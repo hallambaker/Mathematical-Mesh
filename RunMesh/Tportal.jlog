@@ -1,0 +1,11 @@
+{
+  "Header": {
+    "Type": "Data",
+    "Content": "application/mesh-portal",
+    "Comment": "Persistence store for Mesh Portal"}}{
+  "DataItem": {
+    "TransactionID": "TID:1",
+    "PrimaryKey": "Account-Alice@prismproof.org",
+    "Action": "New",
+    "Added": "2015-10-30T12:48:01Z",
+    "Text": "{\n  \"Account\": {\n    \"Created\": \"2015-10-30T12:48:01Z\",\n    \"Modified\": \"2015-10-30T12:48:01Z\",\n    \"AccountID\": \"Alice@prismproof.org\",\n    \"UserProfileUDF\": \"MAG5S-736PO-HQG2L-XKTRT-HC2JF-WNSQK\",\n    \"Status\": \"Open\"}}"}}

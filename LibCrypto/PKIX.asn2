@@ -1,0 +1,449 @@
+﻿Namespace Goedel.CryptoLibNG.PKIX
+
+ROOT id_pkix
+	iso						1
+	identified_organization 3
+	dod						6 
+	internet				1
+	security				5
+	mechanisms				5
+	pkix					7
+
+ROOT id_at
+	joint_iso_ccitt			2
+	ds						5 
+	at						4 
+
+
+OID id_at_countryName				id_at  6
+OID id_at_organizationName			id_at 10
+OID id_at_organizationalUnitName	id_at 11
+OID id_at_dnQualifier				id_at 46
+OID id_at_stateOrProvinceName		id_at  8
+OID id_at_commonName				id_at  3
+OID id_at_serialNumber				id_at  5
+
+OID id_at_localityName				id_at 7
+OID id_at_title						id_at 12
+OID id_at_name						id_at 41
+OID id_at_surname					id_at  4
+OID id_at_givenName					id_at 42
+OID id_at_initials					id_at 43
+OID id_at_pseudonym					id_at 65
+OID id_at_generationQualifier		id_at 44
+
+
+OID id_pe					id_pkix 1
+OID id_qt					id_pkix 2 
+OID id_kp					id_pkix 3 
+OID id_ad					id_pkix 48
+ 
+OID id_qt_cps				id_qt 1
+OID id_qt_unotice			id_qt 2 
+
+OID id_ad_ocsp				id_ad 1 
+OID id_ad_caIssuers			id_ad 2 
+OID id_ad_timeStamping		id_ad 3 
+OID id_ad_caRepository		id_ad 5 
+
+ROOT pkcs 
+	iso					1 
+	member_body			2
+	us					840
+	rsadsi				113549
+	pkcs				1
+
+OID pkcs_9 pkcs 9
+OID pkcs_1 pkcs 1
+OID pkcs_12 pkcs 12
+
+OID pkcs_12_10 pkcs_12 10
+OID pkcs_12_bagtype pkcs_12_10 1
+
+OID pkcs_12_keybag pkcs_12_bagtype 1
+OID pkcs_12_shroudedbag pkcs_12_bagtype 2
+OID pkcs_12_certbag pkcs_12_bagtype 3
+OID pkcs_12_crlbag pkcs_12_bagtype 4
+OID pkcs_12_secretbag pkcs_12_bagtype 5
+OID pkcs_12_safecontentsbag pkcs_12_bagtype 6
+
+OID id_emailAddress      pkcs_9 1
+
+ROOT id_ce	
+	joint_iso_ccitt		2
+	ds					5 
+	ce					29
+
+
+OID id_ce_authorityKeyIdentifier		id_ce 35 
+OID id_ce_subjectKeyIdentifier			id_ce 14 
+OID id_ce_keyUsage						id_ce 15 
+OID id_ce_privateKeyUsagePeriod			id_ce 16 
+
+OID id_ce_certificatePolicies			id_ce 32 
+OID anyPolicy							id_ce_certificatePolicies 0 
+
+OID id_ce_policyMappings				id_ce 33 
+OID id_ce_subjectAltName				id_ce 17 
+OID id_ce_issuerAltName					id_ce 18 
+OID id_ce_subjectDirectoryAttributes	id_ce 9 
+OID id_ce_basicConstraints				id_ce 19 
+OID id_ce_nameConstraints				id_ce 30 
+OID id_ce_policyConstraints				id_ce 36 
+OID id_ce_cRLDistributionPoints			id_ce 31
+OID id_ce_extKeyUsage					id_ce 37
+OID id_ce_cRLNumber						id_ce 20 
+OID id_ce_issuingDistributionPoint		id_ce 28 
+OID id_ce_deltaCRLIndicator				id_ce 27 
+OID id_ce_cRLReasons					id_ce 21 
+OID id_ce_certificateIssuer				id_ce 29 
+OID id_ce_holdInstructionCode			id_ce 23 
+OID id_ce_invalidityDate				id_ce 24 
+OID id_ce_inhibitAnyPolicy				id_ce 54 
+OID id_ce_freshestCRL					id_ce 46 
+
+
+OID id_kp_serverAuth              id_kp 1 
+OID id_kp_clientAuth              id_kp 2 
+OID id_kp_codeSigning             id_kp 3 
+OID id_kp_emailProtection         id_kp 4 
+OID id_kp_timeStamping            id_kp 8 
+OID id_kp_OCSPSigning             id_kp 9 
+
+
+OID id_pe_authorityInfoAccess  id_pe 1 
+OID id_pe_subjectInfoAccess  id_pe 11 
+
+ROOT holdInstruction
+	joint_iso_itu_t		2
+	member_body			2 
+	us					840 
+	x9cm				10040 
+	holdInstruction		2
+
+OID id_holdinstruction_none				holdInstruction 1
+OID id_holdinstruction_callissuer		holdInstruction 2
+OID id_holdinstruction_reject			holdInstruction 3
+
+
+
+OID rsaEncryption					pkcs_1 1 
+OID sha1WithRSAEncryption			pkcs_1 5
+OID sha224WithRSAEncryption			pkcs_1 14 
+OID sha256WithRSAEncryption			pkcs_1 11 
+OID sha384WithRSAEncryption			pkcs_1 12 
+OID sha512WithRSAEncryption			pkcs_1 13 
+
+
+ROOT   nistalgorithm
+	joint_iso_itu_t		2
+	country				16
+	us					840
+	organization		1
+	gov					101
+	csor				3
+	nistalgorithm		4
+
+OID nist_hashalgs	nistalgorithm	2
+
+OID id_sha224		nist_hashalgs	4 
+OID id_sha256		nist_hashalgs	1 
+OID id_sha384		nist_hashalgs	2 
+OID id_sha512		nist_hashalgs	3 
+
+OID nist_aes		nistalgorithm	1
+
+OID id_aes128_ecb	nist_aes 1
+OID id_aes128_cbc	nist_aes 2
+OID id_aes128_ofb	nist_aes 3
+OID id_aes128_cfb	nist_aes 4
+OID id_aes192_ecb	nist_aes 21
+OID id_aes192_cbc	nist_aes 22
+OID id_aes192_ofb	nist_aes 23
+OID id_aes192_cfb	nist_aes 24
+OID id_aes256_ecb	nist_aes 41
+OID id_aes256_cbc	nist_aes 42
+OID id_aes256_ofb	nist_aes 43
+OID id_aes256_cfb	nist_aes 44
+
+ROOT dod_arc
+	iso							1 
+	identified_organization		3 
+	dod							6 
+	internet					1	 
+	private						4 
+	enterprise					1 
+	number					 6449 
+	certificates				1
+	categories					3
+	certified_delivery			5
+
+OID netscape_smime dod_arc 2
+
+
+
+Class Certificate  
+	TBSCertificate			TBSCertificate
+	SignatureAlgorithm		AlgorithmIdentifier
+	Signature				Bits 
+	 
+Class TBSCertificate
+	Version					Integer
+		Explicit
+		Code 0
+	SerialNumber			BigInteger
+	Signature				AlgorithmIdentifier
+	Issuer					List Name
+	Validity				Validity
+	Subject					List Name
+	SubjectPublicKeyInfo	SubjectPublicKeyInfo
+	IssuerUniqueID			Bits
+		Code 1
+		Implicit
+		Optional
+	SubjectUniqueID			Bits
+		Code 2
+		Implicit
+		Optional 
+	Extensions				List Extension
+		Code 3
+		Explicit
+		Optional
+
+Class SubjectPublicKeyInfo
+	Algorithm				AlgorithmIdentifier
+	SubjectPublicKey		Bits
+
+Class DigestInfo
+	Algorithm				AlgorithmIdentifier
+	SubjectPublicKey		Octets
+
+Class AlgorithmIdentifier
+	Algorithm				OIDRef
+	Parameters				List Any
+
+
+Class TaggedBitString
+	Algorithm				OIDRef
+	SubjectPublicKey		Bits
+
+Class Extension
+	ObjectIdentifier		OIDRef
+	Critical				Boolean
+		Default "false"
+		Optional
+	Data					Octets
+
+Class Validity
+    NotBefore      Time
+    NotAfter       Time 
+
+Class CertificateList
+	TBSCertList				TBSCertList
+	Signature				TaggedBitString 
+
+Class TBSCertList
+	Version                 Integer
+		Optional
+	Signature               AlgorithmIdentifier
+	Issuer                  List Name
+	ThisUpdate              Time
+	NextUpdate              Time 
+		Optional
+	RevokedCertificates     List CertEntry
+		Optional
+	CrlExtensions			List Extension
+		Code 0
+		Explicit
+
+Class CertEntry
+	UserCertificate         BigInteger
+	RevocationDate          Time
+	CrlEntryExtensions      List Extension 
+		Optional
+		Explicit
+
+SingularObject Name id_at
+	Member					Set AttributeTypeValue
+
+Class AttributeTypeValue
+	Type					OIDRef
+	Value					AnyString
+
+SingularObject AnyString id_at
+	Value Choice
+		IA5String			IA5String
+			Optional
+		BMPString			BMPString
+			Optional		 
+		UTF8String			UTF8String 
+			Optional
+		PrintableString		PrintableString		
+			Optional
+
+   
+Class CertificationRequest 
+	CertificationRequestInfo	CertificationRequestInfo
+	SignatureAlgorithm			AlgorithmIdentifier
+	Signature					Bits 
+
+
+
+Class CertificationRequestInfo 
+	Version					Integer
+	Subject					List Name
+	SubjectPublicKeyInfo	SubjectPublicKeyInfo
+	Attributes				List AttributeTypeValues
+		Code 0
+		Implicit
+
+Class AttributeTypeValues
+	Type					OIDRef
+	Value					Set Any
+
+
+Class RSAPublicKey 
+	Modulus					BigInteger
+	PublicExponent			BigInteger
+
+
+Object AuthorityKeyIdentifier  id_ce_authorityKeyIdentifier
+	KeyIdentifier					Octets
+		Code 0
+		Context
+		Optional
+	AuthorityCertIssuer				List GeneralName
+		Code 1
+		Context
+		Optional
+	AuthorityCertSerialNumber		Integer
+		Code 2
+		Context
+		Optional
+
+
+
+SingularObject SubjectKeyIdentifier id_ce_subjectKeyIdentifier 
+	Value Octets
+
+SingularObject KeyUsage id_ce_keyUsage 
+	Value VBits
+
+SingularObject certificatePolicies id_ce_certificatePolicies 
+	Value List PolicyInformation
+
+Class PolicyInformation
+	PolicyIdentifier			OIDRef
+	PolicyQualifiers			List PolicyQualifierInfo
+		Optional
+
+Class PolicyQualifierInfo
+	PolicyQualifierId			OIDRef
+	Qualifier					Any
+
+
+
+SingularObject SubjectAltName id_ce_subjectAltName
+	Names					List GeneralName
+
+SingularObject GeneralName id_ce_subjectAltName
+	RFC822Name				IA5String             
+		Code 1
+		Context
+		Optional
+	DNSName					IA5String
+	   	Code 2
+		Context
+		Optional
+
+Object BasicConstraints id_ce_basicConstraints
+	CA                      Boolean
+		Default "false"
+	PathLenConstraint       Integer
+		Optional
+
+Object NameConstraints id_ce_nameConstraints
+	PermittedSubtrees		GeneralSubtrees
+		Code 0
+	ExcludedSubtrees		GeneralSubtrees
+		Code 1
+
+Class GeneralSubtrees
+	Base					GeneralName
+	Minimum					Integer
+		Code 0
+	Maximum					Integer
+		Code 1
+
+SingularObject ExtendedKeyUsage	id_ce_extKeyUsage
+	KeyPurpose				List OIDRef
+
+
+
+Class PFX 
+	Version					Integer
+	AuthSafe				ContentInfo
+	MacData					MacData
+		Optional
+
+Class ContentInfo
+	ContentType				OIDRef
+	Content					Any 
+		Code 0
+		Explicit
+
+Class MacData
+	MAC						DigestInfo
+	MacSalt					Octets
+	Iterations				Integer
+		Default "1"
+
+Class EncryptedData
+	Version					Integer
+	EncryptedContent		EncryptedContentInfo
+
+Class EncryptedContentInfo 
+	ContentType				OIDRef
+	Algorithm				AlgorithmIdentifier
+	EncryptedContent		Octets
+		Code 0
+		Implicit
+		Optional
+
+Class EncryptedPrivateKeyInfo 
+	EncryptionAlgorithm		AlgorithmIdentifier
+	EncryptedData			Octets
+
+Class PrivateKeyInfo 
+	Version					Integer
+	PrivateKeyAlgorithm		AlgorithmIdentifier
+	PrivateKey				Octets
+	Attributes				Set AttributeTypeValues
+		Code 0
+		Implicit
+
+Class RSAPrivateKey
+	Version					Integer
+	Modulus					BigInteger
+	PublicExponent			BigInteger
+	PrivateExponent			BigInteger
+	Prime1					BigInteger
+	Prime2					BigInteger
+	Exponent1				BigInteger
+	Exponent2				BigInteger
+	Coefficient				BigInteger
+
+
+Class Endorsement  
+	TBSEndorsement   		TBSEndorsement
+	SignatureAlgorithm		AlgorithmIdentifier
+	Signature				Bits 
+	 
+Class TBSEndorsement
+	Version					Integer
+	Issued					Time
+	IssuerKeyIdentifier		Octets
+	SubjectKeyIdentifier	Octets
+	Subject					List Name
+	SubjectAltName			List SubjectAltName
+	Extensions				List Extension

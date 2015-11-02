@@ -1,0 +1,99 @@
+﻿
+
+GUI Goedel.MeshSampleClient
+
+	Wizard SampleApplication "Example Mesh Applicetion"
+
+
+		Dialog SelectApplication
+			Heading
+				|Choose an action
+			Text
+				|This program simulates an application using the Mesh for 
+				|configuration management. You can view or modify the application
+				|data for each of the applications supported.
+
+
+			Horizontal
+				Action Password "Password" SelectPassword
+					Text
+						|Password Manager for Web browser or the like.
+				Action Network "Network" SelectNetwork
+					Text
+						|Configuration parameters for network access including
+						|DNS, VPN settings, SSH keys etc.
+				Action Email "Email" SelectEmail
+					Text
+						|Configuration parameters for an email account. Including
+						|S/MIME and OpenPGP configuration data.
+
+		Dialog SelectPassword
+			Heading
+				|Password Manager
+			Output PasswordConfiguration "Current Configuration"
+			Horizontal
+				Action AddPassword "Add" PasswordDialog
+				Action CancelPassword "Cancel" SelectApplication
+				
+		Dialog SelectNetwork
+			Heading
+				|Password Manager
+			Output NetworkConfiguration "Current Configuration"
+			Horizontal
+				Action SetNetwork "Change" NetworkDialog
+				Action CancelNetwork "Cancel" SelectApplication
+
+		Dialog SelectEmail
+			Heading
+				|Password Manager
+			Output EmailConfiguration "Current Configuration"
+			Horizontal
+				Action SetEmail "Change" EmailDialog
+				Action CancelEmail "Cancel" SelectApplication
+
+		Dialog PasswordDialog
+			Heading
+				|Store a new password.
+			Text
+				|A Web browser using the mesh to manage passwords should provide 
+				|a meshanism to delete stored passwords as well. If the user can
+				|guarantee access from every browser they want to use, use
+				|of strong password generation would be feasible.
+			Input DomainName "Web Site"
+			Input Username "Username"
+			Input Password "Password"
+			Horizontal
+				Action AcceptPassword "Accept" SelectApplication
+				Action CancelPassword2 "Cancel" SelectApplication
+
+		Dialog NetworkDialog
+			Heading
+				|Manage network configuration
+			Text
+				|Besides changing DNS service parameters, the network profile
+				|might include data such as the SSH fingerprint of servers
+				|the user has visited.
+			Input DNS1 "Primary DNS Service"
+			Input DNS2 "Secondary DNS Service"
+			Input DNSProtocol "Resolution Protocol"
+			Horizontal
+				Action AcceptNetwork "Accept" SelectApplication
+				Action CancelNetwork2 "Cancel" SelectApplication
+
+		Dialog EmailDialog
+			Heading
+				|Manage email client configuration
+			Text
+				|Besides changing the email server parameters, a management
+				|client would allow actions like requesting a cert from a
+				|CA etc.
+		    Input MailAccount "Mail Account"
+			Input MailServer "Mail Server"
+			Horizontal
+				Action AcceptEmail "Accept" SelectApplication
+				Action CancelEmail2 "Cancel" SelectApplication
+
+
+		Dialog TBS
+			Heading
+				|Not Yet Implemented!

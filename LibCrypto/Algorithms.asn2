@@ -1,0 +1,52 @@
+﻿Namespace Goedel.CryptoLibNG 
+
+ROOT pkcs 
+	iso					1 
+	member_body			2
+	us					840
+	rsadsi				113549
+	pkcs				1
+
+OID pkcs_1 pkcs 1
+OID rsaEncryption					pkcs_1 1 
+OID sha1WithRSAEncryption			pkcs_1 5
+OID sha224WithRSAEncryption			pkcs_1 14 
+OID sha256WithRSAEncryption			pkcs_1 11 
+OID sha384WithRSAEncryption			pkcs_1 12 
+OID sha512WithRSAEncryption			pkcs_1 13 
+
+ROOT   nistalgorithm
+	joint_iso_itu_t		2
+	country				16
+	us					840
+	organization		1
+	gov					101
+	csor				3
+	nistalgorithm		4
+
+OID nist_hashalgs	nistalgorithm	2
+
+OID id_sha224		nist_hashalgs	4 
+OID id_sha256		nist_hashalgs	1 
+OID id_sha384		nist_hashalgs	2 
+OID id_sha512		nist_hashalgs	3 
+
+OID nist_aes		nistalgorithm	1
+OID id_aes128_cbc	nist_aes 2
+OID id_aes256_cbc	nist_aes 42
+
+Class RSAPublicKey 
+	Modulus					BigInteger
+	PublicExponent			BigInteger
+
+Class RSAPrivateKey
+	Version					Integer
+	Modulus					BigInteger
+	PublicExponent			BigInteger
+	PrivateExponent			BigInteger
+	Prime1					BigInteger
+	Prime2					BigInteger
+	Exponent1				BigInteger
+	Exponent2				BigInteger
+	Coefficient				BigInteger
+

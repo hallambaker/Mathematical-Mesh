@@ -1,0 +1,61 @@
+﻿<Page x:Class="Goedel.MeshSampleClient.Dialog_NetworkDialog"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d" 
+      d:DesignHeight="600" d:DesignWidth="800"
+	Title="Dialog_NetworkDialog">
+    <DockPanel>
+        <TextBlock TextWrapping="WrapWithOverflow" FontSize="32" 
+            xml:space="preserve" Margin="25,25,25,0" DockPanel.Dock="Top">Manage network configuration
+</TextBlock>
+        <TextBlock TextWrapping="WrapWithOverflow" FontSize="20" 
+            xml:space="preserve" Margin="25,0,25,25" DockPanel.Dock="Top">Besides changing DNS service parameters, the network profile
+might include data such as the SSH fingerprint of servers
+the user has visited.
+
+</TextBlock>
+        <StackPanel>
+            <StackPanel Orientation="Horizontal">
+				<Label FontSize="20"
+					   VerticalAlignment="Top">Primary DNS Service</Label>
+				<TextBox FontSize="20" Name="Input_DNS1"
+						 VerticalAlignment="Top" TextChanged="Changed_Input_DNS1" Width="400" 
+						 ></TextBox>
+			</StackPanel>
+            <StackPanel Orientation="Horizontal">
+				<Label FontSize="20"
+					   VerticalAlignment="Top">Secondary DNS Service</Label>
+				<TextBox FontSize="20" Name="Input_DNS2"
+						 VerticalAlignment="Top" TextChanged="Changed_Input_DNS2" Width="400" 
+						 ></TextBox>
+			</StackPanel>
+            <StackPanel Orientation="Horizontal">
+				<Label FontSize="20"
+					   VerticalAlignment="Top">Resolution Protocol</Label>
+				<TextBox FontSize="20" Name="Input_DNSProtocol"
+						 VerticalAlignment="Top" TextChanged="Changed_Input_DNSProtocol" Width="400" 
+						 ></TextBox>
+			</StackPanel>
+
+        <Grid Margin="20,20,20,20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="5"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+			<StackPanel Grid.Column="0">
+                <Button  FontSize="20" Width="150" Height="30" 
+                         Click="Action_AcceptNetwork">Accept</Button>
+            </StackPanel>
+			<StackPanel Grid.Column="2">
+                <Button  FontSize="20" Width="150" Height="30" 
+                         Click="Action_CancelNetwork2">Cancel</Button>
+            </StackPanel>
+		</Grid>
+
+
+        </StackPanel>
+    </DockPanel>
+</Page>

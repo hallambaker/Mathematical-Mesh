@@ -1,0 +1,52 @@
+﻿Protocol Goedel.Mesh Portal Portal
+    Using Goedel.Cryptography.Jose 
+	Using Goedel.Mesh
+
+	Structure PortalEntry
+		Abstract
+		DateTime Created
+			Description
+				|Time the pending item was created.
+		DateTime Modified
+			Description
+				|Time the pending item was last modified.
+
+	Structure Account
+		Description
+			|Entry containing the 
+			|UniqueID is Account-<Name>-<Portal>
+			|Indexed by <Name>, <UserProfileUDF> [Most recent open]
+		Inherits PortalEntry
+
+		String AccountID
+			Description
+				|Assigned account identifier, e.g. 'alice@example.com'. Account names are 
+				|not case sensitive.
+		String UserProfileUDF
+			Description
+				|Fingerprint of associated user profile
+		String Status
+			Description
+				|Status of the account, valid values are 'Open', 'Closed',
+				|'Suspended'
+		
+
+	Structure AccountProfile
+		Inherits Account
+		Struct SignedPersonalProfile Profile
+
+
+
+	Structure ConnectionsPending
+		Description
+			|Object containing the list of currently pending device connection requests
+			|for the specified account. 
+			|Unique-ID is ConnectionsPending-<UserProfileUDF>
+		Inherits Account
+		Struct SignedConnectionRequest Requests
+			Multiple
+			Description
+				|List of pending requests
+		
+
+

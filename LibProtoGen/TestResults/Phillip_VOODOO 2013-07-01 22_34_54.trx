@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<TestRun id="c7a729ea-2023-4159-ac39-5a7f4176e3a2" name="Phillip@VOODOO 2013-07-01 22:34:54" runUser="Voodoo\Phillip" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <TestSettings name="Default Test Settings" id="c9c4b540-48d1-4f33-8c6a-2625dad2a210">
+    <Deployment runDeploymentRoot="Phillip_VOODOO 2013-07-01 22_34_54">
+      <DeploymentItem filename="C:\Users\Phillip\Code\Goedel\Goedel.Protocol\bin\Debug\Goedel.Protocol.dll" />
+    </Deployment>
+    <Execution>
+      <TestTypeSpecific />
+      <AgentRule name="Execution Agents">
+      </AgentRule>
+    </Execution>
+  </TestSettings>
+  <Times creation="2013-07-01T22:34:54.4572000-04:00" queuing="2013-07-01T22:34:55.5882000-04:00" start="2013-07-01T22:34:55.6512000-04:00" finish="2013-07-01T22:34:58.0912000-04:00" />
+  <ResultSummary outcome="Completed">
+    <Counters total="5" executed="5" passed="5" error="0" failed="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+  </ResultSummary>
+  <TestDefinitions>
+    <UnitTest name="JSONWriterConstructorTest" storage="c:\users\phillip\code\goedel\goedel.protocol\testreader\bin\debug\testreader.dll" id="fc26d2e6-5699-2a7f-3a7c-3053d2b76fb8">
+      <Execution id="7260d9ab-109d-4802-ac3d-d8ba71b5d174" />
+      <TestMethod codeBase="C:/Users/Phillip/Code/Goedel/Goedel.Protocol/TestReader/bin/Debug/TestReader.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="TestReader.JSONWriterTest, TestReader, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="JSONWriterConstructorTest" />
+    </UnitTest>
+    <UnitTest name="GetCharTypeTest" storage="c:\users\phillip\code\goedel\goedel.protocol\testreader\bin\debug\testreader.dll" id="544c1720-8cd1-12b3-0dd5-c42432ad9f34">
+      <DeploymentItems>
+        <DeploymentItem filename="Goedel.Protocol.dll" />
+      </DeploymentItems>
+      <Execution id="56b28a76-5a53-4690-a2d0-e34033bef7e6" />
+      <TestMethod codeBase="C:/Users/Phillip/Code/Goedel/Goedel.Protocol/TestReader/bin/Debug/TestReader.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="TestReader.JSONReaderTest, TestReader, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="GetCharTypeTest" />
+    </UnitTest>
+    <UnitTest name="LexerTest" storage="c:\users\phillip\code\goedel\goedel.protocol\testreader\bin\debug\testreader.dll" id="06d5388e-1b9f-7b01-a3bd-8715375580a4">
+      <DeploymentItems>
+        <DeploymentItem filename="Goedel.Protocol.dll" />
+      </DeploymentItems>
+      <Execution id="eaeff4a9-7d1c-445d-8ae0-de45ef2c34d5" />
+      <TestMethod codeBase="C:/Users/Phillip/Code/Goedel/Goedel.Protocol/TestReader/bin/Debug/TestReader.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="TestReader.JSONReaderTest, TestReader, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="LexerTest" />
+    </UnitTest>
+    <UnitTest name="JSONReaderConstructorTest1" storage="c:\users\phillip\code\goedel\goedel.protocol\testreader\bin\debug\testreader.dll" id="e3423050-bf5d-1f5d-ab16-247701b50242">
+      <Execution id="46dca11f-0087-4b6b-a309-9717ffe25f4f" />
+      <TestMethod codeBase="C:/Users/Phillip/Code/Goedel/Goedel.Protocol/TestReader/bin/Debug/TestReader.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="TestReader.JSONReaderTest, TestReader, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="JSONReaderConstructorTest1" />
+    </UnitTest>
+    <UnitTest name="JSONReaderConstructorTest" storage="c:\users\phillip\code\goedel\goedel.protocol\testreader\bin\debug\testreader.dll" id="d968fda8-9ff8-540d-3255-8d1e534276e6">
+      <Execution id="c063e390-303e-43b2-937c-f48ed929a12b" />
+      <TestMethod codeBase="C:/Users/Phillip/Code/Goedel/Goedel.Protocol/TestReader/bin/Debug/TestReader.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="TestReader.JSONReaderTest, TestReader, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="JSONReaderConstructorTest" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <TestEntries>
+    <TestEntry testId="d968fda8-9ff8-540d-3255-8d1e534276e6" executionId="c063e390-303e-43b2-937c-f48ed929a12b" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="544c1720-8cd1-12b3-0dd5-c42432ad9f34" executionId="56b28a76-5a53-4690-a2d0-e34033bef7e6" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="06d5388e-1b9f-7b01-a3bd-8715375580a4" executionId="eaeff4a9-7d1c-445d-8ae0-de45ef2c34d5" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="e3423050-bf5d-1f5d-ab16-247701b50242" executionId="46dca11f-0087-4b6b-a309-9717ffe25f4f" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="fc26d2e6-5699-2a7f-3a7c-3053d2b76fb8" executionId="7260d9ab-109d-4802-ac3d-d8ba71b5d174" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <Results>
+    <UnitTestResult executionId="c063e390-303e-43b2-937c-f48ed929a12b" testId="d968fda8-9ff8-540d-3255-8d1e534276e6" testName="JSONReaderConstructorTest" computerName="VOODOO" duration="00:00:00.0208348" startTime="2013-07-01T22:34:55.6982000-04:00" endTime="2013-07-01T22:34:57.9512000-04:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="c063e390-303e-43b2-937c-f48ed929a12b">
+    </UnitTestResult>
+    <UnitTestResult executionId="56b28a76-5a53-4690-a2d0-e34033bef7e6" testId="544c1720-8cd1-12b3-0dd5-c42432ad9f34" testName="GetCharTypeTest" computerName="VOODOO" duration="00:00:00.0019206" startTime="2013-07-01T22:34:57.9622000-04:00" endTime="2013-07-01T22:34:57.9712000-04:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="56b28a76-5a53-4690-a2d0-e34033bef7e6">
+    </UnitTestResult>
+    <UnitTestResult executionId="eaeff4a9-7d1c-445d-8ae0-de45ef2c34d5" testId="06d5388e-1b9f-7b01-a3bd-8715375580a4" testName="LexerTest" computerName="VOODOO" duration="00:00:00.0060648" startTime="2013-07-01T22:34:57.9802000-04:00" endTime="2013-07-01T22:34:57.9912000-04:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="eaeff4a9-7d1c-445d-8ae0-de45ef2c34d5">
+    </UnitTestResult>
+    <UnitTestResult executionId="46dca11f-0087-4b6b-a309-9717ffe25f4f" testId="e3423050-bf5d-1f5d-ab16-247701b50242" testName="JSONReaderConstructorTest1" computerName="VOODOO" duration="00:00:00.0006217" startTime="2013-07-01T22:34:58.0002000-04:00" endTime="2013-07-01T22:34:58.0082000-04:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="46dca11f-0087-4b6b-a309-9717ffe25f4f">
+    </UnitTestResult>
+    <UnitTestResult executionId="7260d9ab-109d-4802-ac3d-d8ba71b5d174" testId="fc26d2e6-5699-2a7f-3a7c-3053d2b76fb8" testName="JSONWriterConstructorTest" computerName="VOODOO" duration="00:00:00.0006748" startTime="2013-07-01T22:34:58.0132000-04:00" endTime="2013-07-01T22:34:58.0192000-04:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="7260d9ab-109d-4802-ac3d-d8ba71b5d174">
+    </UnitTestResult>
+  </Results>
+</TestRun>

@@ -1,0 +1,149 @@
+﻿Class Goedel.Protocol Configure
+
+
+	TopType Interface
+		Id		ID InterfaceHandle
+		List Choice
+			HTTP
+			UDP
+
+	Type UDP
+		Domain	String
+		Port	Integer
+
+	Type HTTP
+		Domain	String
+		Port	Integer
+
+	Type HTTPS
+		Domain	String
+		Port	Integer
+		// Can add in stuff for TLS here
+
+
+	// The service definition
+
+	TopType Service
+		Id		ID ServiceHandle
+		Server	String
+		Options Options
+			IsConnection				Connection		Single
+			Secrets						Seed			Multiple
+			Administrators				Administrator	Multiple
+			Interfaces					On				Multiple
+			Log							Log				Single
+			Store						Store			Single
+			Configuration				Configuration	Single
+
+	Type Connection
+
+	Type AtInterface
+		Id		REF InterfaceHandle
+
+	Type Connection
+		Id		REF ServiceHandle
+
+	Type Configuration
+		File	String
+
+	Type Log
+		File	String
+
+	Type Store
+		File	String
+
+
+
+	TopType Host 
+		Id		ID Handle
+		Options Options
+			Port						Port			Single
+			Domain						Domain			Single
+			Location					Location		Single
+			Binding						Binding			Single
+			Secrets						Seed			Multiple
+			Protocols					Protocol		Multiple
+
+	Type Protocol
+		Of Choice 
+			Connect 
+			OmniQuery 
+			PrivateDNS 
+			Confirm
+
+	Type Connect
+		Options Options
+			EncryptionAlgorithms		Encryption		Multiple
+			AuthenticationAlgorithms	Authentication	Multiple
+			Administrators				Administrator	Multiple
+
+	Type OmniQuery
+
+	Type PrivateDNS
+
+	Type Confirm
+
+	Type Binding
+		Of Choice
+			UDP
+			HTTP
+
+
+	TopType Client
+		Id			ID Handle
+		Account		String
+		Service		String
+		Options Options
+			Scopes						Scope  Multiple
+			Secret						Secret Single
+			Ticket						Ticket Single 
+			EncryptionAlgorithm			Encryption Single
+			AuthenticationAlgorithm		Authentication Single
+			Expires						Expires Single
+			Connections					Connection Multiple
+
+	Type Administrator
+		Account		String
+
+	Type Connection
+		Options Options
+			Scopes						Scope Multiple
+			Secret						Secret Single
+			Ticket						Ticket Single
+			EncryptionAlgorithm			Encryption Single
+			AuthenticationAlgorithm		Authentication Single
+			Expires						Expires Single
+
+	Type Seed
+		Data	String
+		Expiry	String
+
+	Type Secret
+		Data	String
+			
+	Type Ticket
+		Data	String
+	
+	Type Port
+		Data	Integer
+
+	Type Domain
+		Data	String
+
+	Type Location
+		Data	String
+
+	Type Address
+		IP		String
+
+	Type Scope
+		Domain	String
+
+	Type Expires
+		Expiry	String
+
+	Type Encryption
+		Algorithm	String
+
+	Type Authentication
+		Algorithm	String

@@ -1,0 +1,68 @@
+﻿
+
+GUI Goedel.MeshConnect 
+
+	Wizard ConnectProfile "Connect to Mesh Profile"
+
+
+
+
+		Dialog ConnectDevice
+			Heading
+				|Connect this device to an existing mesh profile
+			Text
+				|To connect
+			Vertical
+				Input MeshGateway2 "Mesh provider gateway (e.g. prismproof.org)."
+				Input AccountName3 "Your prefered account name (e.g. alice)." 
+				Action WaitConnect "Next" CheckFingerPrint
+
+		Dialog ConnectPending
+			Heading
+				|Do you want to connect to this profile?
+			Text
+				|
+			Vertical
+				Output ProfileUDF "Profile Fingerprint" 
+				Output DeviceUDF "Device Fingerprint" 
+
+				Next CheckFingerPrint
+
+		Dialog CheckFingerPrint
+			Heading
+				|Check profile fingerprint
+			Text
+				|A connection request has been posted to your account.
+			Text
+				|To make sure that you have connected to the right account, you
+				|should check that the two fingerprints below match those reported by
+				|your profile manager.
+
+			Output Fingerprint1 "Profile" 
+			Output Device1 "This Device" 
+			Horizontal
+				Action AcceptFingerprint "Accept" WaitToComplete
+				Action RejectFingerprint "Cancel" ConnectDevice
+
+
+
+		Dialog WaitToComplete
+			Heading
+				|Wait to approve connection
+			Text
+				|To complete the connection of this device to 
+				|your profile, you must approve the request on another device.
+			Output Fingerprint2 "Profile" 
+			Output Device2 "This Device" 
+			Vertical
+				Action Check "Check" Complete
+
+
+		Dialog Complete
+			Heading
+				|Task is complete.
+			Output ProfileData ""
+			Horizontal
+				Action ExitProgram "Exit" ConnectDevice
+					Text
+

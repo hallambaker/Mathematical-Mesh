@@ -1,0 +1,151 @@
+﻿<!-- <!DOCTYPE html>
+<html>
+<head>
+<title></title>
+</head>
+<body> -->
+
+
+
+<h1>Portal</h1>
+<!-- Protocol description here -->
+
+<h2>Portal Transactions</h2>
+
+<!-- List of Transactions here as H3 entries -->
+
+
+<h2>Portal Messages</h2>
+<!-- List of Messages here as H3 entries -->
+
+
+
+<h2>Portal Structures</h2>
+<!-- List of Structures here as H3 entries -->
+
+<h3>Structure: PortalEntry</h3>
+
+
+<dl>
+<dt>Created :</dt><dd>DateTime [0..1]   <p>
+Time the pending item was created.
+</p>
+</dd>
+<dt>Modified :</dt><dd>DateTime [0..1]   <p>
+Time the pending item was last modified.
+</p>
+</dd>
+</dl>
+
+
+<h3>Structure: Account</h3>
+
+<p>
+Entry containing the 
+UniqueID is Account-<Name>-<Portal>
+Indexed by <Name>, <UserProfileUDF> [Most recent open]
+</p>
+
+<dl>
+<dt>Created :</dt><dd>DateTime [0..1]   <p>
+Time the pending item was created.
+</p>
+</dd>
+<dt>Modified :</dt><dd>DateTime [0..1]   <p>
+Time the pending item was last modified.
+</p>
+</dd>
+<dt>AccountID :</dt><dd>String [0..1]   <p>
+Assigned account identifier, e.g. 'alice@example.com'. Account names are 
+not case sensitive.
+</p>
+</dd>
+<dt>UserProfileUDF :</dt><dd>String [0..1]   <p>
+Fingerprint of associated user profile
+</p>
+</dd>
+<dt>Status :</dt><dd>String [0..1]   <p>
+Status of the account, valid values are 'Open', 'Closed',
+'Suspended'
+</p>
+</dd>
+</dl>
+
+
+<h3>Structure: AccountProfile</h3>
+
+
+<dl>
+<dt>Created :</dt><dd>DateTime [0..1]   <p>
+Time the pending item was created.
+</p>
+</dd>
+<dt>Modified :</dt><dd>DateTime [0..1]   <p>
+Time the pending item was last modified.
+</p>
+</dd>
+<dt>AccountID :</dt><dd>String [0..1]   <p>
+Assigned account identifier, e.g. 'alice@example.com'. Account names are 
+not case sensitive.
+</p>
+</dd>
+<dt>UserProfileUDF :</dt><dd>String [0..1]   <p>
+Fingerprint of associated user profile
+</p>
+</dd>
+<dt>Status :</dt><dd>String [0..1]   <p>
+Status of the account, valid values are 'Open', 'Closed',
+'Suspended'
+</p>
+</dd>
+<dt>Profile :</dt><dd>SignedPersonalProfile [0..1]   <p>
+[TBS]</p>
+</dd>
+</dl>
+
+
+<h3>Structure: ConnectionsPending</h3>
+
+<p>
+Object containing the list of currently pending device connection requests
+for the specified account. 
+Unique-ID is ConnectionsPending-<UserProfileUDF>
+</p>
+
+<dl>
+<dt>Created :</dt><dd>DateTime [0..1]   <p>
+Time the pending item was created.
+</p>
+</dd>
+<dt>Modified :</dt><dd>DateTime [0..1]   <p>
+Time the pending item was last modified.
+</p>
+</dd>
+<dt>AccountID :</dt><dd>String [0..1]   <p>
+Assigned account identifier, e.g. 'alice@example.com'. Account names are 
+not case sensitive.
+</p>
+</dd>
+<dt>UserProfileUDF :</dt><dd>String [0..1]   <p>
+Fingerprint of associated user profile
+</p>
+</dd>
+<dt>Status :</dt><dd>String [0..1]   <p>
+Status of the account, valid values are 'Open', 'Closed',
+'Suspended'
+</p>
+</dd>
+<dt>Requests :</dt><dd>SignedConnectionRequest [0..Many]   <p>
+List of pending requests
+</p>
+</dd>
+</dl>
+
+
+
+
+
+
+
+<!-- </body>
+</html> -->

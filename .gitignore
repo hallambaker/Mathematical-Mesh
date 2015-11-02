@@ -1,0 +1,8 @@
+# Ignore binaries
+*/bin/*
+*/obj/*
+
+# Don't export private data
+*/private/*
+*/Private/*
+

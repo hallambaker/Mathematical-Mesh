@@ -1,0 +1,322 @@
+﻿
+
+GUI Goedel.MeshProfileManager 
+
+	Wizard AddProfile "Configure Mesh Profile"
+
+
+		Dialog AddAccountStart
+			Heading
+				|Lets get started!
+			Text
+				|First, lets configure your Personal Mesh Profile.
+			Horizontal
+				Action NewAccount "New" SelectNormal
+					Text
+						|Choose this if you have not created a personal mesh profile or
+						|want to create a new one.
+				Action ConnectAccount "Connect" ConnectDevice
+					Text
+						|Choose this if you have already created a mesh profile
+						|and it is active on a machine you can connect to.
+				Action  RecoverAccount "Recover" RecoverKey
+					Text
+						|Choose this if you have already created a mesh profile
+						|and need to recover it.
+
+
+		Dialog SelectAdvanced
+			Heading
+				|Do you want to create a key with a vanity fingerprint?
+			Text
+				|Every cryptographic key in the mesh has a unique identifier called
+				|a fingerprint. The fingerprint is constructed using a mathematical 
+				|technique that ensures that it is very improbable that two keys will
+				|ever be created with the same fingerprint.
+			Text
+				|Fingerprints are presented as a series of letters and numbers. Some
+				|people like to choose a key that starts with a particular series of 
+				|letters. Either to make it easier to remember or to distinguish different
+				|keys.
+			Text
+				|Take care however as every letter you choose will cause the key
+				|generation process to take 32 times longer. So if selecting the first 
+				|two letters causes the process to take a second, selecting the third
+				|will cause it to take almost a minute, the fourth quarter of an hour, 
+				|the fifth a third of a day and a sixth more than a week.
+			Text
+				|Another limitation is that the first letter in a fingerprint is
+				|always an M and the second is always an A, B, C or D.
+
+
+			Horizontal
+				Action CreateVanity "Create vanity fingerprint" SelectNormal
+				Action SkipVanity "Skip" SelectNormal
+
+		Dialog SelectNormal
+			Heading
+				|Create Personal Mesh Profile
+			Text
+				|A public profile specifies the name of the person it was created for.
+				|This may be a real name or a pseudonym.
+			Text
+				|You can also specify the name of an email address you wish to secure
+				|with the profile.
+			Vertical
+				Input MeshGateway "Mesh provider gateway (e.g. prismproof.org)."
+				Input AccountName "Your prefered account name (e.g. alice)." 
+				Action Next "Next" AskPassword
+
+		Dialog AskPassword
+			Heading
+				|Do you want to use the mesh to manage your passwords for the Web?
+			Text
+				|Like all private data stored in the mesh, your passwords will be
+				|protected using the highest grade of industry standard encryption
+				|under keys that are only ever stored on the devices you connect
+				|to your personal mesh profile.
+			Text
+				|Passwords stored in the mesh using one Web browser you connect to
+				|your personal mesh profile will be available to any other browser
+				|you connect to the mesh on that or any other device.
+			Horizontal
+				Action ConfigurePassword "Yes" AskEmail
+				Action SkipPassword "Skip" AskEmail
+
+		Dialog AskNetwork
+			Heading
+				|Do you want to use the mesh to manage your secure network profiles?
+			Text
+				|Secure network profiles allow you to simplify management of your
+				|network. 
+			Horizontal
+				Action ConfigureNetwork "Yes" AskEmail
+				Action SkipNetwork "Skip" AskEmail
+
+
+		Dialog AskEmail
+			Heading
+				|Do you want to use the mesh to secure your email?
+			Text
+				|Creating a mesh mail profile allows you to secure your email account(s)
+				|using TLS transport security to encrypt communications between your mail
+				|client and your mail server(s) and OpenPGP and S/MIME to protect messages
+				|at the mail servers.
+			Horizontal
+				Action ConfigureEmail "Yes" AskEmailAccount
+				Action SkipEmail "Skip" AskRecovery
+
+		Dialog AskEmailAccount
+			Heading
+				|Do you want to use the mesh to secure this account?
+			Output AccountName "Account Name"
+			Output AccountAddress "Email Address"
+			Output AccountPersonal "Personal Name"
+			Horizontal
+				Action YesEmail "Yes" AskEmailAccount
+				Action NoEmail "No" AskEmailAccount
+
+		Dialog NoEmailFound
+			Heading
+				|No email accounts found.
+			Text
+				|Don't worry, you can add them to your profile later.
+			Horizontal
+				Action SkipNoEmail "Skip" AskRecovery
+
+		Dialog AskRecovery
+			Heading
+				|Do you want to create recovery keys?
+			Text
+				|The information you store in the mesh could be very valuable to you.
+				|The strong cryptography used by the mesh cannot be broken using any
+				|known means. If you lose your devices with your profile decryption key,
+				|all the data you have encrypted will be lost and there will be absolutely
+				|no way to get it back.
+			Horizontal
+				Action CreateRecovery "Yes" GenerateRecoveryKeys
+				Action SkipRecovery "Skip" GenerateKeys
+
+		Dialog GenerateKeys
+			Heading
+				|Generate Master Keys
+			Text
+				|Generating the keys for your Personal Privacy 
+				|Environment (this may take a while).
+
+			Vertical
+				Task GenerateKeysTask1
+					Text
+						|Generating keys
+				Next Finish
+
+
+		Dialog GenerateRecoveryKeys
+			Heading
+				|Generate Master Keys
+			Text
+				|Generating the keys for your Personal Privacy 
+				|Environment (this may take a while).
+			Text
+				|Write down the recovery share codes and keep them in a 
+				|safe place. Your recovery codes are the only way to recover your 
+				|Mesh profile data if your devices are lost or stolen. 
+			Vertical
+				Task GenerateKeysTask2
+					Text
+						|Generating keys
+				Next FinishRecovery
+
+
+		Dialog Finish
+			Heading
+				|Finished
+			Text
+				|Your personal profile is compete and ready to use. 
+			Text
+				|Note the personal fingerprint code below. Whenever you connect devices
+				|to your profile, you will use that fingerprint. People can also use
+				|your fingerprint to send you secre mail.
+			Vertical
+				Output Fingerprint "ProfileFingerprint" 
+			Action NextClose "Next" Finish
+				Close
+
+
+		Dialog FinishRecovery
+			Heading
+				|Finished
+			Text
+				|Your personal profile is compete and ready to use. 
+			Text
+				|Note the personal fingerprint code below. Whenever you connect devices
+				|to your profile, you will use that fingerprint. People can also use
+				|your fingerprint to send you secre mail.
+			Vertical
+				Output Fingerprintf "ProfileFingerprint" 
+				Output RecoveryShare1f "First Recovery Share" 
+				Output RecoveryShare2f "Second Recovery Share" 
+				Output RecoveryShare3f  "Third Recovery Share" 
+			Action NextClose1 "Next" FinishRecovery
+				Close
+
+
+		Dialog ConnectDevice
+			Heading
+				|Connect this device to an existing mesh profile
+			Text
+				|To connect
+			Vertical
+				Input MeshGateway2 "Mesh provider gateway (e.g. prismproof.org)."
+				Input AccountName3 "Your prefered account name (e.g. alice)." 
+				Action WaitConnect "Next" ConnectPending
+
+		Dialog ConnectPending
+			Heading
+				|Waiting for connection to be accepted.
+			Text
+				|
+			Vertical
+				Output ProfileUDF "Profile Fingerprint" 
+				Task WaitConnectTask
+					Text
+						|Wait for connection to be authorized
+				Next CheckFingerPrint
+
+		Dialog CheckFingerPrint
+			Heading
+				|Check profile fingerprint
+			Text
+				|A connection request has been posted to your account.
+			Text
+				|to make sure that you have connected to the right account, you
+				|should check that the fingerprint below is the same as the fingerprint
+				|for your personal account.
+			Output Fingerprint2 "ProfileFingerprint" 
+			Horizontal
+				Action AcceptFingerprint "Accept" WaitToComplete
+				Action RejectFingerprint "Cancel" Cancelled
+
+
+		Dialog RecoverKey
+			Heading
+				|Recover personal profile from the recovery shares
+			Text
+				|To recover your account you need to provide the recovery shares that 
+				|were created.
+			Vertical
+				Input RecoveryShare1 "First Recovery Share" 
+				Input RecoveryShare2 "Second Recovery Share" 
+				Action Recover "Recover" RecoverKeySuccess
+
+		Dialog RecoverKeySuccess
+			Heading
+				|Profile recovery successful.
+			Text
+				|Recovery of the personal profile succeeded. To use your profile
+				|on the mesh you must specify a mesh portal and account name. These
+				|can be the same as for the original profile or different.
+			Vertical
+				Input MeshGateway1 "Mesh provider gateway (e.g. prismproof.org)."
+				Input AccountName1 "Your prefered account name (e.g. alice)." 
+				Action RecoverRegister "Next" Finish
+
+
+		Dialog WaitToComplete
+			Heading
+				|Wait to approve connection
+			Text
+				|To complete the connection of this device to 
+				|your profile, you must approve the request on another device.
+
+		Dialog Cancelled
+			Heading
+				|Request Cancelled.
+
+
+		Dialog TBS
+			Heading
+				|Not Yet Implemented!
+
+		Dialog SetupComplete
+			Heading
+				|Your Mesh profile setup is complete!
+			Output ProfileUDF "Profile Fingerprint"
+			Output AccountID "Account"
+			Horizontal
+				Action Scan "Check Pending" ProcessPending
+
+
+		Dialog ProcessPending
+			Heading
+				|Pending request
+			Text
+				|You have a pending profile connection request
+			Output PendingUDF "Device Fingerprint"
+			Horizontal
+				Action AcceptPending "Accept" SetupComplete
+					Text
+						|Only accept the profile connection if you are sure
+						|it came from a device you trust and want to connect
+						|to your account to share all your data.
+				Action RejectPending "Reject" SetupComplete
+					Text
+						|If you reject the request, you will have to restart the
+						|connection process if you change your mind.
+
+		Dialog Complete
+			Heading
+				|Task is complete.
+			Horizontal
+				Action ExitProgram "Exit" Complete
+					Text
+						|Choose this if you have not created a personal mesh profile or
+						|want to create a new one.
+				Action CheckPending "Check" Complete
+					Text
+						|Choose this if you have already created a mesh profile
+						|and it is active on a machine you can connect to.
+				Action Erase "Erase" AddAccountStart
+					Text
+						|Erase all profile data from this machine. Can only be undone
+						|using the recovery codes!

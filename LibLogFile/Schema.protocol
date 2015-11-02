@@ -1,0 +1,119 @@
+﻿Protocol Goedel.Persistence LogEntry LogEntry
+
+	Structure DataItem
+		String		TransactionID
+			Description
+				|Unique Transaction ID. Text format ensures that the ID is easily
+				|visible in binary formats etc.
+		String		PrimaryKey
+			Description
+				|Unique primary key.
+		String		PriorTransactionID
+			Description
+				|Specifies the immediately prior transaction that affected
+				|this identifier
+		String		Action
+			Description
+				|Type of transaction, valid values include:
+				|Delete (the key is removed)
+				|New (the key is created)
+				|Modify (the data associated with the key is modified)
+				|Drop (the key is no longer active and will not be modified again)
+		DateTime	Added
+			Description
+				|Time at which the item was added to the log
+		TStruct IndexTerm Keys
+			Multiple
+			Description
+				|Index terms for data item
+		Binary			Data
+			Description
+				|Binary data.
+		String			Text
+			Description
+				|Text data.
+		Boolean			Pending
+			Description
+				|If true, transaction is pending and will not be final until
+				|a commit transaction is posted.
+		Boolean			Commit
+			Description
+				|If true, all pending transactions with the specified TransactionID
+				|are committed and cannot roll back.
+		Boolean			Rollback
+			Description
+				|If true, all pending transactions with the specified TransactionID
+				|are aborted and ignored.
+
+	Structure Header
+		String			Type
+			Description
+				|Log Type, usually 'Consolidated' 'Data' 'Index'
+		String			Content
+			Description
+				|Content type identifier
+		String			Comment
+			Description
+				|Optional description of the log type
+		String			Digest
+			Description
+				|Digest Algorithm
+		Binary			LastDigest
+			Description
+				|Final value of last log
+		Struct Delta	Delta
+			Description
+				|If populated, this is a delta log.
+
+	Structure Delta
+		String			Parent
+			Description
+				|Filename of master log this is a delta to
+		String			Previous
+			Description
+				|Filename of previous delta log				 
+
+	Structure IndexTerm
+		String			Type
+			Description
+				|Key under which index term is listed
+		String			Term
+			Description
+				|Data associated with key
+
+	Structure Final
+		Binary			Digest
+			Description
+				|Digest of this log up to but not including this record
+
+	Structure Terminal
+		Struct IndexIndex	Indexes
+			Multiple
+			Description
+				|Location of index records for specified key(s)
+
+	Structure IndexIndex
+		String			Key
+			Description
+				|Key under which index term is listed
+		Integer			Offset
+			Description
+				|Location in file at which offset occurs
+
+	Structure Index
+		String			Key
+			Description
+				|Key that is indexed
+		Struct IndexEntry Entries
+			Multiple
+			Description
+				|List of occurrences of the specified index term.	
+
+	Structure IndexEntry
+		String			Data
+			Description
+				|Data associated with key
+		Integer			Offset
+			Multiple
+			Description
+				|Location in file at which offset occurs

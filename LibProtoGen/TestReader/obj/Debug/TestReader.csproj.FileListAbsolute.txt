@@ -1,0 +1,18 @@
+C:\Users\Phillip\Visual Studio 2010\Projects\ProtoGen\TestReader\bin\Debug\TestReader.dll
+C:\Users\Phillip\Visual Studio 2010\Projects\ProtoGen\TestReader\bin\Debug\TestReader.pdb
+C:\Users\Phillip\Visual Studio 2010\Projects\ProtoGen\TestReader\bin\Debug\Goedel.Protocol.dll
+C:\Users\Phillip\Visual Studio 2010\Projects\ProtoGen\TestReader\bin\Debug\Goedel.Protocol.pdb
+C:\Users\Phillip\Visual Studio 2010\Projects\ProtoGen\TestReader\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Phillip\Visual Studio 2010\Projects\ProtoGen\TestReader\obj\Debug\TestReader.dll
+C:\Users\Phillip\Visual Studio 2010\Projects\ProtoGen\TestReader\obj\Debug\TestReader.pdb
+C:\Users\Phillip\Visual Studio 2010\Projects\ProtoGen\TestReader\bin\Debug\Goedel.Protocol_Accessor.dll
+C:\Users\Phillip\Visual Studio 2010\Projects\ProtoGen\TestReader\bin\Debug\Goedel.Protocol_Accessor.pdb
+C:\Users\Phillip\Code\Goedel\Goedel.Protocol\TestReader\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Phillip\Code\Goedel\Goedel.Protocol\TestReader\obj\Debug\TestReader.dll
+C:\Users\Phillip\Code\Goedel\Goedel.Protocol\TestReader\obj\Debug\TestReader.pdb
+C:\Users\Phillip\Code\Goedel\Goedel.Protocol\TestReader\bin\Debug\TestReader.dll
+C:\Users\Phillip\Code\Goedel\Goedel.Protocol\TestReader\bin\Debug\TestReader.pdb
+C:\Users\Phillip\Code\Goedel\Goedel.Protocol\TestReader\bin\Debug\Goedel.Protocol.dll
+C:\Users\Phillip\Code\Goedel\Goedel.Protocol\TestReader\bin\Debug\Goedel.Protocol.pdb
+C:\Users\Phillip\Code\Goedel\Goedel.Protocol\TestReader\bin\Debug\Goedel.Protocol_Accessor.dll
+C:\Users\Phillip\Code\Goedel\Goedel.Protocol\TestReader\bin\Debug\Goedel.Protocol_Accessor.pdb

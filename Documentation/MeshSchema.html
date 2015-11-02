@@ -1,0 +1,883 @@
+﻿<!-- <!DOCTYPE html>
+<html>
+<head>
+<title></title>
+</head>
+<body> -->
+
+
+
+<h1>MeshItem</h1>
+<!-- Protocol description here -->
+
+<h2>MeshItem Transactions</h2>
+
+<!-- List of Transactions here as H3 entries -->
+
+
+<h2>MeshItem Messages</h2>
+<!-- List of Messages here as H3 entries -->
+
+
+
+<h2>MeshItem Structures</h2>
+<!-- List of Structures here as H3 entries -->
+
+<h3>Structure: Entry</h3>
+
+
+<dl>
+<dt>Identifier :</dt><dd>String [0..1]   <p>
+Globally unique identifier that remains constant for the lifetime of the 
+entry.
+</p>
+</dd>
+</dl>
+
+
+<h3>Structure: SignedProfile</h3>
+
+<p>
+Contains a signed profile entry
+</p>
+
+<dl>
+<dt>Identifier :</dt><dd>String [0..1]   <p>
+Globally unique identifier that remains constant for the lifetime of the 
+entry.
+</p>
+</dd>
+<dt>SignedData :</dt><dd>JoseWebSignature [0..1]   <p>
+The signed profile
+</p>
+</dd>
+</dl>
+
+
+<h3>Structure: SignedDeviceProfile</h3>
+
+<p>
+Contains a signed device profile
+</p>
+
+<dl>
+<dt>Identifier :</dt><dd>String [0..1]   <p>
+Globally unique identifier that remains constant for the lifetime of the 
+entry.
+</p>
+</dd>
+<dt>SignedData :</dt><dd>JoseWebSignature [0..1]   <p>
+The signed profile
+</p>
+</dd>
+</dl>
+
+
+<h3>Structure: SignedMasterProfile</h3>
+
+<p>
+Contains a signed Personal master profile
+</p>
+
+<dl>
+<dt>Identifier :</dt><dd>String [0..1]   <p>
+Globally unique identifier that remains constant for the lifetime of the 
+entry.
+</p>
+</dd>
+<dt>SignedData :</dt><dd>JoseWebSignature [0..1]   <p>
+The signed profile
+</p>
+</dd>
+</dl>
+
+
+<h3>Structure: SignedPersonalProfile</h3>
+
+<p>
+Contains a signed Personal current profile
+</p>
+
+<dl>
+<dt>Identifier :</dt><dd>String [0..1]   <p>
+Globally unique identifier that remains constant for the lifetime of the 
+entry.
+</p>
+</dd>
+<dt>SignedData :</dt><dd>JoseWebSignature [0..1]   <p>
+The signed profile
+</p>
+</dd>
+</dl>
+
+
+<h3>Structure: SignedApplicationProfile</h3>
+
+<p>
+Contains a signed device profile
+</p>
+
+<dl>
+<dt>Identifier :</dt><dd>String [0..1]   <p>
+Globally unique identifier that remains constant for the lifetime of the 
+entry.
+</p>
+</dd>
+<dt>SignedData :</dt><dd>JoseWebSignature [0..1]   <p>
+The signed profile
+</p>
+</dd>
+</dl>
+
+
+<h3>Structure: EncryptedProfile</h3>
+
+<p>
+Contains an encrypted profile entry
+</p>
+
+<dl>
+<dt>Identifier :</dt><dd>String [0..1]   <p>
+Globally unique identifier that remains constant for the lifetime of the 
+entry.
+</p>
+</dd>
+<dt>EncryptedData :</dt><dd>JoseWebEncryption [0..1]   <p>
+The signed and encrypted profile
+</p>
+</dd>
+</dl>
+
+
+<h3>Structure: Profile</h3>
+
+<p>
+Parent class from which all profile types are derrived
+</p>
+
+<dl>
+<dt>Identifier :</dt><dd>String [0..1]   <p>
+Globally unique identifier that remains constant for the lifetime of the 
+entry.
+</p>
+</dd>
+<dt>Names :</dt><dd>String [0..Many]   <p>
+Fingerprints of index terms for profile retrieval. The use of the fingerprint
+of the name rather than the name itself is a precaution against enumeration
+attacks and other forms of abuse.
+</p>
+</dd>
+<dt>Updated :</dt><dd>DateTime [0..1]   <p>
+The time instant the profile was last modified.
+</p>
+</dd>
+<dt>NotaryToken :</dt><dd>String [0..1]   <p>
+A Uniform Notary Token providing evidence that a signature
+was performed after the notary token was created.
+</p>
+</dd>
+</dl>
+
+
+<h3>Structure: MasterProfile</h3>
+
+<p>
+Describes the long term parameters associated with a personal profile.
+</p>
+
+<dl>
+<dt>Identifier :</dt><dd>String [0..1]   <p>
+Globally unique identifier that remains constant for the lifetime of the 
+entry.
+</p>
+</dd>
+<dt>Names :</dt><dd>String [0..Many]   <p>
+Fingerprints of index terms for profile retrieval. The use of the fingerprint
+of the name rather than the name itself is a precaution against enumeration
+attacks and other forms of abuse.
+</p>
+</dd>
+<dt>Updated :</dt><dd>DateTime [0..1]   <p>
+The time instant the profile was last modified.
+</p>
+</dd>
+<dt>NotaryToken :</dt><dd>String [0..1]   <p>
+A Uniform Notary Token providing evidence that a signature
+was performed after the notary token was created.
+</p>
+</dd>
+<dt>MasterSignatureKey :</dt><dd>PublicKey [0..1]   <p>
+The root of trust for the Personal PKI, the public key of the PMSK 
+is presented as a self-signed X.509v3 certificate with Certificate 
+Signing use enabled. The PMSK is used to sign certificates for the 
+PMEK, POSK and PKEK keys.
+</p>
+</dd>
+<dt>MasterEscrowKeys :</dt><dd>PublicKey [0..Many]   <p>
+A Personal Profile MAY contain one or more PMEK keys to enable escrow 
+of private keys used for stored data. 
+</p>
+</dd>
+<dt>OnlineSignatureKeys :</dt><dd>PublicKey [0..Many]   <p>
+A Personal profile contains at least one POSK which is used to sign 
+device administration application profiles.
+</p>
+</dd>
+</dl>
+
+
+<h3>Structure: PersonalProfile</h3>
+
+<p>
+Describes the current applications and devices connected to a 
+personal master profile.
+</p>
+
+<dl>
+<dt>Identifier :</dt><dd>String [0..1]   <p>
+Globally unique identifier that remains constant for the lifetime of the 
+entry.
+</p>
+</dd>
+<dt>Names :</dt><dd>String [0..Many]   <p>
+Fingerprints of index terms for profile retrieval. The use of the fingerprint
+of the name rather than the name itself is a precaution against enumeration
+attacks and other forms of abuse.
+</p>
+</dd>
+<dt>Updated :</dt><dd>DateTime [0..1]   <p>
+The time instant the profile was last modified.
+</p>
+</dd>
+<dt>NotaryToken :</dt><dd>String [0..1]   <p>
+A Uniform Notary Token providing evidence that a signature
+was performed after the notary token was created.
+</p>
+</dd>
+<dt>SignedMasterProfile :</dt><dd>SignedMasterProfile [0..1]   <p>
+The corresponding master profile. 
+The profile MUST be signed by the PMSK.
+</p>
+</dd>
+<dt>Devices :</dt><dd>SignedDeviceProfile [0..Many]   <p>
+The set of device profiles connected to the profile.
+The profile MUST be signed by the DSK in the profile.
+</p>
+</dd>
+<dt>Applications :</dt><dd>ApplicationProfileEntry [0..Many]   <p>
+Application profiles connected to this profile.
+</p>
+</dd>
+</dl>
+
+
+<h3>Structure: ApplicationProfileEntry</h3>
+
+
+<dl>
+<dt>Identifier :</dt><dd>String [0..1]   <p>
+The unique identifier of the application
+</p>
+</dd>
+<dt>Type :</dt><dd>String [0..1]   <p>
+The application type
+</p>
+</dd>
+<dt>Friendly :</dt><dd>String [0..1]   <p>
+Optional friendly name identifying the application.
+</p>
+</dd>
+<dt>SignID :</dt><dd>String [0..Many]   <p>
+List of devices authorized to sign application profiles
+</p>
+</dd>
+<dt>DecryptID :</dt><dd>String [0..Many]   <p>
+List of devices authorized to read private parts of application 
+profiles					
+</p>
+</dd>
+</dl>
+
+
+<h3>Structure: DeviceProfile</h3>
+
+<p>
+Describes a mesh device.
+</p>
+
+<dl>
+<dt>Identifier :</dt><dd>String [0..1]   <p>
+Globally unique identifier that remains constant for the lifetime of the 
+entry.
+</p>
+</dd>
+<dt>Names :</dt><dd>String [0..Many]   <p>
+Fingerprints of index terms for profile retrieval. The use of the fingerprint
+of the name rather than the name itself is a precaution against enumeration
+attacks and other forms of abuse.
+</p>
+</dd>
+<dt>Updated :</dt><dd>DateTime [0..1]   <p>
+The time instant the profile was last modified.
+</p>
+</dd>
+<dt>NotaryToken :</dt><dd>String [0..1]   <p>
+A Uniform Notary Token providing evidence that a signature
+was performed after the notary token was created.
+</p>
+</dd>
+<dt>Description :</dt><dd>String [0..1]   <p>
+Description of the device
+</p>
+</dd>
+<dt>DeviceSignatureKey :</dt><dd>PublicKey [0..1]   <p>
+Key used to sign certificates for the DAK and DEK. The fingerprint of
+the DSK is the UniqueID of the Device Profile
+</p>
+</dd>
+<dt>DeviceAuthenticationKey :</dt><dd>PublicKey [0..1]   <p>
+Key used to authenticate requests made by the device.
+</p>
+</dd>
+<dt>DeviceEncryptiontionKey :</dt><dd>PublicKey [0..1]   <p>
+Key used to pass encrypted data to the device such as a
+DeviceUseEntry
+</p>
+</dd>
+</dl>
+
+
+<h3>Structure: DevicePrivateProfile</h3>
+
+<p>
+Private portion of device encryption profile. 
+</p>
+
+<dl>
+<dt>DeviceSignatureKey :</dt><dd>Key [0..1]   <p>
+Private portion of the DeviceSignatureKey
+</p>
+</dd>
+<dt>DeviceAuthenticationKey :</dt><dd>Key [0..1]   <p>
+Private portion of the DeviceAuthenticationKey
+</p>
+</dd>
+<dt>DeviceEncryptiontionKey :</dt><dd>Key [0..1]   <p>
+Private portion of the DeviceEncryptiontionKey
+</p>
+</dd>
+</dl>
+
+
+<h3>Structure: ApplicationProfile</h3>
+
+<p>
+Parent class from which all application profiles inherit.
+</p>
+
+<dl>
+<dt>Identifier :</dt><dd>String [0..1]   <p>
+Globally unique identifier that remains constant for the lifetime of the 
+entry.
+</p>
+</dd>
+<dt>Names :</dt><dd>String [0..Many]   <p>
+Fingerprints of index terms for profile retrieval. The use of the fingerprint
+of the name rather than the name itself is a precaution against enumeration
+attacks and other forms of abuse.
+</p>
+</dd>
+<dt>Updated :</dt><dd>DateTime [0..1]   <p>
+The time instant the profile was last modified.
+</p>
+</dd>
+<dt>NotaryToken :</dt><dd>String [0..1]   <p>
+A Uniform Notary Token providing evidence that a signature
+was performed after the notary token was created.
+</p>
+</dd>
+<dt>EncryptedData :</dt><dd>JoseWebEncryption [0..1]   <p>
+Encrypted application data
+</p>
+</dd>
+<dt>Entries :</dt><dd>DeviceEntry [0..Many]   <p>
+Per device information.
+</p>
+</dd>
+</dl>
+
+
+<h3>Structure: DeviceEntry</h3>
+
+<p>
+Contains the device specific data for an application.
+</p>
+
+<dl>
+<dt>UDF :</dt><dd>String [0..1]   <p>
+Fingerprint of the device for which this entry is
+made
+</p>
+</dd>
+<dt>Protocol :</dt><dd>String [0..1]   <p>
+Tag for distinguishing between multiple entries per device.
+for example S/MIME and OpenPGP keys.
+</p>
+</dd>
+<dt>EncryptedKey :</dt><dd>Binary [0..1]   <p>
+Encrypted key for this device
+</p>
+</dd>
+<dt>SignatureKey :</dt><dd>PublicKey [0..1]   <p>
+Per device signature key
+</p>
+</dd>
+<dt>AuthenticationKey :</dt><dd>PublicKey [0..1]   <p>
+Per device authentication key
+</p>
+</dd>
+</dl>
+
+
+<h3>Structure: PasswordProfile</h3>
+
+<p>
+Stores usernames and passwords
+</p>
+
+<dl>
+<dt>Identifier :</dt><dd>String [0..1]   <p>
+Globally unique identifier that remains constant for the lifetime of the 
+entry.
+</p>
+</dd>
+<dt>Names :</dt><dd>String [0..Many]   <p>
+Fingerprints of index terms for profile retrieval. The use of the fingerprint
+of the name rather than the name itself is a precaution against enumeration
+attacks and other forms of abuse.
+</p>
+</dd>
+<dt>Updated :</dt><dd>DateTime [0..1]   <p>
+The time instant the profile was last modified.
+</p>
+</dd>
+<dt>NotaryToken :</dt><dd>String [0..1]   <p>
+A Uniform Notary Token providing evidence that a signature
+was performed after the notary token was created.
+</p>
+</dd>
+<dt>EncryptedData :</dt><dd>JoseWebEncryption [0..1]   <p>
+Encrypted application data
+</p>
+</dd>
+<dt>Entries :</dt><dd>DeviceEntry [0..Many]   <p>
+Per device information.
+</p>
+</dd>
+</dl>
+
+
+<h3>Structure: PasswordProfilePrivate</h3>
+
+
+<dl>
+<dt>Entries :</dt><dd>PasswordEntry [0..Many]   <p>
+[TBS]</p>
+</dd>
+</dl>
+
+
+<h3>Structure: PasswordEntry</h3>
+
+<p>
+Username password entry for a single site
+</p>
+
+<dl>
+<dt>Sites :</dt><dd>String [0..Many]   <p>
+DNS name of site *.example.com matches www.example.com
+etc.
+</p>
+</dd>
+<dt>Username :</dt><dd>String [0..1]   <p>
+Case sensitive username
+</p>
+</dd>
+<dt>Password :</dt><dd>String [0..1]   <p>
+Case sensitive password.
+</p>
+</dd>
+</dl>
+
+
+<h3>Structure: MailProfile</h3>
+
+<p>
+Public profile describes mail receipt policy. Private describes
+Sending policy
+</p>
+
+<dl>
+<dt>Identifier :</dt><dd>String [0..1]   <p>
+Globally unique identifier that remains constant for the lifetime of the 
+entry.
+</p>
+</dd>
+<dt>Names :</dt><dd>String [0..Many]   <p>
+Fingerprints of index terms for profile retrieval. The use of the fingerprint
+of the name rather than the name itself is a precaution against enumeration
+attacks and other forms of abuse.
+</p>
+</dd>
+<dt>Updated :</dt><dd>DateTime [0..1]   <p>
+The time instant the profile was last modified.
+</p>
+</dd>
+<dt>NotaryToken :</dt><dd>String [0..1]   <p>
+A Uniform Notary Token providing evidence that a signature
+was performed after the notary token was created.
+</p>
+</dd>
+<dt>EncryptedData :</dt><dd>JoseWebEncryption [0..1]   <p>
+Encrypted application data
+</p>
+</dd>
+<dt>Entries :</dt><dd>DeviceEntry [0..Many]   <p>
+Per device information.
+</p>
+</dd>
+<dt>EncryptionPGP :</dt><dd>PublicKey [0..1]   <p>
+The current OpenPGP encryption key
+</p>
+</dd>
+<dt>EncryptionSMIME :</dt><dd>PublicKey [0..1]   <p>
+The current S/MIME encryption key
+</p>
+</dd>
+</dl>
+
+
+<h3>Structure: MailProfilePrivate</h3>
+
+
+<dl>
+<dt>Connections :</dt><dd>Connection [0..Many]   <p>
+Mail protocol connections associated with this profile.
+</p>
+</dd>
+<dt>OpenPGPKey :</dt><dd>Key [0..1]   <p>
+Current OpenPGP decryption key
+</p>
+</dd>
+<dt>OpenSMIMEKey :</dt><dd>Key [0..1]   <p>
+Current S/MIME decryption key
+</p>
+</dd>
+</dl>
+
+
+<h3>Structure: NetworkProfile</h3>
+
+<p>
+Describes the network profile to follow
+</p>
+
+<dl>
+<dt>Identifier :</dt><dd>String [0..1]   <p>
+Globally unique identifier that remains constant for the lifetime of the 
+entry.
+</p>
+</dd>
+<dt>Names :</dt><dd>String [0..Many]   <p>
+Fingerprints of index terms for profile retrieval. The use of the fingerprint
+of the name rather than the name itself is a precaution against enumeration
+attacks and other forms of abuse.
+</p>
+</dd>
+<dt>Updated :</dt><dd>DateTime [0..1]   <p>
+The time instant the profile was last modified.
+</p>
+</dd>
+<dt>NotaryToken :</dt><dd>String [0..1]   <p>
+A Uniform Notary Token providing evidence that a signature
+was performed after the notary token was created.
+</p>
+</dd>
+<dt>EncryptedData :</dt><dd>JoseWebEncryption [0..1]   <p>
+Encrypted application data
+</p>
+</dd>
+<dt>Entries :</dt><dd>DeviceEntry [0..Many]   <p>
+Per device information.
+</p>
+</dd>
+</dl>
+
+
+<h3>Structure: NetworkProfilePrivate</h3>
+
+<p>
+Describes the network profile to follow
+</p>
+
+<dl>
+<dt>Sites :</dt><dd>String [0..Many]   <p>
+DNS name of sites to which profile applies *.example.com matches www.example.com
+etc.		
+</p>
+</dd>
+<dt>DNS :</dt><dd>Connection [0..Many]   <p>
+DNS Resolution Services
+</p>
+</dd>
+<dt>Prefix :</dt><dd>String [0..Many]   <p>
+DNS prefixes to search
+</p>
+</dd>
+<dt>CTL :</dt><dd>Binary [0..1]   <p>
+Certificate Trust List giving WebPKI roots to trust
+</p>
+</dd>
+<dt>WebPKI :</dt><dd>String [0..Many]   <p>
+List of UDF fingerprints of keys making up the trust roots
+to be accepted for Web PKI purposes.
+</p>
+</dd>
+</dl>
+
+
+<h3>Structure: EscrowEntry</h3>
+
+<p>
+Contains escrowed data
+</p>
+
+<dl>
+<dt>Identifier :</dt><dd>String [0..1]   <p>
+Globally unique identifier that remains constant for the lifetime of the 
+entry.
+</p>
+</dd>
+<dt>EncryptedData :</dt><dd>JoseWebEncryption [0..1]   <p>
+[TBS]</p>
+</dd>
+</dl>
+
+
+<h3>Structure: OfflineEscrowEntry</h3>
+
+<p>
+Contains data escrowed using the offline escrow mechanism.
+</p>
+
+<dl>
+<dt>Identifier :</dt><dd>String [0..1]   <p>
+Globally unique identifier that remains constant for the lifetime of the 
+entry.
+</p>
+</dd>
+<dt>EncryptedData :</dt><dd>JoseWebEncryption [0..1]   <p>
+[TBS]</p>
+</dd>
+</dl>
+
+
+<h3>Structure: OnlineEscrowEntry</h3>
+
+<p>
+Contains data escrowed using the online escrow mechanism.
+</p>
+
+<dl>
+<dt>Identifier :</dt><dd>String [0..1]   <p>
+Globally unique identifier that remains constant for the lifetime of the 
+entry.
+</p>
+</dd>
+<dt>EncryptedData :</dt><dd>JoseWebEncryption [0..1]   <p>
+[TBS]</p>
+</dd>
+</dl>
+
+
+<h3>Structure: EscrowedKeySet</h3>
+
+<p>
+A set of escrowed keys.
+</p>
+
+<dl>
+<dt>PrivateKeys :</dt><dd>Key [0..Many]   <p>
+The escrowed keys.
+</p>
+</dd>
+</dl>
+
+
+<h3>Structure: Connection</h3>
+
+<p>
+Describes network connection parameters
+</p>
+
+<dl>
+<dt>Name :</dt><dd>String [0..1]   <p>
+DNS Name
+</p>
+</dd>
+<dt>Address :</dt><dd>String [0..1]   <p>
+IP address in customary decimal dot notation (IPv4) or
+hexadecimal notation (IPv6)
+</p>
+</dd>
+<dt>Prefix :</dt><dd>String [0..1]   <p>
+DNS service prefix as described in [!RFC6335]
+</p>
+</dd>
+<dt>Port :</dt><dd>Integer [0..1]   <p>
+TCP Port number
+</p>
+</dd>
+<dt>URI :</dt><dd>String [0..1]   <p>
+Service connection parameters in URI format
+</p>
+</dd>
+<dt>Security :</dt><dd>String [0..Many]   <p>
+Security policy identifier(s)
+</p>
+</dd>
+</dl>
+
+
+<h3>Structure: EncryptedData</h3>
+
+<p>
+Container for JOSE encrypted data and related attributes.
+</p>
+
+<dl>
+<dt>Data :</dt><dd>Binary [0..1]   <p>
+[TBS]</p>
+</dd>
+</dl>
+
+
+<h3>Structure: SignedData</h3>
+
+<p>
+Container for JOSE signed data and related attributes.
+</p>
+
+<dl>
+<dt>Data :</dt><dd>Binary [0..1]   <p>
+[TBS]</p>
+</dd>
+</dl>
+
+
+<h3>Structure: PublicKey</h3>
+
+<p>
+Container for public key pair data
+</p>
+
+<dl>
+<dt>UDF :</dt><dd>String [0..1]   <p>
+UDF fingerprint of the key
+</p>
+</dd>
+<dt>X509Certificate :</dt><dd>Binary [0..1]   <p>
+List of X.509 Certificates
+</p>
+</dd>
+<dt>X509Chain :</dt><dd>Binary [0..Many]   <p>
+X.509 Certificate chain.
+</p>
+</dd>
+<dt>X509CSR :</dt><dd>Binary [0..1]   <p>
+X.509 Certificate Signing Request.
+</p>
+</dd>
+</dl>
+
+
+<h3>Structure: ConnectionRequest</h3>
+
+
+<dl>
+<dt>ParentUDF :</dt><dd>String [0..1]   <p>
+[TBS]</p>
+</dd>
+<dt>Device :</dt><dd>SignedDeviceProfile [0..1]   <p>
+[TBS]</p>
+</dd>
+<dt>BlockToken :</dt><dd>String [0..1]   <p>
+[TBS]</p>
+</dd>
+</dl>
+
+
+<h3>Structure: ConnectionResult</h3>
+
+
+<dl>
+<dt>ParentUDF :</dt><dd>String [0..1]   <p>
+[TBS]</p>
+</dd>
+<dt>Device :</dt><dd>SignedDeviceProfile [0..1]   <p>
+[TBS]</p>
+</dd>
+<dt>BlockToken :</dt><dd>String [0..1]   <p>
+[TBS]</p>
+</dd>
+<dt>Result :</dt><dd>String [0..1]   <p>
+[TBS]</p>
+</dd>
+</dl>
+
+
+<h3>Structure: SignedConnectionRequest</h3>
+
+<p>
+Contains a signed connection request
+</p>
+
+<dl>
+<dt>Identifier :</dt><dd>String [0..1]   <p>
+Globally unique identifier that remains constant for the lifetime of the 
+entry.
+</p>
+</dd>
+<dt>SignedData :</dt><dd>JoseWebSignature [0..1]   <p>
+The signed profile
+</p>
+</dd>
+</dl>
+
+
+<h3>Structure: SignedConnectionResult</h3>
+
+<p>
+Contains a signed connection request
+</p>
+
+<dl>
+<dt>Identifier :</dt><dd>String [0..1]   <p>
+Globally unique identifier that remains constant for the lifetime of the 
+entry.
+</p>
+</dd>
+<dt>SignedData :</dt><dd>JoseWebSignature [0..1]   <p>
+The signed profile
+</p>
+</dd>
+</dl>
+
+
+
+
+
+
+
+<!-- </body>
+</html> -->

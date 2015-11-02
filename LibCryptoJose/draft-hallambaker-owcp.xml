@@ -1,0 +1,558 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd"[
+
+  <!ENTITY RFC1035 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.1035.xml">
+  <!ENTITY RFC2119 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.2119.xml">
+  <!ENTITY RFC2629 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.2629.xml">
+  <!ENTITY RFC5280 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.5280.xml">
+  <!ENTITY RFC3552 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.3552.xml">
+  <!ENTITY RFC3642 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.3642.xml">
+  <!ENTITY RFC4033 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.4033.xml">
+  <!ENTITY RFC4055 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.4055.xml">
+  <!ENTITY RFC4648 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.4648.xml">
+  <!ENTITY RFC5395 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.5395.xml">
+]>
+<?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
+<?rfc strict="yes" ?>
+<?rfc toc="yes"?>
+<?rfc tocdepth="4"?>
+<?rfc symrefs="yes"?>
+<?rfc sortrefs="yes" ?>
+<?rfc compact="yes" ?>
+<?rfc subcompact="no" ?>
+<rfc category="std" docName="draft-hallambaker-owcp-01" ipr="trust200902">
+
+  <front>
+    <title abbrev="Open Web Confirmation Protocol">Open Web Confirmation Protocol (OWCP)</title>
+    <author fullname="Phillip Hallam-Baker" initials="P. M." surname="Hallam-Baker">
+      <organization>Comodo Group Inc.</organization>
+      <address>
+        <email>philliph@comodo.com</email>
+      </address>
+    </author>
+
+    <date day="12" month="July" year="2013" />
+
+    <area>General</area>
+
+    <workgroup>Internet Engineering Task Force</workgroup>
+
+    <keyword>PKIX</keyword>
+
+    <abstract>
+      <t>
+        Open Web Confirmation Protocol (OWCP) is a three party
+        Web Service that supports a transactional second factor
+        confirmation mechanism that provides a superset of the
+        capabilities of traditional second factor authentication
+        schemes.
+      </t>
+    </abstract>
+  </front>
+
+  <middle>
+
+    <section title="Background">
+      <t>
+        Authentication of end users is one of the biggest challenges
+        for Internet and Web security today. Despite an abundance of
+        technology that offers authentication mechanisms that are
+        more robust, more secure and easier to use, the default
+        mechanism for user authentication is the use of usernames
+        and passwords.
+      </t>
+      <t>
+        Unlike traditional schemes, OWCP is designed for implementation
+        on a device that has at least the capabilities of a modern
+        'smartphone'. In particular an OWCP client device must support
+        a display, a means of accepting text input from the user and
+        a connection to the Internet.
+      </t>
+      <t>
+        While mobile devices offering this degree of functionality
+        were rare in 2007, they have since become ubiquitous. It
+        is thus now a practical proposition for a site requiring
+        second factor authentication to support at least a part of
+        its users using a technology that requires this level
+        of capability. Indeed software applications that emulate
+        traditional second factor authentication protocols on
+        such devices have been available for some time.
+      </t>
+      <section title="Second Factor Authentication">
+        <t>
+          Second factor authentication mechanisms offer greater
+          security over the use of passwords alone by combining
+          a first factor (typically a password) with a biometric
+          or proof of possession of a physical token.
+        </t>
+        <t>
+          Traditional second factor authentication techniques
+          have suffered from the need to distribute physical
+          tokens and the difficulty of ensuring that a biometric
+          authentication is presented to a trustworthy terminal.
+        </t>
+        <t>
+          The usability of traditional second factor authentication
+          techniques has been poor or worse. Even the simplest scheme
+          in which the user is required to read in a 'one time use'
+          numeric code from the authentication token device and enter
+          it into a password field. While such operations are relatively
+          simple they require the user to engage in a sequence of
+          operations that bears no necessary or natural relationship
+          to the underlying task for which the authentication is
+          required.
+        </t>
+        <t>
+          Nor does the act of engaging in a traditional second
+          factor scheme offer proof of anything other than that
+          the user was authenticated. Any correspondence between the act of
+          authentication and the purpose for which the
+          authentication was provided must be maintained separately.
+        </t>
+      </section>
+      <section title="Confirmation vs. Authentication">
+        <t>
+          A second factor confirmation service addresses the limitations
+          of traditional second factor authentication schemes.
+        </t>
+        <t>
+          A confirmation service allows the user experience to be precisely
+          matched to the action that the user is attempted. Instead of
+          beinf asked to read a random number from one device and enter
+          it into another, the user is asked if they really want to perform
+          the action for which authentication is requested.
+        </t>
+        <t>
+          A confirmation service offers better accountability for end
+          users than a traditional authentication service.
+          An authentication service only provides an assertion that
+          the user was present. A confirmation service provides an assertion
+          that the user was present and that they confirmed a specific
+          transaction.
+        </t>
+        <t>
+          For example, Alice has been granted access to a machine
+          storing classified data. If an authentication service is
+          used for access control, the authentication service log will
+          only record the dates and times that Alice accessed the
+          system. to find out if Alice accessed a particular file on
+          a particular day it is necessary to consult and correlate
+          both the authentication log of the system and the activity log
+          for the application.
+        </t>
+        <t>
+          If instead a confirmation service is used the confirmation
+          log contains an authenticated record of both the authentication
+          events and the transactions for which the authentication was
+          requested.
+        </t>
+      </section>
+      <section title="Use Scenarios">
+        <t>
+          A confirmation service complements rather than replaces a
+          traditional authentication scheme. Providing a highly secure
+          and convenient means of authenticating requests that carry
+          a high degree of risk mitigates the risk of using convenient
+          but intrinsically low security techniques for other actions.
+        </t>
+
+        <section title="Use in Financial Services">
+          <t>
+            If an attacker is to profit from breaching a
+            an account with a financial service such as a bank or a
+            brokerage they must find a way to move money out of the
+            account. Thus adding bill payment recipients, initiating wire
+            transfers and trading in low volume 'penny stocks' represent
+            high risk activities.
+          </t>
+          <t>
+            For example: Bank of Ethel might permit customers to use a simple
+            username and password scheme to gain access to their account
+            for the purpose of checking their balance or paying bills
+            to existing reciepients but require use of the second factor
+            confirmation device for a high risk transaction such as paying
+            a bill.
+          </t>
+        </section>
+        <section title="Machine Binding">
+          <t>
+            A second factor confirmation service may be combined with
+            a machine level authentication scheme to permit a transparent
+            form of authentication for low risk transactions.
+          </t>
+          <t>
+            For example: Alice stores her low risk authentication credentials
+            (e.g usernames and passwords) using a 'cloud' service. When she
+            wishes to use those credentials an agent on her personal machine
+            fetches credentials from the cloud service as necessary. When Alice
+            wishes to access a site from a different machine she receives a
+            confirmation request on her mobile device to grant access from
+            that machine.
+          </t>
+          <t>
+            Use of such a mechanism is clearly more satisfactory when
+            suitable cryptographic protocols such as SAML or Kerberos are
+            employed to limit the disclosure and hence possible compromise
+            of the credentials. The specification of such protocols is
+            outside the scope of this document.
+          </t>
+        </section>
+        <section title="Tethered Use">
+          <t>
+            Although OWCP is designed for use in a three party scenario,
+            there are situations in which a two party mode may be
+            preferred.
+          </t>
+          <t>
+            For example: Bob is a roadwarrior who requires access to
+            confidential documents stored on his laptop device from
+            anywhere in the world, including locations where Internet
+            access is not possible. To permit access in such circumstances,
+            Bob's OWCP client supports use of a tethered mode in which
+            the mobile device is plugged into his laptop via a USB port.
+          </t>
+          <t>
+            For example: Carol is a network manager of a large computing
+            facility that uses OWCP to authenticate and track all changes
+            to critical resources. Since OWCP is itself a network resource
+            a bootstrap consideration arises: How can Carol confirm her
+            network configuration requests using OWCP when the network itself
+            is down? Support for a tethered mode in which the OWCP device
+            communicates via USB or similar wired protocol allows
+            this use case to be supported.
+          </t>
+          <t>
+            While availability of a tethered mode is clearly essential
+            if OWCP is to be used in certain applications, support for this
+            feature outside the scope of this version of the specification.
+          </t>
+        </section>
+        <section title="Co-Browser">
+          <t>
+            While OWCP is designed for deployment on a secondary device,
+            deployment on the same device as the one for which confirmation
+            is being requested is also possible and can provide
+            security benefits.
+          </t>
+          <t>
+            Modern Web browsers are large and complex with many features
+            such as support for mobile code that are incompatible with
+            a high security environment. Separating the confirmation protocol
+            from the Web Browsing protocol permits implementation in a
+            minimal client designed to permit detailed security analysis.
+            Such a client might be embedded in or support means of secure
+            interaction with a trustworthy operating system component.
+          </t>
+          <t>
+            While this means of deployment does not provide a true second
+            factor confirmation, it is likely to provide a sufficient
+            degree of authentication for many transactions.
+          </t>
+        </section>
+      </section>
+    </section>
+
+    <section title="Description">
+
+      <t>
+        OWCP is a Web Service that permits a Enquirer to request
+        that a User confirm or reject a specified action. If the
+        user responds, the response is signed with a digital signature
+        under a key that is unique to the user account, the client and
+        the device.
+      </t>
+      <section title="Parties">
+        <t>
+          Each OWCP protocol interaction takes place between
+          a connection pair of the following parties:
+        </t>
+        <t>
+          <list>
+            <t hangText="Enquirer">
+              A party that initiates a confirmation request.
+            </t>
+            <t hangText="Broker">
+              A clearing house that stores and forwards requests
+              from Enquirers and responses from Deciders. The
+              Enquirer is only trusted to perform routing
+              filtering and recording of requests and responses.
+              The Enquirer is not trusted with respect to the
+              responses returned.
+            </t>
+            <t>
+              A Enquirer Service MAY impose a use policy on
+              Enquirers, Clients and Users.
+            </t>
+            <t hangText="PKI">
+              Issue and maintenance of Decider Device credentials
+              is a trusted function that is logically independent
+              of the store and forward operation of the Broker.
+            </t>
+            <t hangText="Decider">
+              The Decider interacts with the User and the Enquirer.
+              If Broker policy permits,
+              a User MAY register multiple Devices to serve as
+              confirmation devices for the same account. In this case
+              each Device MUST have a separate signature key.
+            </t>
+            <t hangText="User">
+              The User is the person being asked to grant or refuse
+              confirmation. A User MAY have multiple accounts with
+              multiple Broker Services.
+            </t>
+          </list>
+        </t>
+
+        <figure>
+          <artwork>
+            <![CDATA[
++-------------+         +------------+         +-------------+
+|  Enquirer   | <-----> |   Broker   | <------ |   Decider   |
++-------------+         +------------+         +-------------+
+                               ^                      ^
+                               |                      |
+                               V                      V
+                        +------------+         +-------------+
+                        |     PKI    |         |     User    |
+                        +------------+         +-------------+
+]]>
+          </artwork>
+        </figure>
+        <section title="Accounts">
+          <t>
+            Users and Enquirers are identified by means of an
+            account identifier. The display presentation of an
+            account identifier is the
+            form of an RFC2822 email address identifier without
+            the enclosing angle braces, for example:
+          </t>
+          <t>
+            alice@example.com
+          </t>
+          <t>
+            The account identifier is used by the User when
+            registering the use of the confirmation service
+            with a Broker.
+          </t>
+          <section title="Broker Discovery">
+            <t>
+              [Uses DNS SRV]
+            </t>
+
+          </section>
+          <section title="Third Party Domain Names">
+            <t>
+              OWCP requires that the provider of a Broker service
+              have control over the DNS names used in the corresponding
+              account identifiers.
+            </t>
+            <t>
+              It is thus not possible for any party other than the holder
+              of the domain name example.com to provide OWCP service for
+              alice@example.com. If Alice, the holder of the alice@example.com
+              email address wishes to use an OWCP confirmation
+              service, her choices are limited to persuading the holder
+              of example.com to provide an OWCP Broker service and
+              allow her to use her email identifier or registering with
+              another confirmation service provider and accepting
+              a different identifier.
+            </t>
+            <t>
+              Requiring a strong binding between the Broker service
+              and the account identifier permits the use of the
+              account identifier to be used as a proxy for authorization.
+            </t>
+          </section>
+          <section title="Open and Closed Services">
+            <t>
+              An OWCP service MAY be Open or Closed. An Open service provider
+              provides OWCP service to the general public. A Closed service
+              provider only provides service to a specific community.
+            </t>
+            <t>
+              For example: An Internet Service Provider or DNS Registrar might
+              provide an open OWCP service as a part of their standard service offering
+              to customers. An employer might operate a closed OWCP service
+              to be used for company business.
+            </t>
+          </section>
+        </section>
+      </section>
+    </section>
+    
+
+
+<section title="ConfirmationBroker">
+<!-- Protocol description here -->
+
+<section title="ConfirmationBroker Transactions">
+
+<!-- List of Transactions here as H3 entries -->
+<section title="Confirmation">
+
+<ul>
+<li>Request: ConfirmationRequest</li>
+<li>Response: ConfirmationResponse</li>
+</ul>
+
+<t>
+Post a request for confirmation to a user.
+</t>
+
+</section>
+<section title="AskStatus">
+
+<ul>
+<li>Request: StatusRequest</li>
+<li>Response: StatusResponse</li>
+</ul>
+
+
+</section>
+<section title="Cancel">
+
+<ul>
+<li>Request: CancelRequest</li>
+<li>Response: CancelResponse</li>
+</ul>
+
+
+</section>
+
+</section>
+<section title="ConfirmationBroker Messages">
+<!-- List of Messages here as H3 entries -->
+
+<section title="Message: ConfirmationRequest">
+
+<t>
+Request a confirmation from a specified user.
+</t>
+<t> <list style="hanging" hangIndent="6">
+<t hangText="Account : String [1..1]   "><vspace />
+The user being asked to provide confirmation.
+</t>
+<t>
+The format of the account identifier is the same as for email,
+i.e. &lt;username&gt;@&lt;domain&gt;
+</t>
+
+<t hangText="Text : String [1..1]   "><vspace />
+[TBS]</t>
+
+<t hangText="Option : String [0..Many]   "><vspace />
+[TBS]</t>
+
+</list></t>
+
+</section>
+<section title="Message: ConfirmationRequest2">
+
+<t> <list style="hanging" hangIndent="6">
+<t hangText="Account : String [1..1]   "><vspace />
+The user being asked to provide confirmation.
+</t>
+<t>
+The format of the account identifier is the same as for email,
+i.e. &lt;username&gt;@&lt;domain&gt;
+</t>
+
+<t hangText="Text : String [1..1]   "><vspace />
+[TBS]</t>
+
+<t hangText="Option : String [0..Many]   "><vspace />
+[TBS]</t>
+
+<t hangText="Test : String [0..1]   "><vspace />
+[TBS]</t>
+
+</list></t>
+
+</section>
+<section title="Message: ConfirmationResponse">
+
+<t> <list style="hanging" hangIndent="6">
+<t hangText="TransactionID : Binary [0..1]   "><vspace />
+[TBS]</t>
+
+</list></t>
+
+</section>
+<section title="Message: StatusRequest">
+
+<t> <list style="hanging" hangIndent="6">
+<t hangText="TransactionID : Binary [1..1]   "><vspace />
+[TBS]</t>
+
+</list></t>
+
+</section>
+<section title="Message: StatusResponse">
+
+<t> <list style="hanging" hangIndent="6">
+<t hangText="Option : String [0..1]   "><vspace />
+[TBS]</t>
+
+</list></t>
+
+</section>
+<section title="Message: CancelRequest">
+
+<t> <list style="hanging" hangIndent="6">
+<t hangText="TransactionID : Binary [1..1]   "><vspace />
+[TBS]</t>
+
+</list></t>
+
+</section>
+<section title="Message: CancelResponse">
+
+<!-- No parameters -->
+
+</section>
+
+</section>
+<section title="ConfirmationBroker Structures">
+<!-- List of Structures here as H3 entries -->
+
+
+</section>
+</section>
+
+
+
+    <section title="Security Considerations">
+      <t>
+        Consider spam control, how do users prevent unwanted
+        requests? (EV accreditatio, filtering at Broker)
+      </t>
+      <t>
+        People deploying OWCP as a means of controlling access to
+        networking infrastructure must consider the bootstrap
+        issue. In particular since OWCP requires Internet access the
+        network administrator must ensure that it is possible to
+        manage the network resources necessary to support an
+        OXCP service when that service is down.
+      </t>
+    </section>
+
+    <section title="IANA Considerations">
+      <t>Request SRV prefix, .well-known suffix</t>
+
+    </section>
+
+  </middle>
+
+
+
+  <back>
+    <references title="Normative References">
+      &RFC1035;
+    </references>
+    <references title="Non Normative References">
+      &RFC5395;
+    </references>
+
+  </back>
+</rfc>
+

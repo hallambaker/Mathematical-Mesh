@@ -1,0 +1,32 @@
+﻿<Page x:Class="Goedel.MeshProfileManager.Dialog_NoEmailFound"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d" 
+      d:DesignHeight="600" d:DesignWidth="800"
+	Title="Dialog_NoEmailFound">
+    <DockPanel>
+        <TextBlock TextWrapping="WrapWithOverflow" FontSize="32" 
+            xml:space="preserve" Margin="25,25,25,0" DockPanel.Dock="Top">No email accounts found.
+</TextBlock>
+        <TextBlock TextWrapping="WrapWithOverflow" FontSize="20" 
+            xml:space="preserve" Margin="25,0,25,25" DockPanel.Dock="Top">Don't worry, you can add them to your profile later.
+
+</TextBlock>
+        <StackPanel>
+
+        <Grid Margin="20,20,20,20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+			<StackPanel Grid.Column="0">
+                <Button  FontSize="20" Width="150" Height="30" 
+                         Click="Action_SkipNoEmail">Skip</Button>
+            </StackPanel>
+		</Grid>
+
+
+        </StackPanel>
+    </DockPanel>
+</Page>

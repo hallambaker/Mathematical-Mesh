@@ -1,0 +1,41 @@
+﻿<Page x:Class="Goedel.MeshProfileManager.Dialog_AskEmail"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d" 
+      d:DesignHeight="600" d:DesignWidth="800"
+	Title="Dialog_AskEmail">
+    <DockPanel>
+        <TextBlock TextWrapping="WrapWithOverflow" FontSize="32" 
+            xml:space="preserve" Margin="25,25,25,0" DockPanel.Dock="Top">Do you want to use the mesh to secure your email?
+</TextBlock>
+        <TextBlock TextWrapping="WrapWithOverflow" FontSize="20" 
+            xml:space="preserve" Margin="25,0,25,25" DockPanel.Dock="Top">Creating a mesh mail profile allows you to secure your email account(s)
+using TLS transport security to encrypt communications between your mail
+client and your mail server(s) and OpenPGP and S/MIME to protect messages
+at the mail servers.
+
+</TextBlock>
+        <StackPanel>
+
+        <Grid Margin="20,20,20,20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="5"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+			<StackPanel Grid.Column="0">
+                <Button  FontSize="20" Width="150" Height="30" 
+                         Click="Action_ConfigureEmail">Yes</Button>
+            </StackPanel>
+			<StackPanel Grid.Column="2">
+                <Button  FontSize="20" Width="150" Height="30" 
+                         Click="Action_SkipEmail">Skip</Button>
+            </StackPanel>
+		</Grid>
+
+
+        </StackPanel>
+    </DockPanel>
+</Page>

@@ -1,0 +1,572 @@
+﻿<!-- <!DOCTYPE html>
+<html>
+<head>
+<title></title>
+</head>
+<body> -->
+
+
+
+<h1>MeshProtocol</h1>
+<!-- Protocol description here -->
+
+<h2>MeshProtocol Transactions</h2>
+
+<!-- List of Transactions here as H3 entries -->
+<h3>Hello</h3>
+
+<ul>
+<li>Request: HelloRequest</li>
+<li>Response: HelloResponse</li>
+</ul>
+
+<p>
+Report service and version information. 
+</p>
+
+
+<h3>ValidateAccount</h3>
+
+<ul>
+<li>Request: ValidateRequest</li>
+<li>Response: ValidateResponse</li>
+</ul>
+
+<p>
+Request validation of a proposed name for a new account.
+</p>
+<p>
+For validation of a user's account name during profile creation.
+</p>
+
+
+<h3>CreateAccount</h3>
+
+<ul>
+<li>Request: CreateRequest</li>
+<li>Response: CreateResponse</li>
+</ul>
+
+<p>
+Request creation of a new mesh account.
+</p>
+<p>
+Unlike a profile, a mesh account is specific to a particular 
+Mesh portal. A mesh account must be created and accepted before
+a profile can be published.
+</p>
+
+
+<h3>Publish</h3>
+
+<ul>
+<li>Request: PublishRequest</li>
+<li>Response: PublishResponse</li>
+</ul>
+
+<p>
+Publish a profile or key escrow entry to the mesh.
+</p>
+<p>
+
+</p>
+
+
+<h3>Get</h3>
+
+<ul>
+<li>Request: GetRequest</li>
+<li>Response: GetResponse</li>
+</ul>
+
+<p>
+Search for data in the mesh that matches a set of keys.
+</p>
+
+
+<h3>GetRecords</h3>
+
+<ul>
+<li>Request: GetRequest</li>
+<li>Response: GetRecordsResponse</li>
+</ul>
+
+
+
+<h3>Transfer</h3>
+
+<ul>
+<li>Request: TransferRequest</li>
+<li>Response: TransferResponse</li>
+</ul>
+
+<p>
+Request a bulk transfer of the log between the specified transaction
+identifiers. Requires appropriate authorization
+</p>
+<p>
+[Not currently implemented]
+</p>
+
+
+<h3>Status</h3>
+
+<ul>
+<li>Request: StatusRequest</li>
+<li>Response: StatusResponse</li>
+</ul>
+
+<p>
+Request the current status of the mesh as seen by the portal to which it
+is directed.
+</p>
+<p>
+The response to the status request contains the last signed checkpoint
+and proof chains for each of the peer portals that have been checkpointed.
+</p>
+<p>
+[Not currently implemented]
+</p>
+
+
+<h3>ConnectStart</h3>
+
+<ul>
+<li>Request: ConnectStartRequest</li>
+<li>Response: ConnectStartResponse</li>
+</ul>
+
+<p>
+Request connection of a new device to a mesh profile
+</p>
+
+
+<h3>ConnectStatus</h3>
+
+<ul>
+<li>Request: ConnectStatusRequest</li>
+<li>Response: ConnectStatusResponse</li>
+</ul>
+
+<p>
+Request status of pending connection request of a new device 
+to a mesh profile
+</p>
+
+
+<h3>ConnectPending</h3>
+
+<ul>
+<li>Request: ConnectPendingRequest</li>
+<li>Response: ConnectPendingResponse</li>
+</ul>
+
+<p>
+Request status of pending connection request of a new device 
+to a mesh profile
+</p>
+
+
+<h3>ConnectComplete</h3>
+
+<ul>
+<li>Request: ConnectCompleteRequest</li>
+<li>Response: ConnectCompleteResponse</li>
+</ul>
+
+<p>
+Request status of pending connection request of a new device 
+to a mesh profile
+</p>
+
+
+
+
+<h2>MeshProtocol Messages</h2>
+<!-- List of Messages here as H3 entries -->
+
+<h3>Message: MeshRequest</h3>
+
+<!-- No parameters -->
+
+
+<h3>Message: MeshResponse</h3>
+
+<!-- No parameters -->
+
+
+<h3>Message: HelloRequest</h3>
+
+<!-- No parameters -->
+
+
+<h3>Message: HelloResponse</h3>
+
+<dl>
+<dt>Version :</dt><dd>Version [0..1]   <p>
+Enumerates the protocol versions supported
+</p>
+</dd>
+<dt>Alternates :</dt><dd>Version [0..Many]   <p>
+Enumerates alternate protocol version(s) supported
+</p>
+</dd>
+</dl>
+
+
+<h3>Message: ValidateRequest</h3>
+
+<dl>
+<dt>Account :</dt><dd>String [0..1]   <p>
+Account name requested
+</p>
+</dd>
+<dt>Reserve :</dt><dd>Boolean [0..1]   <p>
+If true, request a reservation for the specified account name.
+Note that the service is not obliged to honor reservation 
+requests.
+</p>
+</dd>
+<dt>Language :</dt><dd>String [0..Many]   <p>
+List of ISO language codes in order of preference. For creating
+explanatory text.
+</p>
+</dd>
+</dl>
+
+
+<h3>Message: ValidateResponse</h3>
+
+<dl>
+<dt>Valid :</dt><dd>Boolean [0..1]   <p>
+[TBS]</p>
+</dd>
+<dt>Minimum :</dt><dd>Integer [0..1]   <p>
+[TBS]</p>
+</dd>
+<dt>InvalidCharacters :</dt><dd>String [0..1]   <p>
+A list of characters from the requested account that the service 
+does not accept in account names.
+</p>
+</dd>
+<dt>Reason :</dt><dd>String [0..1]   <p>
+Text explaining the reason an account name was rejected.
+</p>
+</dd>
+</dl>
+
+
+<h3>Message: CreateRequest</h3>
+
+<dl>
+<dt>Account :</dt><dd>String [0..1]   <p>
+Account name requested
+</p>
+</dd>
+<dt>Profile :</dt><dd>SignedProfile [0..1]   <p>
+User profile of account to be created. The profile MUST specify the 
+account being created as an account.
+</p>
+</dd>
+</dl>
+
+
+<h3>Message: CreateResponse</h3>
+
+<!-- No parameters -->
+
+
+<h3>Message: PublishRequest</h3>
+
+<dl>
+<dt>Entry :</dt><dd>Entry [0..1]   <p>
+Signed profile to be published.
+</p>
+</dd>
+</dl>
+
+
+<h3>Message: PublishResponse</h3>
+
+<!-- No parameters -->
+
+
+<h3>Message: GetRequest</h3>
+
+<dl>
+<dt>Identifier :</dt><dd>String [0..1]   <p>
+Lookup by profile ID
+</p>
+</dd>
+<dt>Account :</dt><dd>String [0..1]   <p>
+Lookup by Account ID
+</p>
+</dd>
+<dt>KeyValues :</dt><dd>KeyValue [0..Many]   <p>
+List of KeyValue pairs specifying the conditions to be met
+</p>
+</dd>
+<dt>NotBefore :</dt><dd>DateTime [0..1]   <p>
+[TBS]</p>
+</dd>
+<dt>NotOnOrAfter :</dt><dd>DateTime [0..1]   <p>
+[TBS]</p>
+</dd>
+<dt>Multiple :</dt><dd>Boolean [0..1]   <p>
+If true return multiple responses if available
+</p>
+</dd>
+</dl>
+
+
+<h3>Message: GetResponse</h3>
+
+<dl>
+<dt>Entries :</dt><dd>Entry [0..Many]   <p>
+List of entries matching the request.
+</p>
+</dd>
+</dl>
+
+
+<h3>Message: GetRecordsResponse</h3>
+
+<dl>
+<dt>DataItems :</dt><dd>DataItem [0..Many]   <p>
+List of mesh data records matching the request.
+</p>
+</dd>
+</dl>
+
+
+<h3>Message: TransferRequest</h3>
+
+<dl>
+<dt>NotBefore :</dt><dd>DateTime [0..1]   <p>
+</p>
+</dd>
+<dt>Until :</dt><dd>DateTime [0..1]   <p>
+</p>
+</dd>
+<dt>After :</dt><dd>String [0..1]   <p>
+</p>
+</dd>
+<dt>MaxEntries :</dt><dd>Integer [0..1]   <p>
+</p>
+</dd>
+<dt>MaxBytes :</dt><dd>Integer [0..1]   <p>
+</p>
+</dd>
+</dl>
+
+
+<h3>Message: TransferResponse</h3>
+
+<!-- No parameters -->
+
+
+<h3>Message: StatusRequest</h3>
+
+<!-- No parameters -->
+
+
+<h3>Message: StatusResponse</h3>
+
+<dl>
+<dt>LastWriteTime :</dt><dd>DateTime [0..1]   <p>
+Time that the last write update was made to the Mesh
+</p>
+</dd>
+<dt>LastCheckpointTime :</dt><dd>DateTime [0..1]   <p>
+Time that the last Mesh checkpoint was calculated.
+</p>
+</dd>
+<dt>NextCheckpointTime :</dt><dd>DateTime [0..1]   <p>
+Time at which the next Mesh checkpoint should be calculated.
+</p>
+</dd>
+<dt>CheckpointValue :</dt><dd>String [0..1]   <p>
+Last checkpoint value.
+</p>
+</dd>
+</dl>
+
+
+<h3>Message: ConnectStartRequest</h3>
+
+<p>
+
+</p>
+<dl>
+<dt>SignedRequest :</dt><dd>SignedConnectionRequest [0..1]   <p>
+
+</p>
+</dd>
+<dt>AccountID :</dt><dd>String [0..1]   <p>
+
+</p>
+</dd>
+</dl>
+
+
+<h3>Message: ConnectStartResponse</h3>
+
+<p>
+
+</p>
+<dl>
+<dt>SignedConnectionResult :</dt><dd>String [0..1]   <p>
+
+</p>
+</dd>
+</dl>
+
+
+<h3>Message: ConnectStatusRequest</h3>
+
+<p>
+
+</p>
+<dl>
+<dt>AccountID :</dt><dd>String [0..1]   <p>
+
+</p>
+</dd>
+<dt>DeviceID :</dt><dd>String [0..1]   <p>
+
+</p>
+</dd>
+</dl>
+
+
+<h3>Message: ConnectStatusResponse</h3>
+
+<p>
+
+</p>
+<dl>
+<dt>Result :</dt><dd>SignedConnectionResult [0..1]   <p>
+
+</p>
+</dd>
+</dl>
+
+
+<h3>Message: ConnectPendingRequest</h3>
+
+<p>
+
+</p>
+<dl>
+<dt>AccountID :</dt><dd>String [0..1]   <p>
+
+</p>
+</dd>
+</dl>
+
+
+<h3>Message: ConnectPendingResponse</h3>
+
+<p>
+
+</p>
+<dl>
+<dt>Pending :</dt><dd>SignedConnectionRequest [0..Many]   <p>
+
+</p>
+</dd>
+</dl>
+
+
+<h3>Message: ConnectCompleteRequest</h3>
+
+<p>
+
+</p>
+<dl>
+<dt>Result :</dt><dd>SignedConnectionResult [0..1]   <p>
+
+</p>
+</dd>
+<dt>AccountID :</dt><dd>String [0..1]   <p>
+
+</p>
+</dd>
+</dl>
+
+
+<h3>Message: ConnectCompleteResponse</h3>
+
+<p>
+
+</p>
+<!-- No parameters -->
+
+
+
+
+<h2>MeshProtocol Structures</h2>
+<!-- List of Structures here as H3 entries -->
+
+<h3>Structure: Version</h3>
+
+
+<dl>
+<dt>Major :</dt><dd>Integer [0..1]   <p>
+Major version number of the service protocol. A higher
+</p>
+</dd>
+<dt>Minor :</dt><dd>Integer [0..1]   <p>
+Minor version number of the service protocol.
+</p>
+</dd>
+<dt>Encodings :</dt><dd>Encoding [0..Many]   <p>
+Enumerates alternative encodings (e.g. ASN.1, XML, JSON-B) if
+supported by the server
+</p>
+</dd>
+<dt>URI :</dt><dd>String [0..Many]   <p>
+The preferred URI for this service. This MAY be used to effect
+a redirect in the case that a service moves.
+</p>
+</dd>
+</dl>
+
+
+<h3>Structure: Encoding</h3>
+
+
+<dl>
+<dt>ID :</dt><dd>String [0..Many]   <p>
+The IANA encoding name
+</p>
+</dd>
+<dt>Dictionary :</dt><dd>String [0..Many]   <p>
+For encodings that employ a named dictionary for tag or data
+compression, the name of the dictionary as defined by that 
+encoding scheme. 			
+</p>
+</dd>
+</dl>
+
+
+<h3>Structure: KeyValue</h3>
+
+
+<dl>
+<dt>Key :</dt><dd>String [0..1]   <p>
+[TBS]</p>
+</dd>
+<dt>Value :</dt><dd>String [0..1]   <p>
+[TBS]</p>
+</dd>
+</dl>
+
+
+
+
+
+
+
+<!-- </body>
+</html> -->

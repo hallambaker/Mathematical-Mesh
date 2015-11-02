@@ -1,0 +1,70 @@
+﻿Class Goedel.Protocol Configure
+
+	TopType Cluster
+		Id		ID ClusterHandle
+		
+
+	TopType Interface
+		Id		ID InterfaceHandle
+		Is Choice
+			HTTP
+			HTTPS
+			UDP
+		Options Options
+			ClusterID					Member			Single
+			Address						Address			Multiple
+						
+	Type UDP
+		Domain	String
+		Port	Integer
+
+
+	Type HTTP
+		Domain	String
+		Port	Integer
+
+	Type HTTPS
+		Domain	String
+		Port	Integer
+
+	Type Address
+		IP		String
+
+	// The service definition
+
+	TopType Service
+		Id		ID ServiceHandle
+		Server	String
+		Options Options
+			ClusterID					Member			Single
+			Secrets						Seed			Multiple
+			Interfaces					On				Multiple
+			Log							Log				Single
+			Store						Store			Single
+			Configuration				Configuration	Single
+			Publish						Publish			Multiple
+
+	Type Publish
+		Id			REF ServiceHandle
+		Priority	Integer	
+		Weight		Integer 
+
+	Type On
+		Id		REF InterfaceHandle
+
+	Type Member
+		Id		REF ClusterHandle
+
+	Type Configuration
+		File	String
+
+	Type Log
+		File	String
+
+	Type Store
+		File	String
+
+	Type Seed
+		Data	String
+		Policy String
+

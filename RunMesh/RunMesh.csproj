@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{BFFBF220-972F-4E71-8EBC-F92AEC7AC178}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Meshtest</RootNamespace>
+    <AssemblyName>Meshtest</AssemblyName>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'RaspberryPi|AnyCPU'">
+    <OutputPath>bin\RaspberryPi\</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AsClient.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="PreBuild.bat" />
+    <None Include="Tmesh.jlog" />
+    <None Include="Tportal.jlog" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LibProtoGen\LibProtoGen.csproj">
+      <Project>{24419f2d-f425-4e0f-a0ea-9d3e7a57e12f}</Project>
+      <Name>ProtoGen.Protocol</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LibCrypto\LibCrypto.csproj">
+      <Project>{1babc0e9-d939-4de5-82a3-16752104b14b}</Project>
+      <Name>CryptoLibNG</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LibDebug\LibDebug.csproj">
+      <Project>{a8090b80-d658-45f6-bda1-4f9dfd2b976f}</Project>
+      <Name>Debug</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LibCryptoJose\LibCryptoJose.csproj">
+      <Project>{59f7f1a5-abbc-4830-b7a3-140fd8e4c369}</Project>
+      <Name>CryptoJoseLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LibMesh\LibMesh.csproj">
+      <Project>{0d8dd801-65d2-497c-8379-2d6adf3867c3}</Project>
+      <Name>MeshLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LibMeshService\LibMeshService.csproj">
+      <Project>{f6343f1b-d03d-4965-9113-5120a8054e9e}</Project>
+      <Name>MeshServiceLib</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>call "$(ProjectDir)\PreBuild.bat"</PreBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
