@@ -29,6 +29,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Documentation", "Documentat
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
 		VWDPort = "50401"
+		SlnRelativePath = "Documentation\"
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibCrypto", "LibCrypto\LibCrypto.csproj", "{1BABC0E9-D939-4DE5-82A3-16752104B14B}"

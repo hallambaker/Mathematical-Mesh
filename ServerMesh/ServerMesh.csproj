@@ -9,9 +9,10 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MeshServer</RootNamespace>
     <AssemblyName>MeshServer</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -50,7 +51,47 @@
     <None Include="App.config" />
     <None Include="PreBuild.bat" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LibCryptoJose\LibCryptoJose.csproj">
+      <Project>{59f7f1a5-abbc-4830-b7a3-140fd8e4c369}</Project>
+      <Name>LibCryptoJose</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LibCrypto\LibCrypto.csproj">
+      <Project>{1babc0e9-d939-4de5-82a3-16752104b14b}</Project>
+      <Name>LibCrypto</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LibDebug\LibDebug.csproj">
+      <Project>{a8090b80-d658-45f6-bda1-4f9dfd2b976f}</Project>
+      <Name>LibDebug</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LibLogFile\LibLogFile.csproj">
+      <Project>{81e30b95-c59d-4a04-925e-85877fd37fdd}</Project>
+      <Name>LibLogFile</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LibMeshService\LibMeshService.csproj">
+      <Project>{f6343f1b-d03d-4965-9113-5120a8054e9e}</Project>
+      <Name>LibMeshService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LibMesh\LibMesh.csproj">
+      <Project>{0d8dd801-65d2-497c-8379-2d6adf3867c3}</Project>
+      <Name>LibMesh</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LibProtoGenServer\LibProtoGenServer.csproj">
+      <Project>{e8fff3e2-3f29-4d2b-9008-a4aee115078a}</Project>
+      <Name>LibProtoGenServer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LibProtoGen\LibProtoGen.csproj">
+      <Project>{24419f2d-f425-4e0f-a0ea-9d3e7a57e12f}</Project>
+      <Name>LibProtoGen</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>powershell PackAll  Private $(TargetPath)</PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>call "$(ProjectDir)\Prebuild.bat"</PreBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

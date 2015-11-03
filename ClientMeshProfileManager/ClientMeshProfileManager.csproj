@@ -140,29 +140,37 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Comodo\ProtoGen\ProtoGen.Protocol\ProtoGen.Protocol.csproj">
-      <Project>{24419f2d-f425-4e0f-a0ea-9d3e7a57e12f}</Project>
-      <Name>ProtoGen.Protocol</Name>
+    <ProjectReference Include="..\LibCryptoJose\LibCryptoJose.csproj">
+      <Project>{59f7f1a5-abbc-4830-b7a3-140fd8e4c369}</Project>
+      <Name>LibCryptoJose</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Generators\Trojan\TrojanLib\TrojanLib.csproj">
-      <Project>{e5a8acb3-08f7-4bc9-9297-67da400a740b}</Project>
-      <Name>TrojanLib</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\CryptoLibNG\CryptoLibNG.csproj">
+    <ProjectReference Include="..\LibCrypto\LibCrypto.csproj">
       <Project>{1babc0e9-d939-4de5-82a3-16752104b14b}</Project>
-      <Name>CryptoLibNG</Name>
+      <Name>LibCrypto</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Debug\Debug.csproj">
+    <ProjectReference Include="..\LibDebug\LibDebug.csproj">
       <Project>{a8090b80-d658-45f6-bda1-4f9dfd2b976f}</Project>
-      <Name>Debug</Name>
+      <Name>LibDebug</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MeshLib\MeshLib.csproj">
-      <Project>{0d8dd801-65d2-497c-8379-2d6adf3867c3}</Project>
-      <Name>MeshLib</Name>
+    <ProjectReference Include="..\LibLogFile\LibLogFile.csproj">
+      <Project>{81e30b95-c59d-4a04-925e-85877fd37fdd}</Project>
+      <Name>LibLogFile</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MeshService\MeshServiceLib.csproj">
+    <ProjectReference Include="..\LibMeshService\LibMeshService.csproj">
       <Project>{f6343f1b-d03d-4965-9113-5120a8054e9e}</Project>
-      <Name>MeshServiceLib</Name>
+      <Name>LibMeshService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LibMesh\LibMesh.csproj">
+      <Project>{0d8dd801-65d2-497c-8379-2d6adf3867c3}</Project>
+      <Name>LibMesh</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LibProtoGen\LibProtoGen.csproj">
+      <Project>{24419f2d-f425-4e0f-a0ea-9d3e7a57e12f}</Project>
+      <Name>LibProtoGen</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LibTrojan\LibTrojan.csproj">
+      <Project>{e5a8acb3-08f7-4bc9-9297-67da400a740b}</Project>
+      <Name>LibTrojan</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

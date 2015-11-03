@@ -5,6 +5,70 @@
 	<meta charset="utf-8" />
 </head>
 <body>
+    <h1>Using SSH and Git on Windows</h1>
+
+    <h2>Why this is hard</h2>
+
+    <p>Configuration of SSH involves a bootstrap problem. You want to 
+    authenticate to a device. But before you can authenticate to the device 
+    you have to log into the device so you need to register your public key.
+    Which means you have to authenticate to the device.</p>
+
+    <p>
+        Some information resources:
+    </p>
+    <ul>
+
+
+        <li>
+            <a href="https://help.github.com/articles/generating-ssh-keys/">
+                Github guide to denerating SSH keys - only one to mention
+                ssh-agent.
+            </a>
+        </li>
+
+        <li>
+            <a href="http://stackoverflow.com/questions/31550993/git-ssh-in-visual-studio-2015">Discussion
+            of using SSH from inside a Visual studio plugin.</a>
+        </li>
+
+        <li>
+            <a href="http://randomswdev.blogspot.it/2015/07/adding-ssh-support-to-visual-studio.html">On
+            how to compile</a>
+        </li>
+        <li>
+            <a href="https://github.com/PROGrand/git2-msvstfs-ssh-patch">Patch for SSH public
+            key auth</a>
+        </li>
+
+        <li>
+            <a href=""></a>
+        </li>
+
+        <li>
+            <a href=""></a>
+        </li>
+
+    </ul>
+
+    <h1>My configuration</h1>
+
+
+    <p>I have a git repository on my dev machine and connect up to a Linux boxen
+    (Orac) which contains the gitolite server repository.</p>
+
+    <p>Access is currently by either public key or password but I am working to remove
+    the need for the password.</p>
+
+    <h1>Automating via the Mesh</h1>
+
+    <p>The Mesh could easily populate the directories used by SSH. But much better would
+    be an extension inside the SSH server could pull information from the Mesh direct
+    and validate the key chains.</p>
+
+    <p>Best of all would be to modify the client as well so that this can push out the
+    necessary credentials with the initial access attempt.</p>
+
 
 </body>
 </html>

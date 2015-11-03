@@ -67,20 +67,20 @@
     <Compile Include="UDF.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Comodo\ProtoGen\ProtoGen.Protocol\ProtoGen.Protocol.csproj">
-      <Project>{24419f2d-f425-4e0f-a0ea-9d3e7a57e12f}</Project>
-      <Name>ProtoGen.Protocol</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Debug\Debug.csproj">
-      <Project>{a8090b80-d658-45f6-bda1-4f9dfd2b976f}</Project>
-      <Name>Debug</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Algorithms.asn2" />
     <None Include="PKIX.asn2" />
     <None Include="PreBuild.bat" />
     <None Include="ToDo.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LibDebug\LibDebug.csproj">
+      <Project>{a8090b80-d658-45f6-bda1-4f9dfd2b976f}</Project>
+      <Name>LibDebug</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LibProtoGen\LibProtoGen.csproj">
+      <Project>{24419f2d-f425-4e0f-a0ea-9d3e7a57e12f}</Project>
+      <Name>LibProtoGen</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
