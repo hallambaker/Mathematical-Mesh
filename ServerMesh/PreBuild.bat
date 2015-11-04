@@ -4,7 +4,7 @@ SETLOCAL
 
 cd %~dp0
 
-Trojan MeshSampleClient.gui Generated
+
 
 exit /b 0
 
