@@ -23,6 +23,8 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
+    <DocumentationFile>
+    </DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -61,7 +63,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Configure.gdl" />
-    <None Include="Copy of Configure.gdl" />
     <None Include="PreBuild.bat" />
   </ItemGroup>
   <ItemGroup>

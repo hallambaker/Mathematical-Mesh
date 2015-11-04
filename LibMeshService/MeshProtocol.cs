@@ -1,7 +1,7 @@
 ﻿
 //  Test
 //  
-//  This file was automatically generated at 10/30/2015 4:45:34 PM
+//  This file was automatically generated at 11/4/2015 4:59:58 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -9,7 +9,7 @@
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
-//      Copyright : Copyright ©  2012
+//      Copyright : Copyright ©  2011
 //  
 //  Build Platform: Win32NT 6.2.9200.0
 //  
@@ -359,10 +359,11 @@ namespace Goedel.Mesh {
 			get {return WellKnown;}
 			}
 
-        /// <summary>
-        /// The caller session context.
-        /// </summary>
-        public JPCSession Session;
+		JPCSession _JPCSession;
+		public virtual JPCSession JPCSession {
+			get {return _JPCSession;}
+			set {_JPCSession = value;}
+			}
 
 
         /// <summary>
@@ -468,13 +469,18 @@ namespace Goedel.Mesh {
     /// </summary>		
     public partial class MeshServiceClient : MeshService {
  		
-		public JPCSession JPCSession;
+		JPCRemoteSession JPCRemoteSession;
+		public override JPCSession JPCSession {
+			get {return JPCRemoteSession;}
+			set {JPCRemoteSession = value as JPCRemoteSession; }
+			}
+
 
         /// <summary>
 		/// Create a client connection to the specified service.
         /// </summary>	
-		public MeshServiceClient (JPCSession JPCSession) {
-			this.JPCSession = JPCSession;
+		public MeshServiceClient (JPCRemoteSession JPCRemoteSession) {
+			this.JPCRemoteSession = JPCRemoteSession;
 			}
 
 
@@ -484,13 +490,8 @@ namespace Goedel.Mesh {
         public override HelloResponse Hello (
                 HelloRequest Request) {
 
-			// Get or re-establish the HTTP client connection
-
-			// Serialize the request
-
-			// Send the request
-
-			// Get, deserialize the response
+            var ResponseData = JPCRemoteSession.Post("Hello", Request);
+            var Response = HelloResponse.FromTagged(ResponseData);
 
             return null;
             }
@@ -501,13 +502,8 @@ namespace Goedel.Mesh {
         public override ValidateResponse ValidateAccount (
                 ValidateRequest Request) {
 
-			// Get or re-establish the HTTP client connection
-
-			// Serialize the request
-
-			// Send the request
-
-			// Get, deserialize the response
+            var ResponseData = JPCRemoteSession.Post("ValidateAccount", Request);
+            var Response = ValidateResponse.FromTagged(ResponseData);
 
             return null;
             }
@@ -518,13 +514,8 @@ namespace Goedel.Mesh {
         public override CreateResponse CreateAccount (
                 CreateRequest Request) {
 
-			// Get or re-establish the HTTP client connection
-
-			// Serialize the request
-
-			// Send the request
-
-			// Get, deserialize the response
+            var ResponseData = JPCRemoteSession.Post("CreateAccount", Request);
+            var Response = CreateResponse.FromTagged(ResponseData);
 
             return null;
             }
@@ -535,13 +526,8 @@ namespace Goedel.Mesh {
         public override PublishResponse Publish (
                 PublishRequest Request) {
 
-			// Get or re-establish the HTTP client connection
-
-			// Serialize the request
-
-			// Send the request
-
-			// Get, deserialize the response
+            var ResponseData = JPCRemoteSession.Post("Publish", Request);
+            var Response = PublishResponse.FromTagged(ResponseData);
 
             return null;
             }
@@ -552,13 +538,8 @@ namespace Goedel.Mesh {
         public override GetResponse Get (
                 GetRequest Request) {
 
-			// Get or re-establish the HTTP client connection
-
-			// Serialize the request
-
-			// Send the request
-
-			// Get, deserialize the response
+            var ResponseData = JPCRemoteSession.Post("Get", Request);
+            var Response = GetResponse.FromTagged(ResponseData);
 
             return null;
             }
@@ -569,13 +550,8 @@ namespace Goedel.Mesh {
         public override GetRecordsResponse GetRecords (
                 GetRequest Request) {
 
-			// Get or re-establish the HTTP client connection
-
-			// Serialize the request
-
-			// Send the request
-
-			// Get, deserialize the response
+            var ResponseData = JPCRemoteSession.Post("GetRecords", Request);
+            var Response = GetRecordsResponse.FromTagged(ResponseData);
 
             return null;
             }
@@ -586,13 +562,8 @@ namespace Goedel.Mesh {
         public override TransferResponse Transfer (
                 TransferRequest Request) {
 
-			// Get or re-establish the HTTP client connection
-
-			// Serialize the request
-
-			// Send the request
-
-			// Get, deserialize the response
+            var ResponseData = JPCRemoteSession.Post("Transfer", Request);
+            var Response = TransferResponse.FromTagged(ResponseData);
 
             return null;
             }
@@ -603,13 +574,8 @@ namespace Goedel.Mesh {
         public override StatusResponse Status (
                 StatusRequest Request) {
 
-			// Get or re-establish the HTTP client connection
-
-			// Serialize the request
-
-			// Send the request
-
-			// Get, deserialize the response
+            var ResponseData = JPCRemoteSession.Post("Status", Request);
+            var Response = StatusResponse.FromTagged(ResponseData);
 
             return null;
             }
@@ -620,13 +586,8 @@ namespace Goedel.Mesh {
         public override ConnectStartResponse ConnectStart (
                 ConnectStartRequest Request) {
 
-			// Get or re-establish the HTTP client connection
-
-			// Serialize the request
-
-			// Send the request
-
-			// Get, deserialize the response
+            var ResponseData = JPCRemoteSession.Post("ConnectStart", Request);
+            var Response = ConnectStartResponse.FromTagged(ResponseData);
 
             return null;
             }
@@ -637,13 +598,8 @@ namespace Goedel.Mesh {
         public override ConnectStatusResponse ConnectStatus (
                 ConnectStatusRequest Request) {
 
-			// Get or re-establish the HTTP client connection
-
-			// Serialize the request
-
-			// Send the request
-
-			// Get, deserialize the response
+            var ResponseData = JPCRemoteSession.Post("ConnectStatus", Request);
+            var Response = ConnectStatusResponse.FromTagged(ResponseData);
 
             return null;
             }
@@ -654,13 +610,8 @@ namespace Goedel.Mesh {
         public override ConnectPendingResponse ConnectPending (
                 ConnectPendingRequest Request) {
 
-			// Get or re-establish the HTTP client connection
-
-			// Serialize the request
-
-			// Send the request
-
-			// Get, deserialize the response
+            var ResponseData = JPCRemoteSession.Post("ConnectPending", Request);
+            var Response = ConnectPendingResponse.FromTagged(ResponseData);
 
             return null;
             }
@@ -671,13 +622,8 @@ namespace Goedel.Mesh {
         public override ConnectCompleteResponse ConnectComplete (
                 ConnectCompleteRequest Request) {
 
-			// Get or re-establish the HTTP client connection
-
-			// Serialize the request
-
-			// Send the request
-
-			// Get, deserialize the response
+            var ResponseData = JPCRemoteSession.Post("ConnectComplete", Request);
+            var Response = ConnectCompleteResponse.FromTagged(ResponseData);
 
             return null;
             }
@@ -690,15 +636,18 @@ namespace Goedel.Mesh {
     /// </summary>		
     public partial class MeshServiceHost : Goedel.Protocol.JPCHost {
 
+		/// <summary>
+		/// Dispatch object for service.
+		/// </summary>	
+		public MeshService Service;
 
-		public override Goedel.Protocol.JSONObject Dispatch(Goedel.Protocol.JPCService JPCService, 
-								Goedel.Protocol.JSONReader JSONReader) {
-			var Service = JPCService as MeshService ;
-			if (Service == null) throw new InvalidHostService("Wrong service class specified.") ;
-			return Dispatch (Service, JSONReader);
-			}
-
-		public Goedel.Protocol.JSONObject Dispatch(MeshService  Service, 
+		/// <summary>
+		/// Dispatch object request in specified authentication context.
+		/// </summary>			
+        /// <param name="Session">The client context.</param>
+        /// <param name="JSONReader">Reader for data object.</param>
+        /// <returns>The response object returned by the corresponding dispatch.</returns>
+		public override Goedel.Protocol.JSONObject Dispatch(JPCSession  Session,  
 								Goedel.Protocol.JSONReader JSONReader) {
 
 			JSONReader.StartObject ();

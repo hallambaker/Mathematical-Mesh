@@ -4,33 +4,72 @@ using Goedel.Protocol;
 using Goedel.Mesh;
 
 namespace Goedel.Mesh {
+
+    /// <summary>
+    /// Abstract interface to a service that supports the MeshPortal API calls.
+    /// </summary>
     public abstract class MeshPortal {
-        protected string Store = "mesh.jlog";
-        protected string Portal = "portal.jlog";
-        protected string ServiceName = "prismproof.org";
 
-        public PublicMeshServiceHost MeshServiceHost;
-        public MeshService MeshService;
-        //public JPCSession Session;
+        public const string ProtocolID = "mathematicalmesh";
 
-        public virtual MeshService GetService(string Service) {
-            return GetService(Service, null);
+
+        /// <summary>
+        /// Return a MeshService object for the named portal service.
+        /// </summary>
+        /// <param name="Portal">Address of the portal service.</param>
+        /// <returns>Mesh service object for API access to the service.</returns>
+        public virtual MeshService GetService(string Portal) {
+            return GetService(Portal, null);
             }
         public abstract MeshService GetService(string Service, string Account);
 
-
+        /// <summary>
+        /// May be set to the default MeshPortal by a calling application.
+        /// </summary>
         public static MeshPortal Default;
 
-
+        /// <summary>
+        /// May be set to the default MeshService by a calling application.
+        /// </summary>
+        public MeshService MeshService;
         }
 
 
-    public class MeshPortalDirect: MeshPortal {
+    public abstract class MeshLocalPortal : MeshPortal{
+        /// <summary>
+        /// File name for local access to the mesh store.
+        /// </summary>
+        protected string Store = "mesh.jlog";
+
+        /// <summary>
+        /// File name for local access to the portal store.
+        /// </summary>
+        protected string Portal = "portal.jlog";
+
+        /// <summary>
+        /// The service name (default to prismproof.org)
+        /// </summary>
+        protected string ServiceName = "prismproof.org";
+
+        /// <summary>
+        /// The local PublicMeshServiceHost.
+        /// </summary>
+        public PublicMeshServiceHost MeshServiceHost;
+        }
+
+
+
+    public class MeshPortalDirect: MeshLocalPortal {
         public MeshPortalDirect () {
-            MeshServiceHost = new PublicMeshServiceHost(ServiceName, Store, Portal);
+            Init(Store, Portal);
             }
 
         public MeshPortalDirect(string Store, string Portal) {
+            Init(Store, Portal);
+            }
+
+
+        void Init (string Store, string Portal) {
             MeshServiceHost = new PublicMeshServiceHost(ServiceName, Store, Portal);
             }
 
@@ -42,18 +81,13 @@ namespace Goedel.Mesh {
 
         }
 
-    public class MeshPortalLocal : MeshPortal {
-        JHost JHost;
+    public class MeshPortalLocal : MeshLocalPortal {
         public MeshPortalLocal() {
             MeshServiceHost = new PublicMeshServiceHost(ServiceName, Store, Portal);
-            JHost = new JHost();
-            var HostService = JHost.AddService(MeshServiceHost);
-            var HostPort = JHost.AddHTTP(ServiceName);
-            HostService.AddPort(HostPort);
             }
 
         public override MeshService GetService(string Service, string Account) {
-            var Session = new RemoteSession(ServiceName, Account);
+            var Session = new LocalRemoteSession(MeshServiceHost, ServiceName, Account);
             MeshService = new MeshServiceClient(Session);
             return MeshService;
             }
@@ -63,7 +97,7 @@ namespace Goedel.Mesh {
     public class MeshPortalRemote : MeshPortal {
 
         public override MeshService GetService(string Service, string Account) {
-            var Session = new RemoteSession(Service, Account);
+            var Session = new WebRemoteSession(ProtocolID, Service, Account);
             MeshService = new MeshServiceClient(Session);
             return MeshService;
             }

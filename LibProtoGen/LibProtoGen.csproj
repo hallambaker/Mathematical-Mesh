@@ -52,7 +52,6 @@
     <Compile Include="ByteBuffer.cs" />
     <Compile Include="ChallengeResponse.cs" />
     <Compile Include="Cryoptography.cs" />
-    <Compile Include="JHost.cs" />
     <Compile Include="JPC.cs" />
     <Compile Include="JSONAWriter.cs" />
     <Compile Include="JSONBWriter.cs" />
@@ -67,8 +66,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security.cs" />
     <Compile Include="Ticket.cs" />
-    <Compile Include="WebServiceClient.cs" />
-    <Compile Include="WebServiceServer.cs" />
+    <Compile Include="WebRemoteSession.cs" />
     <Compile Include="WrapWriter.cs" />
   </ItemGroup>
   <ItemGroup>

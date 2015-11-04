@@ -44,7 +44,7 @@ namespace Goedel.Mesh {
 
         public MeshServiceSession(PublicMeshServiceHost Host, JPCSession Session) {
             this.Host = Host;
-            this.Session = Session;
+            //this.JPCSession = Session;
             }
 
 

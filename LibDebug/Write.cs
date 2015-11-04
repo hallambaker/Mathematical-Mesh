@@ -2,6 +2,10 @@
 
 
 namespace Goedel.Debug {
+
+    /// <summary>
+    /// Collection of static methods that provide debugging utilities.
+    /// </summary>
     public partial class Trace {
 
 
