@@ -12,27 +12,60 @@ namespace Goedel.MeshConnect {
 
     public partial class ConnectProfile {
 
+        /// <summary>
+        /// Placeholder for device fingerprint.
+        /// </summary>
         public string UDF = "ProfileUDF TBS";
 
+        /// <summary>
+        /// Placeholder for device name.
+        /// </summary>
         public string Device1 = "SecondDevice";
+
+        /// <summary>
+        /// Placeholder for device description
+        /// </summary>
         public string Device1Description = "Second profile device";
 
+        /// <summary>
+        /// Account name to connect to
+        /// </summary>
         public string Account;
+
+        /// <summary>
+        /// Mesh portal to connect to
+        /// </summary>
         public string Portal;
 
-        public int AccountIndex;
-
+        /// <summary>
+        /// The device profile
+        /// </summary>
         public SignedDeviceProfile DevProfile;
-        public SignedPersonalProfile SignedCurrentProfile;
 
+        /// <summary>
+        /// The personal profile
+        /// </summary>
+        public SignedPersonalProfile SignedPersonalProfile;
 
+        /// <summary>
+        /// Reporting string used to inform user input is invalid.
+        /// </summary>
         public string InvalidInput;
 
+        /// <summary>
+        /// Registry location for pending requests.
+        /// </summary>
         string Pending = "ConnectPending";
 
-        public SignedDeviceProfile ThisDevice;
 
+        /// <summary>
+        /// The mesh client
+        /// </summary>
         public MeshClient MeshClient;
+
+        /// <summary>
+        /// Initialize the class, called once when dialog is created.
+        /// </summary>
         public override void Initialize() {
             MeshPortal.Default = new MeshPortalDirect();
 
@@ -46,7 +79,13 @@ namespace Goedel.MeshConnect {
             DevProfile.ToRegistry(Pending);
             }
 
-
+        /// <summary>
+        /// Create a MeshClient for the specified portal and request the specified 
+        /// account.
+        /// </summary>
+        /// <param name="Portal">Mesh Portal.</param>
+        /// <param name="Account">Mesh Account.</param>
+        /// <returns>UDF of the personal profile.</returns>
         public string GetAccount (string Portal, string Account) {
 
             // Attempt to connect to portal and connect to account.
@@ -55,18 +94,24 @@ namespace Goedel.MeshConnect {
             this.Account = Account;
 
             MeshClient = new MeshClient(Portal, Account);
-            SignedCurrentProfile = MeshClient.GetPersonalProfile();
-            if (SignedCurrentProfile == null) return null;
-            return SignedCurrentProfile.UDF;
+            SignedPersonalProfile = MeshClient.GetPersonalProfile();
+            if (SignedPersonalProfile == null) return null;
+            return SignedPersonalProfile.UDF;
             }
 
-
+        /// <summary>
+        /// Post the connection request
+        /// </summary>
+        /// <returns></returns>
         public bool PostConnect () {
             var Pending = MeshClient.ConnectRequest(DevProfile);
             return true;
             }
 
-
+        /// <summary>
+        /// Attempt to complete the connection
+        /// </summary>
+        /// <returns></returns>
         public bool CompleteConnect () {
             var Connected = MeshClient.ConnectStatus(DevProfile.UDF);
 
