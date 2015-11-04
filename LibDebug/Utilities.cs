@@ -6,6 +6,12 @@ using System.Text;
 namespace Goedel.Debug {
     public partial class Trace {
 
+        /// <summary>
+        /// Convert string of hex data to byte array. [why isn't this in 
+        /// the conversions library?)
+        /// </summary>
+        /// <param name="input">String to convert.</param>
+        /// <returns>Byte array constructed from the specified value.</returns>
         public static byte[] HexToByte(string input) {
             int Valid = 0;
             bool High = true;

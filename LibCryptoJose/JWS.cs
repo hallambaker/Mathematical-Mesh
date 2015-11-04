@@ -36,6 +36,12 @@ namespace Goedel.Cryptography.Jose {
 
             }
 
+        /// <summary>
+        /// Sign the specified data with the specified key and construct
+        /// the corresponding JWS object.
+        /// </summary>
+        /// <param name="Data">Data to be signed</param>
+        /// <param name="SignatureKey">The signature key</param>
         public JoseWebSignature(byte [] Data, KeyPair SignatureKey) {
             Payload = Data;
 
@@ -56,21 +62,25 @@ namespace Goedel.Cryptography.Jose {
 
             }
 
-        public bool CorruptVerify(string UDF, KeyPair Public) {
-            Throw.IfNot(UDF == Public.UDF, "Key does not match fingerprint");
 
-            Signature[1] = (byte) (Signature[1] ^ 0xff);
-
-            return Verify(Public);
-            }
-
-
+        /// <summary>
+        /// Verify the specified signature.
+        /// </summary>
+        /// <param name="UDF">The UDF of the purported signature verification key.</param>
+        /// <param name="Public">The public signature verification key.</param>
+        /// <returns>True if verification succeeds, otherwise false.</returns>
         public bool Verify(string UDF, KeyPair Public) {
             Throw.IfNot(UDF == Public.UDF, "Key does not match fingerprint");
 
             return Verify(Public);
             }
 
+
+        /// <summary>
+        /// Verify the specified signature.
+        /// </summary>
+        /// <param name="Public">The public signature verification key.</param>
+        /// <returns>True if verification succeeds, otherwise false.</returns>
         public bool Verify(KeyPair Public) {
             var Verifier = Public.VerificationProvider;
 

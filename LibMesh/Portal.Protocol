@@ -14,8 +14,8 @@
 	Structure Account
 		Description
 			|Entry containing the 
-			|UniqueID is Account-<Name>-<Portal>
-			|Indexed by <Name>, <UserProfileUDF> [Most recent open]
+			|UniqueID is Account[Name]-[Portal]
+			|Indexed by [Name], [UserProfileUDF] [Most recent open]
 		Inherits PortalEntry
 
 		String AccountID
@@ -41,7 +41,7 @@
 		Description
 			|Object containing the list of currently pending device connection requests
 			|for the specified account. 
-			|Unique-ID is ConnectionsPending-<UserProfileUDF>
+			|Unique-ID is ConnectionsPending-[UserProfileUDF]
 		Inherits Account
 		Struct SignedConnectionRequest Requests
 			Multiple

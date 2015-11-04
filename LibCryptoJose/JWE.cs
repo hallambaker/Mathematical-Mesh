@@ -23,14 +23,32 @@ namespace Goedel.Cryptography.Jose {
             set { _BulkAlgorithm = value; }
             }
 
+        /// <summary>
+        /// Construct a JWE encryption object and encrypt the specified data.
+        /// </summary>
+        /// <param name="Data">The data to be encrypted.</param>
         public JoseWebEncryption(byte[] Data) {
             Encrypt(Data);
             }
 
+        /// <summary>
+        /// Construct a JWE encryption object and encrypt the specified data
+        /// using the specified encryption provider.
+        /// </summary>
+        /// <param name="Encryptor">Encryption provider to use.</param>
+        /// <param name="Data">The data to be encrypted.</param>
         public JoseWebEncryption(byte[] Data, CryptoProviderEncryption Encryptor) {
             Encrypt(Data, Encryptor);
             }
 
+
+        /// <summary>
+        /// Construct a JWE encryption object and encrypt the specified data
+        /// and create decryption entries for the specified recipients.
+        /// </summary>
+        /// <param name="Recipients">The recipients to create the 
+        /// decryption blobs for.</param>
+        /// <param name="Data">The data to be encrypted.</param>
         public JoseWebEncryption(byte[] Data, List<Recipient> Recipients) {
             Encrypt(Data);
             this.Recipients = Recipients;
@@ -111,9 +129,6 @@ namespace Goedel.Cryptography.Jose {
         public byte[] Decrypt(KeyPair DecryptionKey) {
             // Read the preheader, get the encryption algorithm
             var PreHeader = Header.From(Protected);
-
-
-
             var Recipient = Find(DecryptionKey.UDF);
             var Exchange = DecryptionKey.ExchangeProviderDecrypt;
             CryptoData.Key = Exchange.Decrypt(Recipient.EncryptedKey);
@@ -121,11 +136,9 @@ namespace Goedel.Cryptography.Jose {
 
             // get the IV
             var Decryptor = CryptoCatalog.Default.GetEncryption(BulkAlgorithm);
-            var Result = Decryptor.Decrypt(CryptoData, CipherText);
 
             // decrypt the data
-
-
+            var Result = Decryptor.Decrypt(CryptoData, CipherText);
             return Result.Data;
             }
 
@@ -142,56 +155,6 @@ namespace Goedel.Cryptography.Jose {
             return Result;
             }
 
-
-
-        ///// <summary>
-        ///// Create a JOSE encryption provider for the specified list of 
-        ///// recipients.
-        ///// </summary>
-        //public JoseWebEncryption(List <Recipient> Recipients) {
-        //    }
-
-
-
-
-
-        ///// <summary>
-        ///// Construct JWE structure from a CryptoData Input
-        ///// </summary>
-        ///// <param name="CryptoData"></param>
-        //public JoseWebEncryption(CryptoData CryptoData) {
-        //    var HeaderProtected = new Header();
-        //    var HeaderUnprotected = new Header();            
-            
-
-
-        //    IV = CryptoData.IV;
-        //    CipherText = CryptoData.Data;
-
-        //    Protected = null;
-        //    Unprotected = null;
-
-        //    }
-
-        ///// <summary>
-        ///// Add a decryption blob for the specified JSON recipient.
-        ///// </summary>
-        ///// <param name="Recipient"></param>
-        //public void Add(Recipient Recipient) {
-        //    Recipients.Add(Recipient);
-        //    }
-
-        ///// <summary>
-        ///// Add a decryption blob for the recipient whose key has the specified UDF
-        ///// fingerprint
-        ///// </summary>
-        ///// <param name="KeyHandle">Key handle of the recipient's key.</param>
-        //public void Add(KeyHandle KeyHandle) {
-        //    var Recipient = new Recipient(KeyHandle);
-        //    Recipients.Add(Recipient);
-        //    }
-
-
         }
 
     /// <summary>
@@ -202,7 +165,7 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
         /// Encrypt to the specified key of the specified profile.
         /// </summary>
-        /// <param name="KeyHandle"></param>
+        /// <param name="KeyPair">KeyPair for the recipient.</param>
         public Recipient(KeyPair KeyPair) {
             Header = new Header();
             Header.kid = KeyPair.UDF;

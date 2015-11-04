@@ -34,21 +34,33 @@ namespace Goedel.Cryptography.Jose {
 
         // Key wrapping modes
 
-
+        /// <summary>
+        /// Encode object as a JSON byte array.
+        /// </summary>
+        /// <returns>The encoded data.</returns>
         public byte[] ToJson() {
             var JSONWriter = new JSONWriter();
             Serialize(JSONWriter);
             return JSONWriter.GetBytes;
             }
 
+        /// <summary>
+        /// Encode object as a JSON-B byte array
+        /// </summary>
+        /// <returns>The encoded data.</returns>
         public byte[] ToJsonB() {
             var JSONWriter = new JSONBWriter();
             Serialize(JSONWriter);
             return JSONWriter.GetBytes;
             }
 
-        public byte[] ToJsonC(Dictionary<string, int> Dict) {
-            var JSONWriter = new JSONCWriter(Dict);
+        /// <summary>
+        /// Encode object as a JSON-C byte array
+        /// </summary>
+        /// <param name="Dictionary">Dictionary for encoding tags.</param>
+        /// <returns>The encoded data.</returns>
+        public byte[] ToJsonC(Dictionary<string, int> Dictionary) {
+            var JSONWriter = new JSONCWriter(Dictionary);
             Serialize(JSONWriter);
             return JSONWriter.GetBytes;
             }

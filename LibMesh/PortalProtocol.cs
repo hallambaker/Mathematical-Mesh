@@ -1,7 +1,7 @@
 ﻿
 //  Test
 //  
-//  This file was automatically generated at 11/3/2015 10:59:23 PM
+//  This file was automatically generated at 11/4/2015 12:15:35 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -350,8 +350,8 @@ namespace Goedel.Mesh {
 	/// <summary>
 	///
 	/// Entry containing the 
-	/// UniqueID is Account-<Name>-<Portal>
-	/// Indexed by <Name>, <UserProfileUDF> [Most recent open]
+	/// UniqueID is Account[Name]-[Portal]
+	/// Indexed by [Name], [UserProfileUDF] [Most recent open]
 	/// </summary>
 	public partial class Account : PortalEntry {
         /// <summary>
@@ -733,7 +733,7 @@ namespace Goedel.Mesh {
 	///
 	/// Object containing the list of currently pending device connection requests
 	/// for the specified account. 
-	/// Unique-ID is ConnectionsPending-<UserProfileUDF>
+	/// Unique-ID is ConnectionsPending-[UserProfileUDF]
 	/// </summary>
 	public partial class ConnectionsPending : Account {
 		/// <summary>
