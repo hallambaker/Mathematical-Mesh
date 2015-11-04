@@ -294,7 +294,7 @@
     <PreBuildEvent>call "$(ProjectDir)\Prebuild.bat"</PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PostBuildEvent>powershell PackAll  Private $(TargetPath) $(ProjectDir)\Actions.cs  Goedel.Registry.dll ProtoGenLibrary.dll CryptolibNG.dll ASNLibrary.dll Goedel.Debug.dll Meshlib.dll Trojanlib.dll LogFileLib.dll</PostBuildEvent>
+    <PostBuildEvent>powershell PackAll  Private $(TargetPath) $(ProjectDir)\Actions.cs  Goedel.Registry.dll ProtoGenLibrary.dll CryptolibNG.dll Goedel.Debug.dll Meshlib.dll Trojanlib.dll LogFileLib.dll</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

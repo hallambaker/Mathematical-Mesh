@@ -67,6 +67,7 @@
     <Compile Include="Security.cs" />
     <Compile Include="Ticket.cs" />
     <Compile Include="WebRemoteSession.cs" />
+    <Compile Include="WebSimpleHost.cs" />
     <Compile Include="WrapWriter.cs" />
   </ItemGroup>
   <ItemGroup>
