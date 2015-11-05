@@ -23,6 +23,8 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
+    <DocumentationFile>
+    </DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -61,13 +63,14 @@
     <Compile Include="JSONObject.cs" />
     <Compile Include="JSONWriter.cs" />
     <Compile Include="Message.cs" />
+    <Compile Include="Obsolete WebServiceServer.cs" />
     <Compile Include="ReaderWriter.cs" />
     <Compile Include="JSONReader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security.cs" />
     <Compile Include="Ticket.cs" />
     <Compile Include="WebRemoteSession.cs" />
-    <Compile Include="WebSimpleHost.cs" />
+    <Compile Include="Server.cs" />
     <Compile Include="WrapWriter.cs" />
   </ItemGroup>
   <ItemGroup>
