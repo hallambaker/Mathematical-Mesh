@@ -1,7 +1,7 @@
 ﻿
 //  Test
 //  
-//  This file was automatically generated at 11/4/2015 4:59:58 PM
+//  This file was automatically generated at 11/5/2015 12:20:26 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -351,15 +351,24 @@ namespace Goedel.Mesh {
 	/// The new base class for the client and service side APIs.
     /// </summary>		
     public abstract partial class MeshService : Goedel.Protocol.JPCService {
+		
+        /// <summary>
+        /// Well Known service identifier.
+        /// </summary>
+		public const string WellKnown = "MeshService";
 
-		public static string WellKnown {
-			get {return "MeshService";}
-			}
+        /// <summary>
+        /// Well Known service identifier.
+        /// </summary>
 		public override string GetWellKnown {
 			get {return WellKnown;}
 			}
 
 		JPCSession _JPCSession;
+
+        /// <summary>
+        /// The active JPCSession.
+        /// </summary>		
 		public virtual JPCSession JPCSession {
 			get {return _JPCSession;}
 			set {_JPCSession = value;}
@@ -470,6 +479,9 @@ namespace Goedel.Mesh {
     public partial class MeshServiceClient : MeshService {
  		
 		JPCRemoteSession JPCRemoteSession;
+        /// <summary>
+        /// The active JPCSession.
+        /// </summary>		
 		public override JPCSession JPCSession {
 			get {return JPCRemoteSession;}
 			set {JPCRemoteSession = value as JPCRemoteSession; }

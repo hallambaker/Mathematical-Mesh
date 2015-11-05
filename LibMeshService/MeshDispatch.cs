@@ -15,10 +15,19 @@ namespace Goedel.Mesh {
     public class PublicMeshServiceHost : MeshServiceHost {
         Mesh _Mesh;
 
-        public PublicMeshServiceHost(string Domain, string Persistent, string Portal) {
-            _Mesh = new Mesh(Domain, Persistent, Portal);
+        /// <summary>
+        /// Initialize a Mesh Service Provider.
+        /// </summary>
+        /// <param name="Domain">The domain of the service provider.</param>
+        /// <param name="MeshStore">The mesh persistence store filename.</param>
+        /// <param name="PortalStore">The portal persistence store fielname.</param>
+        public PublicMeshServiceHost(string Domain, string MeshStore, string PortalStore) {
+            _Mesh = new Mesh(Domain, MeshStore, PortalStore);
             }
 
+        /// <summary>
+        /// The mesh persistence provider.
+        /// </summary>
         public Mesh Mesh {
             get {
                 return _Mesh;
@@ -36,12 +45,21 @@ namespace Goedel.Mesh {
     /// </summary>
     public class MeshServiceSession : MeshService {
         PublicMeshServiceHost Host;
+
+        /// <summary>
+        /// The mesh persistence provider.
+        /// </summary>
         public Mesh Mesh {
             get {
                 return Host.Mesh;
                 }
             }
 
+        /// <summary>
+        /// The mesh service dispatcher.
+        /// </summary>
+        /// <param name="Host">The service provider.</param>
+        /// <param name="Session">The authentication context.</param>
         public MeshServiceSession(PublicMeshServiceHost Host, JPCSession Session) {
             this.Host = Host;
             //this.JPCSession = Session;
@@ -156,10 +174,6 @@ namespace Goedel.Mesh {
             var Response = new StatusResponse();
             return Response;
             }
-
-
-
-
 
         /// <summary>
 		/// Add a pending device request for an account

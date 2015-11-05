@@ -9,7 +9,14 @@ using Goedel.Persistence;
 
 
 namespace Goedel.Mesh {
+
     public partial class KeyValue {
+
+        /// <summary>
+        /// Constructor from principal fields.
+        /// </summary>
+        /// <param name="Key">The initial value of the Key field.</param>
+        /// <param name="Value">The initial value of the Value field.</param>
         public KeyValue(string Key, string Value) {
             this.Key = Key;
             this.Value = Value;
@@ -23,19 +30,42 @@ namespace Goedel.Mesh {
     /// High level Mesh Client interface.
     /// </summary>
     public partial class MeshClient {
+
+        /// <summary>
+        /// The MeshProtocol Service provider.
+        /// </summary>
         protected MeshService MeshService;
 
+        /// <summary>
+        /// The account Identifier.
+        /// </summary>
         public string AccountID;
+
+        /// <summary>
+        /// The account name.
+        /// </summary>
         public string AccountName;
+
+        /// <summary>
+        /// The portal address.
+        /// </summary>
         public string Portal;
+
+        /// <summary>
+        /// Fingerprint of the Personal Profile.
+        /// </summary>
         public string UDF;
 
-
-        
-
+        /// <summary>
+        /// True if the client is connected to an active MeshService.
+        /// </summary>
         public bool Connected { get { return MeshService != null; } }
 
         private SignedPersonalProfile _SignedPersonalProfile;
+
+        /// <summary>
+        /// The active personal profile (with signature).
+        /// </summary>
         public SignedPersonalProfile SignedPersonalProfile {
             get {
                 if (_SignedPersonalProfile == null) {
@@ -45,7 +75,9 @@ namespace Goedel.Mesh {
                 }
             }
 
-
+        /// <summary>
+        /// The active personal profile.
+        /// </summary>
         public PersonalProfile PersonalProfile {
             get {
                 if (SignedPersonalProfile == null) return null;
@@ -54,6 +86,9 @@ namespace Goedel.Mesh {
             }
 
         private SignedDeviceProfile _SignedDeviceProfile;
+        /// <summary>
+        /// The active device profile (with signature).
+        /// </summary>
         public SignedDeviceProfile SignedDeviceProfile {
             get {
                 return _SignedDeviceProfile;
@@ -66,9 +101,6 @@ namespace Goedel.Mesh {
                 _SignedDeviceProfile = value;
                 }
             }
-
-
-
 
         /// <summary>
         /// Connect up to the default Mesh Service provider described in the 
@@ -88,8 +120,8 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Connect up to a specified Mesh Portal and account.
         /// </summary>
-        /// <param name="Service">The portal to connect to.</param>
-        /// <param name="Account">The account name.</param>
+        /// <param name="Portal">The portal to connect to.</param>
+        /// <param name="AccountID">The account identifier.</param>
         public MeshClient(string Portal, string AccountID) {
             MeshService = MeshPortal.Default.GetService(Portal, AccountID);
             this.AccountID = AccountID;
@@ -116,10 +148,12 @@ namespace Goedel.Mesh {
 
         /// <summary>
         /// Check to see if an account name is acceptable for use at a portal.
+        /// Note that a positive response to a validation request does not
+        /// guarantee that the account name will be available for a subsequent
+        /// call to CreatePersonalProfile.
         /// </summary>
-        /// <param name="Account"></param>
-        /// <param name="ValidateResponse"></param>
-        /// <returns></returns>
+        /// <param name="Account">The requested account name.</param>
+        /// <returns>The service response.</returns>
         public ValidateResponse Validate(string Account) {
             var ValidateRequest = new ValidateRequest();
 
@@ -134,9 +168,9 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Create a new account and set the personal profile
         /// </summary>
-        /// <param name="Accountname"></param>
-        /// <param name="SignedCurrentProfile"></param>
-        /// <returns></returns>
+        /// <param name="AccountID">The requested account identifier.</param>
+        /// <param name="SignedCurrentProfile">The personal profile to use.</param>
+        /// <returns>The service response.</returns>
         public CreateResponse CreatePersonalProfile(string AccountID,
                             SignedPersonalProfile SignedCurrentProfile) {
 
@@ -155,7 +189,7 @@ namespace Goedel.Mesh {
         /// Publish an offline escrow entry to the mesh.
         /// </summary>
         /// <param name="OfflineEscrowEntry"></param>
-        /// <returns>Response from service.</returns>
+        /// <returns>The service response.</returns>
         public PublishResponse Publish(OfflineEscrowEntry OfflineEscrowEntry) {
             var PublishRequest = new PublishRequest();
             PublishRequest.Entry = OfflineEscrowEntry;
@@ -168,8 +202,8 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Publish an offline escrow entry to the mesh.
         /// </summary>
-        /// <param name="OfflineEscrowEntry"></param>
-        /// <returns>Response from service.</returns>
+        /// <param name="SignedProfile"></param>
+        /// <returns>The service response.</returns>
         public PublishResponse Publish(SignedProfile SignedProfile) {
             var PublishRequest = new PublishRequest();
             PublishRequest.Entry = SignedProfile;
@@ -179,7 +213,10 @@ namespace Goedel.Mesh {
             }
 
 
-
+        /// <summary>
+        /// Get the active profile associated with the current account.
+        /// </summary>
+        /// <returns>The signed personal profile.</returns>
         public SignedPersonalProfile GetPersonalProfile() {
             if (AccountID == null) return null;
 
@@ -199,7 +236,11 @@ namespace Goedel.Mesh {
             return _SignedPersonalProfile;
             }
 
-
+        /// <summary>
+        /// Retrieve an application profile by unique ID.
+        /// </summary>
+        /// <param name="ID">the unique id of the profile.</param>
+        /// <returns>The signed application profile if found, otherwise null.</returns>
         public SignedApplicationProfile GetApplicationProfile (string ID) {
 
             var GetRequest = new GetRequest();
@@ -215,6 +256,10 @@ namespace Goedel.Mesh {
             return SignedApplicationProfile;
             }
 
+        /// <summary>
+        /// Retreive the default password profile.
+        /// </summary>
+        /// <returns>The password profile if found and valid, otherwise null.</returns>
         public PasswordProfile GetPasswordProfile() {
             if (PersonalProfile == null) return null;
 
@@ -231,6 +276,10 @@ namespace Goedel.Mesh {
             return Result;
             }
 
+        /// <summary>
+        /// Retreive the default mail profile.
+        /// </summary>
+        /// <returns>The mail profile if found and valid, otherwise null.</returns>
         public MailProfile GetMailProfile() {
             if (PersonalProfile == null) return null;
 
@@ -242,13 +291,12 @@ namespace Goedel.Mesh {
             if (SignedApplicationProfile == null) return null;
 
             return null;
-
-            //var Result = MailProfile.Get(SignedApplicationProfile,
-            //        PersonalProfile);
-
-            //return Result;
             }
 
+        /// <summary>
+        /// Retreive the default network profile.
+        /// </summary>
+        /// <returns>The network profile if found and valid, otherwise null.</returns>
         public NetworkProfile GetNetworkProfile() {
             if (PersonalProfile == null) return null;
 
@@ -260,14 +308,13 @@ namespace Goedel.Mesh {
             if (SignedApplicationProfile == null) return null;
 
             return null;
-
-            //var Result = NetworkProfile.Get(SignedApplicationProfile,
-            //        PersonalProfile);
-
-            //return Result;
             }
 
-
+        /// <summary>
+        /// Initiate a device connection request.
+        /// </summary>
+        /// <param name="SignedDeviceProfile">The device profile to register.</param>
+        /// <returns></returns>
         public ConnectStartResponse ConnectRequest (SignedDeviceProfile SignedDeviceProfile) {
             this.SignedDeviceProfile = SignedDeviceProfile;
 
@@ -282,7 +329,11 @@ namespace Goedel.Mesh {
             return DeviceResponse;
             }
 
-
+        /// <summary>
+        /// Get status for a pending device connection request.
+        /// </summary>
+        /// <param name="UDF"></param>
+        /// <returns>The service response.</returns>
         public ConnectStatusResponse ConnectStatus (string UDF) {
             var DeviceCheckRequest = new ConnectStatusRequest();
             DeviceCheckRequest.DeviceID = UDF;
@@ -293,6 +344,10 @@ namespace Goedel.Mesh {
             return DeviceResponse;
             }
 
+        /// <summary>
+        /// Get a list of pending device connection requests.
+        /// </summary>
+        /// <returns>The service response.</returns>
         public ConnectPendingResponse ConnectPending () {
             var PendingRequest = new ConnectPendingRequest();
             PendingRequest.AccountID = AccountID;
@@ -300,13 +355,17 @@ namespace Goedel.Mesh {
             return PendingResponse;
             }
 
+        /// <summary>
+        /// Close a pending device connection request.
+        /// </summary>
+        /// <param name="SignedConnectionRequest">The connection request to close.</param>
+        /// <param name="ConnectionStatus">The status to set.</param>
+        /// <returns>The service response.</returns>
         public ConnectCompleteResponse ConnectClose (SignedConnectionRequest SignedConnectionRequest,
                     ConnectionStatus ConnectionStatus) {
 
             var ConnectionRequest = SignedConnectionRequest.Data;
             var Device = ConnectionRequest.Device;
-
-
 
             var ConnectionResult = new ConnectionResult();
             ConnectionResult.Result = ConnectionStatus.ToString ();

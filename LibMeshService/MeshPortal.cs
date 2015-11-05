@@ -7,10 +7,10 @@ namespace Goedel.Mesh {
 
     /// <summary>
     /// Abstract interface to a service that supports the MeshPortal API calls.
+    /// Mostly for useful in test code where the ability to switch between a
+    /// direct and indirect portal connection is desirable. 
     /// </summary>
     public abstract class MeshPortal {
-
-
 
         /// <summary>
         /// Return a MeshService object for the named portal service.
@@ -41,6 +41,9 @@ namespace Goedel.Mesh {
         }
 
 
+    /// <summary>
+    /// Abstract interface to a local service provider.
+    /// </summary>
     public abstract class MeshLocalPortal : MeshPortal{
         /// <summary>
         /// File name for local access to the mesh store.
@@ -92,9 +95,6 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Return a MeshService object for the named portal service.
         /// </summary>
-        /// <param name="Portal">Address of the portal service.</param>
-        /// <param name="Account">Account name.</param>
-        /// <returns>Mesh service object for API access to the service.</returns>
 
         public override MeshService GetService(string Portal, string Account) {
             var Session = new DirectSession(null);
@@ -120,9 +120,6 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Return a MeshService object for the named portal service.
         /// </summary>
-        /// <param name="Portal">Address of the portal service.</param>
-        /// <param name="Account">Account name.</param>
-        /// <returns>Mesh service object for API access to the service.</returns>
         public override MeshService GetService(string Service, string Account) {
             var Session = new LocalRemoteSession(MeshServiceHost, ServiceName, Account);
             MeshService = new MeshServiceClient(Session);
@@ -137,11 +134,8 @@ namespace Goedel.Mesh {
     public class MeshPortalRemote : MeshPortal {
 
         /// <summary>
-        /// 
+        /// Return a MeshService object for the named portal service.
         /// </summary>
-        /// <param name="Service"></param>
-        /// <param name="Account"></param>
-        /// <returns></returns>
         public override MeshService GetService(string Service, string Account) {
             var Session = new WebRemoteSession(MeshService.GetWellKnown, Service, Account);
             MeshService = new MeshServiceClient(Session);
