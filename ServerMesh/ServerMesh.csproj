@@ -34,6 +34,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Goedel.Registry">
+      <HintPath>..\..\..\Code\Tools\Library\Goedel.Registry.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -46,10 +49,12 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServerCommands.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="PreBuild.bat" />
+    <None Include="ServerCommands.cmd" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LibCryptoJose\LibCryptoJose.csproj">

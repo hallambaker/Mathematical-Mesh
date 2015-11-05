@@ -4,7 +4,7 @@ SETLOCAL
 
 cd %~dp0
 
-
+CommandParse ServerCommands.cmd /cs ServerCommands.cs /nocatch
 
 exit /b 0
 

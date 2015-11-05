@@ -9,6 +9,11 @@ namespace Goedel.Protocol {
     public abstract class JPCHost {
 
         /// <summary>
+        /// The dispatch service.
+        /// </summary>
+        public abstract JPCService JPCService { get; }
+
+        /// <summary>
         /// Dispatch Class. Reads input from the provided reader and attempts to
         /// dispatch a method in response. Note that the calling routine may throw 
         /// an error. This must be caught and processed by the host dispatch class.
@@ -18,6 +23,18 @@ namespace Goedel.Protocol {
         /// <returns>The response to the request.</returns>
         public abstract Goedel.Protocol.JSONObject Dispatch(JPCSession Session,
             JSONReader JSONReader);
+
+
+        /// <summary>
+        /// Construct a URI for a well known service.
+        /// </summary>
+        /// <param name="Domain">DNS domain name of the service.</param>
+        /// <param name="WellKnown">The well-known service identifier tag (see RFC 5785).</param>
+        /// <param name="TLS">If true, the https scheme is used, otherwise http is used.</param>
+        /// <returns></returns>
+        public static string WellKnownToURI (string Domain, string WellKnown, bool TLS) {
+            return (TLS ? "https://" : "http://") + Domain + "/.well-known/" + WellKnown;
+            }
 
         }
 

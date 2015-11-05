@@ -1,7 +1,7 @@
 ﻿
 //  Test
 //  
-//  This file was automatically generated at 11/5/2015 12:20:26 AM
+//  This file was automatically generated at 11/5/2015 2:36:14 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -346,7 +346,6 @@ namespace Goedel.Mesh {
 		// Service Dispatch Classes
 
 
-
     /// <summary>
 	/// The new base class for the client and service side APIs.
     /// </summary>		
@@ -652,6 +651,12 @@ namespace Goedel.Mesh {
 		/// Dispatch object for service.
 		/// </summary>	
 		public MeshService Service;
+
+		/// <summary>
+		/// Dispatch object for service.
+		/// </summary>	
+		public override JPCService JPCService { get { return Service ; }}
+
 
 		/// <summary>
 		/// Dispatch object request in specified authentication context.

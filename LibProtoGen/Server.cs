@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Net;
 
 namespace Goedel.Protocol {
 
@@ -98,8 +96,23 @@ namespace Goedel.Protocol {
             var HTTPPortRegistration = new HTTPPortRegistration(URI, this);
             Ports.Add(HTTPPortRegistration);
 
-            return null;
+            return HTTPPortRegistration;
             }
+
+        /// <summary>
+        /// Register a service at the standard HTTP port.
+        /// </summary>
+        /// <param name="URI">URI to register port at. If zero, a 
+        /// random port is chosen and may be read from the port
+        /// registration structure returned.</param>
+        /// <returns>The port registration structure.</returns>
+        public HTTPPortRegistration AddService(string Domain) {
+
+            var URI = JPCHost.WellKnownToURI(Domain, 
+                        JPCHost.JPCService.GetWellKnown, false);
+            return AddHTTP(URI);
+            }
+
 
         /// <summary>
         /// Register a UDP Port, not currently implemented.
@@ -129,6 +142,8 @@ namespace Goedel.Protocol {
                 Port.Close();
                 }
             }
+
+
 
 
         }
@@ -165,11 +180,53 @@ namespace Goedel.Protocol {
             }
 
 
-        void Start () {
+        bool Active;
+
+        /// <summary>
+        /// The HTTP Listener.
+        /// </summary>
+        public HttpListener HttpListener;
+
+
+        /// <summary>
+        /// Blocking listener, reads one request at a time, blocking
+        /// between each read.
+        /// </summary>
+        private void ListenBlocking() {
+
+            Active = true;
+            HttpListener = new HttpListener();
             foreach (var Host in Hosts) {
                 Host.Open();
                 }
 
+
+            while (Active) {
+                var Context = HttpListener.GetContext();
+                Handle(Context);
+                }
+
+            }
+
+
+        private void Handle (HttpListenerContext Context) {
+            // Which provider handles this URI?
+
+            
+
+            // Get request data
+
+            // Authenticate request data
+
+            // Call dispatcher
+
+
+            // Handle errors
+
+
+                // Service not found
+                // Authentication error
+                // Error thrown by provider.
 
             }
 
@@ -183,17 +240,19 @@ namespace Goedel.Protocol {
             }
 
         /// <summary>
-        /// Start the server and wait for completion.
+        /// Start the server and wait for completion using the unthreaded
+        /// listener. Useful for tracking down locking and synchronization 
+        /// bugs.
         /// </summary>
-        public void Run () {
-
+        public void RunBlocking () {
+            ListenBlocking();
             }
 
         /// <summary>
         /// Stop the server.
         /// </summary>
         public void Stop () {
-
+            Active = false;
             }
 
 
