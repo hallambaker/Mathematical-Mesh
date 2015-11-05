@@ -73,6 +73,8 @@ namespace Goedel.Protocol {
         JPCServer JPCServer;
         JPCHost JPCHost;
 
+        List<PortRegistration> Ports;
+
         /// <summary>
         /// Create a host registration.
         /// </summary>
@@ -81,6 +83,7 @@ namespace Goedel.Protocol {
         public HostRegistration(JPCHost JPCHost, JPCServer JPCServer) {
             this.JPCServer = JPCServer;
             this.JPCHost = JPCHost;
+            Ports = new List<PortRegistration>();
             }
 
         /// <summary>
@@ -93,6 +96,7 @@ namespace Goedel.Protocol {
         public HTTPPortRegistration AddHTTP (string URI) {
 
             var HTTPPortRegistration = new HTTPPortRegistration(URI, this);
+            Ports.Add(HTTPPortRegistration);
 
             return null;
             }
@@ -106,6 +110,26 @@ namespace Goedel.Protocol {
         public PortRegistration AddUDP(int port) {
             return null;
             }
+
+
+        /// <summary>
+        /// Register connected ports.
+        /// </summary>
+        public  void Open() {
+            foreach (var Port in Ports) {
+                Port.Open();
+                }
+            }
+
+        /// <summary>
+        /// Deregister connected ports.
+        /// </summary>
+        public  void Close() {
+            foreach (var Port in Ports) {
+                Port.Close();
+                }
+            }
+
 
         }
 
@@ -139,6 +163,16 @@ namespace Goedel.Protocol {
 
             return Registration;
             }
+
+
+        void Start () {
+            foreach (var Host in Hosts) {
+                Host.Open();
+                }
+
+
+            }
+
 
         /// <summary>
         /// Start the server. Note that the server runs in a separate

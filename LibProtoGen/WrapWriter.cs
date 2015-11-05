@@ -5,11 +5,20 @@ using System.Text;
 using Goedel.Protocol;
 
 namespace Goedel.Protocol {
+
+    /// <summary>
+    /// Variant of the textwriter class that performs pretty print formatting on
+    /// the output.
+    /// </summary>
     public class WrapWriter : TextWriter {
         TextWriter Output;
 
-        public WrapWriter(TextWriter _Output) {
-            Output = _Output;
+        /// <summary>
+        /// Construct a new WrapWriter.
+        /// </summary>
+        /// <param name="Output">Base textwriter stream to write output to.</param>
+        public WrapWriter(TextWriter Output) {
+            this.Output = Output;
             }
 
         //
@@ -17,7 +26,11 @@ namespace Goedel.Protocol {
         // pass methods through to the output stream
         //
 
-
+        /// <summary>
+        /// Wrap the input string, inserting linebreaks where necessary.
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         static public string Wrap(string input) { 
             StringWriter StringWriter = new StringWriter ();
             WrapWriter WrapWriter = new WrapWriter (StringWriter);
@@ -34,22 +47,45 @@ namespace Goedel.Protocol {
         string SpaceBuffer = "";
         string Leading = "";        
         
+        /// <summary>
+        /// Line count.
+        /// </summary>
         public int Line = 1;
+
+        /// <summary>
+        /// Column count.
+        /// </summary>
         public int Column {
             get { return Leading.Length + Buffer.Length + 
                 SpaceBuffer.Length + BreakBuffer.Length;}
             }
+
+        /// <summary>
+        /// Column width.
+        /// </summary>
         public int Width = 64;
 
-
+        /// <summary>
+        /// Set of valid break points in addition to white space.
+        /// </summary>
         public string BreakAt = " ,[{(";
+
+        /// <summary>
+        /// Leading space to be added to every line.
+        /// </summary>
         public string MinLeading = "  ";
+
+        /// <summary>
+        /// Additional leading space to add on wrapped lines.
+        /// </summary>
         public string WrappedLeading = "";
 
 
         int state = 0;
 
         public override Encoding Encoding { get {return  System.Text.Encoding.UTF8;} }
+
+
         public override void Close() { 
             Flush ();
             Output.Close(); 
@@ -194,8 +230,6 @@ namespace Goedel.Protocol {
         public override string ToString() {
             Flush ();
             string result = Output.ToString ();
-
-
             return result;
             }
         }
