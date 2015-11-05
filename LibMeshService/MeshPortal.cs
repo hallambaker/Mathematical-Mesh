@@ -10,7 +10,6 @@ namespace Goedel.Mesh {
     /// </summary>
     public abstract class MeshPortal {
 
-        public const string ProtocolID = "mathematicalmesh";
 
 
         /// <summary>
@@ -21,7 +20,14 @@ namespace Goedel.Mesh {
         public virtual MeshService GetService(string Portal) {
             return GetService(Portal, null);
             }
-        public abstract MeshService GetService(string Service, string Account);
+
+        /// <summary>
+        /// Return a MeshService object for the named portal service.
+        /// </summary>
+        /// <param name="Portal">Address of the portal service.</param>
+        /// <param name="Account">Account name.</param>
+        /// <returns>Mesh service object for API access to the service.</returns>
+        public abstract MeshService GetService(string Portal, string Account);
 
         /// <summary>
         /// May be set to the default MeshPortal by a calling application.
@@ -39,12 +45,12 @@ namespace Goedel.Mesh {
         /// <summary>
         /// File name for local access to the mesh store.
         /// </summary>
-        protected string Store = "mesh.jlog";
+        protected string MeshStore = "mesh.jlog";
 
         /// <summary>
         /// File name for local access to the portal store.
         /// </summary>
-        protected string Portal = "portal.jlog";
+        protected string PortalStore = "portal.jlog";
 
         /// <summary>
         /// The service name (default to prismproof.org)
@@ -58,22 +64,39 @@ namespace Goedel.Mesh {
         }
 
 
-
+    /// <summary>
+    /// Direct connection to service provider via API calls. 
+    /// </summary>
     public class MeshPortalDirect: MeshLocalPortal {
+
+        /// <summary>
+        /// Create new portal using the default stores.
+        /// </summary>
         public MeshPortalDirect () {
-            Init(Store, Portal);
+            Init(MeshStore, PortalStore);
             }
 
-        public MeshPortalDirect(string Store, string Portal) {
-            Init(Store, Portal);
+        /// <summary>
+        /// Create a new portal using the specified stores.
+        /// </summary>
+        /// <param name="MeshStore">File name for the Mesh Store.</param>
+        /// <param name="PortalStore">File name for the Portal Store.</param>
+        public MeshPortalDirect(string MeshStore, string PortalStore) {
+            Init(MeshStore, PortalStore);
             }
 
-
-        void Init (string Store, string Portal) {
-            MeshServiceHost = new PublicMeshServiceHost(ServiceName, Store, Portal);
+        void Init (string MeshStore, string PortalStore) {
+            MeshServiceHost = new PublicMeshServiceHost(ServiceName, MeshStore, PortalStore);
             }
 
-        public override MeshService GetService(string service, string Account) {
+        /// <summary>
+        /// Return a MeshService object for the named portal service.
+        /// </summary>
+        /// <param name="Portal">Address of the portal service.</param>
+        /// <param name="Account">Account name.</param>
+        /// <returns>Mesh service object for API access to the service.</returns>
+
+        public override MeshService GetService(string Portal, string Account) {
             var Session = new DirectSession(null);
             MeshService = new MeshServiceSession(MeshServiceHost, Session);
             return MeshService;
@@ -81,11 +104,25 @@ namespace Goedel.Mesh {
 
         }
 
+    /// <summary>
+    /// Direct connection to service provider via JSON encoding, decoding and dispatch.
+    /// Useful for producing documentation and for testing.
+    /// </summary>
     public class MeshPortalLocal : MeshLocalPortal {
+
+        /// <summary>
+        /// Create new portal using the default stores.
+        /// </summary>
         public MeshPortalLocal() {
-            MeshServiceHost = new PublicMeshServiceHost(ServiceName, Store, Portal);
+            MeshServiceHost = new PublicMeshServiceHost(ServiceName, MeshStore, PortalStore);
             }
 
+        /// <summary>
+        /// Return a MeshService object for the named portal service.
+        /// </summary>
+        /// <param name="Portal">Address of the portal service.</param>
+        /// <param name="Account">Account name.</param>
+        /// <returns>Mesh service object for API access to the service.</returns>
         public override MeshService GetService(string Service, string Account) {
             var Session = new LocalRemoteSession(MeshServiceHost, ServiceName, Account);
             MeshService = new MeshServiceClient(Session);
@@ -94,10 +131,19 @@ namespace Goedel.Mesh {
 
         }
 
+    /// <summary>
+    /// Connection to network service using HTTP client.
+    /// </summary>
     public class MeshPortalRemote : MeshPortal {
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Service"></param>
+        /// <param name="Account"></param>
+        /// <returns></returns>
         public override MeshService GetService(string Service, string Account) {
-            var Session = new WebRemoteSession(ProtocolID, Service, Account);
+            var Session = new WebRemoteSession(MeshService.GetWellKnown, Service, Account);
             MeshService = new MeshServiceClient(Session);
             return MeshService;
             }
