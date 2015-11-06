@@ -6,12 +6,21 @@ namespace Goedel.Protocol {
     /// <summary>
     /// Base class for a Host
     /// </summary>
-    public abstract class JPCHost {
+    public abstract class JPCProvider {
+
+
+        /// <summary>
+        /// Register a dispatch interface.
+        /// </summary>
+        /// <param name="JPCService"></param>
+        /// <returns>The Interface Registration object.</returns>
+        public abstract InterfaceRegistration Register(JPCInterface JPCService);
+
 
         /// <summary>
         /// The dispatch service.
         /// </summary>
-        public abstract JPCService JPCService { get; }
+        public abstract JPCInterface JPCInterface { get; }
 
         /// <summary>
         /// Dispatch Class. Reads input from the provided reader and attempts to
@@ -42,7 +51,7 @@ namespace Goedel.Protocol {
     /// <summary>
     /// Base class for all JPC server and client classes.
     /// </summary>
-    public abstract class JPCService {
+    public abstract class JPCInterface {
 
         /// <summary>
         /// The WellKnown service name for HTTP and DNS prefix use.
@@ -155,7 +164,7 @@ namespace Goedel.Protocol {
     /// for documentation.
     /// </summary>
     public partial class LocalRemoteSession : JPCRemoteSession {
-        JPCHost Host;
+        JPCProvider Host;
 
         /// <summary>
         /// Create a remote session without authentication. This call
@@ -165,7 +174,7 @@ namespace Goedel.Protocol {
         /// <param name="Host">The host implementation</param>
         /// <param name="Domain">Portal address</param>
         /// <param name="Account">User account</param>
-        public LocalRemoteSession(JPCHost Host, string Domain, string Account)
+        public LocalRemoteSession(JPCProvider Host, string Domain, string Account)
                 : this (Host, Domain, Account, null)  {
             }
 
@@ -177,7 +186,7 @@ namespace Goedel.Protocol {
         /// <param name="Domain">Portal address</param>
         /// <param name="Account">User account</param>
         /// <param name="UDF">Authentication key identifier.</param>
-        public LocalRemoteSession(JPCHost Host, string Domain, string Account, string UDF) {
+        public LocalRemoteSession(JPCProvider Host, string Domain, string Account, string UDF) {
             this.Account = Account;
             this.Portal = Domain;
             this.UDF = UDF;

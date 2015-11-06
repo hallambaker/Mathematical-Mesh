@@ -1,7 +1,7 @@
 ﻿
 //  Test
 //  
-//  This file was automatically generated at 11/5/2015 2:36:14 PM
+//  This file was automatically generated at 11/5/2015 8:01:37 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -349,7 +349,7 @@ namespace Goedel.Mesh {
     /// <summary>
 	/// The new base class for the client and service side APIs.
     /// </summary>		
-    public abstract partial class MeshService : Goedel.Protocol.JPCService {
+    public abstract partial class MeshService : Goedel.Protocol.JPCInterface {
 		
         /// <summary>
         /// Well Known service identifier.
@@ -645,7 +645,7 @@ namespace Goedel.Mesh {
     /// <summary>
 	/// Client class for MeshService.
     /// </summary>		
-    public partial class MeshServiceHost : Goedel.Protocol.JPCHost {
+    public partial class MeshServiceProvider : Goedel.Protocol.JPCProvider {
 
 		/// <summary>
 		/// Dispatch object for service.
@@ -655,7 +655,16 @@ namespace Goedel.Mesh {
 		/// <summary>
 		/// Dispatch object for service.
 		/// </summary>	
-		public override JPCService JPCService { get { return Service ; }}
+		public override JPCInterface JPCInterface { get { return Service ; }}
+
+        /// <summary>
+        /// Register a dispatch interface.
+        /// </summary>
+        /// <param name="JPCInterface"></param>
+        /// <returns>The Interface Registration object.</returns>
+        public override InterfaceRegistration Register(JPCInterface JPCInterface) {
+			return null;
+			}
 
 
 		/// <summary>

@@ -4,6 +4,20 @@ using System.Net;
 
 namespace Goedel.Protocol {
 
+    /*
+    *   Items described here:
+    *
+    *   Port - URI or UDP port to which requests are directed.
+    *   Interface [Service] - The set of requests supported by that port
+    *   Provider [Host] - A set of related interfaces that share state.
+    *   Server - An executable that supports one or more providers.
+    *   Service - A group of servers that offer semantically equivalent service.
+    *
+    */
+
+
+
+
     /// <summary>
     /// Describes a server port connection.
     /// </summary>
@@ -63,13 +77,22 @@ namespace Goedel.Protocol {
 
         }
 
+    /// <summary>
+    /// Track registration of an interface.
+    /// </summary>
+    public class InterfaceRegistration {
+
+
+
+        }
+
 
     /// <summary>
     /// Represents a specific service provider.
     /// </summary>
     public class HostRegistration {
         JPCServer JPCServer;
-        JPCHost JPCHost;
+        JPCProvider JPCHost;
 
         List<PortRegistration> Ports;
 
@@ -78,7 +101,7 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <param name="JPCHost">Service provider to register</param>
         /// <param name="JPCServer">Server to register to.</param>
-        public HostRegistration(JPCHost JPCHost, JPCServer JPCServer) {
+        public HostRegistration(JPCProvider JPCHost, JPCServer JPCServer) {
             this.JPCServer = JPCServer;
             this.JPCHost = JPCHost;
             Ports = new List<PortRegistration>();
@@ -108,8 +131,8 @@ namespace Goedel.Protocol {
         /// <returns>The port registration structure.</returns>
         public HTTPPortRegistration AddService(string Domain) {
 
-            var URI = JPCHost.WellKnownToURI(Domain, 
-                        JPCHost.JPCService.GetWellKnown, false);
+            var URI = JPCProvider.WellKnownToURI(Domain, 
+                        JPCHost.JPCInterface.GetWellKnown, false);
             return AddHTTP(URI);
             }
 
@@ -172,7 +195,7 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <param name="JPCHost">The Service provider to add.</param>
         /// <returns>Host registration object.</returns>
-        public HostRegistration Add(JPCHost JPCHost) {
+        public HostRegistration Add(JPCProvider JPCHost) {
             var Registration = new HostRegistration(JPCHost, this);
             Hosts.Add(Registration);
 

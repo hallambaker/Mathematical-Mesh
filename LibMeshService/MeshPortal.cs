@@ -63,7 +63,7 @@ namespace Goedel.Mesh {
         /// <summary>
         /// The local PublicMeshServiceHost.
         /// </summary>
-        public PublicMeshServiceHost MeshServiceHost;
+        public PublicMeshServiceProvider MeshServiceHost;
         }
 
 
@@ -89,7 +89,7 @@ namespace Goedel.Mesh {
             }
 
         void Init (string MeshStore, string PortalStore) {
-            MeshServiceHost = new PublicMeshServiceHost(ServiceName, MeshStore, PortalStore);
+            MeshServiceHost = new PublicMeshServiceProvider(ServiceName, MeshStore, PortalStore);
             }
 
         /// <summary>
@@ -114,7 +114,7 @@ namespace Goedel.Mesh {
         /// Create new portal using the default stores.
         /// </summary>
         public MeshPortalLocal() {
-            MeshServiceHost = new PublicMeshServiceHost(ServiceName, MeshStore, PortalStore);
+            MeshServiceHost = new PublicMeshServiceProvider(ServiceName, MeshStore, PortalStore);
             }
 
         /// <summary>

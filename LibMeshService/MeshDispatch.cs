@@ -12,7 +12,7 @@ namespace Goedel.Mesh {
     /// The host class. Receives a stream from the HTTP server caller and 
     /// dispatches the specified server.
     /// </summary>
-    public class PublicMeshServiceHost : MeshServiceHost {
+    public class PublicMeshServiceProvider : MeshServiceProvider {
         Mesh _Mesh;
 
         /// <summary>
@@ -21,7 +21,7 @@ namespace Goedel.Mesh {
         /// <param name="Domain">The domain of the service provider.</param>
         /// <param name="MeshStore">The mesh persistence store filename.</param>
         /// <param name="PortalStore">The portal persistence store fielname.</param>
-        public PublicMeshServiceHost(string Domain, string MeshStore, string PortalStore) {
+        public PublicMeshServiceProvider(string Domain, string MeshStore, string PortalStore) {
             _Mesh = new Mesh(Domain, MeshStore, PortalStore);
             }
 
@@ -44,14 +44,14 @@ namespace Goedel.Mesh {
     /// The session class implements the Mesh session.
     /// </summary>
     public class MeshServiceSession : MeshService {
-        PublicMeshServiceHost Host;
+        PublicMeshServiceProvider Provider;
 
         /// <summary>
         /// The mesh persistence provider.
         /// </summary>
         public Mesh Mesh {
             get {
-                return Host.Mesh;
+                return Provider.Mesh;
                 }
             }
 
@@ -60,8 +60,8 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="Host">The service provider.</param>
         /// <param name="Session">The authentication context.</param>
-        public MeshServiceSession(PublicMeshServiceHost Host, JPCSession Session) {
-            this.Host = Host;
+        public MeshServiceSession(PublicMeshServiceProvider Host, JPCSession Session) {
+            this.Provider = Host;
             //this.JPCSession = Session;
             }
 

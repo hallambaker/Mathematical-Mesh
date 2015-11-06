@@ -12,7 +12,7 @@ namespace MeshServerShell {
         public override void Start(Start Options) {
 
             // Create the provider object.
-            var MeshServiceHost = new PublicMeshServiceHost(Options.Address.Value, 
+            var MeshServiceHost = new PublicMeshServiceProvider(Options.Address.Value, 
                 Options.MeshStore.Value, Options.PortalStore.Value);
 
             // Create the dispatcher for the provider.
