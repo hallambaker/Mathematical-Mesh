@@ -14,7 +14,6 @@ namespace Goedel.Mesh {
     /// </summary>
     public class PublicMeshServiceProvider : MeshServiceProvider {
         Mesh _Mesh;
-
         /// <summary>
         /// Initialize a Mesh Service Provider.
         /// </summary>
@@ -37,6 +36,8 @@ namespace Goedel.Mesh {
                 _Mesh = value;
                 }
             }
+
+
         }
 
 
@@ -62,6 +63,8 @@ namespace Goedel.Mesh {
         /// <param name="Session">The authentication context.</param>
         public MeshServiceSession(PublicMeshServiceProvider Host, JPCSession Session) {
             this.Provider = Host;
+            Host.Interfaces.Add(this);
+            Host.Service = this;
             //this.JPCSession = Session;
             }
 

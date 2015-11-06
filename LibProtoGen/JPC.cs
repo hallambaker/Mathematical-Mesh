@@ -1,5 +1,5 @@
 ﻿using System;
-
+using System.Collections.Generic;
 
 namespace Goedel.Protocol {
 
@@ -10,17 +10,9 @@ namespace Goedel.Protocol {
 
 
         /// <summary>
-        /// Register a dispatch interface.
-        /// </summary>
-        /// <param name="JPCService"></param>
-        /// <returns>The Interface Registration object.</returns>
-        public abstract InterfaceRegistration Register(JPCInterface JPCService);
-
-
-        /// <summary>
         /// The dispatch service.
         /// </summary>
-        public abstract JPCInterface JPCInterface { get; }
+        public List<JPCInterface> Interfaces;
 
         /// <summary>
         /// Dispatch Class. Reads input from the provided reader and attempts to

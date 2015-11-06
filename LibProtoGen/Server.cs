@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net;
+using System.Text;
 
 namespace Goedel.Protocol {
 
@@ -33,6 +35,16 @@ namespace Goedel.Protocol {
         /// </summary>
         public abstract void Close();
 
+        /// <summary>
+        /// The Registered service.
+        /// </summary>
+        public InterfaceRegistration Interface;
+
+        /// <summary>
+        /// The provider to dispatch to.
+        /// </summary>
+        public JPCProvider Provider;
+
         }
 
     /// <summary>
@@ -46,25 +58,23 @@ namespace Goedel.Protocol {
         public string URI;
 
         /// <summary>
-        /// The Registered service.
-        /// </summary>
-        public HostRegistration Host;
-
-        /// <summary>
         /// Register this port with the server. Note the port will not 
         /// be called until it is registered.
         /// </summary>
         /// <param name="URI">HTTP URI to register.</param>
         /// <param name="Host">Service Provider to register.</param>
-        public HTTPPortRegistration (string URI, HostRegistration Host) {
+        public HTTPPortRegistration (string URI, InterfaceRegistration Host) {
             this.URI = URI;
-            this.Host = Host;
+            this.Interface = Host;
             }
 
         /// <summary>
-        /// Close this port and deregister.
+        /// Open this port and Register.
         /// </summary>
         public override void Open() {
+            Provider = Interface.ProviderRegistration.JPCProvider;
+            var JPCServer = Interface.ProviderRegistration.JPCServer;
+            JPCServer.Register(this);
 
             }
 
@@ -82,28 +92,15 @@ namespace Goedel.Protocol {
     /// </summary>
     public class InterfaceRegistration {
 
-
-
-        }
-
-
-    /// <summary>
-    /// Represents a specific service provider.
-    /// </summary>
-    public class HostRegistration {
-        JPCServer JPCServer;
-        JPCProvider JPCHost;
+        public ProviderRegistration ProviderRegistration;
+        public JPCInterface Interface;
 
         List<PortRegistration> Ports;
 
-        /// <summary>
-        /// Create a host registration.
-        /// </summary>
-        /// <param name="JPCHost">Service provider to register</param>
-        /// <param name="JPCServer">Server to register to.</param>
-        public HostRegistration(JPCProvider JPCHost, JPCServer JPCServer) {
-            this.JPCServer = JPCServer;
-            this.JPCHost = JPCHost;
+        public InterfaceRegistration (JPCInterface Interface, 
+                    ProviderRegistration ProviderRegistration) {
+            this.Interface = Interface;
+            this.ProviderRegistration = ProviderRegistration;
             Ports = new List<PortRegistration>();
             }
 
@@ -114,7 +111,7 @@ namespace Goedel.Protocol {
         /// random port is chosen and may be read from the port
         /// registration structure returned.</param>
         /// <returns>The port registration structure.</returns>
-        public HTTPPortRegistration AddHTTP (string URI) {
+        public HTTPPortRegistration AddHTTP(string URI) {
 
             var HTTPPortRegistration = new HTTPPortRegistration(URI, this);
             Ports.Add(HTTPPortRegistration);
@@ -131,8 +128,7 @@ namespace Goedel.Protocol {
         /// <returns>The port registration structure.</returns>
         public HTTPPortRegistration AddService(string Domain) {
 
-            var URI = JPCProvider.WellKnownToURI(Domain, 
-                        JPCHost.JPCInterface.GetWellKnown, false);
+            var URI = JPCProvider.WellKnownToURI(Domain, Interface.GetWellKnown, false);
             return AddHTTP(URI);
             }
 
@@ -147,11 +143,10 @@ namespace Goedel.Protocol {
             return null;
             }
 
-
         /// <summary>
         /// Register connected ports.
         /// </summary>
-        public  void Open() {
+        public void Open() {
             foreach (var Port in Ports) {
                 Port.Open();
                 }
@@ -160,9 +155,60 @@ namespace Goedel.Protocol {
         /// <summary>
         /// Deregister connected ports.
         /// </summary>
-        public  void Close() {
+        public void Close() {
             foreach (var Port in Ports) {
                 Port.Close();
+                }
+            }
+
+
+        }
+
+
+    /// <summary>
+    /// Represents a specific service provider.
+    /// </summary>
+    public class ProviderRegistration {
+        public JPCServer JPCServer;
+        public JPCProvider JPCProvider;
+
+        List<InterfaceRegistration> Interfaces;
+
+
+        /// <summary>
+        /// Create a host registration.
+        /// </summary>
+        /// <param name="JPCHost">Service provider to register</param>
+        /// <param name="JPCServer">Server to register to.</param>
+        public ProviderRegistration(JPCProvider JPCHost, JPCServer JPCServer) {
+            this.JPCServer = JPCServer;
+            this.JPCProvider = JPCHost;
+            Interfaces = new List<InterfaceRegistration>();
+            }
+
+
+        public InterfaceRegistration Add (JPCInterface Interface) {
+            var InterfaceRegistration = new InterfaceRegistration (Interface, this);
+            Interfaces.Add(InterfaceRegistration);
+
+            return InterfaceRegistration;
+            }
+
+        /// <summary>
+        /// Register connected ports.
+        /// </summary>
+        public  void Open() {
+            foreach (var Interface in Interfaces) {
+                Interface.Open();
+                }
+            }
+
+        /// <summary>
+        /// Deregister connected ports.
+        /// </summary>
+        public  void Close() {
+            foreach (var Interface in Interfaces) {
+                Interface.Close();
                 }
             }
 
@@ -181,13 +227,15 @@ namespace Goedel.Protocol {
     /// </example>
     public class JPCServer {
 
-        List<HostRegistration> Hosts;
+        List<ProviderRegistration> Hosts;
+        List<PortRegistration> Ports;
 
         /// <summary>
         /// Create a server.
         /// </summary>
         public JPCServer() {
-            Hosts = new List<HostRegistration>();
+            Hosts = new List<ProviderRegistration>();
+            Ports = new List<PortRegistration>();
             }
 
         /// <summary>
@@ -195,10 +243,9 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <param name="JPCHost">The Service provider to add.</param>
         /// <returns>Host registration object.</returns>
-        public HostRegistration Add(JPCProvider JPCHost) {
-            var Registration = new HostRegistration(JPCHost, this);
+        public ProviderRegistration Add(JPCProvider JPCHost) {
+            var Registration = new ProviderRegistration(JPCHost, this);
             Hosts.Add(Registration);
-
             return Registration;
             }
 
@@ -233,24 +280,55 @@ namespace Goedel.Protocol {
 
 
         private void Handle (HttpListenerContext Context) {
-            // Which provider handles this URI?
+            Stream RequestStream = null, ResponseStream=null;
+            try {
+                // Which provider handles this URI?
 
-            
+                var Port = Ports[0];    // Should search the prefix list but this 
+                                        // is OK for now.
 
-            // Get request data
+                // Get request data
 
-            // Authenticate request data
+                // This is not a very good implementation since it
+                // lacks speed and support for authentication. But it is best to
+                // add both at the same time.
 
-            // Call dispatcher
+                var Request = Context.Request;
+                var Encoding = Request.ContentEncoding;
+                RequestStream = Request.InputStream;
+                var Reader = new StreamReader(RequestStream, Encoding);
+                var RequestBody = Reader.ReadToEnd();
+                Reader.Close();
 
+                // Authenticate request data
+                // Not yet implemented.
+
+                // Call dispatcher
+                var JSONReader = new JSONReader(RequestBody);
+                var ResponseObject = Port.Provider.Dispatch(null, JSONReader);
+
+                var ResponseBody = ResponseObject.ToString();
+                var Buffer = Encoding.UTF8.GetBytes(ResponseBody);
+
+                var Response = Context.Response;
+                Response.ContentType = "application/json";
+                Response.ContentLength64 = Buffer.Length;
+                ResponseStream = Response.OutputStream;
+                ResponseStream.Write(Buffer, 0, Buffer.Length);
+                }
 
             // Handle errors
 
 
-                // Service not found
-                // Authentication error
-                // Error thrown by provider.
+            // Service not found
+            // Authentication error
+            // Error thrown by provider.
 
+            finally {
+                // Make certain all stream objects are cleaned up.
+                if (RequestStream != null) RequestStream.Close();
+                if (ResponseStream != null) ResponseStream.Close();
+                }
             }
 
 
@@ -278,6 +356,9 @@ namespace Goedel.Protocol {
             Active = false;
             }
 
+        public void Register(HTTPPortRegistration Port) {
+            HttpListener.Prefixes.Add(Port.URI);
+            }
 
         }
     }

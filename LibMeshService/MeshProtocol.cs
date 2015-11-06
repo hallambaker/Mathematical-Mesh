@@ -1,7 +1,7 @@
 ﻿
 //  Test
 //  
-//  This file was automatically generated at 11/5/2015 8:01:37 PM
+//  This file was automatically generated at 11/6/2015 12:57:35 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -648,23 +648,9 @@ namespace Goedel.Mesh {
     public partial class MeshServiceProvider : Goedel.Protocol.JPCProvider {
 
 		/// <summary>
-		/// Dispatch object for service.
+		/// Interface object to dispatch requests to.
 		/// </summary>	
 		public MeshService Service;
-
-		/// <summary>
-		/// Dispatch object for service.
-		/// </summary>	
-		public override JPCInterface JPCInterface { get { return Service ; }}
-
-        /// <summary>
-        /// Register a dispatch interface.
-        /// </summary>
-        /// <param name="JPCInterface"></param>
-        /// <returns>The Interface Registration object.</returns>
-        public override InterfaceRegistration Register(JPCInterface JPCInterface) {
-			return null;
-			}
 
 
 		/// <summary>

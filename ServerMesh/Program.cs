@@ -12,16 +12,20 @@ namespace MeshServerShell {
         public override void Start(Start Options) {
 
             // Create the provider object.
-            var MeshServiceHost = new PublicMeshServiceProvider(Options.Address.Value, 
+            var MeshServiceProvider = new PublicMeshServiceProvider(Options.Address.Value, 
                 Options.MeshStore.Value, Options.PortalStore.Value);
 
-            // Create the dispatcher for the provider.
-            MeshServiceHost.Service = new MeshServiceSession(MeshServiceHost, null);
 
             // Create the server, add the provider, create service port.
             var Server = new JPCServer();
-            var HostReg = Server.Add(MeshServiceHost);
-            var PortReg = HostReg.AddService(Options.Address.Value);
+            var HostReg = Server.Add(MeshServiceProvider);
+
+            // Create the interface dispatcher for the provider.
+            var Interface = new MeshServiceSession(MeshServiceProvider, null);
+            var InterfaceReg = HostReg.Add (Interface);
+
+            // Register the network port.
+            var PortReg = InterfaceReg.AddService(Options.Address.Value);
 
             // Run until abort
             Server.RunBlocking();
