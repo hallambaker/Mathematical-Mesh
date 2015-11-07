@@ -270,7 +270,7 @@ namespace Goedel.Protocol {
                 Host.Open();
                 }
 
-
+            HttpListener.Start();
             while (Active) {
                 var Context = HttpListener.GetContext();
                 Handle(Context);
@@ -357,6 +357,7 @@ namespace Goedel.Protocol {
             }
 
         public void Register(HTTPPortRegistration Port) {
+            Ports.Add(Port);
             HttpListener.Prefixes.Add(Port.URI);
             }
 

@@ -8,6 +8,9 @@ namespace Goedel.Protocol {
     /// </summary>
     public abstract class JPCProvider {
 
+        protected JPCProvider () {
+            Interfaces = new List<JPCInterface> ();
+            }
 
         /// <summary>
         /// The dispatch service.
@@ -34,7 +37,7 @@ namespace Goedel.Protocol {
         /// <param name="TLS">If true, the https scheme is used, otherwise http is used.</param>
         /// <returns></returns>
         public static string WellKnownToURI (string Domain, string WellKnown, bool TLS) {
-            return (TLS ? "https://" : "http://") + Domain + "/.well-known/" + WellKnown;
+            return (TLS ? "https://" : "http://") + Domain + "/.well-known/" + WellKnown + "/";
             }
 
         }

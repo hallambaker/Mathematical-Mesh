@@ -5,6 +5,11 @@ using Goedel.Protocol;
 namespace MeshServerShell {
     public partial class MeshServerShell {
 
+        // To run, it is necessary to first set permissions (as root)
+        // netsh http add urlacl url=http://+:80/.well-known user=VOODOO\Phillip
+
+        //netsh http>add urlacl url="http://prismproof.org:80/.well-known/MeshService/" user=VOODOO\Phillip
+
         /// <summary>
         /// Start the mesh server
         /// </summary>
