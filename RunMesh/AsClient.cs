@@ -8,14 +8,25 @@ namespace Goedel.Mesh {
 
     partial class MeshTest {
 
+        public bool DoLocal = false;
+
         MeshClient MeshClient1;
         MeshClient MeshClient2;
         MeshClient MeshClient3;
 
         public void MeshStoreAPI() {
-            File.Delete(Store);
-            File.Delete(Portal);
-            MeshPortal.Default = new MeshPortalDirect(Store, Portal);
+
+            if (DoLocal) {
+                File.Delete(Store);
+                File.Delete(Portal);
+                MeshPortal.Default = new MeshPortalDirect(Store, Portal);
+                }
+            else {
+                JPCProvider.LocalLoopback = false;
+                var Portal = new MeshPortalRemote();
+                MeshPortal.Default = Portal;
+                }
+
 
             MeshClient1 = new MeshClient(Service);
             var valid = MeshClient1.Validate(AccountID);

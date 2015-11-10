@@ -1,7 +1,7 @@
 ﻿
 //  Test
 //  
-//  This file was automatically generated at 11/6/2015 12:57:35 PM
+//  This file was automatically generated at 11/9/2015 4:47:49 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -87,6 +87,8 @@ namespace Goedel.Mesh {
 			Deserialize (_String);
 			_Initialize () ;
 			}
+
+
 
 
 
@@ -504,7 +506,7 @@ namespace Goedel.Mesh {
             var ResponseData = JPCRemoteSession.Post("Hello", Request);
             var Response = HelloResponse.FromTagged(ResponseData);
 
-            return null;
+            return Response;
             }
 
         /// <summary>
@@ -516,7 +518,7 @@ namespace Goedel.Mesh {
             var ResponseData = JPCRemoteSession.Post("ValidateAccount", Request);
             var Response = ValidateResponse.FromTagged(ResponseData);
 
-            return null;
+            return Response;
             }
 
         /// <summary>
@@ -674,8 +676,7 @@ namespace Goedel.Mesh {
 					break;
 					}
 				case "ValidateAccount" : {
-					var Request = new ValidateRequest ();
-					Request.Deserialize (JSONReader);
+					var Request = ValidateRequest.DeserializeTagged (JSONReader);
 					Response = Service.ValidateAccount (Request);
 					break;
 					}
@@ -863,7 +864,17 @@ namespace Goedel.Mesh {
 			}
 
         /// <summary>
-        /// 
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader"></param>
+        public static MeshRequest  DeserializeTagged (JSONReader JSONReader) {
+			MeshRequest Result;
+			Deserialize (JSONReader, out Result);
+			return Result;
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Out"></param>
@@ -1132,7 +1143,17 @@ namespace Goedel.Mesh {
 			}
 
         /// <summary>
-        /// 
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader"></param>
+        public static MeshResponse  DeserializeTagged (JSONReader JSONReader) {
+			MeshResponse Result;
+			Deserialize (JSONReader, out Result);
+			return Result;
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Out"></param>
@@ -1356,7 +1377,17 @@ namespace Goedel.Mesh {
 			}
 
         /// <summary>
-        /// 
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader"></param>
+        public static HelloRequest  DeserializeTagged (JSONReader JSONReader) {
+			HelloRequest Result;
+			Deserialize (JSONReader, out Result);
+			return Result;
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Out"></param>
@@ -1550,7 +1581,17 @@ namespace Goedel.Mesh {
 			}
 
         /// <summary>
-        /// 
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader"></param>
+        public static HelloResponse  DeserializeTagged (JSONReader JSONReader) {
+			HelloResponse Result;
+			Deserialize (JSONReader, out Result);
+			return Result;
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Out"></param>
@@ -1789,7 +1830,17 @@ namespace Goedel.Mesh {
 			}
 
         /// <summary>
-        /// 
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader"></param>
+        public static Version  DeserializeTagged (JSONReader JSONReader) {
+			Version Result;
+			Deserialize (JSONReader, out Result);
+			return Result;
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Out"></param>
@@ -2007,7 +2058,17 @@ namespace Goedel.Mesh {
 			}
 
         /// <summary>
-        /// 
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader"></param>
+        public static Encoding  DeserializeTagged (JSONReader JSONReader) {
+			Encoding Result;
+			Deserialize (JSONReader, out Result);
+			return Result;
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Out"></param>
@@ -2235,7 +2296,17 @@ namespace Goedel.Mesh {
 			}
 
         /// <summary>
-        /// 
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader"></param>
+        public static ValidateRequest  DeserializeTagged (JSONReader JSONReader) {
+			ValidateRequest Result;
+			Deserialize (JSONReader, out Result);
+			return Result;
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Out"></param>
@@ -2464,7 +2535,17 @@ namespace Goedel.Mesh {
 			}
 
         /// <summary>
-        /// 
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader"></param>
+        public static ValidateResponse  DeserializeTagged (JSONReader JSONReader) {
+			ValidateResponse Result;
+			Deserialize (JSONReader, out Result);
+			return Result;
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Out"></param>
@@ -2666,7 +2747,17 @@ namespace Goedel.Mesh {
 			}
 
         /// <summary>
-        /// 
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader"></param>
+        public static CreateRequest  DeserializeTagged (JSONReader JSONReader) {
+			CreateRequest Result;
+			Deserialize (JSONReader, out Result);
+			return Result;
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Out"></param>
@@ -2840,7 +2931,17 @@ namespace Goedel.Mesh {
 			}
 
         /// <summary>
-        /// 
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader"></param>
+        public static CreateResponse  DeserializeTagged (JSONReader JSONReader) {
+			CreateResponse Result;
+			Deserialize (JSONReader, out Result);
+			return Result;
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Out"></param>
@@ -3017,7 +3118,17 @@ namespace Goedel.Mesh {
 			}
 
         /// <summary>
-        /// 
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader"></param>
+        public static PublishRequest  DeserializeTagged (JSONReader JSONReader) {
+			PublishRequest Result;
+			Deserialize (JSONReader, out Result);
+			return Result;
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Out"></param>
@@ -3187,7 +3298,17 @@ namespace Goedel.Mesh {
 			}
 
         /// <summary>
-        /// 
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader"></param>
+        public static PublishResponse  DeserializeTagged (JSONReader JSONReader) {
+			PublishResponse Result;
+			Deserialize (JSONReader, out Result);
+			return Result;
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Out"></param>
@@ -3440,7 +3561,17 @@ namespace Goedel.Mesh {
 			}
 
         /// <summary>
-        /// 
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader"></param>
+        public static GetRequest  DeserializeTagged (JSONReader JSONReader) {
+			GetRequest Result;
+			Deserialize (JSONReader, out Result);
+			return Result;
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Out"></param>
@@ -3646,7 +3777,17 @@ namespace Goedel.Mesh {
 			}
 
         /// <summary>
-        /// 
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader"></param>
+        public static KeyValue  DeserializeTagged (JSONReader JSONReader) {
+			KeyValue Result;
+			Deserialize (JSONReader, out Result);
+			return Result;
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Out"></param>
@@ -3838,7 +3979,17 @@ namespace Goedel.Mesh {
 			}
 
         /// <summary>
-        /// 
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader"></param>
+        public static GetResponse  DeserializeTagged (JSONReader JSONReader) {
+			GetResponse Result;
+			Deserialize (JSONReader, out Result);
+			return Result;
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Out"></param>
@@ -4037,7 +4188,17 @@ namespace Goedel.Mesh {
 			}
 
         /// <summary>
-        /// 
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader"></param>
+        public static GetRecordsResponse  DeserializeTagged (JSONReader JSONReader) {
+			GetRecordsResponse Result;
+			Deserialize (JSONReader, out Result);
+			return Result;
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Out"></param>
@@ -4284,7 +4445,17 @@ namespace Goedel.Mesh {
 			}
 
         /// <summary>
-        /// 
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader"></param>
+        public static TransferRequest  DeserializeTagged (JSONReader JSONReader) {
+			TransferRequest Result;
+			Deserialize (JSONReader, out Result);
+			return Result;
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Out"></param>
@@ -4468,7 +4639,17 @@ namespace Goedel.Mesh {
 			}
 
         /// <summary>
-        /// 
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader"></param>
+        public static TransferResponse  DeserializeTagged (JSONReader JSONReader) {
+			TransferResponse Result;
+			Deserialize (JSONReader, out Result);
+			return Result;
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Out"></param>
@@ -4636,7 +4817,17 @@ namespace Goedel.Mesh {
 			}
 
         /// <summary>
-        /// 
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader"></param>
+        public static StatusRequest  DeserializeTagged (JSONReader JSONReader) {
+			StatusRequest Result;
+			Deserialize (JSONReader, out Result);
+			return Result;
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Out"></param>
@@ -4851,7 +5042,17 @@ namespace Goedel.Mesh {
 			}
 
         /// <summary>
-        /// 
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader"></param>
+        public static StatusResponse  DeserializeTagged (JSONReader JSONReader) {
+			StatusResponse Result;
+			Deserialize (JSONReader, out Result);
+			return Result;
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Out"></param>
@@ -5067,7 +5268,17 @@ namespace Goedel.Mesh {
 			}
 
         /// <summary>
-        /// 
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader"></param>
+        public static ConnectStartRequest  DeserializeTagged (JSONReader JSONReader) {
+			ConnectStartRequest Result;
+			Deserialize (JSONReader, out Result);
+			return Result;
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Out"></param>
@@ -5252,7 +5463,17 @@ namespace Goedel.Mesh {
 			}
 
         /// <summary>
-        /// 
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader"></param>
+        public static ConnectStartResponse  DeserializeTagged (JSONReader JSONReader) {
+			ConnectStartResponse Result;
+			Deserialize (JSONReader, out Result);
+			return Result;
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Out"></param>
@@ -5440,7 +5661,17 @@ namespace Goedel.Mesh {
 			}
 
         /// <summary>
-        /// 
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader"></param>
+        public static ConnectStatusRequest  DeserializeTagged (JSONReader JSONReader) {
+			ConnectStatusRequest Result;
+			Deserialize (JSONReader, out Result);
+			return Result;
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Out"></param>
@@ -5623,7 +5854,17 @@ namespace Goedel.Mesh {
 			}
 
         /// <summary>
-        /// 
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader"></param>
+        public static ConnectStatusResponse  DeserializeTagged (JSONReader JSONReader) {
+			ConnectStatusResponse Result;
+			Deserialize (JSONReader, out Result);
+			return Result;
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Out"></param>
@@ -5804,7 +6045,17 @@ namespace Goedel.Mesh {
 			}
 
         /// <summary>
-        /// 
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader"></param>
+        public static ConnectPendingRequest  DeserializeTagged (JSONReader JSONReader) {
+			ConnectPendingRequest Result;
+			Deserialize (JSONReader, out Result);
+			return Result;
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Out"></param>
@@ -5995,7 +6246,17 @@ namespace Goedel.Mesh {
 			}
 
         /// <summary>
-        /// 
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader"></param>
+        public static ConnectPendingResponse  DeserializeTagged (JSONReader JSONReader) {
+			ConnectPendingResponse Result;
+			Deserialize (JSONReader, out Result);
+			return Result;
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Out"></param>
@@ -6193,7 +6454,17 @@ namespace Goedel.Mesh {
 			}
 
         /// <summary>
-        /// 
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader"></param>
+        public static ConnectCompleteRequest  DeserializeTagged (JSONReader JSONReader) {
+			ConnectCompleteRequest Result;
+			Deserialize (JSONReader, out Result);
+			return Result;
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Out"></param>
@@ -6369,7 +6640,17 @@ namespace Goedel.Mesh {
 			}
 
         /// <summary>
-        /// 
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader"></param>
+        public static ConnectCompleteResponse  DeserializeTagged (JSONReader JSONReader) {
+			ConnectCompleteResponse Result;
+			Deserialize (JSONReader, out Result);
+			return Result;
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Out"></param>

@@ -1,7 +1,7 @@
 ﻿
 //  Test
 //  
-//  This file was automatically generated at 11/6/2015 11:48:41 PM
+//  This file was automatically generated at 11/9/2015 11:31:27 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -87,6 +87,8 @@ namespace Goedel.Mesh {
 			Deserialize (_String);
 			_Initialize () ;
 			}
+
+
 
 
 
@@ -266,7 +268,17 @@ namespace Goedel.Mesh {
 			}
 
         /// <summary>
-        /// 
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader"></param>
+        public static PortalEntry  DeserializeTagged (JSONReader JSONReader) {
+			PortalEntry Result;
+			Deserialize (JSONReader, out Result);
+			return Result;
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Out"></param>
@@ -478,7 +490,17 @@ namespace Goedel.Mesh {
 			}
 
         /// <summary>
-        /// 
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader"></param>
+        public static Account  DeserializeTagged (JSONReader JSONReader) {
+			Account Result;
+			Deserialize (JSONReader, out Result);
+			return Result;
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Out"></param>
@@ -668,7 +690,17 @@ namespace Goedel.Mesh {
 			}
 
         /// <summary>
-        /// 
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader"></param>
+        public static AccountProfile  DeserializeTagged (JSONReader JSONReader) {
+			AccountProfile Result;
+			Deserialize (JSONReader, out Result);
+			return Result;
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Out"></param>
@@ -854,7 +886,17 @@ namespace Goedel.Mesh {
 			}
 
         /// <summary>
-        /// 
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader"></param>
+        public static ConnectionsPending  DeserializeTagged (JSONReader JSONReader) {
+			ConnectionsPending Result;
+			Deserialize (JSONReader, out Result);
+			return Result;
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Out"></param>

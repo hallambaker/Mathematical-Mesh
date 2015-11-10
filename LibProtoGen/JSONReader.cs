@@ -215,13 +215,14 @@ namespace Goedel.Protocol {
                 TokenString = Lexer (out TokenType);
                 }
             Lookahead = false;
-            //Trace.WriteLine("Got {0} \"{1}\"", TokenType, TokenString);
+            Trace.WriteLine("Got {0} \"{1}\"", TokenType, TokenString);
             }
 
         public virtual void UnGetToken() {
             Lookahead = true;
             //Trace.WriteLine("Unget");
             }
+
 
         string Lexer (out Token Token) {
             string result = "";

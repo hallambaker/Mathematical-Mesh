@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Text;
+using Goedel.Debug;
 
 namespace Goedel.Protocol {
 
@@ -296,12 +297,17 @@ namespace Goedel.Protocol {
                 var Request = Context.Request;
                 var Encoding = Request.ContentEncoding;
                 RequestStream = Request.InputStream;
-                var Reader = new StreamReader(RequestStream, Encoding);
-                var RequestBody = Reader.ReadToEnd();
-                Reader.Close();
+
+                //var Reader = new StreamReader(RequestStream, Encoding);
+                //var RequestBody = Reader.ReadToEnd();
+
+                var RequestBody = Dechunk.ReadString(Request.ContentLength64, RequestStream);
+                RequestStream.Close();
 
                 // Authenticate request data
                 // Not yet implemented.
+
+                Trace.WriteLine(RequestBody);
 
                 // Call dispatcher
                 var JSONReader = new JSONReader(RequestBody);

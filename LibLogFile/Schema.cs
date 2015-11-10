@@ -1,7 +1,7 @@
 ﻿
 //  Test
 //  
-//  This file was automatically generated at 11/6/2015 11:48:40 PM
+//  This file was automatically generated at 11/9/2015 11:31:26 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -85,6 +85,8 @@ namespace Goedel.Persistence {
 			Deserialize (_String);
 			_Initialize () ;
 			}
+
+
 
 
 
@@ -423,7 +425,17 @@ namespace Goedel.Persistence {
 			}
 
         /// <summary>
-        /// 
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader"></param>
+        public static DataItem  DeserializeTagged (JSONReader JSONReader) {
+			DataItem Result;
+			Deserialize (JSONReader, out Result);
+			return Result;
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Out"></param>
@@ -682,7 +694,17 @@ namespace Goedel.Persistence {
 			}
 
         /// <summary>
-        /// 
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader"></param>
+        public static Header  DeserializeTagged (JSONReader JSONReader) {
+			Header Result;
+			Deserialize (JSONReader, out Result);
+			return Result;
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Out"></param>
@@ -879,7 +901,17 @@ namespace Goedel.Persistence {
 			}
 
         /// <summary>
-        /// 
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader"></param>
+        public static Delta  DeserializeTagged (JSONReader JSONReader) {
+			Delta Result;
+			Deserialize (JSONReader, out Result);
+			return Result;
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Out"></param>
@@ -1058,7 +1090,17 @@ namespace Goedel.Persistence {
 			}
 
         /// <summary>
-        /// 
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader"></param>
+        public static IndexTerm  DeserializeTagged (JSONReader JSONReader) {
+			IndexTerm Result;
+			Deserialize (JSONReader, out Result);
+			return Result;
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Out"></param>
@@ -1228,7 +1270,17 @@ namespace Goedel.Persistence {
 			}
 
         /// <summary>
-        /// 
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader"></param>
+        public static Final  DeserializeTagged (JSONReader JSONReader) {
+			Final Result;
+			Deserialize (JSONReader, out Result);
+			return Result;
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Out"></param>
@@ -1406,7 +1458,17 @@ namespace Goedel.Persistence {
 			}
 
         /// <summary>
-        /// 
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader"></param>
+        public static Terminal  DeserializeTagged (JSONReader JSONReader) {
+			Terminal Result;
+			Deserialize (JSONReader, out Result);
+			return Result;
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Out"></param>
@@ -1596,7 +1658,17 @@ namespace Goedel.Persistence {
 			}
 
         /// <summary>
-        /// 
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader"></param>
+        public static IndexIndex  DeserializeTagged (JSONReader JSONReader) {
+			IndexIndex Result;
+			Deserialize (JSONReader, out Result);
+			return Result;
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Out"></param>
@@ -1787,7 +1859,17 @@ namespace Goedel.Persistence {
 			}
 
         /// <summary>
-        /// 
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader"></param>
+        public static Index  DeserializeTagged (JSONReader JSONReader) {
+			Index Result;
+			Deserialize (JSONReader, out Result);
+			return Result;
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Out"></param>
@@ -1983,7 +2065,17 @@ namespace Goedel.Persistence {
 			}
 
         /// <summary>
-        /// 
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader"></param>
+        public static IndexEntry  DeserializeTagged (JSONReader JSONReader) {
+			IndexEntry Result;
+			Deserialize (JSONReader, out Result);
+			return Result;
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Out"></param>

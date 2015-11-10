@@ -54,6 +54,7 @@
     <Compile Include="ByteBuffer.cs" />
     <Compile Include="ChallengeResponse.cs" />
     <Compile Include="Cryoptography.cs" />
+    <Compile Include="Dechunking.cs" />
     <Compile Include="JPC.cs" />
     <Compile Include="JSONAWriter.cs" />
     <Compile Include="JSONBWriter.cs" />

@@ -27,7 +27,7 @@ namespace Goedel.Protocol {
     public class StringCharacterStream : BufferedCharacterStream {
         string Source;
         int Position = 0;
-        public override bool EOF { get { return Position < Source.Length; } }
+        public override bool EOF { get { return Position >= Source.Length; } }
 
         public StringCharacterStream(string Source) {
             this.Source = Source;
@@ -64,6 +64,7 @@ namespace Goedel.Protocol {
 
         public TextCharacterTextStream(TextReader Source) {
             this.Source = Source;
+            _EOF = false;
             }
 
         public TextCharacterTextStream(FileStream FileStream) {

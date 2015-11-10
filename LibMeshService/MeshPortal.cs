@@ -134,10 +134,20 @@ namespace Goedel.Mesh {
     public class MeshPortalRemote : MeshPortal {
 
         /// <summary>
+        /// Default constructor.
+        /// </summary>
+        public MeshPortalRemote () {
+
+            }
+
+
+        /// <summary>
         /// Return a MeshService object for the named portal service.
         /// </summary>
         public override MeshService GetService(string Service, string Account) {
-            var Session = new WebRemoteSession(MeshService.GetWellKnown, Service, Account);
+            var URI = JPCProvider.WellKnownToURI(Service, MeshService.WellKnown, false);
+
+            var Session = new WebRemoteSession(URI, Service, Account);
             MeshService = new MeshServiceClient(Session);
             return MeshService;
             }

@@ -53,6 +53,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RunMesh", "RunMesh\RunMesh.csproj", "{BFFBF220-972F-4E71-8EBC-F92AEC7AC178}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerMesh", "ServerMesh\ServerMesh.csproj", "{98BCF5B8-9232-437B-A2FA-BA769BF4D982}"
+	ProjectSection(ProjectDependencies) = postProject
+		{BFFBF220-972F-4E71-8EBC-F92AEC7AC178} = {BFFBF220-972F-4E71-8EBC-F92AEC7AC178}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestLibCrypto", "TestLibCrypto\TestLibCrypto.csproj", "{7188B158-9282-4255-B79B-73510E8B4C99}"
 EndProject

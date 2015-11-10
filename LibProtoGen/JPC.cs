@@ -8,6 +8,11 @@ namespace Goedel.Protocol {
     /// </summary>
     public abstract class JPCProvider {
 
+        /// <summary>
+        /// If set, all domain names are mapped onto 127.0.0.1
+        /// </summary>
+        public static bool LocalLoopback = false;
+
         protected JPCProvider () {
             Interfaces = new List<JPCInterface> ();
             }
@@ -37,7 +42,7 @@ namespace Goedel.Protocol {
         /// <param name="TLS">If true, the https scheme is used, otherwise http is used.</param>
         /// <returns></returns>
         public static string WellKnownToURI (string Domain, string WellKnown, bool TLS) {
-            return (TLS ? "https://" : "http://") + Domain + "/.well-known/" + WellKnown + "/";
+            return (TLS ? "https://" : "http://") + "127.0.0.1" + "/.well-known/" + WellKnown + "/";
             }
 
         }
@@ -77,9 +82,9 @@ namespace Goedel.Protocol {
         public string UDF;
 
         /// <summary>
-        /// Portal Address.
+        /// DNS Address.
         /// </summary>
-        public string Portal;
+        public string Domain;
 
         /// <summary>
         /// If true we have an authentication structure.
@@ -183,7 +188,7 @@ namespace Goedel.Protocol {
         /// <param name="UDF">Authentication key identifier.</param>
         public LocalRemoteSession(JPCProvider Host, string Domain, string Account, string UDF) {
             this.Account = Account;
-            this.Portal = Domain;
+            this.Domain = Domain;
             this.UDF = UDF;
             this.Host = Host;
             }

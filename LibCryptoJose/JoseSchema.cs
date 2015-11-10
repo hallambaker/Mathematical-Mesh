@@ -1,7 +1,7 @@
 ﻿
 //  Test
 //  
-//  This file was automatically generated at 11/6/2015 11:28:25 PM
+//  This file was automatically generated at 11/9/2015 11:31:27 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -85,6 +85,8 @@ namespace Goedel.Cryptography.Jose {
 			Deserialize (_String);
 			_Initialize () ;
 			}
+
+
 
 
 
@@ -337,7 +339,17 @@ namespace Goedel.Cryptography.Jose {
 			}
 
         /// <summary>
-        /// 
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader"></param>
+        public static JoseWebSignature  DeserializeTagged (JSONReader JSONReader) {
+			JoseWebSignature Result;
+			Deserialize (JSONReader, out Result);
+			return Result;
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Out"></param>
@@ -581,7 +593,17 @@ namespace Goedel.Cryptography.Jose {
 			}
 
         /// <summary>
-        /// 
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader"></param>
+        public static JoseWebEncryption  DeserializeTagged (JSONReader JSONReader) {
+			JoseWebEncryption Result;
+			Deserialize (JSONReader, out Result);
+			return Result;
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Out"></param>
@@ -799,7 +821,17 @@ namespace Goedel.Cryptography.Jose {
 			}
 
         /// <summary>
-        /// 
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader"></param>
+        public static Signed  DeserializeTagged (JSONReader JSONReader) {
+			Signed Result;
+			Deserialize (JSONReader, out Result);
+			return Result;
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Out"></param>
@@ -1002,7 +1034,17 @@ namespace Goedel.Cryptography.Jose {
 			}
 
         /// <summary>
-        /// 
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader"></param>
+        public static Encrypted  DeserializeTagged (JSONReader JSONReader) {
+			Encrypted Result;
+			Deserialize (JSONReader, out Result);
+			return Result;
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Out"></param>
@@ -1236,7 +1278,17 @@ namespace Goedel.Cryptography.Jose {
 			}
 
         /// <summary>
-        /// 
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader"></param>
+        public static KeyData  DeserializeTagged (JSONReader JSONReader) {
+			KeyData Result;
+			Deserialize (JSONReader, out Result);
+			return Result;
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Out"></param>
@@ -1491,7 +1543,17 @@ namespace Goedel.Cryptography.Jose {
 			}
 
         /// <summary>
-        /// 
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader"></param>
+        public static Header  DeserializeTagged (JSONReader JSONReader) {
+			Header Result;
+			Deserialize (JSONReader, out Result);
+			return Result;
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Out"></param>
@@ -1702,7 +1764,17 @@ namespace Goedel.Cryptography.Jose {
 			}
 
         /// <summary>
-        /// 
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader"></param>
+        public static Key  DeserializeTagged (JSONReader JSONReader) {
+			Key Result;
+			Deserialize (JSONReader, out Result);
+			return Result;
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Out"></param>
@@ -1904,7 +1976,17 @@ namespace Goedel.Cryptography.Jose {
 			}
 
         /// <summary>
-        /// 
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader"></param>
+        public static Recipient  DeserializeTagged (JSONReader JSONReader) {
+			Recipient Result;
+			Deserialize (JSONReader, out Result);
+			return Result;
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Out"></param>
@@ -2086,7 +2168,17 @@ namespace Goedel.Cryptography.Jose {
 			}
 
         /// <summary>
-        /// 
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader"></param>
+        public static PublicKeyRSA  DeserializeTagged (JSONReader JSONReader) {
+			PublicKeyRSA Result;
+			Deserialize (JSONReader, out Result);
+			return Result;
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Out"></param>
@@ -2310,7 +2402,17 @@ namespace Goedel.Cryptography.Jose {
 			}
 
         /// <summary>
-        /// 
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader"></param>
+        public static PrivateKeyRSA  DeserializeTagged (JSONReader JSONReader) {
+			PrivateKeyRSA Result;
+			Deserialize (JSONReader, out Result);
+			return Result;
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Out"></param>
