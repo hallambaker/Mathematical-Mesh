@@ -183,11 +183,11 @@ namespace Goedel.Mesh {
         /// </summary>		
         public override ConnectStartResponse ConnectStart(
                 ConnectStartRequest Request) {
-
+            var ConnectStartResponse = new ConnectStartResponse();
             var Pending = Mesh.PostConnectionRequest(Request.SignedRequest, 
                             Request.AccountID);
 
-            return null;
+            return ConnectStartResponse;
             }
 
         /// <summary>

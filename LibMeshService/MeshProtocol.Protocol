@@ -171,7 +171,7 @@
 
 	Message PublishRequest
 		Inherits MeshRequest
-		Struct Entry Entry
+		TStruct Entry Entry
 			Description
 				|Signed profile to be published.
 
@@ -212,7 +212,7 @@
 
 	Message GetResponse
 		Inherits MeshResponse
-		Struct Entry Entries
+		TStruct Entry Entries
 			Multiple
 			Description
 				|List of entries matching the request.

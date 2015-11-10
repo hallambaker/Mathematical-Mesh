@@ -1,7 +1,7 @@
 ﻿
 //  Test
 //  
-//  This file was automatically generated at 11/9/2015 11:31:27 PM
+//  This file was automatically generated at 11/10/2015 5:04:42 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -271,7 +271,7 @@ namespace Goedel.Mesh {
         /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
-        public static PortalEntry  DeserializeTagged (JSONReader JSONReader) {
+        public static new PortalEntry  DeserializeTagged (JSONReader JSONReader) {
 			PortalEntry Result;
 			Deserialize (JSONReader, out Result);
 			return Result;
@@ -493,7 +493,7 @@ namespace Goedel.Mesh {
         /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
-        public static Account  DeserializeTagged (JSONReader JSONReader) {
+        public static new Account  DeserializeTagged (JSONReader JSONReader) {
 			Account Result;
 			Deserialize (JSONReader, out Result);
 			return Result;
@@ -693,7 +693,7 @@ namespace Goedel.Mesh {
         /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
-        public static AccountProfile  DeserializeTagged (JSONReader JSONReader) {
+        public static new AccountProfile  DeserializeTagged (JSONReader JSONReader) {
 			AccountProfile Result;
 			Deserialize (JSONReader, out Result);
 			return Result;
@@ -889,7 +889,7 @@ namespace Goedel.Mesh {
         /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
-        public static ConnectionsPending  DeserializeTagged (JSONReader JSONReader) {
+        public static new ConnectionsPending  DeserializeTagged (JSONReader JSONReader) {
 			ConnectionsPending Result;
 			Deserialize (JSONReader, out Result);
 			return Result;

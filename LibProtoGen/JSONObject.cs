@@ -97,6 +97,9 @@ namespace Goedel.Protocol {
 			Deserialize (JSONReader);
 			}
 
+        public static void DeserializeTagged(JSONReader JSONReader) {
+            }
+
         public virtual void Deserialize(JSONReader JSONReader) {
 
             bool Going = JSONReader.StartObject();

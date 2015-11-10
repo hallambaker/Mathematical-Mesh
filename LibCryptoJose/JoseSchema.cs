@@ -1,7 +1,7 @@
 ﻿
 //  Test
 //  
-//  This file was automatically generated at 11/9/2015 11:31:27 PM
+//  This file was automatically generated at 11/10/2015 12:26:34 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -342,7 +342,7 @@ namespace Goedel.Cryptography.Jose {
         /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
-        public static JoseWebSignature  DeserializeTagged (JSONReader JSONReader) {
+        public static new JoseWebSignature  DeserializeTagged (JSONReader JSONReader) {
 			JoseWebSignature Result;
 			Deserialize (JSONReader, out Result);
 			return Result;
@@ -596,7 +596,7 @@ namespace Goedel.Cryptography.Jose {
         /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
-        public static JoseWebEncryption  DeserializeTagged (JSONReader JSONReader) {
+        public static new JoseWebEncryption  DeserializeTagged (JSONReader JSONReader) {
 			JoseWebEncryption Result;
 			Deserialize (JSONReader, out Result);
 			return Result;
@@ -824,7 +824,7 @@ namespace Goedel.Cryptography.Jose {
         /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
-        public static Signed  DeserializeTagged (JSONReader JSONReader) {
+        public static new Signed  DeserializeTagged (JSONReader JSONReader) {
 			Signed Result;
 			Deserialize (JSONReader, out Result);
 			return Result;
@@ -1037,7 +1037,7 @@ namespace Goedel.Cryptography.Jose {
         /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
-        public static Encrypted  DeserializeTagged (JSONReader JSONReader) {
+        public static new Encrypted  DeserializeTagged (JSONReader JSONReader) {
 			Encrypted Result;
 			Deserialize (JSONReader, out Result);
 			return Result;
@@ -1281,7 +1281,7 @@ namespace Goedel.Cryptography.Jose {
         /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
-        public static KeyData  DeserializeTagged (JSONReader JSONReader) {
+        public static new KeyData  DeserializeTagged (JSONReader JSONReader) {
 			KeyData Result;
 			Deserialize (JSONReader, out Result);
 			return Result;
@@ -1546,7 +1546,7 @@ namespace Goedel.Cryptography.Jose {
         /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
-        public static Header  DeserializeTagged (JSONReader JSONReader) {
+        public static new Header  DeserializeTagged (JSONReader JSONReader) {
 			Header Result;
 			Deserialize (JSONReader, out Result);
 			return Result;
@@ -1767,7 +1767,7 @@ namespace Goedel.Cryptography.Jose {
         /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
-        public static Key  DeserializeTagged (JSONReader JSONReader) {
+        public static new Key  DeserializeTagged (JSONReader JSONReader) {
 			Key Result;
 			Deserialize (JSONReader, out Result);
 			return Result;
@@ -1979,7 +1979,7 @@ namespace Goedel.Cryptography.Jose {
         /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
-        public static Recipient  DeserializeTagged (JSONReader JSONReader) {
+        public static new Recipient  DeserializeTagged (JSONReader JSONReader) {
 			Recipient Result;
 			Deserialize (JSONReader, out Result);
 			return Result;
@@ -2171,7 +2171,7 @@ namespace Goedel.Cryptography.Jose {
         /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
-        public static PublicKeyRSA  DeserializeTagged (JSONReader JSONReader) {
+        public static new PublicKeyRSA  DeserializeTagged (JSONReader JSONReader) {
 			PublicKeyRSA Result;
 			Deserialize (JSONReader, out Result);
 			return Result;
@@ -2405,7 +2405,7 @@ namespace Goedel.Cryptography.Jose {
         /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
-        public static PrivateKeyRSA  DeserializeTagged (JSONReader JSONReader) {
+        public static new PrivateKeyRSA  DeserializeTagged (JSONReader JSONReader) {
 			PrivateKeyRSA Result;
 			Deserialize (JSONReader, out Result);
 			return Result;
