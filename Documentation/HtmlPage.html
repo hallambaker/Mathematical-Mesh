@@ -1,0 +1,70 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>IANA Registrations</title>
+	<meta charset="utf-8" />
+</head>
+<body>
+
+    <h1>MatheMatical Mesh: IANA Registrations </h1>
+
+    <p>The MatheMatical Mesh requires the following registrations:</p>
+
+    <ul>
+        <li>SRV Prefix for portal discovery: _mmmi.</li>
+        <li>SRV Prefix for intermesh discovery</li>
+
+
+    </ul>
+
+
+    The relevant authorities are:
+
+
+    <ul>
+        <li><a href="http://www.rfc-editor.org/rfc/rfc6335.txt">RFC 6335 </a></li>
+
+
+    </ul>
+
+    <h2>SRV Template</h2>
+
+    <pre>
+Service Name (REQUIRED):           mmm
+Transport Protocol(s) (REQUIRED):  TCP, UDP
+Assignee (REQUIRED)                Phillip Hallam-Baker <phill@hallambaker.com>
+Contact (REQUIRED)                 Phillip Hallam-Baker <phill@hallambaker.com>
+Description (REQUIRED)
+
+Access protocol for the Mathe-Matical Mesh. The Mesh is a PKI that allows
+a personal user to share credentials and application configuration data
+between devices in an entirely seamless fashion.
+ 
+
+Reference (REQUIRED)
+
+The protocol does not make use of IP Broadcast, Multicast or Anycast.
+
+For the time being we would like the application to be considered under the 
+'proprietary' rules. The reference code for the protocol is generated from a
+machine readable specification. We anticipate making rapid changes to the 
+specification during development and would prefer to release an initial Internet 
+Draft that reflects experience from alpha testing. 
+
+
+Port Number (OPTIONAL)            None
+
+Service Code (REQUIRED for DCCP only)   None
+
+Known Unauthorized Uses (OPTIONAL)
+
+None.
+
+Assignment Notes (OPTIONAL)
+
+At this point we are only seeking pre-assignment of the code point _mmm._tcp so
+that we can use SRV based discovery in the alpha deployment trial.
+
+</pre>
+</body>
+</html>

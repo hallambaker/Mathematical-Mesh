@@ -8,11 +8,11 @@ namespace Goedel.MeshProfileManager {
 
     public partial class AddAccountStart {
         public override void Enter() {
-            Trace.WriteLine("Enter Add Account");
+            //Trace.WriteLine("Enter Add Account");
             }
 
         public override bool Exit() {
-            Trace.WriteLine("Exit Add Account");
+            //Trace.WriteLine("Exit Add Account");
             return true;
             }
         }
@@ -53,7 +53,7 @@ namespace Goedel.MeshProfileManager {
             }
 
         public override bool ConfigurePassword() {
-            Trace.WriteLine("Will Configure Password Manager");
+            //Trace.WriteLine("Will Configure Password Manager");
             Data.ConfigurePassword = true;
             return true;
             }
@@ -64,7 +64,7 @@ namespace Goedel.MeshProfileManager {
 
         public override bool ConfigureNetwork() {
             Data.ConfigureNetwork = true;
-            Trace.WriteLine("Will Configure Network");
+            //Trace.WriteLine("Will Configure Network");
             return true;
             }
 
@@ -81,7 +81,7 @@ namespace Goedel.MeshProfileManager {
             Data.AllMailAccountInfos = MailClientCatalog.FindLocal();
             Data.AccountIndex = 0;
 
-            Trace.WriteLine("Will Configure Email");
+            //Trace.WriteLine("Will Configure Email");
 
             if (Data.AllMailAccountInfos.Count == 0) {
                 Data.Navigate(Data.Data_NoEmailFound);
@@ -131,7 +131,7 @@ namespace Goedel.MeshProfileManager {
         public override bool CreateRecovery() {
             // At some point allow user to ask for a different share than 2 out of three.
             Data.ConfigureRecovery = true;
-            Trace.WriteLine("Will Configure Recovery with ? of ? shares.");
+            //Trace.WriteLine("Will Configure Recovery with ? of ? shares.");
 
             Data.share1 = "Computed 1";
             Data.share2 = "Computed 2";
@@ -145,16 +145,16 @@ namespace Goedel.MeshProfileManager {
 
     public partial class GenerateKeys {
         public override void Enter() {
-            Trace.WriteLine("Enter GenerateKeys");
+            //Trace.WriteLine("Enter GenerateKeys");
             }
 
         public override bool Exit() {
-            Trace.WriteLine("Exit GenerateKeys");
+            //Trace.WriteLine("Exit GenerateKeys");
             return true;
             }
 
         public override void GenerateKeysTask1() {
-            Trace.WriteLine("Generating the keys");
+            //Trace.WriteLine("Generating the keys");
 
             Data.GenerateProfile();
             }
@@ -162,17 +162,17 @@ namespace Goedel.MeshProfileManager {
 
     public partial class GenerateRecoveryKeys {
         public override void Enter() {
-            Trace.WriteLine("Enter GenerateRecoveryKeys");
+            //Trace.WriteLine("Enter GenerateRecoveryKeys");
 
             }
 
         public override bool Exit() {
-            Trace.WriteLine("Exit GenerateRecoveryKeys");
+            //Trace.WriteLine("Exit GenerateRecoveryKeys");
             return true;
             }
 
         public override void GenerateKeysTask2() {
-            Trace.WriteLine("Generating the keys");
+            //Trace.WriteLine("Generating the keys");
 
             Data.GenerateProfile();
             Dialog.UpdateProgress();
@@ -198,14 +198,14 @@ namespace Goedel.MeshProfileManager {
     public partial class ConnectPending {
 
         public override void Enter() {
-            Trace.WriteLine("Enter ConnectPending");
+            //Trace.WriteLine("Enter ConnectPending");
 
             Output_ProfileUDF = Data.UDF;
             Refresh();
             }
 
         public override void WaitConnectTask() {
-            Trace.WriteLine("Generating the keys");
+            //Trace.WriteLine("Generating the keys");
 
             Data.PostConnect();
             Dialog.UpdateProgress();
@@ -216,7 +216,7 @@ namespace Goedel.MeshProfileManager {
     public partial class Finish {
 
         public override void Enter() {
-            Trace.WriteLine("Enter Finish");
+            //Trace.WriteLine("Enter Finish");
 
             Output_Fingerprint = Data.UDF;
             Refresh();
@@ -228,7 +228,7 @@ namespace Goedel.MeshProfileManager {
     public partial class FinishRecovery {
 
         public override void Enter() {
-            Trace.WriteLine("Enter Finish");
+            //Trace.WriteLine("Enter Finish");
 
             Output_RecoveryShare1f = Data.share1;
             Output_RecoveryShare2f = Data.share2;
@@ -242,7 +242,7 @@ namespace Goedel.MeshProfileManager {
     public partial class CheckFingerPrint {
 
         public override void Enter() {
-            Trace.WriteLine("Enter Check UDF");
+            //Trace.WriteLine("Enter Check UDF");
 
             Output_Fingerprint2 = Data.UDF;
             Refresh();
@@ -253,8 +253,8 @@ namespace Goedel.MeshProfileManager {
     public partial class RecoverKey {
 
         public override bool Recover() {
-            Trace.WriteLine("Share 1 {0}", Input_RecoveryShare1);
-            Trace.WriteLine("Share 2 {0}", Input_RecoveryShare2);
+            //Trace.WriteLine("Share 1 {0}", Input_RecoveryShare1);
+            //Trace.WriteLine("Share 2 {0}", Input_RecoveryShare2);
 
             string[] Shares = { Input_RecoveryShare1, Input_RecoveryShare2 };
 
@@ -272,7 +272,7 @@ namespace Goedel.MeshProfileManager {
     public partial class SetupComplete {
         public override void Enter() {
             // set the default provider (prismproof.org)
-            Output_ProfileUDF = Data.MeshClient.UDF;
+            Output_ProfileUDF = Data.UDF;
             Output_AccountID = Data.AccountID;
             }
 
@@ -281,5 +281,23 @@ namespace Goedel.MeshProfileManager {
             }
         }
 
+
+
+    public partial class ProcessPending {
+        public override void Enter() {
+            // set the default provider (prismproof.org)
+            Output_PendingUDF = Data.PendingConnectionRequests[0].Identifier;
+            Output_ProfileUDF1 = Data.UDF;
+            Output_AccountID1 = Data.AccountID;
+            }
+
+        public override bool AcceptPending() {
+            return true;
+            }
+
+        public override bool RejectPending() {
+            return true;
+            }
+        }
 
     }

@@ -54,6 +54,16 @@ namespace Goedel.MeshProfileManager {
             get { return _Output_PendingUDF; }
             set { _Output_PendingUDF = value;   Refresh (); }
             }
+		string _Output_ProfileUDF1;
+		public string Output_ProfileUDF1 {
+            get { return _Output_ProfileUDF1; }
+            set { _Output_ProfileUDF1 = value;   Refresh (); }
+            }
+		string _Output_AccountID1;
+		public string Output_AccountID1 {
+            get { return _Output_AccountID1; }
+            set { _Output_AccountID1 = value;   Refresh (); }
+            }
 
 
 
@@ -107,6 +117,8 @@ namespace Goedel.MeshProfileManager {
 
 		public void Refresh () {
 			Output_PendingUDF.Text  = Data.Output_PendingUDF;
+			Output_ProfileUDF1.Text  = Data.Output_ProfileUDF1;
+			Output_AccountID1.Text  = Data.Output_AccountID1;
 			}
 
         private void Action_AcceptPending(object sender, RoutedEventArgs e) {

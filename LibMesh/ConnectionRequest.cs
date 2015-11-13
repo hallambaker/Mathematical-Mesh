@@ -49,12 +49,9 @@ namespace Goedel.Mesh {
         public ConnectionResult Unpack() {
             _Signed = null;
 
-            ConnectionResult Profile;
-
             var Reader = JSONReader.OfData(SignedData.Payload);
-            ConnectionResult.Deserialize(Reader, out Profile);
 
-            _Signed = Profile;
+            _Signed = ConnectionResult.FromTagged(Reader);
             return _Signed;
             }
 
@@ -86,10 +83,9 @@ namespace Goedel.Mesh {
         public ConnectionRequest Unpack() {
             _Signed = null;
 
-            ConnectionRequest Profile;
 
             var Reader = JSONReader.OfData(SignedData.Payload);
-            ConnectionRequest.Deserialize(Reader, out Profile);
+            var Profile = ConnectionRequest.FromTagged(Reader);
 
             _Signed = Profile;
             return _Signed;

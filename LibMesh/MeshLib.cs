@@ -107,7 +107,7 @@ namespace Goedel.Mesh {
             PortalStore.New(Account, Account.PrimaryKey(Account.UniqueID), null);
 
             // Push the profile out to the Mesh
-            MeshStore.New(Profile, Profile.UniqueID, null);
+            MeshStore.New(Profile, Profile.Identifier, null);
 
             return true;
             }
@@ -192,8 +192,7 @@ namespace Goedel.Mesh {
 
             var DataItem = IndexUniqueID.Get(ID);
 
-            SignedPersonalProfile Profile;
-            SignedPersonalProfile.Deserialize(DataItem.Text, out Profile);
+            var Profile = SignedPersonalProfile.FromTagged(DataItem.Text);
             return Profile;
             }
 

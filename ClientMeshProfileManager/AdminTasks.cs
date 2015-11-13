@@ -128,24 +128,47 @@ namespace Goedel.MeshProfileManager {
         /// </summary>
         public MeshClient MeshClient;
 
+        /// <summary>
+        /// Flag to allow local processing.
+        /// </summary>
+        public bool DoLocal = false;
 
         /// <summary>
         /// One time initialization of the page.
         /// </summary>
         public override void Initialize() {
-            MeshPortal.Default = new MeshPortalDirect();
+
+            // Get the device profile or create a new one if necessary.
             ThisDevice = SignedDeviceProfile.GetLocal(Device1, Device1Description);
 
-            // Get the default profile if possible
-            MeshClient = new MeshClient(); // default account
 
-            if (MeshClient.Connected) {
-                AccountName = MeshClient.AccountName;
-                Portal = MeshClient.Portal;
-                SignedCurrentProfile = SignedPersonalProfile.GetLocal(MeshClient.UDF);
-                Navigate(Data_SetupComplete);
+
+            if (DoLocal) {
+                MeshPortal.Default = new MeshPortalDirect();
+                
+                // Get the default profile if possible
+                MeshClient = new MeshClient(); // default account
+                MeshClient.AccountID = AccountID;
+
+                if (MeshClient.Connected) {
+                    AccountName = MeshClient.AccountName;
+                    Portal = MeshClient.Portal;
+                    SignedCurrentProfile = SignedPersonalProfile.GetLocal(MeshClient.UDF);
+                    Navigate(Data_SetupComplete);
+                    }
                 }
-            
+
+
+            else {
+
+                JPCProvider.LocalLoopback = false;
+                var Portal = new MeshPortalRemote();
+                MeshPortal.Default = Portal;
+
+
+                }
+
+
             }
 
 
@@ -165,7 +188,7 @@ namespace Goedel.MeshProfileManager {
             MeshClient = new MeshClient (Portal);
 
 
-            var ValidateResponse = MeshClient.Validate(Account);
+            var ValidateResponse = MeshClient.Validate(AccountID);
 
             if (!ValidateResponse.Valid) {
                 InvalidInput = ValidateResponse.Reason;
@@ -210,7 +233,7 @@ namespace Goedel.MeshProfileManager {
             var SignedProfile = new SignedPersonalProfile(UserProfile);
             SignedProfile.ToRegistry();
 
-            MeshClient.CreatePersonalProfile (AccountName, SignedProfile);
+            MeshClient.CreatePersonalProfile (AccountID, SignedProfile);
             }
 
 

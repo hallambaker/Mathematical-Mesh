@@ -1,7 +1,7 @@
 ﻿
 //  Test
 //  
-//  This file was automatically generated at 11/10/2015 5:04:42 PM
+//  This file was automatically generated at 11/13/2015 4:22:40 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -460,14 +460,22 @@ namespace Goedel.Mesh {
 
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged byte input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>		
 		public static new Entry From (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return From (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged string input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new Entry From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
@@ -475,58 +483,44 @@ namespace Goedel.Mesh {
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from tagged byte input.
+		/// i.e. { "Entry" : {... data ... } }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new Entry FromTagged (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return FromTagged (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
-		public static new Entry FromTagged (string _Input) {
-			Entry _Result;
-			Deserialize (_Input, out _Result);
-			return _Result;
-			}
-
-
-        /// <summary>
-        /// 
+        /// Create a new instance from tagged string input.
+		/// i.e. { "Entry" : {... data ... } }
         /// </summary>
-        /// <param name="_Input"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(string _Input, out Entry Out) {
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>		
+		public static new Entry FromTagged (string _Input) {
+			//Entry _Result;
+			//Deserialize (_Input, out _Result);
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-
-			Deserialize (JSONReader, out Out);
+			return FromTagged (JSONReader) ;
 			}
+
 
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
-        public static new Entry  DeserializeTagged (JSONReader JSONReader) {
-			Entry Result;
-			Deserialize (JSONReader, out Result);
-			return Result;
-			}
+        public static new Entry  FromTagged (JSONReader JSONReader) {
+			Entry Out = null;
 
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(JSONReader JSONReader, out Entry Out) {
-	
 			JSONReader.StartObject ();
             if (JSONReader.EOR) {
-                Out = null;
-                return;
+                return null;
                 }
 
 			string token = JSONReader.ReadToken ();
-			Out = null;
 
 			switch (token) {
 
@@ -676,12 +670,12 @@ namespace Goedel.Mesh {
 				}
 			JSONReader.EndObject ();
 
-			// should we check for EOF here?
-            }
+			return Out;
+			}
 
 
         /// <summary>
-        /// 
+        /// Having read a tag, process the corresponding value data.
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Tag"></param>
@@ -770,14 +764,22 @@ namespace Goedel.Mesh {
 
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged byte input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>		
 		public static new SignedProfile From (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return From (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged string input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new SignedProfile From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
@@ -785,58 +787,44 @@ namespace Goedel.Mesh {
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from tagged byte input.
+		/// i.e. { "SignedProfile" : {... data ... } }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new SignedProfile FromTagged (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return FromTagged (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
-		public static new SignedProfile FromTagged (string _Input) {
-			SignedProfile _Result;
-			Deserialize (_Input, out _Result);
-			return _Result;
-			}
-
-
-        /// <summary>
-        /// 
+        /// Create a new instance from tagged string input.
+		/// i.e. { "SignedProfile" : {... data ... } }
         /// </summary>
-        /// <param name="_Input"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(string _Input, out SignedProfile Out) {
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>		
+		public static new SignedProfile FromTagged (string _Input) {
+			//SignedProfile _Result;
+			//Deserialize (_Input, out _Result);
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-
-			Deserialize (JSONReader, out Out);
+			return FromTagged (JSONReader) ;
 			}
+
 
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
-        public static new SignedProfile  DeserializeTagged (JSONReader JSONReader) {
-			SignedProfile Result;
-			Deserialize (JSONReader, out Result);
-			return Result;
-			}
+        public static new SignedProfile  FromTagged (JSONReader JSONReader) {
+			SignedProfile Out = null;
 
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(JSONReader JSONReader, out SignedProfile Out) {
-	
 			JSONReader.StartObject ();
             if (JSONReader.EOR) {
-                Out = null;
-                return;
+                return null;
                 }
 
 			string token = JSONReader.ReadToken ();
-			Out = null;
 
 			switch (token) {
 
@@ -897,12 +885,12 @@ namespace Goedel.Mesh {
 				}
 			JSONReader.EndObject ();
 
-			// should we check for EOF here?
-            }
+			return Out;
+			}
 
 
         /// <summary>
-        /// 
+        /// Having read a tag, process the corresponding value data.
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Tag"></param>
@@ -910,9 +898,9 @@ namespace Goedel.Mesh {
 			
 			switch (Tag) {
 				case "SignedData" : {
-					// Field does not have 
+					// An untagged structure
 					SignedData = new JoseWebSignature (JSONReader);
-					//JoseWebSignature.Deserialize(JSONReader, out SignedData) ;
+ 
 					break;
 					}
 				default : {
@@ -985,14 +973,22 @@ namespace Goedel.Mesh {
 
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged byte input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>		
 		public static new SignedDeviceProfile From (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return From (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged string input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new SignedDeviceProfile From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
@@ -1000,58 +996,44 @@ namespace Goedel.Mesh {
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from tagged byte input.
+		/// i.e. { "SignedDeviceProfile" : {... data ... } }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new SignedDeviceProfile FromTagged (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return FromTagged (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
-		public static new SignedDeviceProfile FromTagged (string _Input) {
-			SignedDeviceProfile _Result;
-			Deserialize (_Input, out _Result);
-			return _Result;
-			}
-
-
-        /// <summary>
-        /// 
+        /// Create a new instance from tagged string input.
+		/// i.e. { "SignedDeviceProfile" : {... data ... } }
         /// </summary>
-        /// <param name="_Input"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(string _Input, out SignedDeviceProfile Out) {
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>		
+		public static new SignedDeviceProfile FromTagged (string _Input) {
+			//SignedDeviceProfile _Result;
+			//Deserialize (_Input, out _Result);
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-
-			Deserialize (JSONReader, out Out);
+			return FromTagged (JSONReader) ;
 			}
+
 
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
-        public static new SignedDeviceProfile  DeserializeTagged (JSONReader JSONReader) {
-			SignedDeviceProfile Result;
-			Deserialize (JSONReader, out Result);
-			return Result;
-			}
+        public static new SignedDeviceProfile  FromTagged (JSONReader JSONReader) {
+			SignedDeviceProfile Out = null;
 
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(JSONReader JSONReader, out SignedDeviceProfile Out) {
-	
 			JSONReader.StartObject ();
             if (JSONReader.EOR) {
-                Out = null;
-                return;
+                return null;
                 }
 
 			string token = JSONReader.ReadToken ();
-			Out = null;
 
 			switch (token) {
 
@@ -1070,12 +1052,12 @@ namespace Goedel.Mesh {
 				}
 			JSONReader.EndObject ();
 
-			// should we check for EOF here?
-            }
+			return Out;
+			}
 
 
         /// <summary>
-        /// 
+        /// Having read a tag, process the corresponding value data.
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Tag"></param>
@@ -1152,14 +1134,22 @@ namespace Goedel.Mesh {
 
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged byte input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>		
 		public static new SignedMasterProfile From (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return From (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged string input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new SignedMasterProfile From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
@@ -1167,58 +1157,44 @@ namespace Goedel.Mesh {
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from tagged byte input.
+		/// i.e. { "SignedMasterProfile" : {... data ... } }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new SignedMasterProfile FromTagged (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return FromTagged (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
-		public static new SignedMasterProfile FromTagged (string _Input) {
-			SignedMasterProfile _Result;
-			Deserialize (_Input, out _Result);
-			return _Result;
-			}
-
-
-        /// <summary>
-        /// 
+        /// Create a new instance from tagged string input.
+		/// i.e. { "SignedMasterProfile" : {... data ... } }
         /// </summary>
-        /// <param name="_Input"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(string _Input, out SignedMasterProfile Out) {
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>		
+		public static new SignedMasterProfile FromTagged (string _Input) {
+			//SignedMasterProfile _Result;
+			//Deserialize (_Input, out _Result);
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-
-			Deserialize (JSONReader, out Out);
+			return FromTagged (JSONReader) ;
 			}
+
 
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
-        public static new SignedMasterProfile  DeserializeTagged (JSONReader JSONReader) {
-			SignedMasterProfile Result;
-			Deserialize (JSONReader, out Result);
-			return Result;
-			}
+        public static new SignedMasterProfile  FromTagged (JSONReader JSONReader) {
+			SignedMasterProfile Out = null;
 
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(JSONReader JSONReader, out SignedMasterProfile Out) {
-	
 			JSONReader.StartObject ();
             if (JSONReader.EOR) {
-                Out = null;
-                return;
+                return null;
                 }
 
 			string token = JSONReader.ReadToken ();
-			Out = null;
 
 			switch (token) {
 
@@ -1237,12 +1213,12 @@ namespace Goedel.Mesh {
 				}
 			JSONReader.EndObject ();
 
-			// should we check for EOF here?
-            }
+			return Out;
+			}
 
 
         /// <summary>
-        /// 
+        /// Having read a tag, process the corresponding value data.
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Tag"></param>
@@ -1319,14 +1295,22 @@ namespace Goedel.Mesh {
 
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged byte input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>		
 		public static new SignedPersonalProfile From (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return From (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged string input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new SignedPersonalProfile From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
@@ -1334,58 +1318,44 @@ namespace Goedel.Mesh {
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from tagged byte input.
+		/// i.e. { "SignedPersonalProfile" : {... data ... } }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new SignedPersonalProfile FromTagged (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return FromTagged (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
-		public static new SignedPersonalProfile FromTagged (string _Input) {
-			SignedPersonalProfile _Result;
-			Deserialize (_Input, out _Result);
-			return _Result;
-			}
-
-
-        /// <summary>
-        /// 
+        /// Create a new instance from tagged string input.
+		/// i.e. { "SignedPersonalProfile" : {... data ... } }
         /// </summary>
-        /// <param name="_Input"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(string _Input, out SignedPersonalProfile Out) {
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>		
+		public static new SignedPersonalProfile FromTagged (string _Input) {
+			//SignedPersonalProfile _Result;
+			//Deserialize (_Input, out _Result);
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-
-			Deserialize (JSONReader, out Out);
+			return FromTagged (JSONReader) ;
 			}
+
 
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
-        public static new SignedPersonalProfile  DeserializeTagged (JSONReader JSONReader) {
-			SignedPersonalProfile Result;
-			Deserialize (JSONReader, out Result);
-			return Result;
-			}
+        public static new SignedPersonalProfile  FromTagged (JSONReader JSONReader) {
+			SignedPersonalProfile Out = null;
 
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(JSONReader JSONReader, out SignedPersonalProfile Out) {
-	
 			JSONReader.StartObject ();
             if (JSONReader.EOR) {
-                Out = null;
-                return;
+                return null;
                 }
 
 			string token = JSONReader.ReadToken ();
-			Out = null;
 
 			switch (token) {
 
@@ -1404,12 +1374,12 @@ namespace Goedel.Mesh {
 				}
 			JSONReader.EndObject ();
 
-			// should we check for EOF here?
-            }
+			return Out;
+			}
 
 
         /// <summary>
-        /// 
+        /// Having read a tag, process the corresponding value data.
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Tag"></param>
@@ -1486,14 +1456,22 @@ namespace Goedel.Mesh {
 
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged byte input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>		
 		public static new SignedApplicationProfile From (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return From (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged string input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new SignedApplicationProfile From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
@@ -1501,58 +1479,44 @@ namespace Goedel.Mesh {
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from tagged byte input.
+		/// i.e. { "SignedApplicationProfile" : {... data ... } }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new SignedApplicationProfile FromTagged (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return FromTagged (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
-		public static new SignedApplicationProfile FromTagged (string _Input) {
-			SignedApplicationProfile _Result;
-			Deserialize (_Input, out _Result);
-			return _Result;
-			}
-
-
-        /// <summary>
-        /// 
+        /// Create a new instance from tagged string input.
+		/// i.e. { "SignedApplicationProfile" : {... data ... } }
         /// </summary>
-        /// <param name="_Input"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(string _Input, out SignedApplicationProfile Out) {
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>		
+		public static new SignedApplicationProfile FromTagged (string _Input) {
+			//SignedApplicationProfile _Result;
+			//Deserialize (_Input, out _Result);
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-
-			Deserialize (JSONReader, out Out);
+			return FromTagged (JSONReader) ;
 			}
+
 
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
-        public static new SignedApplicationProfile  DeserializeTagged (JSONReader JSONReader) {
-			SignedApplicationProfile Result;
-			Deserialize (JSONReader, out Result);
-			return Result;
-			}
+        public static new SignedApplicationProfile  FromTagged (JSONReader JSONReader) {
+			SignedApplicationProfile Out = null;
 
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(JSONReader JSONReader, out SignedApplicationProfile Out) {
-	
 			JSONReader.StartObject ();
             if (JSONReader.EOR) {
-                Out = null;
-                return;
+                return null;
                 }
 
 			string token = JSONReader.ReadToken ();
-			Out = null;
 
 			switch (token) {
 
@@ -1571,12 +1535,12 @@ namespace Goedel.Mesh {
 				}
 			JSONReader.EndObject ();
 
-			// should we check for EOF here?
-            }
+			return Out;
+			}
 
 
         /// <summary>
-        /// 
+        /// Having read a tag, process the corresponding value data.
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Tag"></param>
@@ -1662,14 +1626,22 @@ namespace Goedel.Mesh {
 
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged byte input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>		
 		public static new EncryptedProfile From (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return From (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged string input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new EncryptedProfile From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
@@ -1677,58 +1649,44 @@ namespace Goedel.Mesh {
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from tagged byte input.
+		/// i.e. { "EncryptedProfile" : {... data ... } }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new EncryptedProfile FromTagged (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return FromTagged (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
-		public static new EncryptedProfile FromTagged (string _Input) {
-			EncryptedProfile _Result;
-			Deserialize (_Input, out _Result);
-			return _Result;
-			}
-
-
-        /// <summary>
-        /// 
+        /// Create a new instance from tagged string input.
+		/// i.e. { "EncryptedProfile" : {... data ... } }
         /// </summary>
-        /// <param name="_Input"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(string _Input, out EncryptedProfile Out) {
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>		
+		public static new EncryptedProfile FromTagged (string _Input) {
+			//EncryptedProfile _Result;
+			//Deserialize (_Input, out _Result);
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-
-			Deserialize (JSONReader, out Out);
+			return FromTagged (JSONReader) ;
 			}
+
 
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
-        public static new EncryptedProfile  DeserializeTagged (JSONReader JSONReader) {
-			EncryptedProfile Result;
-			Deserialize (JSONReader, out Result);
-			return Result;
-			}
+        public static new EncryptedProfile  FromTagged (JSONReader JSONReader) {
+			EncryptedProfile Out = null;
 
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(JSONReader JSONReader, out EncryptedProfile Out) {
-	
 			JSONReader.StartObject ();
             if (JSONReader.EOR) {
-                Out = null;
-                return;
+                return null;
                 }
 
 			string token = JSONReader.ReadToken ();
-			Out = null;
 
 			switch (token) {
 
@@ -1747,12 +1705,12 @@ namespace Goedel.Mesh {
 				}
 			JSONReader.EndObject ();
 
-			// should we check for EOF here?
-            }
+			return Out;
+			}
 
 
         /// <summary>
-        /// 
+        /// Having read a tag, process the corresponding value data.
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Tag"></param>
@@ -1760,9 +1718,9 @@ namespace Goedel.Mesh {
 			
 			switch (Tag) {
 				case "EncryptedData" : {
-					// Field does not have 
+					// An untagged structure
 					EncryptedData = new JoseWebEncryption (JSONReader);
-					//JoseWebEncryption.Deserialize(JSONReader, out EncryptedData) ;
+ 
 					break;
 					}
 				default : {
@@ -1874,58 +1832,44 @@ namespace Goedel.Mesh {
 
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from tagged byte input.
+		/// i.e. { "Profile" : {... data ... } }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new Profile FromTagged (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return FromTagged (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
-		public static new Profile FromTagged (string _Input) {
-			Profile _Result;
-			Deserialize (_Input, out _Result);
-			return _Result;
-			}
-
-
-        /// <summary>
-        /// 
+        /// Create a new instance from tagged string input.
+		/// i.e. { "Profile" : {... data ... } }
         /// </summary>
-        /// <param name="_Input"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(string _Input, out Profile Out) {
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>		
+		public static new Profile FromTagged (string _Input) {
+			//Profile _Result;
+			//Deserialize (_Input, out _Result);
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-
-			Deserialize (JSONReader, out Out);
+			return FromTagged (JSONReader) ;
 			}
+
 
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
-        public static new Profile  DeserializeTagged (JSONReader JSONReader) {
-			Profile Result;
-			Deserialize (JSONReader, out Result);
-			return Result;
-			}
+        public static new Profile  FromTagged (JSONReader JSONReader) {
+			Profile Out = null;
 
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(JSONReader JSONReader, out Profile Out) {
-	
 			JSONReader.StartObject ();
             if (JSONReader.EOR) {
-                Out = null;
-                return;
+                return null;
                 }
 
 			string token = JSONReader.ReadToken ();
-			Out = null;
 
 			switch (token) {
 
@@ -1991,12 +1935,12 @@ namespace Goedel.Mesh {
 				}
 			JSONReader.EndObject ();
 
-			// should we check for EOF here?
-            }
+			return Out;
+			}
 
 
         /// <summary>
-        /// 
+        /// Having read a tag, process the corresponding value data.
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Tag"></param>
@@ -2004,6 +1948,7 @@ namespace Goedel.Mesh {
 			
 			switch (Tag) {
 				case "Names" : {
+					// Have a sequence of values
 					bool _Going = JSONReader.StartArray ();
 					Names = new List <string> ();
 					while (_Going) {
@@ -2011,7 +1956,6 @@ namespace Goedel.Mesh {
 						Names.Add (_Item);
 						_Going = JSONReader.NextArray ();
 						}
-
 					break;
 					}
 				case "Updated" : {
@@ -2143,14 +2087,22 @@ namespace Goedel.Mesh {
 
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged byte input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>		
 		public static new MasterProfile From (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return From (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged string input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new MasterProfile From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
@@ -2158,58 +2110,44 @@ namespace Goedel.Mesh {
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from tagged byte input.
+		/// i.e. { "MasterProfile" : {... data ... } }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new MasterProfile FromTagged (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return FromTagged (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
-		public static new MasterProfile FromTagged (string _Input) {
-			MasterProfile _Result;
-			Deserialize (_Input, out _Result);
-			return _Result;
-			}
-
-
-        /// <summary>
-        /// 
+        /// Create a new instance from tagged string input.
+		/// i.e. { "MasterProfile" : {... data ... } }
         /// </summary>
-        /// <param name="_Input"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(string _Input, out MasterProfile Out) {
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>		
+		public static new MasterProfile FromTagged (string _Input) {
+			//MasterProfile _Result;
+			//Deserialize (_Input, out _Result);
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-
-			Deserialize (JSONReader, out Out);
+			return FromTagged (JSONReader) ;
 			}
+
 
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
-        public static new MasterProfile  DeserializeTagged (JSONReader JSONReader) {
-			MasterProfile Result;
-			Deserialize (JSONReader, out Result);
-			return Result;
-			}
+        public static new MasterProfile  FromTagged (JSONReader JSONReader) {
+			MasterProfile Out = null;
 
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(JSONReader JSONReader, out MasterProfile Out) {
-	
 			JSONReader.StartObject ();
             if (JSONReader.EOR) {
-                Out = null;
-                return;
+                return null;
                 }
 
 			string token = JSONReader.ReadToken ();
-			Out = null;
 
 			switch (token) {
 
@@ -2228,12 +2166,12 @@ namespace Goedel.Mesh {
 				}
 			JSONReader.EndObject ();
 
-			// should we check for EOF here?
-            }
+			return Out;
+			}
 
 
         /// <summary>
-        /// 
+        /// Having read a tag, process the corresponding value data.
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Tag"></param>
@@ -2241,37 +2179,33 @@ namespace Goedel.Mesh {
 			
 			switch (Tag) {
 				case "MasterSignatureKey" : {
-					// Field does not have 
+					// An untagged structure
 					MasterSignatureKey = new PublicKey (JSONReader);
-					//PublicKey.Deserialize(JSONReader, out MasterSignatureKey) ;
+ 
 					break;
 					}
 				case "MasterEscrowKeys" : {
+					// Have a sequence of values
 					bool _Going = JSONReader.StartArray ();
 					MasterEscrowKeys = new List <PublicKey> ();
 					while (_Going) {
+						// an untagged structure.
 						var _Item = new PublicKey (JSONReader);
-						//PublicKey _Item;
-                        //PublicKey.Deserialize(JSONReader, out _Item);
-
 						MasterEscrowKeys.Add (_Item);
 						_Going = JSONReader.NextArray ();
 						}
-
 					break;
 					}
 				case "OnlineSignatureKeys" : {
+					// Have a sequence of values
 					bool _Going = JSONReader.StartArray ();
 					OnlineSignatureKeys = new List <PublicKey> ();
 					while (_Going) {
+						// an untagged structure.
 						var _Item = new PublicKey (JSONReader);
-						//PublicKey _Item;
-                        //PublicKey.Deserialize(JSONReader, out _Item);
-
 						OnlineSignatureKeys.Add (_Item);
 						_Going = JSONReader.NextArray ();
 						}
-
 					break;
 					}
 				default : {
@@ -2396,14 +2330,22 @@ namespace Goedel.Mesh {
 
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged byte input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>		
 		public static new PersonalProfile From (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return From (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged string input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new PersonalProfile From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
@@ -2411,58 +2353,44 @@ namespace Goedel.Mesh {
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from tagged byte input.
+		/// i.e. { "PersonalProfile" : {... data ... } }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new PersonalProfile FromTagged (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return FromTagged (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
-		public static new PersonalProfile FromTagged (string _Input) {
-			PersonalProfile _Result;
-			Deserialize (_Input, out _Result);
-			return _Result;
-			}
-
-
-        /// <summary>
-        /// 
+        /// Create a new instance from tagged string input.
+		/// i.e. { "PersonalProfile" : {... data ... } }
         /// </summary>
-        /// <param name="_Input"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(string _Input, out PersonalProfile Out) {
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>		
+		public static new PersonalProfile FromTagged (string _Input) {
+			//PersonalProfile _Result;
+			//Deserialize (_Input, out _Result);
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-
-			Deserialize (JSONReader, out Out);
+			return FromTagged (JSONReader) ;
 			}
+
 
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
-        public static new PersonalProfile  DeserializeTagged (JSONReader JSONReader) {
-			PersonalProfile Result;
-			Deserialize (JSONReader, out Result);
-			return Result;
-			}
+        public static new PersonalProfile  FromTagged (JSONReader JSONReader) {
+			PersonalProfile Out = null;
 
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(JSONReader JSONReader, out PersonalProfile Out) {
-	
 			JSONReader.StartObject ();
             if (JSONReader.EOR) {
-                Out = null;
-                return;
+                return null;
                 }
 
 			string token = JSONReader.ReadToken ();
-			Out = null;
 
 			switch (token) {
 
@@ -2481,12 +2409,12 @@ namespace Goedel.Mesh {
 				}
 			JSONReader.EndObject ();
 
-			// should we check for EOF here?
-            }
+			return Out;
+			}
 
 
         /// <summary>
-        /// 
+        /// Having read a tag, process the corresponding value data.
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Tag"></param>
@@ -2494,37 +2422,33 @@ namespace Goedel.Mesh {
 			
 			switch (Tag) {
 				case "SignedMasterProfile" : {
-					// Field does not have 
+					// An untagged structure
 					SignedMasterProfile = new SignedMasterProfile (JSONReader);
-					//SignedMasterProfile.Deserialize(JSONReader, out SignedMasterProfile) ;
+ 
 					break;
 					}
 				case "Devices" : {
+					// Have a sequence of values
 					bool _Going = JSONReader.StartArray ();
 					Devices = new List <SignedDeviceProfile> ();
 					while (_Going) {
+						// an untagged structure.
 						var _Item = new SignedDeviceProfile (JSONReader);
-						//SignedDeviceProfile _Item;
-                        //SignedDeviceProfile.Deserialize(JSONReader, out _Item);
-
 						Devices.Add (_Item);
 						_Going = JSONReader.NextArray ();
 						}
-
 					break;
 					}
 				case "Applications" : {
+					// Have a sequence of values
 					bool _Going = JSONReader.StartArray ();
 					Applications = new List <ApplicationProfileEntry> ();
 					while (_Going) {
+						// an untagged structure.
 						var _Item = new ApplicationProfileEntry (JSONReader);
-						//ApplicationProfileEntry _Item;
-                        //ApplicationProfileEntry.Deserialize(JSONReader, out _Item);
-
 						Applications.Add (_Item);
 						_Going = JSONReader.NextArray ();
 						}
-
 					break;
 					}
 				default : {
@@ -2653,14 +2577,22 @@ namespace Goedel.Mesh {
 
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged byte input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>		
 		public static new ApplicationProfileEntry From (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return From (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged string input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new ApplicationProfileEntry From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
@@ -2668,58 +2600,44 @@ namespace Goedel.Mesh {
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from tagged byte input.
+		/// i.e. { "ApplicationProfileEntry" : {... data ... } }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new ApplicationProfileEntry FromTagged (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return FromTagged (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
-		public static new ApplicationProfileEntry FromTagged (string _Input) {
-			ApplicationProfileEntry _Result;
-			Deserialize (_Input, out _Result);
-			return _Result;
-			}
-
-
-        /// <summary>
-        /// 
+        /// Create a new instance from tagged string input.
+		/// i.e. { "ApplicationProfileEntry" : {... data ... } }
         /// </summary>
-        /// <param name="_Input"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(string _Input, out ApplicationProfileEntry Out) {
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>		
+		public static new ApplicationProfileEntry FromTagged (string _Input) {
+			//ApplicationProfileEntry _Result;
+			//Deserialize (_Input, out _Result);
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-
-			Deserialize (JSONReader, out Out);
+			return FromTagged (JSONReader) ;
 			}
+
 
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
-        public static new ApplicationProfileEntry  DeserializeTagged (JSONReader JSONReader) {
-			ApplicationProfileEntry Result;
-			Deserialize (JSONReader, out Result);
-			return Result;
-			}
+        public static new ApplicationProfileEntry  FromTagged (JSONReader JSONReader) {
+			ApplicationProfileEntry Out = null;
 
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(JSONReader JSONReader, out ApplicationProfileEntry Out) {
-	
 			JSONReader.StartObject ();
             if (JSONReader.EOR) {
-                Out = null;
-                return;
+                return null;
                 }
 
 			string token = JSONReader.ReadToken ();
-			Out = null;
 
 			switch (token) {
 
@@ -2738,12 +2656,12 @@ namespace Goedel.Mesh {
 				}
 			JSONReader.EndObject ();
 
-			// should we check for EOF here?
-            }
+			return Out;
+			}
 
 
         /// <summary>
-        /// 
+        /// Having read a tag, process the corresponding value data.
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Tag"></param>
@@ -2763,6 +2681,7 @@ namespace Goedel.Mesh {
 					break;
 					}
 				case "SignID" : {
+					// Have a sequence of values
 					bool _Going = JSONReader.StartArray ();
 					SignID = new List <string> ();
 					while (_Going) {
@@ -2770,10 +2689,10 @@ namespace Goedel.Mesh {
 						SignID.Add (_Item);
 						_Going = JSONReader.NextArray ();
 						}
-
 					break;
 					}
 				case "DecryptID" : {
+					// Have a sequence of values
 					bool _Going = JSONReader.StartArray ();
 					DecryptID = new List <string> ();
 					while (_Going) {
@@ -2781,7 +2700,6 @@ namespace Goedel.Mesh {
 						DecryptID.Add (_Item);
 						_Going = JSONReader.NextArray ();
 						}
-
 					break;
 					}
 				default : {
@@ -2889,14 +2807,22 @@ namespace Goedel.Mesh {
 
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged byte input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>		
 		public static new DeviceProfile From (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return From (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged string input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new DeviceProfile From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
@@ -2904,58 +2830,44 @@ namespace Goedel.Mesh {
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from tagged byte input.
+		/// i.e. { "DeviceProfile" : {... data ... } }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new DeviceProfile FromTagged (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return FromTagged (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
-		public static new DeviceProfile FromTagged (string _Input) {
-			DeviceProfile _Result;
-			Deserialize (_Input, out _Result);
-			return _Result;
-			}
-
-
-        /// <summary>
-        /// 
+        /// Create a new instance from tagged string input.
+		/// i.e. { "DeviceProfile" : {... data ... } }
         /// </summary>
-        /// <param name="_Input"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(string _Input, out DeviceProfile Out) {
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>		
+		public static new DeviceProfile FromTagged (string _Input) {
+			//DeviceProfile _Result;
+			//Deserialize (_Input, out _Result);
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-
-			Deserialize (JSONReader, out Out);
+			return FromTagged (JSONReader) ;
 			}
+
 
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
-        public static new DeviceProfile  DeserializeTagged (JSONReader JSONReader) {
-			DeviceProfile Result;
-			Deserialize (JSONReader, out Result);
-			return Result;
-			}
+        public static new DeviceProfile  FromTagged (JSONReader JSONReader) {
+			DeviceProfile Out = null;
 
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(JSONReader JSONReader, out DeviceProfile Out) {
-	
 			JSONReader.StartObject ();
             if (JSONReader.EOR) {
-                Out = null;
-                return;
+                return null;
                 }
 
 			string token = JSONReader.ReadToken ();
-			Out = null;
 
 			switch (token) {
 
@@ -2974,12 +2886,12 @@ namespace Goedel.Mesh {
 				}
 			JSONReader.EndObject ();
 
-			// should we check for EOF here?
-            }
+			return Out;
+			}
 
 
         /// <summary>
-        /// 
+        /// Having read a tag, process the corresponding value data.
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Tag"></param>
@@ -2991,21 +2903,21 @@ namespace Goedel.Mesh {
 					break;
 					}
 				case "DeviceSignatureKey" : {
-					// Field does not have 
+					// An untagged structure
 					DeviceSignatureKey = new PublicKey (JSONReader);
-					//PublicKey.Deserialize(JSONReader, out DeviceSignatureKey) ;
+ 
 					break;
 					}
 				case "DeviceAuthenticationKey" : {
-					// Field does not have 
+					// An untagged structure
 					DeviceAuthenticationKey = new PublicKey (JSONReader);
-					//PublicKey.Deserialize(JSONReader, out DeviceAuthenticationKey) ;
+ 
 					break;
 					}
 				case "DeviceEncryptiontionKey" : {
-					// Field does not have 
+					// An untagged structure
 					DeviceEncryptiontionKey = new PublicKey (JSONReader);
-					//PublicKey.Deserialize(JSONReader, out DeviceEncryptiontionKey) ;
+ 
 					break;
 					}
 				default : {
@@ -3104,14 +3016,22 @@ namespace Goedel.Mesh {
 
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged byte input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>		
 		public static new DevicePrivateProfile From (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return From (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged string input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new DevicePrivateProfile From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
@@ -3119,58 +3039,44 @@ namespace Goedel.Mesh {
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from tagged byte input.
+		/// i.e. { "DevicePrivateProfile" : {... data ... } }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new DevicePrivateProfile FromTagged (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return FromTagged (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
-		public static new DevicePrivateProfile FromTagged (string _Input) {
-			DevicePrivateProfile _Result;
-			Deserialize (_Input, out _Result);
-			return _Result;
-			}
-
-
-        /// <summary>
-        /// 
+        /// Create a new instance from tagged string input.
+		/// i.e. { "DevicePrivateProfile" : {... data ... } }
         /// </summary>
-        /// <param name="_Input"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(string _Input, out DevicePrivateProfile Out) {
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>		
+		public static new DevicePrivateProfile FromTagged (string _Input) {
+			//DevicePrivateProfile _Result;
+			//Deserialize (_Input, out _Result);
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-
-			Deserialize (JSONReader, out Out);
+			return FromTagged (JSONReader) ;
 			}
+
 
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
-        public static new DevicePrivateProfile  DeserializeTagged (JSONReader JSONReader) {
-			DevicePrivateProfile Result;
-			Deserialize (JSONReader, out Result);
-			return Result;
-			}
+        public static new DevicePrivateProfile  FromTagged (JSONReader JSONReader) {
+			DevicePrivateProfile Out = null;
 
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(JSONReader JSONReader, out DevicePrivateProfile Out) {
-	
 			JSONReader.StartObject ();
             if (JSONReader.EOR) {
-                Out = null;
-                return;
+                return null;
                 }
 
 			string token = JSONReader.ReadToken ();
-			Out = null;
 
 			switch (token) {
 
@@ -3189,12 +3095,12 @@ namespace Goedel.Mesh {
 				}
 			JSONReader.EndObject ();
 
-			// should we check for EOF here?
-            }
+			return Out;
+			}
 
 
         /// <summary>
-        /// 
+        /// Having read a tag, process the corresponding value data.
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Tag"></param>
@@ -3202,21 +3108,21 @@ namespace Goedel.Mesh {
 			
 			switch (Tag) {
 				case "DeviceSignatureKey" : {
-					// Field does not have 
+					// An untagged structure
 					DeviceSignatureKey = new Key (JSONReader);
-					//Key.Deserialize(JSONReader, out DeviceSignatureKey) ;
+ 
 					break;
 					}
 				case "DeviceAuthenticationKey" : {
-					// Field does not have 
+					// An untagged structure
 					DeviceAuthenticationKey = new Key (JSONReader);
-					//Key.Deserialize(JSONReader, out DeviceAuthenticationKey) ;
+ 
 					break;
 					}
 				case "DeviceEncryptiontionKey" : {
-					// Field does not have 
+					// An untagged structure
 					DeviceEncryptiontionKey = new Key (JSONReader);
-					//Key.Deserialize(JSONReader, out DeviceEncryptiontionKey) ;
+ 
 					break;
 					}
 				default : {
@@ -3318,14 +3224,22 @@ namespace Goedel.Mesh {
 
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged byte input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>		
 		public static new ApplicationProfile From (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return From (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged string input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new ApplicationProfile From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
@@ -3333,58 +3247,44 @@ namespace Goedel.Mesh {
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from tagged byte input.
+		/// i.e. { "ApplicationProfile" : {... data ... } }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new ApplicationProfile FromTagged (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return FromTagged (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
-		public static new ApplicationProfile FromTagged (string _Input) {
-			ApplicationProfile _Result;
-			Deserialize (_Input, out _Result);
-			return _Result;
-			}
-
-
-        /// <summary>
-        /// 
+        /// Create a new instance from tagged string input.
+		/// i.e. { "ApplicationProfile" : {... data ... } }
         /// </summary>
-        /// <param name="_Input"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(string _Input, out ApplicationProfile Out) {
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>		
+		public static new ApplicationProfile FromTagged (string _Input) {
+			//ApplicationProfile _Result;
+			//Deserialize (_Input, out _Result);
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-
-			Deserialize (JSONReader, out Out);
+			return FromTagged (JSONReader) ;
 			}
+
 
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
-        public static new ApplicationProfile  DeserializeTagged (JSONReader JSONReader) {
-			ApplicationProfile Result;
-			Deserialize (JSONReader, out Result);
-			return Result;
-			}
+        public static new ApplicationProfile  FromTagged (JSONReader JSONReader) {
+			ApplicationProfile Out = null;
 
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(JSONReader JSONReader, out ApplicationProfile Out) {
-	
 			JSONReader.StartObject ();
             if (JSONReader.EOR) {
-                Out = null;
-                return;
+                return null;
                 }
 
 			string token = JSONReader.ReadToken ();
-			Out = null;
 
 			switch (token) {
 
@@ -3424,12 +3324,12 @@ namespace Goedel.Mesh {
 				}
 			JSONReader.EndObject ();
 
-			// should we check for EOF here?
-            }
+			return Out;
+			}
 
 
         /// <summary>
-        /// 
+        /// Having read a tag, process the corresponding value data.
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Tag"></param>
@@ -3437,23 +3337,21 @@ namespace Goedel.Mesh {
 			
 			switch (Tag) {
 				case "EncryptedData" : {
-					// Field does not have 
+					// An untagged structure
 					EncryptedData = new JoseWebEncryption (JSONReader);
-					//JoseWebEncryption.Deserialize(JSONReader, out EncryptedData) ;
+ 
 					break;
 					}
 				case "Entries" : {
+					// Have a sequence of values
 					bool _Going = JSONReader.StartArray ();
 					Entries = new List <DeviceEntry> ();
 					while (_Going) {
+						// an untagged structure.
 						var _Item = new DeviceEntry (JSONReader);
-						//DeviceEntry _Item;
-                        //DeviceEntry.Deserialize(JSONReader, out _Item);
-
 						Entries.Add (_Item);
 						_Going = JSONReader.NextArray ();
 						}
-
 					break;
 					}
 				default : {
@@ -3570,14 +3468,22 @@ namespace Goedel.Mesh {
 
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged byte input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>		
 		public static new DeviceEntry From (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return From (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged string input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new DeviceEntry From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
@@ -3585,58 +3491,44 @@ namespace Goedel.Mesh {
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from tagged byte input.
+		/// i.e. { "DeviceEntry" : {... data ... } }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new DeviceEntry FromTagged (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return FromTagged (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
-		public static new DeviceEntry FromTagged (string _Input) {
-			DeviceEntry _Result;
-			Deserialize (_Input, out _Result);
-			return _Result;
-			}
-
-
-        /// <summary>
-        /// 
+        /// Create a new instance from tagged string input.
+		/// i.e. { "DeviceEntry" : {... data ... } }
         /// </summary>
-        /// <param name="_Input"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(string _Input, out DeviceEntry Out) {
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>		
+		public static new DeviceEntry FromTagged (string _Input) {
+			//DeviceEntry _Result;
+			//Deserialize (_Input, out _Result);
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-
-			Deserialize (JSONReader, out Out);
+			return FromTagged (JSONReader) ;
 			}
+
 
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
-        public static new DeviceEntry  DeserializeTagged (JSONReader JSONReader) {
-			DeviceEntry Result;
-			Deserialize (JSONReader, out Result);
-			return Result;
-			}
+        public static new DeviceEntry  FromTagged (JSONReader JSONReader) {
+			DeviceEntry Out = null;
 
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(JSONReader JSONReader, out DeviceEntry Out) {
-	
 			JSONReader.StartObject ();
             if (JSONReader.EOR) {
-                Out = null;
-                return;
+                return null;
                 }
 
 			string token = JSONReader.ReadToken ();
-			Out = null;
 
 			switch (token) {
 
@@ -3655,12 +3547,12 @@ namespace Goedel.Mesh {
 				}
 			JSONReader.EndObject ();
 
-			// should we check for EOF here?
-            }
+			return Out;
+			}
 
 
         /// <summary>
-        /// 
+        /// Having read a tag, process the corresponding value data.
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Tag"></param>
@@ -3680,15 +3572,15 @@ namespace Goedel.Mesh {
 					break;
 					}
 				case "SignatureKey" : {
-					// Field does not have 
+					// An untagged structure
 					SignatureKey = new PublicKey (JSONReader);
-					//PublicKey.Deserialize(JSONReader, out SignatureKey) ;
+ 
 					break;
 					}
 				case "AuthenticationKey" : {
-					// Field does not have 
+					// An untagged structure
 					AuthenticationKey = new PublicKey (JSONReader);
-					//PublicKey.Deserialize(JSONReader, out AuthenticationKey) ;
+ 
 					break;
 					}
 				default : {
@@ -3760,14 +3652,22 @@ namespace Goedel.Mesh {
 
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged byte input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>		
 		public static new PasswordProfile From (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return From (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged string input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new PasswordProfile From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
@@ -3775,58 +3675,44 @@ namespace Goedel.Mesh {
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from tagged byte input.
+		/// i.e. { "PasswordProfile" : {... data ... } }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new PasswordProfile FromTagged (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return FromTagged (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
-		public static new PasswordProfile FromTagged (string _Input) {
-			PasswordProfile _Result;
-			Deserialize (_Input, out _Result);
-			return _Result;
-			}
-
-
-        /// <summary>
-        /// 
+        /// Create a new instance from tagged string input.
+		/// i.e. { "PasswordProfile" : {... data ... } }
         /// </summary>
-        /// <param name="_Input"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(string _Input, out PasswordProfile Out) {
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>		
+		public static new PasswordProfile FromTagged (string _Input) {
+			//PasswordProfile _Result;
+			//Deserialize (_Input, out _Result);
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-
-			Deserialize (JSONReader, out Out);
+			return FromTagged (JSONReader) ;
 			}
+
 
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
-        public static new PasswordProfile  DeserializeTagged (JSONReader JSONReader) {
-			PasswordProfile Result;
-			Deserialize (JSONReader, out Result);
-			return Result;
-			}
+        public static new PasswordProfile  FromTagged (JSONReader JSONReader) {
+			PasswordProfile Out = null;
 
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(JSONReader JSONReader, out PasswordProfile Out) {
-	
 			JSONReader.StartObject ();
             if (JSONReader.EOR) {
-                Out = null;
-                return;
+                return null;
                 }
 
 			string token = JSONReader.ReadToken ();
-			Out = null;
 
 			switch (token) {
 
@@ -3845,12 +3731,12 @@ namespace Goedel.Mesh {
 				}
 			JSONReader.EndObject ();
 
-			// should we check for EOF here?
-            }
+			return Out;
+			}
 
 
         /// <summary>
-        /// 
+        /// Having read a tag, process the corresponding value data.
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Tag"></param>
@@ -3945,14 +3831,22 @@ namespace Goedel.Mesh {
 
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged byte input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>		
 		public static new PasswordProfilePrivate From (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return From (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged string input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new PasswordProfilePrivate From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
@@ -3960,58 +3854,44 @@ namespace Goedel.Mesh {
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from tagged byte input.
+		/// i.e. { "PasswordProfilePrivate" : {... data ... } }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new PasswordProfilePrivate FromTagged (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return FromTagged (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
-		public static new PasswordProfilePrivate FromTagged (string _Input) {
-			PasswordProfilePrivate _Result;
-			Deserialize (_Input, out _Result);
-			return _Result;
-			}
-
-
-        /// <summary>
-        /// 
+        /// Create a new instance from tagged string input.
+		/// i.e. { "PasswordProfilePrivate" : {... data ... } }
         /// </summary>
-        /// <param name="_Input"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(string _Input, out PasswordProfilePrivate Out) {
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>		
+		public static new PasswordProfilePrivate FromTagged (string _Input) {
+			//PasswordProfilePrivate _Result;
+			//Deserialize (_Input, out _Result);
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-
-			Deserialize (JSONReader, out Out);
+			return FromTagged (JSONReader) ;
 			}
+
 
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
-        public static new PasswordProfilePrivate  DeserializeTagged (JSONReader JSONReader) {
-			PasswordProfilePrivate Result;
-			Deserialize (JSONReader, out Result);
-			return Result;
-			}
+        public static new PasswordProfilePrivate  FromTagged (JSONReader JSONReader) {
+			PasswordProfilePrivate Out = null;
 
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(JSONReader JSONReader, out PasswordProfilePrivate Out) {
-	
 			JSONReader.StartObject ();
             if (JSONReader.EOR) {
-                Out = null;
-                return;
+                return null;
                 }
 
 			string token = JSONReader.ReadToken ();
-			Out = null;
 
 			switch (token) {
 
@@ -4030,12 +3910,12 @@ namespace Goedel.Mesh {
 				}
 			JSONReader.EndObject ();
 
-			// should we check for EOF here?
-            }
+			return Out;
+			}
 
 
         /// <summary>
-        /// 
+        /// Having read a tag, process the corresponding value data.
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Tag"></param>
@@ -4043,17 +3923,15 @@ namespace Goedel.Mesh {
 			
 			switch (Tag) {
 				case "Entries" : {
+					// Have a sequence of values
 					bool _Going = JSONReader.StartArray ();
 					Entries = new List <PasswordEntry> ();
 					while (_Going) {
+						// an untagged structure.
 						var _Item = new PasswordEntry (JSONReader);
-						//PasswordEntry _Item;
-                        //PasswordEntry.Deserialize(JSONReader, out _Item);
-
 						Entries.Add (_Item);
 						_Going = JSONReader.NextArray ();
 						}
-
 					break;
 					}
 				default : {
@@ -4158,14 +4036,22 @@ namespace Goedel.Mesh {
 
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged byte input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>		
 		public static new PasswordEntry From (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return From (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged string input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new PasswordEntry From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
@@ -4173,58 +4059,44 @@ namespace Goedel.Mesh {
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from tagged byte input.
+		/// i.e. { "PasswordEntry" : {... data ... } }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new PasswordEntry FromTagged (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return FromTagged (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
-		public static new PasswordEntry FromTagged (string _Input) {
-			PasswordEntry _Result;
-			Deserialize (_Input, out _Result);
-			return _Result;
-			}
-
-
-        /// <summary>
-        /// 
+        /// Create a new instance from tagged string input.
+		/// i.e. { "PasswordEntry" : {... data ... } }
         /// </summary>
-        /// <param name="_Input"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(string _Input, out PasswordEntry Out) {
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>		
+		public static new PasswordEntry FromTagged (string _Input) {
+			//PasswordEntry _Result;
+			//Deserialize (_Input, out _Result);
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-
-			Deserialize (JSONReader, out Out);
+			return FromTagged (JSONReader) ;
 			}
+
 
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
-        public static new PasswordEntry  DeserializeTagged (JSONReader JSONReader) {
-			PasswordEntry Result;
-			Deserialize (JSONReader, out Result);
-			return Result;
-			}
+        public static new PasswordEntry  FromTagged (JSONReader JSONReader) {
+			PasswordEntry Out = null;
 
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(JSONReader JSONReader, out PasswordEntry Out) {
-	
 			JSONReader.StartObject ();
             if (JSONReader.EOR) {
-                Out = null;
-                return;
+                return null;
                 }
 
 			string token = JSONReader.ReadToken ();
-			Out = null;
 
 			switch (token) {
 
@@ -4243,12 +4115,12 @@ namespace Goedel.Mesh {
 				}
 			JSONReader.EndObject ();
 
-			// should we check for EOF here?
-            }
+			return Out;
+			}
 
 
         /// <summary>
-        /// 
+        /// Having read a tag, process the corresponding value data.
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Tag"></param>
@@ -4256,6 +4128,7 @@ namespace Goedel.Mesh {
 			
 			switch (Tag) {
 				case "Sites" : {
+					// Have a sequence of values
 					bool _Going = JSONReader.StartArray ();
 					Sites = new List <string> ();
 					while (_Going) {
@@ -4263,7 +4136,6 @@ namespace Goedel.Mesh {
 						Sites.Add (_Item);
 						_Going = JSONReader.NextArray ();
 						}
-
 					break;
 					}
 				case "Username" : {
@@ -4362,14 +4234,22 @@ namespace Goedel.Mesh {
 
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged byte input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>		
 		public static new MailProfile From (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return From (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged string input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new MailProfile From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
@@ -4377,58 +4257,44 @@ namespace Goedel.Mesh {
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from tagged byte input.
+		/// i.e. { "MailProfile" : {... data ... } }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new MailProfile FromTagged (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return FromTagged (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
-		public static new MailProfile FromTagged (string _Input) {
-			MailProfile _Result;
-			Deserialize (_Input, out _Result);
-			return _Result;
-			}
-
-
-        /// <summary>
-        /// 
+        /// Create a new instance from tagged string input.
+		/// i.e. { "MailProfile" : {... data ... } }
         /// </summary>
-        /// <param name="_Input"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(string _Input, out MailProfile Out) {
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>		
+		public static new MailProfile FromTagged (string _Input) {
+			//MailProfile _Result;
+			//Deserialize (_Input, out _Result);
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-
-			Deserialize (JSONReader, out Out);
+			return FromTagged (JSONReader) ;
 			}
+
 
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
-        public static new MailProfile  DeserializeTagged (JSONReader JSONReader) {
-			MailProfile Result;
-			Deserialize (JSONReader, out Result);
-			return Result;
-			}
+        public static new MailProfile  FromTagged (JSONReader JSONReader) {
+			MailProfile Out = null;
 
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(JSONReader JSONReader, out MailProfile Out) {
-	
 			JSONReader.StartObject ();
             if (JSONReader.EOR) {
-                Out = null;
-                return;
+                return null;
                 }
 
 			string token = JSONReader.ReadToken ();
-			Out = null;
 
 			switch (token) {
 
@@ -4447,12 +4313,12 @@ namespace Goedel.Mesh {
 				}
 			JSONReader.EndObject ();
 
-			// should we check for EOF here?
-            }
+			return Out;
+			}
 
 
         /// <summary>
-        /// 
+        /// Having read a tag, process the corresponding value data.
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Tag"></param>
@@ -4460,15 +4326,15 @@ namespace Goedel.Mesh {
 			
 			switch (Tag) {
 				case "EncryptionPGP" : {
-					// Field does not have 
+					// An untagged structure
 					EncryptionPGP = new PublicKey (JSONReader);
-					//PublicKey.Deserialize(JSONReader, out EncryptionPGP) ;
+ 
 					break;
 					}
 				case "EncryptionSMIME" : {
-					// Field does not have 
+					// An untagged structure
 					EncryptionSMIME = new PublicKey (JSONReader);
-					//PublicKey.Deserialize(JSONReader, out EncryptionSMIME) ;
+ 
 					break;
 					}
 				default : {
@@ -4577,14 +4443,22 @@ namespace Goedel.Mesh {
 
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged byte input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>		
 		public static new MailProfilePrivate From (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return From (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged string input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new MailProfilePrivate From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
@@ -4592,58 +4466,44 @@ namespace Goedel.Mesh {
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from tagged byte input.
+		/// i.e. { "MailProfilePrivate" : {... data ... } }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new MailProfilePrivate FromTagged (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return FromTagged (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
-		public static new MailProfilePrivate FromTagged (string _Input) {
-			MailProfilePrivate _Result;
-			Deserialize (_Input, out _Result);
-			return _Result;
-			}
-
-
-        /// <summary>
-        /// 
+        /// Create a new instance from tagged string input.
+		/// i.e. { "MailProfilePrivate" : {... data ... } }
         /// </summary>
-        /// <param name="_Input"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(string _Input, out MailProfilePrivate Out) {
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>		
+		public static new MailProfilePrivate FromTagged (string _Input) {
+			//MailProfilePrivate _Result;
+			//Deserialize (_Input, out _Result);
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-
-			Deserialize (JSONReader, out Out);
+			return FromTagged (JSONReader) ;
 			}
+
 
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
-        public static new MailProfilePrivate  DeserializeTagged (JSONReader JSONReader) {
-			MailProfilePrivate Result;
-			Deserialize (JSONReader, out Result);
-			return Result;
-			}
+        public static new MailProfilePrivate  FromTagged (JSONReader JSONReader) {
+			MailProfilePrivate Out = null;
 
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(JSONReader JSONReader, out MailProfilePrivate Out) {
-	
 			JSONReader.StartObject ();
             if (JSONReader.EOR) {
-                Out = null;
-                return;
+                return null;
                 }
 
 			string token = JSONReader.ReadToken ();
-			Out = null;
 
 			switch (token) {
 
@@ -4662,12 +4522,12 @@ namespace Goedel.Mesh {
 				}
 			JSONReader.EndObject ();
 
-			// should we check for EOF here?
-            }
+			return Out;
+			}
 
 
         /// <summary>
-        /// 
+        /// Having read a tag, process the corresponding value data.
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Tag"></param>
@@ -4675,29 +4535,27 @@ namespace Goedel.Mesh {
 			
 			switch (Tag) {
 				case "Connections" : {
+					// Have a sequence of values
 					bool _Going = JSONReader.StartArray ();
 					Connections = new List <Connection> ();
 					while (_Going) {
+						// an untagged structure.
 						var _Item = new Connection (JSONReader);
-						//Connection _Item;
-                        //Connection.Deserialize(JSONReader, out _Item);
-
 						Connections.Add (_Item);
 						_Going = JSONReader.NextArray ();
 						}
-
 					break;
 					}
 				case "OpenPGPKey" : {
-					// Field does not have 
+					// An untagged structure
 					OpenPGPKey = new Key (JSONReader);
-					//Key.Deserialize(JSONReader, out OpenPGPKey) ;
+ 
 					break;
 					}
 				case "OpenSMIMEKey" : {
-					// Field does not have 
+					// An untagged structure
 					OpenSMIMEKey = new Key (JSONReader);
-					//Key.Deserialize(JSONReader, out OpenSMIMEKey) ;
+ 
 					break;
 					}
 				default : {
@@ -4769,14 +4627,22 @@ namespace Goedel.Mesh {
 
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged byte input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>		
 		public static new NetworkProfile From (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return From (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged string input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new NetworkProfile From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
@@ -4784,58 +4650,44 @@ namespace Goedel.Mesh {
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from tagged byte input.
+		/// i.e. { "NetworkProfile" : {... data ... } }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new NetworkProfile FromTagged (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return FromTagged (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
-		public static new NetworkProfile FromTagged (string _Input) {
-			NetworkProfile _Result;
-			Deserialize (_Input, out _Result);
-			return _Result;
-			}
-
-
-        /// <summary>
-        /// 
+        /// Create a new instance from tagged string input.
+		/// i.e. { "NetworkProfile" : {... data ... } }
         /// </summary>
-        /// <param name="_Input"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(string _Input, out NetworkProfile Out) {
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>		
+		public static new NetworkProfile FromTagged (string _Input) {
+			//NetworkProfile _Result;
+			//Deserialize (_Input, out _Result);
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-
-			Deserialize (JSONReader, out Out);
+			return FromTagged (JSONReader) ;
 			}
+
 
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
-        public static new NetworkProfile  DeserializeTagged (JSONReader JSONReader) {
-			NetworkProfile Result;
-			Deserialize (JSONReader, out Result);
-			return Result;
-			}
+        public static new NetworkProfile  FromTagged (JSONReader JSONReader) {
+			NetworkProfile Out = null;
 
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(JSONReader JSONReader, out NetworkProfile Out) {
-	
 			JSONReader.StartObject ();
             if (JSONReader.EOR) {
-                Out = null;
-                return;
+                return null;
                 }
 
 			string token = JSONReader.ReadToken ();
-			Out = null;
 
 			switch (token) {
 
@@ -4854,12 +4706,12 @@ namespace Goedel.Mesh {
 				}
 			JSONReader.EndObject ();
 
-			// should we check for EOF here?
-            }
+			return Out;
+			}
 
 
         /// <summary>
-        /// 
+        /// Having read a tag, process the corresponding value data.
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Tag"></param>
@@ -5013,14 +4865,22 @@ namespace Goedel.Mesh {
 
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged byte input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>		
 		public static new NetworkProfilePrivate From (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return From (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged string input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new NetworkProfilePrivate From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
@@ -5028,58 +4888,44 @@ namespace Goedel.Mesh {
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from tagged byte input.
+		/// i.e. { "NetworkProfilePrivate" : {... data ... } }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new NetworkProfilePrivate FromTagged (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return FromTagged (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
-		public static new NetworkProfilePrivate FromTagged (string _Input) {
-			NetworkProfilePrivate _Result;
-			Deserialize (_Input, out _Result);
-			return _Result;
-			}
-
-
-        /// <summary>
-        /// 
+        /// Create a new instance from tagged string input.
+		/// i.e. { "NetworkProfilePrivate" : {... data ... } }
         /// </summary>
-        /// <param name="_Input"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(string _Input, out NetworkProfilePrivate Out) {
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>		
+		public static new NetworkProfilePrivate FromTagged (string _Input) {
+			//NetworkProfilePrivate _Result;
+			//Deserialize (_Input, out _Result);
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-
-			Deserialize (JSONReader, out Out);
+			return FromTagged (JSONReader) ;
 			}
+
 
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
-        public static new NetworkProfilePrivate  DeserializeTagged (JSONReader JSONReader) {
-			NetworkProfilePrivate Result;
-			Deserialize (JSONReader, out Result);
-			return Result;
-			}
+        public static new NetworkProfilePrivate  FromTagged (JSONReader JSONReader) {
+			NetworkProfilePrivate Out = null;
 
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(JSONReader JSONReader, out NetworkProfilePrivate Out) {
-	
 			JSONReader.StartObject ();
             if (JSONReader.EOR) {
-                Out = null;
-                return;
+                return null;
                 }
 
 			string token = JSONReader.ReadToken ();
-			Out = null;
 
 			switch (token) {
 
@@ -5098,12 +4944,12 @@ namespace Goedel.Mesh {
 				}
 			JSONReader.EndObject ();
 
-			// should we check for EOF here?
-            }
+			return Out;
+			}
 
 
         /// <summary>
-        /// 
+        /// Having read a tag, process the corresponding value data.
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Tag"></param>
@@ -5111,6 +4957,7 @@ namespace Goedel.Mesh {
 			
 			switch (Tag) {
 				case "Sites" : {
+					// Have a sequence of values
 					bool _Going = JSONReader.StartArray ();
 					Sites = new List <string> ();
 					while (_Going) {
@@ -5118,24 +4965,22 @@ namespace Goedel.Mesh {
 						Sites.Add (_Item);
 						_Going = JSONReader.NextArray ();
 						}
-
 					break;
 					}
 				case "DNS" : {
+					// Have a sequence of values
 					bool _Going = JSONReader.StartArray ();
 					DNS = new List <Connection> ();
 					while (_Going) {
+						// an untagged structure.
 						var _Item = new Connection (JSONReader);
-						//Connection _Item;
-                        //Connection.Deserialize(JSONReader, out _Item);
-
 						DNS.Add (_Item);
 						_Going = JSONReader.NextArray ();
 						}
-
 					break;
 					}
 				case "Prefix" : {
+					// Have a sequence of values
 					bool _Going = JSONReader.StartArray ();
 					Prefix = new List <string> ();
 					while (_Going) {
@@ -5143,7 +4988,6 @@ namespace Goedel.Mesh {
 						Prefix.Add (_Item);
 						_Going = JSONReader.NextArray ();
 						}
-
 					break;
 					}
 				case "CTL" : {
@@ -5151,6 +4995,7 @@ namespace Goedel.Mesh {
 					break;
 					}
 				case "WebPKI" : {
+					// Have a sequence of values
 					bool _Going = JSONReader.StartArray ();
 					WebPKI = new List <string> ();
 					while (_Going) {
@@ -5158,7 +5003,6 @@ namespace Goedel.Mesh {
 						WebPKI.Add (_Item);
 						_Going = JSONReader.NextArray ();
 						}
-
 					break;
 					}
 				default : {
@@ -5239,14 +5083,22 @@ namespace Goedel.Mesh {
 
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged byte input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>		
 		public static new EscrowEntry From (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return From (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged string input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new EscrowEntry From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
@@ -5254,58 +5106,44 @@ namespace Goedel.Mesh {
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from tagged byte input.
+		/// i.e. { "EscrowEntry" : {... data ... } }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new EscrowEntry FromTagged (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return FromTagged (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
-		public static new EscrowEntry FromTagged (string _Input) {
-			EscrowEntry _Result;
-			Deserialize (_Input, out _Result);
-			return _Result;
-			}
-
-
-        /// <summary>
-        /// 
+        /// Create a new instance from tagged string input.
+		/// i.e. { "EscrowEntry" : {... data ... } }
         /// </summary>
-        /// <param name="_Input"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(string _Input, out EscrowEntry Out) {
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>		
+		public static new EscrowEntry FromTagged (string _Input) {
+			//EscrowEntry _Result;
+			//Deserialize (_Input, out _Result);
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-
-			Deserialize (JSONReader, out Out);
+			return FromTagged (JSONReader) ;
 			}
+
 
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
-        public static new EscrowEntry  DeserializeTagged (JSONReader JSONReader) {
-			EscrowEntry Result;
-			Deserialize (JSONReader, out Result);
-			return Result;
-			}
+        public static new EscrowEntry  FromTagged (JSONReader JSONReader) {
+			EscrowEntry Out = null;
 
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(JSONReader JSONReader, out EscrowEntry Out) {
-	
 			JSONReader.StartObject ();
             if (JSONReader.EOR) {
-                Out = null;
-                return;
+                return null;
                 }
 
 			string token = JSONReader.ReadToken ();
-			Out = null;
 
 			switch (token) {
 
@@ -5338,12 +5176,12 @@ namespace Goedel.Mesh {
 				}
 			JSONReader.EndObject ();
 
-			// should we check for EOF here?
-            }
+			return Out;
+			}
 
 
         /// <summary>
-        /// 
+        /// Having read a tag, process the corresponding value data.
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Tag"></param>
@@ -5351,9 +5189,9 @@ namespace Goedel.Mesh {
 			
 			switch (Tag) {
 				case "EncryptedData" : {
-					// Field does not have 
+					// An untagged structure
 					EncryptedData = new JoseWebEncryption (JSONReader);
-					//JoseWebEncryption.Deserialize(JSONReader, out EncryptedData) ;
+ 
 					break;
 					}
 				default : {
@@ -5426,14 +5264,22 @@ namespace Goedel.Mesh {
 
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged byte input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>		
 		public static new OfflineEscrowEntry From (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return From (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged string input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new OfflineEscrowEntry From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
@@ -5441,58 +5287,44 @@ namespace Goedel.Mesh {
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from tagged byte input.
+		/// i.e. { "OfflineEscrowEntry" : {... data ... } }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new OfflineEscrowEntry FromTagged (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return FromTagged (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
-		public static new OfflineEscrowEntry FromTagged (string _Input) {
-			OfflineEscrowEntry _Result;
-			Deserialize (_Input, out _Result);
-			return _Result;
-			}
-
-
-        /// <summary>
-        /// 
+        /// Create a new instance from tagged string input.
+		/// i.e. { "OfflineEscrowEntry" : {... data ... } }
         /// </summary>
-        /// <param name="_Input"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(string _Input, out OfflineEscrowEntry Out) {
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>		
+		public static new OfflineEscrowEntry FromTagged (string _Input) {
+			//OfflineEscrowEntry _Result;
+			//Deserialize (_Input, out _Result);
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-
-			Deserialize (JSONReader, out Out);
+			return FromTagged (JSONReader) ;
 			}
+
 
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
-        public static new OfflineEscrowEntry  DeserializeTagged (JSONReader JSONReader) {
-			OfflineEscrowEntry Result;
-			Deserialize (JSONReader, out Result);
-			return Result;
-			}
+        public static new OfflineEscrowEntry  FromTagged (JSONReader JSONReader) {
+			OfflineEscrowEntry Out = null;
 
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(JSONReader JSONReader, out OfflineEscrowEntry Out) {
-	
 			JSONReader.StartObject ();
             if (JSONReader.EOR) {
-                Out = null;
-                return;
+                return null;
                 }
 
 			string token = JSONReader.ReadToken ();
-			Out = null;
 
 			switch (token) {
 
@@ -5511,12 +5343,12 @@ namespace Goedel.Mesh {
 				}
 			JSONReader.EndObject ();
 
-			// should we check for EOF here?
-            }
+			return Out;
+			}
 
 
         /// <summary>
-        /// 
+        /// Having read a tag, process the corresponding value data.
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Tag"></param>
@@ -5593,14 +5425,22 @@ namespace Goedel.Mesh {
 
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged byte input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>		
 		public static new OnlineEscrowEntry From (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return From (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged string input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new OnlineEscrowEntry From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
@@ -5608,58 +5448,44 @@ namespace Goedel.Mesh {
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from tagged byte input.
+		/// i.e. { "OnlineEscrowEntry" : {... data ... } }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new OnlineEscrowEntry FromTagged (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return FromTagged (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
-		public static new OnlineEscrowEntry FromTagged (string _Input) {
-			OnlineEscrowEntry _Result;
-			Deserialize (_Input, out _Result);
-			return _Result;
-			}
-
-
-        /// <summary>
-        /// 
+        /// Create a new instance from tagged string input.
+		/// i.e. { "OnlineEscrowEntry" : {... data ... } }
         /// </summary>
-        /// <param name="_Input"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(string _Input, out OnlineEscrowEntry Out) {
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>		
+		public static new OnlineEscrowEntry FromTagged (string _Input) {
+			//OnlineEscrowEntry _Result;
+			//Deserialize (_Input, out _Result);
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-
-			Deserialize (JSONReader, out Out);
+			return FromTagged (JSONReader) ;
 			}
+
 
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
-        public static new OnlineEscrowEntry  DeserializeTagged (JSONReader JSONReader) {
-			OnlineEscrowEntry Result;
-			Deserialize (JSONReader, out Result);
-			return Result;
-			}
+        public static new OnlineEscrowEntry  FromTagged (JSONReader JSONReader) {
+			OnlineEscrowEntry Out = null;
 
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(JSONReader JSONReader, out OnlineEscrowEntry Out) {
-	
 			JSONReader.StartObject ();
             if (JSONReader.EOR) {
-                Out = null;
-                return;
+                return null;
                 }
 
 			string token = JSONReader.ReadToken ();
-			Out = null;
 
 			switch (token) {
 
@@ -5678,12 +5504,12 @@ namespace Goedel.Mesh {
 				}
 			JSONReader.EndObject ();
 
-			// should we check for EOF here?
-            }
+			return Out;
+			}
 
 
         /// <summary>
-        /// 
+        /// Having read a tag, process the corresponding value data.
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Tag"></param>
@@ -5780,14 +5606,22 @@ namespace Goedel.Mesh {
 
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged byte input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>		
 		public static new EscrowedKeySet From (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return From (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged string input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new EscrowedKeySet From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
@@ -5795,58 +5629,44 @@ namespace Goedel.Mesh {
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from tagged byte input.
+		/// i.e. { "EscrowedKeySet" : {... data ... } }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new EscrowedKeySet FromTagged (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return FromTagged (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
-		public static new EscrowedKeySet FromTagged (string _Input) {
-			EscrowedKeySet _Result;
-			Deserialize (_Input, out _Result);
-			return _Result;
-			}
-
-
-        /// <summary>
-        /// 
+        /// Create a new instance from tagged string input.
+		/// i.e. { "EscrowedKeySet" : {... data ... } }
         /// </summary>
-        /// <param name="_Input"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(string _Input, out EscrowedKeySet Out) {
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>		
+		public static new EscrowedKeySet FromTagged (string _Input) {
+			//EscrowedKeySet _Result;
+			//Deserialize (_Input, out _Result);
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-
-			Deserialize (JSONReader, out Out);
+			return FromTagged (JSONReader) ;
 			}
+
 
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
-        public static new EscrowedKeySet  DeserializeTagged (JSONReader JSONReader) {
-			EscrowedKeySet Result;
-			Deserialize (JSONReader, out Result);
-			return Result;
-			}
+        public static new EscrowedKeySet  FromTagged (JSONReader JSONReader) {
+			EscrowedKeySet Out = null;
 
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(JSONReader JSONReader, out EscrowedKeySet Out) {
-	
 			JSONReader.StartObject ();
             if (JSONReader.EOR) {
-                Out = null;
-                return;
+                return null;
                 }
 
 			string token = JSONReader.ReadToken ();
-			Out = null;
 
 			switch (token) {
 
@@ -5865,12 +5685,12 @@ namespace Goedel.Mesh {
 				}
 			JSONReader.EndObject ();
 
-			// should we check for EOF here?
-            }
+			return Out;
+			}
 
 
         /// <summary>
-        /// 
+        /// Having read a tag, process the corresponding value data.
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Tag"></param>
@@ -5878,17 +5698,15 @@ namespace Goedel.Mesh {
 			
 			switch (Tag) {
 				case "PrivateKeys" : {
+					// Have a sequence of values
 					bool _Going = JSONReader.StartArray ();
 					PrivateKeys = new List <Key> ();
 					while (_Going) {
+						// an untagged structure.
 						var _Item = new Key (JSONReader);
-						//Key _Item;
-                        //Key.Deserialize(JSONReader, out _Item);
-
 						PrivateKeys.Add (_Item);
 						_Going = JSONReader.NextArray ();
 						}
-
 					break;
 					}
 				default : {
@@ -6025,14 +5843,22 @@ namespace Goedel.Mesh {
 
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged byte input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>		
 		public static new Connection From (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return From (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged string input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new Connection From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
@@ -6040,58 +5866,44 @@ namespace Goedel.Mesh {
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from tagged byte input.
+		/// i.e. { "Connection" : {... data ... } }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new Connection FromTagged (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return FromTagged (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
-		public static new Connection FromTagged (string _Input) {
-			Connection _Result;
-			Deserialize (_Input, out _Result);
-			return _Result;
-			}
-
-
-        /// <summary>
-        /// 
+        /// Create a new instance from tagged string input.
+		/// i.e. { "Connection" : {... data ... } }
         /// </summary>
-        /// <param name="_Input"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(string _Input, out Connection Out) {
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>		
+		public static new Connection FromTagged (string _Input) {
+			//Connection _Result;
+			//Deserialize (_Input, out _Result);
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-
-			Deserialize (JSONReader, out Out);
+			return FromTagged (JSONReader) ;
 			}
+
 
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
-        public static new Connection  DeserializeTagged (JSONReader JSONReader) {
-			Connection Result;
-			Deserialize (JSONReader, out Result);
-			return Result;
-			}
+        public static new Connection  FromTagged (JSONReader JSONReader) {
+			Connection Out = null;
 
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(JSONReader JSONReader, out Connection Out) {
-	
 			JSONReader.StartObject ();
             if (JSONReader.EOR) {
-                Out = null;
-                return;
+                return null;
                 }
 
 			string token = JSONReader.ReadToken ();
-			Out = null;
 
 			switch (token) {
 
@@ -6110,12 +5922,12 @@ namespace Goedel.Mesh {
 				}
 			JSONReader.EndObject ();
 
-			// should we check for EOF here?
-            }
+			return Out;
+			}
 
 
         /// <summary>
-        /// 
+        /// Having read a tag, process the corresponding value data.
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Tag"></param>
@@ -6143,6 +5955,7 @@ namespace Goedel.Mesh {
 					break;
 					}
 				case "Security" : {
+					// Have a sequence of values
 					bool _Going = JSONReader.StartArray ();
 					Security = new List <string> ();
 					while (_Going) {
@@ -6150,7 +5963,6 @@ namespace Goedel.Mesh {
 						Security.Add (_Item);
 						_Going = JSONReader.NextArray ();
 						}
-
 					break;
 					}
 				default : {
@@ -6230,14 +6042,22 @@ namespace Goedel.Mesh {
 
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged byte input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>		
 		public static new EncryptedData From (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return From (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged string input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new EncryptedData From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
@@ -6245,58 +6065,44 @@ namespace Goedel.Mesh {
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from tagged byte input.
+		/// i.e. { "EncryptedData" : {... data ... } }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new EncryptedData FromTagged (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return FromTagged (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
-		public static new EncryptedData FromTagged (string _Input) {
-			EncryptedData _Result;
-			Deserialize (_Input, out _Result);
-			return _Result;
-			}
-
-
-        /// <summary>
-        /// 
+        /// Create a new instance from tagged string input.
+		/// i.e. { "EncryptedData" : {... data ... } }
         /// </summary>
-        /// <param name="_Input"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(string _Input, out EncryptedData Out) {
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>		
+		public static new EncryptedData FromTagged (string _Input) {
+			//EncryptedData _Result;
+			//Deserialize (_Input, out _Result);
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-
-			Deserialize (JSONReader, out Out);
+			return FromTagged (JSONReader) ;
 			}
+
 
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
-        public static new EncryptedData  DeserializeTagged (JSONReader JSONReader) {
-			EncryptedData Result;
-			Deserialize (JSONReader, out Result);
-			return Result;
-			}
+        public static new EncryptedData  FromTagged (JSONReader JSONReader) {
+			EncryptedData Out = null;
 
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(JSONReader JSONReader, out EncryptedData Out) {
-	
 			JSONReader.StartObject ();
             if (JSONReader.EOR) {
-                Out = null;
-                return;
+                return null;
                 }
 
 			string token = JSONReader.ReadToken ();
-			Out = null;
 
 			switch (token) {
 
@@ -6315,12 +6121,12 @@ namespace Goedel.Mesh {
 				}
 			JSONReader.EndObject ();
 
-			// should we check for EOF here?
-            }
+			return Out;
+			}
 
 
         /// <summary>
-        /// 
+        /// Having read a tag, process the corresponding value data.
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Tag"></param>
@@ -6408,14 +6214,22 @@ namespace Goedel.Mesh {
 
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged byte input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>		
 		public static new SignedData From (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return From (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged string input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new SignedData From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
@@ -6423,58 +6237,44 @@ namespace Goedel.Mesh {
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from tagged byte input.
+		/// i.e. { "SignedData" : {... data ... } }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new SignedData FromTagged (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return FromTagged (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
-		public static new SignedData FromTagged (string _Input) {
-			SignedData _Result;
-			Deserialize (_Input, out _Result);
-			return _Result;
-			}
-
-
-        /// <summary>
-        /// 
+        /// Create a new instance from tagged string input.
+		/// i.e. { "SignedData" : {... data ... } }
         /// </summary>
-        /// <param name="_Input"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(string _Input, out SignedData Out) {
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>		
+		public static new SignedData FromTagged (string _Input) {
+			//SignedData _Result;
+			//Deserialize (_Input, out _Result);
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-
-			Deserialize (JSONReader, out Out);
+			return FromTagged (JSONReader) ;
 			}
+
 
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
-        public static new SignedData  DeserializeTagged (JSONReader JSONReader) {
-			SignedData Result;
-			Deserialize (JSONReader, out Result);
-			return Result;
-			}
+        public static new SignedData  FromTagged (JSONReader JSONReader) {
+			SignedData Out = null;
 
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(JSONReader JSONReader, out SignedData Out) {
-	
 			JSONReader.StartObject ();
             if (JSONReader.EOR) {
-                Out = null;
-                return;
+                return null;
                 }
 
 			string token = JSONReader.ReadToken ();
-			Out = null;
 
 			switch (token) {
 
@@ -6493,12 +6293,12 @@ namespace Goedel.Mesh {
 				}
 			JSONReader.EndObject ();
 
-			// should we check for EOF here?
-            }
+			return Out;
+			}
 
 
         /// <summary>
-        /// 
+        /// Having read a tag, process the corresponding value data.
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Tag"></param>
@@ -6637,14 +6437,22 @@ namespace Goedel.Mesh {
 
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged byte input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>		
 		public static new PublicKey From (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return From (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged string input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new PublicKey From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
@@ -6652,58 +6460,44 @@ namespace Goedel.Mesh {
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from tagged byte input.
+		/// i.e. { "PublicKey" : {... data ... } }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new PublicKey FromTagged (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return FromTagged (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
-		public static new PublicKey FromTagged (string _Input) {
-			PublicKey _Result;
-			Deserialize (_Input, out _Result);
-			return _Result;
-			}
-
-
-        /// <summary>
-        /// 
+        /// Create a new instance from tagged string input.
+		/// i.e. { "PublicKey" : {... data ... } }
         /// </summary>
-        /// <param name="_Input"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(string _Input, out PublicKey Out) {
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>		
+		public static new PublicKey FromTagged (string _Input) {
+			//PublicKey _Result;
+			//Deserialize (_Input, out _Result);
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-
-			Deserialize (JSONReader, out Out);
+			return FromTagged (JSONReader) ;
 			}
+
 
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
-        public static new PublicKey  DeserializeTagged (JSONReader JSONReader) {
-			PublicKey Result;
-			Deserialize (JSONReader, out Result);
-			return Result;
-			}
+        public static new PublicKey  FromTagged (JSONReader JSONReader) {
+			PublicKey Out = null;
 
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(JSONReader JSONReader, out PublicKey Out) {
-	
 			JSONReader.StartObject ();
             if (JSONReader.EOR) {
-                Out = null;
-                return;
+                return null;
                 }
 
 			string token = JSONReader.ReadToken ();
-			Out = null;
 
 			switch (token) {
 
@@ -6722,12 +6516,12 @@ namespace Goedel.Mesh {
 				}
 			JSONReader.EndObject ();
 
-			// should we check for EOF here?
-            }
+			return Out;
+			}
 
 
         /// <summary>
-        /// 
+        /// Having read a tag, process the corresponding value data.
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Tag"></param>
@@ -6743,6 +6537,7 @@ namespace Goedel.Mesh {
 					break;
 					}
 				case "X509Chain" : {
+					// Have a sequence of values
 					bool _Going = JSONReader.StartArray ();
 					X509Chain = new List <byte[]> ();
 					while (_Going) {
@@ -6750,7 +6545,6 @@ namespace Goedel.Mesh {
 						X509Chain.Add (_Item);
 						_Going = JSONReader.NextArray ();
 						}
-
 					break;
 					}
 				case "X509CSR" : {
@@ -6758,8 +6552,7 @@ namespace Goedel.Mesh {
 					break;
 					}
 				case "PublicParameters" : {
-					//PublicParameters = new Key (JSONReader);
-					Key.Deserialize(JSONReader, out PublicParameters) ;
+					PublicParameters = Key.FromTagged (JSONReader) ;  // A tagged structure
 					break;
 					}
 				default : {
@@ -6855,14 +6648,22 @@ namespace Goedel.Mesh {
 
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged byte input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>		
 		public static new ConnectionRequest From (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return From (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged string input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new ConnectionRequest From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
@@ -6870,58 +6671,44 @@ namespace Goedel.Mesh {
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from tagged byte input.
+		/// i.e. { "ConnectionRequest" : {... data ... } }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new ConnectionRequest FromTagged (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return FromTagged (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
-		public static new ConnectionRequest FromTagged (string _Input) {
-			ConnectionRequest _Result;
-			Deserialize (_Input, out _Result);
-			return _Result;
-			}
-
-
-        /// <summary>
-        /// 
+        /// Create a new instance from tagged string input.
+		/// i.e. { "ConnectionRequest" : {... data ... } }
         /// </summary>
-        /// <param name="_Input"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(string _Input, out ConnectionRequest Out) {
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>		
+		public static new ConnectionRequest FromTagged (string _Input) {
+			//ConnectionRequest _Result;
+			//Deserialize (_Input, out _Result);
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-
-			Deserialize (JSONReader, out Out);
+			return FromTagged (JSONReader) ;
 			}
+
 
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
-        public static new ConnectionRequest  DeserializeTagged (JSONReader JSONReader) {
-			ConnectionRequest Result;
-			Deserialize (JSONReader, out Result);
-			return Result;
-			}
+        public static new ConnectionRequest  FromTagged (JSONReader JSONReader) {
+			ConnectionRequest Out = null;
 
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(JSONReader JSONReader, out ConnectionRequest Out) {
-	
 			JSONReader.StartObject ();
             if (JSONReader.EOR) {
-                Out = null;
-                return;
+                return null;
                 }
 
 			string token = JSONReader.ReadToken ();
-			Out = null;
 
 			switch (token) {
 
@@ -6947,12 +6734,12 @@ namespace Goedel.Mesh {
 				}
 			JSONReader.EndObject ();
 
-			// should we check for EOF here?
-            }
+			return Out;
+			}
 
 
         /// <summary>
-        /// 
+        /// Having read a tag, process the corresponding value data.
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Tag"></param>
@@ -6964,9 +6751,9 @@ namespace Goedel.Mesh {
 					break;
 					}
 				case "Device" : {
-					// Field does not have 
+					// An untagged structure
 					Device = new SignedDeviceProfile (JSONReader);
-					//SignedDeviceProfile.Deserialize(JSONReader, out Device) ;
+ 
 					break;
 					}
 				case "BlockToken" : {
@@ -7049,14 +6836,22 @@ namespace Goedel.Mesh {
 
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged byte input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>		
 		public static new ConnectionResult From (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return From (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged string input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new ConnectionResult From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
@@ -7064,58 +6859,44 @@ namespace Goedel.Mesh {
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from tagged byte input.
+		/// i.e. { "ConnectionResult" : {... data ... } }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new ConnectionResult FromTagged (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return FromTagged (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
-		public static new ConnectionResult FromTagged (string _Input) {
-			ConnectionResult _Result;
-			Deserialize (_Input, out _Result);
-			return _Result;
-			}
-
-
-        /// <summary>
-        /// 
+        /// Create a new instance from tagged string input.
+		/// i.e. { "ConnectionResult" : {... data ... } }
         /// </summary>
-        /// <param name="_Input"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(string _Input, out ConnectionResult Out) {
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>		
+		public static new ConnectionResult FromTagged (string _Input) {
+			//ConnectionResult _Result;
+			//Deserialize (_Input, out _Result);
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-
-			Deserialize (JSONReader, out Out);
+			return FromTagged (JSONReader) ;
 			}
+
 
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
-        public static new ConnectionResult  DeserializeTagged (JSONReader JSONReader) {
-			ConnectionResult Result;
-			Deserialize (JSONReader, out Result);
-			return Result;
-			}
+        public static new ConnectionResult  FromTagged (JSONReader JSONReader) {
+			ConnectionResult Out = null;
 
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(JSONReader JSONReader, out ConnectionResult Out) {
-	
 			JSONReader.StartObject ();
             if (JSONReader.EOR) {
-                Out = null;
-                return;
+                return null;
                 }
 
 			string token = JSONReader.ReadToken ();
-			Out = null;
 
 			switch (token) {
 
@@ -7134,12 +6915,12 @@ namespace Goedel.Mesh {
 				}
 			JSONReader.EndObject ();
 
-			// should we check for EOF here?
-            }
+			return Out;
+			}
 
 
         /// <summary>
-        /// 
+        /// Having read a tag, process the corresponding value data.
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Tag"></param>
@@ -7220,14 +7001,22 @@ namespace Goedel.Mesh {
 
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged byte input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>		
 		public static new SignedConnectionRequest From (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return From (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged string input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new SignedConnectionRequest From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
@@ -7235,58 +7024,44 @@ namespace Goedel.Mesh {
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from tagged byte input.
+		/// i.e. { "SignedConnectionRequest" : {... data ... } }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new SignedConnectionRequest FromTagged (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return FromTagged (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
-		public static new SignedConnectionRequest FromTagged (string _Input) {
-			SignedConnectionRequest _Result;
-			Deserialize (_Input, out _Result);
-			return _Result;
-			}
-
-
-        /// <summary>
-        /// 
+        /// Create a new instance from tagged string input.
+		/// i.e. { "SignedConnectionRequest" : {... data ... } }
         /// </summary>
-        /// <param name="_Input"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(string _Input, out SignedConnectionRequest Out) {
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>		
+		public static new SignedConnectionRequest FromTagged (string _Input) {
+			//SignedConnectionRequest _Result;
+			//Deserialize (_Input, out _Result);
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-
-			Deserialize (JSONReader, out Out);
+			return FromTagged (JSONReader) ;
 			}
+
 
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
-        public static new SignedConnectionRequest  DeserializeTagged (JSONReader JSONReader) {
-			SignedConnectionRequest Result;
-			Deserialize (JSONReader, out Result);
-			return Result;
-			}
+        public static new SignedConnectionRequest  FromTagged (JSONReader JSONReader) {
+			SignedConnectionRequest Out = null;
 
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(JSONReader JSONReader, out SignedConnectionRequest Out) {
-	
 			JSONReader.StartObject ();
             if (JSONReader.EOR) {
-                Out = null;
-                return;
+                return null;
                 }
 
 			string token = JSONReader.ReadToken ();
-			Out = null;
 
 			switch (token) {
 
@@ -7305,12 +7080,12 @@ namespace Goedel.Mesh {
 				}
 			JSONReader.EndObject ();
 
-			// should we check for EOF here?
-            }
+			return Out;
+			}
 
 
         /// <summary>
-        /// 
+        /// Having read a tag, process the corresponding value data.
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Tag"></param>
@@ -7387,14 +7162,22 @@ namespace Goedel.Mesh {
 
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged byte input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>		
 		public static new SignedConnectionResult From (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return From (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged string input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new SignedConnectionResult From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
@@ -7402,58 +7185,44 @@ namespace Goedel.Mesh {
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from tagged byte input.
+		/// i.e. { "SignedConnectionResult" : {... data ... } }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new SignedConnectionResult FromTagged (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return FromTagged (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
-		public static new SignedConnectionResult FromTagged (string _Input) {
-			SignedConnectionResult _Result;
-			Deserialize (_Input, out _Result);
-			return _Result;
-			}
-
-
-        /// <summary>
-        /// 
+        /// Create a new instance from tagged string input.
+		/// i.e. { "SignedConnectionResult" : {... data ... } }
         /// </summary>
-        /// <param name="_Input"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(string _Input, out SignedConnectionResult Out) {
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>		
+		public static new SignedConnectionResult FromTagged (string _Input) {
+			//SignedConnectionResult _Result;
+			//Deserialize (_Input, out _Result);
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-
-			Deserialize (JSONReader, out Out);
+			return FromTagged (JSONReader) ;
 			}
+
 
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
-        public static new SignedConnectionResult  DeserializeTagged (JSONReader JSONReader) {
-			SignedConnectionResult Result;
-			Deserialize (JSONReader, out Result);
-			return Result;
-			}
+        public static new SignedConnectionResult  FromTagged (JSONReader JSONReader) {
+			SignedConnectionResult Out = null;
 
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(JSONReader JSONReader, out SignedConnectionResult Out) {
-	
 			JSONReader.StartObject ();
             if (JSONReader.EOR) {
-                Out = null;
-                return;
+                return null;
                 }
 
 			string token = JSONReader.ReadToken ();
-			Out = null;
 
 			switch (token) {
 
@@ -7472,12 +7241,12 @@ namespace Goedel.Mesh {
 				}
 			JSONReader.EndObject ();
 
-			// should we check for EOF here?
-            }
+			return Out;
+			}
 
 
         /// <summary>
-        /// 
+        /// Having read a tag, process the corresponding value data.
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Tag"></param>

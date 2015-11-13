@@ -56,8 +56,8 @@ namespace Goedel.Protocol {
             WebRequest.Headers.Add("Cache-Control: no-store");
             WebRequest.ContentLength = Content.Length;
 
-            Trace.WriteLine("Send Request");
-            Trace.WriteLine(Content.GetUTF8);
+            //Trace.WriteLine("Send Request");
+            //Trace.WriteLine(Content.GetUTF8);
 
             RequestStream = WebRequest.GetRequestStream();
 
@@ -77,7 +77,7 @@ namespace Goedel.Protocol {
             HttpWebResponse WebResponse = (HttpWebResponse)WebRequest.GetResponse();
             int Code = (int)WebResponse.StatusCode;
 
-            Trace.WriteLine("Got a response {0} {1}", Code, WebResponse.StatusDescription);
+            //Trace.WriteLine("Got a response {0} {1}", Code, WebResponse.StatusDescription);
 
             if (Code > 399) {
                 throw new Exception(WebResponse.StatusDescription);

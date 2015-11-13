@@ -11,7 +11,7 @@ GUI Goedel.MeshConnect
 			Heading
 				|Connect this device to an existing mesh profile
 			Text
-				|To connect
+				|You will need to know your mesh provider name and your account name.
 			Vertical
 				Input MeshGateway2 "Mesh provider gateway (e.g. prismproof.org)."
 				Input AccountName3 "Your prefered account name (e.g. alice)." 

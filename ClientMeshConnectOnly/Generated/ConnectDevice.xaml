@@ -11,7 +11,7 @@
             xml:space="preserve" Margin="25,25,25,0" DockPanel.Dock="Top">Connect this device to an existing mesh profile
 </TextBlock>
         <TextBlock TextWrapping="WrapWithOverflow" FontSize="20" 
-            xml:space="preserve" Margin="25,0,25,25" DockPanel.Dock="Top">To connect
+            xml:space="preserve" Margin="25,0,25,25" DockPanel.Dock="Top">You will need to know your mesh provider name and your account name.
 
 </TextBlock>
         <StackPanel>

@@ -389,7 +389,13 @@ namespace Goedel.Mesh {
     /// </summary>
     public class MeshAdminClient : MeshClient {
 
+        /// <summary>
+        /// Delete all profiles from the registry and erase the related keys.
+        /// </summary>
+        public static void ResetRegistry () {
 
+
+            }
         }
 
 

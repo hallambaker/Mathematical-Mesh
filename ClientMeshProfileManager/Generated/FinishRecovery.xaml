@@ -26,6 +26,7 @@ your fingerprint to send you secre mail.
                 <RowDefinition />
                 <RowDefinition />
                 <RowDefinition />
+                <RowDefinition />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
@@ -47,6 +48,9 @@ your fingerprint to send you secre mail.
                    VerticalAlignment="Center">Third Recovery Share</Label>
             <TextBlock Grid.Row="3" Grid.Column="1" FontSize="20" Name="Output_RecoveryShare3f"
 					Width="400" Height="40"></TextBlock>
+            <Button   Grid.Row="4"  Grid.Column="0" Grid.ColumnSpan="2" 
+                      VerticalAlignment="Center" FontSize="20" Width="150" Height="30" 
+                  Click="Action_NextClose1" >Next</Button>
 
 		</Grid>
 

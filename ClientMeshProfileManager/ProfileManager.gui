@@ -179,8 +179,8 @@ GUI Goedel.MeshProfileManager
 				|your fingerprint to send you secre mail.
 			Vertical
 				Output Fingerprint "ProfileFingerprint" 
-			Action NextClose "Next" Finish
-				Close
+			Action NextClose "Next" SetupComplete
+
 
 
 		Dialog FinishRecovery
@@ -196,9 +196,9 @@ GUI Goedel.MeshProfileManager
 				Output Fingerprintf "ProfileFingerprint" 
 				Output RecoveryShare1f "First Recovery Share" 
 				Output RecoveryShare2f "Second Recovery Share" 
-				Output RecoveryShare3f  "Third Recovery Share" 
-			Action NextClose1 "Next" FinishRecovery
-				Close
+				Output RecoveryShare3f  "Third Recovery Share"
+				Action NextClose1 "Next" SetupComplete
+
 
 
 		Dialog ConnectDevice
@@ -293,6 +293,8 @@ GUI Goedel.MeshProfileManager
 			Text
 				|You have a pending profile connection request
 			Output PendingUDF "Device Fingerprint"
+			Output ProfileUDF1 "Profile Fingerprint"
+			Output AccountID1 "Account"
 			Horizontal
 				Action AcceptPending "Accept" SetupComplete
 					Text

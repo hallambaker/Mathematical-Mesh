@@ -1,7 +1,7 @@
 ﻿
 //  Test
 //  
-//  This file was automatically generated at 11/10/2015 5:04:42 PM
+//  This file was automatically generated at 11/13/2015 4:22:39 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -382,14 +382,22 @@ namespace Goedel.Persistence {
 
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged byte input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>		
 		public static new DataItem From (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return From (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged string input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new DataItem From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
@@ -397,58 +405,44 @@ namespace Goedel.Persistence {
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from tagged byte input.
+		/// i.e. { "DataItem" : {... data ... } }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new DataItem FromTagged (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return FromTagged (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
-		public static new DataItem FromTagged (string _Input) {
-			DataItem _Result;
-			Deserialize (_Input, out _Result);
-			return _Result;
-			}
-
-
-        /// <summary>
-        /// 
+        /// Create a new instance from tagged string input.
+		/// i.e. { "DataItem" : {... data ... } }
         /// </summary>
-        /// <param name="_Input"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(string _Input, out DataItem Out) {
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>		
+		public static new DataItem FromTagged (string _Input) {
+			//DataItem _Result;
+			//Deserialize (_Input, out _Result);
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-
-			Deserialize (JSONReader, out Out);
+			return FromTagged (JSONReader) ;
 			}
+
 
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
-        public static new DataItem  DeserializeTagged (JSONReader JSONReader) {
-			DataItem Result;
-			Deserialize (JSONReader, out Result);
-			return Result;
-			}
+        public static new DataItem  FromTagged (JSONReader JSONReader) {
+			DataItem Out = null;
 
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(JSONReader JSONReader, out DataItem Out) {
-	
 			JSONReader.StartObject ();
             if (JSONReader.EOR) {
-                Out = null;
-                return;
+                return null;
                 }
 
 			string token = JSONReader.ReadToken ();
-			Out = null;
 
 			switch (token) {
 
@@ -467,12 +461,12 @@ namespace Goedel.Persistence {
 				}
 			JSONReader.EndObject ();
 
-			// should we check for EOF here?
-            }
+			return Out;
+			}
 
 
         /// <summary>
-        /// 
+        /// Having read a tag, process the corresponding value data.
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Tag"></param>
@@ -500,15 +494,14 @@ namespace Goedel.Persistence {
 					break;
 					}
 				case "Keys" : {
+					// Have a sequence of values
 					bool _Going = JSONReader.StartArray ();
 					Keys = new List <IndexTerm> ();
 					while (_Going) {
-						IndexTerm _Item;
-                        IndexTerm.Deserialize(JSONReader, out _Item);
+						var _Item = IndexTerm.FromTagged (JSONReader); // a tagged structure
 						Keys.Add (_Item);
 						_Going = JSONReader.NextArray ();
 						}
-
 					break;
 					}
 				case "Data" : {
@@ -651,14 +644,22 @@ namespace Goedel.Persistence {
 
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged byte input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>		
 		public static new Header From (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return From (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged string input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new Header From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
@@ -666,58 +667,44 @@ namespace Goedel.Persistence {
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from tagged byte input.
+		/// i.e. { "Header" : {... data ... } }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new Header FromTagged (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return FromTagged (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
-		public static new Header FromTagged (string _Input) {
-			Header _Result;
-			Deserialize (_Input, out _Result);
-			return _Result;
-			}
-
-
-        /// <summary>
-        /// 
+        /// Create a new instance from tagged string input.
+		/// i.e. { "Header" : {... data ... } }
         /// </summary>
-        /// <param name="_Input"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(string _Input, out Header Out) {
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>		
+		public static new Header FromTagged (string _Input) {
+			//Header _Result;
+			//Deserialize (_Input, out _Result);
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-
-			Deserialize (JSONReader, out Out);
+			return FromTagged (JSONReader) ;
 			}
+
 
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
-        public static new Header  DeserializeTagged (JSONReader JSONReader) {
-			Header Result;
-			Deserialize (JSONReader, out Result);
-			return Result;
-			}
+        public static new Header  FromTagged (JSONReader JSONReader) {
+			Header Out = null;
 
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(JSONReader JSONReader, out Header Out) {
-	
 			JSONReader.StartObject ();
             if (JSONReader.EOR) {
-                Out = null;
-                return;
+                return null;
                 }
 
 			string token = JSONReader.ReadToken ();
-			Out = null;
 
 			switch (token) {
 
@@ -736,12 +723,12 @@ namespace Goedel.Persistence {
 				}
 			JSONReader.EndObject ();
 
-			// should we check for EOF here?
-            }
+			return Out;
+			}
 
 
         /// <summary>
-        /// 
+        /// Having read a tag, process the corresponding value data.
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Tag"></param>
@@ -769,9 +756,9 @@ namespace Goedel.Persistence {
 					break;
 					}
 				case "Delta" : {
-					// Field does not have 
+					// An untagged structure
 					Delta = new Delta (JSONReader);
-					//Delta.Deserialize(JSONReader, out Delta) ;
+ 
 					break;
 					}
 				default : {
@@ -858,14 +845,22 @@ namespace Goedel.Persistence {
 
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged byte input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>		
 		public static new Delta From (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return From (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged string input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new Delta From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
@@ -873,58 +868,44 @@ namespace Goedel.Persistence {
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from tagged byte input.
+		/// i.e. { "Delta" : {... data ... } }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new Delta FromTagged (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return FromTagged (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
-		public static new Delta FromTagged (string _Input) {
-			Delta _Result;
-			Deserialize (_Input, out _Result);
-			return _Result;
-			}
-
-
-        /// <summary>
-        /// 
+        /// Create a new instance from tagged string input.
+		/// i.e. { "Delta" : {... data ... } }
         /// </summary>
-        /// <param name="_Input"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(string _Input, out Delta Out) {
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>		
+		public static new Delta FromTagged (string _Input) {
+			//Delta _Result;
+			//Deserialize (_Input, out _Result);
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-
-			Deserialize (JSONReader, out Out);
+			return FromTagged (JSONReader) ;
 			}
+
 
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
-        public static new Delta  DeserializeTagged (JSONReader JSONReader) {
-			Delta Result;
-			Deserialize (JSONReader, out Result);
-			return Result;
-			}
+        public static new Delta  FromTagged (JSONReader JSONReader) {
+			Delta Out = null;
 
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(JSONReader JSONReader, out Delta Out) {
-	
 			JSONReader.StartObject ();
             if (JSONReader.EOR) {
-                Out = null;
-                return;
+                return null;
                 }
 
 			string token = JSONReader.ReadToken ();
-			Out = null;
 
 			switch (token) {
 
@@ -943,12 +924,12 @@ namespace Goedel.Persistence {
 				}
 			JSONReader.EndObject ();
 
-			// should we check for EOF here?
-            }
+			return Out;
+			}
 
 
         /// <summary>
-        /// 
+        /// Having read a tag, process the corresponding value data.
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Tag"></param>
@@ -1047,14 +1028,22 @@ namespace Goedel.Persistence {
 
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged byte input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>		
 		public static new IndexTerm From (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return From (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged string input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new IndexTerm From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
@@ -1062,58 +1051,44 @@ namespace Goedel.Persistence {
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from tagged byte input.
+		/// i.e. { "IndexTerm" : {... data ... } }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new IndexTerm FromTagged (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return FromTagged (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
-		public static new IndexTerm FromTagged (string _Input) {
-			IndexTerm _Result;
-			Deserialize (_Input, out _Result);
-			return _Result;
-			}
-
-
-        /// <summary>
-        /// 
+        /// Create a new instance from tagged string input.
+		/// i.e. { "IndexTerm" : {... data ... } }
         /// </summary>
-        /// <param name="_Input"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(string _Input, out IndexTerm Out) {
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>		
+		public static new IndexTerm FromTagged (string _Input) {
+			//IndexTerm _Result;
+			//Deserialize (_Input, out _Result);
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-
-			Deserialize (JSONReader, out Out);
+			return FromTagged (JSONReader) ;
 			}
+
 
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
-        public static new IndexTerm  DeserializeTagged (JSONReader JSONReader) {
-			IndexTerm Result;
-			Deserialize (JSONReader, out Result);
-			return Result;
-			}
+        public static new IndexTerm  FromTagged (JSONReader JSONReader) {
+			IndexTerm Out = null;
 
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(JSONReader JSONReader, out IndexTerm Out) {
-	
 			JSONReader.StartObject ();
             if (JSONReader.EOR) {
-                Out = null;
-                return;
+                return null;
                 }
 
 			string token = JSONReader.ReadToken ();
-			Out = null;
 
 			switch (token) {
 
@@ -1132,12 +1107,12 @@ namespace Goedel.Persistence {
 				}
 			JSONReader.EndObject ();
 
-			// should we check for EOF here?
-            }
+			return Out;
+			}
 
 
         /// <summary>
-        /// 
+        /// Having read a tag, process the corresponding value data.
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Tag"></param>
@@ -1227,14 +1202,22 @@ namespace Goedel.Persistence {
 
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged byte input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>		
 		public static new Final From (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return From (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged string input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new Final From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
@@ -1242,58 +1225,44 @@ namespace Goedel.Persistence {
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from tagged byte input.
+		/// i.e. { "Final" : {... data ... } }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new Final FromTagged (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return FromTagged (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
-		public static new Final FromTagged (string _Input) {
-			Final _Result;
-			Deserialize (_Input, out _Result);
-			return _Result;
-			}
-
-
-        /// <summary>
-        /// 
+        /// Create a new instance from tagged string input.
+		/// i.e. { "Final" : {... data ... } }
         /// </summary>
-        /// <param name="_Input"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(string _Input, out Final Out) {
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>		
+		public static new Final FromTagged (string _Input) {
+			//Final _Result;
+			//Deserialize (_Input, out _Result);
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-
-			Deserialize (JSONReader, out Out);
+			return FromTagged (JSONReader) ;
 			}
+
 
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
-        public static new Final  DeserializeTagged (JSONReader JSONReader) {
-			Final Result;
-			Deserialize (JSONReader, out Result);
-			return Result;
-			}
+        public static new Final  FromTagged (JSONReader JSONReader) {
+			Final Out = null;
 
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(JSONReader JSONReader, out Final Out) {
-	
 			JSONReader.StartObject ();
             if (JSONReader.EOR) {
-                Out = null;
-                return;
+                return null;
                 }
 
 			string token = JSONReader.ReadToken ();
-			Out = null;
 
 			switch (token) {
 
@@ -1312,12 +1281,12 @@ namespace Goedel.Persistence {
 				}
 			JSONReader.EndObject ();
 
-			// should we check for EOF here?
-            }
+			return Out;
+			}
 
 
         /// <summary>
-        /// 
+        /// Having read a tag, process the corresponding value data.
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Tag"></param>
@@ -1415,14 +1384,22 @@ namespace Goedel.Persistence {
 
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged byte input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>		
 		public static new Terminal From (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return From (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged string input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new Terminal From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
@@ -1430,58 +1407,44 @@ namespace Goedel.Persistence {
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from tagged byte input.
+		/// i.e. { "Terminal" : {... data ... } }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new Terminal FromTagged (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return FromTagged (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
-		public static new Terminal FromTagged (string _Input) {
-			Terminal _Result;
-			Deserialize (_Input, out _Result);
-			return _Result;
-			}
-
-
-        /// <summary>
-        /// 
+        /// Create a new instance from tagged string input.
+		/// i.e. { "Terminal" : {... data ... } }
         /// </summary>
-        /// <param name="_Input"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(string _Input, out Terminal Out) {
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>		
+		public static new Terminal FromTagged (string _Input) {
+			//Terminal _Result;
+			//Deserialize (_Input, out _Result);
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-
-			Deserialize (JSONReader, out Out);
+			return FromTagged (JSONReader) ;
 			}
+
 
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
-        public static new Terminal  DeserializeTagged (JSONReader JSONReader) {
-			Terminal Result;
-			Deserialize (JSONReader, out Result);
-			return Result;
-			}
+        public static new Terminal  FromTagged (JSONReader JSONReader) {
+			Terminal Out = null;
 
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(JSONReader JSONReader, out Terminal Out) {
-	
 			JSONReader.StartObject ();
             if (JSONReader.EOR) {
-                Out = null;
-                return;
+                return null;
                 }
 
 			string token = JSONReader.ReadToken ();
-			Out = null;
 
 			switch (token) {
 
@@ -1500,12 +1463,12 @@ namespace Goedel.Persistence {
 				}
 			JSONReader.EndObject ();
 
-			// should we check for EOF here?
-            }
+			return Out;
+			}
 
 
         /// <summary>
-        /// 
+        /// Having read a tag, process the corresponding value data.
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Tag"></param>
@@ -1513,17 +1476,15 @@ namespace Goedel.Persistence {
 			
 			switch (Tag) {
 				case "Indexes" : {
+					// Have a sequence of values
 					bool _Going = JSONReader.StartArray ();
 					Indexes = new List <IndexIndex> ();
 					while (_Going) {
+						// an untagged structure.
 						var _Item = new IndexIndex (JSONReader);
-						//IndexIndex _Item;
-                        //IndexIndex.Deserialize(JSONReader, out _Item);
-
 						Indexes.Add (_Item);
 						_Going = JSONReader.NextArray ();
 						}
-
 					break;
 					}
 				default : {
@@ -1615,14 +1576,22 @@ namespace Goedel.Persistence {
 
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged byte input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>		
 		public static new IndexIndex From (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return From (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged string input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new IndexIndex From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
@@ -1630,58 +1599,44 @@ namespace Goedel.Persistence {
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from tagged byte input.
+		/// i.e. { "IndexIndex" : {... data ... } }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new IndexIndex FromTagged (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return FromTagged (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
-		public static new IndexIndex FromTagged (string _Input) {
-			IndexIndex _Result;
-			Deserialize (_Input, out _Result);
-			return _Result;
-			}
-
-
-        /// <summary>
-        /// 
+        /// Create a new instance from tagged string input.
+		/// i.e. { "IndexIndex" : {... data ... } }
         /// </summary>
-        /// <param name="_Input"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(string _Input, out IndexIndex Out) {
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>		
+		public static new IndexIndex FromTagged (string _Input) {
+			//IndexIndex _Result;
+			//Deserialize (_Input, out _Result);
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-
-			Deserialize (JSONReader, out Out);
+			return FromTagged (JSONReader) ;
 			}
+
 
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
-        public static new IndexIndex  DeserializeTagged (JSONReader JSONReader) {
-			IndexIndex Result;
-			Deserialize (JSONReader, out Result);
-			return Result;
-			}
+        public static new IndexIndex  FromTagged (JSONReader JSONReader) {
+			IndexIndex Out = null;
 
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(JSONReader JSONReader, out IndexIndex Out) {
-	
 			JSONReader.StartObject ();
             if (JSONReader.EOR) {
-                Out = null;
-                return;
+                return null;
                 }
 
 			string token = JSONReader.ReadToken ();
-			Out = null;
 
 			switch (token) {
 
@@ -1700,12 +1655,12 @@ namespace Goedel.Persistence {
 				}
 			JSONReader.EndObject ();
 
-			// should we check for EOF here?
-            }
+			return Out;
+			}
 
 
         /// <summary>
-        /// 
+        /// Having read a tag, process the corresponding value data.
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Tag"></param>
@@ -1816,14 +1771,22 @@ namespace Goedel.Persistence {
 
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged byte input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>		
 		public static new Index From (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return From (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged string input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new Index From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
@@ -1831,58 +1794,44 @@ namespace Goedel.Persistence {
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from tagged byte input.
+		/// i.e. { "Index" : {... data ... } }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new Index FromTagged (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return FromTagged (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
-		public static new Index FromTagged (string _Input) {
-			Index _Result;
-			Deserialize (_Input, out _Result);
-			return _Result;
-			}
-
-
-        /// <summary>
-        /// 
+        /// Create a new instance from tagged string input.
+		/// i.e. { "Index" : {... data ... } }
         /// </summary>
-        /// <param name="_Input"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(string _Input, out Index Out) {
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>		
+		public static new Index FromTagged (string _Input) {
+			//Index _Result;
+			//Deserialize (_Input, out _Result);
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-
-			Deserialize (JSONReader, out Out);
+			return FromTagged (JSONReader) ;
 			}
+
 
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
-        public static new Index  DeserializeTagged (JSONReader JSONReader) {
-			Index Result;
-			Deserialize (JSONReader, out Result);
-			return Result;
-			}
+        public static new Index  FromTagged (JSONReader JSONReader) {
+			Index Out = null;
 
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(JSONReader JSONReader, out Index Out) {
-	
 			JSONReader.StartObject ();
             if (JSONReader.EOR) {
-                Out = null;
-                return;
+                return null;
                 }
 
 			string token = JSONReader.ReadToken ();
-			Out = null;
 
 			switch (token) {
 
@@ -1901,12 +1850,12 @@ namespace Goedel.Persistence {
 				}
 			JSONReader.EndObject ();
 
-			// should we check for EOF here?
-            }
+			return Out;
+			}
 
 
         /// <summary>
-        /// 
+        /// Having read a tag, process the corresponding value data.
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Tag"></param>
@@ -1918,17 +1867,15 @@ namespace Goedel.Persistence {
 					break;
 					}
 				case "Entries" : {
+					// Have a sequence of values
 					bool _Going = JSONReader.StartArray ();
 					Entries = new List <IndexEntry> ();
 					while (_Going) {
+						// an untagged structure.
 						var _Item = new IndexEntry (JSONReader);
-						//IndexEntry _Item;
-                        //IndexEntry.Deserialize(JSONReader, out _Item);
-
 						Entries.Add (_Item);
 						_Going = JSONReader.NextArray ();
 						}
-
 					break;
 					}
 				default : {
@@ -2022,14 +1969,22 @@ namespace Goedel.Persistence {
 
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged byte input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>		
 		public static new IndexEntry From (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return From (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged string input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new IndexEntry From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
@@ -2037,58 +1992,44 @@ namespace Goedel.Persistence {
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from tagged byte input.
+		/// i.e. { "IndexEntry" : {... data ... } }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new IndexEntry FromTagged (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return FromTagged (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
-		public static new IndexEntry FromTagged (string _Input) {
-			IndexEntry _Result;
-			Deserialize (_Input, out _Result);
-			return _Result;
-			}
-
-
-        /// <summary>
-        /// 
+        /// Create a new instance from tagged string input.
+		/// i.e. { "IndexEntry" : {... data ... } }
         /// </summary>
-        /// <param name="_Input"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(string _Input, out IndexEntry Out) {
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>		
+		public static new IndexEntry FromTagged (string _Input) {
+			//IndexEntry _Result;
+			//Deserialize (_Input, out _Result);
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-
-			Deserialize (JSONReader, out Out);
+			return FromTagged (JSONReader) ;
 			}
+
 
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
-        public static new IndexEntry  DeserializeTagged (JSONReader JSONReader) {
-			IndexEntry Result;
-			Deserialize (JSONReader, out Result);
-			return Result;
-			}
+        public static new IndexEntry  FromTagged (JSONReader JSONReader) {
+			IndexEntry Out = null;
 
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(JSONReader JSONReader, out IndexEntry Out) {
-	
 			JSONReader.StartObject ();
             if (JSONReader.EOR) {
-                Out = null;
-                return;
+                return null;
                 }
 
 			string token = JSONReader.ReadToken ();
-			Out = null;
 
 			switch (token) {
 
@@ -2107,12 +2048,12 @@ namespace Goedel.Persistence {
 				}
 			JSONReader.EndObject ();
 
-			// should we check for EOF here?
-            }
+			return Out;
+			}
 
 
         /// <summary>
-        /// 
+        /// Having read a tag, process the corresponding value data.
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Tag"></param>
@@ -2124,6 +2065,7 @@ namespace Goedel.Persistence {
 					break;
 					}
 				case "Offset" : {
+					// Have a sequence of values
 					bool _Going = JSONReader.StartArray ();
 					Offset = new List <int> ();
 					while (_Going) {
@@ -2131,7 +2073,6 @@ namespace Goedel.Persistence {
 						Offset.Add (_Item);
 						_Going = JSONReader.NextArray ();
 						}
-
 					break;
 					}
 				default : {

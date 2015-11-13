@@ -307,7 +307,7 @@ namespace Goedel.Protocol {
                 // Authenticate request data
                 // Not yet implemented.
 
-                Trace.WriteLine(RequestBody);
+                //Trace.WriteLine(RequestBody);
 
                 // Call dispatcher
                 var JSONReader = new JSONReader(RequestBody);

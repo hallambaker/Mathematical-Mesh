@@ -1,7 +1,12 @@
 ﻿using Goedel.Mesh;
+using Goedel.Protocol;
 using System.Collections.Generic;
 
 namespace Goedel.MeshSampleClient {
+
+    /// <summary>
+    /// Backing class for sample client demo
+    /// </summary>
     public partial class SampleApplication {
         public string ConfigPassword = "No profile";
         public string ConfigNetwork = "No profile";
@@ -17,10 +22,27 @@ namespace Goedel.MeshSampleClient {
             get { return Account.ID(AccountName, Portal); }
             }
 
+        /// <summary>
+        /// Flag to allow local processing.
+        /// </summary>
+        public bool DoLocal = false;
+
+
         SignedPersonalProfile SignedCurrentProfile;
         PersonalProfile PersonalCurrentProfile;
         public override void Initialize() {
-            MeshPortal.Default = new MeshPortalDirect();
+
+            if (DoLocal) {
+                MeshPortal.Default = new MeshPortalDirect();
+                }
+
+            else {
+                JPCProvider.LocalLoopback = false;
+                var Portal = new MeshPortalRemote();
+                MeshPortal.Default = Portal;
+                }
+
+
             // Get the default device
             ThisDevice = SignedDeviceProfile.GetLocal();
 
@@ -31,6 +53,7 @@ namespace Goedel.MeshSampleClient {
                 Portal = MeshClient.Portal;
                 SignedCurrentProfile = SignedPersonalProfile.GetLocal(MeshClient.UDF);
                 PersonalCurrentProfile = SignedCurrentProfile.Signed;
+                PersonalCurrentProfile.SignedDeviceProfile = ThisDevice;
                 }
             }
 

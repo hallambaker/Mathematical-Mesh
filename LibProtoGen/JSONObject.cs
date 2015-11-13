@@ -97,7 +97,7 @@ namespace Goedel.Protocol {
 			Deserialize (JSONReader);
 			}
 
-        public static void DeserializeTagged(JSONReader JSONReader) {
+        public static void FromTagged(JSONReader JSONReader) {
             }
 
         public virtual void Deserialize(JSONReader JSONReader) {

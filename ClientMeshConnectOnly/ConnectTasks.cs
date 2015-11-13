@@ -30,12 +30,19 @@ namespace Goedel.MeshConnect {
         /// <summary>
         /// Account name to connect to
         /// </summary>
-        public string Account;
+        public string AccountName;
 
         /// <summary>
         /// Mesh portal to connect to
         /// </summary>
         public string Portal;
+
+        /// <summary>
+        /// Account Identifier, is [AccountName]@[Portal]
+        /// </summary>
+        public string AccountID {
+            get { return Account.ID(AccountName, Portal); }
+            }
 
         /// <summary>
         /// The device profile
@@ -59,6 +66,11 @@ namespace Goedel.MeshConnect {
 
 
         /// <summary>
+        /// Flag to allow local processing.
+        /// </summary>
+        public bool DoLocal = false;
+
+        /// <summary>
         /// The mesh client
         /// </summary>
         public MeshClient MeshClient;
@@ -67,16 +79,25 @@ namespace Goedel.MeshConnect {
         /// Initialize the class, called once when dialog is created.
         /// </summary>
         public override void Initialize() {
-            MeshPortal.Default = new MeshPortalDirect();
 
-            DevProfile = SignedDeviceProfile.GetLocal(Pending);
+            if (DoLocal) {
+                MeshPortal.Default = new MeshPortalDirect();
+                }
 
-            // Check to see if we have a pending request
-            // if so go to Wait to complete.
+            else {
+                JPCProvider.LocalLoopback = false;
+                var Portal = new MeshPortalRemote();
+                MeshPortal.Default = Portal;
+                }
 
 
-            DevProfile = new SignedDeviceProfile(Device1, Device1Description);
-            DevProfile.ToRegistry(Pending);
+            //DevProfile = SignedDeviceProfile.GetLocal(Pending);
+
+            if (DevProfile == null) {
+                DevProfile = new SignedDeviceProfile(Device1, Device1Description);
+                DevProfile.ToRegistry(Pending);
+                }
+
             }
 
         /// <summary>
@@ -91,9 +112,9 @@ namespace Goedel.MeshConnect {
             // Attempt to connect to portal and connect to account.
 
             this.Portal = Portal;
-            this.Account = Account;
+            this.AccountName = Account;
 
-            MeshClient = new MeshClient(Portal, Account);
+            MeshClient = new MeshClient(Portal, AccountID);
             SignedPersonalProfile = MeshClient.GetPersonalProfile();
             if (SignedPersonalProfile == null) return null;
             return SignedPersonalProfile.UDF;

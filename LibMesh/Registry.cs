@@ -120,9 +120,7 @@ namespace Goedel.Mesh {
                 }
 
             var Reader = JSONReader.OfFile(FileName);
-
-            SignedPersonalProfile Result;
-            Deserialize(Reader, out Result);
+            var Result = SignedPersonalProfile.FromTagged(Reader);
 
             return Result;
             }
@@ -140,7 +138,7 @@ namespace Goedel.Mesh {
             ToRegistry("");
             }
         public void ToRegistry(string Name) {
-            var FileName = Register.WriteFile(Constants.RegistryPersonal, 
+            var FileName = Register.WriteFile(Constants.RegistryDevice, 
                 Constants.FileProfiles, Name, UDF);
             File.WriteAllText(FileName, ToString());
 
@@ -174,9 +172,7 @@ namespace Goedel.Mesh {
                 }
 
             var Reader = JSONReader.OfFile(FileName);
-
-            SignedDeviceProfile Result;
-            Deserialize(Reader, out Result);
+            var Result = FromTagged(Reader);
 
             return Result;
             }
@@ -202,8 +198,7 @@ namespace Goedel.Mesh {
 
             foreach (var Name in Names) {
                 Goedel.Debug.Trace.WriteLine("Name {0}={1}", Name, Key.GetValue(Name));
-                SignedDeviceProfile Result;
-                SignedDeviceProfile.Deserialize(Key.GetValue(Name).ToString(), out Result);
+                var Result = SignedDeviceProfile.FromTagged(Key.GetValue(Name).ToString());
                 if (Result != null) {
                     Result.Unpack();
                     return Result;

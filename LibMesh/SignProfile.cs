@@ -98,10 +98,8 @@ namespace Goedel.Mesh {
         public DeviceProfile Unpack() {
             _Signed = null;
 
-            DeviceProfile Profile;
-
             var Reader = JSONReader.OfData(SignedData.Payload);
-            DeviceProfile.Deserialize(Reader, out Profile);
+            var Profile = DeviceProfile.FromTagged(Reader);
 
             Throw.IfNot(Profile.DeviceSignatureKey.Verify(),
                     "Key fingerprint does not match key value");
@@ -128,16 +126,11 @@ namespace Goedel.Mesh {
 
 
 
-
-
-
-
         public virtual DeviceProfile UnpackAndVerify() {
             var Text = Encoding.UTF8.GetString(SignedData.Payload);
             //Goedel.Debug.Trace.WriteLine("Data as signed {0}", Text);
 
-            DeviceProfile Unpacked;
-            DeviceProfile.Deserialize(Text, out Unpacked);
+            var Unpacked = DeviceProfile.FromTagged (Text);
 
             Unpacked.Unpack();
 
@@ -187,8 +180,7 @@ namespace Goedel.Mesh {
             var Text = Encoding.UTF8.GetString(SignedData.Payload);
             //Goedel.Debug.Trace.WriteLine("Data as signed {0}", Text);
 
-            MasterProfile Unpacked;
-            MasterProfile.Deserialize(Text, out Unpacked);
+            var Unpacked = MasterProfile.FromTagged(Text);
 
             var SigningKey = Unpacked.MasterSignatureKey.KeyPair;
             var Verify = SignedData.Verify(Unpacked.MasterSignatureKey.UDF, SigningKey);
@@ -306,8 +298,7 @@ namespace Goedel.Mesh {
             var Text = Encoding.UTF8.GetString(SignedData.Payload);
             //Goedel.Debug.Trace.WriteLine("Data as signed {0}", Text);
 
-            PersonalProfile Unpacked;
-            PersonalProfile.Deserialize(Text, out Unpacked);
+            var Unpacked = PersonalProfile.FromTagged (Text);
 
             Unpacked.Unpack();
 

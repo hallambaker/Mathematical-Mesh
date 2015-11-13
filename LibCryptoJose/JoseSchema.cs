@@ -1,7 +1,7 @@
 ﻿
 //  Test
 //  
-//  This file was automatically generated at 11/10/2015 12:26:34 PM
+//  This file was automatically generated at 11/13/2015 3:30:38 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -296,14 +296,22 @@ namespace Goedel.Cryptography.Jose {
 
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged byte input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>		
 		public static new JoseWebSignature From (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return From (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged string input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new JoseWebSignature From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
@@ -311,58 +319,44 @@ namespace Goedel.Cryptography.Jose {
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from tagged byte input.
+		/// i.e. { "JoseWebSignature" : {... data ... } }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new JoseWebSignature FromTagged (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return FromTagged (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
-		public static new JoseWebSignature FromTagged (string _Input) {
-			JoseWebSignature _Result;
-			Deserialize (_Input, out _Result);
-			return _Result;
-			}
-
-
-        /// <summary>
-        /// 
+        /// Create a new instance from tagged string input.
+		/// i.e. { "JoseWebSignature" : {... data ... } }
         /// </summary>
-        /// <param name="_Input"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(string _Input, out JoseWebSignature Out) {
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>		
+		public static new JoseWebSignature FromTagged (string _Input) {
+			//JoseWebSignature _Result;
+			//Deserialize (_Input, out _Result);
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-
-			Deserialize (JSONReader, out Out);
+			return FromTagged (JSONReader) ;
 			}
+
 
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
-        public static new JoseWebSignature  DeserializeTagged (JSONReader JSONReader) {
-			JoseWebSignature Result;
-			Deserialize (JSONReader, out Result);
-			return Result;
-			}
+        public static new JoseWebSignature  FromTagged (JSONReader JSONReader) {
+			JoseWebSignature Out = null;
 
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(JSONReader JSONReader, out JoseWebSignature Out) {
-	
 			JSONReader.StartObject ();
             if (JSONReader.EOR) {
-                Out = null;
-                return;
+                return null;
                 }
 
 			string token = JSONReader.ReadToken ();
-			Out = null;
 
 			switch (token) {
 
@@ -381,12 +375,12 @@ namespace Goedel.Cryptography.Jose {
 				}
 			JSONReader.EndObject ();
 
-			// should we check for EOF here?
-            }
+			return Out;
+			}
 
 
         /// <summary>
-        /// 
+        /// Having read a tag, process the corresponding value data.
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Tag"></param>
@@ -550,14 +544,22 @@ namespace Goedel.Cryptography.Jose {
 
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged byte input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>		
 		public static new JoseWebEncryption From (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return From (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged string input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new JoseWebEncryption From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
@@ -565,58 +567,44 @@ namespace Goedel.Cryptography.Jose {
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from tagged byte input.
+		/// i.e. { "JoseWebEncryption" : {... data ... } }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new JoseWebEncryption FromTagged (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return FromTagged (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
-		public static new JoseWebEncryption FromTagged (string _Input) {
-			JoseWebEncryption _Result;
-			Deserialize (_Input, out _Result);
-			return _Result;
-			}
-
-
-        /// <summary>
-        /// 
+        /// Create a new instance from tagged string input.
+		/// i.e. { "JoseWebEncryption" : {... data ... } }
         /// </summary>
-        /// <param name="_Input"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(string _Input, out JoseWebEncryption Out) {
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>		
+		public static new JoseWebEncryption FromTagged (string _Input) {
+			//JoseWebEncryption _Result;
+			//Deserialize (_Input, out _Result);
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-
-			Deserialize (JSONReader, out Out);
+			return FromTagged (JSONReader) ;
 			}
+
 
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
-        public static new JoseWebEncryption  DeserializeTagged (JSONReader JSONReader) {
-			JoseWebEncryption Result;
-			Deserialize (JSONReader, out Result);
-			return Result;
-			}
+        public static new JoseWebEncryption  FromTagged (JSONReader JSONReader) {
+			JoseWebEncryption Out = null;
 
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(JSONReader JSONReader, out JoseWebEncryption Out) {
-	
 			JSONReader.StartObject ();
             if (JSONReader.EOR) {
-                Out = null;
-                return;
+                return null;
                 }
 
 			string token = JSONReader.ReadToken ();
-			Out = null;
 
 			switch (token) {
 
@@ -635,12 +623,12 @@ namespace Goedel.Cryptography.Jose {
 				}
 			JSONReader.EndObject ();
 
-			// should we check for EOF here?
-            }
+			return Out;
+			}
 
 
         /// <summary>
-        /// 
+        /// Having read a tag, process the corresponding value data.
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Tag"></param>
@@ -672,17 +660,15 @@ namespace Goedel.Cryptography.Jose {
 					break;
 					}
 				case "recipients" : {
+					// Have a sequence of values
 					bool _Going = JSONReader.StartArray ();
 					Recipients = new List <Recipient> ();
 					while (_Going) {
+						// an untagged structure.
 						var _Item = new Recipient (JSONReader);
-						//Recipient _Item;
-                        //Recipient.Deserialize(JSONReader, out _Item);
-
 						Recipients.Add (_Item);
 						_Going = JSONReader.NextArray ();
 						}
-
 					break;
 					}
 				default : {
@@ -778,14 +764,22 @@ namespace Goedel.Cryptography.Jose {
 
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged byte input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>		
 		public static new Signed From (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return From (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged string input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new Signed From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
@@ -793,58 +787,44 @@ namespace Goedel.Cryptography.Jose {
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from tagged byte input.
+		/// i.e. { "Signed" : {... data ... } }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new Signed FromTagged (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return FromTagged (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
-		public static new Signed FromTagged (string _Input) {
-			Signed _Result;
-			Deserialize (_Input, out _Result);
-			return _Result;
-			}
-
-
-        /// <summary>
-        /// 
+        /// Create a new instance from tagged string input.
+		/// i.e. { "Signed" : {... data ... } }
         /// </summary>
-        /// <param name="_Input"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(string _Input, out Signed Out) {
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>		
+		public static new Signed FromTagged (string _Input) {
+			//Signed _Result;
+			//Deserialize (_Input, out _Result);
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-
-			Deserialize (JSONReader, out Out);
+			return FromTagged (JSONReader) ;
 			}
+
 
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
-        public static new Signed  DeserializeTagged (JSONReader JSONReader) {
-			Signed Result;
-			Deserialize (JSONReader, out Result);
-			return Result;
-			}
+        public static new Signed  FromTagged (JSONReader JSONReader) {
+			Signed Out = null;
 
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(JSONReader JSONReader, out Signed Out) {
-	
 			JSONReader.StartObject ();
             if (JSONReader.EOR) {
-                Out = null;
-                return;
+                return null;
                 }
 
 			string token = JSONReader.ReadToken ();
-			Out = null;
 
 			switch (token) {
 
@@ -863,12 +843,12 @@ namespace Goedel.Cryptography.Jose {
 				}
 			JSONReader.EndObject ();
 
-			// should we check for EOF here?
-            }
+			return Out;
+			}
 
 
         /// <summary>
-        /// 
+        /// Having read a tag, process the corresponding value data.
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Tag"></param>
@@ -876,9 +856,9 @@ namespace Goedel.Cryptography.Jose {
 			
 			switch (Tag) {
 				case "header" : {
-					// Field does not have 
+					// An untagged structure
 					Header = new Header (JSONReader);
-					//Header.Deserialize(JSONReader, out Header) ;
+ 
 					break;
 					}
 				case "payload" : {
@@ -991,14 +971,22 @@ namespace Goedel.Cryptography.Jose {
 
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged byte input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>		
 		public static new Encrypted From (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return From (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged string input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new Encrypted From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
@@ -1006,58 +994,44 @@ namespace Goedel.Cryptography.Jose {
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from tagged byte input.
+		/// i.e. { "Encrypted" : {... data ... } }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new Encrypted FromTagged (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return FromTagged (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
-		public static new Encrypted FromTagged (string _Input) {
-			Encrypted _Result;
-			Deserialize (_Input, out _Result);
-			return _Result;
-			}
-
-
-        /// <summary>
-        /// 
+        /// Create a new instance from tagged string input.
+		/// i.e. { "Encrypted" : {... data ... } }
         /// </summary>
-        /// <param name="_Input"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(string _Input, out Encrypted Out) {
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>		
+		public static new Encrypted FromTagged (string _Input) {
+			//Encrypted _Result;
+			//Deserialize (_Input, out _Result);
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-
-			Deserialize (JSONReader, out Out);
+			return FromTagged (JSONReader) ;
 			}
+
 
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
-        public static new Encrypted  DeserializeTagged (JSONReader JSONReader) {
-			Encrypted Result;
-			Deserialize (JSONReader, out Result);
-			return Result;
-			}
+        public static new Encrypted  FromTagged (JSONReader JSONReader) {
+			Encrypted Out = null;
 
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(JSONReader JSONReader, out Encrypted Out) {
-	
 			JSONReader.StartObject ();
             if (JSONReader.EOR) {
-                Out = null;
-                return;
+                return null;
                 }
 
 			string token = JSONReader.ReadToken ();
-			Out = null;
 
 			switch (token) {
 
@@ -1076,12 +1050,12 @@ namespace Goedel.Cryptography.Jose {
 				}
 			JSONReader.EndObject ();
 
-			// should we check for EOF here?
-            }
+			return Out;
+			}
 
 
         /// <summary>
-        /// 
+        /// Having read a tag, process the corresponding value data.
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Tag"></param>
@@ -1089,9 +1063,9 @@ namespace Goedel.Cryptography.Jose {
 			
 			switch (Tag) {
 				case "header" : {
-					// Field does not have 
+					// An untagged structure
 					Header = new Header (JSONReader);
-					//Header.Deserialize(JSONReader, out Header) ;
+ 
 					break;
 					}
 				case "iv" : {
@@ -1235,14 +1209,22 @@ namespace Goedel.Cryptography.Jose {
 
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged byte input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>		
 		public static new KeyData From (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return From (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged string input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new KeyData From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
@@ -1250,58 +1232,44 @@ namespace Goedel.Cryptography.Jose {
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from tagged byte input.
+		/// i.e. { "KeyData" : {... data ... } }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new KeyData FromTagged (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return FromTagged (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
-		public static new KeyData FromTagged (string _Input) {
-			KeyData _Result;
-			Deserialize (_Input, out _Result);
-			return _Result;
-			}
-
-
-        /// <summary>
-        /// 
+        /// Create a new instance from tagged string input.
+		/// i.e. { "KeyData" : {... data ... } }
         /// </summary>
-        /// <param name="_Input"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(string _Input, out KeyData Out) {
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>		
+		public static new KeyData FromTagged (string _Input) {
+			//KeyData _Result;
+			//Deserialize (_Input, out _Result);
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-
-			Deserialize (JSONReader, out Out);
+			return FromTagged (JSONReader) ;
 			}
+
 
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
-        public static new KeyData  DeserializeTagged (JSONReader JSONReader) {
-			KeyData Result;
-			Deserialize (JSONReader, out Result);
-			return Result;
-			}
+        public static new KeyData  FromTagged (JSONReader JSONReader) {
+			KeyData Out = null;
 
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(JSONReader JSONReader, out KeyData Out) {
-	
 			JSONReader.StartObject ();
             if (JSONReader.EOR) {
-                Out = null;
-                return;
+                return null;
                 }
 
 			string token = JSONReader.ReadToken ();
-			Out = null;
 
 			switch (token) {
 
@@ -1348,12 +1316,12 @@ namespace Goedel.Cryptography.Jose {
 				}
 			JSONReader.EndObject ();
 
-			// should we check for EOF here?
-            }
+			return Out;
+			}
 
 
         /// <summary>
-        /// 
+        /// Having read a tag, process the corresponding value data.
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Tag"></param>
@@ -1500,14 +1468,22 @@ namespace Goedel.Cryptography.Jose {
 
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged byte input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>		
 		public static new Header From (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return From (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged string input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new Header From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
@@ -1515,58 +1491,44 @@ namespace Goedel.Cryptography.Jose {
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from tagged byte input.
+		/// i.e. { "Header" : {... data ... } }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new Header FromTagged (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return FromTagged (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
-		public static new Header FromTagged (string _Input) {
-			Header _Result;
-			Deserialize (_Input, out _Result);
-			return _Result;
-			}
-
-
-        /// <summary>
-        /// 
+        /// Create a new instance from tagged string input.
+		/// i.e. { "Header" : {... data ... } }
         /// </summary>
-        /// <param name="_Input"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(string _Input, out Header Out) {
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>		
+		public static new Header FromTagged (string _Input) {
+			//Header _Result;
+			//Deserialize (_Input, out _Result);
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-
-			Deserialize (JSONReader, out Out);
+			return FromTagged (JSONReader) ;
 			}
+
 
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
-        public static new Header  DeserializeTagged (JSONReader JSONReader) {
-			Header Result;
-			Deserialize (JSONReader, out Result);
-			return Result;
-			}
+        public static new Header  FromTagged (JSONReader JSONReader) {
+			Header Out = null;
 
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(JSONReader JSONReader, out Header Out) {
-	
 			JSONReader.StartObject ();
             if (JSONReader.EOR) {
-                Out = null;
-                return;
+                return null;
                 }
 
 			string token = JSONReader.ReadToken ();
-			Out = null;
 
 			switch (token) {
 
@@ -1585,12 +1547,12 @@ namespace Goedel.Cryptography.Jose {
 				}
 			JSONReader.EndObject ();
 
-			// should we check for EOF here?
-            }
+			return Out;
+			}
 
 
         /// <summary>
-        /// 
+        /// Having read a tag, process the corresponding value data.
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Tag"></param>
@@ -1721,14 +1683,22 @@ namespace Goedel.Cryptography.Jose {
 
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged byte input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>		
 		public static new Key From (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return From (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged string input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new Key From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
@@ -1736,58 +1706,44 @@ namespace Goedel.Cryptography.Jose {
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from tagged byte input.
+		/// i.e. { "Key" : {... data ... } }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new Key FromTagged (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return FromTagged (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
-		public static new Key FromTagged (string _Input) {
-			Key _Result;
-			Deserialize (_Input, out _Result);
-			return _Result;
-			}
-
-
-        /// <summary>
-        /// 
+        /// Create a new instance from tagged string input.
+		/// i.e. { "Key" : {... data ... } }
         /// </summary>
-        /// <param name="_Input"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(string _Input, out Key Out) {
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>		
+		public static new Key FromTagged (string _Input) {
+			//Key _Result;
+			//Deserialize (_Input, out _Result);
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-
-			Deserialize (JSONReader, out Out);
+			return FromTagged (JSONReader) ;
 			}
+
 
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
-        public static new Key  DeserializeTagged (JSONReader JSONReader) {
-			Key Result;
-			Deserialize (JSONReader, out Result);
-			return Result;
-			}
+        public static new Key  FromTagged (JSONReader JSONReader) {
+			Key Out = null;
 
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(JSONReader JSONReader, out Key Out) {
-	
 			JSONReader.StartObject ();
             if (JSONReader.EOR) {
-                Out = null;
-                return;
+                return null;
                 }
 
 			string token = JSONReader.ReadToken ();
-			Out = null;
 
 			switch (token) {
 
@@ -1820,12 +1776,12 @@ namespace Goedel.Cryptography.Jose {
 				}
 			JSONReader.EndObject ();
 
-			// should we check for EOF here?
-            }
+			return Out;
+			}
 
 
         /// <summary>
-        /// 
+        /// Having read a tag, process the corresponding value data.
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Tag"></param>
@@ -1933,14 +1889,22 @@ namespace Goedel.Cryptography.Jose {
 
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged byte input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>		
 		public static new Recipient From (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return From (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged string input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new Recipient From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
@@ -1948,58 +1912,44 @@ namespace Goedel.Cryptography.Jose {
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from tagged byte input.
+		/// i.e. { "Recipient" : {... data ... } }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new Recipient FromTagged (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return FromTagged (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
-		public static new Recipient FromTagged (string _Input) {
-			Recipient _Result;
-			Deserialize (_Input, out _Result);
-			return _Result;
-			}
-
-
-        /// <summary>
-        /// 
+        /// Create a new instance from tagged string input.
+		/// i.e. { "Recipient" : {... data ... } }
         /// </summary>
-        /// <param name="_Input"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(string _Input, out Recipient Out) {
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>		
+		public static new Recipient FromTagged (string _Input) {
+			//Recipient _Result;
+			//Deserialize (_Input, out _Result);
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-
-			Deserialize (JSONReader, out Out);
+			return FromTagged (JSONReader) ;
 			}
+
 
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
-        public static new Recipient  DeserializeTagged (JSONReader JSONReader) {
-			Recipient Result;
-			Deserialize (JSONReader, out Result);
-			return Result;
-			}
+        public static new Recipient  FromTagged (JSONReader JSONReader) {
+			Recipient Out = null;
 
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(JSONReader JSONReader, out Recipient Out) {
-	
 			JSONReader.StartObject ();
             if (JSONReader.EOR) {
-                Out = null;
-                return;
+                return null;
                 }
 
 			string token = JSONReader.ReadToken ();
-			Out = null;
 
 			switch (token) {
 
@@ -2018,12 +1968,12 @@ namespace Goedel.Cryptography.Jose {
 				}
 			JSONReader.EndObject ();
 
-			// should we check for EOF here?
-            }
+			return Out;
+			}
 
 
         /// <summary>
-        /// 
+        /// Having read a tag, process the corresponding value data.
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Tag"></param>
@@ -2031,9 +1981,9 @@ namespace Goedel.Cryptography.Jose {
 			
 			switch (Tag) {
 				case "Header" : {
-					// Field does not have 
+					// An untagged structure
 					Header = new Header (JSONReader);
-					//Header.Deserialize(JSONReader, out Header) ;
+ 
 					break;
 					}
 				case "encrypted_key" : {
@@ -2125,14 +2075,22 @@ namespace Goedel.Cryptography.Jose {
 
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged byte input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>		
 		public static new PublicKeyRSA From (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return From (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged string input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new PublicKeyRSA From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
@@ -2140,58 +2098,44 @@ namespace Goedel.Cryptography.Jose {
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from tagged byte input.
+		/// i.e. { "PublicKeyRSA" : {... data ... } }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new PublicKeyRSA FromTagged (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return FromTagged (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
-		public static new PublicKeyRSA FromTagged (string _Input) {
-			PublicKeyRSA _Result;
-			Deserialize (_Input, out _Result);
-			return _Result;
-			}
-
-
-        /// <summary>
-        /// 
+        /// Create a new instance from tagged string input.
+		/// i.e. { "PublicKeyRSA" : {... data ... } }
         /// </summary>
-        /// <param name="_Input"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(string _Input, out PublicKeyRSA Out) {
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>		
+		public static new PublicKeyRSA FromTagged (string _Input) {
+			//PublicKeyRSA _Result;
+			//Deserialize (_Input, out _Result);
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-
-			Deserialize (JSONReader, out Out);
+			return FromTagged (JSONReader) ;
 			}
+
 
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
-        public static new PublicKeyRSA  DeserializeTagged (JSONReader JSONReader) {
-			PublicKeyRSA Result;
-			Deserialize (JSONReader, out Result);
-			return Result;
-			}
+        public static new PublicKeyRSA  FromTagged (JSONReader JSONReader) {
+			PublicKeyRSA Out = null;
 
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(JSONReader JSONReader, out PublicKeyRSA Out) {
-	
 			JSONReader.StartObject ();
             if (JSONReader.EOR) {
-                Out = null;
-                return;
+                return null;
                 }
 
 			string token = JSONReader.ReadToken ();
-			Out = null;
 
 			switch (token) {
 
@@ -2217,12 +2161,12 @@ namespace Goedel.Cryptography.Jose {
 				}
 			JSONReader.EndObject ();
 
-			// should we check for EOF here?
-            }
+			return Out;
+			}
 
 
         /// <summary>
-        /// 
+        /// Having read a tag, process the corresponding value data.
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Tag"></param>
@@ -2359,14 +2303,22 @@ namespace Goedel.Cryptography.Jose {
 
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged byte input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>		
 		public static new PrivateKeyRSA From (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return From (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from untagged string input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new PrivateKeyRSA From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
@@ -2374,58 +2326,44 @@ namespace Goedel.Cryptography.Jose {
 			}
 
         /// <summary>
-        /// </summary>		
+		/// Create a new instance from tagged byte input.
+		/// i.e. { "PrivateKeyRSA" : {... data ... } }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>				
 		public static new PrivateKeyRSA FromTagged (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return FromTagged (_Input);
 			}
 
         /// <summary>
-        /// </summary>		
-		public static new PrivateKeyRSA FromTagged (string _Input) {
-			PrivateKeyRSA _Result;
-			Deserialize (_Input, out _Result);
-			return _Result;
-			}
-
-
-        /// <summary>
-        /// 
+        /// Create a new instance from tagged string input.
+		/// i.e. { "PrivateKeyRSA" : {... data ... } }
         /// </summary>
-        /// <param name="_Input"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(string _Input, out PrivateKeyRSA Out) {
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>		
+		public static new PrivateKeyRSA FromTagged (string _Input) {
+			//PrivateKeyRSA _Result;
+			//Deserialize (_Input, out _Result);
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-
-			Deserialize (JSONReader, out Out);
+			return FromTagged (JSONReader) ;
 			}
+
 
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader"></param>
-        public static new PrivateKeyRSA  DeserializeTagged (JSONReader JSONReader) {
-			PrivateKeyRSA Result;
-			Deserialize (JSONReader, out Result);
-			return Result;
-			}
+        public static new PrivateKeyRSA  FromTagged (JSONReader JSONReader) {
+			PrivateKeyRSA Out = null;
 
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Out"></param>
-        public static void Deserialize(JSONReader JSONReader, out PrivateKeyRSA Out) {
-	
 			JSONReader.StartObject ();
             if (JSONReader.EOR) {
-                Out = null;
-                return;
+                return null;
                 }
 
 			string token = JSONReader.ReadToken ();
-			Out = null;
 
 			switch (token) {
 
@@ -2444,12 +2382,12 @@ namespace Goedel.Cryptography.Jose {
 				}
 			JSONReader.EndObject ();
 
-			// should we check for EOF here?
-            }
+			return Out;
+			}
 
 
         /// <summary>
-        /// 
+        /// Having read a tag, process the corresponding value data.
         /// </summary>
         /// <param name="JSONReader"></param>
         /// <param name="Tag"></param>

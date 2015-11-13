@@ -122,7 +122,7 @@ namespace Goedel.MeshProfileManager {
         private void Action_NextClose1(object sender, RoutedEventArgs e) {
 			var Result = Data.NextClose1 ();
 			if (Result) {
-				Data.Data.Navigate (Data.Data.Data_FinishRecovery);
+				Data.Data.Navigate (Data.Data.Data_SetupComplete);
 				}
             }
 

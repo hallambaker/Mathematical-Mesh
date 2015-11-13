@@ -9,6 +9,12 @@ namespace Goedel.MeshConnect {
 
 
     public partial class ConnectDevice {
+        public override void Enter() {
+            // set the default provider (prismproof.org)
+
+            Input_MeshGateway2 = "prismproof.org";
+
+            }
 
         /// <summary>
         /// Connect to the specified portal and account.

@@ -104,7 +104,7 @@ namespace Goedel.MeshProfileManager {
         private void Action_NextClose(object sender, RoutedEventArgs e) {
 			var Result = Data.NextClose ();
 			if (Result) {
-				Data.Data.Navigate (Data.Data.Data_Finish);
+				Data.Data.Navigate (Data.Data.Data_SetupComplete);
 				}
             }
 

@@ -151,7 +151,7 @@
 		String Account
 			Description
 				|Account name requested
-		Struct SignedProfile Profile
+		TStruct SignedProfile Profile
 			Description
 				|User profile of account to be created. The profile MUST specify the 
 				|account being created as an account.
