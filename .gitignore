@@ -6,3 +6,7 @@
 */private/*
 */Private/*
 
+# Don't export platform specific config
+*.user
+
+
