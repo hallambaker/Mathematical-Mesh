@@ -13,4 +13,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <StartWorkingDirectory>C:\Users\Phillip\Code\Applications\OmniClient\MeshClient\</StartWorkingDirectory>
   </PropertyGroup>
+  <PropertyGroup>
+    <ReferencePath>C:\Users\Phillip\Code\Tools\Library\</ReferencePath>
+  </PropertyGroup>
 </Project>
