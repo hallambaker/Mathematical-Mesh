@@ -1,5 +1,9 @@
 ﻿
+<<<<<<< HEAD
 //This file was automatically generated at 12/1/2015 4:10:35 PM
+=======
+//This file was automatically generated at 11/19/2015 10:15:30 AM
+>>>>>>> 27cdfb98174b70c6f54ccbeba77f1448252dbeff
 // 
 //Changes to this file may be overwritten without warning
 //
