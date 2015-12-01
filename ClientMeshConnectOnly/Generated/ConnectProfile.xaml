@@ -1,7 +1,8 @@
 ﻿<Window x:Class="Goedel.MeshConnect.Wizard_ConnectProfile"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Connect to Mesh Profile">
+        Title="Connect to Mesh Profile"
+		Width="800" Height="600">
 
     <Frame Name="Main" Width="800" Height="600"/>
 

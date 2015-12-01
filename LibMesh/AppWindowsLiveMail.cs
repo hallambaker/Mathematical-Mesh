@@ -29,8 +29,7 @@ namespace Goedel.Mesh {
 
 
 
-    public class IntegrateLiveMail {
-        MailClientCatalog Catalog;
+    public class IntegrateLiveMail : IntegratorMailClient {
 
         readonly string WindowsLiveMailRegistryKey =
                 @"Software\Microsoft\Windows Live Mail";
@@ -38,14 +37,10 @@ namespace Goedel.Mesh {
         string StoreRoot;
         string DefaultMailAccount;
 
-        //public List<Account> Accounts = new List<Account>();
-        //public Account DefaultAccount = null;
-        //public Account CurrentAccount = null;
-
         public IntegrateLiveMail(MailClientCatalog Catalog) {
             this.Catalog = Catalog;
             GetRegistryValues();
-            ScanStore();
+            EnumerateAccounts();
             }
 
         public void GetRegistryValues() {
@@ -65,7 +60,7 @@ namespace Goedel.Mesh {
             }
 
 
-        public void ScanStore() {
+        public override void EnumerateAccounts() {
             if (StoreRoot == null) return;
             var Directories = Directory.EnumerateDirectories(StoreRoot);
 
@@ -83,8 +78,12 @@ namespace Goedel.Mesh {
                         }
                     }
                 }
+            }
+
+        public override void CreateAccount(MailAccountInfo MailAccountInfo) {
 
             }
+
 
         //public void SetCertificates(PKIX.Certificate Sign, PKIX.Certificate Encrypt) {
         //    if (CurrentAccount == null) throw new Exception("No valid account");

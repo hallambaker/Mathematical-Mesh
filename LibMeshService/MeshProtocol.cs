@@ -1,7 +1,7 @@
 ﻿
 //  Test
 //  
-//  This file was automatically generated at 11/13/2015 3:30:32 PM
+//  This file was automatically generated at 12/1/2015 4:51:09 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -9,7 +9,7 @@
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
-//      Copyright : Copyright ©  2011
+//      Copyright : Copyright ©  2012
 //  
 //  Build Platform: Win32NT 6.2.9200.0
 //  

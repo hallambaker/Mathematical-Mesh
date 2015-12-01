@@ -1,6 +1,6 @@
 setlocal
 cd %~dp0
 
-ProtoGen MeshProtocol.Protocol /html ../Documentation/MeshProtocol.html /cs MeshProtocol.cs 
+ProtoGen MeshProtocol.Protocol /md ../Documentation/MeshProtocol.md /cs MeshProtocol.cs 
 
 exit /b 0

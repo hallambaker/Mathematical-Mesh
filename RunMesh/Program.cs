@@ -8,9 +8,16 @@ namespace Goedel.Mesh {
     class Program {
         static void Main(string[] args) {
             var MeshTest = new MeshTest();
-            MeshTest.MeshStoreAPI();
+            MeshTest.TestMail();
             }
         }
+
+
+
+
+
+
+
 
     /// <summary>
     /// 
@@ -73,6 +80,18 @@ namespace Goedel.Mesh {
         public MeshTest() {
             
             }
+
+
+
+        public void TestMail() {
+
+            var MailClientCatalog = new MailClientCatalog();
+
+            MailClientCatalog.ImportWindowsLiveMail();
+
+            }
+
+
 
 
         public void Do() {

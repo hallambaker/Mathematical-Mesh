@@ -63,6 +63,7 @@
     <Compile Include="DeviceProfile.cs" />
     <Compile Include="Escrow.cs" />
     <Compile Include="MailClient.cs" />
+    <Compile Include="MailClientIntegration.cs" />
     <Compile Include="MeshConnection.cs" />
     <Compile Include="MeshSchemaPlus.cs" />
     <Compile Include="NetworkProfile.cs" />

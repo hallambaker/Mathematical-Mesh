@@ -55,6 +55,10 @@
     Transaction Admin Hello HelloRequest HelloResponse
 		Description
 			|Report service and version information. 
+		Description
+			|The Hello transaction provides a means of determining which protocol
+			|versions, message encodings and transport protocols are supported by 
+			|the service.
 
 	Message HelloRequest
 		Inherits MeshRequest
@@ -166,8 +170,6 @@
 	Transaction Mesh Publish PublishRequest PublishResponse
 		Description
 			|Publish a profile or key escrow entry to the mesh.
-		Description
-			|
 
 	Message PublishRequest
 		Inherits MeshRequest
