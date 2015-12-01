@@ -1,6 +1,7 @@
 # Ignore binaries
 */bin/*
 */obj/*
+.vs/*
 
 # Don't export private data
 */private/*
