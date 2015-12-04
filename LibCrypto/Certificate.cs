@@ -9,6 +9,10 @@ using Goedel.Debug;
 
 namespace Goedel.CryptoLibNG.PKIX {
 
+    /// <summary>
+    /// Backing class for managing X.509v3 Certificates using the 
+    /// native C# parser code.
+    /// </summary>
     public partial class Certificate {
         private byte[] _Data;
 
@@ -89,18 +93,6 @@ namespace Goedel.CryptoLibNG.PKIX {
                 }
             }
 
-        //CryptoProvider _CryptoProvider;
-
-        ///// <summary>
-        ///// Cryptographic provider for the certificate.
-        ///// </summary>
-        //public CryptoProvider CryptoProvider {
-        //    get { return _CryptoProvider; }
-        //    set { _CryptoProvider = value; }
-        //    }
-
-
-
 
         /// <summary>
         /// Subject Key Identifier
@@ -164,13 +156,6 @@ namespace Goedel.CryptoLibNG.PKIX {
             TBSCertificate = new TBSCertificate(SubjectKey.KeyPair, SubjectName);
             }
 
-
-        //public Certificate(PublicKey PublicKey, Application Application) {
-        //    _KeyPair = PublicKey.KeyPair;
-
-        //    var SubjectName = new Name(SubjectKey).ToList();
-        //    TBSCertificate = new TBSCertificate(SubjectKey, SubjectName);
-        //    }
 
         /// <summary>
         /// Certae a certificate from binary data. 

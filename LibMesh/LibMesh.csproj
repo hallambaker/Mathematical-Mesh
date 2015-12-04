@@ -57,11 +57,13 @@
     <Compile Include="Account.cs" />
     <Compile Include="Administration.cs" />
     <Compile Include="AppWindowsLiveMail.cs" />
+    <Compile Include="ConfigRegistry.cs" />
     <Compile Include="ConnectionRequest.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="DeviceEntry.cs" />
     <Compile Include="DeviceProfile.cs" />
     <Compile Include="Escrow.cs" />
+    <Compile Include="LiveMailReigstry.cs" />
     <Compile Include="MailClient.cs" />
     <Compile Include="MailClientIntegration.cs" />
     <Compile Include="MeshConnection.cs" />
@@ -82,6 +84,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="LiveMail.RegistrySchema" />
     <None Include="Portal.Protocol" />
     <None Include="PreBuild.bat" />
     <None Include="MeshSchema.protocol" />

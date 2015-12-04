@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using Goedel.Debug;
 using Goedel.Protocol;
+using Goedel.CryptoLibNG.PKIX;
 
 namespace Goedel.Mesh {
     class Program {
@@ -86,9 +87,31 @@ namespace Goedel.Mesh {
         public void TestMail() {
 
             var MailClientCatalog = new MailClientCatalog();
+            var LiveMailCount = MailClientCatalog.ImportWindowsLiveMail();
+            MailClientCatalog.Write();
 
-            MailClientCatalog.ImportWindowsLiveMail();
 
+            var MailAccountInfo = new MailAccountInfoWLM();
+
+            var TestName = "test-" + LiveMailCount.ToString();
+
+            MailAccountInfo.EmailAddress = TestName + "@example.com";
+            MailAccountInfo.DisplayName = TestName + "- Delete";
+            MailAccountInfo.AccountName = TestName;
+
+            MailAccountInfo.Outbound = new MailConnection(
+                    "smtp.example.com", 465, AppProtocol.SUBMIT, TestName, null, TLSMode.STARTTLS, true);
+            MailAccountInfo.Inbound = new MailConnection(
+                    "imap.example.com", 993, AppProtocol.IMAP4, TestName, null, TLSMode.PORT, true);
+
+            // Dump out the data on the new account.
+            MailAccountInfo.Write ();
+
+            MailAccountInfo.CreateAccount();
+
+            var MailClientCatalog2 = new MailClientCatalog();
+            var LiveMailCount2 = MailClientCatalog2.ImportWindowsLiveMail();
+            MailClientCatalog2.Write();
             }
 
 

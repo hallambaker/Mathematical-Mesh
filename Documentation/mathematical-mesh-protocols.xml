@@ -1,0 +1,486 @@
+<?xml version='1.0'?>
+<!DOCTYPE rfc SYSTEM 'rfc2629.dtd'>
+<rfc ipr="trust200902" docName="draft-hallambaker-mathematical-mesh-protocols-00" category="Standards Track">
+<front>
+<title abbrev="Mathematical Mesh CSP">Mathematical Mesh: Client-Service Protocol</title>
+<author fullname="Phillip Hallam-Baker    " initials="P. M.    " surname="Phillip    ">
+<organization>Comodo Group Inc.    </organization>
+<address>
+<email>philliph@comodo.com</email>
+</address>
+</author>
+<date day="4" month="December" year="2015"/>
+<area>Security</area>
+<workgroup/>
+<abstract>
+<t>The Mathematical Mesh ?The Mesh? is an end-to-end secure infrastructure that facilitates the exchange of configuration and credential data between multiple user devices. The core protocols of the Mesh are described with examples of common use cases and reference data.</t>
+</abstract>
+</front>
+<middle>
+<section title="Introduction" anchor="Section_1">
+</section>
+<section title="Definitions" anchor="Section_2">
+<section title="Requirements Language" anchor="Section_2_1">
+<t/>
+<t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in RFC 2119 [RFC2119].</t>
+</section>
+</section>
+<section title="Use Scenarios" anchor="Section_3">
+<section title="Service Discovery" anchor="Section_3_1">
+</section>
+<section title="Create Account" anchor="Section_3_2">
+</section>
+<section title="Connect Device" anchor="Section_3_3">
+</section>
+<section title="Add Application" anchor="Section_3_4">
+</section>
+<section title="Update Application" anchor="Section_3_5">
+</section>
+<section title="Delete Device" anchor="Section_3_6">
+</section>
+<section title="Master Profile Recovery" anchor="Section_3_7">
+</section>
+<section title="Application Profile Recovery" anchor="Section_3_8">
+</section>
+</section>
+<section title="Mesh Client-Service Protocol Messages" anchor="Section_4">
+</section>
+<section title="MeshProtocol " anchor="Section_5">
+<section title="MeshProtocol Transactions " anchor="Section_5_1">
+<section title="Transaction: Hello " anchor="Section_5_1_1">
+<t><list style="symbols">
+<t><list style="symbols">
+<t>Request: HelloRequest </t>
+<t>Response: HelloResponse </t>
+</list></t>
+</list></t>
+<t>Report service and version information.  </t>
+<t>The Hello transaction provides a means of determining which protocol versions, message encodings and transport protocols are supported by  the service. </t>
+</section>
+<section title="Transaction: ValidateAccount " anchor="Section_5_1_2">
+<t><list style="symbols">
+<t><list style="symbols">
+<t>Request: ValidateRequest </t>
+<t>Response: ValidateResponse </t>
+</list></t>
+</list></t>
+<t>Request validation of a proposed name for a new account. </t>
+<t>For validation of a user's account name during profile creation. </t>
+</section>
+<section title="Transaction: CreateAccount " anchor="Section_5_1_3">
+<t><list style="symbols">
+<t><list style="symbols">
+<t>Request: CreateRequest </t>
+<t>Response: CreateResponse </t>
+</list></t>
+</list></t>
+<t>Request creation of a new mesh account. </t>
+<t>Unlike a profile, a mesh account is specific to a particular  Mesh portal. A mesh account must be created and accepted before a profile can be published. </t>
+</section>
+<section title="Transaction: Publish " anchor="Section_5_1_4">
+<t><list style="symbols">
+<t><list style="symbols">
+<t>Request: PublishRequest </t>
+<t>Response: PublishResponse </t>
+</list></t>
+</list></t>
+<t>Publish a profile or key escrow entry to the mesh. </t>
+</section>
+<section title="Transaction: Get " anchor="Section_5_1_5">
+<t><list style="symbols">
+<t><list style="symbols">
+<t>Request: GetRequest </t>
+<t>Response: GetResponse </t>
+</list></t>
+</list></t>
+<t>Search for data in the mesh that matches a set of keys. </t>
+</section>
+<section title="Transaction: GetRecords " anchor="Section_5_1_6">
+<t><list style="symbols">
+<t><list style="symbols">
+<t>Request: GetRequest </t>
+<t>Response: GetRecordsResponse </t>
+</list></t>
+</list></t>
+</section>
+<section title="Transaction: Transfer " anchor="Section_5_1_7">
+<t><list style="symbols">
+<t><list style="symbols">
+<t>Request: TransferRequest </t>
+<t>Response: TransferResponse </t>
+</list></t>
+</list></t>
+<t>Request a bulk transfer of the log between the specified transaction identifiers. Requires appropriate authorization </t>
+<t>[Not currently implemented] </t>
+</section>
+<section title="Transaction: Status " anchor="Section_5_1_8">
+<t><list style="symbols">
+<t><list style="symbols">
+<t>Request: StatusRequest </t>
+<t>Response: StatusResponse </t>
+</list></t>
+</list></t>
+<t>Request the current status of the mesh as seen by the portal to which it is directed. </t>
+<t>The response to the status request contains the last signed checkpoint and proof chains for each of the peer portals that have been checkpointed. </t>
+<t>[Not currently implemented] </t>
+</section>
+<section title="Transaction: ConnectStart " anchor="Section_5_1_9">
+<t><list style="symbols">
+<t><list style="symbols">
+<t>Request: ConnectStartRequest </t>
+<t>Response: ConnectStartResponse </t>
+</list></t>
+</list></t>
+<t>Request connection of a new device to a mesh profile </t>
+</section>
+<section title="Transaction: ConnectStatus " anchor="Section_5_1_10">
+<t><list style="symbols">
+<t><list style="symbols">
+<t>Request: ConnectStatusRequest </t>
+<t>Response: ConnectStatusResponse </t>
+</list></t>
+</list></t>
+<t>Request status of pending connection request of a new device  to a mesh profile </t>
+</section>
+<section title="Transaction: ConnectPending " anchor="Section_5_1_11">
+<t><list style="symbols">
+<t><list style="symbols">
+<t>Request: ConnectPendingRequest </t>
+<t>Response: ConnectPendingResponse </t>
+</list></t>
+</list></t>
+<t>Request status of pending connection request of a new device  to a mesh profile </t>
+</section>
+<section title="Transaction: ConnectComplete " anchor="Section_5_1_12">
+<t><list style="symbols">
+<t><list style="symbols">
+<t>Request: ConnectCompleteRequest </t>
+<t>Response: ConnectCompleteResponse </t>
+</list></t>
+</list></t>
+<t>Request status of pending connection request of a new device  to a mesh profile </t>
+</section>
+</section>
+<section title="MeshProtocol Messages " anchor="Section_5_2">
+<section title="Message: MeshRequest " anchor="Section_5_2_1">
+<t>[None] </t>
+</section>
+<section title="Message: MeshResponse " anchor="Section_5_2_2">
+<t>[None] </t>
+</section>
+<section title="Message: HelloRequest " anchor="Section_5_2_3">
+<t>[None] </t>
+</section>
+<section title="Message: HelloResponse " anchor="Section_5_2_4">
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Version : ">Version [0..1]  </t>
+</list></t>
+</list></t>
+<t>Enumerates the protocol versions supported </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Alternates : ">Version [0..Many]  </t>
+</list></t>
+</list></t>
+<t>Enumerates alternate protocol version(s) supported </t>
+</section>
+<section title="Message: ValidateRequest " anchor="Section_5_2_5">
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Account : ">String [0..1]  </t>
+</list></t>
+</list></t>
+<t>Account name requested </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Reserve : ">Boolean [0..1]  </t>
+</list></t>
+</list></t>
+<t>If true, request a reservation for the specified account name. Note that the service is not obliged to honor reservation  requests. </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Language : ">String [0..Many]  </t>
+</list></t>
+</list></t>
+<t>List of ISO language codes in order of preference. For creating explanatory text. </t>
+</section>
+<section title="Message: ValidateResponse " anchor="Section_5_2_6">
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Valid : ">Boolean [0..1]  </t>
+</list></t>
+</list></t>
+<t>[TBS] </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Minimum : ">Integer [0..1]  </t>
+</list></t>
+</list></t>
+<t>[TBS] </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="InvalidCharacters : ">String [0..1]  </t>
+</list></t>
+</list></t>
+<t>A list of characters from the requested account that the service  does not accept in account names. </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Reason : ">String [0..1]  </t>
+</list></t>
+</list></t>
+<t>Text explaining the reason an account name was rejected. </t>
+</section>
+<section title="Message: CreateRequest " anchor="Section_5_2_7">
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Account : ">String [0..1]  </t>
+</list></t>
+</list></t>
+<t>Account name requested </t>
+</section>
+<section title="Message: CreateResponse " anchor="Section_5_2_8">
+<t>[None] </t>
+</section>
+<section title="Message: PublishRequest " anchor="Section_5_2_9">
+<t>[None] </t>
+</section>
+<section title="Message: PublishResponse " anchor="Section_5_2_10">
+<t>[None] </t>
+</section>
+<section title="Message: GetRequest " anchor="Section_5_2_11">
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Identifier : ">String [0..1]  </t>
+</list></t>
+</list></t>
+<t>Lookup by profile ID </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Account : ">String [0..1]  </t>
+</list></t>
+</list></t>
+<t>Lookup by Account ID </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="KeyValues : ">KeyValue [0..Many]  </t>
+</list></t>
+</list></t>
+<t>List of KeyValue pairs specifying the conditions to be met </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="NotBefore : ">DateTime [0..1]  </t>
+</list></t>
+</list></t>
+<t>[TBS] </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="NotOnOrAfter : ">DateTime [0..1]  </t>
+</list></t>
+</list></t>
+<t>[TBS] </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Multiple : ">Boolean [0..1]  </t>
+</list></t>
+</list></t>
+<t>If true return multiple responses if available </t>
+</section>
+<section title="Message: GetResponse " anchor="Section_5_2_12">
+<t>[None] </t>
+</section>
+<section title="Message: GetRecordsResponse " anchor="Section_5_2_13">
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="DataItems : ">DataItem [0..Many]  </t>
+</list></t>
+</list></t>
+<t>List of mesh data records matching the request. </t>
+</section>
+<section title="Message: TransferRequest " anchor="Section_5_2_14">
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="NotBefore : ">DateTime [0..1]  </t>
+<t hangText="Until : ">DateTime [0..1]  </t>
+<t hangText="After : ">String [0..1]  </t>
+<t hangText="MaxEntries : ">Integer [0..1]  </t>
+<t hangText="MaxBytes : ">Integer [0..1]  </t>
+</list></t>
+</list></t>
+</section>
+<section title="Message: TransferResponse " anchor="Section_5_2_15">
+<t>[None] </t>
+</section>
+<section title="Message: StatusRequest " anchor="Section_5_2_16">
+<t>[None] </t>
+</section>
+<section title="Message: StatusResponse " anchor="Section_5_2_17">
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="LastWriteTime : ">DateTime [0..1]  </t>
+</list></t>
+</list></t>
+<t>Time that the last write update was made to the Mesh </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="LastCheckpointTime : ">DateTime [0..1]  </t>
+</list></t>
+</list></t>
+<t>Time that the last Mesh checkpoint was calculated. </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="NextCheckpointTime : ">DateTime [0..1]  </t>
+</list></t>
+</list></t>
+<t>Time at which the next Mesh checkpoint should be calculated. </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="CheckpointValue : ">String [0..1]  </t>
+</list></t>
+</list></t>
+<t>Last checkpoint value. </t>
+</section>
+<section title="Message: ConnectStartRequest " anchor="Section_5_2_18">
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="SignedRequest : ">SignedConnectionRequest [0..1]  </t>
+<t hangText="AccountID : ">String [0..1]  </t>
+</list></t>
+</list></t>
+</section>
+<section title="Message: ConnectStartResponse " anchor="Section_5_2_19">
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="SignedConnectionResult : ">String [0..1]  </t>
+</list></t>
+</list></t>
+</section>
+<section title="Message: ConnectStatusRequest " anchor="Section_5_2_20">
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="AccountID : ">String [0..1]  </t>
+<t hangText="DeviceID : ">String [0..1]  </t>
+</list></t>
+</list></t>
+</section>
+<section title="Message: ConnectStatusResponse " anchor="Section_5_2_21">
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Result : ">SignedConnectionResult [0..1]  </t>
+</list></t>
+</list></t>
+</section>
+<section title="Message: ConnectPendingRequest " anchor="Section_5_2_22">
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="AccountID : ">String [0..1]  </t>
+</list></t>
+</list></t>
+</section>
+<section title="Message: ConnectPendingResponse " anchor="Section_5_2_23">
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Pending : ">SignedConnectionRequest [0..Many]  </t>
+</list></t>
+</list></t>
+</section>
+<section title="Message: ConnectCompleteRequest " anchor="Section_5_2_24">
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Result : ">SignedConnectionResult [0..1]  </t>
+<t hangText="AccountID : ">String [0..1]  </t>
+</list></t>
+</list></t>
+</section>
+<section title="Message: ConnectCompleteResponse " anchor="Section_5_2_25">
+<t>[None] </t>
+</section>
+</section>
+<section title="MeshProtocol Structures " anchor="Section_5_3">
+<section title="Structure: Version " anchor="Section_5_3_1">
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Major : ">Integer [0..1]  </t>
+</list></t>
+</list></t>
+<t>Major version number of the service protocol. A higher </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Minor : ">Integer [0..1]  </t>
+</list></t>
+</list></t>
+<t>Minor version number of the service protocol. </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Encodings : ">Encoding [0..Many]  </t>
+</list></t>
+</list></t>
+<t>Enumerates alternative encodings (e.g. ASN.1, XML, JSON-B) if supported by the server </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="URI : ">String [0..Many]  </t>
+</list></t>
+</list></t>
+<t>The preferred URI for this service. This MAY be used to effect a redirect in the case that a service moves. </t>
+</section>
+<section title="Structure: Encoding " anchor="Section_5_3_2">
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="ID : ">String [0..Many]  </t>
+</list></t>
+</list></t>
+<t>The IANA encoding name </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Dictionary : ">String [0..Many]  </t>
+</list></t>
+</list></t>
+<t>For encodings that employ a named dictionary for tag or data compression, the name of the dictionary as defined by that  encoding scheme.  </t>
+</section>
+<section title="Structure: KeyValue " anchor="Section_5_3_3">
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Key : ">String [0..1]  </t>
+</list></t>
+</list></t>
+<t>[TBS] </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Value : ">String [0..1]  </t>
+</list></t>
+</list></t>
+<t>[TBS] </t>
+</section>
+</section>
+</section>
+<section title="Mesh Client-Service Protocol State Transitions" anchor="Section_6">
+</section>
+<section title="Security Considerations" anchor="Section_7">
+<section title="Service Confidentiality" anchor="Section_7_1">
+</section>
+</section>
+<section title="IANA Considerations" anchor="Section_8">
+<t>IANA has registered the following protocol identifier for use with this protocol: MMM</t>
+</section>
+<section title="Appendix A: Portal Schema." anchor="Section_9">
+</section>
+</middle>
+<back>
+<references title="Normative References">
+<reference anchor="RFC2119">
+<front>
+<title>Key words for use in RFCs to Indicate Requirement Levels</title>
+<author fullname="S. Bradner" initials="S." surname="Bradner">
+<organization/>
+<address>
+</address>
+</author>
+<date month="March" year="1997"/>
+</front>
+<seriesInfo name="BCP" value="14"/>
+<seriesInfo name="RFC" value="2119"/>
+<seriesInfo name="DOI" value="10.17487/RFC2119"/>
+</reference>
+</references>
+</back>
+</rfc>
