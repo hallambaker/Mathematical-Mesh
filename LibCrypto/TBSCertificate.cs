@@ -430,5 +430,17 @@ namespace Goedel.CryptoLibNG.PKIX {
             }
         }
 
-
+    public partial class Name {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="CommonName"></param>
+        /// <returns></returns>
+        public static List<Name> ToName(string CommonName) {
+            List<Name> Result = new List<Name>();
+            Name Segment = new Name(CommonName);
+            Result.Add(Segment);
+            return Result;
+            }
+        }
     }

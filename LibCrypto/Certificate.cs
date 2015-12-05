@@ -157,8 +157,11 @@ namespace Goedel.CryptoLibNG.PKIX {
             }
 
 
+
+
+
         /// <summary>
-        /// Certae a certificate from binary data. 
+        /// Create a certificate from binary data. 
         /// </summary>
         /// <param name="Data">Binary certificate data</param>
         public Certificate(byte[] Data) {
@@ -167,6 +170,7 @@ namespace Goedel.CryptoLibNG.PKIX {
             _KeyPair = KeyPair.GetKeyPair(X509Cert.PublicKey.Key);
             TBSCertificate = new TBSCertificate(X509Cert);
             }
+
 
 
         /// <summary>
@@ -181,13 +185,19 @@ namespace Goedel.CryptoLibNG.PKIX {
                 Sign(SigningCertificate.CryptoProviderSignature);
                 }
             else {
-                TBSCertificate.Issuer = TBSCertificate.Subject;
-                TBSCertificate.SetAuthorityKeyIdentifier(SubjectKeyIdentifier);
-                Sign(CryptoProviderSignature);
+                Sign();
                 }
             }
 
-
+        /// <summary>
+        /// Self-sign certificate. The issuer name and key identifier 
+        /// are taken from the TBS certificate.
+        /// </summary>
+        public void Sign() { 
+            TBSCertificate.Issuer = TBSCertificate.Subject;
+            TBSCertificate.SetAuthorityKeyIdentifier(SubjectKeyIdentifier);
+            Sign(CryptoProviderSignature);
+            }
 
         /// <summary>
         /// Sign certificate.
@@ -198,12 +208,62 @@ namespace Goedel.CryptoLibNG.PKIX {
             TBSCertificate.Signature = new AlgorithmIdentifier(Signer.OID);
             SignatureAlgorithm = TBSCertificate.Signature;
 
-
             var Data = TBSCertificate.DER();
             var SignatureData = Signer.Sign(Data);
             Signature = SignatureData.Integrity;
 
             _Data = this.DER();
+            }
+
+        /// <summary>
+        /// Create a self signed root certificate with the specified
+        /// parameters.
+        /// </summary>
+        /// <param name="SubjectKey">Cryptographic provider for the signer.</param>
+        /// <param name="SubjectName"></param>
+        /// <returns></returns>
+        /// 
+
+        public static Certificate CreateRoot (
+                        CryptoProviderSignature SubjectKey,
+                        string SubjectName) {
+            var Certificate = new Certificate(SubjectKey,
+                Application.Root);
+            return null;
+            }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="SubjectKey">Subject key to be signed.</param>
+        /// <param name="SubjectName">Subject Name</param>
+        /// <returns></returns>
+        public static Certificate CreateIntermediate(
+                        CryptoProviderSignature SubjectKey,
+                        string SubjectName) {
+            var Certificate = new Certificate(SubjectKey, 
+                Application.CA);
+            Certificate.TBSCertificate.Subject = Name.ToName(SubjectName);
+            return null;
+            }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="SubjectKey"></param>
+        /// <param name="Application">Application use(s)</param>
+        /// <param name="Account"></param>
+        /// <param name="SubjectName"></param>
+        /// <returns></returns>
+        public static Certificate CreateEndEntity(
+                        CryptoProviderAsymmetric SubjectKey,
+                        Application Application,
+                        string Account,
+                        string SubjectName) {
+            var Certificate = new Certificate(SubjectKey, Application);
+            Certificate.TBSCertificate.Subject = Name.ToName (SubjectName);
+            Certificate.TBSCertificate.SetSubjectAltName(Account);
+            return null;
             }
 
 
