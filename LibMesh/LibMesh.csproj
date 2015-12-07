@@ -41,8 +41,9 @@
     <OutputPath>bin\RaspberryPi\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Goedel.Registry">
+    <Reference Include="Goedel.Registry, Version=1.0.5819.29744, Culture=neutral, PublicKeyToken=d2b0f210455cec67, processorArchitecture=MSIL">
       <HintPath>..\..\..\Code\Tools\Library\Goedel.Registry.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -93,6 +94,10 @@
     <ProjectReference Include="..\LibCryptoJose\LibCryptoJose.csproj">
       <Project>{59f7f1a5-abbc-4830-b7a3-140fd8e4c369}</Project>
       <Name>LibCryptoJose</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LibCryptoWindows\LibCryptoWindows.csproj">
+      <Project>{5c8e83ab-2669-4242-9a11-5892940a7fe6}</Project>
+      <Name>LibCryptoWindows</Name>
     </ProjectReference>
     <ProjectReference Include="..\LibCrypto\LibCrypto.csproj">
       <Project>{1babc0e9-d939-4de5-82a3-16752104b14b}</Project>

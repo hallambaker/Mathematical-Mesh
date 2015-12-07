@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using Goedel.CryptoLibNG;
-using Goedel.CryptoLibNG.PKIX;
+using Goedel.LibCrypto;
+using Goedel.LibCrypto.PKIX;
 
-namespace Goedel.CryptoLibNG.PKIX {
+namespace Goedel.LibCrypto.PKIX {
 
     /// <summary>
     /// X.500 String types. Most should be avoided.

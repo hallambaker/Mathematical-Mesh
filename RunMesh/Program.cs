@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using Goedel.Debug;
 using Goedel.Protocol;
-using Goedel.CryptoLibNG.PKIX;
+using Goedel.LibCrypto.PKIX;
 
 namespace Goedel.Mesh {
     class Program {

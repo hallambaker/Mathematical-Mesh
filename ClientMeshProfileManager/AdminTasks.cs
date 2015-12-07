@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using Goedel.Protocol;
 using Goedel.Mesh;
 using Goedel.Debug;
-using Goedel.CryptoLibNG;
-using CLG=Goedel.CryptoLibNG;
+using Goedel.LibCrypto;
+using CLG=Goedel.LibCrypto;
 
 namespace Goedel.MeshProfileManager {
 

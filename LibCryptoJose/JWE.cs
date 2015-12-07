@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Goedel.CryptoLibNG;
+using Goedel.LibCrypto;
 
 namespace Goedel.Cryptography.Jose {
 

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Security.Cryptography;
 
-namespace Goedel.CryptoLibNG {
+namespace Goedel.LibCrypto {
 
     /// <summary>
     /// Describes the mechanism that created a cryptographic output.

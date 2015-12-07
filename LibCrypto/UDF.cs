@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using Goedel.Protocol;
 
-namespace Goedel.CryptoLibNG {
+namespace Goedel.LibCrypto {
     /// <summary>
     /// Constants used in building UDF values.
     /// </summary>

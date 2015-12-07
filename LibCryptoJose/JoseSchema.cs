@@ -1,7 +1,7 @@
 ﻿
 //  Test
 //  
-//  This file was automatically generated at 12/2/2015 4:54:55 PM
+//  This file was automatically generated at 12/7/2015 4:48:49 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -85,10 +85,6 @@ namespace Goedel.Cryptography.Jose {
 			Deserialize (_String);
 			_Initialize () ;
 			}
-
-
-
-
 
 		/// <summary>
         /// Construct an instance from the specified tagged JSONReader stream.
@@ -188,13 +184,9 @@ namespace Goedel.Cryptography.Jose {
 				default : {
 					throw new Exception ("Not supported");
 					}
-				}
-
-			
+				}	
 			JSONReader.EndObject ();
             }
-
-
 		}
 
 

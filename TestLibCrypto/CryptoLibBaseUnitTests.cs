@@ -1,5 +1,5 @@
 ﻿using System;
-using Goedel.CryptoLibNG;
+using Goedel.LibCrypto;
 using Goedel.Debug;
 using Goedel.Protocol;
 using System.Text;

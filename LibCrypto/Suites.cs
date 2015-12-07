@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using Goedel.CryptoLibNG;
+using Goedel.LibCrypto;
 
-namespace Goedel.CryptoLibNG {
+namespace Goedel.LibCrypto {
 
     /// <summary>
     /// Describe a suite of crypto algorithms.

@@ -1,7 +1,7 @@
 ﻿
 //  Test
 //  
-//  This file was automatically generated at 12/3/2015 1:59:48 PM
+//  This file was automatically generated at 12/7/2015 4:48:48 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -85,10 +85,6 @@ namespace Goedel.Persistence {
 			Deserialize (_String);
 			_Initialize () ;
 			}
-
-
-
-
 
 		/// <summary>
         /// Construct an instance from the specified tagged JSONReader stream.
@@ -180,13 +176,9 @@ namespace Goedel.Persistence {
 				default : {
 					throw new Exception ("Not supported");
 					}
-				}
-
-			
+				}	
 			JSONReader.EndObject ();
             }
-
-
 		}
 
 

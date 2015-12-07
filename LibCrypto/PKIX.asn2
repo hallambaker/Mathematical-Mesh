@@ -1,4 +1,4 @@
-﻿Namespace Goedel.CryptoLibNG.PKIX
+﻿Namespace Goedel.LibCrypto.PKIX
 
 ROOT id_pkix
 	iso						1

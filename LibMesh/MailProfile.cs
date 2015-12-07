@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using Goedel.Registry;
 using Goedel.Persistence;
-using Goedel.CryptoLibNG;
-using Goedel.CryptoLibNG.PKIX;
+using Goedel.LibCrypto;
+using Goedel.LibCrypto.PKIX;
 
 namespace Goedel.Mesh {
 
@@ -107,6 +107,7 @@ namespace Goedel.Mesh {
             SigningCertificate.TBSCertificate.SetValidity(1);
             SigningCertificate.Sign(IntermediateCertificate);
 
+
             var EncryptionKey = new CryptoProviderExchangeRSA(2048);
             var EncryptionCertificate = Certificate.CreateEndEntity(
                         EncryptionKey,
@@ -116,17 +117,30 @@ namespace Goedel.Mesh {
             EncryptionCertificate.TBSCertificate.SetValidity(1);
             SigningCertificate.Sign(IntermediateCertificate);
 
-            /*
-            var EncryptionCSR = new CertificationRequest(EncryptionCertificate);
+
+            // Create CSRs for use with a CA
+            var RootCSR = new CertificationRequest(RootCert);
+            var IntermediateCSR = new CertificationRequest(IntermediateCertificate);
             var SigningCSR = new CertificationRequest(SigningCertificate);
+            var EncryptionCSR = new CertificationRequest(EncryptionCertificate);
 
 
-            MasterCertificate.WindowsRegister(StoreName.Root, StoreLocation.CurrentUser);
-            OnlineCertificate.WindowsRegister(StoreName.CertificateAuthority, StoreLocation.CurrentUser);
 
-            EncryptionCertificate.WindowsRegister(StoreName.My, StoreLocation.CurrentUser);
-            SigningCertificate.WindowsRegister(StoreName.My, StoreLocation.CurrentUser);
-            */
+
+            // Now need to
+
+            // Cross sign the root an intermediate under the master profile.
+
+            // Escrow the encryption key under the master escrow key.
+
+            // Insert the certificates into the right cert stores.
+
+
+            CertificateStore.Register(RootCert);
+            CertificateStore.Register(IntermediateCertificate);
+            CertificateStore.Register(SigningCertificate);
+            CertificateStore.Register(EncryptionCertificate); 
+                
 
             }
 

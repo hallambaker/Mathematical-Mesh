@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Goedel.Debug;
-using Goedel.CryptoLibNG;
+using Goedel.LibCrypto;
 
 namespace Goedel.Cryptography.Jose {
 

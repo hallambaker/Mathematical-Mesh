@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Text;
 using Goedel.Registry;
 using Goedel.Persistence;
-using Goedel.CryptoLibNG;
-using Goedel.CryptoLibNG.PKIX;
+using Goedel.LibCrypto;
+using Goedel.LibCrypto.PKIX;
 using Goedel.Debug;
 using Goedel.Cryptography.Jose;
 
@@ -119,7 +119,7 @@ namespace Goedel.Mesh {
                     string Type, string Tag) {
             this.PersonalProfile = PersonalProfile;
 
-            Identifier = Goedel.CryptoLibNG.UDF.Random ();
+            Identifier = Goedel.LibCrypto.UDF.Random ();
 
             ApplicationProfileEntry = new ApplicationProfileEntry(this);
             ApplicationProfileEntry.Friendly = Tag;

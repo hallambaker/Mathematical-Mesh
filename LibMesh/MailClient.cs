@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Goedel.CryptoLibNG.PKIX;
+using Goedel.LibCrypto.PKIX;
 using Goedel.Debug;
 
 namespace Goedel.Mesh {

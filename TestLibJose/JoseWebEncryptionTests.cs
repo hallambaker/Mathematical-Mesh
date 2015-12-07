@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Goedel.Cryptography.Jose;
-using Goedel.CryptoLibNG;
+using Goedel.LibCrypto;
 using Goedel.Debug;
 
 namespace Goedel.Cryptography.Jose.Tests {

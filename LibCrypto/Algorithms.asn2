@@ -1,4 +1,4 @@
-﻿Namespace Goedel.CryptoLibNG 
+﻿Namespace Goedel.LibCrypto 
 
 ROOT pkcs 
 	iso					1 

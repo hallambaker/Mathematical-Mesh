@@ -12,7 +12,7 @@ using Goedel.ASN;
 namespace Goedel.ASN {  // default namespace
 
 	}
-namespace Goedel.CryptoLibNG.PKIX {
+namespace Goedel.LibCrypto.PKIX {
 
     /// <summary>
     /// id_pkix =  iso(1)  identified_organization(3)  dod(6)  internet(1)  security(5)  mechanisms(5)  pkix(7) 
@@ -576,7 +576,7 @@ namespace Goedel.CryptoLibNG.PKIX {
 namespace Goedel.ASN {  // default namespace
 
 	}
-namespace Goedel.CryptoLibNG.PKIX {
+namespace Goedel.LibCrypto.PKIX {
     /// <summary>
 	/// Certificate 
     /// </summary>
@@ -589,11 +589,11 @@ namespace Goedel.CryptoLibNG.PKIX {
 		/// <summary>
 		/// ASN.1 member SignatureAlgorithm 
 		/// </summary>
-		public Goedel.CryptoLibNG.PKIX.AlgorithmIdentifier SignatureAlgorithm ;
+		public Goedel.LibCrypto.PKIX.AlgorithmIdentifier SignatureAlgorithm ;
 		/// <summary>
 		/// ASN.1 member TBSCertificate 
 		/// </summary>
-		public Goedel.CryptoLibNG.PKIX.TBSCertificate TBSCertificate ;
+		public Goedel.LibCrypto.PKIX.TBSCertificate TBSCertificate ;
 
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
@@ -624,7 +624,7 @@ namespace Goedel.CryptoLibNG.PKIX {
 		/// <summary>
 		/// ASN.1 member Extensions 
 		/// </summary>
-		public List <Goedel.CryptoLibNG.PKIX.Extension > Extensions ;
+		public List <Goedel.LibCrypto.PKIX.Extension > Extensions ;
 		/// <summary>
 		/// ASN.1 member SubjectUniqueID 
 		/// </summary>
@@ -636,23 +636,23 @@ namespace Goedel.CryptoLibNG.PKIX {
 		/// <summary>
 		/// ASN.1 member SubjectPublicKeyInfo 
 		/// </summary>
-		public Goedel.CryptoLibNG.PKIX.SubjectPublicKeyInfo SubjectPublicKeyInfo ;
+		public Goedel.LibCrypto.PKIX.SubjectPublicKeyInfo SubjectPublicKeyInfo ;
 		/// <summary>
 		/// ASN.1 member Subject 
 		/// </summary>
-		public List <Goedel.CryptoLibNG.PKIX.Name > Subject ;
+		public List <Goedel.LibCrypto.PKIX.Name > Subject ;
 		/// <summary>
 		/// ASN.1 member Validity 
 		/// </summary>
-		public Goedel.CryptoLibNG.PKIX.Validity Validity ;
+		public Goedel.LibCrypto.PKIX.Validity Validity ;
 		/// <summary>
 		/// ASN.1 member Issuer 
 		/// </summary>
-		public List <Goedel.CryptoLibNG.PKIX.Name > Issuer ;
+		public List <Goedel.LibCrypto.PKIX.Name > Issuer ;
 		/// <summary>
 		/// ASN.1 member Signature 
 		/// </summary>
-		public Goedel.CryptoLibNG.PKIX.AlgorithmIdentifier Signature ;
+		public Goedel.LibCrypto.PKIX.AlgorithmIdentifier Signature ;
 		/// <summary>
 		/// ASN.1 member SerialNumber 
 		/// </summary>
@@ -676,7 +676,7 @@ namespace Goedel.CryptoLibNG.PKIX {
 				}
 			else {
 				int XPosition = Buffer.Encode__Sequence_Start();
-				foreach (Goedel.CryptoLibNG.PKIX.Extension  _Index in Extensions) {
+				foreach (Goedel.LibCrypto.PKIX.Extension  _Index in Extensions) {
 		
 			Buffer.Encode__Object (_Index, 0, 0);
 					}
@@ -698,7 +698,7 @@ namespace Goedel.CryptoLibNG.PKIX {
 				}
 			else {
 				int XPosition = Buffer.Encode__Sequence_Start();
-				foreach (Goedel.CryptoLibNG.PKIX.Name  _Index in Subject) {
+				foreach (Goedel.LibCrypto.PKIX.Name  _Index in Subject) {
 		
 			Buffer.Encode__Object (_Index, 0, 0);
 					}
@@ -714,7 +714,7 @@ namespace Goedel.CryptoLibNG.PKIX {
 				}
 			else {
 				int XPosition = Buffer.Encode__Sequence_Start();
-				foreach (Goedel.CryptoLibNG.PKIX.Name  _Index in Issuer) {
+				foreach (Goedel.LibCrypto.PKIX.Name  _Index in Issuer) {
 		
 			Buffer.Encode__Object (_Index, 0, 0);
 					}
@@ -746,7 +746,7 @@ namespace Goedel.CryptoLibNG.PKIX {
 		/// <summary>
 		/// ASN.1 member Algorithm 
 		/// </summary>
-		public Goedel.CryptoLibNG.PKIX.AlgorithmIdentifier Algorithm ;
+		public Goedel.LibCrypto.PKIX.AlgorithmIdentifier Algorithm ;
 
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
@@ -778,7 +778,7 @@ namespace Goedel.CryptoLibNG.PKIX {
 		/// <summary>
 		/// ASN.1 member Algorithm 
 		/// </summary>
-		public Goedel.CryptoLibNG.PKIX.AlgorithmIdentifier Algorithm ;
+		public Goedel.LibCrypto.PKIX.AlgorithmIdentifier Algorithm ;
 
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
@@ -954,11 +954,11 @@ namespace Goedel.CryptoLibNG.PKIX {
 		/// <summary>
 		/// ASN.1 member Signature 
 		/// </summary>
-		public Goedel.CryptoLibNG.PKIX.TaggedBitString Signature ;
+		public Goedel.LibCrypto.PKIX.TaggedBitString Signature ;
 		/// <summary>
 		/// ASN.1 member TBSCertList 
 		/// </summary>
-		public Goedel.CryptoLibNG.PKIX.TBSCertList TBSCertList ;
+		public Goedel.LibCrypto.PKIX.TBSCertList TBSCertList ;
 
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
@@ -986,11 +986,11 @@ namespace Goedel.CryptoLibNG.PKIX {
 		/// <summary>
 		/// ASN.1 member CrlExtensions 
 		/// </summary>
-		public List <Goedel.CryptoLibNG.PKIX.Extension > CrlExtensions ;
+		public List <Goedel.LibCrypto.PKIX.Extension > CrlExtensions ;
 		/// <summary>
 		/// ASN.1 member RevokedCertificates 
 		/// </summary>
-		public List <Goedel.CryptoLibNG.PKIX.CertEntry > RevokedCertificates ;
+		public List <Goedel.LibCrypto.PKIX.CertEntry > RevokedCertificates ;
 		/// <summary>
 		/// ASN.1 member NextUpdate 
 		/// </summary>
@@ -1002,11 +1002,11 @@ namespace Goedel.CryptoLibNG.PKIX {
 		/// <summary>
 		/// ASN.1 member Issuer 
 		/// </summary>
-		public List <Goedel.CryptoLibNG.PKIX.Name > Issuer ;
+		public List <Goedel.LibCrypto.PKIX.Name > Issuer ;
 		/// <summary>
 		/// ASN.1 member Signature 
 		/// </summary>
-		public Goedel.CryptoLibNG.PKIX.AlgorithmIdentifier Signature ;
+		public Goedel.LibCrypto.PKIX.AlgorithmIdentifier Signature ;
 		/// <summary>
 		/// ASN.1 member Version 
 		/// </summary>
@@ -1026,7 +1026,7 @@ namespace Goedel.CryptoLibNG.PKIX {
 				}
 			else {
 				int XPosition = Buffer.Encode__Sequence_Start();
-				foreach (Goedel.CryptoLibNG.PKIX.Extension  _Index in CrlExtensions) {
+				foreach (Goedel.LibCrypto.PKIX.Extension  _Index in CrlExtensions) {
 		
 			Buffer.Encode__Object (_Index, 0, 0);
 					}
@@ -1039,7 +1039,7 @@ namespace Goedel.CryptoLibNG.PKIX {
 				}
 			else {
 				int XPosition = Buffer.Encode__Sequence_Start();
-				foreach (Goedel.CryptoLibNG.PKIX.CertEntry  _Index in RevokedCertificates) {
+				foreach (Goedel.LibCrypto.PKIX.CertEntry  _Index in RevokedCertificates) {
 		
 			Buffer.Encode__Object (_Index, 0, 0);
 					}
@@ -1058,7 +1058,7 @@ namespace Goedel.CryptoLibNG.PKIX {
 				}
 			else {
 				int XPosition = Buffer.Encode__Sequence_Start();
-				foreach (Goedel.CryptoLibNG.PKIX.Name  _Index in Issuer) {
+				foreach (Goedel.LibCrypto.PKIX.Name  _Index in Issuer) {
 		
 			Buffer.Encode__Object (_Index, 0, 0);
 					}
@@ -1083,7 +1083,7 @@ namespace Goedel.CryptoLibNG.PKIX {
 		/// <summary>
 		/// ASN.1 member CrlEntryExtensions 
 		/// </summary>
-		public List <Goedel.CryptoLibNG.PKIX.Extension > CrlEntryExtensions ;
+		public List <Goedel.LibCrypto.PKIX.Extension > CrlEntryExtensions ;
 		/// <summary>
 		/// ASN.1 member RevocationDate 
 		/// </summary>
@@ -1107,7 +1107,7 @@ namespace Goedel.CryptoLibNG.PKIX {
 				}
 			else {
 				int XPosition = Buffer.Encode__Sequence_Start();
-				foreach (Goedel.CryptoLibNG.PKIX.Extension  _Index in CrlEntryExtensions) {
+				foreach (Goedel.LibCrypto.PKIX.Extension  _Index in CrlEntryExtensions) {
 		
 			Buffer.Encode__Object (_Index, 0, 0);
 					}
@@ -1139,7 +1139,7 @@ namespace Goedel.CryptoLibNG.PKIX {
 		/// <summary>
 		/// ASN.1 member Member 
 		/// </summary>
-		public List <Goedel.CryptoLibNG.PKIX.AttributeTypeValue > Member ;
+		public List <Goedel.LibCrypto.PKIX.AttributeTypeValue > Member ;
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
 		///
@@ -1153,7 +1153,7 @@ namespace Goedel.CryptoLibNG.PKIX {
 				}
 			else {
 				int XPosition = Buffer.Encode__Set_Start();
-				foreach (Goedel.CryptoLibNG.PKIX.AttributeTypeValue  _Index in Member) {
+				foreach (Goedel.LibCrypto.PKIX.AttributeTypeValue  _Index in Member) {
 		
 			Buffer.Encode__Object (_Index, 0, 0);
 					}
@@ -1170,7 +1170,7 @@ namespace Goedel.CryptoLibNG.PKIX {
 		/// <summary>
 		/// ASN.1 member Value 
 		/// </summary>
-		public Goedel.CryptoLibNG.PKIX.AnyString Value ;
+		public Goedel.LibCrypto.PKIX.AnyString Value ;
 		/// <summary>
 		/// ASN.1 member Type 
 		/// </summary>
@@ -1258,11 +1258,11 @@ namespace Goedel.CryptoLibNG.PKIX {
 		/// <summary>
 		/// ASN.1 member SignatureAlgorithm 
 		/// </summary>
-		public Goedel.CryptoLibNG.PKIX.AlgorithmIdentifier SignatureAlgorithm ;
+		public Goedel.LibCrypto.PKIX.AlgorithmIdentifier SignatureAlgorithm ;
 		/// <summary>
 		/// ASN.1 member CertificationRequestInfo 
 		/// </summary>
-		public Goedel.CryptoLibNG.PKIX.CertificationRequestInfo CertificationRequestInfo ;
+		public Goedel.LibCrypto.PKIX.CertificationRequestInfo CertificationRequestInfo ;
 
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
@@ -1293,15 +1293,15 @@ namespace Goedel.CryptoLibNG.PKIX {
 		/// <summary>
 		/// ASN.1 member Attributes 
 		/// </summary>
-		public List <Goedel.CryptoLibNG.PKIX.AttributeTypeValues > Attributes ;
+		public List <Goedel.LibCrypto.PKIX.AttributeTypeValues > Attributes ;
 		/// <summary>
 		/// ASN.1 member SubjectPublicKeyInfo 
 		/// </summary>
-		public Goedel.CryptoLibNG.PKIX.SubjectPublicKeyInfo SubjectPublicKeyInfo ;
+		public Goedel.LibCrypto.PKIX.SubjectPublicKeyInfo SubjectPublicKeyInfo ;
 		/// <summary>
 		/// ASN.1 member Subject 
 		/// </summary>
-		public List <Goedel.CryptoLibNG.PKIX.Name > Subject ;
+		public List <Goedel.LibCrypto.PKIX.Name > Subject ;
 		/// <summary>
 		/// ASN.1 member Version 
 		/// </summary>
@@ -1321,7 +1321,7 @@ namespace Goedel.CryptoLibNG.PKIX {
 				}
 			else {
 				int XPosition = Buffer.Encode__Sequence_Start();
-				foreach (Goedel.CryptoLibNG.PKIX.AttributeTypeValues  _Index in Attributes) {
+				foreach (Goedel.LibCrypto.PKIX.AttributeTypeValues  _Index in Attributes) {
 		
 			Buffer.Encode__Object (_Index, 0, 0);
 					}
@@ -1337,7 +1337,7 @@ namespace Goedel.CryptoLibNG.PKIX {
 				}
 			else {
 				int XPosition = Buffer.Encode__Sequence_Start();
-				foreach (Goedel.CryptoLibNG.PKIX.Name  _Index in Subject) {
+				foreach (Goedel.LibCrypto.PKIX.Name  _Index in Subject) {
 		
 			Buffer.Encode__Object (_Index, 0, 0);
 					}
@@ -1442,7 +1442,7 @@ namespace Goedel.CryptoLibNG.PKIX {
 		/// <summary>
 		/// ASN.1 member AuthorityCertIssuer 
 		/// </summary>
-		public List <Goedel.CryptoLibNG.PKIX.GeneralName > AuthorityCertIssuer ;
+		public List <Goedel.LibCrypto.PKIX.GeneralName > AuthorityCertIssuer ;
 		/// <summary>
 		/// ASN.1 member KeyIdentifier 
 		/// </summary>
@@ -1463,7 +1463,7 @@ namespace Goedel.CryptoLibNG.PKIX {
 				}
 			else {
 				int XPosition = Buffer.Encode__Sequence_Start();
-				foreach (Goedel.CryptoLibNG.PKIX.GeneralName  _Index in AuthorityCertIssuer) {
+				foreach (Goedel.LibCrypto.PKIX.GeneralName  _Index in AuthorityCertIssuer) {
 		
 			Buffer.Encode__Object (_Index, 0, 0);
 					}
@@ -1546,7 +1546,7 @@ namespace Goedel.CryptoLibNG.PKIX {
 		/// <summary>
 		/// ASN.1 member Value 
 		/// </summary>
-		public List <Goedel.CryptoLibNG.PKIX.PolicyInformation > Value ;
+		public List <Goedel.LibCrypto.PKIX.PolicyInformation > Value ;
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
 		///
@@ -1560,7 +1560,7 @@ namespace Goedel.CryptoLibNG.PKIX {
 				}
 			else {
 				int XPosition = Buffer.Encode__Sequence_Start();
-				foreach (Goedel.CryptoLibNG.PKIX.PolicyInformation  _Index in Value) {
+				foreach (Goedel.LibCrypto.PKIX.PolicyInformation  _Index in Value) {
 		
 			Buffer.Encode__Object (_Index, 0, 0);
 					}
@@ -1577,7 +1577,7 @@ namespace Goedel.CryptoLibNG.PKIX {
 		/// <summary>
 		/// ASN.1 member PolicyQualifiers 
 		/// </summary>
-		public List <Goedel.CryptoLibNG.PKIX.PolicyQualifierInfo > PolicyQualifiers ;
+		public List <Goedel.LibCrypto.PKIX.PolicyQualifierInfo > PolicyQualifiers ;
 		/// <summary>
 		/// ASN.1 member PolicyIdentifier 
 		/// </summary>
@@ -1597,7 +1597,7 @@ namespace Goedel.CryptoLibNG.PKIX {
 				}
 			else {
 				int XPosition = Buffer.Encode__Sequence_Start();
-				foreach (Goedel.CryptoLibNG.PKIX.PolicyQualifierInfo  _Index in PolicyQualifiers) {
+				foreach (Goedel.LibCrypto.PKIX.PolicyQualifierInfo  _Index in PolicyQualifiers) {
 		
 			Buffer.Encode__Object (_Index, 0, 0);
 					}
@@ -1658,7 +1658,7 @@ namespace Goedel.CryptoLibNG.PKIX {
 		/// <summary>
 		/// ASN.1 member Names 
 		/// </summary>
-		public List <Goedel.CryptoLibNG.PKIX.GeneralName > Names ;
+		public List <Goedel.LibCrypto.PKIX.GeneralName > Names ;
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
 		///
@@ -1672,7 +1672,7 @@ namespace Goedel.CryptoLibNG.PKIX {
 				}
 			else {
 				int XPosition = Buffer.Encode__Sequence_Start();
-				foreach (Goedel.CryptoLibNG.PKIX.GeneralName  _Index in Names) {
+				foreach (Goedel.LibCrypto.PKIX.GeneralName  _Index in Names) {
 		
 			Buffer.Encode__Object (_Index, 0, 0);
 					}
@@ -1765,11 +1765,11 @@ namespace Goedel.CryptoLibNG.PKIX {
 		/// <summary>
 		/// ASN.1 member ExcludedSubtrees 
 		/// </summary>
-		public Goedel.CryptoLibNG.PKIX.GeneralSubtrees ExcludedSubtrees ;
+		public Goedel.LibCrypto.PKIX.GeneralSubtrees ExcludedSubtrees ;
 		/// <summary>
 		/// ASN.1 member PermittedSubtrees 
 		/// </summary>
-		public Goedel.CryptoLibNG.PKIX.GeneralSubtrees PermittedSubtrees ;
+		public Goedel.LibCrypto.PKIX.GeneralSubtrees PermittedSubtrees ;
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
 		///
@@ -1802,7 +1802,7 @@ namespace Goedel.CryptoLibNG.PKIX {
 		/// <summary>
 		/// ASN.1 member Base 
 		/// </summary>
-		public Goedel.CryptoLibNG.PKIX.GeneralName Base ;
+		public Goedel.LibCrypto.PKIX.GeneralName Base ;
 
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
@@ -1871,11 +1871,11 @@ namespace Goedel.CryptoLibNG.PKIX {
 		/// <summary>
 		/// ASN.1 member MacData 
 		/// </summary>
-		public Goedel.CryptoLibNG.PKIX.MacData MacData ;
+		public Goedel.LibCrypto.PKIX.MacData MacData ;
 		/// <summary>
 		/// ASN.1 member AuthSafe 
 		/// </summary>
-		public Goedel.CryptoLibNG.PKIX.ContentInfo AuthSafe ;
+		public Goedel.LibCrypto.PKIX.ContentInfo AuthSafe ;
 		/// <summary>
 		/// ASN.1 member Version 
 		/// </summary>
@@ -1950,7 +1950,7 @@ namespace Goedel.CryptoLibNG.PKIX {
 		/// <summary>
 		/// ASN.1 member MAC 
 		/// </summary>
-		public Goedel.CryptoLibNG.PKIX.DigestInfo MAC ;
+		public Goedel.LibCrypto.PKIX.DigestInfo MAC ;
 
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
@@ -1984,7 +1984,7 @@ namespace Goedel.CryptoLibNG.PKIX {
 		/// <summary>
 		/// ASN.1 member EncryptedContent 
 		/// </summary>
-		public Goedel.CryptoLibNG.PKIX.EncryptedContentInfo EncryptedContent ;
+		public Goedel.LibCrypto.PKIX.EncryptedContentInfo EncryptedContent ;
 		/// <summary>
 		/// ASN.1 member Version 
 		/// </summary>
@@ -2020,7 +2020,7 @@ namespace Goedel.CryptoLibNG.PKIX {
 		/// <summary>
 		/// ASN.1 member Algorithm 
 		/// </summary>
-		public Goedel.CryptoLibNG.PKIX.AlgorithmIdentifier Algorithm ;
+		public Goedel.LibCrypto.PKIX.AlgorithmIdentifier Algorithm ;
 		/// <summary>
 		/// ASN.1 member ContentType 
 		/// </summary>
@@ -2059,7 +2059,7 @@ namespace Goedel.CryptoLibNG.PKIX {
 		/// <summary>
 		/// ASN.1 member EncryptionAlgorithm 
 		/// </summary>
-		public Goedel.CryptoLibNG.PKIX.AlgorithmIdentifier EncryptionAlgorithm ;
+		public Goedel.LibCrypto.PKIX.AlgorithmIdentifier EncryptionAlgorithm ;
 
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
@@ -2087,7 +2087,7 @@ namespace Goedel.CryptoLibNG.PKIX {
 		/// <summary>
 		/// ASN.1 member Attributes 
 		/// </summary>
-		public List <Goedel.CryptoLibNG.PKIX.AttributeTypeValues > Attributes ;
+		public List <Goedel.LibCrypto.PKIX.AttributeTypeValues > Attributes ;
 		/// <summary>
 		/// ASN.1 member PrivateKey 
 		/// </summary>
@@ -2095,7 +2095,7 @@ namespace Goedel.CryptoLibNG.PKIX {
 		/// <summary>
 		/// ASN.1 member PrivateKeyAlgorithm 
 		/// </summary>
-		public Goedel.CryptoLibNG.PKIX.AlgorithmIdentifier PrivateKeyAlgorithm ;
+		public Goedel.LibCrypto.PKIX.AlgorithmIdentifier PrivateKeyAlgorithm ;
 		/// <summary>
 		/// ASN.1 member Version 
 		/// </summary>
@@ -2115,7 +2115,7 @@ namespace Goedel.CryptoLibNG.PKIX {
 				}
 			else {
 				int XPosition = Buffer.Encode__Set_Start();
-				foreach (Goedel.CryptoLibNG.PKIX.AttributeTypeValues  _Index in Attributes) {
+				foreach (Goedel.LibCrypto.PKIX.AttributeTypeValues  _Index in Attributes) {
 		
 			Buffer.Encode__Object (_Index, 0, 0);
 					}
@@ -2228,11 +2228,11 @@ namespace Goedel.CryptoLibNG.PKIX {
 		/// <summary>
 		/// ASN.1 member SignatureAlgorithm 
 		/// </summary>
-		public Goedel.CryptoLibNG.PKIX.AlgorithmIdentifier SignatureAlgorithm ;
+		public Goedel.LibCrypto.PKIX.AlgorithmIdentifier SignatureAlgorithm ;
 		/// <summary>
 		/// ASN.1 member TBSEndorsement 
 		/// </summary>
-		public Goedel.CryptoLibNG.PKIX.TBSEndorsement TBSEndorsement ;
+		public Goedel.LibCrypto.PKIX.TBSEndorsement TBSEndorsement ;
 
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
@@ -2263,15 +2263,15 @@ namespace Goedel.CryptoLibNG.PKIX {
 		/// <summary>
 		/// ASN.1 member Extensions 
 		/// </summary>
-		public List <Goedel.CryptoLibNG.PKIX.Extension > Extensions ;
+		public List <Goedel.LibCrypto.PKIX.Extension > Extensions ;
 		/// <summary>
 		/// ASN.1 member SubjectAltName 
 		/// </summary>
-		public List <Goedel.CryptoLibNG.PKIX.SubjectAltName > SubjectAltName ;
+		public List <Goedel.LibCrypto.PKIX.SubjectAltName > SubjectAltName ;
 		/// <summary>
 		/// ASN.1 member Subject 
 		/// </summary>
-		public List <Goedel.CryptoLibNG.PKIX.Name > Subject ;
+		public List <Goedel.LibCrypto.PKIX.Name > Subject ;
 		/// <summary>
 		/// ASN.1 member SubjectKeyIdentifier 
 		/// </summary>
@@ -2303,7 +2303,7 @@ namespace Goedel.CryptoLibNG.PKIX {
 				}
 			else {
 				int XPosition = Buffer.Encode__Sequence_Start();
-				foreach (Goedel.CryptoLibNG.PKIX.Extension  _Index in Extensions) {
+				foreach (Goedel.LibCrypto.PKIX.Extension  _Index in Extensions) {
 		
 			Buffer.Encode__Object (_Index, 0, 0);
 					}
@@ -2316,7 +2316,7 @@ namespace Goedel.CryptoLibNG.PKIX {
 				}
 			else {
 				int XPosition = Buffer.Encode__Sequence_Start();
-				foreach (Goedel.CryptoLibNG.PKIX.SubjectAltName  _Index in SubjectAltName) {
+				foreach (Goedel.LibCrypto.PKIX.SubjectAltName  _Index in SubjectAltName) {
 		
 			Buffer.Encode__Object (_Index, 0, 0);
 					}
@@ -2329,7 +2329,7 @@ namespace Goedel.CryptoLibNG.PKIX {
 				}
 			else {
 				int XPosition = Buffer.Encode__Sequence_Start();
-				foreach (Goedel.CryptoLibNG.PKIX.Name  _Index in Subject) {
+				foreach (Goedel.LibCrypto.PKIX.Name  _Index in Subject) {
 		
 			Buffer.Encode__Object (_Index, 0, 0);
 					}

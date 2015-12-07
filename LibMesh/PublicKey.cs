@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using Goedel.Registry;
-using Goedel.CryptoLibNG;
-using Goedel.CryptoLibNG.PKIX;
+using Goedel.LibCrypto;
+using Goedel.LibCrypto.PKIX;
 using Goedel.Debug;
 using Goedel.Cryptography.Jose;
 

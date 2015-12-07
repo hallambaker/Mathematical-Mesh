@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using Goedel.Registry;
 using Goedel.Persistence;
-using Goedel.CryptoLibNG;
-using Goedel.CryptoLibNG.PKIX;
+using Goedel.LibCrypto;
+using Goedel.LibCrypto.PKIX;
 
 namespace Goedel.Mesh {
     //public partial class AdministrationProfile {

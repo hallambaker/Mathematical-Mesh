@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
-using Goedel.CryptoLibNG;
+using Goedel.LibCrypto;
 
-namespace Goedel.CryptoLibNG.PKIX {
+namespace Goedel.LibCrypto.PKIX {
     public partial class Name {
 
         /// <summary>

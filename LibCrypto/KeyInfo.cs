@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
-using Goedel.CryptoLibNG;
+using Goedel.LibCrypto;
 using Goedel.ASN;
 
-namespace Goedel.CryptoLibNG.PKIX {
+namespace Goedel.LibCrypto.PKIX {
 
 
     public partial class SubjectPublicKeyInfo : Goedel.ASN.Root {

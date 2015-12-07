@@ -6,7 +6,7 @@ using System.Text;
 using Microsoft.Win32;
 using Goedel.Protocol;
 using Goedel.Debug;
-using Goedel.CryptoLibNG.PKIX;
+using Goedel.LibCrypto.PKIX;
 using Goedel.Mesh.Integration.LiveMail;
 
 namespace Goedel.Mesh {

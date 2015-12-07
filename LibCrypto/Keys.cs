@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
-using Goedel.CryptoLibNG.PKIX;
+using Goedel.LibCrypto.PKIX;
 using Goedel.Protocol;
 
-namespace Goedel.CryptoLibNG {
+namespace Goedel.LibCrypto {
 
     /// <summary>
     /// Describes a reference to a key
@@ -119,11 +119,19 @@ namespace Goedel.CryptoLibNG {
         static bool _TestMode = false;
 
         /// <summary>
+        /// Return the underlying .NET crypto provider.
+        /// </summary>
+        public abstract AsymmetricAlgorithm AsymmetricAlgorithm {
+            get;
+            }
+
+        /// <summary>
         /// If true, keys will be created in containers prefixed with the name
         /// "test:" to allow them to be easily identified and cleaned up.
         /// </summary>
         public static bool TestMode {
-            set { KeyPair._TestMode = value; }
+            get { return _TestMode; }
+            set { _TestMode = value; }
             }
 
         static string ContainerPrefix {
@@ -199,7 +207,7 @@ namespace Goedel.CryptoLibNG {
         /// </summary>
         public override string UDF {
             get {
-                if (_UDF == null) _UDF = Goedel.CryptoLibNG.UDF.ToString(GetUDFBytes());
+                if (_UDF == null) _UDF = Goedel.LibCrypto.UDF.ToString(GetUDFBytes());
                 return _UDF;
                 }
             }
@@ -210,7 +218,7 @@ namespace Goedel.CryptoLibNG {
         /// Returns the UDF fingerprint of the current key as a byte array.
         /// </summary>
         public byte[] GetUDFBytes() {
-            return Goedel.CryptoLibNG.UDF.FromKeyInfo(KeyInfoData.DER());
+            return Goedel.LibCrypto.UDF.FromKeyInfo(KeyInfoData.DER());
             }
 
         /// <summary>
@@ -238,6 +246,14 @@ namespace Goedel.CryptoLibNG {
     /// providers.
     /// </summary>
     public class RSAKeyPair : KeyPair {
+        /// <summary>
+        /// Return the underlying .NET cryptographic provider.
+        /// </summary>
+        public override AsymmetricAlgorithm AsymmetricAlgorithm {
+            get { return _Provider; }
+            }
+
+
         private RSACryptoServiceProvider _Provider;
         private RSAParameters _Parameters;
 

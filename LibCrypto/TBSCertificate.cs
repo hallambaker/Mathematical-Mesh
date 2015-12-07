@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
-using Goedel.CryptoLibNG;
+using Goedel.LibCrypto;
 using System.Security.Cryptography.X509Certificates;
 using Goedel.Protocol;
 using Goedel.Debug;
 
-namespace Goedel.CryptoLibNG.PKIX {
+namespace Goedel.LibCrypto.PKIX {
     public partial class TBSCertificate {
 
         /// <summary>

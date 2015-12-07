@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using Goedel.Protocol;
-using Goedel.CryptoLibNG;
+using Goedel.LibCrypto;
 using Goedel.Debug;
 using Goedel.Cryptography.Jose;
-using Goedel.CryptoLibNG.PKIX;
+using Goedel.LibCrypto.PKIX;
 
 namespace Goedel.Mesh {
     public partial class DeviceProfile : Profile {

@@ -2,10 +2,10 @@
 using Microsoft.Win32;
 using System.Collections.Generic;
 using Goedel.Protocol;
-using Goedel.CryptoLibNG;
+using Goedel.LibCrypto;
 using Goedel.Debug;
 using Goedel.Cryptography.Jose;
-using Goedel.CryptoLibNG.PKIX;
+using Goedel.LibCrypto.PKIX;
 
 namespace Goedel.Mesh {
 

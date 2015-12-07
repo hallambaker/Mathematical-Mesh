@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
-using Goedel.CryptoLibNG;
+using Goedel.LibCrypto;
 using Goedel.Protocol;
 using Goedel.Debug;
 
 
-namespace Goedel.CryptoLibNG.PKIX {
+namespace Goedel.LibCrypto.PKIX {
 
     /// <summary>
     /// Backing class for managing X.509v3 Certificates using the 
@@ -277,5 +277,75 @@ namespace Goedel.CryptoLibNG.PKIX {
         public AlgorithmIdentifier(Oid Oid) {
             }
         }
+
+    public partial class CertificationRequest  {
+
+        /// <summary>
+        /// Construct a certification request.
+        /// </summary>
+        public CertificationRequest() {
+            CertificationRequestInfo = new CertificationRequestInfo();
+            }
+
+        /// <summary>
+        /// Construct a certification request for the specified certificate.
+        /// </summary>
+        /// <param name="Certificate"></param>
+        public CertificationRequest(Certificate Certificate) {
+            CertificationRequestInfo = new CertificationRequestInfo();
+            CertificationRequestInfo.Subject =
+                Certificate.TBSCertificate.Subject;
+            CertificationRequestInfo.SubjectPublicKeyInfo =
+                Certificate.TBSCertificate.SubjectPublicKeyInfo;
+            Sign(Certificate.CryptoProviderSignature);
+            }
+
+
+
+        /// <summary>
+        /// Sign the request
+        /// </summary>
+        /// <param name="SigningKey"></param>
+        public void Sign(CryptoProviderSignature SigningKey) {
+            SignatureAlgorithm = new AlgorithmIdentifier(SigningKey.OID);
+            var SignatureData = SigningKey.Sign(CertificationRequestInfo.DER());
+            Signature = SignatureData.Integrity;
+            }
+
+        /// <summary>
+        /// Set the subject name.
+        /// </summary>
+        /// <param name="name"></param>
+        public void SetSubject(string name) {
+            CertificationRequestInfo.Subject = Name.ToName(name);
+            }
+
+        ///// <summary>
+        ///// Set the subject key
+        ///// </summary>
+        ///// <param name="RSAPublicKey"></param>
+        //public void SetSubjectKey(RSAPublicKey RSAPublicKey) {
+        //    SetSubjectKey(Algorithm.RSA, RSAPublicKey.DER());
+        //    }
+
+
+        //public void SetSubjectKey(Algorithm Algorithm, byte[] KeyData) {
+        //    CertificationRequestInfo.SubjectPublicKeyInfo =
+        //                new SubjectPublicKeyInfo(Algorithm, KeyData);
+        //    }
+
+        }
+
+
+    public partial class CertificationRequestInfo : Goedel.ASN.Root {
+        /// <summary>
+        /// Create an empty CertificationRequestInfo class with version 1.0
+        /// </summary>
+        public CertificationRequestInfo() {
+            Version = 0;
+            }
+        }
+
+
 
     }
