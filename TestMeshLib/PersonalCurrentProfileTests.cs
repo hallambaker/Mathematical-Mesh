@@ -157,7 +157,7 @@ namespace Goedel.Mesh.Tests {
             Mesh.AddProfile(SignedProfile);
             
             var SignedProfile2 = Mesh.GetSignedPersonalProfile(UserName);
-            Trace.Spoil(ref SignedProfile2.SignedData.Signature);
+            Trace.Spoil(SignedProfile2.SignedData.Signature, SignedProfile2.SignedData.Signature);
             var FoundError = CheckProfileFails(SignedProfile2, typeof(System.Exception));
 
             Debug.Trace.Assert("Missed error", FoundError);

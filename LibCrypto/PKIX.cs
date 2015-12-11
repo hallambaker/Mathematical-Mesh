@@ -19,99 +19,211 @@ namespace Goedel.LibCrypto.PKIX {
     /// </summary>
 	public partial class Constants {
 		/// <summary>
-		/// id_pkix 
+		/// id_pkix as integer sequence
 		/// </summary>
-		public static int [] OID__id_pkix = new int [] { 1, 3, 6, 1, 5, 5, 7};
+		public readonly static int [] OID__id_pkix = new int [] { 1, 3, 6, 1, 5, 5, 7};
+		/// <summary>
+		/// id_pkix as string
+		/// </summary>
+		public const string OIDS__id_pkix = "1.3.6.1.5.5.7";
+
 
 		/// <summary>
-		/// id_pe  = id_pkix (1)
-		/// </summary>        
-		public static int [] OID__id_pe = new int [] {1, 3, 6, 1, 5, 5, 7, 1};
+		/// id_pe = id_pkix (1) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_pe = new int [] { 1, 3, 6, 1, 5, 5, 7, 1};
+		/// <summary>
+		/// id_pe = id_pkix (1) as string
+		/// </summary>
+		public const string OIDS__id_pe = "1.3.6.1.5.5.7.1";
+
+
 
 		/// <summary>
-		/// id_pe_authorityInfoAccess  = id_pe (1)
-		/// </summary>        
-		public static int [] OID__id_pe_authorityInfoAccess = new int [] {1, 3, 6, 1, 5, 5, 7, 1, 1};
+		/// id_pe_authorityInfoAccess = id_pe (1) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_pe_authorityInfoAccess = new int [] { 1, 3, 6, 1, 5, 5, 7, 1, 1};
+		/// <summary>
+		/// id_pe_authorityInfoAccess = id_pe (1) as string
+		/// </summary>
+		public const string OIDS__id_pe_authorityInfoAccess = "1.3.6.1.5.5.7.1.1";
+
+
 
 		/// <summary>
-		/// id_pe_subjectInfoAccess  = id_pe (11)
-		/// </summary>        
-		public static int [] OID__id_pe_subjectInfoAccess = new int [] {1, 3, 6, 1, 5, 5, 7, 1, 11};
+		/// id_pe_subjectInfoAccess = id_pe (11) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_pe_subjectInfoAccess = new int [] { 1, 3, 6, 1, 5, 5, 7, 1, 11};
+		/// <summary>
+		/// id_pe_subjectInfoAccess = id_pe (11) as string
+		/// </summary>
+		public const string OIDS__id_pe_subjectInfoAccess = "1.3.6.1.5.5.7.1.11";
+
+
 
 		/// <summary>
-		/// id_qt  = id_pkix (2)
-		/// </summary>        
-		public static int [] OID__id_qt = new int [] {1, 3, 6, 1, 5, 5, 7, 2};
+		/// id_qt = id_pkix (2) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_qt = new int [] { 1, 3, 6, 1, 5, 5, 7, 2};
+		/// <summary>
+		/// id_qt = id_pkix (2) as string
+		/// </summary>
+		public const string OIDS__id_qt = "1.3.6.1.5.5.7.2";
+
+
 
 		/// <summary>
-		/// id_qt_cps  = id_qt (1)
-		/// </summary>        
-		public static int [] OID__id_qt_cps = new int [] {1, 3, 6, 1, 5, 5, 7, 2, 1};
+		/// id_qt_cps = id_qt (1) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_qt_cps = new int [] { 1, 3, 6, 1, 5, 5, 7, 2, 1};
+		/// <summary>
+		/// id_qt_cps = id_qt (1) as string
+		/// </summary>
+		public const string OIDS__id_qt_cps = "1.3.6.1.5.5.7.2.1";
+
+
 
 		/// <summary>
-		/// id_qt_unotice  = id_qt (2)
-		/// </summary>        
-		public static int [] OID__id_qt_unotice = new int [] {1, 3, 6, 1, 5, 5, 7, 2, 2};
+		/// id_qt_unotice = id_qt (2) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_qt_unotice = new int [] { 1, 3, 6, 1, 5, 5, 7, 2, 2};
+		/// <summary>
+		/// id_qt_unotice = id_qt (2) as string
+		/// </summary>
+		public const string OIDS__id_qt_unotice = "1.3.6.1.5.5.7.2.2";
+
+
 
 		/// <summary>
-		/// id_kp  = id_pkix (3)
-		/// </summary>        
-		public static int [] OID__id_kp = new int [] {1, 3, 6, 1, 5, 5, 7, 3};
+		/// id_kp = id_pkix (3) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_kp = new int [] { 1, 3, 6, 1, 5, 5, 7, 3};
+		/// <summary>
+		/// id_kp = id_pkix (3) as string
+		/// </summary>
+		public const string OIDS__id_kp = "1.3.6.1.5.5.7.3";
+
+
 
 		/// <summary>
-		/// id_kp_serverAuth  = id_kp (1)
-		/// </summary>        
-		public static int [] OID__id_kp_serverAuth = new int [] {1, 3, 6, 1, 5, 5, 7, 3, 1};
+		/// id_kp_serverAuth = id_kp (1) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_kp_serverAuth = new int [] { 1, 3, 6, 1, 5, 5, 7, 3, 1};
+		/// <summary>
+		/// id_kp_serverAuth = id_kp (1) as string
+		/// </summary>
+		public const string OIDS__id_kp_serverAuth = "1.3.6.1.5.5.7.3.1";
+
+
 
 		/// <summary>
-		/// id_kp_clientAuth  = id_kp (2)
-		/// </summary>        
-		public static int [] OID__id_kp_clientAuth = new int [] {1, 3, 6, 1, 5, 5, 7, 3, 2};
+		/// id_kp_clientAuth = id_kp (2) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_kp_clientAuth = new int [] { 1, 3, 6, 1, 5, 5, 7, 3, 2};
+		/// <summary>
+		/// id_kp_clientAuth = id_kp (2) as string
+		/// </summary>
+		public const string OIDS__id_kp_clientAuth = "1.3.6.1.5.5.7.3.2";
+
+
 
 		/// <summary>
-		/// id_kp_codeSigning  = id_kp (3)
-		/// </summary>        
-		public static int [] OID__id_kp_codeSigning = new int [] {1, 3, 6, 1, 5, 5, 7, 3, 3};
+		/// id_kp_codeSigning = id_kp (3) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_kp_codeSigning = new int [] { 1, 3, 6, 1, 5, 5, 7, 3, 3};
+		/// <summary>
+		/// id_kp_codeSigning = id_kp (3) as string
+		/// </summary>
+		public const string OIDS__id_kp_codeSigning = "1.3.6.1.5.5.7.3.3";
+
+
 
 		/// <summary>
-		/// id_kp_emailProtection  = id_kp (4)
-		/// </summary>        
-		public static int [] OID__id_kp_emailProtection = new int [] {1, 3, 6, 1, 5, 5, 7, 3, 4};
+		/// id_kp_emailProtection = id_kp (4) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_kp_emailProtection = new int [] { 1, 3, 6, 1, 5, 5, 7, 3, 4};
+		/// <summary>
+		/// id_kp_emailProtection = id_kp (4) as string
+		/// </summary>
+		public const string OIDS__id_kp_emailProtection = "1.3.6.1.5.5.7.3.4";
+
+
 
 		/// <summary>
-		/// id_kp_timeStamping  = id_kp (8)
-		/// </summary>        
-		public static int [] OID__id_kp_timeStamping = new int [] {1, 3, 6, 1, 5, 5, 7, 3, 8};
+		/// id_kp_timeStamping = id_kp (8) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_kp_timeStamping = new int [] { 1, 3, 6, 1, 5, 5, 7, 3, 8};
+		/// <summary>
+		/// id_kp_timeStamping = id_kp (8) as string
+		/// </summary>
+		public const string OIDS__id_kp_timeStamping = "1.3.6.1.5.5.7.3.8";
+
+
 
 		/// <summary>
-		/// id_kp_OCSPSigning  = id_kp (9)
-		/// </summary>        
-		public static int [] OID__id_kp_OCSPSigning = new int [] {1, 3, 6, 1, 5, 5, 7, 3, 9};
+		/// id_kp_OCSPSigning = id_kp (9) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_kp_OCSPSigning = new int [] { 1, 3, 6, 1, 5, 5, 7, 3, 9};
+		/// <summary>
+		/// id_kp_OCSPSigning = id_kp (9) as string
+		/// </summary>
+		public const string OIDS__id_kp_OCSPSigning = "1.3.6.1.5.5.7.3.9";
+
+
 
 		/// <summary>
-		/// id_ad  = id_pkix (48)
-		/// </summary>        
-		public static int [] OID__id_ad = new int [] {1, 3, 6, 1, 5, 5, 7, 48};
+		/// id_ad = id_pkix (48) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_ad = new int [] { 1, 3, 6, 1, 5, 5, 7, 48};
+		/// <summary>
+		/// id_ad = id_pkix (48) as string
+		/// </summary>
+		public const string OIDS__id_ad = "1.3.6.1.5.5.7.48";
+
+
 
 		/// <summary>
-		/// id_ad_ocsp  = id_ad (1)
-		/// </summary>        
-		public static int [] OID__id_ad_ocsp = new int [] {1, 3, 6, 1, 5, 5, 7, 48, 1};
+		/// id_ad_ocsp = id_ad (1) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_ad_ocsp = new int [] { 1, 3, 6, 1, 5, 5, 7, 48, 1};
+		/// <summary>
+		/// id_ad_ocsp = id_ad (1) as string
+		/// </summary>
+		public const string OIDS__id_ad_ocsp = "1.3.6.1.5.5.7.48.1";
+
+
 
 		/// <summary>
-		/// id_ad_caIssuers  = id_ad (2)
-		/// </summary>        
-		public static int [] OID__id_ad_caIssuers = new int [] {1, 3, 6, 1, 5, 5, 7, 48, 2};
+		/// id_ad_caIssuers = id_ad (2) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_ad_caIssuers = new int [] { 1, 3, 6, 1, 5, 5, 7, 48, 2};
+		/// <summary>
+		/// id_ad_caIssuers = id_ad (2) as string
+		/// </summary>
+		public const string OIDS__id_ad_caIssuers = "1.3.6.1.5.5.7.48.2";
+
+
 
 		/// <summary>
-		/// id_ad_timeStamping  = id_ad (3)
-		/// </summary>        
-		public static int [] OID__id_ad_timeStamping = new int [] {1, 3, 6, 1, 5, 5, 7, 48, 3};
+		/// id_ad_timeStamping = id_ad (3) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_ad_timeStamping = new int [] { 1, 3, 6, 1, 5, 5, 7, 48, 3};
+		/// <summary>
+		/// id_ad_timeStamping = id_ad (3) as string
+		/// </summary>
+		public const string OIDS__id_ad_timeStamping = "1.3.6.1.5.5.7.48.3";
+
+
 
 		/// <summary>
-		/// id_ad_caRepository  = id_ad (5)
-		/// </summary>        
-		public static int [] OID__id_ad_caRepository = new int [] {1, 3, 6, 1, 5, 5, 7, 48, 5};
+		/// id_ad_caRepository = id_ad (5) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_ad_caRepository = new int [] { 1, 3, 6, 1, 5, 5, 7, 48, 5};
+		/// <summary>
+		/// id_ad_caRepository = id_ad (5) as string
+		/// </summary>
+		public const string OIDS__id_ad_caRepository = "1.3.6.1.5.5.7.48.5";
+
 
 		}
     /// <summary>
@@ -119,84 +231,178 @@ namespace Goedel.LibCrypto.PKIX {
     /// </summary>
 	public partial class Constants {
 		/// <summary>
-		/// id_at 
+		/// id_at as integer sequence
 		/// </summary>
-		public static int [] OID__id_at = new int [] { 2, 5, 4};
+		public readonly static int [] OID__id_at = new int [] { 2, 5, 4};
+		/// <summary>
+		/// id_at as string
+		/// </summary>
+		public const string OIDS__id_at = "2.5.4";
+
 
 		/// <summary>
-		/// id_at_countryName  = id_at (6)
-		/// </summary>        
-		public static int [] OID__id_at_countryName = new int [] {2, 5, 4, 6};
+		/// id_at_countryName = id_at (6) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_at_countryName = new int [] { 2, 5, 4, 6};
+		/// <summary>
+		/// id_at_countryName = id_at (6) as string
+		/// </summary>
+		public const string OIDS__id_at_countryName = "2.5.4.6";
+
+
 
 		/// <summary>
-		/// id_at_organizationName  = id_at (10)
-		/// </summary>        
-		public static int [] OID__id_at_organizationName = new int [] {2, 5, 4, 10};
+		/// id_at_organizationName = id_at (10) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_at_organizationName = new int [] { 2, 5, 4, 10};
+		/// <summary>
+		/// id_at_organizationName = id_at (10) as string
+		/// </summary>
+		public const string OIDS__id_at_organizationName = "2.5.4.10";
+
+
 
 		/// <summary>
-		/// id_at_organizationalUnitName  = id_at (11)
-		/// </summary>        
-		public static int [] OID__id_at_organizationalUnitName = new int [] {2, 5, 4, 11};
+		/// id_at_organizationalUnitName = id_at (11) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_at_organizationalUnitName = new int [] { 2, 5, 4, 11};
+		/// <summary>
+		/// id_at_organizationalUnitName = id_at (11) as string
+		/// </summary>
+		public const string OIDS__id_at_organizationalUnitName = "2.5.4.11";
+
+
 
 		/// <summary>
-		/// id_at_dnQualifier  = id_at (46)
-		/// </summary>        
-		public static int [] OID__id_at_dnQualifier = new int [] {2, 5, 4, 46};
+		/// id_at_dnQualifier = id_at (46) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_at_dnQualifier = new int [] { 2, 5, 4, 46};
+		/// <summary>
+		/// id_at_dnQualifier = id_at (46) as string
+		/// </summary>
+		public const string OIDS__id_at_dnQualifier = "2.5.4.46";
+
+
 
 		/// <summary>
-		/// id_at_stateOrProvinceName  = id_at (8)
-		/// </summary>        
-		public static int [] OID__id_at_stateOrProvinceName = new int [] {2, 5, 4, 8};
+		/// id_at_stateOrProvinceName = id_at (8) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_at_stateOrProvinceName = new int [] { 2, 5, 4, 8};
+		/// <summary>
+		/// id_at_stateOrProvinceName = id_at (8) as string
+		/// </summary>
+		public const string OIDS__id_at_stateOrProvinceName = "2.5.4.8";
+
+
 
 		/// <summary>
-		/// id_at_commonName  = id_at (3)
-		/// </summary>        
-		public static int [] OID__id_at_commonName = new int [] {2, 5, 4, 3};
+		/// id_at_commonName = id_at (3) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_at_commonName = new int [] { 2, 5, 4, 3};
+		/// <summary>
+		/// id_at_commonName = id_at (3) as string
+		/// </summary>
+		public const string OIDS__id_at_commonName = "2.5.4.3";
+
+
 
 		/// <summary>
-		/// id_at_serialNumber  = id_at (5)
-		/// </summary>        
-		public static int [] OID__id_at_serialNumber = new int [] {2, 5, 4, 5};
+		/// id_at_serialNumber = id_at (5) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_at_serialNumber = new int [] { 2, 5, 4, 5};
+		/// <summary>
+		/// id_at_serialNumber = id_at (5) as string
+		/// </summary>
+		public const string OIDS__id_at_serialNumber = "2.5.4.5";
+
+
 
 		/// <summary>
-		/// id_at_localityName  = id_at (7)
-		/// </summary>        
-		public static int [] OID__id_at_localityName = new int [] {2, 5, 4, 7};
+		/// id_at_localityName = id_at (7) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_at_localityName = new int [] { 2, 5, 4, 7};
+		/// <summary>
+		/// id_at_localityName = id_at (7) as string
+		/// </summary>
+		public const string OIDS__id_at_localityName = "2.5.4.7";
+
+
 
 		/// <summary>
-		/// id_at_title  = id_at (12)
-		/// </summary>        
-		public static int [] OID__id_at_title = new int [] {2, 5, 4, 12};
+		/// id_at_title = id_at (12) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_at_title = new int [] { 2, 5, 4, 12};
+		/// <summary>
+		/// id_at_title = id_at (12) as string
+		/// </summary>
+		public const string OIDS__id_at_title = "2.5.4.12";
+
+
 
 		/// <summary>
-		/// id_at_name  = id_at (41)
-		/// </summary>        
-		public static int [] OID__id_at_name = new int [] {2, 5, 4, 41};
+		/// id_at_name = id_at (41) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_at_name = new int [] { 2, 5, 4, 41};
+		/// <summary>
+		/// id_at_name = id_at (41) as string
+		/// </summary>
+		public const string OIDS__id_at_name = "2.5.4.41";
+
+
 
 		/// <summary>
-		/// id_at_surname  = id_at (4)
-		/// </summary>        
-		public static int [] OID__id_at_surname = new int [] {2, 5, 4, 4};
+		/// id_at_surname = id_at (4) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_at_surname = new int [] { 2, 5, 4, 4};
+		/// <summary>
+		/// id_at_surname = id_at (4) as string
+		/// </summary>
+		public const string OIDS__id_at_surname = "2.5.4.4";
+
+
 
 		/// <summary>
-		/// id_at_givenName  = id_at (42)
-		/// </summary>        
-		public static int [] OID__id_at_givenName = new int [] {2, 5, 4, 42};
+		/// id_at_givenName = id_at (42) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_at_givenName = new int [] { 2, 5, 4, 42};
+		/// <summary>
+		/// id_at_givenName = id_at (42) as string
+		/// </summary>
+		public const string OIDS__id_at_givenName = "2.5.4.42";
+
+
 
 		/// <summary>
-		/// id_at_initials  = id_at (43)
-		/// </summary>        
-		public static int [] OID__id_at_initials = new int [] {2, 5, 4, 43};
+		/// id_at_initials = id_at (43) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_at_initials = new int [] { 2, 5, 4, 43};
+		/// <summary>
+		/// id_at_initials = id_at (43) as string
+		/// </summary>
+		public const string OIDS__id_at_initials = "2.5.4.43";
+
+
 
 		/// <summary>
-		/// id_at_pseudonym  = id_at (65)
-		/// </summary>        
-		public static int [] OID__id_at_pseudonym = new int [] {2, 5, 4, 65};
+		/// id_at_pseudonym = id_at (65) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_at_pseudonym = new int [] { 2, 5, 4, 65};
+		/// <summary>
+		/// id_at_pseudonym = id_at (65) as string
+		/// </summary>
+		public const string OIDS__id_at_pseudonym = "2.5.4.65";
+
+
 
 		/// <summary>
-		/// id_at_generationQualifier  = id_at (44)
-		/// </summary>        
-		public static int [] OID__id_at_generationQualifier = new int [] {2, 5, 4, 44};
+		/// id_at_generationQualifier = id_at (44) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_at_generationQualifier = new int [] { 2, 5, 4, 44};
+		/// <summary>
+		/// id_at_generationQualifier = id_at (44) as string
+		/// </summary>
+		public const string OIDS__id_at_generationQualifier = "2.5.4.44";
+
 
 		}
     /// <summary>
@@ -204,99 +410,211 @@ namespace Goedel.LibCrypto.PKIX {
     /// </summary>
 	public partial class Constants {
 		/// <summary>
-		/// pkcs 
+		/// pkcs as integer sequence
 		/// </summary>
-		public static int [] OID__pkcs = new int [] { 1, 2, 840, 113549, 1};
+		public readonly static int [] OID__pkcs = new int [] { 1, 2, 840, 113549, 1};
+		/// <summary>
+		/// pkcs as string
+		/// </summary>
+		public const string OIDS__pkcs = "1.2.840.113549.1";
+
 
 		/// <summary>
-		/// pkcs_9  = pkcs (9)
-		/// </summary>        
-		public static int [] OID__pkcs_9 = new int [] {1, 2, 840, 113549, 1, 9};
+		/// pkcs_9 = pkcs (9) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__pkcs_9 = new int [] { 1, 2, 840, 113549, 1, 9};
+		/// <summary>
+		/// pkcs_9 = pkcs (9) as string
+		/// </summary>
+		public const string OIDS__pkcs_9 = "1.2.840.113549.1.9";
+
+
 
 		/// <summary>
-		/// id_emailAddress  = pkcs_9 (1)
-		/// </summary>        
-		public static int [] OID__id_emailAddress = new int [] {1, 2, 840, 113549, 1, 9, 1};
+		/// id_emailAddress = pkcs_9 (1) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_emailAddress = new int [] { 1, 2, 840, 113549, 1, 9, 1};
+		/// <summary>
+		/// id_emailAddress = pkcs_9 (1) as string
+		/// </summary>
+		public const string OIDS__id_emailAddress = "1.2.840.113549.1.9.1";
+
+
 
 		/// <summary>
-		/// pkcs_1  = pkcs (1)
-		/// </summary>        
-		public static int [] OID__pkcs_1 = new int [] {1, 2, 840, 113549, 1, 1};
+		/// pkcs_1 = pkcs (1) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__pkcs_1 = new int [] { 1, 2, 840, 113549, 1, 1};
+		/// <summary>
+		/// pkcs_1 = pkcs (1) as string
+		/// </summary>
+		public const string OIDS__pkcs_1 = "1.2.840.113549.1.1";
+
+
 
 		/// <summary>
-		/// rsaEncryption  = pkcs_1 (1)
-		/// </summary>        
-		public static int [] OID__rsaEncryption = new int [] {1, 2, 840, 113549, 1, 1, 1};
+		/// rsaEncryption = pkcs_1 (1) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__rsaEncryption = new int [] { 1, 2, 840, 113549, 1, 1, 1};
+		/// <summary>
+		/// rsaEncryption = pkcs_1 (1) as string
+		/// </summary>
+		public const string OIDS__rsaEncryption = "1.2.840.113549.1.1.1";
+
+
 
 		/// <summary>
-		/// sha1WithRSAEncryption  = pkcs_1 (5)
-		/// </summary>        
-		public static int [] OID__sha1WithRSAEncryption = new int [] {1, 2, 840, 113549, 1, 1, 5};
+		/// sha1WithRSAEncryption = pkcs_1 (5) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__sha1WithRSAEncryption = new int [] { 1, 2, 840, 113549, 1, 1, 5};
+		/// <summary>
+		/// sha1WithRSAEncryption = pkcs_1 (5) as string
+		/// </summary>
+		public const string OIDS__sha1WithRSAEncryption = "1.2.840.113549.1.1.5";
+
+
 
 		/// <summary>
-		/// sha224WithRSAEncryption  = pkcs_1 (14)
-		/// </summary>        
-		public static int [] OID__sha224WithRSAEncryption = new int [] {1, 2, 840, 113549, 1, 1, 14};
+		/// sha224WithRSAEncryption = pkcs_1 (14) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__sha224WithRSAEncryption = new int [] { 1, 2, 840, 113549, 1, 1, 14};
+		/// <summary>
+		/// sha224WithRSAEncryption = pkcs_1 (14) as string
+		/// </summary>
+		public const string OIDS__sha224WithRSAEncryption = "1.2.840.113549.1.1.14";
+
+
 
 		/// <summary>
-		/// sha256WithRSAEncryption  = pkcs_1 (11)
-		/// </summary>        
-		public static int [] OID__sha256WithRSAEncryption = new int [] {1, 2, 840, 113549, 1, 1, 11};
+		/// sha256WithRSAEncryption = pkcs_1 (11) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__sha256WithRSAEncryption = new int [] { 1, 2, 840, 113549, 1, 1, 11};
+		/// <summary>
+		/// sha256WithRSAEncryption = pkcs_1 (11) as string
+		/// </summary>
+		public const string OIDS__sha256WithRSAEncryption = "1.2.840.113549.1.1.11";
+
+
 
 		/// <summary>
-		/// sha384WithRSAEncryption  = pkcs_1 (12)
-		/// </summary>        
-		public static int [] OID__sha384WithRSAEncryption = new int [] {1, 2, 840, 113549, 1, 1, 12};
+		/// sha384WithRSAEncryption = pkcs_1 (12) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__sha384WithRSAEncryption = new int [] { 1, 2, 840, 113549, 1, 1, 12};
+		/// <summary>
+		/// sha384WithRSAEncryption = pkcs_1 (12) as string
+		/// </summary>
+		public const string OIDS__sha384WithRSAEncryption = "1.2.840.113549.1.1.12";
+
+
 
 		/// <summary>
-		/// sha512WithRSAEncryption  = pkcs_1 (13)
-		/// </summary>        
-		public static int [] OID__sha512WithRSAEncryption = new int [] {1, 2, 840, 113549, 1, 1, 13};
+		/// sha512WithRSAEncryption = pkcs_1 (13) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__sha512WithRSAEncryption = new int [] { 1, 2, 840, 113549, 1, 1, 13};
+		/// <summary>
+		/// sha512WithRSAEncryption = pkcs_1 (13) as string
+		/// </summary>
+		public const string OIDS__sha512WithRSAEncryption = "1.2.840.113549.1.1.13";
+
+
 
 		/// <summary>
-		/// pkcs_12  = pkcs (12)
-		/// </summary>        
-		public static int [] OID__pkcs_12 = new int [] {1, 2, 840, 113549, 1, 12};
+		/// pkcs_12 = pkcs (12) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__pkcs_12 = new int [] { 1, 2, 840, 113549, 1, 12};
+		/// <summary>
+		/// pkcs_12 = pkcs (12) as string
+		/// </summary>
+		public const string OIDS__pkcs_12 = "1.2.840.113549.1.12";
+
+
 
 		/// <summary>
-		/// pkcs_12_10  = pkcs_12 (10)
-		/// </summary>        
-		public static int [] OID__pkcs_12_10 = new int [] {1, 2, 840, 113549, 1, 12, 10};
+		/// pkcs_12_10 = pkcs_12 (10) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__pkcs_12_10 = new int [] { 1, 2, 840, 113549, 1, 12, 10};
+		/// <summary>
+		/// pkcs_12_10 = pkcs_12 (10) as string
+		/// </summary>
+		public const string OIDS__pkcs_12_10 = "1.2.840.113549.1.12.10";
+
+
 
 		/// <summary>
-		/// pkcs_12_bagtype  = pkcs_12_10 (1)
-		/// </summary>        
-		public static int [] OID__pkcs_12_bagtype = new int [] {1, 2, 840, 113549, 1, 12, 10, 1};
+		/// pkcs_12_bagtype = pkcs_12_10 (1) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__pkcs_12_bagtype = new int [] { 1, 2, 840, 113549, 1, 12, 10, 1};
+		/// <summary>
+		/// pkcs_12_bagtype = pkcs_12_10 (1) as string
+		/// </summary>
+		public const string OIDS__pkcs_12_bagtype = "1.2.840.113549.1.12.10.1";
+
+
 
 		/// <summary>
-		/// pkcs_12_keybag  = pkcs_12_bagtype (1)
-		/// </summary>        
-		public static int [] OID__pkcs_12_keybag = new int [] {1, 2, 840, 113549, 1, 12, 10, 1, 1};
+		/// pkcs_12_keybag = pkcs_12_bagtype (1) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__pkcs_12_keybag = new int [] { 1, 2, 840, 113549, 1, 12, 10, 1, 1};
+		/// <summary>
+		/// pkcs_12_keybag = pkcs_12_bagtype (1) as string
+		/// </summary>
+		public const string OIDS__pkcs_12_keybag = "1.2.840.113549.1.12.10.1.1";
+
+
 
 		/// <summary>
-		/// pkcs_12_shroudedbag  = pkcs_12_bagtype (2)
-		/// </summary>        
-		public static int [] OID__pkcs_12_shroudedbag = new int [] {1, 2, 840, 113549, 1, 12, 10, 1, 2};
+		/// pkcs_12_shroudedbag = pkcs_12_bagtype (2) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__pkcs_12_shroudedbag = new int [] { 1, 2, 840, 113549, 1, 12, 10, 1, 2};
+		/// <summary>
+		/// pkcs_12_shroudedbag = pkcs_12_bagtype (2) as string
+		/// </summary>
+		public const string OIDS__pkcs_12_shroudedbag = "1.2.840.113549.1.12.10.1.2";
+
+
 
 		/// <summary>
-		/// pkcs_12_certbag  = pkcs_12_bagtype (3)
-		/// </summary>        
-		public static int [] OID__pkcs_12_certbag = new int [] {1, 2, 840, 113549, 1, 12, 10, 1, 3};
+		/// pkcs_12_certbag = pkcs_12_bagtype (3) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__pkcs_12_certbag = new int [] { 1, 2, 840, 113549, 1, 12, 10, 1, 3};
+		/// <summary>
+		/// pkcs_12_certbag = pkcs_12_bagtype (3) as string
+		/// </summary>
+		public const string OIDS__pkcs_12_certbag = "1.2.840.113549.1.12.10.1.3";
+
+
 
 		/// <summary>
-		/// pkcs_12_crlbag  = pkcs_12_bagtype (4)
-		/// </summary>        
-		public static int [] OID__pkcs_12_crlbag = new int [] {1, 2, 840, 113549, 1, 12, 10, 1, 4};
+		/// pkcs_12_crlbag = pkcs_12_bagtype (4) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__pkcs_12_crlbag = new int [] { 1, 2, 840, 113549, 1, 12, 10, 1, 4};
+		/// <summary>
+		/// pkcs_12_crlbag = pkcs_12_bagtype (4) as string
+		/// </summary>
+		public const string OIDS__pkcs_12_crlbag = "1.2.840.113549.1.12.10.1.4";
+
+
 
 		/// <summary>
-		/// pkcs_12_secretbag  = pkcs_12_bagtype (5)
-		/// </summary>        
-		public static int [] OID__pkcs_12_secretbag = new int [] {1, 2, 840, 113549, 1, 12, 10, 1, 5};
+		/// pkcs_12_secretbag = pkcs_12_bagtype (5) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__pkcs_12_secretbag = new int [] { 1, 2, 840, 113549, 1, 12, 10, 1, 5};
+		/// <summary>
+		/// pkcs_12_secretbag = pkcs_12_bagtype (5) as string
+		/// </summary>
+		public const string OIDS__pkcs_12_secretbag = "1.2.840.113549.1.12.10.1.5";
+
+
 
 		/// <summary>
-		/// pkcs_12_safecontentsbag  = pkcs_12_bagtype (6)
-		/// </summary>        
-		public static int [] OID__pkcs_12_safecontentsbag = new int [] {1, 2, 840, 113549, 1, 12, 10, 1, 6};
+		/// pkcs_12_safecontentsbag = pkcs_12_bagtype (6) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__pkcs_12_safecontentsbag = new int [] { 1, 2, 840, 113549, 1, 12, 10, 1, 6};
+		/// <summary>
+		/// pkcs_12_safecontentsbag = pkcs_12_bagtype (6) as string
+		/// </summary>
+		public const string OIDS__pkcs_12_safecontentsbag = "1.2.840.113549.1.12.10.1.6";
+
 
 		}
     /// <summary>
@@ -304,129 +622,277 @@ namespace Goedel.LibCrypto.PKIX {
     /// </summary>
 	public partial class Constants {
 		/// <summary>
-		/// id_ce 
+		/// id_ce as integer sequence
 		/// </summary>
-		public static int [] OID__id_ce = new int [] { 2, 5, 29};
+		public readonly static int [] OID__id_ce = new int [] { 2, 5, 29};
+		/// <summary>
+		/// id_ce as string
+		/// </summary>
+		public const string OIDS__id_ce = "2.5.29";
+
 
 		/// <summary>
-		/// id_ce_authorityKeyIdentifier  = id_ce (35)
-		/// </summary>        
-		public static int [] OID__id_ce_authorityKeyIdentifier = new int [] {2, 5, 29, 35};
+		/// id_ce_authorityKeyIdentifier = id_ce (35) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_ce_authorityKeyIdentifier = new int [] { 2, 5, 29, 35};
+		/// <summary>
+		/// id_ce_authorityKeyIdentifier = id_ce (35) as string
+		/// </summary>
+		public const string OIDS__id_ce_authorityKeyIdentifier = "2.5.29.35";
+
+
 
 		/// <summary>
-		/// id_ce_subjectKeyIdentifier  = id_ce (14)
-		/// </summary>        
-		public static int [] OID__id_ce_subjectKeyIdentifier = new int [] {2, 5, 29, 14};
+		/// id_ce_subjectKeyIdentifier = id_ce (14) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_ce_subjectKeyIdentifier = new int [] { 2, 5, 29, 14};
+		/// <summary>
+		/// id_ce_subjectKeyIdentifier = id_ce (14) as string
+		/// </summary>
+		public const string OIDS__id_ce_subjectKeyIdentifier = "2.5.29.14";
+
+
 
 		/// <summary>
-		/// id_ce_keyUsage  = id_ce (15)
-		/// </summary>        
-		public static int [] OID__id_ce_keyUsage = new int [] {2, 5, 29, 15};
+		/// id_ce_keyUsage = id_ce (15) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_ce_keyUsage = new int [] { 2, 5, 29, 15};
+		/// <summary>
+		/// id_ce_keyUsage = id_ce (15) as string
+		/// </summary>
+		public const string OIDS__id_ce_keyUsage = "2.5.29.15";
+
+
 
 		/// <summary>
-		/// id_ce_privateKeyUsagePeriod  = id_ce (16)
-		/// </summary>        
-		public static int [] OID__id_ce_privateKeyUsagePeriod = new int [] {2, 5, 29, 16};
+		/// id_ce_privateKeyUsagePeriod = id_ce (16) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_ce_privateKeyUsagePeriod = new int [] { 2, 5, 29, 16};
+		/// <summary>
+		/// id_ce_privateKeyUsagePeriod = id_ce (16) as string
+		/// </summary>
+		public const string OIDS__id_ce_privateKeyUsagePeriod = "2.5.29.16";
+
+
 
 		/// <summary>
-		/// id_ce_certificatePolicies  = id_ce (32)
-		/// </summary>        
-		public static int [] OID__id_ce_certificatePolicies = new int [] {2, 5, 29, 32};
+		/// id_ce_certificatePolicies = id_ce (32) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_ce_certificatePolicies = new int [] { 2, 5, 29, 32};
+		/// <summary>
+		/// id_ce_certificatePolicies = id_ce (32) as string
+		/// </summary>
+		public const string OIDS__id_ce_certificatePolicies = "2.5.29.32";
+
+
 
 		/// <summary>
-		/// anyPolicy  = id_ce_certificatePolicies (0)
-		/// </summary>        
-		public static int [] OID__anyPolicy = new int [] {2, 5, 29, 32, 0};
+		/// anyPolicy = id_ce_certificatePolicies (0) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__anyPolicy = new int [] { 2, 5, 29, 32, 0};
+		/// <summary>
+		/// anyPolicy = id_ce_certificatePolicies (0) as string
+		/// </summary>
+		public const string OIDS__anyPolicy = "2.5.29.32.0";
+
+
 
 		/// <summary>
-		/// id_ce_policyMappings  = id_ce (33)
-		/// </summary>        
-		public static int [] OID__id_ce_policyMappings = new int [] {2, 5, 29, 33};
+		/// id_ce_policyMappings = id_ce (33) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_ce_policyMappings = new int [] { 2, 5, 29, 33};
+		/// <summary>
+		/// id_ce_policyMappings = id_ce (33) as string
+		/// </summary>
+		public const string OIDS__id_ce_policyMappings = "2.5.29.33";
+
+
 
 		/// <summary>
-		/// id_ce_subjectAltName  = id_ce (17)
-		/// </summary>        
-		public static int [] OID__id_ce_subjectAltName = new int [] {2, 5, 29, 17};
+		/// id_ce_subjectAltName = id_ce (17) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_ce_subjectAltName = new int [] { 2, 5, 29, 17};
+		/// <summary>
+		/// id_ce_subjectAltName = id_ce (17) as string
+		/// </summary>
+		public const string OIDS__id_ce_subjectAltName = "2.5.29.17";
+
+
 
 		/// <summary>
-		/// id_ce_issuerAltName  = id_ce (18)
-		/// </summary>        
-		public static int [] OID__id_ce_issuerAltName = new int [] {2, 5, 29, 18};
+		/// id_ce_issuerAltName = id_ce (18) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_ce_issuerAltName = new int [] { 2, 5, 29, 18};
+		/// <summary>
+		/// id_ce_issuerAltName = id_ce (18) as string
+		/// </summary>
+		public const string OIDS__id_ce_issuerAltName = "2.5.29.18";
+
+
 
 		/// <summary>
-		/// id_ce_subjectDirectoryAttributes  = id_ce (9)
-		/// </summary>        
-		public static int [] OID__id_ce_subjectDirectoryAttributes = new int [] {2, 5, 29, 9};
+		/// id_ce_subjectDirectoryAttributes = id_ce (9) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_ce_subjectDirectoryAttributes = new int [] { 2, 5, 29, 9};
+		/// <summary>
+		/// id_ce_subjectDirectoryAttributes = id_ce (9) as string
+		/// </summary>
+		public const string OIDS__id_ce_subjectDirectoryAttributes = "2.5.29.9";
+
+
 
 		/// <summary>
-		/// id_ce_basicConstraints  = id_ce (19)
-		/// </summary>        
-		public static int [] OID__id_ce_basicConstraints = new int [] {2, 5, 29, 19};
+		/// id_ce_basicConstraints = id_ce (19) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_ce_basicConstraints = new int [] { 2, 5, 29, 19};
+		/// <summary>
+		/// id_ce_basicConstraints = id_ce (19) as string
+		/// </summary>
+		public const string OIDS__id_ce_basicConstraints = "2.5.29.19";
+
+
 
 		/// <summary>
-		/// id_ce_nameConstraints  = id_ce (30)
-		/// </summary>        
-		public static int [] OID__id_ce_nameConstraints = new int [] {2, 5, 29, 30};
+		/// id_ce_nameConstraints = id_ce (30) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_ce_nameConstraints = new int [] { 2, 5, 29, 30};
+		/// <summary>
+		/// id_ce_nameConstraints = id_ce (30) as string
+		/// </summary>
+		public const string OIDS__id_ce_nameConstraints = "2.5.29.30";
+
+
 
 		/// <summary>
-		/// id_ce_policyConstraints  = id_ce (36)
-		/// </summary>        
-		public static int [] OID__id_ce_policyConstraints = new int [] {2, 5, 29, 36};
+		/// id_ce_policyConstraints = id_ce (36) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_ce_policyConstraints = new int [] { 2, 5, 29, 36};
+		/// <summary>
+		/// id_ce_policyConstraints = id_ce (36) as string
+		/// </summary>
+		public const string OIDS__id_ce_policyConstraints = "2.5.29.36";
+
+
 
 		/// <summary>
-		/// id_ce_cRLDistributionPoints  = id_ce (31)
-		/// </summary>        
-		public static int [] OID__id_ce_cRLDistributionPoints = new int [] {2, 5, 29, 31};
+		/// id_ce_cRLDistributionPoints = id_ce (31) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_ce_cRLDistributionPoints = new int [] { 2, 5, 29, 31};
+		/// <summary>
+		/// id_ce_cRLDistributionPoints = id_ce (31) as string
+		/// </summary>
+		public const string OIDS__id_ce_cRLDistributionPoints = "2.5.29.31";
+
+
 
 		/// <summary>
-		/// id_ce_extKeyUsage  = id_ce (37)
-		/// </summary>        
-		public static int [] OID__id_ce_extKeyUsage = new int [] {2, 5, 29, 37};
+		/// id_ce_extKeyUsage = id_ce (37) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_ce_extKeyUsage = new int [] { 2, 5, 29, 37};
+		/// <summary>
+		/// id_ce_extKeyUsage = id_ce (37) as string
+		/// </summary>
+		public const string OIDS__id_ce_extKeyUsage = "2.5.29.37";
+
+
 
 		/// <summary>
-		/// id_ce_cRLNumber  = id_ce (20)
-		/// </summary>        
-		public static int [] OID__id_ce_cRLNumber = new int [] {2, 5, 29, 20};
+		/// id_ce_cRLNumber = id_ce (20) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_ce_cRLNumber = new int [] { 2, 5, 29, 20};
+		/// <summary>
+		/// id_ce_cRLNumber = id_ce (20) as string
+		/// </summary>
+		public const string OIDS__id_ce_cRLNumber = "2.5.29.20";
+
+
 
 		/// <summary>
-		/// id_ce_issuingDistributionPoint  = id_ce (28)
-		/// </summary>        
-		public static int [] OID__id_ce_issuingDistributionPoint = new int [] {2, 5, 29, 28};
+		/// id_ce_issuingDistributionPoint = id_ce (28) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_ce_issuingDistributionPoint = new int [] { 2, 5, 29, 28};
+		/// <summary>
+		/// id_ce_issuingDistributionPoint = id_ce (28) as string
+		/// </summary>
+		public const string OIDS__id_ce_issuingDistributionPoint = "2.5.29.28";
+
+
 
 		/// <summary>
-		/// id_ce_deltaCRLIndicator  = id_ce (27)
-		/// </summary>        
-		public static int [] OID__id_ce_deltaCRLIndicator = new int [] {2, 5, 29, 27};
+		/// id_ce_deltaCRLIndicator = id_ce (27) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_ce_deltaCRLIndicator = new int [] { 2, 5, 29, 27};
+		/// <summary>
+		/// id_ce_deltaCRLIndicator = id_ce (27) as string
+		/// </summary>
+		public const string OIDS__id_ce_deltaCRLIndicator = "2.5.29.27";
+
+
 
 		/// <summary>
-		/// id_ce_cRLReasons  = id_ce (21)
-		/// </summary>        
-		public static int [] OID__id_ce_cRLReasons = new int [] {2, 5, 29, 21};
+		/// id_ce_cRLReasons = id_ce (21) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_ce_cRLReasons = new int [] { 2, 5, 29, 21};
+		/// <summary>
+		/// id_ce_cRLReasons = id_ce (21) as string
+		/// </summary>
+		public const string OIDS__id_ce_cRLReasons = "2.5.29.21";
+
+
 
 		/// <summary>
-		/// id_ce_certificateIssuer  = id_ce (29)
-		/// </summary>        
-		public static int [] OID__id_ce_certificateIssuer = new int [] {2, 5, 29, 29};
+		/// id_ce_certificateIssuer = id_ce (29) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_ce_certificateIssuer = new int [] { 2, 5, 29, 29};
+		/// <summary>
+		/// id_ce_certificateIssuer = id_ce (29) as string
+		/// </summary>
+		public const string OIDS__id_ce_certificateIssuer = "2.5.29.29";
+
+
 
 		/// <summary>
-		/// id_ce_holdInstructionCode  = id_ce (23)
-		/// </summary>        
-		public static int [] OID__id_ce_holdInstructionCode = new int [] {2, 5, 29, 23};
+		/// id_ce_holdInstructionCode = id_ce (23) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_ce_holdInstructionCode = new int [] { 2, 5, 29, 23};
+		/// <summary>
+		/// id_ce_holdInstructionCode = id_ce (23) as string
+		/// </summary>
+		public const string OIDS__id_ce_holdInstructionCode = "2.5.29.23";
+
+
 
 		/// <summary>
-		/// id_ce_invalidityDate  = id_ce (24)
-		/// </summary>        
-		public static int [] OID__id_ce_invalidityDate = new int [] {2, 5, 29, 24};
+		/// id_ce_invalidityDate = id_ce (24) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_ce_invalidityDate = new int [] { 2, 5, 29, 24};
+		/// <summary>
+		/// id_ce_invalidityDate = id_ce (24) as string
+		/// </summary>
+		public const string OIDS__id_ce_invalidityDate = "2.5.29.24";
+
+
 
 		/// <summary>
-		/// id_ce_inhibitAnyPolicy  = id_ce (54)
-		/// </summary>        
-		public static int [] OID__id_ce_inhibitAnyPolicy = new int [] {2, 5, 29, 54};
+		/// id_ce_inhibitAnyPolicy = id_ce (54) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_ce_inhibitAnyPolicy = new int [] { 2, 5, 29, 54};
+		/// <summary>
+		/// id_ce_inhibitAnyPolicy = id_ce (54) as string
+		/// </summary>
+		public const string OIDS__id_ce_inhibitAnyPolicy = "2.5.29.54";
+
+
 
 		/// <summary>
-		/// id_ce_freshestCRL  = id_ce (46)
-		/// </summary>        
-		public static int [] OID__id_ce_freshestCRL = new int [] {2, 5, 29, 46};
+		/// id_ce_freshestCRL = id_ce (46) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_ce_freshestCRL = new int [] { 2, 5, 29, 46};
+		/// <summary>
+		/// id_ce_freshestCRL = id_ce (46) as string
+		/// </summary>
+		public const string OIDS__id_ce_freshestCRL = "2.5.29.46";
+
 
 		}
     /// <summary>
@@ -434,24 +900,46 @@ namespace Goedel.LibCrypto.PKIX {
     /// </summary>
 	public partial class Constants {
 		/// <summary>
-		/// holdInstruction 
+		/// holdInstruction as integer sequence
 		/// </summary>
-		public static int [] OID__holdInstruction = new int [] { 2, 2, 840, 10040, 2};
+		public readonly static int [] OID__holdInstruction = new int [] { 2, 2, 840, 10040, 2};
+		/// <summary>
+		/// holdInstruction as string
+		/// </summary>
+		public const string OIDS__holdInstruction = "2.2.840.10040.2";
+
 
 		/// <summary>
-		/// id_holdinstruction_none  = holdInstruction (1)
-		/// </summary>        
-		public static int [] OID__id_holdinstruction_none = new int [] {2, 2, 840, 10040, 2, 1};
+		/// id_holdinstruction_none = holdInstruction (1) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_holdinstruction_none = new int [] { 2, 2, 840, 10040, 2, 1};
+		/// <summary>
+		/// id_holdinstruction_none = holdInstruction (1) as string
+		/// </summary>
+		public const string OIDS__id_holdinstruction_none = "2.2.840.10040.2.1";
+
+
 
 		/// <summary>
-		/// id_holdinstruction_callissuer  = holdInstruction (2)
-		/// </summary>        
-		public static int [] OID__id_holdinstruction_callissuer = new int [] {2, 2, 840, 10040, 2, 2};
+		/// id_holdinstruction_callissuer = holdInstruction (2) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_holdinstruction_callissuer = new int [] { 2, 2, 840, 10040, 2, 2};
+		/// <summary>
+		/// id_holdinstruction_callissuer = holdInstruction (2) as string
+		/// </summary>
+		public const string OIDS__id_holdinstruction_callissuer = "2.2.840.10040.2.2";
+
+
 
 		/// <summary>
-		/// id_holdinstruction_reject  = holdInstruction (3)
-		/// </summary>        
-		public static int [] OID__id_holdinstruction_reject = new int [] {2, 2, 840, 10040, 2, 3};
+		/// id_holdinstruction_reject = holdInstruction (3) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_holdinstruction_reject = new int [] { 2, 2, 840, 10040, 2, 3};
+		/// <summary>
+		/// id_holdinstruction_reject = holdInstruction (3) as string
+		/// </summary>
+		public const string OIDS__id_holdinstruction_reject = "2.2.840.10040.2.3";
+
 
 		}
     /// <summary>
@@ -459,99 +947,211 @@ namespace Goedel.LibCrypto.PKIX {
     /// </summary>
 	public partial class Constants {
 		/// <summary>
-		/// nistalgorithm 
+		/// nistalgorithm as integer sequence
 		/// </summary>
-		public static int [] OID__nistalgorithm = new int [] { 2, 16, 840, 1, 101, 3, 4};
+		public readonly static int [] OID__nistalgorithm = new int [] { 2, 16, 840, 1, 101, 3, 4};
+		/// <summary>
+		/// nistalgorithm as string
+		/// </summary>
+		public const string OIDS__nistalgorithm = "2.16.840.1.101.3.4";
+
 
 		/// <summary>
-		/// nist_hashalgs  = nistalgorithm (2)
-		/// </summary>        
-		public static int [] OID__nist_hashalgs = new int [] {2, 16, 840, 1, 101, 3, 4, 2};
+		/// nist_hashalgs = nistalgorithm (2) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__nist_hashalgs = new int [] { 2, 16, 840, 1, 101, 3, 4, 2};
+		/// <summary>
+		/// nist_hashalgs = nistalgorithm (2) as string
+		/// </summary>
+		public const string OIDS__nist_hashalgs = "2.16.840.1.101.3.4.2";
+
+
 
 		/// <summary>
-		/// id_sha224  = nist_hashalgs (4)
-		/// </summary>        
-		public static int [] OID__id_sha224 = new int [] {2, 16, 840, 1, 101, 3, 4, 2, 4};
+		/// id_sha224 = nist_hashalgs (4) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_sha224 = new int [] { 2, 16, 840, 1, 101, 3, 4, 2, 4};
+		/// <summary>
+		/// id_sha224 = nist_hashalgs (4) as string
+		/// </summary>
+		public const string OIDS__id_sha224 = "2.16.840.1.101.3.4.2.4";
+
+
 
 		/// <summary>
-		/// id_sha256  = nist_hashalgs (1)
-		/// </summary>        
-		public static int [] OID__id_sha256 = new int [] {2, 16, 840, 1, 101, 3, 4, 2, 1};
+		/// id_sha256 = nist_hashalgs (1) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_sha256 = new int [] { 2, 16, 840, 1, 101, 3, 4, 2, 1};
+		/// <summary>
+		/// id_sha256 = nist_hashalgs (1) as string
+		/// </summary>
+		public const string OIDS__id_sha256 = "2.16.840.1.101.3.4.2.1";
+
+
 
 		/// <summary>
-		/// id_sha384  = nist_hashalgs (2)
-		/// </summary>        
-		public static int [] OID__id_sha384 = new int [] {2, 16, 840, 1, 101, 3, 4, 2, 2};
+		/// id_sha384 = nist_hashalgs (2) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_sha384 = new int [] { 2, 16, 840, 1, 101, 3, 4, 2, 2};
+		/// <summary>
+		/// id_sha384 = nist_hashalgs (2) as string
+		/// </summary>
+		public const string OIDS__id_sha384 = "2.16.840.1.101.3.4.2.2";
+
+
 
 		/// <summary>
-		/// id_sha512  = nist_hashalgs (3)
-		/// </summary>        
-		public static int [] OID__id_sha512 = new int [] {2, 16, 840, 1, 101, 3, 4, 2, 3};
+		/// id_sha512 = nist_hashalgs (3) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_sha512 = new int [] { 2, 16, 840, 1, 101, 3, 4, 2, 3};
+		/// <summary>
+		/// id_sha512 = nist_hashalgs (3) as string
+		/// </summary>
+		public const string OIDS__id_sha512 = "2.16.840.1.101.3.4.2.3";
+
+
 
 		/// <summary>
-		/// nist_aes  = nistalgorithm (1)
-		/// </summary>        
-		public static int [] OID__nist_aes = new int [] {2, 16, 840, 1, 101, 3, 4, 1};
+		/// nist_aes = nistalgorithm (1) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__nist_aes = new int [] { 2, 16, 840, 1, 101, 3, 4, 1};
+		/// <summary>
+		/// nist_aes = nistalgorithm (1) as string
+		/// </summary>
+		public const string OIDS__nist_aes = "2.16.840.1.101.3.4.1";
+
+
 
 		/// <summary>
-		/// id_aes128_ecb  = nist_aes (1)
-		/// </summary>        
-		public static int [] OID__id_aes128_ecb = new int [] {2, 16, 840, 1, 101, 3, 4, 1, 1};
+		/// id_aes128_ecb = nist_aes (1) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_aes128_ecb = new int [] { 2, 16, 840, 1, 101, 3, 4, 1, 1};
+		/// <summary>
+		/// id_aes128_ecb = nist_aes (1) as string
+		/// </summary>
+		public const string OIDS__id_aes128_ecb = "2.16.840.1.101.3.4.1.1";
+
+
 
 		/// <summary>
-		/// id_aes128_cbc  = nist_aes (2)
-		/// </summary>        
-		public static int [] OID__id_aes128_cbc = new int [] {2, 16, 840, 1, 101, 3, 4, 1, 2};
+		/// id_aes128_cbc = nist_aes (2) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_aes128_cbc = new int [] { 2, 16, 840, 1, 101, 3, 4, 1, 2};
+		/// <summary>
+		/// id_aes128_cbc = nist_aes (2) as string
+		/// </summary>
+		public const string OIDS__id_aes128_cbc = "2.16.840.1.101.3.4.1.2";
+
+
 
 		/// <summary>
-		/// id_aes128_ofb  = nist_aes (3)
-		/// </summary>        
-		public static int [] OID__id_aes128_ofb = new int [] {2, 16, 840, 1, 101, 3, 4, 1, 3};
+		/// id_aes128_ofb = nist_aes (3) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_aes128_ofb = new int [] { 2, 16, 840, 1, 101, 3, 4, 1, 3};
+		/// <summary>
+		/// id_aes128_ofb = nist_aes (3) as string
+		/// </summary>
+		public const string OIDS__id_aes128_ofb = "2.16.840.1.101.3.4.1.3";
+
+
 
 		/// <summary>
-		/// id_aes128_cfb  = nist_aes (4)
-		/// </summary>        
-		public static int [] OID__id_aes128_cfb = new int [] {2, 16, 840, 1, 101, 3, 4, 1, 4};
+		/// id_aes128_cfb = nist_aes (4) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_aes128_cfb = new int [] { 2, 16, 840, 1, 101, 3, 4, 1, 4};
+		/// <summary>
+		/// id_aes128_cfb = nist_aes (4) as string
+		/// </summary>
+		public const string OIDS__id_aes128_cfb = "2.16.840.1.101.3.4.1.4";
+
+
 
 		/// <summary>
-		/// id_aes192_ecb  = nist_aes (21)
-		/// </summary>        
-		public static int [] OID__id_aes192_ecb = new int [] {2, 16, 840, 1, 101, 3, 4, 1, 21};
+		/// id_aes192_ecb = nist_aes (21) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_aes192_ecb = new int [] { 2, 16, 840, 1, 101, 3, 4, 1, 21};
+		/// <summary>
+		/// id_aes192_ecb = nist_aes (21) as string
+		/// </summary>
+		public const string OIDS__id_aes192_ecb = "2.16.840.1.101.3.4.1.21";
+
+
 
 		/// <summary>
-		/// id_aes192_cbc  = nist_aes (22)
-		/// </summary>        
-		public static int [] OID__id_aes192_cbc = new int [] {2, 16, 840, 1, 101, 3, 4, 1, 22};
+		/// id_aes192_cbc = nist_aes (22) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_aes192_cbc = new int [] { 2, 16, 840, 1, 101, 3, 4, 1, 22};
+		/// <summary>
+		/// id_aes192_cbc = nist_aes (22) as string
+		/// </summary>
+		public const string OIDS__id_aes192_cbc = "2.16.840.1.101.3.4.1.22";
+
+
 
 		/// <summary>
-		/// id_aes192_ofb  = nist_aes (23)
-		/// </summary>        
-		public static int [] OID__id_aes192_ofb = new int [] {2, 16, 840, 1, 101, 3, 4, 1, 23};
+		/// id_aes192_ofb = nist_aes (23) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_aes192_ofb = new int [] { 2, 16, 840, 1, 101, 3, 4, 1, 23};
+		/// <summary>
+		/// id_aes192_ofb = nist_aes (23) as string
+		/// </summary>
+		public const string OIDS__id_aes192_ofb = "2.16.840.1.101.3.4.1.23";
+
+
 
 		/// <summary>
-		/// id_aes192_cfb  = nist_aes (24)
-		/// </summary>        
-		public static int [] OID__id_aes192_cfb = new int [] {2, 16, 840, 1, 101, 3, 4, 1, 24};
+		/// id_aes192_cfb = nist_aes (24) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_aes192_cfb = new int [] { 2, 16, 840, 1, 101, 3, 4, 1, 24};
+		/// <summary>
+		/// id_aes192_cfb = nist_aes (24) as string
+		/// </summary>
+		public const string OIDS__id_aes192_cfb = "2.16.840.1.101.3.4.1.24";
+
+
 
 		/// <summary>
-		/// id_aes256_ecb  = nist_aes (41)
-		/// </summary>        
-		public static int [] OID__id_aes256_ecb = new int [] {2, 16, 840, 1, 101, 3, 4, 1, 41};
+		/// id_aes256_ecb = nist_aes (41) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_aes256_ecb = new int [] { 2, 16, 840, 1, 101, 3, 4, 1, 41};
+		/// <summary>
+		/// id_aes256_ecb = nist_aes (41) as string
+		/// </summary>
+		public const string OIDS__id_aes256_ecb = "2.16.840.1.101.3.4.1.41";
+
+
 
 		/// <summary>
-		/// id_aes256_cbc  = nist_aes (42)
-		/// </summary>        
-		public static int [] OID__id_aes256_cbc = new int [] {2, 16, 840, 1, 101, 3, 4, 1, 42};
+		/// id_aes256_cbc = nist_aes (42) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_aes256_cbc = new int [] { 2, 16, 840, 1, 101, 3, 4, 1, 42};
+		/// <summary>
+		/// id_aes256_cbc = nist_aes (42) as string
+		/// </summary>
+		public const string OIDS__id_aes256_cbc = "2.16.840.1.101.3.4.1.42";
+
+
 
 		/// <summary>
-		/// id_aes256_ofb  = nist_aes (43)
-		/// </summary>        
-		public static int [] OID__id_aes256_ofb = new int [] {2, 16, 840, 1, 101, 3, 4, 1, 43};
+		/// id_aes256_ofb = nist_aes (43) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_aes256_ofb = new int [] { 2, 16, 840, 1, 101, 3, 4, 1, 43};
+		/// <summary>
+		/// id_aes256_ofb = nist_aes (43) as string
+		/// </summary>
+		public const string OIDS__id_aes256_ofb = "2.16.840.1.101.3.4.1.43";
+
+
 
 		/// <summary>
-		/// id_aes256_cfb  = nist_aes (44)
-		/// </summary>        
-		public static int [] OID__id_aes256_cfb = new int [] {2, 16, 840, 1, 101, 3, 4, 1, 44};
+		/// id_aes256_cfb = nist_aes (44) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_aes256_cfb = new int [] { 2, 16, 840, 1, 101, 3, 4, 1, 44};
+		/// <summary>
+		/// id_aes256_cfb = nist_aes (44) as string
+		/// </summary>
+		public const string OIDS__id_aes256_cfb = "2.16.840.1.101.3.4.1.44";
+
 
 		}
     /// <summary>
@@ -559,14 +1159,24 @@ namespace Goedel.LibCrypto.PKIX {
     /// </summary>
 	public partial class Constants {
 		/// <summary>
-		/// dod_arc 
+		/// dod_arc as integer sequence
 		/// </summary>
-		public static int [] OID__dod_arc = new int [] { 1, 3, 6, 1, 4, 1, 6449, 1, 3, 5};
+		public readonly static int [] OID__dod_arc = new int [] { 1, 3, 6, 1, 4, 1, 6449, 1, 3, 5};
+		/// <summary>
+		/// dod_arc as string
+		/// </summary>
+		public const string OIDS__dod_arc = "1.3.6.1.4.1.6449.1.3.5";
+
 
 		/// <summary>
-		/// netscape_smime  = dod_arc (2)
-		/// </summary>        
-		public static int [] OID__netscape_smime = new int [] {1, 3, 6, 1, 4, 1, 6449, 1, 3, 5, 2};
+		/// netscape_smime = dod_arc (2) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__netscape_smime = new int [] { 1, 3, 6, 1, 4, 1, 6449, 1, 3, 5, 2};
+		/// <summary>
+		/// netscape_smime = dod_arc (2) as string
+		/// </summary>
+		public const string OIDS__netscape_smime = "1.3.6.1.4.1.6449.1.3.5.2";
+
 
 		}
 	}

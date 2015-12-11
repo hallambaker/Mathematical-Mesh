@@ -128,7 +128,7 @@ namespace Goedel.MeshSampleClient {
                 NetworkProfilePrivate.DNS.Count <=0) return "<Not Specified>";
             var Connection = NetworkProfilePrivate.DNS[0];
 
-            return string.Format ("{0}:{1}", Connection.Address, Connection.Port);
+            return string.Format ("{0}:{1}", Connection.ServiceName, Connection.Port);
             }
 
 
@@ -161,12 +161,14 @@ namespace Goedel.MeshSampleClient {
 
         public string GetMail() {
             if (MailProfilePrivate == null) return "<No Entry>";
-            if (MailProfilePrivate.Connections == null ||
-                MailProfilePrivate.Connections.Count <= 0)
-                return "<Not Specified>";
-            var Connection = MailProfilePrivate.Connections[0];
+            //if (MailProfilePrivate.Connections == null ||
+            //    MailProfilePrivate.Connections.Count <= 0)
+            //    return "<Not Specified>";
+            //var Connection = MailProfilePrivate.Connections[0];
 
-            return string.Format("{0}:{1}", Connection.Address, Connection.Port);
+            return "Not yet implemented";
+
+            //return string.Format("{0}:{1}", Connection.ServiceName, Connection.Port);
             }
 
 

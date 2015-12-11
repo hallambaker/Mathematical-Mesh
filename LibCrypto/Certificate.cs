@@ -23,7 +23,7 @@ namespace Goedel.LibCrypto.PKIX {
         public byte[] Data {
             get { return _Data; }
             }
-        
+
         /// <summary>
         /// High level description of key use.
         /// </summary>
@@ -44,17 +44,28 @@ namespace Goedel.LibCrypto.PKIX {
         /// <summary>
         /// The SHA1 fingerprint of the certificate.
         /// </summary>
-        public string SHA1 {
-            get { return null; }
+        public byte[] SHA1 {
+            get {
+                if (_SHA1 == null) {
+                    _SHA1 = Goedel.LibCrypto.UDF.SHA1(Data);
+                    }
+                return _SHA1;
+                }
             }
+        byte[] _SHA1;
 
         /// <summary>
         /// The SHA-2-256 fingerprint of the certificate.
         /// </summary>
-        public string SHA256 {
-            get { return null; }
+        public byte[] SHA256 {
+            get {
+                if (_SHA256 == null) {
+                    _SHA256 = Goedel.LibCrypto.UDF.SHA256(Data);
+                    }
+                return _SHA256;
+                }
             }
-
+        byte[] _SHA256;
 
         KeyPair _KeyPair;
         /// <summary>
@@ -72,9 +83,9 @@ namespace Goedel.LibCrypto.PKIX {
         /// </summary>
         public CryptoProviderSignature CryptoProviderSignature {
             get {
-            if (_CryptoProviderSignature == null) {
-                _CryptoProviderSignature = KeyPair.SignatureProvider;
-                }
+                if (_CryptoProviderSignature == null) {
+                    _CryptoProviderSignature = KeyPair.SignatureProvider;
+                    }
                 return _CryptoProviderSignature;
                 }
             }
@@ -97,8 +108,8 @@ namespace Goedel.LibCrypto.PKIX {
         /// <summary>
         /// Subject Key Identifier
         /// </summary>
-        public byte [] SubjectKeyIdentifier {
-            get { return KeyPair.GetUDFBytes (); }
+        public byte[] SubjectKeyIdentifier {
+            get { return KeyPair.GetUDFBytes(); }
             }
 
 
@@ -114,7 +125,7 @@ namespace Goedel.LibCrypto.PKIX {
         /// <param name="SigningCertificate">Certificate of signer.</param>
         public Certificate(KeyPair SubjectKey, Application Application,
                     Certificate SigningCertificate) :
-                this (SubjectKey, Application) {
+                this(SubjectKey, Application) {
             _UDF = SubjectKey.UDF;
             TBSCertificate.SetValidity(20);
 
@@ -136,6 +147,27 @@ namespace Goedel.LibCrypto.PKIX {
             var SubjectName = new Name(SubjectKey).ToList();
             TBSCertificate = new TBSCertificate(SubjectKey, SubjectName);
             }
+
+        /// <summary>
+        /// Create a certificate with the specified subject Key. Note that the template is 
+        /// must be completed with calls to set validity etc. before use.
+        /// </summary>
+        /// <param name="SubjectKey">Cryptographic provider for the subject key.</param>
+        /// <param name="Application">Certificate application(s).</param>
+        /// <param name="Subject">Subject name.</param>
+        /// <param name="SubjectAltName">The certificate subject altname</param>
+        public Certificate(KeyPair SubjectKey, Application Application,
+                    string Subject,
+                    string SubjectAltName) {
+            _KeyPair = SubjectKey;
+
+            var SubjectName = new Name(Subject).ToList();
+            TBSCertificate = new TBSCertificate(SubjectKey, SubjectName);
+            TBSCertificate.SetProfile(Application);
+            TBSCertificate.SetSubjectAltName(SubjectAltName);
+            }
+
+
 
         /// <summary>
         /// Create a certificate with the specified subject Key. Note that the template is 
@@ -181,6 +213,7 @@ namespace Goedel.LibCrypto.PKIX {
         public void Sign(Certificate SigningCertificate) {
             if (SigningCertificate != null) {
                 TBSCertificate.Issuer = SigningCertificate.TBSCertificate.Subject;
+                TBSCertificate.SetSubjectKeyIdentifier(SubjectKeyIdentifier);
                 TBSCertificate.SetAuthorityKeyIdentifier(SigningCertificate.SubjectKeyIdentifier);
                 Sign(SigningCertificate.CryptoProviderSignature);
                 }
@@ -193,9 +226,19 @@ namespace Goedel.LibCrypto.PKIX {
         /// Self-sign certificate. The issuer name and key identifier 
         /// are taken from the TBS certificate.
         /// </summary>
-        public void Sign() { 
+        public void Sign() {
             TBSCertificate.Issuer = TBSCertificate.Subject;
+            TBSCertificate.SetSubjectKeyIdentifier(SubjectKeyIdentifier);
             TBSCertificate.SetAuthorityKeyIdentifier(SubjectKeyIdentifier);
+            //TBSCertificate.SetKeyUsage();
+            //TBSCertificate.SetSubjectAltName();
+            //TBSCertificate.SetBasicConstraints(false, 0);
+            //TBSCertificate.SetExtendedKeyUsage();
+            //Key usage?
+            //subject altname?
+            // Basic constraints?
+
+
             Sign(CryptoProviderSignature);
             }
 
@@ -215,56 +258,56 @@ namespace Goedel.LibCrypto.PKIX {
             _Data = this.DER();
             }
 
-        /// <summary>
-        /// Create a self signed root certificate with the specified
-        /// parameters.
-        /// </summary>
-        /// <param name="SubjectKey">Cryptographic provider for the signer.</param>
-        /// <param name="SubjectName"></param>
-        /// <returns></returns>
-        /// 
+        ///// <summary>
+        ///// Create a self signed root certificate with the specified
+        ///// parameters.
+        ///// </summary>
+        ///// <param name="SubjectKey">Cryptographic provider for the signer.</param>
+        ///// <param name="SubjectName"></param>
+        ///// <returns></returns>
+        ///// 
 
-        public static Certificate CreateRoot (
-                        CryptoProviderSignature SubjectKey,
-                        string SubjectName) {
-            var Certificate = new Certificate(SubjectKey,
-                Application.Root);
-            return null;
-            }
+        //public static Certificate CreateRoot(
+        //                CryptoProviderSignature SubjectKey,
+        //                string SubjectName) {
+        //    var Certificate = new Certificate(SubjectKey,
+        //        Application.Root);
+        //    return null;
+        //    }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="SubjectKey">Subject key to be signed.</param>
-        /// <param name="SubjectName">Subject Name</param>
-        /// <returns></returns>
-        public static Certificate CreateIntermediate(
-                        CryptoProviderSignature SubjectKey,
-                        string SubjectName) {
-            var Certificate = new Certificate(SubjectKey, 
-                Application.CA);
-            Certificate.TBSCertificate.Subject = Name.ToName(SubjectName);
-            return null;
-            }
+        ///// <summary>
+        ///// 
+        ///// </summary>
+        ///// <param name="SubjectKey">Subject key to be signed.</param>
+        ///// <param name="SubjectName">Subject Name</param>
+        ///// <returns></returns>
+        //public static Certificate CreateIntermediate(
+        //                CryptoProviderSignature SubjectKey,
+        //                string SubjectName) {
+        //    var Certificate = new Certificate(SubjectKey,
+        //        Application.CA);
+        //    Certificate.TBSCertificate.Subject = Name.ToName(SubjectName);
+        //    return null;
+        //    }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="SubjectKey"></param>
-        /// <param name="Application">Application use(s)</param>
-        /// <param name="Account"></param>
-        /// <param name="SubjectName"></param>
-        /// <returns></returns>
-        public static Certificate CreateEndEntity(
-                        CryptoProviderAsymmetric SubjectKey,
-                        Application Application,
-                        string Account,
-                        string SubjectName) {
-            var Certificate = new Certificate(SubjectKey, Application);
-            Certificate.TBSCertificate.Subject = Name.ToName (SubjectName);
-            Certificate.TBSCertificate.SetSubjectAltName(Account);
-            return null;
-            }
+        ///// <summary>
+        ///// 
+        ///// </summary>
+        ///// <param name="SubjectKey"></param>
+        ///// <param name="Application">Application use(s)</param>
+        ///// <param name="Account"></param>
+        ///// <param name="SubjectName"></param>
+        ///// <returns></returns>
+        //public static Certificate CreateEndEntity(
+        //                CryptoProviderAsymmetric SubjectKey,
+        //                Application Application,
+        //                string Account,
+        //                string SubjectName) {
+        //    var Certificate = new Certificate(SubjectKey, Application);
+        //    Certificate.TBSCertificate.Subject = Name.ToName(SubjectName);
+        //    Certificate.TBSCertificate.SetSubjectAltName(Account);
+        //    return null;
+        //    }
 
 
         }
@@ -278,7 +321,7 @@ namespace Goedel.LibCrypto.PKIX {
             }
         }
 
-    public partial class CertificationRequest  {
+    public partial class CertificationRequest {
 
         /// <summary>
         /// Construct a certification request.
@@ -345,7 +388,4 @@ namespace Goedel.LibCrypto.PKIX {
             Version = 0;
             }
         }
-
-
-
     }

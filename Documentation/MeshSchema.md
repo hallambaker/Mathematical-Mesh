@@ -527,21 +527,65 @@ The current S/MIME encryption key
 
 ###Structure: MailProfilePrivate
 
+Describes a mail account configuration
 
-:Connections :
+Private profile contains connection settings for the inbound and
+outbound mail server(s) and cryptographic private keys. Public
+profile may contain security policy information for the sender.
+
+
+:EmailAddress :
+::String [0..1]   
+
+The RFC822 Email address. [e.g. "alice@example.com"]
+
+:ReplyToAddress :
+::String [0..1]   
+
+The RFC822 Reply toEmail address. [e.g. "alice@example.com"]
+
+When set, allows a sender to tell the receiver that replies to
+this account should be directed to this address.
+
+:DisplayName :
+::String [0..1]   
+
+The Display Name. [e.g. "Alice Example"]
+
+:AccountName :
+::String [0..1]   
+
+The Account Name for display to the app user [e.g. "Work Account"]
+
+:Inbound :
 ::Connection [0..Many]   
 
-Mail protocol connections associated with this profile.
+The Inbound Mail Connection(s). This is typically IMAP4 or POP3
 
-:OpenPGPKey :
-::Key [0..1]   
+If multiple connections are specified, the order in the sequence
+indicates the preference order.
 
-Current OpenPGP decryption key
+:Outbound :
+::Connection [0..Many]   
 
-:OpenSMIMEKey :
-::Key [0..1]   
+The Outbound Mail Connection(s). This is typically SMTP/SUBMIT
 
-Current S/MIME decryption key
+If multiple connections are specified, the order in the sequence
+indicates the preference order.
+
+:Sign :
+::PublicKey [0..Many]   
+
+The public keypair(s) for signing and decrypting email.
+
+If multiple public keys are specified, the order indicates preference.
+
+:Encrypt :
+::PublicKey [0..Many]   
+
+The public keypairs for encrypting and decrypting email.
+
+If multiple public keys are specified, the order indicates preference.							
 
 ###Structure: NetworkProfile
 
@@ -674,39 +718,60 @@ The escrowed keys.
 
 ###Structure: Connection
 
-Describes network connection parameters
+Describes network connection parameters for an application
 
 
-:Name :
+:ServiceName :
 ::String [0..1]   
 
-DNS Name
+DNS address of the server
 
-:Address :
-::String [0..1]   
+:Port :
+::Integer [0..1]   
 
-IP address in customary decimal dot notation (IPv4) or
-hexadecimal notation (IPv6)
+TCP/UDP Port number
 
 :Prefix :
 ::String [0..1]   
 
 DNS service prefix as described in [!RFC6335]
 
-:Port :
-::Integer [0..1]   
+:Security :
+::String [0..Many]   
 
-TCP Port number
+Describes the security mode to use. Valid choices are Direct/Upgrade/None
+
+:UserName :
+::String [0..1]   
+
+Username to present to the service for authentication
+
+:Password :
+::String [0..1]   
+
+Password to present to the service for authentication
 
 :URI :
 ::String [0..1]   
 
 Service connection parameters in URI format
 
-:Security :
-::String [0..Many]   
+:Authentication :
+::String [0..1]   
 
-Security policy identifier(s)
+List of the supported/acceptable authentication mechanisms,
+preferred mechanism first.
+
+:TimeOut :
+::Integer [0..1]   
+
+Service timeout in seconds.
+
+:Polling :
+::Boolean [0..1]   
+
+If set, the client should poll the specified service intermittently
+for updates.
 
 ###Structure: EncryptedData
 

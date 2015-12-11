@@ -149,6 +149,32 @@ namespace Goedel.LibCrypto {
             return BaseConvert.ToUDF32String(Data, Length);
             }
 
+        /// <summary>
+        /// Calculate a SHA-1 fingerprint in Base16 format.
+        /// </summary>
+        /// <param name="Data">Data to be fingerprinted</param>
+        /// <returns>Fingerprint as a hexadecimal string.</returns>
+        public static byte[] SHA1 (byte[] Data) {
+            var Provider = new CryptoProviderSHA1();
+            var Result = Provider.Process(Data);
+            return Result.Integrity;
+            //var Text = BaseConvert.ToBase16String(Result.Integrity);
+            //return Text;
+            }
+
+        /// <summary>
+        /// Calculate a SHA-1 fingerprint in Base16 format.
+        /// </summary>
+        /// <param name="Data">Data to be fingerprinted</param>
+        /// <returns>Fingerprint as a hexadecimal string.</returns>
+        public static byte[] SHA256(byte[] Data) {
+            var Provider = new CryptoProviderSHA2_256();
+            var Result = Provider.Process(Data);
+            return Result.Integrity;
+            //var Text = BaseConvert.ToBase16String(Result.Integrity);
+            //return Text;
+            }
+
 
 
         /// <summary>

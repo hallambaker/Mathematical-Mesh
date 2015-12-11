@@ -38,7 +38,7 @@ Class Goedel.Mesh.Integration.LiveMail MessageAccount
     SMTP_Organization_Name		String
     SMTP_Email_Address			String
 	SMTP_Reply_To_Email_Address	String
-	SMTP_Certificate			String
-	SMTP_Encryption_Certificate	String
+	SMTP_Certificate			Binary
+	SMTP_Encryption_Certificate	Binary
 	SMTP_Encryption_Algorithm	String
     SMTP_Prompt_for_Password	Int

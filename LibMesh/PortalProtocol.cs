@@ -1,7 +1,7 @@
 ﻿
 //  Test
 //  
-//  This file was automatically generated at 12/7/2015 4:48:49 PM
+//  This file was automatically generated at 12/10/2015 4:59:04 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -35,6 +35,7 @@
 //  THE SOFTWARE.
 //  
 //  //Header
+// With all fields as properties
 
 using System;
 using System.IO;
@@ -156,7 +157,7 @@ namespace Goedel.Mesh {
         /// <summary>
         /// 
         /// </summary>
-		public DateTime						Created {
+		public virtual DateTime						Created {
 			get {return _Created;}
 			set {_Created = value; __Created = true; }
 			}
@@ -165,7 +166,7 @@ namespace Goedel.Mesh {
         /// <summary>
         /// 
         /// </summary>
-		public DateTime						Modified {
+		public virtual DateTime						Modified {
 			get {return _Modified;}
 			set {_Modified = value; __Modified = true; }
 			}
@@ -347,15 +348,27 @@ namespace Goedel.Mesh {
         /// <summary>
         /// 
         /// </summary>
-		public string						AccountID;
+		public virtual string						AccountID {
+			get {return _AccountID;}			
+			set {_AccountID = value;}
+			}
+		string						_AccountID ;
         /// <summary>
         /// 
         /// </summary>
-		public string						UserProfileUDF;
+		public virtual string						UserProfileUDF {
+			get {return _UserProfileUDF;}			
+			set {_UserProfileUDF = value;}
+			}
+		string						_UserProfileUDF ;
         /// <summary>
         /// 
         /// </summary>
-		public string						Status;
+		public virtual string						Status {
+			get {return _Status;}			
+			set {_Status = value;}
+			}
+		string						_Status ;
 
         /// <summary>
         /// Tag identifying this class.
@@ -559,7 +572,11 @@ namespace Goedel.Mesh {
         /// <summary>
         /// 
         /// </summary>
-		public SignedPersonalProfile						Profile;
+		public virtual SignedPersonalProfile						Profile {
+			get {return _Profile;}			
+			set {_Profile = value;}
+			}
+		SignedPersonalProfile						_Profile ;
 
         /// <summary>
         /// Tag identifying this class.
@@ -737,7 +754,11 @@ namespace Goedel.Mesh {
 		/// <summary>
         /// 
         /// </summary>
-		public List<SignedConnectionRequest>				Requests;
+		public virtual List<SignedConnectionRequest>				Requests {
+			get {return _Requests;}			
+			set {_Requests = value;}
+			}
+		List<SignedConnectionRequest>				_Requests;
 
         /// <summary>
         /// Tag identifying this class.

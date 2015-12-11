@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Goedel.LibCrypto;
 using Goedel.LibCrypto.PKIX;
 using Goedel.Debug;
 
@@ -13,105 +14,44 @@ namespace Goedel.Mesh {
             return MailClientCatalog.Accounts;
             }
 
-        public void Write () {
+        public virtual void Dump () {
             foreach (var Account in Accounts) {
-                Account.Write();
+                Account.Dump();
                 }
             }
 
         }
 
-    /*
-    MailAccountInfo: public class
-        EmailAddress: public virtual string
-    
-    */
 
 
-    public class MailAccountInfo {
+    public partial class MailAccountInfo : MailProfilePrivate {
+
         /// <summary>
-        /// The RFC822 Email address. [e.g. "alice@example.com"]
+        /// Convenience accessor for the first outbound connection
         /// </summary>
-        public virtual string EmailAddress {
+        public Connection Out {
             get {
-                return _EmailAddress;
+                return Outbound[0];
                 }
 
             set {
-                _EmailAddress = value;
+                Outbound = new List<Connection> { value };
                 }
             }
-        private string _EmailAddress;
 
         /// <summary>
-        /// The RFC822 Reply toEmail address. [e.g. "alice@example.com"]
+        /// Convenience accessor for the first inbound connection
         /// </summary>
-        public virtual string ReplyToAddress {
+        public Connection In {
             get {
-                return _ReplyToAddress;
+                return Inbound[0];
                 }
 
             set {
-                _ReplyToAddress = value;
+                Inbound = new List<Connection> { value };
                 }
             }
-        private string _ReplyToAddress;
 
-        /// <summary>
-        /// The Display Name. [e.g. "Alice Example"]
-        /// </summary>
-        public virtual string DisplayName {
-            get {
-                return _DisplayName;
-                }
-
-            set {
-                _DisplayName = value;
-                }
-            }
-        private string _DisplayName;
-
-        /// <summary>
-        /// The Account Name for display to the app user [e.g. "Example.com"]
-        /// </summary>
-        public virtual string AccountName {
-            get {
-                return _AccountName;
-                }
-
-            set {
-                _AccountName = value;
-                }
-            }
-        private string _AccountName;
-
-        /// <summary>
-        /// Inbound Mail Connection
-        /// </summary>
-        public virtual MailConnection Inbound {
-            get {
-                return _Inbound;
-                }
-
-            set {
-                _Inbound = value;
-                }
-            }
-        private MailConnection _Inbound;
-
-        /// <summary>
-        /// Outbound Mail Connection
-        /// </summary>
-        public virtual MailConnection Outbound {
-            get {
-                return _Outbound;
-                }
-
-            set {
-                _Outbound = value;
-                }
-            }
-        private MailConnection _Outbound;
 
         /// <summary>
         /// Signing Certificate
@@ -141,51 +81,62 @@ namespace Goedel.Mesh {
             }
         private Certificate _CertificateEncrypt;
 
-        public virtual void CreateAccount() {
+        public virtual void Create() {
             }
 
+        public virtual void Update () {
+            }
 
+        /// <summary>
+        /// Generate S/MIME key pairs and register in the correct Windows stores.
+        /// </summary>
+        /// <returns></returns>
+        public virtual bool GenerateSMIME () {
+            var SignKey = PublicKey.Generate(KeyType.ASK,
+                                CryptoCatalog.Default.AlgorithmSignature);
+            SignKey.SignCertificate(Application.EmailSignature |
+                        Application.DataSignature, EmailAddress, SignKey);
+
+            var EncryptKey = PublicKey.Generate(KeyType.AEK, 
+                                CryptoCatalog.Default.AlgorithmExchange);
+            EncryptKey.SignCertificate(Application.EmailEncryption |
+                        Application.DataEncryption, EmailAddress, EncryptKey);
+            
+            var SigningCSR = new CertificationRequest(SignKey.Certificate);
+            var EncryptionCSR = new CertificationRequest(EncryptKey.Certificate);
+
+            CertificateStore.Register(SignKey.Certificate);
+            CertificateStore.Register(EncryptKey.Certificate);
+
+            CertificateSign = SignKey.Certificate;
+            CertificateEncrypt = EncryptKey.Certificate;
+
+            if (Encrypt == null) {
+                Encrypt = new List<PublicKey>();
+                }
+            if (Sign == null) {
+                Sign = new List<PublicKey>();
+                }
+
+            Encrypt.Add(EncryptKey);
+            Sign.Add(SignKey);
+
+
+            return false;
+            }
+
+        
         /// <summary>
         /// For debugging
         /// </summary>
-        public void Write() {
+        public virtual void Dump() {
             Trace.WriteLine("Account {0}  <{1}> ({2})", AccountName, EmailAddress, DisplayName);
-            Inbound.Write ();
-            Outbound.Write ();
-            }
-        }
-
-    public class MailConnection {
-        public string Server;
-        public int Port;
-        public AppProtocol AppProtocol;
-        public string Account;
-        public string Password;
-
-        public TLSMode TLSMode;
-        public bool SecureAuth;
-        public int TimeOut;
-        public int Polling;
-
-        public virtual void Write () {
-            Trace.WriteLine("    Server {0} : Port {1} : Protocol", Server, Port, AppProtocol);
-            Trace.WriteLine("        Username {0}/{1}", Account, Password);
-            Trace.WriteLine("        Timeout {0} : Poll {1}", TimeOut, Polling);           
-            }
-
-        public MailConnection() { }
-
-        public MailConnection(string Server, int Port, AppProtocol AppProtocol,
-            string Account, string Password, TLSMode TLSMode, bool SecureAuth) {
-
-            this.Server = Server;
-            this.Port = Port;
-            this.AppProtocol = AppProtocol;
-            this.Account = Account;
-            this.Password = Password;
-            this.TLSMode = TLSMode;
-            this.SecureAuth = SecureAuth;
-
+            foreach (var Connection in Inbound) {
+                Connection.Dump();
+                }
+            foreach (var Connection in Outbound) {
+                Connection.Dump();
+                }
             }
         }
 
@@ -206,12 +157,12 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Use TLS directly, i.e. no TLS upgrade negotiation.
         /// </summary>
-        PORT = 1,
+        Direct = 1,
 
         /// <summary>
         /// Negotiate TLS upgrade after cleartext start. E.g. using STARTTLS in SMTP.
         /// </summary>
-        STARTTLS = 2,
+        Upgrade = 2,
 
         /// <summary>
         /// No TLS enhancement

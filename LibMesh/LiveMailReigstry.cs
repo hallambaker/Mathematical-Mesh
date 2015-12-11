@@ -1,4 +1,4 @@
-﻿// Generated on 12/4/2015 7:07:06 PM
+﻿// Generated on 12/10/2015 6:05:41 AM
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -290,18 +290,18 @@ namespace Goedel.Mesh.Integration.LiveMail  {
 			}
 		
         /// <summary>
-        /// Accessor for key "Field.Key" of type SZ
+        /// Accessor for key "Field.Key" of type BINARY
         /// </summary>
-		public virtual string SMTP_Certificate {
-			get { return GetSZ ("SMTP_Certificate"); }
+		public virtual byte[] SMTP_Certificate {
+			get { return GetBINARY ("SMTP_Certificate"); }
 			set { Set ("SMTP_Certificate", value); }
 			}
 		
         /// <summary>
-        /// Accessor for key "Field.Key" of type SZ
+        /// Accessor for key "Field.Key" of type BINARY
         /// </summary>
-		public virtual string SMTP_Encryption_Certificate {
-			get { return GetSZ ("SMTP_Encryption_Certificate"); }
+		public virtual byte[] SMTP_Encryption_Certificate {
+			get { return GetBINARY ("SMTP_Encryption_Certificate"); }
 			set { Set ("SMTP_Encryption_Certificate", value); }
 			}
 		

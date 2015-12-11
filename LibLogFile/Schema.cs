@@ -1,7 +1,7 @@
 ﻿
 //  Test
 //  
-//  This file was automatically generated at 12/7/2015 4:48:48 PM
+//  This file was automatically generated at 12/10/2015 4:59:03 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -35,6 +35,7 @@
 //  THE SOFTWARE.
 //  
 //  //Header
+// With all fields as properties
 
 using System;
 using System.IO;
@@ -194,46 +195,74 @@ namespace Goedel.Persistence {
         /// <summary>
         /// 
         /// </summary>
-		public string						TransactionID;
+		public virtual string						TransactionID {
+			get {return _TransactionID;}			
+			set {_TransactionID = value;}
+			}
+		string						_TransactionID ;
         /// <summary>
         /// 
         /// </summary>
-		public string						PrimaryKey;
+		public virtual string						PrimaryKey {
+			get {return _PrimaryKey;}			
+			set {_PrimaryKey = value;}
+			}
+		string						_PrimaryKey ;
         /// <summary>
         /// 
         /// </summary>
-		public string						PriorTransactionID;
+		public virtual string						PriorTransactionID {
+			get {return _PriorTransactionID;}			
+			set {_PriorTransactionID = value;}
+			}
+		string						_PriorTransactionID ;
         /// <summary>
         /// 
         /// </summary>
-		public string						Action;
+		public virtual string						Action {
+			get {return _Action;}			
+			set {_Action = value;}
+			}
+		string						_Action ;
 		bool								__Added = false;
 		private DateTime						_Added;
         /// <summary>
         /// 
         /// </summary>
-		public DateTime						Added {
+		public virtual DateTime						Added {
 			get {return _Added;}
 			set {_Added = value; __Added = true; }
 			}
 		/// <summary>
         /// 
         /// </summary>
-		public List<IndexTerm>				Keys;
+		public virtual List<IndexTerm>				Keys {
+			get {return _Keys;}			
+			set {_Keys = value;}
+			}
+		List<IndexTerm>				_Keys;
         /// <summary>
         /// 
         /// </summary>
-		public byte[]						Data;
+		public virtual byte[]						Data {
+			get {return _Data;}			
+			set {_Data = value;}
+			}
+		byte[]						_Data ;
         /// <summary>
         /// 
         /// </summary>
-		public string						Text;
+		public virtual string						Text {
+			get {return _Text;}			
+			set {_Text = value;}
+			}
+		string						_Text ;
 		bool								__Pending = false;
 		private bool						_Pending;
         /// <summary>
         /// 
         /// </summary>
-		public bool						Pending {
+		public virtual bool						Pending {
 			get {return _Pending;}
 			set {_Pending = value; __Pending = true; }
 			}
@@ -242,7 +271,7 @@ namespace Goedel.Persistence {
         /// <summary>
         /// 
         /// </summary>
-		public bool						Commit {
+		public virtual bool						Commit {
 			get {return _Commit;}
 			set {_Commit = value; __Commit = true; }
 			}
@@ -251,7 +280,7 @@ namespace Goedel.Persistence {
         /// <summary>
         /// 
         /// </summary>
-		public bool						Rollback {
+		public virtual bool						Rollback {
 			get {return _Rollback;}
 			set {_Rollback = value; __Rollback = true; }
 			}
@@ -532,27 +561,51 @@ namespace Goedel.Persistence {
         /// <summary>
         /// 
         /// </summary>
-		public string						Type;
+		public virtual string						Type {
+			get {return _Type;}			
+			set {_Type = value;}
+			}
+		string						_Type ;
         /// <summary>
         /// 
         /// </summary>
-		public string						Content;
+		public virtual string						Content {
+			get {return _Content;}			
+			set {_Content = value;}
+			}
+		string						_Content ;
         /// <summary>
         /// 
         /// </summary>
-		public string						Comment;
+		public virtual string						Comment {
+			get {return _Comment;}			
+			set {_Comment = value;}
+			}
+		string						_Comment ;
         /// <summary>
         /// 
         /// </summary>
-		public string						Digest;
+		public virtual string						Digest {
+			get {return _Digest;}			
+			set {_Digest = value;}
+			}
+		string						_Digest ;
         /// <summary>
         /// 
         /// </summary>
-		public byte[]						LastDigest;
+		public virtual byte[]						LastDigest {
+			get {return _LastDigest;}			
+			set {_LastDigest = value;}
+			}
+		byte[]						_LastDigest ;
         /// <summary>
         /// 
         /// </summary>
-		public Delta						Delta;
+		public virtual Delta						Delta {
+			get {return _Delta;}			
+			set {_Delta = value;}
+			}
+		Delta						_Delta ;
 
         /// <summary>
         /// Tag identifying this class.
@@ -769,11 +822,19 @@ namespace Goedel.Persistence {
         /// <summary>
         /// 
         /// </summary>
-		public string						Parent;
+		public virtual string						Parent {
+			get {return _Parent;}			
+			set {_Parent = value;}
+			}
+		string						_Parent ;
         /// <summary>
         /// 
         /// </summary>
-		public string						Previous;
+		public virtual string						Previous {
+			get {return _Previous;}			
+			set {_Previous = value;}
+			}
+		string						_Previous ;
 
         /// <summary>
         /// Tag identifying this class.
@@ -952,11 +1013,19 @@ namespace Goedel.Persistence {
         /// <summary>
         /// 
         /// </summary>
-		public string						Type;
+		public virtual string						Type {
+			get {return _Type;}			
+			set {_Type = value;}
+			}
+		string						_Type ;
         /// <summary>
         /// 
         /// </summary>
-		public string						Term;
+		public virtual string						Term {
+			get {return _Term;}			
+			set {_Term = value;}
+			}
+		string						_Term ;
 
         /// <summary>
         /// Tag identifying this class.
@@ -1135,7 +1204,11 @@ namespace Goedel.Persistence {
         /// <summary>
         /// 
         /// </summary>
-		public byte[]						Digest;
+		public virtual byte[]						Digest {
+			get {return _Digest;}			
+			set {_Digest = value;}
+			}
+		byte[]						_Digest ;
 
         /// <summary>
         /// Tag identifying this class.
@@ -1305,7 +1378,11 @@ namespace Goedel.Persistence {
 		/// <summary>
         /// 
         /// </summary>
-		public List<IndexIndex>				Indexes;
+		public virtual List<IndexIndex>				Indexes {
+			get {return _Indexes;}			
+			set {_Indexes = value;}
+			}
+		List<IndexIndex>				_Indexes;
 
         /// <summary>
         /// Tag identifying this class.
@@ -1495,13 +1572,17 @@ namespace Goedel.Persistence {
         /// <summary>
         /// 
         /// </summary>
-		public string						Key;
+		public virtual string						Key {
+			get {return _Key;}			
+			set {_Key = value;}
+			}
+		string						_Key ;
 		bool								__Offset = false;
 		private int						_Offset;
         /// <summary>
         /// 
         /// </summary>
-		public int						Offset {
+		public virtual int						Offset {
 			get {return _Offset;}
 			set {_Offset = value; __Offset = true; }
 			}
@@ -1683,11 +1764,19 @@ namespace Goedel.Persistence {
         /// <summary>
         /// 
         /// </summary>
-		public string						Key;
+		public virtual string						Key {
+			get {return _Key;}			
+			set {_Key = value;}
+			}
+		string						_Key ;
 		/// <summary>
         /// 
         /// </summary>
-		public List<IndexEntry>				Entries;
+		public virtual List<IndexEntry>				Entries {
+			get {return _Entries;}			
+			set {_Entries = value;}
+			}
+		List<IndexEntry>				_Entries;
 
         /// <summary>
         /// Tag identifying this class.
@@ -1886,11 +1975,19 @@ namespace Goedel.Persistence {
         /// <summary>
         /// 
         /// </summary>
-		public string						Data;
+		public virtual string						Data {
+			get {return _Data;}			
+			set {_Data = value;}
+			}
+		string						_Data ;
 		/// <summary>
         /// 
         /// </summary>
-		public List<int>				Offset;
+		public virtual List<int>				Offset {
+			get {return _Offset;}			
+			set {_Offset = value;}
+			}
+		List<int>				_Offset;
 
         /// <summary>
         /// Tag identifying this class.

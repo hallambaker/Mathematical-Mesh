@@ -62,7 +62,7 @@
     <Compile Include="ConnectionRequest.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="DeviceEntry.cs" />
-    <Compile Include="DeviceProfile.cs" />
+    <Compile Include="ProfileDevice.cs" />
     <Compile Include="Escrow.cs" />
     <Compile Include="LiveMailReigstry.cs" />
     <Compile Include="MailClient.cs" />
@@ -71,12 +71,13 @@
     <Compile Include="MeshSchemaPlus.cs" />
     <Compile Include="NetworkProfile.cs" />
     <Compile Include="PortalProtocol.cs" />
+    <Compile Include="ProfileMaster.cs" />
     <Compile Include="PublicKey.cs" />
-    <Compile Include="MailProfile.cs" />
+    <Compile Include="ProfileMail.cs" />
     <Compile Include="MeshLib.cs" />
     <Compile Include="MeshSchema.cs" />
     <Compile Include="PasswordProfile.cs" />
-    <Compile Include="PersonalProfile.cs" />
+    <Compile Include="ProfilePersonal.cs" />
     <Compile Include="Profiles.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Registry.cs" />

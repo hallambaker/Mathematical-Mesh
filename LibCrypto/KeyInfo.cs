@@ -36,6 +36,15 @@ namespace Goedel.LibCrypto.PKIX {
             this.Algorithm = Goedel.ASN.ASN.OIDToArray(ID);
             }
 
+        /// <summary>
+        /// Create an Algorithm Identifier from an integer array.
+        /// </summary>
+        /// <param name="Text"></param>
+        /// <param name="Numbers"></param>
+        public AlgorithmIdentifier (string Text, int [] Numbers) {
+            OIDString = Text;
+            Algorithm = Numbers;
+            }
 
         }
     }

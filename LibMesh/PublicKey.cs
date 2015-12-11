@@ -17,6 +17,9 @@ namespace Goedel.Mesh {
         DSK,
         DAK,
         DEK,
+        ASK,
+        AAK,
+        AEK,
         Unknown
         }
 
@@ -32,6 +35,12 @@ namespace Goedel.Mesh {
                 case KeyType.DEK:
                 case KeyType.DAK: {
                     return KeySecurity.Device;
+                    }
+                case KeyType.ASK:
+                case KeyType.AEK:
+                case KeyType.AAK:
+                    {
+                    return KeySecurity.Exportable;
                     }
                 case KeyType.PMSK:
                 case KeyType.POSK:
@@ -156,13 +165,33 @@ namespace Goedel.Mesh {
             throw new Exception("Not found");
             }
 
-
+        /// <summary>
+        /// Create a self signed root certificate
+        /// </summary>
+        /// <param name="PKIXUse">Bit mask specifying certificate uses.</param>
         public void SelfSignCertificate(Application PKIXUse) {
             Certificate = new Certificate(_KeyPair, PKIXUse, null);
             }
 
+        /// <summary>
+        /// Create an application or intermediary certificate
+        /// </summary>
+        /// <param name="PKIXUse">Bit mask specifying certificate uses.</param>
+        /// <param name="Signer">The signing key (which must have an attached certificate).</param>
         public void SignCertificate(Application PKIXUse, PublicKey Signer) {
             Certificate = new Certificate(_KeyPair, PKIXUse, Signer.Certificate);
+            }
+
+        /// <summary>
+        /// Create an application certificate with the specified SubjectAltName.
+        /// </summary>
+        /// <param name="PKIXUse">Bit mask specifying certificate uses.</param>
+        /// <param name="SubjectAltName">The subjectAltName. Must be a DNS domain name
+        /// or a RFC822 email address.</param>
+        /// <param name="Signer">The signing key (which must have an attached certificate).</param>
+        public void SignCertificate(Application PKIXUse, string SubjectAltName, PublicKey Signer) {
+            Certificate = new Certificate(_KeyPair, PKIXUse, SubjectAltName, SubjectAltName);
+            Certificate.Sign(Signer.Certificate);
             }
 
 

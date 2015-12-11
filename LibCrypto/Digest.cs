@@ -231,5 +231,75 @@ namespace Goedel.LibCrypto {
             }
         }
 
+    /// <summary>
+    /// Provider for the SHA-2 512 bit Hash Algorithm
+    /// </summary>
+    public class CryptoProviderSHA1 : CryptoProviderDigest {
+
+
+        /// <summary>
+        /// Return a CryptoAlgorithm structure with properties describing this provider.
+        /// </summary>
+        public override CryptoAlgorithm CryptoAlgorithm {
+            get {
+                return new CryptoAlgorithm(
+                    CryptoAlgorithmID.SHA_1_DEPRECATED, Name, 160,
+                    null, null, null,
+                    "http://www.w3.org/2000/09/xmldsig#sha1",
+                    CryptoAlgorithmClass.Digest,
+                    GetCryptoProvider);
+                }
+            }
+
+        /// <summary>
+        /// The CryptoAlgorithmID Identifier.
+        /// </summary>
+        public override CryptoAlgorithmID CryptoAlgorithmID {
+            get {
+                return CryptoAlgorithmID.SHA_1_DEPRECATED;
+                }
+            }
+        /// <summary>
+        /// .NET Framework name
+        /// </summary>
+        public override string Name {
+            get {
+                return "SHA1";
+                }
+            }
+        /// <summary>
+        /// JSON Algorithm Name
+        /// </summary>
+        public override string JSONName {
+            get {
+                return null;
+                }
+            }
+        /// <summary>
+        /// Default output size.
+        /// </summary>
+        public override int Size {
+            get {
+                return 160;
+                }
+            }
+        /// <summary>
+        /// Returns the default crypto provider.
+        /// </summary>
+        public override GetCryptoProvider GetCryptoProvider {
+            get {
+                return Factory;
+                }
+            }
+        private static CryptoProvider Factory(int KeySize, CryptoAlgorithmID DigestAlgorithm) {
+            return new CryptoProviderSHA1();
+            }
+        /// <summary>
+        /// Create a SHA-2-256 digest provider.
+        /// </summary>
+        public CryptoProviderSHA1() : base(new SHA1Cng()) {
+            }
+        }
+
 
     }

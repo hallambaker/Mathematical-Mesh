@@ -9,7 +9,7 @@ namespace Goedel.Mesh {
     class Program {
         static void Main(string[] args) {
             var MeshTest = new MeshTest();
-            MeshTest.TestMail();
+            MeshTest.TestLiveMail();
             }
         }
 
@@ -84,11 +84,62 @@ namespace Goedel.Mesh {
 
 
 
+        public void TestLiveMail () {
+
+            // Create test Mesh
+            File.Delete(Store);
+            File.Delete(Portal);
+            Mesh = new Mesh(Service, Store, Portal);
+
+            // Create Master Profile
+
+            Mesh.CheckAccount(AccountID);
+            var DevProfile = new SignedDeviceProfile(Device1, Device1Description);
+            var UserProfile = new PersonalProfile(DevProfile);
+
+            var SignedProfile = UserProfile.Signed;
+            Mesh.CreateAccount(UserName, SignedProfile);
+
+            var Account = Mesh.GetAccount(UserName);
+
+
+            // Read the LiveMail accounts
+
+            var MailClientCatalog = new MailClientCatalog();
+            var LiveMailCount = MailClientCatalog.ImportWindowsLiveMail();
+            MailClientCatalog.Dump();
+
+            var MailAccount = MailClientCatalog.Accounts[0];
+            // Add self signed certs if they don't have them already
+            MailAccount.GenerateSMIME();
+
+            // Write out the updated profile
+            MailAccount.Update();
+
+            // Create Mail Profile
+            var MailProfile = new MailProfile(UserProfile, MailAccount);
+
+
+            // Create Test Account from Mail Profile
+
+            var NewMailInfo = new MailAccountInfoWLM();
+            MailProfile.Export(NewMailInfo);
+            NewMailInfo.AccountName = "Test-Delete";
+
+            // Write it out
+            NewMailInfo.Create();
+
+            }
+
+
+
+
+
         public void TestMail() {
 
             var MailClientCatalog = new MailClientCatalog();
             var LiveMailCount = MailClientCatalog.ImportWindowsLiveMail();
-            MailClientCatalog.Write();
+            MailClientCatalog.Dump();
 
 
             var MailAccountInfo = new MailAccountInfoWLM();
@@ -99,19 +150,21 @@ namespace Goedel.Mesh {
             MailAccountInfo.DisplayName = TestName + "- Delete";
             MailAccountInfo.AccountName = TestName;
 
-            MailAccountInfo.Outbound = new MailConnection(
-                    "smtp.example.com", 465, AppProtocol.SUBMIT, TestName, null, TLSMode.STARTTLS, true);
-            MailAccountInfo.Inbound = new MailConnection(
-                    "imap.example.com", 993, AppProtocol.IMAP4, TestName, null, TLSMode.PORT, true);
+            MailAccountInfo.Out = new Connection(
+                    "smtp.example.com", 465, AppProtocol.SUBMIT, TestName, null, 
+                    TLSMode.Upgrade, true);
+            MailAccountInfo.In = new Connection(
+                    "imap.example.com", 993, AppProtocol.IMAP4, TestName, null, 
+                    TLSMode.Direct, true);
 
             // Dump out the data on the new account.
-            MailAccountInfo.Write ();
+            MailAccountInfo.Dump ();
 
-            MailAccountInfo.CreateAccount();
+            MailAccountInfo.Create();
 
             var MailClientCatalog2 = new MailClientCatalog();
             var LiveMailCount2 = MailClientCatalog2.ImportWindowsLiveMail();
-            MailClientCatalog2.Write();
+            MailClientCatalog2.Dump();
             }
 
 

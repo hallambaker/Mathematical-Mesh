@@ -67,7 +67,6 @@
     <Compile Include="UDF.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Algorithms.asn2" />
     <None Include="PKIX.asn2" />
     <None Include="PreBuild.bat" />
     <None Include="ToDo.md" />

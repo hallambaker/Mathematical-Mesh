@@ -1,5 +1,6 @@
 ﻿Namespace Goedel.LibCrypto.PKIX
 
+// The X.509 and PKIX parameters.
 ROOT id_pkix
 	iso						1
 	identified_organization 3
@@ -46,6 +47,9 @@ OID id_ad_caIssuers			id_ad 2
 OID id_ad_timeStamping		id_ad 3 
 OID id_ad_caRepository		id_ad 5 
 
+
+// The PKCS parameters.
+
 ROOT pkcs 
 	iso					1 
 	member_body			2
@@ -68,6 +72,9 @@ OID pkcs_12_secretbag pkcs_12_bagtype 5
 OID pkcs_12_safecontentsbag pkcs_12_bagtype 6
 
 OID id_emailAddress      pkcs_9 1
+
+
+// More from X.509
 
 ROOT id_ce	
 	joint_iso_ccitt		2
@@ -126,6 +133,7 @@ OID id_holdinstruction_callissuer		holdInstruction 2
 OID id_holdinstruction_reject			holdInstruction 3
 
 
+// Algorithm Identifiers.
 
 OID rsaEncryption					pkcs_1 1 
 OID sha1WithRSAEncryption			pkcs_1 5

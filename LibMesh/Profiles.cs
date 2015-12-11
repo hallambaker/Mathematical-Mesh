@@ -232,27 +232,6 @@ namespace Goedel.Mesh {
 
 
 
-
-
-
-
-
-        //protected void InitializeCrypto() {
-        //    var Encrypt = CryptoCatalog.Default.GetEncryption(
-        //        CryptoCatalog.Default.AlgorithmEncryption);
-        //    SessionKey = Encrypt.Key;
-        //    }
-
-        //protected byte[] MakeDecryptInfo(DeviceProfile DeviceProfile) {
-        //    return new byte[16];
-        //    }
-
-
-
-
-
-
-
         public virtual DeviceEntry MakeEntry(SignedDeviceProfile DeviceProfile) {
             var DeviceEntry = new DeviceEntry();
             DeviceEntry.UDF = DeviceProfile.UDF;

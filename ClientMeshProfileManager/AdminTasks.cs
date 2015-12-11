@@ -220,6 +220,7 @@ namespace Goedel.MeshProfileManager {
 
             if (ConfigureEmail) {
                 foreach (var MailAccountInfo in MailAccountInfos) {
+                    MailAccountInfo.GenerateSMIME();
                     var MailProfile = new MailProfile(UserProfile, MailAccountInfo);
                     MailProfile.AddDevice(ThisDevice);
                     }

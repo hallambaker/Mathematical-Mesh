@@ -21,6 +21,11 @@ namespace Goedel.LibCrypto {
         NULL,
 
         /// <summary>
+        /// SHA1 
+        /// </summary>
+        SHA_1_DEPRECATED,
+
+        /// <summary>
         /// SHA2 256 bit
         /// </summary>
         SHA_2_256,
@@ -29,6 +34,16 @@ namespace Goedel.LibCrypto {
         /// SHA2 512 bit
         /// </summary>
         SHA_2_512,
+
+        /// <summary>
+        /// SHA3 256 bit
+        /// </summary>
+        SHA_3_256,
+
+        /// <summary>
+        /// SHA3 512 bit
+        /// </summary>
+        SHA_3_512,
 
         // AES modes
 

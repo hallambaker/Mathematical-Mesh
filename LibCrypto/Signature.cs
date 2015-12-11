@@ -142,6 +142,29 @@ namespace Goedel.LibCrypto {
             }
 
 
+        /// <summary>
+        /// ASN.1 Object Identifier.
+        /// </summary>
+        public override string OID {
+            get {
+                switch (DigestAlgorithm) {
+                    case CryptoAlgorithmID.SHA_1_DEPRECATED:
+                        return PKIX.Constants.OIDS__sha1WithRSAEncryption;
+                    case CryptoAlgorithmID.SHA_2_256:
+                        return PKIX.Constants.OIDS__sha256WithRSAEncryption;
+                    case CryptoAlgorithmID.SHA_2_512:
+                        return PKIX.Constants.OIDS__sha512WithRSAEncryption;
+                    case CryptoAlgorithmID.SHA_3_256:
+                        return PKIX.Constants.OIDS__sha256WithRSAEncryption;
+                    case CryptoAlgorithmID.SHA_3_512:
+                        return PKIX.Constants.OIDS__sha512WithRSAEncryption;
+                    default:
+                        return null;
+                    }
+                }
+            }
+
+
 
         private int _KeySize;
         /// <summary>

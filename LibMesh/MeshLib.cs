@@ -15,12 +15,62 @@ namespace Goedel.Mesh {
         /// <param name="Prefix">DNS service prefix</param>
         /// <param name="Security">Security enhancements</param>
         public Connection(string DNS, int Port, string Prefix, List<string> Security) {
-            this.Name = DNS;
+            this.ServiceName = DNS;
             this.Port = Port;
             this.Prefix = Prefix;
             this.Security = Security;
             }
+
+        //public string Server;
+        //public int Port;
+
+        //public string UserName;
+        //public string Password;
+
+
+        //public int TimeOut;
+        //public int Polling;
+
+        public TLSMode TLSMode;
+        public bool SecureAuth;
+
+
+        /// <summary>
+        /// Convenience accessor for the Prefix property.
+        /// </summary>
+        public AppProtocol AppProtocol {
+            get {
+                return _AppProtocol;
+                }
+
+            set {
+                _AppProtocol = value;
+                }
+            }
+        AppProtocol _AppProtocol;
+
+        public virtual void Dump() {
+            Trace.WriteLine("    Server {0} : Port {1} : Protocol", ServiceName, Port, _AppProtocol);
+            Trace.WriteLine("        Username {0}/{1}", UserName, Password);
+            Trace.WriteLine("        Timeout {0} : Poll {1}", TimeOut, Polling);
+            }
+
+        //public MailConnection() { }
+
+        public Connection(string Server, int Port, AppProtocol AppProtocol,
+            string Account, string Password, TLSMode TLSMode, bool SecureAuth) {
+
+            this.ServiceName = Server;
+            this.Port = Port;
+            this.AppProtocol = AppProtocol;
+            this.UserName = Account;
+            this.Password = Password;
+            this.TLSMode = TLSMode;
+            this.SecureAuth = SecureAuth;
+
+            }
         }
+
 
 
 

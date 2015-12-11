@@ -1,7 +1,7 @@
 ﻿
 //  Test
 //  
-//  This file was automatically generated at 12/7/2015 4:48:49 PM
+//  This file was automatically generated at 12/9/2015 3:34:59 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -35,6 +35,7 @@
 //  THE SOFTWARE.
 //  
 //  //Header
+// With all fields as properties
 
 using System;
 using System.IO;
@@ -202,19 +203,35 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
         /// 
         /// </summary>
-		public byte[]						Protected;
+		public virtual byte[]						Protected {
+			get {return _Protected;}			
+			set {_Protected = value;}
+			}
+		byte[]						_Protected ;
         /// <summary>
         /// 
         /// </summary>
-		public byte[]						Header;
+		public virtual byte[]						Header {
+			get {return _Header;}			
+			set {_Header = value;}
+			}
+		byte[]						_Header ;
         /// <summary>
         /// 
         /// </summary>
-		public byte[]						Payload;
+		public virtual byte[]						Payload {
+			get {return _Payload;}			
+			set {_Payload = value;}
+			}
+		byte[]						_Payload ;
         /// <summary>
         /// 
         /// </summary>
-		public byte[]						Signature;
+		public virtual byte[]						Signature {
+			get {return _Signature;}			
+			set {_Signature = value;}
+			}
+		byte[]						_Signature ;
 
         /// <summary>
         /// Tag identifying this class.
@@ -411,31 +428,59 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
         /// 
         /// </summary>
-		public byte[]						Protected;
+		public virtual byte[]						Protected {
+			get {return _Protected;}			
+			set {_Protected = value;}
+			}
+		byte[]						_Protected ;
         /// <summary>
         /// 
         /// </summary>
-		public byte[]						Unprotected;
+		public virtual byte[]						Unprotected {
+			get {return _Unprotected;}			
+			set {_Unprotected = value;}
+			}
+		byte[]						_Unprotected ;
         /// <summary>
         /// 
         /// </summary>
-		public byte[]						IV;
+		public virtual byte[]						IV {
+			get {return _IV;}			
+			set {_IV = value;}
+			}
+		byte[]						_IV ;
         /// <summary>
         /// 
         /// </summary>
-		public byte[]						CipherText;
+		public virtual byte[]						CipherText {
+			get {return _CipherText;}			
+			set {_CipherText = value;}
+			}
+		byte[]						_CipherText ;
         /// <summary>
         /// 
         /// </summary>
-		public byte[]						JTag;
+		public virtual byte[]						JTag {
+			get {return _JTag;}			
+			set {_JTag = value;}
+			}
+		byte[]						_JTag ;
         /// <summary>
         /// 
         /// </summary>
-		public byte[]						AdditionalAuthenticatedData;
+		public virtual byte[]						AdditionalAuthenticatedData {
+			get {return _AdditionalAuthenticatedData;}			
+			set {_AdditionalAuthenticatedData = value;}
+			}
+		byte[]						_AdditionalAuthenticatedData ;
 		/// <summary>
         /// 
         /// </summary>
-		public List<Recipient>				Recipients;
+		public virtual List<Recipient>				Recipients {
+			get {return _Recipients;}			
+			set {_Recipients = value;}
+			}
+		List<Recipient>				_Recipients;
 
         /// <summary>
         /// Tag identifying this class.
@@ -679,15 +724,27 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
         /// 
         /// </summary>
-		public Header						Header;
+		public virtual Header						Header {
+			get {return _Header;}			
+			set {_Header = value;}
+			}
+		Header						_Header ;
         /// <summary>
         /// 
         /// </summary>
-		public byte[]						Payload;
+		public virtual byte[]						Payload {
+			get {return _Payload;}			
+			set {_Payload = value;}
+			}
+		byte[]						_Payload ;
         /// <summary>
         /// 
         /// </summary>
-		public byte[]						Signature;
+		public virtual byte[]						Signature {
+			get {return _Signature;}			
+			set {_Signature = value;}
+			}
+		byte[]						_Signature ;
 
         /// <summary>
         /// Tag identifying this class.
@@ -877,19 +934,35 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
         /// 
         /// </summary>
-		public Header						Header;
+		public virtual Header						Header {
+			get {return _Header;}			
+			set {_Header = value;}
+			}
+		Header						_Header ;
         /// <summary>
         /// 
         /// </summary>
-		public byte[]						IV;
+		public virtual byte[]						IV {
+			get {return _IV;}			
+			set {_IV = value;}
+			}
+		byte[]						_IV ;
         /// <summary>
         /// 
         /// </summary>
-		public byte[]						CipherText;
+		public virtual byte[]						CipherText {
+			get {return _CipherText;}			
+			set {_CipherText = value;}
+			}
+		byte[]						_CipherText ;
         /// <summary>
         /// 
         /// </summary>
-		public byte[]						Signature;
+		public virtual byte[]						Signature {
+			get {return _Signature;}			
+			set {_Signature = value;}
+			}
+		byte[]						_Signature ;
 
         /// <summary>
         /// Tag identifying this class.
@@ -1088,31 +1161,59 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
         /// 
         /// </summary>
-		public string						enc;
+		public virtual string						enc {
+			get {return _enc;}			
+			set {_enc = value;}
+			}
+		string						_enc ;
         /// <summary>
         /// 
         /// </summary>
-		public string						alg;
+		public virtual string						alg {
+			get {return _alg;}			
+			set {_alg = value;}
+			}
+		string						_alg ;
         /// <summary>
         /// 
         /// </summary>
-		public string						kid;
+		public virtual string						kid {
+			get {return _kid;}			
+			set {_kid = value;}
+			}
+		string						_kid ;
         /// <summary>
         /// 
         /// </summary>
-		public string						x5u;
+		public virtual string						x5u {
+			get {return _x5u;}			
+			set {_x5u = value;}
+			}
+		string						_x5u ;
         /// <summary>
         /// 
         /// </summary>
-		public byte[]						x5c;
+		public virtual byte[]						x5c {
+			get {return _x5c;}			
+			set {_x5c = value;}
+			}
+		byte[]						_x5c ;
         /// <summary>
         /// 
         /// </summary>
-		public byte[]						x5t;
+		public virtual byte[]						x5t {
+			get {return _x5t;}			
+			set {_x5t = value;}
+			}
+		byte[]						_x5t ;
         /// <summary>
         /// 
         /// </summary>
-		public byte[]						x5tS256;
+		public virtual byte[]						x5tS256 {
+			get {return _x5tS256;}			
+			set {_x5tS256 = value;}
+			}
+		byte[]						_x5tS256 ;
 
         /// <summary>
         /// Tag identifying this class.
@@ -1364,23 +1465,43 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
         /// 
         /// </summary>
-		public string						jku;
+		public virtual string						jku {
+			get {return _jku;}			
+			set {_jku = value;}
+			}
+		string						_jku ;
         /// <summary>
         /// 
         /// </summary>
-		public string						jwk;
+		public virtual string						jwk {
+			get {return _jwk;}			
+			set {_jwk = value;}
+			}
+		string						_jwk ;
         /// <summary>
         /// 
         /// </summary>
-		public string						typ;
+		public virtual string						typ {
+			get {return _typ;}			
+			set {_typ = value;}
+			}
+		string						_typ ;
         /// <summary>
         /// 
         /// </summary>
-		public string						cty;
+		public virtual string						cty {
+			get {return _cty;}			
+			set {_cty = value;}
+			}
+		string						_cty ;
         /// <summary>
         /// 
         /// </summary>
-		public string						crit;
+		public virtual string						crit {
+			get {return _crit;}			
+			set {_crit = value;}
+			}
+		string						_crit ;
 
         /// <summary>
         /// Tag identifying this class.
@@ -1588,19 +1709,35 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
         /// 
         /// </summary>
-		public string						kty;
+		public virtual string						kty {
+			get {return _kty;}			
+			set {_kty = value;}
+			}
+		string						_kty ;
         /// <summary>
         /// 
         /// </summary>
-		public string						use;
+		public virtual string						use {
+			get {return _use;}			
+			set {_use = value;}
+			}
+		string						_use ;
         /// <summary>
         /// 
         /// </summary>
-		public string						key_ops;
+		public virtual string						key_ops {
+			get {return _key_ops;}			
+			set {_key_ops = value;}
+			}
+		string						_key_ops ;
         /// <summary>
         /// 
         /// </summary>
-		public byte[]						k;
+		public virtual byte[]						k {
+			get {return _k;}			
+			set {_k = value;}
+			}
+		byte[]						_k ;
 
         /// <summary>
         /// Tag identifying this class.
@@ -1813,11 +1950,19 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
         /// 
         /// </summary>
-		public Header						Header;
+		public virtual Header						Header {
+			get {return _Header;}			
+			set {_Header = value;}
+			}
+		Header						_Header ;
         /// <summary>
         /// 
         /// </summary>
-		public byte[]						EncryptedKey;
+		public virtual byte[]						EncryptedKey {
+			get {return _EncryptedKey;}			
+			set {_EncryptedKey = value;}
+			}
+		byte[]						_EncryptedKey ;
 
         /// <summary>
         /// Tag identifying this class.
@@ -1998,11 +2143,19 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
         /// 
         /// </summary>
-		public byte[]						n;
+		public virtual byte[]						n {
+			get {return _n;}			
+			set {_n = value;}
+			}
+		byte[]						_n ;
         /// <summary>
         /// 
         /// </summary>
-		public byte[]						e;
+		public virtual byte[]						e {
+			get {return _e;}			
+			set {_e = value;}
+			}
+		byte[]						_e ;
 
         /// <summary>
         /// Tag identifying this class.
@@ -2190,27 +2343,51 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
         /// 
         /// </summary>
-		public byte[]						d;
+		public virtual byte[]						d {
+			get {return _d;}			
+			set {_d = value;}
+			}
+		byte[]						_d ;
         /// <summary>
         /// 
         /// </summary>
-		public byte[]						p;
+		public virtual byte[]						p {
+			get {return _p;}			
+			set {_p = value;}
+			}
+		byte[]						_p ;
         /// <summary>
         /// 
         /// </summary>
-		public byte[]						q;
+		public virtual byte[]						q {
+			get {return _q;}			
+			set {_q = value;}
+			}
+		byte[]						_q ;
         /// <summary>
         /// 
         /// </summary>
-		public byte[]						dp;
+		public virtual byte[]						dp {
+			get {return _dp;}			
+			set {_dp = value;}
+			}
+		byte[]						_dp ;
         /// <summary>
         /// 
         /// </summary>
-		public byte[]						dq;
+		public virtual byte[]						dq {
+			get {return _dq;}			
+			set {_dq = value;}
+			}
+		byte[]						_dq ;
         /// <summary>
         /// 
         /// </summary>
-		public byte[]						qi;
+		public virtual byte[]						qi {
+			get {return _qi;}			
+			set {_qi = value;}
+			}
+		byte[]						_qi ;
 
         /// <summary>
         /// Tag identifying this class.

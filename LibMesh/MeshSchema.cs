@@ -1,7 +1,7 @@
 ﻿
 //  Test
 //  
-//  This file was automatically generated at 12/7/2015 4:48:49 PM
+//  This file was automatically generated at 12/10/2015 4:59:04 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -35,6 +35,7 @@
 //  THE SOFTWARE.
 //  
 //  //Header
+// With all fields as properties
 
 using System;
 using System.IO;
@@ -393,7 +394,11 @@ namespace Goedel.Mesh {
         /// <summary>
         /// 
         /// </summary>
-		public string						Identifier;
+		public virtual string						Identifier {
+			get {return _Identifier;}			
+			set {_Identifier = value;}
+			}
+		string						_Identifier ;
 
         /// <summary>
         /// Tag identifying this class.
@@ -696,7 +701,11 @@ namespace Goedel.Mesh {
         /// <summary>
         /// 
         /// </summary>
-		public JoseWebSignature						SignedData;
+		public virtual JoseWebSignature						SignedData {
+			get {return _SignedData;}			
+			set {_SignedData = value;}
+			}
+		JoseWebSignature						_SignedData ;
 
         /// <summary>
         /// Tag identifying this class.
@@ -1558,7 +1567,11 @@ namespace Goedel.Mesh {
         /// <summary>
         /// 
         /// </summary>
-		public JoseWebEncryption						EncryptedData;
+		public virtual JoseWebEncryption						EncryptedData {
+			get {return _EncryptedData;}			
+			set {_EncryptedData = value;}
+			}
+		JoseWebEncryption						_EncryptedData ;
 
         /// <summary>
         /// Tag identifying this class.
@@ -1734,20 +1747,28 @@ namespace Goedel.Mesh {
 		/// <summary>
         /// 
         /// </summary>
-		public List<string>				Names;
+		public virtual List<string>				Names {
+			get {return _Names;}			
+			set {_Names = value;}
+			}
+		List<string>				_Names;
 		bool								__Updated = false;
 		private DateTime						_Updated;
         /// <summary>
         /// 
         /// </summary>
-		public DateTime						Updated {
+		public virtual DateTime						Updated {
 			get {return _Updated;}
 			set {_Updated = value; __Updated = true; }
 			}
         /// <summary>
         /// 
         /// </summary>
-		public string						NotaryToken;
+		public virtual string						NotaryToken {
+			get {return _NotaryToken;}			
+			set {_NotaryToken = value;}
+			}
+		string						_NotaryToken ;
 
         /// <summary>
         /// Tag identifying this class.
@@ -1977,15 +1998,27 @@ namespace Goedel.Mesh {
         /// <summary>
         /// 
         /// </summary>
-		public PublicKey						MasterSignatureKey;
+		public virtual PublicKey						MasterSignatureKey {
+			get {return _MasterSignatureKey;}			
+			set {_MasterSignatureKey = value;}
+			}
+		PublicKey						_MasterSignatureKey ;
 		/// <summary>
         /// 
         /// </summary>
-		public List<PublicKey>				MasterEscrowKeys;
+		public virtual List<PublicKey>				MasterEscrowKeys {
+			get {return _MasterEscrowKeys;}			
+			set {_MasterEscrowKeys = value;}
+			}
+		List<PublicKey>				_MasterEscrowKeys;
 		/// <summary>
         /// 
         /// </summary>
-		public List<PublicKey>				OnlineSignatureKeys;
+		public virtual List<PublicKey>				OnlineSignatureKeys {
+			get {return _OnlineSignatureKeys;}			
+			set {_OnlineSignatureKeys = value;}
+			}
+		List<PublicKey>				_OnlineSignatureKeys;
 
         /// <summary>
         /// Tag identifying this class.
@@ -2220,15 +2253,27 @@ namespace Goedel.Mesh {
         /// <summary>
         /// 
         /// </summary>
-		public SignedMasterProfile						SignedMasterProfile;
+		public virtual SignedMasterProfile						SignedMasterProfile {
+			get {return _SignedMasterProfile;}			
+			set {_SignedMasterProfile = value;}
+			}
+		SignedMasterProfile						_SignedMasterProfile ;
 		/// <summary>
         /// 
         /// </summary>
-		public List<SignedDeviceProfile>				Devices;
+		public virtual List<SignedDeviceProfile>				Devices {
+			get {return _Devices;}			
+			set {_Devices = value;}
+			}
+		List<SignedDeviceProfile>				_Devices;
 		/// <summary>
         /// 
         /// </summary>
-		public List<ApplicationProfileEntry>				Applications;
+		public virtual List<ApplicationProfileEntry>				Applications {
+			get {return _Applications;}			
+			set {_Applications = value;}
+			}
+		List<ApplicationProfileEntry>				_Applications;
 
         /// <summary>
         /// Tag identifying this class.
@@ -2460,23 +2505,43 @@ namespace Goedel.Mesh {
         /// <summary>
         /// 
         /// </summary>
-		public string						Identifier;
+		public virtual string						Identifier {
+			get {return _Identifier;}			
+			set {_Identifier = value;}
+			}
+		string						_Identifier ;
         /// <summary>
         /// 
         /// </summary>
-		public string						Type;
+		public virtual string						Type {
+			get {return _Type;}			
+			set {_Type = value;}
+			}
+		string						_Type ;
         /// <summary>
         /// 
         /// </summary>
-		public string						Friendly;
+		public virtual string						Friendly {
+			get {return _Friendly;}			
+			set {_Friendly = value;}
+			}
+		string						_Friendly ;
 		/// <summary>
         /// 
         /// </summary>
-		public List<string>				SignID;
+		public virtual List<string>				SignID {
+			get {return _SignID;}			
+			set {_SignID = value;}
+			}
+		List<string>				_SignID;
 		/// <summary>
         /// 
         /// </summary>
-		public List<string>				DecryptID;
+		public virtual List<string>				DecryptID {
+			get {return _DecryptID;}			
+			set {_DecryptID = value;}
+			}
+		List<string>				_DecryptID;
 
         /// <summary>
         /// Tag identifying this class.
@@ -2712,19 +2777,35 @@ namespace Goedel.Mesh {
         /// <summary>
         /// 
         /// </summary>
-		public string						Description;
+		public virtual string						Description {
+			get {return _Description;}			
+			set {_Description = value;}
+			}
+		string						_Description ;
         /// <summary>
         /// 
         /// </summary>
-		public PublicKey						DeviceSignatureKey;
+		public virtual PublicKey						DeviceSignatureKey {
+			get {return _DeviceSignatureKey;}			
+			set {_DeviceSignatureKey = value;}
+			}
+		PublicKey						_DeviceSignatureKey ;
         /// <summary>
         /// 
         /// </summary>
-		public PublicKey						DeviceAuthenticationKey;
+		public virtual PublicKey						DeviceAuthenticationKey {
+			get {return _DeviceAuthenticationKey;}			
+			set {_DeviceAuthenticationKey = value;}
+			}
+		PublicKey						_DeviceAuthenticationKey ;
         /// <summary>
         /// 
         /// </summary>
-		public PublicKey						DeviceEncryptiontionKey;
+		public virtual PublicKey						DeviceEncryptiontionKey {
+			get {return _DeviceEncryptiontionKey;}			
+			set {_DeviceEncryptiontionKey = value;}
+			}
+		PublicKey						_DeviceEncryptiontionKey ;
 
         /// <summary>
         /// Tag identifying this class.
@@ -2931,15 +3012,27 @@ namespace Goedel.Mesh {
         /// <summary>
         /// 
         /// </summary>
-		public Key						DeviceSignatureKey;
+		public virtual Key						DeviceSignatureKey {
+			get {return _DeviceSignatureKey;}			
+			set {_DeviceSignatureKey = value;}
+			}
+		Key						_DeviceSignatureKey ;
         /// <summary>
         /// 
         /// </summary>
-		public Key						DeviceAuthenticationKey;
+		public virtual Key						DeviceAuthenticationKey {
+			get {return _DeviceAuthenticationKey;}			
+			set {_DeviceAuthenticationKey = value;}
+			}
+		Key						_DeviceAuthenticationKey ;
         /// <summary>
         /// 
         /// </summary>
-		public Key						DeviceEncryptiontionKey;
+		public virtual Key						DeviceEncryptiontionKey {
+			get {return _DeviceEncryptiontionKey;}			
+			set {_DeviceEncryptiontionKey = value;}
+			}
+		Key						_DeviceEncryptiontionKey ;
 
         /// <summary>
         /// Tag identifying this class.
@@ -3135,11 +3228,19 @@ namespace Goedel.Mesh {
         /// <summary>
         /// 
         /// </summary>
-		public JoseWebEncryption						EncryptedData;
+		public virtual JoseWebEncryption						EncryptedData {
+			get {return _EncryptedData;}			
+			set {_EncryptedData = value;}
+			}
+		JoseWebEncryption						_EncryptedData ;
 		/// <summary>
         /// 
         /// </summary>
-		public List<DeviceEntry>				Entries;
+		public virtual List<DeviceEntry>				Entries {
+			get {return _Entries;}			
+			set {_Entries = value;}
+			}
+		List<DeviceEntry>				_Entries;
 
         /// <summary>
         /// Tag identifying this class.
@@ -3365,23 +3466,43 @@ namespace Goedel.Mesh {
         /// <summary>
         /// 
         /// </summary>
-		public string						UDF;
+		public virtual string						UDF {
+			get {return _UDF;}			
+			set {_UDF = value;}
+			}
+		string						_UDF ;
         /// <summary>
         /// 
         /// </summary>
-		public string						Protocol;
+		public virtual string						Protocol {
+			get {return _Protocol;}			
+			set {_Protocol = value;}
+			}
+		string						_Protocol ;
         /// <summary>
         /// 
         /// </summary>
-		public byte[]						EncryptedKey;
+		public virtual byte[]						EncryptedKey {
+			get {return _EncryptedKey;}			
+			set {_EncryptedKey = value;}
+			}
+		byte[]						_EncryptedKey ;
         /// <summary>
         /// 
         /// </summary>
-		public PublicKey						SignatureKey;
+		public virtual PublicKey						SignatureKey {
+			get {return _SignatureKey;}			
+			set {_SignatureKey = value;}
+			}
+		PublicKey						_SignatureKey ;
         /// <summary>
         /// 
         /// </summary>
-		public PublicKey						AuthenticationKey;
+		public virtual PublicKey						AuthenticationKey {
+			get {return _AuthenticationKey;}			
+			set {_AuthenticationKey = value;}
+			}
+		PublicKey						_AuthenticationKey ;
 
         /// <summary>
         /// Tag identifying this class.
@@ -3752,7 +3873,11 @@ namespace Goedel.Mesh {
 		/// <summary>
         /// 
         /// </summary>
-		public List<PasswordEntry>				Entries;
+		public virtual List<PasswordEntry>				Entries {
+			get {return _Entries;}			
+			set {_Entries = value;}
+			}
+		List<PasswordEntry>				_Entries;
 
         /// <summary>
         /// Tag identifying this class.
@@ -3944,15 +4069,27 @@ namespace Goedel.Mesh {
 		/// <summary>
         /// 
         /// </summary>
-		public List<string>				Sites;
+		public virtual List<string>				Sites {
+			get {return _Sites;}			
+			set {_Sites = value;}
+			}
+		List<string>				_Sites;
         /// <summary>
         /// 
         /// </summary>
-		public string						Username;
+		public virtual string						Username {
+			get {return _Username;}			
+			set {_Username = value;}
+			}
+		string						_Username ;
         /// <summary>
         /// 
         /// </summary>
-		public string						Password;
+		public virtual string						Password {
+			get {return _Password;}			
+			set {_Password = value;}
+			}
+		string						_Password ;
 
         /// <summary>
         /// Tag identifying this class.
@@ -4157,11 +4294,19 @@ namespace Goedel.Mesh {
         /// <summary>
         /// 
         /// </summary>
-		public PublicKey						EncryptionPGP;
+		public virtual PublicKey						EncryptionPGP {
+			get {return _EncryptionPGP;}			
+			set {_EncryptionPGP = value;}
+			}
+		PublicKey						_EncryptionPGP ;
         /// <summary>
         /// 
         /// </summary>
-		public PublicKey						EncryptionSMIME;
+		public virtual PublicKey						EncryptionSMIME {
+			get {return _EncryptionSMIME;}			
+			set {_EncryptionSMIME = value;}
+			}
+		PublicKey						_EncryptionSMIME ;
 
         /// <summary>
         /// Tag identifying this class.
@@ -4341,20 +4486,77 @@ namespace Goedel.Mesh {
 		}
 
 	/// <summary>
+	///
+	/// Describes a mail account configuration
+	/// Private profile contains connection settings for the inbound and
+	/// outbound mail server(s) and cryptographic private keys. Public
+	/// profile may contain security policy information for the sender.
 	/// </summary>
 	public partial class MailProfilePrivate : MeshItem {
+        /// <summary>
+        /// 
+        /// </summary>
+		public virtual string						EmailAddress {
+			get {return _EmailAddress;}			
+			set {_EmailAddress = value;}
+			}
+		string						_EmailAddress ;
+        /// <summary>
+        /// 
+        /// </summary>
+		public virtual string						ReplyToAddress {
+			get {return _ReplyToAddress;}			
+			set {_ReplyToAddress = value;}
+			}
+		string						_ReplyToAddress ;
+        /// <summary>
+        /// 
+        /// </summary>
+		public virtual string						DisplayName {
+			get {return _DisplayName;}			
+			set {_DisplayName = value;}
+			}
+		string						_DisplayName ;
+        /// <summary>
+        /// 
+        /// </summary>
+		public virtual string						AccountName {
+			get {return _AccountName;}			
+			set {_AccountName = value;}
+			}
+		string						_AccountName ;
 		/// <summary>
         /// 
         /// </summary>
-		public List<Connection>				Connections;
-        /// <summary>
+		public virtual List<Connection>				Inbound {
+			get {return _Inbound;}			
+			set {_Inbound = value;}
+			}
+		List<Connection>				_Inbound;
+		/// <summary>
         /// 
         /// </summary>
-		public Key						OpenPGPKey;
-        /// <summary>
+		public virtual List<Connection>				Outbound {
+			get {return _Outbound;}			
+			set {_Outbound = value;}
+			}
+		List<Connection>				_Outbound;
+		/// <summary>
         /// 
         /// </summary>
-		public Key						OpenSMIMEKey;
+		public virtual List<PublicKey>				Sign {
+			get {return _Sign;}			
+			set {_Sign = value;}
+			}
+		List<PublicKey>				_Sign;
+		/// <summary>
+        /// 
+        /// </summary>
+		public virtual List<PublicKey>				Encrypt {
+			get {return _Encrypt;}			
+			set {_Encrypt = value;}
+			}
+		List<PublicKey>				_Encrypt;
 
         /// <summary>
         /// Tag identifying this class.
@@ -4400,12 +4602,32 @@ namespace Goedel.Mesh {
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
-			if (Connections != null) {
+			if (EmailAddress != null) {
 				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("Connections", 1);
+				_Writer.WriteToken ("EmailAddress", 1);
+					_Writer.WriteString (EmailAddress);
+				}
+			if (ReplyToAddress != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("ReplyToAddress", 1);
+					_Writer.WriteString (ReplyToAddress);
+				}
+			if (DisplayName != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("DisplayName", 1);
+					_Writer.WriteString (DisplayName);
+				}
+			if (AccountName != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("AccountName", 1);
+					_Writer.WriteString (AccountName);
+				}
+			if (Inbound != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Inbound", 1);
 				_Writer.WriteArrayStart ();
 				bool _firstarray = true;
-				foreach (var _index in Connections) {
+				foreach (var _index in Inbound) {
 					_Writer.WriteArraySeparator (ref _firstarray);
 					// This is an untagged structure. Cannot inherit.
                     //_Writer.WriteObjectStart();
@@ -4417,16 +4639,57 @@ namespace Goedel.Mesh {
 				_Writer.WriteArrayEnd ();
 				}
 
-			if (OpenPGPKey != null) {
+			if (Outbound != null) {
 				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("OpenPGPKey", 1);
-					OpenPGPKey.Serialize (_Writer, false);
+				_Writer.WriteToken ("Outbound", 1);
+				_Writer.WriteArrayStart ();
+				bool _firstarray = true;
+				foreach (var _index in Outbound) {
+					_Writer.WriteArraySeparator (ref _firstarray);
+					// This is an untagged structure. Cannot inherit.
+                    //_Writer.WriteObjectStart();
+                    //_Writer.WriteToken(_index.Tag(), 1);
+					bool firstinner = true;
+					_index.Serialize (_Writer, true, ref firstinner);
+                    //_Writer.WriteObjectEnd();
+					}
+				_Writer.WriteArrayEnd ();
 				}
-			if (OpenSMIMEKey != null) {
+
+			if (Sign != null) {
 				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("OpenSMIMEKey", 1);
-					OpenSMIMEKey.Serialize (_Writer, false);
+				_Writer.WriteToken ("Sign", 1);
+				_Writer.WriteArrayStart ();
+				bool _firstarray = true;
+				foreach (var _index in Sign) {
+					_Writer.WriteArraySeparator (ref _firstarray);
+					// This is an untagged structure. Cannot inherit.
+                    //_Writer.WriteObjectStart();
+                    //_Writer.WriteToken(_index.Tag(), 1);
+					bool firstinner = true;
+					_index.Serialize (_Writer, true, ref firstinner);
+                    //_Writer.WriteObjectEnd();
+					}
+				_Writer.WriteArrayEnd ();
 				}
+
+			if (Encrypt != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Encrypt", 1);
+				_Writer.WriteArrayStart ();
+				bool _firstarray = true;
+				foreach (var _index in Encrypt) {
+					_Writer.WriteArraySeparator (ref _firstarray);
+					// This is an untagged structure. Cannot inherit.
+                    //_Writer.WriteObjectStart();
+                    //_Writer.WriteToken(_index.Tag(), 1);
+					bool firstinner = true;
+					_index.Serialize (_Writer, true, ref firstinner);
+                    //_Writer.WriteObjectEnd();
+					}
+				_Writer.WriteArrayEnd ();
+				}
+
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
 				}
@@ -4526,28 +4789,68 @@ namespace Goedel.Mesh {
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
-				case "Connections" : {
+				case "EmailAddress" : {
+					EmailAddress = JSONReader.ReadString ();
+					break;
+					}
+				case "ReplyToAddress" : {
+					ReplyToAddress = JSONReader.ReadString ();
+					break;
+					}
+				case "DisplayName" : {
+					DisplayName = JSONReader.ReadString ();
+					break;
+					}
+				case "AccountName" : {
+					AccountName = JSONReader.ReadString ();
+					break;
+					}
+				case "Inbound" : {
 					// Have a sequence of values
 					bool _Going = JSONReader.StartArray ();
-					Connections = new List <Connection> ();
+					Inbound = new List <Connection> ();
 					while (_Going) {
 						// an untagged structure.
 						var _Item = new Connection (JSONReader);
-						Connections.Add (_Item);
+						Inbound.Add (_Item);
 						_Going = JSONReader.NextArray ();
 						}
 					break;
 					}
-				case "OpenPGPKey" : {
-					// An untagged structure
-					OpenPGPKey = new Key (JSONReader);
- 
+				case "Outbound" : {
+					// Have a sequence of values
+					bool _Going = JSONReader.StartArray ();
+					Outbound = new List <Connection> ();
+					while (_Going) {
+						// an untagged structure.
+						var _Item = new Connection (JSONReader);
+						Outbound.Add (_Item);
+						_Going = JSONReader.NextArray ();
+						}
 					break;
 					}
-				case "OpenSMIMEKey" : {
-					// An untagged structure
-					OpenSMIMEKey = new Key (JSONReader);
- 
+				case "Sign" : {
+					// Have a sequence of values
+					bool _Going = JSONReader.StartArray ();
+					Sign = new List <PublicKey> ();
+					while (_Going) {
+						// an untagged structure.
+						var _Item = new PublicKey (JSONReader);
+						Sign.Add (_Item);
+						_Going = JSONReader.NextArray ();
+						}
+					break;
+					}
+				case "Encrypt" : {
+					// Have a sequence of values
+					bool _Going = JSONReader.StartArray ();
+					Encrypt = new List <PublicKey> ();
+					while (_Going) {
+						// an untagged structure.
+						var _Item = new PublicKey (JSONReader);
+						Encrypt.Add (_Item);
+						_Going = JSONReader.NextArray ();
+						}
 					break;
 					}
 				default : {
@@ -4729,23 +5032,43 @@ namespace Goedel.Mesh {
 		/// <summary>
         /// 
         /// </summary>
-		public List<string>				Sites;
+		public virtual List<string>				Sites {
+			get {return _Sites;}			
+			set {_Sites = value;}
+			}
+		List<string>				_Sites;
 		/// <summary>
         /// 
         /// </summary>
-		public List<Connection>				DNS;
+		public virtual List<Connection>				DNS {
+			get {return _DNS;}			
+			set {_DNS = value;}
+			}
+		List<Connection>				_DNS;
 		/// <summary>
         /// 
         /// </summary>
-		public List<string>				Prefix;
+		public virtual List<string>				Prefix {
+			get {return _Prefix;}			
+			set {_Prefix = value;}
+			}
+		List<string>				_Prefix;
         /// <summary>
         /// 
         /// </summary>
-		public byte[]						CTL;
+		public virtual byte[]						CTL {
+			get {return _CTL;}			
+			set {_CTL = value;}
+			}
+		byte[]						_CTL ;
 		/// <summary>
         /// 
         /// </summary>
-		public List<string>				WebPKI;
+		public virtual List<string>				WebPKI {
+			get {return _WebPKI;}			
+			set {_WebPKI = value;}
+			}
+		List<string>				_WebPKI;
 
         /// <summary>
         /// Tag identifying this class.
@@ -5015,7 +5338,11 @@ namespace Goedel.Mesh {
         /// <summary>
         /// 
         /// </summary>
-		public JoseWebEncryption						EncryptedData;
+		public virtual JoseWebEncryption						EncryptedData {
+			get {return _EncryptedData;}			
+			set {_EncryptedData = value;}
+			}
+		JoseWebEncryption						_EncryptedData ;
 
         /// <summary>
         /// Tag identifying this class.
@@ -5527,7 +5854,11 @@ namespace Goedel.Mesh {
 		/// <summary>
         /// 
         /// </summary>
-		public List<Key>				PrivateKeys;
+		public virtual List<Key>				PrivateKeys {
+			get {return _PrivateKeys;}			
+			set {_PrivateKeys = value;}
+			}
+		List<Key>				_PrivateKeys;
 
         /// <summary>
         /// Tag identifying this class.
@@ -5713,38 +6044,92 @@ namespace Goedel.Mesh {
 
 	/// <summary>
 	///
-	/// Describes network connection parameters
+	/// Describes network connection parameters for an application
 	/// </summary>
 	public partial class Connection : MeshItem {
         /// <summary>
         /// 
         /// </summary>
-		public string						Name;
-        /// <summary>
-        /// 
-        /// </summary>
-		public string						Address;
-        /// <summary>
-        /// 
-        /// </summary>
-		public string						Prefix;
+		public virtual string						ServiceName {
+			get {return _ServiceName;}			
+			set {_ServiceName = value;}
+			}
+		string						_ServiceName ;
 		bool								__Port = false;
 		private int						_Port;
         /// <summary>
         /// 
         /// </summary>
-		public int						Port {
+		public virtual int						Port {
 			get {return _Port;}
 			set {_Port = value; __Port = true; }
 			}
         /// <summary>
         /// 
         /// </summary>
-		public string						URI;
+		public virtual string						Prefix {
+			get {return _Prefix;}			
+			set {_Prefix = value;}
+			}
+		string						_Prefix ;
 		/// <summary>
         /// 
         /// </summary>
-		public List<string>				Security;
+		public virtual List<string>				Security {
+			get {return _Security;}			
+			set {_Security = value;}
+			}
+		List<string>				_Security;
+        /// <summary>
+        /// 
+        /// </summary>
+		public virtual string						UserName {
+			get {return _UserName;}			
+			set {_UserName = value;}
+			}
+		string						_UserName ;
+        /// <summary>
+        /// 
+        /// </summary>
+		public virtual string						Password {
+			get {return _Password;}			
+			set {_Password = value;}
+			}
+		string						_Password ;
+        /// <summary>
+        /// 
+        /// </summary>
+		public virtual string						URI {
+			get {return _URI;}			
+			set {_URI = value;}
+			}
+		string						_URI ;
+        /// <summary>
+        /// 
+        /// </summary>
+		public virtual string						Authentication {
+			get {return _Authentication;}			
+			set {_Authentication = value;}
+			}
+		string						_Authentication ;
+		bool								__TimeOut = false;
+		private int						_TimeOut;
+        /// <summary>
+        /// 
+        /// </summary>
+		public virtual int						TimeOut {
+			get {return _TimeOut;}
+			set {_TimeOut = value; __TimeOut = true; }
+			}
+		bool								__Polling = false;
+		private bool						_Polling;
+        /// <summary>
+        /// 
+        /// </summary>
+		public virtual bool						Polling {
+			get {return _Polling;}
+			set {_Polling = value; __Polling = true; }
+			}
 
         /// <summary>
         /// Tag identifying this class.
@@ -5790,30 +6175,20 @@ namespace Goedel.Mesh {
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
-			if (Name != null) {
+			if (ServiceName != null) {
 				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("Name", 1);
-					_Writer.WriteString (Name);
-				}
-			if (Address != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("Address", 1);
-					_Writer.WriteString (Address);
-				}
-			if (Prefix != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("Prefix", 1);
-					_Writer.WriteString (Prefix);
+				_Writer.WriteToken ("ServiceName", 1);
+					_Writer.WriteString (ServiceName);
 				}
 			if (__Port){
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("Port", 1);
 					_Writer.WriteInteger32 (Port);
 				}
-			if (URI != null) {
+			if (Prefix != null) {
 				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("URI", 1);
-					_Writer.WriteString (URI);
+				_Writer.WriteToken ("Prefix", 1);
+					_Writer.WriteString (Prefix);
 				}
 			if (Security != null) {
 				_Writer.WriteObjectSeparator (ref _first);
@@ -5827,6 +6202,36 @@ namespace Goedel.Mesh {
 				_Writer.WriteArrayEnd ();
 				}
 
+			if (UserName != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("UserName", 1);
+					_Writer.WriteString (UserName);
+				}
+			if (Password != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Password", 1);
+					_Writer.WriteString (Password);
+				}
+			if (URI != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("URI", 1);
+					_Writer.WriteString (URI);
+				}
+			if (Authentication != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Authentication", 1);
+					_Writer.WriteString (Authentication);
+				}
+			if (__TimeOut){
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("TimeOut", 1);
+					_Writer.WriteInteger32 (TimeOut);
+				}
+			if (__Polling){
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Polling", 1);
+					_Writer.WriteBoolean (Polling);
+				}
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
 				}
@@ -5926,24 +6331,16 @@ namespace Goedel.Mesh {
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
-				case "Name" : {
-					Name = JSONReader.ReadString ();
-					break;
-					}
-				case "Address" : {
-					Address = JSONReader.ReadString ();
-					break;
-					}
-				case "Prefix" : {
-					Prefix = JSONReader.ReadString ();
+				case "ServiceName" : {
+					ServiceName = JSONReader.ReadString ();
 					break;
 					}
 				case "Port" : {
 					Port = JSONReader.ReadInteger32 ();
 					break;
 					}
-				case "URI" : {
-					URI = JSONReader.ReadString ();
+				case "Prefix" : {
+					Prefix = JSONReader.ReadString ();
 					break;
 					}
 				case "Security" : {
@@ -5955,6 +6352,30 @@ namespace Goedel.Mesh {
 						Security.Add (_Item);
 						_Going = JSONReader.NextArray ();
 						}
+					break;
+					}
+				case "UserName" : {
+					UserName = JSONReader.ReadString ();
+					break;
+					}
+				case "Password" : {
+					Password = JSONReader.ReadString ();
+					break;
+					}
+				case "URI" : {
+					URI = JSONReader.ReadString ();
+					break;
+					}
+				case "Authentication" : {
+					Authentication = JSONReader.ReadString ();
+					break;
+					}
+				case "TimeOut" : {
+					TimeOut = JSONReader.ReadInteger32 ();
+					break;
+					}
+				case "Polling" : {
+					Polling = JSONReader.ReadBoolean ();
 					break;
 					}
 				default : {
@@ -5975,7 +6396,11 @@ namespace Goedel.Mesh {
         /// <summary>
         /// 
         /// </summary>
-		public byte[]						Data;
+		public virtual byte[]						Data {
+			get {return _Data;}			
+			set {_Data = value;}
+			}
+		byte[]						_Data ;
 
         /// <summary>
         /// Tag identifying this class.
@@ -6147,7 +6572,11 @@ namespace Goedel.Mesh {
         /// <summary>
         /// 
         /// </summary>
-		public byte[]						Data;
+		public virtual byte[]						Data {
+			get {return _Data;}			
+			set {_Data = value;}
+			}
+		byte[]						_Data ;
 
         /// <summary>
         /// Tag identifying this class.
@@ -6319,23 +6748,43 @@ namespace Goedel.Mesh {
         /// <summary>
         /// 
         /// </summary>
-		public string						UDF;
+		public virtual string						UDF {
+			get {return _UDF;}			
+			set {_UDF = value;}
+			}
+		string						_UDF ;
         /// <summary>
         /// 
         /// </summary>
-		public byte[]						X509Certificate;
+		public virtual byte[]						X509Certificate {
+			get {return _X509Certificate;}			
+			set {_X509Certificate = value;}
+			}
+		byte[]						_X509Certificate ;
 		/// <summary>
         /// 
         /// </summary>
-		public List<byte[]>				X509Chain;
+		public virtual List<byte[]>				X509Chain {
+			get {return _X509Chain;}			
+			set {_X509Chain = value;}
+			}
+		List<byte[]>				_X509Chain;
         /// <summary>
         /// 
         /// </summary>
-		public byte[]						X509CSR;
+		public virtual byte[]						X509CSR {
+			get {return _X509CSR;}			
+			set {_X509CSR = value;}
+			}
+		byte[]						_X509CSR ;
         /// <summary>
         /// 
         /// </summary>
-		public Key						PublicParameters;
+		public virtual Key						PublicParameters {
+			get {return _PublicParameters;}			
+			set {_PublicParameters = value;}
+			}
+		Key						_PublicParameters ;
 
         /// <summary>
         /// Tag identifying this class.
@@ -6563,15 +7012,27 @@ namespace Goedel.Mesh {
         /// <summary>
         /// 
         /// </summary>
-		public string						ParentUDF;
+		public virtual string						ParentUDF {
+			get {return _ParentUDF;}			
+			set {_ParentUDF = value;}
+			}
+		string						_ParentUDF ;
         /// <summary>
         /// 
         /// </summary>
-		public SignedDeviceProfile						Device;
+		public virtual SignedDeviceProfile						Device {
+			get {return _Device;}			
+			set {_Device = value;}
+			}
+		SignedDeviceProfile						_Device ;
         /// <summary>
         /// 
         /// </summary>
-		public string						BlockToken;
+		public virtual string						BlockToken {
+			get {return _BlockToken;}			
+			set {_BlockToken = value;}
+			}
+		string						_BlockToken ;
 
         /// <summary>
         /// Tag identifying this class.
@@ -6768,7 +7229,11 @@ namespace Goedel.Mesh {
         /// <summary>
         /// 
         /// </summary>
-		public string						Result;
+		public virtual string						Result {
+			get {return _Result;}			
+			set {_Result = value;}
+			}
+		string						_Result ;
 
         /// <summary>
         /// Tag identifying this class.

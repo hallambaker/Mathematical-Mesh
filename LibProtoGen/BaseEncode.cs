@@ -117,6 +117,24 @@ namespace Goedel.Protocol  {
                      49,  50,  51, 255,  255, 255, 255, 255,   // 120-127
         };
 
+        /// <summary>
+        /// Convert the input data to a base16 string.
+        /// </summary>
+        /// <param name="data">The data to convert.</param>
+        /// <returns>The resulting string.</returns>
+        public static string ToBase16String(byte[] data) {
+            return ToBase16String(data, data.Length);
+            }
+
+        /*
+
+        ToBase16String public static string (   # Convert the input data to a base16 string.
+                byte[] data)                    # The resulting string.
+            return ToBase16String(data, data.Length)
+
+        */
+
+
 
         public static string ToBase16String (byte [] data, int Length) {
             string      result = "";

@@ -98,9 +98,6 @@ namespace Goedel.MeshProfileManager {
 
         public override void Enter() {
             var Account = Data.AllMailAccountInfos[Data.AccountIndex];
-
-
-
             Output_AccountName = Account.AccountName;
             Output_AccountAddress = Account.EmailAddress;
             Output_AccountPersonal = Account.DisplayName;

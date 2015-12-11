@@ -252,17 +252,66 @@
 				|The current S/MIME encryption key
 
 
+
 	Structure MailProfilePrivate
-		Struct Connection Connections
+		Description
+			|Describes a mail account configuration
+		Description
+			|Private profile contains connection settings for the inbound and
+			|outbound mail server(s) and cryptographic private keys. Public
+			|profile may contain security policy information for the sender.
+		String EmailAddress
+			Description
+				|The RFC822 Email address. [e.g. "alice@example.com"]
+		String ReplyToAddress
+			Description
+				|The RFC822 Reply toEmail address. [e.g. "alice@example.com"]
+			Description
+				|When set, allows a sender to tell the receiver that replies to
+				|this account should be directed to this address.
+		String DisplayName
+			Description
+				|The Display Name. [e.g. "Alice Example"]
+		String AccountName
+			Description
+				|The Account Name for display to the app user [e.g. "Work Account"]
+
+		Struct Connection Inbound
 			Multiple
 			Description
-				|Mail protocol connections associated with this profile.
-		Struct Key OpenPGPKey
+				|The Inbound Mail Connection(s). This is typically IMAP4 or POP3
 			Description
-				|Current OpenPGP decryption key
-		Struct Key OpenSMIMEKey
+				|If multiple connections are specified, the order in the sequence
+				|indicates the preference order.
+		Struct Connection Outbound
+			Multiple
 			Description
-				|Current S/MIME decryption key
+				|The Outbound Mail Connection(s). This is typically SMTP/SUBMIT
+			Description
+				|If multiple connections are specified, the order in the sequence
+				|indicates the preference order.
+		
+		Struct PublicKey Sign
+			Multiple
+			Description
+				|The public keypair(s) for signing and decrypting email.
+			Description
+				|If multiple public keys are specified, the order indicates preference.
+		Struct PublicKey Encrypt
+			Multiple
+			Description
+				|The public keypairs for encrypting and decrypting email.
+			Description
+				|If multiple public keys are specified, the order indicates preference.							
+
+	
+
+
+
+
+
+
+
 
 	Structure NetworkProfile
 		Inherits ApplicationProfile
@@ -326,27 +375,44 @@
 
 	Structure Connection
 		Description
-			|Describes network connection parameters
-		String Name
+			|Describes network connection parameters for an application
+		String ServiceName
 			Description
-				|DNS Name
-		String Address
+				|DNS address of the server
+		Integer Port
 			Description
-				|IP address in customary decimal dot notation (IPv4) or
-				|hexadecimal notation (IPv6)
+				|TCP/UDP Port number
 		String Prefix
 			Description
 				|DNS service prefix as described in [!RFC6335]
-		Integer Port
-			Description
-				|TCP Port number
-		String URI
-			Description
-				|Service connection parameters in URI format
 		String Security
 			Multiple
 			Description
-				|Security policy identifier(s)
+				|Describes the security mode to use. Valid choices are Direct/Upgrade/None
+
+		String UserName
+			Description
+				|Username to present to the service for authentication
+		String Password
+			Description
+				|Password to present to the service for authentication
+		String URI
+			Description
+				|Service connection parameters in URI format
+		String Authentication
+			Description
+				|List of the supported/acceptable authentication mechanisms,
+				|preferred mechanism first.
+
+
+		Integer TimeOut
+			Description
+				|Service timeout in seconds.
+		Boolean Polling
+			Description
+				|If set, the client should poll the specified service intermittently
+				|for updates.
+
 
 	// These entries will be replaced by references to a JOSE module in
 	// due course

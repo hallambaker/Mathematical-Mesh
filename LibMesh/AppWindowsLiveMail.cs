@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Xml;
 using System.IO;
@@ -25,8 +26,6 @@ namespace Goedel.Mesh {
             }
 
         }
-
-
 
 
 
@@ -91,18 +90,6 @@ namespace Goedel.Mesh {
                     }
                 }
             }
-
-
-
-
-        //public void SetCertificates(PKIX.Certificate Sign, PKIX.Certificate Encrypt) {
-        //    if (CurrentAccount == null) throw new Exception("No valid account");
-        //    CurrentAccount.SMTP_Certificate = Sign.X509Certificate2.Thumbprint;
-        //    CurrentAccount.SMTP_Encryption_Certificate = Encrypt.X509Certificate2.Thumbprint;
-
-        //    CurrentAccount.Update();
-        //    }
-
         }
 
     public class MailAccountInfoWLM : MailAccountInfo {
@@ -171,7 +158,7 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Inbound Mail Connection
         /// </summary>
-        public override MailConnection Inbound {
+        public override List<Connection> Inbound {
             get {
                 return GetInbound ();
                 }
@@ -180,14 +167,12 @@ namespace Goedel.Mesh {
                 SetInbound (value);
                 }
             }
-        private MailConnection _Inbound;
-
-
+        private Connection _Inbound;
 
         /// <summary>
         /// Outbound Mail Connection
         /// </summary>
-        public override MailConnection Outbound {
+        public override List<Connection> Outbound {
             get {
                 return GetOutbound();
                 }
@@ -196,12 +181,10 @@ namespace Goedel.Mesh {
                 SetOutbound(value);
                 }
             }
-        private MailConnection _Outbound;
-
-
+        private Connection _Outbound;
 
         /// <summary>
-        /// Signing Certificate
+        /// Signing Certificate.
         /// </summary>
         public override Certificate CertificateSign {
             get {
@@ -218,7 +201,9 @@ namespace Goedel.Mesh {
             }
         private Certificate _CertificateSign;
 
-
+        /// <summary>
+        /// Encryption Certificate.
+        /// </summary>
         public override Certificate CertificateEncrypt {
             get {
                 // Here, need to use the SHA1 of the cert to locate the
@@ -234,17 +219,21 @@ namespace Goedel.Mesh {
         private Certificate _CertificateEncrypt;
 
 
-
-        public string WLM_Certificate = null;
-        public string WLM_Encryption_Certificate = null;
-
+        /// <summary>
+        /// Construct an account information object from the specified
+        /// Windows Live Mail file.
+        /// </summary>
+        /// <param name="FileName"></param>
         public MailAccountInfoWLM(string FileName) {
             this.FileName = FileName;
-            _Inbound = new MailConnection();
-            _Outbound = new MailConnection();
+            _Inbound = new Connection();
+            _Outbound = new Connection();
             Read();
             }
 
+        /// <summary>
+        /// Construct an empty account information object.
+        /// </summary>
         public MailAccountInfoWLM() {
             // General settings
             MessageAccount = new MessageAccount ();
@@ -256,70 +245,72 @@ namespace Goedel.Mesh {
             }
 
         //https://msdn.microsoft.com/en-us/library/ms715237(v=vs.85).aspx
-        MailConnection GetInbound() {
-            _Inbound = new MailConnection();
+        List<Connection> GetInbound() {
+            _Inbound = new Connection();
+            var ConnectionList = new List<Connection> { _Inbound };
 
             var IMAP_Server = MessageAccount.IMAP_Server;
             if (IMAP_Server != null) {
                 _Inbound.AppProtocol = AppProtocol.IMAP4;
-                _Inbound.Server = IMAP_Server;
+                _Inbound.ServiceName = IMAP_Server;
                 _Inbound.Port = (int)MessageAccount.IMAP_Port;
                 
-                _Inbound.Account = MessageAccount.IMAP_User_Name;
+                _Inbound.UserName = MessageAccount.IMAP_User_Name;
                 _Inbound.Password = null;
                 _Inbound.TLSMode = MessageAccount.IMAP_Secure_Connection == 0 ?
-                    TLSMode.None : TLSMode.PORT;
+                    TLSMode.None : TLSMode.Direct;
                 _Inbound.SecureAuth = MessageAccount.IMAP_Use_Sicily != 0;
                 _Inbound.TimeOut = (int) MessageAccount.IMAP_Timeout;
-                _Inbound.Polling = (int) MessageAccount.IMAP_Polling;
+                _Inbound.Polling =  MessageAccount.IMAP_Polling > 0;
                 }
-            return _Inbound;
+            return ConnectionList;
             }
 
-        void SetInbound(MailConnection Connection) {
-            _Inbound = Connection;
+        void SetInbound(List<Connection> Connection) {
+            _Inbound = Connection[0];
 
             if (_Inbound.AppProtocol == AppProtocol.IMAP4) {
-                MessageAccount.IMAP_Server = _Inbound.Server;
+                MessageAccount.IMAP_Server = _Inbound.ServiceName;
                 MessageAccount.IMAP_Port = (uint)_Inbound.Port;
-                MessageAccount.IMAP_User_Name = _Inbound.Account;
+                MessageAccount.IMAP_User_Name = _Inbound.UserName;
                 MessageAccount.IMAP_Secure_Connection = (uint) (
-                    (_Inbound.TLSMode == TLSMode.PORT |
-                        _Inbound.TLSMode == TLSMode.STARTTLS) ? 1 : 0);
+                    (_Inbound.TLSMode == TLSMode.Direct |
+                        _Inbound.TLSMode == TLSMode.Upgrade) ? 1 : 0);
                 MessageAccount.IMAP_Use_Sicily = (uint)(
                     _Inbound.SecureAuth ? 1 : 0);
                 MessageAccount.IMAP_Timeout = (uint)_Inbound.TimeOut;
-                MessageAccount.IMAP_Polling = (uint)_Inbound.Polling;
+                MessageAccount.IMAP_Polling = (uint) (_Inbound.Polling ? 1 : 0);
                 }
             }
 
-        MailConnection GetOutbound() {
-            _Outbound = new MailConnection();
+        List<Connection> GetOutbound() {
+            _Outbound = new Connection();
+            var ConnectionList = new List<Connection> { _Inbound };
             var SMTP_Server = MessageAccount.SMTP_Server;
             if (SMTP_Server != null) {
-                _Outbound.Server = SMTP_Server;
+                _Outbound.ServiceName = SMTP_Server;
                 _Outbound.Port = (int)MessageAccount.SMTP_Port;
                 _Outbound.AppProtocol = AppProtocol.SMTP;
-                _Outbound.Account = MessageAccount.SMTP_User_Name;
+                _Outbound.UserName = MessageAccount.SMTP_User_Name;
                 _Outbound.Password = null;
                 _Outbound.TLSMode = MessageAccount.SMTP_Secure_Connection == 0 ?
-                    TLSMode.None : TLSMode.PORT;
+                    TLSMode.None : TLSMode.Direct;
                 _Outbound.SecureAuth = MessageAccount.SMTP_Use_Sicily != 0;
-                _Outbound.TimeOut = (int)MessageAccount.SMTP_Timeout;
+                _Outbound.TimeOut = (int) MessageAccount.SMTP_Timeout;
                 }
-            return _Outbound;
+            return ConnectionList;
             }
 
-        void SetOutbound(MailConnection Connection) {
-            _Outbound = Connection;
+        void SetOutbound(List<Connection> Connection) {
+            _Outbound = Connection[0];
 
-            MessageAccount.SMTP_Server = _Outbound.Server;
+            MessageAccount.SMTP_Server = _Outbound.ServiceName;
             MessageAccount.SMTP_Port = (uint)_Outbound.Port;
-            MessageAccount.SMTP_User_Name = _Outbound.Account;
+            MessageAccount.SMTP_User_Name = _Outbound.UserName;
             //MessageAccount.SMTP_Password2 = null;
             MessageAccount.SMTP_Secure_Connection = (uint) (
-                (_Outbound.TLSMode == TLSMode.STARTTLS |
-                _Outbound.TLSMode == TLSMode.PORT) ? 1 : 0);
+                (_Outbound.TLSMode == TLSMode.Upgrade |
+                _Outbound.TLSMode == TLSMode.Direct) ? 1 : 0);
             MessageAccount.SMTP_Use_Sicily = (uint)(
                 _Outbound.SecureAuth ? 1 : 0);
             MessageAccount.SMTP_Timeout = (uint)_Outbound.TimeOut;
@@ -338,14 +329,19 @@ namespace Goedel.Mesh {
 
 
 
-        public void Dump () {
+        public override void  Dump () {
             var XmlWriterSettings = new XmlWriterSettings();
             XmlWriterSettings.Indent = true;
             var Writer = XmlWriter.Create(Console.Out, XmlWriterSettings);
             MessageAccount.Write(Writer);
             }
 
-        public override void CreateAccount() {
+
+        public override void Update() {
+            MessageAccount.Write(FileName);
+            }
+
+        public override void Create() {
             /*
             https://msdn.microsoft.com/en-us/library/ms715237(v=vs.85).aspx
 
@@ -357,11 +353,25 @@ namespace Goedel.Mesh {
             into that subdirectory, and creates an IMAP mail account for Don Hall.
             */
 
-            var FileName = IntegrateLiveMail.StoreRoot +
+            FileName = IntegrateLiveMail.StoreRoot +
                     @"\account{" + AccountName + "}.oeaccount";
             MessageAccount.Write(FileName);
 
             }
+
+        /// <summary>
+        /// Generate keys and certificates for S/MIME
+        /// </summary>
+        /// <returns></returns>
+        public override bool GenerateSMIME(
+                    ) {
+            var Set = base.GenerateSMIME();
+
+            // here register the certs??
+
+            return false;
+            }
+
 
         }
     }
