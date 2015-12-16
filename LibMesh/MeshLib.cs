@@ -46,6 +46,9 @@ namespace Goedel.Mesh {
             }
         AppProtocol _AppProtocol;
 
+        /// <summary>
+        /// Debug routine, writes data to the console.
+        /// </summary>
         public virtual void Dump() {
             Trace.WriteLine("    Server {0} : Port {1} : Protocol", ServiceName, Port, _AppProtocol);
             Trace.WriteLine("        Username {0}/{1}", UserName, Password);
@@ -54,6 +57,17 @@ namespace Goedel.Mesh {
 
         //public MailConnection() { }
 
+        /// <summary>
+        /// Construct a connection object from parameters.
+        /// </summary>
+        /// <param name="Server">DNS service name</param>
+        /// <param name="Port">IP Port number</param>
+        /// <param name="AppProtocol">Application protocol prefix.</param>
+        /// <param name="Account">Account name for authenticaiton</param>
+        /// <param name="Password">Password for authenticaiton</param>
+        /// <param name="TLSMode">TLS Mode, may be Raw, Upgrade or None.</param>
+        /// <param name="SecureAuth">If true, a 
+        /// secure authentication mechanism must be used.</param>
         public Connection(string Server, int Port, AppProtocol AppProtocol,
             string Account, string Password, TLSMode TLSMode, bool SecureAuth) {
 
@@ -70,7 +84,9 @@ namespace Goedel.Mesh {
 
 
 
-
+    /// <summary>
+    /// The Mathamatical Mesh persistence store.
+    /// </summary>
     public class Mesh {
         const string UniqueID = "UniqueID";
         const string KeyUserProfile = "UserProfile";
@@ -90,11 +106,20 @@ namespace Goedel.Mesh {
         PersistenceObjectIndex PortalByPrimary;
 
 
-
+        /// <summary>
+        /// Construct a persistence store for the specified domain.
+        /// </summary>
+        /// <param name="Domain">Domain name of the service</param>
         public Mesh(string Domain) : this (Domain, DefaultMesh, DefaultPortal) {
             }
 
-
+        /// <summary>
+        /// Construct a persistence store for the specified domain, with the
+        /// specified store and portal stores.
+        /// </summary>
+        /// <param name="Domain">Domain name of the service</param>
+        /// <param name="Store">store name for the profile persistence store.</param>
+        /// <param name="Portal">Store name for the portal persistence store.</param>
         public Mesh(string Domain, string Store, string Portal) {
             this.Domain = Domain;
             MeshStore = new LogPersistenceStore(Store, StoreType, StoreComment);
@@ -116,7 +141,7 @@ namespace Goedel.Mesh {
         /// to CheckAccount succeeded as the account name may have been issued in the 
         /// interim or may fail for other reasons.
         /// </summary>
-        /// <param name="Account">The requested account name</param>
+        /// <param name="AccountID">The requested account name</param>
         /// <returns>True is the name is available, otherwise false.</returns>
         public bool CheckAccount (string AccountID) {
             return !PortalByPrimary.Contains(AccountID);
@@ -131,7 +156,7 @@ namespace Goedel.Mesh {
         /// AccountName@Domain as the unique identifier. The profile is 
         /// registered in the mesh under the </para>
         /// </summary>
-        /// <param name="AccountName">The requested account name.</param>
+        /// <param name="AccountID">The requested account name.</param>
         /// <param name="Profile">A signed Personal Profile.</param>
         /// <returns>True if the transaction was successful, otherwise false.  </returns>
         public bool CreateAccount(string AccountID, SignedProfile Profile) {
@@ -159,6 +184,11 @@ namespace Goedel.Mesh {
             return true;
             }
 
+        /// <summary>
+        /// Get Account with the specified identifier.
+        /// </summary>
+        /// <param name="AccountId">Identifier to retrieve.</param>
+        /// <returns>The account object.</returns>
         public Account GetAccount(string AccountId) {
 
             var AccountDataItem = PortalByPrimary.Get(Account.PrimaryKey(AccountId));
@@ -170,7 +200,11 @@ namespace Goedel.Mesh {
             return AccountObject;
             }
 
-
+        /// <summary>
+        /// Get the list of connections pending on an account.
+        /// </summary>
+        /// <param name="Account">The account identifier to get the connections pending for.</param>
+        /// <returns>The pendiong connections.</returns>
         public ConnectionsPending GetPending(Account Account) {
             // Get the pending connections record for the account
             var ConnectionsDataItem = PortalByPrimary.Get(
@@ -186,7 +220,7 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Check the specified personal profile and add it to the mesh.
         /// </summary>
-        /// <param name="Profile"></param>
+        /// <param name="Profile">The profile to add.</param>
         public void AddProfile(SignedProfile Profile) {
             // Validate the signed profile
             if (!Profile.Valid) throw new Throw("Profile not valid");
@@ -222,19 +256,28 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Publish an entry
         /// </summary>
-        /// <param name="Entry"></param>
+        /// <param name="Profile">The profile to publish</param>
         public void UpdateProfile(Entry Profile) {
             if (!Profile.Valid) throw new Throw("Profile not valid");
 
             MeshStore.Update(Profile, Profile.Identifier, Profile.Keys);
             }
 
-
+        /// <summary>
+        /// Get the personal profile with the specified ID.
+        /// </summary>
+        /// <param name="ID">The identifier of the profile to get.</param>
+        /// <returns>The profile if found, otherwise null.</returns>
         public PersonalProfile GetPersonalProfile(string ID) {
             var Profile = GetSignedPersonalProfile(ID);
             return Profile.Signed;
             }
 
+        /// <summary>
+        /// Get the signed personal profile with the specified ID.
+        /// </summary>
+        /// <param name="ID">The identifier of the profile to get.</param>
+        /// <returns>The profile if found, otherwise null.</returns>
         public SignedPersonalProfile GetSignedPersonalProfile(string ID) {
 
             var DataItem = IndexUniqueID.Get(ID);
@@ -243,8 +286,12 @@ namespace Goedel.Mesh {
             return Profile;
             }
 
-
-        public string PostConnectionRequest (
+        /// <summary>
+        /// Post a new connection request to the specified account.
+        /// </summary>
+        /// <param name="SignedConnectionRequest">The request to post</param>
+        /// <param name="AccountId">The account to post it to.</param>
+        public void PostConnectionRequest (
                 SignedConnectionRequest SignedConnectionRequest, string AccountId) {
             var ConnectionRequest = SignedConnectionRequest.Data;
 
@@ -265,11 +312,15 @@ namespace Goedel.Mesh {
             PortalStore.Update(ConnectionsPending, 
                 ConnectionsPending.PrimaryKey(Account.UserProfileUDF), null);
 
-            return null;
+            return;
             }
 
 
-
+        /// <summary>
+        /// Get the list of signed pending connection requests.
+        /// </summary>
+        /// <param name="AccountId">The account to query.</param>
+        /// <returns>The list of requests.</returns>
         public List<SignedConnectionRequest> GetPendingRequests(string AccountId) {
             var Account = GetAccount(AccountId);
 
@@ -282,7 +333,12 @@ namespace Goedel.Mesh {
             }
 
 
-
+        /// <summary>
+        /// Close a connection request.
+        /// </summary>
+        /// <param name="AccountId">The account identifier to close the request on.</param>
+        /// <param name="SignedResult">The status to be posted to the close.</param>
+        /// <returns>true if the connection request coule be found, otherwise false.</returns>
         public bool CloseConnectionRequest(
                 string AccountId, SignedConnectionResult SignedResult) {
 
@@ -319,7 +375,12 @@ namespace Goedel.Mesh {
             }
 
 
-
+        /// <summary>
+        /// Get the status of a pending connection request.
+        /// </summary>
+        /// <param name="AccountId">The account to query.</param>
+        /// <param name="DeviceUDF">The device that is attempting to connect.</param>
+        /// <returns>Status of the pending request.</returns>
         public SignedConnectionResult GetRequestStatus(string AccountId, string DeviceUDF) {
             var Account = GetAccount(AccountId);
 
@@ -333,7 +394,11 @@ namespace Goedel.Mesh {
             return Result;
             }
 
-
+        /// <summary>
+        /// Get the current chain token for the mesh store for use
+        /// in notarized transactions.
+        /// </summary>
+        /// <returns></returns>
         public string GetChainToken () {
             return "Chain:Start";
 

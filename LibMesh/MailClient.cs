@@ -5,15 +5,27 @@ using Goedel.Debug;
 
 namespace Goedel.Mesh {
     public partial class MailClientCatalog {
+
+
+        /// <summary>
+        /// List of all accounts discovered on the local machine.
+        /// </summary>
         public List<MailAccountInfo> Accounts = new List<MailAccountInfo>() ;
 
-
+        /// <summary>
+        /// Search local application configuration files to discover account 
+        /// details.
+        /// </summary>
+        /// <returns>List of the accounts found.</returns>
         public static List<MailAccountInfo> FindLocal () {
             var MailClientCatalog = new MailClientCatalog();
             MailClientCatalog.ImportWindowsLiveMail();
             return MailClientCatalog.Accounts;
             }
 
+        /// <summary>
+        /// Debug utility, dumps list of accounts to the console.
+        /// </summary>
         public virtual void Dump () {
             foreach (var Account in Accounts) {
                 Account.Dump();
@@ -22,8 +34,9 @@ namespace Goedel.Mesh {
 
         }
 
-
-
+    /// <summary>
+    /// Base class for mail profile information for applications on local machine.
+    /// </summary>
     public partial class MailAccountInfo : MailProfilePrivate {
 
         /// <summary>
@@ -81,9 +94,15 @@ namespace Goedel.Mesh {
             }
         private Certificate _CertificateEncrypt;
 
+        /// <summary>
+        /// Create a new profile using the specified configuration data.
+        /// </summary>
         public virtual void Create() {
             }
 
+        /// <summary>
+        /// Update a found profile to match this profile.
+        /// </summary>
         public virtual void Update () {
             }
 

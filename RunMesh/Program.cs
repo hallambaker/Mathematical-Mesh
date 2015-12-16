@@ -253,7 +253,7 @@ namespace Goedel.Mesh {
             var ChainToken = Mesh.GetChainToken();
             var ConnectionRequest = new ConnectionRequest(Account, DevProfile2);
 
-            var Pending = Mesh.PostConnectionRequest(ConnectionRequest.Signed, 
+            Mesh.PostConnectionRequest(ConnectionRequest.Signed, 
                 Account.UniqueID);
 
             // Get list of pending requests

@@ -17,12 +17,22 @@ namespace Goedel.Mesh {
 
     public partial class PersonalProfile  {
 
+        /// <summary>
+        /// The active device profile of the local machine that is attached to this
+        /// profile.
+        /// </summary>
         public SignedDeviceProfile SignedDeviceProfile;
 
+        /// <summary>
+        /// Get UDF fingerprint of the profile.
+        /// </summary>
         public override string UDF { get { return _PersonalMasterProfile.Identifier; } }
+
         MasterProfile _PersonalMasterProfile;
 
-
+        /// <summary>
+        /// The corresponding signed profile.
+        /// </summary>
         public SignedPersonalProfile Signed {
             get {
                 return new SignedPersonalProfile(this);
@@ -56,6 +66,8 @@ namespace Goedel.Mesh {
         /// Create a personal profile with the specified master and administration
         /// profiles.
         /// </summary>
+        /// <param name="PersonalMasterProfile">The master profile for this 
+        /// personal profile.</param>
         /// <param name="DeviceProfile">The device profile to be the initial 
         /// administration device for the profile.</param>
         public PersonalProfile(MasterProfile PersonalMasterProfile,
@@ -157,7 +169,11 @@ namespace Goedel.Mesh {
         //        }
         //    }
 
-
+        /// <summary>
+        /// Get the first application entry of the specified type.
+        /// </summary>
+        /// <param name="Type">The application type.</param>
+        /// <returns>The application profile entry (if found) or null otherwise.</returns>
         public ApplicationProfileEntry GetApplication(string Type) {
             foreach (var App in Applications) {
                 if (App.Type == Type) {
@@ -168,6 +184,12 @@ namespace Goedel.Mesh {
 
             }
 
+        /// <summary>
+        /// Get the named application entry.
+        /// </summary>
+        /// <param name="Type"></param>
+        /// <param name="MatchName"></param>
+        /// <returns>The application profile entry (if found) or null otherwise.</returns>
         public ApplicationProfileEntry GetApplication(System.Type Type, string MatchName) {
             foreach (var App in Applications) {
                 //if (App.GetType() == Type) {
@@ -181,21 +203,37 @@ namespace Goedel.Mesh {
             return null;
             }
 
+        /// <summary>
+        /// Get the default password profile.
+        /// </summary>
+        /// <returns>The application profile entry (if found) or null otherwise.</returns>
         public ApplicationProfileEntry GetPasswordProfile () {
             var Profile = GetApplication(typeof(PasswordProfile).Name);
             return Profile;
             }
 
+        /// <summary>
+        /// Get the default network profile.
+        /// </summary>
+        /// <returns>The application profile entry (if found) or null otherwise.</returns>
         public ApplicationProfileEntry GetNetworkProfile() {
             var Profile = GetApplication(typeof(NetworkProfile).Name);
             return Profile;
             }
 
+        /// <summary>
+        /// Get the default mail profile.
+        /// </summary>
+        /// <returns>The application profile entry (if found) or null otherwise.</returns>
         public ApplicationProfileEntry GetMailProfile() {
             var Profile = GetApplication(typeof(MailProfile).Name);
             return Profile;
             }
 
+        /// <summary>
+        /// Get the administration key (if available).
+        /// </summary>
+        /// <returns>The administration key.</returns>
         public KeyPair GetAdministrationKey() {
             foreach (var Device in Devices) {
                 Console.WriteLine("Got Device {0}", Device.UDF);

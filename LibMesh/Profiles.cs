@@ -9,21 +9,52 @@ using Goedel.Debug;
 using Goedel.Cryptography.Jose;
 
 namespace Goedel.Mesh {
+
+    /// <summary>
+    /// Index term for retrieving mesh profiles.
+    /// </summary>
     public class MeshIndexTerm {
+
+        /// <summary>
+        /// Prefix for unique ID terms
+        /// </summary>
         public const string UniqueID = "UniqueID";
+
+        /// <summary>
+        /// Prefix for user profile terms.
+        /// </summary>
         public const string KeyUserProfile = "UserProfile";
         
+        /// <summary>
+        /// Persistence store where terms are to be interned.
+        /// </summary>
         public PersistenceStore PersistenceStore;
+
+        /// <summary>
+        /// Index of objects by unique ID
+        /// </summary>
         public PersistenceIndex IndexUniqueID;
+
+        /// <summary>
+        /// Index of objects by account name.
+        /// </summary>
         public PersistenceIndex UserProfilesByAccount;
 
-
+        /// <summary>
+        /// Construct a new index term for the specified persistence store.
+        /// </summary>
+        /// <param name="PersistenceStore"></param>
         public MeshIndexTerm(PersistenceStore PersistenceStore) {
             this.PersistenceStore = PersistenceStore;
             UserProfilesByAccount = PersistenceStore.GetIndex(KeyUserProfile);
             IndexUniqueID = PersistenceStore.GetIndex(UniqueID);
             }
 
+        /// <summary>
+        /// Set index terms for a unique identifier.
+        /// </summary>
+        /// <param name="KeyDatas"></param>
+        /// <param name="ID"></param>
         public static void SetUnique(List<IndexTerm> KeyDatas, string ID) {
             }
 
@@ -34,15 +65,24 @@ namespace Goedel.Mesh {
     /// </summary>
     public partial class Profile {
 
-
+        /// <summary>
+        /// List of all the index terms this profile can be retrieved through.
+        /// </summary>
         public List<IndexTerm> IndexTerms {
             get { return GetIndex(); }
             }
+
+        /// <summary>
+        /// Get the unique identifier for this object.
+        /// </summary>
         public string UniqueID {
             get { return Identifier; }
             }
 
-
+        /// <summary>
+        /// Get a list of indexes for this profile.
+        /// </summary>
+        /// <returns></returns>
         public virtual List<IndexTerm> GetIndex() {
             List<IndexTerm> Result = new List<IndexTerm>();
 
@@ -78,8 +118,16 @@ namespace Goedel.Mesh {
         }
 
     public partial class ApplicationProfileEntry {
+
+        /// <summary>
+        /// The application profile object this entry belongs to.
+        /// </summary>
         public ApplicationProfile ApplicationProfile;
 
+        /// <summary>
+        /// Create a new entry for the specified profile.
+        /// </summary>
+        /// <param name="ApplicationProfile">Profile to link to.</param>
         public ApplicationProfileEntry(ApplicationProfile ApplicationProfile) {
 
             Identifier = ApplicationProfile.Identifier;
@@ -97,15 +145,23 @@ namespace Goedel.Mesh {
         /// </summary>
         protected PersonalProfile PersonalProfile;
 
+        /// <summary>
+        /// This application profile's entry in the parent personal profile.
+        /// </summary>
         protected ApplicationProfileEntry ApplicationProfileEntry;
 
+        /// <summary>
+        /// Return a signed version of this profile.
+        /// </summary>
         public SignedApplicationProfile Signed {
             get {
                 return new SignedApplicationProfile(this);
                 }
             }
 
-
+        /// <summary>
+        /// Return the private data of this profile as raw data bytes.
+        /// </summary>
         protected virtual byte[] GetPrivateData {
             get { return null;  }
             }
@@ -114,7 +170,9 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Create a new application profile and add it to the UserProfile.
         /// </summary>
-        /// <param name="UserProfile"></param>
+        /// <param name="PersonalProfile">The personal profile to attach to.</param>
+        /// <param name="Type">Application type</param>
+        /// <param name="Tag">Friendly name</param>
         public ApplicationProfile(PersonalProfile PersonalProfile, 
                     string Type, string Tag) {
             this.PersonalProfile = PersonalProfile;
@@ -141,6 +199,9 @@ namespace Goedel.Mesh {
             PersonalProfile.Applications.Add(ApplicationProfileEntry);
             }
 
+
+
+
         /// <summary>
         /// Connect an application profile read from store to a PersonalProfile object.
         /// </summary>
@@ -154,6 +215,11 @@ namespace Goedel.Mesh {
             ApplicationProfileEntry.ApplicationProfile = this;
             }
 
+        /// <summary>
+        /// Locate a signature key known to this device that 
+        /// is authorized to sign this profile.
+        /// </summary>
+        /// <returns>An authorized key pair.</returns>
         public KeyPair GetSignatureKey() {
             // Check that the device is allowed to sign
             if (!CanSign(PersonalProfile.SignedDeviceProfile)) return null;
@@ -164,6 +230,11 @@ namespace Goedel.Mesh {
             return Result;
             }
 
+        /// <summary>
+        /// Determine if the specified key is allowed to sign this profile.
+        /// </summary>
+        /// <param name="SignedDeviceProfile"></param>
+        /// <returns>True if signing is authorized, otherwise false.</returns>
         public bool CanSign (SignedDeviceProfile SignedDeviceProfile) {
             if (ApplicationProfileEntry == null) throw new Throw("Broken");
             if (ApplicationProfileEntry.SignID == null) throw new Throw("Broken");
@@ -178,6 +249,10 @@ namespace Goedel.Mesh {
             return false;
             }
 
+        /// <summary>
+        /// Add the specified device to the application profile.
+        /// </summary>
+        /// <param name="DeviceProfile"></param>
         public virtual void AddDevice(SignedDeviceProfile DeviceProfile) {
             Debug.Trace.TBS("Should check to see if there is already a device entry and remove it.");
             var DeviceEntry = MakeEntry(DeviceProfile);
@@ -210,7 +285,10 @@ namespace Goedel.Mesh {
             }
 
 
-        /* --------  Grotty bit ---------- */
+        /// <summary>
+        /// Decrypt the private data portion of the profile.
+        /// </summary>
+        /// <returns></returns>
         public virtual byte[] DecryptPrivate() {
             var SignedDeviceProfile = PersonalProfile.SignedDeviceProfile;
             var DeviceProfile = SignedDeviceProfile.Data;
@@ -230,7 +308,11 @@ namespace Goedel.Mesh {
 
 
 
-
+        /// <summary>
+        /// Really not sure if this is needed any more.
+        /// </summary>
+        /// <param name="DeviceProfile"></param>
+        /// <returns>Who can tell?</returns>
 
         public virtual DeviceEntry MakeEntry(SignedDeviceProfile DeviceProfile) {
             var DeviceEntry = new DeviceEntry();

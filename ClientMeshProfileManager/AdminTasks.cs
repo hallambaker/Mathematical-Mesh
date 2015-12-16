@@ -373,8 +373,8 @@ namespace Goedel.MeshProfileManager {
             var PersonalProfile = SignedPersonalProfile.Signed;
             PersonalProfile.Add(DeviceProfile);
 
-            foreach (var App in PersonalProfile.Applications) {
-                // add decryption entry for this device.
+            foreach (var Entry in PersonalProfile.Applications) {
+                AddDevice(Entry, PersonalProfile, DeviceProfile);
                 }
             // Sign personal profile
             var SignedProfile = new SignedPersonalProfile(PersonalProfile);
@@ -390,7 +390,25 @@ namespace Goedel.MeshProfileManager {
             return true;
             }
 
+        /// <summary>
+        /// Add a device to an application profile 
+        /// </summary>
+        /// <param name="Entry">Applicationprofile entry to update</param>
+        /// <param name="PersonalProfile">Personal profile to link to</param>
+        /// <param name="Device">Signed device profile.</param>
+        public void AddDevice(ApplicationProfileEntry Entry, 
+                    PersonalProfile PersonalProfile,
+                SignedDeviceProfile Device) {
+            Entry.SignID.Add(Device.Identifier);
+            Entry.DecryptID.Add(Device.Identifier);
 
+            var SignedAppProfile = MeshClient.GetApplicationProfile(Entry.Identifier);
+            var AppProfile = SignedAppProfile.Signed;
+            AppProfile.Link(PersonalProfile);
+            AppProfile.EncryptPrivate();
+            var NewSignedAppProfile = new SignedApplicationProfile(AppProfile);
+            MeshClient.Publish(NewSignedAppProfile);
+            }
         }
 
 

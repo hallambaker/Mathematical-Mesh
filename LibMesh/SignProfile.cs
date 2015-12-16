@@ -25,10 +25,16 @@ namespace Goedel.Mesh {
             get { return Inner != null ? Inner.UDF : null; }
             }
 
+        /// <summary>
+        /// the list of index terms.
+        /// </summary>
         public virtual List<IndexTerm> IndexTerms {
             get { return Inner != null ? Inner.IndexTerms : null; }
             }
 
+        /// <summary>
+        /// The unique identifier for the profile.
+        /// </summary>
         public virtual string UniqueID {
             get { return Inner != null ? Inner.UniqueID : null; }
             }
@@ -50,6 +56,9 @@ namespace Goedel.Mesh {
 
     public partial class SignedDeviceProfile {
 
+        /// <summary>
+        /// The inner profile object.
+        /// </summary>
         public override Profile Inner {
             get { return Data; }
             }
@@ -80,21 +89,29 @@ namespace Goedel.Mesh {
             get { if (_Signed == null) _Signed = Unpack(); return _Signed; }
             }
 
-
+        /// <summary>
+        /// Construct a signed profile from a device profile.
+        /// </summary>
+        /// <param name="Data">The device profile to sign.</param>
         public SignedDeviceProfile(DeviceProfile Data) {
             Sign(Data);
             }
 
+        /// <summary>
+        /// Sign the device profile.
+        /// </summary>
+        /// <param name="Data">The device profile to sign.</param>
         public void Sign(DeviceProfile Data) {
-
-
             Identifier = Data.Identifier;  // pass through
-
             var PrivateKey = Data.DeviceSignatureKey.PrivateKey;
             SignedData = new JoseWebSignature(Data.GetBytes(), PrivateKey);
             _Signed = Data;
             }
 
+        /// <summary>
+        /// Deserialize the signed data.
+        /// </summary>
+        /// <returns>The device profile object.</returns>
         public DeviceProfile Unpack() {
             _Signed = null;
 
@@ -125,7 +142,11 @@ namespace Goedel.Mesh {
             }
 
 
-
+        /// <summary>
+        /// Unpack the signed device profile data and verify it for
+        /// consistency. Check the signature.
+        /// </summary>
+        /// <returns>The inner profile (if valid) otherwise null.</returns>
         public virtual DeviceProfile UnpackAndVerify() {
             var Text = Encoding.UTF8.GetString(SignedData.Payload);
             //Goedel.Debug.Trace.WriteLine("Data as signed {0}", Text);
@@ -143,7 +164,12 @@ namespace Goedel.Mesh {
             return Unpacked;
             }
 
-
+        /// <summary>
+        /// Find a device profile with the specified signing key from a list.
+        /// </summary>
+        /// <param name="Devices">The list of devices to search.</param>
+        /// <param name="UDF">The identifier of the key to find.</param>
+        /// <returns>The profile of the device (if found) otherwise null.</returns>
         public static SignedDeviceProfile FindSignatureKey(List<SignedDeviceProfile> Devices, string UDF) {
             foreach (var Device in Devices) {
                 if (Device.Data.DeviceSignatureKey.UDF == UDF) {
@@ -161,20 +187,35 @@ namespace Goedel.Mesh {
 
     public partial class SignedMasterProfile {
         MasterProfile _Signed;
+        /// <summary>
+        /// The signed profile object.
+        /// </summary>
         public override Profile Inner {
             get { return Signed; }
             }
 
+        /// <summary>
+        /// The signed profile object.
+        /// </summary>
         public MasterProfile Signed {
             get { if (_Signed == null) _Signed = UnpackAndVerify(); return _Signed; }
             }
 
+        /// <summary>
+        /// Construct a signed profile from the specified profile.
+        /// </summary>
+        /// <param name="Data">The profile to sign.</param>
         public SignedMasterProfile(MasterProfile Data) {
             Identifier = Data.Identifier;  // pass through
             SignedData = new JoseWebSignature(Data.GetBytes(), Data.MasterSignatureKey.KeyPair);
             _Signed = Data;
             }
 
+        /// <summary>
+        /// Unpack the signed data and verify its consistency.
+        /// </summary>
+        /// <returns>The corresponding master profile if validation is successful,
+        /// otherwise null.</returns>
         public virtual MasterProfile UnpackAndVerify() {
 
             var Text = Encoding.UTF8.GetString(SignedData.Payload);
@@ -195,14 +236,23 @@ namespace Goedel.Mesh {
 
     public partial class SignedApplicationProfile {
         ApplicationProfile _Signed = null;
-
+        /// <summary>
+        /// The signed profile object.
+        /// </summary>
         public override Profile Inner {
             get { return Signed; }
             }
+        /// <summary>
+        /// The signed profile object.
+        /// </summary>
         public ApplicationProfile Signed {
             get { if (_Signed == null) _Signed = UnpackAndVerify(); return _Signed; }
             }
 
+        /// <summary>
+        /// Construct a signed profile from the specified profile.
+        /// </summary>
+        /// <param name="Data">The profile to sign.</param>
         public SignedApplicationProfile(ApplicationProfile Data) {
 
             // Locate the administration key for this device.
@@ -220,6 +270,11 @@ namespace Goedel.Mesh {
             _Signed = Data;
             }
 
+        /// <summary>
+        /// Unpack the signed data and verify its consistency.
+        /// </summary>
+        /// <returns>The corresponding master profile if validation is successful,
+        /// otherwise null.</returns>
         public virtual ApplicationProfile UnpackAndVerify() {
 
             // Get the signature key
@@ -250,11 +305,16 @@ namespace Goedel.Mesh {
     public partial class SignedPersonalProfile {
         PersonalProfile _Signed = null;
 
-
+        /// <summary>
+        /// The signed profile object.
+        /// </summary>
         public override Profile Inner {
             get { return _Signed; }
             }
 
+        /// <summary>
+        /// The signed profile object.
+        /// </summary>
         public PersonalProfile Signed {
             get { if (_Signed == null) _Signed = UnpackAndVerify(); return _Signed; }
             }
