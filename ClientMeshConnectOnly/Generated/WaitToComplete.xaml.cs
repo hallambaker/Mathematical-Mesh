@@ -49,11 +49,6 @@ namespace Goedel.MeshConnect {
 		// Input backing variables
 
 		// Output backing variables
-		string _Output_Fingerprint2;
-		public string Output_Fingerprint2 {
-            get { return _Output_Fingerprint2; }
-            set { _Output_Fingerprint2 = value;   Refresh (); }
-            }
 		string _Output_Device2;
 		public string Output_Device2 {
             get { return _Output_Device2; }
@@ -103,7 +98,6 @@ namespace Goedel.MeshConnect {
 			}
 
 		public void Refresh () {
-			Output_Fingerprint2.Text  = Data.Output_Fingerprint2;
 			Output_Device2.Text  = Data.Output_Device2;
 			}
 

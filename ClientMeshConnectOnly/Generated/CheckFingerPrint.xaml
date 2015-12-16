@@ -25,12 +25,6 @@ your profile manager.
 				<TextBlock FontSize="20" Name="Output_Fingerprint1"
 						 VerticalAlignment="Top"></TextBlock>
 			</StackPanel>
-            <StackPanel Orientation="Horizontal">
-				<Label FontSize="20"
-					   VerticalAlignment="Top">This Device</Label>
-				<TextBlock FontSize="20" Name="Output_Device1"
-						 VerticalAlignment="Top"></TextBlock>
-			</StackPanel>
 
         <Grid Margin="20,20,20,20">
             <Grid.ColumnDefinitions>

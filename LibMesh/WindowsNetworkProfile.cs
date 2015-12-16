@@ -11,11 +11,12 @@ namespace Goedel.Mesh {
     /// 
     /// </summary>
     public class SystemNetworkProfile {
+
+        /// <summary>
+        /// Write DNS configuration data to the console.
+        /// </summary>
         public static void DisplayDnsAddresses() {
             NetworkInterface[] adapters = NetworkInterface.GetAllNetworkInterfaces();
-
-
-
 
             foreach (NetworkInterface adapter in adapters) {
                 if ((adapter.OperationalStatus == OperationalStatus.Up) &

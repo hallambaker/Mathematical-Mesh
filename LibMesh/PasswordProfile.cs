@@ -126,6 +126,7 @@ namespace Goedel.Mesh {
         /// by the Mesh to a PasswordProfile.
         /// </summary>
         /// <param name="SignedProfile"></param>
+        /// <param name="PersonalProfile">The personal profile to link the Password Profile to.</param>
         /// <returns>Inner PasswordProfile if the Signed Profile contains one,
         /// otherwise null.</returns>
         public static PasswordProfile Get(SignedProfile SignedProfile,

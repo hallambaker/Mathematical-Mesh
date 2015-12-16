@@ -41,9 +41,17 @@ namespace Goedel.Protocol {
         /// <param name="WellKnown">The well-known service identifier tag (see RFC 5785).</param>
         /// <param name="TLS">If true, the https scheme is used, otherwise http is used.</param>
         /// <returns></returns>
-        public static string WellKnownToURI (string Domain, string WellKnown, bool TLS) {
-            return (TLS ? "https://" : "http://") + "127.0.0.1" + "/.well-known/" + WellKnown + "/";
+        public static string WellKnownToURI (string Domain, string WellKnown, 
+                            string Prefix, bool TLS, bool HostMode) {
+
+            var Address = DNS.Resolve(Domain, Prefix);
+
+            return (TLS ? "https://" : "http://") + 
+                (HostMode ? Domain : Address) + 
+                "/.well-known/" + WellKnown + "/";
             }
+
+
 
         }
 
@@ -57,6 +65,13 @@ namespace Goedel.Protocol {
         /// The WellKnown service name for HTTP and DNS prefix use.
         /// </summary>
         public abstract string GetWellKnown {
+            get;
+            }
+
+        /// <summary>
+        /// The WellKnown service name for HTTP and DNS prefix use.
+        /// </summary>
+        public abstract string GetDiscovery {
             get;
             }
 

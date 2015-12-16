@@ -86,7 +86,7 @@ namespace Goedel.MeshProfileManager {
         /// queried.
         /// </summary>
         public int AccountIndex;
-        
+
         /// <summary>
         /// User's personal profile.
         /// </summary>
@@ -145,7 +145,7 @@ namespace Goedel.MeshProfileManager {
 
             if (DoLocal) {
                 MeshPortal.Default = new MeshPortalDirect();
-                
+
                 // Get the default profile if possible
                 MeshClient = new MeshClient(); // default account
                 MeshClient.AccountID = AccountID;
@@ -185,7 +185,7 @@ namespace Goedel.MeshProfileManager {
             this.Portal = Portal;
             this.AccountName = Account;
 
-            MeshClient = new MeshClient (Portal);
+            MeshClient = new MeshClient(Portal);
 
 
             var ValidateResponse = MeshClient.Validate(AccountID);
@@ -221,20 +221,24 @@ namespace Goedel.MeshProfileManager {
             if (ConfigureEmail) {
                 foreach (var MailAccountInfo in MailAccountInfos) {
                     MailAccountInfo.GenerateSMIME();
+                    MailAccountInfo.Update();
                     var MailProfile = new MailProfile(UserProfile, MailAccountInfo);
                     MailProfile.AddDevice(ThisDevice);
+
+                    var SignedMailProfile = new SignedApplicationProfile(MailProfile);
+                    MeshClient.Publish(SignedMailProfile);
                     }
                 }
 
             if (ConfigureRecovery) {
                 MakeCheckRecovery();
                 }
-            
+
             // publish to the cloud
             var SignedProfile = new SignedPersonalProfile(UserProfile);
             SignedProfile.ToRegistry();
 
-            MeshClient.CreatePersonalProfile (AccountID, SignedProfile);
+            MeshClient.CreatePersonalProfile(AccountID, SignedProfile);
             }
 
 
@@ -260,7 +264,7 @@ namespace Goedel.MeshProfileManager {
         /// </summary>
         /// <param name="Shares">Array containing the necessary shares.</param>
         /// <returns>UDF of the recovered profile (if successful).</returns>
-        public string RecoverProfile(string [] Shares) {
+        public string RecoverProfile(string[] Shares) {
 
             var KeyShares = new KeyShare[Shares.Length];
 
@@ -289,7 +293,7 @@ namespace Goedel.MeshProfileManager {
         /// </summary>
         /// <returns>True, if a pending connection request is present,
         /// otherwise false.</returns>
-        public bool CheckPending () {
+        public bool CheckPending() {
             var PendingResponse = MeshClient.ConnectPending();
             PendingConnectionRequests = PendingResponse.Pending;
 
@@ -336,6 +340,56 @@ namespace Goedel.MeshProfileManager {
 
 
             }
+
+        /// <summary>
+        /// Reject the connection request
+        /// </summary>
+        public bool RejectConnection() {
+
+            var CurrentRequest = PendingConnectionRequests[0];
+            MeshClient.ConnectClose(CurrentRequest, ConnectionStatus.Rejected);
+
+            return true;
+            }
+
+
+        /// <summary>
+        /// Accept the connection request
+        /// </summary>
+        public bool AcceptConnection() {
+
+            // Get the connection request
+            var CurrentRequest = PendingConnectionRequests[0];
+            var RequestData = CurrentRequest.Data;
+
+            // Extract the device profile
+            var DeviceProfile = RequestData.Device;
+
+            // Validate the device profile
+            var SignedPersonalProfile = MeshClient.GetPersonalProfile();
+
+            // Add device profile to personal profile
+
+            var PersonalProfile = SignedPersonalProfile.Signed;
+            PersonalProfile.Add(DeviceProfile);
+
+            foreach (var App in PersonalProfile.Applications) {
+                // add decryption entry for this device.
+                }
+            // Sign personal profile
+            var SignedProfile = new SignedPersonalProfile(PersonalProfile);
+            SignedProfile.ToRegistry();
+
+            // Send client the personal profile update
+            MeshClient.Publish(SignedProfile);
+
+            // Send client the connection result
+            MeshClient.ConnectClose(CurrentRequest, ConnectionStatus.Accepted);
+
+
+            return true;
+            }
+
 
         }
 

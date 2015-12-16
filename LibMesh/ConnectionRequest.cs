@@ -6,10 +6,28 @@ using Goedel.Protocol;
 
 namespace Goedel.Mesh {
 
+    /// <summary>
+    /// Tracks the status of a device profile connection request.
+    /// </summary>
     public enum ConnectionStatus {
+        /// <summary>
+        /// Request was accepted.
+        /// </summary>
         Accepted,
+
+        /// <summary>
+        /// Request has been rejected.
+        /// </summary>
         Rejected,
+
+        /// <summary>
+        /// Request is pending.
+        /// </summary>
         Pending,
+
+        /// <summary>
+        /// Status is not known.
+        /// </summary>
         Unknown,
         }
 
@@ -35,7 +53,6 @@ namespace Goedel.Mesh {
 
             Override comparison operators so List<t> methods work right.
 
-        *
         */
 
 

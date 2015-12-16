@@ -145,7 +145,8 @@ namespace Goedel.Mesh {
         /// Return a MeshService object for the named portal service.
         /// </summary>
         public override MeshService GetService(string Service, string Account) {
-            var URI = JPCProvider.WellKnownToURI(Service, MeshService.WellKnown, false);
+            var URI = JPCProvider.WellKnownToURI(Service, MeshService.WellKnown, 
+                        MeshService.Discovery, false, false);
 
             var Session = new WebRemoteSession(URI, Service, Account);
             MeshService = new MeshServiceClient(Session);

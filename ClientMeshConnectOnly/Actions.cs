@@ -37,7 +37,7 @@ namespace Goedel.MeshConnect {
             Trace.WriteLine("Enter CheckFingerPrint");
 
             Output_Fingerprint1 = Data.SignedPersonalProfile.UDF;
-            Output_Device1 = Data.DevProfile.UDF;
+            //Output_Device1 = Data.DevProfile.UDF;
             Refresh();
             }
 
@@ -62,7 +62,7 @@ namespace Goedel.MeshConnect {
         public override void Enter() {
             Trace.WriteLine("Enter CheckFingerPrint");
 
-            Output_Fingerprint2 = Data.SignedPersonalProfile.UDF;
+            //Output_Fingerprint2 = Data.SignedPersonalProfile.UDF;
             Output_Device2 = Data.DevProfile.UDF;
             Refresh();
             }

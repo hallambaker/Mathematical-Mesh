@@ -18,12 +18,6 @@ your profile, you must approve the request on another device.
         <StackPanel>
             <StackPanel Orientation="Horizontal">
 				<Label FontSize="20"
-					   VerticalAlignment="Top">Profile</Label>
-				<TextBlock FontSize="20" Name="Output_Fingerprint2"
-						 VerticalAlignment="Top"></TextBlock>
-			</StackPanel>
-            <StackPanel Orientation="Horizontal">
-				<Label FontSize="20"
 					   VerticalAlignment="Top">This Device</Label>
 				<TextBlock FontSize="20" Name="Output_Device2"
 						 VerticalAlignment="Top"></TextBlock>

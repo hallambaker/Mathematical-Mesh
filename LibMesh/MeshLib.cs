@@ -21,17 +21,14 @@ namespace Goedel.Mesh {
             this.Security = Security;
             }
 
-        //public string Server;
-        //public int Port;
-
-        //public string UserName;
-        //public string Password;
-
-
-        //public int TimeOut;
-        //public int Polling;
-
+        /// <summary>
+        /// The TLS Mode to use
+        /// </summary>
         public TLSMode TLSMode;
+
+        /// <summary>
+        /// If true, force use of secure authentication.
+        /// </summary>
         public bool SecureAuth;
 
 

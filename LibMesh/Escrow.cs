@@ -14,7 +14,8 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Creates an offline escrow entry for the master keys in the profile.
         /// </summary>
-        /// <param name="Shares">The total number of key shares to be created</param>
+        /// <param name="Profile">The profile to create offline escrow entries for.</param>
+        /// <param name="Shares">The total number of key shares to be created.</param>
         /// <param name="Quorum">The number of key shares required to recover the keys.</param>
         /// <returns></returns>
 

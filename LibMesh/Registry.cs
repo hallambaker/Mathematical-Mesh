@@ -9,13 +9,33 @@ using Goedel.LibCrypto.PKIX;
 
 namespace Goedel.Mesh {
 
+    /// <summary>
+    /// Interface class to manage entries in the Windows Registry anf file system. On
+    /// non-windows machines, this can simply map to flat files.
+    /// </summary>
     public partial class Register {
 
+        /// <summary>
+        /// Create registry entries for the specified parameters and return the 
+        /// file name to write the data file to.
+        /// </summary>
+        /// <param name="KeyName">The Registry key to write to.</param>
+        /// <param name="Path">The Registry Path to write to</param>
+        /// <param name="UDF">The fingerprint of the data object.</param>
+        /// <returns>File name for the data file</returns>
         public static string WriteFile(string KeyName, string Path, string UDF) {
             return WriteFile(KeyName, Path, "", UDF);
             }
 
-
+        /// <summary>
+        /// Create registry entries for the specified parameters and return the 
+        /// file name to write the data file to.
+        /// </summary>
+        /// <param name="KeyName">The Registry key to write to.</param>
+        /// <param name="Path">The Registry Path to write to</param>
+        /// <param name="Name">The name of the key to write to.</param>
+        /// <param name="UDF">The fingerprint of the data object.</param>
+        /// <returns>File name for the data file</returns>
         public static string WriteFile(string KeyName, string Path, string Name, string UDF) {
             var Hive = Microsoft.Win32.Registry.CurrentUser;
             var Key = Hive.CreateSubKey(KeyName);
@@ -29,12 +49,24 @@ namespace Goedel.Mesh {
             return FileName;
             }
 
-
+        /// <summary>
+        /// Get the file name to read a file from the specified keyname and path.
+        /// </summary>
+        /// <param name="KeyName">The Registry key to write to.</param>
+        /// <param name="Path">The Registry Path to write to</param>
+        /// <returns>File name of the stored file.</returns>
         public static string ReadFile(string KeyName, string Path) {
             return ReadFile(KeyName, Path, null);
             }
 
 
+        /// <summary>
+        /// Get the file name to read a file from the specified keyname and path.
+        /// </summary>
+        /// <param name="KeyName">The Registry key to write to.</param>
+        /// <param name="Path">The Registry Path to write to</param>
+        /// <param name="UDF">Fingerprint of the object to read.</param>
+        /// <returns>File name of the stored file.</returns>
         public static string ReadFile(string KeyName, string Path, string UDF) {
             var Hive = Microsoft.Win32.Registry.CurrentUser;
             var Key = Hive.OpenSubKey(KeyName);
@@ -49,6 +81,12 @@ namespace Goedel.Mesh {
             }
 
 
+        /// <summary>
+        /// Create registry entries for the specified parameters.
+        /// </summary>
+        /// <param name="KeyName">The Registry key to write to.</param>
+        /// <param name="Entry">The name of the key to write to.</param>
+        /// <param name="UDF">The fingerprint of the data object.</param>
         public static void Write (string KeyName, string Entry, string UDF) {
             var Hive = Microsoft.Win32.Registry.CurrentUser;
             var Key = Hive.CreateSubKey(KeyName);
@@ -56,10 +94,21 @@ namespace Goedel.Mesh {
             Key.SetValue(Entry, UDF);
             }
 
+        /// <summary>
+        /// Read registry entries for the specified parameters.
+        /// </summary>
+        /// <param name="KeyName">The Registry key to write to.</param>
+        /// <param name="UDF">The fingerprint of the data object.</param>
         public static string Read(string KeyName, out string UDF) {
             return Read(KeyName, null, out UDF);
             }
 
+        /// <summary>
+        /// Read registry entries for the specified parameters.
+        /// </summary>
+        /// <param name="KeyName">The Registry key to write to.</param>
+        /// <param name="Entry">The name of the key to write to.</param>
+        /// <param name="UDF">The fingerprint of the data object.</param>
         public static string Read(string KeyName, string Entry, out string UDF) {
             var Hive = Microsoft.Win32.Registry.CurrentUser;
             var Key = Hive.OpenSubKey(KeyName);
@@ -88,6 +137,9 @@ namespace Goedel.Mesh {
             get { return Profile != null ? Profile.UDF : null; }
             }
 
+        /// <summary>
+        /// Write to the O/S appropriate store.
+        /// </summary>
         public void ToRegistry() {
             var FileName = Register.WriteFile(Constants.RegistryPersonal, Constants.FileProfiles, Profile.UDF);
             File.WriteAllText(FileName, ToString());
@@ -107,10 +159,19 @@ namespace Goedel.Mesh {
             File.WriteAllText(FileName, ToString());
             }
 
+        /// <summary>
+        /// Search for the default profile on the local machine
+        /// </summary>
+        /// <returns>The signed profile if found or null otherwise.</returns>
         public static SignedPersonalProfile GetLocal() {
             return GetLocal(null);
             }
 
+        /// <summary>
+        /// Search for the specified profile on the local machine.
+        /// </summary>
+        /// <param name="UDF">Fingerprint of the profile to find.</param>
+        /// <returns>The signed profile if found or null otherwise.</returns>
         public static SignedPersonalProfile GetLocal (string UDF) {
             var FileName = Register.ReadFile(Constants.RegistryPersonal, 
                     Constants.FileProfiles, UDF);
@@ -137,6 +198,10 @@ namespace Goedel.Mesh {
         public void ToRegistry() {
             ToRegistry("");
             }
+
+        /// <summary>
+        /// Write this device profile to a registry key as a named profile.
+        /// </summary>
         public void ToRegistry(string Name) {
             var FileName = Register.WriteFile(Constants.RegistryDevice, 
                 Constants.FileProfiles, Name, UDF);
@@ -144,18 +209,40 @@ namespace Goedel.Mesh {
 
             }
 
+        /// <summary>
+        /// Get the default device profile for the local machine.
+        /// </summary>
+        /// <returns>The signed profile</returns>
         public static SignedDeviceProfile GetLocal() {
             return GetLocal(null, null);
             }
 
+        /// <summary>
+        /// Get the specified device profile for the local machine.
+        /// </summary>
+        /// <param name="Label">The device profile label</param>
+        /// <returns>The signed profile</returns>
         public static SignedDeviceProfile GetLocal(string Label) {
             return GetLocal(null, null, Label);
             }
 
+        /// <summary>
+        /// Get the specified device profile for the local machine.
+        /// </summary>
+        /// <param name="Name">The device profile name</param>
+        /// <param name="Description">The device profile description.</param>
+        /// <returns>The signed profile</returns>
         public static SignedDeviceProfile GetLocal(string Name, string Description) {
             return GetLocal(Name, Description, null);
             }
 
+        /// <summary>
+        /// Get the specified device profile for the local machine.
+        /// </summary>
+        /// <param name="Name">The device profile name</param>
+        /// <param name="Description">The device profile description.</param>
+        /// <param name="Label">The device profile label</param> 
+        /// <returns>The signed profile</returns>
         public static SignedDeviceProfile GetLocal(string Name, string Description, string Label) {
             var FileName = Register.ReadFile(Constants.RegistryDevice,
                     Constants.FileProfiles, Label);

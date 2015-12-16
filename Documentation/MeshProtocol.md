@@ -5,6 +5,7 @@
 ###Transaction: Hello
 
 *Request: HelloRequest
+
 *Response: HelloResponse
 
 Report service and version information. 
@@ -16,6 +17,7 @@ the service.
 ###Transaction: ValidateAccount
 
 *Request: ValidateRequest
+
 *Response: ValidateResponse
 
 Request validation of a proposed name for a new account.

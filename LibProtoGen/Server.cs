@@ -129,7 +129,8 @@ namespace Goedel.Protocol {
         /// <returns>The port registration structure.</returns>
         public HTTPPortRegistration AddService(string Domain) {
 
-            var URI = JPCProvider.WellKnownToURI(Domain, Interface.GetWellKnown, false);
+            var URI = JPCProvider.WellKnownToURI(Domain, Interface.GetWellKnown,
+                Interface.GetDiscovery, false, true);
             return AddHTTP(URI);
             }
 
@@ -271,9 +272,12 @@ namespace Goedel.Protocol {
                 Host.Open();
                 }
 
+            Trace.WriteLine("Start Listener");
             HttpListener.Start();
             while (Active) {
+                Trace.Write("Wait..");
                 var Context = HttpListener.GetContext();
+                Trace.WriteLine("Dispatch");
                 Handle(Context);
                 }
 
@@ -365,6 +369,8 @@ namespace Goedel.Protocol {
         public void Register(HTTPPortRegistration Port) {
             Ports.Add(Port);
             HttpListener.Prefixes.Add(Port.URI);
+
+            Trace.WriteLine("Add Listener on {0}", Port.URI);
             }
 
         }

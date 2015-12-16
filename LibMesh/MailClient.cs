@@ -140,13 +140,33 @@ namespace Goedel.Mesh {
             }
         }
 
-
+    /// <summary>
+    /// Application protocol enumeration
+    /// </summary>
     public enum AppProtocol {
+        /// <summary>
+        /// SMTP
+        /// </summary>
         SMTP = 1,
+
+        /// <summary>
+        /// SMTP on the SUBMIT port
+        /// </summary>
         SUBMIT = 2,
+
+        /// <summary>
+        /// POP
+        /// </summary>
         POP3 = 4,
+
+        /// <summary>
+        /// IMAP
+        /// </summary>
         IMAP4 = 5,
 
+        /// <summary>
+        /// Unspecified.
+        /// </summary>
         NULL = 0
         };
 

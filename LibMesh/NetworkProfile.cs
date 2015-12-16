@@ -27,11 +27,18 @@ namespace Goedel.Mesh {
                 }
             }
 
-
+        /// <summary>
+        /// Returns the private profile as a block of JSON encoded bytes ready for
+        /// encryption.
+        /// </summary>
         protected override byte[] GetPrivateData {
             get { return _Private.GetBytes(); }
             }
 
+        /// <summary>
+        /// Construct an empty network profile for the specified personal profile.
+        /// </summary>
+        /// <param name="UserProfile"></param>
         public NetworkProfile (PersonalProfile UserProfile)
             : base(UserProfile, "NetworkProfile", null) {
             _Private = new NetworkProfilePrivate ();
@@ -61,6 +68,10 @@ namespace Goedel.Mesh {
             return DeviceEntry;
             }
 
+        /// <summary>
+        /// Add a DNS entry to the network configuration.
+        /// </summary>
+        /// <param name="Connection">The DNS connection data to use.</param>
         public void AddDNS(Connection Connection) {
             Private.DNS = Private.DNS == null ? new List<Connection>() : Private.DNS;
             Private.DNS.Add(Connection);

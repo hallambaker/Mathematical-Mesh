@@ -121,14 +121,16 @@ namespace Goedel.LibCrypto.PKIX {
         /// </summary>
         /// <param name="TimeSpan">Time interval.</param>
         public void SetValidity(TimeSpan TimeSpan) {
-            DateTime NotBefore = DateTime.Now;
+            DateTime NotBefore = DateTime.Now.ToUniversalTime();
             DateTime NotAfter = NotBefore.Add(TimeSpan);
 
             // Predate the certificate by one hour to avoid issues with the day roll round
             NotBefore = NotBefore.AddHours(-1);
 
-            // Predate the certificate to 1 minute past midnight on the date of issue to avoid clock sync issues
-            NotBefore = new DateTime(NotBefore.Year, NotBefore.Month, NotBefore.Day, 0, 0, 1);
+            // Predate the certificate to 1 minute past midnight (UTC) on the date of 
+            // issue to avoid clock sync issues
+            NotBefore = new DateTime(NotBefore.Year, NotBefore.Month, NotBefore.Day, 
+                        0, 0, 1, DateTimeKind.Utc);
 
             SetValidity(NotBefore, NotAfter);
             }

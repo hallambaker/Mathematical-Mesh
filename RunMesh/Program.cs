@@ -106,7 +106,7 @@ namespace Goedel.Mesh {
             // Read the LiveMail accounts
 
             var MailClientCatalog = new MailClientCatalog();
-            var LiveMailCount = MailClientCatalog.ImportWindowsLiveMail();
+            MailClientCatalog.ImportWindowsLiveMail();
             MailClientCatalog.Dump();
 
             var MailAccount = MailClientCatalog.Accounts[0];
@@ -138,13 +138,13 @@ namespace Goedel.Mesh {
         public void TestMail() {
 
             var MailClientCatalog = new MailClientCatalog();
-            var LiveMailCount = MailClientCatalog.ImportWindowsLiveMail();
+            MailClientCatalog.ImportWindowsLiveMail();
             MailClientCatalog.Dump();
 
 
             var MailAccountInfo = new MailAccountInfoWLM();
 
-            var TestName = "test-" + LiveMailCount.ToString();
+            var TestName = "test-";
 
             MailAccountInfo.EmailAddress = TestName + "@example.com";
             MailAccountInfo.DisplayName = TestName + "- Delete";
@@ -163,7 +163,7 @@ namespace Goedel.Mesh {
             MailAccountInfo.Create();
 
             var MailClientCatalog2 = new MailClientCatalog();
-            var LiveMailCount2 = MailClientCatalog2.ImportWindowsLiveMail();
+            MailClientCatalog2.ImportWindowsLiveMail();
             MailClientCatalog2.Dump();
             }
 

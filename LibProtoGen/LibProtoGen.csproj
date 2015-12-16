@@ -55,6 +55,7 @@
     <Compile Include="ChallengeResponse.cs" />
     <Compile Include="Cryoptography.cs" />
     <Compile Include="Dechunking.cs" />
+    <Compile Include="DNS.cs" />
     <Compile Include="JPC.cs" />
     <Compile Include="JSONAWriter.cs" />
     <Compile Include="JSONBWriter.cs" />

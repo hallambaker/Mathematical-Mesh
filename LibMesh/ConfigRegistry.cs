@@ -111,28 +111,55 @@ namespace Goedel.Mesh {
             Writer.Flush();
             }
 
-
+        /// <summary>
+        /// Lookup the key value and return the corresponding ConfigRegistryEntry.
+        /// </summary>
+        /// <param name="Key">The key to lookup.</param>
+        /// <returns>Registry entry or null if not found.</returns>
         public ConfigRegistryEntry Get(string Key) {
             ConfigRegistryEntry Entry;
             bool Found = Dictionary.TryGetValue(Key, out Entry);
             return Found ? Entry : null;
             }
 
+        /// <summary>
+        /// Lookup the key value and return the corresponding value.
+        /// </summary>
+        /// <param name="Key">The key to lookup.</param>
+        /// <returns>Registry value or null if not found.</returns>
         public string GetSZ(string Key) {
             var Entry = Get(Key) as ConfigRegistryEntrySZ;
             return Entry == null ? null : Entry.Value;
             }
 
+        /// <summary>
+        /// Lookup the key value and return the corresponding value.
+        /// </summary>
+        /// <param name="Key">The key to lookup.</param>
+        /// <returns>Registry value or 0 (default value) if not found.</returns>
         public uint GetDWORD(string Key) {
             var Entry = Get(Key) as ConfigRegistryEntryDWORD;
             return Entry == null ? 0 : Entry.Value;
             }
 
+        /// <summary>
+        /// Lookup the key value and return the corresponding value.
+        /// </summary>
+        /// <param name="Key">The key to lookup.</param>
+        /// <returns>Registry value or null if not found.</returns>
         public byte[] GetBINARY(string Key) {
             var Entry = Get(Key) as ConfigRegistryEntryBINARY;
             return Entry == null ? null : Entry.Value;
             }
 
+        /// <summary>
+        /// Set the value of the specified key, creating a new value if necessary
+        /// from a string.
+        /// </summary>
+        /// <param name="Key">The key to set.</param>
+        /// <param name="Type">The type of data to create.</param>
+        /// <param name="Value">The data value as a string.</param>
+        /// <returns>true if a new value was created, otherwise false.</returns>
         public bool Set(string Key, string Type, string Value) {
             switch (Type) {
                 case "SZ":{
@@ -153,6 +180,12 @@ namespace Goedel.Mesh {
 
             }
 
+        /// <summary>
+        /// Set a key for a SZ value, creating a new key if necessary.
+        /// </summary>
+        /// <param name="Key">The key to set.</param>
+        /// <param name="Value">The value to set it to.</param>
+        /// <returns>true if a new value was created, otherwise false.</returns>
         public bool Set(string Key, string Value) {
             var Slot = Get(Key);
             if (Slot == null) {
@@ -167,6 +200,13 @@ namespace Goedel.Mesh {
             return false;
             }
 
+
+        /// <summary>
+        /// Set a key for a DWORD value, creating a new key if necessary.
+        /// </summary>
+        /// <param name="Key">The key to set.</param>
+        /// <param name="Value">The value to set it to.</param>
+        /// <returns>true if a new value was created, otherwise false.</returns>
         public bool Set(string Key, uint Value) {
             var Slot = Get(Key);
             if (Slot == null) {
@@ -181,6 +221,12 @@ namespace Goedel.Mesh {
             return false;
             }
 
+        /// <summary>
+        /// Set a key for a BINARY value, creating a new key if necessary.
+        /// </summary>
+        /// <param name="Key">The key to set.</param>
+        /// <param name="Value">The value to set it to.</param>
+        /// <returns>true if a new value was created, otherwise false.</returns>
         public bool Set(string Key, byte[] Value) {
             var Slot = Get(Key);
             if (Slot == null) {
@@ -205,6 +251,7 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Write the value to an XML stream.
         /// </summary>
+        /// <param name="Key">The key to write</param>
         /// <param name="Writer"></param>
         public abstract void Write(string Key, XmlWriter Writer);
         }

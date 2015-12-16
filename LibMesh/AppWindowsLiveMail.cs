@@ -12,23 +12,35 @@ using Goedel.Mesh.Integration.LiveMail;
 
 namespace Goedel.Mesh {
 
+    /// <summary>
+    /// The collection of mail client entries from multiple applications.
+    /// </summary>
     public partial class MailClientCatalog {
+
+        /// <summary>
+        /// The default mail account for Windows Live Mail.
+        /// </summary>
         public MailAccountInfoWLM DefaultWLMAccount;
 
+        /// <summary>
+        /// The Windows Live Mail integration object.
+        /// </summary>
         public IntegrateLiveMail IntegrateLiveMail;
 
-        public int ImportWindowsLiveMail() {
-            int Result = 0;
-
+        /// <summary>
+        /// Import all accounts from Windows Live Mail.
+        /// </summary>
+        public void ImportWindowsLiveMail() {
             IntegrateLiveMail = new IntegrateLiveMail(this);
-
-            return Result;
+            return ;
             }
 
         }
 
 
-
+    /// <summary>
+    /// Windows Live Mail integration class.
+    /// </summary>
     public class IntegrateLiveMail : IntegratorMailClient {
 
         static readonly string WindowsLiveMailRegistryKey =
@@ -38,6 +50,9 @@ namespace Goedel.Mesh {
         static string _StoreRoot;
         static string _DefaultMailAccount;
 
+        /// <summary>
+        /// Get the directory for the default mail account.
+        /// </summary>
         public static string DefaultMailAccount {
             get {
                 if (_DefaultMailAccount == null) {
@@ -47,6 +62,9 @@ namespace Goedel.Mesh {
                 }
             }
 
+        /// <summary>
+        /// Get the root directory for the Windows Live Mail store.
+        /// </summary>
         public static string StoreRoot {
             get {
                 if (_StoreRoot == null) {
@@ -56,6 +74,9 @@ namespace Goedel.Mesh {
                 }
             }
 
+        /// <summary>
+        /// Get a RegistryKey object for Windows Live Mail.
+        /// </summary>
         public static RegistryKey RegistryKey {
             get {
                 if (_RegistryKey == null) {
@@ -66,11 +87,19 @@ namespace Goedel.Mesh {
                 }
             }
 
+        /// <summary>
+        /// Construct an integrator for the specified catalog and enumerate the accounts.
+        /// </summary>
+        /// <param name="Catalog">Mail account catalog to add to.</param>
         public IntegrateLiveMail(MailClientCatalog Catalog) {
             this.Catalog = Catalog;
             EnumerateAccounts();
             }
 
+        /// <summary>
+        /// Enumerate accounts in the store, creating and populating a MailAccountInfoWLM 
+        /// instance for each account.
+        /// </summary>
         public override void EnumerateAccounts() {
             if (StoreRoot == null) return;
             var Directories = Directory.EnumerateDirectories(StoreRoot);
@@ -92,6 +121,10 @@ namespace Goedel.Mesh {
             }
         }
 
+    /// <summary>
+    /// MailAccountInfo class for Windows Live Mail account. Provides convenience 
+    /// accessors to the corresponding .oeaccount file.
+    /// </summary>
     public class MailAccountInfoWLM : MailAccountInfo {
 
         // Article to make use of
@@ -317,59 +350,50 @@ namespace Goedel.Mesh {
 
             }
 
-
-
-        public void Read() {
-            MessageAccount = new MessageAccount();
-            MessageAccount.Read(FileName);
-            Dump();
-            }
-
-
-
-
-
-        public override void  Dump () {
+        /// <summary>
+        /// Write out all settings to the console for debug purposes.
+        /// </summary>
+        public override void Dump() {
             var XmlWriterSettings = new XmlWriterSettings();
             XmlWriterSettings.Indent = true;
             var Writer = XmlWriter.Create(Console.Out, XmlWriterSettings);
             MessageAccount.Write(Writer);
             }
 
+        /// <summary>
+        /// Read the corrsponding .oeaccount file.
+        /// </summary>
+        public void Read() {
+            MessageAccount = new MessageAccount();
+            MessageAccount.Read(FileName);
+            Dump();
+            }
 
+        /// <summary>
+        /// Update an existing .oeaccount file.
+        /// </summary>
         public override void Update() {
             MessageAccount.Write(FileName);
             }
 
+        /// <summary>
+        /// Create a new account by writing the account settings to a .oeaccount 
+        /// file in the store root see:
+        /// https://msdn.microsoft.com/en-us/library/ms715237(v=vs.85).aspx.
+        /// </summary>
         public override void Create() {
-            /*
-            https://msdn.microsoft.com/en-us/library/ms715237(v=vs.85).aspx
-
-            This example file is named "account{donhallimap}.oeaccount" 
-            and is placed in the store root, which is 
-            "%UserProfile%\Local Settings\Application Data\Microsoft\Windows Mail". 
-            On system startup, Windows Mail creates a "donhallimap" 
-            subdirectory in the store root, moves "account{donhallimap}.oeaccount" 
-            into that subdirectory, and creates an IMAP mail account for Don Hall.
-            */
-
-            FileName = IntegrateLiveMail.StoreRoot +
-                    @"\account{" + AccountName + "}.oeaccount";
+            FileName = IntegrateLiveMail.StoreRoot + @"\account{" + AccountName + "}.oeaccount";
             MessageAccount.Write(FileName);
-
             }
 
         /// <summary>
         /// Generate keys and certificates for S/MIME
         /// </summary>
-        /// <returns></returns>
+        /// <returns>true if new parameters were installed.</returns>
         public override bool GenerateSMIME(
                     ) {
             var Set = base.GenerateSMIME();
-
-            // here register the certs??
-
-            return false;
+            return Set;
             }
 
 

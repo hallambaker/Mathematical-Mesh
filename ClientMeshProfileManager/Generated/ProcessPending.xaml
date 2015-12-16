@@ -23,12 +23,6 @@
 			</StackPanel>
             <StackPanel Orientation="Horizontal">
 				<Label FontSize="20"
-					   VerticalAlignment="Top">Profile Fingerprint</Label>
-				<TextBlock FontSize="20" Name="Output_ProfileUDF1"
-						 VerticalAlignment="Top"></TextBlock>
-			</StackPanel>
-            <StackPanel Orientation="Horizontal">
-				<Label FontSize="20"
 					   VerticalAlignment="Top">Account</Label>
 				<TextBlock FontSize="20" Name="Output_AccountID1"
 						 VerticalAlignment="Top"></TextBlock>

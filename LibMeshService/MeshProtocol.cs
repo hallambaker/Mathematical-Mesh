@@ -1,7 +1,7 @@
 ﻿
 //  Test
 //  
-//  This file was automatically generated at 12/1/2015 4:51:09 PM
+//  This file was automatically generated at 12/15/2015 1:27:21 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -35,6 +35,7 @@
 //  THE SOFTWARE.
 //  
 //  //Header
+// With all fields as properties
 
 using System;
 using System.IO;
@@ -87,10 +88,6 @@ namespace Goedel.Mesh {
 			Deserialize (_String);
 			_Initialize () ;
 			}
-
-
-
-
 
 		/// <summary>
         /// Construct an instance from the specified tagged JSONReader stream.
@@ -334,13 +331,9 @@ namespace Goedel.Mesh {
 				default : {
 					throw new Exception ("Not supported");
 					}
-				}
-
-			
+				}	
 			JSONReader.EndObject ();
             }
-
-
 		}
 
 
@@ -356,13 +349,25 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Well Known service identifier.
         /// </summary>
-		public const string WellKnown = "MeshService";
+		public const string WellKnown = "mmm";
 
         /// <summary>
         /// Well Known service identifier.
         /// </summary>
 		public override string GetWellKnown {
 			get {return WellKnown;}
+			}
+
+        /// <summary>
+        /// Well Known service identifier.
+        /// </summary>
+		public const string Discovery = "_mmm._tcp";
+
+        /// <summary>
+        /// Well Known service identifier.
+        /// </summary>
+		public override string GetDiscovery {
+			get {return Discovery;}
 			}
 
 		JPCSession _JPCSession;
@@ -1415,11 +1420,19 @@ namespace Goedel.Mesh {
         /// <summary>
         /// 
         /// </summary>
-		public Version						Version;
+		public virtual Version						Version {
+			get {return _Version;}			
+			set {_Version = value;}
+			}
+		Version						_Version ;
 		/// <summary>
         /// 
         /// </summary>
-		public List<Version>				Alternates;
+		public virtual List<Version>				Alternates {
+			get {return _Alternates;}			
+			set {_Alternates = value;}
+			}
+		List<Version>				_Alternates;
 
         /// <summary>
         /// Tag identifying this class.
@@ -1633,7 +1646,7 @@ namespace Goedel.Mesh {
         /// <summary>
         /// 
         /// </summary>
-		public int						Major {
+		public virtual int						Major {
 			get {return _Major;}
 			set {_Major = value; __Major = true; }
 			}
@@ -1642,18 +1655,26 @@ namespace Goedel.Mesh {
         /// <summary>
         /// 
         /// </summary>
-		public int						Minor {
+		public virtual int						Minor {
 			get {return _Minor;}
 			set {_Minor = value; __Minor = true; }
 			}
 		/// <summary>
         /// 
         /// </summary>
-		public List<Encoding>				Encodings;
+		public virtual List<Encoding>				Encodings {
+			get {return _Encodings;}			
+			set {_Encodings = value;}
+			}
+		List<Encoding>				_Encodings;
 		/// <summary>
         /// 
         /// </summary>
-		public List<string>				URI;
+		public virtual List<string>				URI {
+			get {return _URI;}			
+			set {_URI = value;}
+			}
+		List<string>				_URI;
 
         /// <summary>
         /// Tag identifying this class.
@@ -1884,11 +1905,19 @@ namespace Goedel.Mesh {
 		/// <summary>
         /// 
         /// </summary>
-		public List<string>				ID;
+		public virtual List<string>				ID {
+			get {return _ID;}			
+			set {_ID = value;}
+			}
+		List<string>				_ID;
 		/// <summary>
         /// 
         /// </summary>
-		public List<string>				Dictionary;
+		public virtual List<string>				Dictionary {
+			get {return _Dictionary;}			
+			set {_Dictionary = value;}
+			}
+		List<string>				_Dictionary;
 
         /// <summary>
         /// Tag identifying this class.
@@ -2095,20 +2124,28 @@ namespace Goedel.Mesh {
         /// <summary>
         /// 
         /// </summary>
-		public string						Account;
+		public virtual string						Account {
+			get {return _Account;}			
+			set {_Account = value;}
+			}
+		string						_Account ;
 		bool								__Reserve = false;
 		private bool						_Reserve;
         /// <summary>
         /// 
         /// </summary>
-		public bool						Reserve {
+		public virtual bool						Reserve {
 			get {return _Reserve;}
 			set {_Reserve = value; __Reserve = true; }
 			}
 		/// <summary>
         /// 
         /// </summary>
-		public List<string>				Language;
+		public virtual List<string>				Language {
+			get {return _Language;}			
+			set {_Language = value;}
+			}
+		List<string>				_Language;
 
         /// <summary>
         /// Tag identifying this class.
@@ -2323,7 +2360,7 @@ namespace Goedel.Mesh {
         /// <summary>
         /// 
         /// </summary>
-		public bool						Valid {
+		public virtual bool						Valid {
 			get {return _Valid;}
 			set {_Valid = value; __Valid = true; }
 			}
@@ -2332,18 +2369,26 @@ namespace Goedel.Mesh {
         /// <summary>
         /// 
         /// </summary>
-		public int						Minimum {
+		public virtual int						Minimum {
 			get {return _Minimum;}
 			set {_Minimum = value; __Minimum = true; }
 			}
         /// <summary>
         /// 
         /// </summary>
-		public string						InvalidCharacters;
+		public virtual string						InvalidCharacters {
+			get {return _InvalidCharacters;}			
+			set {_InvalidCharacters = value;}
+			}
+		string						_InvalidCharacters ;
         /// <summary>
         /// 
         /// </summary>
-		public string						Reason;
+		public virtual string						Reason {
+			get {return _Reason;}			
+			set {_Reason = value;}
+			}
+		string						_Reason ;
 
         /// <summary>
         /// Tag identifying this class.
@@ -2551,11 +2596,19 @@ namespace Goedel.Mesh {
         /// <summary>
         /// 
         /// </summary>
-		public string						Account;
+		public virtual string						Account {
+			get {return _Account;}			
+			set {_Account = value;}
+			}
+		string						_Account ;
         /// <summary>
         /// 
         /// </summary>
-		public SignedProfile						Profile;
+		public virtual SignedProfile						Profile {
+			get {return _Profile;}			
+			set {_Profile = value;}
+			}
+		SignedProfile						_Profile ;
 
         /// <summary>
         /// Tag identifying this class.
@@ -2921,7 +2974,11 @@ namespace Goedel.Mesh {
         /// <summary>
         /// 
         /// </summary>
-		public Entry						Entry;
+		public virtual Entry						Entry {
+			get {return _Entry;}			
+			set {_Entry = value;}
+			}
+		Entry						_Entry ;
 
         /// <summary>
         /// Tag identifying this class.
@@ -3278,21 +3335,33 @@ namespace Goedel.Mesh {
         /// <summary>
         /// 
         /// </summary>
-		public string						Identifier;
+		public virtual string						Identifier {
+			get {return _Identifier;}			
+			set {_Identifier = value;}
+			}
+		string						_Identifier ;
         /// <summary>
         /// 
         /// </summary>
-		public string						Account;
+		public virtual string						Account {
+			get {return _Account;}			
+			set {_Account = value;}
+			}
+		string						_Account ;
 		/// <summary>
         /// 
         /// </summary>
-		public List<KeyValue>				KeyValues;
+		public virtual List<KeyValue>				KeyValues {
+			get {return _KeyValues;}			
+			set {_KeyValues = value;}
+			}
+		List<KeyValue>				_KeyValues;
 		bool								__NotBefore = false;
 		private DateTime						_NotBefore;
         /// <summary>
         /// 
         /// </summary>
-		public DateTime						NotBefore {
+		public virtual DateTime						NotBefore {
 			get {return _NotBefore;}
 			set {_NotBefore = value; __NotBefore = true; }
 			}
@@ -3301,7 +3370,7 @@ namespace Goedel.Mesh {
         /// <summary>
         /// 
         /// </summary>
-		public DateTime						NotOnOrAfter {
+		public virtual DateTime						NotOnOrAfter {
 			get {return _NotOnOrAfter;}
 			set {_NotOnOrAfter = value; __NotOnOrAfter = true; }
 			}
@@ -3310,7 +3379,7 @@ namespace Goedel.Mesh {
         /// <summary>
         /// 
         /// </summary>
-		public bool						Multiple {
+		public virtual bool						Multiple {
 			get {return _Multiple;}
 			set {_Multiple = value; __Multiple = true; }
 			}
@@ -3559,11 +3628,19 @@ namespace Goedel.Mesh {
         /// <summary>
         /// 
         /// </summary>
-		public string						Key;
+		public virtual string						Key {
+			get {return _Key;}			
+			set {_Key = value;}
+			}
+		string						_Key ;
         /// <summary>
         /// 
         /// </summary>
-		public string						Value;
+		public virtual string						Value {
+			get {return _Value;}			
+			set {_Value = value;}
+			}
+		string						_Value ;
 
         /// <summary>
         /// Tag identifying this class.
@@ -3742,7 +3819,11 @@ namespace Goedel.Mesh {
 		/// <summary>
         /// 
         /// </summary>
-		public List<Entry>				Entries;
+		public virtual List<Entry>				Entries {
+			get {return _Entries;}			
+			set {_Entries = value;}
+			}
+		List<Entry>				_Entries;
 
         /// <summary>
         /// Tag identifying this class.
@@ -3941,7 +4022,11 @@ namespace Goedel.Mesh {
 		/// <summary>
         /// 
         /// </summary>
-		public List<DataItem>				DataItems;
+		public virtual List<DataItem>				DataItems {
+			get {return _DataItems;}			
+			set {_DataItems = value;}
+			}
+		List<DataItem>				_DataItems;
 
         /// <summary>
         /// Tag identifying this class.
@@ -4144,7 +4229,7 @@ namespace Goedel.Mesh {
         /// <summary>
         /// 
         /// </summary>
-		public DateTime						NotBefore {
+		public virtual DateTime						NotBefore {
 			get {return _NotBefore;}
 			set {_NotBefore = value; __NotBefore = true; }
 			}
@@ -4153,20 +4238,24 @@ namespace Goedel.Mesh {
         /// <summary>
         /// 
         /// </summary>
-		public DateTime						Until {
+		public virtual DateTime						Until {
 			get {return _Until;}
 			set {_Until = value; __Until = true; }
 			}
         /// <summary>
         /// 
         /// </summary>
-		public string						After;
+		public virtual string						After {
+			get {return _After;}			
+			set {_After = value;}
+			}
+		string						_After ;
 		bool								__MaxEntries = false;
 		private int						_MaxEntries;
         /// <summary>
         /// 
         /// </summary>
-		public int						MaxEntries {
+		public virtual int						MaxEntries {
 			get {return _MaxEntries;}
 			set {_MaxEntries = value; __MaxEntries = true; }
 			}
@@ -4175,7 +4264,7 @@ namespace Goedel.Mesh {
         /// <summary>
         /// 
         /// </summary>
-		public int						MaxBytes {
+		public virtual int						MaxBytes {
 			get {return _MaxBytes;}
 			set {_MaxBytes = value; __MaxBytes = true; }
 			}
@@ -4733,7 +4822,7 @@ namespace Goedel.Mesh {
         /// <summary>
         /// 
         /// </summary>
-		public DateTime						LastWriteTime {
+		public virtual DateTime						LastWriteTime {
 			get {return _LastWriteTime;}
 			set {_LastWriteTime = value; __LastWriteTime = true; }
 			}
@@ -4742,7 +4831,7 @@ namespace Goedel.Mesh {
         /// <summary>
         /// 
         /// </summary>
-		public DateTime						LastCheckpointTime {
+		public virtual DateTime						LastCheckpointTime {
 			get {return _LastCheckpointTime;}
 			set {_LastCheckpointTime = value; __LastCheckpointTime = true; }
 			}
@@ -4751,14 +4840,18 @@ namespace Goedel.Mesh {
         /// <summary>
         /// 
         /// </summary>
-		public DateTime						NextCheckpointTime {
+		public virtual DateTime						NextCheckpointTime {
 			get {return _NextCheckpointTime;}
 			set {_NextCheckpointTime = value; __NextCheckpointTime = true; }
 			}
         /// <summary>
         /// 
         /// </summary>
-		public string						CheckpointValue;
+		public virtual string						CheckpointValue {
+			get {return _CheckpointValue;}			
+			set {_CheckpointValue = value;}
+			}
+		string						_CheckpointValue ;
 
         /// <summary>
         /// Tag identifying this class.
@@ -4968,11 +5061,19 @@ namespace Goedel.Mesh {
         /// <summary>
         /// 
         /// </summary>
-		public SignedConnectionRequest						SignedRequest;
+		public virtual SignedConnectionRequest						SignedRequest {
+			get {return _SignedRequest;}			
+			set {_SignedRequest = value;}
+			}
+		SignedConnectionRequest						_SignedRequest ;
         /// <summary>
         /// 
         /// </summary>
-		public string						AccountID;
+		public virtual string						AccountID {
+			get {return _AccountID;}			
+			set {_AccountID = value;}
+			}
+		string						_AccountID ;
 
         /// <summary>
         /// Tag identifying this class.
@@ -5166,7 +5267,11 @@ namespace Goedel.Mesh {
         /// <summary>
         /// 
         /// </summary>
-		public string						SignedConnectionResult;
+		public virtual string						SignedConnectionResult {
+			get {return _SignedConnectionResult;}			
+			set {_SignedConnectionResult = value;}
+			}
+		string						_SignedConnectionResult ;
 
         /// <summary>
         /// Tag identifying this class.
@@ -5349,11 +5454,19 @@ namespace Goedel.Mesh {
         /// <summary>
         /// 
         /// </summary>
-		public string						AccountID;
+		public virtual string						AccountID {
+			get {return _AccountID;}			
+			set {_AccountID = value;}
+			}
+		string						_AccountID ;
         /// <summary>
         /// 
         /// </summary>
-		public string						DeviceID;
+		public virtual string						DeviceID {
+			get {return _DeviceID;}			
+			set {_DeviceID = value;}
+			}
+		string						_DeviceID ;
 
         /// <summary>
         /// Tag identifying this class.
@@ -5545,7 +5658,11 @@ namespace Goedel.Mesh {
         /// <summary>
         /// 
         /// </summary>
-		public SignedConnectionResult						Result;
+		public virtual SignedConnectionResult						Result {
+			get {return _Result;}			
+			set {_Result = value;}
+			}
+		SignedConnectionResult						_Result ;
 
         /// <summary>
         /// Tag identifying this class.
@@ -5730,7 +5847,11 @@ namespace Goedel.Mesh {
         /// <summary>
         /// 
         /// </summary>
-		public string						AccountID;
+		public virtual string						AccountID {
+			get {return _AccountID;}			
+			set {_AccountID = value;}
+			}
+		string						_AccountID ;
 
         /// <summary>
         /// Tag identifying this class.
@@ -5913,7 +6034,11 @@ namespace Goedel.Mesh {
 		/// <summary>
         /// 
         /// </summary>
-		public List<SignedConnectionRequest>				Pending;
+		public virtual List<SignedConnectionRequest>				Pending {
+			get {return _Pending;}			
+			set {_Pending = value;}
+			}
+		List<SignedConnectionRequest>				_Pending;
 
         /// <summary>
         /// Tag identifying this class.
@@ -6116,11 +6241,19 @@ namespace Goedel.Mesh {
         /// <summary>
         /// 
         /// </summary>
-		public SignedConnectionResult						Result;
+		public virtual SignedConnectionResult						Result {
+			get {return _Result;}			
+			set {_Result = value;}
+			}
+		SignedConnectionResult						_Result ;
         /// <summary>
         /// 
         /// </summary>
-		public string						AccountID;
+		public virtual string						AccountID {
+			get {return _AccountID;}			
+			set {_AccountID = value;}
+			}
+		string						_AccountID ;
 
         /// <summary>
         /// Tag identifying this class.

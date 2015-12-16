@@ -293,7 +293,7 @@ GUI Goedel.MeshProfileManager
 			Text
 				|You have a pending profile connection request
 			Output PendingUDF "Device Fingerprint"
-			Output ProfileUDF1 "Profile Fingerprint"
+			//  Output ProfileUDF1 "Profile Fingerprint"
 			Output AccountID1 "Account"
 			Horizontal
 				Action AcceptPending "Accept" SetupComplete

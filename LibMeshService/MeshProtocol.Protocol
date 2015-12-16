@@ -41,7 +41,7 @@
 		Description
 			|The server cannot handle the request as it is overloaded
 
-    Service MeshService "Mesh" "Mesh" Request Response
+    Service MeshService "_mmm._tcp" "mmm" Request Response
         Description
             |Access library for mesh service
 		Status Success

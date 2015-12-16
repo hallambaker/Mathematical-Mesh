@@ -54,11 +54,6 @@ namespace Goedel.MeshConnect {
             get { return _Output_Fingerprint1; }
             set { _Output_Fingerprint1 = value;   Refresh (); }
             }
-		string _Output_Device1;
-		public string Output_Device1 {
-            get { return _Output_Device1; }
-            set { _Output_Device1 = value;   Refresh (); }
-            }
 
 
 
@@ -112,7 +107,6 @@ namespace Goedel.MeshConnect {
 
 		public void Refresh () {
 			Output_Fingerprint1.Text  = Data.Output_Fingerprint1;
-			Output_Device1.Text  = Data.Output_Device1;
 			}
 
         private void Action_AcceptFingerprint(object sender, RoutedEventArgs e) {

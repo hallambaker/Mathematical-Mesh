@@ -284,16 +284,16 @@ namespace Goedel.MeshProfileManager {
         public override void Enter() {
             // set the default provider (prismproof.org)
             Output_PendingUDF = Data.PendingConnectionRequests[0].Identifier;
-            Output_ProfileUDF1 = Data.UDF;
+            //Output_ProfileUDF1 = Data.UDF;
             Output_AccountID1 = Data.AccountID;
             }
 
         public override bool AcceptPending() {
-            return true;
+            return Data.AcceptConnection();
             }
 
         public override bool RejectPending() {
-            return true;
+            return Data.RejectConnection();
             }
         }
 

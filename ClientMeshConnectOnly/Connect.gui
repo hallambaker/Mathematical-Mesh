@@ -39,7 +39,7 @@ GUI Goedel.MeshConnect
 				|your profile manager.
 
 			Output Fingerprint1 "Profile" 
-			Output Device1 "This Device" 
+			//Output Device1 "This Device" 
 			Horizontal
 				Action AcceptFingerprint "Accept" WaitToComplete
 				Action RejectFingerprint "Cancel" ConnectDevice
@@ -52,7 +52,7 @@ GUI Goedel.MeshConnect
 			Text
 				|To complete the connection of this device to 
 				|your profile, you must approve the request on another device.
-			Output Fingerprint2 "Profile" 
+			//Output Fingerprint2 "Profile" 
 			Output Device2 "This Device" 
 			Vertical
 				Action Check "Check" Complete

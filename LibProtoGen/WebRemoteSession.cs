@@ -50,16 +50,17 @@ namespace Goedel.Protocol {
 
 
             // Get request object for the URI
-            WebRequest WebRequest = WebRequest.Create(URI);
-            WebRequest.Method = "POST";
-            WebRequest.ContentType = "application/json;charset=UTF-8";
-            WebRequest.Headers.Add("Cache-Control: no-store");
-            WebRequest.ContentLength = Content.Length;
+            var Request = WebRequest.CreateHttp(URI);
+            Request.Method = "POST";
+            Request.Host = Domain;
+            Request.ContentType = "application/json;charset=UTF-8";
+            Request.Headers.Add("Cache-Control: no-store");
+            Request.ContentLength = Content.Length;
 
             //Trace.WriteLine("Send Request");
             //Trace.WriteLine(Content.GetUTF8);
 
-            RequestStream = WebRequest.GetRequestStream();
+            RequestStream = Request.GetRequestStream();
 
 
 
@@ -74,7 +75,7 @@ namespace Goedel.Protocol {
 
 
             // Request Complete, fetch the response.
-            HttpWebResponse WebResponse = (HttpWebResponse)WebRequest.GetResponse();
+            HttpWebResponse WebResponse = (HttpWebResponse)Request.GetResponse();
             int Code = (int)WebResponse.StatusCode;
 
             //Trace.WriteLine("Got a response {0} {1}", Code, WebResponse.StatusDescription);

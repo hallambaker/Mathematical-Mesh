@@ -10,18 +10,61 @@ using Goedel.Cryptography.Jose;
 
 namespace Goedel.Mesh {
 
+    /// <summary>
+    /// Mesh Key types
+    /// </summary>
     public enum KeyType {
+        /// <summary>
+        /// Personal Master Key
+        /// </summary>
         PMSK,
+
+        /// <summary>
+        /// Personal Master Escrow Key
+        /// </summary>
         PMEK,
+
+        /// <summary>
+        /// Personal Master Online Signing Key
+        /// </summary>
         POSK,
+
+        /// <summary>
+        /// Device Signing Key 
+        /// </summary>
         DSK,
+
+        /// <summary>
+        /// Device authentication key 
+        /// </summary>
         DAK,
+
+        /// <summary>
+        /// Device Encryption Key
+        /// </summary>
         DEK,
+
+        /// <summary>
+        /// Application Signing Key
+        /// </summary>
         ASK,
+
+        /// <summary>
+        /// Application Authentication Key
+        /// </summary>
         AAK,
+
+        /// <summary>
+        /// Application Encryption Key
+        /// </summary>
         AEK,
+
+        /// <summary>
+        /// Unspecified.
+        /// </summary>
         Unknown
         }
+
 
     public partial class PublicKey {
         /// <summary>
@@ -53,6 +96,10 @@ namespace Goedel.Mesh {
 
         //public List<Certificate> Chain;
 
+        /// <summary>
+        /// The cryptolib representation of the Key Pair. This is the point of access
+        /// for all cryptolib operations. 
+        /// </summary>
         protected KeyPair _KeyPair;
 
         /// <summary>
@@ -98,6 +145,9 @@ namespace Goedel.Mesh {
 
         private Certificate _Certificate;
 
+        /// <summary>
+        /// The PKIC Certificate for the key (if it exists)
+        /// </summary>
         public Certificate Certificate {
             get { return _Certificate; }
             set {
@@ -118,6 +168,11 @@ namespace Goedel.Mesh {
             return Verify(UDF);
             }
 
+        /// <summary>
+        /// Verify the keypair parameters match the fingerprint.
+        /// </summary>
+        /// <param name="TestUDF">The fingerprint value.</param>
+        /// <returns>true if the verification succeeds, false otherwise.</returns>
         public bool Verify (string TestUDF) { 
             var KeyPair = GetKeyPair();
             if (KeyPair.UDF == TestUDF) {

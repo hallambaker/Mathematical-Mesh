@@ -65,6 +65,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="AdminDumpLog.licenseheader" />
     <None Include="App.config" />
     <None Include="PreBuild.bat" />
   </ItemGroup>
