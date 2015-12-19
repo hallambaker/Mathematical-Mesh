@@ -198,6 +198,7 @@ namespace Goedel.LibCrypto.PKIX {
         /// <param name="Data">Binary certificate data</param>
         public Certificate(byte[] Data) {
             Goedel.Debug.Trace.WriteLine(Convert.ToBase64String(Data));
+            _Data = Data;
             var X509Cert = new X509Certificate2(Data);
             _KeyPair = KeyPair.GetKeyPair(X509Cert.PublicKey.Key);
             TBSCertificate = new TBSCertificate(X509Cert);

@@ -47,24 +47,13 @@ namespace Goedel.Mesh {
             this.Description = Description;
 
             DeviceSignatureKey = PublicKey.Generate (KeyType.DSK, SignatureAlgorithmID);
-            //DeviceSignatureKey.SelfSignCertificate(Application.DeviceMaster);
 
             DeviceAuthenticationKey = PublicKey.Generate(KeyType.DAK,
                     SignatureAlgorithmID);
-            //DeviceAuthenticationKey.SignCertificate(Application.ClientAuth, DeviceSignatureKey);
 
             DeviceEncryptiontionKey = PublicKey.Generate(KeyType.DEK, ExchangeAlgorithmID);
-            //DeviceEncryptiontionKey.SignCertificate(Application.DataEncryption, DeviceSignatureKey);
 
             Identifier = DeviceSignatureKey.UDF;
-
             }
-
-
-
-
         }
-
-
-
     }

@@ -323,6 +323,11 @@ namespace Goedel.LibCrypto {
                 }
             Goedel.Debug.Trace.WriteLine("Get Private for {0}", UDF);
 
+            var cp = new CspParameters();
+            cp.KeyContainerName = ContainerName(UDF);
+
+            _Provider = new RSACryptoServiceProvider(cp);
+
             }
 
 

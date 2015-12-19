@@ -200,7 +200,7 @@ namespace Goedel.Mesh {
                 SetInbound (value);
                 }
             }
-        private Connection _Inbound;
+        //private Connection _Inbound;
 
         /// <summary>
         /// Outbound Mail Connection
@@ -214,12 +214,22 @@ namespace Goedel.Mesh {
                 SetOutbound(value);
                 }
             }
-        private Connection _Outbound;
+        //private Connection _Outbound;
+
+        /// <summary>
+        /// Does the account have S/MIME parameters already?
+        /// </summary>
+        public override bool GotSMIME {
+            get {
+                return true;
+                //return MessageAccount.SMTP_Certificate != null;
+                }
+            }
 
         /// <summary>
         /// Signing Certificate.
         /// </summary>
-        public override Certificate CertificateSign {
+        public override PublicKey CertificateSign {
             get {
                 // Here, need to use the SHA1 of the cert to locate the
                 // certificate in the store.
@@ -228,16 +238,17 @@ namespace Goedel.Mesh {
 
             set {
                 _CertificateSign = value;
-                MessageAccount.SMTP_Certificate = _CertificateSign.SHA1;
+                MessageAccount.SMTP_Certificate = 
+                    _CertificateSign.Certificate.SHA1;
 
                 }
             }
-        private Certificate _CertificateSign;
+        private PublicKey _CertificateSign;
 
         /// <summary>
         /// Encryption Certificate.
         /// </summary>
-        public override Certificate CertificateEncrypt {
+        public override PublicKey CertificateEncrypt {
             get {
                 // Here, need to use the SHA1 of the cert to locate the
                 // certificate in the store.
@@ -246,10 +257,11 @@ namespace Goedel.Mesh {
 
             set {
                 _CertificateEncrypt = value;
-                MessageAccount.SMTP_Encryption_Certificate = _CertificateEncrypt.SHA1;
+                MessageAccount.SMTP_Encryption_Certificate = 
+                        _CertificateEncrypt.Certificate.SHA1;
                 }
             }
-        private Certificate _CertificateEncrypt;
+        private PublicKey _CertificateEncrypt;
 
 
         /// <summary>
@@ -259,8 +271,8 @@ namespace Goedel.Mesh {
         /// <param name="FileName"></param>
         public MailAccountInfoWLM(string FileName) {
             this.FileName = FileName;
-            _Inbound = new Connection();
-            _Outbound = new Connection();
+            //_Inbound = new Connection();
+            //_Outbound = new Connection();
             Read();
             }
 
@@ -277,9 +289,12 @@ namespace Goedel.Mesh {
 
             }
 
+        //static readonly List<string> UseTLS = { "
+
         //https://msdn.microsoft.com/en-us/library/ms715237(v=vs.85).aspx
         List<Connection> GetInbound() {
-            _Inbound = new Connection();
+
+            var _Inbound = new Connection();
             var ConnectionList = new List<Connection> { _Inbound };
 
             var IMAP_Server = MessageAccount.IMAP_Server;
@@ -295,12 +310,13 @@ namespace Goedel.Mesh {
                 _Inbound.SecureAuth = MessageAccount.IMAP_Use_Sicily != 0;
                 _Inbound.TimeOut = (int) MessageAccount.IMAP_Timeout;
                 _Inbound.Polling =  MessageAccount.IMAP_Polling > 0;
+
                 }
             return ConnectionList;
             }
 
         void SetInbound(List<Connection> Connection) {
-            _Inbound = Connection[0];
+            var _Inbound = Connection[0];
 
             if (_Inbound.AppProtocol == AppProtocol.IMAP4) {
                 MessageAccount.IMAP_Server = _Inbound.ServiceName;
@@ -317,8 +333,8 @@ namespace Goedel.Mesh {
             }
 
         List<Connection> GetOutbound() {
-            _Outbound = new Connection();
-            var ConnectionList = new List<Connection> { _Inbound };
+            var _Outbound = new Connection();
+            var ConnectionList = new List<Connection> { _Outbound };
             var SMTP_Server = MessageAccount.SMTP_Server;
             if (SMTP_Server != null) {
                 _Outbound.ServiceName = SMTP_Server;
@@ -335,7 +351,7 @@ namespace Goedel.Mesh {
             }
 
         void SetOutbound(List<Connection> Connection) {
-            _Outbound = Connection[0];
+            var _Outbound = Connection[0];
 
             MessageAccount.SMTP_Server = _Outbound.ServiceName;
             MessageAccount.SMTP_Port = (uint)_Outbound.Port;

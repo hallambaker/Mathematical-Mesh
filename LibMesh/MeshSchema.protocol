@@ -182,35 +182,7 @@
 			|Parent class from which all application profiles inherit.
 		Struct JoseWebEncryption EncryptedData
 			Description
-				|Encrypted application data
-		Struct DeviceEntry Entries
-			Multiple
-			Description
-				|Per device information.
-
-
-
-	Structure DeviceEntry
-		Description 
-			|Contains the device specific data for an application.
-		String UDF
-			Description
-				|Fingerprint of the device for which this entry is
-				|made
-		String Protocol
-			Description
-				|Tag for distinguishing between multiple entries per device.
-				|for example S/MIME and OpenPGP keys.
-		Binary EncryptedKey
-			Description
-				|Encrypted key for this device
-		Struct PublicKey SignatureKey
-			Description
-				|Per device signature key
-		Struct PublicKey AuthenticationKey
-			Description
-				|Per device authentication key
-			
+				|Encrypted application data	
 	
 
 	Structure PasswordProfile
@@ -449,7 +421,9 @@
 		TStruct Key PublicParameters
 			Description
 				|The public key parameters.
-
+		TStruct Key PrivateParameters
+			Description
+				|The private key parameters.
 
 
 	Structure ConnectionRequest

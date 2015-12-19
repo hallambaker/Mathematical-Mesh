@@ -164,15 +164,17 @@ namespace Goedel.MeshConnect {
             MeshClient = new MeshClient(Portal, AccountID);
             SignedPersonalProfile = MeshClient.GetPersonalProfile();
 
+
             // extract the personal profile
 
             var PersonalProfile = SignedPersonalProfile.Signed;
+            PersonalProfile.SignedDeviceProfile = DevProfile;
 
             // extract the mail profile(s)
 
             foreach (var AppProfile in PersonalProfile.Applications) {
                 if (AppProfile.Type == "MailProfile") {
-                    InstallMail(AppProfile.Identifier);
+                    InstallMail(PersonalProfile, AppProfile.Identifier);
                     }
 
                 }
@@ -184,13 +186,18 @@ namespace Goedel.MeshConnect {
             }
 
 
-        public void InstallMail (string ID) {
-            var MailProfile = MeshClient.GetApplicationProfile(ID);
+        public void InstallMail (PersonalProfile PersonalProfile, string ID) {
+            var SMP = MeshClient.GetApplicationProfile(ID);
+            var MailProfile = SMP.Signed as MailProfile;
+
+            MailProfile.Link(PersonalProfile);
+
+            MailProfile.Private.AccountName = "Mesh-" + MailProfile.Private.AccountName;
 
 
-            //var AccountInfo = new MailAccountInfoWLM();
-            //MailProfile.Export(AccountInfo);
-            //AccountInfo.Create();
+            var AccountInfo = new MailAccountInfoWLM();
+            MailProfile.Export(AccountInfo);
+            AccountInfo.Create();
             }
 
         }

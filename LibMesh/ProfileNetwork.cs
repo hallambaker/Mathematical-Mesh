@@ -57,16 +57,16 @@ namespace Goedel.Mesh {
             return null;
             }
 
-        /// <summary>
-        /// Make a device entry for the application
-        /// </summary>
-        /// <param name="DeviceProfile">Device profile of device to add.</param>
-        /// <returns>The device entry.</returns>
-        public override DeviceEntry MakeEntry(SignedDeviceProfile DeviceProfile) {
-            var DeviceEntry = base.MakeEntry(DeviceProfile);
-            //DeviceEntry.EncryptedKey = MakeDecryptInfo(DeviceProfile.Signed);
-            return DeviceEntry;
-            }
+        ///// <summary>
+        ///// Make a device entry for the application
+        ///// </summary>
+        ///// <param name="DeviceProfile">Device profile of device to add.</param>
+        ///// <returns>The device entry.</returns>
+        //public override DeviceEntry MakeEntry(SignedDeviceProfile DeviceProfile) {
+        //    var DeviceEntry = base.MakeEntry(DeviceProfile);
+        //    //DeviceEntry.EncryptedKey = MakeDecryptInfo(DeviceProfile.Signed);
+        //    return DeviceEntry;
+        //    }
 
         /// <summary>
         /// Add a DNS entry to the network configuration.

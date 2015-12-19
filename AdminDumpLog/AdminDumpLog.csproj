@@ -86,6 +86,10 @@
       <Project>{81e30b95-c59d-4a04-925e-85877fd37fdd}</Project>
       <Name>LibLogFile</Name>
     </ProjectReference>
+    <ProjectReference Include="..\LibMesh\LibMesh.csproj">
+      <Project>{0d8dd801-65d2-497c-8379-2d6adf3867c3}</Project>
+      <Name>LibMesh</Name>
+    </ProjectReference>
     <ProjectReference Include="..\LibProtoGen\LibProtoGen.csproj">
       <Project>{24419f2d-f425-4e0f-a0ea-9d3e7a57e12f}</Project>
       <Name>LibProtoGen</Name>

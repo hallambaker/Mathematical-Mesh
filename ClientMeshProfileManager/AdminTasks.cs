@@ -211,22 +211,28 @@ namespace Goedel.MeshProfileManager {
             if (ConfigurePassword) {
                 var PasswordProfile = new PasswordProfile(UserProfile);
                 PasswordProfile.AddDevice(ThisDevice);
+                MeshClient.Publish(PasswordProfile.Signed);
                 }
 
             if (ConfigureNetwork) {
                 var NetworkProfile = new NetworkProfile(UserProfile);
                 NetworkProfile.AddDevice(ThisDevice);
+                MeshClient.Publish(NetworkProfile.Signed);
                 }
 
             if (ConfigureEmail) {
                 foreach (var MailAccountInfo in MailAccountInfos) {
-                    MailAccountInfo.GenerateSMIME();
-                    MailAccountInfo.Update();
+                    // Add in the S/MIME parameters and update the profile
+                    //if (!MailAccountInfo.GotSMIME) {
+                        MailAccountInfo.GenerateSMIME();
+                        MailAccountInfo.Update();
+                        //}
+
                     var MailProfile = new MailProfile(UserProfile, MailAccountInfo);
                     MailProfile.AddDevice(ThisDevice);
 
-                    var SignedMailProfile = new SignedApplicationProfile(MailProfile);
-                    MeshClient.Publish(SignedMailProfile);
+                    //var SignedMailProfile = new SignedApplicationProfile(MailProfile);
+                    MeshClient.Publish(MailProfile.Signed);
                     }
                 }
 
@@ -365,19 +371,21 @@ namespace Goedel.MeshProfileManager {
             // Extract the device profile
             var DeviceProfile = RequestData.Device;
 
-            // Validate the device profile
-            var SignedPersonalProfile = MeshClient.GetPersonalProfile();
+            //// Validate the device profile
+            //var SignedPersonalProfile = MeshClient.GetPersonalProfile();
 
-            // Add device profile to personal profile
+            //// Add device profile to personal profile
 
-            var PersonalProfile = SignedPersonalProfile.Signed;
-            PersonalProfile.Add(DeviceProfile);
+            //var UserProfile = SignedPersonalProfile.Signed;
+            
+            UserProfile.Add(DeviceProfile);
+            UserProfile.SignedDeviceProfile = ThisDevice;
 
-            foreach (var Entry in PersonalProfile.Applications) {
-                AddDevice(Entry, PersonalProfile, DeviceProfile);
+            foreach (var Entry in UserProfile.Applications) {
+                AddDevice(Entry, UserProfile, DeviceProfile);
                 }
             // Sign personal profile
-            var SignedProfile = new SignedPersonalProfile(PersonalProfile);
+            var SignedProfile = new SignedPersonalProfile(UserProfile);
             SignedProfile.ToRegistry();
 
             // Send client the personal profile update
@@ -399,10 +407,20 @@ namespace Goedel.MeshProfileManager {
         public void AddDevice(ApplicationProfileEntry Entry, 
                     PersonalProfile PersonalProfile,
                 SignedDeviceProfile Device) {
-            Entry.SignID.Add(Device.Identifier);
-            Entry.DecryptID.Add(Device.Identifier);
+
+            // Add an entry into the application profile
+            // This is not required for profile maintenance but 
+            // is needed for navigation (it seems.
+            //Entry.ApplicationProfile.AddDevice(Device);
+
+            // Add entries into the application profile entry
+            // This sets up the permissions.
+
+            Entry.AddDevice(Device);
 
             var SignedAppProfile = MeshClient.GetApplicationProfile(Entry.Identifier);
+            if (SignedAppProfile == null) return;
+
             var AppProfile = SignedAppProfile.Signed;
             AppProfile.Link(PersonalProfile);
             AppProfile.EncryptPrivate();

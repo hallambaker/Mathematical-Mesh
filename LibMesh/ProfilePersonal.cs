@@ -273,4 +273,45 @@ namespace Goedel.Mesh {
 
         }
 
+
+    public partial class ApplicationProfileEntry {
+
+        /// <summary>
+        /// The application profile object this entry belongs to.
+        /// </summary>
+        public ApplicationProfile ApplicationProfile;
+
+        /// <summary>
+        /// Create a new entry for the specified profile.
+        /// </summary>
+        /// <param name="ApplicationProfile">Profile to link to.</param>
+        public ApplicationProfileEntry(ApplicationProfile ApplicationProfile) {
+
+            Identifier = ApplicationProfile.Identifier;
+            Type = ApplicationProfile.Tag();
+            this.ApplicationProfile = ApplicationProfile;
+            }
+
+        /// <summary>
+        /// Add the specified device to the linked personal profile and 
+        /// create any device specific entries in the private profile.
+        /// </summary>
+        /// <param name="Device">The device to add.</param>
+        public virtual void AddDevice(SignedDeviceProfile Device) {
+            // Create admin entry for this device
+
+            if (SignID == null) {
+                SignID = new List<string>();
+                }
+            SignID.Add(Device.Identifier);
+
+            if (DecryptID == null) {
+                DecryptID = new List<string>();
+                }
+            DecryptID.Add(Device.Identifier);
+            }
+
+        }
+
+
     }

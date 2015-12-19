@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using Goedel.LibCrypto;
+using Goedel.Debug;
+
 
 namespace Goedel.Cryptography.Jose {
 
@@ -71,6 +73,9 @@ namespace Goedel.Cryptography.Jose {
         /// <param name="Data">The data to encrypt</param>
         /// <param name="Encryptor">The encryption provider to use.</param>
         public void Encrypt(byte[] Data, CryptoProviderEncryption Encryptor) {
+            Trace.WriteHex("Encryption Key", Encryptor.Key);
+
+
             CryptoData = Encryptor.Encrypt(Data);
             var Preheader = new Header(Encryptor);
             Protected = Preheader.GetBytes(false); // get the data bytes untagged
@@ -86,7 +91,11 @@ namespace Goedel.Cryptography.Jose {
         /// entry for.</param>
         public void Add(KeyPair EncryptionKey) {
             var Recipient = new Recipient(EncryptionKey);
+
+            Trace.WriteLine("Create blob for {0}", EncryptionKey.UDF);
             Recipient.EncryptedKey = EncryptKey(EncryptionKey);
+            Trace.WriteHex("Created", Recipient.EncryptedKey);
+
             Recipient.Header = new Header();
             Recipient.Header.kid = EncryptionKey.UDF;
             Add(Recipient);
@@ -131,7 +140,14 @@ namespace Goedel.Cryptography.Jose {
             var PreHeader = Header.From(Protected);
             var Recipient = Find(DecryptionKey.UDF);
             var Exchange = DecryptionKey.ExchangeProviderDecrypt;
+
+
+
+
             CryptoData.Key = Exchange.Decrypt(Recipient.EncryptedKey);
+
+            Trace.WriteHex("Decryption Key", CryptoData.Key);
+
             CryptoData.IV = IV;
 
             // get the IV
@@ -151,6 +167,8 @@ namespace Goedel.Cryptography.Jose {
 
             var Exchange = EncryptionKey.ExchangeProviderEncrypt;
             var Result = Exchange.Encrypt(CryptoData.Key);
+
+            Trace.WriteHex("Key is ", CryptoData.Key);
 
             return Result;
             }
@@ -172,8 +190,5 @@ namespace Goedel.Cryptography.Jose {
             }
 
         }
-
-
-
 
     }

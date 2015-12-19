@@ -55,12 +55,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Account.cs" />
-    <Compile Include="Administration.cs" />
     <Compile Include="AppWindowsLiveMail.cs" />
     <Compile Include="ConfigRegistry.cs" />
     <Compile Include="ConnectionRequest.cs" />
     <Compile Include="Constants.cs" />
-    <Compile Include="DeviceEntry.cs" />
+    <Compile Include="ProfileApplication.cs" />
     <Compile Include="ProfileDevice.cs" />
     <Compile Include="Escrow.cs" />
     <Compile Include="LiveMailReigstry.cs" />
@@ -68,14 +67,14 @@
     <Compile Include="MailClientIntegration.cs" />
     <Compile Include="MeshConnection.cs" />
     <Compile Include="MeshSchemaPlus.cs" />
-    <Compile Include="NetworkProfile.cs" />
+    <Compile Include="ProfileNetwork.cs" />
     <Compile Include="PortalProtocol.cs" />
     <Compile Include="ProfileMaster.cs" />
     <Compile Include="PublicKey.cs" />
     <Compile Include="ProfileMail.cs" />
     <Compile Include="MeshLib.cs" />
     <Compile Include="MeshSchema.cs" />
-    <Compile Include="PasswordProfile.cs" />
+    <Compile Include="ProfilePassword.cs" />
     <Compile Include="ProfilePersonal.cs" />
     <Compile Include="Profiles.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

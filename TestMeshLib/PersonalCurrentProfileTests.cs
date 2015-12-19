@@ -69,7 +69,7 @@ namespace Goedel.Mesh.Tests {
             var UserProfile = new PersonalProfile(DevProfile);
             var PasswordProfile = new PasswordProfile(UserProfile);
             var SignedProfile = new SignedPersonalProfile(UserProfile);
-            PasswordProfile.AddDevice(DevProfile);
+            //PasswordProfile.AddDevice(DevProfile);
 
             Mesh.AddProfile(SignedProfile);
 
@@ -150,7 +150,7 @@ namespace Goedel.Mesh.Tests {
             var DevProfile = new SignedDeviceProfile(Device1, Device1Description);
             var UserProfile = new PersonalProfile(DevProfile);
             var PasswordProfile = new PasswordProfile(UserProfile);
-            PasswordProfile.AddDevice(DevProfile);
+            //PasswordProfile.AddDevice(DevProfile);
 
             var SignedProfile = new SignedPersonalProfile(UserProfile);
 

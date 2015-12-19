@@ -248,6 +248,7 @@ namespace Goedel.Mesh {
             GetRequest.Multiple = false;
 
             var GetResponse = MeshService.Get(GetRequest);
+            if (GetResponse.Entries == null) { return null; }
             if (GetResponse.Entries.Count == 0) { return null; }
 
             var SignedApplicationProfile = GetResponse.Entries[0] as SignedApplicationProfile;

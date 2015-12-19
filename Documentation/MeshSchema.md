@@ -368,44 +368,7 @@ was performed after the notary token was created.
 :EncryptedData :
 ::JoseWebEncryption [0..1]   
 
-Encrypted application data
-
-:Entries :
-::DeviceEntry [0..Many]   
-
-Per device information.
-
-###Structure: DeviceEntry
-
-Contains the device specific data for an application.
-
-
-:UDF :
-::String [0..1]   
-
-Fingerprint of the device for which this entry is
-made
-
-:Protocol :
-::String [0..1]   
-
-Tag for distinguishing between multiple entries per device.
-for example S/MIME and OpenPGP keys.
-
-:EncryptedKey :
-::Binary [0..1]   
-
-Encrypted key for this device
-
-:SignatureKey :
-::PublicKey [0..1]   
-
-Per device signature key
-
-:AuthenticationKey :
-::PublicKey [0..1]   
-
-Per device authentication key
+Encrypted application data	
 
 ###Structure: PasswordProfile
 
@@ -439,12 +402,7 @@ was performed after the notary token was created.
 :EncryptedData :
 ::JoseWebEncryption [0..1]   
 
-Encrypted application data
-
-:Entries :
-::DeviceEntry [0..Many]   
-
-Per device information.
+Encrypted application data	
 
 ###Structure: PasswordProfilePrivate
 
@@ -508,12 +466,7 @@ was performed after the notary token was created.
 :EncryptedData :
 ::JoseWebEncryption [0..1]   
 
-Encrypted application data
-
-:Entries :
-::DeviceEntry [0..Many]   
-
-Per device information.
+Encrypted application data	
 
 :EncryptionPGP :
 ::PublicKey [0..1]   
@@ -619,12 +572,7 @@ was performed after the notary token was created.
 :EncryptedData :
 ::JoseWebEncryption [0..1]   
 
-Encrypted application data
-
-:Entries :
-::DeviceEntry [0..Many]   
-
-Per device information.
+Encrypted application data	
 
 ###Structure: NetworkProfilePrivate
 

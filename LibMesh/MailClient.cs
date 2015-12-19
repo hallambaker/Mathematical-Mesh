@@ -65,34 +65,75 @@ namespace Goedel.Mesh {
                 }
             }
 
+        /// <summary>
+        /// Does the account have S/MIME parameters already?
+        /// </summary>
+        public virtual bool GotSMIME {
+            get {
+                return false;
+                }
+            }
+
+        /// <summary>
+        /// List of keys for signing.
+        /// </summary>
+        public override List<PublicKey> Sign {
+            get { return _Sign; }
+            set { _Sign = value;
+                if (_Sign != null && _Sign.Count > 0) {
+                    CertificateSign = _Sign[0];
+                    }
+                }
+
+            }
+
+        /// <summary>
+        /// List of keys for encryption.
+        /// </summary>
+        public override List<PublicKey> Encrypt {
+            get { return _Encrypt; }
+            set {
+                _Encrypt = value;
+                if (_Encrypt != null && _Encrypt.Count > 0) {
+                    CertificateEncrypt = _Encrypt[0];
+                    }
+                }
+
+            }
+
+
+        List<PublicKey> _Sign = new List<PublicKey> ();
+        List<PublicKey> _Encrypt = new List<PublicKey>();
 
         /// <summary>
         /// Signing Certificate
         /// </summary>
-        public virtual Certificate CertificateSign {
+        public virtual PublicKey CertificateSign {
             get {
                 return _CertificateSign;
                 }
 
             set {
                 _CertificateSign = value;
+                _Sign.Add(_CertificateSign);
                 }
             }
-        private Certificate _CertificateSign;
+        private PublicKey _CertificateSign;
 
         /// <summary>
         /// Encryption Certificate if different from signing certificate.
         /// </summary>
-        public virtual Certificate CertificateEncrypt {
+        public virtual PublicKey CertificateEncrypt {
             get {
                 return _CertificateEncrypt;
                 }
 
             set {
                 _CertificateEncrypt = value;
+                _Encrypt.Add(_CertificateEncrypt);
                 }
             }
-        private Certificate _CertificateEncrypt;
+        private PublicKey _CertificateEncrypt;
 
         /// <summary>
         /// Create a new profile using the specified configuration data.
@@ -127,8 +168,8 @@ namespace Goedel.Mesh {
             CertificateStore.Register(SignKey.Certificate);
             CertificateStore.Register(EncryptKey.Certificate);
 
-            CertificateSign = SignKey.Certificate;
-            CertificateEncrypt = EncryptKey.Certificate;
+            CertificateSign = SignKey;
+            CertificateEncrypt = EncryptKey;
 
             if (Encrypt == null) {
                 Encrypt = new List<PublicKey>();

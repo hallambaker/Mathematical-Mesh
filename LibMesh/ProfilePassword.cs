@@ -34,7 +34,9 @@ namespace Goedel.Mesh {
         /// encryption.
         /// </summary>
         protected override byte[] GetPrivateData {
-            get { return _Private.GetBytes(); }
+            get {
+                return Private.GetBytes();
+                }
             }
 
 
@@ -99,16 +101,16 @@ namespace Goedel.Mesh {
             return false;
             }
 
-        /// <summary>
-        /// Make a device entry for the application
-        /// </summary>
-        /// <param name="DeviceProfile">Device profile of device to add.</param>
-        /// <returns>The device entry.</returns>
-        public override DeviceEntry MakeEntry(SignedDeviceProfile DeviceProfile) {
-            var DeviceEntry = base.MakeEntry(DeviceProfile);
-            //DeviceEntry.EncryptedKey = MakeDecryptInfo(DeviceProfile.Signed);
-            return DeviceEntry;
-            }
+        ///// <summary>
+        ///// Make a device entry for the application
+        ///// </summary>
+        ///// <param name="DeviceProfile">Device profile of device to add.</param>
+        ///// <returns>The device entry.</returns>
+        //public override DeviceEntry MakeEntry(SignedDeviceProfile DeviceProfile) {
+        //    var DeviceEntry = base.MakeEntry(DeviceProfile);
+        //    //DeviceEntry.EncryptedKey = MakeDecryptInfo(DeviceProfile.Signed);
+        //    return DeviceEntry;
+        //    }
 
         /// <summary>
         /// Convenience function that converts a generic Signed Profile returned

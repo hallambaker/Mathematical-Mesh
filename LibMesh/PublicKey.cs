@@ -146,10 +146,15 @@ namespace Goedel.Mesh {
         private Certificate _Certificate;
 
         /// <summary>
-        /// The PKIC Certificate for the key (if it exists)
+        /// The PKIX Certificate for the key (if it exists). This is the 
+        /// deserialized version of X509Certificate.
         /// </summary>
         public Certificate Certificate {
-            get { return _Certificate; }
+            get {
+                if (_Certificate == null & X509Certificate != null) {
+                    _Certificate = new Certificate(X509Certificate);
+                    }
+                return _Certificate; }
             set {
                 _Certificate = value;
                 if (_Certificate.Data != null) {
@@ -221,6 +226,17 @@ namespace Goedel.Mesh {
             }
 
         /// <summary>
+        /// Create a Private Parameters property that contains the 
+        /// private parameters of the key.
+        /// </summary>
+        public void ExportPrivateParameters() {
+            if (KeyPair.GetType() == typeof(RSAKeyPair)) {
+                PrivateParameters = new PrivateKeyRSA(KeyPair as RSAKeyPair);
+                }
+            }
+
+
+        /// <summary>
         /// Create a self signed root certificate
         /// </summary>
         /// <param name="PKIXUse">Bit mask specifying certificate uses.</param>
@@ -245,8 +261,13 @@ namespace Goedel.Mesh {
         /// or a RFC822 email address.</param>
         /// <param name="Signer">The signing key (which must have an attached certificate).</param>
         public void SignCertificate(Application PKIXUse, string SubjectAltName, PublicKey Signer) {
-            Certificate = new Certificate(_KeyPair, PKIXUse, SubjectAltName, SubjectAltName);
-            Certificate.Sign(Signer.Certificate);
+            //NB it is essential that the assignment to the Certificate property
+            //takes place AFTER the cert is signed. Otherwise the value of X509Certificate
+            // is not set correctly.
+            var NewCert = new Certificate(_KeyPair, PKIXUse, SubjectAltName, SubjectAltName);
+            NewCert.Sign(Signer.Certificate);
+
+            Certificate = NewCert;
             }
 
 

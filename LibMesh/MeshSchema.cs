@@ -1,7 +1,7 @@
 ﻿
 //  Test
 //  
-//  This file was automatically generated at 12/16/2015 12:03:04 AM
+//  This file was automatically generated at 12/19/2015 12:55:28 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -208,14 +208,6 @@ namespace Goedel.Mesh {
 
 				case "ApplicationProfile" : {
 					var Result = new ApplicationProfile ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
-					break;
-					}
-
-
-				case "DeviceEntry" : {
-					var Result = new DeviceEntry ();
 					Result.Deserialize (JSONReader);
 					Out = Result;
 					break;
@@ -3233,14 +3225,6 @@ namespace Goedel.Mesh {
 			set {_EncryptedData = value;}
 			}
 		JoseWebEncryption						_EncryptedData ;
-		/// <summary>
-        /// 
-        /// </summary>
-		public virtual List<DeviceEntry>				Entries {
-			get {return _Entries;}			
-			set {_Entries = value;}
-			}
-		List<DeviceEntry>				_Entries;
 
         /// <summary>
         /// Tag identifying this class.
@@ -3292,23 +3276,6 @@ namespace Goedel.Mesh {
 				_Writer.WriteToken ("EncryptedData", 1);
 					EncryptedData.Serialize (_Writer, false);
 				}
-			if (Entries != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("Entries", 1);
-				_Writer.WriteArrayStart ();
-				bool _firstarray = true;
-				foreach (var _index in Entries) {
-					_Writer.WriteArraySeparator (ref _firstarray);
-					// This is an untagged structure. Cannot inherit.
-                    //_Writer.WriteObjectStart();
-                    //_Writer.WriteToken(_index.Tag(), 1);
-					bool firstinner = true;
-					_index.Serialize (_Writer, true, ref firstinner);
-                    //_Writer.WriteObjectEnd();
-					}
-				_Writer.WriteArrayEnd ();
-				}
-
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
 				}
@@ -3435,268 +3402,8 @@ namespace Goedel.Mesh {
  
 					break;
 					}
-				case "Entries" : {
-					// Have a sequence of values
-					bool _Going = JSONReader.StartArray ();
-					Entries = new List <DeviceEntry> ();
-					while (_Going) {
-						// an untagged structure.
-						var _Item = new DeviceEntry (JSONReader);
-						Entries.Add (_Item);
-						_Going = JSONReader.NextArray ();
-						}
-					break;
-					}
 				default : {
 					base.DeserializeToken(JSONReader, Tag);
-					break;
-					}
-				}
-			// check up that all the required elements are present
-			}
-
-
-		}
-
-	/// <summary>
-	///
-	/// Contains the device specific data for an application.
-	/// </summary>
-	public partial class DeviceEntry : MeshItem {
-        /// <summary>
-        /// 
-        /// </summary>
-		public virtual string						UDF {
-			get {return _UDF;}			
-			set {_UDF = value;}
-			}
-		string						_UDF ;
-        /// <summary>
-        /// 
-        /// </summary>
-		public virtual string						Protocol {
-			get {return _Protocol;}			
-			set {_Protocol = value;}
-			}
-		string						_Protocol ;
-        /// <summary>
-        /// 
-        /// </summary>
-		public virtual byte[]						EncryptedKey {
-			get {return _EncryptedKey;}			
-			set {_EncryptedKey = value;}
-			}
-		byte[]						_EncryptedKey ;
-        /// <summary>
-        /// 
-        /// </summary>
-		public virtual PublicKey						SignatureKey {
-			get {return _SignatureKey;}			
-			set {_SignatureKey = value;}
-			}
-		PublicKey						_SignatureKey ;
-        /// <summary>
-        /// 
-        /// </summary>
-		public virtual PublicKey						AuthenticationKey {
-			get {return _AuthenticationKey;}			
-			set {_AuthenticationKey = value;}
-			}
-		PublicKey						_AuthenticationKey ;
-
-        /// <summary>
-        /// Tag identifying this class.
-        /// </summary>
-        /// <returns>The tag</returns>
-		public override string Tag () {
-			return "DeviceEntry";
-			}
-
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-		public DeviceEntry () {
-			_Initialize ();
-			}
-        /// <summary>
-        /// </summary>		
-		public DeviceEntry (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			}
-
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// </summary>
-        /// <param name="Writer">Output stream</param>
-        /// <param name="wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
-			SerializeX (Writer, wrap, ref first);
-			}
-
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// Unlike the Serlialize() method, this method is not inherited from the
-        /// parent class allowing a specific version of the method to be called.
-        /// </summary>
-        /// <param name="_Writer">Output stream</param>
-        /// <param name="_wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="_first">If true, item is the first entry in a list.</param>
-		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
-			if (_wrap) {
-				_Writer.WriteObjectStart ();
-				}
-			if (UDF != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("UDF", 1);
-					_Writer.WriteString (UDF);
-				}
-			if (Protocol != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("Protocol", 1);
-					_Writer.WriteString (Protocol);
-				}
-			if (EncryptedKey != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("EncryptedKey", 1);
-					_Writer.WriteBinary (EncryptedKey);
-				}
-			if (SignatureKey != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("SignatureKey", 1);
-					SignatureKey.Serialize (_Writer, false);
-				}
-			if (AuthenticationKey != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("AuthenticationKey", 1);
-					AuthenticationKey.Serialize (_Writer, false);
-				}
-			if (_wrap) {
-				_Writer.WriteObjectEnd ();
-				}
-			}
-
-
-
-        /// <summary>
-		/// Create a new instance from untagged byte input.
-		/// i.e. {... data ... }
-        /// </summary>	
-        /// <param name="_Data">The input data.</param>
-        /// <returns>The created object.</returns>		
-		public static new DeviceEntry From (byte[] _Data) {
-			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
-			return From (_Input);
-			}
-
-        /// <summary>
-		/// Create a new instance from untagged string input.
-		/// i.e. {... data ... }
-        /// </summary>	
-        /// <param name="_Input">The input data.</param>
-        /// <returns>The created object.</returns>				
-		public static new DeviceEntry From (string _Input) {
-			StringReader _Reader = new StringReader (_Input);
-            JSONReader JSONReader = new JSONReader (_Reader);
-			return new DeviceEntry (JSONReader);
-			}
-
-        /// <summary>
-		/// Create a new instance from tagged byte input.
-		/// i.e. { "DeviceEntry" : {... data ... } }
-        /// </summary>	
-        /// <param name="_Data">The input data.</param>
-        /// <returns>The created object.</returns>				
-		public static new DeviceEntry FromTagged (byte[] _Data) {
-			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
-			return FromTagged (_Input);
-			}
-
-        /// <summary>
-        /// Create a new instance from tagged string input.
-		/// i.e. { "DeviceEntry" : {... data ... } }
-        /// </summary>
-        /// <param name="_Input">The input data.</param>
-        /// <returns>The created object.</returns>		
-		public static new DeviceEntry FromTagged (string _Input) {
-			//DeviceEntry _Result;
-			//Deserialize (_Input, out _Result);
-			StringReader _Reader = new StringReader (_Input);
-            JSONReader JSONReader = new JSONReader (_Reader);
-			return FromTagged (JSONReader) ;
-			}
-
-
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="JSONReader"></param>
-        public static new DeviceEntry  FromTagged (JSONReader JSONReader) {
-			DeviceEntry Out = null;
-
-			JSONReader.StartObject ();
-            if (JSONReader.EOR) {
-                return null;
-                }
-
-			string token = JSONReader.ReadToken ();
-
-			switch (token) {
-
-				case "DeviceEntry" : {
-					var Result = new DeviceEntry ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
-					break;
-					}
-
-				default : {
-					//Ignore the unknown data
-                    //throw new Exception ("Not supported");
-                    break;
-					}
-				}
-			JSONReader.EndObject ();
-
-			return Out;
-			}
-
-
-        /// <summary>
-        /// Having read a tag, process the corresponding value data.
-        /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Tag"></param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
-			
-			switch (Tag) {
-				case "UDF" : {
-					UDF = JSONReader.ReadString ();
-					break;
-					}
-				case "Protocol" : {
-					Protocol = JSONReader.ReadString ();
-					break;
-					}
-				case "EncryptedKey" : {
-					EncryptedKey = JSONReader.ReadBinary ();
-					break;
-					}
-				case "SignatureKey" : {
-					// An untagged structure
-					SignatureKey = new PublicKey (JSONReader);
- 
-					break;
-					}
-				case "AuthenticationKey" : {
-					// An untagged structure
-					AuthenticationKey = new PublicKey (JSONReader);
- 
-					break;
-					}
-				default : {
 					break;
 					}
 				}
@@ -6785,6 +6492,14 @@ namespace Goedel.Mesh {
 			set {_PublicParameters = value;}
 			}
 		Key						_PublicParameters ;
+        /// <summary>
+        /// 
+        /// </summary>
+		public virtual Key						PrivateParameters {
+			get {return _PrivateParameters;}			
+			set {_PrivateParameters = value;}
+			}
+		Key						_PrivateParameters ;
 
         /// <summary>
         /// Tag identifying this class.
@@ -6867,6 +6582,19 @@ namespace Goedel.Mesh {
 						_Writer.WriteToken(PublicParameters.Tag(), 1);
 						bool firstinner = true;
 						PublicParameters.Serialize (_Writer, true, ref firstinner);
+						_Writer.WriteObjectEnd();
+						}
+				}
+			if (PrivateParameters != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("PrivateParameters", 1);
+					// expand this to a tagged structure
+					//PrivateParameters.Serialize (_Writer, false);
+					{
+						_Writer.WriteObjectStart();
+						_Writer.WriteToken(PrivateParameters.Tag(), 1);
+						bool firstinner = true;
+						PrivateParameters.Serialize (_Writer, true, ref firstinner);
 						_Writer.WriteObjectEnd();
 						}
 				}
@@ -6994,6 +6722,10 @@ namespace Goedel.Mesh {
 					}
 				case "PublicParameters" : {
 					PublicParameters = Key.FromTagged (JSONReader) ;  // A tagged structure
+					break;
+					}
+				case "PrivateParameters" : {
+					PrivateParameters = Key.FromTagged (JSONReader) ;  // A tagged structure
 					break;
 					}
 				default : {

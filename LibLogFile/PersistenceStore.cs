@@ -333,7 +333,7 @@ namespace Goedel.Persistence {
             /// </summary>
             /// <returns>True if successful, false if no more entries exist.</returns>
             public bool MoveNext() {
-                Console.WriteLine("Try read item");
+                //Console.WriteLine("Try read item");
 
 
                 Position++;

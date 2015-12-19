@@ -21,10 +21,40 @@ namespace Goedel.Mesh {
             this.Security = Security;
             }
 
+        static readonly List<string> TLSDirect = new List<string> { "Direct" };
+        static readonly List<string> TLSUpgrade = new List<string>  { "Upgrade" };
+
+
         /// <summary>
-        /// The TLS Mode to use
+        /// The TLS Mode to use. A convenience accessor for the Security property.
         /// </summary>
-        public TLSMode TLSMode;
+        public TLSMode TLSMode {
+            get {
+                if (Security == null || Security.Count == 0) {
+                    return TLSMode.None;
+                    }
+                if (Security[0] == "Direct") {
+                    return TLSMode.Direct;
+                    }
+                if (Security[0] == "Upgrade") {
+                    return TLSMode.Upgrade;
+                    }
+                return TLSMode.None;
+                }
+
+
+            set {
+                if (value == TLSMode.Direct) {
+                    Security = TLSDirect;
+                    }
+                else if (value == TLSMode.Upgrade) {
+                    Security = TLSUpgrade;
+                    }
+                else {
+                    Security = null;
+                    }
+                }
+            }
 
         /// <summary>
         /// If true, force use of secure authentication.
@@ -37,20 +67,37 @@ namespace Goedel.Mesh {
         /// </summary>
         public AppProtocol AppProtocol {
             get {
-                return _AppProtocol;
+                if (Prefix == "_imap" | Prefix == "_imaps") {
+                    return AppProtocol.IMAP4;
+                    }
+                if (Prefix == "_pop3") {
+                    return AppProtocol.POP3;
+                    }
+                if (Prefix == "_smtp") {
+                    return AppProtocol.SMTP;
+                    }
+                if (Prefix == "_submission") {
+                    return AppProtocol.SUBMIT;
+                    }
+                return AppProtocol.NULL;
                 }
 
             set {
-                _AppProtocol = value;
+                switch (value) {
+                    case AppProtocol.SUBMIT: Prefix = "_submission"; break;
+                    case AppProtocol.SMTP: Prefix = "_smtp"; break;
+                    case AppProtocol.POP3: Prefix = "_pop3"; break;
+                    case AppProtocol.IMAP4: Prefix = "_imap"; break;
+                    }
                 }
             }
-        AppProtocol _AppProtocol;
+
 
         /// <summary>
         /// Debug routine, writes data to the console.
         /// </summary>
         public virtual void Dump() {
-            Trace.WriteLine("    Server {0} : Port {1} : Protocol", ServiceName, Port, _AppProtocol);
+            Trace.WriteLine("    Server {0} : Port {1} : Protocol", ServiceName, Port, AppProtocol);
             Trace.WriteLine("        Username {0}/{1}", UserName, Password);
             Trace.WriteLine("        Timeout {0} : Poll {1}", TimeOut, Polling);
             }
