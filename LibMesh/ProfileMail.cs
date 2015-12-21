@@ -89,7 +89,13 @@ namespace Goedel.Mesh {
             MailAccountInfo.Inbound = Private.Inbound;
             MailAccountInfo.Outbound = Private.Outbound;
             MailAccountInfo.Sign = Private.Sign;
+            foreach (var Key in Private.Sign) {
+                Key.ImportPrivateParameters();
+                }
             MailAccountInfo.Encrypt = Private.Encrypt;
+            foreach (var Key in Private.Encrypt) {
+                Key.ImportPrivateParameters();
+                }
             }
 
 

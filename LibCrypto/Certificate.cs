@@ -21,7 +21,12 @@ namespace Goedel.LibCrypto.PKIX {
         /// property is only filled when the certificate is signed.
         /// </summary>
         public byte[] Data {
-            get { return _Data; }
+                
+            get {
+                if (_Data == null) {
+                    _Data = DER();
+                    }
+                return _Data; }
             }
 
         /// <summary>

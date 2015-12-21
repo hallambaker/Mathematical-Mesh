@@ -124,8 +124,8 @@ namespace Goedel.LibCrypto.PKIX {
             DateTime NotBefore = DateTime.Now.ToUniversalTime();
             DateTime NotAfter = NotBefore.Add(TimeSpan);
 
-            // Predate the certificate by one hour to avoid issues with the day roll round
-            NotBefore = NotBefore.AddHours(-1);
+            // Predate the certificate by one day plus an hour to avoid issues with the day roll round
+            NotBefore = NotBefore.AddHours(-25);
 
             // Predate the certificate to 1 minute past midnight (UTC) on the date of 
             // issue to avoid clock sync issues

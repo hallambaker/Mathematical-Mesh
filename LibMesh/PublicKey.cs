@@ -235,6 +235,18 @@ namespace Goedel.Mesh {
                 }
             }
 
+        /// <summary>
+        /// Create a provider object that includes the private key parameters and add this
+        /// to the certificate.
+        /// </summary>
+        public void ImportPrivateParameters() {
+            if (KeyPair.GetType() == typeof(RSAKeyPair)) {
+                var RSAKeyPair = KeyPair as RSAKeyPair;
+                CertificateStore.Register(Certificate);
+                }
+            }
+
+
 
         /// <summary>
         /// Create a self signed root certificate

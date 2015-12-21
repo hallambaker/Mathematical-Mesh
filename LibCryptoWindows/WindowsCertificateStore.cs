@@ -34,7 +34,7 @@ namespace Goedel.LibCrypto {
             }
 
         static X509Certificate2 X509CertificateAndKey(GCP.Certificate Certificate) {
-            var X509 = new X509Certificate2(Certificate.DER());
+            var X509 = new X509Certificate2(Certificate.Data);
             CryptoProviderAsymmetric Provider;
             if (Certificate.CryptoProviderSignature != null) {
                 Provider = Certificate.CryptoProviderSignature;
