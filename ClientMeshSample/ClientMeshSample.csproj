@@ -95,6 +95,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="ClientMeshSample.licenseheader" />
     <None Include="MeshSampleClient.gui" />
     <None Include="PreBuild.bat" />
     <None Include="Properties\Settings.settings">

@@ -1,4 +1,5 @@
-﻿using System;
+﻿//Sample license text.
+using System;
 using Goedel.LibCrypto;
 using Goedel.Debug;
 using Goedel.Protocol;

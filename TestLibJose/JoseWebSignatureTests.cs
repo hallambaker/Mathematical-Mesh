@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿//Sample license text.
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Goedel.Cryptography.Jose;
 using System;
 using System.Collections.Generic;

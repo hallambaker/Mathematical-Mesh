@@ -57,6 +57,7 @@
     <None Include="PortalPersistenceStore.jlog" />
     <None Include="PreBuild.bat" />
     <None Include="ServerCommands.cmd" />
+    <None Include="ServerMesh.licenseheader" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LibCryptoJose\LibCryptoJose.csproj">

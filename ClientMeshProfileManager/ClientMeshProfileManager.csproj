@@ -127,6 +127,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="ClientMeshProfileManager.licenseheader" />
     <None Include="ProfileManager.gui" />
     <None Include="mesh.jlog" />
     <None Include="portal.jlog" />

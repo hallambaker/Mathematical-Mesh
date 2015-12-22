@@ -1,4 +1,5 @@
-﻿using System;
+﻿//Sample license text.
+using System;
 using Goedel.Persistence;
 
 namespace Goedel.Persistence {

@@ -75,6 +75,7 @@
     <Compile Include="SchemaPlus.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="LibLogFile.licenseheader" />
     <None Include="Schema.protocol" />
     <None Include="PreBuild.bat" />
   </ItemGroup>

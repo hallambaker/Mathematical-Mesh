@@ -1,4 +1,5 @@
-﻿using System;
+﻿//Sample license text.
+using System;
 using System.Net;
 using System.IO;
 using Goedel.Debug;

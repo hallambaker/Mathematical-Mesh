@@ -67,6 +67,7 @@
     <Compile Include="UDF.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="LibCrypto.licenseheader" />
     <None Include="PKIX.asn2" />
     <None Include="PreBuild.bat" />
     <None Include="ToDo.md" />

@@ -1,4 +1,5 @@
-﻿using System;
+﻿//Sample license text.
+using System;
 using Goedel.Mesh;
 using Goedel.Protocol;
 

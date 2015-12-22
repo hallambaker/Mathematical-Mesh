@@ -81,6 +81,9 @@
       <Name>Debug</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="LibProtoGen.licenseheader" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>MoveToLibrary "$(TargetPath)"</PostBuildEvent>

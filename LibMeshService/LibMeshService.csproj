@@ -52,6 +52,7 @@
     <Compile Include="MeshPortal.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="LibMeshService.licenseheader" />
     <None Include="MeshProtocol.Protocol" />
     <None Include="PreBuild.bat" />
   </ItemGroup>
