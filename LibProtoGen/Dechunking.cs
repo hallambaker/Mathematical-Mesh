@@ -1,4 +1,5 @@
-﻿
+﻿//Sample license text.
+
 using System.IO;
 using System.Text;
 

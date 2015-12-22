@@ -1,4 +1,6 @@
-﻿// Generated on 12/10/2015 6:05:41 AM
+﻿//Sample license text.
+
+// Generated on 12/10/2015 6:05:41 AM
 using System;
 using System.Collections.Generic;
 using System.IO;

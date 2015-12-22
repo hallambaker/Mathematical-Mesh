@@ -54,6 +54,7 @@
     <None Include="App.config" />
     <None Include="PostBuild.bat" />
     <None Include="PreBuild.bat" />
+    <None Include="RunMesh.licenseheader" />
     <None Include="Tmesh.jlog" />
     <None Include="Tportal.jlog" />
   </ItemGroup>

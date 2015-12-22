@@ -108,6 +108,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="ClientMeshConnectOnly.licenseheader" />
     <None Include="Connect.gui" />
     <None Include="PreBuild.bat" />
     <None Include="Properties\Settings.settings">

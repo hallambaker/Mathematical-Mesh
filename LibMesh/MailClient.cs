@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿//Sample license text.
+using System.Collections.Generic;
 using Goedel.LibCrypto;
 using Goedel.LibCrypto.PKIX;
 using Goedel.Debug;

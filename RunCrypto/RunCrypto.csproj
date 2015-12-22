@@ -55,6 +55,7 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="PreBuild.bat" />
+    <None Include="RunCrypto.licenseheader" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LibProtoGen\LibProtoGen.csproj">

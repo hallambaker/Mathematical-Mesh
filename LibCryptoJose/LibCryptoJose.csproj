@@ -78,6 +78,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="JoseSchema.Protocol" />
+    <None Include="LibCryptoJose.licenseheader" />
     <None Include="Post.bat" />
     <None Include="Prebuild.bat" />
   </ItemGroup>

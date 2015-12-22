@@ -1,4 +1,6 @@
-﻿
+﻿//Sample license text.
+
+
 
 //
 // Code generated automatically

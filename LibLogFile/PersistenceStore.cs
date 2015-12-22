@@ -1,4 +1,5 @@
-﻿using System;
+﻿//Sample license text.
+using System;
 using System.Linq;
 using System.Collections;
 using System.Collections.Generic;

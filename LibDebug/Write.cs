@@ -1,4 +1,5 @@
-﻿using System;
+﻿//Sample license text.
+using System;
 
 
 namespace Goedel.Debug {

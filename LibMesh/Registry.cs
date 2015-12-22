@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿//Sample license text.
+using System.IO;
 using Microsoft.Win32;
 using System.Collections.Generic;
 using Goedel.Protocol;

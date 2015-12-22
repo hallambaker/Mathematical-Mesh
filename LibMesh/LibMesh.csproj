@@ -84,6 +84,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="LibMesh.licenseheader" />
     <None Include="LiveMail.RegistrySchema" />
     <None Include="Portal.Protocol" />
     <None Include="PreBuild.bat" />

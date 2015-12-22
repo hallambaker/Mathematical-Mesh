@@ -1,9 +1,9 @@
 ﻿
-//This file was automatically generated at 12/21/2015 3:40:26 PM
+//This file was automatically generated at 12/21/2015 10:16:38 PM
 // 
 //Changes to this file may be overwritten without warning
 //
-//Generator:  CommandParse version 1.0.5814.42914
+//Generator:  CommandParse version 1.0.5799.22859
 //    Goedel Script Version : 0.1   Generated 
 //    Goedel Schema Version : 0.1   Generated
 //
@@ -48,26 +48,26 @@ namespace MeshServerShell {
 		static char UnixFlag = '-';
 		static char WindowsFlag = '/';
 
+		//static char Separator;
+		//static char UnixSeparator = '=';
+		//static char WindowsSeparator = ':';
+
         static bool IsFlag(char c) {
             return (c == UnixFlag) | (c == WindowsFlag) ;
             }
 
         static _Main () {
-			// For compatability with .NET Core, remove all references to operating
-			// system version. Since this is only used for giving help, this does not
-			// matter a great deal.
+            System.OperatingSystem OperatingSystem = System.Environment.OSVersion;
 
-		    UsageFlag = WindowsFlag;
-
-            //System.OperatingSystem OperatingSystem = System.Environment.OSVersion;
-
-            //if (OperatingSystem.Platform == PlatformID.Unix |
-            //        OperatingSystem.Platform == PlatformID.MacOSX) {
-            //    UsageFlag = UnixFlag;
-            //    }
-            //else {
-            //    UsageFlag = WindowsFlag;
-            //    }
+            if (OperatingSystem.Platform == PlatformID.Unix |
+                    OperatingSystem.Platform == PlatformID.MacOSX) {
+                UsageFlag = UnixFlag;
+				//Separator = UnixSeparator;
+                }
+            else {
+                UsageFlag = WindowsFlag;
+				//Separator = WindowsSeparator;
+                }
             }
 
         static void Main(string[] args) {
