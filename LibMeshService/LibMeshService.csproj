@@ -47,13 +47,20 @@
   <ItemGroup>
     <Compile Include="MeshClient.cs" />
     <Compile Include="MeshDispatch.cs" />
-    <Compile Include="MeshProtocol.cs" />
+    <Compile Include="MeshProtocol.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MeshProtocol.Protocol</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MeshPortal.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="LibMeshService.licenseheader" />
-    <None Include="MeshProtocol.Protocol" />
+    <None Include="MeshProtocol.Protocol">
+      <Generator>ProtogenCS</Generator>
+      <LastGenOutput>MeshProtocol.cs</LastGenOutput>
+    </None>
     <None Include="PreBuild.bat" />
   </ItemGroup>
   <ItemGroup>

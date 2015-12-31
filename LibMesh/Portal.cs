@@ -1,19 +1,4 @@
-﻿
-//  Test
-//  
-//  This file was automatically generated at 12/31/2015 1:25:40 AM
-//   
-//  Changes to this file may be overwritten without warning
-//  
-//  Generator:  ProtoGen version 1.0.0.0
-//      Goedel Script Version : 0.1   Generated 
-//      Goedel Schema Version : 0.1   Generated
-//  
-//      Copyright : Copyright ©  2012
-//  
-//  Build Platform: Win32NT 6.2.9200.0
-//  
-//  
+
 //  Copyright (c) 2014 by .
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy

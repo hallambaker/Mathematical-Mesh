@@ -1,4 +1,5 @@
-﻿//   Copyright © 2015 by Comodo Group Inc.
+
+//  Copyright (c) 2014 by .
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -18,7 +19,8 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 //  
-//  
+//  //Header
+// With all fields as properties
 
 using System;
 using System.IO;

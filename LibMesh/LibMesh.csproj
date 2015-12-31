@@ -59,6 +59,16 @@
     <Compile Include="ConfigRegistry.cs" />
     <Compile Include="ConnectionRequest.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="MeshSchema.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MeshSchema.protocol</DependentUpon>
+    </Compile>
+    <Compile Include="Portal.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Portal.Protocol</DependentUpon>
+    </Compile>
     <Compile Include="ProfileApplication.cs" />
     <Compile Include="ProfileDevice.cs" />
     <Compile Include="Escrow.cs" />
@@ -68,12 +78,10 @@
     <Compile Include="MeshConnection.cs" />
     <Compile Include="MeshSchemaPlus.cs" />
     <Compile Include="ProfileNetwork.cs" />
-    <Compile Include="PortalProtocol.cs" />
     <Compile Include="ProfileMaster.cs" />
     <Compile Include="PublicKey.cs" />
     <Compile Include="ProfileMail.cs" />
     <Compile Include="MeshLib.cs" />
-    <Compile Include="MeshSchema.cs" />
     <Compile Include="ProfilePassword.cs" />
     <Compile Include="ProfilePersonal.cs" />
     <Compile Include="Profiles.cs" />
@@ -86,9 +94,15 @@
     <None Include="App.config" />
     <None Include="LibMesh.licenseheader" />
     <None Include="LiveMail.RegistrySchema" />
-    <None Include="Portal.Protocol" />
+    <None Include="Portal.Protocol">
+      <Generator>ProtogenCS</Generator>
+      <LastGenOutput>Portal.cs</LastGenOutput>
+    </None>
     <None Include="PreBuild.bat" />
-    <None Include="MeshSchema.protocol" />
+    <None Include="MeshSchema.protocol">
+      <Generator>ProtogenCS</Generator>
+      <LastGenOutput>MeshSchema.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LibCryptoJose\LibCryptoJose.csproj">

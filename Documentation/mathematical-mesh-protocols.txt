@@ -1,7 +1,7 @@
 Internet Engineering Task Force (IETF)             Phillip Hallam-Baker 
 INTERNET-DRAFT                                        Comodo Group Inc. 
-Intended Status: Standards Track                       December 21, 2015
-Expires: June 23, 2016
+Intended Status: Standards Track                       December 31, 2015
+Expires: July 3, 2016
 
 
                Mathematical Mesh: Client-Service Protocol
@@ -54,7 +54,7 @@ Copyright Notice
 
 
 
-                             June 23, 2016                      [Page 1]
+                              July 3, 2016                      [Page 1]
 
 Internet-Draft           Mathematical Mesh CSP             December 2015
 
@@ -112,7 +112,7 @@ Table of Contents
 
 
 
-                             June 23, 2016                      [Page 2]
+                              July 3, 2016                      [Page 2]
 
 Internet-Draft           Mathematical Mesh CSP             December 2015
 
@@ -170,7 +170,7 @@ Table of Contents
 
 
 
-                             June 23, 2016                      [Page 3]
+                              July 3, 2016                      [Page 3]
 
 Internet-Draft           Mathematical Mesh CSP             December 2015
 
@@ -228,7 +228,7 @@ Table of Contents
 
 
 
-                             June 23, 2016                      [Page 4]
+                              July 3, 2016                      [Page 4]
 
 Internet-Draft           Mathematical Mesh CSP             December 2015
 
@@ -286,7 +286,7 @@ Table of Contents
 
 
 
-                             June 23, 2016                      [Page 5]
+                              July 3, 2016                      [Page 5]
 
 Internet-Draft           Mathematical Mesh CSP             December 2015
 
@@ -344,7 +344,7 @@ Table of Contents
 
 
 
-                             June 23, 2016                      [Page 6]
+                              July 3, 2016                      [Page 6]
 
 Internet-Draft           Mathematical Mesh CSP             December 2015
 
@@ -402,7 +402,7 @@ Table of Contents
 
 
 
-                             June 23, 2016                      [Page 7]
+                              July 3, 2016                      [Page 7]
 
 Internet-Draft           Mathematical Mesh CSP             December 2015
 
@@ -460,7 +460,7 @@ Table of Contents
 
 
 
-                             June 23, 2016                      [Page 8]
+                              July 3, 2016                      [Page 8]
 
 Internet-Draft           Mathematical Mesh CSP             December 2015
 
@@ -518,7 +518,7 @@ Table of Contents
 
 
 
-                             June 23, 2016                      [Page 9]
+                              July 3, 2016                      [Page 9]
 
 Internet-Draft           Mathematical Mesh CSP             December 2015
 
@@ -576,7 +576,7 @@ Table of Contents
 
 
 
-                             June 23, 2016                     [Page 10]
+                              July 3, 2016                     [Page 10]
 
 Internet-Draft           Mathematical Mesh CSP             December 2015
 
@@ -634,7 +634,7 @@ Table of Contents
 
 
 
-                             June 23, 2016                     [Page 11]
+                              July 3, 2016                     [Page 11]
 
 Internet-Draft           Mathematical Mesh CSP             December 2015
 
@@ -692,7 +692,7 @@ Table of Contents
 
 
 
-                             June 23, 2016                     [Page 12]
+                              July 3, 2016                     [Page 12]
 
 Internet-Draft           Mathematical Mesh CSP             December 2015
 
@@ -750,4 +750,4 @@ Author's Address
 
 
 
-                             June 23, 2016                     [Page 13]
+                              July 3, 2016                     [Page 13]

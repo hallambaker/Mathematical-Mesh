@@ -1,4 +1,20 @@
-﻿//   Copyright © 2015 by Comodo Group Inc.
+﻿
+//  Test
+//  
+//  This file was automatically generated at 12/31/2015 12:56:04 AM
+//   
+//  Changes to this file may be overwritten without warning
+//  
+//  Generator:  ProtoGen version 1.0.0.0
+//      Goedel Script Version : 0.1   Generated 
+//      Goedel Schema Version : 0.1   Generated
+//  
+//      Copyright : Copyright ©  2012
+//  
+//  Build Platform: Win32NT 6.2.9200.0
+//  
+//  
+//  Copyright (c) 2014 by .
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -18,7 +34,9 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 //  
-//  
+//  //Header
+// With all fields as properties
+
 using System;
 using System.IO;
 using System.Collections;

@@ -1,28 +1,5 @@
 <?xml version='1.0'?>
 <!DOCTYPE rfc SYSTEM 'rfc2629.dtd'>
-
-<!--
-   Copyright © 2015 by Comodo Group Inc.
-
-  Permission is hereby granted, free of charge, to any person obtaining a copy
-  of this software and associated documentation files (the "Software"), to deal
-  in the Software without restriction, including without limitation the rights
-  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-  copies of the Software, and to permit persons to whom the Software is
-  furnished to do so, subject to the following conditions:
-  
-  The above copyright notice and this permission notice shall be included in
-  all copies or substantial portions of the Software.
-
-  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.IN NO EVENT SHALL THE
-  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-  THE SOFTWARE.
--->
-
 <rfc ipr="trust200902" docName="draft-hallambaker-mathematical-mesh-protocols-00" category="Standards Track">
 <front>
 <title abbrev="Mathematical Mesh CSP">Mathematical Mesh: Client-Service Protocol</title>
@@ -32,7 +9,7 @@
 <email>philliph@comodo.com</email>
 </address>
 </author>
-<date day="21" month="December" year="2015"/>
+<date day="31" month="December" year="2015"/>
 <area>Security</area>
 <workgroup/>
 <abstract>

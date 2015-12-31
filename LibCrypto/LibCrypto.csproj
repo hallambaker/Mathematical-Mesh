@@ -55,7 +55,11 @@
     <Compile Include="KeyInfo.cs" />
     <Compile Include="Keys.cs" />
     <Compile Include="KeyShare.cs" />
-    <Compile Include="PKIX.cs" />
+    <Compile Include="PKIX.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PKIX.asn2</DependentUpon>
+    </Compile>
     <Compile Include="PKIXConstants.cs" />
     <Compile Include="PKIXName.cs" />
     <Compile Include="Signature.cs" />
@@ -68,7 +72,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="LibCrypto.licenseheader" />
-    <None Include="PKIX.asn2" />
+    <None Include="PKIX.asn2">
+      <Generator>ASN2CS</Generator>
+      <LastGenOutput>PKIX.cs</LastGenOutput>
+    </None>
     <None Include="PreBuild.bat" />
     <None Include="ToDo.md" />
   </ItemGroup>
