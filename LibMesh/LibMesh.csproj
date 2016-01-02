@@ -59,6 +59,11 @@
     <Compile Include="ConfigRegistry.cs" />
     <Compile Include="ConnectionRequest.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="LiveMail.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LiveMail.RegistrySchema</DependentUpon>
+    </Compile>
     <Compile Include="MeshSchema.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -72,7 +77,6 @@
     <Compile Include="ProfileApplication.cs" />
     <Compile Include="ProfileDevice.cs" />
     <Compile Include="Escrow.cs" />
-    <Compile Include="LiveMailReigstry.cs" />
     <Compile Include="MailClient.cs" />
     <Compile Include="MailClientIntegration.cs" />
     <Compile Include="MeshConnection.cs" />
@@ -93,7 +97,10 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="LibMesh.licenseheader" />
-    <None Include="LiveMail.RegistrySchema" />
+    <None Include="LiveMail.RegistrySchema">
+      <Generator>RegistryCS</Generator>
+      <LastGenOutput>LiveMail.cs</LastGenOutput>
+    </None>
     <None Include="Portal.Protocol">
       <Generator>ProtogenCS</Generator>
       <LastGenOutput>Portal.cs</LastGenOutput>

@@ -49,14 +49,21 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ServerCommands.cs" />
+    <Compile Include="ServerCommands.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ServerCommands.command</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="MeshPersistenceStore.jlog" />
     <None Include="PortalPersistenceStore.jlog" />
     <None Include="PreBuild.bat" />
-    <None Include="ServerCommands.cmd" />
+    <None Include="ServerCommands.command">
+      <Generator>CommandCS</Generator>
+      <LastGenOutput>ServerCommands.cs</LastGenOutput>
+    </None>
     <None Include="ServerMesh.licenseheader" />
   </ItemGroup>
   <ItemGroup>
