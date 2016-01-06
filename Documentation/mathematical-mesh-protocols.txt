@@ -1,7 +1,7 @@
 Internet Engineering Task Force (IETF)             Phillip Hallam-Baker 
 INTERNET-DRAFT                                        Comodo Group Inc. 
-Intended Status: Standards Track                       December 31, 2015
-Expires: July 3, 2016
+Intended Status: Standards Track                         January 5, 2016
+Expires: July 8, 2016
 
 
                Mathematical Mesh: Client-Service Protocol
@@ -32,7 +32,7 @@ Status of This Memo
 
 Copyright Notice
 
-   Copyright (c) 2015 IETF Trust and the persons identified as the 
+   Copyright (c) 2016 IETF Trust and the persons identified as the 
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal 
@@ -54,9 +54,9 @@ Copyright Notice
 
 
 
-                              July 3, 2016                      [Page 1]
+                              July 8, 2016                      [Page 1]
 
-Internet-Draft           Mathematical Mesh CSP             December 2015
+Internet-Draft           Mathematical Mesh CSP              January 2016
 
 Table of Contents
 
@@ -112,9 +112,9 @@ Table of Contents
 
 
 
-                              July 3, 2016                      [Page 2]
+                              July 8, 2016                      [Page 2]
 
-Internet-Draft           Mathematical Mesh CSP             December 2015
+Internet-Draft           Mathematical Mesh CSP              January 2016
 
          5.2.22.  Message: ConnectPendingRequest  . . . . . . . . . . 11
          5.2.23.  Message: ConnectPendingResponse   . . . . . . . . . 11
@@ -170,9 +170,9 @@ Table of Contents
 
 
 
-                              July 3, 2016                      [Page 3]
+                              July 8, 2016                      [Page 3]
 
-Internet-Draft           Mathematical Mesh CSP             December 2015
+Internet-Draft           Mathematical Mesh CSP              January 2016
 
 1. Introduction
 
@@ -228,9 +228,9 @@ Table of Contents
 
 
 
-                              July 3, 2016                      [Page 4]
+                              July 8, 2016                      [Page 4]
 
-Internet-Draft           Mathematical Mesh CSP             December 2015
+Internet-Draft           Mathematical Mesh CSP              January 2016
 
          *  Response: ValidateResponse 
 
@@ -286,9 +286,9 @@ Table of Contents
 
 
 
-                              July 3, 2016                      [Page 5]
+                              July 8, 2016                      [Page 5]
 
-Internet-Draft           Mathematical Mesh CSP             December 2015
+Internet-Draft           Mathematical Mesh CSP              January 2016
 
 5.1.8. Transaction: Status 
 
@@ -344,9 +344,9 @@ Table of Contents
 
 
 
-                              July 3, 2016                      [Page 6]
+                              July 8, 2016                      [Page 6]
 
-Internet-Draft           Mathematical Mesh CSP             December 2015
+Internet-Draft           Mathematical Mesh CSP              January 2016
 
 5.2. MeshProtocol Messages 
 
@@ -402,9 +402,9 @@ Table of Contents
 
 
 
-                              July 3, 2016                      [Page 7]
+                              July 8, 2016                      [Page 7]
 
-Internet-Draft           Mathematical Mesh CSP             December 2015
+Internet-Draft           Mathematical Mesh CSP              January 2016
 
    [TBS] 
 
@@ -460,9 +460,9 @@ Table of Contents
 
 
 
-                              July 3, 2016                      [Page 8]
+                              July 8, 2016                      [Page 8]
 
-Internet-Draft           Mathematical Mesh CSP             December 2015
+Internet-Draft           Mathematical Mesh CSP              January 2016
 
    Lookup by Account ID 
 
@@ -518,9 +518,9 @@ Table of Contents
 
 
 
-                              July 3, 2016                      [Page 9]
+                              July 8, 2016                      [Page 9]
 
-Internet-Draft           Mathematical Mesh CSP             December 2015
+Internet-Draft           Mathematical Mesh CSP              January 2016
 
 5.2.15. Message: TransferResponse 
 
@@ -576,9 +576,9 @@ Table of Contents
 
 
 
-                              July 3, 2016                     [Page 10]
+                              July 8, 2016                     [Page 10]
 
-Internet-Draft           Mathematical Mesh CSP             December 2015
+Internet-Draft           Mathematical Mesh CSP              January 2016
 
 5.2.21. Message: ConnectStatusResponse 
 
@@ -634,9 +634,9 @@ Table of Contents
 
 
 
-                              July 3, 2016                     [Page 11]
+                              July 8, 2016                     [Page 11]
 
-Internet-Draft           Mathematical Mesh CSP             December 2015
+Internet-Draft           Mathematical Mesh CSP              January 2016
 
    The preferred URI for this service. This MAY be used to effect a 
    redirect in the case that a service moves. 
@@ -692,9 +692,9 @@ Table of Contents
 
 
 
-                              July 3, 2016                     [Page 12]
+                              July 8, 2016                     [Page 12]
 
-Internet-Draft           Mathematical Mesh CSP             December 2015
+Internet-Draft           Mathematical Mesh CSP              January 2016
 
 Author's Address
 
@@ -750,4 +750,4 @@ Author's Address
 
 
 
-                              July 3, 2016                     [Page 13]
+                              July 8, 2016                     [Page 13]

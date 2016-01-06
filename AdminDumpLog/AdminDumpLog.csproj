@@ -51,6 +51,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Goedel.Registry, Version=1.0.5848.38885, Culture=neutral, PublicKeyToken=00ce4cbe0647f41a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Packages\Goedel.Registry.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -67,7 +71,6 @@
   <ItemGroup>
     <None Include="AdminDumpLog.licenseheader" />
     <None Include="App.config" />
-    <None Include="PreBuild.bat" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LibCryptoJose\LibCryptoJose.csproj">
@@ -109,11 +112,12 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>powershell PackAll  Private $(TargetPath) $(ProjectDir)\Program.cs  Goedel.Registry.dll ProtoGenLibrary.dll CryptolibNG.dll Goedel.Debug.dll Meshlib.dll  LogFileLib.dll protogen.protocol.dll
+    <PostBuildEvent>powershell publishtarget "$(TargetPath)"   Goedel.Registry.dll  libCrypto.dll libCryptoJose.dll libDebug.dll libLogFile.dll libMesh.dll  libProtoGen.dll 
 </PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PreBuildEvent>call "$(ProjectDir)\Prebuild.bat"</PreBuildEvent>
+    <PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

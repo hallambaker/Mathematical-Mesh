@@ -8,7 +8,7 @@
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MeshServer</RootNamespace>
-    <AssemblyName>MeshServer</AssemblyName>
+    <AssemblyName>ServerMesh</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -34,8 +34,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Goedel.Registry">
-      <HintPath>..\..\..\Code\Tools\Library\Goedel.Registry.dll</HintPath>
+    <Reference Include="Goedel.Registry, Version=1.0.5848.38885, Culture=neutral, PublicKeyToken=00ce4cbe0647f41a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Packages\Goedel.Registry.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -59,7 +60,6 @@
     <None Include="App.config" />
     <None Include="MeshPersistenceStore.jlog" />
     <None Include="PortalPersistenceStore.jlog" />
-    <None Include="PreBuild.bat" />
     <None Include="ServerCommands.command">
       <Generator>CommandCS</Generator>
       <LastGenOutput>ServerCommands.cs</LastGenOutput>
@@ -96,13 +96,17 @@
       <Name>LibProtoGen</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Version.xml" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
+    <PostBuildEvent>powershell publishtarget "$(TargetPath)" Goedel.Registry.dll libCrypto.dll libCryptoJose.dll libDebug.dll libLogFile.dll LibMesh.dll LibMeshService.dll LibProtoGen.dll
+powershell publishtarget "$(TargetDir)MathematicalMesh.zip"</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PreBuildEvent>call "$(ProjectDir)\Prebuild.bat"</PreBuildEvent>
+    <PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Goedel.Mesh</RootNamespace>
-    <AssemblyName>MeshLib</AssemblyName>
+    <AssemblyName>LibMesh</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -22,7 +22,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\MeshLib.XML</DocumentationFile>
+    <DocumentationFile>bin\Debug\LibMesh.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -40,9 +40,9 @@
     <OutputPath>bin\RaspberryPi\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Goedel.Registry, Version=1.0.5819.29744, Culture=neutral, PublicKeyToken=d2b0f210455cec67, processorArchitecture=MSIL">
-      <HintPath>..\..\..\Code\Tools\Library\Goedel.Registry.dll</HintPath>
+    <Reference Include="Goedel.Registry, Version=1.0.5848.38885, Culture=neutral, PublicKeyToken=00ce4cbe0647f41a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Packages\Goedel.Registry.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -105,7 +105,6 @@
       <Generator>ProtogenCS</Generator>
       <LastGenOutput>Portal.cs</LastGenOutput>
     </None>
-    <None Include="PreBuild.bat" />
     <None Include="MeshSchema.protocol">
       <Generator>ProtogenCS</Generator>
       <LastGenOutput>MeshSchema.cs</LastGenOutput>
@@ -139,10 +138,11 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>call "$(ProjectDir)\PreBuild.bat"</PreBuildEvent>
+    <PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PostBuildEvent>MoveToLibrary "$(TargetPath)"</PostBuildEvent>
+    <PostBuildEvent>powershell publishtarget "$(TargetPath)"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

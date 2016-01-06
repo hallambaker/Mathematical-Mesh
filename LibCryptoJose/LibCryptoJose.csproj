@@ -9,7 +9,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Goedel.Cryptography.Jose</RootNamespace>
-    <AssemblyName>JoseLib</AssemblyName>
+    <AssemblyName>libCryptoJose</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
@@ -42,7 +42,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <PlatformTarget>AnyCPU</PlatformTarget>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>bin\Debug\JoseLib.XML</DocumentationFile>
+    <DocumentationFile>bin\Debug\libCryptoJose.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -67,7 +67,11 @@
     <Compile Include="Dictionary.cs" />
     <Compile Include="Header.cs" />
     <Compile Include="JOSE.cs" />
-    <Compile Include="JoseSchema.cs" />
+    <Compile Include="JoseSchema.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>JoseSchema.Protocol</DependentUpon>
+    </Compile>
     <Compile Include="JWE.cs" />
     <Compile Include="JWESimple.cs" />
     <Compile Include="JWK.cs" />
@@ -77,14 +81,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="JoseSchema.Protocol" />
+    <None Include="JoseSchema.Protocol">
+      <Generator>Protogen</Generator>
+      <LastGenOutput>JoseSchema.cs</LastGenOutput>
+    </None>
     <None Include="LibCryptoJose.licenseheader" />
     <None Include="Post.bat" />
-    <None Include="Prebuild.bat" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="JoseSchema.h" />
-    <Content Include="JoseSchema.xml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LibCrypto\LibCrypto.csproj">
@@ -102,10 +104,11 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>call "$(ProjectDir)Prebuild.bat"</PreBuildEvent>
+    <PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PostBuildEvent>MoveToLibrary "$(TargetPath)"</PostBuildEvent>
+    <PostBuildEvent>powershell publishtarget "$(TargetPath)"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

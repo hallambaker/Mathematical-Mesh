@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>PrismProof.Persistence</RootNamespace>
-    <AssemblyName>LogFileLib</AssemblyName>
+    <AssemblyName>LibLogFile</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -21,7 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\LogFileLib.XML</DocumentationFile>
+    <DocumentationFile>bin\Debug\LibLogFile.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -51,7 +51,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'RaspberryPi|AnyCPU'">
     <OutputPath>bin\RaspberryPi\</OutputPath>
-    <DocumentationFile>bin\RaspberryPi\LogFileLib.XML</DocumentationFile>
+    <DocumentationFile>bin\RaspberryPi\LibLogFile.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'RaspberryPi|x64'">
     <OutputPath>bin\x64\RaspberryPi\</OutputPath>
@@ -69,14 +69,21 @@
     <Compile Include="Dump.cs" />
     <Compile Include="IndexedKeyStore.cs" />
     <Compile Include="PersistenceStore.cs" />
-    <Compile Include="Schema.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="LogPersistenceStore.cs" />
+    <Compile Include="Schema.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Schema.protocol</DependentUpon>
+    </Compile>
     <Compile Include="SchemaPlus.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="LibLogFile.licenseheader" />
-    <None Include="Schema.protocol" />
+    <None Include="Schema.protocol">
+      <Generator>Protogen</Generator>
+      <LastGenOutput>Schema.cs</LastGenOutput>
+    </None>
     <None Include="PreBuild.bat" />
   </ItemGroup>
   <ItemGroup>
@@ -91,10 +98,11 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>call "$(ProjectDir)\Prebuild.bat"</PreBuildEvent>
+    <PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PostBuildEvent>MoveToLibrary "$(TargetPath)"</PostBuildEvent>
+    <PostBuildEvent>powershell publishtarget "$(TargetPath)"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

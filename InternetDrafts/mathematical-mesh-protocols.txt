@@ -1,0 +1,521 @@
+Internet Engineering Task Force (IETF)    Phillip Hallam-Baker  Phillip 
+INTERNET-DRAFT                     Hallam-Baker 
+Intended Status: Standards Track        Comodo Group Inc.  Hallam-Baker 
+Expires: July 7, 2016                                    January 4, 2016
+
+
+              Mathematical Mesh: Client-Service Protocol 
+           draft-hallambaker-mathematical-mesh-protocols -00 
+
+Abstract
+
+   This file was converted using RFCTool 
+
+Status of This Memo
+
+   This Internet-Draft is submitted in full conformance with the 
+   provisions of BCP 78 and BCP 79.
+
+   Internet-Drafts are working documents of the Internet Engineering 
+   Task Force (IETF).  Note that other groups may also distribute 
+   working documents as Internet-Drafts.  The list of current Internet-
+   Drafts is at http://datatracker.ietf.org/drafts/current/.
+
+   Internet-Drafts are draft documents valid for a maximum of six months
+   and may be updated, replaced, or obsoleted by other documents at any 
+   time.  It is inappropriate to use Internet-Drafts as reference 
+   material or to cite them other than as "work in progress."
+
+Copyright Notice
+
+   Copyright (c) 2016 IETF Trust and the persons identified as the 
+   document authors.  All rights reserved.
+
+   This document is subject to BCP 78 and the IETF Trust's Legal 
+   Provisions Relating to IETF Documents 
+   (http://trustee.ietf.org/license-info) in effect on the date of 
+   publication of this document. Please review these documents 
+   carefully, as they describe your rights and restrictions with respect
+   to this document. Code Components extracted from this document must 
+   include Simplified BSD License text as described in Section 4.e of 
+   the Trust Legal Provisions and are provided without warranty as 
+   described in the Simplified BSD License.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                              July 7, 2016                      [Page 1]
+
+Internet-Draft           Mathematical Mesh CSP              January 2016
+
+Table of Contents
+
+   Abstract   . . . . . . . . . . . . . . . . . . . . . . . . . . . .  4
+   Introduction   . . . . . . . . . . . . . . . . . . . . . . . . . .  4
+   Definitions  . . . . . . . . . . . . . . . . . . . . . . . . . . .  4
+   Requirements Language  . . . . . . . . . . . . . . . . . . . . . .  4
+   Use Scenarios  . . . . . . . . . . . . . . . . . . . . . . . . . .  4
+   Service Discovery  . . . . . . . . . . . . . . . . . . . . . . . .  4
+   Create Account   . . . . . . . . . . . . . . . . . . . . . . . . .  4
+   Connect Device   . . . . . . . . . . . . . . . . . . . . . . . . .  4
+   Add Application  . . . . . . . . . . . . . . . . . . . . . . . . .  4
+   Update Application   . . . . . . . . . . . . . . . . . . . . . . .  4
+   Delete Device  . . . . . . . . . . . . . . . . . . . . . . . . . .  4
+   Master Profile Recovery  . . . . . . . . . . . . . . . . . . . . .  4
+   Application Profile Recovery   . . . . . . . . . . . . . . . . . .  4
+   Mesh Client-Service Protocol Messages  . . . . . . . . . . . . . .  4
+   MeshProtocol   . . . . . . . . . . . . . . . . . . . . . . . . . .  4
+   MeshProtocol Transactions  . . . . . . . . . . . . . . . . . . . .  4
+   Transaction: Hello   . . . . . . . . . . . . . . . . . . . . . . .  4
+   Transaction: ValidateAccount   . . . . . . . . . . . . . . . . . .  5
+   Transaction: CreateAccount   . . . . . . . . . . . . . . . . . . .  5
+   Transaction: Publish   . . . . . . . . . . . . . . . . . . . . . .  5
+   Transaction: Get   . . . . . . . . . . . . . . . . . . . . . . . .  5
+   Transaction: GetRecords  . . . . . . . . . . . . . . . . . . . . .  5
+   Transaction: Transfer  . . . . . . . . . . . . . . . . . . . . . .  5
+   Transaction: Status  . . . . . . . . . . . . . . . . . . . . . . .  5
+   Transaction: ConnectStart  . . . . . . . . . . . . . . . . . . . .  5
+   Transaction: ConnectStatus   . . . . . . . . . . . . . . . . . . .  5
+   Transaction: ConnectPending  . . . . . . . . . . . . . . . . . . .  6
+   Transaction: ConnectComplete   . . . . . . . . . . . . . . . . . .  6
+   MeshProtocol Messages  . . . . . . . . . . . . . . . . . . . . . .  6
+   Message: MeshRequest   . . . . . . . . . . . . . . . . . . . . . .  6
+   Message: MeshResponse  . . . . . . . . . . . . . . . . . . . . . .  6
+   Message: HelloRequest  . . . . . . . . . . . . . . . . . . . . . .  6
+   Message: HelloResponse   . . . . . . . . . . . . . . . . . . . . .  6
+   Message: ValidateRequest   . . . . . . . . . . . . . . . . . . . .  6
+   Message: ValidateResponse  . . . . . . . . . . . . . . . . . . . .  6
+   Message: CreateRequest   . . . . . . . . . . . . . . . . . . . . .  7
+   Message: CreateResponse  . . . . . . . . . . . . . . . . . . . . .  7
+   Message: PublishRequest  . . . . . . . . . . . . . . . . . . . . .  7
+   Message: PublishResponse   . . . . . . . . . . . . . . . . . . . .  7
+   Message: GetRequest  . . . . . . . . . . . . . . . . . . . . . . .  7
+   Message: GetResponse   . . . . . . . . . . . . . . . . . . . . . .  7
+   Message: GetRecordsResponse  . . . . . . . . . . . . . . . . . . .  7
+   Message: TransferRequest   . . . . . . . . . . . . . . . . . . . .  7
+   Message: TransferResponse  . . . . . . . . . . . . . . . . . . . .  7
+   Message: StatusRequest   . . . . . . . . . . . . . . . . . . . . .  7
+   Message: StatusResponse  . . . . . . . . . . . . . . . . . . . . .  7
+   Message: ConnectStartRequest   . . . . . . . . . . . . . . . . . .  8
+   Message: ConnectStartResponse  . . . . . . . . . . . . . . . . . .  8
+   Message: ConnectStatusRequest  . . . . . . . . . . . . . . . . . .  8
+
+
+
+                              July 7, 2016                      [Page 2]
+
+Internet-Draft           Mathematical Mesh CSP              January 2016
+
+   Message: ConnectStatusResponse   . . . . . . . . . . . . . . . . .  8
+   Message: ConnectPendingRequest   . . . . . . . . . . . . . . . . .  8
+   Message: ConnectPendingResponse  . . . . . . . . . . . . . . . . .  8
+   Message: ConnectCompleteRequest  . . . . . . . . . . . . . . . . .  8
+   Message: ConnectCompleteResponse   . . . . . . . . . . . . . . . .  8
+   MeshProtocol Structures  . . . . . . . . . . . . . . . . . . . . .  8
+   Structure: Version   . . . . . . . . . . . . . . . . . . . . . . .  8
+   Structure: Encoding  . . . . . . . . . . . . . . . . . . . . . . .  8
+   Structure: KeyValue  . . . . . . . . . . . . . . . . . . . . . . .  9
+   Mesh Client-Service Protocol State Transitions   . . . . . . . . .  9
+   Security Considerations  . . . . . . . . . . . . . . . . . . . . .  9
+   Service Confidentiality  . . . . . . . . . . . . . . . . . . . . .  9
+   IANA Considerations  . . . . . . . . . . . . . . . . . . . . . . .  9
+   Appendix A: Portal Schema.   . . . . . . . . . . . . . . . . . . .  9
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                              July 7, 2016                      [Page 3]
+
+Internet-Draft           Mathematical Mesh CSP              January 2016
+
+Abstract 
+
+   The Mathematical Mesh ‘The Mesh’ is an end-to-end secure 
+   infrastructure that facilitates the exchange of configuration and 
+   credential data between multiple user devices. The core protocols of 
+   the Mesh are described with examples of common use cases and 
+   reference data. 
+
+Introduction 
+
+Definitions 
+
+Requirements Language 
+
+   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", 
+   "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this 
+   document are to be interpreted as described in RFC 2119 [RFC2119]. 
+
+Use Scenarios 
+
+Service Discovery 
+
+Create Account 
+
+Connect Device 
+
+Add Application 
+
+Update Application 
+
+Delete Device 
+
+Master Profile Recovery 
+
+Application Profile Recovery 
+
+Mesh Client-Service Protocol Messages 
+
+MeshProtocol 
+
+MeshProtocol Transactions 
+
+Transaction: Hello 
+
+   Report service and version information. 
+
+   The Hello transaction provides a means of determining which protocol 
+   versions, message encodings and transport protocols are supported by 
+   the service. 
+
+
+
+
+
+                              July 7, 2016                      [Page 4]
+
+Internet-Draft           Mathematical Mesh CSP              January 2016
+
+Transaction: ValidateAccount 
+
+   Request validation of a proposed name for a new account. 
+
+   For validation of a user's account name during profile creation. 
+
+Transaction: CreateAccount 
+
+   Request creation of a new mesh account. 
+
+   Unlike a profile, a mesh account is specific to a particular Mesh 
+   portal. A mesh account must be created and accepted before a profile 
+   can be published. 
+
+Transaction: Publish 
+
+   Publish a profile or key escrow entry to the mesh. 
+
+Transaction: Get 
+
+   Search for data in the mesh that matches a set of keys. 
+
+Transaction: GetRecords 
+
+Transaction: Transfer 
+
+   Request a bulk transfer of the log between the specified transaction 
+   identifiers. Requires appropriate authorization 
+
+   [Not currently implemented] 
+
+Transaction: Status 
+
+   Request the current status of the mesh as seen by the portal to which
+   it is directed. 
+
+   The response to the status request contains the last signed 
+   checkpoint and proof chains for each of the peer portals that have 
+   been checkpointed. 
+
+   [Not currently implemented] 
+
+Transaction: ConnectStart 
+
+   Request connection of a new device to a mesh profile 
+
+Transaction: ConnectStatus 
+
+   Request status of pending connection request of a new device to a 
+   mesh profile 
+
+
+
+
+                              July 7, 2016                      [Page 5]
+
+Internet-Draft           Mathematical Mesh CSP              January 2016
+
+Transaction: ConnectPending 
+
+   Request status of pending connection request of a new device to a 
+   mesh profile 
+
+Transaction: ConnectComplete 
+
+   Request status of pending connection request of a new device to a 
+   mesh profile 
+
+MeshProtocol Messages 
+
+Message: MeshRequest 
+
+   [None] 
+
+Message: MeshResponse 
+
+   [None] 
+
+Message: HelloRequest 
+
+   [None] 
+
+Message: HelloResponse 
+
+   Enumerates the protocol versions supported 
+
+   Enumerates alternate protocol version(s) supported 
+
+Message: ValidateRequest 
+
+   Account name requested 
+
+   If true, request a reservation for the specified account name. Note 
+   that the service is not obliged to honor reservation requests. 
+
+   List of ISO language codes in order of preference. For creating 
+   explanatory text. 
+
+Message: ValidateResponse 
+
+   [TBS] 
+
+   [TBS] 
+
+   A list of characters from the requested account that the service does
+   not accept in account names. 
+
+   Text explaining the reason an account name was rejected. 
+
+
+
+
+                              July 7, 2016                      [Page 6]
+
+Internet-Draft           Mathematical Mesh CSP              January 2016
+
+Message: CreateRequest 
+
+   Account name requested 
+
+Message: CreateResponse 
+
+   [None] 
+
+Message: PublishRequest 
+
+   [None] 
+
+Message: PublishResponse 
+
+   [None] 
+
+Message: GetRequest 
+
+   Lookup by profile ID 
+
+   Lookup by Account ID 
+
+   List of KeyValue pairs specifying the conditions to be met 
+
+   [TBS] 
+
+   [TBS] 
+
+   If true return multiple responses if available 
+
+Message: GetResponse 
+
+   [None] 
+
+Message: GetRecordsResponse 
+
+   List of mesh data records matching the request. 
+
+Message: TransferRequest 
+
+Message: TransferResponse 
+
+   [None] 
+
+Message: StatusRequest 
+
+   [None] 
+
+
+
+
+
+
+
+                              July 7, 2016                      [Page 7]
+
+Internet-Draft           Mathematical Mesh CSP              January 2016
+
+Message: StatusResponse 
+
+   Time that the last write update was made to the Mesh 
+
+   Time that the last Mesh checkpoint was calculated. 
+
+   Time at which the next Mesh checkpoint should be calculated. 
+
+   Last checkpoint value. 
+
+Message: ConnectStartRequest 
+
+Message: ConnectStartResponse 
+
+Message: ConnectStatusRequest 
+
+Message: ConnectStatusResponse 
+
+Message: ConnectPendingRequest 
+
+Message: ConnectPendingResponse 
+
+Message: ConnectCompleteRequest 
+
+Message: ConnectCompleteResponse 
+
+   [None] 
+
+MeshProtocol Structures 
+
+Structure: Version 
+
+   Major version number of the service protocol. A higher 
+
+   Minor version number of the service protocol. 
+
+   Enumerates alternative encodings (e.g. ASN.1, XML, JSON-B) if 
+   supported by the server 
+
+   The preferred URI for this service. This MAY be used to effect a 
+   redirect in the case that a service moves. 
+
+Structure: Encoding 
+
+   The IANA encoding name 
+
+   For encodings that employ a named dictionary for tag or data 
+   compression, the name of the dictionary as defined by that encoding 
+   scheme. 
+
+
+
+
+
+                              July 7, 2016                      [Page 8]
+
+Internet-Draft           Mathematical Mesh CSP              January 2016
+
+Structure: KeyValue 
+
+   [TBS] 
+
+   [TBS] 
+
+Mesh Client-Service Protocol State Transitions 
+
+Security Considerations 
+
+Service Confidentiality 
+
+IANA Considerations 
+
+   IANA has registered the following protocol identifier for use with 
+   this protocol: MMM 
+
+Appendix A: Portal Schema. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                              July 7, 2016                      [Page 9]

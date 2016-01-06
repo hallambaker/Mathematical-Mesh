@@ -1,0 +1,184 @@
+﻿Notes For Building
+==================
+
+The project is designed to build under Visual Studio. It should be possible to create 
+build files for other environments but I have not done that.
+
+Required tool set:
+
+PHBBuildTools.vsix
+publishtarget.ps1
+
+Some of the code also uses MoveToLibrary.bat and PackAll which are earlier incarnations 
+of those tools that were separate tools with separate parameters.
+
+In the new scheme, most projects should not require a PreBuild.bat file, instead using
+the built in VSIX toolset and the following post build actions:
+
+Libraries:
+powershell publishtarget "$(TargetPath)" 
+
+Executables:
+powershell publishtarget "$(TargetPath)" <list of DLL files>
+
+VSIX:
+powershell publishtarget "$(TargetPath)" /vsix
+
+Distribution:
+powershell publishtarget "$(TargetPath)" /zip
+
+
+Code Signing
+------------
+
+I really like the idea of strong names, but the implementation is just nuts, sorry.
+for now the assemblies are signed but the private keys are in the distribution.
+I am working on a fix.
+
+
+Setting the Build Version
+-------------------------
+
+The build script that creates the tarball will automatically extract the version number
+from either a .vsixmanifest (if /vsix was specified) or a version.xml file containing
+the following element:
+
+<?xml version="1.0" encoding="utf-8" ?>
+<id Version="0.9.1"/>
+
+Actually any content that has a DOM path id/Version will work.
+
+Note that tarballs are only created for Release configuration builds.
+
+Using the Build Tools
+---------------------
+
+Most of the build tools are integrated into the Visual Studio environment when the .vsix
+package is installed. The only exception to this is the Trojan tool which generates 
+multiple output files from a single input file. The Visual Studio integration setup 
+isn't designed to handle that. Another thing it doesn't do automatically is to add the 
+results of the build to the project.
+
+The only other tool that isn't integrated right now is the RFC tool features for
+reading and writing OpenXML files. And this is because the libraries are freekin'
+enormous. 5.6 MB just to parse the XML file!
+
+The tarball is constructed of everything that is in the Distribution directory
+at the time it is created. There is no process for turfing stuff out.
+
+The scripts will try to copy files to '$env:toolpath', i.e. the toolpath environment
+variable. This should default to not copy at all.
+
+Local Libraries
+---------------
+
+The library Goedel.Registry.dll is imported from the build tools. Since those also use it
+extensively, it can't be moved into the mesh project (though I did this with LibTrojan.dll)
+
+For now, the file is in a directory 'Packages' while I work out a better approach,
+probably involving nuget.
+
+
+Build Errors
+------------
+
+If this is a release and you haven't changed anything, there shouldn't be any build
+errors. If you make changes, you may end up in trouble. Here are some hints:
+
+The code compiles fairly reliably on Visual Studio but there are occasional issues that 
+seem to be due to bugs in Visual Studio and the consequences of mismatched framework 
+versions.
+
+For this reason *every* project currently uses the 4.6 version of the framework.
+
+Another issue that causes huge problems is when changes are made to Goedel.Registry.dll.
+Since every project depends on this file, updates to the assembly cause pretty
+much every assembly to throw warnings about being out of date. Which is astonishingly
+irritating because nothing should be updating it at all. And even if it did, Visual
+Studio should work out the dependencies itself.
+
+In general, Visual Studio is pretty reliable when the source files are correct. The
+problems tend to be always caused by mismatched version numbers or renamed libraries.
+
+In particular:
+
+* If ilmerge is throwing an error complaining about 'duplicate objects' then the most
+likely cause is that a library name has been changed in the project but not the
+publishtarget line. So when ilmerge creates the merged assembly it adds the old
+library as static content and a dynamic link to the new one.
+
+* If an ilmerge project is complaining about a library being the wrong version when
+the file is run, this is probably because the library was not included in the ilmerge
+publish command.
+
+From time to time, the VSIX build in the build tol chain throws this warning:
+The "SuppressedVSIXSourceItems" parameter is not supported by the 
+"CreateVsixSourceItemFromReferences" task. Verify the parameter exists on the 
+task, and it is a settable public instance property.
+
+The error tends to appear after a change is made to the build configuration and
+goes away after restarting Visual studio a few times, doing scratch rebuilds, etc.
+It looks like some sort of caching bug but these are Microsoft files, it is their
+caching bug!
+
+Update: Running Rebuild followed by Build seems to fix the issue. So I suspect
+it might have to do with some sort of race condition in the parallel compilation.
+Another possibility is that it has something to do with including the 
+scriptclassifier project in the solution even though it isn't meant to be built.
+
+
+File Naming Conventions
+-----------------------
+
+I have tried to apply a consistent file naming convention. But this is not so easy
+as the projects have been developed over a span of ten years (25 for Goedel). The
+directory names tend to be off because changing them has serious consequences that 
+ripple through time and space. The project names are much more consistent.
+
+Starting the project names off with the type of project seems to be the best 
+approach. It means that similar stuff is grouped together in the solution explorer.
+
+Build Libraries: LibX
+Command Line Tools: RunX
+Client code examples: ClientX
+Server code examples: ServerX
+Test projects: TestX
+
+
+
+Code Conventions
+----------------
+
+Most of the code is configured to allow documentation to be generated from the
+comments. This creates an XML file. I presume that there is some tool somewhere 
+available to the public that converts these to HTML. Otherwise the situation is
+sad.
+
+The Goedel tool set uses indentation to denote block structure instead of 
+braces. One consequence of that approach is that you get very fed up with the 
+'noisy' braces in C. So my standard style is:
+
+statement {
+    ... block content...
+	}
+
+Like C, C# allows a single statement in place of a block of code. I do use that
+in places but I dislike it as risky. I do use the single line approach very 
+sparingly for things like return if null.
+
+
+Main Defects
+------------
+
+Very little of the code has proper exception handling implemented. If things
+break, they just throw a generic error. This is because most of the code was
+originaly built for generating examples in specs.
+
+To add in proper error handling, I plan to implement a tool 'Exceptional' to 
+help cut through some of the excessively verbose C# clutter. Throwing an 
+exception should be simple and it should link into the documentation 
+correctly.
+
+
+
+
