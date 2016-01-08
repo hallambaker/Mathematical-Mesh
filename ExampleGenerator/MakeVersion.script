@@ -1,0 +1,12 @@
+﻿#using System.Text
+#pclass ExampleGenerator Version
+#method MakeVersion int Ignore
+
+namespace InternetDrafts {
+    class Version {
+        }
+    }
+
+#end method
+#end pclass
+#end using

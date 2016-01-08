@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C26ACE75-2B6C-4553-944B-2C95986E103A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>InternetDrafts</RootNamespace>
+    <AssemblyName>InternetDrafts</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <PropertyGroup>
+    <RunPostBuildEvent>Always</RunPostBuildEvent>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CheckVersion.cs" />
+    <Compile Include="Generated\Version.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Generated\MeshProtocol.md" />
+    <None Include="Generated\MeshSchema.md" />
+    <None Include="Generated\Portal.md" />
+    <None Include="mathematical-mesh-binding.docx" />
+    <None Include="mathematical-mesh-architecture.docx" />
+    <None Include="mathematical-mesh-implementation.docx" />
+    <None Include="mathematical-mesh-profiles.docx" />
+    <None Include="mathematical-mesh-protocol-csp.docx" />
+    <None Include="Postbuild.bat" />
+    <None Include="Prebuild.bat" />
+    <Content Include="Publish\hallambaker-udf.html" />
+    <Content Include="Publish\hallambaker-udf.txt" />
+    <Content Include="Publish\hallambaker-udf.xml" />
+    <Content Include="Publish\mathematical-mesh-architecture.html" />
+    <Content Include="Publish\mathematical-mesh-architecture.txt" />
+    <Content Include="Publish\mathematical-mesh-architecture.xml" />
+    <Content Include="Publish\mathematical-mesh-implementation.html" />
+    <Content Include="Publish\mathematical-mesh-implementation.txt" />
+    <Content Include="Publish\mathematical-mesh-implementation.xml" />
+    <Content Include="Publish\mathematical-mesh-profiles.html" />
+    <Content Include="Publish\mathematical-mesh-profiles.txt" />
+    <Content Include="Publish\mathematical-mesh-profiles.xml" />
+    <Content Include="Publish\mathematical-mesh-protocol-csp.html" />
+    <Content Include="Publish\mathematical-mesh-protocol-csp.txt" />
+    <Content Include="Publish\mathematical-mesh-protocol-csp.xml" />
+    <Content Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Examples\" />
+    <Folder Include="Static\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>call "$(ProjectDir)\Prebuild.bat"</PreBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent>call "$(ProjectDir)\Postbuild.bat"</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

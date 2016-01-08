@@ -7,4 +7,8 @@
   <PropertyGroup>
     <ReferencePath>C:\Users\Phillip\Code\Tools\Library\</ReferencePath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <StartArguments>prismproof.org</StartArguments>
+    <StartWorkingDirectory>C:\Users\Phillip\Work\mmm\ServerMesh\</StartWorkingDirectory>
+  </PropertyGroup>
 </Project>

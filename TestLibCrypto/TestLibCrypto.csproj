@@ -60,15 +60,15 @@
   <ItemGroup>
     <ProjectReference Include="..\LibProtoGen\LibProtoGen.csproj">
       <Project>{24419f2d-f425-4e0f-a0ea-9d3e7a57e12f}</Project>
-      <Name>ProtoGen.Protocol</Name>
+      <Name>LibProtoGen</Name>
     </ProjectReference>
     <ProjectReference Include="..\LibCrypto\LibCrypto.csproj">
       <Project>{1babc0e9-d939-4de5-82a3-16752104b14b}</Project>
-      <Name>CryptoLibNG</Name>
+      <Name>LibCrypto</Name>
     </ProjectReference>
     <ProjectReference Include="..\LibDebug\LibDebug.csproj">
       <Project>{a8090b80-d658-45f6-bda1-4f9dfd2b976f}</Project>
-      <Name>Debug</Name>
+      <Name>LibDebug</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

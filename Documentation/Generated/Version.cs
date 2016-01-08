@@ -1,0 +1,6 @@
+
+namespace InternetDrafts {
+    class Version {
+        }
+    }
+

@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{24419F2D-F425-4E0F-A0EA-9D3E7A57E12F}</ProjectGuid>
+    <ProjectGuid>{DD994F50-5CA7-474D-AC4A-DBF05949621F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Goedel.Protocol</RootNamespace>
-    <AssemblyName>LibProtoGen</AssemblyName>
+    <RootNamespace>Goedel.DNS</RootNamespace>
+    <AssemblyName>libDNS</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -23,8 +23,6 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
-    <DocumentationFile>
-    </DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -33,10 +31,6 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'RaspberryPi|AnyCPU'">
-    <OutputPath>bin\RaspberryPi\</OutputPath>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
@@ -49,48 +43,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BaseEncode.cs" />
-    <Compile Include="BaseMessage.cs" />
-    <Compile Include="ByteBuffer.cs" />
-    <Compile Include="ChallengeResponse.cs" />
-    <Compile Include="Cryoptography.cs" />
-    <Compile Include="Dechunking.cs" />
-    <Compile Include="DNS.cs" />
-    <Compile Include="JPC.cs" />
-    <Compile Include="JSONAWriter.cs" />
-    <Compile Include="JSONBWriter.cs" />
-    <Compile Include="JSONCWriter.cs" />
-    <Compile Include="JSONBufferedReader.cs" />
-    <Compile Include="JSONMessage.cs" />
-    <Compile Include="JSONObject.cs" />
-    <Compile Include="JSONWriter.cs" />
-    <Compile Include="Message.cs" />
-    <Compile Include="Obsolete WebServiceServer.cs" />
-    <Compile Include="ReaderWriter.cs" />
-    <Compile Include="JSONReader.cs" />
+    <Compile Include="Canonicalize.cs" />
+    <Compile Include="DNSBuffer.cs" />
+    <Compile Include="DNSClient.cs" />
+    <Compile Include="DNSService.cs" />
+    <Compile Include="DomainerAPIPlus.cs" />
+    <Compile Include="Exceptions.cs" />
+    <Compile Include="OmniClient.cs" />
+    <Compile Include="OmniDiscover.cs" />
+    <Compile Include="DomainerAPI.cs" />
+    <Compile Include="Parse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Security.cs" />
-    <Compile Include="Ticket.cs" />
-    <Compile Include="WebRemoteSession.cs" />
-    <Compile Include="Server.cs" />
-    <Compile Include="WrapWriter.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\LibDebug\LibDebug.csproj">
-      <Project>{a8090b80-d658-45f6-bda1-4f9dfd2b976f}</Project>
-      <Name>LibDebug</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="LibProtoGen.licenseheader" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>powershell publishtarget "$(TargetPath)"</PostBuildEvent>
-  </PropertyGroup>
-  <PropertyGroup>
-    <PreBuildEvent>
-    </PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
