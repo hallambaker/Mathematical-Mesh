@@ -29,7 +29,7 @@ can be the same as for the original profile or different.
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Label Grid.Row="0" Grid.Column="0" FontSize="20"
-                   VerticalAlignment="Center">Mesh provider gateway (e.g. prismproof.org).</Label>
+                   VerticalAlignment="Center">Mesh provider gateway (e.g. mesh.prismproof.org).</Label>
             <TextBox Grid.Row="0" Grid.Column="1" FontSize="20" Name="Input_MeshGateway1"
 					TextChanged="Changed_Input_MeshGateway1" Width="400" Height="40"></TextBox>
             <Label Grid.Row="1" Grid.Column="0" FontSize="20"

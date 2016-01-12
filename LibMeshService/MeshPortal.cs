@@ -78,9 +78,9 @@ namespace Goedel.Mesh {
         protected string PortalStore = "portal.jlog";
 
         /// <summary>
-        /// The service name (default to prismproof.org)
+        /// The service name (default to mesh.prismproof.org)
         /// </summary>
-        protected string ServiceName = "prismproof.org";
+        protected string ServiceName = "mesh.prismproof.org";
 
         /// <summary>
         /// The local PublicMeshServiceHost.
@@ -168,7 +168,7 @@ namespace Goedel.Mesh {
         /// </summary>
         public override MeshService GetService(string Service, string Account) {
             var URI = JPCProvider.WellKnownToURI(Service, MeshService.WellKnown, 
-                        MeshService.Discovery, false, false);
+                        MeshService.Discovery, false, true);
 
             var Session = new WebRemoteSession(URI, Service, Account);
             MeshService = new MeshServiceClient(Session);

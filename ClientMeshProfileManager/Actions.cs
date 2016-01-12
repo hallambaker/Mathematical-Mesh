@@ -42,7 +42,7 @@ namespace Goedel.MeshProfileManager {
         public override void Enter() {
             // set the default provider (prismproof.org)
 
-            Input_MeshGateway = "prismproof.org";
+            Input_MeshGateway = "mesh.prismproof.org";
 
             }
 

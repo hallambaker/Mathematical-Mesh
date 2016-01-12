@@ -257,13 +257,26 @@ namespace Goedel.Mesh {
                 }
             }
 
+
+
         /// <summary>
         /// Create a provider object that includes the private key parameters and add this
         /// to the certificate.
         /// </summary>
         public void ImportPrivateParameters() {
             if (KeyPair.GetType() == typeof(RSAKeyPair)) {
+                if (PrivateParameters.GetType() != typeof(PrivateKeyRSA)) {
+                    throw new Exception("Invalid key description");
+                    }
+
                 var RSAKeyPair = KeyPair as RSAKeyPair;
+                var PrivateKeyRSA = PrivateParameters as PrivateKeyRSA;
+                //var RSAKeyPair = KeyPair as RSAKeyPair;
+
+                var RSAParameters = PrivateKeyRSA.Parameters;
+                KeyPair = new RSAKeyPair(RSAParameters);
+                Certificate.KeyPair = KeyPair;
+
                 CertificateStore.Register(Certificate);
                 }
             }

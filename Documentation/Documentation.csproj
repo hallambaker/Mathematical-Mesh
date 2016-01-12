@@ -54,11 +54,6 @@
     <None Include="Generated\MeshProtocol.md" />
     <None Include="Generated\MeshSchema.md" />
     <None Include="Generated\Portal.md" />
-    <None Include="mathematical-mesh-binding.docx" />
-    <None Include="mathematical-mesh-architecture.docx" />
-    <None Include="mathematical-mesh-implementation.docx" />
-    <None Include="mathematical-mesh-profiles.docx" />
-    <None Include="mathematical-mesh-protocol-csp.docx" />
     <None Include="Postbuild.bat" />
     <None Include="Prebuild.bat" />
     <Content Include="Publish\hallambaker-udf.html" />

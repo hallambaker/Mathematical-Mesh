@@ -13,7 +13,7 @@ GUI Goedel.MeshConnect
 			Text
 				|You will need to know your mesh provider name and your account name.
 			Vertical
-				Input MeshGateway2 "Mesh provider gateway (e.g. prismproof.org)."
+				Input MeshGateway2 "Mesh provider gateway (e.g. mesh.prismproof.org)."
 				Input AccountName3 "Your prefered account name (e.g. alice)." 
 				Action WaitConnect "Next" CheckFingerPrint
 

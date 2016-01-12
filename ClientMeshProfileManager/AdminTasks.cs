@@ -200,7 +200,7 @@ namespace Goedel.MeshProfileManager {
         /// <param name="Account"></param>
         /// <returns>true if succeeded, false otherwise.</returns>
         public bool TryNewPortalAccount(string Portal, string Account) {
-            Portal = (Portal == null) || (Portal == "") ? "prismproof.org" : Portal;
+            Portal = (Portal == null) || (Portal == "") ? "mesh.prismproof.org" : Portal;
 
 
             this.Portal = Portal;

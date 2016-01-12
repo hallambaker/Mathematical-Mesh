@@ -87,6 +87,19 @@ namespace Goedel.Cryptography.Jose {
             this.n = RSAParameters.Modulus;
             this.e = RSAParameters.Exponent;
             }
+
+        /// <summary>
+        /// Return the parameters as a .NET RSAParameters structure;
+        /// </summary>
+        public virtual NET.RSAParameters  Parameters {
+            get {
+                var Result = new NET.RSAParameters();
+                Result.Modulus = n;
+                Result.Exponent = e;
+                return Result;
+                }
+            }
+
         }
 
     /// <summary>
@@ -104,9 +117,24 @@ namespace Goedel.Cryptography.Jose {
             this.q = RSAParameters.Q;
             this.dp = RSAParameters.DP;
             this.dq = RSAParameters.DQ;
-            this.qi = RSAParameters.Q;
+            this.qi = RSAParameters.InverseQ;
             }
 
+        /// <summary>
+        /// Return the parameters as a .NET RSAParameters structure;
+        /// </summary>
+        public override NET.RSAParameters Parameters {
+            get {
+                var Result = base.Parameters;
+                Result.D = d;
+                Result.P = p;
+                Result.Q = q;
+                Result.DP = dp;
+                Result.DQ= dq;
+                Result.InverseQ = qi;
+                return Result;
+                }
+            }
 
         }
     }

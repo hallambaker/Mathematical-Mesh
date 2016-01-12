@@ -50,11 +50,21 @@ namespace Goedel.LibCrypto {
             }
         const string TestStore = "TestStore";
 
-
+        /// <summary>
+        /// Convert the specified LibCrypto Certificate to a .Net X509Certificate2 object
+        /// </summary>
+        /// <param name="Certificate">The certificate to convert.</param>
+        /// <returns>The .Net X509Certificate2 object</returns>
         static X509Certificate2 X509Certificate2(GCP.Certificate Certificate) {
             return new X509Certificate2(Certificate.DER());
             }
 
+        /// <summary>
+        /// Convert the specified LibCrypto Certificate to a .Net X509Certificate2 object
+        /// with the corresponding private key structure.
+        /// </summary>
+        /// <param name="Certificate">The certificate to convert.</param>
+        /// <returns>The .Net X509Certificate2 object</returns>
         static X509Certificate2 X509CertificateAndKey(GCP.Certificate Certificate) {
             var X509 = new X509Certificate2(Certificate.Data);
             CryptoProviderAsymmetric Provider;

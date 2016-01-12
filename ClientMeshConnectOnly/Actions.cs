@@ -13,7 +13,7 @@ namespace Goedel.MeshConnect {
         public override void Enter() {
             // set the default provider (prismproof.org)
 
-            Input_MeshGateway2 = "prismproof.org";
+            Input_MeshGateway2 = "mesh.prismproof.org";
 
             }
 

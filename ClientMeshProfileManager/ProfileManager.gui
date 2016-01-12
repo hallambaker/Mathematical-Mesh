@@ -63,7 +63,7 @@ GUI Goedel.MeshProfileManager
 				|You can also specify the name of an email address you wish to secure
 				|with the profile.
 			Vertical
-				Input MeshGateway "Mesh provider gateway (e.g. prismproof.org)."
+				Input MeshGateway "Mesh provider gateway (e.g. mesh.prismproof.org)."
 				Input AccountName "Your prefered account name (e.g. alice)." 
 				Action Next "Next" AskPassword
 
@@ -207,7 +207,7 @@ GUI Goedel.MeshProfileManager
 			Text
 				|To connect
 			Vertical
-				Input MeshGateway2 "Mesh provider gateway (e.g. prismproof.org)."
+				Input MeshGateway2 "Mesh provider gateway (e.g. mesh.prismproof.org)."
 				Input AccountName3 "Your prefered account name (e.g. alice)." 
 				Action WaitConnect "Next" ConnectPending
 
@@ -257,7 +257,7 @@ GUI Goedel.MeshProfileManager
 				|on the mesh you must specify a mesh portal and account name. These
 				|can be the same as for the original profile or different.
 			Vertical
-				Input MeshGateway1 "Mesh provider gateway (e.g. prismproof.org)."
+				Input MeshGateway1 "Mesh provider gateway (e.g. mesh.prismproof.org)."
 				Input AccountName1 "Your prefered account name (e.g. alice)." 
 				Action RecoverRegister "Next" Finish
 

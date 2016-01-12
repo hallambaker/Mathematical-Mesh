@@ -53,7 +53,7 @@ namespace Goedel.Mesh {
 
     partial class MeshTest {
         public static string UserName = "Alice";
-        public static string Service = "prismproof.org";
+        public static string Service = "mesh.prismproof.org";
 
         public readonly string AccountID = Account.ID(UserName, Service);
 
