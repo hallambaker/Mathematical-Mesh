@@ -4,33 +4,33 @@ cd %~dp0
 echo Convert documents to TXT, XML and HTML formats
 
 echo architecture
-rfctool O:\Documents\IETF\mathematical-mesh-architecture.docx ^
-	/html Publish\mathematical-mesh-architecture.html ^
-	/xml Publish\mathematical-mesh-architecture.xml ^
-	/txt Publish\mathematical-mesh-architecture.txt
+rfctool O:\Documents\Mesh\hallambaker-mesh-architecture.docx ^
+	/html Publish\hallambaker-mesh-architecture.html ^
+	/xml Publish\hallambaker-mesh-architecture.xml ^
+	/txt Publish\hallambaker-mesh-architecture.txt
 
-echo implementation
-rfctool O:\Documents\IETF\mathematical-mesh-implementation.docx ^
-	/html Publish\mathematical-mesh-implementation.html ^
-	/xml Publish\mathematical-mesh-implementation.xml ^
-	/txt Publish\mathematical-mesh-implementation.txt
+echo developer
+rfctool O:\Documents\Mesh\hallambaker-mesh-developer.docx ^
+	/html Publish\hallambaker-mesh-developer.html ^
+	/xml Publish\hallambaker-mesh-developer.xml ^
+	/txt Publish\hallambaker-mesh-developer.txt
 
-echo profiles
-rfctool O:\Documents\IETF\mathematical-mesh-profiles.docx ^
-	/html Publish\mathematical-mesh-profiles.html ^
-	/xml Publish\mathematical-mesh-profiles.xml ^
-	/txt Publish\mathematical-mesh-profiles.txt
-
-echo portal protocol
-rfctool O:\Documents\IETF\mathematical-mesh-protocol-csp.docx ^
-	/html Publish\mathematical-mesh-protocol-csp.html ^
-	/xml Publish\mathematical-mesh-protocol-csp.xml ^
-	/txt Publish\mathematical-mesh-protocol-csp.txt
+echo reference
+rfctool O:\Documents\Mesh\hallambaker-mesh-reference.docx ^
+	/html Publish\hallambaker-mesh-reference.html ^
+	/xml Publish\hallambaker-mesh-reference.xml ^
+	/txt Publish\hallambaker-mesh-reference.txt
 
 echo udf
-rfctool O:\Documents\IETF\hallambaker-udf.docx ^
+rfctool O:\Documents\Mesh\hallambaker-udf.docx ^
 	/html Publish\hallambaker-udf.html ^
 	/xml Publish\hallambaker-udf.xml ^
 	/txt Publish\hallambaker-udf.txt
+
+echo reference
+rfctool O:\Documents\Mesh\hallambaker-json-web-service.docx ^
+	/html Publish\hallambaker-json-web-service.html ^
+	/xml Publish\hallambaker-json-web-service.xml ^
+	/txt Publish\hallambaker-json-web-service.txt
 
 exit /b 0

@@ -56,21 +56,25 @@
     <None Include="Generated\Portal.md" />
     <None Include="Postbuild.bat" />
     <None Include="Prebuild.bat" />
+    <Content Include="Publish\hallambaker-json-web-service.html" />
+    <Content Include="Publish\hallambaker-json-web-service.txt" />
+    <Content Include="Publish\hallambaker-json-web-service.xml" />
+    <Content Include="Publish\hallambaker-mesh-architecture.html" />
+    <Content Include="Publish\hallambaker-mesh-architecture.txt" />
+    <Content Include="Publish\hallambaker-mesh-architecture.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Publish\hallambaker-mesh-developer.html" />
+    <Content Include="Publish\hallambaker-mesh-developer.txt" />
+    <Content Include="Publish\hallambaker-mesh-developer.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Publish\hallambaker-mesh-reference.html" />
+    <Content Include="Publish\hallambaker-mesh-reference.txt" />
+    <Content Include="Publish\hallambaker-mesh-reference.xml" />
     <Content Include="Publish\hallambaker-udf.html" />
     <Content Include="Publish\hallambaker-udf.txt" />
     <Content Include="Publish\hallambaker-udf.xml" />
-    <Content Include="Publish\mathematical-mesh-architecture.html" />
-    <Content Include="Publish\mathematical-mesh-architecture.txt" />
-    <Content Include="Publish\mathematical-mesh-architecture.xml" />
-    <Content Include="Publish\mathematical-mesh-implementation.html" />
-    <Content Include="Publish\mathematical-mesh-implementation.txt" />
-    <Content Include="Publish\mathematical-mesh-implementation.xml" />
-    <Content Include="Publish\mathematical-mesh-profiles.html" />
-    <Content Include="Publish\mathematical-mesh-profiles.txt" />
-    <Content Include="Publish\mathematical-mesh-profiles.xml" />
-    <Content Include="Publish\mathematical-mesh-protocol-csp.html" />
-    <Content Include="Publish\mathematical-mesh-protocol-csp.txt" />
-    <Content Include="Publish\mathematical-mesh-protocol-csp.xml" />
     <Content Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>

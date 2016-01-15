@@ -11,7 +11,7 @@
 Report service and version information. 
 
 The Hello transaction provides a means of determining which protocol
-versions, message encodings and transport protocols are supported by 
+versions, message encodings and transport protocols are supported by
 the service.
 
 ###Transaction: ValidateAccount

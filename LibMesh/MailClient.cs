@@ -174,19 +174,50 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <returns></returns>
         public virtual bool GenerateSMIME () {
+
+            // Much of this should probably be turned into convenience methods on the PublicKey class.
+
+            var RootKey = PublicKey.Generate(KeyType.ASK,
+                                CryptoCatalog.Default.AlgorithmSignature);
+
+            var NewCert = new Certificate(RootKey.KeyPair, 
+                Application.PersonalMaster | Application.CA |
+                Application.CodeSigning | Application.TimeStamping |
+                Application.ServerAuth | Application.ClientAuth,
+                EmailAddress, EmailAddress);
+            NewCert.TBSCertificate.SetValidity(20);
+
+            //NewCert.Sign(Signer.Certificate);
+
+
+
+            RootKey.SignCertificate(Application.PersonalMaster | Application.CA, 
+                    EmailAddress, RootKey);
+            var RootKeyCertificate = RootKey.Certificate.Data;
+
             var SignKey = PublicKey.Generate(KeyType.ASK,
                                 CryptoCatalog.Default.AlgorithmSignature);
             SignKey.SignCertificate(Application.EmailSignature |
-                        Application.DataSignature, EmailAddress, SignKey);
+                        Application.DataSignature, EmailAddress, RootKey);
+            SignKey.X509Chain = new List<byte[]>();
+            SignKey.X509Chain.Add(RootKeyCertificate);
+
 
             var EncryptKey = PublicKey.Generate(KeyType.AEK, 
                                 CryptoCatalog.Default.AlgorithmExchange);
             EncryptKey.SignCertificate(Application.EmailEncryption |
-                        Application.DataEncryption, EmailAddress, EncryptKey);
-            
-            var SigningCSR = new CertificationRequest(SignKey.Certificate);
-            var EncryptionCSR = new CertificationRequest(EncryptKey.Certificate);
+                        Application.DataEncryption, EmailAddress, RootKey);
+            EncryptKey.X509Chain = new List<byte[]>();
+            EncryptKey.X509Chain.Add(RootKeyCertificate);
 
+
+            var SigningCSR = new CertificationRequest(SignKey.Certificate);
+            SignKey.X509CSR = SigningCSR.DER();
+
+            var EncryptionCSR = new CertificationRequest(EncryptKey.Certificate);
+            EncryptKey.X509CSR = EncryptionCSR.DER();
+
+            CertificateStore.RegisterTrustedRoot(RootKey.Certificate);
             CertificateStore.Register(SignKey.Certificate);
             CertificateStore.Register(EncryptKey.Certificate);
 

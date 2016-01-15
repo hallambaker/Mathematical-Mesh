@@ -277,6 +277,12 @@ namespace Goedel.Mesh {
                 KeyPair = new RSAKeyPair(RSAParameters);
                 Certificate.KeyPair = KeyPair;
 
+                if (X509Chain != null) {
+                    foreach (var cert in X509Chain) {
+                        CertificateStore.RegisterTrustedRoot(cert);
+                        }
+                    }
+
                 CertificateStore.Register(Certificate);
                 }
             }
