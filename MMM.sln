@@ -61,6 +61,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExampleGenerator", "Example
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibDNS", "LibDns\LibDNS.csproj", "{DD994F50-5CA7-474D-AC4A-DBF05949621F}"
 EndProject
+Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "Installer", "Installer\Installer.wixproj", "{AF1A5C5E-4FD1-4BCC-9C96-7D145E5A4EB3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -470,6 +472,20 @@ Global
 		{DD994F50-5CA7-474D-AC4A-DBF05949621F}.Release|x64.Build.0 = Release|Any CPU
 		{DD994F50-5CA7-474D-AC4A-DBF05949621F}.Release|x86.ActiveCfg = Release|Any CPU
 		{DD994F50-5CA7-474D-AC4A-DBF05949621F}.Release|x86.Build.0 = Release|Any CPU
+		{AF1A5C5E-4FD1-4BCC-9C96-7D145E5A4EB3}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{AF1A5C5E-4FD1-4BCC-9C96-7D145E5A4EB3}.Debug|x64.ActiveCfg = Debug|x86
+		{AF1A5C5E-4FD1-4BCC-9C96-7D145E5A4EB3}.Debug|x86.ActiveCfg = Debug|x86
+		{AF1A5C5E-4FD1-4BCC-9C96-7D145E5A4EB3}.Debug|x86.Build.0 = Debug|x86
+		{AF1A5C5E-4FD1-4BCC-9C96-7D145E5A4EB3}.RaspberryPi|Any CPU.ActiveCfg = Release|x86
+		{AF1A5C5E-4FD1-4BCC-9C96-7D145E5A4EB3}.RaspberryPi|Any CPU.Build.0 = Release|x86
+		{AF1A5C5E-4FD1-4BCC-9C96-7D145E5A4EB3}.RaspberryPi|x64.ActiveCfg = Release|x86
+		{AF1A5C5E-4FD1-4BCC-9C96-7D145E5A4EB3}.RaspberryPi|x64.Build.0 = Release|x86
+		{AF1A5C5E-4FD1-4BCC-9C96-7D145E5A4EB3}.RaspberryPi|x86.ActiveCfg = Release|x86
+		{AF1A5C5E-4FD1-4BCC-9C96-7D145E5A4EB3}.RaspberryPi|x86.Build.0 = Release|x86
+		{AF1A5C5E-4FD1-4BCC-9C96-7D145E5A4EB3}.Release|Any CPU.ActiveCfg = Release|x86
+		{AF1A5C5E-4FD1-4BCC-9C96-7D145E5A4EB3}.Release|x64.ActiveCfg = Release|x86
+		{AF1A5C5E-4FD1-4BCC-9C96-7D145E5A4EB3}.Release|x86.ActiveCfg = Release|x86
+		{AF1A5C5E-4FD1-4BCC-9C96-7D145E5A4EB3}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
