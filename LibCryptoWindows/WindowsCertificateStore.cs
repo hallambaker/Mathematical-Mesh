@@ -111,7 +111,7 @@ namespace Goedel.LibCrypto {
             }
 
         /// <summary>
-        /// Register a certificate in the specified Windows store and location.
+        /// Register a certificate in the specified Windows store *and location.
         /// </summary>
         /// <param name="Certificate">Certificate to register.</param>
         /// <param name="StoreName">The certificate store to register the certificate to</param>

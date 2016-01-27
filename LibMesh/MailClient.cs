@@ -180,12 +180,12 @@ namespace Goedel.Mesh {
             var RootKey = PublicKey.Generate(KeyType.ASK,
                                 CryptoCatalog.Default.AlgorithmSignature);
 
-            var NewCert = new Certificate(RootKey.KeyPair, 
-                Application.PersonalMaster | Application.CA |
-                Application.CodeSigning | Application.TimeStamping |
-                Application.ServerAuth | Application.ClientAuth,
-                EmailAddress, EmailAddress);
-            NewCert.TBSCertificate.SetValidity(20);
+            //var NewCert = new Certificate(RootKey.KeyPair, 
+            //    Application.PersonalMaster | Application.CA |
+            //    Application.CodeSigning | Application.TimeStamping |
+            //    Application.ServerAuth | Application.ClientAuth,
+            //    EmailAddress, EmailAddress);
+            //NewCert.TBSCertificate.SetValidity(20);
 
             //NewCert.Sign(Signer.Certificate);
 
@@ -211,11 +211,11 @@ namespace Goedel.Mesh {
             EncryptKey.X509Chain.Add(RootKeyCertificate);
 
 
-            var SigningCSR = new CertificationRequest(SignKey.Certificate);
-            SignKey.X509CSR = SigningCSR.DER();
+            //var SigningCSR = new CertificationRequest(SignKey.Certificate);
+            //SignKey.X509CSR = SigningCSR.DER();
 
-            var EncryptionCSR = new CertificationRequest(EncryptKey.Certificate);
-            EncryptKey.X509CSR = EncryptionCSR.DER();
+            //var EncryptionCSR = new CertificationRequest(EncryptKey.Certificate);
+            //EncryptKey.X509CSR = EncryptionCSR.DER();
 
             CertificateStore.RegisterTrustedRoot(RootKey.Certificate);
             CertificateStore.Register(SignKey.Certificate);
