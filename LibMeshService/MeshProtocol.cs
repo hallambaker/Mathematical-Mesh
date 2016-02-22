@@ -735,6 +735,8 @@ namespace Goedel.Mesh {
 
 		// Transaction Classes
 	/// <summary>
+	///
+	/// Minimal request. Contains no parameters.
 	/// </summary>
 	public partial class MeshRequest : Goedel.Protocol.Request {
 
@@ -1008,8 +1010,28 @@ namespace Goedel.Mesh {
 		}
 
 	/// <summary>
+	///
+	/// Minimal response. Contains only the status value and
+	/// description.
 	/// </summary>
 	public partial class MeshResponse : Goedel.Protocol.Response {
+		bool								__Status = false;
+		private int						_Status;
+        /// <summary>
+        /// 
+        /// </summary>
+		public virtual int						Status {
+			get {return _Status;}
+			set {_Status = value; __Status = true; }
+			}
+        /// <summary>
+        /// 
+        /// </summary>
+		public virtual string						StatusDescription {
+			get {return _StatusDescription;}			
+			set {_StatusDescription = value;}
+			}
+		string						_StatusDescription ;
 
         /// <summary>
         /// Tag identifying this class.
@@ -1065,6 +1087,16 @@ namespace Goedel.Mesh {
 				_Writer.WriteObjectStart ();
 				}
 			((Goedel.Protocol.Response)this).SerializeX(_Writer, false, ref _first);
+			if (__Status){
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Status", 1);
+					_Writer.WriteInteger32 (Status);
+				}
+			if (StatusDescription != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("StatusDescription", 1);
+					_Writer.WriteString (StatusDescription);
+				}
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
 				}
@@ -1220,6 +1252,14 @@ namespace Goedel.Mesh {
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
+				case "Status" : {
+					Status = JSONReader.ReadInteger32 ();
+					break;
+					}
+				case "StatusDescription" : {
+					StatusDescription = JSONReader.ReadString ();
+					break;
+					}
 				default : {
 					base.DeserializeToken(JSONReader, Tag);
 					break;

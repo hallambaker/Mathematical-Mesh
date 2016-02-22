@@ -63,6 +63,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibDNS", "LibDns\LibDNS.csp
 EndProject
 Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "InstallerMesh", "Installer\InstallerMesh.wixproj", "{AF1A5C5E-4FD1-4BCC-9C96-7D145E5A4EB3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Protocol.Debug", "Goedel.Protocol.Debug\Goedel.Protocol.Debug.csproj", "{0586B4C1-814C-4D98-B6F1-180CD4E2FAAB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -486,6 +488,24 @@ Global
 		{AF1A5C5E-4FD1-4BCC-9C96-7D145E5A4EB3}.Release|x64.ActiveCfg = Release|x86
 		{AF1A5C5E-4FD1-4BCC-9C96-7D145E5A4EB3}.Release|x86.ActiveCfg = Release|x86
 		{AF1A5C5E-4FD1-4BCC-9C96-7D145E5A4EB3}.Release|x86.Build.0 = Release|x86
+		{0586B4C1-814C-4D98-B6F1-180CD4E2FAAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0586B4C1-814C-4D98-B6F1-180CD4E2FAAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0586B4C1-814C-4D98-B6F1-180CD4E2FAAB}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{0586B4C1-814C-4D98-B6F1-180CD4E2FAAB}.Debug|x64.Build.0 = Debug|Any CPU
+		{0586B4C1-814C-4D98-B6F1-180CD4E2FAAB}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{0586B4C1-814C-4D98-B6F1-180CD4E2FAAB}.Debug|x86.Build.0 = Debug|Any CPU
+		{0586B4C1-814C-4D98-B6F1-180CD4E2FAAB}.RaspberryPi|Any CPU.ActiveCfg = Release|Any CPU
+		{0586B4C1-814C-4D98-B6F1-180CD4E2FAAB}.RaspberryPi|Any CPU.Build.0 = Release|Any CPU
+		{0586B4C1-814C-4D98-B6F1-180CD4E2FAAB}.RaspberryPi|x64.ActiveCfg = Release|Any CPU
+		{0586B4C1-814C-4D98-B6F1-180CD4E2FAAB}.RaspberryPi|x64.Build.0 = Release|Any CPU
+		{0586B4C1-814C-4D98-B6F1-180CD4E2FAAB}.RaspberryPi|x86.ActiveCfg = Release|Any CPU
+		{0586B4C1-814C-4D98-B6F1-180CD4E2FAAB}.RaspberryPi|x86.Build.0 = Release|Any CPU
+		{0586B4C1-814C-4D98-B6F1-180CD4E2FAAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0586B4C1-814C-4D98-B6F1-180CD4E2FAAB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0586B4C1-814C-4D98-B6F1-180CD4E2FAAB}.Release|x64.ActiveCfg = Release|Any CPU
+		{0586B4C1-814C-4D98-B6F1-180CD4E2FAAB}.Release|x64.Build.0 = Release|Any CPU
+		{0586B4C1-814C-4D98-B6F1-180CD4E2FAAB}.Release|x86.ActiveCfg = Release|Any CPU
+		{0586B4C1-814C-4D98-B6F1-180CD4E2FAAB}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

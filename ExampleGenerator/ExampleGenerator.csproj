@@ -9,9 +9,10 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ExampleGenerator</RootNamespace>
     <AssemblyName>ExampleGenerator</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -52,17 +53,49 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MakeVersion.script</DependentUpon>
     </Compile>
+    <None Include="Generated\Examples.md" />
     <None Include="MakeVersion.script">
       <Generator>gscript</Generator>
       <LastGenOutput>MakeVersion.cs</LastGenOutput>
     </None>
-    <Compile Include="Program.cs" />
+    <Compile Include="CreateExamples.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Goedel.Protocol.Debug\Goedel.Protocol.Debug.csproj">
+      <Project>{0586b4c1-814c-4d98-b6f1-180cd4e2faab}</Project>
+      <Name>Goedel.Protocol.Debug</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LibCryptoJose\LibCryptoJose.csproj">
+      <Project>{59f7f1a5-abbc-4830-b7a3-140fd8e4c369}</Project>
+      <Name>LibCryptoJose</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LibCrypto\LibCrypto.csproj">
+      <Project>{1babc0e9-d939-4de5-82a3-16752104b14b}</Project>
+      <Name>LibCrypto</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LibLogFile\LibLogFile.csproj">
+      <Project>{81e30b95-c59d-4a04-925e-85877fd37fdd}</Project>
+      <Name>LibLogFile</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LibMeshService\LibMeshService.csproj">
+      <Project>{f6343f1b-d03d-4965-9113-5120a8054e9e}</Project>
+      <Name>LibMeshService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LibMesh\LibMesh.csproj">
+      <Project>{0d8dd801-65d2-497c-8379-2d6adf3867c3}</Project>
+      <Name>LibMesh</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LibProtoGen\LibProtoGen.csproj">
+      <Project>{24419f2d-f425-4e0f-a0ea-9d3e7a57e12f}</Project>
+      <Name>LibProtoGen</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>powershell publishtarget "$(TargetPath)" Goedel.Registry.dll</PostBuildEvent>

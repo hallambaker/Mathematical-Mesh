@@ -67,6 +67,7 @@
     <Compile Include="JSONBufferedReader.cs" />
     <Compile Include="JSONMessage.cs" />
     <Compile Include="JSONObject.cs" />
+    <Compile Include="JSONDebugWriter.cs" />
     <Compile Include="JSONWriter.cs" />
     <Compile Include="Message.cs" />
     <Compile Include="Obsolete WebServiceServer.cs" />

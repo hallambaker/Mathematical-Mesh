@@ -103,11 +103,11 @@
     </None>
     <None Include="packages.config" />
     <None Include="Portal.Protocol">
-      <Generator>ProtogenCS</Generator>
+      <Generator>protogen</Generator>
       <LastGenOutput>Portal.cs</LastGenOutput>
     </None>
     <None Include="MeshSchema.protocol">
-      <Generator>ProtogenCS</Generator>
+      <Generator>Protogen</Generator>
       <LastGenOutput>MeshSchema.cs</LastGenOutput>
     </None>
   </ItemGroup>

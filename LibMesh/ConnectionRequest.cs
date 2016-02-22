@@ -219,7 +219,9 @@ namespace Goedel.Mesh {
         }
 
 
-
+    /// <summary>
+    /// Track connections pending.
+    /// </summary>
     public partial class ConnectionsPending {
         /// <summary>
         /// Unique identifier for connections pending object.

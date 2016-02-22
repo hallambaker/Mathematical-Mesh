@@ -6,6 +6,6 @@ using System.Threading.Tasks;
 
 namespace InternetDrafts {
     class CheckVersion {
-        Version Version = new Version();
+        //Version Version = new Version();
         }
     }

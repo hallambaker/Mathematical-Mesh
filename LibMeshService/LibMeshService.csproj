@@ -53,13 +53,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MeshProtocol.Protocol</DependentUpon>
     </Compile>
+    <Compile Include="MeshProtocolPlus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MeshPortal.cs" />
+    <Compile Include="MeshPortalTraced.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="LibMeshService.licenseheader" />
+    <None Include="MeshProtocol-II.Protocol" />
     <None Include="MeshProtocol.Protocol">
-      <Generator>ProtogenCS</Generator>
+      <Generator>Protogen</Generator>
       <LastGenOutput>MeshProtocol.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
@@ -69,6 +72,10 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Goedel.Protocol.Debug\Goedel.Protocol.Debug.csproj">
+      <Project>{0586b4c1-814c-4d98-b6f1-180cd4e2faab}</Project>
+      <Name>Goedel.Protocol.Debug</Name>
+    </ProjectReference>
     <ProjectReference Include="..\LibCryptoJose\LibCryptoJose.csproj">
       <Project>{59f7f1a5-abbc-4830-b7a3-140fd8e4c369}</Project>
       <Name>LibCryptoJose</Name>

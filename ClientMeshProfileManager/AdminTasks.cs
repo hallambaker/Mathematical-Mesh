@@ -292,18 +292,7 @@ namespace Goedel.MeshProfileManager {
         /// <param name="Shares">Array containing the necessary shares.</param>
         /// <returns>UDF of the recovered profile (if successful).</returns>
         public string RecoverProfile(string[] Shares) {
-
-            var KeyShares = new KeyShare[Shares.Length];
-
-            int i = 0;
-            foreach (var Share in Shares) {
-                var Bytes = BaseConvert.FromBase32String(Share);
-                KeyShares[i++] = new KeyShare(Bytes);
-
-                //Trace.WriteHex("Share", Bytes);
-                }
-
-            var Combined = new Secret(KeyShares);
+            var Combined = new Secret(Shares);
             //Trace.WriteHex("MasterKey", Combined.Key);
             var Identifier = CLG.UDF.ToString(CLG.UDF.FromEscrowed(Combined.Key, 150));
 

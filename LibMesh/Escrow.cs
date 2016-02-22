@@ -22,11 +22,9 @@
 
 using System;
 using System.Collections.Generic;
-using Goedel.Registry;
-using Goedel.Persistence;
 using Goedel.LibCrypto;
 using Goedel.Cryptography.Jose;
-using Goedel.Debug;
+using Goedel.Protocol;
 
 namespace Goedel.Mesh {
     public partial class OfflineEscrowEntry {
@@ -89,5 +87,8 @@ namespace Goedel.Mesh {
                 return _KeyShares;
                 }
             }
+
+
+
         }
     }

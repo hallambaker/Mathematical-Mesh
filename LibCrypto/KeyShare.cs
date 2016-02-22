@@ -81,6 +81,24 @@ namespace Goedel.LibCrypto {
             }
 
         /// <summary>
+        /// Recreate a secret from shares specified as Base32 encoded strings.
+        /// </summary>
+        /// <param name="Shares">The shares to be recombined.</param>
+        public Secret (string[] Shares) {
+
+            var KeyShares = new KeyShare[Shares.Length];
+
+            int i = 0;
+            foreach (var Share in Shares) {
+                var Bytes = BaseConvert.FromBase32String(Share);
+                KeyShares[i++] = new KeyShare(Bytes);
+                }
+
+            this.Key = Combine(KeyShares);
+            }
+
+
+        /// <summary>
         /// Constructor for use in inherited classes.
         /// </summary>
         protected Secret() {

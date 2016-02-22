@@ -27,6 +27,10 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Goedel.Mesh {
+
+    /// <summary>
+    /// A portal account object.
+    /// </summary>
     public partial class Account {
 
         /// <summary>

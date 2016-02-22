@@ -201,7 +201,8 @@ namespace Goedel.Protocol {
     /// for documentation.
     /// </summary>
     public partial class LocalRemoteSession : JPCRemoteSession {
-        JPCProvider Host;
+        protected JPCProvider Host;
+
 
         /// <summary>
         /// Create a remote session without authentication. This call

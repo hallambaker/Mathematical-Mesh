@@ -1,50 +1,7 @@
-﻿Protocol Goedel.Mesh MeshProtocol MeshProtocol
+﻿Protocol Goedel.Mesh MeshProtocolII MeshProtocol
 	Using Goedel.Mesh
 	Using Goedel.Persistence
 
-	Success SuccessOK 201
-		Description
-			|Operation completed successfully
-	Success SuccessCreated 201
-		Description
-			|Operation completed successfully, new data item created
-	Success SuccessCreated 202
-		Description
-			|Operation completed successfully, data item was updated
-
-
-
-
-	Success RedirectPermanent 303
-		Description
-			|Service has been permanently moved
-	Warning RedirectTemporary 307
-		Description
-			|Service has been temporarily moved
-
-	Error ClientUnauthorized 401
-		Description
-			|Client is not authorized to perform specified request
-
-	Error ClientNotFound 404
-		Description
-			|The requested client object could not be found.
-	Error ClientAlreadyExists 409
-		Description
-			|The requested client object could not be found.
-
-
-	Error ServerInternal 500
-		Description
-			|An internal error occurred at the server
-	Error ServerOverload 503
-		Description
-			|The server cannot handle the request as it is overloaded
-
-    Service MeshService "_mmm._tcp" "mmm" Request Response
-        Description
-            |Access library for mesh service
-		Status Success
 
 	Message MeshRequest
 		Description
@@ -66,28 +23,71 @@
 				|and log file use.
 
 
-    Transaction Admin Hello HelloRequest HelloResponse
-		Description
-			|Report service and version information. 
-		Description
-			|The Hello transaction provides a means of determining which protocol
-			|versions, message encodings and transport protocols are supported by
-			|the service.
+	// Entries that occur prior to the Service declaration are
+	// Ignored.
 
-	Message HelloRequest
-		Inherits MeshRequest
+    Service MeshService "_mmm._tcp" "mmm" MeshRequest MeshResponse
+        Description
+            |Client access to the Mesh through a Portal Service.
+		Description
+			|The portal service is the intermediary that acts as a 
+			|gatekeeper for all clients interaction with the Mesh. 
+			|The portal service supports registration of new profiles,
+			|updates to existing profiles and connection of new devices.
 
-	Message HelloResponse
-		Inherits MeshResponse
-		Struct Version Version
-			Description
-				|Enumerates the protocol versions supported
-		Struct Version Alternates
-			Multiple
-			Description
-				|Enumerates alternate protocol version(s) supported
+	// Generator will automatically create a section headed 'requests'
+	// with a table of all the request types defined.
+
+	// Generator will automatically create asection header 'responses'
+	// specifying that these have a numeric code, a description and
+	// may include additional data.
+
+	// The documentation generator will automatically create a section marked 
+	// 'response codes' and populate it with the following entries.
+
+	Success SuccessOK 201
+		Description
+			|Operation completed successfully
+	Success SuccessCreated 201
+		Description
+			|Operation completed successfully, new data item created
+	Success SuccessCreated 202
+		Description
+			|Operation completed successfully, data item was updated
+
+	Success RedirectPermanent 303
+		Description
+			|Service has been permanently moved
+	Warning RedirectTemporary 307
+		Description
+			|Service has been temporarily moved
+
+	Error ClientUnauthorized 401
+		Description
+			|Client is not authorized to perform specified request
+
+	Error ClientNotFound 404
+		Description
+			|The requested client object could not be found.
+	Error ClientAlreadyExists 409
+		Description
+			|The requested client object already exists
+
+
+	Error ServerInternal 500
+		Description
+			|An internal error occurred at the server
+	Error ServerOverload 503
+		Description
+			|The server cannot handle the request as it is overloaded
+
+
+	// Common Structures
+	// Here enumerate all the common structures that occur.
 
 	Structure Version
+		Description
+			|Describes a protocol version.
 		Integer Major
 			Description
 				|Major version number of the service protocol. A higher
@@ -107,6 +107,8 @@
 
 
 	Structure Encoding
+		Description
+			|
 		String ID
 			Multiple
 			Description
@@ -117,6 +119,45 @@
 				|For encodings that employ a named dictionary for tag or data
 				|compression, the name of the dictionary as defined by that 
 				|encoding scheme. 			
+	Structure KeyValue
+		Description
+			|
+
+		String Key
+			Description
+				|
+
+		String Value
+			Description
+				|
+
+
+	// Our first request
+
+    Transaction Admin Hello MeshRequest HelloResponse
+		Description
+			|Report service and version information. 
+		Description
+			|The Hello transaction provides a means of determining which protocol
+			|versions, message encodings and transport protocols are supported by
+			|the service.
+
+	Message HelloRequest
+		Inherits MeshRequest
+		Description
+			|Request service description information.
+
+	Message HelloResponse
+		Inherits MeshResponse
+		Description
+			|Response to a Hello request.
+		Struct Version Version
+			Description
+				|Enumerates the protocol versions supported
+		Struct Version Alternates
+			Multiple
+			Description
+				|Enumerates alternate protocol version(s) supported
 
 
 	Transaction Admin ValidateAccount ValidateRequest ValidateResponse
@@ -125,10 +166,10 @@
 		Description
 			|For validation of a user's account name during profile creation.
 
-
-
 	Message ValidateRequest
 		Inherits MeshRequest
+		Description
+			|Request validation of a proposed name for a new account.
 		String Account
 			Description
 				|Account name requested
@@ -145,18 +186,28 @@
 
 	Message ValidateResponse
 		Inherits MeshResponse
+		Description
+			|Report on whether the requested account identifier is available.
 		Boolean Valid
+			Description
+				|If false, indicates that a request for the account identifier 
+				|will be refused. Otherwise, a request MAY be expected to succeed
+				|but acceptance is not guranteed.
 		Integer Minimum
+			Description
+				|The minimum number of characters in an identifier.
 		String InvalidCharacters
 			Description
-				|A list of characters from the requested account that the service 
-				|does not accept in account names.
+				|A list of characters that the service 
+				|does not accept in account names. The list MAY be incomplete but
+				|SHOULD contain all the invalid characters that were rejected 
+				|in the requested account identifier.
 		String Reason
 			Description
 				|Text explaining the reason an account name was rejected.
 
 
-	Transaction Admin CreateAccount CreateRequest CreateResponse
+	Transaction Admin CreateAccount CreateRequest MeshResponse
 		Description
 			|Request creation of a new mesh account.
 		Description
@@ -165,6 +216,8 @@
 			|a profile can be published.
 
 	Message CreateRequest
+		Description
+			|
 		Inherits MeshRequest
 		String Account
 			Description
@@ -174,19 +227,20 @@
 				|User profile of account to be created. The profile MUST specify the 
 				|account being created as an account.
 
-	Message CreateResponse
-		Inherits MeshResponse
 
 
 	// Data related transactions, publish, search, etc.
 	// These are the only transactions that cause entries to be added to the 
 	// mesh log.
 	Transaction Mesh Publish PublishRequest PublishResponse
+
 		Description
 			|Publish a profile or key escrow entry to the mesh.
 
 	Message PublishRequest
 		Inherits MeshRequest
+		Description
+			|
 		TStruct Entry Entry
 			Description
 				|Signed profile to be published.
@@ -200,10 +254,11 @@
 			|Search for data in the mesh that matches a set of keys.
 
 	Transaction Mesh GetRecords GetRequest GetRecordsResponse
+		Description
+			|Search for data in the mesh that matches a set of keys
+			|
 
 
-
-	
 	Message GetRequest
 		Inherits MeshRequest
 		String Identifier
@@ -222,12 +277,12 @@
 			Description
 				|If true return multiple responses if available
 
-	Structure KeyValue
-		String Key
-		String Value
+
 
 	Message GetResponse
 		Inherits MeshResponse
+		Description
+			|
 		TStruct Entry Entries
 			Multiple
 			Description
@@ -237,34 +292,12 @@
 
 	Message GetRecordsResponse
 		Inherits MeshResponse
+		Description
+			|
 		Struct DataItem DataItems
 			Multiple
 			Description
 				|List of mesh data records matching the request.
-
-
-	Transaction Mesh Transfer TransferRequest TransferResponse
-		Description
-			|Request a bulk transfer of the log between the specified transaction
-			|identifiers. Requires appropriate authorization
-		Description
-			|[Not currently implemented]
-
-	Message TransferRequest
-		Inherits MeshRequest
-		DateTime NotBefore
-			Description
-		DateTime Until
-			Description
-		String After
-			Description
-		Integer MaxEntries
-			Description
-		Integer MaxBytes
-			Description
-
-	Message TransferResponse
-		Inherits MeshResponse
 
 
 	Transaction Mesh Status StatusRequest StatusResponse
@@ -279,9 +312,13 @@
 
 	Message StatusRequest
 		Inherits MeshRequest
+		Description
+			|
 
 	Message StatusResponse
 		Inherits MeshResponse
+		Description
+			|
 		DateTime LastWriteTime
 			Description
 				|Time that the last write update was made to the Mesh
@@ -306,25 +343,6 @@
 		Description
 			|Request connection of a new device to a mesh profile
 
-	Transaction Portal ConnectStatus ConnectStatusRequest ConnectStatusResponse
-		Description
-			|Request status of pending connection request of a new device 
-			|to a mesh profile
-
-	Transaction Portal ConnectPending ConnectPendingRequest ConnectPendingResponse
-		Description
-			|Request status of pending connection request of a new device 
-			|to a mesh profile
-
-	Transaction Portal ConnectComplete ConnectCompleteRequest ConnectCompleteResponse
-		Description
-			|Request status of pending connection request of a new device 
-			|to a mesh profile
-
-
-
-
-
 	Message ConnectStartRequest
 		Inherits MeshRequest
 		Description
@@ -343,6 +361,14 @@
 		String SignedConnectionResult
 			Description
 				|
+
+
+
+	Transaction Portal ConnectStatus ConnectStatusRequest ConnectStatusResponse
+		Description
+			|Request status of pending connection request of a new device 
+			|to a mesh profile
+
 
 	Message ConnectStatusRequest
 		Inherits MeshRequest
@@ -363,6 +389,12 @@
 			Description
 				|
 
+	Transaction Portal ConnectPending ConnectPendingRequest ConnectPendingResponse
+		Description
+			|Request status of pending connection request of a new device 
+			|to a mesh profile
+
+
 	Message ConnectPendingRequest
 		Inherits MeshRequest
 		Description
@@ -379,6 +411,12 @@
 			Multiple
 			Description
 				|
+
+	Transaction Portal ConnectComplete ConnectCompleteRequest ConnectCompleteResponse
+		Description
+			|Request status of pending connection request of a new device 
+			|to a mesh profile
+
 
 	Message ConnectCompleteRequest
 		Inherits MeshRequest

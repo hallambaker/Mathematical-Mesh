@@ -30,54 +30,24 @@ namespace Goedel.Protocol {
     //  JSON Writer code
     //
 
+    public class JSONDebugWriter : JSONWriter {
 
-
-
-    public class JSONCWriter : JSONBWriter {
-
-        Dictionary<string, int> TagDictionary;
-
-        public override string ToString() {
-            return Output.GetUTF8;
-            }
-
-        public JSONCWriter(StreamBuffer Output) :
-                this (Output, new Dictionary<string,int>()) {
-            }
-
-        public JSONCWriter() :
-            this(new StreamBuffer(), new Dictionary<string, int>()) {
-            }
-
-        public JSONCWriter(Dictionary<string, int> TagDictionary) :
-            this(new StreamBuffer(), TagDictionary) {
-            }
-
-        public JSONCWriter(bool Wrap) {
+        public JSONDebugWriter() {
             this.Output = new StreamBuffer ();
             }
 
-        public JSONCWriter(StreamBuffer Output, 
-                    Dictionary<string, int> TagDictionary) {
+        public JSONDebugWriter(StreamBuffer Output) {
             this.Output = Output;
-            this.TagDictionary = TagDictionary;
             }
 
-
-        public override void WriteToken(string Tag, int IndentIn) {
-            WriteString(Tag);
+        public JSONDebugWriter(bool Wrap) {
+            this.Output = new StreamBuffer ();
             }
 
-        public override void WriteString(string Data) {
-            int Index;
-
-            if (TagDictionary.TryGetValue(Data, out Index)) {
-                WriteTag(JSONBCD.TagCode, Index);
-                }
-            else {
-                WriteTag(JSONBCD.StringTerm, Data.Length);
-                Output.Write(Data);
-                }
+        public override void WriteBinary(byte[] Data) {
+            Output.Write("\"");
+            Output.Write(BaseConvert.ToBase64urlString(Data));
+            Output.Write("\"");
             }
 
         }

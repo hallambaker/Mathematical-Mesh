@@ -31,7 +31,7 @@ namespace Goedel.Mesh {
     class Program {
         static void Main(string[] args) {
             var MeshTest = new MeshTest();
-            MeshTest.TestLiveMail();
+            MeshTest.MeshStoreAPI();
             }
         }
 

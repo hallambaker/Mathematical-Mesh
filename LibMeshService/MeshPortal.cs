@@ -59,7 +59,7 @@ namespace Goedel.Mesh {
         /// <summary>
         /// May be set to the default MeshService by a calling application.
         /// </summary>
-        public MeshService MeshService;
+        public MeshService MeshServiceClient;
         }
 
 
@@ -98,7 +98,17 @@ namespace Goedel.Mesh {
         /// Create new portal using the default stores.
         /// </summary>
         public MeshPortalDirect () {
-            Init(MeshStore, PortalStore);
+            Init(ServiceName, MeshStore, PortalStore);
+            }
+
+        /// <summary>
+        /// Create a new portal using the specified stores.
+        /// </summary>
+        /// <param name="ServiceName">DNS service name</param>
+        /// <param name="MeshStore">File name for the Mesh Store.</param>
+        /// <param name="PortalStore">File name for the Portal Store.</param>
+        public MeshPortalDirect(string ServiceName, string MeshStore, string PortalStore) {
+            Init(ServiceName, MeshStore, PortalStore);
             }
 
         /// <summary>
@@ -107,10 +117,19 @@ namespace Goedel.Mesh {
         /// <param name="MeshStore">File name for the Mesh Store.</param>
         /// <param name="PortalStore">File name for the Portal Store.</param>
         public MeshPortalDirect(string MeshStore, string PortalStore) {
-            Init(MeshStore, PortalStore);
+            Init(ServiceName, MeshStore, PortalStore);
             }
 
-        void Init (string MeshStore, string PortalStore) {
+        /// <summary>
+        /// Initialize the portal
+        /// </summary>
+        /// <param name="ServiceName"></param>
+        /// <param name="MeshStore"></param>
+        /// <param name="PortalStore"></param>
+        protected void Init (string ServiceName, string MeshStore, string PortalStore) {
+            this.ServiceName = ServiceName;
+            this.MeshStore = MeshStore;
+            this.PortalStore = PortalStore;
             MeshServiceHost = new PublicMeshServiceProvider(ServiceName, MeshStore, PortalStore);
             }
 
@@ -120,11 +139,16 @@ namespace Goedel.Mesh {
 
         public override MeshService GetService(string Portal, string Account) {
             var Session = new DirectSession(null);
-            MeshService = new MeshServiceSession(MeshServiceHost, Session);
-            return MeshService;
+            MeshServiceClient = new PublicMeshService(MeshServiceHost, Session);
+            return MeshServiceClient;
             }
 
         }
+
+
+
+
+
 
     /// <summary>
     /// Direct connection to service provider via JSON encoding, decoding and dispatch.
@@ -144,8 +168,8 @@ namespace Goedel.Mesh {
         /// </summary>
         public override MeshService GetService(string Service, string Account) {
             var Session = new LocalRemoteSession(MeshServiceHost, ServiceName, Account);
-            MeshService = new MeshServiceClient(Session);
-            return MeshService;
+            MeshServiceClient = new MeshServiceClient(Session);
+            return MeshServiceClient;
             }
 
         }
@@ -171,8 +195,8 @@ namespace Goedel.Mesh {
                         MeshService.Discovery, false, true);
 
             var Session = new WebRemoteSession(URI, Service, Account);
-            MeshService = new MeshServiceClient(Session);
-            return MeshService;
+            MeshServiceClient = new MeshServiceClient(Session);
+            return MeshServiceClient;
             }
         }
 

@@ -122,11 +122,27 @@ to a mesh profile
 
 ###Message: MeshRequest
 
+Minimal request. Contains no parameters.
+
 [None]
 
 ###Message: MeshResponse
 
-[None]
+Minimal response. Contains only the status value and
+description.
+
+
+:Status :
+::Integer [0..1]   
+
+Status return code. The SMTP/HTTP scheme of 2xx = Success,
+3xx = incomplete, 4xx = failure is followed.
+
+:StatusDescription :
+::String [0..1]   
+
+Text description of the status return code for debugging 
+and log file use.
 
 ###Message: HelloRequest
 
@@ -134,6 +150,18 @@ to a mesh profile
 
 ###Message: HelloResponse
 
+
+:Status :
+::Integer [0..1]   
+
+Status return code. The SMTP/HTTP scheme of 2xx = Success,
+3xx = incomplete, 4xx = failure is followed.
+
+:StatusDescription :
+::String [0..1]   
+
+Text description of the status return code for debugging 
+and log file use.
 
 :Version :
 ::Version [0..1]   
@@ -169,6 +197,18 @@ explanatory text.
 ###Message: ValidateResponse
 
 
+:Status :
+::Integer [0..1]   
+
+Status return code. The SMTP/HTTP scheme of 2xx = Success,
+3xx = incomplete, 4xx = failure is followed.
+
+:StatusDescription :
+::String [0..1]   
+
+Text description of the status return code for debugging 
+and log file use.
+
 :Valid :
 ::Boolean [0..1]   
 
@@ -200,7 +240,18 @@ Account name requested
 
 ###Message: CreateResponse
 
-[None]
+
+:Status :
+::Integer [0..1]   
+
+Status return code. The SMTP/HTTP scheme of 2xx = Success,
+3xx = incomplete, 4xx = failure is followed.
+
+:StatusDescription :
+::String [0..1]   
+
+Text description of the status return code for debugging 
+and log file use.
 
 ###Message: PublishRequest
 
@@ -208,7 +259,18 @@ Account name requested
 
 ###Message: PublishResponse
 
-[None]
+
+:Status :
+::Integer [0..1]   
+
+Status return code. The SMTP/HTTP scheme of 2xx = Success,
+3xx = incomplete, 4xx = failure is followed.
+
+:StatusDescription :
+::String [0..1]   
+
+Text description of the status return code for debugging 
+and log file use.
 
 ###Message: GetRequest
 
@@ -245,10 +307,33 @@ If true return multiple responses if available
 
 ###Message: GetResponse
 
-[None]
+
+:Status :
+::Integer [0..1]   
+
+Status return code. The SMTP/HTTP scheme of 2xx = Success,
+3xx = incomplete, 4xx = failure is followed.
+
+:StatusDescription :
+::String [0..1]   
+
+Text description of the status return code for debugging 
+and log file use.
 
 ###Message: GetRecordsResponse
 
+
+:Status :
+::Integer [0..1]   
+
+Status return code. The SMTP/HTTP scheme of 2xx = Success,
+3xx = incomplete, 4xx = failure is followed.
+
+:StatusDescription :
+::String [0..1]   
+
+Text description of the status return code for debugging 
+and log file use.
 
 :DataItems :
 ::DataItem [0..Many]   
@@ -280,7 +365,18 @@ List of mesh data records matching the request.
 
 ###Message: TransferResponse
 
-[None]
+
+:Status :
+::Integer [0..1]   
+
+Status return code. The SMTP/HTTP scheme of 2xx = Success,
+3xx = incomplete, 4xx = failure is followed.
+
+:StatusDescription :
+::String [0..1]   
+
+Text description of the status return code for debugging 
+and log file use.
 
 ###Message: StatusRequest
 
@@ -288,6 +384,18 @@ List of mesh data records matching the request.
 
 ###Message: StatusResponse
 
+
+:Status :
+::Integer [0..1]   
+
+Status return code. The SMTP/HTTP scheme of 2xx = Success,
+3xx = incomplete, 4xx = failure is followed.
+
+:StatusDescription :
+::String [0..1]   
+
+Text description of the status return code for debugging 
+and log file use.
 
 :LastWriteTime :
 ::DateTime [0..1]   

@@ -36,23 +36,6 @@ namespace Goedel.Protocol {
     public class JSONAWriter : JSONWriter {
         
         
-        //private TextWriter Output;
-        
-        //private bool Buffered = false;
-
-
-        //private StreamBuffer Output;
-
-
-        private int Indent = 0;
-
-        private void NewLine() {
-            Output.WriteLine();
-            for (int i = 0; i < Indent; i++) {
-                Output.Write("  ");
-                }
-            }
-
         public override string ToString() {
             return Output.GetUTF8;
             }

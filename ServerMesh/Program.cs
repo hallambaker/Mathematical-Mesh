@@ -48,7 +48,7 @@ namespace MeshServerShell {
             var HostReg = Server.Add(MeshServiceProvider);
 
             // Create the interface dispatcher for the provider.
-            var Interface = new MeshServiceSession(MeshServiceProvider, null);
+            var Interface = new PublicMeshService(MeshServiceProvider, null);
             var InterfaceReg = HostReg.Add (Interface);
 
             // Register the network port.

@@ -222,7 +222,7 @@ namespace Goedel.Mesh {
 
 
         /// <summary>
-        /// Publish an offline escrow entry to the mesh.
+        /// Publish a signed profile entry to the mesh.
         /// </summary>
         /// <param name="SignedProfile"></param>
         /// <returns>The service response.</returns>

@@ -66,7 +66,7 @@ namespace Goedel.Mesh {
     /// <summary>
     /// The session class implements the Mesh session.
     /// </summary>
-    public class MeshServiceSession : MeshService {
+    public class PublicMeshService : MeshService {
         PublicMeshServiceProvider Provider;
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="Host">The service provider.</param>
         /// <param name="Session">The authentication context.</param>
-        public MeshServiceSession(PublicMeshServiceProvider Host, JPCSession Session) {
+        public PublicMeshService(PublicMeshServiceProvider Host, JPCSession Session) {
             this.Provider = Host;
             Host.Interfaces.Add(this);
             Host.Service = this;
@@ -137,7 +137,7 @@ namespace Goedel.Mesh {
             var Response = new CreateResponse();
             var Success = Mesh.CreateAccount(Request.Account, Request.Profile);
             if (!Success) {
-                Response.Status = 409;
+                Response.StatusCode = 409;
                 }
 
             return Response;
