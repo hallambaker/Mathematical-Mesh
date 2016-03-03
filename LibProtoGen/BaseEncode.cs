@@ -317,23 +317,23 @@ namespace Goedel.Protocol  {
             }
 
         public static string ToBase64urlString(byte[] data, bool Newline) {
-            return ToBase64urlString (data, data.Length, Newline);
+            return ToBase64urlString (data, 0, data.Length, Newline);
             }        
         public static string ToBase64urlString(byte[] data) {
             return ToBase64urlString (data, data.Length);
             }
 
         public static string ToBase64urlString(byte[] data, int Length) {
-            return ToBase64urlString (data, Length, true);
+            return ToBase64urlString (data, 0, Length, true);
             }
 
-
-        public static string ToBase64urlString(byte[] data, int Length, bool Newline) {
+        public static string ToBase64urlString(byte[] data, int First, int Length, bool Newline) {
             string result = "";
             int offset = 0;
             int a = 0;
+            int Last = First + Length;
 
-            for (int i = 0; i < Length; i++) {
+            for (int i = First; i < Last; i++) {
                 if (Newline & ((i % 48) == 0)) {
                     result += '\n';
                     }

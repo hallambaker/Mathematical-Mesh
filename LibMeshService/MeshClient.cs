@@ -236,6 +236,25 @@ namespace Goedel.Mesh {
 
 
         /// <summary>
+        /// Recover an offline escrow entry
+        /// </summary>
+        /// <param name="Identifier">The UDF of the decryption key</param>
+        /// <returns>Offline escrow entry (if found), null otherwise.</returns>
+        public OfflineEscrowEntry Recover (string Identifier) {
+            var GetRequest = new GetRequest();
+            GetRequest.Identifier = Identifier;
+            GetRequest.Multiple = false;
+            var GetResponse = MeshService.Get(GetRequest);
+
+            if (GetResponse.Entries.Count == 0) { return null; }
+
+            var Result = GetResponse.Entries[0] as OfflineEscrowEntry;
+
+            return Result;
+            }
+
+
+        /// <summary>
         /// Get the active profile associated with the current account.
         /// </summary>
         /// <returns>The signed personal profile.</returns>

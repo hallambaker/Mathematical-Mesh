@@ -309,14 +309,14 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="UDF"></param>
         /// <returns></returns>
-        public SignedProfile GetProfile (string UDF) {
+        public Entry GetProfile (string UDF) {
 
-            var Entry = IndexUniqueID.Get(UDF);
-            if (Entry == null) {
+            var PEntry = IndexUniqueID.Get(UDF);
+            if (PEntry == null) {
                 return null;
                 }
 
-            var Result = SignedProfile.FromTagged(Entry.Text);
+            var Result = Entry.FromTagged(PEntry.Text);
 
             return Result;
             }

@@ -256,7 +256,8 @@ namespace Goedel.Mesh {
             AccountPersonalProfile.SignedDeviceProfile = DevProfile;
 
             var PasswordEntry = AccountPersonalProfile.GetPasswordProfile();
-            var SignedPasswordProfile2 = Mesh.GetProfile(PasswordEntry.Identifier);
+            var SignedPasswordProfile2 = 
+                Mesh.GetProfile(PasswordEntry.Identifier) as SignedProfile;
 
             var AccountPasswordProfile = PasswordProfile.Get(
                             SignedPasswordProfile2, AccountPersonalProfile);
@@ -297,7 +298,8 @@ namespace Goedel.Mesh {
 
 
             // decrypt using device2 credential
-            var SignedPasswordProfile3 = Mesh.GetProfile(PasswordEntry.Identifier);
+            var SignedPasswordProfile3 = 
+                Mesh.GetProfile(PasswordEntry.Identifier) as SignedProfile;
             var PP3 = PasswordProfile.Get(SignedPasswordProfile3, AccountPersonalProfile);
             var PasswordPrivate = PP3.Private;
 

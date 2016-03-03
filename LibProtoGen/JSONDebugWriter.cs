@@ -32,6 +32,8 @@ namespace Goedel.Protocol {
 
     public class JSONDebugWriter : JSONWriter {
 
+        static public int Threshold = 260;
+
         public JSONDebugWriter() {
             this.Output = new StreamBuffer ();
             }
@@ -46,8 +48,27 @@ namespace Goedel.Protocol {
 
         public override void WriteBinary(byte[] Data) {
             Output.Write("\"");
-            Output.Write(BaseConvert.ToBase64urlString(Data));
+            if (Data.Length < Threshold) {
+                Output.Write(BaseConvert.ToBase64urlString(Data));
+                }
+            else {
+                Output.Write(BaseConvert.ToBase64urlString(Data,0,96,true));
+                Output.Write("\n...");
+                int Start = 48 * (Data.Length / 48);
+                // If the last line is null, make it a full line.
+                Start = (Data.Length % 48) == 0 ? Start - 48 : Start;
+                int Length = Data.Length - Start;
+                Output.Write(BaseConvert.ToBase64urlString(Data, Start, Length, true));
+                }
             Output.Write("\"");
+            }
+
+
+        public static string Write(JSONObject JSONObject) {
+            var Buffer = new StreamBuffer();
+            var JSONWriter = new JSONDebugWriter(Buffer);
+            JSONObject.Serialize(JSONWriter, true);
+            return JSONWriter.GetUTF8;
             }
 
         }

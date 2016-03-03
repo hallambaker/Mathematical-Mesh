@@ -299,7 +299,14 @@ namespace Goedel.Protocol.Debug {
         /// <returns>the formatted message</returns>
         public string StringJSON(bool Redact) {
             var Buffer = new StreamBuffer();
-            var JSONWriter = new JSONWriter(Buffer);
+            JSONWriter JSONWriter;
+
+            if (Redact) {
+                JSONWriter = new JSONDebugWriter(Buffer);
+                }
+            else {
+                JSONWriter = new JSONWriter(Buffer);
+                }
             Payload.Serialize(JSONWriter, true);
             return JSONWriter.GetUTF8;
             }
@@ -324,12 +331,15 @@ namespace Goedel.Protocol.Debug {
             return StringHTTP(true);
             }
 
+
         /// <summary>
         /// Serialize a message at the current default level of detail
         /// </summary>
         /// <returns>the formatted message</returns>
         public string String() {
-            return String(TracePoint.Level);
+            var Result = "\n~~~~\n" + String(TracePoint.Level) + "\n~~~~\n";
+
+            return Result;
             }
         }
     }
