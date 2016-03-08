@@ -1,23 +1,32 @@
-﻿#Portal
+﻿
 
-##Portal Transactions
+#Mesh Portal Objects
 
-##Portal Messages
+The precise implementation of the portal service and the
+data structures representing state at the portal
+service are outside the scope of this specification.
 
-##Portal Structures
+The specification of the Mesh Portal objects given here is to
+enable future formal specification of the portal protocols
+by defining the state changes resulting from portal
+transactions.
+
+##Mesh Portal Log Entries
+
+Like the Mesh itself, the state of the portal is tracked by an
+append only log. This log contains entries binding account identifiers
+to mesh profiles and lists of pending connections.
 
 ###Structure: PortalEntry
 
 
-:Created :
-::DateTime [0..1]   
+Created: DateTime (Optional)
 
-Time the pending item was created.
+:Time the pending item was created.
 
-:Modified :
-::DateTime [0..1]   
+Modified: DateTime (Optional)
 
-Time the pending item was last modified.
+:Time the pending item was last modified.
 
 ###Structure: Account
 
@@ -25,68 +34,31 @@ Entry containing the
 UniqueID is Account[Name]-[Portal]
 Indexed by [Name], [UserProfileUDF] [Most recent open]
 
+* Inherits: PortalEntry
 
-:Created :
-::DateTime [0..1]   
 
-Time the pending item was created.
+AccountID: String (Optional)
 
-:Modified :
-::DateTime [0..1]   
-
-Time the pending item was last modified.
-
-:AccountID :
-::String [0..1]   
-
-Assigned account identifier, e.g. 'alice@example.com'. Account names are 
+:Assigned account identifier, e.g. 'alice@example.com'. Account names are 
 not case sensitive.
 
-:UserProfileUDF :
-::String [0..1]   
+UserProfileUDF: String (Optional)
 
-Fingerprint of associated user profile
+:Fingerprint of associated user profile
 
-:Status :
-::String [0..1]   
+Status: String (Optional)
 
-Status of the account, valid values are 'Open', 'Closed',
+:Status of the account, valid values are 'Open', 'Closed',
 'Suspended'
 
 ###Structure: AccountProfile
 
+* Inherits: Account
 
-:Created :
-::DateTime [0..1]   
 
-Time the pending item was created.
+Profile: SignedPersonalProfile (Optional)
 
-:Modified :
-::DateTime [0..1]   
-
-Time the pending item was last modified.
-
-:AccountID :
-::String [0..1]   
-
-Assigned account identifier, e.g. 'alice@example.com'. Account names are 
-not case sensitive.
-
-:UserProfileUDF :
-::String [0..1]   
-
-Fingerprint of associated user profile
-
-:Status :
-::String [0..1]   
-
-Status of the account, valid values are 'Open', 'Closed',
-'Suspended'
-
-:Profile :
-::SignedPersonalProfile [0..1]   
-
-[TBS]
+:The personal profile associated with the account.
 
 ###Structure: ConnectionsPending
 
@@ -94,36 +66,10 @@ Object containing the list of currently pending device connection requests
 for the specified account. 
 Unique-ID is ConnectionsPending-[UserProfileUDF]
 
+* Inherits: Account
 
-:Created :
-::DateTime [0..1]   
 
-Time the pending item was created.
+Requests: SignedConnectionRequest [0..Many]
 
-:Modified :
-::DateTime [0..1]   
-
-Time the pending item was last modified.
-
-:AccountID :
-::String [0..1]   
-
-Assigned account identifier, e.g. 'alice@example.com'. Account names are 
-not case sensitive.
-
-:UserProfileUDF :
-::String [0..1]   
-
-Fingerprint of associated user profile
-
-:Status :
-::String [0..1]   
-
-Status of the account, valid values are 'Open', 'Closed',
-'Suspended'
-
-:Requests :
-::SignedConnectionRequest [0..Many]   
-
-List of pending requests
+:List of pending requests
 

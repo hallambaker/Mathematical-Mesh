@@ -54,6 +54,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Examples\Examples.md" />
     <None Include="Generated\MeshProtocol.md" />
     <None Include="Generated\MeshSchema.md" />
     <None Include="Generated\Portal.md" />
@@ -82,7 +83,6 @@
     <Content Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Examples\" />
     <Folder Include="Static\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

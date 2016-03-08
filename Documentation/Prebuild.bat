@@ -15,6 +15,6 @@ protogen ..\LibMesh\Portal.Protocol /md Generated\Portal.md
 
 echo Generate new examples.
 
-ExampleGenerator
+ExampleGenerator Examples/Examples.md
 
 exit /b 0
