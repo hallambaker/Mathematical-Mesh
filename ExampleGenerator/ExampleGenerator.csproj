@@ -61,6 +61,7 @@
     <Compile Include="CreateExamples.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="packages.config" />
+    <None Include="Postbuild.bat" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -98,7 +99,7 @@
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>powershell publishtarget "$(TargetPath)" Goedel.Registry.dll</PostBuildEvent>
+    <PostBuildEvent>powershell publishtarget "$(TargetPath)" Goedel.Registry.dll libMesh.dll  libMeshService.dll libprotogen.dll libcrypto.dll libcryptojose.dll liblogfile.dll  libdebug.dll</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

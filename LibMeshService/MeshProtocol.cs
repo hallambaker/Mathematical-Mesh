@@ -106,22 +106,6 @@ namespace Goedel.Mesh {
 					}
 
 
-				case "HelloRequest" : {
-					var Result = new HelloRequest ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
-					break;
-					}
-
-
-				case "HelloResponse" : {
-					var Result = new HelloResponse ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
-					break;
-					}
-
-
 				case "Version" : {
 					var Result = new Version ();
 					Result.Deserialize (JSONReader);
@@ -132,6 +116,38 @@ namespace Goedel.Mesh {
 
 				case "Encoding" : {
 					var Result = new Encoding ();
+					Result.Deserialize (JSONReader);
+					Out = Result;
+					break;
+					}
+
+
+				case "KeyValue" : {
+					var Result = new KeyValue ();
+					Result.Deserialize (JSONReader);
+					Out = Result;
+					break;
+					}
+
+
+				case "SearchConstraints" : {
+					var Result = new SearchConstraints ();
+					Result.Deserialize (JSONReader);
+					Out = Result;
+					break;
+					}
+
+
+				case "HelloRequest" : {
+					var Result = new HelloRequest ();
+					Result.Deserialize (JSONReader);
+					Out = Result;
+					break;
+					}
+
+
+				case "HelloResponse" : {
+					var Result = new HelloResponse ();
 					Result.Deserialize (JSONReader);
 					Out = Result;
 					break;
@@ -170,32 +186,8 @@ namespace Goedel.Mesh {
 					}
 
 
-				case "PublishRequest" : {
-					var Result = new PublishRequest ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
-					break;
-					}
-
-
-				case "PublishResponse" : {
-					var Result = new PublishResponse ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
-					break;
-					}
-
-
 				case "GetRequest" : {
 					var Result = new GetRequest ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
-					break;
-					}
-
-
-				case "KeyValue" : {
-					var Result = new KeyValue ();
 					Result.Deserialize (JSONReader);
 					Out = Result;
 					break;
@@ -210,24 +202,16 @@ namespace Goedel.Mesh {
 					}
 
 
-				case "GetRecordsResponse" : {
-					var Result = new GetRecordsResponse ();
+				case "PublishRequest" : {
+					var Result = new PublishRequest ();
 					Result.Deserialize (JSONReader);
 					Out = Result;
 					break;
 					}
 
 
-				case "TransferRequest" : {
-					var Result = new TransferRequest ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
-					break;
-					}
-
-
-				case "TransferResponse" : {
-					var Result = new TransferResponse ();
+				case "PublishResponse" : {
+					var Result = new PublishResponse ();
 					Result.Deserialize (JSONReader);
 					Out = Result;
 					break;
@@ -313,6 +297,22 @@ namespace Goedel.Mesh {
 					break;
 					}
 
+
+				case "TransferRequest" : {
+					var Result = new TransferRequest ();
+					Result.Deserialize (JSONReader);
+					Out = Result;
+					break;
+					}
+
+
+				case "TransferResponse" : {
+					var Result = new TransferResponse ();
+					Result.Deserialize (JSONReader);
+					Out = Result;
+					break;
+					}
+
 				default : {
 					throw new Exception ("Not supported");
 					}
@@ -393,14 +393,6 @@ namespace Goedel.Mesh {
         /// <summary>
 		/// Base class for implementing the transaction.
         /// </summary>		
-        public virtual PublishResponse Publish (
-                PublishRequest Request) {
-            return null;
-            }
-
-        /// <summary>
-		/// Base class for implementing the transaction.
-        /// </summary>		
         public virtual GetResponse Get (
                 GetRequest Request) {
             return null;
@@ -409,16 +401,8 @@ namespace Goedel.Mesh {
         /// <summary>
 		/// Base class for implementing the transaction.
         /// </summary>		
-        public virtual GetRecordsResponse GetRecords (
-                GetRequest Request) {
-            return null;
-            }
-
-        /// <summary>
-		/// Base class for implementing the transaction.
-        /// </summary>		
-        public virtual TransferResponse Transfer (
-                TransferRequest Request) {
+        public virtual PublishResponse Publish (
+                PublishRequest Request) {
             return null;
             }
 
@@ -459,6 +443,14 @@ namespace Goedel.Mesh {
         /// </summary>		
         public virtual ConnectCompleteResponse ConnectComplete (
                 ConnectCompleteRequest Request) {
+            return null;
+            }
+
+        /// <summary>
+		/// Base class for implementing the transaction.
+        /// </summary>		
+        public virtual TransferResponse Transfer (
+                TransferRequest Request) {
             return null;
             }
 
@@ -526,18 +518,6 @@ namespace Goedel.Mesh {
         /// <summary>
 		/// Implement the transaction
         /// </summary>		
-        public override PublishResponse Publish (
-                PublishRequest Request) {
-
-            var ResponseData = JPCRemoteSession.Post("Publish", Request);
-            var Response = PublishResponse.FromTagged(ResponseData);
-
-            return Response;
-            }
-
-        /// <summary>
-		/// Implement the transaction
-        /// </summary>		
         public override GetResponse Get (
                 GetRequest Request) {
 
@@ -550,23 +530,11 @@ namespace Goedel.Mesh {
         /// <summary>
 		/// Implement the transaction
         /// </summary>		
-        public override GetRecordsResponse GetRecords (
-                GetRequest Request) {
+        public override PublishResponse Publish (
+                PublishRequest Request) {
 
-            var ResponseData = JPCRemoteSession.Post("GetRecords", Request);
-            var Response = GetRecordsResponse.FromTagged(ResponseData);
-
-            return Response;
-            }
-
-        /// <summary>
-		/// Implement the transaction
-        /// </summary>		
-        public override TransferResponse Transfer (
-                TransferRequest Request) {
-
-            var ResponseData = JPCRemoteSession.Post("Transfer", Request);
-            var Response = TransferResponse.FromTagged(ResponseData);
+            var ResponseData = JPCRemoteSession.Post("Publish", Request);
+            var Response = PublishResponse.FromTagged(ResponseData);
 
             return Response;
             }
@@ -631,6 +599,18 @@ namespace Goedel.Mesh {
             return Response;
             }
 
+        /// <summary>
+		/// Implement the transaction
+        /// </summary>		
+        public override TransferResponse Transfer (
+                TransferRequest Request) {
+
+            var ResponseData = JPCRemoteSession.Post("Transfer", Request);
+            var Response = TransferResponse.FromTagged(ResponseData);
+
+            return Response;
+            }
+
 		}
 
 
@@ -674,24 +654,14 @@ namespace Goedel.Mesh {
 					Response = Service.CreateAccount (Request);
 					break;
 					}
-				case "Publish" : {
-					var Request = PublishRequest.FromTagged (JSONReader);
-					Response = Service.Publish (Request);
-					break;
-					}
 				case "Get" : {
 					var Request = GetRequest.FromTagged (JSONReader);
 					Response = Service.Get (Request);
 					break;
 					}
-				case "GetRecords" : {
-					var Request = GetRequest.FromTagged (JSONReader);
-					Response = Service.GetRecords (Request);
-					break;
-					}
-				case "Transfer" : {
-					var Request = TransferRequest.FromTagged (JSONReader);
-					Response = Service.Transfer (Request);
+				case "Publish" : {
+					var Request = PublishRequest.FromTagged (JSONReader);
+					Response = Service.Publish (Request);
 					break;
 					}
 				case "Status" : {
@@ -719,6 +689,11 @@ namespace Goedel.Mesh {
 					Response = Service.ConnectComplete (Request);
 					break;
 					}
+				case "Transfer" : {
+					var Request = TransferRequest.FromTagged (JSONReader);
+					Response = Service.Transfer (Request);
+					break;
+					}
 				default : {
 					throw new Goedel.Protocol.UnknownOperation ();
 					}
@@ -736,9 +711,17 @@ namespace Goedel.Mesh {
 		// Transaction Classes
 	/// <summary>
 	///
-	/// Minimal request. Contains no parameters.
+	/// Base class for all request objects.
 	/// </summary>
 	public partial class MeshRequest : Goedel.Protocol.Request {
+        /// <summary>
+        /// 
+        /// </summary>
+		public virtual string						Portal {
+			get {return _Portal;}			
+			set {_Portal = value;}
+			}
+		string						_Portal ;
 
         /// <summary>
         /// Tag identifying this class.
@@ -794,6 +777,11 @@ namespace Goedel.Mesh {
 				_Writer.WriteObjectStart ();
 				}
 			((Goedel.Protocol.Request)this).SerializeX(_Writer, false, ref _first);
+			if (Portal != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Portal", 1);
+					_Writer.WriteString (Portal);
+				}
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
 				}
@@ -894,13 +882,6 @@ namespace Goedel.Mesh {
 					break;
 					}
 
-				case "PublishRequest" : {
-					var Result = new PublishRequest ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
-					break;
-					}
-
 				case "GetRequest" : {
 					var Result = new GetRequest ();
 					Result.Deserialize (JSONReader);
@@ -908,8 +889,8 @@ namespace Goedel.Mesh {
 					break;
 					}
 
-				case "TransferRequest" : {
-					var Result = new TransferRequest ();
+				case "PublishRequest" : {
+					var Result = new PublishRequest ();
 					Result.Deserialize (JSONReader);
 					Out = Result;
 					break;
@@ -978,6 +959,13 @@ namespace Goedel.Mesh {
 					break;
 					}
 
+				case "TransferRequest" : {
+					var Result = new TransferRequest ();
+					Result.Deserialize (JSONReader);
+					Out = Result;
+					break;
+					}
+
 				default : {
 					//Ignore the unknown data
                     //throw new Exception ("Not supported");
@@ -998,6 +986,10 @@ namespace Goedel.Mesh {
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
+				case "Portal" : {
+					Portal = JSONReader.ReadString ();
+					break;
+					}
 				default : {
 					base.DeserializeToken(JSONReader, Tag);
 					break;
@@ -1011,8 +1003,12 @@ namespace Goedel.Mesh {
 
 	/// <summary>
 	///
-	/// Minimal response. Contains only the status value and
-	/// description.
+	/// Base class for all responses. Contains only the
+	/// status code and status description fields.
+	/// A service MAY return either the response message specified
+	/// for that transaction or any parent of that message. 
+	/// Thus the MeshResponse message MAY be returned in response 
+	/// to any request.
 	/// </summary>
 	public partial class MeshResponse : Goedel.Protocol.Response {
 		bool								__Status = false;
@@ -1197,13 +1193,6 @@ namespace Goedel.Mesh {
 					break;
 					}
 
-				case "PublishResponse" : {
-					var Result = new PublishResponse ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
-					break;
-					}
-
 				case "GetResponse" : {
 					var Result = new GetResponse ();
 					Result.Deserialize (JSONReader);
@@ -1211,15 +1200,8 @@ namespace Goedel.Mesh {
 					break;
 					}
 
-				case "GetRecordsResponse" : {
-					var Result = new GetRecordsResponse ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
-					break;
-					}
-
-				case "TransferResponse" : {
-					var Result = new TransferResponse ();
+				case "PublishResponse" : {
+					var Result = new PublishResponse ();
 					Result.Deserialize (JSONReader);
 					Out = Result;
 					break;
@@ -1227,6 +1209,13 @@ namespace Goedel.Mesh {
 
 				case "StatusResponse" : {
 					var Result = new StatusResponse ();
+					Result.Deserialize (JSONReader);
+					Out = Result;
+					break;
+					}
+
+				case "TransferResponse" : {
+					var Result = new TransferResponse ();
 					Result.Deserialize (JSONReader);
 					Out = Result;
 					break;
@@ -1272,398 +1261,8 @@ namespace Goedel.Mesh {
 		}
 
 	/// <summary>
-	/// </summary>
-	public partial class HelloRequest : MeshRequest {
-
-        /// <summary>
-        /// Tag identifying this class.
-        /// </summary>
-        /// <returns>The tag</returns>
-		public override string Tag () {
-			return "HelloRequest";
-			}
-
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-		public HelloRequest () {
-			_Initialize ();
-			}
-
-        /// <summary>
-		/// Initialize class from JSONReader stream.
-        /// </summary>		
-		public HelloRequest (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			}
-
-        /// <summary>
-		/// Initialize class from a JSON encoded class.
-        /// </summary>		
-		public HelloRequest (string _String) {
-			Deserialize (_String);
-			}
-
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// </summary>
-        /// <param name="Writer">Output stream</param>
-        /// <param name="wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
-			SerializeX (Writer, wrap, ref first);
-			}
-
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// Unlike the Serlialize() method, this method is not inherited from the
-        /// parent class allowing a specific version of the method to be called.
-        /// </summary>
-        /// <param name="_Writer">Output stream</param>
-        /// <param name="_wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="_first">If true, item is the first entry in a list.</param>
-		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
-			if (_wrap) {
-				_Writer.WriteObjectStart ();
-				}
-			((MeshRequest)this).SerializeX(_Writer, false, ref _first);
-			if (_wrap) {
-				_Writer.WriteObjectEnd ();
-				}
-			}
-
-
-
-        /// <summary>
-		/// Create a new instance from untagged byte input.
-		/// i.e. {... data ... }
-        /// </summary>	
-        /// <param name="_Data">The input data.</param>
-        /// <returns>The created object.</returns>		
-		public static new HelloRequest From (byte[] _Data) {
-			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
-			return From (_Input);
-			}
-
-        /// <summary>
-		/// Create a new instance from untagged string input.
-		/// i.e. {... data ... }
-        /// </summary>	
-        /// <param name="_Input">The input data.</param>
-        /// <returns>The created object.</returns>				
-		public static new HelloRequest From (string _Input) {
-			StringReader _Reader = new StringReader (_Input);
-            JSONReader JSONReader = new JSONReader (_Reader);
-			return new HelloRequest (JSONReader);
-			}
-
-        /// <summary>
-		/// Create a new instance from tagged byte input.
-		/// i.e. { "HelloRequest" : {... data ... } }
-        /// </summary>	
-        /// <param name="_Data">The input data.</param>
-        /// <returns>The created object.</returns>				
-		public static new HelloRequest FromTagged (byte[] _Data) {
-			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
-			return FromTagged (_Input);
-			}
-
-        /// <summary>
-        /// Create a new instance from tagged string input.
-		/// i.e. { "HelloRequest" : {... data ... } }
-        /// </summary>
-        /// <param name="_Input">The input data.</param>
-        /// <returns>The created object.</returns>		
-		public static new HelloRequest FromTagged (string _Input) {
-			//HelloRequest _Result;
-			//Deserialize (_Input, out _Result);
-			StringReader _Reader = new StringReader (_Input);
-            JSONReader JSONReader = new JSONReader (_Reader);
-			return FromTagged (JSONReader) ;
-			}
-
-
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="JSONReader"></param>
-        public static new HelloRequest  FromTagged (JSONReader JSONReader) {
-			HelloRequest Out = null;
-
-			JSONReader.StartObject ();
-            if (JSONReader.EOR) {
-                return null;
-                }
-
-			string token = JSONReader.ReadToken ();
-
-			switch (token) {
-
-				case "HelloRequest" : {
-					var Result = new HelloRequest ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
-					break;
-					}
-
-				default : {
-					//Ignore the unknown data
-                    //throw new Exception ("Not supported");
-                    break;
-					}
-				}
-			JSONReader.EndObject ();
-
-			return Out;
-			}
-
-
-        /// <summary>
-        /// Having read a tag, process the corresponding value data.
-        /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Tag"></param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
-			
-			switch (Tag) {
-				default : {
-					base.DeserializeToken(JSONReader, Tag);
-					break;
-					}
-				}
-			// check up that all the required elements are present
-			}
-
-
-		}
-
-	/// <summary>
-	/// </summary>
-	public partial class HelloResponse : MeshResponse {
-        /// <summary>
-        /// 
-        /// </summary>
-		public virtual Version						Version {
-			get {return _Version;}			
-			set {_Version = value;}
-			}
-		Version						_Version ;
-		/// <summary>
-        /// 
-        /// </summary>
-		public virtual List<Version>				Alternates {
-			get {return _Alternates;}			
-			set {_Alternates = value;}
-			}
-		List<Version>				_Alternates;
-
-        /// <summary>
-        /// Tag identifying this class.
-        /// </summary>
-        /// <returns>The tag</returns>
-		public override string Tag () {
-			return "HelloResponse";
-			}
-
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-		public HelloResponse () {
-			_Initialize ();
-			}
-
-        /// <summary>
-		/// Initialize class from JSONReader stream.
-        /// </summary>		
-		public HelloResponse (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			}
-
-        /// <summary>
-		/// Initialize class from a JSON encoded class.
-        /// </summary>		
-		public HelloResponse (string _String) {
-			Deserialize (_String);
-			}
-
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// </summary>
-        /// <param name="Writer">Output stream</param>
-        /// <param name="wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
-			SerializeX (Writer, wrap, ref first);
-			}
-
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// Unlike the Serlialize() method, this method is not inherited from the
-        /// parent class allowing a specific version of the method to be called.
-        /// </summary>
-        /// <param name="_Writer">Output stream</param>
-        /// <param name="_wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="_first">If true, item is the first entry in a list.</param>
-		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
-			if (_wrap) {
-				_Writer.WriteObjectStart ();
-				}
-			((MeshResponse)this).SerializeX(_Writer, false, ref _first);
-			if (Version != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("Version", 1);
-					Version.Serialize (_Writer, false);
-				}
-			if (Alternates != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("Alternates", 1);
-				_Writer.WriteArrayStart ();
-				bool _firstarray = true;
-				foreach (var _index in Alternates) {
-					_Writer.WriteArraySeparator (ref _firstarray);
-					// This is an untagged structure. Cannot inherit.
-                    //_Writer.WriteObjectStart();
-                    //_Writer.WriteToken(_index.Tag(), 1);
-					bool firstinner = true;
-					_index.Serialize (_Writer, true, ref firstinner);
-                    //_Writer.WriteObjectEnd();
-					}
-				_Writer.WriteArrayEnd ();
-				}
-
-			if (_wrap) {
-				_Writer.WriteObjectEnd ();
-				}
-			}
-
-
-
-        /// <summary>
-		/// Create a new instance from untagged byte input.
-		/// i.e. {... data ... }
-        /// </summary>	
-        /// <param name="_Data">The input data.</param>
-        /// <returns>The created object.</returns>		
-		public static new HelloResponse From (byte[] _Data) {
-			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
-			return From (_Input);
-			}
-
-        /// <summary>
-		/// Create a new instance from untagged string input.
-		/// i.e. {... data ... }
-        /// </summary>	
-        /// <param name="_Input">The input data.</param>
-        /// <returns>The created object.</returns>				
-		public static new HelloResponse From (string _Input) {
-			StringReader _Reader = new StringReader (_Input);
-            JSONReader JSONReader = new JSONReader (_Reader);
-			return new HelloResponse (JSONReader);
-			}
-
-        /// <summary>
-		/// Create a new instance from tagged byte input.
-		/// i.e. { "HelloResponse" : {... data ... } }
-        /// </summary>	
-        /// <param name="_Data">The input data.</param>
-        /// <returns>The created object.</returns>				
-		public static new HelloResponse FromTagged (byte[] _Data) {
-			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
-			return FromTagged (_Input);
-			}
-
-        /// <summary>
-        /// Create a new instance from tagged string input.
-		/// i.e. { "HelloResponse" : {... data ... } }
-        /// </summary>
-        /// <param name="_Input">The input data.</param>
-        /// <returns>The created object.</returns>		
-		public static new HelloResponse FromTagged (string _Input) {
-			//HelloResponse _Result;
-			//Deserialize (_Input, out _Result);
-			StringReader _Reader = new StringReader (_Input);
-            JSONReader JSONReader = new JSONReader (_Reader);
-			return FromTagged (JSONReader) ;
-			}
-
-
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="JSONReader"></param>
-        public static new HelloResponse  FromTagged (JSONReader JSONReader) {
-			HelloResponse Out = null;
-
-			JSONReader.StartObject ();
-            if (JSONReader.EOR) {
-                return null;
-                }
-
-			string token = JSONReader.ReadToken ();
-
-			switch (token) {
-
-				case "HelloResponse" : {
-					var Result = new HelloResponse ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
-					break;
-					}
-
-				default : {
-					//Ignore the unknown data
-                    //throw new Exception ("Not supported");
-                    break;
-					}
-				}
-			JSONReader.EndObject ();
-
-			return Out;
-			}
-
-
-        /// <summary>
-        /// Having read a tag, process the corresponding value data.
-        /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Tag"></param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
-			
-			switch (Tag) {
-				case "Version" : {
-					// An untagged structure
-					Version = new Version (JSONReader);
- 
-					break;
-					}
-				case "Alternates" : {
-					// Have a sequence of values
-					bool _Going = JSONReader.StartArray ();
-					Alternates = new List <Version> ();
-					while (_Going) {
-						// an untagged structure.
-						var _Item = new Version (JSONReader);
-						Alternates.Add (_Item);
-						_Going = JSONReader.NextArray ();
-						}
-					break;
-					}
-				default : {
-					base.DeserializeToken(JSONReader, Tag);
-					break;
-					}
-				}
-			// check up that all the required elements are present
-			}
-
-
-		}
-
-	/// <summary>
+	///
+	/// Describes a protocol version.
 	/// </summary>
 	public partial class Version : MeshProtocol {
 		bool								__Major = false;
@@ -1925,6 +1524,8 @@ namespace Goedel.Mesh {
 		}
 
 	/// <summary>
+	///
+	/// Describes a message content encoding.
 	/// </summary>
 	public partial class Encoding : MeshProtocol {
 		/// <summary>
@@ -2144,6 +1745,848 @@ namespace Goedel.Mesh {
 		}
 
 	/// <summary>
+	///
+	/// Describes a Key/Value structure used to make queries
+	/// for records matching one or more selection criteria.
+	/// </summary>
+	public partial class KeyValue : MeshProtocol {
+        /// <summary>
+        /// 
+        /// </summary>
+		public virtual string						Key {
+			get {return _Key;}			
+			set {_Key = value;}
+			}
+		string						_Key ;
+        /// <summary>
+        /// 
+        /// </summary>
+		public virtual string						Value {
+			get {return _Value;}			
+			set {_Value = value;}
+			}
+		string						_Value ;
+
+        /// <summary>
+        /// Tag identifying this class.
+        /// </summary>
+        /// <returns>The tag</returns>
+		public override string Tag () {
+			return "KeyValue";
+			}
+
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
+		public KeyValue () {
+			_Initialize ();
+			}
+        /// <summary>
+        /// </summary>		
+		public KeyValue (JSONReader JSONReader) {
+			Deserialize (JSONReader);
+			}
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="Writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
+			SerializeX (Writer, wrap, ref first);
+			}
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_Writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			if (_wrap) {
+				_Writer.WriteObjectStart ();
+				}
+			if (Key != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Key", 1);
+					_Writer.WriteString (Key);
+				}
+			if (Value != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Value", 1);
+					_Writer.WriteString (Value);
+				}
+			if (_wrap) {
+				_Writer.WriteObjectEnd ();
+				}
+			}
+
+
+
+        /// <summary>
+		/// Create a new instance from untagged byte input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>		
+		public static new KeyValue From (byte[] _Data) {
+			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
+			return From (_Input);
+			}
+
+        /// <summary>
+		/// Create a new instance from untagged string input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>				
+		public static new KeyValue From (string _Input) {
+			StringReader _Reader = new StringReader (_Input);
+            JSONReader JSONReader = new JSONReader (_Reader);
+			return new KeyValue (JSONReader);
+			}
+
+        /// <summary>
+		/// Create a new instance from tagged byte input.
+		/// i.e. { "KeyValue" : {... data ... } }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>				
+		public static new KeyValue FromTagged (byte[] _Data) {
+			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
+			return FromTagged (_Input);
+			}
+
+        /// <summary>
+        /// Create a new instance from tagged string input.
+		/// i.e. { "KeyValue" : {... data ... } }
+        /// </summary>
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>		
+		public static new KeyValue FromTagged (string _Input) {
+			//KeyValue _Result;
+			//Deserialize (_Input, out _Result);
+			StringReader _Reader = new StringReader (_Input);
+            JSONReader JSONReader = new JSONReader (_Reader);
+			return FromTagged (JSONReader) ;
+			}
+
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader"></param>
+        public static new KeyValue  FromTagged (JSONReader JSONReader) {
+			KeyValue Out = null;
+
+			JSONReader.StartObject ();
+            if (JSONReader.EOR) {
+                return null;
+                }
+
+			string token = JSONReader.ReadToken ();
+
+			switch (token) {
+
+				case "KeyValue" : {
+					var Result = new KeyValue ();
+					Result.Deserialize (JSONReader);
+					Out = Result;
+					break;
+					}
+
+				default : {
+					//Ignore the unknown data
+                    //throw new Exception ("Not supported");
+                    break;
+					}
+				}
+			JSONReader.EndObject ();
+
+			return Out;
+			}
+
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="JSONReader"></param>
+        /// <param name="Tag"></param>
+		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+			
+			switch (Tag) {
+				case "Key" : {
+					Key = JSONReader.ReadString ();
+					break;
+					}
+				case "Value" : {
+					Value = JSONReader.ReadString ();
+					break;
+					}
+				default : {
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
+	/// <summary>
+	///
+	/// Specifies constraints to be applied to a search result. These 
+	/// allow a client to limit the number of records returned, the quantity
+	/// of data returned, the earliest and latest data returned, etc.
+	/// </summary>
+	public partial class SearchConstraints : MeshProtocol {
+		bool								__NotBefore = false;
+		private DateTime						_NotBefore;
+        /// <summary>
+        /// 
+        /// </summary>
+		public virtual DateTime						NotBefore {
+			get {return _NotBefore;}
+			set {_NotBefore = value; __NotBefore = true; }
+			}
+		bool								__Before = false;
+		private DateTime						_Before;
+        /// <summary>
+        /// 
+        /// </summary>
+		public virtual DateTime						Before {
+			get {return _Before;}
+			set {_Before = value; __Before = true; }
+			}
+		bool								__MaxEntries = false;
+		private int						_MaxEntries;
+        /// <summary>
+        /// 
+        /// </summary>
+		public virtual int						MaxEntries {
+			get {return _MaxEntries;}
+			set {_MaxEntries = value; __MaxEntries = true; }
+			}
+		bool								__MaxBytes = false;
+		private int						_MaxBytes;
+        /// <summary>
+        /// 
+        /// </summary>
+		public virtual int						MaxBytes {
+			get {return _MaxBytes;}
+			set {_MaxBytes = value; __MaxBytes = true; }
+			}
+        /// <summary>
+        /// 
+        /// </summary>
+		public virtual string						PageKey {
+			get {return _PageKey;}			
+			set {_PageKey = value;}
+			}
+		string						_PageKey ;
+
+        /// <summary>
+        /// Tag identifying this class.
+        /// </summary>
+        /// <returns>The tag</returns>
+		public override string Tag () {
+			return "SearchConstraints";
+			}
+
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
+		public SearchConstraints () {
+			_Initialize ();
+			}
+        /// <summary>
+        /// </summary>		
+		public SearchConstraints (JSONReader JSONReader) {
+			Deserialize (JSONReader);
+			}
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="Writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
+			SerializeX (Writer, wrap, ref first);
+			}
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_Writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			if (_wrap) {
+				_Writer.WriteObjectStart ();
+				}
+			if (__NotBefore){
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("NotBefore", 1);
+					_Writer.WriteDateTime (NotBefore);
+				}
+			if (__Before){
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Before", 1);
+					_Writer.WriteDateTime (Before);
+				}
+			if (__MaxEntries){
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("MaxEntries", 1);
+					_Writer.WriteInteger32 (MaxEntries);
+				}
+			if (__MaxBytes){
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("MaxBytes", 1);
+					_Writer.WriteInteger32 (MaxBytes);
+				}
+			if (PageKey != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("PageKey", 1);
+					_Writer.WriteString (PageKey);
+				}
+			if (_wrap) {
+				_Writer.WriteObjectEnd ();
+				}
+			}
+
+
+
+        /// <summary>
+		/// Create a new instance from untagged byte input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>		
+		public static new SearchConstraints From (byte[] _Data) {
+			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
+			return From (_Input);
+			}
+
+        /// <summary>
+		/// Create a new instance from untagged string input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>				
+		public static new SearchConstraints From (string _Input) {
+			StringReader _Reader = new StringReader (_Input);
+            JSONReader JSONReader = new JSONReader (_Reader);
+			return new SearchConstraints (JSONReader);
+			}
+
+        /// <summary>
+		/// Create a new instance from tagged byte input.
+		/// i.e. { "SearchConstraints" : {... data ... } }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>				
+		public static new SearchConstraints FromTagged (byte[] _Data) {
+			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
+			return FromTagged (_Input);
+			}
+
+        /// <summary>
+        /// Create a new instance from tagged string input.
+		/// i.e. { "SearchConstraints" : {... data ... } }
+        /// </summary>
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>		
+		public static new SearchConstraints FromTagged (string _Input) {
+			//SearchConstraints _Result;
+			//Deserialize (_Input, out _Result);
+			StringReader _Reader = new StringReader (_Input);
+            JSONReader JSONReader = new JSONReader (_Reader);
+			return FromTagged (JSONReader) ;
+			}
+
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader"></param>
+        public static new SearchConstraints  FromTagged (JSONReader JSONReader) {
+			SearchConstraints Out = null;
+
+			JSONReader.StartObject ();
+            if (JSONReader.EOR) {
+                return null;
+                }
+
+			string token = JSONReader.ReadToken ();
+
+			switch (token) {
+
+				case "SearchConstraints" : {
+					var Result = new SearchConstraints ();
+					Result.Deserialize (JSONReader);
+					Out = Result;
+					break;
+					}
+
+				default : {
+					//Ignore the unknown data
+                    //throw new Exception ("Not supported");
+                    break;
+					}
+				}
+			JSONReader.EndObject ();
+
+			return Out;
+			}
+
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="JSONReader"></param>
+        /// <param name="Tag"></param>
+		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+			
+			switch (Tag) {
+				case "NotBefore" : {
+					NotBefore = JSONReader.ReadDateTime ();
+					break;
+					}
+				case "Before" : {
+					Before = JSONReader.ReadDateTime ();
+					break;
+					}
+				case "MaxEntries" : {
+					MaxEntries = JSONReader.ReadInteger32 ();
+					break;
+					}
+				case "MaxBytes" : {
+					MaxBytes = JSONReader.ReadInteger32 ();
+					break;
+					}
+				case "PageKey" : {
+					PageKey = JSONReader.ReadString ();
+					break;
+					}
+				default : {
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
+	/// <summary>
+	/// </summary>
+	public partial class HelloRequest : MeshRequest {
+
+        /// <summary>
+        /// Tag identifying this class.
+        /// </summary>
+        /// <returns>The tag</returns>
+		public override string Tag () {
+			return "HelloRequest";
+			}
+
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
+		public HelloRequest () {
+			_Initialize ();
+			}
+
+        /// <summary>
+		/// Initialize class from JSONReader stream.
+        /// </summary>		
+		public HelloRequest (JSONReader JSONReader) {
+			Deserialize (JSONReader);
+			}
+
+        /// <summary>
+		/// Initialize class from a JSON encoded class.
+        /// </summary>		
+		public HelloRequest (string _String) {
+			Deserialize (_String);
+			}
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="Writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
+			SerializeX (Writer, wrap, ref first);
+			}
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_Writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			if (_wrap) {
+				_Writer.WriteObjectStart ();
+				}
+			((MeshRequest)this).SerializeX(_Writer, false, ref _first);
+			if (_wrap) {
+				_Writer.WriteObjectEnd ();
+				}
+			}
+
+
+
+        /// <summary>
+		/// Create a new instance from untagged byte input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>		
+		public static new HelloRequest From (byte[] _Data) {
+			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
+			return From (_Input);
+			}
+
+        /// <summary>
+		/// Create a new instance from untagged string input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>				
+		public static new HelloRequest From (string _Input) {
+			StringReader _Reader = new StringReader (_Input);
+            JSONReader JSONReader = new JSONReader (_Reader);
+			return new HelloRequest (JSONReader);
+			}
+
+        /// <summary>
+		/// Create a new instance from tagged byte input.
+		/// i.e. { "HelloRequest" : {... data ... } }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>				
+		public static new HelloRequest FromTagged (byte[] _Data) {
+			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
+			return FromTagged (_Input);
+			}
+
+        /// <summary>
+        /// Create a new instance from tagged string input.
+		/// i.e. { "HelloRequest" : {... data ... } }
+        /// </summary>
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>		
+		public static new HelloRequest FromTagged (string _Input) {
+			//HelloRequest _Result;
+			//Deserialize (_Input, out _Result);
+			StringReader _Reader = new StringReader (_Input);
+            JSONReader JSONReader = new JSONReader (_Reader);
+			return FromTagged (JSONReader) ;
+			}
+
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader"></param>
+        public static new HelloRequest  FromTagged (JSONReader JSONReader) {
+			HelloRequest Out = null;
+
+			JSONReader.StartObject ();
+            if (JSONReader.EOR) {
+                return null;
+                }
+
+			string token = JSONReader.ReadToken ();
+
+			switch (token) {
+
+				case "HelloRequest" : {
+					var Result = new HelloRequest ();
+					Result.Deserialize (JSONReader);
+					Out = Result;
+					break;
+					}
+
+				default : {
+					//Ignore the unknown data
+                    //throw new Exception ("Not supported");
+                    break;
+					}
+				}
+			JSONReader.EndObject ();
+
+			return Out;
+			}
+
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="JSONReader"></param>
+        /// <param name="Tag"></param>
+		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+			
+			switch (Tag) {
+				default : {
+					base.DeserializeToken(JSONReader, Tag);
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
+	/// <summary>
+	///
+	/// Always reports success. Describes the configuration of the Mesh
+	/// portal service.
+	/// </summary>
+	public partial class HelloResponse : MeshResponse {
+        /// <summary>
+        /// 
+        /// </summary>
+		public virtual Version						Version {
+			get {return _Version;}			
+			set {_Version = value;}
+			}
+		Version						_Version ;
+		/// <summary>
+        /// 
+        /// </summary>
+		public virtual List<Version>				Alternates {
+			get {return _Alternates;}			
+			set {_Alternates = value;}
+			}
+		List<Version>				_Alternates;
+
+        /// <summary>
+        /// Tag identifying this class.
+        /// </summary>
+        /// <returns>The tag</returns>
+		public override string Tag () {
+			return "HelloResponse";
+			}
+
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
+		public HelloResponse () {
+			_Initialize ();
+			}
+
+        /// <summary>
+		/// Initialize class from JSONReader stream.
+        /// </summary>		
+		public HelloResponse (JSONReader JSONReader) {
+			Deserialize (JSONReader);
+			}
+
+        /// <summary>
+		/// Initialize class from a JSON encoded class.
+        /// </summary>		
+		public HelloResponse (string _String) {
+			Deserialize (_String);
+			}
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="Writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
+			SerializeX (Writer, wrap, ref first);
+			}
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_Writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			if (_wrap) {
+				_Writer.WriteObjectStart ();
+				}
+			((MeshResponse)this).SerializeX(_Writer, false, ref _first);
+			if (Version != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Version", 1);
+					Version.Serialize (_Writer, false);
+				}
+			if (Alternates != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Alternates", 1);
+				_Writer.WriteArrayStart ();
+				bool _firstarray = true;
+				foreach (var _index in Alternates) {
+					_Writer.WriteArraySeparator (ref _firstarray);
+					// This is an untagged structure. Cannot inherit.
+                    //_Writer.WriteObjectStart();
+                    //_Writer.WriteToken(_index.Tag(), 1);
+					bool firstinner = true;
+					_index.Serialize (_Writer, true, ref firstinner);
+                    //_Writer.WriteObjectEnd();
+					}
+				_Writer.WriteArrayEnd ();
+				}
+
+			if (_wrap) {
+				_Writer.WriteObjectEnd ();
+				}
+			}
+
+
+
+        /// <summary>
+		/// Create a new instance from untagged byte input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>		
+		public static new HelloResponse From (byte[] _Data) {
+			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
+			return From (_Input);
+			}
+
+        /// <summary>
+		/// Create a new instance from untagged string input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>				
+		public static new HelloResponse From (string _Input) {
+			StringReader _Reader = new StringReader (_Input);
+            JSONReader JSONReader = new JSONReader (_Reader);
+			return new HelloResponse (JSONReader);
+			}
+
+        /// <summary>
+		/// Create a new instance from tagged byte input.
+		/// i.e. { "HelloResponse" : {... data ... } }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>				
+		public static new HelloResponse FromTagged (byte[] _Data) {
+			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
+			return FromTagged (_Input);
+			}
+
+        /// <summary>
+        /// Create a new instance from tagged string input.
+		/// i.e. { "HelloResponse" : {... data ... } }
+        /// </summary>
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>		
+		public static new HelloResponse FromTagged (string _Input) {
+			//HelloResponse _Result;
+			//Deserialize (_Input, out _Result);
+			StringReader _Reader = new StringReader (_Input);
+            JSONReader JSONReader = new JSONReader (_Reader);
+			return FromTagged (JSONReader) ;
+			}
+
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader"></param>
+        public static new HelloResponse  FromTagged (JSONReader JSONReader) {
+			HelloResponse Out = null;
+
+			JSONReader.StartObject ();
+            if (JSONReader.EOR) {
+                return null;
+                }
+
+			string token = JSONReader.ReadToken ();
+
+			switch (token) {
+
+				case "HelloResponse" : {
+					var Result = new HelloResponse ();
+					Result.Deserialize (JSONReader);
+					Out = Result;
+					break;
+					}
+
+				default : {
+					//Ignore the unknown data
+                    //throw new Exception ("Not supported");
+                    break;
+					}
+				}
+			JSONReader.EndObject ();
+
+			return Out;
+			}
+
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="JSONReader"></param>
+        /// <param name="Tag"></param>
+		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+			
+			switch (Tag) {
+				case "Version" : {
+					// An untagged structure
+					Version = new Version (JSONReader);
+ 
+					break;
+					}
+				case "Alternates" : {
+					// Have a sequence of values
+					bool _Going = JSONReader.StartArray ();
+					Alternates = new List <Version> ();
+					while (_Going) {
+						// an untagged structure.
+						var _Item = new Version (JSONReader);
+						Alternates.Add (_Item);
+						_Going = JSONReader.NextArray ();
+						}
+					break;
+					}
+				default : {
+					base.DeserializeToken(JSONReader, Tag);
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
+	/// <summary>
+	///
+	/// Describes the proposed account properties. Currently, these are limited
+	/// to the account name but could be extended in future versions of the protocol.
 	/// </summary>
 	public partial class ValidateRequest : MeshRequest {
         /// <summary>
@@ -2378,6 +2821,16 @@ namespace Goedel.Mesh {
 		}
 
 	/// <summary>
+	///
+	/// States whether the proposed account properties are acceptable and
+	/// (optional) returns an indication of what properties are valid.
+	/// Note that receiving a 'Valid' responseto a Validate Request does
+	/// not guarantee creation of the account. In addition to the possibility 
+	/// that the account namecould be requested by another user between the 
+	/// Validate and Create transactions, a portal service MAY perform more 
+	/// stringent validation criteria when an account is actually being 
+	/// created. For example, checking with the authoritative list of
+	/// current accounts rather than a cached copy.
 	/// </summary>
 	public partial class ValidateResponse : MeshResponse {
 		bool								__Valid = false;
@@ -2397,6 +2850,15 @@ namespace Goedel.Mesh {
 		public virtual int						Minimum {
 			get {return _Minimum;}
 			set {_Minimum = value; __Minimum = true; }
+			}
+		bool								__Maximum = false;
+		private int						_Maximum;
+        /// <summary>
+        /// 
+        /// </summary>
+		public virtual int						Maximum {
+			get {return _Maximum;}
+			set {_Maximum = value; __Maximum = true; }
 			}
         /// <summary>
         /// 
@@ -2478,6 +2940,11 @@ namespace Goedel.Mesh {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("Minimum", 1);
 					_Writer.WriteInteger32 (Minimum);
+				}
+			if (__Maximum){
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Maximum", 1);
+					_Writer.WriteInteger32 (Maximum);
 				}
 			if (InvalidCharacters != null) {
 				_Writer.WriteObjectSeparator (ref _first);
@@ -2596,6 +3063,10 @@ namespace Goedel.Mesh {
 					Minimum = JSONReader.ReadInteger32 ();
 					break;
 					}
+				case "Maximum" : {
+					Maximum = JSONReader.ReadInteger32 ();
+					break;
+					}
 				case "InvalidCharacters" : {
 					InvalidCharacters = JSONReader.ReadString ();
 					break;
@@ -2616,6 +3087,10 @@ namespace Goedel.Mesh {
 		}
 
 	/// <summary>
+	///
+	/// Request creation of a new portal account. The request specifies
+	/// the requested account identifier and the Mesh profile to be associated 
+	/// with the account.
 	/// </summary>
 	public partial class CreateRequest : MeshRequest {
         /// <summary>
@@ -2826,6 +3301,8 @@ namespace Goedel.Mesh {
 		}
 
 	/// <summary>
+	///
+	/// Reports the success or failure of a Create transaction.
 	/// </summary>
 	public partial class CreateResponse : MeshResponse {
 
@@ -2994,6 +3471,565 @@ namespace Goedel.Mesh {
 		}
 
 	/// <summary>
+	///
+	/// Describes the Portal or Mesh data to be retreived.
+	/// </summary>
+	public partial class GetRequest : MeshRequest {
+        /// <summary>
+        /// 
+        /// </summary>
+		public virtual string						Identifier {
+			get {return _Identifier;}			
+			set {_Identifier = value;}
+			}
+		string						_Identifier ;
+        /// <summary>
+        /// 
+        /// </summary>
+		public virtual string						Account {
+			get {return _Account;}			
+			set {_Account = value;}
+			}
+		string						_Account ;
+		/// <summary>
+        /// 
+        /// </summary>
+		public virtual List<KeyValue>				KeyValues {
+			get {return _KeyValues;}			
+			set {_KeyValues = value;}
+			}
+		List<KeyValue>				_KeyValues;
+        /// <summary>
+        /// 
+        /// </summary>
+		public virtual SearchConstraints						SearchConstraints {
+			get {return _SearchConstraints;}			
+			set {_SearchConstraints = value;}
+			}
+		SearchConstraints						_SearchConstraints ;
+		bool								__Multiple = false;
+		private bool						_Multiple;
+        /// <summary>
+        /// 
+        /// </summary>
+		public virtual bool						Multiple {
+			get {return _Multiple;}
+			set {_Multiple = value; __Multiple = true; }
+			}
+		bool								__Full = false;
+		private bool						_Full;
+        /// <summary>
+        /// 
+        /// </summary>
+		public virtual bool						Full {
+			get {return _Full;}
+			set {_Full = value; __Full = true; }
+			}
+
+        /// <summary>
+        /// Tag identifying this class.
+        /// </summary>
+        /// <returns>The tag</returns>
+		public override string Tag () {
+			return "GetRequest";
+			}
+
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
+		public GetRequest () {
+			_Initialize ();
+			}
+
+        /// <summary>
+		/// Initialize class from JSONReader stream.
+        /// </summary>		
+		public GetRequest (JSONReader JSONReader) {
+			Deserialize (JSONReader);
+			}
+
+        /// <summary>
+		/// Initialize class from a JSON encoded class.
+        /// </summary>		
+		public GetRequest (string _String) {
+			Deserialize (_String);
+			}
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="Writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
+			SerializeX (Writer, wrap, ref first);
+			}
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_Writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			if (_wrap) {
+				_Writer.WriteObjectStart ();
+				}
+			((MeshRequest)this).SerializeX(_Writer, false, ref _first);
+			if (Identifier != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Identifier", 1);
+					_Writer.WriteString (Identifier);
+				}
+			if (Account != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Account", 1);
+					_Writer.WriteString (Account);
+				}
+			if (KeyValues != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("KeyValues", 1);
+				_Writer.WriteArrayStart ();
+				bool _firstarray = true;
+				foreach (var _index in KeyValues) {
+					_Writer.WriteArraySeparator (ref _firstarray);
+					// This is an untagged structure. Cannot inherit.
+                    //_Writer.WriteObjectStart();
+                    //_Writer.WriteToken(_index.Tag(), 1);
+					bool firstinner = true;
+					_index.Serialize (_Writer, true, ref firstinner);
+                    //_Writer.WriteObjectEnd();
+					}
+				_Writer.WriteArrayEnd ();
+				}
+
+			if (SearchConstraints != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("SearchConstraints", 1);
+					SearchConstraints.Serialize (_Writer, false);
+				}
+			if (__Multiple){
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Multiple", 1);
+					_Writer.WriteBoolean (Multiple);
+				}
+			if (__Full){
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Full", 1);
+					_Writer.WriteBoolean (Full);
+				}
+			if (_wrap) {
+				_Writer.WriteObjectEnd ();
+				}
+			}
+
+
+
+        /// <summary>
+		/// Create a new instance from untagged byte input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>		
+		public static new GetRequest From (byte[] _Data) {
+			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
+			return From (_Input);
+			}
+
+        /// <summary>
+		/// Create a new instance from untagged string input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>				
+		public static new GetRequest From (string _Input) {
+			StringReader _Reader = new StringReader (_Input);
+            JSONReader JSONReader = new JSONReader (_Reader);
+			return new GetRequest (JSONReader);
+			}
+
+        /// <summary>
+		/// Create a new instance from tagged byte input.
+		/// i.e. { "GetRequest" : {... data ... } }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>				
+		public static new GetRequest FromTagged (byte[] _Data) {
+			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
+			return FromTagged (_Input);
+			}
+
+        /// <summary>
+        /// Create a new instance from tagged string input.
+		/// i.e. { "GetRequest" : {... data ... } }
+        /// </summary>
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>		
+		public static new GetRequest FromTagged (string _Input) {
+			//GetRequest _Result;
+			//Deserialize (_Input, out _Result);
+			StringReader _Reader = new StringReader (_Input);
+            JSONReader JSONReader = new JSONReader (_Reader);
+			return FromTagged (JSONReader) ;
+			}
+
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader"></param>
+        public static new GetRequest  FromTagged (JSONReader JSONReader) {
+			GetRequest Out = null;
+
+			JSONReader.StartObject ();
+            if (JSONReader.EOR) {
+                return null;
+                }
+
+			string token = JSONReader.ReadToken ();
+
+			switch (token) {
+
+				case "GetRequest" : {
+					var Result = new GetRequest ();
+					Result.Deserialize (JSONReader);
+					Out = Result;
+					break;
+					}
+
+				default : {
+					//Ignore the unknown data
+                    //throw new Exception ("Not supported");
+                    break;
+					}
+				}
+			JSONReader.EndObject ();
+
+			return Out;
+			}
+
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="JSONReader"></param>
+        /// <param name="Tag"></param>
+		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+			
+			switch (Tag) {
+				case "Identifier" : {
+					Identifier = JSONReader.ReadString ();
+					break;
+					}
+				case "Account" : {
+					Account = JSONReader.ReadString ();
+					break;
+					}
+				case "KeyValues" : {
+					// Have a sequence of values
+					bool _Going = JSONReader.StartArray ();
+					KeyValues = new List <KeyValue> ();
+					while (_Going) {
+						// an untagged structure.
+						var _Item = new KeyValue (JSONReader);
+						KeyValues.Add (_Item);
+						_Going = JSONReader.NextArray ();
+						}
+					break;
+					}
+				case "SearchConstraints" : {
+					// An untagged structure
+					SearchConstraints = new SearchConstraints (JSONReader);
+ 
+					break;
+					}
+				case "Multiple" : {
+					Multiple = JSONReader.ReadBoolean ();
+					break;
+					}
+				case "Full" : {
+					Full = JSONReader.ReadBoolean ();
+					break;
+					}
+				default : {
+					base.DeserializeToken(JSONReader, Tag);
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
+	/// <summary>
+	///
+	/// Reports the success or failure of a Get transaction. If a Mesh entry
+	/// matching the specified profile is found, containsthe list of entries
+	/// matching the request.
+	/// </summary>
+	public partial class GetResponse : MeshResponse {
+		/// <summary>
+        /// 
+        /// </summary>
+		public virtual List<Entry>				Entries {
+			get {return _Entries;}			
+			set {_Entries = value;}
+			}
+		List<Entry>				_Entries;
+		/// <summary>
+        /// 
+        /// </summary>
+		public virtual List<DataItem>				DataItems {
+			get {return _DataItems;}			
+			set {_DataItems = value;}
+			}
+		List<DataItem>				_DataItems;
+        /// <summary>
+        /// 
+        /// </summary>
+		public virtual string						PageKey {
+			get {return _PageKey;}			
+			set {_PageKey = value;}
+			}
+		string						_PageKey ;
+
+        /// <summary>
+        /// Tag identifying this class.
+        /// </summary>
+        /// <returns>The tag</returns>
+		public override string Tag () {
+			return "GetResponse";
+			}
+
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
+		public GetResponse () {
+			_Initialize ();
+			}
+
+        /// <summary>
+		/// Initialize class from JSONReader stream.
+        /// </summary>		
+		public GetResponse (JSONReader JSONReader) {
+			Deserialize (JSONReader);
+			}
+
+        /// <summary>
+		/// Initialize class from a JSON encoded class.
+        /// </summary>		
+		public GetResponse (string _String) {
+			Deserialize (_String);
+			}
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="Writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
+			SerializeX (Writer, wrap, ref first);
+			}
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_Writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			if (_wrap) {
+				_Writer.WriteObjectStart ();
+				}
+			((MeshResponse)this).SerializeX(_Writer, false, ref _first);
+			if (Entries != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Entries", 1);
+				_Writer.WriteArrayStart ();
+				bool _firstarray = true;
+				foreach (var _index in Entries) {
+					_Writer.WriteArraySeparator (ref _firstarray);
+                    _Writer.WriteObjectStart();
+                    _Writer.WriteToken(_index.Tag(), 1);
+					bool firstinner = true;
+					_index.Serialize (_Writer, true, ref firstinner);
+                    _Writer.WriteObjectEnd();
+					}
+				_Writer.WriteArrayEnd ();
+				}
+
+			if (DataItems != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("DataItems", 1);
+				_Writer.WriteArrayStart ();
+				bool _firstarray = true;
+				foreach (var _index in DataItems) {
+					_Writer.WriteArraySeparator (ref _firstarray);
+					// This is an untagged structure. Cannot inherit.
+                    //_Writer.WriteObjectStart();
+                    //_Writer.WriteToken(_index.Tag(), 1);
+					bool firstinner = true;
+					_index.Serialize (_Writer, true, ref firstinner);
+                    //_Writer.WriteObjectEnd();
+					}
+				_Writer.WriteArrayEnd ();
+				}
+
+			if (PageKey != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("PageKey", 1);
+					_Writer.WriteString (PageKey);
+				}
+			if (_wrap) {
+				_Writer.WriteObjectEnd ();
+				}
+			}
+
+
+
+        /// <summary>
+		/// Create a new instance from untagged byte input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>		
+		public static new GetResponse From (byte[] _Data) {
+			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
+			return From (_Input);
+			}
+
+        /// <summary>
+		/// Create a new instance from untagged string input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>				
+		public static new GetResponse From (string _Input) {
+			StringReader _Reader = new StringReader (_Input);
+            JSONReader JSONReader = new JSONReader (_Reader);
+			return new GetResponse (JSONReader);
+			}
+
+        /// <summary>
+		/// Create a new instance from tagged byte input.
+		/// i.e. { "GetResponse" : {... data ... } }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>				
+		public static new GetResponse FromTagged (byte[] _Data) {
+			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
+			return FromTagged (_Input);
+			}
+
+        /// <summary>
+        /// Create a new instance from tagged string input.
+		/// i.e. { "GetResponse" : {... data ... } }
+        /// </summary>
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>		
+		public static new GetResponse FromTagged (string _Input) {
+			//GetResponse _Result;
+			//Deserialize (_Input, out _Result);
+			StringReader _Reader = new StringReader (_Input);
+            JSONReader JSONReader = new JSONReader (_Reader);
+			return FromTagged (JSONReader) ;
+			}
+
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader"></param>
+        public static new GetResponse  FromTagged (JSONReader JSONReader) {
+			GetResponse Out = null;
+
+			JSONReader.StartObject ();
+            if (JSONReader.EOR) {
+                return null;
+                }
+
+			string token = JSONReader.ReadToken ();
+
+			switch (token) {
+
+				case "GetResponse" : {
+					var Result = new GetResponse ();
+					Result.Deserialize (JSONReader);
+					Out = Result;
+					break;
+					}
+
+				default : {
+					//Ignore the unknown data
+                    //throw new Exception ("Not supported");
+                    break;
+					}
+				}
+			JSONReader.EndObject ();
+
+			return Out;
+			}
+
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="JSONReader"></param>
+        /// <param name="Tag"></param>
+		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+			
+			switch (Tag) {
+				case "Entries" : {
+					// Have a sequence of values
+					bool _Going = JSONReader.StartArray ();
+					Entries = new List <Entry> ();
+					while (_Going) {
+						var _Item = Entry.FromTagged (JSONReader); // a tagged structure
+						Entries.Add (_Item);
+						_Going = JSONReader.NextArray ();
+						}
+					break;
+					}
+				case "DataItems" : {
+					// Have a sequence of values
+					bool _Going = JSONReader.StartArray ();
+					DataItems = new List <DataItem> ();
+					while (_Going) {
+						// an untagged structure.
+						var _Item = new DataItem (JSONReader);
+						DataItems.Add (_Item);
+						_Going = JSONReader.NextArray ();
+						}
+					break;
+					}
+				case "PageKey" : {
+					PageKey = JSONReader.ReadString ();
+					break;
+					}
+				default : {
+					base.DeserializeToken(JSONReader, Tag);
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
+	/// <summary>
+	///
+	/// Requests publication of the specified Mesh entry.
 	/// </summary>
 	public partial class PublishRequest : MeshRequest {
         /// <summary>
@@ -3187,6 +4223,8 @@ namespace Goedel.Mesh {
 		}
 
 	/// <summary>
+	///
+	/// Reports the success or failure of a Publish transaction.
 	/// </summary>
 	public partial class PublishResponse : MeshResponse {
 
@@ -3355,1323 +4393,8 @@ namespace Goedel.Mesh {
 		}
 
 	/// <summary>
-	/// </summary>
-	public partial class GetRequest : MeshRequest {
-        /// <summary>
-        /// 
-        /// </summary>
-		public virtual string						Identifier {
-			get {return _Identifier;}			
-			set {_Identifier = value;}
-			}
-		string						_Identifier ;
-        /// <summary>
-        /// 
-        /// </summary>
-		public virtual string						Account {
-			get {return _Account;}			
-			set {_Account = value;}
-			}
-		string						_Account ;
-		/// <summary>
-        /// 
-        /// </summary>
-		public virtual List<KeyValue>				KeyValues {
-			get {return _KeyValues;}			
-			set {_KeyValues = value;}
-			}
-		List<KeyValue>				_KeyValues;
-		bool								__NotBefore = false;
-		private DateTime						_NotBefore;
-        /// <summary>
-        /// 
-        /// </summary>
-		public virtual DateTime						NotBefore {
-			get {return _NotBefore;}
-			set {_NotBefore = value; __NotBefore = true; }
-			}
-		bool								__NotOnOrAfter = false;
-		private DateTime						_NotOnOrAfter;
-        /// <summary>
-        /// 
-        /// </summary>
-		public virtual DateTime						NotOnOrAfter {
-			get {return _NotOnOrAfter;}
-			set {_NotOnOrAfter = value; __NotOnOrAfter = true; }
-			}
-		bool								__Multiple = false;
-		private bool						_Multiple;
-        /// <summary>
-        /// 
-        /// </summary>
-		public virtual bool						Multiple {
-			get {return _Multiple;}
-			set {_Multiple = value; __Multiple = true; }
-			}
-
-        /// <summary>
-        /// Tag identifying this class.
-        /// </summary>
-        /// <returns>The tag</returns>
-		public override string Tag () {
-			return "GetRequest";
-			}
-
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-		public GetRequest () {
-			_Initialize ();
-			}
-
-        /// <summary>
-		/// Initialize class from JSONReader stream.
-        /// </summary>		
-		public GetRequest (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			}
-
-        /// <summary>
-		/// Initialize class from a JSON encoded class.
-        /// </summary>		
-		public GetRequest (string _String) {
-			Deserialize (_String);
-			}
-
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// </summary>
-        /// <param name="Writer">Output stream</param>
-        /// <param name="wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
-			SerializeX (Writer, wrap, ref first);
-			}
-
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// Unlike the Serlialize() method, this method is not inherited from the
-        /// parent class allowing a specific version of the method to be called.
-        /// </summary>
-        /// <param name="_Writer">Output stream</param>
-        /// <param name="_wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="_first">If true, item is the first entry in a list.</param>
-		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
-			if (_wrap) {
-				_Writer.WriteObjectStart ();
-				}
-			((MeshRequest)this).SerializeX(_Writer, false, ref _first);
-			if (Identifier != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("Identifier", 1);
-					_Writer.WriteString (Identifier);
-				}
-			if (Account != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("Account", 1);
-					_Writer.WriteString (Account);
-				}
-			if (KeyValues != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("KeyValues", 1);
-				_Writer.WriteArrayStart ();
-				bool _firstarray = true;
-				foreach (var _index in KeyValues) {
-					_Writer.WriteArraySeparator (ref _firstarray);
-					// This is an untagged structure. Cannot inherit.
-                    //_Writer.WriteObjectStart();
-                    //_Writer.WriteToken(_index.Tag(), 1);
-					bool firstinner = true;
-					_index.Serialize (_Writer, true, ref firstinner);
-                    //_Writer.WriteObjectEnd();
-					}
-				_Writer.WriteArrayEnd ();
-				}
-
-			if (__NotBefore){
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("NotBefore", 1);
-					_Writer.WriteDateTime (NotBefore);
-				}
-			if (__NotOnOrAfter){
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("NotOnOrAfter", 1);
-					_Writer.WriteDateTime (NotOnOrAfter);
-				}
-			if (__Multiple){
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("Multiple", 1);
-					_Writer.WriteBoolean (Multiple);
-				}
-			if (_wrap) {
-				_Writer.WriteObjectEnd ();
-				}
-			}
-
-
-
-        /// <summary>
-		/// Create a new instance from untagged byte input.
-		/// i.e. {... data ... }
-        /// </summary>	
-        /// <param name="_Data">The input data.</param>
-        /// <returns>The created object.</returns>		
-		public static new GetRequest From (byte[] _Data) {
-			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
-			return From (_Input);
-			}
-
-        /// <summary>
-		/// Create a new instance from untagged string input.
-		/// i.e. {... data ... }
-        /// </summary>	
-        /// <param name="_Input">The input data.</param>
-        /// <returns>The created object.</returns>				
-		public static new GetRequest From (string _Input) {
-			StringReader _Reader = new StringReader (_Input);
-            JSONReader JSONReader = new JSONReader (_Reader);
-			return new GetRequest (JSONReader);
-			}
-
-        /// <summary>
-		/// Create a new instance from tagged byte input.
-		/// i.e. { "GetRequest" : {... data ... } }
-        /// </summary>	
-        /// <param name="_Data">The input data.</param>
-        /// <returns>The created object.</returns>				
-		public static new GetRequest FromTagged (byte[] _Data) {
-			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
-			return FromTagged (_Input);
-			}
-
-        /// <summary>
-        /// Create a new instance from tagged string input.
-		/// i.e. { "GetRequest" : {... data ... } }
-        /// </summary>
-        /// <param name="_Input">The input data.</param>
-        /// <returns>The created object.</returns>		
-		public static new GetRequest FromTagged (string _Input) {
-			//GetRequest _Result;
-			//Deserialize (_Input, out _Result);
-			StringReader _Reader = new StringReader (_Input);
-            JSONReader JSONReader = new JSONReader (_Reader);
-			return FromTagged (JSONReader) ;
-			}
-
-
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="JSONReader"></param>
-        public static new GetRequest  FromTagged (JSONReader JSONReader) {
-			GetRequest Out = null;
-
-			JSONReader.StartObject ();
-            if (JSONReader.EOR) {
-                return null;
-                }
-
-			string token = JSONReader.ReadToken ();
-
-			switch (token) {
-
-				case "GetRequest" : {
-					var Result = new GetRequest ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
-					break;
-					}
-
-				default : {
-					//Ignore the unknown data
-                    //throw new Exception ("Not supported");
-                    break;
-					}
-				}
-			JSONReader.EndObject ();
-
-			return Out;
-			}
-
-
-        /// <summary>
-        /// Having read a tag, process the corresponding value data.
-        /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Tag"></param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
-			
-			switch (Tag) {
-				case "Identifier" : {
-					Identifier = JSONReader.ReadString ();
-					break;
-					}
-				case "Account" : {
-					Account = JSONReader.ReadString ();
-					break;
-					}
-				case "KeyValues" : {
-					// Have a sequence of values
-					bool _Going = JSONReader.StartArray ();
-					KeyValues = new List <KeyValue> ();
-					while (_Going) {
-						// an untagged structure.
-						var _Item = new KeyValue (JSONReader);
-						KeyValues.Add (_Item);
-						_Going = JSONReader.NextArray ();
-						}
-					break;
-					}
-				case "NotBefore" : {
-					NotBefore = JSONReader.ReadDateTime ();
-					break;
-					}
-				case "NotOnOrAfter" : {
-					NotOnOrAfter = JSONReader.ReadDateTime ();
-					break;
-					}
-				case "Multiple" : {
-					Multiple = JSONReader.ReadBoolean ();
-					break;
-					}
-				default : {
-					base.DeserializeToken(JSONReader, Tag);
-					break;
-					}
-				}
-			// check up that all the required elements are present
-			}
-
-
-		}
-
-	/// <summary>
-	/// </summary>
-	public partial class KeyValue : MeshProtocol {
-        /// <summary>
-        /// 
-        /// </summary>
-		public virtual string						Key {
-			get {return _Key;}			
-			set {_Key = value;}
-			}
-		string						_Key ;
-        /// <summary>
-        /// 
-        /// </summary>
-		public virtual string						Value {
-			get {return _Value;}			
-			set {_Value = value;}
-			}
-		string						_Value ;
-
-        /// <summary>
-        /// Tag identifying this class.
-        /// </summary>
-        /// <returns>The tag</returns>
-		public override string Tag () {
-			return "KeyValue";
-			}
-
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-		public KeyValue () {
-			_Initialize ();
-			}
-        /// <summary>
-        /// </summary>		
-		public KeyValue (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			}
-
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// </summary>
-        /// <param name="Writer">Output stream</param>
-        /// <param name="wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
-			SerializeX (Writer, wrap, ref first);
-			}
-
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// Unlike the Serlialize() method, this method is not inherited from the
-        /// parent class allowing a specific version of the method to be called.
-        /// </summary>
-        /// <param name="_Writer">Output stream</param>
-        /// <param name="_wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="_first">If true, item is the first entry in a list.</param>
-		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
-			if (_wrap) {
-				_Writer.WriteObjectStart ();
-				}
-			if (Key != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("Key", 1);
-					_Writer.WriteString (Key);
-				}
-			if (Value != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("Value", 1);
-					_Writer.WriteString (Value);
-				}
-			if (_wrap) {
-				_Writer.WriteObjectEnd ();
-				}
-			}
-
-
-
-        /// <summary>
-		/// Create a new instance from untagged byte input.
-		/// i.e. {... data ... }
-        /// </summary>	
-        /// <param name="_Data">The input data.</param>
-        /// <returns>The created object.</returns>		
-		public static new KeyValue From (byte[] _Data) {
-			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
-			return From (_Input);
-			}
-
-        /// <summary>
-		/// Create a new instance from untagged string input.
-		/// i.e. {... data ... }
-        /// </summary>	
-        /// <param name="_Input">The input data.</param>
-        /// <returns>The created object.</returns>				
-		public static new KeyValue From (string _Input) {
-			StringReader _Reader = new StringReader (_Input);
-            JSONReader JSONReader = new JSONReader (_Reader);
-			return new KeyValue (JSONReader);
-			}
-
-        /// <summary>
-		/// Create a new instance from tagged byte input.
-		/// i.e. { "KeyValue" : {... data ... } }
-        /// </summary>	
-        /// <param name="_Data">The input data.</param>
-        /// <returns>The created object.</returns>				
-		public static new KeyValue FromTagged (byte[] _Data) {
-			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
-			return FromTagged (_Input);
-			}
-
-        /// <summary>
-        /// Create a new instance from tagged string input.
-		/// i.e. { "KeyValue" : {... data ... } }
-        /// </summary>
-        /// <param name="_Input">The input data.</param>
-        /// <returns>The created object.</returns>		
-		public static new KeyValue FromTagged (string _Input) {
-			//KeyValue _Result;
-			//Deserialize (_Input, out _Result);
-			StringReader _Reader = new StringReader (_Input);
-            JSONReader JSONReader = new JSONReader (_Reader);
-			return FromTagged (JSONReader) ;
-			}
-
-
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="JSONReader"></param>
-        public static new KeyValue  FromTagged (JSONReader JSONReader) {
-			KeyValue Out = null;
-
-			JSONReader.StartObject ();
-            if (JSONReader.EOR) {
-                return null;
-                }
-
-			string token = JSONReader.ReadToken ();
-
-			switch (token) {
-
-				case "KeyValue" : {
-					var Result = new KeyValue ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
-					break;
-					}
-
-				default : {
-					//Ignore the unknown data
-                    //throw new Exception ("Not supported");
-                    break;
-					}
-				}
-			JSONReader.EndObject ();
-
-			return Out;
-			}
-
-
-        /// <summary>
-        /// Having read a tag, process the corresponding value data.
-        /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Tag"></param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
-			
-			switch (Tag) {
-				case "Key" : {
-					Key = JSONReader.ReadString ();
-					break;
-					}
-				case "Value" : {
-					Value = JSONReader.ReadString ();
-					break;
-					}
-				default : {
-					break;
-					}
-				}
-			// check up that all the required elements are present
-			}
-
-
-		}
-
-	/// <summary>
-	/// </summary>
-	public partial class GetResponse : MeshResponse {
-		/// <summary>
-        /// 
-        /// </summary>
-		public virtual List<Entry>				Entries {
-			get {return _Entries;}			
-			set {_Entries = value;}
-			}
-		List<Entry>				_Entries;
-
-        /// <summary>
-        /// Tag identifying this class.
-        /// </summary>
-        /// <returns>The tag</returns>
-		public override string Tag () {
-			return "GetResponse";
-			}
-
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-		public GetResponse () {
-			_Initialize ();
-			}
-
-        /// <summary>
-		/// Initialize class from JSONReader stream.
-        /// </summary>		
-		public GetResponse (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			}
-
-        /// <summary>
-		/// Initialize class from a JSON encoded class.
-        /// </summary>		
-		public GetResponse (string _String) {
-			Deserialize (_String);
-			}
-
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// </summary>
-        /// <param name="Writer">Output stream</param>
-        /// <param name="wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
-			SerializeX (Writer, wrap, ref first);
-			}
-
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// Unlike the Serlialize() method, this method is not inherited from the
-        /// parent class allowing a specific version of the method to be called.
-        /// </summary>
-        /// <param name="_Writer">Output stream</param>
-        /// <param name="_wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="_first">If true, item is the first entry in a list.</param>
-		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
-			if (_wrap) {
-				_Writer.WriteObjectStart ();
-				}
-			((MeshResponse)this).SerializeX(_Writer, false, ref _first);
-			if (Entries != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("Entries", 1);
-				_Writer.WriteArrayStart ();
-				bool _firstarray = true;
-				foreach (var _index in Entries) {
-					_Writer.WriteArraySeparator (ref _firstarray);
-                    _Writer.WriteObjectStart();
-                    _Writer.WriteToken(_index.Tag(), 1);
-					bool firstinner = true;
-					_index.Serialize (_Writer, true, ref firstinner);
-                    _Writer.WriteObjectEnd();
-					}
-				_Writer.WriteArrayEnd ();
-				}
-
-			if (_wrap) {
-				_Writer.WriteObjectEnd ();
-				}
-			}
-
-
-
-        /// <summary>
-		/// Create a new instance from untagged byte input.
-		/// i.e. {... data ... }
-        /// </summary>	
-        /// <param name="_Data">The input data.</param>
-        /// <returns>The created object.</returns>		
-		public static new GetResponse From (byte[] _Data) {
-			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
-			return From (_Input);
-			}
-
-        /// <summary>
-		/// Create a new instance from untagged string input.
-		/// i.e. {... data ... }
-        /// </summary>	
-        /// <param name="_Input">The input data.</param>
-        /// <returns>The created object.</returns>				
-		public static new GetResponse From (string _Input) {
-			StringReader _Reader = new StringReader (_Input);
-            JSONReader JSONReader = new JSONReader (_Reader);
-			return new GetResponse (JSONReader);
-			}
-
-        /// <summary>
-		/// Create a new instance from tagged byte input.
-		/// i.e. { "GetResponse" : {... data ... } }
-        /// </summary>	
-        /// <param name="_Data">The input data.</param>
-        /// <returns>The created object.</returns>				
-		public static new GetResponse FromTagged (byte[] _Data) {
-			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
-			return FromTagged (_Input);
-			}
-
-        /// <summary>
-        /// Create a new instance from tagged string input.
-		/// i.e. { "GetResponse" : {... data ... } }
-        /// </summary>
-        /// <param name="_Input">The input data.</param>
-        /// <returns>The created object.</returns>		
-		public static new GetResponse FromTagged (string _Input) {
-			//GetResponse _Result;
-			//Deserialize (_Input, out _Result);
-			StringReader _Reader = new StringReader (_Input);
-            JSONReader JSONReader = new JSONReader (_Reader);
-			return FromTagged (JSONReader) ;
-			}
-
-
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="JSONReader"></param>
-        public static new GetResponse  FromTagged (JSONReader JSONReader) {
-			GetResponse Out = null;
-
-			JSONReader.StartObject ();
-            if (JSONReader.EOR) {
-                return null;
-                }
-
-			string token = JSONReader.ReadToken ();
-
-			switch (token) {
-
-				case "GetResponse" : {
-					var Result = new GetResponse ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
-					break;
-					}
-
-				default : {
-					//Ignore the unknown data
-                    //throw new Exception ("Not supported");
-                    break;
-					}
-				}
-			JSONReader.EndObject ();
-
-			return Out;
-			}
-
-
-        /// <summary>
-        /// Having read a tag, process the corresponding value data.
-        /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Tag"></param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
-			
-			switch (Tag) {
-				case "Entries" : {
-					// Have a sequence of values
-					bool _Going = JSONReader.StartArray ();
-					Entries = new List <Entry> ();
-					while (_Going) {
-						var _Item = Entry.FromTagged (JSONReader); // a tagged structure
-						Entries.Add (_Item);
-						_Going = JSONReader.NextArray ();
-						}
-					break;
-					}
-				default : {
-					base.DeserializeToken(JSONReader, Tag);
-					break;
-					}
-				}
-			// check up that all the required elements are present
-			}
-
-
-		}
-
-	/// <summary>
-	/// </summary>
-	public partial class GetRecordsResponse : MeshResponse {
-		/// <summary>
-        /// 
-        /// </summary>
-		public virtual List<DataItem>				DataItems {
-			get {return _DataItems;}			
-			set {_DataItems = value;}
-			}
-		List<DataItem>				_DataItems;
-
-        /// <summary>
-        /// Tag identifying this class.
-        /// </summary>
-        /// <returns>The tag</returns>
-		public override string Tag () {
-			return "GetRecordsResponse";
-			}
-
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-		public GetRecordsResponse () {
-			_Initialize ();
-			}
-
-        /// <summary>
-		/// Initialize class from JSONReader stream.
-        /// </summary>		
-		public GetRecordsResponse (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			}
-
-        /// <summary>
-		/// Initialize class from a JSON encoded class.
-        /// </summary>		
-		public GetRecordsResponse (string _String) {
-			Deserialize (_String);
-			}
-
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// </summary>
-        /// <param name="Writer">Output stream</param>
-        /// <param name="wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
-			SerializeX (Writer, wrap, ref first);
-			}
-
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// Unlike the Serlialize() method, this method is not inherited from the
-        /// parent class allowing a specific version of the method to be called.
-        /// </summary>
-        /// <param name="_Writer">Output stream</param>
-        /// <param name="_wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="_first">If true, item is the first entry in a list.</param>
-		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
-			if (_wrap) {
-				_Writer.WriteObjectStart ();
-				}
-			((MeshResponse)this).SerializeX(_Writer, false, ref _first);
-			if (DataItems != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("DataItems", 1);
-				_Writer.WriteArrayStart ();
-				bool _firstarray = true;
-				foreach (var _index in DataItems) {
-					_Writer.WriteArraySeparator (ref _firstarray);
-					// This is an untagged structure. Cannot inherit.
-                    //_Writer.WriteObjectStart();
-                    //_Writer.WriteToken(_index.Tag(), 1);
-					bool firstinner = true;
-					_index.Serialize (_Writer, true, ref firstinner);
-                    //_Writer.WriteObjectEnd();
-					}
-				_Writer.WriteArrayEnd ();
-				}
-
-			if (_wrap) {
-				_Writer.WriteObjectEnd ();
-				}
-			}
-
-
-
-        /// <summary>
-		/// Create a new instance from untagged byte input.
-		/// i.e. {... data ... }
-        /// </summary>	
-        /// <param name="_Data">The input data.</param>
-        /// <returns>The created object.</returns>		
-		public static new GetRecordsResponse From (byte[] _Data) {
-			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
-			return From (_Input);
-			}
-
-        /// <summary>
-		/// Create a new instance from untagged string input.
-		/// i.e. {... data ... }
-        /// </summary>	
-        /// <param name="_Input">The input data.</param>
-        /// <returns>The created object.</returns>				
-		public static new GetRecordsResponse From (string _Input) {
-			StringReader _Reader = new StringReader (_Input);
-            JSONReader JSONReader = new JSONReader (_Reader);
-			return new GetRecordsResponse (JSONReader);
-			}
-
-        /// <summary>
-		/// Create a new instance from tagged byte input.
-		/// i.e. { "GetRecordsResponse" : {... data ... } }
-        /// </summary>	
-        /// <param name="_Data">The input data.</param>
-        /// <returns>The created object.</returns>				
-		public static new GetRecordsResponse FromTagged (byte[] _Data) {
-			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
-			return FromTagged (_Input);
-			}
-
-        /// <summary>
-        /// Create a new instance from tagged string input.
-		/// i.e. { "GetRecordsResponse" : {... data ... } }
-        /// </summary>
-        /// <param name="_Input">The input data.</param>
-        /// <returns>The created object.</returns>		
-		public static new GetRecordsResponse FromTagged (string _Input) {
-			//GetRecordsResponse _Result;
-			//Deserialize (_Input, out _Result);
-			StringReader _Reader = new StringReader (_Input);
-            JSONReader JSONReader = new JSONReader (_Reader);
-			return FromTagged (JSONReader) ;
-			}
-
-
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="JSONReader"></param>
-        public static new GetRecordsResponse  FromTagged (JSONReader JSONReader) {
-			GetRecordsResponse Out = null;
-
-			JSONReader.StartObject ();
-            if (JSONReader.EOR) {
-                return null;
-                }
-
-			string token = JSONReader.ReadToken ();
-
-			switch (token) {
-
-				case "GetRecordsResponse" : {
-					var Result = new GetRecordsResponse ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
-					break;
-					}
-
-				default : {
-					//Ignore the unknown data
-                    //throw new Exception ("Not supported");
-                    break;
-					}
-				}
-			JSONReader.EndObject ();
-
-			return Out;
-			}
-
-
-        /// <summary>
-        /// Having read a tag, process the corresponding value data.
-        /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Tag"></param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
-			
-			switch (Tag) {
-				case "DataItems" : {
-					// Have a sequence of values
-					bool _Going = JSONReader.StartArray ();
-					DataItems = new List <DataItem> ();
-					while (_Going) {
-						// an untagged structure.
-						var _Item = new DataItem (JSONReader);
-						DataItems.Add (_Item);
-						_Going = JSONReader.NextArray ();
-						}
-					break;
-					}
-				default : {
-					base.DeserializeToken(JSONReader, Tag);
-					break;
-					}
-				}
-			// check up that all the required elements are present
-			}
-
-
-		}
-
-	/// <summary>
-	/// </summary>
-	public partial class TransferRequest : MeshRequest {
-		bool								__NotBefore = false;
-		private DateTime						_NotBefore;
-        /// <summary>
-        /// 
-        /// </summary>
-		public virtual DateTime						NotBefore {
-			get {return _NotBefore;}
-			set {_NotBefore = value; __NotBefore = true; }
-			}
-		bool								__Until = false;
-		private DateTime						_Until;
-        /// <summary>
-        /// 
-        /// </summary>
-		public virtual DateTime						Until {
-			get {return _Until;}
-			set {_Until = value; __Until = true; }
-			}
-        /// <summary>
-        /// 
-        /// </summary>
-		public virtual string						After {
-			get {return _After;}			
-			set {_After = value;}
-			}
-		string						_After ;
-		bool								__MaxEntries = false;
-		private int						_MaxEntries;
-        /// <summary>
-        /// 
-        /// </summary>
-		public virtual int						MaxEntries {
-			get {return _MaxEntries;}
-			set {_MaxEntries = value; __MaxEntries = true; }
-			}
-		bool								__MaxBytes = false;
-		private int						_MaxBytes;
-        /// <summary>
-        /// 
-        /// </summary>
-		public virtual int						MaxBytes {
-			get {return _MaxBytes;}
-			set {_MaxBytes = value; __MaxBytes = true; }
-			}
-
-        /// <summary>
-        /// Tag identifying this class.
-        /// </summary>
-        /// <returns>The tag</returns>
-		public override string Tag () {
-			return "TransferRequest";
-			}
-
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-		public TransferRequest () {
-			_Initialize ();
-			}
-
-        /// <summary>
-		/// Initialize class from JSONReader stream.
-        /// </summary>		
-		public TransferRequest (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			}
-
-        /// <summary>
-		/// Initialize class from a JSON encoded class.
-        /// </summary>		
-		public TransferRequest (string _String) {
-			Deserialize (_String);
-			}
-
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// </summary>
-        /// <param name="Writer">Output stream</param>
-        /// <param name="wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
-			SerializeX (Writer, wrap, ref first);
-			}
-
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// Unlike the Serlialize() method, this method is not inherited from the
-        /// parent class allowing a specific version of the method to be called.
-        /// </summary>
-        /// <param name="_Writer">Output stream</param>
-        /// <param name="_wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="_first">If true, item is the first entry in a list.</param>
-		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
-			if (_wrap) {
-				_Writer.WriteObjectStart ();
-				}
-			((MeshRequest)this).SerializeX(_Writer, false, ref _first);
-			if (__NotBefore){
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("NotBefore", 1);
-					_Writer.WriteDateTime (NotBefore);
-				}
-			if (__Until){
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("Until", 1);
-					_Writer.WriteDateTime (Until);
-				}
-			if (After != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("After", 1);
-					_Writer.WriteString (After);
-				}
-			if (__MaxEntries){
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("MaxEntries", 1);
-					_Writer.WriteInteger32 (MaxEntries);
-				}
-			if (__MaxBytes){
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("MaxBytes", 1);
-					_Writer.WriteInteger32 (MaxBytes);
-				}
-			if (_wrap) {
-				_Writer.WriteObjectEnd ();
-				}
-			}
-
-
-
-        /// <summary>
-		/// Create a new instance from untagged byte input.
-		/// i.e. {... data ... }
-        /// </summary>	
-        /// <param name="_Data">The input data.</param>
-        /// <returns>The created object.</returns>		
-		public static new TransferRequest From (byte[] _Data) {
-			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
-			return From (_Input);
-			}
-
-        /// <summary>
-		/// Create a new instance from untagged string input.
-		/// i.e. {... data ... }
-        /// </summary>	
-        /// <param name="_Input">The input data.</param>
-        /// <returns>The created object.</returns>				
-		public static new TransferRequest From (string _Input) {
-			StringReader _Reader = new StringReader (_Input);
-            JSONReader JSONReader = new JSONReader (_Reader);
-			return new TransferRequest (JSONReader);
-			}
-
-        /// <summary>
-		/// Create a new instance from tagged byte input.
-		/// i.e. { "TransferRequest" : {... data ... } }
-        /// </summary>	
-        /// <param name="_Data">The input data.</param>
-        /// <returns>The created object.</returns>				
-		public static new TransferRequest FromTagged (byte[] _Data) {
-			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
-			return FromTagged (_Input);
-			}
-
-        /// <summary>
-        /// Create a new instance from tagged string input.
-		/// i.e. { "TransferRequest" : {... data ... } }
-        /// </summary>
-        /// <param name="_Input">The input data.</param>
-        /// <returns>The created object.</returns>		
-		public static new TransferRequest FromTagged (string _Input) {
-			//TransferRequest _Result;
-			//Deserialize (_Input, out _Result);
-			StringReader _Reader = new StringReader (_Input);
-            JSONReader JSONReader = new JSONReader (_Reader);
-			return FromTagged (JSONReader) ;
-			}
-
-
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="JSONReader"></param>
-        public static new TransferRequest  FromTagged (JSONReader JSONReader) {
-			TransferRequest Out = null;
-
-			JSONReader.StartObject ();
-            if (JSONReader.EOR) {
-                return null;
-                }
-
-			string token = JSONReader.ReadToken ();
-
-			switch (token) {
-
-				case "TransferRequest" : {
-					var Result = new TransferRequest ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
-					break;
-					}
-
-				default : {
-					//Ignore the unknown data
-                    //throw new Exception ("Not supported");
-                    break;
-					}
-				}
-			JSONReader.EndObject ();
-
-			return Out;
-			}
-
-
-        /// <summary>
-        /// Having read a tag, process the corresponding value data.
-        /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Tag"></param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
-			
-			switch (Tag) {
-				case "NotBefore" : {
-					NotBefore = JSONReader.ReadDateTime ();
-					break;
-					}
-				case "Until" : {
-					Until = JSONReader.ReadDateTime ();
-					break;
-					}
-				case "After" : {
-					After = JSONReader.ReadString ();
-					break;
-					}
-				case "MaxEntries" : {
-					MaxEntries = JSONReader.ReadInteger32 ();
-					break;
-					}
-				case "MaxBytes" : {
-					MaxBytes = JSONReader.ReadInteger32 ();
-					break;
-					}
-				default : {
-					base.DeserializeToken(JSONReader, Tag);
-					break;
-					}
-				}
-			// check up that all the required elements are present
-			}
-
-
-		}
-
-	/// <summary>
-	/// </summary>
-	public partial class TransferResponse : MeshResponse {
-
-        /// <summary>
-        /// Tag identifying this class.
-        /// </summary>
-        /// <returns>The tag</returns>
-		public override string Tag () {
-			return "TransferResponse";
-			}
-
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-		public TransferResponse () {
-			_Initialize ();
-			}
-
-        /// <summary>
-		/// Initialize class from JSONReader stream.
-        /// </summary>		
-		public TransferResponse (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			}
-
-        /// <summary>
-		/// Initialize class from a JSON encoded class.
-        /// </summary>		
-		public TransferResponse (string _String) {
-			Deserialize (_String);
-			}
-
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// </summary>
-        /// <param name="Writer">Output stream</param>
-        /// <param name="wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
-			SerializeX (Writer, wrap, ref first);
-			}
-
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// Unlike the Serlialize() method, this method is not inherited from the
-        /// parent class allowing a specific version of the method to be called.
-        /// </summary>
-        /// <param name="_Writer">Output stream</param>
-        /// <param name="_wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="_first">If true, item is the first entry in a list.</param>
-		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
-			if (_wrap) {
-				_Writer.WriteObjectStart ();
-				}
-			((MeshResponse)this).SerializeX(_Writer, false, ref _first);
-			if (_wrap) {
-				_Writer.WriteObjectEnd ();
-				}
-			}
-
-
-
-        /// <summary>
-		/// Create a new instance from untagged byte input.
-		/// i.e. {... data ... }
-        /// </summary>	
-        /// <param name="_Data">The input data.</param>
-        /// <returns>The created object.</returns>		
-		public static new TransferResponse From (byte[] _Data) {
-			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
-			return From (_Input);
-			}
-
-        /// <summary>
-		/// Create a new instance from untagged string input.
-		/// i.e. {... data ... }
-        /// </summary>	
-        /// <param name="_Input">The input data.</param>
-        /// <returns>The created object.</returns>				
-		public static new TransferResponse From (string _Input) {
-			StringReader _Reader = new StringReader (_Input);
-            JSONReader JSONReader = new JSONReader (_Reader);
-			return new TransferResponse (JSONReader);
-			}
-
-        /// <summary>
-		/// Create a new instance from tagged byte input.
-		/// i.e. { "TransferResponse" : {... data ... } }
-        /// </summary>	
-        /// <param name="_Data">The input data.</param>
-        /// <returns>The created object.</returns>				
-		public static new TransferResponse FromTagged (byte[] _Data) {
-			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
-			return FromTagged (_Input);
-			}
-
-        /// <summary>
-        /// Create a new instance from tagged string input.
-		/// i.e. { "TransferResponse" : {... data ... } }
-        /// </summary>
-        /// <param name="_Input">The input data.</param>
-        /// <returns>The created object.</returns>		
-		public static new TransferResponse FromTagged (string _Input) {
-			//TransferResponse _Result;
-			//Deserialize (_Input, out _Result);
-			StringReader _Reader = new StringReader (_Input);
-            JSONReader JSONReader = new JSONReader (_Reader);
-			return FromTagged (JSONReader) ;
-			}
-
-
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="JSONReader"></param>
-        public static new TransferResponse  FromTagged (JSONReader JSONReader) {
-			TransferResponse Out = null;
-
-			JSONReader.StartObject ();
-            if (JSONReader.EOR) {
-                return null;
-                }
-
-			string token = JSONReader.ReadToken ();
-
-			switch (token) {
-
-				case "TransferResponse" : {
-					var Result = new TransferResponse ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
-					break;
-					}
-
-				default : {
-					//Ignore the unknown data
-                    //throw new Exception ("Not supported");
-                    break;
-					}
-				}
-			JSONReader.EndObject ();
-
-			return Out;
-			}
-
-
-        /// <summary>
-        /// Having read a tag, process the corresponding value data.
-        /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Tag"></param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
-			
-			switch (Tag) {
-				default : {
-					base.DeserializeToken(JSONReader, Tag);
-					break;
-					}
-				}
-			// check up that all the required elements are present
-			}
-
-
-		}
-
-	/// <summary>
+	///
+	/// Initiates a status transaction.
 	/// </summary>
 	public partial class StatusRequest : MeshRequest {
 
@@ -4840,6 +4563,8 @@ namespace Goedel.Mesh {
 		}
 
 	/// <summary>
+	///
+	/// Reports the success or failure of a Status transaction.
 	/// </summary>
 	public partial class StatusResponse : MeshResponse {
 		bool								__LastWriteTime = false;
@@ -5080,7 +4805,7 @@ namespace Goedel.Mesh {
 
 	/// <summary>
 	///
-	/// 
+	/// Initial device connection request.
 	/// </summary>
 	public partial class ConnectStartRequest : MeshRequest {
         /// <summary>
@@ -5286,17 +5011,9 @@ namespace Goedel.Mesh {
 
 	/// <summary>
 	///
-	/// 
+	/// Reports the success or failure of a ConnectStart transaction.
 	/// </summary>
 	public partial class ConnectStartResponse : MeshRequest {
-        /// <summary>
-        /// 
-        /// </summary>
-		public virtual string						SignedConnectionResult {
-			get {return _SignedConnectionResult;}			
-			set {_SignedConnectionResult = value;}
-			}
-		string						_SignedConnectionResult ;
 
         /// <summary>
         /// Tag identifying this class.
@@ -5352,11 +5069,6 @@ namespace Goedel.Mesh {
 				_Writer.WriteObjectStart ();
 				}
 			((MeshRequest)this).SerializeX(_Writer, false, ref _first);
-			if (SignedConnectionResult != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("SignedConnectionResult", 1);
-					_Writer.WriteString (SignedConnectionResult);
-				}
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
 				}
@@ -5456,10 +5168,6 @@ namespace Goedel.Mesh {
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
-				case "SignedConnectionResult" : {
-					SignedConnectionResult = JSONReader.ReadString ();
-					break;
-					}
 				default : {
 					base.DeserializeToken(JSONReader, Tag);
 					break;
@@ -5473,7 +5181,8 @@ namespace Goedel.Mesh {
 
 	/// <summary>
 	///
-	/// 
+	/// Request status information for a pending request posted
+	/// previously.
 	/// </summary>
 	public partial class ConnectStatusRequest : MeshRequest {
         /// <summary>
@@ -5677,7 +5386,7 @@ namespace Goedel.Mesh {
 
 	/// <summary>
 	///
-	/// 
+	/// Reports the success or failure of a ConnectStatus transaction.
 	/// </summary>
 	public partial class ConnectStatusResponse : MeshRequest {
         /// <summary>
@@ -5866,7 +5575,7 @@ namespace Goedel.Mesh {
 
 	/// <summary>
 	///
-	/// 
+	/// Specify the criteria for pending requests.
 	/// </summary>
 	public partial class ConnectPendingRequest : MeshRequest {
         /// <summary>
@@ -5877,6 +5586,14 @@ namespace Goedel.Mesh {
 			set {_AccountID = value;}
 			}
 		string						_AccountID ;
+        /// <summary>
+        /// 
+        /// </summary>
+		public virtual SearchConstraints						SearchConstraints {
+			get {return _SearchConstraints;}			
+			set {_SearchConstraints = value;}
+			}
+		SearchConstraints						_SearchConstraints ;
 
         /// <summary>
         /// Tag identifying this class.
@@ -5936,6 +5653,11 @@ namespace Goedel.Mesh {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("AccountID", 1);
 					_Writer.WriteString (AccountID);
+				}
+			if (SearchConstraints != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("SearchConstraints", 1);
+					SearchConstraints.Serialize (_Writer, false);
 				}
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
@@ -6040,6 +5762,12 @@ namespace Goedel.Mesh {
 					AccountID = JSONReader.ReadString ();
 					break;
 					}
+				case "SearchConstraints" : {
+					// An untagged structure
+					SearchConstraints = new SearchConstraints (JSONReader);
+ 
+					break;
+					}
 				default : {
 					base.DeserializeToken(JSONReader, Tag);
 					break;
@@ -6053,7 +5781,7 @@ namespace Goedel.Mesh {
 
 	/// <summary>
 	///
-	/// 
+	/// Reports the success or failure of a ConnectPending transaction.
 	/// </summary>
 	public partial class ConnectPendingResponse : MeshRequest {
 		/// <summary>
@@ -6064,6 +5792,14 @@ namespace Goedel.Mesh {
 			set {_Pending = value;}
 			}
 		List<SignedConnectionRequest>				_Pending;
+        /// <summary>
+        /// 
+        /// </summary>
+		public virtual string						PageKey {
+			get {return _PageKey;}			
+			set {_PageKey = value;}
+			}
+		string						_PageKey ;
 
         /// <summary>
         /// Tag identifying this class.
@@ -6136,6 +5872,11 @@ namespace Goedel.Mesh {
 				_Writer.WriteArrayEnd ();
 				}
 
+			if (PageKey != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("PageKey", 1);
+					_Writer.WriteString (PageKey);
+				}
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
 				}
@@ -6247,6 +5988,10 @@ namespace Goedel.Mesh {
 						}
 					break;
 					}
+				case "PageKey" : {
+					PageKey = JSONReader.ReadString ();
+					break;
+					}
 				default : {
 					base.DeserializeToken(JSONReader, Tag);
 					break;
@@ -6260,7 +6005,7 @@ namespace Goedel.Mesh {
 
 	/// <summary>
 	///
-	/// 
+	/// Reports the success or failure of a ConnectComplete transaction.
 	/// </summary>
 	public partial class ConnectCompleteRequest : MeshRequest {
         /// <summary>
@@ -6466,7 +6211,7 @@ namespace Goedel.Mesh {
 
 	/// <summary>
 	///
-	/// 
+	/// Reports the success or failure of a ConnectComplete transaction.
 	/// </summary>
 	public partial class ConnectCompleteResponse : MeshRequest {
 
@@ -6623,6 +6368,420 @@ namespace Goedel.Mesh {
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
+				default : {
+					base.DeserializeToken(JSONReader, Tag);
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
+	/// <summary>
+	///
+	/// 
+	/// </summary>
+	public partial class TransferRequest : MeshRequest {
+        /// <summary>
+        /// 
+        /// </summary>
+		public virtual SearchConstraints						SearchConstraints {
+			get {return _SearchConstraints;}			
+			set {_SearchConstraints = value;}
+			}
+		SearchConstraints						_SearchConstraints ;
+
+        /// <summary>
+        /// Tag identifying this class.
+        /// </summary>
+        /// <returns>The tag</returns>
+		public override string Tag () {
+			return "TransferRequest";
+			}
+
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
+		public TransferRequest () {
+			_Initialize ();
+			}
+
+        /// <summary>
+		/// Initialize class from JSONReader stream.
+        /// </summary>		
+		public TransferRequest (JSONReader JSONReader) {
+			Deserialize (JSONReader);
+			}
+
+        /// <summary>
+		/// Initialize class from a JSON encoded class.
+        /// </summary>		
+		public TransferRequest (string _String) {
+			Deserialize (_String);
+			}
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="Writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
+			SerializeX (Writer, wrap, ref first);
+			}
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_Writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			if (_wrap) {
+				_Writer.WriteObjectStart ();
+				}
+			((MeshRequest)this).SerializeX(_Writer, false, ref _first);
+			if (SearchConstraints != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("SearchConstraints", 1);
+					SearchConstraints.Serialize (_Writer, false);
+				}
+			if (_wrap) {
+				_Writer.WriteObjectEnd ();
+				}
+			}
+
+
+
+        /// <summary>
+		/// Create a new instance from untagged byte input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>		
+		public static new TransferRequest From (byte[] _Data) {
+			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
+			return From (_Input);
+			}
+
+        /// <summary>
+		/// Create a new instance from untagged string input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>				
+		public static new TransferRequest From (string _Input) {
+			StringReader _Reader = new StringReader (_Input);
+            JSONReader JSONReader = new JSONReader (_Reader);
+			return new TransferRequest (JSONReader);
+			}
+
+        /// <summary>
+		/// Create a new instance from tagged byte input.
+		/// i.e. { "TransferRequest" : {... data ... } }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>				
+		public static new TransferRequest FromTagged (byte[] _Data) {
+			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
+			return FromTagged (_Input);
+			}
+
+        /// <summary>
+        /// Create a new instance from tagged string input.
+		/// i.e. { "TransferRequest" : {... data ... } }
+        /// </summary>
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>		
+		public static new TransferRequest FromTagged (string _Input) {
+			//TransferRequest _Result;
+			//Deserialize (_Input, out _Result);
+			StringReader _Reader = new StringReader (_Input);
+            JSONReader JSONReader = new JSONReader (_Reader);
+			return FromTagged (JSONReader) ;
+			}
+
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader"></param>
+        public static new TransferRequest  FromTagged (JSONReader JSONReader) {
+			TransferRequest Out = null;
+
+			JSONReader.StartObject ();
+            if (JSONReader.EOR) {
+                return null;
+                }
+
+			string token = JSONReader.ReadToken ();
+
+			switch (token) {
+
+				case "TransferRequest" : {
+					var Result = new TransferRequest ();
+					Result.Deserialize (JSONReader);
+					Out = Result;
+					break;
+					}
+
+				default : {
+					//Ignore the unknown data
+                    //throw new Exception ("Not supported");
+                    break;
+					}
+				}
+			JSONReader.EndObject ();
+
+			return Out;
+			}
+
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="JSONReader"></param>
+        /// <param name="Tag"></param>
+		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+			
+			switch (Tag) {
+				case "SearchConstraints" : {
+					// An untagged structure
+					SearchConstraints = new SearchConstraints (JSONReader);
+ 
+					break;
+					}
+				default : {
+					base.DeserializeToken(JSONReader, Tag);
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
+	/// <summary>
+	///
+	/// Reports the success or failure of a Transfer transaction.
+	/// If successful, contains the list of Mesh records to be transferred.
+	/// </summary>
+	public partial class TransferResponse : MeshResponse {
+		/// <summary>
+        /// 
+        /// </summary>
+		public virtual List<DataItem>				DataItems {
+			get {return _DataItems;}			
+			set {_DataItems = value;}
+			}
+		List<DataItem>				_DataItems;
+        /// <summary>
+        /// 
+        /// </summary>
+		public virtual string						PageKey {
+			get {return _PageKey;}			
+			set {_PageKey = value;}
+			}
+		string						_PageKey ;
+
+        /// <summary>
+        /// Tag identifying this class.
+        /// </summary>
+        /// <returns>The tag</returns>
+		public override string Tag () {
+			return "TransferResponse";
+			}
+
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
+		public TransferResponse () {
+			_Initialize ();
+			}
+
+        /// <summary>
+		/// Initialize class from JSONReader stream.
+        /// </summary>		
+		public TransferResponse (JSONReader JSONReader) {
+			Deserialize (JSONReader);
+			}
+
+        /// <summary>
+		/// Initialize class from a JSON encoded class.
+        /// </summary>		
+		public TransferResponse (string _String) {
+			Deserialize (_String);
+			}
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="Writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
+			SerializeX (Writer, wrap, ref first);
+			}
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_Writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			if (_wrap) {
+				_Writer.WriteObjectStart ();
+				}
+			((MeshResponse)this).SerializeX(_Writer, false, ref _first);
+			if (DataItems != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("DataItems", 1);
+				_Writer.WriteArrayStart ();
+				bool _firstarray = true;
+				foreach (var _index in DataItems) {
+					_Writer.WriteArraySeparator (ref _firstarray);
+					// This is an untagged structure. Cannot inherit.
+                    //_Writer.WriteObjectStart();
+                    //_Writer.WriteToken(_index.Tag(), 1);
+					bool firstinner = true;
+					_index.Serialize (_Writer, true, ref firstinner);
+                    //_Writer.WriteObjectEnd();
+					}
+				_Writer.WriteArrayEnd ();
+				}
+
+			if (PageKey != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("PageKey", 1);
+					_Writer.WriteString (PageKey);
+				}
+			if (_wrap) {
+				_Writer.WriteObjectEnd ();
+				}
+			}
+
+
+
+        /// <summary>
+		/// Create a new instance from untagged byte input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>		
+		public static new TransferResponse From (byte[] _Data) {
+			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
+			return From (_Input);
+			}
+
+        /// <summary>
+		/// Create a new instance from untagged string input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>				
+		public static new TransferResponse From (string _Input) {
+			StringReader _Reader = new StringReader (_Input);
+            JSONReader JSONReader = new JSONReader (_Reader);
+			return new TransferResponse (JSONReader);
+			}
+
+        /// <summary>
+		/// Create a new instance from tagged byte input.
+		/// i.e. { "TransferResponse" : {... data ... } }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>				
+		public static new TransferResponse FromTagged (byte[] _Data) {
+			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
+			return FromTagged (_Input);
+			}
+
+        /// <summary>
+        /// Create a new instance from tagged string input.
+		/// i.e. { "TransferResponse" : {... data ... } }
+        /// </summary>
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>		
+		public static new TransferResponse FromTagged (string _Input) {
+			//TransferResponse _Result;
+			//Deserialize (_Input, out _Result);
+			StringReader _Reader = new StringReader (_Input);
+            JSONReader JSONReader = new JSONReader (_Reader);
+			return FromTagged (JSONReader) ;
+			}
+
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader"></param>
+        public static new TransferResponse  FromTagged (JSONReader JSONReader) {
+			TransferResponse Out = null;
+
+			JSONReader.StartObject ();
+            if (JSONReader.EOR) {
+                return null;
+                }
+
+			string token = JSONReader.ReadToken ();
+
+			switch (token) {
+
+				case "TransferResponse" : {
+					var Result = new TransferResponse ();
+					Result.Deserialize (JSONReader);
+					Out = Result;
+					break;
+					}
+
+				default : {
+					//Ignore the unknown data
+                    //throw new Exception ("Not supported");
+                    break;
+					}
+				}
+			JSONReader.EndObject ();
+
+			return Out;
+			}
+
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="JSONReader"></param>
+        /// <param name="Tag"></param>
+		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+			
+			switch (Tag) {
+				case "DataItems" : {
+					// Have a sequence of values
+					bool _Going = JSONReader.StartArray ();
+					DataItems = new List <DataItem> ();
+					while (_Going) {
+						// an untagged structure.
+						var _Item = new DataItem (JSONReader);
+						DataItems.Add (_Item);
+						_Going = JSONReader.NextArray ();
+						}
+					break;
+					}
+				case "PageKey" : {
+					PageKey = JSONReader.ReadString ();
+					break;
+					}
 				default : {
 					base.DeserializeToken(JSONReader, Tag);
 					break;

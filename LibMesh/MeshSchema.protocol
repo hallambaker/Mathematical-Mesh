@@ -1,8 +1,56 @@
 ﻿Protocol Goedel.Mesh MeshItem MeshItem
     Using Goedel.Cryptography.Jose 
+
+	Section 1 "Cryptographic Data Objects"
+
+	Section 2 "Public Key Objects"
+
+	Structure PublicKey
+		Description
+			|Container for public key pair data
+		String UDF
+			Description
+				|UDF fingerprint of the key
+		Binary X509Certificate
+			Description
+				|List of X.509 Certificates
+		Binary X509Chain
+			Multiple
+			Description
+				|X.509 Certificate chain.
+		Binary X509CSR
+			Description
+				|X.509 Certificate Signing Request.
+		TStruct Key PublicParameters
+			Description
+				|The public key parameters as defined in the JOSE specification.
+		TStruct Key PrivateParameters
+			Description
+				|The private key parameters as defined in the JOSE specification.
+
+	Section 2 "JOSE Signature Objects"
+
+	Structure SignedData
+		Description
+			|Container for JOSE signed data and related attributes.
+		Binary Data
+			|The signed data
 	
+	Section 2 "JOSE Encryption Objects"	
+
+	Structure EncryptedData
+		Description
+			|Container for JOSE encrypted data and related attributes.
+		Binary Data
+			|The encrypted data
+		
+	Section 1 "Mesh Profile Objects"
+
+	Section 2 "Base Profile Objects"
+
 	Structure Entry
-		//Abstract	
+		Description 
+			|Base class for all Mesh Profile objects.
 		String Identifier
 			Description 
 				|Globally unique identifier that remains constant for the lifetime of the 
@@ -14,37 +62,12 @@
 			|Contains a signed profile entry
 		Struct JoseWebSignature SignedData
 			Description
-				|The signed profile
-
-	Structure SignedDeviceProfile
-		Inherits SignedProfile
-		Description 
-			|Contains a signed device profile
-
-	Structure SignedMasterProfile
-		Inherits SignedProfile
-		Description 
-			|Contains a signed Personal master profile
-
-	Structure SignedPersonalProfile
-		Inherits SignedProfile
-		Description 
-			|Contains a signed Personal current profile
-
-
-	Structure SignedApplicationProfile
-		Inherits SignedProfile
-		Description 
-			|Contains a signed device profile
-
-	Structure EncryptedProfile
-		Inherits Entry
-		Description
-			|Contains an encrypted profile entry
-		Struct JoseWebEncryption EncryptedData
+				|The signed profile.
 			Description
-				|The signed and encrypted profile
-
+				|Note that each child of SignedProfile requires that the Payload field
+				|of the SignedData object contain an object of a specific type. 
+				|For example, a SignedDeviceProfile object MUST contain a Payload field that
+				|contains a DeviceProfile object.
 
 	Structure Profile
 		Abstract
@@ -66,80 +89,12 @@
 				|was performed after the notary token was created.
 
 
-	Structure MasterProfile
-		Inherits Profile
+	Section 2 "Device Profile Objects"
+
+	Structure SignedDeviceProfile
+		Inherits SignedProfile
 		Description 
-			|Describes the long term parameters associated with a personal profile.
-		Struct PublicKey MasterSignatureKey
-			Description
-				|The root of trust for the Personal PKI, the public key of the PMSK 
-				|is presented as a self-signed X.509v3 certificate with Certificate 
-				|Signing use enabled. The PMSK is used to sign certificates for the 
-				|PMEK, POSK and PKEK keys.
-		Struct PublicKey MasterEscrowKeys
-			Multiple
-			Description
-				|A Personal Profile MAY contain one or more PMEK keys to enable escrow 
-				|of private keys used for stored data. 
-		Struct PublicKey OnlineSignatureKeys
-			Multiple
-			Description
-				|A Personal profile contains at least one POSK which is used to sign 
-				|device administration application profiles.
-
-
-	Structure PersonalProfile
-		Inherits Profile
-		Description 
-			|Describes the current applications and devices connected to a 
-			|personal master profile.
-		Struct SignedMasterProfile SignedMasterProfile
-			Description
-				|The corresponding master profile. 
-				|The profile MUST be signed by the PMSK.
-		Struct SignedDeviceProfile Devices
-			Multiple
-			Description 
-				|The set of device profiles connected to the profile.
-				|The profile MUST be signed by the DSK in the profile.
-		Struct ApplicationProfileEntry Applications
-			Multiple
-			Description
-				|Application profiles connected to this profile.
-
-		//TStruct ApplicationProfile Applications
-		//	Multiple
-		//	Description 
-		//		|The set of application profiles connected to the profile.
-		//Struct SignedAdministrationProfile SignedAdministrationProfile
-		//	Description
-		//		|The Administration profile associated with this device.
-		//		|The profile MUST be signed by the POSK.
-
-	Structure ApplicationProfileEntry
-		String Identifier
-			Description
-				|The unique identifier of the application
-		String Type
-			Description
-				|The application type
-		String Friendly
-			Description
-				|Optional friendly name identifying the application.
-		String SignID
-			Multiple
-			Description
-				|List of devices authorized to sign application profiles
-		String DecryptID
-			Multiple
-			Description
-				|List of devices authorized to read private parts of application 
-				|profiles					
-
-
-
-
-
+			|Contains a signed device profile
 
 	Structure DeviceProfile
 		Inherits Profile
@@ -174,7 +129,74 @@
 			Description
 				|Private portion of the DeviceEncryptiontionKey
 
+	Section 2 "Master Profile Objects"
 
+	Structure SignedMasterProfile
+		Inherits SignedProfile
+		Description 
+			|Contains a signed Personal master profile
+
+	Structure MasterProfile
+		Inherits Profile
+		Description 
+			|Describes the long term parameters associated with a personal profile.
+		Struct PublicKey MasterSignatureKey
+			Description
+				|The root of trust for the Personal PKI, the public key of the PMSK 
+				|is presented as a self-signed X.509v3 certificate with Certificate 
+				|Signing use enabled. The PMSK is used to sign certificates for the 
+				|PMEK, POSK and PKEK keys.
+		Struct PublicKey MasterEscrowKeys
+			Multiple
+			Description
+				|A Personal Profile MAY contain one or more PMEK keys to enable escrow 
+				|of private keys used for stored data. 
+		Struct PublicKey OnlineSignatureKeys
+			Multiple
+			Description
+				|A Personal profile contains at least one POSK which is used to sign 
+				|device administration application profiles.
+
+	Section 2 "Personal Profile Objects"
+
+	Structure SignedPersonalProfile
+		Inherits SignedProfile
+		Description 
+			|Contains a signed Personal current profile
+
+	Structure PersonalProfile
+		Inherits Profile
+		Description 
+			|Describes the current applications and devices connected to a 
+			|personal master profile.
+		Struct SignedMasterProfile SignedMasterProfile
+			Description
+				|The corresponding master profile. 
+				|The profile MUST be signed by the PMSK.
+		Struct SignedDeviceProfile Devices
+			Multiple
+			Description 
+				|The set of device profiles connected to the profile.
+				|The profile MUST be signed by the DSK in the profile.
+		Struct ApplicationProfileEntry Applications
+			Multiple
+			Description
+				|Application profiles connected to this profile.
+
+	Section 2 "Application Profile Objects"
+
+	Structure SignedApplicationProfile
+		Inherits SignedProfile
+		Description 
+			|Contains a signed device profile
+
+	Structure EncryptedProfile
+		Inherits Entry
+		Description
+			|Contains an encrypted profile entry
+		Struct JoseWebEncryption EncryptedData
+			Description
+				|The signed and encrypted profile
 
 	Structure ApplicationProfile
 		Inherits Profile
@@ -183,7 +205,69 @@
 		Struct JoseWebEncryption EncryptedData
 			Description
 				|Encrypted application data	
-	
+
+	Structure ApplicationProfileEntry
+		String Identifier
+			Description
+				|The unique identifier of the application
+		String Type
+			Description
+				|The application type
+		String Friendly
+			Description
+				|Optional friendly name identifying the application.
+		String SignID
+			Multiple
+			Description
+				|List of devices authorized to sign application profiles
+		String DecryptID
+			Multiple
+			Description
+				|List of devices authorized to read private parts of application 
+				|profiles					
+
+	Section 2 "Common Application Objects"
+
+	Structure Connection
+		Description
+			|Describes network connection parameters for an application
+		String ServiceName
+			Description
+				|DNS address of the server
+		Integer Port
+			Description
+				|TCP/UDP Port number
+		String Prefix
+			Description
+				|DNS service prefix as described in [!RFC6335]
+		String Security
+			Multiple
+			Description
+				|Describes the security mode to use. Valid choices are Direct/Upgrade/None
+
+		String UserName
+			Description
+				|Username to present to the service for authentication
+		String Password
+			Description
+				|Password to present to the service for authentication
+		String URI
+			Description
+				|Service connection parameters in URI format
+		String Authentication
+			Description
+				|List of the supported/acceptable authentication mechanisms,
+				|preferred mechanism first.
+
+		Integer TimeOut
+			Description
+				|Service timeout in seconds.
+		Boolean Polling
+			Description
+				|If set, the client should poll the specified service intermittently
+				|for updates.
+
+	Section 2 "Password Application Profile Objects"
 
 	Structure PasswordProfile
 		Inherits ApplicationProfile
@@ -210,6 +294,7 @@
 			Description
 				|Case sensitive password.
 
+	Section 2 "Mail Application Profile Objects"
 
 	Structure MailProfile
 		Inherits ApplicationProfile
@@ -277,12 +362,7 @@
 				|If multiple public keys are specified, the order indicates preference.							
 
 	
-
-
-
-
-
-
+	Section 2 "Network Application Profile Objects"
 
 
 	Structure NetworkProfile
@@ -315,7 +395,7 @@
 				|List of UDF fingerprints of keys making up the trust roots
 				|to be accepted for Web PKI purposes.
 
-
+	Section 2 "Key Escrow Objects"
 		
 	// These structures are probably not very interesting as all the data is 
 	// encrypted
@@ -345,102 +425,39 @@
 				|The escrowed keys.
 
 
-	Structure Connection
-		Description
-			|Describes network connection parameters for an application
-		String ServiceName
-			Description
-				|DNS address of the server
-		Integer Port
-			Description
-				|TCP/UDP Port number
-		String Prefix
-			Description
-				|DNS service prefix as described in [!RFC6335]
-		String Security
-			Multiple
-			Description
-				|Describes the security mode to use. Valid choices are Direct/Upgrade/None
+	Section 1 "Portal Connection"
 
-		String UserName
-			Description
-				|Username to present to the service for authentication
-		String Password
-			Description
-				|Password to present to the service for authentication
-		String URI
-			Description
-				|Service connection parameters in URI format
-		String Authentication
-			Description
-				|List of the supported/acceptable authentication mechanisms,
-				|preferred mechanism first.
-
-
-		Integer TimeOut
-			Description
-				|Service timeout in seconds.
-		Boolean Polling
-			Description
-				|If set, the client should poll the specified service intermittently
-				|for updates.
-
-
-	// These entries will be replaced by references to a JOSE module in
-	// due course
-	Structure EncryptedData
-		Description
-			|Container for JOSE encrypted data and related attributes.
-		Binary Data
-			|The encrypted data
-
-	Structure SignedData
-		Description
-			|Container for JOSE signed data and related attributes.
-		Binary Data
-			|The signed data
-
-
-	// Placeholder structures for the key data 
-	Structure PublicKey
-		Description
-			|Container for public key pair data
-		String UDF
-			Description
-				|UDF fingerprint of the key
-		Binary X509Certificate
-			Description
-				|List of X.509 Certificates
-		Binary X509Chain
-			Multiple
-			Description
-				|X.509 Certificate chain.
-		Binary X509CSR
-			Description
-				|X.509 Certificate Signing Request.
-		TStruct Key PublicParameters
-			Description
-				|The public key parameters.
-		TStruct Key PrivateParameters
-			Description
-				|The private key parameters.
-
+	Section 2 "Connection Request and Response Structures"
 
 	Structure ConnectionRequest
+		Description
+			|Describes a connection request.
 		String ParentUDF
+			Description
+				|UDF of Mesh Profile to which connection is requested.
 		Struct SignedDeviceProfile Device
-		String BlockToken
+			Description
+				|The Device profile to be connected
 
-	Structure ConnectionResult
-		Inherits ConnectionRequest
-		String Result
 
 	Structure SignedConnectionRequest
 		Inherits SignedProfile
 		Description 
-			|Contains a signed connection request
+			|Contains a ConnectionRequest signed by the 
+			|corresponding device signature key.
+
+	Structure ConnectionResult
+		Description
+			|Describes the result of a connection request.
+		Inherits ConnectionRequest
+		String Result
+			Description
+				|The result of the connection request. Valid responses are:
+				|Accepted, Refused, Query.
+
+
 
 	Structure SignedConnectionResult
 		Inherits SignedProfile
 		Description 
-			|Contains a signed connection request
+			|Contains a signed connection result

@@ -60,8 +60,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="LibMeshService.licenseheader" />
-    <None Include="MeshProtocol-II.Protocol" />
-    <None Include="MeshProtocol.md" />
     <None Include="MeshProtocol.Protocol">
       <Generator>Protogen</Generator>
       <LastGenOutput>MeshProtocol.cs</LastGenOutput>

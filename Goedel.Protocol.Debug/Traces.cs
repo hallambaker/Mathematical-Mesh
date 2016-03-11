@@ -251,7 +251,8 @@ namespace Goedel.Protocol.Debug {
         public TraceMessage(TracePoint TracePoint,
                     JSONObject Payload, DateTime Time, bool IsRequest) {
             this.TracePoint = TracePoint;
-            _Payload = Payload;
+
+            _Payload = Payload.DeepCopy();
             _Time = Time.ToUniversalTime();
             _IsRequest = IsRequest;
 

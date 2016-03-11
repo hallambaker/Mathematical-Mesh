@@ -2,6 +2,7 @@
 #using Goedel.Mesh
 #using Goedel.Protocol
 #pclass ExampleGenerator ExampleGenerator
+
 #method MakeVersion int Ignore
 
 namespace InternetDrafts {
@@ -16,12 +17,8 @@ namespace InternetDrafts {
 
 ##Protocol Overview
 
-[NB - serious bug! the status code is not included in the response!]
-
-[NB - another serious bug! need to pickle the data in each message!]
-
 [Account request does not specify the portal in the request body,
-only the HTTP package includes this information.]
+only the HTTP package includes this information. This is probably a bug.]
 
 
 ####Creating a new portal account
@@ -30,7 +27,7 @@ A user interacts with a Mesh service through a Mesh portal provider
 with which she establishes a portal account. 
 
 For user convenience, a portal account identifier has the familiar 
-<username>@<domain> format established in [~RFC822].
+<<username>@<<domain> format established in [~RFC822].
 
 For example Alice selects #{CreateExamples.NameService} as her 
 portal provider and chooses the account name #{CreateExamples.NameAccount}.
@@ -376,7 +373,9 @@ Unlike a traditional password management service, the data stored
 the Password Profile is encrypted end to end and can only be 
 decrypted by the devices that hold a decryption key.
 
+~~~~
 #{Example.PasswordProfile}
+~~~~
 
 The application profile is published to the Mesh in the same
 way as any other profile update, via a a Publish transaction:

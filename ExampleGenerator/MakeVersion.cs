@@ -16,6 +16,7 @@ namespace ExampleGenerator {
 		public ExampleGenerator (TextWriter Output) : base (Output) {
 			}
 
+		//  
 		// #method MakeVersion int Ignore 
 		
 
@@ -52,18 +53,10 @@ namespace ExampleGenerator {
 			_Output.Write ("#Protocol Overview\n{0}", _Indent);
 			//  
 			_Output.Write ("\n{0}", _Indent);
-			// [NB - serious bug! the status code is not included in the response!] 
-			_Output.Write ("[NB - serious bug! the status code is not included in the response!]\n{0}", _Indent);
-			//  
-			_Output.Write ("\n{0}", _Indent);
-			// [NB - another serious bug! need to pickle the data in each message!] 
-			_Output.Write ("[NB - another serious bug! need to pickle the data in each message!]\n{0}", _Indent);
-			//  
-			_Output.Write ("\n{0}", _Indent);
 			// [Account request does not specify the portal in the request body, 
 			_Output.Write ("[Account request does not specify the portal in the request body,\n{0}", _Indent);
-			// only the HTTP package includes this information.] 
-			_Output.Write ("only the HTTP package includes this information.]\n{0}", _Indent);
+			// only the HTTP package includes this information. This is probably a bug.] 
+			_Output.Write ("only the HTTP package includes this information. This is probably a bug.]\n{0}", _Indent);
 			//  
 			_Output.Write ("\n{0}", _Indent);
 			//  
@@ -80,8 +73,8 @@ namespace ExampleGenerator {
 			_Output.Write ("\n{0}", _Indent);
 			// For user convenience, a portal account identifier has the familiar  
 			_Output.Write ("For user convenience, a portal account identifier has the familiar \n{0}", _Indent);
-			// <username>@<domain> format established in [~RFC822]. 
-			_Output.Write ("<username>@<domain> format established in [~RFC822].\n{0}", _Indent);
+			// <<username>@<<domain> format established in [~RFC822]. 
+			_Output.Write ("<<username>@<<domain> format established in [~RFC822].\n{0}", _Indent);
 			//  
 			_Output.Write ("\n{0}", _Indent);
 			// For example Alice selects #{CreateExamples.NameService} as her  
@@ -772,8 +765,12 @@ namespace ExampleGenerator {
 			_Output.Write ("decrypted by the devices that hold a decryption key.\n{0}", _Indent);
 			//  
 			_Output.Write ("\n{0}", _Indent);
+			// ~~~~ 
+			_Output.Write ("~~~~\n{0}", _Indent);
 			// #{Example.PasswordProfile} 
 			_Output.Write ("{1}\n{0}", _Indent, Example.PasswordProfile);
+			// ~~~~ 
+			_Output.Write ("~~~~\n{0}", _Indent);
 			//  
 			_Output.Write ("\n{0}", _Indent);
 			// The application profile is published to the Mesh in the same 

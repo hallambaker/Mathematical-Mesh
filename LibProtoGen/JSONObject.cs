@@ -50,6 +50,16 @@ namespace Goedel.Protocol {
 			Deserialize (_String);
 			}
 
+        /// <summary>
+        /// If implemented in the child class, performs a deep copy of the structure.
+        /// </summary>
+        /// <returns>Deep copy of the object with all referenced objects
+        /// copied.</returns>
+        public virtual JSONObject DeepCopy() {
+            return null;
+            }
+
+
 		public override string ToString () {
 			JSONWriter _JSONWriter = new JSONWriter ();
 			Serialize (_JSONWriter, true);

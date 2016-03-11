@@ -9,17 +9,18 @@ using Goedel.Protocol.Debug;
 namespace ExampleGenerator {
     public class CreateExamples {
         static void Main(string[] args) {
+
             var Class = new CreateExamples();
-            Class.Go();
+            Class.Go(args[0]);
             }
 
-        string Output = "Examples.md";
+
         string LogPortal = "Portal.jlog";
         string LogMesh = "Mesh.jlog";
 
         public TraceDictionary Traces;
 
-        void Go() {
+        void Go(string Output) {
             StartService();
 
             CreateProfile();
