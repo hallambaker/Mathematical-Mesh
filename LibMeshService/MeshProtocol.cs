@@ -711,7 +711,7 @@ namespace Goedel.Mesh {
 		// Transaction Classes
 	/// <summary>
 	///
-	/// Base class for all request objects.
+	/// Base class for all request messages.
 	/// </summary>
 	public partial class MeshRequest : Goedel.Protocol.Request {
         /// <summary>
@@ -1003,7 +1003,7 @@ namespace Goedel.Mesh {
 
 	/// <summary>
 	///
-	/// Base class for all responses. Contains only the
+	/// Base class for all response messages. Contains only the
 	/// status code and status description fields.
 	/// A service MAY return either the response message specified
 	/// for that transaction or any parent of that message. 

@@ -29,7 +29,7 @@ address in the HTTP Host field.
 
 ###Message: MeshRequest
 
-Base class for all request objects.
+Base class for all request messages.
 
 
 Portal: String (Optional)
@@ -48,7 +48,7 @@ payload object MUST always be considered authoritative.
 
 ###Message: MeshResponse
 
-Base class for all responses. Contains only the
+Base class for all response messages. Contains only the
 status code and status description fields.
 
 A service MAY return either the response message specified
@@ -72,13 +72,13 @@ and log file use.
 The following response codes are returned when a
 transaction has completed successfully.
 
-201 SuccessOK
+[201] SuccessOK
 :Operation completed successfully
 
-201 SuccessCreated
+[201] SuccessCreated
 :Operation completed successfully, new data item created
 
-202 SuccessUpdated
+[202] SuccessUpdated
 :Operation completed successfully, data item was updated
 
 ###Warning Response Codes
@@ -94,10 +94,10 @@ indicated in a status response might be incorrect
 or even malicious and cannot be considered 
 trustworthy without appropriate authentication.
 
-303 RedirectPermanent
+[303] RedirectPermanent
 :Service has been permanently moved
 
-307 RedirectTemporary
+[307] RedirectTemporary
 :Service has been temporarily moved
 
 ###Error Response Codes
@@ -106,13 +106,13 @@ A response code in the range 400-499 is
 returned when the service was able to process the
 transaction but the transaction resulted in an error.
 
-401 ClientUnauthorized
+[401] ClientUnauthorized
 :Client is not authorized to perform specified request
 
-404 NotFound
+[404] NotFound
 :The requested object could not be found.
 
-409 AlreadyExists
+[409] AlreadyExists
 :The requested object already exists.
 
 ###Failure Response Codes
@@ -122,10 +122,10 @@ returned when the service was unable to process the
 transaction but the transaction due to an internal
 failure.
 
-500 ServerInternal
+[500] ServerInternal
 :An internal error occurred at the server
 
-503 ServerOverload
+[503] ServerOverload
 :The server cannot handle the request as it is overloaded
 
 ##Imported Objects

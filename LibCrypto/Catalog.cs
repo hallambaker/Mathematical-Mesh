@@ -119,6 +119,11 @@ namespace Goedel.LibCrypto {
         ECDSA_P256,
 
         /// <summary>
+        /// Elliptic Curve DSA with curve P384
+        /// </summary>
+        ECDSA_P384,
+
+        /// <summary>
         /// Elliptic Curve DSA with curve P521
         /// </summary>
         ECDSA_P521,
@@ -153,6 +158,11 @@ namespace Goedel.LibCrypto {
         /// Elliptic Curve DH with curve P256
         /// </summary>
         ECDH_P256,
+
+        /// <summary>
+        /// Elliptic Curve DH with curve P384
+        /// </summary>
+        ECDH_P384,
 
         /// <summary>
         /// Elliptic Curve DH with curve P521

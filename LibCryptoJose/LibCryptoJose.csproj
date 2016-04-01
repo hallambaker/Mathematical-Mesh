@@ -77,7 +77,6 @@
       <DependentUpon>JoseSchema.Protocol</DependentUpon>
     </Compile>
     <Compile Include="JWE.cs" />
-    <Compile Include="JWESimple.cs" />
     <Compile Include="JWK.cs" />
     <Compile Include="JWSimple.cs" />
     <Compile Include="JWS.cs" />

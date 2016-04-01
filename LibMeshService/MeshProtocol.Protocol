@@ -25,7 +25,7 @@
 
 	Message MeshRequest
 		Description
-			|Base class for all request objects.
+			|Base class for all request messages.
 		External Goedel.Protocol.Request
 		String Portal
 			Description
@@ -44,7 +44,7 @@
 	Message MeshResponse
 		External Goedel.Protocol.Response		
 		Description
-			|Base class for all responses. Contains only the
+			|Base class for all response messages. Contains only the
 			|status code and status description fields.
 		Description
 			|A service MAY return either the response message specified

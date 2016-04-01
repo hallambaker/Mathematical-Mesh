@@ -84,7 +84,7 @@ namespace Goedel.Protocol.Debug {
             Request.Serialize(JSONWriter, true);
             JSONWriter.WriteObjectEnd();
 
-            // Now prepare a reader so that the data can be unpackef
+            // Now prepare a reader so that the data can be unpacked
             var DataText = Buffer.GetUTF8;
             var JSONReader = new JSONReader(DataText);
 
