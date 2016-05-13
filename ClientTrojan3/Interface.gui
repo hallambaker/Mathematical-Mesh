@@ -1,0 +1,300 @@
+﻿
+
+GUI PHB.Apps.Mesh.ProfileManager ProfileManager
+
+	About "Mesh Profile Manager"
+
+
+	Window MainWindow "Mesh Profile Manager"
+		ThreePane MenuTop
+
+	Menu MenuTop "Menu"
+		Menu Profiles "Profile"
+			Menu Create "Create"
+				Command CreateProfile "Create New Personal Profile"
+				Command CreateApplication "Create New Application Profile"
+				Command CreateEscrow "Create escrow key set"
+			Command About "About"
+			Command Quit "Quit"
+		Menu View "View"
+			Command ViewPendingRequests "View Pending Requests"
+			Command ViewPendingApplications "View Applications"
+			Command ViewPendingDevices "View Devices"
+		Menu Connect "Connections"
+			Command AcceptConnect "Accept"
+				Select ConnectRequest
+			Command RejectConnect "Reject"
+				Select ConnectRequest
+			Command Refresh "Get Pending Requests"
+			Command GetOTC "Issue One Time Code"
+			Command Delete "Delete"
+				Select Device
+		Menu Manage "Manage"
+			Menu Privilege "Privileges"
+				Command AdministratorGrant "Grant Administrator"
+					Select Device
+				Command AdministratorRemove "Remove Administrator"
+					Select Device
+			Command Rollover "Refresh Keys"
+				Select Application
+
+
+	Wizard WizardCreateProfile "Create a New Mesh Profile"
+		Text
+			|This wizard will guide you through the process of setting up
+			|a new mesh profile and configuring it for use with your applications.
+		Text
+			|To create a Mesh profile you will need to know the
+			|address of the portal where the profile is to be registered
+			|and provide a name for the profile at that portal.
+		Text
+			|Unlike an email account, a Mesh profile belongs to you and
+			|only you. You can always change the portal registration 
+			|for your profile at a later date.
+
+		Step CreateProfile		"Create Profile"
+		Step SelectApplications "Select Applications"
+		Step Review				"Review"
+		Step Finish				"Finish"
+
+	Object Message "Message"
+		DateTime	Issued		"Sent"
+		DateTime	Expires		"Expires"
+		String		Status		"Status"
+
+	Object ConnectRequest "Connection Request"
+		Inherit		Message
+		String		Description		"Device description"
+		String		Fingerprint		"Fingerprint"
+
+		Command		Accept "Accept"
+		Command		Reject "Reject"
+
+	Object Profile "Profile"
+		String Fingerprint			"Fingerprint"
+			Output
+		Set Group		Groups 	"Groups"
+		Set Device	Devices		"Connected devices"
+		Set Application  Applications		"Connected applications"
+
+
+	Object Device "Device"
+		Set Group		Groups 	"Member of groups"
+		Set Application  Applications		"Connected applications"
+
+	Object Application "Application"
+		Set Group	Groups		"Member of groups"
+		Set Device	Devices		"Connected devices"
+
+	Object Group "Group"
+		Set Device	Devices		"Devices"
+		Set Application	Applications	"Applications"
+
+	Object ApplicationMail "Mail"
+		Inherit Application
+		String Account		"Account name"
+		String Address		"Email address"
+		
+		Item ServerSASL Inbound		"Inbound Server"
+		Item ServerSASL Outbound	"Outbound Server"
+
+		Option EnablePGP				"OpenPGP"
+			Boolean PGPPerDeviceSign		"Separate signing keys per device"
+			Boolean PGPPerDeviceDecrypt	"Separate decryption keys per device"
+			Option PGPSelectAlgorithms		"Specifiy permitted algorithms"
+				Chooser PGPAlgorithms		"Algorithms"
+			List KeysPGP PGPKeys "Keys"
+
+		Option EnableSMIME		"S/MIME"
+			Boolean SMIMEPerDeviceSign		"Separate signing keys per device"
+			Boolean SMIMEPerDeviceDecrypt	"Separate decryption keys per device"
+			Option SMIMESelectAlgorithms		"Specifiy permitted algorithms"
+				Chooser SMIMEAlgorithms		"Algorithms"
+			List KeysSMIME SMIMEKeys "Keys"
+
+
+	Object ApplicationSSH "SSH"
+		Inherit Application
+		String Fingerprint		"Fingerprint"
+		String Algorithm		"Algorithm"
+		String Key				"Key"
+
+	Object ApplicationPassword "Password Manager"
+		Inherit Application
+		List WebPassword	Sites	"Sites"
+
+	Object ApplicationWiFi "WiFi"
+		Inherit Application
+		List WiFi			WiFis	"Networks"
+
+	Object Key "Key"
+		String Fingerprint			"Fingerprint"
+			Output
+
+	Object KeysSMIME "S/MIME Key"
+		Inherit Key
+		Boolean Valid			"Is valid"
+			Output
+		String Created			"Created"
+		String Expires			"Expires"
+		Command Revoke			"Revoke"
+		Command Renew			"Renew"
+			
+	Object KeysPGP "OpenPGP Key"
+		Inherit Key
+		Boolean Valid		"Is valid"
+			Output
+		String Created			"Created"
+		String Expires			"Expires"
+		Command Revoke			"Revoke"
+		Command Renew			"Renew"
+
+	Object SSHKey "SSH Key"
+		Inherit Key
+		String Algorithm			"Algorithm"
+		String Key					"Key"
+
+	Object SSHService "SSH Service"
+		Item		Server Server			"Server"
+		String		Fingerprint		"Fingerprint"
+
+	Object WebPassword "Password"
+		String		Site			"Site"
+		String		Account			"Account"
+		Secret		Password		"Password"
+
+	Object WiFi "WiFi Connection"
+		String		SSID		"SSID"
+		Secret		Password	"Password"
+		Boolean		WEP			"WEP"
+		Boolean		WPA			"WPA"
+		Boolean		WPA2			"WPA2"
+		Boolean		WPAEnterprise	"WPA Enterprise"
+		Boolean		WPA2Enterprise	"WPA2 Enterprise"
+
+
+
+	Object Server "Server"
+		String		Address		"DNS Address"
+		Integer		Port		"Port"
+
+	Object ServerTLS "TLS Protected Server"
+		Inherit Server
+		Boolean		TLS			"Require TLS"
+		String		Root		"TLS Root"
+
+	Object ServerSASL "TLS/SASL Protected Server"
+		Inherit Server
+		Secret		Password	"Password"
+		Boolean		Auth		"Require Secure Auth"
+		String		Schemes		"Only accept"
+
+
+
+
+
+	Object CreateProfile "Create a New Mesh Profile"
+
+		String		FriendlyName	"Identifier"
+		String		PortalAccount	"Account Name"
+		String		PortalAddress	"Portal Address"
+
+		Option Advanced "Advanced Options"
+
+			Option Harden "Strong Fingerprint"
+				Integer Bits "Number of Bits"
+				Text
+					|A strong fingerprint is generated by generating master keys until 
+					|a master key matching a certain pattern is found. This increases the 
+					|difficulty of breaking the fingerprint by 'brute force' but only by
+					|the same amount of effort that was put into generating it.
+
+			Option Escrow "Escrow Keys"
+				Integer Shares "Number of Key Shares"
+				Integer Quorum "Number of shares required for recovery"
+				Text
+					|Creating an escrow record for the Master Key allows it to be 
+					|recovered should the need arise.
+
+
+	Object SelectApplications "Select Applications"
+		Text
+			|Which applications do you want to use the Mesh to secure?
+		Text
+			|(You can always add or remove applications later on.)
+
+		Command		SecureEmail		"Configure"
+			Text
+				|Email (S/MIME, OpenPGP)
+		Command		SecureSSH		"Configure"
+			Text
+				|SSH Secure Shell
+		Command		SecureWeb		"Configure"
+			Text
+				|World Wide Web
+		Command		SecureNetwork	"Configure"
+			Text
+				|Secure Network Access
+
+	
+	Object SelectAccountsEmail "Select Email Accounts"
+		Text
+			|The following accounts were discovered on your computer.
+		Enumerate Selection "Security settings"
+			Radio All "Use same security settings for all accounts"
+			Radio Choose "Let me choose options for each account"
+		List EmailAccounts Accounts "Email Accounts"
+
+
+	Object EmailAccounts "Email Accounts"
+		String Address		"Address"
+		String Application	"Application"
+
+	Object EmailOptions "Email Account Options"
+		String Account		"Account"
+		String Application	"Application"
+
+		Option UseOpenPGP "Create keys for OpenPGP"
+			Boolean		PublishPGPMesh		"Publish public key to the Mesh"
+			Boolean		PublishPGPKeyRing	"Publish public key to OpenPGP key servers"
+			Boolean		EscrowPGP			"Use personal escrow key to safeguard key"
+
+		Option UseSMIME "Create keys for S/MIME"
+			String		SMIMECA				"DNS address of CA"
+			Boolean		EscrowSMIME			"Use personal escrow key to safeguard key"
+
+
+	Object WebOptions "Web Options"
+		Enumerate Selection ""
+			Radio Both "Use the Mesh to store Web passwords and bookmarks"
+			Radio Password "Use the Mesh to store Web passwords"
+			Radio Bookmark "Use the Mesh to store Web bookmarks"
+			Radio Neither "Don't use the Mesh to store Web data"
+
+	Object NetworkOptions "Network Options"
+		String DNS1 "DNS server 1"
+		String DNS2	"DNS server 2"
+		String Scope "Restrict scope to domains"
+		Option RequireSecurity "Require Security"
+			String SecurityConfig "Security policy"
+			Boolean DNSTLS		"Allow DNS over TLS"
+			Boolean DNSPrivate	"Allow Private DNS"
+			String TrustRoot    "DNS Root of Trust"
+
+	Object Review "Final Review"
+		String Fingerprint "Master Fingerprint"
+			Output
+		String MeshPortal "Mesh Portal"
+			Output
+		Option Escrow "Escrow encryption keys"
+			String Quorum "Quorum"
+				Output
+			List Share Shares "Shares"
+
+	Object Share "Share"
+		Integer Number "Number"
+		String Share "Share"
+
+	Object Finish "Finished"
+		Text
+			|Success! The profile was accepted by the mesh portal.
