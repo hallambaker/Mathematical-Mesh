@@ -1,61 +1,99 @@
 ﻿
 
 GUI PHB.Apps.Mesh.ProfileManager ProfileManager
-
 	About "Mesh Profile Manager"
-
 
 	Window MainWindow "Mesh Profile Manager"
 		ThreePane MenuTop
 
 	Menu MenuTop "Menu"
-		Menu Profiles "Profile"
-			Menu Create "Create"
-				Command CreateProfile "Create New Personal Profile"
-				Command CreateApplication "Create New Application Profile"
-				Command CreateEscrow "Create escrow key set"
-			Command About "About"
-			Command Quit "Quit"
-		Menu View "View"
-			Command ViewPendingRequests "View Pending Requests"
-			Command ViewPendingApplications "View Applications"
-			Command ViewPendingDevices "View Devices"
-		Menu Connect "Connections"
-			Command AcceptConnect "Accept"
-				Select ConnectRequest
-			Command RejectConnect "Reject"
-				Select ConnectRequest
-			Command Refresh "Get Pending Requests"
-			Command GetOTC "Issue One Time Code"
-			Command Delete "Delete"
-				Select Device
-		Menu Manage "Manage"
-			Menu Privilege "Privileges"
-				Command AdministratorGrant "Grant Administrator"
-					Select Device
-				Command AdministratorRemove "Remove Administrator"
-					Select Device
-			Command Rollover "Refresh Keys"
-				Select Application
+		Menu MenuProfile "Master"
+			Action ProfileCreate
+			Action ProfileEscrow
+			Divider
+			Action Print
+			Action About
+			Action Quit
+
+		Menu MenuDevice "Device"
+			Action ConnectRefresh
+			Action ConnectAccept
+			Action ConnectReject
+			Action ConnectGetOTC
+			Action DeviceDelete
+			Divider
+			Menu Administrator "Administrator"
+				Action AdministratorAdd
+				Action AdministratorRemove
+			Divider
+			Action DeviceRefreshKeys
+
+		Menu MenuApplication "Application"
+			Menu ApplicationAdd "Add Application"
+				Action ApplicationAddMail
+				Action ApplicationAddSSH
+				Action ApplicationAddWiFi
+				Action ApplicationAddWeb
+			Action ApplicationDelete
+			Action ApplicationRefreshKeys
 
 
-	Wizard WizardCreateProfile "Create a New Mesh Profile"
-		Text
-			|This wizard will guide you through the process of setting up
-			|a new mesh profile and configuring it for use with your applications.
-		Text
-			|To create a Mesh profile you will need to know the
-			|address of the portal where the profile is to be registered
-			|and provide a name for the profile at that portal.
-		Text
-			|Unlike an email account, a Mesh profile belongs to you and
-			|only you. You can always change the portal registration 
-			|for your profile at a later date.
+	// Profile
+	Command ProfileCreate "Create New Master Profile"
+	Command ProfileEscrow "Create escrow key set"
+		Select Profile
 
-		Step CreateProfile		"Create Profile"
-		Step SelectApplications "Select Applications"
-		Step Review				"Review"
-		Step Finish				"Finish"
+	// Misc
+	Command About "About"
+	Command Quit "Quit"
+	Command Print "Print"
+		Select Object
+
+	// Connection management
+	Command ConnectRefresh "Get Pending Requests"
+	Command ConnectAccept "Accept Connection"
+		Select ConnectRequest
+	Command ConnectReject "Reject Connection"
+		Select ConnectRequest
+	Command ConnectGetOTC "Issue One Time Code"
+	Command DeviceDelete "Delete Device"
+		Select Device
+	Command DeviceRefreshKeys "Refresh Keys"
+		Select Device
+
+	// Add applications, devices to profile
+
+	Command ApplicationAddWizard "Add Application"
+		Select Profile
+	Command ApplicationAddMail "Add Mail"
+		Select Profile
+	Command ApplicationAddSSH "Add SSH"
+		Select Profile
+	Command ApplicationAddWiFi "Add WiFi Network"
+		Select Profile
+	Command ApplicationAddWeb "Add Web Password Manager"
+		Select Profile
+
+	Command ApplicationDelete "Delete Application"
+		Select Application
+	Command ApplicationRefreshKeys "Refresh Keys"
+		Select Application
+
+	// Administrative
+	Command AdministratorAdd "Grant Administrator"
+		Select Device
+	Command AdministratorRemove "Remove Administrator"
+		Select Device
+
+
+	Command KeyRefresh "Rollover Key"
+	Command KeyDelete "Delete Key"
+
+
+	// Manipulate the viewport area
+	Command ViewPendingRequests "View Pending Requests"
+	Command ViewPendingApplications "View Applications"
+	Command ViewPendingDevices "View Devices"
 
 	Object Message "Message"
 		DateTime	Issued		"Sent"
@@ -66,27 +104,33 @@ GUI PHB.Apps.Mesh.ProfileManager ProfileManager
 		Inherit		Message
 		String		Description		"Device description"
 		String		Fingerprint		"Fingerprint"
-
-		Command		Accept "Accept"
-		Command		Reject "Reject"
+		Action ConnectAccept
+		Action ConnectReject
 
 	Object Profile "Profile"
+		String Identifier			"Name"
 		String Fingerprint			"Fingerprint"
 			Output
-		Set Group		Groups 	"Groups"
+		//Set Group		Groups 	"Groups"
 		Set Device	Devices		"Connected devices"
+			Action DeviceDelete
+
 		Set Application  Applications		"Connected applications"
+			Action ApplicationAdd
 
 
 	Object Device "Device"
-		Set Group		Groups 	"Member of groups"
+		String Identifier			"Name"
+		//Set Group		Groups 	"Member of groups"
 		Set Application  Applications		"Connected applications"
 
 	Object Application "Application"
-		Set Group	Groups		"Member of groups"
+		String Identifier			"Name"
+		//Set Group	Groups		"Member of groups"
 		Set Device	Devices		"Connected devices"
 
 	Object Group "Group"
+		String Identifier			"Name"
 		Set Device	Devices		"Devices"
 		Set Application	Applications	"Applications"
 
@@ -101,16 +145,20 @@ GUI PHB.Apps.Mesh.ProfileManager ProfileManager
 		Option EnablePGP				"OpenPGP"
 			Boolean PGPPerDeviceSign		"Separate signing keys per device"
 			Boolean PGPPerDeviceDecrypt	"Separate decryption keys per device"
-			Option PGPSelectAlgorithms		"Specifiy permitted algorithms"
+			Option PGPSelectAlgorithms		"Specify permitted algorithms"
 				Chooser PGPAlgorithms		"Algorithms"
 			List KeysPGP PGPKeys "Keys"
-
+				Action KeyRemove
+			Action KeyRefresh
 		Option EnableSMIME		"S/MIME"
 			Boolean SMIMEPerDeviceSign		"Separate signing keys per device"
 			Boolean SMIMEPerDeviceDecrypt	"Separate decryption keys per device"
-			Option SMIMESelectAlgorithms		"Specifiy permitted algorithms"
+			Option SMIMESelectAlgorithms		"Specify permitted algorithms"
 				Chooser SMIMEAlgorithms		"Algorithms"
 			List KeysSMIME SMIMEKeys "Keys"
+				Action KeyRemove
+			Action KeyRefresh
+
 
 
 	Object ApplicationSSH "SSH"
@@ -126,28 +174,23 @@ GUI PHB.Apps.Mesh.ProfileManager ProfileManager
 	Object ApplicationWiFi "WiFi"
 		Inherit Application
 		List WiFi			WiFis	"Networks"
+			Action ApplicationWiFiAddNetwork
 
 	Object Key "Key"
 		String Fingerprint			"Fingerprint"
 			Output
+		Boolean KeyValid			"Is valid"
+			Output
+		String Created			"Created"
+		String Expires			"Expires"
+		Action KeyRemove
+		Action KeyRefresh
 
 	Object KeysSMIME "S/MIME Key"
 		Inherit Key
-		Boolean Valid			"Is valid"
-			Output
-		String Created			"Created"
-		String Expires			"Expires"
-		Command Revoke			"Revoke"
-		Command Renew			"Renew"
 			
 	Object KeysPGP "OpenPGP Key"
 		Inherit Key
-		Boolean Valid		"Is valid"
-			Output
-		String Created			"Created"
-		String Expires			"Expires"
-		Command Revoke			"Revoke"
-		Command Renew			"Renew"
 
 	Object SSHKey "SSH Key"
 		Inherit Key
@@ -191,6 +234,24 @@ GUI PHB.Apps.Mesh.ProfileManager ProfileManager
 
 
 
+	Wizard WizardCreateProfile "Create a New Mesh Profile"
+		Text
+			|This wizard will guide you through the process of setting up
+			|a new mesh profile and configuring it for use with your applications.
+		Text
+			|To create a Mesh profile you will need to know the
+			|address of the portal where the profile is to be registered
+			|and provide a name for the profile at that portal.
+		Text
+			|Unlike an email account, a Mesh profile belongs to you and
+			|only you. You can always change the portal registration 
+			|for your profile at a later date.
+
+		Step CreateProfile		"Create Profile"
+		Step SelectApplications "Select Applications"
+		Step Review				"Review"
+		Step CommitWizardCreateProfile		"Finish"
+
 
 
 	Object CreateProfile "Create a New Mesh Profile"
@@ -216,6 +277,13 @@ GUI PHB.Apps.Mesh.ProfileManager ProfileManager
 					|Creating an escrow record for the Master Key allows it to be 
 					|recovered should the need arise.
 
+	Object EscrowParameters "Escrow Master Key Parameters"
+		Integer Shares "Number of Key Shares"
+		Integer Quorum "Number of shares required for recovery"
+		Text
+			|Creating an escrow record for the Master Key allows it to be 
+			|recovered should the need arise.
+
 
 	Object SelectApplications "Select Applications"
 		Text
@@ -223,18 +291,19 @@ GUI PHB.Apps.Mesh.ProfileManager ProfileManager
 		Text
 			|(You can always add or remove applications later on.)
 
-		Command		SecureEmail		"Configure"
+		Action		ApplicationAddMail
 			Text
 				|Email (S/MIME, OpenPGP)
-		Command		SecureSSH		"Configure"
+		Action		ApplicationAddSSH
 			Text
 				|SSH Secure Shell
-		Command		SecureWeb		"Configure"
-			Text
-				|World Wide Web
-		Command		SecureNetwork	"Configure"
+		Action		ApplicationAddWiFi
 			Text
 				|Secure Network Access
+		Action		ApplicationAddWeb
+			Text
+				|World Wide Web
+
 
 	
 	Object SelectAccountsEmail "Select Email Accounts"
@@ -293,8 +362,8 @@ GUI PHB.Apps.Mesh.ProfileManager ProfileManager
 
 	Object Share "Share"
 		Integer Number "Number"
-		String Share "Share"
+		String Value "Value"
 
-	Object Finish "Finished"
+	Object CommitWizardCreateProfile "Finished"
 		Text
 			|Success! The profile was accepted by the mesh portal.

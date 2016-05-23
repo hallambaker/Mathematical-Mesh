@@ -17,18 +17,29 @@ namespace PHB.Apps.Mesh.ProfileManager {
 		}
 	public abstract partial class Window:  Goedel.Trojan.Window {
 		}
-	public abstract partial class Wizard:  Goedel.Trojan.Wizard {
-		}
-	public abstract partial class Model:  Goedel.Trojan.Model {
-		}
 
-	//The main declarations
+
+	/// <summary>
+    /// The application data model. This inherits the field declarations and
+	/// stub callback methods from the template. The stub callbacks should be
+	/// overwritten by the user's code. 
+    /// </summary>
 	public partial class ProfileManager : _ProfileManager {
 		}
 
+	/// <summary>
+    /// The template data model  constructed from the specification.
+	/// Contains stub methods for each callback.
+    /// </summary>
+	public abstract class _ProfileManager : Goedel.Trojan.Model {
+		/// <summary>
+		/// The currently active selection or null if no object is selected.
+		/// </summary>
+		public Object Selected = null;
 
-	public partial class _ProfileManager : Model {
-
+        /// <summary>
+        /// Default constructor.
+        /// </summary>
         public _ProfileManager() {
             _About = new About(this) {
 				Name = "Mesh Profile Manager"
@@ -38,128 +49,169 @@ namespace PHB.Apps.Mesh.ProfileManager {
 
 
 
-		public virtual void CreateProfile () {
+        /// <summary>
+        ///Stub method for ProfileCreatecommand.Override with application implementation.
+        /// </summary>
+ 		public virtual void ProfileCreate () {
 			}
 
-		public virtual void CreateApplication () {
+        /// <summary>
+        ///Stub method for ProfileEscrowcommand.Override with application implementation.
+        /// </summary>
+ 		public virtual void ProfileEscrow (Object Profile) {
 			}
 
-		public virtual void CreateEscrow () {
+        /// <summary>
+        ///Stub method for Aboutcommand.Override with application implementation.
+        /// </summary>
+ 		public virtual void About () {
 			}
 
-		public virtual void About () {
+        /// <summary>
+        ///Stub method for Quitcommand.Override with application implementation.
+        /// </summary>
+ 		public virtual void Quit () {
 			}
 
-		public virtual void Quit () {
+        /// <summary>
+        ///Stub method for Printcommand.Override with application implementation.
+        /// </summary>
+ 		public virtual void Print (Object Object) {
 			}
 
-		public virtual void ViewPendingRequests () {
+        /// <summary>
+        ///Stub method for ConnectRefreshcommand.Override with application implementation.
+        /// </summary>
+ 		public virtual void ConnectRefresh () {
 			}
 
-		public virtual void ViewPendingApplications () {
+        /// <summary>
+        ///Stub method for ConnectAcceptcommand.Override with application implementation.
+        /// </summary>
+ 		public virtual void ConnectAccept (Object ConnectRequest) {
 			}
 
-		public virtual void ViewPendingDevices () {
+        /// <summary>
+        ///Stub method for ConnectRejectcommand.Override with application implementation.
+        /// </summary>
+ 		public virtual void ConnectReject (Object ConnectRequest) {
 			}
 
-		public virtual void AcceptConnect (ConnectRequest ConnectRequest) {
+        /// <summary>
+        ///Stub method for ConnectGetOTCcommand.Override with application implementation.
+        /// </summary>
+ 		public virtual void ConnectGetOTC () {
 			}
 
-		public virtual void RejectConnect (ConnectRequest ConnectRequest) {
+        /// <summary>
+        ///Stub method for DeviceDeletecommand.Override with application implementation.
+        /// </summary>
+ 		public virtual void DeviceDelete (Object Device) {
 			}
 
-		public virtual void Refresh () {
+        /// <summary>
+        ///Stub method for DeviceRefreshKeyscommand.Override with application implementation.
+        /// </summary>
+ 		public virtual void DeviceRefreshKeys (Object Device) {
 			}
 
-		public virtual void GetOTC () {
+        /// <summary>
+        ///Stub method for ApplicationAddWizardcommand.Override with application implementation.
+        /// </summary>
+ 		public virtual void ApplicationAddWizard (Object Profile) {
 			}
 
-		public virtual void Delete (Device Device) {
+        /// <summary>
+        ///Stub method for ApplicationAddMailcommand.Override with application implementation.
+        /// </summary>
+ 		public virtual void ApplicationAddMail (Object Profile) {
 			}
 
-		public virtual void AdministratorGrant (Device Device) {
+        /// <summary>
+        ///Stub method for ApplicationAddSSHcommand.Override with application implementation.
+        /// </summary>
+ 		public virtual void ApplicationAddSSH (Object Profile) {
 			}
 
-		public virtual void AdministratorRemove (Device Device) {
+        /// <summary>
+        ///Stub method for ApplicationAddWiFicommand.Override with application implementation.
+        /// </summary>
+ 		public virtual void ApplicationAddWiFi (Object Profile) {
 			}
 
-		public virtual void Rollover (Application Application) {
+        /// <summary>
+        ///Stub method for ApplicationAddWebcommand.Override with application implementation.
+        /// </summary>
+ 		public virtual void ApplicationAddWeb (Object Profile) {
 			}
 
-		public virtual void Accept (ConnectRequest ConnectRequest) {
+        /// <summary>
+        ///Stub method for ApplicationDeletecommand.Override with application implementation.
+        /// </summary>
+ 		public virtual void ApplicationDelete (Object Application) {
 			}
 
-		public virtual void Reject (ConnectRequest ConnectRequest) {
+        /// <summary>
+        ///Stub method for ApplicationRefreshKeyscommand.Override with application implementation.
+        /// </summary>
+ 		public virtual void ApplicationRefreshKeys (Object Application) {
 			}
 
-		public virtual void Revoke (KeysSMIME KeysSMIME) {
+        /// <summary>
+        ///Stub method for AdministratorAddcommand.Override with application implementation.
+        /// </summary>
+ 		public virtual void AdministratorAdd (Object Device) {
 			}
 
-		public virtual void Renew (KeysSMIME KeysSMIME) {
+        /// <summary>
+        ///Stub method for AdministratorRemovecommand.Override with application implementation.
+        /// </summary>
+ 		public virtual void AdministratorRemove (Object Device) {
 			}
 
-		public virtual void Revoke (KeysPGP KeysPGP) {
+        /// <summary>
+        ///Stub method for KeyRefreshcommand.Override with application implementation.
+        /// </summary>
+ 		public virtual void KeyRefresh () {
 			}
 
-		public virtual void Renew (KeysPGP KeysPGP) {
+        /// <summary>
+        ///Stub method for KeyDeletecommand.Override with application implementation.
+        /// </summary>
+ 		public virtual void KeyDelete () {
 			}
 
-		public virtual void SecureEmail (SelectApplications SelectApplications) {
+        /// <summary>
+        ///Stub method for ViewPendingRequestscommand.Override with application implementation.
+        /// </summary>
+ 		public virtual void ViewPendingRequests () {
 			}
 
-		public virtual void SecureSSH (SelectApplications SelectApplications) {
+        /// <summary>
+        ///Stub method for ViewPendingApplicationscommand.Override with application implementation.
+        /// </summary>
+ 		public virtual void ViewPendingApplications () {
 			}
 
-		public virtual void SecureWeb (SelectApplications SelectApplications) {
+        /// <summary>
+        ///Stub method for ViewPendingDevicescommand.Override with application implementation.
+        /// </summary>
+ 		public virtual void ViewPendingDevices () {
 			}
 
-		public virtual void SecureNetwork (SelectApplications SelectApplications) {
-			}
 
 
-		protected Message Selected_Message = null ;
-		protected ConnectRequest Selected_ConnectRequest = null ;
-		protected Profile Selected_Profile = null ;
-		protected Device Selected_Device = null ;
-		protected Application Selected_Application = null ;
-		protected Group Selected_Group = null ;
-		protected ApplicationMail Selected_ApplicationMail = null ;
-		protected ApplicationSSH Selected_ApplicationSSH = null ;
-		protected ApplicationPassword Selected_ApplicationPassword = null ;
-		protected ApplicationWiFi Selected_ApplicationWiFi = null ;
-		protected Key Selected_Key = null ;
-		protected KeysSMIME Selected_KeysSMIME = null ;
-		protected KeysPGP Selected_KeysPGP = null ;
-		protected SSHKey Selected_SSHKey = null ;
-		protected SSHService Selected_SSHService = null ;
-		protected WebPassword Selected_WebPassword = null ;
-		protected WiFi Selected_WiFi = null ;
-		protected Server Selected_Server = null ;
-		protected ServerTLS Selected_ServerTLS = null ;
-		protected ServerSASL Selected_ServerSASL = null ;
-		protected CreateProfile Selected_CreateProfile = null ;
-		protected SelectApplications Selected_SelectApplications = null ;
-		protected SelectAccountsEmail Selected_SelectAccountsEmail = null ;
-		protected EmailAccounts Selected_EmailAccounts = null ;
-		protected EmailOptions Selected_EmailOptions = null ;
-		protected WebOptions Selected_WebOptions = null ;
-		protected NetworkOptions Selected_NetworkOptions = null ;
-		protected Review Selected_Review = null ;
-		protected Share Selected_Share = null ;
-		protected Finish Selected_Finish = null ;
-
-        public override void  Dispach(string Command) {
+        /// <summary>
+        ///Dispatch command callback with required parameters.
+        /// </summary>
+         public override void  Dispatch(string Command) {
             switch (Command) {
-                case "CreateProfile": {
-                        CreateProfile();
+                case "ProfileCreate": {
+                        ProfileCreate();
                         return;
                         }
-                case "CreateApplication": {
-                        CreateApplication();
-                        return;
-                        }
-                case "CreateEscrow": {
-                        CreateEscrow();
+                case "ProfileEscrow_Profile": {
+                        ProfileEscrow(Selected);
                         return;
                         }
                 case "About": {
@@ -168,6 +220,78 @@ namespace PHB.Apps.Mesh.ProfileManager {
                         }
                 case "Quit": {
                         Quit();
+                        return;
+                        }
+                case "Print_Object": {
+                        Print(Selected);
+                        return;
+                        }
+                case "ConnectRefresh": {
+                        ConnectRefresh();
+                        return;
+                        }
+                case "ConnectAccept_ConnectRequest": {
+                        ConnectAccept(Selected);
+                        return;
+                        }
+                case "ConnectReject_ConnectRequest": {
+                        ConnectReject(Selected);
+                        return;
+                        }
+                case "ConnectGetOTC": {
+                        ConnectGetOTC();
+                        return;
+                        }
+                case "DeviceDelete_Device": {
+                        DeviceDelete(Selected);
+                        return;
+                        }
+                case "DeviceRefreshKeys_Device": {
+                        DeviceRefreshKeys(Selected);
+                        return;
+                        }
+                case "ApplicationAddWizard_Profile": {
+                        ApplicationAddWizard(Selected);
+                        return;
+                        }
+                case "ApplicationAddMail_Profile": {
+                        ApplicationAddMail(Selected);
+                        return;
+                        }
+                case "ApplicationAddSSH_Profile": {
+                        ApplicationAddSSH(Selected);
+                        return;
+                        }
+                case "ApplicationAddWiFi_Profile": {
+                        ApplicationAddWiFi(Selected);
+                        return;
+                        }
+                case "ApplicationAddWeb_Profile": {
+                        ApplicationAddWeb(Selected);
+                        return;
+                        }
+                case "ApplicationDelete_Application": {
+                        ApplicationDelete(Selected);
+                        return;
+                        }
+                case "ApplicationRefreshKeys_Application": {
+                        ApplicationRefreshKeys(Selected);
+                        return;
+                        }
+                case "AdministratorAdd_Device": {
+                        AdministratorAdd(Selected);
+                        return;
+                        }
+                case "AdministratorRemove_Device": {
+                        AdministratorRemove(Selected);
+                        return;
+                        }
+                case "KeyRefresh": {
+                        KeyRefresh();
+                        return;
+                        }
+                case "KeyDelete": {
+                        KeyDelete();
                         return;
                         }
                 case "ViewPendingRequests": {
@@ -182,130 +306,88 @@ namespace PHB.Apps.Mesh.ProfileManager {
                         ViewPendingDevices();
                         return;
                         }
-                case "AcceptConnect_ConnectRequest": {
-                        AcceptConnect(Selected_ConnectRequest);
-                        return;
-                        }
-                case "RejectConnect_ConnectRequest": {
-                        RejectConnect(Selected_ConnectRequest);
-                        return;
-                        }
-                case "Refresh": {
-                        Refresh();
-                        return;
-                        }
-                case "GetOTC": {
-                        GetOTC();
-                        return;
-                        }
-                case "Delete_Device": {
-                        Delete(Selected_Device);
-                        return;
-                        }
-                case "AdministratorGrant_Device": {
-                        AdministratorGrant(Selected_Device);
-                        return;
-                        }
-                case "AdministratorRemove_Device": {
-                        AdministratorRemove(Selected_Device);
-                        return;
-                        }
-                case "Rollover_Application": {
-                        Rollover(Selected_Application);
-                        return;
-                        }
-                case "Accept_ConnectRequest": {
-                        Accept(Selected_ConnectRequest);
-                        return;
-                        }
-                case "Reject_ConnectRequest": {
-                        Reject(Selected_ConnectRequest);
-                        return;
-                        }
-                case "Revoke_KeysSMIME": {
-                        Revoke(Selected_KeysSMIME);
-                        return;
-                        }
-                case "Renew_KeysSMIME": {
-                        Renew(Selected_KeysSMIME);
-                        return;
-                        }
-                case "Revoke_KeysPGP": {
-                        Revoke(Selected_KeysPGP);
-                        return;
-                        }
-                case "Renew_KeysPGP": {
-                        Renew(Selected_KeysPGP);
-                        return;
-                        }
-                case "SecureEmail_SelectApplications": {
-                        SecureEmail(Selected_SelectApplications);
-                        return;
-                        }
-                case "SecureSSH_SelectApplications": {
-                        SecureSSH(Selected_SelectApplications);
-                        return;
-                        }
-                case "SecureWeb_SelectApplications": {
-                        SecureWeb(Selected_SelectApplications);
-                        return;
-                        }
-                case "SecureNetwork_SelectApplications": {
-                        SecureNetwork(Selected_SelectApplications);
-                        return;
-                        }
                 }
             }
 
-        public bool Active(String Command) {
+        /// <summary>
+        ///Report if selection criteria for specified command are met.
+        /// </summary>
+         public bool Active(String Command) {
             switch (Command) {
-                case "AcceptConnect_ConnectRequest": {
-                        return Selected_ConnectRequest != null;
+                case "ProfileEscrow_Profile": {
+						// NYI here make a list of all the possibilities
+                        //return Selected_Profile != null;
+						return true;
                         }
-                case "RejectConnect_ConnectRequest": {
-                        return Selected_ConnectRequest != null;
+                case "Print_Object": {
+						// NYI here make a list of all the possibilities
+                        //return Selected_Object != null;
+						return true;
                         }
-                case "Delete_Device": {
-                        return Selected_Device != null;
+                case "ConnectAccept_ConnectRequest": {
+						// NYI here make a list of all the possibilities
+                        //return Selected_ConnectRequest != null;
+						return true;
                         }
-                case "AdministratorGrant_Device": {
-                        return Selected_Device != null;
+                case "ConnectReject_ConnectRequest": {
+						// NYI here make a list of all the possibilities
+                        //return Selected_ConnectRequest != null;
+						return true;
+                        }
+                case "DeviceDelete_Device": {
+						// NYI here make a list of all the possibilities
+                        //return Selected_Device != null;
+						return true;
+                        }
+                case "DeviceRefreshKeys_Device": {
+						// NYI here make a list of all the possibilities
+                        //return Selected_Device != null;
+						return true;
+                        }
+                case "ApplicationAddWizard_Profile": {
+						// NYI here make a list of all the possibilities
+                        //return Selected_Profile != null;
+						return true;
+                        }
+                case "ApplicationAddMail_Profile": {
+						// NYI here make a list of all the possibilities
+                        //return Selected_Profile != null;
+						return true;
+                        }
+                case "ApplicationAddSSH_Profile": {
+						// NYI here make a list of all the possibilities
+                        //return Selected_Profile != null;
+						return true;
+                        }
+                case "ApplicationAddWiFi_Profile": {
+						// NYI here make a list of all the possibilities
+                        //return Selected_Profile != null;
+						return true;
+                        }
+                case "ApplicationAddWeb_Profile": {
+						// NYI here make a list of all the possibilities
+                        //return Selected_Profile != null;
+						return true;
+                        }
+                case "ApplicationDelete_Application": {
+						// NYI here make a list of all the possibilities
+                        //return Selected_Application != null;
+						return true;
+                        }
+                case "ApplicationRefreshKeys_Application": {
+						// NYI here make a list of all the possibilities
+                        //return Selected_Application != null;
+						return true;
+                        }
+                case "AdministratorAdd_Device": {
+						// NYI here make a list of all the possibilities
+                        //return Selected_Device != null;
+						return true;
                         }
                 case "AdministratorRemove_Device": {
-                        return Selected_Device != null;
-                        }
-                case "Rollover_Application": {
-                        return Selected_Application != null;
-                        }
-                case "Accept_ConnectRequest": {
-                        return Selected_ConnectRequest != null;
-                        }
-                case "Reject_ConnectRequest": {
-                        return Selected_ConnectRequest != null;
-                        }
-                case "Revoke_KeysSMIME": {
-                        return Selected_KeysSMIME != null;
-                        }
-                case "Renew_KeysSMIME": {
-                        return Selected_KeysSMIME != null;
-                        }
-                case "Revoke_KeysPGP": {
-                        return Selected_KeysPGP != null;
-                        }
-                case "Renew_KeysPGP": {
-                        return Selected_KeysPGP != null;
-                        }
-                case "SecureEmail_SelectApplications": {
-                        return Selected_SelectApplications != null;
-                        }
-                case "SecureSSH_SelectApplications": {
-                        return Selected_SelectApplications != null;
-                        }
-                case "SecureWeb_SelectApplications": {
-                        return Selected_SelectApplications != null;
-                        }
-                case "SecureNetwork_SelectApplications": {
-                        return Selected_SelectApplications != null;
+						// NYI here make a list of all the possibilities
+                        //return Selected_Device != null;
+						return true;
                         }
                 }
             return true;
@@ -314,8 +396,13 @@ namespace PHB.Apps.Mesh.ProfileManager {
 
 	// Windows
 
-
-	public partial class MainWindow : _MainWindow {
+	/*
+	* Window declarations
+	*/
+        /// <summary>
+        ///TBS
+        /// </summary>
+ 	public partial class MainWindow : _MainWindow {
 
 		string _Title = "Mesh Profile Manager";
 		public override string Title {
@@ -323,7 +410,7 @@ namespace PHB.Apps.Mesh.ProfileManager {
 			set {_Title = value;}
 			}
 
-		public MainWindow  (Model Model, Binding Binding) {
+		public MainWindow  (Goedel.Trojan.Model Model, Binding Binding) {
 			// Call backing code to populate the data model
 			Populate ();
 
@@ -338,11 +425,14 @@ namespace PHB.Apps.Mesh.ProfileManager {
         public override Goedel.Trojan.Menu Menu { get { return _Menu; } }
 		}
 
+	/*
+	* Menu declarations
+	*/
 
-	public partial class MenuTop : _MenuTop {
-		}
-
-	public partial class _MenuTop : Menu {
+        /// <summary>
+        ///TBS
+        /// </summary>
+ 	public partial class MenuTop : Menu {
 	
 		public override List<MenuEntry> Entries {
             get { return _Entries; }
@@ -350,18 +440,26 @@ namespace PHB.Apps.Mesh.ProfileManager {
             }
 
 		List<MenuEntry> _Entries = new List<MenuEntry> {
-			new SubMenu ("Profiles",  "Profile", new Profiles()),
-			new SubMenu ("View",  "View", new View()),
-			new SubMenu ("Connect",  "Connections", new Connect()),
-			new SubMenu ("Manage",  "Manage", new Manage())};
+			new SubMenu () {
+				Id ="MenuProfile",  
+				Label = "Master", 
+				Sub = new MenuProfile() },
+			new SubMenu () {
+				Id ="MenuDevice",  
+				Label = "Device", 
+				Sub = new MenuDevice() },
+			new SubMenu () {
+				Id ="MenuApplication",  
+				Label = "Application", 
+				Sub = new MenuApplication() }};
 		}
 
 
 
-	public partial class Profiles : _Profiles {
-		}
-
-	public partial class _Profiles : Menu {
+        /// <summary>
+        ///TBS
+        /// </summary>
+ 	public partial class MenuProfile : Menu {
 	
 		public override List<MenuEntry> Entries {
             get { return _Entries; }
@@ -369,17 +467,30 @@ namespace PHB.Apps.Mesh.ProfileManager {
             }
 
 		List<MenuEntry> _Entries = new List<MenuEntry> {
-			new SubMenu ("Create",  "Create", new Create()),
-			new MenuEntry ("About",  "About"),
-			new MenuEntry ("Quit",  "Quit")};
+			new MenuEntry () { 
+				Id ="ProfileCreate",  
+				Label = "Create New Master Profile" },
+			new MenuEntry () { 
+				Id ="ProfileEscrow",  
+				Label = "Create escrow key set" },
+			new MenuDivider () ,
+			new MenuEntry () { 
+				Id ="Print",  
+				Label = "Print" },
+			new MenuEntry () { 
+				Id ="About",  
+				Label = "About" },
+			new MenuEntry () { 
+				Id ="Quit",  
+				Label = "Quit" }};
 		}
 
 
 
-	public partial class Create : _Create {
-		}
-
-	public partial class _Create : Menu {
+        /// <summary>
+        ///TBS
+        /// </summary>
+ 	public partial class MenuDevice : Menu {
 	
 		public override List<MenuEntry> Entries {
             get { return _Entries; }
@@ -387,17 +498,38 @@ namespace PHB.Apps.Mesh.ProfileManager {
             }
 
 		List<MenuEntry> _Entries = new List<MenuEntry> {
-			new MenuEntry ("CreateProfile",  "Create New Personal Profile"),
-			new MenuEntry ("CreateApplication",  "Create New Application Profile"),
-			new MenuEntry ("CreateEscrow",  "Create escrow key set")};
+			new MenuEntry () { 
+				Id ="ConnectRefresh",  
+				Label = "Get Pending Requests" },
+			new MenuEntry () { 
+				Id ="ConnectAccept",  
+				Label = "Accept Connection" },
+			new MenuEntry () { 
+				Id ="ConnectReject",  
+				Label = "Reject Connection" },
+			new MenuEntry () { 
+				Id ="ConnectGetOTC",  
+				Label = "Issue One Time Code" },
+			new MenuEntry () { 
+				Id ="DeviceDelete",  
+				Label = "Delete Device" },
+			new MenuDivider () ,
+			new SubMenu () {
+				Id ="Administrator",  
+				Label = "Administrator", 
+				Sub = new Administrator() },
+			new MenuDivider () ,
+			new MenuEntry () { 
+				Id ="DeviceRefreshKeys",  
+				Label = "Refresh Keys" }};
 		}
 
 
 
-	public partial class View : _View {
-		}
-
-	public partial class _View : Menu {
+        /// <summary>
+        ///TBS
+        /// </summary>
+ 	public partial class Administrator : Menu {
 	
 		public override List<MenuEntry> Entries {
             get { return _Entries; }
@@ -405,17 +537,20 @@ namespace PHB.Apps.Mesh.ProfileManager {
             }
 
 		List<MenuEntry> _Entries = new List<MenuEntry> {
-			new MenuEntry ("ViewPendingRequests",  "View Pending Requests"),
-			new MenuEntry ("ViewPendingApplications",  "View Applications"),
-			new MenuEntry ("ViewPendingDevices",  "View Devices")};
+			new MenuEntry () { 
+				Id ="AdministratorAdd",  
+				Label = "Grant Administrator" },
+			new MenuEntry () { 
+				Id ="AdministratorRemove",  
+				Label = "Remove Administrator" }};
 		}
 
 
 
-	public partial class Connect : _Connect {
-		}
-
-	public partial class _Connect : Menu {
+        /// <summary>
+        ///TBS
+        /// </summary>
+ 	public partial class MenuApplication : Menu {
 	
 		public override List<MenuEntry> Entries {
             get { return _Entries; }
@@ -423,19 +558,24 @@ namespace PHB.Apps.Mesh.ProfileManager {
             }
 
 		List<MenuEntry> _Entries = new List<MenuEntry> {
-			new MenuEntry ("AcceptConnect",  "Accept"),
-			new MenuEntry ("RejectConnect",  "Reject"),
-			new MenuEntry ("Refresh",  "Get Pending Requests"),
-			new MenuEntry ("GetOTC",  "Issue One Time Code"),
-			new MenuEntry ("Delete",  "Delete")};
+			new SubMenu () {
+				Id ="ApplicationAdd",  
+				Label = "Add Application", 
+				Sub = new ApplicationAdd() },
+			new MenuEntry () { 
+				Id ="ApplicationDelete",  
+				Label = "Delete Application" },
+			new MenuEntry () { 
+				Id ="ApplicationRefreshKeys",  
+				Label = "Refresh Keys" }};
 		}
 
 
 
-	public partial class Manage : _Manage {
-		}
-
-	public partial class _Manage : Menu {
+        /// <summary>
+        ///TBS
+        /// </summary>
+ 	public partial class ApplicationAdd : Menu {
 	
 		public override List<MenuEntry> Entries {
             get { return _Entries; }
@@ -443,114 +583,162 @@ namespace PHB.Apps.Mesh.ProfileManager {
             }
 
 		List<MenuEntry> _Entries = new List<MenuEntry> {
-			new SubMenu ("Privilege",  "Privileges", new Privilege()),
-			new MenuEntry ("Rollover",  "Refresh Keys")};
+			new MenuEntry () { 
+				Id ="ApplicationAddMail",  
+				Label = "Add Mail" },
+			new MenuEntry () { 
+				Id ="ApplicationAddSSH",  
+				Label = "Add SSH" },
+			new MenuEntry () { 
+				Id ="ApplicationAddWiFi",  
+				Label = "Add WiFi Network" },
+			new MenuEntry () { 
+				Id ="ApplicationAddWeb",  
+				Label = "Add Web Password Manager" }};
 		}
 
 
 
-	public partial class Privilege : _Privilege {
-		}
-
-	public partial class _Privilege : Menu {
-	
-		public override List<MenuEntry> Entries {
-            get { return _Entries; }
-            set { _Entries = value; }
-            }
-
-		List<MenuEntry> _Entries = new List<MenuEntry> {
-			new MenuEntry ("AdministratorGrant",  "Grant Administrator"),
-			new MenuEntry ("AdministratorRemove",  "Remove Administrator")};
-		}
+	/*
+	* Wizard declarations
+	*/
 
 
-
-	// Wizards
-
-
+	/// <summary>
+    /// Wizard callback class.
+    /// </summary>
 
 	public partial class WizardCreateProfile : _WizardCreateProfile {
 		}
 
+
+	/// <summary>
+    /// Template class for wizard. The application programmer implements
+	/// the wizard by overriding wizard methods. Note that since the user 
+	/// may backtrack when implementing a method, callbacks MUST tolerate
+	/// being called multiple times. It is also permitted for a user to 
+	/// cancel a wizard before the final commit.
+    /// </summary>
 	public partial class _WizardCreateProfile : Wizard {
 
         public override string Title => "Create a New Mesh Profile";
         public override List<string> Texts => _Texts;
         public override List<Step> Steps => _Steps;
 
+		/// <summary>
+        /// CreateProfile
+        /// </summary>
+		public CreateProfile CreateProfile {
+			get {
+				return (CreateProfile) Steps[0].Value;
+				}
 
-	// WizardCreateProfile
+			}
+			
+		/// <summary>
+        /// SelectApplications
+        /// </summary>
+		public SelectApplications SelectApplications {
+			get {
+				return (SelectApplications) Steps[1].Value;
+				}
+
+			}
+			
+		/// <summary>
+        /// Review
+        /// </summary>
+		public Review Review {
+			get {
+				return (Review) Steps[2].Value;
+				}
+
+			}
+			
+		/// <summary>
+        /// CommitWizardCreateProfile
+        /// </summary>
+		public CommitWizardCreateProfile CommitWizardCreateProfile {
+			get {
+				return (CommitWizardCreateProfile) Steps[3].Value;
+				}
+
+			}
+			
+
+		// WizardCreateProfile
 		List<string> _Texts = 		new List<string> {
 			"This wizard will guide you through the process of setting up a new mesh profile and configuring it for use with your applications." ,
 			"To create a Mesh profile you will need to know the address of the portal where the profile is to be registered and provide a name for the profile at that portal." ,
 			"Unlike an email account, a Mesh profile belongs to you and only you. You can always change the portal registration  for your profile at a later date." 
 			};
 		List<Step> _Steps = new List<Step> {
-			new Step () {Object = new CreateProfile (), 
+			new Step () {Value = new CreateProfile (), 
 				Title = "Create Profile", Description =
 				new List<string> {
 					}},
-			new Step () {Object = new SelectApplications (), 
+			new Step () {Value = new SelectApplications (), 
 				Title = "Select Applications", Description =
 				new List<string> {
 					}},
-			new Step () {Object = new Review (), 
+			new Step () {Value = new Review (), 
 				Title = "Review", Description =
 				new List<string> {
 					}},
-			new Step () {Object = new Finish (), 
+			new Step () {Value = new CommitWizardCreateProfile (), 
 				Title = "Finish", Description =
 				new List<string> {
 					}}};
 
 
+		public override bool Dispatch (int Step) {
+
+			switch (Step) {
+				case 0 : return CreateProfile.Dispatch(this);
+				case 1 : return SelectApplications.Dispatch(this);
+				case 2 : return Review.Dispatch(this);
+				case 3 : return CommitWizardCreateProfile.Dispatch(this);
+				}
+			return false;
+			}
+
 		}
 
 
 
-	// Objects
-
-	public partial class Message : _Message{
-		}
-
-
-	public class _Message : Object {
+	/*
+	* Backing object class declarations
+	*/
+	public partial class Message : Object {
 
 		/// <summary>
         /// Issued
         /// </summary>
-		public DateTime Issued {
+		public ObjectFieldDateTime Issued {
 			get {
-				return ((ObjectFieldDateTime)Entries[0]).Value;
+				return ((ObjectFieldDateTime)Entries[0]);
 				}
-			set {
-				((ObjectFieldDateTime)Entries[0]).Value = value;
-				}
+
 			}
 			
 		/// <summary>
         /// Expires
         /// </summary>
-		public DateTime Expires {
+		public ObjectFieldDateTime Expires {
 			get {
-				return ((ObjectFieldDateTime)Entries[1]).Value;
+				return ((ObjectFieldDateTime)Entries[1]);
 				}
-			set {
-				((ObjectFieldDateTime)Entries[1]).Value = value;
-				}
+
 			}
 			
 		/// <summary>
         /// Status
         /// </summary>
-		public string Status {
+		public ObjectFieldString Status {
 			get {
-				return ((ObjectFieldString)Entries[2]).Value;
+				return ((ObjectFieldString)Entries[2]);
 				}
-			set {
-				((ObjectFieldString)Entries[2]).Value = value;
-				}
+
 			}
 			
 
@@ -562,45 +750,50 @@ namespace PHB.Apps.Mesh.ProfileManager {
 		List<ObjectEntry> _Entries = new List<ObjectEntry> {
 
 			new ObjectFieldDateTime {Id = "Issued", 
-						Label = "Sent" // ((ObjectFieldDateTime)Entries[0]).Value
+						Label = "Sent" // ((ObjectFieldDateTime)Entries[0])
 					    },
 			new ObjectFieldDateTime {Id = "Expires", 
-						Label = "Expires" // ((ObjectFieldDateTime)Entries[1]).Value
+						Label = "Expires" // ((ObjectFieldDateTime)Entries[1])
 					    },
 			new ObjectFieldString {Id = "Status", 
-						Label = "Status" // ((ObjectFieldString)Entries[2]).Value
+						Label = "Status" // ((ObjectFieldString)Entries[2])
 					    }			} ;
+
+
+        /// <summary>
+        /// Create a list containing all the current children.
+        /// </summary>
+        /// <returns></returns>
+        public override List<Goedel.Trojan.Object> GetChildren() {
+			var Result = base.GetChildren();
+
+			return Result;
+            }
+
+
 		}
 
 
-	public partial class ConnectRequest : _ConnectRequest{
-		}
-
-
-	public class _ConnectRequest : Message {
+	public partial class ConnectRequest : Message {
 
 		/// <summary>
         /// Description
         /// </summary>
-		public string Description {
+		public ObjectFieldString Description {
 			get {
-				return ((ObjectFieldString)Entries[3]).Value;
+				return ((ObjectFieldString)Entries[3]);
 				}
-			set {
-				((ObjectFieldString)Entries[3]).Value = value;
-				}
+
 			}
 			
 		/// <summary>
         /// Fingerprint
         /// </summary>
-		public string Fingerprint {
+		public ObjectFieldString Fingerprint {
 			get {
-				return ((ObjectFieldString)Entries[4]).Value;
+				return ((ObjectFieldString)Entries[4]);
 				}
-			set {
-				((ObjectFieldString)Entries[4]).Value = value;
-				}
+
 			}
 			
 
@@ -612,81 +805,76 @@ namespace PHB.Apps.Mesh.ProfileManager {
 		List<ObjectEntry> _Entries = new List<ObjectEntry> {
 
 			new ObjectFieldDateTime {Id = "Issued", 
-						Label = "Sent" // ((ObjectFieldDateTime)Entries[0]).Value
+						Label = "Sent" // ((ObjectFieldDateTime)Entries[0])
 					    },
 			new ObjectFieldDateTime {Id = "Expires", 
-						Label = "Expires" // ((ObjectFieldDateTime)Entries[1]).Value
+						Label = "Expires" // ((ObjectFieldDateTime)Entries[1])
 					    },
 			new ObjectFieldString {Id = "Status", 
-						Label = "Status" // ((ObjectFieldString)Entries[2]).Value
+						Label = "Status" // ((ObjectFieldString)Entries[2])
 					    },
 			new ObjectFieldString {Id = "Description", 
-						Label = "Device description" // ((ObjectFieldString)Entries[3]).Value
+						Label = "Device description" // ((ObjectFieldString)Entries[3])
 					    },
 			new ObjectFieldString {Id = "Fingerprint", 
-						Label = "Fingerprint" // ((ObjectFieldString)Entries[4]).Value
-					    },
-			new ObjectCommand {
-						Id = "Accept",  
-						Label = "Accept"},
-			new ObjectCommand {
-						Id = "Reject",  
-						Label = "Reject"}			} ;
+						Label = "Fingerprint" // ((ObjectFieldString)Entries[4])
+					    }			} ;
+
+
+        /// <summary>
+        /// Create a list containing all the current children.
+        /// </summary>
+        /// <returns></returns>
+        public override List<Goedel.Trojan.Object> GetChildren() {
+            var Result = new List<Goedel.Trojan.Object>();
+
+			return Result;
+            }
+
+
 		}
 
 
-	public partial class Profile : _Profile{
-		}
+	public partial class Profile : Object {
 
+		/// <summary>
+        /// Identifier
+        /// </summary>
+		public ObjectFieldString Identifier {
+			get {
+				return ((ObjectFieldString)Entries[0]);
+				}
 
-	public class _Profile : Object {
-
+			}
+			
 		/// <summary>
         /// Fingerprint
         /// </summary>
-		public string Fingerprint {
+		public ObjectFieldString Fingerprint {
 			get {
-				return ((ObjectFieldString)Entries[0]).Value;
+				return ((ObjectFieldString)Entries[1]);
 				}
-			set {
-				((ObjectFieldString)Entries[0]).Value = value;
-				}
-			}
-			
-		/// <summary>
-        /// Groups
-        /// </summary>
-		public List<Goedel.Trojan.Object> Groups {
-			get {
-				return ((ObjectFieldSet)Entries[1]).Value;
-				}
-			set {
-				((ObjectFieldSet)Entries[1]).Value = value;
-				}
+
 			}
 			
 		/// <summary>
         /// Devices
         /// </summary>
-		public List<Goedel.Trojan.Object> Devices {
+		public ObjectFieldSet Devices {
 			get {
-				return ((ObjectFieldSet)Entries[2]).Value;
+				return ((ObjectFieldSet)Entries[2]);
 				}
-			set {
-				((ObjectFieldSet)Entries[2]).Value = value;
-				}
+
 			}
 			
 		/// <summary>
         /// Applications
         /// </summary>
-		public List<Goedel.Trojan.Object> Applications {
+		public ObjectFieldSet Applications {
 			get {
-				return ((ObjectFieldSet)Entries[3]).Value;
+				return ((ObjectFieldSet)Entries[3]);
 				}
-			set {
-				((ObjectFieldSet)Entries[3]).Value = value;
-				}
+
 			}
 			
 
@@ -697,49 +885,64 @@ namespace PHB.Apps.Mesh.ProfileManager {
 
 		List<ObjectEntry> _Entries = new List<ObjectEntry> {
 
+			new ObjectFieldString {Id = "Identifier", 
+						Label = "Name" // ((ObjectFieldString)Entries[0])
+					    },
 			new ObjectFieldString {Id = "Fingerprint", 
-						Label = "Fingerprint" // ((ObjectFieldString)Entries[0]).Value
-					    },
-			new ObjectFieldSet {Id = "Groups", 
-						Label = "Groups" // ((ObjectFieldSet)Entries[1]).Value
+						Label = "Fingerprint" // ((ObjectFieldString)Entries[1])
 					    },
 			new ObjectFieldSet {Id = "Devices", 
-						Label = "Connected devices" // ((ObjectFieldSet)Entries[2]).Value
+						Label = "Connected devices" // ((ObjectFieldSet)Entries[2])
 					    },
 			new ObjectFieldSet {Id = "Applications", 
-						Label = "Connected applications" // ((ObjectFieldSet)Entries[3]).Value
+						Label = "Connected applications" // ((ObjectFieldSet)Entries[3])
 					    }			} ;
+
+
+        /// <summary>
+        /// Create a list containing all the current children.
+        /// </summary>
+        /// <returns></returns>
+        public override List<Goedel.Trojan.Object> GetChildren() {
+			var Result = base.GetChildren();
+			if (Devices.Value != null) {
+				foreach (var Entry in Devices.Value) {
+					Result.Add (Entry);
+					}
+				}
+			if (Applications.Value != null) {
+				foreach (var Entry in Applications.Value) {
+					Result.Add (Entry);
+					}
+				}
+
+			return Result;
+            }
+
+
 		}
 
 
-	public partial class Device : _Device{
-		}
-
-
-	public class _Device : Object {
+	public partial class Device : Object {
 
 		/// <summary>
-        /// Groups
+        /// Identifier
         /// </summary>
-		public List<Goedel.Trojan.Object> Groups {
+		public ObjectFieldString Identifier {
 			get {
-				return ((ObjectFieldSet)Entries[0]).Value;
+				return ((ObjectFieldString)Entries[0]);
 				}
-			set {
-				((ObjectFieldSet)Entries[0]).Value = value;
-				}
+
 			}
 			
 		/// <summary>
         /// Applications
         /// </summary>
-		public List<Goedel.Trojan.Object> Applications {
+		public ObjectFieldSet Applications {
 			get {
-				return ((ObjectFieldSet)Entries[1]).Value;
+				return ((ObjectFieldSet)Entries[1]);
 				}
-			set {
-				((ObjectFieldSet)Entries[1]).Value = value;
-				}
+
 			}
 			
 
@@ -750,43 +953,53 @@ namespace PHB.Apps.Mesh.ProfileManager {
 
 		List<ObjectEntry> _Entries = new List<ObjectEntry> {
 
-			new ObjectFieldSet {Id = "Groups", 
-						Label = "Member of groups" // ((ObjectFieldSet)Entries[0]).Value
+			new ObjectFieldString {Id = "Identifier", 
+						Label = "Name" // ((ObjectFieldString)Entries[0])
 					    },
 			new ObjectFieldSet {Id = "Applications", 
-						Label = "Connected applications" // ((ObjectFieldSet)Entries[1]).Value
+						Label = "Connected applications" // ((ObjectFieldSet)Entries[1])
 					    }			} ;
+
+
+        /// <summary>
+        /// Create a list containing all the current children.
+        /// </summary>
+        /// <returns></returns>
+        public override List<Goedel.Trojan.Object> GetChildren() {
+			var Result = base.GetChildren();
+			if (Applications.Value != null) {
+				foreach (var Entry in Applications.Value) {
+					Result.Add (Entry);
+					}
+				}
+
+			return Result;
+            }
+
+
 		}
 
 
-	public partial class Application : _Application{
-		}
-
-
-	public class _Application : Object {
+	public partial class Application : Object {
 
 		/// <summary>
-        /// Groups
+        /// Identifier
         /// </summary>
-		public List<Goedel.Trojan.Object> Groups {
+		public ObjectFieldString Identifier {
 			get {
-				return ((ObjectFieldSet)Entries[0]).Value;
+				return ((ObjectFieldString)Entries[0]);
 				}
-			set {
-				((ObjectFieldSet)Entries[0]).Value = value;
-				}
+
 			}
 			
 		/// <summary>
         /// Devices
         /// </summary>
-		public List<Goedel.Trojan.Object> Devices {
+		public ObjectFieldSet Devices {
 			get {
-				return ((ObjectFieldSet)Entries[1]).Value;
+				return ((ObjectFieldSet)Entries[1]);
 				}
-			set {
-				((ObjectFieldSet)Entries[1]).Value = value;
-				}
+
 			}
 			
 
@@ -797,43 +1010,63 @@ namespace PHB.Apps.Mesh.ProfileManager {
 
 		List<ObjectEntry> _Entries = new List<ObjectEntry> {
 
-			new ObjectFieldSet {Id = "Groups", 
-						Label = "Member of groups" // ((ObjectFieldSet)Entries[0]).Value
+			new ObjectFieldString {Id = "Identifier", 
+						Label = "Name" // ((ObjectFieldString)Entries[0])
 					    },
 			new ObjectFieldSet {Id = "Devices", 
-						Label = "Connected devices" // ((ObjectFieldSet)Entries[1]).Value
+						Label = "Connected devices" // ((ObjectFieldSet)Entries[1])
 					    }			} ;
+
+
+        /// <summary>
+        /// Create a list containing all the current children.
+        /// </summary>
+        /// <returns></returns>
+        public override List<Goedel.Trojan.Object> GetChildren() {
+			var Result = base.GetChildren();
+			if (Devices.Value != null) {
+				foreach (var Entry in Devices.Value) {
+					Result.Add (Entry);
+					}
+				}
+
+			return Result;
+            }
+
+
 		}
 
 
-	public partial class Group : _Group{
-		}
+	public partial class Group : Object {
 
+		/// <summary>
+        /// Identifier
+        /// </summary>
+		public ObjectFieldString Identifier {
+			get {
+				return ((ObjectFieldString)Entries[0]);
+				}
 
-	public class _Group : Object {
-
+			}
+			
 		/// <summary>
         /// Devices
         /// </summary>
-		public List<Goedel.Trojan.Object> Devices {
+		public ObjectFieldSet Devices {
 			get {
-				return ((ObjectFieldSet)Entries[0]).Value;
+				return ((ObjectFieldSet)Entries[1]);
 				}
-			set {
-				((ObjectFieldSet)Entries[0]).Value = value;
-				}
+
 			}
 			
 		/// <summary>
         /// Applications
         /// </summary>
-		public List<Goedel.Trojan.Object> Applications {
+		public ObjectFieldSet Applications {
 			get {
-				return ((ObjectFieldSet)Entries[1]).Value;
+				return ((ObjectFieldSet)Entries[2]);
 				}
-			set {
-				((ObjectFieldSet)Entries[1]).Value = value;
-				}
+
 			}
 			
 
@@ -844,43 +1077,61 @@ namespace PHB.Apps.Mesh.ProfileManager {
 
 		List<ObjectEntry> _Entries = new List<ObjectEntry> {
 
+			new ObjectFieldString {Id = "Identifier", 
+						Label = "Name" // ((ObjectFieldString)Entries[0])
+					    },
 			new ObjectFieldSet {Id = "Devices", 
-						Label = "Devices" // ((ObjectFieldSet)Entries[0]).Value
+						Label = "Devices" // ((ObjectFieldSet)Entries[1])
 					    },
 			new ObjectFieldSet {Id = "Applications", 
-						Label = "Applications" // ((ObjectFieldSet)Entries[1]).Value
+						Label = "Applications" // ((ObjectFieldSet)Entries[2])
 					    }			} ;
+
+
+        /// <summary>
+        /// Create a list containing all the current children.
+        /// </summary>
+        /// <returns></returns>
+        public override List<Goedel.Trojan.Object> GetChildren() {
+			var Result = base.GetChildren();
+			if (Devices.Value != null) {
+				foreach (var Entry in Devices.Value) {
+					Result.Add (Entry);
+					}
+				}
+			if (Applications.Value != null) {
+				foreach (var Entry in Applications.Value) {
+					Result.Add (Entry);
+					}
+				}
+
+			return Result;
+            }
+
+
 		}
 
 
-	public partial class ApplicationMail : _ApplicationMail{
-		}
-
-
-	public class _ApplicationMail : Application {
+	public partial class ApplicationMail : Application {
 
 		/// <summary>
         /// Account
         /// </summary>
-		public string Account {
+		public ObjectFieldString Account {
 			get {
-				return ((ObjectFieldString)Entries[2]).Value;
+				return ((ObjectFieldString)Entries[2]);
 				}
-			set {
-				((ObjectFieldString)Entries[2]).Value = value;
-				}
+
 			}
 			
 		/// <summary>
         /// Address
         /// </summary>
-		public string Address {
+		public ObjectFieldString Address {
 			get {
-				return ((ObjectFieldString)Entries[3]).Value;
+				return ((ObjectFieldString)Entries[3]);
 				}
-			set {
-				((ObjectFieldString)Entries[3]).Value = value;
-				}
+
 			}
 			
 		/// <summary>
@@ -888,11 +1139,9 @@ namespace PHB.Apps.Mesh.ProfileManager {
         /// </summary>
 		public ServerSASL Inbound {
 			get {
-				return (ServerSASL) ((ObjectFieldItem)Entries[4]).Value;
+				return (ServerSASL) (((ObjectFieldItem)Entries[4])).Value;
 				}
-			set {
-				((ObjectFieldItem)Entries[4]).Value = value;
-				}
+
 			}
 			
 		/// <summary>
@@ -900,155 +1149,129 @@ namespace PHB.Apps.Mesh.ProfileManager {
         /// </summary>
 		public ServerSASL Outbound {
 			get {
-				return (ServerSASL) ((ObjectFieldItem)Entries[5]).Value;
+				return (ServerSASL) (((ObjectFieldItem)Entries[5])).Value;
 				}
-			set {
-				((ObjectFieldItem)Entries[5]).Value = value;
-				}
+
 			}
 			
 		/// <summary>
         /// EnablePGP
         /// </summary>
-		public bool EnablePGP {
+		public ObjectFieldOption EnablePGP {
 			get {
-				return ((ObjectFieldOption)Entries[6]).Value;
+				return ((ObjectFieldOption)Entries[6]);
 				}
-			set {
-				((ObjectFieldOption)Entries[6]).Value = value;
-				}
+
 			}
 			
 		/// <summary>
         /// PGPPerDeviceSign
         /// </summary>
-		public bool PGPPerDeviceSign {
+		public ObjectFieldBoolean PGPPerDeviceSign {
 			get {
-				return ((ObjectFieldBoolean)((ObjectFieldOption)Entries[6]).Entries[0]).Value;
+				return ((ObjectFieldBoolean)((ObjectFieldOption)Entries[6]).Entries[0]);
 				}
-			set {
-				((ObjectFieldBoolean)((ObjectFieldOption)Entries[6]).Entries[0]).Value = value;
-				}
+
 			}
 			
 		/// <summary>
         /// PGPPerDeviceDecrypt
         /// </summary>
-		public bool PGPPerDeviceDecrypt {
+		public ObjectFieldBoolean PGPPerDeviceDecrypt {
 			get {
-				return ((ObjectFieldBoolean)((ObjectFieldOption)Entries[6]).Entries[1]).Value;
+				return ((ObjectFieldBoolean)((ObjectFieldOption)Entries[6]).Entries[1]);
 				}
-			set {
-				((ObjectFieldBoolean)((ObjectFieldOption)Entries[6]).Entries[1]).Value = value;
-				}
+
 			}
 			
 		/// <summary>
         /// PGPSelectAlgorithms
         /// </summary>
-		public bool PGPSelectAlgorithms {
+		public ObjectFieldOption PGPSelectAlgorithms {
 			get {
-				return ((ObjectFieldOption)((ObjectFieldOption)Entries[6]).Entries[2]).Value;
+				return ((ObjectFieldOption)((ObjectFieldOption)Entries[6]).Entries[2]);
 				}
-			set {
-				((ObjectFieldOption)((ObjectFieldOption)Entries[6]).Entries[2]).Value = value;
-				}
+
 			}
 			
 		/// <summary>
         /// PGPAlgorithms
         /// </summary>
-		public List<string> PGPAlgorithms {
+		public ObjectFieldChooser PGPAlgorithms {
 			get {
-				return ((ObjectFieldChooser)((ObjectFieldOption)((ObjectFieldOption)Entries[6]).Entries[2]).Entries[3]).Value;
+				return ((ObjectFieldChooser)((ObjectFieldOption)((ObjectFieldOption)Entries[6]).Entries[2]).Entries[3]);
 				}
-			set {
-				((ObjectFieldChooser)((ObjectFieldOption)((ObjectFieldOption)Entries[6]).Entries[2]).Entries[3]).Value = value;
-				}
+
 			}
 			
 		/// <summary>
         /// PGPKeys
         /// </summary>
-		public List<Goedel.Trojan.Object> PGPKeys {
+		public ObjectFieldList PGPKeys {
 			get {
-				return ((ObjectFieldList)((ObjectFieldOption)Entries[6]).Entries[4]).Value;
+				return ((ObjectFieldList)((ObjectFieldOption)Entries[6]).Entries[4]);
 				}
-			set {
-				((ObjectFieldList)((ObjectFieldOption)Entries[6]).Entries[4]).Value = value;
-				}
+
 			}
 			
 		/// <summary>
         /// EnableSMIME
         /// </summary>
-		public bool EnableSMIME {
+		public ObjectFieldOption EnableSMIME {
 			get {
-				return ((ObjectFieldOption)Entries[7]).Value;
+				return ((ObjectFieldOption)Entries[7]);
 				}
-			set {
-				((ObjectFieldOption)Entries[7]).Value = value;
-				}
+
 			}
 			
 		/// <summary>
         /// SMIMEPerDeviceSign
         /// </summary>
-		public bool SMIMEPerDeviceSign {
+		public ObjectFieldBoolean SMIMEPerDeviceSign {
 			get {
-				return ((ObjectFieldBoolean)((ObjectFieldOption)Entries[7]).Entries[5]).Value;
+				return ((ObjectFieldBoolean)((ObjectFieldOption)Entries[7]).Entries[5]);
 				}
-			set {
-				((ObjectFieldBoolean)((ObjectFieldOption)Entries[7]).Entries[5]).Value = value;
-				}
+
 			}
 			
 		/// <summary>
         /// SMIMEPerDeviceDecrypt
         /// </summary>
-		public bool SMIMEPerDeviceDecrypt {
+		public ObjectFieldBoolean SMIMEPerDeviceDecrypt {
 			get {
-				return ((ObjectFieldBoolean)((ObjectFieldOption)Entries[7]).Entries[6]).Value;
+				return ((ObjectFieldBoolean)((ObjectFieldOption)Entries[7]).Entries[6]);
 				}
-			set {
-				((ObjectFieldBoolean)((ObjectFieldOption)Entries[7]).Entries[6]).Value = value;
-				}
+
 			}
 			
 		/// <summary>
         /// SMIMESelectAlgorithms
         /// </summary>
-		public bool SMIMESelectAlgorithms {
+		public ObjectFieldOption SMIMESelectAlgorithms {
 			get {
-				return ((ObjectFieldOption)((ObjectFieldOption)Entries[7]).Entries[7]).Value;
+				return ((ObjectFieldOption)((ObjectFieldOption)Entries[7]).Entries[7]);
 				}
-			set {
-				((ObjectFieldOption)((ObjectFieldOption)Entries[7]).Entries[7]).Value = value;
-				}
+
 			}
 			
 		/// <summary>
         /// SMIMEAlgorithms
         /// </summary>
-		public List<string> SMIMEAlgorithms {
+		public ObjectFieldChooser SMIMEAlgorithms {
 			get {
-				return ((ObjectFieldChooser)((ObjectFieldOption)((ObjectFieldOption)Entries[7]).Entries[7]).Entries[8]).Value;
+				return ((ObjectFieldChooser)((ObjectFieldOption)((ObjectFieldOption)Entries[7]).Entries[7]).Entries[8]);
 				}
-			set {
-				((ObjectFieldChooser)((ObjectFieldOption)((ObjectFieldOption)Entries[7]).Entries[7]).Entries[8]).Value = value;
-				}
+
 			}
 			
 		/// <summary>
         /// SMIMEKeys
         /// </summary>
-		public List<Goedel.Trojan.Object> SMIMEKeys {
+		public ObjectFieldList SMIMEKeys {
 			get {
-				return ((ObjectFieldList)((ObjectFieldOption)Entries[7]).Entries[9]).Value;
+				return ((ObjectFieldList)((ObjectFieldOption)Entries[7]).Entries[9]);
 				}
-			set {
-				((ObjectFieldList)((ObjectFieldOption)Entries[7]).Entries[9]).Value = value;
-				}
+
 			}
 			
 
@@ -1059,45 +1282,49 @@ namespace PHB.Apps.Mesh.ProfileManager {
 
 		List<ObjectEntry> _Entries = new List<ObjectEntry> {
 
-			new ObjectFieldSet {Id = "Groups", 
-						Label = "Member of groups" // ((ObjectFieldSet)Entries[0]).Value
+			new ObjectFieldString {Id = "Identifier", 
+						Label = "Name" // ((ObjectFieldString)Entries[0])
 					    },
 			new ObjectFieldSet {Id = "Devices", 
-						Label = "Connected devices" // ((ObjectFieldSet)Entries[1]).Value
+						Label = "Connected devices" // ((ObjectFieldSet)Entries[1])
 					    },
 			new ObjectFieldString {Id = "Account", 
-						Label = "Account name" // ((ObjectFieldString)Entries[2]).Value
+						Label = "Account name" // ((ObjectFieldString)Entries[2])
 					    },
 			new ObjectFieldString {Id = "Address", 
-						Label = "Email address" // ((ObjectFieldString)Entries[3]).Value
+						Label = "Email address" // ((ObjectFieldString)Entries[3])
 					    },
-			new ObjectFieldItem {Id = "Inbound", 
-						Label = "Inbound Server" // ((ObjectFieldItem)Entries[4]).Value
-					    },
-			new ObjectFieldItem {Id = "Outbound", 
-						Label = "Outbound Server" // ((ObjectFieldItem)Entries[5]).Value
-					    },	
+			new ObjectFieldItem {
+						Id = "Inbound",  
+						Label = "Inbound Server",
+						Value = new ServerSASL ()
+						},
+			new ObjectFieldItem {
+						Id = "Outbound",  
+						Label = "Outbound Server",
+						Value = new ServerSASL ()
+						},	
 			new ObjectFieldOption {
 						Id = "EnablePGP",  
 						Label = "OpenPGP",
 						Entries = new List<ObjectEntry> {
 				new ObjectFieldBoolean {Id = "PGPPerDeviceSign", 
-							Label = "Separate signing keys per device" // ((ObjectFieldBoolean)((ObjectFieldOption)Entries[6]).Entries[0]).Value
+							Label = "Separate signing keys per device" // ((ObjectFieldBoolean)((ObjectFieldOption)Entries[6]).Entries[0])
 						    },
 				new ObjectFieldBoolean {Id = "PGPPerDeviceDecrypt", 
-							Label = "Separate decryption keys per device" // ((ObjectFieldBoolean)((ObjectFieldOption)Entries[6]).Entries[1]).Value
+							Label = "Separate decryption keys per device" // ((ObjectFieldBoolean)((ObjectFieldOption)Entries[6]).Entries[1])
 						    },	
 				new ObjectFieldOption {
 							Id = "PGPSelectAlgorithms",  
-							Label = "Specifiy permitted algorithms",
+							Label = "Specify permitted algorithms",
 							Entries = new List<ObjectEntry> {
 					new ObjectFieldChooser {Id = "PGPAlgorithms", 
-								Label = "Algorithms" // ((ObjectFieldChooser)((ObjectFieldOption)((ObjectFieldOption)Entries[6]).Entries[2]).Entries[3]).Value
+								Label = "Algorithms" // ((ObjectFieldChooser)((ObjectFieldOption)((ObjectFieldOption)Entries[6]).Entries[2]).Entries[3])
 							    }
 								}
 							},
 				new ObjectFieldList {Id = "PGPKeys", 
-							Label = "Keys" // ((ObjectFieldList)((ObjectFieldOption)Entries[6]).Entries[4]).Value
+							Label = "Keys" // ((ObjectFieldList)((ObjectFieldOption)Entries[6]).Entries[4])
 						    }
 							}
 						},	
@@ -1106,68 +1333,71 @@ namespace PHB.Apps.Mesh.ProfileManager {
 						Label = "S/MIME",
 						Entries = new List<ObjectEntry> {
 				new ObjectFieldBoolean {Id = "SMIMEPerDeviceSign", 
-							Label = "Separate signing keys per device" // ((ObjectFieldBoolean)((ObjectFieldOption)Entries[7]).Entries[5]).Value
+							Label = "Separate signing keys per device" // ((ObjectFieldBoolean)((ObjectFieldOption)Entries[7]).Entries[5])
 						    },
 				new ObjectFieldBoolean {Id = "SMIMEPerDeviceDecrypt", 
-							Label = "Separate decryption keys per device" // ((ObjectFieldBoolean)((ObjectFieldOption)Entries[7]).Entries[6]).Value
+							Label = "Separate decryption keys per device" // ((ObjectFieldBoolean)((ObjectFieldOption)Entries[7]).Entries[6])
 						    },	
 				new ObjectFieldOption {
 							Id = "SMIMESelectAlgorithms",  
-							Label = "Specifiy permitted algorithms",
+							Label = "Specify permitted algorithms",
 							Entries = new List<ObjectEntry> {
 					new ObjectFieldChooser {Id = "SMIMEAlgorithms", 
-								Label = "Algorithms" // ((ObjectFieldChooser)((ObjectFieldOption)((ObjectFieldOption)Entries[7]).Entries[7]).Entries[8]).Value
+								Label = "Algorithms" // ((ObjectFieldChooser)((ObjectFieldOption)((ObjectFieldOption)Entries[7]).Entries[7]).Entries[8])
 							    }
 								}
 							},
 				new ObjectFieldList {Id = "SMIMEKeys", 
-							Label = "Keys" // ((ObjectFieldList)((ObjectFieldOption)Entries[7]).Entries[9]).Value
+							Label = "Keys" // ((ObjectFieldList)((ObjectFieldOption)Entries[7]).Entries[9])
 						    }
 							}
 						}			} ;
+
+
+        /// <summary>
+        /// Create a list containing all the current children.
+        /// </summary>
+        /// <returns></returns>
+        public override List<Goedel.Trojan.Object> GetChildren() {
+            var Result = new List<Goedel.Trojan.Object>();
+
+			return Result;
+            }
+
+
 		}
 
 
-	public partial class ApplicationSSH : _ApplicationSSH{
-		}
-
-
-	public class _ApplicationSSH : Application {
+	public partial class ApplicationSSH : Application {
 
 		/// <summary>
         /// Fingerprint
         /// </summary>
-		public string Fingerprint {
+		public ObjectFieldString Fingerprint {
 			get {
-				return ((ObjectFieldString)Entries[2]).Value;
+				return ((ObjectFieldString)Entries[2]);
 				}
-			set {
-				((ObjectFieldString)Entries[2]).Value = value;
-				}
+
 			}
 			
 		/// <summary>
         /// Algorithm
         /// </summary>
-		public string Algorithm {
+		public ObjectFieldString Algorithm {
 			get {
-				return ((ObjectFieldString)Entries[3]).Value;
+				return ((ObjectFieldString)Entries[3]);
 				}
-			set {
-				((ObjectFieldString)Entries[3]).Value = value;
-				}
+
 			}
 			
 		/// <summary>
         /// Key
         /// </summary>
-		public string Key {
+		public ObjectFieldString Key {
 			get {
-				return ((ObjectFieldString)Entries[4]).Value;
+				return ((ObjectFieldString)Entries[4]);
 				}
-			set {
-				((ObjectFieldString)Entries[4]).Value = value;
-				}
+
 			}
 			
 
@@ -1178,40 +1408,47 @@ namespace PHB.Apps.Mesh.ProfileManager {
 
 		List<ObjectEntry> _Entries = new List<ObjectEntry> {
 
-			new ObjectFieldSet {Id = "Groups", 
-						Label = "Member of groups" // ((ObjectFieldSet)Entries[0]).Value
+			new ObjectFieldString {Id = "Identifier", 
+						Label = "Name" // ((ObjectFieldString)Entries[0])
 					    },
 			new ObjectFieldSet {Id = "Devices", 
-						Label = "Connected devices" // ((ObjectFieldSet)Entries[1]).Value
+						Label = "Connected devices" // ((ObjectFieldSet)Entries[1])
 					    },
 			new ObjectFieldString {Id = "Fingerprint", 
-						Label = "Fingerprint" // ((ObjectFieldString)Entries[2]).Value
+						Label = "Fingerprint" // ((ObjectFieldString)Entries[2])
 					    },
 			new ObjectFieldString {Id = "Algorithm", 
-						Label = "Algorithm" // ((ObjectFieldString)Entries[3]).Value
+						Label = "Algorithm" // ((ObjectFieldString)Entries[3])
 					    },
 			new ObjectFieldString {Id = "Key", 
-						Label = "Key" // ((ObjectFieldString)Entries[4]).Value
+						Label = "Key" // ((ObjectFieldString)Entries[4])
 					    }			} ;
+
+
+        /// <summary>
+        /// Create a list containing all the current children.
+        /// </summary>
+        /// <returns></returns>
+        public override List<Goedel.Trojan.Object> GetChildren() {
+            var Result = new List<Goedel.Trojan.Object>();
+
+			return Result;
+            }
+
+
 		}
 
 
-	public partial class ApplicationPassword : _ApplicationPassword{
-		}
-
-
-	public class _ApplicationPassword : Application {
+	public partial class ApplicationPassword : Application {
 
 		/// <summary>
         /// Sites
         /// </summary>
-		public List<Goedel.Trojan.Object> Sites {
+		public ObjectFieldList Sites {
 			get {
-				return ((ObjectFieldList)Entries[2]).Value;
+				return ((ObjectFieldList)Entries[2]);
 				}
-			set {
-				((ObjectFieldList)Entries[2]).Value = value;
-				}
+
 			}
 			
 
@@ -1222,34 +1459,46 @@ namespace PHB.Apps.Mesh.ProfileManager {
 
 		List<ObjectEntry> _Entries = new List<ObjectEntry> {
 
-			new ObjectFieldSet {Id = "Groups", 
-						Label = "Member of groups" // ((ObjectFieldSet)Entries[0]).Value
+			new ObjectFieldString {Id = "Identifier", 
+						Label = "Name" // ((ObjectFieldString)Entries[0])
 					    },
 			new ObjectFieldSet {Id = "Devices", 
-						Label = "Connected devices" // ((ObjectFieldSet)Entries[1]).Value
+						Label = "Connected devices" // ((ObjectFieldSet)Entries[1])
 					    },
 			new ObjectFieldList {Id = "Sites", 
-						Label = "Sites" // ((ObjectFieldList)Entries[2]).Value
+						Label = "Sites" // ((ObjectFieldList)Entries[2])
 					    }			} ;
+
+
+        /// <summary>
+        /// Create a list containing all the current children.
+        /// </summary>
+        /// <returns></returns>
+        public override List<Goedel.Trojan.Object> GetChildren() {
+            var Result = new List<Goedel.Trojan.Object>();
+			if (Sites.Value != null) {
+				foreach (var Entry in Sites.Value) {
+					Result.Add (Entry);
+					}
+				}
+
+			return Result;
+            }
+
+
 		}
 
 
-	public partial class ApplicationWiFi : _ApplicationWiFi{
-		}
-
-
-	public class _ApplicationWiFi : Application {
+	public partial class ApplicationWiFi : Application {
 
 		/// <summary>
         /// WiFis
         /// </summary>
-		public List<Goedel.Trojan.Object> WiFis {
+		public ObjectFieldList WiFis {
 			get {
-				return ((ObjectFieldList)Entries[2]).Value;
+				return ((ObjectFieldList)Entries[2]);
 				}
-			set {
-				((ObjectFieldList)Entries[2]).Value = value;
-				}
+
 			}
 			
 
@@ -1260,34 +1509,76 @@ namespace PHB.Apps.Mesh.ProfileManager {
 
 		List<ObjectEntry> _Entries = new List<ObjectEntry> {
 
-			new ObjectFieldSet {Id = "Groups", 
-						Label = "Member of groups" // ((ObjectFieldSet)Entries[0]).Value
+			new ObjectFieldString {Id = "Identifier", 
+						Label = "Name" // ((ObjectFieldString)Entries[0])
 					    },
 			new ObjectFieldSet {Id = "Devices", 
-						Label = "Connected devices" // ((ObjectFieldSet)Entries[1]).Value
+						Label = "Connected devices" // ((ObjectFieldSet)Entries[1])
 					    },
 			new ObjectFieldList {Id = "WiFis", 
-						Label = "Networks" // ((ObjectFieldList)Entries[2]).Value
+						Label = "Networks" // ((ObjectFieldList)Entries[2])
 					    }			} ;
+
+
+        /// <summary>
+        /// Create a list containing all the current children.
+        /// </summary>
+        /// <returns></returns>
+        public override List<Goedel.Trojan.Object> GetChildren() {
+            var Result = new List<Goedel.Trojan.Object>();
+			if (WiFis.Value != null) {
+				foreach (var Entry in WiFis.Value) {
+					Result.Add (Entry);
+					}
+				}
+
+			return Result;
+            }
+
+
 		}
 
 
-	public partial class Key : _Key{
-		}
-
-
-	public class _Key : Object {
+	public partial class Key : Object {
 
 		/// <summary>
         /// Fingerprint
         /// </summary>
-		public string Fingerprint {
+		public ObjectFieldString Fingerprint {
 			get {
-				return ((ObjectFieldString)Entries[0]).Value;
+				return ((ObjectFieldString)Entries[0]);
 				}
-			set {
-				((ObjectFieldString)Entries[0]).Value = value;
+
+			}
+			
+		/// <summary>
+        /// KeyValid
+        /// </summary>
+		public ObjectFieldBoolean KeyValid {
+			get {
+				return ((ObjectFieldBoolean)Entries[1]);
 				}
+
+			}
+			
+		/// <summary>
+        /// Created
+        /// </summary>
+		public ObjectFieldString Created {
+			get {
+				return ((ObjectFieldString)Entries[2]);
+				}
+
+			}
+			
+		/// <summary>
+        /// Expires
+        /// </summary>
+		public ObjectFieldString Expires {
+			get {
+				return ((ObjectFieldString)Entries[3]);
+				}
+
 			}
 			
 
@@ -1299,53 +1590,35 @@ namespace PHB.Apps.Mesh.ProfileManager {
 		List<ObjectEntry> _Entries = new List<ObjectEntry> {
 
 			new ObjectFieldString {Id = "Fingerprint", 
-						Label = "Fingerprint" // ((ObjectFieldString)Entries[0]).Value
+						Label = "Fingerprint" // ((ObjectFieldString)Entries[0])
+					    },
+			new ObjectFieldBoolean {Id = "KeyValid", 
+						Label = "Is valid" // ((ObjectFieldBoolean)Entries[1])
+					    },
+			new ObjectFieldString {Id = "Created", 
+						Label = "Created" // ((ObjectFieldString)Entries[2])
+					    },
+			new ObjectFieldString {Id = "Expires", 
+						Label = "Expires" // ((ObjectFieldString)Entries[3])
 					    }			} ;
+
+
+        /// <summary>
+        /// Create a list containing all the current children.
+        /// </summary>
+        /// <returns></returns>
+        public override List<Goedel.Trojan.Object> GetChildren() {
+			var Result = base.GetChildren();
+
+			return Result;
+            }
+
+
 		}
 
 
-	public partial class KeysSMIME : _KeysSMIME{
-		}
+	public partial class KeysSMIME : Key {
 
-
-	public class _KeysSMIME : Key {
-
-		/// <summary>
-        /// Valid
-        /// </summary>
-		public bool Valid {
-			get {
-				return ((ObjectFieldBoolean)Entries[1]).Value;
-				}
-			set {
-				((ObjectFieldBoolean)Entries[1]).Value = value;
-				}
-			}
-			
-		/// <summary>
-        /// Created
-        /// </summary>
-		public string Created {
-			get {
-				return ((ObjectFieldString)Entries[2]).Value;
-				}
-			set {
-				((ObjectFieldString)Entries[2]).Value = value;
-				}
-			}
-			
-		/// <summary>
-        /// Expires
-        /// </summary>
-		public string Expires {
-			get {
-				return ((ObjectFieldString)Entries[3]).Value;
-				}
-			set {
-				((ObjectFieldString)Entries[3]).Value = value;
-				}
-			}
-			
 
 		public override List<ObjectEntry> Entries {
             get { return _Entries; }
@@ -1355,68 +1628,35 @@ namespace PHB.Apps.Mesh.ProfileManager {
 		List<ObjectEntry> _Entries = new List<ObjectEntry> {
 
 			new ObjectFieldString {Id = "Fingerprint", 
-						Label = "Fingerprint" // ((ObjectFieldString)Entries[0]).Value
+						Label = "Fingerprint" // ((ObjectFieldString)Entries[0])
 					    },
-			new ObjectFieldBoolean {Id = "Valid", 
-						Label = "Is valid" // ((ObjectFieldBoolean)Entries[1]).Value
+			new ObjectFieldBoolean {Id = "KeyValid", 
+						Label = "Is valid" // ((ObjectFieldBoolean)Entries[1])
 					    },
 			new ObjectFieldString {Id = "Created", 
-						Label = "Created" // ((ObjectFieldString)Entries[2]).Value
+						Label = "Created" // ((ObjectFieldString)Entries[2])
 					    },
 			new ObjectFieldString {Id = "Expires", 
-						Label = "Expires" // ((ObjectFieldString)Entries[3]).Value
-					    },
-			new ObjectCommand {
-						Id = "Revoke",  
-						Label = "Revoke"},
-			new ObjectCommand {
-						Id = "Renew",  
-						Label = "Renew"}			} ;
+						Label = "Expires" // ((ObjectFieldString)Entries[3])
+					    }			} ;
+
+
+        /// <summary>
+        /// Create a list containing all the current children.
+        /// </summary>
+        /// <returns></returns>
+        public override List<Goedel.Trojan.Object> GetChildren() {
+            var Result = new List<Goedel.Trojan.Object>();
+
+			return Result;
+            }
+
+
 		}
 
 
-	public partial class KeysPGP : _KeysPGP{
-		}
+	public partial class KeysPGP : Key {
 
-
-	public class _KeysPGP : Key {
-
-		/// <summary>
-        /// Valid
-        /// </summary>
-		public bool Valid {
-			get {
-				return ((ObjectFieldBoolean)Entries[1]).Value;
-				}
-			set {
-				((ObjectFieldBoolean)Entries[1]).Value = value;
-				}
-			}
-			
-		/// <summary>
-        /// Created
-        /// </summary>
-		public string Created {
-			get {
-				return ((ObjectFieldString)Entries[2]).Value;
-				}
-			set {
-				((ObjectFieldString)Entries[2]).Value = value;
-				}
-			}
-			
-		/// <summary>
-        /// Expires
-        /// </summary>
-		public string Expires {
-			get {
-				return ((ObjectFieldString)Entries[3]).Value;
-				}
-			set {
-				((ObjectFieldString)Entries[3]).Value = value;
-				}
-			}
-			
 
 		public override List<ObjectEntry> Entries {
             get { return _Entries; }
@@ -1426,54 +1666,53 @@ namespace PHB.Apps.Mesh.ProfileManager {
 		List<ObjectEntry> _Entries = new List<ObjectEntry> {
 
 			new ObjectFieldString {Id = "Fingerprint", 
-						Label = "Fingerprint" // ((ObjectFieldString)Entries[0]).Value
+						Label = "Fingerprint" // ((ObjectFieldString)Entries[0])
 					    },
-			new ObjectFieldBoolean {Id = "Valid", 
-						Label = "Is valid" // ((ObjectFieldBoolean)Entries[1]).Value
+			new ObjectFieldBoolean {Id = "KeyValid", 
+						Label = "Is valid" // ((ObjectFieldBoolean)Entries[1])
 					    },
 			new ObjectFieldString {Id = "Created", 
-						Label = "Created" // ((ObjectFieldString)Entries[2]).Value
+						Label = "Created" // ((ObjectFieldString)Entries[2])
 					    },
 			new ObjectFieldString {Id = "Expires", 
-						Label = "Expires" // ((ObjectFieldString)Entries[3]).Value
-					    },
-			new ObjectCommand {
-						Id = "Revoke",  
-						Label = "Revoke"},
-			new ObjectCommand {
-						Id = "Renew",  
-						Label = "Renew"}			} ;
+						Label = "Expires" // ((ObjectFieldString)Entries[3])
+					    }			} ;
+
+
+        /// <summary>
+        /// Create a list containing all the current children.
+        /// </summary>
+        /// <returns></returns>
+        public override List<Goedel.Trojan.Object> GetChildren() {
+            var Result = new List<Goedel.Trojan.Object>();
+
+			return Result;
+            }
+
+
 		}
 
 
-	public partial class SSHKey : _SSHKey{
-		}
-
-
-	public class _SSHKey : Key {
+	public partial class SSHKey : Key {
 
 		/// <summary>
         /// Algorithm
         /// </summary>
-		public string Algorithm {
+		public ObjectFieldString Algorithm {
 			get {
-				return ((ObjectFieldString)Entries[1]).Value;
+				return ((ObjectFieldString)Entries[4]);
 				}
-			set {
-				((ObjectFieldString)Entries[1]).Value = value;
-				}
+
 			}
 			
 		/// <summary>
         /// Key
         /// </summary>
-		public string Key {
+		public ObjectFieldString Key {
 			get {
-				return ((ObjectFieldString)Entries[2]).Value;
+				return ((ObjectFieldString)Entries[5]);
 				}
-			set {
-				((ObjectFieldString)Entries[2]).Value = value;
-				}
+
 			}
 			
 
@@ -1485,45 +1724,59 @@ namespace PHB.Apps.Mesh.ProfileManager {
 		List<ObjectEntry> _Entries = new List<ObjectEntry> {
 
 			new ObjectFieldString {Id = "Fingerprint", 
-						Label = "Fingerprint" // ((ObjectFieldString)Entries[0]).Value
+						Label = "Fingerprint" // ((ObjectFieldString)Entries[0])
+					    },
+			new ObjectFieldBoolean {Id = "KeyValid", 
+						Label = "Is valid" // ((ObjectFieldBoolean)Entries[1])
+					    },
+			new ObjectFieldString {Id = "Created", 
+						Label = "Created" // ((ObjectFieldString)Entries[2])
+					    },
+			new ObjectFieldString {Id = "Expires", 
+						Label = "Expires" // ((ObjectFieldString)Entries[3])
 					    },
 			new ObjectFieldString {Id = "Algorithm", 
-						Label = "Algorithm" // ((ObjectFieldString)Entries[1]).Value
+						Label = "Algorithm" // ((ObjectFieldString)Entries[4])
 					    },
 			new ObjectFieldString {Id = "Key", 
-						Label = "Key" // ((ObjectFieldString)Entries[2]).Value
+						Label = "Key" // ((ObjectFieldString)Entries[5])
 					    }			} ;
+
+
+        /// <summary>
+        /// Create a list containing all the current children.
+        /// </summary>
+        /// <returns></returns>
+        public override List<Goedel.Trojan.Object> GetChildren() {
+            var Result = new List<Goedel.Trojan.Object>();
+
+			return Result;
+            }
+
+
 		}
 
 
-	public partial class SSHService : _SSHService{
-		}
-
-
-	public class _SSHService : Object {
+	public partial class SSHService : Object {
 
 		/// <summary>
         /// Server
         /// </summary>
 		public Server Server {
 			get {
-				return (Server) ((ObjectFieldItem)Entries[0]).Value;
+				return (Server) (((ObjectFieldItem)Entries[0])).Value;
 				}
-			set {
-				((ObjectFieldItem)Entries[0]).Value = value;
-				}
+
 			}
 			
 		/// <summary>
         /// Fingerprint
         /// </summary>
-		public string Fingerprint {
+		public ObjectFieldString Fingerprint {
 			get {
-				return ((ObjectFieldString)Entries[1]).Value;
+				return ((ObjectFieldString)Entries[1]);
 				}
-			set {
-				((ObjectFieldString)Entries[1]).Value = value;
-				}
+
 			}
 			
 
@@ -1534,55 +1787,60 @@ namespace PHB.Apps.Mesh.ProfileManager {
 
 		List<ObjectEntry> _Entries = new List<ObjectEntry> {
 
-			new ObjectFieldItem {Id = "Server", 
-						Label = "Server" // ((ObjectFieldItem)Entries[0]).Value
-					    },
+			new ObjectFieldItem {
+						Id = "Server",  
+						Label = "Server",
+						Value = new Server ()
+						},
 			new ObjectFieldString {Id = "Fingerprint", 
-						Label = "Fingerprint" // ((ObjectFieldString)Entries[1]).Value
+						Label = "Fingerprint" // ((ObjectFieldString)Entries[1])
 					    }			} ;
+
+
+        /// <summary>
+        /// Create a list containing all the current children.
+        /// </summary>
+        /// <returns></returns>
+        public override List<Goedel.Trojan.Object> GetChildren() {
+			var Result = base.GetChildren();
+
+			return Result;
+            }
+
+
 		}
 
 
-	public partial class WebPassword : _WebPassword{
-		}
-
-
-	public class _WebPassword : Object {
+	public partial class WebPassword : Object {
 
 		/// <summary>
         /// Site
         /// </summary>
-		public string Site {
+		public ObjectFieldString Site {
 			get {
-				return ((ObjectFieldString)Entries[0]).Value;
+				return ((ObjectFieldString)Entries[0]);
 				}
-			set {
-				((ObjectFieldString)Entries[0]).Value = value;
-				}
+
 			}
 			
 		/// <summary>
         /// Account
         /// </summary>
-		public string Account {
+		public ObjectFieldString Account {
 			get {
-				return ((ObjectFieldString)Entries[1]).Value;
+				return ((ObjectFieldString)Entries[1]);
 				}
-			set {
-				((ObjectFieldString)Entries[1]).Value = value;
-				}
+
 			}
 			
 		/// <summary>
         /// Password
         /// </summary>
-		public string Password {
+		public ObjectFieldSecret Password {
 			get {
-				return ((ObjectFieldSecret)Entries[2]).Value;
+				return ((ObjectFieldSecret)Entries[2]);
 				}
-			set {
-				((ObjectFieldSecret)Entries[2]).Value = value;
-				}
+
 			}
 			
 
@@ -1594,105 +1852,100 @@ namespace PHB.Apps.Mesh.ProfileManager {
 		List<ObjectEntry> _Entries = new List<ObjectEntry> {
 
 			new ObjectFieldString {Id = "Site", 
-						Label = "Site" // ((ObjectFieldString)Entries[0]).Value
+						Label = "Site" // ((ObjectFieldString)Entries[0])
 					    },
 			new ObjectFieldString {Id = "Account", 
-						Label = "Account" // ((ObjectFieldString)Entries[1]).Value
+						Label = "Account" // ((ObjectFieldString)Entries[1])
 					    },
 			new ObjectFieldSecret {Id = "Password", 
-						Label = "Password" // ((ObjectFieldSecret)Entries[2]).Value
+						Label = "Password" // ((ObjectFieldSecret)Entries[2])
 					    }			} ;
+
+
+        /// <summary>
+        /// Create a list containing all the current children.
+        /// </summary>
+        /// <returns></returns>
+        public override List<Goedel.Trojan.Object> GetChildren() {
+			var Result = base.GetChildren();
+
+			return Result;
+            }
+
+
 		}
 
 
-	public partial class WiFi : _WiFi{
-		}
-
-
-	public class _WiFi : Object {
+	public partial class WiFi : Object {
 
 		/// <summary>
         /// SSID
         /// </summary>
-		public string SSID {
+		public ObjectFieldString SSID {
 			get {
-				return ((ObjectFieldString)Entries[0]).Value;
+				return ((ObjectFieldString)Entries[0]);
 				}
-			set {
-				((ObjectFieldString)Entries[0]).Value = value;
-				}
+
 			}
 			
 		/// <summary>
         /// Password
         /// </summary>
-		public string Password {
+		public ObjectFieldSecret Password {
 			get {
-				return ((ObjectFieldSecret)Entries[1]).Value;
+				return ((ObjectFieldSecret)Entries[1]);
 				}
-			set {
-				((ObjectFieldSecret)Entries[1]).Value = value;
-				}
+
 			}
 			
 		/// <summary>
         /// WEP
         /// </summary>
-		public bool WEP {
+		public ObjectFieldBoolean WEP {
 			get {
-				return ((ObjectFieldBoolean)Entries[2]).Value;
+				return ((ObjectFieldBoolean)Entries[2]);
 				}
-			set {
-				((ObjectFieldBoolean)Entries[2]).Value = value;
-				}
+
 			}
 			
 		/// <summary>
         /// WPA
         /// </summary>
-		public bool WPA {
+		public ObjectFieldBoolean WPA {
 			get {
-				return ((ObjectFieldBoolean)Entries[3]).Value;
+				return ((ObjectFieldBoolean)Entries[3]);
 				}
-			set {
-				((ObjectFieldBoolean)Entries[3]).Value = value;
-				}
+
 			}
 			
 		/// <summary>
         /// WPA2
         /// </summary>
-		public bool WPA2 {
+		public ObjectFieldBoolean WPA2 {
 			get {
-				return ((ObjectFieldBoolean)Entries[4]).Value;
+				return ((ObjectFieldBoolean)Entries[4]);
 				}
-			set {
-				((ObjectFieldBoolean)Entries[4]).Value = value;
-				}
+
 			}
 			
 		/// <summary>
         /// WPAEnterprise
         /// </summary>
-		public bool WPAEnterprise {
+		public ObjectFieldBoolean WPAEnterprise {
 			get {
-				return ((ObjectFieldBoolean)Entries[5]).Value;
+				return ((ObjectFieldBoolean)Entries[5]);
 				}
-			set {
-				((ObjectFieldBoolean)Entries[5]).Value = value;
-				}
+
 			}
 			
 		/// <summary>
         /// WPA2Enterprise
         /// </summary>
-		public bool WPA2Enterprise {
+		public ObjectFieldBoolean WPA2Enterprise {
 			get {
-				return ((ObjectFieldBoolean)Entries[6]).Value;
+				return ((ObjectFieldBoolean)Entries[6]);
 				}
-			set {
-				((ObjectFieldBoolean)Entries[6]).Value = value;
-				}
+
 			}
 			
 
@@ -1704,57 +1957,62 @@ namespace PHB.Apps.Mesh.ProfileManager {
 		List<ObjectEntry> _Entries = new List<ObjectEntry> {
 
 			new ObjectFieldString {Id = "SSID", 
-						Label = "SSID" // ((ObjectFieldString)Entries[0]).Value
+						Label = "SSID" // ((ObjectFieldString)Entries[0])
 					    },
 			new ObjectFieldSecret {Id = "Password", 
-						Label = "Password" // ((ObjectFieldSecret)Entries[1]).Value
+						Label = "Password" // ((ObjectFieldSecret)Entries[1])
 					    },
 			new ObjectFieldBoolean {Id = "WEP", 
-						Label = "WEP" // ((ObjectFieldBoolean)Entries[2]).Value
+						Label = "WEP" // ((ObjectFieldBoolean)Entries[2])
 					    },
 			new ObjectFieldBoolean {Id = "WPA", 
-						Label = "WPA" // ((ObjectFieldBoolean)Entries[3]).Value
+						Label = "WPA" // ((ObjectFieldBoolean)Entries[3])
 					    },
 			new ObjectFieldBoolean {Id = "WPA2", 
-						Label = "WPA2" // ((ObjectFieldBoolean)Entries[4]).Value
+						Label = "WPA2" // ((ObjectFieldBoolean)Entries[4])
 					    },
 			new ObjectFieldBoolean {Id = "WPAEnterprise", 
-						Label = "WPA Enterprise" // ((ObjectFieldBoolean)Entries[5]).Value
+						Label = "WPA Enterprise" // ((ObjectFieldBoolean)Entries[5])
 					    },
 			new ObjectFieldBoolean {Id = "WPA2Enterprise", 
-						Label = "WPA2 Enterprise" // ((ObjectFieldBoolean)Entries[6]).Value
+						Label = "WPA2 Enterprise" // ((ObjectFieldBoolean)Entries[6])
 					    }			} ;
+
+
+        /// <summary>
+        /// Create a list containing all the current children.
+        /// </summary>
+        /// <returns></returns>
+        public override List<Goedel.Trojan.Object> GetChildren() {
+			var Result = base.GetChildren();
+
+			return Result;
+            }
+
+
 		}
 
 
-	public partial class Server : _Server{
-		}
-
-
-	public class _Server : Object {
+	public partial class Server : Object {
 
 		/// <summary>
         /// Address
         /// </summary>
-		public string Address {
+		public ObjectFieldString Address {
 			get {
-				return ((ObjectFieldString)Entries[0]).Value;
+				return ((ObjectFieldString)Entries[0]);
 				}
-			set {
-				((ObjectFieldString)Entries[0]).Value = value;
-				}
+
 			}
 			
 		/// <summary>
         /// Port
         /// </summary>
-		public int Port {
+		public ObjectFieldInteger Port {
 			get {
-				return ((ObjectFieldInteger)Entries[1]).Value;
+				return ((ObjectFieldInteger)Entries[1]);
 				}
-			set {
-				((ObjectFieldInteger)Entries[1]).Value = value;
-				}
+
 			}
 			
 
@@ -1766,42 +2024,47 @@ namespace PHB.Apps.Mesh.ProfileManager {
 		List<ObjectEntry> _Entries = new List<ObjectEntry> {
 
 			new ObjectFieldString {Id = "Address", 
-						Label = "DNS Address" // ((ObjectFieldString)Entries[0]).Value
+						Label = "DNS Address" // ((ObjectFieldString)Entries[0])
 					    },
 			new ObjectFieldInteger {Id = "Port", 
-						Label = "Port" // ((ObjectFieldInteger)Entries[1]).Value
+						Label = "Port" // ((ObjectFieldInteger)Entries[1])
 					    }			} ;
+
+
+        /// <summary>
+        /// Create a list containing all the current children.
+        /// </summary>
+        /// <returns></returns>
+        public override List<Goedel.Trojan.Object> GetChildren() {
+			var Result = base.GetChildren();
+
+			return Result;
+            }
+
+
 		}
 
 
-	public partial class ServerTLS : _ServerTLS{
-		}
-
-
-	public class _ServerTLS : Server {
+	public partial class ServerTLS : Server {
 
 		/// <summary>
         /// TLS
         /// </summary>
-		public bool TLS {
+		public ObjectFieldBoolean TLS {
 			get {
-				return ((ObjectFieldBoolean)Entries[2]).Value;
+				return ((ObjectFieldBoolean)Entries[2]);
 				}
-			set {
-				((ObjectFieldBoolean)Entries[2]).Value = value;
-				}
+
 			}
 			
 		/// <summary>
         /// Root
         /// </summary>
-		public string Root {
+		public ObjectFieldString Root {
 			get {
-				return ((ObjectFieldString)Entries[3]).Value;
+				return ((ObjectFieldString)Entries[3]);
 				}
-			set {
-				((ObjectFieldString)Entries[3]).Value = value;
-				}
+
 			}
 			
 
@@ -1813,60 +2076,63 @@ namespace PHB.Apps.Mesh.ProfileManager {
 		List<ObjectEntry> _Entries = new List<ObjectEntry> {
 
 			new ObjectFieldString {Id = "Address", 
-						Label = "DNS Address" // ((ObjectFieldString)Entries[0]).Value
+						Label = "DNS Address" // ((ObjectFieldString)Entries[0])
 					    },
 			new ObjectFieldInteger {Id = "Port", 
-						Label = "Port" // ((ObjectFieldInteger)Entries[1]).Value
+						Label = "Port" // ((ObjectFieldInteger)Entries[1])
 					    },
 			new ObjectFieldBoolean {Id = "TLS", 
-						Label = "Require TLS" // ((ObjectFieldBoolean)Entries[2]).Value
+						Label = "Require TLS" // ((ObjectFieldBoolean)Entries[2])
 					    },
 			new ObjectFieldString {Id = "Root", 
-						Label = "TLS Root" // ((ObjectFieldString)Entries[3]).Value
+						Label = "TLS Root" // ((ObjectFieldString)Entries[3])
 					    }			} ;
+
+
+        /// <summary>
+        /// Create a list containing all the current children.
+        /// </summary>
+        /// <returns></returns>
+        public override List<Goedel.Trojan.Object> GetChildren() {
+            var Result = new List<Goedel.Trojan.Object>();
+
+			return Result;
+            }
+
+
 		}
 
 
-	public partial class ServerSASL : _ServerSASL{
-		}
-
-
-	public class _ServerSASL : Server {
+	public partial class ServerSASL : Server {
 
 		/// <summary>
         /// Password
         /// </summary>
-		public string Password {
+		public ObjectFieldSecret Password {
 			get {
-				return ((ObjectFieldSecret)Entries[2]).Value;
+				return ((ObjectFieldSecret)Entries[2]);
 				}
-			set {
-				((ObjectFieldSecret)Entries[2]).Value = value;
-				}
+
 			}
 			
 		/// <summary>
         /// Auth
         /// </summary>
-		public bool Auth {
+		public ObjectFieldBoolean Auth {
 			get {
-				return ((ObjectFieldBoolean)Entries[3]).Value;
+				return ((ObjectFieldBoolean)Entries[3]);
 				}
-			set {
-				((ObjectFieldBoolean)Entries[3]).Value = value;
-				}
+
 			}
 			
 		/// <summary>
         /// Schemes
         /// </summary>
-		public string Schemes {
+		public ObjectFieldString Schemes {
 			get {
-				return ((ObjectFieldString)Entries[4]).Value;
+				return ((ObjectFieldString)Entries[4]);
 				}
-			set {
-				((ObjectFieldString)Entries[4]).Value = value;
-				}
+
 			}
 			
 
@@ -1878,135 +2144,126 @@ namespace PHB.Apps.Mesh.ProfileManager {
 		List<ObjectEntry> _Entries = new List<ObjectEntry> {
 
 			new ObjectFieldString {Id = "Address", 
-						Label = "DNS Address" // ((ObjectFieldString)Entries[0]).Value
+						Label = "DNS Address" // ((ObjectFieldString)Entries[0])
 					    },
 			new ObjectFieldInteger {Id = "Port", 
-						Label = "Port" // ((ObjectFieldInteger)Entries[1]).Value
+						Label = "Port" // ((ObjectFieldInteger)Entries[1])
 					    },
 			new ObjectFieldSecret {Id = "Password", 
-						Label = "Password" // ((ObjectFieldSecret)Entries[2]).Value
+						Label = "Password" // ((ObjectFieldSecret)Entries[2])
 					    },
 			new ObjectFieldBoolean {Id = "Auth", 
-						Label = "Require Secure Auth" // ((ObjectFieldBoolean)Entries[3]).Value
+						Label = "Require Secure Auth" // ((ObjectFieldBoolean)Entries[3])
 					    },
 			new ObjectFieldString {Id = "Schemes", 
-						Label = "Only accept" // ((ObjectFieldString)Entries[4]).Value
+						Label = "Only accept" // ((ObjectFieldString)Entries[4])
 					    }			} ;
+
+
+        /// <summary>
+        /// Create a list containing all the current children.
+        /// </summary>
+        /// <returns></returns>
+        public override List<Goedel.Trojan.Object> GetChildren() {
+            var Result = new List<Goedel.Trojan.Object>();
+
+			return Result;
+            }
+
+
 		}
 
 
-	public partial class CreateProfile : _CreateProfile{
-		}
-
-
-	public class _CreateProfile : Object {
+	public partial class CreateProfile : Object {
 
 		/// <summary>
         /// FriendlyName
         /// </summary>
-		public string FriendlyName {
+		public ObjectFieldString FriendlyName {
 			get {
-				return ((ObjectFieldString)Entries[0]).Value;
+				return ((ObjectFieldString)Entries[0]);
 				}
-			set {
-				((ObjectFieldString)Entries[0]).Value = value;
-				}
+
 			}
 			
 		/// <summary>
         /// PortalAccount
         /// </summary>
-		public string PortalAccount {
+		public ObjectFieldString PortalAccount {
 			get {
-				return ((ObjectFieldString)Entries[1]).Value;
+				return ((ObjectFieldString)Entries[1]);
 				}
-			set {
-				((ObjectFieldString)Entries[1]).Value = value;
-				}
+
 			}
 			
 		/// <summary>
         /// PortalAddress
         /// </summary>
-		public string PortalAddress {
+		public ObjectFieldString PortalAddress {
 			get {
-				return ((ObjectFieldString)Entries[2]).Value;
+				return ((ObjectFieldString)Entries[2]);
 				}
-			set {
-				((ObjectFieldString)Entries[2]).Value = value;
-				}
+
 			}
 			
 		/// <summary>
         /// Advanced
         /// </summary>
-		public bool Advanced {
+		public ObjectFieldOption Advanced {
 			get {
-				return ((ObjectFieldOption)Entries[3]).Value;
+				return ((ObjectFieldOption)Entries[3]);
 				}
-			set {
-				((ObjectFieldOption)Entries[3]).Value = value;
-				}
+
 			}
 			
 		/// <summary>
         /// Harden
         /// </summary>
-		public bool Harden {
+		public ObjectFieldOption Harden {
 			get {
-				return ((ObjectFieldOption)((ObjectFieldOption)Entries[3]).Entries[0]).Value;
+				return ((ObjectFieldOption)((ObjectFieldOption)Entries[3]).Entries[0]);
 				}
-			set {
-				((ObjectFieldOption)((ObjectFieldOption)Entries[3]).Entries[0]).Value = value;
-				}
+
 			}
 			
 		/// <summary>
         /// Bits
         /// </summary>
-		public int Bits {
+		public ObjectFieldInteger Bits {
 			get {
-				return ((ObjectFieldInteger)((ObjectFieldOption)((ObjectFieldOption)Entries[3]).Entries[0]).Entries[1]).Value;
+				return ((ObjectFieldInteger)((ObjectFieldOption)((ObjectFieldOption)Entries[3]).Entries[0]).Entries[1]);
 				}
-			set {
-				((ObjectFieldInteger)((ObjectFieldOption)((ObjectFieldOption)Entries[3]).Entries[0]).Entries[1]).Value = value;
-				}
+
 			}
 			
 		/// <summary>
         /// Escrow
         /// </summary>
-		public bool Escrow {
+		public ObjectFieldOption Escrow {
 			get {
-				return ((ObjectFieldOption)((ObjectFieldOption)Entries[3]).Entries[2]).Value;
+				return ((ObjectFieldOption)((ObjectFieldOption)Entries[3]).Entries[2]);
 				}
-			set {
-				((ObjectFieldOption)((ObjectFieldOption)Entries[3]).Entries[2]).Value = value;
-				}
+
 			}
 			
 		/// <summary>
         /// Shares
         /// </summary>
-		public int Shares {
+		public ObjectFieldInteger Shares {
 			get {
-				return ((ObjectFieldInteger)((ObjectFieldOption)((ObjectFieldOption)Entries[3]).Entries[2]).Entries[3]).Value;
+				return ((ObjectFieldInteger)((ObjectFieldOption)((ObjectFieldOption)Entries[3]).Entries[2]).Entries[3]);
 				}
-			set {
-				((ObjectFieldInteger)((ObjectFieldOption)((ObjectFieldOption)Entries[3]).Entries[2]).Entries[3]).Value = value;
-				}
+
 			}
 			
 		/// <summary>
         /// Quorum
         /// </summary>
-		public int Quorum {
+		public ObjectFieldInteger Quorum {
 			get {
-				return ((ObjectFieldInteger)((ObjectFieldOption)((ObjectFieldOption)Entries[3]).Entries[2]).Entries[4]).Value;
+				return ((ObjectFieldInteger)((ObjectFieldOption)((ObjectFieldOption)Entries[3]).Entries[2]).Entries[4]);
 				}
-			set {
-				((ObjectFieldInteger)((ObjectFieldOption)((ObjectFieldOption)Entries[3]).Entries[2]).Entries[4]).Value = value;
-				}
+
 			}
 			
 
@@ -2018,13 +2275,13 @@ namespace PHB.Apps.Mesh.ProfileManager {
 		List<ObjectEntry> _Entries = new List<ObjectEntry> {
 
 			new ObjectFieldString {Id = "FriendlyName", 
-						Label = "Identifier" // ((ObjectFieldString)Entries[0]).Value
+						Label = "Identifier" // ((ObjectFieldString)Entries[0])
 					    },
 			new ObjectFieldString {Id = "PortalAccount", 
-						Label = "Account Name" // ((ObjectFieldString)Entries[1]).Value
+						Label = "Account Name" // ((ObjectFieldString)Entries[1])
 					    },
 			new ObjectFieldString {Id = "PortalAddress", 
-						Label = "Portal Address" // ((ObjectFieldString)Entries[2]).Value
+						Label = "Portal Address" // ((ObjectFieldString)Entries[2])
 					    },	
 			new ObjectFieldOption {
 						Id = "Advanced",  
@@ -2035,7 +2292,7 @@ namespace PHB.Apps.Mesh.ProfileManager {
 							Label = "Strong Fingerprint",
 							Entries = new List<ObjectEntry> {
 					new ObjectFieldInteger {Id = "Bits", 
-								Label = "Number of Bits" // ((ObjectFieldInteger)((ObjectFieldOption)((ObjectFieldOption)Entries[3]).Entries[0]).Entries[1]).Value
+								Label = "Number of Bits" // ((ObjectFieldInteger)((ObjectFieldOption)((ObjectFieldOption)Entries[3]).Entries[0]).Entries[1])
 							    },
 					new ObjectText {
 								Text = "A strong fingerprint is generated by generating master keys until  a master key matching a certain pattern is found. This increases the  difficulty of breaking the fingerprint by 'brute force' but only by the same amount of effort that was put into generating it."
@@ -2047,10 +2304,10 @@ namespace PHB.Apps.Mesh.ProfileManager {
 							Label = "Escrow Keys",
 							Entries = new List<ObjectEntry> {
 					new ObjectFieldInteger {Id = "Shares", 
-								Label = "Number of Key Shares" // ((ObjectFieldInteger)((ObjectFieldOption)((ObjectFieldOption)Entries[3]).Entries[2]).Entries[3]).Value
+								Label = "Number of Key Shares" // ((ObjectFieldInteger)((ObjectFieldOption)((ObjectFieldOption)Entries[3]).Entries[2]).Entries[3])
 							    },
 					new ObjectFieldInteger {Id = "Quorum", 
-								Label = "Number of shares required for recovery" // ((ObjectFieldInteger)((ObjectFieldOption)((ObjectFieldOption)Entries[3]).Entries[2]).Entries[4]).Value
+								Label = "Number of shares required for recovery" // ((ObjectFieldInteger)((ObjectFieldOption)((ObjectFieldOption)Entries[3]).Entries[2]).Entries[4])
 							    },
 					new ObjectText {
 								Text = "Creating an escrow record for the Master Key allows it to be  recovered should the need arise."
@@ -2059,14 +2316,78 @@ namespace PHB.Apps.Mesh.ProfileManager {
 							}
 							}
 						}			} ;
+
+
+        /// <summary>
+        /// Create a list containing all the current children.
+        /// </summary>
+        /// <returns></returns>
+        public override List<Goedel.Trojan.Object> GetChildren() {
+			var Result = base.GetChildren();
+
+			return Result;
+            }
+
+
 		}
 
 
-	public partial class SelectApplications : _SelectApplications{
+	public partial class EscrowParameters : Object {
+
+		/// <summary>
+        /// Shares
+        /// </summary>
+		public ObjectFieldInteger Shares {
+			get {
+				return ((ObjectFieldInteger)Entries[0]);
+				}
+
+			}
+			
+		/// <summary>
+        /// Quorum
+        /// </summary>
+		public ObjectFieldInteger Quorum {
+			get {
+				return ((ObjectFieldInteger)Entries[1]);
+				}
+
+			}
+			
+
+		public override List<ObjectEntry> Entries {
+            get { return _Entries; }
+            set { _Entries = value; }
+            }
+
+		List<ObjectEntry> _Entries = new List<ObjectEntry> {
+
+			new ObjectFieldInteger {Id = "Shares", 
+						Label = "Number of Key Shares" // ((ObjectFieldInteger)Entries[0])
+					    },
+			new ObjectFieldInteger {Id = "Quorum", 
+						Label = "Number of shares required for recovery" // ((ObjectFieldInteger)Entries[1])
+					    },
+			new ObjectText {
+						Text = "Creating an escrow record for the Master Key allows it to be  recovered should the need arise."
+						}			} ;
+
+
+        /// <summary>
+        /// Create a list containing all the current children.
+        /// </summary>
+        /// <returns></returns>
+        public override List<Goedel.Trojan.Object> GetChildren() {
+			var Result = base.GetChildren();
+
+			return Result;
+            }
+
+
 		}
 
 
-	public class _SelectApplications : Object {
+	public partial class SelectApplications : Object {
 
 
 		public override List<ObjectEntry> Entries {
@@ -2081,27 +2402,24 @@ namespace PHB.Apps.Mesh.ProfileManager {
 						},
 			new ObjectText {
 						Text = "(You can always add or remove applications later on.)"
-						},
-			new ObjectCommand {
-						Id = "SecureEmail",  
-						Label = "Configure"},
-			new ObjectCommand {
-						Id = "SecureSSH",  
-						Label = "Configure"},
-			new ObjectCommand {
-						Id = "SecureWeb",  
-						Label = "Configure"},
-			new ObjectCommand {
-						Id = "SecureNetwork",  
-						Label = "Configure"}			} ;
+						}			} ;
+
+
+        /// <summary>
+        /// Create a list containing all the current children.
+        /// </summary>
+        /// <returns></returns>
+        public override List<Goedel.Trojan.Object> GetChildren() {
+			var Result = base.GetChildren();
+
+			return Result;
+            }
+
+
 		}
 
 
-	public partial class SelectAccountsEmail : _SelectAccountsEmail{
-		}
-
-
-	public class _SelectAccountsEmail : Object {
+	public partial class SelectAccountsEmail : Object {
 
 		public enum EnumSelection {
 			All  /* Use same security settings for all accounts */
@@ -2112,13 +2430,11 @@ namespace PHB.Apps.Mesh.ProfileManager {
 		/// <summary>
         /// Accounts
         /// </summary>
-		public List<Goedel.Trojan.Object> Accounts {
+		public ObjectFieldList Accounts {
 			get {
-				return ((ObjectFieldList)Entries[1]).Value;
+				return ((ObjectFieldList)Entries[1]);
 				}
-			set {
-				((ObjectFieldList)Entries[1]).Value = value;
-				}
+
 			}
 			
 
@@ -2137,47 +2453,57 @@ namespace PHB.Apps.Mesh.ProfileManager {
 						Label = "Security settings",
 						Entries = new List<ObjectEntry> {
 				new ObjectFieldRadio {Id = "All", 
-							Label = "Use same security settings for all accounts" // ((ObjectFieldRadio)((ObjectFieldEnumerate)Entries[0]).Entries[0]).Value
+							Label = "Use same security settings for all accounts" // ((ObjectFieldRadio)((ObjectFieldEnumerate)Entries[0]).Entries[0])
 						    },
 				new ObjectFieldRadio {Id = "Choose", 
-							Label = "Let me choose options for each account" // ((ObjectFieldRadio)((ObjectFieldEnumerate)Entries[0]).Entries[1]).Value
+							Label = "Let me choose options for each account" // ((ObjectFieldRadio)((ObjectFieldEnumerate)Entries[0]).Entries[1])
 						    }
 							}
 						},
 			new ObjectFieldList {Id = "Accounts", 
-						Label = "Email Accounts" // ((ObjectFieldList)Entries[1]).Value
+						Label = "Email Accounts" // ((ObjectFieldList)Entries[1])
 					    }			} ;
+
+
+        /// <summary>
+        /// Create a list containing all the current children.
+        /// </summary>
+        /// <returns></returns>
+        public override List<Goedel.Trojan.Object> GetChildren() {
+			var Result = base.GetChildren();
+			if (Accounts.Value != null) {
+				foreach (var Entry in Accounts.Value) {
+					Result.Add (Entry);
+					}
+				}
+
+			return Result;
+            }
+
+
 		}
 
 
-	public partial class EmailAccounts : _EmailAccounts{
-		}
-
-
-	public class _EmailAccounts : Object {
+	public partial class EmailAccounts : Object {
 
 		/// <summary>
         /// Address
         /// </summary>
-		public string Address {
+		public ObjectFieldString Address {
 			get {
-				return ((ObjectFieldString)Entries[0]).Value;
+				return ((ObjectFieldString)Entries[0]);
 				}
-			set {
-				((ObjectFieldString)Entries[0]).Value = value;
-				}
+
 			}
 			
 		/// <summary>
         /// Application
         /// </summary>
-		public string Application {
+		public ObjectFieldString Application {
 			get {
-				return ((ObjectFieldString)Entries[1]).Value;
+				return ((ObjectFieldString)Entries[1]);
 				}
-			set {
-				((ObjectFieldString)Entries[1]).Value = value;
-				}
+
 			}
 			
 
@@ -2189,126 +2515,117 @@ namespace PHB.Apps.Mesh.ProfileManager {
 		List<ObjectEntry> _Entries = new List<ObjectEntry> {
 
 			new ObjectFieldString {Id = "Address", 
-						Label = "Address" // ((ObjectFieldString)Entries[0]).Value
+						Label = "Address" // ((ObjectFieldString)Entries[0])
 					    },
 			new ObjectFieldString {Id = "Application", 
-						Label = "Application" // ((ObjectFieldString)Entries[1]).Value
+						Label = "Application" // ((ObjectFieldString)Entries[1])
 					    }			} ;
+
+
+        /// <summary>
+        /// Create a list containing all the current children.
+        /// </summary>
+        /// <returns></returns>
+        public override List<Goedel.Trojan.Object> GetChildren() {
+			var Result = base.GetChildren();
+
+			return Result;
+            }
+
+
 		}
 
 
-	public partial class EmailOptions : _EmailOptions{
-		}
-
-
-	public class _EmailOptions : Object {
+	public partial class EmailOptions : Object {
 
 		/// <summary>
         /// Account
         /// </summary>
-		public string Account {
+		public ObjectFieldString Account {
 			get {
-				return ((ObjectFieldString)Entries[0]).Value;
+				return ((ObjectFieldString)Entries[0]);
 				}
-			set {
-				((ObjectFieldString)Entries[0]).Value = value;
-				}
+
 			}
 			
 		/// <summary>
         /// Application
         /// </summary>
-		public string Application {
+		public ObjectFieldString Application {
 			get {
-				return ((ObjectFieldString)Entries[1]).Value;
+				return ((ObjectFieldString)Entries[1]);
 				}
-			set {
-				((ObjectFieldString)Entries[1]).Value = value;
-				}
+
 			}
 			
 		/// <summary>
         /// UseOpenPGP
         /// </summary>
-		public bool UseOpenPGP {
+		public ObjectFieldOption UseOpenPGP {
 			get {
-				return ((ObjectFieldOption)Entries[2]).Value;
+				return ((ObjectFieldOption)Entries[2]);
 				}
-			set {
-				((ObjectFieldOption)Entries[2]).Value = value;
-				}
+
 			}
 			
 		/// <summary>
         /// PublishPGPMesh
         /// </summary>
-		public bool PublishPGPMesh {
+		public ObjectFieldBoolean PublishPGPMesh {
 			get {
-				return ((ObjectFieldBoolean)((ObjectFieldOption)Entries[2]).Entries[0]).Value;
+				return ((ObjectFieldBoolean)((ObjectFieldOption)Entries[2]).Entries[0]);
 				}
-			set {
-				((ObjectFieldBoolean)((ObjectFieldOption)Entries[2]).Entries[0]).Value = value;
-				}
+
 			}
 			
 		/// <summary>
         /// PublishPGPKeyRing
         /// </summary>
-		public bool PublishPGPKeyRing {
+		public ObjectFieldBoolean PublishPGPKeyRing {
 			get {
-				return ((ObjectFieldBoolean)((ObjectFieldOption)Entries[2]).Entries[1]).Value;
+				return ((ObjectFieldBoolean)((ObjectFieldOption)Entries[2]).Entries[1]);
 				}
-			set {
-				((ObjectFieldBoolean)((ObjectFieldOption)Entries[2]).Entries[1]).Value = value;
-				}
+
 			}
 			
 		/// <summary>
         /// EscrowPGP
         /// </summary>
-		public bool EscrowPGP {
+		public ObjectFieldBoolean EscrowPGP {
 			get {
-				return ((ObjectFieldBoolean)((ObjectFieldOption)Entries[2]).Entries[2]).Value;
+				return ((ObjectFieldBoolean)((ObjectFieldOption)Entries[2]).Entries[2]);
 				}
-			set {
-				((ObjectFieldBoolean)((ObjectFieldOption)Entries[2]).Entries[2]).Value = value;
-				}
+
 			}
 			
 		/// <summary>
         /// UseSMIME
         /// </summary>
-		public bool UseSMIME {
+		public ObjectFieldOption UseSMIME {
 			get {
-				return ((ObjectFieldOption)Entries[3]).Value;
+				return ((ObjectFieldOption)Entries[3]);
 				}
-			set {
-				((ObjectFieldOption)Entries[3]).Value = value;
-				}
+
 			}
 			
 		/// <summary>
         /// SMIMECA
         /// </summary>
-		public string SMIMECA {
+		public ObjectFieldString SMIMECA {
 			get {
-				return ((ObjectFieldString)((ObjectFieldOption)Entries[3]).Entries[3]).Value;
+				return ((ObjectFieldString)((ObjectFieldOption)Entries[3]).Entries[3]);
 				}
-			set {
-				((ObjectFieldString)((ObjectFieldOption)Entries[3]).Entries[3]).Value = value;
-				}
+
 			}
 			
 		/// <summary>
         /// EscrowSMIME
         /// </summary>
-		public bool EscrowSMIME {
+		public ObjectFieldBoolean EscrowSMIME {
 			get {
-				return ((ObjectFieldBoolean)((ObjectFieldOption)Entries[3]).Entries[4]).Value;
+				return ((ObjectFieldBoolean)((ObjectFieldOption)Entries[3]).Entries[4]);
 				}
-			set {
-				((ObjectFieldBoolean)((ObjectFieldOption)Entries[3]).Entries[4]).Value = value;
-				}
+
 			}
 			
 
@@ -2320,23 +2637,23 @@ namespace PHB.Apps.Mesh.ProfileManager {
 		List<ObjectEntry> _Entries = new List<ObjectEntry> {
 
 			new ObjectFieldString {Id = "Account", 
-						Label = "Account" // ((ObjectFieldString)Entries[0]).Value
+						Label = "Account" // ((ObjectFieldString)Entries[0])
 					    },
 			new ObjectFieldString {Id = "Application", 
-						Label = "Application" // ((ObjectFieldString)Entries[1]).Value
+						Label = "Application" // ((ObjectFieldString)Entries[1])
 					    },	
 			new ObjectFieldOption {
 						Id = "UseOpenPGP",  
 						Label = "Create keys for OpenPGP",
 						Entries = new List<ObjectEntry> {
 				new ObjectFieldBoolean {Id = "PublishPGPMesh", 
-							Label = "Publish public key to the Mesh" // ((ObjectFieldBoolean)((ObjectFieldOption)Entries[2]).Entries[0]).Value
+							Label = "Publish public key to the Mesh" // ((ObjectFieldBoolean)((ObjectFieldOption)Entries[2]).Entries[0])
 						    },
 				new ObjectFieldBoolean {Id = "PublishPGPKeyRing", 
-							Label = "Publish public key to OpenPGP key servers" // ((ObjectFieldBoolean)((ObjectFieldOption)Entries[2]).Entries[1]).Value
+							Label = "Publish public key to OpenPGP key servers" // ((ObjectFieldBoolean)((ObjectFieldOption)Entries[2]).Entries[1])
 						    },
 				new ObjectFieldBoolean {Id = "EscrowPGP", 
-							Label = "Use personal escrow key to safeguard key" // ((ObjectFieldBoolean)((ObjectFieldOption)Entries[2]).Entries[2]).Value
+							Label = "Use personal escrow key to safeguard key" // ((ObjectFieldBoolean)((ObjectFieldOption)Entries[2]).Entries[2])
 						    }
 							}
 						},	
@@ -2345,21 +2662,30 @@ namespace PHB.Apps.Mesh.ProfileManager {
 						Label = "Create keys for S/MIME",
 						Entries = new List<ObjectEntry> {
 				new ObjectFieldString {Id = "SMIMECA", 
-							Label = "DNS address of CA" // ((ObjectFieldString)((ObjectFieldOption)Entries[3]).Entries[3]).Value
+							Label = "DNS address of CA" // ((ObjectFieldString)((ObjectFieldOption)Entries[3]).Entries[3])
 						    },
 				new ObjectFieldBoolean {Id = "EscrowSMIME", 
-							Label = "Use personal escrow key to safeguard key" // ((ObjectFieldBoolean)((ObjectFieldOption)Entries[3]).Entries[4]).Value
+							Label = "Use personal escrow key to safeguard key" // ((ObjectFieldBoolean)((ObjectFieldOption)Entries[3]).Entries[4])
 						    }
 							}
 						}			} ;
+
+
+        /// <summary>
+        /// Create a list containing all the current children.
+        /// </summary>
+        /// <returns></returns>
+        public override List<Goedel.Trojan.Object> GetChildren() {
+			var Result = base.GetChildren();
+
+			return Result;
+            }
+
+
 		}
 
 
-	public partial class WebOptions : _WebOptions{
-		}
-
-
-	public class _WebOptions : Object {
+	public partial class WebOptions : Object {
 
 		public enum EnumSelection {
 			Both  /* Use the Mesh to store Web passwords and bookmarks */
@@ -2384,122 +2710,115 @@ namespace PHB.Apps.Mesh.ProfileManager {
 						Label = "",
 						Entries = new List<ObjectEntry> {
 				new ObjectFieldRadio {Id = "Both", 
-							Label = "Use the Mesh to store Web passwords and bookmarks" // ((ObjectFieldRadio)((ObjectFieldEnumerate)Entries[0]).Entries[0]).Value
+							Label = "Use the Mesh to store Web passwords and bookmarks" // ((ObjectFieldRadio)((ObjectFieldEnumerate)Entries[0]).Entries[0])
 						    },
 				new ObjectFieldRadio {Id = "Password", 
-							Label = "Use the Mesh to store Web passwords" // ((ObjectFieldRadio)((ObjectFieldEnumerate)Entries[0]).Entries[1]).Value
+							Label = "Use the Mesh to store Web passwords" // ((ObjectFieldRadio)((ObjectFieldEnumerate)Entries[0]).Entries[1])
 						    },
 				new ObjectFieldRadio {Id = "Bookmark", 
-							Label = "Use the Mesh to store Web bookmarks" // ((ObjectFieldRadio)((ObjectFieldEnumerate)Entries[0]).Entries[2]).Value
+							Label = "Use the Mesh to store Web bookmarks" // ((ObjectFieldRadio)((ObjectFieldEnumerate)Entries[0]).Entries[2])
 						    },
 				new ObjectFieldRadio {Id = "Neither", 
-							Label = "Don't use the Mesh to store Web data" // ((ObjectFieldRadio)((ObjectFieldEnumerate)Entries[0]).Entries[3]).Value
+							Label = "Don't use the Mesh to store Web data" // ((ObjectFieldRadio)((ObjectFieldEnumerate)Entries[0]).Entries[3])
 						    }
 							}
 						}			} ;
+
+
+        /// <summary>
+        /// Create a list containing all the current children.
+        /// </summary>
+        /// <returns></returns>
+        public override List<Goedel.Trojan.Object> GetChildren() {
+			var Result = base.GetChildren();
+
+			return Result;
+            }
+
+
 		}
 
 
-	public partial class NetworkOptions : _NetworkOptions{
-		}
-
-
-	public class _NetworkOptions : Object {
+	public partial class NetworkOptions : Object {
 
 		/// <summary>
         /// DNS1
         /// </summary>
-		public string DNS1 {
+		public ObjectFieldString DNS1 {
 			get {
-				return ((ObjectFieldString)Entries[0]).Value;
+				return ((ObjectFieldString)Entries[0]);
 				}
-			set {
-				((ObjectFieldString)Entries[0]).Value = value;
-				}
+
 			}
 			
 		/// <summary>
         /// DNS2
         /// </summary>
-		public string DNS2 {
+		public ObjectFieldString DNS2 {
 			get {
-				return ((ObjectFieldString)Entries[1]).Value;
+				return ((ObjectFieldString)Entries[1]);
 				}
-			set {
-				((ObjectFieldString)Entries[1]).Value = value;
-				}
+
 			}
 			
 		/// <summary>
         /// Scope
         /// </summary>
-		public string Scope {
+		public ObjectFieldString Scope {
 			get {
-				return ((ObjectFieldString)Entries[2]).Value;
+				return ((ObjectFieldString)Entries[2]);
 				}
-			set {
-				((ObjectFieldString)Entries[2]).Value = value;
-				}
+
 			}
 			
 		/// <summary>
         /// RequireSecurity
         /// </summary>
-		public bool RequireSecurity {
+		public ObjectFieldOption RequireSecurity {
 			get {
-				return ((ObjectFieldOption)Entries[3]).Value;
+				return ((ObjectFieldOption)Entries[3]);
 				}
-			set {
-				((ObjectFieldOption)Entries[3]).Value = value;
-				}
+
 			}
 			
 		/// <summary>
         /// SecurityConfig
         /// </summary>
-		public string SecurityConfig {
+		public ObjectFieldString SecurityConfig {
 			get {
-				return ((ObjectFieldString)((ObjectFieldOption)Entries[3]).Entries[0]).Value;
+				return ((ObjectFieldString)((ObjectFieldOption)Entries[3]).Entries[0]);
 				}
-			set {
-				((ObjectFieldString)((ObjectFieldOption)Entries[3]).Entries[0]).Value = value;
-				}
+
 			}
 			
 		/// <summary>
         /// DNSTLS
         /// </summary>
-		public bool DNSTLS {
+		public ObjectFieldBoolean DNSTLS {
 			get {
-				return ((ObjectFieldBoolean)((ObjectFieldOption)Entries[3]).Entries[1]).Value;
+				return ((ObjectFieldBoolean)((ObjectFieldOption)Entries[3]).Entries[1]);
 				}
-			set {
-				((ObjectFieldBoolean)((ObjectFieldOption)Entries[3]).Entries[1]).Value = value;
-				}
+
 			}
 			
 		/// <summary>
         /// DNSPrivate
         /// </summary>
-		public bool DNSPrivate {
+		public ObjectFieldBoolean DNSPrivate {
 			get {
-				return ((ObjectFieldBoolean)((ObjectFieldOption)Entries[3]).Entries[2]).Value;
+				return ((ObjectFieldBoolean)((ObjectFieldOption)Entries[3]).Entries[2]);
 				}
-			set {
-				((ObjectFieldBoolean)((ObjectFieldOption)Entries[3]).Entries[2]).Value = value;
-				}
+
 			}
 			
 		/// <summary>
         /// TrustRoot
         /// </summary>
-		public string TrustRoot {
+		public ObjectFieldString TrustRoot {
 			get {
-				return ((ObjectFieldString)((ObjectFieldOption)Entries[3]).Entries[3]).Value;
+				return ((ObjectFieldString)((ObjectFieldOption)Entries[3]).Entries[3]);
 				}
-			set {
-				((ObjectFieldString)((ObjectFieldOption)Entries[3]).Entries[3]).Value = value;
-				}
+
 			}
 			
 
@@ -2511,99 +2830,98 @@ namespace PHB.Apps.Mesh.ProfileManager {
 		List<ObjectEntry> _Entries = new List<ObjectEntry> {
 
 			new ObjectFieldString {Id = "DNS1", 
-						Label = "DNS server 1" // ((ObjectFieldString)Entries[0]).Value
+						Label = "DNS server 1" // ((ObjectFieldString)Entries[0])
 					    },
 			new ObjectFieldString {Id = "DNS2", 
-						Label = "DNS server 2" // ((ObjectFieldString)Entries[1]).Value
+						Label = "DNS server 2" // ((ObjectFieldString)Entries[1])
 					    },
 			new ObjectFieldString {Id = "Scope", 
-						Label = "Restrict scope to domains" // ((ObjectFieldString)Entries[2]).Value
+						Label = "Restrict scope to domains" // ((ObjectFieldString)Entries[2])
 					    },	
 			new ObjectFieldOption {
 						Id = "RequireSecurity",  
 						Label = "Require Security",
 						Entries = new List<ObjectEntry> {
 				new ObjectFieldString {Id = "SecurityConfig", 
-							Label = "Security policy" // ((ObjectFieldString)((ObjectFieldOption)Entries[3]).Entries[0]).Value
+							Label = "Security policy" // ((ObjectFieldString)((ObjectFieldOption)Entries[3]).Entries[0])
 						    },
 				new ObjectFieldBoolean {Id = "DNSTLS", 
-							Label = "Allow DNS over TLS" // ((ObjectFieldBoolean)((ObjectFieldOption)Entries[3]).Entries[1]).Value
+							Label = "Allow DNS over TLS" // ((ObjectFieldBoolean)((ObjectFieldOption)Entries[3]).Entries[1])
 						    },
 				new ObjectFieldBoolean {Id = "DNSPrivate", 
-							Label = "Allow Private DNS" // ((ObjectFieldBoolean)((ObjectFieldOption)Entries[3]).Entries[2]).Value
+							Label = "Allow Private DNS" // ((ObjectFieldBoolean)((ObjectFieldOption)Entries[3]).Entries[2])
 						    },
 				new ObjectFieldString {Id = "TrustRoot", 
-							Label = "DNS Root of Trust" // ((ObjectFieldString)((ObjectFieldOption)Entries[3]).Entries[3]).Value
+							Label = "DNS Root of Trust" // ((ObjectFieldString)((ObjectFieldOption)Entries[3]).Entries[3])
 						    }
 							}
 						}			} ;
+
+
+        /// <summary>
+        /// Create a list containing all the current children.
+        /// </summary>
+        /// <returns></returns>
+        public override List<Goedel.Trojan.Object> GetChildren() {
+			var Result = base.GetChildren();
+
+			return Result;
+            }
+
+
 		}
 
 
-	public partial class Review : _Review{
-		}
-
-
-	public class _Review : Object {
+	public partial class Review : Object {
 
 		/// <summary>
         /// Fingerprint
         /// </summary>
-		public string Fingerprint {
+		public ObjectFieldString Fingerprint {
 			get {
-				return ((ObjectFieldString)Entries[0]).Value;
+				return ((ObjectFieldString)Entries[0]);
 				}
-			set {
-				((ObjectFieldString)Entries[0]).Value = value;
-				}
+
 			}
 			
 		/// <summary>
         /// MeshPortal
         /// </summary>
-		public string MeshPortal {
+		public ObjectFieldString MeshPortal {
 			get {
-				return ((ObjectFieldString)Entries[1]).Value;
+				return ((ObjectFieldString)Entries[1]);
 				}
-			set {
-				((ObjectFieldString)Entries[1]).Value = value;
-				}
+
 			}
 			
 		/// <summary>
         /// Escrow
         /// </summary>
-		public bool Escrow {
+		public ObjectFieldOption Escrow {
 			get {
-				return ((ObjectFieldOption)Entries[2]).Value;
+				return ((ObjectFieldOption)Entries[2]);
 				}
-			set {
-				((ObjectFieldOption)Entries[2]).Value = value;
-				}
+
 			}
 			
 		/// <summary>
         /// Quorum
         /// </summary>
-		public string Quorum {
+		public ObjectFieldString Quorum {
 			get {
-				return ((ObjectFieldString)((ObjectFieldOption)Entries[2]).Entries[0]).Value;
+				return ((ObjectFieldString)((ObjectFieldOption)Entries[2]).Entries[0]);
 				}
-			set {
-				((ObjectFieldString)((ObjectFieldOption)Entries[2]).Entries[0]).Value = value;
-				}
+
 			}
 			
 		/// <summary>
         /// Shares
         /// </summary>
-		public List<Goedel.Trojan.Object> Shares {
+		public ObjectFieldList Shares {
 			get {
-				return ((ObjectFieldList)((ObjectFieldOption)Entries[2]).Entries[1]).Value;
+				return ((ObjectFieldList)((ObjectFieldOption)Entries[2]).Entries[1]);
 				}
-			set {
-				((ObjectFieldList)((ObjectFieldOption)Entries[2]).Entries[1]).Value = value;
-				}
+
 			}
 			
 
@@ -2615,54 +2933,59 @@ namespace PHB.Apps.Mesh.ProfileManager {
 		List<ObjectEntry> _Entries = new List<ObjectEntry> {
 
 			new ObjectFieldString {Id = "Fingerprint", 
-						Label = "Master Fingerprint" // ((ObjectFieldString)Entries[0]).Value
+						Label = "Master Fingerprint" // ((ObjectFieldString)Entries[0])
 					    },
 			new ObjectFieldString {Id = "MeshPortal", 
-						Label = "Mesh Portal" // ((ObjectFieldString)Entries[1]).Value
+						Label = "Mesh Portal" // ((ObjectFieldString)Entries[1])
 					    },	
 			new ObjectFieldOption {
 						Id = "Escrow",  
 						Label = "Escrow encryption keys",
 						Entries = new List<ObjectEntry> {
 				new ObjectFieldString {Id = "Quorum", 
-							Label = "Quorum" // ((ObjectFieldString)((ObjectFieldOption)Entries[2]).Entries[0]).Value
+							Label = "Quorum" // ((ObjectFieldString)((ObjectFieldOption)Entries[2]).Entries[0])
 						    },
 				new ObjectFieldList {Id = "Shares", 
-							Label = "Shares" // ((ObjectFieldList)((ObjectFieldOption)Entries[2]).Entries[1]).Value
+							Label = "Shares" // ((ObjectFieldList)((ObjectFieldOption)Entries[2]).Entries[1])
 						    }
 							}
 						}			} ;
+
+
+        /// <summary>
+        /// Create a list containing all the current children.
+        /// </summary>
+        /// <returns></returns>
+        public override List<Goedel.Trojan.Object> GetChildren() {
+			var Result = base.GetChildren();
+
+			return Result;
+            }
+
+
 		}
 
 
-	public partial class Share : _Share{
-		}
-
-
-	public class _Share : Object {
+	public partial class Share : Object {
 
 		/// <summary>
         /// Number
         /// </summary>
-		public int Number {
+		public ObjectFieldInteger Number {
 			get {
-				return ((ObjectFieldInteger)Entries[0]).Value;
+				return ((ObjectFieldInteger)Entries[0]);
 				}
-			set {
-				((ObjectFieldInteger)Entries[0]).Value = value;
-				}
+
 			}
 			
 		/// <summary>
-        /// Share
+        /// Value
         /// </summary>
-		public string Share {
+		public ObjectFieldString Value {
 			get {
-				return ((ObjectFieldString)Entries[1]).Value;
+				return ((ObjectFieldString)Entries[1]);
 				}
-			set {
-				((ObjectFieldString)Entries[1]).Value = value;
-				}
+
 			}
 			
 
@@ -2674,19 +2997,28 @@ namespace PHB.Apps.Mesh.ProfileManager {
 		List<ObjectEntry> _Entries = new List<ObjectEntry> {
 
 			new ObjectFieldInteger {Id = "Number", 
-						Label = "Number" // ((ObjectFieldInteger)Entries[0]).Value
+						Label = "Number" // ((ObjectFieldInteger)Entries[0])
 					    },
-			new ObjectFieldString {Id = "Share", 
-						Label = "Share" // ((ObjectFieldString)Entries[1]).Value
+			new ObjectFieldString {Id = "Value", 
+						Label = "Value" // ((ObjectFieldString)Entries[1])
 					    }			} ;
+
+
+        /// <summary>
+        /// Create a list containing all the current children.
+        /// </summary>
+        /// <returns></returns>
+        public override List<Goedel.Trojan.Object> GetChildren() {
+			var Result = base.GetChildren();
+
+			return Result;
+            }
+
+
 		}
 
 
-	public partial class Finish : _Finish{
-		}
-
-
-	public class _Finish : Object {
+	public partial class CommitWizardCreateProfile : Object {
 
 
 		public override List<ObjectEntry> Entries {
@@ -2699,6 +3031,19 @@ namespace PHB.Apps.Mesh.ProfileManager {
 			new ObjectText {
 						Text = "Success! The profile was accepted by the mesh portal."
 						}			} ;
+
+
+        /// <summary>
+        /// Create a list containing all the current children.
+        /// </summary>
+        /// <returns></returns>
+        public override List<Goedel.Trojan.Object> GetChildren() {
+			var Result = base.GetChildren();
+
+			return Result;
+            }
+
+
 		}
 
 
