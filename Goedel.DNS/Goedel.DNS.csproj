@@ -1,20 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{C943B7B9-D8B1-4532-962A-36EFA72218E9}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{DD994F50-5CA7-474D-AC4A-DBF05949621F}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CryptoTest</RootNamespace>
-    <AssemblyName>RunCrypto</AssemblyName>
+    <RootNamespace>Goedel.DNS</RootNamespace>
+    <AssemblyName>libDNS</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -22,27 +22,21 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'RaspberryPi|AnyCPU'">
-    <OutputPath>bin\RaspberryPi\</OutputPath>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Goedel.Registry, Version=1.0.5856.42846, Culture=neutral, PublicKeyToken=00ce4cbe0647f41a, processorArchitecture=MSIL">
       <HintPath>..\packages\Goedel.Registry.1.0.5856.42846\lib\net40\Goedel.Registry.dll</HintPath>
       <Private>True</Private>
-    </Reference>
-    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\IDE\PublicAssemblies\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -53,40 +47,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
+    <Compile Include="Canonicalize.cs" />
+    <Compile Include="DNSBuffer.cs" />
+    <Compile Include="DNSClient.cs" />
+    <Compile Include="DNSService.cs" />
+    <Compile Include="DomainerAPIPlus.cs" />
+    <Compile Include="Exceptions.cs" />
+    <Compile Include="OmniClient.cs" />
+    <Compile Include="OmniDiscover.cs" />
+    <Compile Include="DomainerAPI.cs" />
+    <Compile Include="Parse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
     <None Include="packages.config" />
-    <None Include="RunCrypto.licenseheader" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\LibProtoGen\Goedel.Protocol.csproj">
-      <Project>{24419f2d-f425-4e0f-a0ea-9d3e7a57e12f}</Project>
-      <Name>Goedel.Protocol</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Goedel.Cryptography\Goedel.Cryptography.csproj">
-      <Project>{1babc0e9-d939-4de5-82a3-16752104b14b}</Project>
-      <Name>Goedel.Cryptography</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Goedel.Debug\Goedel.Debug.csproj">
-      <Project>{a8090b80-d658-45f6-bda1-4f9dfd2b976f}</Project>
-      <Name>Goedel.Debug</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Goedel.Cryptography.Jose\Goedel.Cryptography.Jose.csproj">
-      <Project>{59f7f1a5-abbc-4830-b7a3-140fd8e4c369}</Project>
-      <Name>Goedel.Cryptography.Jose</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>
-    </PreBuildEvent>
-  </PropertyGroup>
-  <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
+    <PostBuildEvent>powershell publishtarget "$(TargetPath)"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

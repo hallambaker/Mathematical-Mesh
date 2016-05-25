@@ -71,15 +71,15 @@
       <Project>{0586b4c1-814c-4d98-b6f1-180cd4e2faab}</Project>
       <Name>Goedel.Protocol.Debug</Name>
     </ProjectReference>
-    <ProjectReference Include="..\LibCryptoJose\Goedel.Cryptography.Jose.csproj">
+    <ProjectReference Include="..\Goedel.Cryptography.Jose\Goedel.Cryptography.Jose.csproj">
       <Project>{59f7f1a5-abbc-4830-b7a3-140fd8e4c369}</Project>
       <Name>Goedel.Cryptography.Jose</Name>
     </ProjectReference>
-    <ProjectReference Include="..\LibCrypto\Goedel.Cryptography.csproj">
+    <ProjectReference Include="..\Goedel.Cryptography\Goedel.Cryptography.csproj">
       <Project>{1babc0e9-d939-4de5-82a3-16752104b14b}</Project>
       <Name>Goedel.Cryptography</Name>
     </ProjectReference>
-    <ProjectReference Include="..\LibLogFile\Goedel.Persistence.csproj">
+    <ProjectReference Include="..\Goedel.Persistence\Goedel.Persistence.csproj">
       <Project>{81e30b95-c59d-4a04-925e-85877fd37fdd}</Project>
       <Name>Goedel.Persistence</Name>
     </ProjectReference>
@@ -87,7 +87,7 @@
       <Project>{f6343f1b-d03d-4965-9113-5120a8054e9e}</Project>
       <Name>Goedel.Mesh.Portal</Name>
     </ProjectReference>
-    <ProjectReference Include="..\LibMesh\Goedel.Mesh.csproj">
+    <ProjectReference Include="..\Goedel.Mesh\Goedel.Mesh.csproj">
       <Project>{0d8dd801-65d2-497c-8379-2d6adf3867c3}</Project>
       <Name>Goedel.Mesh</Name>
     </ProjectReference>

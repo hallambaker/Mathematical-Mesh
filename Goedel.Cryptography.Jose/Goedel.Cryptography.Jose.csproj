@@ -1,20 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{98BCF5B8-9232-437B-A2FA-BA769BF4D982}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{59F7F1A5-ABBC-4830-B7A3-140FD8E4C369}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MeshServer</RootNamespace>
-    <AssemblyName>ServerMesh</AssemblyName>
+    <RootNamespace>Goedel.Cryptography.Jose</RootNamespace>
+    <AssemblyName>libCryptoJose</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <TargetFrameworkProfile />
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
@@ -23,15 +24,35 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>bin\Debug\libCryptoJose.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <OutputPath>bin\Release\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'RaspberryPi|x86'">
+    <OutputPath>bin\x86\RaspberryPi\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'RaspberryPi|AnyCPU'">
+    <OutputPath>bin\RaspberryPi\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Goedel.Registry, Version=1.0.5856.42846, Culture=neutral, PublicKeyToken=00ce4cbe0647f41a, processorArchitecture=MSIL">
@@ -44,34 +65,34 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ServerCommands.cs">
+    <Compile Include="Dictionary.cs" />
+    <Compile Include="Header.cs" />
+    <Compile Include="JOSE.cs" />
+    <Compile Include="JoseSchema.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ServerCommands.command</DependentUpon>
+      <DependentUpon>JoseSchema.Protocol</DependentUpon>
     </Compile>
+    <Compile Include="JWE.cs" />
+    <Compile Include="JWK.cs" />
+    <Compile Include="JWSimple.cs" />
+    <Compile Include="JWS.cs" />
+    <Compile Include="KeyClasses.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-    <None Include="MeshPersistenceStore.jlog" />
-    <None Include="packages.config" />
-    <None Include="PortalPersistenceStore.jlog" />
-    <None Include="ServerCommands.command">
-      <Generator>CommandCS</Generator>
-      <LastGenOutput>ServerCommands.cs</LastGenOutput>
+    <None Include="JoseSchema.Protocol">
+      <Generator>Protogen</Generator>
+      <LastGenOutput>JoseSchema.cs</LastGenOutput>
     </None>
-    <None Include="ServerMesh.licenseheader" />
+    <None Include="LibCryptoJose.licenseheader" />
+    <None Include="packages.config" />
+    <None Include="Post.bat" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Goedel.Cryptography.Jose\Goedel.Cryptography.Jose.csproj">
-      <Project>{59f7f1a5-abbc-4830-b7a3-140fd8e4c369}</Project>
-      <Name>Goedel.Cryptography.Jose</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Goedel.Cryptography\Goedel.Cryptography.csproj">
       <Project>{1babc0e9-d939-4de5-82a3-16752104b14b}</Project>
       <Name>Goedel.Cryptography</Name>
@@ -80,34 +101,18 @@
       <Project>{a8090b80-d658-45f6-bda1-4f9dfd2b976f}</Project>
       <Name>Goedel.Debug</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Goedel.Persistence\Goedel.Persistence.csproj">
-      <Project>{81e30b95-c59d-4a04-925e-85877fd37fdd}</Project>
-      <Name>Goedel.Persistence</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\LibMeshService\Goedel.Mesh.Portal.csproj">
-      <Project>{f6343f1b-d03d-4965-9113-5120a8054e9e}</Project>
-      <Name>Goedel.Mesh.Portal</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Goedel.Mesh\Goedel.Mesh.csproj">
-      <Project>{0d8dd801-65d2-497c-8379-2d6adf3867c3}</Project>
-      <Name>Goedel.Mesh</Name>
-    </ProjectReference>
     <ProjectReference Include="..\LibProtoGen\Goedel.Protocol.csproj">
       <Project>{24419f2d-f425-4e0f-a0ea-9d3e7a57e12f}</Project>
       <Name>Goedel.Protocol</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="Version.xml" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PostBuildEvent>powershell publishtarget "$(TargetPath)" Goedel.Registry.dll libCrypto.dll libCryptoJose.dll libDebug.dll libLogFile.dll LibMesh.dll LibMeshService.dll LibProtoGen.dll
-powershell publishtarget "$(TargetDir)MathematicalMesh.zip"</PostBuildEvent>
-  </PropertyGroup>
   <PropertyGroup>
     <PreBuildEvent>
     </PreBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent>powershell publishtarget "$(TargetPath)"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

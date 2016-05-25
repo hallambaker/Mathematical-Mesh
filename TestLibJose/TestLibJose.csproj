@@ -67,15 +67,15 @@
       <Project>{24419f2d-f425-4e0f-a0ea-9d3e7a57e12f}</Project>
       <Name>Goedel.Protocol</Name>
     </ProjectReference>
-    <ProjectReference Include="..\LibCrypto\Goedel.Cryptography.csproj">
+    <ProjectReference Include="..\Goedel.Cryptography\Goedel.Cryptography.csproj">
       <Project>{1babc0e9-d939-4de5-82a3-16752104b14b}</Project>
       <Name>Goedel.Cryptography</Name>
     </ProjectReference>
-    <ProjectReference Include="..\LibDebug\Goedel.Debug.csproj">
+    <ProjectReference Include="..\Goedel.Debug\Goedel.Debug.csproj">
       <Project>{a8090b80-d658-45f6-bda1-4f9dfd2b976f}</Project>
       <Name>Goedel.Debug</Name>
     </ProjectReference>
-    <ProjectReference Include="..\LibCryptoJose\Goedel.Cryptography.Jose.csproj">
+    <ProjectReference Include="..\Goedel.Cryptography.Jose\Goedel.Cryptography.Jose.csproj">
       <Project>{59F7F1A5-ABBC-4830-B7A3-140FD8E4C369}</Project>
       <Name>Goedel.Cryptography.Jose</Name>
     </ProjectReference>

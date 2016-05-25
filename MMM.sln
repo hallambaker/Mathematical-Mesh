@@ -11,19 +11,19 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientMeshProfileManager", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientMeshSample", "ClientMeshSample\ClientMeshSample.csproj", "{48A4E066-EC73-466D-B0CF-9CBA06CDDD4E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Cryptography", "LibCrypto\Goedel.Cryptography.csproj", "{1BABC0E9-D939-4DE5-82A3-16752104B14B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Cryptography", "Goedel.Cryptography\Goedel.Cryptography.csproj", "{1BABC0E9-D939-4DE5-82A3-16752104B14B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Cryptography.Jose", "LibCryptoJose\Goedel.Cryptography.Jose.csproj", "{59F7F1A5-ABBC-4830-B7A3-140FD8E4C369}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Cryptography.Jose", "Goedel.Cryptography.Jose\Goedel.Cryptography.Jose.csproj", "{59F7F1A5-ABBC-4830-B7A3-140FD8E4C369}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Debug", "LibDebug\Goedel.Debug.csproj", "{A8090B80-D658-45F6-BDA1-4F9DFD2B976F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Debug", "Goedel.Debug\Goedel.Debug.csproj", "{A8090B80-D658-45F6-BDA1-4F9DFD2B976F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Persistence", "LibLogFile\Goedel.Persistence.csproj", "{81E30B95-C59D-4A04-925E-85877FD37FDD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Persistence", "Goedel.Persistence\Goedel.Persistence.csproj", "{81E30B95-C59D-4A04-925E-85877FD37FDD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Mesh", "LibMesh\Goedel.Mesh.csproj", "{0D8DD801-65D2-497C-8379-2D6ADF3867C3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Mesh", "Goedel.Mesh\Goedel.Mesh.csproj", "{0D8DD801-65D2-497C-8379-2D6ADF3867C3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Mesh.Portal", "LibMeshService\Goedel.Mesh.Portal.csproj", "{F6343F1B-D03D-4965-9113-5120A8054E9E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Mesh.Portal", "Goedel.Mesh.Portal\Goedel.Mesh.Portal.csproj", "{F6343F1B-D03D-4965-9113-5120A8054E9E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Protocol", "LibProtoGen\Goedel.Protocol.csproj", "{24419F2D-F425-4E0F-A0EA-9D3E7A57E12F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Protocol", "Goedel.Protocol\Goedel.Protocol.csproj", "{24419F2D-F425-4E0F-A0EA-9D3E7A57E12F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibTrojan", "LibTrojan\LibTrojan.csproj", "{E5A8ACB3-08F7-4BC9-9297-67DA400A740B}"
 EndProject
@@ -50,7 +50,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.gitignore = .gitignore
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Cryptography.Windows", "LibCryptoWindows\Goedel.Cryptography.Windows.csproj", "{5C8E83AB-2669-4242-9A11-5892940A7FE6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Cryptography.Windows", "Goedel.Cryptography.Windows\Goedel.Cryptography.Windows.csproj", "{5C8E83AB-2669-4242-9A11-5892940A7FE6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Documentation", "Documentation\Documentation.csproj", "{C26ACE75-2B6C-4553-944B-2C95986E103A}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -59,7 +59,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Documentation", "Documentat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExampleGenerator", "ExampleGenerator\ExampleGenerator.csproj", "{42B19C98-005A-4797-B636-DA8A8E99532F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.DNS", "LibDns\Goedel.DNS.csproj", "{DD994F50-5CA7-474D-AC4A-DBF05949621F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.DNS", "Goedel.DNS\Goedel.DNS.csproj", "{DD994F50-5CA7-474D-AC4A-DBF05949621F}"
 EndProject
 Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "InstallerMesh", "Installer\InstallerMesh.wixproj", "{AF1A5C5E-4FD1-4BCC-9C96-7D145E5A4EB3}"
 EndProject
