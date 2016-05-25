@@ -31,7 +31,7 @@ namespace Goedel.Mesh {
     public class Constants {
 
         /// <summary>
-        /// The administraiton key.
+        /// The administration key.
         /// </summary>
         public const string AdminKey = "$Admin";
 

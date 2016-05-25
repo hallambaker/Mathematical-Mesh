@@ -148,33 +148,33 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\LibCryptoJose\LibCryptoJose.csproj">
+    <ProjectReference Include="..\LibCryptoJose\Goedel.Cryptography.Jose.csproj">
       <Project>{59f7f1a5-abbc-4830-b7a3-140fd8e4c369}</Project>
-      <Name>LibCryptoJose</Name>
+      <Name>Goedel.Cryptography.Jose</Name>
     </ProjectReference>
-    <ProjectReference Include="..\LibCrypto\LibCrypto.csproj">
+    <ProjectReference Include="..\LibCrypto\Goedel.Cryptography.csproj">
       <Project>{1babc0e9-d939-4de5-82a3-16752104b14b}</Project>
-      <Name>LibCrypto</Name>
+      <Name>Goedel.Cryptography</Name>
     </ProjectReference>
-    <ProjectReference Include="..\LibDebug\LibDebug.csproj">
+    <ProjectReference Include="..\LibDebug\Goedel.Debug.csproj">
       <Project>{a8090b80-d658-45f6-bda1-4f9dfd2b976f}</Project>
-      <Name>LibDebug</Name>
+      <Name>Goedel.Debug</Name>
     </ProjectReference>
-    <ProjectReference Include="..\LibLogFile\LibLogFile.csproj">
+    <ProjectReference Include="..\LibLogFile\Goedel.Persistence.csproj">
       <Project>{81e30b95-c59d-4a04-925e-85877fd37fdd}</Project>
-      <Name>LibLogFile</Name>
+      <Name>Goedel.Persistence</Name>
     </ProjectReference>
-    <ProjectReference Include="..\LibMeshService\LibMeshService.csproj">
+    <ProjectReference Include="..\LibMeshService\Goedel.Mesh.Portal.csproj">
       <Project>{f6343f1b-d03d-4965-9113-5120a8054e9e}</Project>
-      <Name>LibMeshService</Name>
+      <Name>Goedel.Mesh.Portal</Name>
     </ProjectReference>
-    <ProjectReference Include="..\LibMesh\LibMesh.csproj">
+    <ProjectReference Include="..\LibMesh\Goedel.Mesh.csproj">
       <Project>{0d8dd801-65d2-497c-8379-2d6adf3867c3}</Project>
-      <Name>LibMesh</Name>
+      <Name>Goedel.Mesh</Name>
     </ProjectReference>
-    <ProjectReference Include="..\LibProtoGen\LibProtoGen.csproj">
+    <ProjectReference Include="..\LibProtoGen\Goedel.Protocol.csproj">
       <Project>{24419f2d-f425-4e0f-a0ea-9d3e7a57e12f}</Project>
-      <Name>LibProtoGen</Name>
+      <Name>Goedel.Protocol</Name>
     </ProjectReference>
     <ProjectReference Include="..\LibTrojan\LibTrojan.csproj">
       <Project>{e5a8acb3-08f7-4bc9-9297-67da400a740b}</Project>

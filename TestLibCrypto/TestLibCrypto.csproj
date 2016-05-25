@@ -62,17 +62,17 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\LibProtoGen\LibProtoGen.csproj">
+    <ProjectReference Include="..\LibProtoGen\Goedel.Protocol.csproj">
       <Project>{24419f2d-f425-4e0f-a0ea-9d3e7a57e12f}</Project>
-      <Name>LibProtoGen</Name>
+      <Name>Goedel.Protocol</Name>
     </ProjectReference>
-    <ProjectReference Include="..\LibCrypto\LibCrypto.csproj">
+    <ProjectReference Include="..\LibCrypto\Goedel.Cryptography.csproj">
       <Project>{1babc0e9-d939-4de5-82a3-16752104b14b}</Project>
-      <Name>LibCrypto</Name>
+      <Name>Goedel.Cryptography</Name>
     </ProjectReference>
-    <ProjectReference Include="..\LibDebug\LibDebug.csproj">
+    <ProjectReference Include="..\LibDebug\Goedel.Debug.csproj">
       <Project>{a8090b80-d658-45f6-bda1-4f9dfd2b976f}</Project>
-      <Name>LibDebug</Name>
+      <Name>Goedel.Debug</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

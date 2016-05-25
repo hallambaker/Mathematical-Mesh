@@ -11,19 +11,19 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientMeshProfileManager", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientMeshSample", "ClientMeshSample\ClientMeshSample.csproj", "{48A4E066-EC73-466D-B0CF-9CBA06CDDD4E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibCrypto", "LibCrypto\LibCrypto.csproj", "{1BABC0E9-D939-4DE5-82A3-16752104B14B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Cryptography", "LibCrypto\Goedel.Cryptography.csproj", "{1BABC0E9-D939-4DE5-82A3-16752104B14B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibCryptoJose", "LibCryptoJose\LibCryptoJose.csproj", "{59F7F1A5-ABBC-4830-B7A3-140FD8E4C369}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Cryptography.Jose", "LibCryptoJose\Goedel.Cryptography.Jose.csproj", "{59F7F1A5-ABBC-4830-B7A3-140FD8E4C369}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibDebug", "LibDebug\LibDebug.csproj", "{A8090B80-D658-45F6-BDA1-4F9DFD2B976F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Debug", "LibDebug\Goedel.Debug.csproj", "{A8090B80-D658-45F6-BDA1-4F9DFD2B976F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibLogFile", "LibLogFile\LibLogFile.csproj", "{81E30B95-C59D-4A04-925E-85877FD37FDD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Persistence", "LibLogFile\Goedel.Persistence.csproj", "{81E30B95-C59D-4A04-925E-85877FD37FDD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibMesh", "LibMesh\LibMesh.csproj", "{0D8DD801-65D2-497C-8379-2D6ADF3867C3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Mesh", "LibMesh\Goedel.Mesh.csproj", "{0D8DD801-65D2-497C-8379-2D6ADF3867C3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibMeshService", "LibMeshService\LibMeshService.csproj", "{F6343F1B-D03D-4965-9113-5120A8054E9E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Mesh.Portal", "LibMeshService\Goedel.Mesh.Portal.csproj", "{F6343F1B-D03D-4965-9113-5120A8054E9E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibProtoGen", "LibProtoGen\LibProtoGen.csproj", "{24419F2D-F425-4E0F-A0EA-9D3E7A57E12F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Protocol", "LibProtoGen\Goedel.Protocol.csproj", "{24419F2D-F425-4E0F-A0EA-9D3E7A57E12F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibTrojan", "LibTrojan\LibTrojan.csproj", "{E5A8ACB3-08F7-4BC9-9297-67DA400A740B}"
 EndProject
@@ -50,7 +50,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.gitignore = .gitignore
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibCryptoWindows", "LibCryptoWindows\LibCryptoWindows.csproj", "{5C8E83AB-2669-4242-9A11-5892940A7FE6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Cryptography.Windows", "LibCryptoWindows\Goedel.Cryptography.Windows.csproj", "{5C8E83AB-2669-4242-9A11-5892940A7FE6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Documentation", "Documentation\Documentation.csproj", "{C26ACE75-2B6C-4553-944B-2C95986E103A}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -59,7 +59,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Documentation", "Documentat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExampleGenerator", "ExampleGenerator\ExampleGenerator.csproj", "{42B19C98-005A-4797-B636-DA8A8E99532F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibDNS", "LibDns\LibDNS.csproj", "{DD994F50-5CA7-474D-AC4A-DBF05949621F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.DNS", "LibDns\Goedel.DNS.csproj", "{DD994F50-5CA7-474D-AC4A-DBF05949621F}"
 EndProject
 Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "InstallerMesh", "Installer\InstallerMesh.wixproj", "{AF1A5C5E-4FD1-4BCC-9C96-7D145E5A4EB3}"
 EndProject
@@ -75,6 +75,16 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Trojan", "..\buildtools\Trojan3\Goedel.Trojan\Goedel.Trojan.csproj", "{30425912-50AE-4CAC-8A26-CF672F1D94F8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientTrojan3", "ClientTrojan3\ClientTrojan3.csproj", "{27874B2E-7FCC-4D11-A3A0-493E8A0EDEE7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Mesh.Client", "Goedel.Mesh.Client\Goedel.Mesh.Client.csproj", "{A803FE85-50D9-4CCD-8FFC-F653A4BD73E3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Cryptography.Registry", "Goedel.Crypto.Registry\Goedel.Cryptography.Registry.csproj", "{CA485578-77EA-4BB9-9705-2B0AC4D0B613}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.ASN1", "Goedel.ASN1\Goedel.ASN1.csproj", "{8D149451-E2DA-48CA-99F1-BD7FFE7F00FA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Cryptography.PKIX", "Goedel.Cryptography.PKIX\Goedel.Cryptography.PKIX.csproj", "{AC86E0E2-661F-4EEA-B226-0BB66C7A166C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Mesh.Integration", "Goedel.Mesh.Integration\Goedel.Mesh.Integration.csproj", "{C8617598-DA24-41FA-BB97-C1CB4C740DD1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -571,6 +581,96 @@ Global
 		{27874B2E-7FCC-4D11-A3A0-493E8A0EDEE7}.Release|x64.Build.0 = Release|Any CPU
 		{27874B2E-7FCC-4D11-A3A0-493E8A0EDEE7}.Release|x86.ActiveCfg = Release|Any CPU
 		{27874B2E-7FCC-4D11-A3A0-493E8A0EDEE7}.Release|x86.Build.0 = Release|Any CPU
+		{A803FE85-50D9-4CCD-8FFC-F653A4BD73E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A803FE85-50D9-4CCD-8FFC-F653A4BD73E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A803FE85-50D9-4CCD-8FFC-F653A4BD73E3}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{A803FE85-50D9-4CCD-8FFC-F653A4BD73E3}.Debug|x64.Build.0 = Debug|Any CPU
+		{A803FE85-50D9-4CCD-8FFC-F653A4BD73E3}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A803FE85-50D9-4CCD-8FFC-F653A4BD73E3}.Debug|x86.Build.0 = Debug|Any CPU
+		{A803FE85-50D9-4CCD-8FFC-F653A4BD73E3}.RaspberryPi|Any CPU.ActiveCfg = Release|Any CPU
+		{A803FE85-50D9-4CCD-8FFC-F653A4BD73E3}.RaspberryPi|Any CPU.Build.0 = Release|Any CPU
+		{A803FE85-50D9-4CCD-8FFC-F653A4BD73E3}.RaspberryPi|x64.ActiveCfg = Release|Any CPU
+		{A803FE85-50D9-4CCD-8FFC-F653A4BD73E3}.RaspberryPi|x64.Build.0 = Release|Any CPU
+		{A803FE85-50D9-4CCD-8FFC-F653A4BD73E3}.RaspberryPi|x86.ActiveCfg = Release|Any CPU
+		{A803FE85-50D9-4CCD-8FFC-F653A4BD73E3}.RaspberryPi|x86.Build.0 = Release|Any CPU
+		{A803FE85-50D9-4CCD-8FFC-F653A4BD73E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A803FE85-50D9-4CCD-8FFC-F653A4BD73E3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A803FE85-50D9-4CCD-8FFC-F653A4BD73E3}.Release|x64.ActiveCfg = Release|Any CPU
+		{A803FE85-50D9-4CCD-8FFC-F653A4BD73E3}.Release|x64.Build.0 = Release|Any CPU
+		{A803FE85-50D9-4CCD-8FFC-F653A4BD73E3}.Release|x86.ActiveCfg = Release|Any CPU
+		{A803FE85-50D9-4CCD-8FFC-F653A4BD73E3}.Release|x86.Build.0 = Release|Any CPU
+		{CA485578-77EA-4BB9-9705-2B0AC4D0B613}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA485578-77EA-4BB9-9705-2B0AC4D0B613}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA485578-77EA-4BB9-9705-2B0AC4D0B613}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{CA485578-77EA-4BB9-9705-2B0AC4D0B613}.Debug|x64.Build.0 = Debug|Any CPU
+		{CA485578-77EA-4BB9-9705-2B0AC4D0B613}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{CA485578-77EA-4BB9-9705-2B0AC4D0B613}.Debug|x86.Build.0 = Debug|Any CPU
+		{CA485578-77EA-4BB9-9705-2B0AC4D0B613}.RaspberryPi|Any CPU.ActiveCfg = Release|Any CPU
+		{CA485578-77EA-4BB9-9705-2B0AC4D0B613}.RaspberryPi|Any CPU.Build.0 = Release|Any CPU
+		{CA485578-77EA-4BB9-9705-2B0AC4D0B613}.RaspberryPi|x64.ActiveCfg = Release|Any CPU
+		{CA485578-77EA-4BB9-9705-2B0AC4D0B613}.RaspberryPi|x64.Build.0 = Release|Any CPU
+		{CA485578-77EA-4BB9-9705-2B0AC4D0B613}.RaspberryPi|x86.ActiveCfg = Release|Any CPU
+		{CA485578-77EA-4BB9-9705-2B0AC4D0B613}.RaspberryPi|x86.Build.0 = Release|Any CPU
+		{CA485578-77EA-4BB9-9705-2B0AC4D0B613}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA485578-77EA-4BB9-9705-2B0AC4D0B613}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA485578-77EA-4BB9-9705-2B0AC4D0B613}.Release|x64.ActiveCfg = Release|Any CPU
+		{CA485578-77EA-4BB9-9705-2B0AC4D0B613}.Release|x64.Build.0 = Release|Any CPU
+		{CA485578-77EA-4BB9-9705-2B0AC4D0B613}.Release|x86.ActiveCfg = Release|Any CPU
+		{CA485578-77EA-4BB9-9705-2B0AC4D0B613}.Release|x86.Build.0 = Release|Any CPU
+		{8D149451-E2DA-48CA-99F1-BD7FFE7F00FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D149451-E2DA-48CA-99F1-BD7FFE7F00FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D149451-E2DA-48CA-99F1-BD7FFE7F00FA}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{8D149451-E2DA-48CA-99F1-BD7FFE7F00FA}.Debug|x64.Build.0 = Debug|Any CPU
+		{8D149451-E2DA-48CA-99F1-BD7FFE7F00FA}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8D149451-E2DA-48CA-99F1-BD7FFE7F00FA}.Debug|x86.Build.0 = Debug|Any CPU
+		{8D149451-E2DA-48CA-99F1-BD7FFE7F00FA}.RaspberryPi|Any CPU.ActiveCfg = Release|Any CPU
+		{8D149451-E2DA-48CA-99F1-BD7FFE7F00FA}.RaspberryPi|Any CPU.Build.0 = Release|Any CPU
+		{8D149451-E2DA-48CA-99F1-BD7FFE7F00FA}.RaspberryPi|x64.ActiveCfg = Release|Any CPU
+		{8D149451-E2DA-48CA-99F1-BD7FFE7F00FA}.RaspberryPi|x64.Build.0 = Release|Any CPU
+		{8D149451-E2DA-48CA-99F1-BD7FFE7F00FA}.RaspberryPi|x86.ActiveCfg = Release|Any CPU
+		{8D149451-E2DA-48CA-99F1-BD7FFE7F00FA}.RaspberryPi|x86.Build.0 = Release|Any CPU
+		{8D149451-E2DA-48CA-99F1-BD7FFE7F00FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D149451-E2DA-48CA-99F1-BD7FFE7F00FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D149451-E2DA-48CA-99F1-BD7FFE7F00FA}.Release|x64.ActiveCfg = Release|Any CPU
+		{8D149451-E2DA-48CA-99F1-BD7FFE7F00FA}.Release|x64.Build.0 = Release|Any CPU
+		{8D149451-E2DA-48CA-99F1-BD7FFE7F00FA}.Release|x86.ActiveCfg = Release|Any CPU
+		{8D149451-E2DA-48CA-99F1-BD7FFE7F00FA}.Release|x86.Build.0 = Release|Any CPU
+		{AC86E0E2-661F-4EEA-B226-0BB66C7A166C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC86E0E2-661F-4EEA-B226-0BB66C7A166C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC86E0E2-661F-4EEA-B226-0BB66C7A166C}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{AC86E0E2-661F-4EEA-B226-0BB66C7A166C}.Debug|x64.Build.0 = Debug|Any CPU
+		{AC86E0E2-661F-4EEA-B226-0BB66C7A166C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{AC86E0E2-661F-4EEA-B226-0BB66C7A166C}.Debug|x86.Build.0 = Debug|Any CPU
+		{AC86E0E2-661F-4EEA-B226-0BB66C7A166C}.RaspberryPi|Any CPU.ActiveCfg = Release|Any CPU
+		{AC86E0E2-661F-4EEA-B226-0BB66C7A166C}.RaspberryPi|Any CPU.Build.0 = Release|Any CPU
+		{AC86E0E2-661F-4EEA-B226-0BB66C7A166C}.RaspberryPi|x64.ActiveCfg = Release|Any CPU
+		{AC86E0E2-661F-4EEA-B226-0BB66C7A166C}.RaspberryPi|x64.Build.0 = Release|Any CPU
+		{AC86E0E2-661F-4EEA-B226-0BB66C7A166C}.RaspberryPi|x86.ActiveCfg = Release|Any CPU
+		{AC86E0E2-661F-4EEA-B226-0BB66C7A166C}.RaspberryPi|x86.Build.0 = Release|Any CPU
+		{AC86E0E2-661F-4EEA-B226-0BB66C7A166C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC86E0E2-661F-4EEA-B226-0BB66C7A166C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC86E0E2-661F-4EEA-B226-0BB66C7A166C}.Release|x64.ActiveCfg = Release|Any CPU
+		{AC86E0E2-661F-4EEA-B226-0BB66C7A166C}.Release|x64.Build.0 = Release|Any CPU
+		{AC86E0E2-661F-4EEA-B226-0BB66C7A166C}.Release|x86.ActiveCfg = Release|Any CPU
+		{AC86E0E2-661F-4EEA-B226-0BB66C7A166C}.Release|x86.Build.0 = Release|Any CPU
+		{C8617598-DA24-41FA-BB97-C1CB4C740DD1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8617598-DA24-41FA-BB97-C1CB4C740DD1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8617598-DA24-41FA-BB97-C1CB4C740DD1}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{C8617598-DA24-41FA-BB97-C1CB4C740DD1}.Debug|x64.Build.0 = Debug|Any CPU
+		{C8617598-DA24-41FA-BB97-C1CB4C740DD1}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C8617598-DA24-41FA-BB97-C1CB4C740DD1}.Debug|x86.Build.0 = Debug|Any CPU
+		{C8617598-DA24-41FA-BB97-C1CB4C740DD1}.RaspberryPi|Any CPU.ActiveCfg = Release|Any CPU
+		{C8617598-DA24-41FA-BB97-C1CB4C740DD1}.RaspberryPi|Any CPU.Build.0 = Release|Any CPU
+		{C8617598-DA24-41FA-BB97-C1CB4C740DD1}.RaspberryPi|x64.ActiveCfg = Release|Any CPU
+		{C8617598-DA24-41FA-BB97-C1CB4C740DD1}.RaspberryPi|x64.Build.0 = Release|Any CPU
+		{C8617598-DA24-41FA-BB97-C1CB4C740DD1}.RaspberryPi|x86.ActiveCfg = Release|Any CPU
+		{C8617598-DA24-41FA-BB97-C1CB4C740DD1}.RaspberryPi|x86.Build.0 = Release|Any CPU
+		{C8617598-DA24-41FA-BB97-C1CB4C740DD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8617598-DA24-41FA-BB97-C1CB4C740DD1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C8617598-DA24-41FA-BB97-C1CB4C740DD1}.Release|x64.ActiveCfg = Release|Any CPU
+		{C8617598-DA24-41FA-BB97-C1CB4C740DD1}.Release|x64.Build.0 = Release|Any CPU
+		{C8617598-DA24-41FA-BB97-C1CB4C740DD1}.Release|x86.ActiveCfg = Release|Any CPU
+		{C8617598-DA24-41FA-BB97-C1CB4C740DD1}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

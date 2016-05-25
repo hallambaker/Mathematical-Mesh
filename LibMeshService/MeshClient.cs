@@ -160,6 +160,24 @@ namespace Goedel.Mesh {
 
 
         /// <summary>
+        /// Return a list of all the clients on the current machine
+        /// </summary>
+        /// <returns></returns>
+        public static List<MeshClient> GetClientList() {
+            var Result = new List<MeshClient>();
+
+            var Client = new MeshClient();
+            if (Client != null) {
+                Result.Add(Client);
+                }
+
+            return Result;
+            }
+
+
+
+
+        /// <summary>
         /// Make the current portal and account name the default
         /// </summary>
         public void MakeDefault(string UDF) {

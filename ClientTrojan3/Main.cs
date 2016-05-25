@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+
+using Goedel.Mesh;
+
 using Goedel.Trojan;
 using Goedel.Trojan.GTK;
 
@@ -18,18 +21,37 @@ namespace PHB.Apps.Mesh.ProfileManager {
         Binding Binding;
         Window MainWindow;
 
+        /// <summary>
+        /// Track state of the mesh connection.
+        /// </summary>
+        public List<MeshClient> MeshClients;
+
+
         public ProfileManager(Binding Binding) {
 
             // Here fill up the selection list with 
             // profiles, applications, devices
-            Populate();
+            Initialize();
 
-            // Now creat the window system
+            // Now create the window system
             this.Binding = Binding;
             MainWindow = new MainWindow(this, Binding);
 
 
             }
+
+
+        public void Initialize() {
+            // Get the current list of Mesh clients
+            MeshClients = MeshClient.GetClientList();  
+
+            // Pull each client profile
+
+
+            }
+
+
+
 
 
 
