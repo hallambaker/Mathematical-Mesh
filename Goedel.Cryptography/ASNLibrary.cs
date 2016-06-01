@@ -24,7 +24,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Goedel.ASN {
+namespace Goedel.ASN1 {
 
     /// <summary>
     /// Constants for encoding ASN1 data
@@ -164,7 +164,7 @@ namespace Goedel.ASN {
         /// </summary>
         /// <returns></returns>
         public virtual byte [] DER () {
-            Goedel.ASN.Buffer Buffer = new Buffer ();
+            Goedel.ASN1.Buffer Buffer = new Buffer ();
             this.Encode (Buffer);
 
             return Buffer.Data;
@@ -173,7 +173,7 @@ namespace Goedel.ASN {
         /// 
         /// </summary>
 
-        public abstract void Encode (Goedel.ASN.Buffer Buffer) ;
+        public abstract void Encode (Goedel.ASN1.Buffer Buffer) ;
 
         }
 

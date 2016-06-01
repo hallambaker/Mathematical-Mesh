@@ -1,6 +1,9 @@
 ﻿Protocol Goedel.Cryptography.Jose  Jose Jose
 
 	Structure JoseWebSignature
+
+		// Parametric Object
+
 		Binary Protected
 			Tag "protected"
 		Binary Header
@@ -12,6 +15,9 @@
 
 
 	Structure JoseWebEncryption
+
+		// Parametric Object
+
 		Binary Protected
 			Tag "protected"
 		Binary Unprotected

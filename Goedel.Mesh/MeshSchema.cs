@@ -1539,7 +1539,7 @@ namespace Goedel.Mesh {
 
 	/// <summary>
 	///
-	/// Parent class from which all profile types are derrived
+	/// Parent class from which all profile types are derived
 	/// </summary>
 	abstract public partial class Profile : Entry {
 		/// <summary>

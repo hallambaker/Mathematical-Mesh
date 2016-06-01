@@ -400,7 +400,7 @@ namespace Goedel.LibCrypto.PKIX {
         ///   'critical' meaning that backwards compatibility will be broken 
         ///   and legacy relying parties MUST reject the certificate. Only use
         ///   if this is the intended behavior.</param>
-        public Extension(Goedel.ASN.Root Object, bool Critical) {
+        public Extension(Goedel.ASN1.Root Object, bool Critical) {
             this.ObjectIdentifier = Object.OID;
             this.Critical = Critical;
             this.Data = Object.DER();

@@ -21,7 +21,6 @@
 //  
 
 using System.IO;
-using Microsoft.Win32;
 
 
 namespace Goedel.Cryptography.Registry {

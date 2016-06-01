@@ -625,12 +625,30 @@ namespace PHB.Apps.Mesh.ProfileManager {
         public override List<string> Texts => _Texts;
         public override List<Step> Steps => _Steps;
 
+        /// <summary>
+        /// Default constructor
+        /// </summary>
+        /// <param name="Model">Model to bind to</param>
+        public _WizardCreateProfile(Model Model) : base(Model) {
+            }
+
+
+		/// <summary>
+        /// NameDevice
+        /// </summary>
+		public NameDevice NameDevice {
+			get {
+				return (NameDevice) Steps[0].Value;
+				}
+
+			}
+			
 		/// <summary>
         /// CreateProfile
         /// </summary>
 		public CreateProfile CreateProfile {
 			get {
-				return (CreateProfile) Steps[0].Value;
+				return (CreateProfile) Steps[1].Value;
 				}
 
 			}
@@ -640,7 +658,7 @@ namespace PHB.Apps.Mesh.ProfileManager {
         /// </summary>
 		public SelectApplications SelectApplications {
 			get {
-				return (SelectApplications) Steps[1].Value;
+				return (SelectApplications) Steps[2].Value;
 				}
 
 			}
@@ -650,7 +668,7 @@ namespace PHB.Apps.Mesh.ProfileManager {
         /// </summary>
 		public Review Review {
 			get {
-				return (Review) Steps[2].Value;
+				return (Review) Steps[3].Value;
 				}
 
 			}
@@ -660,7 +678,7 @@ namespace PHB.Apps.Mesh.ProfileManager {
         /// </summary>
 		public CommitWizardCreateProfile CommitWizardCreateProfile {
 			get {
-				return (CommitWizardCreateProfile) Steps[3].Value;
+				return (CommitWizardCreateProfile) Steps[4].Value;
 				}
 
 			}
@@ -673,6 +691,10 @@ namespace PHB.Apps.Mesh.ProfileManager {
 			"Unlike an email account, a Mesh profile belongs to you and only you. You can always change the portal registration  for your profile at a later date." 
 			};
 		List<Step> _Steps = new List<Step> {
+			new Step () {Value = new NameDevice (), 
+				Title = "Name this Device", Description =
+				new List<string> {
+					}},
 			new Step () {Value = new CreateProfile (), 
 				Title = "Create Profile", Description =
 				new List<string> {
@@ -694,10 +716,11 @@ namespace PHB.Apps.Mesh.ProfileManager {
 		public override bool Dispatch (int Step) {
 
 			switch (Step) {
-				case 0 : return CreateProfile.Dispatch(this);
-				case 1 : return SelectApplications.Dispatch(this);
-				case 2 : return Review.Dispatch(this);
-				case 3 : return CommitWizardCreateProfile.Dispatch(this);
+				case 0 : return NameDevice.Dispatch(this);
+				case 1 : return CreateProfile.Dispatch(this);
+				case 2 : return SelectApplications.Dispatch(this);
+				case 3 : return Review.Dispatch(this);
+				case 4 : return CommitWizardCreateProfile.Dispatch(this);
 				}
 			return false;
 			}
@@ -2174,12 +2197,80 @@ namespace PHB.Apps.Mesh.ProfileManager {
 		}
 
 
+	public partial class NameDevice : Object {
+
+		/// <summary>
+        /// DeviceName
+        /// </summary>
+		public ObjectFieldString DeviceName {
+			get {
+				return ((ObjectFieldString)Entries[1]);
+				}
+
+			}
+			
+		/// <summary>
+        /// DeviceDescription
+        /// </summary>
+		public ObjectFieldString DeviceDescription {
+			get {
+				return ((ObjectFieldString)Entries[2]);
+				}
+
+			}
+			
+		/// <summary>
+        /// NewDeviceProfile
+        /// </summary>
+		public ObjectFieldBoolean NewDeviceProfile {
+			get {
+				return ((ObjectFieldBoolean)Entries[3]);
+				}
+
+			}
+			
+
+		public override List<ObjectEntry> Entries {
+            get { return _Entries; }
+            set { _Entries = value; }
+            }
+
+		List<ObjectEntry> _Entries = new List<ObjectEntry> {
+
+			new ObjectText {
+						Text = "What name do you want to use for this device?"
+						},
+			new ObjectFieldString {Id = "DeviceName", 
+						Label = "Name for this device" // ((ObjectFieldString)Entries[1])
+					    },
+			new ObjectFieldString {Id = "DeviceDescription", 
+						Label = "Description" // ((ObjectFieldString)Entries[2])
+					    },
+			new ObjectFieldBoolean {Id = "NewDeviceProfile", 
+						Label = "Create new device profile" // ((ObjectFieldBoolean)Entries[3])
+					    }			} ;
+
+
+        /// <summary>
+        /// Create a list containing all the current children.
+        /// </summary>
+        /// <returns></returns>
+        public override List<Goedel.Trojan.Object> GetChildren() {
+			var Result = base.GetChildren();
+
+			return Result;
+            }
+
+
+		}
+
+
 	public partial class CreateProfile : Object {
 
 		/// <summary>
-        /// FriendlyName
+        /// PortalAddress
         /// </summary>
-		public ObjectFieldString FriendlyName {
+		public ObjectFieldString PortalAddress {
 			get {
 				return ((ObjectFieldString)Entries[0]);
 				}
@@ -2197,9 +2288,9 @@ namespace PHB.Apps.Mesh.ProfileManager {
 			}
 			
 		/// <summary>
-        /// PortalAddress
+        /// FriendlyName
         /// </summary>
-		public ObjectFieldString PortalAddress {
+		public ObjectFieldString FriendlyName {
 			get {
 				return ((ObjectFieldString)Entries[2]);
 				}
@@ -2241,7 +2332,7 @@ namespace PHB.Apps.Mesh.ProfileManager {
         /// </summary>
 		public ObjectFieldOption Escrow {
 			get {
-				return ((ObjectFieldOption)((ObjectFieldOption)Entries[3]).Entries[2]);
+				return ((ObjectFieldOption)((ObjectFieldOption)Entries[3]).Entries[3]);
 				}
 
 			}
@@ -2251,7 +2342,7 @@ namespace PHB.Apps.Mesh.ProfileManager {
         /// </summary>
 		public ObjectFieldInteger Shares {
 			get {
-				return ((ObjectFieldInteger)((ObjectFieldOption)((ObjectFieldOption)Entries[3]).Entries[2]).Entries[3]);
+				return ((ObjectFieldInteger)((ObjectFieldOption)((ObjectFieldOption)Entries[3]).Entries[3]).Entries[4]);
 				}
 
 			}
@@ -2261,7 +2352,7 @@ namespace PHB.Apps.Mesh.ProfileManager {
         /// </summary>
 		public ObjectFieldInteger Quorum {
 			get {
-				return ((ObjectFieldInteger)((ObjectFieldOption)((ObjectFieldOption)Entries[3]).Entries[2]).Entries[4]);
+				return ((ObjectFieldInteger)((ObjectFieldOption)((ObjectFieldOption)Entries[3]).Entries[3]).Entries[5]);
 				}
 
 			}
@@ -2274,14 +2365,14 @@ namespace PHB.Apps.Mesh.ProfileManager {
 
 		List<ObjectEntry> _Entries = new List<ObjectEntry> {
 
-			new ObjectFieldString {Id = "FriendlyName", 
-						Label = "Identifier" // ((ObjectFieldString)Entries[0])
+			new ObjectFieldString {Id = "PortalAddress", 
+						Label = "Portal Address" // ((ObjectFieldString)Entries[0])
 					    },
 			new ObjectFieldString {Id = "PortalAccount", 
 						Label = "Account Name" // ((ObjectFieldString)Entries[1])
 					    },
-			new ObjectFieldString {Id = "PortalAddress", 
-						Label = "Portal Address" // ((ObjectFieldString)Entries[2])
+			new ObjectFieldString {Id = "FriendlyName", 
+						Label = "Identifier" // ((ObjectFieldString)Entries[2])
 					    },	
 			new ObjectFieldOption {
 						Id = "Advanced",  
@@ -2304,13 +2395,13 @@ namespace PHB.Apps.Mesh.ProfileManager {
 							Label = "Escrow Keys",
 							Entries = new List<ObjectEntry> {
 					new ObjectFieldInteger {Id = "Shares", 
-								Label = "Number of Key Shares" // ((ObjectFieldInteger)((ObjectFieldOption)((ObjectFieldOption)Entries[3]).Entries[2]).Entries[3])
+								Label = "Number of Key Shares" // ((ObjectFieldInteger)((ObjectFieldOption)((ObjectFieldOption)Entries[3]).Entries[3]).Entries[4])
 							    },
 					new ObjectFieldInteger {Id = "Quorum", 
-								Label = "Number of shares required for recovery" // ((ObjectFieldInteger)((ObjectFieldOption)((ObjectFieldOption)Entries[3]).Entries[2]).Entries[4])
+								Label = "Number of shares required for recovery" // ((ObjectFieldInteger)((ObjectFieldOption)((ObjectFieldOption)Entries[3]).Entries[3]).Entries[5])
 							    },
 					new ObjectText {
-								Text = "Creating an escrow record for the Master Key allows it to be  recovered should the need arise."
+								Text = "Creating an escrow record for the Master Key allows it to be  recovered should the need arise.			"
 								}
 								}
 							}
@@ -2419,6 +2510,194 @@ namespace PHB.Apps.Mesh.ProfileManager {
 		}
 
 
+	public partial class Review : Object {
+
+		/// <summary>
+        /// FriendlyName
+        /// </summary>
+		public ObjectFieldString FriendlyName {
+			get {
+				return ((ObjectFieldString)Entries[0]);
+				}
+
+			}
+			
+		/// <summary>
+        /// Fingerprint
+        /// </summary>
+		public ObjectFieldString Fingerprint {
+			get {
+				return ((ObjectFieldString)Entries[1]);
+				}
+
+			}
+			
+		/// <summary>
+        /// MeshAddress
+        /// </summary>
+		public ObjectFieldString MeshAddress {
+			get {
+				return ((ObjectFieldString)Entries[2]);
+				}
+
+			}
+			
+		/// <summary>
+        /// Escrow
+        /// </summary>
+		public ObjectFieldOption Escrow {
+			get {
+				return ((ObjectFieldOption)Entries[3]);
+				}
+
+			}
+			
+		/// <summary>
+        /// Quorum
+        /// </summary>
+		public ObjectFieldString Quorum {
+			get {
+				return ((ObjectFieldString)((ObjectFieldOption)Entries[3]).Entries[0]);
+				}
+
+			}
+			
+		/// <summary>
+        /// Shares
+        /// </summary>
+		public ObjectFieldList Shares {
+			get {
+				return ((ObjectFieldList)((ObjectFieldOption)Entries[3]).Entries[1]);
+				}
+
+			}
+			
+
+		public override List<ObjectEntry> Entries {
+            get { return _Entries; }
+            set { _Entries = value; }
+            }
+
+		List<ObjectEntry> _Entries = new List<ObjectEntry> {
+
+			new ObjectFieldString {Id = "FriendlyName", 
+						Label = "Friendly Name" // ((ObjectFieldString)Entries[0])
+					    },
+			new ObjectFieldString {Id = "Fingerprint", 
+						Label = "Master Fingerprint" // ((ObjectFieldString)Entries[1])
+					    },
+			new ObjectFieldString {Id = "MeshAddress", 
+						Label = "Mesh Portal account" // ((ObjectFieldString)Entries[2])
+					    },	
+			new ObjectFieldOption {
+						Id = "Escrow",  
+						Label = "Escrow encryption keys",
+						Entries = new List<ObjectEntry> {
+				new ObjectFieldString {Id = "Quorum", 
+							Label = "Quorum" // ((ObjectFieldString)((ObjectFieldOption)Entries[3]).Entries[0])
+						    },
+				new ObjectFieldList {Id = "Shares", 
+							Label = "Shares" // ((ObjectFieldList)((ObjectFieldOption)Entries[3]).Entries[1])
+						    }
+							}
+						}			} ;
+
+
+        /// <summary>
+        /// Create a list containing all the current children.
+        /// </summary>
+        /// <returns></returns>
+        public override List<Goedel.Trojan.Object> GetChildren() {
+			var Result = base.GetChildren();
+
+			return Result;
+            }
+
+
+		}
+
+
+	public partial class Share : Object {
+
+		/// <summary>
+        /// Number
+        /// </summary>
+		public ObjectFieldInteger Number {
+			get {
+				return ((ObjectFieldInteger)Entries[0]);
+				}
+
+			}
+			
+		/// <summary>
+        /// Value
+        /// </summary>
+		public ObjectFieldString Value {
+			get {
+				return ((ObjectFieldString)Entries[1]);
+				}
+
+			}
+			
+
+		public override List<ObjectEntry> Entries {
+            get { return _Entries; }
+            set { _Entries = value; }
+            }
+
+		List<ObjectEntry> _Entries = new List<ObjectEntry> {
+
+			new ObjectFieldInteger {Id = "Number", 
+						Label = "Number" // ((ObjectFieldInteger)Entries[0])
+					    },
+			new ObjectFieldString {Id = "Value", 
+						Label = "Value" // ((ObjectFieldString)Entries[1])
+					    }			} ;
+
+
+        /// <summary>
+        /// Create a list containing all the current children.
+        /// </summary>
+        /// <returns></returns>
+        public override List<Goedel.Trojan.Object> GetChildren() {
+			var Result = base.GetChildren();
+
+			return Result;
+            }
+
+
+		}
+
+
+	public partial class CommitWizardCreateProfile : Object {
+
+
+		public override List<ObjectEntry> Entries {
+            get { return _Entries; }
+            set { _Entries = value; }
+            }
+
+		List<ObjectEntry> _Entries = new List<ObjectEntry> {
+
+			new ObjectText {
+						Text = "Success! The profile was accepted by the mesh portal."
+						}			} ;
+
+
+        /// <summary>
+        /// Create a list containing all the current children.
+        /// </summary>
+        /// <returns></returns>
+        public override List<Goedel.Trojan.Object> GetChildren() {
+			var Result = base.GetChildren();
+
+			return Result;
+            }
+
+
+		}
+
+
 	public partial class SelectAccountsEmail : Object {
 
 		public enum EnumSelection {
@@ -2432,7 +2711,7 @@ namespace PHB.Apps.Mesh.ProfileManager {
         /// </summary>
 		public ObjectFieldList Accounts {
 			get {
-				return ((ObjectFieldList)Entries[1]);
+				return ((ObjectFieldList)Entries[2]);
 				}
 
 			}
@@ -2453,15 +2732,15 @@ namespace PHB.Apps.Mesh.ProfileManager {
 						Label = "Security settings",
 						Entries = new List<ObjectEntry> {
 				new ObjectFieldRadio {Id = "All", 
-							Label = "Use same security settings for all accounts" // ((ObjectFieldRadio)((ObjectFieldEnumerate)Entries[0]).Entries[0])
+							Label = "Use same security settings for all accounts" // ((ObjectFieldRadio)((ObjectFieldEnumerate)Entries[1]).Entries[0])
 						    },
 				new ObjectFieldRadio {Id = "Choose", 
-							Label = "Let me choose options for each account" // ((ObjectFieldRadio)((ObjectFieldEnumerate)Entries[0]).Entries[1])
+							Label = "Let me choose options for each account" // ((ObjectFieldRadio)((ObjectFieldEnumerate)Entries[1]).Entries[1])
 						    }
 							}
 						},
 			new ObjectFieldList {Id = "Accounts", 
-						Label = "Email Accounts" // ((ObjectFieldList)Entries[1])
+						Label = "Email Accounts" // ((ObjectFieldList)Entries[2])
 					    }			} ;
 
 
@@ -2855,181 +3134,6 @@ namespace PHB.Apps.Mesh.ProfileManager {
 							Label = "DNS Root of Trust" // ((ObjectFieldString)((ObjectFieldOption)Entries[3]).Entries[3])
 						    }
 							}
-						}			} ;
-
-
-        /// <summary>
-        /// Create a list containing all the current children.
-        /// </summary>
-        /// <returns></returns>
-        public override List<Goedel.Trojan.Object> GetChildren() {
-			var Result = base.GetChildren();
-
-			return Result;
-            }
-
-
-		}
-
-
-	public partial class Review : Object {
-
-		/// <summary>
-        /// Fingerprint
-        /// </summary>
-		public ObjectFieldString Fingerprint {
-			get {
-				return ((ObjectFieldString)Entries[0]);
-				}
-
-			}
-			
-		/// <summary>
-        /// MeshPortal
-        /// </summary>
-		public ObjectFieldString MeshPortal {
-			get {
-				return ((ObjectFieldString)Entries[1]);
-				}
-
-			}
-			
-		/// <summary>
-        /// Escrow
-        /// </summary>
-		public ObjectFieldOption Escrow {
-			get {
-				return ((ObjectFieldOption)Entries[2]);
-				}
-
-			}
-			
-		/// <summary>
-        /// Quorum
-        /// </summary>
-		public ObjectFieldString Quorum {
-			get {
-				return ((ObjectFieldString)((ObjectFieldOption)Entries[2]).Entries[0]);
-				}
-
-			}
-			
-		/// <summary>
-        /// Shares
-        /// </summary>
-		public ObjectFieldList Shares {
-			get {
-				return ((ObjectFieldList)((ObjectFieldOption)Entries[2]).Entries[1]);
-				}
-
-			}
-			
-
-		public override List<ObjectEntry> Entries {
-            get { return _Entries; }
-            set { _Entries = value; }
-            }
-
-		List<ObjectEntry> _Entries = new List<ObjectEntry> {
-
-			new ObjectFieldString {Id = "Fingerprint", 
-						Label = "Master Fingerprint" // ((ObjectFieldString)Entries[0])
-					    },
-			new ObjectFieldString {Id = "MeshPortal", 
-						Label = "Mesh Portal" // ((ObjectFieldString)Entries[1])
-					    },	
-			new ObjectFieldOption {
-						Id = "Escrow",  
-						Label = "Escrow encryption keys",
-						Entries = new List<ObjectEntry> {
-				new ObjectFieldString {Id = "Quorum", 
-							Label = "Quorum" // ((ObjectFieldString)((ObjectFieldOption)Entries[2]).Entries[0])
-						    },
-				new ObjectFieldList {Id = "Shares", 
-							Label = "Shares" // ((ObjectFieldList)((ObjectFieldOption)Entries[2]).Entries[1])
-						    }
-							}
-						}			} ;
-
-
-        /// <summary>
-        /// Create a list containing all the current children.
-        /// </summary>
-        /// <returns></returns>
-        public override List<Goedel.Trojan.Object> GetChildren() {
-			var Result = base.GetChildren();
-
-			return Result;
-            }
-
-
-		}
-
-
-	public partial class Share : Object {
-
-		/// <summary>
-        /// Number
-        /// </summary>
-		public ObjectFieldInteger Number {
-			get {
-				return ((ObjectFieldInteger)Entries[0]);
-				}
-
-			}
-			
-		/// <summary>
-        /// Value
-        /// </summary>
-		public ObjectFieldString Value {
-			get {
-				return ((ObjectFieldString)Entries[1]);
-				}
-
-			}
-			
-
-		public override List<ObjectEntry> Entries {
-            get { return _Entries; }
-            set { _Entries = value; }
-            }
-
-		List<ObjectEntry> _Entries = new List<ObjectEntry> {
-
-			new ObjectFieldInteger {Id = "Number", 
-						Label = "Number" // ((ObjectFieldInteger)Entries[0])
-					    },
-			new ObjectFieldString {Id = "Value", 
-						Label = "Value" // ((ObjectFieldString)Entries[1])
-					    }			} ;
-
-
-        /// <summary>
-        /// Create a list containing all the current children.
-        /// </summary>
-        /// <returns></returns>
-        public override List<Goedel.Trojan.Object> GetChildren() {
-			var Result = base.GetChildren();
-
-			return Result;
-            }
-
-
-		}
-
-
-	public partial class CommitWizardCreateProfile : Object {
-
-
-		public override List<ObjectEntry> Entries {
-            get { return _Entries; }
-            set { _Entries = value; }
-            }
-
-		List<ObjectEntry> _Entries = new List<ObjectEntry> {
-
-			new ObjectText {
-						Text = "Success! The profile was accepted by the mesh portal."
 						}			} ;
 
 

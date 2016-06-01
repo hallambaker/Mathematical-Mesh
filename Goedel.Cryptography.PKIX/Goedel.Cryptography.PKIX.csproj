@@ -40,7 +40,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Certificate.cs" />
+    <Compile Include="PKIX.cs">
+      <DependentUpon>PKIX.asn2</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="PKIXConstants.cs" />
+    <Compile Include="PKIXName.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="PKIX.asn2">
+      <Generator>ASN2CS</Generator>
+      <LastGenOutput>PKIX.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

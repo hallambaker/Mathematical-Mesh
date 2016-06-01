@@ -18,6 +18,9 @@ namespace PHB.Apps.Mesh.ProfileManager {
 
 
     public partial class ProfileManager {
+        public RegistrationMachine RegistrationMachine;
+
+
         Binding Binding;
         Window MainWindow;
 
@@ -41,12 +44,21 @@ namespace PHB.Apps.Mesh.ProfileManager {
             }
 
 
+
         public void Initialize() {
             // Get the current list of Mesh clients
-            MeshClients = MeshClient.GetClientList();  
+            RegistrationMachine = new RegistrationMachine();
 
-            // Pull each client profile
 
+            foreach (var PersonalProfile in RegistrationMachine.Personals) {
+                var DisplayProfile = new Profile(PersonalProfile);
+                Selector.Add(DisplayProfile);
+                }
+
+            foreach (var DeviceProfile in RegistrationMachine.Devices) {
+                var DisplayProfile = new Profile(DeviceProfile);
+                Selector.Add(DisplayProfile);
+                }
 
             }
 
@@ -98,7 +110,7 @@ namespace PHB.Apps.Mesh.ProfileManager {
 
         // Fire up the wizards
         public override void ProfileCreate() {
-            var Wizard = new WizardCreateProfile();
+            var Wizard = new WizardCreateProfile(this);
             Binding.Wizard(Wizard);
             }
 
@@ -147,36 +159,7 @@ namespace PHB.Apps.Mesh.ProfileManager {
 
         }
 
-    public partial class CreateProfile {
-        public override bool Dispatch(Wizard Wizard) {
-            return base.Dispatch();
-            }
-        }
 
-    public partial class SelectApplications {
-        public override bool Dispatch() {
-            return base.Dispatch();
-            }
-        }
-
-    public partial class Review {
-        public override bool Dispatch() {
-            return base.Dispatch();
-            }
-        }
-
-
-    public partial class CommitWizardCreateProfile {
-        public override bool Dispatch() {
-            return base.Dispatch();
-            }
-        }
-
-    public partial class WizardCreateProfile {
-        public override bool Dispatch() {
-            return base.Dispatch();
-            }
-        }
 
 
     }

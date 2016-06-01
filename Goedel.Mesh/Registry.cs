@@ -20,8 +20,11 @@
 //  
 //  
 
+using System.IO;
 using Goedel.Protocol;
 using Goedel.Cryptography.Registry;
+
+
 
 namespace Goedel.Mesh {
 
@@ -161,14 +164,14 @@ namespace Goedel.Mesh {
 
 
 
-        void Dump(RegistryKey Key) {
-            var Names = Key.GetValueNames();
-            foreach (var Name in Names) {
+        //void Dump(RegistryKey Key) {
+        //    var Names = Key.GetValueNames();
+        //    foreach (var Name in Names) {
 
-                Goedel.Debug.Trace.WriteLine("Name {0}={1}", Name, Key.GetValue(Name));
-                }
+        //        Goedel.Debug.Trace.WriteLine("Name {0}={1}", Name, Key.GetValue(Name));
+        //        }
 
-            }
+        //    }
 
         /// <summary>
         /// Read this device profile from a registry key

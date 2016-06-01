@@ -77,7 +77,7 @@ contains a DeviceProfile object.
 
 * Inherits: Entry
 
-Parent class from which all profile types are derrived
+Parent class from which all profile types are derived
 
 
 Names: String [0..Many]

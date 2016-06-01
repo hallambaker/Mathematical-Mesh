@@ -9,7 +9,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Goedel.Cryptography.Jose</RootNamespace>
-    <AssemblyName>libCryptoJose</AssemblyName>
+    <AssemblyName>Goedel.Cryptography.Jose</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
@@ -42,7 +42,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <PlatformTarget>AnyCPU</PlatformTarget>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>bin\Debug\libCryptoJose.xml</DocumentationFile>
+    <DocumentationFile>bin\Debug\Goedel.Cryptography.Jose.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -85,7 +85,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="JoseSchema.Protocol">
-      <Generator>Protogen</Generator>
+      <Generator>protogen</Generator>
       <LastGenOutput>JoseSchema.cs</LastGenOutput>
     </None>
     <None Include="LibCryptoJose.licenseheader" />
@@ -101,7 +101,7 @@
       <Project>{a8090b80-d658-45f6-bda1-4f9dfd2b976f}</Project>
       <Name>Goedel.Debug</Name>
     </ProjectReference>
-    <ProjectReference Include="..\LibProtoGen\Goedel.Protocol.csproj">
+    <ProjectReference Include="..\Goedel.Protocol\Goedel.Protocol.csproj">
       <Project>{24419f2d-f425-4e0f-a0ea-9d3e7a57e12f}</Project>
       <Name>Goedel.Protocol</Name>
     </ProjectReference>

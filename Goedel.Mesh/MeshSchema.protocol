@@ -33,6 +33,9 @@
 	Structure SignedData
 		Description
 			|Container for JOSE signed data and related attributes.
+
+
+
 		Binary Data
 			|The signed data
 	
@@ -56,6 +59,8 @@
 				|Globally unique identifier that remains constant for the lifetime of the 
 				|entry.
 
+
+
 	Structure SignedProfile
 		Inherits Entry
 		Description
@@ -73,7 +78,7 @@
 		Abstract
 		Inherits Entry
 		Description 
-			|Parent class from which all profile types are derrived
+			|Parent class from which all profile types are derived
 		String Names
 			Multiple
 			Description

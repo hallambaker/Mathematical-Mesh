@@ -23,12 +23,12 @@ using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using Goedel.LibCrypto;
-using Goedel.ASN;
+using Goedel.ASN1;
 
 namespace Goedel.LibCrypto.PKIX {
 
 
-    public partial class SubjectPublicKeyInfo : Goedel.ASN.Root {
+    public partial class SubjectPublicKeyInfo : Goedel.ASN1.Root {
 
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace Goedel.LibCrypto.PKIX {
         }
 
 
-    public partial class AlgorithmIdentifier : Goedel.ASN.Root {
+    public partial class AlgorithmIdentifier : Goedel.ASN1.Root {
         string OIDString;
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace Goedel.LibCrypto.PKIX {
         /// <param name="ID"></param>
         public AlgorithmIdentifier(string ID) {
             OIDString = ID;
-            this.Algorithm = Goedel.ASN.ASN.OIDToArray(ID);
+            this.Algorithm = Goedel.ASN1.ASN.OIDToArray(ID);
             }
 
         /// <summary>

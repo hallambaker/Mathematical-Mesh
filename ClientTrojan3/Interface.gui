@@ -247,18 +247,24 @@ GUI PHB.Apps.Mesh.ProfileManager ProfileManager
 			|only you. You can always change the portal registration 
 			|for your profile at a later date.
 
+		Step NameDevice		    "Name this Device"
 		Step CreateProfile		"Create Profile"
 		Step SelectApplications "Select Applications"
 		Step Review				"Review"
 		Step CommitWizardCreateProfile		"Finish"
 
-
+	Object NameDevice "Name Device"
+		Text
+			|What name do you want to use for this device?
+		String DeviceName "Name for this device"
+		String DeviceDescription "Description"
+		Boolean NewDeviceProfile "Create new device profile"
 
 	Object CreateProfile "Create a New Mesh Profile"
 
-		String		FriendlyName	"Identifier"
-		String		PortalAccount	"Account Name"
 		String		PortalAddress	"Portal Address"
+		String		PortalAccount	"Account Name"
+		String		FriendlyName	"Identifier"
 
 		Option Advanced "Advanced Options"
 
@@ -275,7 +281,7 @@ GUI PHB.Apps.Mesh.ProfileManager ProfileManager
 				Integer Quorum "Number of shares required for recovery"
 				Text
 					|Creating an escrow record for the Master Key allows it to be 
-					|recovered should the need arise.
+					|recovered should the need arise.			
 
 	Object EscrowParameters "Escrow Master Key Parameters"
 		Integer Shares "Number of Key Shares"
@@ -303,6 +309,28 @@ GUI PHB.Apps.Mesh.ProfileManager ProfileManager
 		Action		ApplicationAddWeb
 			Text
 				|World Wide Web
+
+	Object Review "Final Review"
+		String FriendlyName "Friendly Name"
+			Output 
+		String Fingerprint "Master Fingerprint"
+			Output
+		String MeshAddress "Mesh Portal account"
+			Output
+		Option Escrow "Escrow encryption keys"
+			String Quorum "Quorum"
+				Output
+			List Share Shares "Shares"
+
+	Object Share "Share"
+		Integer Number "Number"
+		String Value "Value"
+
+	Object CommitWizardCreateProfile "Finished"
+		Text
+			|Success! The profile was accepted by the mesh portal.
+
+
 
 
 	
@@ -350,20 +378,3 @@ GUI PHB.Apps.Mesh.ProfileManager ProfileManager
 			Boolean DNSPrivate	"Allow Private DNS"
 			String TrustRoot    "DNS Root of Trust"
 
-	Object Review "Final Review"
-		String Fingerprint "Master Fingerprint"
-			Output
-		String MeshPortal "Mesh Portal"
-			Output
-		Option Escrow "Escrow encryption keys"
-			String Quorum "Quorum"
-				Output
-			List Share Shares "Shares"
-
-	Object Share "Share"
-		Integer Number "Number"
-		String Value "Value"
-
-	Object CommitWizardCreateProfile "Finished"
-		Text
-			|Success! The profile was accepted by the mesh portal.

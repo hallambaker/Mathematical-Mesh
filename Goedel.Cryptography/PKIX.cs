@@ -1,15 +1,36 @@
-ï»¿
+//   Copyright © 2015 by Comodo Group Inc.
+//  
+//  Permission is hereby granted, free of charge, to any person obtaining a copy
+//  of this software and associated documentation files (the "Software"), to deal
+//  in the Software without restriction, including without limitation the rights
+//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  copies of the Software, and to permit persons to whom the Software is
+//  furnished to do so, subject to the following conditions:
+//  
+//  The above copyright notice and this permission notice shall be included in
+//  all copies or substantial portions of the Software.
+//  
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+//  THE SOFTWARE.
+//  
+//  
+
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Goedel.ASN;
+using Goedel.ASN1;
 
 // This is the generated code Don't edit.
 
 
 // Generate OID declarations
 
-namespace Goedel.ASN {  // default namespace
+namespace Goedel.ASN1 {  // default namespace
 
 	}
 namespace Goedel.LibCrypto.PKIX {
@@ -1183,14 +1204,14 @@ namespace Goedel.LibCrypto.PKIX {
 
 
 // Generate Classes
-namespace Goedel.ASN {  // default namespace
+namespace Goedel.ASN1 {  // default namespace
 
 	}
 namespace Goedel.LibCrypto.PKIX {
     /// <summary>
 	/// Certificate 
     /// </summary>
-	public partial class Certificate : Goedel.ASN.Root {
+	public partial class Certificate : Goedel.ASN1.Root {
 
 		/// <summary>
 		/// ASN.1 member Signature 
@@ -1211,7 +1232,7 @@ namespace Goedel.LibCrypto.PKIX {
 		/// NB Assinine ASN.1 DER encoding rules requires members be added in reverse order.
 		/// </summary>
 		/// <param name="Buffer">Output buffer</param>
-        public override void Encode (Goedel.ASN.Buffer Buffer) {
+        public override void Encode (Goedel.ASN1.Buffer Buffer) {
 			int Position = Buffer.Encode__Sequence_Start ();
 
 			Buffer.Encode__Bits  (Signature, 0, -1);
@@ -1229,7 +1250,7 @@ namespace Goedel.LibCrypto.PKIX {
     /// <summary>
 	/// TBSCertificate 
     /// </summary>
-	public partial class TBSCertificate : Goedel.ASN.Root {
+	public partial class TBSCertificate : Goedel.ASN1.Root {
 
 		/// <summary>
 		/// ASN.1 member Extensions 
@@ -1278,7 +1299,7 @@ namespace Goedel.LibCrypto.PKIX {
 		/// NB Assinine ASN.1 DER encoding rules requires members be added in reverse order.
 		/// </summary>
 		/// <param name="Buffer">Output buffer</param>
-        public override void Encode (Goedel.ASN.Buffer Buffer) {
+        public override void Encode (Goedel.ASN1.Buffer Buffer) {
 			int Position = Buffer.Encode__Sequence_Start ();
 
 			if (Extensions == null || Extensions.Count == 0) {
@@ -1347,7 +1368,7 @@ namespace Goedel.LibCrypto.PKIX {
     /// <summary>
 	/// SubjectPublicKeyInfo 
     /// </summary>
-	public partial class SubjectPublicKeyInfo : Goedel.ASN.Root {
+	public partial class SubjectPublicKeyInfo : Goedel.ASN1.Root {
 
 		/// <summary>
 		/// ASN.1 member SubjectPublicKey 
@@ -1364,7 +1385,7 @@ namespace Goedel.LibCrypto.PKIX {
 		/// NB Assinine ASN.1 DER encoding rules requires members be added in reverse order.
 		/// </summary>
 		/// <param name="Buffer">Output buffer</param>
-        public override void Encode (Goedel.ASN.Buffer Buffer) {
+        public override void Encode (Goedel.ASN1.Buffer Buffer) {
 			int Position = Buffer.Encode__Sequence_Start ();
 
 			Buffer.Encode__Bits  (SubjectPublicKey, 0, -1);
@@ -1379,7 +1400,7 @@ namespace Goedel.LibCrypto.PKIX {
     /// <summary>
 	/// DigestInfo 
     /// </summary>
-	public partial class DigestInfo : Goedel.ASN.Root {
+	public partial class DigestInfo : Goedel.ASN1.Root {
 
 		/// <summary>
 		/// ASN.1 member SubjectPublicKey 
@@ -1396,7 +1417,7 @@ namespace Goedel.LibCrypto.PKIX {
 		/// NB Assinine ASN.1 DER encoding rules requires members be added in reverse order.
 		/// </summary>
 		/// <param name="Buffer">Output buffer</param>
-        public override void Encode (Goedel.ASN.Buffer Buffer) {
+        public override void Encode (Goedel.ASN1.Buffer Buffer) {
 			int Position = Buffer.Encode__Sequence_Start ();
 
 			Buffer.Encode__Octets  (SubjectPublicKey, 0, -1);
@@ -1411,7 +1432,7 @@ namespace Goedel.LibCrypto.PKIX {
     /// <summary>
 	/// AlgorithmIdentifier 
     /// </summary>
-	public partial class AlgorithmIdentifier : Goedel.ASN.Root {
+	public partial class AlgorithmIdentifier : Goedel.ASN1.Root {
 
 		/// <summary>
 		/// ASN.1 member Parameters 
@@ -1428,7 +1449,7 @@ namespace Goedel.LibCrypto.PKIX {
 		/// NB Assinine ASN.1 DER encoding rules requires members be added in reverse order.
 		/// </summary>
 		/// <param name="Buffer">Output buffer</param>
-        public override void Encode (Goedel.ASN.Buffer Buffer) {
+        public override void Encode (Goedel.ASN1.Buffer Buffer) {
 			int Position = Buffer.Encode__Sequence_Start ();
 
 			if (Parameters == null || Parameters.Count == 0) {
@@ -1453,7 +1474,7 @@ namespace Goedel.LibCrypto.PKIX {
     /// <summary>
 	/// TaggedBitString 
     /// </summary>
-	public partial class TaggedBitString : Goedel.ASN.Root {
+	public partial class TaggedBitString : Goedel.ASN1.Root {
 
 		/// <summary>
 		/// ASN.1 member SubjectPublicKey 
@@ -1470,7 +1491,7 @@ namespace Goedel.LibCrypto.PKIX {
 		/// NB Assinine ASN.1 DER encoding rules requires members be added in reverse order.
 		/// </summary>
 		/// <param name="Buffer">Output buffer</param>
-        public override void Encode (Goedel.ASN.Buffer Buffer) {
+        public override void Encode (Goedel.ASN1.Buffer Buffer) {
 			int Position = Buffer.Encode__Sequence_Start ();
 
 			Buffer.Encode__Bits  (SubjectPublicKey, 0, -1);
@@ -1485,7 +1506,7 @@ namespace Goedel.LibCrypto.PKIX {
     /// <summary>
 	/// Extension 
     /// </summary>
-	public partial class Extension : Goedel.ASN.Root {
+	public partial class Extension : Goedel.ASN1.Root {
 
 		/// <summary>
 		/// ASN.1 member Data 
@@ -1506,7 +1527,7 @@ namespace Goedel.LibCrypto.PKIX {
 		/// NB Assinine ASN.1 DER encoding rules requires members be added in reverse order.
 		/// </summary>
 		/// <param name="Buffer">Output buffer</param>
-        public override void Encode (Goedel.ASN.Buffer Buffer) {
+        public override void Encode (Goedel.ASN1.Buffer Buffer) {
 			int Position = Buffer.Encode__Sequence_Start ();
 
 			Buffer.Encode__Octets  (Data, 0, -1);
@@ -1527,7 +1548,7 @@ namespace Goedel.LibCrypto.PKIX {
     /// <summary>
 	/// Validity 
     /// </summary>
-	public partial class Validity : Goedel.ASN.Root {
+	public partial class Validity : Goedel.ASN1.Root {
 
 		/// <summary>
 		/// ASN.1 member NotAfter 
@@ -1544,7 +1565,7 @@ namespace Goedel.LibCrypto.PKIX {
 		/// NB Assinine ASN.1 DER encoding rules requires members be added in reverse order.
 		/// </summary>
 		/// <param name="Buffer">Output buffer</param>
-        public override void Encode (Goedel.ASN.Buffer Buffer) {
+        public override void Encode (Goedel.ASN1.Buffer Buffer) {
 			int Position = Buffer.Encode__Sequence_Start ();
 
 			Buffer.Encode__Time  (NotAfter, 0, -1);
@@ -1559,7 +1580,7 @@ namespace Goedel.LibCrypto.PKIX {
     /// <summary>
 	/// CertificateList 
     /// </summary>
-	public partial class CertificateList : Goedel.ASN.Root {
+	public partial class CertificateList : Goedel.ASN1.Root {
 
 		/// <summary>
 		/// ASN.1 member Signature 
@@ -1576,7 +1597,7 @@ namespace Goedel.LibCrypto.PKIX {
 		/// NB Assinine ASN.1 DER encoding rules requires members be added in reverse order.
 		/// </summary>
 		/// <param name="Buffer">Output buffer</param>
-        public override void Encode (Goedel.ASN.Buffer Buffer) {
+        public override void Encode (Goedel.ASN1.Buffer Buffer) {
 			int Position = Buffer.Encode__Sequence_Start ();
 
 			Buffer.Encode__Object (Signature, 0, -1);
@@ -1591,7 +1612,7 @@ namespace Goedel.LibCrypto.PKIX {
     /// <summary>
 	/// TBSCertList 
     /// </summary>
-	public partial class TBSCertList : Goedel.ASN.Root {
+	public partial class TBSCertList : Goedel.ASN1.Root {
 
 		/// <summary>
 		/// ASN.1 member CrlExtensions 
@@ -1628,7 +1649,7 @@ namespace Goedel.LibCrypto.PKIX {
 		/// NB Assinine ASN.1 DER encoding rules requires members be added in reverse order.
 		/// </summary>
 		/// <param name="Buffer">Output buffer</param>
-        public override void Encode (Goedel.ASN.Buffer Buffer) {
+        public override void Encode (Goedel.ASN1.Buffer Buffer) {
 			int Position = Buffer.Encode__Sequence_Start ();
 
 			if (CrlExtensions == null || CrlExtensions.Count == 0) {
@@ -1688,7 +1709,7 @@ namespace Goedel.LibCrypto.PKIX {
     /// <summary>
 	/// CertEntry 
     /// </summary>
-	public partial class CertEntry : Goedel.ASN.Root {
+	public partial class CertEntry : Goedel.ASN1.Root {
 
 		/// <summary>
 		/// ASN.1 member CrlEntryExtensions 
@@ -1709,7 +1730,7 @@ namespace Goedel.LibCrypto.PKIX {
 		/// NB Assinine ASN.1 DER encoding rules requires members be added in reverse order.
 		/// </summary>
 		/// <param name="Buffer">Output buffer</param>
-        public override void Encode (Goedel.ASN.Buffer Buffer) {
+        public override void Encode (Goedel.ASN1.Buffer Buffer) {
 			int Position = Buffer.Encode__Sequence_Start ();
 
 			if (CrlEntryExtensions == null || CrlEntryExtensions.Count == 0) {
@@ -1739,7 +1760,7 @@ namespace Goedel.LibCrypto.PKIX {
     /// <summary>
 	/// Name 
     /// </summary>
-	public partial class Name : Goedel.ASN.Root {
+	public partial class Name : Goedel.ASN1.Root {
 		/// <summary>
 		/// The OID value
 		/// </summary>
@@ -1756,7 +1777,7 @@ namespace Goedel.LibCrypto.PKIX {
 		/// NB Assinine ASN.1 DER encoding rules requires members be added in reverse order.
 		/// </summary>
 		/// <param name="Buffer">Output buffer</param>
-        public override void Encode (Goedel.ASN.Buffer Buffer) {
+        public override void Encode (Goedel.ASN1.Buffer Buffer) {
 
 			if (Member == null || Member.Count == 0) {
 				Buffer.Encode__Object (null, 0, -1);
@@ -1775,7 +1796,7 @@ namespace Goedel.LibCrypto.PKIX {
     /// <summary>
 	/// AttributeTypeValue 
     /// </summary>
-	public partial class AttributeTypeValue : Goedel.ASN.Root {
+	public partial class AttributeTypeValue : Goedel.ASN1.Root {
 
 		/// <summary>
 		/// ASN.1 member Value 
@@ -1792,7 +1813,7 @@ namespace Goedel.LibCrypto.PKIX {
 		/// NB Assinine ASN.1 DER encoding rules requires members be added in reverse order.
 		/// </summary>
 		/// <param name="Buffer">Output buffer</param>
-        public override void Encode (Goedel.ASN.Buffer Buffer) {
+        public override void Encode (Goedel.ASN1.Buffer Buffer) {
 			int Position = Buffer.Encode__Sequence_Start ();
 
 			Buffer.Encode__Object (Value, 0, -1);
@@ -1809,7 +1830,7 @@ namespace Goedel.LibCrypto.PKIX {
     /// <summary>
 	/// AnyString 
     /// </summary>
-	public partial class AnyString : Goedel.ASN.Root {
+	public partial class AnyString : Goedel.ASN1.Root {
 		/// <summary>
 		/// The OID value
 		/// </summary>
@@ -1838,7 +1859,7 @@ namespace Goedel.LibCrypto.PKIX {
 		/// NB Assinine ASN.1 DER encoding rules requires members be added in reverse order.
 		/// </summary>
 		/// <param name="Buffer">Output buffer</param>
-        public override void Encode (Goedel.ASN.Buffer Buffer) {
+        public override void Encode (Goedel.ASN1.Buffer Buffer) {
 
 	// Do Choice
             //
@@ -1859,7 +1880,7 @@ namespace Goedel.LibCrypto.PKIX {
     /// <summary>
 	/// CertificationRequest 
     /// </summary>
-	public partial class CertificationRequest : Goedel.ASN.Root {
+	public partial class CertificationRequest : Goedel.ASN1.Root {
 
 		/// <summary>
 		/// ASN.1 member Signature 
@@ -1880,7 +1901,7 @@ namespace Goedel.LibCrypto.PKIX {
 		/// NB Assinine ASN.1 DER encoding rules requires members be added in reverse order.
 		/// </summary>
 		/// <param name="Buffer">Output buffer</param>
-        public override void Encode (Goedel.ASN.Buffer Buffer) {
+        public override void Encode (Goedel.ASN1.Buffer Buffer) {
 			int Position = Buffer.Encode__Sequence_Start ();
 
 			Buffer.Encode__Bits  (Signature, 0, -1);
@@ -1898,7 +1919,7 @@ namespace Goedel.LibCrypto.PKIX {
     /// <summary>
 	/// CertificationRequestInfo 
     /// </summary>
-	public partial class CertificationRequestInfo : Goedel.ASN.Root {
+	public partial class CertificationRequestInfo : Goedel.ASN1.Root {
 
 		/// <summary>
 		/// ASN.1 member Attributes 
@@ -1923,7 +1944,7 @@ namespace Goedel.LibCrypto.PKIX {
 		/// NB Assinine ASN.1 DER encoding rules requires members be added in reverse order.
 		/// </summary>
 		/// <param name="Buffer">Output buffer</param>
-        public override void Encode (Goedel.ASN.Buffer Buffer) {
+        public override void Encode (Goedel.ASN1.Buffer Buffer) {
 			int Position = Buffer.Encode__Sequence_Start ();
 
 			if (Attributes == null || Attributes.Count == 0) {
@@ -1964,7 +1985,7 @@ namespace Goedel.LibCrypto.PKIX {
     /// <summary>
 	/// AttributeTypeValues 
     /// </summary>
-	public partial class AttributeTypeValues : Goedel.ASN.Root {
+	public partial class AttributeTypeValues : Goedel.ASN1.Root {
 
 		/// <summary>
 		/// ASN.1 member Value 
@@ -1981,7 +2002,7 @@ namespace Goedel.LibCrypto.PKIX {
 		/// NB Assinine ASN.1 DER encoding rules requires members be added in reverse order.
 		/// </summary>
 		/// <param name="Buffer">Output buffer</param>
-        public override void Encode (Goedel.ASN.Buffer Buffer) {
+        public override void Encode (Goedel.ASN1.Buffer Buffer) {
 			int Position = Buffer.Encode__Sequence_Start ();
 
 			if (Value == null || Value.Count == 0) {
@@ -2006,7 +2027,7 @@ namespace Goedel.LibCrypto.PKIX {
     /// <summary>
 	/// RSAPublicKey 
     /// </summary>
-	public partial class RSAPublicKey : Goedel.ASN.Root {
+	public partial class RSAPublicKey : Goedel.ASN1.Root {
 
 		/// <summary>
 		/// ASN.1 member PublicExponent 
@@ -2023,7 +2044,7 @@ namespace Goedel.LibCrypto.PKIX {
 		/// NB Assinine ASN.1 DER encoding rules requires members be added in reverse order.
 		/// </summary>
 		/// <param name="Buffer">Output buffer</param>
-        public override void Encode (Goedel.ASN.Buffer Buffer) {
+        public override void Encode (Goedel.ASN1.Buffer Buffer) {
 			int Position = Buffer.Encode__Sequence_Start ();
 
 			Buffer.Encode__BigInteger  (PublicExponent, 0, -1);
@@ -2038,7 +2059,7 @@ namespace Goedel.LibCrypto.PKIX {
     /// <summary>
 	/// AuthorityKeyIdentifier 
     /// </summary>
-	public partial class AuthorityKeyIdentifier : Goedel.ASN.Root {
+	public partial class AuthorityKeyIdentifier : Goedel.ASN1.Root {
 		/// <summary>
 		/// The OID value
 		/// </summary>
@@ -2063,7 +2084,7 @@ namespace Goedel.LibCrypto.PKIX {
 		/// NB Assinine ASN.1 DER encoding rules requires members be added in reverse order.
 		/// </summary>
 		/// <param name="Buffer">Output buffer</param>
-        public override void Encode (Goedel.ASN.Buffer Buffer) {
+        public override void Encode (Goedel.ASN1.Buffer Buffer) {
 			int Position = Buffer.Encode__Sequence_Start ();
 
 			Buffer.Encode__Integer  (AuthorityCertSerialNumber, 12, 2);
@@ -2090,7 +2111,7 @@ namespace Goedel.LibCrypto.PKIX {
     /// <summary>
 	/// SubjectKeyIdentifier 
     /// </summary>
-	public partial class SubjectKeyIdentifier : Goedel.ASN.Root {
+	public partial class SubjectKeyIdentifier : Goedel.ASN1.Root {
 		/// <summary>
 		/// The OID value
 		/// </summary>
@@ -2107,7 +2128,7 @@ namespace Goedel.LibCrypto.PKIX {
 		/// NB Assinine ASN.1 DER encoding rules requires members be added in reverse order.
 		/// </summary>
 		/// <param name="Buffer">Output buffer</param>
-        public override void Encode (Goedel.ASN.Buffer Buffer) {
+        public override void Encode (Goedel.ASN1.Buffer Buffer) {
 
 			Buffer.Encode__Octets  (Value, 0, -1);
             }
@@ -2118,7 +2139,7 @@ namespace Goedel.LibCrypto.PKIX {
     /// <summary>
 	/// KeyUsage 
     /// </summary>
-	public partial class KeyUsage : Goedel.ASN.Root {
+	public partial class KeyUsage : Goedel.ASN1.Root {
 		/// <summary>
 		/// The OID value
 		/// </summary>
@@ -2135,7 +2156,7 @@ namespace Goedel.LibCrypto.PKIX {
 		/// NB Assinine ASN.1 DER encoding rules requires members be added in reverse order.
 		/// </summary>
 		/// <param name="Buffer">Output buffer</param>
-        public override void Encode (Goedel.ASN.Buffer Buffer) {
+        public override void Encode (Goedel.ASN1.Buffer Buffer) {
 
 			Buffer.Encode__VBits  (Value, 0, -1);
             }
@@ -2146,7 +2167,7 @@ namespace Goedel.LibCrypto.PKIX {
     /// <summary>
 	/// certificatePolicies 
     /// </summary>
-	public partial class certificatePolicies : Goedel.ASN.Root {
+	public partial class certificatePolicies : Goedel.ASN1.Root {
 		/// <summary>
 		/// The OID value
 		/// </summary>
@@ -2163,7 +2184,7 @@ namespace Goedel.LibCrypto.PKIX {
 		/// NB Assinine ASN.1 DER encoding rules requires members be added in reverse order.
 		/// </summary>
 		/// <param name="Buffer">Output buffer</param>
-        public override void Encode (Goedel.ASN.Buffer Buffer) {
+        public override void Encode (Goedel.ASN1.Buffer Buffer) {
 
 			if (Value == null || Value.Count == 0) {
 				Buffer.Encode__Object (null, 0, -1);
@@ -2182,7 +2203,7 @@ namespace Goedel.LibCrypto.PKIX {
     /// <summary>
 	/// PolicyInformation 
     /// </summary>
-	public partial class PolicyInformation : Goedel.ASN.Root {
+	public partial class PolicyInformation : Goedel.ASN1.Root {
 
 		/// <summary>
 		/// ASN.1 member PolicyQualifiers 
@@ -2199,7 +2220,7 @@ namespace Goedel.LibCrypto.PKIX {
 		/// NB Assinine ASN.1 DER encoding rules requires members be added in reverse order.
 		/// </summary>
 		/// <param name="Buffer">Output buffer</param>
-        public override void Encode (Goedel.ASN.Buffer Buffer) {
+        public override void Encode (Goedel.ASN1.Buffer Buffer) {
 			int Position = Buffer.Encode__Sequence_Start ();
 
 			if (PolicyQualifiers == null || PolicyQualifiers.Count == 0) {
@@ -2224,7 +2245,7 @@ namespace Goedel.LibCrypto.PKIX {
     /// <summary>
 	/// PolicyQualifierInfo 
     /// </summary>
-	public partial class PolicyQualifierInfo : Goedel.ASN.Root {
+	public partial class PolicyQualifierInfo : Goedel.ASN1.Root {
 
 		/// <summary>
 		/// ASN.1 member Qualifier 
@@ -2241,7 +2262,7 @@ namespace Goedel.LibCrypto.PKIX {
 		/// NB Assinine ASN.1 DER encoding rules requires members be added in reverse order.
 		/// </summary>
 		/// <param name="Buffer">Output buffer</param>
-        public override void Encode (Goedel.ASN.Buffer Buffer) {
+        public override void Encode (Goedel.ASN1.Buffer Buffer) {
 			int Position = Buffer.Encode__Sequence_Start ();
 
 			Buffer.Encode__Any  (Qualifier, 0, -1);
@@ -2258,7 +2279,7 @@ namespace Goedel.LibCrypto.PKIX {
     /// <summary>
 	/// SubjectAltName 
     /// </summary>
-	public partial class SubjectAltName : Goedel.ASN.Root {
+	public partial class SubjectAltName : Goedel.ASN1.Root {
 		/// <summary>
 		/// The OID value
 		/// </summary>
@@ -2275,7 +2296,7 @@ namespace Goedel.LibCrypto.PKIX {
 		/// NB Assinine ASN.1 DER encoding rules requires members be added in reverse order.
 		/// </summary>
 		/// <param name="Buffer">Output buffer</param>
-        public override void Encode (Goedel.ASN.Buffer Buffer) {
+        public override void Encode (Goedel.ASN1.Buffer Buffer) {
 
 			if (Names == null || Names.Count == 0) {
 				Buffer.Encode__Object (null, 0, -1);
@@ -2296,7 +2317,7 @@ namespace Goedel.LibCrypto.PKIX {
     /// <summary>
 	/// GeneralName 
     /// </summary>
-	public partial class GeneralName : Goedel.ASN.Root {
+	public partial class GeneralName : Goedel.ASN1.Root {
 		/// <summary>
 		/// The OID value
 		/// </summary>
@@ -2317,7 +2338,7 @@ namespace Goedel.LibCrypto.PKIX {
 		/// NB Assinine ASN.1 DER encoding rules requires members be added in reverse order.
 		/// </summary>
 		/// <param name="Buffer">Output buffer</param>
-        public override void Encode (Goedel.ASN.Buffer Buffer) {
+        public override void Encode (Goedel.ASN1.Buffer Buffer) {
 
 			Buffer.Encode__IA5String  (DNSName, 12, 2);
 
@@ -2328,7 +2349,7 @@ namespace Goedel.LibCrypto.PKIX {
     /// <summary>
 	/// BasicConstraints 
     /// </summary>
-	public partial class BasicConstraints : Goedel.ASN.Root {
+	public partial class BasicConstraints : Goedel.ASN1.Root {
 		/// <summary>
 		/// The OID value
 		/// </summary>
@@ -2349,7 +2370,7 @@ namespace Goedel.LibCrypto.PKIX {
 		/// NB Assinine ASN.1 DER encoding rules requires members be added in reverse order.
 		/// </summary>
 		/// <param name="Buffer">Output buffer</param>
-        public override void Encode (Goedel.ASN.Buffer Buffer) {
+        public override void Encode (Goedel.ASN1.Buffer Buffer) {
 			int Position = Buffer.Encode__Sequence_Start ();
 
 			Buffer.Encode__Integer  (PathLenConstraint, 4, -1);
@@ -2365,7 +2386,7 @@ namespace Goedel.LibCrypto.PKIX {
     /// <summary>
 	/// NameConstraints 
     /// </summary>
-	public partial class NameConstraints : Goedel.ASN.Root {
+	public partial class NameConstraints : Goedel.ASN1.Root {
 		/// <summary>
 		/// The OID value
 		/// </summary>
@@ -2386,7 +2407,7 @@ namespace Goedel.LibCrypto.PKIX {
 		/// NB Assinine ASN.1 DER encoding rules requires members be added in reverse order.
 		/// </summary>
 		/// <param name="Buffer">Output buffer</param>
-        public override void Encode (Goedel.ASN.Buffer Buffer) {
+        public override void Encode (Goedel.ASN1.Buffer Buffer) {
 			int Position = Buffer.Encode__Sequence_Start ();
 
 			Buffer.Encode__Object (ExcludedSubtrees, 0, 1);
@@ -2399,7 +2420,7 @@ namespace Goedel.LibCrypto.PKIX {
     /// <summary>
 	/// GeneralSubtrees 
     /// </summary>
-	public partial class GeneralSubtrees : Goedel.ASN.Root {
+	public partial class GeneralSubtrees : Goedel.ASN1.Root {
 
 		/// <summary>
 		/// ASN.1 member Maximum 
@@ -2420,7 +2441,7 @@ namespace Goedel.LibCrypto.PKIX {
 		/// NB Assinine ASN.1 DER encoding rules requires members be added in reverse order.
 		/// </summary>
 		/// <param name="Buffer">Output buffer</param>
-        public override void Encode (Goedel.ASN.Buffer Buffer) {
+        public override void Encode (Goedel.ASN1.Buffer Buffer) {
 			int Position = Buffer.Encode__Sequence_Start ();
 
 			Buffer.Encode__Integer  (Maximum, 0, 1);
@@ -2440,7 +2461,7 @@ namespace Goedel.LibCrypto.PKIX {
     /// <summary>
 	/// ExtendedKeyUsage 
     /// </summary>
-	public partial class ExtendedKeyUsage : Goedel.ASN.Root {
+	public partial class ExtendedKeyUsage : Goedel.ASN1.Root {
 		/// <summary>
 		/// The OID value
 		/// </summary>
@@ -2457,7 +2478,7 @@ namespace Goedel.LibCrypto.PKIX {
 		/// NB Assinine ASN.1 DER encoding rules requires members be added in reverse order.
 		/// </summary>
 		/// <param name="Buffer">Output buffer</param>
-        public override void Encode (Goedel.ASN.Buffer Buffer) {
+        public override void Encode (Goedel.ASN1.Buffer Buffer) {
 
 			if (KeyPurpose == null || KeyPurpose.Count == 0) {
 				Buffer.Encode__Object (null, 0, -1);
@@ -2476,7 +2497,7 @@ namespace Goedel.LibCrypto.PKIX {
     /// <summary>
 	/// PFX 
     /// </summary>
-	public partial class PFX : Goedel.ASN.Root {
+	public partial class PFX : Goedel.ASN1.Root {
 
 		/// <summary>
 		/// ASN.1 member MacData 
@@ -2497,7 +2518,7 @@ namespace Goedel.LibCrypto.PKIX {
 		/// NB Assinine ASN.1 DER encoding rules requires members be added in reverse order.
 		/// </summary>
 		/// <param name="Buffer">Output buffer</param>
-        public override void Encode (Goedel.ASN.Buffer Buffer) {
+        public override void Encode (Goedel.ASN1.Buffer Buffer) {
 			int Position = Buffer.Encode__Sequence_Start ();
 
 			Buffer.Encode__Object (MacData, 4, -1);
@@ -2515,7 +2536,7 @@ namespace Goedel.LibCrypto.PKIX {
     /// <summary>
 	/// ContentInfo 
     /// </summary>
-	public partial class ContentInfo : Goedel.ASN.Root {
+	public partial class ContentInfo : Goedel.ASN1.Root {
 
 		/// <summary>
 		/// ASN.1 member Content 
@@ -2532,7 +2553,7 @@ namespace Goedel.LibCrypto.PKIX {
 		/// NB Assinine ASN.1 DER encoding rules requires members be added in reverse order.
 		/// </summary>
 		/// <param name="Buffer">Output buffer</param>
-        public override void Encode (Goedel.ASN.Buffer Buffer) {
+        public override void Encode (Goedel.ASN1.Buffer Buffer) {
 			int Position = Buffer.Encode__Sequence_Start ();
 
 			Buffer.Encode__Any  (Content, 2, 0);
@@ -2547,7 +2568,7 @@ namespace Goedel.LibCrypto.PKIX {
     /// <summary>
 	/// MacData 
     /// </summary>
-	public partial class MacData : Goedel.ASN.Root {
+	public partial class MacData : Goedel.ASN1.Root {
 
 		/// <summary>
 		/// ASN.1 member Iterations 
@@ -2568,7 +2589,7 @@ namespace Goedel.LibCrypto.PKIX {
 		/// NB Assinine ASN.1 DER encoding rules requires members be added in reverse order.
 		/// </summary>
 		/// <param name="Buffer">Output buffer</param>
-        public override void Encode (Goedel.ASN.Buffer Buffer) {
+        public override void Encode (Goedel.ASN1.Buffer Buffer) {
 			int Position = Buffer.Encode__Sequence_Start ();
 
 			// Default is 1
@@ -2589,7 +2610,7 @@ namespace Goedel.LibCrypto.PKIX {
     /// <summary>
 	/// EncryptedData 
     /// </summary>
-	public partial class EncryptedData : Goedel.ASN.Root {
+	public partial class EncryptedData : Goedel.ASN1.Root {
 
 		/// <summary>
 		/// ASN.1 member EncryptedContent 
@@ -2606,7 +2627,7 @@ namespace Goedel.LibCrypto.PKIX {
 		/// NB Assinine ASN.1 DER encoding rules requires members be added in reverse order.
 		/// </summary>
 		/// <param name="Buffer">Output buffer</param>
-        public override void Encode (Goedel.ASN.Buffer Buffer) {
+        public override void Encode (Goedel.ASN1.Buffer Buffer) {
 			int Position = Buffer.Encode__Sequence_Start ();
 
 			Buffer.Encode__Object (EncryptedContent, 0, -1);
@@ -2621,7 +2642,7 @@ namespace Goedel.LibCrypto.PKIX {
     /// <summary>
 	/// EncryptedContentInfo 
     /// </summary>
-	public partial class EncryptedContentInfo : Goedel.ASN.Root {
+	public partial class EncryptedContentInfo : Goedel.ASN1.Root {
 
 		/// <summary>
 		/// ASN.1 member EncryptedContent 
@@ -2642,7 +2663,7 @@ namespace Goedel.LibCrypto.PKIX {
 		/// NB Assinine ASN.1 DER encoding rules requires members be added in reverse order.
 		/// </summary>
 		/// <param name="Buffer">Output buffer</param>
-        public override void Encode (Goedel.ASN.Buffer Buffer) {
+        public override void Encode (Goedel.ASN1.Buffer Buffer) {
 			int Position = Buffer.Encode__Sequence_Start ();
 
 			Buffer.Encode__Octets  (EncryptedContent, 5, 0);
@@ -2660,7 +2681,7 @@ namespace Goedel.LibCrypto.PKIX {
     /// <summary>
 	/// EncryptedPrivateKeyInfo 
     /// </summary>
-	public partial class EncryptedPrivateKeyInfo : Goedel.ASN.Root {
+	public partial class EncryptedPrivateKeyInfo : Goedel.ASN1.Root {
 
 		/// <summary>
 		/// ASN.1 member EncryptedData 
@@ -2677,7 +2698,7 @@ namespace Goedel.LibCrypto.PKIX {
 		/// NB Assinine ASN.1 DER encoding rules requires members be added in reverse order.
 		/// </summary>
 		/// <param name="Buffer">Output buffer</param>
-        public override void Encode (Goedel.ASN.Buffer Buffer) {
+        public override void Encode (Goedel.ASN1.Buffer Buffer) {
 			int Position = Buffer.Encode__Sequence_Start ();
 
 			Buffer.Encode__Octets  (EncryptedData, 0, -1);
@@ -2692,7 +2713,7 @@ namespace Goedel.LibCrypto.PKIX {
     /// <summary>
 	/// PrivateKeyInfo 
     /// </summary>
-	public partial class PrivateKeyInfo : Goedel.ASN.Root {
+	public partial class PrivateKeyInfo : Goedel.ASN1.Root {
 
 		/// <summary>
 		/// ASN.1 member Attributes 
@@ -2717,7 +2738,7 @@ namespace Goedel.LibCrypto.PKIX {
 		/// NB Assinine ASN.1 DER encoding rules requires members be added in reverse order.
 		/// </summary>
 		/// <param name="Buffer">Output buffer</param>
-        public override void Encode (Goedel.ASN.Buffer Buffer) {
+        public override void Encode (Goedel.ASN1.Buffer Buffer) {
 			int Position = Buffer.Encode__Sequence_Start ();
 
 			if (Attributes == null || Attributes.Count == 0) {
@@ -2748,7 +2769,7 @@ namespace Goedel.LibCrypto.PKIX {
     /// <summary>
 	/// RSAPrivateKey 
     /// </summary>
-	public partial class RSAPrivateKey : Goedel.ASN.Root {
+	public partial class RSAPrivateKey : Goedel.ASN1.Root {
 
 		/// <summary>
 		/// ASN.1 member Coefficient 
@@ -2793,7 +2814,7 @@ namespace Goedel.LibCrypto.PKIX {
 		/// NB Assinine ASN.1 DER encoding rules requires members be added in reverse order.
 		/// </summary>
 		/// <param name="Buffer">Output buffer</param>
-        public override void Encode (Goedel.ASN.Buffer Buffer) {
+        public override void Encode (Goedel.ASN1.Buffer Buffer) {
 			int Position = Buffer.Encode__Sequence_Start ();
 
 			Buffer.Encode__BigInteger  (Coefficient, 0, -1);
@@ -2829,7 +2850,7 @@ namespace Goedel.LibCrypto.PKIX {
     /// <summary>
 	/// Endorsement 
     /// </summary>
-	public partial class Endorsement : Goedel.ASN.Root {
+	public partial class Endorsement : Goedel.ASN1.Root {
 
 		/// <summary>
 		/// ASN.1 member Signature 
@@ -2850,7 +2871,7 @@ namespace Goedel.LibCrypto.PKIX {
 		/// NB Assinine ASN.1 DER encoding rules requires members be added in reverse order.
 		/// </summary>
 		/// <param name="Buffer">Output buffer</param>
-        public override void Encode (Goedel.ASN.Buffer Buffer) {
+        public override void Encode (Goedel.ASN1.Buffer Buffer) {
 			int Position = Buffer.Encode__Sequence_Start ();
 
 			Buffer.Encode__Bits  (Signature, 0, -1);
@@ -2868,7 +2889,7 @@ namespace Goedel.LibCrypto.PKIX {
     /// <summary>
 	/// TBSEndorsement 
     /// </summary>
-	public partial class TBSEndorsement : Goedel.ASN.Root {
+	public partial class TBSEndorsement : Goedel.ASN1.Root {
 
 		/// <summary>
 		/// ASN.1 member Extensions 
@@ -2905,7 +2926,7 @@ namespace Goedel.LibCrypto.PKIX {
 		/// NB Assinine ASN.1 DER encoding rules requires members be added in reverse order.
 		/// </summary>
 		/// <param name="Buffer">Output buffer</param>
-        public override void Encode (Goedel.ASN.Buffer Buffer) {
+        public override void Encode (Goedel.ASN1.Buffer Buffer) {
 			int Position = Buffer.Encode__Sequence_Start ();
 
 			if (Extensions == null || Extensions.Count == 0) {

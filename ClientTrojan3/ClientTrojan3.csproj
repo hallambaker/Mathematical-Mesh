@@ -7,7 +7,7 @@
     <ProjectGuid>{27874B2E-7FCC-4D11-A3A0-493E8A0EDEE7}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ClientTrojan3</RootNamespace>
+    <RootNamespace>PHB.Apps.Mesh.ProfileManager</RootNamespace>
     <AssemblyName>ClientTrojan3</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -109,7 +109,9 @@
   <ItemGroup>
     <Compile Include="Interface.cs" />
     <Compile Include="Main.cs" />
+    <Compile Include="ProfilePlus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WizardCreateProfile.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -135,6 +137,10 @@
       <Project>{a803fe85-50d9-4ccd-8ffc-f653a4bd73e3}</Project>
       <Name>Goedel.Mesh.Client</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Goedel.Portability.Windows\Goedel.Portability.Windows.csproj">
+      <Project>{574f9f99-a364-4225-b28e-1037a37703b4}</Project>
+      <Name>Goedel.Portability.Windows</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Goedel.Protocol.Debug\Goedel.Protocol.Debug.csproj">
       <Project>{0586b4c1-814c-4d98-b6f1-180cd4e2faab}</Project>
       <Name>Goedel.Protocol.Debug</Name>
@@ -151,7 +157,7 @@
       <Project>{a8090b80-d658-45f6-bda1-4f9dfd2b976f}</Project>
       <Name>Goedel.Debug</Name>
     </ProjectReference>
-    <ProjectReference Include="..\LibDns\Goedel.DNS.csproj">
+    <ProjectReference Include="..\Goedel.DNS\Goedel.DNS.csproj">
       <Project>{dd994f50-5ca7-474d-ac4a-dbf05949621f}</Project>
       <Name>Goedel.DNS</Name>
     </ProjectReference>
@@ -159,7 +165,7 @@
       <Project>{81e30b95-c59d-4a04-925e-85877fd37fdd}</Project>
       <Name>Goedel.Persistence</Name>
     </ProjectReference>
-    <ProjectReference Include="..\LibMeshService\Goedel.Mesh.Portal.csproj">
+    <ProjectReference Include="..\Goedel.Mesh.Portal\Goedel.Mesh.Portal.csproj">
       <Project>{f6343f1b-d03d-4965-9113-5120a8054e9e}</Project>
       <Name>Goedel.Mesh.Portal</Name>
     </ProjectReference>
@@ -167,7 +173,7 @@
       <Project>{0d8dd801-65d2-497c-8379-2d6adf3867c3}</Project>
       <Name>Goedel.Mesh</Name>
     </ProjectReference>
-    <ProjectReference Include="..\LibProtoGen\Goedel.Protocol.csproj">
+    <ProjectReference Include="..\Goedel.Protocol\Goedel.Protocol.csproj">
       <Project>{24419f2d-f425-4e0f-a0ea-9d3e7a57e12f}</Project>
       <Name>Goedel.Protocol</Name>
     </ProjectReference>

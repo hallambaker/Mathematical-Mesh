@@ -407,7 +407,7 @@ namespace Goedel.LibCrypto.PKIX {
         }
 
 
-    public partial class CertificationRequestInfo : Goedel.ASN.Root {
+    public partial class CertificationRequestInfo : Goedel.ASN1.Root {
         /// <summary>
         /// Create an empty CertificationRequestInfo class with version 1.0
         /// </summary>

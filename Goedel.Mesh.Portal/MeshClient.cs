@@ -27,7 +27,7 @@ using System.Collections.Generic;
 using System.Text;
 using Goedel.Protocol;
 using Goedel.Mesh;
-using Goedel.Persistence;
+using Goedel.Cryptography.Registry;
 
 
 namespace Goedel.Mesh {

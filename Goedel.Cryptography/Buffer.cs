@@ -24,13 +24,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Goedel.ASN {
+namespace Goedel.ASN1 {
 
     // ASN.1 Tagging modes
     //
     // We have the following options:
     //
-    // Universal / Contrusted
+    // Universal / Constructed
 
 
     /// <summary>
@@ -605,7 +605,7 @@ namespace Goedel.ASN {
         /// <param name="Data"></param>
         /// <param name="Flags"></param>
         /// <param name="Code"></param>
-        public void Encode__Object(Goedel.ASN.Root Data, int Flags, int Code) {
+        public void Encode__Object(Goedel.ASN1.Root Data, int Flags, int Code) {
             int Position = Pointer;
 
             if (NullCheck(Data == null, Flags, Code)) return;

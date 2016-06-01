@@ -7,8 +7,8 @@
     <ProjectGuid>{81E30B95-C59D-4A04-925E-85877FD37FDD}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PrismProof.Persistence</RootNamespace>
-    <AssemblyName>LibLogFile</AssemblyName>
+    <RootNamespace>Goedel.Persistence</RootNamespace>
+    <AssemblyName>Goedel.Persistence</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -21,7 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\LibLogFile.xml</DocumentationFile>
+    <DocumentationFile>bin\Debug\Goedel.Persistence.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -51,7 +51,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'RaspberryPi|AnyCPU'">
     <OutputPath>bin\RaspberryPi\</OutputPath>
-    <DocumentationFile>bin\RaspberryPi\LibLogFile.xml</DocumentationFile>
+    <DocumentationFile>bin\RaspberryPi\Goedel.Persistence.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'RaspberryPi|x64'">
     <OutputPath>bin\x64\RaspberryPi\</OutputPath>
@@ -96,7 +96,7 @@
       <Project>{a8090b80-d658-45f6-bda1-4f9dfd2b976f}</Project>
       <Name>Goedel.Debug</Name>
     </ProjectReference>
-    <ProjectReference Include="..\LibProtoGen\Goedel.Protocol.csproj">
+    <ProjectReference Include="..\Goedel.Protocol\Goedel.Protocol.csproj">
       <Project>{24419f2d-f425-4e0f-a0ea-9d3e7a57e12f}</Project>
       <Name>Goedel.Protocol</Name>
     </ProjectReference>

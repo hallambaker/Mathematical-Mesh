@@ -62,7 +62,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\LibProtoGen\Goedel.Protocol.csproj">
+    <ProjectReference Include="..\Goedel.Protocol\Goedel.Protocol.csproj">
       <Project>{24419f2d-f425-4e0f-a0ea-9d3e7a57e12f}</Project>
       <Name>Goedel.Protocol</Name>
     </ProjectReference>

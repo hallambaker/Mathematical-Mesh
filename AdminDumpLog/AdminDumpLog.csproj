@@ -94,7 +94,7 @@
       <Project>{0d8dd801-65d2-497c-8379-2d6adf3867c3}</Project>
       <Name>Goedel.Mesh</Name>
     </ProjectReference>
-    <ProjectReference Include="..\LibProtoGen\Goedel.Protocol.csproj">
+    <ProjectReference Include="..\Goedel.Protocol\Goedel.Protocol.csproj">
       <Project>{24419f2d-f425-4e0f-a0ea-9d3e7a57e12f}</Project>
       <Name>Goedel.Protocol</Name>
     </ProjectReference>
@@ -113,8 +113,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>powershell publishtarget "$(TargetPath)"   Goedel.Registry.dll  libCrypto.dll libCryptoJose.dll libDebug.dll libLogFile.dll libMesh.dll  libProtoGen.dll 
-</PostBuildEvent>
+    <PostBuildEvent>powershell publishtarget "$(TargetPath)" Goedel.Registry.dll Goedel.Cryptography.Jose.dll Goedel.Cryptography.dll Goedel.Debug.dll Goedel.Persistence.dll Goedel.Mesh.dll Goedel.Protocol.dll libTrojan.dll</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PreBuildEvent>

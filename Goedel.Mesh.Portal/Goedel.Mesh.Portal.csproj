@@ -71,6 +71,10 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Goedel.Crypto.Registry\Goedel.Cryptography.Registry.csproj">
+      <Project>{ca485578-77ea-4bb9-9705-2b0ac4d0b613}</Project>
+      <Name>Goedel.Cryptography.Registry</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Goedel.Protocol.Debug\Goedel.Protocol.Debug.csproj">
       <Project>{0586b4c1-814c-4d98-b6f1-180cd4e2faab}</Project>
       <Name>Goedel.Protocol.Debug</Name>
@@ -95,7 +99,7 @@
       <Project>{0d8dd801-65d2-497c-8379-2d6adf3867c3}</Project>
       <Name>Goedel.Mesh</Name>
     </ProjectReference>
-    <ProjectReference Include="..\LibProtoGen\Goedel.Protocol.csproj">
+    <ProjectReference Include="..\Goedel.Protocol\Goedel.Protocol.csproj">
       <Project>{24419f2d-f425-4e0f-a0ea-9d3e7a57e12f}</Project>
       <Name>Goedel.Protocol</Name>
     </ProjectReference>

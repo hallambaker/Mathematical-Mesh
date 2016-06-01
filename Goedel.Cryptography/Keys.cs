@@ -245,7 +245,7 @@ namespace Goedel.LibCrypto {
         /// <summary>
         /// Get the key associated with a system asymmetric provider.
         /// </summary>
-        /// <param name="AsymmetricAlgorithm">Asymmeteic provider.</param>
+        /// <param name="AsymmetricAlgorithm">Asymmetric provider.</param>
         /// <returns></returns>
         public static KeyPair GetKeyPair(AsymmetricAlgorithm AsymmetricAlgorithm) {
 

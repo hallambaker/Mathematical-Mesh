@@ -51,15 +51,29 @@ namespace Goedel.Mesh {
         /// <returns>Mesh service object for API access to the service.</returns>
         public abstract MeshService GetService(string Portal, string Account);
 
+        private static MeshPortal _Default;
         /// <summary>
-        /// May be set to the default MeshPortal by a calling application.
+        /// Specify the default portal. If not overriden, the default default is to
+        /// make a remote connection.
         /// </summary>
-        public static MeshPortal Default;
+        public static MeshPortal Default {
+            get {
+                if (_Default == null) {
+                    _Default = new MeshPortalRemote();
+                    }
+                return _Default;
+                }
+
+            set {
+                _Default = value;
+                }
+            }
 
         /// <summary>
         /// May be set to the default MeshService by a calling application.
         /// </summary>
         public MeshService MeshServiceClient;
+
         }
 
 

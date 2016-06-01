@@ -99,7 +99,7 @@ namespace Goedel.LibCrypto.PKIX {
     /// <summary>
     /// Attribute = type = value tripple
     /// </summary>
-    public partial class AttributeTypeValue : Goedel.ASN.Root {
+    public partial class AttributeTypeValue : Goedel.ASN1.Root {
 
         /// <summary>
         /// Construct from components.
@@ -117,7 +117,7 @@ namespace Goedel.LibCrypto.PKIX {
     /// <summary>
     /// Encoding of X.500 text string.
     /// </summary>
-    public partial class AnyString : Goedel.ASN.Root {
+    public partial class AnyString : Goedel.ASN1.Root {
         /// <summary>
         /// Construct from StringType enumeration.
         /// </summary>
