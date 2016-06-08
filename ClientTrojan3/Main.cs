@@ -114,8 +114,6 @@ namespace PHB.Apps.Mesh.ProfileManager {
             Binding.Wizard(Wizard);
             }
 
-
-
         public override void ProfileEscrow(Object Profile) {
             var Dialog = new EscrowParameters();
             Binding.Dialog(Dialog);
@@ -123,9 +121,124 @@ namespace PHB.Apps.Mesh.ProfileManager {
 
 
 
+        /// <summary>
+        ///Stub method for ConnectRefreshcommand.Override with application implementation.
+        /// </summary>
+ 		public override void ConnectRefresh() {
+            // Delete the list of pending requests
 
-        public override void ApplicationAddWizard(Object Profile) {
+            // for each portal in the list
+                // Request the list of pending requests
+                // Update the selector
+
             }
+
+        /// <summary>
+        ///Stub method for ConnectAcceptcommand.Override with application implementation.
+        /// </summary>
+ 		public override void ConnectAccept(Object Object) {
+            }
+
+        /// <summary>
+        ///Stub method for ConnectRejectcommand.Override with application implementation.
+        /// </summary>
+ 		public override void ConnectReject(Object Object) {
+            }
+
+        /// <summary>
+        ///Stub method for ConnectGetOTCcommand.Override with application implementation.
+        /// </summary>
+ 		public override void ConnectGetOTC() {
+            }
+
+        /// <summary>
+        ///Stub method for DeviceDeletecommand.Override with application implementation.
+        /// </summary>
+ 		public override void DeviceDelete(Object Object) {
+            }
+
+        /// <summary>
+        ///Stub method for DeviceRefreshKeyscommand.Override with application implementation.
+        /// </summary>
+ 		public override void DeviceRefreshKeys(Object Object) {
+            }
+
+        /// <summary>
+        ///Stub method for ApplicationAddWizardcommand.Override with application implementation.
+        /// </summary>
+ 		public override void ApplicationAddWizard(Object Object) {
+            }
+
+        /// <summary>
+        ///Stub method for ApplicationAddMailcommand.Override with application implementation.
+        /// </summary>
+        public override void ApplicationAddMail(Object Profile) {
+            //var Dialog = new SelectAccountsEmail();
+            var Dialog = new ApplicationMail();
+            Binding.Dialog(Dialog);
+            }
+
+        /// <summary>
+        ///Stub method for ApplicationAddSSHcommand.Override with application implementation.
+        /// </summary>
+ 		public override void ApplicationAddSSH(Object Object) {
+            var Dialog = new SSHOptions();
+            Binding.Dialog(Dialog);
+            }
+
+        /// <summary>
+        ///Stub method for ApplicationAddWiFicommand.Override with application implementation.
+        /// </summary>
+ 		public override void ApplicationAddWiFi(Object Object) {
+            var Dialog = new NetworkOptions();
+            Binding.Dialog(Dialog);
+            }
+
+        /// <summary>
+        ///Stub method for ApplicationAddWebcommand.Override with application implementation.
+        /// </summary>
+ 		public override void ApplicationAddWeb(Object Object) {
+            var Dialog = new WebOptions();
+            Binding.Dialog(Dialog);
+            }
+
+        /// <summary>
+        ///Stub method for ApplicationDeletecommand.Override with application implementation.
+        /// </summary>
+ 		public override void ApplicationDelete(Object Object) {
+            }
+
+        /// <summary>
+        ///Stub method for ApplicationRefreshKeyscommand.Override with application implementation.
+        /// </summary>
+ 		public override void ApplicationRefreshKeys(Object Object) {
+            }
+
+        /// <summary>
+        ///Stub method for AdministratorAddcommand.Override with application implementation.
+        /// </summary>
+ 		public override void AdministratorAdd(Object Object) {
+            }
+
+        /// <summary>
+        ///Stub method for AdministratorRemovecommand.Override with application implementation.
+        /// </summary>
+ 		public override void AdministratorRemove(Object Object) {
+            }
+
+        /// <summary>
+        ///Stub method for KeyRefreshcommand.Override with application implementation.
+        /// </summary>
+ 		public override void KeyRefresh() {
+            }
+
+        /// <summary>
+        ///Stub method for KeyDeletecommand.Override with application implementation.
+        /// </summary>
+ 		public override void KeyDelete() {
+            }
+
+
 
 
 
@@ -134,11 +247,17 @@ namespace PHB.Apps.Mesh.ProfileManager {
 
 
     public partial class EscrowParameters {
+
+        /// <summary>
+        /// Set up defaults
+        /// </summary>
         public EscrowParameters() {
             Shares.Maximum = 16;
             Shares.Minimum = 2;
+            Shares.Value = 3;
             Quorum.Maximum = 16;
             Quorum.Minimum = 2;
+            Quorum.Value = 2;
             }
 
         public override bool Valid() {
@@ -160,7 +279,26 @@ namespace PHB.Apps.Mesh.ProfileManager {
         }
 
 
+    public partial class SelectAccountsEmail {
 
+        public SelectAccountsEmail() {
+            Selection.Value = (int) EnumSelection.All;
+
+            var Act1 = new EmailAccount();
+            Act1.Address.Value = "Fred@example.com";
+            Act1.Application.Value = "Windows Live Mail";
+            Accounts.Value.Add(Act1);
+
+
+            var Act2 = new EmailAccount();
+            Act2.Address.Value = "Bob@minions.com";
+            Act2.Application.Value = "Outlook";
+            Accounts.Value.Add(Act2);
+
+            }
+
+
+        }
 
     }
 

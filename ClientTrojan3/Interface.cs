@@ -32,10 +32,6 @@ namespace PHB.Apps.Mesh.ProfileManager {
 	/// Contains stub methods for each callback.
     /// </summary>
 	public abstract class _ProfileManager : Goedel.Trojan.Model {
-		/// <summary>
-		/// The currently active selection or null if no object is selected.
-		/// </summary>
-		public Object Selected = null;
 
         /// <summary>
         /// Default constructor.
@@ -58,7 +54,7 @@ namespace PHB.Apps.Mesh.ProfileManager {
         /// <summary>
         ///Stub method for ProfileEscrowcommand.Override with application implementation.
         /// </summary>
- 		public virtual void ProfileEscrow (Object Profile) {
+ 		public virtual void ProfileEscrow (Object Object ) {
 			}
 
         /// <summary>
@@ -76,7 +72,7 @@ namespace PHB.Apps.Mesh.ProfileManager {
         /// <summary>
         ///Stub method for Printcommand.Override with application implementation.
         /// </summary>
- 		public virtual void Print (Object Object) {
+ 		public virtual void Print (Object Object ) {
 			}
 
         /// <summary>
@@ -88,13 +84,13 @@ namespace PHB.Apps.Mesh.ProfileManager {
         /// <summary>
         ///Stub method for ConnectAcceptcommand.Override with application implementation.
         /// </summary>
- 		public virtual void ConnectAccept (Object ConnectRequest) {
+ 		public virtual void ConnectAccept (Object Object ) {
 			}
 
         /// <summary>
         ///Stub method for ConnectRejectcommand.Override with application implementation.
         /// </summary>
- 		public virtual void ConnectReject (Object ConnectRequest) {
+ 		public virtual void ConnectReject (Object Object ) {
 			}
 
         /// <summary>
@@ -106,67 +102,67 @@ namespace PHB.Apps.Mesh.ProfileManager {
         /// <summary>
         ///Stub method for DeviceDeletecommand.Override with application implementation.
         /// </summary>
- 		public virtual void DeviceDelete (Object Device) {
+ 		public virtual void DeviceDelete (Object Object ) {
 			}
 
         /// <summary>
         ///Stub method for DeviceRefreshKeyscommand.Override with application implementation.
         /// </summary>
- 		public virtual void DeviceRefreshKeys (Object Device) {
+ 		public virtual void DeviceRefreshKeys (Object Object ) {
 			}
 
         /// <summary>
         ///Stub method for ApplicationAddWizardcommand.Override with application implementation.
         /// </summary>
- 		public virtual void ApplicationAddWizard (Object Profile) {
+ 		public virtual void ApplicationAddWizard (Object Object ) {
 			}
 
         /// <summary>
         ///Stub method for ApplicationAddMailcommand.Override with application implementation.
         /// </summary>
- 		public virtual void ApplicationAddMail (Object Profile) {
+ 		public virtual void ApplicationAddMail (Object Object ) {
 			}
 
         /// <summary>
         ///Stub method for ApplicationAddSSHcommand.Override with application implementation.
         /// </summary>
- 		public virtual void ApplicationAddSSH (Object Profile) {
+ 		public virtual void ApplicationAddSSH (Object Object ) {
 			}
 
         /// <summary>
         ///Stub method for ApplicationAddWiFicommand.Override with application implementation.
         /// </summary>
- 		public virtual void ApplicationAddWiFi (Object Profile) {
+ 		public virtual void ApplicationAddWiFi (Object Object ) {
 			}
 
         /// <summary>
         ///Stub method for ApplicationAddWebcommand.Override with application implementation.
         /// </summary>
- 		public virtual void ApplicationAddWeb (Object Profile) {
+ 		public virtual void ApplicationAddWeb (Object Object ) {
 			}
 
         /// <summary>
         ///Stub method for ApplicationDeletecommand.Override with application implementation.
         /// </summary>
- 		public virtual void ApplicationDelete (Object Application) {
+ 		public virtual void ApplicationDelete (Object Object ) {
 			}
 
         /// <summary>
         ///Stub method for ApplicationRefreshKeyscommand.Override with application implementation.
         /// </summary>
- 		public virtual void ApplicationRefreshKeys (Object Application) {
+ 		public virtual void ApplicationRefreshKeys (Object Object ) {
 			}
 
         /// <summary>
         ///Stub method for AdministratorAddcommand.Override with application implementation.
         /// </summary>
- 		public virtual void AdministratorAdd (Object Device) {
+ 		public virtual void AdministratorAdd (Object Object ) {
 			}
 
         /// <summary>
         ///Stub method for AdministratorRemovecommand.Override with application implementation.
         /// </summary>
- 		public virtual void AdministratorRemove (Object Device) {
+ 		public virtual void AdministratorRemove (Object Object ) {
 			}
 
         /// <summary>
@@ -201,6 +197,7 @@ namespace PHB.Apps.Mesh.ProfileManager {
 
 
 
+
         /// <summary>
         ///Dispatch command callback with required parameters.
         /// </summary>
@@ -210,8 +207,8 @@ namespace PHB.Apps.Mesh.ProfileManager {
                         ProfileCreate();
                         return;
                         }
-                case "ProfileEscrow_Profile": {
-                        ProfileEscrow(Selected);
+                case "ProfileEscrow": {
+                        ProfileEscrow(Selected as Object);
                         return;
                         }
                 case "About": {
@@ -222,68 +219,68 @@ namespace PHB.Apps.Mesh.ProfileManager {
                         Quit();
                         return;
                         }
-                case "Print_Object": {
-                        Print(Selected);
+                case "Print": {
+                        Print(Selected as Object);
                         return;
                         }
                 case "ConnectRefresh": {
                         ConnectRefresh();
                         return;
                         }
-                case "ConnectAccept_ConnectRequest": {
-                        ConnectAccept(Selected);
+                case "ConnectAccept": {
+                        ConnectAccept(Selected as Object);
                         return;
                         }
-                case "ConnectReject_ConnectRequest": {
-                        ConnectReject(Selected);
+                case "ConnectReject": {
+                        ConnectReject(Selected as Object);
                         return;
                         }
                 case "ConnectGetOTC": {
                         ConnectGetOTC();
                         return;
                         }
-                case "DeviceDelete_Device": {
-                        DeviceDelete(Selected);
+                case "DeviceDelete": {
+                        DeviceDelete(Selected as Object);
                         return;
                         }
-                case "DeviceRefreshKeys_Device": {
-                        DeviceRefreshKeys(Selected);
+                case "DeviceRefreshKeys": {
+                        DeviceRefreshKeys(Selected as Object);
                         return;
                         }
-                case "ApplicationAddWizard_Profile": {
-                        ApplicationAddWizard(Selected);
+                case "ApplicationAddWizard": {
+                        ApplicationAddWizard(Selected as Object);
                         return;
                         }
-                case "ApplicationAddMail_Profile": {
-                        ApplicationAddMail(Selected);
+                case "ApplicationAddMail": {
+                        ApplicationAddMail(Selected as Object);
                         return;
                         }
-                case "ApplicationAddSSH_Profile": {
-                        ApplicationAddSSH(Selected);
+                case "ApplicationAddSSH": {
+                        ApplicationAddSSH(Selected as Object);
                         return;
                         }
-                case "ApplicationAddWiFi_Profile": {
-                        ApplicationAddWiFi(Selected);
+                case "ApplicationAddWiFi": {
+                        ApplicationAddWiFi(Selected as Object);
                         return;
                         }
-                case "ApplicationAddWeb_Profile": {
-                        ApplicationAddWeb(Selected);
+                case "ApplicationAddWeb": {
+                        ApplicationAddWeb(Selected as Object);
                         return;
                         }
-                case "ApplicationDelete_Application": {
-                        ApplicationDelete(Selected);
+                case "ApplicationDelete": {
+                        ApplicationDelete(Selected as Object);
                         return;
                         }
-                case "ApplicationRefreshKeys_Application": {
-                        ApplicationRefreshKeys(Selected);
+                case "ApplicationRefreshKeys": {
+                        ApplicationRefreshKeys(Selected as Object);
                         return;
                         }
-                case "AdministratorAdd_Device": {
-                        AdministratorAdd(Selected);
+                case "AdministratorAdd": {
+                        AdministratorAdd(Selected as Object);
                         return;
                         }
-                case "AdministratorRemove_Device": {
-                        AdministratorRemove(Selected);
+                case "AdministratorRemove": {
+                        AdministratorRemove(Selected as Object);
                         return;
                         }
                 case "KeyRefresh": {
@@ -309,90 +306,8 @@ namespace PHB.Apps.Mesh.ProfileManager {
                 }
             }
 
-        /// <summary>
-        ///Report if selection criteria for specified command are met.
-        /// </summary>
-         public bool Active(String Command) {
-            switch (Command) {
-                case "ProfileEscrow_Profile": {
-						// NYI here make a list of all the possibilities
-                        //return Selected_Profile != null;
-						return true;
-                        }
-                case "Print_Object": {
-						// NYI here make a list of all the possibilities
-                        //return Selected_Object != null;
-						return true;
-                        }
-                case "ConnectAccept_ConnectRequest": {
-						// NYI here make a list of all the possibilities
-                        //return Selected_ConnectRequest != null;
-						return true;
-                        }
-                case "ConnectReject_ConnectRequest": {
-						// NYI here make a list of all the possibilities
-                        //return Selected_ConnectRequest != null;
-						return true;
-                        }
-                case "DeviceDelete_Device": {
-						// NYI here make a list of all the possibilities
-                        //return Selected_Device != null;
-						return true;
-                        }
-                case "DeviceRefreshKeys_Device": {
-						// NYI here make a list of all the possibilities
-                        //return Selected_Device != null;
-						return true;
-                        }
-                case "ApplicationAddWizard_Profile": {
-						// NYI here make a list of all the possibilities
-                        //return Selected_Profile != null;
-						return true;
-                        }
-                case "ApplicationAddMail_Profile": {
-						// NYI here make a list of all the possibilities
-                        //return Selected_Profile != null;
-						return true;
-                        }
-                case "ApplicationAddSSH_Profile": {
-						// NYI here make a list of all the possibilities
-                        //return Selected_Profile != null;
-						return true;
-                        }
-                case "ApplicationAddWiFi_Profile": {
-						// NYI here make a list of all the possibilities
-                        //return Selected_Profile != null;
-						return true;
-                        }
-                case "ApplicationAddWeb_Profile": {
-						// NYI here make a list of all the possibilities
-                        //return Selected_Profile != null;
-						return true;
-                        }
-                case "ApplicationDelete_Application": {
-						// NYI here make a list of all the possibilities
-                        //return Selected_Application != null;
-						return true;
-                        }
-                case "ApplicationRefreshKeys_Application": {
-						// NYI here make a list of all the possibilities
-                        //return Selected_Application != null;
-						return true;
-                        }
-                case "AdministratorAdd_Device": {
-						// NYI here make a list of all the possibilities
-                        //return Selected_Device != null;
-						return true;
-                        }
-                case "AdministratorRemove_Device": {
-						// NYI here make a list of all the possibilities
-                        //return Selected_Device != null;
-						return true;
-                        }
-                }
-            return true;
-            }
 		}
+
 
 	// Windows
 
@@ -841,7 +756,13 @@ namespace PHB.Apps.Mesh.ProfileManager {
 					    },
 			new ObjectFieldString {Id = "Fingerprint", 
 						Label = "Fingerprint" // ((ObjectFieldString)Entries[4])
-					    }			} ;
+					    },
+			new ObjectAction {
+						Id = "ConnectAccept",  
+						Label = "Accept Connection"},
+			new ObjectAction {
+						Id = "ConnectReject",  
+						Label = "Reject Connection"}			} ;
 
 
         /// <summary>
@@ -912,6 +833,7 @@ namespace PHB.Apps.Mesh.ProfileManager {
 						Label = "Name" // ((ObjectFieldString)Entries[0])
 					    },
 			new ObjectFieldString {Id = "Fingerprint", 
+						ReadOnly = true,
 						Label = "Fingerprint" // ((ObjectFieldString)Entries[1])
 					    },
 			new ObjectFieldSet {Id = "Devices", 
@@ -1320,13 +1242,11 @@ namespace PHB.Apps.Mesh.ProfileManager {
 			new ObjectFieldItem {
 						Id = "Inbound",  
 						Label = "Inbound Server",
-						Value = new ServerSASL ()
-						},
+						Value = new ServerSASL () },
 			new ObjectFieldItem {
 						Id = "Outbound",  
 						Label = "Outbound Server",
-						Value = new ServerSASL ()
-						},	
+						Value = new ServerSASL () },	
 			new ObjectFieldOption {
 						Id = "EnablePGP",  
 						Label = "OpenPGP",
@@ -1348,7 +1268,10 @@ namespace PHB.Apps.Mesh.ProfileManager {
 							},
 				new ObjectFieldList {Id = "PGPKeys", 
 							Label = "Keys" // ((ObjectFieldList)((ObjectFieldOption)Entries[6]).Entries[4])
-						    }
+						    },
+				new ObjectAction {
+							Id = "KeyRefresh",  
+							Label = "Rollover Key"}
 							}
 						},	
 			new ObjectFieldOption {
@@ -1372,7 +1295,10 @@ namespace PHB.Apps.Mesh.ProfileManager {
 							},
 				new ObjectFieldList {Id = "SMIMEKeys", 
 							Label = "Keys" // ((ObjectFieldList)((ObjectFieldOption)Entries[7]).Entries[9])
-						    }
+						    },
+				new ObjectAction {
+							Id = "KeyRefresh",  
+							Label = "Rollover Key"}
 							}
 						}			} ;
 
@@ -1613,9 +1539,11 @@ namespace PHB.Apps.Mesh.ProfileManager {
 		List<ObjectEntry> _Entries = new List<ObjectEntry> {
 
 			new ObjectFieldString {Id = "Fingerprint", 
+						ReadOnly = true,
 						Label = "Fingerprint" // ((ObjectFieldString)Entries[0])
 					    },
 			new ObjectFieldBoolean {Id = "KeyValid", 
+						ReadOnly = true,
 						Label = "Is valid" // ((ObjectFieldBoolean)Entries[1])
 					    },
 			new ObjectFieldString {Id = "Created", 
@@ -1623,7 +1551,13 @@ namespace PHB.Apps.Mesh.ProfileManager {
 					    },
 			new ObjectFieldString {Id = "Expires", 
 						Label = "Expires" // ((ObjectFieldString)Entries[3])
-					    }			} ;
+					    },
+			new ObjectAction {
+						Id = "KeyRemove",  
+						Label = ""},
+			new ObjectAction {
+						Id = "KeyRefresh",  
+						Label = "Rollover Key"}			} ;
 
 
         /// <summary>
@@ -1651,9 +1585,11 @@ namespace PHB.Apps.Mesh.ProfileManager {
 		List<ObjectEntry> _Entries = new List<ObjectEntry> {
 
 			new ObjectFieldString {Id = "Fingerprint", 
+						ReadOnly = true,
 						Label = "Fingerprint" // ((ObjectFieldString)Entries[0])
 					    },
 			new ObjectFieldBoolean {Id = "KeyValid", 
+						ReadOnly = true,
 						Label = "Is valid" // ((ObjectFieldBoolean)Entries[1])
 					    },
 			new ObjectFieldString {Id = "Created", 
@@ -1661,7 +1597,13 @@ namespace PHB.Apps.Mesh.ProfileManager {
 					    },
 			new ObjectFieldString {Id = "Expires", 
 						Label = "Expires" // ((ObjectFieldString)Entries[3])
-					    }			} ;
+					    },
+			new ObjectAction {
+						Id = "KeyRemove",  
+						Label = ""},
+			new ObjectAction {
+						Id = "KeyRefresh",  
+						Label = "Rollover Key"}			} ;
 
 
         /// <summary>
@@ -1689,9 +1631,11 @@ namespace PHB.Apps.Mesh.ProfileManager {
 		List<ObjectEntry> _Entries = new List<ObjectEntry> {
 
 			new ObjectFieldString {Id = "Fingerprint", 
+						ReadOnly = true,
 						Label = "Fingerprint" // ((ObjectFieldString)Entries[0])
 					    },
 			new ObjectFieldBoolean {Id = "KeyValid", 
+						ReadOnly = true,
 						Label = "Is valid" // ((ObjectFieldBoolean)Entries[1])
 					    },
 			new ObjectFieldString {Id = "Created", 
@@ -1699,7 +1643,13 @@ namespace PHB.Apps.Mesh.ProfileManager {
 					    },
 			new ObjectFieldString {Id = "Expires", 
 						Label = "Expires" // ((ObjectFieldString)Entries[3])
-					    }			} ;
+					    },
+			new ObjectAction {
+						Id = "KeyRemove",  
+						Label = ""},
+			new ObjectAction {
+						Id = "KeyRefresh",  
+						Label = "Rollover Key"}			} ;
 
 
         /// <summary>
@@ -1747,9 +1697,11 @@ namespace PHB.Apps.Mesh.ProfileManager {
 		List<ObjectEntry> _Entries = new List<ObjectEntry> {
 
 			new ObjectFieldString {Id = "Fingerprint", 
+						ReadOnly = true,
 						Label = "Fingerprint" // ((ObjectFieldString)Entries[0])
 					    },
 			new ObjectFieldBoolean {Id = "KeyValid", 
+						ReadOnly = true,
 						Label = "Is valid" // ((ObjectFieldBoolean)Entries[1])
 					    },
 			new ObjectFieldString {Id = "Created", 
@@ -1758,6 +1710,12 @@ namespace PHB.Apps.Mesh.ProfileManager {
 			new ObjectFieldString {Id = "Expires", 
 						Label = "Expires" // ((ObjectFieldString)Entries[3])
 					    },
+			new ObjectAction {
+						Id = "KeyRemove",  
+						Label = ""},
+			new ObjectAction {
+						Id = "KeyRefresh",  
+						Label = "Rollover Key"},
 			new ObjectFieldString {Id = "Algorithm", 
 						Label = "Algorithm" // ((ObjectFieldString)Entries[4])
 					    },
@@ -1813,8 +1771,7 @@ namespace PHB.Apps.Mesh.ProfileManager {
 			new ObjectFieldItem {
 						Id = "Server",  
 						Label = "Server",
-						Value = new Server ()
-						},
+						Value = new Server () },
 			new ObjectFieldString {Id = "Fingerprint", 
 						Label = "Fingerprint" // ((ObjectFieldString)Entries[1])
 					    }			} ;
@@ -2241,12 +2198,14 @@ namespace PHB.Apps.Mesh.ProfileManager {
 						Text = "What name do you want to use for this device?"
 						},
 			new ObjectFieldString {Id = "DeviceName", 
+						Tip = "This is the name that Mesh applications will use to identify this device to you.",
 						Label = "Name for this device" // ((ObjectFieldString)Entries[1])
 					    },
 			new ObjectFieldString {Id = "DeviceDescription", 
 						Label = "Description" // ((ObjectFieldString)Entries[2])
 					    },
 			new ObjectFieldBoolean {Id = "NewDeviceProfile", 
+						Tip = "The device you are currently using will be the initial administration device for the new profile and therefor must have a device profile defined for it.",
 						Label = "Create new device profile" // ((ObjectFieldBoolean)Entries[3])
 					    }			} ;
 
@@ -2493,7 +2452,23 @@ namespace PHB.Apps.Mesh.ProfileManager {
 						},
 			new ObjectText {
 						Text = "(You can always add or remove applications later on.)"
-						}			} ;
+						},
+			new ObjectAction {
+						Id = "ApplicationAddMail",  
+						Text = "Email (S/MIME, OpenPGP)",
+						Label = "Add Mail"},
+			new ObjectAction {
+						Id = "ApplicationAddSSH",  
+						Text = "SSH Secure Shell",
+						Label = "Add SSH"},
+			new ObjectAction {
+						Id = "ApplicationAddWiFi",  
+						Text = "Secure Network Access",
+						Label = "Add WiFi Network"},
+			new ObjectAction {
+						Id = "ApplicationAddWeb",  
+						Text = "World Wide Web",
+						Label = "Add Web Password Manager"}			} ;
 
 
         /// <summary>
@@ -2581,12 +2556,15 @@ namespace PHB.Apps.Mesh.ProfileManager {
 		List<ObjectEntry> _Entries = new List<ObjectEntry> {
 
 			new ObjectFieldString {Id = "FriendlyName", 
+						ReadOnly = true,
 						Label = "Friendly Name" // ((ObjectFieldString)Entries[0])
 					    },
 			new ObjectFieldString {Id = "Fingerprint", 
+						ReadOnly = true,
 						Label = "Master Fingerprint" // ((ObjectFieldString)Entries[1])
 					    },
 			new ObjectFieldString {Id = "MeshAddress", 
+						ReadOnly = true,
 						Label = "Mesh Portal account" // ((ObjectFieldString)Entries[2])
 					    },	
 			new ObjectFieldOption {
@@ -2594,6 +2572,7 @@ namespace PHB.Apps.Mesh.ProfileManager {
 						Label = "Escrow encryption keys",
 						Entries = new List<ObjectEntry> {
 				new ObjectFieldString {Id = "Quorum", 
+							ReadOnly = true,
 							Label = "Quorum" // ((ObjectFieldString)((ObjectFieldOption)Entries[3]).Entries[0])
 						    },
 				new ObjectFieldList {Id = "Shares", 
@@ -2705,7 +2684,11 @@ namespace PHB.Apps.Mesh.ProfileManager {
 ,
 			Choose  /* Let me choose options for each account */
 			};
-		public EnumSelection Selection;
+		public ObjectFieldEnumerate Selection  {
+			get {
+				return ((ObjectFieldEnumerate)Entries[1]);
+				}
+			}
 		/// <summary>
         /// Accounts
         /// </summary>
@@ -2731,13 +2714,14 @@ namespace PHB.Apps.Mesh.ProfileManager {
 						Id = "Selection",  
 						Label = "Security settings",
 						Entries = new List<ObjectEntry> {
-				new ObjectFieldRadio {Id = "All", 
-							Label = "Use same security settings for all accounts" // ((ObjectFieldRadio)((ObjectFieldEnumerate)Entries[1]).Entries[0])
-						    },
-				new ObjectFieldRadio {Id = "Choose", 
-							Label = "Let me choose options for each account" // ((ObjectFieldRadio)((ObjectFieldEnumerate)Entries[1]).Entries[1])
-						    }
-							}
+				new ObjectFieldRadio {
+						Id = "All",  
+						Label = "Use same security settings for all accounts",
+						SelectionValue = (int) EnumSelection.All  } ,
+				new ObjectFieldRadio {
+						Id = "Choose",  
+						Label = "Let me choose options for each account",
+						SelectionValue = (int) EnumSelection.Choose  } 							}
 						},
 			new ObjectFieldList {Id = "Accounts", 
 						Label = "Email Accounts" // ((ObjectFieldList)Entries[2])
@@ -2763,7 +2747,7 @@ namespace PHB.Apps.Mesh.ProfileManager {
 		}
 
 
-	public partial class EmailAccounts : Object {
+	public partial class EmailAccount : Object {
 
 		/// <summary>
         /// Address
@@ -2964,6 +2948,78 @@ namespace PHB.Apps.Mesh.ProfileManager {
 		}
 
 
+	public partial class SSHOptions : Object {
+
+		public enum EnumKeySeparation {
+			PerDevice  /* Create separate SSH keys for each device (recommended). */
+,
+			OneKey  /* Use one keypair for all devices. */
+			};
+		public ObjectFieldEnumerate KeySeparation  {
+			get {
+				return ((ObjectFieldEnumerate)Entries[0]);
+				}
+			}
+		public enum EnumKeyHygiene {
+			PerApplication  /* Create separate keys for use with SSH and GIT (recommended) */
+,
+			Combine  /* Use the same key for both. */
+			};
+		public ObjectFieldEnumerate KeyHygiene  {
+			get {
+				return ((ObjectFieldEnumerate)Entries[1]);
+				}
+			}
+
+		public override List<ObjectEntry> Entries {
+            get { return _Entries; }
+            set { _Entries = value; }
+            }
+
+		List<ObjectEntry> _Entries = new List<ObjectEntry> {
+
+			new ObjectFieldEnumerate {
+						Id = "KeySeparation",  
+						Label = "Key separation",
+						Entries = new List<ObjectEntry> {
+				new ObjectFieldRadio {
+						Id = "PerDevice",  
+						Label = "Create separate SSH keys for each device (recommended).",
+						SelectionValue = (int) EnumKeySeparation.PerDevice  } ,
+				new ObjectFieldRadio {
+						Id = "OneKey",  
+						Label = "Use one keypair for all devices.",
+						SelectionValue = (int) EnumKeySeparation.OneKey  } 							}
+						},
+			new ObjectFieldEnumerate {
+						Id = "KeyHygiene",  
+						Label = "Key Hygiene",
+						Entries = new List<ObjectEntry> {
+				new ObjectFieldRadio {
+						Id = "PerApplication",  
+						Label = "Create separate keys for use with SSH and GIT (recommended)",
+						SelectionValue = (int) EnumKeyHygiene.PerApplication  } ,
+				new ObjectFieldRadio {
+						Id = "Combine",  
+						Label = "Use the same key for both.",
+						SelectionValue = (int) EnumKeyHygiene.Combine  } 							}
+						}			} ;
+
+
+        /// <summary>
+        /// Create a list containing all the current children.
+        /// </summary>
+        /// <returns></returns>
+        public override List<Goedel.Trojan.Object> GetChildren() {
+			var Result = base.GetChildren();
+
+			return Result;
+            }
+
+
+		}
+
+
 	public partial class WebOptions : Object {
 
 		public enum EnumSelection {
@@ -2975,7 +3031,11 @@ namespace PHB.Apps.Mesh.ProfileManager {
 ,
 			Neither  /* Don't use the Mesh to store Web data */
 			};
-		public EnumSelection Selection;
+		public ObjectFieldEnumerate Selection  {
+			get {
+				return ((ObjectFieldEnumerate)Entries[0]);
+				}
+			}
 
 		public override List<ObjectEntry> Entries {
             get { return _Entries; }
@@ -2986,21 +3046,24 @@ namespace PHB.Apps.Mesh.ProfileManager {
 
 			new ObjectFieldEnumerate {
 						Id = "Selection",  
-						Label = "",
+						Label = "Do you want to use the Mesh to store passwords or bookmarks?",
 						Entries = new List<ObjectEntry> {
-				new ObjectFieldRadio {Id = "Both", 
-							Label = "Use the Mesh to store Web passwords and bookmarks" // ((ObjectFieldRadio)((ObjectFieldEnumerate)Entries[0]).Entries[0])
-						    },
-				new ObjectFieldRadio {Id = "Password", 
-							Label = "Use the Mesh to store Web passwords" // ((ObjectFieldRadio)((ObjectFieldEnumerate)Entries[0]).Entries[1])
-						    },
-				new ObjectFieldRadio {Id = "Bookmark", 
-							Label = "Use the Mesh to store Web bookmarks" // ((ObjectFieldRadio)((ObjectFieldEnumerate)Entries[0]).Entries[2])
-						    },
-				new ObjectFieldRadio {Id = "Neither", 
-							Label = "Don't use the Mesh to store Web data" // ((ObjectFieldRadio)((ObjectFieldEnumerate)Entries[0]).Entries[3])
-						    }
-							}
+				new ObjectFieldRadio {
+						Id = "Both",  
+						Label = "Use the Mesh to store Web passwords and bookmarks",
+						SelectionValue = (int) EnumSelection.Both  } ,
+				new ObjectFieldRadio {
+						Id = "Password",  
+						Label = "Use the Mesh to store Web passwords",
+						SelectionValue = (int) EnumSelection.Password  } ,
+				new ObjectFieldRadio {
+						Id = "Bookmark",  
+						Label = "Use the Mesh to store Web bookmarks",
+						SelectionValue = (int) EnumSelection.Bookmark  } ,
+				new ObjectFieldRadio {
+						Id = "Neither",  
+						Label = "Don't use the Mesh to store Web data",
+						SelectionValue = (int) EnumSelection.Neither  } 							}
 						}			} ;
 
 

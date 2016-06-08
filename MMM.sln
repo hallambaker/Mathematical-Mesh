@@ -67,6 +67,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Protocol.Debug", "Go
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TestTrojan", "TestTrojan", "{8B8B3B78-F903-4847-9305-13D598E742B0}"
 	ProjectSection(SolutionItems) = preProject
+		GTK Crib Sheet.txt = GTK Crib Sheet.txt
 		ToDo.md.html = ToDo.md.html
 	EndProjectSection
 EndProject
@@ -87,6 +88,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Mesh.Integration", "Goedel.Mesh.Integration\Goedel.Mesh.Integration.csproj", "{C8617598-DA24-41FA-BB97-C1CB4C740DD1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Portability.Windows", "Goedel.Portability.Windows\Goedel.Portability.Windows.csproj", "{574F9F99-A364-4225-B28E-1037A37703B4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MakeWidgets", "..\buildtools\Trojan3\MakeWidgets\MakeWidgets.csproj", "{D50EA3BF-891E-4321-AD4E-6F1A72960D20}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -691,6 +694,24 @@ Global
 		{574F9F99-A364-4225-B28E-1037A37703B4}.Release|x64.Build.0 = Release|Any CPU
 		{574F9F99-A364-4225-B28E-1037A37703B4}.Release|x86.ActiveCfg = Release|Any CPU
 		{574F9F99-A364-4225-B28E-1037A37703B4}.Release|x86.Build.0 = Release|Any CPU
+		{D50EA3BF-891E-4321-AD4E-6F1A72960D20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D50EA3BF-891E-4321-AD4E-6F1A72960D20}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D50EA3BF-891E-4321-AD4E-6F1A72960D20}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{D50EA3BF-891E-4321-AD4E-6F1A72960D20}.Debug|x64.Build.0 = Debug|Any CPU
+		{D50EA3BF-891E-4321-AD4E-6F1A72960D20}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D50EA3BF-891E-4321-AD4E-6F1A72960D20}.Debug|x86.Build.0 = Debug|Any CPU
+		{D50EA3BF-891E-4321-AD4E-6F1A72960D20}.RaspberryPi|Any CPU.ActiveCfg = Release|Any CPU
+		{D50EA3BF-891E-4321-AD4E-6F1A72960D20}.RaspberryPi|Any CPU.Build.0 = Release|Any CPU
+		{D50EA3BF-891E-4321-AD4E-6F1A72960D20}.RaspberryPi|x64.ActiveCfg = Release|Any CPU
+		{D50EA3BF-891E-4321-AD4E-6F1A72960D20}.RaspberryPi|x64.Build.0 = Release|Any CPU
+		{D50EA3BF-891E-4321-AD4E-6F1A72960D20}.RaspberryPi|x86.ActiveCfg = Release|Any CPU
+		{D50EA3BF-891E-4321-AD4E-6F1A72960D20}.RaspberryPi|x86.Build.0 = Release|Any CPU
+		{D50EA3BF-891E-4321-AD4E-6F1A72960D20}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D50EA3BF-891E-4321-AD4E-6F1A72960D20}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D50EA3BF-891E-4321-AD4E-6F1A72960D20}.Release|x64.ActiveCfg = Release|Any CPU
+		{D50EA3BF-891E-4321-AD4E-6F1A72960D20}.Release|x64.Build.0 = Release|Any CPU
+		{D50EA3BF-891E-4321-AD4E-6F1A72960D20}.Release|x86.ActiveCfg = Release|Any CPU
+		{D50EA3BF-891E-4321-AD4E-6F1A72960D20}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -699,5 +720,6 @@ Global
 		{3DB16DB9-3144-4953-892E-77606701FFF8} = {8B8B3B78-F903-4847-9305-13D598E742B0}
 		{30425912-50AE-4CAC-8A26-CF672F1D94F8} = {8B8B3B78-F903-4847-9305-13D598E742B0}
 		{27874B2E-7FCC-4D11-A3A0-493E8A0EDEE7} = {8B8B3B78-F903-4847-9305-13D598E742B0}
+		{D50EA3BF-891E-4321-AD4E-6F1A72960D20} = {8B8B3B78-F903-4847-9305-13D598E742B0}
 	EndGlobalSection
 EndGlobal

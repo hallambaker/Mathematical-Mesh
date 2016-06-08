@@ -1,0 +1,28 @@
+=GTK# Crib sheet
+
+The biggest problem in dealing with any GUI toolkit is working out which of the hundreds
+of different events, properties, etc. actually matter and how to extract values, etc.
+from the widgets.
+
+GTK# is particularly complex as there are inconvenience routines for pretty much everything.
+
+== Text display
+
+Use the Entry or Label widget
+
+The text displayed is in 'Text'
+
+== Button
+
+Use the Button widget
+
+* Label - the text to display
+* Clicked - called when clicked
+
+== Checkbox
+
+* Active - the value of the widget (!)
+
+== Window
+
+* DeleteEvent - called when close window is clicked

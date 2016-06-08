@@ -40,6 +40,7 @@ GUI PHB.Apps.Mesh.ProfileManager ProfileManager
 
 	// Profile
 	Command ProfileCreate "Create New Master Profile"
+
 	Command ProfileEscrow "Create escrow key set"
 		Select Profile
 
@@ -257,8 +258,14 @@ GUI PHB.Apps.Mesh.ProfileManager ProfileManager
 		Text
 			|What name do you want to use for this device?
 		String DeviceName "Name for this device"
+			Tip
+				|This is the name that Mesh applications will use to identify this
+				|device to you.
 		String DeviceDescription "Description"
 		Boolean NewDeviceProfile "Create new device profile"
+			Tip
+				|The device you are currently using will be the initial administration
+				|device for the new profile and therefor must have a device profile defined for it.
 
 	Object CreateProfile "Create a New Mesh Profile"
 
@@ -340,10 +347,10 @@ GUI PHB.Apps.Mesh.ProfileManager ProfileManager
 		Enumerate Selection "Security settings"
 			Radio All "Use same security settings for all accounts"
 			Radio Choose "Let me choose options for each account"
-		List EmailAccounts Accounts "Email Accounts"
+		List EmailAccount Accounts "Email Accounts"
 
 
-	Object EmailAccounts "Email Accounts"
+	Object EmailAccount "Email Account"
 		String Address		"Address"
 		String Application	"Application"
 
@@ -361,8 +368,16 @@ GUI PHB.Apps.Mesh.ProfileManager ProfileManager
 			Boolean		EscrowSMIME			"Use personal escrow key to safeguard key"
 
 
+    Object SSHOptions "SSH Options"
+		Enumerate KeySeparation "Key separation"
+			Radio PerDevice "Create separate SSH keys for each device (recommended)."
+			Radio OneKey "Use one keypair for all devices."
+		Enumerate KeyHygiene "Key Hygiene"
+			Radio PerApplication "Create separate keys for use with SSH and GIT (recommended)"
+			Radio Combine "Use the same key for both."
+
 	Object WebOptions "Web Options"
-		Enumerate Selection ""
+		Enumerate Selection "Do you want to use the Mesh to store passwords or bookmarks?"
 			Radio Both "Use the Mesh to store Web passwords and bookmarks"
 			Radio Password "Use the Mesh to store Web passwords"
 			Radio Bookmark "Use the Mesh to store Web bookmarks"
