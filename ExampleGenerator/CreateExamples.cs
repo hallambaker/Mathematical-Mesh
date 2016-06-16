@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using Goedel.Mesh;
-using Goedel.LibCrypto;
+using Goedel.Cryptography;
 using Goedel.Protocol.Debug;
 
 namespace ExampleGenerator {
@@ -11,7 +11,7 @@ namespace ExampleGenerator {
         static void Main(string[] args) {
 
             var Class = new CreateExamples();
-            Class.Go(args[0]);
+            Class.Go(args[0], args[1]);
             }
 
 
@@ -20,7 +20,7 @@ namespace ExampleGenerator {
 
         public TraceDictionary Traces;
 
-        void Go(string Output) {
+        void Go(string Output1, string Output2) {
             StartService();
 
             CreateProfile();
@@ -31,9 +31,14 @@ namespace ExampleGenerator {
 
             Traces = Portal.Traces;
 
-            using (var Writer = new StreamWriter (Output)) {
+            using (var Writer = new StreamWriter (Output1)) {
                 var ExampleGenerator = new ExampleGenerator(Writer);
                 ExampleGenerator.MeshExamples(this);
+                }
+
+            using (var Writer = new StreamWriter(Output2)) {
+                var ExampleGenerator = new ExampleGenerator(Writer);
+                ExampleGenerator.MeshExamplesWeb(this);
                 }
 
             }
@@ -146,6 +151,9 @@ namespace ExampleGenerator {
         public string LabelApplicationProfile = "Publish update profile";
 
         public PasswordProfile PasswordProfile;
+        public string PasswordProfilePrivate1;
+        public string PasswordProfilePrivate2;
+        public string PasswordProfilePrivate3;
 
         /// <summary>
         /// Create a Web credential profile.
@@ -170,6 +178,18 @@ namespace ExampleGenerator {
             //PersonalProfile.Add(SignedPasswordProfile);
             MeshClient.Publish(SignedPersonalProfile);
 
+
+            PasswordProfile.Add("example.com", "alice", "secret");
+            PasswordProfile.Add("cnn.com", "alice1", "secret");
+
+            PasswordProfilePrivate1 = PasswordProfile.Private.ToString();
+            PasswordProfile.Private.AutoGenerate = true;
+
+            PasswordProfilePrivate2 = PasswordProfile.Private.ToString();
+
+            PasswordProfile.Private.NeverAsk = new List<string> { "bank.com" };
+
+            PasswordProfilePrivate3 = PasswordProfile.Private.ToString();
             }
 
 

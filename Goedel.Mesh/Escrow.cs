@@ -22,7 +22,7 @@
 
 using System;
 using System.Collections.Generic;
-using Goedel.LibCrypto;
+using Goedel.Cryptography;
 using Goedel.Cryptography.Jose;
 using Goedel.Protocol;
 

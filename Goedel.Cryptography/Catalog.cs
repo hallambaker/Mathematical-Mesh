@@ -26,7 +26,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
 
-namespace Goedel.LibCrypto {
+namespace Goedel.Cryptography {
 
     // Having realized that all crypto applications invariably end up with nested
     // systems of crypto algorithm martialing code, here is yet another set of 

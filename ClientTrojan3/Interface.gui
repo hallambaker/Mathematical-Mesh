@@ -220,7 +220,9 @@ GUI PHB.Apps.Mesh.ProfileManager ProfileManager
 
 	Object Server "Server"
 		String		Address		"DNS Address"
+			Length 32
 		Integer		Port		"Port"
+			Length 5
 
 	Object ServerTLS "TLS Protected Server"
 		Inherit Server
@@ -270,8 +272,11 @@ GUI PHB.Apps.Mesh.ProfileManager ProfileManager
 	Object CreateProfile "Create a New Mesh Profile"
 
 		String		PortalAddress	"Portal Address"
+			Length 32
 		String		PortalAccount	"Account Name"
+			Length 16
 		String		FriendlyName	"Identifier"
+			Length 32
 
 		Option Advanced "Advanced Options"
 
@@ -285,14 +290,20 @@ GUI PHB.Apps.Mesh.ProfileManager ProfileManager
 
 			Option Escrow "Escrow Keys"
 				Integer Shares "Number of Key Shares"
+					Slider
+					Range 2 16 1
 				Integer Quorum "Number of shares required for recovery"
+					Slider
+					Range 2 16 1
 				Text
 					|Creating an escrow record for the Master Key allows it to be 
 					|recovered should the need arise.			
 
 	Object EscrowParameters "Escrow Master Key Parameters"
 		Integer Shares "Number of Key Shares"
+			Slider
 		Integer Quorum "Number of shares required for recovery"
+			Slider
 		Text
 			|Creating an escrow record for the Master Key allows it to be 
 			|recovered should the need arise.

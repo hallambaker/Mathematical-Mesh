@@ -39,6 +39,115 @@ namespace ExampleGenerator {
 			// #end method 
 			}
 		//  
+		// #method MeshExamplesWeb CreateExamples Example 
+		
+
+		//
+		// MeshExamplesWeb
+		//
+		public void MeshExamplesWeb (CreateExamples Example) {
+			//  
+			_Output.Write ("\n{0}", _Indent);
+			// ##Password Management 
+			_Output.Write ("#Password Management\n{0}", _Indent);
+			//  
+			_Output.Write ("\n{0}", _Indent);
+			// Alice decides to use the Mesh to manage her Web usernames and passwords. 
+			_Output.Write ("Alice decides to use the Mesh to manage her Web usernames and passwords.\n{0}", _Indent);
+			//  
+			_Output.Write ("\n{0}", _Indent);
+			// She creates two accounts: 
+			_Output.Write ("She creates two accounts:\n{0}", _Indent);
+			//  
+			_Output.Write ("\n{0}", _Indent);
+			// * example.com: username 'alice', password 'secret' 
+			_Output.Write ("* example.com: username 'alice', password 'secret'\n{0}", _Indent);
+			//  
+			_Output.Write ("\n{0}", _Indent);
+			// * cnn.com: username 'alice1', password 'secret' 
+			_Output.Write ("* cnn.com: username 'alice1', password 'secret'\n{0}", _Indent);
+			//  
+			_Output.Write ("\n{0}", _Indent);
+			//  
+			_Output.Write ("\n{0}", _Indent);
+			// The JSON encoding of the password data is as follows: 
+			_Output.Write ("The JSON encoding of the password data is as follows:\n{0}", _Indent);
+			//  
+			_Output.Write ("\n{0}", _Indent);
+			// ~~~~ 
+			_Output.Write ("~~~~\n{0}", _Indent);
+			// #{Example.PasswordProfilePrivate1} 
+			_Output.Write ("{1}\n{0}", _Indent, Example.PasswordProfilePrivate1);
+			// ~~~~ 
+			_Output.Write ("~~~~\n{0}", _Indent);
+			//  
+			_Output.Write ("\n{0}", _Indent);
+			// The JSON encoded password data is then encrypted and stored in an 
+			_Output.Write ("The JSON encoded password data is then encrypted and stored in an\n{0}", _Indent);
+			// application profile as follows: 
+			_Output.Write ("application profile as follows:\n{0}", _Indent);
+			//  
+			_Output.Write ("\n{0}", _Indent);
+			// ~~~~ 
+			_Output.Write ("~~~~\n{0}", _Indent);
+			// #{Example.PasswordProfile} 
+			_Output.Write ("{1}\n{0}", _Indent, Example.PasswordProfile);
+			// ~~~~ 
+			_Output.Write ("~~~~\n{0}", _Indent);
+			//  
+			_Output.Write ("\n{0}", _Indent);
+			// As we saw earlier, Alice really needs to start using stronger passwords.  
+			_Output.Write ("As we saw earlier, Alice really needs to start using stronger passwords. \n{0}", _Indent);
+			// Fortunately, having access to a password manager means that Alice doesn't 
+			_Output.Write ("Fortunately, having access to a password manager means that Alice doesn't\n{0}", _Indent);
+			// need to remember different passwords for every site she uses any more. 
+			_Output.Write ("need to remember different passwords for every site she uses any more.\n{0}", _Indent);
+			//  
+			_Output.Write ("\n{0}", _Indent);
+			// In addition to offering to use the Mesh to remember passwords, a Web 
+			_Output.Write ("In addition to offering to use the Mesh to remember passwords, a Web\n{0}", _Indent);
+			// browser can offer to automatically generate a password for a site. 
+			_Output.Write ("browser can offer to automatically generate a password for a site.\n{0}", _Indent);
+			// This can be a much stronger password than the user would normally want 
+			_Output.Write ("This can be a much stronger password than the user would normally want\n{0}", _Indent);
+			// to choose if they had to remember it. 
+			_Output.Write ("to choose if they had to remember it.\n{0}", _Indent);
+			//  
+			_Output.Write ("\n{0}", _Indent);
+			// Alice chooses to use password generation. Her password manager profile is 
+			_Output.Write ("Alice chooses to use password generation. Her password manager profile is\n{0}", _Indent);
+			// updated to reflect this new choice. 
+			_Output.Write ("updated to reflect this new choice.\n{0}", _Indent);
+			//  
+			_Output.Write ("\n{0}", _Indent);
+			// ~~~~ 
+			_Output.Write ("~~~~\n{0}", _Indent);
+			// #{Example.PasswordProfilePrivate2} 
+			_Output.Write ("{1}\n{0}", _Indent, Example.PasswordProfilePrivate2);
+			// ~~~~ 
+			_Output.Write ("~~~~\n{0}", _Indent);
+			//  
+			_Output.Write ("\n{0}", _Indent);
+			// Alice is happy to use the password manager for her general Web sites but 
+			_Output.Write ("Alice is happy to use the password manager for her general Web sites but\n{0}", _Indent);
+			// not for the password she uses to log in to her bank account. When asked 
+			_Output.Write ("not for the password she uses to log in to her bank account. When asked\n{0}", _Indent);
+			// if the password should be stored in the Mesh, Alice declines and asks  
+			_Output.Write ("if the password should be stored in the Mesh, Alice declines and asks \n{0}", _Indent);
+			// not to be asked in the future. 
+			_Output.Write ("not to be asked in the future.\n{0}", _Indent);
+			//  
+			_Output.Write ("\n{0}", _Indent);
+			// ~~~~ 
+			_Output.Write ("~~~~\n{0}", _Indent);
+			// #{Example.PasswordProfilePrivate3} 
+			_Output.Write ("{1}\n{0}", _Indent, Example.PasswordProfilePrivate3);
+			// ~~~~ 
+			_Output.Write ("~~~~\n{0}", _Indent);
+			//  
+			_Output.Write ("\n{0}", _Indent);
+			// #end method 
+			}
 		//  
 		// #method MeshExamples CreateExamples Example 
 		

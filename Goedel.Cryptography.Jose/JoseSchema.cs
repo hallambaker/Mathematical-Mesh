@@ -1,4 +1,4 @@
-
+﻿
 //  Copyright (c) 2014 by .
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -233,10 +233,19 @@ namespace Goedel.Cryptography.Jose {
 			_Initialize ();
 			}
         /// <summary>
+		/// Initialize class from JSONReader stream.
         /// </summary>		
 		public JoseWebSignature (JSONReader JSONReader) {
 			Deserialize (JSONReader);
 			}
+
+        /// <summary> 
+		/// Initialize class from a JSON encoded class.
+        /// </summary>		
+		public JoseWebSignature (string _String) {
+			Deserialize (_String);
+			}
+
 
         /// <summary>
         /// Serialize this object to the specified output stream.
@@ -482,10 +491,19 @@ namespace Goedel.Cryptography.Jose {
 			_Initialize ();
 			}
         /// <summary>
+		/// Initialize class from JSONReader stream.
         /// </summary>		
 		public JoseWebEncryption (JSONReader JSONReader) {
 			Deserialize (JSONReader);
 			}
+
+        /// <summary> 
+		/// Initialize class from a JSON encoded class.
+        /// </summary>		
+		public JoseWebEncryption (string _String) {
+			Deserialize (_String);
+			}
+
 
         /// <summary>
         /// Serialize this object to the specified output stream.
@@ -746,10 +764,19 @@ namespace Goedel.Cryptography.Jose {
 			_Initialize ();
 			}
         /// <summary>
+		/// Initialize class from JSONReader stream.
         /// </summary>		
 		public Signed (JSONReader JSONReader) {
 			Deserialize (JSONReader);
 			}
+
+        /// <summary> 
+		/// Initialize class from a JSON encoded class.
+        /// </summary>		
+		public Signed (string _String) {
+			Deserialize (_String);
+			}
+
 
         /// <summary>
         /// Serialize this object to the specified output stream.
@@ -964,10 +991,19 @@ namespace Goedel.Cryptography.Jose {
 			_Initialize ();
 			}
         /// <summary>
+		/// Initialize class from JSONReader stream.
         /// </summary>		
 		public Encrypted (JSONReader JSONReader) {
 			Deserialize (JSONReader);
 			}
+
+        /// <summary> 
+		/// Initialize class from a JSON encoded class.
+        /// </summary>		
+		public Encrypted (string _String) {
+			Deserialize (_String);
+			}
+
 
         /// <summary>
         /// Serialize this object to the specified output stream.
@@ -1215,10 +1251,19 @@ namespace Goedel.Cryptography.Jose {
 			_Initialize ();
 			}
         /// <summary>
+		/// Initialize class from JSONReader stream.
         /// </summary>		
 		public KeyData (JSONReader JSONReader) {
 			Deserialize (JSONReader);
 			}
+
+        /// <summary> 
+		/// Initialize class from a JSON encoded class.
+        /// </summary>		
+		public KeyData (string _String) {
+			Deserialize (_String);
+			}
+
 
         /// <summary>
         /// Serialize this object to the specified output stream.
@@ -1503,10 +1548,19 @@ namespace Goedel.Cryptography.Jose {
 			_Initialize ();
 			}
         /// <summary>
+		/// Initialize class from JSONReader stream.
         /// </summary>		
 		public Header (JSONReader JSONReader) {
 			Deserialize (JSONReader);
 			}
+
+        /// <summary> 
+		/// Initialize class from a JSON encoded class.
+        /// </summary>		
+		public Header (string _String) {
+			Deserialize (_String);
+			}
+
 
         /// <summary>
         /// Serialize this object to the specified output stream.
@@ -1739,10 +1793,19 @@ namespace Goedel.Cryptography.Jose {
 			_Initialize ();
 			}
         /// <summary>
+		/// Initialize class from JSONReader stream.
         /// </summary>		
 		public Key (JSONReader JSONReader) {
 			Deserialize (JSONReader);
 			}
+
+        /// <summary> 
+		/// Initialize class from a JSON encoded class.
+        /// </summary>		
+		public Key (string _String) {
+			Deserialize (_String);
+			}
+
 
         /// <summary>
         /// Serialize this object to the specified output stream.
@@ -1964,10 +2027,19 @@ namespace Goedel.Cryptography.Jose {
 			_Initialize ();
 			}
         /// <summary>
+		/// Initialize class from JSONReader stream.
         /// </summary>		
 		public Recipient (JSONReader JSONReader) {
 			Deserialize (JSONReader);
 			}
+
+        /// <summary> 
+		/// Initialize class from a JSON encoded class.
+        /// </summary>		
+		public Recipient (string _String) {
+			Deserialize (_String);
+			}
+
 
         /// <summary>
         /// Serialize this object to the specified output stream.
@@ -2157,10 +2229,19 @@ namespace Goedel.Cryptography.Jose {
 			_Initialize ();
 			}
         /// <summary>
+		/// Initialize class from JSONReader stream.
         /// </summary>		
 		public PublicKeyRSA (JSONReader JSONReader) {
 			Deserialize (JSONReader);
 			}
+
+        /// <summary> 
+		/// Initialize class from a JSON encoded class.
+        /// </summary>		
+		public PublicKeyRSA (string _String) {
+			Deserialize (_String);
+			}
+
 
         /// <summary>
         /// Serialize this object to the specified output stream.
@@ -2389,10 +2470,19 @@ namespace Goedel.Cryptography.Jose {
 			_Initialize ();
 			}
         /// <summary>
+		/// Initialize class from JSONReader stream.
         /// </summary>		
 		public PrivateKeyRSA (JSONReader JSONReader) {
 			Deserialize (JSONReader);
 			}
+
+        /// <summary> 
+		/// Initialize class from a JSON encoded class.
+        /// </summary>		
+		public PrivateKeyRSA (string _String) {
+			Deserialize (_String);
+			}
+
 
         /// <summary>
         /// Serialize this object to the specified output stream.

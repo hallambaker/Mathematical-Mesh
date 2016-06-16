@@ -21,29 +21,22 @@
 //  
 
 using System.Collections.Generic;
-using Goedel.LibCrypto;
-using Goedel.LibCrypto.PKIX;
+using Goedel.Cryptography;
+using Goedel.Cryptography.PKIX;
 using Goedel.Debug;
 
 namespace Goedel.Mesh {
-    public partial class MailClientCatalog {
+
+    /// <summary>
+    /// Base class for the MailClientCatalog class defined in Goedel.Mesh.Platform
+    /// </summary>
+    public abstract class MailClientCatalog {
 
 
         /// <summary>
         /// List of all accounts discovered on the local machine.
         /// </summary>
         public List<MailAccountInfo> Accounts = new List<MailAccountInfo>() ;
-
-        /// <summary>
-        /// Search local application configuration files to discover account 
-        /// details.
-        /// </summary>
-        /// <returns>List of the accounts found.</returns>
-        public static List<MailAccountInfo> FindLocal () {
-            var MailClientCatalog = new MailClientCatalog();
-            MailClientCatalog.ImportWindowsLiveMail();
-            return MailClientCatalog.Accounts;
-            }
 
         /// <summary>
         /// Debug utility, dumps list of accounts to the console.

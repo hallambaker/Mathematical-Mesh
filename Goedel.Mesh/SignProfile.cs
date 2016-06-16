@@ -94,7 +94,8 @@ namespace Goedel.Mesh {
         public static SignedDeviceProfile Current {
             get {
                 if (_Current == null) {
-                    _Current = FromRegistry();
+                    Console.WriteLine("Current profile now has to be pulled explicitly.");
+                    //_Current = FromRegistry();
                     }
                 return _Current;
                 }
@@ -202,6 +203,21 @@ namespace Goedel.Mesh {
                 }
             return null;
             }
+
+        /// <summary>
+        /// Search for the specified profile on the local machine.
+        /// </summary>
+        /// <param name="UDF">Fingerprint of the profile to find.</param>
+        /// <param name="FileName">The name of the file</param>
+        /// <returns>The signed profile if found or null otherwise.</returns>
+        public static SignedDeviceProfile FromFile(string UDF, string FileName) {
+
+            var Reader = JSONReader.OfFile(FileName);
+            var Result = SignedDeviceProfile.FromTagged(Reader);
+
+            return Result;
+            }
+
 
         }
 
@@ -316,7 +332,19 @@ namespace Goedel.Mesh {
             return Result;
             }
 
+        /// <summary>
+        /// Search for the specified profile on the local machine.
+        /// </summary>
+        /// <param name="UDF">Fingerprint of the profile to find.</param>
+        /// <param name="FileName">The name of the file</param>
+        /// <returns>The signed profile if found or null otherwise.</returns>
+        public static SignedApplicationProfile FromFile(string UDF, string FileName) {
 
+            var Reader = JSONReader.OfFile(FileName);
+            var Result = SignedApplicationProfile.FromTagged(Reader);
+
+            return Result;
+            }
         }
 
 
@@ -363,7 +391,21 @@ namespace Goedel.Mesh {
             _Signed = Data;
             }
 
+        /// <summary>
+        /// Search for the specified profile on the local machine.
+        /// </summary>
+        /// <param name="UDF">Fingerprint of the profile to find.</param>
+        /// <param name="FileName">The name of the file</param>
+        /// <returns>The signed profile if found or null otherwise.</returns>
+        public static SignedPersonalProfile FromFile(string UDF, string FileName) {
 
+            var Reader = JSONReader.OfFile(FileName);
+            var Result = SignedPersonalProfile.FromTagged(Reader);
+
+            Goedel.Cryptography.UDF.Validate(UDF, Result.UDF);
+
+            return Result;
+            }
 
 
         /// <summary>

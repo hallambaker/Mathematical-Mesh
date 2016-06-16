@@ -1,7 +1,7 @@
 ﻿
 
 
-namespace Goedel.Portability {
+namespace Goedel.Platform {
     public class Environment {
 
 

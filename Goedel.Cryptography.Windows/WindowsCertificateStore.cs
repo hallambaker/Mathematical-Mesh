@@ -27,9 +27,9 @@ using System.Text;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using Goedel.Debug;
-using GCP=Goedel.LibCrypto.PKIX;
+using GCP=Goedel.Cryptography.PKIX;
 
-namespace Goedel.LibCrypto {
+namespace Goedel.Cryptography {
 
     /// <summary>
     /// Interface to the Windows certificate store. Channel all platform 
@@ -51,7 +51,7 @@ namespace Goedel.LibCrypto {
         const string TestStore = "TestStore";
 
         /// <summary>
-        /// Convert the specified LibCrypto Certificate to a .Net X509Certificate2 object
+        /// Convert the specified Cryptography Certificate to a .Net X509Certificate2 object
         /// </summary>
         /// <param name="Certificate">The certificate to convert.</param>
         /// <returns>The .Net X509Certificate2 object</returns>
@@ -60,7 +60,7 @@ namespace Goedel.LibCrypto {
             }
 
         /// <summary>
-        /// Convert the specified LibCrypto Certificate to a .Net X509Certificate2 object
+        /// Convert the specified Cryptography Certificate to a .Net X509Certificate2 object
         /// with the corresponding private key structure.
         /// </summary>
         /// <param name="Certificate">The certificate to convert.</param>

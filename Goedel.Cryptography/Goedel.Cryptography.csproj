@@ -73,6 +73,7 @@
     <Compile Include="Suites.cs" />
     <Compile Include="TBSCertificate.cs" />
     <Compile Include="UDF.cs" />
+    <Compile Include="CertificateStore.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="LibCrypto.licenseheader" />

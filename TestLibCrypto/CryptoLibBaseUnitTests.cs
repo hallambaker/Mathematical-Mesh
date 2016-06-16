@@ -21,7 +21,7 @@
 //  
 
 using System;
-using Goedel.LibCrypto;
+using Goedel.Cryptography;
 using Goedel.Debug;
 using Goedel.Protocol;
 using System.Text;

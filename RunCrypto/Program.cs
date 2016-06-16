@@ -24,7 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Goedel.LibCrypto;
+using Goedel.Cryptography;
 using Goedel.Debug;
 using Goedel.Protocol;
 using Goedel.Cryptography.Jose;

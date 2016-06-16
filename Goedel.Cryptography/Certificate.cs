@@ -23,12 +23,12 @@ using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
-using Goedel.LibCrypto;
+using Goedel.Cryptography;
 using Goedel.Protocol;
 using Goedel.Debug;
 
 
-namespace Goedel.LibCrypto.PKIX {
+namespace Goedel.Cryptography.PKIX {
 
     /// <summary>
     /// Backing class for managing X.509v3 Certificates using the 
@@ -73,7 +73,7 @@ namespace Goedel.LibCrypto.PKIX {
         public byte[] SHA1 {
             get {
                 if (_SHA1 == null) {
-                    _SHA1 = Goedel.LibCrypto.UDF.SHA1(Data);
+                    _SHA1 = Goedel.Cryptography.UDF.SHA1(Data);
                     }
                 return _SHA1;
                 }
@@ -86,7 +86,7 @@ namespace Goedel.LibCrypto.PKIX {
         public byte[] SHA256 {
             get {
                 if (_SHA256 == null) {
-                    _SHA256 = Goedel.LibCrypto.UDF.SHA256(Data);
+                    _SHA256 = Goedel.Cryptography.UDF.SHA256(Data);
                     }
                 return _SHA256;
                 }

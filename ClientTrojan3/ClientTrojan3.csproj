@@ -129,17 +129,17 @@
       <Project>{30425912-50ae-4cac-8a26-cf672f1d94f8}</Project>
       <Name>Goedel.Trojan</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Goedel.Crypto.Registry\Goedel.Cryptography.Registry.csproj">
-      <Project>{ca485578-77ea-4bb9-9705-2b0ac4d0b613}</Project>
-      <Name>Goedel.Cryptography.Registry</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Goedel.Mesh.Client\Goedel.Mesh.Client.csproj">
       <Project>{a803fe85-50d9-4ccd-8ffc-f653a4bd73e3}</Project>
       <Name>Goedel.Mesh.Client</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Goedel.Portability.Windows\Goedel.Portability.Windows.csproj">
+    <ProjectReference Include="..\Goedel.Mesh.Windows\Goedel.Mesh.Platform %28Windows%29.csproj">
+      <Project>{c378c917-f41d-4388-b467-efd6677c4459}</Project>
+      <Name>Goedel.Mesh.Platform %28Windows%29</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Goedel.Portability.Windows\Goedel.Platform %28Windows%29.csproj">
       <Project>{574f9f99-a364-4225-b28e-1037a37703b4}</Project>
-      <Name>Goedel.Portability.Windows</Name>
+      <Name>Goedel.Platform %28Windows%29</Name>
     </ProjectReference>
     <ProjectReference Include="..\Goedel.Protocol.Debug\Goedel.Protocol.Debug.csproj">
       <Project>{0586b4c1-814c-4d98-b6f1-180cd4e2faab}</Project>

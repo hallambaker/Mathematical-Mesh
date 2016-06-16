@@ -38,6 +38,8 @@
 
 	
 	Structure Signed
+
+
 		Struct Header Header
 			Tag "header"
 		Binary Payload
@@ -46,6 +48,8 @@
 			Tag "signature"
 
 	Structure Encrypted
+
+
 		Struct Header Header
 			Tag "header"
 		Binary IV

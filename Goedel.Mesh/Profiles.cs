@@ -25,8 +25,8 @@ using System.Collections.Generic;
 using System.Text;
 using Goedel.Registry;
 using Goedel.Persistence;
-using Goedel.LibCrypto;
-using Goedel.LibCrypto.PKIX;
+using Goedel.Cryptography;
+using Goedel.Cryptography.PKIX;
 using Goedel.Debug;
 using Goedel.Cryptography.Jose;
 

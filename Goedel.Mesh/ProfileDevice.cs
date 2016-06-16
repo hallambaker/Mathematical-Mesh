@@ -23,10 +23,10 @@
 using System;
 using System.Collections.Generic;
 using Goedel.Protocol;
-using Goedel.LibCrypto;
+using Goedel.Cryptography;
 using Goedel.Debug;
 using Goedel.Cryptography.Jose;
-using Goedel.LibCrypto.PKIX;
+using Goedel.Cryptography.PKIX;
 
 namespace Goedel.Mesh {
 

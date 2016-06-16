@@ -22,7 +22,7 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Goedel.Cryptography.Jose;
-using Goedel.LibCrypto;
+using Goedel.Cryptography;
 using Goedel.Debug;
 
 namespace Goedel.Cryptography.Jose.Tests {

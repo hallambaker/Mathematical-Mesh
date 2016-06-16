@@ -1144,7 +1144,7 @@ namespace PHB.Apps.Mesh.ProfileManager {
         /// </summary>
 		public ObjectFieldChooser PGPAlgorithms {
 			get {
-				return ((ObjectFieldChooser)((ObjectFieldOption)((ObjectFieldOption)Entries[6]).Entries[2]).Entries[3]);
+				return ((ObjectFieldChooser)((ObjectFieldOption)((ObjectFieldOption)Entries[6]).Entries[2]).Entries[0]);
 				}
 
 			}
@@ -1154,7 +1154,7 @@ namespace PHB.Apps.Mesh.ProfileManager {
         /// </summary>
 		public ObjectFieldList PGPKeys {
 			get {
-				return ((ObjectFieldList)((ObjectFieldOption)Entries[6]).Entries[4]);
+				return ((ObjectFieldList)((ObjectFieldOption)Entries[6]).Entries[3]);
 				}
 
 			}
@@ -1174,7 +1174,7 @@ namespace PHB.Apps.Mesh.ProfileManager {
         /// </summary>
 		public ObjectFieldBoolean SMIMEPerDeviceSign {
 			get {
-				return ((ObjectFieldBoolean)((ObjectFieldOption)Entries[7]).Entries[5]);
+				return ((ObjectFieldBoolean)((ObjectFieldOption)Entries[7]).Entries[0]);
 				}
 
 			}
@@ -1184,7 +1184,7 @@ namespace PHB.Apps.Mesh.ProfileManager {
         /// </summary>
 		public ObjectFieldBoolean SMIMEPerDeviceDecrypt {
 			get {
-				return ((ObjectFieldBoolean)((ObjectFieldOption)Entries[7]).Entries[6]);
+				return ((ObjectFieldBoolean)((ObjectFieldOption)Entries[7]).Entries[1]);
 				}
 
 			}
@@ -1194,7 +1194,7 @@ namespace PHB.Apps.Mesh.ProfileManager {
         /// </summary>
 		public ObjectFieldOption SMIMESelectAlgorithms {
 			get {
-				return ((ObjectFieldOption)((ObjectFieldOption)Entries[7]).Entries[7]);
+				return ((ObjectFieldOption)((ObjectFieldOption)Entries[7]).Entries[2]);
 				}
 
 			}
@@ -1204,7 +1204,7 @@ namespace PHB.Apps.Mesh.ProfileManager {
         /// </summary>
 		public ObjectFieldChooser SMIMEAlgorithms {
 			get {
-				return ((ObjectFieldChooser)((ObjectFieldOption)((ObjectFieldOption)Entries[7]).Entries[7]).Entries[8]);
+				return ((ObjectFieldChooser)((ObjectFieldOption)((ObjectFieldOption)Entries[7]).Entries[2]).Entries[0]);
 				}
 
 			}
@@ -1214,7 +1214,7 @@ namespace PHB.Apps.Mesh.ProfileManager {
         /// </summary>
 		public ObjectFieldList SMIMEKeys {
 			get {
-				return ((ObjectFieldList)((ObjectFieldOption)Entries[7]).Entries[9]);
+				return ((ObjectFieldList)((ObjectFieldOption)Entries[7]).Entries[3]);
 				}
 
 			}
@@ -1242,11 +1242,13 @@ namespace PHB.Apps.Mesh.ProfileManager {
 			new ObjectFieldItem {
 						Id = "Inbound",  
 						Label = "Inbound Server",
-						Value = new ServerSASL () },
+						Value = new ServerSASL () 
+						},
 			new ObjectFieldItem {
 						Id = "Outbound",  
 						Label = "Outbound Server",
-						Value = new ServerSASL () },	
+						Value = new ServerSASL () 
+						},	
 			new ObjectFieldOption {
 						Id = "EnablePGP",  
 						Label = "OpenPGP",
@@ -1262,12 +1264,13 @@ namespace PHB.Apps.Mesh.ProfileManager {
 							Label = "Specify permitted algorithms",
 							Entries = new List<ObjectEntry> {
 					new ObjectFieldChooser {Id = "PGPAlgorithms", 
-								Label = "Algorithms" // ((ObjectFieldChooser)((ObjectFieldOption)((ObjectFieldOption)Entries[6]).Entries[2]).Entries[3])
+								Label = "Algorithms" // ((ObjectFieldChooser)((ObjectFieldOption)((ObjectFieldOption)Entries[6]).Entries[2]).Entries[0])
 							    }
 								}
 							},
 				new ObjectFieldList {Id = "PGPKeys", 
-							Label = "Keys" // ((ObjectFieldList)((ObjectFieldOption)Entries[6]).Entries[4])
+							Prototype = new KeysPGP (),
+							Label = "Keys" // ((ObjectFieldList)((ObjectFieldOption)Entries[6]).Entries[3])
 						    },
 				new ObjectAction {
 							Id = "KeyRefresh",  
@@ -1279,22 +1282,23 @@ namespace PHB.Apps.Mesh.ProfileManager {
 						Label = "S/MIME",
 						Entries = new List<ObjectEntry> {
 				new ObjectFieldBoolean {Id = "SMIMEPerDeviceSign", 
-							Label = "Separate signing keys per device" // ((ObjectFieldBoolean)((ObjectFieldOption)Entries[7]).Entries[5])
+							Label = "Separate signing keys per device" // ((ObjectFieldBoolean)((ObjectFieldOption)Entries[7]).Entries[0])
 						    },
 				new ObjectFieldBoolean {Id = "SMIMEPerDeviceDecrypt", 
-							Label = "Separate decryption keys per device" // ((ObjectFieldBoolean)((ObjectFieldOption)Entries[7]).Entries[6])
+							Label = "Separate decryption keys per device" // ((ObjectFieldBoolean)((ObjectFieldOption)Entries[7]).Entries[1])
 						    },	
 				new ObjectFieldOption {
 							Id = "SMIMESelectAlgorithms",  
 							Label = "Specify permitted algorithms",
 							Entries = new List<ObjectEntry> {
 					new ObjectFieldChooser {Id = "SMIMEAlgorithms", 
-								Label = "Algorithms" // ((ObjectFieldChooser)((ObjectFieldOption)((ObjectFieldOption)Entries[7]).Entries[7]).Entries[8])
+								Label = "Algorithms" // ((ObjectFieldChooser)((ObjectFieldOption)((ObjectFieldOption)Entries[7]).Entries[2]).Entries[0])
 							    }
 								}
 							},
 				new ObjectFieldList {Id = "SMIMEKeys", 
-							Label = "Keys" // ((ObjectFieldList)((ObjectFieldOption)Entries[7]).Entries[9])
+							Prototype = new KeysSMIME (),
+							Label = "Keys" // ((ObjectFieldList)((ObjectFieldOption)Entries[7]).Entries[3])
 						    },
 				new ObjectAction {
 							Id = "KeyRefresh",  
@@ -1415,6 +1419,7 @@ namespace PHB.Apps.Mesh.ProfileManager {
 						Label = "Connected devices" // ((ObjectFieldSet)Entries[1])
 					    },
 			new ObjectFieldList {Id = "Sites", 
+						Prototype = new WebPassword (),
 						Label = "Sites" // ((ObjectFieldList)Entries[2])
 					    }			} ;
 
@@ -1465,6 +1470,7 @@ namespace PHB.Apps.Mesh.ProfileManager {
 						Label = "Connected devices" // ((ObjectFieldSet)Entries[1])
 					    },
 			new ObjectFieldList {Id = "WiFis", 
+						Prototype = new WiFi (),
 						Label = "Networks" // ((ObjectFieldList)Entries[2])
 					    }			} ;
 
@@ -1771,7 +1777,8 @@ namespace PHB.Apps.Mesh.ProfileManager {
 			new ObjectFieldItem {
 						Id = "Server",  
 						Label = "Server",
-						Value = new Server () },
+						Value = new Server () 
+						},
 			new ObjectFieldString {Id = "Fingerprint", 
 						Label = "Fingerprint" // ((ObjectFieldString)Entries[1])
 					    }			} ;
@@ -2004,9 +2011,11 @@ namespace PHB.Apps.Mesh.ProfileManager {
 		List<ObjectEntry> _Entries = new List<ObjectEntry> {
 
 			new ObjectFieldString {Id = "Address", 
+						Length = 32,
 						Label = "DNS Address" // ((ObjectFieldString)Entries[0])
 					    },
 			new ObjectFieldInteger {Id = "Port", 
+						Length = 5,
 						Label = "Port" // ((ObjectFieldInteger)Entries[1])
 					    }			} ;
 
@@ -2056,9 +2065,11 @@ namespace PHB.Apps.Mesh.ProfileManager {
 		List<ObjectEntry> _Entries = new List<ObjectEntry> {
 
 			new ObjectFieldString {Id = "Address", 
+						Length = 32,
 						Label = "DNS Address" // ((ObjectFieldString)Entries[0])
 					    },
 			new ObjectFieldInteger {Id = "Port", 
+						Length = 5,
 						Label = "Port" // ((ObjectFieldInteger)Entries[1])
 					    },
 			new ObjectFieldBoolean {Id = "TLS", 
@@ -2124,9 +2135,11 @@ namespace PHB.Apps.Mesh.ProfileManager {
 		List<ObjectEntry> _Entries = new List<ObjectEntry> {
 
 			new ObjectFieldString {Id = "Address", 
+						Length = 32,
 						Label = "DNS Address" // ((ObjectFieldString)Entries[0])
 					    },
 			new ObjectFieldInteger {Id = "Port", 
+						Length = 5,
 						Label = "Port" // ((ObjectFieldInteger)Entries[1])
 					    },
 			new ObjectFieldSecret {Id = "Password", 
@@ -2281,7 +2294,7 @@ namespace PHB.Apps.Mesh.ProfileManager {
         /// </summary>
 		public ObjectFieldInteger Bits {
 			get {
-				return ((ObjectFieldInteger)((ObjectFieldOption)((ObjectFieldOption)Entries[3]).Entries[0]).Entries[1]);
+				return ((ObjectFieldInteger)((ObjectFieldOption)((ObjectFieldOption)Entries[3]).Entries[0]).Entries[0]);
 				}
 
 			}
@@ -2291,7 +2304,7 @@ namespace PHB.Apps.Mesh.ProfileManager {
         /// </summary>
 		public ObjectFieldOption Escrow {
 			get {
-				return ((ObjectFieldOption)((ObjectFieldOption)Entries[3]).Entries[3]);
+				return ((ObjectFieldOption)((ObjectFieldOption)Entries[3]).Entries[1]);
 				}
 
 			}
@@ -2301,7 +2314,7 @@ namespace PHB.Apps.Mesh.ProfileManager {
         /// </summary>
 		public ObjectFieldInteger Shares {
 			get {
-				return ((ObjectFieldInteger)((ObjectFieldOption)((ObjectFieldOption)Entries[3]).Entries[3]).Entries[4]);
+				return ((ObjectFieldInteger)((ObjectFieldOption)((ObjectFieldOption)Entries[3]).Entries[1]).Entries[0]);
 				}
 
 			}
@@ -2311,7 +2324,7 @@ namespace PHB.Apps.Mesh.ProfileManager {
         /// </summary>
 		public ObjectFieldInteger Quorum {
 			get {
-				return ((ObjectFieldInteger)((ObjectFieldOption)((ObjectFieldOption)Entries[3]).Entries[3]).Entries[5]);
+				return ((ObjectFieldInteger)((ObjectFieldOption)((ObjectFieldOption)Entries[3]).Entries[1]).Entries[1]);
 				}
 
 			}
@@ -2325,12 +2338,15 @@ namespace PHB.Apps.Mesh.ProfileManager {
 		List<ObjectEntry> _Entries = new List<ObjectEntry> {
 
 			new ObjectFieldString {Id = "PortalAddress", 
+						Length = 32,
 						Label = "Portal Address" // ((ObjectFieldString)Entries[0])
 					    },
 			new ObjectFieldString {Id = "PortalAccount", 
+						Length = 16,
 						Label = "Account Name" // ((ObjectFieldString)Entries[1])
 					    },
 			new ObjectFieldString {Id = "FriendlyName", 
+						Length = 32,
 						Label = "Identifier" // ((ObjectFieldString)Entries[2])
 					    },	
 			new ObjectFieldOption {
@@ -2342,7 +2358,7 @@ namespace PHB.Apps.Mesh.ProfileManager {
 							Label = "Strong Fingerprint",
 							Entries = new List<ObjectEntry> {
 					new ObjectFieldInteger {Id = "Bits", 
-								Label = "Number of Bits" // ((ObjectFieldInteger)((ObjectFieldOption)((ObjectFieldOption)Entries[3]).Entries[0]).Entries[1])
+								Label = "Number of Bits" // ((ObjectFieldInteger)((ObjectFieldOption)((ObjectFieldOption)Entries[3]).Entries[0]).Entries[0])
 							    },
 					new ObjectText {
 								Text = "A strong fingerprint is generated by generating master keys until  a master key matching a certain pattern is found. This increases the  difficulty of breaking the fingerprint by 'brute force' but only by the same amount of effort that was put into generating it."
@@ -2354,10 +2370,18 @@ namespace PHB.Apps.Mesh.ProfileManager {
 							Label = "Escrow Keys",
 							Entries = new List<ObjectEntry> {
 					new ObjectFieldInteger {Id = "Shares", 
-								Label = "Number of Key Shares" // ((ObjectFieldInteger)((ObjectFieldOption)((ObjectFieldOption)Entries[3]).Entries[3]).Entries[4])
+								Mode = FieldModeInteger.Slider,
+								Minimum = 2,
+								Maximum = 16,
+								Step = 1,
+								Label = "Number of Key Shares" // ((ObjectFieldInteger)((ObjectFieldOption)((ObjectFieldOption)Entries[3]).Entries[1]).Entries[0])
 							    },
 					new ObjectFieldInteger {Id = "Quorum", 
-								Label = "Number of shares required for recovery" // ((ObjectFieldInteger)((ObjectFieldOption)((ObjectFieldOption)Entries[3]).Entries[3]).Entries[5])
+								Mode = FieldModeInteger.Slider,
+								Minimum = 2,
+								Maximum = 16,
+								Step = 1,
+								Label = "Number of shares required for recovery" // ((ObjectFieldInteger)((ObjectFieldOption)((ObjectFieldOption)Entries[3]).Entries[1]).Entries[1])
 							    },
 					new ObjectText {
 								Text = "Creating an escrow record for the Master Key allows it to be  recovered should the need arise.			"
@@ -2413,9 +2437,11 @@ namespace PHB.Apps.Mesh.ProfileManager {
 		List<ObjectEntry> _Entries = new List<ObjectEntry> {
 
 			new ObjectFieldInteger {Id = "Shares", 
+						Mode = FieldModeInteger.Slider,
 						Label = "Number of Key Shares" // ((ObjectFieldInteger)Entries[0])
 					    },
 			new ObjectFieldInteger {Id = "Quorum", 
+						Mode = FieldModeInteger.Slider,
 						Label = "Number of shares required for recovery" // ((ObjectFieldInteger)Entries[1])
 					    },
 			new ObjectText {
@@ -2576,6 +2602,7 @@ namespace PHB.Apps.Mesh.ProfileManager {
 							Label = "Quorum" // ((ObjectFieldString)((ObjectFieldOption)Entries[3]).Entries[0])
 						    },
 				new ObjectFieldList {Id = "Shares", 
+							Prototype = new Share (),
 							Label = "Shares" // ((ObjectFieldList)((ObjectFieldOption)Entries[3]).Entries[1])
 						    }
 							}
@@ -2724,6 +2751,7 @@ namespace PHB.Apps.Mesh.ProfileManager {
 						SelectionValue = (int) EnumSelection.Choose  } 							}
 						},
 			new ObjectFieldList {Id = "Accounts", 
+						Prototype = new EmailAccount (),
 						Label = "Email Accounts" // ((ObjectFieldList)Entries[2])
 					    }			} ;
 
@@ -2876,7 +2904,7 @@ namespace PHB.Apps.Mesh.ProfileManager {
         /// </summary>
 		public ObjectFieldString SMIMECA {
 			get {
-				return ((ObjectFieldString)((ObjectFieldOption)Entries[3]).Entries[3]);
+				return ((ObjectFieldString)((ObjectFieldOption)Entries[3]).Entries[0]);
 				}
 
 			}
@@ -2886,7 +2914,7 @@ namespace PHB.Apps.Mesh.ProfileManager {
         /// </summary>
 		public ObjectFieldBoolean EscrowSMIME {
 			get {
-				return ((ObjectFieldBoolean)((ObjectFieldOption)Entries[3]).Entries[4]);
+				return ((ObjectFieldBoolean)((ObjectFieldOption)Entries[3]).Entries[1]);
 				}
 
 			}
@@ -2925,10 +2953,10 @@ namespace PHB.Apps.Mesh.ProfileManager {
 						Label = "Create keys for S/MIME",
 						Entries = new List<ObjectEntry> {
 				new ObjectFieldString {Id = "SMIMECA", 
-							Label = "DNS address of CA" // ((ObjectFieldString)((ObjectFieldOption)Entries[3]).Entries[3])
+							Label = "DNS address of CA" // ((ObjectFieldString)((ObjectFieldOption)Entries[3]).Entries[0])
 						    },
 				new ObjectFieldBoolean {Id = "EscrowSMIME", 
-							Label = "Use personal escrow key to safeguard key" // ((ObjectFieldBoolean)((ObjectFieldOption)Entries[3]).Entries[4])
+							Label = "Use personal escrow key to safeguard key" // ((ObjectFieldBoolean)((ObjectFieldOption)Entries[3]).Entries[1])
 						    }
 							}
 						}			} ;

@@ -50,16 +50,18 @@ namespace PHB.Apps.Mesh.ProfileManager {
             RegistrationMachine = new RegistrationMachine();
 
 
-            foreach (var PersonalProfile in RegistrationMachine.Personals) {
-                var DisplayProfile = new Profile(PersonalProfile);
-                Selector.Add(DisplayProfile);
-                }
+            //foreach (var PersonalProfile in RegistrationMachine.GetPersonal()) {
+            //    var DisplayProfile = new Profile(PersonalProfile);
+            //    Selector.Add(DisplayProfile);
+            //    }
 
-            foreach (var DeviceProfile in RegistrationMachine.Devices) {
-                var DisplayProfile = new Profile(DeviceProfile);
-                Selector.Add(DisplayProfile);
-                }
+            //foreach (var DeviceProfile in RegistrationMachine.Devices) {
+            //    var DisplayProfile = new Profile(DeviceProfile);
+            //    Selector.Add(DisplayProfile);
+            //    }
 
+
+            Populate();
             }
 
 
@@ -173,8 +175,15 @@ namespace PHB.Apps.Mesh.ProfileManager {
         ///Stub method for ApplicationAddMailcommand.Override with application implementation.
         /// </summary>
         public override void ApplicationAddMail(Object Profile) {
-            //var Dialog = new SelectAccountsEmail();
-            var Dialog = new ApplicationMail();
+            var Dialog = new SelectAccountsEmail();
+            //var Dialog = new ApplicationMail();
+
+            //var Options = new List<string> {
+            //    "RSA", "DH", "ECDH"
+            //    };
+            //Dialog.PGPAlgorithms.Options = Options;
+
+
             Binding.Dialog(Dialog);
             }
 

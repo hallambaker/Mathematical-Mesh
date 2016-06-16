@@ -23,7 +23,7 @@
 using System;
 using System.Collections.Generic;
 using Goedel.Protocol;
-using Goedel.LibCrypto;
+using Goedel.Cryptography;
 using NET = System.Security.Cryptography;
 
 namespace Goedel.Cryptography.Jose {

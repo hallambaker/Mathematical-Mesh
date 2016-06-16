@@ -71,11 +71,7 @@
     <Compile Include="Dictionary.cs" />
     <Compile Include="Header.cs" />
     <Compile Include="JOSE.cs" />
-    <Compile Include="JoseSchema.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>JoseSchema.Protocol</DependentUpon>
-    </Compile>
+    <Compile Include="JoseSchema.cs" />
     <Compile Include="JWE.cs" />
     <Compile Include="JWK.cs" />
     <Compile Include="JWSimple.cs" />
@@ -84,10 +80,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="JoseSchema.Protocol">
-      <Generator>protogen</Generator>
-      <LastGenOutput>JoseSchema.cs</LastGenOutput>
-    </None>
+    <None Include="JoseSchema.Protocol" />
     <None Include="LibCryptoJose.licenseheader" />
     <None Include="packages.config" />
     <None Include="Post.bat" />

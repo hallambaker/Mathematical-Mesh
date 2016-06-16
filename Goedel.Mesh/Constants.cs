@@ -43,7 +43,7 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Root entry for device specific settings.
         /// </summary>
-        public const string RegistryDevice = RegistryRoot + @"\ThisDevice";
+        public const string RegistryDevice = RegistryRoot + @"\DeviceProfiles";
 
         /// <summary>
         /// Root entry for personal profiles shared across multiple machines.
@@ -51,9 +51,20 @@ namespace Goedel.Mesh {
         public const string RegistryPersonal = RegistryRoot + @"\PersonalProfiles";
 
         /// <summary>
+        /// Root entry for personal profiles shared across multiple machines.
+        /// </summary>
+        public const string RegistryApplication = RegistryRoot + @"\ApplicationProfiles";
+
+
+        /// <summary>
         /// Root entry for registry account entries.
         /// </summary>
         public const string RegistryAccounts = RegistryRoot + @"\Accounts";
+
+        ///// <summary>
+        ///// Root entry for registry account entries.
+        ///// </summary>
+        //public const string RegistryAlternative = RegistryRoot + @"\Alternative";
 
         /// <summary>
         /// The application data path (may be shared across machines).

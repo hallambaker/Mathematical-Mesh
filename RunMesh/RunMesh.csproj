@@ -63,6 +63,10 @@
     <None Include="Tportal.jlog" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Goedel.Mesh.Windows\Goedel.Mesh.Platform %28Windows%29.csproj">
+      <Project>{c378c917-f41d-4388-b467-efd6677c4459}</Project>
+      <Name>Goedel.Mesh.Platform %28Windows%29</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Goedel.Protocol\Goedel.Protocol.csproj">
       <Project>{24419f2d-f425-4e0f-a0ea-9d3e7a57e12f}</Project>
       <Name>Goedel.Protocol</Name>

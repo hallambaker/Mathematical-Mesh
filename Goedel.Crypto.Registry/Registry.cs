@@ -21,6 +21,7 @@
 //  
 
 using System.IO;
+using System.Collections.Generic;
 
 
 namespace Goedel.Cryptography.Registry {
@@ -141,10 +142,80 @@ namespace Goedel.Cryptography.Registry {
             }
 
 
+        public static Dictionary<string, string> GetKeys(string KeyName) {
+            var Result = new Dictionary<string, string>();
+
+            var Hive = Microsoft.Win32.Registry.CurrentUser;
+            if (Hive == null) return Result;
+
+            var Key = Hive.OpenSubKey(KeyName);
+            if (Key == null) return Result;
+
+            foreach (var SubKey in Key.GetValueNames()) {
+                var Value = Key.GetValue(SubKey);
+                if ((Value as string)!= null) {
+                    Result.Add(SubKey, Value as string);
+                    }
+                }
+
+            return Result;
+            }
+
+
+
+        public static List<RegistryKeySet> GetSubKeys(string KeyName) {
+            var Result = new List<RegistryKeySet>();
+
+            var Hive = Microsoft.Win32.Registry.CurrentUser;
+            if (Hive == null) return Result;
+
+            var Key = Hive.OpenSubKey(KeyName);
+            if (Key == null) return Result;
+
+            string Default = Key.GetValue("") as string;
+
+            foreach (var SubKey in Key.GetSubKeyNames()) {
+                var Value = Key.OpenSubKey(SubKey);
+                var RegistryKeySet = new RegistryKeySet(SubKey, Value);
+                RegistryKeySet.Default = SubKey == Default;
+                Result.Add(RegistryKeySet);
+                }
+
+            return Result;
+            }
 
 
         }
 
+    public class RegistryKeySet {
+        Microsoft.Win32.RegistryKey RegistryKey;
+        public string Key { get; set; }
+        public bool Default = false;
 
+        public RegistryKeySet(string Key, Microsoft.Win32.RegistryKey RegistryKey) {
+            this.RegistryKey = RegistryKey;
+            this.Key = Key;
+            }
 
+        public string[] GetValueMultiString (string Key) {
+            var RVK = RegistryKey.GetValueKind(Key);
+
+            if (RVK != Microsoft.Win32.RegistryValueKind.MultiString) {
+                return null;
+                }
+
+            return (string[]) RegistryKey.GetValue(Key);
+            }
+
+        public string GetValueString(string Key) {
+            var RVK = RegistryKey.GetValueKind(Key);
+
+            if (RVK != Microsoft.Win32.RegistryValueKind.String) {
+                return null;
+                }
+
+            return (string)RegistryKey.GetValue(Key);
+            }
+
+        }
     }

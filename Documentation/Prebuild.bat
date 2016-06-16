@@ -10,11 +10,11 @@ del Publish /q
 echo Create reference material from protocol definition files
 
 protogen ..\Goedel.Mesh.Portal\MeshProtocol.Protocol /md Generated\MeshProtocol.md
-protogen ..\Goedel.Mesh\MeshSchema.Protocol /md Generated\MeshSchema.md
+protogen ..\Goedel.Mesh\SchemaMesh.Protocol /md Generated\MeshSchema.md
 protogen ..\Goedel.Mesh\Portal.Protocol /md Generated\Portal.md
 
 echo Generate new examples.
 
-ExampleGenerator Examples/Examples.md
+ExampleGenerator Examples/Examples.md Examples/ExamplesWeb.md
 
 exit /b 0

@@ -99,7 +99,7 @@
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>powershell publishtarget "$(TargetPath)" Goedel.Registry.dll libMesh.dll  libMeshService.dll libprotogen.dll libcrypto.dll libcryptojose.dll liblogfile.dll  libdebug.dll</PostBuildEvent>
+    <PostBuildEvent>powershell publishtarget "$(TargetPath)" Goedel.Registry.dll  Goedel.Debug.dll  Goedel.Mesh.dll  Goedel.Mesh.portal.dll Goedel.Persistence.dll Goedel.Protocol.dll Goedel.Protocol.Debug.dll Goedel.Cryptography.dll  Goedel.Cryptography.Jose.dll</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

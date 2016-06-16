@@ -331,7 +331,22 @@ Stores usernames and passwords
 ###Structure: PasswordProfilePrivate
 
 
+AutoGenerate: Boolean (Optional)
+
+:If true, a client MAY offer to automatically generate strong
+(i.e. not memorable) passwords for a user. A user would not
+normally want to use this feature unless they have access to
+Mesh password management on every device they use to browse
+the Web
+
 Entries: PasswordEntry [0..Many]
+
+:A list of password credential entries.
+
+NeverAsk: String [0..Many]
+
+:A list of domain names of sites for which clients MUST NOT
+ask to store passwords for.
 
 ###Structure: PasswordEntry
 

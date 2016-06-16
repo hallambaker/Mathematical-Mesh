@@ -26,7 +26,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
 
-namespace Goedel.LibCrypto {
+namespace Goedel.Cryptography {
 
     /// <summary>
     /// Base provider for public key encryption and symmetric key wrap.

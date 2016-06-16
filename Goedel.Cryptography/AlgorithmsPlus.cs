@@ -23,9 +23,9 @@ using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using Goedel.Protocol;
-using Goedel.LibCrypto;
+using Goedel.Cryptography;
 
-namespace Goedel.LibCrypto.PKIX {
+namespace Goedel.Cryptography.PKIX {
 
     /// <summary>
     /// Formatting class for representing RSA Public Keys in ASN.1 and

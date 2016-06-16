@@ -71,10 +71,6 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Goedel.Crypto.Registry\Goedel.Cryptography.Registry.csproj">
-      <Project>{ca485578-77ea-4bb9-9705-2b0ac4d0b613}</Project>
-      <Name>Goedel.Cryptography.Registry</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Goedel.Protocol.Debug\Goedel.Protocol.Debug.csproj">
       <Project>{0586b4c1-814c-4d98-b6f1-180cd4e2faab}</Project>
       <Name>Goedel.Protocol.Debug</Name>

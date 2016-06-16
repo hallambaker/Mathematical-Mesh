@@ -21,9 +21,9 @@
 //  
 using System;
 using System.Collections.Generic;
-using Goedel.LibCrypto;
+using Goedel.Cryptography;
 
-namespace Goedel.LibCrypto {
+namespace Goedel.Cryptography {
 
     /// <summary>
     /// Describe a suite of crypto algorithms.

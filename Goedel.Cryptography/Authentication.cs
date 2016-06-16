@@ -26,7 +26,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
 
-namespace Goedel.LibCrypto {
+namespace Goedel.Cryptography {
     /// <summary>
     /// Provider for bulk authentication algorithms (e.g. HMAC-SHA256).
     /// </summary>

@@ -24,8 +24,8 @@ using System;
 using System.Collections.Generic;
 using Goedel.Registry;
 using Goedel.Persistence;
-using Goedel.LibCrypto;
-using Goedel.LibCrypto.PKIX;
+using Goedel.Cryptography;
+using Goedel.Cryptography.PKIX;
 
 namespace Goedel.Mesh {
 
@@ -83,7 +83,6 @@ namespace Goedel.Mesh {
             : base(PersonalProfile, TypeTag, Friendly) {
             _Private = new PasswordProfilePrivate();
             }
-
 
 
         /// <summary>

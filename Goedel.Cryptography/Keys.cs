@@ -22,10 +22,10 @@
 using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
-using Goedel.LibCrypto.PKIX;
+using Goedel.Cryptography.PKIX;
 using Goedel.Protocol;
 
-namespace Goedel.LibCrypto {
+namespace Goedel.Cryptography {
 
     /// <summary>
     /// Describes a reference to a key
@@ -228,7 +228,7 @@ namespace Goedel.LibCrypto {
         /// </summary>
         public override string UDF {
             get {
-                if (_UDF == null) _UDF = Goedel.LibCrypto.UDF.ToString(GetUDFBytes());
+                if (_UDF == null) _UDF = Goedel.Cryptography.UDF.ToString(GetUDFBytes());
                 return _UDF;
                 }
             }
@@ -239,7 +239,7 @@ namespace Goedel.LibCrypto {
         /// Returns the UDF fingerprint of the current key as a byte array.
         /// </summary>
         public byte[] GetUDFBytes() {
-            return Goedel.LibCrypto.UDF.FromKeyInfo(KeyInfoData.DER());
+            return Goedel.Cryptography.UDF.FromKeyInfo(KeyInfoData.DER());
             }
 
         /// <summary>

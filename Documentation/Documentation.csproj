@@ -55,15 +55,20 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Examples\Examples.md" />
+    <None Include="Examples\ExamplesWeb.md" />
     <None Include="Generated\MeshProtocol.md" />
     <None Include="Generated\MeshSchema.md" />
     <None Include="Generated\Portal.md" />
+    <None Include="MeshSchemaWeb.md" />
     <None Include="packages.config" />
     <None Include="Postbuild.bat" />
     <None Include="Prebuild.bat" />
     <Content Include="Publish\hallambaker-json-web-service.html" />
     <Content Include="Publish\hallambaker-json-web-service.txt" />
     <Content Include="Publish\hallambaker-json-web-service.xml" />
+    <Content Include="Publish\hallambaker-mesh-app-web.html" />
+    <Content Include="Publish\hallambaker-mesh-app-web.txt" />
+    <Content Include="Publish\hallambaker-mesh-app-web.xml" />
     <Content Include="Publish\hallambaker-mesh-architecture.html" />
     <Content Include="Publish\hallambaker-mesh-architecture.txt" />
     <Content Include="Publish\hallambaker-mesh-architecture.xml">
@@ -74,6 +79,9 @@
     <Content Include="Publish\hallambaker-mesh-developer.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Publish\hallambaker-mesh-platform.html" />
+    <Content Include="Publish\hallambaker-mesh-platform.txt" />
+    <Content Include="Publish\hallambaker-mesh-platform.xml" />
     <Content Include="Publish\hallambaker-mesh-reference.html" />
     <Content Include="Publish\hallambaker-mesh-reference.txt" />
     <Content Include="Publish\hallambaker-mesh-reference.xml" />

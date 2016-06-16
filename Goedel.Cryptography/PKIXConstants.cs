@@ -21,10 +21,10 @@
 //  
 using System;
 using System.Collections.Generic;
-using Goedel.LibCrypto;
-using Goedel.LibCrypto.PKIX;
+using Goedel.Cryptography;
+using Goedel.Cryptography.PKIX;
 
-namespace Goedel.LibCrypto.PKIX {
+namespace Goedel.Cryptography.PKIX {
 
     /// <summary>
     /// X.500 String types. Most should be avoided.

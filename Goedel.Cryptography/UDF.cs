@@ -25,7 +25,7 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using Goedel.Protocol;
 
-namespace Goedel.LibCrypto {
+namespace Goedel.Cryptography {
     /// <summary>
     /// Constants used in building UDF values.
     /// </summary>
@@ -171,29 +171,25 @@ namespace Goedel.LibCrypto {
             }
 
         /// <summary>
-        /// Calculate a SHA-1 fingerprint in Base16 format.
+        /// Calculate a SHA-1 fingerprint
         /// </summary>
         /// <param name="Data">Data to be fingerprinted</param>
-        /// <returns>Fingerprint as a hexadecimal string.</returns>
+        /// <returns>Fingerprint.</returns>
         public static byte[] SHA1 (byte[] Data) {
             var Provider = new CryptoProviderSHA1();
             var Result = Provider.Process(Data);
             return Result.Integrity;
-            //var Text = BaseConvert.ToBase16String(Result.Integrity);
-            //return Text;
             }
 
         /// <summary>
-        /// Calculate a SHA-1 fingerprint in Base16 format.
+        /// Calculate a SHA-1 fingerprint
         /// </summary>
         /// <param name="Data">Data to be fingerprinted</param>
-        /// <returns>Fingerprint as a hexadecimal string.</returns>
+        /// <returns>Fingerprint.</returns>
         public static byte[] SHA256(byte[] Data) {
             var Provider = new CryptoProviderSHA2_256();
             var Result = Provider.Process(Data);
             return Result.Integrity;
-            //var Text = BaseConvert.ToBase16String(Result.Integrity);
-            //return Text;
             }
 
 
@@ -215,6 +211,20 @@ namespace Goedel.LibCrypto {
             var Data = CryptoCatalog.GetBits(Bits);
             return ToString("application/random", Data, Bits);
 
+
+            }
+
+        /// <summary>
+        /// Check that a UDF fingerprint satisfies a test value. At present
+        /// the test must be exact. It is possible that this can be relaxed
+        /// so that a longer fingerprint will satisfy a shorter one.
+        /// </summary>
+        /// <param name="Test"></param>
+        /// <param name="Value"></param>
+        public static void Validate (string Test, string Value) {
+            if (Test != Value) {
+                throw new Exception("Fingerprints don't match");
+                }
 
             }
         }

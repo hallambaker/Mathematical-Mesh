@@ -3,6 +3,20 @@ cd %~dp0
 
 echo Convert documents to TXT, XML and HTML formats
 
+echo Web App
+rfctool O:\Documents\Mesh\hallambaker-mesh-app-web.docx ^
+	/html Publish\hallambaker-mesh-app-web.html ^
+	/xml Publish\hallambaker-mesh-app-web.xml ^
+	/txt Publish\hallambaker-mesh-app-web.txt
+
+echo Platform
+rfctool O:\Documents\Mesh\hallambaker-mesh-platform.docx ^
+	/html Publish\hallambaker-mesh-platform.html ^
+	/xml Publish\hallambaker-mesh-platform.xml ^
+	/txt Publish\hallambaker-mesh-platform.txt
+
+exit /b 0
+
 echo architecture
 rfctool O:\Documents\Mesh\hallambaker-mesh-architecture.docx ^
 	/html Publish\hallambaker-mesh-architecture.html ^

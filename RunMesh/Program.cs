@@ -23,9 +23,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Goedel.Debug;
-using Goedel.Protocol;
-using Goedel.LibCrypto.PKIX;
+using Goedel.Mesh.Platform;
 
 namespace Goedel.Mesh {
     class Program {
@@ -36,20 +34,6 @@ namespace Goedel.Mesh {
         }
 
 
-
-
-
-
-
-
-    /// <summary>
-    /// 
-    /// </summary>
-
-    // Objective - by Friday
-    //   Write out personal profile and parse it back
-    //   Unpack all the substructures
-    //   Unpack everything
 
     partial class MeshTest {
         public static string UserName = "Alice";
@@ -127,7 +111,7 @@ namespace Goedel.Mesh {
 
             // Read the LiveMail accounts
 
-            var MailClientCatalog = new MailClientCatalog();
+            var MailClientCatalog = new MailClientCatalogPlatform();
             MailClientCatalog.ImportWindowsLiveMail();
             MailClientCatalog.Dump();
 
@@ -159,7 +143,7 @@ namespace Goedel.Mesh {
 
         public void TestMail() {
 
-            var MailClientCatalog = new MailClientCatalog();
+            var MailClientCatalog = new MailClientCatalogPlatform();
             MailClientCatalog.ImportWindowsLiveMail();
             MailClientCatalog.Dump();
 
@@ -184,7 +168,7 @@ namespace Goedel.Mesh {
 
             MailAccountInfo.Create();
 
-            var MailClientCatalog2 = new MailClientCatalog();
+            var MailClientCatalog2 = new MailClientCatalogPlatform();
             MailClientCatalog2.ImportWindowsLiveMail();
             MailClientCatalog2.Dump();
             }
@@ -306,140 +290,6 @@ namespace Goedel.Mesh {
 
             }
 
-
-
-
-        //public void InitDirect () {
-        //    MeshServiceHost = new PublicMeshServiceHost (Service, Store, Portal);
-        //    Session = new DirectSession(UserName);
-        //    MeshService = new MeshServiceSession(MeshServiceHost, Session);
-        //    }
-
-
-        //JHost JHost;
-        //public void InitRemote() {
-        //    // Create the service instance
-        //    MeshServiceHost = new PublicMeshServiceHost(Service, Store, Portal);
-
-        //    // Create a host and create the port;
-        //    JHost = new JHost();
-        //    var HostService = JHost.AddService(MeshServiceHost);
-        //    var HostPort = JHost.AddHTTP(Service);
-        //    HostService.AddPort(HostPort);
-
-        //    // Create a client to connect to the service
-        //    Session = new RemoteSession(Service, UserName);
-        //    MeshService = new MeshServiceClient(Session);
-        //    }
-
-
-        //public void Do1() {
-        //    var DevProfile = new SignedDeviceProfile(Device1, Device1Description);
-        //    Console.WriteLine(DevProfile.ToString());
-
-
-        //    // Create the Mesh Service
-        //    Mesh = new Mesh(Service);
-
-        //    DoCreateProfile();
-        //    DoEscrowMasters();
-
-        //    DoAddDevice();
-        //    DoAddApp();
-        //    DoAddDevice3();
-        //    DoAddPassword();
-        //    DoGetPassword();
-        //    DoAddNetwork();
-        //    }
-
-
-
-        //public void DoCreateProfile() {
-        //    var DevProfile = new SignedDeviceProfile(Device1, Device1Description);
-        //    var UserProfile = new PersonalProfile(DevProfile);
-        //    var PasswordProfile = new PasswordProfile(UserProfile);
-        //    var SignedProfile = new SignedPersonalProfile(UserProfile);
-        //    PasswordProfile.AddDevice(DevProfile);
-
-        //    Mesh.AddProfile(SignedProfile);
-
-        //    var SignedProfile2 = Mesh.GetSignedPersonalProfile(UserName);
-
-        //    Console.WriteLine(SignedProfile2.ToString());
-
-
-        //    var TheProfile = SignedProfile2.Signed;
-
-        //    }
-
-
-        //public void DoEscrowMasters( ) {
-        //    var UserProfile = Mesh.GetPersonalProfile(UserName);           
-        //    }
-
-
-        //public void DoAddDevice( ) {
-        //    var UserProfile = Mesh.GetPersonalProfile(UserName);
-        //    var Dev = new SignedDeviceProfile (Device2, Device2Description);
-
-        //    foreach (var Application in UserProfile.Applications) {
-        //        Application.AddDevice(Dev);
-        //        }
-
-        //    UserProfile.Add(Dev);
-        //    Mesh.UpdateProfile(UserProfile);
-        //    }
-
-        //public void DoAddApp( ) {
-        //    var UserProfile = Mesh.GetPersonalProfile(UserName);
-        //    var AppProfile = new MailProfile(UserProfile, MailAccount);
-        //    AppProfile.Add(ConnectionSubmit);
-        //    AppProfile.Add(ConnectionIMAP);
-
-        //    foreach (var Device in UserProfile.Devices) {
-        //        AppProfile.AddDevice(Device);
-        //        }
-
-        //    Mesh.UpdateProfile(UserProfile);
-        //    }
-
-        //public void DoAddPassword( ) {
-        //    var UserProfile = Mesh.GetPersonalProfile(UserName);
-        //    var PasswordApplication =
-        //            PasswordProfile.Get(UserProfile);
-        //    PasswordApplication.Add(PWDSite, PWDUser, PWDPassword);
-        //    Mesh.UpdateProfile(UserProfile);
-        //    }
-
-        //public void DoAddDevice3( ) {
-        //    var UserProfile = Mesh.GetPersonalProfile(UserName);
-        //    var DeviceProfile = new SignedDeviceProfile(Device3, Device3Description);
-        //    UserProfile.Add(DeviceProfile);
-        //    foreach (var Application in UserProfile.Applications) {
-        //        Application.AddDevice(DeviceProfile);
-        //        }
-
-        //    Mesh.UpdateProfile(UserProfile);
-        //    }
-
-        //public void DoGetPassword( ) {
-        //    var UserProfile = Mesh.GetPersonalProfile(UserName);
-        //    var PasswordApplicationProfile = PasswordProfile.Get(UserProfile);
-        //    PasswordApplicationProfile.GetEntry(PWDSite,
-        //        out PWDUserResult, out PWDPasswordResult);
-        //    }
-
-        //public void DoAddNetwork() {
-        //    var UserProfile = Mesh.GetPersonalProfile(UserName);
-        //    var AppProfile = new NetworkProfile(UserProfile);
-        //    AppProfile.AddDNS(DNS1);
-        //    AppProfile.AddDNS(DNS2);
-        //    foreach (var Device in UserProfile.Devices) {
-        //        AppProfile.AddDevice(Device);
-        //        }
-
-        //    Mesh.UpdateProfile(UserProfile);
-        //    }
 
         }
     }

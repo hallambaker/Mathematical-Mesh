@@ -27,7 +27,7 @@ using System.Text;
 using System.Numerics;
 using Goedel.Protocol;
 
-namespace Goedel.LibCrypto {
+namespace Goedel.Cryptography {
 
     /// <summary>
     /// Represents a secret key that may be split into or reformed from 

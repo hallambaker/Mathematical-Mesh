@@ -113,7 +113,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>powershell publishtarget "$(TargetPath)" Goedel.Registry.dll Goedel.Cryptography.Jose.dll Goedel.Cryptography.dll Goedel.Debug.dll Goedel.Persistence.dll Goedel.Mesh.dll Goedel.Protocol.dll libTrojan.dll</PostBuildEvent>
+    <PostBuildEvent>powershell publishtarget "$(TargetPath)" Goedel.Registry.dll Goedel.Cryptography.Jose.dll Goedel.Cryptography.dll Goedel.Debug.dll Goedel.Persistence.dll Goedel.Mesh.dll Goedel.Protocol.dll</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PreBuildEvent>

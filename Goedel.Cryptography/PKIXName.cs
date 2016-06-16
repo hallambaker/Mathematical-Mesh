@@ -22,9 +22,9 @@
 using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
-using Goedel.LibCrypto;
+using Goedel.Cryptography;
 
-namespace Goedel.LibCrypto.PKIX {
+namespace Goedel.Cryptography.PKIX {
     public partial class Name {
 
         /// <summary>

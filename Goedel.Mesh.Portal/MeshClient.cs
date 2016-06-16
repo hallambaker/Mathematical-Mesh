@@ -27,7 +27,6 @@ using System.Collections.Generic;
 using System.Text;
 using Goedel.Protocol;
 using Goedel.Mesh;
-using Goedel.Cryptography.Registry;
 
 
 namespace Goedel.Mesh {
@@ -124,20 +123,26 @@ namespace Goedel.Mesh {
                 }
             }
 
-        /// <summary>
-        /// Connect up to the default Mesh Service provider described in the 
-        /// registry.
-        /// </summary>
-        public MeshClient() {
-            // get the data from the registry
-            var AccountID = Register.Read(Constants.RegistryAccounts, out UDF);
-            if (AccountID == null) {
-                return;
-                }
+        ///// <summary>
+        ///// The profile set loaded on the local machine.
+        ///// </summary>
+        //public RegistrationMachine RegistrationMachine = RegistrationMachine.Current;
 
-            Account.SplitAccountID(AccountID, out AccountName, out Portal);
-            MeshService = MeshPortal.Default.GetService(Portal, AccountName);
-            }
+
+        ///// <summary>
+        ///// Connect up to the default Mesh Service provider described in the 
+        ///// registry.
+        ///// </summary>
+        //public MeshClient() {
+        //    // get the data from the registry
+        //    var AccountID = Register.Read(Constants.RegistryAccounts, out UDF);
+        //    if (AccountID == null) {
+        //        return;
+        //        }
+
+        //    Account.SplitAccountID(AccountID, out AccountName, out Portal);
+        //    MeshService = MeshPortal.Default.GetService(Portal, AccountName);
+        //    }
 
         /// <summary>
         /// Connect up to a specified Mesh Portal and account.
@@ -159,20 +164,20 @@ namespace Goedel.Mesh {
             }
 
 
-        /// <summary>
-        /// Return a list of all the clients on the current machine
-        /// </summary>
-        /// <returns></returns>
-        public static List<MeshClient> GetClientList() {
-            var Result = new List<MeshClient>();
+        ///// <summary>
+        ///// Return a list of all the clients on the current machine
+        ///// </summary>
+        ///// <returns></returns>
+        //public static List<MeshClient> GetClientList() {
+        //    var Result = new List<MeshClient>();
 
-            var Client = new MeshClient();
-            if (Client != null) {
-                Result.Add(Client);
-                }
+        //    var Client = new MeshClient();
+        //    if (Client != null) {
+        //        Result.Add(Client);
+        //        }
 
-            return Result;
-            }
+        //    return Result;
+        //    }
 
 
 
@@ -182,7 +187,7 @@ namespace Goedel.Mesh {
         /// </summary>
         public void MakeDefault(string UDF) {
             var AccountID = Account.ID(AccountName, Portal);
-            Register.Write(Constants.RegistryAccounts, AccountID, UDF);
+            //Register.Write(Constants.RegistryAccounts, AccountID, UDF);
             }
 
 
@@ -220,7 +225,7 @@ namespace Goedel.Mesh {
             var CreateResponse = MeshService.CreateAccount(CreateRequest);
 
             this.AccountID = AccountID;
-            Register.Write(Constants.RegistryAccounts, AccountID, SignedCurrentProfile.UDF);
+            //Register.Write(Constants.RegistryAccounts, AccountID, SignedCurrentProfile.UDF);
 
             return CreateResponse;
             }
@@ -443,20 +448,20 @@ namespace Goedel.Mesh {
 
         }
 
-    /// <summary>
-    /// Extended version of MeshClient adding in helper routines for
-    /// profile administration.
-    /// </summary>
-    public class MeshAdminClient : MeshClient {
+    ///// <summary>
+    ///// Extended version of MeshClient adding in helper routines for
+    ///// profile administration.
+    ///// </summary>
+    //public class MeshAdminClient : MeshClient {
 
-        /// <summary>
-        /// Delete all profiles from the registry and erase the related keys.
-        /// </summary>
-        public static void ResetRegistry () {
+    //    /// <summary>
+    //    /// Delete all profiles from the registry and erase the related keys.
+    //    /// </summary>
+    //    public static void ResetRegistry () {
 
 
-            }
-        }
+    //        }
+    //    }
 
 
     }

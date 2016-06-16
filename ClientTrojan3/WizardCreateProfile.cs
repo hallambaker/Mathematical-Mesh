@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-
 using Goedel.Mesh;
-
 using Goedel.Trojan;
-using Goedel.Portability;
+
 
 namespace PHB.Apps.Mesh.ProfileManager {
 
@@ -37,7 +35,7 @@ namespace PHB.Apps.Mesh.ProfileManager {
             base.Initialize(Wizard.Model);
 
             // Here try to pull a machine name from the environment variables
-            DeviceName.Value = Goedel.Portability.Environment.MachineName;
+            DeviceName.Value = Goedel.Platform.Environment.MachineName;
 
             // Here look to see if we already have a device profile
             if (ProfileManager.RegistrationMachine.Device == null) {
@@ -160,7 +158,7 @@ namespace PHB.Apps.Mesh.ProfileManager {
             this.Wizard = Wizard;
 
             var SignedProfile = new SignedPersonalProfile(WizardCreateProfile.PersonalProfile);
-            SignedProfile.ToRegistry();
+            //SignedProfile.ToRegistry();
 
             var MeshClient = ProfileManager.GetCachedClient(WizardCreateProfile.PortalAddress);
             MeshClient.CreatePersonalProfile(WizardCreateProfile.MeshAddress, SignedProfile);
@@ -256,7 +254,7 @@ namespace PHB.Apps.Mesh.ProfileManager {
         /// just too confusing in the code.
         /// </summary>
         void AsyncGetProfiles() {
-            _DeviceProfile = SignedDeviceProfile.GetLocal(DeviceName, DeviceDescription);
+            //_DeviceProfile = SignedDeviceProfile.GetLocal(DeviceName, DeviceDescription);
             _PersonalProfile = new PersonalProfile(_DeviceProfile);
             }
 

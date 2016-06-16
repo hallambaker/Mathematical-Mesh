@@ -55,19 +55,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Account.cs" />
-    <Compile Include="AppWindowsLiveMail.cs" />
     <Compile Include="ConfigRegistry.cs" />
     <Compile Include="ConnectionRequest.cs" />
     <Compile Include="Constants.cs" />
-    <Compile Include="LiveMail.cs">
+    <Compile Include="SchemaMesh.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>LiveMail.RegistrySchema</DependentUpon>
-    </Compile>
-    <Compile Include="MeshSchema.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>MeshSchema.protocol</DependentUpon>
+      <DependentUpon>SchemaMesh.protocol</DependentUpon>
     </Compile>
     <Compile Include="Portal.cs">
       <AutoGen>True</AutoGen>
@@ -78,9 +72,8 @@
     <Compile Include="ProfileDevice.cs" />
     <Compile Include="Escrow.cs" />
     <Compile Include="MailClient.cs" />
-    <Compile Include="MailClientIntegration.cs" />
     <Compile Include="MeshConnection.cs" />
-    <Compile Include="MeshSchemaPlus.cs" />
+    <Compile Include="SchemaMeshPlus.cs" />
     <Compile Include="ProfileNetwork.cs" />
     <Compile Include="ProfileMaster.cs" />
     <Compile Include="PublicKey.cs" />
@@ -90,40 +83,26 @@
     <Compile Include="ProfilePersonal.cs" />
     <Compile Include="Profiles.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RegisteredProfile.cs" />
-    <Compile Include="Registry.cs" />
     <Compile Include="SignProfile.cs" />
     <Compile Include="WindowsNetworkProfile.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="LibMesh.licenseheader" />
-    <None Include="LiveMail.RegistrySchema">
-      <Generator>RegistryCS</Generator>
-      <LastGenOutput>LiveMail.cs</LastGenOutput>
-    </None>
     <None Include="packages.config" />
     <None Include="Portal.Protocol">
       <Generator>protogen</Generator>
       <LastGenOutput>Portal.cs</LastGenOutput>
     </None>
-    <None Include="MeshSchema.protocol">
+    <None Include="SchemaMesh.protocol">
       <Generator>Protogen</Generator>
-      <LastGenOutput>MeshSchema.cs</LastGenOutput>
+      <LastGenOutput>SchemaMesh.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Goedel.Crypto.Registry\Goedel.Cryptography.Registry.csproj">
-      <Project>{ca485578-77ea-4bb9-9705-2b0ac4d0b613}</Project>
-      <Name>Goedel.Cryptography.Registry</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Goedel.Cryptography.Jose\Goedel.Cryptography.Jose.csproj">
       <Project>{59f7f1a5-abbc-4830-b7a3-140fd8e4c369}</Project>
       <Name>Goedel.Cryptography.Jose</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Goedel.Cryptography.Windows\Goedel.Cryptography.Windows.csproj">
-      <Project>{5c8e83ab-2669-4242-9a11-5892940a7fe6}</Project>
-      <Name>Goedel.Cryptography.Windows</Name>
     </ProjectReference>
     <ProjectReference Include="..\Goedel.Cryptography\Goedel.Cryptography.csproj">
       <Project>{1babc0e9-d939-4de5-82a3-16752104b14b}</Project>
