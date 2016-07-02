@@ -1,0 +1,35 @@
+=To Do
+
+
+==Mesh
+
+* Registry entry for profiles is not recording the Profile location on disk as it should
+
+* Profiles saved to disk do not have a proper extension (.mmm)
+
+
+==Client
+
+* Newly created profiles are not added to the selection box
+
+* Selection box is not being populated
+
+
+==Trojan
+
+* Advanced options does not work
+
+* Read only items are not being disabled as they should
+
+* Wizard offers 'back' in the final completion page
+
+* Clicking on finish does not close the wizard
+
+
+
+
+==Testing
+
+* Many regression tests now fail
+
+
