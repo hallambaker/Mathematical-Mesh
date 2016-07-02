@@ -402,7 +402,8 @@ namespace Goedel.Mesh {
             var Reader = JSONReader.OfFile(FileName);
             var Result = SignedPersonalProfile.FromTagged(Reader);
 
-            Goedel.Cryptography.UDF.Validate(UDF, Result.UDF);
+            var Test = Result.Signed.UDF;
+            Goedel.Cryptography.UDF.Validate(UDF, Test);
 
             return Result;
             }

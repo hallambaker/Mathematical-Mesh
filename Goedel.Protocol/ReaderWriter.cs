@@ -60,7 +60,7 @@ namespace Goedel.Protocol {
             }
 
         public override char GetNext() {
-            //Console.Write(LookNext());
+            Console.Write(LookNext());
 
             return Source[Position++];
             }

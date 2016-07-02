@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using Goedel.Mesh;
+using Goedel.Mesh.Platform;
+
 
 namespace PHB.Apps.Mesh.ProfileManager {
     public partial class Profile {

@@ -40,6 +40,7 @@ namespace PHB.Apps.Mesh.ProfileManager {
             // Here look to see if we already have a device profile
             if (ProfileManager.RegistrationMachine.Device == null) {
                 NewDeviceProfile.Value = true;
+                NewDeviceProfile.ReadOnly = true;
                 }
             }
 
@@ -158,11 +159,12 @@ namespace PHB.Apps.Mesh.ProfileManager {
             this.Wizard = Wizard;
 
             var SignedProfile = new SignedPersonalProfile(WizardCreateProfile.PersonalProfile);
-            //SignedProfile.ToRegistry();
+
+            var Registration = ProfileManager.RegistrationMachine.Add(SignedProfile,
+                    WizardCreateProfile.MeshAddress);
 
             var MeshClient = ProfileManager.GetCachedClient(WizardCreateProfile.PortalAddress);
             MeshClient.CreatePersonalProfile(WizardCreateProfile.MeshAddress, SignedProfile);
-
 
             return true;
             }
@@ -179,6 +181,8 @@ namespace PHB.Apps.Mesh.ProfileManager {
     /// The profile creation wizard
     /// </summary>
     public partial class WizardCreateProfile {
+        ProfileManager ProfileManager { get { return Model as ProfileManager; } }
+
         public string DeviceName { get { return NameDevice.DeviceName.Test; } }
         public string DeviceDescription { get { return NameDevice.DeviceDescription.Test; } }
         public bool NewDeviceProfile { get { return NameDevice.NewDeviceProfile.Test; } }
@@ -221,6 +225,14 @@ namespace PHB.Apps.Mesh.ProfileManager {
 
         public override bool Dispatch() {
             // attach the new personal profile to the list of selected.
+
+
+            ProfileManager.RegistrationMachine.Add(DeviceProfile);
+
+            var SignedPersonalProfile = PersonalProfile.Signed;
+
+            ProfileManager.RegistrationMachine.Add(SignedPersonalProfile, MeshAddress);
+
             return true;
             }
 
@@ -254,7 +266,14 @@ namespace PHB.Apps.Mesh.ProfileManager {
         /// just too confusing in the code.
         /// </summary>
         void AsyncGetProfiles() {
-            //_DeviceProfile = SignedDeviceProfile.GetLocal(DeviceName, DeviceDescription);
+            if (NewDeviceProfile) {
+                var NewProfile = new SignedDeviceProfile(DeviceName, DeviceDescription);
+                var Registration = ProfileManager.RegistrationMachine.Add(NewProfile);
+                _DeviceProfile = NewProfile;
+                }
+            else {
+                _DeviceProfile = ProfileManager.RegistrationMachine.Device.Device;
+                }
             _PersonalProfile = new PersonalProfile(_DeviceProfile);
             }
 

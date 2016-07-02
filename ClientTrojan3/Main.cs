@@ -6,6 +6,9 @@ using Goedel.Mesh;
 using Goedel.Trojan;
 using Goedel.Trojan.GTK;
 
+using Goedel.Platform;
+using Goedel.Mesh.Platform;
+
 
 namespace PHB.Apps.Mesh.ProfileManager {
     public class Wrapper {
@@ -47,7 +50,7 @@ namespace PHB.Apps.Mesh.ProfileManager {
 
         public void Initialize() {
             // Get the current list of Mesh clients
-            RegistrationMachine = new RegistrationMachine();
+            RegistrationMachine = RegistrationMachine.Current;
 
 
             //foreach (var PersonalProfile in RegistrationMachine.GetPersonal()) {

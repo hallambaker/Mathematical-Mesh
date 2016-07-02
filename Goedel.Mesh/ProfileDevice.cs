@@ -40,7 +40,7 @@ namespace Goedel.Mesh {
         /// The profile fingerprint value is the device signature key.
         /// </summary>
         public override string UDF {
-            get { return DeviceSignatureKey.UDF; }
+            get { return DeviceSignatureKey?.UDF; }
             }
 
         /// <summary>

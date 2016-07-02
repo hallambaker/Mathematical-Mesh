@@ -29,7 +29,7 @@ namespace Goedel.Mesh {
     class Program {
         static void Main(string[] args) {
             var MeshTest = new MeshTest();
-            MeshTest.MeshStoreAPI();
+            MeshTest.TestRegistry();
             }
         }
 
@@ -86,6 +86,23 @@ namespace Goedel.Mesh {
         public string Portal = "Tportal.jlog";
         public MeshTest() {
             
+            }
+
+
+        public void TestRegistry() {
+            RegistrationMachine.Erase();
+
+            var MeshAddress = "Testing@wherever";
+
+            var Machine = RegistrationMachine.Current;
+            var NewProfileDevice = new SignedDeviceProfile("Test", "Test Device");
+            var Registration = Machine.Add(NewProfileDevice);
+
+            var PersonalProfile = new PersonalProfile(NewProfileDevice);
+            var SignedPersonalProfile = PersonalProfile.Signed;
+
+            Machine.Add(SignedPersonalProfile, MeshAddress);
+
             }
 
 
