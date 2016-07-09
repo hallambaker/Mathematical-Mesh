@@ -219,6 +219,11 @@ namespace Goedel.Mesh.Platform {
             }
 
 
+        public RegistrationApplication(SignedApplicationProfile SignedApplicationProfile) {
+            _Profile = SignedApplicationProfile;
+            ToRegistry();
+            }
+
         /// <summary>
         /// Read a personal registration from a file
         /// </summary>
@@ -350,8 +355,9 @@ namespace Goedel.Mesh.Platform {
         /// Add the associated registration to the machine store.
         /// </summary>
         public void Add(RegistrationDevice Registration) {
-            DeviceProfiles.Add(Registration.UDF, Registration);
-
+            if (!DeviceProfiles.ContainsKey(Registration.UDF)) {
+                DeviceProfiles.Add(Registration.UDF, Registration);
+                }
             // If no existing default, register as the default
             if (Device == null) {
                 Device = Registration;
@@ -378,6 +384,16 @@ namespace Goedel.Mesh.Platform {
         /// </summary>
         public RegistrationDevice Add(SignedDeviceProfile SignedDeviceProfile) {
             var Registration = new RegistrationDevice(SignedDeviceProfile);
+
+            Add(Registration);
+            return Registration;
+            }
+
+        /// <summary>
+        /// Add the associated profile to the machine store.
+        /// </summary>
+        public RegistrationApplication Add(SignedApplicationProfile SignedApplicationProfile) {
+            var Registration = new RegistrationApplication(SignedApplicationProfile);
 
             Add(Registration);
             return Registration;

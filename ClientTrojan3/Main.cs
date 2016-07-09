@@ -210,7 +210,15 @@ namespace PHB.Apps.Mesh.ProfileManager {
         ///Stub method for ApplicationAddWebcommand.Override with application implementation.
         /// </summary>
  		public override void ApplicationAddWeb(Object Object) {
+            var SelectApplications = Object as SelectApplications;
+
+
             var Dialog = new WebOptions();
+
+            if (SelectApplications != null) {
+                SelectApplications.WebOptions = Dialog;
+                }
+
             Binding.Dialog(Dialog);
             }
 

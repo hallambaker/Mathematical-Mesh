@@ -53,7 +53,7 @@ a subsequent account creation request MAY still fail.
 
 ~~~~
 HTTP/1.1 200 OK
-Date: Fri 01 Jul 2016 07:23:22
+Date: Tue 05 Jul 2016 02:03:24
 Content-Length: 190
 
 {
@@ -89,62 +89,62 @@ to express the same trust relationships described in the Mesh.
 ~~~~
 {
   "MasterProfile": {
-    "Identifier": "MCYSX-N2ZJE-QLDDN-QKCKK-BX6WI-SH5DT",
+    "Identifier": "MBME7-5QLKZ-F2S5H-65W6T-56242-64XGL",
     "MasterSignatureKey": {
-      "UDF": "MCYSX-N2ZJE-QLDDN-QKCKK-BX6WI-SH5DT",
+      "UDF": "MBME7-5QLKZ-F2S5H-65W6T-56242-64XGL",
       "X509Certificate": "
-MIIDJzCCAg-gAwIBAgIRAKaJrPZIoa-Mliu6JtFdxo0wDQYJKoZIhvcNAQENBQAw
-LjEsMCoGA1UEAxYjTUNZU1gtTjJaSkUtUUxERE4tUUtDS0stQlg2V0ktU0g1RFQw
+MIIDJzCCAg-gAwIBAgIRAJiIYgkcbzif-euD5qpfPncwDQYJKoZIhvcNAQENBQAw
+LjEsMCoGA1UEAxYjTUJNRTctNVFMS1otRjJTNUgtNjVXNlQtNTYyNDItNjRYR0ww
 ...
-bRoEQoJhOkFVHiykvfRjeh0uCXRUbBPCUc2SO-9gbuEHgJUdhBRtY7B9Ng",
+g7f3bhvDgi_Y6XGX7EXcJlnH3K4UsQoLv7SPOdeqUqe00il7UCHYj_daqw",
       "PublicParameters": {
         "PublicKeyRSA": {
-          "kid": "MCYSX-N2ZJE-QLDDN-QKCKK-BX6WI-SH5DT",
+          "kid": "MBME7-5QLKZ-F2S5H-65W6T-56242-64XGL",
           "n": "
-pbxbcO_Wdw7uJ8hvxU_wNpw9AzpPLFj6PMssrewohM6oHBANi6IljBqTnUlUDzw9
-c6bkWRDh9vS6YuL7GvhpFipVHE6DdM8lTQTypShlrDe6Wv4S9e0Wtj74K3RKaRnr
-SksS-q9ihEY2XqssyAL9idQpzQa7TzfrIPraIOfm2QGym6jJ_5qU_-n3R6KYwuBq
-mLq_psBS5kZtsB3JIhE9r1oJ6sQWrTB6FcB2yLDbev7h6FYTvRRJD2uONL7LjA7p
-rX7A9QjyzrAhuSzhR0AhZW978SYLGqwEzg0z133Co-CW_3hPNABN0b3ebct3m6a6
-28GkdzkcECsMtwNEe8fkZQ",
+2Jcvn2pTOWD-VVDZVKbUVLKj5TFs_E14rnrv6zHMrLWsdZ9dQUgoJTjmdbJ_v8mY
+quxXehpMuV0DbBx34J4OKYQNIx8L0qN-ajKRBRRlfuSURtugnkU4p6vxi6Hc-UdV
+AQw8wA7T-p0vpDSpKSZlAD58G6rgLyd905KbYQB5b8R92ZiIAnUkHN8FvJI8pD3B
+uCkwE0MG23v-PBXJ2Thfm2eVadvRi-39KvAfhyCPhdkzolTNzS_lRSLI9QJG2TQV
+eZbYqalrJpUteYNEAcexY03PnPR-z9LGj-NFfRdPEB98iwLchgihKIcNUk4t1JHi
+MABmeArOzG-ySdZ5jspgiQ",
           "e": "
 AQAB"}}},
     "MasterEscrowKeys": [{
-        "UDF": "MDY7B-3HQDU-MYU7X-HSDAM-VY2VP-EVXI6",
+        "UDF": "MDHZI-N2HBC-J62QO-ODHWV-MFSN2-TCOKP",
         "X509Certificate": "
-MIIDJjCCAg6gAwIBAgIQbPuH6A55zboWyBlc9OQKTjANBgkqhkiG9w0BAQ0FADAu
-MSwwKgYDVQQDFiNNQ1lTWC1OMlpKRS1RTERETi1RS0NLSy1CWDZXSS1TSDVEVDAe
+MIIDJzCCAg-gAwIBAgIRAPzf-Jxk_iunZaBM7V38nrswDQYJKoZIhvcNAQENBQAw
+LjEsMCoGA1UEAxYjTUJNRTctNVFMS1otRjJTNUgtNjVXNlQtNTYyNDItNjRYR0ww
 ...
-qNcshHKyF3ILQsJoK131J_YRkvHR3T0GKodUAwH6R72jeGhEMGqQ0iR3",
+NgNQkBYeyXnFCsUb4rFh_0qhqyjRs3pRI6aDlYNAyycNXn9XOmPofPlctA",
         "PublicParameters": {
           "PublicKeyRSA": {
-            "kid": "MDY7B-3HQDU-MYU7X-HSDAM-VY2VP-EVXI6",
+            "kid": "MDHZI-N2HBC-J62QO-ODHWV-MFSN2-TCOKP",
             "n": "
-sUEsHxL_MIaURLJYqMDM3Yk1e7qA-sPyy3-j2Ar74OuMKqB08wBtytXaK4EoNqZk
-tW0HOYK_xu6toGf5krkXMxDE_dkP8-u6ZTpaRul59NVS4k8deJlEeg9dvXS6fthU
-0mPd8L_ku244zFnT8lp4i42td8vVKClGvPVRQ-Cf9EF3WA9Jy90A5fzhC8ciBuTy
-7Hvc_-0PVjmjPx6ytTuCH62EDRHCsO24iTPPkkFc99d38p_8PYEekprGkMfJ7KAe
-Y2Qr5T8dpZ-WWhnD-QWumkFZfAbmb1iM90ePrHrrUMr8BJsTSaY2ggFGw0DmWNCn
-sfSaCMyYqgHr6608XSEPdQ",
+n9ED1J-EBgPVV6xSnNk-RS6qoG1aNdSWLPcMftN-f0ERkBQn1yu6go5CQ0q9ZyBe
+M34vCnCI9_dR96Uibos6V-0HRyZ1A-aVndRP_XLqkmc94FvgeDiGs9ATWoXtFarV
+lCkuyLm-npxu13EFmphViVb7maz7zlEv4GJ5Claob34sdM4qySr35ZZAuq9Q_IAH
+6PlR5Jh6bgMfB0S7xlMS2MR3hV0-smWbbs6sp4xRSH3j5kOHrYY85DGaqQRMZ4lf
+3FoO5MvndaeRm_xWwvuEFUAnOrFYbub4FXxpmxKNh9FfgQnme4lsYkOtyJw5DDzT
+kuoOm-F8af1Vx-LouY8u1w",
             "e": "
 AQAB"}}}],
     "OnlineSignatureKeys": [{
-        "UDF": "MBKFC-ZYNBY-MVTTW-KGNIZ-QY6BI-22M6N",
+        "UDF": "MBGGH-N4EF5-L7S2D-U4IHC-QBSDR-M6QHY",
         "X509Certificate": "
-MIIDJjCCAg6gAwIBAgIQXuCKus7X_6IrCran_3uq0jANBgkqhkiG9w0BAQ0FADAu
-MSwwKgYDVQQDFiNNQ1lTWC1OMlpKRS1RTERETi1RS0NLSy1CWDZXSS1TSDVEVDAe
+MIIDJzCCAg-gAwIBAgIRAJnbFqrPmUhGwKClDVtRzLIwDQYJKoZIhvcNAQENBQAw
+LjEsMCoGA1UEAxYjTUJNRTctNVFMS1otRjJTNUgtNjVXNlQtNTYyNDItNjRYR0ww
 ...
-Orx4s3zDZs5nVV3aWO-VDJraQ804Yp9MkE4iQ9uyo_O5nq6cfa32btXq",
+UkVaXR7pMxLvWzBKibic0LAzOpEgbrvjLHCTbf04CkKrGwU7JWsI1kglCA",
         "PublicParameters": {
           "PublicKeyRSA": {
-            "kid": "MBKFC-ZYNBY-MVTTW-KGNIZ-QY6BI-22M6N",
+            "kid": "MBGGH-N4EF5-L7S2D-U4IHC-QBSDR-M6QHY",
             "n": "
-tQEZ4ql78x3af0qfIIyQ5fK-PuuCuncjd61FJT7zpsr90ZUhnpHQxbGqmHX67r9r
--eHel-occpXSwDuonSUhXSIaV3xfb2Rf-vxx0aJn87WBSuhLqC4ijiCR6rrsopAs
-WYVLtSJWBsRtMiKW4VJkxXPNdskgjVKkZSiSbO2C3G25oRQQ-B9FnNs6I0hhbgM2
-Zq8EXd6TbbBf8hqU-W_MzHvuP6ud9071vaKud2EqdqEUeiUy_oSO8Y4jtNTgGgZK
-9uJbjb7WPYTUas4S_RzqFRrovvLWm9r5ak-IVxcAsPKroBAXFzZcb6NqhPXTqOef
-AOzwY6s028B6lVuNd87SgQ",
+0dtLjf7IxEjN-NbiFvwx-Gz3YPc9Z5udsCm4cr7vLyV1F74G7lOOW6vvzHduVwNS
+LgDSSdTMZDL_SCxXOu0kUQP6dZ4D1dUxRG50la8KIrKsYhzLgnllVuct5YL93Fl0
+1-tTTFOycCX--x5fDNe_fuypM-e7OkNWwfdvxzu260Hy_l8Z7Ptgf4y5xheROpVB
+R-QCYjSP9o-8ioh2TDIbJWr1J8FuyDg0ideVivgH3rv2mT48xUpOEJhzKf09amLH
+7VnE550u6VuAvIMsoIQpOi1PcKdFWzXokifaZSQgVIFbheJUTn4rNmC0uHQqLeWF
+c8UaMgpvBwBd84sGOndUpQ",
             "e": "
 AQAB"}}}]}}
 ~~~~
@@ -154,23 +154,23 @@ The Master Profile is always signed using the Master Signing Key:
 ~~~~
 {
   "SignedMasterProfile": {
-    "Identifier": "MCYSX-N2ZJE-QLDDN-QKCKK-BX6WI-SH5DT",
+    "Identifier": "MBME7-5QLKZ-F2S5H-65W6T-56242-64XGL",
     "SignedData": {
       "header": "
-ewogICJhbGciOiAiUlM1MTIiLAogICJraWQiOiAiTUNZU1gtTjJaSkUtUUxERE4t
-UUtDS0stQlg2V0ktU0g1RFQifQ",
+ewogICJhbGciOiAiUlM1MTIiLAogICJraWQiOiAiTUJNRTctNVFMS1otRjJTNUgt
+NjVXNlQtNTYyNDItNjRYR0wifQ",
       "payload": "
-ewogICJNYXN0ZXJQcm9maWxlIjogewogICAgIklkZW50aWZpZXIiOiAiTUNZU1gt
-TjJaSkUtUUxERE4tUUtDS0stQlg2V0ktU0g1RFQiLAogICAgIk1hc3RlclNpZ25h
+ewogICJNYXN0ZXJQcm9maWxlIjogewogICAgIklkZW50aWZpZXIiOiAiTUJNRTct
+NVFMS1otRjJTNUgtNjVXNlQtNTYyNDItNjRYR0wiLAogICAgIk1hc3RlclNpZ25h
 ...
-QVFBQiJ9fX1dfX0",
+OiAiCkFRQUIifX19XX19",
       "signature": "
-Z62JdrViWelP6DTmi5gsrPezivFyj7NJjjqsACLWYdetcTR7s3dHnmeBDUOBc9w7
-aNVPGqWIdrkTRjojnj7fL6S3MCgBhtCsgKYIFPQvd5kzCnoYLTH0eTi_Y2CwPLJN
-Y2pbROk-8H5UNJeALbggasQtJ0OnI1_K8thPHQowa8E7oxWKYIkdv2BkwRrXn4Gt
-0DXulOx1-ZLgCtacbaCGv_p5J9oA5b7po8viV9IYHLQUngWkZnzzxT8t2JvX2nDK
-Z-JseezZl_kKGtzoYvjV_BNehHj9sXIPldme6pzg-E_c2ZYUbQTXNFAlrPPh7M4D
-fhmFSnafqKOcVkrRCCxIiw"}}}
+bfMrHcF7jA8D3zI_tPV9lgbEdlL1SA6iH38DhT1RWoog6UTKV49U8_RH0YM446PN
+Mxjtwr0wEaGTYyM_D-8jHQMd2QsKG5Ioq9r8IIPIBggRDzu81NTiSDVP1KzHH04w
+cNfFg6HtIKrH9lbc6HwVyNfcKL9tTlDwSbasXxrMIWJfdpQ1_zhHgtblCBF862oY
+L_S9Tx4SlKYVqRqUgcKlitY6xxp1HLm-mA56ZbRLhbS9Dkx40Kck8OULjoZtyR4_
+U9N5PHhMzXc7x2R6wZ0eBIbBY5MHgA3x_PdvfvHier7MrJ7d0XdsbuIfzkEjx69-
+6xra2Doj-BTXASJjbqr7xg"}}}
 ~~~~
 
 Since the device used to create the personal profile is typically
@@ -181,49 +181,49 @@ and a Device Authentication Key:
 ~~~~
 {
   "DeviceProfile": {
-    "Identifier": "MDHG2-56YEL-PD6MX-MBGEG-62KMZ-MNOYS",
+    "Identifier": "MD5KV-HBVOU-RZ3WQ-IRLXU-2GDWW-DESDT",
     "Names": ["Alice Desktop"],
     "Description": "A desktop computer built by Acme Computer Co.",
     "DeviceSignatureKey": {
-      "UDF": "MDHG2-56YEL-PD6MX-MBGEG-62KMZ-MNOYS",
+      "UDF": "MD5KV-HBVOU-RZ3WQ-IRLXU-2GDWW-DESDT",
       "PublicParameters": {
         "PublicKeyRSA": {
-          "kid": "MDHG2-56YEL-PD6MX-MBGEG-62KMZ-MNOYS",
+          "kid": "MD5KV-HBVOU-RZ3WQ-IRLXU-2GDWW-DESDT",
           "n": "
-rqEP4jgOKXsfMtH70JO7vXNQ82g_3PgJq3BtRUk5LUvhTxXL3f7Y7GHbLXgIBa2a
-z6OYnAi8A1lkj5bj4J-FnNGVbugc0Mb-T_7Szm8Frn24qPw1JHv3AEXy1zScjfK_
-QvDF8LlbMUyBXohtzblKf-V8V2xuw65cM0DXzwWFXmtRnoPbcVUv6XCz-LXOKzk3
-JzA4TR0jWZJEtbo5ithU7l0f39p8qPeM431iMZFwrXOSCekRgBGuDvoNOkRci1x7
-qJsZyceEjIIN7sdlv8Lccpq-fVogVZgYbhCJ6Oqmzi3b3sDNKm-3U5RhIXMyEJRG
-T9V547zEJNzSJ0bazILAWw",
+vPvLLyOsftTkmG3X3vPqv4E0GArrA1KeCsRoo9HuWgsO-PIVxIXPNXEeaJZAd-FT
+-GGuJENTyIWsxYBwwg9IxkLAtUPB3d-TpZXoczdQmBwbezC3t_AOWAntGRx0Brq_
+EdD9_UNE8KvsqiFXbzdY4Kd8xFsBCNy1NRUmkRWi_PVjX_mQY6tLQPBajQ0Ab_10
+etb5gOqgn2MT4MS2RcdhD-u-Ic2mIYDMvmBpITPT8hu_D89Faidap0szBtikoCyQ
+g86rE5CC8k1jaNjHBGwxZJSj8_2ZnmmvP4asubHrtmHi0RKdfllikUqUHEZA8MRZ
+G5cRg-qWwSE8Igs1pOsQIQ",
           "e": "
 AQAB"}}},
     "DeviceAuthenticationKey": {
-      "UDF": "MBTNL-NIJJL-TZNK7-FLY6S-RW4CY-YVLJZ",
+      "UDF": "MDBNB-5AANR-D4AY4-U5DAT-H33PG-FROBG",
       "PublicParameters": {
         "PublicKeyRSA": {
-          "kid": "MBTNL-NIJJL-TZNK7-FLY6S-RW4CY-YVLJZ",
+          "kid": "MDBNB-5AANR-D4AY4-U5DAT-H33PG-FROBG",
           "n": "
-qN_WInjR4z0tk0YBiEirJtc0v-w7adbitUJsCxAinE2e7lmF515PFbPRoC1SPQhO
-TTdRnV-w225OCYZoWA6xOQfXdSkT0vuwiGPC9ThZ4shC7uylRmUekqDcuRR6Aew7
-RppBiWzpvWTpNpGhOCuFOYh8leycSzpTprixqnbA60olKAwyfkg6gtWkKsJazlno
-DTkQjtdkztrinlQMcEicRdFJoPzzOxSTFzDCBcninlZ7SoK0pfm2W3me_sATHS0b
-pG3pMR56ek3DKvgMTZgs51Qy6XInPPZhhIb3G_fB8iYGqt3D_A7dyJn-vJDZO1it
-j-qYCnvcNJBJ2xQcoxHkfQ",
+3dJ2tlKGO02eW0EzY0tVojmoIxIv8hVLP1sJc1VJvZW0z2fzAQ1TfTCE_fqNuvYM
+BYOeOpPkqAt7K8mtd9JAkrOLxXZuUOgCO5WHnsdzoXMHoK8OiCsDUmoh_Dl-5XJY
+vIUEAwME2kGHtJaqCr5K2XFbydkzMoJDnCGv1KSEsLDEYVyCydKjRhBjsoOCUuvI
+hkt-5ewrRUDJS-ZzZKXa6zx2XvXVRiacvyU6X-_kQPC5ilXTL4i9TdvJk-gKg_Te
+OwDSiTjAqkE5O4iZyEmEZQvc4IZRuHaWalaf_s8edYbO26iF4pMxzos3EeEveH7W
+mCrXTvGuakzay9udKHjTHQ",
           "e": "
 AQAB"}}},
     "DeviceEncryptiontionKey": {
-      "UDF": "MCK5Y-7KP4O-UNALP-ZPN6B-NWIRD-W4WWO",
+      "UDF": "MCW27-PQHPW-74AOT-RXCIX-CUIXZ-7EBUB",
       "PublicParameters": {
         "PublicKeyRSA": {
-          "kid": "MCK5Y-7KP4O-UNALP-ZPN6B-NWIRD-W4WWO",
+          "kid": "MCW27-PQHPW-74AOT-RXCIX-CUIXZ-7EBUB",
           "n": "
-rIqI12aBC1rZhvTbD6lHjCXHbc4ZXZB_NdWgQKz1_Lym3PPVhYavmuH-ee6FqVQe
-OtVBAW6AoslagDEP9BokOrizA8iXa-_08-saMzzKd9F1Ti5Z8haxUNfOlOnpgwJT
-bjg-rf0qlWVJDOX5OvEsdw3G-3qt_fwBd5evoGR1RxzjSWgMdr5VXpBxFES9_s_L
-zcHrvj9MAVP3eCO9tuUoM0vFsR6nE10CiLjT2kxYbQfrS9IiYH5DKaBSXiy2a72P
-ubHlf2mhFGyikxoovNInAvSkOvZQAgctuVpX-_FwzTCky_V6qdIKtuEJs9aOxeLu
-ETEpCGHA4rjd66QihXGLzQ",
+r23uNrtz9PJLF1zjJGeLUDAfYD8DLrwyDdgje3_9YZwcHdSsvcIQSDRR7jyDQX1S
+fOW5pMlQCZhaiZxa6t-6f9GG6XAb_CfSEV32dNG_e8fjV25VaKNoVRrnmvFebG6V
+c0RJ9kyULLNoGVKypQkW19ewxOjH2KwmehL5OYQvLYdxDNsYXO0SB-24iTQVFmUj
+qS8p2A-GF0LwyqaVK-hG-Wtt10HlXVwB3eWwyuA8b2BUGAYrY0l1GIq9pU80i12f
+KpHtagYO__aseIeN6MQoaJsqi10UuA3r0duyiwtfFQchHWeUIC5tecbYZmGaXtLc
+XYgHGOtijUWA76ekSizEKQ",
           "e": "
 AQAB"}}}}}
 ~~~~
@@ -233,23 +233,23 @@ The Device Profile is signed using the Device Signing Key:
 ~~~~
 {
   "SignedDeviceProfile": {
-    "Identifier": "MDHG2-56YEL-PD6MX-MBGEG-62KMZ-MNOYS",
+    "Identifier": "MD5KV-HBVOU-RZ3WQ-IRLXU-2GDWW-DESDT",
     "SignedData": {
       "header": "
-ewogICJhbGciOiAiUlM1MTIiLAogICJraWQiOiAiTURIRzItNTZZRUwtUEQ2TVgt
-TUJHRUctNjJLTVotTU5PWVMifQ",
+ewogICJhbGciOiAiUlM1MTIiLAogICJraWQiOiAiTUQ1S1YtSEJWT1UtUlozV1Et
+SVJMWFUtMkdEV1ctREVTRFQifQ",
       "payload": "
-ewogICJEZXZpY2VQcm9maWxlIjogewogICAgIklkZW50aWZpZXIiOiAiTURIRzIt
-NTZZRUwtUEQ2TVgtTUJHRUctNjJLTVotTU5PWVMiLAogICAgIk5hbWVzIjogWyJB
+ewogICJEZXZpY2VQcm9maWxlIjogewogICAgIklkZW50aWZpZXIiOiAiTUQ1S1Yt
+SEJWT1UtUlozV1EtSVJMWFUtMkdEV1ctREVTRFQiLAogICAgIk5hbWVzIjogWyJB
 ...
 ICAgICAiZSI6ICIKQVFBQiJ9fX19fQ",
       "signature": "
-idvd-0t_ryaIsLb05sgn7trprxfIta_a3EmBYG_RaraxKOoNTsOAj665AWiDCaBm
-12prub2aw5CNh_BrPGbEQ813iQiiv4HcKAcG6ExEz3D7bGoo7oPJEsZW1vVyhjPI
-IdHpyNGiLski0lIn5suYvciKN2MIxzyPGiqIFKQqQu_m2IEZyiRv83I7tHyjwgyS
-O3bJ81bccJwJW7to_FEcrJIX062T1mdpZnVcBxLltFDv6BD3Ohg2qJWtsliv4hSc
-CnxIvVaguJZLF9_UxzoM_6G1FW41G7XeD7Xjs1Fn1WfcbexjQLbb6pwvvAdf2jTp
-Ujii5jakDUEEIiaigGYdag"}}}
+bVoMuXOqJPS2UpztTNjPnIXOyq5M-mJRpeQzdVUeR42d4qP5NyQraicnuA9mx7ve
+Va2F_fVbPFAatUEHPODkPvkjXlDGp8BjfGdEwUBP7wIAJt_Ct2xlQxR8V5LGvRfj
+RgNVsx1ggP3oe4bNlmifizA9OfFlwmInt-KXjqNMSAb2-KzeXsUe7KteEh1SGRPN
+uY2swGwNk4II9UdK-Okf7COOmCG46r-ALbfKO7rFrM7n6pqkFIiIYoUfl8eO820u
+ri92py33k_4-Z3wYi0ggqZC3EUZpRpr-t7sYcrFa-dQj1L677L77AnMqbAp53pEY
+yu2JkCdpzffaGxZuf6yXXw"}}}
 ~~~~
 
 A personal profile would typically contain at least one application
@@ -261,43 +261,43 @@ the device profile:
 ~~~~
 {
   "PersonalProfile": {
-    "Identifier": "MCYSX-N2ZJE-QLDDN-QKCKK-BX6WI-SH5DT",
+    "Identifier": "MBME7-5QLKZ-F2S5H-65W6T-56242-64XGL",
     "SignedMasterProfile": {
-      "Identifier": "MCYSX-N2ZJE-QLDDN-QKCKK-BX6WI-SH5DT",
+      "Identifier": "MBME7-5QLKZ-F2S5H-65W6T-56242-64XGL",
       "SignedData": {
         "header": "
-ewogICJhbGciOiAiUlM1MTIiLAogICJraWQiOiAiTUNZU1gtTjJaSkUtUUxERE4t
-UUtDS0stQlg2V0ktU0g1RFQifQ",
+ewogICJhbGciOiAiUlM1MTIiLAogICJraWQiOiAiTUJNRTctNVFMS1otRjJTNUgt
+NjVXNlQtNTYyNDItNjRYR0wifQ",
         "payload": "
-ewogICJNYXN0ZXJQcm9maWxlIjogewogICAgIklkZW50aWZpZXIiOiAiTUNZU1gt
-TjJaSkUtUUxERE4tUUtDS0stQlg2V0ktU0g1RFQiLAogICAgIk1hc3RlclNpZ25h
+ewogICJNYXN0ZXJQcm9maWxlIjogewogICAgIklkZW50aWZpZXIiOiAiTUJNRTct
+NVFMS1otRjJTNUgtNjVXNlQtNTYyNDItNjRYR0wiLAogICAgIk1hc3RlclNpZ25h
 ...
-QVFBQiJ9fX1dfX0",
+OiAiCkFRQUIifX19XX19",
         "signature": "
-Z62JdrViWelP6DTmi5gsrPezivFyj7NJjjqsACLWYdetcTR7s3dHnmeBDUOBc9w7
-aNVPGqWIdrkTRjojnj7fL6S3MCgBhtCsgKYIFPQvd5kzCnoYLTH0eTi_Y2CwPLJN
-Y2pbROk-8H5UNJeALbggasQtJ0OnI1_K8thPHQowa8E7oxWKYIkdv2BkwRrXn4Gt
-0DXulOx1-ZLgCtacbaCGv_p5J9oA5b7po8viV9IYHLQUngWkZnzzxT8t2JvX2nDK
-Z-JseezZl_kKGtzoYvjV_BNehHj9sXIPldme6pzg-E_c2ZYUbQTXNFAlrPPh7M4D
-fhmFSnafqKOcVkrRCCxIiw"}},
+bfMrHcF7jA8D3zI_tPV9lgbEdlL1SA6iH38DhT1RWoog6UTKV49U8_RH0YM446PN
+Mxjtwr0wEaGTYyM_D-8jHQMd2QsKG5Ioq9r8IIPIBggRDzu81NTiSDVP1KzHH04w
+cNfFg6HtIKrH9lbc6HwVyNfcKL9tTlDwSbasXxrMIWJfdpQ1_zhHgtblCBF862oY
+L_S9Tx4SlKYVqRqUgcKlitY6xxp1HLm-mA56ZbRLhbS9Dkx40Kck8OULjoZtyR4_
+U9N5PHhMzXc7x2R6wZ0eBIbBY5MHgA3x_PdvfvHier7MrJ7d0XdsbuIfzkEjx69-
+6xra2Doj-BTXASJjbqr7xg"}},
     "Devices": [{
-        "Identifier": "MDHG2-56YEL-PD6MX-MBGEG-62KMZ-MNOYS",
+        "Identifier": "MD5KV-HBVOU-RZ3WQ-IRLXU-2GDWW-DESDT",
         "SignedData": {
           "header": "
-ewogICJhbGciOiAiUlM1MTIiLAogICJraWQiOiAiTURIRzItNTZZRUwtUEQ2TVgt
-TUJHRUctNjJLTVotTU5PWVMifQ",
+ewogICJhbGciOiAiUlM1MTIiLAogICJraWQiOiAiTUQ1S1YtSEJWT1UtUlozV1Et
+SVJMWFUtMkdEV1ctREVTRFQifQ",
           "payload": "
-ewogICJEZXZpY2VQcm9maWxlIjogewogICAgIklkZW50aWZpZXIiOiAiTURIRzIt
-NTZZRUwtUEQ2TVgtTUJHRUctNjJLTVotTU5PWVMiLAogICAgIk5hbWVzIjogWyJB
+ewogICJEZXZpY2VQcm9maWxlIjogewogICAgIklkZW50aWZpZXIiOiAiTUQ1S1Yt
+SEJWT1UtUlozV1EtSVJMWFUtMkdEV1ctREVTRFQiLAogICAgIk5hbWVzIjogWyJB
 ...
 ICAgICAiZSI6ICIKQVFBQiJ9fX19fQ",
           "signature": "
-idvd-0t_ryaIsLb05sgn7trprxfIta_a3EmBYG_RaraxKOoNTsOAj665AWiDCaBm
-12prub2aw5CNh_BrPGbEQ813iQiiv4HcKAcG6ExEz3D7bGoo7oPJEsZW1vVyhjPI
-IdHpyNGiLski0lIn5suYvciKN2MIxzyPGiqIFKQqQu_m2IEZyiRv83I7tHyjwgyS
-O3bJ81bccJwJW7to_FEcrJIX062T1mdpZnVcBxLltFDv6BD3Ohg2qJWtsliv4hSc
-CnxIvVaguJZLF9_UxzoM_6G1FW41G7XeD7Xjs1Fn1WfcbexjQLbb6pwvvAdf2jTp
-Ujii5jakDUEEIiaigGYdag"}}],
+bVoMuXOqJPS2UpztTNjPnIXOyq5M-mJRpeQzdVUeR42d4qP5NyQraicnuA9mx7ve
+Va2F_fVbPFAatUEHPODkPvkjXlDGp8BjfGdEwUBP7wIAJt_Ct2xlQxR8V5LGvRfj
+RgNVsx1ggP3oe4bNlmifizA9OfFlwmInt-KXjqNMSAb2-KzeXsUe7KteEh1SGRPN
+uY2swGwNk4II9UdK-Okf7COOmCG46r-ALbfKO7rFrM7n6pqkFIiIYoUfl8eO820u
+ri92py33k_4-Z3wYi0ggqZC3EUZpRpr-t7sYcrFa-dQj1L677L77AnMqbAp53pEY
+yu2JkCdpzffaGxZuf6yXXw"}}],
     "Applications": []}}
 ~~~~
 
@@ -307,23 +307,23 @@ The personal profile is then signed using the Online Signing Key:
 ~~~~
 {
   "SignedPersonalProfile": {
-    "Identifier": "MCYSX-N2ZJE-QLDDN-QKCKK-BX6WI-SH5DT",
+    "Identifier": "MBME7-5QLKZ-F2S5H-65W6T-56242-64XGL",
     "SignedData": {
       "header": "
-ewogICJhbGciOiAiUlM1MTIiLAogICJraWQiOiAiTURIRzItNTZZRUwtUEQ2TVgt
-TUJHRUctNjJLTVotTU5PWVMifQ",
+ewogICJhbGciOiAiUlM1MTIiLAogICJraWQiOiAiTUQ1S1YtSEJWT1UtUlozV1Et
+SVJMWFUtMkdEV1ctREVTRFQifQ",
       "payload": "
-ewogICJQZXJzb25hbFByb2ZpbGUiOiB7CiAgICAiSWRlbnRpZmllciI6ICJNQ1lT
-WC1OMlpKRS1RTERETi1RS0NLSy1CWDZXSS1TSDVEVCIsCiAgICAiU2lnbmVkTWFz
+ewogICJQZXJzb25hbFByb2ZpbGUiOiB7CiAgICAiSWRlbnRpZmllciI6ICJNQk1F
+Ny01UUxLWi1GMlM1SC02NVc2VC01NjI0Mi02NFhHTCIsCiAgICAiU2lnbmVkTWFz
 ...
-RUVJaWFpZ0dZZGFnIn19XSwKICAgICJBcHBsaWNhdGlvbnMiOiBbXX19",
+Q2RwemZmYUd4WnVmNnlYWHcifX1dLAogICAgIkFwcGxpY2F0aW9ucyI6IFtdfX0",
       "signature": "
-lw5hDAGCQKDBmcrywjgpYiLaR1jI8Lh9L9h4c1qOxdK0Vup3bZnN7MQ3uj8JQQKi
--QC6L7otuPQXAYHQC9qZAv7nsbqZyziudh30XgIj0fp-vv4gRzNray_bVhTGf2IJ
-TkuFfudzJeiLx7YH-tiGbQG7dXNteZxtx3OAO7E-GecZEtHYZVInLC8K_B0iyg89
-O8wDHhlbnbfaBhXnp3-ey_AKDmHCAngu6PJMaqKcOrOqYcEPhiBDbzDVGk_Nvf5M
-F0aYS5s44qyj0CS-2ELvY_ng8e4OcybinPymYQzmRT3ewqQH_35ej_yKRYEXF9Mb
-5jnLuBB0vssaUfCruWc10w"}}}
+eHD-qDjWV3ya2wkwrnpVq6Dl80iPgowgT9IXym4ZHVBnRPJ2t3N6hSVVDQ5LIq6G
+XT5SAEvc0AQaXg6sIEYp9Wxe-joGjsRUc-cS22XGBllCn2WPz0a2Rp2Qu7X34VqI
+U49TlKx-YAAKM5fAnZ5DJT86DpwXrQBhrH0D1HG48wOVVUpliKN9czIb7Tu2bvbC
+6jxO-Oj7wJCnnkpH4_jXRLkcS1O9m6bIWhZ6oWf5EL0PHQxhrgfxuAfQxbuXgIyz
+byGmEcRD-OSl1bGMMzCPjgDhqvi7qQXqQynUo8k3ZpK-D2vChdUPs7LXhLisL2mM
+Ng_1pKoR7LHkTn3NES8LpQ"}}}
 ~~~~
 
 ###Publishing a new user profile
@@ -339,23 +339,23 @@ contains the requested account identifier and profile:
     "Account": "alice",
     "Profile": {
       "SignedPersonalProfile": {
-        "Identifier": "MCYSX-N2ZJE-QLDDN-QKCKK-BX6WI-SH5DT",
+        "Identifier": "MBME7-5QLKZ-F2S5H-65W6T-56242-64XGL",
         "SignedData": {
           "header": "
-ewogICJhbGciOiAiUlM1MTIiLAogICJraWQiOiAiTURIRzItNTZZRUwtUEQ2TVgt
-TUJHRUctNjJLTVotTU5PWVMifQ",
+ewogICJhbGciOiAiUlM1MTIiLAogICJraWQiOiAiTUQ1S1YtSEJWT1UtUlozV1Et
+SVJMWFUtMkdEV1ctREVTRFQifQ",
           "payload": "
-ewogICJQZXJzb25hbFByb2ZpbGUiOiB7CiAgICAiSWRlbnRpZmllciI6ICJNQ1lT
-WC1OMlpKRS1RTERETi1RS0NLSy1CWDZXSS1TSDVEVCIsCiAgICAiU2lnbmVkTWFz
+ewogICJQZXJzb25hbFByb2ZpbGUiOiB7CiAgICAiSWRlbnRpZmllciI6ICJNQk1F
+Ny01UUxLWi1GMlM1SC02NVc2VC01NjI0Mi02NFhHTCIsCiAgICAiU2lnbmVkTWFz
 ...
-RUVJaWFpZ0dZZGFnIn19XSwKICAgICJBcHBsaWNhdGlvbnMiOiBbXX19",
+Q2RwemZmYUd4WnVmNnlYWHcifX1dLAogICAgIkFwcGxpY2F0aW9ucyI6IFtdfX0",
           "signature": "
-lw5hDAGCQKDBmcrywjgpYiLaR1jI8Lh9L9h4c1qOxdK0Vup3bZnN7MQ3uj8JQQKi
--QC6L7otuPQXAYHQC9qZAv7nsbqZyziudh30XgIj0fp-vv4gRzNray_bVhTGf2IJ
-TkuFfudzJeiLx7YH-tiGbQG7dXNteZxtx3OAO7E-GecZEtHYZVInLC8K_B0iyg89
-O8wDHhlbnbfaBhXnp3-ey_AKDmHCAngu6PJMaqKcOrOqYcEPhiBDbzDVGk_Nvf5M
-F0aYS5s44qyj0CS-2ELvY_ng8e4OcybinPymYQzmRT3ewqQH_35ej_yKRYEXF9Mb
-5jnLuBB0vssaUfCruWc10w"}}}}}
+eHD-qDjWV3ya2wkwrnpVq6Dl80iPgowgT9IXym4ZHVBnRPJ2t3N6hSVVDQ5LIq6G
+XT5SAEvc0AQaXg6sIEYp9Wxe-joGjsRUc-cS22XGBllCn2WPz0a2Rp2Qu7X34VqI
+U49TlKx-YAAKM5fAnZ5DJT86DpwXrQBhrH0D1HG48wOVVUpliKN9czIb7Tu2bvbC
+6jxO-Oj7wJCnnkpH4_jXRLkcS1O9m6bIWhZ6oWf5EL0PHQxhrgfxuAfQxbuXgIyz
+byGmEcRD-OSl1bGMMzCPjgDhqvi7qQXqQynUo8k3ZpK-D2vChdUPs7LXhLisL2mM
+Ng_1pKoR7LHkTn3NES8LpQ"}}}}}
 ~~~~
 
 
@@ -416,49 +416,49 @@ but these private keys cannot be extracted from the device:
 ~~~~
 {
   "DeviceProfile": {
-    "Identifier": "MD3Y4-VINAO-XUXFY-XXVLG-P2S3P-DWF7B",
+    "Identifier": "MCVIL-CTGB4-PZ5C6-HEVNW-6KDYC-DOWTL",
     "Names": ["Alice Ring"],
     "Description": "A wearable ring computer bought.",
     "DeviceSignatureKey": {
-      "UDF": "MD3Y4-VINAO-XUXFY-XXVLG-P2S3P-DWF7B",
+      "UDF": "MCVIL-CTGB4-PZ5C6-HEVNW-6KDYC-DOWTL",
       "PublicParameters": {
         "PublicKeyRSA": {
-          "kid": "MD3Y4-VINAO-XUXFY-XXVLG-P2S3P-DWF7B",
+          "kid": "MCVIL-CTGB4-PZ5C6-HEVNW-6KDYC-DOWTL",
           "n": "
-xRZAYn1-fFaF9USY4jbiRdbliR4Q5-hVTZsGcMD1rCQC2qVO4EpE6O1ooRaxDJsO
-dxgvaxTc6FFplaeq_UGr0VWKwBldRRnhEPH1h_0ntVzLrCoN4iiFlp5d202u5bGF
-MqTiqOcrNmLNKfxZKWYRD6AOXGEKdqzPNJXt2FcrCySF6OwpfqK2YaSuVbT-7jmQ
-XfpRmKBPG3Es_3s25erbpYaZ4akrVYfkbpqb1cizXjU6DpQh3YeBp1dBITvHqGJ4
-6ioOXtqaBz7z_FkR9uLLKItnfC1_juZ-ZGx23KV3GlqgbPSkokfO9Bx0iAaOjQF2
-nGQoUKLSs8F8m1ZtDOih3Q",
+yI2IE3XwztAedhbQPd7lmDSarAphFyjS8WtjN_M1U7F15oUA0I6OA9ragkuP_uHG
+1oZwwJJtAaT__3ZhOra1p4z-aD9M-oskkjriKD_Lsk-T-gB7RTsvnhV9J8zy1s8N
+4tJCoq15N9mer5kDq3GZNTvknW2C6kWxZs1atj09lpqPVEf1cdrbWNiZGHkF4PfV
+m_9ze5lWloxVUJDQnIStVVJM4wk6_4H-18U7aMu53nN35OyvZct_0mMZJwfgE5d3
+MLWfQOMUzxGpOr1nc4yfczCJ8mCFgIds9LwW3ZITGGzr2-63h-uP6vbEUuMPRcRc
+INsHzCPxnnZnx1FU6-Gb5Q",
           "e": "
 AQAB"}}},
     "DeviceAuthenticationKey": {
-      "UDF": "MCH3P-MHV4V-GT4JP-NISSF-TDZIT-ZFI22",
+      "UDF": "MDH7T-2RHBX-X6G4K-52G4Z-4EF6A-PSTPI",
       "PublicParameters": {
         "PublicKeyRSA": {
-          "kid": "MCH3P-MHV4V-GT4JP-NISSF-TDZIT-ZFI22",
+          "kid": "MDH7T-2RHBX-X6G4K-52G4Z-4EF6A-PSTPI",
           "n": "
-u6oeqakO9dqxNXQ-BuDhzWfHz2Zho7Q2Un0qBe6ynvTCAWiSC92OZIa35aqvG68s
-Bh8FP9z-11-6xlSBlDZnLQL0lwoIBvoCvh026puzUKvxc_Ku8vgCa8JcLeUNC4RM
-2phBNQnhCSfsaf0dn4hXXr4njKkim2Rsd2PZGIWZnsIFZiCIf68REqQQIynvnCEr
-2bo7TJD6VT7I0gR9-z-TfKL_X0z9wp2wFp2eDqlOUiXlb31xjVaqIPnZQDYKwWhV
-fn2QMj1LUd4rat-S-uLcQi3rf0YWaAL-yZIDSDokDjPd7SCrMkpQ3R3XlZglg9Hw
-7GqE5yQn1fG9jT8oodmuaQ",
+2jxA95p7DVmxyWl9uQI2CubzelVbhvHTL07WzfyGAn3GpY2lm-EQWUAPWFp4ENgJ
+aWPh8Bkd2pAFHPk0ptMRwBt9NksLtSfY1ww6HFDF9ovbtnezVa-lU2RMZ60jGwV3
+7MoWxqhMi51_XsbNzq__YsYOnicYAodvEicWrgl5WRkLR68c4kOR399m-u_HWfkK
+9p6mEhWRIbPp8baqkmNZCwRESQzow63fQLlo9wRANBgk3QXpFw0JM2Doj1YbcvX2
+gSLxBrWR2Ms-8pvuymRp0S47rCvMYgw65zQHu9SWwGZOktbC90ufSIdHQs2wz2O3
+jdlXrF6-O6FCadprIiVDmw",
           "e": "
 AQAB"}}},
     "DeviceEncryptiontionKey": {
-      "UDF": "MA2LR-P56A6-2FFKZ-VPENT-FQQIE-36JKL",
+      "UDF": "MAGNJ-JRPDN-AUY6X-6TL3E-GMDCB-IWW2X",
       "PublicParameters": {
         "PublicKeyRSA": {
-          "kid": "MA2LR-P56A6-2FFKZ-VPENT-FQQIE-36JKL",
+          "kid": "MAGNJ-JRPDN-AUY6X-6TL3E-GMDCB-IWW2X",
           "n": "
-w31eutmZcwTg5-ydqqZATGFQYDIMtGsNeXYH12f4MSNpn8qpfxmjUnrz49OLB8HV
-lYNSAYE9xJJvN9_ld0KweUpUlob2eA3vstAg88SsobBAfvVzg7IGSzkm4hv9kP5_
-OPxmlFd3ST-PNipGDO2EGAHsKDWMR_GX0XXMFMbBKeK5BdISygsSmcRVYdIsAjxu
-HWTSALVbZ1eZ7oJbjhFZtmg2FZQ9vEofjLHMvYeecQrwRgqdowDqNMBWUUoF6PYG
-C2oGBToD-9oLAWNmHRzrR_Bqpe8Ca0yf0HP4VwjwZKf1w1oKusUPxZjF767dGOm9
-0XBUsNKZ2AqjGOHDil5vLQ",
+xE6MD8YzTg3JAGgT1SV-IfOgQlFxlatXCzNtTR11aDSqEvGHF0-tTMHYb5YRUr_7
+ALMS0LcM6mDHBZky_x5eGLqllMwVY4j2aEe8KvJDOHX7i7vFXJuITPAJdfHF6TD3
+PSzHJKTWHB0UnCm41T29YBGgRKqjsdSJ9q6QZJ2v00AJtyoxEKAdsVeR8Hxe7ViW
+79vBN1Ks6qlTLYfYgRaBUPaRbKTwh9JwS4rfs2wBEAcz4SFSZB621_Lg2p52pAnT
+emNs7gaN4qJzK9g61TOPIryJ7UNejghyIsPkdXO4_7If0K2ZKEzaJXDEQR-9BGHh
+z-gg03MvfBa08Kc534bVSw",
           "e": "
 AQAB"}}}}}
 ~~~~
@@ -468,23 +468,23 @@ The device profile is then signed:
 ~~~~
 {
   "SignedDeviceProfile": {
-    "Identifier": "MD3Y4-VINAO-XUXFY-XXVLG-P2S3P-DWF7B",
+    "Identifier": "MCVIL-CTGB4-PZ5C6-HEVNW-6KDYC-DOWTL",
     "SignedData": {
       "header": "
-ewogICJhbGciOiAiUlM1MTIiLAogICJraWQiOiAiTUQzWTQtVklOQU8tWFVYRlkt
-WFhWTEctUDJTM1AtRFdGN0IifQ",
+ewogICJhbGciOiAiUlM1MTIiLAogICJraWQiOiAiTUNWSUwtQ1RHQjQtUFo1QzYt
+SEVWTlctNktEWUMtRE9XVEwifQ",
       "payload": "
-ewogICJEZXZpY2VQcm9maWxlIjogewogICAgIklkZW50aWZpZXIiOiAiTUQzWTQt
-VklOQU8tWFVYRlktWFhWTEctUDJTM1AtRFdGN0IiLAogICAgIk5hbWVzIjogWyJB
+ewogICJEZXZpY2VQcm9maWxlIjogewogICAgIklkZW50aWZpZXIiOiAiTUNWSUwt
+Q1RHQjQtUFo1QzYtSEVWTlctNktEWUMtRE9XVEwiLAogICAgIk5hbWVzIjogWyJB
 ...
 In19fX19",
       "signature": "
-icn0yA_KyQzIpL1C0xsH6s8ToPOinOo6Nw9fLmpx5t2UwT2JQIWUx_s75JGVpNzF
-2xQ7k08PEYKCn3wCdQ2BD0J1oPeBc8zNHcF_72Yyni3NtSSnVvjTZc3Qh5uajpuR
-ZHJ6f4S-lafM39qEbXLl3SexqKZMeoQsNPuDVUg8woXF50JAaVYqJv7PABYnmdz3
-NhdE46wPVoyUs8D9eTBPfpLV9EGOs-C_9p7fzq_yT2zA36xF35A86IUUxcCWEGW0
-LoyWkSiXM7CfSey-O8AU4bMpZZ7LI2XbQLPw3_4jUM48g0JDCP887PF_nDBZ1xyD
--SiNHaxUCw3hT-ls8w8jLQ"}}}
+TvOi_iILPNwTQxV65BVUadggB1OepKHlh8Pde8lzVBRBJIQhGGU2GWOogYDQVdE6
+a-23xs0ERPAzZmaMSy0-5S-VBO12H2tkz9CejqKFBuSq22hTejuLXmiWf5RjT2WV
+rUKvGgnqNldChFapd8FcCAiZ6g8J3LUO3hCQBThPpE0Z_-zXxBMJRA8d65WcIbL1
+QtZdUIyYfX69L-SptwaOW3Yvrn0q7a71KDnPv-FS5BUN9-lykM9Qvj_9K-epdxe8
+Aex3QdSdPpPeFL6RzLSiMvCu6veKs7X8OPaFaBN0NIcN6QhmNOfkk4giepDjSVDr
+5nqAHHqq-ndID7yRHJeVMA"}}}
 ~~~~
 
 ###Profile Authentication
@@ -535,23 +535,23 @@ The response contains the requested profile information.
     "StatusDescription": "Operation completed successfully",
     "Entries": [{
         "SignedPersonalProfile": {
-          "Identifier": "MCYSX-N2ZJE-QLDDN-QKCKK-BX6WI-SH5DT",
+          "Identifier": "MBME7-5QLKZ-F2S5H-65W6T-56242-64XGL",
           "SignedData": {
             "header": "
-ewogICJhbGciOiAiUlM1MTIiLAogICJraWQiOiAiTURIRzItNTZZRUwtUEQ2TVgt
-TUJHRUctNjJLTVotTU5PWVMifQ",
+ewogICJhbGciOiAiUlM1MTIiLAogICJraWQiOiAiTUQ1S1YtSEJWT1UtUlozV1Et
+SVJMWFUtMkdEV1ctREVTRFQifQ",
             "payload": "
-ewogICJQZXJzb25hbFByb2ZpbGUiOiB7CiAgICAiSWRlbnRpZmllciI6ICJNQ1lT
-WC1OMlpKRS1RTERETi1RS0NLSy1CWDZXSS1TSDVEVCIsCiAgICAiU2lnbmVkTWFz
+ewogICJQZXJzb25hbFByb2ZpbGUiOiB7CiAgICAiSWRlbnRpZmllciI6ICJNQk1F
+Ny01UUxLWi1GMlM1SC02NVc2VC01NjI0Mi02NFhHTCIsCiAgICAiU2lnbmVkTWFz
 ...
-RUVJaWFpZ0dZZGFnIn19XSwKICAgICJBcHBsaWNhdGlvbnMiOiBbXX19",
+Q2RwemZmYUd4WnVmNnlYWHcifX1dLAogICAgIkFwcGxpY2F0aW9ucyI6IFtdfX0",
             "signature": "
-lw5hDAGCQKDBmcrywjgpYiLaR1jI8Lh9L9h4c1qOxdK0Vup3bZnN7MQ3uj8JQQKi
--QC6L7otuPQXAYHQC9qZAv7nsbqZyziudh30XgIj0fp-vv4gRzNray_bVhTGf2IJ
-TkuFfudzJeiLx7YH-tiGbQG7dXNteZxtx3OAO7E-GecZEtHYZVInLC8K_B0iyg89
-O8wDHhlbnbfaBhXnp3-ey_AKDmHCAngu6PJMaqKcOrOqYcEPhiBDbzDVGk_Nvf5M
-F0aYS5s44qyj0CS-2ELvY_ng8e4OcybinPymYQzmRT3ewqQH_35ej_yKRYEXF9Mb
-5jnLuBB0vssaUfCruWc10w"}}}]}}
+eHD-qDjWV3ya2wkwrnpVq6Dl80iPgowgT9IXym4ZHVBnRPJ2t3N6hSVVDQ5LIq6G
+XT5SAEvc0AQaXg6sIEYp9Wxe-joGjsRUc-cS22XGBllCn2WPz0a2Rp2Qu7X34VqI
+U49TlKx-YAAKM5fAnZ5DJT86DpwXrQBhrH0D1HG48wOVVUpliKN9czIb7Tu2bvbC
+6jxO-Oj7wJCnnkpH4_jXRLkcS1O9m6bIWhZ6oWf5EL0PHQxhrgfxuAfQxbuXgIyz
+byGmEcRD-OSl1bGMMzCPjgDhqvi7qQXqQynUo8k3ZpK-D2vChdUPs7LXhLisL2mM
+Ng_1pKoR7LHkTn3NES8LpQ"}}}]}}
 ~~~~
 
 
@@ -607,23 +607,23 @@ client posts a device connection request to the portal:
 {
   "ConnectStartRequest": {
     "SignedRequest": {
-      "Identifier": "MD3Y4-VINAO-XUXFY-XXVLG-P2S3P-DWF7B",
+      "Identifier": "MCVIL-CTGB4-PZ5C6-HEVNW-6KDYC-DOWTL",
       "SignedData": {
         "header": "
-ewogICJhbGciOiAiUlM1MTIiLAogICJraWQiOiAiTUQzWTQtVklOQU8tWFVYRlkt
-WFhWTEctUDJTM1AtRFdGN0IifQ",
+ewogICJhbGciOiAiUlM1MTIiLAogICJraWQiOiAiTUNWSUwtQ1RHQjQtUFo1QzYt
+SEVWTlctNktEWUMtRE9XVEwifQ",
         "payload": "
 ewogICJDb25uZWN0aW9uUmVxdWVzdCI6IHsKICAgICJQYXJlbnRVREYiOiAiYWxp
-Y2UiLAogICAgIkRldmljZSI6IHsKICAgICAgIklkZW50aWZpZXIiOiAiTUQzWTQt
+Y2UiLAogICAgIkRldmljZSI6IHsKICAgICAgIklkZW50aWZpZXIiOiAiTUNWSUwt
 ...
-TFEifX19fQ",
+TUEifX19fQ",
         "signature": "
-Gi_02CTSxzyb_QKanU89a0ZuavOGzvtn6Lt-6A0xrlOeq1bcYsVdUG5j1d8SQDBI
-yiwZTCQGpzSPPCOjvHbPyr9dxzrPklJS81VznkMbZuSx6TSfqbspEd9oKiUyULEQ
-2hpjYAQOalBVKDOBa0VR8jqO5WXNVQ5P-ebs3EpCzl7V4o6f_OpUOYkZWPhX6ViH
-9aw1xUSeFBUPfMfgLOv11hoaQFcZPc54QUXNqr4SHIsZgBTNqlbjpVBa7OKA3rsL
-phsuzEW9KzMoUw6uPQGCU6iUxgkhWh-g1OI61BkkEJehajLK3U9CiCUP01oraofj
-zqYKnQnU_aljrfAQ-46JjA"}},
+fqo-gPmatR1SiIYjPJlPixWsDrp2PyLIJz8NgErqXSLKsOPoxLxlu-lJLZUCTk14
+hWgmb7ZI4c2WnEziHnuCQxJSLuFhF5mXWqE8Zb2Vun_OiQMiozzMSPYzRFraXA0U
+R8NG5J31nlvDmCBaD6O6dtDnqbTCFAPByydn1mQLeqmgmcVw4YYASt8NbOPaaLwM
+jASwQmGrk3vFJ4eh7ybU9RKlLNjbMDXubIkXUCnQzC3ipcveq-_6kM-bUxdpcTC1
+tq8G-aWDVGuMP1WweA86rjVQXkh8O-f4x2_96tWfmubS97EunBHBGs_xSo8AU26Y
+jRAgxs-76gXSN9-wJH77wA"}},
     "AccountID": "alice"}}
 ~~~~
 
@@ -665,23 +665,23 @@ The service responds with a list of pending requests:
 {
   "ConnectPendingResponse": {
     "Pending": [{
-        "Identifier": "MD3Y4-VINAO-XUXFY-XXVLG-P2S3P-DWF7B",
+        "Identifier": "MCVIL-CTGB4-PZ5C6-HEVNW-6KDYC-DOWTL",
         "SignedData": {
           "header": "
-ewogICJhbGciOiAiUlM1MTIiLAogICJraWQiOiAiTUQzWTQtVklOQU8tWFVYRlkt
-WFhWTEctUDJTM1AtRFdGN0IifQ",
+ewogICJhbGciOiAiUlM1MTIiLAogICJraWQiOiAiTUNWSUwtQ1RHQjQtUFo1QzYt
+SEVWTlctNktEWUMtRE9XVEwifQ",
           "payload": "
 ewogICJDb25uZWN0aW9uUmVxdWVzdCI6IHsKICAgICJQYXJlbnRVREYiOiAiYWxp
-Y2UiLAogICAgIkRldmljZSI6IHsKICAgICAgIklkZW50aWZpZXIiOiAiTUQzWTQt
+Y2UiLAogICAgIkRldmljZSI6IHsKICAgICAgIklkZW50aWZpZXIiOiAiTUNWSUwt
 ...
-TFEifX19fQ",
+TUEifX19fQ",
           "signature": "
-Gi_02CTSxzyb_QKanU89a0ZuavOGzvtn6Lt-6A0xrlOeq1bcYsVdUG5j1d8SQDBI
-yiwZTCQGpzSPPCOjvHbPyr9dxzrPklJS81VznkMbZuSx6TSfqbspEd9oKiUyULEQ
-2hpjYAQOalBVKDOBa0VR8jqO5WXNVQ5P-ebs3EpCzl7V4o6f_OpUOYkZWPhX6ViH
-9aw1xUSeFBUPfMfgLOv11hoaQFcZPc54QUXNqr4SHIsZgBTNqlbjpVBa7OKA3rsL
-phsuzEW9KzMoUw6uPQGCU6iUxgkhWh-g1OI61BkkEJehajLK3U9CiCUP01oraofj
-zqYKnQnU_aljrfAQ-46JjA"}}]}}
+fqo-gPmatR1SiIYjPJlPixWsDrp2PyLIJz8NgErqXSLKsOPoxLxlu-lJLZUCTk14
+hWgmb7ZI4c2WnEziHnuCQxJSLuFhF5mXWqE8Zb2Vun_OiQMiozzMSPYzRFraXA0U
+R8NG5J31nlvDmCBaD6O6dtDnqbTCFAPByydn1mQLeqmgmcVw4YYASt8NbOPaaLwM
+jASwQmGrk3vFJ4eh7ybU9RKlLNjbMDXubIkXUCnQzC3ipcveq-_6kM-bUxdpcTC1
+tq8G-aWDVGuMP1WweA86rjVQXkh8O-f4x2_96tWfmubS97EunBHBGs_xSo8AU26Y
+jRAgxs-76gXSN9-wJH77wA"}}]}}
 ~~~~
 
 
@@ -698,23 +698,23 @@ portal:
   "PublishRequest": {
     "Entry": {
       "SignedPersonalProfile": {
-        "Identifier": "MCYSX-N2ZJE-QLDDN-QKCKK-BX6WI-SH5DT",
+        "Identifier": "MBME7-5QLKZ-F2S5H-65W6T-56242-64XGL",
         "SignedData": {
           "header": "
-ewogICJhbGciOiAiUlM1MTIiLAogICJraWQiOiAiTURIRzItNTZZRUwtUEQ2TVgt
-TUJHRUctNjJLTVotTU5PWVMifQ",
+ewogICJhbGciOiAiUlM1MTIiLAogICJraWQiOiAiTUQ1S1YtSEJWT1UtUlozV1Et
+SVJMWFUtMkdEV1ctREVTRFQifQ",
           "payload": "
-ewogICJQZXJzb25hbFByb2ZpbGUiOiB7CiAgICAiSWRlbnRpZmllciI6ICJNQ1lT
-WC1OMlpKRS1RTERETi1RS0NLSy1CWDZXSS1TSDVEVCIsCiAgICAiU2lnbmVkTWFz
+ewogICJQZXJzb25hbFByb2ZpbGUiOiB7CiAgICAiSWRlbnRpZmllciI6ICJNQk1F
+Ny01UUxLWi1GMlM1SC02NVc2VC01NjI0Mi02NFhHTCIsCiAgICAiU2lnbmVkTWFz
 ...
-eFVDdzNoVC1sczh3OGpMUSJ9fV0sCiAgICAiQXBwbGljYXRpb25zIjogW119fQ",
+XX19",
           "signature": "
-i-zKSN2SQsNkZ436urCOOssErZbBZ366p_7YMSr1UeOevzRrMJECfpmPwKMLz8uf
-VLKz2IQd3WDAqFVXE329X81ksn_ny-LYwdCkky8tkZLZAV80BxxzCwOCxZosJQ6U
-KjXw-XBfP8vacKMoFTI3inlqirMg9DFLhI0xpCfdADmi3h_zbjAJEiGMduDGzoN1
-Mfo06IjNznmwP2l8EiO8NU9HBO1DxmbEGXfxXfeoMbxwvatg88zS3kruAlP9ZCTR
-kGrw-Gz3agKMnkUiqz-AGAxHBKwR3g-tX53clWh68BbRoVxIePsdNllS0GeFl6QA
-nb7SPHHMqU_rmj4g6XnmwQ"}}}}}
+KBtucC5HTlN6iAo6f28D2mSyD098n4vPywR_zKFIcrDhTrvv92fu7fUGnhQQ7FrA
+mzZxMC0mSX9B435y5qGF5V9OmPkAttF1kOIJDGF2ukGTGJb9sdxlsG70sVfNh7Hw
+ICoHHQAWz-SPWs144yRQ6GR7oTNZQ59hAztvz7sWZyDDhC14hYTqjE0wMwM42m9i
+hx4JHarupkh8QhD_PHchkYEvpNpHWMBjnTL_CoTF11hyfeP8XdSfaevr6IG97aR7
+SRY9pBX992Fa_d7emn-1zFfpGM726KPPqXPoRYZH4wUBwn4VeZPVFxvtN8HxhbJf
+DbTtcCNnvq1gE_KRdvFleg"}}}}}
 ~~~~
 
 
@@ -740,23 +740,23 @@ result which is posted to the portal using ConnectCompleteRequest:
 {
   "ConnectCompleteRequest": {
     "Result": {
-      "Identifier": "MD3Y4-VINAO-XUXFY-XXVLG-P2S3P-DWF7B",
+      "Identifier": "MCVIL-CTGB4-PZ5C6-HEVNW-6KDYC-DOWTL",
       "SignedData": {
         "header": "
-ewogICJhbGciOiAiUlM1MTIiLAogICJraWQiOiAiTURIRzItNTZZRUwtUEQ2TVgt
-TUJHRUctNjJLTVotTU5PWVMifQ",
+ewogICJhbGciOiAiUlM1MTIiLAogICJraWQiOiAiTUQ1S1YtSEJWT1UtUlozV1Et
+SVJMWFUtMkdEV1ctREVTRFQifQ",
         "payload": "
 ewogICJDb25uZWN0aW9uUmVzdWx0IjogewogICAgIkRldmljZSI6IHsKICAgICAg
-IklkZW50aWZpZXIiOiAiTUQzWTQtVklOQU8tWFVYRlktWFhWTEctUDJTM1AtRFdG
+IklkZW50aWZpZXIiOiAiTUNWSUwtQ1RHQjQtUFo1QzYtSEVWTlctNktEWUMtRE9X
 ...
 dGVkIn19",
         "signature": "
-P55MLHQaAl5dYtezIIJ9TORlsWzUHPzWWDyuwLwRzEdCd0nkYifinimy-iRJJtvf
-A7KCy2-owOz5OajVfr08UZq_9FYjmYYLfod9va2OkrK2V7RlzBVz33i4EV7ZBrER
-gQJSf9uKZyUPUGSqOvz2psour4iNJmB34Ux3cOuYFa1lPt5QnpvBPBZ5YCjMDZWi
-enSiQJIS9-h4TEiZ1-4z6nnXA-OUbfg7oRa7xaiX0RXcSWXhtBKLYC8J0XhF3elm
-zZoaiQ-X_MKNETau4BxRMuZ7BGKClmjLPqI3pLZN-WBY6_FY77LmMmF-trfhLvOA
-pScZan-nUUy3ALqeSnhkIA"}},
+CA5sAV3sJwAN5lN0X7Mm8HfUiGQ0tnRW-SEU05h50BnsgX1-KusdIwEc3eRKDRgl
+Rqxjx5Pwthisqw0kUG8zWKEW3pv1ODCnQQjobkxGWtd-QswMVITydQUS-d4iqo0h
+Pz3i3Zi_ojmd-XlHbsoy69W-XSztgohZ_9o6dP8wbjoKsHCKfcdaxXHrXNqBAM2t
+g7ZG6nN5br2tB3f1wE_0kfaXatBKFfmYLTjP1Izn7zpGZYf_aOWma406E7O1AK--
+vgQYlvGumeZLZ7tW1xqZT8dKgHHpcSX__f4cHo4XxdkO50EFlmrxDNzyyhptZBc1
+ksIRPzFoLpjZB38p8RmRfw"}},
     "AccountID": "alice"}}
 ~~~~
 
@@ -781,7 +781,7 @@ using ConnectStatusRequest:
 {
   "ConnectStatusRequest": {
     "AccountID": "alice",
-    "DeviceID": "MD3Y4-VINAO-XUXFY-XXVLG-P2S3P-DWF7B"}}
+    "DeviceID": "MCVIL-CTGB4-PZ5C6-HEVNW-6KDYC-DOWTL"}}
 ~~~~
 
 
@@ -794,23 +794,23 @@ retry interval. In this case however there is a connection result:
 {
   "ConnectStatusResponse": {
     "Result": {
-      "Identifier": "MD3Y4-VINAO-XUXFY-XXVLG-P2S3P-DWF7B",
+      "Identifier": "MCVIL-CTGB4-PZ5C6-HEVNW-6KDYC-DOWTL",
       "SignedData": {
         "header": "
-ewogICJhbGciOiAiUlM1MTIiLAogICJraWQiOiAiTURIRzItNTZZRUwtUEQ2TVgt
-TUJHRUctNjJLTVotTU5PWVMifQ",
+ewogICJhbGciOiAiUlM1MTIiLAogICJraWQiOiAiTUQ1S1YtSEJWT1UtUlozV1Et
+SVJMWFUtMkdEV1ctREVTRFQifQ",
         "payload": "
 ewogICJDb25uZWN0aW9uUmVzdWx0IjogewogICAgIkRldmljZSI6IHsKICAgICAg
-IklkZW50aWZpZXIiOiAiTUQzWTQtVklOQU8tWFVYRlktWFhWTEctUDJTM1AtRFdG
+IklkZW50aWZpZXIiOiAiTUNWSUwtQ1RHQjQtUFo1QzYtSEVWTlctNktEWUMtRE9X
 ...
 dGVkIn19",
         "signature": "
-P55MLHQaAl5dYtezIIJ9TORlsWzUHPzWWDyuwLwRzEdCd0nkYifinimy-iRJJtvf
-A7KCy2-owOz5OajVfr08UZq_9FYjmYYLfod9va2OkrK2V7RlzBVz33i4EV7ZBrER
-gQJSf9uKZyUPUGSqOvz2psour4iNJmB34Ux3cOuYFa1lPt5QnpvBPBZ5YCjMDZWi
-enSiQJIS9-h4TEiZ1-4z6nnXA-OUbfg7oRa7xaiX0RXcSWXhtBKLYC8J0XhF3elm
-zZoaiQ-X_MKNETau4BxRMuZ7BGKClmjLPqI3pLZN-WBY6_FY77LmMmF-trfhLvOA
-pScZan-nUUy3ALqeSnhkIA"}}}}
+CA5sAV3sJwAN5lN0X7Mm8HfUiGQ0tnRW-SEU05h50BnsgX1-KusdIwEc3eRKDRgl
+Rqxjx5Pwthisqw0kUG8zWKEW3pv1ODCnQQjobkxGWtd-QswMVITydQUS-d4iqo0h
+Pz3i3Zi_ojmd-XlHbsoy69W-XSztgohZ_9o6dP8wbjoKsHCKfcdaxXHrXNqBAM2t
+g7ZG6nN5br2tB3f1wE_0kfaXatBKFfmYLTjP1Izn7zpGZYf_aOWma406E7O1AK--
+vgQYlvGumeZLZ7tW1xqZT8dKgHHpcSX__f4cHo4XxdkO50EFlmrxDNzyyhptZBc1
+ksIRPzFoLpjZB38p8RmRfw"}}}}
 ~~~~
 
 
@@ -846,34 +846,34 @@ decrypted by the devices that hold a decryption key.
 ~~~~
 {
   "PasswordProfile": {
-    "Identifier": "MDSYN-PXEKK-QTTTR-3AS3H-MQLHC-DTO7G-A",
+    "Identifier": "MBVBG-SM37C-7P5OT-VRAUN-ZSQG5-3BAJW-A",
     "EncryptedData": {
       "protected": "
 ewogICJhbGciOiAiQUUxMjgifQ",
       "iv": "
-YhjmV0bW-w12tbGXvh-7tQ",
+WSE2zrH3Fz8snMqzno2zLQ",
       "ciphertext": "
-x7a9uxSL6F8KuFUhD75SrA3rQyucqgarZhBItIbr5BEmwt0Av3JHgdSJsZQhu2Wm",
+SRIoO5rXXBEwHKwWyeXO3xItPBDJv5e3EIuWomBX7gv2-f13l4q7SdpacyfENR8R",
       "recipients": [{
           "Header": {
-            "kid": "MCK5Y-7KP4O-UNALP-ZPN6B-NWIRD-W4WWO"},
+            "kid": "MCW27-PQHPW-74AOT-RXCIX-CUIXZ-7EBUB"},
           "encrypted_key": "
-n10q6FXujbyVwEiNLFVayIEdc5WkRTsl5Tnw4Va0hgbBmybSnOlH-JusvNl_YxIr
-dkwqVokQbq0H6pTlE4J_Vn00T4tsM4nYj3iuUvZi1_mf35-cKQpqbHGWbdA8FFpU
-hd-3GuA2wkvwnJBua-skOuZdZV1pYOycZXySZYyK2me5H7H8Q6_URhBbVZf8mqfv
-0Tqw3Jq3Q5PwOKhBHRG8EmmV6RPFgPPSPLb_NMCeX5w4NXTzQnwVdXc5hzyhIYHO
-VaoauB3rv9rcu2V3gmmSMzqTDkpAmoXBL1a9ybAoOPP_CtF2lg01FWs21FRMea8h
-Y40qz6OVHlzx-s4oWbXQyQ"},
+N7175Zjy5dDK48fc_Li7VCqXNt-wOe-st9JXRziYdL1mOQBrO-6Qhof0DzuX0tvO
+yZjuCTpUUj6ZQxhr2dUy0n22WCwk5b309uT2Sa-QQRe_2glICb1vpp0CLOiFU64V
+L08eg_Wy_9DG90jhIDWf-L5JoxD7BI2dZaGaEm51PU7nPu5DBPhdMejH-K_ZICNZ
+5YKBpQ5JlWnN0d3kK6NlYDCFakUCXLqZwj-SefNgobwAUIio3kn8_rlNfEFbBs8f
+9opA2k4w_e3bNs5fqsxW2iWQ_9P19l1IgefJioqWt9RniaSopYvJqyBTZiNC5IAY
+EJMZ4MnQqXcf7OCY02ddOw"},
         {
           "Header": {
-            "kid": "MA2LR-P56A6-2FFKZ-VPENT-FQQIE-36JKL"},
+            "kid": "MAGNJ-JRPDN-AUY6X-6TL3E-GMDCB-IWW2X"},
           "encrypted_key": "
-GV0tSrCJDBdvaEPPClEqTFt8s3xLPT6b7toIDu0EfBxFOAv_Ok23Gh87zlzzjWFM
-ljqz3r1DP30s4WQO8c2HaRTQ10vUIUal4SidobA-VQ-A1dm8b3q64WG1rkAA60sJ
-PxjTDEiNxamL03mMacdJ83MXGgA2Ob59JVyJjRaFLCBaL-vhE73A-NuEYpr1fLwp
-J-L1nqcKyHMzr6PWQtHkEw2T2icGN5cgNTSFhZH8YjtYzBAcE_wFjj1QaDXBCWYq
-BlMfZj1G-UolV0V5Pfk2IpLG_FVvXSNH7t1j7IDKtkoN2FityEXV-QQM4ui8rCBZ
-wSp6-m9PO1_ZvEIGXiWqsg"}]}}}
+FZluqAmcbm4F2uaTDNbRlBWe86MYLLCForKQBGdpEjTAZhoTlh80fPPg-VZHXZPm
+lM34SLrFBR4Fu-I13oRDzhluKSOoPviolzbBQOWJT4Z24fvqF7kNvkOa4c0NfQ5r
+g09gtitVO-w_xAH7cZw4f0Dz1nN1SosSRp9gAPnF5Pc91gjr5mxd-pf4iMBanfAq
+KTxq81FZRErCFoeFPOPZZ-bdIOmyt4jhd3_ILS_pvU_uZgBY2Rix2pWa6_ua5uGx
+OQ24h5fwKSJB6ibrl1FrGBn6Pgvg05FCJo-4LwoKCo6woGFNT-ubHz_tP0OcyPsE
+9RYsGzahx6XyTgXO_m7_Cg"}]}}}
 ~~~~
 
 The application profile is published to the Mesh in the same
@@ -885,23 +885,23 @@ way as any other profile update, via a a Publish transaction:
   "PublishRequest": {
     "Entry": {
       "SignedApplicationProfile": {
-        "Identifier": "MDSYN-PXEKK-QTTTR-3AS3H-MQLHC-DTO7G-A",
+        "Identifier": "MBVBG-SM37C-7P5OT-VRAUN-ZSQG5-3BAJW-A",
         "SignedData": {
           "header": "
-ewogICJhbGciOiAiUlM1MTIiLAogICJraWQiOiAiTURIRzItNTZZRUwtUEQ2TVgt
-TUJHRUctNjJLTVotTU5PWVMifQ",
+ewogICJhbGciOiAiUlM1MTIiLAogICJraWQiOiAiTUQ1S1YtSEJWT1UtUlozV1Et
+SVJMWFUtMkdEV1ctREVTRFQifQ",
           "payload": "
-ewogICJQYXNzd29yZFByb2ZpbGUiOiB7CiAgICAiSWRlbnRpZmllciI6ICJNRFNZ
-Ti1QWEVLSy1RVFRUUi0zQVMzSC1NUUxIQy1EVE83Ry1BIiwKICAgICJFbmNyeXB0
+ewogICJQYXNzd29yZFByb2ZpbGUiOiB7CiAgICAiSWRlbnRpZmllciI6ICJNQlZC
+Ry1TTTM3Qy03UDVPVC1WUkFVTi1aU1FHNS0zQkFKVy1BIiwKICAgICJFbmNyeXB0
 ...
-Vi1RUU00dWk4ckNCWgp3U3A2LW05UE8xX1p2RUlHWGlXcXNnIn1dfX19",
+Ykh6X3RQME9jeVBzRQo5UllzR3phaHg2WHlUZ1hPX203X0NnIn1dfX19",
           "signature": "
-W4gtRKsZ5bzv3kWjqNYwcbIVFEkOJFaptQYJVfU9q4lrbU6X44Iqy_CiL3Gcs_GF
-vt-WOnNnze8X7C72e_drqHeBA8aLDBmRZ7h9lLH8K0TsA6ZqKhHDr567bqil1H73
-x4t1R2gSJ9Lo_wIDi9pZx3r7BfMp_spQjiexlL88ETalUGgU0zm3Go2ndkxdNLm1
-ZZHG61vyEqkepqw6LfNUxOCGUmG2MXyh1Rg-N9ZAtKXQBeN1plZXPK_Xkhy7dL36
-43qCnDhwaUxFfT9cUBr83NF1AkIbwdBsu1mPat62DbZhq0qLWz3auYPCcnTJA9FY
-5rq2uxpDHyZkBabelTc0Ig"}}}}}
+EyUDZ1nV-NmTzLSSOpbdPwdQMPA9dIY670l6MaH8Y6ZMsxniXdZ2lnVeRh3G0PHx
+FLyBRuZ_YfkcIc93DE03EghRHQjot61GiwyjCS5PQxd-8tgJ2VaNRFHATjDEXaN6
+tPzG-NIE2wovDG_oqd5sm5i0OSD8ajI7Wn2t-UCGNYbNT8P8vQUB5TY6FxyH1V-v
+9mpbiq-ZnHgPWTCvA0ryUuTPhMKdmB-nGJVUizRTUqli0YKgFI5nsFhjsRzooHPS
+w0noHsAISW4nakvV2i0Zf6gZm79UdR1s410c7A6t-qnGFDaUssrrQMb8v1rVUZXO
+CxmgtW3EEUFjE_GVv830ow"}}}}}
 ~~~~
 
 
@@ -928,23 +928,23 @@ adds it to the personal profile and publishes it:
   "PublishRequest": {
     "Entry": {
       "SignedPersonalProfile": {
-        "Identifier": "MCYSX-N2ZJE-QLDDN-QKCKK-BX6WI-SH5DT",
+        "Identifier": "MBME7-5QLKZ-F2S5H-65W6T-56242-64XGL",
         "SignedData": {
           "header": "
-ewogICJhbGciOiAiUlM1MTIiLAogICJraWQiOiAiTURIRzItNTZZRUwtUEQ2TVgt
-TUJHRUctNjJLTVotTU5PWVMifQ",
+ewogICJhbGciOiAiUlM1MTIiLAogICJraWQiOiAiTUQ1S1YtSEJWT1UtUlozV1Et
+SVJMWFUtMkdEV1ctREVTRFQifQ",
           "payload": "
-ewogICJQZXJzb25hbFByb2ZpbGUiOiB7CiAgICAiSWRlbnRpZmllciI6ICJNQ1lT
-WC1OMlpKRS1RTERETi1RS0NLSy1CWDZXSS1TSDVEVCIsCiAgICAiU2lnbmVkTWFz
+ewogICJQZXJzb25hbFByb2ZpbGUiOiB7CiAgICAiSWRlbnRpZmllciI6ICJNQk1F
+Ny01UUxLWi1GMlM1SC02NVc2VC01NjI0Mi02NFhHTCIsCiAgICAiU2lnbmVkTWFz
 ...
-eFVDdzNoVC1sczh3OGpMUSJ9fV0sCiAgICAiQXBwbGljYXRpb25zIjogW119fQ",
+XX19",
           "signature": "
-i-zKSN2SQsNkZ436urCOOssErZbBZ366p_7YMSr1UeOevzRrMJECfpmPwKMLz8uf
-VLKz2IQd3WDAqFVXE329X81ksn_ny-LYwdCkky8tkZLZAV80BxxzCwOCxZosJQ6U
-KjXw-XBfP8vacKMoFTI3inlqirMg9DFLhI0xpCfdADmi3h_zbjAJEiGMduDGzoN1
-Mfo06IjNznmwP2l8EiO8NU9HBO1DxmbEGXfxXfeoMbxwvatg88zS3kruAlP9ZCTR
-kGrw-Gz3agKMnkUiqz-AGAxHBKwR3g-tX53clWh68BbRoVxIePsdNllS0GeFl6QA
-nb7SPHHMqU_rmj4g6XnmwQ"}}}}}
+KBtucC5HTlN6iAo6f28D2mSyD098n4vPywR_zKFIcrDhTrvv92fu7fUGnhQQ7FrA
+mzZxMC0mSX9B435y5qGF5V9OmPkAttF1kOIJDGF2ukGTGJb9sdxlsG70sVfNh7Hw
+ICoHHQAWz-SPWs144yRQ6GR7oTNZQ59hAztvz7sWZyDDhC14hYTqjE0wMwM42m9i
+hx4JHarupkh8QhD_PHchkYEvpNpHWMBjnTL_CoTF11hyfeP8XdSfaevr6IG97aR7
+SRY9pBX992Fa_d7emn-1zFfpGM726KPPqXPoRYZH4wUBwn4VeZPVFxvtN8HxhbJf
+DbTtcCNnvq1gE_KRdvFleg"}}}}}
 ~~~~
 
 
@@ -1008,17 +1008,17 @@ transaction:
   "PublishRequest": {
     "Entry": {
       "OfflineEscrowEntry": {
-        "Identifier": "MBDX3-63TCV-RO5RV-QMR6G-MI4AQ-LBYQS",
+        "Identifier": "MBV4Z-UA6GF-V6CNW-4NUXK-2OUXY-WXQBI",
         "EncryptedData": {
           "protected": "
 ewogICJhbGciOiAiQUUxMjgifQ",
           "iv": "
-FElCo3Cf5Ux3uIIL-uFd0A",
+Fax_AbuoHWJeo-mRmR6byw",
           "ciphertext": "
-T4NJQZiGiZNfxdmz6R15zWRRCC5PiBbEM3PDnEbNHfaS0hrTNndAWIg5H5YujmfT
-mJHWrkCR1r0_HNrniwUEb3BjbeK6DzJsqasYJLP5i798m0jLoxbISh1J9Ld6OeoU
+PDgUy1j1aohZKEJauezEYlhbw3N9AuIfNgaDgED8xvL539HceNxtJC7IF1b5vv_P
+UQMLbgp6ja5xr8oFlTl4HMLZQd0-5uJVPZ-swrfCjq5pdvfzsIE6-u3isB2ol1pm
 ...
-0wxkGrh3HHXyhxtGGhZwUk9849UuEl-7j6pBpKPT2PRDr0rQSm9FdbU-k07t9TJB"}}}}}
+1Ei4FQqmTZyFuH6oKiKqGRek4q_yuOmS3fhIzuKp1ov-d5j_Nzmyi0uJ_zUO_dQm"}}}}}
 ~~~~
 
 
@@ -1045,7 +1045,7 @@ to use as the locator in a Get transaction:
 ~~~~
 {
   "GetRequest": {
-    "Identifier": "MBDX3-63TCV-RO5RV-QMR6G-MI4AQ-LBYQS",
+    "Identifier": "MBV4Z-UA6GF-V6CNW-4NUXK-2OUXY-WXQBI",
     "Multiple": false}}
 ~~~~
 
@@ -1061,17 +1061,17 @@ requested data.
     "StatusDescription": "Operation completed successfully",
     "Entries": [{
         "OfflineEscrowEntry": {
-          "Identifier": "MBDX3-63TCV-RO5RV-QMR6G-MI4AQ-LBYQS",
+          "Identifier": "MBV4Z-UA6GF-V6CNW-4NUXK-2OUXY-WXQBI",
           "EncryptedData": {
             "protected": "
 ewogICJhbGciOiAiQUUxMjgifQ",
             "iv": "
-FElCo3Cf5Ux3uIIL-uFd0A",
+Fax_AbuoHWJeo-mRmR6byw",
             "ciphertext": "
-T4NJQZiGiZNfxdmz6R15zWRRCC5PiBbEM3PDnEbNHfaS0hrTNndAWIg5H5YujmfT
-mJHWrkCR1r0_HNrniwUEb3BjbeK6DzJsqasYJLP5i798m0jLoxbISh1J9Ld6OeoU
+PDgUy1j1aohZKEJauezEYlhbw3N9AuIfNgaDgED8xvL539HceNxtJC7IF1b5vv_P
+UQMLbgp6ja5xr8oFlTl4HMLZQd0-5uJVPZ-swrfCjq5pdvfzsIE6-u3isB2ol1pm
 ...
-0wxkGrh3HHXyhxtGGhZwUk9849UuEl-7j6pBpKPT2PRDr0rQSm9FdbU-k07t9TJB"}}}]}}
+1Ei4FQqmTZyFuH6oKiKqGRek4q_yuOmS3fhIzuKp1ov-d5j_Nzmyi0uJ_zUO_dQm"}}}]}}
 ~~~~
 
 

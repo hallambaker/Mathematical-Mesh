@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Goedel.Mesh;
@@ -28,7 +29,7 @@ namespace PHB.Apps.Mesh.ProfileManager {
 
 
     public partial class NameDevice {
-
+        public string Gotit = "no";
         ProfileManager ProfileManager { get { return Model as ProfileManager; } }
 
         public override void Initialize(Wizard Wizard) {
@@ -41,6 +42,7 @@ namespace PHB.Apps.Mesh.ProfileManager {
             if (ProfileManager.RegistrationMachine.Device == null) {
                 NewDeviceProfile.Value = true;
                 NewDeviceProfile.ReadOnly = true;
+                Gotit = "Yep";
                 }
             }
 
@@ -80,7 +82,7 @@ namespace PHB.Apps.Mesh.ProfileManager {
         public override bool Dispatch(Wizard Wizard) {
             this.Wizard = Wizard;
 
-            WizardCreateProfile.StartTaskPersonalProfile(); // start the profile creation task
+            //WizardCreateProfile.StartTaskPersonalProfile(); // start the profile creation task
 
 
             return true;
@@ -127,6 +129,10 @@ namespace PHB.Apps.Mesh.ProfileManager {
         }
 
     public partial class SelectApplications {
+
+        // The dialogs for each of the commands
+        public WebOptions WebOptions;
+
         public override bool Dispatch() {
             return base.Dispatch();
             }
@@ -141,32 +147,34 @@ namespace PHB.Apps.Mesh.ProfileManager {
 
         public override void Initialize(Wizard Wizard) {
             this.Wizard = Wizard;
-            // here we perform all the necessary keygens
+
+            // here we perform all the necessary profile building, etc.
+
+            WizardCreateProfile.Calculate();
+
 
             var PersonalProfile = WizardCreateProfile.PersonalProfile;
-
-            //
             FriendlyName.Value = WizardCreateProfile.FriendlyName;
             Fingerprint.Value = PersonalProfile.UDF;
+            Fingerprint.Length = 64;
             MeshAddress.Value = WizardCreateProfile.MeshAddress;
+            MeshAddress.Length = 64;
 
+            Escrow.Value = WizardCreateProfile.EscrowKeys;
+            Quorum.Value = WizardCreateProfile.EscrowQuorum;
+            Shares.Value = WizardCreateProfile.EscrowKeyShares;
 
+            if (WizardCreateProfile.WebApplicationProfile) {
+                WebApplication.Value = true;
+                Passwords.Value = WizardCreateProfile.WebApplicationPassword;
+                Bookmarks.Value = WizardCreateProfile.WebApplicationBookmarks;
+                }
 
             }
 
 
         public override bool Dispatch(Wizard Wizard) {
-            this.Wizard = Wizard;
-
-            var SignedProfile = new SignedPersonalProfile(WizardCreateProfile.PersonalProfile);
-
-            var Registration = ProfileManager.RegistrationMachine.Add(SignedProfile,
-                    WizardCreateProfile.MeshAddress);
-
-            var MeshClient = ProfileManager.GetCachedClient(WizardCreateProfile.PortalAddress);
-            MeshClient.CreatePersonalProfile(WizardCreateProfile.MeshAddress, SignedProfile);
-
-            return true;
+            return WizardCreateProfile.Save();
             }
         }
 
@@ -193,8 +201,23 @@ namespace PHB.Apps.Mesh.ProfileManager {
 
         public string MeshAddress { get { return PortalAccount + "@" + PortalAddress; } }
 
+        public bool EscrowKeys { get { return CreateProfile.Escrow.Test; } }
+        public int EscrowQuorum { get { return CreateProfile.Quorum.Test; } }
+        public int EscrowShares { get { return CreateProfile.Shares.Test; } }
+
+        public bool WebApplicationProfile { get { return SelectApplications.WebOptions != null; } }
+        public bool WebApplicationPassword { get { return SelectApplications.WebOptions.Passwords.Test; } }
+        public bool WebApplicationBookmarks { get { return SelectApplications.WebOptions.Bookmarks.Test; } }
+
+
+        public List<Goedel.Trojan.Object> EscrowKeyShares = null;
+
         SignedDeviceProfile _DeviceProfile;
         PersonalProfile _PersonalProfile;
+        SignedPersonalProfile _SignedPersonalProfile;
+        PasswordProfile PasswordProfile;
+        SignedApplicationProfile SignedPasswordProfile;
+
 
         /// <summary>
         /// The device profile. This takes some time to generate and so the process is performed 
@@ -202,7 +225,7 @@ namespace PHB.Apps.Mesh.ProfileManager {
         /// </summary>
         public SignedDeviceProfile DeviceProfile {
             get {
-                TaskGetProfiles.Wait();
+                //TaskGetProfiles.Wait();
                 return _DeviceProfile;
                 }
             }
@@ -213,7 +236,7 @@ namespace PHB.Apps.Mesh.ProfileManager {
         /// </summary>
         public PersonalProfile PersonalProfile {
             get {
-                TaskGetProfiles.Wait();
+                //TaskGetProfiles.Wait();
                 return _PersonalProfile;
                 }
             }
@@ -223,42 +246,124 @@ namespace PHB.Apps.Mesh.ProfileManager {
             }
 
 
-        public override bool Dispatch() {
-            // attach the new personal profile to the list of selected.
+        public bool Calculate() {
+
+            if (NewDeviceProfile) {
+                var NewProfile = new SignedDeviceProfile(DeviceName, DeviceDescription);
+                _DeviceProfile = NewProfile;
+                }
+            else {
+                _DeviceProfile = ProfileManager.RegistrationMachine.Device.Device;
+                }
+            _PersonalProfile = new PersonalProfile(_DeviceProfile);
 
 
-            ProfileManager.RegistrationMachine.Add(DeviceProfile);
+            // Have got the profile, escrow the key
+            if (EscrowKeys) {
+                var OfflineEscrowEntry = new
+                    OfflineEscrowEntry(_PersonalProfile, EscrowShares, EscrowQuorum);
 
-            var SignedPersonalProfile = PersonalProfile.Signed;
+                EscrowKeyShares = new List<Goedel.Trojan.Object>();
 
-            ProfileManager.RegistrationMachine.Add(SignedPersonalProfile, MeshAddress);
+                int Index = 1;
+                foreach (var KeyShare in OfflineEscrowEntry.KeyShares) {
+                    var Share = new Share();
+                    Share.Number.Value = Index++;
+                    Share.Value.Value = KeyShare.Text;
+                    EscrowKeyShares.Add(Share);
+                    }
+                }
+
+            if (WebApplicationProfile) {
+                PasswordProfile = new PasswordProfile(PersonalProfile);
+                PasswordProfile.AddDevice(_DeviceProfile);
+                }
+
+            // Mail profiles here
+            /*
+                             foreach (var MailAccountInfo in MailAccountInfos) {
+                                // Add in the S/MIME parameters and update the profile
+                                //if (!MailAccountInfo.GotSMIME) {
+                                    MailAccountInfo.GenerateSMIME();
+                                    MailAccountInfo.Update();
+                                    //}
+
+                                var MailProfile = new MailProfile(UserProfile, MailAccountInfo);
+                                MailProfile.AddDevice(ThisDevice);
+
+                                //var SignedMailProfile = new SignedApplicationProfile(MailProfile);
+                                MeshClient.Publish(MailProfile.Signed);
+                                }
+             * */
+
+            // Network profiles here
+            /*
+                                var NetworkProfile = new NetworkProfile(UserProfile);
+                                NetworkProfile.AddDevice(ThisDevice);
+                                MeshClient.Publish(NetworkProfile.Signed);
+            */
+
+            // SSH profiles here
+
+
+            SignedPasswordProfile = PasswordProfile.Signed;
+            _SignedPersonalProfile = new SignedPersonalProfile(PersonalProfile);
 
             return true;
             }
 
-        public override void Exit () {
-            CancellationTokenSource.Cancel();
-            }
-
-
-        CancellationTokenSource CancellationTokenSource;
-        CancellationToken CancellationToken;
-        Task TaskGetProfiles = null;
-
-
-        /// <summary>
-        /// Called to start the generation of a personal profile. 
-        /// </summary>
-        public void StartTaskPersonalProfile() {
-            if (TaskGetProfiles != null) {
-                // We have a pending task, kill it.
-                CancellationTokenSource.Cancel();
+        
+        public bool Save() {
+   
+            if (NewDeviceProfile) {
+                ProfileManager.RegistrationMachine.Add(_DeviceProfile);
                 }
+            ProfileManager.RegistrationMachine.Add(_SignedPersonalProfile, MeshAddress);
+            ProfileManager.RegistrationMachine.Add(SignedPasswordProfile);
 
-            CancellationTokenSource = new CancellationTokenSource();
-            CancellationToken = CancellationTokenSource.Token;
-            TaskGetProfiles = Task.Run( () => AsyncGetProfiles(), CancellationToken);
+            var MeshClient = ProfileManager.GetCachedClient(PortalAddress);
+            MeshClient.CreatePersonalProfile(MeshAddress, _SignedPersonalProfile);
+            MeshClient.Publish(SignedPasswordProfile);
+
+            return true;
             }
+
+        //public override bool Dispatch() {
+        //    // attach the new personal profile to the list of selected.
+
+
+        //    //ProfileManager.RegistrationMachine.Add(DeviceProfile);
+
+        //    //var SignedPersonalProfile = PersonalProfile.Signed;
+
+        //    //ProfileManager.RegistrationMachine.Add(SignedPersonalProfile, MeshAddress);
+
+        //    return true;
+        //    }
+
+        //public override void Exit () {
+        //    CancellationTokenSource.Cancel();
+        //    }
+
+
+        //CancellationTokenSource CancellationTokenSource;
+        //CancellationToken CancellationToken;
+        //Task TaskGetProfiles = null;
+
+
+        ///// <summary>
+        ///// Called to start the generation of a personal profile. 
+        ///// </summary>
+        //public void StartTaskPersonalProfile() {
+        //    if (TaskGetProfiles != null) {
+        //        // We have a pending task, kill it.
+        //        CancellationTokenSource.Cancel();
+        //        }
+
+        //    CancellationTokenSource = new CancellationTokenSource();
+        //    CancellationToken = CancellationTokenSource.Token;
+        //    TaskGetProfiles = Task.Run( () => AsyncGetProfiles(), CancellationToken);
+        //    }
 
 
         /// <summary>
@@ -266,15 +371,7 @@ namespace PHB.Apps.Mesh.ProfileManager {
         /// just too confusing in the code.
         /// </summary>
         void AsyncGetProfiles() {
-            if (NewDeviceProfile) {
-                var NewProfile = new SignedDeviceProfile(DeviceName, DeviceDescription);
-                var Registration = ProfileManager.RegistrationMachine.Add(NewProfile);
-                _DeviceProfile = NewProfile;
-                }
-            else {
-                _DeviceProfile = ProfileManager.RegistrationMachine.Device.Device;
-                }
-            _PersonalProfile = new PersonalProfile(_DeviceProfile);
+
             }
 
 

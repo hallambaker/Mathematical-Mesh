@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdminDumpLog", "AdminDumpLog\AdminDumpLog.csproj", "{5B17F3FE-8CED-4DE6-BBBD-08C65B419F1D}"
 EndProject
@@ -80,6 +80,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Mesh.Platform (Windows)", "Goedel.Mesh.Windows\Goedel.Mesh.Platform (Windows).csproj", "{C378C917-F41D-4388-B467-EFD6677C4459}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Mesh.Platform (Windows)Tests", "Goedel.Mesh.Platform (Windows)Tests\Goedel.Mesh.Platform (Windows)Tests.csproj", "{3272DE86-EAE8-4F72-9B6E-4F1E46CA38D7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "meshman", "meshman\meshman.csproj", "{491511D6-D747-45E0-9382-61FCD89E1381}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -612,6 +614,24 @@ Global
 		{3272DE86-EAE8-4F72-9B6E-4F1E46CA38D7}.Release|x64.Build.0 = Release|Any CPU
 		{3272DE86-EAE8-4F72-9B6E-4F1E46CA38D7}.Release|x86.ActiveCfg = Release|Any CPU
 		{3272DE86-EAE8-4F72-9B6E-4F1E46CA38D7}.Release|x86.Build.0 = Release|Any CPU
+		{491511D6-D747-45E0-9382-61FCD89E1381}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{491511D6-D747-45E0-9382-61FCD89E1381}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{491511D6-D747-45E0-9382-61FCD89E1381}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{491511D6-D747-45E0-9382-61FCD89E1381}.Debug|x64.Build.0 = Debug|Any CPU
+		{491511D6-D747-45E0-9382-61FCD89E1381}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{491511D6-D747-45E0-9382-61FCD89E1381}.Debug|x86.Build.0 = Debug|Any CPU
+		{491511D6-D747-45E0-9382-61FCD89E1381}.RaspberryPi|Any CPU.ActiveCfg = Release|Any CPU
+		{491511D6-D747-45E0-9382-61FCD89E1381}.RaspberryPi|Any CPU.Build.0 = Release|Any CPU
+		{491511D6-D747-45E0-9382-61FCD89E1381}.RaspberryPi|x64.ActiveCfg = Release|Any CPU
+		{491511D6-D747-45E0-9382-61FCD89E1381}.RaspberryPi|x64.Build.0 = Release|Any CPU
+		{491511D6-D747-45E0-9382-61FCD89E1381}.RaspberryPi|x86.ActiveCfg = Release|Any CPU
+		{491511D6-D747-45E0-9382-61FCD89E1381}.RaspberryPi|x86.Build.0 = Release|Any CPU
+		{491511D6-D747-45E0-9382-61FCD89E1381}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{491511D6-D747-45E0-9382-61FCD89E1381}.Release|Any CPU.Build.0 = Release|Any CPU
+		{491511D6-D747-45E0-9382-61FCD89E1381}.Release|x64.ActiveCfg = Release|Any CPU
+		{491511D6-D747-45E0-9382-61FCD89E1381}.Release|x64.Build.0 = Release|Any CPU
+		{491511D6-D747-45E0-9382-61FCD89E1381}.Release|x86.ActiveCfg = Release|Any CPU
+		{491511D6-D747-45E0-9382-61FCD89E1381}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
