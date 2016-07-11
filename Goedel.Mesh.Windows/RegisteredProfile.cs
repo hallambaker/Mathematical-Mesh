@@ -105,7 +105,7 @@ namespace Goedel.Mesh.Platform {
         /// <summary>
         /// The most recent cached profile data, if available.
         /// </summary>
-        SignedProfile Profile;
+        public SignedPersonalProfile Profile;
 
         /// <summary>
         /// The profile fingerprint
@@ -559,6 +559,16 @@ namespace Goedel.Mesh.Platform {
             }
 
 
+        public bool GetID(string ID, out RegistrationDevice Registration) {
+            Registration = null;
+            return false;
+            }
+
+
+        public bool GetUDF (string UDF, out RegistrationDevice Registration) {
+            Registration = null;
+            return false;
+            }
 
         public static void Erase() {
 #pragma warning disable 162
@@ -570,7 +580,8 @@ namespace Goedel.Mesh.Platform {
             DirectoryDelete(Constants.NonRoamingRoot);     // Device specific profiles
 
             var Hive = Microsoft.Win32.Registry.CurrentUser;
-            Hive.DeleteSubKeyTree(Constants.RegistryRoot);
+
+            Hive.DeleteSubKeyTree(Constants.RegistryRoot, false);
 
 #pragma warning restore 162
             }

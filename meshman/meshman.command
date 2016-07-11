@@ -1,4 +1,4 @@
-﻿Class Goedel.Mesh.MeshMan MeshManShell
+﻿Class Goedel.Mesh.MeshMan Shell
 	Brief		"MatheMatical Mesh Key Manager"
 
 	Type NewFile			"file"
@@ -9,14 +9,58 @@
 		Brief "Report version and build date"
 
 
+	OptionSet Reporting
+		Option Verbose "verbose" Flag
+			Default "true"
+			Brief "Verbose reports (default)"
+		Option Report "report" Flag
+			Default "true"
+			Brief "Report results (default)"
+
+	OptionSet PortalAccount
+		Option Portal "portal" String
+			Brief "Portal account"
+		Option UDF "udf" String
+			Brief "Profile fingerprint"
+
+	OptionSet DeviceProfileInfo
+		Option DeviceNew "new" Flag
+			Brief "Force creation of new profile"
+		Option DeviceUDF "dudf" String
+			Brief "Device profile fingerprint"
+		Option DeviceID "did" String
+			Brief "Device identifier"
+		Option DeviceDescription "dd" String
+			Brief "Device description"
+
 	// For debugging
 	Command Reset "reset"
 		Brief "Delete all test profiles"
 		
 	// Profile management
-	Command Create "create"
+
+	Command Device "device"
+		Brief "Create new device profile"
+		Parameter DeviceID "id" String
+			Brief "Device identifier"
+		Parameter DeviceDescription "dd" String
+			Brief "Device description"
+		Option Default "default" Flag
+			Brief "Make the new device profile the default"
+
+	Command Personal "personal"
 		Brief "Create new personal profile"
-		Parameter Profile "profile" String
+		Parameter Portal "portal" String
+			Brief "New portal account"
+		Parameter Description "pd" String
+			Brief "Device description"
+		Include Reporting
+		Include DeviceProfileInfo
+
+
+		Option Next "next" Flag
+			Brief "If set ask the "
+
 
 	Command Register "register"
 		Brief "Register the specified profile at a new portal"
@@ -24,20 +68,17 @@
 			Brief "Profile fingerprint"
 		Parameter Portal "portal" String
 			Brief "New portal account"
+		Include Reporting
 
 	Command Sync "sync"
 		Brief "Synchronize local copies of Mesh profiles with the server"
-		Parameter Portal "portal" String
-			Brief "Portal account"
-		Parameter UDF "udf" String
-			Brief "Profile fingerprint"
+		Include PortalAccount
+		Include Reporting
 
 	Command Escrow "escrow"
 		Brief "Create a set of key escrow shares"
-		Parameter Portal "portal" String
-			Brief "Portal account"
-		Parameter UDF "udf" String
-			Brief "Profile fingerprint"
+		Include PortalAccount
+		Include Reporting
 		Option Quorum "quorum" integer
 		Option Shares "shares" integer
 
@@ -45,104 +86,90 @@
 	Command Export "export"
 		Brief "Export the specified profile data to the specified file"
 		Parameter File "file" NewFile
-		Parameter Portal "portal" String
-			Brief "Portal account"
-		Parameter UDF "udf" String
-			Brief "Profile fingerprint"
+		Include PortalAccount
+		Include Reporting
 
 	Command Import "import"
 		Brief "Import the specified profile data to the specified file"
 		Parameter File "file" NewFile
-		Parameter Portal "portal" String
-			Brief "Portal account"
-		Parameter UDF "udf" String
-			Brief "Profile fingerprint"
-
+		Include PortalAccount
+		Include Reporting
 
 	// Describe configuration
 	Command List "list"
-		Brief "List all profiles"
-		Parameter Portal "portal" String
-			Brief "Portal account"
-		Parameter UDF "udf" String
-			Brief "Profile fingerprint"
-		Parameter All "all" Flag
-			Brief "List all profiles"
-	
+		Brief "List all profiles on the local machine"
+		Include Reporting
+
+	Command Dump "dump"
+		Brief "Describe the specified profile"
+		Include PortalAccount
+		Include Reporting
+
+
 	// Connection related
 	Command Pending "pending"
 		Brief "Get list of pending connection requests"
-		Option Portal "portal" String
-			Brief "Portal account"
-	
+		Include PortalAccount
+		Include Reporting
+			
 	Command Connect "connect"
 		Brief "Connect to an existing profile registered at a portal"
-		Parameter UDF "udf" String
-			Brief "Profile fingerprint"
-		Option Portal "portal" String
-			Brief "Portal account"
+		Parameter Portal "portal" String
+			Brief "New portal account"
 		Option PIN "pin" String
 			Brief "One time use authenticator"
+		Include Reporting
+		Include DeviceProfileInfo
 
 	Command Accept "accept"
 		Brief "Accept a pending connection"
-		Parameter UDF "udf" String
+		Parameter DeviceUDF "udf" String
 			Brief "Fingerprint of connection to accept"
+		Include Reporting
+		Include PortalAccount
 
 	Command Complete "complete"
 		Brief "Complete a pending connection request"
-		Option Portal "portal" String
-			Brief "Portal account"
-		Parameter UDF "udf" String
-			Brief "Profile fingerprint"
-
+		Include Reporting
+		Include PortalAccount
 
 	// Application profiles
 	Command Web "web"
 		Brief "Add a web application profile to a personal profile"
-		Option Portal "portal" String
-			Brief "Portal account"
-		Parameter UDF "udf" string
-			Brief "Profile String"
+		Include PortalAccount
+		Include Reporting
 
 	Command AddPassword "pwa"
+		Brief "Add password entry"
 		Parameter Site "site" String
 		Parameter Username "user" String
 		Parameter Password "password" String
-		Option Portal "portal" String
-			Brief "Portal account"
-		Parameter UDF "udf" String
-			Brief "Profile fingerprint"
+		Include PortalAccount
+		Include Reporting
 
 	Command GetPassword "pwg"
+		Brief "Lookup password entry"
 		Parameter Site "site" String
-		Option Portal "portal" String
-			Brief "Portal account"
-		Parameter UDF "udf" string
-			Brief "Profile fingerprint"
+		Include PortalAccount
+		Include Reporting
 
 	Command DeletePassword "pwd"
+		Brief "Delete password entry"
 		Parameter Site "site" String
 			Brief "Domain name of Web site"
-		Option Portal "portal" String
-			Brief "Portal account"
-		Parameter UDF "udf" String
-			Brief "Profile fingerprint"
+		Include PortalAccount
+		Include Reporting
 
 	// Mail
 	Command Mail "mail"
 		Brief "Add a mail application profile to a personal profile"
 		Parameter address "address" String
 			Brief "Mail account to create profile from"
-		Option Portal "portal" String
-			Brief "Portal account"
-		Parameter UDF "udf" String
-			Brief "Profile fingerprint"
+		Include PortalAccount
+		Include Reporting
 
 	// SSH
 	Command SSH "ssh"
 		Brief "Add a ssh application profile to a personal profile"
-		Option Portal "portal" String
-			Brief "Portal account"
-		Parameter UDF "udf" String
-			Brief "Profile fingerprint"
+		Include PortalAccount
+		Include Reporting

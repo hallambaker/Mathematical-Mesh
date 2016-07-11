@@ -52,10 +52,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>BC1B3BF185F1AACD52CA38EFA49E43EE4C345803</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>F25A16E2BBBB6517F1E5126EE9B80BCCB093C5DA</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>ClientTrojan3_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>ClientTrojan3_1_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
@@ -115,6 +115,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="ClientTrojan3_1_TemporaryKey.pfx" />
     <None Include="ClientTrojan3_TemporaryKey.pfx" />
     <None Include="Interface.gui" />
     <None Include="packages.config" />
