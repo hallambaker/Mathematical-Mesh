@@ -34,7 +34,11 @@ namespace Goedel.Mesh {
     // In general it is useful to be able to consider a bundle of passwords 
     // as being part of the same application profile. 
     public partial class PasswordProfile : ApplicationProfile {
-        const string TypeTag = "PasswordProfile";
+
+        /// <summary>
+        /// The public type tag
+        /// </summary>
+        public const string TypeTag = "PasswordProfile";
 
         private PasswordProfilePrivate _Private;
 
@@ -61,28 +65,35 @@ namespace Goedel.Mesh {
                 }
             }
 
-
-
         /// <summary>
-        /// Create a new password profile and attach it to the specified
-        /// personal profile.
+        /// Initialize the private data
         /// </summary>
-        /// <param name="PersonalProfile">Personal profile to connect to</param>
-        public PasswordProfile(PersonalProfile PersonalProfile) :
-            this(PersonalProfile, null) { }
-
-
-        /// <summary>
-        /// Create a new password profile and attach it to the specified
-        /// personal profile.
-        /// </summary>
-        /// <param name="PersonalProfile">Personal profile to connect to</param>
-        /// <param name="Friendly">Friendly name to be used to distinguish
-        /// profiles of the same type</param>
-        public PasswordProfile(PersonalProfile PersonalProfile, string Friendly)
-            : base(PersonalProfile, TypeTag, Friendly) {
+        protected override void _Initialize() {
+            base._Initialize();
             _Private = new PasswordProfilePrivate();
             }
+
+        ///// <summary>
+        ///// Create a new password profile and attach it to the specified
+        ///// personal profile.
+        ///// </summary>
+        //public PasswordProfile() :
+        //    base() { }
+
+
+        ///// <summary>
+        ///// Create a new password profile and attach it to the specified
+        ///// personal profile.
+        ///// </summary>
+        ///// <param name="PersonalProfile">Personal profile to connect to</param>
+        ///// <param name="Friendly">Friendly name to be used to distinguish
+        ///// profiles of the same type</param>
+        //public PasswordProfile(PersonalProfile PersonalProfile, string Friendly)
+        //    : base(PersonalProfile, TypeTag, Friendly) {
+        //    _Private = new PasswordProfilePrivate();
+
+        //    PersonalProfile.Add(this);
+        //    }
 
 
         /// <summary>

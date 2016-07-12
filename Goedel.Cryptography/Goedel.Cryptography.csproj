@@ -57,6 +57,7 @@
     <Compile Include="Authentication.cs" />
     <Compile Include="Encryption.cs" />
     <Compile Include="KeyInfo.cs" />
+    <Compile Include="KeyLocate.cs" />
     <Compile Include="Keys.cs" />
     <Compile Include="KeyShare.cs" />
     <Compile Include="PKIX.cs">

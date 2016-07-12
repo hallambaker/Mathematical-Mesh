@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Goedel.Mesh;
+using Goedel.Debug;
 using Goedel.Mesh.Platform;
 
 namespace Goedel.Mesh.MeshMan {
@@ -29,6 +30,15 @@ namespace Goedel.Mesh.MeshMan {
                 }
             }
 
+        public void Repor(string Text, List<string> Items) {
+            if (!ReportOutput) return;
+            Console.Write(Text);
+            foreach (var Item in Items) {
+                Console.Write(" ");
+                Console.Write(Item);
+                }
+            }
+
         public void Report(string Text, params object[] Data) {
             if (ReportOutput) {
                 Console.WriteLine(Text, Data);
@@ -48,11 +58,12 @@ namespace Goedel.Mesh.MeshMan {
         private void GetProfile(String Portal, String UDF) {
 
             RegistrationPersonal = Machine.Personal;
+            Utilities.Assert(RegistrationPersonal, "No profile found");
 
-            Utilities.Assert(RegistrationPersonal != null, "No profile found");
+            PortalID = RegistrationPersonal?.Portals?[0];
+            Utilities.Assert(PortalID, "No portal ID known");
+
             SignedPersonalProfile = RegistrationPersonal.Profile;
-
-
             }
 
 

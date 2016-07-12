@@ -57,14 +57,14 @@ namespace Goedel.Mesh {
             get { return _Private.GetBytes(); }
             }
 
-        /// <summary>
-        /// Construct an empty network profile for the specified personal profile.
-        /// </summary>
-        /// <param name="UserProfile"></param>
-        public NetworkProfile (PersonalProfile UserProfile)
-            : base(UserProfile, "NetworkProfile", null) {
-            _Private = new NetworkProfilePrivate ();
-            }
+        ///// <summary>
+        ///// Construct an empty network profile for the specified personal profile.
+        ///// </summary>
+        ///// <param name="UserProfile"></param>
+        //public NetworkProfile (PersonalProfile UserProfile)
+        //    : base(UserProfile, "NetworkProfile", null) {
+        //    _Private = new NetworkProfilePrivate ();
+        //    }
 
 
         /// <summary>

@@ -161,35 +161,24 @@ namespace Goedel.Mesh {
             Devices.Add(DeviceProfile);
             }
 
-        ///// <summary>
-        ///// Add a device to the profile.
-        ///// </summary>
-        ///// <param name="DeviceProfile">The device profile to add</param>
-        //public void AddAdministrative(SignedDeviceProfile DeviceProfile) {
-        //    AdministrationProfile.AddDevice(DeviceProfile);
-        //    SignedAdministrationProfile = new SignedAdministrationProfile(
-        //                _AdministrationProfile, _PersonalMasterProfile);
-        //    }
-
         /// <summary>
         /// Add an application to the profile
         /// </summary>
         /// <param name="ApplicationProfile">The application profile to add.</param>
-        public void Add(ApplicationProfile ApplicationProfile) {
+        /// <returns>The appliccation profile entry</returns>
+        public ApplicationProfileEntry Add(ApplicationProfile ApplicationProfile) {
 
             var ApplicationProfileEntry = new ApplicationProfileEntry();
 
+            ApplicationProfileEntry.Identifier = ApplicationProfile.Identifier;
+
+            if (Applications == null) {
+                Applications = new List<ApplicationProfileEntry>();
+                }
+
             Applications.Add(ApplicationProfileEntry);
+            return ApplicationProfileEntry;
             }
-
-
-
-
-        //public override void Package() {
-        //    foreach (var Application in Applications) {
-        //        Application.Package();
-        //        }
-        //    }
 
         /// <summary>
         /// Get the first application entry of the specified type.
@@ -270,11 +259,6 @@ namespace Goedel.Mesh {
                 }
             return null;
             }
-
-        //AdministrationProfile GetAdministrationProfile() {
-        //    var AdminProfile = GetApplication(typeof(AdministrationProfile), Constants.AdminKey);
-        //    return AdminProfile as AdministrationProfile;
-        //    }
 
 
         /// <summary>

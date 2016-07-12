@@ -110,8 +110,8 @@ namespace Goedel.Mesh.MeshMan {
 							Handle_Complete (Dispatch, args, 1);
 							break;
 							}
-						case "web" : {
-							Handle_Web (Dispatch, args, 1);
+						case "password" : {
+							Handle_Password (Dispatch, args, 1);
 							break;
 							}
 						case "pwa" : {
@@ -1364,23 +1364,23 @@ namespace Goedel.Mesh.MeshMan {
 			Dispatch.Complete (Options);
 
 			}
-		private enum TagType_Web {
+		private enum TagType_Password {
 			Portal,
 			UDF,
 			Verbose,
 			Report,
 			}
 
-		private static void Handle_Web (
+		private static void Handle_Password (
 					Shell Dispatch, string[] args, int index) {
-			Web		Options = new Web ();
+			Password		Options = new Password ();
 
 			var Registry = new Goedel.Registry.Registry ();
 
-			Options.Portal.Register ("portal", Registry, (int) TagType_Web.Portal);
-			Options.UDF.Register ("udf", Registry, (int) TagType_Web.UDF);
-			Options.Verbose.Register ("verbose", Registry, (int) TagType_Web.Verbose);
-			Options.Report.Register ("report", Registry, (int) TagType_Web.Report);
+			Options.Portal.Register ("portal", Registry, (int) TagType_Password.Portal);
+			Options.UDF.Register ("udf", Registry, (int) TagType_Password.UDF);
+			Options.Verbose.Register ("verbose", Registry, (int) TagType_Password.Verbose);
+			Options.Report.Register ("report", Registry, (int) TagType_Password.Report);
 
 
 #pragma warning disable 162
@@ -1389,12 +1389,12 @@ namespace Goedel.Mesh.MeshMan {
 					throw new System.Exception ("Unexpected parameter: " + args[i]);}			
 				string Rest = args [i].Substring (1);
 
-				TagType_Web TagType = (TagType_Web) Registry.Find (Rest);
+				TagType_Password TagType = (TagType_Password) Registry.Find (Rest);
 
 				// here have the cases for what to do with it.
 
 				switch (TagType) {
-					case TagType_Web.Portal : {
+					case TagType_Password.Portal : {
 						int OptionParams = Options.Portal.Tag (Rest);
 						
 						if (OptionParams>0 && ((i+1) < args.Length)) {
@@ -1405,7 +1405,7 @@ namespace Goedel.Mesh.MeshMan {
 							}
 						break;
 						}
-					case TagType_Web.UDF : {
+					case TagType_Password.UDF : {
 						int OptionParams = Options.UDF.Tag (Rest);
 						
 						if (OptionParams>0 && ((i+1) < args.Length)) {
@@ -1416,7 +1416,7 @@ namespace Goedel.Mesh.MeshMan {
 							}
 						break;
 						}
-					case TagType_Web.Verbose : {
+					case TagType_Password.Verbose : {
 						int OptionParams = Options.Verbose.Tag (Rest);
 						
 						if (OptionParams>0 && ((i+1) < args.Length)) {
@@ -1427,7 +1427,7 @@ namespace Goedel.Mesh.MeshMan {
 							}
 						break;
 						}
-					case TagType_Web.Report : {
+					case TagType_Password.Report : {
 						int OptionParams = Options.Report.Tag (Rest);
 						
 						if (OptionParams>0 && ((i+1) < args.Length)) {
@@ -1443,7 +1443,7 @@ namespace Goedel.Mesh.MeshMan {
 				}
 
 #pragma warning restore 162
-			Dispatch.Web (Options);
+			Dispatch.Password (Options);
 
 			}
 		private enum TagType_AddPassword {
@@ -2155,10 +2155,10 @@ namespace Goedel.Mesh.MeshMan {
 
 				{
 #pragma warning disable 219
-					Web		Dummy = new Web ();
+					Password		Dummy = new Password ();
 #pragma warning restore 219
 
-					Console.Write ("{0}web ", UsageFlag);
+					Console.Write ("{0}password ", UsageFlag);
 					Console.Write ("[{0}] ", Dummy.Portal.Usage ("portal", "value", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.UDF.Usage ("udf", "value", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.Verbose.Usage ("verbose", "value", UsageFlag));
@@ -2531,7 +2531,7 @@ namespace Goedel.Mesh.MeshMan {
         } // class Complete
 
 
-    public class _Web : Goedel.Registry.Dispatch {
+    public class _Password : Goedel.Registry.Dispatch {
 
 		public String			Portal = new  String ();
 
@@ -2544,8 +2544,8 @@ namespace Goedel.Mesh.MeshMan {
 
 		}
 
-    public partial class Web : _Web {
-        } // class Web
+    public partial class Password : _Password {
+        } // class Password
 
 
     public class _AddPassword : Goedel.Registry.Dispatch {
@@ -3219,16 +3219,16 @@ namespace Goedel.Mesh.MeshMan {
 							"UDF", Options.UDF);
 			Console.WriteLine ("Not Yet Implemented");
 			}
-		public virtual void Web ( Web Options
+		public virtual void Password ( Password Options
 				) {
 
 			char UsageFlag = '-';
 				{
 #pragma warning disable 219
-					Web		Dummy = new Web ();
+					Password		Dummy = new Password ();
 #pragma warning restore 219
 
-					Console.Write ("{0}web ", UsageFlag);
+					Console.Write ("{0}password ", UsageFlag);
 					Console.Write ("[{0}] ", Dummy.Portal.Usage ("portal", "value", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.UDF.Usage ("udf", "value", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.Verbose.Usage ("verbose", "value", UsageFlag));

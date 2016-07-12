@@ -136,7 +136,7 @@ namespace Goedel.Cryptography {
     /// <summary>
     /// Base class for all cryptographic key pairs.
     /// </summary>
-    public abstract class KeyPair : CryptoKey {
+    public abstract partial class KeyPair : CryptoKey {
         static bool _TestMode = false;
 
         /// <summary>
@@ -155,9 +155,7 @@ namespace Goedel.Cryptography {
             set { _TestMode = value; }
             }
 
-        static string ContainerPrefix {
-            get { return _TestMode ? "TEST:" : "mmm:";  }
-            }
+
 
         /// <summary>
         /// Returns a signature provider for the key (if the private portion is available).
@@ -195,11 +193,11 @@ namespace Goedel.Cryptography {
 
         /// <summary>
         /// Search all the local machine stores to find a key pair with the specified
-        /// fingerprint.
+        /// fingerprint
         /// </summary>
         /// <param name="UDF"></param>
         /// <returns></returns>
-        public static KeyPair FindLocal (string UDF) {
+        public static KeyPair FindLocal(string UDF) {
             var FindRSA = RSAKeyPair.FindLocal(UDF);
             if (FindRSA != null) {
                 return FindRSA;
@@ -208,14 +206,6 @@ namespace Goedel.Cryptography {
             return null;
             }
 
-        /// <summary>
-        /// Generate a key container name from a UDF fingerprint.
-        /// </summary>
-        /// <param name="UDF">UDF fingerprint value.</param>
-        /// <returns>The container name.</returns>
-        public static string ContainerName(string UDF) {
-            return (ContainerPrefix + UDF);
-            }
 
         /// <summary>
         /// The public key data formatted as a PKIX KeyInfo data blob.
@@ -266,7 +256,7 @@ namespace Goedel.Cryptography {
     /// utility functions that are shared by the signature and exchange 
     /// providers.
     /// </summary>
-    public class RSAKeyPair : KeyPair {
+    public partial class RSAKeyPair : KeyPair {
         /// <summary>
         /// Return the underlying .NET cryptographic provider.
         /// </summary>
@@ -331,25 +321,20 @@ namespace Goedel.Cryptography {
 
 
         bool _Exportable;
-        
-
 
 
         /// <summary>
-        /// Retrieve the private key from local storage.
+        /// Find a KeyPair with the specified container fingerprint in the local key store.
         /// </summary>
-        public override void GetPrivate() {
-            if (Provider.PublicOnly == false) {
-                return;
-                }
-            Goedel.Debug.Trace.WriteLine("Get Private for {0}", UDF);
-
-            var cp = new CspParameters();
-            cp.KeyContainerName = ContainerName(UDF);
-
-            _Provider = new RSACryptoServiceProvider(cp);
-
+        /// <param name="UDF">Fingerprint of key.</param>
+        /// <returns>RSAKeyPair</returns>
+        public static new RSAKeyPair FindLocal(string UDF) {
+            var Provider = PlatformLocateRSAProvider(UDF);
+            if (Provider == null) return null;
+            return new RSAKeyPair(Provider);
             }
+
+
 
 
 
@@ -401,30 +386,16 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="UDF">Fingerprint of key.</param>
         public RSAKeyPair(string UDF) {
-            _Provider = FindProvider(UDF);
+            _Provider = PlatformLocateRSAProvider(UDF);
             }
 
 
 
 
 
-        /// <summary>
-        /// Find a KeyPair with the specified container fingerprint in the local key store.
-        /// </summary>
-        /// <param name="UDF">Fingerprint of key.</param>
-        /// <returns>RSAKeyPair</returns>
-        public static new RSAKeyPair FindLocal(string UDF) {
-            var Provider = FindProvider(UDF);
-            if (Provider == null) return null;
-            return new RSAKeyPair(Provider);
-            }
 
-        // Utility functions for accessing the key store.
-        static RSACryptoServiceProvider FindProvider (string UDF) {
-            var Parameters = new CspParameters();
-            Parameters.KeyContainerName = ContainerName(UDF);
-            return new RSACryptoServiceProvider(Parameters);
-            }
+
+
 
         /// <summary>
         /// Generate a KeyPair from a .NET Provider.

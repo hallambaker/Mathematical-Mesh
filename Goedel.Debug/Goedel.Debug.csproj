@@ -49,8 +49,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Exception.cs" />
+    <Compile Include="Extension.cs" />
     <Compile Include="MyConsole.cs" />
     <Compile Include="Test.cs" />
+    <Compile Include="Trace.cs" />
     <Compile Include="Utilities.cs" />
     <Compile Include="Write.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

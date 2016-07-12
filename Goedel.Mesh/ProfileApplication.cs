@@ -62,28 +62,27 @@ namespace Goedel.Mesh {
 
 
         /// <summary>
-        /// Create a new application profile and add it to the UserProfile.
+        /// Protected initializer
         /// </summary>
-        /// <param name="PersonalProfile">The personal profile to attach to.</param>
-        /// <param name="Type">Application type</param>
-        /// <param name="Tag">Friendly name</param>
-        public ApplicationProfile(PersonalProfile PersonalProfile,
-                    string Type, string Tag) {
-            this.PersonalProfile = PersonalProfile;
-
+        protected override void _Initialize() {
             Identifier = Goedel.Cryptography.UDF.Random();
-
-            ApplicationProfileEntry = new ApplicationProfileEntry(this);
-            ApplicationProfileEntry.Friendly = Tag;
-
-
-            if (PersonalProfile.Applications == null) {
-                PersonalProfile.Applications = new List<ApplicationProfileEntry>();
-                }
-            PersonalProfile.Applications.Add(ApplicationProfileEntry);
             }
 
 
+        ///// <summary>
+        ///// Create a new application profile and add it to the UserProfile.
+        ///// </summary>
+        ///// <param name="PersonalProfile">The personal profile to attach to.</param>
+        ///// <param name="Type">Application type</param>
+        ///// <param name="Tag">Friendly name</param>
+        //public ApplicationProfile(PersonalProfile PersonalProfile,
+        //            string Type, string Tag) {
+        //    this.PersonalProfile = PersonalProfile;
+
+        //    Identifier = Goedel.Cryptography.UDF.Random();
+
+
+        //    }
 
 
         /// <summary>
@@ -91,13 +90,27 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="PersonalProfile"></param>
         public void Link(PersonalProfile PersonalProfile) {
-            this.PersonalProfile = PersonalProfile;
+
 
             ApplicationProfileEntry = PersonalProfile.GetApplicationEntry(Identifier);
             if (ApplicationProfileEntry == null) throw new Throw("Not found");
 
+            Link(PersonalProfile, ApplicationProfileEntry);
             ApplicationProfileEntry.ApplicationProfile = this;
             }
+
+        /// <summary>
+        /// Connect an application profile read from store to a PersonalProfile object.
+        /// </summary>
+        /// <param name="PersonalProfile"></param>
+        /// <param name="ApplicationProfileEntry"></param>
+        public void Link(PersonalProfile PersonalProfile, 
+                    ApplicationProfileEntry ApplicationProfileEntry) {
+            this.PersonalProfile = PersonalProfile;
+            this.ApplicationProfileEntry = ApplicationProfileEntry;
+            ApplicationProfileEntry.ApplicationProfile = this;
+            }
+
 
         /// <summary>
         /// Locate a signature key known to this device that 
@@ -105,45 +118,17 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <returns>An authorized key pair.</returns>
         public KeyPair GetSignatureKey() {
-            // Check that the device is allowed to sign
-            if (!CanSign(PersonalProfile.SignedDeviceProfile)) return null;
-
-            var DeviceProfile = PersonalProfile.SignedDeviceProfile.Data;
-
-            var Result = KeyPair.FindLocal(DeviceProfile.DeviceSignatureKey.UDF);
-            return Result;
-            }
-
-        /// <summary>
-        /// Determine if the specified key is allowed to sign this profile.
-        /// </summary>
-        /// <param name="SignedDeviceProfile"></param>
-        /// <returns>True if signing is authorized, otherwise false.</returns>
-        public bool CanSign(SignedDeviceProfile SignedDeviceProfile) {
             if (ApplicationProfileEntry == null) throw new Throw("Broken");
-            if (ApplicationProfileEntry.SignID == null) throw new Throw("Broken");
-            if (SignedDeviceProfile == null) throw new Throw("Broken");
-
-            foreach (var Entry in ApplicationProfileEntry.SignID) {
-                if (SignedDeviceProfile.Identifier == Entry) {
-                    return true;
+            foreach (var SignID in ApplicationProfileEntry.SignID) {
+                var SignKey = KeyPair.FindLocal(SignID);
+                if (SignKey != null) {
+                    return SignKey;
                     }
                 }
-
-            return false;
+            return null;
             }
 
-        ///// <summary>
-        ///// Add the specified device to the application profile.
-        ///// </summary>
-        ///// <param name="DeviceProfile"></param>
-        //public virtual void AddDevice(SignedDeviceProfile DeviceProfile) {
-        //    Debug.Trace.TBS("Should check to see if there is already a device entry and remove it.");
-        //    var DeviceEntry = MakeEntry(DeviceProfile);
 
-        //    //Entries = Entries == null ? new List<DeviceEntry>() : Entries;
-        //    //Entries.Add(DeviceEntry);
-        //    }
 
         /// <summary>
         /// Encrypt the private data and create a decryption key for each device.
@@ -165,7 +150,6 @@ namespace Goedel.Mesh {
                 EncryptedData.Add(EncryptionKey.KeyPair);
                 }
             Trace.NYI("Add entry here for the escrow key for this application");
-
             }
 
 
@@ -198,11 +182,7 @@ namespace Goedel.Mesh {
             // Create admin entry for this device
 
             ApplicationProfileEntry.AddDevice(Device);
-
-
             }
-
-
 
         }
 

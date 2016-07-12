@@ -1,79 +1,126 @@
-﻿//   Copyright © 2015 by Comodo Group Inc.
-//  
-//  Permission is hereby granted, free of charge, to any person obtaining a copy
-//  of this software and associated documentation files (the "Software"), to deal
-//  in the Software without restriction, including without limitation the rights
-//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-//  copies of the Software, and to permit persons to whom the Software is
-//  furnished to do so, subject to the following conditions:
-//  
-//  The above copyright notice and this permission notice shall be included in
-//  all copies or substantial portions of the Software.
-//  
-//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-//  THE SOFTWARE.
-//  
-//  
-
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System;
 
 
 namespace Goedel.Debug {
-    public partial class Trace {
+
+    /// <summary>
+    /// General utility routines to simplify checking of inputs, return values, etc.
+    /// </summary>
+    public partial class Utilities {
+
+
+        // Convenience routines 
 
         /// <summary>
-        /// Convert string of hex data to byte array. [why isn't this in 
-        /// the conversions library?)
+        /// Returns the override value if non-null and the default value otherwise.
         /// </summary>
-        /// <param name="input">String to convert.</param>
-        /// <returns>Byte array constructed from the specified value.</returns>
-        public static byte[] HexToByte(string input) {
-            int Valid = 0;
-            bool High = true;
-            int Buffer = 0;
-            int Index = 0;
-
-            foreach (char c in input) {
-                if (HexValue(c) >= 0) Valid++;
-                }
-
-            var Result = new byte[(Valid + 1) / 2];
-            foreach (char c in input) {
-                var h = HexValue(c);
-                if (h >= 0) {
-                    if (High) {
-                        Buffer = h;
-                        }
-                    else {
-                        Result[Index++] = (byte)(h + (Buffer * 16));
-                        }
-
-                    High = !High;
-                    }
-                }
-            return Result;
+        /// <param name="Override">The override value.</param>
+        /// <param name="Default">The default value</param>
+        /// <returns>The override value if non-null and the default value otherwise.</returns>
+        public static string Default(string Override, string Default) {
+            return Override == null ? Default : Override;
             }
 
-
-        static int HexValue(char c) {
-            if (c >= '0' & c <= '9') {
-                return c - '0';
-                }
-            if (c >= 'a' & c <= 'f') {
-                return c + 10 - 'a';
-                }
-            if (c >= 'A' & c <= 'F') {
-                return c + 10 - 'A';
-                }
-            return -1;
+        /// <summary>
+        /// Write an error message to the console if the assertion test fails
+        /// </summary>
+        /// <param name="Value">Test value, error asserted if false</param>
+        /// <param name="Reason">Text describing the reason the error was raised.</param>
+        public static void Assert(bool Value, string Reason) {
+            if (Value) return;
+            Error(Reason);
+            }
+        /// <summary>
+        /// Write an error message to the console if the assertion test fails
+        /// </summary>
+        /// <param name="Value">Test value, error asserted if null</param>
+        /// <param name="Reason">Text describing the reason the error was raised.</param>
+        public static void Assert(object Value, string Reason) {
+            if (Value != null) return;
+            Error(Reason);
             }
 
+        /// <summary>
+        /// Write an error message to the console if the assertion test fails
+        /// </summary>
+        /// <param name="Value">Test value, error asserted if false</param>
+        /// <param name="Text">Format string describing the error.</param>
+        /// <param name="Data">Data values to populate the format string.</param>
+        public static void Assert(bool Value, string Text, params object[] Data) {
+            if (Value) return;
+            Error(Text, Data);
+            }
+
+        /// <summary>
+        /// Write an error message to the console if the assertion test fails
+        /// </summary>
+        /// <param name="Value">Test value, error asserted if null</param>
+        /// <param name="Text">Format string describing the error.</param>
+        /// <param name="Data">Data values to populate the format string.</param>
+        public static void Assert(object Value, string Text, params object[] Data) {
+            if (Value != null) return;
+            Error(Text, Data);
+            }
+
+        /// <summary>
+        /// Report error text.
+        /// </summary>
+        /// <param name="Text">Format string describing the error.</param>
+        /// <param name="Data">Data values to populate the format string.</param>
+        public static void Error(string Text, params object[] Data) {
+            var Reason = System.String.Format(Text, Data);
+            Error(Reason);
+            }
+
+        /// <summary>
+        /// Report error text. This can be overriden in calling code by assigning a 
+        /// delegate error handler to OverrideError.
+        /// </summary>
+        /// <param name="Text">Text describing the error.</param>
+        public static void Error(string Text) {
+            OverrideError(Text);
+            }
+
+        /// <summary>
+        /// Override the default error handler with a custom error handler.
+        /// </summary>
+        public static ErrorReport OverrideError = DefaultError;
+
+
+        /// <summary>
+        /// Report error text.
+        /// </summary>
+        /// <param name="Text">Text describing the error.</param>
+        public static void DefaultError(string Text) {
+
+            Console.WriteLine(Text);
+            throw new Exception(Text);
+
+            }
+
+        /// <summary>
+        /// Report error text.
+        /// </summary>
+        /// <param name="Text">Text describing the error.</param>
+        public delegate void ErrorReport(string Text);
+
+
+        /// <summary>
+        /// Not Yet Implemented Error
+        /// </summary>
+        /// <param name="Item">Describe what is not yet implemented</param>
+        public static void NYI(string Item) {
+            Error("Not yet implemented: {0}", Item);
+            }
+
+        /// <summary>
+        /// Not Yet Implemented Error
+        /// </summary>
+        public static void NYI() {
+            Error("Not yet implemented");
+            }
         }
+
+
+
     }

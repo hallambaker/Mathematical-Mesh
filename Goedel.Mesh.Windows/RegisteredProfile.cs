@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.IO;
+using Goedel.Debug;
 
 namespace Goedel.Mesh.Platform {
 
@@ -84,7 +85,9 @@ namespace Goedel.Mesh.Platform {
         /// <summary>
         /// 
         /// </summary>
-        public virtual void ToRegistry() { }
+        public virtual void ToRegistry() {
+            Utilities.NYI();
+            }
 
 
         protected string Filename(string Path, string Fingerprint) {
@@ -157,6 +160,14 @@ namespace Goedel.Mesh.Platform {
             }
 
 
+
+        public override void Update() {
+
+            var PersonalProfile = Profile.Signed;
+            Profile = new SignedPersonalProfile (PersonalProfile);
+
+            ToRegistry();
+            }
 
         public override void ToRegistry() {
             // This was going to be a call to a method off Registry but a compiler
@@ -233,7 +244,25 @@ namespace Goedel.Mesh.Platform {
 
 
             _Profile = SignedApplicationProfile.FromFile(UDF, File);
+            }
+
+
+        public override void Update() {
             ToRegistry();
+            }
+
+        public override void ToRegistry() {
+            var Hive = Microsoft.Win32.Registry.CurrentUser;
+            var Key = Hive.CreateSubKey(Constants.RegistryApplication);
+            var FileName = Filename(Constants.FileProfilesApplication, UDF);
+
+            Directory.CreateDirectory(Constants.FileProfilesApplication);
+
+            Key.SetValue(UDF, FileName);
+
+            File.WriteAllText(FileName, Profile.ToString());
+
+
             }
         }
 
@@ -299,6 +328,10 @@ namespace Goedel.Mesh.Platform {
             Key.SetValue(UDF, FileName);
 
             File.WriteAllText(FileName, Device.ToString());
+            }
+
+        public override void Update() {
+            ToRegistry();
             }
 
         }
@@ -378,6 +411,21 @@ namespace Goedel.Mesh.Platform {
 
             }
 
+
+        /// <summary>
+        /// Add the associated registration to the machine store.
+        /// </summary>
+        public void Add(RegistrationApplication Registration) {
+            ApplicationProfiles.Add(Registration.UDF, Registration);
+
+            //PersonalProfiles.Add(Registration.UDF, Registration);
+
+            //// If no existing default, register as the default
+            //if (Personal == null) {
+            //    Personal = Registration;
+            //    }
+
+            }
 
         /// <summary>
         /// Add the associated profile to the machine store.
@@ -521,9 +569,9 @@ namespace Goedel.Mesh.Platform {
 
             foreach (var Key in ApplicationKeys) {
                 if (Key.Key.Length > 10) {
-                    var Profile = new RegistrationDevice(Key.Key, Key.Value);
+                    var Profile = new RegistrationApplication(Key.Key, Key.Value);
                     if (Profile != null) {
-                        DeviceProfiles.Add(Key.Key, Profile);
+                        ApplicationProfiles.Add(Key.Key, Profile);
                         }
                     }
                 else {

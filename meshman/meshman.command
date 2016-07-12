@@ -134,7 +134,7 @@
 		Include PortalAccount
 
 	// Application profiles
-	Command Web "web"
+	Command Password "password"
 		Brief "Add a web application profile to a personal profile"
 		Include PortalAccount
 		Include Reporting

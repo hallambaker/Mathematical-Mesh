@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Goedel.Debug;
 using Goedel.Mesh;
 using Goedel.Mesh.Platform;
 
@@ -124,7 +125,7 @@ namespace Goedel.Mesh.MeshMan {
 
             // Register with the Mesh portal
             var PublishResult = MeshClient.Publish(SignedPersonalProfile);
-            Utilities.Assert(PublishResult.Status.Success(), "Portal refused profile publication request");
+            Utilities.Assert(PublishResult.Status.StatusSuccess(), "Portal refused profile publication request");
 
 
 
@@ -158,7 +159,7 @@ namespace Goedel.Mesh.MeshMan {
 
         void Report(RegistrationPersonal Registration, bool Detail) {
             var SignedPersonalProfile = Registration.Profile;
-            var PersonalProfile = SignedPersonalProfile.Inner;
+            var PersonalProfile = SignedPersonalProfile.Signed;
 
             var Identifier = Utilities.Default(PersonalProfile.Identifier, "<null>");
             var Updated = Utilities.Default(PersonalProfile.Updated.ToString(), "<null>");
@@ -177,14 +178,37 @@ namespace Goedel.Mesh.MeshMan {
             Report("");
 
             if (!Detail) return;
+
+            Report("Devices");
+            foreach (var Device in PersonalProfile.Devices) {
+                Report(Device);
+                }
+
+            Report("Applications");
+            foreach (var ApplicationProfileEntry in PersonalProfile.Applications) {
+                Report("    Type {0}, Friendly {1}", ApplicationProfileEntry.Identifier,
+                        ApplicationProfileEntry.Friendly);
+                Report("    Identifier: {0}", ApplicationProfileEntry.Identifier);
+                Report("        Sign IDs: ", ApplicationProfileEntry.SignID);
+                Report("        Decrypt IDs: ", ApplicationProfileEntry.DecryptID);
+                }
+
             }
 
         void Report(RegistrationApplication Registration) {
-            Report("Profile {0}", Registration.UDF);
+            Report(Registration.Profile);
+            }
+
+        void Report(SignedApplicationProfile Application) {
+            Report("Profile {0}", Application.UDF);
             }
 
         void Report(RegistrationDevice Registration) {
-            Report("Profile {0}", Registration.UDF);
+            Report(Registration.Device);
+            }
+
+        void Report(SignedDeviceProfile Device) {
+            Report("Profile {0}", Device.UDF);
             }
 
         /// <summary>
@@ -238,7 +262,7 @@ namespace Goedel.Mesh.MeshMan {
         /// Create a new web application profile.
         /// </summary>
         /// <param name="Options">Command line parameters</param>
-        public override void Web(Web Options) {
+        public override void Password(Password Options) {
             SetReporting(Options.Report, Options.Verbose);
             GetProfile(Options.Portal, Options.UDF);
             GetMeshClient();
@@ -248,8 +272,13 @@ namespace Goedel.Mesh.MeshMan {
 
             var PersonalProfile = SignedPersonalProfile.Signed;
 
-            var PasswordProfile = new PasswordProfile(PersonalProfile);
-            PasswordProfile.AddDevice(DeviceProfile);
+            var PasswordProfile = new PasswordProfile();
+
+            var ApplicationProfileEntry = PersonalProfile.Add(PasswordProfile);
+            ApplicationProfileEntry.AddDevice(DeviceProfile);
+
+            PasswordProfile.Link(PersonalProfile, ApplicationProfileEntry);
+
             var SignedPasswordProfile = PasswordProfile.Signed;
 
             Machine.Add(SignedPasswordProfile);
@@ -258,7 +287,6 @@ namespace Goedel.Mesh.MeshMan {
             MeshClient.Publish(SignedPasswordProfile);
             MeshClient.Publish(RegistrationPersonal.Profile);
 
-            Utilities.NYI();
             }
 
         /// <summary>

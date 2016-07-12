@@ -60,26 +60,26 @@ namespace Goedel.Mesh {
             }
 
 
-        /// <summary>
-        /// Construct a MailProfile from the specified account information.
-        /// </summary>
-        /// <param name="UserProfile">The personal profile to attach this profile to.</param>
-        /// <param name="MailAccountInfo">Description of the mail account.</param>
-        public MailProfile(PersonalProfile UserProfile, MailAccountInfo MailAccountInfo)
-            : base(UserProfile, "MailProfile", MailAccountInfo.AccountName) {
-            _Private = new MailProfilePrivate(MailAccountInfo);
-            }
+        ///// <summary>
+        ///// Construct a MailProfile from the specified account information.
+        ///// </summary>
+        ///// <param name="UserProfile">The personal profile to attach this profile to.</param>
+        ///// <param name="MailAccountInfo">Description of the mail account.</param>
+        //public MailProfile(PersonalProfile UserProfile, MailAccountInfo MailAccountInfo)
+        //    : base(UserProfile, "MailProfile", MailAccountInfo.AccountName) {
+        //    _Private = new MailProfilePrivate(MailAccountInfo);
+        //    }
 
 
-        /// <summary>
-        /// Construct an empty MailProfile for the specified account.
-        /// </summary>
-        /// <param name="UserProfile">The Personal Profile to link the MailProfile to.</param>
-        /// <param name="Account">The mail account name.</param>
-        public MailProfile(PersonalProfile UserProfile, string Account)
-            : base(UserProfile, "MailProfile", Account) {
-            //_Private = new MailProfilePrivate(Account);
-            }
+        ///// <summary>
+        ///// Construct an empty MailProfile for the specified account.
+        ///// </summary>
+        ///// <param name="UserProfile">The Personal Profile to link the MailProfile to.</param>
+        ///// <param name="Account">The mail account name.</param>
+        //public MailProfile(PersonalProfile UserProfile, string Account)
+        //    : base(UserProfile, "MailProfile", Account) {
+        //    //_Private = new MailProfilePrivate(Account);
+        //    }
 
         /// <summary>
         /// Get the default mail profile from the specified personal profile.
