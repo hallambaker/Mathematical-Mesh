@@ -30,13 +30,14 @@ namespace Goedel.Mesh.MeshMan {
                 }
             }
 
-        public void Repor(string Text, List<string> Items) {
+        public void Report(string Text, List<string> Items) {
             if (!ReportOutput) return;
             Console.Write(Text);
             foreach (var Item in Items) {
                 Console.Write(" ");
                 Console.Write(Item);
                 }
+            Console.WriteLine();
             }
 
         public void Report(string Text, params object[] Data) {
