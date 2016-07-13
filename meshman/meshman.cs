@@ -114,16 +114,20 @@ namespace Goedel.Mesh.MeshMan {
 							Handle_Password (Dispatch, args, 1);
 							break;
 							}
-						case "pwa" : {
+						case "pwadd" : {
 							Handle_AddPassword (Dispatch, args, 1);
 							break;
 							}
-						case "pwg" : {
+						case "pwged" : {
 							Handle_GetPassword (Dispatch, args, 1);
 							break;
 							}
-						case "pwd" : {
+						case "pwdelete" : {
 							Handle_DeletePassword (Dispatch, args, 1);
+							break;
+							}
+						case "pwdump" : {
+							Handle_DumpPassword (Dispatch, args, 1);
 							break;
 							}
 						case "mail" : {
@@ -1732,6 +1736,96 @@ namespace Goedel.Mesh.MeshMan {
 			Dispatch.DeletePassword (Options);
 
 			}
+		private enum TagType_DumpPassword {
+			JSON,
+			Portal,
+			UDF,
+			Verbose,
+			Report,
+			}
+
+		private static void Handle_DumpPassword (
+					Shell Dispatch, string[] args, int index) {
+			DumpPassword		Options = new DumpPassword ();
+
+			var Registry = new Goedel.Registry.Registry ();
+
+			Options.JSON.Register ("json", Registry, (int) TagType_DumpPassword.JSON);
+			Options.Portal.Register ("portal", Registry, (int) TagType_DumpPassword.Portal);
+			Options.UDF.Register ("udf", Registry, (int) TagType_DumpPassword.UDF);
+			Options.Verbose.Register ("verbose", Registry, (int) TagType_DumpPassword.Verbose);
+			Options.Report.Register ("report", Registry, (int) TagType_DumpPassword.Report);
+
+			// looking for parameter Param.Name}
+			if (index < args.Length && !IsFlag (args [index][0] )) {
+				// Have got the parameter, call the parameter value method
+				Options.JSON.Parameter (args [index]);
+				index++;
+				}
+
+#pragma warning disable 162
+			for (int i = index; i< args.Length; i++) {
+				if 	(!IsFlag (args [i][0] )) {
+					throw new System.Exception ("Unexpected parameter: " + args[i]);}			
+				string Rest = args [i].Substring (1);
+
+				TagType_DumpPassword TagType = (TagType_DumpPassword) Registry.Find (Rest);
+
+				// here have the cases for what to do with it.
+
+				switch (TagType) {
+					case TagType_DumpPassword.Portal : {
+						int OptionParams = Options.Portal.Tag (Rest);
+						
+						if (OptionParams>0 && ((i+1) < args.Length)) {
+							if 	(!IsFlag (args [i+1][0] )) {
+								i++;								
+								Options.Portal.Parameter (args[i]);
+								}
+							}
+						break;
+						}
+					case TagType_DumpPassword.UDF : {
+						int OptionParams = Options.UDF.Tag (Rest);
+						
+						if (OptionParams>0 && ((i+1) < args.Length)) {
+							if 	(!IsFlag (args [i+1][0] )) {
+								i++;								
+								Options.UDF.Parameter (args[i]);
+								}
+							}
+						break;
+						}
+					case TagType_DumpPassword.Verbose : {
+						int OptionParams = Options.Verbose.Tag (Rest);
+						
+						if (OptionParams>0 && ((i+1) < args.Length)) {
+							if 	(!IsFlag (args [i+1][0] )) {
+								i++;								
+								Options.Verbose.Parameter (args[i]);
+								}
+							}
+						break;
+						}
+					case TagType_DumpPassword.Report : {
+						int OptionParams = Options.Report.Tag (Rest);
+						
+						if (OptionParams>0 && ((i+1) < args.Length)) {
+							if 	(!IsFlag (args [i+1][0] )) {
+								i++;								
+								Options.Report.Parameter (args[i]);
+								}
+							}
+						break;
+						}
+					default : throw new System.Exception ("Internal error");
+					}
+				}
+
+#pragma warning restore 162
+			Dispatch.DumpPassword (Options);
+
+			}
 		private enum TagType_Mail {
 			address,
 			Portal,
@@ -2174,7 +2268,7 @@ namespace Goedel.Mesh.MeshMan {
 					AddPassword		Dummy = new AddPassword ();
 #pragma warning restore 219
 
-					Console.Write ("{0}pwa ", UsageFlag);
+					Console.Write ("{0}pwadd ", UsageFlag);
 					Console.Write ("[{0}] ", Dummy.Site.Usage (null, "site", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.Username.Usage (null, "user", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.Password.Usage (null, "password", UsageFlag));
@@ -2193,7 +2287,7 @@ namespace Goedel.Mesh.MeshMan {
 					GetPassword		Dummy = new GetPassword ();
 #pragma warning restore 219
 
-					Console.Write ("{0}pwg ", UsageFlag);
+					Console.Write ("{0}pwged ", UsageFlag);
 					Console.Write ("[{0}] ", Dummy.Site.Usage (null, "site", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.Portal.Usage ("portal", "value", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.UDF.Usage ("udf", "value", UsageFlag));
@@ -2210,7 +2304,7 @@ namespace Goedel.Mesh.MeshMan {
 					DeletePassword		Dummy = new DeletePassword ();
 #pragma warning restore 219
 
-					Console.Write ("{0}pwd ", UsageFlag);
+					Console.Write ("{0}pwdelete ", UsageFlag);
 					Console.Write ("[{0}] ", Dummy.Site.Usage (null, "site", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.Portal.Usage ("portal", "value", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.UDF.Usage ("udf", "value", UsageFlag));
@@ -2219,6 +2313,23 @@ namespace Goedel.Mesh.MeshMan {
 					Console.WriteLine ();
 
 					Console.WriteLine ("    Delete password entry");
+
+				}
+
+				{
+#pragma warning disable 219
+					DumpPassword		Dummy = new DumpPassword ();
+#pragma warning restore 219
+
+					Console.Write ("{0}pwdump ", UsageFlag);
+					Console.Write ("[{0}] ", Dummy.JSON.Usage (null, "json", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.Portal.Usage ("portal", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.UDF.Usage ("udf", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.Verbose.Usage ("verbose", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.Report.Usage ("report", "value", UsageFlag));
+					Console.WriteLine ();
+
+					Console.WriteLine ("    Describe password entry");
 
 				}
 
@@ -2602,6 +2713,24 @@ namespace Goedel.Mesh.MeshMan {
 
     public partial class DeletePassword : _DeletePassword {
         } // class DeletePassword
+
+
+    public class _DumpPassword : Goedel.Registry.Dispatch {
+		public Flag			JSON = new Flag ();
+
+		public String			Portal = new  String ();
+
+		public String			UDF = new  String ();
+
+		public Flag			Verbose = new  Flag ("true");
+
+		public Flag			Report = new  Flag ("true");
+
+
+		}
+
+    public partial class DumpPassword : _DumpPassword {
+        } // class DumpPassword
 
 
     public class _Mail : Goedel.Registry.Dispatch {
@@ -3258,7 +3387,7 @@ namespace Goedel.Mesh.MeshMan {
 					AddPassword		Dummy = new AddPassword ();
 #pragma warning restore 219
 
-					Console.Write ("{0}pwa ", UsageFlag);
+					Console.Write ("{0}pwadd ", UsageFlag);
 					Console.Write ("[{0}] ", Dummy.Site.Usage (null, "site", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.Username.Usage (null, "user", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.Password.Usage (null, "password", UsageFlag));
@@ -3297,7 +3426,7 @@ namespace Goedel.Mesh.MeshMan {
 					GetPassword		Dummy = new GetPassword ();
 #pragma warning restore 219
 
-					Console.Write ("{0}pwg ", UsageFlag);
+					Console.Write ("{0}pwged ", UsageFlag);
 					Console.Write ("[{0}] ", Dummy.Site.Usage (null, "site", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.Portal.Usage ("portal", "value", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.UDF.Usage ("udf", "value", UsageFlag));
@@ -3330,7 +3459,7 @@ namespace Goedel.Mesh.MeshMan {
 					DeletePassword		Dummy = new DeletePassword ();
 #pragma warning restore 219
 
-					Console.Write ("{0}pwd ", UsageFlag);
+					Console.Write ("{0}pwdelete ", UsageFlag);
 					Console.Write ("[{0}] ", Dummy.Site.Usage (null, "site", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.Portal.Usage ("portal", "value", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.UDF.Usage ("udf", "value", UsageFlag));
@@ -3344,6 +3473,39 @@ namespace Goedel.Mesh.MeshMan {
 
 				Console.WriteLine ("    {0}\t{1} = [{2}]", "String", 
 							"Site", Options.Site);
+				Console.WriteLine ("    {0}\t{1} = [{2}]", "String", 
+							"Portal", Options.Portal);
+				Console.WriteLine ("    {0}\t{1} = [{2}]", "String", 
+							"UDF", Options.UDF);
+				Console.WriteLine ("    {0}\t{1} = [{2}]", "Flag", 
+							"Verbose", Options.Verbose);
+				Console.WriteLine ("    {0}\t{1} = [{2}]", "Flag", 
+							"Report", Options.Report);
+			Console.WriteLine ("Not Yet Implemented");
+			}
+		public virtual void DumpPassword ( DumpPassword Options
+				) {
+
+			char UsageFlag = '-';
+				{
+#pragma warning disable 219
+					DumpPassword		Dummy = new DumpPassword ();
+#pragma warning restore 219
+
+					Console.Write ("{0}pwdump ", UsageFlag);
+					Console.Write ("[{0}] ", Dummy.JSON.Usage (null, "json", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.Portal.Usage ("portal", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.UDF.Usage ("udf", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.Verbose.Usage ("verbose", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.Report.Usage ("report", "value", UsageFlag));
+					Console.WriteLine ();
+
+					Console.WriteLine ("    Describe password entry");
+
+				}
+
+				Console.WriteLine ("    {0}\t{1} = [{2}]", "Flag", 
+							"JSON", Options.JSON);
 				Console.WriteLine ("    {0}\t{1} = [{2}]", "String", 
 							"Portal", Options.Portal);
 				Console.WriteLine ("    {0}\t{1} = [{2}]", "String", 

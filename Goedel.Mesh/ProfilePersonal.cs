@@ -124,6 +124,23 @@ namespace Goedel.Mesh {
             return null;
             }
 
+        /// <summary>
+        /// Find the Application Profile Entry that matches an identifier.
+        /// </summary>
+        /// <param name="Identifier"></param>
+        /// <returns>The matching application profile entry if found, otherwise null.</returns>
+        public ApplicationProfileEntry GetApplicationEntryPassword(string Identifier) {
+
+            foreach (var Entry in Applications) {
+                if (Entry.Type == PasswordProfile.TypeTag) {
+                    if (Identifier == null | Entry.Identifier == Identifier) {
+                        return Entry;
+                        }
+                    }
+                }
+            return null;
+            }
+
 
         /// <summary>
         /// Find the Application Profile Entry that matches an identifier.
@@ -171,6 +188,7 @@ namespace Goedel.Mesh {
             var ApplicationProfileEntry = new ApplicationProfileEntry();
 
             ApplicationProfileEntry.Identifier = ApplicationProfile.Identifier;
+            ApplicationProfileEntry.Type = ApplicationProfile.Tag();
 
             if (Applications == null) {
                 Applications = new List<ApplicationProfileEntry>();

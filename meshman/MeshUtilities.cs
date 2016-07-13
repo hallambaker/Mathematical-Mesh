@@ -7,7 +7,10 @@ using Goedel.Mesh;
 using Goedel.Debug;
 using Goedel.Mesh.Platform;
 
+
+
 namespace Goedel.Mesh.MeshMan {
+
     public partial class Shell {
 
         bool VerboseOutput = true;
@@ -75,15 +78,21 @@ namespace Goedel.Mesh.MeshMan {
             return Machine.Device.Device;
             }
 
-        RegistrationApplication RegistrationWeb;
+        ApplicationProfileEntry PasswordEntry;
+        RegistrationApplication PasswordRegistration;
         SignedApplicationProfile SignedApplicationWeb;
         PasswordProfile PasswordProfile;
         PasswordProfilePrivate PasswordProfilePrivate;
 
         private void GetPasswordProfile () {
-            //RegistrationWeb = GetPasswordProfile();
-            SignedApplicationWeb = RegistrationWeb.Profile;
+
+            PasswordEntry = SignedPersonalProfile.Signed.GetApplicationEntryPassword(
+                null);
+            PasswordRegistration = Machine.Get(PasswordEntry);
+
+            SignedApplicationWeb = PasswordRegistration.Profile;
             PasswordProfile = SignedApplicationWeb.Signed as PasswordProfile;
+            PasswordProfile.Link (SignedPersonalProfile.Signed, PasswordEntry);
             PasswordProfilePrivate = PasswordProfile.Private;
 
             return;
@@ -91,6 +100,11 @@ namespace Goedel.Mesh.MeshMan {
 
         private void UpdatePasswordProfile() {
 
+            var NewSigned = PasswordProfile.Signed;
+
+            PasswordRegistration.Profile = NewSigned;
+            PasswordRegistration.Update();
+            MeshClient.Publish(PasswordRegistration.Profile);
             return;
             }
 

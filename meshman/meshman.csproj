@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Dispatch.cs" />
+    <Compile Include="DispatchPassword.cs" />
     <Compile Include="meshman.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

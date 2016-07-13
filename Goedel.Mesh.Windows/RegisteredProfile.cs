@@ -235,6 +235,18 @@ namespace Goedel.Mesh.Platform {
             ToRegistry();
             }
 
+
+        /// <summary>
+        /// Read a personal registration from the local store
+        /// </summary>
+        /// <param name="UDF">File fingerprint</param>
+        public RegistrationApplication(string UDF) {
+            var File = Microsoft.Win32.Registry.GetValue(@"HKEY_CURRENT_USER\" 
+                        + Constants.RegistryApplication, UDF, null);
+            var FileName = File as string;
+            _Profile = SignedApplicationProfile.FromFile(UDF, FileName);
+            }
+
         /// <summary>
         /// Read a personal registration from a file
         /// </summary>
@@ -426,6 +438,19 @@ namespace Goedel.Mesh.Platform {
             //    }
 
             }
+
+
+        /// <summary>
+        /// Locate the specified application profile.
+        /// </summary>
+        /// <param name="Profile"></param>
+        /// <returns></returns>
+        public RegistrationApplication Get(ApplicationProfileEntry Profile) {
+            var Result = new RegistrationApplication(Profile.Identifier);
+
+            return Result;
+            }
+
 
         /// <summary>
         /// Add the associated profile to the machine store.

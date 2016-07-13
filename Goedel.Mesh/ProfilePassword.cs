@@ -38,7 +38,7 @@ namespace Goedel.Mesh {
         /// <summary>
         /// The public type tag
         /// </summary>
-        public const string TypeTag = "PasswordProfile";
+        public static string TypeTag { get { return "PasswordProfile"; } }
 
         private PasswordProfilePrivate _Private;
 
@@ -81,20 +81,6 @@ namespace Goedel.Mesh {
         //    base() { }
 
 
-        ///// <summary>
-        ///// Create a new password profile and attach it to the specified
-        ///// personal profile.
-        ///// </summary>
-        ///// <param name="PersonalProfile">Personal profile to connect to</param>
-        ///// <param name="Friendly">Friendly name to be used to distinguish
-        ///// profiles of the same type</param>
-        //public PasswordProfile(PersonalProfile PersonalProfile, string Friendly)
-        //    : base(PersonalProfile, TypeTag, Friendly) {
-        //    _Private = new PasswordProfilePrivate();
-
-        //    PersonalProfile.Add(this);
-        //    }
-
 
         /// <summary>
         /// Add an entry to the profile.
@@ -117,32 +103,52 @@ namespace Goedel.Mesh {
         public bool GetEntry(
             string Site, out string Username, out string Password) {
 
+            var Entry = Get(Site);
+            if (Entry == null) {
+                Username = null;
+                Password = null;
+                return false ;
+                }
+
+            Username = Entry.Username;
+            Password = Entry.Password;
+            return true;
+            }
+
+
+        /// <summary>
+        /// Find the entry for a given site.
+        /// </summary>
+        /// <param name="Site">The site details are looked for</param>
+        public PasswordEntry Get(string Site) {
             if (Private.Entries != null) {
                 foreach (var Entry in Private.Entries) {
                     foreach (var EntrySite in Entry.Sites) {
                         if (Site == EntrySite) {
-                            Username = Entry.Username;
-                            Password = Entry.Password;
-                            return true;
+                             return Entry;
                             }
                         }
                     }
                 }
-            Username = null;
-            Password = null;
-            return false;
+            return null;
             }
 
-        ///// <summary>
-        ///// Make a device entry for the application
-        ///// </summary>
-        ///// <param name="DeviceProfile">Device profile of device to add.</param>
-        ///// <returns>The device entry.</returns>
-        //public override DeviceEntry MakeEntry(SignedDeviceProfile DeviceProfile) {
-        //    var DeviceEntry = base.MakeEntry(DeviceProfile);
-        //    //DeviceEntry.EncryptedKey = MakeDecryptInfo(DeviceProfile.Signed);
-        //    return DeviceEntry;
-        //    }
+
+        /// <summary>
+        /// Delete a password entry.
+        /// </summary>
+        /// <param name="Site">The site whose details are to be removed</param>
+        /// <returns>true if the site was found, otherwise false.</returns>
+        public bool Delete(string Site) {
+            var Entry = Get(Site);
+            if (Entry == null) {
+                return false;
+                }
+
+            Private.Entries.Remove(Entry);
+            return true;
+            }
+
 
         /// <summary>
         /// Convenience function that converts a generic Signed Profile returned

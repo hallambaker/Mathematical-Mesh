@@ -186,7 +186,7 @@ namespace Goedel.Mesh.MeshMan {
 
             Report("Applications");
             foreach (var ApplicationProfileEntry in PersonalProfile.Applications) {
-                Report("    Type {0}, Friendly {1}", ApplicationProfileEntry.Identifier,
+                Report("    Type {0}, Friendly {1}", ApplicationProfileEntry.Type,
                         ApplicationProfileEntry.Friendly);
                 Report("    Identifier: {0}", ApplicationProfileEntry.Identifier);
                 Report("        Sign IDs: ", ApplicationProfileEntry.SignID);
@@ -259,80 +259,6 @@ namespace Goedel.Mesh.MeshMan {
             }
 
         /// <summary>
-        /// Create a new web application profile.
-        /// </summary>
-        /// <param name="Options">Command line parameters</param>
-        public override void Password(Password Options) {
-            SetReporting(Options.Report, Options.Verbose);
-            GetProfile(Options.Portal, Options.UDF);
-            GetMeshClient();
-
-            var DeviceProfile = GetDevice(SignedPersonalProfile);
-            Utilities.Assert(DeviceProfile, "Could not locate a device profile on this device");
-
-            var PersonalProfile = SignedPersonalProfile.Signed;
-
-            var PasswordProfile = new PasswordProfile();
-
-            var ApplicationProfileEntry = PersonalProfile.Add(PasswordProfile);
-            ApplicationProfileEntry.AddDevice(DeviceProfile);
-
-            PasswordProfile.Link(PersonalProfile, ApplicationProfileEntry);
-
-            var SignedPasswordProfile = PasswordProfile.Signed;
-
-            Machine.Add(SignedPasswordProfile);
-            RegistrationPersonal.Update ();
-
-            MeshClient.Publish(SignedPasswordProfile);
-            MeshClient.Publish(RegistrationPersonal.Profile);
-
-            }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="Options">Command line parameters</param>
-        public override void AddPassword(AddPassword Options) {
-            SetReporting(Options.Report, Options.Verbose);
-            GetProfile(Options.Portal, Options.UDF);
-            GetMeshClient();
-
-            // Access
-
-            GetPasswordProfile();
-
-            // Update
-
-            // Write out data
-            UpdatePasswordProfile();
-
-            Utilities.NYI();
-            }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="Options">Command line parameters</param>
-        public override void GetPassword(GetPassword Options) {
-            SetReporting(Options.Report, Options.Verbose);
-            GetProfile(Options.Portal, Options.UDF);
-            GetMeshClient();
-
-            Utilities.NYI();
-            }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="Options">Command line parameters</param>
-        public override void DeletePassword(DeletePassword Options) {
-            SetReporting(Options.Report, Options.Verbose);
-            GetProfile(Options.Portal, Options.UDF);
-            GetMeshClient();
-
-            Utilities.NYI();
-            }
 
 
         }

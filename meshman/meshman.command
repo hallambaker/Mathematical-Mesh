@@ -139,7 +139,7 @@
 		Include PortalAccount
 		Include Reporting
 
-	Command AddPassword "pwa"
+	Command AddPassword "pwadd"
 		Brief "Add password entry"
 		Parameter Site "site" String
 		Parameter Username "user" String
@@ -147,18 +147,26 @@
 		Include PortalAccount
 		Include Reporting
 
-	Command GetPassword "pwg"
+	Command GetPassword "pwged"
 		Brief "Lookup password entry"
 		Parameter Site "site" String
 		Include PortalAccount
 		Include Reporting
 
-	Command DeletePassword "pwd"
+	Command DeletePassword "pwdelete"
 		Brief "Delete password entry"
 		Parameter Site "site" String
 			Brief "Domain name of Web site"
 		Include PortalAccount
 		Include Reporting
+
+	Command DumpPassword "pwdump"
+		Brief "Describe password entry"
+		Parameter JSON "json" Flag
+			Brief "Report results as JSON structure."
+		Include PortalAccount
+		Include Reporting
+
 
 	// Mail
 	Command Mail "mail"
