@@ -95,7 +95,7 @@ namespace Goedel.Cryptography.Jose {
         /// <param name="Data">The data to encrypt</param>
         /// <param name="Encryptor">The encryption provider to use.</param>
         public void Encrypt(byte[] Data, CryptoProviderEncryption Encryptor) {
-            Trace.WriteHex("Encryption Key", Encryptor.Key);
+            //Trace.WriteHex("Encryption Key", Encryptor.Key);
 
 
             CryptoData = Encryptor.Encrypt(Data);
@@ -114,9 +114,9 @@ namespace Goedel.Cryptography.Jose {
         public void Add(KeyPair EncryptionKey) {
             var Recipient = new Recipient(EncryptionKey);
 
-            Trace.WriteLine("Create blob for {0}", EncryptionKey.UDF);
+            //Trace.WriteLine("Create blob for {0}", EncryptionKey.UDF);
             Recipient.EncryptedKey = EncryptKey(EncryptionKey);
-            Trace.WriteHex("Created", Recipient.EncryptedKey);
+            //Trace.WriteHex("Created", Recipient.EncryptedKey);
 
             Recipient.Header = new Header();
             Recipient.Header.kid = EncryptionKey.UDF;
@@ -168,7 +168,7 @@ namespace Goedel.Cryptography.Jose {
 
             CryptoData.Key = Exchange.Decrypt(Recipient.EncryptedKey);
 
-            Trace.WriteHex("Decryption Key", CryptoData.Key);
+            //Trace.WriteHex("Decryption Key", CryptoData.Key);
 
             CryptoData.IV = IV;
 
@@ -190,7 +190,7 @@ namespace Goedel.Cryptography.Jose {
             var Exchange = EncryptionKey.ExchangeProviderEncrypt;
             var Result = Exchange.Encrypt(CryptoData.Key);
 
-            Trace.WriteHex("Key is ", CryptoData.Key);
+            //Trace.WriteHex("Key is ", CryptoData.Key);
 
             return Result;
             }

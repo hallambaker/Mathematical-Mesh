@@ -46,12 +46,12 @@ namespace Goedel.Mesh.MeshMan {
 
 
                     switch (args[0].Substring(1).ToLower()) {
-						case "mathematical mesh key manager" : {
-							Usage ();
+						case "about" : {
+							FileTools.About ();
 							break;
 							}
-						case "about" : {
-							Handle_About (Dispatch, args, 1);
+						case "brief" : {
+							Usage ();
 							break;
 							}
 						case "reset" : {
@@ -149,36 +149,6 @@ namespace Goedel.Mesh.MeshMan {
             } // Main
 
 
-		private enum TagType_About {
-			}
-
-		private static void Handle_About (
-					Shell Dispatch, string[] args, int index) {
-			About		Options = new About ();
-
-			var Registry = new Goedel.Registry.Registry ();
-
-
-
-#pragma warning disable 162
-			for (int i = index; i< args.Length; i++) {
-				if 	(!IsFlag (args [i][0] )) {
-					throw new System.Exception ("Unexpected parameter: " + args[i]);}			
-				string Rest = args [i].Substring (1);
-
-				TagType_About TagType = (TagType_About) Registry.Find (Rest);
-
-				// here have the cases for what to do with it.
-
-				switch (TagType) {
-					default : throw new System.Exception ("Internal error");
-					}
-				}
-
-#pragma warning restore 162
-			Dispatch.About (Options);
-
-			}
 		private enum TagType_Reset {
 			}
 
@@ -2001,20 +1971,8 @@ namespace Goedel.Mesh.MeshMan {
 
 		private static void Usage () {
 
-				Console.WriteLine ("MatheMatical Mesh Key Manager");
+				Console.WriteLine ("brief");
 				Console.WriteLine ("");
-
-				{
-#pragma warning disable 219
-					About		Dummy = new About ();
-#pragma warning restore 219
-
-					Console.Write ("{0}about ", UsageFlag);
-					Console.WriteLine ();
-
-					Console.WriteLine ("    Report version and build date");
-
-				}
 
 				{
 #pragma warning disable 219
@@ -2389,15 +2347,6 @@ namespace Goedel.Mesh.MeshMan {
 	// and Goedel.Registry.Type
 
 
-
-
-    public class _About : Goedel.Registry.Dispatch {
-
-
-		}
-
-    public partial class About : _About {
-        } // class About
 
 
     public class _Reset : Goedel.Registry.Dispatch {
@@ -2889,24 +2838,6 @@ namespace Goedel.Mesh.MeshMan {
     public class _Shell {
 
 
-		public virtual void About ( About Options
-				) {
-
-			char UsageFlag = '-';
-				{
-#pragma warning disable 219
-					About		Dummy = new About ();
-#pragma warning restore 219
-
-					Console.Write ("{0}about ", UsageFlag);
-					Console.WriteLine ();
-
-					Console.WriteLine ("    Report version and build date");
-
-				}
-
-			Console.WriteLine ("Not Yet Implemented");
-			}
 		public virtual void Reset ( Reset Options
 				) {
 

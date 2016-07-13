@@ -29,15 +29,24 @@ meshman /create alice@mesh.prismproof.org
 ~~~~
 
 
-
-
-
 ==Step 3: Add a Web password profile
 
+~~~~
+meshman /password
+~~~~
+
+At this point you can use the /pwadd, /pwdelete and /pwdump commands to manage 
+the password entries,
 
 
 
 = Useful commands
+
+
+==Command line documentation
+
+The commands /about and /brief give details of the tool version and the supported
+commands respectively.
 
 ==Reset profiles
 

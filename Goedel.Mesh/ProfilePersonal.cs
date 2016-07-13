@@ -265,8 +265,6 @@ namespace Goedel.Mesh {
         /// <returns>The administration key.</returns>
         public KeyPair GetAdministrationKey() {
             foreach (var Device in Devices) {
-                Console.WriteLine("Got Device {0}", Device.UDF);
-
                 var Key = KeyPair.FindLocal(Device.UDF);
                 if (Key != null) {
                     return Key;

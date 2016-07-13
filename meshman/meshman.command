@@ -1,13 +1,10 @@
 ﻿Class Goedel.Mesh.MeshMan Shell
-	Brief		"MatheMatical Mesh Key Manager"
 
 	Type NewFile			"file"
 	Type ExistingFile		"file"
 
-
-	Command About "about"
-		Brief "Report version and build date"
-
+	About "About"
+	Brief		"brief"
 
 	OptionSet Reporting
 		Option Verbose "verbose" Flag

@@ -149,7 +149,7 @@ namespace Goedel.Mesh {
 
                 EncryptedData.Add(EncryptionKey.KeyPair);
                 }
-            Trace.NYI("Add entry here for the escrow key for this application");
+            //Trace.NYI("Add entry here for the escrow key for this application");
             }
 
 
@@ -161,8 +161,6 @@ namespace Goedel.Mesh {
             var SignedDeviceProfile = PersonalProfile.SignedDeviceProfile;
             var DeviceProfile = SignedDeviceProfile.Data;
             var EncryptionKey = DeviceProfile.DeviceEncryptiontionKey;
-
-            Trace.NYI("Decrypt data");
 
             if (ApplicationProfileEntry == null) throw new Throw("Broken");
             if (ApplicationProfileEntry.DecryptID == null) throw new Throw("Broken");

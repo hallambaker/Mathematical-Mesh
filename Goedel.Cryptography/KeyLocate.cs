@@ -45,7 +45,7 @@ namespace Goedel.Cryptography {
             if (Provider.PublicOnly == false) {
                 return;
                 }
-            Goedel.Debug.Trace.WriteLine("Get Private for {0}", UDF);
+            //Goedel.Debug.Trace.WriteLine("Get Private for {0}", UDF);
 
             var cp = new CspParameters();
             cp.KeyContainerName = ContainerName(UDF);
