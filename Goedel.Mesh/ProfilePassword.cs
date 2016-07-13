@@ -66,11 +66,22 @@ namespace Goedel.Mesh {
             }
 
         /// <summary>
+        /// Create a new personal profile.
+        /// </summary>
+        /// <param name="MakePrivate">If true, a private profile will be created.</param>
+        public PasswordProfile(bool MakePrivate) {
+            if (MakePrivate) {
+                _Private = new PasswordProfilePrivate();
+                }
+            }
+
+
+
+        /// <summary>
         /// Initialize the private data
         /// </summary>
         protected override void _Initialize() {
             base._Initialize();
-            _Private = new PasswordProfilePrivate();
             }
 
         ///// <summary>

@@ -58,6 +58,7 @@ namespace Goedel.Mesh.MeshMan {
 
         RegistrationPersonal RegistrationPersonal;
         SignedPersonalProfile SignedPersonalProfile;
+        PersonalProfile PersonalProfile;
 
         private void GetProfile(String Portal, String UDF) {
 
@@ -68,6 +69,9 @@ namespace Goedel.Mesh.MeshMan {
             Utilities.Assert(PortalID, "No portal ID known");
 
             SignedPersonalProfile = RegistrationPersonal.Profile;
+            PersonalProfile = SignedPersonalProfile.Signed;
+
+            PersonalProfile.SignedDeviceProfile = GetDevice(SignedPersonalProfile);
             }
 
 

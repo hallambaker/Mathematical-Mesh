@@ -18,7 +18,7 @@ namespace Goedel.Mesh.MeshMan {
 
             var PersonalProfile = SignedPersonalProfile.Signed;
 
-            var PasswordProfile = new PasswordProfile();
+            var PasswordProfile = new PasswordProfile(true);
 
             var ApplicationProfileEntry = PersonalProfile.Add(PasswordProfile);
             ApplicationProfileEntry.AddDevice(DeviceProfile);

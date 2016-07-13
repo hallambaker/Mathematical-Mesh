@@ -147,7 +147,7 @@
 		Include PortalAccount
 		Include Reporting
 
-	Command GetPassword "pwged"
+	Command GetPassword "pwget"
 		Brief "Lookup password entry"
 		Parameter Site "site" String
 		Include PortalAccount

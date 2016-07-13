@@ -118,7 +118,7 @@ namespace Goedel.Mesh.MeshMan {
 							Handle_AddPassword (Dispatch, args, 1);
 							break;
 							}
-						case "pwged" : {
+						case "pwget" : {
 							Handle_GetPassword (Dispatch, args, 1);
 							break;
 							}
@@ -2287,7 +2287,7 @@ namespace Goedel.Mesh.MeshMan {
 					GetPassword		Dummy = new GetPassword ();
 #pragma warning restore 219
 
-					Console.Write ("{0}pwged ", UsageFlag);
+					Console.Write ("{0}pwget ", UsageFlag);
 					Console.Write ("[{0}] ", Dummy.Site.Usage (null, "site", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.Portal.Usage ("portal", "value", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.UDF.Usage ("udf", "value", UsageFlag));
@@ -3426,7 +3426,7 @@ namespace Goedel.Mesh.MeshMan {
 					GetPassword		Dummy = new GetPassword ();
 #pragma warning restore 219
 
-					Console.Write ("{0}pwged ", UsageFlag);
+					Console.Write ("{0}pwget ", UsageFlag);
 					Console.Write ("[{0}] ", Dummy.Site.Usage (null, "site", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.Portal.Usage ("portal", "value", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.UDF.Usage ("udf", "value", UsageFlag));
