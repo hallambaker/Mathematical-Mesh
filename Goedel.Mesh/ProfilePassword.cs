@@ -132,16 +132,8 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="Site">The site details are looked for</param>
         public PasswordEntry Get(string Site) {
-            if (Private.Entries != null) {
-                foreach (var Entry in Private.Entries) {
-                    foreach (var EntrySite in Entry.Sites) {
-                        if (Site == EntrySite) {
-                             return Entry;
-                            }
-                        }
-                    }
-                }
-            return null;
+            return Private.Get(Site);
+
             }
 
 
@@ -198,6 +190,25 @@ namespace Goedel.Mesh {
 
 
     public partial class PasswordProfilePrivate {
+
+
+        /// <summary>
+        /// Find the entry for a given site.
+        /// </summary>
+        /// <param name="Site">The site details are looked for</param>
+        public PasswordEntry Get(string Site) {
+            if (Entries != null) {
+                foreach (var Entry in Entries) {
+                    foreach (var EntrySite in Entry.Sites) {
+                        if (Site == EntrySite) {
+                            return Entry;
+                            }
+                        }
+                    }
+                }
+            return null;
+            }
+
         /// <summary>
         /// Add an entry to the profile.
         /// </summary>
@@ -205,6 +216,12 @@ namespace Goedel.Mesh {
         /// <param name="Username">Username</param>
         /// <param name="Password">Password</param>
         public void Add(string Site, string Username, string Password) {
+
+            var Previous = Get(Site);
+            if (Previous != null) {
+                Entries.Remove(Previous);
+                }
+
             var Entry = new PasswordEntry(Site, Username, Password);
             Entries = Entries == null ? new List<PasswordEntry> (): Entries;
             Entries.Add (Entry);

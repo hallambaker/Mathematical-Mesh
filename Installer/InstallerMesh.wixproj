@@ -25,30 +25,30 @@
     <Compile Include="Product.wxs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ClientMeshConnectOnly\ClientMeshConnectOnly.csproj">
-      <Name>ClientMeshConnectOnly</Name>
-      <Project>{640192b9-df4f-41ab-bf78-9043874763db}</Project>
-      <Private>True</Private>
-      <DoNotHarvest>True</DoNotHarvest>
-      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
-      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
-    </ProjectReference>
-    <ProjectReference Include="..\ClientMeshProfileManager\ClientMeshProfileManager.csproj">
-      <Name>ClientMeshProfileManager</Name>
-      <Project>{072ee504-5743-4a61-bdb8-77da20c17f4a}</Project>
-      <Private>True</Private>
-      <DoNotHarvest>True</DoNotHarvest>
-      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
-      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Product_en_us.wxl" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.ico" />
     <Content Include="Background.bmp" />
     <Content Include="BannerTop.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\meshman\meshman.csproj">
+      <Name>meshman</Name>
+      <Project>{491511d6-d747-45e0-9382-61fcd89e1381}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>True</DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
+      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
+    </ProjectReference>
+    <ProjectReference Include="..\ServerMesh\ServerMesh.csproj">
+      <Name>ServerMesh</Name>
+      <Project>{98bcf5b8-9232-437b-a2fa-ba769bf4d982}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>True</DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
+      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(WixTargetsPath)" />
   <PropertyGroup>

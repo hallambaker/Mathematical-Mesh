@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppWindowsLiveMail.cs" />
+    <Compile Include="MeshGateway.cs" />
     <Compile Include="StorageLocations.cs" />
     <Compile Include="LiveMail.cs">
       <DependentUpon>LiveMail.RegistrySchema</DependentUpon>
