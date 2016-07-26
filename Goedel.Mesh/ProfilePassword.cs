@@ -143,13 +143,7 @@ namespace Goedel.Mesh {
         /// <param name="Site">The site whose details are to be removed</param>
         /// <returns>true if the site was found, otherwise false.</returns>
         public bool Delete(string Site) {
-            var Entry = Get(Site);
-            if (Entry == null) {
-                return false;
-                }
-
-            Private.Entries.Remove(Entry);
-            return true;
+            return Private.Delete(Site);
             }
 
 
@@ -210,6 +204,23 @@ namespace Goedel.Mesh {
             }
 
         /// <summary>
+        /// Delete a password entry.
+        /// </summary>
+        /// <param name="Site">The site to delete</param>
+        public bool Delete(string Site) {
+            bool Result = false;
+
+            var Previous = Get(Site);
+            while (Previous != null) {
+                Entries.Remove(Previous);
+                Previous = Get(Site);
+                Result = true;
+                }
+
+            return Result;
+            }
+
+        /// <summary>
         /// Add an entry to the profile.
         /// </summary>
         /// <param name="Site">Site at which this entry is to be used.</param>
@@ -217,10 +228,7 @@ namespace Goedel.Mesh {
         /// <param name="Password">Password</param>
         public void Add(string Site, string Username, string Password) {
 
-            var Previous = Get(Site);
-            if (Previous != null) {
-                Entries.Remove(Previous);
-                }
+            Delete(Site);
 
             var Entry = new PasswordEntry(Site, Username, Password);
             Entries = Entries == null ? new List<PasswordEntry> (): Entries;
