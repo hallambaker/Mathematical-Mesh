@@ -88,11 +88,11 @@
       <Project>{a803fe85-50d9-4ccd-8ffc-f653a4bd73e3}</Project>
       <Name>Goedel.Mesh.Client</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Goedel.Mesh.Portal\Goedel.Mesh.Portal.csproj">
+    <ProjectReference Include="..\Goedel.Mesh.Server\Goedel.Mesh.Server.csproj">
       <Project>{f6343f1b-d03d-4965-9113-5120a8054e9e}</Project>
-      <Name>Goedel.Mesh.Portal</Name>
+      <Name>Goedel.Mesh.Server</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Goedel.Mesh.Windows\Goedel.Mesh.Platform %28Windows%29.csproj">
+    <ProjectReference Include="..\Goedel.Mesh.Platform %28Windows%29\Goedel.Mesh.Platform %28Windows%29.csproj">
       <Project>{c378c917-f41d-4388-b467-efd6677c4459}</Project>
       <Name>Goedel.Mesh.Platform %28Windows%29</Name>
     </ProjectReference>

@@ -83,7 +83,7 @@
       <Project>{81e30b95-c59d-4a04-925e-85877fd37fdd}</Project>
       <Name>Goedel.Persistence</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Goedel.Mesh.Portal\Goedel.Mesh.Portal.csproj">
+    <ProjectReference Include="..\Goedel.Mesh.Server\Goedel.Mesh.Server.csproj">
       <Project>{f6343f1b-d03d-4965-9113-5120a8054e9e}</Project>
       <Name>Goedel.Mesh.Portal</Name>
     </ProjectReference>

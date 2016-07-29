@@ -72,7 +72,6 @@
     <Compile Include="ProfileDevice.cs" />
     <Compile Include="Escrow.cs" />
     <Compile Include="MailClient.cs" />
-    <Compile Include="MeshConnection.cs" />
     <Compile Include="SchemaMeshPlus.cs" />
     <Compile Include="ProfileNetwork.cs" />
     <Compile Include="ProfileMaster.cs" />

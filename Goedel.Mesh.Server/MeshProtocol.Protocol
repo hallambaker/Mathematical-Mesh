@@ -1,0 +1,581 @@
+﻿Protocol Goedel.Mesh MeshProtocol MeshProtocol
+	Using Goedel.Mesh
+	Using Goedel.Persistence
+
+	Section 1 "Mesh Portal Service  Reference"
+
+    Service MeshService "_mmm._tcp" "mmm" MeshRequest MeshResponse
+		Description
+			|Every Mesh Portal Service transaction consists of exactly one
+			|request followed by exactly one response.
+			|Mesh Service transactions MAY cause modification
+			|of the data stored in the Mesh Portal or the Mesh itself
+			|but do not cause changes to the connection state. The protocol
+			|itself is thus idempotent. There is no set sequence
+			|in which operations are required to be performed. It is not
+			|necessary to perform a Hello transaction prior to
+			|a ValidateAccount, Publish or any other transaction.
+
+	Section 2 "Request Messages"
+		Description
+			|A Mesh Portal Service request consists of a payload object
+			|that inherits from the MeshRequest class. When using the 
+			|HTTP binding, the request MUST specify the portal DNS
+			|address in the HTTP Host field. 
+
+	Message MeshRequest
+		Description
+			|Base class for all request messages.
+		External Goedel.Protocol.Request
+		String Portal
+			Description
+				|Name of the Mesh Portal Service to which the request 
+				|is directed.
+
+	Section 2 "Response Messages"
+		Description
+			|A Mesh Portal Service response consists of a payload object that
+			|inherits from the MeshResponse class. When using the
+			|HTTP binding, the response SHOULD
+			|report the Status response code in the HTTP response 
+			|message. However the response code returned in the
+			|payload object MUST always be considered authoritative.
+
+	Message MeshResponse
+		External Goedel.Protocol.Response		
+		Description
+			|Base class for all response messages. Contains only the
+			|status code and status description fields.
+		Description
+			|A service MAY return either the response message specified
+			|for that transaction or any parent of that message. 
+			|Thus the MeshResponse message MAY be returned in response 
+			|to any request.
+		Integer Status
+			Description
+				|Status return code. The SMTP/HTTP scheme of 2xx = Success,
+				|3xx = incomplete, 4xx = failure is followed.
+		String StatusDescription
+			Description
+				|Text description of the status return code for debugging 
+				|and log file use.
+
+	Section 3 "Successful Response Codes"
+		Description
+			|The following response codes are returned when a
+			|transaction has completed successfully.
+
+	Success SuccessOK 201
+		Description
+			|Operation completed successfully
+	Success SuccessCreated 201
+		Description
+			|Operation completed successfully, new data item created
+	Success SuccessUpdated 202
+		Description
+			|Operation completed successfully, data item was updated
+
+	Section 3 "Warning Response Codes"
+		Description
+			|The following response codes are returned when a
+			|transaction did not complete because the target
+			|service has been redirected.
+		Description
+			|In the case that a redirect code is returned, the 
+			|StatusDescription field contains the URI of the 
+			|new service. Note however that the redirect location 
+			|indicated in a status response might be incorrect
+			|or even malicious and cannot be considered 
+			|trustworthy without appropriate authentication.
+
+	Warning RedirectPermanent 303
+		Description
+			|Service has been permanently moved
+	Warning RedirectTemporary 307
+		Description
+			|Service has been temporarily moved
+
+	Section 3 "Error Response Codes"
+		Description
+			|A response code in the range 400-499 is
+			|returned when the service was able to process the
+			|transaction but the transaction resulted in an error.
+
+	Error ClientUnauthorized 401
+		Description
+			|Client is not authorized to perform specified request
+	Error NotFound 404
+		Description
+			|The requested object could not be found.
+	Error AlreadyExists 409
+		Description
+			|The requested object already exists.
+
+	Section 3 "Failure Response Codes"
+		Description
+			|A response code in the range 500-599 is
+			|returned when the service was unable to process the
+			|transaction but the transaction due to an internal
+			|failure.
+
+	Error ServerInternal 500
+		Description
+			|An internal error occurred at the server
+	Error ServerOverload 503
+		Description
+			|The server cannot handle the request as it is overloaded
+
+
+	Section 2 "Imported Objects"
+		Description
+			|The Mesh Service protocol makes use of JSON objects
+			|defined in the JOSE Signatgure and Encryption specifications.
+
+	Section 2 "Common Structures"
+		Description
+			|The following common structures are used in the protocol
+			|messages:
+
+
+	Structure Version
+		Description
+			|Describes a protocol version.
+		Integer Major
+			Description
+				|Major version number of the service protocol. A higher
+		Integer Minor
+			Description
+				|Minor version number of the service protocol.
+		Struct Encoding Encodings
+			Multiple
+			Description
+				|Enumerates alternative encodings (e.g. ASN.1, XML, JSON-B)
+				|supported by the service. If no encodings are specified, the
+				|JSON encoding is assumed.
+		String URI
+			Multiple
+			Description
+				|The preferred URI for this service. This MAY be used to effect
+				|a redirect in the case that a service moves.
+
+
+	Structure Encoding
+		Description
+			|Describes a message content encoding.
+		String ID
+			Multiple
+			Description
+				|The IANA encoding name
+		String Dictionary
+			Multiple
+			Description
+				|For encodings that employ a named dictionary for tag or data
+				|compression, the name of the dictionary as defined by that 
+				|encoding scheme. 	
+
+	Structure KeyValue
+		Description
+			|Describes a Key/Value structure used to make queries
+			|for records matching one or more selection criteria.
+		String Key
+			Description
+				|The data retrieval key.
+
+		String Value
+			Description
+				|The data value to match.
+
+
+	Structure SearchConstraints
+		Description
+			|Specifies constraints to be applied to a search result. These 
+			|allow a client to limit the number of records returned, the quantity
+			|of data returned, the earliest and latest data returned, etc.
+		DateTime NotBefore
+			Description
+				|Only data published on or after the specified time instant 
+				|is requested.
+		DateTime Before
+			Description
+				|Only data published before the specified time instant is
+				|requested. This excludes data published at the specified time instant.
+		Integer MaxEntries
+			Description
+				|Maximum number of data entries to return.
+		Integer MaxBytes
+			Description
+				|Maximum number of data bytes to return.
+		String PageKey
+			Description
+				|Specifies a page key returned in a previous search operation
+				|in which the number of responses exceeded the specified bounds.
+			Description
+				|When a page key is specified, all the other search parameters
+				|except for MaxEntries and MaxBytes are ignored and the service
+				|returns the next set of data responding to the earlier query.
+				
+
+	//Hello
+    Transaction Admin Hello HelloRequest HelloResponse
+		Description
+			|Report service and version information. 
+		Description
+			|The Hello transaction provides a means of determining which protocol
+			|versions, message encodings and transport protocols are supported by
+			|the service.
+
+	Message HelloRequest
+		Inherits MeshRequest
+
+	Message HelloResponse
+		Description
+			|Always reports success. Describes the configuration of the Mesh
+			|portal service.
+		Inherits MeshResponse
+		Struct Version Version
+			Description
+				|Enumerates the protocol versions supported
+		Struct Version Alternates
+			Multiple
+			Description
+				|Enumerates alternate protocol version(s) supported
+
+
+	//Validate
+	Transaction Admin ValidateAccount ValidateRequest ValidateResponse
+		Description
+			|Request validation of a proposed name for a new account.
+		Description
+			|For validation of a user's account name during profile creation.
+
+	Message ValidateRequest
+		Inherits MeshRequest
+		Description
+			|Describes the proposed account properties. Currently, these are limited
+			|to the account name but could be extended in future versions of the protocol.
+		String Account
+			Description
+				|Account name requested
+		Boolean Reserve
+			Description
+				|If true, request a reservation for the specified account name.
+				|Note that the service is not obliged to honor reservation 
+				|requests.
+		String Language
+			Multiple
+			Description
+				|List of ISO language codes in order of preference. For creating
+				|explanatory text.
+
+	Message ValidateResponse
+		Inherits MeshResponse
+		Description
+			|States whether the proposed account properties are acceptable and
+			|(optional) returns an indication of what properties are valid.
+		Description
+			|Note that receiving a 'Valid' responseto a Validate Request does
+			|not guarantee creation of the account. In addition to the possibility 
+			|that the account namecould be requested by another user between the 
+			|Validate and Create transactions, a portal service MAY perform more 
+			|stringent validation criteria when an account is actually being 
+			|created. For example, checking with the authoritative list of
+			|current accounts rather than a cached copy.
+		Boolean Valid
+			Description
+				|If true, the specified account identifier is acceptable. If false,
+				|the account identifier is rejected.
+		Integer Minimum
+			Description
+				|Specifies the minimum length of an account name.
+		Integer Maximum
+			Description
+				|Specifies the maximum length of an account name.
+		String InvalidCharacters
+			Description
+				|A list of characters that the service 
+				|does not accept in account names. The list of characters 
+				|MAY not be exhaustive but SHOULD include any illegal characters
+				|in the proposed account name.
+		String Reason
+			Description
+				|Text explaining the reason an account name was rejected.
+
+	//Create account
+	Transaction Admin CreateAccount CreateRequest CreateResponse
+		Description
+			|Request creation of a new portal account.
+		Description
+			|Unlike a profile, a mesh account is specific to a particular 
+			|Mesh portal. A mesh account must be created and accepted before
+			|a profile can be published.
+
+	Message CreateRequest
+		Description
+			|Request creation of a new portal account. The request specifies
+			|the requested account identifier and the Mesh profile to be associated 
+			|with the account.
+		Inherits MeshRequest
+		String Account
+			Description
+				|Account identifier requested.
+		TStruct SignedProfile Profile
+			Description
+				|User profile of account to be created. The profile MUST specify the 
+				|account being created as an account.
+
+	Message CreateResponse
+		Inherits MeshResponse
+		Description
+			|Reports the success or failure of a Create transaction.
+
+	//Get
+	Transaction Mesh Get GetRequest GetResponse
+		Description
+			|Search for data in the mesh that matches a set of properties
+			|described by a sequence of key/value pairs.
+
+
+	Message GetRequest
+		Description
+			|Describes the Portal or Mesh data to be retreived.
+		Inherits MeshRequest
+		String Identifier
+			Description
+				|Lookup by profile ID
+		String Account
+			Description
+				|Lookup by Account ID
+		Struct KeyValue KeyValues
+			Multiple
+			Description
+				|List of KeyValue pairs specifying the conditions to be met
+		Struct SearchConstraints SearchConstraints
+			Description
+				|Constrain the search to a specific time interval and/or 
+				|limit the number and/or total size of data records returned.
+		Boolean Multiple
+			Description
+				|If true return multiple responses if available
+		Boolean Full
+			Description
+				|If true, the client requests that the full Mesh data record be 
+				|returned containing both the Mesh entry itself and the Mesh
+				|metadata that allows the date and time of the publication of
+				|the Mesh entry to be verified.
+
+	Message GetResponse
+		Description
+			|Reports the success or failure of a Get transaction. If a Mesh entry
+			|matching the specified profile is found, containsthe list of entries
+			|matching the request.
+		Inherits MeshResponse
+		TStruct Entry Entries
+			Multiple
+			Description
+				|List of entries matching the request.
+		Struct DataItem DataItems
+			Multiple
+			Description
+				|List of mesh data records matching the request.
+		String PageKey
+			Description
+				|If non-null, indicates that the number and/or size of the data records
+				|returned exceeds either the SearchConstraints specified in the
+				|request or internal server limits.
+
+
+	//Publish
+	Transaction Mesh Publish PublishRequest PublishResponse
+		Description
+			|Publish a profile or key escrow entry to the mesh.
+
+	Message PublishRequest
+		Description
+			|Requests publication of the specified Mesh entry.
+		Inherits MeshRequest
+		TStruct Entry Entry
+			Description
+				|Signed profile to be published.
+
+	Message PublishResponse
+		Description
+			|Reports the success or failure of a Publish transaction.
+		Inherits MeshResponse
+
+
+	Transaction Mesh Status StatusRequest StatusResponse
+		Description
+			|Request the current status of the mesh as seen by the portal to which it
+			|is directed.
+		Description
+			|The response to the status request contains the last signed checkpoint
+			|and proof chains for each of the peer portals that have been checkpointed.
+		Description
+			|[Not currently implemented]
+
+	Message StatusRequest
+		Inherits MeshRequest
+		Description
+			|Initiates a status transaction.
+
+	Message StatusResponse
+		Description
+			|Reports the success or failure of a Status transaction.
+		Inherits MeshResponse
+		DateTime LastWriteTime
+			Description
+				|Time that the last write update was made to the Mesh
+		DateTime LastCheckpointTime
+			Description
+				|Time that the last Mesh checkpoint was calculated.
+		DateTime NextCheckpointTime
+			Description
+				|Time at which the next Mesh checkpoint should be calculated.
+		String CheckpointValue
+			Description
+				|Last checkpoint value.
+
+
+
+	// Device connection Request
+	// Note that the connection request does not get stored in the mesh log
+	// But the profile update to add the additional device profile data is
+	// added by the admin device.
+
+	Transaction Portal ConnectStart ConnectStartRequest ConnectStartResponse
+		Description
+			|Request connection of a new device to a mesh profile
+
+	Message ConnectStartRequest
+		Inherits MeshRequest
+		Description
+			|Initial device connection request.
+		Struct SignedConnectionRequest SignedRequest
+			Description
+				|Device connection request signed by thesignature key of the 
+				|device requesting connection.
+		String AccountID
+			Description
+				|Account identifier of account to which the device is requesting
+				|connection.
+
+	Message ConnectStartResponse
+		Description
+			|Reports the success or failure of a ConnectStart transaction.
+		Inherits MeshRequest
+
+
+	Transaction Portal ConnectStatus ConnectStatusRequest ConnectStatusResponse
+		Description
+			|Request status of pending connection request of a new device 
+			|to a mesh profile
+
+	Message ConnectStatusRequest
+		Inherits MeshRequest
+		Description
+			|Request status information for a pending request posted
+			|previously.
+		String AccountID
+			Description
+				|Account identifier for which pending connection information
+				|is requested.
+		String DeviceID
+			Description
+				|Device identifier of device requesting status information.
+
+	Message ConnectStatusResponse
+		Description
+			|Reports the success or failure of a ConnectStatus transaction.
+		Inherits MeshRequest
+		Struct SignedConnectionResult Result
+			Description
+				|The signed ConnectionResult object.
+
+
+	Transaction Portal ConnectPending ConnectPendingRequest ConnectPendingResponse
+		Description
+			|Request a list of pending requests for an administration profile.
+
+	Message ConnectPendingRequest
+		Inherits MeshRequest
+		Description
+			|Specify the criteria for pending requests.
+		String AccountID
+			Description
+				|The account identifier of the account for which
+				|pending connection requests are requested.
+		Struct SearchConstraints SearchConstraints
+			Description
+				|Constrain the search to a specific time interval and/or 
+				|limit the number and/or total size of data records returned.
+
+	Message ConnectPendingResponse
+		Description
+			|Reports the success or failure of a ConnectPending transaction.
+		Inherits MeshRequest
+		Struct SignedConnectionRequest Pending
+			Multiple
+			Description
+				|A list of pending requests satisfying the criteria set out
+				|in the request.
+		String PageKey
+			Description
+				|If non-null, indicates that the number and/or size of the data records
+				|returned exceeds either the SearchConstraints specified in the
+				|request or internal server limits.
+
+	Transaction Portal ConnectComplete ConnectCompleteRequest ConnectCompleteResponse
+		Description
+			|Post response to a pending connection request.
+
+	Message ConnectCompleteRequest
+		Description
+			|Reports the success or failure of a ConnectComplete transaction.
+		Inherits MeshRequest
+		Struct SignedConnectionResult Result
+			Description
+				|The connection result to be posted to the portal. The result MUST
+				|be signed by a valid administration key for the Mesh profile.
+		String AccountID
+			Description
+				|The account identifier to which the connection result is
+				|posted.
+
+	Message ConnectCompleteResponse
+		Inherits MeshRequest
+		Description
+			|Reports the success or failure of a ConnectComplete transaction.
+
+
+
+
+	Transaction Mesh Transfer TransferRequest TransferResponse
+		Description
+			|Request a bulk transfer of the log between the specified transaction
+			|identifiers. Requires appropriate authorization
+		Description
+			|[Not currently implemented]
+
+	Message TransferRequest
+		Description
+			|
+		Inherits MeshRequest
+		Struct SearchConstraints SearchConstraints
+			Description
+				|Constrain the search to a specific time interval and/or 
+				|limit the number and/or total size of data records returned.
+
+	Message TransferResponse
+		Inherits MeshResponse
+		Description
+			|Reports the success or failure of a Transfer transaction.
+			|If successful, contains the list of Mesh records to be transferred.
+		Struct DataItem DataItems
+			Multiple
+			Description
+				|List of mesh data records matching the request.
+		String PageKey
+			Description
+				|If non-null, indicates that the number and/or size of the data records
+				|returned exceeds either the SearchConstraints specified in the
+				|request or internal server limits.

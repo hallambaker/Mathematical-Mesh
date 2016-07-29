@@ -55,7 +55,7 @@
     <Compile Include="RegistrationMachineTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Goedel.Mesh.Windows\Goedel.Mesh.Platform %28Windows%29.csproj">
+    <ProjectReference Include="..\Goedel.Mesh.Platform %28Windows%29\Goedel.Mesh.Platform %28Windows%29.csproj">
       <Project>{C378C917-F41D-4388-B467-EFD6677C4459}</Project>
       <Name>Goedel.Mesh.Platform %28Windows%29</Name>
     </ProjectReference>
