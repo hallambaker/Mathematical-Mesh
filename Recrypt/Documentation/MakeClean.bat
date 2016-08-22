@@ -11,8 +11,4 @@ echo Create reference material from protocol definition files
 
 protogen ..\Goedel.Recrypt\RecryptProtocol.Protocol /md Generated\Recrypt.md
 
-echo Generate new examples.
-
-RecryptExampleGenerator Examples/Examples.md Examples/ExamplesWeb.md
-
 exit /b 0

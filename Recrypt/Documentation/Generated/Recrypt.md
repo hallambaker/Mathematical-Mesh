@@ -169,6 +169,53 @@ Dictionary: String [0..Many]
 compression, the name of the dictionary as defined by that 
 encoding scheme. 	
 
+###Structure: Resource
+
+
+Identifier: String (Optional)
+
+###Structure: Static
+
+* Inherits: Resource
+
+[None]
+
+###Structure: Dynamic
+
+* Inherits: Resource
+
+[None]
+
+###Structure: ResourceSet
+
+* Inherits: Resource
+
+[None]
+
+###Structure: User
+
+* Inherits: Resource
+
+
+Account: String (Optional)
+
+###Structure: Label
+
+* Inherits: Resource
+
+[None]
+
+###Structure: KeySet
+
+* Inherits: Resource
+
+
+Account: String (Optional)
+
+Administrators: User [0..Many]
+
+Readers: User [0..Many]
+
 ##Transaction: Hello
 
 Request: HelloRequest
@@ -185,14 +232,16 @@ the service.
 
 * Inherits: RecryptRequest
 
+
+
 [None]
 
 ###Message: HelloResponse
 
+* Inherits: RecryptResponse
+
 Always reports success. Describes the configuration of the Mesh
 portal service.
-
-* Inherits: RecryptResponse
 
 
 Version: Version (Optional)
@@ -202,4 +251,130 @@ Version: Version (Optional)
 Alternates: Version [0..Many]
 
 :Enumerates alternate protocol version(s) supported
+
+##Transaction: Set
+
+Request: SetRequest
+
+Response:SetResponse
+
+###Message: SetRequest
+
+* Inherits: RecryptRequest
+
+
+
+[None]
+
+###Message: SetResponse
+
+* Inherits: RecryptResponse
+
+
+[None]
+
+##Transaction: Get
+
+Request: GetRequest
+
+Response:GetResponse
+
+###Message: GetRequest
+
+* Inherits: RecryptRequest
+
+
+
+[None]
+
+###Message: GetResponse
+
+* Inherits: RecryptResponse
+
+
+[None]
+
+##Transaction: Delete
+
+Request: DeleteRequest
+
+Response:DeleteResponse
+
+###Message: DeleteRequest
+
+* Inherits: RecryptRequest
+
+
+
+[None]
+
+###Message: DeleteResponse
+
+* Inherits: RecryptResponse
+
+
+[None]
+
+##Transaction: Select
+
+Request: SearchRequest
+
+Response:SearchResponse
+
+###Message: SearchRequest
+
+* Inherits: RecryptRequest
+
+
+
+[None]
+
+###Message: SearchResponse
+
+* Inherits: RecryptResponse
+
+
+[None]
+
+##Transaction: Join
+
+Request: JoinRequest
+
+Response:JoinResponse
+
+###Message: JoinRequest
+
+* Inherits: RecryptRequest
+
+
+
+[None]
+
+###Message: JoinResponse
+
+* Inherits: RecryptResponse
+
+
+[None]
+
+##Transaction: Leave
+
+Request: LeaveRequest
+
+Response:LeaveResponse
+
+###Message: LeaveRequest
+
+* Inherits: RecryptRequest
+
+
+
+[None]
+
+###Message: LeaveResponse
+
+* Inherits: RecryptResponse
+
+
+[None]
 

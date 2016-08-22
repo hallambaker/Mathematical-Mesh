@@ -1,74 +1,339 @@
 
 
-#Protocol Overview
+#Mesh/Recrypt 
 
-Here we put a description of the basic protocol 
+Mesh/Recrypt is a messaging infrastructure built on the Mathematical 
+Mesh infrastructure that supports end-to-end encryption with:
 
-##Connection Establishment
+*   Confidential Document Control
 
-This part of the specification should be separated into a generic 
-building block for reuse in other protocols.
+*   Asynchronous messaging (e.g. mail, mailing lists)
 
-The service discovery mechanism described in 
-[!draft-hallambaker-json-web-service-02] is used.
+*   Synchronous messaging (e.g. chat, voice, video)
 
-The Hello transaction MAY be used to determine specific 
-features of the particular Web Service.
+Mesh/Recrypt builds on the same suite of existing Internet standards 
+and specifications as the Mathematical Mesh. These include:
 
-The client request is:
+* All messages and data structures are encoded using either JSON 
+encoding or the extended JSON-C encoding that offers efficient binary
+encoding and compression of field tags and strings.
 
+* All services are implemented as Web Services using HTTP transport and
+TLS for transport layer security.
+
+* Message layer security is provided using JOSE signature and 
+Encryption.
+
+* Uniform Data Fingerprints are used to identify public keys
+
+* Use of DNS SRV records for Web Service discovery
+
+* Use of the .well-known convention to specify the Web Service 
+endpoint.
+
+One significant limitation in the current implementation is that it 
+uses traditional Diffie Hellman key exchange in a finite field rather
+than the newly defined CFRG elliptic curve algorithms. This is due to
+the version of the development environment having not caught up with 
+the development of the new standards yet.
+
+For clarity, the use of the command line tool 'recrypt' is shown. For
+most production use, a GUI interface or integration of the recryption
+functions into the document editing and/or viewing tools would be 
+preferred.
+
+## Scenario
+
+   Since Confidential Document Control is the application that is not 
+   currently supported by existing open standards, we present this as 
+   the example use case. The extension of the approach to other 
+   messaging modalities will be considered separately.
+
+   In the following examples, the named parties have the following 
+   roles:
+
+:Alice
+
+::The owner and administrator of the recryption group 
+   'privatealice@example.com'. She decides who is permitted to read 
+   documents that have been encrypted to this group and generates the 
+   necessary recryption keys.
+
+:Bob
+
+::The person Alice grants read access to her controlled documents.
+
+:Service
+
+::The service that enforces control of controlled documents.
+
+Note that the Service is only one part of the CDC infrastructure. 
+Alice sets policy for who is permitted access to the controlled 
+documents using the recrypt tool. The service is responsible for 
+enforcement of that policy.
+
+##Parties create a Mesh personal profile
+
+Alice creates a Mesh personal profile with a Mesh/Recrypt profile. 
+This can be done using a Mesh profile management tool or the recrypt
+tool. The recrypt tool generates a Mesh/Recrypt profile by default:
+
+~~~~
+recrypt /personal alice@example.com
+~~~~
+
+Bob and Carol do likewise but using a different Mesh portal.
+
+~~~~
+recrypt /personal bob@example.net
 ~~~~
 
 ~~~~
-POST /.well-known/meshrecrypt/HTTP/1.1
-Host: example.com
-Content-Length: 23
-
-{
-  "HelloRequest": {}}
+recrypt /personal carol@example.net
 ~~~~
 
+At this point Alice, Bob and Carol have established a persistent personal PKI.
+Since it is the only profile each has established for the account they 
+are using on the computer, it is automatically registered as the default
+profile for that account and does not need to be specified in future 
+commands.
+
+To simplify future examples, we assume that Alice and Bob have established
+each other's profiles as trustworthy via some out of band process. 
+This might be through a direct trust model (i.e. exchange of profile 
+fingerprints), a brokered trust mode (e.g. a certificate issued by a CA)
+or some other mechanism to be determined.
+
+To use the protocol, the recyption service also requires a Mesh/Recrypt
+profile containing a public key to use for encryption. For simplicity 
+we assume that this is a WebPKI certificate using an appropriate validation
+mechanism (e.g. Extended Validation).
+
+##Alice creates a recryption group
+
+To create a recryption group, Alice just needs to specify the name for 
+the group. Since this is a group for Alice's personal use, and the
+recryption service will be managed by her Mesh portal, she chooses 
+the name privatealice@example.com.
+
+[The extent to which this convention is useful and/or requires enforcement
+steps to be taken by portals is not currently understood. It seems
+like a good idea but might not be.]
+
+~~~~
+recrypt /newgroup privatealice@example.com
 ~~~~
 
-The service responds with a description of the service. This 
-description MUST specify at least one supported protocol
-version.
+As with any other Mesh profile, the recryption group has both a friendly
+name and a UDF fingerprint.
 
-A typical client response is:
-
-~~~~
+The recryption group contains a master signature key and an encryption
+key and is signed under the signature key:
 
 ~~~~
-HTTP/1.1 200 OK
-Date: Wed 27 Jul 2016 05:53:27
-Content-Length: 219
-
-{
-  "HelloResponse": {
-    "Status": 201,
-    "StatusDescription": "Operation completed successfully",
-    "Version": {
-      "Major": 0,
-      "Minor": 7,
-      "Encodings": [{
-          "ID": ["application/json"]}]}}}
+Recrypt profile...
 ~~~~
 
+The newly created recryption profile is published to both the recryption 
+service and the Mesh Portal. Note that even though the Mesh Portal and 
+Recryption Service are both provided by the same domain (example.com), 
+these are distinct Web Services and may be hosted on separate machines.
+
+Since the use of a recryption group is a stored data encryption application
+and Alice has opted to create a personal escrow key, the recrypt client
+also 
+
+##Alice encrypts a document
+
+Alice creates a text document containing the text 'this is a test' and
+saves it under the filename text.txt.
+
+To encrypt the document to the recryption group, Alice specifies the 
+file she wishes to encrypt and the name of the group:
+
+~~~~
+recrypt /encrypt privatealice@example.com test.txt
 ~~~~
 
-All versions of the protocol SHALL support the Hello transaction.
-A service MUST support the use of JSON encoding for the 
-Hello transaction regardless of version. 
+The recryption client fetches the current recryption group profile from 
+the Mesh Portal and verifies that it meets the relevant trust criteria.
 
-The set of encodings supportted by a protocol version is 
-specified in the Encodings field. The encodings field MAY 
-be omitted if only JSON is supported.
+Since privatealice@example.com is a sub-account of alice@example.com
+which Alice trusts because it is her own account. It suffices for the 
+client to verify that Alice's current Mesh profile has an entry
+for the recryption group and has a valid signature.
 
-A service SHOULD support at least one protocol version with 
-JSON encoding.
+Having acquired the recryption group profile, the client 
+extracts the group encryption key and uses it to create a JOSE 
+encrypted message:
 
+~~~~
+TBS
+~~~~
 
-[Note that for the sake of concise presentation, the HTTP binding
-information is omitted from future examples.]
+The encrypted data is a wrapper that specifies the content 
+metadata.
 
+~~~~
+TBS
+~~~~
+
+The encrypted document is saved as test.txt.jcd (Jose Controlled Document)
+
+The message format has been designed to permit authenticated and
+encrypted messages to be generated and recieved as message streams 
+without the need to buffer content. A protected message consists 
+of a list containing the following items in order:
+
+* Header specifying the information necessary to decrypt the 
+  message and the authentication algorithm.
+
+* The encrypted data.
+
+* Trailer specifying the authentication value.
+
+One disadvantage of using JSON encoding in an encryption scheme
+is that the need to encode binary data as Base63 encoded strings
+incurs a 33% inflation penalty on each pass. For this reason, 
+Mesh/Recrypt applications are required to accept (but not generate)
+the JSON-B and JSON-C encodings which permit binary data to be 
+encoded directly.
+
+##Alice adds Bob and Carol to the recryption group
+
+Alice adds Bob and Carol to the recryption tool by specifying their
+profile identifiers:
+
+~~~~
+recrypt add privatealice@example.com bob@example.net
+recrypt add privatealice@example.com carol@example.net
+~~~~ 
+
+To add each user the client:
+
+* Acquires and validates the user's Mesh profile
+
+* Obtains the private key for the recryption group 
+(stored on the machine).
+
+* Creates a recryption entry as described earlier.
+
+* Encrypts recryption entry under the encryption key of the
+recryption service.
+
+* Publishes the encrypted recryption entry to the service 
+using a secure channel (HTTPS to the Server WebPKI certificate).
+
+The encrypted recryption entry is:
+
+~~~~
+TBS
+~~~~
+
+The encrypted content within the recryption entry is:
+
+~~~~
+TBS
+~~~~
+
+##Bob decrypts a document
+
+Alice sends the encrypted controlled document to Bob by whichever 
+means is most convenient. Alice might send the document to Bob by email, 
+hand him a USB thumdrive or just save the document to an enterprise file 
+server that Bob has access to.
+
+To read the document, Bob must decrypt it. Ideally the encryption and 
+decryption of documents would be handled transparently by the application
+and/or platform. Instead Bob uses the recrypt tool:
+
+~~~~
+recrypt /decrypt test.txt.jcd
+~~~~
+
+To decrypt the document, the client:
+
+* Reads the document header to determine that it is a recrypted document
+
+* Obtain a recryption grant from the recryption service indicated. This 
+is encrypted under Bob's encryption key.
+
+* Decrypt the recryption grant and the user portion of the recryption private key
+
+* Combine the user and service data
+
+* Decrypt the message
+
+The recryption service may require Bob to authenticate before the recryption 
+grant is provided. This prevents denial of service attacks on the service 
+and allows the service to enforce quotas and/or accountability controls.
+
+##Bob uses multiple devices
+
+Recryption may be used to support multiple devices in more than one way.
+The approach that is most appropriate depends on the precise use scenario.
+
+The simplest method of supporting multiple devices is for Alice to create 
+multiple recryption entries for Bob, one for each of his authorized devices.
+Alice might prefer this approach despite the additional work for her 
+because it allows her to decide which of Bob's devices are authorized to 
+read the documents she controls. The chief limitation of this approach is
+that Bob must obtain Alice's approval to add or remove devices.
+
+In a more sophisticated approach, Bob administers his own recryption group
+and creates recryption keys for each device that is not to be an administrator
+device for the group. These are called standard devices.
+
+To read Alice's document on a standard device, the device must first obtain
+the recryption key from Alice's recryption service as before, then contact 
+Bob's recryption service to decrypt the recryption grant.
+
+[It is not clear at this stage how much data this leaks to the client and 
+to what extent Bob is trusting the recryption service to enforce policy. Each 
+ordinary device gains access to Bob's decryption key for the group. Instead of
+using recryption to control access to the document itself, this approach uses 
+recryption to control access to the recryption grant used to unlock the 
+document.]
+
+[For the most sensitive documents, Bob can reduce the degree of trust in
+the recryption service by obtaining his recryption private user key for a 
+group and creating a recryption keyset for that device. The principal 
+disadvantage of this approach is that this requires Alice and Bob to perform
+an administration operation when the group is created and each time the 
+keys are changed. Another disadvantage is that if Bob has ten devices 
+and is a member of a hundred recryption groups, he will need to administer
+a thousand individual recryption entries.]
+
+##Alice revokes Carol’s group membership
+
+At minimum, revoking Carol read access to the group requires the client 
+to inform the recryption service that the entry for Carol should be deleted.
+Relying on the recryption service to enforce the policy change requires
+the service to be trusted which may or may not be acceptable.
+
+If the confidential data being controlled is particularly sensitive, Alice
+can block access to any new material encrypted under the group with a 
+rollover of the group key and set of recryption keys. A client might
+perform such a key rollover by default if the number of entries in the
+group is small. 
+
+##Bob loses a device
+
+The loss of a device requires Bob to perform the same tasks as Alice did
+to remove Carol from the recryption group.
+
+##Bob visits a hostile environment
+
+If Bob knows that he is going to be visiting an environment where his device
+may be searched by agents who may coerce him to reveal any decryption keys, 
+he may avoid disclosure of confidential material by removing the device from 
+the recryption group and deleting all the unencrypted confidential from it.
+
+Bob access to the confidential material may be quickly restored through
+the introduction of a trusted third party. Before leaving, Bob creates 
+a recryption entry, and encrypts it under an encryption key unique to 
+the device he is to use. This information is sent to the trusted third 
+party via a secure channel. To regain access to the material, Bob must
+convince the trusted third party that he is safe and not in a situation 
+he is subject to coertion.
 

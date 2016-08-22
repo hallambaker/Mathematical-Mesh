@@ -7,18 +7,8 @@ using Goedel.Cryptography;
 using Goedel.Protocol.Debug;
 
 namespace ExampleGenerator {
-    public class CreateExamples {
-        static void Main(string[] args) {
+    public partial class CreateExamples {
 
-            var Class = new CreateExamples();
-            Class.Go(args[0], args[1]);
-            }
-
-
-        string LogPortal = "Portal.jlog";
-        string LogMesh = "Mesh.jlog";
-
-        public TraceDictionary Traces;
 
         void Go(string Output1, string Output2) {
             StartService();
@@ -164,6 +154,8 @@ namespace ExampleGenerator {
 
             // Create basic application
             PasswordProfile = new PasswordProfile(true);
+            var ApplicationProfileEntry = PersonalProfile.Add(PasswordProfile);
+            PasswordProfile.Link(PersonalProfile, ApplicationProfileEntry);
 
             // Add decryption blobs for each device granted access
             PasswordProfile.AddDevice(SignedDeviceProfile1);

@@ -54,6 +54,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="RecryptProtocol.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RecryptProtocol.Protocol</DependentUpon>
+    </Compile>
     <Compile Include="RecryptProtocolPlus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -61,6 +66,7 @@
     <None Include="App.config" />
     <None Include="RecryptProtocol.Protocol">
       <Generator>Protogen</Generator>
+      <LastGenOutput>RecryptProtocol.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
   </ItemGroup>

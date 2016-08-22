@@ -51,8 +51,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CheckVersion.cs" />
-    <Compile Include="Import.cs" />
+    <Compile Include="MakeUDF.cs">
+      <DependentUpon>MakeUDF.script</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="MakeVersion.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -64,7 +67,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="Examples\Examples.md" />
     <None Include="Generated\Recrypt.md" />
+    <None Include="MakeUDF.script">
+      <Generator>gscript</Generator>
+      <LastGenOutput>MakeUDF.cs</LastGenOutput>
+    </None>
     <None Include="MakeVersion.script">
       <Generator>gscript</Generator>
       <LastGenOutput>MakeVersion.cs</LastGenOutput>
@@ -78,7 +86,6 @@
     <Content Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Examples\" />
     <Folder Include="Static\" />
   </ItemGroup>
   <ItemGroup>

@@ -5,12 +5,13 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{C26ACE75-2B6C-4553-944B-2C95986E103A}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>InternetDrafts</RootNamespace>
     <AssemblyName>InternetDrafts</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -50,19 +51,30 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CheckVersion.cs" />
+    <Compile Include="CreateExamples.cs" />
+    <Compile Include="MakeVersion.cs">
+      <DependentUpon>MakeVersion.script</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="Examples\Examples.md" />
     <None Include="Examples\ExamplesWeb.md" />
     <None Include="Generated\MeshProtocol.md" />
     <None Include="Generated\MeshSchema.md" />
     <None Include="Generated\Portal.md" />
+    <None Include="MakeClean.bat" />
+    <None Include="MakeDocs.bat" />
+    <None Include="MakeVersion.script">
+      <Generator>gscript</Generator>
+      <LastGenOutput>MakeVersion.cs</LastGenOutput>
+    </None>
     <None Include="MeshSchemaWeb.md" />
     <None Include="packages.config" />
-    <None Include="Postbuild.bat" />
-    <None Include="Prebuild.bat" />
     <Content Include="Publish\hallambaker-json-web-service.html" />
     <Content Include="Publish\hallambaker-json-web-service.txt" />
     <Content Include="Publish\hallambaker-json-web-service.xml" />
@@ -89,16 +101,62 @@
     <Content Include="Publish\hallambaker-udf.txt" />
     <Content Include="Publish\hallambaker-udf.xml" />
     <Content Include="ReadMe.txt" />
+    <None Include="Postbuild.bat" />
+    <None Include="Prebuild.bat" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Static\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Goedel.Cryptography.Jose\Goedel.Cryptography.Jose.csproj">
+      <Project>{59f7f1a5-abbc-4830-b7a3-140fd8e4c369}</Project>
+      <Name>Goedel.Cryptography.Jose</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Goedel.Cryptography\Goedel.Cryptography.csproj">
+      <Project>{1babc0e9-d939-4de5-82a3-16752104b14b}</Project>
+      <Name>Goedel.Cryptography</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Goedel.Debug\Goedel.Debug.csproj">
+      <Project>{a8090b80-d658-45f6-bda1-4f9dfd2b976f}</Project>
+      <Name>Goedel.Debug</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Goedel.DNS\Goedel.DNS.csproj">
+      <Project>{dd994f50-5ca7-474d-ac4a-dbf05949621f}</Project>
+      <Name>Goedel.DNS</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Goedel.Mesh.Client\Goedel.Mesh.Client.csproj">
+      <Project>{a803fe85-50d9-4ccd-8ffc-f653a4bd73e3}</Project>
+      <Name>Goedel.Mesh.Client</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Goedel.Mesh.Server\Goedel.Mesh.Server.csproj">
+      <Project>{f6343f1b-d03d-4965-9113-5120a8054e9e}</Project>
+      <Name>Goedel.Mesh.Server</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Goedel.Mesh\Goedel.Mesh.csproj">
+      <Project>{0d8dd801-65d2-497c-8379-2d6adf3867c3}</Project>
+      <Name>Goedel.Mesh</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Goedel.Persistence\Goedel.Persistence.csproj">
+      <Project>{81e30b95-c59d-4a04-925e-85877fd37fdd}</Project>
+      <Name>Goedel.Persistence</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Goedel.Protocol.Debug\Goedel.Protocol.Debug.csproj">
+      <Project>{0586b4c1-814c-4d98-b6f1-180cd4e2faab}</Project>
+      <Name>Goedel.Protocol.Debug</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Goedel.Protocol\Goedel.Protocol.csproj">
+      <Project>{24419f2d-f425-4e0f-a0ea-9d3e7a57e12f}</Project>
+      <Name>Goedel.Protocol</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>call "$(ProjectDir)\Prebuild.bat"</PreBuildEvent>
+    <PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PostBuildEvent>call "$(ProjectDir)\Postbuild.bat"</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

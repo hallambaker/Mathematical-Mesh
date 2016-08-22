@@ -164,33 +164,9 @@
 				|compression, the name of the dictionary as defined by that 
 				|encoding scheme. 	
 
-	//Hello
-    Transaction Admin Hello HelloRequest HelloResponse
-		Description
-			|Report service and version information. 
-		Description
-			|The Hello transaction provides a means of determining which protocol
-			|versions, message encodings and transport protocols are supported by
-			|the service.
-
-	Message HelloRequest
-		Inherits RecryptRequest
-
-	Message HelloResponse
-		Description
-			|Always reports success. Describes the configuration of the Mesh
-			|portal service.
-		Inherits RecryptResponse
-		Struct Version Version
-			Description
-				|Enumerates the protocol versions supported
-		Struct Version Alternates
-			Multiple
-			Description
-				|Enumerates alternate protocol version(s) supported
-
 
 	Structure Resource
+		String Identifier
 
 	Structure Static
 		Inherits Resource
@@ -203,22 +179,116 @@
 
 	Structure User
 		Inherits Resource
+		String Account
 
 	Structure Label
 		Inherits Resource
 
 
-	Transaction Set SetRequest SetResponse
+	Structure KeySet
+		Inherits Resource
+		String Account
+		Struct User Administrators
+			Multiple
+		Struct User Readers
+			Multiple
 
-	Transaction Get GetRequest GetResponse
+	//Hello
+    Transaction Admin Hello HelloRequest HelloResponse
+		Description
+			|Report service and version information. 
+		Description
+			|The Hello transaction provides a means of determining which protocol
+			|versions, message encodings and transport protocols are supported by
+			|the service.
 
-	Transaction Delete DeleteRequest Delete Response
+	Message HelloRequest
+		Inherits RecryptRequest
+		Description
+			|
 
-	Transaction Search SearchRequest SearchResponse
+	Message HelloResponse
+		Inherits RecryptResponse
+		Description
+			|Always reports success. Describes the configuration of the Mesh
+			|portal service.
+		Struct Version Version
+			Description
+				|Enumerates the protocol versions supported
+		Struct Version Alternates
+			Multiple
+			Description
+				|Enumerates alternate protocol version(s) supported
+
+
+
+
+
+	Transaction User Set SetRequest SetResponse
+
+	Message SetRequest
+		Inherits RecryptRequest
+		Description
+			|
+
+	Message SetResponse
+		Inherits RecryptResponse
+		Description
+
+	Transaction User Get GetRequest GetResponse
+
+	Message GetRequest
+		Inherits RecryptRequest
+		Description
+			|
+
+	Message GetResponse
+		Inherits RecryptResponse
+		Description
+
+
+	Transaction User Delete DeleteRequest DeleteResponse
+
+	Message DeleteRequest
+		Inherits RecryptRequest
+		Description
+			|
+
+	Message DeleteResponse
+		Inherits RecryptResponse
+		Description
+
+	Transaction User Select SearchRequest SearchResponse
+
+	Message SearchRequest
+		Inherits RecryptRequest
+		Description
+			|
+
+	Message SearchResponse
+		Inherits RecryptResponse
+		Description
 
 	// Only apply to dynamic resources
 
-	Transaction Join JoinRequest JoinResponse
+	Transaction User Join JoinRequest JoinResponse
 
-	Transaction Leave LeaveRequest LeaveResponse
+	Message JoinRequest
+		Inherits RecryptRequest
+		Description
+			|
 
+	Message JoinResponse
+		Inherits RecryptResponse
+		Description
+
+	Transaction User Leave LeaveRequest LeaveResponse
+
+	Message LeaveRequest
+		Inherits RecryptRequest
+		Description
+			|
+
+	Message LeaveResponse
+		Inherits RecryptResponse
+		Description
