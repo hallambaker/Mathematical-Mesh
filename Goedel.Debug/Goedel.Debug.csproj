@@ -35,10 +35,6 @@
     <OutputPath>bin\RaspberryPi\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Goedel.Registry, Version=1.0.5856.42846, Culture=neutral, PublicKeyToken=00ce4cbe0647f41a, processorArchitecture=MSIL">
-      <HintPath>..\..\applications\Lurk\packages\Goedel.Registry.1.0.5856.42846\lib\net40\Goedel.Registry.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -50,7 +46,6 @@
   <ItemGroup>
     <Compile Include="Exception.cs" />
     <Compile Include="Extension.cs" />
-    <Compile Include="MyConsole.cs" />
     <Compile Include="Test.cs" />
     <Compile Include="Trace.cs" />
     <Compile Include="Utilities.cs" />
@@ -59,7 +54,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="LibDebug.licenseheader" />
-    <None Include="packages.config" />
     <None Include="PreBuild.bat" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

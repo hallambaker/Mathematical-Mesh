@@ -25,6 +25,7 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
 using Goedel.Protocol;
+using Goedel.Utilities;
 //using OBPConnection;
 //using OBPQuery;
 

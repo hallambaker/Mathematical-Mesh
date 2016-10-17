@@ -1,0 +1,1560 @@
+<?xml version='1.0'?>
+<!DOCTYPE rfc SYSTEM 'rfc2629.dtd'>
+<rfc ipr="trust200902" docName="draft-hallambaker-mesh-reference-03" category="std">
+<?rfc toc="yes"?>  
+<?rfc symrefs="yes"?>  
+<?rfc sortrefs="yes"?>  
+<?rfc compact="yes"?>  
+<?rfc subcompact="no"?>  
+<front>
+<title abbrev="Mathematical Mesh Reference">Mathematical Mesh: Reference</title>
+<author fullname="Phillip Hallam-Baker    " initials="P. M.    " surname="Hallam-Baker    ">
+<organization>Comodo Group Inc.    </organization>
+<address>
+<email>philliph@comodo.com</email>
+</address>
+</author>
+<date day="19" month="September" year="2016"/>
+<area>Security</area>
+<workgroup/>
+<abstract>
+<t>The Mathematical Mesh 'The Mesh' is an end-to-end secure infrastructure that facilitates the exchange of configuration and credential data between multiple user devices. The core protocols of the Mesh are described with examples of common use cases and reference data.</t>
+</abstract>
+</front>
+<middle>
+<section title="Introduction" anchor="Section_1">
+<t>NB: The reference material in this document is generated from the schema used to derive the source code. The tool used to create this material has not been optimized to produce output for the IETF documentation format at this time. Consequently the formatting is currently sub-optimal.</t>
+</section>
+<section title="Definitions" anchor="Section_2">
+<section title="Requirements Language" anchor="Section_2_1">
+<t/>
+<t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in RFC 2119 [RFC2119].</t>
+</section>
+</section>
+<section title="Architecture" anchor="Section_3">
+<section title="Data Model" anchor="Section_3_1">
+<section title="First Class Object" anchor="Section_3_1_1">
+</section>
+<section title="Profile" anchor="Section_3_1_2">
+<t>A profile is a first class object. It has a globally unique identifier that provides an unambiguous reference to the profile in any situation.</t>
+</section>
+<section title="Record" anchor="Section_3_1_3">
+<t>A record describes the state of an object at the completion of a specific Transaction.</t>
+</section>
+<section title="Transaction" anchor="Section_3_1_4">
+<t>A transaction is an event in which the state of an object changes. Every transaction has a globally unique transaction identifier. Transaction identifiers are issued in a monotonic sequence such that a transaction that completes at time t1 will always have a lower transaction identifier than one that begins at time t2 where t2 &gt; t1.</t>
+</section>
+</section>
+<section title="Profile Types" anchor="Section_3_2">
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Master Profile"> </t>
+<t hangText="Personal Profile"> </t>
+<t hangText="Application Profile"> </t>
+<t hangText="Device Profile"> </t>
+</list></t>
+</list></t>
+</section>
+<section title="Master Profile" anchor="Section_3_3">
+<t>The master profile contains the axioms of trust for a Mesh user.</t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Identifier: &quot;Master&quot; + UDF Fingerprint of the Master Signing Key"> </t>
+<t hangText="Signature: Master Signing Key">The key used to sign the profile MUST be MasterSigningKey</t>
+<t hangText="Property: Master Signing Key">The Master Signing key is the ultimate trust axiom for the Master Profile.</t>
+<t hangText="Property: Master Escrow Keys"> </t>
+<t hangText="Property: Online Signature Keys"> </t>
+</list></t>
+</list></t>
+</section>
+<section title="Personal Profile" anchor="Section_3_4">
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Identifier: UDF Fingerprint of the Master Signing Key"> </t>
+<t hangText="Signature: Online Signature Key">The key used to sign the profile MUST be a member of MasterProfile/OnlineSignatureKeys</t>
+<t hangText="Property: Master Profile">The Master Profile that this personal profile is an instance of.</t>
+<t hangText="Property: Devices"> </t>
+<t hangText="Property: Applications">A list of application profile entries specifying which application profiles are attached to the personal profile</t>
+</list></t>
+</list></t>
+</section>
+<section title="Device Profile" anchor="Section_3_5">
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Identifier: UDF Fingerprint of the Device Signing Key"> </t>
+<t hangText="Signature: Device Signing Key">The key used to sign the profile MUST be MasterSigningKey</t>
+<t hangText="Property: Device Signing Key">The Master Signing key is the ultimate trust axiom for the Master Profile.</t>
+<t hangText="Property: Device Encryption Key"> </t>
+<t hangText="Property: Device Authentication Key"> </t>
+</list></t>
+</list></t>
+</section>
+<section title="Application Profile" anchor="Section_3_6">
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Identifier: Randomly chosen"> </t>
+<t hangText="Property: Encrypted Data"> </t>
+</list></t>
+</list></t>
+</section>
+</section>
+<section title="Cryptographic Data Objects " anchor="Section_4">
+<section title="Public Key Objects " anchor="Section_4_1">
+<section title="Structure: PublicKey " anchor="Section_4_1_1">
+<t>Container for public key pair data </t>
+<t>UDF: String (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="UDF fingerprint of the key "> </t>
+</list></t>
+</list></t>
+<t>X509Certificate: Binary (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="List of X.509 Certificates "> </t>
+</list></t>
+</list></t>
+<t>X509Chain: Binary [0..Many] </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="X.509 Certificate chain. "> </t>
+</list></t>
+</list></t>
+<t>X509CSR: Binary (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="X.509 Certificate Signing Request. "> </t>
+</list></t>
+</list></t>
+</section>
+</section>
+<section title="JOSE Signature Objects " anchor="Section_4_2">
+<section title="Structure: SignedData " anchor="Section_4_2_1">
+<t>Container for JOSE signed data and related attributes. </t>
+<t>Data: Binary (Optional) </t>
+</section>
+</section>
+<section title="JOSE Encryption Objects " anchor="Section_4_3">
+<section title="Structure: EncryptedData " anchor="Section_4_3_1">
+<t>Container for JOSE encrypted data and related attributes. </t>
+<t>Data: Binary (Optional) </t>
+</section>
+</section>
+</section>
+<section title="Mesh Profile Objects " anchor="Section_5">
+<section title="Base Profile Objects " anchor="Section_5_1">
+<section title="Structure: Entry " anchor="Section_5_1_1">
+<t>Base class for all Mesh Profile objects. </t>
+<t>Identifier: String (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Globally unique identifier that remains constant for the lifetime of the  entry. "> </t>
+</list></t>
+</list></t>
+</section>
+<section title="Structure: SignedProfile " anchor="Section_5_1_2">
+<t><list style="symbols">
+<t><list style="symbols">
+<t> Inherits: Entry </t>
+</list></t>
+</list></t>
+<t>Contains a signed profile entry </t>
+<t>SignedData: JoseWebSignature (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="The signed profile. "> </t>
+<t hangText="Note that each child of SignedProfile requires that the Payload field of the SignedData object contain an object of a specific type.  For example, a SignedDeviceProfile object MUST contain a Payload field that contains a DeviceProfile object. "> </t>
+</list></t>
+</list></t>
+</section>
+<section title="Structure: Profile " anchor="Section_5_1_3">
+<t><list style="symbols">
+<t><list style="symbols">
+<t> Inherits: Entry </t>
+</list></t>
+</list></t>
+<t>Parent class from which all profile types are derived </t>
+<t>Names: String [0..Many] </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Fingerprints of index terms for profile retrieval. The use of the fingerprint of the name rather than the name itself is a precaution against enumeration attacks and other forms of abuse. "> </t>
+</list></t>
+</list></t>
+<t>Updated: DateTime (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="The time instant the profile was last modified. "> </t>
+</list></t>
+</list></t>
+<t>NotaryToken: String (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="A Uniform Notary Token providing evidence that a signature was performed after the notary token was created. "> </t>
+</list></t>
+</list></t>
+</section>
+</section>
+<section title="Device Profile Objects " anchor="Section_5_2">
+<section title="Structure: SignedDeviceProfile " anchor="Section_5_2_1">
+<t><list style="symbols">
+<t><list style="symbols">
+<t> Inherits: SignedProfile </t>
+</list></t>
+</list></t>
+<t>Contains a signed device profile </t>
+<t>[None] </t>
+</section>
+<section title="Structure: DeviceProfile " anchor="Section_5_2_2">
+<t><list style="symbols">
+<t><list style="symbols">
+<t> Inherits: Profile </t>
+</list></t>
+</list></t>
+<t>Describes a mesh device. </t>
+<t>Description: String (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Description of the device "> </t>
+</list></t>
+</list></t>
+<t>DeviceSignatureKey: PublicKey (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Key used to sign certificates for the DAK and DEK. The fingerprint of the DSK is the UniqueID of the Device Profile "> </t>
+</list></t>
+</list></t>
+<t>DeviceAuthenticationKey: PublicKey (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Key used to authenticate requests made by the device. "> </t>
+</list></t>
+</list></t>
+<t>DeviceEncryptiontionKey: PublicKey (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Key used to pass encrypted data to the device such as a DeviceUseEntry "> </t>
+</list></t>
+</list></t>
+</section>
+<section title="Structure: DevicePrivateProfile " anchor="Section_5_2_3">
+<t>Private portion of device encryption profile.  </t>
+<t>DeviceSignatureKey: Key (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Private portion of the DeviceSignatureKey "> </t>
+</list></t>
+</list></t>
+<t>DeviceAuthenticationKey: Key (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Private portion of the DeviceAuthenticationKey "> </t>
+</list></t>
+</list></t>
+<t>DeviceEncryptiontionKey: Key (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Private portion of the DeviceEncryptiontionKey "> </t>
+</list></t>
+</list></t>
+</section>
+</section>
+<section title="Master Profile Objects " anchor="Section_5_3">
+<section title="Structure: SignedMasterProfile " anchor="Section_5_3_1">
+<t><list style="symbols">
+<t><list style="symbols">
+<t> Inherits: SignedProfile </t>
+</list></t>
+</list></t>
+<t>Contains a signed Personal master profile </t>
+<t>[None] </t>
+</section>
+<section title="Structure: MasterProfile " anchor="Section_5_3_2">
+<t><list style="symbols">
+<t><list style="symbols">
+<t> Inherits: Profile </t>
+</list></t>
+</list></t>
+<t>Describes the long term parameters associated with a personal profile. </t>
+<t>MasterSignatureKey: PublicKey (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="The root of trust for the Personal PKI, the public key of the PMSK  is presented as a self-signed X.509v3 certificate with Certificate  Signing use enabled. The PMSK is used to sign certificates for the  PMEK, POSK and PKEK keys. "> </t>
+</list></t>
+</list></t>
+<t>MasterEscrowKeys: PublicKey [0..Many] </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="A Personal Profile MAY contain one or more PMEK keys to enable escrow  of private keys used for stored data.  "> </t>
+</list></t>
+</list></t>
+<t>OnlineSignatureKeys: PublicKey [0..Many] </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="A Personal profile contains at least one POSK which is used to sign  device administration application profiles. "> </t>
+</list></t>
+</list></t>
+</section>
+</section>
+<section title="Personal Profile Objects " anchor="Section_5_4">
+<section title="Structure: SignedPersonalProfile " anchor="Section_5_4_1">
+<t><list style="symbols">
+<t><list style="symbols">
+<t> Inherits: SignedProfile </t>
+</list></t>
+</list></t>
+<t>Contains a signed Personal current profile </t>
+<t>[None] </t>
+</section>
+<section title="Structure: PersonalProfile " anchor="Section_5_4_2">
+<t><list style="symbols">
+<t><list style="symbols">
+<t> Inherits: Profile </t>
+</list></t>
+</list></t>
+<t>Describes the current applications and devices connected to a  personal master profile. </t>
+<t>SignedMasterProfile: SignedMasterProfile (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="The corresponding master profile.  The profile MUST be signed by the PMSK. "> </t>
+</list></t>
+</list></t>
+<t>Devices: SignedDeviceProfile [0..Many] </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="The set of device profiles connected to the profile. The profile MUST be signed by the DSK in the profile. "> </t>
+</list></t>
+</list></t>
+<t>Applications: ApplicationProfileEntry [0..Many] </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Application profiles connected to this profile. "> </t>
+</list></t>
+</list></t>
+</section>
+</section>
+<section title="Application Profile Objects " anchor="Section_5_5">
+<section title="Structure: SignedApplicationProfile " anchor="Section_5_5_1">
+<t><list style="symbols">
+<t><list style="symbols">
+<t> Inherits: SignedProfile </t>
+</list></t>
+</list></t>
+<t>Contains a signed device profile </t>
+<t>[None] </t>
+</section>
+<section title="Structure: EncryptedProfile " anchor="Section_5_5_2">
+<t><list style="symbols">
+<t><list style="symbols">
+<t> Inherits: Entry </t>
+</list></t>
+</list></t>
+<t>Contains an encrypted profile entry </t>
+<t>EncryptedData: JoseWebEncryption (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="The signed and encrypted profile "> </t>
+</list></t>
+</list></t>
+</section>
+<section title="Structure: ApplicationProfile " anchor="Section_5_5_3">
+<t><list style="symbols">
+<t><list style="symbols">
+<t> Inherits: Profile </t>
+</list></t>
+</list></t>
+<t>Parent class from which all application profiles inherit. </t>
+<t>EncryptedData: JoseWebEncryption (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Encrypted application data	 "> </t>
+</list></t>
+</list></t>
+</section>
+<section title="Structure: ApplicationProfileEntry " anchor="Section_5_5_4">
+<t>Identifier: String (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="The unique identifier of the application "> </t>
+</list></t>
+</list></t>
+<t>Type: String (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="The application type "> </t>
+</list></t>
+</list></t>
+<t>Friendly: String (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Optional friendly name identifying the application. "> </t>
+</list></t>
+</list></t>
+<t>SignID: String [0..Many] </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="List of devices authorized to sign application profiles "> </t>
+</list></t>
+</list></t>
+<t>DecryptID: String [0..Many] </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="List of devices authorized to read private parts of application  profiles	 "> </t>
+</list></t>
+</list></t>
+</section>
+</section>
+<section title="Common Application Objects " anchor="Section_5_6">
+<section title="Structure: Connection " anchor="Section_5_6_1">
+<t>Describes network connection parameters for an application </t>
+<t>ServiceName: String (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="DNS address of the server "> </t>
+</list></t>
+</list></t>
+<t>Port: Integer (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="TCP/UDP Port number "> </t>
+</list></t>
+</list></t>
+<t>Prefix: String (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="DNS service prefix as described in [RFC6335] "> </t>
+</list></t>
+</list></t>
+<t>Security: String [0..Many] </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Describes the security mode to use. Valid choices are Direct/Upgrade/None "> </t>
+</list></t>
+</list></t>
+<t>UserName: String (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Username to present to the service for authentication "> </t>
+</list></t>
+</list></t>
+<t>Password: String (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Password to present to the service for authentication "> </t>
+</list></t>
+</list></t>
+<t>URI: String (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Service connection parameters in URI format "> </t>
+</list></t>
+</list></t>
+<t>Authentication: String (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="List of the supported/acceptable authentication mechanisms, preferred mechanism first. "> </t>
+</list></t>
+</list></t>
+<t>TimeOut: Integer (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Service timeout in seconds. "> </t>
+</list></t>
+</list></t>
+<t>Polling: Boolean (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="If set, the client should poll the specified service intermittently for updates. "> </t>
+</list></t>
+</list></t>
+</section>
+</section>
+<section title="Password Application Profile Objects " anchor="Section_5_7">
+<section title="Structure: PasswordProfile " anchor="Section_5_7_1">
+<t><list style="symbols">
+<t><list style="symbols">
+<t> Inherits: ApplicationProfile </t>
+</list></t>
+</list></t>
+<t>Stores usernames and passwords </t>
+<t>[None] </t>
+</section>
+<section title="Structure: PasswordProfilePrivate " anchor="Section_5_7_2">
+<t>AutoGenerate: Boolean (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="If true, a client MAY offer to automatically generate strong (i.e. not memorable) passwords for a user. A user would not normally want to use this feature unless they have access to Mesh password management on every device they use to browse the Web "> </t>
+</list></t>
+</list></t>
+<t>Entries: PasswordEntry [0..Many] </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="A list of password credential entries. "> </t>
+</list></t>
+</list></t>
+<t>NeverAsk: String [0..Many] </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="A list of domain names of sites for which clients MUST NOT ask to store passwords for. "> </t>
+</list></t>
+</list></t>
+</section>
+<section title="Structure: PasswordEntry " anchor="Section_5_7_3">
+<t>Username password entry for a single site </t>
+<t>Sites: String [0..Many] </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="DNS name of site *.example.com matches www.example.com etc. "> </t>
+</list></t>
+</list></t>
+<t>Username: String (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Case sensitive username "> </t>
+</list></t>
+</list></t>
+<t>Password: String (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Case sensitive password. "> </t>
+</list></t>
+</list></t>
+</section>
+</section>
+<section title="Mail Application Profile Objects " anchor="Section_5_8">
+<section title="Structure: MailProfile " anchor="Section_5_8_1">
+<t><list style="symbols">
+<t><list style="symbols">
+<t> Inherits: ApplicationProfile </t>
+</list></t>
+</list></t>
+<t>Public profile describes mail receipt policy. Private describes Sending policy </t>
+<t>EncryptionPGP: PublicKey (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="The current OpenPGP encryption key "> </t>
+</list></t>
+</list></t>
+<t>EncryptionSMIME: PublicKey (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="The current S/MIME encryption key "> </t>
+</list></t>
+</list></t>
+</section>
+<section title="Structure: MailProfilePrivate " anchor="Section_5_8_2">
+<t>Describes a mail account configuration </t>
+<t>Private profile contains connection settings for the inbound and outbound mail server(s) and cryptographic private keys. Public profile may contain security policy information for the sender. </t>
+<t>EmailAddress: String (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="The RFC822 Email address. [e.g. &quot;alice@example.com&quot;] "> </t>
+</list></t>
+</list></t>
+<t>ReplyToAddress: String (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="The RFC822 Reply toEmail address. [e.g. &quot;alice@example.com&quot;] "> </t>
+<t hangText="When set, allows a sender to tell the receiver that replies to this account should be directed to this address. "> </t>
+</list></t>
+</list></t>
+<t>DisplayName: String (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="The Display Name. [e.g. &quot;Alice Example&quot;] "> </t>
+</list></t>
+</list></t>
+<t>AccountName: String (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="The Account Name for display to the app user [e.g. &quot;Work Account&quot;] "> </t>
+</list></t>
+</list></t>
+<t>Inbound: Connection [0..Many] </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="The Inbound Mail Connection(s). This is typically IMAP4 or POP3 "> </t>
+<t hangText="If multiple connections are specified, the order in the sequence indicates the preference order. "> </t>
+</list></t>
+</list></t>
+<t>Outbound: Connection [0..Many] </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="The Outbound Mail Connection(s). This is typically SMTP/SUBMIT "> </t>
+<t hangText="If multiple connections are specified, the order in the sequence indicates the preference order. "> </t>
+</list></t>
+</list></t>
+<t>Sign: PublicKey [0..Many] </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="The public keypair(s) for signing and decrypting email. "> </t>
+<t hangText="If multiple public keys are specified, the order indicates preference. "> </t>
+</list></t>
+</list></t>
+<t>Encrypt: PublicKey [0..Many] </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="The public keypairs for encrypting and decrypting email. "> </t>
+<t hangText="If multiple public keys are specified, the order indicates preference.	 "> </t>
+</list></t>
+</list></t>
+</section>
+</section>
+<section title="Network Application Profile Objects " anchor="Section_5_9">
+<section title="Structure: NetworkProfile " anchor="Section_5_9_1">
+<t><list style="symbols">
+<t><list style="symbols">
+<t> Inherits: ApplicationProfile </t>
+</list></t>
+</list></t>
+<t>Describes the network profile to follow </t>
+<t>[None] </t>
+</section>
+<section title="Structure: NetworkProfilePrivate " anchor="Section_5_9_2">
+<t>Describes the network profile to follow </t>
+<t>Sites: String [0..Many] </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="DNS name of sites to which profile applies *.example.com matches www.example.com etc.	 "> </t>
+</list></t>
+</list></t>
+<t>DNS: Connection [0..Many] </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="DNS Resolution Services "> </t>
+</list></t>
+</list></t>
+<t>Prefix: String [0..Many] </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="DNS prefixes to search "> </t>
+</list></t>
+</list></t>
+<t>CTL: Binary (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Certificate Trust List giving WebPKI roots to trust "> </t>
+</list></t>
+</list></t>
+<t>WebPKI: String [0..Many] </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="List of UDF fingerprints of keys making up the trust roots to be accepted for Web PKI purposes. "> </t>
+</list></t>
+</list></t>
+</section>
+</section>
+<section title="Key Escrow Objects " anchor="Section_5_10">
+<section title="Structure: EscrowEntry " anchor="Section_5_10_1">
+<t><list style="symbols">
+<t><list style="symbols">
+<t> Inherits: Entry </t>
+</list></t>
+</list></t>
+<t>Contains escrowed data </t>
+<t>EncryptedData: JoseWebEncryption (Optional) </t>
+</section>
+<section title="Structure: OfflineEscrowEntry " anchor="Section_5_10_2">
+<t><list style="symbols">
+<t><list style="symbols">
+<t> Inherits: EscrowEntry </t>
+</list></t>
+</list></t>
+<t>Contains data escrowed using the offline escrow mechanism. </t>
+<t>[None] </t>
+</section>
+<section title="Structure: OnlineEscrowEntry " anchor="Section_5_10_3">
+<t><list style="symbols">
+<t><list style="symbols">
+<t> Inherits: EscrowEntry </t>
+</list></t>
+</list></t>
+<t>Contains data escrowed using the online escrow mechanism. </t>
+<t>[None] </t>
+</section>
+<section title="Structure: EscrowedKeySet " anchor="Section_5_10_4">
+<t>A set of escrowed keys. </t>
+<t>PrivateKeys: Key [0..Many] </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="The escrowed keys. "> </t>
+</list></t>
+</list></t>
+</section>
+</section>
+</section>
+<section title="Portal Connection " anchor="Section_6">
+<section title="Connection Request and Response Structures " anchor="Section_6_1">
+<section title="Structure: ConnectionRequest " anchor="Section_6_1_1">
+<t>Describes a connection request. </t>
+<t>ParentUDF: String (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="UDF of Mesh Profile to which connection is requested. "> </t>
+</list></t>
+</list></t>
+<t>Device: SignedDeviceProfile (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="The Device profile to be connected "> </t>
+</list></t>
+</list></t>
+</section>
+<section title="Structure: SignedConnectionRequest " anchor="Section_6_1_2">
+<t><list style="symbols">
+<t><list style="symbols">
+<t> Inherits: SignedProfile </t>
+</list></t>
+</list></t>
+<t>Contains a ConnectionRequest signed by the  corresponding device signature key. </t>
+<t>[None] </t>
+</section>
+<section title="Structure: ConnectionResult " anchor="Section_6_1_3">
+<t>Describes the result of a connection request. </t>
+<t><list style="symbols">
+<t><list style="symbols">
+<t> Inherits: ConnectionRequest </t>
+</list></t>
+</list></t>
+<t>Result: String (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="The result of the connection request. Valid responses are: Accepted, Refused, Query. "> </t>
+</list></t>
+</list></t>
+</section>
+<section title="Structure: SignedConnectionResult " anchor="Section_6_1_4">
+<t><list style="symbols">
+<t><list style="symbols">
+<t> Inherits: SignedProfile </t>
+</list></t>
+</list></t>
+<t>Contains a signed connection result </t>
+<t>[None] </t>
+</section>
+</section>
+</section>
+<section title="Mesh Portal Service Reference " anchor="Section_7">
+<t>SRV Prefix: </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="_mmm._tcp "> </t>
+</list></t>
+</list></t>
+<t>HTTP Well Known Service Prefix: </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="/.well-known/mmm "> </t>
+</list></t>
+</list></t>
+<t>Every Mesh Portal Service transaction consists of exactly one request followed by exactly one response. Mesh Service transactions MAY cause modification of the data stored in the Mesh Portal or the Mesh itself but do not cause changes to the connection state. The protocol itself is thus idempotent. There is no set sequence in which operations are required to be performed. It is not necessary to perform a Hello transaction prior to a ValidateAccount, Publish or any other transaction. </t>
+<section title="Request Messages " anchor="Section_7_1">
+<t>A Mesh Portal Service request consists of a payload object that inherits from the MeshRequest class. When using the  HTTP binding, the request MUST specify the portal DNS address in the HTTP Host field.  </t>
+<section title="Message: MeshRequest " anchor="Section_7_1_1">
+<t>Base class for all request messages. </t>
+<t>Portal: String (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Name of the Mesh Portal Service to which the request  is directed. "> </t>
+</list></t>
+</list></t>
+</section>
+</section>
+<section title="Response Messages " anchor="Section_7_2">
+<t>A Mesh Portal Service response consists of a payload object that inherits from the MeshResponse class. When using the HTTP binding, the response SHOULD report the Status response code in the HTTP response  message. However the response code returned in the payload object MUST always be considered authoritative. </t>
+<section title="Message: MeshResponse " anchor="Section_7_2_1">
+<t>Base class for all response messages. Contains only the status code and status description fields. </t>
+<t>A service MAY return either the response message specified for that transaction or any parent of that message.  Thus the MeshResponse message MAY be returned in response  to any request. </t>
+<t>Status: Integer (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Status return code. The SMTP/HTTP scheme of 2xx = Success, 3xx = incomplete, 4xx = failure is followed. "> </t>
+</list></t>
+</list></t>
+<t>StatusDescription: String (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Text description of the status return code for debugging  and log file use. "> </t>
+</list></t>
+</list></t>
+</section>
+<section title="Successful Response Codes " anchor="Section_7_2_2">
+<t>The following response codes are returned when a transaction has completed successfully. </t>
+<t>[201] SuccessOK </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Operation completed successfully "> </t>
+</list></t>
+</list></t>
+<t>[201] SuccessCreated </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Operation completed successfully, new data item created "> </t>
+</list></t>
+</list></t>
+<t>[202] SuccessUpdated </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Operation completed successfully, data item was updated "> </t>
+</list></t>
+</list></t>
+</section>
+<section title="Warning Response Codes " anchor="Section_7_2_3">
+<t>The following response codes are returned when a transaction did not complete because the target service has been redirected. </t>
+<t>In the case that a redirect code is returned, the  StatusDescription field contains the URI of the  new service. Note however that the redirect location  indicated in a status response might be incorrect or even malicious and cannot be considered  trustworthy without appropriate authentication. </t>
+<t>[303] RedirectPermanent </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Service has been permanently moved "> </t>
+</list></t>
+</list></t>
+<t>[307] RedirectTemporary </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Service has been temporarily moved "> </t>
+</list></t>
+</list></t>
+</section>
+<section title="Error Response Codes " anchor="Section_7_2_4">
+<t>A response code in the range 400-499 is returned when the service was able to process the transaction but the transaction resulted in an error. </t>
+<t>[401] ClientUnauthorized </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Client is not authorized to perform specified request "> </t>
+</list></t>
+</list></t>
+<t>[404] NotFound </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="The requested object could not be found. "> </t>
+</list></t>
+</list></t>
+<t>[409] AlreadyExists </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="The requested object already exists. "> </t>
+</list></t>
+</list></t>
+</section>
+<section title="Failure Response Codes " anchor="Section_7_2_5">
+<t>A response code in the range 500-599 is returned when the service was unable to process the transaction but the transaction due to an internal failure. </t>
+<t>[500] ServerInternal </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="An internal error occurred at the server "> </t>
+</list></t>
+</list></t>
+<t>[503] ServerOverload </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="The server cannot handle the request as it is overloaded "> </t>
+</list></t>
+</list></t>
+</section>
+</section>
+<section title="Imported Objects " anchor="Section_7_3">
+<t>The Mesh Service protocol makes use of JSON objects defined in the JOSE Signatgure and Encryption specifications. </t>
+</section>
+<section title="Common Structures " anchor="Section_7_4">
+<t>The following common structures are used in the protocol messages: </t>
+<section title="Structure: Version " anchor="Section_7_4_1">
+<t>Describes a protocol version. </t>
+<t>Major: Integer (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Major version number of the service protocol. A higher "> </t>
+</list></t>
+</list></t>
+<t>Minor: Integer (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Minor version number of the service protocol. "> </t>
+</list></t>
+</list></t>
+<t>Encodings: Encoding [0..Many] </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Enumerates alternative encodings (e.g. ASN.1, XML, JSON-B) supported by the service. If no encodings are specified, the JSON encoding is assumed. "> </t>
+</list></t>
+</list></t>
+<t>URI: String [0..Many] </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="The preferred URI for this service. This MAY be used to effect a redirect in the case that a service moves. "> </t>
+</list></t>
+</list></t>
+</section>
+<section title="Structure: Encoding " anchor="Section_7_4_2">
+<t>Describes a message content encoding. </t>
+<t>ID: String [0..Many] </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="The IANA encoding name "> </t>
+</list></t>
+</list></t>
+<t>Dictionary: String [0..Many] </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="For encodings that employ a named dictionary for tag or data compression, the name of the dictionary as defined by that  encoding scheme.  "> </t>
+</list></t>
+</list></t>
+</section>
+<section title="Structure: KeyValue " anchor="Section_7_4_3">
+<t>Describes a Key/Value structure used to make queries for records matching one or more selection criteria. </t>
+<t>Key: String (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="The data retrieval key. "> </t>
+</list></t>
+</list></t>
+<t>Value: String (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="The data value to match. "> </t>
+</list></t>
+</list></t>
+</section>
+<section title="Structure: SearchConstraints " anchor="Section_7_4_4">
+<t>Specifies constraints to be applied to a search result. These  allow a client to limit the number of records returned, the quantity of data returned, the earliest and latest data returned, etc. </t>
+<t>NotBefore: DateTime (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Only data published on or after the specified time instant  is requested. "> </t>
+</list></t>
+</list></t>
+<t>Before: DateTime (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Only data published before the specified time instant is requested. This excludes data published at the specified time instant. "> </t>
+</list></t>
+</list></t>
+<t>MaxEntries: Integer (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Maximum number of data entries to return. "> </t>
+</list></t>
+</list></t>
+<t>MaxBytes: Integer (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Maximum number of data bytes to return. "> </t>
+</list></t>
+</list></t>
+<t>PageKey: String (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Specifies a page key returned in a previous search operation in which the number of responses exceeded the specified bounds. "> </t>
+<t hangText="When a page key is specified, all the other search parameters except for MaxEntries and MaxBytes are ignored and the service returns the next set of data responding to the earlier query. "> </t>
+</list></t>
+</list></t>
+</section>
+</section>
+<section title="Transaction: Hello " anchor="Section_7_5">
+<t>Request: HelloRequest </t>
+<t>Response:HelloResponse </t>
+<t>Report service and version information.  </t>
+<t>The Hello transaction provides a means of determining which protocol versions, message encodings and transport protocols are supported by the service. </t>
+<section title="Message: HelloRequest " anchor="Section_7_5_1">
+<t><list style="symbols">
+<t><list style="symbols">
+<t> Inherits: MeshRequest </t>
+</list></t>
+</list></t>
+<t>[None] </t>
+</section>
+<section title="Message: HelloResponse " anchor="Section_7_5_2">
+<t>Always reports success. Describes the configuration of the Mesh portal service. </t>
+<t><list style="symbols">
+<t><list style="symbols">
+<t> Inherits: MeshResponse </t>
+</list></t>
+</list></t>
+<t>Version: Version (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Enumerates the protocol versions supported "> </t>
+</list></t>
+</list></t>
+<t>Alternates: Version [0..Many] </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Enumerates alternate protocol version(s) supported "> </t>
+</list></t>
+</list></t>
+</section>
+</section>
+<section title="Transaction: ValidateAccount " anchor="Section_7_6">
+<t>Request: ValidateRequest </t>
+<t>Response:ValidateResponse </t>
+<t>Request validation of a proposed name for a new account. </t>
+<t>For validation of a user's account name during profile creation. </t>
+<section title="Message: ValidateRequest " anchor="Section_7_6_1">
+<t><list style="symbols">
+<t><list style="symbols">
+<t> Inherits: MeshRequest </t>
+</list></t>
+</list></t>
+<t>Describes the proposed account properties. Currently, these are limited to the account name but could be extended in future versions of the protocol. </t>
+<t>Account: String (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Account name requested "> </t>
+</list></t>
+</list></t>
+<t>Reserve: Boolean (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="If true, request a reservation for the specified account name. Note that the service is not obliged to honor reservation  requests. "> </t>
+</list></t>
+</list></t>
+<t>Language: String [0..Many] </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="List of ISO language codes in order of preference. For creating explanatory text. "> </t>
+</list></t>
+</list></t>
+</section>
+<section title="Message: ValidateResponse " anchor="Section_7_6_2">
+<t><list style="symbols">
+<t><list style="symbols">
+<t> Inherits: MeshResponse </t>
+</list></t>
+</list></t>
+<t>States whether the proposed account properties are acceptable and (optional) returns an indication of what properties are valid. </t>
+<t>Note that receiving a 'Valid' responseto a Validate Request does not guarantee creation of the account. In addition to the possibility  that the account namecould be requested by another user between the  Validate and Create transactions, a portal service MAY perform more  stringent validation criteria when an account is actually being  created. For example, checking with the authoritative list of current accounts rather than a cached copy. </t>
+<t>Valid: Boolean (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="If true, the specified account identifier is acceptable. If false, the account identifier is rejected. "> </t>
+</list></t>
+</list></t>
+<t>Minimum: Integer (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Specifies the minimum length of an account name. "> </t>
+</list></t>
+</list></t>
+<t>Maximum: Integer (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Specifies the maximum length of an account name. "> </t>
+</list></t>
+</list></t>
+<t>InvalidCharacters: String (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="A list of characters that the service  does not accept in account names. The list of characters  MAY not be exhaustive but SHOULD include any illegal characters in the proposed account name. "> </t>
+</list></t>
+</list></t>
+<t>Reason: String (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Text explaining the reason an account name was rejected. "> </t>
+</list></t>
+</list></t>
+</section>
+</section>
+<section title="Transaction: CreateAccount " anchor="Section_7_7">
+<t>Request: CreateRequest </t>
+<t>Response:CreateResponse </t>
+<t>Request creation of a new portal account. </t>
+<t>Unlike a profile, a mesh account is specific to a particular  Mesh portal. A mesh account must be created and accepted before a profile can be published. </t>
+<section title="Message: CreateRequest " anchor="Section_7_7_1">
+<t>Request creation of a new portal account. The request specifies the requested account identifier and the Mesh profile to be associated  with the account. </t>
+<t><list style="symbols">
+<t><list style="symbols">
+<t> Inherits: MeshRequest </t>
+</list></t>
+</list></t>
+<t>Account: String (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Account identifier requested. "> </t>
+</list></t>
+</list></t>
+</section>
+<section title="Message: CreateResponse " anchor="Section_7_7_2">
+<t><list style="symbols">
+<t><list style="symbols">
+<t> Inherits: MeshResponse </t>
+</list></t>
+</list></t>
+<t>Reports the success or failure of a Create transaction. </t>
+<t>[None] </t>
+</section>
+</section>
+<section title="Transaction: Get " anchor="Section_7_8">
+<t>Request: GetRequest </t>
+<t>Response:GetResponse </t>
+<t>Search for data in the mesh that matches a set of properties described by a sequence of key/value pairs. </t>
+<section title="Message: GetRequest " anchor="Section_7_8_1">
+<t>Describes the Portal or Mesh data to be retreived. </t>
+<t><list style="symbols">
+<t><list style="symbols">
+<t> Inherits: MeshRequest </t>
+</list></t>
+</list></t>
+<t>Identifier: String (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Lookup by profile ID "> </t>
+</list></t>
+</list></t>
+<t>Account: String (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Lookup by Account ID "> </t>
+</list></t>
+</list></t>
+<t>KeyValues: KeyValue [0..Many] </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="List of KeyValue pairs specifying the conditions to be met "> </t>
+</list></t>
+</list></t>
+<t>SearchConstraints: SearchConstraints (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Constrain the search to a specific time interval and/or  limit the number and/or total size of data records returned. "> </t>
+</list></t>
+</list></t>
+<t>Multiple: Boolean (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="If true return multiple responses if available "> </t>
+</list></t>
+</list></t>
+<t>Full: Boolean (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="If true, the client requests that the full Mesh data record  be returned containing both the Mesh entry itself and the  Mesh metadata that allows the date and time of the  publication of the Mesh entry to be verified. "> </t>
+</list></t>
+</list></t>
+</section>
+<section title="Message: GetResponse " anchor="Section_7_8_2">
+<t>Reports the success or failure of a Get transaction. If a Mesh entry matching the specified profile is found, containsthe list of entries matching the request. </t>
+<t><list style="symbols">
+<t><list style="symbols">
+<t> Inherits: MeshResponse </t>
+</list></t>
+</list></t>
+<t>DataItems: DataItem [0..Many] </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="List of mesh data records matching the request. "> </t>
+</list></t>
+</list></t>
+<t>PageKey: String (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="If non-null, indicates that the number and/or size of the data records returned exceeds either the SearchConstraints specified in the request or internal server limits. "> </t>
+</list></t>
+</list></t>
+</section>
+</section>
+<section title="Transaction: Publish " anchor="Section_7_9">
+<t>Request: PublishRequest </t>
+<t>Response:PublishResponse </t>
+<t>Publish a profile or key escrow entry to the mesh. </t>
+<section title="Message: PublishRequest " anchor="Section_7_9_1">
+<t>Requests publication of the specified Mesh entry. </t>
+<t><list style="symbols">
+<t><list style="symbols">
+<t> Inherits: MeshRequest </t>
+</list></t>
+</list></t>
+<t>[None] </t>
+</section>
+<section title="Message: PublishResponse " anchor="Section_7_9_2">
+<t>Reports the success or failure of a Publish transaction. </t>
+<t><list style="symbols">
+<t><list style="symbols">
+<t> Inherits: MeshResponse </t>
+</list></t>
+</list></t>
+<t>[None] </t>
+</section>
+</section>
+<section title="Transaction: Status " anchor="Section_7_10">
+<t>Request: StatusRequest </t>
+<t>Response:StatusResponse </t>
+<t>Request the current status of the mesh as seen by the portal to which it is directed. </t>
+<t>The response to the status request contains the last signed checkpoint and proof chains for each of the peer portals that have been checkpointed. </t>
+<t>[Not currently implemented] </t>
+<section title="Message: StatusRequest " anchor="Section_7_10_1">
+<t><list style="symbols">
+<t><list style="symbols">
+<t> Inherits: MeshRequest </t>
+</list></t>
+</list></t>
+<t>Initiates a status transaction. </t>
+<t>[None] </t>
+</section>
+<section title="Message: StatusResponse " anchor="Section_7_10_2">
+<t>Reports the success or failure of a Status transaction. </t>
+<t><list style="symbols">
+<t><list style="symbols">
+<t> Inherits: MeshResponse </t>
+</list></t>
+</list></t>
+<t>LastWriteTime: DateTime (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Time that the last write update was made to the Mesh "> </t>
+</list></t>
+</list></t>
+<t>LastCheckpointTime: DateTime (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Time that the last Mesh checkpoint was calculated. "> </t>
+</list></t>
+</list></t>
+<t>NextCheckpointTime: DateTime (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Time at which the next Mesh checkpoint should be calculated. "> </t>
+</list></t>
+</list></t>
+<t>CheckpointValue: String (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Last checkpoint value. "> </t>
+</list></t>
+</list></t>
+</section>
+</section>
+<section title="Transaction: ConnectStart " anchor="Section_7_11">
+<t>Request: ConnectStartRequest </t>
+<t>Response:ConnectStartResponse </t>
+<t>Request connection of a new device to a mesh profile </t>
+<section title="Message: ConnectStartRequest " anchor="Section_7_11_1">
+<t><list style="symbols">
+<t><list style="symbols">
+<t> Inherits: MeshRequest </t>
+</list></t>
+</list></t>
+<t>Initial device connection request. </t>
+<t>SignedRequest: SignedConnectionRequest (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Device connection request signed by thesignature key of the  device requesting connection. "> </t>
+</list></t>
+</list></t>
+<t>AccountID: String (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Account identifier of account to which the device is requesting connection. "> </t>
+</list></t>
+</list></t>
+</section>
+<section title="Message: ConnectStartResponse " anchor="Section_7_11_2">
+<t>Reports the success or failure of a ConnectStart transaction. </t>
+<t><list style="symbols">
+<t><list style="symbols">
+<t> Inherits: MeshRequest </t>
+</list></t>
+</list></t>
+<t>[None] </t>
+</section>
+</section>
+<section title="Transaction: ConnectStatus " anchor="Section_7_12">
+<t>Request: ConnectStatusRequest </t>
+<t>Response:ConnectStatusResponse </t>
+<t>Request status of pending connection request of a new device  to a mesh profile </t>
+<section title="Message: ConnectStatusRequest " anchor="Section_7_12_1">
+<t><list style="symbols">
+<t><list style="symbols">
+<t> Inherits: MeshRequest </t>
+</list></t>
+</list></t>
+<t>Request status information for a pending request posted previously. </t>
+<t>AccountID: String (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Account identifier for which pending connection information is requested. "> </t>
+</list></t>
+</list></t>
+<t>DeviceID: String (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Device identifier of device requesting status information. "> </t>
+</list></t>
+</list></t>
+</section>
+<section title="Message: ConnectStatusResponse " anchor="Section_7_12_2">
+<t>Reports the success or failure of a ConnectStatus transaction. </t>
+<t><list style="symbols">
+<t><list style="symbols">
+<t> Inherits: MeshRequest </t>
+</list></t>
+</list></t>
+<t>Result: SignedConnectionResult (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="The signed ConnectionResult object. "> </t>
+</list></t>
+</list></t>
+</section>
+</section>
+<section title="Transaction: ConnectPending " anchor="Section_7_13">
+<t>Request: ConnectPendingRequest </t>
+<t>Response:ConnectPendingResponse </t>
+<t>Request a list of pending requests for an administration profile. </t>
+<section title="Message: ConnectPendingRequest " anchor="Section_7_13_1">
+<t><list style="symbols">
+<t><list style="symbols">
+<t> Inherits: MeshRequest </t>
+</list></t>
+</list></t>
+<t>Specify the criteria for pending requests. </t>
+<t>AccountID: String (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="The account identifier of the account for which pending connection requests are requested. "> </t>
+</list></t>
+</list></t>
+<t>SearchConstraints: SearchConstraints (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Constrain the search to a specific time interval and/or  limit the number and/or total size of data records returned. "> </t>
+</list></t>
+</list></t>
+</section>
+<section title="Message: ConnectPendingResponse " anchor="Section_7_13_2">
+<t>Reports the success or failure of a ConnectPending transaction. </t>
+<t><list style="symbols">
+<t><list style="symbols">
+<t> Inherits: MeshRequest </t>
+</list></t>
+</list></t>
+<t>Pending: SignedConnectionRequest [0..Many] </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="A list of pending requests satisfying the criteria set out in the request. "> </t>
+</list></t>
+</list></t>
+<t>PageKey: String (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="If non-null, indicates that the number and/or size of the data records returned exceeds either the SearchConstraints specified in the request or internal server limits. "> </t>
+</list></t>
+</list></t>
+</section>
+</section>
+<section title="Transaction: ConnectComplete " anchor="Section_7_14">
+<t>Request: ConnectCompleteRequest </t>
+<t>Response:ConnectCompleteResponse </t>
+<t>Post response to a pending connection request. </t>
+<section title="Message: ConnectCompleteRequest " anchor="Section_7_14_1">
+<t>Reports the success or failure of a ConnectComplete transaction. </t>
+<t><list style="symbols">
+<t><list style="symbols">
+<t> Inherits: MeshRequest </t>
+</list></t>
+</list></t>
+<t>Result: SignedConnectionResult (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="The connection result to be posted to the portal. The result MUST be signed by a valid administration key for the Mesh profile. "> </t>
+</list></t>
+</list></t>
+<t>AccountID: String (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="The account identifier to which the connection result is posted. "> </t>
+</list></t>
+</list></t>
+</section>
+<section title="Message: ConnectCompleteResponse " anchor="Section_7_14_2">
+<t><list style="symbols">
+<t><list style="symbols">
+<t> Inherits: MeshRequest </t>
+</list></t>
+</list></t>
+<t>Reports the success or failure of a ConnectComplete transaction. </t>
+<t>[None] </t>
+</section>
+</section>
+<section title="Transaction: Transfer " anchor="Section_7_15">
+<t>Request: TransferRequest </t>
+<t>Response:TransferResponse </t>
+<t>Request a bulk transfer of the log between the specified transaction identifiers. Requires appropriate authorization </t>
+<t>[Not currently implemented] </t>
+<section title="Message: TransferRequest " anchor="Section_7_15_1">
+<t><list style="symbols">
+<t><list style="symbols">
+<t> Inherits: MeshRequest </t>
+</list></t>
+</list></t>
+<t>SearchConstraints: SearchConstraints (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Constrain the search to a specific time interval and/or  limit the number and/or total size of data records returned. "> </t>
+</list></t>
+</list></t>
+</section>
+<section title="Message: TransferResponse " anchor="Section_7_15_2">
+<t><list style="symbols">
+<t><list style="symbols">
+<t> Inherits: MeshResponse </t>
+</list></t>
+</list></t>
+<t>Reports the success or failure of a Transfer transaction. If successful, contains the list of Mesh records to be transferred. </t>
+<t>DataItems: DataItem [0..Many] </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="List of mesh data records matching the request. "> </t>
+</list></t>
+</list></t>
+<t>PageKey: String (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="If non-null, indicates that the number and/or size of the data records returned exceeds either the SearchConstraints specified in the request or internal server limits. "> </t>
+</list></t>
+</list></t>
+</section>
+</section>
+</section>
+<section title="Mesh Portal Objects " anchor="Section_8">
+<t>The precise implementation of the portal service and the data structures representing state at the portal service are outside the scope of this specification. </t>
+<t>The specification of the Mesh Portal objects given here is to enable future formal specification of the portal protocols by defining the state changes resulting from portal transactions. </t>
+<section title="Mesh Portal Log Entries " anchor="Section_8_1">
+<t>Like the Mesh itself, the state of the portal is tracked by an append only log. This log contains entries binding account identifiers to mesh profiles and lists of pending connections. </t>
+<section title="Structure: PortalEntry " anchor="Section_8_1_1">
+<t>Created: DateTime (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Time the pending item was created. "> </t>
+</list></t>
+</list></t>
+<t>Modified: DateTime (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Time the pending item was last modified. "> </t>
+</list></t>
+</list></t>
+</section>
+<section title="Structure: Account " anchor="Section_8_1_2">
+<t>Entry containing the  UniqueID is Account[Name]-[Portal] Indexed by [Name], [UserProfileUDF] [Most recent open] </t>
+<t><list style="symbols">
+<t><list style="symbols">
+<t> Inherits: PortalEntry </t>
+</list></t>
+</list></t>
+<t>AccountID: String (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Assigned account identifier, e.g. 'alice@example.com'. Account names are  not case sensitive. "> </t>
+</list></t>
+</list></t>
+<t>UserProfileUDF: String (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Fingerprint of associated user profile "> </t>
+</list></t>
+</list></t>
+<t>Status: String (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Status of the account, valid values are 'Open', 'Closed', 'Suspended' "> </t>
+</list></t>
+</list></t>
+</section>
+<section title="Structure: AccountProfile " anchor="Section_8_1_3">
+<t><list style="symbols">
+<t><list style="symbols">
+<t> Inherits: Account </t>
+</list></t>
+</list></t>
+<t>Profile: SignedPersonalProfile (Optional) </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="The personal profile associated with the account. "> </t>
+</list></t>
+</list></t>
+</section>
+<section title="Structure: ConnectionsPending " anchor="Section_8_1_4">
+<t>Object containing the list of currently pending device connection requests for the specified account.  Unique-ID is ConnectionsPending-[UserProfileUDF] </t>
+<t><list style="symbols">
+<t><list style="symbols">
+<t> Inherits: Account </t>
+</list></t>
+</list></t>
+<t>Requests: SignedConnectionRequest [0..Many] </t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="List of pending requests "> </t>
+</list></t>
+</list></t>
+</section>
+</section>
+</section>
+<section title="Security Considerations" anchor="Section_9">
+<t>TBS</t>
+<section title="Confidentiality" anchor="Section_9_1">
+</section>
+<section title="Integrity" anchor="Section_9_2">
+</section>
+<section title="Service" anchor="Section_9_3">
+<t/>
+</section>
+</section>
+<section title="IANA Considerations" anchor="Section_10">
+<t>All the IANA considerations for the Mesh documents are specified in this document</t>
+</section>
+<section title="Acknowledgements" anchor="Section_11">
+<t/>
+</section>
+</middle>
+<back>
+<references title="Normative References">
+<reference anchor="RFC2119">
+<front>
+<title>Key words for use in RFCs to Indicate Requirement Levels</title>
+<author fullname="S. Bradner" initials="S." surname="Bradner">
+<organization/>
+<address>
+</address>
+</author>
+<date month="March" year="1997"/>
+</front>
+<seriesInfo name="BCP" value="14"/>
+<seriesInfo name="RFC" value="2119"/>
+<seriesInfo name="DOI" value="10.17487/RFC2119"/>
+</reference>
+<reference anchor="RFC6335">
+<front>
+<title>Internet Assigned Numbers Authority (IANA) Procedures for the Management of the Service Name and Transport Protocol Port Number Registry</title>
+<author fullname="M. Cotton" initials="M." surname="Cotton">
+<organization/>
+<address>
+</address>
+</author>
+<author fullname="L. Eggert" initials="L." surname="Eggert">
+<organization/>
+<address>
+</address>
+</author>
+<author fullname="J. Touch" initials="J." surname="Touch">
+<organization/>
+<address>
+</address>
+</author>
+<author fullname="M. Westerlund" initials="M." surname="Westerlund">
+<organization/>
+<address>
+</address>
+</author>
+<author fullname="S. Cheshire" initials="S." surname="Cheshire">
+<organization/>
+<address>
+</address>
+</author>
+<date month="August" year="2011"/>
+</front>
+<seriesInfo name="BCP" value="165"/>
+<seriesInfo name="RFC" value="6335"/>
+<seriesInfo name="DOI" value="10.17487/RFC6335"/>
+</reference>
+</references>
+</back>
+</rfc>

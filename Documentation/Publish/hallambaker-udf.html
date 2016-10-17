@@ -1,0 +1,133 @@
+<?xml version='1.0'?>
+<html>
+<head>
+<title>Uniform Data Fingerprint (UDF)</title>
+</head>
+<body>
+<h1>Uniform Data Fingerprint (UDF)</h1>
+<h1 class="abstract" id="Abstract">Abstract</h1>
+<P class="abstract">This document describes means of generating Uniform Data Fingerprint (UDF) values and their presentation as text sequences and as URIs.</P>
+<P class="abstract">Cryptographic digests provide a means of uniquely identifying static data without the need for a registration authority. A fingerprint is a form of presenting a cryptographic digest that makes it suitable for use in applications where human readability is required. The UDF fingerprint format improves over existing formats through the introduction of a compact algorithm identifier affording an intentionally limited choice of digest algorithm and the inclusion of an IANA registered MIME Content-Type identifier within the scope of the digest input to allow the use of a single fingerprint format in multiple application domains.</P>
+<P class="abstract">Alternative means of rendering fingerprint values are considered including machine-readable codes, word and image lists. </P>
+<h1 id="Section_1">Definitions</h1>
+<p id="">Cryptographic Digest Function</p>
+<p id="">Digest</p>
+<p id="">Fingerprint</p>
+<p id="">Hash</p>
+<p id="">Presentation</p>
+<p id="">Fingerprint Strengthening</p>
+<p id="">Fingerprint Work Hardening</p>
+<p id="">Work Factor</p>
+<p id="">Content-Type</p>
+<h2 id="Section_1_1">Requirements Language</h2>
+<p id="">The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in RFC 2119 [RFC2119].</p>
+<h1 id="Section_2">Introduction</h1>
+<p id="">The use of cryptographic digest functions to produce identifiers is well established as a means of generating a unique identifier for fixed data without the need for a registration authority.</p>
+<p id="">While the use of fingerprints of public keys was popularized by PGP, they are employed in many other applications including OpenPGP, SSH, BitCoin and PKIX.</p>
+<p id="">A cryptographic digest is a particular form of hash function that has the properties:</p>
+<p id="">It is easy to compute the digest value for any given message</p>
+<p id="">It is&nbsp;infeasible&nbsp;to generate a message from its digest value</p>
+<p id="">It is infeasible to modify a message without changing the digest value</p>
+<p id="">It is infeasible to find two different messages with the same digest value.</p>
+<p id="">If these properties are met, the only way that two data objects that map to the same digest value is by random chance. If the number of possible digest values is sufficiently large (i.e. is a sufficiently large number of bits in length), this chance is reduced to an arbitrarily infinitesimal probability. Such values are described as being probabilistically unique.</p>
+<p id="">A fingerprint is a representation of a cryptographic digest value optimized for purposes of verification and in some cases data entry. </p>
+<h2 id="Section_2_1">Algorithm Identifier</h2>
+<p id="">Although a secure cryptographic digest algorithm has properties that make it ideal for certain types of identifier use, several cryptographic digest algorithms have found widespread use, some of which have been demonstrated to be insecure. </p>
+<p id="">For example the MD5 message digest algorithm [RFC1321], was widely used in IETF protocols until it was demonstrated to be vulnerable to collision attacks [TBS].</p>
+<p id="">The secure use of a fingerprint scheme therefore requires the digest algorithm to either be fixed or otherwise determined by the fingerprint value itself. Otherwise an attacker may be able to use a weak, broken digest algorithm to generate a data object matching a fingerprint value generated using a strong digest algorithm.</p>
+<h2 id="Section_2_2">Content Type Identifier</h2>
+<p id="">A secure cryptographic digest algorithm provides a unique digest value that is probabilistically unique for a particular byte sequence but does not fix the context in which a byte sequence is interpreted. While such ambiguity may be tolerated in a fingerprint format designed for a single specific field of use, it is not acceptable in a general purpose format.</p>
+<p id="">For example, the SSH and OpenPGP applications both make use of fingerprints as identifiers for the public keys used but using different digest algorithms and data formats for representing the public key data. While no such vulnerability has been demonstrated to date, it is certainly conceivable that a crafty attacker might construct an SSH key in such a fashion that OpenPGP interprets the data in an insecure fashion. If the number of applications making use of fingerprint format that permits such substitutions is sufficiently large, the probability of a semantic substitution vulnerability being possible becomes unacceptably large.</p>
+<p id="">A simple control that defeats such attacks is to incorporate a content type identifier within the scope of the data input to the hash function.</p>
+<h2 id="Section_2_3">Representation</h2>
+<p id="">The representation of a fingerprint is the format in which it is presented to either an application or the user.</p>
+<p id="">Base32 encoding is used to produce the preferred text representation of a UDF fingerprint. This encoding uses only the letters of the Latin alphabet with numbers chosen to minimize the risk of ambiguity between numbers and letters (2, 3, 4, 5, 6 and 7).</p>
+<p id="">To enhance readability and improve data entry, characters are grouped into groups of five.</p>
+<h2 id="Section_2_4">Truncation</h2>
+<p id="">Different applications of fingerprints demand different tradeoffs between compactness of the representation and the number of significant bits. A larger the number of significant bits reduces the risk of collision but at a cost to convenience.</p>
+<p id="">Modern cryptographic digest functions such as SHA-2 produce output values of at least 256 bits in length. This is considerably larger than most uses of fingerprints require and certainly greater than can be represented in human readable form on a business card.</p>
+<p id="">Since a strong cryptographic digest function produces an output value in which every bit in the input value affects every bit in the output value with equal probability, it follows that truncating the digest value to produce a finger print is at least as strong as any other mechanism if digest algorithm used is strong.</p>
+<p id="">Using truncation to reduce the precision of the digest function has the advantage that a lower precision fingerprint of some data content is always a prefix of a higher prefix of the same content. This allows higher precision fingerprints to be converted to a lower precision without the need for special tools.</p>
+<h1 id="Section_3">Encoding</h1>
+<p id="">A UDF fingerprint for a given data object is generated by calculating the Binary Fingerprint Value for the given data object and type identifier, truncating it to obtain the desired degree of precision and then converting the truncated value to a representation.</p>
+<h2 id="Section_3_1">Binary Fingerprint Value</h2>
+<p id="">The binary encoding of a fingerprint is calculated using the formula:</p>
+<pre id="">
+<![CDATA[Fingerprint = <<Version-ID> + H (<<Content-ID>  + ?:? + H(<<Data>))]]></pre>
+<p id="">Where</p>
+<pre id="">
+<![CDATA[H(x) is the cryptographic digest function
+<<Version-ID> is the fingerprint version and algorithm identifier.
+<<Content-ID> is the MIME Content-Type of the data.
+<<Data> is the binary data.]]></pre>
+<p id="">The use of the nested hash function permits a fingerprint to be taken of data for which a digest value is already known without the need to calculate a new digest over the data.</p>
+<p id="">The inclusion of a MIME content type prevents message substitution attacks in which one content type is substituted for another. </p>
+<h3 id="Section_3_1_1">Version ID</h3>
+<p id="">Two digest algorithm identifiers are specified in this document:</p>
+<p id="">SHA-2-512 = 96</p>
+<p id="">SHA-3-512 = 144</p>
+<p id="">These algorithm identifiers have been carefully chosen so that the first character in a SHA-2-512 fingerprint will always be 'M' and the first character in a SHA-3-512 fingerprint will always be 'S'. These provide mnemonics for 'Merkle-Damgard' and 'Sponge' respectively.</p>
+<h2 id="Section_3_2">Truncation</h2>
+<p id="">The Binary Fingerprint Value is truncated to an integer multiple of 25 bits regardless of the intended output presentation.  </p>
+<p id="">The output of the hash function is truncated to a sequence of n bits by first selecting the first n/8 bytes of the output function. If n is an integer multiple of 8, no additional bits are required and this is the result. Otherwise the remaining bits are taken from the most significant bits of the next byte and any unused bits set to 0.</p>
+<p id="">For example, to truncate the byte sequence [a0, b1, c2, d3, e4] to 25 bits. 25/8 = 3 bytes with 1 bit remaining, the first three bytes of the truncated sequence is [a0, b1, c2] and the final byte is e4 AND 80 = 80 which we add to the previous result to obtain the final truncated sequence of [a0, b1, c2, 80]</p>
+<h2 id="Section_3_3">Base32 Representation</h2>
+<p id="">A modified version of Base32 [RFC4648] encoding is used to present the fingerprint in text form grouping the output text into groups of five characters separated by a dash '-'. This representation improves the accuracy of both data entry and verification.</p>
+<h2 id="Section_3_4">URI Representation</h2>
+<p id="">Any UDF fingerprint MAY be encoded as a URI by prefixing the Base32 text representation of the fingerprint with the string 'udf:'</p>
+<h2 id="Section_3_5">Examples</h2>
+<p id="">In the following examples, &lt;Content-ID&gt; is the UTF8 encoding of the string "text/plain" and  is the UTF8 encoding of the string "UDF Data Value"</p>
+<p id="">Data = 55 44 46 20 44 61 74 61 20 56 61 6c 75 65</p>
+<h3 id="Section_3_5_1">Using SHA-2-512 Digest</h3>
+<pre id="">
+<![CDATA[H( <Data> ) = 
+    48 da 47 cc  ab fe a4 5c  76 61 d3 21  ba 34 3e 58
+    10 87 2a 03  b4 02 9d ab  84 7c ce d2  22 b6 9c ab 
+    02 38 d4 e9  1e 2f 6b 36  a0 9e ed 11  09 8a ea ac
+    99 d9 e0 bd  ea 47 93 15  bd 7a e9 e1  2e ad c4 15
+H(H( <Data> ) + Content-ID>) = 
+    45 e0 59 e0  39 34 ea b7  f6 5d 83 b2  d8 f9 b1 6d 
+    2a 6b 08 63  d9 3c c1 02  86 7b 83 49  f2 d9 f0 8f
+    fe 07 87 30  c7 c9 05 74  ac a1 38 2b  b3 14 4d c6
+    39 f9 8c 12  c0 4a 3e b5  05 0b 3e 67  df 52 4b 57
+]]></pre>
+<p id="">Text Presentation (100 bit)MB2GK-6DUF5-YGYYL-JNY5E</p>
+<p id="">Text Presentation (125 bit)MB2GK-6DUF5-YGYYL-JNY5E-RWSHZ</p>
+<p id="">Text Presentation (150bit)MB2GK-6DUF5-YGYYL-JNY5E-RWSHZ-SV75J</p>
+<p id="">Text Presentation (250bit)MB2GK-6DUF5-YGYYL-JNY5E-RWSHZ-SV75J-C4OZQ-5GIN2-GQ7FQ-EEHFI</p>
+<h3 id="Section_3_5_2">Using SHA-3-512 Digest</h3>
+<p id="">[This data intentionally omitted pending publication of the final SHA-3 standards document]</p>
+<h2 id="Section_3_6">Key Improvement</h2>
+<h2 id="Section_3_7">Work Hardening</h2>
+<h1 id="Section_4">Content Types</h1>
+<h2 id="Section_4_1">PKIX keyInfo</h2>
+<p id=""/>
+<h2 id="Section_4_2">OpenPGP Key</h2>
+<h1 id="Section_5">Additional UDF Renderings</h1>
+<p id="">By default, a UDF fingerprint is rendered in the Base32 encoding described in this document. Additional renderings MAY be employed to facilitate entry and/or verification of fingerprint values.</p>
+<h2 id="Section_5_1">Machine Readable Rendering</h2>
+<p id="">The use of a machine-readable rendering such as a QR Code allows a UDF value to be input directly using a smartphone or other device equipped with a camera. </p>
+<p id="">A QR code fixed to a network capable device might contain the fingerprint of a machine readable description of the device.</p>
+<h2 id="Section_5_2">Word Lists</h2>
+<p id="">The use of a Word List to encode fingerprint values was introduced by Patrick Juola and Philip Zimmerman for the PGPfone application. The PGP Word List is designed to facilitate exchange and verification of fingerprint values in a voice application. To minimize the risk of misinterpretation, two word lists of 256 values each are used to encode alternative fingerprint bytes. The compact size of the lists used allowed the compilers to curate them so as to maximize the phonetic distance of the words selected.</p>
+<p id="">The PGP Word List is designed to achieve a balance between ease of entry and verification. Applications where only verification is required may be better served by a much larger word list, permitting shorter fingerprint encodings. </p>
+<p id="">For example, a word list with 16384 entries permits 14 bits of the fingerprint to be encoded at once, 65536 entries permits 16. These encodings allow a 125 bit fingerprint to be encoded in 9 and 8 words respectively.</p>
+<h2 id="Section_5_3">Image List</h2>
+<p id="">An image list is used in the same manner as a word list affording rapid visual verification of a fingerprint value. For obvious reasons, this approach is not generally suited to data entry.</p>
+<h1 id="Section_6">Security Considerations</h1>
+<h2 id="Section_6_1">Precision</h2>
+<h2 id="Section_6_2">Use of Truncated Digests</h2>
+<h1 id="Section_7">IANA Considerations</h1>
+<p id="">[This will be extended later]</p>
+<h2 id="Section_7_1">URI Registration</h2>
+<p id="">[Here a URI registration for the udf: scheme]</p>
+<h2 id="Section_7_2">Content Type Registration</h2>
+<p id="">[PKIX KeyInfo]</p>
+<p id="">[PGP Key Packet]</p>
+<h2 id="Section_7_3">Version Registry</h2>
+<p id="">96 = SHA-2-512</p>
+<p id="">144 = SHA-3-512</p>
+<h1>References</h1>
+<h2 class="references" id="NormativeReferences">Normative References</h2>
+</body>
+</html>

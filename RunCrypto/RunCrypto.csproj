@@ -36,9 +36,13 @@
     <OutputPath>bin\RaspberryPi\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Goedel.Protocol, Version=1.0.6128.28622, Culture=neutral, PublicKeyToken=9ac84b9f2535680b, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Library\Goedel.Protocol.dll</HintPath>
+    </Reference>
     <Reference Include="Goedel.Registry, Version=1.0.5856.42846, Culture=neutral, PublicKeyToken=00ce4cbe0647f41a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Goedel.Registry.1.0.5856.42846\lib\net40\Goedel.Registry.dll</HintPath>
-      <Private>True</Private>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Library\Goedel.Registry.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -58,14 +62,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="packages.config" />
+    <None Include="Makefile" />
     <None Include="RunCrypto.licenseheader" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Goedel.Protocol\Goedel.Protocol.csproj">
-      <Project>{24419f2d-f425-4e0f-a0ea-9d3e7a57e12f}</Project>
-      <Name>Goedel.Protocol</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Goedel.Cryptography\Goedel.Cryptography.csproj">
       <Project>{1babc0e9-d939-4de5-82a3-16752104b14b}</Project>
       <Name>Goedel.Cryptography</Name>

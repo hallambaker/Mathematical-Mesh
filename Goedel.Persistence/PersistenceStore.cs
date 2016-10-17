@@ -51,8 +51,15 @@ namespace Goedel.Persistence {
     /// A key entry mapping the specified key to the specified data value.
     /// </summary>
     public struct KeyData {
-        string Key;
-        string Data;
+        /// <summary>
+        /// The key
+        /// </summary>
+        public string Key;
+
+        /// <summary>
+        /// The data value
+        /// </summary>
+        public string Data;
 
         /// <summary>
         /// Construct a key entry.

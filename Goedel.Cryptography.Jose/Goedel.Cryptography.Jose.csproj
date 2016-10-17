@@ -55,9 +55,13 @@
     <OutputPath>bin\RaspberryPi\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Goedel.Protocol, Version=1.0.6128.28622, Culture=neutral, PublicKeyToken=9ac84b9f2535680b, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Library\Goedel.Protocol.dll</HintPath>
+    </Reference>
     <Reference Include="Goedel.Registry, Version=1.0.5856.42846, Culture=neutral, PublicKeyToken=00ce4cbe0647f41a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Goedel.Registry.1.0.5856.42846\lib\net40\Goedel.Registry.dll</HintPath>
-      <Private>True</Private>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Library\Goedel.Registry.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -82,7 +86,6 @@
   <ItemGroup>
     <None Include="JoseSchema.Protocol" />
     <None Include="LibCryptoJose.licenseheader" />
-    <None Include="packages.config" />
     <None Include="Post.bat" />
   </ItemGroup>
   <ItemGroup>
@@ -93,10 +96,6 @@
     <ProjectReference Include="..\Goedel.Debug\Goedel.Debug.csproj">
       <Project>{a8090b80-d658-45f6-bda1-4f9dfd2b976f}</Project>
       <Name>Goedel.Debug</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Goedel.Protocol\Goedel.Protocol.csproj">
-      <Project>{24419f2d-f425-4e0f-a0ea-9d3e7a57e12f}</Project>
-      <Name>Goedel.Protocol</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

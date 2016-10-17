@@ -1887,6 +1887,8 @@ namespace Goedel.Mesh.MeshMan {
 
 			}
 		private enum TagType_SSH {
+			Host,
+			Client,
 			Portal,
 			UDF,
 			Verbose,
@@ -1899,11 +1901,25 @@ namespace Goedel.Mesh.MeshMan {
 
 			var Registry = new Goedel.Registry.Registry ();
 
+			Options.Host.Register ("host", Registry, (int) TagType_SSH.Host);
+			Options.Client.Register ("client", Registry, (int) TagType_SSH.Client);
 			Options.Portal.Register ("portal", Registry, (int) TagType_SSH.Portal);
 			Options.UDF.Register ("udf", Registry, (int) TagType_SSH.UDF);
 			Options.Verbose.Register ("verbose", Registry, (int) TagType_SSH.Verbose);
 			Options.Report.Register ("report", Registry, (int) TagType_SSH.Report);
 
+			// looking for parameter Param.Name}
+			if (index < args.Length && !IsFlag (args [index][0] )) {
+				// Have got the parameter, call the parameter value method
+				Options.Host.Parameter (args [index]);
+				index++;
+				}
+			// looking for parameter Param.Name}
+			if (index < args.Length && !IsFlag (args [index][0] )) {
+				// Have got the parameter, call the parameter value method
+				Options.Client.Parameter (args [index]);
+				index++;
+				}
 
 #pragma warning disable 162
 			for (int i = index; i< args.Length; i++) {
@@ -2314,6 +2330,8 @@ namespace Goedel.Mesh.MeshMan {
 #pragma warning restore 219
 
 					Console.Write ("{0}ssh ", UsageFlag);
+					Console.Write ("[{0}] ", Dummy.Host.Usage (null, "host", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.Client.Usage (null, "client", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.Portal.Usage ("portal", "value", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.UDF.Usage ("udf", "value", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.Verbose.Usage ("verbose", "value", UsageFlag));
@@ -2701,6 +2719,8 @@ namespace Goedel.Mesh.MeshMan {
 
 
     public class _SSH : Goedel.Registry.Dispatch {
+		public Flag			Host = new Flag ();
+		public Flag			Client = new Flag ();
 
 		public String			Portal = new  String ();
 
@@ -3490,6 +3510,8 @@ namespace Goedel.Mesh.MeshMan {
 #pragma warning restore 219
 
 					Console.Write ("{0}ssh ", UsageFlag);
+					Console.Write ("[{0}] ", Dummy.Host.Usage (null, "host", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.Client.Usage (null, "client", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.Portal.Usage ("portal", "value", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.UDF.Usage ("udf", "value", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.Verbose.Usage ("verbose", "value", UsageFlag));
@@ -3500,6 +3522,10 @@ namespace Goedel.Mesh.MeshMan {
 
 				}
 
+				Console.WriteLine ("    {0}\t{1} = [{2}]", "Flag", 
+							"Host", Options.Host);
+				Console.WriteLine ("    {0}\t{1} = [{2}]", "Flag", 
+							"Client", Options.Client);
 				Console.WriteLine ("    {0}\t{1} = [{2}]", "String", 
 							"Portal", Options.Portal);
 				Console.WriteLine ("    {0}\t{1} = [{2}]", "String", 

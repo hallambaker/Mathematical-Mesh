@@ -46,7 +46,7 @@ namespace Goedel.Protocol {
         public static byte [] ReadBytes (long Length, Stream Stream) {
 
             if (Length < 0) return ReadChunked(Stream);
-            if (Length > int.MaxValue) throw new Throw("Message too big");
+            if (Length > int.MaxValue) throw new System.Exception("Message too big");
 
             byte[] Buffer = new byte[Length];
             int Counter = 0;
@@ -62,7 +62,7 @@ namespace Goedel.Protocol {
 
 
         public static byte [] ReadChunked (Stream Stream) {
-            throw new Throw("Not Yet Implemented");
+            throw new System.Exception("Not Yet Implemented");
             }
 
 

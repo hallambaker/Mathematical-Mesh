@@ -1,4 +1,5 @@
 ﻿using System;
+using static System.Console;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -16,7 +17,7 @@ namespace ExampleGenerator {
             CreateProfile();
             PublishProfile();
             ConnectDevice();
-            AddApplication();
+            AddApplicationWeb();
             KeyRecovery();
 
             Traces = Portal.Traces;
@@ -112,7 +113,7 @@ namespace ExampleGenerator {
 
             Portal.Label(LabelConnectRequest);
             // Post connection request
-            var ConnectRequestResult = MeshClient.ConnectRequest (SignedDeviceProfile2);
+            MeshClient.ConnectRequest (SignedDeviceProfile2);
 
             Portal.Label(LabelConnectPending);
             // Poll for list of connection requests
@@ -129,11 +130,10 @@ namespace ExampleGenerator {
 
             Portal.Label(LabelConnectAccept);
             // Post acceptance for first request
-            var ConnectCloseResult = MeshClient.ConnectClose(FirstRequest, 
-                                    ConnectionStatus.Accepted);
+            MeshClient.ConnectClose(FirstRequest, ConnectionStatus.Accepted);
             Portal.Label(LabelConnectStatus);
             // Retrieve acceptance
-            var Status = MeshClient.ConnectStatus(SignedDeviceProfile2.UDF);
+            MeshClient.ConnectStatus(SignedDeviceProfile2.UDF);
             }
 
 
@@ -148,9 +148,7 @@ namespace ExampleGenerator {
         /// <summary>
         /// Create a Web credential profile.
         /// </summary>
-        void AddApplication() {
-
-
+        void AddApplicationWeb() {
 
             // Create basic application
             PasswordProfile = new PasswordProfile(true);
@@ -184,6 +182,23 @@ namespace ExampleGenerator {
             PasswordProfilePrivate3 = PasswordProfile.Private.ToString();
             }
 
+        SSHProfile SSHProfile;
+
+        /// <summary>
+        /// Create a SSH credential profile.
+        /// </summary>
+        void AddApplicationSSH() {
+
+            // Create basic application
+            SSHProfile = new SSHProfile();
+            var ApplicationProfileEntry = PersonalProfile.Add(SSHProfile);
+            SSHProfile.Link(PersonalProfile, ApplicationProfileEntry);
+
+
+
+            }
+
+
 
         /// <summary>
         /// The offline escrow entry data.
@@ -204,7 +219,7 @@ namespace ExampleGenerator {
 
             Portal.Label(LabelEscrow);
             // Publish key escrow to the Mesh
-            var PublishResponse = MeshClient.Publish(OfflineEscrowEntry);
+            MeshClient.Publish(OfflineEscrowEntry);
 
             // Recover encryption key from two shares
             var share1 = OfflineEscrowEntry.KeyShares[0].Text;
@@ -221,7 +236,7 @@ namespace ExampleGenerator {
             // Here need a call to pull the data
             Portal.Label(LabelRecover);
 
-            var RecoverResponse = MeshClient.Recover(Identifier);
+            MeshClient.Recover(Identifier);
             }
 
         }

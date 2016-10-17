@@ -1,16 +1,24 @@
 ﻿Protocol Goedel.Mesh MeshItem MeshItem
     Using Goedel.Cryptography.Jose 
 
-	Section 1 "Cryptographic Data Objects"
+	Section 1 "Shared Classes"
+		Description
+			|The following classes are used as common elements in
+			|Mesh profile specifications.
 
-	Section 2 "Public Key Objects"
+	Section 2 "Cryptographic Data Classes"
+		Description
+			|Most Mesh objects are signed and/or encrypted. For consistency
+			|all Mesh classes make use of the cryptographic data classes
+			|described in this section.
 
 	Structure PublicKey
 		Description
-			|Container for public key pair data
+			|The PublicKey class is used to describe public key pairs and 
+			|trust assertions associated with a public key.
 		String UDF
 			Description
-				|UDF fingerprint of the key
+				|UDF fingerprint of the public key parameters/
 		Binary X509Certificate
 			Description
 				|List of X.509 Certificates
@@ -28,7 +36,6 @@
 			Description
 				|The private key parameters as defined in the JOSE specification.
 
-	Section 2 "JOSE Signature Objects"
 
 	Structure SignedData
 		Description
@@ -37,13 +44,53 @@
 		Binary Data
 			|The signed data
 	
-	Section 2 "JOSE Encryption Objects"	
-
 	Structure EncryptedData
 		Description
 			|Container for JOSE encrypted data and related attributes.
 		Binary Data
 			|The encrypted data
+
+
+	Section 2 "Common Application Classes"
+
+	Structure Connection
+		Description
+			|Describes network connection parameters for an application
+		String ServiceName
+			Description
+				|DNS address of the server
+		Integer Port
+			Description
+				|TCP/UDP Port number
+		String Prefix
+			Description
+				|DNS service prefix as described in [!RFC6335]
+		String Security
+			Multiple
+			Description
+				|Describes the security mode to use. Valid choices are Direct/Upgrade/None
+
+		String UserName
+			Description
+				|Username to present to the service for authentication
+		String Password
+			Description
+				|Password to present to the service for authentication
+		String URI
+			Description
+				|Service connection parameters in URI format
+		String Authentication
+			Description
+				|List of the supported/acceptable authentication mechanisms,
+				|preferred mechanism first.
+
+		Integer TimeOut
+			Description
+				|Service timeout in seconds.
+		Boolean Polling
+			Description
+				|If set, the client should poll the specified service intermittently
+				|for updates.
 		
 	Section 1 "Mesh Profile Objects"
 
@@ -90,7 +137,7 @@
 				|was performed after the notary token was created.
 
 
-	Section 2 "Device Profile Objects"
+	Section 2 "Device Profile Classes"
 
 	Structure SignedDeviceProfile
 		Inherits SignedProfile
@@ -207,6 +254,11 @@
 			Description
 				|Encrypted application data	
 
+	Structure ApplicationProfilePrivate
+		Inherits Entry
+		Description
+			|The base class for all private profiles.
+
 	Structure ApplicationProfileEntry
 		String Identifier
 			Description
@@ -227,188 +279,8 @@
 				|List of devices authorized to read private parts of application 
 				|profiles					
 
-	Section 2 "Common Application Objects"
-
-	Structure Connection
-		Description
-			|Describes network connection parameters for an application
-		String ServiceName
-			Description
-				|DNS address of the server
-		Integer Port
-			Description
-				|TCP/UDP Port number
-		String Prefix
-			Description
-				|DNS service prefix as described in [!RFC6335]
-		String Security
-			Multiple
-			Description
-				|Describes the security mode to use. Valid choices are Direct/Upgrade/None
-
-		String UserName
-			Description
-				|Username to present to the service for authentication
-		String Password
-			Description
-				|Password to present to the service for authentication
-		String URI
-			Description
-				|Service connection parameters in URI format
-		String Authentication
-			Description
-				|List of the supported/acceptable authentication mechanisms,
-				|preferred mechanism first.
-
-		Integer TimeOut
-			Description
-				|Service timeout in seconds.
-		Boolean Polling
-			Description
-				|If set, the client should poll the specified service intermittently
-				|for updates.
-
-	Section 2 "Password Application Profile Objects"
-
-	Structure PasswordProfile
-		Inherits ApplicationProfile
-		Description 
-			|Stores usernames and passwords
 
 
-	Structure PasswordProfilePrivate
-		Boolean AutoGenerate
-			Description
-				|If true, a client MAY offer to automatically generate strong
-				|(i.e. not memorable) passwords for a user. A user would not
-				|normally want to use this feature unless they have access to
-				|Mesh password management on every device they use to browse
-				|the Web
-		Struct PasswordEntry Entries
-			Multiple
-			Description
-				|A list of password credential entries.
-		String NeverAsk
-			Multiple
-			Description
-				|A list of domain names of sites for which clients MUST NOT
-				|ask to store passwords for.
-				
-	Structure PasswordEntry
-		Description
-			|Username password entry for a single site
-		String Sites
-			Multiple
-			Description
-				|DNS name of site *.example.com matches www.example.com
-				|etc.
-		String Username
-			Description
-				|Case sensitive username
-		String Password
-			Description
-				|Case sensitive password.
-
-	Section 2 "Mail Application Profile Objects"
-
-	Structure MailProfile
-		Inherits ApplicationProfile
-		Description 
-			|Public profile describes mail receipt policy. Private describes
-			|Sending policy
-		Struct PublicKey EncryptionPGP
-			Description
-				|The current OpenPGP encryption key
-		Struct PublicKey EncryptionSMIME
-			Description
-				|The current S/MIME encryption key
-
-
-
-	Structure MailProfilePrivate
-		Description
-			|Describes a mail account configuration
-		Description
-			|Private profile contains connection settings for the inbound and
-			|outbound mail server(s) and cryptographic private keys. Public
-			|profile may contain security policy information for the sender.
-		String EmailAddress
-			Description
-				|The RFC822 Email address. [e.g. "alice@example.com"]
-		String ReplyToAddress
-			Description
-				|The RFC822 Reply toEmail address. [e.g. "alice@example.com"]
-			Description
-				|When set, allows a sender to tell the receiver that replies to
-				|this account should be directed to this address.
-		String DisplayName
-			Description
-				|The Display Name. [e.g. "Alice Example"]
-		String AccountName
-			Description
-				|The Account Name for display to the app user [e.g. "Work Account"]
-
-		Struct Connection Inbound
-			Multiple
-			Description
-				|The Inbound Mail Connection(s). This is typically IMAP4 or POP3
-			Description
-				|If multiple connections are specified, the order in the sequence
-				|indicates the preference order.
-		Struct Connection Outbound
-			Multiple
-			Description
-				|The Outbound Mail Connection(s). This is typically SMTP/SUBMIT
-			Description
-				|If multiple connections are specified, the order in the sequence
-				|indicates the preference order.
-		
-		Struct PublicKey Sign
-			Multiple
-			Description
-				|The public keypair(s) for signing and decrypting email.
-			Description
-				|If multiple public keys are specified, the order indicates preference.
-		Struct PublicKey Encrypt
-			Multiple
-			Description
-				|The public keypairs for encrypting and decrypting email.
-			Description
-				|If multiple public keys are specified, the order indicates preference.							
-
-	
-	Section 2 "Network Application Profile Objects"
-
-
-	Structure NetworkProfile
-		Inherits ApplicationProfile
-		Description 
-			|Describes the network profile to follow
-
-	Structure NetworkProfilePrivate
-		Description
-			|Describes the network profile to follow
-		String Sites
-			Multiple
-			Description
-				|DNS name of sites to which profile applies *.example.com matches www.example.com
-				|etc.		
-		Struct Connection DNS
-			Multiple
-			Description
-				|DNS Resolution Services
-		String Prefix
-			Multiple
-			Description
-				|DNS prefixes to search
-		Binary CTL
-			Description
-				|Certificate Trust List giving WebPKI roots to trust
-		String WebPKI
-			Multiple
-			Description
-				|List of UDF fingerprints of keys making up the trust roots
-				|to be accepted for Web PKI purposes.
 
 	Section 2 "Key Escrow Objects"
 		
@@ -454,7 +326,6 @@
 			Description
 				|The Device profile to be connected
 
-
 	Structure SignedConnectionRequest
 		Inherits SignedProfile
 		Description 
@@ -469,8 +340,6 @@
 			Description
 				|The result of the connection request. Valid responses are:
 				|Accepted, Refused, Query.
-
-
 
 	Structure SignedConnectionResult
 		Inherits SignedProfile

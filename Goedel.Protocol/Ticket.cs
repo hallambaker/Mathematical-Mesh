@@ -25,7 +25,7 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
 using System.IO;
-using Goedel.Protocol;
+using Goedel.Utilities;
 
 namespace Goedel.Protocol {
     public class TicketData {

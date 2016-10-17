@@ -1,0 +1,160 @@
+<?xml version='1.0'?>
+<!DOCTYPE rfc SYSTEM 'rfc2629.dtd'>
+<rfc ipr="trust200902" docName="draft-hallambaker-mesh-platform-00" category="std">
+<?rfc toc="yes"?>  
+<?rfc symrefs="yes"?>  
+<?rfc sortrefs="yes"?>  
+<?rfc compact="yes"?>  
+<?rfc subcompact="no"?>  
+<front>
+<title abbrev="Mathematical Mesh Platform Configuration">Mathematical Mesh: Platform Configuration</title>
+<author fullname="Phillip Hallam-Baker    " initials="P. M.    " surname="Hallam-Baker    ">
+<organization>Comodo Group Inc.    </organization>
+<address>
+<email>philliph@comodo.com</email>
+</address>
+</author>
+<date day="19" month="September" year="2016"/>
+<area>Security</area>
+<workgroup/>
+<abstract>
+<t>The Mathematical Mesh 'The Mesh' is an end-to-end secure infrastructure that facilitates the exchange of configuration and credential data between multiple user devices. This document describes how Mesh profiles are stored for application access on Windows, Linux and OSX platforms.</t>
+</abstract>
+</front>
+<middle>
+<section title="Definitions" anchor="Section_1">
+<section title="Requirements Language" anchor="Section_1_1">
+<t/>
+<t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in RFC 2119 [RFC2119].</t>
+</section>
+</section>
+<section title="Configuration Scope" anchor="Section_2">
+</section>
+<section title="Windows Platform Configuration" anchor="Section_3">
+<t>The Windows Configuration is stored in a combination of Windows Key Store entries, registry entries and data files.</t>
+<t>The profiles that are available to a user are specified as Windows registry keys.</t>
+<t>Cached and archival copies of profiles are stored on the local machine as data files with file names and locations specified in the Windows registry.</t>
+<t>Cryptographic keys are stored in a Windows key store.</t>
+<t>To locate a device, application or personal profile, an application:</t>
+<t>Searches for a Windows registry entry that matches the relevant criteria.</t>
+<t>Retrieves the profile data from either a local cached copy or the corresponding portal.</t>
+<t>Accesses the corresponding private keys through the Windows key store.</t>
+<t>The Windows Key store is the natural storage location for cryptographic keys on the Windows platform as keys are at minimum protected by the operating system access control mechanism. The Windows key store also permits the use of cryptographic hardware devices.</t>
+<section title="Registry Key Entries" anchor="Section_3_1">
+<t>All keys used by the Mathematical Mesh are stored in the following Windows registry location:</t>
+<t>HKEY_CURRENT_USER\SOFTWARE\CryptoMesh</t>
+<t>This location has the following sub keys:</t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="PersonalProfiles">(Default) -&gt; UDF fingerprint of the default personal profile</t>
+<t hangText="PersonalProfiles\&lt;UDF&gt;">(Default) -&gt; File location for the profile.</t>
+<t hangText="">Archive -&gt; File location for the profile archive.</t>
+<t hangText="">Portals -&gt; Multistring containing portal accounts to which the profile is registered. The default portal is first.</t>
+<t hangText="ApplicationProfiles">Web -&gt; UDF fingerprint of default Web Application profile</t>
+<t hangText="">SSH -&gt; UDF fingerprint of default SSH Application profile</t>
+<t hangText="">Network -&gt; UDF fingerprint of default network Application profile</t>
+<t hangText="">Mail -&gt; UDF fingerprint of default Mail Application profile</t>
+<t hangText="">UDF Fingerprint of profile -&gt; File location of profile  </t>
+<t hangText="DeviceProfiles">(Default) -&gt; UDF fingerprint of default device profile</t>
+<t hangText="">UDF Fingerprint of Device profile -&gt; File location of device profile</t>
+</list></t>
+</list></t>
+</section>
+<section title="Data File Locations" anchor="Section_3_2">
+<t>ApplicationData \CryptoMesh\</t>
+</section>
+<section title="Key Store Entries" anchor="Section_3_3">
+<t>&lt;&gt;</t>
+</section>
+<section title="Profiles" anchor="Section_3_4">
+<section title="Locating a personal profile" anchor="Section_3_4_1">
+<t>To locate the default personal profile, an application:</t>
+<t>Retrieves the key PersonalProfiles\(Default) to get &lt;UDF&gt;</t>
+<t>Locates the profile with identifier &lt;UDF&gt;</t>
+<t>To locate the personal profile with identifier UDF, an application:</t>
+<t>Retrieves the key PersonalProfiles\&lt;UDF&gt;</t>
+<t>Retrieves the latest version of the profile from the location specified in PersonalProfiles\&lt;UDF&gt;\(Default)</t>
+<t>If necessary, the profile is refreshed from one of the accounts specified in PersonalProfiles\&lt;UDF&gt;\Portal</t>
+<t>In case of an inconsistency being detected, the application MAY use the archived copies of the profile to resynchronize.</t>
+<t>Note that having been connected to a profile at some time in the past does not guarantee that a device currently has access, even if the device in question was an administration device for the profile.</t>
+</section>
+<section title="Locating a device profile" anchor="Section_3_4_2">
+<t>To locate a device profile an application </t>
+</section>
+<section title="Locating an application profile" anchor="Section_3_4_3">
+<t>To locate a device profile an application </t>
+<t/>
+</section>
+</section>
+</section>
+<section title="OSX Platform Configuration" anchor="Section_4">
+<t>The OSX configuration is stored in a combination of a master configuration file, profile data files and the OSX KeyChain</t>
+<t>The profiles that are available to a user are stored in a JSON configuration file </t>
+<t>Cached and archival copies of profiles are stored on the local machine as data files with file names and locations specified in the JSON configuration file</t>
+<t>Cryptographic keys are stored in the OSX Key Chain.</t>
+<t>File locations</t>
+<t>The JSON Configuration file is stored in ~/.cryptomesh/profiles.json</t>
+<t>Profile data files are stored in a directory ~/.cryptomesh/&lt;UDF&gt;</t>
+<t>The latest copy of the profile is stored in &lt;UDF&gt;.mmm</t>
+<t>An archive containing all the stored profiles is stored in &lt;UDF&gt;.all.mmm</t>
+<t/>
+<section title="Key Storage" anchor="Section_4_1">
+<t>Private keys are stored in the OSX Key Manager in some fashion to be decided later.</t>
+</section>
+</section>
+<section title="Linux Platform Configuration" anchor="Section_5">
+<t>The Linux configuration is stored in a combination of a master configuration file, profile data files and private key files.</t>
+<t>The file layout of the Linux configuration and data files is identical to that of OSX.</t>
+<section title="Key Storage" anchor="Section_5_1">
+<t>Private Keys are stored in the locations that the Linux applications that are to use them expect to find them.</t>
+</section>
+</section>
+<section title="JSON configuration File" anchor="Section_6">
+</section>
+<section title="Application Programming Interface" anchor="Section_7">
+<section title="C# " anchor="Section_7_1">
+<t>The C# reference code base provides the following classes to provide access to the Mesh machine configuration:</t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Goedel.Mesh.RegistrationType"> </t>
+<t hangText="Goedel.Mesh.RegistrationMachine"> </t>
+<t hangText="Goedel.Mesh.RegistrationPersonal"> </t>
+<t hangText="Goedel.Mesh.RegistrationDevice"> </t>
+<t hangText="Goedel.Mesh.RegistrationApplication"> </t>
+<t hangText="Goedel.Portability.Windows"> </t>
+<t hangText="Goedel.Portability.OSX"> </t>
+<t hangText="Goedel.Portability.Linux"> </t>
+<t hangText="Goedel.Mesh.Windows"> </t>
+<t hangText=""> </t>
+<t hangText=""> </t>
+</list></t>
+</list></t>
+</section>
+</section>
+<section title="IANA Considerations" anchor="Section_8">
+<t>None</t>
+</section>
+<section title="Acknowledgements" anchor="Section_9">
+<t>TBS</t>
+<t/>
+</section>
+</middle>
+<back>
+<references title="Normative References">
+<reference anchor="RFC2119">
+<front>
+<title>Key words for use in RFCs to Indicate Requirement Levels</title>
+<author fullname="S. Bradner" initials="S." surname="Bradner">
+<organization/>
+<address>
+</address>
+</author>
+<date month="March" year="1997"/>
+</front>
+<seriesInfo name="BCP" value="14"/>
+<seriesInfo name="RFC" value="2119"/>
+<seriesInfo name="DOI" value="10.17487/RFC2119"/>
+</reference>
+</references>
+</back>
+</rfc>

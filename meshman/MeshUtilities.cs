@@ -55,6 +55,73 @@ namespace Goedel.Mesh.MeshMan {
                 }
             }
 
+        public MeshClient GetMeshClient() {
+            return GetMeshClient(PortalID);
+            }
+
+
+        /// <summary>
+        /// Bind to the Mesh client for the specified portal account
+        /// </summary>
+        /// <param name="PortalID"></param>
+        /// <returns></returns>
+        public MeshClient GetMeshClient(string PortalID) {
+            this.PortalID = PortalID;
+
+            Utils.Assert(PortalID != null, "No Portal account specified");
+            Account.SplitAccountID(PortalID, out AccountID, out Portal);
+            Utils.Assert(AccountID != null | Portal != null, "[{0}] is not a valid portal address");
+
+            MeshClient = new MeshClient(Portal);
+            Utils.Assert(MeshClient != null, "Could not connect to portal {0}", Portal);
+
+            return MeshClient;
+            }
+
+
+        /// <summary>
+        /// Rough draft, I think this is correct but can't check now 
+        /// as the server is accepting everything.
+        /// </summary>
+        private void GetNextAccount() {
+
+            int Base = 1;
+            int Index = 1;
+
+            bool Found = CheckAccount(Index);
+            if (Found) {
+                AccountID = MakeAccountID(Index);
+                return;
+                }
+
+            while (!Found) {
+                Base = Index;
+                Index = Index * 2;
+                Found = CheckAccount(Index);
+                }
+            while (Index > 2) {
+                Index = Index / 2;
+                Found = CheckAccount(Base + Index);
+                if (!Found) {
+                    Base = Base + Index;
+                    }
+                }
+            AccountID = MakeAccountID(Base + Index);
+
+            Utils.NYI("Generate new identifer if original is taken");
+
+            }
+
+        private string MakeAccountID(int I) {
+            return AccountID + "_" + I.ToString("x");
+            }
+
+        private bool CheckAccount(int I) {
+            //var TestID = MakeAccountID(I);
+            var AccountAvailable = MeshClient.Validate(AccountID);
+            return AccountAvailable.Valid;
+            }
+
 
         RegistrationPersonal RegistrationPersonal;
         SignedPersonalProfile SignedPersonalProfile;
@@ -63,16 +130,19 @@ namespace Goedel.Mesh.MeshMan {
         private void GetProfile(String Portal, String UDF) {
 
             RegistrationPersonal = Machine.Personal;
-            Utilities.Assert(RegistrationPersonal, "No profile found");
+            Utils.Assert(RegistrationPersonal, "No profile found");
 
             PortalID = RegistrationPersonal?.Portals?[0];
-            Utilities.Assert(PortalID, "No portal ID known");
+            Utils.Assert(PortalID, "No portal ID known");
 
             SignedPersonalProfile = RegistrationPersonal.Profile;
             PersonalProfile = SignedPersonalProfile.Signed;
 
             PersonalProfile.SignedDeviceProfile = GetDevice(SignedPersonalProfile);
             }
+
+
+
 
 
         // A placeholder routine. This should actually search

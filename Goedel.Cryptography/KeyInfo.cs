@@ -46,14 +46,12 @@ namespace Goedel.Cryptography.PKIX {
 
 
     public partial class AlgorithmIdentifier : Goedel.ASN1.Root {
-        string OIDString;
 
         /// <summary>
         /// Construct from OID identifier string.
         /// </summary>
         /// <param name="ID"></param>
         public AlgorithmIdentifier(string ID) {
-            OIDString = ID;
             this.Algorithm = Goedel.ASN1.ASN.OIDToArray(ID);
             }
 
@@ -63,7 +61,6 @@ namespace Goedel.Cryptography.PKIX {
         /// <param name="Text"></param>
         /// <param name="Numbers"></param>
         public AlgorithmIdentifier (string Text, int [] Numbers) {
-            OIDString = Text;
             Algorithm = Numbers;
             }
 

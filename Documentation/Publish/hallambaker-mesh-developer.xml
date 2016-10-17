@@ -1,0 +1,240 @@
+<?xml version='1.0'?>
+<!DOCTYPE rfc SYSTEM 'rfc2629.dtd'>
+<rfc ipr="trust200902" docName="draft-hallambaker-mesh-developer-02" category="info">
+<?rfc toc="yes"?>  
+<?rfc symrefs="yes"?>  
+<?rfc sortrefs="yes"?>  
+<?rfc compact="yes"?>  
+<?rfc subcompact="no"?>  
+<front>
+<title abbrev="Mathematical Mesh Developer">Mathematical Mesh: Developer's Guide</title>
+<author fullname="Phillip Hallam-Baker    " initials="P. M.    " surname="Hallam-Baker    ">
+<organization>Comodo Group Inc.    </organization>
+<address>
+<email>philliph@comodo.com</email>
+</address>
+</author>
+<date day="19" month="September" year="2016"/>
+<area>Security</area>
+<workgroup/>
+<abstract>
+<t>The Mathematical Mesh 'The Mesh' is an end-to-end secure infrastructure that facilitates the exchange of configuration and credential data between multiple user devices.</t>
+<t>This document describes how to install and run the Mesh reference code and make use of the reference code in applications. It does not form a part of the Mesh specifications and is not normative.</t>
+</abstract>
+</front>
+<middle>
+<section title="Getting the Reference Code and Build Tools" anchor="Section_1">
+<t>The Mesh Reference library was developed using Visual Studio 2015 Community Edition using PHB's Build Tools extensions. The reference code itself is currently limited to C# libraries.</t>
+<t>The code should in theory run under other operating systems but this is not currently tested. </t>
+<t>Development under different development environments is also possible but would require re-engineering to make use of the line mode versions of the build tools.</t>
+<section title="Obtaining the Development Environment" anchor="Section_1_1">
+<t>Visual Studio 2015 Community Edition is currently available at no cost for a wide range of non-commercial development including personal use and development of Open Source software. For full details, please consult the license published by Microsoft.</t>
+<figure>
+<artwork>
+<![CDATA[https://www.visualstudio.com/]]></artwork>
+</figure>
+</section>
+<section title="Obtaining the Build Tools" anchor="Section_1_2">
+<t>Over half the code in the reference code library is generated using code generators. These are used to ensure that the specification, examples and reference code are always kept in synchronization. </t>
+<t>The build tools are published under an MIT License and are available in two forms:</t>
+<t>As stand-alone tools to be run from the command line.</t>
+<t>As a VSIX package that integrates into the Visual Studio environment.</t>
+<t>The source distribution is configured to use the tools integrated into the Visual Studio environment. If development on other platforms is desired, the simplest approach is likely to be to write a tool that reads the Visual Studio configuration files and generates the corresponding files for use with make.</t>
+<t>The VSIX package is available from the Visual Studio extensions gallery:</t>
+<figure>
+<artwork>
+<![CDATA[PHB Code Generation Tools]]></artwork>
+</figure>
+<t>The source code for the build tools is available from:</t>
+<figure>
+<artwork>
+<![CDATA[https://sourceforge.net/projects/phb-build-tools/]]></artwork>
+</figure>
+</section>
+<section title="Obtaining the Mesh Source Libraries" anchor="Section_1_3">
+<t>The Mesh reference library source code is published under an MIT license and is available from:</t>
+<figure>
+<artwork>
+<![CDATA[https://sourceforge.net/projects/mathematicalmesh/]]></artwork>
+</figure>
+</section>
+</section>
+<section title="Running the Reference Code Examples" anchor="Section_2">
+<t>The reference code examples are designed to illustrate how the Mesh might be used in an application rather than be standalone tools in their own right. The Mesh is designed to make it each for developers to add security to their own applications rather than providing the applications themselves.</t>
+<section title="Starting the Server" anchor="Section_2_1">
+<t>On the Windows platform, the server runs in the context of the platform Web server and must be granted permission to bind to the range of server addresses used using the netsh command.</t>
+<t>From a command prompt with administrator privileges, run the following command:</t>
+<figure>
+<artwork>
+<![CDATA[netsh http add urlacl http://<domain>/.well-known/mmm/ 
+    \user=<machine>\<user>]]></artwork>
+</figure>
+<t>Where  is the DNS domain name under which the service is run,  is the Windows domain name of the machine and  the account name.</t>
+<t>To start the service from the command line type:</t>
+<figure>
+<artwork>
+<![CDATA[servermesh <domain>]]></artwork>
+</figure>
+<t>The server does not require administration privileges.</t>
+</section>
+<section title="The Profile Manager Wizard" anchor="Section_2_2">
+<t>The profile manager wizard demonstrates functions that are performed on an administration device. These include creating a completely new profile and initial configuration of applications, connecting a device to the profile and recovery of the profile from escrow data.</t>
+<t>To run the client from the command line, place the executable image in a location that it will be found in the PATH variable and type:</t>
+<figure>
+<artwork>
+<![CDATA[meshclient]]></artwork>
+</figure>
+</section>
+<section title="The Profile Connection Wizard" anchor="Section_2_3">
+<t>The Profile connection wizard demonstrates the much more restricted functionality that would be required in a Mesh connected application and/or a profile manager for a non-administration device.</t>
+<t>To run the client from the command line, place the executable image in a location that it will be found in the PATH variable and type:</t>
+<figure>
+<artwork>
+<![CDATA[meshconnect]]></artwork>
+</figure>
+</section>
+</section>
+<section title="Platform specific configuration data" anchor="Section_3">
+<section title="Windows" anchor="Section_3_1">
+<section title="Private Key Data" anchor="Section_3_1_1">
+<t>All private key data is stored using the Windows public key store. At minimum, this ensures that private keys are obfuscated and encrypted under the account password to protect the data against casual extraction attacks. On a machine with cryptographic hardware support such as a TPM or HSM, extraction of the private key may be infeasible without physical access to the machine and possibly require sophisticated diagnostic equipment.</t>
+</section>
+<section title="Registry settings" anchor="Section_3_1_2">
+<t>Separate settings are used for production and test code. Test Code should use the Registry Hive:</t>
+<t>HKEY_CURRENT_USER\SOFTWARE\CryptoMesh</t>
+<t>Production code should use the hive</t>
+<t>HKEY_CURRENT_USER\SOFTWARE\MathematicalMesh</t>
+<t>In either case the sub structure is:</t>
+<t><list style="hanging">
+<t><list style="hanging">
+<t hangText="Accounts">Contains the set of Mesh Portal Accounts for the user. The default value is the account name of the default account. The Name of the each key is a portal account name and the value a REG_SZ entry containing the UDF of the profile master key.</t>
+<t hangText="PersonalProfiles">Contains the set of Mesh Profiles for the user. The default value is the UDF of the default profile master key. The Name of each key is the UDF of the master key and the value a REG_SZ entry containing the file location of the cached copy of the personal profile.</t>
+<t hangText="ThisDevice">Contains the set of Device profiles in the same format as the PersonalProfiles.</t>
+</list></t>
+</list></t>
+</section>
+<section title="Profile data files" anchor="Section_3_1_3">
+<t>The profile data itself is stored in data files at the location specified in the registry. The files are standard XML files in UTF8 encoding.</t>
+</section>
+</section>
+<section title="OSX and Linux" anchor="Section_3_2">
+<t>[[Not yet implemented, subject to change.]</t>
+<t>All configuration information is stored in the user directory ~/.mmm</t>
+<t>Keys are stored in SSH key file format [RFC4716] using the customary name and extension conventions for that application. </t>
+</section>
+</section>
+<section title="Using the Mesh C#/.Net Libraries in an Application" anchor="Section_4">
+<t>The application ExampleGenerator shows the use of the Mesh in an application using the convenience API. It is the application program used to generate the examples in the reference document.</t>
+<t>ExampleGenerator implements a client that connects to a remote WebService, creates new personal profile with an escrow entry with offline recovery codes, attaches applications and other devices, updates an application profile, deletes all the profile data from the local machine and then restores them using the recovery codes and escrow entry.</t>
+<section title="Creating a Portal Client Connection" anchor="Section_4_1">
+<t>The normal method of creating a Portal Client connection is?</t>
+<t>Since the purpose of the ExampleGenerator is to create examples for the documentation, it is not necessary for the JSON Remote Procedure Calls to actually be 'Remote'. Instead the 'Local' Procedure Call mode is used in which the client and server both run in the same process with the client API invoking the server dispatch methods through an interface that performs JSON serialization and deserialization but does not invoke the network transport.</t>
+<t>?.</t>
+<t>For purposes of testing and initial development of a Web Service it is frequently desirable to further simplify the implementation by dispensing with the serialization layer and the client calling the server dispatch methods directly.</t>
+<t>?.</t>
+</section>
+<section title="Checking that a Portal Account name is acceptable" anchor="Section_4_2">
+</section>
+<section title="Creating a Personal Profile" anchor="Section_4_3">
+</section>
+<section title="Creating an Offline Escrow Entry" anchor="Section_4_4">
+</section>
+<section title="Publishing the Profile and Escrow Entries" anchor="Section_4_5">
+</section>
+<section title="Attaching a New Device" anchor="Section_4_6">
+</section>
+<section title="Attaching a new Application" anchor="Section_4_7">
+</section>
+<section title="Deleting Profile Data" anchor="Section_4_8">
+</section>
+<section title="Recovering Profile Data" anchor="Section_4_9">
+</section>
+</section>
+<section title="Using other languages" anchor="Section_5">
+<t>If you are building Mesh applications in another language, the least effort approach may be to rewrite the PROTOGEN build tool to target your language.</t>
+<t>Protogen does support generation of C header files that may be used to drive a parser. If however you are adding Mesh support for an application that already uses JSON based protocols, you might want to edit the generator scripting files to generate code for your existing libraries.</t>
+<section title="Using the C Binding" anchor="Section_5_1">
+</section>
+</section>
+<section title="Reference Code Architecture" anchor="Section_6">
+<section title="Protocol Definition" anchor="Section_6_1">
+<section title="Serialization" anchor="Section_6_1_1">
+</section>
+<section title="Deserialization" anchor="Section_6_1_2">
+</section>
+<section title="Class library" anchor="Section_6_1_3">
+</section>
+</section>
+<section title="Profile" anchor="Section_6_2">
+<section title="Generation" anchor="Section_6_2_1">
+</section>
+<section title="Validation" anchor="Section_6_2_2">
+</section>
+<section title="Operations" anchor="Section_6_2_3">
+</section>
+</section>
+<section title="Server " anchor="Section_6_3">
+<section title="Management Class" anchor="Section_6_3_1">
+</section>
+<section title="Dispatch Class" anchor="Section_6_3_2">
+</section>
+<section title="Connection Modes" anchor="Section_6_3_3">
+<section title="Direct" anchor="Section_6_3_3_1">
+</section>
+<section title="Local" anchor="Section_6_3_3_2">
+</section>
+<section title="Remote" anchor="Section_6_3_3_3">
+</section>
+</section>
+</section>
+<section title="Client" anchor="Section_6_4">
+<section title="Stub Library" anchor="Section_6_4_1">
+</section>
+<section title="Convenience API" anchor="Section_6_4_2">
+</section>
+</section>
+</section>
+<section title="Security Considerations" anchor="Section_7">
+<t>Security Considerations are addressed in the companion document [draft-hallambaker-mesh-architecture-01]</t>
+</section>
+<section title="IANA Considerations" anchor="Section_8">
+<t>IANA Considerations are addressed in the companion document [draft-hallambaker-mesh-architecture-01]</t>
+</section>
+<section title=" Acknowledgements" anchor="Section_9">
+<t>Comodo Group: Egemen Tas, Melhi Abdulhayo?lu, Rob Stradling, Robin Alden.</t>
+</section>
+</middle>
+<back>
+<references title="Normative References">
+<reference anchor="RFC4716">
+<front>
+<title>The Secure Shell (SSH) Public Key File Format</title>
+<author fullname="J. Galbraith" initials="J." surname="Galbraith">
+<organization/>
+<address>
+</address>
+</author>
+<author fullname="R. Thayer" initials="R." surname="Thayer">
+<organization/>
+<address>
+</address>
+</author>
+<date month="November" year="2006"/>
+</front>
+<seriesInfo name="RFC" value="4716"/>
+<seriesInfo name="DOI" value="10.17487/RFC4716"/>
+</reference>
+<reference anchor="draft-hallambaker-mesh-architecture-01">
+<front>
+<title>[Reference Not Found!]</title>
+<author initials="" surname="">
+<organization/>
+<address>
+</address>
+</author>
+<date/>
+</front>
+</reference>
+</references>
+</back>
+</rfc>

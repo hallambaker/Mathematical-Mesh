@@ -14,7 +14,7 @@ namespace Goedel.Mesh.MeshMan {
             GetMeshClient();
 
             var DeviceProfile = GetDevice(SignedPersonalProfile);
-            Utilities.Assert(DeviceProfile, "Could not locate a device profile on this device");
+            Utils.Assert(DeviceProfile, "Could not locate a device profile on this device");
 
             var PersonalProfile = SignedPersonalProfile.Signed;
 
@@ -101,7 +101,7 @@ namespace Goedel.Mesh.MeshMan {
             GetMeshClient();
             GetPasswordProfile();
 
-            var Entry = PasswordProfile.Delete(Options.Site.Value);
+            PasswordProfile.Delete(Options.Site.Value);
 
             UpdatePasswordProfile();
             }

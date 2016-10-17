@@ -24,6 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using Goedel.Utilities;
 
 namespace Goedel.Protocol {
     //

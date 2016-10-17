@@ -37,9 +37,27 @@
     <OutputPath>bin\RaspberryPi\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Goedel.Debug2">
+      <HintPath>..\..\Library\Goedel.Debug2.dll</HintPath>
+    </Reference>
+    <Reference Include="Goedel.FSR">
+      <HintPath>..\..\Library\Goedel.FSR.dll</HintPath>
+    </Reference>
+    <Reference Include="Goedel.IO">
+      <HintPath>..\..\Library\Goedel.IO.dll</HintPath>
+    </Reference>
+    <Reference Include="Goedel.Protocol">
+      <HintPath>..\..\Library\Goedel.Protocol.dll</HintPath>
+    </Reference>
+    <Reference Include="Goedel.Protocol.Extended">
+      <HintPath>..\..\Library\Goedel.Protocol.Extended.dll</HintPath>
+    </Reference>
     <Reference Include="Goedel.Registry, Version=1.0.5856.42846, Culture=neutral, PublicKeyToken=00ce4cbe0647f41a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Goedel.Registry.1.0.5856.42846\lib\net40\Goedel.Registry.dll</HintPath>
-      <Private>True</Private>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Library\Goedel.Registry.dll</HintPath>
+    </Reference>
+    <Reference Include="Goedel.Utilities">
+      <HintPath>..\..\Library\Goedel.Utilities.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -63,13 +81,13 @@
     <None Include="Tportal.jlog" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Goedel.Mesh.Windows\Goedel.Mesh.Platform %28Windows%29.csproj">
-      <Project>{c378c917-f41d-4388-b467-efd6677c4459}</Project>
-      <Name>Goedel.Mesh.Platform %28Windows%29</Name>
+    <ProjectReference Include="..\Goedel.Cryptography.KeyFile\Goedel.Cryptography.KeyFile.csproj">
+      <Project>{73d40f24-a492-4081-b58e-b2af30762c78}</Project>
+      <Name>Goedel.Cryptography.KeyFile</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Goedel.Protocol\Goedel.Protocol.csproj">
-      <Project>{24419f2d-f425-4e0f-a0ea-9d3e7a57e12f}</Project>
-      <Name>Goedel.Protocol</Name>
+    <ProjectReference Include="..\Goedel.Mesh.Platform.Windows\Goedel.Mesh.Platform.Windows.csproj">
+      <Project>{c378c917-f41d-4388-b467-efd6677c4459}</Project>
+      <Name>Goedel.Mesh.Platform.Windows</Name>
     </ProjectReference>
     <ProjectReference Include="..\Goedel.Cryptography\Goedel.Cryptography.csproj">
       <Project>{1babc0e9-d939-4de5-82a3-16752104b14b}</Project>
@@ -87,9 +105,17 @@
       <Project>{0d8dd801-65d2-497c-8379-2d6adf3867c3}</Project>
       <Name>Goedel.Mesh</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Goedel.Mesh.Portal\Goedel.Mesh.Portal.csproj">
+    <ProjectReference Include="..\Goedel.Mesh.Server\Goedel.Mesh.Server.csproj">
       <Project>{f6343f1b-d03d-4965-9113-5120a8054e9e}</Project>
-      <Name>Goedel.Mesh.Portal</Name>
+      <Name>Goedel.Mesh.Server</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Goedel.Persistence\Goedel.Persistence.csproj">
+      <Project>{81e30b95-c59d-4a04-925e-85877fd37fdd}</Project>
+      <Name>Goedel.Persistence</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Goedel.Protocol.Debug\Goedel.Protocol.Debug.csproj">
+      <Project>{0586b4c1-814c-4d98-b6f1-180cd4e2faab}</Project>
+      <Name>Goedel.Protocol.Debug</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

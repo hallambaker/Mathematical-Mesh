@@ -34,9 +34,32 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Goedel.Registry, Version=1.0.5856.42846, Culture=neutral, PublicKeyToken=00ce4cbe0647f41a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Goedel.Registry.1.0.5856.42846\lib\net40\Goedel.Registry.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Goedel.Debug2, Version=1.0.6128.30690, Culture=neutral, PublicKeyToken=9ac84b9f2535680b, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Library\Goedel.Debug2.dll</HintPath>
+    </Reference>
+    <Reference Include="Goedel.FSR">
+      <HintPath>..\..\Library\Goedel.FSR.dll</HintPath>
+    </Reference>
+    <Reference Include="Goedel.IO, Version=1.0.6128.30690, Culture=neutral, PublicKeyToken=9ac84b9f2535680b, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Library\Goedel.IO.dll</HintPath>
+    </Reference>
+    <Reference Include="Goedel.Protocol, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Library\Goedel.Protocol.dll</HintPath>
+    </Reference>
+    <Reference Include="Goedel.Protocol.Extended, Version=1.0.6129.42753, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Library\Goedel.Protocol.Extended.dll</HintPath>
+    </Reference>
+    <Reference Include="Goedel.Registry, Version=1.0.6031.20440, Culture=neutral, PublicKeyToken=00ce4cbe0647f41a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Library\Goedel.Registry.dll</HintPath>
+    </Reference>
+    <Reference Include="Goedel.Utilities, Version=1.0.6128.30690, Culture=neutral, PublicKeyToken=9ac84b9f2535680b, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Library\Goedel.Utilities.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -58,8 +81,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Makefile" />
     <None Include="MeshPersistenceStore.jlog" />
-    <None Include="packages.config" />
     <None Include="PortalPersistenceStore.jlog" />
     <None Include="ServerCommands.command">
       <Generator>CommandCS</Generator>
@@ -92,9 +115,9 @@
       <Project>{0d8dd801-65d2-497c-8379-2d6adf3867c3}</Project>
       <Name>Goedel.Mesh</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Goedel.Protocol\Goedel.Protocol.csproj">
-      <Project>{24419f2d-f425-4e0f-a0ea-9d3e7a57e12f}</Project>
-      <Name>Goedel.Protocol</Name>
+    <ProjectReference Include="..\Goedel.Protocol.Debug\Goedel.Protocol.Debug.csproj">
+      <Project>{0586b4c1-814c-4d98-b6f1-180cd4e2faab}</Project>
+      <Name>Goedel.Protocol.Debug</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -102,7 +125,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>powershell publishtarget "$(TargetPath)" Goedel.Registry.dll Goedel.Cryptography.Jose.dll Goedel.Cryptography.dll Goedel.Debug.dll Goedel.Persistence.dll Goedel.Mesh.Portal.dll Goedel.Mesh.dll Goedel.Protocol.dll
+    <PostBuildEvent>powershell publishtarget "$(TargetPath)" Goedel.Registry.dll Goedel.Cryptography.Jose.dll Goedel.Cryptography.dll Goedel.Debug.dll Goedel.Persistence.dll Goedel.Mesh.Server.dll Goedel.Mesh.dll Goedel.Protocol.dll
 powershell publishtarget "$(TargetDir)MathematicalMesh.zip"</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>

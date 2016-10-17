@@ -7,8 +7,8 @@
     <ProjectGuid>{F6343F1B-D03D-4965-9113-5120A8054E9E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Goedel.Mesh.Portal</RootNamespace>
-    <AssemblyName>Goedel.Mesh.Portal</AssemblyName>
+    <RootNamespace>Goedel.Mesh.Server</RootNamespace>
+    <AssemblyName>Goedel.Mesh.Server</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -21,7 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\Goedel.Mesh.Portal.xml</DocumentationFile>
+    <DocumentationFile>bin\Debug\Goedel.Mesh.Server.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -32,9 +32,27 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Goedel.Registry, Version=1.0.5856.42846, Culture=neutral, PublicKeyToken=00ce4cbe0647f41a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Goedel.Registry.1.0.5856.42846\lib\net40\Goedel.Registry.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Goedel.Debug2, Version=1.0.6129.42745, Culture=neutral, PublicKeyToken=9ac84b9f2535680b, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Library\Goedel.Debug2.dll</HintPath>
+    </Reference>
+    <Reference Include="Goedel.FSR">
+      <HintPath>..\..\Library\Goedel.FSR.dll</HintPath>
+    </Reference>
+    <Reference Include="Goedel.IO, Version=1.0.6129.42745, Culture=neutral, PublicKeyToken=9ac84b9f2535680b, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Library\Goedel.IO.dll</HintPath>
+    </Reference>
+    <Reference Include="Goedel.Protocol, Version=1.0.6128.28622, Culture=neutral, PublicKeyToken=9ac84b9f2535680b, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Library\Goedel.Protocol.dll</HintPath>
+    </Reference>
+    <Reference Include="Goedel.Protocol.Extended">
+      <HintPath>..\..\Library\Goedel.Protocol.Extended.dll</HintPath>
+    </Reference>
+    <Reference Include="Goedel.Utilities, Version=1.0.6129.42745, Culture=neutral, PublicKeyToken=9ac84b9f2535680b, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Library\Goedel.Utilities.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -60,11 +78,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="LibMeshService.licenseheader" />
+    <None Include="Makefile" />
     <None Include="MeshProtocol.Protocol">
       <Generator>Protogen</Generator>
       <LastGenOutput>MeshProtocol.cs</LastGenOutput>
     </None>
-    <None Include="packages.config" />
     <None Include="PreBuild.bat" />
   </ItemGroup>
   <ItemGroup>
@@ -94,10 +112,6 @@
     <ProjectReference Include="..\Goedel.Mesh\Goedel.Mesh.csproj">
       <Project>{0d8dd801-65d2-497c-8379-2d6adf3867c3}</Project>
       <Name>Goedel.Mesh</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Goedel.Protocol\Goedel.Protocol.csproj">
-      <Project>{24419f2d-f425-4e0f-a0ea-9d3e7a57e12f}</Project>
-      <Name>Goedel.Protocol</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

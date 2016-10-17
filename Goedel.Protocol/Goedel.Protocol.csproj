@@ -53,8 +53,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BaseEncode.cs" />
-    <Compile Include="BaseMessage.cs" />
     <Compile Include="ByteBuffer.cs" />
     <Compile Include="ChallengeResponse.cs" />
     <Compile Include="Cryoptography.cs" />
@@ -69,6 +67,7 @@
     <Compile Include="JSONObject.cs" />
     <Compile Include="JSONDebugWriter.cs" />
     <Compile Include="JSONWriter.cs" />
+    <Compile Include="LexReader.cs" />
     <Compile Include="Message.cs" />
     <Compile Include="Obsolete WebServiceServer.cs" />
     <Compile Include="ReaderWriter.cs" />
@@ -81,14 +80,13 @@
     <Compile Include="WrapWriter.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Goedel.Debug\Goedel.Debug.csproj">
-      <Project>{a8090b80-d658-45f6-bda1-4f9dfd2b976f}</Project>
-      <Name>Goedel.Debug</Name>
+    <ProjectReference Include="..\..\buildtools\Libraries\Goedel.Utilities\Goedel.Utilities.csproj">
+      <Project>{e891bc7f-d7bd-4931-931b-42c83cca68e2}</Project>
+      <Name>Goedel.Utilities</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="LibProtoGen.licenseheader" />
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

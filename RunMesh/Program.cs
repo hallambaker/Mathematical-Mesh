@@ -25,13 +25,43 @@ using System.Collections.Generic;
 using System.IO;
 using Goedel.Mesh.Platform;
 
+using Goedel.Cryptography;
+using Goedel.Cryptography.KeyFile;
+
 namespace Goedel.Mesh {
     class Program {
         static void Main(string[] args) {
-            var MeshTest = new MeshTest();
-            MeshTest.TestRegistry();
+            //var MeshTest = new MeshTest();
+            //MeshTest.TestRegistry();
+
+            new ParseSSH();
+
             }
         }
+
+
+    partial class ParseSSH  {
+
+        public ParseSSH () {
+
+            //var KeyPair = KeyFile.DecodePEM("PrivateKey.OpenSSH");
+
+            KeyFile.DecodeAuthHost("authorized_keys.pub");
+
+
+            //var NewKeyPair = new RSAKeyPair (2048, true);
+            //var ReEncode = KeyPair.ToPEM();
+
+            //Console.Write(ReEncode);
+
+            //var KeyPair2 = KeyFile.DecodePEMText(ReEncode);
+
+            }
+
+ 
+
+        }
+
 
 
 
@@ -96,7 +126,7 @@ namespace Goedel.Mesh {
 
             var Machine = RegistrationMachine.Current;
             var NewProfileDevice = new SignedDeviceProfile("Test", "Test Device");
-            var Registration = Machine.Add(NewProfileDevice);
+            Machine.Add(NewProfileDevice);
 
             var PersonalProfile = new PersonalProfile(NewProfileDevice);
             var SignedPersonalProfile = PersonalProfile.Signed;
@@ -123,7 +153,7 @@ namespace Goedel.Mesh {
             var SignedProfile = UserProfile.Signed;
             Mesh.CreateAccount(UserName, SignedProfile);
 
-            var Account = Mesh.GetAccount(UserName);
+            Mesh.GetAccount(UserName);
 
 
             // Read the LiveMail accounts
@@ -139,14 +169,14 @@ namespace Goedel.Mesh {
             // Write out the updated profile
             MailAccount.Update();
 
-            // Create Mail Profile
-            var MailProfile = new MailProfile(UserProfile, MailAccount);
+            //// Create Mail Profile
+            //var MailProfile = new MailProfile(UserProfile, MailAccount);
 
 
             // Create Test Account from Mail Profile
 
             var NewMailInfo = new MailAccountInfoWLM();
-            MailProfile.Export(NewMailInfo);
+            //MailProfile.Export(NewMailInfo);
             NewMailInfo.AccountName = "Test-Delete";
 
             // Write it out
@@ -210,9 +240,9 @@ namespace Goedel.Mesh {
             var SignedProfile = UserProfile.Signed;
             Mesh.CreateAccount(UserName, SignedProfile);
 
-            var Account = Mesh.GetAccount(UserName);
+            Mesh.GetAccount(UserName);
 
-            var PasswordProfile = new PasswordProfile(UserProfile);
+            var PasswordProfile = new PasswordProfile(true);
             var SignedPasswordProfile = PasswordProfile.Signed;
 
             SignedProfile = UserProfile.Signed;
@@ -242,7 +272,7 @@ namespace Goedel.Mesh {
 
             // Add the device to the profile entry in the parent.
 
-            var PasswordProfile = new PasswordProfile(UserProfile);
+            var PasswordProfile = new PasswordProfile(true);
 
             var SignedPasswordProfile = PasswordProfile.Signed;
 
@@ -274,14 +304,14 @@ namespace Goedel.Mesh {
             var DevProfile2 = new SignedDeviceProfile(Device2, Device2Description);
 
             // Post Connect Request
-            var ChainToken = Mesh.GetChainToken();
+            Mesh.GetChainToken();
             var ConnectionRequest = new ConnectionRequest(Account, DevProfile2);
 
             Mesh.PostConnectionRequest(ConnectionRequest.Signed, 
                 Account.UniqueID);
 
             // Get list of pending requests
-            var Connections = Mesh.GetPendingRequests(Account.AccountID);
+            Mesh.GetPendingRequests(Account.AccountID);
 
             // Accept pending request
 
@@ -295,7 +325,7 @@ namespace Goedel.Mesh {
 
 
             // Pull password data 
-            var Status = Mesh.GetRequestStatus(Account.AccountID, DevProfile2.UDF);
+            Mesh.GetRequestStatus(Account.AccountID, DevProfile2.UDF);
 
 
             // decrypt using device2 credential

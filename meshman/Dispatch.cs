@@ -47,8 +47,8 @@ namespace Goedel.Mesh.MeshMan {
         /// </summary>
         /// <param name="Options">Command line parameters</param>
         public override void Device(Device Options) {
-            var DeviceID = Utilities.Default(Options.DeviceID.Value, "Default");
-            var DeviceDescription = Utilities.Default(Options.DeviceDescription.Value, "Unknown");
+            var DeviceID = Utils.Default(Options.DeviceID.Value, "Default");
+            var DeviceDescription = Utils.Default(Options.DeviceDescription.Value, "Unknown");
 
             var ProfileDevice = new SignedDeviceProfile(DeviceID, DeviceDescription);
             var RegistrationDevice = Machine.Add(ProfileDevice);
@@ -67,7 +67,7 @@ namespace Goedel.Mesh.MeshMan {
             SetReporting(Options.Report, Options.Verbose);
 
             var Address = Options.Portal.Value;
-            Utilities.Assert((Address != null & Address != ""), "Must specify account");
+            Utils.Assert((Address != null & Address != ""), "Must specify account");
 
 
             // See if the portal exists and will accept the specified account name.
@@ -79,7 +79,7 @@ namespace Goedel.Mesh.MeshMan {
                     GetNextAccount();
                     }
                 else {
-                    Utilities.Error("Portal refused account {0} because {1}",
+                    Utils.Error("Portal refused account {0} because {1}",
                         Address, AccountAvailable.Reason);
                     }
                 }
@@ -93,12 +93,12 @@ namespace Goedel.Mesh.MeshMan {
             else if (Options.DeviceUDF.Value != null) {
                 // use the profile with the specified fingerprint
                 var Found = Machine.GetUDF(Options.DeviceUDF.Value, out RegistrationDevice);
-                Utilities.Assert(Found, "Could not find profile " + Options.DeviceUDF.Value);
+                Utils.Assert(Found, "Could not find profile " + Options.DeviceUDF.Value);
                 }
             else if (Options.DeviceID.Value != null) {
                 // use the profile with the specified ID
                 var Found = Machine.GetID(Options.DeviceID.Value, out RegistrationDevice);
-                Utilities.Assert(Found, "Could not find profile " + Options.DeviceID.Value);
+                Utils.Assert(Found, "Could not find profile " + Options.DeviceID.Value);
                 }
             else if (Machine.Device != null) {
                 RegistrationDevice = Machine.Device;
@@ -109,8 +109,8 @@ namespace Goedel.Mesh.MeshMan {
 
             // Generate a new device profile
             if (Generate) {
-                var DeviceID = Utilities.Default(Options.DeviceID.Value, "Default");
-                var DeviceDescription = Utilities.Default(Options.DeviceDescription.Value, "Unknown");
+                var DeviceID = Utils.Default(Options.DeviceID.Value, "Default");
+                var DeviceDescription = Utils.Default(Options.DeviceDescription.Value, "Unknown");
 
                 var NewProfileDevice = new SignedDeviceProfile(DeviceID, DeviceDescription);
                 RegistrationDevice = Machine.Add(NewProfileDevice);
@@ -121,11 +121,11 @@ namespace Goedel.Mesh.MeshMan {
             var SignedPersonalProfile = PersonalProfile.Signed;
 
             // add to the machine registry
-            var RegistrationPersonal = Machine.Add(SignedPersonalProfile, PortalID);
+            Machine.Add(SignedPersonalProfile, PortalID);
 
             // Register with the Mesh portal
             var PublishResult = MeshClient.Publish(SignedPersonalProfile);
-            Utilities.Assert(PublishResult.Status.StatusSuccess(), "Portal refused profile publication request");
+            Utils.Assert(PublishResult.Status.StatusSuccess(), "Portal refused profile publication request");
 
 
 
@@ -161,9 +161,9 @@ namespace Goedel.Mesh.MeshMan {
             var SignedPersonalProfile = Registration.Profile;
             var PersonalProfile = SignedPersonalProfile.Signed;
 
-            var Identifier = Utilities.Default(PersonalProfile.Identifier, "<null>");
-            var Updated = Utilities.Default(PersonalProfile.Updated.ToString(), "<null>");
-            var UDF = Utilities.Default(PersonalProfile.UDF, "<null>");
+            var Identifier = Utils.Default(PersonalProfile.Identifier, "<null>");
+            var Updated = Utils.Default(PersonalProfile.Updated.ToString(), "<null>");
+            var UDF = Utils.Default(PersonalProfile.UDF, "<null>");
 
 
             Report("Profile {0}", Identifier);
@@ -231,7 +231,7 @@ namespace Goedel.Mesh.MeshMan {
             GetProfile(Options.Portal, Options.UDF);
             GetMeshClient();
 
-            Utilities.NYI();
+            Utils.NYI();
             }
 
         /// <summary>
@@ -243,7 +243,7 @@ namespace Goedel.Mesh.MeshMan {
             GetProfile(Options.Portal, Options.UDF);
             GetMeshClient();
 
-            Utilities.NYI();
+            Utils.NYI();
             }
 
         /// <summary>
@@ -255,7 +255,7 @@ namespace Goedel.Mesh.MeshMan {
             GetProfile(Options.Portal, Options.UDF);
             GetMeshClient();
 
-            Utilities.NYI();
+            Utils.NYI();
             }
 
         /// <summary>

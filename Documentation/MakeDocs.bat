@@ -39,10 +39,16 @@ rfctool O:\Documents\Mesh\hallambaker-udf.docx ^
 	/xml Publish\hallambaker-udf.xml ^
 	/txt Publish\hallambaker-udf.txt
 
-echo reference
+echo json web service
 rfctool O:\Documents\Mesh\hallambaker-json-web-service.docx ^
 	/html Publish\hallambaker-json-web-service.html ^
 	/xml Publish\hallambaker-json-web-service.xml ^
 	/txt Publish\hallambaker-json-web-service.txt
+
+echo ssh
+rfctool O:\Documents\Mesh\hallambaker-mesh-app-ssh.docx ^
+	/html Publish\hallambaker-mesh-app-ssh.html ^
+	/xml Publish\hallambaker-mesh-app-ssh.xml ^
+	/txt Publish\hallambaker-mesh-app-ssh.txt
 
 exit /b 0

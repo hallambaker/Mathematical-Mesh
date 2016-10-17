@@ -1,36 +1,15 @@
-//   Copyright © 2015 by Comodo Group Inc.
-//  
-//  Permission is hereby granted, free of charge, to any person obtaining a copy
-//  of this software and associated documentation files (the "Software"), to deal
-//  in the Software without restriction, including without limitation the rights
-//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-//  copies of the Software, and to permit persons to whom the Software is
-//  furnished to do so, subject to the following conditions:
-//  
-//  The above copyright notice and this permission notice shall be included in
-//  all copies or substantial portions of the Software.
-//  
-//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-//  THE SOFTWARE.
-//  
-//  
-
+ï»¿
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Goedel.ASN1;
+using Goedel.ASN;
 
 // This is the generated code Don't edit.
 
 
 // Generate OID declarations
 
-namespace Goedel.ASN1 {  // default namespace
+namespace Goedel.ASN {  // default namespace
 
 	}
 namespace Goedel.Cryptography.PKIX {
@@ -1204,7 +1183,7 @@ namespace Goedel.Cryptography.PKIX {
 
 
 // Generate Classes
-namespace Goedel.ASN1 {  // default namespace
+namespace Goedel.ASN {  // default namespace
 
 	}
 namespace Goedel.Cryptography.PKIX {
@@ -1214,17 +1193,17 @@ namespace Goedel.Cryptography.PKIX {
 	public partial class Certificate : Goedel.ASN1.Root {
 
 		/// <summary>
-		/// ASN.1 member Signature 
+		/// ASN.1 member TBSCertificate 
 		/// </summary>
-		public byte []  Signature ;
+		public Goedel.Cryptography.PKIX.TBSCertificate TBSCertificate ;
 		/// <summary>
 		/// ASN.1 member SignatureAlgorithm 
 		/// </summary>
 		public Goedel.Cryptography.PKIX.AlgorithmIdentifier SignatureAlgorithm ;
 		/// <summary>
-		/// ASN.1 member TBSCertificate 
+		/// ASN.1 member Signature 
 		/// </summary>
-		public Goedel.Cryptography.PKIX.TBSCertificate TBSCertificate ;
+		public byte []  Signature ;
 
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
@@ -1246,6 +1225,27 @@ namespace Goedel.Cryptography.PKIX {
 			Buffer.Encode__Sequence_End (Position);
             }
 
+			/*
+		/// <summary>
+		/// Decode buffer to populate class members
+		///
+		/// This is done in the forward direction
+		/// </summary>
+        public override void Decode (Goedel.ASN1.Buffer Buffer) {
+			int Position = Buffer.Decode__Sequence_Start ();
+
+			Buffer.Decode__Object (TBSCertificate, 0, -1);
+			Buffer.Debug ("TBSCertificate");
+
+			Buffer.Decode__Object (SignatureAlgorithm, 0, -1);
+			Buffer.Debug ("SignatureAlgorithm");
+
+			Buffer.Decode__Bits  (Signature, 0, -1);
+			Buffer.Debug ("Signature");
+			Buffer.Decode__Sequence_End (Position);
+            }
+			*/
+
 		}
     /// <summary>
 	/// TBSCertificate 
@@ -1253,45 +1253,45 @@ namespace Goedel.Cryptography.PKIX {
 	public partial class TBSCertificate : Goedel.ASN1.Root {
 
 		/// <summary>
-		/// ASN.1 member Extensions 
+		/// ASN.1 member Version 
 		/// </summary>
-		public List <Goedel.Cryptography.PKIX.Extension > Extensions ;
-		/// <summary>
-		/// ASN.1 member SubjectUniqueID 
-		/// </summary>
-		public byte []  SubjectUniqueID ;
-		/// <summary>
-		/// ASN.1 member IssuerUniqueID 
-		/// </summary>
-		public byte []  IssuerUniqueID ;
-		/// <summary>
-		/// ASN.1 member SubjectPublicKeyInfo 
-		/// </summary>
-		public Goedel.Cryptography.PKIX.SubjectPublicKeyInfo SubjectPublicKeyInfo ;
-		/// <summary>
-		/// ASN.1 member Subject 
-		/// </summary>
-		public List <Goedel.Cryptography.PKIX.Name > Subject ;
-		/// <summary>
-		/// ASN.1 member Validity 
-		/// </summary>
-		public Goedel.Cryptography.PKIX.Validity Validity ;
-		/// <summary>
-		/// ASN.1 member Issuer 
-		/// </summary>
-		public List <Goedel.Cryptography.PKIX.Name > Issuer ;
-		/// <summary>
-		/// ASN.1 member Signature 
-		/// </summary>
-		public Goedel.Cryptography.PKIX.AlgorithmIdentifier Signature ;
+		public int  Version ;
 		/// <summary>
 		/// ASN.1 member SerialNumber 
 		/// </summary>
 		public byte []  SerialNumber ;
 		/// <summary>
-		/// ASN.1 member Version 
+		/// ASN.1 member Signature 
 		/// </summary>
-		public int  Version ;
+		public Goedel.Cryptography.PKIX.AlgorithmIdentifier Signature ;
+		/// <summary>
+		/// ASN.1 member Issuer 
+		/// </summary>
+		public List <Goedel.Cryptography.PKIX.Name > Issuer ;
+		/// <summary>
+		/// ASN.1 member Validity 
+		/// </summary>
+		public Goedel.Cryptography.PKIX.Validity Validity ;
+		/// <summary>
+		/// ASN.1 member Subject 
+		/// </summary>
+		public List <Goedel.Cryptography.PKIX.Name > Subject ;
+		/// <summary>
+		/// ASN.1 member SubjectPublicKeyInfo 
+		/// </summary>
+		public Goedel.Cryptography.PKIX.SubjectPublicKeyInfo SubjectPublicKeyInfo ;
+		/// <summary>
+		/// ASN.1 member IssuerUniqueID 
+		/// </summary>
+		public byte []  IssuerUniqueID ;
+		/// <summary>
+		/// ASN.1 member SubjectUniqueID 
+		/// </summary>
+		public byte []  SubjectUniqueID ;
+		/// <summary>
+		/// ASN.1 member Extensions 
+		/// </summary>
+		public List <Goedel.Cryptography.PKIX.Extension > Extensions ;
 
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
@@ -1364,6 +1364,78 @@ namespace Goedel.Cryptography.PKIX {
 			Buffer.Encode__Sequence_End (Position);
             }
 
+			/*
+		/// <summary>
+		/// Decode buffer to populate class members
+		///
+		/// This is done in the forward direction
+		/// </summary>
+        public override void Decode (Goedel.ASN1.Buffer Buffer) {
+			int Position = Buffer.Decode__Sequence_Start ();
+
+			Buffer.Encode__Integer  (Version, 2, 0);
+			Buffer.Debug ("Version");
+
+			Buffer.Decode__BigInteger  (SerialNumber, 0, -1);
+			Buffer.Debug ("SerialNumber");
+
+			Buffer.Decode__Object (Signature, 0, -1);
+			Buffer.Debug ("Signature");
+
+			if (Issuer == null || Issuer.Count == 0) {
+				Buffer.Decode__Object (null, 0, -1);
+				}
+			else {
+				int XPosition = Buffer.Decode__Sequence_Start();
+				foreach (Goedel.Cryptography.PKIX.Name  _Index in Issuer) {
+		
+			Buffer.Encode__Object (_Index, 0, 0);
+					}
+				Buffer.Decode__Sequence_End(XPosition, 0, -1);
+			}
+			Buffer.Debug ("Issuer");
+
+			Buffer.Decode__Object (Validity, 0, -1);
+			Buffer.Debug ("Validity");
+
+			if (Subject == null || Subject.Count == 0) {
+				Buffer.Decode__Object (null, 0, -1);
+				}
+			else {
+				int XPosition = Buffer.Decode__Sequence_Start();
+				foreach (Goedel.Cryptography.PKIX.Name  _Index in Subject) {
+		
+			Buffer.Encode__Object (_Index, 0, 0);
+					}
+				Buffer.Decode__Sequence_End(XPosition, 0, -1);
+			}
+			Buffer.Debug ("Subject");
+
+			Buffer.Decode__Object (SubjectPublicKeyInfo, 0, -1);
+			Buffer.Debug ("SubjectPublicKeyInfo");
+
+			Buffer.Decode__Bits  (IssuerUniqueID, 5, 1);
+			Buffer.Debug ("IssuerUniqueID");
+
+			Buffer.Decode__Bits  (SubjectUniqueID, 5, 2);
+			Buffer.Debug ("SubjectUniqueID");
+
+			if (Extensions == null || Extensions.Count == 0) {
+				Buffer.Decode__Object (null, 6, 3);
+				}
+			else {
+				int XPosition = Buffer.Decode__Sequence_Start();
+				foreach (Goedel.Cryptography.PKIX.Extension  _Index in Extensions) {
+		
+			Buffer.Encode__Object (_Index, 0, 0);
+					}
+				Buffer.Decode__Sequence_End(XPosition, 6, 3);
+			}
+			Buffer.Debug ("Extensions");
+			Buffer.Decode__Sequence_End (Position);
+            }
+			*/
+
 		}
     /// <summary>
 	/// SubjectPublicKeyInfo 
@@ -1371,13 +1443,13 @@ namespace Goedel.Cryptography.PKIX {
 	public partial class SubjectPublicKeyInfo : Goedel.ASN1.Root {
 
 		/// <summary>
-		/// ASN.1 member SubjectPublicKey 
-		/// </summary>
-		public byte []  SubjectPublicKey ;
-		/// <summary>
 		/// ASN.1 member Algorithm 
 		/// </summary>
 		public Goedel.Cryptography.PKIX.AlgorithmIdentifier Algorithm ;
+		/// <summary>
+		/// ASN.1 member SubjectPublicKey 
+		/// </summary>
+		public byte []  SubjectPublicKey ;
 
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
@@ -1396,6 +1468,24 @@ namespace Goedel.Cryptography.PKIX {
 			Buffer.Encode__Sequence_End (Position);
             }
 
+			/*
+		/// <summary>
+		/// Decode buffer to populate class members
+		///
+		/// This is done in the forward direction
+		/// </summary>
+        public override void Decode (Goedel.ASN1.Buffer Buffer) {
+			int Position = Buffer.Decode__Sequence_Start ();
+
+			Buffer.Decode__Object (Algorithm, 0, -1);
+			Buffer.Debug ("Algorithm");
+
+			Buffer.Decode__Bits  (SubjectPublicKey, 0, -1);
+			Buffer.Debug ("SubjectPublicKey");
+			Buffer.Decode__Sequence_End (Position);
+            }
+			*/
+
 		}
     /// <summary>
 	/// DigestInfo 
@@ -1403,13 +1493,13 @@ namespace Goedel.Cryptography.PKIX {
 	public partial class DigestInfo : Goedel.ASN1.Root {
 
 		/// <summary>
-		/// ASN.1 member SubjectPublicKey 
-		/// </summary>
-		public byte []  SubjectPublicKey ;
-		/// <summary>
 		/// ASN.1 member Algorithm 
 		/// </summary>
 		public Goedel.Cryptography.PKIX.AlgorithmIdentifier Algorithm ;
+		/// <summary>
+		/// ASN.1 member SubjectPublicKey 
+		/// </summary>
+		public byte []  SubjectPublicKey ;
 
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
@@ -1428,6 +1518,24 @@ namespace Goedel.Cryptography.PKIX {
 			Buffer.Encode__Sequence_End (Position);
             }
 
+			/*
+		/// <summary>
+		/// Decode buffer to populate class members
+		///
+		/// This is done in the forward direction
+		/// </summary>
+        public override void Decode (Goedel.ASN1.Buffer Buffer) {
+			int Position = Buffer.Decode__Sequence_Start ();
+
+			Buffer.Decode__Object (Algorithm, 0, -1);
+			Buffer.Debug ("Algorithm");
+
+			Buffer.Decode__Octets  (SubjectPublicKey, 0, -1);
+			Buffer.Debug ("SubjectPublicKey");
+			Buffer.Decode__Sequence_End (Position);
+            }
+			*/
+
 		}
     /// <summary>
 	/// AlgorithmIdentifier 
@@ -1435,13 +1543,13 @@ namespace Goedel.Cryptography.PKIX {
 	public partial class AlgorithmIdentifier : Goedel.ASN1.Root {
 
 		/// <summary>
-		/// ASN.1 member Parameters 
-		/// </summary>
-		public List <byte []  > Parameters ;
-		/// <summary>
 		/// ASN.1 member Algorithm 
 		/// </summary>
 		public int []  Algorithm ;
+		/// <summary>
+		/// ASN.1 member Parameters 
+		/// </summary>
+		public List <byte []  > Parameters ;
 
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
@@ -1470,6 +1578,34 @@ namespace Goedel.Cryptography.PKIX {
 			Buffer.Encode__Sequence_End (Position);
             }
 
+			/*
+		/// <summary>
+		/// Decode buffer to populate class members
+		///
+		/// This is done in the forward direction
+		/// </summary>
+        public override void Decode (Goedel.ASN1.Buffer Buffer) {
+			int Position = Buffer.Decode__Sequence_Start ();
+
+			Buffer.Decode__OIDRef  (Algorithm, 0, -1);
+			Buffer.Debug ("Algorithm");
+
+			if (Parameters == null || Parameters.Count == 0) {
+				Buffer.Decode__Object (null, 0, -1);
+				}
+			else {
+				int XPosition = Buffer.Decode__Sequence_Start();
+				foreach (byte []   _Index in Parameters) {
+		
+			Buffer.Encode__Any  (_Index, 0, 0);
+					}
+				Buffer.Decode__Sequence_End(XPosition, 0, -1);
+			}
+			Buffer.Debug ("Parameters");
+			Buffer.Decode__Sequence_End (Position);
+            }
+			*/
+
 		}
     /// <summary>
 	/// TaggedBitString 
@@ -1477,13 +1613,13 @@ namespace Goedel.Cryptography.PKIX {
 	public partial class TaggedBitString : Goedel.ASN1.Root {
 
 		/// <summary>
-		/// ASN.1 member SubjectPublicKey 
-		/// </summary>
-		public byte []  SubjectPublicKey ;
-		/// <summary>
 		/// ASN.1 member Algorithm 
 		/// </summary>
 		public int []  Algorithm ;
+		/// <summary>
+		/// ASN.1 member SubjectPublicKey 
+		/// </summary>
+		public byte []  SubjectPublicKey ;
 
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
@@ -1502,6 +1638,24 @@ namespace Goedel.Cryptography.PKIX {
 			Buffer.Encode__Sequence_End (Position);
             }
 
+			/*
+		/// <summary>
+		/// Decode buffer to populate class members
+		///
+		/// This is done in the forward direction
+		/// </summary>
+        public override void Decode (Goedel.ASN1.Buffer Buffer) {
+			int Position = Buffer.Decode__Sequence_Start ();
+
+			Buffer.Decode__OIDRef  (Algorithm, 0, -1);
+			Buffer.Debug ("Algorithm");
+
+			Buffer.Decode__Bits  (SubjectPublicKey, 0, -1);
+			Buffer.Debug ("SubjectPublicKey");
+			Buffer.Decode__Sequence_End (Position);
+            }
+			*/
+
 		}
     /// <summary>
 	/// Extension 
@@ -1509,17 +1663,17 @@ namespace Goedel.Cryptography.PKIX {
 	public partial class Extension : Goedel.ASN1.Root {
 
 		/// <summary>
-		/// ASN.1 member Data 
+		/// ASN.1 member ObjectIdentifier 
 		/// </summary>
-		public byte []  Data ;
+		public int []  ObjectIdentifier ;
 		/// <summary>
 		/// ASN.1 member Critical 
 		/// </summary>
 		public bool  Critical ;
 		/// <summary>
-		/// ASN.1 member ObjectIdentifier 
+		/// ASN.1 member Data 
 		/// </summary>
-		public int []  ObjectIdentifier ;
+		public byte []  Data ;
 
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
@@ -1544,6 +1698,30 @@ namespace Goedel.Cryptography.PKIX {
 			Buffer.Encode__Sequence_End (Position);
             }
 
+			/*
+		/// <summary>
+		/// Decode buffer to populate class members
+		///
+		/// This is done in the forward direction
+		/// </summary>
+        public override void Decode (Goedel.ASN1.Buffer Buffer) {
+			int Position = Buffer.Decode__Sequence_Start ();
+
+			Buffer.Decode__OIDRef  (ObjectIdentifier, 0, -1);
+			Buffer.Debug ("ObjectIdentifier");
+
+			// Default is false
+			if (Critical != false) {
+				Buffer.Decode__Boolean (Critical, 4, -1);
+				}
+			Buffer.Debug ("Critical");
+
+			Buffer.Decode__Octets  (Data, 0, -1);
+			Buffer.Debug ("Data");
+			Buffer.Decode__Sequence_End (Position);
+            }
+			*/
+
 		}
     /// <summary>
 	/// Validity 
@@ -1551,13 +1729,13 @@ namespace Goedel.Cryptography.PKIX {
 	public partial class Validity : Goedel.ASN1.Root {
 
 		/// <summary>
-		/// ASN.1 member NotAfter 
-		/// </summary>
-		public DateTime  NotAfter ;
-		/// <summary>
 		/// ASN.1 member NotBefore 
 		/// </summary>
 		public DateTime  NotBefore ;
+		/// <summary>
+		/// ASN.1 member NotAfter 
+		/// </summary>
+		public DateTime  NotAfter ;
 
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
@@ -1576,6 +1754,24 @@ namespace Goedel.Cryptography.PKIX {
 			Buffer.Encode__Sequence_End (Position);
             }
 
+			/*
+		/// <summary>
+		/// Decode buffer to populate class members
+		///
+		/// This is done in the forward direction
+		/// </summary>
+        public override void Decode (Goedel.ASN1.Buffer Buffer) {
+			int Position = Buffer.Decode__Sequence_Start ();
+
+			Buffer.EDecode__Time  (NotBefore, 0, -1);
+			Buffer.Debug ("NotBefore");
+
+			Buffer.EDecode__Time  (NotAfter, 0, -1);
+			Buffer.Debug ("NotAfter");
+			Buffer.Decode__Sequence_End (Position);
+            }
+			*/
+
 		}
     /// <summary>
 	/// CertificateList 
@@ -1583,13 +1779,13 @@ namespace Goedel.Cryptography.PKIX {
 	public partial class CertificateList : Goedel.ASN1.Root {
 
 		/// <summary>
-		/// ASN.1 member Signature 
-		/// </summary>
-		public Goedel.Cryptography.PKIX.TaggedBitString Signature ;
-		/// <summary>
 		/// ASN.1 member TBSCertList 
 		/// </summary>
 		public Goedel.Cryptography.PKIX.TBSCertList TBSCertList ;
+		/// <summary>
+		/// ASN.1 member Signature 
+		/// </summary>
+		public Goedel.Cryptography.PKIX.TaggedBitString Signature ;
 
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
@@ -1608,6 +1804,24 @@ namespace Goedel.Cryptography.PKIX {
 			Buffer.Encode__Sequence_End (Position);
             }
 
+			/*
+		/// <summary>
+		/// Decode buffer to populate class members
+		///
+		/// This is done in the forward direction
+		/// </summary>
+        public override void Decode (Goedel.ASN1.Buffer Buffer) {
+			int Position = Buffer.Decode__Sequence_Start ();
+
+			Buffer.Decode__Object (TBSCertList, 0, -1);
+			Buffer.Debug ("TBSCertList");
+
+			Buffer.Decode__Object (Signature, 0, -1);
+			Buffer.Debug ("Signature");
+			Buffer.Decode__Sequence_End (Position);
+            }
+			*/
+
 		}
     /// <summary>
 	/// TBSCertList 
@@ -1615,33 +1829,33 @@ namespace Goedel.Cryptography.PKIX {
 	public partial class TBSCertList : Goedel.ASN1.Root {
 
 		/// <summary>
-		/// ASN.1 member CrlExtensions 
+		/// ASN.1 member Version 
 		/// </summary>
-		public List <Goedel.Cryptography.PKIX.Extension > CrlExtensions ;
-		/// <summary>
-		/// ASN.1 member RevokedCertificates 
-		/// </summary>
-		public List <Goedel.Cryptography.PKIX.CertEntry > RevokedCertificates ;
-		/// <summary>
-		/// ASN.1 member NextUpdate 
-		/// </summary>
-		public DateTime  NextUpdate ;
-		/// <summary>
-		/// ASN.1 member ThisUpdate 
-		/// </summary>
-		public DateTime  ThisUpdate ;
-		/// <summary>
-		/// ASN.1 member Issuer 
-		/// </summary>
-		public List <Goedel.Cryptography.PKIX.Name > Issuer ;
+		public int  Version ;
 		/// <summary>
 		/// ASN.1 member Signature 
 		/// </summary>
 		public Goedel.Cryptography.PKIX.AlgorithmIdentifier Signature ;
 		/// <summary>
-		/// ASN.1 member Version 
+		/// ASN.1 member Issuer 
 		/// </summary>
-		public int  Version ;
+		public List <Goedel.Cryptography.PKIX.Name > Issuer ;
+		/// <summary>
+		/// ASN.1 member ThisUpdate 
+		/// </summary>
+		public DateTime  ThisUpdate ;
+		/// <summary>
+		/// ASN.1 member NextUpdate 
+		/// </summary>
+		public DateTime  NextUpdate ;
+		/// <summary>
+		/// ASN.1 member RevokedCertificates 
+		/// </summary>
+		public List <Goedel.Cryptography.PKIX.CertEntry > RevokedCertificates ;
+		/// <summary>
+		/// ASN.1 member CrlExtensions 
+		/// </summary>
+		public List <Goedel.Cryptography.PKIX.Extension > CrlExtensions ;
 
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
@@ -1705,6 +1919,69 @@ namespace Goedel.Cryptography.PKIX {
 			Buffer.Encode__Sequence_End (Position);
             }
 
+			/*
+		/// <summary>
+		/// Decode buffer to populate class members
+		///
+		/// This is done in the forward direction
+		/// </summary>
+        public override void Decode (Goedel.ASN1.Buffer Buffer) {
+			int Position = Buffer.Decode__Sequence_Start ();
+
+			Buffer.Encode__Integer  (Version, 4, -1);
+			Buffer.Debug ("Version");
+
+			Buffer.Decode__Object (Signature, 0, -1);
+			Buffer.Debug ("Signature");
+
+			if (Issuer == null || Issuer.Count == 0) {
+				Buffer.Decode__Object (null, 0, -1);
+				}
+			else {
+				int XPosition = Buffer.Decode__Sequence_Start();
+				foreach (Goedel.Cryptography.PKIX.Name  _Index in Issuer) {
+		
+			Buffer.Encode__Object (_Index, 0, 0);
+					}
+				Buffer.Decode__Sequence_End(XPosition, 0, -1);
+			}
+			Buffer.Debug ("Issuer");
+
+			Buffer.EDecode__Time  (ThisUpdate, 0, -1);
+			Buffer.Debug ("ThisUpdate");
+
+			Buffer.EDecode__Time  (NextUpdate, 4, -1);
+			Buffer.Debug ("NextUpdate");
+
+			if (RevokedCertificates == null || RevokedCertificates.Count == 0) {
+				Buffer.Decode__Object (null, 4, -1);
+				}
+			else {
+				int XPosition = Buffer.Decode__Sequence_Start();
+				foreach (Goedel.Cryptography.PKIX.CertEntry  _Index in RevokedCertificates) {
+		
+			Buffer.Encode__Object (_Index, 0, 0);
+					}
+				Buffer.Decode__Sequence_End(XPosition, 4, -1);
+			}
+			Buffer.Debug ("RevokedCertificates");
+
+			if (CrlExtensions == null || CrlExtensions.Count == 0) {
+				Buffer.Decode__Object (null, 2, 0);
+				}
+			else {
+				int XPosition = Buffer.Decode__Sequence_Start();
+				foreach (Goedel.Cryptography.PKIX.Extension  _Index in CrlExtensions) {
+		
+			Buffer.Encode__Object (_Index, 0, 0);
+					}
+				Buffer.Decode__Sequence_End(XPosition, 2, 0);
+			}
+			Buffer.Debug ("CrlExtensions");
+			Buffer.Decode__Sequence_End (Position);
+            }
+			*/
+
 		}
     /// <summary>
 	/// CertEntry 
@@ -1712,17 +1989,17 @@ namespace Goedel.Cryptography.PKIX {
 	public partial class CertEntry : Goedel.ASN1.Root {
 
 		/// <summary>
-		/// ASN.1 member CrlEntryExtensions 
+		/// ASN.1 member UserCertificate 
 		/// </summary>
-		public List <Goedel.Cryptography.PKIX.Extension > CrlEntryExtensions ;
+		public byte []  UserCertificate ;
 		/// <summary>
 		/// ASN.1 member RevocationDate 
 		/// </summary>
 		public DateTime  RevocationDate ;
 		/// <summary>
-		/// ASN.1 member UserCertificate 
+		/// ASN.1 member CrlEntryExtensions 
 		/// </summary>
-		public byte []  UserCertificate ;
+		public List <Goedel.Cryptography.PKIX.Extension > CrlEntryExtensions ;
 
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
@@ -1753,6 +2030,37 @@ namespace Goedel.Cryptography.PKIX {
 			Buffer.Debug ("UserCertificate");
 			Buffer.Encode__Sequence_End (Position);
             }
+
+			/*
+		/// <summary>
+		/// Decode buffer to populate class members
+		///
+		/// This is done in the forward direction
+		/// </summary>
+        public override void Decode (Goedel.ASN1.Buffer Buffer) {
+			int Position = Buffer.Decode__Sequence_Start ();
+
+			Buffer.Decode__BigInteger  (UserCertificate, 0, -1);
+			Buffer.Debug ("UserCertificate");
+
+			Buffer.EDecode__Time  (RevocationDate, 0, -1);
+			Buffer.Debug ("RevocationDate");
+
+			if (CrlEntryExtensions == null || CrlEntryExtensions.Count == 0) {
+				Buffer.Decode__Object (null, 6, -1);
+				}
+			else {
+				int XPosition = Buffer.Decode__Sequence_Start();
+				foreach (Goedel.Cryptography.PKIX.Extension  _Index in CrlEntryExtensions) {
+		
+			Buffer.Encode__Object (_Index, 0, 0);
+					}
+				Buffer.Decode__Sequence_End(XPosition, 6, -1);
+			}
+			Buffer.Debug ("CrlEntryExtensions");
+			Buffer.Decode__Sequence_End (Position);
+            }
+			*/
 
 		}
 
@@ -1791,6 +2099,32 @@ namespace Goedel.Cryptography.PKIX {
 				Buffer.Encode__Set_End(XPosition, 0, -1);
 			}
             }
+
+			/*
+		/// <summary>
+		/// Decode buffer to populate class members
+		///
+		/// This is done in the forward direction
+		/// </summary>
+        public override void Decode (Goedel.ASN1.Buffer Buffer) {
+			int Position = Buffer.Decode__Sequence_Start ();
+
+			if (Member == null || Member.Count == 0) {
+				Buffer.Decode__Object (null, 0, -1);
+				}
+			else {
+				int XPosition = Decode.Encode__Set_Start();
+				foreach (Goedel.Cryptography.PKIX.AttributeTypeValue  _Index in Member) {
+		
+			Buffer.Encode__Object (_Index, 0, 0);
+					}
+				Buffer.Decode__Set_End(XPosition, 0, -1);
+			}
+			Buffer.Debug ("Member");
+			Buffer.Decode__Sequence_End (Position);
+            }
+			*/
+
 		}
 
     /// <summary>
@@ -1799,13 +2133,13 @@ namespace Goedel.Cryptography.PKIX {
 	public partial class AttributeTypeValue : Goedel.ASN1.Root {
 
 		/// <summary>
-		/// ASN.1 member Value 
-		/// </summary>
-		public Goedel.Cryptography.PKIX.AnyString Value ;
-		/// <summary>
 		/// ASN.1 member Type 
 		/// </summary>
 		public int []  Type ;
+		/// <summary>
+		/// ASN.1 member Value 
+		/// </summary>
+		public Goedel.Cryptography.PKIX.AnyString Value ;
 
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
@@ -1823,6 +2157,24 @@ namespace Goedel.Cryptography.PKIX {
 			Buffer.Debug ("Type");
 			Buffer.Encode__Sequence_End (Position);
             }
+
+			/*
+		/// <summary>
+		/// Decode buffer to populate class members
+		///
+		/// This is done in the forward direction
+		/// </summary>
+        public override void Decode (Goedel.ASN1.Buffer Buffer) {
+			int Position = Buffer.Decode__Sequence_Start ();
+
+			Buffer.Decode__OIDRef  (Type, 0, -1);
+			Buffer.Debug ("Type");
+
+			Buffer.Decode__Object (Value, 0, -1);
+			Buffer.Debug ("Value");
+			Buffer.Decode__Sequence_End (Position);
+            }
+			*/
 
 		}
 
@@ -1875,6 +2227,34 @@ namespace Goedel.Cryptography.PKIX {
 
 			Buffer.Encode__PrintableString  (PrintableString, 4, -1);
             }
+
+			/*
+		/// <summary>
+		/// Decode buffer to populate class members
+		///
+		/// This is done in the forward direction
+		/// </summary>
+        public override void Decode (Goedel.ASN1.Buffer Buffer) {
+			int Position = Buffer.Decode__Sequence_Start ();
+
+	// Do Choice
+            //
+
+			Buffer.Encode__IA5String  (IA5String, 4, -1);
+            //
+
+			Buffer.Encode__BMPString  (BMPString, 4, -1);
+            //
+
+			Buffer.Encode__UTF8String  (UTF8String, 4, -1);
+            //
+
+			Buffer.Encode__PrintableString  (PrintableString, 4, -1);
+			Buffer.Debug ("Value");
+			Buffer.Decode__Sequence_End (Position);
+            }
+			*/
+
 		}
 
     /// <summary>
@@ -1883,17 +2263,17 @@ namespace Goedel.Cryptography.PKIX {
 	public partial class CertificationRequest : Goedel.ASN1.Root {
 
 		/// <summary>
-		/// ASN.1 member Signature 
+		/// ASN.1 member CertificationRequestInfo 
 		/// </summary>
-		public byte []  Signature ;
+		public Goedel.Cryptography.PKIX.CertificationRequestInfo CertificationRequestInfo ;
 		/// <summary>
 		/// ASN.1 member SignatureAlgorithm 
 		/// </summary>
 		public Goedel.Cryptography.PKIX.AlgorithmIdentifier SignatureAlgorithm ;
 		/// <summary>
-		/// ASN.1 member CertificationRequestInfo 
+		/// ASN.1 member Signature 
 		/// </summary>
-		public Goedel.Cryptography.PKIX.CertificationRequestInfo CertificationRequestInfo ;
+		public byte []  Signature ;
 
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
@@ -1915,6 +2295,27 @@ namespace Goedel.Cryptography.PKIX {
 			Buffer.Encode__Sequence_End (Position);
             }
 
+			/*
+		/// <summary>
+		/// Decode buffer to populate class members
+		///
+		/// This is done in the forward direction
+		/// </summary>
+        public override void Decode (Goedel.ASN1.Buffer Buffer) {
+			int Position = Buffer.Decode__Sequence_Start ();
+
+			Buffer.Decode__Object (CertificationRequestInfo, 0, -1);
+			Buffer.Debug ("CertificationRequestInfo");
+
+			Buffer.Decode__Object (SignatureAlgorithm, 0, -1);
+			Buffer.Debug ("SignatureAlgorithm");
+
+			Buffer.Decode__Bits  (Signature, 0, -1);
+			Buffer.Debug ("Signature");
+			Buffer.Decode__Sequence_End (Position);
+            }
+			*/
+
 		}
     /// <summary>
 	/// CertificationRequestInfo 
@@ -1922,21 +2323,21 @@ namespace Goedel.Cryptography.PKIX {
 	public partial class CertificationRequestInfo : Goedel.ASN1.Root {
 
 		/// <summary>
-		/// ASN.1 member Attributes 
+		/// ASN.1 member Version 
 		/// </summary>
-		public List <Goedel.Cryptography.PKIX.AttributeTypeValues > Attributes ;
-		/// <summary>
-		/// ASN.1 member SubjectPublicKeyInfo 
-		/// </summary>
-		public Goedel.Cryptography.PKIX.SubjectPublicKeyInfo SubjectPublicKeyInfo ;
+		public int  Version ;
 		/// <summary>
 		/// ASN.1 member Subject 
 		/// </summary>
 		public List <Goedel.Cryptography.PKIX.Name > Subject ;
 		/// <summary>
-		/// ASN.1 member Version 
+		/// ASN.1 member SubjectPublicKeyInfo 
 		/// </summary>
-		public int  Version ;
+		public Goedel.Cryptography.PKIX.SubjectPublicKeyInfo SubjectPublicKeyInfo ;
+		/// <summary>
+		/// ASN.1 member Attributes 
+		/// </summary>
+		public List <Goedel.Cryptography.PKIX.AttributeTypeValues > Attributes ;
 
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
@@ -1981,6 +2382,50 @@ namespace Goedel.Cryptography.PKIX {
 			Buffer.Encode__Sequence_End (Position);
             }
 
+			/*
+		/// <summary>
+		/// Decode buffer to populate class members
+		///
+		/// This is done in the forward direction
+		/// </summary>
+        public override void Decode (Goedel.ASN1.Buffer Buffer) {
+			int Position = Buffer.Decode__Sequence_Start ();
+
+			Buffer.Encode__Integer  (Version, 0, -1);
+			Buffer.Debug ("Version");
+
+			if (Subject == null || Subject.Count == 0) {
+				Buffer.Decode__Object (null, 0, -1);
+				}
+			else {
+				int XPosition = Buffer.Decode__Sequence_Start();
+				foreach (Goedel.Cryptography.PKIX.Name  _Index in Subject) {
+		
+			Buffer.Encode__Object (_Index, 0, 0);
+					}
+				Buffer.Decode__Sequence_End(XPosition, 0, -1);
+			}
+			Buffer.Debug ("Subject");
+
+			Buffer.Decode__Object (SubjectPublicKeyInfo, 0, -1);
+			Buffer.Debug ("SubjectPublicKeyInfo");
+
+			if (Attributes == null || Attributes.Count == 0) {
+				Buffer.Decode__Object (null, 1, 0);
+				}
+			else {
+				int XPosition = Buffer.Decode__Sequence_Start();
+				foreach (Goedel.Cryptography.PKIX.AttributeTypeValues  _Index in Attributes) {
+		
+			Buffer.Encode__Object (_Index, 0, 0);
+					}
+				Buffer.Decode__Sequence_End(XPosition, 1, 0);
+			}
+			Buffer.Debug ("Attributes");
+			Buffer.Decode__Sequence_End (Position);
+            }
+			*/
+
 		}
     /// <summary>
 	/// AttributeTypeValues 
@@ -1988,13 +2433,13 @@ namespace Goedel.Cryptography.PKIX {
 	public partial class AttributeTypeValues : Goedel.ASN1.Root {
 
 		/// <summary>
-		/// ASN.1 member Value 
-		/// </summary>
-		public List <byte []  > Value ;
-		/// <summary>
 		/// ASN.1 member Type 
 		/// </summary>
 		public int []  Type ;
+		/// <summary>
+		/// ASN.1 member Value 
+		/// </summary>
+		public List <byte []  > Value ;
 
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
@@ -2023,6 +2468,34 @@ namespace Goedel.Cryptography.PKIX {
 			Buffer.Encode__Sequence_End (Position);
             }
 
+			/*
+		/// <summary>
+		/// Decode buffer to populate class members
+		///
+		/// This is done in the forward direction
+		/// </summary>
+        public override void Decode (Goedel.ASN1.Buffer Buffer) {
+			int Position = Buffer.Decode__Sequence_Start ();
+
+			Buffer.Decode__OIDRef  (Type, 0, -1);
+			Buffer.Debug ("Type");
+
+			if (Value == null || Value.Count == 0) {
+				Buffer.Decode__Object (null, 0, -1);
+				}
+			else {
+				int XPosition = Decode.Encode__Set_Start();
+				foreach (byte []   _Index in Value) {
+		
+			Buffer.Encode__Any  (_Index, 0, 0);
+					}
+				Buffer.Decode__Set_End(XPosition, 0, -1);
+			}
+			Buffer.Debug ("Value");
+			Buffer.Decode__Sequence_End (Position);
+            }
+			*/
+
 		}
     /// <summary>
 	/// RSAPublicKey 
@@ -2030,13 +2503,13 @@ namespace Goedel.Cryptography.PKIX {
 	public partial class RSAPublicKey : Goedel.ASN1.Root {
 
 		/// <summary>
-		/// ASN.1 member PublicExponent 
-		/// </summary>
-		public byte []  PublicExponent ;
-		/// <summary>
 		/// ASN.1 member Modulus 
 		/// </summary>
 		public byte []  Modulus ;
+		/// <summary>
+		/// ASN.1 member PublicExponent 
+		/// </summary>
+		public byte []  PublicExponent ;
 
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
@@ -2055,6 +2528,24 @@ namespace Goedel.Cryptography.PKIX {
 			Buffer.Encode__Sequence_End (Position);
             }
 
+			/*
+		/// <summary>
+		/// Decode buffer to populate class members
+		///
+		/// This is done in the forward direction
+		/// </summary>
+        public override void Decode (Goedel.ASN1.Buffer Buffer) {
+			int Position = Buffer.Decode__Sequence_Start ();
+
+			Buffer.Decode__BigInteger  (Modulus, 0, -1);
+			Buffer.Debug ("Modulus");
+
+			Buffer.Decode__BigInteger  (PublicExponent, 0, -1);
+			Buffer.Debug ("PublicExponent");
+			Buffer.Decode__Sequence_End (Position);
+            }
+			*/
+
 		}
     /// <summary>
 	/// AuthorityKeyIdentifier 
@@ -2067,17 +2558,17 @@ namespace Goedel.Cryptography.PKIX {
 			get { return Constants.OID__id_ce_authorityKeyIdentifier; } }  
 
 		/// <summary>
-		/// ASN.1 member AuthorityCertSerialNumber 
+		/// ASN.1 member KeyIdentifier 
 		/// </summary>
-		public int  AuthorityCertSerialNumber ;
+		public byte []  KeyIdentifier ;
 		/// <summary>
 		/// ASN.1 member AuthorityCertIssuer 
 		/// </summary>
 		public List <Goedel.Cryptography.PKIX.GeneralName > AuthorityCertIssuer ;
 		/// <summary>
-		/// ASN.1 member KeyIdentifier 
+		/// ASN.1 member AuthorityCertSerialNumber 
 		/// </summary>
-		public byte []  KeyIdentifier ;
+		public int  AuthorityCertSerialNumber ;
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
 		///
@@ -2104,6 +2595,37 @@ namespace Goedel.Cryptography.PKIX {
 			Buffer.Encode__Octets  (KeyIdentifier, 12, 0);
 			Buffer.Encode__Sequence_End (Position);
             }
+
+			/*
+		/// <summary>
+		/// Decode buffer to populate class members
+		///
+		/// This is done in the forward direction
+		/// </summary>
+        public override void Decode (Goedel.ASN1.Buffer Buffer) {
+			int Position = Buffer.Decode__Sequence_Start ();
+
+			Buffer.Decode__Octets  (KeyIdentifier, 12, 0);
+			Buffer.Debug ("KeyIdentifier");
+
+			if (AuthorityCertIssuer == null || AuthorityCertIssuer.Count == 0) {
+				Buffer.Decode__Object (null, 12, 1);
+				}
+			else {
+				int XPosition = Buffer.Decode__Sequence_Start();
+				foreach (Goedel.Cryptography.PKIX.GeneralName  _Index in AuthorityCertIssuer) {
+		
+			Buffer.Encode__Object (_Index, 0, 0);
+					}
+				Buffer.Decode__Sequence_End(XPosition, 12, 1);
+			}
+			Buffer.Debug ("AuthorityCertIssuer");
+
+			Buffer.Encode__Integer  (AuthorityCertSerialNumber, 12, 2);
+			Buffer.Debug ("AuthorityCertSerialNumber");
+			Buffer.Decode__Sequence_End (Position);
+            }
+			*/
 		}
 
 
@@ -2132,6 +2654,22 @@ namespace Goedel.Cryptography.PKIX {
 
 			Buffer.Encode__Octets  (Value, 0, -1);
             }
+
+			/*
+		/// <summary>
+		/// Decode buffer to populate class members
+		///
+		/// This is done in the forward direction
+		/// </summary>
+        public override void Decode (Goedel.ASN1.Buffer Buffer) {
+			int Position = Buffer.Decode__Sequence_Start ();
+
+			Buffer.Decode__Octets  (Value, 0, -1);
+			Buffer.Debug ("Value");
+			Buffer.Decode__Sequence_End (Position);
+            }
+			*/
+
 		}
 
 
@@ -2160,6 +2698,22 @@ namespace Goedel.Cryptography.PKIX {
 
 			Buffer.Encode__VBits  (Value, 0, -1);
             }
+
+			/*
+		/// <summary>
+		/// Decode buffer to populate class members
+		///
+		/// This is done in the forward direction
+		/// </summary>
+        public override void Decode (Goedel.ASN1.Buffer Buffer) {
+			int Position = Buffer.Decode__Sequence_Start ();
+
+			Buffer.Decode__VBits  (Value, 0, -1);
+			Buffer.Debug ("Value");
+			Buffer.Decode__Sequence_End (Position);
+            }
+			*/
+
 		}
 
 
@@ -2198,6 +2752,32 @@ namespace Goedel.Cryptography.PKIX {
 				Buffer.Encode__Sequence_End(XPosition, 0, -1);
 			}
             }
+
+			/*
+		/// <summary>
+		/// Decode buffer to populate class members
+		///
+		/// This is done in the forward direction
+		/// </summary>
+        public override void Decode (Goedel.ASN1.Buffer Buffer) {
+			int Position = Buffer.Decode__Sequence_Start ();
+
+			if (Value == null || Value.Count == 0) {
+				Buffer.Decode__Object (null, 0, -1);
+				}
+			else {
+				int XPosition = Buffer.Decode__Sequence_Start();
+				foreach (Goedel.Cryptography.PKIX.PolicyInformation  _Index in Value) {
+		
+			Buffer.Encode__Object (_Index, 0, 0);
+					}
+				Buffer.Decode__Sequence_End(XPosition, 0, -1);
+			}
+			Buffer.Debug ("Value");
+			Buffer.Decode__Sequence_End (Position);
+            }
+			*/
+
 		}
 
     /// <summary>
@@ -2206,13 +2786,13 @@ namespace Goedel.Cryptography.PKIX {
 	public partial class PolicyInformation : Goedel.ASN1.Root {
 
 		/// <summary>
-		/// ASN.1 member PolicyQualifiers 
-		/// </summary>
-		public List <Goedel.Cryptography.PKIX.PolicyQualifierInfo > PolicyQualifiers ;
-		/// <summary>
 		/// ASN.1 member PolicyIdentifier 
 		/// </summary>
 		public int []  PolicyIdentifier ;
+		/// <summary>
+		/// ASN.1 member PolicyQualifiers 
+		/// </summary>
+		public List <Goedel.Cryptography.PKIX.PolicyQualifierInfo > PolicyQualifiers ;
 
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
@@ -2241,6 +2821,34 @@ namespace Goedel.Cryptography.PKIX {
 			Buffer.Encode__Sequence_End (Position);
             }
 
+			/*
+		/// <summary>
+		/// Decode buffer to populate class members
+		///
+		/// This is done in the forward direction
+		/// </summary>
+        public override void Decode (Goedel.ASN1.Buffer Buffer) {
+			int Position = Buffer.Decode__Sequence_Start ();
+
+			Buffer.Decode__OIDRef  (PolicyIdentifier, 0, -1);
+			Buffer.Debug ("PolicyIdentifier");
+
+			if (PolicyQualifiers == null || PolicyQualifiers.Count == 0) {
+				Buffer.Decode__Object (null, 4, -1);
+				}
+			else {
+				int XPosition = Buffer.Decode__Sequence_Start();
+				foreach (Goedel.Cryptography.PKIX.PolicyQualifierInfo  _Index in PolicyQualifiers) {
+		
+			Buffer.Encode__Object (_Index, 0, 0);
+					}
+				Buffer.Decode__Sequence_End(XPosition, 4, -1);
+			}
+			Buffer.Debug ("PolicyQualifiers");
+			Buffer.Decode__Sequence_End (Position);
+            }
+			*/
+
 		}
     /// <summary>
 	/// PolicyQualifierInfo 
@@ -2248,13 +2856,13 @@ namespace Goedel.Cryptography.PKIX {
 	public partial class PolicyQualifierInfo : Goedel.ASN1.Root {
 
 		/// <summary>
-		/// ASN.1 member Qualifier 
-		/// </summary>
-		public byte []  Qualifier ;
-		/// <summary>
 		/// ASN.1 member PolicyQualifierId 
 		/// </summary>
 		public int []  PolicyQualifierId ;
+		/// <summary>
+		/// ASN.1 member Qualifier 
+		/// </summary>
+		public byte []  Qualifier ;
 
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
@@ -2272,6 +2880,24 @@ namespace Goedel.Cryptography.PKIX {
 			Buffer.Debug ("PolicyQualifierId");
 			Buffer.Encode__Sequence_End (Position);
             }
+
+			/*
+		/// <summary>
+		/// Decode buffer to populate class members
+		///
+		/// This is done in the forward direction
+		/// </summary>
+        public override void Decode (Goedel.ASN1.Buffer Buffer) {
+			int Position = Buffer.Decode__Sequence_Start ();
+
+			Buffer.Decode__OIDRef  (PolicyQualifierId, 0, -1);
+			Buffer.Debug ("PolicyQualifierId");
+
+			Buffer.Decode__Any  (Qualifier, 0, -1);
+			Buffer.Debug ("Qualifier");
+			Buffer.Decode__Sequence_End (Position);
+            }
+			*/
 
 		}
 
@@ -2310,6 +2936,32 @@ namespace Goedel.Cryptography.PKIX {
 				Buffer.Encode__Sequence_End(XPosition, 0, -1);
 			}
             }
+
+			/*
+		/// <summary>
+		/// Decode buffer to populate class members
+		///
+		/// This is done in the forward direction
+		/// </summary>
+        public override void Decode (Goedel.ASN1.Buffer Buffer) {
+			int Position = Buffer.Decode__Sequence_Start ();
+
+			if (Names == null || Names.Count == 0) {
+				Buffer.Decode__Object (null, 0, -1);
+				}
+			else {
+				int XPosition = Buffer.Decode__Sequence_Start();
+				foreach (Goedel.Cryptography.PKIX.GeneralName  _Index in Names) {
+		
+			Buffer.Encode__Object (_Index, 0, 0);
+					}
+				Buffer.Decode__Sequence_End(XPosition, 0, -1);
+			}
+			Buffer.Debug ("Names");
+			Buffer.Decode__Sequence_End (Position);
+            }
+			*/
+
 		}
 
 
@@ -2325,13 +2977,13 @@ namespace Goedel.Cryptography.PKIX {
 			get { return Constants.OID__id_ce_subjectAltName; } }  
 
 		/// <summary>
-		/// ASN.1 member DNSName 
-		/// </summary>
-		public string DNSName ;
-		/// <summary>
 		/// ASN.1 member RFC822Name 
 		/// </summary>
 		public string RFC822Name ;
+		/// <summary>
+		/// ASN.1 member DNSName 
+		/// </summary>
+		public string DNSName ;
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
 		///
@@ -2344,6 +2996,25 @@ namespace Goedel.Cryptography.PKIX {
 
 			Buffer.Encode__IA5String  (RFC822Name, 12, 1);
             }
+
+			/*
+		/// <summary>
+		/// Decode buffer to populate class members
+		///
+		/// This is done in the forward direction
+		/// </summary>
+        public override void Decode (Goedel.ASN1.Buffer Buffer) {
+			int Position = Buffer.Decode__Sequence_Start ();
+
+			Buffer.Decode__IA5String  (RFC822Name, 12, 1);
+			Buffer.Debug ("RFC822Name");
+
+			Buffer.Decode__IA5String  (DNSName, 12, 2);
+			Buffer.Debug ("DNSName");
+			Buffer.Decode__Sequence_End (Position);
+            }
+			*/
+
 		}
 
     /// <summary>
@@ -2357,13 +3028,13 @@ namespace Goedel.Cryptography.PKIX {
 			get { return Constants.OID__id_ce_basicConstraints; } }  
 
 		/// <summary>
-		/// ASN.1 member PathLenConstraint 
-		/// </summary>
-		public int  PathLenConstraint ;
-		/// <summary>
 		/// ASN.1 member CA 
 		/// </summary>
 		public bool  CA ;
+		/// <summary>
+		/// ASN.1 member PathLenConstraint 
+		/// </summary>
+		public int  PathLenConstraint ;
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
 		///
@@ -2381,6 +3052,27 @@ namespace Goedel.Cryptography.PKIX {
 				}
 			Buffer.Encode__Sequence_End (Position);
             }
+
+			/*
+		/// <summary>
+		/// Decode buffer to populate class members
+		///
+		/// This is done in the forward direction
+		/// </summary>
+        public override void Decode (Goedel.ASN1.Buffer Buffer) {
+			int Position = Buffer.Decode__Sequence_Start ();
+
+			// Default is false
+			if (CA != false) {
+				Buffer.Decode__Boolean (CA, 0, -1);
+				}
+			Buffer.Debug ("CA");
+
+			Buffer.Encode__Integer  (PathLenConstraint, 4, -1);
+			Buffer.Debug ("PathLenConstraint");
+			Buffer.Decode__Sequence_End (Position);
+            }
+			*/
 		}
 
     /// <summary>
@@ -2394,13 +3086,13 @@ namespace Goedel.Cryptography.PKIX {
 			get { return Constants.OID__id_ce_nameConstraints; } }  
 
 		/// <summary>
-		/// ASN.1 member ExcludedSubtrees 
-		/// </summary>
-		public Goedel.Cryptography.PKIX.GeneralSubtrees ExcludedSubtrees ;
-		/// <summary>
 		/// ASN.1 member PermittedSubtrees 
 		/// </summary>
 		public Goedel.Cryptography.PKIX.GeneralSubtrees PermittedSubtrees ;
+		/// <summary>
+		/// ASN.1 member ExcludedSubtrees 
+		/// </summary>
+		public Goedel.Cryptography.PKIX.GeneralSubtrees ExcludedSubtrees ;
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
 		///
@@ -2415,6 +3107,24 @@ namespace Goedel.Cryptography.PKIX {
 			Buffer.Encode__Object (PermittedSubtrees, 0, 0);
 			Buffer.Encode__Sequence_End (Position);
             }
+
+			/*
+		/// <summary>
+		/// Decode buffer to populate class members
+		///
+		/// This is done in the forward direction
+		/// </summary>
+        public override void Decode (Goedel.ASN1.Buffer Buffer) {
+			int Position = Buffer.Decode__Sequence_Start ();
+
+			Buffer.Decode__Object (PermittedSubtrees, 0, 0);
+			Buffer.Debug ("PermittedSubtrees");
+
+			Buffer.Decode__Object (ExcludedSubtrees, 0, 1);
+			Buffer.Debug ("ExcludedSubtrees");
+			Buffer.Decode__Sequence_End (Position);
+            }
+			*/
 		}
 
     /// <summary>
@@ -2423,17 +3133,17 @@ namespace Goedel.Cryptography.PKIX {
 	public partial class GeneralSubtrees : Goedel.ASN1.Root {
 
 		/// <summary>
-		/// ASN.1 member Maximum 
+		/// ASN.1 member Base 
 		/// </summary>
-		public int  Maximum ;
+		public Goedel.Cryptography.PKIX.GeneralName Base ;
 		/// <summary>
 		/// ASN.1 member Minimum 
 		/// </summary>
 		public int  Minimum ;
 		/// <summary>
-		/// ASN.1 member Base 
+		/// ASN.1 member Maximum 
 		/// </summary>
-		public Goedel.Cryptography.PKIX.GeneralName Base ;
+		public int  Maximum ;
 
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
@@ -2454,6 +3164,27 @@ namespace Goedel.Cryptography.PKIX {
 			Buffer.Debug ("Base");
 			Buffer.Encode__Sequence_End (Position);
             }
+
+			/*
+		/// <summary>
+		/// Decode buffer to populate class members
+		///
+		/// This is done in the forward direction
+		/// </summary>
+        public override void Decode (Goedel.ASN1.Buffer Buffer) {
+			int Position = Buffer.Decode__Sequence_Start ();
+
+			Buffer.Decode__Object (Base, 0, -1);
+			Buffer.Debug ("Base");
+
+			Buffer.Encode__Integer  (Minimum, 0, 0);
+			Buffer.Debug ("Minimum");
+
+			Buffer.Encode__Integer  (Maximum, 0, 1);
+			Buffer.Debug ("Maximum");
+			Buffer.Decode__Sequence_End (Position);
+            }
+			*/
 
 		}
 
@@ -2492,6 +3223,32 @@ namespace Goedel.Cryptography.PKIX {
 				Buffer.Encode__Sequence_End(XPosition, 0, -1);
 			}
             }
+
+			/*
+		/// <summary>
+		/// Decode buffer to populate class members
+		///
+		/// This is done in the forward direction
+		/// </summary>
+        public override void Decode (Goedel.ASN1.Buffer Buffer) {
+			int Position = Buffer.Decode__Sequence_Start ();
+
+			if (KeyPurpose == null || KeyPurpose.Count == 0) {
+				Buffer.Decode__Object (null, 0, -1);
+				}
+			else {
+				int XPosition = Buffer.Decode__Sequence_Start();
+				foreach (int []   _Index in KeyPurpose) {
+		
+			Buffer.Encode__OIDRef  (_Index, 0, 0);
+					}
+				Buffer.Decode__Sequence_End(XPosition, 0, -1);
+			}
+			Buffer.Debug ("KeyPurpose");
+			Buffer.Decode__Sequence_End (Position);
+            }
+			*/
+
 		}
 
     /// <summary>
@@ -2500,17 +3257,17 @@ namespace Goedel.Cryptography.PKIX {
 	public partial class PFX : Goedel.ASN1.Root {
 
 		/// <summary>
-		/// ASN.1 member MacData 
+		/// ASN.1 member Version 
 		/// </summary>
-		public Goedel.Cryptography.PKIX.MacData MacData ;
+		public int  Version ;
 		/// <summary>
 		/// ASN.1 member AuthSafe 
 		/// </summary>
 		public Goedel.Cryptography.PKIX.ContentInfo AuthSafe ;
 		/// <summary>
-		/// ASN.1 member Version 
+		/// ASN.1 member MacData 
 		/// </summary>
-		public int  Version ;
+		public Goedel.Cryptography.PKIX.MacData MacData ;
 
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
@@ -2532,6 +3289,27 @@ namespace Goedel.Cryptography.PKIX {
 			Buffer.Encode__Sequence_End (Position);
             }
 
+			/*
+		/// <summary>
+		/// Decode buffer to populate class members
+		///
+		/// This is done in the forward direction
+		/// </summary>
+        public override void Decode (Goedel.ASN1.Buffer Buffer) {
+			int Position = Buffer.Decode__Sequence_Start ();
+
+			Buffer.Encode__Integer  (Version, 0, -1);
+			Buffer.Debug ("Version");
+
+			Buffer.Decode__Object (AuthSafe, 0, -1);
+			Buffer.Debug ("AuthSafe");
+
+			Buffer.Decode__Object (MacData, 4, -1);
+			Buffer.Debug ("MacData");
+			Buffer.Decode__Sequence_End (Position);
+            }
+			*/
+
 		}
     /// <summary>
 	/// ContentInfo 
@@ -2539,13 +3317,13 @@ namespace Goedel.Cryptography.PKIX {
 	public partial class ContentInfo : Goedel.ASN1.Root {
 
 		/// <summary>
-		/// ASN.1 member Content 
-		/// </summary>
-		public byte []  Content ;
-		/// <summary>
 		/// ASN.1 member ContentType 
 		/// </summary>
 		public int []  ContentType ;
+		/// <summary>
+		/// ASN.1 member Content 
+		/// </summary>
+		public byte []  Content ;
 
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
@@ -2564,6 +3342,24 @@ namespace Goedel.Cryptography.PKIX {
 			Buffer.Encode__Sequence_End (Position);
             }
 
+			/*
+		/// <summary>
+		/// Decode buffer to populate class members
+		///
+		/// This is done in the forward direction
+		/// </summary>
+        public override void Decode (Goedel.ASN1.Buffer Buffer) {
+			int Position = Buffer.Decode__Sequence_Start ();
+
+			Buffer.Decode__OIDRef  (ContentType, 0, -1);
+			Buffer.Debug ("ContentType");
+
+			Buffer.Decode__Any  (Content, 2, 0);
+			Buffer.Debug ("Content");
+			Buffer.Decode__Sequence_End (Position);
+            }
+			*/
+
 		}
     /// <summary>
 	/// MacData 
@@ -2571,17 +3367,17 @@ namespace Goedel.Cryptography.PKIX {
 	public partial class MacData : Goedel.ASN1.Root {
 
 		/// <summary>
-		/// ASN.1 member Iterations 
+		/// ASN.1 member MAC 
 		/// </summary>
-		public int  Iterations ;
+		public Goedel.Cryptography.PKIX.DigestInfo MAC ;
 		/// <summary>
 		/// ASN.1 member MacSalt 
 		/// </summary>
 		public byte []  MacSalt ;
 		/// <summary>
-		/// ASN.1 member MAC 
+		/// ASN.1 member Iterations 
 		/// </summary>
-		public Goedel.Cryptography.PKIX.DigestInfo MAC ;
+		public int  Iterations ;
 
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
@@ -2606,6 +3402,30 @@ namespace Goedel.Cryptography.PKIX {
 			Buffer.Encode__Sequence_End (Position);
             }
 
+			/*
+		/// <summary>
+		/// Decode buffer to populate class members
+		///
+		/// This is done in the forward direction
+		/// </summary>
+        public override void Decode (Goedel.ASN1.Buffer Buffer) {
+			int Position = Buffer.Decode__Sequence_Start ();
+
+			Buffer.Decode__Object (MAC, 0, -1);
+			Buffer.Debug ("MAC");
+
+			Buffer.Decode__Octets  (MacSalt, 0, -1);
+			Buffer.Debug ("MacSalt");
+
+			// Default is 1
+			if (Iterations != 1) {
+				Buffer.Decode__Integer (Iterations, 0, -1);
+				}
+			Buffer.Debug ("Iterations");
+			Buffer.Decode__Sequence_End (Position);
+            }
+			*/
+
 		}
     /// <summary>
 	/// EncryptedData 
@@ -2613,13 +3433,13 @@ namespace Goedel.Cryptography.PKIX {
 	public partial class EncryptedData : Goedel.ASN1.Root {
 
 		/// <summary>
-		/// ASN.1 member EncryptedContent 
-		/// </summary>
-		public Goedel.Cryptography.PKIX.EncryptedContentInfo EncryptedContent ;
-		/// <summary>
 		/// ASN.1 member Version 
 		/// </summary>
 		public int  Version ;
+		/// <summary>
+		/// ASN.1 member EncryptedContent 
+		/// </summary>
+		public Goedel.Cryptography.PKIX.EncryptedContentInfo EncryptedContent ;
 
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
@@ -2638,6 +3458,24 @@ namespace Goedel.Cryptography.PKIX {
 			Buffer.Encode__Sequence_End (Position);
             }
 
+			/*
+		/// <summary>
+		/// Decode buffer to populate class members
+		///
+		/// This is done in the forward direction
+		/// </summary>
+        public override void Decode (Goedel.ASN1.Buffer Buffer) {
+			int Position = Buffer.Decode__Sequence_Start ();
+
+			Buffer.Encode__Integer  (Version, 0, -1);
+			Buffer.Debug ("Version");
+
+			Buffer.Decode__Object (EncryptedContent, 0, -1);
+			Buffer.Debug ("EncryptedContent");
+			Buffer.Decode__Sequence_End (Position);
+            }
+			*/
+
 		}
     /// <summary>
 	/// EncryptedContentInfo 
@@ -2645,17 +3483,17 @@ namespace Goedel.Cryptography.PKIX {
 	public partial class EncryptedContentInfo : Goedel.ASN1.Root {
 
 		/// <summary>
-		/// ASN.1 member EncryptedContent 
+		/// ASN.1 member ContentType 
 		/// </summary>
-		public byte []  EncryptedContent ;
+		public int []  ContentType ;
 		/// <summary>
 		/// ASN.1 member Algorithm 
 		/// </summary>
 		public Goedel.Cryptography.PKIX.AlgorithmIdentifier Algorithm ;
 		/// <summary>
-		/// ASN.1 member ContentType 
+		/// ASN.1 member EncryptedContent 
 		/// </summary>
-		public int []  ContentType ;
+		public byte []  EncryptedContent ;
 
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
@@ -2677,6 +3515,27 @@ namespace Goedel.Cryptography.PKIX {
 			Buffer.Encode__Sequence_End (Position);
             }
 
+			/*
+		/// <summary>
+		/// Decode buffer to populate class members
+		///
+		/// This is done in the forward direction
+		/// </summary>
+        public override void Decode (Goedel.ASN1.Buffer Buffer) {
+			int Position = Buffer.Decode__Sequence_Start ();
+
+			Buffer.Decode__OIDRef  (ContentType, 0, -1);
+			Buffer.Debug ("ContentType");
+
+			Buffer.Decode__Object (Algorithm, 0, -1);
+			Buffer.Debug ("Algorithm");
+
+			Buffer.Decode__Octets  (EncryptedContent, 5, 0);
+			Buffer.Debug ("EncryptedContent");
+			Buffer.Decode__Sequence_End (Position);
+            }
+			*/
+
 		}
     /// <summary>
 	/// EncryptedPrivateKeyInfo 
@@ -2684,13 +3543,13 @@ namespace Goedel.Cryptography.PKIX {
 	public partial class EncryptedPrivateKeyInfo : Goedel.ASN1.Root {
 
 		/// <summary>
-		/// ASN.1 member EncryptedData 
-		/// </summary>
-		public byte []  EncryptedData ;
-		/// <summary>
 		/// ASN.1 member EncryptionAlgorithm 
 		/// </summary>
 		public Goedel.Cryptography.PKIX.AlgorithmIdentifier EncryptionAlgorithm ;
+		/// <summary>
+		/// ASN.1 member EncryptedData 
+		/// </summary>
+		public byte []  EncryptedData ;
 
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
@@ -2709,6 +3568,24 @@ namespace Goedel.Cryptography.PKIX {
 			Buffer.Encode__Sequence_End (Position);
             }
 
+			/*
+		/// <summary>
+		/// Decode buffer to populate class members
+		///
+		/// This is done in the forward direction
+		/// </summary>
+        public override void Decode (Goedel.ASN1.Buffer Buffer) {
+			int Position = Buffer.Decode__Sequence_Start ();
+
+			Buffer.Decode__Object (EncryptionAlgorithm, 0, -1);
+			Buffer.Debug ("EncryptionAlgorithm");
+
+			Buffer.Decode__Octets  (EncryptedData, 0, -1);
+			Buffer.Debug ("EncryptedData");
+			Buffer.Decode__Sequence_End (Position);
+            }
+			*/
+
 		}
     /// <summary>
 	/// PrivateKeyInfo 
@@ -2716,21 +3593,21 @@ namespace Goedel.Cryptography.PKIX {
 	public partial class PrivateKeyInfo : Goedel.ASN1.Root {
 
 		/// <summary>
-		/// ASN.1 member Attributes 
+		/// ASN.1 member Version 
 		/// </summary>
-		public List <Goedel.Cryptography.PKIX.AttributeTypeValues > Attributes ;
-		/// <summary>
-		/// ASN.1 member PrivateKey 
-		/// </summary>
-		public byte []  PrivateKey ;
+		public int  Version ;
 		/// <summary>
 		/// ASN.1 member PrivateKeyAlgorithm 
 		/// </summary>
 		public Goedel.Cryptography.PKIX.AlgorithmIdentifier PrivateKeyAlgorithm ;
 		/// <summary>
-		/// ASN.1 member Version 
+		/// ASN.1 member PrivateKey 
 		/// </summary>
-		public int  Version ;
+		public byte []  PrivateKey ;
+		/// <summary>
+		/// ASN.1 member Attributes 
+		/// </summary>
+		public List <Goedel.Cryptography.PKIX.AttributeTypeValues > Attributes ;
 
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
@@ -2765,6 +3642,40 @@ namespace Goedel.Cryptography.PKIX {
 			Buffer.Encode__Sequence_End (Position);
             }
 
+			/*
+		/// <summary>
+		/// Decode buffer to populate class members
+		///
+		/// This is done in the forward direction
+		/// </summary>
+        public override void Decode (Goedel.ASN1.Buffer Buffer) {
+			int Position = Buffer.Decode__Sequence_Start ();
+
+			Buffer.Encode__Integer  (Version, 0, -1);
+			Buffer.Debug ("Version");
+
+			Buffer.Decode__Object (PrivateKeyAlgorithm, 0, -1);
+			Buffer.Debug ("PrivateKeyAlgorithm");
+
+			Buffer.Decode__Octets  (PrivateKey, 0, -1);
+			Buffer.Debug ("PrivateKey");
+
+			if (Attributes == null || Attributes.Count == 0) {
+				Buffer.Decode__Object (null, 1, 0);
+				}
+			else {
+				int XPosition = Decode.Encode__Set_Start();
+				foreach (Goedel.Cryptography.PKIX.AttributeTypeValues  _Index in Attributes) {
+		
+			Buffer.Encode__Object (_Index, 0, 0);
+					}
+				Buffer.Decode__Set_End(XPosition, 1, 0);
+			}
+			Buffer.Debug ("Attributes");
+			Buffer.Decode__Sequence_End (Position);
+            }
+			*/
+
 		}
     /// <summary>
 	/// RSAPrivateKey 
@@ -2772,41 +3683,41 @@ namespace Goedel.Cryptography.PKIX {
 	public partial class RSAPrivateKey : Goedel.ASN1.Root {
 
 		/// <summary>
-		/// ASN.1 member Coefficient 
+		/// ASN.1 member Version 
 		/// </summary>
-		public byte []  Coefficient ;
-		/// <summary>
-		/// ASN.1 member Exponent2 
-		/// </summary>
-		public byte []  Exponent2 ;
-		/// <summary>
-		/// ASN.1 member Exponent1 
-		/// </summary>
-		public byte []  Exponent1 ;
-		/// <summary>
-		/// ASN.1 member Prime2 
-		/// </summary>
-		public byte []  Prime2 ;
-		/// <summary>
-		/// ASN.1 member Prime1 
-		/// </summary>
-		public byte []  Prime1 ;
-		/// <summary>
-		/// ASN.1 member PrivateExponent 
-		/// </summary>
-		public byte []  PrivateExponent ;
-		/// <summary>
-		/// ASN.1 member PublicExponent 
-		/// </summary>
-		public byte []  PublicExponent ;
+		public int  Version ;
 		/// <summary>
 		/// ASN.1 member Modulus 
 		/// </summary>
 		public byte []  Modulus ;
 		/// <summary>
-		/// ASN.1 member Version 
+		/// ASN.1 member PublicExponent 
 		/// </summary>
-		public int  Version ;
+		public byte []  PublicExponent ;
+		/// <summary>
+		/// ASN.1 member PrivateExponent 
+		/// </summary>
+		public byte []  PrivateExponent ;
+		/// <summary>
+		/// ASN.1 member Prime1 
+		/// </summary>
+		public byte []  Prime1 ;
+		/// <summary>
+		/// ASN.1 member Prime2 
+		/// </summary>
+		public byte []  Prime2 ;
+		/// <summary>
+		/// ASN.1 member Exponent1 
+		/// </summary>
+		public byte []  Exponent1 ;
+		/// <summary>
+		/// ASN.1 member Exponent2 
+		/// </summary>
+		public byte []  Exponent2 ;
+		/// <summary>
+		/// ASN.1 member Coefficient 
+		/// </summary>
+		public byte []  Coefficient ;
 
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
@@ -2846,6 +3757,45 @@ namespace Goedel.Cryptography.PKIX {
 			Buffer.Encode__Sequence_End (Position);
             }
 
+			/*
+		/// <summary>
+		/// Decode buffer to populate class members
+		///
+		/// This is done in the forward direction
+		/// </summary>
+        public override void Decode (Goedel.ASN1.Buffer Buffer) {
+			int Position = Buffer.Decode__Sequence_Start ();
+
+			Buffer.Encode__Integer  (Version, 0, -1);
+			Buffer.Debug ("Version");
+
+			Buffer.Decode__BigInteger  (Modulus, 0, -1);
+			Buffer.Debug ("Modulus");
+
+			Buffer.Decode__BigInteger  (PublicExponent, 0, -1);
+			Buffer.Debug ("PublicExponent");
+
+			Buffer.Decode__BigInteger  (PrivateExponent, 0, -1);
+			Buffer.Debug ("PrivateExponent");
+
+			Buffer.Decode__BigInteger  (Prime1, 0, -1);
+			Buffer.Debug ("Prime1");
+
+			Buffer.Decode__BigInteger  (Prime2, 0, -1);
+			Buffer.Debug ("Prime2");
+
+			Buffer.Decode__BigInteger  (Exponent1, 0, -1);
+			Buffer.Debug ("Exponent1");
+
+			Buffer.Decode__BigInteger  (Exponent2, 0, -1);
+			Buffer.Debug ("Exponent2");
+
+			Buffer.Decode__BigInteger  (Coefficient, 0, -1);
+			Buffer.Debug ("Coefficient");
+			Buffer.Decode__Sequence_End (Position);
+            }
+			*/
+
 		}
     /// <summary>
 	/// Endorsement 
@@ -2853,17 +3803,17 @@ namespace Goedel.Cryptography.PKIX {
 	public partial class Endorsement : Goedel.ASN1.Root {
 
 		/// <summary>
-		/// ASN.1 member Signature 
+		/// ASN.1 member TBSEndorsement 
 		/// </summary>
-		public byte []  Signature ;
+		public Goedel.Cryptography.PKIX.TBSEndorsement TBSEndorsement ;
 		/// <summary>
 		/// ASN.1 member SignatureAlgorithm 
 		/// </summary>
 		public Goedel.Cryptography.PKIX.AlgorithmIdentifier SignatureAlgorithm ;
 		/// <summary>
-		/// ASN.1 member TBSEndorsement 
+		/// ASN.1 member Signature 
 		/// </summary>
-		public Goedel.Cryptography.PKIX.TBSEndorsement TBSEndorsement ;
+		public byte []  Signature ;
 
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
@@ -2885,6 +3835,27 @@ namespace Goedel.Cryptography.PKIX {
 			Buffer.Encode__Sequence_End (Position);
             }
 
+			/*
+		/// <summary>
+		/// Decode buffer to populate class members
+		///
+		/// This is done in the forward direction
+		/// </summary>
+        public override void Decode (Goedel.ASN1.Buffer Buffer) {
+			int Position = Buffer.Decode__Sequence_Start ();
+
+			Buffer.Decode__Object (TBSEndorsement, 0, -1);
+			Buffer.Debug ("TBSEndorsement");
+
+			Buffer.Decode__Object (SignatureAlgorithm, 0, -1);
+			Buffer.Debug ("SignatureAlgorithm");
+
+			Buffer.Decode__Bits  (Signature, 0, -1);
+			Buffer.Debug ("Signature");
+			Buffer.Decode__Sequence_End (Position);
+            }
+			*/
+
 		}
     /// <summary>
 	/// TBSEndorsement 
@@ -2892,33 +3863,33 @@ namespace Goedel.Cryptography.PKIX {
 	public partial class TBSEndorsement : Goedel.ASN1.Root {
 
 		/// <summary>
-		/// ASN.1 member Extensions 
+		/// ASN.1 member Version 
 		/// </summary>
-		public List <Goedel.Cryptography.PKIX.Extension > Extensions ;
-		/// <summary>
-		/// ASN.1 member SubjectAltName 
-		/// </summary>
-		public List <Goedel.Cryptography.PKIX.SubjectAltName > SubjectAltName ;
-		/// <summary>
-		/// ASN.1 member Subject 
-		/// </summary>
-		public List <Goedel.Cryptography.PKIX.Name > Subject ;
-		/// <summary>
-		/// ASN.1 member SubjectKeyIdentifier 
-		/// </summary>
-		public byte []  SubjectKeyIdentifier ;
-		/// <summary>
-		/// ASN.1 member IssuerKeyIdentifier 
-		/// </summary>
-		public byte []  IssuerKeyIdentifier ;
+		public int  Version ;
 		/// <summary>
 		/// ASN.1 member Issued 
 		/// </summary>
 		public DateTime  Issued ;
 		/// <summary>
-		/// ASN.1 member Version 
+		/// ASN.1 member IssuerKeyIdentifier 
 		/// </summary>
-		public int  Version ;
+		public byte []  IssuerKeyIdentifier ;
+		/// <summary>
+		/// ASN.1 member SubjectKeyIdentifier 
+		/// </summary>
+		public byte []  SubjectKeyIdentifier ;
+		/// <summary>
+		/// ASN.1 member Subject 
+		/// </summary>
+		public List <Goedel.Cryptography.PKIX.Name > Subject ;
+		/// <summary>
+		/// ASN.1 member SubjectAltName 
+		/// </summary>
+		public List <Goedel.Cryptography.PKIX.SubjectAltName > SubjectAltName ;
+		/// <summary>
+		/// ASN.1 member Extensions 
+		/// </summary>
+		public List <Goedel.Cryptography.PKIX.Extension > Extensions ;
 
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
@@ -2981,6 +3952,69 @@ namespace Goedel.Cryptography.PKIX {
 			Buffer.Debug ("Version");
 			Buffer.Encode__Sequence_End (Position);
             }
+
+			/*
+		/// <summary>
+		/// Decode buffer to populate class members
+		///
+		/// This is done in the forward direction
+		/// </summary>
+        public override void Decode (Goedel.ASN1.Buffer Buffer) {
+			int Position = Buffer.Decode__Sequence_Start ();
+
+			Buffer.Encode__Integer  (Version, 0, -1);
+			Buffer.Debug ("Version");
+
+			Buffer.EDecode__Time  (Issued, 0, -1);
+			Buffer.Debug ("Issued");
+
+			Buffer.Decode__Octets  (IssuerKeyIdentifier, 0, -1);
+			Buffer.Debug ("IssuerKeyIdentifier");
+
+			Buffer.Decode__Octets  (SubjectKeyIdentifier, 0, -1);
+			Buffer.Debug ("SubjectKeyIdentifier");
+
+			if (Subject == null || Subject.Count == 0) {
+				Buffer.Decode__Object (null, 0, -1);
+				}
+			else {
+				int XPosition = Buffer.Decode__Sequence_Start();
+				foreach (Goedel.Cryptography.PKIX.Name  _Index in Subject) {
+		
+			Buffer.Encode__Object (_Index, 0, 0);
+					}
+				Buffer.Decode__Sequence_End(XPosition, 0, -1);
+			}
+			Buffer.Debug ("Subject");
+
+			if (SubjectAltName == null || SubjectAltName.Count == 0) {
+				Buffer.Decode__Object (null, 0, -1);
+				}
+			else {
+				int XPosition = Buffer.Decode__Sequence_Start();
+				foreach (Goedel.Cryptography.PKIX.SubjectAltName  _Index in SubjectAltName) {
+		
+			Buffer.Encode__Object (_Index, 0, 0);
+					}
+				Buffer.Decode__Sequence_End(XPosition, 0, -1);
+			}
+			Buffer.Debug ("SubjectAltName");
+
+			if (Extensions == null || Extensions.Count == 0) {
+				Buffer.Decode__Object (null, 0, -1);
+				}
+			else {
+				int XPosition = Buffer.Decode__Sequence_Start();
+				foreach (Goedel.Cryptography.PKIX.Extension  _Index in Extensions) {
+		
+			Buffer.Encode__Object (_Index, 0, 0);
+					}
+				Buffer.Decode__Sequence_End(XPosition, 0, -1);
+			}
+			Buffer.Debug ("Extensions");
+			Buffer.Decode__Sequence_End (Position);
+            }
+			*/
 
 		}
 	}

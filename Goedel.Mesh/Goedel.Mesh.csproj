@@ -40,9 +40,19 @@
     <OutputPath>bin\RaspberryPi\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Goedel.IO">
+      <HintPath>..\..\Library\Goedel.IO.dll</HintPath>
+    </Reference>
+    <Reference Include="Goedel.Protocol, Version=1.0.6128.28622, Culture=neutral, PublicKeyToken=9ac84b9f2535680b, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Library\Goedel.Protocol.dll</HintPath>
+    </Reference>
     <Reference Include="Goedel.Registry, Version=1.0.5856.42846, Culture=neutral, PublicKeyToken=00ce4cbe0647f41a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Goedel.Registry.1.0.5856.42846\lib\net40\Goedel.Registry.dll</HintPath>
-      <Private>True</Private>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Library\Goedel.Registry.dll</HintPath>
+    </Reference>
+    <Reference Include="Goedel.Utilities">
+      <HintPath>..\..\Library\Goedel.Utilities.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -58,11 +68,6 @@
     <Compile Include="ConfigRegistry.cs" />
     <Compile Include="ConnectionRequest.cs" />
     <Compile Include="Constants.cs" />
-    <Compile Include="SchemaMesh.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>SchemaMesh.protocol</DependentUpon>
-    </Compile>
     <Compile Include="Portal.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -72,6 +77,17 @@
     <Compile Include="ProfileDevice.cs" />
     <Compile Include="Escrow.cs" />
     <Compile Include="MailClient.cs" />
+    <Compile Include="ProfileSSH.cs" />
+    <Compile Include="SchemaNetwork.cs">
+      <DependentUpon>SchemaNetwork.protocol</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="SchemaMesh.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SchemaMesh.protocol</DependentUpon>
+    </Compile>
     <Compile Include="SchemaMeshPlus.cs" />
     <Compile Include="ProfileNetwork.cs" />
     <Compile Include="ProfileMaster.cs" />
@@ -82,16 +98,46 @@
     <Compile Include="ProfilePersonal.cs" />
     <Compile Include="Profiles.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SchemaMail.cs">
+      <DependentUpon>SchemaMail.protocol</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="SchemaPassword.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SchemaPassword.protocol</DependentUpon>
+    </Compile>
     <Compile Include="SignProfile.cs" />
+    <Compile Include="SchemaSSH.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SchemaSSH.protocol</DependentUpon>
+    </Compile>
     <Compile Include="WindowsNetworkProfile.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="LibMesh.licenseheader" />
-    <None Include="packages.config" />
     <None Include="Portal.Protocol">
       <Generator>protogen</Generator>
       <LastGenOutput>Portal.cs</LastGenOutput>
+    </None>
+    <None Include="SchemaNetwork.protocol">
+      <Generator>protogen</Generator>
+      <LastGenOutput>SchemaNetwork.cs</LastGenOutput>
+    </None>
+    <None Include="SchemaPassword.protocol">
+      <Generator>protogen</Generator>
+      <LastGenOutput>SchemaPassword.cs</LastGenOutput>
+    </None>
+    <None Include="SchemaMail.protocol">
+      <Generator>protogen</Generator>
+      <LastGenOutput>SchemaMail.cs</LastGenOutput>
+    </None>
+    <None Include="SchemaSSH.protocol">
+      <Generator>protogen</Generator>
+      <LastGenOutput>SchemaSSH.cs</LastGenOutput>
     </None>
     <None Include="SchemaMesh.protocol">
       <Generator>Protogen</Generator>
@@ -114,10 +160,6 @@
     <ProjectReference Include="..\Goedel.Persistence\Goedel.Persistence.csproj">
       <Project>{81e30b95-c59d-4a04-925e-85877fd37fdd}</Project>
       <Name>Goedel.Persistence</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Goedel.Protocol\Goedel.Protocol.csproj">
-      <Project>{24419f2d-f425-4e0f-a0ea-9d3e7a57e12f}</Project>
-      <Name>Goedel.Protocol</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

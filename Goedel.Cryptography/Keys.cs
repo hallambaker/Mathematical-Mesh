@@ -23,7 +23,6 @@ using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using Goedel.Cryptography.PKIX;
-using Goedel.Protocol;
 
 namespace Goedel.Cryptography {
 
@@ -320,9 +319,6 @@ namespace Goedel.Cryptography {
             }
 
 
-        bool _Exportable;
-
-
         /// <summary>
         /// Find a KeyPair with the specified container fingerprint in the local key store.
         /// </summary>
@@ -377,7 +373,6 @@ namespace Goedel.Cryptography {
                 Parameters.Flags = CspProviderFlags.UseNonExportableKey | CspProviderFlags.CreateEphemeralKey;
                 }
             _Provider = new RSACryptoServiceProvider(KeySize, Parameters);
-            _Exportable = Exportable;
             }
 
 
@@ -409,9 +404,12 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Generate a KeyPair from a .NET set of parameters.
         /// </summary>
-        /// <param name="Parameters">The RSA parameters.</param>
-        public RSAKeyPair(RSAParameters Parameters) {
-            _Parameters = Parameters;
+        /// <param name="RSAParameters">The RSA parameters.</param>
+        public RSAKeyPair(RSAParameters RSAParameters) {
+            _Parameters = RSAParameters;
+
+            _Provider = new RSACryptoServiceProvider();
+            _Provider.ImportParameters(RSAParameters);
             }
 
 
@@ -422,7 +420,7 @@ namespace Goedel.Cryptography {
         /// <param name="KeySecurity">Key protection level to be applied.</param>
         public void Persist (KeySecurity KeySecurity) {
 
-            if (Provider == null) throw new Exception ("No provider set");
+            if (Provider == null) throw new System.Exception ("No provider set");
 
             var Parameters = new CspParameters();
             switch (KeySecurity) {

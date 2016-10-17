@@ -51,9 +51,29 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Goedel.Registry, Version=1.0.5856.42846, Culture=neutral, PublicKeyToken=00ce4cbe0647f41a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Goedel.Registry.1.0.5856.42846\lib\net40\Goedel.Registry.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Goedel.Debug2, Version=1.0.6128.30690, Culture=neutral, PublicKeyToken=9ac84b9f2535680b, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Library\Goedel.Debug2.dll</HintPath>
+    </Reference>
+    <Reference Include="Goedel.FSR">
+      <HintPath>..\..\Library\Goedel.FSR.dll</HintPath>
+    </Reference>
+    <Reference Include="Goedel.IO, Version=1.0.6128.30690, Culture=neutral, PublicKeyToken=9ac84b9f2535680b, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Library\Goedel.IO.dll</HintPath>
+    </Reference>
+    <Reference Include="Goedel.Protocol">
+      <HintPath>..\..\Library\Goedel.Protocol.dll</HintPath>
+    </Reference>
+    <Reference Include="Goedel.Protocol.Extended">
+      <HintPath>..\..\Library\Goedel.Protocol.Extended.dll</HintPath>
+    </Reference>
+    <Reference Include="Goedel.Registry">
+      <HintPath>..\..\Library\Goedel.Registry.dll</HintPath>
+    </Reference>
+    <Reference Include="Goedel.Utilities, Version=1.0.6128.30690, Culture=neutral, PublicKeyToken=9ac84b9f2535680b, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Library\Goedel.Utilities.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -71,7 +91,6 @@
   <ItemGroup>
     <None Include="AdminDumpLog.licenseheader" />
     <None Include="App.config" />
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Goedel.Cryptography.Jose\Goedel.Cryptography.Jose.csproj">
@@ -93,10 +112,6 @@
     <ProjectReference Include="..\Goedel.Mesh\Goedel.Mesh.csproj">
       <Project>{0d8dd801-65d2-497c-8379-2d6adf3867c3}</Project>
       <Name>Goedel.Mesh</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Goedel.Protocol\Goedel.Protocol.csproj">
-      <Project>{24419f2d-f425-4e0f-a0ea-9d3e7a57e12f}</Project>
-      <Name>Goedel.Protocol</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

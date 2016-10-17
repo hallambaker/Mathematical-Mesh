@@ -166,7 +166,10 @@ namespace Goedel.Mesh {
         const string PortalType = "application/mesh-portal";
         const string PortalComment = "Persistence store for Mesh Portal";
 
-        string Domain;
+        /// <summary>
+        /// Domain for the store
+        /// </summary>
+        public string Domain;
 
         PersistenceStore PortalStore;
         PersistenceStore MeshStore;
@@ -451,7 +454,7 @@ namespace Goedel.Mesh {
         /// <param name="DeviceUDF">The device that is attempting to connect.</param>
         /// <returns>Status of the pending request.</returns>
         public SignedConnectionResult GetRequestStatus(string AccountId, string DeviceUDF) {
-            var Account = GetAccount(AccountId);
+            //var Account = GetAccount(AccountId);
 
             // Look for a completed notification
             var DataItem = PortalByPrimary.Get(

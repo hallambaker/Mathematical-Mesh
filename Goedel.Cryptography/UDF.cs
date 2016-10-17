@@ -23,7 +23,7 @@ using System;
 using System.Text;
 using System.Collections.Generic;
 using System.Security.Cryptography;
-using Goedel.Protocol;
+using Goedel.Utilities;
 
 namespace Goedel.Cryptography {
     /// <summary>

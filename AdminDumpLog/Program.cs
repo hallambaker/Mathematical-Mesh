@@ -32,7 +32,7 @@ namespace DumpLog {
         static string Store = "MeshPersistenceStore.jlog";
         static string Portal = "PortalPersistenceStore.jlog";
         static void Main(string[] args) {
-            var Program = new Program();
+            //var Program = new Program();
             Console.WriteLine("Persistence Store");
             Console.WriteLine("-----------------");
             Console.WriteLine();

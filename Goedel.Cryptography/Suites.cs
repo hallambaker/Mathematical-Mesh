@@ -113,7 +113,6 @@ namespace Goedel.Cryptography {
     /// Catalog of CryptoSuite objects indexed by JSON algorithm identifier.
     /// </summary>
     public class CryptoSuites {
-        CryptoCatalog CryptoCatalog;
         Dictionary<string, CryptoSuite> ByName = new Dictionary<string,CryptoSuite> ();
 
         static CryptoSuites _Default;
@@ -140,7 +139,6 @@ namespace Goedel.Cryptography {
         /// <param name="CryptoCatalog">Catalog of cryptographic algorithms to use.</param>
         /// <param name="Defaults">If tru, prefills catalog with defined algorithms.</param>
         public CryptoSuites(CryptoCatalog CryptoCatalog, bool Defaults) {
-            this.CryptoCatalog = CryptoCatalog;
 
             if (Defaults) {
 

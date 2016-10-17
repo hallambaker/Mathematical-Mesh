@@ -36,8 +36,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Goedel.Registry, Version=1.0.5856.42846, Culture=neutral, PublicKeyToken=00ce4cbe0647f41a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Goedel.Registry.1.0.5856.42846\lib\net40\Goedel.Registry.dll</HintPath>
-      <Private>True</Private>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Library\Goedel.Registry.dll</HintPath>
+    </Reference>
+    <Reference Include="Goedel.Utilities, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Library\Goedel.Utilities.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -53,6 +57,7 @@
     <Compile Include="Bulk.cs" />
     <Compile Include="Certificate.cs" />
     <Compile Include="CryptoData.cs" />
+    <Compile Include="DecodeBuffer.cs" />
     <Compile Include="Digest.cs" />
     <Compile Include="Authentication.cs" />
     <Compile Include="Encryption.cs" />
@@ -60,11 +65,8 @@
     <Compile Include="KeyLocate.cs" />
     <Compile Include="Keys.cs" />
     <Compile Include="KeyShare.cs" />
-    <Compile Include="PKIX.cs">
-      <DependentUpon>PKIX.asn2</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
+    <Compile Include="PKIX.cs" />
+    <Compile Include="RSAPrivateKey.cs" />
     <Compile Include="PKIXConstants.cs" />
     <Compile Include="PKIXName.cs" />
     <Compile Include="Signature.cs" />
@@ -78,21 +80,14 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="LibCrypto.licenseheader" />
-    <None Include="packages.config" />
-    <None Include="PKIX.asn2">
-      <Generator>ASN2CS</Generator>
-      <LastGenOutput>PKIX.cs</LastGenOutput>
-    </None>
+    <None Include="Makefile" />
+    <None Include="PKIX.asn2" />
     <None Include="ToDo.md" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Goedel.Debug\Goedel.Debug.csproj">
       <Project>{a8090b80-d658-45f6-bda1-4f9dfd2b976f}</Project>
       <Name>Goedel.Debug</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Goedel.Protocol\Goedel.Protocol.csproj">
-      <Project>{24419f2d-f425-4e0f-a0ea-9d3e7a57e12f}</Project>
-      <Name>Goedel.Protocol</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

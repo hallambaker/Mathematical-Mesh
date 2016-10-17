@@ -447,7 +447,6 @@ namespace Goedel.Cryptography {
         /// <param name="ID">Algorithm identifier</param>
         /// <returns>Cryptographic provider if found or null otherwise.</returns>
         public CryptoProviderEncryption GetEncryption(CryptoAlgorithmID ID) {
-            var Result = Get(ID);
             return Get(OrDefault(ID, AlgorithmEncryption)) as CryptoProviderEncryption;
             }
 

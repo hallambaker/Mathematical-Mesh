@@ -1,4 +1,4 @@
-﻿Namespace Goedel.LibCrypto.PKIX
+﻿Namespace Goedel.Cryptography.PKIX
 
 // The X.509 and PKIX parameters.
 ROOT id_pkix

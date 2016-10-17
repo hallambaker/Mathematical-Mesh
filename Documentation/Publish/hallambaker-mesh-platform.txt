@@ -1,0 +1,405 @@
+Internet Engineering Task Force (IETF)             Phillip Hallam-Baker 
+INTERNET-DRAFT                                        Comodo Group Inc. 
+Intended Status: Standards Track                      September 19, 2016
+Expires: March 23, 2017
+
+
+               Mathematical Mesh: Platform Configuration
+                   draft-hallambaker-mesh-platform-00
+
+Abstract
+
+   The Mathematical Mesh 'The Mesh' is an end-to-end secure 
+   infrastructure that facilitates the exchange of configuration and 
+   credential data between multiple user devices. This document 
+   describes how Mesh profiles are stored for application access on 
+   Windows, Linux and OSX platforms.
+
+Status of This Memo
+
+   This Internet-Draft is submitted in full conformance with the 
+   provisions of BCP 78 and BCP 79.
+
+   Internet-Drafts are working documents of the Internet Engineering 
+   Task Force (IETF).  Note that other groups may also distribute 
+   working documents as Internet-Drafts.  The list of current Internet-
+   Drafts is at http://datatracker.ietf.org/drafts/current/.
+
+   Internet-Drafts are draft documents valid for a maximum of six months
+   and may be updated, replaced, or obsoleted by other documents at any 
+   time.  It is inappropriate to use Internet-Drafts as reference 
+   material or to cite them other than as "work in progress."
+
+Copyright Notice
+
+   Copyright (c) 2016 IETF Trust and the persons identified as the 
+   document authors.  All rights reserved.
+
+   This document is subject to BCP 78 and the IETF Trust's Legal 
+   Provisions Relating to IETF Documents 
+   (http://trustee.ietf.org/license-info) in effect on the date of 
+   publication of this document. Please review these documents 
+   carefully, as they describe your rights and restrictions with respect
+   to this document. Code Components extracted from this document must 
+   include Simplified BSD License text as described in Section 4.e of 
+   the Trust Legal Provisions and are provided without warranty as 
+   described in the Simplified BSD License.
+
+
+
+
+
+
+
+
+
+
+                         Expires March 23, 2017                 [Page 1]
+
+Internet-Draft  Mathematical Mesh Platform Configuration  September 2016
+
+Table of Contents
+
+   1.  Definitions  . . . . . . . . . . . . . . . . . . . . . . . . .  3
+      1.1.  Requirements Language . . . . . . . . . . . . . . . . . .  3
+   2.  Configuration Scope  . . . . . . . . . . . . . . . . . . . . .  3
+   3.  Windows Platform Configuration . . . . . . . . . . . . . . . .  3
+      3.1.  Registry Key Entries  . . . . . . . . . . . . . . . . . .  3
+      3.2.  Data File Locations . . . . . . . . . . . . . . . . . . .  4
+      3.3.  Key Store Entries . . . . . . . . . . . . . . . . . . . .  4
+      3.4.  Profiles  . . . . . . . . . . . . . . . . . . . . . . . .  4
+         3.4.1.  Locating a personal profile  . . . . . . . . . . . .  4
+         3.4.2.  Locating a device profile  . . . . . . . . . . . . .  5
+         3.4.3.  Locating an application profile  . . . . . . . . . .  5
+   4.  OSX Platform Configuration . . . . . . . . . . . . . . . . . .  5
+      4.1.  Key Storage . . . . . . . . . . . . . . . . . . . . . . .  6
+   5.  Linux Platform Configuration . . . . . . . . . . . . . . . . .  6
+      5.1.  Key Storage . . . . . . . . . . . . . . . . . . . . . . .  6
+   6.  JSON configuration File  . . . . . . . . . . . . . . . . . . .  6
+   7.  Application Programming Interface  . . . . . . . . . . . . . .  6
+      7.1.  C#  . . . . . . . . . . . . . . . . . . . . . . . . . . .  6
+   8.  IANA Considerations  . . . . . . . . . . . . . . . . . . . . .  7
+   9.  Acknowledgements . . . . . . . . . . . . . . . . . . . . . . .  7
+   10.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  7
+      10.1.  Normative References . . . . . . . . . . . . . . . . . .  7
+   Author's Address . . . . . . . . . . . . . . . . . . . . . . . . .  7
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                         Expires March 23, 2017                 [Page 2]
+
+Internet-Draft  Mathematical Mesh Platform Configuration  September 2016
+
+1. Definitions
+
+1.1. Requirements Language
+
+   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", 
+   "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this 
+   document are to be interpreted as described in RFC 2119 [RFC2119].
+
+2. Configuration Scope
+
+3. Windows Platform Configuration
+
+   The Windows Configuration is stored in a combination of Windows Key 
+   Store entries, registry entries and data files.
+
+   The profiles that are available to a user are specified as Windows 
+   registry keys.
+
+   Cached and archival copies of profiles are stored on the local 
+   machine as data files with file names and locations specified in the 
+   Windows registry.
+
+   Cryptographic keys are stored in a Windows key store.
+
+   To locate a device, application or personal profile, an application:
+
+   Searches for a Windows registry entry that matches the relevant 
+   criteria.
+
+   Retrieves the profile data from either a local cached copy or the 
+   corresponding portal.
+
+   Accesses the corresponding private keys through the Windows key 
+   store.
+
+   The Windows Key store is the natural storage location for 
+   cryptographic keys on the Windows platform as keys are at minimum 
+   protected by the operating system access control mechanism. The 
+   Windows key store also permits the use of cryptographic hardware 
+   devices.
+
+3.1. Registry Key Entries
+
+   All keys used by the Mathematical Mesh are stored in the following 
+   Windows registry location:
+
+
+
+
+
+
+
+
+
+                         Expires March 23, 2017                 [Page 3]
+
+Internet-Draft  Mathematical Mesh Platform Configuration  September 2016
+
+   HKEY_CURRENT_USER\SOFTWARE\CryptoMesh
+
+   This location has the following sub keys:
+
+         PersonalProfiles
+            (Default) -> UDF fingerprint of the default personal profile
+
+         PersonalProfiles\<UDF>
+            (Default) -> File location for the profile.
+
+            Archive -> File location for the profile archive.
+
+            Portals -> Multistring containing portal accounts to which 
+            the profile is registered. The default portal is first.
+
+         ApplicationProfiles
+            Web -> UDF fingerprint of default Web Application profile
+
+            SSH -> UDF fingerprint of default SSH Application profile
+
+            Network -> UDF fingerprint of default network Application 
+            profile
+
+            Mail -> UDF fingerprint of default Mail Application profile
+
+            UDF Fingerprint of profile -> File location of profile 
+
+         DeviceProfiles
+            (Default) -> UDF fingerprint of default device profile
+
+            UDF Fingerprint of Device profile -> File location of device
+            profile
+
+3.2. Data File Locations
+
+   ApplicationData \CryptoMesh\
+
+3.3. Key Store Entries
+
+   <>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                         Expires March 23, 2017                 [Page 4]
+
+Internet-Draft  Mathematical Mesh Platform Configuration  September 2016
+
+3.4. Profiles
+
+3.4.1. Locating a personal profile
+
+   To locate the default personal profile, an application:
+
+   Retrieves the key PersonalProfiles\(Default) to get <UDF>
+
+   Locates the profile with identifier <UDF>
+
+   To locate the personal profile with identifier UDF, an application:
+
+   Retrieves the key PersonalProfiles\<UDF>
+
+   Retrieves the latest version of the profile from the location 
+   specified in PersonalProfiles\<UDF>\(Default)
+
+   If necessary, the profile is refreshed from one of the accounts 
+   specified in PersonalProfiles\<UDF>\Portal
+
+   In case of an inconsistency being detected, the application MAY use 
+   the archived copies of the profile to resynchronize.
+
+   Note that having been connected to a profile at some time in the past
+   does not guarantee that a device currently has access, even if the 
+   device in question was an administration device for the profile.
+
+3.4.2. Locating a device profile
+
+   To locate a device profile an application 
+
+3.4.3. Locating an application profile
+
+   To locate a device profile an application 
+
+4. OSX Platform Configuration
+
+   The OSX configuration is stored in a combination of a master 
+   configuration file, profile data files and the OSX KeyChain
+
+   The profiles that are available to a user are stored in a JSON 
+   configuration file 
+
+   Cached and archival copies of profiles are stored on the local 
+   machine as data files with file names and locations specified in the 
+   JSON configuration file
+
+
+
+
+
+
+
+
+                         Expires March 23, 2017                 [Page 5]
+
+Internet-Draft  Mathematical Mesh Platform Configuration  September 2016
+
+   Cryptographic keys are stored in the OSX Key Chain.
+
+   File locations
+
+   The JSON Configuration file is stored in ~/.cryptomesh/profiles.json
+
+   Profile data files are stored in a directory ~/.cryptomesh/<UDF>
+
+   The latest copy of the profile is stored in <UDF>.mmm
+
+   An archive containing all the stored profiles is stored in 
+   <UDF>.all.mmm
+
+4.1. Key Storage
+
+   Private keys are stored in the OSX Key Manager in some fashion to be 
+   decided later.
+
+5. Linux Platform Configuration
+
+   The Linux configuration is stored in a combination of a master 
+   configuration file, profile data files and private key files.
+
+   The file layout of the Linux configuration and data files is 
+   identical to that of OSX.
+
+5.1. Key Storage
+
+   Private Keys are stored in the locations that the Linux applications 
+   that are to use them expect to find them.
+
+6. JSON configuration File
+
+7. Application Programming Interface
+
+7.1. C# 
+
+   The C# reference code base provides the following classes to provide 
+   access to the Mesh machine configuration:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                         Expires March 23, 2017                 [Page 6]
+
+Internet-Draft  Mathematical Mesh Platform Configuration  September 2016
+
+         Goedel.Mesh.RegistrationType
+
+         Goedel.Mesh.RegistrationMachine
+
+         Goedel.Mesh.RegistrationPersonal
+
+         Goedel.Mesh.RegistrationDevice
+
+         Goedel.Mesh.RegistrationApplication
+
+         Goedel.Portability.Windows
+
+         Goedel.Portability.OSX
+
+         Goedel.Portability.Linux
+
+         Goedel.Mesh.Windows
+
+8. IANA Considerations
+
+   None
+
+9. Acknowledgements
+
+   TBS
+
+10. References
+
+10.1. Normative References
+
+   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate 
+              Requirement Levels", BCP 14, RFC 2119, DOI 
+              10.17487/RFC2119, March 1997.
+
+Author's Address
+
+   Phillip Hallam-Baker 
+   Comodo Group Inc. 
+
+   philliph@comodo.com
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                         Expires March 23, 2017                 [Page 7]

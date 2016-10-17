@@ -27,6 +27,7 @@ using Goedel.Debug;
 using Goedel.Cryptography.Jose;
 using Goedel.Persistence;
 using Goedel.Protocol;
+using Goedel.IO;
 
 namespace Goedel.Mesh {
 
@@ -212,10 +213,14 @@ namespace Goedel.Mesh {
         /// <returns>The signed profile if found or null otherwise.</returns>
         public static SignedDeviceProfile FromFile(string UDF, string FileName) {
 
-            var Reader = JSONReader.OfFile(FileName);
-            var Result = SignedDeviceProfile.FromTagged(Reader);
+            using (var FileReader = FileName.OpenFileReadShared()) {
+                using (var TextReader = FileReader.OpenTextReader()) {
+                    var Reader = new JSONReader(TextReader);
+                    var Result = SignedDeviceProfile.FromTagged(Reader);
 
-            return Result;
+                    return Result;
+                    }
+                }
             }
 
 
@@ -340,11 +345,16 @@ namespace Goedel.Mesh {
         /// <returns>The signed profile if found or null otherwise.</returns>
         public static SignedApplicationProfile FromFile(string UDF, string FileName) {
 
-            var Reader = JSONReader.OfFile(FileName);
-            var Result = SignedApplicationProfile.FromTagged(Reader);
+            using (var FileReader = FileName.OpenFileReadShared()) {
+                using (var TextReader = FileReader.OpenTextReader()) {
+                    var Reader = new JSONReader(TextReader);
+                    var Result = SignedApplicationProfile.FromTagged(Reader);
 
-            return Result;
+                    return Result;
+                    }
+                }
             }
+
         }
 
 
@@ -399,13 +409,17 @@ namespace Goedel.Mesh {
         /// <returns>The signed profile if found or null otherwise.</returns>
         public static SignedPersonalProfile FromFile(string UDF, string FileName) {
 
-            var Reader = JSONReader.OfFile(FileName);
-            var Result = SignedPersonalProfile.FromTagged(Reader);
+            using (var FileReader = FileName.OpenFileReadShared()) {
+                using (var TextReader = FileReader.OpenTextReader()) {
+                    var Reader = new JSONReader(TextReader);
+                    var Result = SignedPersonalProfile.FromTagged(Reader);
 
-            var Test = Result.Signed.UDF;
-            Goedel.Cryptography.UDF.Validate(UDF, Test);
+                    var Test = Result.Signed.UDF;
+                    Goedel.Cryptography.UDF.Validate(UDF, Test);
 
-            return Result;
+                    return Result;
+                    }
+                }
             }
 
 

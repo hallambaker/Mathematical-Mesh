@@ -140,12 +140,14 @@ namespace Goedel.Persistence {
             }
 
         void Read() {
-            var JSONReader = new JSONBufferedReader (FileStream);
+            using (var TextReader = new StreamReader(FileStream)) {
+                var JSONReader = new JSONReader(TextReader);
 
-            LogEntry LogEntry;
-            do {
-                LogEntry = ReadRecord(JSONReader);
-                } while (LogEntry != null);
+                LogEntry LogEntry;
+                do {
+                    LogEntry = ReadRecord(JSONReader);
+                    } while (LogEntry != null);
+                }
             }
 
         LogEntry ReadRecord(JSONReader JSONReader) {

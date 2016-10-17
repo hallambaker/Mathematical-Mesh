@@ -25,7 +25,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Text;
-using Goedel.Debug;
 
 namespace Goedel.Protocol {
 
@@ -294,12 +293,12 @@ namespace Goedel.Protocol {
                 Host.Open();
                 }
 
-            Trace.WriteLine("Start Listener");
+            //Trace.WriteLine("Start Listener");
             HttpListener.Start();
             while (Active) {
-                Trace.Write("Wait..");
+                //Trace.Write("Wait..");
                 var Context = HttpListener.GetContext();
-                Trace.WriteLine("Dispatch");
+                //Trace.WriteLine("Dispatch");
                 Handle(Context);
                 }
 
@@ -392,7 +391,7 @@ namespace Goedel.Protocol {
             Ports.Add(Port);
             HttpListener.Prefixes.Add(Port.URI);
 
-            Trace.WriteLine("Add Listener on {0}", Port.URI);
+            //Trace.WriteLine("Add Listener on {0}", Port.URI);
             }
 
         }

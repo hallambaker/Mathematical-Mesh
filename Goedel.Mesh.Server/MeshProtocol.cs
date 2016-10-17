@@ -1,4 +1,5 @@
-//   Copyright © 2015 by Comodo Group Inc.
+
+//  Copyright (c) 2016 by .
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -19,6 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
+
 using System;
 using System.IO;
 using System.Collections;
@@ -39,7 +41,7 @@ namespace Goedel.Mesh {
     /// <summary>
     /// 
     /// </summary>
-	public abstract partial class MeshProtocol : Goedel.Protocol.JSONObject {
+	public abstract partial class MeshProtocol : global::Goedel.Protocol.JSONObject {
 
         /// <summary>
         /// 
@@ -692,7 +694,7 @@ namespace Goedel.Mesh {
 					break;
 					}
 				default : {
-					throw new Goedel.Protocol.UnknownOperation ();
+					throw new Exception ();
 					}
 				}
 			JSONReader.EndObject ();
@@ -1312,10 +1314,19 @@ namespace Goedel.Mesh {
 			_Initialize ();
 			}
         /// <summary>
+		/// Initialize class from JSONReader stream.
         /// </summary>		
 		public Version (JSONReader JSONReader) {
 			Deserialize (JSONReader);
 			}
+
+        /// <summary> 
+		/// Initialize class from a JSON encoded class.
+        /// </summary>		
+		public Version (string _String) {
+			Deserialize (_String);
+			}
+
 
         /// <summary>
         /// Serialize this object to the specified output stream.
@@ -1557,10 +1568,19 @@ namespace Goedel.Mesh {
 			_Initialize ();
 			}
         /// <summary>
+		/// Initialize class from JSONReader stream.
         /// </summary>		
 		public Encoding (JSONReader JSONReader) {
 			Deserialize (JSONReader);
 			}
+
+        /// <summary> 
+		/// Initialize class from a JSON encoded class.
+        /// </summary>		
+		public Encoding (string _String) {
+			Deserialize (_String);
+			}
+
 
         /// <summary>
         /// Serialize this object to the specified output stream.
@@ -1779,10 +1799,19 @@ namespace Goedel.Mesh {
 			_Initialize ();
 			}
         /// <summary>
+		/// Initialize class from JSONReader stream.
         /// </summary>		
 		public KeyValue (JSONReader JSONReader) {
 			Deserialize (JSONReader);
 			}
+
+        /// <summary> 
+		/// Initialize class from a JSON encoded class.
+        /// </summary>		
+		public KeyValue (string _String) {
+			Deserialize (_String);
+			}
+
 
         /// <summary>
         /// Serialize this object to the specified output stream.
@@ -2002,10 +2031,19 @@ namespace Goedel.Mesh {
 			_Initialize ();
 			}
         /// <summary>
+		/// Initialize class from JSONReader stream.
         /// </summary>		
 		public SearchConstraints (JSONReader JSONReader) {
 			Deserialize (JSONReader);
 			}
+
+        /// <summary> 
+		/// Initialize class from a JSON encoded class.
+        /// </summary>		
+		public SearchConstraints (string _String) {
+			Deserialize (_String);
+			}
+
 
         /// <summary>
         /// Serialize this object to the specified output stream.

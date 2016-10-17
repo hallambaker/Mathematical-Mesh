@@ -24,6 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using Goedel.Utilities;
 
 namespace Goedel.Protocol {
     //
@@ -61,6 +62,7 @@ namespace Goedel.Protocol {
                 Output.Write(BaseConvert.ToBase64urlString(Data, Start, Length, true));
                 }
             Output.Write("\"");
+            Output.Write("\n");
             }
 
 

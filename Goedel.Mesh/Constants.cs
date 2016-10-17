@@ -84,7 +84,7 @@ namespace Goedel.Mesh {
         /// <summary>
         /// The device specific data path.
         /// </summary>
-        readonly static string DeviceData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+        public readonly static string DeviceData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
 
         /// <summary>
         /// The root directory for device files.

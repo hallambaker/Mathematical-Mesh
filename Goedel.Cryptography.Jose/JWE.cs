@@ -159,7 +159,7 @@ namespace Goedel.Cryptography.Jose {
         /// <returns>The decrypted data</returns>
         public byte[] Decrypt(KeyPair DecryptionKey) {
             // Read the preheader, get the encryption algorithm
-            var PreHeader = Header.From(Protected);
+            //var PreHeader = Header.From(Protected);
             var Recipient = Find(DecryptionKey.UDF);
             var Exchange = DecryptionKey.ExchangeProviderDecrypt;
 

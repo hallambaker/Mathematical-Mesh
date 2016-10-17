@@ -269,7 +269,7 @@ namespace Goedel.Mesh {
                     throw new Exception("Invalid key description");
                     }
 
-                var RSAKeyPair = KeyPair as RSAKeyPair;
+                //var RSAKeyPair = KeyPair as RSAKeyPair;
                 var PrivateKeyRSA = PrivateParameters as PrivateKeyRSA;
                 //var RSAKeyPair = KeyPair as RSAKeyPair;
 

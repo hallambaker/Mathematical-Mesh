@@ -6,7 +6,7 @@ namespace Goedel.Debug {
     /// <summary>
     /// General utility routines to simplify checking of inputs, return values, etc.
     /// </summary>
-    public partial class Utilities {
+    public partial class Utils {
 
 
         // Convenience routines 

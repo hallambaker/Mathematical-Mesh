@@ -130,13 +130,23 @@ namespace Goedel.DNS {
 			{0, ""} // End of list * = ALL
 			} ;
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Tag"></param>
+        /// <returns></returns>
         public static DNSTypeCode TypeCode(string Tag) {
             if (Tag != null) {
                 return (DNSTypeCode) DictionaryType[Tag];
                 }
             return 0;
             }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Code"></param>
+        /// <returns></returns>
         public static string TypeCode(int Code ) {
             return DictionaryCode[(ushort)Code];
             }
@@ -229,12 +239,19 @@ namespace Goedel.DNS {
 		public virtual DNSTypeCode			Code {
 			get {return (0);} }		
 		public virtual string	Label {
-			get {return ("Unknown");} }	
-		public virtual string	Description {
-			get {return ("Record is not defined");} }
-			
-			
-			
+			get {return ("Unknown");} }
+        /// <summary>
+        /// 
+        /// </summary>
+        public virtual string Description {
+            get { return ("Record is not defined"); } }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Index"></param>
+        /// <returns></returns>
         public static DNSRecord Decode(DNSBufferIndex Index) {
 			DNSRecord			DNSRecord;
 			
@@ -476,6 +493,12 @@ namespace Goedel.DNS {
             return DNSRecord;
             }				
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Tag"></param>
+        /// <param name="Parse"></param>
+        /// <returns></returns>
 		public static DNSRecord Parse(string Tag, Parse Parse) {
 			switch (Tag) {
 
@@ -674,6 +697,11 @@ namespace Goedel.DNS {
 			get {return ("Host address");} }
 
         // Convert to canonical form
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public override string Canonical () {
 			Canonicalize Canonicalize = new Canonicalize ("A", Domain);
 			Canonicalize.IPv4  (Address);

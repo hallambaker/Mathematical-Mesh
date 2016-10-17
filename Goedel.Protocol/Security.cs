@@ -26,6 +26,7 @@ using System.IO;
 using System.Net;
 using System.Text;
 using Goedel.Protocol;
+using Goedel.Utilities;
 
 namespace Goedel.Protocol {
     public class CryptographicContext {

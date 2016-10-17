@@ -404,10 +404,10 @@ Multiple: Boolean (Optional)
 
 Full: Boolean (Optional)
 
-:If true, the client requests that the full Mesh data record be 
-returned containing both the Mesh entry itself and the Mesh
-metadata that allows the date and time of the publication of
-the Mesh entry to be verified.
+:If true, the client requests that the full Mesh data record 
+be returned containing both the Mesh entry itself and the 
+Mesh metadata that allows the date and time of the 
+publication of the Mesh entry to be verified.
 
 ###Message: GetResponse
 

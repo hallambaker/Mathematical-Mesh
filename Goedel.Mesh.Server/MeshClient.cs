@@ -149,7 +149,7 @@ namespace Goedel.Mesh {
         /// Make the current portal and account name the default
         /// </summary>
         public void MakeDefault(string UDF) {
-            var AccountID = Account.ID(AccountName, Portal);
+            //var AccountID = Account.ID(AccountName, Portal);
             //Register.Write(Constants.RegistryAccounts, AccountID, UDF);
             }
 

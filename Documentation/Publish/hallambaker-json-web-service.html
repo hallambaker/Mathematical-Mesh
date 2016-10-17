@@ -1,0 +1,274 @@
+<?xml version='1.0'?>
+<html>
+<head>
+<title>JSON Web Service Binding v1.0</title>
+</head>
+<body>
+<h1>JSON Web Service Binding Version 1.0</h1>
+<h1 class="abstract" id="Abstract">Abstract</h1>
+<P class="abstract">The JSON Web Binding (JWB) describes a standardized approach to implementing Web Services. Services are advertised using the DNS SRV and HTTP Well Known Service conventions. Messages may be authenticated or authenticated and encrypted at the message layer in addition to any transport and/or network layer security. Service messages are encoded in JSON using Internet time format for Date-Time fields and Base64urlencoding for binary objects. </P>
+<P class="abstract">This document specifies Version 1.0 of JWB which uses HTTP/1.1 for transport. Use of the multiple stream capabilities of HTTP version 2 is outside the scope of this document.</P>
+<h1 id="Section_1">Introduction</h1>
+<p id="">The JSON Web Binding (JWB) specifies one approach to using DNS Discovery [RFC1035], the HTTP [RFC7230] protocol and the JSON data encoding [RFC7159] in a Web Service.</p>
+<p id="">JWB is not the only approach possible, but developing a standard means making choices that don't matter to developers that build on it. While there are infinitely many ways that a Web Service might employ HTTP and JSON to implement a Web Service, a client and a server can only interoperate if they both agree to use the same one.</p>
+<dl>
+<dl>
+<dt>Discovery</dt>
+<dd>Beginning with a DNS address of the service (e.g. example.com), the client identifies a specific HTTP URL at which to access the service. The DNS SRV record [RFC2782] and Well Known Service [RFC5785] mechanisms are used for this purpose.</dd>
+<dt>Authentication and Encryption</dt>
+<dd>Web Services MAY require authentication and encryption services at the message level even if transport layer security (e.g. TLS [RFC5264]) is used. Use of such enhancements is signaled using the HTTP Content-Encoding header.</dd>
+<dt>Content Mapping</dt>
+<dd>The mapping of data types described in the specification (integer, string, etc.) to JSON data types. [RFC3339] Date time encoding and BASE64-url encoding [RFC4648] are used to map date-time and binary data types to JSON encoding values.</dd>
+</dl>
+</dl>
+<p id="">A key architectural principle that guides the design of JWB is that the Web Service application should be as independent of the HTTP presentation layer as is possible. Thus:</p>
+<p id="">Message semantics are not affected by HTTP headers or the request line URL.</p>
+<p id="">The use of HTTP response codes is limited to reporting errors and warnings that arise from the HTTP transport.</p>
+<p id="">If message layer authentication or authenticated encryption are used, this is applied within the HTTP content payload and not through a combination of payload and header data.</p>
+<p id="">This specification describes a mechanism for accessing a collection of hosts as a single undifferentiated service with provision for load balancing and fault tolerance. This has important consequences for state management. Web Services typically involve some form of stateful interaction or real world side effect. Otherwise, it is likely that the Web Service would be better written as a traditional Web interaction mapping the stateless resources to URIs.</p>
+<p id="">The mechanism described in this specification is intended for the initial discovery of a host with which to engage in a Web Service transaction which may or may not consist of a series of message exchanges. Since sharing state between hosts supporting a virtual service requires resources and typically introduces latency, a service specification MAY require that a transaction begun on one host be completed with the same host and the time period in which a transaction that is accepted by one host will be regarded as 'final' by the virtual service.</p>
+<p id="">For example, a file upload protocol for a photograph sharing service might have separate messages for checking that there is space to store the photograph 'Check', uploading the file 'Store' and reporting that the data is safely stored at multiple locations. When responding to the Check command, the host is reporting that there is space at that local node. It is obviously undesirable for a client to verify that host1 has enough space to store the file and then attempt to upload the file to host2. Equally, having uploaded the file to host1, it might be minutes, hours or even days before the photograph could be retrieved through host2. Such questions are left for the Web Service protocol designer to address.</p>
+<h1 id="Section_2">Definitions</h1>
+<h2 id="Section_2_1">Requirements Language</h2>
+<p id="">The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in RFC 2119 [RFC2119].</p>
+<h1 id="Section_3">Service Discovery</h1>
+<p id="">Service discovery is the process of resolving the address of a Web Service to a Web Service Endpoint, a URI [RFC3986] at which the service is provided.</p>
+<p id="">A JWB Web Service is specified by giving the DNS Address of the service &lt;domain&gt;, and Well Known Service name &lt;service&gt;.</p>
+<h2 id="Section_3_1">Host Identification</h2>
+<p id="">The first step in service discovery is to resolve the &lt;domain&gt; and &lt;service&gt; identifiers to the IP address of a host that provides that service.</p>
+<h3 id="Section_3_1_1">SRV Lookup</h3>
+<p id="">A client attempting to connect to the service first attempts to locate an SRV record [RFC2782] for the specified service:</p>
+<pre id="">
+<![CDATA[_<service>._tcp._<domain>  SRV  <priority> <weight> <port> <mapping>]]></pre>
+<p id="">Where &lt;priority&gt; and &lt;weight&gt; are the SRV priority and weight parameters specified in [RFC2782], &lt;port&gt; is the TCP port number and &lt;mapping&gt; is the DNS name of the host for which the service advertisement is made. Standard A/AAAA/CNAME resolution is used to obtain the IP address of the host from &lt;mapping&gt;.</p>
+<p id="">If a match is found, the client uses the mechanism specified in [RFC2782] to choose hosts and attempts to contact each host in turn until a successful HTTP connection is established or the maximum number of attempts threshold is reached.</p>
+<h3 id="Section_3_1_2">DNS Fallback</h3>
+<p id="">Despite the fact that SRV records have been a part of the DNS standard for 20 years, it is not uncommon for network intermediaries to implement SRV record resolution incorrectly or block it entirely. </p>
+<p id="">If no SRV record is found, a client MAY perform fallback discovery if explicitly authorized to do so by the corresponding Web Service protocol specification. The client attempts to connect to the host &lt;service&gt;.&lt;domain&gt; using the standard A/AAAA/CNAME resolution rules to obtain the IP address of the host.</p>
+<h2 id="Section_3_2">HTTP host processing </h2>
+<p id="">Having identified the IP address, the client performs a HTTP or HTTPS Web Service POST request at the default Web Service Endpoint specified by the Well Known Service name and the original DNS address of the service.</p>
+<pre id="">
+<![CDATA[http://<domain>:<port>/.well-known/<service>]]></pre>
+<p id="">Note that a given host MAY provide multiple instances of a Web Service under different discovery addresses. Therefore it is essential to use the original &lt;domain&gt; value rather than the &lt;mapping&gt; returned in the SRV record.</p>
+<h3 id="Section_3_2_1">Use of TLS transport</h3>
+<p id="">The use of TLS transport is indicated by the SRV port number as follows:</p>
+<dl>
+<dl>
+<dt>If the SRV port number is 80, 8000, 8080 or greater than 32,767</dt>
+<dd>HTTP over TCP is used.</dd>
+<dt>Otherwise</dt>
+<dd>HTTP over TLS Transport (HTTPS) is used.</dd>
+<dd>If an authenticated DNS resolution protocol (e.g. DNSSEC [RFC4033]) is used to resolve the SRV record, these rules permit deployments to achieve 'secure on first contact' transport security without the need to resolve additional records (e.g. TLSA [RFC6698]. Note however that while the use of TLS is mandated, the criteria for evaluating the TLS certificate chain presented by the server is left to local site policy.</dd>
+<dd>A service presented on a port for which HTTP is indicated MAY specify a redirect to require use of HTTPS protocol.</dd>
+</dl>
+</dl>
+<h3 id="Section_3_2_2">Fallback Processing Rules</h3>
+<p id="">If a client's attempt to connect to a host selected from an SRV connection redirection results in a HTTP (3xx), Client error (4xx) or Server error (5xx) code, the client MUST process the HTTP error response and not simply attempt a connection to a different host. If a client request is rejected for lack of authentication (511) or because the request is too large (413) at one host, the client should assume that the request will be rejected for the same reason at another. If the attempt to create a TCP connection fails or the server returns Service Unavailable (503), the client MAY use the SRV fallback rules to select an alternative host.</p>
+<h3 id="Section_3_2_3">Service Continuation</h3>
+<p id="">Once the initial service discovery mechanism has been used to establish contact with a host, the service protocol MAY specify that further interactions be directed to another host and/or using a different protocol. Such mechanisms are outside the scope of this specification.</p>
+<h2 id="Section_3_3">Example</h2>
+<p id="">The Mathematical Mesh has the Well Known Service name of 'MMM'.  Accounts used in the Mathematical Mesh follow the [RFC5322] format of &lt;user&gt;@&lt;domain&gt;. </p>
+<p id="">Alice has the account alice@example.com and the DNS configuration file for example.com has the following entries:</p>
+<pre id="">
+<![CDATA[_mmm._tcp.example.com SRV host1.example.com 0 10 80 host1.example.com
+_mmm._tcp.example.com SRV host2.example.com 0 40 80 host2.example.com
+mmm.example.com       CNAME host3.example.com
+host1.example.com     A 10.0.1.1
+host2.example.com     A 10.0.1.2
+host3.example.com     A 10.0.1.1
+host3.example.com     A 10.0.1.2]]></pre>
+<p id=""> The client attempts to resolve the address alice@example.com as follows:</p>
+<p id="">Client attempts to resolve SRV record for _mmm._tcp.example.com</p>
+<p id="">DNS resolver returns two entries.</p>
+<p id="">Client makes a random selection between host1 (20% weighting) and host2 (80% weighting). Chooses host1.</p>
+<p id="">Client resolves A/AAAA for host1.example.com</p>
+<p id="">DNS resolver returns 10.0.1.1</p>
+<p id="">Client attempts to POST Web Service request to http://example.com/.well-known/mmm at host address 10.0.1.1</p>
+<p id="">The host at 10.0.1.1 returns 503 Service Unavailable</p>
+<p id="">Client resolves A/AAAA for host2.example.com</p>
+<p id="">DNS resolver returns 10.0.1.2</p>
+<p id="">Client attempts to POST Web Service request to http://example.com/.well-known/mmm at host address 10.0.1.2</p>
+<p id="">Request succeeds, session proceeds.</p>
+<p id="">If the same client is used in a network location where the SRV record resolution fails due to a faulty firewall configuration, the resolution proceeds as follows:</p>
+<p id="">Client attempts to resolve SRV record for _mmm._tcp.example.com</p>
+<p id="">DNS resolver returns 'not found'</p>
+<p id="">Client attempts to resolve A and AAAA record </p>
+<p id="">DNS resolver returns 10.0.1.1, 10.0.1.2</p>
+<p id="">Client makes a random selection between 10.0.1.1 (50% weighting) and 10.0.1.2 (50% weighting). Chooses host1.</p>
+<p id="">Client attempts to POST Web Service request to http://example.com/.well-known/mmm at host address 10.0.1.1</p>
+<p id="">The host at 10.0.1.1 returns 503 Service Unavailable</p>
+<p id="">Client attempts to POST Web Service request to http://example.com/.well-known/mmm at host address 10.0.1.2</p>
+<p id="">Request succeeds, session proceeds.</p>
+<p id="">Note that the main difference between these two scenarios is that the use of the SRV record allows the service configuration to account for load balancing with tiers of fallback support while the use of round robin A/AAAA records does not.</p>
+<h1 id="Section_4">HTTP Messages</h1>
+<p id="">JWB messages are exchanged as HTTP POST transactions. Support for and use of HTTP/1.1 [RFC7230] is REQUIRED unless otherwise specified by the Web Service Specification.</p>
+<p id="">While the use of HTTP/2 [RFC7540] offers the potential benefit of multiple concurrent transaction streams, the means of making use of such capabilities is outside the scope of JWB v1.0 but is likely to be the main incentive for defining a revision.</p>
+<p id="">In contrast to other approaches to the design of Web Services, the only use made of the HTTP transport is to distinguish between different services on the same host using the Host header and .well-known convention and for message framing.</p>
+<p id="">In particular no use is made of the URI request line to identify commands, nor are the caching or proxy capabilities of HTTP. One of the main design objectives of JWB is to enable message level authentication. Since HTTP headers are mutable and may be changed by intermediaries, any attempt to make use of HTTP features requires a mechanism to canonicalize or duplicate the headers. Furthermore, the implementation of authentication and encryption features at the message level is liable to be incompatible with the HTTP caching model and any attempt to implement caching is moot when TLS is in use.</p>
+<h2 id="Section_4_1">Request</h2>
+<p id="">The HTTP request MAY contain any valid HTTP header specified in [RFC7230]. </p>
+<dl>
+<dl>
+<dt>Request Line URI </dt>
+<dd>/well-known/&lt;service&gt;</dd>
+<dt>Request Line Method</dt>
+<dd>POST</dd>
+<dt>Host: Header</dt>
+<dd>&lt;domain&gt;</dd>
+<dt>Content-Encoding</dt>
+<dd>As specified in section yy below.</dd>
+<dt>Content-Type</dt>
+<dd>As specified in section zz below.</dd>
+<dt>Content-Length or Transfer-Encoding</dt>
+<dd>As specified in [RFC7230].</dd>
+<dt>Payload</dt>
+<dd>The content payload as specified in section XX below.</dd>
+</dl>
+</dl>
+<p id="">Example: The HTTP request for the mmm service in the previous example would be:</p>
+<pre id="">
+<![CDATA[POST /.well-known/mmm HTTP/1.1
+Host: example.com
+Content-Type: application/json
+Content-Length: 16
+
+{ ?hello? : {} }]]></pre>
+<h2 id="Section_4_2">Response</h2>
+<p id="">The response MAY contain any HTTP response header. However since JWB services do not make use of HTTP caching and messages are not intended to be modified by HTTP intermediaries, only a limited number of headers have significance.</p>
+<dl>
+<dl>
+<dt>Response Code</dt>
+<dd>The HTTP response code. This is processed as described in section zz below.</dd>
+<dt>Content-Type</dt>
+<dd>As specified in section zz below.</dd>
+<dt>Content-Length or Transfer-Encoding</dt>
+<dd>As specified in [RFC7230].</dd>
+<dt>Cache-Control</dt>
+<dd>Since the only valid HTTP method for a JWB request is POST, JWB responses are not cacheable. The use of the cache-control header is therefore unnecessary. However experience suggests that reviewers find it easier to understand protocol specifications if they are reminded of the fact that caching is neither supported nor desired. </dd>
+</dl>
+</dl>
+<p id="">Example: The HTTP response for the mmm service in the previous example would be:</p>
+<pre id="">
+<![CDATA[HTTP/1.1 200 OK
+Content-Type: application/json
+Connection: keep-alive
+Cache-Control: no-store
+Content-Length: 43
+
+{ ?hello-response? : { ?Version? : ?1.0? }}]]></pre>
+<h1 id="Section_5">Error handling and response codes</h1>
+<p id="">A JWB Web Service is effectively using a three layer protocol stack with the potential for an error to occur at any of the three layers:</p>
+<p id="">Transport Layer</p>
+<p id="">HTTP Layer</p>
+<p id="">Web Service Layer</p>
+<p id="">Services SHOULD always attempt to return error codes at the highest level possible. However it is clearly impossible for a connection that is refused at the Transport layer to return an error code at the HTTP layer. It is however possible for a HTTP layer error response to contain a content body.</p>
+<p id="">In the case that a JWB response contains both a HTTP response code and a well formed JWB payload containing a response, the JWB payload response SHALL have precedence.</p>
+<h1 id="Section_6">Content Encoding</h1>
+<p id="">The HTTP Content-Encoding header specifies transformations performed on the content before the HTTP Transfer encoding was applied. This is commonly used for specifying compression. In JWB the Content-Encoding header MAY be used to specify that the content that follows contains a payload that is either authenticated [RFC7515] or authenticated and encrypted [RFC7516] using the JOSE specification.</p>
+<h2 id="Section_6_1">Direct Encoding</h2>
+<p id="">If the Content-Encoding header is absent or empty, the HTTP content is the message payload as specified by the Content-Type header.</p>
+<h2 id="Section_6_2">Content-Encoding: jose-jwb</h2>
+<p id="">The Content-Encoding type jose-jwb is a serialization format for JSON Web Signature and JSON Web Encryption objects. Each message consists of the following sequence:</p>
+<p id="">Preamble: A JSON object in UTF-8 encoding</p>
+<p id="">ASCII Record Separator Character (%x1E)</p>
+<p id="">Payload</p>
+<p id="">ASCII Record Separator Character (%x1E)</p>
+<p id="">Postscript: A JSON object in UTF-8 encoding</p>
+<p id="">The payload data consists of all the data that appears between the first and the last occurrence of the record separator character %x1E in the HTTP content. Since the UTF-8 encoding does not permit the octet %0x1E to occur within a well formed JSON object, the use of this character as a record separator is unambiguous even if the character occurs within the payload (as is possible with a binary content-type or if the payload is encrypted).</p>
+<p id="">The contents of the Preamble, Payload and Postscript vary according to whether the message is authenticated or authenticated and encrypted.</p>
+<h2 id="Section_6_3">Authenticated</h2>
+<p id="">Authenticated messages are signed using Jose Web Signature [RFC7515]. The Preamble, Payload and Postscript are formed as follows:</p>
+<dl>
+<dl>
+<dt>Preamble</dt>
+<dd>A JSON Object containing the JWS Protected Header</dd>
+<dt>Payload</dt>
+<dd>The binary data over which the signature value is calculated</dd>
+<dt>Postscript</dt>
+<dd>The JWS Signature header</dd>
+</dl>
+</dl>
+<p id="">Note that a jsoe-jwb message is only permitted to have a single header and there is no provision for providing data that is not integrity protected.</p>
+<h2 id="Section_6_4">Authenticated Encryption</h2>
+<p id="">Authenticated messages are signed using Jose Web Signature [RFC7515]. The Preamble, Payload and Postscript are formed as follows:</p>
+<dl>
+<dl>
+<dt>Preamble</dt>
+<dd>A JSON Object containing the JWS Protected Header</dd>
+<dt>Payload</dt>
+<dd>The binary data over which the signature value is calculated</dd>
+<dt>Postscript</dt>
+<dd>The JWS Signature header</dd>
+</dl>
+</dl>
+<p id="">Note that a jsoe-jwb message is only permitted to have a single header and there is no provision for providing data that is not integrity protected.</p>
+<h1 id="Section_7">Content Type</h1>
+<p id="">The Content Type header specifies the plaintext payload media type as specified in [RFC6838].</p>
+<p id="">For version1.0 of this specification, the only supported payload media type is application/json as specified in [RFC7159].</p>
+<p id="">Future versions of this specification may include support for binary encodings such as JSON-B [draft-hallambaker-jsonbcd-05] and/or CBOR [rfc7049].</p>
+<h1 id="Section_8">JSON Data Bindings</h1>
+<p id="">Note that this is the only part of this specification that is strictly limited to JSON encoding. The rest of the specification is equally applicable to Web Services using XML and/or CBOR encoding.</p>
+<h2 id="Section_8_1">Request Message</h2>
+<p id="">Each JWBv1.0 request contains exactly one Web Service Command. [Future versions MAY specify a mechanism that permits multiple commands to be sent in parallel]</p>
+<p id="">The request payload contains a JSON object that contains exactly one member whose name is the name of the command that is requested and whose value is an object that contains the command parameters (if any).</p>
+<pre id="">
+<![CDATA[{ ?hello? : {} }]]></pre>
+<h2 id="Section_8_2">Response Message</h2>
+<p id="">The response payload contains a JSON object that contains the members specified by the Web Service specification.</p>
+<p id="">Future versions of this specification MAY reserve particular fields in the response payload for particular purposes (e.g. returning status values).</p>
+<pre id="">
+<![CDATA[{ ?hello-response? : { ?Version? : ?1.0? }}]]></pre>
+<h2 id="Section_8_3">Data Fields</h2>
+<p id="">JSON was originally developed to provide a serialization format for the JavaScript programming language [ECMA-262]. While this approach is generally applicable to the type systems of scripting programming languages, it is less well matched to the richer type systems of modern object oriented programming languages such as Java and C#. Moreover</p>
+<p id="">Working within a subset of the capabilities of JSON allows a Web Service protocol to be accessed with equal ease from either platform type. In particular the following capabilities of JSON are avoided:</p>
+<p id="">The ability to use arbitrary strings as field names.</p>
+<p id="">The use of JSON objects to define maps directly</p>
+<p id="">The following data field types are used:</p>
+<dl>
+<dl>
+<dt>Integer</dt>
+<dd>Integer values are encoded as JSON number values.</dd>
+<dt>String</dt>
+<dd>Test strings are encoded as JSON text strings.</dd>
+<dt>Boolean</dt>
+<dd>Boolean values are encoded as JSON 'false', 'true' or 'null' tokens according to value.</dd>
+<dt>Sequence</dt>
+<dd>Sequences of data items that are encoded as JSON arrays</dd>
+<dt>Object of known type</dt>
+<dd>Objects whose type is known to the receiver are encoded as JSON objects</dd>
+<dt>Object of variable type</dt>
+<dd>Objects whose type is not known to the receiver are encoded as JSON objects containing a single field whose name describes the type of the object value and whose value contains the value.</dd>
+<dt>Binary Data</dt>
+<dd>Byte sequences are converted to BASE64-url encoding [RFC4648] and encoded as JSON string values.</dd>
+<dt>Date Time</dt>
+<dd>Date Time values are converted to Internet time format as described in [RFC3339] and encoded as JSON string values.</dd>
+</dl>
+</dl>
+<h1 id="Section_9">Security Considerations</h1>
+<p id="">A fuller treatment of the security considerations will follow.</p>
+<h2 id="Section_9_1">Integrity</h2>
+<h3 id="Section_9_1_1">DNS Spoofing</h3>
+<h3 id="Section_9_1_2">TLS Downgrade</h3>
+<h3 id="Section_9_1_3">TLS Service Impersonation</h3>
+<h3 id="Section_9_1_4">Request Replay Attack</h3>
+<h3 id="Section_9_1_5">Response Replay Attack</h3>
+<h2 id="Section_9_2">Confidentiality</h2>
+<h3 id="Section_9_2_1">Side Channel Attack</h3>
+<h3 id="Section_9_2_2">Session Key Leakage</h3>
+<h1 id="Section_10">IANA Considerations</h1>
+<p id="">The following registrations are required:</p>
+<dl>
+<dl>
+<dt>HTTP Content Coding Registry</dt>
+<dd>jose-jwb</dd>
+<dt>Well-Known URIs</dt>
+<dd>/.well-known/srv/</dd>
+<dd>[Or change registry to FCFS]</dd>
+<dt/>
+</dl>
+</dl>
+<h1>References</h1>
+<h2 class="references" id="NormativeReferences">Normative References</h2>
+<h2 class="references" id="InformativeReferences">Informative References</h2>
+</body>
+</html>

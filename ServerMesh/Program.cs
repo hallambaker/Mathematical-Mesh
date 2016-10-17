@@ -23,6 +23,7 @@
 using System;
 using Goedel.Mesh;
 using Goedel.Protocol;
+using Goedel.Protocol.Extended;
 
 namespace MeshServerShell {
     public partial class MeshServerShell {
@@ -52,7 +53,7 @@ namespace MeshServerShell {
             var InterfaceReg = HostReg.Add (Interface);
 
             // Register the network port.
-            var PortReg = InterfaceReg.AddService(Options.Address.Value);
+            InterfaceReg.AddService(Options.Address.Value);
 
             // Run until abort
             Server.RunBlocking();

@@ -25,7 +25,7 @@ using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Numerics;
-using Goedel.Protocol;
+using Goedel.Utilities;
 
 namespace Goedel.Cryptography {
 

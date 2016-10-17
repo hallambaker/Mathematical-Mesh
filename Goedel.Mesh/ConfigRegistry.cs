@@ -25,7 +25,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Xml;
-using Goedel.Protocol;
+using Goedel.Utilities;
 
 namespace Goedel.Mesh {
 

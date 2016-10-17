@@ -95,7 +95,7 @@ namespace Goedel.ASN1 {
         // Buffer is filled from the end
         private byte []                 Buffered;
 
-        // While we could in theory use Assanine 1 for > 2Gb og data it 
+        // While we could in theory use Assanine 1 for > 2Gb of data it 
         // would be stupid to do that.
         private int                    Pointer;
 
@@ -125,7 +125,7 @@ namespace Goedel.ASN1 {
         /// <summary>
         /// 
         /// </summary>
-        public Buffer() : this (1024) {
+        public Buffer() : this (4096) {
             }
 
         /// <summary>
@@ -168,6 +168,8 @@ namespace Goedel.ASN1 {
                 byte [] NewBuffer = new byte [NewLength];
 
                 Array.Copy (Buffered, 0, NewBuffer, NewLength-Length, Length);
+                Pointer = Pointer + NewLength - Length;
+                Buffered = NewBuffer;
                 }
             Pointer --;
             Buffered [Pointer] = Data;
@@ -333,7 +335,7 @@ namespace Goedel.ASN1 {
             bool Context = (Flags & (int) ASNFlags.Context) > 0;
             bool Implicit = (Flags & (int) ASNFlags.Implicit) > 0;
             bool Explicit = (Flags & (int) ASNFlags.Explicit) > 0;
-            bool Optional = (Flags & (int) ASNFlags.Optional) > 0;
+
 
             if (Context) {
                 AddLength (Position - Pointer);
@@ -503,7 +505,8 @@ namespace Goedel.ASN1 {
             }
 
         /// <summary>
-        /// 
+        /// Add a sequence of bytes to the buffer. Note that the bytes are added in 
+        /// reverse order.
         /// </summary>
         /// <param name="Data"></param>
         /// <param name="Start"></param>
@@ -606,7 +609,6 @@ namespace Goedel.ASN1 {
         /// <param name="Flags"></param>
         /// <param name="Code"></param>
         public void Encode__Object(Goedel.ASN1.Root Data, int Flags, int Code) {
-            int Position = Pointer;
 
             if (NullCheck(Data == null, Flags, Code)) return;
 
@@ -648,8 +650,6 @@ namespace Goedel.ASN1 {
         /// <param name="Flags"></param>
         /// <param name="Code"></param>
         public void Encode__Time(DateTime Data, int Flags, int Code) {
-
-            if (NullCheck (Data == null, Flags, Code)) return;
 
             if (Data.Year < 2050) {
                 Encode__UTCTime (Data, Flags, Code);
