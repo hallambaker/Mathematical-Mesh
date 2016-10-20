@@ -1,0 +1,44 @@
+﻿
+Class Goedel.Mesh.Integration.LiveMail MessageAccount
+    Account_Name				String 
+    Connection_Type				Int 
+	Make_Available_Offline		Int
+
+    IMAP_Server					String 
+    IMAP_User_Name				String
+    IMAP_Password2				Binary
+    IMAP_Use_Sicily				Int 
+    IMAP_Port					Int
+    IMAP_Secure_Connection		Int 
+    IMAP_Timeout				Int
+	IMAP_Polling				Int
+	IMAP_Sent_Items_Folder		String
+    IMAP_Drafts_Folder			String 
+    IMAP_Prompt_for_Password	Int
+    IMAP_Dirty					Int
+    IMAP_Deleted_Items_Folder	String
+
+    IMAP_Junk_E_mail_Folder		String
+		AltID "IMAP_Junk_E-mail_Folder"
+    IMAP_XLIST_Sent_Items		Int
+    IMAP_XLIST_Drafts			Int
+    IMAP_XLIST_Deleted_Items	Int
+    IMAP_XLIST_Junk_E_mail		Int
+		AltID "IMAP_Junk_E-mail_Folder"
+    IMAP_XLIST_Migration_Done	Int
+
+    SMTP_Server					String
+    SMTP_User_Name				String
+	SMTP_Password2				String
+	SMTP_Use_Sicily				Int
+    SMTP_Port					Int
+    SMTP_Secure_Connection		Int
+    SMTP_Timeout				Int
+	SMTP_Display_Name			String
+    SMTP_Organization_Name		String
+    SMTP_Email_Address			String
+	SMTP_Reply_To_Email_Address	String
+	SMTP_Certificate			Binary
+	SMTP_Encryption_Certificate	Binary
+	SMTP_Encryption_Algorithm	String
+    SMTP_Prompt_for_Password	Int
