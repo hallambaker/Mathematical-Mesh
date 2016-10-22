@@ -31,11 +31,17 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Publish|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Publish\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DocumentationFile>bin\Debug\Goedel.Mesh.Server.xml</DocumentationFile>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Goedel.Debug2, Version=1.0.6129.42745, Culture=neutral, PublicKeyToken=9ac84b9f2535680b, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Library\Goedel.Debug2.dll</HintPath>
-    </Reference>
     <Reference Include="Goedel.FSR">
       <HintPath>..\..\Library\Goedel.FSR.dll</HintPath>
     </Reference>
@@ -46,6 +52,10 @@
     <Reference Include="Goedel.Protocol, Version=1.0.6128.28622, Culture=neutral, PublicKeyToken=9ac84b9f2535680b, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Library\Goedel.Protocol.dll</HintPath>
+    </Reference>
+    <Reference Include="Goedel.Protocol.Debug, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Library\Goedel.Protocol.Debug.dll</HintPath>
     </Reference>
     <Reference Include="Goedel.Protocol.Extended">
       <HintPath>..\..\Library\Goedel.Protocol.Extended.dll</HintPath>
@@ -89,10 +99,6 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Goedel.Protocol.Debug\Goedel.Protocol.Debug.csproj">
-      <Project>{0586b4c1-814c-4d98-b6f1-180cd4e2faab}</Project>
-      <Name>Goedel.Protocol.Debug</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Goedel.Cryptography.Jose\Goedel.Cryptography.Jose.csproj">
       <Project>{59f7f1a5-abbc-4830-b7a3-140fd8e4c369}</Project>
       <Name>Goedel.Cryptography.Jose</Name>

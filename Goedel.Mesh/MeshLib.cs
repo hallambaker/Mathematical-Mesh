@@ -310,8 +310,8 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Get a profile with the specified UDF key.
         /// </summary>
-        /// <param name="UDF"></param>
-        /// <returns></returns>
+        /// <param name="UDF">Fingerprint of requested profile.</param>
+        /// <returns>The profile (if found).</returns>
         public Entry GetProfile (string UDF) {
 
             var PEntry = IndexUniqueID.Get(UDF);
@@ -470,7 +470,7 @@ namespace Goedel.Mesh {
         /// Get the current chain token for the mesh store for use
         /// in notarized transactions.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The most recent entry in the log chain.</returns>
         public string GetChainToken () {
             return "Chain:Start";
 

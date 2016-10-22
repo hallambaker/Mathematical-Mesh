@@ -75,6 +75,9 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Return a MeshService object for the named portal service.
         /// </summary>
+        /// <param name="Account">The account to get.</param>
+        /// <param name="Service">The service to get the service from.</param> 
+        /// <returns>The service instance</returns>
         public override MeshService GetService(string Service, string Account) {
             Session = new DebugLocalSession(MeshServiceHost, ServiceName, Account);
             Session.Traces = Traces;

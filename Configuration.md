@@ -29,3 +29,22 @@ The server creates two log files in the directory it is run from. These have a .
 extension and contain the account data that is local to the portal and the mesh data 
 that will be shared with other mesh nodes in due course.
 
+
+
+==Configuring the build environment
+
+Some of the project use build tools, these are
+
+* Sandcastle help file builder
+* WIX for installers
+* Goedel Build Tools
+* PHB Build Tools 
+* PHB RFC Tools
+* Visual Studio Extensions Thingie
+
+I also have the Git Hub and the .NET Portability analyzer loaded. Plus the usual MSFT
+things that come in Visual Studio.
+
+
+
+https://visualstudiogallery.msdn.microsoft.com/ecb123bf-44bb-4ae3-91ee-a08fc1b9770e

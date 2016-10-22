@@ -84,7 +84,7 @@ namespace Goedel.Persistence {
         /// <summary>
         /// Construct a data collection with the specified member.
         /// </summary>
-        /// <param name="DataItem"></param>
+        /// <param name="DataItem">Initial member</param>
         public DataCollection(DataItem DataItem) {
             Add(DataItem);
             }
@@ -92,7 +92,7 @@ namespace Goedel.Persistence {
         /// <summary>
         /// Add the specified member to the collection.
         /// </summary>
-        /// <param name="DataItem"></param>
+        /// <param name="DataItem">Data item to add</param>
         public void Add(DataItem DataItem) {
             DataItems.Add (DataItem);
             }
@@ -191,7 +191,7 @@ namespace Goedel.Persistence {
         /// Find the data collection with the specified key value.
         /// </summary>
         /// <param name="Value">Key value to find.</param>
-        /// <returns></returns>
+        /// <returns>True if value found, otherwise null.</returns>
         public virtual bool Contains(string Value) {
             return DictionaryKeyId.ContainsKey(Value);
             }
@@ -201,7 +201,7 @@ namespace Goedel.Persistence {
         /// Find the data collection with the specified key value.
         /// </summary>
         /// <param name="Value">Key value to find.</param>
-        /// <returns></returns>
+        /// <returns>The data collection if found, null otherwise.</returns>
         public virtual DataCollection Get(string Value) {
             DataCollection Result;
 
@@ -215,8 +215,8 @@ namespace Goedel.Persistence {
         /// <summary>
         /// Get the most recently added value with a specified key.
         /// </summary>
-        /// <param name="Value"></param>
-        /// <returns></returns>
+        /// <param name="Value">Key value to find.</param>
+        /// <returns>The data collection if found, null otherwise.</returns>
         public virtual DataItem GetLast (string Value) {
             var Collection = Get(Value);
             if (Collection == null) return null;
@@ -313,7 +313,7 @@ namespace Goedel.Persistence {
         /// <summary>
         /// Returns a globally unique, monotonically increasing transaction ID.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The transaction identifier.</returns>
         protected virtual string GetTransactionID() {
             var ID = Interlocked.Increment(ref LastTransaction);
             return TransactionIDPrefix + ID.ToString();

@@ -228,7 +228,7 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="KeyType">The mest key type.</param>
         /// <param name="CryptoAlgorithmID">The algorithm to generate keys for.</param>
-        /// <returns></returns>
+        /// <returns>The generated key pair</returns>
         public static PublicKey Generate(KeyType KeyType, CryptoAlgorithmID CryptoAlgorithmID) {
 
             var CryptoProvider = CryptoCatalog.Default.GetAsymmetric(CryptoAlgorithmID);

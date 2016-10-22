@@ -33,11 +33,17 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Publish|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Publish\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Goedel.Debug2, Version=1.0.6129.42745, Culture=neutral, PublicKeyToken=9ac84b9f2535680b, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Library\Goedel.Debug2.dll</HintPath>
-    </Reference>
     <Reference Include="Goedel.FSR">
       <HintPath>..\..\Library\Goedel.FSR.dll</HintPath>
     </Reference>
@@ -121,10 +127,6 @@
     <ProjectReference Include="..\Goedel.Persistence\Goedel.Persistence.csproj">
       <Project>{81e30b95-c59d-4a04-925e-85877fd37fdd}</Project>
       <Name>Goedel.Persistence</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Goedel.Protocol.Debug\Goedel.Protocol.Debug.csproj">
-      <Project>{0586b4c1-814c-4d98-b6f1-180cd4e2faab}</Project>
-      <Name>Goedel.Protocol.Debug</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

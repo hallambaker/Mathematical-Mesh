@@ -101,6 +101,7 @@ namespace Goedel.Mesh.Platform {
         /// </summary>
         /// <param name="KeyName">The Registry key to write to.</param>
         /// <param name="UDF">The fingerprint of the data object.</param>
+        /// <returns>The registry value</returns>
         public static string Read(string KeyName, out string UDF) {
             return Read(KeyName, null, out UDF);
             }
@@ -111,6 +112,7 @@ namespace Goedel.Mesh.Platform {
         /// <param name="KeyName">The Registry key to write to.</param>
         /// <param name="Entry">The name of the key to write to.</param>
         /// <param name="UDF">The fingerprint of the data object.</param>
+        /// <returns>The registry value</returns>
         public static string Read(string KeyName, string Entry, out string UDF) {
             var Hive = Microsoft.Win32.Registry.CurrentUser;
             var Key = Hive.OpenSubKey(KeyName);
@@ -126,7 +128,11 @@ namespace Goedel.Mesh.Platform {
             return Entry;
             }
 
-
+        /// <summary>
+        /// Get windows registry keys matching a key name.
+        /// </summary>
+        /// <param name="KeyName">The key to fetch.</param>
+        /// <returns>Dictionary mapping keys to values.</returns>
         public static Dictionary<string, string> GetKeys(string KeyName) {
             var Result = new Dictionary<string, string>();
 
@@ -147,7 +153,11 @@ namespace Goedel.Mesh.Platform {
             }
 
 
-
+        /// <summary>
+        /// Get registry sub keys
+        /// </summary>
+        /// <param name="KeyName">The registry key to retrieve.</param>
+        /// <returns>Set of registry keys</returns>
         public static List<RegistryKeySet> GetSubKeys(string KeyName) {
             var Result = new List<RegistryKeySet>();
 
@@ -172,16 +182,33 @@ namespace Goedel.Mesh.Platform {
 
         }
 
+    /// <summary>
+    /// A set of registry keys
+    /// </summary>
     public class RegistryKeySet {
         Microsoft.Win32.RegistryKey RegistryKey;
+
+        /// <summary>The key value</summary>
         public string Key { get; set; }
+
+        /// <summary>If true, there is a default value.</summary>
         public bool Default = false;
 
+        /// <summary>
+        /// Get set of registry keys
+        /// </summary>
+        /// <param name="Key">Key to fetch</param>
+        /// <param name="RegistryKey">Key value</param>
         public RegistryKeySet(string Key, Microsoft.Win32.RegistryKey RegistryKey) {
             this.RegistryKey = RegistryKey;
             this.Key = Key;
             }
 
+        /// <summary>
+        /// Get a multiple string value.
+        /// </summary>
+        /// <param name="Key">key to fetch</param>
+        /// <returns>Array of strings</returns>
         public string[] GetValueMultiString (string Key) {
             var RVK = RegistryKey.GetValueKind(Key);
 
@@ -192,6 +219,11 @@ namespace Goedel.Mesh.Platform {
             return (string[]) RegistryKey.GetValue(Key);
             }
 
+        /// <summary>
+        /// Get a single string value
+        /// </summary>
+        /// <param name="Key">The key</param>
+        /// <returns>A string value.</returns>
         public string GetValueString(string Key) {
             var RVK = RegistryKey.GetValueKind(Key);
 
@@ -202,10 +234,20 @@ namespace Goedel.Mesh.Platform {
             return (string)RegistryKey.GetValue(Key);
             }
 
+        /// <summary>
+        /// Write a string valye
+        /// </summary>
+        /// <param name="Key">The Key</param>
+        /// <param name="Value">The value.</param>
         public void Write(string Key, string Value) {
             RegistryKey.SetValue(Key, Value);
             }
 
+        /// <summary>
+        /// Write a multiple string valye
+        /// </summary>
+        /// <param name="Key">The Key</param>
+        /// <param name="Value">The value.</param>
         public void Write(string Key, List<string> Value) {
             RegistryKey.SetValue(Key, Value);
             }

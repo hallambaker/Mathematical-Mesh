@@ -1,5 +1,5 @@
 
-//  Copyright (c) 2014 by .
+//  Copyright (c) 2016 by .
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -19,9 +19,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 //  
-//  //Header
-// With all fields as properties
-
+//  
 using System;
 using System.IO;
 using System.Collections;
@@ -33,18 +31,19 @@ using Goedel.Protocol;
 
 
 
-
 namespace Goedel.Persistence {
 
 
-    /// <summary>
-    /// 
-    /// </summary>
-	public abstract partial class LogEntry : Goedel.Protocol.JSONObject {
+	/// <summary>
+	///
+	/// Record persistence entries in a log format.
+	/// </summary>
+	public abstract partial class LogEntry : global::Goedel.Protocol.JSONObject {
 
         /// <summary>
-        /// 
+        /// Schema tag.
         /// </summary>
+        /// <returns>The tag value</returns>
 		public override string Tag () {
 			return "LogEntry";
 			}
@@ -59,6 +58,7 @@ namespace Goedel.Persistence {
         /// <summary>
         /// Construct an instance from a JSON encoded stream.
         /// </summary>
+        /// <param name="JSONReader">Input stream</param>
 		public LogEntry (JSONReader JSONReader) {
 			Deserialize (JSONReader);
 			_Initialize () ;
@@ -67,6 +67,7 @@ namespace Goedel.Persistence {
         /// <summary>
         /// Construct an instance from a JSON encoded string.
         /// </summary>
+        /// <param name="_String">Input string</param>
 		public LogEntry (string _String) {
 			Deserialize (_String);
 			_Initialize () ;
@@ -75,6 +76,8 @@ namespace Goedel.Persistence {
 		/// <summary>
         /// Construct an instance from the specified tagged JSONReader stream.
         /// </summary>
+        /// <param name="JSONReader">Input stream</param>
+        /// <param name="Out">The created object</param>
         public static void Deserialize(JSONReader JSONReader, out JSONObject Out) {
 	
 			JSONReader.StartObject ();
@@ -175,35 +178,47 @@ namespace Goedel.Persistence {
 
 		// Transaction Classes
 	/// <summary>
+	///
+	/// A log entry
 	/// </summary>
 	public partial class DataItem : LogEntry {
         /// <summary>
-        /// 
+        ///Unique Transaction ID. Text format ensures that the ID is easily
+        ///visible in binary formats etc.
         /// </summary>
+
 		public virtual string						TransactionID {
 			get {return _TransactionID;}			
 			set {_TransactionID = value;}
 			}
 		string						_TransactionID ;
         /// <summary>
-        /// 
+        ///Unique primary key.
         /// </summary>
+
 		public virtual string						PrimaryKey {
 			get {return _PrimaryKey;}			
 			set {_PrimaryKey = value;}
 			}
 		string						_PrimaryKey ;
         /// <summary>
-        /// 
+        ///Specifies the immediately prior transaction that affected
+        ///this identifier
         /// </summary>
+
 		public virtual string						PriorTransactionID {
 			get {return _PriorTransactionID;}			
 			set {_PriorTransactionID = value;}
 			}
 		string						_PriorTransactionID ;
         /// <summary>
-        /// 
+        ///Type of transaction, valid values include:
+        ///Delete (the key is removed)
+        ///New (the key is created)
+        ///Modify (the data associated with the key is modified)
+        ///Drop (the key is no longer active and will not be modified again)
         /// </summary>
+
 		public virtual string						Action {
 			get {return _Action;}			
 			set {_Action = value;}
@@ -212,31 +227,35 @@ namespace Goedel.Persistence {
 		bool								__Added = false;
 		private DateTime						_Added;
         /// <summary>
-        /// 
+        ///Time at which the item was added to the log
         /// </summary>
+
 		public virtual DateTime						Added {
 			get {return _Added;}
 			set {_Added = value; __Added = true; }
 			}
-		/// <summary>
-        /// 
+        /// <summary>
+        ///Index terms for data item
         /// </summary>
+
 		public virtual List<IndexTerm>				Keys {
 			get {return _Keys;}			
 			set {_Keys = value;}
 			}
 		List<IndexTerm>				_Keys;
         /// <summary>
-        /// 
+        ///Binary data.
         /// </summary>
+
 		public virtual byte[]						Data {
 			get {return _Data;}			
 			set {_Data = value;}
 			}
 		byte[]						_Data ;
         /// <summary>
-        /// 
+        ///Text data.
         /// </summary>
+
 		public virtual string						Text {
 			get {return _Text;}			
 			set {_Text = value;}
@@ -245,8 +264,10 @@ namespace Goedel.Persistence {
 		bool								__Pending = false;
 		private bool						_Pending;
         /// <summary>
-        /// 
+        ///If true, transaction is pending and will not be final until
+        ///a commit transaction is posted.
         /// </summary>
+
 		public virtual bool						Pending {
 			get {return _Pending;}
 			set {_Pending = value; __Pending = true; }
@@ -254,8 +275,10 @@ namespace Goedel.Persistence {
 		bool								__Commit = false;
 		private bool						_Commit;
         /// <summary>
-        /// 
+        ///If true, all pending transactions with the specified TransactionID
+        ///are committed and cannot roll back.
         /// </summary>
+
 		public virtual bool						Commit {
 			get {return _Commit;}
 			set {_Commit = value; __Commit = true; }
@@ -263,8 +286,10 @@ namespace Goedel.Persistence {
 		bool								__Rollback = false;
 		private bool						_Rollback;
         /// <summary>
-        /// 
+        ///If true, all pending transactions with the specified TransactionID
+        ///are aborted and ignored.
         /// </summary>
+
 		public virtual bool						Rollback {
 			get {return _Rollback;}
 			set {_Rollback = value; __Rollback = true; }
@@ -285,10 +310,21 @@ namespace Goedel.Persistence {
 			_Initialize ();
 			}
         /// <summary>
+		/// Initialize class from JSONReader stream.
         /// </summary>		
+        /// <param name="JSONReader">Input stream</param>	
 		public DataItem (JSONReader JSONReader) {
 			Deserialize (JSONReader);
 			}
+
+        /// <summary> 
+		/// Initialize class from a JSON encoded class.
+        /// </summary>		
+        /// <param name="_String">Input string</param>
+		public DataItem (string _String) {
+			Deserialize (_String);
+			}
+
 
         /// <summary>
         /// Serialize this object to the specified output stream.
@@ -439,7 +475,8 @@ namespace Goedel.Persistence {
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
-        /// <param name="JSONReader"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <returns>The created object.</returns>		
         public static new DataItem  FromTagged (JSONReader JSONReader) {
 			DataItem Out = null;
 
@@ -474,8 +511,8 @@ namespace Goedel.Persistence {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Tag"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
@@ -541,51 +578,60 @@ namespace Goedel.Persistence {
 		}
 
 	/// <summary>
+	///
+	/// Initial entry in a log file, specify the creation date, type of log,
+	/// etc.
 	/// </summary>
 	public partial class Header : LogEntry {
         /// <summary>
-        /// 
+        ///Log Type, usually 'Consolidated' 'Data' 'Index'
         /// </summary>
+
 		public virtual string						Type {
 			get {return _Type;}			
 			set {_Type = value;}
 			}
 		string						_Type ;
         /// <summary>
-        /// 
+        ///Content type identifier
         /// </summary>
+
 		public virtual string						Content {
 			get {return _Content;}			
 			set {_Content = value;}
 			}
 		string						_Content ;
         /// <summary>
-        /// 
+        ///Optional description of the log type
         /// </summary>
+
 		public virtual string						Comment {
 			get {return _Comment;}			
 			set {_Comment = value;}
 			}
 		string						_Comment ;
         /// <summary>
-        /// 
+        ///Digest Algorithm
         /// </summary>
+
 		public virtual string						Digest {
 			get {return _Digest;}			
 			set {_Digest = value;}
 			}
 		string						_Digest ;
         /// <summary>
-        /// 
+        ///Final value of last log
         /// </summary>
+
 		public virtual byte[]						LastDigest {
 			get {return _LastDigest;}			
 			set {_LastDigest = value;}
 			}
 		byte[]						_LastDigest ;
         /// <summary>
-        /// 
+        ///If populated, this is a delta log.
         /// </summary>
+
 		public virtual Delta						Delta {
 			get {return _Delta;}			
 			set {_Delta = value;}
@@ -607,10 +653,21 @@ namespace Goedel.Persistence {
 			_Initialize ();
 			}
         /// <summary>
+		/// Initialize class from JSONReader stream.
         /// </summary>		
+        /// <param name="JSONReader">Input stream</param>	
 		public Header (JSONReader JSONReader) {
 			Deserialize (JSONReader);
 			}
+
+        /// <summary> 
+		/// Initialize class from a JSON encoded class.
+        /// </summary>		
+        /// <param name="_String">Input string</param>
+		public Header (string _String) {
+			Deserialize (_String);
+			}
+
 
         /// <summary>
         /// Serialize this object to the specified output stream.
@@ -725,7 +782,8 @@ namespace Goedel.Persistence {
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
-        /// <param name="JSONReader"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <returns>The created object.</returns>		
         public static new Header  FromTagged (JSONReader JSONReader) {
 			Header Out = null;
 
@@ -760,8 +818,8 @@ namespace Goedel.Persistence {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Tag"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
@@ -802,19 +860,24 @@ namespace Goedel.Persistence {
 		}
 
 	/// <summary>
+	///
+	/// Describe a log that records the changes made since a specific 
+	/// checkpoint 
 	/// </summary>
 	public partial class Delta : LogEntry {
         /// <summary>
-        /// 
+        ///Filename of master log this is a delta to
         /// </summary>
+
 		public virtual string						Parent {
 			get {return _Parent;}			
 			set {_Parent = value;}
 			}
 		string						_Parent ;
         /// <summary>
-        /// 
+        ///Filename of previous delta log				 
         /// </summary>
+
 		public virtual string						Previous {
 			get {return _Previous;}			
 			set {_Previous = value;}
@@ -836,10 +899,21 @@ namespace Goedel.Persistence {
 			_Initialize ();
 			}
         /// <summary>
+		/// Initialize class from JSONReader stream.
         /// </summary>		
+        /// <param name="JSONReader">Input stream</param>	
 		public Delta (JSONReader JSONReader) {
 			Deserialize (JSONReader);
 			}
+
+        /// <summary> 
+		/// Initialize class from a JSON encoded class.
+        /// </summary>		
+        /// <param name="_String">Input string</param>
+		public Delta (string _String) {
+			Deserialize (_String);
+			}
+
 
         /// <summary>
         /// Serialize this object to the specified output stream.
@@ -934,7 +1008,8 @@ namespace Goedel.Persistence {
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
-        /// <param name="JSONReader"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <returns>The created object.</returns>		
         public static new Delta  FromTagged (JSONReader JSONReader) {
 			Delta Out = null;
 
@@ -969,8 +1044,8 @@ namespace Goedel.Persistence {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Tag"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
@@ -993,19 +1068,23 @@ namespace Goedel.Persistence {
 		}
 
 	/// <summary>
+	///
+	/// Record a collected index.
 	/// </summary>
 	public partial class IndexTerm : LogEntry {
         /// <summary>
-        /// 
+        ///Key under which index term is listed
         /// </summary>
+
 		public virtual string						Type {
 			get {return _Type;}			
 			set {_Type = value;}
 			}
 		string						_Type ;
         /// <summary>
-        /// 
+        ///Data associated with key
         /// </summary>
+
 		public virtual string						Term {
 			get {return _Term;}			
 			set {_Term = value;}
@@ -1027,10 +1106,21 @@ namespace Goedel.Persistence {
 			_Initialize ();
 			}
         /// <summary>
+		/// Initialize class from JSONReader stream.
         /// </summary>		
+        /// <param name="JSONReader">Input stream</param>	
 		public IndexTerm (JSONReader JSONReader) {
 			Deserialize (JSONReader);
 			}
+
+        /// <summary> 
+		/// Initialize class from a JSON encoded class.
+        /// </summary>		
+        /// <param name="_String">Input string</param>
+		public IndexTerm (string _String) {
+			Deserialize (_String);
+			}
+
 
         /// <summary>
         /// Serialize this object to the specified output stream.
@@ -1125,7 +1215,8 @@ namespace Goedel.Persistence {
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
-        /// <param name="JSONReader"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <returns>The created object.</returns>		
         public static new IndexTerm  FromTagged (JSONReader JSONReader) {
 			IndexTerm Out = null;
 
@@ -1160,8 +1251,8 @@ namespace Goedel.Persistence {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Tag"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
@@ -1184,11 +1275,15 @@ namespace Goedel.Persistence {
 		}
 
 	/// <summary>
+	///
+	/// Specify the digest value of a log up to but not including the 
+	/// record with the fingerprint.
 	/// </summary>
 	public partial class Final : LogEntry {
         /// <summary>
-        /// 
+        ///Digest of this log up to but not including this record
         /// </summary>
+
 		public virtual byte[]						Digest {
 			get {return _Digest;}			
 			set {_Digest = value;}
@@ -1210,10 +1305,21 @@ namespace Goedel.Persistence {
 			_Initialize ();
 			}
         /// <summary>
+		/// Initialize class from JSONReader stream.
         /// </summary>		
+        /// <param name="JSONReader">Input stream</param>	
 		public Final (JSONReader JSONReader) {
 			Deserialize (JSONReader);
 			}
+
+        /// <summary> 
+		/// Initialize class from a JSON encoded class.
+        /// </summary>		
+        /// <param name="_String">Input string</param>
+		public Final (string _String) {
+			Deserialize (_String);
+			}
+
 
         /// <summary>
         /// Serialize this object to the specified output stream.
@@ -1303,7 +1409,8 @@ namespace Goedel.Persistence {
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
-        /// <param name="JSONReader"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <returns>The created object.</returns>		
         public static new Final  FromTagged (JSONReader JSONReader) {
 			Final Out = null;
 
@@ -1338,8 +1445,8 @@ namespace Goedel.Persistence {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Tag"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
@@ -1358,11 +1465,15 @@ namespace Goedel.Persistence {
 		}
 
 	/// <summary>
+	///
+	/// Final entry in a log, contains indexes that specify the location
+	/// of the index records.
 	/// </summary>
 	public partial class Terminal : LogEntry {
-		/// <summary>
-        /// 
+        /// <summary>
+        ///Location of index records for specified key(s)
         /// </summary>
+
 		public virtual List<IndexIndex>				Indexes {
 			get {return _Indexes;}			
 			set {_Indexes = value;}
@@ -1384,10 +1495,21 @@ namespace Goedel.Persistence {
 			_Initialize ();
 			}
         /// <summary>
+		/// Initialize class from JSONReader stream.
         /// </summary>		
+        /// <param name="JSONReader">Input stream</param>	
 		public Terminal (JSONReader JSONReader) {
 			Deserialize (JSONReader);
 			}
+
+        /// <summary> 
+		/// Initialize class from a JSON encoded class.
+        /// </summary>		
+        /// <param name="_String">Input string</param>
+		public Terminal (string _String) {
+			Deserialize (_String);
+			}
+
 
         /// <summary>
         /// Serialize this object to the specified output stream.
@@ -1489,7 +1611,8 @@ namespace Goedel.Persistence {
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
-        /// <param name="JSONReader"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <returns>The created object.</returns>		
         public static new Terminal  FromTagged (JSONReader JSONReader) {
 			Terminal Out = null;
 
@@ -1524,8 +1647,8 @@ namespace Goedel.Persistence {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Tag"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
@@ -1552,11 +1675,14 @@ namespace Goedel.Persistence {
 		}
 
 	/// <summary>
+	///
+	/// Record an index location in the current log file.
 	/// </summary>
 	public partial class IndexIndex : LogEntry {
         /// <summary>
-        /// 
+        ///Key under which index term is listed
         /// </summary>
+
 		public virtual string						Key {
 			get {return _Key;}			
 			set {_Key = value;}
@@ -1565,8 +1691,9 @@ namespace Goedel.Persistence {
 		bool								__Offset = false;
 		private int						_Offset;
         /// <summary>
-        /// 
+        ///Location in file at which offset occurs
         /// </summary>
+
 		public virtual int						Offset {
 			get {return _Offset;}
 			set {_Offset = value; __Offset = true; }
@@ -1587,10 +1714,21 @@ namespace Goedel.Persistence {
 			_Initialize ();
 			}
         /// <summary>
+		/// Initialize class from JSONReader stream.
         /// </summary>		
+        /// <param name="JSONReader">Input stream</param>	
 		public IndexIndex (JSONReader JSONReader) {
 			Deserialize (JSONReader);
 			}
+
+        /// <summary> 
+		/// Initialize class from a JSON encoded class.
+        /// </summary>		
+        /// <param name="_String">Input string</param>
+		public IndexIndex (string _String) {
+			Deserialize (_String);
+			}
+
 
         /// <summary>
         /// Serialize this object to the specified output stream.
@@ -1685,7 +1823,8 @@ namespace Goedel.Persistence {
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
-        /// <param name="JSONReader"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <returns>The created object.</returns>		
         public static new IndexIndex  FromTagged (JSONReader JSONReader) {
 			IndexIndex Out = null;
 
@@ -1720,8 +1859,8 @@ namespace Goedel.Persistence {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Tag"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
@@ -1744,19 +1883,24 @@ namespace Goedel.Persistence {
 		}
 
 	/// <summary>
+	///
+	/// An index record. These are written out to a log file after it is closed 
+	/// to permit rapid access.
 	/// </summary>
 	public partial class Index : LogEntry {
         /// <summary>
-        /// 
+        ///Key that is indexed
         /// </summary>
+
 		public virtual string						Key {
 			get {return _Key;}			
 			set {_Key = value;}
 			}
 		string						_Key ;
-		/// <summary>
-        /// 
+        /// <summary>
+        ///List of occurrences of the specified index term.	
         /// </summary>
+
 		public virtual List<IndexEntry>				Entries {
 			get {return _Entries;}			
 			set {_Entries = value;}
@@ -1778,10 +1922,21 @@ namespace Goedel.Persistence {
 			_Initialize ();
 			}
         /// <summary>
+		/// Initialize class from JSONReader stream.
         /// </summary>		
+        /// <param name="JSONReader">Input stream</param>	
 		public Index (JSONReader JSONReader) {
 			Deserialize (JSONReader);
 			}
+
+        /// <summary> 
+		/// Initialize class from a JSON encoded class.
+        /// </summary>		
+        /// <param name="_String">Input string</param>
+		public Index (string _String) {
+			Deserialize (_String);
+			}
+
 
         /// <summary>
         /// Serialize this object to the specified output stream.
@@ -1888,7 +2043,8 @@ namespace Goedel.Persistence {
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
-        /// <param name="JSONReader"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <returns>The created object.</returns>		
         public static new Index  FromTagged (JSONReader JSONReader) {
 			Index Out = null;
 
@@ -1923,8 +2079,8 @@ namespace Goedel.Persistence {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Tag"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
@@ -1955,19 +2111,23 @@ namespace Goedel.Persistence {
 		}
 
 	/// <summary>
+	///
+	/// An index entry.
 	/// </summary>
 	public partial class IndexEntry : LogEntry {
         /// <summary>
-        /// 
+        ///Data associated with key
         /// </summary>
+
 		public virtual string						Data {
 			get {return _Data;}			
 			set {_Data = value;}
 			}
 		string						_Data ;
-		/// <summary>
-        /// 
+        /// <summary>
+        ///Location in file at which offset occurs
         /// </summary>
+
 		public virtual List<int>				Offset {
 			get {return _Offset;}			
 			set {_Offset = value;}
@@ -1989,10 +2149,21 @@ namespace Goedel.Persistence {
 			_Initialize ();
 			}
         /// <summary>
+		/// Initialize class from JSONReader stream.
         /// </summary>		
+        /// <param name="JSONReader">Input stream</param>	
 		public IndexEntry (JSONReader JSONReader) {
 			Deserialize (JSONReader);
 			}
+
+        /// <summary> 
+		/// Initialize class from a JSON encoded class.
+        /// </summary>		
+        /// <param name="_String">Input string</param>
+		public IndexEntry (string _String) {
+			Deserialize (_String);
+			}
+
 
         /// <summary>
         /// Serialize this object to the specified output stream.
@@ -2094,7 +2265,8 @@ namespace Goedel.Persistence {
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
-        /// <param name="JSONReader"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <returns>The created object.</returns>		
         public static new IndexEntry  FromTagged (JSONReader JSONReader) {
 			IndexEntry Out = null;
 
@@ -2129,8 +2301,8 @@ namespace Goedel.Persistence {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Tag"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {

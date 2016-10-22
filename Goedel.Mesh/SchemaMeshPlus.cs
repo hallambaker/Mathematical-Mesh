@@ -63,12 +63,13 @@ namespace Goedel.Mesh {
         }
 
     public partial class PublicKey {
-        /// <summary>
-        /// Is true if the Entry passed validation checking.
-        /// </summary>
-        public bool GetPrivate () {
-            return false;
-            }
+        ///// <summary>
+        ///// Is true if the Entry passed validation checking.
+        ///// </summary>
+        ///// <returns>True if the Entry passed validation checking.</returns>
+        //public bool GetPrivate () {
+        //    return false;
+        //    }
         }
 
 

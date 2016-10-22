@@ -128,7 +128,7 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Construct a MailProfile object from a MailAccountInfo object.
         /// </summary>
-        /// <param name="MailAccountInfo"></param>
+        /// <param name="MailAccountInfo">Description of the mail account settings.</param>
         public MailProfilePrivate(MailAccountInfo MailAccountInfo) {
             EmailAddress = MailAccountInfo.EmailAddress;
             ReplyToAddress = MailAccountInfo.ReplyToAddress;

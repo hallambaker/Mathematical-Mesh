@@ -60,7 +60,7 @@ namespace Goedel {
         /// <param name="Test">Must be true or exception is thrown.</param>
         /// <param name="Report">Message to report.</param>
         public static void If(bool Test, string Report) {
-            if (Test) throw new Throw (Report);
+            if (Test) throw new Throw(Report);
             }
 
         /// <summary>
@@ -69,7 +69,7 @@ namespace Goedel {
         /// <param name="Test">Must be false or exception is thrown.</param>
         /// <param name="Report">Message to report.</param>
         public static void IfNot(bool Test, string Report) {
-            if (!Test) throw new Throw (Report);
+            if (!Test) throw new Throw(Report);
             }
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace Goedel {
         /// </summary>
         /// <param name="Report">Message to report.</param>
         public static void Always(string Report) {
-            throw new Throw (Report);
+            throw new Throw(Report);
             }
 
         }

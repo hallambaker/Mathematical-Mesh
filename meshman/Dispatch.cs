@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Goedel.Debug;
+using Goedel.Protocol;
 using Goedel.Mesh;
 using Goedel.Mesh.Platform;
 

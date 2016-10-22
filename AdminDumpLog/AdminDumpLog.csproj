@@ -50,11 +50,19 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Publish|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Publish\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+    <DocumentationFile>bin\Debug\DumpLog.XML</DocumentationFile>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Goedel.Debug2, Version=1.0.6128.30690, Culture=neutral, PublicKeyToken=9ac84b9f2535680b, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Library\Goedel.Debug2.dll</HintPath>
-    </Reference>
     <Reference Include="Goedel.FSR">
       <HintPath>..\..\Library\Goedel.FSR.dll</HintPath>
     </Reference>

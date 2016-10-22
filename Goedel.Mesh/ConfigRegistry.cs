@@ -274,7 +274,7 @@ namespace Goedel.Mesh {
         /// Write the value to an XML stream.
         /// </summary>
         /// <param name="Key">The key to write</param>
-        /// <param name="Writer"></param>
+        /// <param name="Writer">The writer to output the entry to.</param>
         public abstract void Write(string Key, XmlWriter Writer);
         }
 

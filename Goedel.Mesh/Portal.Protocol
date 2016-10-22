@@ -1,7 +1,8 @@
 ﻿Protocol Goedel.Mesh Portal Portal
     Using Goedel.Cryptography.Jose 
 	Using Goedel.Mesh
-
+	Description
+		|Classes that represent data written to the portal log.
 
 	Section 1 "Mesh Portal Objects"
 		Description
@@ -23,6 +24,8 @@
 
 
 	Structure PortalEntry
+		Description
+			|An entry in the portal log
 		Abstract
 		DateTime Created
 			Description
@@ -52,6 +55,8 @@
 		
 
 	Structure AccountProfile
+		Description
+			|An account profile entry.
 		Inherits Account
 		Struct SignedPersonalProfile Profile
 			Description

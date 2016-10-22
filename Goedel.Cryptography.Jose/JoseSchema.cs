@@ -1,5 +1,5 @@
-﻿
-//  Copyright (c) 2014 by .
+
+//  Copyright (c) 2016 by .
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -19,8 +19,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 //  
-//  //Header
-// With all fields as properties
+//  
 
 using System;
 using System.IO;
@@ -40,7 +39,7 @@ namespace Goedel.Cryptography.Jose {
     /// <summary>
     /// 
     /// </summary>
-	public abstract partial class Jose : Goedel.Protocol.JSONObject {
+	public abstract partial class Jose : global::Goedel.Protocol.JSONObject {
 
         /// <summary>
         /// 

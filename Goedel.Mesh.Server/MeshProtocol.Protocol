@@ -2,6 +2,9 @@
 	Using Goedel.Mesh
 	Using Goedel.Persistence
 
+	Description
+		|Communication between the user and the portal.
+
 	Section 1 "Mesh Portal Service  Reference"
 
     Service MeshService "_mmm._tcp" "mmm" MeshRequest MeshResponse
@@ -226,6 +229,8 @@
 
 	Message HelloRequest
 		Inherits MeshRequest
+		Description
+			|Request service description.
 
 	Message HelloResponse
 		Description
@@ -551,14 +556,15 @@
 
 	Transaction Mesh Transfer TransferRequest TransferResponse
 		Description
-			|Request a bulk transfer of the log between the specified transaction
+			|Perform a bulk transfer of the log between the specified transaction
 			|identifiers. Requires appropriate authorization
 		Description
 			|[Not currently implemented]
 
 	Message TransferRequest
 		Description
-			|
+			|Request a bulk transfer of the log between the specified transaction
+			|identifiers. Requires appropriate authorization
 		Inherits MeshRequest
 		Struct SearchConstraints SearchConstraints
 			Description

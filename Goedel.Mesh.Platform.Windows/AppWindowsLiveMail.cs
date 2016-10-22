@@ -287,7 +287,7 @@ namespace Goedel.Mesh.Platform {
         /// Construct an account information object from the specified
         /// Windows Live Mail file.
         /// </summary>
-        /// <param name="FileName"></param>
+        /// <param name="FileName">The configuration file for the account.</param>
         public MailAccountInfoWLM(string FileName) {
             this.FileName = FileName;
             //_Inbound = new Connection();

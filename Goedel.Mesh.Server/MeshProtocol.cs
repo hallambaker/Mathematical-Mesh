@@ -20,14 +20,12 @@
 //  THE SOFTWARE.
 //  
 //  
-
 using System;
 using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using Goedel.Protocol;
-
 
 
 
@@ -38,14 +36,16 @@ using Goedel.Persistence;
 namespace Goedel.Mesh {
 
 
-    /// <summary>
-    /// 
-    /// </summary>
+	/// <summary>
+	///
+	/// Communication between the user and the portal.
+	/// </summary>
 	public abstract partial class MeshProtocol : global::Goedel.Protocol.JSONObject {
 
         /// <summary>
-        /// 
+        /// Schema tag.
         /// </summary>
+        /// <returns>The tag value</returns>
 		public override string Tag () {
 			return "MeshProtocol";
 			}
@@ -60,6 +60,7 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Construct an instance from a JSON encoded stream.
         /// </summary>
+        /// <param name="JSONReader">Input stream</param>
 		public MeshProtocol (JSONReader JSONReader) {
 			Deserialize (JSONReader);
 			_Initialize () ;
@@ -68,6 +69,7 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Construct an instance from a JSON encoded string.
         /// </summary>
+        /// <param name="_String">Input string</param>
 		public MeshProtocol (string _String) {
 			Deserialize (_String);
 			_Initialize () ;
@@ -76,6 +78,8 @@ namespace Goedel.Mesh {
 		/// <summary>
         /// Construct an instance from the specified tagged JSONReader stream.
         /// </summary>
+        /// <param name="JSONReader">Input stream</param>
+        /// <param name="Out">The created object</param>
         public static void Deserialize(JSONReader JSONReader, out JSONObject Out) {
 	
 			JSONReader.StartObject ();
@@ -366,88 +370,110 @@ namespace Goedel.Mesh {
 
 
         /// <summary>
-		/// Base class for implementing the transaction.
-        /// </summary>		
+		/// Base method for implementing the transaction  Hello.
+        /// </summary>
+        /// <param name="Request">The request object to send to the host.</param>
+		/// <returns>The response object from the service</returns>
         public virtual HelloResponse Hello (
                 HelloRequest Request) {
             return null;
             }
 
         /// <summary>
-		/// Base class for implementing the transaction.
-        /// </summary>		
+		/// Base method for implementing the transaction  ValidateAccount.
+        /// </summary>
+        /// <param name="Request">The request object to send to the host.</param>
+		/// <returns>The response object from the service</returns>
         public virtual ValidateResponse ValidateAccount (
                 ValidateRequest Request) {
             return null;
             }
 
         /// <summary>
-		/// Base class for implementing the transaction.
-        /// </summary>		
+		/// Base method for implementing the transaction  CreateAccount.
+        /// </summary>
+        /// <param name="Request">The request object to send to the host.</param>
+		/// <returns>The response object from the service</returns>
         public virtual CreateResponse CreateAccount (
                 CreateRequest Request) {
             return null;
             }
 
         /// <summary>
-		/// Base class for implementing the transaction.
-        /// </summary>		
+		/// Base method for implementing the transaction  Get.
+        /// </summary>
+        /// <param name="Request">The request object to send to the host.</param>
+		/// <returns>The response object from the service</returns>
         public virtual GetResponse Get (
                 GetRequest Request) {
             return null;
             }
 
         /// <summary>
-		/// Base class for implementing the transaction.
-        /// </summary>		
+		/// Base method for implementing the transaction  Publish.
+        /// </summary>
+        /// <param name="Request">The request object to send to the host.</param>
+		/// <returns>The response object from the service</returns>
         public virtual PublishResponse Publish (
                 PublishRequest Request) {
             return null;
             }
 
         /// <summary>
-		/// Base class for implementing the transaction.
-        /// </summary>		
+		/// Base method for implementing the transaction  Status.
+        /// </summary>
+        /// <param name="Request">The request object to send to the host.</param>
+		/// <returns>The response object from the service</returns>
         public virtual StatusResponse Status (
                 StatusRequest Request) {
             return null;
             }
 
         /// <summary>
-		/// Base class for implementing the transaction.
-        /// </summary>		
+		/// Base method for implementing the transaction  ConnectStart.
+        /// </summary>
+        /// <param name="Request">The request object to send to the host.</param>
+		/// <returns>The response object from the service</returns>
         public virtual ConnectStartResponse ConnectStart (
                 ConnectStartRequest Request) {
             return null;
             }
 
         /// <summary>
-		/// Base class for implementing the transaction.
-        /// </summary>		
+		/// Base method for implementing the transaction  ConnectStatus.
+        /// </summary>
+        /// <param name="Request">The request object to send to the host.</param>
+		/// <returns>The response object from the service</returns>
         public virtual ConnectStatusResponse ConnectStatus (
                 ConnectStatusRequest Request) {
             return null;
             }
 
         /// <summary>
-		/// Base class for implementing the transaction.
-        /// </summary>		
+		/// Base method for implementing the transaction  ConnectPending.
+        /// </summary>
+        /// <param name="Request">The request object to send to the host.</param>
+		/// <returns>The response object from the service</returns>
         public virtual ConnectPendingResponse ConnectPending (
                 ConnectPendingRequest Request) {
             return null;
             }
 
         /// <summary>
-		/// Base class for implementing the transaction.
-        /// </summary>		
+		/// Base method for implementing the transaction  ConnectComplete.
+        /// </summary>
+        /// <param name="Request">The request object to send to the host.</param>
+		/// <returns>The response object from the service</returns>
         public virtual ConnectCompleteResponse ConnectComplete (
                 ConnectCompleteRequest Request) {
             return null;
             }
 
         /// <summary>
-		/// Base class for implementing the transaction.
-        /// </summary>		
+		/// Base method for implementing the transaction  Transfer.
+        /// </summary>
+        /// <param name="Request">The request object to send to the host.</param>
+		/// <returns>The response object from the service</returns>
         public virtual TransferResponse Transfer (
                 TransferRequest Request) {
             return null;
@@ -473,6 +499,7 @@ namespace Goedel.Mesh {
         /// <summary>
 		/// Create a client connection to the specified service.
         /// </summary>	
+        /// <param name="JPCRemoteSession">The remote session to connect to</param>
 		public MeshServiceClient (JPCRemoteSession JPCRemoteSession) {
 			this.JPCRemoteSession = JPCRemoteSession;
 			}
@@ -481,6 +508,8 @@ namespace Goedel.Mesh {
         /// <summary>
 		/// Implement the transaction
         /// </summary>		
+        /// <param name="Request">The request object</param>
+		/// <returns>The response object</returns>
         public override HelloResponse Hello (
                 HelloRequest Request) {
 
@@ -493,6 +522,8 @@ namespace Goedel.Mesh {
         /// <summary>
 		/// Implement the transaction
         /// </summary>		
+        /// <param name="Request">The request object</param>
+		/// <returns>The response object</returns>
         public override ValidateResponse ValidateAccount (
                 ValidateRequest Request) {
 
@@ -505,6 +536,8 @@ namespace Goedel.Mesh {
         /// <summary>
 		/// Implement the transaction
         /// </summary>		
+        /// <param name="Request">The request object</param>
+		/// <returns>The response object</returns>
         public override CreateResponse CreateAccount (
                 CreateRequest Request) {
 
@@ -517,6 +550,8 @@ namespace Goedel.Mesh {
         /// <summary>
 		/// Implement the transaction
         /// </summary>		
+        /// <param name="Request">The request object</param>
+		/// <returns>The response object</returns>
         public override GetResponse Get (
                 GetRequest Request) {
 
@@ -529,6 +564,8 @@ namespace Goedel.Mesh {
         /// <summary>
 		/// Implement the transaction
         /// </summary>		
+        /// <param name="Request">The request object</param>
+		/// <returns>The response object</returns>
         public override PublishResponse Publish (
                 PublishRequest Request) {
 
@@ -541,6 +578,8 @@ namespace Goedel.Mesh {
         /// <summary>
 		/// Implement the transaction
         /// </summary>		
+        /// <param name="Request">The request object</param>
+		/// <returns>The response object</returns>
         public override StatusResponse Status (
                 StatusRequest Request) {
 
@@ -553,6 +592,8 @@ namespace Goedel.Mesh {
         /// <summary>
 		/// Implement the transaction
         /// </summary>		
+        /// <param name="Request">The request object</param>
+		/// <returns>The response object</returns>
         public override ConnectStartResponse ConnectStart (
                 ConnectStartRequest Request) {
 
@@ -565,6 +606,8 @@ namespace Goedel.Mesh {
         /// <summary>
 		/// Implement the transaction
         /// </summary>		
+        /// <param name="Request">The request object</param>
+		/// <returns>The response object</returns>
         public override ConnectStatusResponse ConnectStatus (
                 ConnectStatusRequest Request) {
 
@@ -577,6 +620,8 @@ namespace Goedel.Mesh {
         /// <summary>
 		/// Implement the transaction
         /// </summary>		
+        /// <param name="Request">The request object</param>
+		/// <returns>The response object</returns>
         public override ConnectPendingResponse ConnectPending (
                 ConnectPendingRequest Request) {
 
@@ -589,6 +634,8 @@ namespace Goedel.Mesh {
         /// <summary>
 		/// Implement the transaction
         /// </summary>		
+        /// <param name="Request">The request object</param>
+		/// <returns>The response object</returns>
         public override ConnectCompleteResponse ConnectComplete (
                 ConnectCompleteRequest Request) {
 
@@ -601,6 +648,8 @@ namespace Goedel.Mesh {
         /// <summary>
 		/// Implement the transaction
         /// </summary>		
+        /// <param name="Request">The request object</param>
+		/// <returns>The response object</returns>
         public override TransferResponse Transfer (
                 TransferRequest Request) {
 
@@ -694,7 +743,7 @@ namespace Goedel.Mesh {
 					break;
 					}
 				default : {
-					throw new Exception ();
+					throw new Goedel.Protocol.UnknownOperation ();
 					}
 				}
 			JSONReader.EndObject ();
@@ -714,8 +763,10 @@ namespace Goedel.Mesh {
 	/// </summary>
 	public partial class MeshRequest : Goedel.Protocol.Request {
         /// <summary>
-        /// 
+        ///Name of the Mesh Portal Service to which the request 
+        ///is directed.
         /// </summary>
+
 		public virtual string						Portal {
 			get {return _Portal;}			
 			set {_Portal = value;}
@@ -739,7 +790,8 @@ namespace Goedel.Mesh {
 
         /// <summary>
 		/// Initialize class from JSONReader stream.
-        /// </summary>		
+        /// </summary>	
+        /// <param name="JSONReader">Input stream</param>			
 		public MeshRequest (JSONReader JSONReader) {
 			Deserialize (JSONReader);
 			}
@@ -747,6 +799,7 @@ namespace Goedel.Mesh {
         /// <summary>
 		/// Initialize class from a JSON encoded class.
         /// </summary>		
+        /// <param name="_String">Input string</param>
 		public MeshRequest (string _String) {
 			Deserialize (_String);
 			}
@@ -840,7 +893,8 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
-        /// <param name="JSONReader"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <returns>The created object.</returns>		
         public static new MeshRequest  FromTagged (JSONReader JSONReader) {
 			MeshRequest Out = null;
 
@@ -980,8 +1034,8 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Tag"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
@@ -1013,15 +1067,19 @@ namespace Goedel.Mesh {
 		bool								__Status = false;
 		private int						_Status;
         /// <summary>
-        /// 
+        ///Status return code. The SMTP/HTTP scheme of 2xx = Success,
+        ///3xx = incomplete, 4xx = failure is followed.
         /// </summary>
+
 		public virtual int						Status {
 			get {return _Status;}
 			set {_Status = value; __Status = true; }
 			}
         /// <summary>
-        /// 
+        ///Text description of the status return code for debugging 
+        ///and log file use.
         /// </summary>
+
 		public virtual string						StatusDescription {
 			get {return _StatusDescription;}			
 			set {_StatusDescription = value;}
@@ -1045,7 +1103,8 @@ namespace Goedel.Mesh {
 
         /// <summary>
 		/// Initialize class from JSONReader stream.
-        /// </summary>		
+        /// </summary>	
+        /// <param name="JSONReader">Input stream</param>			
 		public MeshResponse (JSONReader JSONReader) {
 			Deserialize (JSONReader);
 			}
@@ -1053,6 +1112,7 @@ namespace Goedel.Mesh {
         /// <summary>
 		/// Initialize class from a JSON encoded class.
         /// </summary>		
+        /// <param name="_String">Input string</param>
 		public MeshResponse (string _String) {
 			Deserialize (_String);
 			}
@@ -1151,7 +1211,8 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
-        /// <param name="JSONReader"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <returns>The created object.</returns>		
         public static new MeshResponse  FromTagged (JSONReader JSONReader) {
 			MeshResponse Out = null;
 
@@ -1235,8 +1296,8 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Tag"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
@@ -1267,8 +1328,9 @@ namespace Goedel.Mesh {
 		bool								__Major = false;
 		private int						_Major;
         /// <summary>
-        /// 
+        ///Major version number of the service protocol. A higher
         /// </summary>
+
 		public virtual int						Major {
 			get {return _Major;}
 			set {_Major = value; __Major = true; }
@@ -1276,23 +1338,29 @@ namespace Goedel.Mesh {
 		bool								__Minor = false;
 		private int						_Minor;
         /// <summary>
-        /// 
+        ///Minor version number of the service protocol.
         /// </summary>
+
 		public virtual int						Minor {
 			get {return _Minor;}
 			set {_Minor = value; __Minor = true; }
 			}
-		/// <summary>
-        /// 
+        /// <summary>
+        ///Enumerates alternative encodings (e.g. ASN.1, XML, JSON-B)
+        ///supported by the service. If no encodings are specified, the
+        ///JSON encoding is assumed.
         /// </summary>
+
 		public virtual List<Encoding>				Encodings {
 			get {return _Encodings;}			
 			set {_Encodings = value;}
 			}
 		List<Encoding>				_Encodings;
-		/// <summary>
-        /// 
+        /// <summary>
+        ///The preferred URI for this service. This MAY be used to effect
+        ///a redirect in the case that a service moves.
         /// </summary>
+
 		public virtual List<string>				URI {
 			get {return _URI;}			
 			set {_URI = value;}
@@ -1316,6 +1384,7 @@ namespace Goedel.Mesh {
         /// <summary>
 		/// Initialize class from JSONReader stream.
         /// </summary>		
+        /// <param name="JSONReader">Input stream</param>	
 		public Version (JSONReader JSONReader) {
 			Deserialize (JSONReader);
 			}
@@ -1323,6 +1392,7 @@ namespace Goedel.Mesh {
         /// <summary> 
 		/// Initialize class from a JSON encoded class.
         /// </summary>		
+        /// <param name="_String">Input string</param>
 		public Version (string _String) {
 			Deserialize (_String);
 			}
@@ -1450,7 +1520,8 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
-        /// <param name="JSONReader"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <returns>The created object.</returns>		
         public static new Version  FromTagged (JSONReader JSONReader) {
 			Version Out = null;
 
@@ -1485,8 +1556,8 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Tag"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
@@ -1536,17 +1607,21 @@ namespace Goedel.Mesh {
 	/// Describes a message content encoding.
 	/// </summary>
 	public partial class Encoding : MeshProtocol {
-		/// <summary>
-        /// 
+        /// <summary>
+        ///The IANA encoding name
         /// </summary>
+
 		public virtual List<string>				ID {
 			get {return _ID;}			
 			set {_ID = value;}
 			}
 		List<string>				_ID;
-		/// <summary>
-        /// 
+        /// <summary>
+        ///For encodings that employ a named dictionary for tag or data
+        ///compression, the name of the dictionary as defined by that 
+        ///encoding scheme. 	
         /// </summary>
+
 		public virtual List<string>				Dictionary {
 			get {return _Dictionary;}			
 			set {_Dictionary = value;}
@@ -1570,6 +1645,7 @@ namespace Goedel.Mesh {
         /// <summary>
 		/// Initialize class from JSONReader stream.
         /// </summary>		
+        /// <param name="JSONReader">Input stream</param>	
 		public Encoding (JSONReader JSONReader) {
 			Deserialize (JSONReader);
 			}
@@ -1577,6 +1653,7 @@ namespace Goedel.Mesh {
         /// <summary> 
 		/// Initialize class from a JSON encoded class.
         /// </summary>		
+        /// <param name="_String">Input string</param>
 		public Encoding (string _String) {
 			Deserialize (_String);
 			}
@@ -1689,7 +1766,8 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
-        /// <param name="JSONReader"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <returns>The created object.</returns>		
         public static new Encoding  FromTagged (JSONReader JSONReader) {
 			Encoding Out = null;
 
@@ -1724,8 +1802,8 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Tag"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
@@ -1768,16 +1846,18 @@ namespace Goedel.Mesh {
 	/// </summary>
 	public partial class KeyValue : MeshProtocol {
         /// <summary>
-        /// 
+        ///The data retrieval key.
         /// </summary>
+
 		public virtual string						Key {
 			get {return _Key;}			
 			set {_Key = value;}
 			}
 		string						_Key ;
         /// <summary>
-        /// 
+        ///The data value to match.
         /// </summary>
+
 		public virtual string						Value {
 			get {return _Value;}			
 			set {_Value = value;}
@@ -1801,6 +1881,7 @@ namespace Goedel.Mesh {
         /// <summary>
 		/// Initialize class from JSONReader stream.
         /// </summary>		
+        /// <param name="JSONReader">Input stream</param>	
 		public KeyValue (JSONReader JSONReader) {
 			Deserialize (JSONReader);
 			}
@@ -1808,6 +1889,7 @@ namespace Goedel.Mesh {
         /// <summary> 
 		/// Initialize class from a JSON encoded class.
         /// </summary>		
+        /// <param name="_String">Input string</param>
 		public KeyValue (string _String) {
 			Deserialize (_String);
 			}
@@ -1906,7 +1988,8 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
-        /// <param name="JSONReader"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <returns>The created object.</returns>		
         public static new KeyValue  FromTagged (JSONReader JSONReader) {
 			KeyValue Out = null;
 
@@ -1941,8 +2024,8 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Tag"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
@@ -1974,8 +2057,10 @@ namespace Goedel.Mesh {
 		bool								__NotBefore = false;
 		private DateTime						_NotBefore;
         /// <summary>
-        /// 
+        ///Only data published on or after the specified time instant 
+        ///is requested.
         /// </summary>
+
 		public virtual DateTime						NotBefore {
 			get {return _NotBefore;}
 			set {_NotBefore = value; __NotBefore = true; }
@@ -1983,8 +2068,10 @@ namespace Goedel.Mesh {
 		bool								__Before = false;
 		private DateTime						_Before;
         /// <summary>
-        /// 
+        ///Only data published before the specified time instant is
+        ///requested. This excludes data published at the specified time instant.
         /// </summary>
+
 		public virtual DateTime						Before {
 			get {return _Before;}
 			set {_Before = value; __Before = true; }
@@ -1992,8 +2079,9 @@ namespace Goedel.Mesh {
 		bool								__MaxEntries = false;
 		private int						_MaxEntries;
         /// <summary>
-        /// 
+        ///Maximum number of data entries to return.
         /// </summary>
+
 		public virtual int						MaxEntries {
 			get {return _MaxEntries;}
 			set {_MaxEntries = value; __MaxEntries = true; }
@@ -2001,15 +2089,21 @@ namespace Goedel.Mesh {
 		bool								__MaxBytes = false;
 		private int						_MaxBytes;
         /// <summary>
-        /// 
+        ///Maximum number of data bytes to return.
         /// </summary>
+
 		public virtual int						MaxBytes {
 			get {return _MaxBytes;}
 			set {_MaxBytes = value; __MaxBytes = true; }
 			}
         /// <summary>
-        /// 
+        ///Specifies a page key returned in a previous search operation
+        ///in which the number of responses exceeded the specified bounds.
+        ///When a page key is specified, all the other search parameters
+        ///except for MaxEntries and MaxBytes are ignored and the service
+        ///returns the next set of data responding to the earlier query.
         /// </summary>
+
 		public virtual string						PageKey {
 			get {return _PageKey;}			
 			set {_PageKey = value;}
@@ -2033,6 +2127,7 @@ namespace Goedel.Mesh {
         /// <summary>
 		/// Initialize class from JSONReader stream.
         /// </summary>		
+        /// <param name="JSONReader">Input stream</param>	
 		public SearchConstraints (JSONReader JSONReader) {
 			Deserialize (JSONReader);
 			}
@@ -2040,6 +2135,7 @@ namespace Goedel.Mesh {
         /// <summary> 
 		/// Initialize class from a JSON encoded class.
         /// </summary>		
+        /// <param name="_String">Input string</param>
 		public SearchConstraints (string _String) {
 			Deserialize (_String);
 			}
@@ -2153,7 +2249,8 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
-        /// <param name="JSONReader"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <returns>The created object.</returns>		
         public static new SearchConstraints  FromTagged (JSONReader JSONReader) {
 			SearchConstraints Out = null;
 
@@ -2188,8 +2285,8 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Tag"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
@@ -2224,6 +2321,8 @@ namespace Goedel.Mesh {
 		}
 
 	/// <summary>
+	///
+	/// Request service description.
 	/// </summary>
 	public partial class HelloRequest : MeshRequest {
 
@@ -2244,7 +2343,8 @@ namespace Goedel.Mesh {
 
         /// <summary>
 		/// Initialize class from JSONReader stream.
-        /// </summary>		
+        /// </summary>	
+        /// <param name="JSONReader">Input stream</param>			
 		public HelloRequest (JSONReader JSONReader) {
 			Deserialize (JSONReader);
 			}
@@ -2252,6 +2352,7 @@ namespace Goedel.Mesh {
         /// <summary>
 		/// Initialize class from a JSON encoded class.
         /// </summary>		
+        /// <param name="_String">Input string</param>
 		public HelloRequest (string _String) {
 			Deserialize (_String);
 			}
@@ -2340,7 +2441,8 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
-        /// <param name="JSONReader"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <returns>The created object.</returns>		
         public static new HelloRequest  FromTagged (JSONReader JSONReader) {
 			HelloRequest Out = null;
 
@@ -2375,8 +2477,8 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Tag"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
@@ -2398,16 +2500,18 @@ namespace Goedel.Mesh {
 	/// </summary>
 	public partial class HelloResponse : MeshResponse {
         /// <summary>
-        /// 
+        ///Enumerates the protocol versions supported
         /// </summary>
+
 		public virtual Version						Version {
 			get {return _Version;}			
 			set {_Version = value;}
 			}
 		Version						_Version ;
-		/// <summary>
-        /// 
+        /// <summary>
+        ///Enumerates alternate protocol version(s) supported
         /// </summary>
+
 		public virtual List<Version>				Alternates {
 			get {return _Alternates;}			
 			set {_Alternates = value;}
@@ -2431,7 +2535,8 @@ namespace Goedel.Mesh {
 
         /// <summary>
 		/// Initialize class from JSONReader stream.
-        /// </summary>		
+        /// </summary>	
+        /// <param name="JSONReader">Input stream</param>			
 		public HelloResponse (JSONReader JSONReader) {
 			Deserialize (JSONReader);
 			}
@@ -2439,6 +2544,7 @@ namespace Goedel.Mesh {
         /// <summary>
 		/// Initialize class from a JSON encoded class.
         /// </summary>		
+        /// <param name="_String">Input string</param>
 		public HelloResponse (string _String) {
 			Deserialize (_String);
 			}
@@ -2549,7 +2655,8 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
-        /// <param name="JSONReader"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <returns>The created object.</returns>		
         public static new HelloResponse  FromTagged (JSONReader JSONReader) {
 			HelloResponse Out = null;
 
@@ -2584,8 +2691,8 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Tag"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
@@ -2625,8 +2732,9 @@ namespace Goedel.Mesh {
 	/// </summary>
 	public partial class ValidateRequest : MeshRequest {
         /// <summary>
-        /// 
+        ///Account name requested
         /// </summary>
+
 		public virtual string						Account {
 			get {return _Account;}			
 			set {_Account = value;}
@@ -2635,15 +2743,20 @@ namespace Goedel.Mesh {
 		bool								__Reserve = false;
 		private bool						_Reserve;
         /// <summary>
-        /// 
+        ///If true, request a reservation for the specified account name.
+        ///Note that the service is not obliged to honor reservation 
+        ///requests.
         /// </summary>
+
 		public virtual bool						Reserve {
 			get {return _Reserve;}
 			set {_Reserve = value; __Reserve = true; }
 			}
-		/// <summary>
-        /// 
+        /// <summary>
+        ///List of ISO language codes in order of preference. For creating
+        ///explanatory text.
         /// </summary>
+
 		public virtual List<string>				Language {
 			get {return _Language;}			
 			set {_Language = value;}
@@ -2667,7 +2780,8 @@ namespace Goedel.Mesh {
 
         /// <summary>
 		/// Initialize class from JSONReader stream.
-        /// </summary>		
+        /// </summary>	
+        /// <param name="JSONReader">Input stream</param>			
 		public ValidateRequest (JSONReader JSONReader) {
 			Deserialize (JSONReader);
 			}
@@ -2675,6 +2789,7 @@ namespace Goedel.Mesh {
         /// <summary>
 		/// Initialize class from a JSON encoded class.
         /// </summary>		
+        /// <param name="_String">Input string</param>
 		public ValidateRequest (string _String) {
 			Deserialize (_String);
 			}
@@ -2785,7 +2900,8 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
-        /// <param name="JSONReader"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <returns>The created object.</returns>		
         public static new ValidateRequest  FromTagged (JSONReader JSONReader) {
 			ValidateRequest Out = null;
 
@@ -2820,8 +2936,8 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Tag"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
@@ -2871,8 +2987,10 @@ namespace Goedel.Mesh {
 		bool								__Valid = false;
 		private bool						_Valid;
         /// <summary>
-        /// 
+        ///If true, the specified account identifier is acceptable. If false,
+        ///the account identifier is rejected.
         /// </summary>
+
 		public virtual bool						Valid {
 			get {return _Valid;}
 			set {_Valid = value; __Valid = true; }
@@ -2880,8 +2998,9 @@ namespace Goedel.Mesh {
 		bool								__Minimum = false;
 		private int						_Minimum;
         /// <summary>
-        /// 
+        ///Specifies the minimum length of an account name.
         /// </summary>
+
 		public virtual int						Minimum {
 			get {return _Minimum;}
 			set {_Minimum = value; __Minimum = true; }
@@ -2889,23 +3008,29 @@ namespace Goedel.Mesh {
 		bool								__Maximum = false;
 		private int						_Maximum;
         /// <summary>
-        /// 
+        ///Specifies the maximum length of an account name.
         /// </summary>
+
 		public virtual int						Maximum {
 			get {return _Maximum;}
 			set {_Maximum = value; __Maximum = true; }
 			}
         /// <summary>
-        /// 
+        ///A list of characters that the service 
+        ///does not accept in account names. The list of characters 
+        ///MAY not be exhaustive but SHOULD include any illegal characters
+        ///in the proposed account name.
         /// </summary>
+
 		public virtual string						InvalidCharacters {
 			get {return _InvalidCharacters;}			
 			set {_InvalidCharacters = value;}
 			}
 		string						_InvalidCharacters ;
         /// <summary>
-        /// 
+        ///Text explaining the reason an account name was rejected.
         /// </summary>
+
 		public virtual string						Reason {
 			get {return _Reason;}			
 			set {_Reason = value;}
@@ -2929,7 +3054,8 @@ namespace Goedel.Mesh {
 
         /// <summary>
 		/// Initialize class from JSONReader stream.
-        /// </summary>		
+        /// </summary>	
+        /// <param name="JSONReader">Input stream</param>			
 		public ValidateResponse (JSONReader JSONReader) {
 			Deserialize (JSONReader);
 			}
@@ -2937,6 +3063,7 @@ namespace Goedel.Mesh {
         /// <summary>
 		/// Initialize class from a JSON encoded class.
         /// </summary>		
+        /// <param name="_String">Input string</param>
 		public ValidateResponse (string _String) {
 			Deserialize (_String);
 			}
@@ -3050,7 +3177,8 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
-        /// <param name="JSONReader"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <returns>The created object.</returns>		
         public static new ValidateResponse  FromTagged (JSONReader JSONReader) {
 			ValidateResponse Out = null;
 
@@ -3085,8 +3213,8 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Tag"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
@@ -3129,16 +3257,19 @@ namespace Goedel.Mesh {
 	/// </summary>
 	public partial class CreateRequest : MeshRequest {
         /// <summary>
-        /// 
+        ///Account identifier requested.
         /// </summary>
+
 		public virtual string						Account {
 			get {return _Account;}			
 			set {_Account = value;}
 			}
 		string						_Account ;
         /// <summary>
-        /// 
+        ///User profile of account to be created. The profile MUST specify the 
+        ///account being created as an account.
         /// </summary>
+
 		public virtual SignedProfile						Profile {
 			get {return _Profile;}			
 			set {_Profile = value;}
@@ -3162,7 +3293,8 @@ namespace Goedel.Mesh {
 
         /// <summary>
 		/// Initialize class from JSONReader stream.
-        /// </summary>		
+        /// </summary>	
+        /// <param name="JSONReader">Input stream</param>			
 		public CreateRequest (JSONReader JSONReader) {
 			Deserialize (JSONReader);
 			}
@@ -3170,6 +3302,7 @@ namespace Goedel.Mesh {
         /// <summary>
 		/// Initialize class from a JSON encoded class.
         /// </summary>		
+        /// <param name="_String">Input string</param>
 		public CreateRequest (string _String) {
 			Deserialize (_String);
 			}
@@ -3276,7 +3409,8 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
-        /// <param name="JSONReader"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <returns>The created object.</returns>		
         public static new CreateRequest  FromTagged (JSONReader JSONReader) {
 			CreateRequest Out = null;
 
@@ -3311,8 +3445,8 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Tag"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
@@ -3358,7 +3492,8 @@ namespace Goedel.Mesh {
 
         /// <summary>
 		/// Initialize class from JSONReader stream.
-        /// </summary>		
+        /// </summary>	
+        /// <param name="JSONReader">Input stream</param>			
 		public CreateResponse (JSONReader JSONReader) {
 			Deserialize (JSONReader);
 			}
@@ -3366,6 +3501,7 @@ namespace Goedel.Mesh {
         /// <summary>
 		/// Initialize class from a JSON encoded class.
         /// </summary>		
+        /// <param name="_String">Input string</param>
 		public CreateResponse (string _String) {
 			Deserialize (_String);
 			}
@@ -3454,7 +3590,8 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
-        /// <param name="JSONReader"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <returns>The created object.</returns>		
         public static new CreateResponse  FromTagged (JSONReader JSONReader) {
 			CreateResponse Out = null;
 
@@ -3489,8 +3626,8 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Tag"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
@@ -3511,32 +3648,37 @@ namespace Goedel.Mesh {
 	/// </summary>
 	public partial class GetRequest : MeshRequest {
         /// <summary>
-        /// 
+        ///Lookup by profile ID
         /// </summary>
+
 		public virtual string						Identifier {
 			get {return _Identifier;}			
 			set {_Identifier = value;}
 			}
 		string						_Identifier ;
         /// <summary>
-        /// 
+        ///Lookup by Account ID
         /// </summary>
+
 		public virtual string						Account {
 			get {return _Account;}			
 			set {_Account = value;}
 			}
 		string						_Account ;
-		/// <summary>
-        /// 
+        /// <summary>
+        ///List of KeyValue pairs specifying the conditions to be met
         /// </summary>
+
 		public virtual List<KeyValue>				KeyValues {
 			get {return _KeyValues;}			
 			set {_KeyValues = value;}
 			}
 		List<KeyValue>				_KeyValues;
         /// <summary>
-        /// 
+        ///Constrain the search to a specific time interval and/or 
+        ///limit the number and/or total size of data records returned.
         /// </summary>
+
 		public virtual SearchConstraints						SearchConstraints {
 			get {return _SearchConstraints;}			
 			set {_SearchConstraints = value;}
@@ -3545,8 +3687,9 @@ namespace Goedel.Mesh {
 		bool								__Multiple = false;
 		private bool						_Multiple;
         /// <summary>
-        /// 
+        ///If true return multiple responses if available
         /// </summary>
+
 		public virtual bool						Multiple {
 			get {return _Multiple;}
 			set {_Multiple = value; __Multiple = true; }
@@ -3554,8 +3697,12 @@ namespace Goedel.Mesh {
 		bool								__Full = false;
 		private bool						_Full;
         /// <summary>
-        /// 
+        ///If true, the client requests that the full Mesh data record 
+        ///be returned containing both the Mesh entry itself and the 
+        ///Mesh metadata that allows the date and time of the 
+        ///publication of the Mesh entry to be verified.
         /// </summary>
+
 		public virtual bool						Full {
 			get {return _Full;}
 			set {_Full = value; __Full = true; }
@@ -3578,7 +3725,8 @@ namespace Goedel.Mesh {
 
         /// <summary>
 		/// Initialize class from JSONReader stream.
-        /// </summary>		
+        /// </summary>	
+        /// <param name="JSONReader">Input stream</param>			
 		public GetRequest (JSONReader JSONReader) {
 			Deserialize (JSONReader);
 			}
@@ -3586,6 +3734,7 @@ namespace Goedel.Mesh {
         /// <summary>
 		/// Initialize class from a JSON encoded class.
         /// </summary>		
+        /// <param name="_String">Input string</param>
 		public GetRequest (string _String) {
 			Deserialize (_String);
 			}
@@ -3716,7 +3865,8 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
-        /// <param name="JSONReader"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <returns>The created object.</returns>		
         public static new GetRequest  FromTagged (JSONReader JSONReader) {
 			GetRequest Out = null;
 
@@ -3751,8 +3901,8 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Tag"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
@@ -3808,25 +3958,30 @@ namespace Goedel.Mesh {
 	/// matching the request.
 	/// </summary>
 	public partial class GetResponse : MeshResponse {
-		/// <summary>
-        /// 
+        /// <summary>
+        ///List of entries matching the request.
         /// </summary>
+
 		public virtual List<Entry>				Entries {
 			get {return _Entries;}			
 			set {_Entries = value;}
 			}
 		List<Entry>				_Entries;
-		/// <summary>
-        /// 
+        /// <summary>
+        ///List of mesh data records matching the request.
         /// </summary>
+
 		public virtual List<DataItem>				DataItems {
 			get {return _DataItems;}			
 			set {_DataItems = value;}
 			}
 		List<DataItem>				_DataItems;
         /// <summary>
-        /// 
+        ///If non-null, indicates that the number and/or size of the data records
+        ///returned exceeds either the SearchConstraints specified in the
+        ///request or internal server limits.
         /// </summary>
+
 		public virtual string						PageKey {
 			get {return _PageKey;}			
 			set {_PageKey = value;}
@@ -3850,7 +4005,8 @@ namespace Goedel.Mesh {
 
         /// <summary>
 		/// Initialize class from JSONReader stream.
-        /// </summary>		
+        /// </summary>	
+        /// <param name="JSONReader">Input stream</param>			
 		public GetResponse (JSONReader JSONReader) {
 			Deserialize (JSONReader);
 			}
@@ -3858,6 +4014,7 @@ namespace Goedel.Mesh {
         /// <summary>
 		/// Initialize class from a JSON encoded class.
         /// </summary>		
+        /// <param name="_String">Input string</param>
 		public GetResponse (string _String) {
 			Deserialize (_String);
 			}
@@ -3984,7 +4141,8 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
-        /// <param name="JSONReader"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <returns>The created object.</returns>		
         public static new GetResponse  FromTagged (JSONReader JSONReader) {
 			GetResponse Out = null;
 
@@ -4019,8 +4177,8 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Tag"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
@@ -4068,8 +4226,9 @@ namespace Goedel.Mesh {
 	/// </summary>
 	public partial class PublishRequest : MeshRequest {
         /// <summary>
-        /// 
+        ///Signed profile to be published.
         /// </summary>
+
 		public virtual Entry						Entry {
 			get {return _Entry;}			
 			set {_Entry = value;}
@@ -4093,7 +4252,8 @@ namespace Goedel.Mesh {
 
         /// <summary>
 		/// Initialize class from JSONReader stream.
-        /// </summary>		
+        /// </summary>	
+        /// <param name="JSONReader">Input stream</param>			
 		public PublishRequest (JSONReader JSONReader) {
 			Deserialize (JSONReader);
 			}
@@ -4101,6 +4261,7 @@ namespace Goedel.Mesh {
         /// <summary>
 		/// Initialize class from a JSON encoded class.
         /// </summary>		
+        /// <param name="_String">Input string</param>
 		public PublishRequest (string _String) {
 			Deserialize (_String);
 			}
@@ -4202,7 +4363,8 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
-        /// <param name="JSONReader"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <returns>The created object.</returns>		
         public static new PublishRequest  FromTagged (JSONReader JSONReader) {
 			PublishRequest Out = null;
 
@@ -4237,8 +4399,8 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Tag"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
@@ -4280,7 +4442,8 @@ namespace Goedel.Mesh {
 
         /// <summary>
 		/// Initialize class from JSONReader stream.
-        /// </summary>		
+        /// </summary>	
+        /// <param name="JSONReader">Input stream</param>			
 		public PublishResponse (JSONReader JSONReader) {
 			Deserialize (JSONReader);
 			}
@@ -4288,6 +4451,7 @@ namespace Goedel.Mesh {
         /// <summary>
 		/// Initialize class from a JSON encoded class.
         /// </summary>		
+        /// <param name="_String">Input string</param>
 		public PublishResponse (string _String) {
 			Deserialize (_String);
 			}
@@ -4376,7 +4540,8 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
-        /// <param name="JSONReader"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <returns>The created object.</returns>		
         public static new PublishResponse  FromTagged (JSONReader JSONReader) {
 			PublishResponse Out = null;
 
@@ -4411,8 +4576,8 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Tag"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
@@ -4450,7 +4615,8 @@ namespace Goedel.Mesh {
 
         /// <summary>
 		/// Initialize class from JSONReader stream.
-        /// </summary>		
+        /// </summary>	
+        /// <param name="JSONReader">Input stream</param>			
 		public StatusRequest (JSONReader JSONReader) {
 			Deserialize (JSONReader);
 			}
@@ -4458,6 +4624,7 @@ namespace Goedel.Mesh {
         /// <summary>
 		/// Initialize class from a JSON encoded class.
         /// </summary>		
+        /// <param name="_String">Input string</param>
 		public StatusRequest (string _String) {
 			Deserialize (_String);
 			}
@@ -4546,7 +4713,8 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
-        /// <param name="JSONReader"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <returns>The created object.</returns>		
         public static new StatusRequest  FromTagged (JSONReader JSONReader) {
 			StatusRequest Out = null;
 
@@ -4581,8 +4749,8 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Tag"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
@@ -4605,8 +4773,9 @@ namespace Goedel.Mesh {
 		bool								__LastWriteTime = false;
 		private DateTime						_LastWriteTime;
         /// <summary>
-        /// 
+        ///Time that the last write update was made to the Mesh
         /// </summary>
+
 		public virtual DateTime						LastWriteTime {
 			get {return _LastWriteTime;}
 			set {_LastWriteTime = value; __LastWriteTime = true; }
@@ -4614,8 +4783,9 @@ namespace Goedel.Mesh {
 		bool								__LastCheckpointTime = false;
 		private DateTime						_LastCheckpointTime;
         /// <summary>
-        /// 
+        ///Time that the last Mesh checkpoint was calculated.
         /// </summary>
+
 		public virtual DateTime						LastCheckpointTime {
 			get {return _LastCheckpointTime;}
 			set {_LastCheckpointTime = value; __LastCheckpointTime = true; }
@@ -4623,15 +4793,17 @@ namespace Goedel.Mesh {
 		bool								__NextCheckpointTime = false;
 		private DateTime						_NextCheckpointTime;
         /// <summary>
-        /// 
+        ///Time at which the next Mesh checkpoint should be calculated.
         /// </summary>
+
 		public virtual DateTime						NextCheckpointTime {
 			get {return _NextCheckpointTime;}
 			set {_NextCheckpointTime = value; __NextCheckpointTime = true; }
 			}
         /// <summary>
-        /// 
+        ///Last checkpoint value.
         /// </summary>
+
 		public virtual string						CheckpointValue {
 			get {return _CheckpointValue;}			
 			set {_CheckpointValue = value;}
@@ -4655,7 +4827,8 @@ namespace Goedel.Mesh {
 
         /// <summary>
 		/// Initialize class from JSONReader stream.
-        /// </summary>		
+        /// </summary>	
+        /// <param name="JSONReader">Input stream</param>			
 		public StatusResponse (JSONReader JSONReader) {
 			Deserialize (JSONReader);
 			}
@@ -4663,6 +4836,7 @@ namespace Goedel.Mesh {
         /// <summary>
 		/// Initialize class from a JSON encoded class.
         /// </summary>		
+        /// <param name="_String">Input string</param>
 		public StatusResponse (string _String) {
 			Deserialize (_String);
 			}
@@ -4771,7 +4945,8 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
-        /// <param name="JSONReader"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <returns>The created object.</returns>		
         public static new StatusResponse  FromTagged (JSONReader JSONReader) {
 			StatusResponse Out = null;
 
@@ -4806,8 +4981,8 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Tag"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
@@ -4844,16 +5019,20 @@ namespace Goedel.Mesh {
 	/// </summary>
 	public partial class ConnectStartRequest : MeshRequest {
         /// <summary>
-        /// 
+        ///Device connection request signed by thesignature key of the 
+        ///device requesting connection.
         /// </summary>
+
 		public virtual SignedConnectionRequest						SignedRequest {
 			get {return _SignedRequest;}			
 			set {_SignedRequest = value;}
 			}
 		SignedConnectionRequest						_SignedRequest ;
         /// <summary>
-        /// 
+        ///Account identifier of account to which the device is requesting
+        ///connection.
         /// </summary>
+
 		public virtual string						AccountID {
 			get {return _AccountID;}			
 			set {_AccountID = value;}
@@ -4877,7 +5056,8 @@ namespace Goedel.Mesh {
 
         /// <summary>
 		/// Initialize class from JSONReader stream.
-        /// </summary>		
+        /// </summary>	
+        /// <param name="JSONReader">Input stream</param>			
 		public ConnectStartRequest (JSONReader JSONReader) {
 			Deserialize (JSONReader);
 			}
@@ -4885,6 +5065,7 @@ namespace Goedel.Mesh {
         /// <summary>
 		/// Initialize class from a JSON encoded class.
         /// </summary>		
+        /// <param name="_String">Input string</param>
 		public ConnectStartRequest (string _String) {
 			Deserialize (_String);
 			}
@@ -4983,7 +5164,8 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
-        /// <param name="JSONReader"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <returns>The created object.</returns>		
         public static new ConnectStartRequest  FromTagged (JSONReader JSONReader) {
 			ConnectStartRequest Out = null;
 
@@ -5018,8 +5200,8 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Tag"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
@@ -5067,7 +5249,8 @@ namespace Goedel.Mesh {
 
         /// <summary>
 		/// Initialize class from JSONReader stream.
-        /// </summary>		
+        /// </summary>	
+        /// <param name="JSONReader">Input stream</param>			
 		public ConnectStartResponse (JSONReader JSONReader) {
 			Deserialize (JSONReader);
 			}
@@ -5075,6 +5258,7 @@ namespace Goedel.Mesh {
         /// <summary>
 		/// Initialize class from a JSON encoded class.
         /// </summary>		
+        /// <param name="_String">Input string</param>
 		public ConnectStartResponse (string _String) {
 			Deserialize (_String);
 			}
@@ -5163,7 +5347,8 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
-        /// <param name="JSONReader"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <returns>The created object.</returns>		
         public static new ConnectStartResponse  FromTagged (JSONReader JSONReader) {
 			ConnectStartResponse Out = null;
 
@@ -5198,8 +5383,8 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Tag"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
@@ -5221,16 +5406,19 @@ namespace Goedel.Mesh {
 	/// </summary>
 	public partial class ConnectStatusRequest : MeshRequest {
         /// <summary>
-        /// 
+        ///Account identifier for which pending connection information
+        ///is requested.
         /// </summary>
+
 		public virtual string						AccountID {
 			get {return _AccountID;}			
 			set {_AccountID = value;}
 			}
 		string						_AccountID ;
         /// <summary>
-        /// 
+        ///Device identifier of device requesting status information.
         /// </summary>
+
 		public virtual string						DeviceID {
 			get {return _DeviceID;}			
 			set {_DeviceID = value;}
@@ -5254,7 +5442,8 @@ namespace Goedel.Mesh {
 
         /// <summary>
 		/// Initialize class from JSONReader stream.
-        /// </summary>		
+        /// </summary>	
+        /// <param name="JSONReader">Input stream</param>			
 		public ConnectStatusRequest (JSONReader JSONReader) {
 			Deserialize (JSONReader);
 			}
@@ -5262,6 +5451,7 @@ namespace Goedel.Mesh {
         /// <summary>
 		/// Initialize class from a JSON encoded class.
         /// </summary>		
+        /// <param name="_String">Input string</param>
 		public ConnectStatusRequest (string _String) {
 			Deserialize (_String);
 			}
@@ -5360,7 +5550,8 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
-        /// <param name="JSONReader"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <returns>The created object.</returns>		
         public static new ConnectStatusRequest  FromTagged (JSONReader JSONReader) {
 			ConnectStatusRequest Out = null;
 
@@ -5395,8 +5586,8 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Tag"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
@@ -5425,8 +5616,9 @@ namespace Goedel.Mesh {
 	/// </summary>
 	public partial class ConnectStatusResponse : MeshRequest {
         /// <summary>
-        /// 
+        ///The signed ConnectionResult object.
         /// </summary>
+
 		public virtual SignedConnectionResult						Result {
 			get {return _Result;}			
 			set {_Result = value;}
@@ -5450,7 +5642,8 @@ namespace Goedel.Mesh {
 
         /// <summary>
 		/// Initialize class from JSONReader stream.
-        /// </summary>		
+        /// </summary>	
+        /// <param name="JSONReader">Input stream</param>			
 		public ConnectStatusResponse (JSONReader JSONReader) {
 			Deserialize (JSONReader);
 			}
@@ -5458,6 +5651,7 @@ namespace Goedel.Mesh {
         /// <summary>
 		/// Initialize class from a JSON encoded class.
         /// </summary>		
+        /// <param name="_String">Input string</param>
 		public ConnectStatusResponse (string _String) {
 			Deserialize (_String);
 			}
@@ -5551,7 +5745,8 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
-        /// <param name="JSONReader"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <returns>The created object.</returns>		
         public static new ConnectStatusResponse  FromTagged (JSONReader JSONReader) {
 			ConnectStatusResponse Out = null;
 
@@ -5586,8 +5781,8 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Tag"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
@@ -5614,16 +5809,20 @@ namespace Goedel.Mesh {
 	/// </summary>
 	public partial class ConnectPendingRequest : MeshRequest {
         /// <summary>
-        /// 
+        ///The account identifier of the account for which
+        ///pending connection requests are requested.
         /// </summary>
+
 		public virtual string						AccountID {
 			get {return _AccountID;}			
 			set {_AccountID = value;}
 			}
 		string						_AccountID ;
         /// <summary>
-        /// 
+        ///Constrain the search to a specific time interval and/or 
+        ///limit the number and/or total size of data records returned.
         /// </summary>
+
 		public virtual SearchConstraints						SearchConstraints {
 			get {return _SearchConstraints;}			
 			set {_SearchConstraints = value;}
@@ -5647,7 +5846,8 @@ namespace Goedel.Mesh {
 
         /// <summary>
 		/// Initialize class from JSONReader stream.
-        /// </summary>		
+        /// </summary>	
+        /// <param name="JSONReader">Input stream</param>			
 		public ConnectPendingRequest (JSONReader JSONReader) {
 			Deserialize (JSONReader);
 			}
@@ -5655,6 +5855,7 @@ namespace Goedel.Mesh {
         /// <summary>
 		/// Initialize class from a JSON encoded class.
         /// </summary>		
+        /// <param name="_String">Input string</param>
 		public ConnectPendingRequest (string _String) {
 			Deserialize (_String);
 			}
@@ -5753,7 +5954,8 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
-        /// <param name="JSONReader"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <returns>The created object.</returns>		
         public static new ConnectPendingRequest  FromTagged (JSONReader JSONReader) {
 			ConnectPendingRequest Out = null;
 
@@ -5788,8 +5990,8 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Tag"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
@@ -5819,17 +6021,22 @@ namespace Goedel.Mesh {
 	/// Reports the success or failure of a ConnectPending transaction.
 	/// </summary>
 	public partial class ConnectPendingResponse : MeshRequest {
-		/// <summary>
-        /// 
+        /// <summary>
+        ///A list of pending requests satisfying the criteria set out
+        ///in the request.
         /// </summary>
+
 		public virtual List<SignedConnectionRequest>				Pending {
 			get {return _Pending;}			
 			set {_Pending = value;}
 			}
 		List<SignedConnectionRequest>				_Pending;
         /// <summary>
-        /// 
+        ///If non-null, indicates that the number and/or size of the data records
+        ///returned exceeds either the SearchConstraints specified in the
+        ///request or internal server limits.
         /// </summary>
+
 		public virtual string						PageKey {
 			get {return _PageKey;}			
 			set {_PageKey = value;}
@@ -5853,7 +6060,8 @@ namespace Goedel.Mesh {
 
         /// <summary>
 		/// Initialize class from JSONReader stream.
-        /// </summary>		
+        /// </summary>	
+        /// <param name="JSONReader">Input stream</param>			
 		public ConnectPendingResponse (JSONReader JSONReader) {
 			Deserialize (JSONReader);
 			}
@@ -5861,6 +6069,7 @@ namespace Goedel.Mesh {
         /// <summary>
 		/// Initialize class from a JSON encoded class.
         /// </summary>		
+        /// <param name="_String">Input string</param>
 		public ConnectPendingResponse (string _String) {
 			Deserialize (_String);
 			}
@@ -5971,7 +6180,8 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
-        /// <param name="JSONReader"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <returns>The created object.</returns>		
         public static new ConnectPendingResponse  FromTagged (JSONReader JSONReader) {
 			ConnectPendingResponse Out = null;
 
@@ -6006,8 +6216,8 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Tag"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
@@ -6044,16 +6254,20 @@ namespace Goedel.Mesh {
 	/// </summary>
 	public partial class ConnectCompleteRequest : MeshRequest {
         /// <summary>
-        /// 
+        ///The connection result to be posted to the portal. The result MUST
+        ///be signed by a valid administration key for the Mesh profile.
         /// </summary>
+
 		public virtual SignedConnectionResult						Result {
 			get {return _Result;}			
 			set {_Result = value;}
 			}
 		SignedConnectionResult						_Result ;
         /// <summary>
-        /// 
+        ///The account identifier to which the connection result is
+        ///posted.
         /// </summary>
+
 		public virtual string						AccountID {
 			get {return _AccountID;}			
 			set {_AccountID = value;}
@@ -6077,7 +6291,8 @@ namespace Goedel.Mesh {
 
         /// <summary>
 		/// Initialize class from JSONReader stream.
-        /// </summary>		
+        /// </summary>	
+        /// <param name="JSONReader">Input stream</param>			
 		public ConnectCompleteRequest (JSONReader JSONReader) {
 			Deserialize (JSONReader);
 			}
@@ -6085,6 +6300,7 @@ namespace Goedel.Mesh {
         /// <summary>
 		/// Initialize class from a JSON encoded class.
         /// </summary>		
+        /// <param name="_String">Input string</param>
 		public ConnectCompleteRequest (string _String) {
 			Deserialize (_String);
 			}
@@ -6183,7 +6399,8 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
-        /// <param name="JSONReader"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <returns>The created object.</returns>		
         public static new ConnectCompleteRequest  FromTagged (JSONReader JSONReader) {
 			ConnectCompleteRequest Out = null;
 
@@ -6218,8 +6435,8 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Tag"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
@@ -6267,7 +6484,8 @@ namespace Goedel.Mesh {
 
         /// <summary>
 		/// Initialize class from JSONReader stream.
-        /// </summary>		
+        /// </summary>	
+        /// <param name="JSONReader">Input stream</param>			
 		public ConnectCompleteResponse (JSONReader JSONReader) {
 			Deserialize (JSONReader);
 			}
@@ -6275,6 +6493,7 @@ namespace Goedel.Mesh {
         /// <summary>
 		/// Initialize class from a JSON encoded class.
         /// </summary>		
+        /// <param name="_String">Input string</param>
 		public ConnectCompleteResponse (string _String) {
 			Deserialize (_String);
 			}
@@ -6363,7 +6582,8 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
-        /// <param name="JSONReader"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <returns>The created object.</returns>		
         public static new ConnectCompleteResponse  FromTagged (JSONReader JSONReader) {
 			ConnectCompleteResponse Out = null;
 
@@ -6398,8 +6618,8 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Tag"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
@@ -6416,12 +6636,15 @@ namespace Goedel.Mesh {
 
 	/// <summary>
 	///
-	/// 
+	/// Request a bulk transfer of the log between the specified transaction
+	/// identifiers. Requires appropriate authorization
 	/// </summary>
 	public partial class TransferRequest : MeshRequest {
         /// <summary>
-        /// 
+        ///Constrain the search to a specific time interval and/or 
+        ///limit the number and/or total size of data records returned.
         /// </summary>
+
 		public virtual SearchConstraints						SearchConstraints {
 			get {return _SearchConstraints;}			
 			set {_SearchConstraints = value;}
@@ -6445,7 +6668,8 @@ namespace Goedel.Mesh {
 
         /// <summary>
 		/// Initialize class from JSONReader stream.
-        /// </summary>		
+        /// </summary>	
+        /// <param name="JSONReader">Input stream</param>			
 		public TransferRequest (JSONReader JSONReader) {
 			Deserialize (JSONReader);
 			}
@@ -6453,6 +6677,7 @@ namespace Goedel.Mesh {
         /// <summary>
 		/// Initialize class from a JSON encoded class.
         /// </summary>		
+        /// <param name="_String">Input string</param>
 		public TransferRequest (string _String) {
 			Deserialize (_String);
 			}
@@ -6546,7 +6771,8 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
-        /// <param name="JSONReader"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <returns>The created object.</returns>		
         public static new TransferRequest  FromTagged (JSONReader JSONReader) {
 			TransferRequest Out = null;
 
@@ -6581,8 +6807,8 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Tag"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
@@ -6609,17 +6835,21 @@ namespace Goedel.Mesh {
 	/// If successful, contains the list of Mesh records to be transferred.
 	/// </summary>
 	public partial class TransferResponse : MeshResponse {
-		/// <summary>
-        /// 
+        /// <summary>
+        ///List of mesh data records matching the request.
         /// </summary>
+
 		public virtual List<DataItem>				DataItems {
 			get {return _DataItems;}			
 			set {_DataItems = value;}
 			}
 		List<DataItem>				_DataItems;
         /// <summary>
-        /// 
+        ///If non-null, indicates that the number and/or size of the data records
+        ///returned exceeds either the SearchConstraints specified in the
+        ///request or internal server limits.
         /// </summary>
+
 		public virtual string						PageKey {
 			get {return _PageKey;}			
 			set {_PageKey = value;}
@@ -6643,7 +6873,8 @@ namespace Goedel.Mesh {
 
         /// <summary>
 		/// Initialize class from JSONReader stream.
-        /// </summary>		
+        /// </summary>	
+        /// <param name="JSONReader">Input stream</param>			
 		public TransferResponse (JSONReader JSONReader) {
 			Deserialize (JSONReader);
 			}
@@ -6651,6 +6882,7 @@ namespace Goedel.Mesh {
         /// <summary>
 		/// Initialize class from a JSON encoded class.
         /// </summary>		
+        /// <param name="_String">Input string</param>
 		public TransferResponse (string _String) {
 			Deserialize (_String);
 			}
@@ -6761,7 +6993,8 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
-        /// <param name="JSONReader"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <returns>The created object.</returns>		
         public static new TransferResponse  FromTagged (JSONReader JSONReader) {
 			TransferResponse Out = null;
 
@@ -6796,8 +7029,8 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Tag"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {

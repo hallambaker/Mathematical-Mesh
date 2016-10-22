@@ -1,6 +1,12 @@
 ﻿Protocol Goedel.Persistence LogEntry LogEntry
 
+	Description
+		|Record persistence entries in a log format.
+
 	Structure DataItem
+		Description
+			|A log entry
+
 		String		TransactionID
 			Description
 				|Unique Transaction ID. Text format ensures that the ID is easily
@@ -46,6 +52,9 @@
 				|are aborted and ignored.
 
 	Structure Header
+		Description
+			|Initial entry in a log file, specify the creation date, type of log,
+			|etc.
 		String			Type
 			Description
 				|Log Type, usually 'Consolidated' 'Data' 'Index'
@@ -66,6 +75,9 @@
 				|If populated, this is a delta log.
 
 	Structure Delta
+		Description
+			|Describe a log that records the changes made since a specific 
+			|checkpoint 
 		String			Parent
 			Description
 				|Filename of master log this is a delta to
@@ -74,6 +86,8 @@
 				|Filename of previous delta log				 
 
 	Structure IndexTerm
+		Description
+			|Record a collected index.
 		String			Type
 			Description
 				|Key under which index term is listed
@@ -82,17 +96,25 @@
 				|Data associated with key
 
 	Structure Final
+		Description
+			|Specify the digest value of a log up to but not including the 
+			|record with the fingerprint.
 		Binary			Digest
 			Description
 				|Digest of this log up to but not including this record
 
 	Structure Terminal
+		Description
+			|Final entry in a log, contains indexes that specify the location
+			|of the index records.
 		Struct IndexIndex	Indexes
 			Multiple
 			Description
 				|Location of index records for specified key(s)
 
 	Structure IndexIndex
+		Description
+			|Record an index location in the current log file.
 		String			Key
 			Description
 				|Key under which index term is listed
@@ -101,6 +123,9 @@
 				|Location in file at which offset occurs
 
 	Structure Index
+		Description
+			|An index record. These are written out to a log file after it is closed 
+			|to permit rapid access.
 		String			Key
 			Description
 				|Key that is indexed
@@ -110,6 +135,8 @@
 				|List of occurrences of the specified index term.	
 
 	Structure IndexEntry
+		Description
+			|An index entry.
 		String			Data
 			Description
 				|Data associated with key

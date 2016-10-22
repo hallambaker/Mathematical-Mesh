@@ -93,10 +93,10 @@ namespace Goedel.Persistence {
             }
 
         /// <summary>
-        /// 
+        ///  Add a key to the persistence store index
         /// </summary>
-        /// <param name="Key"></param>
-        /// <param name="Data"></param>
+        /// <param name="Key">Key to add entry to</param>
+        /// <param name="Data">Data to add.</param>
         public void AddKey (string Key, string Data) {
             if (Keys == null) Keys = new List<IndexTerm>();
             var IndexTerm = new IndexTerm(Key, Data);
@@ -104,10 +104,10 @@ namespace Goedel.Persistence {
             }
 
         /// <summary>
-        /// 
+        /// Add a key to the persistence store index
         /// </summary>
-        /// <param name="Index"></param>
-        /// <param name="Data"></param>
+        /// <param name="Index">Index to add key to</param>
+        /// <param name="Data">Data to add.</param>
         public void AddKey(PersistenceIndex Index, string Data) {
             if (Keys == null) Keys = new List<IndexTerm>();
             var IndexTerm = new IndexTermExtended(Index, Data);

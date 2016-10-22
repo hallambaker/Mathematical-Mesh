@@ -30,9 +30,14 @@ namespace Goedel.Mesh.Platform {
     /// </summary>
     public class Constants {
 
+        /// <summary>
+        /// If true, use test mode locations.
+        /// </summary>
         public const bool TestMode = true;
 
-
+        /// <summary>
+        /// Root for registry keys
+        /// </summary>
         public const string RootName = TestMode ? "CryptoMeshTest" : "CryptoMesh";
 
         /// <summary>

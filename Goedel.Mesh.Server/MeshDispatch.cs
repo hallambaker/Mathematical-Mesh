@@ -92,8 +92,10 @@ namespace Goedel.Mesh {
 
 
         /// <summary>
-		/// Respond with the 'hello' version and encoding info.
+        /// Respond with the 'hello' version and encoding info.
         /// </summary>		
+        /// <param name="Request">The request object to send to the host.</param>
+		/// <returns>The response object from the service</returns>
         public override HelloResponse Hello(
                 HelloRequest Request) {
 
@@ -111,8 +113,10 @@ namespace Goedel.Mesh {
             }
 
         /// <summary>
-		/// Base class for implementing the transaction.
+        /// Base class for implementing the transaction.
         /// </summary>		
+        /// <param name="Request">The request object to send to the host.</param>
+        /// <returns>The response object from the service</returns>
         public override ValidateResponse ValidateAccount(
                 ValidateRequest Request) {
 
@@ -132,6 +136,8 @@ namespace Goedel.Mesh {
         /// <summary>
 		/// Base class for implementing the transaction.
         /// </summary>		
+        /// <param name="Request">The request object to send to the host.</param>
+		/// <returns>The response object from the service</returns>
         public override CreateResponse CreateAccount(
                 CreateRequest Request) {
             var Response = new CreateResponse();
@@ -146,6 +152,8 @@ namespace Goedel.Mesh {
         /// <summary>
 		/// Base class for implementing the transaction.
         /// </summary>		
+        /// <param name="Request">The request object to send to the host.</param>
+		/// <returns>The response object from the service</returns>
         public override PublishResponse Publish(
                 PublishRequest Request) {
 
@@ -157,6 +165,8 @@ namespace Goedel.Mesh {
         /// <summary>
 		/// Base class for implementing the transaction.
         /// </summary>		
+        /// <param name="Request">The request object to send to the host.</param>
+		/// <returns>The response object from the service</returns>
         public override GetResponse Get(
                 GetRequest Request) {
             var Response = new GetResponse();
@@ -185,6 +195,8 @@ namespace Goedel.Mesh {
         /// <summary>
 		/// Request a transfer of a part of the mesh log to another node
         /// </summary>		
+        /// <param name="Request">The request object to send to the host.</param>
+		/// <returns>The response object from the service</returns>
         public override TransferResponse Transfer(
                 TransferRequest Request) {
             var Response = new TransferResponse();
@@ -192,8 +204,10 @@ namespace Goedel.Mesh {
             }
 
         /// <summary>
-		/// Return the current status of the Mesh log.
+        /// Return the current status of the Mesh log.
         /// </summary>		
+        /// <param name="Request">The request object to send to the host.</param>
+		/// <returns>The response object from the service</returns>
         public override StatusResponse Status(
                 StatusRequest Request) {
             var Response = new StatusResponse();
@@ -203,6 +217,8 @@ namespace Goedel.Mesh {
         /// <summary>
 		/// Add a pending device request for an account
         /// </summary>		
+        /// <param name="Request">The request object to send to the host.</param>
+		/// <returns>The response object from the service</returns>
         public override ConnectStartResponse ConnectStart(
                 ConnectStartRequest Request) {
             var ConnectStartResponse = new ConnectStartResponse();
@@ -215,6 +231,8 @@ namespace Goedel.Mesh {
         /// <summary>
 		/// Base class for implementing the transaction.
         /// </summary>		
+        /// <param name="Request">The request object to send to the host.</param>
+		/// <returns>The response object from the service</returns>
         public override ConnectStatusResponse ConnectStatus(
                 ConnectStatusRequest Request) {
 
@@ -228,8 +246,10 @@ namespace Goedel.Mesh {
             }
 
         /// <summary>
-		///  Get pending device add requests for an account
+        ///  Get pending device add requests for an account
         /// </summary>		
+        /// <param name="Request">The request object to send to the host.</param>
+        /// <returns>The response object from the service</returns>
         public override ConnectPendingResponse ConnectPending(
                 ConnectPendingRequest Request) {
 
@@ -244,6 +264,8 @@ namespace Goedel.Mesh {
         /// <summary>
 		/// Base class for implementing the transaction.
         /// </summary>		
+        /// <param name="Request">The request object to send to the host.</param>
+		/// <returns>The response object from the service</returns> 
         public override ConnectCompleteResponse ConnectComplete(
                 ConnectCompleteRequest Request) {
 

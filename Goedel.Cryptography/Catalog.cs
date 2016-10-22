@@ -741,6 +741,8 @@ namespace Goedel.Cryptography {
         /// </summary>
         public abstract string Name { get;  }
 
+
+
         /// <summary>
         /// JSON Algorithm Name.
         /// </summary>

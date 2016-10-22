@@ -54,10 +54,29 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'RaspberryPi|AnyCPU'">
     <OutputPath>bin\RaspberryPi\</OutputPath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Publish|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Publish\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Publish|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Publish\</OutputPath>
+    <DocumentationFile>bin\Debug\Goedel.Cryptography.Jose.xml</DocumentationFile>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Goedel.Protocol, Version=1.0.6128.28622, Culture=neutral, PublicKeyToken=9ac84b9f2535680b, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Library\Goedel.Protocol.dll</HintPath>
+    </Reference>
+    <Reference Include="Goedel.Protocol.Extended">
+      <HintPath>..\..\Library\Goedel.Protocol.Extended.dll</HintPath>
     </Reference>
     <Reference Include="Goedel.Registry, Version=1.0.5856.42846, Culture=neutral, PublicKeyToken=00ce4cbe0647f41a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -75,7 +94,11 @@
     <Compile Include="Dictionary.cs" />
     <Compile Include="Header.cs" />
     <Compile Include="JOSE.cs" />
-    <Compile Include="JoseSchema.cs" />
+    <Compile Include="JoseSchema.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>JoseSchema.Protocol</DependentUpon>
+    </Compile>
     <Compile Include="JWE.cs" />
     <Compile Include="JWK.cs" />
     <Compile Include="JWSimple.cs" />
@@ -84,7 +107,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="JoseSchema.Protocol" />
+    <None Include="JoseSchema.Protocol">
+      <Generator>Protogen</Generator>
+      <LastGenOutput>JoseSchema.cs</LastGenOutput>
+    </None>
     <None Include="LibCryptoJose.licenseheader" />
     <None Include="Post.bat" />
   </ItemGroup>

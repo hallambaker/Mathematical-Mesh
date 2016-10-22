@@ -138,6 +138,7 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Connect up to the specified Mesh Portal
         /// </summary>
+        /// <param name="Portal">The portal to connect to.</param> 
         public MeshClient(string Portal) {
             this.Portal = Portal;
             MeshService = MeshPortal.Default.GetService(Portal);
@@ -148,6 +149,7 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Make the current portal and account name the default
         /// </summary>
+        /// <param name="UDF">Fingerprint of the profile to make default.</param>
         public void MakeDefault(string UDF) {
             //var AccountID = Account.ID(AccountName, Portal);
             //Register.Write(Constants.RegistryAccounts, AccountID, UDF);
@@ -196,7 +198,7 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Publish an offline escrow entry to the mesh.
         /// </summary>
-        /// <param name="OfflineEscrowEntry"></param>
+        /// <param name="OfflineEscrowEntry">The escrow entry to publish</param>
         /// <returns>The service response.</returns>
         public PublishResponse Publish(OfflineEscrowEntry OfflineEscrowEntry) {
             var PublishRequest = new PublishRequest();
@@ -210,7 +212,7 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Publish a signed profile entry to the mesh.
         /// </summary>
-        /// <param name="SignedProfile"></param>
+        /// <param name="SignedProfile">The profile to publish</param>
         /// <returns>The service response.</returns>
         public PublishResponse Publish(SignedProfile SignedProfile) {
             var PublishRequest = new PublishRequest();
@@ -342,7 +344,7 @@ namespace Goedel.Mesh {
         /// Initiate a device connection request.
         /// </summary>
         /// <param name="SignedDeviceProfile">The device profile to register.</param>
-        /// <returns></returns>
+        /// <returns>The service response.</returns>
         public ConnectStartResponse ConnectRequest (SignedDeviceProfile SignedDeviceProfile) {
             this.SignedDeviceProfile = SignedDeviceProfile;
 
@@ -360,7 +362,7 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Get status for a pending device connection request.
         /// </summary>
-        /// <param name="UDF"></param>
+        /// <param name="UDF">Fingerprint of the device that requested the connection.</param>
         /// <returns>The service response.</returns>
         public ConnectStatusResponse ConnectStatus (string UDF) {
             var DeviceCheckRequest = new ConnectStatusRequest();

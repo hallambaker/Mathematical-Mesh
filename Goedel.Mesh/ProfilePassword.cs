@@ -131,6 +131,7 @@ namespace Goedel.Mesh {
         /// Find the entry for a given site.
         /// </summary>
         /// <param name="Site">The site details are looked for</param>
+        /// <returns>The password entry</returns>
         public PasswordEntry Get(string Site) {
             return Private.Get(Site);
 
@@ -151,7 +152,7 @@ namespace Goedel.Mesh {
         /// Convenience function that converts a generic Signed Profile returned
         /// by the Mesh to a PasswordProfile.
         /// </summary>
-        /// <param name="SignedProfile"></param>
+        /// <param name="SignedProfile">A signed password profile.</param>
         /// <returns>Inner PasswordProfile if the Signed Profile contains one,
         /// otherwise null.</returns>
         public static PasswordProfile Get(SignedProfile SignedProfile) {
@@ -162,7 +163,7 @@ namespace Goedel.Mesh {
         /// Convenience function that converts a generic Signed Profile returned
         /// by the Mesh to a PasswordProfile.
         /// </summary>
-        /// <param name="SignedProfile"></param>
+        /// <param name="SignedProfile">A signed password profile.</param>
         /// <param name="PersonalProfile">The personal profile to link the Password Profile to.</param>
         /// <returns>Inner PasswordProfile if the Signed Profile contains one,
         /// otherwise null.</returns>
@@ -190,6 +191,7 @@ namespace Goedel.Mesh {
         /// Find the entry for a given site.
         /// </summary>
         /// <param name="Site">The site details are looked for</param>
+        /// <returns>The password entry if found</returns> 
         public PasswordEntry Get(string Site) {
             if (Entries != null) {
                 foreach (var Entry in Entries) {
@@ -207,6 +209,7 @@ namespace Goedel.Mesh {
         /// Delete a password entry.
         /// </summary>
         /// <param name="Site">The site to delete</param>
+        /// <returns>True if the entry was deleted, otherwise false.</returns>
         public bool Delete(string Site) {
             bool Result = false;
 

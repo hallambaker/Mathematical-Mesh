@@ -4,4 +4,7 @@
     <StartWorkingDirectory>C:\Users\hallam\Work\mmm\Goedel.Cryptography.KeyFile\</StartWorkingDirectory>
     <StartAction>Project</StartAction>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Publish|AnyCPU'">
+    <StartWorkingDirectory>C:\Users\hallam\Work\mmm\Goedel.Cryptography.KeyFile\</StartWorkingDirectory>
+  </PropertyGroup>
 </Project>

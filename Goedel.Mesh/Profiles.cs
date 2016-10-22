@@ -27,7 +27,7 @@ using Goedel.Registry;
 using Goedel.Persistence;
 using Goedel.Cryptography;
 using Goedel.Cryptography.PKIX;
-using Goedel.Debug;
+using Goedel.Utilities;
 using Goedel.Cryptography.Jose;
 
 namespace Goedel.Mesh {
@@ -65,7 +65,7 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Construct a new index term for the specified persistence store.
         /// </summary>
-        /// <param name="PersistenceStore"></param>
+        /// <param name="PersistenceStore">Store to add index term to.</param>
         public MeshIndexTerm(PersistenceStore PersistenceStore) {
             this.PersistenceStore = PersistenceStore;
             UserProfilesByAccount = PersistenceStore.GetIndex(KeyUserProfile);
@@ -75,9 +75,10 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Set index terms for a unique identifier.
         /// </summary>
-        /// <param name="KeyDatas"></param>
-        /// <param name="ID"></param>
+        /// <param name="KeyDatas">Keys to set</param>
+        /// <param name="ID">Identifier target.</param>
         public static void SetUnique(List<IndexTerm> KeyDatas, string ID) {
+            throw new NYI();
             }
 
         }
@@ -104,7 +105,7 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Get a list of indexes for this profile.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The list of indexes</returns>
         public virtual List<IndexTerm> GetIndex() {
             List<IndexTerm> Result = new List<IndexTerm>();
 

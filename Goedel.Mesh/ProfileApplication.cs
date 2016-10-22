@@ -88,7 +88,7 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Connect an application profile read from store to a PersonalProfile object.
         /// </summary>
-        /// <param name="PersonalProfile"></param>
+        /// <param name="PersonalProfile">Personal profile to link</param>
         public void Link(PersonalProfile PersonalProfile) {
 
 
@@ -102,8 +102,8 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Connect an application profile read from store to a PersonalProfile object.
         /// </summary>
-        /// <param name="PersonalProfile"></param>
-        /// <param name="ApplicationProfileEntry"></param>
+        /// <param name="PersonalProfile">Personal profile to link</param>
+        /// <param name="ApplicationProfileEntry">Profile entry to link to</param>
         public void Link(PersonalProfile PersonalProfile, 
                     ApplicationProfileEntry ApplicationProfileEntry) {
             this.PersonalProfile = PersonalProfile;
@@ -156,7 +156,7 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Decrypt the private data portion of the profile.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Decrypted bytes.</returns>
         public virtual byte[] DecryptPrivate() {
             var SignedDeviceProfile = PersonalProfile.SignedDeviceProfile;
             var DeviceProfile = SignedDeviceProfile.Data;

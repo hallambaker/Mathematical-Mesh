@@ -165,7 +165,7 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Generate S/MIME key pairs and register in the correct Windows stores.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The generated key pair data.</returns>
         public virtual bool GenerateSMIME () {
 
             // Much of this should probably be turned into convenience methods on the PublicKey class.

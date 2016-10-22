@@ -138,9 +138,9 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Initialize the portal
         /// </summary>
-        /// <param name="ServiceName"></param>
-        /// <param name="MeshStore"></param>
-        /// <param name="PortalStore"></param>
+        /// <param name="ServiceName">DNS service name</param>
+        /// <param name="MeshStore">File name for the Mesh Store.</param>
+        /// <param name="PortalStore">File name for the Portal Store.</param>
         protected void Init (string ServiceName, string MeshStore, string PortalStore) {
             this.ServiceName = ServiceName;
             this.MeshStore = MeshStore;
@@ -151,7 +151,9 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Return a MeshService object for the named portal service.
         /// </summary>
-
+        /// <param name="Account">The account to get.</param>
+        /// <param name="Portal">The portal to get the service from.</param>
+        /// <returns>The service instance</returns> 
         public override MeshService GetService(string Portal, string Account) {
             var Session = new DirectSession(null);
             MeshServiceClient = new PublicMeshService(MeshServiceHost, Session);
@@ -181,6 +183,9 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Return a MeshService object for the named portal service.
         /// </summary>
+        /// <param name="Account">The account to get.</param>
+        /// <param name="Service">The service to get the service from.</param> 
+        /// <returns>The service instance</returns>
         public override MeshService GetService(string Service, string Account) {
             var Session = new LocalRemoteSession(MeshServiceHost, ServiceName, Account);
             MeshServiceClient = new MeshServiceClient(Session);
@@ -205,6 +210,9 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Return a MeshService object for the named portal service.
         /// </summary>
+        /// <param name="Account">The account to get.</param>
+        /// <param name="Service">The service to get the service from.</param> 
+        /// <returns>The service instance</returns>
         public override MeshService GetService(string Service, string Account) {
             var URI = JPCProvider.WellKnownToURI(Service, MeshService.WellKnown, 
                         MeshService.Discovery, false, true);

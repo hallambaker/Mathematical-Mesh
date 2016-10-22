@@ -34,6 +34,16 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'RaspberryPi|AnyCPU'">
     <OutputPath>bin\RaspberryPi\</OutputPath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Publish|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Publish\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DocumentationFile>bin\Debug\Goedel.Cryptography.xml</DocumentationFile>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Goedel.Registry, Version=1.0.5856.42846, Culture=neutral, PublicKeyToken=00ce4cbe0647f41a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

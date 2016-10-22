@@ -66,7 +66,7 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Validate this profile to check that it is internally consistent.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>True if the profile passed validation, otherwise false.</returns>
         public virtual bool Validate () {
 
             Trace.NYI("Need to validate the profile");
@@ -157,8 +157,8 @@ namespace Goedel.Mesh {
         /// Create a new device profile and persist it in the registry
         /// as the default profile.
         /// </summary>
-        /// <param name="Name"></param>
-        /// <param name="Description"></param>
+        /// <param name="Name">Name of the device</param>
+        /// <param name="Description">Description of the device.</param>
         public SignedDeviceProfile(string Name, string Description) {
             var Data = new DeviceProfile(Name, Description);
             Sign(Data);

@@ -83,13 +83,18 @@ namespace Goedel.Mesh.Platform {
         public virtual void Update() { }
 
         /// <summary>
-        /// 
+        /// Write data to the registry.
         /// </summary>
         public virtual void ToRegistry() {
             Utils.NYI();
             }
 
-
+        /// <summary>
+        /// Construct filename for a mesh file
+        /// </summary>
+        /// <param name="Path">Path to write file to</param>
+        /// <param name="Fingerprint">Fingerprint identifying data</param>
+        /// <returns>The file name.</returns>
         protected string Filename(string Path, string Fingerprint) {
             return Path + "\\" + Fingerprint + ".mmm";
             }
@@ -152,7 +157,8 @@ namespace Goedel.Mesh.Platform {
         /// <summary>
         /// Register a personal profile in the Windows registry
         /// </summary>
-        /// <param name="Profile"></param>
+        /// <param name="Profile">The personal profile</param>
+        /// <param name="Portals">The list of portals.</param>
         public RegistrationPersonal(SignedPersonalProfile Profile, List<string> Portals) {
             this.Profile = Profile;
             this.Portals = Portals;
@@ -160,7 +166,7 @@ namespace Goedel.Mesh.Platform {
             }
 
 
-
+        /// <summary>Update portal entries.</summary>
         public override void Update() {
 
             var PersonalProfile = Profile.Signed;
@@ -169,6 +175,7 @@ namespace Goedel.Mesh.Platform {
             ToRegistry();
             }
 
+        /// <summary>Write values to registry</summary>
         public override void ToRegistry() {
             // This was going to be a call to a method off Registry but a compiler
             // error stopped that.
@@ -229,7 +236,10 @@ namespace Goedel.Mesh.Platform {
         public override void Refresh() {
             }
 
-
+        /// <summary>
+        /// Register request to register an application.
+        /// </summary>
+        /// <param name="SignedApplicationProfile">The application profile</param>
         public RegistrationApplication(SignedApplicationProfile SignedApplicationProfile) {
             _Profile = SignedApplicationProfile;
             ToRegistry();
@@ -258,11 +268,12 @@ namespace Goedel.Mesh.Platform {
             _Profile = SignedApplicationProfile.FromFile(UDF, File);
             }
 
-
+        /// <summary>Update persistence store</summary>
         public override void Update() {
             ToRegistry();
             }
 
+        /// <summary>Write to registry.</summary>
         public override void ToRegistry() {
             var Hive = Microsoft.Win32.Registry.CurrentUser;
             var Key = Hive.CreateSubKey(Constants.RegistryApplication);
@@ -297,6 +308,7 @@ namespace Goedel.Mesh.Platform {
                 }
             }
 
+        /// <summary>Return the fingerprint.</summary>
         public override string UDF {
             get { return Device?.UDF; }
             }
@@ -322,13 +334,14 @@ namespace Goedel.Mesh.Platform {
         /// <summary>
         /// Add the associated profile to the machine store.
         /// </summary>
+        /// <param name="SignedDeviceProfile">The device profile</param>
         public RegistrationDevice (SignedDeviceProfile SignedDeviceProfile) {
             _Device = SignedDeviceProfile;
             ToRegistry();
             }
 
         /// <summary>
-        /// 
+        /// Write values to registry.
         /// </summary>
         public override void ToRegistry() {
             var Hive = Microsoft.Win32.Registry.CurrentUser;
@@ -342,6 +355,7 @@ namespace Goedel.Mesh.Platform {
             File.WriteAllText(FileName, Device.ToString());
             }
 
+        /// <summary>Update values.</summary>
         public override void Update() {
             ToRegistry();
             }
@@ -377,7 +391,7 @@ namespace Goedel.Mesh.Platform {
         /// </summary>
         public Dictionary<string, RegistrationDevice> DeviceProfiles { get; set; }
 
-
+        /// <summary>The fingerprint of the device</summary>
         public override string UDF {
             get { return _Device?.UDF; }
             }
@@ -389,6 +403,7 @@ namespace Goedel.Mesh.Platform {
         /// <summary>
         /// Add the associated profile to the machine store.
         /// </summary>
+        /// <param name="Registration">Profile to add.</param>
         public void Add(Registration Registration) {
             if (Registration as RegistrationApplication != null) {
                 Add(Registration as RegistrationApplication);
@@ -399,6 +414,7 @@ namespace Goedel.Mesh.Platform {
         /// <summary>
         /// Add the associated registration to the machine store.
         /// </summary>
+        /// <param name="Registration">Profile to add.</param> 
         public void Add(RegistrationDevice Registration) {
             if (!DeviceProfiles.ContainsKey(Registration.UDF)) {
                 DeviceProfiles.Add(Registration.UDF, Registration);
@@ -413,6 +429,7 @@ namespace Goedel.Mesh.Platform {
         /// <summary>
         /// Add the associated registration to the machine store.
         /// </summary>
+        /// <param name="Registration">Profile to add.</param>
         public void Add(RegistrationPersonal Registration) {
             PersonalProfiles.Add(Registration.UDF, Registration);
 
@@ -427,6 +444,7 @@ namespace Goedel.Mesh.Platform {
         /// <summary>
         /// Add the associated registration to the machine store.
         /// </summary>
+        /// <param name="Registration">Profile to add.</param>
         public void Add(RegistrationApplication Registration) {
             ApplicationProfiles.Add(Registration.UDF, Registration);
 
@@ -443,8 +461,8 @@ namespace Goedel.Mesh.Platform {
         /// <summary>
         /// Locate the specified application profile.
         /// </summary>
-        /// <param name="Profile"></param>
-        /// <returns></returns>
+        /// <param name="Profile">Profile entry for requested application.</param>
+        /// <returns>The registration application.</returns>
         public RegistrationApplication Get(ApplicationProfileEntry Profile) {
             var Result = new RegistrationApplication(Profile.Identifier);
 
@@ -455,6 +473,8 @@ namespace Goedel.Mesh.Platform {
         /// <summary>
         /// Add the associated profile to the machine store.
         /// </summary>
+        /// <param name="SignedDeviceProfile">Profile to add.</param>
+        /// <returns>The registration created</returns>
         public RegistrationDevice Add(SignedDeviceProfile SignedDeviceProfile) {
             var Registration = new RegistrationDevice(SignedDeviceProfile);
 
@@ -465,6 +485,8 @@ namespace Goedel.Mesh.Platform {
         /// <summary>
         /// Add the associated profile to the machine store.
         /// </summary>
+        /// <param name="SignedApplicationProfile">Profile to add.</param>
+        /// <returns>The registration created</returns>
         public RegistrationApplication Add(SignedApplicationProfile SignedApplicationProfile) {
             var Registration = new RegistrationApplication(SignedApplicationProfile);
 
@@ -475,6 +497,9 @@ namespace Goedel.Mesh.Platform {
         /// <summary>
         /// Add the associated profile to the machine store.
         /// </summary>
+        /// <param name="PortalAddress">Portal to add profile to</param>
+        /// <param name="SignedPersonalProfile">Profile to add</param>
+        /// <returns>The registration created</returns>
         public RegistrationPersonal Add(SignedPersonalProfile SignedPersonalProfile, string PortalAddress) {
             var Registration = new RegistrationPersonal(SignedPersonalProfile, new List<string> { PortalAddress });
             Add(Registration);
@@ -631,18 +656,29 @@ namespace Goedel.Mesh.Platform {
         public override void Refresh() {
             }
 
-
+        /// <summary>
+        /// Get a device registration by identifier
+        /// </summary>
+        /// <param name="ID">Registration to get</param>
+        /// <param name="Registration">The registration if found, null otherwise.</param>
+        /// <returns>True if found, false otherwise.</returns>
         public bool GetID(string ID, out RegistrationDevice Registration) {
             Registration = null;
             return false;
             }
 
-
+        /// <summary>
+        /// Get a device registration by fingerprint
+        /// </summary>
+        /// <param name="UDF">Registration to get</param>
+        /// <param name="Registration">The registration if found, null otherwise.</param>
+        /// <returns>True if found, false otherwise.</returns>
         public bool GetUDF (string UDF, out RegistrationDevice Registration) {
             Registration = null;
             return false;
             }
 
+        /// <summary>Erase the profile and associated keys.</summary>
         public static void Erase() {
 #pragma warning disable 162
             if (!Constants.TestMode) {

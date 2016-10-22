@@ -112,7 +112,7 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Find the Application Profile Entry that matches an identifier.
         /// </summary>
-        /// <param name="Identifier"></param>
+        /// <param name="Identifier">The profile identifier</param>
         /// <returns>The matching application profile entry if found, otherwise null.</returns>
         public ApplicationProfileEntry GetApplicationEntry(string Identifier) {
 
@@ -127,7 +127,7 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Find the Application Profile Entry that matches an identifier.
         /// </summary>
-        /// <param name="Identifier"></param>
+        /// <param name="Identifier">The profile identifier</param>
         /// <returns>The matching application profile entry if found, otherwise null.</returns>
         public ApplicationProfileEntry GetApplicationEntryPassword(string Identifier) {
 
@@ -145,7 +145,7 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Find the Application Profile Entry that matches an identifier.
         /// </summary>
-        /// <param name="Identifier"></param>
+        /// <param name="Identifier">The profile identifier</param>
         /// <returns>The matching application profile entry if found, otherwise null.</returns>
         public SignedDeviceProfile GetDeviceProfile(string Identifier) {
 
@@ -161,7 +161,7 @@ namespace Goedel.Mesh {
         /// This method returns the list of index terms for the profile and is used
         /// by the mesh protocols.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>List of index terms.</returns>
         public override List<IndexTerm> GetIndex() {
             var Result = base.GetIndex();
             //foreach (var Account in Accounts) {
@@ -216,8 +216,8 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Get the named application entry.
         /// </summary>
-        /// <param name="Type"></param>
-        /// <param name="MatchName"></param>
+        /// <param name="Type">The application type.</param>
+        /// <param name="MatchName">The friendly name to match</param>
         /// <returns>The application profile entry (if found) or null otherwise.</returns>
         public ApplicationProfileEntry GetApplication(System.Type Type, string MatchName) {
             foreach (var App in Applications) {
@@ -296,6 +296,9 @@ namespace Goedel.Mesh {
         }
 
 
+    /// <summary>
+    /// Base class for application profile entries.
+    /// </summary>
     public partial class ApplicationProfileEntry {
 
         /// <summary>

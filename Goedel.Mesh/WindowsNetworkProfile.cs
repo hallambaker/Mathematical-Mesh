@@ -30,7 +30,8 @@ using System.Net.NetworkInformation;
 namespace Goedel.Mesh {
 
     /// <summary>
-    /// 
+    /// Get information on the system network configuration. This includes the number 
+    /// of adapters, DNS services, etc.
     /// </summary>
     public class SystemNetworkProfile {
 

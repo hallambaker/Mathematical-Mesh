@@ -104,8 +104,8 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Construct a primary key ID.
         /// </summary>
-        /// <param name="UniqueID"></param>
-        /// <returns></returns>
+        /// <param name="UniqueID">The unique key</param>
+        /// <returns>The key as an ID</returns>
         public static string PrimaryKey(string UniqueID) {
             return "Result-" + UniqueID;
             }
@@ -239,14 +239,14 @@ namespace Goedel.Mesh {
             return "Pending-" + UniqueID;
             }
 
-        /// <summary>
-        /// Construct object for the specified account.
-        /// </summary>
-        /// <param name="AccountID"></param>
-        public ConnectionsPending (string AccountID) {
-            this.AccountID = AccountID;
-            Requests = new List<SignedConnectionRequest>();
-            }
+        ///// <summary>
+        ///// Construct object for the specified account.
+        ///// </summary>
+        ///// <param name="AccountID"></param>
+        //public ConnectionsPending (string AccountID) {
+        //    this.AccountID = AccountID;
+        //    Requests = new List<SignedConnectionRequest>();
+        //    }
 
         /// <summary>
         /// Purge expired requests (currently a placeholder);
