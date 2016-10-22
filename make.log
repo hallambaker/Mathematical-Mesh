@@ -1,0 +1,40 @@
+
+*** Directory Goedel.Debug
+
+*** Directory Goedel.Cryptography
+
+*** Directory Goedel.Cryptography.Jose
+
+*** Directory Goedel.Persistence
+
+*** Directory Goedel.Mesh
+
+*** Directory AdminDumpLog
+
+*** Directory Goedel.Protocol.Debug
+DebugLocalSession.cs(73,17): warning CS0219: The variable `ResultObject' is assigned but its value is never used
+Traces.cs(134,16): warning CS0414: The private field `Goedel.Protocol.Debug.TracePoint._Tag' is assigned but its value is never used
+
+*** Directory Goedel.Mesh.Server
+
+*** Directory Goedel.Cryptography.KeyFile
+
+*** Directory Goedel.Platform.Windows
+
+*** Directory Goedel.Mesh.Platform.Windows
+
+*** Directory RunMesh
+
+*** Directory Goedel.DNS
+OmniClient.cs(142,26): warning CS0414: The private field `Goedel.Omnibroker.OmniClient.DNSClient' is assigned but its value is never used
+
+*** Directory ServerMesh
+
+*** Directory Goedel.Mesh.Client
+
+*** Directory Documentation
+
+*** Directory meshman
+
+*** Directory UniversalLibraries/Goedel.Cryptography.Portable
+Properties/AssemblyInfo.cs(22,30): warning CS1699: Use compiler option `keycontainer' or appropriate project settings instead of `AssemblyKeyName' attribute

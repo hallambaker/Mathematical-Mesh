@@ -1,0 +1,73 @@
+﻿Protocol Goedel.Mesh MeshMail MeshMail
+    Using Goedel.Cryptography.Jose 
+	Extern ApplicationProfile
+	Extern ApplicationProfilePrivate
+	Extern Entry
+
+	Description 
+		|Classes that describe Mail applications.
+
+	Section 1 "Mail Application Profile Objects"
+
+	Structure MailProfile
+		Inherits ApplicationProfile
+		Description 
+			|Public profile describes mail receipt policy. Private describes
+			|Sending policy
+		Struct PublicKey EncryptionPGP
+			Description
+				|The current OpenPGP encryption key
+		Struct PublicKey EncryptionSMIME
+			Description
+				|The current S/MIME encryption key
+
+	Structure MailProfilePrivate
+		Description
+			|Describes a mail account configuration
+		Description
+			|Private profile contains connection settings for the inbound and
+			|outbound mail server(s) and cryptographic private keys. Public
+			|profile may contain security policy information for the sender.
+		String EmailAddress
+			Description
+				|The RFC822 Email address. [e.g. "alice@example.com"]
+		String ReplyToAddress
+			Description
+				|The RFC822 Reply toEmail address. [e.g. "alice@example.com"]
+			Description
+				|When set, allows a sender to tell the receiver that replies to
+				|this account should be directed to this address.
+		String DisplayName
+			Description
+				|The Display Name. [e.g. "Alice Example"]
+		String AccountName
+			Description
+				|The Account Name for display to the app user [e.g. "Work Account"]
+
+		Struct Connection Inbound
+			Multiple
+			Description
+				|The Inbound Mail Connection(s). This is typically IMAP4 or POP3
+			Description
+				|If multiple connections are specified, the order in the sequence
+				|indicates the preference order.
+		Struct Connection Outbound
+			Multiple
+			Description
+				|The Outbound Mail Connection(s). This is typically SMTP/SUBMIT
+			Description
+				|If multiple connections are specified, the order in the sequence
+				|indicates the preference order.
+		
+		Struct PublicKey Sign
+			Multiple
+			Description
+				|The public keypair(s) for signing and decrypting email.
+			Description
+				|If multiple public keys are specified, the order indicates preference.
+		Struct PublicKey Encrypt
+			Multiple
+			Description
+				|The public keypairs for encrypting and decrypting email.
+			Description
+				|If multiple public keys are specified, the order indicates preference.	

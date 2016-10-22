@@ -1,0 +1,670 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shfbBuild product="Sandcastle Help File Builder and Tools" version="2016.9.17.0" projectFile="C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\MeshLibraries.shfbproj" started="10/21/2016 12:26:52 PM">
+<buildStep step="Initializing">
+Finding tools...
+The Sandcastle tools are located in &#39;C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\&#39;
+Searching for HTML Help 1 compiler...
+Found HTML Help 1 compiler in &#39;C:\Program Files (x86)\HTML Help Workshop\&#39;
+Locating components in the following folder(s):
+    C:\Users\hallam\Work\mmm\Documentation\MeshLibraries
+    C:\ProgramData\EWSoftware\Sandcastle Help File Builder\Components and Plug-Ins\
+    C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\
+Using framework reflection data for &#39;.NET Framework 4.6&#39; located in &#39;C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\Data\.NETFramework&#39;
+Using presentation style &#39;VS2013&#39; located in &#39;C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013&#39;
+Loading and initializing plug-ins...
+Assembly Binding Redirection Version 2016.9.17.0
+Copyright &#169; 2006-2016, Eric Woodruff, All Rights Reserved
+Additional Reference Links Version 2016.9.17.0
+Copyright &#169; 2006-2016, Eric Woodruff, All Rights Reserved
+Lightweight Website Style Version 2016.9.17.0
+Copyright &#169; 2006-2016, Eric Woodruff, All Rights Reserved
+Portions Copyright &#169; 2014, Sam Harwell, All Rights Reserved
+-------------------------------
+Clearing any prior web/markdown output...
+</buildStep>
+<buildStep step="ValidatingDocumentationSources">
+Validating and copying documentation source information
+Source: C:\Users\hallam\Work\mmm\Goedel.Mesh\Goedel.Mesh.csproj
+    Found project &#39;C:\Users\hallam\Work\mmm\Goedel.Mesh\Goedel.Mesh.csproj&#39;
+Source: C:\Users\hallam\Work\mmm\Goedel.Mesh\bin\Publish\Goedel.Mesh.dll
+SHFB: Warning BE0006: Unable to locate any documentation sources for &#39;C:\Users\hallam\Work\mmm\Goedel.Mesh\bin\Publish\Goedel.Mesh.dll&#39; (Configuration: Debug Platform: AnyCPU)
+Source: C:\Users\hallam\Work\mmm\Goedel.Mesh\bin\Publish\Goedel.Mesh.xml
+SHFB: Warning BE0006: Unable to locate any documentation sources for &#39;C:\Users\hallam\Work\mmm\Goedel.Mesh\bin\Publish\Goedel.Mesh.xml&#39; (Configuration: Debug Platform: AnyCPU)
+Source: C:\Users\hallam\Work\mmm\Goedel.Mesh.Platform.Windows\Goedel.Mesh.Platform.Windows.csproj
+    Found project &#39;C:\Users\hallam\Work\mmm\Goedel.Mesh.Platform.Windows\Goedel.Mesh.Platform.Windows.csproj&#39;
+Source: C:\Users\hallam\Work\mmm\Goedel.Mesh.Platform.Windows\bin\Publish\Goedel.Mesh.Platform.Windows.XML
+Source: C:\Users\hallam\Work\mmm\Goedel.Mesh.Platform.Windows\bin\Publish\Goedel.Mesh.Platform.Windows.dll
+SHFB: Warning BE0006: Unable to locate any documentation sources for &#39;C:\Users\hallam\Work\mmm\Goedel.Mesh.Platform.Windows\bin\Publish\Goedel.Mesh.Platform.Windows.dll&#39; (Configuration: Debug Platform: AnyCPU)
+Source: C:\Users\hallam\Work\mmm\Goedel.Mesh.Server\Goedel.Mesh.Server.csproj
+    Found project &#39;C:\Users\hallam\Work\mmm\Goedel.Mesh.Server\Goedel.Mesh.Server.csproj&#39;
+Source: C:\Users\hallam\Work\mmm\Goedel.Mesh.Server\bin\Publish\Goedel.Mesh.Server.xml
+Source: C:\Users\hallam\Work\mmm\Goedel.Mesh.Server\bin\Publish\Goedel.Mesh.Server.dll
+SHFB: Warning BE0006: Unable to locate any documentation sources for &#39;C:\Users\hallam\Work\mmm\Goedel.Mesh.Server\bin\Publish\Goedel.Mesh.Server.dll&#39; (Configuration: Debug Platform: AnyCPU)
+Source: C:\Users\hallam\Work\mmm\Goedel.Persistence\Goedel.Persistence.csproj
+    Found project &#39;C:\Users\hallam\Work\mmm\Goedel.Persistence\Goedel.Persistence.csproj&#39;
+Source: C:\Users\hallam\Work\mmm\Goedel.Persistence\bin\Publish\Goedel.Persistence.xml
+Source: C:\Users\hallam\Work\mmm\Goedel.Persistence\bin\Publish\Goedel.Persistence.dll
+    Found assembly &#39;C:\Users\hallam\Work\mmm\Goedel.Persistence\bin\Publish\Goedel.Persistence.dll&#39;
+Source: C:\Users\hallam\Work\mmm\Goedel.Platform.Windows\bin\Publish\Goedel.Platform.Windows.XML
+Source: C:\Users\hallam\Work\mmm\Goedel.Platform.Windows\bin\Publish\Goedel.Platform.Windows.dll
+    Found assembly &#39;C:\Users\hallam\Work\mmm\Goedel.Platform.Windows\bin\Publish\Goedel.Platform.Windows.dll&#39;
+
+Parsing project files
+    Found assembly &#39;C:\Users\hallam\Work\mmm\Goedel.Mesh\bin\Debug\Goedel.Mesh.dll&#39;
+    Found assembly &#39;C:\Users\hallam\Work\mmm\Goedel.Mesh.Platform.Windows\bin\Debug\Goedel.Mesh.Platform.Windows.dll&#39;
+    Found assembly &#39;C:\Users\hallam\Work\mmm\Goedel.Mesh.Server\bin\Debug\Goedel.Mesh.Server.dll&#39;
+    Found assembly &#39;C:\Users\hallam\Work\mmm\Goedel.Persistence\bin\Debug\Goedel.Persistence.dll&#39;
+
+References to include (excluding framework assemblies):
+    Goedel.FSR
+    Goedel.IO
+    Goedel.IO, Version=1.0.6129.42745, Culture=neutral, PublicKeyToken=9ac84b9f2535680b, processorArchitecture=MSIL
+    Goedel.Protocol, Version=1.0.6128.28622, Culture=neutral, PublicKeyToken=9ac84b9f2535680b, processorArchitecture=MSIL
+    Goedel.Protocol.Debug, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL
+    Goedel.Protocol.Extended
+    Goedel.Registry, Version=1.0.5856.42846, Culture=neutral, PublicKeyToken=00ce4cbe0647f41a, processorArchitecture=MSIL
+    Goedel.Utilities
+    Goedel.Utilities, Version=1.0.6129.42745, Culture=neutral, PublicKeyToken=9ac84b9f2535680b, processorArchitecture=MSIL
+
+Copying XML comments files
+    C:\Users\hallam\Work\mmm\Goedel.Mesh.Platform.Windows\bin\Publish\Goedel.Mesh.Platform.Windows.XML -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Goedel.Mesh.Platform.Windows.XML
+    C:\Users\hallam\Work\mmm\Goedel.Mesh.Server\bin\Publish\Goedel.Mesh.Server.xml -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Goedel.Mesh.Server.xml
+    C:\Users\hallam\Work\mmm\Goedel.Persistence\bin\Publish\Goedel.Persistence.xml -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Goedel.Persistence.xml
+    C:\Users\hallam\Work\mmm\Goedel.Platform.Windows\bin\Publish\Goedel.Platform.Windows.XML -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Goedel.Platform.Windows.XML
+    C:\Users\hallam\Work\mmm\Goedel.Mesh\bin\Debug\Goedel.Mesh.xml -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Goedel.Mesh.xml
+SHFB: Warning BE0063: &#39;C:\Users\hallam\Work\mmm\Goedel.Mesh.Server\bin\Debug\Goedel.Mesh.Server.xml&#39; matches a previously copied comments filename.  The duplicate will be copied to a unique name to preserve the comments it contains.
+    C:\Users\hallam\Work\mmm\Goedel.Mesh.Server\bin\Debug\Goedel.Mesh.Server.xml -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\{c8657823-e7df-45a8-b6cc-c731fd61ba9d}
+SHFB: Warning BE0063: &#39;C:\Users\hallam\Work\mmm\Goedel.Persistence\bin\Debug\Goedel.Persistence.xml&#39; matches a previously copied comments filename.  The duplicate will be copied to a unique name to preserve the comments it contains.
+    C:\Users\hallam\Work\mmm\Goedel.Persistence\bin\Debug\Goedel.Persistence.xml -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\{3cd742a3-9448-4869-9aea-4140acdb2d30}
+</buildStep>
+<buildStep step="GenerateSharedContent">
+Generating shared content files (en-US, English (United States))...
+<plugIn name="Lightweight Website Style" behavior="After" priority="1000">
+</plugIn>    Last step completed in 00:00:00.0120
+</buildStep>
+<buildStep step="GenerateApiFilter">
+Generating API filter for MRefBuilder...
+    Last step completed in 00:00:00.0215
+</buildStep>
+<buildStep step="GenerateReflectionInfo">
+Generating reflection information...
+<plugIn name="Assembly Binding Redirection" behavior="Before" priority="1000">
+Adding ignored assembly names to assembly resolver configuration:
+    BusinessObjects.Licensing.KeycodeDecoder
+    Microsoft.VisualStudio.TestTools.UITest.Playback
+    System.Runtime
+</plugIn>[C:\Program Files (x86)\MSBuild\14.0\bin\MSBuild.exe - GenerateRefInfo.proj]
+Build started 10/21/2016 12:26:52 PM.
+The target &quot;_ConvertPdbFiles&quot; listed in a BeforeTargets attribute at &quot;C:\Program Files (x86)\MSBuild\14.0\Microsoft.Common.targets\ImportAfter\Xamarin.Common.targets (34,37)&quot; does not exist in the project, and will be ignored.
+The target &quot;_CollectPdbFiles&quot; listed in an AfterTargets attribute at &quot;C:\Program Files (x86)\MSBuild\14.0\Microsoft.Common.targets\ImportAfter\Xamarin.Common.targets (34,70)&quot; does not exist in the project, and will be ignored.
+The target &quot;_CollectMdbFiles&quot; listed in a BeforeTargets attribute at &quot;C:\Program Files (x86)\MSBuild\14.0\Microsoft.Common.targets\ImportAfter\Xamarin.Common.targets (41,38)&quot; does not exist in the project, and will be ignored.
+The target &quot;_CopyMdbFiles&quot; listed in an AfterTargets attribute at &quot;C:\Program Files (x86)\MSBuild\14.0\Microsoft.Common.targets\ImportAfter\Xamarin.Common.targets (41,71)&quot; does not exist in the project, and will be ignored.
+Project &quot;C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\GenerateRefInfo.proj&quot; on node 1 (default targets).
+PrepareForBuild:
+  Creating directory &quot;obj\Debug\&quot;.
+GenerateRefInfo:
+  MRefBuilder (v2016.9.17.0)
+  Copyright c 2006-2016, Microsoft Corporation, All Rights Reserved.
+  Portions Copyright c 2006-2016, Eric Woodruff, All Rights Reserved.
+  No source code context base path specified.  Source context information is unavailable.
+  Loaded 6 assemblies for reflection and 61 dependency assemblies.
+MRefBuilder : warning : Ignoring unresolved assembly reference: System.Runtime (System.Runtime, Version=4.0.10.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a) required by Goedel.Protocol [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\GenerateRefInfo.proj]
+  Wrote information on 5 namespaces, 171 types, and 2004 members
+  Copying file from &quot;reflection.org&quot; to &quot;reflection.all&quot;.
+  XslTransform (v2016.9.17.0)
+  Copyright c 2006-2016, Microsoft Corporation, All Rights Reserved.
+  Portions Copyright c 2006-2016, Eric Woodruff, All Rights Reserved.
+  Applying XSL transformation &#39;C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\ProductionTransforms\MergeDuplicates.xsl&#39;.
+Done Building Project &quot;C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\GenerateRefInfo.proj&quot; (default targets).
+
+Build succeeded.
+
+Time Elapsed 00:00:02.64
+    Last step completed in 00:00:02.7542
+</buildStep>
+<buildStep step="TransformReflectionInfo">
+Transforming reflection output...
+[C:\Program Files (x86)\MSBuild\14.0\bin\MSBuild.exe - TransformManifest.proj]
+Build started 10/21/2016 12:26:55 PM.
+Project &quot;C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\TransformManifest.proj&quot; on node 1 (default targets).
+TransformManifest:
+  XslTransform (v2016.9.17.0)
+  Copyright c 2006-2016, Microsoft Corporation, All Rights Reserved.
+  Portions Copyright c 2006-2016, Eric Woodruff, All Rights Reserved.
+  Applying XSL transformation &#39;C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\\ProductionTransforms\ApplyVSDocModel.xsl&#39;.
+  Copying file from &quot;reflection.xml&quot; to &quot;reflection.nofilenames&quot;.
+  XslTransform (v2016.9.17.0)
+  Copyright c 2006-2016, Microsoft Corporation, All Rights Reserved.
+  Portions Copyright c 2006-2016, Eric Woodruff, All Rights Reserved.
+  Applying XSL transformation &#39;C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\ProductionTransforms\AddFilenames.xsl&#39;.
+  XslTransform (v2016.9.17.0)
+  Copyright c 2006-2016, Microsoft Corporation, All Rights Reserved.
+  Portions Copyright c 2006-2016, Eric Woodruff, All Rights Reserved.
+  Applying XSL transformation &#39;C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\ProductionTransforms\ReflectionToManifest.xsl&#39;.
+Done Building Project &quot;C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\TransformManifest.proj&quot; (default targets).
+
+Build succeeded.
+
+Time Elapsed 00:00:01.06
+    Last step completed in 00:00:01.1788
+</buildStep>
+<buildStep step="GenerateNamespaceSummaries">
+Generating namespace summary information...
+<plugIn name="Additional Reference Links" behavior="Before" priority="1000">
+Performing partial builds on additional targets&#39; projects
+
+Building C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\FrameworkLibraries.shfbproj
+Initializing
+ValidatingDocumentationSources
+GenerateSharedContent
+GenerateApiFilter
+GenerateReflectionInfo
+TransformReflectionInfo
+Completed
+
+Building C:\Users\hallam\Work\buildtools\Documentation\PortableLibraries\PortableLibraries.shfbproj
+Initializing
+ValidatingDocumentationSources
+GenerateSharedContent
+GenerateApiFilter
+GenerateReflectionInfo
+TransformReflectionInfo
+Completed
+</plugIn>    Last step completed in 00:00:35.5712
+</buildStep>
+<buildStep step="CopyConceptualContent">
+Copying conceptual content...
+Copying standard token shared content file...
+Checking for other token files...
+Checking for code snippets files...
+Copying images and creating the media map file...
+Generating conceptual topic files
+    Parsing topic file &#39;C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Content\Welcome.aml&#39;
+    C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Content\Welcome.aml -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\ddueXml\6125f6e9-eb69-498a-a31e-470325a44fe5.xml
+    Parsing topic file &#39;C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Content\VersionHistory\VersionHistory.aml&#39;
+    C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Content\VersionHistory\VersionHistory.aml -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\ddueXml\2f350f4e-e314-43a7-8475-40df0a38fc69.xml
+    Parsing topic file &#39;C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Content\VersionHistory\v1.0.0.0.aml&#39;
+    C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Content\VersionHistory\v1.0.0.0.aml -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\ddueXml\8053ab96-ecc1-4551-bfa4-078a0f32b0b5.xml
+    Last step completed in 00:00:00.0280
+</buildStep>
+<buildStep step="CreateConceptualTopicConfigs">
+Creating conceptual topic configuration files...
+    Companion files
+    _ContentMetadata_.xml
+    Merging topic IDs into manifest.xml
+    Last step completed in 00:00:00.0205
+</buildStep>
+<buildStep step="CopyAdditionalContent">
+Copying additional content files...
+C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\icons\Help.png -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\HtmlHelp1\icons\Help.png
+C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\icons\Help.png -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\MSHelpViewer\icons\Help.png
+C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\icons\Help.png -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\Website\icons\Help.png
+    Last step completed in 00:00:00.0100
+</buildStep>
+<buildStep step="MergeTablesOfContents">
+Merging conceptual and additional tables of contents...
+    Last step completed in 00:00:00.0000
+</buildStep>
+<buildStep step="GenerateIntermediateTableOfContents">
+Generating intermediate table of contents file...
+[C:\Program Files (x86)\MSBuild\14.0\bin\MSBuild.exe - GenerateIntermediateTOC.proj]
+Build started 10/21/2016 12:27:32 PM.
+Project &quot;C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\GenerateIntermediateTOC.proj&quot; on node 1 (default targets).
+GenerateIntermediateTOC:
+  XslTransform (v2016.9.17.0)
+  Copyright c 2006-2016, Microsoft Corporation, All Rights Reserved.
+  Portions Copyright c 2006-2016, Eric Woodruff, All Rights Reserved.
+  Applying XSL transformation &#39;C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\\ProductionTransforms\CreateVSToc.xsl&#39;.
+Done Building Project &quot;C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\GenerateIntermediateTOC.proj&quot; (default targets).
+
+Build succeeded.
+
+Time Elapsed 00:00:00.15
+Generating conceptual content intermediate TOC file...
+    Last step completed in 00:00:00.2464
+</buildStep>
+<buildStep step="CreateBuildAssemblerConfigs">
+Creating Sandcastle configuration files...
+<plugIn name="Additional Reference Links" behavior="Before" priority="1000">
+Adding additional reference link namespaces...
+</plugIn>    sandcastle.config
+    Last step completed in 00:00:00.2589
+</buildStep>
+<buildStep step="MergeCustomConfigs">
+Merging custom build component configurations
+C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\sandcastle.config
+  Updating reference topic configurations.
+  Updating conceptual topic configurations.
+    Removing unused ExampleComponent.
+<plugIn name="Additional Reference Links" behavior="After" priority="1000">
+
+Adding references to C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\sandcastle.config...
+</plugIn>    Last step completed in 00:00:00.0135
+</buildStep>
+<buildStep step="BuildTopics">
+Building help topics...
+[C:\Program Files (x86)\MSBuild\14.0\bin\MSBuild.exe - BuildTopics.proj]
+Build started 10/21/2016 12:27:32 PM.
+Project &quot;C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj&quot; on node 1 (default targets).
+BuildTopics:
+  BuildAssembler (v2016.9.17.0)
+  Copyright c 2006-2016, Microsoft Corporation, All Rights Reserved.
+  Portions Copyright c 2006-2016, Eric Woodruff, All Rights Reserved.
+  Loading configuration...
+BuildAssembler : warning : CopyFromIndexComponent: Entries for the key &#39;N:Goedel.Platform&#39; occur in both &#39;C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\9044E7D1\reflection.xml&#39; and &#39;C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\reflection.xml&#39;. The last entry will be used. [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
+  Processing topics...
+BuildAssembler : warning : ShowMissingComponent: [P:Goedel.Mesh.EncryptedData.Data] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:Goedel.Mesh.EscrowEntry.EncryptedData] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.MeshClient.#ctor(System.String)] Missing &lt;param name=&quot;Portal&quot;/&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.MeshIndexTerm.#ctor(Goedel.Persistence.PersistenceStore)] Missing &lt;param name=&quot;PersistenceStore&quot;/&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.PasswordProfile.Get(Goedel.Mesh.SignedProfile)] Missing &lt;param name=&quot;SignedProfile&quot;/&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.PasswordProfile.Get(Goedel.Mesh.SignedProfile,Goedel.Mesh.PersonalProfile)] Missing &lt;param name=&quot;SignedProfile&quot;/&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.PasswordProfile.Get(System.String)] Missing &lt;returns&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.PasswordProfilePrivate.Delete(System.String)] Missing &lt;returns&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.PasswordProfilePrivate.Get(System.String)] Missing &lt;returns&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.PersonalProfile.GetApplication(System.Type,System.String)] Missing &lt;param name=&quot;Type&quot;/&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.PersonalProfile.GetApplication(System.Type,System.String)] Missing &lt;param name=&quot;MatchName&quot;/&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.PersonalProfile.GetApplicationEntry(System.String)] Missing &lt;param name=&quot;Identifier&quot;/&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.PersonalProfile.GetApplicationEntryPassword(System.String)] Missing &lt;param name=&quot;Identifier&quot;/&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.PersonalProfile.GetDeviceProfile(System.String)] Missing &lt;param name=&quot;Identifier&quot;/&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.PersonalProfile.GetIndex] Missing &lt;returns&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.Portal.Tag] Missing &lt;returns&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.Profile.GetIndex] Missing &lt;returns&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.PublicKey.Generate(Goedel.Mesh.KeyType,Goedel.Cryptography.CryptoAlgorithmID)] Missing &lt;returns&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.PublicKey.GetPrivate] Missing &lt;returns&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.SignedConnectionResult.PrimaryKey(System.String)] Missing &lt;returns&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.SignedConnectionResult.PrimaryKey(System.String)] Missing &lt;param name=&quot;UniqueID&quot;/&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.SignedDeviceProfile.#ctor(System.String,System.String)] Missing &lt;param name=&quot;Name&quot;/&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.SignedDeviceProfile.#ctor(System.String,System.String)] Missing &lt;param name=&quot;Description&quot;/&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.SignedProfile.Validate] Missing &lt;returns&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.SSHProfile.Get(Goedel.Mesh.SignedProfile)] Missing &lt;param name=&quot;SignedProfile&quot;/&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.SSHProfile.Get(Goedel.Mesh.SignedProfile,Goedel.Mesh.PersonalProfile)] Missing &lt;param name=&quot;SignedProfile&quot;/&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [T:Goedel.Mesh.TransferRequest] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.Platform.MailAccountInfoWLM.#ctor(System.String)] Missing &lt;param name=&quot;FileName&quot;/&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.Platform.MeshApplicationPassword.Delete(System.String)] Missing &lt;param name=&quot;Site&quot;/&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.Platform.MeshApplicationPassword.Get(System.String)] Missing &lt;param name=&quot;Site&quot;/&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.Platform.MeshCatalog.BeginConnect(System.String,System.String)] Missing &lt;param name=&quot;PortalID&quot;/&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.Platform.MeshCatalog.CompleteConnect(System.String)] Missing &lt;param name=&quot;PortalID&quot;/&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.Platform.MeshPersonal.GetPIN] Missing &lt;returns&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.Platform.Register.Read(System.String,System.String,System.String@)] Missing &lt;returns&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.Platform.Register.Read(System.String,System.String@)] Missing &lt;returns&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.Platform.RegistrationApplication.#ctor(Goedel.Mesh.SignedApplicationProfile)] Missing &lt;param name=&quot;SignedApplicationProfile&quot;/&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.Platform.RegistrationApplication.ToRegistry] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.Platform.RegistrationApplication.Update] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.Platform.RegistrationDevice.#ctor(Goedel.Mesh.SignedDeviceProfile)] Missing &lt;param name=&quot;SignedDeviceProfile&quot;/&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.Platform.RegistrationMachine.Add(Goedel.Mesh.Platform.Registration)] Missing &lt;param name=&quot;Registration&quot;/&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.Platform.RegistrationMachine.Add(Goedel.Mesh.Platform.RegistrationApplication)] Missing &lt;param name=&quot;Registration&quot;/&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.Platform.RegistrationMachine.Add(Goedel.Mesh.Platform.RegistrationDevice)] Missing &lt;param name=&quot;Registration&quot;/&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.Platform.RegistrationMachine.Add(Goedel.Mesh.Platform.RegistrationPersonal)] Missing &lt;param name=&quot;Registration&quot;/&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.Platform.RegistrationMachine.Add(Goedel.Mesh.SignedApplicationProfile)] Missing &lt;returns&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.Platform.RegistrationMachine.Add(Goedel.Mesh.SignedApplicationProfile)] Missing &lt;param name=&quot;SignedApplicationProfile&quot;/&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.Platform.RegistrationMachine.Add(Goedel.Mesh.SignedDeviceProfile)] Missing &lt;returns&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.Platform.RegistrationMachine.Add(Goedel.Mesh.SignedDeviceProfile)] Missing &lt;param name=&quot;SignedDeviceProfile&quot;/&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.Platform.RegistrationMachine.Add(Goedel.Mesh.SignedPersonalProfile,System.String)] Missing &lt;returns&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.Platform.RegistrationMachine.Add(Goedel.Mesh.SignedPersonalProfile,System.String)] Missing &lt;param name=&quot;SignedPersonalProfile&quot;/&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.Platform.RegistrationMachine.Add(Goedel.Mesh.SignedPersonalProfile,System.String)] Missing &lt;param name=&quot;PortalAddress&quot;/&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.Platform.RegistrationMachine.Get(Goedel.Mesh.ApplicationProfileEntry)] Missing &lt;param name=&quot;Profile&quot;/&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.Platform.RegistrationMachine.GetID(System.String,Goedel.Mesh.Platform.RegistrationDevice@)] Missing &lt;returns&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.Platform.RegistrationMachine.GetUDF(System.String,Goedel.Mesh.Platform.RegistrationDevice@)] Missing &lt;returns&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:Goedel.Mesh.Platform.RegistrationMachine.UDF] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Persistence.PersistenceStore.GetTransactionID] Missing &lt;returns&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [T:Goedel.Platform.SystemNetworkProfile] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Platform.WindowsCertificateStore.Get(System.String)] Missing &lt;returns&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Platform.WindowsCertificateStore.Get(System.String)] Missing &lt;param name=&quot;Fingerprint&quot;/&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Platform.WindowsCertificateStore.Get(System.String,System.Security.Cryptography.X509Certificates.X509Store)] Missing &lt;returns&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Platform.WindowsCertificateStore.Get(System.String,System.Security.Cryptography.X509Certificates.X509Store)] Missing &lt;param name=&quot;Store&quot;/&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Platform.WindowsCertificateStore.Initialize] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
+  Processed 2609 topic(s)
+  62 warning(s)
+  CopyFromIndexComponent: &quot;metadata&quot; in-memory cache entries used: 1 of 15.
+  ResolveArtLinksComponent: Copying media files...
+  ResolveArtLinksComponent: Copying media files...
+  ResolveArtLinksComponent: Copying media files...
+  CopyFromIndexComponent: &quot;reflection&quot; in-memory cache entries used: 11 of 15.
+  CopyFromIndexComponent: &quot;comments&quot; in-memory cache entries used: 8 of 30.
+  SaveComponent: Waiting for the document writer task to finish (83 Help1 API file(s) remaining)...
+  SaveComponent: Waiting for the document writer task to finish (16 MSHelpViewer API file(s) remaining)...
+Done Building Project &quot;C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj&quot; (default targets).
+
+Build succeeded.
+
+Time Elapsed 00:00:38.85
+    Last step completed in 00:00:38.9541
+</buildStep>
+<buildStep step="CombiningIntermediateTocFiles">
+Combining conceptual and API intermediate TOC files...
+    Last step completed in 00:00:00.0115
+</buildStep>
+<buildStep step="ExtractingHtmlInfo">
+Extracting HTML info for HTML Help 1 and/or website...
+[C:\Program Files (x86)\MSBuild\14.0\bin\MSBuild.exe - ExtractHtmlInfo.proj]
+Sandcastle Help File Builder and Tools, version 2016.9.17.0
+Copyright c 2006-2016, Eric Woodruff, All Rights Reserved
+E-Mail: Eric@EWoodruff.us
+
+Using LCID &#39;1033&#39;, code page &#39;65001&#39;, encoding charset &#39;UTF-8&#39;.
+
+Processing Help 1 files in C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\HtmlHelp1
+Processed 2609 HTML files
+Sorting keywords and generating See Also indices
+Saving HTML Help 1 keyword index to C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\MeshLibraries.hhk
+Saving HTML Help 1 table of contents to C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\MeshLibraries.hhc
+
+Processing website files in C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\Website
+Processed 2609 HTML files
+Sorting keywords and generating See Also indices
+Saving website keyword index to C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\WebKI.xml
+Saving website table of contents to C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\WebTOC.xml
+    Last step completed in 00:00:08.8706
+</buildStep>
+<buildStep step="CopyStandardHelpContent">
+Copying standard help content...
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\AlertCaution.png -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\HtmlHelp1\icons\AlertCaution.png
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\AlertNote.png -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\HtmlHelp1\icons\AlertNote.png
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\AlertSecurity.png -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\HtmlHelp1\icons\AlertSecurity.png
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\CFW.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\HtmlHelp1\icons\CFW.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\CodeExample.png -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\HtmlHelp1\icons\CodeExample.png
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\favicon.ico -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\HtmlHelp1\icons\favicon.ico
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\privclass.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\HtmlHelp1\icons\privclass.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\privdelegate.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\HtmlHelp1\icons\privdelegate.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\privenumeration.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\HtmlHelp1\icons\privenumeration.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\privevent.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\HtmlHelp1\icons\privevent.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\privextension.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\HtmlHelp1\icons\privextension.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\privfield.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\HtmlHelp1\icons\privfield.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\privinterface.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\HtmlHelp1\icons\privinterface.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\privmethod.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\HtmlHelp1\icons\privmethod.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\privproperty.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\HtmlHelp1\icons\privproperty.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\privstructure.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\HtmlHelp1\icons\privstructure.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\protclass.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\HtmlHelp1\icons\protclass.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\protdelegate.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\HtmlHelp1\icons\protdelegate.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\protenumeration.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\HtmlHelp1\icons\protenumeration.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\protevent.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\HtmlHelp1\icons\protevent.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\protextension.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\HtmlHelp1\icons\protextension.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\protfield.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\HtmlHelp1\icons\protfield.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\protinterface.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\HtmlHelp1\icons\protinterface.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\protmethod.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\HtmlHelp1\icons\protmethod.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\protoperator.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\HtmlHelp1\icons\protoperator.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\protproperty.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\HtmlHelp1\icons\protproperty.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\protstructure.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\HtmlHelp1\icons\protstructure.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\pubclass.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\HtmlHelp1\icons\pubclass.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\pubdelegate.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\HtmlHelp1\icons\pubdelegate.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\pubenumeration.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\HtmlHelp1\icons\pubenumeration.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\pubevent.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\HtmlHelp1\icons\pubevent.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\pubextension.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\HtmlHelp1\icons\pubextension.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\pubfield.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\HtmlHelp1\icons\pubfield.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\pubinterface.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\HtmlHelp1\icons\pubinterface.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\pubmethod.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\HtmlHelp1\icons\pubmethod.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\puboperator.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\HtmlHelp1\icons\puboperator.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\pubproperty.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\HtmlHelp1\icons\pubproperty.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\pubstructure.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\HtmlHelp1\icons\pubstructure.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\SectionCollapsed.png -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\HtmlHelp1\icons\SectionCollapsed.png
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\SectionExpanded.png -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\HtmlHelp1\icons\SectionExpanded.png
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\slMobile.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\HtmlHelp1\icons\slMobile.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\static.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\HtmlHelp1\icons\static.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\xna.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\HtmlHelp1\icons\xna.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\scripts\branding.js -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\HtmlHelp1\scripts\branding.js
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-cs-CZ.css -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\HtmlHelp1\styles\branding-cs-CZ.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-de-DE.css -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\HtmlHelp1\styles\branding-de-DE.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-en-US.css -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\HtmlHelp1\styles\branding-en-US.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-es-ES.css -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\HtmlHelp1\styles\branding-es-ES.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-fr-FR.css -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\HtmlHelp1\styles\branding-fr-FR.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-Help1.css -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\HtmlHelp1\styles\branding-Help1.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-HelpViewer.css -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\HtmlHelp1\styles\branding-HelpViewer.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-it-IT.css -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\HtmlHelp1\styles\branding-it-IT.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-ja-JP.css -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\HtmlHelp1\styles\branding-ja-JP.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-ko-KR.css -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\HtmlHelp1\styles\branding-ko-KR.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-pl-PL.css -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\HtmlHelp1\styles\branding-pl-PL.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-pt-BR.css -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\HtmlHelp1\styles\branding-pt-BR.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-ru-RU.css -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\HtmlHelp1\styles\branding-ru-RU.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-tr-TR.css -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\HtmlHelp1\styles\branding-tr-TR.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-Website.css -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\HtmlHelp1\styles\branding-Website.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-zh-CN.css -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\HtmlHelp1\styles\branding-zh-CN.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-zh-TW.css -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\HtmlHelp1\styles\branding-zh-TW.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding.css -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\HtmlHelp1\styles\branding.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\AlertCaution.png -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\MSHelpViewer\icons\AlertCaution.png
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\AlertNote.png -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\MSHelpViewer\icons\AlertNote.png
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\AlertSecurity.png -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\MSHelpViewer\icons\AlertSecurity.png
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\CFW.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\MSHelpViewer\icons\CFW.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\CodeExample.png -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\MSHelpViewer\icons\CodeExample.png
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\favicon.ico -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\MSHelpViewer\icons\favicon.ico
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\privclass.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\MSHelpViewer\icons\privclass.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\privdelegate.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\MSHelpViewer\icons\privdelegate.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\privenumeration.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\MSHelpViewer\icons\privenumeration.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\privevent.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\MSHelpViewer\icons\privevent.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\privextension.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\MSHelpViewer\icons\privextension.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\privfield.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\MSHelpViewer\icons\privfield.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\privinterface.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\MSHelpViewer\icons\privinterface.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\privmethod.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\MSHelpViewer\icons\privmethod.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\privproperty.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\MSHelpViewer\icons\privproperty.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\privstructure.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\MSHelpViewer\icons\privstructure.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\protclass.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\MSHelpViewer\icons\protclass.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\protdelegate.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\MSHelpViewer\icons\protdelegate.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\protenumeration.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\MSHelpViewer\icons\protenumeration.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\protevent.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\MSHelpViewer\icons\protevent.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\protextension.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\MSHelpViewer\icons\protextension.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\protfield.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\MSHelpViewer\icons\protfield.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\protinterface.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\MSHelpViewer\icons\protinterface.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\protmethod.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\MSHelpViewer\icons\protmethod.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\protoperator.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\MSHelpViewer\icons\protoperator.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\protproperty.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\MSHelpViewer\icons\protproperty.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\protstructure.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\MSHelpViewer\icons\protstructure.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\pubclass.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\MSHelpViewer\icons\pubclass.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\pubdelegate.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\MSHelpViewer\icons\pubdelegate.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\pubenumeration.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\MSHelpViewer\icons\pubenumeration.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\pubevent.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\MSHelpViewer\icons\pubevent.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\pubextension.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\MSHelpViewer\icons\pubextension.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\pubfield.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\MSHelpViewer\icons\pubfield.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\pubinterface.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\MSHelpViewer\icons\pubinterface.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\pubmethod.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\MSHelpViewer\icons\pubmethod.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\puboperator.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\MSHelpViewer\icons\puboperator.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\pubproperty.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\MSHelpViewer\icons\pubproperty.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\pubstructure.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\MSHelpViewer\icons\pubstructure.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\SectionCollapsed.png -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\MSHelpViewer\icons\SectionCollapsed.png
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\SectionExpanded.png -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\MSHelpViewer\icons\SectionExpanded.png
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\slMobile.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\MSHelpViewer\icons\slMobile.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\static.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\MSHelpViewer\icons\static.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\xna.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\MSHelpViewer\icons\xna.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\scripts\branding.js -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\MSHelpViewer\scripts\branding.js
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-cs-CZ.css -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\MSHelpViewer\styles\branding-cs-CZ.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-de-DE.css -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\MSHelpViewer\styles\branding-de-DE.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-en-US.css -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\MSHelpViewer\styles\branding-en-US.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-es-ES.css -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\MSHelpViewer\styles\branding-es-ES.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-fr-FR.css -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\MSHelpViewer\styles\branding-fr-FR.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-Help1.css -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\MSHelpViewer\styles\branding-Help1.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-HelpViewer.css -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\MSHelpViewer\styles\branding-HelpViewer.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-it-IT.css -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\MSHelpViewer\styles\branding-it-IT.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-ja-JP.css -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\MSHelpViewer\styles\branding-ja-JP.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-ko-KR.css -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\MSHelpViewer\styles\branding-ko-KR.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-pl-PL.css -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\MSHelpViewer\styles\branding-pl-PL.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-pt-BR.css -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\MSHelpViewer\styles\branding-pt-BR.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-ru-RU.css -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\MSHelpViewer\styles\branding-ru-RU.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-tr-TR.css -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\MSHelpViewer\styles\branding-tr-TR.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-Website.css -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\MSHelpViewer\styles\branding-Website.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-zh-CN.css -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\MSHelpViewer\styles\branding-zh-CN.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-zh-TW.css -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\MSHelpViewer\styles\branding-zh-TW.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding.css -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\MSHelpViewer\styles\branding.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\AlertCaution.png -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\Website\icons\AlertCaution.png
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\AlertNote.png -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\Website\icons\AlertNote.png
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\AlertSecurity.png -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\Website\icons\AlertSecurity.png
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\CFW.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\Website\icons\CFW.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\CodeExample.png -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\Website\icons\CodeExample.png
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\favicon.ico -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\Website\icons\favicon.ico
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\privclass.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\Website\icons\privclass.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\privdelegate.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\Website\icons\privdelegate.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\privenumeration.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\Website\icons\privenumeration.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\privevent.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\Website\icons\privevent.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\privextension.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\Website\icons\privextension.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\privfield.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\Website\icons\privfield.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\privinterface.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\Website\icons\privinterface.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\privmethod.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\Website\icons\privmethod.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\privproperty.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\Website\icons\privproperty.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\privstructure.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\Website\icons\privstructure.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\protclass.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\Website\icons\protclass.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\protdelegate.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\Website\icons\protdelegate.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\protenumeration.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\Website\icons\protenumeration.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\protevent.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\Website\icons\protevent.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\protextension.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\Website\icons\protextension.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\protfield.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\Website\icons\protfield.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\protinterface.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\Website\icons\protinterface.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\protmethod.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\Website\icons\protmethod.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\protoperator.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\Website\icons\protoperator.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\protproperty.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\Website\icons\protproperty.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\protstructure.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\Website\icons\protstructure.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\pubclass.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\Website\icons\pubclass.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\pubdelegate.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\Website\icons\pubdelegate.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\pubenumeration.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\Website\icons\pubenumeration.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\pubevent.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\Website\icons\pubevent.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\pubextension.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\Website\icons\pubextension.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\pubfield.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\Website\icons\pubfield.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\pubinterface.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\Website\icons\pubinterface.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\pubmethod.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\Website\icons\pubmethod.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\puboperator.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\Website\icons\puboperator.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\pubproperty.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\Website\icons\pubproperty.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\pubstructure.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\Website\icons\pubstructure.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\SectionCollapsed.png -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\Website\icons\SectionCollapsed.png
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\SectionExpanded.png -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\Website\icons\SectionExpanded.png
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\slMobile.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\Website\icons\slMobile.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\static.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\Website\icons\static.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\xna.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\Website\icons\xna.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\scripts\branding.js -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\Website\scripts\branding.js
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-cs-CZ.css -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\Website\styles\branding-cs-CZ.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-de-DE.css -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\Website\styles\branding-de-DE.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-en-US.css -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\Website\styles\branding-en-US.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-es-ES.css -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\Website\styles\branding-es-ES.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-fr-FR.css -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\Website\styles\branding-fr-FR.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-Help1.css -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\Website\styles\branding-Help1.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-HelpViewer.css -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\Website\styles\branding-HelpViewer.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-it-IT.css -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\Website\styles\branding-it-IT.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-ja-JP.css -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\Website\styles\branding-ja-JP.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-ko-KR.css -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\Website\styles\branding-ko-KR.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-pl-PL.css -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\Website\styles\branding-pl-PL.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-pt-BR.css -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\Website\styles\branding-pt-BR.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-ru-RU.css -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\Website\styles\branding-ru-RU.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-tr-TR.css -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\Website\styles\branding-tr-TR.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-Website.css -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\Website\styles\branding-Website.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-zh-CN.css -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\Website\styles\branding-zh-CN.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-zh-TW.css -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\Website\styles\branding-zh-TW.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding.css -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\Website\styles\branding.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\Web\index.html -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\Website\index.html
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\Web\search.html -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\Website\search.html
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\Web\SearchHelp.aspx -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\Website\SearchHelp.aspx
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\Web\SearchHelp.inc.php -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\Website\SearchHelp.inc.php
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\Web\SearchHelp.php -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\Website\SearchHelp.php
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\Web\Web.Config -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\Website\Web.Config
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\Web\icons\Search.png -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\Website\icons\Search.png
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\Web\icons\TocClose.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\Website\icons\TocClose.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\Web\icons\TocCollapsed.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\Website\icons\TocCollapsed.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\Web\icons\TocExpanded.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\Website\icons\TocExpanded.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\Web\icons\TocOpen.gif -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\Website\icons\TocOpen.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\Web\scripts\branding-Website.js -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\Website\scripts\branding-Website.js
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\Web\scripts\clipboard.min.js -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\Website\scripts\clipboard.min.js
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\Web\scripts\jquery-1.11.0.min.js -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\Website\scripts\jquery-1.11.0.min.js
+    Last step completed in 00:00:00.7807
+</buildStep>
+<buildStep step="GenerateHelpFormatTableOfContents">
+Generating HTML Help 1 table of contents file...
+    Last step completed in 00:00:00.0005
+</buildStep>
+<buildStep step="GenerateHelpFileIndex">
+Generating HTML Help 1 index file...
+    Last step completed in 00:00:00.0000
+</buildStep>
+<buildStep step="GenerateHelpProject">
+Generating HTML Help 1 project file...
+    Last step completed in 00:00:00.0185
+</buildStep>
+<buildStep step="CompilingHelpFile">
+Compiling HTML Help 1 file...
+[C:\Program Files (x86)\MSBuild\14.0\bin\MSBuild.exe - Build1xHelpFile.proj]
+  Microsoft HTML Help Compiler 4.74.8702
+  
+  
+  
+  Compiling c:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\HtmlHelp1\MeshLibraries.chm
+  
+  
+  
+  
+  
+  Compile time: 0 minutes, 9 seconds
+  
+  2,611	Topics
+  
+  27,834	Local links
+  
+  3,078	Internet links
+  
+  0	Graphics
+  
+  
+  
+  
+  
+  Created c:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\HtmlHelp1\MeshLibraries.chm, 2,881,753 bytes
+  
+  Compression decreased file by 18,049,087 bytes.
+  
+    Last step completed in 00:00:09.8846
+</buildStep>
+<buildStep step="GenerateHelpFormatTableOfContents">
+Executing informational Generate Table of Contents build step for plug-ins (not used for MS Help Viewer)
+    Last step completed in 00:00:00.0010
+</buildStep>
+<buildStep step="GenerateHelpProject">
+Executing informational Generate Help Project build step for plug-ins (not used for MS Help Viewer)
+    Last step completed in 00:00:00.0010
+</buildStep>
+<buildStep step="CompilingHelpFile">
+Generating MS Help Viewer file...
+[C:\Program Files (x86)\MSBuild\14.0\bin\MSBuild.exe - BuildHelpViewerFile.proj]
+  Compressing help content files...
+  500 items added
+  1000 items added
+  1500 items added
+  2000 items added
+  2500 items added
+  Compression finished.  2678 items added
+  Saving C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\MeshLibraries.mshc...
+  Saved 500 of 2678 items
+  Saved 1000 of 2678 items
+  Saved 1500 of 2678 items
+  Saved 2000 of 2678 items
+  Saved 2500 of 2678 items
+  Finished saving C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\MeshLibraries.mshc
+  Compressed 5 folders, 2673 files.  Reduced size by 16,445,388 bytes (76%).
+    Last step completed in 00:00:01.6762
+</buildStep>
+<buildStep step="GenerateHelpFormatTableOfContents">
+Generating website table of contents file...
+    Last step completed in 00:00:00.0005
+</buildStep>
+<buildStep step="GenerateFullTextIndex">
+Generating full-text index for the website...
+
+<plugIn name="Lightweight Website Style" behavior="After" priority="1000">
+Adding lightweight search and TOC elements to each topic...
+</plugIn>    Last step completed in 00:00:05.7123
+</buildStep>
+<buildStep step="CopyingWebsiteFiles">
+Copying website files to output folder...
+
+Copied 500 files
+Copied 1000 files
+Copied 1500 files
+Copied 2000 files
+Copied 2500 files
+Copied 3000 files
+Copied 3500 files
+Copied 3500 files for the website content
+    Last step completed in 00:00:03.5775
+</buildStep>
+<buildStep step="CleanIntermediates">
+Removing intermediate files...
+    Last step completed in 00:00:02.4092
+</buildStep>
+<buildStep step="Completed">
+
+Build completed successfully at 10/21/2016 12:28:44 PM.  Total time: 00:01:52.4477
+
+</buildStep>
+</shfbBuild>

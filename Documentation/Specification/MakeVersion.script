@@ -1,0 +1,528 @@
+﻿#using System.Text
+#using Goedel.Mesh
+#using Goedel.Protocol
+#pclass ExampleGenerator ExampleGenerator
+
+#method MakeVersion int Ignore
+
+namespace InternetDrafts {
+    class Version {
+        }
+    }
+
+#end method
+
+#method MeshExamplesWeb CreateExamples Example
+
+##Password Management
+
+Alice decides to use the Mesh to manage her Web usernames and passwords.
+
+She creates two accounts:
+
+* example.com: username 'alice', password 'secret'
+
+* cnn.com: username 'alice1', password 'secret'
+
+
+The JSON encoding of the password data is as follows:
+
+~~~~
+#{Example.PasswordProfilePrivate1}
+~~~~
+
+The JSON encoded password data is then encrypted and stored in an
+application profile as follows:
+
+~~~~
+#{Example.PasswordProfile}
+~~~~
+
+As we saw earlier, Alice really needs to start using stronger passwords. 
+Fortunately, having access to a password manager means that Alice doesn't
+need to remember different passwords for every site she uses any more.
+
+In addition to offering to use the Mesh to remember passwords, a Web
+browser can offer to automatically generate a password for a site.
+This can be a much stronger password than the user would normally want
+to choose if they had to remember it.
+
+Alice chooses to use password generation. Her password manager profile is
+updated to reflect this new choice.
+
+~~~~
+#{Example.PasswordProfilePrivate2}
+~~~~
+
+Alice is happy to use the password manager for her general Web sites but
+not for the password she uses to log in to her bank account. When asked
+if the password should be stored in the Mesh, Alice declines and asks 
+not to be asked in the future.
+
+~~~~
+#{Example.PasswordProfilePrivate3}
+~~~~
+
+#end method
+
+#method MeshExamples CreateExamples Example
+
+##Protocol Overview
+
+[Account request does not specify the portal in the request body,
+only the HTTP package includes this information. This is probably a bug.]
+
+
+####Creating a new portal account
+
+A user interacts with a Mesh service through a Mesh portal provider 
+with which she establishes a portal account. 
+
+For user convenience, a portal account identifier has the familiar 
+<<username>@<<domain> format established in [~RFC822].
+
+For example Alice selects #{CreateExamples.NameService} as her 
+portal provider and chooses the account name #{CreateExamples.NameAccount}.
+Her portal account identifier is #{CreateExamples.NameAccount}.
+
+A user MAY establish accounts with multiple portal providers
+and/or change their portal provider at any time they choose.
+
+######Checking Account Identifier for uniqueness
+#% var Point = Example.Traces.Get (Example.LabelValidate);
+#% Example.Traces.Level = 0;
+
+The first step in creating a new account is to check to see if the
+chosen account identifier is available. This allows a client to 
+validate user input and if necessary warn the user that they need 
+to choose a new account identifier when the data is first entered.
+
+The ValidateRequest message contains the requested account identifier
+and an optional language parameter to allow the service to provide
+informative error messages in a language the user understands. The
+Language field contains a list of ISO language identifier codes 
+in order of preference, most preferred first.
+
+#{Point.Messages[0].String()}
+
+The ValidateResponse message returns the result of the validation
+request in the Valid field. Note that even if the value true is returned,
+a subsequent account creation request MAY still fail.
+
+#{Point.Messages[1].String()}
+
+
+
+#% Example.Traces.Level = 5;
+[Note that for the sake of concise presentation, the HTTP binding
+information is omitted from future examples.]
+
+
+####Creating a new user profile
+#% Point = Example.Traces.Get (Example.LabelCreatePersonal);
+#% Point = Example.Traces.Get (Example.LabelCreatePersonal);
+#% var CreateRequest = Point.Messages[0].Payload as Goedel.Mesh.CreateRequest;
+#% var SignedProfile = CreateRequest.Profile as SignedPersonalProfile;
+#% var Profile = SignedProfile.Signed;
+
+The first step in creating a new personal profile is to create a
+Master Profile object. This contains the long term Master Signing
+Key that will remain constant for the life of the profile, at least 
+one Online Signature Key to be used for administering the personal
+profile and (optionally), one or more master escrow keys.
+
+For convenience, the descriptions of the Master Signing Key, 
+Online Signing Keys and Escrow Keys typically include PKIX 
+certificates signed by the Master Signing Key. This allows 
+PKIX based applications to make use of PKIX certificate chains
+to express the same trust relationships described in the Mesh.
+
+~~~~
+#{JSONDebugWriter.Write (Profile.PersonalMasterProfile)}
+~~~~
+
+The Master Profile is always signed using the Master Signing Key:
+
+~~~~
+#{JSONDebugWriter.Write (Profile.SignedMasterProfile)}
+~~~~
+
+Since the device used to create the personal profile is typically
+connected to the profile, a Device profile entry is created 
+for it. This contains a Device Signing Key, a Device Encryption Key
+and a Device Authentication Key:
+
+#% var DeviceProfile = Profile.Devices[0];
+~~~~
+#{JSONDebugWriter.Write (DeviceProfile.Data)}
+~~~~
+
+The Device Profile is signed using the Device Signing Key:
+
+~~~~
+#{JSONDebugWriter.Write (DeviceProfile)}
+~~~~
+
+A personal profile would typically contain at least one application
+when first created. For the sake of demonstration, we will do this later.
+
+The personal profile thus consists of the master profile and 
+the device profile:
+
+~~~~
+#{JSONDebugWriter.Write (Profile)}
+~~~~
+
+The personal profile is then signed using the Online Signing Key:
+
+
+~~~~
+#{JSONDebugWriter.Write (SignedProfile)}
+~~~~
+
+######Publishing a new user profile
+
+Once the signed personal profile is created, the client can finaly
+make the request for the service to create the account. The request object 
+contains the requested account identifier and profile:
+
+#{Point.Messages[0].String()}
+
+The service reports the success (or failure) of the account creation
+request:
+
+#{Point.Messages[1].String()}
+
+
+####Connecting a device profile to a user profile
+
+Connecting a device to a profile requires the client on the new
+device to interact with a client on a device that has administration capabilities,
+i.e. it has access to an Online Signing Key. Since clients cannot 
+interact directly with other clients, a service is required to 
+mediate the connection. This service is provided by a Mesh portal
+provider.
+
+All service transactions are initiated by the clients. First the 
+connecting device posts ConnectStart, after which it may poll for the
+outcome of the connection request using ConnectStatus.
+
+Periodically, the Administration Device polls for a list of pending
+connection requests using ConnectPending. After posting a request,
+the administration device posts the result using ConnectComplete:
+
+~~~~
+Connecting                  Mesh                 Administration
+  Device                   Service                   Device
+
+	|                         |                         |
+	|      ConnectStart       |                         |
+	| ----------------------> |                         |
+	|                         |      ConnectPending     |
+	|                         | <---------------------- |
+	|                         |                         |
+	|                         |      ConnectComplete    |
+	|                         | <---------------------- |
+	|      ConnectStatus      |                         |
+	| ----------------------> |                         |
+~~~~
+
+
+
+The first step in the process is for the client to generate a
+device profile. Ideally the device profile is bound to the device
+in a read-only fashion such that applications running on the 
+device can make use of the deencryption and authentication keys
+but these private keys cannot be extracted from the device:
+
+~~~~
+#{JSONDebugWriter.Write (Example.SignedDeviceProfile2.Data)}
+~~~~
+
+The device profile is then signed:
+
+~~~~
+#{JSONDebugWriter.Write (Example.SignedDeviceProfile2)}
+~~~~
+
+######Profile Authentication
+
+One of the main architecutral principles of the Mesh is 
+bilateral authentication. Every device that is connected to a 
+Mesh profile MUST authenticate the profile it is connecting
+to and every Mesh profile administrator MUST authenticate devices
+that are connected.
+
+Having created the necessary profile, the device MUST verify 
+that it is connecting to the correct Mesh profile. The best 
+mechanism for achieving this purpose depends on the capabilities 
+of the device being connected. The administration device 
+obviously requires some means of communicating with the 
+user to serve its function. But the device being connected may
+have a limited display capability or no user interaction 
+capability at all.
+
+########Interactive Devices
+
+
+If the device has user input and display capabilities, it can
+verify that it is connecting to the correct display by first
+requesting the user enter the portal account of the profile 
+they wish to connect to, retreiving the profile associated 
+with the device and displaying the profile fingerprint. 
+
+#% Point = Example.Traces.Get (Example.LabelConnectRequest);
+
+The client requests the profile for the requested account name:
+
+#{Point.Messages[0].String()}
+
+The response contains the requested profile information.
+
+#{Point.Messages[1].String()}
+
+Having received the profile data, the user can then 
+verify that the device is attempting to 
+connect to the correct profile by verifying that the 
+fingerprint shown by the device attempting to connect is
+correct.
+
+#########Constrained Interaction Devices
+
+Connection of an Internet of Things 'IoT' device that does 
+not have the ability to accept user input requires a mechanism
+by which the user can identify the device they wish to connect 
+to their profile and a mechanism to authenticate the profile 
+to the device.
+
+If the connecting device has a wired communication capability
+such as a USB port, this MAY be used to effect the device 
+connection using a standardized interaction profile. But 
+an increasing number of constrained IoT devices are only 
+capable of wireless communication.
+
+Configuration of such devices for the purpose of the Mesh requires
+that we also consider configuration of the wireless networking
+capabilities at the same time. The precise mechanism by which 
+this is achieved is therefore outside the scope of this particular 
+document. However prototypes have been built and are being considered
+that make use of some or all of the following communication techniques:
+
+* Wired serial connection (RS232, RS485).
+
+* DHCP signalling.
+
+* Machine readable device identifiers (barcodes, QRCodes).
+
+* Default device profile installed during manufacture.
+
+* Optical communication path using camera on administrative device
+and status light on connecting device to communicate the device 
+identifier, challenge nonce and confirm profile fingerprint.
+
+* Speech output on audio capable connecting device.
+
+
+######Connection request
+
+After the user verifies the device fingerprint as correct, the 
+client posts a device connection request to the portal:
+
+#{Point.Messages[2].String()}
+
+The portal verifies that the request is accepable and returns 
+the transaction result:
+
+#{Point.Messages[3].String()}
+
+######Administrator Polls Pending Connections
+
+The client can poll the portal for the status of pending requests
+at any time (modulo any service throttling restrictions at the 
+service side). But the request status will only change when
+an update is posted by an administration device.
+
+Since the user is typically connecting a device to their profile,
+the next step in connecting the device is to start the administration
+client. When started, the client polls for pending connection 
+requests using ConnectPendingRequest.
+
+#% Point = Example.Traces.Get (Example.LabelConnectPending);
+#{Point.Messages[0].String()}
+
+The service responds with a list of pending requests:
+
+#{Point.Messages[1].String()}
+
+######Administrator updates and publishes the personal profile.
+
+The device profile is added to the Personal profile which is
+then signed by the online signing key. The administration
+client publishes the updated profile to the Mesh through the
+portal:
+
+#% Point = Example.Traces.Get (Example.LabelConnectPublish);
+#{Point.Messages[0].String()}
+
+As usual, the service returns the response code:
+
+#{Point.Messages[1].String()}
+
+######Administrator posts completion request.
+
+Having accepted the device and connected it to the profile, the
+administration client creates and signs a connection completion
+result which is posted to the portal using ConnectCompleteRequest:
+
+#% Point = Example.Traces.Get (Example.LabelConnectAccept);
+#{Point.Messages[0].String()}
+
+Again, the service returns the response code:
+
+#{Point.Messages[1].String()}
+
+######Connecting device polls for status update.
+
+As stated previously, the connecting device polls the portal 
+periodically to determine the status of the pending request
+using ConnectStatusRequest:
+
+#% Point = Example.Traces.Get (Example.LabelConnectStatus);
+#{Point.Messages[0].String()}
+
+If the response is that the connection status has not changed,
+the service MAY return a response that specifies a minimum 
+retry interval. In this case however there is a connection result: 
+
+#{Point.Messages[1].String()}
+
+[Should probably unpack further.]
+
+####Adding an application profile to a user profile
+
+Application profiles are published separately from the 
+personal profile to which they are linked. This allows a 
+device to be given administration capability for a particular
+application without granting administration capability for 
+the profile itself and the ability to connect additional 
+profiles and devices.
+
+Another advantage of this separation is that an application 
+profile might be managed by a separate party. In an enterprise,
+the application profile for a user's corporate email account 
+could be managed by the corporate IT department.
+
+A user MAY have multiple application profiles for the same
+application. If a user has three email accounts, they would 
+have three email application profiles, one for each account.
+
+In this example, the user has requested a PaswordProfile to be
+created. When populated, this records the usernames and passwords
+for the various Web sites that the user has created accounts at 
+and has requested the Web browser store in the Mesh.
+
+Unlike a traditional password management service, the data stored
+the Password Profile is encrypted end to end and can only be 
+decrypted by the devices that hold a decryption key.
+
+~~~~
+#{Example.PasswordProfile}
+~~~~
+
+The application profile is published to the Mesh in the same
+way as any other profile update, via a a Publish transaction:
+
+#% Point = Example.Traces.Get (Example.LabelApplicationPublish);
+#{Point.Messages[0].String()}
+
+The service returns a status response.
+
+#{Point.Messages[1].String()}
+
+Note that the degree of verification to be performed by the service
+when an application profile is published is an open question.
+
+Having created the application profile, the administration client
+adds it to the personal profile and publishes it:
+
+#% Point = Example.Traces.Get (Example.LabelApplicationProfile);
+#{Point.Messages[0].String()}
+
+Note that if the publication was to happen in the reverse order,
+with the personal profile being published before the application
+profile, the personal profile might be rejected by the portal for 
+inconsistency as it links to a non existent application profile.
+Though the value of such a check is debatable. It might well
+be preferable to not make such checks as it permits an application
+profile to have a degree of anonymity.
+
+#{Point.Messages[1].String()}
+
+####Creating a recovery profile
+
+The Mesh invites users to put all their data eggs in one cryptographic
+basket. If the private keys in their master profile are lost, they
+could lose all their digital assets.
+
+The debate over the desirability of key escrow is a complex one.
+Not least because voluntary key escrow by the user to protect
+the user's digital assets is frequently conflated with mechanisms
+to support 'Lawful Access' through government managed backdoors.
+
+
+Accidents happen and so do disasters. For most users and most applications,
+data loss is a much more important concern than data disclosure. The option 
+of using a robust key recovery mechanism is therefore essential for use of 
+strong cryptography is to become ubiquitous.
+
+There are of course circumstances in which some users may prefer to risk
+losing some of their data rather than risk disclosure. Since any key recovery
+infrastructure necessarily introduces the risk of coercion, the
+choice of whether to use key recovery or not is left to the user to 
+decide.
+
+The Mesh permits users to escrow their private keys in the Mesh itself
+in an OfflineEscrowEntry. Such entries are encrypted using the
+strongest degree of encryption available under a symmetric key. 
+The symmetric key is then in turn split using Shamir secret
+sharing using an n of m threshold scheme.
+
+The OfflineEscrowEntry identifier is a UDF fingerprint of the symmetric
+key used to encrypt the data. This guarantees that a party that has the
+decryption key has the ability to locate the corresponding Escrow
+entry.
+
+The OfflineEscrowEntry is published using the usual Publish
+transaction:
+
+#% Point = Example.Traces.Get (Example.LabelEscrow);
+#{Point.Messages[0].String()}
+
+The response indicates success or failure:
+
+#{Point.Messages[1].String()}
+
+
+####Recovering a profile
+
+To recover a profile, the user MUST supply the necessary number of 
+secret shares. These are then used to calculate the UDF fingerprint
+to use as the locator in a Get transaction:
+
+
+#% Point = Example.Traces.Get (Example.LabelRecover);
+#{Point.Messages[0].String()}
+
+If the transaction succeeds, GetResponse is returned with the 
+requested data.
+
+#{Point.Messages[1].String()}
+
+The client can now decrypt the OfflineEscrowEntry to recover the 
+private key(s).
+
+
+#end method
+
+#end pclass
+#end using

@@ -1,0 +1,66 @@
+﻿Protocol Goedel.Mesh MeshSSH MeshSSH
+    Using Goedel.Cryptography.Jose 
+	Extern ApplicationProfile
+	Extern ApplicationProfilePrivate
+	Extern Entry
+
+	Description 
+		|Mesh profile for SSH applications.
+
+	Section 1 "SSH Application Profile Objects"
+
+	Structure SSHProfile
+		Description 
+			|Application profile for SSH. This is an initial cut of the 
+			|profile and will need revision. In particular, a sysadmin with 
+			|a very large number of hosts they are accessing will need some means
+			|of avoiding combinatorial explosion.
+		Inherits ApplicationProfile
+
+	Structure SSHProfilePrivate
+		Description 
+			|Private portion or profile.
+		Inherits ApplicationProfilePrivate
+		String Account
+			Description 
+				|The account to which the profile is bound
+
+		Struct DeviceEntry DeviceEntries
+			Multiple
+			Description 
+				|Devices bound to the profile
+
+		Struct HostEntry HostEntries
+			Multiple
+			Description 
+				|Hosts bound to the profile
+
+
+	Structure DeviceEntry
+		Description 
+			|Describe connection of a device to the SSH profile. This is a 
+			|device on which the user will use an SSH credential.
+		Inherits Entry
+		String UDF
+			Description 
+				|Device profile fingerprint.
+		Struct PublicKey UserKeys
+			Multiple
+			Description 
+				|Keys authorized for this device. The private key is generated and stored on 
+				|the device.
+
+	Structure HostEntry
+		Description 
+			|Describe a host connected to the SSH profile. This is a machine 
+			|that the user will access using the credential.
+		Inherits Entry
+		Struct Connection HostConnection
+			Multiple
+			Description 
+				|Describe the means of accessing the host (DNS, IP, account, etc.).
+		Struct PublicKey HostKeys
+			Multiple
+			Description 
+				|The public keys that are to be added to the host when this profile is
+				|conected.
