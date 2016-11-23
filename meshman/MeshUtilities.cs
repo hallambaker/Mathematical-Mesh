@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Goedel.Mesh;
-using Goedel.Debug;
+using Goedel.Utilities;
 using Goedel.Mesh.Platform;
 
 
@@ -68,12 +68,11 @@ namespace Goedel.Mesh.MeshMan {
         public MeshClient GetMeshClient(string PortalID) {
             this.PortalID = PortalID;
 
-            Utils.Assert(PortalID != null, "No Portal account specified");
+            Assert.NotNull(PortalID, NoPortalAccount.Throw);
             Account.SplitAccountID(PortalID, out AccountID, out Portal);
-            Utils.Assert(AccountID != null | Portal != null, "[{0}] is not a valid portal address");
-
+            Assert.NotNull(AccountID, InvalidPortalAddress.Throw);
             MeshClient = new MeshClient(Portal);
-            Utils.Assert(MeshClient != null, "Could not connect to portal {0}", Portal);
+            Assert.NotNull(MeshClient, PortalConnectFail.Throw);
 
             return MeshClient;
             }
@@ -108,7 +107,7 @@ namespace Goedel.Mesh.MeshMan {
                 }
             AccountID = MakeAccountID(Base + Index);
 
-            Utils.NYI("Generate new identifer if original is taken");
+            throw new NYI("Generate new identifer if original is taken");
 
             }
 
@@ -130,10 +129,10 @@ namespace Goedel.Mesh.MeshMan {
         private void GetProfile(String Portal, String UDF) {
 
             RegistrationPersonal = Machine.Personal;
-            Utils.Assert(RegistrationPersonal, "No profile found");
+            Assert.NotNull(RegistrationPersonal, NoPersonalProfile.Throw);
 
             PortalID = RegistrationPersonal?.Portals?[0];
-            Utils.Assert(PortalID, "No portal ID known");
+            Assert.NotNull(PortalID, NoPortalAccount.Throw);
 
             SignedPersonalProfile = RegistrationPersonal.Profile;
             PersonalProfile = SignedPersonalProfile.Signed;

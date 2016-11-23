@@ -22,7 +22,7 @@
 
 using System;
 using System.Collections.Generic;
-using Goedel.Registry;
+using Goedel.Utilities;
 using Goedel.Persistence;
 using Goedel.Cryptography;
 using Goedel.Cryptography.PKIX;
@@ -171,9 +171,7 @@ namespace Goedel.Mesh {
                     PersonalProfile PersonalProfile) {
             var Result = SignedProfile.Inner as PasswordProfile;
 
-            if (Result == null) {
-                throw new Throw("Not a password profile.");
-                }
+            Assert.NotNull(Result, NotValidProfile.Throw);
 
             Result.Link(PersonalProfile);
             return (Result);

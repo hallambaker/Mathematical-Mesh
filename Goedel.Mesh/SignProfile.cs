@@ -23,11 +23,11 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Goedel.Debug;
 using Goedel.Cryptography.Jose;
 using Goedel.Persistence;
 using Goedel.Protocol;
 using Goedel.IO;
+using Goedel.Utilities;
 
 namespace Goedel.Mesh {
 
@@ -69,9 +69,8 @@ namespace Goedel.Mesh {
         /// <returns>True if the profile passed validation, otherwise false.</returns>
         public virtual bool Validate () {
 
-            Trace.NYI("Need to validate the profile");
+            throw new NYI ("Need to validate the profile");
 
-            return true;
             }
 
         }
@@ -142,12 +141,13 @@ namespace Goedel.Mesh {
             var Reader = JSONReader.OfData(SignedData.Payload);
             var Profile = DeviceProfile.FromTagged(Reader);
 
-            Throw.IfNot(Profile.DeviceSignatureKey.Verify(),
-                    "Key fingerprint does not match key value");
-            var PublicKey = Profile.DeviceSignatureKey.KeyPair;
-            KeyNotFoundException.If(PublicKey == null);
+            Assert.True(Profile.DeviceSignatureKey.Verify(), KeyFingerprintMismatch.Throw);
 
-            Throw.IfNot(SignedData.Verify(Profile.UDF, PublicKey), "Signature does not verify");
+            var PublicKey = Profile.DeviceSignatureKey.KeyPair;
+            Assert.NotNull(PublicKey, PublicKeyNotFound.Throw);
+
+            Assert.True(SignedData.Verify(Profile.UDF, PublicKey), InvalidProfileSignature.Throw);
+
 
             _Signed = Profile;
             return _Signed;
@@ -181,8 +181,7 @@ namespace Goedel.Mesh {
 
             var SigningKey = Unpacked.DeviceSignatureKey.KeyPair;
             var Verify = SignedData.Verify(Unpacked.UDF, SigningKey);
-            Throw.IfNot(Verify, "Device signature does not verify");
-
+            Assert.True(Verify, InvalidProfileSignature.Throw);
 
             _Signed = Unpacked;
             return Unpacked;
@@ -268,7 +267,7 @@ namespace Goedel.Mesh {
 
             var SigningKey = Unpacked.MasterSignatureKey.KeyPair;
             var Verify = SignedData.Verify(Unpacked.MasterSignatureKey.UDF, SigningKey);
-            Throw.IfNot(Verify, "Master signature does not verify");
+            Assert.True(Verify, InvalidProfileChain.Throw);
 
             Unpacked.Unpack();
 
@@ -301,7 +300,7 @@ namespace Goedel.Mesh {
             // Locate the administration key for this device.
             var AdminKey = Data.GetSignatureKey();
 
-            Throw.If(AdminKey == null, "Device not authorized for administration.");
+            Assert.NotNull(AdminKey, NotAdministrationDevice.Throw);
 
             // Make sure all the data is properly registered
             Data.EncryptPrivate();
@@ -389,7 +388,7 @@ namespace Goedel.Mesh {
             // Locate the administration key for this device.
             var AdminKey = Data.GetAdministrationKey();
 
-            Throw.If(AdminKey == null, "Device not authorized for administration.");
+            Assert.NotNull(AdminKey, NotAdministrationDevice.Throw);
 
             // Make sure all the data is properly registered
             Data.Package();

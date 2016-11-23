@@ -1,0 +1,40 @@
+﻿Namespace Goedel.Mesh
+    
+	Exception MeshException
+        Console "Error occurred in Mesh library"
+
+		Exception ProfileInvalid
+			Console "Profile not valid"
+
+		Exception InvalidResponse
+			Console "Invalid response from server"
+
+		Exception ProfileNotFound
+			Console "Profile not found"
+
+		Exception NotValidProfile
+			Console "Profile is not valid"
+
+		Exception PublicKeyNotFound
+			Console "Public key could not be found"
+
+		Exception PrivateKeyNotFound
+			Console "Private key could not be found"
+
+		Exception KeyFingerprintMismatch
+			Console "Key does not match fingerprint"
+
+		Exception InvalidProfileSignature
+			Console "Profile signature is invalid"
+
+		Exception NotAdministrationDevice
+			Console "Administration operation attempted on non administration device"
+
+		Exception InvalidProfileChain
+			Console "Profile chain is not valid"
+
+		Exception NoMasterProfile
+			Console "No master profile"
+
+		Exception NoDeviceProfile
+			Console "No device profile"

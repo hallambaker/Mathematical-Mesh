@@ -70,10 +70,13 @@ namespace MeshServerShell {
 
 
 		private enum TagType_Start {
-			Address,
+			PortalAddress,
+			HostAddress,
 			MeshStore,
 			PortalStore,
 			Verify,
+			Fallback,
+			Multithread,
 			}
 
 		private static void Handle_Start (
@@ -82,15 +85,24 @@ namespace MeshServerShell {
 
 			var Registry = new Goedel.Registry.Registry ();
 
-			Options.Address.Register ("address", Registry, (int) TagType_Start.Address);
-			Options.MeshStore.Register ("mesh", Registry, (int) TagType_Start.MeshStore);
-			Options.PortalStore.Register ("mesh", Registry, (int) TagType_Start.PortalStore);
+			Options.PortalAddress.Register ("portal", Registry, (int) TagType_Start.PortalAddress);
+			Options.HostAddress.Register ("host", Registry, (int) TagType_Start.HostAddress);
+			Options.MeshStore.Register ("mlog", Registry, (int) TagType_Start.MeshStore);
+			Options.PortalStore.Register ("plog", Registry, (int) TagType_Start.PortalStore);
 			Options.Verify.Register ("verify", Registry, (int) TagType_Start.Verify);
+			Options.Fallback.Register ("fallback", Registry, (int) TagType_Start.Fallback);
+			Options.Multithread.Register ("multi", Registry, (int) TagType_Start.Multithread);
 
 			// looking for parameter Param.Name}
 			if (index < args.Length && !IsFlag (args [index][0] )) {
 				// Have got the parameter, call the parameter value method
-				Options.Address.Parameter (args [index]);
+				Options.PortalAddress.Parameter (args [index]);
+				index++;
+				}
+			// looking for parameter Param.Name}
+			if (index < args.Length && !IsFlag (args [index][0] )) {
+				// Have got the parameter, call the parameter value method
+				Options.HostAddress.Parameter (args [index]);
 				index++;
 				}
 
@@ -134,6 +146,28 @@ namespace MeshServerShell {
 							if 	(!IsFlag (args [i+1][0] )) {
 								i++;								
 								Options.Verify.Parameter (args[i]);
+								}
+							}
+						break;
+						}
+					case TagType_Start.Fallback : {
+						int OptionParams = Options.Fallback.Tag (Rest);
+						
+						if (OptionParams>0 && ((i+1) < args.Length)) {
+							if 	(!IsFlag (args [i+1][0] )) {
+								i++;								
+								Options.Fallback.Parameter (args[i]);
+								}
+							}
+						break;
+						}
+					case TagType_Start.Multithread : {
+						int OptionParams = Options.Multithread.Tag (Rest);
+						
+						if (OptionParams>0 && ((i+1) < args.Length)) {
+							if 	(!IsFlag (args [i+1][0] )) {
+								i++;								
+								Options.Multithread.Parameter (args[i]);
 								}
 							}
 						break;
@@ -188,11 +222,16 @@ namespace MeshServerShell {
 #pragma warning restore 219
 
 					Console.Write ("{0}start ", UsageFlag);
-					Console.Write ("[{0}] ", Dummy.Address.Usage (null, "address", UsageFlag));
-					Console.Write ("[{0}] ", Dummy.MeshStore.Usage ("mesh", "value", UsageFlag));
-					Console.Write ("[{0}] ", Dummy.PortalStore.Usage ("mesh", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.PortalAddress.Usage (null, "portal", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.HostAddress.Usage (null, "host", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.MeshStore.Usage ("mlog", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.PortalStore.Usage ("plog", "value", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.Verify.Usage ("verify", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.Fallback.Usage ("fallback", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.Multithread.Usage ("multi", "value", UsageFlag));
 					Console.WriteLine ();
+
+					Console.WriteLine ("    Start Mesh server");
 
 				}
 
@@ -234,13 +273,18 @@ namespace MeshServerShell {
 
 
     public class _Start : Goedel.Registry.Dispatch {
-		public String			Address = new String ();
+		public String			PortalAddress = new String ();
+		public String			HostAddress = new String ();
 
 		public String			MeshStore = new  String ("MeshPersistenceStore.jlog");
 
 		public String			PortalStore = new  String ("PortalPersistenceStore.jlog");
 
 		public Flag			Verify = new  Flag ();
+
+		public Flag			Fallback = new  Flag ("true");
+
+		public Flag			Multithread = new  Flag ("true");
 
 
 		}
@@ -366,22 +410,33 @@ namespace MeshServerShell {
 #pragma warning restore 219
 
 					Console.Write ("{0}start ", UsageFlag);
-					Console.Write ("[{0}] ", Dummy.Address.Usage (null, "address", UsageFlag));
-					Console.Write ("[{0}] ", Dummy.MeshStore.Usage ("mesh", "value", UsageFlag));
-					Console.Write ("[{0}] ", Dummy.PortalStore.Usage ("mesh", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.PortalAddress.Usage (null, "portal", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.HostAddress.Usage (null, "host", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.MeshStore.Usage ("mlog", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.PortalStore.Usage ("plog", "value", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.Verify.Usage ("verify", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.Fallback.Usage ("fallback", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.Multithread.Usage ("multi", "value", UsageFlag));
 					Console.WriteLine ();
+
+					Console.WriteLine ("    Start Mesh server");
 
 				}
 
 				Console.WriteLine ("    {0}\t{1} = [{2}]", "String", 
-							"Address", Options.Address);
+							"PortalAddress", Options.PortalAddress);
+				Console.WriteLine ("    {0}\t{1} = [{2}]", "String", 
+							"HostAddress", Options.HostAddress);
 				Console.WriteLine ("    {0}\t{1} = [{2}]", "String", 
 							"MeshStore", Options.MeshStore);
 				Console.WriteLine ("    {0}\t{1} = [{2}]", "String", 
 							"PortalStore", Options.PortalStore);
 				Console.WriteLine ("    {0}\t{1} = [{2}]", "Flag", 
 							"Verify", Options.Verify);
+				Console.WriteLine ("    {0}\t{1} = [{2}]", "Flag", 
+							"Fallback", Options.Fallback);
+				Console.WriteLine ("    {0}\t{1} = [{2}]", "Flag", 
+							"Multithread", Options.Multithread);
 			Console.WriteLine ("Not Yet Implemented");
 			}
 		public virtual void About ( About Options

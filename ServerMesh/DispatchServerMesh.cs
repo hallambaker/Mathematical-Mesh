@@ -23,7 +23,9 @@
 using System;
 using Goedel.Mesh;
 using Goedel.Protocol;
-using Goedel.Protocol.Extended;
+using Goedel.Protocol.Framework;
+
+using System.Diagnostics;
 
 namespace MeshServerShell {
     public partial class MeshServerShell {
@@ -39,8 +41,11 @@ namespace MeshServerShell {
         /// <param name="Options"></param>
         public override void Start(Start Options) {
 
+            Trace.Listeners.Add(new TextWriterTraceListener(Console.Out));
+
+
             // Create the provider object.
-            var MeshServiceProvider = new PublicMeshServiceProvider(Options.Address.Value, 
+            var MeshServiceProvider = new PublicMeshServiceProvider(Options.PortalAddress.Value, 
                 Options.MeshStore.Value, Options.PortalStore.Value);
 
 
@@ -53,10 +58,21 @@ namespace MeshServerShell {
             var InterfaceReg = HostReg.Add (Interface);
 
             // Register the network port.
-            InterfaceReg.AddService(Options.Address.Value);
-
-            // Run until abort
-            Server.RunBlocking();
+            if (Options.HostAddress.Value != null) {
+                InterfaceReg.AddService(Options.HostAddress.Value);
+                }
+            if (Options.Fallback.Value) {
+                var Fallback = "mmm." +Options.PortalAddress.Value;
+                InterfaceReg.AddService(Fallback);
+                }
+            if (Options.Multithread.Value) {
+                // Run until abort
+                Server.StartAsync ();
+                }
+            else {
+                // Run until abort
+                Server.RunBlocking ();
+                }
             }
 
         }

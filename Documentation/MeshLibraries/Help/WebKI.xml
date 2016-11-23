@@ -488,12 +488,12 @@
     <HelpKINode Title="constructor" Url="html/8b2aa67f-b4ea-51e1-c6de-af500df9566c.htm" />
     <HelpKINode Title="fields" Url="html/e695aead-df59-320e-36fe-68b5a6771f0b.htm" />
     <HelpKINode Title="fields" Url="html/2c049743-64f0-faf6-76ca-0793826be59e.htm" />
-    <HelpKINode Title="methods" Url="html/a808c24e-3d45-05f0-0a69-afc2c1d8753a.htm" />
     <HelpKINode Title="methods" Url="html/33acd1c6-4cc5-9d43-e6af-68707bb683b5.htm" />
+    <HelpKINode Title="methods" Url="html/a808c24e-3d45-05f0-0a69-afc2c1d8753a.htm" />
   </HelpKINode>
   <HelpKINode Title="Constants.AdminKey field">
-    <HelpKINode Title="Constants.AdminKey Field" Url="html/1cf80cfb-1af4-992f-09e3-773d256a9123.htm" />
     <HelpKINode Title="Constants.AdminKey Field" Url="html/2aa5b8fd-f942-f77b-d63b-3414d1edc7d6.htm" />
+    <HelpKINode Title="Constants.AdminKey Field" Url="html/1cf80cfb-1af4-992f-09e3-773d256a9123.htm" />
   </HelpKINode>
   <HelpKINode Title="Constants.Constants constructor">
     <HelpKINode Title="Constants Constructor " Url="html/8b2aa67f-b4ea-51e1-c6de-af500df9566c.htm" />
@@ -510,20 +510,20 @@
   <HelpKINode Title="Constants.NonRoamingData field" Url="html/a60e0695-55d5-edae-8c2b-4ea8b11b6e2c.htm" />
   <HelpKINode Title="Constants.NonRoamingRoot field" Url="html/7d76b24c-092f-bb84-a146-262d69d1c120.htm" />
   <HelpKINode Title="Constants.RegistryAccounts field">
-    <HelpKINode Title="Constants.RegistryAccounts Field" Url="html/0e50b877-5f3a-45cf-28b3-1bd54f1f8253.htm" />
     <HelpKINode Title="Constants.RegistryAccounts Field" Url="html/e9a8cc73-10c9-e7e0-9023-e37d49fe59b6.htm" />
+    <HelpKINode Title="Constants.RegistryAccounts Field" Url="html/0e50b877-5f3a-45cf-28b3-1bd54f1f8253.htm" />
   </HelpKINode>
   <HelpKINode Title="Constants.RegistryApplication field">
-    <HelpKINode Title="Constants.RegistryApplication Field" Url="html/5e824808-e52a-bad8-30df-7fe5f510bd8a.htm" />
     <HelpKINode Title="Constants.RegistryApplication Field" Url="html/ec919f9c-9b68-a585-a5fb-0a8ceb2abd45.htm" />
+    <HelpKINode Title="Constants.RegistryApplication Field" Url="html/5e824808-e52a-bad8-30df-7fe5f510bd8a.htm" />
   </HelpKINode>
   <HelpKINode Title="Constants.RegistryDevice field">
-    <HelpKINode Title="Constants.RegistryDevice Field" Url="html/f44a1d9f-52de-22ef-eae2-ac1d66b68ac7.htm" />
     <HelpKINode Title="Constants.RegistryDevice Field" Url="html/fabfdd3b-ac2c-7e47-9e0d-352398491d96.htm" />
+    <HelpKINode Title="Constants.RegistryDevice Field" Url="html/f44a1d9f-52de-22ef-eae2-ac1d66b68ac7.htm" />
   </HelpKINode>
   <HelpKINode Title="Constants.RegistryPersonal field">
-    <HelpKINode Title="Constants.RegistryPersonal Field" Url="html/6ceec475-5ca1-1c6c-7c08-105ed663af0e.htm" />
     <HelpKINode Title="Constants.RegistryPersonal Field" Url="html/ebdb3e2a-3721-f115-2484-8b29a316094d.htm" />
+    <HelpKINode Title="Constants.RegistryPersonal Field" Url="html/6ceec475-5ca1-1c6c-7c08-105ed663af0e.htm" />
   </HelpKINode>
   <HelpKINode Title="Constants.RegistryRoot field">
     <HelpKINode Title="Constants.RegistryRoot Field" Url="html/530c6468-ff6f-1c70-35cf-a8e02d9566f6.htm" />
@@ -1280,7 +1280,6 @@
     <HelpKINode Title="MeshClient.GetPersonalProfile Method " Url="html/978a8c47-e7fc-705c-419c-f367a1d89c62.htm" />
   </HelpKINode>
   <HelpKINode Title="GetPIN method" Url="html/9a51a186-7945-29a6-29d1-34e5f70cac13.htm" />
-  <HelpKINode Title="GetPrivate method" Url="html/e353ec58-d6fd-7e6f-c16a-69115819d29f.htm" />
   <HelpKINode Title="GetPrivateData property">
     <HelpKINode Title="ApplicationProfile.GetPrivateData Property " Url="html/37e15fd2-fd6e-3745-f4e0-0141e7579c4f.htm" />
     <HelpKINode Title="MailProfile.GetPrivateData Property " Url="html/095c0644-6a0f-ffa7-d9ac-655dac7396b4.htm" />
@@ -2798,7 +2797,6 @@
   <HelpKINode Title="PublicKey.FromTagged method" Url="html/f5ef0beb-b5e6-8a68-f5a8-e5e9958cf135.htm" />
   <HelpKINode Title="PublicKey.Generate method" Url="html/114b774c-73b2-0fbe-b5cd-ee56a92589ff.htm" />
   <HelpKINode Title="PublicKey.GetKeySecurity method" Url="html/975a5626-d397-1387-e120-6fcc9dc386f9.htm" />
-  <HelpKINode Title="PublicKey.GetPrivate method" Url="html/e353ec58-d6fd-7e6f-c16a-69115819d29f.htm" />
   <HelpKINode Title="PublicKey.ImportPrivateParameters method" Url="html/544580b9-8cea-d1a7-13b1-45062ba248b2.htm" />
   <HelpKINode Title="PublicKey.KeyPair property" Url="html/370f2ff6-5e94-418a-f205-0988eaf67446.htm" />
   <HelpKINode Title="PublicKey.KeyType property" Url="html/199d13aa-6c73-8a4d-6ff9-05d526ebc861.htm" />
@@ -3001,12 +2999,12 @@
   <HelpKINode Title="RegistrationType enumeration" Url="html/ae9656ed-732d-dd8a-26e8-5f1ae96ee491.htm" />
   <HelpKINode Title="Registry enumeration member" Url="html/ae9656ed-732d-dd8a-26e8-5f1ae96ee491.htm" />
   <HelpKINode Title="RegistryAccounts field">
-    <HelpKINode Title="Constants.RegistryAccounts Field" Url="html/0e50b877-5f3a-45cf-28b3-1bd54f1f8253.htm" />
     <HelpKINode Title="Constants.RegistryAccounts Field" Url="html/e9a8cc73-10c9-e7e0-9023-e37d49fe59b6.htm" />
+    <HelpKINode Title="Constants.RegistryAccounts Field" Url="html/0e50b877-5f3a-45cf-28b3-1bd54f1f8253.htm" />
   </HelpKINode>
   <HelpKINode Title="RegistryApplication field">
-    <HelpKINode Title="Constants.RegistryApplication Field" Url="html/ec919f9c-9b68-a585-a5fb-0a8ceb2abd45.htm" />
     <HelpKINode Title="Constants.RegistryApplication Field" Url="html/5e824808-e52a-bad8-30df-7fe5f510bd8a.htm" />
+    <HelpKINode Title="Constants.RegistryApplication Field" Url="html/ec919f9c-9b68-a585-a5fb-0a8ceb2abd45.htm" />
   </HelpKINode>
   <HelpKINode Title="RegistryDevice field">
     <HelpKINode Title="Constants.RegistryDevice Field" Url="html/fabfdd3b-ac2c-7e47-9e0d-352398491d96.htm" />
@@ -3523,26 +3521,26 @@
   <HelpKINode Title="SUBMIT enumeration member" Url="html/5fc6997b-5c4c-c0f2-73b0-d969fb4e64f0.htm" />
   <HelpKINode Title="Sync method" Url="html/0efa492a-6cc6-3be6-3bea-800cb8544e01.htm" />
   <HelpKINode Title="SystemNetworkProfile class">
-    <HelpKINode Title="SystemNetworkProfile Class" Url="html/be44d998-34ef-746d-b814-0ef40a6e2989.htm" />
     <HelpKINode Title="SystemNetworkProfile Class" Url="html/f9b1df0d-d9b6-050d-415e-1d1fb5ef4be7.htm" />
+    <HelpKINode Title="SystemNetworkProfile Class" Url="html/be44d998-34ef-746d-b814-0ef40a6e2989.htm" />
     <HelpKINode Title="about SystemNetworkProfile class" Url="html/be44d998-34ef-746d-b814-0ef40a6e2989.htm" />
     <HelpKINode Title="about SystemNetworkProfile class" Url="html/f9b1df0d-d9b6-050d-415e-1d1fb5ef4be7.htm" />
     <HelpKINode Title="constructor" Url="html/b791a5df-e803-b914-a44b-c56b969f459d.htm" />
     <HelpKINode Title="constructor" Url="html/daa95775-349e-d06a-e25b-97939ca0532d.htm" />
-    <HelpKINode Title="methods" Url="html/4c0f7b6a-7905-b9a2-3505-5dfc127cad8b.htm" />
     <HelpKINode Title="methods" Url="html/c838eb7d-4611-a632-fb52-ee7d081cdcfe.htm" />
+    <HelpKINode Title="methods" Url="html/4c0f7b6a-7905-b9a2-3505-5dfc127cad8b.htm" />
   </HelpKINode>
   <HelpKINode Title="SystemNetworkProfile.DisplayDnsAddresses method">
-    <HelpKINode Title="SystemNetworkProfile.DisplayDnsAddresses Method " Url="html/a577f4b3-620a-9cec-04f0-8a2231fefbee.htm" />
     <HelpKINode Title="SystemNetworkProfile.DisplayDnsAddresses Method " Url="html/77cada3e-a920-2bc6-c058-636fc0b01d17.htm" />
+    <HelpKINode Title="SystemNetworkProfile.DisplayDnsAddresses Method " Url="html/a577f4b3-620a-9cec-04f0-8a2231fefbee.htm" />
   </HelpKINode>
   <HelpKINode Title="SystemNetworkProfile.GetDnsAddresses method">
     <HelpKINode Title="SystemNetworkProfile.GetDnsAddresses Method " Url="html/4583598d-006f-6b90-477a-ffb0c75c0591.htm" />
     <HelpKINode Title="SystemNetworkProfile.GetDnsAddresses Method " Url="html/69a8281d-3ea1-e391-446a-02d0bb2398ba.htm" />
   </HelpKINode>
   <HelpKINode Title="SystemNetworkProfile.SystemNetworkProfile constructor">
-    <HelpKINode Title="SystemNetworkProfile Constructor " Url="html/daa95775-349e-d06a-e25b-97939ca0532d.htm" />
     <HelpKINode Title="SystemNetworkProfile Constructor " Url="html/b791a5df-e803-b914-a44b-c56b969f459d.htm" />
+    <HelpKINode Title="SystemNetworkProfile Constructor " Url="html/daa95775-349e-d06a-e25b-97939ca0532d.htm" />
   </HelpKINode>
   <HelpKINode Title="Tag method">
     <HelpKINode Title="Account.Tag Method " Url="html/ba611d9c-f5c8-47b0-fadc-4b46bbd5ec15.htm" />

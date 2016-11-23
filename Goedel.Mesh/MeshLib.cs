@@ -21,9 +21,10 @@
 //  
 
 using System;
+using System.Diagnostics;
 using System.Collections.Generic;
 using Goedel.Persistence;
-using Goedel.Debug;
+using Goedel.Utilities;
 
 namespace Goedel.Mesh {
 
@@ -119,9 +120,9 @@ namespace Goedel.Mesh {
         /// Debug routine, writes data to the console.
         /// </summary>
         public virtual void Dump() {
-            Trace.WriteLine("    Server {0} : Port {1} : Protocol", ServiceName, Port, AppProtocol);
-            Trace.WriteLine("        Username {0}/{1}", UserName, Password);
-            Trace.WriteLine("        Timeout {0} : Poll {1}", TimeOut, Polling);
+            Debug.WriteLine("    Server {0} : Port {1} : Protocol", ServiceName, Port, AppProtocol);
+            Debug.WriteLine("        Username {0}/{1}", UserName, Password);
+            Debug.WriteLine("        Timeout {0} : Poll {1}", TimeOut, Polling);
             }
 
         //public MailConnection() { }
@@ -234,7 +235,7 @@ namespace Goedel.Mesh {
         public bool CreateAccount(string AccountID, SignedProfile Profile) {
 
             // Validate the signed profile
-            if (!Profile.Validate()) throw new Throw ("Profile not valid");
+            Assert.True(Profile.Validate(), ProfileInvalid.Throw);
 
             // Create the new account on the portal (fail if already exists)
             var Account = new Account();
@@ -295,7 +296,7 @@ namespace Goedel.Mesh {
         /// <param name="Profile">The profile to add.</param>
         public void AddProfile(SignedProfile Profile) {
             // Validate the signed profile
-            if (!Profile.Valid) throw new Throw("Profile not valid");
+            Assert.True(Profile.Validate(), ProfileInvalid.Throw);
 
             //var KeyData = new IndexTerm(UniqueID, Profile.Identifier);
             //var KeyDatas = new List<IndexTerm> { KeyData };
@@ -330,7 +331,7 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="Profile">The profile to publish</param>
         public void UpdateProfile(Entry Profile) {
-            if (!Profile.Valid) throw new Throw("Profile not valid");
+            Assert.True(Profile.Valid, ProfileInvalid.Throw);
 
             MeshStore.Update(Profile, Profile.Identifier, Profile.Keys);
             }
@@ -410,7 +411,7 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="AccountId">The account identifier to close the request on.</param>
         /// <param name="SignedResult">The status to be posted to the close.</param>
-        /// <returns>true if the connection request coule be found, otherwise false.</returns>
+        /// <returns>true if the connection request could be found, otherwise false.</returns>
         public bool CloseConnectionRequest(
                 string AccountId, SignedConnectionResult SignedResult) {
 
@@ -433,8 +434,7 @@ namespace Goedel.Mesh {
                     ConnectionsPending.Requests.RemoveAt(i);
                     }
                 }
-
-            if (SignedConnectionRequest == null) throw new Throw ("Bad");
+            Assert.NotNull(SignedConnectionRequest, InvalidResponse.Throw);
 
             // Create a completed notification.
             PortalStore.Update(ConnectionsPending,

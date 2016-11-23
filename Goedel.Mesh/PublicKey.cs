@@ -27,7 +27,7 @@ using System.Security.Cryptography.X509Certificates;
 using Goedel.Registry;
 using Goedel.Cryptography;
 using Goedel.Cryptography.PKIX;
-using Goedel.Debug;
+using Goedel.Utilities;
 using Goedel.Cryptography.Jose;
 
 namespace Goedel.Mesh {
@@ -173,10 +173,12 @@ namespace Goedel.Mesh {
         /// </summary>
         public Certificate Certificate {
             get {
-                if (_Certificate == null & X509Certificate != null) {
-                    _Certificate = new Certificate(X509Certificate);
-                    }
-                return _Certificate; }
+                throw new NYI("RSA Key Pair Management");
+                //if (_Certificate == null & X509Certificate != null) {
+                //    _Certificate = new Certificate(X509Certificate);
+                //    }
+                //return _Certificate;
+                }
             set {
                 _Certificate = value;
                 if (_Certificate.Data != null) {
@@ -239,8 +241,8 @@ namespace Goedel.Mesh {
             PublicKey.KeyPair = KeyPair;
             
 
-            if (KeyPair.GetType() == typeof(RSAKeyPair)) {
-                PublicKey.PublicParameters = new PublicKeyRSA(KeyPair as RSAKeyPair);
+            if (KeyPair.GetType() == typeof(RSAKeyPairBase)) {
+                PublicKey.PublicParameters = new PublicKeyRSA(KeyPair as RSAKeyPairBase);
                 return PublicKey;
                }
 
@@ -252,8 +254,8 @@ namespace Goedel.Mesh {
         /// private parameters of the key.
         /// </summary>
         public void ExportPrivateParameters() {
-            if (KeyPair.GetType() == typeof(RSAKeyPair)) {
-                PrivateParameters = new PrivateKeyRSA(KeyPair as RSAKeyPair);
+            if (KeyPair.GetType() == typeof(RSAKeyPairBase)) {
+                PrivateParameters = new PrivateKeyRSA(KeyPair as RSAKeyPairBase);
                 }
             }
 
@@ -264,7 +266,7 @@ namespace Goedel.Mesh {
         /// to the certificate.
         /// </summary>
         public void ImportPrivateParameters() {
-            if (KeyPair.GetType() == typeof(RSAKeyPair)) {
+            if (KeyPair.GetType() == typeof(RSAKeyPairBase)) {
                 if (PrivateParameters.GetType() != typeof(PrivateKeyRSA)) {
                     throw new Exception("Invalid key description");
                     }
@@ -273,17 +275,20 @@ namespace Goedel.Mesh {
                 var PrivateKeyRSA = PrivateParameters as PrivateKeyRSA;
                 //var RSAKeyPair = KeyPair as RSAKeyPair;
 
-                var RSAParameters = PrivateKeyRSA.Parameters;
-                KeyPair = new RSAKeyPair(RSAParameters);
-                Certificate.KeyPair = KeyPair;
+                throw new NYI("RSA Key Pair Management");
 
-                if (X509Chain != null) {
-                    foreach (var cert in X509Chain) {
-                        CertificateStore.RegisterTrustedRoot(cert);
-                        }
-                    }
 
-                CertificateStore.Register(Certificate);
+                //var RSAParameters = PrivateKeyRSA.Parameters;
+                //KeyPair = new RSAKeyPair(RSAParameters);
+                //Certificate.KeyPair = KeyPair;
+
+                //if (X509Chain != null) {
+                //    foreach (var cert in X509Chain) {
+                //        CertificateStore.RegisterTrustedRoot(cert);
+                //        }
+                //    }
+
+                //CertificateStore.Register(Certificate);
                 }
             }
 

@@ -41,6 +41,18 @@
     <DocumentationFile>bin\Publish\Goedel.Platform.Windows.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Goedel.ASN">
+      <HintPath>..\..\Library\Goedel.ASN.dll</HintPath>
+    </Reference>
+    <Reference Include="Goedel.Cryptography">
+      <HintPath>..\..\Library\Goedel.Cryptography.dll</HintPath>
+    </Reference>
+    <Reference Include="Goedel.Cryptography.Framework">
+      <HintPath>..\..\Library\Goedel.Cryptography.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Goedel.Utilities">
+      <HintPath>..\..\Library\Goedel.Utilities.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -56,20 +68,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WindowsCertificateStore.cs" />
     <Compile Include="WindowsNetworkProfile.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Goedel.Cryptography.Jose\Goedel.Cryptography.Jose.csproj">
-      <Project>{59f7f1a5-abbc-4830-b7a3-140fd8e4c369}</Project>
-      <Name>Goedel.Cryptography.Jose</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Goedel.Cryptography\Goedel.Cryptography.csproj">
-      <Project>{1babc0e9-d939-4de5-82a3-16752104b14b}</Project>
-      <Name>Goedel.Cryptography</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Goedel.Debug\Goedel.Debug.csproj">
-      <Project>{a8090b80-d658-45f6-bda1-4f9dfd2b976f}</Project>
-      <Name>Goedel.Debug</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

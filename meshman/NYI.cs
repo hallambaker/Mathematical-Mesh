@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Goedel.Debug;
+using Goedel.Utilities;
 using Goedel.Mesh;
 using Goedel.Mesh.Platform;
 
@@ -15,18 +15,13 @@ namespace Goedel.Mesh.MeshMan {
 
     public partial class Shell {
 
-
-
-
-
-
         /// <summary>
         /// 
         /// </summary>
         /// <param name="Options">Command line parameters</param>
         public override void Register(Register Options) {
             SetReporting(Options.Report, Options.Verbose);
-            Utils.NYI();
+            throw new NYI("");
             }
 
         /// <summary>
@@ -35,7 +30,7 @@ namespace Goedel.Mesh.MeshMan {
         /// <param name="Options">Command line parameters</param>
         public override void Sync(Sync Options) {
             SetReporting(Options.Report, Options.Verbose);
-            Utils.NYI();
+            throw new NYI("");
             }
 
         /// <summary>
@@ -44,6 +39,7 @@ namespace Goedel.Mesh.MeshMan {
         /// <param name="Options">Command line parameters</param>
         public override void Escrow(Escrow Options) {
             SetReporting(Options.Report, Options.Verbose);
+            throw new NYI("");
             }
 
         /// <summary>
@@ -52,7 +48,7 @@ namespace Goedel.Mesh.MeshMan {
         /// <param name="Options">Command line parameters</param>
         public override void Export(Export Options) {
             SetReporting(Options.Report, Options.Verbose);
-            Utils.NYI();
+            throw new NYI("");
             }
 
         /// <summary>
@@ -61,7 +57,7 @@ namespace Goedel.Mesh.MeshMan {
         /// <param name="Options">Command line parameters</param>
         public override void Import(Import Options) {
             SetReporting(Options.Report, Options.Verbose);
-            Utils.NYI();
+            throw new NYI("");
             }
 
         /// <summary>
@@ -70,7 +66,7 @@ namespace Goedel.Mesh.MeshMan {
         /// <param name="Options">Command line parameters</param>
         public override void Mail(Mail Options) {
             SetReporting(Options.Report, Options.Verbose);
-            Utils.NYI();
+            throw new NYI("");
             }
 
         }

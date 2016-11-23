@@ -66,7 +66,7 @@ namespace Goedel.Mesh {
             //    Trace.WriteHex("Share", share.Key);
             //    }
 
-            Encryptor.Key = Secret.Key;
+            //Encryptor.Key = Secret.Key;
             EncryptedData = new JoseWebEncryption (EscrowedKeySet.GetBytes(), Encryptor);
 
 

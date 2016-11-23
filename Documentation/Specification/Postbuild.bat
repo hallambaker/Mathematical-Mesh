@@ -3,6 +3,14 @@ cd %~dp0
 
 echo Convert documents to TXT, XML and HTML formats
 
+echo udf
+rfctool O:\Documents\Mesh\hallambaker-udf.docx ^
+	/html Publish\hallambaker-udf.html ^
+	/xml Publish\hallambaker-udf.xml ^
+	/txt Publish\hallambaker-udf.txt
+
+exit /b 0
+
 echo Web App
 rfctool O:\Documents\Mesh\hallambaker-mesh-app-web.docx ^
 	/html Publish\hallambaker-mesh-app-web.html ^
@@ -15,7 +23,7 @@ rfctool O:\Documents\Mesh\hallambaker-mesh-platform.docx ^
 	/xml Publish\hallambaker-mesh-platform.xml ^
 	/txt Publish\hallambaker-mesh-platform.txt
 
-exit /b 0
+
 
 echo architecture
 rfctool O:\Documents\Mesh\hallambaker-mesh-architecture.docx ^

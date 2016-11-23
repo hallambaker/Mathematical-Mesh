@@ -1,4 +1,4 @@
-﻿using Goedel.Debug;
+﻿using Goedel.Utilities;
 using Goedel.Mesh;
 using Goedel.Mesh.Platform;
 
@@ -14,7 +14,7 @@ namespace Goedel.Mesh.MeshMan {
             GetMeshClient();
 
             var DeviceProfile = GetDevice(SignedPersonalProfile);
-            Utils.Assert(DeviceProfile, "Could not locate a device profile on this device");
+            Assert.NotNull(DeviceProfile, NoDeviceProfile.Throw);
 
             var PersonalProfile = SignedPersonalProfile.Signed;
 

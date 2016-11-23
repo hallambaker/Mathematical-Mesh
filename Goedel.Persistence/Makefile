@@ -119,10 +119,9 @@ SourceFiles = \
 
 LinkFiles = \
     $(LIBRARYBIN)/Goedel.Protocol.dll\
-    $(LIBRARYBIN)/Goedel.Registry.dll\
-    $(TARGETBIN)/Goedel.Debug.dll
+    $(LIBRARYBIN)/Goedel.Registry.dll
 
-LinkFilesComma = $(LIBRARYBIN)/Goedel.Protocol.dll,$(LIBRARYBIN)/Goedel.Registry.dll,$(TARGETBIN)/Goedel.Debug.dll
+LinkFilesComma = $(LIBRARYBIN)/Goedel.Protocol.dll,$(LIBRARYBIN)/Goedel.Registry.dll
 
 
 NugetFiles = 
@@ -173,14 +172,7 @@ endif
 # Recursive make targets, do not execute if the variable NORECURSE is defined
 ifndef NORECURSE
 
-../Goedel.Debug/$(TARGETBIN)/Goedel.Debug.dll : recursive
-! $(MAKE) -C ../Goedel.Debug
-
 endif
-
-$(TARGETBIN)/Goedel.Debug.dll :| $(TARGETBIN)
-$(TARGETBIN)/Goedel.Debug.dll : ../Goedel.Debug/$(TARGETBIN)/Goedel.Debug.dll
-!  cp ../Goedel.Debug/$(TARGETBIN)/Goedel.Debug.dll $(TARGETBIN)/Goedel.Debug.dll
 
 
 # Referenced Libraries

@@ -26,7 +26,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using Goedel.Protocol;
-using Goedel.Debug;
 
 namespace Goedel.Persistence {
     // A persistence store consists of a set of DataItems which are

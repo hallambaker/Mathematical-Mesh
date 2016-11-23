@@ -21,9 +21,9 @@
 //  
 
 using System.Collections.Generic;
+using Goedel.IO;
 using Goedel.Cryptography;
 using Goedel.Cryptography.PKIX;
-using Goedel.Debug;
 
 namespace Goedel.Mesh {
 
@@ -236,7 +236,7 @@ namespace Goedel.Mesh {
         /// For debugging
         /// </summary>
         public virtual void Dump() {
-            Trace.WriteLine("Account {0}  <{1}> ({2})", AccountName, EmailAddress, DisplayName);
+            Debug.WriteLine("Account {0}  <{1}> ({2})", AccountName, EmailAddress, DisplayName);
             foreach (var Connection in Inbound) {
                 Connection.Dump();
                 }

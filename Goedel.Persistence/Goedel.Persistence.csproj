@@ -113,12 +113,6 @@
     </None>
     <None Include="PreBuild.bat" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Goedel.Debug\Goedel.Debug.csproj">
-      <Project>{a8090b80-d658-45f6-bda1-4f9dfd2b976f}</Project>
-      <Name>Goedel.Debug</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>

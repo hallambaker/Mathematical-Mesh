@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shfbBuild product="Sandcastle Help File Builder and Tools" version="2016.9.17.0" projectFile="C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\MeshLibraries.shfbproj" started="10/21/2016 12:26:52 PM">
+<shfbBuild product="Sandcastle Help File Builder and Tools" version="2016.9.17.0" projectFile="C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\MeshLibraries.shfbproj" started="10/26/2016 4:00:34 PM">
 <buildStep step="Initializing">
 Finding tools...
 The Sandcastle tools are located in &#39;C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\&#39;
@@ -27,19 +27,18 @@ Validating and copying documentation source information
 Source: C:\Users\hallam\Work\mmm\Goedel.Mesh\Goedel.Mesh.csproj
     Found project &#39;C:\Users\hallam\Work\mmm\Goedel.Mesh\Goedel.Mesh.csproj&#39;
 Source: C:\Users\hallam\Work\mmm\Goedel.Mesh\bin\Publish\Goedel.Mesh.dll
-SHFB: Warning BE0006: Unable to locate any documentation sources for &#39;C:\Users\hallam\Work\mmm\Goedel.Mesh\bin\Publish\Goedel.Mesh.dll&#39; (Configuration: Debug Platform: AnyCPU)
+    Found assembly &#39;C:\Users\hallam\Work\mmm\Goedel.Mesh\bin\Publish\Goedel.Mesh.dll&#39;
 Source: C:\Users\hallam\Work\mmm\Goedel.Mesh\bin\Publish\Goedel.Mesh.xml
-SHFB: Warning BE0006: Unable to locate any documentation sources for &#39;C:\Users\hallam\Work\mmm\Goedel.Mesh\bin\Publish\Goedel.Mesh.xml&#39; (Configuration: Debug Platform: AnyCPU)
 Source: C:\Users\hallam\Work\mmm\Goedel.Mesh.Platform.Windows\Goedel.Mesh.Platform.Windows.csproj
     Found project &#39;C:\Users\hallam\Work\mmm\Goedel.Mesh.Platform.Windows\Goedel.Mesh.Platform.Windows.csproj&#39;
 Source: C:\Users\hallam\Work\mmm\Goedel.Mesh.Platform.Windows\bin\Publish\Goedel.Mesh.Platform.Windows.XML
 Source: C:\Users\hallam\Work\mmm\Goedel.Mesh.Platform.Windows\bin\Publish\Goedel.Mesh.Platform.Windows.dll
-SHFB: Warning BE0006: Unable to locate any documentation sources for &#39;C:\Users\hallam\Work\mmm\Goedel.Mesh.Platform.Windows\bin\Publish\Goedel.Mesh.Platform.Windows.dll&#39; (Configuration: Debug Platform: AnyCPU)
+    Found assembly &#39;C:\Users\hallam\Work\mmm\Goedel.Mesh.Platform.Windows\bin\Publish\Goedel.Mesh.Platform.Windows.dll&#39;
 Source: C:\Users\hallam\Work\mmm\Goedel.Mesh.Server\Goedel.Mesh.Server.csproj
     Found project &#39;C:\Users\hallam\Work\mmm\Goedel.Mesh.Server\Goedel.Mesh.Server.csproj&#39;
 Source: C:\Users\hallam\Work\mmm\Goedel.Mesh.Server\bin\Publish\Goedel.Mesh.Server.xml
 Source: C:\Users\hallam\Work\mmm\Goedel.Mesh.Server\bin\Publish\Goedel.Mesh.Server.dll
-SHFB: Warning BE0006: Unable to locate any documentation sources for &#39;C:\Users\hallam\Work\mmm\Goedel.Mesh.Server\bin\Publish\Goedel.Mesh.Server.dll&#39; (Configuration: Debug Platform: AnyCPU)
+    Found assembly &#39;C:\Users\hallam\Work\mmm\Goedel.Mesh.Server\bin\Publish\Goedel.Mesh.Server.dll&#39;
 Source: C:\Users\hallam\Work\mmm\Goedel.Persistence\Goedel.Persistence.csproj
     Found project &#39;C:\Users\hallam\Work\mmm\Goedel.Persistence\Goedel.Persistence.csproj&#39;
 Source: C:\Users\hallam\Work\mmm\Goedel.Persistence\bin\Publish\Goedel.Persistence.xml
@@ -56,35 +55,45 @@ Parsing project files
     Found assembly &#39;C:\Users\hallam\Work\mmm\Goedel.Persistence\bin\Debug\Goedel.Persistence.dll&#39;
 
 References to include (excluding framework assemblies):
+    Goedel.ASN
+    Goedel.Cryptography, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL
+    Goedel.Cryptography.Framework
+    Goedel.Cryptography.Jose, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL
+    Goedel.Cryptography.KeyFile
     Goedel.FSR
     Goedel.IO
     Goedel.IO, Version=1.0.6129.42745, Culture=neutral, PublicKeyToken=9ac84b9f2535680b, processorArchitecture=MSIL
+    Goedel.Platform
+    Goedel.Platform.Framework
     Goedel.Protocol, Version=1.0.6128.28622, Culture=neutral, PublicKeyToken=9ac84b9f2535680b, processorArchitecture=MSIL
     Goedel.Protocol.Debug, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL
-    Goedel.Protocol.Extended
+    Goedel.Protocol.Framework
     Goedel.Registry, Version=1.0.5856.42846, Culture=neutral, PublicKeyToken=00ce4cbe0647f41a, processorArchitecture=MSIL
     Goedel.Utilities
     Goedel.Utilities, Version=1.0.6129.42745, Culture=neutral, PublicKeyToken=9ac84b9f2535680b, processorArchitecture=MSIL
+    Goedel.Utilities, Version=1.0.6138.21520, Culture=neutral, PublicKeyToken=9ac84b9f2535680b, processorArchitecture=MSIL
 
 Copying XML comments files
+    C:\Users\hallam\Work\mmm\Goedel.Mesh\bin\Publish\Goedel.Mesh.xml -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Goedel.Mesh.xml
     C:\Users\hallam\Work\mmm\Goedel.Mesh.Platform.Windows\bin\Publish\Goedel.Mesh.Platform.Windows.XML -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Goedel.Mesh.Platform.Windows.XML
     C:\Users\hallam\Work\mmm\Goedel.Mesh.Server\bin\Publish\Goedel.Mesh.Server.xml -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Goedel.Mesh.Server.xml
     C:\Users\hallam\Work\mmm\Goedel.Persistence\bin\Publish\Goedel.Persistence.xml -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Goedel.Persistence.xml
     C:\Users\hallam\Work\mmm\Goedel.Platform.Windows\bin\Publish\Goedel.Platform.Windows.XML -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Goedel.Platform.Windows.XML
-    C:\Users\hallam\Work\mmm\Goedel.Mesh\bin\Debug\Goedel.Mesh.xml -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Goedel.Mesh.xml
+SHFB: Warning BE0063: &#39;C:\Users\hallam\Work\mmm\Goedel.Mesh\bin\Debug\Goedel.Mesh.xml&#39; matches a previously copied comments filename.  The duplicate will be copied to a unique name to preserve the comments it contains.
+    C:\Users\hallam\Work\mmm\Goedel.Mesh\bin\Debug\Goedel.Mesh.xml -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\{55a29b5b-3395-4b9c-bc37-3b4c2200aeac}
 SHFB: Warning BE0063: &#39;C:\Users\hallam\Work\mmm\Goedel.Mesh.Server\bin\Debug\Goedel.Mesh.Server.xml&#39; matches a previously copied comments filename.  The duplicate will be copied to a unique name to preserve the comments it contains.
-    C:\Users\hallam\Work\mmm\Goedel.Mesh.Server\bin\Debug\Goedel.Mesh.Server.xml -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\{c8657823-e7df-45a8-b6cc-c731fd61ba9d}
+    C:\Users\hallam\Work\mmm\Goedel.Mesh.Server\bin\Debug\Goedel.Mesh.Server.xml -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\{6cf92eb7-1f5d-4578-bd6f-6c998f379cfd}
 SHFB: Warning BE0063: &#39;C:\Users\hallam\Work\mmm\Goedel.Persistence\bin\Debug\Goedel.Persistence.xml&#39; matches a previously copied comments filename.  The duplicate will be copied to a unique name to preserve the comments it contains.
-    C:\Users\hallam\Work\mmm\Goedel.Persistence\bin\Debug\Goedel.Persistence.xml -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\{3cd742a3-9448-4869-9aea-4140acdb2d30}
+    C:\Users\hallam\Work\mmm\Goedel.Persistence\bin\Debug\Goedel.Persistence.xml -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\{a20eec03-acc5-4fe3-8665-009a29f66110}
 </buildStep>
 <buildStep step="GenerateSharedContent">
 Generating shared content files (en-US, English (United States))...
 <plugIn name="Lightweight Website Style" behavior="After" priority="1000">
-</plugIn>    Last step completed in 00:00:00.0120
+</plugIn>    Last step completed in 00:00:00.0210
 </buildStep>
 <buildStep step="GenerateApiFilter">
 Generating API filter for MRefBuilder...
-    Last step completed in 00:00:00.0215
+    Last step completed in 00:00:00.0245
 </buildStep>
 <buildStep step="GenerateReflectionInfo">
 Generating reflection information...
@@ -94,7 +103,7 @@ Adding ignored assembly names to assembly resolver configuration:
     Microsoft.VisualStudio.TestTools.UITest.Playback
     System.Runtime
 </plugIn>[C:\Program Files (x86)\MSBuild\14.0\bin\MSBuild.exe - GenerateRefInfo.proj]
-Build started 10/21/2016 12:26:52 PM.
+Build started 10/26/2016 4:00:35 PM.
 The target &quot;_ConvertPdbFiles&quot; listed in a BeforeTargets attribute at &quot;C:\Program Files (x86)\MSBuild\14.0\Microsoft.Common.targets\ImportAfter\Xamarin.Common.targets (34,37)&quot; does not exist in the project, and will be ignored.
 The target &quot;_CollectPdbFiles&quot; listed in an AfterTargets attribute at &quot;C:\Program Files (x86)\MSBuild\14.0\Microsoft.Common.targets\ImportAfter\Xamarin.Common.targets (34,70)&quot; does not exist in the project, and will be ignored.
 The target &quot;_CollectMdbFiles&quot; listed in a BeforeTargets attribute at &quot;C:\Program Files (x86)\MSBuild\14.0\Microsoft.Common.targets\ImportAfter\Xamarin.Common.targets (41,38)&quot; does not exist in the project, and will be ignored.
@@ -107,9 +116,10 @@ GenerateRefInfo:
   Copyright c 2006-2016, Microsoft Corporation, All Rights Reserved.
   Portions Copyright c 2006-2016, Eric Woodruff, All Rights Reserved.
   No source code context base path specified.  Source context information is unavailable.
-  Loaded 6 assemblies for reflection and 61 dependency assemblies.
+  Loaded 9 assemblies for reflection and 68 dependency assemblies.
 MRefBuilder : warning : Ignoring unresolved assembly reference: System.Runtime (System.Runtime, Version=4.0.10.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a) required by Goedel.Protocol [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\GenerateRefInfo.proj]
-  Wrote information on 5 namespaces, 171 types, and 2004 members
+MRefBuilder : warning : Ignoring unresolved assembly reference: System.Runtime (System.Runtime, Version=4.0.10.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a) required by Goedel.ASN [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\GenerateRefInfo.proj]
+  Wrote information on 5 namespaces, 298 types, and 3591 members
   Copying file from &quot;reflection.org&quot; to &quot;reflection.all&quot;.
   XslTransform (v2016.9.17.0)
   Copyright c 2006-2016, Microsoft Corporation, All Rights Reserved.
@@ -119,13 +129,13 @@ Done Building Project &quot;C:\Users\hallam\Work\mmm\Documentation\MeshLibraries
 
 Build succeeded.
 
-Time Elapsed 00:00:02.64
-    Last step completed in 00:00:02.7542
+Time Elapsed 00:00:04.49
+    Last step completed in 00:00:04.6085
 </buildStep>
 <buildStep step="TransformReflectionInfo">
 Transforming reflection output...
 [C:\Program Files (x86)\MSBuild\14.0\bin\MSBuild.exe - TransformManifest.proj]
-Build started 10/21/2016 12:26:55 PM.
+Build started 10/26/2016 4:00:40 PM.
 Project &quot;C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\TransformManifest.proj&quot; on node 1 (default targets).
 TransformManifest:
   XslTransform (v2016.9.17.0)
@@ -145,8 +155,8 @@ Done Building Project &quot;C:\Users\hallam\Work\mmm\Documentation\MeshLibraries
 
 Build succeeded.
 
-Time Elapsed 00:00:01.06
-    Last step completed in 00:00:01.1788
+Time Elapsed 00:00:01.24
+    Last step completed in 00:00:01.3108
 </buildStep>
 <buildStep step="GenerateNamespaceSummaries">
 Generating namespace summary information...
@@ -170,7 +180,7 @@ GenerateApiFilter
 GenerateReflectionInfo
 TransformReflectionInfo
 Completed
-</plugIn>    Last step completed in 00:00:35.5712
+</plugIn>    Last step completed in 00:00:41.9643
 </buildStep>
 <buildStep step="CopyConceptualContent">
 Copying conceptual content...
@@ -185,14 +195,14 @@ Generating conceptual topic files
     C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Content\VersionHistory\VersionHistory.aml -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\ddueXml\2f350f4e-e314-43a7-8475-40df0a38fc69.xml
     Parsing topic file &#39;C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Content\VersionHistory\v1.0.0.0.aml&#39;
     C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Content\VersionHistory\v1.0.0.0.aml -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\ddueXml\8053ab96-ecc1-4551-bfa4-078a0f32b0b5.xml
-    Last step completed in 00:00:00.0280
+    Last step completed in 00:00:00.0366
 </buildStep>
 <buildStep step="CreateConceptualTopicConfigs">
 Creating conceptual topic configuration files...
     Companion files
     _ContentMetadata_.xml
     Merging topic IDs into manifest.xml
-    Last step completed in 00:00:00.0205
+    Last step completed in 00:00:00.0320
 </buildStep>
 <buildStep step="CopyAdditionalContent">
 Copying additional content files...
@@ -203,12 +213,12 @@ C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\icons\Help.png -&gt; C:\Use
 </buildStep>
 <buildStep step="MergeTablesOfContents">
 Merging conceptual and additional tables of contents...
-    Last step completed in 00:00:00.0000
+    Last step completed in 00:00:00.0005
 </buildStep>
 <buildStep step="GenerateIntermediateTableOfContents">
 Generating intermediate table of contents file...
 [C:\Program Files (x86)\MSBuild\14.0\bin\MSBuild.exe - GenerateIntermediateTOC.proj]
-Build started 10/21/2016 12:27:32 PM.
+Build started 10/26/2016 4:01:23 PM.
 Project &quot;C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\GenerateIntermediateTOC.proj&quot; on node 1 (default targets).
 GenerateIntermediateTOC:
   XslTransform (v2016.9.17.0)
@@ -219,16 +229,16 @@ Done Building Project &quot;C:\Users\hallam\Work\mmm\Documentation\MeshLibraries
 
 Build succeeded.
 
-Time Elapsed 00:00:00.15
+Time Elapsed 00:00:00.16
 Generating conceptual content intermediate TOC file...
-    Last step completed in 00:00:00.2464
+    Last step completed in 00:00:00.2644
 </buildStep>
 <buildStep step="CreateBuildAssemblerConfigs">
 Creating Sandcastle configuration files...
 <plugIn name="Additional Reference Links" behavior="Before" priority="1000">
 Adding additional reference link namespaces...
 </plugIn>    sandcastle.config
-    Last step completed in 00:00:00.2589
+    Last step completed in 00:00:00.2834
 </buildStep>
 <buildStep step="MergeCustomConfigs">
 Merging custom build component configurations
@@ -239,12 +249,12 @@ C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\sandcastle.con
 <plugIn name="Additional Reference Links" behavior="After" priority="1000">
 
 Adding references to C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\sandcastle.config...
-</plugIn>    Last step completed in 00:00:00.0135
+</plugIn>    Last step completed in 00:00:00.0125
 </buildStep>
 <buildStep step="BuildTopics">
 Building help topics...
 [C:\Program Files (x86)\MSBuild\14.0\bin\MSBuild.exe - BuildTopics.proj]
-Build started 10/21/2016 12:27:32 PM.
+Build started 10/26/2016 4:01:23 PM.
 Project &quot;C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj&quot; on node 1 (default targets).
 BuildTopics:
   BuildAssembler (v2016.9.17.0)
@@ -253,69 +263,8 @@ BuildTopics:
   Loading configuration...
 BuildAssembler : warning : CopyFromIndexComponent: Entries for the key &#39;N:Goedel.Platform&#39; occur in both &#39;C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\9044E7D1\reflection.xml&#39; and &#39;C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\reflection.xml&#39;. The last entry will be used. [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
   Processing topics...
-BuildAssembler : warning : ShowMissingComponent: [P:Goedel.Mesh.EncryptedData.Data] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [P:Goedel.Mesh.EscrowEntry.EncryptedData] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.MeshClient.#ctor(System.String)] Missing &lt;param name=&quot;Portal&quot;/&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.MeshIndexTerm.#ctor(Goedel.Persistence.PersistenceStore)] Missing &lt;param name=&quot;PersistenceStore&quot;/&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.PasswordProfile.Get(Goedel.Mesh.SignedProfile)] Missing &lt;param name=&quot;SignedProfile&quot;/&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.PasswordProfile.Get(Goedel.Mesh.SignedProfile,Goedel.Mesh.PersonalProfile)] Missing &lt;param name=&quot;SignedProfile&quot;/&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.PasswordProfile.Get(System.String)] Missing &lt;returns&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.PasswordProfilePrivate.Delete(System.String)] Missing &lt;returns&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.PasswordProfilePrivate.Get(System.String)] Missing &lt;returns&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.PersonalProfile.GetApplication(System.Type,System.String)] Missing &lt;param name=&quot;Type&quot;/&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.PersonalProfile.GetApplication(System.Type,System.String)] Missing &lt;param name=&quot;MatchName&quot;/&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.PersonalProfile.GetApplicationEntry(System.String)] Missing &lt;param name=&quot;Identifier&quot;/&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.PersonalProfile.GetApplicationEntryPassword(System.String)] Missing &lt;param name=&quot;Identifier&quot;/&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.PersonalProfile.GetDeviceProfile(System.String)] Missing &lt;param name=&quot;Identifier&quot;/&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.PersonalProfile.GetIndex] Missing &lt;returns&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.Portal.Tag] Missing &lt;returns&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.Profile.GetIndex] Missing &lt;returns&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.PublicKey.Generate(Goedel.Mesh.KeyType,Goedel.Cryptography.CryptoAlgorithmID)] Missing &lt;returns&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.PublicKey.GetPrivate] Missing &lt;returns&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.SignedConnectionResult.PrimaryKey(System.String)] Missing &lt;returns&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.SignedConnectionResult.PrimaryKey(System.String)] Missing &lt;param name=&quot;UniqueID&quot;/&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.SignedDeviceProfile.#ctor(System.String,System.String)] Missing &lt;param name=&quot;Name&quot;/&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.SignedDeviceProfile.#ctor(System.String,System.String)] Missing &lt;param name=&quot;Description&quot;/&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.SignedProfile.Validate] Missing &lt;returns&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.SSHProfile.Get(Goedel.Mesh.SignedProfile)] Missing &lt;param name=&quot;SignedProfile&quot;/&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.SSHProfile.Get(Goedel.Mesh.SignedProfile,Goedel.Mesh.PersonalProfile)] Missing &lt;param name=&quot;SignedProfile&quot;/&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [T:Goedel.Mesh.TransferRequest] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.Platform.MailAccountInfoWLM.#ctor(System.String)] Missing &lt;param name=&quot;FileName&quot;/&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.Platform.MeshApplicationPassword.Delete(System.String)] Missing &lt;param name=&quot;Site&quot;/&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.Platform.MeshApplicationPassword.Get(System.String)] Missing &lt;param name=&quot;Site&quot;/&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.Platform.MeshCatalog.BeginConnect(System.String,System.String)] Missing &lt;param name=&quot;PortalID&quot;/&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.Platform.MeshCatalog.CompleteConnect(System.String)] Missing &lt;param name=&quot;PortalID&quot;/&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.Platform.MeshPersonal.GetPIN] Missing &lt;returns&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.Platform.Register.Read(System.String,System.String,System.String@)] Missing &lt;returns&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.Platform.Register.Read(System.String,System.String@)] Missing &lt;returns&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.Platform.RegistrationApplication.#ctor(Goedel.Mesh.SignedApplicationProfile)] Missing &lt;param name=&quot;SignedApplicationProfile&quot;/&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.Platform.RegistrationApplication.ToRegistry] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.Platform.RegistrationApplication.Update] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.Platform.RegistrationDevice.#ctor(Goedel.Mesh.SignedDeviceProfile)] Missing &lt;param name=&quot;SignedDeviceProfile&quot;/&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.Platform.RegistrationMachine.Add(Goedel.Mesh.Platform.Registration)] Missing &lt;param name=&quot;Registration&quot;/&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.Platform.RegistrationMachine.Add(Goedel.Mesh.Platform.RegistrationApplication)] Missing &lt;param name=&quot;Registration&quot;/&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.Platform.RegistrationMachine.Add(Goedel.Mesh.Platform.RegistrationDevice)] Missing &lt;param name=&quot;Registration&quot;/&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.Platform.RegistrationMachine.Add(Goedel.Mesh.Platform.RegistrationPersonal)] Missing &lt;param name=&quot;Registration&quot;/&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.Platform.RegistrationMachine.Add(Goedel.Mesh.SignedApplicationProfile)] Missing &lt;returns&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.Platform.RegistrationMachine.Add(Goedel.Mesh.SignedApplicationProfile)] Missing &lt;param name=&quot;SignedApplicationProfile&quot;/&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.Platform.RegistrationMachine.Add(Goedel.Mesh.SignedDeviceProfile)] Missing &lt;returns&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.Platform.RegistrationMachine.Add(Goedel.Mesh.SignedDeviceProfile)] Missing &lt;param name=&quot;SignedDeviceProfile&quot;/&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.Platform.RegistrationMachine.Add(Goedel.Mesh.SignedPersonalProfile,System.String)] Missing &lt;returns&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.Platform.RegistrationMachine.Add(Goedel.Mesh.SignedPersonalProfile,System.String)] Missing &lt;param name=&quot;SignedPersonalProfile&quot;/&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.Platform.RegistrationMachine.Add(Goedel.Mesh.SignedPersonalProfile,System.String)] Missing &lt;param name=&quot;PortalAddress&quot;/&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.Platform.RegistrationMachine.Get(Goedel.Mesh.ApplicationProfileEntry)] Missing &lt;param name=&quot;Profile&quot;/&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.Platform.RegistrationMachine.GetID(System.String,Goedel.Mesh.Platform.RegistrationDevice@)] Missing &lt;returns&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Mesh.Platform.RegistrationMachine.GetUDF(System.String,Goedel.Mesh.Platform.RegistrationDevice@)] Missing &lt;returns&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [P:Goedel.Mesh.Platform.RegistrationMachine.UDF] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Persistence.PersistenceStore.GetTransactionID] Missing &lt;returns&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [T:Goedel.Platform.SystemNetworkProfile] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Platform.WindowsCertificateStore.Get(System.String)] Missing &lt;returns&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Platform.WindowsCertificateStore.Get(System.String)] Missing &lt;param name=&quot;Fingerprint&quot;/&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Platform.WindowsCertificateStore.Get(System.String,System.Security.Cryptography.X509Certificates.X509Store)] Missing &lt;returns&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Platform.WindowsCertificateStore.Get(System.String,System.Security.Cryptography.X509Certificates.X509Store)] Missing &lt;param name=&quot;Store&quot;/&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Platform.WindowsCertificateStore.Initialize] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\BuildTopics.proj]
-  Processed 2609 topic(s)
-  62 warning(s)
+  Processed 2608 topic(s)
+  1 warning(s)
   CopyFromIndexComponent: &quot;metadata&quot; in-memory cache entries used: 1 of 15.
   ResolveArtLinksComponent: Copying media files...
   ResolveArtLinksComponent: Copying media files...
@@ -328,12 +277,12 @@ Done Building Project &quot;C:\Users\hallam\Work\mmm\Documentation\MeshLibraries
 
 Build succeeded.
 
-Time Elapsed 00:00:38.85
-    Last step completed in 00:00:38.9541
+Time Elapsed 00:00:39.40
+    Last step completed in 00:00:39.4751
 </buildStep>
 <buildStep step="CombiningIntermediateTocFiles">
 Combining conceptual and API intermediate TOC files...
-    Last step completed in 00:00:00.0115
+    Last step completed in 00:00:00.0155
 </buildStep>
 <buildStep step="ExtractingHtmlInfo">
 Extracting HTML info for HTML Help 1 and/or website...
@@ -345,17 +294,17 @@ E-Mail: Eric@EWoodruff.us
 Using LCID &#39;1033&#39;, code page &#39;65001&#39;, encoding charset &#39;UTF-8&#39;.
 
 Processing Help 1 files in C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\HtmlHelp1
-Processed 2609 HTML files
+Processed 2608 HTML files
 Sorting keywords and generating See Also indices
 Saving HTML Help 1 keyword index to C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\MeshLibraries.hhk
 Saving HTML Help 1 table of contents to C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\MeshLibraries.hhc
 
 Processing website files in C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\Website
-Processed 2609 HTML files
+Processed 2608 HTML files
 Sorting keywords and generating See Also indices
 Saving website keyword index to C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\WebKI.xml
 Saving website table of contents to C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\WebTOC.xml
-    Last step completed in 00:00:08.8706
+    Last step completed in 00:00:09.3109
 </buildStep>
 <buildStep step="CopyStandardHelpContent">
 Copying standard help content...
@@ -559,7 +508,7 @@ C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyle
 C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\Web\scripts\branding-Website.js -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\Website\scripts\branding-Website.js
 C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\Web\scripts\clipboard.min.js -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\Website\scripts\clipboard.min.js
 C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\Web\scripts\jquery-1.11.0.min.js -&gt; C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\Website\scripts\jquery-1.11.0.min.js
-    Last step completed in 00:00:00.7807
+    Last step completed in 00:00:00.7286
 </buildStep>
 <buildStep step="GenerateHelpFormatTableOfContents">
 Generating HTML Help 1 table of contents file...
@@ -571,7 +520,7 @@ Generating HTML Help 1 index file...
 </buildStep>
 <buildStep step="GenerateHelpProject">
 Generating HTML Help 1 project file...
-    Last step completed in 00:00:00.0185
+    Last step completed in 00:00:00.0201
 </buildStep>
 <buildStep step="CompilingHelpFile">
 Compiling HTML Help 1 file...
@@ -588,11 +537,11 @@ Compiling HTML Help 1 file...
   
   Compile time: 0 minutes, 9 seconds
   
-  2,611	Topics
+  2,610	Topics
   
-  27,834	Local links
+  27,823	Local links
   
-  3,078	Internet links
+  3,077	Internet links
   
   0	Graphics
   
@@ -600,11 +549,11 @@ Compiling HTML Help 1 file...
   
   
   
-  Created c:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\HtmlHelp1\MeshLibraries.chm, 2,881,753 bytes
+  Created c:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\Output\HtmlHelp1\MeshLibraries.chm, 2,889,973 bytes
   
-  Compression decreased file by 18,049,087 bytes.
+  Compression decreased file by 18,170,563 bytes.
   
-    Last step completed in 00:00:09.8846
+    Last step completed in 00:00:10.0496
 </buildStep>
 <buildStep step="GenerateHelpFormatTableOfContents">
 Executing informational Generate Table of Contents build step for plug-ins (not used for MS Help Viewer)
@@ -612,7 +561,7 @@ Executing informational Generate Table of Contents build step for plug-ins (not 
 </buildStep>
 <buildStep step="GenerateHelpProject">
 Executing informational Generate Help Project build step for plug-ins (not used for MS Help Viewer)
-    Last step completed in 00:00:00.0010
+    Last step completed in 00:00:00.0005
 </buildStep>
 <buildStep step="CompilingHelpFile">
 Generating MS Help Viewer file...
@@ -623,27 +572,27 @@ Generating MS Help Viewer file...
   1500 items added
   2000 items added
   2500 items added
-  Compression finished.  2678 items added
+  Compression finished.  2677 items added
   Saving C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\MeshLibraries.mshc...
-  Saved 500 of 2678 items
-  Saved 1000 of 2678 items
-  Saved 1500 of 2678 items
-  Saved 2000 of 2678 items
-  Saved 2500 of 2678 items
+  Saved 500 of 2677 items
+  Saved 1000 of 2677 items
+  Saved 1500 of 2677 items
+  Saved 2000 of 2677 items
+  Saved 2500 of 2677 items
   Finished saving C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\MeshLibraries.mshc
-  Compressed 5 folders, 2673 files.  Reduced size by 16,445,388 bytes (76%).
-    Last step completed in 00:00:01.6762
+  Compressed 5 folders, 2672 files.  Reduced size by 16,565,904 bytes (76%).
+    Last step completed in 00:00:01.7187
 </buildStep>
 <buildStep step="GenerateHelpFormatTableOfContents">
 Generating website table of contents file...
-    Last step completed in 00:00:00.0005
+    Last step completed in 00:00:00.0000
 </buildStep>
 <buildStep step="GenerateFullTextIndex">
 Generating full-text index for the website...
 
 <plugIn name="Lightweight Website Style" behavior="After" priority="1000">
 Adding lightweight search and TOC elements to each topic...
-</plugIn>    Last step completed in 00:00:05.7123
+</plugIn>    Last step completed in 00:00:05.9794
 </buildStep>
 <buildStep step="CopyingWebsiteFiles">
 Copying website files to output folder...
@@ -654,17 +603,16 @@ Copied 1500 files
 Copied 2000 files
 Copied 2500 files
 Copied 3000 files
-Copied 3500 files
-Copied 3500 files for the website content
-    Last step completed in 00:00:03.5775
+Copied 3499 files for the website content
+    Last step completed in 00:00:03.7167
 </buildStep>
 <buildStep step="CleanIntermediates">
 Removing intermediate files...
-    Last step completed in 00:00:02.4092
+    Last step completed in 00:00:02.1464
 </buildStep>
 <buildStep step="Completed">
 
-Build completed successfully at 10/21/2016 12:28:44 PM.  Total time: 00:01:52.4477
+Build completed successfully at 10/26/2016 4:02:37 PM.  Total time: 00:02:02.4477
 
 </buildStep>
 </shfbBuild>

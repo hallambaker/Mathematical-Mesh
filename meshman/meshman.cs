@@ -70,6 +70,10 @@ namespace Goedel.Mesh.MeshMan {
 							Handle_Register (Dispatch, args, 1);
 							break;
 							}
+						case "fingerprint" : {
+							Handle_Fingerprint (Dispatch, args, 1);
+							break;
+							}
 						case "sync" : {
 							Handle_Sync (Dispatch, args, 1);
 							break;
@@ -445,6 +449,101 @@ namespace Goedel.Mesh.MeshMan {
 
 #pragma warning restore 162
 			Dispatch.Register (Options);
+
+			}
+		private enum TagType_Fingerprint {
+			DeviceID,
+			Portal,
+			UDF,
+			Verbose,
+			Report,
+			}
+
+		private static void Handle_Fingerprint (
+					Shell Dispatch, string[] args, int index) {
+			Fingerprint		Options = new Fingerprint ();
+
+			var Registry = new Goedel.Registry.Registry ();
+
+			Options.DeviceID.Register ("did", Registry, (int) TagType_Fingerprint.DeviceID);
+			Options.Portal.Register ("portal", Registry, (int) TagType_Fingerprint.Portal);
+			Options.UDF.Register ("udf", Registry, (int) TagType_Fingerprint.UDF);
+			Options.Verbose.Register ("verbose", Registry, (int) TagType_Fingerprint.Verbose);
+			Options.Report.Register ("report", Registry, (int) TagType_Fingerprint.Report);
+
+
+#pragma warning disable 162
+			for (int i = index; i< args.Length; i++) {
+				if 	(!IsFlag (args [i][0] )) {
+					throw new System.Exception ("Unexpected parameter: " + args[i]);}			
+				string Rest = args [i].Substring (1);
+
+				TagType_Fingerprint TagType = (TagType_Fingerprint) Registry.Find (Rest);
+
+				// here have the cases for what to do with it.
+
+				switch (TagType) {
+					case TagType_Fingerprint.DeviceID : {
+						int OptionParams = Options.DeviceID.Tag (Rest);
+						
+						if (OptionParams>0 && ((i+1) < args.Length)) {
+							if 	(!IsFlag (args [i+1][0] )) {
+								i++;								
+								Options.DeviceID.Parameter (args[i]);
+								}
+							}
+						break;
+						}
+					case TagType_Fingerprint.Portal : {
+						int OptionParams = Options.Portal.Tag (Rest);
+						
+						if (OptionParams>0 && ((i+1) < args.Length)) {
+							if 	(!IsFlag (args [i+1][0] )) {
+								i++;								
+								Options.Portal.Parameter (args[i]);
+								}
+							}
+						break;
+						}
+					case TagType_Fingerprint.UDF : {
+						int OptionParams = Options.UDF.Tag (Rest);
+						
+						if (OptionParams>0 && ((i+1) < args.Length)) {
+							if 	(!IsFlag (args [i+1][0] )) {
+								i++;								
+								Options.UDF.Parameter (args[i]);
+								}
+							}
+						break;
+						}
+					case TagType_Fingerprint.Verbose : {
+						int OptionParams = Options.Verbose.Tag (Rest);
+						
+						if (OptionParams>0 && ((i+1) < args.Length)) {
+							if 	(!IsFlag (args [i+1][0] )) {
+								i++;								
+								Options.Verbose.Parameter (args[i]);
+								}
+							}
+						break;
+						}
+					case TagType_Fingerprint.Report : {
+						int OptionParams = Options.Report.Tag (Rest);
+						
+						if (OptionParams>0 && ((i+1) < args.Length)) {
+							if 	(!IsFlag (args [i+1][0] )) {
+								i++;								
+								Options.Report.Parameter (args[i]);
+								}
+							}
+						break;
+						}
+					default : throw new System.Exception ("Internal error");
+					}
+				}
+
+#pragma warning restore 162
+			Dispatch.Fingerprint (Options);
 
 			}
 		private enum TagType_Sync {
@@ -2056,6 +2155,23 @@ namespace Goedel.Mesh.MeshMan {
 
 				{
 #pragma warning disable 219
+					Fingerprint		Dummy = new Fingerprint ();
+#pragma warning restore 219
+
+					Console.Write ("{0}fingerprint ", UsageFlag);
+					Console.Write ("[{0}] ", Dummy.DeviceID.Usage ("did", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.Portal.Usage ("portal", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.UDF.Usage ("udf", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.Verbose.Usage ("verbose", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.Report.Usage ("report", "value", UsageFlag));
+					Console.WriteLine ();
+
+					Console.WriteLine ("    Return the fingerprint of a Mesh profile");
+
+				}
+
+				{
+#pragma warning disable 219
 					Sync		Dummy = new Sync ();
 #pragma warning restore 219
 
@@ -2427,6 +2543,25 @@ namespace Goedel.Mesh.MeshMan {
 
     public partial class Register : _Register {
         } // class Register
+
+
+    public class _Fingerprint : Goedel.Registry.Dispatch {
+
+		public String			DeviceID = new  String ();
+
+		public String			Portal = new  String ();
+
+		public String			UDF = new  String ();
+
+		public Flag			Verbose = new  Flag ("true");
+
+		public Flag			Report = new  Flag ("true");
+
+
+		}
+
+    public partial class Fingerprint : _Fingerprint {
+        } // class Fingerprint
 
 
     public class _Sync : Goedel.Registry.Dispatch {
@@ -2972,6 +3107,39 @@ namespace Goedel.Mesh.MeshMan {
 							"UDF", Options.UDF);
 				Console.WriteLine ("    {0}\t{1} = [{2}]", "String", 
 							"Portal", Options.Portal);
+				Console.WriteLine ("    {0}\t{1} = [{2}]", "Flag", 
+							"Verbose", Options.Verbose);
+				Console.WriteLine ("    {0}\t{1} = [{2}]", "Flag", 
+							"Report", Options.Report);
+			Console.WriteLine ("Not Yet Implemented");
+			}
+		public virtual void Fingerprint ( Fingerprint Options
+				) {
+
+			char UsageFlag = '-';
+				{
+#pragma warning disable 219
+					Fingerprint		Dummy = new Fingerprint ();
+#pragma warning restore 219
+
+					Console.Write ("{0}fingerprint ", UsageFlag);
+					Console.Write ("[{0}] ", Dummy.DeviceID.Usage ("did", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.Portal.Usage ("portal", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.UDF.Usage ("udf", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.Verbose.Usage ("verbose", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.Report.Usage ("report", "value", UsageFlag));
+					Console.WriteLine ();
+
+					Console.WriteLine ("    Return the fingerprint of a Mesh profile");
+
+				}
+
+				Console.WriteLine ("    {0}\t{1} = [{2}]", "String", 
+							"DeviceID", Options.DeviceID);
+				Console.WriteLine ("    {0}\t{1} = [{2}]", "String", 
+							"Portal", Options.Portal);
+				Console.WriteLine ("    {0}\t{1} = [{2}]", "String", 
+							"UDF", Options.UDF);
 				Console.WriteLine ("    {0}\t{1} = [{2}]", "Flag", 
 							"Verbose", Options.Verbose);
 				Console.WriteLine ("    {0}\t{1} = [{2}]", "Flag", 

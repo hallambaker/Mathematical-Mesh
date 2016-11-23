@@ -67,6 +67,13 @@
 			Brief "New portal account"
 		Include Reporting
 
+	Command Fingerprint "fingerprint"
+		Brief "Return the fingerprint of a Mesh profile"
+		Option DeviceID "did" String
+			Brief "Device identifier"
+		Include PortalAccount
+		Include Reporting
+
 	Command Sync "sync"
 		Brief "Synchronize local copies of Mesh profiles with the server"
 		Include PortalAccount

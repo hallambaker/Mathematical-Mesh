@@ -23,7 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.IO;
-using Goedel.Debug;
+using Goedel.Utilities;
 
 namespace Goedel.Mesh.Platform {
 
@@ -86,7 +86,7 @@ namespace Goedel.Mesh.Platform {
         /// Write data to the registry.
         /// </summary>
         public virtual void ToRegistry() {
-            Utils.NYI();
+            throw new NYI("Write data to registry");
             }
 
         /// <summary>

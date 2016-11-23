@@ -27,7 +27,9 @@ using System.Text;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using Goedel.Cryptography;
+using Goedel.Cryptography.Framework;
 using GCP=Goedel.Cryptography.PKIX;
+using Goedel.Utilities;
 
 namespace Goedel.Platform {
 
@@ -77,9 +79,10 @@ namespace Goedel.Platform {
                 }
             var KeyPair = Provider.KeyPair;
 
+            throw new NYI();
 
-            X509.PrivateKey = Provider.KeyPair.AsymmetricAlgorithm;
-            return X509;
+            //X509.PrivateKey = Provider.KeyPair.AsymmetricAlgorithm;
+            //return X509;
             }
 
         /// <summary>

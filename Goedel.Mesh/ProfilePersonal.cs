@@ -22,11 +22,9 @@
 
 using System;
 using System.Collections.Generic;
-using Goedel.Registry;
+using Goedel.Utilities;
 using Goedel.Persistence;
 using Goedel.Cryptography;
-using Goedel.Cryptography.PKIX;
-using Goedel.Cryptography.Jose;
 
 namespace Goedel.Mesh {
 
@@ -281,9 +279,9 @@ namespace Goedel.Mesh {
         /// Unpack the profile and signed sub profiles.
         /// </summary>
         public override void Unpack() {
-            Throw.If(SignedMasterProfile == null, "No master profile");
+            Assert.NotNull(SignedMasterProfile, NoMasterProfile.Throw);
             //Throw.If(SignedAdministrationProfile == null, "No administration profile");
-            Throw.If(Devices == null, "No device profile");
+            Assert.NotNull(Devices == null, NoDeviceProfile.Throw);
 
             _PersonalMasterProfile = SignedMasterProfile.UnpackAndVerify();
             //_AdministrationProfile = SignedAdministrationProfile.UnpackAndVerify();

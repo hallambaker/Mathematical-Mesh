@@ -116,11 +116,12 @@ SourceFiles = \
      WindowsNetworkProfile.cs
 
 LinkFiles = \
-    $(TARGETBIN)/Goedel.Cryptography.Jose.dll\
-    $(TARGETBIN)/Goedel.Cryptography.dll\
-    $(TARGETBIN)/Goedel.Debug.dll
+    $(LIBRARYBIN)/Goedel.ASN.dll\
+    $(LIBRARYBIN)/Goedel.Cryptography.dll\
+    $(LIBRARYBIN)/Goedel.Cryptography.Framework.dll\
+    $(LIBRARYBIN)/Goedel.Utilities.dll
 
-LinkFilesComma = $(TARGETBIN)/Goedel.Cryptography.Jose.dll,$(TARGETBIN)/Goedel.Cryptography.dll,$(TARGETBIN)/Goedel.Debug.dll
+LinkFilesComma = $(LIBRARYBIN)/Goedel.ASN.dll,$(LIBRARYBIN)/Goedel.Cryptography.dll,$(LIBRARYBIN)/Goedel.Cryptography.Framework.dll,$(LIBRARYBIN)/Goedel.Utilities.dll
 
 
 NugetFiles = 
@@ -169,28 +170,7 @@ endif
 # Recursive make targets, do not execute if the variable NORECURSE is defined
 ifndef NORECURSE
 
-../Goedel.Cryptography.Jose/$(TARGETBIN)/Goedel.Cryptography.Jose.dll : recursive
-! $(MAKE) -C ../Goedel.Cryptography.Jose
-
-../Goedel.Cryptography/$(TARGETBIN)/Goedel.Cryptography.dll : recursive
-! $(MAKE) -C ../Goedel.Cryptography
-
-../Goedel.Debug/$(TARGETBIN)/Goedel.Debug.dll : recursive
-! $(MAKE) -C ../Goedel.Debug
-
 endif
-
-$(TARGETBIN)/Goedel.Cryptography.Jose.dll :| $(TARGETBIN)
-$(TARGETBIN)/Goedel.Cryptography.Jose.dll : ../Goedel.Cryptography.Jose/$(TARGETBIN)/Goedel.Cryptography.Jose.dll
-!  cp ../Goedel.Cryptography.Jose/$(TARGETBIN)/Goedel.Cryptography.Jose.dll $(TARGETBIN)/Goedel.Cryptography.Jose.dll
-
-$(TARGETBIN)/Goedel.Cryptography.dll :| $(TARGETBIN)
-$(TARGETBIN)/Goedel.Cryptography.dll : ../Goedel.Cryptography/$(TARGETBIN)/Goedel.Cryptography.dll
-!  cp ../Goedel.Cryptography/$(TARGETBIN)/Goedel.Cryptography.dll $(TARGETBIN)/Goedel.Cryptography.dll
-
-$(TARGETBIN)/Goedel.Debug.dll :| $(TARGETBIN)
-$(TARGETBIN)/Goedel.Debug.dll : ../Goedel.Debug/$(TARGETBIN)/Goedel.Debug.dll
-!  cp ../Goedel.Debug/$(TARGETBIN)/Goedel.Debug.dll $(TARGETBIN)/Goedel.Debug.dll
 
 
 # Referenced Libraries

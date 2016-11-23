@@ -47,9 +47,32 @@
     <DocumentationFile>bin\Publish\Goedel.Mesh.Platform.Windows.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Goedel.Cryptography, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Library\Goedel.Cryptography.dll</HintPath>
+    </Reference>
+    <Reference Include="Goedel.Cryptography.Framework">
+      <HintPath>..\..\Library\Goedel.Cryptography.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Goedel.Cryptography.KeyFile">
+      <HintPath>..\..\Library\Goedel.Cryptography.KeyFile.dll</HintPath>
+    </Reference>
+    <Reference Include="Goedel.IO">
+      <HintPath>..\..\Library\Goedel.IO.dll</HintPath>
+    </Reference>
+    <Reference Include="Goedel.Platform">
+      <HintPath>..\..\Library\Goedel.Platform.dll</HintPath>
+    </Reference>
+    <Reference Include="Goedel.Platform.Framework">
+      <HintPath>..\..\Library\Goedel.Platform.Framework.dll</HintPath>
+    </Reference>
     <Reference Include="Goedel.Protocol, Version=1.0.6128.28622, Culture=neutral, PublicKeyToken=9ac84b9f2535680b, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Library\Goedel.Protocol.dll</HintPath>
+    </Reference>
+    <Reference Include="Goedel.Utilities, Version=1.0.6138.21520, Culture=neutral, PublicKeyToken=9ac84b9f2535680b, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Library\Goedel.Utilities.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -85,14 +108,6 @@
     <None Include="ReadMe.md" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Goedel.Cryptography\Goedel.Cryptography.csproj">
-      <Project>{1babc0e9-d939-4de5-82a3-16752104b14b}</Project>
-      <Name>Goedel.Cryptography</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Goedel.Debug\Goedel.Debug.csproj">
-      <Project>{a8090b80-d658-45f6-bda1-4f9dfd2b976f}</Project>
-      <Name>Goedel.Debug</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Goedel.Mesh\Goedel.Mesh.csproj">
       <Project>{0d8dd801-65d2-497c-8379-2d6adf3867c3}</Project>
       <Name>Goedel.Mesh</Name>

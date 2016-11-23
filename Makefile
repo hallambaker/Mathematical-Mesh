@@ -119,12 +119,6 @@ export Custom_TrojanGTK_FLAG	?= /cs
 
 all : AdminDumpLog/$(TARGETBIN)/DumpLog.exe
 
-AdminDumpLog/$(TARGETBIN)/DumpLog.exe : Goedel.Cryptography.Jose/$(TARGETBIN)/Goedel.Cryptography.Jose.dll
-
-AdminDumpLog/$(TARGETBIN)/DumpLog.exe : Goedel.Cryptography/$(TARGETBIN)/Goedel.Cryptography.dll
-
-AdminDumpLog/$(TARGETBIN)/DumpLog.exe : Goedel.Debug/$(TARGETBIN)/Goedel.Debug.dll
-
 AdminDumpLog/$(TARGETBIN)/DumpLog.exe : Goedel.Persistence/$(TARGETBIN)/Goedel.Persistence.dll
 
 AdminDumpLog/$(TARGETBIN)/DumpLog.exe : Goedel.Mesh/$(TARGETBIN)/Goedel.Mesh.dll
@@ -135,55 +129,11 @@ AdminDumpLog/$(TARGETBIN)/DumpLog.exe : always
 ! echo "*** Directory AdminDumpLog" >&2
 ! make NORECURSE=true -C AdminDumpLog
 
-# Project : Goedel.Cryptography.dll
-# Item :  Goedel.Cryptography
-# Output :     Goedel.Cryptography/$(TARGETBIN)/Goedel.Cryptography.dll
-
-all : Goedel.Cryptography/$(TARGETBIN)/Goedel.Cryptography.dll
-
-Goedel.Cryptography/$(TARGETBIN)/Goedel.Cryptography.dll : Goedel.Debug/$(TARGETBIN)/Goedel.Debug.dll
-
-
-Goedel.Cryptography/$(TARGETBIN)/Goedel.Cryptography.dll : always
-! echo "" >&2
-! echo "*** Directory Goedel.Cryptography" >&2
-! make NORECURSE=true -C Goedel.Cryptography
-
-# Project : Goedel.Cryptography.Jose.dll
-# Item :  Goedel.Cryptography.Jose
-# Output :     Goedel.Cryptography.Jose/$(TARGETBIN)/Goedel.Cryptography.Jose.dll
-
-all : Goedel.Cryptography.Jose/$(TARGETBIN)/Goedel.Cryptography.Jose.dll
-
-Goedel.Cryptography.Jose/$(TARGETBIN)/Goedel.Cryptography.Jose.dll : Goedel.Cryptography/$(TARGETBIN)/Goedel.Cryptography.dll
-
-Goedel.Cryptography.Jose/$(TARGETBIN)/Goedel.Cryptography.Jose.dll : Goedel.Debug/$(TARGETBIN)/Goedel.Debug.dll
-
-
-Goedel.Cryptography.Jose/$(TARGETBIN)/Goedel.Cryptography.Jose.dll : always
-! echo "" >&2
-! echo "*** Directory Goedel.Cryptography.Jose" >&2
-! make NORECURSE=true -C Goedel.Cryptography.Jose
-
-# Project : Goedel.Debug.dll
-# Item :  Goedel.Debug
-# Output :     Goedel.Debug/$(TARGETBIN)/Goedel.Debug.dll
-
-all : Goedel.Debug/$(TARGETBIN)/Goedel.Debug.dll
-
-
-Goedel.Debug/$(TARGETBIN)/Goedel.Debug.dll : always
-! echo "" >&2
-! echo "*** Directory Goedel.Debug" >&2
-! make NORECURSE=true -C Goedel.Debug
-
 # Project : Goedel.Persistence.dll
 # Item :  Goedel.Persistence
 # Output :     Goedel.Persistence/$(TARGETBIN)/Goedel.Persistence.dll
 
 all : Goedel.Persistence/$(TARGETBIN)/Goedel.Persistence.dll
-
-Goedel.Persistence/$(TARGETBIN)/Goedel.Persistence.dll : Goedel.Debug/$(TARGETBIN)/Goedel.Debug.dll
 
 
 Goedel.Persistence/$(TARGETBIN)/Goedel.Persistence.dll : always
@@ -196,12 +146,6 @@ Goedel.Persistence/$(TARGETBIN)/Goedel.Persistence.dll : always
 # Output :     Goedel.Mesh/$(TARGETBIN)/Goedel.Mesh.dll
 
 all : Goedel.Mesh/$(TARGETBIN)/Goedel.Mesh.dll
-
-Goedel.Mesh/$(TARGETBIN)/Goedel.Mesh.dll : Goedel.Cryptography.Jose/$(TARGETBIN)/Goedel.Cryptography.Jose.dll
-
-Goedel.Mesh/$(TARGETBIN)/Goedel.Mesh.dll : Goedel.Cryptography/$(TARGETBIN)/Goedel.Cryptography.dll
-
-Goedel.Mesh/$(TARGETBIN)/Goedel.Mesh.dll : Goedel.Debug/$(TARGETBIN)/Goedel.Debug.dll
 
 Goedel.Mesh/$(TARGETBIN)/Goedel.Mesh.dll : Goedel.Persistence/$(TARGETBIN)/Goedel.Persistence.dll
 
@@ -216,14 +160,6 @@ Goedel.Mesh/$(TARGETBIN)/Goedel.Mesh.dll : always
 # Output :     Goedel.Mesh.Server/$(TARGETBIN)/Goedel.Mesh.Server.dll
 
 all : Goedel.Mesh.Server/$(TARGETBIN)/Goedel.Mesh.Server.dll
-
-Goedel.Mesh.Server/$(TARGETBIN)/Goedel.Mesh.Server.dll : Goedel.Protocol.Debug/$(TARGETBIN)/Goedel.Protocol.Debug.dll
-
-Goedel.Mesh.Server/$(TARGETBIN)/Goedel.Mesh.Server.dll : Goedel.Cryptography.Jose/$(TARGETBIN)/Goedel.Cryptography.Jose.dll
-
-Goedel.Mesh.Server/$(TARGETBIN)/Goedel.Mesh.Server.dll : Goedel.Cryptography/$(TARGETBIN)/Goedel.Cryptography.dll
-
-Goedel.Mesh.Server/$(TARGETBIN)/Goedel.Mesh.Server.dll : Goedel.Debug/$(TARGETBIN)/Goedel.Debug.dll
 
 Goedel.Mesh.Server/$(TARGETBIN)/Goedel.Mesh.Server.dll : Goedel.Persistence/$(TARGETBIN)/Goedel.Persistence.dll
 
@@ -241,23 +177,13 @@ Goedel.Mesh.Server/$(TARGETBIN)/Goedel.Mesh.Server.dll : always
 
 all : RunMesh/$(TARGETBIN)/RunMesh.exe
 
-RunMesh/$(TARGETBIN)/RunMesh.exe : Goedel.Cryptography.KeyFile/$(TARGETBIN)/Goedel.Cryptography.KeyFile.dll
-
 RunMesh/$(TARGETBIN)/RunMesh.exe : Goedel.Mesh.Platform.Windows/$(TARGETBIN)/Goedel.Mesh.Platform.Windows.dll
-
-RunMesh/$(TARGETBIN)/RunMesh.exe : Goedel.Cryptography/$(TARGETBIN)/Goedel.Cryptography.dll
-
-RunMesh/$(TARGETBIN)/RunMesh.exe : Goedel.Debug/$(TARGETBIN)/Goedel.Debug.dll
-
-RunMesh/$(TARGETBIN)/RunMesh.exe : Goedel.Cryptography.Jose/$(TARGETBIN)/Goedel.Cryptography.Jose.dll
 
 RunMesh/$(TARGETBIN)/RunMesh.exe : Goedel.Mesh/$(TARGETBIN)/Goedel.Mesh.dll
 
 RunMesh/$(TARGETBIN)/RunMesh.exe : Goedel.Mesh.Server/$(TARGETBIN)/Goedel.Mesh.Server.dll
 
 RunMesh/$(TARGETBIN)/RunMesh.exe : Goedel.Persistence/$(TARGETBIN)/Goedel.Persistence.dll
-
-RunMesh/$(TARGETBIN)/RunMesh.exe : Goedel.Protocol.Debug/$(TARGETBIN)/Goedel.Protocol.Debug.dll
 
 
 RunMesh/$(TARGETBIN)/RunMesh.exe : always
@@ -271,81 +197,17 @@ RunMesh/$(TARGETBIN)/RunMesh.exe : always
 
 all : ServerMesh/$(TARGETBIN)/ServerMesh.exe
 
-ServerMesh/$(TARGETBIN)/ServerMesh.exe : Goedel.Cryptography.Jose/$(TARGETBIN)/Goedel.Cryptography.Jose.dll
-
-ServerMesh/$(TARGETBIN)/ServerMesh.exe : Goedel.Cryptography/$(TARGETBIN)/Goedel.Cryptography.dll
-
-ServerMesh/$(TARGETBIN)/ServerMesh.exe : Goedel.Debug/$(TARGETBIN)/Goedel.Debug.dll
-
-ServerMesh/$(TARGETBIN)/ServerMesh.exe : Goedel.DNS/$(TARGETBIN)/Goedel.DNS.dll
-
 ServerMesh/$(TARGETBIN)/ServerMesh.exe : Goedel.Persistence/$(TARGETBIN)/Goedel.Persistence.dll
 
 ServerMesh/$(TARGETBIN)/ServerMesh.exe : Goedel.Mesh.Server/$(TARGETBIN)/Goedel.Mesh.Server.dll
 
 ServerMesh/$(TARGETBIN)/ServerMesh.exe : Goedel.Mesh/$(TARGETBIN)/Goedel.Mesh.dll
 
-ServerMesh/$(TARGETBIN)/ServerMesh.exe : Goedel.Protocol.Debug/$(TARGETBIN)/Goedel.Protocol.Debug.dll
-
 
 ServerMesh/$(TARGETBIN)/ServerMesh.exe : always
 ! echo "" >&2
 ! echo "*** Directory ServerMesh" >&2
 ! make NORECURSE=true -C ServerMesh
-
-# Project : InternetDrafts.exe
-# Item :  Documentation
-# Output :     Documentation/$(TARGETEXE)/InternetDrafts.exe
-
-all : Documentation/$(TARGETBIN)/InternetDrafts.exe
-
-Documentation/$(TARGETBIN)/InternetDrafts.exe : Goedel.Cryptography.Jose/$(TARGETBIN)/Goedel.Cryptography.Jose.dll
-
-Documentation/$(TARGETBIN)/InternetDrafts.exe : Goedel.Cryptography/$(TARGETBIN)/Goedel.Cryptography.dll
-
-Documentation/$(TARGETBIN)/InternetDrafts.exe : Goedel.Debug/$(TARGETBIN)/Goedel.Debug.dll
-
-Documentation/$(TARGETBIN)/InternetDrafts.exe : Goedel.DNS/$(TARGETBIN)/Goedel.DNS.dll
-
-Documentation/$(TARGETBIN)/InternetDrafts.exe : Goedel.Mesh.Client/$(TARGETBIN)/Goedel.Mesh.Client.dll
-
-Documentation/$(TARGETBIN)/InternetDrafts.exe : Goedel.Mesh.Server/$(TARGETBIN)/Goedel.Mesh.Server.dll
-
-Documentation/$(TARGETBIN)/InternetDrafts.exe : Goedel.Mesh/$(TARGETBIN)/Goedel.Mesh.dll
-
-Documentation/$(TARGETBIN)/InternetDrafts.exe : Goedel.Persistence/$(TARGETBIN)/Goedel.Persistence.dll
-
-Documentation/$(TARGETBIN)/InternetDrafts.exe : Goedel.Protocol.Debug/$(TARGETBIN)/Goedel.Protocol.Debug.dll
-
-
-Documentation/$(TARGETBIN)/InternetDrafts.exe : always
-! echo "" >&2
-! echo "*** Directory Documentation" >&2
-! make NORECURSE=true -C Documentation
-
-# Project : Goedel.DNS.dll
-# Item :  Goedel.DNS
-# Output :     Goedel.DNS/$(TARGETBIN)/Goedel.DNS.dll
-
-all : Goedel.DNS/$(TARGETBIN)/Goedel.DNS.dll
-
-
-Goedel.DNS/$(TARGETBIN)/Goedel.DNS.dll : always
-! echo "" >&2
-! echo "*** Directory Goedel.DNS" >&2
-! make NORECURSE=true -C Goedel.DNS
-
-# Project : Goedel.Protocol.Debug.dll
-# Item :  Goedel.Protocol.Debug
-# Output :     Goedel.Protocol.Debug/$(TARGETBIN)/Goedel.Protocol.Debug.dll
-
-all : Goedel.Protocol.Debug/$(TARGETBIN)/Goedel.Protocol.Debug.dll
-
-
-Goedel.Protocol.Debug/$(TARGETBIN)/Goedel.Protocol.Debug.dll : always
-! echo "" >&2
-! echo "*** Directory Goedel.Protocol.Debug" >&2
-! make NORECURSE=true -C Goedel.Protocol.Debug
 
 # Project : Goedel.Mesh.Client.dll
 # Item :  Goedel.Mesh.Client
@@ -365,12 +227,6 @@ Goedel.Mesh.Client/$(TARGETBIN)/Goedel.Mesh.Client.dll : always
 
 all : Goedel.Platform.Windows/$(TARGETBIN)/Goedel.Platform.Windows.dll
 
-Goedel.Platform.Windows/$(TARGETBIN)/Goedel.Platform.Windows.dll : Goedel.Cryptography.Jose/$(TARGETBIN)/Goedel.Cryptography.Jose.dll
-
-Goedel.Platform.Windows/$(TARGETBIN)/Goedel.Platform.Windows.dll : Goedel.Cryptography/$(TARGETBIN)/Goedel.Cryptography.dll
-
-Goedel.Platform.Windows/$(TARGETBIN)/Goedel.Platform.Windows.dll : Goedel.Debug/$(TARGETBIN)/Goedel.Debug.dll
-
 
 Goedel.Platform.Windows/$(TARGETBIN)/Goedel.Platform.Windows.dll : always
 ! echo "" >&2
@@ -383,15 +239,9 @@ Goedel.Platform.Windows/$(TARGETBIN)/Goedel.Platform.Windows.dll : always
 
 all : Goedel.Mesh.Platform.Windows/$(TARGETBIN)/Goedel.Mesh.Platform.Windows.dll
 
-Goedel.Mesh.Platform.Windows/$(TARGETBIN)/Goedel.Mesh.Platform.Windows.dll : Goedel.Cryptography/$(TARGETBIN)/Goedel.Cryptography.dll
-
-Goedel.Mesh.Platform.Windows/$(TARGETBIN)/Goedel.Mesh.Platform.Windows.dll : Goedel.Debug/$(TARGETBIN)/Goedel.Debug.dll
-
 Goedel.Mesh.Platform.Windows/$(TARGETBIN)/Goedel.Mesh.Platform.Windows.dll : Goedel.Mesh/$(TARGETBIN)/Goedel.Mesh.dll
 
 Goedel.Mesh.Platform.Windows/$(TARGETBIN)/Goedel.Mesh.Platform.Windows.dll : Goedel.Platform.Windows/$(TARGETBIN)/Goedel.Platform.Windows.dll
-
-Goedel.Mesh.Platform.Windows/$(TARGETBIN)/Goedel.Mesh.Platform.Windows.dll : Goedel.Protocol.Debug/$(TARGETBIN)/Goedel.Protocol.Debug.dll
 
 
 Goedel.Mesh.Platform.Windows/$(TARGETBIN)/Goedel.Mesh.Platform.Windows.dll : always
@@ -405,14 +255,6 @@ Goedel.Mesh.Platform.Windows/$(TARGETBIN)/Goedel.Mesh.Platform.Windows.dll : alw
 
 all : meshman/$(TARGETBIN)/meshman.exe
 
-meshman/$(TARGETBIN)/meshman.exe : Goedel.Cryptography.Jose/$(TARGETBIN)/Goedel.Cryptography.Jose.dll
-
-meshman/$(TARGETBIN)/meshman.exe : Goedel.Cryptography/$(TARGETBIN)/Goedel.Cryptography.dll
-
-meshman/$(TARGETBIN)/meshman.exe : Goedel.Debug/$(TARGETBIN)/Goedel.Debug.dll
-
-meshman/$(TARGETBIN)/meshman.exe : Goedel.DNS/$(TARGETBIN)/Goedel.DNS.dll
-
 meshman/$(TARGETBIN)/meshman.exe : Goedel.Mesh.Client/$(TARGETBIN)/Goedel.Mesh.Client.dll
 
 meshman/$(TARGETBIN)/meshman.exe : Goedel.Mesh.Server/$(TARGETBIN)/Goedel.Mesh.Server.dll
@@ -423,102 +265,73 @@ meshman/$(TARGETBIN)/meshman.exe : Goedel.Mesh/$(TARGETBIN)/Goedel.Mesh.dll
 
 meshman/$(TARGETBIN)/meshman.exe : Goedel.Persistence/$(TARGETBIN)/Goedel.Persistence.dll
 
-meshman/$(TARGETBIN)/meshman.exe : Goedel.Protocol.Debug/$(TARGETBIN)/Goedel.Protocol.Debug.dll
-
 
 meshman/$(TARGETBIN)/meshman.exe : always
 ! echo "" >&2
 ! echo "*** Directory meshman" >&2
 ! make NORECURSE=true -C meshman
 
-# Project : Goedel.Cryptography.KeyFile.dll
-# Item :  Goedel.Cryptography.KeyFile
-# Output :     Goedel.Cryptography.KeyFile/$(TARGETBIN)/Goedel.Cryptography.KeyFile.dll
+# Project : InternetDrafts.exe
+# Item :  Documentation/Specification
+# Output :     Documentation/Specification/$(TARGETEXE)/InternetDrafts.exe
 
-all : Goedel.Cryptography.KeyFile/$(TARGETBIN)/Goedel.Cryptography.KeyFile.dll
+all : Documentation/Specification/$(TARGETBIN)/InternetDrafts.exe
 
-Goedel.Cryptography.KeyFile/$(TARGETBIN)/Goedel.Cryptography.KeyFile.dll : Goedel.Cryptography/$(TARGETBIN)/Goedel.Cryptography.dll
+Documentation/Specification/$(TARGETBIN)/InternetDrafts.exe : Goedel.Mesh.Client/$(TARGETBIN)/Goedel.Mesh.Client.dll
+
+Documentation/Specification/$(TARGETBIN)/InternetDrafts.exe : Goedel.Mesh.Server/$(TARGETBIN)/Goedel.Mesh.Server.dll
+
+Documentation/Specification/$(TARGETBIN)/InternetDrafts.exe : Goedel.Mesh/$(TARGETBIN)/Goedel.Mesh.dll
+
+Documentation/Specification/$(TARGETBIN)/InternetDrafts.exe : Goedel.Persistence/$(TARGETBIN)/Goedel.Persistence.dll
 
 
-Goedel.Cryptography.KeyFile/$(TARGETBIN)/Goedel.Cryptography.KeyFile.dll : always
+Documentation/Specification/$(TARGETBIN)/InternetDrafts.exe : always
 ! echo "" >&2
-! echo "*** Directory Goedel.Cryptography.KeyFile" >&2
-! make NORECURSE=true -C Goedel.Cryptography.KeyFile
-
-# Project : Goedel.Cryptography.Portable.dll
-# Item :  UniversalLibraries/Goedel.Cryptography.Portable
-# Output :     UniversalLibraries/Goedel.Cryptography.Portable/$(TARGETBIN)/Goedel.Cryptography.Portable.dll
-
-all : UniversalLibraries/Goedel.Cryptography.Portable/$(TARGETBIN)/Goedel.Cryptography.Portable.dll
-
-
-UniversalLibraries/Goedel.Cryptography.Portable/$(TARGETBIN)/Goedel.Cryptography.Portable.dll : always
-! echo "" >&2
-! echo "*** Directory UniversalLibraries/Goedel.Cryptography.Portable" >&2
-! make NORECURSE=true -C UniversalLibraries/Goedel.Cryptography.Portable
+! echo "*** Directory Documentation/Specification" >&2
+! make NORECURSE=true -C Documentation/Specification
 
 
 
 # clean all projects
 clean :
 ! make clean NORECURSE=true -C AdminDumpLog
-! make clean NORECURSE=true -C Goedel.Cryptography
-! make clean NORECURSE=true -C Goedel.Cryptography.Jose
-! make clean NORECURSE=true -C Goedel.Debug
 ! make clean NORECURSE=true -C Goedel.Persistence
 ! make clean NORECURSE=true -C Goedel.Mesh
 ! make clean NORECURSE=true -C Goedel.Mesh.Server
 ! make clean NORECURSE=true -C RunMesh
 ! make clean NORECURSE=true -C ServerMesh
-! make clean NORECURSE=true -C Documentation
-! make clean NORECURSE=true -C Goedel.DNS
-! make clean NORECURSE=true -C Goedel.Protocol.Debug
 ! make clean NORECURSE=true -C Goedel.Mesh.Client
 ! make clean NORECURSE=true -C Goedel.Platform.Windows
 ! make clean NORECURSE=true -C Goedel.Mesh.Platform.Windows
 ! make clean NORECURSE=true -C meshman
-! make clean NORECURSE=true -C Goedel.Cryptography.KeyFile
-! make clean NORECURSE=true -C UniversalLibraries/Goedel.Cryptography.Portable
+! make clean NORECURSE=true -C Documentation/Specification
 
 # publish all projects
 publish : all
 ! make publish NORECURSE=true -C AdminDumpLog
-! make publish NORECURSE=true -C Goedel.Cryptography
-! make publish NORECURSE=true -C Goedel.Cryptography.Jose
-! make publish NORECURSE=true -C Goedel.Debug
 ! make publish NORECURSE=true -C Goedel.Persistence
 ! make publish NORECURSE=true -C Goedel.Mesh
 ! make publish NORECURSE=true -C Goedel.Mesh.Server
 ! make publish NORECURSE=true -C RunMesh
 ! make publish NORECURSE=true -C ServerMesh
-! make publish NORECURSE=true -C Documentation
-! make publish NORECURSE=true -C Goedel.DNS
-! make publish NORECURSE=true -C Goedel.Protocol.Debug
 ! make publish NORECURSE=true -C Goedel.Mesh.Client
 ! make publish NORECURSE=true -C Goedel.Platform.Windows
 ! make publish NORECURSE=true -C Goedel.Mesh.Platform.Windows
 ! make publish NORECURSE=true -C meshman
-! make publish NORECURSE=true -C Goedel.Cryptography.KeyFile
-! make publish NORECURSE=true -C UniversalLibraries/Goedel.Cryptography.Portable
+! make publish NORECURSE=true -C Documentation/Specification
 
 # install all projects
 install : all
 ! make install NORECURSE=true -C AdminDumpLog
-! make install NORECURSE=true -C Goedel.Cryptography
-! make install NORECURSE=true -C Goedel.Cryptography.Jose
-! make install NORECURSE=true -C Goedel.Debug
 ! make install NORECURSE=true -C Goedel.Persistence
 ! make install NORECURSE=true -C Goedel.Mesh
 ! make install NORECURSE=true -C Goedel.Mesh.Server
 ! make install NORECURSE=true -C RunMesh
 ! make install NORECURSE=true -C ServerMesh
-! make install NORECURSE=true -C Documentation
-! make install NORECURSE=true -C Goedel.DNS
-! make install NORECURSE=true -C Goedel.Protocol.Debug
 ! make install NORECURSE=true -C Goedel.Mesh.Client
 ! make install NORECURSE=true -C Goedel.Platform.Windows
 ! make install NORECURSE=true -C Goedel.Mesh.Platform.Windows
 ! make install NORECURSE=true -C meshman
-! make install NORECURSE=true -C Goedel.Cryptography.KeyFile
-! make install NORECURSE=true -C UniversalLibraries/Goedel.Cryptography.Portable
+! make install NORECURSE=true -C Documentation/Specification
 

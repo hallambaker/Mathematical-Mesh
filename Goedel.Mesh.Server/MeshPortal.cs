@@ -23,7 +23,7 @@
 using System;
 using System.Collections.Generic;
 using Goedel.Protocol;
-using Goedel.Protocol.Extended;
+using Goedel.Protocol.Framework;
 using Goedel.Mesh;
 
 namespace Goedel.Mesh {
@@ -213,11 +213,13 @@ namespace Goedel.Mesh {
         /// <param name="Account">The account to get.</param>
         /// <param name="Service">The service to get the service from.</param> 
         /// <returns>The service instance</returns>
-        public override MeshService GetService(string Service, string Account) {
-            var URI = JPCProvider.WellKnownToURI(Service, MeshService.WellKnown, 
-                        MeshService.Discovery, false, true);
+        public override MeshService GetService(string Domain, string Account) {
+            //var URI = JPCProvider.WellKnownToURI(Service, MeshService.WellKnown, 
+            //            MeshService.Discovery, false, true);
 
-            var Session = new WebRemoteSession(URI, Service, Account);
+            //var Session = new WebRemoteSession(URI, Service, Account);
+
+            var Session = new WebRemoteSession(Domain, MeshService.WellKnown, Account);
             MeshServiceClient = new MeshServiceClient(Session);
             return MeshServiceClient;
             }

@@ -23,6 +23,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net;
 using Goedel.Mesh.Platform;
 
 using Goedel.Cryptography;
@@ -34,8 +35,12 @@ namespace Goedel.Mesh {
             //var MeshTest = new MeshTest();
             //MeshTest.TestRegistry();
 
-            new ParseSSH();
+            //new ParseSSH();
 
+
+            var Listener = new HttpListener();
+            Listener.Prefixes.Add("http://host1.prismproof.org/.well-known/mmm/");
+            Listener.Start();
             }
         }
 

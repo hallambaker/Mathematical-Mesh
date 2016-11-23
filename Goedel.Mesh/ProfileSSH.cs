@@ -22,6 +22,7 @@
 
 using System;
 using System.Collections.Generic;
+using Goedel.Utilities;
 using Goedel.Registry;
 using Goedel.Persistence;
 using Goedel.Cryptography;
@@ -107,9 +108,7 @@ namespace Goedel.Mesh {
                     PersonalProfile PersonalProfile) {
             var Result = SignedProfile.Inner as SSHProfile;
 
-            if (Result == null) {
-                throw new Throw("Not a SSH profile.");
-                }
+            Assert.NotNull(Result, NotValidProfile.Throw);
 
             Result.Link(PersonalProfile);
             return (Result);

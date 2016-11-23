@@ -24,10 +24,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Goedel.Registry;
-using Goedel.Persistence;
+using Goedel.Utilities;
 using Goedel.Cryptography;
 using Goedel.Cryptography.PKIX;
-using Goedel.Debug;
 using Goedel.Cryptography.Jose;
 
 namespace Goedel.Mesh {
@@ -93,7 +92,7 @@ namespace Goedel.Mesh {
 
 
             ApplicationProfileEntry = PersonalProfile.GetApplicationEntry(Identifier);
-            if (ApplicationProfileEntry == null) throw new Throw("Not found");
+            Assert.NotNull(ApplicationProfileEntry, ProfileNotFound.Throw);
 
             Link(PersonalProfile, ApplicationProfileEntry);
             ApplicationProfileEntry.ApplicationProfile = this;
@@ -118,7 +117,7 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <returns>An authorized key pair.</returns>
         public KeyPair GetSignatureKey() {
-            if (ApplicationProfileEntry == null) throw new Throw("Broken");
+            Assert.NotNull(ApplicationProfileEntry, MeshException.Throw);
             foreach (var SignID in ApplicationProfileEntry.SignID) {
                 var SignKey = KeyPair.FindLocal(SignID);
                 if (SignKey != null) {
@@ -134,8 +133,8 @@ namespace Goedel.Mesh {
         /// Encrypt the private data and create a decryption key for each device.
         /// </summary>
         public virtual void EncryptPrivate() {
-            if (ApplicationProfileEntry == null) throw new Throw("Broken");
-            if (ApplicationProfileEntry.DecryptID == null) throw new Throw("Broken");
+            Assert.NotNull(ApplicationProfileEntry, MeshException.Throw);
+            Assert.NotNull(ApplicationProfileEntry.DecryptID, MeshException.Throw);
 
             EncryptedData = new JoseWebEncryption(GetPrivateData);
 
@@ -162,8 +161,8 @@ namespace Goedel.Mesh {
             var DeviceProfile = SignedDeviceProfile.Data;
             var EncryptionKey = DeviceProfile.DeviceEncryptiontionKey;
 
-            if (ApplicationProfileEntry == null) throw new Throw("Broken");
-            if (ApplicationProfileEntry.DecryptID == null) throw new Throw("Broken");
+            Assert.NotNull(ApplicationProfileEntry, MeshException.Throw);
+            Assert.NotNull(ApplicationProfileEntry.DecryptID, MeshException.Throw);
 
             var Result = EncryptedData.Decrypt(EncryptionKey.KeyPair);
 
