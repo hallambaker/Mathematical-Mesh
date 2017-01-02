@@ -23,12 +23,13 @@
 using System;
 using Microsoft.Win32;
 
-namespace Goedel.Mesh.Platform {
+namespace Goedel.Mesh.Platform.Windows {
 
     /// <summary>
     /// Constants specifying operating system locations and formats for the Mesh.
     /// </summary>
     public class Constants {
+
 
         /// <summary>
         /// If true, use test mode locations.

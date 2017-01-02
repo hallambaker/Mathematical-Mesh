@@ -7,7 +7,7 @@
     <ProjectGuid>{574F9F99-A364-4225-B28E-1037A37703B4}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Goedel.Platform</RootNamespace>
+    <RootNamespace>Goedel.Platform.Windows</RootNamespace>
     <AssemblyName>Goedel.Platform.Windows</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

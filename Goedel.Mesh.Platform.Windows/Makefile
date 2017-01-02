@@ -110,14 +110,12 @@ export Custom_TrojanGTK_FLAG	?= /cs
 
 SourceFiles = \
      AppWindowsLiveMail.cs\
-     MeshGateway.cs\
      StorageLocations.cs\
      LiveMail.cs\
      MailClientCatalog.cs\
      Properties/AssemblyInfo.cs\
      RegisteredProfile.cs\
-     Registry.cs\
-     StoreProfiles.cs
+     Registry.cs
 
 LinkFiles = \
     $(LIBRARYBIN)/Goedel.Cryptography.dll\
@@ -128,10 +126,11 @@ LinkFiles = \
     $(LIBRARYBIN)/Goedel.Platform.Framework.dll\
     $(LIBRARYBIN)/Goedel.Protocol.dll\
     $(LIBRARYBIN)/Goedel.Utilities.dll\
+    $(TARGETBIN)/Goedel.Mesh.Platform.dll\
     $(TARGETBIN)/Goedel.Mesh.dll\
     $(TARGETBIN)/Goedel.Platform.Windows.dll
 
-LinkFilesComma = $(LIBRARYBIN)/Goedel.Cryptography.dll,$(LIBRARYBIN)/Goedel.Cryptography.Framework.dll,$(LIBRARYBIN)/Goedel.Cryptography.KeyFile.dll,$(LIBRARYBIN)/Goedel.IO.dll,$(LIBRARYBIN)/Goedel.Platform.dll,$(LIBRARYBIN)/Goedel.Platform.Framework.dll,$(LIBRARYBIN)/Goedel.Protocol.dll,$(LIBRARYBIN)/Goedel.Utilities.dll,$(TARGETBIN)/Goedel.Mesh.dll,$(TARGETBIN)/Goedel.Platform.Windows.dll
+LinkFilesComma = $(LIBRARYBIN)/Goedel.Cryptography.dll,$(LIBRARYBIN)/Goedel.Cryptography.Framework.dll,$(LIBRARYBIN)/Goedel.Cryptography.KeyFile.dll,$(LIBRARYBIN)/Goedel.IO.dll,$(LIBRARYBIN)/Goedel.Platform.dll,$(LIBRARYBIN)/Goedel.Platform.Framework.dll,$(LIBRARYBIN)/Goedel.Protocol.dll,$(LIBRARYBIN)/Goedel.Utilities.dll,$(TARGETBIN)/Goedel.Mesh.Platform.dll,$(TARGETBIN)/Goedel.Mesh.dll,$(TARGETBIN)/Goedel.Platform.Windows.dll
 
 
 NugetFiles = 
@@ -182,6 +181,9 @@ endif
 # Recursive make targets, do not execute if the variable NORECURSE is defined
 ifndef NORECURSE
 
+../Goedel.Mesh.Platform/$(TARGETBIN)/Goedel.Mesh.Platform.dll : recursive
+! $(MAKE) -C ../Goedel.Mesh.Platform
+
 ../Goedel.Mesh/$(TARGETBIN)/Goedel.Mesh.dll : recursive
 ! $(MAKE) -C ../Goedel.Mesh
 
@@ -189,6 +191,10 @@ ifndef NORECURSE
 ! $(MAKE) -C ../Goedel.Platform.Windows
 
 endif
+
+$(TARGETBIN)/Goedel.Mesh.Platform.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.Mesh.Platform.dll : ../Goedel.Mesh.Platform/$(TARGETBIN)/Goedel.Mesh.Platform.dll
+!  cp ../Goedel.Mesh.Platform/$(TARGETBIN)/Goedel.Mesh.Platform.dll $(TARGETBIN)/Goedel.Mesh.Platform.dll
 
 $(TARGETBIN)/Goedel.Mesh.dll :| $(TARGETBIN)
 $(TARGETBIN)/Goedel.Mesh.dll : ../Goedel.Mesh/$(TARGETBIN)/Goedel.Mesh.dll

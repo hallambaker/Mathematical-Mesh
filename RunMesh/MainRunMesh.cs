@@ -25,22 +25,21 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using Goedel.Mesh.Platform;
-
+using Goedel.Mesh.Platform.Windows;
 using Goedel.Cryptography;
 using Goedel.Cryptography.KeyFile;
 
 namespace Goedel.Mesh {
     class Program {
         static void Main(string[] args) {
-            //var MeshTest = new MeshTest();
-            //MeshTest.TestRegistry();
+            Goedel.Platform.Framework.Platform.Initialize();
+            Goedel.Cryptography.Framework.Cryptography.Initialize();
+            Goedel.Mesh.Platform.Windows.Platform.Initialize();
 
-            //new ParseSSH();
+            var MeshTest = new MeshTest();
+            MeshTest.Gateway();
 
 
-            var Listener = new HttpListener();
-            Listener.Prefixes.Add("http://host1.prismproof.org/.well-known/mmm/");
-            Listener.Start();
             }
         }
 
@@ -72,7 +71,7 @@ namespace Goedel.Mesh {
 
     partial class MeshTest {
         public static string UserName = "Alice";
-        public static string Service = "mesh.prismproof.org";
+        public static string Service = "prismproof.org";
 
         public readonly string AccountID = Account.ID(UserName, Service);
 
@@ -119,24 +118,48 @@ namespace Goedel.Mesh {
 
         public string Store = "Tmesh.jlog";
         public string Portal = "Tportal.jlog";
+
+        MeshCatalog MeshCatalog;
         public MeshTest() {
-            
+
+            MeshCatalog = new MeshCatalog();
+
+
+            }
+
+        /// <summary>
+        /// The Mesh gateway
+        /// </summary>
+        public void Gateway () {
+
+            var Registration = MeshCatalog.AddPersonal(AccountID, DeviceNew:true,
+                DeviceID: Device1, DeviceDescription: Device1Description);
+
+            var SignedPersonalProfile = Registration.Profile;
+            //var ProfileDevice = Registration.Device.UDF;
+            var PortalID = Registration.Portals.Default;
+
+            Console.WriteLine("Created new personal profile {0}", SignedPersonalProfile.UDF);
+            //Report("Device profile is {0}", ProfileDevice);
+            Console.WriteLine("Profile registered to {0}", PortalID);
             }
 
 
+
+
         public void TestRegistry() {
-            RegistrationMachine.Erase();
+            //RegistrationMachine.Erase();
 
-            var MeshAddress = "Testing@wherever";
+            //var MeshAddress = "Testing@wherever";
 
-            var Machine = RegistrationMachine.Current;
-            var NewProfileDevice = new SignedDeviceProfile("Test", "Test Device");
-            Machine.Add(NewProfileDevice);
+            //var Machine = RegistrationMachine.Current;
+            //var NewProfileDevice = new SignedDeviceProfile("Test", "Test Device");
+            //Machine.Add(NewProfileDevice);
 
-            var PersonalProfile = new PersonalProfile(NewProfileDevice);
-            var SignedPersonalProfile = PersonalProfile.Signed;
+            //var PersonalProfile = new PersonalProfile(NewProfileDevice);
+            //var SignedPersonalProfile = PersonalProfile.Signed;
 
-            Machine.Add(SignedPersonalProfile, MeshAddress);
+            //Machine.Add(SignedPersonalProfile, MeshAddress);
 
             }
 

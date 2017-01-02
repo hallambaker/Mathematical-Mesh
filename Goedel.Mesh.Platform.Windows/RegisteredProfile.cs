@@ -25,557 +25,132 @@ using System.Linq;
 using System.IO;
 using Goedel.Utilities;
 
-namespace Goedel.Mesh.Platform {
+namespace Goedel.Mesh.Platform.Windows {
 
-    /// <summary>
-    /// Describe the means by which a registration is made.
-    /// </summary>
-    public enum RegistrationType {
-        /// <summary>
-        /// Data is stored in a Windows registry key
-        /// </summary>
-        Registry,
+    public static class Platform {
 
-        /// <summary>
-        /// Data is stored in a file in the ~/.mmm directory.
-        /// </summary>
-        File,
-
-        /// <summary>
-        /// Data was previously registered but has been deleted.
-        /// </summary>
-        Removed
-        }
-
-    /// <summary>
-    /// Describes a registration
-    /// </summary>
-    public abstract partial class Registration {
-
-        /// <summary>
-        /// The profile fingerprint
-        /// </summary>
-        public abstract string UDF { get;}
-
-        /// <summary>
-        /// The location of the registration.
-        /// </summary>
-        public string Path { get; set; }
-
-        /// <summary>
-        /// The type of registration (i.e. Registry or file)
-        /// </summary>
-        public RegistrationType Type { get; set; }
-
-        /// <summary>
-        /// Fetch the latest version of the profile version
-        /// </summary>
-        public abstract void Refresh();
-
-        /// <summary>
-        /// Delete the associated profile from the registry
-        /// </summary>
-        public virtual void Delete() { }
-
-        /// <summary>
-        /// Update the associated profile in the registry
-        /// </summary>
-        public virtual void Update() { }
-
-        /// <summary>
-        /// Write data to the registry.
-        /// </summary>
-        public virtual void ToRegistry() {
-            throw new NYI("Write data to registry");
+        public static void Initialize () {
+            RegistrationMachineWindows.Initialize();
             }
 
         /// <summary>
-        /// Construct filename for a mesh file
+        /// Construct filename for a mesh personal profile
         /// </summary>
         /// <param name="Path">Path to write file to</param>
         /// <param name="Fingerprint">Fingerprint identifying data</param>
         /// <returns>The file name.</returns>
-        protected string Filename(string Path, string Fingerprint) {
-            return Path + "\\" + Fingerprint + ".mmm";
-            }
-        }
-
-
-    /// <summary>
-    /// Describes the registration of as profile on as machine. This includes
-    /// the fingerprint, the cached profile data and the list of portal entries
-    /// to which the profile is bound.
-    /// </summary>
-    public partial class RegistrationPersonal : Registration {
-
-
-
-        /// <summary>
-        /// The most recent cached profile data, if available.
-        /// </summary>
-        public SignedPersonalProfile Profile;
-
-        /// <summary>
-        /// The profile fingerprint
-        /// </summary>
-        public override string UDF { get { return Profile?.UDF;  } }
-
-
-        /// <summary>
-        /// Profiles associated with this account in chronological order.
-        /// </summary>
-        public SortedList<DateTime, SignedProfile> Profiles;
-
-
-        /// <summary>
-        /// Filename of the profile archive.
-        /// </summary>
-        public string Archive { get; set; }
-
-        /// <summary>
-        /// List of the accounts through which the profile is registered.
-        /// </summary>
-        public List<string> Portals { get; set; }
-
-        /// <summary>
-        /// Fetch the latest version of the profile version
-        /// </summary>
-        public override void Refresh() {
-            }
-
-
-        /// <summary>
-        /// Read a personal registration from a file
-        /// </summary>
-        /// <param name="UDF">File fingerprint</param>
-        /// <param name="File">Filename on local machine</param>
-        public RegistrationPersonal(string UDF, string File) {
-
-            Profile = SignedPersonalProfile.FromFile (UDF, File);
+        public static string FilePersonalProfile(string Fingerprint) {
+            return Constants.FileProfilesPersonal + "\\" + Fingerprint + ".mmmp";
             }
 
         /// <summary>
-        /// Register a personal profile in the Windows registry
+        /// Construct filename for a mesh personal profile
         /// </summary>
-        /// <param name="Profile">The personal profile</param>
-        /// <param name="Portals">The list of portals.</param>
-        public RegistrationPersonal(SignedPersonalProfile Profile, List<string> Portals) {
-            this.Profile = Profile;
-            this.Portals = Portals;
-            ToRegistry();
+        /// <param name="Path">Path to write file to</param>
+        /// <param name="Fingerprint">Fingerprint identifying data</param>
+        /// <returns>The file name.</returns>
+        public static string FileDeviceProfile(string Fingerprint) {
+            return Constants.FileProfilesDevice + "\\" + Fingerprint + ".mmmd";
             }
 
-
-        /// <summary>Update portal entries.</summary>
-        public override void Update() {
-
-            var PersonalProfile = Profile.Signed;
-            Profile = new SignedPersonalProfile (PersonalProfile);
-
-            ToRegistry();
-            }
-
-        /// <summary>Write values to registry</summary>
-        public override void ToRegistry() {
-            // This was going to be a call to a method off Registry but a compiler
-            // error stopped that.
-
-            //RegistryKeySet TheRegistryKeySet = null;
-            //var FileName = Register.MakeKeyset(Constants.RegistryPersonal,
-            //    Constants.FileProfiles, UDF, ref TheRegistryKeySet);
-            var KeyName = Constants.RegistryPersonal;
-
-            var Hive = Microsoft.Win32.Registry.CurrentUser;
-            //var Key = Hive.CreateSubKey(KeyName);
-            var FileName = Filename (Constants.FileProfilesPersonal, UDF);
-
-            Directory.CreateDirectory(Constants.FileProfilesPersonal);
-            var SubKeyName = KeyName + @"\" + UDF;
-            var SubKey = Hive.CreateSubKey(SubKeyName);
-
-            SubKey.SetValue("", FileName);
-            if (Portals != null) {
-                SubKey.SetValue("Portals", Portals.ToArray(), 
-                        Microsoft.Win32.RegistryValueKind.MultiString);
-                }
-            SubKey.SetValue("Archive", "TBS");
-            File.WriteAllText(FileName, Profile.ToString());
+        /// <summary>
+        /// Construct filename for a mesh personal profile
+        /// </summary>
+        /// <param name="Path">Path to write file to</param>
+        /// <param name="Fingerprint">Fingerprint identifying data</param>
+        /// <returns>The file name.</returns>
+        public static string FileApplicationlProfile(string Fingerprint) {
+            return Constants.FileProfilesApplication + "\\" + Fingerprint + ".mmma";
             }
 
         }
 
 
-    /// <summary>
-    /// Describes the registration of a device profile on a machine.
-    /// </summary>
-    public class RegistrationApplication : Registration {
-        SignedApplicationProfile _Profile;
-
-        /// <summary>
-        /// The Device profile
-        /// </summary>
-        public SignedApplicationProfile Profile {
-            get {
-                return _Profile;
-                }
-
-            set {
-                _Profile = value;
-                }
-            }
-
-        /// <summary>
-        /// The profile fingerprint
-        /// </summary>
-        public override string UDF { get { return Profile?.UDF; } }
-
-
-        /// <summary>
-        /// Fetch the latest version of the profile version
-        /// </summary>
-        public override void Refresh() {
-            }
-
-        /// <summary>
-        /// Register request to register an application.
-        /// </summary>
-        /// <param name="SignedApplicationProfile">The application profile</param>
-        public RegistrationApplication(SignedApplicationProfile SignedApplicationProfile) {
-            _Profile = SignedApplicationProfile;
-            ToRegistry();
-            }
-
-
-        /// <summary>
-        /// Read a personal registration from the local store
-        /// </summary>
-        /// <param name="UDF">File fingerprint</param>
-        public RegistrationApplication(string UDF) {
-            var File = Microsoft.Win32.Registry.GetValue(@"HKEY_CURRENT_USER\" 
-                        + Constants.RegistryApplication, UDF, null);
-            var FileName = File as string;
-            _Profile = SignedApplicationProfile.FromFile(UDF, FileName);
-            }
-
-        /// <summary>
-        /// Read a personal registration from a file
-        /// </summary>
-        /// <param name="UDF">File fingerprint</param>
-        /// <param name="File">Filename on local machine</param>
-        public RegistrationApplication(string UDF, string File) {
-
-
-            _Profile = SignedApplicationProfile.FromFile(UDF, File);
-            }
-
-        /// <summary>Update persistence store</summary>
-        public override void Update() {
-            ToRegistry();
-            }
-
-        /// <summary>Write to registry.</summary>
-        public override void ToRegistry() {
-            var Hive = Microsoft.Win32.Registry.CurrentUser;
-            var Key = Hive.CreateSubKey(Constants.RegistryApplication);
-            var FileName = Filename(Constants.FileProfilesApplication, UDF);
-
-            Directory.CreateDirectory(Constants.FileProfilesApplication);
-
-            Key.SetValue(UDF, FileName);
-
-            File.WriteAllText(FileName, Profile.ToString());
-
-
-            }
-        }
-
-    /// <summary>
-    /// Describes the registration of a device profile on a machine.
-    /// </summary>
-    public class RegistrationDevice : Registration {
-        SignedDeviceProfile _Device;
-
-        /// <summary>
-        /// The Device profile
-        /// </summary>
-        public SignedDeviceProfile Device {
-            get {
-                return _Device;
-                }
-
-            set {
-                _Device = value;
-                }
-            }
-
-        /// <summary>Return the fingerprint.</summary>
-        public override string UDF {
-            get { return Device?.UDF; }
-            }
-
-
-        /// <summary>
-        /// Fetch the latest version of the profile version
-        /// </summary>
-        public override void Refresh() {
-            }
-
-
-        /// <summary>
-        /// Read a personal registration from a file
-        /// </summary>
-        /// <param name="UDF">File fingerprint</param>
-        /// <param name="File">Filename on local machine</param>
-        public RegistrationDevice(string UDF, string File) {
-            _Device = SignedDeviceProfile.FromFile(UDF, File);
-            }
-
-
-        /// <summary>
-        /// Add the associated profile to the machine store.
-        /// </summary>
-        /// <param name="SignedDeviceProfile">The device profile</param>
-        public RegistrationDevice (SignedDeviceProfile SignedDeviceProfile) {
-            _Device = SignedDeviceProfile;
-            ToRegistry();
-            }
-
-        /// <summary>
-        /// Write values to registry.
-        /// </summary>
-        public override void ToRegistry() {
-            var Hive = Microsoft.Win32.Registry.CurrentUser;
-            var Key = Hive.CreateSubKey(Constants.RegistryDevice);
-            var FileName = Filename(Constants.FileProfilesDevice, UDF);
-
-            Directory.CreateDirectory(Constants.FileProfilesDevice);
-
-            Key.SetValue(UDF, FileName);
-
-            File.WriteAllText(FileName, Device.ToString());
-            }
-
-        /// <summary>Update values.</summary>
-        public override void Update() {
-            ToRegistry();
-            }
-
-        }
-
-    /// <summary>
-    /// Describes a set of registered profiles on a particular machine, usually the
-    /// current machine.
-    /// </summary>
-    public class RegistrationMachine : Registration {
-
-        static RegistrationMachine _Current;
+    public partial class RegistrationMachineWindows : RegistrationMachine {
 
         /// <summary>
         /// The a dictionary of personal profiles indexed by fingerprint.
         /// </summary>
-        public Dictionary<string, RegistrationPersonal> PersonalProfiles { get; set; }
+        public override Dictionary<string, RegistrationPersonal> PersonalProfiles {
+            get { return _PersonalProfiles; }
+            }
+        Dictionary<string, RegistrationPersonal> _PersonalProfiles;
 
         /// <summary>
         /// A dictionary of application profiles indexed by fingerprint.
         /// </summary>
-        public Dictionary<string, RegistrationApplication> ApplicationProfiles { get; set; }
-
+        public override Dictionary<string, RegistrationApplication> ApplicationProfiles {
+            get { return _ApplicationProfiles; }
+            }
+        Dictionary<string, RegistrationApplication> _ApplicationProfiles;
 
         /// <summary>
         /// A dictionary of default application profiles indexed by application identifier;
         /// </summary>
-        public Dictionary<string, string> ApplicationProfilesDefault { get; set; }
+        public override Dictionary<string, string> ApplicationProfilesDefault {
+            get { return _ApplicationProfilesDefault; }
+            }
+        Dictionary<string, string> _ApplicationProfilesDefault;
 
         /// <summary>
         /// A dictionary of device profiles indexed by fingerprint.
         /// </summary>
-        public Dictionary<string, RegistrationDevice> DeviceProfiles { get; set; }
-
-        /// <summary>The fingerprint of the device</summary>
-        public override string UDF {
-            get { return _Device?.UDF; }
+        public override Dictionary<string, RegistrationDevice> DeviceProfiles {
+            get { return _DeviceProfiles; }
             }
+        Dictionary<string, RegistrationDevice> _DeviceProfiles;
 
-        RegistrationPersonal _Personal;
-        RegistrationDevice _Device;
 
 
         /// <summary>
-        /// Add the associated profile to the machine store.
+        /// Register the delegates for handling Windows native registrations with
+        /// the Registration class stubs.
         /// </summary>
-        /// <param name="Registration">Profile to add.</param>
-        public void Add(Registration Registration) {
-            if (Registration as RegistrationApplication != null) {
-                Add(Registration as RegistrationApplication);
+        public static void Initialize() {
+            if (Current == null) {
+                Current = new RegistrationMachineWindows();
                 }
 
             }
 
         /// <summary>
-        /// Add the associated registration to the machine store.
+        /// Write out the configuration to the current machine.
         /// </summary>
-        /// <param name="Registration">Profile to add.</param> 
-        public void Add(RegistrationDevice Registration) {
-            if (!DeviceProfiles.ContainsKey(Registration.UDF)) {
-                DeviceProfiles.Add(Registration.UDF, Registration);
-                }
-            // If no existing default, register as the default
-            if (Device == null) {
-                Device = Registration;
-                }
+        public override void Write() {
 
             }
 
-        /// <summary>
-        /// Add the associated registration to the machine store.
-        /// </summary>
-        /// <param name="Registration">Profile to add.</param>
-        public void Add(RegistrationPersonal Registration) {
-            PersonalProfiles.Add(Registration.UDF, Registration);
-
-            // If no existing default, register as the default
-            if (Personal == null) {
-                Personal = Registration;
-                }
-
-            }
-
-
-        /// <summary>
-        /// Add the associated registration to the machine store.
-        /// </summary>
-        /// <param name="Registration">Profile to add.</param>
-        public void Add(RegistrationApplication Registration) {
-            ApplicationProfiles.Add(Registration.UDF, Registration);
-
-            //PersonalProfiles.Add(Registration.UDF, Registration);
-
-            //// If no existing default, register as the default
-            //if (Personal == null) {
-            //    Personal = Registration;
-            //    }
-
-            }
-
-
-        /// <summary>
-        /// Locate the specified application profile.
-        /// </summary>
-        /// <param name="Profile">Profile entry for requested application.</param>
-        /// <returns>The registration application.</returns>
-        public RegistrationApplication Get(ApplicationProfileEntry Profile) {
-            var Result = new RegistrationApplication(Profile.Identifier);
-
-            return Result;
-            }
-
-
-        /// <summary>
-        /// Add the associated profile to the machine store.
-        /// </summary>
-        /// <param name="SignedDeviceProfile">Profile to add.</param>
-        /// <returns>The registration created</returns>
-        public RegistrationDevice Add(SignedDeviceProfile SignedDeviceProfile) {
-            var Registration = new RegistrationDevice(SignedDeviceProfile);
-
-            Add(Registration);
-            return Registration;
-            }
-
-        /// <summary>
-        /// Add the associated profile to the machine store.
-        /// </summary>
-        /// <param name="SignedApplicationProfile">Profile to add.</param>
-        /// <returns>The registration created</returns>
-        public RegistrationApplication Add(SignedApplicationProfile SignedApplicationProfile) {
-            var Registration = new RegistrationApplication(SignedApplicationProfile);
-
-            Add(Registration);
-            return Registration;
-            }
-
-        /// <summary>
-        /// Add the associated profile to the machine store.
-        /// </summary>
-        /// <param name="PortalAddress">Portal to add profile to</param>
-        /// <param name="SignedPersonalProfile">Profile to add</param>
-        /// <returns>The registration created</returns>
-        public RegistrationPersonal Add(SignedPersonalProfile SignedPersonalProfile, string PortalAddress) {
-            var Registration = new RegistrationPersonal(SignedPersonalProfile, new List<string> { PortalAddress });
-            Add(Registration);
-            return Registration;
-            }
-
-
-        /// <summary>
-        /// The registration on the current machine. This will be read from either
-        /// the Windows registry (Windows) or the ~/.mmm directory (OSX, Linux).
-        /// </summary>
-        public static RegistrationMachine Current {
-            get {
-                if (_Current == null) {
-                    _Current = new RegistrationMachine();
-                    }
-                return _Current;
-                }
-            set {
-                Register.WriteKey(Constants.RegistryDevice, "", value.UDF);
-                }
-            }
-
-        /// <summary>
-        /// The default personal profile. Note that when setting the default
-        /// personal profile, only the fingerprint is stored.
-        /// </summary>
-        public RegistrationPersonal Personal {
-            get {
-                return _Personal;
-                }
-            set {
-                Register.WriteKey(Constants.RegistryPersonal, "", value.UDF);
-                }
-            }
-
-
-        /// <summary>
-        /// The list of all the available personal profiles
-        /// </summary>
-        public List<RegistrationPersonal> Personals {
-            get {
-                return PersonalProfiles.Values.ToList ();
-                }
-            }
-
-
-        /// <summary>
-        /// The list of all device profiles
-        /// </summary>
-        public List<RegistrationDevice> Devices {
-            get {
-                return DeviceProfiles.Values.ToList();
-                }
-            }
-
-        /// <summary>
-        /// The default device profile
-        /// </summary>
-        public RegistrationDevice Device {
-            get {
-                return _Device;
-                }
-            set {
-                _Device = value;
-                Register.WriteKey(Constants.RegistryDevice, "", _Device.UDF);
-                }
-            }
 
 
         /// <summary>
         /// Default constructor, get values from the current machine.
         /// </summary>
-        public RegistrationMachine() {
+        public RegistrationMachineWindows() {
             Fill();
             }
+
+        // The default profile
+        public override RegistrationPersonal Personal {
+            get { return _Personal; }
+            set {
+                var Value = value as RegistrationPersonalWindows;
+                _Personal = Value;
+                Value.MakeDefault();
+                }
+            }
+        RegistrationPersonal _Personal;
+
+        // The default device
+        public override RegistrationDevice Device {
+            get { return _Device; }
+            set {
+                var Value = value as RegistrationDeviceWindows;
+                _Device = Value;
+                Value.MakeDefault();
+                }
+            }
+        RegistrationDevice _Device;
+
 
 
         /// <summary>
@@ -583,10 +158,10 @@ namespace Goedel.Mesh.Platform {
         /// </summary>
         void Fill() {
 
-            PersonalProfiles = new Dictionary<string, RegistrationPersonal>();
-            ApplicationProfiles = new Dictionary<string, RegistrationApplication>();
-            ApplicationProfilesDefault = new Dictionary<string, string>();
-            DeviceProfiles = new Dictionary<string, RegistrationDevice>();
+            _PersonalProfiles = new Dictionary<string, RegistrationPersonal>();
+            _ApplicationProfiles = new Dictionary<string, RegistrationApplication>();
+            _ApplicationProfilesDefault = new Dictionary<string, string>();
+            _DeviceProfiles = new Dictionary<string, RegistrationDevice>();
 
             var ProfileKeys = Register.GetSubKeys(Constants.RegistryPersonal);
             var DeviceKeys = Register.GetKeys(Constants.RegistryDevice);
@@ -598,7 +173,8 @@ namespace Goedel.Mesh.Platform {
                 var Filename = KeySet.GetValueString("");
 
                 if (Filename != "") {
-                    var Profile = new RegistrationPersonal(KeySet.Key, Filename);
+                    var Portals = KeySet.GetValueMultiString("Portals");
+                    var Profile = new RegistrationPersonalWindows (KeySet.Key, Filename, Portals);
                     if (Profile != null) {
                         PersonalProfiles.Add(KeySet.Key, Profile);
 
@@ -606,12 +182,8 @@ namespace Goedel.Mesh.Platform {
                         var Archive = KeySet.GetValueString("Archive");
                         Profile.Archive = Archive;
 
-                        // add Portals
-                        var Portals = KeySet.GetValueMultiString("Portals");
-                        Profile.Portals = Portals?.ToList();
-
                         if (KeySet.Default) {
-                            _Personal = Profile;
+                            Personal = Profile;
                             }
                         }
                     }
@@ -619,7 +191,7 @@ namespace Goedel.Mesh.Platform {
 
             foreach (var Key in ApplicationKeys) {
                 if (Key.Key.Length > 10) {
-                    var Profile = new RegistrationApplication(Key.Key, Key.Value);
+                    var Profile = new RegistrationApplicationWindows(Key.Key, Key.Value);
                     if (Profile != null) {
                         ApplicationProfiles.Add(Key.Key, Profile);
                         }
@@ -632,7 +204,7 @@ namespace Goedel.Mesh.Platform {
 
             foreach (var Key in DeviceKeys) {
                 if (Key.Key != "") {
-                    var Profile = new RegistrationDevice(Key.Key, Key.Value);
+                    var Profile = new RegistrationDeviceWindows (Key.Key, Key.Value);
                     if (Profile != null) {
                         DeviceProfiles.Add(Key.Key, Profile);
                         }
@@ -643,7 +215,9 @@ namespace Goedel.Mesh.Platform {
                 }
 
             if (DefaultDevice != null) {
-                DeviceProfiles.TryGetValue(DefaultDevice, out _Device);
+                RegistrationDevice DeviceOut;
+                DeviceProfiles.TryGetValue(DefaultDevice, out DeviceOut);
+                Device = DeviceOut;
                 }
 
             return;
@@ -656,32 +230,12 @@ namespace Goedel.Mesh.Platform {
         public override void Refresh() {
             }
 
-        /// <summary>
-        /// Get a device registration by identifier
-        /// </summary>
-        /// <param name="ID">Registration to get</param>
-        /// <param name="Registration">The registration if found, null otherwise.</param>
-        /// <returns>True if found, false otherwise.</returns>
-        public bool GetID(string ID, out RegistrationDevice Registration) {
-            Registration = null;
-            return false;
-            }
 
-        /// <summary>
-        /// Get a device registration by fingerprint
-        /// </summary>
-        /// <param name="UDF">Registration to get</param>
-        /// <param name="Registration">The registration if found, null otherwise.</param>
-        /// <returns>True if found, false otherwise.</returns>
-        public bool GetUDF (string UDF, out RegistrationDevice Registration) {
-            Registration = null;
-            return false;
-            }
 
         /// <summary>Erase the profile and associated keys.</summary>
-        public static void Erase() {
-#pragma warning disable 162
-            if (!Constants.TestMode) {
+        public override void Erase() {
+
+            if (Constants.TestMode.False()) {
                 return; //
                 }
 
@@ -692,7 +246,7 @@ namespace Goedel.Mesh.Platform {
 
             Hive.DeleteSubKeyTree(Constants.RegistryRoot, false);
 
-#pragma warning restore 162
+
             }
 
 
@@ -714,6 +268,390 @@ namespace Goedel.Mesh.Platform {
                 }
 
             }
+        
+
+        /// <summary>
+        /// Add the associated profile to the machine store.
+        /// </summary>
+        /// <param name="SignedProfile">Profile to add.</param>
+        /// <returns>Registration for the created profile.</returns>
+        public override RegistrationDevice Add(SignedDeviceProfile SignedProfile) {
+            var Registration = new RegistrationDeviceWindows(SignedProfile);
+            DeviceProfiles.Add(SignedProfile.Identifier, Registration);
+            return Registration;
+            }
+
+        /// <summary>
+        /// Add the associated profile to the machine store.
+        /// </summary>
+        /// <param name="SignedProfile">Profile to add.</param>
+        /// <returns>Registration for the created profile.</returns>
+        public override RegistrationPersonal Add(SignedPersonalProfile SignedProfile) {
+            var Registration = new RegistrationPersonalWindows(SignedProfile);
+            PersonalProfiles.Add(SignedProfile.Identifier, Registration);
+            return Registration;
+            }
+
+
+
+        /// <summary>
+        /// Add the associated profile to the machine store.
+        /// </summary>
+        /// <param name="SignedProfile">Profile to add.</param>
+        /// <returns>Registration for the created profile.</returns>
+        public override RegistrationApplication Add(SignedApplicationProfile SignedProfile) {
+            var Registration = new RegistrationApplicationWindows(SignedProfile);
+            ApplicationProfiles.Add(SignedProfile.Identifier, Registration);
+            return Registration;
+            }
+
+        /// <summary>
+        /// Locate a device profile by identifier
+        /// </summary>
+        /// <param name="RegistrationDevice">The returned profile.</param>
+        /// <param name="ID">UDF fingerprint of the profile or short form ID</param>
+        /// <returns>True if the profile is found, otherwise false.</returns>
+        public override bool Find(string ID, out RegistrationDevice RegistrationDevice) {
+            RegistrationDevice = null;
+            return false;
+            }
+
+        /// <summary>
+        /// Locate a device profile by identifier
+        /// </summary>
+        /// <param name="RegistrationDevice">The returned profile.</param>
+        /// <param name="ID">UDF fingerprint of the profile or short form ID</param>
+        /// <returns>True if the profile is found, otherwise false.</returns>
+        public override bool Find(string ID, out RegistrationApplication RegistrationApplication) {
+            RegistrationApplication = null;
+            return false;
+            }
+
+        /// <summary>
+        /// Locate a device profile by identifier
+        /// </summary>
+        /// <param name="RegistrationDevice">The returned profile.</param>
+        /// <param name="ID">UDF fingerprint of the profile or short form ID</param>
+        /// <returns>True if the profile is found, otherwise false.</returns>
+        public override bool Find(string ID, out RegistrationPersonal RegistrationPersonal) {
+            RegistrationPersonal = null;
+            return false;
+            }
+
         }
+
+
+
+
+    /// <summary>
+    /// Describes the registration of as profile on as machine. This includes
+    /// the fingerprint, the cached profile data and the list of portal entries
+    /// to which the profile is bound.
+    /// </summary>
+    public partial class RegistrationPersonalWindows : RegistrationPersonal {
+
+
+        /// <summary>
+        /// The profile fingerprint
+        /// </summary>
+        public override string UDF { get { return Profile?.UDF;  } }
+
+
+        /// <summary>
+        /// Profiles associated with this account in chronological order.
+        /// </summary>
+        public override SortedList<DateTime, SignedProfile> Profiles { get; set; }
+
+
+        /// <summary>
+        /// List of the accounts through which the profile is registered.
+        /// </summary>
+        public override PortalCollection Portals { get; }
+
+        /// <summary>
+        /// Fetch the latest version of the profile version
+        /// </summary>
+        public override void Refresh() {
+            }
+
+        public string Archive { get; set; }
+
+        /// <summary>
+        /// Read a personal registration from a file
+        /// </summary>
+        /// <param name="UDF">File fingerprint</param>
+        /// <param name="File">Filename on local machine</param>
+        public RegistrationPersonalWindows(string UDF, string File, IEnumerable<string> Portals = null) {
+
+            Profile = SignedPersonalProfile.FromFile (UDF, File);
+            this.Portals = new PortalCollectionWindows(Portals);
+            }
+
+        /// <summary>
+        /// Register a personal profile in the Windows registry
+        /// </summary>
+        /// <param name="Profile">The personal profile</param>
+        /// <param name="Portals">The list of portals.</param>
+        public RegistrationPersonalWindows(SignedPersonalProfile Profile, IEnumerable<string> Portals = null) {
+            this.Profile = Profile;
+            this.Portals = new PortalCollectionWindows(Portals);
+            ToRegistry();
+            }
+
+
+        /// <summary>
+        /// Factory method to create from an identifier.
+        /// </summary>
+        /// <param name="UDF">Profile identifier, if null, the default profile is used.</param>
+        /// <param name="File">Filename, if null, a default filename is constructed from
+        /// the identifier.</param>
+        /// <returns>The registration object</returns>
+        public static  RegistrationPersonal Factory(string UDF = null, string File = null) {
+
+            return new RegistrationPersonalWindows(UDF, File);
+
+            }
+
+        /// <summary>
+        /// Factory method to create from a profile
+        /// </summary>
+        /// <param name="Profile">The profile to register</param>
+        /// <param name="Portals">The portals at which the profile is registered.</param>
+        /// <returns>The registration object</returns>
+        public static RegistrationPersonal Factory(
+                            SignedPersonalProfile Profile, List<string> Portals = null) {
+
+            return new RegistrationPersonalWindows(Profile, Portals);
+            }
+
+
+
+        /// <summary>Update portal entries.</summary>
+        public override void Update() {
+
+            var PersonalProfile = Profile.Signed;
+            Profile = new SignedPersonalProfile (PersonalProfile);
+
+            ToRegistry();
+            }
+
+        /// <summary>Write values to registry</summary>
+        public override void ToRegistry() {
+
+            var KeyName = Constants.RegistryPersonal;
+
+            var Hive = Microsoft.Win32.Registry.CurrentUser;
+            var FileName = Platform.FilePersonalProfile (UDF);
+
+            Directory.CreateDirectory(Constants.FileProfilesPersonal);
+            var SubKeyName = KeyName + @"\" + UDF;
+            var SubKey = Hive.CreateSubKey(SubKeyName);
+
+            SubKey.SetValue("", FileName);
+            if (Portals != null) {
+                SubKey.SetValue("Portals", Portals.ToArray(), 
+                        Microsoft.Win32.RegistryValueKind.MultiString);
+                }
+            SubKey.SetValue("Archive", "TBS");
+            File.WriteAllText(FileName, Profile.ToString());
+            }
+
+
+        public void MakeDefault() {
+            var Hive = Microsoft.Win32.Registry.CurrentUser;
+            var Key = Hive.CreateSubKey(Constants.RegistryPersonal);
+            Key.SetValue("", UDF);
+            }
+        }
+
+
+    /// <summary>
+    /// Manage a collection of portals
+    /// </summary>
+    public class PortalCollectionWindows : PortalCollection {
+
+        /// <summary>
+        /// Default constructor
+        /// </summary>
+        public PortalCollectionWindows (IEnumerable<string> Portals) : base (Portals) {
+
+            }
+        }
+
+
+    /// <summary>
+    /// Describes the registration of a device profile on a machine.
+    /// </summary>
+    public class RegistrationApplicationWindows : RegistrationApplication {
+
+
+        /// <summary>
+        /// Fetch the latest version of the profile version
+        /// </summary>
+        public override void Refresh() {
+            }
+
+        /// <summary>
+        /// Register request to register an application.
+        /// </summary>
+        /// <param name="SignedApplicationProfile">The application profile</param>
+        public RegistrationApplicationWindows(SignedApplicationProfile SignedApplicationProfile) {
+            Profile = SignedApplicationProfile;
+            ToRegistry();
+            }
+
+
+        /// <summary>
+        /// Read a personal registration from a file
+        /// </summary>
+        /// <param name="UDF">File fingerprint</param>
+        /// <param name="File">Filename on local machine</param>
+        public RegistrationApplicationWindows(string UDF=null, string File=null) {
+            if (File == null) {
+                var FileName = Microsoft.Win32.Registry.GetValue(@"HKEY_CURRENT_USER\"
+                            + Constants.RegistryApplication, UDF, null);
+                File = FileName as string;
+                }
+
+            Profile = SignedApplicationProfile.FromFile(UDF, File);
+            }
+
+
+        /// <summary>
+        /// Factory method to create from an identifier.
+        /// </summary>
+        /// <param name="UDF">Profile identifier, if null, the default profile is used.</param>
+        /// <param name="File">Filename, if null, a default filename is constructed from
+        /// the identifier.</param>
+        /// <returns>The registration object</returns>
+        public static RegistrationApplication Factory(string UDF = null, string File = null) {
+            return new RegistrationApplicationWindows(UDF, File);
+
+            }
+
+        /// <summary>
+        /// Factory method to create from a profile
+        /// </summary>
+        /// <param name="Profile">The profile to register</param>
+        /// <param name="Portals">The portals at which the profile is registered.</param>
+        /// <returns>The registration object</returns>
+        public static RegistrationApplication Factory(
+                            SignedApplicationProfile Profile) {
+            return new RegistrationApplicationWindows(Profile);
+            }
+
+
+
+        /// <summary>Update persistence store</summary>
+        public override void Update() {
+            ToRegistry();
+            }
+
+        /// <summary>Write to registry.</summary>
+        public override void ToRegistry() {
+            var Hive = Microsoft.Win32.Registry.CurrentUser;
+            var Key = Hive.CreateSubKey(Constants.RegistryApplication);
+            var FileName = Platform.FileApplicationlProfile(UDF);
+
+            Directory.CreateDirectory(Constants.FileProfilesApplication);
+
+            Key.SetValue(UDF, FileName);
+
+            File.WriteAllText(FileName, Profile.ToString());
+
+
+            }
+        }
+
+    /// <summary>
+    /// Describes the registration of a device profile on a machine.
+    /// </summary>
+    public class RegistrationDeviceWindows : RegistrationDevice {
+
+
+        /// <summary>Return the fingerprint.</summary>
+        public override string UDF {
+            get { return Profile?.UDF; }
+            }
+
+
+        /// <summary>
+        /// Fetch the latest version of the profile version
+        /// </summary>
+        public override void Refresh() {
+            }
+
+
+        /// <summary>
+        /// Read a personal registration from a file
+        /// </summary>
+        /// <param name="UDF">File fingerprint</param>
+        /// <param name="File">Filename on local machine</param>
+        public RegistrationDeviceWindows(string UDF = null, string File = null) {
+            Profile = SignedDeviceProfile.FromFile(UDF, File);
+            }
+
+
+        /// <summary>
+        /// Add the associated profile to the machine store.
+        /// </summary>
+        /// <param name="SignedDeviceProfile">The device profile</param>
+        public RegistrationDeviceWindows(SignedDeviceProfile SignedDeviceProfile) {
+            Profile = SignedDeviceProfile;
+            ToRegistry();
+            }
+
+        /// <summary>
+        /// Factory method to create from an identifier.
+        /// </summary>
+        /// <param name="UDF">Profile identifier, if null, the default profile is used.</param>
+        /// <param name="File">Filename, if null, a default filename is constructed from
+        /// the identifier.</param>
+        /// <returns>The registration object</returns>
+        public static RegistrationDevice Factory(string UDF = null, string File = null) {
+            return new RegistrationDeviceWindows(UDF, File);
+            }
+
+        /// <summary>
+        /// Factory method to create from a profile
+        /// </summary>
+        /// <param name="Profile">The profile to register</param>
+        /// <param name="Portals">The portals at which the profile is registered.</param>
+        /// <returns>The registration object</returns>
+        public static RegistrationDevice Factory(
+                            SignedDeviceProfile Profile) {
+            return new RegistrationDeviceWindows(Profile);
+            }
+
+
+        /// <summary>
+        /// Write values to registry.
+        /// </summary>
+        public override void ToRegistry() {
+            var Hive = Microsoft.Win32.Registry.CurrentUser;
+            var Key = Hive.CreateSubKey(Constants.RegistryDevice);
+            var FileName = Platform.FileDeviceProfile(UDF);
+
+            Directory.CreateDirectory(Constants.FileProfilesDevice);
+
+            Key.SetValue(UDF, FileName);
+
+            File.WriteAllText(FileName, Profile.ToString());
+            }
+
+
+        public void MakeDefault () {
+            var Hive = Microsoft.Win32.Registry.CurrentUser;
+            var Key = Hive.CreateSubKey(Constants.RegistryDevice);
+            Key.SetValue("", UDF);
+            }
+
+        /// <summary>Update values.</summary>
+        public override void Update() {
+            ToRegistry();
+            }
+
+        }
+
 
     }

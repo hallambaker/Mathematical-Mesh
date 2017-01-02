@@ -47,40 +47,52 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Goedel.Cryptography">
+    <Reference Include="Goedel.Cryptography, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Library\Goedel.Cryptography.dll</HintPath>
     </Reference>
-    <Reference Include="Goedel.Cryptography.Framework">
+    <Reference Include="Goedel.Cryptography.Framework, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Library\Goedel.Cryptography.Framework.dll</HintPath>
     </Reference>
-    <Reference Include="Goedel.IO, Version=1.0.6129.42745, Culture=neutral, PublicKeyToken=9ac84b9f2535680b, processorArchitecture=MSIL">
+    <Reference Include="Goedel.Cryptography.Jose, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Library\Goedel.IO.dll</HintPath>
+      <HintPath>..\..\..\Library\Goedel.Cryptography.Jose.dll</HintPath>
     </Reference>
-    <Reference Include="Goedel.Platform">
+    <Reference Include="Goedel.Cryptography.KeyFile">
+      <HintPath>..\..\..\Library\Goedel.Cryptography.KeyFile.dll</HintPath>
+    </Reference>
+    <Reference Include="Goedel.IO, Version=1.0.6176.29863, Culture=neutral, PublicKeyToken=9ac84b9f2535680b, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Library\Goedel.IO.dll</HintPath>
+    </Reference>
+    <Reference Include="Goedel.Platform, Version=1.0.6176.29864, Culture=neutral, PublicKeyToken=9ac84b9f2535680b, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Library\Goedel.Platform.dll</HintPath>
     </Reference>
-    <Reference Include="Goedel.Platform.Framework">
+    <Reference Include="Goedel.Platform.Framework, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Library\Goedel.Platform.Framework.dll</HintPath>
     </Reference>
-    <Reference Include="Goedel.Protocol, Version=1.0.6128.28622, Culture=neutral, PublicKeyToken=9ac84b9f2535680b, processorArchitecture=MSIL">
+    <Reference Include="Goedel.Protocol, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Library\Goedel.Protocol.dll</HintPath>
+      <HintPath>..\..\..\Library\Goedel.Protocol.dll</HintPath>
     </Reference>
     <Reference Include="Goedel.Protocol.Debug, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Library\Goedel.Protocol.Debug.dll</HintPath>
+      <HintPath>..\..\..\Library\Goedel.Protocol.Debug.dll</HintPath>
     </Reference>
-    <Reference Include="Goedel.Protocol.Framework">
+    <Reference Include="Goedel.Protocol.Framework, Version=1.0.6176.29866, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Library\Goedel.Protocol.Framework.dll</HintPath>
     </Reference>
     <Reference Include="Goedel.Registry, Version=1.0.5856.42846, Culture=neutral, PublicKeyToken=00ce4cbe0647f41a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Goedel.Registry.1.0.5856.42846\lib\net40\Goedel.Registry.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Goedel.Utilities, Version=1.0.6128.27490, Culture=neutral, PublicKeyToken=9ac84b9f2535680b, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Library\Goedel.Utilities.dll</HintPath>
+      <HintPath>..\..\..\Library\Goedel.Registry.dll</HintPath>
+    </Reference>
+    <Reference Include="Goedel.Utilities, Version=1.0.6136.1659, Culture=neutral, PublicKeyToken=9ac84b9f2535680b, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Library\Goedel.Utilities.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -153,6 +165,14 @@
       <Project>{a803fe85-50d9-4ccd-8ffc-f653a4bd73e3}</Project>
       <Name>Goedel.Mesh.Client</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Goedel.Mesh.Platform.Windows\Goedel.Mesh.Platform.Windows.csproj">
+      <Project>{c378c917-f41d-4388-b467-efd6677c4459}</Project>
+      <Name>Goedel.Mesh.Platform.Windows</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Goedel.Mesh.Platform\Goedel.Mesh.Platform.csproj">
+      <Project>{90e3d724-811e-41cb-ae8d-91fd0677187c}</Project>
+      <Name>Goedel.Mesh.Platform</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Goedel.Mesh.Server\Goedel.Mesh.Server.csproj">
       <Project>{f6343f1b-d03d-4965-9113-5120a8054e9e}</Project>
       <Name>Goedel.Mesh.Server</Name>
@@ -164,6 +184,10 @@
     <ProjectReference Include="..\..\Goedel.Persistence\Goedel.Persistence.csproj">
       <Project>{81e30b95-c59d-4a04-925e-85877fd37fdd}</Project>
       <Name>Goedel.Persistence</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Goedel.Platform.Windows\Goedel.Platform.Windows.csproj">
+      <Project>{574f9f99-a364-4225-b28e-1037a37703b4}</Project>
+      <Name>Goedel.Platform.Windows</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

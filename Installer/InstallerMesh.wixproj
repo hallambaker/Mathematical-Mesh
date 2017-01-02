@@ -33,9 +33,9 @@
     <Content Include="BannerTop.bmp" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\meshman\meshman.csproj">
-      <Name>meshman</Name>
-      <Project>{491511d6-d747-45e0-9382-61fcd89e1381}</Project>
+    <ProjectReference Include="..\meshman_windows\meshman_windows.csproj">
+      <Name>meshman_windows</Name>
+      <Project>{c99a9102-88f3-4e35-9590-d75e608094ff}</Project>
       <Private>True</Private>
       <DoNotHarvest>True</DoNotHarvest>
       <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>

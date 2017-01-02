@@ -179,6 +179,8 @@ all : RunMesh/$(TARGETBIN)/RunMesh.exe
 
 RunMesh/$(TARGETBIN)/RunMesh.exe : Goedel.Mesh.Platform.Windows/$(TARGETBIN)/Goedel.Mesh.Platform.Windows.dll
 
+RunMesh/$(TARGETBIN)/RunMesh.exe : Goedel.Mesh.Platform/$(TARGETBIN)/Goedel.Mesh.Platform.dll
+
 RunMesh/$(TARGETBIN)/RunMesh.exe : Goedel.Mesh/$(TARGETBIN)/Goedel.Mesh.dll
 
 RunMesh/$(TARGETBIN)/RunMesh.exe : Goedel.Mesh.Server/$(TARGETBIN)/Goedel.Mesh.Server.dll
@@ -239,6 +241,8 @@ Goedel.Platform.Windows/$(TARGETBIN)/Goedel.Platform.Windows.dll : always
 
 all : Goedel.Mesh.Platform.Windows/$(TARGETBIN)/Goedel.Mesh.Platform.Windows.dll
 
+Goedel.Mesh.Platform.Windows/$(TARGETBIN)/Goedel.Mesh.Platform.Windows.dll : Goedel.Mesh.Platform/$(TARGETBIN)/Goedel.Mesh.Platform.dll
+
 Goedel.Mesh.Platform.Windows/$(TARGETBIN)/Goedel.Mesh.Platform.Windows.dll : Goedel.Mesh/$(TARGETBIN)/Goedel.Mesh.dll
 
 Goedel.Mesh.Platform.Windows/$(TARGETBIN)/Goedel.Mesh.Platform.Windows.dll : Goedel.Platform.Windows/$(TARGETBIN)/Goedel.Platform.Windows.dll
@@ -249,28 +253,6 @@ Goedel.Mesh.Platform.Windows/$(TARGETBIN)/Goedel.Mesh.Platform.Windows.dll : alw
 ! echo "*** Directory Goedel.Mesh.Platform.Windows" >&2
 ! make NORECURSE=true -C Goedel.Mesh.Platform.Windows
 
-# Project : meshman.exe
-# Item :  meshman
-# Output :     meshman/$(TARGETEXE)/meshman.exe
-
-all : meshman/$(TARGETBIN)/meshman.exe
-
-meshman/$(TARGETBIN)/meshman.exe : Goedel.Mesh.Client/$(TARGETBIN)/Goedel.Mesh.Client.dll
-
-meshman/$(TARGETBIN)/meshman.exe : Goedel.Mesh.Server/$(TARGETBIN)/Goedel.Mesh.Server.dll
-
-meshman/$(TARGETBIN)/meshman.exe : Goedel.Mesh.Platform.Windows/$(TARGETBIN)/Goedel.Mesh.Platform.Windows.dll
-
-meshman/$(TARGETBIN)/meshman.exe : Goedel.Mesh/$(TARGETBIN)/Goedel.Mesh.dll
-
-meshman/$(TARGETBIN)/meshman.exe : Goedel.Persistence/$(TARGETBIN)/Goedel.Persistence.dll
-
-
-meshman/$(TARGETBIN)/meshman.exe : always
-! echo "" >&2
-! echo "*** Directory meshman" >&2
-! make NORECURSE=true -C meshman
-
 # Project : InternetDrafts.exe
 # Item :  Documentation/Specification
 # Output :     Documentation/Specification/$(TARGETEXE)/InternetDrafts.exe
@@ -279,17 +261,139 @@ all : Documentation/Specification/$(TARGETBIN)/InternetDrafts.exe
 
 Documentation/Specification/$(TARGETBIN)/InternetDrafts.exe : Goedel.Mesh.Client/$(TARGETBIN)/Goedel.Mesh.Client.dll
 
+Documentation/Specification/$(TARGETBIN)/InternetDrafts.exe : Goedel.Mesh.Platform.Windows/$(TARGETBIN)/Goedel.Mesh.Platform.Windows.dll
+
+Documentation/Specification/$(TARGETBIN)/InternetDrafts.exe : Goedel.Mesh.Platform/$(TARGETBIN)/Goedel.Mesh.Platform.dll
+
 Documentation/Specification/$(TARGETBIN)/InternetDrafts.exe : Goedel.Mesh.Server/$(TARGETBIN)/Goedel.Mesh.Server.dll
 
 Documentation/Specification/$(TARGETBIN)/InternetDrafts.exe : Goedel.Mesh/$(TARGETBIN)/Goedel.Mesh.dll
 
 Documentation/Specification/$(TARGETBIN)/InternetDrafts.exe : Goedel.Persistence/$(TARGETBIN)/Goedel.Persistence.dll
 
+Documentation/Specification/$(TARGETBIN)/InternetDrafts.exe : Goedel.Platform.Windows/$(TARGETBIN)/Goedel.Platform.Windows.dll
+
 
 Documentation/Specification/$(TARGETBIN)/InternetDrafts.exe : always
 ! echo "" >&2
 ! echo "*** Directory Documentation/Specification" >&2
 ! make NORECURSE=true -C Documentation/Specification
+
+# Project : Goedel.Mesh.Shell.MeshMan.dll
+# Item :  Goedel.Mesh.Shell.MeshMan
+# Output :     Goedel.Mesh.Shell.MeshMan/$(TARGETBIN)/Goedel.Mesh.Shell.MeshMan.dll
+
+all : Goedel.Mesh.Shell.MeshMan/$(TARGETBIN)/Goedel.Mesh.Shell.MeshMan.dll
+
+Goedel.Mesh.Shell.MeshMan/$(TARGETBIN)/Goedel.Mesh.Shell.MeshMan.dll : Goedel.Mesh.Client/$(TARGETBIN)/Goedel.Mesh.Client.dll
+
+Goedel.Mesh.Shell.MeshMan/$(TARGETBIN)/Goedel.Mesh.Shell.MeshMan.dll : Goedel.Mesh.Platform/$(TARGETBIN)/Goedel.Mesh.Platform.dll
+
+Goedel.Mesh.Shell.MeshMan/$(TARGETBIN)/Goedel.Mesh.Shell.MeshMan.dll : Goedel.Mesh.Server/$(TARGETBIN)/Goedel.Mesh.Server.dll
+
+Goedel.Mesh.Shell.MeshMan/$(TARGETBIN)/Goedel.Mesh.Shell.MeshMan.dll : Goedel.Mesh/$(TARGETBIN)/Goedel.Mesh.dll
+
+Goedel.Mesh.Shell.MeshMan/$(TARGETBIN)/Goedel.Mesh.Shell.MeshMan.dll : Goedel.Persistence/$(TARGETBIN)/Goedel.Persistence.dll
+
+
+Goedel.Mesh.Shell.MeshMan/$(TARGETBIN)/Goedel.Mesh.Shell.MeshMan.dll : always
+! echo "" >&2
+! echo "*** Directory Goedel.Mesh.Shell.MeshMan" >&2
+! make NORECURSE=true -C Goedel.Mesh.Shell.MeshMan
+
+# Project : Goedel.Mesh.Platform.dll
+# Item :  Goedel.Mesh.Platform
+# Output :     Goedel.Mesh.Platform/$(TARGETBIN)/Goedel.Mesh.Platform.dll
+
+all : Goedel.Mesh.Platform/$(TARGETBIN)/Goedel.Mesh.Platform.dll
+
+Goedel.Mesh.Platform/$(TARGETBIN)/Goedel.Mesh.Platform.dll : Goedel.Mesh.Server/$(TARGETBIN)/Goedel.Mesh.Server.dll
+
+Goedel.Mesh.Platform/$(TARGETBIN)/Goedel.Mesh.Platform.dll : Goedel.Mesh/$(TARGETBIN)/Goedel.Mesh.dll
+
+
+Goedel.Mesh.Platform/$(TARGETBIN)/Goedel.Mesh.Platform.dll : always
+! echo "" >&2
+! echo "*** Directory Goedel.Mesh.Platform" >&2
+! make NORECURSE=true -C Goedel.Mesh.Platform
+
+# Project : meshman_windows.exe
+# Item :  meshman_windows
+# Output :     meshman_windows/$(TARGETEXE)/meshman_windows.exe
+
+all : meshman_windows/$(TARGETBIN)/meshman_windows.exe
+
+meshman_windows/$(TARGETBIN)/meshman_windows.exe : Goedel.Mesh.Client/$(TARGETBIN)/Goedel.Mesh.Client.dll
+
+meshman_windows/$(TARGETBIN)/meshman_windows.exe : Goedel.Mesh.Platform.Windows/$(TARGETBIN)/Goedel.Mesh.Platform.Windows.dll
+
+meshman_windows/$(TARGETBIN)/meshman_windows.exe : Goedel.Mesh.Platform/$(TARGETBIN)/Goedel.Mesh.Platform.dll
+
+meshman_windows/$(TARGETBIN)/meshman_windows.exe : Goedel.Mesh.Server/$(TARGETBIN)/Goedel.Mesh.Server.dll
+
+meshman_windows/$(TARGETBIN)/meshman_windows.exe : Goedel.Mesh.Shell.MeshMan/$(TARGETBIN)/Goedel.Mesh.Shell.MeshMan.dll
+
+meshman_windows/$(TARGETBIN)/meshman_windows.exe : Goedel.Mesh/$(TARGETBIN)/Goedel.Mesh.dll
+
+meshman_windows/$(TARGETBIN)/meshman_windows.exe : Goedel.Persistence/$(TARGETBIN)/Goedel.Persistence.dll
+
+
+meshman_windows/$(TARGETBIN)/meshman_windows.exe : always
+! echo "" >&2
+! echo "*** Directory meshman_windows" >&2
+! make NORECURSE=true -C meshman_windows
+
+# Project : meshman_windows.exe
+# Item :  meshman_linux
+# Output :     meshman_linux/$(TARGETEXE)/meshman_windows.exe
+
+all : meshman_linux/$(TARGETBIN)/meshman_windows.exe
+
+meshman_linux/$(TARGETBIN)/meshman_windows.exe : Goedel.Mesh.Client/$(TARGETBIN)/Goedel.Mesh.Client.dll
+
+meshman_linux/$(TARGETBIN)/meshman_windows.exe : Goedel.Mesh.Platform.Windows/$(TARGETBIN)/Goedel.Mesh.Platform.Windows.dll
+
+meshman_linux/$(TARGETBIN)/meshman_windows.exe : Goedel.Mesh.Platform/$(TARGETBIN)/Goedel.Mesh.Platform.dll
+
+meshman_linux/$(TARGETBIN)/meshman_windows.exe : Goedel.Mesh.Server/$(TARGETBIN)/Goedel.Mesh.Server.dll
+
+meshman_linux/$(TARGETBIN)/meshman_windows.exe : Goedel.Mesh.Shell.MeshMan/$(TARGETBIN)/Goedel.Mesh.Shell.MeshMan.dll
+
+meshman_linux/$(TARGETBIN)/meshman_windows.exe : Goedel.Mesh/$(TARGETBIN)/Goedel.Mesh.dll
+
+meshman_linux/$(TARGETBIN)/meshman_windows.exe : Goedel.Persistence/$(TARGETBIN)/Goedel.Persistence.dll
+
+
+meshman_linux/$(TARGETBIN)/meshman_windows.exe : always
+! echo "" >&2
+! echo "*** Directory meshman_linux" >&2
+! make NORECURSE=true -C meshman_linux
+
+# Project : meshman_windows.exe
+# Item :  meshman_osx
+# Output :     meshman_osx/$(TARGETEXE)/meshman_windows.exe
+
+all : meshman_osx/$(TARGETBIN)/meshman_windows.exe
+
+meshman_osx/$(TARGETBIN)/meshman_windows.exe : Goedel.Mesh.Client/$(TARGETBIN)/Goedel.Mesh.Client.dll
+
+meshman_osx/$(TARGETBIN)/meshman_windows.exe : Goedel.Mesh.Platform.Windows/$(TARGETBIN)/Goedel.Mesh.Platform.Windows.dll
+
+meshman_osx/$(TARGETBIN)/meshman_windows.exe : Goedel.Mesh.Platform/$(TARGETBIN)/Goedel.Mesh.Platform.dll
+
+meshman_osx/$(TARGETBIN)/meshman_windows.exe : Goedel.Mesh.Server/$(TARGETBIN)/Goedel.Mesh.Server.dll
+
+meshman_osx/$(TARGETBIN)/meshman_windows.exe : Goedel.Mesh.Shell.MeshMan/$(TARGETBIN)/Goedel.Mesh.Shell.MeshMan.dll
+
+meshman_osx/$(TARGETBIN)/meshman_windows.exe : Goedel.Mesh/$(TARGETBIN)/Goedel.Mesh.dll
+
+meshman_osx/$(TARGETBIN)/meshman_windows.exe : Goedel.Persistence/$(TARGETBIN)/Goedel.Persistence.dll
+
+
+meshman_osx/$(TARGETBIN)/meshman_windows.exe : always
+! echo "" >&2
+! echo "*** Directory meshman_osx" >&2
+! make NORECURSE=true -C meshman_osx
 
 
 
@@ -304,8 +408,12 @@ clean :
 ! make clean NORECURSE=true -C Goedel.Mesh.Client
 ! make clean NORECURSE=true -C Goedel.Platform.Windows
 ! make clean NORECURSE=true -C Goedel.Mesh.Platform.Windows
-! make clean NORECURSE=true -C meshman
 ! make clean NORECURSE=true -C Documentation/Specification
+! make clean NORECURSE=true -C Goedel.Mesh.Shell.MeshMan
+! make clean NORECURSE=true -C Goedel.Mesh.Platform
+! make clean NORECURSE=true -C meshman_windows
+! make clean NORECURSE=true -C meshman_linux
+! make clean NORECURSE=true -C meshman_osx
 
 # publish all projects
 publish : all
@@ -318,8 +426,12 @@ publish : all
 ! make publish NORECURSE=true -C Goedel.Mesh.Client
 ! make publish NORECURSE=true -C Goedel.Platform.Windows
 ! make publish NORECURSE=true -C Goedel.Mesh.Platform.Windows
-! make publish NORECURSE=true -C meshman
 ! make publish NORECURSE=true -C Documentation/Specification
+! make publish NORECURSE=true -C Goedel.Mesh.Shell.MeshMan
+! make publish NORECURSE=true -C Goedel.Mesh.Platform
+! make publish NORECURSE=true -C meshman_windows
+! make publish NORECURSE=true -C meshman_linux
+! make publish NORECURSE=true -C meshman_osx
 
 # install all projects
 install : all
@@ -332,6 +444,10 @@ install : all
 ! make install NORECURSE=true -C Goedel.Mesh.Client
 ! make install NORECURSE=true -C Goedel.Platform.Windows
 ! make install NORECURSE=true -C Goedel.Mesh.Platform.Windows
-! make install NORECURSE=true -C meshman
 ! make install NORECURSE=true -C Documentation/Specification
+! make install NORECURSE=true -C Goedel.Mesh.Shell.MeshMan
+! make install NORECURSE=true -C Goedel.Mesh.Platform
+! make install NORECURSE=true -C meshman_windows
+! make install NORECURSE=true -C meshman_linux
+! make install NORECURSE=true -C meshman_osx
 

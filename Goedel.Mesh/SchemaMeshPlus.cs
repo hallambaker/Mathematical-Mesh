@@ -36,7 +36,7 @@ namespace Goedel.Mesh {
             }
 
         /// <summary>
-        /// The set of keys under which the Entry is to be catalogued.
+        /// The set of keys under which the Entry is to be cataloged.
         /// </summary>
         public virtual List<IndexTerm> Keys {
             get { return new List<IndexTerm> (); }

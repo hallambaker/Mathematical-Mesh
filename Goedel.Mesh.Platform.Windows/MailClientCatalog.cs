@@ -23,7 +23,7 @@
 using System.Collections.Generic;
 using Goedel.Mesh;
 
-namespace Goedel.Mesh.Platform {
+namespace Goedel.Mesh.Platform.Windows {
 
     /// <summary>
     /// Base class for Mail Client integration classes.

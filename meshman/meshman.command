@@ -1,4 +1,5 @@
 ﻿Class Goedel.Mesh.MeshMan Shell
+	Library
 
 	Type NewFile			"file"
 	Type ExistingFile		"file"

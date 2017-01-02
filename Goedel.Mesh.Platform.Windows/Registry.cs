@@ -24,7 +24,7 @@ using System.IO;
 using System.Collections.Generic;
 
 
-namespace Goedel.Mesh.Platform {
+namespace Goedel.Mesh.Platform.Windows {
 
     /// <summary>
     /// Interface class to manage entries in the Windows Registry and file system. On

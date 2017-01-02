@@ -117,26 +117,29 @@ SourceFiles = \
 LinkFiles = \
     $(LIBRARYBIN)/Goedel.Cryptography.dll\
     $(LIBRARYBIN)/Goedel.Cryptography.Framework.dll\
+    $(LIBRARYBIN)/Goedel.Cryptography.Jose.dll\
+    $(LIBRARYBIN)/Goedel.Cryptography.KeyFile.dll\
     $(LIBRARYBIN)/Goedel.IO.dll\
     $(LIBRARYBIN)/Goedel.Platform.dll\
     $(LIBRARYBIN)/Goedel.Platform.Framework.dll\
     $(LIBRARYBIN)/Goedel.Protocol.dll\
     $(LIBRARYBIN)/Goedel.Protocol.Debug.dll\
     $(LIBRARYBIN)/Goedel.Protocol.Framework.dll\
+    $(LIBRARYBIN)/Goedel.Registry.dll\
     $(LIBRARYBIN)/Goedel.Utilities.dll\
     $(TARGETBIN)/Goedel.Mesh.Client.dll\
+    $(TARGETBIN)/Goedel.Mesh.Platform.Windows.dll\
+    $(TARGETBIN)/Goedel.Mesh.Platform.dll\
     $(TARGETBIN)/Goedel.Mesh.Server.dll\
     $(TARGETBIN)/Goedel.Mesh.dll\
-    $(TARGETBIN)/Goedel.Persistence.dll
+    $(TARGETBIN)/Goedel.Persistence.dll\
+    $(TARGETBIN)/Goedel.Platform.Windows.dll
 
-LinkFilesComma = $(LIBRARYBIN)/Goedel.Cryptography.dll,$(LIBRARYBIN)/Goedel.Cryptography.Framework.dll,$(LIBRARYBIN)/Goedel.IO.dll,$(LIBRARYBIN)/Goedel.Platform.dll,$(LIBRARYBIN)/Goedel.Platform.Framework.dll,$(LIBRARYBIN)/Goedel.Protocol.dll,$(LIBRARYBIN)/Goedel.Protocol.Debug.dll,$(LIBRARYBIN)/Goedel.Protocol.Framework.dll,$(LIBRARYBIN)/Goedel.Utilities.dll,$(TARGETBIN)/Goedel.Mesh.Client.dll,$(TARGETBIN)/Goedel.Mesh.Server.dll,$(TARGETBIN)/Goedel.Mesh.dll,$(TARGETBIN)/Goedel.Persistence.dll
-#  Nuget Goedel.Registry, Version=1.0.5856.42846, Culture=neutral, PublicKeyToken=00ce4cbe0647f41a, processorArchitecture=MSIL :  ..\packages\Goedel.Registry.1.0.5856.42846\lib\net40\Goedel.Registry.dll
+LinkFilesComma = $(LIBRARYBIN)/Goedel.Cryptography.dll,$(LIBRARYBIN)/Goedel.Cryptography.Framework.dll,$(LIBRARYBIN)/Goedel.Cryptography.Jose.dll,$(LIBRARYBIN)/Goedel.Cryptography.KeyFile.dll,$(LIBRARYBIN)/Goedel.IO.dll,$(LIBRARYBIN)/Goedel.Platform.dll,$(LIBRARYBIN)/Goedel.Platform.Framework.dll,$(LIBRARYBIN)/Goedel.Protocol.dll,$(LIBRARYBIN)/Goedel.Protocol.Debug.dll,$(LIBRARYBIN)/Goedel.Protocol.Framework.dll,$(LIBRARYBIN)/Goedel.Registry.dll,$(LIBRARYBIN)/Goedel.Utilities.dll,$(TARGETBIN)/Goedel.Mesh.Client.dll,$(TARGETBIN)/Goedel.Mesh.Platform.Windows.dll,$(TARGETBIN)/Goedel.Mesh.Platform.dll,$(TARGETBIN)/Goedel.Mesh.Server.dll,$(TARGETBIN)/Goedel.Mesh.dll,$(TARGETBIN)/Goedel.Persistence.dll,$(TARGETBIN)/Goedel.Platform.Windows.dll
 
 
-NugetFiles = \
-    ../packages/Goedel.Registry.1.0.5856.42846/lib/net40/Goedel.Registry.dll
-NugetFilesComa = \
-    ../packages/Goedel.Registry.1.0.5856.42846/lib/net40/Goedel.Registry.dll
+NugetFiles = 
+NugetFilesComa = 
 
 # A) Main target packaged
 $(TARGETEXE)/InternetDrafts :| $(TARGETEXE)
@@ -146,7 +149,7 @@ $(TARGETEXE)/InternetDrafts : $(TARGETBIN)/InternetDrafts.exe
 # B) Main target executable
 $(TARGETBIN)/InternetDrafts.exe :| $(TARGETBIN)
 $(TARGETBIN)/InternetDrafts.exe : $(SourceFiles) $(LinkFiles) $(NugetFiles)
-! $(CSHARPEXE) /out:$@  $(SourceFiles) -reference:$(LinkFilesComma) -r:$(NugetFilesComa) 
+! $(CSHARPEXE) /out:$@  $(SourceFiles) -reference:$(LinkFilesComma) 
 
 
 # Directories etc.
@@ -187,6 +190,12 @@ ifndef NORECURSE
 ../../Goedel.Mesh.Client/$(TARGETBIN)/Goedel.Mesh.Client.dll : recursive
 ! $(MAKE) -C ../../Goedel.Mesh.Client
 
+../../Goedel.Mesh.Platform.Windows/$(TARGETBIN)/Goedel.Mesh.Platform.Windows.dll : recursive
+! $(MAKE) -C ../../Goedel.Mesh.Platform.Windows
+
+../../Goedel.Mesh.Platform/$(TARGETBIN)/Goedel.Mesh.Platform.dll : recursive
+! $(MAKE) -C ../../Goedel.Mesh.Platform
+
 ../../Goedel.Mesh.Server/$(TARGETBIN)/Goedel.Mesh.Server.dll : recursive
 ! $(MAKE) -C ../../Goedel.Mesh.Server
 
@@ -196,11 +205,22 @@ ifndef NORECURSE
 ../../Goedel.Persistence/$(TARGETBIN)/Goedel.Persistence.dll : recursive
 ! $(MAKE) -C ../../Goedel.Persistence
 
+../../Goedel.Platform.Windows/$(TARGETBIN)/Goedel.Platform.Windows.dll : recursive
+! $(MAKE) -C ../../Goedel.Platform.Windows
+
 endif
 
 $(TARGETBIN)/Goedel.Mesh.Client.dll :| $(TARGETBIN)
 $(TARGETBIN)/Goedel.Mesh.Client.dll : ../../Goedel.Mesh.Client/$(TARGETBIN)/Goedel.Mesh.Client.dll
 !  cp ../../Goedel.Mesh.Client/$(TARGETBIN)/Goedel.Mesh.Client.dll $(TARGETBIN)/Goedel.Mesh.Client.dll
+
+$(TARGETBIN)/Goedel.Mesh.Platform.Windows.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.Mesh.Platform.Windows.dll : ../../Goedel.Mesh.Platform.Windows/$(TARGETBIN)/Goedel.Mesh.Platform.Windows.dll
+!  cp ../../Goedel.Mesh.Platform.Windows/$(TARGETBIN)/Goedel.Mesh.Platform.Windows.dll $(TARGETBIN)/Goedel.Mesh.Platform.Windows.dll
+
+$(TARGETBIN)/Goedel.Mesh.Platform.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.Mesh.Platform.dll : ../../Goedel.Mesh.Platform/$(TARGETBIN)/Goedel.Mesh.Platform.dll
+!  cp ../../Goedel.Mesh.Platform/$(TARGETBIN)/Goedel.Mesh.Platform.dll $(TARGETBIN)/Goedel.Mesh.Platform.dll
 
 $(TARGETBIN)/Goedel.Mesh.Server.dll :| $(TARGETBIN)
 $(TARGETBIN)/Goedel.Mesh.Server.dll : ../../Goedel.Mesh.Server/$(TARGETBIN)/Goedel.Mesh.Server.dll
@@ -214,12 +234,13 @@ $(TARGETBIN)/Goedel.Persistence.dll :| $(TARGETBIN)
 $(TARGETBIN)/Goedel.Persistence.dll : ../../Goedel.Persistence/$(TARGETBIN)/Goedel.Persistence.dll
 !  cp ../../Goedel.Persistence/$(TARGETBIN)/Goedel.Persistence.dll $(TARGETBIN)/Goedel.Persistence.dll
 
+$(TARGETBIN)/Goedel.Platform.Windows.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.Platform.Windows.dll : ../../Goedel.Platform.Windows/$(TARGETBIN)/Goedel.Platform.Windows.dll
+!  cp ../../Goedel.Platform.Windows/$(TARGETBIN)/Goedel.Platform.Windows.dll $(TARGETBIN)/Goedel.Platform.Windows.dll
+
 
 # Referenced Libraries
 #
-$(TARGETBIN)/Goedel.Registry.dll :| $(TARGETBIN)
-$(TARGETBIN)/Goedel.Registry.dll : ../packages/Goedel.Registry.1.0.5856.42846/lib/net40/Goedel.Registry.dll
-!  cp   ../packages/Goedel.Registry.1.0.5856.42846/lib/net40/Goedel.Registry.dll $(TARGETBIN)/Goedel.Registry.dll
 
 
 # Clean up

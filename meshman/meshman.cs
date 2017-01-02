@@ -33,7 +33,7 @@ namespace Goedel.Mesh.MeshMan {
             //    }
             }
 
-        static void Main(string[] args) {
+        static void MainMethod(string[] args) {
 
 			Shell Dispatch = new Shell ();
 

@@ -22,6 +22,7 @@ LinkFiles = \
     Goedel.Platform.Framework.dll\
     Goedel.Protocol.dll\
     Goedel.Utilities.dll\
+    Goedel.Mesh.Platform.dll\
     Goedel.Mesh.dll\
     Goedel.Platform.Windows.dll
 

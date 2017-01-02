@@ -211,7 +211,7 @@ namespace Goedel.Mesh {
         /// Return a MeshService object for the named portal service.
         /// </summary>
         /// <param name="Account">The account to get.</param>
-        /// <param name="Service">The service to get the service from.</param> 
+        /// <param name="Domain">The DNS name of the service to get the service from.</param> 
         /// <returns>The service instance</returns>
         public override MeshService GetService(string Domain, string Account) {
             //var URI = JPCProvider.WellKnownToURI(Service, MeshService.WellKnown, 

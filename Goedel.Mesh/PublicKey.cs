@@ -173,7 +173,9 @@ namespace Goedel.Mesh {
         /// </summary>
         public Certificate Certificate {
             get {
-                throw new NYI("RSA Key Pair Management");
+                Console.WriteLine("HI");
+                return null;
+                //throw new NYI("RSA Key Pair Management");
                 //if (_Certificate == null & X509Certificate != null) {
                 //    _Certificate = new Certificate(X509Certificate);
                 //    }
@@ -241,7 +243,7 @@ namespace Goedel.Mesh {
             PublicKey.KeyPair = KeyPair;
             
 
-            if (KeyPair.GetType() == typeof(RSAKeyPairBase)) {
+            if (KeyPair as RSAKeyPairBase != null) {
                 PublicKey.PublicParameters = new PublicKeyRSA(KeyPair as RSAKeyPairBase);
                 return PublicKey;
                }

@@ -216,6 +216,7 @@ namespace Goedel.Mesh {
                 using (var TextReader = FileReader.OpenTextReader()) {
                     var Reader = new JSONReader(TextReader);
                     var Result = SignedDeviceProfile.FromTagged(Reader);
+                    Result.UnpackAndVerify();
 
                     return Result;
                     }

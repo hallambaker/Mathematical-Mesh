@@ -86,7 +86,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppWindowsLiveMail.cs" />
-    <Compile Include="MeshGateway.cs" />
     <Compile Include="StorageLocations.cs" />
     <Compile Include="LiveMail.cs">
       <DependentUpon>LiveMail.RegistrySchema</DependentUpon>
@@ -97,7 +96,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RegisteredProfile.cs" />
     <Compile Include="Registry.cs" />
-    <Compile Include="StoreProfiles.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -108,6 +106,10 @@
     <None Include="ReadMe.md" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Goedel.Mesh.Platform\Goedel.Mesh.Platform.csproj">
+      <Project>{90e3d724-811e-41cb-ae8d-91fd0677187c}</Project>
+      <Name>Goedel.Mesh.Platform</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Goedel.Mesh\Goedel.Mesh.csproj">
       <Project>{0d8dd801-65d2-497c-8379-2d6adf3867c3}</Project>
       <Name>Goedel.Mesh</Name>

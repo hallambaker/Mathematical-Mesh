@@ -27,9 +27,10 @@ using System.Xml;
 using System.IO;
 using System.Text;
 using Microsoft.Win32;
+using Goedel.Mesh.Platform;
 using Goedel.Mesh.Integration.LiveMail;
 
-namespace Goedel.Mesh.Platform {
+namespace Goedel.Mesh.Platform.Windows {
 
     /// <summary>
     /// The collection of mail client entries from multiple applications.
