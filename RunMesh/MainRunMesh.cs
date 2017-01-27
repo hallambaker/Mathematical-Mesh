@@ -50,7 +50,7 @@ namespace Goedel.Mesh {
 
             //var KeyPair = KeyFile.DecodePEM("PrivateKey.OpenSSH");
 
-            KeyFile.DecodeAuthHost("authorized_keys.pub");
+            //KeyFile.DecodeAuthHost("authorized_keys.pub");
 
 
             //var NewKeyPair = new RSAKeyPair (2048, true);
@@ -175,10 +175,10 @@ namespace Goedel.Mesh {
             // Create Master Profile
 
             Mesh.CheckAccount(AccountID);
-            var DevProfile = new SignedDeviceProfile(Device1, Device1Description);
+            var DevProfile = new DeviceProfile(Device1, Device1Description);
             var UserProfile = new PersonalProfile(DevProfile);
 
-            var SignedProfile = UserProfile.Signed;
+            var SignedProfile = UserProfile.SignedPersonalProfile;
             Mesh.CreateAccount(UserName, SignedProfile);
 
             Mesh.GetAccount(UserName);
@@ -262,10 +262,10 @@ namespace Goedel.Mesh {
             Mesh = new Mesh(Service, Store, Portal);
             Mesh.CheckAccount(AccountID);
 
-            var DevProfile = new SignedDeviceProfile(Device1, Device1Description);
+            var DevProfile = new DeviceProfile(Device1, Device1Description);
             var UserProfile = new PersonalProfile(DevProfile);
 
-            var SignedProfile = UserProfile.Signed;
+            var SignedProfile = UserProfile.SignedPersonalProfile;
             Mesh.CreateAccount(UserName, SignedProfile);
 
             Mesh.GetAccount(UserName);
@@ -273,7 +273,7 @@ namespace Goedel.Mesh {
             var PasswordProfile = new PasswordProfile(true);
             var SignedPasswordProfile = PasswordProfile.Signed;
 
-            SignedProfile = UserProfile.Signed;
+            SignedProfile = UserProfile.SignedPersonalProfile;
             Mesh.AddProfile(SignedPasswordProfile);
             Mesh.UpdateProfile(SignedProfile);
 
@@ -292,10 +292,10 @@ namespace Goedel.Mesh {
 
             Mesh.CheckAccount(AccountID);
 
-            var DevProfile = new SignedDeviceProfile(Device1, Device1Description);
+            var DevProfile = new DeviceProfile(Device1, Device1Description);
             var UserProfile = new PersonalProfile(DevProfile);
 
-            var SignedProfile = UserProfile.Signed;
+            var SignedProfile = UserProfile.SignedPersonalProfile;
             Mesh.CreateAccount(AccountID, SignedProfile);
 
             // Add the device to the profile entry in the parent.
@@ -304,7 +304,7 @@ namespace Goedel.Mesh {
 
             var SignedPasswordProfile = PasswordProfile.Signed;
 
-            SignedProfile = UserProfile.Signed;
+            SignedProfile = UserProfile.SignedPersonalProfile;
             Mesh.AddProfile(SignedPasswordProfile); 
             Mesh.UpdateProfile(SignedProfile);
 
@@ -312,7 +312,7 @@ namespace Goedel.Mesh {
 
             var Account = Mesh.GetAccount(AccountID); 
             var AccountPersonalProfile = Mesh.GetPersonalProfile(Account.UserProfileUDF);
-            AccountPersonalProfile.SignedDeviceProfile = DevProfile;
+            AccountPersonalProfile.DeviceProfile = DevProfile;
 
             var PasswordEntry = AccountPersonalProfile.GetPasswordProfile();
             var SignedPasswordProfile2 = 

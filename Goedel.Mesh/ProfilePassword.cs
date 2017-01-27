@@ -156,7 +156,7 @@ namespace Goedel.Mesh {
         /// <returns>Inner PasswordProfile if the Signed Profile contains one,
         /// otherwise null.</returns>
         public static PasswordProfile Get(SignedProfile SignedProfile) {
-            return SignedProfile.Inner as PasswordProfile;
+            return SignedProfile.Profile as PasswordProfile;
             }
 
         /// <summary>
@@ -169,7 +169,7 @@ namespace Goedel.Mesh {
         /// otherwise null.</returns>
         public static PasswordProfile Get(SignedProfile SignedProfile,
                     PersonalProfile PersonalProfile) {
-            var Result = SignedProfile.Inner as PasswordProfile;
+            var Result = SignedProfile.Profile as PasswordProfile;
 
             Assert.NotNull(Result, NotValidProfile.Throw);
 

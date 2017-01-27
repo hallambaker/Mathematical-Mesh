@@ -87,6 +87,40 @@ namespace Goedel.Mesh {
         Unknown
         }
 
+    /// <summary>
+    /// Extension methods
+    /// </summary>
+    public static partial class Extension {
+
+        /// <summary>
+        /// Return the algorithm class of a key type
+        /// </summary>
+        /// <param name="KeyType">The Mesh key type</param>
+        /// <returns>The cryptographic algorithm type to use.</returns>
+        public static CryptoAlgorithmClass AlgorithmClass(this KeyType KeyType) {
+
+            switch (KeyType) {
+                case KeyType.PMSK:
+                case KeyType.POSK:
+                case KeyType.DSK:
+                case KeyType.ASK: {
+                    return CryptoAlgorithmClass.Signature;
+                    }
+                case KeyType.PMEK:
+                case KeyType.DEK:
+                case KeyType.AEK: {
+                    return CryptoAlgorithmClass.Exchange;
+                    }
+                case KeyType.DAK:
+                case KeyType.AAK: {
+                    return CryptoAlgorithmClass.Signature;
+                    }
+                }
+            return CryptoAlgorithmClass.NULL;
+            }
+
+        }
+
 
     public partial class PublicKey {
         /// <summary>
@@ -167,26 +201,23 @@ namespace Goedel.Mesh {
 
         private Certificate _Certificate;
 
+
+        // TODO: Fix this mess PKIX cert key handling
+
         /// <summary>
         /// The PKIX Certificate for the key (if it exists). This is the 
         /// deserialized version of X509Certificate.
         /// </summary>
         public Certificate Certificate {
             get {
-                Console.WriteLine("HI");
-                return null;
-                //throw new NYI("RSA Key Pair Management");
-                //if (_Certificate == null & X509Certificate != null) {
-                //    _Certificate = new Certificate(X509Certificate);
-                //    }
-                //return _Certificate;
+                if (_Certificate == null) {
+                    _Certificate = null; // NYI Parse X509Certificate to get Certificate 
+                    }
+                return _Certificate;
                 }
             set {
                 _Certificate = value;
-                if (_Certificate.Data != null) {
-                    X509Certificate = _Certificate.Data;
-                    }
-                KeyPair = Certificate.KeyPair;
+                X509Certificate = _Certificate.Data;
                 }
             }
 
@@ -235,20 +266,22 @@ namespace Goedel.Mesh {
         /// <returns>The generated key pair</returns>
         public static PublicKey Generate(KeyType KeyType, CryptoAlgorithmID CryptoAlgorithmID) {
 
-            var CryptoProvider = CryptoCatalog.Default.GetAsymmetric(CryptoAlgorithmID);
+            var KeyClass = KeyType.AlgorithmClass();
+            CryptoProviderAsymmetric CryptoProvider;
+            if (KeyClass == CryptoAlgorithmClass.Signature) {
+                CryptoProvider = CryptoCatalog.Default.GetSignature(CryptoAlgorithmID);
+                }
+            else {
+                CryptoProvider = CryptoCatalog.Default.GetExchange(CryptoAlgorithmID);
+                }
+
             CryptoProvider.Generate(GetKeySecurity(KeyType));
             var KeyPair = CryptoProvider.KeyPair;
 
             var PublicKey = new PublicKey();
             PublicKey.KeyPair = KeyPair;
-            
-
-            if (KeyPair as RSAKeyPairBase != null) {
-                PublicKey.PublicParameters = new PublicKeyRSA(KeyPair as RSAKeyPairBase);
-                return PublicKey;
-               }
-
-            throw new Exception("Not found");
+            PublicKey.PublicParameters = Key.GetPublic(KeyPair);
+            return PublicKey;
             }
 
         /// <summary>

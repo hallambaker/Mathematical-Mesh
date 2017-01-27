@@ -156,6 +156,7 @@
       <Generator>protogen</Generator>
       <LastGenOutput>Portal.cs</LastGenOutput>
     </None>
+    <None Include="Profiles.md" />
     <None Include="SchemaNetwork.protocol">
       <Generator>protogen</Generator>
       <LastGenOutput>SchemaNetwork.cs</LastGenOutput>

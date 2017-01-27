@@ -96,7 +96,7 @@ namespace DumpLog {
         public static void Dump(SignedPersonalProfile Item) {
             if (Item == null) return;
 
-            Dump (Item.Signed);
+            Dump (Item.PersonalProfile);
             }
 
         public static void Dump(PersonalProfile Item) {

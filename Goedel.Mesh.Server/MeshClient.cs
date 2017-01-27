@@ -102,7 +102,7 @@ namespace Goedel.Mesh {
         public PersonalProfile PersonalProfile {
             get {
                 if (SignedPersonalProfile == null) return null;
-                return SignedPersonalProfile.Signed;
+                return SignedPersonalProfile.PersonalProfile;
                 }
             }
 
@@ -117,7 +117,7 @@ namespace Goedel.Mesh {
 
             set {
                 if (PersonalProfile != null) {
-                    PersonalProfile.SignedDeviceProfile = value;
+                    PersonalProfile.DeviceProfile = value.DeviceProfile;
                     }
                 _SignedDeviceProfile = value;
                 }
@@ -260,7 +260,7 @@ namespace Goedel.Mesh {
             _SignedPersonalProfile = GetResponse.Entries[0] as SignedPersonalProfile;
 
             if (PersonalProfile != null) {
-                PersonalProfile.SignedDeviceProfile = SignedDeviceProfile;
+                PersonalProfile.DeviceProfile = SignedDeviceProfile.DeviceProfile;
                 }
             return _SignedPersonalProfile;
             }

@@ -47,10 +47,6 @@ namespace Goedel.Mesh.Platform.Windows {
             return;
             }
 
-
-
-
-
         /// <summary>
         /// Get the file name to read a file from the specified keyname and path.
         /// </summary>
@@ -60,7 +56,6 @@ namespace Goedel.Mesh.Platform.Windows {
         public static string ReadFile(string KeyName, string Path) {
             return ReadFile(KeyName, Path, null);
             }
-
 
         /// <summary>
         /// Get the file name to read a file from the specified keyname and path.
@@ -81,7 +76,6 @@ namespace Goedel.Mesh.Platform.Windows {
             var FileName = Key.GetValue(UDF) as string;
             return FileName;
             }
-
 
         /// <summary>
         /// Create registry entries for the specified parameters.
@@ -148,7 +142,6 @@ namespace Goedel.Mesh.Platform.Windows {
                     Result.Add(SubKey, Value as string);
                     }
                 }
-
             return Result;
             }
 
@@ -210,13 +203,16 @@ namespace Goedel.Mesh.Platform.Windows {
         /// <param name="Key">key to fetch</param>
         /// <returns>Array of strings</returns>
         public string[] GetValueMultiString (string Key) {
-            var RVK = RegistryKey.GetValueKind(Key);
-
-            if (RVK != Microsoft.Win32.RegistryValueKind.MultiString) {
+            try {
+                var RVK = RegistryKey.GetValueKind(Key);
+                if (RVK != Microsoft.Win32.RegistryValueKind.MultiString) {
+                    return null;
+                    }
+                return (string[])RegistryKey.GetValue(Key);
+                }
+            catch (IOException) {
                 return null;
                 }
-
-            return (string[]) RegistryKey.GetValue(Key);
             }
 
         /// <summary>
@@ -225,17 +221,20 @@ namespace Goedel.Mesh.Platform.Windows {
         /// <param name="Key">The key</param>
         /// <returns>A string value.</returns>
         public string GetValueString(string Key) {
-            var RVK = RegistryKey.GetValueKind(Key);
-
-            if (RVK != Microsoft.Win32.RegistryValueKind.String) {
+            try {
+                var RVK = RegistryKey.GetValueKind(Key);
+                if (RVK != Microsoft.Win32.RegistryValueKind.String) {
+                    return null;
+                    }
+                return (string)RegistryKey.GetValue(Key);
+                }
+            catch (IOException) {
                 return null;
                 }
-
-            return (string)RegistryKey.GetValue(Key);
             }
 
         /// <summary>
-        /// Write a string valye
+        /// Write a string value
         /// </summary>
         /// <param name="Key">The Key</param>
         /// <param name="Value">The value.</param>
@@ -244,7 +243,7 @@ namespace Goedel.Mesh.Platform.Windows {
             }
 
         /// <summary>
-        /// Write a multiple string valye
+        /// Write a multiple string value
         /// </summary>
         /// <param name="Key">The Key</param>
         /// <param name="Value">The value.</param>

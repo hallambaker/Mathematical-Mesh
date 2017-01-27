@@ -37,7 +37,7 @@ namespace Goedel.Mesh {
         /// <summary>
         /// The profile that was signed.
         /// </summary>
-        public virtual Profile Inner {
+        public virtual Profile Profile {
             get { return null; }
             }
 
@@ -45,21 +45,21 @@ namespace Goedel.Mesh {
         /// Pass the UDF identifier of the inner profile if it is defined.
         /// </summary>
         public virtual string UDF {
-            get { return Inner != null ? Inner.UDF : null; }
+            get { return Profile != null ? Profile.UDF : null; }
             }
 
         /// <summary>
         /// the list of index terms.
         /// </summary>
         public virtual List<IndexTerm> IndexTerms {
-            get { return Inner != null ? Inner.IndexTerms : null; }
+            get { return Profile != null ? Profile.IndexTerms : null; }
             }
 
         /// <summary>
         /// The unique identifier for the profile.
         /// </summary>
         public virtual string UniqueID {
-            get { return Inner != null ? Inner.UniqueID : null; }
+            get { return Profile != null ? Profile.UniqueID : null; }
             }
 
 
@@ -67,50 +67,41 @@ namespace Goedel.Mesh {
         /// Validate this profile to check that it is internally consistent.
         /// </summary>
         /// <returns>True if the profile passed validation, otherwise false.</returns>
-        public virtual bool Validate () {
+        public virtual bool Validate() {
 
-            throw new NYI ("Need to validate the profile");
+            throw new NYI("Need to validate the profile");
 
             }
 
-        }
+        /// <summary>
+        /// Deserialize the signed data.
+        /// </summary>
+        /// <returns>The device profile object.</returns>
+        public virtual Profile Unpack() {
+            throw new NYI("Need to unpack the profile");
+            }
 
+        }
 
     public partial class SignedDeviceProfile {
 
         /// <summary>
         /// The inner profile object.
         /// </summary>
-        public override Profile Inner {
-            get { return Data; }
+        public override Profile Profile {
+            get { return DeviceProfile; }
             }
-
-
-        static SignedDeviceProfile _Current = null;
-
-        /// <summary>
-        /// The default profile of the current device.
-        /// </summary>
-        public static SignedDeviceProfile Current {
-            get {
-                if (_Current == null) {
-                    Console.WriteLine("Current profile now has to be pulled explicitly.");
-                    //_Current = FromRegistry();
-                    }
-                return _Current;
-                }
-            set { _Current = value; }
-            }
-
-        DeviceProfile _Signed;
-
 
         /// <summary>
         /// Gets the inner signed data;
         /// </summary>
-        public DeviceProfile Data {
-            get { if (_Signed == null) _Signed = Unpack(); return _Signed; }
+        public DeviceProfile DeviceProfile {
+            get {
+                _Signed = _Signed ?? UnpackDeviceProfile();
+                return _Signed;
+                }
             }
+        DeviceProfile _Signed;
 
         /// <summary>
         /// Construct a signed profile from a device profile.
@@ -119,6 +110,17 @@ namespace Goedel.Mesh {
         public SignedDeviceProfile(DeviceProfile Data) {
             Sign(Data);
             }
+
+        /// <summary>
+        /// Create a new device profile
+        /// </summary>
+        /// <param name="Name">Name of the device</param>
+        /// <param name="Description">Description of the device.</param>
+        public SignedDeviceProfile(string Name, string Description) {
+            var Data = new DeviceProfile(Name, Description, SignedDeviceProfile: this);
+            Sign(Data);
+            }
+
 
         /// <summary>
         /// Sign the device profile.
@@ -135,35 +137,10 @@ namespace Goedel.Mesh {
         /// Deserialize the signed data.
         /// </summary>
         /// <returns>The device profile object.</returns>
-        public DeviceProfile Unpack() {
-            _Signed = null;
-
-            var Reader = JSONReader.OfData(SignedData.Payload);
-            var Profile = DeviceProfile.FromTagged(Reader);
-
-            Assert.True(Profile.DeviceSignatureKey.Verify(), KeyFingerprintMismatch.Throw);
-
-            var PublicKey = Profile.DeviceSignatureKey.KeyPair;
-            Assert.NotNull(PublicKey, PublicKeyNotFound.Throw);
-
-            Assert.True(SignedData.Verify(Profile.UDF, PublicKey), InvalidProfileSignature.Throw);
-
-
-            _Signed = Profile;
-            return _Signed;
+        public override Profile Unpack() {
+            return UnpackDeviceProfile();
             }
 
-        /// <summary>
-        /// Create a new device profile and persist it in the registry
-        /// as the default profile.
-        /// </summary>
-        /// <param name="Name">Name of the device</param>
-        /// <param name="Description">Description of the device.</param>
-        public SignedDeviceProfile(string Name, string Description) {
-            var Data = new DeviceProfile(Name, Description);
-            Sign(Data);
-            _Current = this;
-            }
 
 
         /// <summary>
@@ -171,20 +148,20 @@ namespace Goedel.Mesh {
         /// consistency. Check the signature.
         /// </summary>
         /// <returns>The inner profile (if valid) otherwise null.</returns>
-        public virtual DeviceProfile UnpackAndVerify() {
-            var Text = Encoding.UTF8.GetString(SignedData.Payload);
-            //Goedel.Debug.Trace.WriteLine("Data as signed {0}", Text);
+        public virtual DeviceProfile UnpackDeviceProfile() {
+            _Signed = null;
 
-            var Unpacked = DeviceProfile.FromTagged (Text);
+            var Profile = DeviceProfile.FromTagged(SignedData.Payload);
+            Assert.True(Profile.DeviceSignatureKey.Verify(), KeyFingerprintMismatch.Throw);
 
-            Unpacked.Unpack();
+            var PublicKey = Profile.DeviceSignatureKey.KeyPair;
+            Assert.NotNull(PublicKey, PublicKeyNotFound.Throw);
+            Assert.True(SignedData.Verify(Profile.UDF, PublicKey), InvalidProfileSignature.Throw);
 
-            var SigningKey = Unpacked.DeviceSignatureKey.KeyPair;
-            var Verify = SignedData.Verify(Unpacked.UDF, SigningKey);
-            Assert.True(Verify, InvalidProfileSignature.Throw);
+            Profile.SignedDeviceProfile = this;
 
-            _Signed = Unpacked;
-            return Unpacked;
+            _Signed = Profile;
+            return _Signed;
             }
 
         /// <summary>
@@ -195,8 +172,8 @@ namespace Goedel.Mesh {
         /// <returns>The profile of the device (if found) otherwise null.</returns>
         public static SignedDeviceProfile FindSignatureKey(List<SignedDeviceProfile> Devices, string UDF) {
             foreach (var Device in Devices) {
-                if (Device.Data.DeviceSignatureKey.UDF == UDF) {
-                    if (Device.Data.DeviceSignatureKey.Verify()) {
+                if (Device.DeviceProfile.DeviceSignatureKey.UDF == UDF) {
+                    if (Device.DeviceProfile.DeviceSignatureKey.Verify()) {
                         return Device;
                         }
                     }
@@ -216,13 +193,12 @@ namespace Goedel.Mesh {
                 using (var TextReader = FileReader.OpenTextReader()) {
                     var Reader = new JSONReader(TextReader);
                     var Result = SignedDeviceProfile.FromTagged(Reader);
-                    Result.UnpackAndVerify();
+                    Result.UnpackDeviceProfile();
 
                     return Result;
                     }
                 }
             }
-
 
         }
 
@@ -233,7 +209,7 @@ namespace Goedel.Mesh {
         /// <summary>
         /// The signed profile object.
         /// </summary>
-        public override Profile Inner {
+        public override Profile Profile {
             get { return Signed; }
             }
 
@@ -282,7 +258,7 @@ namespace Goedel.Mesh {
         /// <summary>
         /// The signed profile object.
         /// </summary>
-        public override Profile Inner {
+        public override Profile Profile {
             get { return Signed; }
             }
         /// <summary>
@@ -363,21 +339,23 @@ namespace Goedel.Mesh {
     /// Personal profile signed with a valid administration key
     /// </summary>
     public partial class SignedPersonalProfile {
-        PersonalProfile _Signed = null;
+
 
         /// <summary>
         /// The signed profile object.
         /// </summary>
-        public override Profile Inner {
+        public override Profile Profile {
             get { return _Signed; }
             }
 
         /// <summary>
         /// The signed profile object.
         /// </summary>
-        public PersonalProfile Signed {
+        public PersonalProfile PersonalProfile {
             get { if (_Signed == null) _Signed = UnpackAndVerify(); return _Signed; }
             }
+        PersonalProfile _Signed = null;
+
 
         /// <summary>
         /// Create from a current personal profile.
@@ -408,17 +386,21 @@ namespace Goedel.Mesh {
         /// <param name="FileName">The name of the file</param>
         /// <returns>The signed profile if found or null otherwise.</returns>
         public static SignedPersonalProfile FromFile(string UDF, string FileName) {
+            try {
+                using (var FileReader = FileName.OpenFileReadShared()) {
+                    using (var TextReader = FileReader.OpenTextReader()) {
+                        var Reader = new JSONReader(TextReader);
+                        var Result = SignedPersonalProfile.FromTagged(Reader);
 
-            using (var FileReader = FileName.OpenFileReadShared()) {
-                using (var TextReader = FileReader.OpenTextReader()) {
-                    var Reader = new JSONReader(TextReader);
-                    var Result = SignedPersonalProfile.FromTagged(Reader);
+                        var Test = Result.PersonalProfile.UDF;
+                        Goedel.Cryptography.UDF.Validate(UDF, Test);
 
-                    var Test = Result.Signed.UDF;
-                    Goedel.Cryptography.UDF.Validate(UDF, Test);
-
-                    return Result;
+                        return Result;
+                        }
                     }
+                }
+            catch {
+                return null;
                 }
             }
 

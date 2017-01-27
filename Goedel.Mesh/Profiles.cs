@@ -138,6 +138,15 @@ namespace Goedel.Mesh {
             // Do nothing.
             }
 
+
+        /// <summary>
+        /// Sign the current profile. 
+        /// </summary>
+        /// <param name="UDF">Specify the signature key by identifier</param>
+        /// <param name="KeyPair">Specify the signature key by key handle</param>
+        public virtual void Sign(string UDF=null,  KeyPair KeyPair = null) {
+            }
+
         }
 
 

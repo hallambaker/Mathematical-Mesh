@@ -34,6 +34,11 @@ namespace Goedel.Mesh {
     /// </summary>
     public partial class DeviceProfile : Profile {
 
+        /// <summary>
+        /// The signed device profile
+        /// </summary>
+        public SignedDeviceProfile SignedDeviceProfile { get; set; }
+
 
         /// <summary>
         /// The profile fingerprint value is the device signature key.
@@ -42,16 +47,6 @@ namespace Goedel.Mesh {
             get { return DeviceSignatureKey?.UDF; }
             }
 
-        /// <summary>
-        /// Construct profile for the specified device.
-        /// </summary>
-        /// <param name="Name">The name of the device within profiles.</param>
-        /// <param name="Description">Description of the device.</param>
-        public DeviceProfile(string Name, string Description) : this 
-              (Name, Description,
-                        CryptoCatalog.Default.AlgorithmSignature,
-                        CryptoCatalog.Default.AlgorithmExchange) {
-            }
 
         /// <summary>
         /// Construct profile for the specified device.
@@ -60,21 +55,36 @@ namespace Goedel.Mesh {
         /// <param name="Description">Description of the device.</param>
         /// <param name="SignatureAlgorithmID">The public key algorithm to use for signature keys.</param>
         /// <param name="ExchangeAlgorithmID">The public key algorithm to use for encryption keys.</param>
+        /// <param name="SignedDeviceProfile">The enclosing signed device profile</param>
         public DeviceProfile(string Name, string Description,
-                    CryptoAlgorithmID SignatureAlgorithmID, 
-                    CryptoAlgorithmID ExchangeAlgorithmID) {
+                    CryptoAlgorithmID SignatureAlgorithmID = CryptoAlgorithmID.Default, 
+                    CryptoAlgorithmID ExchangeAlgorithmID = CryptoAlgorithmID.Default,
+                    SignedDeviceProfile SignedDeviceProfile = null) {
+
             this.Names = new List<string>();
             this.Names.Add(Name);
             this.Description = Description;
 
             DeviceSignatureKey = PublicKey.Generate (KeyType.DSK, SignatureAlgorithmID);
-
-            DeviceAuthenticationKey = PublicKey.Generate(KeyType.DAK,
-                    SignatureAlgorithmID);
-
+            DeviceAuthenticationKey = PublicKey.Generate(KeyType.DAK, SignatureAlgorithmID);
             DeviceEncryptiontionKey = PublicKey.Generate(KeyType.DEK, ExchangeAlgorithmID);
 
             Identifier = DeviceSignatureKey.UDF;
+
+            Sign();
             }
+
+
+        /// <summary>
+        /// Sign the current profile. It is not necessary to specify the signature
+        /// key because the only valid signature key for a device profile is the
+        /// one identified by the UDF of the profile.
+        /// </summary>
+        /// <param name="UDF">Specify the signature key by identifier</param>
+        /// <param name="KeyPair">Specify the signature key by key handle</param>
+        public override void Sign(string UDF = null, KeyPair KeyPair = null) {
+            this.SignedDeviceProfile = new SignedDeviceProfile(this);
+            }
+
         }
     }

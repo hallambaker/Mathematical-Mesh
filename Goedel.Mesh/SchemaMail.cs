@@ -132,20 +132,12 @@ namespace Goedel.Mesh {
         ///The current OpenPGP encryption key
         /// </summary>
 
-		public virtual PublicKey						EncryptionPGP {
-			get {return _EncryptionPGP;}			
-			set {_EncryptionPGP = value;}
-			}
-		PublicKey						_EncryptionPGP ;
+		public virtual PublicKey						EncryptionPGP  {get; set;}
         /// <summary>
         ///The current S/MIME encryption key
         /// </summary>
 
-		public virtual PublicKey						EncryptionSMIME {
-			get {return _EncryptionSMIME;}			
-			set {_EncryptionSMIME = value;}
-			}
-		PublicKey						_EncryptionSMIME ;
+		public virtual PublicKey						EncryptionSMIME  {get; set;}
 
         /// <summary>
         /// Tag identifying this class.
@@ -294,8 +286,6 @@ namespace Goedel.Mesh {
 					}
 
 				default : {
-					//Ignore the unknown data
-                    //throw new Exception ("Not supported");
                     break;
 					}
 				}
@@ -348,82 +338,50 @@ namespace Goedel.Mesh {
         ///The RFC822 Email address. [e.g. "alice@example.com"]
         /// </summary>
 
-		public virtual string						EmailAddress {
-			get {return _EmailAddress;}			
-			set {_EmailAddress = value;}
-			}
-		string						_EmailAddress ;
+		public virtual string						EmailAddress  {get; set;}
         /// <summary>
         ///The RFC822 Reply toEmail address. [e.g. "alice@example.com"]
         ///When set, allows a sender to tell the receiver that replies to
         ///this account should be directed to this address.
         /// </summary>
 
-		public virtual string						ReplyToAddress {
-			get {return _ReplyToAddress;}			
-			set {_ReplyToAddress = value;}
-			}
-		string						_ReplyToAddress ;
+		public virtual string						ReplyToAddress  {get; set;}
         /// <summary>
         ///The Display Name. [e.g. "Alice Example"]
         /// </summary>
 
-		public virtual string						DisplayName {
-			get {return _DisplayName;}			
-			set {_DisplayName = value;}
-			}
-		string						_DisplayName ;
+		public virtual string						DisplayName  {get; set;}
         /// <summary>
         ///The Account Name for display to the app user [e.g. "Work Account"]
         /// </summary>
 
-		public virtual string						AccountName {
-			get {return _AccountName;}			
-			set {_AccountName = value;}
-			}
-		string						_AccountName ;
+		public virtual string						AccountName  {get; set;}
         /// <summary>
         ///The Inbound Mail Connection(s). This is typically IMAP4 or POP3
         ///If multiple connections are specified, the order in the sequence
         ///indicates the preference order.
         /// </summary>
 
-		public virtual List<Connection>				Inbound {
-			get {return _Inbound;}			
-			set {_Inbound = value;}
-			}
-		List<Connection>				_Inbound;
+		public virtual List<Connection>				Inbound  {get; set;}
         /// <summary>
         ///The Outbound Mail Connection(s). This is typically SMTP/SUBMIT
         ///If multiple connections are specified, the order in the sequence
         ///indicates the preference order.
         /// </summary>
 
-		public virtual List<Connection>				Outbound {
-			get {return _Outbound;}			
-			set {_Outbound = value;}
-			}
-		List<Connection>				_Outbound;
+		public virtual List<Connection>				Outbound  {get; set;}
         /// <summary>
         ///The public keypair(s) for signing and decrypting email.
         ///If multiple public keys are specified, the order indicates preference.
         /// </summary>
 
-		public virtual List<PublicKey>				Sign {
-			get {return _Sign;}			
-			set {_Sign = value;}
-			}
-		List<PublicKey>				_Sign;
+		public virtual List<PublicKey>				Sign  {get; set;}
         /// <summary>
         ///The public keypairs for encrypting and decrypting email.
         ///If multiple public keys are specified, the order indicates preference.	
         /// </summary>
 
-		public virtual List<PublicKey>				Encrypt {
-			get {return _Encrypt;}			
-			set {_Encrypt = value;}
-			}
-		List<PublicKey>				_Encrypt;
+		public virtual List<PublicKey>				Encrypt  {get; set;}
 
         /// <summary>
         /// Tag identifying this class.
@@ -649,8 +607,6 @@ namespace Goedel.Mesh {
 					}
 
 				default : {
-					//Ignore the unknown data
-                    //throw new Exception ("Not supported");
                     break;
 					}
 				}

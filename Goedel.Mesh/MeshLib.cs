@@ -208,8 +208,7 @@ namespace Goedel.Mesh {
             }
 
 
-        /// <summary>
-        /// Test to see if an account name is available. Note that 
+        /// <summary>Test to see if an account name is available. Note that 
         /// a subsequence CreateAccount request can fail even if a previous call 
         /// to CheckAccount succeeded as the account name may have been issued in the 
         /// interim or may fail for other reasons.
@@ -343,7 +342,7 @@ namespace Goedel.Mesh {
         /// <returns>The profile if found, otherwise null.</returns>
         public PersonalProfile GetPersonalProfile(string ID) {
             var Profile = GetSignedPersonalProfile(ID);
-            return Profile.Signed;
+            return Profile.PersonalProfile;
             }
 
         /// <summary>

@@ -141,12 +141,12 @@ namespace Goedel.Mesh {
             foreach (var Recipient in ApplicationProfileEntry.DecryptID) {
                 // extract the device profile from the personal profile
                 var SignedDeviceProfile = PersonalProfile.GetDeviceProfile(Recipient);
-                var DeviceProfile = SignedDeviceProfile.Data;
+                var DeviceProfile = SignedDeviceProfile.DeviceProfile;
                 var EncryptionKey = DeviceProfile.DeviceEncryptiontionKey;
 
                 // create a recipient entry
 
-                EncryptedData.Add(EncryptionKey.KeyPair);
+                EncryptedData.AddRecipient(EncryptionKey.KeyPair);
                 }
             //Trace.NYI("Add entry here for the escrow key for this application");
             }
@@ -158,7 +158,7 @@ namespace Goedel.Mesh {
         /// <returns>Decrypted bytes.</returns>
         public virtual byte[] DecryptPrivate() {
             var SignedDeviceProfile = PersonalProfile.SignedDeviceProfile;
-            var DeviceProfile = SignedDeviceProfile.Data;
+            var DeviceProfile = SignedDeviceProfile.DeviceProfile;
             var EncryptionKey = DeviceProfile.DeviceEncryptiontionKey;
 
             Assert.NotNull(ApplicationProfileEntry, MeshException.Throw);

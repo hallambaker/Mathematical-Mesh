@@ -498,7 +498,7 @@ namespace Goedel.Persistence {
 
 				default : {
 					//Ignore the unknown data
-                    //throw new Exception ("Not supported");
+                    //tthrow new Exception ("Not supported");
                     break;
 					}
 				}

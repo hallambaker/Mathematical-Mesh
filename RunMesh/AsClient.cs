@@ -25,6 +25,13 @@ using System.Collections.Generic;
 using System.IO;
 using Goedel.Protocol;
 
+// TODO: Create SSH key files
+// TODO: Create Mesh/Remesh key files
+// TODO: Create Escrow data
+// TODO: Recover escrow data
+// TODO: create SSH, SMIME escrow data
+// TODO: Recover SSH, SMIME escrow data
+
 
 namespace Goedel.Mesh {
 
@@ -56,9 +63,9 @@ namespace Goedel.Mesh {
                 Console.WriteLine("Validate failed");
                 }
 
-            var DevProfile = new SignedDeviceProfile(Device1, Device1Description);
+            var DevProfile = new DeviceProfile(Device1, Device1Description);
             var UserProfile = new PersonalProfile(DevProfile);
-            var SignedProfile = UserProfile.Signed;
+            var SignedProfile = UserProfile.SignedPersonalProfile;
 
             MeshClient1.CreatePersonalProfile(AccountID, SignedProfile);
 
@@ -72,7 +79,7 @@ namespace Goedel.Mesh {
 
 
             MeshClient2 = new MeshClient(Service, AccountID);
-            MeshClient2.SignedDeviceProfile = DevProfile;
+            MeshClient2.SignedDeviceProfile = DevProfile.SignedDeviceProfile;
             MeshClient2.GetPersonalProfile();
 
             // Read back the password profile and add entry 

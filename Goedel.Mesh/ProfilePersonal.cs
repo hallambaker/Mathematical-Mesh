@@ -37,76 +37,60 @@ namespace Goedel.Mesh {
 
     public partial class PersonalProfile  {
 
+
         /// <summary>
         /// The active device profile of the local machine that is attached to this
         /// profile.
         /// </summary>
-        public SignedDeviceProfile SignedDeviceProfile;
+        public DeviceProfile DeviceProfile { get; set; }
+
+        /// <summary>
+        /// The active device profile of the local machine that is attached to this
+        /// profile.
+        /// </summary>
+        public SignedDeviceProfile SignedDeviceProfile {
+            get { return DeviceProfile.SignedDeviceProfile; }
+            }
 
         /// <summary>
         /// Get UDF fingerprint of the profile.
         /// </summary>
-        public override string UDF { get { return _PersonalMasterProfile.Identifier; } }
+        public override string UDF {
+            get { return PersonalMasterProfile.Identifier; }
+            }
 
-        MasterProfile _PersonalMasterProfile;
 
         /// <summary>
         /// The corresponding signed profile.
         /// </summary>
-        public SignedPersonalProfile Signed {
-            get {
-                return new SignedPersonalProfile(this);
-                }
-            }
+        public SignedPersonalProfile SignedPersonalProfile { get; set; }
 
         /// <summary>
         /// The parsed master profile associated with this profile
         /// </summary>
-        public MasterProfile PersonalMasterProfile {
-            get { return _PersonalMasterProfile; }
-            }
-
-        /// <summary>
-        /// Create a personal profile including the associated master and administration
-        /// profiles.
-        /// </summary>
-        /// <param name="DeviceProfile">The device profile to be the initial 
-        /// administration device for the profile.</param>
-
-        public PersonalProfile(SignedDeviceProfile DeviceProfile) {
-            _PersonalMasterProfile = new MasterProfile(CryptoCatalog.Default);
-            SignedMasterProfile = new SignedMasterProfile(_PersonalMasterProfile);
-
-
-            // Set up the device and application profiles.
-            Initialize(_PersonalMasterProfile, DeviceProfile);
-            }
+        public MasterProfile PersonalMasterProfile { get; set; }
 
         /// <summary>
         /// Create a personal profile with the specified master and administration
         /// profiles.
         /// </summary>
-        /// <param name="PersonalMasterProfile">The master profile for this 
-        /// personal profile.</param>
         /// <param name="DeviceProfile">The device profile to be the initial 
         /// administration device for the profile.</param>
-        public PersonalProfile(MasterProfile PersonalMasterProfile,
-                    SignedDeviceProfile DeviceProfile) {
-            Initialize(PersonalMasterProfile, DeviceProfile);
-            }
+        /// <param name="MasterProfile">The master profile for this 
+        /// personal profile.</param>
+        public PersonalProfile(DeviceProfile DeviceProfile, MasterProfile MasterProfile = null) {
 
+            this.DeviceProfile = DeviceProfile ;
+            this.PersonalMasterProfile = MasterProfile ?? new MasterProfile(CryptoCatalog.Default);
 
-        private void Initialize (MasterProfile PersonalMasterProfile,
-                    SignedDeviceProfile DeviceProfile) {
-            SignedDeviceProfile = DeviceProfile;
-
-            Identifier = _PersonalMasterProfile.MasterSignatureKey.UDF;
-            Devices = new List<SignedDeviceProfile>();
-            Devices.Add(DeviceProfile);
+            Identifier = PersonalMasterProfile.MasterSignatureKey.UDF;
+            Devices = new List<SignedDeviceProfile>() { SignedDeviceProfile };
             Applications = new List<ApplicationProfileEntry>();
+
+            SignedPersonalProfile = new SignedPersonalProfile(this);
             }
 
-          
+         
         /// <summary>
         /// Find the Application Profile Entry that matches an identifier.
         /// </summary>
@@ -283,10 +267,10 @@ namespace Goedel.Mesh {
             //Throw.If(SignedAdministrationProfile == null, "No administration profile");
             Assert.NotNull(Devices == null, NoDeviceProfile.Throw);
 
-            _PersonalMasterProfile = SignedMasterProfile.UnpackAndVerify();
+            PersonalMasterProfile = SignedMasterProfile.UnpackAndVerify();
             //_AdministrationProfile = SignedAdministrationProfile.UnpackAndVerify();
             foreach (var Device in Devices) {
-                Device.UnpackAndVerify();
+                Device.UnpackDeviceProfile();
                 }
             }
 

@@ -61,13 +61,19 @@ namespace Goedel.Mesh {
             var Secret = new Secret(Encryptor.Size);
             _KeyShares = Secret.Split(Shares, Quorum);
 
-            //Trace.WriteHex("MasterKey", Secret.Key);
-            //foreach (var share in _KeyShares) {
-            //    Trace.WriteHex("Share", share.Key);
-            //    }
 
-            //Encryptor.Key = Secret.Key;
-            EncryptedData = new JoseWebEncryption (EscrowedKeySet.GetBytes(), Encryptor);
+            // TODO: Write encryptor that takes a secret as input.
+            // TODO: Use Key wrap
+            // TODO: Test recovery
+            // TODO: Encrypt Application encryption keys to master
+
+            ////Trace.WriteHex("MasterKey", Secret.Key);
+            ////foreach (var share in _KeyShares) {
+            ////    Trace.WriteHex("Share", share.Key);
+            ////    }
+
+            ////Encryptor.Key = Secret.Key;
+            //EncryptedData = new JoseWebEncryption (EscrowedKeySet.GetBytes(), Encryptor);
 
 
             Identifier = UDF.ToString (UDF.FromEscrowed(Secret.Key, 150));

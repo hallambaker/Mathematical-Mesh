@@ -384,6 +384,8 @@ namespace Goedel.Mesh.Platform.Windows {
         public RegistrationPersonalWindows(string UDF, string File, IEnumerable<string> Portals = null) {
 
             Profile = SignedPersonalProfile.FromFile (UDF, File);
+            if (Profile == null) { return; }   // TTHROW: Proper exception
+
             this.Portals = new PortalCollectionWindows(Portals);
             }
 
@@ -429,7 +431,7 @@ namespace Goedel.Mesh.Platform.Windows {
         /// <summary>Update portal entries.</summary>
         public override void Update() {
 
-            var PersonalProfile = Profile.Signed;
+            var PersonalProfile = Profile.PersonalProfile;
             Profile = new SignedPersonalProfile (PersonalProfile);
 
             ToRegistry();

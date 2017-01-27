@@ -93,7 +93,7 @@ namespace Goedel.Mesh {
         /// <returns>Inner PasswordProfile if the Signed Profile contains one,
         /// otherwise null.</returns>
         public static SSHProfile Get(SignedProfile SignedProfile) {
-            return SignedProfile.Inner as SSHProfile;
+            return SignedProfile.Profile as SSHProfile;
             }
 
         /// <summary>
@@ -106,7 +106,7 @@ namespace Goedel.Mesh {
         /// otherwise null.</returns>
         public static SSHProfile Get(SignedProfile SignedProfile,
                     PersonalProfile PersonalProfile) {
-            var Result = SignedProfile.Inner as SSHProfile;
+            var Result = SignedProfile.Profile as SSHProfile;
 
             Assert.NotNull(Result, NotValidProfile.Throw);
 

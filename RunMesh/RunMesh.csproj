@@ -77,7 +77,7 @@
     <Reference Include="Goedel.Protocol.Framework">
       <HintPath>..\..\Library\Goedel.Protocol.Framework.dll</HintPath>
     </Reference>
-    <Reference Include="Goedel.Registry, Version=1.0.5856.42846, Culture=neutral, PublicKeyToken=00ce4cbe0647f41a, processorArchitecture=MSIL">
+    <Reference Include="Goedel.Registry, Version=1.0.6219.21974, Culture=neutral, PublicKeyToken=9ac84b9f2535680b, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Library\Goedel.Registry.dll</HintPath>
     </Reference>
@@ -99,7 +99,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="packages.config" />
     <None Include="PostBuild.bat" />
     <None Include="RunMesh.licenseheader" />
     <None Include="Tmesh.jlog" />

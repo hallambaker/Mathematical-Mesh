@@ -118,7 +118,7 @@ namespace Goedel.Mesh {
         public SignedConnectionResult(ConnectionResult ConnectionResult,
                     KeyPair AdminKey) {
             var SignedDeviceProfile = ConnectionResult.Device;
-            var DeviceProfile = SignedDeviceProfile.Data;
+            var DeviceProfile = SignedDeviceProfile.DeviceProfile;
 
             Identifier = DeviceProfile.UDF;
             SignedData = new JoseWebSignature(ConnectionResult.GetBytes(), AdminKey);
@@ -159,7 +159,7 @@ namespace Goedel.Mesh {
         /// <param name="ConnectionRequest">Connection request to sign.</param>
         public SignedConnectionRequest (ConnectionRequest ConnectionRequest) {
             var SignedDeviceProfile = ConnectionRequest.Device;
-            var DeviceProfile = SignedDeviceProfile.Data;
+            var DeviceProfile = SignedDeviceProfile.DeviceProfile;
 
             Identifier = DeviceProfile.UDF;
 

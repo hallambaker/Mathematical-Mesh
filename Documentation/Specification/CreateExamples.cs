@@ -78,7 +78,7 @@ namespace ExampleGenerator {
             // Create master profile
 
             PersonalProfile = new PersonalProfile(SignedDeviceProfile1);
-            SignedPersonalProfile = PersonalProfile.Signed;
+            SignedPersonalProfile = PersonalProfile.SignedPersonalProfile;
             }
 
 
@@ -125,7 +125,7 @@ namespace ExampleGenerator {
             // Publish the updated profile to the Mesh.
             Portal.Label(LabelConnectPublish);
             PersonalProfile.Add(FirstRequest.Data.Device);
-            SignedPersonalProfile = PersonalProfile.Signed;
+            SignedPersonalProfile = PersonalProfile.SignedPersonalProfile;
             MeshClient.Publish(SignedPersonalProfile);
 
             Portal.Label(LabelConnectAccept);

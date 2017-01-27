@@ -271,7 +271,7 @@ namespace ExampleGenerator {
 			// #% var SignedProfile = CreateRequest.Profile as SignedPersonalProfile; 
 			 var SignedProfile = CreateRequest.Profile as SignedPersonalProfile;
 			// #% var Profile = SignedProfile.Signed; 
-			 var Profile = SignedProfile.Signed;
+			 var Profile = SignedProfile.PersonalProfile;
 			//  
 			_Output.Write ("\n{0}", _Indent);
 			// The first step in creating a new personal profile is to create a 
@@ -333,7 +333,7 @@ namespace ExampleGenerator {
 			// ~~~~ 
 			_Output.Write ("~~~~\n{0}", _Indent);
 			// #{JSONDebugWriter.Write (DeviceProfile.Data)} 
-			_Output.Write ("{1}\n{0}", _Indent, JSONDebugWriter.Write (DeviceProfile.Data));
+			_Output.Write ("{1}\n{0}", _Indent, JSONDebugWriter.Write (DeviceProfile.DeviceProfile));
 			// ~~~~ 
 			_Output.Write ("~~~~\n{0}", _Indent);
 			//  
@@ -497,7 +497,7 @@ namespace ExampleGenerator {
 			// ~~~~ 
 			_Output.Write ("~~~~\n{0}", _Indent);
 			// #{JSONDebugWriter.Write (Example.SignedDeviceProfile2.Data)} 
-			_Output.Write ("{1}\n{0}", _Indent, JSONDebugWriter.Write (Example.SignedDeviceProfile2.Data));
+			_Output.Write ("{1}\n{0}", _Indent, JSONDebugWriter.Write (Example.SignedDeviceProfile2.DeviceProfile));
 			// ~~~~ 
 			_Output.Write ("~~~~\n{0}", _Indent);
 			//  

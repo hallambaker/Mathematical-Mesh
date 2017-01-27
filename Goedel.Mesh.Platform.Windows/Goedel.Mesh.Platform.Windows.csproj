@@ -114,10 +114,6 @@
       <Project>{0d8dd801-65d2-497c-8379-2d6adf3867c3}</Project>
       <Name>Goedel.Mesh</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Goedel.Platform.Windows\Goedel.Platform.Windows.csproj">
-      <Project>{574f9f99-a364-4225-b28e-1037a37703b4}</Project>
-      <Name>Goedel.Platform.Windows</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
