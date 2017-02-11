@@ -31,6 +31,12 @@ namespace Goedel.Mesh {
     public partial class MasterProfile : Profile {
 
         /// <summary>
+        /// The Signed Master Profile.
+        /// </summary>
+        public SignedMasterProfile SignedMasterProfile { get; set; }
+
+
+        /// <summary>
         /// Create a MasterProfile using the default signature and exchange
         /// algorithms.
         /// </summary>
@@ -67,6 +73,48 @@ namespace Goedel.Mesh {
             MasterEscrowKeys.Add(MasterEscrowKey);
 
             Identifier = MasterSignatureKey.UDF;
+
+            SignedMasterProfile = new SignedMasterProfile(this);
+            }
+
+
+        /// <summary>
+        /// Test to see if the key is an administration key authorized by this master profile.
+        /// </summary>
+        /// <param name="KeyId">The Key Identifier.</param>
+        /// <returns>The KeyID.</returns>
+        public KeyPair AdministrationKeyPair (string KeyId) {
+            foreach (var AdminKey in OnlineSignatureKeys) {
+                if (AdminKey.UDF == KeyId) {
+                    return AdminKey.KeyPair;
+                    }
+                }
+            return null;
+            }
+
+        /// <summary>
+        /// Get the administration key (if available).
+        /// </summary>
+        public KeyPair AdministrationKey {
+            get {
+                _AdministrationKey = _AdministrationKey ?? GetAdministrationKey();
+                return _AdministrationKey;
+                }
+            }
+        KeyPair _AdministrationKey;
+
+        /// <summary>
+        /// Get the administration key (if available).
+        /// </summary>
+        /// <returns>The administration key.</returns>
+        public KeyPair GetAdministrationKey() {
+            foreach (var OnlineKey in OnlineSignatureKeys) {
+                var Key = KeyPair.FindLocal(OnlineKey.UDF);
+                if (Key != null) {
+                    return Key;
+                    }
+                }
+            return null;
             }
 
 

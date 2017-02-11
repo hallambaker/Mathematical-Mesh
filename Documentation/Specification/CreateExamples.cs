@@ -74,10 +74,11 @@ namespace ExampleGenerator {
         /// </summary>
         void CreateProfile() {
             // Create device profile
-            SignedDeviceProfile1 = new SignedDeviceProfile(Device1, Device1Description);
+            var DeviceProfile1 = new DeviceProfile(Device1, Device1Description);
+            SignedDeviceProfile1 = DeviceProfile1.SignedDeviceProfile;
             // Create master profile
 
-            PersonalProfile = new PersonalProfile(SignedDeviceProfile1);
+            PersonalProfile = new PersonalProfile(DeviceProfile1);
             SignedPersonalProfile = PersonalProfile.SignedPersonalProfile;
             }
 
@@ -153,7 +154,7 @@ namespace ExampleGenerator {
             // Create basic application
             PasswordProfile = new PasswordProfile(true);
             var ApplicationProfileEntry = PersonalProfile.Add(PasswordProfile);
-            PasswordProfile.Link(PersonalProfile, ApplicationProfileEntry);
+
 
             // Add decryption blobs for each device granted access
             PasswordProfile.AddDevice(SignedDeviceProfile1);
@@ -192,7 +193,6 @@ namespace ExampleGenerator {
             // Create basic application
             SSHProfile = new SSHProfile();
             var ApplicationProfileEntry = PersonalProfile.Add(SSHProfile);
-            SSHProfile.Link(PersonalProfile, ApplicationProfileEntry);
 
 
 

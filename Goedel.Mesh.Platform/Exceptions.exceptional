@@ -1,0 +1,25 @@
+﻿
+Namespace Goedel.Mesh.Platform
+
+
+
+
+	Exception Internal
+        Console "An internal error occurred"
+		Description
+			|An internal assertion check failed.
+
+	Exception Gateway
+        Console "Error occurred in Gateway"
+
+		Exception NoPortalAccount
+			Console "No Portal account specified"
+
+		Exception InvalidPortalAddress
+			Console "Not a valid portal address"
+		
+		Exception PortalConnectFail
+			Console "Could not connect to portal"
+
+		Exception PublicationRequestRefused
+			Console "Portal refused profile publication request"

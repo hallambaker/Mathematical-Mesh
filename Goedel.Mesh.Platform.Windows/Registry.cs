@@ -22,7 +22,7 @@
 
 using System.IO;
 using System.Collections.Generic;
-
+using Goedel.Utilities;
 
 namespace Goedel.Mesh.Platform.Windows {
 
@@ -139,7 +139,7 @@ namespace Goedel.Mesh.Platform.Windows {
             foreach (var SubKey in Key.GetValueNames()) {
                 var Value = Key.GetValue(SubKey);
                 if ((Value as string)!= null) {
-                    Result.Add(SubKey, Value as string);
+                    Result.AddSafe(SubKey, Value as string); // NYI check if present
                     }
                 }
             return Result;

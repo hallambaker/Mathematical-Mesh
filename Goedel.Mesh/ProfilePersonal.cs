@@ -49,14 +49,14 @@ namespace Goedel.Mesh {
         /// profile.
         /// </summary>
         public SignedDeviceProfile SignedDeviceProfile {
-            get { return DeviceProfile.SignedDeviceProfile; }
+            get { return DeviceProfile?.SignedDeviceProfile; }
             }
 
         /// <summary>
         /// Get UDF fingerprint of the profile.
         /// </summary>
         public override string UDF {
-            get { return PersonalMasterProfile.Identifier; }
+            get { return MasterProfile.Identifier; }
             }
 
 
@@ -68,7 +68,7 @@ namespace Goedel.Mesh {
         /// <summary>
         /// The parsed master profile associated with this profile
         /// </summary>
-        public MasterProfile PersonalMasterProfile { get; set; }
+        public MasterProfile MasterProfile { get { return SignedMasterProfile.MasterProfile;  } }
 
         /// <summary>
         /// Create a personal profile with the specified master and administration
@@ -81,16 +81,35 @@ namespace Goedel.Mesh {
         public PersonalProfile(DeviceProfile DeviceProfile, MasterProfile MasterProfile = null) {
 
             this.DeviceProfile = DeviceProfile ;
-            this.PersonalMasterProfile = MasterProfile ?? new MasterProfile(CryptoCatalog.Default);
+            var PersonalMasterProfile = MasterProfile ?? new MasterProfile(CryptoCatalog.Default);
+            SignedMasterProfile = PersonalMasterProfile.SignedMasterProfile;
 
             Identifier = PersonalMasterProfile.MasterSignatureKey.UDF;
             Devices = new List<SignedDeviceProfile>() { SignedDeviceProfile };
             Applications = new List<ApplicationProfileEntry>();
 
-            SignedPersonalProfile = new SignedPersonalProfile(this);
+
+            Sign();
             }
 
-         
+        /// <summary>
+        /// Sign the current profile. 
+        /// </summary>
+        /// <param name="UDF">Specify the signature key by identifier</param>
+        /// <param name="KeyPair">Specify the signature key by key handle</param>
+        public override void Sign(string UDF = null, KeyPair KeyPair = null) {
+            // Locate the administration key for this device.
+            var AdminKey = MasterProfile.AdministrationKey;
+
+            Assert.NotNull(AdminKey, NotAdministrationDevice.Throw);
+
+            SignedPersonalProfile = new SignedPersonalProfile(this, AdminKey);
+            }
+
+
+
+
+
         /// <summary>
         /// Find the Application Profile Entry that matches an identifier.
         /// </summary>
@@ -177,6 +196,8 @@ namespace Goedel.Mesh {
                 }
 
             Applications.Add(ApplicationProfileEntry);
+            ApplicationProfile.Link(this, ApplicationProfileEntry);
+
             return ApplicationProfileEntry;
             }
 
@@ -242,20 +263,12 @@ namespace Goedel.Mesh {
             }
 
         /// <summary>
-        /// Get the administration key (if available).
+        /// The Administration key (if null, this is not an administration profile)
         /// </summary>
-        /// <returns>The administration key.</returns>
-        public KeyPair GetAdministrationKey() {
-            foreach (var Device in Devices) {
-                var Key = KeyPair.FindLocal(Device.UDF);
-                if (Key != null) {
-                    return Key;
-                    }
-
-
-                // if have private [device]...
+        public KeyPair AdministrationKey {
+            get {
+                return MasterProfile.AdministrationKey;
                 }
-            return null;
             }
 
 
@@ -267,7 +280,7 @@ namespace Goedel.Mesh {
             //Throw.If(SignedAdministrationProfile == null, "No administration profile");
             Assert.NotNull(Devices == null, NoDeviceProfile.Throw);
 
-            PersonalMasterProfile = SignedMasterProfile.UnpackAndVerify();
+            //MasterProfile = SignedMasterProfile.UnpackMasterProfile();
             //_AdministrationProfile = SignedAdministrationProfile.UnpackAndVerify();
             foreach (var Device in Devices) {
                 Device.UnpackDeviceProfile();

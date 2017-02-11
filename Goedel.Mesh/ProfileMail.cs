@@ -63,6 +63,16 @@ namespace Goedel.Mesh {
         ///// <summary>
         ///// Construct a MailProfile from the specified account information.
         ///// </summary>
+        /// <param name="MailProfilePrivate">Specify the private account parameters.</param>
+        public MailProfile(MailProfilePrivate MailProfilePrivate) {
+
+            }
+
+
+
+        ///// <summary>
+        ///// Construct a MailProfile from the specified account information.
+        ///// </summary>
         ///// <param name="UserProfile">The personal profile to attach this profile to.</param>
         ///// <param name="MailAccountInfo">Description of the mail account.</param>
         //public MailProfile(PersonalProfile UserProfile, MailAccountInfo MailAccountInfo)

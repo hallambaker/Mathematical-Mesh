@@ -236,10 +236,8 @@ namespace Goedel.Mesh {
         public override ConnectStatusResponse ConnectStatus(
                 ConnectStatusRequest Request) {
 
-
             var Status = Mesh.GetRequestStatus(Request.AccountID, Request.DeviceID);
             var ConnectStatusResponse = new ConnectStatusResponse();
-
             ConnectStatusResponse.Result = Status;
 
             return ConnectStatusResponse;
@@ -252,7 +250,6 @@ namespace Goedel.Mesh {
         /// <returns>The response object from the service</returns>
         public override ConnectPendingResponse ConnectPending(
                 ConnectPendingRequest Request) {
-
 
             var Pending = Mesh.GetPendingRequests(Request.AccountID);
             var ConnectPendingResponse = new ConnectPendingResponse();
@@ -276,11 +273,5 @@ namespace Goedel.Mesh {
             return ConnectCompleteResponse;
             }
 
-
-
         }
-
-
-
-
     }

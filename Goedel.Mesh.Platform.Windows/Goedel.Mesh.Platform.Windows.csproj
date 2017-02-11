@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Goedel.Mesh.Platform</RootNamespace>
     <AssemblyName>Goedel.Mesh.Platform.Windows</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworkProfile />
@@ -57,6 +57,9 @@
     <Reference Include="Goedel.Cryptography.KeyFile">
       <HintPath>..\..\Library\Goedel.Cryptography.KeyFile.dll</HintPath>
     </Reference>
+    <Reference Include="Goedel.Cryptography.Windows">
+      <HintPath>..\..\Library\Goedel.Cryptography.Windows.dll</HintPath>
+    </Reference>
     <Reference Include="Goedel.IO">
       <HintPath>..\..\Library\Goedel.IO.dll</HintPath>
     </Reference>
@@ -86,6 +89,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppWindowsLiveMail.cs" />
+    <Compile Include="Initialize.cs" />
     <Compile Include="StorageLocations.cs" />
     <Compile Include="LiveMail.cs">
       <DependentUpon>LiveMail.RegistrySchema</DependentUpon>

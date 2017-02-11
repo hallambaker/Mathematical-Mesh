@@ -84,6 +84,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Library\Goedel.Registry.dll</HintPath>
     </Reference>
+    <Reference Include="Goedel.Utilities, Version=1.0.6249.24284, Culture=neutral, PublicKeyToken=a968c0b8f7e813a1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Library\Goedel.Utilities.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />

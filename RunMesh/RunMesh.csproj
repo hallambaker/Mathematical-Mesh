@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Meshtest</RootNamespace>
     <AssemblyName>RunMesh</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -59,17 +59,14 @@
     <Reference Include="Goedel.Cryptography.KeyFile">
       <HintPath>..\..\Library\Goedel.Cryptography.KeyFile.dll</HintPath>
     </Reference>
+    <Reference Include="Goedel.Cryptography.Windows">
+      <HintPath>..\..\Library\Goedel.Cryptography.Windows.dll</HintPath>
+    </Reference>
     <Reference Include="Goedel.FSR">
       <HintPath>..\..\Library\Goedel.FSR.dll</HintPath>
     </Reference>
     <Reference Include="Goedel.IO">
       <HintPath>..\..\Library\Goedel.IO.dll</HintPath>
-    </Reference>
-    <Reference Include="Goedel.Platform">
-      <HintPath>..\..\Library\Goedel.Platform.dll</HintPath>
-    </Reference>
-    <Reference Include="Goedel.Platform.Framework">
-      <HintPath>..\..\Library\Goedel.Platform.Framework.dll</HintPath>
     </Reference>
     <Reference Include="Goedel.Protocol">
       <HintPath>..\..\Library\Goedel.Protocol.dll</HintPath>
@@ -84,6 +81,7 @@
     <Reference Include="Goedel.Utilities">
       <HintPath>..\..\Library\Goedel.Utilities.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -124,6 +122,10 @@
     <ProjectReference Include="..\Goedel.Persistence\Goedel.Persistence.csproj">
       <Project>{81e30b95-c59d-4a04-925e-85877fd37fdd}</Project>
       <Name>Goedel.Persistence</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Testing\Test.Constants\Test.Constants.csproj">
+      <Project>{e4f332ed-4cfe-487f-9c22-e38105c18fc5}</Project>
+      <Name>Test.Constants</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

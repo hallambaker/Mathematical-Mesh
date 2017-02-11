@@ -26,6 +26,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using Goedel.Protocol;
+using Goedel.Utilities;
 
 namespace Goedel.Persistence {
     // A persistence store consists of a set of DataItems which are
@@ -122,7 +123,7 @@ namespace Goedel.Persistence {
         /// <param name="DataItem">Data item to add.</param>
         public virtual void Add(DataItem DataItem) {
             Dictionary.Remove(DataItem.PrimaryKey);
-            Dictionary.Add(DataItem.PrimaryKey, DataItem);
+            Dictionary.AddSafe(DataItem.PrimaryKey, DataItem); // NYI check if null
 
             return;
             }
@@ -482,7 +483,7 @@ namespace Goedel.Persistence {
                     }
                 else {
                     DataCollection = new DataCollection(DataItem);
-                    Index.DictionaryKeyId.Add(IndexTerm.Term, DataCollection);
+                    Index.DictionaryKeyId.AddSafe(IndexTerm.Term, DataCollection); // NYI check if null
                     }
                 }
             }
@@ -594,7 +595,7 @@ namespace Goedel.Persistence {
             if (Found) return Index;
             if (Create) {
                 Index = new PersistenceIndex(this, Type);
-                Catalog.Add(Type, Index);
+                Catalog.AddSafe(Type, Index);   // NYI check if null
                 return Index;
                 }
             

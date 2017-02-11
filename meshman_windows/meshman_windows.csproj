@@ -1,0 +1,131 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C99A9102-88F3-4E35-9590-D75E608094FF}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>meshman_windows</RootNamespace>
+    <AssemblyName>meshman_windows</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Goedel.ASN">
+      <HintPath>..\..\Library\Goedel.ASN.dll</HintPath>
+    </Reference>
+    <Reference Include="Goedel.Cryptography">
+      <HintPath>..\..\Library\Goedel.Cryptography.dll</HintPath>
+    </Reference>
+    <Reference Include="Goedel.Cryptography.Framework">
+      <HintPath>..\..\Library\Goedel.Cryptography.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Goedel.Cryptography.Jose">
+      <HintPath>..\..\Library\Goedel.Cryptography.Jose.dll</HintPath>
+    </Reference>
+    <Reference Include="Goedel.Cryptography.KeyFile">
+      <HintPath>..\..\Library\Goedel.Cryptography.KeyFile.dll</HintPath>
+    </Reference>
+    <Reference Include="Goedel.Cryptography.Windows">
+      <HintPath>..\..\Library\Goedel.Cryptography.Windows.dll</HintPath>
+    </Reference>
+    <Reference Include="Goedel.FSR">
+      <HintPath>..\..\Library\Goedel.FSR.dll</HintPath>
+    </Reference>
+    <Reference Include="Goedel.IO">
+      <HintPath>..\..\Library\Goedel.IO.dll</HintPath>
+    </Reference>
+    <Reference Include="Goedel.Platform">
+      <HintPath>..\..\Library\Goedel.Platform.dll</HintPath>
+    </Reference>
+    <Reference Include="Goedel.Platform.Framework">
+      <HintPath>..\..\Library\Goedel.Platform.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Goedel.Protocol">
+      <HintPath>..\..\Library\Goedel.Protocol.dll</HintPath>
+    </Reference>
+    <Reference Include="Goedel.Protocol.Framework">
+      <HintPath>..\..\Library\Goedel.Protocol.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Goedel.Registry">
+      <HintPath>..\..\Library\Goedel.Registry.dll</HintPath>
+    </Reference>
+    <Reference Include="Goedel.Utilities">
+      <HintPath>..\..\Library\Goedel.Utilities.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Main.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Goedel.Mesh.Client\Goedel.Mesh.Client.csproj">
+      <Project>{a803fe85-50d9-4ccd-8ffc-f653a4bd73e3}</Project>
+      <Name>Goedel.Mesh.Client</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Goedel.Mesh.Platform.Windows\Goedel.Mesh.Platform.Windows.csproj">
+      <Project>{c378c917-f41d-4388-b467-efd6677c4459}</Project>
+      <Name>Goedel.Mesh.Platform.Windows</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Goedel.Mesh.Platform\Goedel.Mesh.Platform.csproj">
+      <Project>{90e3d724-811e-41cb-ae8d-91fd0677187c}</Project>
+      <Name>Goedel.Mesh.Platform</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Goedel.Mesh.Server\Goedel.Mesh.Server.csproj">
+      <Project>{f6343f1b-d03d-4965-9113-5120a8054e9e}</Project>
+      <Name>Goedel.Mesh.Server</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Goedel.Mesh.Shell.MeshMan\Goedel.Mesh.Shell.MeshMan.csproj">
+      <Project>{64ef7e6f-1d8e-449c-90e7-5c974e50533f}</Project>
+      <Name>Goedel.Mesh.Shell.MeshMan</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Goedel.Mesh\Goedel.Mesh.csproj">
+      <Project>{0d8dd801-65d2-497c-8379-2d6adf3867c3}</Project>
+      <Name>Goedel.Mesh</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Goedel.Persistence\Goedel.Persistence.csproj">
+      <Project>{81e30b95-c59d-4a04-925e-85877fd37fdd}</Project>
+      <Name>Goedel.Persistence</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>call postbuild</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

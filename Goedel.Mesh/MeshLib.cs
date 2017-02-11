@@ -133,8 +133,8 @@ namespace Goedel.Mesh {
         /// <param name="Server">DNS service name</param>
         /// <param name="Port">IP Port number</param>
         /// <param name="AppProtocol">Application protocol prefix.</param>
-        /// <param name="Account">Account name for authenticaiton</param>
-        /// <param name="Password">Password for authenticaiton</param>
+        /// <param name="Account">Account name for authentication</param>
+        /// <param name="Password">Password for authentication</param>
         /// <param name="TLSMode">TLS Mode, may be Raw, Upgrade or None.</param>
         /// <param name="SecureAuth">If true, a 
         /// secure authentication mechanism must be used.</param>
@@ -155,7 +155,7 @@ namespace Goedel.Mesh {
 
 
     /// <summary>
-    /// The Mathamatical Mesh persistence store.
+    /// The Mathematical Mesh persistence store.
     /// </summary>
     public class Mesh {
         const string UniqueID = "UniqueID";

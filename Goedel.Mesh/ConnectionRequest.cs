@@ -85,14 +85,14 @@ namespace Goedel.Mesh {
         /// Get the inner connection result data.
         /// </summary>
         public ConnectionResult Data {
-            get { if (_Signed == null) _Signed = Unpack(); return _Signed; }
+            get { if (_Signed == null) _Signed = UnpackConnectionResult(); return _Signed; }
             }
 
         /// <summary>
         /// Unpack the connection result.
         /// </summary>
         /// <returns>The unpacked request</returns>
-        public ConnectionResult Unpack() {
+        public  ConnectionResult UnpackConnectionResult() {
             _Signed = null;
 
             var Reader = JSONReader.OfData(SignedData.Payload);
@@ -135,14 +135,14 @@ namespace Goedel.Mesh {
         /// Get the connection request data.
         /// </summary>
         public ConnectionRequest Data {
-            get { if (_Signed == null) _Signed = Unpack(); return _Signed; }
+            get { if (_Signed == null) _Signed = UnpackConnectionRequest(); return _Signed; }
             }
 
         /// <summary>
         /// Unpack the connection request data.
         /// </summary>
         /// <returns>The unpacked request.</returns>
-        public ConnectionRequest Unpack() {
+        public ConnectionRequest UnpackConnectionRequest() {
             _Signed = null;
 
 

@@ -24,14 +24,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.IO;
 using Goedel.Utilities;
+using Goedel.Cryptography;
 
 namespace Goedel.Mesh.Platform.Windows {
 
-    public static class Platform {
+    public static class MeshWindows {
 
-        public static void Initialize () {
-            RegistrationMachineWindows.Initialize();
-            }
+    //    public static void Initialize () {
+
+            //RegistrationMachineWindows.Initialize();
+            //}
 
         /// <summary>
         /// Construct filename for a mesh personal profile
@@ -71,34 +73,33 @@ namespace Goedel.Mesh.Platform.Windows {
         /// <summary>
         /// The a dictionary of personal profiles indexed by fingerprint.
         /// </summary>
-        public override Dictionary<string, RegistrationPersonal> PersonalProfiles {
-            get { return _PersonalProfiles; }
-            }
-        Dictionary<string, RegistrationPersonal> _PersonalProfiles;
+        public override Dictionary<string, RegistrationPersonal> PersonalProfilesUDF { get; } =
+            new Dictionary<string, RegistrationPersonal>();
+
+        /// <summary>
+        /// The a dictionary of personal profiles indexed by portal account.
+        /// </summary>
+        public override Dictionary<string, RegistrationPersonal> PersonalProfilesPortal { get; } =
+            new Dictionary<string, RegistrationPersonal>();
+
 
         /// <summary>
         /// A dictionary of application profiles indexed by fingerprint.
         /// </summary>
-        public override Dictionary<string, RegistrationApplication> ApplicationProfiles {
-            get { return _ApplicationProfiles; }
-            }
-        Dictionary<string, RegistrationApplication> _ApplicationProfiles;
+        public override Dictionary<string, RegistrationApplication> ApplicationProfiles { get; } =
+            new Dictionary<string, RegistrationApplication>();
 
         /// <summary>
         /// A dictionary of default application profiles indexed by application identifier;
         /// </summary>
-        public override Dictionary<string, string> ApplicationProfilesDefault {
-            get { return _ApplicationProfilesDefault; }
-            }
-        Dictionary<string, string> _ApplicationProfilesDefault;
+        public override Dictionary<string, string> ApplicationProfilesDefault { get; } =
+            new Dictionary<string, string>();
 
         /// <summary>
         /// A dictionary of device profiles indexed by fingerprint.
         /// </summary>
-        public override Dictionary<string, RegistrationDevice> DeviceProfiles {
-            get { return _DeviceProfiles; }
-            }
-        Dictionary<string, RegistrationDevice> _DeviceProfiles;
+        public override Dictionary<string, RegistrationDevice> DeviceProfiles { get; } =
+            new Dictionary<string, RegistrationDevice>();
 
 
 
@@ -106,7 +107,9 @@ namespace Goedel.Mesh.Platform.Windows {
         /// Register the delegates for handling Windows native registrations with
         /// the Registration class stubs.
         /// </summary>
-        public static void Initialize() {
+        /// <param name="TestMode">If true, the application will be initialized in
+        /// test/debug mode.</param>
+        public static void Initialize(bool TestMode = false) {
             if (Current == null) {
                 Current = new RegistrationMachineWindows();
                 }
@@ -152,22 +155,22 @@ namespace Goedel.Mesh.Platform.Windows {
         RegistrationDevice _Device;
 
 
+        void RegisterPersonal (RegistrationPersonal Profile) {
+            PersonalProfilesUDF.AddSafe(Profile.UDF, Profile); // NYI check if already entered
+            foreach (var Name in Profile.Portals) {
+                PersonalProfilesPortal.AddSafe(Name, Profile);  //NYI check if already entered
+                }
+            }
 
         /// <summary>
         /// Fetch the latest version of the profile version
         /// </summary>
         void Fill() {
 
-            _PersonalProfiles = new Dictionary<string, RegistrationPersonal>();
-            _ApplicationProfiles = new Dictionary<string, RegistrationApplication>();
-            _ApplicationProfilesDefault = new Dictionary<string, string>();
-            _DeviceProfiles = new Dictionary<string, RegistrationDevice>();
-
             var ProfileKeys = Register.GetSubKeys(Constants.RegistryPersonal);
             var DeviceKeys = Register.GetKeys(Constants.RegistryDevice);
             var ApplicationKeys = Register.GetKeys(Constants.RegistryApplication);
             string DefaultDevice = null;
-
 
             foreach (var KeySet in ProfileKeys) {
                 var Filename = KeySet.GetValueString("");
@@ -176,12 +179,10 @@ namespace Goedel.Mesh.Platform.Windows {
                     var Portals = KeySet.GetValueMultiString("Portals");
                     var Profile = new RegistrationPersonalWindows (KeySet.Key, Filename, Portals);
                     if (Profile != null) {
-                        PersonalProfiles.Add(KeySet.Key, Profile);
-
+                        RegisterPersonal(Profile);
                         // add Archive
                         var Archive = KeySet.GetValueString("Archive");
                         Profile.Archive = Archive;
-
                         if (KeySet.Default) {
                             Personal = Profile;
                             }
@@ -193,11 +194,11 @@ namespace Goedel.Mesh.Platform.Windows {
                 if (Key.Key.Length > 10) {
                     var Profile = new RegistrationApplicationWindows(Key.Key, Key.Value);
                     if (Profile != null) {
-                        ApplicationProfiles.Add(Key.Key, Profile);
+                        ApplicationProfiles.AddSafe(Key.Key, Profile); // NYI check if present
                         }
                     }
                 else {
-                    ApplicationProfilesDefault.Add(Key.Key, Key.Value);
+                    ApplicationProfilesDefault.AddSafe(Key.Key, Key.Value); // NYI check if present
                     }
                 }
 
@@ -206,11 +207,11 @@ namespace Goedel.Mesh.Platform.Windows {
                 if (Key.Key != "") {
                     var Profile = new RegistrationDeviceWindows (Key.Key, Key.Value);
                     if (Profile != null) {
-                        DeviceProfiles.Add(Key.Key, Profile);
+                        DeviceProfiles.AddSafe(Key.Key, Profile); // NYI check if present
                         }
                     }
                 else {
-                    DefaultDevice = Key.Value;
+                    DefaultDevice = Key.Value; 
                     }
                 }
 
@@ -245,6 +246,15 @@ namespace Goedel.Mesh.Platform.Windows {
             var Hive = Microsoft.Win32.Registry.CurrentUser;
 
             Hive.DeleteSubKeyTree(Constants.RegistryRoot, false);
+            foreach (var Erase in Goedel.Cryptography.Platform.EraseTest) {
+                Erase();
+                }
+
+            PersonalProfilesUDF.Clear();
+            PersonalProfilesPortal.Clear();
+            ApplicationProfiles.Clear();
+            ApplicationProfilesDefault.Clear();
+            DeviceProfiles.Clear();
 
 
             }
@@ -277,7 +287,7 @@ namespace Goedel.Mesh.Platform.Windows {
         /// <returns>Registration for the created profile.</returns>
         public override RegistrationDevice Add(SignedDeviceProfile SignedProfile) {
             var Registration = new RegistrationDeviceWindows(SignedProfile);
-            DeviceProfiles.Add(SignedProfile.Identifier, Registration);
+            DeviceProfiles.AddSafe(SignedProfile.Identifier, Registration); // NYI check if present
             return Registration;
             }
 
@@ -286,9 +296,9 @@ namespace Goedel.Mesh.Platform.Windows {
         /// </summary>
         /// <param name="SignedProfile">Profile to add.</param>
         /// <returns>Registration for the created profile.</returns>
-        public override RegistrationPersonal Add(SignedPersonalProfile SignedProfile) {
-            var Registration = new RegistrationPersonalWindows(SignedProfile);
-            PersonalProfiles.Add(SignedProfile.Identifier, Registration);
+        public override RegistrationPersonal Add(SignedPersonalProfile SignedProfile, List<string> Portals) {
+            var Registration = new RegistrationPersonalWindows(SignedProfile, Portals:Portals);
+            RegisterPersonal(Registration);
             return Registration;
             }
 
@@ -301,7 +311,7 @@ namespace Goedel.Mesh.Platform.Windows {
         /// <returns>Registration for the created profile.</returns>
         public override RegistrationApplication Add(SignedApplicationProfile SignedProfile) {
             var Registration = new RegistrationApplicationWindows(SignedProfile);
-            ApplicationProfiles.Add(SignedProfile.Identifier, Registration);
+            ApplicationProfiles.AddSafe(SignedProfile.Identifier, Registration); // NYI check if present
             return Registration;
             }
 
@@ -312,8 +322,7 @@ namespace Goedel.Mesh.Platform.Windows {
         /// <param name="ID">UDF fingerprint of the profile or short form ID</param>
         /// <returns>True if the profile is found, otherwise false.</returns>
         public override bool Find(string ID, out RegistrationDevice RegistrationDevice) {
-            RegistrationDevice = null;
-            return false;
+            return DeviceProfiles.TryGetValue (ID, out RegistrationDevice);
             }
 
         /// <summary>
@@ -323,8 +332,7 @@ namespace Goedel.Mesh.Platform.Windows {
         /// <param name="ID">UDF fingerprint of the profile or short form ID</param>
         /// <returns>True if the profile is found, otherwise false.</returns>
         public override bool Find(string ID, out RegistrationApplication RegistrationApplication) {
-            RegistrationApplication = null;
-            return false;
+            return ApplicationProfiles.TryGetValue(ID, out RegistrationApplication);
             }
 
         /// <summary>
@@ -334,8 +342,7 @@ namespace Goedel.Mesh.Platform.Windows {
         /// <param name="ID">UDF fingerprint of the profile or short form ID</param>
         /// <returns>True if the profile is found, otherwise false.</returns>
         public override bool Find(string ID, out RegistrationPersonal RegistrationPersonal) {
-            RegistrationPersonal = null;
-            return false;
+            return PersonalProfilesUDF.TryGetValue(ID, out RegistrationPersonal);
             }
 
         }
@@ -354,7 +361,7 @@ namespace Goedel.Mesh.Platform.Windows {
         /// <summary>
         /// The profile fingerprint
         /// </summary>
-        public override string UDF { get { return Profile?.UDF;  } }
+        public override string UDF { get { return SignedPersonalProfile?.UDF;  } }
 
 
         /// <summary>
@@ -383,8 +390,8 @@ namespace Goedel.Mesh.Platform.Windows {
         /// <param name="File">Filename on local machine</param>
         public RegistrationPersonalWindows(string UDF, string File, IEnumerable<string> Portals = null) {
 
-            Profile = SignedPersonalProfile.FromFile (UDF, File);
-            if (Profile == null) { return; }   // TTHROW: Proper exception
+            SignedPersonalProfile = SignedPersonalProfile.FromFile (UDF, File);
+            if (SignedPersonalProfile == null) { return; }   // TTHROW: Proper exception
 
             this.Portals = new PortalCollectionWindows(Portals);
             }
@@ -395,7 +402,7 @@ namespace Goedel.Mesh.Platform.Windows {
         /// <param name="Profile">The personal profile</param>
         /// <param name="Portals">The list of portals.</param>
         public RegistrationPersonalWindows(SignedPersonalProfile Profile, IEnumerable<string> Portals = null) {
-            this.Profile = Profile;
+            this.SignedPersonalProfile = Profile;
             this.Portals = new PortalCollectionWindows(Portals);
             ToRegistry();
             }
@@ -431,8 +438,10 @@ namespace Goedel.Mesh.Platform.Windows {
         /// <summary>Update portal entries.</summary>
         public override void Update() {
 
-            var PersonalProfile = Profile.PersonalProfile;
-            Profile = new SignedPersonalProfile (PersonalProfile);
+            var PersonalProfile = SignedPersonalProfile.PersonalProfile;
+            PersonalProfile.Sign();
+
+            SignedPersonalProfile = PersonalProfile.SignedPersonalProfile;
 
             ToRegistry();
             }
@@ -443,7 +452,7 @@ namespace Goedel.Mesh.Platform.Windows {
             var KeyName = Constants.RegistryPersonal;
 
             var Hive = Microsoft.Win32.Registry.CurrentUser;
-            var FileName = Platform.FilePersonalProfile (UDF);
+            var FileName = MeshWindows.FilePersonalProfile (UDF);
 
             Directory.CreateDirectory(Constants.FileProfilesPersonal);
             var SubKeyName = KeyName + @"\" + UDF;
@@ -455,7 +464,7 @@ namespace Goedel.Mesh.Platform.Windows {
                         Microsoft.Win32.RegistryValueKind.MultiString);
                 }
             SubKey.SetValue("Archive", "TBS");
-            File.WriteAllText(FileName, Profile.ToString());
+            File.WriteAllText(FileName, SignedPersonalProfile.ToString());
             }
 
 
@@ -498,7 +507,7 @@ namespace Goedel.Mesh.Platform.Windows {
         /// </summary>
         /// <param name="SignedApplicationProfile">The application profile</param>
         public RegistrationApplicationWindows(SignedApplicationProfile SignedApplicationProfile) {
-            Profile = SignedApplicationProfile;
+            this.SignedApplicationProfile = SignedApplicationProfile;
             ToRegistry();
             }
 
@@ -515,7 +524,7 @@ namespace Goedel.Mesh.Platform.Windows {
                 File = FileName as string;
                 }
 
-            Profile = SignedApplicationProfile.FromFile(UDF, File);
+            SignedApplicationProfile = SignedApplicationProfile.FromFile(UDF, File);
             }
 
 
@@ -553,13 +562,13 @@ namespace Goedel.Mesh.Platform.Windows {
         public override void ToRegistry() {
             var Hive = Microsoft.Win32.Registry.CurrentUser;
             var Key = Hive.CreateSubKey(Constants.RegistryApplication);
-            var FileName = Platform.FileApplicationlProfile(UDF);
+            var FileName = MeshWindows.FileApplicationlProfile(UDF);
 
             Directory.CreateDirectory(Constants.FileProfilesApplication);
 
             Key.SetValue(UDF, FileName);
 
-            File.WriteAllText(FileName, Profile.ToString());
+            File.WriteAllText(FileName, SignedApplicationProfile.ToString());
 
 
             }
@@ -573,7 +582,7 @@ namespace Goedel.Mesh.Platform.Windows {
 
         /// <summary>Return the fingerprint.</summary>
         public override string UDF {
-            get { return Profile?.UDF; }
+            get { return SignedDeviceProfile?.UDF; }
             }
 
 
@@ -590,7 +599,7 @@ namespace Goedel.Mesh.Platform.Windows {
         /// <param name="UDF">File fingerprint</param>
         /// <param name="File">Filename on local machine</param>
         public RegistrationDeviceWindows(string UDF = null, string File = null) {
-            Profile = SignedDeviceProfile.FromFile(UDF, File);
+            SignedDeviceProfile = SignedDeviceProfile.FromFile(UDF, File);
             }
 
 
@@ -599,7 +608,7 @@ namespace Goedel.Mesh.Platform.Windows {
         /// </summary>
         /// <param name="SignedDeviceProfile">The device profile</param>
         public RegistrationDeviceWindows(SignedDeviceProfile SignedDeviceProfile) {
-            Profile = SignedDeviceProfile;
+            base.SignedDeviceProfile = SignedDeviceProfile;
             ToRegistry();
             }
 
@@ -632,13 +641,13 @@ namespace Goedel.Mesh.Platform.Windows {
         public override void ToRegistry() {
             var Hive = Microsoft.Win32.Registry.CurrentUser;
             var Key = Hive.CreateSubKey(Constants.RegistryDevice);
-            var FileName = Platform.FileDeviceProfile(UDF);
+            var FileName = MeshWindows.FileDeviceProfile(UDF);
 
             Directory.CreateDirectory(Constants.FileProfilesDevice);
 
             Key.SetValue(UDF, FileName);
 
-            File.WriteAllText(FileName, Profile.ToString());
+            File.WriteAllText(FileName, SignedDeviceProfile.ToString());
             }
 
 

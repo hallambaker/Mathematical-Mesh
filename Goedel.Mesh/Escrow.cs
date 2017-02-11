@@ -40,15 +40,15 @@ namespace Goedel.Mesh {
         /// <returns></returns>
 
         public OfflineEscrowEntry(PersonalProfile Profile, int Shares, int Quorum) {
-            var Master = Profile.PersonalMasterProfile;
+            var Master = Profile.MasterProfile;
 
             var EscrowedKeySet = new EscrowedKeySet();
             EscrowedKeySet.PrivateKeys = new List<Key>();
 
             EscrowedKeySet.PrivateKeys.Add(GetEscrow(
-                Profile.PersonalMasterProfile.MasterSignatureKey.UDF));
+                Profile.MasterProfile.MasterSignatureKey.UDF));
 
-            foreach (var Escrow in Profile.PersonalMasterProfile.MasterEscrowKeys) {
+            foreach (var Escrow in Profile.MasterProfile.MasterEscrowKeys) {
                 EscrowedKeySet.PrivateKeys.Add(GetEscrow (Escrow.UDF));
                 }
 

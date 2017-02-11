@@ -23,6 +23,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Goedel.Cryptography;
 using Goedel.Cryptography.Jose;
 using Goedel.Persistence;
 using Goedel.Protocol;
@@ -210,14 +211,14 @@ namespace Goedel.Mesh {
         /// The signed profile object.
         /// </summary>
         public override Profile Profile {
-            get { return Signed; }
+            get { return MasterProfile; }
             }
 
         /// <summary>
         /// The signed profile object.
         /// </summary>
-        public MasterProfile Signed {
-            get { if (_Signed == null) _Signed = UnpackAndVerify(); return _Signed; }
+        public MasterProfile MasterProfile {
+            get { if (_Signed == null) _Signed = UnpackMasterProfile(); return _Signed; }
             }
 
         /// <summary>
@@ -231,11 +232,19 @@ namespace Goedel.Mesh {
             }
 
         /// <summary>
+        /// Unpack the profile.
+        /// </summary>
+        /// <returns></returns>
+        public override Profile Unpack() {
+            return UnpackMasterProfile(); 
+            }
+
+        /// <summary>
         /// Unpack the signed data and verify its consistency.
         /// </summary>
         /// <returns>The corresponding master profile if validation is successful,
         /// otherwise null.</returns>
-        public virtual MasterProfile UnpackAndVerify() {
+        public virtual MasterProfile UnpackMasterProfile() {
 
             var Text = Encoding.UTF8.GetString(SignedData.Payload);
             //Goedel.Debug.Trace.WriteLine("Data as signed {0}", Text);
@@ -248,6 +257,8 @@ namespace Goedel.Mesh {
 
             Unpacked.Unpack();
 
+            Unpacked.SignedMasterProfile = this;
+
             _Signed = Unpacked;
             return Unpacked;
             }
@@ -259,12 +270,12 @@ namespace Goedel.Mesh {
         /// The signed profile object.
         /// </summary>
         public override Profile Profile {
-            get { return Signed; }
+            get { return ApplicationProfile; }
             }
         /// <summary>
         /// The signed profile object.
         /// </summary>
-        public ApplicationProfile Signed {
+        public ApplicationProfile ApplicationProfile {
             get { if (_Signed == null) _Signed = UnpackAndVerify(); return _Signed; }
             }
 
@@ -340,7 +351,6 @@ namespace Goedel.Mesh {
     /// </summary>
     public partial class SignedPersonalProfile {
 
-
         /// <summary>
         /// The signed profile object.
         /// </summary>
@@ -352,32 +362,28 @@ namespace Goedel.Mesh {
         /// The signed profile object.
         /// </summary>
         public PersonalProfile PersonalProfile {
-            get { if (_Signed == null) _Signed = UnpackAndVerify(); return _Signed; }
+            get { if (_Signed == null) _Signed = UnpackPersonalProfile(); return _Signed; }
             }
         PersonalProfile _Signed = null;
-
 
         /// <summary>
         /// Create from a current personal profile.
         /// </summary>
         /// <param name="Data">The current profile to sign</param>
+        /// <param name="AdminKey">The administration key to use for signing.</param>
         /// <exception cref="Exception">The administration key could not be found.</exception>
-        public SignedPersonalProfile(PersonalProfile Data) {
-
-            // Locate the administration key for this device.
-            var AdminKey = Data.GetAdministrationKey();
-
-            Assert.NotNull(AdminKey, NotAdministrationDevice.Throw);
+        public SignedPersonalProfile(PersonalProfile Data, KeyPair AdminKey) {
 
             // Make sure all the data is properly registered
             Data.Package();
             Identifier = Data.Identifier;
-
-            //Goedel.Debug.Trace.WriteLine("Data to be signed {0}", Data.ToString());
-
             SignedData = new JoseWebSignature(Data.GetBytes(), AdminKey);
             _Signed = Data;
             }
+
+
+
+
 
         /// <summary>
         /// Search for the specified profile on the local machine.
@@ -404,7 +410,6 @@ namespace Goedel.Mesh {
                 }
             }
 
-
         /// <summary>
         /// Unpack the SignedData structure and verify that the components 
         /// are all valid.
@@ -414,67 +419,40 @@ namespace Goedel.Mesh {
         /// <para>Each signing key matches the specified UDF.</para>
         /// </summary>
         /// <returns></returns>
-        PersonalProfile UnpackAndVerify() {
-
-            var Text = Encoding.UTF8.GetString(SignedData.Payload);
-            //Goedel.Debug.Trace.WriteLine("Data as signed {0}", Text);
-
-            var Unpacked = PersonalProfile.FromTagged (Text);
+        public virtual PersonalProfile UnpackPersonalProfile() {
+            var Unpacked = PersonalProfile.FromTagged (SignedData.Payload);
 
             Unpacked.Unpack();
+            Validate(Unpacked);
 
-            CheckSignedPOSK(Unpacked);
-            //CheckSignedAdmin(Unpacked);
-            // Check the signature on the profile
-
+            Unpacked.SignedPersonalProfile = this;
             _Signed = Unpacked;
             return Unpacked;
             }
 
-        //private void CheckSignedAdmin(PersonalProfile Unpacked) {
+        private void Validate(PersonalProfile Unpacked) {
 
-        //    // Get the UDF of the signing key.
-        //    var SignatureKeyUDF = SignedData.ParsedHeader.kid;
+            // Get the master profile (force Master profile validation)
+            var MasterProfile = Unpacked.MasterProfile;
 
-        //    // Get the corresponding device key parameters.
-        //    var SignedDevice = SignedDeviceProfile.FindSignatureKey(Unpacked.Devices, SignatureKeyUDF);
+            // Check this is the correct Master profile
+            Assert.True (MasterProfile.UDF == Unpacked.UDF, FingerprintMatchFailed.Throw);
 
-        //    // Is the device authorized for admin?
-        //    bool Found = false;
-        //    foreach (var Entry in Unpacked.AdministrationProfile.Entries) {
-        //        if (Entry.UDF == SignedDevice.UDF) {
-        //            Found = true;
-        //            }
-        //        }
-        //    Throw.IfNot(Found, "Device not authorized to sign administration profile");
+            
+            foreach (var Signature in SignedData.Signatures) {
+                var KeyID = Signature.Header.kid;
+                var AdminKey = MasterProfile.AdministrationKeyPair(Signature.Header.kid);
 
-        //    // Check the signature.
+                // Check that this is a valid admin key
+                Assert.NotNull(AdminKey, InvalidProfileSignature.Throw);
 
-        //    var SigningKey = SignedDevice.Signed.DeviceSignatureKey.KeyPair;
-        //    var Verify = SignedData.Verify(SignatureKeyUDF, SigningKey);
-        //    Throw.IfNot(Verify, "Profile signature does not verify");
-        //    }
+                // Check the signature
+                var Verify = SignedData.Verify(KeyID, AdminKey);
+                Assert.True(Verify, InvalidProfileSignature.Throw);
+                }
 
-        private void CheckSignedPOSK(PersonalProfile Unpacked) {
-
-            //// Get the UDF of the signing key.
-            //var SignatureKeyUDF = Unpacked.SignedAdministrationProfile.SignedData.ParsedHeader.kid;
-
-            //PublicKey SigningKey = null;
-            //foreach (var Key in Unpacked.PersonalMasterProfile.OnlineSignatureKeys) {
-            //    if (Key.UDF == SignatureKeyUDF) {
-            //        Throw.IfNot(Key.Verify(), "Invalid key");
-            //        SigningKey = Key;
-            //        }
-            //    }
-
-            //Throw.If(SigningKey == null, "Administration profile not signed");
-
-            //// Check the signature.
-
-            //var Verify = Unpacked.SignedAdministrationProfile.SignedData.Verify(SignatureKeyUDF, SigningKey.KeyPair);
-            //Throw.IfNot(Verify, "Profile signature does not verify");
             }
+
 
         }
     }

@@ -1,0 +1,30 @@
+﻿Protocol Goedel.Mesh MeshConfirm MeshConfirm
+    Using Goedel.Cryptography.Jose 
+	Extern ApplicationProfile
+	Extern ApplicationProfilePrivate
+	Extern Entry
+
+	Description 
+		|Mesh profile for Confirm applications.
+
+	Section 1 "Mesh/Confirm Application Profile Objects"
+
+
+	Structure ConfirmProfile
+		Description 
+			|Application profile for Confirm
+		Inherits ApplicationProfile
+		String Account
+			Description 
+				|The account to which the profile is bound
+		Struct PublicKey Authentication
+			Multiple
+			Description
+				|Authorized Authentication keys for this account.
+
+	Structure ConfirmPrivate
+		Description 
+			|Private portion of profile. Currently empty.
+		Inherits ApplicationProfilePrivate
+
+

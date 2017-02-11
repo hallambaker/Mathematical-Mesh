@@ -111,19 +111,19 @@ namespace Goedel.Mesh {
         /// <param name="Username">Username (null if not found)</param>
         /// <param name="Password">Password (null if not found)</param>
         /// <returns>true if the site is found, false otherwise.</returns>
-        public bool GetEntry(
+        public PasswordEntry GetEntry(
             string Site, out string Username, out string Password) {
 
             var Entry = Get(Site);
             if (Entry == null) {
                 Username = null;
                 Password = null;
-                return false ;
+                return null ;
                 }
 
             Username = Entry.Username;
             Password = Entry.Password;
-            return true;
+            return Entry;
             }
 
 

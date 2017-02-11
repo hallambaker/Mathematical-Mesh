@@ -401,7 +401,7 @@ namespace Goedel.Mesh {
             ConnectionResult.Result = ConnectionStatus.ToString ();
             ConnectionResult.Device = Device;
             var SignedConnectionResult = new SignedConnectionResult(ConnectionResult,
-                PersonalProfile.GetAdministrationKey());
+                PersonalProfile.AdministrationKey);
 
             var ConnectCloseRequest = new ConnectCompleteRequest();
             ConnectCloseRequest.Result = SignedConnectionResult;

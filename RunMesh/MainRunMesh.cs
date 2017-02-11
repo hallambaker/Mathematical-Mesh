@@ -27,20 +27,61 @@ using System.Net;
 using Goedel.Mesh.Platform;
 using Goedel.Mesh.Platform.Windows;
 using Goedel.Cryptography;
+using Goedel.Cryptography.Windows;
 using Goedel.Cryptography.KeyFile;
+using Test.Common;
+using UT = Microsoft.VisualStudio.TestTools.UnitTesting;
+
 
 namespace Goedel.Mesh {
     class Program {
+        static TestConstant TestConstant;
+        static MeshCatalog MeshCatalog;
+
         static void Main(string[] args) {
-            Goedel.Platform.Framework.Platform.Initialize();
-            Goedel.Cryptography.Framework.Cryptography.Initialize();
-            Goedel.Mesh.Platform.Windows.Platform.Initialize();
+            TestConstant = new TestConstant();
+            MeshWindows.Initialize(true);
 
-            var MeshTest = new MeshTest();
-            MeshTest.Gateway();
+            MeshCatalog = new MeshCatalog();
+            MeshCatalog.EraseTest(); // remove previous test data
 
 
+            // Connect to a direct, in process portal.
+            var Portal = new MeshPortalDirect(TestConstant.NameService, TestConstant.LogMesh, TestConstant.LogPortal);
+            MeshPortal.Default = Portal;
+
+
+            var Program = new Program();
+            Program.Test();
             }
+
+
+        void Test () {
+            var DeviceRegistration = MeshCatalog.GetDevice(DeviceNew: true,
+            DeviceID: TestConstant.Device1,
+            DeviceDescription: TestConstant.Device1Description);
+
+            var PersonalProfile1 = new PersonalProfile(DeviceRegistration.DeviceProfile);
+            var PersonalRegistration = MeshCatalog.AddPersonal(TestConstant.AccountID, PersonalProfile1);
+
+            UT.Assert.IsNotNull(PersonalRegistration);
+            UT.Assert.IsNotNull(PersonalRegistration.SignedPersonalProfile);
+
+            var MeshCatalog2 = new MeshCatalog();
+
+
+            var PersonalMesh = MeshCatalog2.GetPersonal(TestConstant.AccountID);
+            var PersonalProfile2 = PersonalMesh.PersonalProfile;
+
+            UT.Assert.AreEqual(PersonalProfile1.UDF, PersonalProfile2.UDF);
+            UT.Assert.AreEqual(PersonalProfile1.AdministrationKey.UDF, PersonalProfile2.AdministrationKey.UDF);
+            UT.Assert.AreEqual(PersonalProfile1.DeviceProfile.UDF, PersonalProfile2.DeviceProfile.UDF);
+            UT.Assert.IsTrue(PersonalProfile1.Valid);
+            UT.Assert.IsTrue(PersonalProfile2.Valid);
+            }
+
+
+
         }
 
 
@@ -120,9 +161,17 @@ namespace Goedel.Mesh {
         public string Portal = "Tportal.jlog";
 
         MeshCatalog MeshCatalog;
+        TestConstant TestConstant;
+
         public MeshTest() {
+            TestConstant = new TestConstant();
+
+            // Connect to a direct, in process portal.
+            var Portal = new MeshPortalDirect(TestConstant.NameService, TestConstant.LogMesh, TestConstant.LogPortal);
+            MeshPortal.Default = Portal;
 
             MeshCatalog = new MeshCatalog();
+
 
 
             }
@@ -132,16 +181,24 @@ namespace Goedel.Mesh {
         /// </summary>
         public void Gateway () {
 
-            var Registration = MeshCatalog.AddPersonal(AccountID, DeviceNew:true,
-                DeviceID: Device1, DeviceDescription: Device1Description);
+            var Registration = MeshCatalog.AddPersonal(TestConstant.AccountID, DeviceNew: true,
+                        DeviceID: TestConstant.Device1,
+                        DeviceDescription: TestConstant.Device1Description);
 
-            var SignedPersonalProfile = Registration.Profile;
+            var SignedPersonalProfile = Registration.SignedPersonalProfile;
             //var ProfileDevice = Registration.Device.UDF;
             var PortalID = Registration.Portals.Default;
 
             Console.WriteLine("Created new personal profile {0}", SignedPersonalProfile.UDF);
             //Report("Device profile is {0}", ProfileDevice);
             Console.WriteLine("Profile registered to {0}", PortalID);
+
+
+
+            MeshCatalog.EraseTest();
+
+
+
             }
 
 
@@ -348,7 +405,8 @@ namespace Goedel.Mesh {
             ConnectionResult.Result = "Accept";
             ConnectionResult.Device = DevProfile2;
             var SignedConnectionResult = new SignedConnectionResult(ConnectionResult,
-                AccountPersonalProfile.GetAdministrationKey());
+                AccountPersonalProfile.AdministrationKey);
+
             Mesh.CloseConnectionRequest(Account.AccountID, SignedConnectionResult);
 
 

@@ -212,7 +212,7 @@ namespace Goedel.Mesh {
             var Slot = Get(Key);
             if (Slot == null) {
                 var NewEntry = new ConfigRegistryEntrySZ(Value);
-                Dictionary.Add(Key, NewEntry);
+                Dictionary.AddSafe(Key, NewEntry); // NYI check if null
                 return true;
                 }
             var Entry = Slot as ConfigRegistryEntrySZ;
@@ -233,7 +233,7 @@ namespace Goedel.Mesh {
             var Slot = Get(Key);
             if (Slot == null) {
                 var NewEntry = new ConfigRegistryEntryDWORD(Value);
-                Dictionary.Add(Key, NewEntry);
+                Dictionary.AddSafe(Key, NewEntry);// NYI check if null
                 return true;
                 }
             var Entry = Slot as ConfigRegistryEntryDWORD;
@@ -253,7 +253,7 @@ namespace Goedel.Mesh {
             var Slot = Get(Key);
             if (Slot == null) {
                 var NewEntry = new ConfigRegistryEntryBINARY(Value);
-                Dictionary.Add(Key, NewEntry);
+                Dictionary.AddSafe(Key, NewEntry);// NYI check if null
                 return true;
                 }
             var Entry = Slot as ConfigRegistryEntryBINARY;

@@ -109,7 +109,7 @@ namespace DumpLog {
         public static void Dump(SignedApplicationProfile Item) {
             if (Item == null) return;
 
-            Dump(Item.Signed);
+            Dump(Item.ApplicationProfile);
             }
 
         public static void Dump(ApplicationProfile Item) {
