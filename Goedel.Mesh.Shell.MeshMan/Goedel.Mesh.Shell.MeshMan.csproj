@@ -9,9 +9,10 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Goedel.Mesh.Shell.MeshMan</RootNamespace>
     <AssemblyName>Goedel.Mesh.Shell.MeshMan</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
+    <AssemblyVersion>1.0.0.138</AssemblyVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -70,17 +71,22 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Dispatch.cs" />
+    <Compile Include="DispatchDump.cs" />
+    <Compile Include="DispatchEscrow.cs" />
     <Compile Include="DispatchPassword.cs" />
+    <Compile Include="DispatchConfirm.cs" />
+    <Compile Include="DispatchRecrypt.cs" />
+    <Compile Include="DispatchMail.cs" />
     <Compile Include="DispatchSSH.cs" />
     <Compile Include="Exceptions.cs">
-      <DependentUpon>Exceptions.Exceptional</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+      <DependentUpon>Exceptions.Exceptional</DependentUpon>
     </Compile>
     <Compile Include="meshman.cs">
-      <DependentUpon>meshman.command</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+      <DependentUpon>meshman.command</DependentUpon>
     </Compile>
     <Compile Include="MeshUtilities.cs" />
     <Compile Include="NYI.cs" />
@@ -109,6 +115,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DispatchExport.cs" />
     <None Include="Exceptions.Exceptional">
       <Generator>Exceptional</Generator>
       <LastGenOutput>Exceptions.cs</LastGenOutput>
@@ -117,6 +124,7 @@
       <Generator>CommandCS</Generator>
       <LastGenOutput>meshman.cs</LastGenOutput>
     </None>
+    <None Include="meshman.notcs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -33,6 +33,12 @@ namespace Goedel.Mesh.Platform {
     /// Describes the registration of a device profile on a machine.
     /// </summary>
     public abstract class RegistrationDevice : Registration {
+
+        /// <summary>
+        /// The registered signed profile.
+        /// </summary>
+        public override SignedProfile SignedProfile { get => SignedDeviceProfile; }
+
         /// <summary>
         /// The Device profile
         /// </summary>
@@ -42,13 +48,45 @@ namespace Goedel.Mesh.Platform {
         /// The most recent cached profile data, if available.
         /// </summary>
         public virtual DeviceProfile DeviceProfile {
-            get { return SignedDeviceProfile.DeviceProfile; }
+            get => SignedDeviceProfile.DeviceProfile;
             }
 
+        /// <summary>
+        /// Begin the process of connecting to a profile at the specified portal
+        /// </summary>
+        /// <param name="PortalID">The portal to connect to</param>
+        /// <param name="PIN">Optional one time authenticator.</param>
+        public RegistrationPersonal BeginConnect(string PortalID, string PIN = null) {
+
+            // Create a portal for the PortalID
+            var MeshClient = new MeshClient(PortalAccount: PortalID) {
+                SignedDeviceProfile = SignedDeviceProfile
+                };
+
+            // Fetch the personal profile 
+            var SignedPersonalProfile = MeshClient.GetPersonalProfile();
+            MeshClient.SignedPersonalProfile = SignedPersonalProfile;
+
+            var PendingResponse = MeshClient.ConnectRequest(SignedDeviceProfile);
+
+            // Copy the MeshClient to the unconnected profile
+            var RegisteredPersonal = MeshCatalog.AddPersonal(SignedPersonalProfile.PersonalProfile);
+            RegisteredPersonal.MeshClient = MeshClient;
+
+            return RegisteredPersonal;
+            }
 
         /// <summary>
         /// The profile fingerprint
         /// </summary>
-        public override string UDF { get { return SignedDeviceProfile?.UDF; } }
+        public override string UDF { get => SignedDeviceProfile?.UDF; }
+
+        public override void Write(bool Default = true) {
+            WriteToLocal(Default);
+            }
+
+        public override void Read() {
+            }
         }
+
     }

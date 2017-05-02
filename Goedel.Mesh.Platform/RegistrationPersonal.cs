@@ -26,6 +26,7 @@ using System.Linq;
 using System.IO;
 using Goedel.Utilities;
 using Goedel.Mesh;
+using Goedel.Protocol;
 
 namespace Goedel.Mesh.Platform {
 
@@ -35,15 +36,36 @@ namespace Goedel.Mesh.Platform {
     /// the fingerprint, the cached profile data and the list of portal entries
     /// to which the profile is bound.
     /// </summary>
-    public abstract class RegistrationPersonal : Registration {
+    public abstract class RegistrationPersonal : PortalRegistration {
+
+        /// <summary>
+        /// The registered signed profile.
+        /// </summary>
+        public override SignedProfile SignedProfile { get => SignedPersonalProfile; }
+
 
         /// <summary>
         /// The most recent cached profile data, if available.
         /// </summary>
         public virtual PersonalProfile PersonalProfile {
-            get { return SignedPersonalProfile.PersonalProfile; }
+            get => SignedPersonalProfile.PersonalProfile; 
             }
 
+
+        /// <summary>
+        /// Client which may be used to interact with the portal on which this
+        /// profile is registered.
+        /// </summary>
+        public override MeshClient MeshClient {
+            get {
+                _MeshClient = _MeshClient ?? MeshCatalog.Bind(Portals.Default);
+                return _MeshClient;
+                }
+            set {
+                _MeshClient = value;
+                }
+            }
+        MeshClient _MeshClient = null;
 
         /// <summary>
         /// The most recent cached profile data, if available.
@@ -53,34 +75,109 @@ namespace Goedel.Mesh.Platform {
         /// <summary>
         /// The profile fingerprint
         /// </summary>
-        public override string UDF { get { return SignedPersonalProfile?.UDF; } }
+        public override string UDF { get => SignedPersonalProfile?.UDF; } 
 
         /// <summary>
         /// Profiles associated with this account in chronological order.
         /// </summary>
         public abstract SortedList<DateTime, SignedProfile> Profiles { get; set; }
 
-        /// <summary>
-        /// List of the accounts through which the profile is registered.
-        /// </summary>
-        public abstract PortalCollection Portals { get; }
 
-        /// <summary>
-        /// Client which may be used to interact with the portal on which this
-        /// profile is registered.
-        /// </summary>
-        public MeshClient MeshClient { get; set; }
+        public virtual bool Escrow (int Shares, int Quorum) {
+            var OfflineEscrowEntry = new OfflineEscrowEntry(
+               PersonalProfile, Shares, Quorum);
+            return Escrow(OfflineEscrowEntry);
+            }
 
-        public bool Escrow (OfflineEscrowEntry OfflineEscrowEntry) {
-            return false;
+        public virtual bool Escrow(OfflineEscrowEntry OfflineEscrowEntry) {
+            var Result = MeshClient.Publish(OfflineEscrowEntry);
+            return Result.Status.StatusSuccess();
             }
 
 
+        /// <summary>
+        /// Add a portal to this registration
+        /// </summary>
+        /// <param name="AccountID"></param>
+        /// <param name="MeshClient"></param>
+        /// <param name="Create">If true, the mesh client </param>
+        public abstract void AddPortal(string AccountID, MeshClient MeshClient = null, bool Create=false);
+
+        /// <summary>
+        /// Add an application to this profile
+        /// </summary>
+        /// <param name="Profile"></param>
+        /// <param name="Delay"></param>
+        /// <returns></returns>
         public virtual RegistrationApplication Add(
-                    ApplicationProfile Profile,
-                    bool Delay) {
+                    ApplicationProfile Profile, bool Write = true) {
+
+            var Entry = PersonalProfile.Add(Profile);
+
+            var RegistrationApplication = RegisterApplication(Profile);
+            RegistrationApplication.RegistrationPersonal = this;
+
+            if (Write) {
+                this.Write();
+                RegistrationApplication.Write();
+                }
+
+            return RegistrationApplication;
+            }
+
+        ApplicationProfileEntry ApplicationProfileEntry { get; set; }
+
+        /// <summary>
+        /// Factory method to create an application registration. 
+        /// </summary>
+        /// <param name="ApplicationProfile"></param>
+        /// <returns></returns>
+        public abstract RegistrationApplication RegisterApplication(ApplicationProfile ApplicationProfile);
+
+        /// <summary>
+        /// Complete process of connecting to a profile.
+        /// </summary>
+        public List<ConnectionRequest> GetPending() {
             throw new NYI();
             }
+
+        /// <summary>
+        /// Complete process of connecting to a profile.
+        /// </summary>
+        public void Confirm(ConnectionRequest Request) {
+            PersonalProfile.Add(Request.Device.DeviceProfile);
+
+            Write();
+           
+            }
+
+        /// <summary>
+        /// Provide a PIN for authenticating the specified account ID
+        /// </summary>
+        public string GetPin (string AccountID, int length) {
+            throw new NYI();
+            }
+
+        /// <summary>
+        /// Complete process of connecting to a profile.
+        /// </summary>
+        public void CompleteConnect() {
+            GetFromPortal();
+            }
+
+        /// <summary>
+        /// Fetch the latest version of the profile version
+        /// </summary>
+        public override void GetFromPortal() {
+            SignedPersonalProfile = MeshClient.GetPersonalProfile();
+            }
+        /// <summary>
+        /// Update the associated profile in the registry
+        /// </summary>
+        public override void WriteToPortal() {
+            MeshClient.Publish(SignedPersonalProfile);
+            }
+
         }
 
     }

@@ -100,8 +100,24 @@ namespace Goedel.Mesh {
 					}
 
 
-				case "RecryptPrivate" : {
-					var Result = new RecryptPrivate ();
+				case "RecryptDevicePublic" : {
+					var Result = new RecryptDevicePublic ();
+					Result.Deserialize (JSONReader);
+					Out = Result;
+					break;
+					}
+
+
+				case "RecryptProfilePrivate" : {
+					var Result = new RecryptProfilePrivate ();
+					Result.Deserialize (JSONReader);
+					Out = Result;
+					break;
+					}
+
+
+				case "RecryptDevicePrivate" : {
+					var Result = new RecryptDevicePrivate ();
 					Result.Deserialize (JSONReader);
 					Out = Result;
 					break;
@@ -133,10 +149,10 @@ namespace Goedel.Mesh {
 
 		public virtual string						Account  {get; set;}
         /// <summary>
-        ///Authorized Authentication keys for this account.
+        ///Public device keys
         /// </summary>
 
-		public virtual List<PublicKey>				Authentication  {get; set;}
+		public virtual List<RecryptDevicePublic>				Devices  {get; set;}
 
         /// <summary>
         /// Tag identifying this class.
@@ -199,12 +215,12 @@ namespace Goedel.Mesh {
 				_Writer.WriteToken ("Account", 1);
 					_Writer.WriteString (Account);
 				}
-			if (Authentication != null) {
+			if (Devices != null) {
 				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("Authentication", 1);
+				_Writer.WriteToken ("Devices", 1);
 				_Writer.WriteArrayStart ();
 				bool _firstarray = true;
-				foreach (var _index in Authentication) {
+				foreach (var _index in Devices) {
 					_Writer.WriteArraySeparator (ref _firstarray);
 					// This is an untagged structure. Cannot inherit.
                     //_Writer.WriteObjectStart();
@@ -318,14 +334,14 @@ namespace Goedel.Mesh {
 					Account = JSONReader.ReadString ();
 					break;
 					}
-				case "Authentication" : {
+				case "Devices" : {
 					// Have a sequence of values
 					bool _Going = JSONReader.StartArray ();
-					Authentication = new List <PublicKey> ();
+					Devices = new List <RecryptDevicePublic> ();
 					while (_Going) {
 						// an untagged structure.
-						var _Item = new PublicKey (JSONReader);
-						Authentication.Add (_Item);
+						var _Item = new RecryptDevicePublic (JSONReader);
+						Devices.Add (_Item);
 						_Going = JSONReader.NextArray ();
 						}
 					break;
@@ -343,29 +359,41 @@ namespace Goedel.Mesh {
 
 	/// <summary>
 	///
-	/// Private portion of profile. Currently empty.
+	/// Contains public device description
 	/// </summary>
-	public partial class RecryptPrivate : ApplicationProfilePrivate {
+	public partial class RecryptDevicePublic : ApplicationDevicePublic {
+        /// <summary>
+        ///A private keypair or keypair contribution created for exclusive use 
+        ///of this device.
+        /// </summary>
+
+		public virtual PublicKey						EncryptKey  {get; set;}
+        /// <summary>
+        ///A private keypair or keypair contribution created for exclusive use 
+        ///of this device.
+        /// </summary>
+
+		public virtual PublicKey						AuthKey  {get; set;}
 
         /// <summary>
         /// Tag identifying this class.
         /// </summary>
         /// <returns>The tag</returns>
 		public override string Tag () {
-			return "RecryptPrivate";
+			return "RecryptDevicePublic";
 			}
 
         /// <summary>
         /// Default Constructor
         /// </summary>
-		public RecryptPrivate () {
+		public RecryptDevicePublic () {
 			_Initialize ();
 			}
         /// <summary>
 		/// Initialize class from JSONReader stream.
         /// </summary>		
         /// <param name="JSONReader">Input stream</param>	
-		public RecryptPrivate (JSONReader JSONReader) {
+		public RecryptDevicePublic (JSONReader JSONReader) {
 			Deserialize (JSONReader);
 			}
 
@@ -373,7 +401,201 @@ namespace Goedel.Mesh {
 		/// Initialize class from a JSON encoded class.
         /// </summary>		
         /// <param name="_String">Input string</param>
-		public RecryptPrivate (string _String) {
+		public RecryptDevicePublic (string _String) {
+			Deserialize (_String);
+			}
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="Writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
+			SerializeX (Writer, wrap, ref first);
+			}
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_Writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			if (_wrap) {
+				_Writer.WriteObjectStart ();
+				}
+			((ApplicationDevicePublic)this).SerializeX(_Writer, false, ref _first);
+			if (EncryptKey != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("EncryptKey", 1);
+					EncryptKey.Serialize (_Writer, false);
+				}
+			if (AuthKey != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("AuthKey", 1);
+					AuthKey.Serialize (_Writer, false);
+				}
+			if (_wrap) {
+				_Writer.WriteObjectEnd ();
+				}
+			}
+
+
+
+        /// <summary>
+		/// Create a new instance from untagged byte input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>		
+		public static new RecryptDevicePublic From (byte[] _Data) {
+			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
+			return From (_Input);
+			}
+
+        /// <summary>
+		/// Create a new instance from untagged string input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>				
+		public static new RecryptDevicePublic From (string _Input) {
+			StringReader _Reader = new StringReader (_Input);
+            JSONReader JSONReader = new JSONReader (_Reader);
+			return new RecryptDevicePublic (JSONReader);
+			}
+
+        /// <summary>
+		/// Create a new instance from tagged byte input.
+		/// i.e. { "RecryptDevicePublic" : {... data ... } }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>				
+		public static new RecryptDevicePublic FromTagged (byte[] _Data) {
+			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
+			return FromTagged (_Input);
+			}
+
+        /// <summary>
+        /// Create a new instance from tagged string input.
+		/// i.e. { "RecryptDevicePublic" : {... data ... } }
+        /// </summary>
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>		
+		public static new RecryptDevicePublic FromTagged (string _Input) {
+			//RecryptDevicePublic _Result;
+			//Deserialize (_Input, out _Result);
+			StringReader _Reader = new StringReader (_Input);
+            JSONReader JSONReader = new JSONReader (_Reader);
+			return FromTagged (JSONReader) ;
+			}
+
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+        /// <returns>The created object.</returns>		
+        public static new RecryptDevicePublic  FromTagged (JSONReader JSONReader) {
+			RecryptDevicePublic Out = null;
+
+			JSONReader.StartObject ();
+            if (JSONReader.EOR) {
+                return null;
+                }
+
+			string token = JSONReader.ReadToken ();
+
+			switch (token) {
+
+				case "RecryptDevicePublic" : {
+					var Result = new RecryptDevicePublic ();
+					Result.Deserialize (JSONReader);
+					Out = Result;
+					break;
+					}
+
+				default : {
+                    break;
+					}
+				}
+			JSONReader.EndObject ();
+
+			return Out;
+			}
+
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
+		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+			
+			switch (Tag) {
+				case "EncryptKey" : {
+					// An untagged structure
+					EncryptKey = new PublicKey (JSONReader);
+ 
+					break;
+					}
+				case "AuthKey" : {
+					// An untagged structure
+					AuthKey = new PublicKey (JSONReader);
+ 
+					break;
+					}
+				default : {
+					base.DeserializeToken(JSONReader, Tag);
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
+	/// <summary>
+	///
+	/// Private portion of profile. Currently empty. Might have a list of 
+	/// registered accounts at some point or may not.
+	/// </summary>
+	public partial class RecryptProfilePrivate : ApplicationProfilePrivate {
+
+        /// <summary>
+        /// Tag identifying this class.
+        /// </summary>
+        /// <returns>The tag</returns>
+		public override string Tag () {
+			return "RecryptProfilePrivate";
+			}
+
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
+		public RecryptProfilePrivate () {
+			_Initialize ();
+			}
+        /// <summary>
+		/// Initialize class from JSONReader stream.
+        /// </summary>		
+        /// <param name="JSONReader">Input stream</param>	
+		public RecryptProfilePrivate (JSONReader JSONReader) {
+			Deserialize (JSONReader);
+			}
+
+        /// <summary> 
+		/// Initialize class from a JSON encoded class.
+        /// </summary>		
+        /// <param name="_String">Input string</param>
+		public RecryptProfilePrivate (string _String) {
 			Deserialize (_String);
 			}
 
@@ -416,7 +638,7 @@ namespace Goedel.Mesh {
         /// </summary>	
         /// <param name="_Data">The input data.</param>
         /// <returns>The created object.</returns>		
-		public static new RecryptPrivate From (byte[] _Data) {
+		public static new RecryptProfilePrivate From (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return From (_Input);
 			}
@@ -427,31 +649,31 @@ namespace Goedel.Mesh {
         /// </summary>	
         /// <param name="_Input">The input data.</param>
         /// <returns>The created object.</returns>				
-		public static new RecryptPrivate From (string _Input) {
+		public static new RecryptProfilePrivate From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-			return new RecryptPrivate (JSONReader);
+			return new RecryptProfilePrivate (JSONReader);
 			}
 
         /// <summary>
 		/// Create a new instance from tagged byte input.
-		/// i.e. { "RecryptPrivate" : {... data ... } }
+		/// i.e. { "RecryptProfilePrivate" : {... data ... } }
         /// </summary>	
         /// <param name="_Data">The input data.</param>
         /// <returns>The created object.</returns>				
-		public static new RecryptPrivate FromTagged (byte[] _Data) {
+		public static new RecryptProfilePrivate FromTagged (byte[] _Data) {
 			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
 			return FromTagged (_Input);
 			}
 
         /// <summary>
         /// Create a new instance from tagged string input.
-		/// i.e. { "RecryptPrivate" : {... data ... } }
+		/// i.e. { "RecryptProfilePrivate" : {... data ... } }
         /// </summary>
         /// <param name="_Input">The input data.</param>
         /// <returns>The created object.</returns>		
-		public static new RecryptPrivate FromTagged (string _Input) {
-			//RecryptPrivate _Result;
+		public static new RecryptProfilePrivate FromTagged (string _Input) {
+			//RecryptProfilePrivate _Result;
 			//Deserialize (_Input, out _Result);
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
@@ -464,8 +686,8 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="JSONReader">The input stream</param>
         /// <returns>The created object.</returns>		
-        public static new RecryptPrivate  FromTagged (JSONReader JSONReader) {
-			RecryptPrivate Out = null;
+        public static new RecryptProfilePrivate  FromTagged (JSONReader JSONReader) {
+			RecryptProfilePrivate Out = null;
 
 			JSONReader.StartObject ();
             if (JSONReader.EOR) {
@@ -476,8 +698,8 @@ namespace Goedel.Mesh {
 
 			switch (token) {
 
-				case "RecryptPrivate" : {
-					var Result = new RecryptPrivate ();
+				case "RecryptProfilePrivate" : {
+					var Result = new RecryptProfilePrivate ();
 					Result.Deserialize (JSONReader);
 					Out = Result;
 					break;
@@ -501,6 +723,211 @@ namespace Goedel.Mesh {
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
+				default : {
+					base.DeserializeToken(JSONReader, Tag);
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
+	/// <summary>
+	///
+	/// Private data specific to the device
+	/// </summary>
+	public partial class RecryptDevicePrivate : ApplicationDevicePrivate {
+        /// <summary>
+        ///A private keypair or keypair contribution created for exclusive use 
+        ///of this device.
+        /// </summary>
+
+		public virtual PublicKey						EncryptKey  {get; set;}
+        /// <summary>
+        ///A private keypair or keypair contribution created for exclusive use 
+        ///of this device.
+        /// </summary>
+
+		public virtual PublicKey						AuthKey  {get; set;}
+
+        /// <summary>
+        /// Tag identifying this class.
+        /// </summary>
+        /// <returns>The tag</returns>
+		public override string Tag () {
+			return "RecryptDevicePrivate";
+			}
+
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
+		public RecryptDevicePrivate () {
+			_Initialize ();
+			}
+        /// <summary>
+		/// Initialize class from JSONReader stream.
+        /// </summary>		
+        /// <param name="JSONReader">Input stream</param>	
+		public RecryptDevicePrivate (JSONReader JSONReader) {
+			Deserialize (JSONReader);
+			}
+
+        /// <summary> 
+		/// Initialize class from a JSON encoded class.
+        /// </summary>		
+        /// <param name="_String">Input string</param>
+		public RecryptDevicePrivate (string _String) {
+			Deserialize (_String);
+			}
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="Writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
+			SerializeX (Writer, wrap, ref first);
+			}
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_Writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			if (_wrap) {
+				_Writer.WriteObjectStart ();
+				}
+			((ApplicationDevicePrivate)this).SerializeX(_Writer, false, ref _first);
+			if (EncryptKey != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("EncryptKey", 1);
+					EncryptKey.Serialize (_Writer, false);
+				}
+			if (AuthKey != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("AuthKey", 1);
+					AuthKey.Serialize (_Writer, false);
+				}
+			if (_wrap) {
+				_Writer.WriteObjectEnd ();
+				}
+			}
+
+
+
+        /// <summary>
+		/// Create a new instance from untagged byte input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>		
+		public static new RecryptDevicePrivate From (byte[] _Data) {
+			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
+			return From (_Input);
+			}
+
+        /// <summary>
+		/// Create a new instance from untagged string input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>				
+		public static new RecryptDevicePrivate From (string _Input) {
+			StringReader _Reader = new StringReader (_Input);
+            JSONReader JSONReader = new JSONReader (_Reader);
+			return new RecryptDevicePrivate (JSONReader);
+			}
+
+        /// <summary>
+		/// Create a new instance from tagged byte input.
+		/// i.e. { "RecryptDevicePrivate" : {... data ... } }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>				
+		public static new RecryptDevicePrivate FromTagged (byte[] _Data) {
+			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
+			return FromTagged (_Input);
+			}
+
+        /// <summary>
+        /// Create a new instance from tagged string input.
+		/// i.e. { "RecryptDevicePrivate" : {... data ... } }
+        /// </summary>
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>		
+		public static new RecryptDevicePrivate FromTagged (string _Input) {
+			//RecryptDevicePrivate _Result;
+			//Deserialize (_Input, out _Result);
+			StringReader _Reader = new StringReader (_Input);
+            JSONReader JSONReader = new JSONReader (_Reader);
+			return FromTagged (JSONReader) ;
+			}
+
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+        /// <returns>The created object.</returns>		
+        public static new RecryptDevicePrivate  FromTagged (JSONReader JSONReader) {
+			RecryptDevicePrivate Out = null;
+
+			JSONReader.StartObject ();
+            if (JSONReader.EOR) {
+                return null;
+                }
+
+			string token = JSONReader.ReadToken ();
+
+			switch (token) {
+
+				case "RecryptDevicePrivate" : {
+					var Result = new RecryptDevicePrivate ();
+					Result.Deserialize (JSONReader);
+					Out = Result;
+					break;
+					}
+
+				default : {
+                    break;
+					}
+				}
+			JSONReader.EndObject ();
+
+			return Out;
+			}
+
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
+		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+			
+			switch (Tag) {
+				case "EncryptKey" : {
+					// An untagged structure
+					EncryptKey = new PublicKey (JSONReader);
+ 
+					break;
+					}
+				case "AuthKey" : {
+					// An untagged structure
+					AuthKey = new PublicKey (JSONReader);
+ 
+					break;
+					}
 				default : {
 					base.DeserializeToken(JSONReader, Tag);
 					break;

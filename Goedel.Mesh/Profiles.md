@@ -45,15 +45,52 @@ The corresponding wrapper has the following properties:
 :: Validate and unpack the profile
 
 
+==Registered profile
+
+A profile may be persisted locally, at a portal or both. 
+
+
+==Portal Account
+
+To persist profiles
+at a portal, a portal account is required. Creation of portal accounts are
+the one instance in which user code interacts with the MeshClient object class directly
+
+~~~~
+var MeshClient = new MeshClient (Service:"example.com");
+~~~~
+
+~~~~
+var Try1 = MeshClient.Validate ("alice@example.com")
+~~~~
+
+~~~~
+var Try2 = MeshClient.Validate ("alice2@example.com")
+~~~~
+
+~~~~
+RegisteredProfile.Register (MeshClient, "alice2@example.com")
+~~~~
+
+
+
 ==Creating and Updating Profiles
 
 Profiles are managed through the MeshCatalog of profile registrations. The pattern for 
 creating, manipulating and updating profiles is:
 
-* Create the profile.
 
-* Register the profile in the MeshCatalog. This causes the profile to be persisted
-on the local machine and the portal(s).
+
+* Create the personal  profile.
+
+* Register the profile in the MeshCatalog. This causes the profile 
+  to be persisted to the local machine
+
+* Register the profile to the Portal(s). This provides for external
+  persistence.
+
+To update a profile: 
+
 
 * Fetch the profile from the catalog.
 
@@ -61,8 +98,6 @@ on the local machine and the portal(s).
 
 * Update the registered profile.
 
-This approach allows us to use the Profile* classes to interact with the profile data
-and then checkpoint that data against the local and remote mesh.
 
 ~~~~
 ~~~~

@@ -9,9 +9,10 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Goedel.Mesh.Platform</RootNamespace>
     <AssemblyName>Goedel.Mesh.Platform</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
+    <AssemblyVersion>1.0.0.142</AssemblyVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -56,6 +57,7 @@
     <Compile Include="AbstractRegistration.cs" />
     <Compile Include="RegistrationDevice.cs" />
     <Compile Include="RegistrationApplication.cs" />
+    <Compile Include="RegistrationMachine.cs" />
     <Compile Include="RegistrationPersonal.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -65,6 +67,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Goedel.Mesh.Client\Goedel.Mesh.Client.csproj">
+      <Project>{a803fe85-50d9-4ccd-8ffc-f653a4bd73e3}</Project>
+      <Name>Goedel.Mesh.Client</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Goedel.Mesh.Server\Goedel.Mesh.Server.csproj">
       <Project>{f6343f1b-d03d-4965-9113-5120a8054e9e}</Project>
       <Name>Goedel.Mesh.Server</Name>

@@ -236,14 +236,15 @@ namespace Goedel.Mesh {
             // Validate the signed profile
             Assert.True(Profile.Validate(), ProfileInvalid.Throw);
 
+            var Now = DateTime.Now;
             // Create the new account on the portal (fail if already exists)
-            var Account = new Account();
-            Account.AccountID = AccountID;
-            Account.Status = "Open";
-            Account.Created = DateTime.Now;
-            Account.Modified = Account.Created;
-            Account.UserProfileUDF = Profile.Identifier;
-
+            var Account = new Account() {
+                AccountID = AccountID,
+                Status = "Open",
+                Created = Now,
+                Modified = Now,
+                UserProfileUDF = Profile.Identifier
+                };
             //// Allow accounts to be searched by the profile they link to:
             //var KeyData = new IndexTerm(KeyUserProfile, Account.UniqueID);
             //var KeyDatas = new List<IndexTerm> { KeyData };
@@ -255,6 +256,32 @@ namespace Goedel.Mesh {
 
             return true;
             }
+
+
+        /// <summary>
+        /// Create an account with the specified account name and profile.
+        /// <para>The profile is validated for consistency and rejected if 
+        /// validation fails.</para>
+        /// <para>The new account is registered in the Portal log under  
+        /// AccountName@Domain as the unique identifier. The profile is 
+        /// registered in the mesh under the </para>
+        /// </summary>
+        /// <param name="AccountID">The requested account name.</param>
+        /// <returns>True if the transaction was successful, otherwise false.  </returns>
+        public bool DeleteAccount (string AccountID) {
+
+            var KeyAccountID = Account.PrimaryKey(AccountID);
+
+            var AccountDataItem = PortalByPrimary.Get(KeyAccountID);
+            if (AccountDataItem == null) {
+                return false;
+                }
+
+            PortalStore.Delete(AccountDataItem);
+
+            return true;
+            }
+
 
         /// <summary>
         /// Get Account with the specified identifier.
@@ -282,7 +309,9 @@ namespace Goedel.Mesh {
             var ConnectionsDataItem = PortalByPrimary.Get(
                 ConnectionsPending.PrimaryKey(Account.UserProfileUDF));
 
-            if (ConnectionsDataItem == null) return null;
+            if (ConnectionsDataItem == null) {
+                return null;
+                }
 
             var Result  = ConnectionsPending.FromTagged(ConnectionsDataItem.Text);
             return Result;
@@ -363,7 +392,7 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="SignedConnectionRequest">The request to post</param>
         /// <param name="AccountId">The account to post it to.</param>
-        public void PostConnectionRequest (
+        public void PostConnectionRequest(
                 SignedConnectionRequest SignedConnectionRequest, string AccountId) {
             var ConnectionRequest = SignedConnectionRequest.Data;
 
@@ -371,9 +400,10 @@ namespace Goedel.Mesh {
             var Account = GetAccount(AccountId);
             var ConnectionsPending = GetPending(Account);
 
-            if (ConnectionsPending == null) {
-                ConnectionsPending = new ConnectionsPending(AccountId);
-                }
+            ConnectionsPending = ConnectionsPending ?? new ConnectionsPending() {
+                AccountID = AccountId,
+                Requests = new List<SignedConnectionRequest>()
+                };
 
             // Delete any expired requests
             ConnectionsPending.Purge();
@@ -381,7 +411,7 @@ namespace Goedel.Mesh {
             // Add the pending connection
             ConnectionsPending.Requests.Add(SignedConnectionRequest);
 
-            PortalStore.Update(ConnectionsPending, 
+            PortalStore.Update(ConnectionsPending,
                 ConnectionsPending.PrimaryKey(Account.UserProfileUDF), null);
 
             return;
@@ -399,7 +429,9 @@ namespace Goedel.Mesh {
             // Get the pending connections record for the account
             var ConnectionsPending = GetPending(Account);
 
-            if (ConnectionsPending == null) return null;
+            if (ConnectionsPending == null) {
+                return null;
+                }
 
             return ConnectionsPending.Requests;
             }
@@ -420,7 +452,9 @@ namespace Goedel.Mesh {
             var Account = GetAccount(AccountId);
             var ConnectionsPending = GetPending(Account);
 
-            if (ConnectionsPending == null) return false;
+            if (ConnectionsPending == null) {
+                return false;
+                }
 
             SignedConnectionRequest SignedConnectionRequest = null;
             // Remove the specified request

@@ -54,7 +54,7 @@ namespace ExampleGenerator {
             Portal = new MeshPortalTraced(NameService, LogMesh, LogPortal);
             MeshPortal.Default = Portal;
 
-            MeshClient = new MeshClient(NameService);
+            MeshClient = new MeshClient(PortalAccount: NameService);
             }
 
         public string Device1 = "Alice Desktop";
@@ -95,7 +95,7 @@ namespace ExampleGenerator {
 
             Portal.Label(LabelCreatePersonal);
             // Publish to the Portal
-            MeshClient.CreatePersonalProfile(NameAccount, SignedPersonalProfile);
+            MeshClient.CreatePortalAccount(NameAccount, SignedPersonalProfile);
             }
 
 
@@ -162,7 +162,7 @@ namespace ExampleGenerator {
 
             Portal.Label(LabelApplicationPublish);
             // Publish the application profile to the Mesh
-            MeshClient.Publish(PasswordProfile.Signed);
+            MeshClient.Publish(PasswordProfile.SignedApplicationProfile);
 
             Portal.Label(LabelApplicationProfile);
             // Publish the user profile to the Mesh

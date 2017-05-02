@@ -110,17 +110,23 @@ export Custom_TrojanGTK_FLAG	?= /cs
 
 SourceFiles = \
      Exceptions.cs\
-     MeshGateway.cs\
+     MeshCatalog.cs\
      Properties/AssemblyInfo.cs\
-     AbstractRegistration.cs
+     AbstractRegistration.cs\
+     RegistrationDevice.cs\
+     RegistrationApplication.cs\
+     RegistrationMachine.cs\
+     RegistrationPersonal.cs
 
 LinkFiles = \
+    $(LIBRARYBIN)/Goedel.Cryptography.dll\
     $(LIBRARYBIN)/Goedel.Protocol.dll\
     $(LIBRARYBIN)/Goedel.Utilities.dll\
+    $(TARGETBIN)/Goedel.Mesh.Client.dll\
     $(TARGETBIN)/Goedel.Mesh.Server.dll\
     $(TARGETBIN)/Goedel.Mesh.dll
 
-LinkFilesComma = $(LIBRARYBIN)/Goedel.Protocol.dll,$(LIBRARYBIN)/Goedel.Utilities.dll,$(TARGETBIN)/Goedel.Mesh.Server.dll,$(TARGETBIN)/Goedel.Mesh.dll
+LinkFilesComma = $(LIBRARYBIN)/Goedel.Cryptography.dll,$(LIBRARYBIN)/Goedel.Protocol.dll,$(LIBRARYBIN)/Goedel.Utilities.dll,$(TARGETBIN)/Goedel.Mesh.Client.dll,$(TARGETBIN)/Goedel.Mesh.Server.dll,$(TARGETBIN)/Goedel.Mesh.dll
 
 
 NugetFiles = 
@@ -171,6 +177,9 @@ endif
 # Recursive make targets, do not execute if the variable NORECURSE is defined
 ifndef NORECURSE
 
+../Goedel.Mesh.Client/$(TARGETBIN)/Goedel.Mesh.Client.dll : recursive
+! $(MAKE) -C ../Goedel.Mesh.Client
+
 ../Goedel.Mesh.Server/$(TARGETBIN)/Goedel.Mesh.Server.dll : recursive
 ! $(MAKE) -C ../Goedel.Mesh.Server
 
@@ -178,6 +187,10 @@ ifndef NORECURSE
 ! $(MAKE) -C ../Goedel.Mesh
 
 endif
+
+$(TARGETBIN)/Goedel.Mesh.Client.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.Mesh.Client.dll : ../Goedel.Mesh.Client/$(TARGETBIN)/Goedel.Mesh.Client.dll
+!  cp ../Goedel.Mesh.Client/$(TARGETBIN)/Goedel.Mesh.Client.dll $(TARGETBIN)/Goedel.Mesh.Client.dll
 
 $(TARGETBIN)/Goedel.Mesh.Server.dll :| $(TARGETBIN)
 $(TARGETBIN)/Goedel.Mesh.Server.dll : ../Goedel.Mesh.Server/$(TARGETBIN)/Goedel.Mesh.Server.dll

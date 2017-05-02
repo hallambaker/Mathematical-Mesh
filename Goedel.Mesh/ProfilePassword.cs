@@ -38,7 +38,7 @@ namespace Goedel.Mesh {
         /// <summary>
         /// The public type tag
         /// </summary>
-        public static string TypeTag { get { return "PasswordProfile"; } }
+        public static string TypeTag { get => "PasswordProfile";  }
 
         private PasswordProfilePrivate _Private;
 
@@ -60,9 +60,7 @@ namespace Goedel.Mesh {
         /// encryption.
         /// </summary>
         protected override byte[] GetPrivateData {
-            get {
-                return Private.GetBytes();
-                }
+            get => Private.GetBytes();
             }
 
         /// <summary>
@@ -84,12 +82,6 @@ namespace Goedel.Mesh {
             base._Initialize();
             }
 
-        ///// <summary>
-        ///// Create a new password profile and attach it to the specified
-        ///// personal profile.
-        ///// </summary>
-        //public PasswordProfile() :
-        //    base() { }
 
 
 
@@ -159,23 +151,23 @@ namespace Goedel.Mesh {
             return SignedProfile.Profile as PasswordProfile;
             }
 
-        /// <summary>
-        /// Convenience function that converts a generic Signed Profile returned
-        /// by the Mesh to a PasswordProfile.
-        /// </summary>
-        /// <param name="SignedProfile">A signed password profile.</param>
-        /// <param name="PersonalProfile">The personal profile to link the Password Profile to.</param>
-        /// <returns>Inner PasswordProfile if the Signed Profile contains one,
-        /// otherwise null.</returns>
-        public static PasswordProfile Get(SignedProfile SignedProfile,
-                    PersonalProfile PersonalProfile) {
-            var Result = SignedProfile.Profile as PasswordProfile;
+        ///// <summary>
+        ///// Convenience function that converts a generic Signed Profile returned
+        ///// by the Mesh to a PasswordProfile.
+        ///// </summary>
+        ///// <param name="SignedProfile">A signed password profile.</param>
+        ///// <param name="PersonalProfile">The personal profile to link the Password Profile to.</param>
+        ///// <returns>Inner PasswordProfile if the Signed Profile contains one,
+        ///// otherwise null.</returns>
+        //public static PasswordProfile Get(SignedProfile SignedProfile,
+        //            PersonalProfile PersonalProfile) {
+        //    var Result = SignedProfile.Profile as PasswordProfile;
 
-            Assert.NotNull(Result, NotValidProfile.Throw);
+        //    Assert.NotNull(Result, NotValidProfile.Throw);
 
-            Result.Link(PersonalProfile);
-            return (Result);
-            }
+        //    Result.Link(PersonalProfile);
+        //    return (Result);
+        //    }
 
         }
 
@@ -232,7 +224,7 @@ namespace Goedel.Mesh {
             Delete(Site);
 
             var Entry = new PasswordEntry(Site, Username, Password);
-            Entries = Entries == null ? new List<PasswordEntry> (): Entries;
+            Entries = Entries ?? new List<PasswordEntry> () ;
             Entries.Add (Entry);
             }
         }
@@ -246,8 +238,7 @@ namespace Goedel.Mesh {
         /// <param name="Password">Password</param>
         public PasswordEntry(
             string Site, string Username, string Password) {
-            Sites = new List<string>();
-            Sites.Add(Site);
+            Sites = new List<string>() { Site };
             this.Username = Username;
             this.Password = Password;
             }

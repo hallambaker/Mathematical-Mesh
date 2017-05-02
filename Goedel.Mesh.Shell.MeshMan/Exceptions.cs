@@ -383,13 +383,13 @@ namespace Goedel.Mesh.MeshMan {
     public class ProfileNotFound : MeshManException {
 
 		/// <summary>
-        /// Construct instance for exception "Could not find profile XXX"
+        /// Construct instance for exception "Could not find profile"
         /// </summary>		
-		public ProfileNotFound () : base ("Could not find profile XXX") {
+		public ProfileNotFound () : base ("Could not find profile") {
 			}
         
 		/// <summary>
-        /// Construct instance for exception "Could not find profile XXX"
+        /// Construct instance for exception "Could not find profile"
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
 		public ProfileNotFound (string Description) : base (Description) {
@@ -405,6 +405,29 @@ namespace Goedel.Mesh.MeshMan {
 			}
 
 
+		/// <summary>
+        /// Construct instance for exception using a userdata parameter of
+		/// type ExceptionData and the format string "The personal profile {0} could not be found"
+        /// </summary>		
+        /// <param name="Object">User data</param>	
+		public ProfileNotFound (ExceptionData Object) : 
+				base (global::System.String.Format ("The personal profile {0} could not be found",
+					Object.String					)) {
+			UserData = Object;
+			}
+
+		/// <summary>
+        /// Construct instance for exception using a userdata parameter of
+		/// type ExceptionData and the format string "The personal profile {0} could not be found"
+        /// </summary>		
+        /// <param name="Object">User data</param>	
+		/// <param name="Inner">Inner Exception</param>	
+		public ProfileNotFound (ExceptionData Object, System.Exception Inner) : 
+				base (global::System.String.Format ("The personal profile {0} could not be found",
+					Object.String					), Inner) {
+			UserData = Object;
+			}
+
 
 
 		
@@ -416,6 +439,9 @@ namespace Goedel.Mesh.MeshMan {
         static System.Exception _Throw(object Reason) {
 			if (Reason as string != null) {
 				return new ProfileNotFound(Reason as string);
+				}
+			else if (Reason as ExceptionData != null) {
+				return new ProfileNotFound(Reason as ExceptionData);
 				}
 			else {
 				return new ProfileNotFound();
@@ -465,6 +491,196 @@ namespace Goedel.Mesh.MeshMan {
 				}
 			else {
 				return new PublicationRequestRefused();
+				}
+            }
+        }
+
+
+    /// <summary>
+    /// </summary>
+    public class InvalidEscrowParameters : MeshManException {
+
+		/// <summary>
+        /// Construct instance for exception "Invalid escrow parameters"
+        /// </summary>		
+		public InvalidEscrowParameters () : base ("Invalid escrow parameters") {
+			}
+        
+		/// <summary>
+        /// Construct instance for exception "Invalid escrow parameters"
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		public InvalidEscrowParameters (string Description) : base (Description) {
+			}
+
+		/// <summary>
+        /// Construct instance for exception 		/// containing an inner exception.
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		/// <param name="Inner">Inner Exception</param>	
+		public InvalidEscrowParameters (string Description, System.Exception Inner) : 
+				base (Description, Inner) {
+			}
+
+
+
+
+		
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+
+        static System.Exception _Throw(object Reason) {
+			if (Reason as string != null) {
+				return new InvalidEscrowParameters(Reason as string);
+				}
+			else {
+				return new InvalidEscrowParameters();
+				}
+            }
+        }
+
+
+    /// <summary>
+    /// </summary>
+    public class InvalidShares : MeshManException {
+
+		/// <summary>
+        /// Construct instance for exception "An error occurred"
+        /// </summary>		
+		public InvalidShares () : base ("An error occurred") {
+			}
+        
+		/// <summary>
+        /// Construct instance for exception "An error occurred"
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		public InvalidShares (string Description) : base (Description) {
+			}
+
+		/// <summary>
+        /// Construct instance for exception 		/// containing an inner exception.
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		/// <param name="Inner">Inner Exception</param>	
+		public InvalidShares (string Description, System.Exception Inner) : 
+				base (Description, Inner) {
+			}
+
+
+		/// <summary>
+        /// Construct instance for exception using a userdata parameter of
+		/// type ExceptionData and the format string "The number of shares is invalid: {0}"
+        /// </summary>		
+        /// <param name="Object">User data</param>	
+		public InvalidShares (ExceptionData Object) : 
+				base (global::System.String.Format ("The number of shares is invalid: {0}",
+					Object.Int					)) {
+			UserData = Object;
+			}
+
+		/// <summary>
+        /// Construct instance for exception using a userdata parameter of
+		/// type ExceptionData and the format string "The number of shares is invalid: {0}"
+        /// </summary>		
+        /// <param name="Object">User data</param>	
+		/// <param name="Inner">Inner Exception</param>	
+		public InvalidShares (ExceptionData Object, System.Exception Inner) : 
+				base (global::System.String.Format ("The number of shares is invalid: {0}",
+					Object.Int					), Inner) {
+			UserData = Object;
+			}
+
+
+
+		
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+
+        static System.Exception _Throw(object Reason) {
+			if (Reason as string != null) {
+				return new InvalidShares(Reason as string);
+				}
+			else if (Reason as ExceptionData != null) {
+				return new InvalidShares(Reason as ExceptionData);
+				}
+			else {
+				return new InvalidShares();
+				}
+            }
+        }
+
+
+    /// <summary>
+    /// </summary>
+    public class InvalidQuorum : MeshManException {
+
+		/// <summary>
+        /// Construct instance for exception "An error occurred"
+        /// </summary>		
+		public InvalidQuorum () : base ("An error occurred") {
+			}
+        
+		/// <summary>
+        /// Construct instance for exception "An error occurred"
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		public InvalidQuorum (string Description) : base (Description) {
+			}
+
+		/// <summary>
+        /// Construct instance for exception 		/// containing an inner exception.
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		/// <param name="Inner">Inner Exception</param>	
+		public InvalidQuorum (string Description, System.Exception Inner) : 
+				base (Description, Inner) {
+			}
+
+
+		/// <summary>
+        /// Construct instance for exception using a userdata parameter of
+		/// type ExceptionData and the format string "The quorum is invalid: {0}"
+        /// </summary>		
+        /// <param name="Object">User data</param>	
+		public InvalidQuorum (ExceptionData Object) : 
+				base (global::System.String.Format ("The quorum is invalid: {0}",
+					Object.Int					)) {
+			UserData = Object;
+			}
+
+		/// <summary>
+        /// Construct instance for exception using a userdata parameter of
+		/// type ExceptionData and the format string "The quorum is invalid: {0}"
+        /// </summary>		
+        /// <param name="Object">User data</param>	
+		/// <param name="Inner">Inner Exception</param>	
+		public InvalidQuorum (ExceptionData Object, System.Exception Inner) : 
+				base (global::System.String.Format ("The quorum is invalid: {0}",
+					Object.Int					), Inner) {
+			UserData = Object;
+			}
+
+
+
+		
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+
+        static System.Exception _Throw(object Reason) {
+			if (Reason as string != null) {
+				return new InvalidQuorum(Reason as string);
+				}
+			else if (Reason as ExceptionData != null) {
+				return new InvalidQuorum(Reason as ExceptionData);
+				}
+			else {
+				return new InvalidQuorum();
 				}
             }
         }

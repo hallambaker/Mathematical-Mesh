@@ -7,7 +7,7 @@
 	Section 1 "Shared Classes"
 		Description
 			|The following classes are used as common elements in
-			|Mesh profile specifications.
+			|Mesh profile specifications.a
 
 	Section 2 "Cryptographic Data Classes"
 		Description
@@ -236,37 +236,9 @@
 			Description
 				|Application profiles connected to this profile.
 
-	Section 2 "Application Profile Objects"
-
-	Structure SignedApplicationProfile
-		Inherits SignedProfile
-		Description 
-			|Contains a signed device profile
-
-	Structure EncryptedProfile
-		Inherits Entry
-		Description
-			|Contains an encrypted profile entry
-		Struct JoseWebEncryption EncryptedData
-			Description
-				|The signed and encrypted profile
-
-	Structure ApplicationProfile
-		Inherits Profile
-		Description 
-			|Parent class from which all application profiles inherit.
-		Struct JoseWebEncryption EncryptedData
-			Description
-				|Encrypted application data	
-
-	Structure ApplicationProfilePrivate
-		Inherits Entry
-		Description
-			|The base class for all private profiles.
-
 	Structure ApplicationProfileEntry
 		Description
-			|Entry connecting a host to an application.
+			|Personal profile entry describing the privileges of specific devices.
 		String Identifier
 			Description
 				|The unique identifier of the application
@@ -284,10 +256,43 @@
 			Multiple
 			Description
 				|List of devices authorized to read private parts of application 
-				|profiles					
+				|profiles		
 
 
+	Section 2 "Application Profile Objects"
 
+	Structure SignedApplicationProfile
+		Inherits SignedProfile
+		Description 
+			|Contains a signed device profile
+
+
+	Structure ApplicationProfile
+		Inherits Profile
+		Description 
+			|Parent class from which all application profiles inherit.
+		Struct JoseWebEncryption SharedPrivate
+			Description
+				|Encrypted application data	shared between all devices
+		Struct JoseWebEncryption DevicePrivate
+			Multiple
+			Description
+				|Encrypted application data	specific to one device
+
+	Structure ApplicationProfilePrivate
+		Inherits Entry
+		Description
+			|The base class for all private profiles.
+
+	Structure ApplicationDevicePublic
+		Inherits Entry
+		Description
+			|Describes the public per device data
+
+	Structure ApplicationDevicePrivate
+		Inherits Entry
+		Description
+			|Describes the private per device data
 
 	Section 2 "Key Escrow Objects"
 		
@@ -314,12 +319,14 @@
 
 	Structure EscrowedKeySet
 		Description
-			|A set of escrowed keys.
-		Struct Key PrivateKeys
+			|A set of escrowed keys. 
+		TStruct Key MasterSignatureKey
+			Description
+				|A Master Signature Key
+		TStruct Key MasterEscrowKeys
 			Multiple
 			Description
 				|The escrowed keys.
-
 
 	Section 1 "Portal Connection"
 

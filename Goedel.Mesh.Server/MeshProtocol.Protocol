@@ -333,6 +333,28 @@
 		Description
 			|Reports the success or failure of a Create transaction.
 
+	Transaction Admin DeleteAccount DeleteRequest DeleteResponse
+		Description
+			|Request deletion of a portal account.
+		Description
+			|Deletes a portal account but not the underlying profile. Once registered,
+			|profiles are permanent.
+
+	Message DeleteRequest
+		Description
+			|Request deletion of a new portal account. The request specifies
+			|the requested account identifier.
+		Inherits MeshRequest
+		String Account
+			Description
+				|Account identifier to be deleted.
+
+	Message DeleteResponse
+		Inherits MeshResponse
+		Description
+			|Reports the success or failure of a Delete transaction.
+
+
 	//Get
 	Transaction Mesh Get GetRequest GetResponse
 		Description

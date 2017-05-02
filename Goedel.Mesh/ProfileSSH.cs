@@ -26,6 +26,7 @@ using Goedel.Utilities;
 using Goedel.Registry;
 using Goedel.Persistence;
 using Goedel.Cryptography;
+using Goedel.Cryptography.Jose;
 using Goedel.Cryptography.PKIX;
 
 namespace Goedel.Mesh {
@@ -39,7 +40,7 @@ namespace Goedel.Mesh {
         /// <summary>
         /// The public type tag as a static element for efficiency
         /// </summary>
-        public static string TypeTag { get { return "SSHProfile"; } }
+        public static string TypeTag { get => "SSHProfile"; } 
 
         private SSHProfilePrivate _Private;
 
@@ -61,9 +62,7 @@ namespace Goedel.Mesh {
         /// encryption.
         /// </summary>
         protected override byte[] GetPrivateData {
-            get {
-                return Private.GetBytes();
-                }
+            get => Private.GetBytes();
             }
 
         /// <summary>
@@ -75,8 +74,6 @@ namespace Goedel.Mesh {
                 _Private = new SSHProfilePrivate();
                 }
             }
-
-
 
         /// <summary>
         /// Initialize the private data
@@ -96,23 +93,96 @@ namespace Goedel.Mesh {
             return SignedProfile.Profile as SSHProfile;
             }
 
+        ///// <summary>
+        ///// Convenience function that converts a generic Signed Profile returned
+        ///// by the Mesh to a PasswordProfile.
+        ///// </summary>
+        ///// <param name="SignedProfile">Generic signed profile</param>
+        ///// <param name="PersonalProfile">The personal profile to link the Password Profile to.</param>
+        ///// <returns>Inner PasswordProfile if the Signed Profile contains one,
+        ///// otherwise null.</returns>
+        //public static SSHProfile Get(SignedProfile SignedProfile,
+        //            PersonalProfile PersonalProfile) {
+        //    var Result = SignedProfile.Profile as SSHProfile;
+
+        //    Assert.NotNull(Result, NotValidProfile.Throw);
+
+        //    Result.Link(PersonalProfile);
+        //    return (Result);
+        //    }
+
+
         /// <summary>
-        /// Convenience function that converts a generic Signed Profile returned
-        /// by the Mesh to a PasswordProfile.
+        /// Add the specified device to the linked personal profile and 
+        /// create any device specific entries in the private profile.
         /// </summary>
-        /// <param name="SignedProfile">Generic signed profile</param>
-        /// <param name="PersonalProfile">The personal profile to link the Password Profile to.</param>
-        /// <returns>Inner PasswordProfile if the Signed Profile contains one,
-        /// otherwise null.</returns>
-        public static SSHProfile Get(SignedProfile SignedProfile,
-                    PersonalProfile PersonalProfile) {
-            var Result = SignedProfile.Profile as SSHProfile;
+        /// <param name="DeviceProfile">The device to add.</param>
+        /// <param name="Administration">If true, enroll as an administration device.</param>
+        /// <param name="ApplicationDevicePublic">Per device public data,  if required.</param>
 
-            Assert.NotNull(Result, NotValidProfile.Throw);
+        public override void AddDevice(
+                        DeviceProfile DeviceProfile, 
+                        bool Administration = false,
+                        ApplicationDevicePublic ApplicationDevicePublic = null) {
+            SignedDeviceProfile SignedDevice = DeviceProfile.SignedDeviceProfile;
 
-            Result.Link(PersonalProfile);
-            return (Result);
+            if (ApplicationDevicePublic == null) {
+                ApplicationDevicePublic = CreateDeviceProfiles(
+                            DeviceProfile, out var ApplicationDevicePrivate);
+
+                if (ApplicationDevicePrivate != null) {
+                    // NYI: wrap private and add to DevicePrivate
+
+                    var DevicePrivateBytes = ApplicationDevicePrivate.GetBytes();
+
+                    var DeviceEncrypt = new JoseWebEncryption(DevicePrivateBytes);
+                    DeviceEncrypt.AddRecipient(DeviceProfile.DeviceEncryptiontionKey.KeyPair);
+                    DevicePrivate = DevicePrivate ?? new List<JoseWebEncryption>();
+                    DevicePrivate.Add(DeviceEncrypt);
+                    }
+
+                }
+
+            switch (ApplicationDevicePublic) {
+                case SSHDevicePublic SSHDevicePublic: {
+                    Devices = Devices ?? new List<SSHDevicePublic>();
+                    Devices.Add(SSHDevicePublic);
+                    break;
+                    }
+                }
+
+            if (ApplicationProfileEntry != null) {
+                ApplicationProfileEntry.AddDevice(DeviceProfile, Administration);
+                }
             }
+
+        /// <summary>
+        /// Create the public (and private) profiles for a device. This may be called by either
+        /// the administrator or on the device itself, depending on when the application is being
+        /// initialized.
+        /// </summary>
+        /// <param name="Device">The profile of the device to initialize</param>
+        /// <param name="ApplicationDevicePrivate"></param>
+        /// <returns></returns>
+        public override ApplicationDevicePublic CreateDeviceProfiles (DeviceProfile Device, 
+                    out ApplicationDevicePrivate ApplicationDevicePrivate) {
+
+            var KeyPair = PublicKey.Generate(KeyType.AAK, CryptoAlgorithmID.RSASign);
+            var KeyPrivate = new PublicKey() { PrivateParameters = KeyPair.PrivateParameters };
+            var KeyPublic = new PublicKey() { PrivateParameters = KeyPair.PublicParameters };
+
+            ApplicationDevicePrivate = new SSHDevicePrivate() {
+                DevicePrivateKey = KeyPrivate
+                };
+
+            var ApplicationDevicePublic = new SSHDevicePublic() {
+                Identifier = Device.UDF,
+                PublicKey = KeyPublic
+                };
+
+            return ApplicationDevicePublic;
+            }
+
 
         }
 
@@ -124,7 +194,6 @@ namespace Goedel.Mesh {
         /// Initializer
         /// </summary>
         protected override void _Initialize () {
-            DeviceEntries = new List<DeviceEntry>();
             HostEntries = new List<HostEntry>();
             }
         }

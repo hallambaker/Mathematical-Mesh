@@ -181,11 +181,15 @@ RunMesh/$(TARGETBIN)/RunMesh.exe : Goedel.Mesh.Platform.Windows/$(TARGETBIN)/Goe
 
 RunMesh/$(TARGETBIN)/RunMesh.exe : Goedel.Mesh.Platform/$(TARGETBIN)/Goedel.Mesh.Platform.dll
 
+RunMesh/$(TARGETBIN)/RunMesh.exe : Goedel.Mesh.Shell.MeshMan/$(TARGETBIN)/Goedel.Mesh.Shell.MeshMan.dll
+
 RunMesh/$(TARGETBIN)/RunMesh.exe : Goedel.Mesh/$(TARGETBIN)/Goedel.Mesh.dll
 
 RunMesh/$(TARGETBIN)/RunMesh.exe : Goedel.Mesh.Server/$(TARGETBIN)/Goedel.Mesh.Server.dll
 
 RunMesh/$(TARGETBIN)/RunMesh.exe : Goedel.Persistence/$(TARGETBIN)/Goedel.Persistence.dll
+
+RunMesh/$(TARGETBIN)/RunMesh.exe : Testing/Test.Constants/$(TARGETBIN)/Test.Constants.dll
 
 
 RunMesh/$(TARGETBIN)/RunMesh.exe : always
@@ -223,29 +227,19 @@ Goedel.Mesh.Client/$(TARGETBIN)/Goedel.Mesh.Client.dll : always
 ! echo "*** Directory Goedel.Mesh.Client" >&2
 ! make NORECURSE=true -C Goedel.Mesh.Client
 
-# Project : Goedel.Platform.Windows.dll
-# Item :  Goedel.Platform.Windows
-# Output :     Goedel.Platform.Windows/$(TARGETBIN)/Goedel.Platform.Windows.dll
-
-all : Goedel.Platform.Windows/$(TARGETBIN)/Goedel.Platform.Windows.dll
-
-
-Goedel.Platform.Windows/$(TARGETBIN)/Goedel.Platform.Windows.dll : always
-! echo "" >&2
-! echo "*** Directory Goedel.Platform.Windows" >&2
-! make NORECURSE=true -C Goedel.Platform.Windows
-
 # Project : Goedel.Mesh.Platform.Windows.dll
 # Item :  Goedel.Mesh.Platform.Windows
 # Output :     Goedel.Mesh.Platform.Windows/$(TARGETBIN)/Goedel.Mesh.Platform.Windows.dll
 
 all : Goedel.Mesh.Platform.Windows/$(TARGETBIN)/Goedel.Mesh.Platform.Windows.dll
 
+Goedel.Mesh.Platform.Windows/$(TARGETBIN)/Goedel.Mesh.Platform.Windows.dll : Goedel.Mesh.Client/$(TARGETBIN)/Goedel.Mesh.Client.dll
+
 Goedel.Mesh.Platform.Windows/$(TARGETBIN)/Goedel.Mesh.Platform.Windows.dll : Goedel.Mesh.Platform/$(TARGETBIN)/Goedel.Mesh.Platform.dll
 
-Goedel.Mesh.Platform.Windows/$(TARGETBIN)/Goedel.Mesh.Platform.Windows.dll : Goedel.Mesh/$(TARGETBIN)/Goedel.Mesh.dll
+Goedel.Mesh.Platform.Windows/$(TARGETBIN)/Goedel.Mesh.Platform.Windows.dll : Goedel.Mesh.Server/$(TARGETBIN)/Goedel.Mesh.Server.dll
 
-Goedel.Mesh.Platform.Windows/$(TARGETBIN)/Goedel.Mesh.Platform.Windows.dll : Goedel.Platform.Windows/$(TARGETBIN)/Goedel.Platform.Windows.dll
+Goedel.Mesh.Platform.Windows/$(TARGETBIN)/Goedel.Mesh.Platform.Windows.dll : Goedel.Mesh/$(TARGETBIN)/Goedel.Mesh.dll
 
 
 Goedel.Mesh.Platform.Windows/$(TARGETBIN)/Goedel.Mesh.Platform.Windows.dll : always
@@ -270,8 +264,6 @@ Documentation/Specification/$(TARGETBIN)/InternetDrafts.exe : Goedel.Mesh.Server
 Documentation/Specification/$(TARGETBIN)/InternetDrafts.exe : Goedel.Mesh/$(TARGETBIN)/Goedel.Mesh.dll
 
 Documentation/Specification/$(TARGETBIN)/InternetDrafts.exe : Goedel.Persistence/$(TARGETBIN)/Goedel.Persistence.dll
-
-Documentation/Specification/$(TARGETBIN)/InternetDrafts.exe : Goedel.Platform.Windows/$(TARGETBIN)/Goedel.Platform.Windows.dll
 
 
 Documentation/Specification/$(TARGETBIN)/InternetDrafts.exe : always
@@ -306,6 +298,8 @@ Goedel.Mesh.Shell.MeshMan/$(TARGETBIN)/Goedel.Mesh.Shell.MeshMan.dll : always
 # Output :     Goedel.Mesh.Platform/$(TARGETBIN)/Goedel.Mesh.Platform.dll
 
 all : Goedel.Mesh.Platform/$(TARGETBIN)/Goedel.Mesh.Platform.dll
+
+Goedel.Mesh.Platform/$(TARGETBIN)/Goedel.Mesh.Platform.dll : Goedel.Mesh.Client/$(TARGETBIN)/Goedel.Mesh.Client.dll
 
 Goedel.Mesh.Platform/$(TARGETBIN)/Goedel.Mesh.Platform.dll : Goedel.Mesh.Server/$(TARGETBIN)/Goedel.Mesh.Server.dll
 
@@ -395,6 +389,130 @@ meshman_osx/$(TARGETBIN)/meshman_windows.exe : always
 ! echo "*** Directory meshman_osx" >&2
 ! make NORECURSE=true -C meshman_osx
 
+# Project : Test.Goedel.Mesh.dll
+# Item :  Testing/Test.Goedel.Mesh.Profile
+# Output :     Testing/Test.Goedel.Mesh.Profile/$(TARGETBIN)/Test.Goedel.Mesh.dll
+
+all : Testing/Test.Goedel.Mesh.Profile/$(TARGETBIN)/Test.Goedel.Mesh.dll
+
+Testing/Test.Goedel.Mesh.Profile/$(TARGETBIN)/Test.Goedel.Mesh.dll : Goedel.Mesh.Platform.Windows/$(TARGETBIN)/Goedel.Mesh.Platform.Windows.dll
+
+Testing/Test.Goedel.Mesh.Profile/$(TARGETBIN)/Test.Goedel.Mesh.dll : Goedel.Mesh.Platform/$(TARGETBIN)/Goedel.Mesh.Platform.dll
+
+Testing/Test.Goedel.Mesh.Profile/$(TARGETBIN)/Test.Goedel.Mesh.dll : Goedel.Mesh/$(TARGETBIN)/Goedel.Mesh.dll
+
+
+Testing/Test.Goedel.Mesh.Profile/$(TARGETBIN)/Test.Goedel.Mesh.dll : always
+! echo "" >&2
+! echo "*** Directory Testing/Test.Goedel.Mesh.Profile" >&2
+! make NORECURSE=true -C Testing/Test.Goedel.Mesh.Profile
+
+# Project : Test.Goedel.Mesh.dll
+# Item :  Testing/Test.Goedel.Mesh.Recrypt
+# Output :     Testing/Test.Goedel.Mesh.Recrypt/$(TARGETBIN)/Test.Goedel.Mesh.dll
+
+all : Testing/Test.Goedel.Mesh.Recrypt/$(TARGETBIN)/Test.Goedel.Mesh.dll
+
+
+Testing/Test.Goedel.Mesh.Recrypt/$(TARGETBIN)/Test.Goedel.Mesh.dll : always
+! echo "" >&2
+! echo "*** Directory Testing/Test.Goedel.Mesh.Recrypt" >&2
+! make NORECURSE=true -C Testing/Test.Goedel.Mesh.Recrypt
+
+# Project : Test.Goedel.Mesh.dll
+# Item :  Testing/Test.Goedel.Mesh.Web
+# Output :     Testing/Test.Goedel.Mesh.Web/$(TARGETBIN)/Test.Goedel.Mesh.dll
+
+all : Testing/Test.Goedel.Mesh.Web/$(TARGETBIN)/Test.Goedel.Mesh.dll
+
+
+Testing/Test.Goedel.Mesh.Web/$(TARGETBIN)/Test.Goedel.Mesh.dll : always
+! echo "" >&2
+! echo "*** Directory Testing/Test.Goedel.Mesh.Web" >&2
+! make NORECURSE=true -C Testing/Test.Goedel.Mesh.Web
+
+# Project : Test.Goedel.Mesh.dll
+# Item :  Testing/Test.Goedel.Mesh.Confirm
+# Output :     Testing/Test.Goedel.Mesh.Confirm/$(TARGETBIN)/Test.Goedel.Mesh.dll
+
+all : Testing/Test.Goedel.Mesh.Confirm/$(TARGETBIN)/Test.Goedel.Mesh.dll
+
+Testing/Test.Goedel.Mesh.Confirm/$(TARGETBIN)/Test.Goedel.Mesh.dll : Goedel.Mesh/$(TARGETBIN)/Goedel.Mesh.dll
+
+
+Testing/Test.Goedel.Mesh.Confirm/$(TARGETBIN)/Test.Goedel.Mesh.dll : always
+! echo "" >&2
+! echo "*** Directory Testing/Test.Goedel.Mesh.Confirm" >&2
+! make NORECURSE=true -C Testing/Test.Goedel.Mesh.Confirm
+
+# Project : Test.Goedel.Mesh.dll
+# Item :  Testing/Test.Goedel.Mesh.Services
+# Output :     Testing/Test.Goedel.Mesh.Services/$(TARGETBIN)/Test.Goedel.Mesh.dll
+
+all : Testing/Test.Goedel.Mesh.Services/$(TARGETBIN)/Test.Goedel.Mesh.dll
+
+Testing/Test.Goedel.Mesh.Services/$(TARGETBIN)/Test.Goedel.Mesh.dll : Goedel.Mesh.Client/$(TARGETBIN)/Goedel.Mesh.Client.dll
+
+Testing/Test.Goedel.Mesh.Services/$(TARGETBIN)/Test.Goedel.Mesh.dll : Goedel.Mesh.Platform.Windows/$(TARGETBIN)/Goedel.Mesh.Platform.Windows.dll
+
+Testing/Test.Goedel.Mesh.Services/$(TARGETBIN)/Test.Goedel.Mesh.dll : Goedel.Mesh.Platform/$(TARGETBIN)/Goedel.Mesh.Platform.dll
+
+Testing/Test.Goedel.Mesh.Services/$(TARGETBIN)/Test.Goedel.Mesh.dll : Goedel.Mesh.Server/$(TARGETBIN)/Goedel.Mesh.Server.dll
+
+Testing/Test.Goedel.Mesh.Services/$(TARGETBIN)/Test.Goedel.Mesh.dll : Goedel.Mesh/$(TARGETBIN)/Goedel.Mesh.dll
+
+Testing/Test.Goedel.Mesh.Services/$(TARGETBIN)/Test.Goedel.Mesh.dll : Goedel.Persistence/$(TARGETBIN)/Goedel.Persistence.dll
+
+Testing/Test.Goedel.Mesh.Services/$(TARGETBIN)/Test.Goedel.Mesh.dll : Testing/Test.Constants/$(TARGETBIN)/Test.Constants.dll
+
+
+Testing/Test.Goedel.Mesh.Services/$(TARGETBIN)/Test.Goedel.Mesh.dll : always
+! echo "" >&2
+! echo "*** Directory Testing/Test.Goedel.Mesh.Services" >&2
+! make NORECURSE=true -C Testing/Test.Goedel.Mesh.Services
+
+# Project : Test.Constants.dll
+# Item :  Testing/Test.Constants
+# Output :     Testing/Test.Constants/$(TARGETBIN)/Test.Constants.dll
+
+all : Testing/Test.Constants/$(TARGETBIN)/Test.Constants.dll
+
+Testing/Test.Constants/$(TARGETBIN)/Test.Constants.dll : Goedel.Mesh/$(TARGETBIN)/Goedel.Mesh.dll
+
+
+Testing/Test.Constants/$(TARGETBIN)/Test.Constants.dll : always
+! echo "" >&2
+! echo "*** Directory Testing/Test.Constants" >&2
+! make NORECURSE=true -C Testing/Test.Constants
+
+# Project : Test.Goedel.Mesh.dll
+# Item :  Testing/Test.Goedel.Mesh.Shell
+# Output :     Testing/Test.Goedel.Mesh.Shell/$(TARGETBIN)/Test.Goedel.Mesh.dll
+
+all : Testing/Test.Goedel.Mesh.Shell/$(TARGETBIN)/Test.Goedel.Mesh.dll
+
+Testing/Test.Goedel.Mesh.Shell/$(TARGETBIN)/Test.Goedel.Mesh.dll : Goedel.Mesh.Client/$(TARGETBIN)/Goedel.Mesh.Client.dll
+
+Testing/Test.Goedel.Mesh.Shell/$(TARGETBIN)/Test.Goedel.Mesh.dll : Goedel.Mesh.Platform.Windows/$(TARGETBIN)/Goedel.Mesh.Platform.Windows.dll
+
+Testing/Test.Goedel.Mesh.Shell/$(TARGETBIN)/Test.Goedel.Mesh.dll : Goedel.Mesh.Platform/$(TARGETBIN)/Goedel.Mesh.Platform.dll
+
+Testing/Test.Goedel.Mesh.Shell/$(TARGETBIN)/Test.Goedel.Mesh.dll : Goedel.Mesh.Server/$(TARGETBIN)/Goedel.Mesh.Server.dll
+
+Testing/Test.Goedel.Mesh.Shell/$(TARGETBIN)/Test.Goedel.Mesh.dll : Goedel.Mesh.Shell.MeshMan/$(TARGETBIN)/Goedel.Mesh.Shell.MeshMan.dll
+
+Testing/Test.Goedel.Mesh.Shell/$(TARGETBIN)/Test.Goedel.Mesh.dll : Goedel.Mesh/$(TARGETBIN)/Goedel.Mesh.dll
+
+Testing/Test.Goedel.Mesh.Shell/$(TARGETBIN)/Test.Goedel.Mesh.dll : Goedel.Persistence/$(TARGETBIN)/Goedel.Persistence.dll
+
+Testing/Test.Goedel.Mesh.Shell/$(TARGETBIN)/Test.Goedel.Mesh.dll : Testing/Test.Constants/$(TARGETBIN)/Test.Constants.dll
+
+
+Testing/Test.Goedel.Mesh.Shell/$(TARGETBIN)/Test.Goedel.Mesh.dll : always
+! echo "" >&2
+! echo "*** Directory Testing/Test.Goedel.Mesh.Shell" >&2
+! make NORECURSE=true -C Testing/Test.Goedel.Mesh.Shell
+
 
 
 # clean all projects
@@ -406,7 +524,6 @@ clean :
 ! make clean NORECURSE=true -C RunMesh
 ! make clean NORECURSE=true -C ServerMesh
 ! make clean NORECURSE=true -C Goedel.Mesh.Client
-! make clean NORECURSE=true -C Goedel.Platform.Windows
 ! make clean NORECURSE=true -C Goedel.Mesh.Platform.Windows
 ! make clean NORECURSE=true -C Documentation/Specification
 ! make clean NORECURSE=true -C Goedel.Mesh.Shell.MeshMan
@@ -414,6 +531,13 @@ clean :
 ! make clean NORECURSE=true -C meshman_windows
 ! make clean NORECURSE=true -C meshman_linux
 ! make clean NORECURSE=true -C meshman_osx
+! make clean NORECURSE=true -C Testing/Test.Goedel.Mesh.Profile
+! make clean NORECURSE=true -C Testing/Test.Goedel.Mesh.Recrypt
+! make clean NORECURSE=true -C Testing/Test.Goedel.Mesh.Web
+! make clean NORECURSE=true -C Testing/Test.Goedel.Mesh.Confirm
+! make clean NORECURSE=true -C Testing/Test.Goedel.Mesh.Services
+! make clean NORECURSE=true -C Testing/Test.Constants
+! make clean NORECURSE=true -C Testing/Test.Goedel.Mesh.Shell
 
 # publish all projects
 publish : all
@@ -424,7 +548,6 @@ publish : all
 ! make publish NORECURSE=true -C RunMesh
 ! make publish NORECURSE=true -C ServerMesh
 ! make publish NORECURSE=true -C Goedel.Mesh.Client
-! make publish NORECURSE=true -C Goedel.Platform.Windows
 ! make publish NORECURSE=true -C Goedel.Mesh.Platform.Windows
 ! make publish NORECURSE=true -C Documentation/Specification
 ! make publish NORECURSE=true -C Goedel.Mesh.Shell.MeshMan
@@ -432,6 +555,13 @@ publish : all
 ! make publish NORECURSE=true -C meshman_windows
 ! make publish NORECURSE=true -C meshman_linux
 ! make publish NORECURSE=true -C meshman_osx
+! make publish NORECURSE=true -C Testing/Test.Goedel.Mesh.Profile
+! make publish NORECURSE=true -C Testing/Test.Goedel.Mesh.Recrypt
+! make publish NORECURSE=true -C Testing/Test.Goedel.Mesh.Web
+! make publish NORECURSE=true -C Testing/Test.Goedel.Mesh.Confirm
+! make publish NORECURSE=true -C Testing/Test.Goedel.Mesh.Services
+! make publish NORECURSE=true -C Testing/Test.Constants
+! make publish NORECURSE=true -C Testing/Test.Goedel.Mesh.Shell
 
 # install all projects
 install : all
@@ -442,7 +572,6 @@ install : all
 ! make install NORECURSE=true -C RunMesh
 ! make install NORECURSE=true -C ServerMesh
 ! make install NORECURSE=true -C Goedel.Mesh.Client
-! make install NORECURSE=true -C Goedel.Platform.Windows
 ! make install NORECURSE=true -C Goedel.Mesh.Platform.Windows
 ! make install NORECURSE=true -C Documentation/Specification
 ! make install NORECURSE=true -C Goedel.Mesh.Shell.MeshMan
@@ -450,4 +579,11 @@ install : all
 ! make install NORECURSE=true -C meshman_windows
 ! make install NORECURSE=true -C meshman_linux
 ! make install NORECURSE=true -C meshman_osx
+! make install NORECURSE=true -C Testing/Test.Goedel.Mesh.Profile
+! make install NORECURSE=true -C Testing/Test.Goedel.Mesh.Recrypt
+! make install NORECURSE=true -C Testing/Test.Goedel.Mesh.Web
+! make install NORECURSE=true -C Testing/Test.Goedel.Mesh.Confirm
+! make install NORECURSE=true -C Testing/Test.Goedel.Mesh.Services
+! make install NORECURSE=true -C Testing/Test.Constants
+! make install NORECURSE=true -C Testing/Test.Goedel.Mesh.Shell
 

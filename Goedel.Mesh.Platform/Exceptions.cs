@@ -155,52 +155,6 @@ namespace Goedel.Mesh.Platform {
 
     /// <summary>
     /// </summary>
-    public class InvalidPortalAddress : Gateway {
-
-		/// <summary>
-        /// Construct instance for exception "Not a valid portal address"
-        /// </summary>		
-		public InvalidPortalAddress () : base ("Not a valid portal address") {
-			}
-        
-		/// <summary>
-        /// Construct instance for exception "Not a valid portal address"
-        /// </summary>		
-        /// <param name="Description">Description of the error</param>	
-		public InvalidPortalAddress (string Description) : base (Description) {
-			}
-
-		/// <summary>
-        /// Construct instance for exception 		/// containing an inner exception.
-        /// </summary>		
-        /// <param name="Description">Description of the error</param>	
-		/// <param name="Inner">Inner Exception</param>	
-		public InvalidPortalAddress (string Description, System.Exception Inner) : 
-				base (Description, Inner) {
-			}
-
-
-
-
-		
-		/// <summary>
-        /// The public fatory delegate
-        /// </summary>
-        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
-
-        static System.Exception _Throw(object Reason) {
-			if (Reason as string != null) {
-				return new InvalidPortalAddress(Reason as string);
-				}
-			else {
-				return new InvalidPortalAddress();
-				}
-            }
-        }
-
-
-    /// <summary>
-    /// </summary>
     public class PortalConnectFail : Gateway {
 
 		/// <summary>

@@ -119,9 +119,10 @@ SourceFiles = \
 
 LinkFiles = \
     $(LIBRARYBIN)/Goedel.Protocol.dll\
-    $(LIBRARYBIN)/Goedel.Registry.dll
+    $(LIBRARYBIN)/Goedel.Registry.dll\
+    $(LIBRARYBIN)/Goedel.Utilities.dll
 
-LinkFilesComma = $(LIBRARYBIN)/Goedel.Protocol.dll,$(LIBRARYBIN)/Goedel.Registry.dll
+LinkFilesComma = $(LIBRARYBIN)/Goedel.Protocol.dll,$(LIBRARYBIN)/Goedel.Registry.dll,$(LIBRARYBIN)/Goedel.Utilities.dll
 
 
 NugetFiles = 

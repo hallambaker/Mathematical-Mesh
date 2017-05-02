@@ -25,6 +25,7 @@ using System.Collections.Generic;
 using Goedel.Utilities;
 using Goedel.Persistence;
 using Goedel.Cryptography;
+using Goedel.Protocol;
 
 namespace Goedel.Mesh {
 
@@ -49,26 +50,41 @@ namespace Goedel.Mesh {
         /// profile.
         /// </summary>
         public SignedDeviceProfile SignedDeviceProfile {
-            get { return DeviceProfile?.SignedDeviceProfile; }
+            get => DeviceProfile?.SignedDeviceProfile; 
             }
 
         /// <summary>
         /// Get UDF fingerprint of the profile.
         /// </summary>
         public override string UDF {
-            get { return MasterProfile.Identifier; }
+            get => MasterProfile.Identifier; 
             }
 
 
         /// <summary>
         /// The corresponding signed profile.
         /// </summary>
-        public SignedPersonalProfile SignedPersonalProfile { get; set; }
+        public SignedPersonalProfile SignedPersonalProfile {
+            get {
+                if (_SignedPersonalProfile == null) {
+                    Sign();
+                    }
+                return _SignedPersonalProfile;
+                }
+            set { _SignedPersonalProfile = value; }
+            }
+
+        SignedPersonalProfile _SignedPersonalProfile;
+
+        void ClearSignature () {
+            _SignedPersonalProfile = null;
+            }
+
 
         /// <summary>
         /// The parsed master profile associated with this profile
         /// </summary>
-        public MasterProfile MasterProfile { get { return SignedMasterProfile.MasterProfile;  } }
+        public MasterProfile MasterProfile { get => SignedMasterProfile.MasterProfile;  } 
 
         /// <summary>
         /// Create a personal profile with the specified master and administration
@@ -88,22 +104,26 @@ namespace Goedel.Mesh {
             Devices = new List<SignedDeviceProfile>() { SignedDeviceProfile };
             Applications = new List<ApplicationProfileEntry>();
 
-
-            Sign();
             }
+
+
+
 
         /// <summary>
         /// Sign the current profile. 
         /// </summary>
         /// <param name="UDF">Specify the signature key by identifier</param>
         /// <param name="KeyPair">Specify the signature key by key handle</param>
-        public override void Sign(string UDF = null, KeyPair KeyPair = null) {
+        /// <param name="Encoding">The encoding for the inner data</param>
+        public override SignedProfile Sign (string UDF = null, KeyPair KeyPair = null,
+                        DataEncoding Encoding = DataEncoding.JSON) {
             // Locate the administration key for this device.
             var AdminKey = MasterProfile.AdministrationKey;
 
             Assert.NotNull(AdminKey, NotAdministrationDevice.Throw);
 
             SignedPersonalProfile = new SignedPersonalProfile(this, AdminKey);
+            return SignedPersonalProfile;
             }
 
 
@@ -175,8 +195,9 @@ namespace Goedel.Mesh {
         /// Add a device to the profile.
         /// </summary>
         /// <param name="DeviceProfile">The device profile to add</param>
-        public void Add(SignedDeviceProfile DeviceProfile) {
-            Devices.Add(DeviceProfile);
+        public void Add(DeviceProfile DeviceProfile) {
+            Devices.Add(DeviceProfile.SignedDeviceProfile);
+            ClearSignature();
             }
 
         /// <summary>
@@ -186,17 +207,21 @@ namespace Goedel.Mesh {
         /// <returns>The appliccation profile entry</returns>
         public ApplicationProfileEntry Add(ApplicationProfile ApplicationProfile) {
 
-            var ApplicationProfileEntry = new ApplicationProfileEntry();
-
-            ApplicationProfileEntry.Identifier = ApplicationProfile.Identifier;
-            ApplicationProfileEntry.Type = ApplicationProfile.Tag();
+            var ApplicationProfileEntry = new ApplicationProfileEntry() {
+                Identifier = ApplicationProfile.Identifier,
+                Type = ApplicationProfile.Tag(),
+  
+                };
 
             if (Applications == null) {
                 Applications = new List<ApplicationProfileEntry>();
                 }
 
             Applications.Add(ApplicationProfileEntry);
-            ApplicationProfile.Link(this, ApplicationProfileEntry);
+            ApplicationProfile.ApplicationProfileEntry = ApplicationProfileEntry;
+            ApplicationProfile.PersonalProfile = this;
+
+            ClearSignature();
 
             return ApplicationProfileEntry;
             }
@@ -266,9 +291,7 @@ namespace Goedel.Mesh {
         /// The Administration key (if null, this is not an administration profile)
         /// </summary>
         public KeyPair AdministrationKey {
-            get {
-                return MasterProfile.AdministrationKey;
-                }
+            get => MasterProfile.AdministrationKey;
             }
 
 
@@ -317,14 +340,17 @@ namespace Goedel.Mesh {
         /// create any device specific entries in the private profile.
         /// </summary>
         /// <param name="Device">The device to add.</param>
-        public virtual void AddDevice(SignedDeviceProfile Device) {
+        /// <param name="Administration">If true, enroll as an administration device.</param>
+        public virtual void AddDevice(DeviceProfile Device, bool Administration=false) {
             // Create admin entry for this device
-
-            if (SignID == null) {
-                SignID = new List<string>();
+            if (Administration) {
+                if (SignID == null) {
+                    SignID = new List<string>();
+                    }
+                SignID.Add(Device.Identifier);
                 }
-            SignID.Add(Device.Identifier);
 
+            // Create device entry for this device
             if (DecryptID == null) {
                 DecryptID = new List<string>();
                 }

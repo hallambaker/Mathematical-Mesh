@@ -265,8 +265,6 @@ namespace Goedel.Mesh {
 					}
 
 				default : {
-					//Ignore the unknown data
-                    //throw new Exception ("Not supported");
                     break;
 					}
 				}
@@ -305,48 +303,28 @@ namespace Goedel.Mesh {
         ///etc.		
         /// </summary>
 
-		public virtual List<string>				Sites {
-			get {return _Sites;}			
-			set {_Sites = value;}
-			}
-		List<string>				_Sites;
+		public virtual List<string>				Sites  {get; set;}
         /// <summary>
         ///DNS Resolution Services
         /// </summary>
 
-		public virtual List<Connection>				DNS {
-			get {return _DNS;}			
-			set {_DNS = value;}
-			}
-		List<Connection>				_DNS;
+		public virtual List<Connection>				DNS  {get; set;}
         /// <summary>
         ///DNS prefixes to search
         /// </summary>
 
-		public virtual List<string>				Prefix {
-			get {return _Prefix;}			
-			set {_Prefix = value;}
-			}
-		List<string>				_Prefix;
+		public virtual List<string>				Prefix  {get; set;}
         /// <summary>
         ///Certificate Trust List giving WebPKI roots to trust
         /// </summary>
 
-		public virtual byte[]						CTL {
-			get {return _CTL;}			
-			set {_CTL = value;}
-			}
-		byte[]						_CTL ;
+		public virtual byte[]						CTL  {get; set;}
         /// <summary>
         ///List of UDF fingerprints of keys making up the trust roots
         ///to be accepted for Web PKI purposes.
         /// </summary>
 
-		public virtual List<string>				WebPKI {
-			get {return _WebPKI;}			
-			set {_WebPKI = value;}
-			}
-		List<string>				_WebPKI;
+		public virtual List<string>				WebPKI  {get; set;}
 
         /// <summary>
         /// Tag identifying this class.
@@ -542,8 +520,6 @@ namespace Goedel.Mesh {
 					}
 
 				default : {
-					//Ignore the unknown data
-                    //throw new Exception ("Not supported");
                     break;
 					}
 				}

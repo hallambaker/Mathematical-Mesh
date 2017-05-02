@@ -33,25 +33,77 @@ namespace Goedel.Mesh.Platform {
     /// <summary>
     /// Describes the registration of a device profile on a machine.
     /// </summary>
-    public abstract class RegistrationApplication : Registration {
+    public abstract class RegistrationApplication : PortalRegistration {
 
         /// <summary>
-        /// The Device profile
+        /// List of the accounts through which the profile is registered.
         /// </summary>
-        public SignedApplicationProfile SignedApplicationProfile { get; set; }
+        public override PortalCollection Portals { get => RegistrationPersonal.Portals; }
+
+
+        public RegistrationPersonal RegistrationPersonal;
+
+        //public ApplicationProfileEntry ApplicationProfileEntry { get; set;} 
+
+        PersonalProfile PersonalProfile {
+            get => RegistrationPersonal.PersonalProfile;
+            }
 
         /// <summary>
-        /// The most recent cached profile data, if available.
+        /// Client which may be used to interact with the portal on which this
+        /// profile is registered.
         /// </summary>
-        public virtual ApplicationProfile ApplicationProfile {
-            get { return SignedApplicationProfile.ApplicationProfile; }
+        public override MeshClient MeshClient {
+            get => RegistrationPersonal.MeshClient;
+            set => RegistrationPersonal.MeshClient = value;
             }
 
 
         /// <summary>
+        /// The registered signed profile.
+        /// </summary>
+        public override SignedProfile SignedProfile { get => SignedApplicationProfile; }
+
+
+        /// <summary>
+        /// The Device profile
+        /// </summary>
+        public SignedApplicationProfile SignedApplicationProfile {
+            get {
+                _SignedApplicationProfile = _SignedApplicationProfile ?? 
+                    _ApplicationProfile.SignedApplicationProfile;
+                return _SignedApplicationProfile;
+                }
+            set {
+                _SignedApplicationProfile = value;
+                _ApplicationProfile = _SignedApplicationProfile.ApplicationProfile;
+                }  }
+
+        /// <summary>
+        /// The most recent cached profile data, if available.
+        /// </summary>
+        public  ApplicationProfile ApplicationProfile {
+            get => _ApplicationProfile; 
+            set {
+                _ApplicationProfile = value;
+                }
+            }
+
+
+        SignedApplicationProfile _SignedApplicationProfile;
+        ApplicationProfile _ApplicationProfile;
+
+        /// <summary>
         /// The profile fingerprint
         /// </summary>
-        public override string UDF { get { return SignedApplicationProfile?.UDF; } }
+        public override string UDF { get => SignedApplicationProfile?.UDF; }
+
+        public void AddDevice (
+                    DeviceProfile DeviceProfile,
+                    bool Administration = false) {
+            //ApplicationProfileEntry.AddDevice(DeviceProfile, Administration);
+            ApplicationProfile.AddDevice(DeviceProfile, Administration);
+            }
 
         }
 

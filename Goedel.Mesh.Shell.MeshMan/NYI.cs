@@ -33,41 +33,6 @@ namespace Goedel.Mesh.MeshMan {
             throw new NYI("");
             }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="Options">Command line parameters</param>
-        public override void Escrow(Escrow Options) {
-            SetReporting(Options.Report, Options.Verbose);
-            throw new NYI("");
-            }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="Options">Command line parameters</param>
-        public override void Export(Export Options) {
-            SetReporting(Options.Report, Options.Verbose);
-            throw new NYI("");
-            }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="Options">Command line parameters</param>
-        public override void Import(Import Options) {
-            SetReporting(Options.Report, Options.Verbose);
-            throw new NYI("");
-            }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="Options">Command line parameters</param>
-        public override void Mail(Mail Options) {
-            SetReporting(Options.Report, Options.Verbose);
-            throw new NYI("");
-            }
 
         }
     }

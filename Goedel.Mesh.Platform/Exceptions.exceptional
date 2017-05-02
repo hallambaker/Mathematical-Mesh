@@ -15,8 +15,6 @@ Namespace Goedel.Mesh.Platform
 		Exception NoPortalAccount
 			Console "No Portal account specified"
 
-		Exception InvalidPortalAddress
-			Console "Not a valid portal address"
 		
 		Exception PortalConnectFail
 			Console "Could not connect to portal"

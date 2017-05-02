@@ -43,7 +43,7 @@ namespace Goedel.Persistence {
         /// <param name="FileName">Log file.</param>
         /// <param name="Type">Type of data to store (the schema name).</param>
         /// <param name="Comment">Comment to be written to the log.</param>
-        public LogPersistenceStore(string FileName, 
+        public LogPersistenceStore(string FileName,
                 string Type, string Comment)
             : this(FileName, false, Type, Comment) {
             }
@@ -70,7 +70,7 @@ namespace Goedel.Persistence {
         /// <param name="Comment">Comment to be written to the log.</param>
         public LogPersistenceStore(string FileName, bool ReadOnly,
                 string Type, string Comment) {
-                Init(FileName, ReadOnly, Type, Comment);
+            Init(FileName, ReadOnly, Type, Comment);
             }
 
 
@@ -109,10 +109,11 @@ namespace Goedel.Persistence {
             }
 
         void MakeHeader(string Type, string Comment) {
-            var Header = new Header();
-            Header.Type = "Data"; 
-            Header.Content = Type;
-            Header.Comment = Comment;
+            var Header = new Header() {
+                Type = "Data",
+                Content = Type,
+                Comment = Comment
+                };
             Write(Header);
             }
 
@@ -123,8 +124,8 @@ namespace Goedel.Persistence {
         /// thread safety.
         /// </summary>
         /// <param name="DataItem">The data to be written.</param>
-        protected override void pStore(DataItem DataItem) {
-            base.pStore(DataItem);
+        protected override void UnprotectedStore(DataItem DataItem) {
+            base.UnprotectedStore(DataItem);
             if (!DataItem.Persisted) {
                 Write(DataItem);
                 DataItem.Persisted = true;
@@ -139,21 +140,19 @@ namespace Goedel.Persistence {
             }
 
         void Read() {
-            using (var TextReader = new StreamReader(FileStream)) {
-                var JSONReader = new JSONReader(TextReader);
+            var TextReader = new StreamReader(FileStream);
+            var JSONReader = new JSONReader(TextReader);
 
-                LogEntry LogEntry;
-                do {
-                    LogEntry = ReadRecord(JSONReader);
-                    } while (LogEntry != null);
-                }
+            LogEntry LogEntry ;
+            do {
+                LogEntry = ReadRecord(JSONReader);
+                } while (LogEntry != null);
             }
-
+        
         LogEntry ReadRecord(JSONReader JSONReader) {
-            JSONObject ResultObject;
 
             try {
-                LogEntry.Deserialize(JSONReader, out ResultObject);
+                LogEntry.Deserialize(JSONReader, out var ResultObject);
                 if (ResultObject == null) {
                     return null;
                     }
@@ -163,7 +162,7 @@ namespace Goedel.Persistence {
                 if (Result.GetType() == typeof(DataItem)) {
                     var DI = (DataItem)Result;
                     DI.Persisted = true;
-                    pStore(DI);
+                    UnprotectedStore(DI);
                     }
 
                 return Result;

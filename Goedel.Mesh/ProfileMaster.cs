@@ -56,24 +56,43 @@ namespace Goedel.Mesh {
         public MasterProfile(CryptoAlgorithmID SignatureAlgorithmID,
                         CryptoAlgorithmID ExchangeAlgorithmID) {
 
-
             MasterSignatureKey = PublicKey.Generate(KeyType.PMSK, SignatureAlgorithmID);
             MasterSignatureKey.SelfSignCertificate(Application.PersonalMaster);
 
-            var OnlineSignatureKey = PublicKey.Generate(KeyType.POSK, SignatureAlgorithmID);
-            OnlineSignatureKey.SignCertificate(Application.CA, MasterSignatureKey);
-
-            OnlineSignatureKeys = new List<PublicKey>();
-            OnlineSignatureKeys.Add(OnlineSignatureKey);
-
             var MasterEscrowKey = PublicKey.Generate(KeyType.PMEK, ExchangeAlgorithmID);
             MasterEscrowKey.SignCertificate(Application.DataEncryption, MasterSignatureKey);
+            MasterEscrowKeys = new List<PublicKey>() { MasterEscrowKey };
 
-            MasterEscrowKeys = new List<PublicKey>();
-            MasterEscrowKeys.Add(MasterEscrowKey);
+            var OnlineSignatureKey = PublicKey.Generate(KeyType.POSK, SignatureAlgorithmID);
+            OnlineSignatureKey.SignCertificate(Application.CA, MasterSignatureKey);
+            OnlineSignatureKeys = new List<PublicKey>() { OnlineSignatureKey };
 
             Identifier = MasterSignatureKey.UDF;
 
+            SignedMasterProfile = new SignedMasterProfile(this);
+            }
+
+        /// <summary>
+        /// Rereate a MasterProfile from the specified escrow data
+        /// </summary>
+        public MasterProfile(EscrowedKeySet EscrowedKeySet) {
+            var MasterSignatureKeyPair =  EscrowedKeySet.MasterSignatureKey.GetKeyPair();
+            MasterSignatureKey = new PublicKey(MasterSignatureKeyPair);
+            MasterSignatureKey.SelfSignCertificate(Application.PersonalMaster);
+
+            MasterEscrowKeys = new List<PublicKey>();
+            foreach (var EscrowKeyEntry in EscrowedKeySet.MasterEscrowKeys) {
+                var EscrowKeyPair = EscrowKeyEntry.GetKeyPair();
+                var EscrowKey = new PublicKey(EscrowKeyPair);
+                EscrowKey.SignCertificate(Application.DataEncryption, MasterSignatureKey);
+                MasterEscrowKeys.Add(EscrowKey);
+                }
+
+            var OnlineSignatureKey = PublicKey.Generate(KeyType.POSK, MasterSignatureKeyPair.CryptoAlgorithmID);
+            OnlineSignatureKey.SignCertificate(Application.CA, MasterSignatureKey);
+            OnlineSignatureKeys = new List<PublicKey>() { OnlineSignatureKey };
+
+            Identifier = MasterSignatureKey.UDF;
             SignedMasterProfile = new SignedMasterProfile(this);
             }
 

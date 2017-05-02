@@ -9,29 +9,29 @@ namespace Goedel.Mesh.MeshMan {
         /// </summary>
         /// <param name="Options">Command line parameters</param>
         public override void Password(Password Options) {
-            SetReporting(Options.Report, Options.Verbose);
-            GetProfile(Options.Portal, Options.UDF);
-            GetMeshClient();
+            //SetReporting(Options.Report, Options.Verbose);
+            //GetProfile(Options.Portal, Options.UDF);
+            //GetMeshClient();
 
-            var DeviceProfile = GetDevice(SignedPersonalProfile);
-            Assert.NotNull(DeviceProfile, NoDeviceProfile.Throw);
+            //var SignedDeviceProfile = GetDevice(SignedPersonalProfile);
+            //Assert.NotNull(SignedDeviceProfile, NoDeviceProfile.Throw);
 
-            var PersonalProfile = SignedPersonalProfile.PersonalProfile;
+            //var PersonalProfile = SignedPersonalProfile.PersonalProfile;
 
-            var PasswordProfile = new PasswordProfile(true);
+            //var PasswordProfile = new PasswordProfile(true);
 
-            var ApplicationProfileEntry = PersonalProfile.Add(PasswordProfile);
-            ApplicationProfileEntry.AddDevice(DeviceProfile);
+            //var ApplicationProfileEntry = PersonalProfile.Add(PasswordProfile);
+            //ApplicationProfileEntry.AddDevice(SignedDeviceProfile.DeviceProfile);
 
-            PasswordProfile.Link(PersonalProfile, ApplicationProfileEntry);
+            //PasswordProfile.Link(PersonalProfile, ApplicationProfileEntry);
 
-            var SignedPasswordProfile = PasswordProfile.Signed;
+            //var SignedPasswordProfile = PasswordProfile.SignedApplicationProfile;
 
-            Machine.Add(SignedPasswordProfile);
-            RegistrationPersonal.Update();
+            //Machine.Add(SignedPasswordProfile);
+            //RegistrationPersonal.WriteToPortal();
 
-            MeshClient.Publish(SignedPasswordProfile);
-            MeshClient.Publish(RegistrationPersonal.SignedPersonalProfile);
+            //MeshClient.Publish(SignedPasswordProfile);
+            //MeshClient.Publish(RegistrationPersonal.SignedPersonalProfile);
 
             }
 

@@ -24,7 +24,7 @@ using System;
 using System.Collections.Generic;
 using Goedel.Cryptography;
 using Goedel.Cryptography.Jose;
-using Goedel.Protocol;
+using Goedel.Utilities;
 
 namespace Goedel.Mesh {
     public partial class OfflineEscrowEntry {
@@ -42,41 +42,51 @@ namespace Goedel.Mesh {
         public OfflineEscrowEntry(PersonalProfile Profile, int Shares, int Quorum) {
             var Master = Profile.MasterProfile;
 
-            var EscrowedKeySet = new EscrowedKeySet();
-            EscrowedKeySet.PrivateKeys = new List<Key>();
+            var EscrowedKeySet = new EscrowedKeySet() {
+                MasterEscrowKeys = new List<Key>()
+                };
 
-            EscrowedKeySet.PrivateKeys.Add(GetEscrow(
+            EscrowedKeySet.MasterSignatureKey = (GetEscrow(
                 Profile.MasterProfile.MasterSignatureKey.UDF));
 
             foreach (var Escrow in Profile.MasterProfile.MasterEscrowKeys) {
-                EscrowedKeySet.PrivateKeys.Add(GetEscrow (Escrow.UDF));
+                EscrowedKeySet.MasterEscrowKeys.Add(GetEscrow (Escrow.UDF));
                 }
 
+            var Plaintext = EscrowedKeySet.GetBytes(true);
 
-
-
-            var Encryptor = CryptoCatalog.Default.GetEncryption(
-                            CryptoAlgorithmID.AES128CBC);
-
-            var Secret = new Secret(Encryptor.Size);
+            var Secret = new Secret(128);
             _KeyShares = Secret.Split(Shares, Quorum);
 
+            var share1 = KeyShares[0].Text;
+            var share2 = KeyShares[1].Text;
 
-            // TODO: Write encryptor that takes a secret as input.
-            // TODO: Use Key wrap
-            // TODO: Test recovery
-            // TODO: Encrypt Application encryption keys to master
+            // Get recovery data
+            string[] TestShares = { share1, share2 };
+            var RecoveryKey = new Secret(TestShares);
 
-            ////Trace.WriteHex("MasterKey", Secret.Key);
-            ////foreach (var share in _KeyShares) {
-            ////    Trace.WriteHex("Share", share.Key);
-            ////    }
-
-            ////Encryptor.Key = Secret.Key;
-            //EncryptedData = new JoseWebEncryption (EscrowedKeySet.GetBytes(), Encryptor);
-
+            EncryptedData = new JoseWebEncryption (Plaintext, Secret.Key, 
+                        EncryptID:CryptoAlgorithmID.AES256CBC);
 
             Identifier = UDF.ToString (UDF.FromEscrowed(Secret.Key, 150));
+            }
+
+        /// <summary>
+        /// Recover the encrypted profile.
+        /// </summary>
+        /// <param name="Secret"></param>
+        /// <returns></returns>
+        public EscrowedKeySet Decrypt(Secret Secret) {
+
+            var Decrypt = EncryptedData.Decrypt(Secret.Key);
+            // Decrypt here
+
+            var Plaintext = Decrypt.ToUTF8();
+
+            var Result = EscrowedKeySet.FromTagged(Decrypt);
+
+
+            return Result;
             }
 
 
@@ -89,9 +99,7 @@ namespace Goedel.Mesh {
         /// The associated key shares for reconstructing the key.
         /// </summary>
         public KeyShare[] KeyShares {
-            get {
-                return _KeyShares;
-                }
+            get => _KeyShares;
             }
 
 

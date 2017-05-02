@@ -72,11 +72,7 @@ namespace Goedel.Mesh {
         /// <summary>
         /// The mesh persistence provider.
         /// </summary>
-        public Mesh Mesh {
-            get {
-                return Provider.Mesh;
-                }
-            }
+        public Mesh Mesh { get =>Provider.Mesh; }
 
         /// <summary>
         /// The mesh service dispatcher.
@@ -99,14 +95,17 @@ namespace Goedel.Mesh {
         public override HelloResponse Hello(
                 HelloRequest Request) {
 
-            var HelloResponse = new HelloResponse();
-            HelloResponse.Version = new Version();
-            HelloResponse.Version.Major = 0;
-            HelloResponse.Version.Minor = 7;
-            HelloResponse.Version.Encodings = new List<Encoding>();
+            var HelloResponse = new HelloResponse() {
+                Version = new Version() {
+                    Major = 0,
+                    Minor = 7,
+                    Encodings = new List<Encoding>()
+                    }
+                };
 
-            var Encoding = new Encoding();
-            Encoding.ID = new List<string> { "application/json" };
+            var Encoding = new Encoding() {
+                ID = new List<string> { "application/json" }
+                };
             HelloResponse.Version.Encodings.Add(Encoding);
 
             return HelloResponse;
@@ -120,11 +119,11 @@ namespace Goedel.Mesh {
         public override ValidateResponse ValidateAccount(
                 ValidateRequest Request) {
 
-            var ValidateResponse = new ValidateResponse();
-
-            ValidateResponse.Minimum = 1;
-            ValidateResponse.InvalidCharacters = @".,:;{}()[]<>?|\@#";
-            ValidateResponse.Valid = Mesh.CheckAccount(Request.Account);
+            var ValidateResponse = new ValidateResponse() {
+                Minimum = 1,
+                InvalidCharacters = @".,:;{}()[]<>?|\@#",
+                Valid = Mesh.CheckAccount(Request.Account)
+                };
 
             if (!ValidateResponse.Valid) {
                 ValidateResponse.Reason = "That name is not available";
@@ -150,6 +149,21 @@ namespace Goedel.Mesh {
             }
 
         /// <summary>
+        /// Delete an account from a portal.
+        /// </summary>
+        /// <param name="Request"></param>
+        /// <returns></returns>
+        public override DeleteResponse DeleteAccount (DeleteRequest Request) {
+            var Response = new DeleteResponse();
+            var Success = Mesh.DeleteAccount(Request.Account);
+            if (!Success) {
+                Response.StatusCode = 409;
+                }
+            return Response;
+            }
+
+
+        /// <summary>
 		/// Base class for implementing the transaction.
         /// </summary>		
         /// <param name="Request">The request object to send to the host.</param>
@@ -173,7 +187,9 @@ namespace Goedel.Mesh {
 
             if (Request.Account != null) {
                 var Account = Mesh.GetAccount(Request.Account);
-                if (Account == null) return Response;
+                if (Account == null) {
+                    return Response;
+                    }
 
                 var Profile = Mesh.GetSignedPersonalProfile(Account.UserProfileUDF);
 
@@ -183,7 +199,9 @@ namespace Goedel.Mesh {
             else if (Request.Identifier != null) {
 
                 var Profile = Mesh.GetProfile (Request.Identifier);
-                if (Profile == null) return Response;
+                if (Profile == null) {
+                    return Response;
+                    }
 
                 var EntryDatas = new List<Entry> { Profile };
                 Response.Entries = EntryDatas;
@@ -237,8 +255,9 @@ namespace Goedel.Mesh {
                 ConnectStatusRequest Request) {
 
             var Status = Mesh.GetRequestStatus(Request.AccountID, Request.DeviceID);
-            var ConnectStatusResponse = new ConnectStatusResponse();
-            ConnectStatusResponse.Result = Status;
+            var ConnectStatusResponse = new ConnectStatusResponse() {
+                Result = Status
+                };
 
             return ConnectStatusResponse;
             }
@@ -252,8 +271,9 @@ namespace Goedel.Mesh {
                 ConnectPendingRequest Request) {
 
             var Pending = Mesh.GetPendingRequests(Request.AccountID);
-            var ConnectPendingResponse = new ConnectPendingResponse();
-            ConnectPendingResponse.Pending = Pending;
+            var ConnectPendingResponse = new ConnectPendingResponse() {
+                Pending = Pending
+                };
 
             return ConnectPendingResponse;
             }

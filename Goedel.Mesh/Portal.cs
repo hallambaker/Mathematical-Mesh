@@ -305,8 +305,6 @@ namespace Goedel.Mesh {
 					}
 
 				default : {
-					//Ignore the unknown data
-                    //throw new Exception ("Not supported");
                     break;
 					}
 				}
@@ -354,30 +352,18 @@ namespace Goedel.Mesh {
         ///not case sensitive.
         /// </summary>
 
-		public virtual string						AccountID {
-			get {return _AccountID;}			
-			set {_AccountID = value;}
-			}
-		string						_AccountID ;
+		public virtual string						AccountID  {get; set;}
         /// <summary>
         ///Fingerprint of associated user profile
         /// </summary>
 
-		public virtual string						UserProfileUDF {
-			get {return _UserProfileUDF;}			
-			set {_UserProfileUDF = value;}
-			}
-		string						_UserProfileUDF ;
+		public virtual string						UserProfileUDF  {get; set;}
         /// <summary>
         ///Status of the account, valid values are 'Open', 'Closed',
         ///'Suspended'
         /// </summary>
 
-		public virtual string						Status {
-			get {return _Status;}			
-			set {_Status = value;}
-			}
-		string						_Status ;
+		public virtual string						Status  {get; set;}
 
         /// <summary>
         /// Tag identifying this class.
@@ -545,8 +531,6 @@ namespace Goedel.Mesh {
 					}
 
 				default : {
-					//Ignore the unknown data
-                    //throw new Exception ("Not supported");
                     break;
 					}
 				}
@@ -596,11 +580,7 @@ namespace Goedel.Mesh {
         ///The personal profile associated with the account.
         /// </summary>
 
-		public virtual SignedPersonalProfile						Profile {
-			get {return _Profile;}			
-			set {_Profile = value;}
-			}
-		SignedPersonalProfile						_Profile ;
+		public virtual SignedPersonalProfile						Profile  {get; set;}
 
         /// <summary>
         /// Tag identifying this class.
@@ -744,8 +724,6 @@ namespace Goedel.Mesh {
 					}
 
 				default : {
-					//Ignore the unknown data
-                    //throw new Exception ("Not supported");
                     break;
 					}
 				}
@@ -791,11 +769,7 @@ namespace Goedel.Mesh {
         ///List of pending requests
         /// </summary>
 
-		public virtual List<SignedConnectionRequest>				Requests {
-			get {return _Requests;}			
-			set {_Requests = value;}
-			}
-		List<SignedConnectionRequest>				_Requests;
+		public virtual List<SignedConnectionRequest>				Requests  {get; set;}
 
         /// <summary>
         /// Tag identifying this class.
@@ -951,8 +925,6 @@ namespace Goedel.Mesh {
 					}
 
 				default : {
-					//Ignore the unknown data
-                    //throw new Exception ("Not supported");
                     break;
 					}
 				}

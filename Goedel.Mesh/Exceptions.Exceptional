@@ -38,3 +38,9 @@
 
 		Exception NoDeviceProfile
 			Console "No device profile"
+
+		Exception InvalidPortalAddress
+			Console "Not a valid portal address"
+
+		Exception PortalConnectFail
+			Console "Could not connect to portal"

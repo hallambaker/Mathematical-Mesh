@@ -33,6 +33,7 @@ namespace Goedel.Mesh {
 
     /// <summary>
     /// The Mesh Mail Profile
+    /// 
     /// </summary>
     public partial class MailProfile : ApplicationProfile {
 
@@ -56,18 +57,117 @@ namespace Goedel.Mesh {
         /// encryption.
         /// </summary>
         protected override byte[] GetPrivateData {
-            get { return Private.GetBytes(); }
+            get => Private.GetBytes(); 
             }
 
 
-        ///// <summary>
-        ///// Construct a MailProfile from the specified account information.
-        ///// </summary>
-        /// <param name="MailProfilePrivate">Specify the private account parameters.</param>
-        public MailProfile(MailProfilePrivate MailProfilePrivate) {
+        /// <summary>
+        /// Create a new personal profile.
+        /// </summary>
+        /// <param name="MakePrivate">If true, a private profile will be created.</param>
+        public MailProfile (bool MakePrivate) {
+            if (MakePrivate) {
+                _Private = new MailProfilePrivate();
+                }
+            }
+
+
+        /// <summary>
+        /// Create a new mail profile
+        /// </summary>
+        /// <param name="AccountName">The account email address</param>
+        /// <param name="SMime">If true create an SMIME key set.</param>
+        /// <param name="OpenPGP">If true create an OpenPGP keyset.</param>
+        /// <param name="CADomain">The certificate authority to register the key with</param>
+        /// <param name="KeyServer">The OpenPGP key server</param>
+        public MailProfile (string AccountName, bool SMime = true, 
+                    bool OpenPGP = true, string CADomain = null, string KeyServer = null ) {
+            if (SMime) {
+                AddSMime(CADomain);
+                }
+            if (OpenPGP) {
+                AddOpenPGP(KeyServer);
+                }
 
             }
 
+
+        /// <summary>
+        /// Create an S/MIME keyset and add to the account.
+        /// </summary>
+        /// <param name="CADomain">DNS address of Certificate Authority to obtain
+        /// certificate from.</param>
+        public void AddSMime (string CADomain = null) {
+            var EncryptPair = PublicKey.Generate(KeyType.AEK, CryptoAlgorithmID.DH);
+            var EncryptPrivate = new PublicKey() { PrivateParameters = EncryptPair.PrivateParameters };
+            var EncryptPublic = new PublicKey() { PrivateParameters = EncryptPair.PublicParameters };
+
+            var SignPair = PublicKey.Generate(KeyType.AAK, CryptoAlgorithmID.RSASign);
+            var SignPrivate = new PublicKey() { PrivateParameters = SignPair.PrivateParameters };
+
+            EncryptionSMIME = EncryptPublic;
+            Private.Encrypt.Add(EncryptPrivate);
+            Private.Sign.Add(SignPrivate);
+            }
+
+        /// <summary>
+        /// Create an OpenPGP keyset and add to the account.
+        /// </summary>
+        /// <param name="KeyServer">The name of a key server to register the key to.</param>
+        public void AddOpenPGP(string KeyServer = null) {
+            var EncryptPair = PublicKey.Generate(KeyType.AEK, CryptoAlgorithmID.DH);
+            var EncryptPrivate = new PublicKey() { PrivateParameters = EncryptPair.PrivateParameters };
+            var EncryptPublic = new PublicKey() { PrivateParameters = EncryptPair.PublicParameters };
+
+            var SignPair = PublicKey.Generate(KeyType.AAK, CryptoAlgorithmID.RSASign);
+            var SignPrivate = new PublicKey() { PrivateParameters = SignPair.PrivateParameters };
+
+            EncryptionPGP = EncryptPublic;
+            Private.Encrypt.Add (EncryptPrivate);
+            Private.Sign.Add (SignPrivate );
+            }
+
+        /// <summary>
+        /// Update existing encryption and signature keys and re-register.
+        /// </summary>
+        /// <param name="SMime">Replace S/MIME keys (if specified)</param>
+        /// <param name="OpenPGP">Replace OpenPGP keys (if specified)</param>
+        public void RollOver(bool SMime = true, bool OpenPGP = true) {
+            if (SMime) {
+                RollOverSMime();
+                }
+            if (OpenPGP) {
+                RollOverSMime();
+                }
+            }
+
+        /// <summary>
+        /// Update existing encryption and signature keys and re-register.
+        /// </summary>
+        public void RollOverSMime() {
+
+            }
+
+        /// <summary>
+        /// Update existing encryption and signature keys and re-register.
+        /// </summary>
+        public void RollOverOpenPGP() {
+
+            }
+
+        /// <summary>
+        /// Remove S/MIME Keys and certificates
+        /// </summary>
+        public void RemoveSMime() {
+
+            }
+
+        /// <summary>
+        /// Remove OpenPGP keys
+        /// </summary>
+        public void RemoveOpenPGP() {
+
+            }
 
 
         ///// <summary>
@@ -129,6 +229,10 @@ namespace Goedel.Mesh {
                 Key.ImportPrivateParameters();
                 }
             }
+
+
+        // There is no per-device data at present, all clients can decrypt the data.
+        // This will change when we do proxy re-encryption though
 
 
         }

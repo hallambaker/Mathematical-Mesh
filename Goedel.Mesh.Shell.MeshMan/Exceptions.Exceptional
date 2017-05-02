@@ -9,6 +9,7 @@
 		Exception NoPersonalProfile
 			Console "No personal profile"
 
+
 		Exception NoDeviceProfile
 			Console "No device profile"
 
@@ -25,7 +26,20 @@
 			Console "Portal refused request XXX"
 
 		Exception ProfileNotFound
-			Console "Could not find profile XXX"
+			Console "Could not find profile"
+			Object ExceptionData "The personal profile {0} could not be found"
+				String
 
 		Exception PublicationRequestRefused
 			Console "Portal refused profile publication request"
+
+		Exception InvalidEscrowParameters
+			Console "Invalid escrow parameters"
+
+		Exception InvalidShares
+			Object ExceptionData "The number of shares is invalid: {0}"
+				Int
+
+		Exception InvalidQuorum
+			Object ExceptionData "The quorum is invalid: {0}"
+				Int

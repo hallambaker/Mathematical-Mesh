@@ -119,9 +119,13 @@ SourceFiles = \
      ProfileDevice.cs\
      Escrow.cs\
      MailClient.cs\
+     ProfileConfirm.cs\
+     ProfileRecrypt.cs\
      ProfileSSH.cs\
-     SchemaNetwork.cs\
+     SchemaConfirm.cs\
      SchemaMesh.cs\
+     SchemaRecrypt.cs\
+     SchemaNetwork.cs\
      SchemaMeshPlus.cs\
      ProfileNetwork.cs\
      ProfileMaster.cs\
@@ -134,8 +138,8 @@ SourceFiles = \
      Properties/AssemblyInfo.cs\
      SchemaMail.cs\
      SchemaPassword.cs\
-     SignProfile.cs\
      SchemaSSH.cs\
+     SignProfile.cs\
      WindowsNetworkProfile.cs
 
 LinkFiles = \
@@ -190,14 +194,18 @@ Exceptions.cs : Exceptions.Exceptional
 !  $(Custom_Exceptional) Exceptions.Exceptional $(Custom_Exceptional_FLAG) Exceptions.cs 
 Portal.cs : Portal.Protocol
 !  $(Custom_protogen) Portal.Protocol $(Custom_protogen_FLAG) Portal.cs 
+SchemaRecrypt.cs : SchemaRecrypt.protocol
+!  $(Custom_protogen) SchemaRecrypt.protocol $(Custom_protogen_FLAG) SchemaRecrypt.cs 
 SchemaNetwork.cs : SchemaNetwork.protocol
 !  $(Custom_protogen) SchemaNetwork.protocol $(Custom_protogen_FLAG) SchemaNetwork.cs 
 SchemaPassword.cs : SchemaPassword.protocol
 !  $(Custom_protogen) SchemaPassword.protocol $(Custom_protogen_FLAG) SchemaPassword.cs 
 SchemaMail.cs : SchemaMail.protocol
 !  $(Custom_protogen) SchemaMail.protocol $(Custom_protogen_FLAG) SchemaMail.cs 
+SchemaConfirm.cs : SchemaConfirm.protocol
+!  $(Custom_protogen) SchemaConfirm.protocol $(Custom_protogen_FLAG) SchemaConfirm.cs 
 SchemaSSH.cs : SchemaSSH.protocol
-!  $(Custom_protogen) SchemaSSH.protocol $(Custom_protogen_FLAG) SchemaSSH.cs 
+!  $(Custom_Protogen) SchemaSSH.protocol $(Custom_Protogen_FLAG) SchemaSSH.cs 
 SchemaMesh.cs : SchemaMesh.protocol
 !  $(Custom_Protogen) SchemaMesh.protocol $(Custom_Protogen_FLAG) SchemaMesh.cs 
 

@@ -39,28 +39,28 @@ namespace Goedel.Mesh {
         /// The profile that was signed.
         /// </summary>
         public virtual Profile Profile {
-            get { return null; }
+            get => null; 
             }
 
         /// <summary>
         /// Pass the UDF identifier of the inner profile if it is defined.
         /// </summary>
         public virtual string UDF {
-            get { return Profile != null ? Profile.UDF : null; }
+            get => Profile?.UDF ; 
             }
 
         /// <summary>
         /// the list of index terms.
         /// </summary>
         public virtual List<IndexTerm> IndexTerms {
-            get { return Profile != null ? Profile.IndexTerms : null; }
+            get => Profile?.IndexTerms; 
             }
 
         /// <summary>
         /// The unique identifier for the profile.
         /// </summary>
         public virtual string UniqueID {
-            get { return Profile != null ? Profile.UniqueID : null; }
+            get => Profile?.UniqueID;
             }
 
 
@@ -90,7 +90,7 @@ namespace Goedel.Mesh {
         /// The inner profile object.
         /// </summary>
         public override Profile Profile {
-            get { return DeviceProfile; }
+            get => DeviceProfile; 
             }
 
         /// <summary>
@@ -107,9 +107,11 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Construct a signed profile from a device profile.
         /// </summary>
-        /// <param name="Data">The device profile to sign.</param>
-        public SignedDeviceProfile(DeviceProfile Data) {
-            Sign(Data);
+        /// <param name="DeviceProfile">The device profile to sign.</param>
+        /// <param name="Encoding">The encoding for the inner data</param>
+        public SignedDeviceProfile (DeviceProfile DeviceProfile, 
+                    DataEncoding Encoding = DataEncoding.JSON) {
+            Sign(DeviceProfile, Encoding);
             }
 
         /// <summary>
@@ -126,12 +128,14 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Sign the device profile.
         /// </summary>
-        /// <param name="Data">The device profile to sign.</param>
-        public void Sign(DeviceProfile Data) {
-            Identifier = Data.Identifier;  // pass through
-            var PrivateKey = Data.DeviceSignatureKey.PrivateKey;
-            SignedData = new JoseWebSignature(Data.GetBytes(), PrivateKey);
-            _Signed = Data;
+        /// <param name="DeviceProfile">The device profile to sign.</param>
+        /// <param name="Encoding">The encoding for the inner data</param>
+        public void Sign(DeviceProfile DeviceProfile, 
+                    DataEncoding Encoding = DataEncoding.JSON) {
+            Identifier = DeviceProfile.Identifier;  // pass through
+            var PrivateKey = DeviceProfile.DeviceSignatureKey.PrivateKey;
+            SignedData = new JoseWebSignature(DeviceProfile, Encoding, PrivateKey);
+            _Signed = DeviceProfile;
             }
 
         /// <summary>
@@ -211,14 +215,14 @@ namespace Goedel.Mesh {
         /// The signed profile object.
         /// </summary>
         public override Profile Profile {
-            get { return MasterProfile; }
+            get => MasterProfile;
             }
 
         /// <summary>
         /// The signed profile object.
         /// </summary>
         public MasterProfile MasterProfile {
-            get { if (_Signed == null) _Signed = UnpackMasterProfile(); return _Signed; }
+            get { _Signed = _Signed ?? UnpackMasterProfile(); return _Signed; }
             }
 
         /// <summary>
@@ -265,39 +269,48 @@ namespace Goedel.Mesh {
         }
 
     public partial class SignedApplicationProfile {
-        ApplicationProfile _Signed = null;
+
         /// <summary>
         /// The signed profile object.
         /// </summary>
         public override Profile Profile {
-            get { return ApplicationProfile; }
+            get => ApplicationProfile; 
             }
         /// <summary>
         /// The signed profile object.
         /// </summary>
         public ApplicationProfile ApplicationProfile {
-            get { if (_Signed == null) _Signed = UnpackAndVerify(); return _Signed; }
+            get {
+                _ApplicationProfile = _ApplicationProfile?? UnpackAndVerify();
+                return _ApplicationProfile;
+                }
             }
+        ApplicationProfile _ApplicationProfile = null;
 
         /// <summary>
         /// Construct a signed profile from the specified profile.
         /// </summary>
+        /// <param name="Encoding">The encoding for the inner data</param>
         /// <param name="Data">The profile to sign.</param>
-        public SignedApplicationProfile(ApplicationProfile Data) {
+        public SignedApplicationProfile (ApplicationProfile Data, 
+                    DataEncoding Encoding = DataEncoding.JSON) {
+            _ApplicationProfile = Data;
+            Sign(Encoding: Encoding);
+            }
 
-            // Locate the administration key for this device.
-            var AdminKey = Data.GetSignatureKey();
+        /// <summary>
+        /// Package and sign the 
+        /// </summary>
+        /// <param name="SigningKey"></param>
+        /// <param name="Encoding"></param>
+        public void Sign (KeyPair SigningKey=null, DataEncoding Encoding = DataEncoding.JSON) {
+            SigningKey = SigningKey ?? ApplicationProfile.GetSignatureKey();
+            Assert.NotNull(SigningKey, NotAdministrationDevice.Throw);
 
-            Assert.NotNull(AdminKey, NotAdministrationDevice.Throw);
+            ApplicationProfile.EncryptPrivate();
+            Identifier = ApplicationProfile.Identifier;
 
-            // Make sure all the data is properly registered
-            Data.EncryptPrivate();
-            Identifier = Data.Identifier;
-
-            //Goedel.Debug.Trace.WriteLine("Data to be signed {0}", Data.ToString());
-
-            SignedData = new JoseWebSignature(Data.GetBytes(), AdminKey);
-            _Signed = Data;
+            SignedData = new JoseWebSignature(ApplicationProfile, Encoding, SigningKey);
             }
 
         /// <summary>
@@ -306,23 +319,93 @@ namespace Goedel.Mesh {
         /// <returns>The corresponding master profile if validation is successful,
         /// otherwise null.</returns>
         public virtual ApplicationProfile UnpackAndVerify() {
+            // NYI check signature chain.
 
-            // Get the signature key
-
-            // Get this application entry from the personal profile
-
-            // check the signature key is included in SignID for this application
-
-            // abort if fail
-
-
-            // unpack the data
-
-            var Result = ApplicationProfile.FromTagged(SignedData.Payload);
-
+            var Result = ReadProfile(SignedData.Payload);
+            Result.SignedApplicationProfile = this;
 
             return Result;
             }
+
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="Data">The input stream</param>
+        /// <returns>The created object.</returns>		
+        public static ApplicationProfile ReadProfile (byte[] Data) {
+            ApplicationProfile Out = null;
+
+            var _Reader = new System.IO.StringReader(Data.ToUTF8());
+            var JSONReader = new JSONReader(_Reader);
+
+            JSONReader.StartObject();
+            if (JSONReader.EOR) {
+                return null;
+                }
+
+            string token = JSONReader.ReadToken();
+
+            switch (token) {
+
+                case "ApplicationProfile": {
+                    var Result = new ApplicationProfile();
+                    Result.Deserialize(JSONReader);
+                    Out = Result;
+                    break;
+                    }
+
+                case "SSHProfile": {
+                    var Result = new SSHProfile();
+                    Result.Deserialize(JSONReader);
+                    Out = Result;
+                    break;
+                    }
+
+                case "MailProfile": {
+                    var Result = new MailProfile();
+                    Result.Deserialize(JSONReader);
+                    Out = Result;
+                    break;
+                    }
+                case "NetworkProfile": {
+                    var Result = new NetworkProfile();
+                    Result.Deserialize(JSONReader);
+                    Out = Result;
+                    break;
+                    }
+                case "PasswordProfile": {
+                    var Result = new PasswordProfile();
+                    Result.Deserialize(JSONReader);
+                    Out = Result;
+                    break;
+                    }
+                case "RecryptProfile": {
+                    var Result = new RecryptProfile();
+                    Result.Deserialize(JSONReader);
+                    Out = Result;
+                    break;
+                    }
+                case "ConfirmProfile": {
+                    var Result = new ConfirmProfile();
+                    Result.Deserialize(JSONReader);
+                    Out = Result;
+                    break;
+                    }
+
+                default: {
+                    break;
+                    }
+                }
+
+            JSONReader.EndObject();
+
+            return Out;
+            }
+
+
+
+
 
         /// <summary>
         /// Search for the specified profile on the local machine.
@@ -331,16 +414,16 @@ namespace Goedel.Mesh {
         /// <param name="FileName">The name of the file</param>
         /// <returns>The signed profile if found or null otherwise.</returns>
         public static SignedApplicationProfile FromFile(string UDF, string FileName) {
-
             using (var FileReader = FileName.OpenFileReadShared()) {
                 using (var TextReader = FileReader.OpenTextReader()) {
                     var Reader = new JSONReader(TextReader);
-                    var Result = SignedApplicationProfile.FromTagged(Reader);
-
+                    var Result = FromTagged(Reader);
                     return Result;
                     }
                 }
             }
+
+
 
         }
 
@@ -355,14 +438,14 @@ namespace Goedel.Mesh {
         /// The signed profile object.
         /// </summary>
         public override Profile Profile {
-            get { return _Signed; }
+            get => _Signed; 
             }
 
         /// <summary>
         /// The signed profile object.
         /// </summary>
         public PersonalProfile PersonalProfile {
-            get { if (_Signed == null) _Signed = UnpackPersonalProfile(); return _Signed; }
+            get { _Signed = _Signed ?? UnpackPersonalProfile(); return _Signed; }
             }
         PersonalProfile _Signed = null;
 
@@ -429,6 +512,18 @@ namespace Goedel.Mesh {
             _Signed = Unpacked;
             return Unpacked;
             }
+
+
+        /// <summary>
+        /// Validate this profile to check that it is internally consistent.
+        /// </summary>
+        /// <returns>True if the profile passed validation, otherwise false.</returns>
+        public override bool Validate() {
+
+            return true; // Hack: Must implemenmt this.
+
+            }
+
 
         private void Validate(PersonalProfile Unpacked) {
 

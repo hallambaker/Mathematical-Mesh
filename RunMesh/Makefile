@@ -118,21 +118,22 @@ LinkFiles = \
     $(LIBRARYBIN)/Goedel.Cryptography.Framework.dll\
     $(LIBRARYBIN)/Goedel.Cryptography.Jose.dll\
     $(LIBRARYBIN)/Goedel.Cryptography.KeyFile.dll\
+    $(LIBRARYBIN)/Goedel.Cryptography.Windows.dll\
     $(LIBRARYBIN)/Goedel.FSR.dll\
     $(LIBRARYBIN)/Goedel.IO.dll\
-    $(LIBRARYBIN)/Goedel.Platform.dll\
-    $(LIBRARYBIN)/Goedel.Platform.Framework.dll\
     $(LIBRARYBIN)/Goedel.Protocol.dll\
     $(LIBRARYBIN)/Goedel.Protocol.Framework.dll\
     $(LIBRARYBIN)/Goedel.Registry.dll\
     $(LIBRARYBIN)/Goedel.Utilities.dll\
     $(TARGETBIN)/Goedel.Mesh.Platform.Windows.dll\
     $(TARGETBIN)/Goedel.Mesh.Platform.dll\
+    $(TARGETBIN)/Goedel.Mesh.Shell.MeshMan.dll\
     $(TARGETBIN)/Goedel.Mesh.dll\
     $(TARGETBIN)/Goedel.Mesh.Server.dll\
-    $(TARGETBIN)/Goedel.Persistence.dll
+    $(TARGETBIN)/Goedel.Persistence.dll\
+    $(TARGETBIN)/Test.Constants.dll
 
-LinkFilesComma = $(LIBRARYBIN)/Goedel.Cryptography.dll,$(LIBRARYBIN)/Goedel.Cryptography.Framework.dll,$(LIBRARYBIN)/Goedel.Cryptography.Jose.dll,$(LIBRARYBIN)/Goedel.Cryptography.KeyFile.dll,$(LIBRARYBIN)/Goedel.FSR.dll,$(LIBRARYBIN)/Goedel.IO.dll,$(LIBRARYBIN)/Goedel.Platform.dll,$(LIBRARYBIN)/Goedel.Platform.Framework.dll,$(LIBRARYBIN)/Goedel.Protocol.dll,$(LIBRARYBIN)/Goedel.Protocol.Framework.dll,$(LIBRARYBIN)/Goedel.Registry.dll,$(LIBRARYBIN)/Goedel.Utilities.dll,$(TARGETBIN)/Goedel.Mesh.Platform.Windows.dll,$(TARGETBIN)/Goedel.Mesh.Platform.dll,$(TARGETBIN)/Goedel.Mesh.dll,$(TARGETBIN)/Goedel.Mesh.Server.dll,$(TARGETBIN)/Goedel.Persistence.dll
+LinkFilesComma = $(LIBRARYBIN)/Goedel.Cryptography.dll,$(LIBRARYBIN)/Goedel.Cryptography.Framework.dll,$(LIBRARYBIN)/Goedel.Cryptography.Jose.dll,$(LIBRARYBIN)/Goedel.Cryptography.KeyFile.dll,$(LIBRARYBIN)/Goedel.Cryptography.Windows.dll,$(LIBRARYBIN)/Goedel.FSR.dll,$(LIBRARYBIN)/Goedel.IO.dll,$(LIBRARYBIN)/Goedel.Protocol.dll,$(LIBRARYBIN)/Goedel.Protocol.Framework.dll,$(LIBRARYBIN)/Goedel.Registry.dll,$(LIBRARYBIN)/Goedel.Utilities.dll,$(TARGETBIN)/Goedel.Mesh.Platform.Windows.dll,$(TARGETBIN)/Goedel.Mesh.Platform.dll,$(TARGETBIN)/Goedel.Mesh.Shell.MeshMan.dll,$(TARGETBIN)/Goedel.Mesh.dll,$(TARGETBIN)/Goedel.Mesh.Server.dll,$(TARGETBIN)/Goedel.Persistence.dll,$(TARGETBIN)/Test.Constants.dll,Microsoft.VisualStudio.QualityTools.UnitTestFramework
 
 
 NugetFiles = 
@@ -188,6 +189,9 @@ ifndef NORECURSE
 ../Goedel.Mesh.Platform/$(TARGETBIN)/Goedel.Mesh.Platform.dll : recursive
 ! $(MAKE) -C ../Goedel.Mesh.Platform
 
+../Goedel.Mesh.Shell.MeshMan/$(TARGETBIN)/Goedel.Mesh.Shell.MeshMan.dll : recursive
+! $(MAKE) -C ../Goedel.Mesh.Shell.MeshMan
+
 ../Goedel.Mesh/$(TARGETBIN)/Goedel.Mesh.dll : recursive
 ! $(MAKE) -C ../Goedel.Mesh
 
@@ -196,6 +200,9 @@ ifndef NORECURSE
 
 ../Goedel.Persistence/$(TARGETBIN)/Goedel.Persistence.dll : recursive
 ! $(MAKE) -C ../Goedel.Persistence
+
+../Testing/Test.Constants/$(TARGETBIN)/Test.Constants.dll : recursive
+! $(MAKE) -C ../Testing/Test.Constants
 
 endif
 
@@ -206,6 +213,10 @@ $(TARGETBIN)/Goedel.Mesh.Platform.Windows.dll : ../Goedel.Mesh.Platform.Windows/
 $(TARGETBIN)/Goedel.Mesh.Platform.dll :| $(TARGETBIN)
 $(TARGETBIN)/Goedel.Mesh.Platform.dll : ../Goedel.Mesh.Platform/$(TARGETBIN)/Goedel.Mesh.Platform.dll
 !  cp ../Goedel.Mesh.Platform/$(TARGETBIN)/Goedel.Mesh.Platform.dll $(TARGETBIN)/Goedel.Mesh.Platform.dll
+
+$(TARGETBIN)/Goedel.Mesh.Shell.MeshMan.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.Mesh.Shell.MeshMan.dll : ../Goedel.Mesh.Shell.MeshMan/$(TARGETBIN)/Goedel.Mesh.Shell.MeshMan.dll
+!  cp ../Goedel.Mesh.Shell.MeshMan/$(TARGETBIN)/Goedel.Mesh.Shell.MeshMan.dll $(TARGETBIN)/Goedel.Mesh.Shell.MeshMan.dll
 
 $(TARGETBIN)/Goedel.Mesh.dll :| $(TARGETBIN)
 $(TARGETBIN)/Goedel.Mesh.dll : ../Goedel.Mesh/$(TARGETBIN)/Goedel.Mesh.dll
@@ -218,6 +229,10 @@ $(TARGETBIN)/Goedel.Mesh.Server.dll : ../Goedel.Mesh.Server/$(TARGETBIN)/Goedel.
 $(TARGETBIN)/Goedel.Persistence.dll :| $(TARGETBIN)
 $(TARGETBIN)/Goedel.Persistence.dll : ../Goedel.Persistence/$(TARGETBIN)/Goedel.Persistence.dll
 !  cp ../Goedel.Persistence/$(TARGETBIN)/Goedel.Persistence.dll $(TARGETBIN)/Goedel.Persistence.dll
+
+$(TARGETBIN)/Test.Constants.dll :| $(TARGETBIN)
+$(TARGETBIN)/Test.Constants.dll : ../Testing/Test.Constants/$(TARGETBIN)/Test.Constants.dll
+!  cp ../Testing/Test.Constants/$(TARGETBIN)/Test.Constants.dll $(TARGETBIN)/Test.Constants.dll
 
 
 # Referenced Libraries

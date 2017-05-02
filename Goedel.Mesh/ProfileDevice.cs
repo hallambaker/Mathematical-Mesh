@@ -44,7 +44,7 @@ namespace Goedel.Mesh {
         /// The profile fingerprint value is the device signature key.
         /// </summary>
         public override string UDF {
-            get { return DeviceSignatureKey?.UDF; }
+            get => DeviceSignatureKey?.UDF; 
             }
 
 
@@ -61,8 +61,8 @@ namespace Goedel.Mesh {
                     CryptoAlgorithmID ExchangeAlgorithmID = CryptoAlgorithmID.Default,
                     SignedDeviceProfile SignedDeviceProfile = null) {
 
-            this.Names = new List<string>();
-            this.Names.Add(Name);
+            Names = new List<string>() { Name};
+
             this.Description = Description;
 
             DeviceSignatureKey = PublicKey.Generate (KeyType.DSK, SignatureAlgorithmID);
@@ -82,8 +82,11 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="UDF">Specify the signature key by identifier</param>
         /// <param name="KeyPair">Specify the signature key by key handle</param>
-        public override void Sign(string UDF = null, KeyPair KeyPair = null) {
-            this.SignedDeviceProfile = new SignedDeviceProfile(this);
+        /// <param name="Encoding">The encoding for the inner data</param>
+        public override SignedProfile Sign (string UDF = null, KeyPair KeyPair = null,
+                        DataEncoding Encoding = DataEncoding.JSON) {
+            SignedDeviceProfile = new SignedDeviceProfile(this, Encoding);
+            return SignedDeviceProfile;
             }
 
         }

@@ -9,9 +9,10 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Meshtest</RootNamespace>
     <AssemblyName>RunMesh</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
+    <AssemblyVersion>1.0.0.201</AssemblyVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -97,10 +98,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Service.bat" />
     <None Include="PostBuild.bat" />
     <None Include="RunMesh.licenseheader" />
     <None Include="Tmesh.jlog" />
     <None Include="Tportal.jlog" />
+    <None Include="VS.Make" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Goedel.Mesh.Platform.Windows\Goedel.Mesh.Platform.Windows.csproj">
@@ -110,6 +113,10 @@
     <ProjectReference Include="..\Goedel.Mesh.Platform\Goedel.Mesh.Platform.csproj">
       <Project>{90e3d724-811e-41cb-ae8d-91fd0677187c}</Project>
       <Name>Goedel.Mesh.Platform</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Goedel.Mesh.Shell.MeshMan\Goedel.Mesh.Shell.MeshMan.csproj">
+      <Project>{64ef7e6f-1d8e-449c-90e7-5c974e50533f}</Project>
+      <Name>Goedel.Mesh.Shell.MeshMan</Name>
     </ProjectReference>
     <ProjectReference Include="..\Goedel.Mesh\Goedel.Mesh.csproj">
       <Project>{0d8dd801-65d2-497c-8379-2d6adf3867c3}</Project>

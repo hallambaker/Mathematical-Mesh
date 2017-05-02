@@ -31,8 +31,7 @@ LinkFiles = \
     Goedel.Mesh.Platform.dll\
     Goedel.Mesh.Server.dll\
     Goedel.Mesh.dll\
-    Goedel.Persistence.dll\
-    Goedel.Platform.Windows.dll
+    Goedel.Persistence.dll
 
 prebuild : 
     echo "Do Prebuild"

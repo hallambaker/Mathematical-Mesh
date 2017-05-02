@@ -187,30 +187,18 @@ namespace Goedel.Persistence {
         ///visible in binary formats etc.
         /// </summary>
 
-		public virtual string						TransactionID {
-			get {return _TransactionID;}			
-			set {_TransactionID = value;}
-			}
-		string						_TransactionID ;
+		public virtual string						TransactionID  {get; set;}
         /// <summary>
         ///Unique primary key.
         /// </summary>
 
-		public virtual string						PrimaryKey {
-			get {return _PrimaryKey;}			
-			set {_PrimaryKey = value;}
-			}
-		string						_PrimaryKey ;
+		public virtual string						PrimaryKey  {get; set;}
         /// <summary>
         ///Specifies the immediately prior transaction that affected
         ///this identifier
         /// </summary>
 
-		public virtual string						PriorTransactionID {
-			get {return _PriorTransactionID;}			
-			set {_PriorTransactionID = value;}
-			}
-		string						_PriorTransactionID ;
+		public virtual string						PriorTransactionID  {get; set;}
         /// <summary>
         ///Type of transaction, valid values include:
         ///Delete (the key is removed)
@@ -219,11 +207,7 @@ namespace Goedel.Persistence {
         ///Drop (the key is no longer active and will not be modified again)
         /// </summary>
 
-		public virtual string						Action {
-			get {return _Action;}			
-			set {_Action = value;}
-			}
-		string						_Action ;
+		public virtual string						Action  {get; set;}
 		bool								__Added = false;
 		private DateTime						_Added;
         /// <summary>
@@ -238,29 +222,17 @@ namespace Goedel.Persistence {
         ///Index terms for data item
         /// </summary>
 
-		public virtual List<IndexTerm>				Keys {
-			get {return _Keys;}			
-			set {_Keys = value;}
-			}
-		List<IndexTerm>				_Keys;
+		public virtual List<IndexTerm>				Keys  {get; set;}
         /// <summary>
         ///Binary data.
         /// </summary>
 
-		public virtual byte[]						Data {
-			get {return _Data;}			
-			set {_Data = value;}
-			}
-		byte[]						_Data ;
+		public virtual byte[]						Data  {get; set;}
         /// <summary>
         ///Text data.
         /// </summary>
 
-		public virtual string						Text {
-			get {return _Text;}			
-			set {_Text = value;}
-			}
-		string						_Text ;
+		public virtual string						Text  {get; set;}
 		bool								__Pending = false;
 		private bool						_Pending;
         /// <summary>
@@ -497,8 +469,6 @@ namespace Goedel.Persistence {
 					}
 
 				default : {
-					//Ignore the unknown data
-                    //tthrow new Exception ("Not supported");
                     break;
 					}
 				}
@@ -587,56 +557,32 @@ namespace Goedel.Persistence {
         ///Log Type, usually 'Consolidated' 'Data' 'Index'
         /// </summary>
 
-		public virtual string						Type {
-			get {return _Type;}			
-			set {_Type = value;}
-			}
-		string						_Type ;
+		public virtual string						Type  {get; set;}
         /// <summary>
         ///Content type identifier
         /// </summary>
 
-		public virtual string						Content {
-			get {return _Content;}			
-			set {_Content = value;}
-			}
-		string						_Content ;
+		public virtual string						Content  {get; set;}
         /// <summary>
         ///Optional description of the log type
         /// </summary>
 
-		public virtual string						Comment {
-			get {return _Comment;}			
-			set {_Comment = value;}
-			}
-		string						_Comment ;
+		public virtual string						Comment  {get; set;}
         /// <summary>
         ///Digest Algorithm
         /// </summary>
 
-		public virtual string						Digest {
-			get {return _Digest;}			
-			set {_Digest = value;}
-			}
-		string						_Digest ;
+		public virtual string						Digest  {get; set;}
         /// <summary>
         ///Final value of last log
         /// </summary>
 
-		public virtual byte[]						LastDigest {
-			get {return _LastDigest;}			
-			set {_LastDigest = value;}
-			}
-		byte[]						_LastDigest ;
+		public virtual byte[]						LastDigest  {get; set;}
         /// <summary>
         ///If populated, this is a delta log.
         /// </summary>
 
-		public virtual Delta						Delta {
-			get {return _Delta;}			
-			set {_Delta = value;}
-			}
-		Delta						_Delta ;
+		public virtual Delta						Delta  {get; set;}
 
         /// <summary>
         /// Tag identifying this class.
@@ -804,8 +750,6 @@ namespace Goedel.Persistence {
 					}
 
 				default : {
-					//Ignore the unknown data
-                    //throw new Exception ("Not supported");
                     break;
 					}
 				}
@@ -869,20 +813,12 @@ namespace Goedel.Persistence {
         ///Filename of master log this is a delta to
         /// </summary>
 
-		public virtual string						Parent {
-			get {return _Parent;}			
-			set {_Parent = value;}
-			}
-		string						_Parent ;
+		public virtual string						Parent  {get; set;}
         /// <summary>
         ///Filename of previous delta log				 
         /// </summary>
 
-		public virtual string						Previous {
-			get {return _Previous;}			
-			set {_Previous = value;}
-			}
-		string						_Previous ;
+		public virtual string						Previous  {get; set;}
 
         /// <summary>
         /// Tag identifying this class.
@@ -1030,8 +966,6 @@ namespace Goedel.Persistence {
 					}
 
 				default : {
-					//Ignore the unknown data
-                    //throw new Exception ("Not supported");
                     break;
 					}
 				}
@@ -1076,20 +1010,12 @@ namespace Goedel.Persistence {
         ///Key under which index term is listed
         /// </summary>
 
-		public virtual string						Type {
-			get {return _Type;}			
-			set {_Type = value;}
-			}
-		string						_Type ;
+		public virtual string						Type  {get; set;}
         /// <summary>
         ///Data associated with key
         /// </summary>
 
-		public virtual string						Term {
-			get {return _Term;}			
-			set {_Term = value;}
-			}
-		string						_Term ;
+		public virtual string						Term  {get; set;}
 
         /// <summary>
         /// Tag identifying this class.
@@ -1237,8 +1163,6 @@ namespace Goedel.Persistence {
 					}
 
 				default : {
-					//Ignore the unknown data
-                    //throw new Exception ("Not supported");
                     break;
 					}
 				}
@@ -1284,11 +1208,7 @@ namespace Goedel.Persistence {
         ///Digest of this log up to but not including this record
         /// </summary>
 
-		public virtual byte[]						Digest {
-			get {return _Digest;}			
-			set {_Digest = value;}
-			}
-		byte[]						_Digest ;
+		public virtual byte[]						Digest  {get; set;}
 
         /// <summary>
         /// Tag identifying this class.
@@ -1431,8 +1351,6 @@ namespace Goedel.Persistence {
 					}
 
 				default : {
-					//Ignore the unknown data
-                    //throw new Exception ("Not supported");
                     break;
 					}
 				}
@@ -1474,11 +1392,7 @@ namespace Goedel.Persistence {
         ///Location of index records for specified key(s)
         /// </summary>
 
-		public virtual List<IndexIndex>				Indexes {
-			get {return _Indexes;}			
-			set {_Indexes = value;}
-			}
-		List<IndexIndex>				_Indexes;
+		public virtual List<IndexIndex>				Indexes  {get; set;}
 
         /// <summary>
         /// Tag identifying this class.
@@ -1633,8 +1547,6 @@ namespace Goedel.Persistence {
 					}
 
 				default : {
-					//Ignore the unknown data
-                    //throw new Exception ("Not supported");
                     break;
 					}
 				}
@@ -1683,11 +1595,7 @@ namespace Goedel.Persistence {
         ///Key under which index term is listed
         /// </summary>
 
-		public virtual string						Key {
-			get {return _Key;}			
-			set {_Key = value;}
-			}
-		string						_Key ;
+		public virtual string						Key  {get; set;}
 		bool								__Offset = false;
 		private int						_Offset;
         /// <summary>
@@ -1845,8 +1753,6 @@ namespace Goedel.Persistence {
 					}
 
 				default : {
-					//Ignore the unknown data
-                    //throw new Exception ("Not supported");
                     break;
 					}
 				}
@@ -1892,20 +1798,12 @@ namespace Goedel.Persistence {
         ///Key that is indexed
         /// </summary>
 
-		public virtual string						Key {
-			get {return _Key;}			
-			set {_Key = value;}
-			}
-		string						_Key ;
+		public virtual string						Key  {get; set;}
         /// <summary>
         ///List of occurrences of the specified index term.	
         /// </summary>
 
-		public virtual List<IndexEntry>				Entries {
-			get {return _Entries;}			
-			set {_Entries = value;}
-			}
-		List<IndexEntry>				_Entries;
+		public virtual List<IndexEntry>				Entries  {get; set;}
 
         /// <summary>
         /// Tag identifying this class.
@@ -2065,8 +1963,6 @@ namespace Goedel.Persistence {
 					}
 
 				default : {
-					//Ignore the unknown data
-                    //throw new Exception ("Not supported");
                     break;
 					}
 				}
@@ -2119,20 +2015,12 @@ namespace Goedel.Persistence {
         ///Data associated with key
         /// </summary>
 
-		public virtual string						Data {
-			get {return _Data;}			
-			set {_Data = value;}
-			}
-		string						_Data ;
+		public virtual string						Data  {get; set;}
         /// <summary>
         ///Location in file at which offset occurs
         /// </summary>
 
-		public virtual List<int>				Offset {
-			get {return _Offset;}			
-			set {_Offset = value;}
-			}
-		List<int>				_Offset;
+		public virtual List<int>				Offset  {get; set;}
 
         /// <summary>
         /// Tag identifying this class.
@@ -2287,8 +2175,6 @@ namespace Goedel.Persistence {
 					}
 
 				default : {
-					//Ignore the unknown data
-                    //throw new Exception ("Not supported");
                     break;
 					}
 				}

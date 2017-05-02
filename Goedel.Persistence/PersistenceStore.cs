@@ -143,9 +143,8 @@ namespace Goedel.Persistence {
         /// <param name="Value">Key value to find.</param>
         /// <returns>Data item if found.</returns>
         public virtual DataItem Get(string Value) {
-            DataItem Result;
 
-            if (Dictionary.TryGetValue(Value, out Result)) {
+            if (Dictionary.TryGetValue(Value, out var Result)) {
                 return Result;
                 }
 
@@ -203,9 +202,9 @@ namespace Goedel.Persistence {
         /// <param name="Value">Key value to find.</param>
         /// <returns>The data collection if found, null otherwise.</returns>
         public virtual DataCollection Get(string Value) {
-            DataCollection Result;
 
-            if (DictionaryKeyId.TryGetValue (Value, out Result))  {
+
+            if (DictionaryKeyId.TryGetValue (Value, out var Result))  {
                 return Result;
                 }
 
@@ -219,7 +218,9 @@ namespace Goedel.Persistence {
         /// <returns>The data collection if found, null otherwise.</returns>
         public virtual DataItem GetLast (string Value) {
             var Collection = Get(Value);
-            if (Collection == null) return null;
+            if (Collection == null) {
+                return null;
+                }
 
             return Collection.DataItems.Last();
             }
@@ -377,10 +378,10 @@ namespace Goedel.Persistence {
                 }
 
             private object Current1 {
-                get { return this.Current; }
+                get => this.Current; 
                 }
             object IEnumerator.Current {
-                get { return Current1; }
+                get => Current1; 
                 }
 
             /// <summary>
@@ -418,7 +419,7 @@ namespace Goedel.Persistence {
             try {
                 Lock.TryEnterWriteLock(_TimeOut);
                 try {
-                    this.pStore(DataItem);
+                    UnprotectedStore(DataItem);
                     Interlocked.Increment(ref Adds);
                     }
                 finally {
@@ -441,7 +442,7 @@ namespace Goedel.Persistence {
             try {
                 Lock.TryEnterReadLock(TimeOut);
                 try {
-                Result = this.pGetData(Key, Value);
+                Result = this.UnprotectedGetData(Key, Value);
                     Interlocked.Increment(ref Reads);
                     }
                 finally {
@@ -461,11 +462,13 @@ namespace Goedel.Persistence {
         /// overriden in delegate classes.
         /// </summary>
         /// <param name="DataItem">Data item to write.</param>
-        protected virtual void pStore(DataItem DataItem) {
+        protected virtual void UnprotectedStore(DataItem DataItem) {
             Entries.Add(DataItem);
             ObjectIndex.Add(DataItem);
 
-            if (DataItem.Keys == null) return;
+            if (DataItem.Keys == null) {
+                return;
+                }
 
             foreach (var IndexTerm in DataItem.Keys) {
                 PersistenceIndex Index;
@@ -476,9 +479,8 @@ namespace Goedel.Persistence {
                 else {
                     Index = GetIndex(IndexTerm.Type, true);
                     }
-                DataCollection DataCollection;
                 if (Index.DictionaryKeyId.TryGetValue(IndexTerm.Term,
-                            out DataCollection)) {
+                            out var DataCollection)) {
                     DataCollection.Add(DataItem);
                     }
                 else {
@@ -494,7 +496,7 @@ namespace Goedel.Persistence {
         /// <param name="Key">Key to search on.</param>
         /// <param name="Value">Value to find.</param>
         /// <returns>Item if found, null otherwise.</returns>
-        protected virtual DataItem pGetData(string Key, string Value) {
+        protected virtual DataItem UnprotectedGetData(string Key, string Value) {
             DataItem Result = null;
             //DictionaryEmail.TryGetValue(Email, out Result);
             return Result;
@@ -567,7 +569,9 @@ namespace Goedel.Persistence {
         /// <returns>Data collection if a match is found, otherwise null.</returns>
         public virtual DataCollection Get(string Key, string Value) {
             var Index = GetIndex(Key, false);
-            if (Index == null) return null;
+            if (Index == null) {
+                return null;
+                }
             return Index.Get (Value);
             }
 
@@ -589,10 +593,12 @@ namespace Goedel.Persistence {
         /// <param name="Create">If true, will create an index if none is found.</param>
         /// <returns>The index if found or created, otherwise null.</returns>
         public virtual PersistenceIndex GetIndex(string Type, bool Create) {
-            PersistenceIndex Index;
-            var Found = Catalog.TryGetValue(Type, out Index);
 
-            if (Found) return Index;
+            var Found = Catalog.TryGetValue(Type, out var Index);
+
+            if (Found) {
+                return Index;
+                }
             if (Create) {
                 Index = new PersistenceIndex(this, Type);
                 Catalog.AddSafe(Type, Index);   // NYI check if null

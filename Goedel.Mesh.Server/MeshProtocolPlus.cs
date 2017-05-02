@@ -73,5 +73,25 @@ namespace Goedel.Mesh {
             return Result;
             }
         }
+    /// <summary>
+    ///
+    /// Reports the success or failure of a ConnectPending transaction.
+    /// </summary>
+    public partial class ConnectPendingResponse { 
 
+        /// <summary>
+        /// Find connection request matching a request.
+        /// </summary>
+        /// <param name="UDF"></param>
+        /// <returns></returns>
+        public ConnectionRequest Match (string UDF) {
+            foreach (var Request in Pending) {
+                if (Request.Identifier == UDF) { // ToDo: audit use of identifier vs UDF
+                    return Request.Data;
+                    }
+                }
+            return null;
+            }
+
+        }
     }

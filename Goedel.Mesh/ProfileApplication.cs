@@ -23,7 +23,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Goedel.Registry;
+using Goedel.Protocol;
 using Goedel.Utilities;
 using Goedel.Cryptography;
 using Goedel.Cryptography.PKIX;
@@ -36,27 +36,38 @@ namespace Goedel.Mesh {
         /// <summary>
         /// The personal profile to which this is attached.
         /// </summary>
-        protected PersonalProfile PersonalProfile;
+        public PersonalProfile PersonalProfile;
 
         /// <summary>
         /// This application profile's entry in the parent personal profile.
         /// </summary>
-        protected ApplicationProfileEntry ApplicationProfileEntry;
+        public ApplicationProfileEntry ApplicationProfileEntry;
 
         /// <summary>
-        /// Return a signed version of this profile.
+        /// The corresponding signed profile.
         /// </summary>
-        public SignedApplicationProfile Signed {
+        public SignedApplicationProfile SignedApplicationProfile {
             get {
-                return new SignedApplicationProfile(this);
+                if (_SignedApplicationProfile == null) {
+                    Sign();
+                    }
+                return _SignedApplicationProfile;
                 }
+            set { _SignedApplicationProfile = value; }
             }
+
+        SignedApplicationProfile _SignedApplicationProfile;
+
+        void ClearSignature() {
+            _SignedApplicationProfile = null;
+            }
+
 
         /// <summary>
         /// Return the private data of this profile as raw data bytes.
         /// </summary>
         protected virtual byte[] GetPrivateData {
-            get { return null; }
+            get => null;
             }
 
 
@@ -68,47 +79,32 @@ namespace Goedel.Mesh {
             }
 
 
+
         ///// <summary>
-        ///// Create a new application profile and add it to the UserProfile.
+        ///// Connect an application profile read from store to a PersonalProfile object.
         ///// </summary>
-        ///// <param name="PersonalProfile">The personal profile to attach to.</param>
-        ///// <param name="Type">Application type</param>
-        ///// <param name="Tag">Friendly name</param>
-        //public ApplicationProfile(PersonalProfile PersonalProfile,
-        //            string Type, string Tag) {
-        //    this.PersonalProfile = PersonalProfile;
-
-        //    Identifier = Goedel.Cryptography.UDF.Random();
+        ///// <param name="PersonalProfile">Personal profile to link</param>
+        //public void Link(PersonalProfile PersonalProfile) {
 
 
+        //    ApplicationProfileEntry = PersonalProfile.GetApplicationEntry(Identifier);
+        //    Assert.NotNull(ApplicationProfileEntry, ProfileNotFound.Throw);
+
+        //    Link(PersonalProfile, ApplicationProfileEntry);
+        //    ApplicationProfileEntry.ApplicationProfile = this;
         //    }
 
-
-        /// <summary>
-        /// Connect an application profile read from store to a PersonalProfile object.
-        /// </summary>
-        /// <param name="PersonalProfile">Personal profile to link</param>
-        public void Link(PersonalProfile PersonalProfile) {
-
-
-            ApplicationProfileEntry = PersonalProfile.GetApplicationEntry(Identifier);
-            Assert.NotNull(ApplicationProfileEntry, ProfileNotFound.Throw);
-
-            Link(PersonalProfile, ApplicationProfileEntry);
-            ApplicationProfileEntry.ApplicationProfile = this;
-            }
-
-        /// <summary>
-        /// Connect an application profile read from store to a PersonalProfile object.
-        /// </summary>
-        /// <param name="PersonalProfile">Personal profile to link</param>
-        /// <param name="ApplicationProfileEntry">Profile entry to link to</param>
-        public void Link(PersonalProfile PersonalProfile, 
-                    ApplicationProfileEntry ApplicationProfileEntry) {
-            this.PersonalProfile = PersonalProfile;
-            this.ApplicationProfileEntry = ApplicationProfileEntry;
-            ApplicationProfileEntry.ApplicationProfile = this;
-            }
+        ///// <summary>
+        ///// Connect an application profile read from store to a PersonalProfile object.
+        ///// </summary>
+        ///// <param name="PersonalProfile">Personal profile to link</param>
+        ///// <param name="ApplicationProfileEntry">Profile entry to link to</param>
+        //public void Link(PersonalProfile PersonalProfile, 
+        //            ApplicationProfileEntry ApplicationProfileEntry) {
+        //    this.PersonalProfile = PersonalProfile;
+        //    this.ApplicationProfileEntry = ApplicationProfileEntry;
+        //    ApplicationProfileEntry.ApplicationProfile = this;
+        //    }
 
 
         /// <summary>
@@ -118,6 +114,9 @@ namespace Goedel.Mesh {
         /// <returns>An authorized key pair.</returns>
         public KeyPair GetSignatureKey() {
             Assert.NotNull(ApplicationProfileEntry, MeshException.Throw);
+            if (ApplicationProfileEntry.SignID == null) {
+                return null;
+                }
             foreach (var SignID in ApplicationProfileEntry.SignID) {
                 var SignKey = KeyPair.FindLocal(SignID);
                 if (SignKey != null) {
@@ -136,7 +135,7 @@ namespace Goedel.Mesh {
             Assert.NotNull(ApplicationProfileEntry, MeshException.Throw);
             Assert.NotNull(ApplicationProfileEntry.DecryptID, MeshException.Throw);
 
-            EncryptedData = new JoseWebEncryption(GetPrivateData);
+            SharedPrivate = new JoseWebEncryption(GetPrivateData);
 
             foreach (var Recipient in ApplicationProfileEntry.DecryptID) {
                 // extract the device profile from the personal profile
@@ -146,7 +145,7 @@ namespace Goedel.Mesh {
 
                 // create a recipient entry
 
-                EncryptedData.AddRecipient(EncryptionKey.KeyPair);
+                SharedPrivate.AddRecipient(EncryptionKey.KeyPair);
                 }
             //Trace.NYI("Add entry here for the escrow key for this application");
             }
@@ -164,7 +163,7 @@ namespace Goedel.Mesh {
             Assert.NotNull(ApplicationProfileEntry, MeshException.Throw);
             Assert.NotNull(ApplicationProfileEntry.DecryptID, MeshException.Throw);
 
-            var Result = EncryptedData.Decrypt(EncryptionKey.KeyPair);
+            var Result = SharedPrivate.Decrypt(EncryptionKey.KeyPair);
 
             return Result;
             }
@@ -174,12 +173,45 @@ namespace Goedel.Mesh {
         /// Add the specified device to the linked personal profile and 
         /// create any device specific entries in the private profile.
         /// </summary>
-        /// <param name="Device">The device to add.</param>
-        public virtual void AddDevice(SignedDeviceProfile Device) {
-            // Create admin entry for this device
-
-            ApplicationProfileEntry.AddDevice(Device);
+        /// <param name="DeviceProfile">The device to add.</param>
+        /// <param name="Administration">If true, enroll as an administration device.</param>
+        /// <param name="ApplicationDevicePublic">Per device public data,  if required.</param>
+        public virtual void AddDevice(
+                DeviceProfile DeviceProfile,
+                bool Administration = false,
+                ApplicationDevicePublic ApplicationDevicePublic = null) {
+            ApplicationProfileEntry.AddDevice(DeviceProfile, Administration);
             }
+
+        /// <summary>
+        /// Create the public (and private) profiles for a device. This may be called by either
+        /// the administrator or on the device itself, depending on when the application is being
+        /// initialized.
+        /// </summary>
+        /// <param name="Device">The profile of the device to initialize</param>
+        /// <param name="ApplicationDevicePrivate"></param>
+        /// <returns></returns>
+        public virtual ApplicationDevicePublic CreateDeviceProfiles(DeviceProfile Device,
+                    out ApplicationDevicePrivate ApplicationDevicePrivate) {
+
+            ApplicationDevicePrivate = null;
+            return null;
+            }
+
+        /// <summary>
+        /// Sign the current profile. It is not necessary to specify the signature
+        /// key because the only valid signature key for a device profile is the
+        /// one identified by the UDF of the profile.
+        /// </summary>
+        /// <param name="UDF">Specify the signature key by identifier</param>
+        /// <param name="KeyPair">Specify the signature key by key handle</param>
+        /// <param name="Encoding">The encoding for the inner data</param>
+        public override SignedProfile Sign (string UDF = null, KeyPair KeyPair = null,
+                        DataEncoding Encoding = DataEncoding.JSON) {
+            this.SignedApplicationProfile = new SignedApplicationProfile(this);
+            return SignedApplicationProfile;
+            }
+
 
         }
 

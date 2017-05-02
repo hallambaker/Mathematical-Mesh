@@ -57,7 +57,6 @@ namespace Goedel.Mesh.Platform {
     /// </summary>
     public abstract class RegistrationMachine : Registration {
 
-        static RegistrationMachine _Current;
 
         /// <summary>
         /// The a dictionary of personal profiles indexed by fingerprint.
@@ -89,7 +88,7 @@ namespace Goedel.Mesh.Platform {
 
         /// <summary>The fingerprint of the device</summary>
         public override string UDF {
-            get { return Device?.UDF; }
+            get => Device?.UDF; 
             }
 
 
@@ -105,16 +104,16 @@ namespace Goedel.Mesh.Platform {
         /// </summary>
         public static RegistrationMachine Current { get; set; }
 
-        /// <summary>
-        /// Write out the configuration to the current machine.
-        /// </summary>
-        public abstract void Write();
 
         /// <summary>
         /// Erase the (test) configuration data on the current machine.
         /// </summary>
         public abstract void Erase();
 
+        /// <summary>
+        /// Erase the (test) configuration data on the current machine.
+        /// </summary>
+        public abstract RegistrationMachine Reload ();
 
         /// <summary>
         /// Add the associated profile to the machine store.
@@ -123,29 +122,13 @@ namespace Goedel.Mesh.Platform {
         /// <returns>Registration for the created profile.</returns>
         public abstract RegistrationDevice Add(SignedDeviceProfile SignedProfile);
 
-
-
         /// <summary>
         /// Bind the associated profile to the machine store.
         /// </summary>
         /// <param name="SignedProfile">Profile to add.</param>
         /// <param name="Portals">Portals to bind the profile to.</param>
         /// <returns>Registration for the created profile.</returns>
-        public abstract RegistrationPersonal Add(SignedPersonalProfile SignedProfile, 
-            List<string> Portals);
-
-        /// <summary>
-        /// Bind the associated profile to the machine store.
-        /// </summary>
-        /// <param name="SignedProfile">Profile to add.</param>
-        /// <param name="Portals">Portals to bind the profile to.</param>
-        /// <returns>Registration for the created profile.</returns>
-        public virtual RegistrationPersonal Add(SignedPersonalProfile SignedProfile, string Portal) {
-            var Portals = new List<string>() { Portal };
-            return Add(SignedProfile, Portals);
-
-            }
-
+        public abstract RegistrationPersonal Add(SignedPersonalProfile SignedProfile);
 
         /// <summary>
         /// Add the associated profile to the machine store.
@@ -188,6 +171,16 @@ namespace Goedel.Mesh.Platform {
     public abstract partial class Registration {
 
         /// <summary>
+        /// The catalog this registration is attached to.
+        /// </summary>
+        public MeshCatalog MeshCatalog { get; set; }
+
+        /// <summary>
+        /// The registered signed profile.
+        /// </summary>
+        public abstract SignedProfile SignedProfile { get; }
+
+        /// <summary>
         /// The profile fingerprint
         /// </summary>
         public abstract string UDF { get; }
@@ -203,9 +196,11 @@ namespace Goedel.Mesh.Platform {
         public RegistrationType Type { get; set; }
 
         /// <summary>
-        /// Fetch the latest version of the profile version
+        /// Make this the default registration for its type
         /// </summary>
-        public abstract void Refresh();
+        public virtual bool MakeDefault(bool Force = true) {
+            return Force;
+            }
 
         /// <summary>
         /// Delete the associated profile from the registry
@@ -213,29 +208,82 @@ namespace Goedel.Mesh.Platform {
         public virtual void Delete() { }
 
         /// <summary>
-        /// Update the associated profile in the registry
+        /// Write data to the local machine.
         /// </summary>
-        public virtual void Update() { }
+        public virtual void WriteToLocal(bool Default = true) {
+            }
+
+
 
         /// <summary>
-        /// Write data to the registry.
+        /// Write out the configuration to the portal and the current machine
         /// </summary>
-        public virtual void ToRegistry() {
-            throw new NYI("Write data to registry");
+        public abstract void Write(bool Default = true);
+
+        /// <summary>
+        /// Read the configuration from the portal using the current machine as backup
+        /// </summary>
+        public abstract void Read();
+
+        }
+
+
+    /// <summary>
+    /// Describes a registration
+    /// </summary>
+    public abstract partial class PortalRegistration : Registration {
+
+        /// <summary>
+        /// List of the accounts through which the profile is registered.
+        /// </summary>
+        public abstract PortalCollection Portals { get; }
+
+
+        /// <summary>
+        /// Client which may be used to interact with the portal on which this
+        /// profile is registered.
+        /// </summary>
+        public abstract MeshClient MeshClient {get; set;
+            }
+
+
+        /// <summary>
+        /// Fetch the latest version of the profile version
+        /// </summary>
+        public abstract void GetFromPortal();
+
+
+
+        /// <summary>Update remote and persistence store</summary>
+        public virtual void WriteToPortal() {
+            MeshClient.Publish(SignedProfile);
+            }
+
+
+        /// <summary>
+        /// Write out the configuration to the portal and the current machine
+        /// </summary>
+        public override void Write(bool Default = true) {
+            WriteToLocal(Default); // NYI flag to record if a pending update should be pushed out
+            WriteToPortal();
+            }
+
+        /// <summary>
+        /// Read the configuration from the portal using the current machine as backup
+        /// </summary>
+        public override void Read() {
+            throw new NYI();
             }
 
 
         }
 
 
-
-
-
     /// <summary>
     /// Class to track the portal collection. Implements Add, Remove and 
     /// IEnumerable interfaces (enabling foreach to be used);
     /// </summary>
-    public abstract class PortalCollection : IEnumerable {
+    public class PortalCollection : IEnumerable {
         SortedSet<string> Collection = new SortedSet<string>();
 
         /// <summary>
@@ -274,6 +322,7 @@ namespace Goedel.Mesh.Platform {
         /// <param name="Portal"></param>
         public virtual void Add(string Portal) {
             Collection.Add(Portal);
+            Default = Default ?? Portal; // Hack: Does not currently support multiple portals.
             }
 
         /// <summary>

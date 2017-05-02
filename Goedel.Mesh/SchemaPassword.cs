@@ -275,8 +275,6 @@ namespace Goedel.Mesh {
 					}
 
 				default : {
-					//Ignore the unknown data
-                    //throw new Exception ("Not supported");
                     break;
 					}
 				}
@@ -328,21 +326,13 @@ namespace Goedel.Mesh {
         ///A list of password credential entries.
         /// </summary>
 
-		public virtual List<PasswordEntry>				Entries {
-			get {return _Entries;}			
-			set {_Entries = value;}
-			}
-		List<PasswordEntry>				_Entries;
+		public virtual List<PasswordEntry>				Entries  {get; set;}
         /// <summary>
         ///A list of domain names of sites for which clients MUST NOT
         ///ask to store passwords for.
         /// </summary>
 
-		public virtual List<string>				NeverAsk {
-			get {return _NeverAsk;}			
-			set {_NeverAsk = value;}
-			}
-		List<string>				_NeverAsk;
+		public virtual List<string>				NeverAsk  {get; set;}
 
         /// <summary>
         /// Tag identifying this class.
@@ -514,8 +504,6 @@ namespace Goedel.Mesh {
 					}
 
 				default : {
-					//Ignore the unknown data
-                    //throw new Exception ("Not supported");
                     break;
 					}
 				}
@@ -580,29 +568,17 @@ namespace Goedel.Mesh {
         ///etc.
         /// </summary>
 
-		public virtual List<string>				Sites {
-			get {return _Sites;}			
-			set {_Sites = value;}
-			}
-		List<string>				_Sites;
+		public virtual List<string>				Sites  {get; set;}
         /// <summary>
         ///Case sensitive username
         /// </summary>
 
-		public virtual string						Username {
-			get {return _Username;}			
-			set {_Username = value;}
-			}
-		string						_Username ;
+		public virtual string						Username  {get; set;}
         /// <summary>
         ///Case sensitive password.
         /// </summary>
 
-		public virtual string						Password {
-			get {return _Password;}			
-			set {_Password = value;}
-			}
-		string						_Password ;
+		public virtual string						Password  {get; set;}
 
         /// <summary>
         /// Tag identifying this class.
@@ -762,8 +738,6 @@ namespace Goedel.Mesh {
 					}
 
 				default : {
-					//Ignore the unknown data
-                    //throw new Exception ("Not supported");
                     break;
 					}
 				}

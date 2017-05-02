@@ -8,6 +8,8 @@ using Goedel.Cryptography;
 using Goedel.Cryptography.Jose;
 using Goedel.Protocol;
 using Goedel.Protocol.Framework;
+using Goedel.Mesh.Platform;
+
 
 namespace Test.Goedel.Mesh {
 
@@ -15,11 +17,14 @@ namespace Test.Goedel.Mesh {
     [TestClass]
     public class TestProfile {
 
+
         [ClassInitialize()]
         public static void InitializeClass(TestContext context) {
             MeshWindows.Initialize(true);
+
             DeviceProfile = new DeviceProfile(Device1, Device1Description);
             PersonalProfile = new PersonalProfile(DeviceProfile);
+
             }
 
 
@@ -191,6 +196,7 @@ namespace Test.Goedel.Mesh {
 
             }
 
+
         [TestMethod]
         [ExpectedException(typeof(FingerprintMatchFailed))]
         public void CheckPersonalBadMasterSignature() {
@@ -208,8 +214,7 @@ namespace Test.Goedel.Mesh {
         [ExpectedException(typeof(InvalidProfileSignature))]
         public void CheckPersonalBadSignature() {
             var Bad = Copy(PersonalProfile);
-            Bad.Names = new List<string>();
-            Bad.Names.Add("Bad");
+            Bad.Names = new List<string>() { "Bad" };
             var SignedPersonal = WrapBadData(Bad);
             var Fail = SignedPersonal.PersonalProfile;
             }
@@ -222,7 +227,20 @@ namespace Test.Goedel.Mesh {
             var SignedProfile = PersonalProfile.SignedPersonalProfile;
             }
 
+        [TestMethod]
+        public void CheckConnect() {
+            var DeviceProfile1 = new DeviceProfile(Device1, Device1Description);
+            var DeviceProfile2 = new DeviceProfile(Device2, Device2Description);
+            PersonalProfile = new PersonalProfile(DeviceProfile1);
+            PersonalProfile.Add(DeviceProfile2);
 
+            var SignedPersonal2 = SignedPersonalProfile.FromTagged(
+                        PersonalProfile.SignedPersonalProfile.GetBytes());
+
+
+            UT.Assert.IsTrue(PersonalProfile.Devices.Count == 2);
+            UT.Assert.IsTrue(SignedPersonal2.PersonalProfile.Devices.Count == 2);
+            }
 
         // add email 
         // delete key

@@ -2,6 +2,8 @@
     Using Goedel.Cryptography.Jose 
 	Extern ApplicationProfile
 	Extern ApplicationProfilePrivate
+	Extern ApplicationDevicePublic
+	Extern ApplicationDevicePrivate
 	Extern Entry
 
 	Description 
@@ -20,11 +22,46 @@
 		Struct PublicKey Authentication
 			Multiple
 			Description
-				|Authorized Authentication keys for this account.
+				|Authorized Authentication keys for this account. Authentication
+				|keys provide authentication without providing non-repudiability.
+				|This permits their use in cases where it is desirable to avoid
+				|the possibility of contractual binding.
+		Struct PublicKey Signature
+			Multiple
+			Description
+				|Authorized Signature keys for this account.Signature keys
+				|provide non-repudiable authentication of a response. This permits
+				|their use in cases where it is desirable to provide the possibility
+				|of contractual binding.
+
 
 	Structure ConfirmPrivate
 		Description 
 			|Private portion of profile. Currently empty.
 		Inherits ApplicationProfilePrivate
 
+	Structure ConfirmDevicePublic
+		Description 
+			|Public data specific to the device
+		Inherits ApplicationDevicePublic
+		Struct PublicKey SignPublicKey
+			Description
+				|A private keypair or keypair contribution created for exclusive use 
+				|of this device.
+		Struct PublicKey AuthPublicKey
+			Description
+				|A private keypair or keypair contribution created for exclusive use 
+				|of this device.
 
+	Structure ConfirmDevicePrivate
+		Description 
+			|Private data specific to the device
+		Inherits ApplicationDevicePrivate
+		Struct PublicKey SignPrivateKey
+			Description
+				|A private keypair or keypair contribution created for exclusive use 
+				|of this device.
+		Struct PublicKey AuthPrivateKey
+			Description
+				|A private keypair or keypair contribution created for exclusive use 
+				|of this device.

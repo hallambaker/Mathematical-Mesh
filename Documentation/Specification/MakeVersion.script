@@ -123,7 +123,7 @@ information is omitted from future examples.]
 #% Point = Example.Traces.Get (Example.LabelCreatePersonal);
 #% var CreateRequest = Point.Messages[0].Payload as Goedel.Mesh.CreateRequest;
 #% var SignedProfile = CreateRequest.Profile as SignedPersonalProfile;
-#% var Profile = SignedProfile.Signed;
+#% var Profile = SignedProfile.PersonalProfile;
 
 The first step in creating a new personal profile is to create a
 Master Profile object. This contains the long term Master Signing
@@ -138,7 +138,7 @@ PKIX based applications to make use of PKIX certificate chains
 to express the same trust relationships described in the Mesh.
 
 ~~~~
-#{JSONDebugWriter.Write (Profile.PersonalMasterProfile)}
+#{JSONDebugWriter.Write (Profile.MasterProfile)}
 ~~~~
 
 The Master Profile is always signed using the Master Signing Key:
@@ -154,7 +154,7 @@ and a Device Authentication Key:
 
 #% var DeviceProfile = Profile.Devices[0];
 ~~~~
-#{JSONDebugWriter.Write (DeviceProfile.Data)}
+#{JSONDebugWriter.Write (DeviceProfile.SignedData)}
 ~~~~
 
 The Device Profile is signed using the Device Signing Key:
@@ -236,7 +236,7 @@ device can make use of the deencryption and authentication keys
 but these private keys cannot be extracted from the device:
 
 ~~~~
-#{JSONDebugWriter.Write (Example.SignedDeviceProfile2.Data)}
+#{JSONDebugWriter.Write (Example.SignedDeviceProfile2.SignedData)}
 ~~~~
 
 The device profile is then signed:

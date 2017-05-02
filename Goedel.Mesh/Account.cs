@@ -37,7 +37,7 @@ namespace Goedel.Mesh {
         /// Return the unique ID for the account.
         /// </summary>
         public virtual string UniqueID {
-            get { return AccountID; }
+            get => AccountID; 
             }
 
 
@@ -73,7 +73,9 @@ namespace Goedel.Mesh {
             Account = null;
             Portal = null;
             int At = AccountID.LastIndexOf('@');
-            if (At < 0) return;
+            if (At < 0) {
+                return;
+                }
 
             Account = AccountID.Substring(0, At);
             Portal = AccountID.Substring(At + 1);

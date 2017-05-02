@@ -24,12 +24,12 @@ namespace Goedel.Mesh.MeshMan {
 
         string PortalID;
         string AccountID;
-        string Portal;
+
         MeshClient MeshClient;
 
         MeshCatalog MeshCatalog;
 
-        public Shell() {
+        public Shell () {
             MeshCatalog = new MeshCatalog();
             }
 
@@ -38,7 +38,7 @@ namespace Goedel.Mesh.MeshMan {
         /// Erase all test profiles
         /// </summary>
         /// <param name="Options">Command line parameters</param>
-        public override void Reset(Reset Options) {
+        public override void Reset (Reset Options) {
             MeshCatalog.EraseTest();
             }
 
@@ -47,7 +47,7 @@ namespace Goedel.Mesh.MeshMan {
         /// Create a new device profile
         /// </summary>
         /// <param name="Options">Command line parameters</param>
-        public override void Device(Device Options) {
+        public override void Device (Device Options) {
             var DeviceID = Options.DeviceID.Value ?? "Default";
             var DeviceDescription = Options.DeviceDescription.Value ?? "Unknown";
             bool? Default = Options.Default.Value;
@@ -63,6 +63,56 @@ namespace Goedel.Mesh.MeshMan {
 
 
             }
+        /// <summary>
+        /// Create a new personal profile
+        /// </summary>
+        /// <param name="Options">Command line parameters</param>
+        public override void Deregister (Deregister Options) {
+
+
+
+                SetReporting(Options.Report, Options.Verbose);
+                var Address = Options.Portal.Value;
+                Assert.True((Address != null & Address != ""), NoPortalAccount.Throw);
+
+                var ProfileRegistration = MeshCatalog.GetPersonal(Address, Portal: false);
+                Assert.NotNull(ProfileRegistration, ProfileNotFound.Throw);
+
+                ProfileRegistration.Delete();
+
+
+
+            }
+
+
+        /// <summary>
+        /// Create a new personal profile
+        /// </summary>
+        /// <param name="Options">Command line parameters</param>
+        public override void Verify (Verify Options) {
+            SetReporting(Options.Report, Options.Verbose);
+            try {
+                var Address = Options.Portal.Value;
+                Assert.True((Address != null & Address != ""), NoPortalAccount.Throw);
+
+                var Response = MeshCatalog.Validate(Address);
+
+                if (Response.Valid) {
+                    Report("Accepted: {0}", Address);
+                    }
+                else {
+                    if (Response.StatusDescription == null) {
+                        Report("Refused {0}", Address);
+                        }
+                    else {
+                        Report("Refused {0} because {1}", Address, Response.StatusDescription);
+                        }
+                    }
+                }
+            catch (Exception Exception) {
+                Error(Exception);
+                }
+            }
 
 
         /// <summary>
@@ -75,178 +125,38 @@ namespace Goedel.Mesh.MeshMan {
             var Address = Options.Portal.Value;
             Assert.True((Address != null & Address != ""), NoPortalAccount.Throw);
 
-            var Registration = MeshCatalog.AddPersonal(
-                Options.Portal.Value,
-                Options.DeviceNew.Value,
-                Options.DeviceUDF.Value,
-                Options.DeviceID.Value,
-                Options.DeviceDescription.Value
-                );
+            RegistrationDevice DeviceRegistration;
 
 
+            // Hack: Should rejig command parsing to return presence or absence of flags.
+            
+            // Feature: Should allow user to specify if device profile should be the default.
 
-            //// See if the portal exists and will accept the specified account name.
-            //GetMeshClient(Address);
-            //var AccountAvailable = MeshClient.Validate(AccountID);
-
-            //if (!AccountAvailable.Valid) {
-            //    if (Options.Next.Value) {
-            //        GetNextAccount();
-            //        }
-            //    else {
-            //        throw new PortalRefusedRequest();
-            //        //Utils.Error("Portal refused account {0} because {1}",
-            //        //    Address, AccountAvailable.Reason);
-            //        }
-            //    }
-
-            //// Get / create the device profile if required
-            //RegistrationDevice RegistrationDevice = null;
-            //bool Generate = false;
-            //if (Options.DeviceNew.Value) {
-            //    Generate = true;
-            //    }
-            //else if (Options.DeviceUDF.Value != null) {
-            //    // use the profile with the specified fingerprint
-            //    var Found = Machine.Find(Options.DeviceUDF.Value, out RegistrationDevice);
-            //    Assert.NotNull(Found, ProfileNotFound.Throw);
-            //    //"Could not find profile " + Options.DeviceID.Value);
-            //    }
-            //else if (Options.DeviceID.Value != null) {
-            //    // use the profile with the specified ID
-            //    var Found = Machine.Find(Options.DeviceID.Value, out RegistrationDevice);
-            //    Assert.NotNull(Found, ProfileNotFound.Throw);
-            //        //"Could not find profile " + Options.DeviceID.Value);
-            //    }
-            //else if (Machine.Device != null) {
-            //    RegistrationDevice = Machine.Device;
-            //    }
-            //else {
-            //    Generate = true;
-            //    }
-
-            //// Generate a new device profile
-            //if (Generate) {
-            //    var DeviceID = Options.DeviceID.Value ?? "Default";
-            //    var DeviceDescription = Options.DeviceDescription.Value ?? "Unknown";
-
-            //    var NewProfileDevice = new SignedDeviceProfile(DeviceID, DeviceDescription);
-            //    RegistrationDevice = Machine.Add(NewProfileDevice);
-            //    }
-
-            //if (Machine.Device == null) {
-            //    Machine.Device = RegistrationDevice;
-            //    }
-
-
-            //var ProfileDevice = RegistrationDevice.Profile;
-
-            //var PersonalProfile = new PersonalProfile(ProfileDevice);
-            //var SignedPersonalProfile = PersonalProfile.Signed;
-
-            //// add to the machine registry
-            //Machine.Add(SignedPersonalProfile, PortalID);
-
-            //// Register with the Mesh portal
-            //var PublishResult = MeshClient.Publish(SignedPersonalProfile);
-            //Assert.True(PublishResult.Status.StatusSuccess(), PublicationRequestRefused.Throw);
-
-            var SignedPersonalProfile = Registration.SignedPersonalProfile;
-            //var ProfileDevice = Registration.Device.UDF;
-            var PortalID = Registration.Portals.Default;
-
-            Report("Created new personal profile {0}", SignedPersonalProfile.UDF);
-            //Report("Device profile is {0}", ProfileDevice);
-            Report("Profile registered to {0}", PortalID);
-
-            }
-
-
-        /// <summary>
-        /// Report the profiles registered to the current machine.
-        /// </summary>
-        /// <param name="Options">Command line parameters</param>
-        public override void List(List Options) {
-            SetReporting(Options.Report, Options.Verbose);
-
-            Report("Personal Profiles");
-            foreach (var Registration in Machine.PersonalProfilesUDF) {
-                Report(Registration.Value, false);
+            if (Options.DeviceUDF.Value != null) {
+                // Fingerprint specified so must use existing.
+                DeviceRegistration = MeshCatalog.GetDevice(Options.DeviceUDF.Value);
                 }
-            Report("Device Profiles");
-            foreach (var Registration in Machine.DeviceProfiles) {
-                Report(Registration.Value);
+            else if (Options.DeviceID.Value == null | Options.DeviceNew.Value) {
+                // Either no Device ID specified or the new flag specified so create new.
+                var DeviceID = Options.DeviceID.Value ?? "Default";     // Feature: Pull from platform
+                var DeviceDescription = Options.DeviceDescription.Value ?? "Unknown";  // Feature: Pull from platform
+                DeviceRegistration = MeshCatalog.CreateDevice(DeviceID, DeviceDescription, true);
                 }
-            Report("Application Profiles");
-            foreach (var Registration in Machine.ApplicationProfiles) {
-                Report(Registration.Value);
-                }
-            }
-
-        void Report(RegistrationPersonal Registration, bool Detail) {
-            var SignedPersonalProfile = Registration.SignedPersonalProfile;
-            var PersonalProfile = SignedPersonalProfile.PersonalProfile;
-
-            var Identifier = PersonalProfile.Identifier ?? "<null>";
-            var Updated = PersonalProfile.Updated.ToString() ?? "<null>";
-            var UDF = PersonalProfile.UDF ?? "<null>";
-
-
-            Report("Profile {0}", Identifier);
-            Report("    UDF : {0}", UDF);
-            Report("    Updated : {0}", Updated);
-
-            ReportWrite("    PortalIDs :");
-            foreach (var Portal in Registration.Portals) {
-                ReportWrite(" ");
-                ReportWrite(Portal);
-                }
-            Report("");
-
-            if (!Detail) return;
-
-            Report("Devices");
-            foreach (var Device in PersonalProfile.Devices) {
-                Report(Device);
+            else {
+                // DeviceID specified without new so look for existing profile.
+                DeviceRegistration = MeshCatalog.GetDevice(DeviceID: Options.DeviceID.Value);
                 }
 
-            Report("Applications");
-            foreach (var ApplicationProfileEntry in PersonalProfile.Applications) {
-                Report("    Type {0}, Friendly {1}", ApplicationProfileEntry.Type,
-                        ApplicationProfileEntry.Friendly);
-                Report("    Identifier: {0}", ApplicationProfileEntry.Identifier);
-                Report("        Sign IDs: ", ApplicationProfileEntry.SignID);
-                Report("        Decrypt IDs: ", ApplicationProfileEntry.DecryptID);
-                }
+            var PersonalProfile = new PersonalProfile(DeviceRegistration.DeviceProfile);
+
+            var Registration = MeshCatalog.CreateAccount(Address, PersonalProfile);
+
+            Report("Created new personal profile {0}", Registration.UDF);
+            Report("Profile registered to {0}", Address);
 
             }
 
-        void Report(RegistrationApplication Registration) {
-            Report(Registration.SignedApplicationProfile);
-            }
 
-        void Report(SignedApplicationProfile Application) {
-            Report("Profile {0}", Application.UDF);
-            }
-
-        void Report(RegistrationDevice Registration) {
-            Report(Registration.SignedDeviceProfile);
-            }
-
-        void Report(SignedDeviceProfile Device) {
-            Report("Profile {0}", Device.UDF);
-            }
-
-        /// <summary>
-        /// Write out the current personal profile
-        /// </summary>
-        /// <param name="Options">Command line parameters</param>
-        public override void Dump(Dump Options) {
-            SetReporting(Options.Report, Options.Verbose);
-            GetProfile(Options.Portal, Options.UDF);
-
-            Report(RegistrationPersonal, true);
-            }
 
         /// <summary>
         /// List pending connection requests
@@ -284,7 +194,6 @@ namespace Goedel.Mesh.MeshMan {
             throw new NYI();
             }
 
-        /// <summary>
 
 
         }

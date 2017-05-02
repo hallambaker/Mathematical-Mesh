@@ -9,7 +9,7 @@
 
 	OptionSet Reporting
 		Option Verbose "verbose" Flag
-			Default "true"
+			Default "false"
 			Brief "Verbose reports (default)"
 		Option Report "report" Flag
 			Default "true"
@@ -46,6 +46,12 @@
 		Option Default "default" Flag
 			Brief "Make the new device profile the default"
 
+	Command Verify "verify"
+		Brief "Verify requested portal address"
+		Parameter Portal "portal" String
+			Brief "Test portal account"
+		Include Reporting
+
 	Command Personal "personal"
 		Brief "Create new personal profile"
 		Parameter Portal "portal" String
@@ -56,17 +62,20 @@
 		Include DeviceProfileInfo
 
 
-		Option Next "next" Flag
-			Brief "If set ask the "
-
-
 	Command Register "register"
 		Brief "Register the specified profile at a new portal"
+		Parameter Portal "portal" String
+			Brief "New portal account"
 		Parameter UDF "udf" String
 			Brief "Profile fingerprint"
+		Include Reporting
+
+	Command Deregister "deregister"
+		Brief "Deregister the specified profile at a portal"
 		Parameter Portal "portal" String
 			Brief "New portal account"
 		Include Reporting
+
 
 	Command Fingerprint "fingerprint"
 		Brief "Return the fingerprint of a Mesh profile"
@@ -86,7 +95,7 @@
 		Include Reporting
 		Option Quorum "quorum" integer
 		Option Shares "shares" integer
-
+		Option File "file" NewFile
 
 	Command Export "export"
 		Brief "Export the specified profile data to the specified file"
@@ -176,8 +185,10 @@
 	// Mail
 	Command Mail "mail"
 		Brief "Add a mail application profile to a personal profile"
-		Parameter address "address" String
+		Parameter Address "address" String
 			Brief "Mail account to create profile from"
+		Option CA "ca" String
+			Brief "Domain name of CA"
 		Include PortalAccount
 		Include Reporting
 
@@ -187,6 +198,78 @@
 		Brief "Add a ssh application profile to a personal profile"
 		Include PortalAccount
 		Include Reporting
-
 		Parameter Host "host" Flag
 		Parameter Client "client" Flag
+
+	Command SSHHost "sshhosts"
+		Brief "List the SSH Hosts"
+		Include PortalAccount
+		Include Reporting
+		Parameter Host "host" Flag
+		Parameter Client "client" Flag
+
+
+	Command SSHPublic "sshpub"
+		Brief "Return the ssh public key for this device"
+		Include PortalAccount
+		Include Reporting
+		Parameter Host "host" Flag
+		Parameter Client "client" Flag
+
+	Command SSHPrivate "sshpriv"
+		Brief "Return the ss private key for this device"
+		Include PortalAccount
+		Include Reporting
+		Parameter Host "host" Flag
+		Parameter Client "client" Flag
+
+
+
+	//Confirm
+	Command Confirm "confim"
+		Brief "Add a confirmation profile account"
+		Include PortalAccount
+		Include Reporting
+		Parameter Address "address" String
+			Brief "Confirmation account to create "
+		Option PIN "pin" String
+			Brief "One time use authenticator"
+
+	Command ConfirmPost "confimpost"
+		Brief "Post a confirmation request to an account"
+
+
+	Command ConfirmGet "confimget"
+		Brief "List the pending confirmation requests for this account"
+
+	Command ConfirmAccept "confimaccept"
+		Brief "Accept a confirmation request"
+
+	Command ConfirmReject "confimreject"
+		Brief "Reject a confirmation request"
+
+
+	//Recrypt
+	Command Recrypt "recrypt"
+		Brief "Add a confirmation profile account"
+		Include PortalAccount
+		Include Reporting
+		Parameter Address "address" String
+			Brief "Confirmation account to create "
+		Option PIN "pin" String
+			Brief "One time use authenticator"
+
+	Command RecryptGroup "recryptgroup"
+		Brief "Create a new recryption group"
+
+	Command RecryptAdd "recryptadd"
+		Brief "Add a member to a recryption group"
+
+	Command RecryptDelete "recryptdel"
+		Brief "Remove a member from a recryption group"
+
+	Command Encrypt "encrypt"
+		Brief "Encrypt a file or directory"
+
+	Command Decrypt "decrypt"
+		Brief "Decrypt a file or directory"

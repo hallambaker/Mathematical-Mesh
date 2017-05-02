@@ -24,6 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Goedel.Registry;
+using Goedel.Protocol;
 using Goedel.Persistence;
 using Goedel.Cryptography;
 using Goedel.Cryptography.PKIX;
@@ -92,26 +93,25 @@ namespace Goedel.Mesh {
         /// List of all the index terms this profile can be retrieved through.
         /// </summary>
         public List<IndexTerm> IndexTerms {
-            get { return GetIndex(); }
+            get => GetIndex(); 
             }
 
         /// <summary>
         /// Get the unique identifier for this object.
         /// </summary>
         public string UniqueID {
-            get { return Identifier; }
+            get => Identifier; 
             }
 
         /// <summary>
         /// Get a list of indexes for this profile.
         /// </summary>
         /// <returns>The list of indexes</returns>
-        public virtual List<IndexTerm> GetIndex() {
-            List<IndexTerm> Result = new List<IndexTerm>();
-
-            Result.Add(new IndexTerm(MeshIndexTerm.UniqueID, UniqueID)); // as uniqueID
-            Result.Add(new IndexTerm(Tag(), Identifier)); // as profile type
-
+        public virtual List<IndexTerm> GetIndex () {
+            var Result = new List<IndexTerm>() {
+                new IndexTerm(MeshIndexTerm.UniqueID, UniqueID), // as uniqueID
+                new IndexTerm(Tag(), Identifier) // as profile type
+                };
             return Result;
             }
 
@@ -119,7 +119,7 @@ namespace Goedel.Mesh {
         /// Every profile has a unique UDF identifier.
         /// </summary>
         public virtual string UDF {
-            get { return Identifier; }
+            get => Identifier; 
             }
 
 
@@ -144,7 +144,10 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="UDF">Specify the signature key by identifier</param>
         /// <param name="KeyPair">Specify the signature key by key handle</param>
-        public virtual void Sign(string UDF=null,  KeyPair KeyPair = null) {
+        /// <param name="Encoding">The encoding for the inner data</param>
+        public virtual SignedProfile Sign(string UDF=null,  KeyPair KeyPair = null,
+                        DataEncoding Encoding = DataEncoding.JSON) {
+            throw new NYI();
             }
 
         }

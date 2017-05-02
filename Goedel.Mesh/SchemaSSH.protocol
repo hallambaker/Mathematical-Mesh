@@ -2,6 +2,8 @@
     Using Goedel.Cryptography.Jose 
 	Extern ApplicationProfile
 	Extern ApplicationProfilePrivate
+	Extern ApplicationDevicePublic
+	Extern ApplicationDevicePrivate
 	Extern Entry
 
 	Description 
@@ -16,6 +18,18 @@
 			|a very large number of hosts they are accessing will need some means
 			|of avoiding combinatorial explosion.
 		Inherits ApplicationProfile
+		Struct SSHDevicePublic Devices
+			Multiple
+			Description
+				|Public device keys
+
+	Structure SSHDevicePublic
+		Description
+			|Contains public device description
+		Inherits ApplicationDevicePublic
+		Struct PublicKey PublicKey
+			Description 
+				|Public authentication key for a device.
 
 	Structure SSHProfilePrivate
 		Description 
@@ -25,30 +39,10 @@
 			Description 
 				|The account to which the profile is bound
 
-		Struct DeviceEntry DeviceEntries
-			Multiple
-			Description 
-				|Devices bound to the profile
-
 		Struct HostEntry HostEntries
 			Multiple
 			Description 
 				|Hosts bound to the profile
-
-
-	Structure DeviceEntry
-		Description 
-			|Describe connection of a device to the SSH profile. This is a 
-			|device on which the user will use an SSH credential.
-		Inherits Entry
-		String UDF
-			Description 
-				|Device profile fingerprint.
-		Struct PublicKey UserKeys
-			Multiple
-			Description 
-				|Keys authorized for this device. The private key is generated and stored on 
-				|the device.
 
 	Structure HostEntry
 		Description 
@@ -64,3 +58,13 @@
 			Description 
 				|The public keys that are to be added to the host when this profile is
 				|conected.
+
+	Structure SSHDevicePrivate
+		Description 
+			|Private data specific to the device
+		Inherits ApplicationDevicePrivate
+		Struct PublicKey DevicePrivateKey
+			Description
+				|A private keypair or keypair contribution created for exclusive use 
+				|of this device.
+

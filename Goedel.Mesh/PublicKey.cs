@@ -277,12 +277,20 @@ namespace Goedel.Mesh {
 
             CryptoProvider.Generate(GetKeySecurity(KeyType));
             var KeyPair = CryptoProvider.KeyPair;
-
-            var PublicKey = new PublicKey();
-            PublicKey.KeyPair = KeyPair;
-            PublicKey.PublicParameters = Key.GetPublic(KeyPair);
-            return PublicKey;
+            return new PublicKey (KeyPair);
             }
+
+
+        /// <summary>
+        /// Return a PublicKey object for the specified KeyPair
+        /// </summary>
+        /// <param name="KeyPair">The key pair to bind.</param>
+        /// <returns>The generated key pair</returns>
+        public PublicKey (KeyPair KeyPair) {
+            this.KeyPair = KeyPair;
+            PublicParameters = Key.GetPublic(KeyPair);
+            }
+
 
         /// <summary>
         /// Create a Private Parameters property that contains the 

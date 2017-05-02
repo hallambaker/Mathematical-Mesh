@@ -29,3 +29,8 @@ extended class with platform specific extensions has a Platform suffix.
 
 When it comes time to identify classes etc that might usefully be used in other 
 applications, this will be factored out into Goedel.Platform.<PlatformName>
+
+
+Agh... Windows 10 Mail has a different design entirely. The config files are stored here:
+
+//HKEY_USERS\S-1-5-21-4237498542-1133628048-3486816621-1001\SOFTWARE\Microsoft\ActiveSync\Partners\{60D03F1B-38BA-4FC2-8CA3-89408FC4ED48}

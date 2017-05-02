@@ -5,7 +5,7 @@ using System.Text;
 using Goedel.Registry;
 
 namespace MeshServerShell {
-    class _Main {
+    public partial class CommandLineInterpreter : CommandLineInterpreterBase {
 
 		static char UsageFlag;
 		static char UnixFlag = '-';
@@ -15,25 +15,23 @@ namespace MeshServerShell {
             return (c == UnixFlag) | (c == WindowsFlag) ;
             }
 
-        static _Main () {
-			// For compatability with .NET Core, remove all references to operating
-			// system version. Since this is only used for giving help, this does not
-			// matter a great deal.
+        static CommandLineInterpreter () {
+            System.OperatingSystem OperatingSystem = System.Environment.OSVersion;
 
-		    UsageFlag = WindowsFlag;
-
-            //System.OperatingSystem OperatingSystem = System.Environment.OSVersion;
-
-            //if (OperatingSystem.Platform == PlatformID.Unix |
-            //        OperatingSystem.Platform == PlatformID.MacOSX) {
-            //    UsageFlag = UnixFlag;
-            //    }
-            //else {
-            //    UsageFlag = WindowsFlag;
-            //    }
+            if (OperatingSystem.Platform == PlatformID.Unix |
+                    OperatingSystem.Platform == PlatformID.MacOSX) {
+                UsageFlag = UnixFlag;
+                }
+            else {
+                UsageFlag = WindowsFlag;
+                }
             }
 
         static void Main(string[] args) {
+			var CLI = new CommandLineInterpreter ();
+			CLI.MainMethod (args);
+			}
+        public void MainMethod(string[] args) {
 
 			MeshServerShell Dispatch = new MeshServerShell ();
 

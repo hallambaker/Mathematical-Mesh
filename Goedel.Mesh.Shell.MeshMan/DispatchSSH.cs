@@ -9,15 +9,22 @@ namespace Goedel.Mesh.MeshMan {
         /// </summary>
         /// <param name="Options">Command line parameters</param>
         public override void SSH(SSH Options) {
-            SetReporting(Options.Report, Options.Verbose);
-            GetProfile(Options.Portal, Options.UDF);
-            GetMeshClient();
+            SetReporting(Options);
+            var RegistrationPersonal = GetPersonal(Options);
 
-            var DeviceProfile = GetDevice(SignedPersonalProfile);
-            Assert.NotNull(DeviceProfile, NoDeviceProfile.Throw);
+            var SSHProfile = new SSHProfile(true);
 
-            var PersonalProfile = SignedPersonalProfile.PersonalProfile;
+            // Add the application to the personal profile.
+            // By default we add all the admin devices for the personal profile to be admin for 
+            // the app profile.
+            var RegistrationApplication = RegistrationPersonal.Add(SSHProfile, false);
 
+            // Add this device to the registration in the personal profile.
+            var DeviceProfile = RegistrationPersonal.PersonalProfile.DeviceProfile;
+            RegistrationApplication.AddDevice(DeviceProfile, Administration: true);
+
+            RegistrationPersonal.Write();
+            RegistrationApplication.Write();
             }
         }
     }

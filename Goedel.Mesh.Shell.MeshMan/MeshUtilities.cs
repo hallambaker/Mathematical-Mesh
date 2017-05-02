@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 using Goedel.Mesh;
 using Goedel.Utilities;
 using Goedel.Mesh.Platform;
@@ -13,28 +14,44 @@ namespace Goedel.Mesh.MeshMan {
 
     public partial class Shell {
 
-        bool VerboseOutput = true;
+        bool VerboseOutput = false;
         bool ReportOutput = true;
+        bool ActiveListener = false;
 
-        private void SetReporting(Flag Report, Flag Verbose) {
-            ReportOutput = Report.Value;
-            VerboseOutput = Verbose.Value;
+        private void SetReporting (IReporting Reporting) {
+            SetReporting(Reporting.Report, Reporting.Verbose);
             }
 
-        public void Verbose(string Text, params object[] Data) {
+        private void SetReporting (Flag Report, Flag Verbose) {
+
+            // Hack: Should really make the options groups into interfaces 
+            // in the Command processor. Then can simply hand in the options.
+
+            ReportOutput = Report.Value;
+            VerboseOutput = Verbose.Value;
+
+            if (VerboseOutput & !ActiveListener) {
+                Debug.Listeners.Add(new TextWriterTraceListener(Console.Out));
+                ActiveListener = true;
+                }
+            }
+
+        public void Verbose (string Text, params object[] Data) {
             if (VerboseOutput & ReportOutput) {
                 Console.WriteLine(Text, Data);
                 }
             }
 
-        public void ReportWrite(string Text) {
+        public void ReportWrite (string Text) {
             if (ReportOutput) {
                 Console.Write(Text);
                 }
             }
 
-        public void Report(string Text, List<string> Items) {
-            if (!ReportOutput) return;
+        public void Report (string Text, List<string> Items) {
+            if (!ReportOutput) {
+                return;
+                }
             Console.Write(Text);
             foreach (var Item in Items) {
                 Console.Write(" ");
@@ -43,20 +60,44 @@ namespace Goedel.Mesh.MeshMan {
             Console.WriteLine();
             }
 
-        public void Report(string Text, params object[] Data) {
+        public void Report (string Text, params object[] Data) {
             if (ReportOutput) {
                 Console.WriteLine(Text, Data);
                 }
             }
 
-        public void Report(string Text) {
+        public void Report (string Text) {
             if (ReportOutput) {
                 Console.WriteLine(Text);
                 }
             }
 
+        public RegistrationPersonal GetPersonal (IPortalAccount Options) {
+            return GetPersonal(Options.Portal.Value);
+            }
+
+        public RegistrationPersonal GetPersonal (string Address) {
+            var RegistrationPersonal =  MeshCatalog.GetPersonal(Address);
+
+            Assert.NotNull(RegistrationPersonal, ProfileNotFound.Throw,
+                new ExceptionData() { String = Address ?? "<default>" });
+
+            return RegistrationPersonal;
+            }
+
+
+
         public MeshClient GetMeshClient() {
             return GetMeshClient(PortalID);
+            }
+
+
+        public void Error (Exception Exception) {
+            Console.WriteLine(Exception.Message);
+
+            if (VerboseOutput & Exception.InnerException != null) {
+                Error(Exception.InnerException);
+                }
             }
 
 
@@ -69,9 +110,7 @@ namespace Goedel.Mesh.MeshMan {
             this.PortalID = PortalID;
 
             Assert.NotNull(PortalID, NoPortalAccount.Throw);
-            Account.SplitAccountID(PortalID, out AccountID, out Portal);
-            Assert.NotNull(AccountID, InvalidPortalAddress.Throw);
-            MeshClient = new MeshClient(Portal);
+            MeshClient = new MeshClient(PortalAccount: PortalID);
             Assert.NotNull(MeshClient, PortalConnectFail.Throw);
 
             return MeshClient;
@@ -151,32 +190,32 @@ namespace Goedel.Mesh.MeshMan {
 
 
 
-        ApplicationProfileEntry PasswordEntry;
-        RegistrationApplication PasswordRegistration;
+        //ApplicationProfileEntry PasswordEntry;
+        //RegistrationApplication PasswordRegistration;
         //SignedApplicationProfile SignedApplicationWeb;
         PasswordProfile PasswordProfile;
         PasswordProfilePrivate PasswordProfilePrivate;
 
         private void GetPasswordProfile () {
 
-            PasswordEntry = SignedPersonalProfile.PersonalProfile.GetApplicationEntryPassword(
-                null);
-            var Found = Machine.Find(PasswordEntry.Identifier, out PasswordRegistration);
+            //PasswordEntry = SignedPersonalProfile.PersonalProfile.GetApplicationEntryPassword(
+            //    null);
+            //var Found = Machine.Find(PasswordEntry.Identifier, out PasswordRegistration);
 
-            PasswordProfile = PasswordRegistration.ApplicationProfile as PasswordProfile;
-            PasswordProfile.Link (SignedPersonalProfile.PersonalProfile, PasswordEntry);
-            PasswordProfilePrivate = PasswordProfile.Private;
+            //PasswordProfile = PasswordRegistration.ApplicationProfile as PasswordProfile;
+            //PasswordProfile.Link (SignedPersonalProfile.PersonalProfile, PasswordEntry);
+            //PasswordProfilePrivate = PasswordProfile.Private;
 
             return;
             }
 
         private void UpdatePasswordProfile() {
 
-            var NewSigned = PasswordProfile.Signed;
+            //var NewSigned = PasswordProfile.SignedApplicationProfile;
 
-            PasswordRegistration.SignedApplicationProfile = NewSigned;
-            PasswordRegistration.Update();
-            MeshClient.Publish(PasswordRegistration.SignedApplicationProfile);
+            //PasswordRegistration.SignedApplicationProfile = NewSigned;
+            //PasswordRegistration.WriteToPortal();
+            //MeshClient.Publish(PasswordRegistration.SignedApplicationProfile);
             return;
             }
 

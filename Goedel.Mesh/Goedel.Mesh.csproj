@@ -9,9 +9,10 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Goedel.Mesh</RootNamespace>
     <AssemblyName>Goedel.Mesh</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
+    <AssemblyVersion>1.0.</AssemblyVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -106,26 +107,28 @@
     <Compile Include="ProfileDevice.cs" />
     <Compile Include="Escrow.cs" />
     <Compile Include="MailClient.cs" />
+    <Compile Include="ProfileConfirm.cs" />
+    <Compile Include="ProfileRecrypt.cs" />
     <Compile Include="ProfileSSH.cs" />
-    <Compile Include="SchemaRecrypt.cs">
-      <DependentUpon>SchemaRecrypt.protocol</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <Compile Include="SchemaConfirm.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>SchemaConfirm.protocol</DependentUpon>
     </Compile>
-    <Compile Include="SchemaNetwork.cs">
-      <DependentUpon>SchemaNetwork.protocol</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <Compile Include="SchemaMesh.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>SchemaMesh.protocol</DependentUpon>
+    </Compile>
+    <Compile Include="SchemaRecrypt.cs">
+      <DependentUpon>SchemaRecrypt.protocol</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="SchemaNetwork.cs">
+      <DependentUpon>SchemaNetwork.protocol</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="SchemaMeshPlus.cs" />
     <Compile Include="ProfileNetwork.cs" />
@@ -147,12 +150,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SchemaPassword.protocol</DependentUpon>
     </Compile>
-    <Compile Include="SignProfile.cs" />
     <Compile Include="SchemaSSH.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>SchemaSSH.protocol</DependentUpon>
     </Compile>
+    <Compile Include="SignProfile.cs" />
     <Compile Include="WindowsNetworkProfile.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -188,7 +191,7 @@
       <LastGenOutput>SchemaConfirm.cs</LastGenOutput>
     </None>
     <None Include="SchemaSSH.protocol">
-      <Generator>protogen</Generator>
+      <Generator>Protogen</Generator>
       <LastGenOutput>SchemaSSH.cs</LastGenOutput>
     </None>
     <None Include="SchemaMesh.protocol">

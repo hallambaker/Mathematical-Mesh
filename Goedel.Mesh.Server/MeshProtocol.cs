@@ -189,6 +189,22 @@ namespace Goedel.Mesh {
 					}
 
 
+				case "DeleteRequest" : {
+					var Result = new DeleteRequest ();
+					Result.Deserialize (JSONReader);
+					Out = Result;
+					break;
+					}
+
+
+				case "DeleteResponse" : {
+					var Result = new DeleteResponse ();
+					Result.Deserialize (JSONReader);
+					Out = Result;
+					break;
+					}
+
+
 				case "GetRequest" : {
 					var Result = new GetRequest ();
 					Result.Deserialize (JSONReader);
@@ -358,15 +374,10 @@ namespace Goedel.Mesh {
 			get {return Discovery;}
 			}
 
-		JPCSession _JPCSession;
-
         /// <summary>
         /// The active JPCSession.
         /// </summary>		
-		public virtual JPCSession JPCSession {
-			get {return _JPCSession;}
-			set {_JPCSession = value;}
-			}
+		public virtual JPCSession JPCSession {get; set;}
 
 
         /// <summary>
@@ -396,6 +407,16 @@ namespace Goedel.Mesh {
 		/// <returns>The response object from the service</returns>
         public virtual CreateResponse CreateAccount (
                 CreateRequest Request) {
+            return null;
+            }
+
+        /// <summary>
+		/// Base method for implementing the transaction  DeleteAccount.
+        /// </summary>
+        /// <param name="Request">The request object to send to the host.</param>
+		/// <returns>The response object from the service</returns>
+        public virtual DeleteResponse DeleteAccount (
+                DeleteRequest Request) {
             return null;
             }
 
@@ -543,6 +564,20 @@ namespace Goedel.Mesh {
 
             var ResponseData = JPCRemoteSession.Post("CreateAccount", Request);
             var Response = CreateResponse.FromTagged(ResponseData);
+
+            return Response;
+            }
+
+        /// <summary>
+		/// Implement the transaction
+        /// </summary>		
+        /// <param name="Request">The request object</param>
+		/// <returns>The response object</returns>
+        public override DeleteResponse DeleteAccount (
+                DeleteRequest Request) {
+
+            var ResponseData = JPCRemoteSession.Post("DeleteAccount", Request);
+            var Response = DeleteResponse.FromTagged(ResponseData);
 
             return Response;
             }
@@ -702,6 +737,11 @@ namespace Goedel.Mesh {
 					Response = Service.CreateAccount (Request);
 					break;
 					}
+				case "DeleteAccount" : {
+					var Request = DeleteRequest.FromTagged (JSONReader);
+					Response = Service.DeleteAccount (Request);
+					break;
+					}
 				case "Get" : {
 					var Request = GetRequest.FromTagged (JSONReader);
 					Response = Service.Get (Request);
@@ -767,11 +807,7 @@ namespace Goedel.Mesh {
         ///is directed.
         /// </summary>
 
-		public virtual string						Portal {
-			get {return _Portal;}			
-			set {_Portal = value;}
-			}
-		string						_Portal ;
+		public virtual string						Portal  {get; set;}
 
         /// <summary>
         /// Tag identifying this class.
@@ -935,6 +971,13 @@ namespace Goedel.Mesh {
 					break;
 					}
 
+				case "DeleteRequest" : {
+					var Result = new DeleteRequest ();
+					Result.Deserialize (JSONReader);
+					Out = Result;
+					break;
+					}
+
 				case "GetRequest" : {
 					var Result = new GetRequest ();
 					Result.Deserialize (JSONReader);
@@ -1020,8 +1063,6 @@ namespace Goedel.Mesh {
 					}
 
 				default : {
-					//Ignore the unknown data
-                    //throw new Exception ("Not supported");
                     break;
 					}
 				}
@@ -1080,11 +1121,7 @@ namespace Goedel.Mesh {
         ///and log file use.
         /// </summary>
 
-		public virtual string						StatusDescription {
-			get {return _StatusDescription;}			
-			set {_StatusDescription = value;}
-			}
-		string						_StatusDescription ;
+		public virtual string						StatusDescription  {get; set;}
 
         /// <summary>
         /// Tag identifying this class.
@@ -1253,6 +1290,13 @@ namespace Goedel.Mesh {
 					break;
 					}
 
+				case "DeleteResponse" : {
+					var Result = new DeleteResponse ();
+					Result.Deserialize (JSONReader);
+					Out = Result;
+					break;
+					}
+
 				case "GetResponse" : {
 					var Result = new GetResponse ();
 					Result.Deserialize (JSONReader);
@@ -1282,8 +1326,6 @@ namespace Goedel.Mesh {
 					}
 
 				default : {
-					//Ignore the unknown data
-                    //throw new Exception ("Not supported");
                     break;
 					}
 				}
@@ -1351,21 +1393,13 @@ namespace Goedel.Mesh {
         ///JSON encoding is assumed.
         /// </summary>
 
-		public virtual List<Encoding>				Encodings {
-			get {return _Encodings;}			
-			set {_Encodings = value;}
-			}
-		List<Encoding>				_Encodings;
+		public virtual List<Encoding>				Encodings  {get; set;}
         /// <summary>
         ///The preferred URI for this service. This MAY be used to effect
         ///a redirect in the case that a service moves.
         /// </summary>
 
-		public virtual List<string>				URI {
-			get {return _URI;}			
-			set {_URI = value;}
-			}
-		List<string>				_URI;
+		public virtual List<string>				URI  {get; set;}
 
         /// <summary>
         /// Tag identifying this class.
@@ -1542,8 +1576,6 @@ namespace Goedel.Mesh {
 					}
 
 				default : {
-					//Ignore the unknown data
-                    //throw new Exception ("Not supported");
                     break;
 					}
 				}
@@ -1611,22 +1643,14 @@ namespace Goedel.Mesh {
         ///The IANA encoding name
         /// </summary>
 
-		public virtual List<string>				ID {
-			get {return _ID;}			
-			set {_ID = value;}
-			}
-		List<string>				_ID;
+		public virtual List<string>				ID  {get; set;}
         /// <summary>
         ///For encodings that employ a named dictionary for tag or data
         ///compression, the name of the dictionary as defined by that 
         ///encoding scheme. 	
         /// </summary>
 
-		public virtual List<string>				Dictionary {
-			get {return _Dictionary;}			
-			set {_Dictionary = value;}
-			}
-		List<string>				_Dictionary;
+		public virtual List<string>				Dictionary  {get; set;}
 
         /// <summary>
         /// Tag identifying this class.
@@ -1788,8 +1812,6 @@ namespace Goedel.Mesh {
 					}
 
 				default : {
-					//Ignore the unknown data
-                    //throw new Exception ("Not supported");
                     break;
 					}
 				}
@@ -1849,20 +1871,12 @@ namespace Goedel.Mesh {
         ///The data retrieval key.
         /// </summary>
 
-		public virtual string						Key {
-			get {return _Key;}			
-			set {_Key = value;}
-			}
-		string						_Key ;
+		public virtual string						Key  {get; set;}
         /// <summary>
         ///The data value to match.
         /// </summary>
 
-		public virtual string						Value {
-			get {return _Value;}			
-			set {_Value = value;}
-			}
-		string						_Value ;
+		public virtual string						Value  {get; set;}
 
         /// <summary>
         /// Tag identifying this class.
@@ -2010,8 +2024,6 @@ namespace Goedel.Mesh {
 					}
 
 				default : {
-					//Ignore the unknown data
-                    //throw new Exception ("Not supported");
                     break;
 					}
 				}
@@ -2104,11 +2116,7 @@ namespace Goedel.Mesh {
         ///returns the next set of data responding to the earlier query.
         /// </summary>
 
-		public virtual string						PageKey {
-			get {return _PageKey;}			
-			set {_PageKey = value;}
-			}
-		string						_PageKey ;
+		public virtual string						PageKey  {get; set;}
 
         /// <summary>
         /// Tag identifying this class.
@@ -2271,8 +2279,6 @@ namespace Goedel.Mesh {
 					}
 
 				default : {
-					//Ignore the unknown data
-                    //throw new Exception ("Not supported");
                     break;
 					}
 				}
@@ -2463,8 +2469,6 @@ namespace Goedel.Mesh {
 					}
 
 				default : {
-					//Ignore the unknown data
-                    //throw new Exception ("Not supported");
                     break;
 					}
 				}
@@ -2503,20 +2507,12 @@ namespace Goedel.Mesh {
         ///Enumerates the protocol versions supported
         /// </summary>
 
-		public virtual Version						Version {
-			get {return _Version;}			
-			set {_Version = value;}
-			}
-		Version						_Version ;
+		public virtual Version						Version  {get; set;}
         /// <summary>
         ///Enumerates alternate protocol version(s) supported
         /// </summary>
 
-		public virtual List<Version>				Alternates {
-			get {return _Alternates;}			
-			set {_Alternates = value;}
-			}
-		List<Version>				_Alternates;
+		public virtual List<Version>				Alternates  {get; set;}
 
         /// <summary>
         /// Tag identifying this class.
@@ -2677,8 +2673,6 @@ namespace Goedel.Mesh {
 					}
 
 				default : {
-					//Ignore the unknown data
-                    //throw new Exception ("Not supported");
                     break;
 					}
 				}
@@ -2735,11 +2729,7 @@ namespace Goedel.Mesh {
         ///Account name requested
         /// </summary>
 
-		public virtual string						Account {
-			get {return _Account;}			
-			set {_Account = value;}
-			}
-		string						_Account ;
+		public virtual string						Account  {get; set;}
 		bool								__Reserve = false;
 		private bool						_Reserve;
         /// <summary>
@@ -2757,11 +2747,7 @@ namespace Goedel.Mesh {
         ///explanatory text.
         /// </summary>
 
-		public virtual List<string>				Language {
-			get {return _Language;}			
-			set {_Language = value;}
-			}
-		List<string>				_Language;
+		public virtual List<string>				Language  {get; set;}
 
         /// <summary>
         /// Tag identifying this class.
@@ -2922,8 +2908,6 @@ namespace Goedel.Mesh {
 					}
 
 				default : {
-					//Ignore the unknown data
-                    //throw new Exception ("Not supported");
                     break;
 					}
 				}
@@ -3022,20 +3006,12 @@ namespace Goedel.Mesh {
         ///in the proposed account name.
         /// </summary>
 
-		public virtual string						InvalidCharacters {
-			get {return _InvalidCharacters;}			
-			set {_InvalidCharacters = value;}
-			}
-		string						_InvalidCharacters ;
+		public virtual string						InvalidCharacters  {get; set;}
         /// <summary>
         ///Text explaining the reason an account name was rejected.
         /// </summary>
 
-		public virtual string						Reason {
-			get {return _Reason;}			
-			set {_Reason = value;}
-			}
-		string						_Reason ;
+		public virtual string						Reason  {get; set;}
 
         /// <summary>
         /// Tag identifying this class.
@@ -3199,8 +3175,6 @@ namespace Goedel.Mesh {
 					}
 
 				default : {
-					//Ignore the unknown data
-                    //throw new Exception ("Not supported");
                     break;
 					}
 				}
@@ -3260,21 +3234,13 @@ namespace Goedel.Mesh {
         ///Account identifier requested.
         /// </summary>
 
-		public virtual string						Account {
-			get {return _Account;}			
-			set {_Account = value;}
-			}
-		string						_Account ;
+		public virtual string						Account  {get; set;}
         /// <summary>
         ///User profile of account to be created. The profile MUST specify the 
         ///account being created as an account.
         /// </summary>
 
-		public virtual SignedProfile						Profile {
-			get {return _Profile;}			
-			set {_Profile = value;}
-			}
-		SignedProfile						_Profile ;
+		public virtual SignedProfile						Profile  {get; set;}
 
         /// <summary>
         /// Tag identifying this class.
@@ -3431,8 +3397,6 @@ namespace Goedel.Mesh {
 					}
 
 				default : {
-					//Ignore the unknown data
-                    //throw new Exception ("Not supported");
                     break;
 					}
 				}
@@ -3612,8 +3576,363 @@ namespace Goedel.Mesh {
 					}
 
 				default : {
-					//Ignore the unknown data
-                    //throw new Exception ("Not supported");
+                    break;
+					}
+				}
+			JSONReader.EndObject ();
+
+			return Out;
+			}
+
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
+		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+			
+			switch (Tag) {
+				default : {
+					base.DeserializeToken(JSONReader, Tag);
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
+	/// <summary>
+	///
+	/// Request deletion of a new portal account. The request specifies
+	/// the requested account identifier.
+	/// </summary>
+	public partial class DeleteRequest : MeshRequest {
+        /// <summary>
+        ///Account identifier to be deleted.
+        /// </summary>
+
+		public virtual string						Account  {get; set;}
+
+        /// <summary>
+        /// Tag identifying this class.
+        /// </summary>
+        /// <returns>The tag</returns>
+		public override string Tag () {
+			return "DeleteRequest";
+			}
+
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
+		public DeleteRequest () {
+			_Initialize ();
+			}
+
+        /// <summary>
+		/// Initialize class from JSONReader stream.
+        /// </summary>	
+        /// <param name="JSONReader">Input stream</param>			
+		public DeleteRequest (JSONReader JSONReader) {
+			Deserialize (JSONReader);
+			}
+
+        /// <summary>
+		/// Initialize class from a JSON encoded class.
+        /// </summary>		
+        /// <param name="_String">Input string</param>
+		public DeleteRequest (string _String) {
+			Deserialize (_String);
+			}
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="Writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
+			SerializeX (Writer, wrap, ref first);
+			}
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_Writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			if (_wrap) {
+				_Writer.WriteObjectStart ();
+				}
+			((MeshRequest)this).SerializeX(_Writer, false, ref _first);
+			if (Account != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Account", 1);
+					_Writer.WriteString (Account);
+				}
+			if (_wrap) {
+				_Writer.WriteObjectEnd ();
+				}
+			}
+
+
+
+        /// <summary>
+		/// Create a new instance from untagged byte input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>		
+		public static new DeleteRequest From (byte[] _Data) {
+			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
+			return From (_Input);
+			}
+
+        /// <summary>
+		/// Create a new instance from untagged string input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>				
+		public static new DeleteRequest From (string _Input) {
+			StringReader _Reader = new StringReader (_Input);
+            JSONReader JSONReader = new JSONReader (_Reader);
+			return new DeleteRequest (JSONReader);
+			}
+
+        /// <summary>
+		/// Create a new instance from tagged byte input.
+		/// i.e. { "DeleteRequest" : {... data ... } }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>				
+		public static new DeleteRequest FromTagged (byte[] _Data) {
+			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
+			return FromTagged (_Input);
+			}
+
+        /// <summary>
+        /// Create a new instance from tagged string input.
+		/// i.e. { "DeleteRequest" : {... data ... } }
+        /// </summary>
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>		
+		public static new DeleteRequest FromTagged (string _Input) {
+			//DeleteRequest _Result;
+			//Deserialize (_Input, out _Result);
+			StringReader _Reader = new StringReader (_Input);
+            JSONReader JSONReader = new JSONReader (_Reader);
+			return FromTagged (JSONReader) ;
+			}
+
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+        /// <returns>The created object.</returns>		
+        public static new DeleteRequest  FromTagged (JSONReader JSONReader) {
+			DeleteRequest Out = null;
+
+			JSONReader.StartObject ();
+            if (JSONReader.EOR) {
+                return null;
+                }
+
+			string token = JSONReader.ReadToken ();
+
+			switch (token) {
+
+				case "DeleteRequest" : {
+					var Result = new DeleteRequest ();
+					Result.Deserialize (JSONReader);
+					Out = Result;
+					break;
+					}
+
+				default : {
+                    break;
+					}
+				}
+			JSONReader.EndObject ();
+
+			return Out;
+			}
+
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
+		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+			
+			switch (Tag) {
+				case "Account" : {
+					Account = JSONReader.ReadString ();
+					break;
+					}
+				default : {
+					base.DeserializeToken(JSONReader, Tag);
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
+	/// <summary>
+	///
+	/// Reports the success or failure of a Delete transaction.
+	/// </summary>
+	public partial class DeleteResponse : MeshResponse {
+
+        /// <summary>
+        /// Tag identifying this class.
+        /// </summary>
+        /// <returns>The tag</returns>
+		public override string Tag () {
+			return "DeleteResponse";
+			}
+
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
+		public DeleteResponse () {
+			_Initialize ();
+			}
+
+        /// <summary>
+		/// Initialize class from JSONReader stream.
+        /// </summary>	
+        /// <param name="JSONReader">Input stream</param>			
+		public DeleteResponse (JSONReader JSONReader) {
+			Deserialize (JSONReader);
+			}
+
+        /// <summary>
+		/// Initialize class from a JSON encoded class.
+        /// </summary>		
+        /// <param name="_String">Input string</param>
+		public DeleteResponse (string _String) {
+			Deserialize (_String);
+			}
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="Writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
+			SerializeX (Writer, wrap, ref first);
+			}
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_Writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			if (_wrap) {
+				_Writer.WriteObjectStart ();
+				}
+			((MeshResponse)this).SerializeX(_Writer, false, ref _first);
+			if (_wrap) {
+				_Writer.WriteObjectEnd ();
+				}
+			}
+
+
+
+        /// <summary>
+		/// Create a new instance from untagged byte input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>		
+		public static new DeleteResponse From (byte[] _Data) {
+			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
+			return From (_Input);
+			}
+
+        /// <summary>
+		/// Create a new instance from untagged string input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>				
+		public static new DeleteResponse From (string _Input) {
+			StringReader _Reader = new StringReader (_Input);
+            JSONReader JSONReader = new JSONReader (_Reader);
+			return new DeleteResponse (JSONReader);
+			}
+
+        /// <summary>
+		/// Create a new instance from tagged byte input.
+		/// i.e. { "DeleteResponse" : {... data ... } }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>				
+		public static new DeleteResponse FromTagged (byte[] _Data) {
+			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
+			return FromTagged (_Input);
+			}
+
+        /// <summary>
+        /// Create a new instance from tagged string input.
+		/// i.e. { "DeleteResponse" : {... data ... } }
+        /// </summary>
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>		
+		public static new DeleteResponse FromTagged (string _Input) {
+			//DeleteResponse _Result;
+			//Deserialize (_Input, out _Result);
+			StringReader _Reader = new StringReader (_Input);
+            JSONReader JSONReader = new JSONReader (_Reader);
+			return FromTagged (JSONReader) ;
+			}
+
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+        /// <returns>The created object.</returns>		
+        public static new DeleteResponse  FromTagged (JSONReader JSONReader) {
+			DeleteResponse Out = null;
+
+			JSONReader.StartObject ();
+            if (JSONReader.EOR) {
+                return null;
+                }
+
+			string token = JSONReader.ReadToken ();
+
+			switch (token) {
+
+				case "DeleteResponse" : {
+					var Result = new DeleteResponse ();
+					Result.Deserialize (JSONReader);
+					Out = Result;
+					break;
+					}
+
+				default : {
                     break;
 					}
 				}
@@ -3651,39 +3970,23 @@ namespace Goedel.Mesh {
         ///Lookup by profile ID
         /// </summary>
 
-		public virtual string						Identifier {
-			get {return _Identifier;}			
-			set {_Identifier = value;}
-			}
-		string						_Identifier ;
+		public virtual string						Identifier  {get; set;}
         /// <summary>
         ///Lookup by Account ID
         /// </summary>
 
-		public virtual string						Account {
-			get {return _Account;}			
-			set {_Account = value;}
-			}
-		string						_Account ;
+		public virtual string						Account  {get; set;}
         /// <summary>
         ///List of KeyValue pairs specifying the conditions to be met
         /// </summary>
 
-		public virtual List<KeyValue>				KeyValues {
-			get {return _KeyValues;}			
-			set {_KeyValues = value;}
-			}
-		List<KeyValue>				_KeyValues;
+		public virtual List<KeyValue>				KeyValues  {get; set;}
         /// <summary>
         ///Constrain the search to a specific time interval and/or 
         ///limit the number and/or total size of data records returned.
         /// </summary>
 
-		public virtual SearchConstraints						SearchConstraints {
-			get {return _SearchConstraints;}			
-			set {_SearchConstraints = value;}
-			}
-		SearchConstraints						_SearchConstraints ;
+		public virtual SearchConstraints						SearchConstraints  {get; set;}
 		bool								__Multiple = false;
 		private bool						_Multiple;
         /// <summary>
@@ -3887,8 +4190,6 @@ namespace Goedel.Mesh {
 					}
 
 				default : {
-					//Ignore the unknown data
-                    //throw new Exception ("Not supported");
                     break;
 					}
 				}
@@ -3962,31 +4263,19 @@ namespace Goedel.Mesh {
         ///List of entries matching the request.
         /// </summary>
 
-		public virtual List<Entry>				Entries {
-			get {return _Entries;}			
-			set {_Entries = value;}
-			}
-		List<Entry>				_Entries;
+		public virtual List<Entry>				Entries  {get; set;}
         /// <summary>
         ///List of mesh data records matching the request.
         /// </summary>
 
-		public virtual List<DataItem>				DataItems {
-			get {return _DataItems;}			
-			set {_DataItems = value;}
-			}
-		List<DataItem>				_DataItems;
+		public virtual List<DataItem>				DataItems  {get; set;}
         /// <summary>
         ///If non-null, indicates that the number and/or size of the data records
         ///returned exceeds either the SearchConstraints specified in the
         ///request or internal server limits.
         /// </summary>
 
-		public virtual string						PageKey {
-			get {return _PageKey;}			
-			set {_PageKey = value;}
-			}
-		string						_PageKey ;
+		public virtual string						PageKey  {get; set;}
 
         /// <summary>
         /// Tag identifying this class.
@@ -4163,8 +4452,6 @@ namespace Goedel.Mesh {
 					}
 
 				default : {
-					//Ignore the unknown data
-                    //throw new Exception ("Not supported");
                     break;
 					}
 				}
@@ -4229,11 +4516,7 @@ namespace Goedel.Mesh {
         ///Signed profile to be published.
         /// </summary>
 
-		public virtual Entry						Entry {
-			get {return _Entry;}			
-			set {_Entry = value;}
-			}
-		Entry						_Entry ;
+		public virtual Entry						Entry  {get; set;}
 
         /// <summary>
         /// Tag identifying this class.
@@ -4385,8 +4668,6 @@ namespace Goedel.Mesh {
 					}
 
 				default : {
-					//Ignore the unknown data
-                    //throw new Exception ("Not supported");
                     break;
 					}
 				}
@@ -4562,8 +4843,6 @@ namespace Goedel.Mesh {
 					}
 
 				default : {
-					//Ignore the unknown data
-                    //throw new Exception ("Not supported");
                     break;
 					}
 				}
@@ -4735,8 +5014,6 @@ namespace Goedel.Mesh {
 					}
 
 				default : {
-					//Ignore the unknown data
-                    //throw new Exception ("Not supported");
                     break;
 					}
 				}
@@ -4804,11 +5081,7 @@ namespace Goedel.Mesh {
         ///Last checkpoint value.
         /// </summary>
 
-		public virtual string						CheckpointValue {
-			get {return _CheckpointValue;}			
-			set {_CheckpointValue = value;}
-			}
-		string						_CheckpointValue ;
+		public virtual string						CheckpointValue  {get; set;}
 
         /// <summary>
         /// Tag identifying this class.
@@ -4967,8 +5240,6 @@ namespace Goedel.Mesh {
 					}
 
 				default : {
-					//Ignore the unknown data
-                    //throw new Exception ("Not supported");
                     break;
 					}
 				}
@@ -5023,21 +5294,13 @@ namespace Goedel.Mesh {
         ///device requesting connection.
         /// </summary>
 
-		public virtual SignedConnectionRequest						SignedRequest {
-			get {return _SignedRequest;}			
-			set {_SignedRequest = value;}
-			}
-		SignedConnectionRequest						_SignedRequest ;
+		public virtual SignedConnectionRequest						SignedRequest  {get; set;}
         /// <summary>
         ///Account identifier of account to which the device is requesting
         ///connection.
         /// </summary>
 
-		public virtual string						AccountID {
-			get {return _AccountID;}			
-			set {_AccountID = value;}
-			}
-		string						_AccountID ;
+		public virtual string						AccountID  {get; set;}
 
         /// <summary>
         /// Tag identifying this class.
@@ -5186,8 +5449,6 @@ namespace Goedel.Mesh {
 					}
 
 				default : {
-					//Ignore the unknown data
-                    //throw new Exception ("Not supported");
                     break;
 					}
 				}
@@ -5369,8 +5630,6 @@ namespace Goedel.Mesh {
 					}
 
 				default : {
-					//Ignore the unknown data
-                    //throw new Exception ("Not supported");
                     break;
 					}
 				}
@@ -5410,20 +5669,12 @@ namespace Goedel.Mesh {
         ///is requested.
         /// </summary>
 
-		public virtual string						AccountID {
-			get {return _AccountID;}			
-			set {_AccountID = value;}
-			}
-		string						_AccountID ;
+		public virtual string						AccountID  {get; set;}
         /// <summary>
         ///Device identifier of device requesting status information.
         /// </summary>
 
-		public virtual string						DeviceID {
-			get {return _DeviceID;}			
-			set {_DeviceID = value;}
-			}
-		string						_DeviceID ;
+		public virtual string						DeviceID  {get; set;}
 
         /// <summary>
         /// Tag identifying this class.
@@ -5572,8 +5823,6 @@ namespace Goedel.Mesh {
 					}
 
 				default : {
-					//Ignore the unknown data
-                    //throw new Exception ("Not supported");
                     break;
 					}
 				}
@@ -5619,11 +5868,7 @@ namespace Goedel.Mesh {
         ///The signed ConnectionResult object.
         /// </summary>
 
-		public virtual SignedConnectionResult						Result {
-			get {return _Result;}			
-			set {_Result = value;}
-			}
-		SignedConnectionResult						_Result ;
+		public virtual SignedConnectionResult						Result  {get; set;}
 
         /// <summary>
         /// Tag identifying this class.
@@ -5767,8 +6012,6 @@ namespace Goedel.Mesh {
 					}
 
 				default : {
-					//Ignore the unknown data
-                    //throw new Exception ("Not supported");
                     break;
 					}
 				}
@@ -5813,21 +6056,13 @@ namespace Goedel.Mesh {
         ///pending connection requests are requested.
         /// </summary>
 
-		public virtual string						AccountID {
-			get {return _AccountID;}			
-			set {_AccountID = value;}
-			}
-		string						_AccountID ;
+		public virtual string						AccountID  {get; set;}
         /// <summary>
         ///Constrain the search to a specific time interval and/or 
         ///limit the number and/or total size of data records returned.
         /// </summary>
 
-		public virtual SearchConstraints						SearchConstraints {
-			get {return _SearchConstraints;}			
-			set {_SearchConstraints = value;}
-			}
-		SearchConstraints						_SearchConstraints ;
+		public virtual SearchConstraints						SearchConstraints  {get; set;}
 
         /// <summary>
         /// Tag identifying this class.
@@ -5976,8 +6211,6 @@ namespace Goedel.Mesh {
 					}
 
 				default : {
-					//Ignore the unknown data
-                    //throw new Exception ("Not supported");
                     break;
 					}
 				}
@@ -6026,22 +6259,14 @@ namespace Goedel.Mesh {
         ///in the request.
         /// </summary>
 
-		public virtual List<SignedConnectionRequest>				Pending {
-			get {return _Pending;}			
-			set {_Pending = value;}
-			}
-		List<SignedConnectionRequest>				_Pending;
+		public virtual List<SignedConnectionRequest>				Pending  {get; set;}
         /// <summary>
         ///If non-null, indicates that the number and/or size of the data records
         ///returned exceeds either the SearchConstraints specified in the
         ///request or internal server limits.
         /// </summary>
 
-		public virtual string						PageKey {
-			get {return _PageKey;}			
-			set {_PageKey = value;}
-			}
-		string						_PageKey ;
+		public virtual string						PageKey  {get; set;}
 
         /// <summary>
         /// Tag identifying this class.
@@ -6202,8 +6427,6 @@ namespace Goedel.Mesh {
 					}
 
 				default : {
-					//Ignore the unknown data
-                    //throw new Exception ("Not supported");
                     break;
 					}
 				}
@@ -6258,21 +6481,13 @@ namespace Goedel.Mesh {
         ///be signed by a valid administration key for the Mesh profile.
         /// </summary>
 
-		public virtual SignedConnectionResult						Result {
-			get {return _Result;}			
-			set {_Result = value;}
-			}
-		SignedConnectionResult						_Result ;
+		public virtual SignedConnectionResult						Result  {get; set;}
         /// <summary>
         ///The account identifier to which the connection result is
         ///posted.
         /// </summary>
 
-		public virtual string						AccountID {
-			get {return _AccountID;}			
-			set {_AccountID = value;}
-			}
-		string						_AccountID ;
+		public virtual string						AccountID  {get; set;}
 
         /// <summary>
         /// Tag identifying this class.
@@ -6421,8 +6636,6 @@ namespace Goedel.Mesh {
 					}
 
 				default : {
-					//Ignore the unknown data
-                    //throw new Exception ("Not supported");
                     break;
 					}
 				}
@@ -6604,8 +6817,6 @@ namespace Goedel.Mesh {
 					}
 
 				default : {
-					//Ignore the unknown data
-                    //throw new Exception ("Not supported");
                     break;
 					}
 				}
@@ -6645,11 +6856,7 @@ namespace Goedel.Mesh {
         ///limit the number and/or total size of data records returned.
         /// </summary>
 
-		public virtual SearchConstraints						SearchConstraints {
-			get {return _SearchConstraints;}			
-			set {_SearchConstraints = value;}
-			}
-		SearchConstraints						_SearchConstraints ;
+		public virtual SearchConstraints						SearchConstraints  {get; set;}
 
         /// <summary>
         /// Tag identifying this class.
@@ -6793,8 +7000,6 @@ namespace Goedel.Mesh {
 					}
 
 				default : {
-					//Ignore the unknown data
-                    //throw new Exception ("Not supported");
                     break;
 					}
 				}
@@ -6839,22 +7044,14 @@ namespace Goedel.Mesh {
         ///List of mesh data records matching the request.
         /// </summary>
 
-		public virtual List<DataItem>				DataItems {
-			get {return _DataItems;}			
-			set {_DataItems = value;}
-			}
-		List<DataItem>				_DataItems;
+		public virtual List<DataItem>				DataItems  {get; set;}
         /// <summary>
         ///If non-null, indicates that the number and/or size of the data records
         ///returned exceeds either the SearchConstraints specified in the
         ///request or internal server limits.
         /// </summary>
 
-		public virtual string						PageKey {
-			get {return _PageKey;}			
-			set {_PageKey = value;}
-			}
-		string						_PageKey ;
+		public virtual string						PageKey  {get; set;}
 
         /// <summary>
         /// Tag identifying this class.
@@ -7015,8 +7212,6 @@ namespace Goedel.Mesh {
 					}
 
 				default : {
-					//Ignore the unknown data
-                    //throw new Exception ("Not supported");
                     break;
 					}
 				}

@@ -17,14 +17,16 @@ LinkFiles = \
     Goedel.Cryptography.dll\
     Goedel.Cryptography.Framework.dll\
     Goedel.Cryptography.KeyFile.dll\
+    Goedel.Cryptography.Windows.dll\
     Goedel.IO.dll\
     Goedel.Platform.dll\
     Goedel.Platform.Framework.dll\
     Goedel.Protocol.dll\
     Goedel.Utilities.dll\
+    Goedel.Mesh.Client.dll\
     Goedel.Mesh.Platform.dll\
-    Goedel.Mesh.dll\
-    Goedel.Platform.Windows.dll
+    Goedel.Mesh.Server.dll\
+    Goedel.Mesh.dll
 
 prebuild : 
     echo "Do Prebuild"
