@@ -43,11 +43,15 @@ namespace Goedel.Mesh.Platform {
 
         public RegistrationPersonal RegistrationPersonal;
 
-        //public ApplicationProfileEntry ApplicationProfileEntry { get; set;} 
+
+        /// <summary>The abstract machine a profile registration is attached to</summary>
+        public override RegistrationMachine RegistrationMachine {
+                get => RegistrationPersonal?.RegistrationMachine; }
+
 
         PersonalProfile PersonalProfile {
-            get => RegistrationPersonal.PersonalProfile;
-            }
+                get => RegistrationPersonal?.PersonalProfile;
+                }
 
         /// <summary>
         /// Client which may be used to interact with the portal on which this

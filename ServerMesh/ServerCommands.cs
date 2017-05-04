@@ -352,7 +352,7 @@ namespace MeshServerShell {
             } 
 
 		public string			Value {
-			get {return Text;}
+			get => Text;
 			}
 
         } // _String

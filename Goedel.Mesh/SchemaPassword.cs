@@ -51,31 +51,6 @@ namespace Goedel.Mesh {
 			return "MeshPassword";
 			}
 
-        /// <summary>
-        /// Default constructor.
-        /// </summary>
-		public MeshPassword () {
-			_Initialize () ;
-			}
-
-        /// <summary>
-        /// Construct an instance from a JSON encoded stream.
-        /// </summary>
-        /// <param name="JSONReader">Input stream</param>
-		public MeshPassword (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			_Initialize () ;
-			}
-
-        /// <summary>
-        /// Construct an instance from a JSON encoded string.
-        /// </summary>
-        /// <param name="_String">Input string</param>
-		public MeshPassword (string _String) {
-			Deserialize (_String);
-			_Initialize () ;
-			}
-
 		/// <summary>
         /// Construct an instance from the specified tagged JSONReader stream.
         /// </summary>
@@ -95,25 +70,22 @@ namespace Goedel.Mesh {
 			switch (token) {
 
 				case "PasswordProfile" : {
-					var Result = new PasswordProfile ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new PasswordProfile ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 
 				case "PasswordProfilePrivate" : {
-					var Result = new PasswordProfilePrivate ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new PasswordProfilePrivate ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 
 				case "PasswordEntry" : {
-					var Result = new PasswordEntry ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new PasswordEntry ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
@@ -146,27 +118,6 @@ namespace Goedel.Mesh {
 			return "PasswordProfile";
 			}
 
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-		public PasswordProfile () {
-			_Initialize ();
-			}
-        /// <summary>
-		/// Initialize class from JSONReader stream.
-        /// </summary>		
-        /// <param name="JSONReader">Input stream</param>	
-		public PasswordProfile (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			}
-
-        /// <summary> 
-		/// Initialize class from a JSON encoded class.
-        /// </summary>		
-        /// <param name="_String">Input string</param>
-		public PasswordProfile (string _String) {
-			Deserialize (_String);
-			}
 
 
         /// <summary>
@@ -221,7 +172,10 @@ namespace Goedel.Mesh {
 		public static new PasswordProfile From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-			return new PasswordProfile (JSONReader);
+			var Result = new PasswordProfile ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			// return new PasswordProfile (JSONReader);
 			}
 
         /// <summary>
@@ -268,9 +222,8 @@ namespace Goedel.Mesh {
 			switch (token) {
 
 				case "PasswordProfile" : {
-					var Result = new PasswordProfile ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new PasswordProfile ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
@@ -342,27 +295,6 @@ namespace Goedel.Mesh {
 			return "PasswordProfilePrivate";
 			}
 
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-		public PasswordProfilePrivate () {
-			_Initialize ();
-			}
-        /// <summary>
-		/// Initialize class from JSONReader stream.
-        /// </summary>		
-        /// <param name="JSONReader">Input stream</param>	
-		public PasswordProfilePrivate (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			}
-
-        /// <summary> 
-		/// Initialize class from a JSON encoded class.
-        /// </summary>		
-        /// <param name="_String">Input string</param>
-		public PasswordProfilePrivate (string _String) {
-			Deserialize (_String);
-			}
 
 
         /// <summary>
@@ -450,7 +382,10 @@ namespace Goedel.Mesh {
 		public static new PasswordProfilePrivate From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-			return new PasswordProfilePrivate (JSONReader);
+			var Result = new PasswordProfilePrivate ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			// return new PasswordProfilePrivate (JSONReader);
 			}
 
         /// <summary>
@@ -497,9 +432,8 @@ namespace Goedel.Mesh {
 			switch (token) {
 
 				case "PasswordProfilePrivate" : {
-					var Result = new PasswordProfilePrivate ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new PasswordProfilePrivate ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
@@ -531,7 +465,9 @@ namespace Goedel.Mesh {
 					Entries = new List <PasswordEntry> ();
 					while (_Going) {
 						// an untagged structure.
-						var _Item = new PasswordEntry (JSONReader);
+						var _Item = new  PasswordEntry ();
+						_Item.Deserialize (JSONReader);
+						// var _Item = new PasswordEntry (JSONReader);
 						Entries.Add (_Item);
 						_Going = JSONReader.NextArray ();
 						}
@@ -588,27 +524,6 @@ namespace Goedel.Mesh {
 			return "PasswordEntry";
 			}
 
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-		public PasswordEntry () {
-			_Initialize ();
-			}
-        /// <summary>
-		/// Initialize class from JSONReader stream.
-        /// </summary>		
-        /// <param name="JSONReader">Input stream</param>	
-		public PasswordEntry (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			}
-
-        /// <summary> 
-		/// Initialize class from a JSON encoded class.
-        /// </summary>		
-        /// <param name="_String">Input string</param>
-		public PasswordEntry (string _String) {
-			Deserialize (_String);
-			}
 
 
         /// <summary>
@@ -684,7 +599,10 @@ namespace Goedel.Mesh {
 		public static new PasswordEntry From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-			return new PasswordEntry (JSONReader);
+			var Result = new PasswordEntry ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			// return new PasswordEntry (JSONReader);
 			}
 
         /// <summary>
@@ -731,9 +649,8 @@ namespace Goedel.Mesh {
 			switch (token) {
 
 				case "PasswordEntry" : {
-					var Result = new PasswordEntry ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new PasswordEntry ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 

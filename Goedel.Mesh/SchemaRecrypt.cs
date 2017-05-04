@@ -49,31 +49,6 @@ namespace Goedel.Mesh {
 			return "MeshRecrypt";
 			}
 
-        /// <summary>
-        /// Default constructor.
-        /// </summary>
-		public MeshRecrypt () {
-			_Initialize () ;
-			}
-
-        /// <summary>
-        /// Construct an instance from a JSON encoded stream.
-        /// </summary>
-        /// <param name="JSONReader">Input stream</param>
-		public MeshRecrypt (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			_Initialize () ;
-			}
-
-        /// <summary>
-        /// Construct an instance from a JSON encoded string.
-        /// </summary>
-        /// <param name="_String">Input string</param>
-		public MeshRecrypt (string _String) {
-			Deserialize (_String);
-			_Initialize () ;
-			}
-
 		/// <summary>
         /// Construct an instance from the specified tagged JSONReader stream.
         /// </summary>
@@ -93,33 +68,29 @@ namespace Goedel.Mesh {
 			switch (token) {
 
 				case "RecryptProfile" : {
-					var Result = new RecryptProfile ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new RecryptProfile ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 
 				case "RecryptDevicePublic" : {
-					var Result = new RecryptDevicePublic ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new RecryptDevicePublic ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 
 				case "RecryptProfilePrivate" : {
-					var Result = new RecryptProfilePrivate ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new RecryptProfilePrivate ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 
 				case "RecryptDevicePrivate" : {
-					var Result = new RecryptDevicePrivate ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new RecryptDevicePrivate ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
@@ -162,27 +133,6 @@ namespace Goedel.Mesh {
 			return "RecryptProfile";
 			}
 
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-		public RecryptProfile () {
-			_Initialize ();
-			}
-        /// <summary>
-		/// Initialize class from JSONReader stream.
-        /// </summary>		
-        /// <param name="JSONReader">Input stream</param>	
-		public RecryptProfile (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			}
-
-        /// <summary> 
-		/// Initialize class from a JSON encoded class.
-        /// </summary>		
-        /// <param name="_String">Input string</param>
-		public RecryptProfile (string _String) {
-			Deserialize (_String);
-			}
 
 
         /// <summary>
@@ -259,7 +209,10 @@ namespace Goedel.Mesh {
 		public static new RecryptProfile From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-			return new RecryptProfile (JSONReader);
+			var Result = new RecryptProfile ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			// return new RecryptProfile (JSONReader);
 			}
 
         /// <summary>
@@ -306,9 +259,8 @@ namespace Goedel.Mesh {
 			switch (token) {
 
 				case "RecryptProfile" : {
-					var Result = new RecryptProfile ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new RecryptProfile ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
@@ -340,7 +292,9 @@ namespace Goedel.Mesh {
 					Devices = new List <RecryptDevicePublic> ();
 					while (_Going) {
 						// an untagged structure.
-						var _Item = new RecryptDevicePublic (JSONReader);
+						var _Item = new  RecryptDevicePublic ();
+						_Item.Deserialize (JSONReader);
+						// var _Item = new RecryptDevicePublic (JSONReader);
 						Devices.Add (_Item);
 						_Going = JSONReader.NextArray ();
 						}
@@ -383,27 +337,6 @@ namespace Goedel.Mesh {
 			return "RecryptDevicePublic";
 			}
 
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-		public RecryptDevicePublic () {
-			_Initialize ();
-			}
-        /// <summary>
-		/// Initialize class from JSONReader stream.
-        /// </summary>		
-        /// <param name="JSONReader">Input stream</param>	
-		public RecryptDevicePublic (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			}
-
-        /// <summary> 
-		/// Initialize class from a JSON encoded class.
-        /// </summary>		
-        /// <param name="_String">Input string</param>
-		public RecryptDevicePublic (string _String) {
-			Deserialize (_String);
-			}
 
 
         /// <summary>
@@ -468,7 +401,10 @@ namespace Goedel.Mesh {
 		public static new RecryptDevicePublic From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-			return new RecryptDevicePublic (JSONReader);
+			var Result = new RecryptDevicePublic ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			// return new RecryptDevicePublic (JSONReader);
 			}
 
         /// <summary>
@@ -515,9 +451,8 @@ namespace Goedel.Mesh {
 			switch (token) {
 
 				case "RecryptDevicePublic" : {
-					var Result = new RecryptDevicePublic ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new RecryptDevicePublic ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
@@ -541,13 +476,15 @@ namespace Goedel.Mesh {
 			switch (Tag) {
 				case "EncryptKey" : {
 					// An untagged structure
-					EncryptKey = new PublicKey (JSONReader);
+					EncryptKey = new PublicKey ();
+					EncryptKey.Deserialize (JSONReader);
  
 					break;
 					}
 				case "AuthKey" : {
 					// An untagged structure
-					AuthKey = new PublicKey (JSONReader);
+					AuthKey = new PublicKey ();
+					AuthKey.Deserialize (JSONReader);
  
 					break;
 					}
@@ -577,27 +514,6 @@ namespace Goedel.Mesh {
 			return "RecryptProfilePrivate";
 			}
 
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-		public RecryptProfilePrivate () {
-			_Initialize ();
-			}
-        /// <summary>
-		/// Initialize class from JSONReader stream.
-        /// </summary>		
-        /// <param name="JSONReader">Input stream</param>	
-		public RecryptProfilePrivate (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			}
-
-        /// <summary> 
-		/// Initialize class from a JSON encoded class.
-        /// </summary>		
-        /// <param name="_String">Input string</param>
-		public RecryptProfilePrivate (string _String) {
-			Deserialize (_String);
-			}
 
 
         /// <summary>
@@ -652,7 +568,10 @@ namespace Goedel.Mesh {
 		public static new RecryptProfilePrivate From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-			return new RecryptProfilePrivate (JSONReader);
+			var Result = new RecryptProfilePrivate ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			// return new RecryptProfilePrivate (JSONReader);
 			}
 
         /// <summary>
@@ -699,9 +618,8 @@ namespace Goedel.Mesh {
 			switch (token) {
 
 				case "RecryptProfilePrivate" : {
-					var Result = new RecryptProfilePrivate ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new RecryptProfilePrivate ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
@@ -760,27 +678,6 @@ namespace Goedel.Mesh {
 			return "RecryptDevicePrivate";
 			}
 
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-		public RecryptDevicePrivate () {
-			_Initialize ();
-			}
-        /// <summary>
-		/// Initialize class from JSONReader stream.
-        /// </summary>		
-        /// <param name="JSONReader">Input stream</param>	
-		public RecryptDevicePrivate (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			}
-
-        /// <summary> 
-		/// Initialize class from a JSON encoded class.
-        /// </summary>		
-        /// <param name="_String">Input string</param>
-		public RecryptDevicePrivate (string _String) {
-			Deserialize (_String);
-			}
 
 
         /// <summary>
@@ -845,7 +742,10 @@ namespace Goedel.Mesh {
 		public static new RecryptDevicePrivate From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-			return new RecryptDevicePrivate (JSONReader);
+			var Result = new RecryptDevicePrivate ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			// return new RecryptDevicePrivate (JSONReader);
 			}
 
         /// <summary>
@@ -892,9 +792,8 @@ namespace Goedel.Mesh {
 			switch (token) {
 
 				case "RecryptDevicePrivate" : {
-					var Result = new RecryptDevicePrivate ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new RecryptDevicePrivate ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
@@ -918,13 +817,15 @@ namespace Goedel.Mesh {
 			switch (Tag) {
 				case "EncryptKey" : {
 					// An untagged structure
-					EncryptKey = new PublicKey (JSONReader);
+					EncryptKey = new PublicKey ();
+					EncryptKey.Deserialize (JSONReader);
  
 					break;
 					}
 				case "AuthKey" : {
 					// An untagged structure
-					AuthKey = new PublicKey (JSONReader);
+					AuthKey = new PublicKey ();
+					AuthKey.Deserialize (JSONReader);
  
 					break;
 					}

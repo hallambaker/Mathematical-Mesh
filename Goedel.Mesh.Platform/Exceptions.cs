@@ -9,6 +9,7 @@ namespace Goedel.Mesh.Platform {
     /// <summary>
     /// An internal assertion check failed.
     /// </summary>
+    [Serializable]
     public class Internal : global::System.Exception {
 
 		/// <summary>

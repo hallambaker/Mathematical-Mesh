@@ -29,7 +29,10 @@ using Goedel.Utilities;
 namespace Goedel.Mesh {
     public partial class OfflineEscrowEntry {
         private KeyShare[] _KeyShares;
-
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
+        public OfflineEscrowEntry () { }
 
         /// <summary>
         /// Creates an offline escrow entry for the master keys in the profile.

@@ -87,6 +87,24 @@ namespace Goedel.Mesh.MeshMan {
 
 
 
+        public void Register (RegistrationPersonal RegistrationPersonal,
+               ApplicationProfile ApplicationProfile) {
+
+
+            // Add the application to the personal profile.
+            // By default we add all the admin devices for the personal profile to be admin for 
+            // the app profile.
+            var RegistrationApplication = RegistrationPersonal.Add(ApplicationProfile, false);
+
+            // Add this device to the registration in the personal profile.
+            var DeviceProfile = RegistrationPersonal.PersonalProfile.DeviceProfile;
+            RegistrationApplication.AddDevice(DeviceProfile, Administration: true);
+
+            RegistrationPersonal.Write();
+            RegistrationApplication.Write();
+            }
+
+
         public MeshClient GetMeshClient() {
             return GetMeshClient(PortalID);
             }
@@ -190,34 +208,45 @@ namespace Goedel.Mesh.MeshMan {
 
 
 
-        //ApplicationProfileEntry PasswordEntry;
-        //RegistrationApplication PasswordRegistration;
-        //SignedApplicationProfile SignedApplicationWeb;
-        PasswordProfile PasswordProfile;
-        PasswordProfilePrivate PasswordProfilePrivate;
+        public RegistrationApplication GetApplication (IApplicationProfile Options, string Type) {
 
-        private void GetPasswordProfile () {
+             Machine.Find (out var RegistrationApplication, Type,
+                    Options.Portal.Value, Options.UDF.Value, Options.ID.Value);
 
-            //PasswordEntry = SignedPersonalProfile.PersonalProfile.GetApplicationEntryPassword(
-            //    null);
-            //var Found = Machine.Find(PasswordEntry.Identifier, out PasswordRegistration);
+            return RegistrationApplication;
 
-            //PasswordProfile = PasswordRegistration.ApplicationProfile as PasswordProfile;
-            //PasswordProfile.Link (SignedPersonalProfile.PersonalProfile, PasswordEntry);
-            //PasswordProfilePrivate = PasswordProfile.Private;
-
-            return;
             }
 
-        private void UpdatePasswordProfile() {
 
-            //var NewSigned = PasswordProfile.SignedApplicationProfile;
 
-            //PasswordRegistration.SignedApplicationProfile = NewSigned;
-            //PasswordRegistration.WriteToPortal();
-            //MeshClient.Publish(PasswordRegistration.SignedApplicationProfile);
-            return;
-            }
+        ////ApplicationProfileEntry PasswordEntry;
+        ////RegistrationApplication PasswordRegistration;
+        ////SignedApplicationProfile SignedApplicationWeb;
+        //PasswordProfile PasswordProfile;
+        //PasswordProfilePrivate PasswordProfilePrivate;
+
+        //private void GetPasswordProfile () {
+
+        //    //PasswordEntry = SignedPersonalProfile.PersonalProfile.GetApplicationEntryPassword(
+        //    //    null);
+        //    //var Found = Machine.Find(PasswordEntry.Identifier, out PasswordRegistration);
+
+        //    //PasswordProfile = PasswordRegistration.ApplicationProfile as PasswordProfile;
+        //    //PasswordProfile.Link (SignedPersonalProfile.PersonalProfile, PasswordEntry);
+        //    //PasswordProfilePrivate = PasswordProfile.Private;
+
+        //    return;
+        //    }
+
+        //private void UpdatePasswordProfile() {
+
+        //    //var NewSigned = PasswordProfile.SignedApplicationProfile;
+
+        //    //PasswordRegistration.SignedApplicationProfile = NewSigned;
+        //    //PasswordRegistration.WriteToPortal();
+        //    //MeshClient.Publish(PasswordRegistration.SignedApplicationProfile);
+        //    return;
+        //    }
 
         }
     }

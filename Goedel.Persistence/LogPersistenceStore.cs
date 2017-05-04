@@ -84,7 +84,7 @@ namespace Goedel.Persistence {
         /// if none exists.</param>
         /// <param name="Type">Type of data to store (the schema name).</param>
         /// <param name="Comment">Comment to be written to the log.</param>
-        protected void Init(string FileName, bool ReadOnly,
+         void Init(string FileName, bool ReadOnly,
                 string Type, string Comment) {
             if (ReadOnly) {
                 //Trace.WriteLine("Open store ReadOnly");

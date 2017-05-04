@@ -22,6 +22,9 @@
 		Exception PortalConnectFail
 			Console "Could not connect to portal"
 
+		Exception ProfileNotReadable
+			Console "The profile could not be read on this machine"
+
 		Exception PortalRefusedRequest
 			Console "Portal refused request XXX"
 

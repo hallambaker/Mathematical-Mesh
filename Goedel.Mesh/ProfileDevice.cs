@@ -47,6 +47,10 @@ namespace Goedel.Mesh {
             get => DeviceSignatureKey?.UDF; 
             }
 
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
+        public DeviceProfile () { }
 
         /// <summary>
         /// Construct profile for the specified device.
@@ -56,7 +60,7 @@ namespace Goedel.Mesh {
         /// <param name="SignatureAlgorithmID">The public key algorithm to use for signature keys.</param>
         /// <param name="ExchangeAlgorithmID">The public key algorithm to use for encryption keys.</param>
         /// <param name="SignedDeviceProfile">The enclosing signed device profile</param>
-        public DeviceProfile(string Name, string Description,
+        public DeviceProfile (string Name, string Description,
                     CryptoAlgorithmID SignatureAlgorithmID = CryptoAlgorithmID.Default, 
                     CryptoAlgorithmID ExchangeAlgorithmID = CryptoAlgorithmID.Default,
                     SignedDeviceProfile SignedDeviceProfile = null) {

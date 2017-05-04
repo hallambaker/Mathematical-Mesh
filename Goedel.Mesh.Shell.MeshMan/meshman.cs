@@ -145,8 +145,12 @@ namespace Goedel.Mesh.MeshMan {
 							Handle_SSH (Dispatch, args, 1);
 							break;
 							}
-						case "sshhosts" : {
-							Handle_SSHHost (Dispatch, args, 1);
+						case "sshauth" : {
+							Handle_SSHAuth (Dispatch, args, 1);
+							break;
+							}
+						case "sshknown" : {
+							Handle_SSHKnown (Dispatch, args, 1);
 							break;
 							}
 						case "sshpub" : {
@@ -157,7 +161,7 @@ namespace Goedel.Mesh.MeshMan {
 							Handle_SSHPrivate (Dispatch, args, 1);
 							break;
 							}
-						case "confim" : {
+						case "confirm" : {
 							Handle_Confirm (Dispatch, args, 1);
 							break;
 							}
@@ -1712,6 +1716,7 @@ namespace Goedel.Mesh.MeshMan {
 			Password,
 			Portal,
 			UDF,
+			ID,
 			Verbose,
 			Report,
 			}
@@ -1727,6 +1732,7 @@ namespace Goedel.Mesh.MeshMan {
 			Options.Password.Register ("password", Registry, (int) TagType_AddPassword.Password);
 			Options.Portal.Register ("portal", Registry, (int) TagType_AddPassword.Portal);
 			Options.UDF.Register ("udf", Registry, (int) TagType_AddPassword.UDF);
+			Options.ID.Register ("id", Registry, (int) TagType_AddPassword.ID);
 			Options.Verbose.Register ("verbose", Registry, (int) TagType_AddPassword.Verbose);
 			Options.Report.Register ("report", Registry, (int) TagType_AddPassword.Report);
 
@@ -1782,6 +1788,17 @@ namespace Goedel.Mesh.MeshMan {
 							}
 						break;
 						}
+					case TagType_AddPassword.ID : {
+						int OptionParams = Options.ID.Tag (Rest);
+						
+						if (OptionParams>0 && ((i+1) < args.Length)) {
+							if 	(!IsFlag (args [i+1][0] )) {
+								i++;								
+								Options.ID.Parameter (args[i]);
+								}
+							}
+						break;
+						}
 					case TagType_AddPassword.Verbose : {
 						int OptionParams = Options.Verbose.Tag (Rest);
 						
@@ -1816,6 +1833,7 @@ namespace Goedel.Mesh.MeshMan {
 			Site,
 			Portal,
 			UDF,
+			ID,
 			Verbose,
 			Report,
 			}
@@ -1829,6 +1847,7 @@ namespace Goedel.Mesh.MeshMan {
 			Options.Site.Register ("site", Registry, (int) TagType_GetPassword.Site);
 			Options.Portal.Register ("portal", Registry, (int) TagType_GetPassword.Portal);
 			Options.UDF.Register ("udf", Registry, (int) TagType_GetPassword.UDF);
+			Options.ID.Register ("id", Registry, (int) TagType_GetPassword.ID);
 			Options.Verbose.Register ("verbose", Registry, (int) TagType_GetPassword.Verbose);
 			Options.Report.Register ("report", Registry, (int) TagType_GetPassword.Report);
 
@@ -1872,6 +1891,17 @@ namespace Goedel.Mesh.MeshMan {
 							}
 						break;
 						}
+					case TagType_GetPassword.ID : {
+						int OptionParams = Options.ID.Tag (Rest);
+						
+						if (OptionParams>0 && ((i+1) < args.Length)) {
+							if 	(!IsFlag (args [i+1][0] )) {
+								i++;								
+								Options.ID.Parameter (args[i]);
+								}
+							}
+						break;
+						}
 					case TagType_GetPassword.Verbose : {
 						int OptionParams = Options.Verbose.Tag (Rest);
 						
@@ -1906,6 +1936,7 @@ namespace Goedel.Mesh.MeshMan {
 			Site,
 			Portal,
 			UDF,
+			ID,
 			Verbose,
 			Report,
 			}
@@ -1919,6 +1950,7 @@ namespace Goedel.Mesh.MeshMan {
 			Options.Site.Register ("site", Registry, (int) TagType_DeletePassword.Site);
 			Options.Portal.Register ("portal", Registry, (int) TagType_DeletePassword.Portal);
 			Options.UDF.Register ("udf", Registry, (int) TagType_DeletePassword.UDF);
+			Options.ID.Register ("id", Registry, (int) TagType_DeletePassword.ID);
 			Options.Verbose.Register ("verbose", Registry, (int) TagType_DeletePassword.Verbose);
 			Options.Report.Register ("report", Registry, (int) TagType_DeletePassword.Report);
 
@@ -1962,6 +1994,17 @@ namespace Goedel.Mesh.MeshMan {
 							}
 						break;
 						}
+					case TagType_DeletePassword.ID : {
+						int OptionParams = Options.ID.Tag (Rest);
+						
+						if (OptionParams>0 && ((i+1) < args.Length)) {
+							if 	(!IsFlag (args [i+1][0] )) {
+								i++;								
+								Options.ID.Parameter (args[i]);
+								}
+							}
+						break;
+						}
 					case TagType_DeletePassword.Verbose : {
 						int OptionParams = Options.Verbose.Tag (Rest);
 						
@@ -1996,6 +2039,7 @@ namespace Goedel.Mesh.MeshMan {
 			JSON,
 			Portal,
 			UDF,
+			ID,
 			Verbose,
 			Report,
 			}
@@ -2009,6 +2053,7 @@ namespace Goedel.Mesh.MeshMan {
 			Options.JSON.Register ("json", Registry, (int) TagType_DumpPassword.JSON);
 			Options.Portal.Register ("portal", Registry, (int) TagType_DumpPassword.Portal);
 			Options.UDF.Register ("udf", Registry, (int) TagType_DumpPassword.UDF);
+			Options.ID.Register ("id", Registry, (int) TagType_DumpPassword.ID);
 			Options.Verbose.Register ("verbose", Registry, (int) TagType_DumpPassword.Verbose);
 			Options.Report.Register ("report", Registry, (int) TagType_DumpPassword.Report);
 
@@ -2048,6 +2093,17 @@ namespace Goedel.Mesh.MeshMan {
 							if 	(!IsFlag (args [i+1][0] )) {
 								i++;								
 								Options.UDF.Parameter (args[i]);
+								}
+							}
+						break;
+						}
+					case TagType_DumpPassword.ID : {
+						int OptionParams = Options.ID.Tag (Rest);
+						
+						if (OptionParams>0 && ((i+1) < args.Length)) {
+							if 	(!IsFlag (args [i+1][0] )) {
+								i++;								
+								Options.ID.Parameter (args[i]);
 								}
 							}
 						break;
@@ -2283,27 +2339,29 @@ namespace Goedel.Mesh.MeshMan {
 			Dispatch.SSH (Options);
 
 			}
-		private enum TagType_SSHHost {
+		private enum TagType_SSHAuth {
 			Host,
 			Client,
 			Portal,
 			UDF,
+			ID,
 			Verbose,
 			Report,
 			}
 
-		private static void Handle_SSHHost (
+		private static void Handle_SSHAuth (
 					Shell Dispatch, string[] args, int index) {
-			SSHHost		Options = new SSHHost ();
+			SSHAuth		Options = new SSHAuth ();
 
 			var Registry = new Goedel.Registry.Registry ();
 
-			Options.Host.Register ("host", Registry, (int) TagType_SSHHost.Host);
-			Options.Client.Register ("client", Registry, (int) TagType_SSHHost.Client);
-			Options.Portal.Register ("portal", Registry, (int) TagType_SSHHost.Portal);
-			Options.UDF.Register ("udf", Registry, (int) TagType_SSHHost.UDF);
-			Options.Verbose.Register ("verbose", Registry, (int) TagType_SSHHost.Verbose);
-			Options.Report.Register ("report", Registry, (int) TagType_SSHHost.Report);
+			Options.Host.Register ("host", Registry, (int) TagType_SSHAuth.Host);
+			Options.Client.Register ("client", Registry, (int) TagType_SSHAuth.Client);
+			Options.Portal.Register ("portal", Registry, (int) TagType_SSHAuth.Portal);
+			Options.UDF.Register ("udf", Registry, (int) TagType_SSHAuth.UDF);
+			Options.ID.Register ("id", Registry, (int) TagType_SSHAuth.ID);
+			Options.Verbose.Register ("verbose", Registry, (int) TagType_SSHAuth.Verbose);
+			Options.Report.Register ("report", Registry, (int) TagType_SSHAuth.Report);
 
 			// looking for parameter Param.Name}
 			if (index < args.Length && !IsFlag (args [index][0] )) {
@@ -2324,12 +2382,12 @@ namespace Goedel.Mesh.MeshMan {
 					throw new System.Exception ("Unexpected parameter: " + args[i]);}			
 				string Rest = args [i].Substring (1);
 
-				TagType_SSHHost TagType = (TagType_SSHHost) Registry.Find (Rest);
+				TagType_SSHAuth TagType = (TagType_SSHAuth) Registry.Find (Rest);
 
 				// here have the cases for what to do with it.
 
 				switch (TagType) {
-					case TagType_SSHHost.Portal : {
+					case TagType_SSHAuth.Portal : {
 						int OptionParams = Options.Portal.Tag (Rest);
 						
 						if (OptionParams>0 && ((i+1) < args.Length)) {
@@ -2340,7 +2398,7 @@ namespace Goedel.Mesh.MeshMan {
 							}
 						break;
 						}
-					case TagType_SSHHost.UDF : {
+					case TagType_SSHAuth.UDF : {
 						int OptionParams = Options.UDF.Tag (Rest);
 						
 						if (OptionParams>0 && ((i+1) < args.Length)) {
@@ -2351,7 +2409,18 @@ namespace Goedel.Mesh.MeshMan {
 							}
 						break;
 						}
-					case TagType_SSHHost.Verbose : {
+					case TagType_SSHAuth.ID : {
+						int OptionParams = Options.ID.Tag (Rest);
+						
+						if (OptionParams>0 && ((i+1) < args.Length)) {
+							if 	(!IsFlag (args [i+1][0] )) {
+								i++;								
+								Options.ID.Parameter (args[i]);
+								}
+							}
+						break;
+						}
+					case TagType_SSHAuth.Verbose : {
 						int OptionParams = Options.Verbose.Tag (Rest);
 						
 						if (OptionParams>0 && ((i+1) < args.Length)) {
@@ -2362,7 +2431,7 @@ namespace Goedel.Mesh.MeshMan {
 							}
 						break;
 						}
-					case TagType_SSHHost.Report : {
+					case TagType_SSHAuth.Report : {
 						int OptionParams = Options.Report.Tag (Rest);
 						
 						if (OptionParams>0 && ((i+1) < args.Length)) {
@@ -2378,7 +2447,118 @@ namespace Goedel.Mesh.MeshMan {
 				}
 
 #pragma warning restore 162
-			Dispatch.SSHHost (Options);
+			Dispatch.SSHAuth (Options);
+
+			}
+		private enum TagType_SSHKnown {
+			Host,
+			Client,
+			Portal,
+			UDF,
+			ID,
+			Verbose,
+			Report,
+			}
+
+		private static void Handle_SSHKnown (
+					Shell Dispatch, string[] args, int index) {
+			SSHKnown		Options = new SSHKnown ();
+
+			var Registry = new Goedel.Registry.Registry ();
+
+			Options.Host.Register ("host", Registry, (int) TagType_SSHKnown.Host);
+			Options.Client.Register ("client", Registry, (int) TagType_SSHKnown.Client);
+			Options.Portal.Register ("portal", Registry, (int) TagType_SSHKnown.Portal);
+			Options.UDF.Register ("udf", Registry, (int) TagType_SSHKnown.UDF);
+			Options.ID.Register ("id", Registry, (int) TagType_SSHKnown.ID);
+			Options.Verbose.Register ("verbose", Registry, (int) TagType_SSHKnown.Verbose);
+			Options.Report.Register ("report", Registry, (int) TagType_SSHKnown.Report);
+
+			// looking for parameter Param.Name}
+			if (index < args.Length && !IsFlag (args [index][0] )) {
+				// Have got the parameter, call the parameter value method
+				Options.Host.Parameter (args [index]);
+				index++;
+				}
+			// looking for parameter Param.Name}
+			if (index < args.Length && !IsFlag (args [index][0] )) {
+				// Have got the parameter, call the parameter value method
+				Options.Client.Parameter (args [index]);
+				index++;
+				}
+
+#pragma warning disable 162
+			for (int i = index; i< args.Length; i++) {
+				if 	(!IsFlag (args [i][0] )) {
+					throw new System.Exception ("Unexpected parameter: " + args[i]);}			
+				string Rest = args [i].Substring (1);
+
+				TagType_SSHKnown TagType = (TagType_SSHKnown) Registry.Find (Rest);
+
+				// here have the cases for what to do with it.
+
+				switch (TagType) {
+					case TagType_SSHKnown.Portal : {
+						int OptionParams = Options.Portal.Tag (Rest);
+						
+						if (OptionParams>0 && ((i+1) < args.Length)) {
+							if 	(!IsFlag (args [i+1][0] )) {
+								i++;								
+								Options.Portal.Parameter (args[i]);
+								}
+							}
+						break;
+						}
+					case TagType_SSHKnown.UDF : {
+						int OptionParams = Options.UDF.Tag (Rest);
+						
+						if (OptionParams>0 && ((i+1) < args.Length)) {
+							if 	(!IsFlag (args [i+1][0] )) {
+								i++;								
+								Options.UDF.Parameter (args[i]);
+								}
+							}
+						break;
+						}
+					case TagType_SSHKnown.ID : {
+						int OptionParams = Options.ID.Tag (Rest);
+						
+						if (OptionParams>0 && ((i+1) < args.Length)) {
+							if 	(!IsFlag (args [i+1][0] )) {
+								i++;								
+								Options.ID.Parameter (args[i]);
+								}
+							}
+						break;
+						}
+					case TagType_SSHKnown.Verbose : {
+						int OptionParams = Options.Verbose.Tag (Rest);
+						
+						if (OptionParams>0 && ((i+1) < args.Length)) {
+							if 	(!IsFlag (args [i+1][0] )) {
+								i++;								
+								Options.Verbose.Parameter (args[i]);
+								}
+							}
+						break;
+						}
+					case TagType_SSHKnown.Report : {
+						int OptionParams = Options.Report.Tag (Rest);
+						
+						if (OptionParams>0 && ((i+1) < args.Length)) {
+							if 	(!IsFlag (args [i+1][0] )) {
+								i++;								
+								Options.Report.Parameter (args[i]);
+								}
+							}
+						break;
+						}
+					default : throw new System.Exception ("Internal error");
+					}
+				}
+
+#pragma warning restore 162
+			Dispatch.SSHKnown (Options);
 
 			}
 		private enum TagType_SSHPublic {
@@ -2386,6 +2566,7 @@ namespace Goedel.Mesh.MeshMan {
 			Client,
 			Portal,
 			UDF,
+			ID,
 			Verbose,
 			Report,
 			}
@@ -2400,6 +2581,7 @@ namespace Goedel.Mesh.MeshMan {
 			Options.Client.Register ("client", Registry, (int) TagType_SSHPublic.Client);
 			Options.Portal.Register ("portal", Registry, (int) TagType_SSHPublic.Portal);
 			Options.UDF.Register ("udf", Registry, (int) TagType_SSHPublic.UDF);
+			Options.ID.Register ("id", Registry, (int) TagType_SSHPublic.ID);
 			Options.Verbose.Register ("verbose", Registry, (int) TagType_SSHPublic.Verbose);
 			Options.Report.Register ("report", Registry, (int) TagType_SSHPublic.Report);
 
@@ -2449,6 +2631,17 @@ namespace Goedel.Mesh.MeshMan {
 							}
 						break;
 						}
+					case TagType_SSHPublic.ID : {
+						int OptionParams = Options.ID.Tag (Rest);
+						
+						if (OptionParams>0 && ((i+1) < args.Length)) {
+							if 	(!IsFlag (args [i+1][0] )) {
+								i++;								
+								Options.ID.Parameter (args[i]);
+								}
+							}
+						break;
+						}
 					case TagType_SSHPublic.Verbose : {
 						int OptionParams = Options.Verbose.Tag (Rest);
 						
@@ -2484,6 +2677,7 @@ namespace Goedel.Mesh.MeshMan {
 			Client,
 			Portal,
 			UDF,
+			ID,
 			Verbose,
 			Report,
 			}
@@ -2498,6 +2692,7 @@ namespace Goedel.Mesh.MeshMan {
 			Options.Client.Register ("client", Registry, (int) TagType_SSHPrivate.Client);
 			Options.Portal.Register ("portal", Registry, (int) TagType_SSHPrivate.Portal);
 			Options.UDF.Register ("udf", Registry, (int) TagType_SSHPrivate.UDF);
+			Options.ID.Register ("id", Registry, (int) TagType_SSHPrivate.ID);
 			Options.Verbose.Register ("verbose", Registry, (int) TagType_SSHPrivate.Verbose);
 			Options.Report.Register ("report", Registry, (int) TagType_SSHPrivate.Report);
 
@@ -2543,6 +2738,17 @@ namespace Goedel.Mesh.MeshMan {
 							if 	(!IsFlag (args [i+1][0] )) {
 								i++;								
 								Options.UDF.Parameter (args[i]);
+								}
+							}
+						break;
+						}
+					case TagType_SSHPrivate.ID : {
+						int OptionParams = Options.ID.Tag (Rest);
+						
+						if (OptionParams>0 && ((i+1) < args.Length)) {
+							if 	(!IsFlag (args [i+1][0] )) {
+								i++;								
+								Options.ID.Parameter (args[i]);
 								}
 							}
 						break;
@@ -2681,6 +2887,11 @@ namespace Goedel.Mesh.MeshMan {
 
 			}
 		private enum TagType_ConfirmPost {
+			Portal,
+			UDF,
+			ID,
+			Verbose,
+			Report,
 			}
 
 		private static void Handle_ConfirmPost (
@@ -2689,6 +2900,11 @@ namespace Goedel.Mesh.MeshMan {
 
 			var Registry = new Goedel.Registry.Registry ();
 
+			Options.Portal.Register ("portal", Registry, (int) TagType_ConfirmPost.Portal);
+			Options.UDF.Register ("udf", Registry, (int) TagType_ConfirmPost.UDF);
+			Options.ID.Register ("id", Registry, (int) TagType_ConfirmPost.ID);
+			Options.Verbose.Register ("verbose", Registry, (int) TagType_ConfirmPost.Verbose);
+			Options.Report.Register ("report", Registry, (int) TagType_ConfirmPost.Report);
 
 
 #pragma warning disable 162
@@ -2702,6 +2918,61 @@ namespace Goedel.Mesh.MeshMan {
 				// here have the cases for what to do with it.
 
 				switch (TagType) {
+					case TagType_ConfirmPost.Portal : {
+						int OptionParams = Options.Portal.Tag (Rest);
+						
+						if (OptionParams>0 && ((i+1) < args.Length)) {
+							if 	(!IsFlag (args [i+1][0] )) {
+								i++;								
+								Options.Portal.Parameter (args[i]);
+								}
+							}
+						break;
+						}
+					case TagType_ConfirmPost.UDF : {
+						int OptionParams = Options.UDF.Tag (Rest);
+						
+						if (OptionParams>0 && ((i+1) < args.Length)) {
+							if 	(!IsFlag (args [i+1][0] )) {
+								i++;								
+								Options.UDF.Parameter (args[i]);
+								}
+							}
+						break;
+						}
+					case TagType_ConfirmPost.ID : {
+						int OptionParams = Options.ID.Tag (Rest);
+						
+						if (OptionParams>0 && ((i+1) < args.Length)) {
+							if 	(!IsFlag (args [i+1][0] )) {
+								i++;								
+								Options.ID.Parameter (args[i]);
+								}
+							}
+						break;
+						}
+					case TagType_ConfirmPost.Verbose : {
+						int OptionParams = Options.Verbose.Tag (Rest);
+						
+						if (OptionParams>0 && ((i+1) < args.Length)) {
+							if 	(!IsFlag (args [i+1][0] )) {
+								i++;								
+								Options.Verbose.Parameter (args[i]);
+								}
+							}
+						break;
+						}
+					case TagType_ConfirmPost.Report : {
+						int OptionParams = Options.Report.Tag (Rest);
+						
+						if (OptionParams>0 && ((i+1) < args.Length)) {
+							if 	(!IsFlag (args [i+1][0] )) {
+								i++;								
+								Options.Report.Parameter (args[i]);
+								}
+							}
+						break;
+						}
 					default : throw new System.Exception ("Internal error");
 					}
 				}
@@ -2711,6 +2982,11 @@ namespace Goedel.Mesh.MeshMan {
 
 			}
 		private enum TagType_ConfirmGet {
+			Portal,
+			UDF,
+			ID,
+			Verbose,
+			Report,
 			}
 
 		private static void Handle_ConfirmGet (
@@ -2719,6 +2995,11 @@ namespace Goedel.Mesh.MeshMan {
 
 			var Registry = new Goedel.Registry.Registry ();
 
+			Options.Portal.Register ("portal", Registry, (int) TagType_ConfirmGet.Portal);
+			Options.UDF.Register ("udf", Registry, (int) TagType_ConfirmGet.UDF);
+			Options.ID.Register ("id", Registry, (int) TagType_ConfirmGet.ID);
+			Options.Verbose.Register ("verbose", Registry, (int) TagType_ConfirmGet.Verbose);
+			Options.Report.Register ("report", Registry, (int) TagType_ConfirmGet.Report);
 
 
 #pragma warning disable 162
@@ -2732,6 +3013,61 @@ namespace Goedel.Mesh.MeshMan {
 				// here have the cases for what to do with it.
 
 				switch (TagType) {
+					case TagType_ConfirmGet.Portal : {
+						int OptionParams = Options.Portal.Tag (Rest);
+						
+						if (OptionParams>0 && ((i+1) < args.Length)) {
+							if 	(!IsFlag (args [i+1][0] )) {
+								i++;								
+								Options.Portal.Parameter (args[i]);
+								}
+							}
+						break;
+						}
+					case TagType_ConfirmGet.UDF : {
+						int OptionParams = Options.UDF.Tag (Rest);
+						
+						if (OptionParams>0 && ((i+1) < args.Length)) {
+							if 	(!IsFlag (args [i+1][0] )) {
+								i++;								
+								Options.UDF.Parameter (args[i]);
+								}
+							}
+						break;
+						}
+					case TagType_ConfirmGet.ID : {
+						int OptionParams = Options.ID.Tag (Rest);
+						
+						if (OptionParams>0 && ((i+1) < args.Length)) {
+							if 	(!IsFlag (args [i+1][0] )) {
+								i++;								
+								Options.ID.Parameter (args[i]);
+								}
+							}
+						break;
+						}
+					case TagType_ConfirmGet.Verbose : {
+						int OptionParams = Options.Verbose.Tag (Rest);
+						
+						if (OptionParams>0 && ((i+1) < args.Length)) {
+							if 	(!IsFlag (args [i+1][0] )) {
+								i++;								
+								Options.Verbose.Parameter (args[i]);
+								}
+							}
+						break;
+						}
+					case TagType_ConfirmGet.Report : {
+						int OptionParams = Options.Report.Tag (Rest);
+						
+						if (OptionParams>0 && ((i+1) < args.Length)) {
+							if 	(!IsFlag (args [i+1][0] )) {
+								i++;								
+								Options.Report.Parameter (args[i]);
+								}
+							}
+						break;
+						}
 					default : throw new System.Exception ("Internal error");
 					}
 				}
@@ -2741,6 +3077,11 @@ namespace Goedel.Mesh.MeshMan {
 
 			}
 		private enum TagType_ConfirmAccept {
+			Portal,
+			UDF,
+			ID,
+			Verbose,
+			Report,
 			}
 
 		private static void Handle_ConfirmAccept (
@@ -2749,6 +3090,11 @@ namespace Goedel.Mesh.MeshMan {
 
 			var Registry = new Goedel.Registry.Registry ();
 
+			Options.Portal.Register ("portal", Registry, (int) TagType_ConfirmAccept.Portal);
+			Options.UDF.Register ("udf", Registry, (int) TagType_ConfirmAccept.UDF);
+			Options.ID.Register ("id", Registry, (int) TagType_ConfirmAccept.ID);
+			Options.Verbose.Register ("verbose", Registry, (int) TagType_ConfirmAccept.Verbose);
+			Options.Report.Register ("report", Registry, (int) TagType_ConfirmAccept.Report);
 
 
 #pragma warning disable 162
@@ -2762,6 +3108,61 @@ namespace Goedel.Mesh.MeshMan {
 				// here have the cases for what to do with it.
 
 				switch (TagType) {
+					case TagType_ConfirmAccept.Portal : {
+						int OptionParams = Options.Portal.Tag (Rest);
+						
+						if (OptionParams>0 && ((i+1) < args.Length)) {
+							if 	(!IsFlag (args [i+1][0] )) {
+								i++;								
+								Options.Portal.Parameter (args[i]);
+								}
+							}
+						break;
+						}
+					case TagType_ConfirmAccept.UDF : {
+						int OptionParams = Options.UDF.Tag (Rest);
+						
+						if (OptionParams>0 && ((i+1) < args.Length)) {
+							if 	(!IsFlag (args [i+1][0] )) {
+								i++;								
+								Options.UDF.Parameter (args[i]);
+								}
+							}
+						break;
+						}
+					case TagType_ConfirmAccept.ID : {
+						int OptionParams = Options.ID.Tag (Rest);
+						
+						if (OptionParams>0 && ((i+1) < args.Length)) {
+							if 	(!IsFlag (args [i+1][0] )) {
+								i++;								
+								Options.ID.Parameter (args[i]);
+								}
+							}
+						break;
+						}
+					case TagType_ConfirmAccept.Verbose : {
+						int OptionParams = Options.Verbose.Tag (Rest);
+						
+						if (OptionParams>0 && ((i+1) < args.Length)) {
+							if 	(!IsFlag (args [i+1][0] )) {
+								i++;								
+								Options.Verbose.Parameter (args[i]);
+								}
+							}
+						break;
+						}
+					case TagType_ConfirmAccept.Report : {
+						int OptionParams = Options.Report.Tag (Rest);
+						
+						if (OptionParams>0 && ((i+1) < args.Length)) {
+							if 	(!IsFlag (args [i+1][0] )) {
+								i++;								
+								Options.Report.Parameter (args[i]);
+								}
+							}
+						break;
+						}
 					default : throw new System.Exception ("Internal error");
 					}
 				}
@@ -2771,6 +3172,11 @@ namespace Goedel.Mesh.MeshMan {
 
 			}
 		private enum TagType_ConfirmReject {
+			Portal,
+			UDF,
+			ID,
+			Verbose,
+			Report,
 			}
 
 		private static void Handle_ConfirmReject (
@@ -2779,6 +3185,11 @@ namespace Goedel.Mesh.MeshMan {
 
 			var Registry = new Goedel.Registry.Registry ();
 
+			Options.Portal.Register ("portal", Registry, (int) TagType_ConfirmReject.Portal);
+			Options.UDF.Register ("udf", Registry, (int) TagType_ConfirmReject.UDF);
+			Options.ID.Register ("id", Registry, (int) TagType_ConfirmReject.ID);
+			Options.Verbose.Register ("verbose", Registry, (int) TagType_ConfirmReject.Verbose);
+			Options.Report.Register ("report", Registry, (int) TagType_ConfirmReject.Report);
 
 
 #pragma warning disable 162
@@ -2792,6 +3203,61 @@ namespace Goedel.Mesh.MeshMan {
 				// here have the cases for what to do with it.
 
 				switch (TagType) {
+					case TagType_ConfirmReject.Portal : {
+						int OptionParams = Options.Portal.Tag (Rest);
+						
+						if (OptionParams>0 && ((i+1) < args.Length)) {
+							if 	(!IsFlag (args [i+1][0] )) {
+								i++;								
+								Options.Portal.Parameter (args[i]);
+								}
+							}
+						break;
+						}
+					case TagType_ConfirmReject.UDF : {
+						int OptionParams = Options.UDF.Tag (Rest);
+						
+						if (OptionParams>0 && ((i+1) < args.Length)) {
+							if 	(!IsFlag (args [i+1][0] )) {
+								i++;								
+								Options.UDF.Parameter (args[i]);
+								}
+							}
+						break;
+						}
+					case TagType_ConfirmReject.ID : {
+						int OptionParams = Options.ID.Tag (Rest);
+						
+						if (OptionParams>0 && ((i+1) < args.Length)) {
+							if 	(!IsFlag (args [i+1][0] )) {
+								i++;								
+								Options.ID.Parameter (args[i]);
+								}
+							}
+						break;
+						}
+					case TagType_ConfirmReject.Verbose : {
+						int OptionParams = Options.Verbose.Tag (Rest);
+						
+						if (OptionParams>0 && ((i+1) < args.Length)) {
+							if 	(!IsFlag (args [i+1][0] )) {
+								i++;								
+								Options.Verbose.Parameter (args[i]);
+								}
+							}
+						break;
+						}
+					case TagType_ConfirmReject.Report : {
+						int OptionParams = Options.Report.Tag (Rest);
+						
+						if (OptionParams>0 && ((i+1) < args.Length)) {
+							if 	(!IsFlag (args [i+1][0] )) {
+								i++;								
+								Options.Report.Parameter (args[i]);
+								}
+							}
+						break;
+						}
 					default : throw new System.Exception ("Internal error");
 					}
 				}
@@ -2904,6 +3370,11 @@ namespace Goedel.Mesh.MeshMan {
 
 			}
 		private enum TagType_RecryptGroup {
+			Portal,
+			UDF,
+			ID,
+			Verbose,
+			Report,
 			}
 
 		private static void Handle_RecryptGroup (
@@ -2912,6 +3383,11 @@ namespace Goedel.Mesh.MeshMan {
 
 			var Registry = new Goedel.Registry.Registry ();
 
+			Options.Portal.Register ("portal", Registry, (int) TagType_RecryptGroup.Portal);
+			Options.UDF.Register ("udf", Registry, (int) TagType_RecryptGroup.UDF);
+			Options.ID.Register ("id", Registry, (int) TagType_RecryptGroup.ID);
+			Options.Verbose.Register ("verbose", Registry, (int) TagType_RecryptGroup.Verbose);
+			Options.Report.Register ("report", Registry, (int) TagType_RecryptGroup.Report);
 
 
 #pragma warning disable 162
@@ -2925,6 +3401,61 @@ namespace Goedel.Mesh.MeshMan {
 				// here have the cases for what to do with it.
 
 				switch (TagType) {
+					case TagType_RecryptGroup.Portal : {
+						int OptionParams = Options.Portal.Tag (Rest);
+						
+						if (OptionParams>0 && ((i+1) < args.Length)) {
+							if 	(!IsFlag (args [i+1][0] )) {
+								i++;								
+								Options.Portal.Parameter (args[i]);
+								}
+							}
+						break;
+						}
+					case TagType_RecryptGroup.UDF : {
+						int OptionParams = Options.UDF.Tag (Rest);
+						
+						if (OptionParams>0 && ((i+1) < args.Length)) {
+							if 	(!IsFlag (args [i+1][0] )) {
+								i++;								
+								Options.UDF.Parameter (args[i]);
+								}
+							}
+						break;
+						}
+					case TagType_RecryptGroup.ID : {
+						int OptionParams = Options.ID.Tag (Rest);
+						
+						if (OptionParams>0 && ((i+1) < args.Length)) {
+							if 	(!IsFlag (args [i+1][0] )) {
+								i++;								
+								Options.ID.Parameter (args[i]);
+								}
+							}
+						break;
+						}
+					case TagType_RecryptGroup.Verbose : {
+						int OptionParams = Options.Verbose.Tag (Rest);
+						
+						if (OptionParams>0 && ((i+1) < args.Length)) {
+							if 	(!IsFlag (args [i+1][0] )) {
+								i++;								
+								Options.Verbose.Parameter (args[i]);
+								}
+							}
+						break;
+						}
+					case TagType_RecryptGroup.Report : {
+						int OptionParams = Options.Report.Tag (Rest);
+						
+						if (OptionParams>0 && ((i+1) < args.Length)) {
+							if 	(!IsFlag (args [i+1][0] )) {
+								i++;								
+								Options.Report.Parameter (args[i]);
+								}
+							}
+						break;
+						}
 					default : throw new System.Exception ("Internal error");
 					}
 				}
@@ -2934,6 +3465,11 @@ namespace Goedel.Mesh.MeshMan {
 
 			}
 		private enum TagType_RecryptAdd {
+			Portal,
+			UDF,
+			ID,
+			Verbose,
+			Report,
 			}
 
 		private static void Handle_RecryptAdd (
@@ -2942,6 +3478,11 @@ namespace Goedel.Mesh.MeshMan {
 
 			var Registry = new Goedel.Registry.Registry ();
 
+			Options.Portal.Register ("portal", Registry, (int) TagType_RecryptAdd.Portal);
+			Options.UDF.Register ("udf", Registry, (int) TagType_RecryptAdd.UDF);
+			Options.ID.Register ("id", Registry, (int) TagType_RecryptAdd.ID);
+			Options.Verbose.Register ("verbose", Registry, (int) TagType_RecryptAdd.Verbose);
+			Options.Report.Register ("report", Registry, (int) TagType_RecryptAdd.Report);
 
 
 #pragma warning disable 162
@@ -2955,6 +3496,61 @@ namespace Goedel.Mesh.MeshMan {
 				// here have the cases for what to do with it.
 
 				switch (TagType) {
+					case TagType_RecryptAdd.Portal : {
+						int OptionParams = Options.Portal.Tag (Rest);
+						
+						if (OptionParams>0 && ((i+1) < args.Length)) {
+							if 	(!IsFlag (args [i+1][0] )) {
+								i++;								
+								Options.Portal.Parameter (args[i]);
+								}
+							}
+						break;
+						}
+					case TagType_RecryptAdd.UDF : {
+						int OptionParams = Options.UDF.Tag (Rest);
+						
+						if (OptionParams>0 && ((i+1) < args.Length)) {
+							if 	(!IsFlag (args [i+1][0] )) {
+								i++;								
+								Options.UDF.Parameter (args[i]);
+								}
+							}
+						break;
+						}
+					case TagType_RecryptAdd.ID : {
+						int OptionParams = Options.ID.Tag (Rest);
+						
+						if (OptionParams>0 && ((i+1) < args.Length)) {
+							if 	(!IsFlag (args [i+1][0] )) {
+								i++;								
+								Options.ID.Parameter (args[i]);
+								}
+							}
+						break;
+						}
+					case TagType_RecryptAdd.Verbose : {
+						int OptionParams = Options.Verbose.Tag (Rest);
+						
+						if (OptionParams>0 && ((i+1) < args.Length)) {
+							if 	(!IsFlag (args [i+1][0] )) {
+								i++;								
+								Options.Verbose.Parameter (args[i]);
+								}
+							}
+						break;
+						}
+					case TagType_RecryptAdd.Report : {
+						int OptionParams = Options.Report.Tag (Rest);
+						
+						if (OptionParams>0 && ((i+1) < args.Length)) {
+							if 	(!IsFlag (args [i+1][0] )) {
+								i++;								
+								Options.Report.Parameter (args[i]);
+								}
+							}
+						break;
+						}
 					default : throw new System.Exception ("Internal error");
 					}
 				}
@@ -2964,6 +3560,11 @@ namespace Goedel.Mesh.MeshMan {
 
 			}
 		private enum TagType_RecryptDelete {
+			Portal,
+			UDF,
+			ID,
+			Verbose,
+			Report,
 			}
 
 		private static void Handle_RecryptDelete (
@@ -2972,6 +3573,11 @@ namespace Goedel.Mesh.MeshMan {
 
 			var Registry = new Goedel.Registry.Registry ();
 
+			Options.Portal.Register ("portal", Registry, (int) TagType_RecryptDelete.Portal);
+			Options.UDF.Register ("udf", Registry, (int) TagType_RecryptDelete.UDF);
+			Options.ID.Register ("id", Registry, (int) TagType_RecryptDelete.ID);
+			Options.Verbose.Register ("verbose", Registry, (int) TagType_RecryptDelete.Verbose);
+			Options.Report.Register ("report", Registry, (int) TagType_RecryptDelete.Report);
 
 
 #pragma warning disable 162
@@ -2985,6 +3591,61 @@ namespace Goedel.Mesh.MeshMan {
 				// here have the cases for what to do with it.
 
 				switch (TagType) {
+					case TagType_RecryptDelete.Portal : {
+						int OptionParams = Options.Portal.Tag (Rest);
+						
+						if (OptionParams>0 && ((i+1) < args.Length)) {
+							if 	(!IsFlag (args [i+1][0] )) {
+								i++;								
+								Options.Portal.Parameter (args[i]);
+								}
+							}
+						break;
+						}
+					case TagType_RecryptDelete.UDF : {
+						int OptionParams = Options.UDF.Tag (Rest);
+						
+						if (OptionParams>0 && ((i+1) < args.Length)) {
+							if 	(!IsFlag (args [i+1][0] )) {
+								i++;								
+								Options.UDF.Parameter (args[i]);
+								}
+							}
+						break;
+						}
+					case TagType_RecryptDelete.ID : {
+						int OptionParams = Options.ID.Tag (Rest);
+						
+						if (OptionParams>0 && ((i+1) < args.Length)) {
+							if 	(!IsFlag (args [i+1][0] )) {
+								i++;								
+								Options.ID.Parameter (args[i]);
+								}
+							}
+						break;
+						}
+					case TagType_RecryptDelete.Verbose : {
+						int OptionParams = Options.Verbose.Tag (Rest);
+						
+						if (OptionParams>0 && ((i+1) < args.Length)) {
+							if 	(!IsFlag (args [i+1][0] )) {
+								i++;								
+								Options.Verbose.Parameter (args[i]);
+								}
+							}
+						break;
+						}
+					case TagType_RecryptDelete.Report : {
+						int OptionParams = Options.Report.Tag (Rest);
+						
+						if (OptionParams>0 && ((i+1) < args.Length)) {
+							if 	(!IsFlag (args [i+1][0] )) {
+								i++;								
+								Options.Report.Parameter (args[i]);
+								}
+							}
+						break;
+						}
 					default : throw new System.Exception ("Internal error");
 					}
 				}
@@ -2994,6 +3655,11 @@ namespace Goedel.Mesh.MeshMan {
 
 			}
 		private enum TagType_Encrypt {
+			Portal,
+			UDF,
+			ID,
+			Verbose,
+			Report,
 			}
 
 		private static void Handle_Encrypt (
@@ -3002,6 +3668,11 @@ namespace Goedel.Mesh.MeshMan {
 
 			var Registry = new Goedel.Registry.Registry ();
 
+			Options.Portal.Register ("portal", Registry, (int) TagType_Encrypt.Portal);
+			Options.UDF.Register ("udf", Registry, (int) TagType_Encrypt.UDF);
+			Options.ID.Register ("id", Registry, (int) TagType_Encrypt.ID);
+			Options.Verbose.Register ("verbose", Registry, (int) TagType_Encrypt.Verbose);
+			Options.Report.Register ("report", Registry, (int) TagType_Encrypt.Report);
 
 
 #pragma warning disable 162
@@ -3015,6 +3686,61 @@ namespace Goedel.Mesh.MeshMan {
 				// here have the cases for what to do with it.
 
 				switch (TagType) {
+					case TagType_Encrypt.Portal : {
+						int OptionParams = Options.Portal.Tag (Rest);
+						
+						if (OptionParams>0 && ((i+1) < args.Length)) {
+							if 	(!IsFlag (args [i+1][0] )) {
+								i++;								
+								Options.Portal.Parameter (args[i]);
+								}
+							}
+						break;
+						}
+					case TagType_Encrypt.UDF : {
+						int OptionParams = Options.UDF.Tag (Rest);
+						
+						if (OptionParams>0 && ((i+1) < args.Length)) {
+							if 	(!IsFlag (args [i+1][0] )) {
+								i++;								
+								Options.UDF.Parameter (args[i]);
+								}
+							}
+						break;
+						}
+					case TagType_Encrypt.ID : {
+						int OptionParams = Options.ID.Tag (Rest);
+						
+						if (OptionParams>0 && ((i+1) < args.Length)) {
+							if 	(!IsFlag (args [i+1][0] )) {
+								i++;								
+								Options.ID.Parameter (args[i]);
+								}
+							}
+						break;
+						}
+					case TagType_Encrypt.Verbose : {
+						int OptionParams = Options.Verbose.Tag (Rest);
+						
+						if (OptionParams>0 && ((i+1) < args.Length)) {
+							if 	(!IsFlag (args [i+1][0] )) {
+								i++;								
+								Options.Verbose.Parameter (args[i]);
+								}
+							}
+						break;
+						}
+					case TagType_Encrypt.Report : {
+						int OptionParams = Options.Report.Tag (Rest);
+						
+						if (OptionParams>0 && ((i+1) < args.Length)) {
+							if 	(!IsFlag (args [i+1][0] )) {
+								i++;								
+								Options.Report.Parameter (args[i]);
+								}
+							}
+						break;
+						}
 					default : throw new System.Exception ("Internal error");
 					}
 				}
@@ -3024,6 +3750,11 @@ namespace Goedel.Mesh.MeshMan {
 
 			}
 		private enum TagType_Decrypt {
+			Portal,
+			UDF,
+			ID,
+			Verbose,
+			Report,
 			}
 
 		private static void Handle_Decrypt (
@@ -3032,6 +3763,11 @@ namespace Goedel.Mesh.MeshMan {
 
 			var Registry = new Goedel.Registry.Registry ();
 
+			Options.Portal.Register ("portal", Registry, (int) TagType_Decrypt.Portal);
+			Options.UDF.Register ("udf", Registry, (int) TagType_Decrypt.UDF);
+			Options.ID.Register ("id", Registry, (int) TagType_Decrypt.ID);
+			Options.Verbose.Register ("verbose", Registry, (int) TagType_Decrypt.Verbose);
+			Options.Report.Register ("report", Registry, (int) TagType_Decrypt.Report);
 
 
 #pragma warning disable 162
@@ -3045,6 +3781,61 @@ namespace Goedel.Mesh.MeshMan {
 				// here have the cases for what to do with it.
 
 				switch (TagType) {
+					case TagType_Decrypt.Portal : {
+						int OptionParams = Options.Portal.Tag (Rest);
+						
+						if (OptionParams>0 && ((i+1) < args.Length)) {
+							if 	(!IsFlag (args [i+1][0] )) {
+								i++;								
+								Options.Portal.Parameter (args[i]);
+								}
+							}
+						break;
+						}
+					case TagType_Decrypt.UDF : {
+						int OptionParams = Options.UDF.Tag (Rest);
+						
+						if (OptionParams>0 && ((i+1) < args.Length)) {
+							if 	(!IsFlag (args [i+1][0] )) {
+								i++;								
+								Options.UDF.Parameter (args[i]);
+								}
+							}
+						break;
+						}
+					case TagType_Decrypt.ID : {
+						int OptionParams = Options.ID.Tag (Rest);
+						
+						if (OptionParams>0 && ((i+1) < args.Length)) {
+							if 	(!IsFlag (args [i+1][0] )) {
+								i++;								
+								Options.ID.Parameter (args[i]);
+								}
+							}
+						break;
+						}
+					case TagType_Decrypt.Verbose : {
+						int OptionParams = Options.Verbose.Tag (Rest);
+						
+						if (OptionParams>0 && ((i+1) < args.Length)) {
+							if 	(!IsFlag (args [i+1][0] )) {
+								i++;								
+								Options.Verbose.Parameter (args[i]);
+								}
+							}
+						break;
+						}
+					case TagType_Decrypt.Report : {
+						int OptionParams = Options.Report.Tag (Rest);
+						
+						if (OptionParams>0 && ((i+1) < args.Length)) {
+							if 	(!IsFlag (args [i+1][0] )) {
+								i++;								
+								Options.Report.Parameter (args[i]);
+								}
+							}
+						break;
+						}
 					default : throw new System.Exception ("Internal error");
 					}
 				}
@@ -3364,6 +4155,7 @@ namespace Goedel.Mesh.MeshMan {
 					Console.Write ("[{0}] ", Dummy.Password.Usage (null, "password", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.Portal.Usage ("portal", "value", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.UDF.Usage ("udf", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.ID.Usage ("id", "value", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.Verbose.Usage ("verbose", "value", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.Report.Usage ("report", "value", UsageFlag));
 					Console.WriteLine ();
@@ -3381,6 +4173,7 @@ namespace Goedel.Mesh.MeshMan {
 					Console.Write ("[{0}] ", Dummy.Site.Usage (null, "site", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.Portal.Usage ("portal", "value", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.UDF.Usage ("udf", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.ID.Usage ("id", "value", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.Verbose.Usage ("verbose", "value", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.Report.Usage ("report", "value", UsageFlag));
 					Console.WriteLine ();
@@ -3398,6 +4191,7 @@ namespace Goedel.Mesh.MeshMan {
 					Console.Write ("[{0}] ", Dummy.Site.Usage (null, "site", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.Portal.Usage ("portal", "value", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.UDF.Usage ("udf", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.ID.Usage ("id", "value", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.Verbose.Usage ("verbose", "value", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.Report.Usage ("report", "value", UsageFlag));
 					Console.WriteLine ();
@@ -3415,6 +4209,7 @@ namespace Goedel.Mesh.MeshMan {
 					Console.Write ("[{0}] ", Dummy.JSON.Usage (null, "json", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.Portal.Usage ("portal", "value", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.UDF.Usage ("udf", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.ID.Usage ("id", "value", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.Verbose.Usage ("verbose", "value", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.Report.Usage ("report", "value", UsageFlag));
 					Console.WriteLine ();
@@ -3461,19 +4256,39 @@ namespace Goedel.Mesh.MeshMan {
 
 				{
 #pragma warning disable 219
-					SSHHost		Dummy = new SSHHost ();
+					SSHAuth		Dummy = new SSHAuth ();
 #pragma warning restore 219
 
-					Console.Write ("{0}sshhosts ", UsageFlag);
+					Console.Write ("{0}sshauth ", UsageFlag);
 					Console.Write ("[{0}] ", Dummy.Host.Usage (null, "host", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.Client.Usage (null, "client", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.Portal.Usage ("portal", "value", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.UDF.Usage ("udf", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.ID.Usage ("id", "value", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.Verbose.Usage ("verbose", "value", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.Report.Usage ("report", "value", UsageFlag));
 					Console.WriteLine ();
 
-					Console.WriteLine ("    List the SSH Hosts");
+					Console.WriteLine ("    List the SSH Authorized keys");
+
+				}
+
+				{
+#pragma warning disable 219
+					SSHKnown		Dummy = new SSHKnown ();
+#pragma warning restore 219
+
+					Console.Write ("{0}sshknown ", UsageFlag);
+					Console.Write ("[{0}] ", Dummy.Host.Usage (null, "host", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.Client.Usage (null, "client", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.Portal.Usage ("portal", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.UDF.Usage ("udf", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.ID.Usage ("id", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.Verbose.Usage ("verbose", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.Report.Usage ("report", "value", UsageFlag));
+					Console.WriteLine ();
+
+					Console.WriteLine ("    List the SSH Known Hosts");
 
 				}
 
@@ -3487,6 +4302,7 @@ namespace Goedel.Mesh.MeshMan {
 					Console.Write ("[{0}] ", Dummy.Client.Usage (null, "client", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.Portal.Usage ("portal", "value", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.UDF.Usage ("udf", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.ID.Usage ("id", "value", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.Verbose.Usage ("verbose", "value", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.Report.Usage ("report", "value", UsageFlag));
 					Console.WriteLine ();
@@ -3505,6 +4321,7 @@ namespace Goedel.Mesh.MeshMan {
 					Console.Write ("[{0}] ", Dummy.Client.Usage (null, "client", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.Portal.Usage ("portal", "value", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.UDF.Usage ("udf", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.ID.Usage ("id", "value", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.Verbose.Usage ("verbose", "value", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.Report.Usage ("report", "value", UsageFlag));
 					Console.WriteLine ();
@@ -3518,7 +4335,7 @@ namespace Goedel.Mesh.MeshMan {
 					Confirm		Dummy = new Confirm ();
 #pragma warning restore 219
 
-					Console.Write ("{0}confim ", UsageFlag);
+					Console.Write ("{0}confirm ", UsageFlag);
 					Console.Write ("[{0}] ", Dummy.Address.Usage (null, "address", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.PIN.Usage ("pin", "value", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.Portal.Usage ("portal", "value", UsageFlag));
@@ -3537,6 +4354,11 @@ namespace Goedel.Mesh.MeshMan {
 #pragma warning restore 219
 
 					Console.Write ("{0}confimpost ", UsageFlag);
+					Console.Write ("[{0}] ", Dummy.Portal.Usage ("portal", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.UDF.Usage ("udf", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.ID.Usage ("id", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.Verbose.Usage ("verbose", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.Report.Usage ("report", "value", UsageFlag));
 					Console.WriteLine ();
 
 					Console.WriteLine ("    Post a confirmation request to an account");
@@ -3549,6 +4371,11 @@ namespace Goedel.Mesh.MeshMan {
 #pragma warning restore 219
 
 					Console.Write ("{0}confimget ", UsageFlag);
+					Console.Write ("[{0}] ", Dummy.Portal.Usage ("portal", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.UDF.Usage ("udf", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.ID.Usage ("id", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.Verbose.Usage ("verbose", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.Report.Usage ("report", "value", UsageFlag));
 					Console.WriteLine ();
 
 					Console.WriteLine ("    List the pending confirmation requests for this account");
@@ -3561,6 +4388,11 @@ namespace Goedel.Mesh.MeshMan {
 #pragma warning restore 219
 
 					Console.Write ("{0}confimaccept ", UsageFlag);
+					Console.Write ("[{0}] ", Dummy.Portal.Usage ("portal", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.UDF.Usage ("udf", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.ID.Usage ("id", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.Verbose.Usage ("verbose", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.Report.Usage ("report", "value", UsageFlag));
 					Console.WriteLine ();
 
 					Console.WriteLine ("    Accept a confirmation request");
@@ -3573,6 +4405,11 @@ namespace Goedel.Mesh.MeshMan {
 #pragma warning restore 219
 
 					Console.Write ("{0}confimreject ", UsageFlag);
+					Console.Write ("[{0}] ", Dummy.Portal.Usage ("portal", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.UDF.Usage ("udf", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.ID.Usage ("id", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.Verbose.Usage ("verbose", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.Report.Usage ("report", "value", UsageFlag));
 					Console.WriteLine ();
 
 					Console.WriteLine ("    Reject a confirmation request");
@@ -3603,6 +4440,11 @@ namespace Goedel.Mesh.MeshMan {
 #pragma warning restore 219
 
 					Console.Write ("{0}recryptgroup ", UsageFlag);
+					Console.Write ("[{0}] ", Dummy.Portal.Usage ("portal", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.UDF.Usage ("udf", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.ID.Usage ("id", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.Verbose.Usage ("verbose", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.Report.Usage ("report", "value", UsageFlag));
 					Console.WriteLine ();
 
 					Console.WriteLine ("    Create a new recryption group");
@@ -3615,6 +4457,11 @@ namespace Goedel.Mesh.MeshMan {
 #pragma warning restore 219
 
 					Console.Write ("{0}recryptadd ", UsageFlag);
+					Console.Write ("[{0}] ", Dummy.Portal.Usage ("portal", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.UDF.Usage ("udf", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.ID.Usage ("id", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.Verbose.Usage ("verbose", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.Report.Usage ("report", "value", UsageFlag));
 					Console.WriteLine ();
 
 					Console.WriteLine ("    Add a member to a recryption group");
@@ -3627,6 +4474,11 @@ namespace Goedel.Mesh.MeshMan {
 #pragma warning restore 219
 
 					Console.Write ("{0}recryptdel ", UsageFlag);
+					Console.Write ("[{0}] ", Dummy.Portal.Usage ("portal", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.UDF.Usage ("udf", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.ID.Usage ("id", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.Verbose.Usage ("verbose", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.Report.Usage ("report", "value", UsageFlag));
 					Console.WriteLine ();
 
 					Console.WriteLine ("    Remove a member from a recryption group");
@@ -3639,6 +4491,11 @@ namespace Goedel.Mesh.MeshMan {
 #pragma warning restore 219
 
 					Console.Write ("{0}encrypt ", UsageFlag);
+					Console.Write ("[{0}] ", Dummy.Portal.Usage ("portal", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.UDF.Usage ("udf", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.ID.Usage ("id", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.Verbose.Usage ("verbose", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.Report.Usage ("report", "value", UsageFlag));
 					Console.WriteLine ();
 
 					Console.WriteLine ("    Encrypt a file or directory");
@@ -3651,6 +4508,11 @@ namespace Goedel.Mesh.MeshMan {
 #pragma warning restore 219
 
 					Console.Write ("{0}decrypt ", UsageFlag);
+					Console.Write ("[{0}] ", Dummy.Portal.Usage ("portal", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.UDF.Usage ("udf", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.ID.Usage ("id", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.Verbose.Usage ("verbose", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.Report.Usage ("report", "value", UsageFlag));
 					Console.WriteLine ();
 
 					Console.WriteLine ("    Decrypt a file or directory");
@@ -3690,6 +4552,13 @@ namespace Goedel.Mesh.MeshMan {
 	public interface IPortalAccount {
 		String			Portal{get; set;}
 		String			UDF{get; set;}
+		}
+
+
+	public interface IApplicationProfile {
+		String			Portal{get; set;}
+		String			UDF{get; set;}
+		String			ID{get; set;}
 		}
 
 
@@ -3971,13 +4840,14 @@ namespace Goedel.Mesh.MeshMan {
 
 
     public class _AddPassword : Goedel.Registry.Dispatch ,
-							IPortalAccount,
+							IApplicationProfile,
 							IReporting {
 		public String			Site{get; set;}  = new String ();
 		public String			Username{get; set;}  = new String ();
 		public String			Password{get; set;}  = new String ();
 		public String			Portal{get; set;} = new  String ();
 		public String			UDF{get; set;} = new  String ();
+		public String			ID{get; set;} = new  String ();
 		public Flag			Verbose{get; set;}  = new  Flag ("false");
 		public Flag			Report{get; set;}  = new  Flag ("true");
 
@@ -3989,11 +4859,12 @@ namespace Goedel.Mesh.MeshMan {
 
 
     public class _GetPassword : Goedel.Registry.Dispatch ,
-							IPortalAccount,
+							IApplicationProfile,
 							IReporting {
 		public String			Site{get; set;}  = new String ();
 		public String			Portal{get; set;} = new  String ();
 		public String			UDF{get; set;} = new  String ();
+		public String			ID{get; set;} = new  String ();
 		public Flag			Verbose{get; set;}  = new  Flag ("false");
 		public Flag			Report{get; set;}  = new  Flag ("true");
 
@@ -4005,11 +4876,12 @@ namespace Goedel.Mesh.MeshMan {
 
 
     public class _DeletePassword : Goedel.Registry.Dispatch ,
-							IPortalAccount,
+							IApplicationProfile,
 							IReporting {
 		public String			Site{get; set;}  = new String ();
 		public String			Portal{get; set;} = new  String ();
 		public String			UDF{get; set;} = new  String ();
+		public String			ID{get; set;} = new  String ();
 		public Flag			Verbose{get; set;}  = new  Flag ("false");
 		public Flag			Report{get; set;}  = new  Flag ("true");
 
@@ -4021,11 +4893,12 @@ namespace Goedel.Mesh.MeshMan {
 
 
     public class _DumpPassword : Goedel.Registry.Dispatch ,
-							IPortalAccount,
+							IApplicationProfile,
 							IReporting {
 		public Flag			JSON{get; set;}  = new Flag ();
 		public String			Portal{get; set;} = new  String ();
 		public String			UDF{get; set;} = new  String ();
+		public String			ID{get; set;} = new  String ();
 		public Flag			Verbose{get; set;}  = new  Flag ("false");
 		public Flag			Report{get; set;}  = new  Flag ("true");
 
@@ -4070,30 +4943,50 @@ namespace Goedel.Mesh.MeshMan {
         } // class SSH
 
 
-    public class _SSHHost : Goedel.Registry.Dispatch ,
-							IPortalAccount,
+    public class _SSHAuth : Goedel.Registry.Dispatch ,
+							IApplicationProfile,
 							IReporting {
 		public Flag			Host{get; set;}  = new Flag ();
 		public Flag			Client{get; set;}  = new Flag ();
 		public String			Portal{get; set;} = new  String ();
 		public String			UDF{get; set;} = new  String ();
+		public String			ID{get; set;} = new  String ();
 		public Flag			Verbose{get; set;}  = new  Flag ("false");
 		public Flag			Report{get; set;}  = new  Flag ("true");
 
 
 		}
 
-    public partial class SSHHost : _SSHHost {
-        } // class SSHHost
+    public partial class SSHAuth : _SSHAuth {
+        } // class SSHAuth
 
 
-    public class _SSHPublic : Goedel.Registry.Dispatch ,
-							IPortalAccount,
+    public class _SSHKnown : Goedel.Registry.Dispatch ,
+							IApplicationProfile,
 							IReporting {
 		public Flag			Host{get; set;}  = new Flag ();
 		public Flag			Client{get; set;}  = new Flag ();
 		public String			Portal{get; set;} = new  String ();
 		public String			UDF{get; set;} = new  String ();
+		public String			ID{get; set;} = new  String ();
+		public Flag			Verbose{get; set;}  = new  Flag ("false");
+		public Flag			Report{get; set;}  = new  Flag ("true");
+
+
+		}
+
+    public partial class SSHKnown : _SSHKnown {
+        } // class SSHKnown
+
+
+    public class _SSHPublic : Goedel.Registry.Dispatch ,
+							IApplicationProfile,
+							IReporting {
+		public Flag			Host{get; set;}  = new Flag ();
+		public Flag			Client{get; set;}  = new Flag ();
+		public String			Portal{get; set;} = new  String ();
+		public String			UDF{get; set;} = new  String ();
+		public String			ID{get; set;} = new  String ();
 		public Flag			Verbose{get; set;}  = new  Flag ("false");
 		public Flag			Report{get; set;}  = new  Flag ("true");
 
@@ -4105,12 +4998,13 @@ namespace Goedel.Mesh.MeshMan {
 
 
     public class _SSHPrivate : Goedel.Registry.Dispatch ,
-							IPortalAccount,
+							IApplicationProfile,
 							IReporting {
 		public Flag			Host{get; set;}  = new Flag ();
 		public Flag			Client{get; set;}  = new Flag ();
 		public String			Portal{get; set;} = new  String ();
 		public String			UDF{get; set;} = new  String ();
+		public String			ID{get; set;} = new  String ();
 		public Flag			Verbose{get; set;}  = new  Flag ("false");
 		public Flag			Report{get; set;}  = new  Flag ("true");
 
@@ -4138,7 +5032,14 @@ namespace Goedel.Mesh.MeshMan {
         } // class Confirm
 
 
-    public class _ConfirmPost : Goedel.Registry.Dispatch  {
+    public class _ConfirmPost : Goedel.Registry.Dispatch ,
+							IApplicationProfile,
+							IReporting {
+		public String			Portal{get; set;} = new  String ();
+		public String			UDF{get; set;} = new  String ();
+		public String			ID{get; set;} = new  String ();
+		public Flag			Verbose{get; set;}  = new  Flag ("false");
+		public Flag			Report{get; set;}  = new  Flag ("true");
 
 
 		}
@@ -4147,7 +5048,14 @@ namespace Goedel.Mesh.MeshMan {
         } // class ConfirmPost
 
 
-    public class _ConfirmGet : Goedel.Registry.Dispatch  {
+    public class _ConfirmGet : Goedel.Registry.Dispatch ,
+							IApplicationProfile,
+							IReporting {
+		public String			Portal{get; set;} = new  String ();
+		public String			UDF{get; set;} = new  String ();
+		public String			ID{get; set;} = new  String ();
+		public Flag			Verbose{get; set;}  = new  Flag ("false");
+		public Flag			Report{get; set;}  = new  Flag ("true");
 
 
 		}
@@ -4156,7 +5064,14 @@ namespace Goedel.Mesh.MeshMan {
         } // class ConfirmGet
 
 
-    public class _ConfirmAccept : Goedel.Registry.Dispatch  {
+    public class _ConfirmAccept : Goedel.Registry.Dispatch ,
+							IApplicationProfile,
+							IReporting {
+		public String			Portal{get; set;} = new  String ();
+		public String			UDF{get; set;} = new  String ();
+		public String			ID{get; set;} = new  String ();
+		public Flag			Verbose{get; set;}  = new  Flag ("false");
+		public Flag			Report{get; set;}  = new  Flag ("true");
 
 
 		}
@@ -4165,7 +5080,14 @@ namespace Goedel.Mesh.MeshMan {
         } // class ConfirmAccept
 
 
-    public class _ConfirmReject : Goedel.Registry.Dispatch  {
+    public class _ConfirmReject : Goedel.Registry.Dispatch ,
+							IApplicationProfile,
+							IReporting {
+		public String			Portal{get; set;} = new  String ();
+		public String			UDF{get; set;} = new  String ();
+		public String			ID{get; set;} = new  String ();
+		public Flag			Verbose{get; set;}  = new  Flag ("false");
+		public Flag			Report{get; set;}  = new  Flag ("true");
 
 
 		}
@@ -4191,7 +5113,14 @@ namespace Goedel.Mesh.MeshMan {
         } // class Recrypt
 
 
-    public class _RecryptGroup : Goedel.Registry.Dispatch  {
+    public class _RecryptGroup : Goedel.Registry.Dispatch ,
+							IApplicationProfile,
+							IReporting {
+		public String			Portal{get; set;} = new  String ();
+		public String			UDF{get; set;} = new  String ();
+		public String			ID{get; set;} = new  String ();
+		public Flag			Verbose{get; set;}  = new  Flag ("false");
+		public Flag			Report{get; set;}  = new  Flag ("true");
 
 
 		}
@@ -4200,7 +5129,14 @@ namespace Goedel.Mesh.MeshMan {
         } // class RecryptGroup
 
 
-    public class _RecryptAdd : Goedel.Registry.Dispatch  {
+    public class _RecryptAdd : Goedel.Registry.Dispatch ,
+							IApplicationProfile,
+							IReporting {
+		public String			Portal{get; set;} = new  String ();
+		public String			UDF{get; set;} = new  String ();
+		public String			ID{get; set;} = new  String ();
+		public Flag			Verbose{get; set;}  = new  Flag ("false");
+		public Flag			Report{get; set;}  = new  Flag ("true");
 
 
 		}
@@ -4209,7 +5145,14 @@ namespace Goedel.Mesh.MeshMan {
         } // class RecryptAdd
 
 
-    public class _RecryptDelete : Goedel.Registry.Dispatch  {
+    public class _RecryptDelete : Goedel.Registry.Dispatch ,
+							IApplicationProfile,
+							IReporting {
+		public String			Portal{get; set;} = new  String ();
+		public String			UDF{get; set;} = new  String ();
+		public String			ID{get; set;} = new  String ();
+		public Flag			Verbose{get; set;}  = new  Flag ("false");
+		public Flag			Report{get; set;}  = new  Flag ("true");
 
 
 		}
@@ -4218,7 +5161,14 @@ namespace Goedel.Mesh.MeshMan {
         } // class RecryptDelete
 
 
-    public class _Encrypt : Goedel.Registry.Dispatch  {
+    public class _Encrypt : Goedel.Registry.Dispatch ,
+							IApplicationProfile,
+							IReporting {
+		public String			Portal{get; set;} = new  String ();
+		public String			UDF{get; set;} = new  String ();
+		public String			ID{get; set;} = new  String ();
+		public Flag			Verbose{get; set;}  = new  Flag ("false");
+		public Flag			Report{get; set;}  = new  Flag ("true");
 
 
 		}
@@ -4227,7 +5177,14 @@ namespace Goedel.Mesh.MeshMan {
         } // class Encrypt
 
 
-    public class _Decrypt : Goedel.Registry.Dispatch  {
+    public class _Decrypt : Goedel.Registry.Dispatch ,
+							IApplicationProfile,
+							IReporting {
+		public String			Portal{get; set;} = new  String ();
+		public String			UDF{get; set;} = new  String ();
+		public String			ID{get; set;} = new  String ();
+		public Flag			Verbose{get; set;}  = new  Flag ("false");
+		public Flag			Report{get; set;}  = new  Flag ("true");
 
 
 		}
@@ -4925,6 +5882,7 @@ namespace Goedel.Mesh.MeshMan {
 					Console.Write ("[{0}] ", Dummy.Password.Usage (null, "password", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.Portal.Usage ("portal", "value", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.UDF.Usage ("udf", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.ID.Usage ("id", "value", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.Verbose.Usage ("verbose", "value", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.Report.Usage ("report", "value", UsageFlag));
 					Console.WriteLine ();
@@ -4943,6 +5901,8 @@ namespace Goedel.Mesh.MeshMan {
 							"Portal", Options.Portal);
 				Console.WriteLine ("    {0}\t{1} = [{2}]", "String", 
 							"UDF", Options.UDF);
+				Console.WriteLine ("    {0}\t{1} = [{2}]", "String", 
+							"ID", Options.ID);
 				Console.WriteLine ("    {0}\t{1} = [{2}]", "Flag", 
 							"Verbose", Options.Verbose);
 				Console.WriteLine ("    {0}\t{1} = [{2}]", "Flag", 
@@ -4962,6 +5922,7 @@ namespace Goedel.Mesh.MeshMan {
 					Console.Write ("[{0}] ", Dummy.Site.Usage (null, "site", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.Portal.Usage ("portal", "value", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.UDF.Usage ("udf", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.ID.Usage ("id", "value", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.Verbose.Usage ("verbose", "value", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.Report.Usage ("report", "value", UsageFlag));
 					Console.WriteLine ();
@@ -4976,6 +5937,8 @@ namespace Goedel.Mesh.MeshMan {
 							"Portal", Options.Portal);
 				Console.WriteLine ("    {0}\t{1} = [{2}]", "String", 
 							"UDF", Options.UDF);
+				Console.WriteLine ("    {0}\t{1} = [{2}]", "String", 
+							"ID", Options.ID);
 				Console.WriteLine ("    {0}\t{1} = [{2}]", "Flag", 
 							"Verbose", Options.Verbose);
 				Console.WriteLine ("    {0}\t{1} = [{2}]", "Flag", 
@@ -4995,6 +5958,7 @@ namespace Goedel.Mesh.MeshMan {
 					Console.Write ("[{0}] ", Dummy.Site.Usage (null, "site", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.Portal.Usage ("portal", "value", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.UDF.Usage ("udf", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.ID.Usage ("id", "value", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.Verbose.Usage ("verbose", "value", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.Report.Usage ("report", "value", UsageFlag));
 					Console.WriteLine ();
@@ -5009,6 +5973,8 @@ namespace Goedel.Mesh.MeshMan {
 							"Portal", Options.Portal);
 				Console.WriteLine ("    {0}\t{1} = [{2}]", "String", 
 							"UDF", Options.UDF);
+				Console.WriteLine ("    {0}\t{1} = [{2}]", "String", 
+							"ID", Options.ID);
 				Console.WriteLine ("    {0}\t{1} = [{2}]", "Flag", 
 							"Verbose", Options.Verbose);
 				Console.WriteLine ("    {0}\t{1} = [{2}]", "Flag", 
@@ -5028,6 +5994,7 @@ namespace Goedel.Mesh.MeshMan {
 					Console.Write ("[{0}] ", Dummy.JSON.Usage (null, "json", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.Portal.Usage ("portal", "value", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.UDF.Usage ("udf", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.ID.Usage ("id", "value", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.Verbose.Usage ("verbose", "value", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.Report.Usage ("report", "value", UsageFlag));
 					Console.WriteLine ();
@@ -5042,6 +6009,8 @@ namespace Goedel.Mesh.MeshMan {
 							"Portal", Options.Portal);
 				Console.WriteLine ("    {0}\t{1} = [{2}]", "String", 
 							"UDF", Options.UDF);
+				Console.WriteLine ("    {0}\t{1} = [{2}]", "String", 
+							"ID", Options.ID);
 				Console.WriteLine ("    {0}\t{1} = [{2}]", "Flag", 
 							"Verbose", Options.Verbose);
 				Console.WriteLine ("    {0}\t{1} = [{2}]", "Flag", 
@@ -5120,25 +6089,26 @@ namespace Goedel.Mesh.MeshMan {
 							"Report", Options.Report);
 			Console.WriteLine ("Not Yet Implemented");
 			}
-		public virtual void SSHHost ( SSHHost Options
+		public virtual void SSHAuth ( SSHAuth Options
 				) {
 
 			char UsageFlag = '-';
 				{
 #pragma warning disable 219
-					SSHHost		Dummy = new SSHHost ();
+					SSHAuth		Dummy = new SSHAuth ();
 #pragma warning restore 219
 
-					Console.Write ("{0}sshhosts ", UsageFlag);
+					Console.Write ("{0}sshauth ", UsageFlag);
 					Console.Write ("[{0}] ", Dummy.Host.Usage (null, "host", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.Client.Usage (null, "client", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.Portal.Usage ("portal", "value", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.UDF.Usage ("udf", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.ID.Usage ("id", "value", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.Verbose.Usage ("verbose", "value", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.Report.Usage ("report", "value", UsageFlag));
 					Console.WriteLine ();
 
-					Console.WriteLine ("    List the SSH Hosts");
+					Console.WriteLine ("    List the SSH Authorized keys");
 
 				}
 
@@ -5150,6 +6120,47 @@ namespace Goedel.Mesh.MeshMan {
 							"Portal", Options.Portal);
 				Console.WriteLine ("    {0}\t{1} = [{2}]", "String", 
 							"UDF", Options.UDF);
+				Console.WriteLine ("    {0}\t{1} = [{2}]", "String", 
+							"ID", Options.ID);
+				Console.WriteLine ("    {0}\t{1} = [{2}]", "Flag", 
+							"Verbose", Options.Verbose);
+				Console.WriteLine ("    {0}\t{1} = [{2}]", "Flag", 
+							"Report", Options.Report);
+			Console.WriteLine ("Not Yet Implemented");
+			}
+		public virtual void SSHKnown ( SSHKnown Options
+				) {
+
+			char UsageFlag = '-';
+				{
+#pragma warning disable 219
+					SSHKnown		Dummy = new SSHKnown ();
+#pragma warning restore 219
+
+					Console.Write ("{0}sshknown ", UsageFlag);
+					Console.Write ("[{0}] ", Dummy.Host.Usage (null, "host", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.Client.Usage (null, "client", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.Portal.Usage ("portal", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.UDF.Usage ("udf", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.ID.Usage ("id", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.Verbose.Usage ("verbose", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.Report.Usage ("report", "value", UsageFlag));
+					Console.WriteLine ();
+
+					Console.WriteLine ("    List the SSH Known Hosts");
+
+				}
+
+				Console.WriteLine ("    {0}\t{1} = [{2}]", "Flag", 
+							"Host", Options.Host);
+				Console.WriteLine ("    {0}\t{1} = [{2}]", "Flag", 
+							"Client", Options.Client);
+				Console.WriteLine ("    {0}\t{1} = [{2}]", "String", 
+							"Portal", Options.Portal);
+				Console.WriteLine ("    {0}\t{1} = [{2}]", "String", 
+							"UDF", Options.UDF);
+				Console.WriteLine ("    {0}\t{1} = [{2}]", "String", 
+							"ID", Options.ID);
 				Console.WriteLine ("    {0}\t{1} = [{2}]", "Flag", 
 							"Verbose", Options.Verbose);
 				Console.WriteLine ("    {0}\t{1} = [{2}]", "Flag", 
@@ -5170,6 +6181,7 @@ namespace Goedel.Mesh.MeshMan {
 					Console.Write ("[{0}] ", Dummy.Client.Usage (null, "client", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.Portal.Usage ("portal", "value", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.UDF.Usage ("udf", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.ID.Usage ("id", "value", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.Verbose.Usage ("verbose", "value", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.Report.Usage ("report", "value", UsageFlag));
 					Console.WriteLine ();
@@ -5186,6 +6198,8 @@ namespace Goedel.Mesh.MeshMan {
 							"Portal", Options.Portal);
 				Console.WriteLine ("    {0}\t{1} = [{2}]", "String", 
 							"UDF", Options.UDF);
+				Console.WriteLine ("    {0}\t{1} = [{2}]", "String", 
+							"ID", Options.ID);
 				Console.WriteLine ("    {0}\t{1} = [{2}]", "Flag", 
 							"Verbose", Options.Verbose);
 				Console.WriteLine ("    {0}\t{1} = [{2}]", "Flag", 
@@ -5206,6 +6220,7 @@ namespace Goedel.Mesh.MeshMan {
 					Console.Write ("[{0}] ", Dummy.Client.Usage (null, "client", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.Portal.Usage ("portal", "value", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.UDF.Usage ("udf", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.ID.Usage ("id", "value", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.Verbose.Usage ("verbose", "value", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.Report.Usage ("report", "value", UsageFlag));
 					Console.WriteLine ();
@@ -5222,6 +6237,8 @@ namespace Goedel.Mesh.MeshMan {
 							"Portal", Options.Portal);
 				Console.WriteLine ("    {0}\t{1} = [{2}]", "String", 
 							"UDF", Options.UDF);
+				Console.WriteLine ("    {0}\t{1} = [{2}]", "String", 
+							"ID", Options.ID);
 				Console.WriteLine ("    {0}\t{1} = [{2}]", "Flag", 
 							"Verbose", Options.Verbose);
 				Console.WriteLine ("    {0}\t{1} = [{2}]", "Flag", 
@@ -5237,7 +6254,7 @@ namespace Goedel.Mesh.MeshMan {
 					Confirm		Dummy = new Confirm ();
 #pragma warning restore 219
 
-					Console.Write ("{0}confim ", UsageFlag);
+					Console.Write ("{0}confirm ", UsageFlag);
 					Console.Write ("[{0}] ", Dummy.Address.Usage (null, "address", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.PIN.Usage ("pin", "value", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.Portal.Usage ("portal", "value", UsageFlag));
@@ -5274,12 +6291,27 @@ namespace Goedel.Mesh.MeshMan {
 #pragma warning restore 219
 
 					Console.Write ("{0}confimpost ", UsageFlag);
+					Console.Write ("[{0}] ", Dummy.Portal.Usage ("portal", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.UDF.Usage ("udf", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.ID.Usage ("id", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.Verbose.Usage ("verbose", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.Report.Usage ("report", "value", UsageFlag));
 					Console.WriteLine ();
 
 					Console.WriteLine ("    Post a confirmation request to an account");
 
 				}
 
+				Console.WriteLine ("    {0}\t{1} = [{2}]", "String", 
+							"Portal", Options.Portal);
+				Console.WriteLine ("    {0}\t{1} = [{2}]", "String", 
+							"UDF", Options.UDF);
+				Console.WriteLine ("    {0}\t{1} = [{2}]", "String", 
+							"ID", Options.ID);
+				Console.WriteLine ("    {0}\t{1} = [{2}]", "Flag", 
+							"Verbose", Options.Verbose);
+				Console.WriteLine ("    {0}\t{1} = [{2}]", "Flag", 
+							"Report", Options.Report);
 			Console.WriteLine ("Not Yet Implemented");
 			}
 		public virtual void ConfirmGet ( ConfirmGet Options
@@ -5292,12 +6324,27 @@ namespace Goedel.Mesh.MeshMan {
 #pragma warning restore 219
 
 					Console.Write ("{0}confimget ", UsageFlag);
+					Console.Write ("[{0}] ", Dummy.Portal.Usage ("portal", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.UDF.Usage ("udf", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.ID.Usage ("id", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.Verbose.Usage ("verbose", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.Report.Usage ("report", "value", UsageFlag));
 					Console.WriteLine ();
 
 					Console.WriteLine ("    List the pending confirmation requests for this account");
 
 				}
 
+				Console.WriteLine ("    {0}\t{1} = [{2}]", "String", 
+							"Portal", Options.Portal);
+				Console.WriteLine ("    {0}\t{1} = [{2}]", "String", 
+							"UDF", Options.UDF);
+				Console.WriteLine ("    {0}\t{1} = [{2}]", "String", 
+							"ID", Options.ID);
+				Console.WriteLine ("    {0}\t{1} = [{2}]", "Flag", 
+							"Verbose", Options.Verbose);
+				Console.WriteLine ("    {0}\t{1} = [{2}]", "Flag", 
+							"Report", Options.Report);
 			Console.WriteLine ("Not Yet Implemented");
 			}
 		public virtual void ConfirmAccept ( ConfirmAccept Options
@@ -5310,12 +6357,27 @@ namespace Goedel.Mesh.MeshMan {
 #pragma warning restore 219
 
 					Console.Write ("{0}confimaccept ", UsageFlag);
+					Console.Write ("[{0}] ", Dummy.Portal.Usage ("portal", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.UDF.Usage ("udf", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.ID.Usage ("id", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.Verbose.Usage ("verbose", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.Report.Usage ("report", "value", UsageFlag));
 					Console.WriteLine ();
 
 					Console.WriteLine ("    Accept a confirmation request");
 
 				}
 
+				Console.WriteLine ("    {0}\t{1} = [{2}]", "String", 
+							"Portal", Options.Portal);
+				Console.WriteLine ("    {0}\t{1} = [{2}]", "String", 
+							"UDF", Options.UDF);
+				Console.WriteLine ("    {0}\t{1} = [{2}]", "String", 
+							"ID", Options.ID);
+				Console.WriteLine ("    {0}\t{1} = [{2}]", "Flag", 
+							"Verbose", Options.Verbose);
+				Console.WriteLine ("    {0}\t{1} = [{2}]", "Flag", 
+							"Report", Options.Report);
 			Console.WriteLine ("Not Yet Implemented");
 			}
 		public virtual void ConfirmReject ( ConfirmReject Options
@@ -5328,12 +6390,27 @@ namespace Goedel.Mesh.MeshMan {
 #pragma warning restore 219
 
 					Console.Write ("{0}confimreject ", UsageFlag);
+					Console.Write ("[{0}] ", Dummy.Portal.Usage ("portal", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.UDF.Usage ("udf", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.ID.Usage ("id", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.Verbose.Usage ("verbose", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.Report.Usage ("report", "value", UsageFlag));
 					Console.WriteLine ();
 
 					Console.WriteLine ("    Reject a confirmation request");
 
 				}
 
+				Console.WriteLine ("    {0}\t{1} = [{2}]", "String", 
+							"Portal", Options.Portal);
+				Console.WriteLine ("    {0}\t{1} = [{2}]", "String", 
+							"UDF", Options.UDF);
+				Console.WriteLine ("    {0}\t{1} = [{2}]", "String", 
+							"ID", Options.ID);
+				Console.WriteLine ("    {0}\t{1} = [{2}]", "Flag", 
+							"Verbose", Options.Verbose);
+				Console.WriteLine ("    {0}\t{1} = [{2}]", "Flag", 
+							"Report", Options.Report);
 			Console.WriteLine ("Not Yet Implemented");
 			}
 		public virtual void Recrypt ( Recrypt Options
@@ -5382,12 +6459,27 @@ namespace Goedel.Mesh.MeshMan {
 #pragma warning restore 219
 
 					Console.Write ("{0}recryptgroup ", UsageFlag);
+					Console.Write ("[{0}] ", Dummy.Portal.Usage ("portal", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.UDF.Usage ("udf", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.ID.Usage ("id", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.Verbose.Usage ("verbose", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.Report.Usage ("report", "value", UsageFlag));
 					Console.WriteLine ();
 
 					Console.WriteLine ("    Create a new recryption group");
 
 				}
 
+				Console.WriteLine ("    {0}\t{1} = [{2}]", "String", 
+							"Portal", Options.Portal);
+				Console.WriteLine ("    {0}\t{1} = [{2}]", "String", 
+							"UDF", Options.UDF);
+				Console.WriteLine ("    {0}\t{1} = [{2}]", "String", 
+							"ID", Options.ID);
+				Console.WriteLine ("    {0}\t{1} = [{2}]", "Flag", 
+							"Verbose", Options.Verbose);
+				Console.WriteLine ("    {0}\t{1} = [{2}]", "Flag", 
+							"Report", Options.Report);
 			Console.WriteLine ("Not Yet Implemented");
 			}
 		public virtual void RecryptAdd ( RecryptAdd Options
@@ -5400,12 +6492,27 @@ namespace Goedel.Mesh.MeshMan {
 #pragma warning restore 219
 
 					Console.Write ("{0}recryptadd ", UsageFlag);
+					Console.Write ("[{0}] ", Dummy.Portal.Usage ("portal", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.UDF.Usage ("udf", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.ID.Usage ("id", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.Verbose.Usage ("verbose", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.Report.Usage ("report", "value", UsageFlag));
 					Console.WriteLine ();
 
 					Console.WriteLine ("    Add a member to a recryption group");
 
 				}
 
+				Console.WriteLine ("    {0}\t{1} = [{2}]", "String", 
+							"Portal", Options.Portal);
+				Console.WriteLine ("    {0}\t{1} = [{2}]", "String", 
+							"UDF", Options.UDF);
+				Console.WriteLine ("    {0}\t{1} = [{2}]", "String", 
+							"ID", Options.ID);
+				Console.WriteLine ("    {0}\t{1} = [{2}]", "Flag", 
+							"Verbose", Options.Verbose);
+				Console.WriteLine ("    {0}\t{1} = [{2}]", "Flag", 
+							"Report", Options.Report);
 			Console.WriteLine ("Not Yet Implemented");
 			}
 		public virtual void RecryptDelete ( RecryptDelete Options
@@ -5418,12 +6525,27 @@ namespace Goedel.Mesh.MeshMan {
 #pragma warning restore 219
 
 					Console.Write ("{0}recryptdel ", UsageFlag);
+					Console.Write ("[{0}] ", Dummy.Portal.Usage ("portal", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.UDF.Usage ("udf", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.ID.Usage ("id", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.Verbose.Usage ("verbose", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.Report.Usage ("report", "value", UsageFlag));
 					Console.WriteLine ();
 
 					Console.WriteLine ("    Remove a member from a recryption group");
 
 				}
 
+				Console.WriteLine ("    {0}\t{1} = [{2}]", "String", 
+							"Portal", Options.Portal);
+				Console.WriteLine ("    {0}\t{1} = [{2}]", "String", 
+							"UDF", Options.UDF);
+				Console.WriteLine ("    {0}\t{1} = [{2}]", "String", 
+							"ID", Options.ID);
+				Console.WriteLine ("    {0}\t{1} = [{2}]", "Flag", 
+							"Verbose", Options.Verbose);
+				Console.WriteLine ("    {0}\t{1} = [{2}]", "Flag", 
+							"Report", Options.Report);
 			Console.WriteLine ("Not Yet Implemented");
 			}
 		public virtual void Encrypt ( Encrypt Options
@@ -5436,12 +6558,27 @@ namespace Goedel.Mesh.MeshMan {
 #pragma warning restore 219
 
 					Console.Write ("{0}encrypt ", UsageFlag);
+					Console.Write ("[{0}] ", Dummy.Portal.Usage ("portal", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.UDF.Usage ("udf", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.ID.Usage ("id", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.Verbose.Usage ("verbose", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.Report.Usage ("report", "value", UsageFlag));
 					Console.WriteLine ();
 
 					Console.WriteLine ("    Encrypt a file or directory");
 
 				}
 
+				Console.WriteLine ("    {0}\t{1} = [{2}]", "String", 
+							"Portal", Options.Portal);
+				Console.WriteLine ("    {0}\t{1} = [{2}]", "String", 
+							"UDF", Options.UDF);
+				Console.WriteLine ("    {0}\t{1} = [{2}]", "String", 
+							"ID", Options.ID);
+				Console.WriteLine ("    {0}\t{1} = [{2}]", "Flag", 
+							"Verbose", Options.Verbose);
+				Console.WriteLine ("    {0}\t{1} = [{2}]", "Flag", 
+							"Report", Options.Report);
 			Console.WriteLine ("Not Yet Implemented");
 			}
 		public virtual void Decrypt ( Decrypt Options
@@ -5454,12 +6591,27 @@ namespace Goedel.Mesh.MeshMan {
 #pragma warning restore 219
 
 					Console.Write ("{0}decrypt ", UsageFlag);
+					Console.Write ("[{0}] ", Dummy.Portal.Usage ("portal", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.UDF.Usage ("udf", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.ID.Usage ("id", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.Verbose.Usage ("verbose", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.Report.Usage ("report", "value", UsageFlag));
 					Console.WriteLine ();
 
 					Console.WriteLine ("    Decrypt a file or directory");
 
 				}
 
+				Console.WriteLine ("    {0}\t{1} = [{2}]", "String", 
+							"Portal", Options.Portal);
+				Console.WriteLine ("    {0}\t{1} = [{2}]", "String", 
+							"UDF", Options.UDF);
+				Console.WriteLine ("    {0}\t{1} = [{2}]", "String", 
+							"ID", Options.ID);
+				Console.WriteLine ("    {0}\t{1} = [{2}]", "Flag", 
+							"Verbose", Options.Verbose);
+				Console.WriteLine ("    {0}\t{1} = [{2}]", "Flag", 
+							"Report", Options.Report);
 			Console.WriteLine ("Not Yet Implemented");
 			}
 

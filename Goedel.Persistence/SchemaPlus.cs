@@ -25,6 +25,10 @@ using System.Collections.Generic;
 
 namespace Goedel.Persistence {
     public partial class IndexTerm {
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
+        public IndexTerm () { }
 
         /// <summary>
         /// An index term
@@ -66,6 +70,11 @@ namespace Goedel.Persistence {
         private bool persisted = false;
 
         /// <summary>
+        /// Default Constructor
+        /// </summary>
+        public DataItem () { }
+
+        /// <summary>
         /// Construct a data item with the specified transaction identifier, uniqueID, text data and keys.
         /// </summary>
         /// <param name="TransactionID">The transation identifier.</param>
@@ -98,7 +107,7 @@ namespace Goedel.Persistence {
         /// <param name="Key">Key to add entry to</param>
         /// <param name="Data">Data to add.</param>
         public void AddKey (string Key, string Data) {
-            if (Keys == null) Keys = new List<IndexTerm>();
+            Keys = Keys ?? new List<IndexTerm>();
             var IndexTerm = new IndexTerm(Key, Data);
             Keys.Add(IndexTerm);
             }
@@ -109,7 +118,7 @@ namespace Goedel.Persistence {
         /// <param name="Index">Index to add key to</param>
         /// <param name="Data">Data to add.</param>
         public void AddKey(PersistenceIndex Index, string Data) {
-            if (Keys == null) Keys = new List<IndexTerm>();
+            Keys = Keys ?? new List<IndexTerm>();
             var IndexTerm = new IndexTermExtended(Index, Data);
             Keys.Add(IndexTerm);
             }

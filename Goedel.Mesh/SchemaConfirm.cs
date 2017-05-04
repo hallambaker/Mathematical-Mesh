@@ -49,31 +49,6 @@ namespace Goedel.Mesh {
 			return "MeshConfirm";
 			}
 
-        /// <summary>
-        /// Default constructor.
-        /// </summary>
-		public MeshConfirm () {
-			_Initialize () ;
-			}
-
-        /// <summary>
-        /// Construct an instance from a JSON encoded stream.
-        /// </summary>
-        /// <param name="JSONReader">Input stream</param>
-		public MeshConfirm (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			_Initialize () ;
-			}
-
-        /// <summary>
-        /// Construct an instance from a JSON encoded string.
-        /// </summary>
-        /// <param name="_String">Input string</param>
-		public MeshConfirm (string _String) {
-			Deserialize (_String);
-			_Initialize () ;
-			}
-
 		/// <summary>
         /// Construct an instance from the specified tagged JSONReader stream.
         /// </summary>
@@ -93,33 +68,29 @@ namespace Goedel.Mesh {
 			switch (token) {
 
 				case "ConfirmProfile" : {
-					var Result = new ConfirmProfile ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new ConfirmProfile ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 
 				case "ConfirmPrivate" : {
-					var Result = new ConfirmPrivate ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new ConfirmPrivate ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 
 				case "ConfirmDevicePublic" : {
-					var Result = new ConfirmDevicePublic ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new ConfirmDevicePublic ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 
 				case "ConfirmDevicePrivate" : {
-					var Result = new ConfirmDevicePrivate ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new ConfirmDevicePrivate ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
@@ -173,27 +144,6 @@ namespace Goedel.Mesh {
 			return "ConfirmProfile";
 			}
 
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-		public ConfirmProfile () {
-			_Initialize ();
-			}
-        /// <summary>
-		/// Initialize class from JSONReader stream.
-        /// </summary>		
-        /// <param name="JSONReader">Input stream</param>	
-		public ConfirmProfile (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			}
-
-        /// <summary> 
-		/// Initialize class from a JSON encoded class.
-        /// </summary>		
-        /// <param name="_String">Input string</param>
-		public ConfirmProfile (string _String) {
-			Deserialize (_String);
-			}
 
 
         /// <summary>
@@ -287,7 +237,10 @@ namespace Goedel.Mesh {
 		public static new ConfirmProfile From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-			return new ConfirmProfile (JSONReader);
+			var Result = new ConfirmProfile ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			// return new ConfirmProfile (JSONReader);
 			}
 
         /// <summary>
@@ -334,9 +287,8 @@ namespace Goedel.Mesh {
 			switch (token) {
 
 				case "ConfirmProfile" : {
-					var Result = new ConfirmProfile ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new ConfirmProfile ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
@@ -368,7 +320,9 @@ namespace Goedel.Mesh {
 					Authentication = new List <PublicKey> ();
 					while (_Going) {
 						// an untagged structure.
-						var _Item = new PublicKey (JSONReader);
+						var _Item = new  PublicKey ();
+						_Item.Deserialize (JSONReader);
+						// var _Item = new PublicKey (JSONReader);
 						Authentication.Add (_Item);
 						_Going = JSONReader.NextArray ();
 						}
@@ -380,7 +334,9 @@ namespace Goedel.Mesh {
 					Signature = new List <PublicKey> ();
 					while (_Going) {
 						// an untagged structure.
-						var _Item = new PublicKey (JSONReader);
+						var _Item = new  PublicKey ();
+						_Item.Deserialize (JSONReader);
+						// var _Item = new PublicKey (JSONReader);
 						Signature.Add (_Item);
 						_Going = JSONReader.NextArray ();
 						}
@@ -411,27 +367,6 @@ namespace Goedel.Mesh {
 			return "ConfirmPrivate";
 			}
 
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-		public ConfirmPrivate () {
-			_Initialize ();
-			}
-        /// <summary>
-		/// Initialize class from JSONReader stream.
-        /// </summary>		
-        /// <param name="JSONReader">Input stream</param>	
-		public ConfirmPrivate (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			}
-
-        /// <summary> 
-		/// Initialize class from a JSON encoded class.
-        /// </summary>		
-        /// <param name="_String">Input string</param>
-		public ConfirmPrivate (string _String) {
-			Deserialize (_String);
-			}
 
 
         /// <summary>
@@ -486,7 +421,10 @@ namespace Goedel.Mesh {
 		public static new ConfirmPrivate From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-			return new ConfirmPrivate (JSONReader);
+			var Result = new ConfirmPrivate ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			// return new ConfirmPrivate (JSONReader);
 			}
 
         /// <summary>
@@ -533,9 +471,8 @@ namespace Goedel.Mesh {
 			switch (token) {
 
 				case "ConfirmPrivate" : {
-					var Result = new ConfirmPrivate ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new ConfirmPrivate ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
@@ -594,27 +531,6 @@ namespace Goedel.Mesh {
 			return "ConfirmDevicePublic";
 			}
 
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-		public ConfirmDevicePublic () {
-			_Initialize ();
-			}
-        /// <summary>
-		/// Initialize class from JSONReader stream.
-        /// </summary>		
-        /// <param name="JSONReader">Input stream</param>	
-		public ConfirmDevicePublic (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			}
-
-        /// <summary> 
-		/// Initialize class from a JSON encoded class.
-        /// </summary>		
-        /// <param name="_String">Input string</param>
-		public ConfirmDevicePublic (string _String) {
-			Deserialize (_String);
-			}
 
 
         /// <summary>
@@ -679,7 +595,10 @@ namespace Goedel.Mesh {
 		public static new ConfirmDevicePublic From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-			return new ConfirmDevicePublic (JSONReader);
+			var Result = new ConfirmDevicePublic ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			// return new ConfirmDevicePublic (JSONReader);
 			}
 
         /// <summary>
@@ -726,9 +645,8 @@ namespace Goedel.Mesh {
 			switch (token) {
 
 				case "ConfirmDevicePublic" : {
-					var Result = new ConfirmDevicePublic ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new ConfirmDevicePublic ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
@@ -752,13 +670,15 @@ namespace Goedel.Mesh {
 			switch (Tag) {
 				case "SignPublicKey" : {
 					// An untagged structure
-					SignPublicKey = new PublicKey (JSONReader);
+					SignPublicKey = new PublicKey ();
+					SignPublicKey.Deserialize (JSONReader);
  
 					break;
 					}
 				case "AuthPublicKey" : {
 					// An untagged structure
-					AuthPublicKey = new PublicKey (JSONReader);
+					AuthPublicKey = new PublicKey ();
+					AuthPublicKey.Deserialize (JSONReader);
  
 					break;
 					}
@@ -799,27 +719,6 @@ namespace Goedel.Mesh {
 			return "ConfirmDevicePrivate";
 			}
 
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-		public ConfirmDevicePrivate () {
-			_Initialize ();
-			}
-        /// <summary>
-		/// Initialize class from JSONReader stream.
-        /// </summary>		
-        /// <param name="JSONReader">Input stream</param>	
-		public ConfirmDevicePrivate (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			}
-
-        /// <summary> 
-		/// Initialize class from a JSON encoded class.
-        /// </summary>		
-        /// <param name="_String">Input string</param>
-		public ConfirmDevicePrivate (string _String) {
-			Deserialize (_String);
-			}
 
 
         /// <summary>
@@ -884,7 +783,10 @@ namespace Goedel.Mesh {
 		public static new ConfirmDevicePrivate From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-			return new ConfirmDevicePrivate (JSONReader);
+			var Result = new ConfirmDevicePrivate ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			// return new ConfirmDevicePrivate (JSONReader);
 			}
 
         /// <summary>
@@ -931,9 +833,8 @@ namespace Goedel.Mesh {
 			switch (token) {
 
 				case "ConfirmDevicePrivate" : {
-					var Result = new ConfirmDevicePrivate ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new ConfirmDevicePrivate ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
@@ -957,13 +858,15 @@ namespace Goedel.Mesh {
 			switch (Tag) {
 				case "SignPrivateKey" : {
 					// An untagged structure
-					SignPrivateKey = new PublicKey (JSONReader);
+					SignPrivateKey = new PublicKey ();
+					SignPrivateKey.Deserialize (JSONReader);
  
 					break;
 					}
 				case "AuthPrivateKey" : {
 					// An untagged structure
-					AuthPrivateKey = new PublicKey (JSONReader);
+					AuthPrivateKey = new PublicKey ();
+					AuthPrivateKey.Deserialize (JSONReader);
  
 					break;
 					}

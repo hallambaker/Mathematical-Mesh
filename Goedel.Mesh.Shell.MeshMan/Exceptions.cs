@@ -334,6 +334,52 @@ namespace Goedel.Mesh.MeshMan {
 
     /// <summary>
     /// </summary>
+    public class ProfileNotReadable : MeshManException {
+
+		/// <summary>
+        /// Construct instance for exception "The profile could not be read on this machine"
+        /// </summary>		
+		public ProfileNotReadable () : base ("The profile could not be read on this machine") {
+			}
+        
+		/// <summary>
+        /// Construct instance for exception "The profile could not be read on this machine"
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		public ProfileNotReadable (string Description) : base (Description) {
+			}
+
+		/// <summary>
+        /// Construct instance for exception 		/// containing an inner exception.
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		/// <param name="Inner">Inner Exception</param>	
+		public ProfileNotReadable (string Description, System.Exception Inner) : 
+				base (Description, Inner) {
+			}
+
+
+
+
+		
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+
+        static System.Exception _Throw(object Reason) {
+			if (Reason as string != null) {
+				return new ProfileNotReadable(Reason as string);
+				}
+			else {
+				return new ProfileNotReadable();
+				}
+            }
+        }
+
+
+    /// <summary>
+    /// </summary>
     public class PortalRefusedRequest : MeshManException {
 
 		/// <summary>

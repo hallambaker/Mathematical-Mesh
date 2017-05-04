@@ -52,6 +52,8 @@ namespace Goedel.Mesh.Platform {
             }
 
 
+        public MeshCatalog MeshCatalog { get; set; }
+
         /// <summary>
         /// Client which may be used to interact with the portal on which this
         /// profile is registered.
@@ -114,7 +116,7 @@ namespace Goedel.Mesh.Platform {
 
             var Entry = PersonalProfile.Add(Profile);
 
-            var RegistrationApplication = RegisterApplication(Profile);
+            var RegistrationApplication = RegistrationMachine.Add(Profile);
             RegistrationApplication.RegistrationPersonal = this;
 
             if (Write) {
@@ -125,14 +127,7 @@ namespace Goedel.Mesh.Platform {
             return RegistrationApplication;
             }
 
-        ApplicationProfileEntry ApplicationProfileEntry { get; set; }
 
-        /// <summary>
-        /// Factory method to create an application registration. 
-        /// </summary>
-        /// <param name="ApplicationProfile"></param>
-        /// <returns></returns>
-        public abstract RegistrationApplication RegisterApplication(ApplicationProfile ApplicationProfile);
 
         /// <summary>
         /// Complete process of connecting to a profile.

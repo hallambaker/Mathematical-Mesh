@@ -81,7 +81,8 @@ namespace Goedel.Mesh {
             CommandLineInterpreter.MainMethod("/dump");
             CommandLineInterpreter.MainMethod("/export myprofile.json");
             CommandLineInterpreter.MainMethod("/ssh");
-            CommandLineInterpreter.MainMethod("/pending");
+            CommandLineInterpreter.MainMethod("/sshauth");
+
             CommandLineInterpreter.MainMethod("/password");
             CommandLineInterpreter.MainMethod("/pwadd example.com alice password1");
             CommandLineInterpreter.MainMethod("/pwdump");
@@ -89,9 +90,14 @@ namespace Goedel.Mesh {
             CommandLineInterpreter.MainMethod("/pwadd example.net alice password3");
             CommandLineInterpreter.MainMethod("/pwdump");
             CommandLineInterpreter.MainMethod("/pwdelete example.com");
+            CommandLineInterpreter.MainMethod("/pwdump");
+
             CommandLineInterpreter.MainMethod("/mail alice#example.com ");
             CommandLineInterpreter.MainMethod("/confirm alice@prismproof.org ");
             CommandLineInterpreter.MainMethod("/recrypt alice@prismproof.org ");
+
+            CommandLineInterpreter.MainMethod("/dump");
+            CommandLineInterpreter.MainMethod("/pending");
             }
         }
 

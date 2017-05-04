@@ -9,30 +9,11 @@ namespace Goedel.Mesh.MeshMan {
         /// </summary>
         /// <param name="Options">Command line parameters</param>
         public override void Password(Password Options) {
-            //SetReporting(Options.Report, Options.Verbose);
-            //GetProfile(Options.Portal, Options.UDF);
-            //GetMeshClient();
+            SetReporting(Options);
+            var RegistrationPersonal = GetPersonal(Options);
 
-            //var SignedDeviceProfile = GetDevice(SignedPersonalProfile);
-            //Assert.NotNull(SignedDeviceProfile, NoDeviceProfile.Throw);
-
-            //var PersonalProfile = SignedPersonalProfile.PersonalProfile;
-
-            //var PasswordProfile = new PasswordProfile(true);
-
-            //var ApplicationProfileEntry = PersonalProfile.Add(PasswordProfile);
-            //ApplicationProfileEntry.AddDevice(SignedDeviceProfile.DeviceProfile);
-
-            //PasswordProfile.Link(PersonalProfile, ApplicationProfileEntry);
-
-            //var SignedPasswordProfile = PasswordProfile.SignedApplicationProfile;
-
-            //Machine.Add(SignedPasswordProfile);
-            //RegistrationPersonal.WriteToPortal();
-
-            //MeshClient.Publish(SignedPasswordProfile);
-            //MeshClient.Publish(RegistrationPersonal.SignedPersonalProfile);
-
+            var PasswordProfile = new PasswordProfile(true);
+            Register(RegistrationPersonal, PasswordProfile);
             }
 
 
@@ -43,9 +24,10 @@ namespace Goedel.Mesh.MeshMan {
         public override void DumpPassword(DumpPassword Options) {
             SetReporting(Options.Report, Options.Verbose);
             GetProfile(Options.Portal, Options.UDF);
-            GetMeshClient();
 
-            GetPasswordProfile();
+            var RegistrationApplication = GetApplication(Options, "PasswordProfile");
+            var PasswordProfile = RegistrationApplication?.ApplicationProfile as PasswordProfile;
+            var PasswordProfilePrivate = PasswordProfile.Private;
 
             if (PasswordProfilePrivate.Entries == null) {
                 Report("Empty");
@@ -68,12 +50,13 @@ namespace Goedel.Mesh.MeshMan {
             SetReporting(Options.Report, Options.Verbose);
             GetProfile(Options.Portal, Options.UDF);
             GetMeshClient();
-            GetPasswordProfile();
+            var RegistrationApplication = GetApplication(Options, "PasswordProfile");
+            var PasswordProfile = RegistrationApplication?.ApplicationProfile as PasswordProfile;
 
             PasswordProfile.Add(Options.Site.Value, Options.Username.Value,
                 Options.Password.Value);
 
-            UpdatePasswordProfile();
+            RegistrationApplication.Write();
             }
 
         /// <summary>
@@ -84,7 +67,8 @@ namespace Goedel.Mesh.MeshMan {
             SetReporting(Options.Report, Options.Verbose);
             GetProfile(Options.Portal, Options.UDF);
             GetMeshClient();
-            GetPasswordProfile();
+            var RegistrationApplication = GetApplication(Options, "PasswordProfile");
+            var PasswordProfile = RegistrationApplication?.ApplicationProfile as PasswordProfile;
 
             var Entry = PasswordProfile.Get(Options.Site.Value);
 
@@ -99,11 +83,13 @@ namespace Goedel.Mesh.MeshMan {
             SetReporting(Options.Report, Options.Verbose);
             GetProfile(Options.Portal, Options.UDF);
             GetMeshClient();
-            GetPasswordProfile();
+            var RegistrationApplication = GetApplication(Options, "PasswordProfile");
+            var PasswordProfile = RegistrationApplication?.ApplicationProfile as PasswordProfile;
+
 
             PasswordProfile.Delete(Options.Site.Value);
 
-            UpdatePasswordProfile();
+            RegistrationApplication.Write();
             }
         }
 

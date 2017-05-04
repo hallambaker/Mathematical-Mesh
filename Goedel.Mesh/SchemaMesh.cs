@@ -49,31 +49,6 @@ namespace Goedel.Mesh {
 			return "MeshItem";
 			}
 
-        /// <summary>
-        /// Default constructor.
-        /// </summary>
-		public MeshItem () {
-			_Initialize () ;
-			}
-
-        /// <summary>
-        /// Construct an instance from a JSON encoded stream.
-        /// </summary>
-        /// <param name="JSONReader">Input stream</param>
-		public MeshItem (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			_Initialize () ;
-			}
-
-        /// <summary>
-        /// Construct an instance from a JSON encoded string.
-        /// </summary>
-        /// <param name="_String">Input string</param>
-		public MeshItem (string _String) {
-			Deserialize (_String);
-			_Initialize () ;
-			}
-
 		/// <summary>
         /// Construct an instance from the specified tagged JSONReader stream.
         /// </summary>
@@ -93,49 +68,43 @@ namespace Goedel.Mesh {
 			switch (token) {
 
 				case "PublicKey" : {
-					var Result = new PublicKey ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new PublicKey ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 
 				case "SignedData" : {
-					var Result = new SignedData ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new SignedData ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 
 				case "EncryptedData" : {
-					var Result = new EncryptedData ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new EncryptedData ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 
 				case "Connection" : {
-					var Result = new Connection ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new Connection ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 
 				case "Entry" : {
-					var Result = new Entry ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new Entry ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 
 				case "SignedProfile" : {
-					var Result = new SignedProfile ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new SignedProfile ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
@@ -147,169 +116,148 @@ namespace Goedel.Mesh {
 
 
 				case "SignedDeviceProfile" : {
-					var Result = new SignedDeviceProfile ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new SignedDeviceProfile ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 
 				case "DeviceProfile" : {
-					var Result = new DeviceProfile ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new DeviceProfile ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 
 				case "DevicePrivateProfile" : {
-					var Result = new DevicePrivateProfile ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new DevicePrivateProfile ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 
 				case "SignedMasterProfile" : {
-					var Result = new SignedMasterProfile ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new SignedMasterProfile ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 
 				case "MasterProfile" : {
-					var Result = new MasterProfile ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new MasterProfile ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 
 				case "SignedPersonalProfile" : {
-					var Result = new SignedPersonalProfile ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new SignedPersonalProfile ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 
 				case "PersonalProfile" : {
-					var Result = new PersonalProfile ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new PersonalProfile ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 
 				case "ApplicationProfileEntry" : {
-					var Result = new ApplicationProfileEntry ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new ApplicationProfileEntry ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 
 				case "SignedApplicationProfile" : {
-					var Result = new SignedApplicationProfile ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new SignedApplicationProfile ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 
 				case "ApplicationProfile" : {
-					var Result = new ApplicationProfile ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new ApplicationProfile ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 
 				case "ApplicationProfilePrivate" : {
-					var Result = new ApplicationProfilePrivate ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new ApplicationProfilePrivate ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 
 				case "ApplicationDevicePublic" : {
-					var Result = new ApplicationDevicePublic ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new ApplicationDevicePublic ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 
 				case "ApplicationDevicePrivate" : {
-					var Result = new ApplicationDevicePrivate ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new ApplicationDevicePrivate ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 
 				case "EscrowEntry" : {
-					var Result = new EscrowEntry ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new EscrowEntry ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 
 				case "OfflineEscrowEntry" : {
-					var Result = new OfflineEscrowEntry ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new OfflineEscrowEntry ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 
 				case "OnlineEscrowEntry" : {
-					var Result = new OnlineEscrowEntry ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new OnlineEscrowEntry ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 
 				case "EscrowedKeySet" : {
-					var Result = new EscrowedKeySet ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new EscrowedKeySet ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 
 				case "ConnectionRequest" : {
-					var Result = new ConnectionRequest ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new ConnectionRequest ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 
 				case "SignedConnectionRequest" : {
-					var Result = new SignedConnectionRequest ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new SignedConnectionRequest ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 
 				case "ConnectionResult" : {
-					var Result = new ConnectionResult ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new ConnectionResult ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 
 				case "SignedConnectionResult" : {
-					var Result = new SignedConnectionResult ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new SignedConnectionResult ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
@@ -373,27 +321,6 @@ namespace Goedel.Mesh {
 			return "PublicKey";
 			}
 
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-		public PublicKey () {
-			_Initialize ();
-			}
-        /// <summary>
-		/// Initialize class from JSONReader stream.
-        /// </summary>		
-        /// <param name="JSONReader">Input stream</param>	
-		public PublicKey (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			}
-
-        /// <summary> 
-		/// Initialize class from a JSON encoded class.
-        /// </summary>		
-        /// <param name="_String">Input string</param>
-		public PublicKey (string _String) {
-			Deserialize (_String);
-			}
 
 
         /// <summary>
@@ -500,7 +427,10 @@ namespace Goedel.Mesh {
 		public static new PublicKey From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-			return new PublicKey (JSONReader);
+			var Result = new PublicKey ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			// return new PublicKey (JSONReader);
 			}
 
         /// <summary>
@@ -547,9 +477,8 @@ namespace Goedel.Mesh {
 			switch (token) {
 
 				case "PublicKey" : {
-					var Result = new PublicKey ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new PublicKey ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
@@ -631,27 +560,6 @@ namespace Goedel.Mesh {
 			return "SignedData";
 			}
 
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-		public SignedData () {
-			_Initialize ();
-			}
-        /// <summary>
-		/// Initialize class from JSONReader stream.
-        /// </summary>		
-        /// <param name="JSONReader">Input stream</param>	
-		public SignedData (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			}
-
-        /// <summary> 
-		/// Initialize class from a JSON encoded class.
-        /// </summary>		
-        /// <param name="_String">Input string</param>
-		public SignedData (string _String) {
-			Deserialize (_String);
-			}
 
 
         /// <summary>
@@ -710,7 +618,10 @@ namespace Goedel.Mesh {
 		public static new SignedData From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-			return new SignedData (JSONReader);
+			var Result = new SignedData ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			// return new SignedData (JSONReader);
 			}
 
         /// <summary>
@@ -757,9 +668,8 @@ namespace Goedel.Mesh {
 			switch (token) {
 
 				case "SignedData" : {
-					var Result = new SignedData ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new SignedData ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
@@ -814,27 +724,6 @@ namespace Goedel.Mesh {
 			return "EncryptedData";
 			}
 
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-		public EncryptedData () {
-			_Initialize ();
-			}
-        /// <summary>
-		/// Initialize class from JSONReader stream.
-        /// </summary>		
-        /// <param name="JSONReader">Input stream</param>	
-		public EncryptedData (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			}
-
-        /// <summary> 
-		/// Initialize class from a JSON encoded class.
-        /// </summary>		
-        /// <param name="_String">Input string</param>
-		public EncryptedData (string _String) {
-			Deserialize (_String);
-			}
 
 
         /// <summary>
@@ -893,7 +782,10 @@ namespace Goedel.Mesh {
 		public static new EncryptedData From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-			return new EncryptedData (JSONReader);
+			var Result = new EncryptedData ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			// return new EncryptedData (JSONReader);
 			}
 
         /// <summary>
@@ -940,9 +832,8 @@ namespace Goedel.Mesh {
 			switch (token) {
 
 				case "EncryptedData" : {
-					var Result = new EncryptedData ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new EncryptedData ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
@@ -1059,27 +950,6 @@ namespace Goedel.Mesh {
 			return "Connection";
 			}
 
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-		public Connection () {
-			_Initialize ();
-			}
-        /// <summary>
-		/// Initialize class from JSONReader stream.
-        /// </summary>		
-        /// <param name="JSONReader">Input stream</param>	
-		public Connection (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			}
-
-        /// <summary> 
-		/// Initialize class from a JSON encoded class.
-        /// </summary>		
-        /// <param name="_String">Input string</param>
-		public Connection (string _String) {
-			Deserialize (_String);
-			}
 
 
         /// <summary>
@@ -1190,7 +1060,10 @@ namespace Goedel.Mesh {
 		public static new Connection From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-			return new Connection (JSONReader);
+			var Result = new Connection ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			// return new Connection (JSONReader);
 			}
 
         /// <summary>
@@ -1237,9 +1110,8 @@ namespace Goedel.Mesh {
 			switch (token) {
 
 				case "Connection" : {
-					var Result = new Connection ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new Connection ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
@@ -1338,27 +1210,6 @@ namespace Goedel.Mesh {
 			return "Entry";
 			}
 
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-		public Entry () {
-			_Initialize ();
-			}
-        /// <summary>
-		/// Initialize class from JSONReader stream.
-        /// </summary>		
-        /// <param name="JSONReader">Input stream</param>	
-		public Entry (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			}
-
-        /// <summary> 
-		/// Initialize class from a JSON encoded class.
-        /// </summary>		
-        /// <param name="_String">Input string</param>
-		public Entry (string _String) {
-			Deserialize (_String);
-			}
 
 
         /// <summary>
@@ -1417,7 +1268,10 @@ namespace Goedel.Mesh {
 		public static new Entry From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-			return new Entry (JSONReader);
+			var Result = new Entry ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			// return new Entry (JSONReader);
 			}
 
         /// <summary>
@@ -1464,58 +1318,50 @@ namespace Goedel.Mesh {
 			switch (token) {
 
 				case "Entry" : {
-					var Result = new Entry ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new Entry ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 				case "SignedProfile" : {
-					var Result = new SignedProfile ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new SignedProfile ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 				case "SignedDeviceProfile" : {
-					var Result = new SignedDeviceProfile ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new SignedDeviceProfile ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 				case "SignedMasterProfile" : {
-					var Result = new SignedMasterProfile ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new SignedMasterProfile ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 				case "SignedPersonalProfile" : {
-					var Result = new SignedPersonalProfile ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new SignedPersonalProfile ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 				case "SignedApplicationProfile" : {
-					var Result = new SignedApplicationProfile ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new SignedApplicationProfile ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 				case "SignedConnectionRequest" : {
-					var Result = new SignedConnectionRequest ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new SignedConnectionRequest ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 				case "SignedConnectionResult" : {
-					var Result = new SignedConnectionResult ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new SignedConnectionResult ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
@@ -1525,72 +1371,62 @@ namespace Goedel.Mesh {
 					}
 
 				case "DeviceProfile" : {
-					var Result = new DeviceProfile ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new DeviceProfile ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 				case "MasterProfile" : {
-					var Result = new MasterProfile ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new MasterProfile ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 				case "PersonalProfile" : {
-					var Result = new PersonalProfile ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new PersonalProfile ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 				case "ApplicationProfile" : {
-					var Result = new ApplicationProfile ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new ApplicationProfile ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 				case "ApplicationProfilePrivate" : {
-					var Result = new ApplicationProfilePrivate ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new ApplicationProfilePrivate ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 				case "ApplicationDevicePublic" : {
-					var Result = new ApplicationDevicePublic ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new ApplicationDevicePublic ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 				case "ApplicationDevicePrivate" : {
-					var Result = new ApplicationDevicePrivate ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new ApplicationDevicePrivate ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 				case "EscrowEntry" : {
-					var Result = new EscrowEntry ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new EscrowEntry ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 				case "OfflineEscrowEntry" : {
-					var Result = new OfflineEscrowEntry ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new OfflineEscrowEntry ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 				case "OnlineEscrowEntry" : {
-					var Result = new OnlineEscrowEntry ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new OnlineEscrowEntry ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
@@ -1649,27 +1485,6 @@ namespace Goedel.Mesh {
 			return "SignedProfile";
 			}
 
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-		public SignedProfile () {
-			_Initialize ();
-			}
-        /// <summary>
-		/// Initialize class from JSONReader stream.
-        /// </summary>		
-        /// <param name="JSONReader">Input stream</param>	
-		public SignedProfile (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			}
-
-        /// <summary> 
-		/// Initialize class from a JSON encoded class.
-        /// </summary>		
-        /// <param name="_String">Input string</param>
-		public SignedProfile (string _String) {
-			Deserialize (_String);
-			}
 
 
         /// <summary>
@@ -1729,7 +1544,10 @@ namespace Goedel.Mesh {
 		public static new SignedProfile From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-			return new SignedProfile (JSONReader);
+			var Result = new SignedProfile ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			// return new SignedProfile (JSONReader);
 			}
 
         /// <summary>
@@ -1776,51 +1594,44 @@ namespace Goedel.Mesh {
 			switch (token) {
 
 				case "SignedProfile" : {
-					var Result = new SignedProfile ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new SignedProfile ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 				case "SignedDeviceProfile" : {
-					var Result = new SignedDeviceProfile ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new SignedDeviceProfile ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 				case "SignedMasterProfile" : {
-					var Result = new SignedMasterProfile ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new SignedMasterProfile ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 				case "SignedPersonalProfile" : {
-					var Result = new SignedPersonalProfile ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new SignedPersonalProfile ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 				case "SignedApplicationProfile" : {
-					var Result = new SignedApplicationProfile ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new SignedApplicationProfile ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 				case "SignedConnectionRequest" : {
-					var Result = new SignedConnectionRequest ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new SignedConnectionRequest ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 				case "SignedConnectionResult" : {
-					var Result = new SignedConnectionResult ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new SignedConnectionResult ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
@@ -1844,7 +1655,8 @@ namespace Goedel.Mesh {
 			switch (Tag) {
 				case "SignedData" : {
 					// An untagged structure
-					SignedData = new JoseWebSignature (JSONReader);
+					SignedData = new JoseWebSignature ();
+					SignedData.Deserialize (JSONReader);
  
 					break;
 					}
@@ -1896,27 +1708,6 @@ namespace Goedel.Mesh {
 			return "Profile";
 			}
 
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-		public Profile () {
-			_Initialize ();
-			}
-        /// <summary>
-		/// Initialize class from JSONReader stream.
-        /// </summary>		
-        /// <param name="JSONReader">Input stream</param>	
-		public Profile (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			}
-
-        /// <summary> 
-		/// Initialize class from a JSON encoded class.
-        /// </summary>		
-        /// <param name="_String">Input string</param>
-		public Profile (string _String) {
-			Deserialize (_String);
-			}
 
 
         /// <summary>
@@ -2022,30 +1813,26 @@ namespace Goedel.Mesh {
 					}
 
 				case "DeviceProfile" : {
-					var Result = new DeviceProfile ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new DeviceProfile ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 				case "MasterProfile" : {
-					var Result = new MasterProfile ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new MasterProfile ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 				case "PersonalProfile" : {
-					var Result = new PersonalProfile ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new PersonalProfile ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 				case "ApplicationProfile" : {
-					var Result = new ApplicationProfile ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new ApplicationProfile ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
@@ -2111,27 +1898,6 @@ namespace Goedel.Mesh {
 			return "SignedDeviceProfile";
 			}
 
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-		public SignedDeviceProfile () {
-			_Initialize ();
-			}
-        /// <summary>
-		/// Initialize class from JSONReader stream.
-        /// </summary>		
-        /// <param name="JSONReader">Input stream</param>	
-		public SignedDeviceProfile (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			}
-
-        /// <summary> 
-		/// Initialize class from a JSON encoded class.
-        /// </summary>		
-        /// <param name="_String">Input string</param>
-		public SignedDeviceProfile (string _String) {
-			Deserialize (_String);
-			}
 
 
         /// <summary>
@@ -2186,7 +1952,10 @@ namespace Goedel.Mesh {
 		public static new SignedDeviceProfile From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-			return new SignedDeviceProfile (JSONReader);
+			var Result = new SignedDeviceProfile ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			// return new SignedDeviceProfile (JSONReader);
 			}
 
         /// <summary>
@@ -2233,9 +2002,8 @@ namespace Goedel.Mesh {
 			switch (token) {
 
 				case "SignedDeviceProfile" : {
-					var Result = new SignedDeviceProfile ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new SignedDeviceProfile ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
@@ -2304,27 +2072,6 @@ namespace Goedel.Mesh {
 			return "DeviceProfile";
 			}
 
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-		public DeviceProfile () {
-			_Initialize ();
-			}
-        /// <summary>
-		/// Initialize class from JSONReader stream.
-        /// </summary>		
-        /// <param name="JSONReader">Input stream</param>	
-		public DeviceProfile (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			}
-
-        /// <summary> 
-		/// Initialize class from a JSON encoded class.
-        /// </summary>		
-        /// <param name="_String">Input string</param>
-		public DeviceProfile (string _String) {
-			Deserialize (_String);
-			}
 
 
         /// <summary>
@@ -2399,7 +2146,10 @@ namespace Goedel.Mesh {
 		public static new DeviceProfile From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-			return new DeviceProfile (JSONReader);
+			var Result = new DeviceProfile ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			// return new DeviceProfile (JSONReader);
 			}
 
         /// <summary>
@@ -2446,9 +2196,8 @@ namespace Goedel.Mesh {
 			switch (token) {
 
 				case "DeviceProfile" : {
-					var Result = new DeviceProfile ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new DeviceProfile ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
@@ -2476,19 +2225,22 @@ namespace Goedel.Mesh {
 					}
 				case "DeviceSignatureKey" : {
 					// An untagged structure
-					DeviceSignatureKey = new PublicKey (JSONReader);
+					DeviceSignatureKey = new PublicKey ();
+					DeviceSignatureKey.Deserialize (JSONReader);
  
 					break;
 					}
 				case "DeviceAuthenticationKey" : {
 					// An untagged structure
-					DeviceAuthenticationKey = new PublicKey (JSONReader);
+					DeviceAuthenticationKey = new PublicKey ();
+					DeviceAuthenticationKey.Deserialize (JSONReader);
  
 					break;
 					}
 				case "DeviceEncryptiontionKey" : {
 					// An untagged structure
-					DeviceEncryptiontionKey = new PublicKey (JSONReader);
+					DeviceEncryptiontionKey = new PublicKey ();
+					DeviceEncryptiontionKey.Deserialize (JSONReader);
  
 					break;
 					}
@@ -2532,27 +2284,6 @@ namespace Goedel.Mesh {
 			return "DevicePrivateProfile";
 			}
 
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-		public DevicePrivateProfile () {
-			_Initialize ();
-			}
-        /// <summary>
-		/// Initialize class from JSONReader stream.
-        /// </summary>		
-        /// <param name="JSONReader">Input stream</param>	
-		public DevicePrivateProfile (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			}
-
-        /// <summary> 
-		/// Initialize class from a JSON encoded class.
-        /// </summary>		
-        /// <param name="_String">Input string</param>
-		public DevicePrivateProfile (string _String) {
-			Deserialize (_String);
-			}
 
 
         /// <summary>
@@ -2621,7 +2352,10 @@ namespace Goedel.Mesh {
 		public static new DevicePrivateProfile From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-			return new DevicePrivateProfile (JSONReader);
+			var Result = new DevicePrivateProfile ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			// return new DevicePrivateProfile (JSONReader);
 			}
 
         /// <summary>
@@ -2668,9 +2402,8 @@ namespace Goedel.Mesh {
 			switch (token) {
 
 				case "DevicePrivateProfile" : {
-					var Result = new DevicePrivateProfile ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new DevicePrivateProfile ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
@@ -2694,19 +2427,22 @@ namespace Goedel.Mesh {
 			switch (Tag) {
 				case "DeviceSignatureKey" : {
 					// An untagged structure
-					DeviceSignatureKey = new Key (JSONReader);
+					DeviceSignatureKey = new Key ();
+					DeviceSignatureKey.Deserialize (JSONReader);
  
 					break;
 					}
 				case "DeviceAuthenticationKey" : {
 					// An untagged structure
-					DeviceAuthenticationKey = new Key (JSONReader);
+					DeviceAuthenticationKey = new Key ();
+					DeviceAuthenticationKey.Deserialize (JSONReader);
  
 					break;
 					}
 				case "DeviceEncryptiontionKey" : {
 					// An untagged structure
-					DeviceEncryptiontionKey = new Key (JSONReader);
+					DeviceEncryptiontionKey = new Key ();
+					DeviceEncryptiontionKey.Deserialize (JSONReader);
  
 					break;
 					}
@@ -2734,27 +2470,6 @@ namespace Goedel.Mesh {
 			return "SignedMasterProfile";
 			}
 
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-		public SignedMasterProfile () {
-			_Initialize ();
-			}
-        /// <summary>
-		/// Initialize class from JSONReader stream.
-        /// </summary>		
-        /// <param name="JSONReader">Input stream</param>	
-		public SignedMasterProfile (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			}
-
-        /// <summary> 
-		/// Initialize class from a JSON encoded class.
-        /// </summary>		
-        /// <param name="_String">Input string</param>
-		public SignedMasterProfile (string _String) {
-			Deserialize (_String);
-			}
 
 
         /// <summary>
@@ -2809,7 +2524,10 @@ namespace Goedel.Mesh {
 		public static new SignedMasterProfile From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-			return new SignedMasterProfile (JSONReader);
+			var Result = new SignedMasterProfile ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			// return new SignedMasterProfile (JSONReader);
 			}
 
         /// <summary>
@@ -2856,9 +2574,8 @@ namespace Goedel.Mesh {
 			switch (token) {
 
 				case "SignedMasterProfile" : {
-					var Result = new SignedMasterProfile ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new SignedMasterProfile ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
@@ -2925,27 +2642,6 @@ namespace Goedel.Mesh {
 			return "MasterProfile";
 			}
 
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-		public MasterProfile () {
-			_Initialize ();
-			}
-        /// <summary>
-		/// Initialize class from JSONReader stream.
-        /// </summary>		
-        /// <param name="JSONReader">Input stream</param>	
-		public MasterProfile (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			}
-
-        /// <summary> 
-		/// Initialize class from a JSON encoded class.
-        /// </summary>		
-        /// <param name="_String">Input string</param>
-		public MasterProfile (string _String) {
-			Deserialize (_String);
-			}
 
 
         /// <summary>
@@ -3039,7 +2735,10 @@ namespace Goedel.Mesh {
 		public static new MasterProfile From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-			return new MasterProfile (JSONReader);
+			var Result = new MasterProfile ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			// return new MasterProfile (JSONReader);
 			}
 
         /// <summary>
@@ -3086,9 +2785,8 @@ namespace Goedel.Mesh {
 			switch (token) {
 
 				case "MasterProfile" : {
-					var Result = new MasterProfile ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new MasterProfile ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
@@ -3112,7 +2810,8 @@ namespace Goedel.Mesh {
 			switch (Tag) {
 				case "MasterSignatureKey" : {
 					// An untagged structure
-					MasterSignatureKey = new PublicKey (JSONReader);
+					MasterSignatureKey = new PublicKey ();
+					MasterSignatureKey.Deserialize (JSONReader);
  
 					break;
 					}
@@ -3122,7 +2821,9 @@ namespace Goedel.Mesh {
 					MasterEscrowKeys = new List <PublicKey> ();
 					while (_Going) {
 						// an untagged structure.
-						var _Item = new PublicKey (JSONReader);
+						var _Item = new  PublicKey ();
+						_Item.Deserialize (JSONReader);
+						// var _Item = new PublicKey (JSONReader);
 						MasterEscrowKeys.Add (_Item);
 						_Going = JSONReader.NextArray ();
 						}
@@ -3134,7 +2835,9 @@ namespace Goedel.Mesh {
 					OnlineSignatureKeys = new List <PublicKey> ();
 					while (_Going) {
 						// an untagged structure.
-						var _Item = new PublicKey (JSONReader);
+						var _Item = new  PublicKey ();
+						_Item.Deserialize (JSONReader);
+						// var _Item = new PublicKey (JSONReader);
 						OnlineSignatureKeys.Add (_Item);
 						_Going = JSONReader.NextArray ();
 						}
@@ -3165,27 +2868,6 @@ namespace Goedel.Mesh {
 			return "SignedPersonalProfile";
 			}
 
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-		public SignedPersonalProfile () {
-			_Initialize ();
-			}
-        /// <summary>
-		/// Initialize class from JSONReader stream.
-        /// </summary>		
-        /// <param name="JSONReader">Input stream</param>	
-		public SignedPersonalProfile (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			}
-
-        /// <summary> 
-		/// Initialize class from a JSON encoded class.
-        /// </summary>		
-        /// <param name="_String">Input string</param>
-		public SignedPersonalProfile (string _String) {
-			Deserialize (_String);
-			}
 
 
         /// <summary>
@@ -3240,7 +2922,10 @@ namespace Goedel.Mesh {
 		public static new SignedPersonalProfile From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-			return new SignedPersonalProfile (JSONReader);
+			var Result = new SignedPersonalProfile ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			// return new SignedPersonalProfile (JSONReader);
 			}
 
         /// <summary>
@@ -3287,9 +2972,8 @@ namespace Goedel.Mesh {
 			switch (token) {
 
 				case "SignedPersonalProfile" : {
-					var Result = new SignedPersonalProfile ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new SignedPersonalProfile ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
@@ -3354,27 +3038,6 @@ namespace Goedel.Mesh {
 			return "PersonalProfile";
 			}
 
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-		public PersonalProfile () {
-			_Initialize ();
-			}
-        /// <summary>
-		/// Initialize class from JSONReader stream.
-        /// </summary>		
-        /// <param name="JSONReader">Input stream</param>	
-		public PersonalProfile (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			}
-
-        /// <summary> 
-		/// Initialize class from a JSON encoded class.
-        /// </summary>		
-        /// <param name="_String">Input string</param>
-		public PersonalProfile (string _String) {
-			Deserialize (_String);
-			}
 
 
         /// <summary>
@@ -3468,7 +3131,10 @@ namespace Goedel.Mesh {
 		public static new PersonalProfile From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-			return new PersonalProfile (JSONReader);
+			var Result = new PersonalProfile ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			// return new PersonalProfile (JSONReader);
 			}
 
         /// <summary>
@@ -3515,9 +3181,8 @@ namespace Goedel.Mesh {
 			switch (token) {
 
 				case "PersonalProfile" : {
-					var Result = new PersonalProfile ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new PersonalProfile ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
@@ -3541,7 +3206,8 @@ namespace Goedel.Mesh {
 			switch (Tag) {
 				case "SignedMasterProfile" : {
 					// An untagged structure
-					SignedMasterProfile = new SignedMasterProfile (JSONReader);
+					SignedMasterProfile = new SignedMasterProfile ();
+					SignedMasterProfile.Deserialize (JSONReader);
  
 					break;
 					}
@@ -3551,7 +3217,9 @@ namespace Goedel.Mesh {
 					Devices = new List <SignedDeviceProfile> ();
 					while (_Going) {
 						// an untagged structure.
-						var _Item = new SignedDeviceProfile (JSONReader);
+						var _Item = new  SignedDeviceProfile ();
+						_Item.Deserialize (JSONReader);
+						// var _Item = new SignedDeviceProfile (JSONReader);
 						Devices.Add (_Item);
 						_Going = JSONReader.NextArray ();
 						}
@@ -3563,7 +3231,9 @@ namespace Goedel.Mesh {
 					Applications = new List <ApplicationProfileEntry> ();
 					while (_Going) {
 						// an untagged structure.
-						var _Item = new ApplicationProfileEntry (JSONReader);
+						var _Item = new  ApplicationProfileEntry ();
+						_Item.Deserialize (JSONReader);
+						// var _Item = new ApplicationProfileEntry (JSONReader);
 						Applications.Add (_Item);
 						_Going = JSONReader.NextArray ();
 						}
@@ -3620,27 +3290,6 @@ namespace Goedel.Mesh {
 			return "ApplicationProfileEntry";
 			}
 
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-		public ApplicationProfileEntry () {
-			_Initialize ();
-			}
-        /// <summary>
-		/// Initialize class from JSONReader stream.
-        /// </summary>		
-        /// <param name="JSONReader">Input stream</param>	
-		public ApplicationProfileEntry (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			}
-
-        /// <summary> 
-		/// Initialize class from a JSON encoded class.
-        /// </summary>		
-        /// <param name="_String">Input string</param>
-		public ApplicationProfileEntry (string _String) {
-			Deserialize (_String);
-			}
 
 
         /// <summary>
@@ -3733,7 +3382,10 @@ namespace Goedel.Mesh {
 		public static new ApplicationProfileEntry From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-			return new ApplicationProfileEntry (JSONReader);
+			var Result = new ApplicationProfileEntry ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			// return new ApplicationProfileEntry (JSONReader);
 			}
 
         /// <summary>
@@ -3780,9 +3432,8 @@ namespace Goedel.Mesh {
 			switch (token) {
 
 				case "ApplicationProfileEntry" : {
-					var Result = new ApplicationProfileEntry ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new ApplicationProfileEntry ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
@@ -3862,27 +3513,6 @@ namespace Goedel.Mesh {
 			return "SignedApplicationProfile";
 			}
 
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-		public SignedApplicationProfile () {
-			_Initialize ();
-			}
-        /// <summary>
-		/// Initialize class from JSONReader stream.
-        /// </summary>		
-        /// <param name="JSONReader">Input stream</param>	
-		public SignedApplicationProfile (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			}
-
-        /// <summary> 
-		/// Initialize class from a JSON encoded class.
-        /// </summary>		
-        /// <param name="_String">Input string</param>
-		public SignedApplicationProfile (string _String) {
-			Deserialize (_String);
-			}
 
 
         /// <summary>
@@ -3937,7 +3567,10 @@ namespace Goedel.Mesh {
 		public static new SignedApplicationProfile From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-			return new SignedApplicationProfile (JSONReader);
+			var Result = new SignedApplicationProfile ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			// return new SignedApplicationProfile (JSONReader);
 			}
 
         /// <summary>
@@ -3984,9 +3617,8 @@ namespace Goedel.Mesh {
 			switch (token) {
 
 				case "SignedApplicationProfile" : {
-					var Result = new SignedApplicationProfile ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new SignedApplicationProfile ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
@@ -4043,27 +3675,6 @@ namespace Goedel.Mesh {
 			return "ApplicationProfile";
 			}
 
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-		public ApplicationProfile () {
-			_Initialize ();
-			}
-        /// <summary>
-		/// Initialize class from JSONReader stream.
-        /// </summary>		
-        /// <param name="JSONReader">Input stream</param>	
-		public ApplicationProfile (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			}
-
-        /// <summary> 
-		/// Initialize class from a JSON encoded class.
-        /// </summary>		
-        /// <param name="_String">Input string</param>
-		public ApplicationProfile (string _String) {
-			Deserialize (_String);
-			}
 
 
         /// <summary>
@@ -4140,7 +3751,10 @@ namespace Goedel.Mesh {
 		public static new ApplicationProfile From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-			return new ApplicationProfile (JSONReader);
+			var Result = new ApplicationProfile ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			// return new ApplicationProfile (JSONReader);
 			}
 
         /// <summary>
@@ -4187,9 +3801,8 @@ namespace Goedel.Mesh {
 			switch (token) {
 
 				case "ApplicationProfile" : {
-					var Result = new ApplicationProfile ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new ApplicationProfile ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
@@ -4197,8 +3810,7 @@ namespace Goedel.Mesh {
                     break;
 					}
 				}
-
-            JSONReader.EndObject ();
+			JSONReader.EndObject ();
 
 			return Out;
 			}
@@ -4214,7 +3826,8 @@ namespace Goedel.Mesh {
 			switch (Tag) {
 				case "SharedPrivate" : {
 					// An untagged structure
-					SharedPrivate = new JoseWebEncryption (JSONReader);
+					SharedPrivate = new JoseWebEncryption ();
+					SharedPrivate.Deserialize (JSONReader);
  
 					break;
 					}
@@ -4224,7 +3837,9 @@ namespace Goedel.Mesh {
 					DevicePrivate = new List <JoseWebEncryption> ();
 					while (_Going) {
 						// an untagged structure.
-						var _Item = new JoseWebEncryption (JSONReader);
+						var _Item = new  JoseWebEncryption ();
+						_Item.Deserialize (JSONReader);
+						// var _Item = new JoseWebEncryption (JSONReader);
 						DevicePrivate.Add (_Item);
 						_Going = JSONReader.NextArray ();
 						}
@@ -4255,27 +3870,6 @@ namespace Goedel.Mesh {
 			return "ApplicationProfilePrivate";
 			}
 
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-		public ApplicationProfilePrivate () {
-			_Initialize ();
-			}
-        /// <summary>
-		/// Initialize class from JSONReader stream.
-        /// </summary>		
-        /// <param name="JSONReader">Input stream</param>	
-		public ApplicationProfilePrivate (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			}
-
-        /// <summary> 
-		/// Initialize class from a JSON encoded class.
-        /// </summary>		
-        /// <param name="_String">Input string</param>
-		public ApplicationProfilePrivate (string _String) {
-			Deserialize (_String);
-			}
 
 
         /// <summary>
@@ -4330,7 +3924,10 @@ namespace Goedel.Mesh {
 		public static new ApplicationProfilePrivate From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-			return new ApplicationProfilePrivate (JSONReader);
+			var Result = new ApplicationProfilePrivate ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			// return new ApplicationProfilePrivate (JSONReader);
 			}
 
         /// <summary>
@@ -4377,9 +3974,8 @@ namespace Goedel.Mesh {
 			switch (token) {
 
 				case "ApplicationProfilePrivate" : {
-					var Result = new ApplicationProfilePrivate ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new ApplicationProfilePrivate ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
@@ -4426,27 +4022,6 @@ namespace Goedel.Mesh {
 			return "ApplicationDevicePublic";
 			}
 
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-		public ApplicationDevicePublic () {
-			_Initialize ();
-			}
-        /// <summary>
-		/// Initialize class from JSONReader stream.
-        /// </summary>		
-        /// <param name="JSONReader">Input stream</param>	
-		public ApplicationDevicePublic (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			}
-
-        /// <summary> 
-		/// Initialize class from a JSON encoded class.
-        /// </summary>		
-        /// <param name="_String">Input string</param>
-		public ApplicationDevicePublic (string _String) {
-			Deserialize (_String);
-			}
 
 
         /// <summary>
@@ -4501,7 +4076,10 @@ namespace Goedel.Mesh {
 		public static new ApplicationDevicePublic From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-			return new ApplicationDevicePublic (JSONReader);
+			var Result = new ApplicationDevicePublic ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			// return new ApplicationDevicePublic (JSONReader);
 			}
 
         /// <summary>
@@ -4548,9 +4126,8 @@ namespace Goedel.Mesh {
 			switch (token) {
 
 				case "ApplicationDevicePublic" : {
-					var Result = new ApplicationDevicePublic ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new ApplicationDevicePublic ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
@@ -4597,27 +4174,6 @@ namespace Goedel.Mesh {
 			return "ApplicationDevicePrivate";
 			}
 
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-		public ApplicationDevicePrivate () {
-			_Initialize ();
-			}
-        /// <summary>
-		/// Initialize class from JSONReader stream.
-        /// </summary>		
-        /// <param name="JSONReader">Input stream</param>	
-		public ApplicationDevicePrivate (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			}
-
-        /// <summary> 
-		/// Initialize class from a JSON encoded class.
-        /// </summary>		
-        /// <param name="_String">Input string</param>
-		public ApplicationDevicePrivate (string _String) {
-			Deserialize (_String);
-			}
 
 
         /// <summary>
@@ -4672,7 +4228,10 @@ namespace Goedel.Mesh {
 		public static new ApplicationDevicePrivate From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-			return new ApplicationDevicePrivate (JSONReader);
+			var Result = new ApplicationDevicePrivate ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			// return new ApplicationDevicePrivate (JSONReader);
 			}
 
         /// <summary>
@@ -4719,9 +4278,8 @@ namespace Goedel.Mesh {
 			switch (token) {
 
 				case "ApplicationDevicePrivate" : {
-					var Result = new ApplicationDevicePrivate ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new ApplicationDevicePrivate ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
@@ -4773,27 +4331,6 @@ namespace Goedel.Mesh {
 			return "EscrowEntry";
 			}
 
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-		public EscrowEntry () {
-			_Initialize ();
-			}
-        /// <summary>
-		/// Initialize class from JSONReader stream.
-        /// </summary>		
-        /// <param name="JSONReader">Input stream</param>	
-		public EscrowEntry (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			}
-
-        /// <summary> 
-		/// Initialize class from a JSON encoded class.
-        /// </summary>		
-        /// <param name="_String">Input string</param>
-		public EscrowEntry (string _String) {
-			Deserialize (_String);
-			}
 
 
         /// <summary>
@@ -4853,7 +4390,10 @@ namespace Goedel.Mesh {
 		public static new EscrowEntry From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-			return new EscrowEntry (JSONReader);
+			var Result = new EscrowEntry ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			// return new EscrowEntry (JSONReader);
 			}
 
         /// <summary>
@@ -4900,23 +4440,20 @@ namespace Goedel.Mesh {
 			switch (token) {
 
 				case "EscrowEntry" : {
-					var Result = new EscrowEntry ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new EscrowEntry ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 				case "OfflineEscrowEntry" : {
-					var Result = new OfflineEscrowEntry ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new OfflineEscrowEntry ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 				case "OnlineEscrowEntry" : {
-					var Result = new OnlineEscrowEntry ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new OnlineEscrowEntry ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
@@ -4940,7 +4477,8 @@ namespace Goedel.Mesh {
 			switch (Tag) {
 				case "EncryptedData" : {
 					// An untagged structure
-					EncryptedData = new JoseWebEncryption (JSONReader);
+					EncryptedData = new JoseWebEncryption ();
+					EncryptedData.Deserialize (JSONReader);
  
 					break;
 					}
@@ -4969,27 +4507,6 @@ namespace Goedel.Mesh {
 			return "OfflineEscrowEntry";
 			}
 
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-		public OfflineEscrowEntry () {
-			_Initialize ();
-			}
-        /// <summary>
-		/// Initialize class from JSONReader stream.
-        /// </summary>		
-        /// <param name="JSONReader">Input stream</param>	
-		public OfflineEscrowEntry (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			}
-
-        /// <summary> 
-		/// Initialize class from a JSON encoded class.
-        /// </summary>		
-        /// <param name="_String">Input string</param>
-		public OfflineEscrowEntry (string _String) {
-			Deserialize (_String);
-			}
 
 
         /// <summary>
@@ -5044,7 +4561,10 @@ namespace Goedel.Mesh {
 		public static new OfflineEscrowEntry From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-			return new OfflineEscrowEntry (JSONReader);
+			var Result = new OfflineEscrowEntry ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			// return new OfflineEscrowEntry (JSONReader);
 			}
 
         /// <summary>
@@ -5091,9 +4611,8 @@ namespace Goedel.Mesh {
 			switch (token) {
 
 				case "OfflineEscrowEntry" : {
-					var Result = new OfflineEscrowEntry ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new OfflineEscrowEntry ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
@@ -5140,27 +4659,6 @@ namespace Goedel.Mesh {
 			return "OnlineEscrowEntry";
 			}
 
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-		public OnlineEscrowEntry () {
-			_Initialize ();
-			}
-        /// <summary>
-		/// Initialize class from JSONReader stream.
-        /// </summary>		
-        /// <param name="JSONReader">Input stream</param>	
-		public OnlineEscrowEntry (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			}
-
-        /// <summary> 
-		/// Initialize class from a JSON encoded class.
-        /// </summary>		
-        /// <param name="_String">Input string</param>
-		public OnlineEscrowEntry (string _String) {
-			Deserialize (_String);
-			}
 
 
         /// <summary>
@@ -5215,7 +4713,10 @@ namespace Goedel.Mesh {
 		public static new OnlineEscrowEntry From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-			return new OnlineEscrowEntry (JSONReader);
+			var Result = new OnlineEscrowEntry ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			// return new OnlineEscrowEntry (JSONReader);
 			}
 
         /// <summary>
@@ -5262,9 +4763,8 @@ namespace Goedel.Mesh {
 			switch (token) {
 
 				case "OnlineEscrowEntry" : {
-					var Result = new OnlineEscrowEntry ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new OnlineEscrowEntry ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
@@ -5321,27 +4821,6 @@ namespace Goedel.Mesh {
 			return "EscrowedKeySet";
 			}
 
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-		public EscrowedKeySet () {
-			_Initialize ();
-			}
-        /// <summary>
-		/// Initialize class from JSONReader stream.
-        /// </summary>		
-        /// <param name="JSONReader">Input stream</param>	
-		public EscrowedKeySet (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			}
-
-        /// <summary> 
-		/// Initialize class from a JSON encoded class.
-        /// </summary>		
-        /// <param name="_String">Input string</param>
-		public EscrowedKeySet (string _String) {
-			Deserialize (_String);
-			}
 
 
         /// <summary>
@@ -5424,7 +4903,10 @@ namespace Goedel.Mesh {
 		public static new EscrowedKeySet From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-			return new EscrowedKeySet (JSONReader);
+			var Result = new EscrowedKeySet ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			// return new EscrowedKeySet (JSONReader);
 			}
 
         /// <summary>
@@ -5471,9 +4953,8 @@ namespace Goedel.Mesh {
 			switch (token) {
 
 				case "EscrowedKeySet" : {
-					var Result = new EscrowedKeySet ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new EscrowedKeySet ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
@@ -5544,27 +5025,6 @@ namespace Goedel.Mesh {
 			return "ConnectionRequest";
 			}
 
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-		public ConnectionRequest () {
-			_Initialize ();
-			}
-        /// <summary>
-		/// Initialize class from JSONReader stream.
-        /// </summary>		
-        /// <param name="JSONReader">Input stream</param>	
-		public ConnectionRequest (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			}
-
-        /// <summary> 
-		/// Initialize class from a JSON encoded class.
-        /// </summary>		
-        /// <param name="_String">Input string</param>
-		public ConnectionRequest (string _String) {
-			Deserialize (_String);
-			}
 
 
         /// <summary>
@@ -5628,7 +5088,10 @@ namespace Goedel.Mesh {
 		public static new ConnectionRequest From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-			return new ConnectionRequest (JSONReader);
+			var Result = new ConnectionRequest ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			// return new ConnectionRequest (JSONReader);
 			}
 
         /// <summary>
@@ -5675,16 +5138,14 @@ namespace Goedel.Mesh {
 			switch (token) {
 
 				case "ConnectionRequest" : {
-					var Result = new ConnectionRequest ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new ConnectionRequest ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 				case "ConnectionResult" : {
-					var Result = new ConnectionResult ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new ConnectionResult ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
@@ -5712,7 +5173,8 @@ namespace Goedel.Mesh {
 					}
 				case "Device" : {
 					// An untagged structure
-					Device = new SignedDeviceProfile (JSONReader);
+					Device = new SignedDeviceProfile ();
+					Device.Deserialize (JSONReader);
  
 					break;
 					}
@@ -5741,27 +5203,6 @@ namespace Goedel.Mesh {
 			return "SignedConnectionRequest";
 			}
 
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-		public SignedConnectionRequest () {
-			_Initialize ();
-			}
-        /// <summary>
-		/// Initialize class from JSONReader stream.
-        /// </summary>		
-        /// <param name="JSONReader">Input stream</param>	
-		public SignedConnectionRequest (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			}
-
-        /// <summary> 
-		/// Initialize class from a JSON encoded class.
-        /// </summary>		
-        /// <param name="_String">Input string</param>
-		public SignedConnectionRequest (string _String) {
-			Deserialize (_String);
-			}
 
 
         /// <summary>
@@ -5816,7 +5257,10 @@ namespace Goedel.Mesh {
 		public static new SignedConnectionRequest From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-			return new SignedConnectionRequest (JSONReader);
+			var Result = new SignedConnectionRequest ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			// return new SignedConnectionRequest (JSONReader);
 			}
 
         /// <summary>
@@ -5863,9 +5307,8 @@ namespace Goedel.Mesh {
 			switch (token) {
 
 				case "SignedConnectionRequest" : {
-					var Result = new SignedConnectionRequest ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new SignedConnectionRequest ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
@@ -5918,27 +5361,6 @@ namespace Goedel.Mesh {
 			return "ConnectionResult";
 			}
 
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-		public ConnectionResult () {
-			_Initialize ();
-			}
-        /// <summary>
-		/// Initialize class from JSONReader stream.
-        /// </summary>		
-        /// <param name="JSONReader">Input stream</param>	
-		public ConnectionResult (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			}
-
-        /// <summary> 
-		/// Initialize class from a JSON encoded class.
-        /// </summary>		
-        /// <param name="_String">Input string</param>
-		public ConnectionResult (string _String) {
-			Deserialize (_String);
-			}
 
 
         /// <summary>
@@ -5998,7 +5420,10 @@ namespace Goedel.Mesh {
 		public static new ConnectionResult From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-			return new ConnectionResult (JSONReader);
+			var Result = new ConnectionResult ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			// return new ConnectionResult (JSONReader);
 			}
 
         /// <summary>
@@ -6045,9 +5470,8 @@ namespace Goedel.Mesh {
 			switch (token) {
 
 				case "ConnectionResult" : {
-					var Result = new ConnectionResult ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new ConnectionResult ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
@@ -6098,27 +5522,6 @@ namespace Goedel.Mesh {
 			return "SignedConnectionResult";
 			}
 
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-		public SignedConnectionResult () {
-			_Initialize ();
-			}
-        /// <summary>
-		/// Initialize class from JSONReader stream.
-        /// </summary>		
-        /// <param name="JSONReader">Input stream</param>	
-		public SignedConnectionResult (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			}
-
-        /// <summary> 
-		/// Initialize class from a JSON encoded class.
-        /// </summary>		
-        /// <param name="_String">Input string</param>
-		public SignedConnectionResult (string _String) {
-			Deserialize (_String);
-			}
 
 
         /// <summary>
@@ -6173,7 +5576,10 @@ namespace Goedel.Mesh {
 		public static new SignedConnectionResult From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-			return new SignedConnectionResult (JSONReader);
+			var Result = new SignedConnectionResult ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			// return new SignedConnectionResult (JSONReader);
 			}
 
         /// <summary>
@@ -6220,9 +5626,8 @@ namespace Goedel.Mesh {
 			switch (token) {
 
 				case "SignedConnectionResult" : {
-					var Result = new SignedConnectionResult ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new SignedConnectionResult ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 

@@ -84,7 +84,12 @@ namespace Goedel.Mesh {
         /// <summary>
         /// The parsed master profile associated with this profile
         /// </summary>
-        public MasterProfile MasterProfile { get => SignedMasterProfile.MasterProfile;  } 
+        public MasterProfile MasterProfile { get => SignedMasterProfile.MasterProfile;  }
+
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
+        public PersonalProfile () { }
 
         /// <summary>
         /// Create a personal profile with the specified master and administration
@@ -323,6 +328,11 @@ namespace Goedel.Mesh {
         /// The application profile object this entry belongs to.
         /// </summary>
         public ApplicationProfile ApplicationProfile;
+
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
+        public ApplicationProfileEntry () { }
 
         /// <summary>
         /// Create a new entry for the specified profile.

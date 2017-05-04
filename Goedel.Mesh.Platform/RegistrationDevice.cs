@@ -44,6 +44,9 @@ namespace Goedel.Mesh.Platform {
         /// </summary>
         public SignedDeviceProfile SignedDeviceProfile { get; set; }
 
+        public override RegistrationMachine RegistrationMachine { get; }
+
+
         /// <summary>
         /// The most recent cached profile data, if available.
         /// </summary>
@@ -70,7 +73,7 @@ namespace Goedel.Mesh.Platform {
             var PendingResponse = MeshClient.ConnectRequest(SignedDeviceProfile);
 
             // Copy the MeshClient to the unconnected profile
-            var RegisteredPersonal = MeshCatalog.AddPersonal(SignedPersonalProfile.PersonalProfile);
+            var RegisteredPersonal = RegistrationMachine.Add(SignedPersonalProfile);
             RegisteredPersonal.MeshClient = MeshClient;
 
             return RegisteredPersonal;

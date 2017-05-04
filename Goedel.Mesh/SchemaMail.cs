@@ -49,31 +49,6 @@ namespace Goedel.Mesh {
 			return "MeshMail";
 			}
 
-        /// <summary>
-        /// Default constructor.
-        /// </summary>
-		public MeshMail () {
-			_Initialize () ;
-			}
-
-        /// <summary>
-        /// Construct an instance from a JSON encoded stream.
-        /// </summary>
-        /// <param name="JSONReader">Input stream</param>
-		public MeshMail (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			_Initialize () ;
-			}
-
-        /// <summary>
-        /// Construct an instance from a JSON encoded string.
-        /// </summary>
-        /// <param name="_String">Input string</param>
-		public MeshMail (string _String) {
-			Deserialize (_String);
-			_Initialize () ;
-			}
-
 		/// <summary>
         /// Construct an instance from the specified tagged JSONReader stream.
         /// </summary>
@@ -93,17 +68,15 @@ namespace Goedel.Mesh {
 			switch (token) {
 
 				case "MailProfile" : {
-					var Result = new MailProfile ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new MailProfile ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 
 				case "MailProfilePrivate" : {
-					var Result = new MailProfilePrivate ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new MailProfilePrivate ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
@@ -147,27 +120,6 @@ namespace Goedel.Mesh {
 			return "MailProfile";
 			}
 
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-		public MailProfile () {
-			_Initialize ();
-			}
-        /// <summary>
-		/// Initialize class from JSONReader stream.
-        /// </summary>		
-        /// <param name="JSONReader">Input stream</param>	
-		public MailProfile (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			}
-
-        /// <summary> 
-		/// Initialize class from a JSON encoded class.
-        /// </summary>		
-        /// <param name="_String">Input string</param>
-		public MailProfile (string _String) {
-			Deserialize (_String);
-			}
 
 
         /// <summary>
@@ -232,7 +184,10 @@ namespace Goedel.Mesh {
 		public static new MailProfile From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-			return new MailProfile (JSONReader);
+			var Result = new MailProfile ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			// return new MailProfile (JSONReader);
 			}
 
         /// <summary>
@@ -279,9 +234,8 @@ namespace Goedel.Mesh {
 			switch (token) {
 
 				case "MailProfile" : {
-					var Result = new MailProfile ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new MailProfile ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
@@ -305,13 +259,15 @@ namespace Goedel.Mesh {
 			switch (Tag) {
 				case "EncryptionPGP" : {
 					// An untagged structure
-					EncryptionPGP = new PublicKey (JSONReader);
+					EncryptionPGP = new PublicKey ();
+					EncryptionPGP.Deserialize (JSONReader);
  
 					break;
 					}
 				case "EncryptionSMIME" : {
 					// An untagged structure
-					EncryptionSMIME = new PublicKey (JSONReader);
+					EncryptionSMIME = new PublicKey ();
+					EncryptionSMIME.Deserialize (JSONReader);
  
 					break;
 					}
@@ -391,27 +347,6 @@ namespace Goedel.Mesh {
 			return "MailProfilePrivate";
 			}
 
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-		public MailProfilePrivate () {
-			_Initialize ();
-			}
-        /// <summary>
-		/// Initialize class from JSONReader stream.
-        /// </summary>		
-        /// <param name="JSONReader">Input stream</param>	
-		public MailProfilePrivate (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			}
-
-        /// <summary> 
-		/// Initialize class from a JSON encoded class.
-        /// </summary>		
-        /// <param name="_String">Input string</param>
-		public MailProfilePrivate (string _String) {
-			Deserialize (_String);
-			}
 
 
         /// <summary>
@@ -553,7 +488,10 @@ namespace Goedel.Mesh {
 		public static new MailProfilePrivate From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-			return new MailProfilePrivate (JSONReader);
+			var Result = new MailProfilePrivate ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			// return new MailProfilePrivate (JSONReader);
 			}
 
         /// <summary>
@@ -600,9 +538,8 @@ namespace Goedel.Mesh {
 			switch (token) {
 
 				case "MailProfilePrivate" : {
-					var Result = new MailProfilePrivate ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new MailProfilePrivate ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
@@ -646,7 +583,9 @@ namespace Goedel.Mesh {
 					Inbound = new List <Connection> ();
 					while (_Going) {
 						// an untagged structure.
-						var _Item = new Connection (JSONReader);
+						var _Item = new  Connection ();
+						_Item.Deserialize (JSONReader);
+						// var _Item = new Connection (JSONReader);
 						Inbound.Add (_Item);
 						_Going = JSONReader.NextArray ();
 						}
@@ -658,7 +597,9 @@ namespace Goedel.Mesh {
 					Outbound = new List <Connection> ();
 					while (_Going) {
 						// an untagged structure.
-						var _Item = new Connection (JSONReader);
+						var _Item = new  Connection ();
+						_Item.Deserialize (JSONReader);
+						// var _Item = new Connection (JSONReader);
 						Outbound.Add (_Item);
 						_Going = JSONReader.NextArray ();
 						}
@@ -670,7 +611,9 @@ namespace Goedel.Mesh {
 					Sign = new List <PublicKey> ();
 					while (_Going) {
 						// an untagged structure.
-						var _Item = new PublicKey (JSONReader);
+						var _Item = new  PublicKey ();
+						_Item.Deserialize (JSONReader);
+						// var _Item = new PublicKey (JSONReader);
 						Sign.Add (_Item);
 						_Going = JSONReader.NextArray ();
 						}
@@ -682,7 +625,9 @@ namespace Goedel.Mesh {
 					Encrypt = new List <PublicKey> ();
 					while (_Going) {
 						// an untagged structure.
-						var _Item = new PublicKey (JSONReader);
+						var _Item = new  PublicKey ();
+						_Item.Deserialize (JSONReader);
+						// var _Item = new PublicKey (JSONReader);
 						Encrypt.Add (_Item);
 						_Going = JSONReader.NextArray ();
 						}

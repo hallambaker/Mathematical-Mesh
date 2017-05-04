@@ -33,6 +33,11 @@ namespace Goedel.Mesh {
     public partial class KeyValue {
 
         /// <summary>
+        /// Default Constructor
+        /// </summary>
+        public KeyValue () { }
+
+        /// <summary>
         /// Constructor from principal fields.
         /// </summary>
         /// <param name="Key">The initial value of the Key field.</param>

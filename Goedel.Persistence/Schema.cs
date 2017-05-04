@@ -48,31 +48,6 @@ namespace Goedel.Persistence {
 			return "LogEntry";
 			}
 
-        /// <summary>
-        /// Default constructor.
-        /// </summary>
-		public LogEntry () {
-			_Initialize () ;
-			}
-
-        /// <summary>
-        /// Construct an instance from a JSON encoded stream.
-        /// </summary>
-        /// <param name="JSONReader">Input stream</param>
-		public LogEntry (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			_Initialize () ;
-			}
-
-        /// <summary>
-        /// Construct an instance from a JSON encoded string.
-        /// </summary>
-        /// <param name="_String">Input string</param>
-		public LogEntry (string _String) {
-			Deserialize (_String);
-			_Initialize () ;
-			}
-
 		/// <summary>
         /// Construct an instance from the specified tagged JSONReader stream.
         /// </summary>
@@ -92,73 +67,64 @@ namespace Goedel.Persistence {
 			switch (token) {
 
 				case "DataItem" : {
-					var Result = new DataItem ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new DataItem ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 
 				case "Header" : {
-					var Result = new Header ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new Header ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 
 				case "Delta" : {
-					var Result = new Delta ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new Delta ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 
 				case "IndexTerm" : {
-					var Result = new IndexTerm ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new IndexTerm ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 
 				case "Final" : {
-					var Result = new Final ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new Final ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 
 				case "Terminal" : {
-					var Result = new Terminal ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new Terminal ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 
 				case "IndexIndex" : {
-					var Result = new IndexIndex ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new IndexIndex ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 
 				case "Index" : {
-					var Result = new Index ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new Index ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 
 				case "IndexEntry" : {
-					var Result = new IndexEntry ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new IndexEntry ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
@@ -275,27 +241,6 @@ namespace Goedel.Persistence {
 			return "DataItem";
 			}
 
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-		public DataItem () {
-			_Initialize ();
-			}
-        /// <summary>
-		/// Initialize class from JSONReader stream.
-        /// </summary>		
-        /// <param name="JSONReader">Input stream</param>	
-		public DataItem (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			}
-
-        /// <summary> 
-		/// Initialize class from a JSON encoded class.
-        /// </summary>		
-        /// <param name="_String">Input string</param>
-		public DataItem (string _String) {
-			Deserialize (_String);
-			}
 
 
         /// <summary>
@@ -415,7 +360,10 @@ namespace Goedel.Persistence {
 		public static new DataItem From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-			return new DataItem (JSONReader);
+			var Result = new DataItem ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			// return new DataItem (JSONReader);
 			}
 
         /// <summary>
@@ -462,9 +410,8 @@ namespace Goedel.Persistence {
 			switch (token) {
 
 				case "DataItem" : {
-					var Result = new DataItem ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new DataItem ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
@@ -592,27 +539,6 @@ namespace Goedel.Persistence {
 			return "Header";
 			}
 
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-		public Header () {
-			_Initialize ();
-			}
-        /// <summary>
-		/// Initialize class from JSONReader stream.
-        /// </summary>		
-        /// <param name="JSONReader">Input stream</param>	
-		public Header (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			}
-
-        /// <summary> 
-		/// Initialize class from a JSON encoded class.
-        /// </summary>		
-        /// <param name="_String">Input string</param>
-		public Header (string _String) {
-			Deserialize (_String);
-			}
 
 
         /// <summary>
@@ -696,7 +622,10 @@ namespace Goedel.Persistence {
 		public static new Header From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-			return new Header (JSONReader);
+			var Result = new Header ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			// return new Header (JSONReader);
 			}
 
         /// <summary>
@@ -743,9 +672,8 @@ namespace Goedel.Persistence {
 			switch (token) {
 
 				case "Header" : {
-					var Result = new Header ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new Header ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
@@ -789,7 +717,8 @@ namespace Goedel.Persistence {
 					}
 				case "Delta" : {
 					// An untagged structure
-					Delta = new Delta (JSONReader);
+					Delta = new Delta ();
+					Delta.Deserialize (JSONReader);
  
 					break;
 					}
@@ -828,27 +757,6 @@ namespace Goedel.Persistence {
 			return "Delta";
 			}
 
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-		public Delta () {
-			_Initialize ();
-			}
-        /// <summary>
-		/// Initialize class from JSONReader stream.
-        /// </summary>		
-        /// <param name="JSONReader">Input stream</param>	
-		public Delta (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			}
-
-        /// <summary> 
-		/// Initialize class from a JSON encoded class.
-        /// </summary>		
-        /// <param name="_String">Input string</param>
-		public Delta (string _String) {
-			Deserialize (_String);
-			}
 
 
         /// <summary>
@@ -912,7 +820,10 @@ namespace Goedel.Persistence {
 		public static new Delta From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-			return new Delta (JSONReader);
+			var Result = new Delta ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			// return new Delta (JSONReader);
 			}
 
         /// <summary>
@@ -959,9 +870,8 @@ namespace Goedel.Persistence {
 			switch (token) {
 
 				case "Delta" : {
-					var Result = new Delta ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new Delta ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
@@ -1025,27 +935,6 @@ namespace Goedel.Persistence {
 			return "IndexTerm";
 			}
 
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-		public IndexTerm () {
-			_Initialize ();
-			}
-        /// <summary>
-		/// Initialize class from JSONReader stream.
-        /// </summary>		
-        /// <param name="JSONReader">Input stream</param>	
-		public IndexTerm (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			}
-
-        /// <summary> 
-		/// Initialize class from a JSON encoded class.
-        /// </summary>		
-        /// <param name="_String">Input string</param>
-		public IndexTerm (string _String) {
-			Deserialize (_String);
-			}
 
 
         /// <summary>
@@ -1109,7 +998,10 @@ namespace Goedel.Persistence {
 		public static new IndexTerm From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-			return new IndexTerm (JSONReader);
+			var Result = new IndexTerm ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			// return new IndexTerm (JSONReader);
 			}
 
         /// <summary>
@@ -1156,9 +1048,8 @@ namespace Goedel.Persistence {
 			switch (token) {
 
 				case "IndexTerm" : {
-					var Result = new IndexTerm ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new IndexTerm ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
@@ -1218,27 +1109,6 @@ namespace Goedel.Persistence {
 			return "Final";
 			}
 
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-		public Final () {
-			_Initialize ();
-			}
-        /// <summary>
-		/// Initialize class from JSONReader stream.
-        /// </summary>		
-        /// <param name="JSONReader">Input stream</param>	
-		public Final (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			}
-
-        /// <summary> 
-		/// Initialize class from a JSON encoded class.
-        /// </summary>		
-        /// <param name="_String">Input string</param>
-		public Final (string _String) {
-			Deserialize (_String);
-			}
 
 
         /// <summary>
@@ -1297,7 +1167,10 @@ namespace Goedel.Persistence {
 		public static new Final From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-			return new Final (JSONReader);
+			var Result = new Final ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			// return new Final (JSONReader);
 			}
 
         /// <summary>
@@ -1344,9 +1217,8 @@ namespace Goedel.Persistence {
 			switch (token) {
 
 				case "Final" : {
-					var Result = new Final ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new Final ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
@@ -1402,27 +1274,6 @@ namespace Goedel.Persistence {
 			return "Terminal";
 			}
 
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-		public Terminal () {
-			_Initialize ();
-			}
-        /// <summary>
-		/// Initialize class from JSONReader stream.
-        /// </summary>		
-        /// <param name="JSONReader">Input stream</param>	
-		public Terminal (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			}
-
-        /// <summary> 
-		/// Initialize class from a JSON encoded class.
-        /// </summary>		
-        /// <param name="_String">Input string</param>
-		public Terminal (string _String) {
-			Deserialize (_String);
-			}
 
 
         /// <summary>
@@ -1493,7 +1344,10 @@ namespace Goedel.Persistence {
 		public static new Terminal From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-			return new Terminal (JSONReader);
+			var Result = new Terminal ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			// return new Terminal (JSONReader);
 			}
 
         /// <summary>
@@ -1540,9 +1394,8 @@ namespace Goedel.Persistence {
 			switch (token) {
 
 				case "Terminal" : {
-					var Result = new Terminal ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new Terminal ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
@@ -1570,7 +1423,9 @@ namespace Goedel.Persistence {
 					Indexes = new List <IndexIndex> ();
 					while (_Going) {
 						// an untagged structure.
-						var _Item = new IndexIndex (JSONReader);
+						var _Item = new  IndexIndex ();
+						_Item.Deserialize (JSONReader);
+						// var _Item = new IndexIndex (JSONReader);
 						Indexes.Add (_Item);
 						_Going = JSONReader.NextArray ();
 						}
@@ -1615,27 +1470,6 @@ namespace Goedel.Persistence {
 			return "IndexIndex";
 			}
 
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-		public IndexIndex () {
-			_Initialize ();
-			}
-        /// <summary>
-		/// Initialize class from JSONReader stream.
-        /// </summary>		
-        /// <param name="JSONReader">Input stream</param>	
-		public IndexIndex (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			}
-
-        /// <summary> 
-		/// Initialize class from a JSON encoded class.
-        /// </summary>		
-        /// <param name="_String">Input string</param>
-		public IndexIndex (string _String) {
-			Deserialize (_String);
-			}
 
 
         /// <summary>
@@ -1699,7 +1533,10 @@ namespace Goedel.Persistence {
 		public static new IndexIndex From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-			return new IndexIndex (JSONReader);
+			var Result = new IndexIndex ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			// return new IndexIndex (JSONReader);
 			}
 
         /// <summary>
@@ -1746,9 +1583,8 @@ namespace Goedel.Persistence {
 			switch (token) {
 
 				case "IndexIndex" : {
-					var Result = new IndexIndex ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new IndexIndex ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
@@ -1813,27 +1649,6 @@ namespace Goedel.Persistence {
 			return "Index";
 			}
 
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-		public Index () {
-			_Initialize ();
-			}
-        /// <summary>
-		/// Initialize class from JSONReader stream.
-        /// </summary>		
-        /// <param name="JSONReader">Input stream</param>	
-		public Index (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			}
-
-        /// <summary> 
-		/// Initialize class from a JSON encoded class.
-        /// </summary>		
-        /// <param name="_String">Input string</param>
-		public Index (string _String) {
-			Deserialize (_String);
-			}
 
 
         /// <summary>
@@ -1909,7 +1724,10 @@ namespace Goedel.Persistence {
 		public static new Index From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-			return new Index (JSONReader);
+			var Result = new Index ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			// return new Index (JSONReader);
 			}
 
         /// <summary>
@@ -1956,9 +1774,8 @@ namespace Goedel.Persistence {
 			switch (token) {
 
 				case "Index" : {
-					var Result = new Index ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new Index ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
@@ -1990,7 +1807,9 @@ namespace Goedel.Persistence {
 					Entries = new List <IndexEntry> ();
 					while (_Going) {
 						// an untagged structure.
-						var _Item = new IndexEntry (JSONReader);
+						var _Item = new  IndexEntry ();
+						_Item.Deserialize (JSONReader);
+						// var _Item = new IndexEntry (JSONReader);
 						Entries.Add (_Item);
 						_Going = JSONReader.NextArray ();
 						}
@@ -2030,27 +1849,6 @@ namespace Goedel.Persistence {
 			return "IndexEntry";
 			}
 
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-		public IndexEntry () {
-			_Initialize ();
-			}
-        /// <summary>
-		/// Initialize class from JSONReader stream.
-        /// </summary>		
-        /// <param name="JSONReader">Input stream</param>	
-		public IndexEntry (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			}
-
-        /// <summary> 
-		/// Initialize class from a JSON encoded class.
-        /// </summary>		
-        /// <param name="_String">Input string</param>
-		public IndexEntry (string _String) {
-			Deserialize (_String);
-			}
 
 
         /// <summary>
@@ -2121,7 +1919,10 @@ namespace Goedel.Persistence {
 		public static new IndexEntry From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-			return new IndexEntry (JSONReader);
+			var Result = new IndexEntry ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			// return new IndexEntry (JSONReader);
 			}
 
         /// <summary>
@@ -2168,9 +1969,8 @@ namespace Goedel.Persistence {
 			switch (token) {
 
 				case "IndexEntry" : {
-					var Result = new IndexEntry ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new IndexEntry ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 

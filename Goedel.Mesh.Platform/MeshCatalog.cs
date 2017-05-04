@@ -156,8 +156,6 @@ namespace Goedel.Mesh.Platform {
             if (Generate) {
                 var NewProfileDevice = new SignedDeviceProfile(DeviceID, DeviceDescription);
                 RegistrationDevice = Machine.Add(NewProfileDevice);
-                RegistrationDevice.MeshCatalog = this;
-
                 }
 
             // Always make the device profile the default if one is not specified.
@@ -180,6 +178,7 @@ namespace Goedel.Mesh.Platform {
 
             MeshClient = MeshClient ?? new MeshClient(PortalAccount: PortalAddress);
             var RegistrationPersonal = AddPersonal(Profile);
+
             RegistrationPersonal.AddPortal(PortalAddress, MeshClient, true);
 
             return RegistrationPersonal;
@@ -224,14 +223,7 @@ namespace Goedel.Mesh.Platform {
             PersonalProfile PersonalProfile) {
 
             var SignedPersonalProfile = PersonalProfile.SignedPersonalProfile;
-
-            // add to the machine registry
             var Registration = Machine.Add(SignedPersonalProfile);
-
-            //var PublishResult = MeshClient.Publish(SignedPersonalProfile);
-            //Assert.True(PublishResult.Status.StatusSuccess(),
-            //            PublicationRequestRefused.Throw);
-
             Registration.MeshCatalog = this;
 
             return Registration;

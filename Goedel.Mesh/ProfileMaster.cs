@@ -35,6 +35,10 @@ namespace Goedel.Mesh {
         /// </summary>
         public SignedMasterProfile SignedMasterProfile { get; set; }
 
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
+        public MasterProfile () { }
 
         /// <summary>
         /// Create a MasterProfile using the default signature and exchange

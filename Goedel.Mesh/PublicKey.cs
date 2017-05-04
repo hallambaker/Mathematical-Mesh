@@ -280,6 +280,11 @@ namespace Goedel.Mesh {
             return new PublicKey (KeyPair);
             }
 
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
+        public PublicKey () {
+            }
 
         /// <summary>
         /// Return a PublicKey object for the specified KeyPair

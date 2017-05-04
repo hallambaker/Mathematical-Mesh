@@ -49,31 +49,6 @@ namespace Goedel.Mesh {
 			return "MeshNetwork";
 			}
 
-        /// <summary>
-        /// Default constructor.
-        /// </summary>
-		public MeshNetwork () {
-			_Initialize () ;
-			}
-
-        /// <summary>
-        /// Construct an instance from a JSON encoded stream.
-        /// </summary>
-        /// <param name="JSONReader">Input stream</param>
-		public MeshNetwork (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			_Initialize () ;
-			}
-
-        /// <summary>
-        /// Construct an instance from a JSON encoded string.
-        /// </summary>
-        /// <param name="_String">Input string</param>
-		public MeshNetwork (string _String) {
-			Deserialize (_String);
-			_Initialize () ;
-			}
-
 		/// <summary>
         /// Construct an instance from the specified tagged JSONReader stream.
         /// </summary>
@@ -93,17 +68,15 @@ namespace Goedel.Mesh {
 			switch (token) {
 
 				case "NetworkProfile" : {
-					var Result = new NetworkProfile ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new NetworkProfile ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 
 				case "NetworkProfilePrivate" : {
-					var Result = new NetworkProfilePrivate ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new NetworkProfilePrivate ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
@@ -136,27 +109,6 @@ namespace Goedel.Mesh {
 			return "NetworkProfile";
 			}
 
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-		public NetworkProfile () {
-			_Initialize ();
-			}
-        /// <summary>
-		/// Initialize class from JSONReader stream.
-        /// </summary>		
-        /// <param name="JSONReader">Input stream</param>	
-		public NetworkProfile (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			}
-
-        /// <summary> 
-		/// Initialize class from a JSON encoded class.
-        /// </summary>		
-        /// <param name="_String">Input string</param>
-		public NetworkProfile (string _String) {
-			Deserialize (_String);
-			}
 
 
         /// <summary>
@@ -211,7 +163,10 @@ namespace Goedel.Mesh {
 		public static new NetworkProfile From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-			return new NetworkProfile (JSONReader);
+			var Result = new NetworkProfile ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			// return new NetworkProfile (JSONReader);
 			}
 
         /// <summary>
@@ -258,9 +213,8 @@ namespace Goedel.Mesh {
 			switch (token) {
 
 				case "NetworkProfile" : {
-					var Result = new NetworkProfile ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new NetworkProfile ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
@@ -334,27 +288,6 @@ namespace Goedel.Mesh {
 			return "NetworkProfilePrivate";
 			}
 
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-		public NetworkProfilePrivate () {
-			_Initialize ();
-			}
-        /// <summary>
-		/// Initialize class from JSONReader stream.
-        /// </summary>		
-        /// <param name="JSONReader">Input stream</param>	
-		public NetworkProfilePrivate (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			}
-
-        /// <summary> 
-		/// Initialize class from a JSON encoded class.
-        /// </summary>		
-        /// <param name="_String">Input string</param>
-		public NetworkProfilePrivate (string _String) {
-			Deserialize (_String);
-			}
 
 
         /// <summary>
@@ -466,7 +399,10 @@ namespace Goedel.Mesh {
 		public static new NetworkProfilePrivate From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-			return new NetworkProfilePrivate (JSONReader);
+			var Result = new NetworkProfilePrivate ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			// return new NetworkProfilePrivate (JSONReader);
 			}
 
         /// <summary>
@@ -513,9 +449,8 @@ namespace Goedel.Mesh {
 			switch (token) {
 
 				case "NetworkProfilePrivate" : {
-					var Result = new NetworkProfilePrivate ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new NetworkProfilePrivate ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
@@ -554,7 +489,9 @@ namespace Goedel.Mesh {
 					DNS = new List <Connection> ();
 					while (_Going) {
 						// an untagged structure.
-						var _Item = new Connection (JSONReader);
+						var _Item = new  Connection ();
+						_Item.Deserialize (JSONReader);
+						// var _Item = new Connection (JSONReader);
 						DNS.Add (_Item);
 						_Going = JSONReader.NextArray ();
 						}

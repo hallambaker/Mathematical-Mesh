@@ -352,11 +352,11 @@ namespace Goedel.Persistence {
                 this.KeyStore = KeyStore;
                 }
 
-            /// <summary>
-            /// Finalize.
-            /// </summary>
-            ~KeyEntryEnum() {
-                }
+            ///// <summary>
+            ///// Finalize.
+            ///// </summary>
+            //~KeyEntryEnum() {
+            //    }
 
             /// <summary>
             /// Get the next entry.

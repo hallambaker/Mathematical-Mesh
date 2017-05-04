@@ -44,3 +44,7 @@
 
 		Exception PortalConnectFail
 			Console "Could not connect to portal"
+
+		
+		Exception UnexpectedRegistryType
+			Console "A registry entry was of unexpcected type"

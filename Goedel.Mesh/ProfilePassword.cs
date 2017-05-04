@@ -67,22 +67,11 @@ namespace Goedel.Mesh {
         /// Create a new personal profile.
         /// </summary>
         /// <param name="MakePrivate">If true, a private profile will be created.</param>
-        public PasswordProfile(bool MakePrivate) {
+        public PasswordProfile(bool MakePrivate=false) {
             if (MakePrivate) {
                 _Private = new PasswordProfilePrivate();
                 }
             }
-
-
-
-        /// <summary>
-        /// Initialize the private data
-        /// </summary>
-        protected override void _Initialize() {
-            base._Initialize();
-            }
-
-
 
 
         /// <summary>
@@ -230,6 +219,13 @@ namespace Goedel.Mesh {
         }
 
     public partial class PasswordEntry {
+
+
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
+        public PasswordEntry () { }
+
         /// <summary>
         /// Create a password entry from a Site/Username/Password tripple.
         /// </summary>

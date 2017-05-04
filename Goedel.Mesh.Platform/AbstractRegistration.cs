@@ -133,9 +133,9 @@ namespace Goedel.Mesh.Platform {
         /// <summary>
         /// Add the associated profile to the machine store.
         /// </summary>
-        /// <param name="SignedProfile">Profile to add.</param>
+        /// <param name="ApplicationProfile">Profile to add.</param>
         /// <returns>Registration for the created profile.</returns>
-        public abstract RegistrationApplication Add(SignedApplicationProfile SignedProfile);
+        public abstract RegistrationApplication Add(ApplicationProfile ApplicationProfile);
 
         /// <summary>
         /// Locate a device profile by identifier
@@ -161,6 +161,43 @@ namespace Goedel.Mesh.Platform {
         /// <returns>True if the profile is found, otherwise false.</returns>
         public abstract bool Find(string ID, out RegistrationPersonal RegistrationPersonal);
 
+
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Type"></param>
+        /// <param name="PortalAddress"></param>
+        /// <param name="UDF"></param>
+        /// <param name="ShortId"></param>
+        public bool Find (
+                    out RegistrationApplication RegistrationApplication,
+                    string Type,
+                    string PortalAddress = null,
+                    string UDF = null,
+                    string ShortId = null) {
+
+            // If an application matches by UDF then it is the result, return it.
+            if (UDF != null && ApplicationProfiles.TryGetValue(UDF, out RegistrationApplication)) {
+                return true;
+                }
+
+            // NYI: ignore short names for the time being.
+
+            // Return the default profile for this application type
+            // Hack: ignores the Personal Profile value.
+            if (Type != null && ApplicationProfilesDefault.TryGetValue(Type, out UDF)) {
+                if (ApplicationProfiles.TryGetValue(UDF, out RegistrationApplication)) {
+                    return true;
+                    }
+                }
+
+            RegistrationApplication = null;
+            return false;
+            }
+
+
         }
 
 
@@ -170,10 +207,13 @@ namespace Goedel.Mesh.Platform {
     /// </summary>
     public abstract partial class Registration {
 
-        /// <summary>
-        /// The catalog this registration is attached to.
-        /// </summary>
-        public MeshCatalog MeshCatalog { get; set; }
+        ///// <summary>
+        ///// The catalog this registration is attached to.
+        ///// </summary>
+        //public virtual MeshCatalog MeshCatalog { get; }
+
+        /// <summary>The abstract machine a profile registration is attached to</summary>
+        public abstract RegistrationMachine RegistrationMachine { get; }
 
         /// <summary>
         /// The registered signed profile.

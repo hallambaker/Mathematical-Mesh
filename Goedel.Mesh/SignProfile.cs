@@ -105,6 +105,12 @@ namespace Goedel.Mesh {
         DeviceProfile _Signed;
 
         /// <summary>
+        /// Default Constructor
+        /// </summary>
+        public SignedDeviceProfile () { }
+
+
+        /// <summary>
         /// Construct a signed profile from a device profile.
         /// </summary>
         /// <param name="DeviceProfile">The device profile to sign.</param>
@@ -226,6 +232,11 @@ namespace Goedel.Mesh {
             }
 
         /// <summary>
+        /// Default Constructor
+        /// </summary>
+        public SignedMasterProfile () { }
+
+        /// <summary>
         /// Construct a signed profile from the specified profile.
         /// </summary>
         /// <param name="Data">The profile to sign.</param>
@@ -286,6 +297,11 @@ namespace Goedel.Mesh {
                 }
             }
         ApplicationProfile _ApplicationProfile = null;
+
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
+        public SignedApplicationProfile () { }
 
         /// <summary>
         /// Construct a signed profile from the specified profile.
@@ -448,6 +464,11 @@ namespace Goedel.Mesh {
             get { _Signed = _Signed ?? UnpackPersonalProfile(); return _Signed; }
             }
         PersonalProfile _Signed = null;
+
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
+        public SignedPersonalProfile () { }
 
         /// <summary>
         /// Create from a current personal profile.

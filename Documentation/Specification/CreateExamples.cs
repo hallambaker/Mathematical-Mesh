@@ -109,32 +109,32 @@ namespace ExampleGenerator {
         /// </summary>
         void ConnectDevice() {
             
-            // Create device profile
-            SignedDeviceProfile2 = new SignedDeviceProfile(Device2, Device2Description);
+            //// Create device profile
+            //SignedDeviceProfile2 = new SignedDeviceProfile(Device2, Device2Description);
 
-            Portal.Label(LabelConnectRequest);
-            // Post connection request
-            MeshClient.ConnectRequest (SignedDeviceProfile2);
+            //Portal.Label(LabelConnectRequest);
+            //// Post connection request
+            //MeshClient.ConnectRequest (SignedDeviceProfile2);
 
-            Portal.Label(LabelConnectPending);
-            // Poll for list of connection requests
-            var ConnectPendingResult = MeshClient.ConnectPending();
+            //Portal.Label(LabelConnectPending);
+            //// Poll for list of connection requests
+            //var ConnectPendingResult = MeshClient.ConnectPending();
 
 
-            var FirstRequest = ConnectPendingResult.Pending[0];
+            //var FirstRequest = ConnectPendingResult.Pending[0];
 
-            // Publish the updated profile to the Mesh.
-            Portal.Label(LabelConnectPublish);
-            PersonalProfile.Add(FirstRequest.Data.Device);
-            SignedPersonalProfile = PersonalProfile.SignedPersonalProfile;
-            MeshClient.Publish(SignedPersonalProfile);
+            //// Publish the updated profile to the Mesh.
+            //Portal.Label(LabelConnectPublish);
+            //PersonalProfile.Add(FirstRequest.Data.Device);
+            //SignedPersonalProfile = PersonalProfile.SignedPersonalProfile;
+            //MeshClient.Publish(SignedPersonalProfile);
 
-            Portal.Label(LabelConnectAccept);
-            // Post acceptance for first request
-            MeshClient.ConnectClose(FirstRequest, ConnectionStatus.Accepted);
-            Portal.Label(LabelConnectStatus);
-            // Retrieve acceptance
-            MeshClient.ConnectStatus(SignedDeviceProfile2.UDF);
+            //Portal.Label(LabelConnectAccept);
+            //// Post acceptance for first request
+            //MeshClient.ConnectClose(FirstRequest, ConnectionStatus.Accepted);
+            //Portal.Label(LabelConnectStatus);
+            //// Retrieve acceptance
+            //MeshClient.ConnectStatus(SignedDeviceProfile2.UDF);
             }
 
 
@@ -151,36 +151,36 @@ namespace ExampleGenerator {
         /// </summary>
         void AddApplicationWeb() {
 
-            // Create basic application
-            PasswordProfile = new PasswordProfile(true);
-            var ApplicationProfileEntry = PersonalProfile.Add(PasswordProfile);
+            //// Create basic application
+            //PasswordProfile = new PasswordProfile(true);
+            //var ApplicationProfileEntry = PersonalProfile.Add(PasswordProfile);
 
 
-            // Add decryption blobs for each device granted access
-            PasswordProfile.AddDevice(SignedDeviceProfile1);
-            PasswordProfile.AddDevice(SignedDeviceProfile2);
+            //// Add decryption blobs for each device granted access
+            //PasswordProfile.AddDevice(SignedDeviceProfile1);
+            //PasswordProfile.AddDevice(SignedDeviceProfile2);
 
-            Portal.Label(LabelApplicationPublish);
-            // Publish the application profile to the Mesh
-            MeshClient.Publish(PasswordProfile.SignedApplicationProfile);
+            //Portal.Label(LabelApplicationPublish);
+            //// Publish the application profile to the Mesh
+            //MeshClient.Publish(PasswordProfile.SignedApplicationProfile);
 
-            Portal.Label(LabelApplicationProfile);
-            // Publish the user profile to the Mesh
-            //PersonalProfile.Add(SignedPasswordProfile);
-            MeshClient.Publish(SignedPersonalProfile);
+            //Portal.Label(LabelApplicationProfile);
+            //// Publish the user profile to the Mesh
+            ////PersonalProfile.Add(SignedPasswordProfile);
+            //MeshClient.Publish(SignedPersonalProfile);
 
 
-            PasswordProfile.Add("example.com", "alice", "secret");
-            PasswordProfile.Add("cnn.com", "alice1", "secret");
+            //PasswordProfile.Add("example.com", "alice", "secret");
+            //PasswordProfile.Add("cnn.com", "alice1", "secret");
 
-            PasswordProfilePrivate1 = PasswordProfile.Private.ToString();
-            PasswordProfile.Private.AutoGenerate = true;
+            //PasswordProfilePrivate1 = PasswordProfile.Private.ToString();
+            //PasswordProfile.Private.AutoGenerate = true;
 
-            PasswordProfilePrivate2 = PasswordProfile.Private.ToString();
+            //PasswordProfilePrivate2 = PasswordProfile.Private.ToString();
 
-            PasswordProfile.Private.NeverAsk = new List<string> { "bank.com" };
+            //PasswordProfile.Private.NeverAsk = new List<string> { "bank.com" };
 
-            PasswordProfilePrivate3 = PasswordProfile.Private.ToString();
+            //PasswordProfilePrivate3 = PasswordProfile.Private.ToString();
             }
 
         SSHProfile SSHProfile;

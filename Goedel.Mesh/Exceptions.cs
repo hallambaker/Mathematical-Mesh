@@ -700,4 +700,50 @@ namespace Goedel.Mesh {
         }
 
 
+    /// <summary>
+    /// </summary>
+    public class UnexpectedRegistryType : MeshException {
+
+		/// <summary>
+        /// Construct instance for exception "A registry entry was of unexpcected type"
+        /// </summary>		
+		public UnexpectedRegistryType () : base ("A registry entry was of unexpcected type") {
+			}
+        
+		/// <summary>
+        /// Construct instance for exception "A registry entry was of unexpcected type"
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		public UnexpectedRegistryType (string Description) : base (Description) {
+			}
+
+		/// <summary>
+        /// Construct instance for exception 		/// containing an inner exception.
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		/// <param name="Inner">Inner Exception</param>	
+		public UnexpectedRegistryType (string Description, System.Exception Inner) : 
+				base (Description, Inner) {
+			}
+
+
+
+
+		
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+
+        static System.Exception _Throw(object Reason) {
+			if (Reason as string != null) {
+				return new UnexpectedRegistryType(Reason as string);
+				}
+			else {
+				return new UnexpectedRegistryType();
+				}
+            }
+        }
+
+
 	}

@@ -49,31 +49,6 @@ namespace Goedel.Mesh {
 			return "MeshSSH";
 			}
 
-        /// <summary>
-        /// Default constructor.
-        /// </summary>
-		public MeshSSH () {
-			_Initialize () ;
-			}
-
-        /// <summary>
-        /// Construct an instance from a JSON encoded stream.
-        /// </summary>
-        /// <param name="JSONReader">Input stream</param>
-		public MeshSSH (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			_Initialize () ;
-			}
-
-        /// <summary>
-        /// Construct an instance from a JSON encoded string.
-        /// </summary>
-        /// <param name="_String">Input string</param>
-		public MeshSSH (string _String) {
-			Deserialize (_String);
-			_Initialize () ;
-			}
-
 		/// <summary>
         /// Construct an instance from the specified tagged JSONReader stream.
         /// </summary>
@@ -93,41 +68,36 @@ namespace Goedel.Mesh {
 			switch (token) {
 
 				case "SSHProfile" : {
-					var Result = new SSHProfile ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new SSHProfile ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 
 				case "SSHDevicePublic" : {
-					var Result = new SSHDevicePublic ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new SSHDevicePublic ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 
 				case "SSHProfilePrivate" : {
-					var Result = new SSHProfilePrivate ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new SSHProfilePrivate ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 
 				case "HostEntry" : {
-					var Result = new HostEntry ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new HostEntry ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 
 				case "SSHDevicePrivate" : {
-					var Result = new SSHDevicePrivate ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new SSHDevicePrivate ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
@@ -168,27 +138,6 @@ namespace Goedel.Mesh {
 			return "SSHProfile";
 			}
 
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-		public SSHProfile () {
-			_Initialize ();
-			}
-        /// <summary>
-		/// Initialize class from JSONReader stream.
-        /// </summary>		
-        /// <param name="JSONReader">Input stream</param>	
-		public SSHProfile (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			}
-
-        /// <summary> 
-		/// Initialize class from a JSON encoded class.
-        /// </summary>		
-        /// <param name="_String">Input string</param>
-		public SSHProfile (string _String) {
-			Deserialize (_String);
-			}
 
 
         /// <summary>
@@ -260,7 +209,10 @@ namespace Goedel.Mesh {
 		public static new SSHProfile From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-			return new SSHProfile (JSONReader);
+			var Result = new SSHProfile ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			// return new SSHProfile (JSONReader);
 			}
 
         /// <summary>
@@ -307,9 +259,8 @@ namespace Goedel.Mesh {
 			switch (token) {
 
 				case "SSHProfile" : {
-					var Result = new SSHProfile ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new SSHProfile ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
@@ -337,7 +288,9 @@ namespace Goedel.Mesh {
 					Devices = new List <SSHDevicePublic> ();
 					while (_Going) {
 						// an untagged structure.
-						var _Item = new SSHDevicePublic (JSONReader);
+						var _Item = new  SSHDevicePublic ();
+						_Item.Deserialize (JSONReader);
+						// var _Item = new SSHDevicePublic (JSONReader);
 						Devices.Add (_Item);
 						_Going = JSONReader.NextArray ();
 						}
@@ -373,27 +326,6 @@ namespace Goedel.Mesh {
 			return "SSHDevicePublic";
 			}
 
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-		public SSHDevicePublic () {
-			_Initialize ();
-			}
-        /// <summary>
-		/// Initialize class from JSONReader stream.
-        /// </summary>		
-        /// <param name="JSONReader">Input stream</param>	
-		public SSHDevicePublic (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			}
-
-        /// <summary> 
-		/// Initialize class from a JSON encoded class.
-        /// </summary>		
-        /// <param name="_String">Input string</param>
-		public SSHDevicePublic (string _String) {
-			Deserialize (_String);
-			}
 
 
         /// <summary>
@@ -453,7 +385,10 @@ namespace Goedel.Mesh {
 		public static new SSHDevicePublic From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-			return new SSHDevicePublic (JSONReader);
+			var Result = new SSHDevicePublic ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			// return new SSHDevicePublic (JSONReader);
 			}
 
         /// <summary>
@@ -500,9 +435,8 @@ namespace Goedel.Mesh {
 			switch (token) {
 
 				case "SSHDevicePublic" : {
-					var Result = new SSHDevicePublic ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new SSHDevicePublic ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
@@ -526,7 +460,8 @@ namespace Goedel.Mesh {
 			switch (Tag) {
 				case "PublicKey" : {
 					// An untagged structure
-					PublicKey = new PublicKey (JSONReader);
+					PublicKey = new PublicKey ();
+					PublicKey.Deserialize (JSONReader);
  
 					break;
 					}
@@ -565,27 +500,6 @@ namespace Goedel.Mesh {
 			return "SSHProfilePrivate";
 			}
 
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-		public SSHProfilePrivate () {
-			_Initialize ();
-			}
-        /// <summary>
-		/// Initialize class from JSONReader stream.
-        /// </summary>		
-        /// <param name="JSONReader">Input stream</param>	
-		public SSHProfilePrivate (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			}
-
-        /// <summary> 
-		/// Initialize class from a JSON encoded class.
-        /// </summary>		
-        /// <param name="_String">Input string</param>
-		public SSHProfilePrivate (string _String) {
-			Deserialize (_String);
-			}
 
 
         /// <summary>
@@ -662,7 +576,10 @@ namespace Goedel.Mesh {
 		public static new SSHProfilePrivate From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-			return new SSHProfilePrivate (JSONReader);
+			var Result = new SSHProfilePrivate ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			// return new SSHProfilePrivate (JSONReader);
 			}
 
         /// <summary>
@@ -709,9 +626,8 @@ namespace Goedel.Mesh {
 			switch (token) {
 
 				case "SSHProfilePrivate" : {
-					var Result = new SSHProfilePrivate ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new SSHProfilePrivate ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
@@ -743,7 +659,9 @@ namespace Goedel.Mesh {
 					HostEntries = new List <HostEntry> ();
 					while (_Going) {
 						// an untagged structure.
-						var _Item = new HostEntry (JSONReader);
+						var _Item = new  HostEntry ();
+						_Item.Deserialize (JSONReader);
+						// var _Item = new HostEntry (JSONReader);
 						HostEntries.Add (_Item);
 						_Going = JSONReader.NextArray ();
 						}
@@ -786,27 +704,6 @@ namespace Goedel.Mesh {
 			return "HostEntry";
 			}
 
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-		public HostEntry () {
-			_Initialize ();
-			}
-        /// <summary>
-		/// Initialize class from JSONReader stream.
-        /// </summary>		
-        /// <param name="JSONReader">Input stream</param>	
-		public HostEntry (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			}
-
-        /// <summary> 
-		/// Initialize class from a JSON encoded class.
-        /// </summary>		
-        /// <param name="_String">Input string</param>
-		public HostEntry (string _String) {
-			Deserialize (_String);
-			}
 
 
         /// <summary>
@@ -895,7 +792,10 @@ namespace Goedel.Mesh {
 		public static new HostEntry From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-			return new HostEntry (JSONReader);
+			var Result = new HostEntry ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			// return new HostEntry (JSONReader);
 			}
 
         /// <summary>
@@ -942,9 +842,8 @@ namespace Goedel.Mesh {
 			switch (token) {
 
 				case "HostEntry" : {
-					var Result = new HostEntry ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new HostEntry ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
@@ -972,7 +871,9 @@ namespace Goedel.Mesh {
 					HostConnection = new List <Connection> ();
 					while (_Going) {
 						// an untagged structure.
-						var _Item = new Connection (JSONReader);
+						var _Item = new  Connection ();
+						_Item.Deserialize (JSONReader);
+						// var _Item = new Connection (JSONReader);
 						HostConnection.Add (_Item);
 						_Going = JSONReader.NextArray ();
 						}
@@ -984,7 +885,9 @@ namespace Goedel.Mesh {
 					HostKeys = new List <PublicKey> ();
 					while (_Going) {
 						// an untagged structure.
-						var _Item = new PublicKey (JSONReader);
+						var _Item = new  PublicKey ();
+						_Item.Deserialize (JSONReader);
+						// var _Item = new PublicKey (JSONReader);
 						HostKeys.Add (_Item);
 						_Going = JSONReader.NextArray ();
 						}
@@ -1021,27 +924,6 @@ namespace Goedel.Mesh {
 			return "SSHDevicePrivate";
 			}
 
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-		public SSHDevicePrivate () {
-			_Initialize ();
-			}
-        /// <summary>
-		/// Initialize class from JSONReader stream.
-        /// </summary>		
-        /// <param name="JSONReader">Input stream</param>	
-		public SSHDevicePrivate (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			}
-
-        /// <summary> 
-		/// Initialize class from a JSON encoded class.
-        /// </summary>		
-        /// <param name="_String">Input string</param>
-		public SSHDevicePrivate (string _String) {
-			Deserialize (_String);
-			}
 
 
         /// <summary>
@@ -1101,7 +983,10 @@ namespace Goedel.Mesh {
 		public static new SSHDevicePrivate From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-			return new SSHDevicePrivate (JSONReader);
+			var Result = new SSHDevicePrivate ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			// return new SSHDevicePrivate (JSONReader);
 			}
 
         /// <summary>
@@ -1148,9 +1033,8 @@ namespace Goedel.Mesh {
 			switch (token) {
 
 				case "SSHDevicePrivate" : {
-					var Result = new SSHDevicePrivate ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new SSHDevicePrivate ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
@@ -1174,7 +1058,8 @@ namespace Goedel.Mesh {
 			switch (Tag) {
 				case "DevicePrivateKey" : {
 					// An untagged structure
-					DevicePrivateKey = new PublicKey (JSONReader);
+					DevicePrivateKey = new PublicKey ();
+					DevicePrivateKey.Deserialize (JSONReader);
  
 					break;
 					}

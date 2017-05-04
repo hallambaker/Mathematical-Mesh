@@ -21,6 +21,14 @@
 		Option UDF "udf" String
 			Brief "Profile fingerprint"
 
+	OptionSet ApplicationProfile
+		Option Portal "portal" String
+			Brief "Portal account"
+		Option UDF "udf" String
+			Brief "Profile fingerprint"
+		Option ID "id" String
+			Brief "Application profile friendly name"
+
 	OptionSet DeviceProfileInfo
 		Option DeviceNew "new" Flag
 			Brief "Force creation of new profile"
@@ -158,27 +166,27 @@
 		Parameter Site "site" String
 		Parameter Username "user" String
 		Parameter Password "password" String
-		Include PortalAccount
+		Include ApplicationProfile
 		Include Reporting
 
 	Command GetPassword "pwget"
 		Brief "Lookup password entry"
 		Parameter Site "site" String
-		Include PortalAccount
+		Include ApplicationProfile
 		Include Reporting
 
 	Command DeletePassword "pwdelete"
 		Brief "Delete password entry"
 		Parameter Site "site" String
 			Brief "Domain name of Web site"
-		Include PortalAccount
+		Include ApplicationProfile
 		Include Reporting
 
 	Command DumpPassword "pwdump"
 		Brief "Describe password entry"
 		Parameter JSON "json" Flag
 			Brief "Report results as JSON structure."
-		Include PortalAccount
+		Include ApplicationProfile
 		Include Reporting
 
 
@@ -201,9 +209,17 @@
 		Parameter Host "host" Flag
 		Parameter Client "client" Flag
 
-	Command SSHHost "sshhosts"
-		Brief "List the SSH Hosts"
-		Include PortalAccount
+
+	Command SSHAuth "sshauth"
+		Brief "List the SSH Authorized keys"
+		Include ApplicationProfile
+		Include Reporting
+		Parameter Host "host" Flag
+		Parameter Client "client" Flag
+
+	Command SSHKnown "sshknown"
+		Brief "List the SSH Known Hosts"
+		Include ApplicationProfile
 		Include Reporting
 		Parameter Host "host" Flag
 		Parameter Client "client" Flag
@@ -211,14 +227,14 @@
 
 	Command SSHPublic "sshpub"
 		Brief "Return the ssh public key for this device"
-		Include PortalAccount
+		Include ApplicationProfile
 		Include Reporting
 		Parameter Host "host" Flag
 		Parameter Client "client" Flag
 
 	Command SSHPrivate "sshpriv"
 		Brief "Return the ss private key for this device"
-		Include PortalAccount
+		Include ApplicationProfile
 		Include Reporting
 		Parameter Host "host" Flag
 		Parameter Client "client" Flag
@@ -226,7 +242,7 @@
 
 
 	//Confirm
-	Command Confirm "confim"
+	Command Confirm "confirm"
 		Brief "Add a confirmation profile account"
 		Include PortalAccount
 		Include Reporting
@@ -237,17 +253,23 @@
 
 	Command ConfirmPost "confimpost"
 		Brief "Post a confirmation request to an account"
-
+		Include ApplicationProfile
+		Include Reporting
 
 	Command ConfirmGet "confimget"
 		Brief "List the pending confirmation requests for this account"
+		Include ApplicationProfile
+		Include Reporting
 
 	Command ConfirmAccept "confimaccept"
 		Brief "Accept a confirmation request"
+		Include ApplicationProfile
+		Include Reporting
 
 	Command ConfirmReject "confimreject"
 		Brief "Reject a confirmation request"
-
+		Include ApplicationProfile
+		Include Reporting
 
 	//Recrypt
 	Command Recrypt "recrypt"
@@ -261,15 +283,25 @@
 
 	Command RecryptGroup "recryptgroup"
 		Brief "Create a new recryption group"
+		Include ApplicationProfile
+		Include Reporting
 
 	Command RecryptAdd "recryptadd"
 		Brief "Add a member to a recryption group"
+		Include ApplicationProfile
+		Include Reporting
 
 	Command RecryptDelete "recryptdel"
 		Brief "Remove a member from a recryption group"
+		Include ApplicationProfile
+		Include Reporting
 
 	Command Encrypt "encrypt"
 		Brief "Encrypt a file or directory"
+		Include ApplicationProfile
+		Include Reporting
 
 	Command Decrypt "decrypt"
 		Brief "Decrypt a file or directory"
+		Include ApplicationProfile
+		Include Reporting

@@ -30,6 +30,12 @@ namespace Goedel.Mesh {
 
 
     public partial class Connection {
+
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
+        public Connection () { }
+
         /// <summary>
         /// Convenience constructor, create instance from the principal fields.
         /// </summary>

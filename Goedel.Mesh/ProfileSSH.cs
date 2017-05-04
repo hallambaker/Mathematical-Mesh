@@ -69,18 +69,12 @@ namespace Goedel.Mesh {
         /// Create a new personal profile.
         /// </summary>
         /// <param name="MakePrivate">If true, a private profile will be created.</param>
-        public SSHProfile(bool MakePrivate) {
+        public SSHProfile(bool MakePrivate=false) {
             if (MakePrivate) {
                 _Private = new SSHProfilePrivate();
                 }
             }
 
-        /// <summary>
-        /// Initialize the private data
-        /// </summary>
-        protected override void _Initialize() {
-            base._Initialize();
-            }
 
         /// <summary>
         /// Convenience function that converts a generic Signed Profile returned
@@ -193,7 +187,7 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Initializer
         /// </summary>
-        protected override void _Initialize () {
+        public SSHProfilePrivate () {
             HostEntries = new List<HostEntry>();
             }
         }

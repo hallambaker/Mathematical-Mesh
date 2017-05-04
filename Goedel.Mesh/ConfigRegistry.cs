@@ -34,15 +34,12 @@ namespace Goedel.Mesh {
     /// an XML file.
     /// </summary>
     public class ConfigRegistry {
-        string _Name;
+
         /// <summary>
         /// The registry name, used to create the topmost element.
         /// </summary>
-        public virtual string Name {
-            get {
-                return _Name;
-                }
-            }
+        public virtual string Name { get; }
+
 
         /// <summary>
         /// Sorted dictionary mapping registry keys to entries. The original insertion
@@ -56,7 +53,7 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="Name">The topmost element of the registry.</param>
         public ConfigRegistry(string Name) {
-            this._Name = Name;
+            this.Name = Name;
             Dictionary = new SortedDictionary<string, ConfigRegistryEntry>();
             }
 
@@ -112,8 +109,9 @@ namespace Goedel.Mesh {
         /// <param name="FileName">The file to write.</param>
         public void Write(string FileName) {
             using (var Stream = new StreamWriter(FileName)) {
-                var XmlWriterSettings = new XmlWriterSettings();
-                XmlWriterSettings.Indent = true;
+                var XmlWriterSettings = new XmlWriterSettings() {
+                    Indent = true
+                    };
                 using (var Writer = XmlWriter.Create(Stream, XmlWriterSettings)) {
                     Write(Writer);
                     }
@@ -139,8 +137,7 @@ namespace Goedel.Mesh {
         /// <param name="Key">The key to lookup.</param>
         /// <returns>Registry entry or null if not found.</returns>
         public ConfigRegistryEntry Get(string Key) {
-            ConfigRegistryEntry Entry;
-            bool Found = Dictionary.TryGetValue(Key, out Entry);
+            bool Found = Dictionary.TryGetValue(Key, out var Entry);
             return Found ? Entry : null;
             }
 
@@ -151,7 +148,7 @@ namespace Goedel.Mesh {
         /// <returns>Registry value or null if not found.</returns>
         public string GetSZ(string Key) {
             var Entry = Get(Key) as ConfigRegistryEntrySZ;
-            return Entry == null ? null : Entry.Value;
+            return Entry?.Value;
             }
 
         /// <summary>
@@ -171,7 +168,7 @@ namespace Goedel.Mesh {
         /// <returns>Registry value or null if not found.</returns>
         public byte[] GetBINARY(string Key) {
             var Entry = Get(Key) as ConfigRegistryEntryBINARY;
-            return Entry == null ? null : Entry.Value;
+            return Entry?.Value;
             }
 
         /// <summary>
@@ -216,7 +213,7 @@ namespace Goedel.Mesh {
                 return true;
                 }
             var Entry = Slot as ConfigRegistryEntrySZ;
-            if (Entry == null) throw new Exception("Wrong type!");
+            Assert.NotNull(Entry, UnexpectedRegistryType.Throw);
 
             Entry.Value = Value;
             return false;
@@ -237,7 +234,7 @@ namespace Goedel.Mesh {
                 return true;
                 }
             var Entry = Slot as ConfigRegistryEntryDWORD;
-            if (Entry == null) throw new Exception("Wrong type!");
+            Assert.NotNull(Entry, UnexpectedRegistryType.Throw);
 
             Entry.Value = Value;
             return false;
@@ -257,7 +254,7 @@ namespace Goedel.Mesh {
                 return true;
                 }
             var Entry = Slot as ConfigRegistryEntryBINARY;
-            if (Entry == null) throw new Exception("Wrong type!");
+            Assert.NotNull(Entry, UnexpectedRegistryType.Throw);
 
             Entry.Value = Value;
             return false;

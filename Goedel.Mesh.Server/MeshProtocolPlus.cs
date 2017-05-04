@@ -34,9 +34,9 @@ namespace Goedel.Mesh {
             }
 
         /// <summary>
-        /// Set the default status code (success)
+        /// Default constructor
         /// </summary>
-        protected override void _Initialize() {
+        public MeshResponse () {
             StatusCode = 201;
             StatusDescriptionCode = "Operation completed successfully";
             }

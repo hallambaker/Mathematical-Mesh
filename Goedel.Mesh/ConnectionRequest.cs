@@ -85,7 +85,10 @@ namespace Goedel.Mesh {
         /// Get the inner connection result data.
         /// </summary>
         public ConnectionResult Data {
-            get { if (_Signed == null) _Signed = UnpackConnectionResult(); return _Signed; }
+            get {
+                _Signed = _Signed ?? UnpackConnectionResult();
+                return _Signed;
+                }
             }
 
         /// <summary>
@@ -109,6 +112,11 @@ namespace Goedel.Mesh {
         public static string PrimaryKey(string UniqueID) {
             return "Result-" + UniqueID;
             }
+
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
+        public SignedConnectionResult () { }
 
         /// <summary>
         /// Create a signed connection result.
@@ -135,7 +143,10 @@ namespace Goedel.Mesh {
         /// Get the connection request data.
         /// </summary>
         public ConnectionRequest Data {
-            get { if (_Signed == null) _Signed = UnpackConnectionRequest(); return _Signed; }
+            get {
+                _Signed = _Signed ?? UnpackConnectionRequest();
+                return _Signed;
+                }
             }
 
         /// <summary>
@@ -152,6 +163,11 @@ namespace Goedel.Mesh {
             _Signed = Profile;
             return _Signed;
             }
+
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
+        public SignedConnectionRequest () { }
 
         /// <summary>
         /// Sign a connection request.
@@ -176,16 +192,20 @@ namespace Goedel.Mesh {
         /// Return a signed version of the data.
         /// </summary>
         public SignedConnectionRequest Signed {
-            get { return new SignedConnectionRequest(this); }
+            get => new SignedConnectionRequest(this); 
             }
 
         /// <summary>
         /// A unique object ID.
         /// </summary>
         public string UniqueID {
-            get { return ParentUDF;  }
+            get => ParentUDF;  
             }
 
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
+        public ConnectionRequest () { }
 
         /// <summary>
         /// Construct a connection request to attach a device to the 
@@ -227,7 +247,7 @@ namespace Goedel.Mesh {
         /// Unique identifier for connections pending object.
         /// </summary>
         public override string UniqueID {
-            get { return UserProfileUDF; }
+            get => UserProfileUDF; 
             }
 
         /// <summary>

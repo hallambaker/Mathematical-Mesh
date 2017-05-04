@@ -65,7 +65,7 @@ namespace Goedel.Mesh {
         /// Create a new personal profile.
         /// </summary>
         /// <param name="MakePrivate">If true, a private profile will be created.</param>
-        public MailProfile (bool MakePrivate) {
+        public MailProfile (bool MakePrivate=false) {
             if (MakePrivate) {
                 _Private = new MailProfilePrivate();
                 }
@@ -238,6 +238,12 @@ namespace Goedel.Mesh {
         }
 
     public partial class MailProfilePrivate {
+
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
+        public MailProfilePrivate () { }
+
 
         /// <summary>
         /// Construct a MailProfile object from a MailAccountInfo object.
