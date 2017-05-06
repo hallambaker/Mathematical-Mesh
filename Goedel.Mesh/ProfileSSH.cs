@@ -43,7 +43,6 @@ namespace Goedel.Mesh {
         public static string TypeTag { get => "SSHProfile"; } 
 
         private SSHProfilePrivate _Private;
-
         /// <summary>
         /// The portion of the profile that is encrypted in the mesh.
         /// </summary>
@@ -56,6 +55,22 @@ namespace Goedel.Mesh {
                 return _Private;
                 }
             }
+
+        private SSHDevicePrivate _DevicePrivate;
+        /// <summary>
+        /// The portion of the profile that is encrypted in the mesh.
+        /// </summary>
+        public SSHDevicePrivate DecryptedDevicePrivate {
+            get {
+                if (_DevicePrivate == null) {
+                    var Plaintext = DecryptPrivate();
+                    var PlainUTF8 = Plaintext.ToUTF8();
+                    _DevicePrivate = SSHDevicePrivate.FromTagged(Plaintext);
+                    }
+                return _DevicePrivate;
+                }
+            }
+
 
         /// <summary>
         /// Returns the private profile as a block of JSON encoded bytes ready for
@@ -86,24 +101,6 @@ namespace Goedel.Mesh {
         public static SSHProfile Get(SignedProfile SignedProfile) {
             return SignedProfile.Profile as SSHProfile;
             }
-
-        ///// <summary>
-        ///// Convenience function that converts a generic Signed Profile returned
-        ///// by the Mesh to a PasswordProfile.
-        ///// </summary>
-        ///// <param name="SignedProfile">Generic signed profile</param>
-        ///// <param name="PersonalProfile">The personal profile to link the Password Profile to.</param>
-        ///// <returns>Inner PasswordProfile if the Signed Profile contains one,
-        ///// otherwise null.</returns>
-        //public static SSHProfile Get(SignedProfile SignedProfile,
-        //            PersonalProfile PersonalProfile) {
-        //    var Result = SignedProfile.Profile as SSHProfile;
-
-        //    Assert.NotNull(Result, NotValidProfile.Throw);
-
-        //    Result.Link(PersonalProfile);
-        //    return (Result);
-        //    }
 
 
         /// <summary>

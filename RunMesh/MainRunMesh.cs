@@ -81,7 +81,11 @@ namespace Goedel.Mesh {
             CommandLineInterpreter.MainMethod("/dump");
             CommandLineInterpreter.MainMethod("/export myprofile.json");
             CommandLineInterpreter.MainMethod("/ssh");
+            MeshCatalog.Reload();
             CommandLineInterpreter.MainMethod("/sshauth");
+            CommandLineInterpreter.MainMethod("/sshknown");
+            CommandLineInterpreter.MainMethod("/sshpub");
+            CommandLineInterpreter.MainMethod("/sshpriv");
 
             CommandLineInterpreter.MainMethod("/password");
             CommandLineInterpreter.MainMethod("/pwadd example.com alice password1");

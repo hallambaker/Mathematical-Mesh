@@ -101,8 +101,8 @@
 		Brief "Create a set of key escrow shares"
 		Include PortalAccount
 		Include Reporting
-		Option Quorum "quorum" integer
-		Option Shares "shares" integer
+		Option Quorum "quorum" Integer
+		Option Shares "shares" Integer
 		Option File "file" NewFile
 
 	Command Export "export"

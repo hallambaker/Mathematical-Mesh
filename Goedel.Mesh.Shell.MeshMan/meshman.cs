@@ -4685,8 +4685,8 @@ namespace Goedel.Mesh.MeshMan {
     public class _Escrow : Goedel.Registry.Dispatch ,
 							IPortalAccount,
 							IReporting {
-		public integer			Quorum{get; set;} = new  integer ();
-		public integer			Shares{get; set;} = new  integer ();
+		public Integer			Quorum{get; set;} = new  Integer ();
+		public Integer			Shares{get; set;} = new  Integer ();
 		public NewFile			File{get; set;} = new  NewFile ();
 		public String			Portal{get; set;} = new  String ();
 		public String			UDF{get; set;} = new  String ();
@@ -5276,11 +5276,11 @@ namespace Goedel.Mesh.MeshMan {
         } // String
 
 
-    // Parameter type integer
-    public abstract class _integer : Goedel.Registry.Type {
-        public _integer() {
+    // Parameter type Integer
+    public abstract class _Integer : Goedel.Registry.Type {
+        public _Integer() {
             }
-        public _integer(string Value) {
+        public _Integer(string Value) {
 			Default (Value);
             } 
 
@@ -5288,15 +5288,15 @@ namespace Goedel.Mesh.MeshMan {
 			get => Text;
 			}
 
-        } // _integer
+        } // _Integer
 
-    public partial class  integer : _integer {
-        public integer() {
+    public partial class  Integer : _Integer {
+        public Integer() {
             } 
-        public integer(string Value) {
+        public Integer(string Value) {
 			Default (Value);
             } 
-        } // integer
+        } // Integer
 
 
 
@@ -5566,9 +5566,9 @@ namespace Goedel.Mesh.MeshMan {
 
 				}
 
-				Console.WriteLine ("    {0}\t{1} = [{2}]", "integer", 
+				Console.WriteLine ("    {0}\t{1} = [{2}]", "Integer", 
 							"Quorum", Options.Quorum);
-				Console.WriteLine ("    {0}\t{1} = [{2}]", "integer", 
+				Console.WriteLine ("    {0}\t{1} = [{2}]", "Integer", 
 							"Shares", Options.Shares);
 				Console.WriteLine ("    {0}\t{1} = [{2}]", "NewFile", 
 							"File", Options.File);

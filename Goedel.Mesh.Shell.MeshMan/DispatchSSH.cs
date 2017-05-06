@@ -25,7 +25,10 @@ namespace Goedel.Mesh.MeshMan {
             var SSHProfile = RegistrationApplication?.ApplicationProfile as SSHProfile;
             Assert.NotNull(SSHProfile, ProfileNotFound.Throw);
 
-                        var Private = SSHProfile.Private;
+            var Private = SSHProfile.Private;
+
+            var DecryptedDevicePrivate = SSHProfile.DecryptedDevicePrivate;
+
             Assert.NotNull(Private, ProfileNotReadable.Throw);
             foreach (var Host in Private.HostEntries) {
                 Report("Host {0}", Host.Identifier);
