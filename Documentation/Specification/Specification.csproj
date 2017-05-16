@@ -131,6 +131,9 @@
     <Content Include="Publish\hallambaker-json-web-service.html" />
     <Content Include="Publish\hallambaker-json-web-service.txt" />
     <Content Include="Publish\hallambaker-json-web-service.xml" />
+    <Content Include="Publish\hallambaker-jsonbcd.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Publish\hallambaker-mesh-app-web.html" />
     <Content Include="Publish\hallambaker-mesh-app-web.txt" />
     <Content Include="Publish\hallambaker-mesh-app-web.xml" />

@@ -36,7 +36,7 @@ namespace Goedel.Mesh.Platform {
     /// the fingerprint, the cached profile data and the list of portal entries
     /// to which the profile is bound.
     /// </summary>
-    public abstract class RegistrationPersonal : PortalRegistration {
+    public abstract partial class RegistrationPersonal : PortalRegistration {
 
         /// <summary>
         /// The registered signed profile.

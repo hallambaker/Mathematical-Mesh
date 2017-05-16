@@ -206,9 +206,7 @@
 		Brief "Add a ssh application profile to a personal profile"
 		Include PortalAccount
 		Include Reporting
-		Parameter Host "host" Flag
-		Parameter Client "client" Flag
-
+		Parameter Install "install" Flag
 
 	Command SSHAuth "sshauth"
 		Brief "List the SSH Authorized keys"

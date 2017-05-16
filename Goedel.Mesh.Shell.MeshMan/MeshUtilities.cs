@@ -18,7 +18,7 @@ namespace Goedel.Mesh.MeshMan {
         bool ReportOutput = true;
         bool ActiveListener = false;
 
-        private void SetReporting (IReporting Reporting) {
+        private void SetReporting (Goedel.Mesh.MeshMan.IReporting Reporting) {
             SetReporting(Reporting.Report, Reporting.Verbose);
             }
 

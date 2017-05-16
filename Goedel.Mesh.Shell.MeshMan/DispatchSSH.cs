@@ -1,6 +1,7 @@
 ﻿using Goedel.Utilities;
 using Goedel.Mesh;
 using Goedel.Mesh.Platform;
+using Goedel.Cryptography.KeyFile;
 
 namespace Goedel.Mesh.MeshMan {
 
@@ -11,9 +12,14 @@ namespace Goedel.Mesh.MeshMan {
         public override void SSH (SSH Options) {
             SetReporting(Options);
             var RegistrationPersonal = GetPersonal(Options);
+            RegistrationPersonal.CreateSSH();
 
-            var SSHProfile = new SSHProfile(true);
-            Register(RegistrationPersonal, SSHProfile);
+            //var SSHProfile = new SSHProfile(true);
+            //Register(RegistrationPersonal, SSHProfile);
+
+
+            // NYI: Here a hook to 'This device' entry
+            // Write out the files id_rsa, id_rsa.pub
             }
 
         /// Create a new web application profile.
@@ -34,10 +40,12 @@ namespace Goedel.Mesh.MeshMan {
                 Report("Host {0}", Host.Identifier);
                 }
 
+
+
             }
 
 
-        /// Create a new web application profile.
+        /// Create a list of SSH authorized keys from the Mesh profile
         /// </summary>
         /// <param name="Options">Command line parameters</param>
         public override void SSHAuth (SSHAuth Options) {
@@ -53,7 +61,7 @@ namespace Goedel.Mesh.MeshMan {
 
             }
 
-        /// Create a new web application profile.
+        /// Write out the SSH public key for this device
         /// </summary>
         /// <param name="Options">Command line parameters</param>
         public override void SSHPublic (SSHPublic Options) {
@@ -76,6 +84,9 @@ namespace Goedel.Mesh.MeshMan {
         /// <param name="Options">Command line parameters</param>
         public override void SSHPrivate (SSHPrivate Options) {
             SetReporting(Options);
+            var RegistrationApplication = GetApplication(Options, "SSHProfile");
+            var SSHProfile = RegistrationApplication?.ApplicationProfile as SSHProfile;
+            Assert.NotNull(SSHProfile, ProfileNotFound.Throw);
 
             // Get the device specific data
 

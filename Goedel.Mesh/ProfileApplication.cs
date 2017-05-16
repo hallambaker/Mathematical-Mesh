@@ -128,13 +128,6 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <returns>Decrypted bytes.</returns>
         public virtual byte[] DecryptPrivate() {
-            //var SignedDeviceProfile = PersonalProfile.SignedDeviceProfile;
-            //var DeviceProfile = SignedDeviceProfile.DeviceProfile;
-            //var EncryptionKey = DeviceProfile.DeviceEncryptiontionKey;
-
-            //Assert.NotNull(ApplicationProfileEntry, MeshException.Throw);
-            //Assert.NotNull(ApplicationProfileEntry.DecryptID, MeshException.Throw);
-
             var Key = SharedPrivate.GetKey();
             Assert.NotNull(Key, MeshException.Throw);
             var Result = SharedPrivate.Decrypt(Key);
@@ -148,6 +141,9 @@ namespace Goedel.Mesh {
         /// <returns>Decrypted bytes.</returns>
         public virtual byte[] DecryptDevicePrivate () {
             var Found = DevicePrivate.GetKey(out var Key, out var JWE);
+            if (!Found) {
+                return null;
+                }
             Assert.NotNull(Key, MeshException.Throw);
             return JWE.Decrypt(Key);
             }

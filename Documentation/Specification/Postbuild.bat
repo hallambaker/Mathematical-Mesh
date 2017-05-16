@@ -3,13 +3,18 @@ cd %~dp0
 
 echo Convert documents to TXT, XML and HTML formats
 
+echo jsonbcd
+rfctool O:\Documents\IETF\hallambaker-jsonbcd.docx ^
+	/html Publish\hallambaker-jsonbcd.html ^
+	/xml Publish\hallambaker-jsonbcd.xml ^
+	/txt Publish\hallambaker-jsonbcd.txt
+
+
 echo udf
 rfctool O:\Documents\Mesh\hallambaker-udf.docx ^
 	/html Publish\hallambaker-udf.html ^
 	/xml Publish\hallambaker-udf.xml ^
 	/txt Publish\hallambaker-udf.txt
-
-exit /b 0
 
 echo Web App
 rfctool O:\Documents\Mesh\hallambaker-mesh-app-web.docx ^
@@ -22,8 +27,6 @@ rfctool O:\Documents\Mesh\hallambaker-mesh-platform.docx ^
 	/html Publish\hallambaker-mesh-platform.html ^
 	/xml Publish\hallambaker-mesh-platform.xml ^
 	/txt Publish\hallambaker-mesh-platform.txt
-
-
 
 echo architecture
 rfctool O:\Documents\Mesh\hallambaker-mesh-architecture.docx ^
@@ -42,12 +45,6 @@ rfctool O:\Documents\Mesh\hallambaker-mesh-reference.docx ^
 	/html Publish\hallambaker-mesh-reference.html ^
 	/xml Publish\hallambaker-mesh-reference.xml ^
 	/txt Publish\hallambaker-mesh-reference.txt
-
-echo udf
-rfctool O:\Documents\Mesh\hallambaker-udf.docx ^
-	/html Publish\hallambaker-udf.html ^
-	/xml Publish\hallambaker-udf.xml ^
-	/txt Publish\hallambaker-udf.txt
 
 echo reference
 rfctool O:\Documents\Mesh\hallambaker-json-web-service.docx ^

@@ -12,7 +12,7 @@
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
-    <AssemblyVersion>1.0.0.190</AssemblyVersion>
+    <AssemblyVersion>1.0.0.208</AssemblyVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -32,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Goedel.Command">
+      <HintPath>..\..\Library\Goedel.Command.dll</HintPath>
+    </Reference>
     <Reference Include="Goedel.Cryptography">
       <HintPath>..\..\Library\Goedel.Cryptography.dll</HintPath>
     </Reference>
@@ -124,7 +127,6 @@
       <Generator>CommandCS</Generator>
       <LastGenOutput>meshman.cs</LastGenOutput>
     </None>
-    <None Include="meshman.notcs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

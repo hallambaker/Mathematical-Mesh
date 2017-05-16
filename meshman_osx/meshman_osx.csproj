@@ -12,7 +12,7 @@
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
-    <AssemblyVersion>1.0.0.117</AssemblyVersion>
+    <AssemblyVersion>1.0.0.128</AssemblyVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -37,6 +37,9 @@
   <ItemGroup>
     <Reference Include="Goedel.ASN">
       <HintPath>..\..\Library\Goedel.ASN.dll</HintPath>
+    </Reference>
+    <Reference Include="Goedel.Command">
+      <HintPath>..\..\Library\Goedel.Command.dll</HintPath>
     </Reference>
     <Reference Include="Goedel.Cryptography">
       <HintPath>..\..\Library\Goedel.Cryptography.dll</HintPath>

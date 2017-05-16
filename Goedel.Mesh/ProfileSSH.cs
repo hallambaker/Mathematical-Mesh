@@ -50,7 +50,9 @@ namespace Goedel.Mesh {
             get {
                 if (_Private == null) {
                     var Plaintext = DecryptPrivate();
-                    _Private = SSHProfilePrivate.FromTagged(Plaintext);
+                    if (Plaintext != null) {
+                        _Private = SSHProfilePrivate.FromTagged(Plaintext);
+                        }
                     }
                 return _Private;
                 }
@@ -63,9 +65,12 @@ namespace Goedel.Mesh {
         public SSHDevicePrivate DecryptedDevicePrivate {
             get {
                 if (_DevicePrivate == null) {
-                    var Plaintext = DecryptPrivate();
-                    var PlainUTF8 = Plaintext.ToUTF8();
-                    _DevicePrivate = SSHDevicePrivate.FromTagged(Plaintext);
+                    var Plaintext = DecryptDevicePrivate();
+
+                    if (Plaintext != null) {
+                        var PlainUTF8 = Plaintext.ToUTF8();
+                        _DevicePrivate = SSHDevicePrivate.FromTagged(Plaintext);
+                        }
                     }
                 return _DevicePrivate;
                 }
@@ -84,11 +89,35 @@ namespace Goedel.Mesh {
         /// Create a new personal profile.
         /// </summary>
         /// <param name="MakePrivate">If true, a private profile will be created.</param>
-        public SSHProfile(bool MakePrivate=false) {
+        public SSHProfile (bool MakePrivate = false) {
             if (MakePrivate) {
                 _Private = new SSHProfilePrivate();
                 }
             }
+
+
+        /// <summary>
+        /// The public parameter entry for this particular device.
+        /// </summary>
+        public SSHDevicePublic SSHDevicePublic { get; private set; }
+
+        /// <summary>
+        /// Create new SSH profile
+        /// </summary>
+        /// <param name="PersonalProfile"></param>
+        /// <returns></returns>
+        public static SSHProfile Create (PersonalProfile PersonalProfile) {
+            var Result = new SSHProfile(true);
+
+            foreach (var Device in PersonalProfile.Devices) {
+
+
+                }
+
+            return Result;
+            }
+
+
 
 
         /// <summary>
@@ -129,7 +158,10 @@ namespace Goedel.Mesh {
                     var DeviceEncrypt = new JoseWebEncryption(DevicePrivateBytes);
                     DeviceEncrypt.AddRecipient(DeviceProfile.DeviceEncryptiontionKey.KeyPair);
                     DevicePrivate = DevicePrivate ?? new List<JoseWebEncryption>();
-                    DevicePrivate.Add(DeviceEncrypt);
+                    // NYI: create per device encrypted private key for the other
+                    //devices
+
+                    //DevicePrivate.Add(DeviceEncrypt);
                     }
 
                 }

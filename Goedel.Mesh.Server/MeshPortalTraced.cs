@@ -31,20 +31,10 @@ namespace Goedel.Mesh {
     /// Direct connection to service provider via API calls. 
     /// </summary>
     public class MeshPortalTraced : MeshPortalDirect {
-        TraceDictionary _Traces;
-
         /// <summary>
         /// the set of traces for this service
         /// </summary>
-        public TraceDictionary Traces {
-            get {
-                return _Traces;
-                }
-
-            set {
-                _Traces = value;
-                }
-            }
+        public TraceDictionary Traces { get; set; }
 
         /// <summary>
         /// Create a new portal using the specified stores.
@@ -59,16 +49,6 @@ namespace Goedel.Mesh {
             var ParsedURI = new Uri(URI);
             Traces = new TraceDictionary(ServiceName, ParsedURI.PathAndQuery);
             }
-
-        /// <summary>
-        /// Create a new portal using the specified stores.
-        /// </summary>
-        /// <param name="MeshStore">File name for the Mesh Store.</param>
-        /// <param name="PortalStore">File name for the Portal Store.</param>
-        public MeshPortalTraced(string MeshStore, string PortalStore) {
-
-            }
-
 
         DebugLocalSession Session;
 

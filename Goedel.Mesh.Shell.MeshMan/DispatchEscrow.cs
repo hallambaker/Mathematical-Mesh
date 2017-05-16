@@ -25,9 +25,8 @@ namespace Goedel.Mesh.MeshMan {
 
             var RegistrationPersonal = GetPersonal(Options);
 
-            var GotShares= int.TryParse(Options.Shares.Value, out var Shares);
-            var GotQuorum = int.TryParse(Options.Quorum.Value, out var Quorum);
-            Assert.True(GotShares & GotQuorum, InvalidEscrowParameters.Throw);
+            var Shares = Options.Shares.Value;
+            var Quorum =Options.Quorum.Value;
             Assert.True(Shares>=2 & Shares < 16, InvalidShares.Throw, Int: Shares);
             Assert.True((Quorum >= 1) & (Quorum <= Shares), InvalidQuorum.Throw, Int: Quorum);
 

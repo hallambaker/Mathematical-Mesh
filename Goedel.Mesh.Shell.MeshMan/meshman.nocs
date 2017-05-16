@@ -1,8 +1,22 @@
+﻿
+//  This file was automatically generated at 5/12/2017 4:59:55 PM
+//   
+//  Changes to this file may be overwritten without warning
+//  
+//  Generator:  CommandParse version 1.0.6341.30594
+//      Goedel Script Version : 0.1   Generated 
+//      Goedel Schema Version : 0.1   Generated
+//  
+//      Copyright : Copyright ©  2011
+//  
+//  Build Platform: Win32NT 6.2.9200.0
+//  
+//  
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using Goedel.Command;
+using Goedel.Registry;
 using Goedel.Utilities;
 
 namespace Goedel.Mesh.MeshMan {
@@ -11,39 +25,6 @@ namespace Goedel.Mesh.MeshMan {
 
 		static char UnixFlag = '-';
 		static char WindowsFlag = '/';
-
-		
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="Dispatch"></param>
-        /// <param name="args"></param>
-        /// <param name="index"></param>
-        public static void Help (DispatchShell Dispatch, string[] args, int index) {
-            Brief();
-            }
-
-        public static DescribeCommandEntry DescribeHelp = new DescribeCommandEntry() {
-            Identifier = "help",
-            HandleDelegate = Brief,
-            Entries = new List<DescribeEntry>() { }
-            };
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="Dispatch"></param>
-        /// <param name="args"></param>
-        /// <param name="index"></param>
-        public static new void About (DispatchShell Dispatch, string[] args, int index) {
-            FileTools.About();
-            }
-
-        public static DescribeCommandEntry DescribeAbout = new DescribeCommandEntry() {
-            Identifier = "about",
-            HandleDelegate = About,
-            Entries = new List<DescribeEntry>() { }
-            };
 
         static bool IsFlag(char c) {
             return (c == UnixFlag) | (c == WindowsFlag) ;
@@ -64,7 +45,7 @@ namespace Goedel.Mesh.MeshMan {
 				Description = "brief";
 
 			Entries = new  SortedDictionary<string, DescribeCommand> () {
-				{"about", DescribeAbout },
+				{"about", _About },
 				{"reset", _Reset._DescribeCommand },
 				{"device", _Device._DescribeCommand },
 				{"verify", _Verify._DescribeCommand },
@@ -104,27 +85,47 @@ namespace Goedel.Mesh.MeshMan {
 				{"recryptdel", _RecryptDelete._DescribeCommand },
 				{"encrypt", _Encrypt._DescribeCommand },
 				{"decrypt", _Decrypt._DescribeCommand },
-				{"help", DescribeHelp }
+				{"help", _Brief }
 				}; // End Entries
 
 
 
             }
 
+        public static DescribeCommandEntry _About = new DescribeCommandEntry() {
+            Identifier = "about",
+            HandleDelegate = About,
+			Entries = new  List<DescribeEntry> () {}
+            };
+        public static DescribeCommandEntry _Brief = new DescribeCommandEntry() {
+            Identifier = "help",
+            HandleDelegate = Brief,
+			Entries = new  List<DescribeEntry> () {}
+            };
 
 
-        public void MainMethod(string[] Args) {
+        static void Main(string[] args) {
+			var CLI = new CommandLineInterpreter ();
+			CLI.MainMethod (args);
+			}
+        public void MainMethod(string[] args) {
+
 			Shell Dispatch = new Shell ();
 
-			MainMethod (Dispatch, Args);
-			}
 
+				Assert.False (args.Length == 0, NoCommand.Throw);
 
-        public void MainMethod(Shell Dispatch, string[] Args) {
-			Dispatcher (Entries, Dispatch, Args, 0);
+                if (IsFlag(args[0][0])) {
+					Dispatcher (Entries, Dispatch, args, 0);
+                    }
+                else {
+                    Assert.True (false, NoCommand.Throw);
+                    }
             } // Main
 
 
+		private enum TagType_Reset {
+			}
 
 		public static void Handle_Reset (
 					DispatchShell  DispatchIn, string[] Args, int Index) {
@@ -132,6 +133,11 @@ namespace Goedel.Mesh.MeshMan {
 			Reset		Options = new Reset ();
 			ProcessOptions (Args, Index, Options);
 			Dispatch.Reset (Options);
+			}
+		private enum TagType_Device {
+			DeviceID,
+			DeviceDescription,
+			Default,
 			}
 
 		public static void Handle_Device (
@@ -141,6 +147,9 @@ namespace Goedel.Mesh.MeshMan {
 			ProcessOptions (Args, Index, Options);
 			Dispatch.Device (Options);
 			}
+		private enum TagType_Verify {
+			Portal,
+			}
 
 		public static void Handle_Verify (
 					DispatchShell  DispatchIn, string[] Args, int Index) {
@@ -148,6 +157,10 @@ namespace Goedel.Mesh.MeshMan {
 			Verify		Options = new Verify ();
 			ProcessOptions (Args, Index, Options);
 			Dispatch.Verify (Options);
+			}
+		private enum TagType_Personal {
+			Portal,
+			Description,
 			}
 
 		public static void Handle_Personal (
@@ -157,6 +170,10 @@ namespace Goedel.Mesh.MeshMan {
 			ProcessOptions (Args, Index, Options);
 			Dispatch.Personal (Options);
 			}
+		private enum TagType_Register {
+			Portal,
+			UDF,
+			}
 
 		public static void Handle_Register (
 					DispatchShell  DispatchIn, string[] Args, int Index) {
@@ -164,6 +181,9 @@ namespace Goedel.Mesh.MeshMan {
 			Register		Options = new Register ();
 			ProcessOptions (Args, Index, Options);
 			Dispatch.Register (Options);
+			}
+		private enum TagType_Deregister {
+			Portal,
 			}
 
 		public static void Handle_Deregister (
@@ -173,6 +193,9 @@ namespace Goedel.Mesh.MeshMan {
 			ProcessOptions (Args, Index, Options);
 			Dispatch.Deregister (Options);
 			}
+		private enum TagType_Fingerprint {
+			DeviceID,
+			}
 
 		public static void Handle_Fingerprint (
 					DispatchShell  DispatchIn, string[] Args, int Index) {
@@ -180,6 +203,8 @@ namespace Goedel.Mesh.MeshMan {
 			Fingerprint		Options = new Fingerprint ();
 			ProcessOptions (Args, Index, Options);
 			Dispatch.Fingerprint (Options);
+			}
+		private enum TagType_Sync {
 			}
 
 		public static void Handle_Sync (
@@ -189,6 +214,11 @@ namespace Goedel.Mesh.MeshMan {
 			ProcessOptions (Args, Index, Options);
 			Dispatch.Sync (Options);
 			}
+		private enum TagType_Escrow {
+			Quorum,
+			Shares,
+			File,
+			}
 
 		public static void Handle_Escrow (
 					DispatchShell  DispatchIn, string[] Args, int Index) {
@@ -196,6 +226,9 @@ namespace Goedel.Mesh.MeshMan {
 			Escrow		Options = new Escrow ();
 			ProcessOptions (Args, Index, Options);
 			Dispatch.Escrow (Options);
+			}
+		private enum TagType_Export {
+			File,
 			}
 
 		public static void Handle_Export (
@@ -205,6 +238,9 @@ namespace Goedel.Mesh.MeshMan {
 			ProcessOptions (Args, Index, Options);
 			Dispatch.Export (Options);
 			}
+		private enum TagType_Import {
+			File,
+			}
 
 		public static void Handle_Import (
 					DispatchShell  DispatchIn, string[] Args, int Index) {
@@ -212,6 +248,8 @@ namespace Goedel.Mesh.MeshMan {
 			Import		Options = new Import ();
 			ProcessOptions (Args, Index, Options);
 			Dispatch.Import (Options);
+			}
+		private enum TagType_List {
 			}
 
 		public static void Handle_List (
@@ -221,6 +259,8 @@ namespace Goedel.Mesh.MeshMan {
 			ProcessOptions (Args, Index, Options);
 			Dispatch.List (Options);
 			}
+		private enum TagType_Dump {
+			}
 
 		public static void Handle_Dump (
 					DispatchShell  DispatchIn, string[] Args, int Index) {
@@ -228,6 +268,8 @@ namespace Goedel.Mesh.MeshMan {
 			Dump		Options = new Dump ();
 			ProcessOptions (Args, Index, Options);
 			Dispatch.Dump (Options);
+			}
+		private enum TagType_Pending {
 			}
 
 		public static void Handle_Pending (
@@ -237,6 +279,10 @@ namespace Goedel.Mesh.MeshMan {
 			ProcessOptions (Args, Index, Options);
 			Dispatch.Pending (Options);
 			}
+		private enum TagType_Connect {
+			Portal,
+			PIN,
+			}
 
 		public static void Handle_Connect (
 					DispatchShell  DispatchIn, string[] Args, int Index) {
@@ -244,6 +290,9 @@ namespace Goedel.Mesh.MeshMan {
 			Connect		Options = new Connect ();
 			ProcessOptions (Args, Index, Options);
 			Dispatch.Connect (Options);
+			}
+		private enum TagType_Accept {
+			DeviceUDF,
 			}
 
 		public static void Handle_Accept (
@@ -253,6 +302,8 @@ namespace Goedel.Mesh.MeshMan {
 			ProcessOptions (Args, Index, Options);
 			Dispatch.Accept (Options);
 			}
+		private enum TagType_Complete {
+			}
 
 		public static void Handle_Complete (
 					DispatchShell  DispatchIn, string[] Args, int Index) {
@@ -260,6 +311,8 @@ namespace Goedel.Mesh.MeshMan {
 			Complete		Options = new Complete ();
 			ProcessOptions (Args, Index, Options);
 			Dispatch.Complete (Options);
+			}
+		private enum TagType_Password {
 			}
 
 		public static void Handle_Password (
@@ -269,6 +322,11 @@ namespace Goedel.Mesh.MeshMan {
 			ProcessOptions (Args, Index, Options);
 			Dispatch.Password (Options);
 			}
+		private enum TagType_AddPassword {
+			Site,
+			Username,
+			Password,
+			}
 
 		public static void Handle_AddPassword (
 					DispatchShell  DispatchIn, string[] Args, int Index) {
@@ -276,6 +334,9 @@ namespace Goedel.Mesh.MeshMan {
 			AddPassword		Options = new AddPassword ();
 			ProcessOptions (Args, Index, Options);
 			Dispatch.AddPassword (Options);
+			}
+		private enum TagType_GetPassword {
+			Site,
 			}
 
 		public static void Handle_GetPassword (
@@ -285,6 +346,9 @@ namespace Goedel.Mesh.MeshMan {
 			ProcessOptions (Args, Index, Options);
 			Dispatch.GetPassword (Options);
 			}
+		private enum TagType_DeletePassword {
+			Site,
+			}
 
 		public static void Handle_DeletePassword (
 					DispatchShell  DispatchIn, string[] Args, int Index) {
@@ -292,6 +356,9 @@ namespace Goedel.Mesh.MeshMan {
 			DeletePassword		Options = new DeletePassword ();
 			ProcessOptions (Args, Index, Options);
 			Dispatch.DeletePassword (Options);
+			}
+		private enum TagType_DumpPassword {
+			JSON,
 			}
 
 		public static void Handle_DumpPassword (
@@ -301,6 +368,10 @@ namespace Goedel.Mesh.MeshMan {
 			ProcessOptions (Args, Index, Options);
 			Dispatch.DumpPassword (Options);
 			}
+		private enum TagType_Mail {
+			Address,
+			CA,
+			}
 
 		public static void Handle_Mail (
 					DispatchShell  DispatchIn, string[] Args, int Index) {
@@ -308,6 +379,9 @@ namespace Goedel.Mesh.MeshMan {
 			Mail		Options = new Mail ();
 			ProcessOptions (Args, Index, Options);
 			Dispatch.Mail (Options);
+			}
+		private enum TagType_SSH {
+			Install,
 			}
 
 		public static void Handle_SSH (
@@ -317,6 +391,10 @@ namespace Goedel.Mesh.MeshMan {
 			ProcessOptions (Args, Index, Options);
 			Dispatch.SSH (Options);
 			}
+		private enum TagType_SSHAuth {
+			Host,
+			Client,
+			}
 
 		public static void Handle_SSHAuth (
 					DispatchShell  DispatchIn, string[] Args, int Index) {
@@ -324,6 +402,10 @@ namespace Goedel.Mesh.MeshMan {
 			SSHAuth		Options = new SSHAuth ();
 			ProcessOptions (Args, Index, Options);
 			Dispatch.SSHAuth (Options);
+			}
+		private enum TagType_SSHKnown {
+			Host,
+			Client,
 			}
 
 		public static void Handle_SSHKnown (
@@ -333,6 +415,10 @@ namespace Goedel.Mesh.MeshMan {
 			ProcessOptions (Args, Index, Options);
 			Dispatch.SSHKnown (Options);
 			}
+		private enum TagType_SSHPublic {
+			Host,
+			Client,
+			}
 
 		public static void Handle_SSHPublic (
 					DispatchShell  DispatchIn, string[] Args, int Index) {
@@ -340,6 +426,10 @@ namespace Goedel.Mesh.MeshMan {
 			SSHPublic		Options = new SSHPublic ();
 			ProcessOptions (Args, Index, Options);
 			Dispatch.SSHPublic (Options);
+			}
+		private enum TagType_SSHPrivate {
+			Host,
+			Client,
 			}
 
 		public static void Handle_SSHPrivate (
@@ -349,6 +439,10 @@ namespace Goedel.Mesh.MeshMan {
 			ProcessOptions (Args, Index, Options);
 			Dispatch.SSHPrivate (Options);
 			}
+		private enum TagType_Confirm {
+			Address,
+			PIN,
+			}
 
 		public static void Handle_Confirm (
 					DispatchShell  DispatchIn, string[] Args, int Index) {
@@ -356,6 +450,8 @@ namespace Goedel.Mesh.MeshMan {
 			Confirm		Options = new Confirm ();
 			ProcessOptions (Args, Index, Options);
 			Dispatch.Confirm (Options);
+			}
+		private enum TagType_ConfirmPost {
 			}
 
 		public static void Handle_ConfirmPost (
@@ -365,6 +461,8 @@ namespace Goedel.Mesh.MeshMan {
 			ProcessOptions (Args, Index, Options);
 			Dispatch.ConfirmPost (Options);
 			}
+		private enum TagType_ConfirmGet {
+			}
 
 		public static void Handle_ConfirmGet (
 					DispatchShell  DispatchIn, string[] Args, int Index) {
@@ -372,6 +470,8 @@ namespace Goedel.Mesh.MeshMan {
 			ConfirmGet		Options = new ConfirmGet ();
 			ProcessOptions (Args, Index, Options);
 			Dispatch.ConfirmGet (Options);
+			}
+		private enum TagType_ConfirmAccept {
 			}
 
 		public static void Handle_ConfirmAccept (
@@ -381,6 +481,8 @@ namespace Goedel.Mesh.MeshMan {
 			ProcessOptions (Args, Index, Options);
 			Dispatch.ConfirmAccept (Options);
 			}
+		private enum TagType_ConfirmReject {
+			}
 
 		public static void Handle_ConfirmReject (
 					DispatchShell  DispatchIn, string[] Args, int Index) {
@@ -388,6 +490,10 @@ namespace Goedel.Mesh.MeshMan {
 			ConfirmReject		Options = new ConfirmReject ();
 			ProcessOptions (Args, Index, Options);
 			Dispatch.ConfirmReject (Options);
+			}
+		private enum TagType_Recrypt {
+			Address,
+			PIN,
 			}
 
 		public static void Handle_Recrypt (
@@ -397,6 +503,8 @@ namespace Goedel.Mesh.MeshMan {
 			ProcessOptions (Args, Index, Options);
 			Dispatch.Recrypt (Options);
 			}
+		private enum TagType_RecryptGroup {
+			}
 
 		public static void Handle_RecryptGroup (
 					DispatchShell  DispatchIn, string[] Args, int Index) {
@@ -404,6 +512,8 @@ namespace Goedel.Mesh.MeshMan {
 			RecryptGroup		Options = new RecryptGroup ();
 			ProcessOptions (Args, Index, Options);
 			Dispatch.RecryptGroup (Options);
+			}
+		private enum TagType_RecryptAdd {
 			}
 
 		public static void Handle_RecryptAdd (
@@ -413,6 +523,8 @@ namespace Goedel.Mesh.MeshMan {
 			ProcessOptions (Args, Index, Options);
 			Dispatch.RecryptAdd (Options);
 			}
+		private enum TagType_RecryptDelete {
+			}
 
 		public static void Handle_RecryptDelete (
 					DispatchShell  DispatchIn, string[] Args, int Index) {
@@ -421,6 +533,8 @@ namespace Goedel.Mesh.MeshMan {
 			ProcessOptions (Args, Index, Options);
 			Dispatch.RecryptDelete (Options);
 			}
+		private enum TagType_Encrypt {
+			}
 
 		public static void Handle_Encrypt (
 					DispatchShell  DispatchIn, string[] Args, int Index) {
@@ -428,6 +542,8 @@ namespace Goedel.Mesh.MeshMan {
 			Encrypt		Options = new Encrypt ();
 			ProcessOptions (Args, Index, Options);
 			Dispatch.Encrypt (Options);
+			}
+		private enum TagType_Decrypt {
 			}
 
 		public static void Handle_Decrypt (
@@ -447,7 +563,7 @@ namespace Goedel.Mesh.MeshMan {
 	// with partial virtual that can be extended as required.
 
 	// All subclasses inherit from the abstract classes Goedel.Regisrty.Dispatch 
-	// and Goedel.Command.Type
+	// and Goedel.Registry.Type
 
 	public interface IReporting {
 		Flag			Verbose{get; set;}
@@ -473,11 +589,10 @@ namespace Goedel.Mesh.MeshMan {
 		}
 
 
-    public class _Reset : Goedel.Command.Dispatch  {
+    public class _Reset : Goedel.Registry.Dispatch  {
 
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {			} ;
+		public override Goedel.Registry.Type[] _Data {get; set;} = new Goedel.Registry.Type [] {			} ;
 
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
 			Identifier = "reset",
@@ -493,9 +608,9 @@ namespace Goedel.Mesh.MeshMan {
     public partial class Reset : _Reset {
         } // class Reset
 
-    public class _Device : Goedel.Command.Dispatch  {
+    public class _Device : Goedel.Registry.Dispatch  {
 
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+		public override Goedel.Registry.Type[] _Data {get; set;} = new Goedel.Registry.Type [] {
 			new String (),
 			new String (),
 			new Flag ()			} ;
@@ -505,29 +620,16 @@ namespace Goedel.Mesh.MeshMan {
 			get => _Data[0] as String;
 			set => _Data[0]  = value;
 			}
-
-		public virtual string _DeviceID {
-			set => _Data[0].Parameter (value);
-			}
 		/// <summary>Field accessor for parameter []</summary>
 		public virtual String DeviceDescription {
 			get => _Data[1] as String;
 			set => _Data[1]  = value;
-			}
-
-		public virtual string _DeviceDescription {
-			set => _Data[1].Parameter (value);
 			}
 		/// <summary>Field accessor for option [default]</summary>
 		public virtual Flag Default {
 			get => _Data[2] as Flag;
 			set => _Data[2]  = value;
 			}
-
-		public virtual string _Default {
-			set => _Data[2].Parameter (value);
-			}
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
 			Identifier = "device",
@@ -538,21 +640,21 @@ namespace Goedel.Mesh.MeshMan {
 				new DescribeEntryParameter () {
 					Identifier = "DeviceID", 
 					Default = "",
-					Brief = "Device identifier",
+					Brief = "<Unspecified>",
 					Index = 0,
 					Key = ""
 					},
 				new DescribeEntryParameter () {
 					Identifier = "DeviceDescription", 
 					Default = "",
-					Brief = "Device description",
+					Brief = "<Unspecified>",
 					Index = 1,
 					Key = ""
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Default", 
 					Default = "",
-					Brief = "Make the new device profile the default",
+					Brief = "<Unspecified>",
 					Index = 2,
 					Key = "default"
 					}
@@ -564,10 +666,10 @@ namespace Goedel.Mesh.MeshMan {
     public partial class Device : _Device {
         } // class Device
 
-    public class _Verify : Goedel.Command.Dispatch ,
+    public class _Verify : Goedel.Registry.Dispatch ,
 							IReporting {
 
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+		public override Goedel.Registry.Type[] _Data {get; set;} = new Goedel.Registry.Type [] {
 			new String (),
 			new Flag (),
 			new Flag ()			} ;
@@ -577,29 +679,16 @@ namespace Goedel.Mesh.MeshMan {
 			get => _Data[0] as String;
 			set => _Data[0]  = value;
 			}
-
-		public virtual string _Portal {
-			set => _Data[0].Parameter (value);
-			}
 		/// <summary>Field accessor for option [verbose]</summary>
 		public virtual Flag Verbose {
 			get => _Data[1] as Flag;
 			set => _Data[1]  = value;
-			}
-
-		public virtual string _Verbose {
-			set => _Data[1].Parameter (value);
 			}
 		/// <summary>Field accessor for option [report]</summary>
 		public virtual Flag Report {
 			get => _Data[2] as Flag;
 			set => _Data[2]  = value;
 			}
-
-		public virtual string _Report {
-			set => _Data[2].Parameter (value);
-			}
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
 			Identifier = "verify",
@@ -610,18 +699,18 @@ namespace Goedel.Mesh.MeshMan {
 				new DescribeEntryParameter () {
 					Identifier = "Portal", 
 					Default = "",
-					Brief = "Test portal account",
+					Brief = "<Unspecified>",
 					Index = 0,
 					Key = ""
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Verbose", 
 					Default = "false",
 					Brief = "Verbose reports (default)",
 					Index = 1,
 					Key = "verbose"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Report", 
 					Default = "true",
 					Brief = "Report results (default)",
@@ -636,11 +725,11 @@ namespace Goedel.Mesh.MeshMan {
     public partial class Verify : _Verify {
         } // class Verify
 
-    public class _Personal : Goedel.Command.Dispatch ,
+    public class _Personal : Goedel.Registry.Dispatch ,
 							IReporting,
 							IDeviceProfileInfo {
 
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+		public override Goedel.Registry.Type[] _Data {get; set;} = new Goedel.Registry.Type [] {
 			new String (),
 			new String (),
 			new Flag (),
@@ -655,74 +744,41 @@ namespace Goedel.Mesh.MeshMan {
 			get => _Data[0] as String;
 			set => _Data[0]  = value;
 			}
-
-		public virtual string _Portal {
-			set => _Data[0].Parameter (value);
-			}
 		/// <summary>Field accessor for parameter []</summary>
 		public virtual String Description {
 			get => _Data[1] as String;
 			set => _Data[1]  = value;
-			}
-
-		public virtual string _Description {
-			set => _Data[1].Parameter (value);
 			}
 		/// <summary>Field accessor for option [verbose]</summary>
 		public virtual Flag Verbose {
 			get => _Data[2] as Flag;
 			set => _Data[2]  = value;
 			}
-
-		public virtual string _Verbose {
-			set => _Data[2].Parameter (value);
-			}
 		/// <summary>Field accessor for option [report]</summary>
 		public virtual Flag Report {
 			get => _Data[3] as Flag;
 			set => _Data[3]  = value;
-			}
-
-		public virtual string _Report {
-			set => _Data[3].Parameter (value);
 			}
 		/// <summary>Field accessor for option [new]</summary>
 		public virtual Flag DeviceNew {
 			get => _Data[4] as Flag;
 			set => _Data[4]  = value;
 			}
-
-		public virtual string _DeviceNew {
-			set => _Data[4].Parameter (value);
-			}
 		/// <summary>Field accessor for option [dudf]</summary>
 		public virtual String DeviceUDF {
 			get => _Data[5] as String;
 			set => _Data[5]  = value;
-			}
-
-		public virtual string _DeviceUDF {
-			set => _Data[5].Parameter (value);
 			}
 		/// <summary>Field accessor for option [did]</summary>
 		public virtual String DeviceID {
 			get => _Data[6] as String;
 			set => _Data[6]  = value;
 			}
-
-		public virtual string _DeviceID {
-			set => _Data[6].Parameter (value);
-			}
 		/// <summary>Field accessor for option [dd]</summary>
 		public virtual String DeviceDescription {
 			get => _Data[7] as String;
 			set => _Data[7]  = value;
 			}
-
-		public virtual string _DeviceDescription {
-			set => _Data[7].Parameter (value);
-			}
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
 			Identifier = "personal",
@@ -733,53 +789,53 @@ namespace Goedel.Mesh.MeshMan {
 				new DescribeEntryParameter () {
 					Identifier = "Portal", 
 					Default = "",
-					Brief = "New portal account",
+					Brief = "<Unspecified>",
 					Index = 0,
 					Key = ""
 					},
 				new DescribeEntryParameter () {
 					Identifier = "Description", 
 					Default = "",
-					Brief = "Device description",
+					Brief = "<Unspecified>",
 					Index = 1,
 					Key = ""
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Verbose", 
 					Default = "false",
 					Brief = "Verbose reports (default)",
 					Index = 2,
 					Key = "verbose"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Report", 
 					Default = "true",
 					Brief = "Report results (default)",
 					Index = 3,
 					Key = "report"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "DeviceNew", 
 					Default = "",
 					Brief = "Force creation of new profile",
 					Index = 4,
 					Key = "new"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "DeviceUDF", 
 					Default = "",
 					Brief = "Device profile fingerprint",
 					Index = 5,
 					Key = "dudf"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "DeviceID", 
 					Default = "",
 					Brief = "Device identifier",
 					Index = 6,
 					Key = "did"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "DeviceDescription", 
 					Default = "",
 					Brief = "Device description",
@@ -794,10 +850,10 @@ namespace Goedel.Mesh.MeshMan {
     public partial class Personal : _Personal {
         } // class Personal
 
-    public class _Register : Goedel.Command.Dispatch ,
+    public class _Register : Goedel.Registry.Dispatch ,
 							IReporting {
 
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+		public override Goedel.Registry.Type[] _Data {get; set;} = new Goedel.Registry.Type [] {
 			new String (),
 			new String (),
 			new Flag (),
@@ -808,38 +864,21 @@ namespace Goedel.Mesh.MeshMan {
 			get => _Data[0] as String;
 			set => _Data[0]  = value;
 			}
-
-		public virtual string _Portal {
-			set => _Data[0].Parameter (value);
-			}
 		/// <summary>Field accessor for parameter []</summary>
 		public virtual String UDF {
 			get => _Data[1] as String;
 			set => _Data[1]  = value;
-			}
-
-		public virtual string _UDF {
-			set => _Data[1].Parameter (value);
 			}
 		/// <summary>Field accessor for option [verbose]</summary>
 		public virtual Flag Verbose {
 			get => _Data[2] as Flag;
 			set => _Data[2]  = value;
 			}
-
-		public virtual string _Verbose {
-			set => _Data[2].Parameter (value);
-			}
 		/// <summary>Field accessor for option [report]</summary>
 		public virtual Flag Report {
 			get => _Data[3] as Flag;
 			set => _Data[3]  = value;
 			}
-
-		public virtual string _Report {
-			set => _Data[3].Parameter (value);
-			}
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
 			Identifier = "register",
@@ -850,25 +889,25 @@ namespace Goedel.Mesh.MeshMan {
 				new DescribeEntryParameter () {
 					Identifier = "Portal", 
 					Default = "",
-					Brief = "New portal account",
+					Brief = "<Unspecified>",
 					Index = 0,
 					Key = ""
 					},
 				new DescribeEntryParameter () {
 					Identifier = "UDF", 
 					Default = "",
-					Brief = "Profile fingerprint",
+					Brief = "<Unspecified>",
 					Index = 1,
 					Key = ""
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Verbose", 
 					Default = "false",
 					Brief = "Verbose reports (default)",
 					Index = 2,
 					Key = "verbose"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Report", 
 					Default = "true",
 					Brief = "Report results (default)",
@@ -883,10 +922,10 @@ namespace Goedel.Mesh.MeshMan {
     public partial class Register : _Register {
         } // class Register
 
-    public class _Deregister : Goedel.Command.Dispatch ,
+    public class _Deregister : Goedel.Registry.Dispatch ,
 							IReporting {
 
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+		public override Goedel.Registry.Type[] _Data {get; set;} = new Goedel.Registry.Type [] {
 			new String (),
 			new Flag (),
 			new Flag ()			} ;
@@ -896,29 +935,16 @@ namespace Goedel.Mesh.MeshMan {
 			get => _Data[0] as String;
 			set => _Data[0]  = value;
 			}
-
-		public virtual string _Portal {
-			set => _Data[0].Parameter (value);
-			}
 		/// <summary>Field accessor for option [verbose]</summary>
 		public virtual Flag Verbose {
 			get => _Data[1] as Flag;
 			set => _Data[1]  = value;
-			}
-
-		public virtual string _Verbose {
-			set => _Data[1].Parameter (value);
 			}
 		/// <summary>Field accessor for option [report]</summary>
 		public virtual Flag Report {
 			get => _Data[2] as Flag;
 			set => _Data[2]  = value;
 			}
-
-		public virtual string _Report {
-			set => _Data[2].Parameter (value);
-			}
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
 			Identifier = "deregister",
@@ -929,18 +955,18 @@ namespace Goedel.Mesh.MeshMan {
 				new DescribeEntryParameter () {
 					Identifier = "Portal", 
 					Default = "",
-					Brief = "New portal account",
+					Brief = "<Unspecified>",
 					Index = 0,
 					Key = ""
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Verbose", 
 					Default = "false",
 					Brief = "Verbose reports (default)",
 					Index = 1,
 					Key = "verbose"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Report", 
 					Default = "true",
 					Brief = "Report results (default)",
@@ -955,11 +981,11 @@ namespace Goedel.Mesh.MeshMan {
     public partial class Deregister : _Deregister {
         } // class Deregister
 
-    public class _Fingerprint : Goedel.Command.Dispatch ,
+    public class _Fingerprint : Goedel.Registry.Dispatch ,
 							IPortalAccount,
 							IReporting {
 
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+		public override Goedel.Registry.Type[] _Data {get; set;} = new Goedel.Registry.Type [] {
 			new String (),
 			new String (),
 			new String (),
@@ -971,36 +997,20 @@ namespace Goedel.Mesh.MeshMan {
 			get => _Data[0] as String;
 			set => _Data[0]  = value;
 			}
-
-		public virtual string _DeviceID {
-			set => _Data[0].Parameter (value);
-			}
 		/// <summary>Field accessor for option [portal]</summary>
 		public virtual String Portal {
 			get => _Data[1] as String;
 			set => _Data[1]  = value;
-			}
-
-		public virtual string _Portal {
-			set => _Data[1].Parameter (value);
 			}
 		/// <summary>Field accessor for option [udf]</summary>
 		public virtual String UDF {
 			get => _Data[2] as String;
 			set => _Data[2]  = value;
 			}
-
-		public virtual string _UDF {
-			set => _Data[2].Parameter (value);
-			}
 		/// <summary>Field accessor for option [verbose]</summary>
 		public virtual Flag Verbose {
 			get => _Data[3] as Flag;
 			set => _Data[3]  = value;
-			}
-
-		public virtual string _Verbose {
-			set => _Data[3].Parameter (value);
 			}
 		/// <summary>Field accessor for option [report]</summary>
 		public virtual Flag Report {
@@ -1008,46 +1018,41 @@ namespace Goedel.Mesh.MeshMan {
 			set => _Data[4]  = value;
 			}
 
-		public virtual string _Report {
-			set => _Data[4].Parameter (value);
-			}
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
-
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
 			Identifier = "fingerprint",
 			Brief =  "Return the fingerprint of a Mesh profile",
 			HandleDelegate =  CommandLineInterpreter.Handle_Fingerprint,
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "DeviceID", 
 					Default = "",
-					Brief = "Device identifier",
+					Brief = "<Unspecified>",
 					Index = 0,
 					Key = "did"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Portal", 
 					Default = "",
 					Brief = "Portal account",
 					Index = 1,
 					Key = "portal"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "UDF", 
 					Default = "",
 					Brief = "Profile fingerprint",
 					Index = 2,
 					Key = "udf"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Verbose", 
 					Default = "false",
 					Brief = "Verbose reports (default)",
 					Index = 3,
 					Key = "verbose"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Report", 
 					Default = "true",
 					Brief = "Report results (default)",
@@ -1062,11 +1067,11 @@ namespace Goedel.Mesh.MeshMan {
     public partial class Fingerprint : _Fingerprint {
         } // class Fingerprint
 
-    public class _Sync : Goedel.Command.Dispatch ,
+    public class _Sync : Goedel.Registry.Dispatch ,
 							IPortalAccount,
 							IReporting {
 
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+		public override Goedel.Registry.Type[] _Data {get; set;} = new Goedel.Registry.Type [] {
 			new String (),
 			new String (),
 			new Flag (),
@@ -1077,27 +1082,15 @@ namespace Goedel.Mesh.MeshMan {
 			get => _Data[0] as String;
 			set => _Data[0]  = value;
 			}
-
-		public virtual string _Portal {
-			set => _Data[0].Parameter (value);
-			}
 		/// <summary>Field accessor for option [udf]</summary>
 		public virtual String UDF {
 			get => _Data[1] as String;
 			set => _Data[1]  = value;
 			}
-
-		public virtual string _UDF {
-			set => _Data[1].Parameter (value);
-			}
 		/// <summary>Field accessor for option [verbose]</summary>
 		public virtual Flag Verbose {
 			get => _Data[2] as Flag;
 			set => _Data[2]  = value;
-			}
-
-		public virtual string _Verbose {
-			set => _Data[2].Parameter (value);
 			}
 		/// <summary>Field accessor for option [report]</summary>
 		public virtual Flag Report {
@@ -1105,39 +1098,34 @@ namespace Goedel.Mesh.MeshMan {
 			set => _Data[3]  = value;
 			}
 
-		public virtual string _Report {
-			set => _Data[3].Parameter (value);
-			}
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
-
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
 			Identifier = "sync",
 			Brief =  "Synchronize local copies of Mesh profiles with the server",
 			HandleDelegate =  CommandLineInterpreter.Handle_Sync,
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Portal", 
 					Default = "",
 					Brief = "Portal account",
 					Index = 0,
 					Key = "portal"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "UDF", 
 					Default = "",
 					Brief = "Profile fingerprint",
 					Index = 1,
 					Key = "udf"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Verbose", 
 					Default = "false",
 					Brief = "Verbose reports (default)",
 					Index = 2,
 					Key = "verbose"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Report", 
 					Default = "true",
 					Brief = "Report results (default)",
@@ -1152,11 +1140,11 @@ namespace Goedel.Mesh.MeshMan {
     public partial class Sync : _Sync {
         } // class Sync
 
-    public class _Escrow : Goedel.Command.Dispatch ,
+    public class _Escrow : Goedel.Registry.Dispatch ,
 							IPortalAccount,
 							IReporting {
 
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+		public override Goedel.Registry.Type[] _Data {get; set;} = new Goedel.Registry.Type [] {
 			new String (),
 			new String (),
 			new Flag (),
@@ -1170,54 +1158,30 @@ namespace Goedel.Mesh.MeshMan {
 			get => _Data[0] as String;
 			set => _Data[0]  = value;
 			}
-
-		public virtual string _Portal {
-			set => _Data[0].Parameter (value);
-			}
 		/// <summary>Field accessor for option [udf]</summary>
 		public virtual String UDF {
 			get => _Data[1] as String;
 			set => _Data[1]  = value;
-			}
-
-		public virtual string _UDF {
-			set => _Data[1].Parameter (value);
 			}
 		/// <summary>Field accessor for option [verbose]</summary>
 		public virtual Flag Verbose {
 			get => _Data[2] as Flag;
 			set => _Data[2]  = value;
 			}
-
-		public virtual string _Verbose {
-			set => _Data[2].Parameter (value);
-			}
 		/// <summary>Field accessor for option [report]</summary>
 		public virtual Flag Report {
 			get => _Data[3] as Flag;
 			set => _Data[3]  = value;
-			}
-
-		public virtual string _Report {
-			set => _Data[3].Parameter (value);
 			}
 		/// <summary>Field accessor for option [quorum]</summary>
 		public virtual Integer Quorum {
 			get => _Data[4] as Integer;
 			set => _Data[4]  = value;
 			}
-
-		public virtual string _Quorum {
-			set => _Data[4].Parameter (value);
-			}
 		/// <summary>Field accessor for option [shares]</summary>
 		public virtual Integer Shares {
 			get => _Data[5] as Integer;
 			set => _Data[5]  = value;
-			}
-
-		public virtual string _Shares {
-			set => _Data[5].Parameter (value);
 			}
 		/// <summary>Field accessor for option [file]</summary>
 		public virtual NewFile File {
@@ -1225,60 +1189,55 @@ namespace Goedel.Mesh.MeshMan {
 			set => _Data[6]  = value;
 			}
 
-		public virtual string _File {
-			set => _Data[6].Parameter (value);
-			}
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
-
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
 			Identifier = "escrow",
 			Brief =  "Create a set of key escrow shares",
 			HandleDelegate =  CommandLineInterpreter.Handle_Escrow,
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Portal", 
 					Default = "",
 					Brief = "Portal account",
 					Index = 0,
 					Key = "portal"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "UDF", 
 					Default = "",
 					Brief = "Profile fingerprint",
 					Index = 1,
 					Key = "udf"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Verbose", 
 					Default = "false",
 					Brief = "Verbose reports (default)",
 					Index = 2,
 					Key = "verbose"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Report", 
 					Default = "true",
 					Brief = "Report results (default)",
 					Index = 3,
 					Key = "report"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Quorum", 
 					Default = "",
 					Brief = "<Unspecified>",
 					Index = 4,
 					Key = "quorum"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Shares", 
 					Default = "",
 					Brief = "<Unspecified>",
 					Index = 5,
 					Key = "shares"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "File", 
 					Default = "",
 					Brief = "<Unspecified>",
@@ -1293,11 +1252,11 @@ namespace Goedel.Mesh.MeshMan {
     public partial class Escrow : _Escrow {
         } // class Escrow
 
-    public class _Export : Goedel.Command.Dispatch ,
+    public class _Export : Goedel.Registry.Dispatch ,
 							IPortalAccount,
 							IReporting {
 
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+		public override Goedel.Registry.Type[] _Data {get; set;} = new Goedel.Registry.Type [] {
 			new NewFile (),
 			new String (),
 			new String (),
@@ -1309,47 +1268,26 @@ namespace Goedel.Mesh.MeshMan {
 			get => _Data[0] as NewFile;
 			set => _Data[0]  = value;
 			}
-
-		public virtual string _File {
-			set => _Data[0].Parameter (value);
-			}
 		/// <summary>Field accessor for option [portal]</summary>
 		public virtual String Portal {
 			get => _Data[1] as String;
 			set => _Data[1]  = value;
-			}
-
-		public virtual string _Portal {
-			set => _Data[1].Parameter (value);
 			}
 		/// <summary>Field accessor for option [udf]</summary>
 		public virtual String UDF {
 			get => _Data[2] as String;
 			set => _Data[2]  = value;
 			}
-
-		public virtual string _UDF {
-			set => _Data[2].Parameter (value);
-			}
 		/// <summary>Field accessor for option [verbose]</summary>
 		public virtual Flag Verbose {
 			get => _Data[3] as Flag;
 			set => _Data[3]  = value;
-			}
-
-		public virtual string _Verbose {
-			set => _Data[3].Parameter (value);
 			}
 		/// <summary>Field accessor for option [report]</summary>
 		public virtual Flag Report {
 			get => _Data[4] as Flag;
 			set => _Data[4]  = value;
 			}
-
-		public virtual string _Report {
-			set => _Data[4].Parameter (value);
-			}
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
 			Identifier = "export",
@@ -1364,28 +1302,28 @@ namespace Goedel.Mesh.MeshMan {
 					Index = 0,
 					Key = ""
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Portal", 
 					Default = "",
 					Brief = "Portal account",
 					Index = 1,
 					Key = "portal"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "UDF", 
 					Default = "",
 					Brief = "Profile fingerprint",
 					Index = 2,
 					Key = "udf"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Verbose", 
 					Default = "false",
 					Brief = "Verbose reports (default)",
 					Index = 3,
 					Key = "verbose"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Report", 
 					Default = "true",
 					Brief = "Report results (default)",
@@ -1400,11 +1338,11 @@ namespace Goedel.Mesh.MeshMan {
     public partial class Export : _Export {
         } // class Export
 
-    public class _Import : Goedel.Command.Dispatch ,
+    public class _Import : Goedel.Registry.Dispatch ,
 							IPortalAccount,
 							IReporting {
 
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+		public override Goedel.Registry.Type[] _Data {get; set;} = new Goedel.Registry.Type [] {
 			new NewFile (),
 			new String (),
 			new String (),
@@ -1416,47 +1354,26 @@ namespace Goedel.Mesh.MeshMan {
 			get => _Data[0] as NewFile;
 			set => _Data[0]  = value;
 			}
-
-		public virtual string _File {
-			set => _Data[0].Parameter (value);
-			}
 		/// <summary>Field accessor for option [portal]</summary>
 		public virtual String Portal {
 			get => _Data[1] as String;
 			set => _Data[1]  = value;
-			}
-
-		public virtual string _Portal {
-			set => _Data[1].Parameter (value);
 			}
 		/// <summary>Field accessor for option [udf]</summary>
 		public virtual String UDF {
 			get => _Data[2] as String;
 			set => _Data[2]  = value;
 			}
-
-		public virtual string _UDF {
-			set => _Data[2].Parameter (value);
-			}
 		/// <summary>Field accessor for option [verbose]</summary>
 		public virtual Flag Verbose {
 			get => _Data[3] as Flag;
 			set => _Data[3]  = value;
-			}
-
-		public virtual string _Verbose {
-			set => _Data[3].Parameter (value);
 			}
 		/// <summary>Field accessor for option [report]</summary>
 		public virtual Flag Report {
 			get => _Data[4] as Flag;
 			set => _Data[4]  = value;
 			}
-
-		public virtual string _Report {
-			set => _Data[4].Parameter (value);
-			}
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
 			Identifier = "import",
@@ -1471,28 +1388,28 @@ namespace Goedel.Mesh.MeshMan {
 					Index = 0,
 					Key = ""
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Portal", 
 					Default = "",
 					Brief = "Portal account",
 					Index = 1,
 					Key = "portal"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "UDF", 
 					Default = "",
 					Brief = "Profile fingerprint",
 					Index = 2,
 					Key = "udf"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Verbose", 
 					Default = "false",
 					Brief = "Verbose reports (default)",
 					Index = 3,
 					Key = "verbose"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Report", 
 					Default = "true",
 					Brief = "Report results (default)",
@@ -1507,10 +1424,10 @@ namespace Goedel.Mesh.MeshMan {
     public partial class Import : _Import {
         } // class Import
 
-    public class _List : Goedel.Command.Dispatch ,
+    public class _List : Goedel.Registry.Dispatch ,
 							IReporting {
 
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+		public override Goedel.Registry.Type[] _Data {get; set;} = new Goedel.Registry.Type [] {
 			new Flag (),
 			new Flag ()			} ;
 
@@ -1519,20 +1436,11 @@ namespace Goedel.Mesh.MeshMan {
 			get => _Data[0] as Flag;
 			set => _Data[0]  = value;
 			}
-
-		public virtual string _Verbose {
-			set => _Data[0].Parameter (value);
-			}
 		/// <summary>Field accessor for option [report]</summary>
 		public virtual Flag Report {
 			get => _Data[1] as Flag;
 			set => _Data[1]  = value;
 			}
-
-		public virtual string _Report {
-			set => _Data[1].Parameter (value);
-			}
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
 			Identifier = "list",
@@ -1540,14 +1448,14 @@ namespace Goedel.Mesh.MeshMan {
 			HandleDelegate =  CommandLineInterpreter.Handle_List,
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Verbose", 
 					Default = "false",
 					Brief = "Verbose reports (default)",
 					Index = 0,
 					Key = "verbose"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Report", 
 					Default = "true",
 					Brief = "Report results (default)",
@@ -1562,11 +1470,11 @@ namespace Goedel.Mesh.MeshMan {
     public partial class List : _List {
         } // class List
 
-    public class _Dump : Goedel.Command.Dispatch ,
+    public class _Dump : Goedel.Registry.Dispatch ,
 							IPortalAccount,
 							IReporting {
 
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+		public override Goedel.Registry.Type[] _Data {get; set;} = new Goedel.Registry.Type [] {
 			new String (),
 			new String (),
 			new Flag (),
@@ -1577,27 +1485,15 @@ namespace Goedel.Mesh.MeshMan {
 			get => _Data[0] as String;
 			set => _Data[0]  = value;
 			}
-
-		public virtual string _Portal {
-			set => _Data[0].Parameter (value);
-			}
 		/// <summary>Field accessor for option [udf]</summary>
 		public virtual String UDF {
 			get => _Data[1] as String;
 			set => _Data[1]  = value;
 			}
-
-		public virtual string _UDF {
-			set => _Data[1].Parameter (value);
-			}
 		/// <summary>Field accessor for option [verbose]</summary>
 		public virtual Flag Verbose {
 			get => _Data[2] as Flag;
 			set => _Data[2]  = value;
-			}
-
-		public virtual string _Verbose {
-			set => _Data[2].Parameter (value);
 			}
 		/// <summary>Field accessor for option [report]</summary>
 		public virtual Flag Report {
@@ -1605,39 +1501,34 @@ namespace Goedel.Mesh.MeshMan {
 			set => _Data[3]  = value;
 			}
 
-		public virtual string _Report {
-			set => _Data[3].Parameter (value);
-			}
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
-
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
 			Identifier = "dump",
 			Brief =  "Describe the specified profile",
 			HandleDelegate =  CommandLineInterpreter.Handle_Dump,
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Portal", 
 					Default = "",
 					Brief = "Portal account",
 					Index = 0,
 					Key = "portal"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "UDF", 
 					Default = "",
 					Brief = "Profile fingerprint",
 					Index = 1,
 					Key = "udf"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Verbose", 
 					Default = "false",
 					Brief = "Verbose reports (default)",
 					Index = 2,
 					Key = "verbose"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Report", 
 					Default = "true",
 					Brief = "Report results (default)",
@@ -1652,11 +1543,11 @@ namespace Goedel.Mesh.MeshMan {
     public partial class Dump : _Dump {
         } // class Dump
 
-    public class _Pending : Goedel.Command.Dispatch ,
+    public class _Pending : Goedel.Registry.Dispatch ,
 							IPortalAccount,
 							IReporting {
 
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+		public override Goedel.Registry.Type[] _Data {get; set;} = new Goedel.Registry.Type [] {
 			new String (),
 			new String (),
 			new Flag (),
@@ -1667,27 +1558,15 @@ namespace Goedel.Mesh.MeshMan {
 			get => _Data[0] as String;
 			set => _Data[0]  = value;
 			}
-
-		public virtual string _Portal {
-			set => _Data[0].Parameter (value);
-			}
 		/// <summary>Field accessor for option [udf]</summary>
 		public virtual String UDF {
 			get => _Data[1] as String;
 			set => _Data[1]  = value;
 			}
-
-		public virtual string _UDF {
-			set => _Data[1].Parameter (value);
-			}
 		/// <summary>Field accessor for option [verbose]</summary>
 		public virtual Flag Verbose {
 			get => _Data[2] as Flag;
 			set => _Data[2]  = value;
-			}
-
-		public virtual string _Verbose {
-			set => _Data[2].Parameter (value);
 			}
 		/// <summary>Field accessor for option [report]</summary>
 		public virtual Flag Report {
@@ -1695,39 +1574,34 @@ namespace Goedel.Mesh.MeshMan {
 			set => _Data[3]  = value;
 			}
 
-		public virtual string _Report {
-			set => _Data[3].Parameter (value);
-			}
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
-
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
 			Identifier = "pending",
 			Brief =  "Get list of pending connection requests",
 			HandleDelegate =  CommandLineInterpreter.Handle_Pending,
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Portal", 
 					Default = "",
 					Brief = "Portal account",
 					Index = 0,
 					Key = "portal"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "UDF", 
 					Default = "",
 					Brief = "Profile fingerprint",
 					Index = 1,
 					Key = "udf"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Verbose", 
 					Default = "false",
 					Brief = "Verbose reports (default)",
 					Index = 2,
 					Key = "verbose"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Report", 
 					Default = "true",
 					Brief = "Report results (default)",
@@ -1742,11 +1616,11 @@ namespace Goedel.Mesh.MeshMan {
     public partial class Pending : _Pending {
         } // class Pending
 
-    public class _Connect : Goedel.Command.Dispatch ,
+    public class _Connect : Goedel.Registry.Dispatch ,
 							IReporting,
 							IDeviceProfileInfo {
 
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+		public override Goedel.Registry.Type[] _Data {get; set;} = new Goedel.Registry.Type [] {
 			new String (),
 			new String (),
 			new Flag (),
@@ -1761,74 +1635,41 @@ namespace Goedel.Mesh.MeshMan {
 			get => _Data[0] as String;
 			set => _Data[0]  = value;
 			}
-
-		public virtual string _Portal {
-			set => _Data[0].Parameter (value);
-			}
 		/// <summary>Field accessor for option [pin]</summary>
 		public virtual String PIN {
 			get => _Data[1] as String;
 			set => _Data[1]  = value;
-			}
-
-		public virtual string _PIN {
-			set => _Data[1].Parameter (value);
 			}
 		/// <summary>Field accessor for option [verbose]</summary>
 		public virtual Flag Verbose {
 			get => _Data[2] as Flag;
 			set => _Data[2]  = value;
 			}
-
-		public virtual string _Verbose {
-			set => _Data[2].Parameter (value);
-			}
 		/// <summary>Field accessor for option [report]</summary>
 		public virtual Flag Report {
 			get => _Data[3] as Flag;
 			set => _Data[3]  = value;
-			}
-
-		public virtual string _Report {
-			set => _Data[3].Parameter (value);
 			}
 		/// <summary>Field accessor for option [new]</summary>
 		public virtual Flag DeviceNew {
 			get => _Data[4] as Flag;
 			set => _Data[4]  = value;
 			}
-
-		public virtual string _DeviceNew {
-			set => _Data[4].Parameter (value);
-			}
 		/// <summary>Field accessor for option [dudf]</summary>
 		public virtual String DeviceUDF {
 			get => _Data[5] as String;
 			set => _Data[5]  = value;
-			}
-
-		public virtual string _DeviceUDF {
-			set => _Data[5].Parameter (value);
 			}
 		/// <summary>Field accessor for option [did]</summary>
 		public virtual String DeviceID {
 			get => _Data[6] as String;
 			set => _Data[6]  = value;
 			}
-
-		public virtual string _DeviceID {
-			set => _Data[6].Parameter (value);
-			}
 		/// <summary>Field accessor for option [dd]</summary>
 		public virtual String DeviceDescription {
 			get => _Data[7] as String;
 			set => _Data[7]  = value;
 			}
-
-		public virtual string _DeviceDescription {
-			set => _Data[7].Parameter (value);
-			}
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
 			Identifier = "connect",
@@ -1839,53 +1680,53 @@ namespace Goedel.Mesh.MeshMan {
 				new DescribeEntryParameter () {
 					Identifier = "Portal", 
 					Default = "",
-					Brief = "New portal account",
+					Brief = "<Unspecified>",
 					Index = 0,
 					Key = ""
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "PIN", 
 					Default = "",
-					Brief = "One time use authenticator",
+					Brief = "<Unspecified>",
 					Index = 1,
 					Key = "pin"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Verbose", 
 					Default = "false",
 					Brief = "Verbose reports (default)",
 					Index = 2,
 					Key = "verbose"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Report", 
 					Default = "true",
 					Brief = "Report results (default)",
 					Index = 3,
 					Key = "report"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "DeviceNew", 
 					Default = "",
 					Brief = "Force creation of new profile",
 					Index = 4,
 					Key = "new"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "DeviceUDF", 
 					Default = "",
 					Brief = "Device profile fingerprint",
 					Index = 5,
 					Key = "dudf"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "DeviceID", 
 					Default = "",
 					Brief = "Device identifier",
 					Index = 6,
 					Key = "did"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "DeviceDescription", 
 					Default = "",
 					Brief = "Device description",
@@ -1900,11 +1741,11 @@ namespace Goedel.Mesh.MeshMan {
     public partial class Connect : _Connect {
         } // class Connect
 
-    public class _Accept : Goedel.Command.Dispatch ,
+    public class _Accept : Goedel.Registry.Dispatch ,
 							IReporting,
 							IPortalAccount {
 
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+		public override Goedel.Registry.Type[] _Data {get; set;} = new Goedel.Registry.Type [] {
 			new String (),
 			new Flag (),
 			new Flag (),
@@ -1916,47 +1757,26 @@ namespace Goedel.Mesh.MeshMan {
 			get => _Data[0] as String;
 			set => _Data[0]  = value;
 			}
-
-		public virtual string _DeviceUDF {
-			set => _Data[0].Parameter (value);
-			}
 		/// <summary>Field accessor for option [verbose]</summary>
 		public virtual Flag Verbose {
 			get => _Data[1] as Flag;
 			set => _Data[1]  = value;
-			}
-
-		public virtual string _Verbose {
-			set => _Data[1].Parameter (value);
 			}
 		/// <summary>Field accessor for option [report]</summary>
 		public virtual Flag Report {
 			get => _Data[2] as Flag;
 			set => _Data[2]  = value;
 			}
-
-		public virtual string _Report {
-			set => _Data[2].Parameter (value);
-			}
 		/// <summary>Field accessor for option [portal]</summary>
 		public virtual String Portal {
 			get => _Data[3] as String;
 			set => _Data[3]  = value;
-			}
-
-		public virtual string _Portal {
-			set => _Data[3].Parameter (value);
 			}
 		/// <summary>Field accessor for option [udf]</summary>
 		public virtual String UDF {
 			get => _Data[4] as String;
 			set => _Data[4]  = value;
 			}
-
-		public virtual string _UDF {
-			set => _Data[4].Parameter (value);
-			}
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
 			Identifier = "accept",
@@ -1967,32 +1787,32 @@ namespace Goedel.Mesh.MeshMan {
 				new DescribeEntryParameter () {
 					Identifier = "DeviceUDF", 
 					Default = "",
-					Brief = "Fingerprint of connection to accept",
+					Brief = "<Unspecified>",
 					Index = 0,
 					Key = ""
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Verbose", 
 					Default = "false",
 					Brief = "Verbose reports (default)",
 					Index = 1,
 					Key = "verbose"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Report", 
 					Default = "true",
 					Brief = "Report results (default)",
 					Index = 2,
 					Key = "report"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Portal", 
 					Default = "",
 					Brief = "Portal account",
 					Index = 3,
 					Key = "portal"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "UDF", 
 					Default = "",
 					Brief = "Profile fingerprint",
@@ -2007,11 +1827,11 @@ namespace Goedel.Mesh.MeshMan {
     public partial class Accept : _Accept {
         } // class Accept
 
-    public class _Complete : Goedel.Command.Dispatch ,
+    public class _Complete : Goedel.Registry.Dispatch ,
 							IReporting,
 							IPortalAccount {
 
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+		public override Goedel.Registry.Type[] _Data {get; set;} = new Goedel.Registry.Type [] {
 			new Flag (),
 			new Flag (),
 			new String (),
@@ -2022,27 +1842,15 @@ namespace Goedel.Mesh.MeshMan {
 			get => _Data[0] as Flag;
 			set => _Data[0]  = value;
 			}
-
-		public virtual string _Verbose {
-			set => _Data[0].Parameter (value);
-			}
 		/// <summary>Field accessor for option [report]</summary>
 		public virtual Flag Report {
 			get => _Data[1] as Flag;
 			set => _Data[1]  = value;
 			}
-
-		public virtual string _Report {
-			set => _Data[1].Parameter (value);
-			}
 		/// <summary>Field accessor for option [portal]</summary>
 		public virtual String Portal {
 			get => _Data[2] as String;
 			set => _Data[2]  = value;
-			}
-
-		public virtual string _Portal {
-			set => _Data[2].Parameter (value);
 			}
 		/// <summary>Field accessor for option [udf]</summary>
 		public virtual String UDF {
@@ -2050,39 +1858,34 @@ namespace Goedel.Mesh.MeshMan {
 			set => _Data[3]  = value;
 			}
 
-		public virtual string _UDF {
-			set => _Data[3].Parameter (value);
-			}
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
-
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
 			Identifier = "complete",
 			Brief =  "Complete a pending connection request",
 			HandleDelegate =  CommandLineInterpreter.Handle_Complete,
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Verbose", 
 					Default = "false",
 					Brief = "Verbose reports (default)",
 					Index = 0,
 					Key = "verbose"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Report", 
 					Default = "true",
 					Brief = "Report results (default)",
 					Index = 1,
 					Key = "report"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Portal", 
 					Default = "",
 					Brief = "Portal account",
 					Index = 2,
 					Key = "portal"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "UDF", 
 					Default = "",
 					Brief = "Profile fingerprint",
@@ -2097,11 +1900,11 @@ namespace Goedel.Mesh.MeshMan {
     public partial class Complete : _Complete {
         } // class Complete
 
-    public class _Password : Goedel.Command.Dispatch ,
+    public class _Password : Goedel.Registry.Dispatch ,
 							IPortalAccount,
 							IReporting {
 
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+		public override Goedel.Registry.Type[] _Data {get; set;} = new Goedel.Registry.Type [] {
 			new String (),
 			new String (),
 			new Flag (),
@@ -2112,27 +1915,15 @@ namespace Goedel.Mesh.MeshMan {
 			get => _Data[0] as String;
 			set => _Data[0]  = value;
 			}
-
-		public virtual string _Portal {
-			set => _Data[0].Parameter (value);
-			}
 		/// <summary>Field accessor for option [udf]</summary>
 		public virtual String UDF {
 			get => _Data[1] as String;
 			set => _Data[1]  = value;
 			}
-
-		public virtual string _UDF {
-			set => _Data[1].Parameter (value);
-			}
 		/// <summary>Field accessor for option [verbose]</summary>
 		public virtual Flag Verbose {
 			get => _Data[2] as Flag;
 			set => _Data[2]  = value;
-			}
-
-		public virtual string _Verbose {
-			set => _Data[2].Parameter (value);
 			}
 		/// <summary>Field accessor for option [report]</summary>
 		public virtual Flag Report {
@@ -2140,39 +1931,34 @@ namespace Goedel.Mesh.MeshMan {
 			set => _Data[3]  = value;
 			}
 
-		public virtual string _Report {
-			set => _Data[3].Parameter (value);
-			}
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
-
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
 			Identifier = "password",
 			Brief =  "Add a web application profile to a personal profile",
 			HandleDelegate =  CommandLineInterpreter.Handle_Password,
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Portal", 
 					Default = "",
 					Brief = "Portal account",
 					Index = 0,
 					Key = "portal"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "UDF", 
 					Default = "",
 					Brief = "Profile fingerprint",
 					Index = 1,
 					Key = "udf"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Verbose", 
 					Default = "false",
 					Brief = "Verbose reports (default)",
 					Index = 2,
 					Key = "verbose"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Report", 
 					Default = "true",
 					Brief = "Report results (default)",
@@ -2187,11 +1973,11 @@ namespace Goedel.Mesh.MeshMan {
     public partial class Password : _Password {
         } // class Password
 
-    public class _AddPassword : Goedel.Command.Dispatch ,
+    public class _AddPassword : Goedel.Registry.Dispatch ,
 							IApplicationProfile,
 							IReporting {
 
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+		public override Goedel.Registry.Type[] _Data {get; set;} = new Goedel.Registry.Type [] {
 			new String (),
 			new String (),
 			new String (),
@@ -2206,74 +1992,41 @@ namespace Goedel.Mesh.MeshMan {
 			get => _Data[0] as String;
 			set => _Data[0]  = value;
 			}
-
-		public virtual string _Site {
-			set => _Data[0].Parameter (value);
-			}
 		/// <summary>Field accessor for parameter []</summary>
 		public virtual String Username {
 			get => _Data[1] as String;
 			set => _Data[1]  = value;
-			}
-
-		public virtual string _Username {
-			set => _Data[1].Parameter (value);
 			}
 		/// <summary>Field accessor for parameter []</summary>
 		public virtual String Password {
 			get => _Data[2] as String;
 			set => _Data[2]  = value;
 			}
-
-		public virtual string _Password {
-			set => _Data[2].Parameter (value);
-			}
 		/// <summary>Field accessor for option [portal]</summary>
 		public virtual String Portal {
 			get => _Data[3] as String;
 			set => _Data[3]  = value;
-			}
-
-		public virtual string _Portal {
-			set => _Data[3].Parameter (value);
 			}
 		/// <summary>Field accessor for option [udf]</summary>
 		public virtual String UDF {
 			get => _Data[4] as String;
 			set => _Data[4]  = value;
 			}
-
-		public virtual string _UDF {
-			set => _Data[4].Parameter (value);
-			}
 		/// <summary>Field accessor for option [id]</summary>
 		public virtual String ID {
 			get => _Data[5] as String;
 			set => _Data[5]  = value;
-			}
-
-		public virtual string _ID {
-			set => _Data[5].Parameter (value);
 			}
 		/// <summary>Field accessor for option [verbose]</summary>
 		public virtual Flag Verbose {
 			get => _Data[6] as Flag;
 			set => _Data[6]  = value;
 			}
-
-		public virtual string _Verbose {
-			set => _Data[6].Parameter (value);
-			}
 		/// <summary>Field accessor for option [report]</summary>
 		public virtual Flag Report {
 			get => _Data[7] as Flag;
 			set => _Data[7]  = value;
 			}
-
-		public virtual string _Report {
-			set => _Data[7].Parameter (value);
-			}
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
 			Identifier = "pwadd",
@@ -2302,35 +2055,35 @@ namespace Goedel.Mesh.MeshMan {
 					Index = 2,
 					Key = ""
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Portal", 
 					Default = "",
 					Brief = "Portal account",
 					Index = 3,
 					Key = "portal"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "UDF", 
 					Default = "",
 					Brief = "Profile fingerprint",
 					Index = 4,
 					Key = "udf"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "ID", 
 					Default = "",
 					Brief = "Application profile friendly name",
 					Index = 5,
 					Key = "id"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Verbose", 
 					Default = "false",
 					Brief = "Verbose reports (default)",
 					Index = 6,
 					Key = "verbose"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Report", 
 					Default = "true",
 					Brief = "Report results (default)",
@@ -2345,11 +2098,11 @@ namespace Goedel.Mesh.MeshMan {
     public partial class AddPassword : _AddPassword {
         } // class AddPassword
 
-    public class _GetPassword : Goedel.Command.Dispatch ,
+    public class _GetPassword : Goedel.Registry.Dispatch ,
 							IApplicationProfile,
 							IReporting {
 
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+		public override Goedel.Registry.Type[] _Data {get; set;} = new Goedel.Registry.Type [] {
 			new String (),
 			new String (),
 			new String (),
@@ -2362,56 +2115,31 @@ namespace Goedel.Mesh.MeshMan {
 			get => _Data[0] as String;
 			set => _Data[0]  = value;
 			}
-
-		public virtual string _Site {
-			set => _Data[0].Parameter (value);
-			}
 		/// <summary>Field accessor for option [portal]</summary>
 		public virtual String Portal {
 			get => _Data[1] as String;
 			set => _Data[1]  = value;
-			}
-
-		public virtual string _Portal {
-			set => _Data[1].Parameter (value);
 			}
 		/// <summary>Field accessor for option [udf]</summary>
 		public virtual String UDF {
 			get => _Data[2] as String;
 			set => _Data[2]  = value;
 			}
-
-		public virtual string _UDF {
-			set => _Data[2].Parameter (value);
-			}
 		/// <summary>Field accessor for option [id]</summary>
 		public virtual String ID {
 			get => _Data[3] as String;
 			set => _Data[3]  = value;
-			}
-
-		public virtual string _ID {
-			set => _Data[3].Parameter (value);
 			}
 		/// <summary>Field accessor for option [verbose]</summary>
 		public virtual Flag Verbose {
 			get => _Data[4] as Flag;
 			set => _Data[4]  = value;
 			}
-
-		public virtual string _Verbose {
-			set => _Data[4].Parameter (value);
-			}
 		/// <summary>Field accessor for option [report]</summary>
 		public virtual Flag Report {
 			get => _Data[5] as Flag;
 			set => _Data[5]  = value;
 			}
-
-		public virtual string _Report {
-			set => _Data[5].Parameter (value);
-			}
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
 			Identifier = "pwget",
@@ -2426,35 +2154,35 @@ namespace Goedel.Mesh.MeshMan {
 					Index = 0,
 					Key = ""
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Portal", 
 					Default = "",
 					Brief = "Portal account",
 					Index = 1,
 					Key = "portal"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "UDF", 
 					Default = "",
 					Brief = "Profile fingerprint",
 					Index = 2,
 					Key = "udf"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "ID", 
 					Default = "",
 					Brief = "Application profile friendly name",
 					Index = 3,
 					Key = "id"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Verbose", 
 					Default = "false",
 					Brief = "Verbose reports (default)",
 					Index = 4,
 					Key = "verbose"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Report", 
 					Default = "true",
 					Brief = "Report results (default)",
@@ -2469,11 +2197,11 @@ namespace Goedel.Mesh.MeshMan {
     public partial class GetPassword : _GetPassword {
         } // class GetPassword
 
-    public class _DeletePassword : Goedel.Command.Dispatch ,
+    public class _DeletePassword : Goedel.Registry.Dispatch ,
 							IApplicationProfile,
 							IReporting {
 
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+		public override Goedel.Registry.Type[] _Data {get; set;} = new Goedel.Registry.Type [] {
 			new String (),
 			new String (),
 			new String (),
@@ -2486,56 +2214,31 @@ namespace Goedel.Mesh.MeshMan {
 			get => _Data[0] as String;
 			set => _Data[0]  = value;
 			}
-
-		public virtual string _Site {
-			set => _Data[0].Parameter (value);
-			}
 		/// <summary>Field accessor for option [portal]</summary>
 		public virtual String Portal {
 			get => _Data[1] as String;
 			set => _Data[1]  = value;
-			}
-
-		public virtual string _Portal {
-			set => _Data[1].Parameter (value);
 			}
 		/// <summary>Field accessor for option [udf]</summary>
 		public virtual String UDF {
 			get => _Data[2] as String;
 			set => _Data[2]  = value;
 			}
-
-		public virtual string _UDF {
-			set => _Data[2].Parameter (value);
-			}
 		/// <summary>Field accessor for option [id]</summary>
 		public virtual String ID {
 			get => _Data[3] as String;
 			set => _Data[3]  = value;
-			}
-
-		public virtual string _ID {
-			set => _Data[3].Parameter (value);
 			}
 		/// <summary>Field accessor for option [verbose]</summary>
 		public virtual Flag Verbose {
 			get => _Data[4] as Flag;
 			set => _Data[4]  = value;
 			}
-
-		public virtual string _Verbose {
-			set => _Data[4].Parameter (value);
-			}
 		/// <summary>Field accessor for option [report]</summary>
 		public virtual Flag Report {
 			get => _Data[5] as Flag;
 			set => _Data[5]  = value;
 			}
-
-		public virtual string _Report {
-			set => _Data[5].Parameter (value);
-			}
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
 			Identifier = "pwdelete",
@@ -2546,39 +2249,39 @@ namespace Goedel.Mesh.MeshMan {
 				new DescribeEntryParameter () {
 					Identifier = "Site", 
 					Default = "",
-					Brief = "Domain name of Web site",
+					Brief = "<Unspecified>",
 					Index = 0,
 					Key = ""
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Portal", 
 					Default = "",
 					Brief = "Portal account",
 					Index = 1,
 					Key = "portal"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "UDF", 
 					Default = "",
 					Brief = "Profile fingerprint",
 					Index = 2,
 					Key = "udf"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "ID", 
 					Default = "",
 					Brief = "Application profile friendly name",
 					Index = 3,
 					Key = "id"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Verbose", 
 					Default = "false",
 					Brief = "Verbose reports (default)",
 					Index = 4,
 					Key = "verbose"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Report", 
 					Default = "true",
 					Brief = "Report results (default)",
@@ -2593,11 +2296,11 @@ namespace Goedel.Mesh.MeshMan {
     public partial class DeletePassword : _DeletePassword {
         } // class DeletePassword
 
-    public class _DumpPassword : Goedel.Command.Dispatch ,
+    public class _DumpPassword : Goedel.Registry.Dispatch ,
 							IApplicationProfile,
 							IReporting {
 
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+		public override Goedel.Registry.Type[] _Data {get; set;} = new Goedel.Registry.Type [] {
 			new Flag (),
 			new String (),
 			new String (),
@@ -2610,56 +2313,31 @@ namespace Goedel.Mesh.MeshMan {
 			get => _Data[0] as Flag;
 			set => _Data[0]  = value;
 			}
-
-		public virtual string _JSON {
-			set => _Data[0].Parameter (value);
-			}
 		/// <summary>Field accessor for option [portal]</summary>
 		public virtual String Portal {
 			get => _Data[1] as String;
 			set => _Data[1]  = value;
-			}
-
-		public virtual string _Portal {
-			set => _Data[1].Parameter (value);
 			}
 		/// <summary>Field accessor for option [udf]</summary>
 		public virtual String UDF {
 			get => _Data[2] as String;
 			set => _Data[2]  = value;
 			}
-
-		public virtual string _UDF {
-			set => _Data[2].Parameter (value);
-			}
 		/// <summary>Field accessor for option [id]</summary>
 		public virtual String ID {
 			get => _Data[3] as String;
 			set => _Data[3]  = value;
-			}
-
-		public virtual string _ID {
-			set => _Data[3].Parameter (value);
 			}
 		/// <summary>Field accessor for option [verbose]</summary>
 		public virtual Flag Verbose {
 			get => _Data[4] as Flag;
 			set => _Data[4]  = value;
 			}
-
-		public virtual string _Verbose {
-			set => _Data[4].Parameter (value);
-			}
 		/// <summary>Field accessor for option [report]</summary>
 		public virtual Flag Report {
 			get => _Data[5] as Flag;
 			set => _Data[5]  = value;
 			}
-
-		public virtual string _Report {
-			set => _Data[5].Parameter (value);
-			}
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
 			Identifier = "pwdump",
@@ -2670,39 +2348,39 @@ namespace Goedel.Mesh.MeshMan {
 				new DescribeEntryParameter () {
 					Identifier = "JSON", 
 					Default = "",
-					Brief = "Report results as JSON structure.",
+					Brief = "<Unspecified>",
 					Index = 0,
 					Key = ""
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Portal", 
 					Default = "",
 					Brief = "Portal account",
 					Index = 1,
 					Key = "portal"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "UDF", 
 					Default = "",
 					Brief = "Profile fingerprint",
 					Index = 2,
 					Key = "udf"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "ID", 
 					Default = "",
 					Brief = "Application profile friendly name",
 					Index = 3,
 					Key = "id"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Verbose", 
 					Default = "false",
 					Brief = "Verbose reports (default)",
 					Index = 4,
 					Key = "verbose"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Report", 
 					Default = "true",
 					Brief = "Report results (default)",
@@ -2717,11 +2395,11 @@ namespace Goedel.Mesh.MeshMan {
     public partial class DumpPassword : _DumpPassword {
         } // class DumpPassword
 
-    public class _Mail : Goedel.Command.Dispatch ,
+    public class _Mail : Goedel.Registry.Dispatch ,
 							IPortalAccount,
 							IReporting {
 
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+		public override Goedel.Registry.Type[] _Data {get; set;} = new Goedel.Registry.Type [] {
 			new String (),
 			new String (),
 			new String (),
@@ -2734,56 +2412,31 @@ namespace Goedel.Mesh.MeshMan {
 			get => _Data[0] as String;
 			set => _Data[0]  = value;
 			}
-
-		public virtual string _Address {
-			set => _Data[0].Parameter (value);
-			}
 		/// <summary>Field accessor for option [ca]</summary>
 		public virtual String CA {
 			get => _Data[1] as String;
 			set => _Data[1]  = value;
-			}
-
-		public virtual string _CA {
-			set => _Data[1].Parameter (value);
 			}
 		/// <summary>Field accessor for option [portal]</summary>
 		public virtual String Portal {
 			get => _Data[2] as String;
 			set => _Data[2]  = value;
 			}
-
-		public virtual string _Portal {
-			set => _Data[2].Parameter (value);
-			}
 		/// <summary>Field accessor for option [udf]</summary>
 		public virtual String UDF {
 			get => _Data[3] as String;
 			set => _Data[3]  = value;
-			}
-
-		public virtual string _UDF {
-			set => _Data[3].Parameter (value);
 			}
 		/// <summary>Field accessor for option [verbose]</summary>
 		public virtual Flag Verbose {
 			get => _Data[4] as Flag;
 			set => _Data[4]  = value;
 			}
-
-		public virtual string _Verbose {
-			set => _Data[4].Parameter (value);
-			}
 		/// <summary>Field accessor for option [report]</summary>
 		public virtual Flag Report {
 			get => _Data[5] as Flag;
 			set => _Data[5]  = value;
 			}
-
-		public virtual string _Report {
-			set => _Data[5].Parameter (value);
-			}
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
 			Identifier = "mail",
@@ -2794,39 +2447,39 @@ namespace Goedel.Mesh.MeshMan {
 				new DescribeEntryParameter () {
 					Identifier = "Address", 
 					Default = "",
-					Brief = "Mail account to create profile from",
+					Brief = "<Unspecified>",
 					Index = 0,
 					Key = ""
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "CA", 
 					Default = "",
-					Brief = "Domain name of CA",
+					Brief = "<Unspecified>",
 					Index = 1,
 					Key = "ca"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Portal", 
 					Default = "",
 					Brief = "Portal account",
 					Index = 2,
 					Key = "portal"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "UDF", 
 					Default = "",
 					Brief = "Profile fingerprint",
 					Index = 3,
 					Key = "udf"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Verbose", 
 					Default = "false",
 					Brief = "Verbose reports (default)",
 					Index = 4,
 					Key = "verbose"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Report", 
 					Default = "true",
 					Brief = "Report results (default)",
@@ -2841,11 +2494,11 @@ namespace Goedel.Mesh.MeshMan {
     public partial class Mail : _Mail {
         } // class Mail
 
-    public class _SSH : Goedel.Command.Dispatch ,
+    public class _SSH : Goedel.Registry.Dispatch ,
 							IPortalAccount,
 							IReporting {
 
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+		public override Goedel.Registry.Type[] _Data {get; set;} = new Goedel.Registry.Type [] {
 			new String (),
 			new String (),
 			new Flag (),
@@ -2857,36 +2510,20 @@ namespace Goedel.Mesh.MeshMan {
 			get => _Data[0] as String;
 			set => _Data[0]  = value;
 			}
-
-		public virtual string _Portal {
-			set => _Data[0].Parameter (value);
-			}
 		/// <summary>Field accessor for option [udf]</summary>
 		public virtual String UDF {
 			get => _Data[1] as String;
 			set => _Data[1]  = value;
-			}
-
-		public virtual string _UDF {
-			set => _Data[1].Parameter (value);
 			}
 		/// <summary>Field accessor for option [verbose]</summary>
 		public virtual Flag Verbose {
 			get => _Data[2] as Flag;
 			set => _Data[2]  = value;
 			}
-
-		public virtual string _Verbose {
-			set => _Data[2].Parameter (value);
-			}
 		/// <summary>Field accessor for option [report]</summary>
 		public virtual Flag Report {
 			get => _Data[3] as Flag;
 			set => _Data[3]  = value;
-			}
-
-		public virtual string _Report {
-			set => _Data[3].Parameter (value);
 			}
 		/// <summary>Field accessor for parameter []</summary>
 		public virtual Flag Install {
@@ -2894,39 +2531,34 @@ namespace Goedel.Mesh.MeshMan {
 			set => _Data[4]  = value;
 			}
 
-		public virtual string _Install {
-			set => _Data[4].Parameter (value);
-			}
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
-
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
 			Identifier = "ssh",
 			Brief =  "Add a ssh application profile to a personal profile",
 			HandleDelegate =  CommandLineInterpreter.Handle_SSH,
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Portal", 
 					Default = "",
 					Brief = "Portal account",
 					Index = 0,
 					Key = "portal"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "UDF", 
 					Default = "",
 					Brief = "Profile fingerprint",
 					Index = 1,
 					Key = "udf"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Verbose", 
 					Default = "false",
 					Brief = "Verbose reports (default)",
 					Index = 2,
 					Key = "verbose"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Report", 
 					Default = "true",
 					Brief = "Report results (default)",
@@ -2948,11 +2580,11 @@ namespace Goedel.Mesh.MeshMan {
     public partial class SSH : _SSH {
         } // class SSH
 
-    public class _SSHAuth : Goedel.Command.Dispatch ,
+    public class _SSHAuth : Goedel.Registry.Dispatch ,
 							IApplicationProfile,
 							IReporting {
 
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+		public override Goedel.Registry.Type[] _Data {get; set;} = new Goedel.Registry.Type [] {
 			new String (),
 			new String (),
 			new String (),
@@ -2966,54 +2598,30 @@ namespace Goedel.Mesh.MeshMan {
 			get => _Data[0] as String;
 			set => _Data[0]  = value;
 			}
-
-		public virtual string _Portal {
-			set => _Data[0].Parameter (value);
-			}
 		/// <summary>Field accessor for option [udf]</summary>
 		public virtual String UDF {
 			get => _Data[1] as String;
 			set => _Data[1]  = value;
-			}
-
-		public virtual string _UDF {
-			set => _Data[1].Parameter (value);
 			}
 		/// <summary>Field accessor for option [id]</summary>
 		public virtual String ID {
 			get => _Data[2] as String;
 			set => _Data[2]  = value;
 			}
-
-		public virtual string _ID {
-			set => _Data[2].Parameter (value);
-			}
 		/// <summary>Field accessor for option [verbose]</summary>
 		public virtual Flag Verbose {
 			get => _Data[3] as Flag;
 			set => _Data[3]  = value;
-			}
-
-		public virtual string _Verbose {
-			set => _Data[3].Parameter (value);
 			}
 		/// <summary>Field accessor for option [report]</summary>
 		public virtual Flag Report {
 			get => _Data[4] as Flag;
 			set => _Data[4]  = value;
 			}
-
-		public virtual string _Report {
-			set => _Data[4].Parameter (value);
-			}
 		/// <summary>Field accessor for parameter []</summary>
 		public virtual Flag Host {
 			get => _Data[5] as Flag;
 			set => _Data[5]  = value;
-			}
-
-		public virtual string _Host {
-			set => _Data[5].Parameter (value);
 			}
 		/// <summary>Field accessor for parameter []</summary>
 		public virtual Flag Client {
@@ -3021,46 +2629,41 @@ namespace Goedel.Mesh.MeshMan {
 			set => _Data[6]  = value;
 			}
 
-		public virtual string _Client {
-			set => _Data[6].Parameter (value);
-			}
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
-
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
 			Identifier = "sshauth",
 			Brief =  "List the SSH Authorized keys",
 			HandleDelegate =  CommandLineInterpreter.Handle_SSHAuth,
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Portal", 
 					Default = "",
 					Brief = "Portal account",
 					Index = 0,
 					Key = "portal"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "UDF", 
 					Default = "",
 					Brief = "Profile fingerprint",
 					Index = 1,
 					Key = "udf"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "ID", 
 					Default = "",
 					Brief = "Application profile friendly name",
 					Index = 2,
 					Key = "id"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Verbose", 
 					Default = "false",
 					Brief = "Verbose reports (default)",
 					Index = 3,
 					Key = "verbose"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Report", 
 					Default = "true",
 					Brief = "Report results (default)",
@@ -3089,11 +2692,11 @@ namespace Goedel.Mesh.MeshMan {
     public partial class SSHAuth : _SSHAuth {
         } // class SSHAuth
 
-    public class _SSHKnown : Goedel.Command.Dispatch ,
+    public class _SSHKnown : Goedel.Registry.Dispatch ,
 							IApplicationProfile,
 							IReporting {
 
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+		public override Goedel.Registry.Type[] _Data {get; set;} = new Goedel.Registry.Type [] {
 			new String (),
 			new String (),
 			new String (),
@@ -3107,54 +2710,30 @@ namespace Goedel.Mesh.MeshMan {
 			get => _Data[0] as String;
 			set => _Data[0]  = value;
 			}
-
-		public virtual string _Portal {
-			set => _Data[0].Parameter (value);
-			}
 		/// <summary>Field accessor for option [udf]</summary>
 		public virtual String UDF {
 			get => _Data[1] as String;
 			set => _Data[1]  = value;
-			}
-
-		public virtual string _UDF {
-			set => _Data[1].Parameter (value);
 			}
 		/// <summary>Field accessor for option [id]</summary>
 		public virtual String ID {
 			get => _Data[2] as String;
 			set => _Data[2]  = value;
 			}
-
-		public virtual string _ID {
-			set => _Data[2].Parameter (value);
-			}
 		/// <summary>Field accessor for option [verbose]</summary>
 		public virtual Flag Verbose {
 			get => _Data[3] as Flag;
 			set => _Data[3]  = value;
-			}
-
-		public virtual string _Verbose {
-			set => _Data[3].Parameter (value);
 			}
 		/// <summary>Field accessor for option [report]</summary>
 		public virtual Flag Report {
 			get => _Data[4] as Flag;
 			set => _Data[4]  = value;
 			}
-
-		public virtual string _Report {
-			set => _Data[4].Parameter (value);
-			}
 		/// <summary>Field accessor for parameter []</summary>
 		public virtual Flag Host {
 			get => _Data[5] as Flag;
 			set => _Data[5]  = value;
-			}
-
-		public virtual string _Host {
-			set => _Data[5].Parameter (value);
 			}
 		/// <summary>Field accessor for parameter []</summary>
 		public virtual Flag Client {
@@ -3162,46 +2741,41 @@ namespace Goedel.Mesh.MeshMan {
 			set => _Data[6]  = value;
 			}
 
-		public virtual string _Client {
-			set => _Data[6].Parameter (value);
-			}
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
-
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
 			Identifier = "sshknown",
 			Brief =  "List the SSH Known Hosts",
 			HandleDelegate =  CommandLineInterpreter.Handle_SSHKnown,
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Portal", 
 					Default = "",
 					Brief = "Portal account",
 					Index = 0,
 					Key = "portal"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "UDF", 
 					Default = "",
 					Brief = "Profile fingerprint",
 					Index = 1,
 					Key = "udf"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "ID", 
 					Default = "",
 					Brief = "Application profile friendly name",
 					Index = 2,
 					Key = "id"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Verbose", 
 					Default = "false",
 					Brief = "Verbose reports (default)",
 					Index = 3,
 					Key = "verbose"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Report", 
 					Default = "true",
 					Brief = "Report results (default)",
@@ -3230,11 +2804,11 @@ namespace Goedel.Mesh.MeshMan {
     public partial class SSHKnown : _SSHKnown {
         } // class SSHKnown
 
-    public class _SSHPublic : Goedel.Command.Dispatch ,
+    public class _SSHPublic : Goedel.Registry.Dispatch ,
 							IApplicationProfile,
 							IReporting {
 
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+		public override Goedel.Registry.Type[] _Data {get; set;} = new Goedel.Registry.Type [] {
 			new String (),
 			new String (),
 			new String (),
@@ -3248,54 +2822,30 @@ namespace Goedel.Mesh.MeshMan {
 			get => _Data[0] as String;
 			set => _Data[0]  = value;
 			}
-
-		public virtual string _Portal {
-			set => _Data[0].Parameter (value);
-			}
 		/// <summary>Field accessor for option [udf]</summary>
 		public virtual String UDF {
 			get => _Data[1] as String;
 			set => _Data[1]  = value;
-			}
-
-		public virtual string _UDF {
-			set => _Data[1].Parameter (value);
 			}
 		/// <summary>Field accessor for option [id]</summary>
 		public virtual String ID {
 			get => _Data[2] as String;
 			set => _Data[2]  = value;
 			}
-
-		public virtual string _ID {
-			set => _Data[2].Parameter (value);
-			}
 		/// <summary>Field accessor for option [verbose]</summary>
 		public virtual Flag Verbose {
 			get => _Data[3] as Flag;
 			set => _Data[3]  = value;
-			}
-
-		public virtual string _Verbose {
-			set => _Data[3].Parameter (value);
 			}
 		/// <summary>Field accessor for option [report]</summary>
 		public virtual Flag Report {
 			get => _Data[4] as Flag;
 			set => _Data[4]  = value;
 			}
-
-		public virtual string _Report {
-			set => _Data[4].Parameter (value);
-			}
 		/// <summary>Field accessor for parameter []</summary>
 		public virtual Flag Host {
 			get => _Data[5] as Flag;
 			set => _Data[5]  = value;
-			}
-
-		public virtual string _Host {
-			set => _Data[5].Parameter (value);
 			}
 		/// <summary>Field accessor for parameter []</summary>
 		public virtual Flag Client {
@@ -3303,46 +2853,41 @@ namespace Goedel.Mesh.MeshMan {
 			set => _Data[6]  = value;
 			}
 
-		public virtual string _Client {
-			set => _Data[6].Parameter (value);
-			}
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
-
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
 			Identifier = "sshpub",
 			Brief =  "Return the ssh public key for this device",
 			HandleDelegate =  CommandLineInterpreter.Handle_SSHPublic,
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Portal", 
 					Default = "",
 					Brief = "Portal account",
 					Index = 0,
 					Key = "portal"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "UDF", 
 					Default = "",
 					Brief = "Profile fingerprint",
 					Index = 1,
 					Key = "udf"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "ID", 
 					Default = "",
 					Brief = "Application profile friendly name",
 					Index = 2,
 					Key = "id"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Verbose", 
 					Default = "false",
 					Brief = "Verbose reports (default)",
 					Index = 3,
 					Key = "verbose"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Report", 
 					Default = "true",
 					Brief = "Report results (default)",
@@ -3371,11 +2916,11 @@ namespace Goedel.Mesh.MeshMan {
     public partial class SSHPublic : _SSHPublic {
         } // class SSHPublic
 
-    public class _SSHPrivate : Goedel.Command.Dispatch ,
+    public class _SSHPrivate : Goedel.Registry.Dispatch ,
 							IApplicationProfile,
 							IReporting {
 
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+		public override Goedel.Registry.Type[] _Data {get; set;} = new Goedel.Registry.Type [] {
 			new String (),
 			new String (),
 			new String (),
@@ -3389,54 +2934,30 @@ namespace Goedel.Mesh.MeshMan {
 			get => _Data[0] as String;
 			set => _Data[0]  = value;
 			}
-
-		public virtual string _Portal {
-			set => _Data[0].Parameter (value);
-			}
 		/// <summary>Field accessor for option [udf]</summary>
 		public virtual String UDF {
 			get => _Data[1] as String;
 			set => _Data[1]  = value;
-			}
-
-		public virtual string _UDF {
-			set => _Data[1].Parameter (value);
 			}
 		/// <summary>Field accessor for option [id]</summary>
 		public virtual String ID {
 			get => _Data[2] as String;
 			set => _Data[2]  = value;
 			}
-
-		public virtual string _ID {
-			set => _Data[2].Parameter (value);
-			}
 		/// <summary>Field accessor for option [verbose]</summary>
 		public virtual Flag Verbose {
 			get => _Data[3] as Flag;
 			set => _Data[3]  = value;
-			}
-
-		public virtual string _Verbose {
-			set => _Data[3].Parameter (value);
 			}
 		/// <summary>Field accessor for option [report]</summary>
 		public virtual Flag Report {
 			get => _Data[4] as Flag;
 			set => _Data[4]  = value;
 			}
-
-		public virtual string _Report {
-			set => _Data[4].Parameter (value);
-			}
 		/// <summary>Field accessor for parameter []</summary>
 		public virtual Flag Host {
 			get => _Data[5] as Flag;
 			set => _Data[5]  = value;
-			}
-
-		public virtual string _Host {
-			set => _Data[5].Parameter (value);
 			}
 		/// <summary>Field accessor for parameter []</summary>
 		public virtual Flag Client {
@@ -3444,46 +2965,41 @@ namespace Goedel.Mesh.MeshMan {
 			set => _Data[6]  = value;
 			}
 
-		public virtual string _Client {
-			set => _Data[6].Parameter (value);
-			}
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
-
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
 			Identifier = "sshpriv",
 			Brief =  "Return the ss private key for this device",
 			HandleDelegate =  CommandLineInterpreter.Handle_SSHPrivate,
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Portal", 
 					Default = "",
 					Brief = "Portal account",
 					Index = 0,
 					Key = "portal"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "UDF", 
 					Default = "",
 					Brief = "Profile fingerprint",
 					Index = 1,
 					Key = "udf"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "ID", 
 					Default = "",
 					Brief = "Application profile friendly name",
 					Index = 2,
 					Key = "id"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Verbose", 
 					Default = "false",
 					Brief = "Verbose reports (default)",
 					Index = 3,
 					Key = "verbose"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Report", 
 					Default = "true",
 					Brief = "Report results (default)",
@@ -3512,11 +3028,11 @@ namespace Goedel.Mesh.MeshMan {
     public partial class SSHPrivate : _SSHPrivate {
         } // class SSHPrivate
 
-    public class _Confirm : Goedel.Command.Dispatch ,
+    public class _Confirm : Goedel.Registry.Dispatch ,
 							IPortalAccount,
 							IReporting {
 
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+		public override Goedel.Registry.Type[] _Data {get; set;} = new Goedel.Registry.Type [] {
 			new String (),
 			new String (),
 			new Flag (),
@@ -3529,45 +3045,25 @@ namespace Goedel.Mesh.MeshMan {
 			get => _Data[0] as String;
 			set => _Data[0]  = value;
 			}
-
-		public virtual string _Portal {
-			set => _Data[0].Parameter (value);
-			}
 		/// <summary>Field accessor for option [udf]</summary>
 		public virtual String UDF {
 			get => _Data[1] as String;
 			set => _Data[1]  = value;
-			}
-
-		public virtual string _UDF {
-			set => _Data[1].Parameter (value);
 			}
 		/// <summary>Field accessor for option [verbose]</summary>
 		public virtual Flag Verbose {
 			get => _Data[2] as Flag;
 			set => _Data[2]  = value;
 			}
-
-		public virtual string _Verbose {
-			set => _Data[2].Parameter (value);
-			}
 		/// <summary>Field accessor for option [report]</summary>
 		public virtual Flag Report {
 			get => _Data[3] as Flag;
 			set => _Data[3]  = value;
 			}
-
-		public virtual string _Report {
-			set => _Data[3].Parameter (value);
-			}
 		/// <summary>Field accessor for parameter []</summary>
 		public virtual String Address {
 			get => _Data[4] as String;
 			set => _Data[4]  = value;
-			}
-
-		public virtual string _Address {
-			set => _Data[4].Parameter (value);
 			}
 		/// <summary>Field accessor for option [pin]</summary>
 		public virtual String PIN {
@@ -3575,39 +3071,34 @@ namespace Goedel.Mesh.MeshMan {
 			set => _Data[5]  = value;
 			}
 
-		public virtual string _PIN {
-			set => _Data[5].Parameter (value);
-			}
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
-
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
 			Identifier = "confirm",
 			Brief =  "Add a confirmation profile account",
 			HandleDelegate =  CommandLineInterpreter.Handle_Confirm,
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Portal", 
 					Default = "",
 					Brief = "Portal account",
 					Index = 0,
 					Key = "portal"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "UDF", 
 					Default = "",
 					Brief = "Profile fingerprint",
 					Index = 1,
 					Key = "udf"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Verbose", 
 					Default = "false",
 					Brief = "Verbose reports (default)",
 					Index = 2,
 					Key = "verbose"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Report", 
 					Default = "true",
 					Brief = "Report results (default)",
@@ -3617,14 +3108,14 @@ namespace Goedel.Mesh.MeshMan {
 				new DescribeEntryParameter () {
 					Identifier = "Address", 
 					Default = "",
-					Brief = "Confirmation account to create ",
+					Brief = "<Unspecified>",
 					Index = 4,
 					Key = ""
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "PIN", 
 					Default = "",
-					Brief = "One time use authenticator",
+					Brief = "<Unspecified>",
 					Index = 5,
 					Key = "pin"
 					}
@@ -3636,11 +3127,11 @@ namespace Goedel.Mesh.MeshMan {
     public partial class Confirm : _Confirm {
         } // class Confirm
 
-    public class _ConfirmPost : Goedel.Command.Dispatch ,
+    public class _ConfirmPost : Goedel.Registry.Dispatch ,
 							IApplicationProfile,
 							IReporting {
 
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+		public override Goedel.Registry.Type[] _Data {get; set;} = new Goedel.Registry.Type [] {
 			new String (),
 			new String (),
 			new String (),
@@ -3652,36 +3143,20 @@ namespace Goedel.Mesh.MeshMan {
 			get => _Data[0] as String;
 			set => _Data[0]  = value;
 			}
-
-		public virtual string _Portal {
-			set => _Data[0].Parameter (value);
-			}
 		/// <summary>Field accessor for option [udf]</summary>
 		public virtual String UDF {
 			get => _Data[1] as String;
 			set => _Data[1]  = value;
-			}
-
-		public virtual string _UDF {
-			set => _Data[1].Parameter (value);
 			}
 		/// <summary>Field accessor for option [id]</summary>
 		public virtual String ID {
 			get => _Data[2] as String;
 			set => _Data[2]  = value;
 			}
-
-		public virtual string _ID {
-			set => _Data[2].Parameter (value);
-			}
 		/// <summary>Field accessor for option [verbose]</summary>
 		public virtual Flag Verbose {
 			get => _Data[3] as Flag;
 			set => _Data[3]  = value;
-			}
-
-		public virtual string _Verbose {
-			set => _Data[3].Parameter (value);
 			}
 		/// <summary>Field accessor for option [report]</summary>
 		public virtual Flag Report {
@@ -3689,46 +3164,41 @@ namespace Goedel.Mesh.MeshMan {
 			set => _Data[4]  = value;
 			}
 
-		public virtual string _Report {
-			set => _Data[4].Parameter (value);
-			}
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
-
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
 			Identifier = "confimpost",
 			Brief =  "Post a confirmation request to an account",
 			HandleDelegate =  CommandLineInterpreter.Handle_ConfirmPost,
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Portal", 
 					Default = "",
 					Brief = "Portal account",
 					Index = 0,
 					Key = "portal"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "UDF", 
 					Default = "",
 					Brief = "Profile fingerprint",
 					Index = 1,
 					Key = "udf"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "ID", 
 					Default = "",
 					Brief = "Application profile friendly name",
 					Index = 2,
 					Key = "id"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Verbose", 
 					Default = "false",
 					Brief = "Verbose reports (default)",
 					Index = 3,
 					Key = "verbose"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Report", 
 					Default = "true",
 					Brief = "Report results (default)",
@@ -3743,11 +3213,11 @@ namespace Goedel.Mesh.MeshMan {
     public partial class ConfirmPost : _ConfirmPost {
         } // class ConfirmPost
 
-    public class _ConfirmGet : Goedel.Command.Dispatch ,
+    public class _ConfirmGet : Goedel.Registry.Dispatch ,
 							IApplicationProfile,
 							IReporting {
 
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+		public override Goedel.Registry.Type[] _Data {get; set;} = new Goedel.Registry.Type [] {
 			new String (),
 			new String (),
 			new String (),
@@ -3759,36 +3229,20 @@ namespace Goedel.Mesh.MeshMan {
 			get => _Data[0] as String;
 			set => _Data[0]  = value;
 			}
-
-		public virtual string _Portal {
-			set => _Data[0].Parameter (value);
-			}
 		/// <summary>Field accessor for option [udf]</summary>
 		public virtual String UDF {
 			get => _Data[1] as String;
 			set => _Data[1]  = value;
-			}
-
-		public virtual string _UDF {
-			set => _Data[1].Parameter (value);
 			}
 		/// <summary>Field accessor for option [id]</summary>
 		public virtual String ID {
 			get => _Data[2] as String;
 			set => _Data[2]  = value;
 			}
-
-		public virtual string _ID {
-			set => _Data[2].Parameter (value);
-			}
 		/// <summary>Field accessor for option [verbose]</summary>
 		public virtual Flag Verbose {
 			get => _Data[3] as Flag;
 			set => _Data[3]  = value;
-			}
-
-		public virtual string _Verbose {
-			set => _Data[3].Parameter (value);
 			}
 		/// <summary>Field accessor for option [report]</summary>
 		public virtual Flag Report {
@@ -3796,46 +3250,41 @@ namespace Goedel.Mesh.MeshMan {
 			set => _Data[4]  = value;
 			}
 
-		public virtual string _Report {
-			set => _Data[4].Parameter (value);
-			}
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
-
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
 			Identifier = "confimget",
 			Brief =  "List the pending confirmation requests for this account",
 			HandleDelegate =  CommandLineInterpreter.Handle_ConfirmGet,
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Portal", 
 					Default = "",
 					Brief = "Portal account",
 					Index = 0,
 					Key = "portal"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "UDF", 
 					Default = "",
 					Brief = "Profile fingerprint",
 					Index = 1,
 					Key = "udf"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "ID", 
 					Default = "",
 					Brief = "Application profile friendly name",
 					Index = 2,
 					Key = "id"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Verbose", 
 					Default = "false",
 					Brief = "Verbose reports (default)",
 					Index = 3,
 					Key = "verbose"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Report", 
 					Default = "true",
 					Brief = "Report results (default)",
@@ -3850,11 +3299,11 @@ namespace Goedel.Mesh.MeshMan {
     public partial class ConfirmGet : _ConfirmGet {
         } // class ConfirmGet
 
-    public class _ConfirmAccept : Goedel.Command.Dispatch ,
+    public class _ConfirmAccept : Goedel.Registry.Dispatch ,
 							IApplicationProfile,
 							IReporting {
 
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+		public override Goedel.Registry.Type[] _Data {get; set;} = new Goedel.Registry.Type [] {
 			new String (),
 			new String (),
 			new String (),
@@ -3866,36 +3315,20 @@ namespace Goedel.Mesh.MeshMan {
 			get => _Data[0] as String;
 			set => _Data[0]  = value;
 			}
-
-		public virtual string _Portal {
-			set => _Data[0].Parameter (value);
-			}
 		/// <summary>Field accessor for option [udf]</summary>
 		public virtual String UDF {
 			get => _Data[1] as String;
 			set => _Data[1]  = value;
-			}
-
-		public virtual string _UDF {
-			set => _Data[1].Parameter (value);
 			}
 		/// <summary>Field accessor for option [id]</summary>
 		public virtual String ID {
 			get => _Data[2] as String;
 			set => _Data[2]  = value;
 			}
-
-		public virtual string _ID {
-			set => _Data[2].Parameter (value);
-			}
 		/// <summary>Field accessor for option [verbose]</summary>
 		public virtual Flag Verbose {
 			get => _Data[3] as Flag;
 			set => _Data[3]  = value;
-			}
-
-		public virtual string _Verbose {
-			set => _Data[3].Parameter (value);
 			}
 		/// <summary>Field accessor for option [report]</summary>
 		public virtual Flag Report {
@@ -3903,46 +3336,41 @@ namespace Goedel.Mesh.MeshMan {
 			set => _Data[4]  = value;
 			}
 
-		public virtual string _Report {
-			set => _Data[4].Parameter (value);
-			}
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
-
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
 			Identifier = "confimaccept",
 			Brief =  "Accept a confirmation request",
 			HandleDelegate =  CommandLineInterpreter.Handle_ConfirmAccept,
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Portal", 
 					Default = "",
 					Brief = "Portal account",
 					Index = 0,
 					Key = "portal"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "UDF", 
 					Default = "",
 					Brief = "Profile fingerprint",
 					Index = 1,
 					Key = "udf"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "ID", 
 					Default = "",
 					Brief = "Application profile friendly name",
 					Index = 2,
 					Key = "id"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Verbose", 
 					Default = "false",
 					Brief = "Verbose reports (default)",
 					Index = 3,
 					Key = "verbose"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Report", 
 					Default = "true",
 					Brief = "Report results (default)",
@@ -3957,11 +3385,11 @@ namespace Goedel.Mesh.MeshMan {
     public partial class ConfirmAccept : _ConfirmAccept {
         } // class ConfirmAccept
 
-    public class _ConfirmReject : Goedel.Command.Dispatch ,
+    public class _ConfirmReject : Goedel.Registry.Dispatch ,
 							IApplicationProfile,
 							IReporting {
 
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+		public override Goedel.Registry.Type[] _Data {get; set;} = new Goedel.Registry.Type [] {
 			new String (),
 			new String (),
 			new String (),
@@ -3973,36 +3401,20 @@ namespace Goedel.Mesh.MeshMan {
 			get => _Data[0] as String;
 			set => _Data[0]  = value;
 			}
-
-		public virtual string _Portal {
-			set => _Data[0].Parameter (value);
-			}
 		/// <summary>Field accessor for option [udf]</summary>
 		public virtual String UDF {
 			get => _Data[1] as String;
 			set => _Data[1]  = value;
-			}
-
-		public virtual string _UDF {
-			set => _Data[1].Parameter (value);
 			}
 		/// <summary>Field accessor for option [id]</summary>
 		public virtual String ID {
 			get => _Data[2] as String;
 			set => _Data[2]  = value;
 			}
-
-		public virtual string _ID {
-			set => _Data[2].Parameter (value);
-			}
 		/// <summary>Field accessor for option [verbose]</summary>
 		public virtual Flag Verbose {
 			get => _Data[3] as Flag;
 			set => _Data[3]  = value;
-			}
-
-		public virtual string _Verbose {
-			set => _Data[3].Parameter (value);
 			}
 		/// <summary>Field accessor for option [report]</summary>
 		public virtual Flag Report {
@@ -4010,46 +3422,41 @@ namespace Goedel.Mesh.MeshMan {
 			set => _Data[4]  = value;
 			}
 
-		public virtual string _Report {
-			set => _Data[4].Parameter (value);
-			}
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
-
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
 			Identifier = "confimreject",
 			Brief =  "Reject a confirmation request",
 			HandleDelegate =  CommandLineInterpreter.Handle_ConfirmReject,
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Portal", 
 					Default = "",
 					Brief = "Portal account",
 					Index = 0,
 					Key = "portal"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "UDF", 
 					Default = "",
 					Brief = "Profile fingerprint",
 					Index = 1,
 					Key = "udf"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "ID", 
 					Default = "",
 					Brief = "Application profile friendly name",
 					Index = 2,
 					Key = "id"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Verbose", 
 					Default = "false",
 					Brief = "Verbose reports (default)",
 					Index = 3,
 					Key = "verbose"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Report", 
 					Default = "true",
 					Brief = "Report results (default)",
@@ -4064,11 +3471,11 @@ namespace Goedel.Mesh.MeshMan {
     public partial class ConfirmReject : _ConfirmReject {
         } // class ConfirmReject
 
-    public class _Recrypt : Goedel.Command.Dispatch ,
+    public class _Recrypt : Goedel.Registry.Dispatch ,
 							IPortalAccount,
 							IReporting {
 
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+		public override Goedel.Registry.Type[] _Data {get; set;} = new Goedel.Registry.Type [] {
 			new String (),
 			new String (),
 			new Flag (),
@@ -4081,45 +3488,25 @@ namespace Goedel.Mesh.MeshMan {
 			get => _Data[0] as String;
 			set => _Data[0]  = value;
 			}
-
-		public virtual string _Portal {
-			set => _Data[0].Parameter (value);
-			}
 		/// <summary>Field accessor for option [udf]</summary>
 		public virtual String UDF {
 			get => _Data[1] as String;
 			set => _Data[1]  = value;
-			}
-
-		public virtual string _UDF {
-			set => _Data[1].Parameter (value);
 			}
 		/// <summary>Field accessor for option [verbose]</summary>
 		public virtual Flag Verbose {
 			get => _Data[2] as Flag;
 			set => _Data[2]  = value;
 			}
-
-		public virtual string _Verbose {
-			set => _Data[2].Parameter (value);
-			}
 		/// <summary>Field accessor for option [report]</summary>
 		public virtual Flag Report {
 			get => _Data[3] as Flag;
 			set => _Data[3]  = value;
 			}
-
-		public virtual string _Report {
-			set => _Data[3].Parameter (value);
-			}
 		/// <summary>Field accessor for parameter []</summary>
 		public virtual String Address {
 			get => _Data[4] as String;
 			set => _Data[4]  = value;
-			}
-
-		public virtual string _Address {
-			set => _Data[4].Parameter (value);
 			}
 		/// <summary>Field accessor for option [pin]</summary>
 		public virtual String PIN {
@@ -4127,39 +3514,34 @@ namespace Goedel.Mesh.MeshMan {
 			set => _Data[5]  = value;
 			}
 
-		public virtual string _PIN {
-			set => _Data[5].Parameter (value);
-			}
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
-
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
 			Identifier = "recrypt",
 			Brief =  "Add a confirmation profile account",
 			HandleDelegate =  CommandLineInterpreter.Handle_Recrypt,
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Portal", 
 					Default = "",
 					Brief = "Portal account",
 					Index = 0,
 					Key = "portal"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "UDF", 
 					Default = "",
 					Brief = "Profile fingerprint",
 					Index = 1,
 					Key = "udf"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Verbose", 
 					Default = "false",
 					Brief = "Verbose reports (default)",
 					Index = 2,
 					Key = "verbose"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Report", 
 					Default = "true",
 					Brief = "Report results (default)",
@@ -4169,14 +3551,14 @@ namespace Goedel.Mesh.MeshMan {
 				new DescribeEntryParameter () {
 					Identifier = "Address", 
 					Default = "",
-					Brief = "Confirmation account to create ",
+					Brief = "<Unspecified>",
 					Index = 4,
 					Key = ""
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "PIN", 
 					Default = "",
-					Brief = "One time use authenticator",
+					Brief = "<Unspecified>",
 					Index = 5,
 					Key = "pin"
 					}
@@ -4188,11 +3570,11 @@ namespace Goedel.Mesh.MeshMan {
     public partial class Recrypt : _Recrypt {
         } // class Recrypt
 
-    public class _RecryptGroup : Goedel.Command.Dispatch ,
+    public class _RecryptGroup : Goedel.Registry.Dispatch ,
 							IApplicationProfile,
 							IReporting {
 
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+		public override Goedel.Registry.Type[] _Data {get; set;} = new Goedel.Registry.Type [] {
 			new String (),
 			new String (),
 			new String (),
@@ -4204,36 +3586,20 @@ namespace Goedel.Mesh.MeshMan {
 			get => _Data[0] as String;
 			set => _Data[0]  = value;
 			}
-
-		public virtual string _Portal {
-			set => _Data[0].Parameter (value);
-			}
 		/// <summary>Field accessor for option [udf]</summary>
 		public virtual String UDF {
 			get => _Data[1] as String;
 			set => _Data[1]  = value;
-			}
-
-		public virtual string _UDF {
-			set => _Data[1].Parameter (value);
 			}
 		/// <summary>Field accessor for option [id]</summary>
 		public virtual String ID {
 			get => _Data[2] as String;
 			set => _Data[2]  = value;
 			}
-
-		public virtual string _ID {
-			set => _Data[2].Parameter (value);
-			}
 		/// <summary>Field accessor for option [verbose]</summary>
 		public virtual Flag Verbose {
 			get => _Data[3] as Flag;
 			set => _Data[3]  = value;
-			}
-
-		public virtual string _Verbose {
-			set => _Data[3].Parameter (value);
 			}
 		/// <summary>Field accessor for option [report]</summary>
 		public virtual Flag Report {
@@ -4241,46 +3607,41 @@ namespace Goedel.Mesh.MeshMan {
 			set => _Data[4]  = value;
 			}
 
-		public virtual string _Report {
-			set => _Data[4].Parameter (value);
-			}
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
-
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
 			Identifier = "recryptgroup",
 			Brief =  "Create a new recryption group",
 			HandleDelegate =  CommandLineInterpreter.Handle_RecryptGroup,
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Portal", 
 					Default = "",
 					Brief = "Portal account",
 					Index = 0,
 					Key = "portal"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "UDF", 
 					Default = "",
 					Brief = "Profile fingerprint",
 					Index = 1,
 					Key = "udf"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "ID", 
 					Default = "",
 					Brief = "Application profile friendly name",
 					Index = 2,
 					Key = "id"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Verbose", 
 					Default = "false",
 					Brief = "Verbose reports (default)",
 					Index = 3,
 					Key = "verbose"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Report", 
 					Default = "true",
 					Brief = "Report results (default)",
@@ -4295,11 +3656,11 @@ namespace Goedel.Mesh.MeshMan {
     public partial class RecryptGroup : _RecryptGroup {
         } // class RecryptGroup
 
-    public class _RecryptAdd : Goedel.Command.Dispatch ,
+    public class _RecryptAdd : Goedel.Registry.Dispatch ,
 							IApplicationProfile,
 							IReporting {
 
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+		public override Goedel.Registry.Type[] _Data {get; set;} = new Goedel.Registry.Type [] {
 			new String (),
 			new String (),
 			new String (),
@@ -4311,36 +3672,20 @@ namespace Goedel.Mesh.MeshMan {
 			get => _Data[0] as String;
 			set => _Data[0]  = value;
 			}
-
-		public virtual string _Portal {
-			set => _Data[0].Parameter (value);
-			}
 		/// <summary>Field accessor for option [udf]</summary>
 		public virtual String UDF {
 			get => _Data[1] as String;
 			set => _Data[1]  = value;
-			}
-
-		public virtual string _UDF {
-			set => _Data[1].Parameter (value);
 			}
 		/// <summary>Field accessor for option [id]</summary>
 		public virtual String ID {
 			get => _Data[2] as String;
 			set => _Data[2]  = value;
 			}
-
-		public virtual string _ID {
-			set => _Data[2].Parameter (value);
-			}
 		/// <summary>Field accessor for option [verbose]</summary>
 		public virtual Flag Verbose {
 			get => _Data[3] as Flag;
 			set => _Data[3]  = value;
-			}
-
-		public virtual string _Verbose {
-			set => _Data[3].Parameter (value);
 			}
 		/// <summary>Field accessor for option [report]</summary>
 		public virtual Flag Report {
@@ -4348,46 +3693,41 @@ namespace Goedel.Mesh.MeshMan {
 			set => _Data[4]  = value;
 			}
 
-		public virtual string _Report {
-			set => _Data[4].Parameter (value);
-			}
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
-
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
 			Identifier = "recryptadd",
 			Brief =  "Add a member to a recryption group",
 			HandleDelegate =  CommandLineInterpreter.Handle_RecryptAdd,
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Portal", 
 					Default = "",
 					Brief = "Portal account",
 					Index = 0,
 					Key = "portal"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "UDF", 
 					Default = "",
 					Brief = "Profile fingerprint",
 					Index = 1,
 					Key = "udf"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "ID", 
 					Default = "",
 					Brief = "Application profile friendly name",
 					Index = 2,
 					Key = "id"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Verbose", 
 					Default = "false",
 					Brief = "Verbose reports (default)",
 					Index = 3,
 					Key = "verbose"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Report", 
 					Default = "true",
 					Brief = "Report results (default)",
@@ -4402,11 +3742,11 @@ namespace Goedel.Mesh.MeshMan {
     public partial class RecryptAdd : _RecryptAdd {
         } // class RecryptAdd
 
-    public class _RecryptDelete : Goedel.Command.Dispatch ,
+    public class _RecryptDelete : Goedel.Registry.Dispatch ,
 							IApplicationProfile,
 							IReporting {
 
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+		public override Goedel.Registry.Type[] _Data {get; set;} = new Goedel.Registry.Type [] {
 			new String (),
 			new String (),
 			new String (),
@@ -4418,36 +3758,20 @@ namespace Goedel.Mesh.MeshMan {
 			get => _Data[0] as String;
 			set => _Data[0]  = value;
 			}
-
-		public virtual string _Portal {
-			set => _Data[0].Parameter (value);
-			}
 		/// <summary>Field accessor for option [udf]</summary>
 		public virtual String UDF {
 			get => _Data[1] as String;
 			set => _Data[1]  = value;
-			}
-
-		public virtual string _UDF {
-			set => _Data[1].Parameter (value);
 			}
 		/// <summary>Field accessor for option [id]</summary>
 		public virtual String ID {
 			get => _Data[2] as String;
 			set => _Data[2]  = value;
 			}
-
-		public virtual string _ID {
-			set => _Data[2].Parameter (value);
-			}
 		/// <summary>Field accessor for option [verbose]</summary>
 		public virtual Flag Verbose {
 			get => _Data[3] as Flag;
 			set => _Data[3]  = value;
-			}
-
-		public virtual string _Verbose {
-			set => _Data[3].Parameter (value);
 			}
 		/// <summary>Field accessor for option [report]</summary>
 		public virtual Flag Report {
@@ -4455,46 +3779,41 @@ namespace Goedel.Mesh.MeshMan {
 			set => _Data[4]  = value;
 			}
 
-		public virtual string _Report {
-			set => _Data[4].Parameter (value);
-			}
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
-
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
 			Identifier = "recryptdel",
 			Brief =  "Remove a member from a recryption group",
 			HandleDelegate =  CommandLineInterpreter.Handle_RecryptDelete,
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Portal", 
 					Default = "",
 					Brief = "Portal account",
 					Index = 0,
 					Key = "portal"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "UDF", 
 					Default = "",
 					Brief = "Profile fingerprint",
 					Index = 1,
 					Key = "udf"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "ID", 
 					Default = "",
 					Brief = "Application profile friendly name",
 					Index = 2,
 					Key = "id"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Verbose", 
 					Default = "false",
 					Brief = "Verbose reports (default)",
 					Index = 3,
 					Key = "verbose"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Report", 
 					Default = "true",
 					Brief = "Report results (default)",
@@ -4509,11 +3828,11 @@ namespace Goedel.Mesh.MeshMan {
     public partial class RecryptDelete : _RecryptDelete {
         } // class RecryptDelete
 
-    public class _Encrypt : Goedel.Command.Dispatch ,
+    public class _Encrypt : Goedel.Registry.Dispatch ,
 							IApplicationProfile,
 							IReporting {
 
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+		public override Goedel.Registry.Type[] _Data {get; set;} = new Goedel.Registry.Type [] {
 			new String (),
 			new String (),
 			new String (),
@@ -4525,36 +3844,20 @@ namespace Goedel.Mesh.MeshMan {
 			get => _Data[0] as String;
 			set => _Data[0]  = value;
 			}
-
-		public virtual string _Portal {
-			set => _Data[0].Parameter (value);
-			}
 		/// <summary>Field accessor for option [udf]</summary>
 		public virtual String UDF {
 			get => _Data[1] as String;
 			set => _Data[1]  = value;
-			}
-
-		public virtual string _UDF {
-			set => _Data[1].Parameter (value);
 			}
 		/// <summary>Field accessor for option [id]</summary>
 		public virtual String ID {
 			get => _Data[2] as String;
 			set => _Data[2]  = value;
 			}
-
-		public virtual string _ID {
-			set => _Data[2].Parameter (value);
-			}
 		/// <summary>Field accessor for option [verbose]</summary>
 		public virtual Flag Verbose {
 			get => _Data[3] as Flag;
 			set => _Data[3]  = value;
-			}
-
-		public virtual string _Verbose {
-			set => _Data[3].Parameter (value);
 			}
 		/// <summary>Field accessor for option [report]</summary>
 		public virtual Flag Report {
@@ -4562,46 +3865,41 @@ namespace Goedel.Mesh.MeshMan {
 			set => _Data[4]  = value;
 			}
 
-		public virtual string _Report {
-			set => _Data[4].Parameter (value);
-			}
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
-
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
 			Identifier = "encrypt",
 			Brief =  "Encrypt a file or directory",
 			HandleDelegate =  CommandLineInterpreter.Handle_Encrypt,
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Portal", 
 					Default = "",
 					Brief = "Portal account",
 					Index = 0,
 					Key = "portal"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "UDF", 
 					Default = "",
 					Brief = "Profile fingerprint",
 					Index = 1,
 					Key = "udf"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "ID", 
 					Default = "",
 					Brief = "Application profile friendly name",
 					Index = 2,
 					Key = "id"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Verbose", 
 					Default = "false",
 					Brief = "Verbose reports (default)",
 					Index = 3,
 					Key = "verbose"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Report", 
 					Default = "true",
 					Brief = "Report results (default)",
@@ -4616,11 +3914,11 @@ namespace Goedel.Mesh.MeshMan {
     public partial class Encrypt : _Encrypt {
         } // class Encrypt
 
-    public class _Decrypt : Goedel.Command.Dispatch ,
+    public class _Decrypt : Goedel.Registry.Dispatch ,
 							IApplicationProfile,
 							IReporting {
 
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+		public override Goedel.Registry.Type[] _Data {get; set;} = new Goedel.Registry.Type [] {
 			new String (),
 			new String (),
 			new String (),
@@ -4632,36 +3930,20 @@ namespace Goedel.Mesh.MeshMan {
 			get => _Data[0] as String;
 			set => _Data[0]  = value;
 			}
-
-		public virtual string _Portal {
-			set => _Data[0].Parameter (value);
-			}
 		/// <summary>Field accessor for option [udf]</summary>
 		public virtual String UDF {
 			get => _Data[1] as String;
 			set => _Data[1]  = value;
-			}
-
-		public virtual string _UDF {
-			set => _Data[1].Parameter (value);
 			}
 		/// <summary>Field accessor for option [id]</summary>
 		public virtual String ID {
 			get => _Data[2] as String;
 			set => _Data[2]  = value;
 			}
-
-		public virtual string _ID {
-			set => _Data[2].Parameter (value);
-			}
 		/// <summary>Field accessor for option [verbose]</summary>
 		public virtual Flag Verbose {
 			get => _Data[3] as Flag;
 			set => _Data[3]  = value;
-			}
-
-		public virtual string _Verbose {
-			set => _Data[3].Parameter (value);
 			}
 		/// <summary>Field accessor for option [report]</summary>
 		public virtual Flag Report {
@@ -4669,46 +3951,41 @@ namespace Goedel.Mesh.MeshMan {
 			set => _Data[4]  = value;
 			}
 
-		public virtual string _Report {
-			set => _Data[4].Parameter (value);
-			}
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
-
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
 			Identifier = "decrypt",
 			Brief =  "Decrypt a file or directory",
 			HandleDelegate =  CommandLineInterpreter.Handle_Decrypt,
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Portal", 
 					Default = "",
 					Brief = "Portal account",
 					Index = 0,
 					Key = "portal"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "UDF", 
 					Default = "",
 					Brief = "Profile fingerprint",
 					Index = 1,
 					Key = "udf"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "ID", 
 					Default = "",
 					Brief = "Application profile friendly name",
 					Index = 2,
 					Key = "id"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Verbose", 
 					Default = "false",
 					Brief = "Verbose reports (default)",
 					Index = 3,
 					Key = "verbose"
 					},
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "Report", 
 					Default = "true",
 					Brief = "Report results (default)",
@@ -4723,50 +4000,116 @@ namespace Goedel.Mesh.MeshMan {
     public partial class Decrypt : _Decrypt {
         } // class Decrypt
 
+    // Parameter type NewFile
+    public abstract class _NewFile : Goedel.Registry._File {
+        public _NewFile() {
+            }
+
+
+        } // _NewFile
 
     public partial class  NewFile : _NewFile {
+        public NewFile() {
+            }
+			
         public static NewFile Factory (string Value) {
             var Result = new NewFile();
             Result.Default(Value);
             return Result;
             }
+
         } // NewFile
 
 
+    // Parameter type ExistingFile
+    public abstract class _ExistingFile : Goedel.Registry._File {
+        public _ExistingFile() {
+            }
+
+
+        } // _ExistingFile
+
     public partial class  ExistingFile : _ExistingFile {
+        public ExistingFile() {
+            }
+			
         public static ExistingFile Factory (string Value) {
             var Result = new ExistingFile();
             Result.Default(Value);
             return Result;
             }
+
         } // ExistingFile
 
 
+    // Parameter type Flag
+    public abstract class _Flag : Goedel.Registry._Flag {
+        public _Flag() {
+            }
+
+
+        } // _Flag
+
     public partial class  Flag : _Flag {
+        public Flag() {
+            }
+			
         public static Flag Factory (string Value) {
             var Result = new Flag();
             Result.Default(Value);
             return Result;
             }
+
         } // Flag
 
 
+    // Parameter type String
+    public abstract class _String : Goedel.Registry.Type {
+        public _String() {
+            }
+
+		public string			Value {
+			get => Text;
+			}
+
+        } // _String
+
     public partial class  String : _String {
+        public String() {
+            }
+			
         public static String Factory (string Value) {
             var Result = new String();
             Result.Default(Value);
             return Result;
             }
+
         } // String
 
 
+    // Parameter type Integer
+    public abstract class _Integer : Goedel.Registry.Type {
+        public _Integer() {
+            }
+
+		public string			Value {
+			get => Text;
+			}
+
+        } // _Integer
+
     public partial class  Integer : _Integer {
+        public Integer() {
+            }
+			
         public static Integer Factory (string Value) {
             var Result = new Integer();
             Result.Default(Value);
             return Result;
             }
+
         } // Integer
+
 
 
 
@@ -4775,7 +4118,7 @@ namespace Goedel.Mesh.MeshMan {
 
 	// Eventually there will be a compiler option to suppress the debugging
 	// to eliminate the redundant code
-    public class _Shell : global::Goedel.Command.DispatchShell {
+    public class _Shell : global::Goedel.Registry.DispatchShell {
 
 		public virtual void Reset ( Reset Options) {
 			CommandLineInterpreter.DescribeValues (Options);

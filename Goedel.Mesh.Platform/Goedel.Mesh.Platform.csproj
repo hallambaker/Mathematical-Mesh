@@ -12,7 +12,7 @@
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
-    <AssemblyVersion>1.0.0.184</AssemblyVersion>
+    <AssemblyVersion>1.0.0.202</AssemblyVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -59,6 +59,7 @@
     <Compile Include="RegistrationApplication.cs" />
     <Compile Include="RegistrationMachine.cs" />
     <Compile Include="RegistrationPersonal.cs" />
+    <Compile Include="RegistrationSSH.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Exceptions.exceptional">
