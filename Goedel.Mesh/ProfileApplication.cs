@@ -58,6 +58,44 @@ namespace Goedel.Mesh {
 
         SignedApplicationProfile _SignedApplicationProfile;
 
+
+        /// <summary>
+        /// The public data corresponding to the current device.
+        /// </summary>
+        public ApplicationDevicePublic ApplicationDevicePublic {
+            get {
+                _ApplicationDevicePublic = _ApplicationDevicePublic ?? GetDevicePublic();
+                return _ApplicationDevicePublic;
+                }
+            }
+        ApplicationDevicePublic _ApplicationDevicePublic;
+
+        /// <summary>
+        /// The decrypted private data corresponding to the current device.
+        /// </summary>
+        public ApplicationDevicePrivate ApplicationDevicePrivate {
+            get {
+                _ApplicationDevicePrivate = _ApplicationDevicePrivate ?? GetDevicePrivate();
+                return _ApplicationDevicePrivate;
+                }
+
+            }
+        ApplicationDevicePrivate _ApplicationDevicePrivate;
+
+
+        /// <summary>
+        /// The decrypted private data corresponding to the current device.
+        /// </summary>
+        public ApplicationProfilePrivate ApplicationProfilePrivate {
+            get {
+                _ApplicationProfilePrivate = _ApplicationProfilePrivate ?? GetProfilePrivate();
+                return _ApplicationProfilePrivate;
+                }
+            set => _ApplicationProfilePrivate = value;
+            }
+        ApplicationProfilePrivate _ApplicationProfilePrivate;
+
+
         void ClearSignature() {
             _SignedApplicationProfile = null;
             }
@@ -67,7 +105,7 @@ namespace Goedel.Mesh {
         /// Return the private data of this profile as raw data bytes.
         /// </summary>
         protected virtual byte[] GetPrivateData {
-            get => null;
+            get => ApplicationProfilePrivate.GetJson (Tagged:true);
             }
 
 
@@ -124,28 +162,46 @@ namespace Goedel.Mesh {
 
 
         /// <summary>
-        /// Decrypt the private data portion of the profile.
+        /// Decrypt the common private data portion of the profile.
         /// </summary>
         /// <returns>Decrypted bytes.</returns>
-        public virtual byte[] DecryptPrivate() {
+        public virtual ApplicationProfilePrivate GetProfilePrivate () {
             var Key = SharedPrivate.GetKey();
             Assert.NotNull(Key, MeshException.Throw);
             var Result = SharedPrivate.Decrypt(Key);
 
-            return Result;
+
+
+            return ApplicationProfilePrivate.FromJSON(new JSONReader(Result));
             }
 
         /// <summary>
-        /// Decrypt the private data portion of the profile.
+        /// Locate and decrypt the private device data for the current device.
         /// </summary>
         /// <returns>Decrypted bytes.</returns>
-        public virtual byte[] DecryptDevicePrivate () {
+        public virtual ApplicationDevicePrivate GetDevicePrivate () {
             var Found = DevicePrivate.GetKey(out var Key, out var JWE);
             if (!Found) {
                 return null;
                 }
             Assert.NotNull(Key, MeshException.Throw);
-            return JWE.Decrypt(Key);
+            var Data = JWE.Decrypt(Key);
+
+            return ApplicationDevicePrivate.FromJSON(new JSONReader(Data));
+            }
+
+
+        /// <summary>
+        /// Locate the public device data for the current device.
+        /// </summary>
+        /// <returns>Public device data for the current device</returns>
+        public virtual ApplicationDevicePublic GetDevicePublic () {
+            foreach (var Device in Devices) {
+                if (Device.DeviceUDF == PersonalProfile.DeviceProfile.UDF) {
+                    return Device;
+                    }
+                }
+            return null;
             }
 
 
@@ -156,12 +212,37 @@ namespace Goedel.Mesh {
         /// <param name="DeviceProfile">The device to add.</param>
         /// <param name="Administration">If true, enroll as an administration device.</param>
         /// <param name="ApplicationDevicePublic">Per device public data,  if required.</param>
-        public virtual void AddDevice(
+        public void AddDevice(
                 DeviceProfile DeviceProfile,
                 bool Administration = false,
                 ApplicationDevicePublic ApplicationDevicePublic = null) {
-            ApplicationProfileEntry.AddDevice(DeviceProfile, Administration);
+            SignedDeviceProfile SignedDevice = DeviceProfile.SignedDeviceProfile;
+
+            if (ApplicationDevicePublic == null) {
+                ApplicationDevicePublic = CreateDeviceProfiles(
+                            DeviceProfile, out var ApplicationDevicePrivate);
+
+                if (ApplicationDevicePrivate != null) {
+                    var DevicePrivateBytes = ApplicationDevicePrivate.GetBytes();
+                    var DeviceEncrypt = new JoseWebEncryption(DevicePrivateBytes);
+                    DeviceEncrypt.AddRecipient(DeviceProfile.DeviceEncryptiontionKey.KeyPair);
+                    DevicePrivate = DevicePrivate ?? new List<JoseWebEncryption>();
+                    DevicePrivate.Add(DeviceEncrypt);
+                    }
+                }
+
+            if (ApplicationDevicePublic != null) {
+                Devices = Devices ?? new List<ApplicationDevicePublic>();
+                Devices.Add(ApplicationDevicePublic);
+                }
+
+            if (ApplicationProfileEntry != null) {
+                ApplicationProfileEntry.AddDevice(DeviceProfile, Administration);
+                }
             }
+
+
+
 
         /// <summary>
         /// Create the public (and private) profiles for a device. This may be called by either

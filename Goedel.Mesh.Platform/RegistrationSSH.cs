@@ -18,6 +18,14 @@ namespace Goedel.Mesh.Platform {
             var Profile = SSHProfile.Create(PersonalProfile);
             var RegistrationApplication = Add(Profile, false);
 
+
+
+            foreach (var Device in PersonalProfile.Devices) {
+                var Administration = Device.UDF == PersonalProfile.DeviceProfile.UDF;
+                RegistrationApplication.AddDevice(Device.DeviceProfile, Administration);
+                }
+
+
             if (Write) {
                 this.Write();
                 RegistrationApplication.Write();

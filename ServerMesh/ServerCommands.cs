@@ -2,258 +2,95 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using Goedel.Registry;
+using Goedel.Command;
+using Goedel.Utilities;
 
 namespace MeshServerShell {
     public partial class CommandLineInterpreter : CommandLineInterpreterBase {
 
-		static char UsageFlag;
+
 		static char UnixFlag = '-';
 		static char WindowsFlag = '/';
+
+		
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Dispatch"></param>
+        /// <param name="args"></param>
+        /// <param name="index"></param>
+        public static void Help (DispatchShell Dispatch, string[] args, int index) {
+            Brief();
+            }
+
+        public static DescribeCommandEntry DescribeHelp = new DescribeCommandEntry() {
+            Identifier = "help",
+            HandleDelegate = Brief,
+            Entries = new List<DescribeEntry>() { }
+            };
+
 
         static bool IsFlag(char c) {
             return (c == UnixFlag) | (c == WindowsFlag) ;
             }
+
 
         static CommandLineInterpreter () {
             System.OperatingSystem OperatingSystem = System.Environment.OSVersion;
 
             if (OperatingSystem.Platform == PlatformID.Unix |
                     OperatingSystem.Platform == PlatformID.MacOSX) {
-                UsageFlag = UnixFlag;
+                FlagIndicator = UnixFlag;
                 }
             else {
-                UsageFlag = WindowsFlag;
+                FlagIndicator = WindowsFlag;
                 }
+
+				DefaultCommand = _Start._DescribeCommand;
+				Description = "MatheMatical Mesh Server";
+
+			Entries = new  SortedDictionary<string, DescribeCommand> () {
+				{"start", _Start._DescribeCommand },
+				{"about", _About._DescribeCommand },
+				{"help", DescribeHelp }
+				}; // End Entries
+
+
+
             }
 
         static void Main(string[] args) {
 			var CLI = new CommandLineInterpreter ();
 			CLI.MainMethod (args);
 			}
-        public void MainMethod(string[] args) {
 
+        public void MainMethod(string[] Args) {
 			MeshServerShell Dispatch = new MeshServerShell ();
 
-
-				if (args.Length == 0) {
-					throw new ParserException ("No command specified");
-					}
-
-                if (IsFlag(args[0][0])) {
+			MainMethod (Dispatch, Args);
+			}
 
 
-                    switch (args[0].Substring(1).ToLower()) {
-						case "mathematical mesh server" : {
-							Usage ();
-							break;
-							}
-						case "start" : {
-							Handle_Start (Dispatch, args, 1);
-							break;
-							}
-						case "about" : {
-							Handle_About (Dispatch, args, 1);
-							break;
-							}
-						default: {
-							throw new ParserException("Unknown Command: " + args[0]);
-                            }
-                        }
-                    }
-                else {
-					Handle_Start (Dispatch, args, 0);
-                    }
+        public void MainMethod(MeshServerShell Dispatch, string[] Args) {
+			Dispatcher (Entries, Dispatch, Args, 0);
             } // Main
 
 
-		private enum TagType_Start {
-			PortalAddress,
-			HostAddress,
-			MeshStore,
-			PortalStore,
-			Verify,
-			Fallback,
-			Multithread,
-			}
 
-		private static void Handle_Start (
-					MeshServerShell Dispatch, string[] args, int index) {
+		public static void Handle_Start (
+					DispatchShell  DispatchIn, string[] Args, int Index) {
+			MeshServerShell Dispatch =	DispatchIn as MeshServerShell;
 			Start		Options = new Start ();
-
-			var Registry = new Goedel.Registry.Registry ();
-
-			Options.PortalAddress.Register ("portal", Registry, (int) TagType_Start.PortalAddress);
-			Options.HostAddress.Register ("host", Registry, (int) TagType_Start.HostAddress);
-			Options.MeshStore.Register ("mlog", Registry, (int) TagType_Start.MeshStore);
-			Options.PortalStore.Register ("plog", Registry, (int) TagType_Start.PortalStore);
-			Options.Verify.Register ("verify", Registry, (int) TagType_Start.Verify);
-			Options.Fallback.Register ("fallback", Registry, (int) TagType_Start.Fallback);
-			Options.Multithread.Register ("multi", Registry, (int) TagType_Start.Multithread);
-
-			// looking for parameter Param.Name}
-			if (index < args.Length && !IsFlag (args [index][0] )) {
-				// Have got the parameter, call the parameter value method
-				Options.PortalAddress.Parameter (args [index]);
-				index++;
-				}
-			// looking for parameter Param.Name}
-			if (index < args.Length && !IsFlag (args [index][0] )) {
-				// Have got the parameter, call the parameter value method
-				Options.HostAddress.Parameter (args [index]);
-				index++;
-				}
-
-#pragma warning disable 162
-			for (int i = index; i< args.Length; i++) {
-				if 	(!IsFlag (args [i][0] )) {
-					throw new System.Exception ("Unexpected parameter: " + args[i]);}			
-				string Rest = args [i].Substring (1);
-
-				TagType_Start TagType = (TagType_Start) Registry.Find (Rest);
-
-				// here have the cases for what to do with it.
-
-				switch (TagType) {
-					case TagType_Start.MeshStore : {
-						int OptionParams = Options.MeshStore.Tag (Rest);
-						
-						if (OptionParams>0 && ((i+1) < args.Length)) {
-							if 	(!IsFlag (args [i+1][0] )) {
-								i++;								
-								Options.MeshStore.Parameter (args[i]);
-								}
-							}
-						break;
-						}
-					case TagType_Start.PortalStore : {
-						int OptionParams = Options.PortalStore.Tag (Rest);
-						
-						if (OptionParams>0 && ((i+1) < args.Length)) {
-							if 	(!IsFlag (args [i+1][0] )) {
-								i++;								
-								Options.PortalStore.Parameter (args[i]);
-								}
-							}
-						break;
-						}
-					case TagType_Start.Verify : {
-						int OptionParams = Options.Verify.Tag (Rest);
-						
-						if (OptionParams>0 && ((i+1) < args.Length)) {
-							if 	(!IsFlag (args [i+1][0] )) {
-								i++;								
-								Options.Verify.Parameter (args[i]);
-								}
-							}
-						break;
-						}
-					case TagType_Start.Fallback : {
-						int OptionParams = Options.Fallback.Tag (Rest);
-						
-						if (OptionParams>0 && ((i+1) < args.Length)) {
-							if 	(!IsFlag (args [i+1][0] )) {
-								i++;								
-								Options.Fallback.Parameter (args[i]);
-								}
-							}
-						break;
-						}
-					case TagType_Start.Multithread : {
-						int OptionParams = Options.Multithread.Tag (Rest);
-						
-						if (OptionParams>0 && ((i+1) < args.Length)) {
-							if 	(!IsFlag (args [i+1][0] )) {
-								i++;								
-								Options.Multithread.Parameter (args[i]);
-								}
-							}
-						break;
-						}
-					default : throw new System.Exception ("Internal error");
-					}
-				}
-
-#pragma warning restore 162
+			ProcessOptions (Args, Index, Options);
 			Dispatch.Start (Options);
-
-			}
-		private enum TagType_About {
 			}
 
-		private static void Handle_About (
-					MeshServerShell Dispatch, string[] args, int index) {
+		public static void Handle_About (
+					DispatchShell  DispatchIn, string[] Args, int Index) {
+			MeshServerShell Dispatch =	DispatchIn as MeshServerShell;
 			About		Options = new About ();
-
-			var Registry = new Goedel.Registry.Registry ();
-
-
-
-#pragma warning disable 162
-			for (int i = index; i< args.Length; i++) {
-				if 	(!IsFlag (args [i][0] )) {
-					throw new System.Exception ("Unexpected parameter: " + args[i]);}			
-				string Rest = args [i].Substring (1);
-
-				TagType_About TagType = (TagType_About) Registry.Find (Rest);
-
-				// here have the cases for what to do with it.
-
-				switch (TagType) {
-					default : throw new System.Exception ("Internal error");
-					}
-				}
-
-#pragma warning restore 162
+			ProcessOptions (Args, Index, Options);
 			Dispatch.About (Options);
-
-			}
-
-		private static void Usage () {
-
-				Console.WriteLine ("MatheMatical Mesh Server");
-				Console.WriteLine ("");
-
-				{
-#pragma warning disable 219
-					Start		Dummy = new Start ();
-#pragma warning restore 219
-
-					Console.Write ("{0}start ", UsageFlag);
-					Console.Write ("[{0}] ", Dummy.PortalAddress.Usage (null, "portal", UsageFlag));
-					Console.Write ("[{0}] ", Dummy.HostAddress.Usage (null, "host", UsageFlag));
-					Console.Write ("[{0}] ", Dummy.MeshStore.Usage ("mlog", "value", UsageFlag));
-					Console.Write ("[{0}] ", Dummy.PortalStore.Usage ("plog", "value", UsageFlag));
-					Console.Write ("[{0}] ", Dummy.Verify.Usage ("verify", "value", UsageFlag));
-					Console.Write ("[{0}] ", Dummy.Fallback.Usage ("fallback", "value", UsageFlag));
-					Console.Write ("[{0}] ", Dummy.Multithread.Usage ("multi", "value", UsageFlag));
-					Console.WriteLine ();
-
-					Console.WriteLine ("    Start Mesh server");
-
-				}
-
-				{
-#pragma warning disable 219
-					About		Dummy = new About ();
-#pragma warning restore 219
-
-					Console.Write ("{0}about ", UsageFlag);
-					Console.WriteLine ();
-
-					Console.WriteLine ("    Report version and build date");
-
-				}
-
-			} // Usage 
-
-		public class ParserException : System.Exception {
-
-			public ParserException(string message)
-				: base(message) {
-
-				Console.WriteLine (message);
-				}
 			}
 
 
@@ -265,34 +102,162 @@ namespace MeshServerShell {
 	// with partial virtual that can be extended as required.
 
 	// All subclasses inherit from the abstract classes Goedel.Regisrty.Dispatch 
-	// and Goedel.Registry.Type
+	// and Goedel.Command.Type
 
 
+    public class _Start : Goedel.Command.Dispatch  {
 
+		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new String (),
+			new String (),
+			new String (),
+			new String (),
+			new Flag (),
+			new Flag (),
+			new Flag ()			} ;
 
-    public class _Start : Goedel.Registry.Dispatch {
-		public String			PortalAddress = new String ();
-		public String			HostAddress = new String ();
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual String PortalAddress {
+			get => _Data[0] as String;
+			set => _Data[0]  = value;
+			}
 
-		public String			MeshStore = new  String ("MeshPersistenceStore.jlog");
+		public virtual string _PortalAddress {
+			set => _Data[0].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual String HostAddress {
+			get => _Data[1] as String;
+			set => _Data[1]  = value;
+			}
 
-		public String			PortalStore = new  String ("PortalPersistenceStore.jlog");
+		public virtual string _HostAddress {
+			set => _Data[1].Parameter (value);
+			}
+		/// <summary>Field accessor for option [mlog]</summary>
+		public virtual String MeshStore {
+			get => _Data[2] as String;
+			set => _Data[2]  = value;
+			}
 
-		public Flag			Verify = new  Flag ();
+		public virtual string _MeshStore {
+			set => _Data[2].Parameter (value);
+			}
+		/// <summary>Field accessor for option [plog]</summary>
+		public virtual String PortalStore {
+			get => _Data[3] as String;
+			set => _Data[3]  = value;
+			}
 
-		public Flag			Fallback = new  Flag ("true");
+		public virtual string _PortalStore {
+			set => _Data[3].Parameter (value);
+			}
+		/// <summary>Field accessor for option [verify]</summary>
+		public virtual Flag Verify {
+			get => _Data[4] as Flag;
+			set => _Data[4]  = value;
+			}
 
-		public Flag			Multithread = new  Flag ("true");
+		public virtual string _Verify {
+			set => _Data[4].Parameter (value);
+			}
+		/// <summary>Field accessor for option [fallback]</summary>
+		public virtual Flag Fallback {
+			get => _Data[5] as Flag;
+			set => _Data[5]  = value;
+			}
 
+		public virtual string _Fallback {
+			set => _Data[5].Parameter (value);
+			}
+		/// <summary>Field accessor for option [multi]</summary>
+		public virtual Flag Multithread {
+			get => _Data[6] as Flag;
+			set => _Data[6]  = value;
+			}
+
+		public virtual string _Multithread {
+			set => _Data[6].Parameter (value);
+			}
+		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
+			Identifier = "start",
+			Brief =  "Start Mesh server",
+			HandleDelegate =  CommandLineInterpreter.Handle_Start,
+			Lazy =  false,
+			Entries = new List<DescribeEntry> () {
+				new DescribeEntryParameter () {
+					Identifier = "PortalAddress", 
+					Default = null, // null if null
+					Brief = "Service DNS address",
+					Index = 0,
+					Key = ""
+					},
+				new DescribeEntryParameter () {
+					Identifier = "HostAddress", 
+					Default = null, // null if null
+					Brief = "Host address for Web Service Endpoint",
+					Index = 1,
+					Key = ""
+					},
+				new DescribeEntryOption () {
+					Identifier = "MeshStore", 
+					Default = "MeshPersistenceStore.jlog", // null if null
+					Brief = "Log file for mesh transactions",
+					Index = 2,
+					Key = "mlog"
+					},
+				new DescribeEntryOption () {
+					Identifier = "PortalStore", 
+					Default = "PortalPersistenceStore.jlog", // null if null
+					Brief = "Log file for portal transactions",
+					Index = 3,
+					Key = "plog"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Verify", 
+					Default = null, // null if null
+					Brief = "Verify configuration only",
+					Index = 4,
+					Key = "verify"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Fallback", 
+					Default = "true", // null if null
+					Brief = "Bind to fallback Web Service Endpoint (default)",
+					Index = 5,
+					Key = "fallback"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Multithread", 
+					Default = "true", // null if null
+					Brief = "run as multithreaded service (default)",
+					Index = 6,
+					Key = "multi"
+					}
+				}
+			};
 
 		}
 
     public partial class Start : _Start {
         } // class Start
 
+    public class _About : Goedel.Command.Dispatch  {
 
-    public class _About : Goedel.Registry.Dispatch {
+		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {			} ;
 
+		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
+			Identifier = "about",
+			Brief =  "Report version and build date",
+			HandleDelegate =  CommandLineInterpreter.Handle_About,
+			Lazy =  false,
+			Entries = new List<DescribeEntry> () {
+				}
+			};
 
 		}
 
@@ -300,93 +265,40 @@ namespace MeshServerShell {
         } // class About
 
 
-
-    // Parameter type NewFile
-    public abstract class _NewFile : Goedel.Registry._File {
-        public _NewFile() {
-            }
-        public _NewFile(string Value) {
-			Default (Value);
-            } 
-
-
-
-        } // _NewFile
-
     public partial class  NewFile : _NewFile {
-        public NewFile() {
-            } 
-        public NewFile(string Value) {
-			Default (Value);
-            } 
+        public static NewFile Factory (string Value) {
+            var Result = new NewFile();
+            Result.Default(Value);
+            return Result;
+            }
         } // NewFile
 
 
-    // Parameter type ExistingFile
-    public abstract class _ExistingFile : Goedel.Registry._File {
-        public _ExistingFile() {
-            }
-        public _ExistingFile(string Value) {
-			Default (Value);
-            } 
-
-
-
-        } // _ExistingFile
-
     public partial class  ExistingFile : _ExistingFile {
-        public ExistingFile() {
-            } 
-        public ExistingFile(string Value) {
-			Default (Value);
-            } 
+        public static ExistingFile Factory (string Value) {
+            var Result = new ExistingFile();
+            Result.Default(Value);
+            return Result;
+            }
         } // ExistingFile
 
 
-    // Parameter type String
-    public abstract class _String : Goedel.Registry.Type {
-        public _String() {
-            }
-        public _String(string Value) {
-			Default (Value);
-            } 
-
-		public string			Value {
-			get => Text;
-			}
-
-        } // _String
-
     public partial class  String : _String {
-        public String() {
-            } 
-        public String(string Value) {
-			Default (Value);
-            } 
+        public static String Factory (string Value) {
+            var Result = new String();
+            Result.Default(Value);
+            return Result;
+            }
         } // String
 
 
-    // Parameter type Flag
-    public abstract class _Flag : Goedel.Registry._Flag {
-        public _Flag() {
-            }
-        public _Flag(string Value) {
-			Default (Value);
-            } 
-
-
-
-
-        } // _Flag
-
     public partial class  Flag : _Flag {
-        public Flag() {
-            } 
-        public Flag(string Value) {
-			Default (Value);
-            } 
+        public static Flag Factory (string Value) {
+            var Result = new Flag();
+            Result.Default(Value);
+            return Result;
+            }
         } // Flag
-
 
 
 
@@ -395,66 +307,16 @@ namespace MeshServerShell {
 
 	// Eventually there will be a compiler option to suppress the debugging
 	// to eliminate the redundant code
-    public class _MeshServerShell {
+    public class _MeshServerShell : global::Goedel.Command.DispatchShell {
 
-
-		public virtual void Start ( Start Options
-				) {
-
-			char UsageFlag = '-';
-				{
-#pragma warning disable 219
-					Start		Dummy = new Start ();
-#pragma warning restore 219
-
-					Console.Write ("{0}start ", UsageFlag);
-					Console.Write ("[{0}] ", Dummy.PortalAddress.Usage (null, "portal", UsageFlag));
-					Console.Write ("[{0}] ", Dummy.HostAddress.Usage (null, "host", UsageFlag));
-					Console.Write ("[{0}] ", Dummy.MeshStore.Usage ("mlog", "value", UsageFlag));
-					Console.Write ("[{0}] ", Dummy.PortalStore.Usage ("plog", "value", UsageFlag));
-					Console.Write ("[{0}] ", Dummy.Verify.Usage ("verify", "value", UsageFlag));
-					Console.Write ("[{0}] ", Dummy.Fallback.Usage ("fallback", "value", UsageFlag));
-					Console.Write ("[{0}] ", Dummy.Multithread.Usage ("multi", "value", UsageFlag));
-					Console.WriteLine ();
-
-					Console.WriteLine ("    Start Mesh server");
-
-				}
-
-				Console.WriteLine ("    {0}\t{1} = [{2}]", "String", 
-							"PortalAddress", Options.PortalAddress);
-				Console.WriteLine ("    {0}\t{1} = [{2}]", "String", 
-							"HostAddress", Options.HostAddress);
-				Console.WriteLine ("    {0}\t{1} = [{2}]", "String", 
-							"MeshStore", Options.MeshStore);
-				Console.WriteLine ("    {0}\t{1} = [{2}]", "String", 
-							"PortalStore", Options.PortalStore);
-				Console.WriteLine ("    {0}\t{1} = [{2}]", "Flag", 
-							"Verify", Options.Verify);
-				Console.WriteLine ("    {0}\t{1} = [{2}]", "Flag", 
-							"Fallback", Options.Fallback);
-				Console.WriteLine ("    {0}\t{1} = [{2}]", "Flag", 
-							"Multithread", Options.Multithread);
-			Console.WriteLine ("Not Yet Implemented");
+		public virtual void Start ( Start Options) {
+			CommandLineInterpreter.DescribeValues (Options);
 			}
-		public virtual void About ( About Options
-				) {
 
-			char UsageFlag = '-';
-				{
-#pragma warning disable 219
-					About		Dummy = new About ();
-#pragma warning restore 219
-
-					Console.Write ("{0}about ", UsageFlag);
-					Console.WriteLine ();
-
-					Console.WriteLine ("    Report version and build date");
-
-				}
-
-			Console.WriteLine ("Not Yet Implemented");
+		public virtual void About ( About Options) {
+			CommandLineInterpreter.DescribeValues (Options);
 			}
+
 
         } // class _MeshServerShell
 

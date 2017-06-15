@@ -28,6 +28,7 @@ using Goedel.Persistence;
 using Goedel.Cryptography;
 using Goedel.Cryptography.Jose;
 using Goedel.Cryptography.PKIX;
+using Goedel.Cryptography.KeyFile;
 
 namespace Goedel.Mesh {
 
@@ -38,51 +39,25 @@ namespace Goedel.Mesh {
     public partial class SSHProfile : ApplicationProfile {
 
         /// <summary>
-        /// The public type tag as a static element for efficiency
+        /// The public parameter entry for this particular device.
         /// </summary>
-        public static string TypeTag { get => "SSHProfile"; } 
+        public SSHDevicePublic SSHDevicePublic {
+            get => ApplicationDevicePublic as SSHDevicePublic;
+            }
 
-        private SSHProfilePrivate _Private;
         /// <summary>
         /// The portion of the profile that is encrypted in the mesh.
         /// </summary>
         public SSHProfilePrivate Private {
-            get {
-                if (_Private == null) {
-                    var Plaintext = DecryptPrivate();
-                    if (Plaintext != null) {
-                        _Private = SSHProfilePrivate.FromTagged(Plaintext);
-                        }
-                    }
-                return _Private;
-                }
+            get => ApplicationProfilePrivate as SSHProfilePrivate;
+            set => ApplicationProfilePrivate = value;
             }
 
-        private SSHDevicePrivate _DevicePrivate;
         /// <summary>
         /// The portion of the profile that is encrypted in the mesh.
         /// </summary>
         public SSHDevicePrivate DecryptedDevicePrivate {
-            get {
-                if (_DevicePrivate == null) {
-                    var Plaintext = DecryptDevicePrivate();
-
-                    if (Plaintext != null) {
-                        var PlainUTF8 = Plaintext.ToUTF8();
-                        _DevicePrivate = SSHDevicePrivate.FromTagged(Plaintext);
-                        }
-                    }
-                return _DevicePrivate;
-                }
-            }
-
-
-        /// <summary>
-        /// Returns the private profile as a block of JSON encoded bytes ready for
-        /// encryption.
-        /// </summary>
-        protected override byte[] GetPrivateData {
-            get => Private.GetBytes();
+            get => ApplicationDevicePrivate as SSHDevicePrivate;
             }
 
         /// <summary>
@@ -91,15 +66,12 @@ namespace Goedel.Mesh {
         /// <param name="MakePrivate">If true, a private profile will be created.</param>
         public SSHProfile (bool MakePrivate = false) {
             if (MakePrivate) {
-                _Private = new SSHProfilePrivate();
+                Private = new SSHProfilePrivate();
                 }
             }
 
 
-        /// <summary>
-        /// The public parameter entry for this particular device.
-        /// </summary>
-        public SSHDevicePublic SSHDevicePublic { get; private set; }
+        
 
         /// <summary>
         /// Create new SSH profile
@@ -107,18 +79,8 @@ namespace Goedel.Mesh {
         /// <param name="PersonalProfile"></param>
         /// <returns></returns>
         public static SSHProfile Create (PersonalProfile PersonalProfile) {
-            var Result = new SSHProfile(true);
-
-            foreach (var Device in PersonalProfile.Devices) {
-
-
-                }
-
-            return Result;
+            return new SSHProfile(true);
             }
-
-
-
 
         /// <summary>
         /// Convenience function that converts a generic Signed Profile returned
@@ -133,53 +95,6 @@ namespace Goedel.Mesh {
 
 
         /// <summary>
-        /// Add the specified device to the linked personal profile and 
-        /// create any device specific entries in the private profile.
-        /// </summary>
-        /// <param name="DeviceProfile">The device to add.</param>
-        /// <param name="Administration">If true, enroll as an administration device.</param>
-        /// <param name="ApplicationDevicePublic">Per device public data,  if required.</param>
-
-        public override void AddDevice(
-                        DeviceProfile DeviceProfile, 
-                        bool Administration = false,
-                        ApplicationDevicePublic ApplicationDevicePublic = null) {
-            SignedDeviceProfile SignedDevice = DeviceProfile.SignedDeviceProfile;
-
-            if (ApplicationDevicePublic == null) {
-                ApplicationDevicePublic = CreateDeviceProfiles(
-                            DeviceProfile, out var ApplicationDevicePrivate);
-
-                if (ApplicationDevicePrivate != null) {
-                    // NYI: wrap private and add to DevicePrivate
-
-                    var DevicePrivateBytes = ApplicationDevicePrivate.GetBytes();
-
-                    var DeviceEncrypt = new JoseWebEncryption(DevicePrivateBytes);
-                    DeviceEncrypt.AddRecipient(DeviceProfile.DeviceEncryptiontionKey.KeyPair);
-                    DevicePrivate = DevicePrivate ?? new List<JoseWebEncryption>();
-                    // NYI: create per device encrypted private key for the other
-                    //devices
-
-                    //DevicePrivate.Add(DeviceEncrypt);
-                    }
-
-                }
-
-            switch (ApplicationDevicePublic) {
-                case SSHDevicePublic SSHDevicePublic: {
-                    Devices = Devices ?? new List<SSHDevicePublic>();
-                    Devices.Add(SSHDevicePublic);
-                    break;
-                    }
-                }
-
-            if (ApplicationProfileEntry != null) {
-                ApplicationProfileEntry.AddDevice(DeviceProfile, Administration);
-                }
-            }
-
-        /// <summary>
         /// Create the public (and private) profiles for a device. This may be called by either
         /// the administrator or on the device itself, depending on when the application is being
         /// initialized.
@@ -190,16 +105,32 @@ namespace Goedel.Mesh {
         public override ApplicationDevicePublic CreateDeviceProfiles (DeviceProfile Device, 
                     out ApplicationDevicePrivate ApplicationDevicePrivate) {
 
-            var KeyPair = PublicKey.Generate(KeyType.AAK, CryptoAlgorithmID.RSASign);
-            var KeyPrivate = new PublicKey() { PrivateParameters = KeyPair.PrivateParameters };
-            var KeyPublic = new PublicKey() { PrivateParameters = KeyPair.PublicParameters };
+            var IsLocal = Device.DeviceSignatureKey.PrivateKey != null;
 
-            ApplicationDevicePrivate = new SSHDevicePrivate() {
-                DevicePrivateKey = KeyPrivate
+            var KeyStorage = IsLocal ? KeyType.DAK : KeyType.AAK;
+
+            var KeyPair = PublicKey.Generate(KeyStorage, CryptoAlgorithmID.RSASign);
+
+            var KeyPublic = new PublicKey() {
+                PublicParameters = KeyPair.PublicParameters
                 };
 
+            ApplicationDevicePrivate = null;
+            if (IsLocal) {
+                ApplicationDevicePrivate = new SSHDevicePrivate() {
+                    KeyUDF = KeyPair.UDF
+                    };
+                }
+            else {
+                var KeyPrivate = new PublicKey() { PrivateParameters = KeyPair.PrivateParameters };
+                ApplicationDevicePrivate = new SSHDevicePrivate() {
+                    DevicePrivateKey = KeyPrivate
+                    };
+                }
+
             var ApplicationDevicePublic = new SSHDevicePublic() {
-                Identifier = Device.UDF,
+                DeviceUDF = Device.UDF,
+                DeviceDescription = Device.Name,
                 PublicKey = KeyPublic
                 };
 
@@ -209,6 +140,22 @@ namespace Goedel.Mesh {
 
         }
 
+
+    public partial class SSHDevicePublic {
+
+        /// <summary>
+        /// Convert to SSH file entry.
+        /// </summary>
+        /// <param name="PortalID"></param>
+        /// <returns></returns>
+        public string ToOpenSSH (string PortalID) {
+            var KeyPair = PublicKey.KeyPair;
+            var Text = KeyPair.ToOpenSSH();
+            var DeviceDescription = this.DeviceDescription ?? "-";
+            return String.Format("{0} mmm:{1} [{2}]", Text, PortalID, DeviceDescription);
+            }
+
+        }
 
 
 

@@ -7,7 +7,7 @@ using System.Diagnostics;
 using Goedel.Mesh;
 using Goedel.Utilities;
 using Goedel.Mesh.Platform;
-
+using Goedel.Mesh.Server;
 
 
 namespace Goedel.Mesh.MeshMan {
@@ -18,15 +18,13 @@ namespace Goedel.Mesh.MeshMan {
         bool ReportOutput = true;
         bool ActiveListener = false;
 
+        //public MeshCatalog MeshCatalog { get; set; }
+
         private void SetReporting (Goedel.Mesh.MeshMan.IReporting Reporting) {
             SetReporting(Reporting.Report, Reporting.Verbose);
             }
 
         private void SetReporting (Flag Report, Flag Verbose) {
-
-            // Hack: Should really make the options groups into interfaces 
-            // in the Command processor. Then can simply hand in the options.
-
             ReportOutput = Report.Value;
             VerboseOutput = Verbose.Value;
 
@@ -72,12 +70,33 @@ namespace Goedel.Mesh.MeshMan {
                 }
             }
 
+
+        public RegistrationDevice GetDevice (IDeviceProfileInfo Options) {
+
+            // Feature: Should allow user to specify if device profile should be the default.
+
+            if (!Options.DeviceUDF.ByDefault) {
+                // Fingerprint specified so must use existing.
+                return MeshCatalog.GetDevice(Options.DeviceUDF.Value);
+                }
+            if (Options.DeviceID.ByDefault | Options.DeviceNew.Value) {
+                // Either no Device ID specified or the new flag specified so create new.
+                var DeviceID = Options.DeviceID.Value ?? "Default";     // Feature: Pull from platform
+                var DeviceDescription = Options.DeviceDescription.Value ?? "Unknown";  // Feature: Pull from platform
+                return MeshCatalog.CreateDevice(DeviceID, DeviceDescription, true);
+                }
+            // DeviceID specified without new so look for existing profile.
+            return MeshCatalog.GetDevice(DeviceID: Options.DeviceID.Value);
+            }
+
+
         public RegistrationPersonal GetPersonal (IPortalAccount Options) {
             return GetPersonal(Options.Portal.Value);
             }
 
         public RegistrationPersonal GetPersonal (string Address) {
             var RegistrationPersonal =  MeshCatalog.GetPersonal(Address);
+            RegistrationPersonal.MeshCatalog = MeshCatalog;
 
             Assert.NotNull(RegistrationPersonal, ProfileNotFound.Throw,
                 new ExceptionData() { String = Address ?? "<default>" });
@@ -178,75 +197,43 @@ namespace Goedel.Mesh.MeshMan {
             return AccountAvailable.Valid;
             }
 
-
         RegistrationPersonal RegistrationPersonal;
-        SignedPersonalProfile SignedPersonalProfile;
         PersonalProfile PersonalProfile;
 
         private void GetProfile(String Portal, String UDF) {
-
             RegistrationPersonal = Machine.Personal;
             Assert.NotNull(RegistrationPersonal, NoPersonalProfile.Throw);
 
             PortalID = RegistrationPersonal?.Portals?.Default;
             Assert.NotNull(PortalID, NoPortalAccount.Throw);
 
-            SignedPersonalProfile = RegistrationPersonal.SignedPersonalProfile;
-            PersonalProfile = SignedPersonalProfile.PersonalProfile;
-
-            //PersonalProfile.SignedDeviceProfile = GetDevice(SignedPersonalProfile);
+            PersonalProfile = RegistrationPersonal.PersonalProfile;
             }
 
 
-        // A placeholder routine. This should actually search
-        // the profile to find a matching device profile that
-        // is supported on the local machine.
-        private SignedDeviceProfile GetDevice(SignedPersonalProfile Profile) {
-            TraceX.TBS("Device not read properly");
-            return Machine.Device.SignedDeviceProfile;
-            }
+        //// A placeholder routine. This should actually search
+        //// the profile to find a matching device profile that
+        //// is supported on the local machine.
+        //private SignedDeviceProfile GetDevice(SignedPersonalProfile Profile) {
+        //    TraceX.TBS("Device not read properly");
+        //    return Machine.Device.SignedDeviceProfile;
+        //    }
 
 
 
         public RegistrationApplication GetApplication (IApplicationProfile Options, string Type) {
 
-             Machine.Find (out var RegistrationApplication, Type,
+            Machine.Find (out var RegistrationApplication, Type,
                     Options.Portal.Value, Options.UDF.Value, Options.ID.Value);
 
+            RegistrationPersonal = Machine.Personal;
+            PortalID = RegistrationPersonal?.Portals?.Default;
+            PersonalProfile = RegistrationPersonal?.PersonalProfile;
             return RegistrationApplication;
 
             }
 
 
-
-        ////ApplicationProfileEntry PasswordEntry;
-        ////RegistrationApplication PasswordRegistration;
-        ////SignedApplicationProfile SignedApplicationWeb;
-        //PasswordProfile PasswordProfile;
-        //PasswordProfilePrivate PasswordProfilePrivate;
-
-        //private void GetPasswordProfile () {
-
-        //    //PasswordEntry = SignedPersonalProfile.PersonalProfile.GetApplicationEntryPassword(
-        //    //    null);
-        //    //var Found = Machine.Find(PasswordEntry.Identifier, out PasswordRegistration);
-
-        //    //PasswordProfile = PasswordRegistration.ApplicationProfile as PasswordProfile;
-        //    //PasswordProfile.Link (SignedPersonalProfile.PersonalProfile, PasswordEntry);
-        //    //PasswordProfilePrivate = PasswordProfile.Private;
-
-        //    return;
-        //    }
-
-        //private void UpdatePasswordProfile() {
-
-        //    //var NewSigned = PasswordProfile.SignedApplicationProfile;
-
-        //    //PasswordRegistration.SignedApplicationProfile = NewSigned;
-        //    //PasswordRegistration.WriteToPortal();
-        //    //MeshClient.Publish(PasswordRegistration.SignedApplicationProfile);
-        //    return;
-        //    }
 
         }
     }

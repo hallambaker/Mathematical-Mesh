@@ -70,7 +70,7 @@ namespace Goedel.Mesh {
         /// <returns>True if the profile passed validation, otherwise false.</returns>
         public virtual bool Validate() {
 
-            throw new NYI("Need to validate the profile");
+            throw new Goedel.Utilities.NYI("Need to validate the profile");
 
             }
 
@@ -79,7 +79,7 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <returns>The device profile object.</returns>
         public virtual Profile Unpack() {
-            throw new NYI("Need to unpack the profile");
+            throw new Goedel.Utilities.NYI("Need to unpack the profile");
             }
 
         }
@@ -162,7 +162,7 @@ namespace Goedel.Mesh {
         public virtual DeviceProfile UnpackDeviceProfile() {
             _Signed = null;
 
-            var Profile = DeviceProfile.FromTagged(SignedData.Payload);
+            var Profile = DeviceProfile.FromJSON(new JSONReader (SignedData.Payload));
             Assert.True(Profile.DeviceSignatureKey.Verify(), KeyFingerprintMismatch.Throw);
 
             var PublicKey = Profile.DeviceSignatureKey.KeyPair;
@@ -195,15 +195,15 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Search for the specified profile on the local machine.
         /// </summary>
-        /// <param name="UDF">Fingerprint of the profile to find.</param>
         /// <param name="FileName">The name of the file</param>
+        /// <param name="UDF">Fingerprint of the profile to find.</param>
         /// <returns>The signed profile if found or null otherwise.</returns>
-        public static SignedDeviceProfile FromFile(string UDF, string FileName) {
+        public static SignedDeviceProfile FromFile (string FileName, string UDF) {
 
             using (var FileReader = FileName.OpenFileReadShared()) {
                 using (var TextReader = FileReader.OpenTextReader()) {
                     var Reader = new JSONReader(TextReader);
-                    var Result = SignedDeviceProfile.FromTagged(Reader);
+                    var Result = FromJSON(Reader);
                     Result.UnpackDeviceProfile();
 
                     return Result;
@@ -261,10 +261,10 @@ namespace Goedel.Mesh {
         /// otherwise null.</returns>
         public virtual MasterProfile UnpackMasterProfile() {
 
-            var Text = Encoding.UTF8.GetString(SignedData.Payload);
+            var Text = System.Text.Encoding.UTF8.GetString(SignedData.Payload);
             //Goedel.Debug.Trace.WriteLine("Data as signed {0}", Text);
 
-            var Unpacked = MasterProfile.FromTagged(Text);
+            var Unpacked = MasterProfile.FromJSON(new JSONReader(Text));
 
             var SigningKey = Unpacked.MasterSignatureKey.KeyPair;
             var Verify = SignedData.Verify(Unpacked.MasterSignatureKey.UDF, SigningKey);
@@ -426,17 +426,23 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Search for the specified profile on the local machine.
         /// </summary>
-        /// <param name="UDF">Fingerprint of the profile to find.</param>
         /// <param name="FileName">The name of the file</param>
+        /// <param name="UDF">Fingerprint of the profile to find.</param>
         /// <returns>The signed profile if found or null otherwise.</returns>
-        public static SignedApplicationProfile FromFile(string UDF, string FileName) {
-            using (var FileReader = FileName.OpenFileReadShared()) {
-                using (var TextReader = FileReader.OpenTextReader()) {
-                    var Reader = new JSONReader(TextReader);
-                    var Result = FromTagged(Reader);
-                    return Result;
+        public static SignedApplicationProfile FromFile (string FileName, string UDF=null) {
+            try {
+                using (var FileReader = FileName.OpenFileReadShared()) {
+                    using (var TextReader = FileReader.OpenTextReader()) {
+                        var Reader = new JSONReader(TextReader);
+                        var Result = FromJSON(Reader, true);
+                        return Result;
+                        }
                     }
                 }
+            catch {
+                return null;
+                }
+
             }
 
 
@@ -492,19 +498,20 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Search for the specified profile on the local machine.
         /// </summary>
-        /// <param name="UDF">Fingerprint of the profile to find.</param>
         /// <param name="FileName">The name of the file</param>
+        /// <param name="UDF">Fingerprint of the profile to find.</param>
         /// <returns>The signed profile if found or null otherwise.</returns>
-        public static SignedPersonalProfile FromFile(string UDF, string FileName) {
+        public static SignedPersonalProfile FromFile (string FileName, string UDF=null) {
             try {
                 using (var FileReader = FileName.OpenFileReadShared()) {
                     using (var TextReader = FileReader.OpenTextReader()) {
                         var Reader = new JSONReader(TextReader);
-                        var Result = SignedPersonalProfile.FromTagged(Reader);
+                        var Result = SignedPersonalProfile.FromJSON(Reader);
 
-                        var Test = Result.PersonalProfile.UDF;
-                        Goedel.Cryptography.UDF.Validate(UDF, Test);
-
+                        if (UDF != null) {
+                            var Test = Result.PersonalProfile.UDF;
+                            Goedel.Cryptography.UDF.Validate(UDF, Test);
+                            }
                         return Result;
                         }
                     }
@@ -524,7 +531,7 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <returns></returns>
         public virtual PersonalProfile UnpackPersonalProfile() {
-            var Unpacked = PersonalProfile.FromTagged (SignedData.Payload);
+            var Unpacked = PersonalProfile.FromJSON(new JSONReader(SignedData.Payload));
 
             Unpacked.Unpack();
             Validate(Unpacked);

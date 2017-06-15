@@ -45,8 +45,29 @@ namespace Goedel.Persistence {
         /// </summary>
         /// <returns>The tag value</returns>
 		public override string Tag () {
-			return "LogEntry";
+			return _Tag;
 			}
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public override string _Tag { get; } = "LogEntry";
+
+		/// <summary>
+        /// Dictionary mapping tags to factory methods
+        /// </summary>
+		public static Dictionary<string, JSONFactoryDelegate> _TagDictionary = 
+				new Dictionary<string, JSONFactoryDelegate> () {
+
+			{"DataItem", DataItem._Factory},
+			{"Header", Header._Factory},
+			{"Delta", Delta._Factory},
+			{"IndexTerm", IndexTerm._Factory},
+			{"Final", Final._Factory},
+			{"Terminal", Terminal._Factory},
+			{"IndexIndex", IndexIndex._Factory},
+			{"Index", Index._Factory},
+			{"IndexEntry", IndexEntry._Factory}			};
 
 		/// <summary>
         /// Construct an instance from the specified tagged JSONReader stream.
@@ -54,85 +75,7 @@ namespace Goedel.Persistence {
         /// <param name="JSONReader">Input stream</param>
         /// <param name="Out">The created object</param>
         public static void Deserialize(JSONReader JSONReader, out JSONObject Out) {
-	
-			JSONReader.StartObject ();
-            if (JSONReader.EOR) {
-                Out = null;
-                return;
-                }
-
-			string token = JSONReader.ReadToken ();
-			Out = null;
-
-			switch (token) {
-
-				case "DataItem" : {
-					Out = new DataItem ();
-					Out.Deserialize (JSONReader);
-					break;
-					}
-
-
-				case "Header" : {
-					Out = new Header ();
-					Out.Deserialize (JSONReader);
-					break;
-					}
-
-
-				case "Delta" : {
-					Out = new Delta ();
-					Out.Deserialize (JSONReader);
-					break;
-					}
-
-
-				case "IndexTerm" : {
-					Out = new IndexTerm ();
-					Out.Deserialize (JSONReader);
-					break;
-					}
-
-
-				case "Final" : {
-					Out = new Final ();
-					Out.Deserialize (JSONReader);
-					break;
-					}
-
-
-				case "Terminal" : {
-					Out = new Terminal ();
-					Out.Deserialize (JSONReader);
-					break;
-					}
-
-
-				case "IndexIndex" : {
-					Out = new IndexIndex ();
-					Out.Deserialize (JSONReader);
-					break;
-					}
-
-
-				case "Index" : {
-					Out = new Index ();
-					Out.Deserialize (JSONReader);
-					break;
-					}
-
-
-				case "IndexEntry" : {
-					Out = new IndexEntry ();
-					Out.Deserialize (JSONReader);
-					break;
-					}
-
-				default : {
-					throw new Exception ("Not supported");
-					}
-				}	
-			JSONReader.EndObject ();
+			Out = JSONReader.ReadTaggedObject (_TagDictionary);
             }
 		}
 
@@ -232,15 +175,19 @@ namespace Goedel.Persistence {
 			get {return _Rollback;}
 			set {_Rollback = value; __Rollback = true; }
 			}
-
-        /// <summary>
-        /// Tag identifying this class.
+		
+		/// <summary>
+        /// Tag identifying this class
         /// </summary>
-        /// <returns>The tag</returns>
-		public override string Tag () {
-			return "DataItem";
-			}
+		public override string _Tag { get; } = "DataItem";
 
+		/// <summary>
+        /// Factory method
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JSONObject _Factory () {
+			return new DataItem();
+			}
 
 
         /// <summary>
@@ -339,91 +286,21 @@ namespace Goedel.Persistence {
 			}
 
 
-
-        /// <summary>
-		/// Create a new instance from untagged byte input.
-		/// i.e. {... data ... }
-        /// </summary>	
-        /// <param name="_Data">The input data.</param>
-        /// <returns>The created object.</returns>		
-		public static new DataItem From (byte[] _Data) {
-			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
-			return From (_Input);
-			}
-
-        /// <summary>
-		/// Create a new instance from untagged string input.
-		/// i.e. {... data ... }
-        /// </summary>	
-        /// <param name="_Input">The input data.</param>
-        /// <returns>The created object.</returns>				
-		public static new DataItem From (string _Input) {
-			StringReader _Reader = new StringReader (_Input);
-            JSONReader JSONReader = new JSONReader (_Reader);
-			var Result = new DataItem ();
-			Result.Deserialize (JSONReader);
-			return Result;
-			// return new DataItem (JSONReader);
-			}
-
-        /// <summary>
-		/// Create a new instance from tagged byte input.
-		/// i.e. { "DataItem" : {... data ... } }
-        /// </summary>	
-        /// <param name="_Data">The input data.</param>
-        /// <returns>The created object.</returns>				
-		public static new DataItem FromTagged (byte[] _Data) {
-			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
-			return FromTagged (_Input);
-			}
-
-        /// <summary>
-        /// Create a new instance from tagged string input.
-		/// i.e. { "DataItem" : {... data ... } }
-        /// </summary>
-        /// <param name="_Input">The input data.</param>
-        /// <returns>The created object.</returns>		
-		public static new DataItem FromTagged (string _Input) {
-			//DataItem _Result;
-			//Deserialize (_Input, out _Result);
-			StringReader _Reader = new StringReader (_Input);
-            JSONReader JSONReader = new JSONReader (_Reader);
-			return FromTagged (JSONReader) ;
-			}
-
-
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader">The input stream</param>
+		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new DataItem  FromTagged (JSONReader JSONReader) {
-			DataItem Out = null;
-
-			JSONReader.StartObject ();
-            if (JSONReader.EOR) {
-                return null;
-                }
-
-			string token = JSONReader.ReadToken ();
-
-			switch (token) {
-
-				case "DataItem" : {
-					Out = new DataItem ();
-					Out.Deserialize (JSONReader);
-					break;
-					}
-
-				default : {
-                    break;
-					}
+        public static new DataItem FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (Tagged) {
+				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				return Out as DataItem;
 				}
-			JSONReader.EndObject ();
-
-			return Out;
+		    var Result = new DataItem ();
+			Result.Deserialize (JSONReader);
+			return Result;
 			}
-
 
         /// <summary>
         /// Having read a tag, process the corresponding value data.
@@ -458,7 +335,7 @@ namespace Goedel.Persistence {
 					bool _Going = JSONReader.StartArray ();
 					Keys = new List <IndexTerm> ();
 					while (_Going) {
-						var _Item = IndexTerm.FromTagged (JSONReader); // a tagged structure
+						var _Item = IndexTerm.FromJSON (JSONReader, true); // a tagged structure
 						Keys.Add (_Item);
 						_Going = JSONReader.NextArray ();
 						}
@@ -530,15 +407,19 @@ namespace Goedel.Persistence {
         /// </summary>
 
 		public virtual Delta						Delta  {get; set;}
-
-        /// <summary>
-        /// Tag identifying this class.
+		
+		/// <summary>
+        /// Tag identifying this class
         /// </summary>
-        /// <returns>The tag</returns>
-		public override string Tag () {
-			return "Header";
-			}
+		public override string _Tag { get; } = "Header";
 
+		/// <summary>
+        /// Factory method
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JSONObject _Factory () {
+			return new Header();
+			}
 
 
         /// <summary>
@@ -601,91 +482,21 @@ namespace Goedel.Persistence {
 			}
 
 
-
-        /// <summary>
-		/// Create a new instance from untagged byte input.
-		/// i.e. {... data ... }
-        /// </summary>	
-        /// <param name="_Data">The input data.</param>
-        /// <returns>The created object.</returns>		
-		public static new Header From (byte[] _Data) {
-			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
-			return From (_Input);
-			}
-
-        /// <summary>
-		/// Create a new instance from untagged string input.
-		/// i.e. {... data ... }
-        /// </summary>	
-        /// <param name="_Input">The input data.</param>
-        /// <returns>The created object.</returns>				
-		public static new Header From (string _Input) {
-			StringReader _Reader = new StringReader (_Input);
-            JSONReader JSONReader = new JSONReader (_Reader);
-			var Result = new Header ();
-			Result.Deserialize (JSONReader);
-			return Result;
-			// return new Header (JSONReader);
-			}
-
-        /// <summary>
-		/// Create a new instance from tagged byte input.
-		/// i.e. { "Header" : {... data ... } }
-        /// </summary>	
-        /// <param name="_Data">The input data.</param>
-        /// <returns>The created object.</returns>				
-		public static new Header FromTagged (byte[] _Data) {
-			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
-			return FromTagged (_Input);
-			}
-
-        /// <summary>
-        /// Create a new instance from tagged string input.
-		/// i.e. { "Header" : {... data ... } }
-        /// </summary>
-        /// <param name="_Input">The input data.</param>
-        /// <returns>The created object.</returns>		
-		public static new Header FromTagged (string _Input) {
-			//Header _Result;
-			//Deserialize (_Input, out _Result);
-			StringReader _Reader = new StringReader (_Input);
-            JSONReader JSONReader = new JSONReader (_Reader);
-			return FromTagged (JSONReader) ;
-			}
-
-
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader">The input stream</param>
+		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new Header  FromTagged (JSONReader JSONReader) {
-			Header Out = null;
-
-			JSONReader.StartObject ();
-            if (JSONReader.EOR) {
-                return null;
-                }
-
-			string token = JSONReader.ReadToken ();
-
-			switch (token) {
-
-				case "Header" : {
-					Out = new Header ();
-					Out.Deserialize (JSONReader);
-					break;
-					}
-
-				default : {
-                    break;
-					}
+        public static new Header FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (Tagged) {
+				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				return Out as Header;
 				}
-			JSONReader.EndObject ();
-
-			return Out;
+		    var Result = new Header ();
+			Result.Deserialize (JSONReader);
+			return Result;
 			}
-
 
         /// <summary>
         /// Having read a tag, process the corresponding value data.
@@ -748,15 +559,19 @@ namespace Goedel.Persistence {
         /// </summary>
 
 		public virtual string						Previous  {get; set;}
-
-        /// <summary>
-        /// Tag identifying this class.
+		
+		/// <summary>
+        /// Tag identifying this class
         /// </summary>
-        /// <returns>The tag</returns>
-		public override string Tag () {
-			return "Delta";
-			}
+		public override string _Tag { get; } = "Delta";
 
+		/// <summary>
+        /// Factory method
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JSONObject _Factory () {
+			return new Delta();
+			}
 
 
         /// <summary>
@@ -799,91 +614,21 @@ namespace Goedel.Persistence {
 			}
 
 
-
-        /// <summary>
-		/// Create a new instance from untagged byte input.
-		/// i.e. {... data ... }
-        /// </summary>	
-        /// <param name="_Data">The input data.</param>
-        /// <returns>The created object.</returns>		
-		public static new Delta From (byte[] _Data) {
-			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
-			return From (_Input);
-			}
-
-        /// <summary>
-		/// Create a new instance from untagged string input.
-		/// i.e. {... data ... }
-        /// </summary>	
-        /// <param name="_Input">The input data.</param>
-        /// <returns>The created object.</returns>				
-		public static new Delta From (string _Input) {
-			StringReader _Reader = new StringReader (_Input);
-            JSONReader JSONReader = new JSONReader (_Reader);
-			var Result = new Delta ();
-			Result.Deserialize (JSONReader);
-			return Result;
-			// return new Delta (JSONReader);
-			}
-
-        /// <summary>
-		/// Create a new instance from tagged byte input.
-		/// i.e. { "Delta" : {... data ... } }
-        /// </summary>	
-        /// <param name="_Data">The input data.</param>
-        /// <returns>The created object.</returns>				
-		public static new Delta FromTagged (byte[] _Data) {
-			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
-			return FromTagged (_Input);
-			}
-
-        /// <summary>
-        /// Create a new instance from tagged string input.
-		/// i.e. { "Delta" : {... data ... } }
-        /// </summary>
-        /// <param name="_Input">The input data.</param>
-        /// <returns>The created object.</returns>		
-		public static new Delta FromTagged (string _Input) {
-			//Delta _Result;
-			//Deserialize (_Input, out _Result);
-			StringReader _Reader = new StringReader (_Input);
-            JSONReader JSONReader = new JSONReader (_Reader);
-			return FromTagged (JSONReader) ;
-			}
-
-
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader">The input stream</param>
+		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new Delta  FromTagged (JSONReader JSONReader) {
-			Delta Out = null;
-
-			JSONReader.StartObject ();
-            if (JSONReader.EOR) {
-                return null;
-                }
-
-			string token = JSONReader.ReadToken ();
-
-			switch (token) {
-
-				case "Delta" : {
-					Out = new Delta ();
-					Out.Deserialize (JSONReader);
-					break;
-					}
-
-				default : {
-                    break;
-					}
+        public static new Delta FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (Tagged) {
+				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				return Out as Delta;
 				}
-			JSONReader.EndObject ();
-
-			return Out;
+		    var Result = new Delta ();
+			Result.Deserialize (JSONReader);
+			return Result;
 			}
-
 
         /// <summary>
         /// Having read a tag, process the corresponding value data.
@@ -926,15 +671,19 @@ namespace Goedel.Persistence {
         /// </summary>
 
 		public virtual string						Term  {get; set;}
-
-        /// <summary>
-        /// Tag identifying this class.
+		
+		/// <summary>
+        /// Tag identifying this class
         /// </summary>
-        /// <returns>The tag</returns>
-		public override string Tag () {
-			return "IndexTerm";
-			}
+		public override string _Tag { get; } = "IndexTerm";
 
+		/// <summary>
+        /// Factory method
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JSONObject _Factory () {
+			return new IndexTerm();
+			}
 
 
         /// <summary>
@@ -977,91 +726,21 @@ namespace Goedel.Persistence {
 			}
 
 
-
-        /// <summary>
-		/// Create a new instance from untagged byte input.
-		/// i.e. {... data ... }
-        /// </summary>	
-        /// <param name="_Data">The input data.</param>
-        /// <returns>The created object.</returns>		
-		public static new IndexTerm From (byte[] _Data) {
-			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
-			return From (_Input);
-			}
-
-        /// <summary>
-		/// Create a new instance from untagged string input.
-		/// i.e. {... data ... }
-        /// </summary>	
-        /// <param name="_Input">The input data.</param>
-        /// <returns>The created object.</returns>				
-		public static new IndexTerm From (string _Input) {
-			StringReader _Reader = new StringReader (_Input);
-            JSONReader JSONReader = new JSONReader (_Reader);
-			var Result = new IndexTerm ();
-			Result.Deserialize (JSONReader);
-			return Result;
-			// return new IndexTerm (JSONReader);
-			}
-
-        /// <summary>
-		/// Create a new instance from tagged byte input.
-		/// i.e. { "IndexTerm" : {... data ... } }
-        /// </summary>	
-        /// <param name="_Data">The input data.</param>
-        /// <returns>The created object.</returns>				
-		public static new IndexTerm FromTagged (byte[] _Data) {
-			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
-			return FromTagged (_Input);
-			}
-
-        /// <summary>
-        /// Create a new instance from tagged string input.
-		/// i.e. { "IndexTerm" : {... data ... } }
-        /// </summary>
-        /// <param name="_Input">The input data.</param>
-        /// <returns>The created object.</returns>		
-		public static new IndexTerm FromTagged (string _Input) {
-			//IndexTerm _Result;
-			//Deserialize (_Input, out _Result);
-			StringReader _Reader = new StringReader (_Input);
-            JSONReader JSONReader = new JSONReader (_Reader);
-			return FromTagged (JSONReader) ;
-			}
-
-
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader">The input stream</param>
+		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new IndexTerm  FromTagged (JSONReader JSONReader) {
-			IndexTerm Out = null;
-
-			JSONReader.StartObject ();
-            if (JSONReader.EOR) {
-                return null;
-                }
-
-			string token = JSONReader.ReadToken ();
-
-			switch (token) {
-
-				case "IndexTerm" : {
-					Out = new IndexTerm ();
-					Out.Deserialize (JSONReader);
-					break;
-					}
-
-				default : {
-                    break;
-					}
+        public static new IndexTerm FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (Tagged) {
+				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				return Out as IndexTerm;
 				}
-			JSONReader.EndObject ();
-
-			return Out;
+		    var Result = new IndexTerm ();
+			Result.Deserialize (JSONReader);
+			return Result;
 			}
-
 
         /// <summary>
         /// Having read a tag, process the corresponding value data.
@@ -1100,15 +779,19 @@ namespace Goedel.Persistence {
         /// </summary>
 
 		public virtual byte[]						Digest  {get; set;}
-
-        /// <summary>
-        /// Tag identifying this class.
+		
+		/// <summary>
+        /// Tag identifying this class
         /// </summary>
-        /// <returns>The tag</returns>
-		public override string Tag () {
-			return "Final";
-			}
+		public override string _Tag { get; } = "Final";
 
+		/// <summary>
+        /// Factory method
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JSONObject _Factory () {
+			return new Final();
+			}
 
 
         /// <summary>
@@ -1146,91 +829,21 @@ namespace Goedel.Persistence {
 			}
 
 
-
-        /// <summary>
-		/// Create a new instance from untagged byte input.
-		/// i.e. {... data ... }
-        /// </summary>	
-        /// <param name="_Data">The input data.</param>
-        /// <returns>The created object.</returns>		
-		public static new Final From (byte[] _Data) {
-			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
-			return From (_Input);
-			}
-
-        /// <summary>
-		/// Create a new instance from untagged string input.
-		/// i.e. {... data ... }
-        /// </summary>	
-        /// <param name="_Input">The input data.</param>
-        /// <returns>The created object.</returns>				
-		public static new Final From (string _Input) {
-			StringReader _Reader = new StringReader (_Input);
-            JSONReader JSONReader = new JSONReader (_Reader);
-			var Result = new Final ();
-			Result.Deserialize (JSONReader);
-			return Result;
-			// return new Final (JSONReader);
-			}
-
-        /// <summary>
-		/// Create a new instance from tagged byte input.
-		/// i.e. { "Final" : {... data ... } }
-        /// </summary>	
-        /// <param name="_Data">The input data.</param>
-        /// <returns>The created object.</returns>				
-		public static new Final FromTagged (byte[] _Data) {
-			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
-			return FromTagged (_Input);
-			}
-
-        /// <summary>
-        /// Create a new instance from tagged string input.
-		/// i.e. { "Final" : {... data ... } }
-        /// </summary>
-        /// <param name="_Input">The input data.</param>
-        /// <returns>The created object.</returns>		
-		public static new Final FromTagged (string _Input) {
-			//Final _Result;
-			//Deserialize (_Input, out _Result);
-			StringReader _Reader = new StringReader (_Input);
-            JSONReader JSONReader = new JSONReader (_Reader);
-			return FromTagged (JSONReader) ;
-			}
-
-
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader">The input stream</param>
+		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new Final  FromTagged (JSONReader JSONReader) {
-			Final Out = null;
-
-			JSONReader.StartObject ();
-            if (JSONReader.EOR) {
-                return null;
-                }
-
-			string token = JSONReader.ReadToken ();
-
-			switch (token) {
-
-				case "Final" : {
-					Out = new Final ();
-					Out.Deserialize (JSONReader);
-					break;
-					}
-
-				default : {
-                    break;
-					}
+        public static new Final FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (Tagged) {
+				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				return Out as Final;
 				}
-			JSONReader.EndObject ();
-
-			return Out;
+		    var Result = new Final ();
+			Result.Deserialize (JSONReader);
+			return Result;
 			}
-
 
         /// <summary>
         /// Having read a tag, process the corresponding value data.
@@ -1265,15 +878,19 @@ namespace Goedel.Persistence {
         /// </summary>
 
 		public virtual List<IndexIndex>				Indexes  {get; set;}
-
-        /// <summary>
-        /// Tag identifying this class.
+		
+		/// <summary>
+        /// Tag identifying this class
         /// </summary>
-        /// <returns>The tag</returns>
-		public override string Tag () {
-			return "Terminal";
-			}
+		public override string _Tag { get; } = "Terminal";
 
+		/// <summary>
+        /// Factory method
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JSONObject _Factory () {
+			return new Terminal();
+			}
 
 
         /// <summary>
@@ -1323,91 +940,21 @@ namespace Goedel.Persistence {
 			}
 
 
-
-        /// <summary>
-		/// Create a new instance from untagged byte input.
-		/// i.e. {... data ... }
-        /// </summary>	
-        /// <param name="_Data">The input data.</param>
-        /// <returns>The created object.</returns>		
-		public static new Terminal From (byte[] _Data) {
-			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
-			return From (_Input);
-			}
-
-        /// <summary>
-		/// Create a new instance from untagged string input.
-		/// i.e. {... data ... }
-        /// </summary>	
-        /// <param name="_Input">The input data.</param>
-        /// <returns>The created object.</returns>				
-		public static new Terminal From (string _Input) {
-			StringReader _Reader = new StringReader (_Input);
-            JSONReader JSONReader = new JSONReader (_Reader);
-			var Result = new Terminal ();
-			Result.Deserialize (JSONReader);
-			return Result;
-			// return new Terminal (JSONReader);
-			}
-
-        /// <summary>
-		/// Create a new instance from tagged byte input.
-		/// i.e. { "Terminal" : {... data ... } }
-        /// </summary>	
-        /// <param name="_Data">The input data.</param>
-        /// <returns>The created object.</returns>				
-		public static new Terminal FromTagged (byte[] _Data) {
-			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
-			return FromTagged (_Input);
-			}
-
-        /// <summary>
-        /// Create a new instance from tagged string input.
-		/// i.e. { "Terminal" : {... data ... } }
-        /// </summary>
-        /// <param name="_Input">The input data.</param>
-        /// <returns>The created object.</returns>		
-		public static new Terminal FromTagged (string _Input) {
-			//Terminal _Result;
-			//Deserialize (_Input, out _Result);
-			StringReader _Reader = new StringReader (_Input);
-            JSONReader JSONReader = new JSONReader (_Reader);
-			return FromTagged (JSONReader) ;
-			}
-
-
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader">The input stream</param>
+		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new Terminal  FromTagged (JSONReader JSONReader) {
-			Terminal Out = null;
-
-			JSONReader.StartObject ();
-            if (JSONReader.EOR) {
-                return null;
-                }
-
-			string token = JSONReader.ReadToken ();
-
-			switch (token) {
-
-				case "Terminal" : {
-					Out = new Terminal ();
-					Out.Deserialize (JSONReader);
-					break;
-					}
-
-				default : {
-                    break;
-					}
+        public static new Terminal FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (Tagged) {
+				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				return Out as Terminal;
 				}
-			JSONReader.EndObject ();
-
-			return Out;
+		    var Result = new Terminal ();
+			Result.Deserialize (JSONReader);
+			return Result;
 			}
-
 
         /// <summary>
         /// Having read a tag, process the corresponding value data.
@@ -1461,15 +1008,19 @@ namespace Goedel.Persistence {
 			get {return _Offset;}
 			set {_Offset = value; __Offset = true; }
 			}
-
-        /// <summary>
-        /// Tag identifying this class.
+		
+		/// <summary>
+        /// Tag identifying this class
         /// </summary>
-        /// <returns>The tag</returns>
-		public override string Tag () {
-			return "IndexIndex";
-			}
+		public override string _Tag { get; } = "IndexIndex";
 
+		/// <summary>
+        /// Factory method
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JSONObject _Factory () {
+			return new IndexIndex();
+			}
 
 
         /// <summary>
@@ -1512,91 +1063,21 @@ namespace Goedel.Persistence {
 			}
 
 
-
-        /// <summary>
-		/// Create a new instance from untagged byte input.
-		/// i.e. {... data ... }
-        /// </summary>	
-        /// <param name="_Data">The input data.</param>
-        /// <returns>The created object.</returns>		
-		public static new IndexIndex From (byte[] _Data) {
-			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
-			return From (_Input);
-			}
-
-        /// <summary>
-		/// Create a new instance from untagged string input.
-		/// i.e. {... data ... }
-        /// </summary>	
-        /// <param name="_Input">The input data.</param>
-        /// <returns>The created object.</returns>				
-		public static new IndexIndex From (string _Input) {
-			StringReader _Reader = new StringReader (_Input);
-            JSONReader JSONReader = new JSONReader (_Reader);
-			var Result = new IndexIndex ();
-			Result.Deserialize (JSONReader);
-			return Result;
-			// return new IndexIndex (JSONReader);
-			}
-
-        /// <summary>
-		/// Create a new instance from tagged byte input.
-		/// i.e. { "IndexIndex" : {... data ... } }
-        /// </summary>	
-        /// <param name="_Data">The input data.</param>
-        /// <returns>The created object.</returns>				
-		public static new IndexIndex FromTagged (byte[] _Data) {
-			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
-			return FromTagged (_Input);
-			}
-
-        /// <summary>
-        /// Create a new instance from tagged string input.
-		/// i.e. { "IndexIndex" : {... data ... } }
-        /// </summary>
-        /// <param name="_Input">The input data.</param>
-        /// <returns>The created object.</returns>		
-		public static new IndexIndex FromTagged (string _Input) {
-			//IndexIndex _Result;
-			//Deserialize (_Input, out _Result);
-			StringReader _Reader = new StringReader (_Input);
-            JSONReader JSONReader = new JSONReader (_Reader);
-			return FromTagged (JSONReader) ;
-			}
-
-
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader">The input stream</param>
+		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new IndexIndex  FromTagged (JSONReader JSONReader) {
-			IndexIndex Out = null;
-
-			JSONReader.StartObject ();
-            if (JSONReader.EOR) {
-                return null;
-                }
-
-			string token = JSONReader.ReadToken ();
-
-			switch (token) {
-
-				case "IndexIndex" : {
-					Out = new IndexIndex ();
-					Out.Deserialize (JSONReader);
-					break;
-					}
-
-				default : {
-                    break;
-					}
+        public static new IndexIndex FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (Tagged) {
+				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				return Out as IndexIndex;
 				}
-			JSONReader.EndObject ();
-
-			return Out;
+		    var Result = new IndexIndex ();
+			Result.Deserialize (JSONReader);
+			return Result;
 			}
-
 
         /// <summary>
         /// Having read a tag, process the corresponding value data.
@@ -1640,15 +1121,19 @@ namespace Goedel.Persistence {
         /// </summary>
 
 		public virtual List<IndexEntry>				Entries  {get; set;}
-
-        /// <summary>
-        /// Tag identifying this class.
+		
+		/// <summary>
+        /// Tag identifying this class
         /// </summary>
-        /// <returns>The tag</returns>
-		public override string Tag () {
-			return "Index";
-			}
+		public override string _Tag { get; } = "Index";
 
+		/// <summary>
+        /// Factory method
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JSONObject _Factory () {
+			return new Index();
+			}
 
 
         /// <summary>
@@ -1703,91 +1188,21 @@ namespace Goedel.Persistence {
 			}
 
 
-
-        /// <summary>
-		/// Create a new instance from untagged byte input.
-		/// i.e. {... data ... }
-        /// </summary>	
-        /// <param name="_Data">The input data.</param>
-        /// <returns>The created object.</returns>		
-		public static new Index From (byte[] _Data) {
-			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
-			return From (_Input);
-			}
-
-        /// <summary>
-		/// Create a new instance from untagged string input.
-		/// i.e. {... data ... }
-        /// </summary>	
-        /// <param name="_Input">The input data.</param>
-        /// <returns>The created object.</returns>				
-		public static new Index From (string _Input) {
-			StringReader _Reader = new StringReader (_Input);
-            JSONReader JSONReader = new JSONReader (_Reader);
-			var Result = new Index ();
-			Result.Deserialize (JSONReader);
-			return Result;
-			// return new Index (JSONReader);
-			}
-
-        /// <summary>
-		/// Create a new instance from tagged byte input.
-		/// i.e. { "Index" : {... data ... } }
-        /// </summary>	
-        /// <param name="_Data">The input data.</param>
-        /// <returns>The created object.</returns>				
-		public static new Index FromTagged (byte[] _Data) {
-			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
-			return FromTagged (_Input);
-			}
-
-        /// <summary>
-        /// Create a new instance from tagged string input.
-		/// i.e. { "Index" : {... data ... } }
-        /// </summary>
-        /// <param name="_Input">The input data.</param>
-        /// <returns>The created object.</returns>		
-		public static new Index FromTagged (string _Input) {
-			//Index _Result;
-			//Deserialize (_Input, out _Result);
-			StringReader _Reader = new StringReader (_Input);
-            JSONReader JSONReader = new JSONReader (_Reader);
-			return FromTagged (JSONReader) ;
-			}
-
-
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader">The input stream</param>
+		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new Index  FromTagged (JSONReader JSONReader) {
-			Index Out = null;
-
-			JSONReader.StartObject ();
-            if (JSONReader.EOR) {
-                return null;
-                }
-
-			string token = JSONReader.ReadToken ();
-
-			switch (token) {
-
-				case "Index" : {
-					Out = new Index ();
-					Out.Deserialize (JSONReader);
-					break;
-					}
-
-				default : {
-                    break;
-					}
+        public static new Index FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (Tagged) {
+				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				return Out as Index;
 				}
-			JSONReader.EndObject ();
-
-			return Out;
+		    var Result = new Index ();
+			Result.Deserialize (JSONReader);
+			return Result;
 			}
-
 
         /// <summary>
         /// Having read a tag, process the corresponding value data.
@@ -1840,15 +1255,19 @@ namespace Goedel.Persistence {
         /// </summary>
 
 		public virtual List<int>				Offset  {get; set;}
-
-        /// <summary>
-        /// Tag identifying this class.
+		
+		/// <summary>
+        /// Tag identifying this class
         /// </summary>
-        /// <returns>The tag</returns>
-		public override string Tag () {
-			return "IndexEntry";
-			}
+		public override string _Tag { get; } = "IndexEntry";
 
+		/// <summary>
+        /// Factory method
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JSONObject _Factory () {
+			return new IndexEntry();
+			}
 
 
         /// <summary>
@@ -1898,91 +1317,21 @@ namespace Goedel.Persistence {
 			}
 
 
-
-        /// <summary>
-		/// Create a new instance from untagged byte input.
-		/// i.e. {... data ... }
-        /// </summary>	
-        /// <param name="_Data">The input data.</param>
-        /// <returns>The created object.</returns>		
-		public static new IndexEntry From (byte[] _Data) {
-			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
-			return From (_Input);
-			}
-
-        /// <summary>
-		/// Create a new instance from untagged string input.
-		/// i.e. {... data ... }
-        /// </summary>	
-        /// <param name="_Input">The input data.</param>
-        /// <returns>The created object.</returns>				
-		public static new IndexEntry From (string _Input) {
-			StringReader _Reader = new StringReader (_Input);
-            JSONReader JSONReader = new JSONReader (_Reader);
-			var Result = new IndexEntry ();
-			Result.Deserialize (JSONReader);
-			return Result;
-			// return new IndexEntry (JSONReader);
-			}
-
-        /// <summary>
-		/// Create a new instance from tagged byte input.
-		/// i.e. { "IndexEntry" : {... data ... } }
-        /// </summary>	
-        /// <param name="_Data">The input data.</param>
-        /// <returns>The created object.</returns>				
-		public static new IndexEntry FromTagged (byte[] _Data) {
-			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
-			return FromTagged (_Input);
-			}
-
-        /// <summary>
-        /// Create a new instance from tagged string input.
-		/// i.e. { "IndexEntry" : {... data ... } }
-        /// </summary>
-        /// <param name="_Input">The input data.</param>
-        /// <returns>The created object.</returns>		
-		public static new IndexEntry FromTagged (string _Input) {
-			//IndexEntry _Result;
-			//Deserialize (_Input, out _Result);
-			StringReader _Reader = new StringReader (_Input);
-            JSONReader JSONReader = new JSONReader (_Reader);
-			return FromTagged (JSONReader) ;
-			}
-
-
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader">The input stream</param>
+		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new IndexEntry  FromTagged (JSONReader JSONReader) {
-			IndexEntry Out = null;
-
-			JSONReader.StartObject ();
-            if (JSONReader.EOR) {
-                return null;
-                }
-
-			string token = JSONReader.ReadToken ();
-
-			switch (token) {
-
-				case "IndexEntry" : {
-					Out = new IndexEntry ();
-					Out.Deserialize (JSONReader);
-					break;
-					}
-
-				default : {
-                    break;
-					}
+        public static new IndexEntry FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (Tagged) {
+				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				return Out as IndexEntry;
 				}
-			JSONReader.EndObject ();
-
-			return Out;
+		    var Result = new IndexEntry ();
+			Result.Deserialize (JSONReader);
+			return Result;
 			}
-
 
         /// <summary>
         /// Having read a tag, process the corresponding value data.

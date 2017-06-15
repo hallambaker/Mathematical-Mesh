@@ -48,59 +48,5 @@ namespace ExampleGenerator {
 
 
 
-
-
-        //public void MakeExamples () {
-        //    StartService();
-        //    //Hello();
-
-
-        //    Traces = Portal.Traces;
-
-        //    using (var Writer = new StreamWriter(Output1)) {
-        //        var ExampleGenerator = new ExampleGenerator(Writer);
-        //        ExampleGenerator.MeshExamples(this);
-        //        }
-
-        //    using (var Writer = new StreamWriter(Output2)) {
-        //        var ExampleGenerator = new ExampleGenerator(Writer);
-        //        ExampleGenerator.MeshExamplesWeb(this);
-        //        }
-        //    }
-
-
-
-        //public static string NameAccount = "alice";
-        //public static string NameService = "example.com";
-        //public readonly string AccountID = Account.ID(NameAccount, NameService);
-
-        //// Set these variables to whatever type is used in the application
-        //MeshClient MeshClient;
-        //MeshPortalTraced Portal;
-        ///// <summary>
-        ///// Start the Mesh as a direct service
-        ///// </summary>
-        //void StartService() {
-        //    // Create test Mesh
-        //    File.Delete(LogMesh);
-        //    File.Delete(LogPortal);
-
-        //    Portal = new MeshPortalTraced(NameService, LogMesh, LogPortal);
-        //    MeshPortal.Default = Portal;
-
-        //    MeshClient = new MeshClient(NameService);
-        //    }
-
-
-        //public string LabelHello = "Hello";
-        ///// <summary>
-        ///// Create a new profile for alice@example.com
-        ///// </summary>
-        //void Hello() {
-        //    Portal.Label(LabelHello);
-
-        //    var Result = RecryptClient.Hello();
-        //    }
-
         }
     }

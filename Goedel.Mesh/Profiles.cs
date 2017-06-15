@@ -79,7 +79,7 @@ namespace Goedel.Mesh {
         /// <param name="KeyDatas">Keys to set</param>
         /// <param name="ID">Identifier target.</param>
         public static void SetUnique(List<IndexTerm> KeyDatas, string ID) {
-            throw new NYI();
+            throw new Goedel.Utilities.NYI();
             }
 
         }
@@ -147,7 +147,7 @@ namespace Goedel.Mesh {
         /// <param name="Encoding">The encoding for the inner data</param>
         public virtual SignedProfile Sign(string UDF=null,  KeyPair KeyPair = null,
                         DataEncoding Encoding = DataEncoding.JSON) {
-            throw new NYI();
+            throw new Goedel.Protocol.NYI();
             }
 
         }

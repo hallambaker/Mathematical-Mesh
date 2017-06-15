@@ -79,7 +79,7 @@ namespace Test.Goedel.Mesh {
         static DeviceProfile Copy (DeviceProfile DeviceProfile) {
             var Signed = DeviceProfile.SignedDeviceProfile;
             var Text = Signed.GetBytes(true);
-            var Signed2 = SignedDeviceProfile.FromTagged(Text);
+            var Signed2 = SignedDeviceProfile.FromJSON(Text.JSONReader());
             return Signed2.DeviceProfile;
             }
 
@@ -88,7 +88,7 @@ namespace Test.Goedel.Mesh {
             var Signed1 = DeviceProfile.SignedDeviceProfile;
             Signed1.SignedData.Data = DeviceProfile.GetBytes(true);
             var Text = Signed1.GetBytes(true);
-            var Signed2 = SignedDeviceProfile.FromTagged(Text);
+            var Signed2 = SignedDeviceProfile.FromJSON(Text.JSONReader());
 
             return Signed2;
             }
@@ -97,7 +97,7 @@ namespace Test.Goedel.Mesh {
         static PersonalProfile Copy(PersonalProfile PersonalProfile) {
            var Signed = PersonalProfile.SignedPersonalProfile;
             var Text = Signed.GetBytes(true);
-            var Signed2 = SignedPersonalProfile.FromTagged(Text);
+            var Signed2 = SignedPersonalProfile.FromJSON(Text.JSONReader());
             return Signed2.PersonalProfile;
             }
 
@@ -106,7 +106,7 @@ namespace Test.Goedel.Mesh {
             var Signed1 = PersonalProfile.SignedPersonalProfile;
             Signed1.SignedData.Data = PersonalProfile.GetBytes(true);
             var Text = Signed1.GetBytes(true);
-            var Signed2 = SignedPersonalProfile.FromTagged(Text);
+            var Signed2 = SignedPersonalProfile.FromJSON(Text.JSONReader());
 
             return Signed2;
             }
@@ -115,7 +115,7 @@ namespace Test.Goedel.Mesh {
             var Signed1 = MasterProfile.SignedMasterProfile;
             Signed1.SignedData.Data = MasterProfile.GetBytes(true);
             var Text = Signed1.GetBytes(true);
-            var Signed2 = SignedMasterProfile.FromTagged(Text);
+            var Signed2 = SignedMasterProfile.FromJSON(Text.JSONReader());
 
             return Signed2;
             }
@@ -128,7 +128,7 @@ namespace Test.Goedel.Mesh {
                 PublicKeyRSA.n[0] ^= (byte)1;
                 return;
                 }
-            throw new NYI();
+            throw new Exception();
 
             }
 
@@ -234,8 +234,8 @@ namespace Test.Goedel.Mesh {
             PersonalProfile = new PersonalProfile(DeviceProfile1);
             PersonalProfile.Add(DeviceProfile2);
 
-            var SignedPersonal2 = SignedPersonalProfile.FromTagged(
-                        PersonalProfile.SignedPersonalProfile.GetBytes());
+            var SignedPersonal2 = SignedPersonalProfile.FromJSON(
+                        PersonalProfile.SignedPersonalProfile.GetBytes().JSONReader());
 
 
             UT.Assert.IsTrue(PersonalProfile.Devices.Count == 2);

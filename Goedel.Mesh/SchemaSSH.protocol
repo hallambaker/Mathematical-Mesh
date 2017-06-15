@@ -18,10 +18,7 @@
 			|a very large number of hosts they are accessing will need some means
 			|of avoiding combinatorial explosion.
 		Inherits ApplicationProfile
-		Struct SSHDevicePublic Devices
-			Multiple
-			Description
-				|Public device keys
+
 
 	Structure SSHDevicePublic
 		Description
@@ -30,6 +27,7 @@
 		Struct PublicKey PublicKey
 			Description 
 				|Public authentication key for a device.
+
 
 	Structure SSHProfilePrivate
 		Description 
@@ -49,15 +47,16 @@
 			|Describe a host connected to the SSH profile. This is a machine 
 			|that the user will access using the credential.
 		Inherits Entry
-		Struct Connection HostConnection
-			Multiple
-			Description 
-				|Describe the means of accessing the host (DNS, IP, account, etc.).
-		Struct PublicKey HostKeys
-			Multiple
-			Description 
-				|The public keys that are to be added to the host when this profile is
-				|conected.
+
+		String Address
+			Description
+				|The DNS address or IP address of the host
+		String AlgorithmID
+			Description
+				|The SSH Algorithm identifier
+		String PublicKey
+			Description
+				|The Base64 encoded public key
 
 	Structure SSHDevicePrivate
 		Description 
@@ -67,4 +66,6 @@
 			Description
 				|A private keypair or keypair contribution created for exclusive use 
 				|of this device.
-
+		String KeyUDF
+			Description
+				|Fingerprint of device that this key corresponds to.

@@ -8,26 +8,23 @@ using Goedel.Utilities;
 using Goedel.Protocol;
 using Goedel.Mesh;
 using Goedel.Mesh.Platform;
+using Goedel.Mesh.Server;
 
 namespace Goedel.Mesh.MeshMan {
 
     public partial class Shell {
 
-        static RegistrationMachine _Machine = null;
-        static RegistrationMachine Machine {
-            get {
-                if (_Machine == null) {
-                    _Machine = RegistrationMachine.Current;
-                    }
-                return _Machine; }
+        public List<ConnectionRequest> PendingRequests;
+        RegistrationMachine Machine {
+            get => MeshCatalog.Machine;
             }
 
         string PortalID;
         string AccountID;
 
-        MeshClient MeshClient;
+        public MeshClient MeshClient;
 
-        MeshCatalog MeshCatalog;
+        public MeshCatalog MeshCatalog;
 
         public Shell () {
             MeshCatalog = new MeshCatalog();
@@ -112,86 +109,6 @@ namespace Goedel.Mesh.MeshMan {
             catch (Exception Exception) {
                 Error(Exception);
                 }
-            }
-
-
-        /// <summary>
-        /// Create a new personal profile
-        /// </summary>
-        /// <param name="Options">Command line parameters</param>
-        public override void Personal(Personal Options) {
-            SetReporting(Options.Report, Options.Verbose);
-
-            var Address = Options.Portal.Value;
-            Assert.True((Address != null & Address != ""), NoPortalAccount.Throw);
-
-            RegistrationDevice DeviceRegistration;
-
-
-            // Hack: Should rejig command parsing to return presence or absence of flags.
-            
-            // Feature: Should allow user to specify if device profile should be the default.
-
-            if (Options.DeviceUDF.Value != null) {
-                // Fingerprint specified so must use existing.
-                DeviceRegistration = MeshCatalog.GetDevice(Options.DeviceUDF.Value);
-                }
-            else if (Options.DeviceID.Value == null | Options.DeviceNew.Value) {
-                // Either no Device ID specified or the new flag specified so create new.
-                var DeviceID = Options.DeviceID.Value ?? "Default";     // Feature: Pull from platform
-                var DeviceDescription = Options.DeviceDescription.Value ?? "Unknown";  // Feature: Pull from platform
-                DeviceRegistration = MeshCatalog.CreateDevice(DeviceID, DeviceDescription, true);
-                }
-            else {
-                // DeviceID specified without new so look for existing profile.
-                DeviceRegistration = MeshCatalog.GetDevice(DeviceID: Options.DeviceID.Value);
-                }
-
-            var PersonalProfile = new PersonalProfile(DeviceRegistration.DeviceProfile);
-
-            var Registration = MeshCatalog.CreateAccount(Address, PersonalProfile);
-
-            Report("Created new personal profile {0}", Registration.UDF);
-            Report("Profile registered to {0}", Address);
-
-            }
-
-
-
-        /// <summary>
-        /// List pending connection requests
-        /// </summary>
-        /// <param name="Options">Command line parameters</param>
-        public override void Pending(Pending Options) {
-            SetReporting(Options.Report, Options.Verbose);
-            GetProfile(Options.Portal, Options.UDF);
-            GetMeshClient();
-
-            throw new NYI();
-            }
-
-        /// <summary>
-        /// Accept a connection request
-        /// </summary>
-        /// <param name="Options">Command line parameters</param>
-        public override void Accept(Accept Options) {
-            SetReporting(Options.Report, Options.Verbose);
-            GetProfile(Options.Portal, Options.UDF);
-            GetMeshClient();
-
-            throw new NYI();
-            }
-
-        /// <summary>
-        /// Complete processing of a connection request
-        /// </summary>
-        /// <param name="Options">Command line parameters</param>
-        public override void Complete(Complete Options) {
-            SetReporting(Options.Report, Options.Verbose);
-            GetProfile(Options.Portal, Options.UDF);
-            GetMeshClient();
-
-            throw new NYI();
             }
 
 

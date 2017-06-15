@@ -337,54 +337,54 @@ meshman_windows/$(TARGETBIN)/meshman_windows.exe : always
 ! echo "*** Directory meshman_windows" >&2
 ! make NORECURSE=true -C meshman_windows
 
-# Project : meshman_windows.exe
+# Project : meshman_linux.exe
 # Item :  meshman_linux
-# Output :     meshman_linux/$(TARGETEXE)/meshman_windows.exe
+# Output :     meshman_linux/$(TARGETEXE)/meshman_linux.exe
 
-all : meshman_linux/$(TARGETBIN)/meshman_windows.exe
+all : meshman_linux/$(TARGETBIN)/meshman_linux.exe
 
-meshman_linux/$(TARGETBIN)/meshman_windows.exe : Goedel.Mesh.Client/$(TARGETBIN)/Goedel.Mesh.Client.dll
+meshman_linux/$(TARGETBIN)/meshman_linux.exe : Goedel.Mesh.Client/$(TARGETBIN)/Goedel.Mesh.Client.dll
 
-meshman_linux/$(TARGETBIN)/meshman_windows.exe : Goedel.Mesh.Platform.Windows/$(TARGETBIN)/Goedel.Mesh.Platform.Windows.dll
+meshman_linux/$(TARGETBIN)/meshman_linux.exe : Goedel.Mesh.Platform.Windows/$(TARGETBIN)/Goedel.Mesh.Platform.Windows.dll
 
-meshman_linux/$(TARGETBIN)/meshman_windows.exe : Goedel.Mesh.Platform/$(TARGETBIN)/Goedel.Mesh.Platform.dll
+meshman_linux/$(TARGETBIN)/meshman_linux.exe : Goedel.Mesh.Platform/$(TARGETBIN)/Goedel.Mesh.Platform.dll
 
-meshman_linux/$(TARGETBIN)/meshman_windows.exe : Goedel.Mesh.Server/$(TARGETBIN)/Goedel.Mesh.Server.dll
+meshman_linux/$(TARGETBIN)/meshman_linux.exe : Goedel.Mesh.Server/$(TARGETBIN)/Goedel.Mesh.Server.dll
 
-meshman_linux/$(TARGETBIN)/meshman_windows.exe : Goedel.Mesh.Shell.MeshMan/$(TARGETBIN)/Goedel.Mesh.Shell.MeshMan.dll
+meshman_linux/$(TARGETBIN)/meshman_linux.exe : Goedel.Mesh.Shell.MeshMan/$(TARGETBIN)/Goedel.Mesh.Shell.MeshMan.dll
 
-meshman_linux/$(TARGETBIN)/meshman_windows.exe : Goedel.Mesh/$(TARGETBIN)/Goedel.Mesh.dll
+meshman_linux/$(TARGETBIN)/meshman_linux.exe : Goedel.Mesh/$(TARGETBIN)/Goedel.Mesh.dll
 
-meshman_linux/$(TARGETBIN)/meshman_windows.exe : Goedel.Persistence/$(TARGETBIN)/Goedel.Persistence.dll
+meshman_linux/$(TARGETBIN)/meshman_linux.exe : Goedel.Persistence/$(TARGETBIN)/Goedel.Persistence.dll
 
 
-meshman_linux/$(TARGETBIN)/meshman_windows.exe : always
+meshman_linux/$(TARGETBIN)/meshman_linux.exe : always
 ! echo "" >&2
 ! echo "*** Directory meshman_linux" >&2
 ! make NORECURSE=true -C meshman_linux
 
-# Project : meshman_windows.exe
+# Project : meshman_osx.exe
 # Item :  meshman_osx
-# Output :     meshman_osx/$(TARGETEXE)/meshman_windows.exe
+# Output :     meshman_osx/$(TARGETEXE)/meshman_osx.exe
 
-all : meshman_osx/$(TARGETBIN)/meshman_windows.exe
+all : meshman_osx/$(TARGETBIN)/meshman_osx.exe
 
-meshman_osx/$(TARGETBIN)/meshman_windows.exe : Goedel.Mesh.Client/$(TARGETBIN)/Goedel.Mesh.Client.dll
+meshman_osx/$(TARGETBIN)/meshman_osx.exe : Goedel.Mesh.Client/$(TARGETBIN)/Goedel.Mesh.Client.dll
 
-meshman_osx/$(TARGETBIN)/meshman_windows.exe : Goedel.Mesh.Platform.Windows/$(TARGETBIN)/Goedel.Mesh.Platform.Windows.dll
+meshman_osx/$(TARGETBIN)/meshman_osx.exe : Goedel.Mesh.Platform.Windows/$(TARGETBIN)/Goedel.Mesh.Platform.Windows.dll
 
-meshman_osx/$(TARGETBIN)/meshman_windows.exe : Goedel.Mesh.Platform/$(TARGETBIN)/Goedel.Mesh.Platform.dll
+meshman_osx/$(TARGETBIN)/meshman_osx.exe : Goedel.Mesh.Platform/$(TARGETBIN)/Goedel.Mesh.Platform.dll
 
-meshman_osx/$(TARGETBIN)/meshman_windows.exe : Goedel.Mesh.Server/$(TARGETBIN)/Goedel.Mesh.Server.dll
+meshman_osx/$(TARGETBIN)/meshman_osx.exe : Goedel.Mesh.Server/$(TARGETBIN)/Goedel.Mesh.Server.dll
 
-meshman_osx/$(TARGETBIN)/meshman_windows.exe : Goedel.Mesh.Shell.MeshMan/$(TARGETBIN)/Goedel.Mesh.Shell.MeshMan.dll
+meshman_osx/$(TARGETBIN)/meshman_osx.exe : Goedel.Mesh.Shell.MeshMan/$(TARGETBIN)/Goedel.Mesh.Shell.MeshMan.dll
 
-meshman_osx/$(TARGETBIN)/meshman_windows.exe : Goedel.Mesh/$(TARGETBIN)/Goedel.Mesh.dll
+meshman_osx/$(TARGETBIN)/meshman_osx.exe : Goedel.Mesh/$(TARGETBIN)/Goedel.Mesh.dll
 
-meshman_osx/$(TARGETBIN)/meshman_windows.exe : Goedel.Persistence/$(TARGETBIN)/Goedel.Persistence.dll
+meshman_osx/$(TARGETBIN)/meshman_osx.exe : Goedel.Persistence/$(TARGETBIN)/Goedel.Persistence.dll
 
 
-meshman_osx/$(TARGETBIN)/meshman_windows.exe : always
+meshman_osx/$(TARGETBIN)/meshman_osx.exe : always
 ! echo "" >&2
 ! echo "*** Directory meshman_osx" >&2
 ! make NORECURSE=true -C meshman_osx

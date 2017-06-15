@@ -26,6 +26,7 @@ using System.Linq;
 using System.IO;
 using Goedel.Utilities;
 using Goedel.Mesh;
+using Goedel.Mesh.Server;
 
 namespace Goedel.Mesh.Platform {
 
@@ -73,39 +74,23 @@ namespace Goedel.Mesh.Platform {
         /// The Device profile
         /// </summary>
         public SignedApplicationProfile SignedApplicationProfile {
-            get {
-                _SignedApplicationProfile = _SignedApplicationProfile ?? 
-                    _ApplicationProfile.SignedApplicationProfile;
-                return _SignedApplicationProfile;
-                }
-            set {
-                _SignedApplicationProfile = value;
-                _ApplicationProfile = _SignedApplicationProfile.ApplicationProfile;
-                }  }
+            get => ApplicationProfile.SignedApplicationProfile;
+            set => ApplicationProfile = value.ApplicationProfile;
+                } 
 
         /// <summary>
         /// The most recent cached profile data, if available.
         /// </summary>
-        public  ApplicationProfile ApplicationProfile {
-            get => _ApplicationProfile; 
-            set {
-                _ApplicationProfile = value;
-                }
-            }
-
-
-        SignedApplicationProfile _SignedApplicationProfile;
-        ApplicationProfile _ApplicationProfile;
+        public  ApplicationProfile ApplicationProfile { get; set; }
 
         /// <summary>
         /// The profile fingerprint
         /// </summary>
-        public override string UDF { get => SignedApplicationProfile?.UDF; }
+        public override string UDF { get => ApplicationProfile?.UDF; }
 
         public void AddDevice (
                     DeviceProfile DeviceProfile,
                     bool Administration = false) {
-            //ApplicationProfileEntry.AddDevice(DeviceProfile, Administration);
             ApplicationProfile.AddDevice(DeviceProfile, Administration);
             }
 

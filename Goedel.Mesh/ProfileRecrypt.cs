@@ -38,31 +38,11 @@ namespace Goedel.Mesh {
     public partial class RecryptProfile : ApplicationProfile {
 
         /// <summary>
-        /// The public type tag as a static element for efficiency
-        /// </summary>
-        public static string TypeTag { get => "SSHProfile"; } 
-
-        private SSHProfilePrivate _Private;
-
-        /// <summary>
         /// The portion of the profile that is encrypted in the mesh.
         /// </summary>
-        public SSHProfilePrivate Private {
-            get {
-                if (_Private == null) {
-                    var Plaintext = DecryptPrivate();
-                    _Private = SSHProfilePrivate.FromTagged(Plaintext);
-                    }
-                return _Private;
-                }
-            }
-
-        /// <summary>
-        /// Returns the private profile as a block of JSON encoded bytes ready for
-        /// encryption.
-        /// </summary>
-        protected override byte[] GetPrivateData {
-            get => Private.GetBytes();
+        public RecryptProfilePrivate Private {
+            get => ApplicationProfilePrivate as RecryptProfilePrivate;
+            set => ApplicationProfilePrivate = value;
             }
 
         /// <summary>
@@ -71,7 +51,7 @@ namespace Goedel.Mesh {
         /// <param name="MakePrivate">If true, a private profile will be created.</param>
         public RecryptProfile(bool MakePrivate=false) {
             if (MakePrivate) {
-                _Private = new SSHProfilePrivate();
+                Private = new RecryptProfilePrivate();
                 }
             }
 
@@ -87,62 +67,6 @@ namespace Goedel.Mesh {
             return SignedProfile.Profile as RecryptProfile;
             }
 
-        ///// <summary>
-        ///// Convenience function that converts a generic Signed Profile returned
-        ///// by the Mesh to a PasswordProfile.
-        ///// </summary>
-        ///// <param name="SignedProfile">Generic signed profile</param>
-        ///// <param name="PersonalProfile">The personal profile to link the Password Profile to.</param>
-        ///// <returns>Inner PasswordProfile if the Signed Profile contains one,
-        ///// otherwise null.</returns>
-        //public static RecryptProfile Get(SignedProfile SignedProfile,
-        //            PersonalProfile PersonalProfile) {
-        //    var Result = SignedProfile.Profile as RecryptProfile;
-
-        //    Assert.NotNull(Result, NotValidProfile.Throw);
-
-        //    Result.Link(PersonalProfile);
-        //    return (Result);
-        //    }
-
-
-
-        /// <summary>
-        /// Add the specified device to the linked personal profile and 
-        /// create any device specific entries in the private profile.
-        /// </summary>
-        /// <param name="DeviceProfile">The device to add.</param>
-        /// <param name="Administration">If true, enroll as an administration device.</param>
-        /// <param name="ApplicationDevicePublic">Per device public data,  if required.</param>
-        public override void AddDevice(
-                    DeviceProfile DeviceProfile,
-                    bool Administration = false,
-                    ApplicationDevicePublic ApplicationDevicePublic = null) {
-            if (ApplicationDevicePublic == null) {
-
-                ApplicationDevicePublic = CreateDeviceProfiles(DeviceProfile, out var ApplicationDevicePrivate);
-
-                if (ApplicationDevicePrivate != null) {
-                    var DevicePrivateBytes = ApplicationDevicePrivate.GetBytes();
-
-                    var DeviceEncrypt = new JoseWebEncryption(DevicePrivateBytes);
-                    DeviceEncrypt.AddRecipient(DeviceProfile.DeviceEncryptiontionKey.KeyPair);
-                    DevicePrivate = DevicePrivate ?? new List<JoseWebEncryption>();
-                    DevicePrivate.Add(DeviceEncrypt);
-                    }
-
-                }
-
-            switch (ApplicationDevicePublic) {
-                case RecryptDevicePublic RecryptDevicePublic: {
-                    Devices = Devices ?? new List<RecryptDevicePublic>();
-                    Devices.Add(RecryptDevicePublic);
-                    break;
-                    }
-                }
-
-            ApplicationProfileEntry.AddDevice(DeviceProfile, Administration);
-            }
 
         /// <summary>
         /// Create the public (and private) profiles for a device. This may be called by either
@@ -182,15 +106,5 @@ namespace Goedel.Mesh {
         }
 
 
-
-
-    public partial class SSHProfilePrivate {
-        ///// <summary>
-        ///// Initializer
-        ///// </summary>
-        //protected override void _Initialize () {
-        //    HostEntries = new List<HostEntry>();
-        //    }
-        }
 
     }

@@ -12,7 +12,7 @@
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
-    <AssemblyVersion>1.0.0.128</AssemblyVersion>
+    <AssemblyVersion>1.0.0.137</AssemblyVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -35,51 +35,6 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Goedel.ASN">
-      <HintPath>..\..\Library\Goedel.ASN.dll</HintPath>
-    </Reference>
-    <Reference Include="Goedel.Command">
-      <HintPath>..\..\Library\Goedel.Command.dll</HintPath>
-    </Reference>
-    <Reference Include="Goedel.Cryptography">
-      <HintPath>..\..\Library\Goedel.Cryptography.dll</HintPath>
-    </Reference>
-    <Reference Include="Goedel.Cryptography.Framework">
-      <HintPath>..\..\Library\Goedel.Cryptography.Framework.dll</HintPath>
-    </Reference>
-    <Reference Include="Goedel.Cryptography.Jose">
-      <HintPath>..\..\Library\Goedel.Cryptography.Jose.dll</HintPath>
-    </Reference>
-    <Reference Include="Goedel.Cryptography.KeyFile">
-      <HintPath>..\..\Library\Goedel.Cryptography.KeyFile.dll</HintPath>
-    </Reference>
-    <Reference Include="Goedel.Cryptography.Windows">
-      <HintPath>..\..\Library\Goedel.Cryptography.Windows.dll</HintPath>
-    </Reference>
-    <Reference Include="Goedel.FSR">
-      <HintPath>..\..\Library\Goedel.FSR.dll</HintPath>
-    </Reference>
-    <Reference Include="Goedel.IO">
-      <HintPath>..\..\Library\Goedel.IO.dll</HintPath>
-    </Reference>
-    <Reference Include="Goedel.Platform">
-      <HintPath>..\..\Library\Goedel.Platform.dll</HintPath>
-    </Reference>
-    <Reference Include="Goedel.Platform.Framework">
-      <HintPath>..\..\Library\Goedel.Platform.Framework.dll</HintPath>
-    </Reference>
-    <Reference Include="Goedel.Protocol">
-      <HintPath>..\..\Library\Goedel.Protocol.dll</HintPath>
-    </Reference>
-    <Reference Include="Goedel.Protocol.Framework">
-      <HintPath>..\..\Library\Goedel.Protocol.Framework.dll</HintPath>
-    </Reference>
-    <Reference Include="Goedel.Registry">
-      <HintPath>..\..\Library\Goedel.Registry.dll</HintPath>
-    </Reference>
-    <Reference Include="Goedel.Utilities">
-      <HintPath>..\..\Library\Goedel.Utilities.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
@@ -89,6 +44,66 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\buildtools\Libraries\Goedel.ASN\Goedel.ASN.csproj">
+      <Project>{251f8ca0-9f59-4026-a203-0de006e0a1e3}</Project>
+      <Name>Goedel.ASN</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\buildtools\Libraries\Goedel.Command\Goedel.Command.csproj">
+      <Project>{e7d4d1f4-e41a-44e2-abbd-f6a9e1d3f1ac}</Project>
+      <Name>Goedel.Command</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\buildtools\Libraries\Goedel.Cryptography.Framework\Goedel.Cryptography.Framework.csproj">
+      <Project>{b12ad19f-0e50-4d1d-99de-30c63886e718}</Project>
+      <Name>Goedel.Cryptography.Framework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\buildtools\Libraries\Goedel.Cryptography.Jose\Goedel.Cryptography.Jose.csproj">
+      <Project>{b1a5a847-2d13-4142-9267-582028f93f32}</Project>
+      <Name>Goedel.Cryptography.Jose</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\buildtools\Libraries\Goedel.Cryptography.KeyFile\Goedel.Cryptography.KeyFile.csproj">
+      <Project>{73d40f24-a492-4081-b58e-b2af30762c78}</Project>
+      <Name>Goedel.Cryptography.KeyFile</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\buildtools\Libraries\Goedel.Cryptography.Windows\Goedel.Cryptography.Windows.csproj">
+      <Project>{fd1d6ce2-8a10-45a5-a473-f5517b8ab3d5}</Project>
+      <Name>Goedel.Cryptography.Windows</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\buildtools\Libraries\Goedel.Cryptography\Goedel.Cryptography.csproj">
+      <Project>{0039b613-3071-493f-a51b-fb75f7ca56c2}</Project>
+      <Name>Goedel.Cryptography</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\buildtools\Libraries\Goedel.FSR\Goedel.FSR.csproj">
+      <Project>{97b7261d-3779-4564-90a4-64a2fad01295}</Project>
+      <Name>Goedel.FSR</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\buildtools\Libraries\Goedel.IO\Goedel.IO.csproj">
+      <Project>{c4824513-f416-4ead-be82-f2df23641f6a}</Project>
+      <Name>Goedel.IO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\buildtools\Libraries\Goedel.Platform.Framework\Goedel.Platform.Framework.csproj">
+      <Project>{168a9984-6dbc-4683-9e43-c3e077066933}</Project>
+      <Name>Goedel.Platform.Framework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\buildtools\Libraries\Goedel.Platform\Goedel.Platform.csproj">
+      <Project>{b806fca3-aa82-4fd4-aa56-9d53250bda4a}</Project>
+      <Name>Goedel.Platform</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\buildtools\Libraries\Goedel.Protocol.Framework\Goedel.Protocol.Framework.csproj">
+      <Project>{c1d2c847-ee62-430c-82dc-a4bd5ab38a44}</Project>
+      <Name>Goedel.Protocol.Framework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\buildtools\Libraries\Goedel.Protocol\Goedel.Protocol.csproj">
+      <Project>{18cb2a21-48f4-4862-ae95-94efbd209ab3}</Project>
+      <Name>Goedel.Protocol</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\buildtools\Libraries\Goedel.Registry\Goedel.Registry.csproj">
+      <Project>{ebda947e-d7a9-4a93-aef1-aea9d56b9225}</Project>
+      <Name>Goedel.Registry</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\buildtools\Libraries\Goedel.Utilities\Goedel.Utilities.csproj">
+      <Project>{2b20317b-39d5-4c20-8e06-dd4bc7573a73}</Project>
+      <Name>Goedel.Utilities</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Goedel.Mesh.Client\Goedel.Mesh.Client.csproj">
       <Project>{a803fe85-50d9-4ccd-8ffc-f653a4bd73e3}</Project>
       <Name>Goedel.Mesh.Client</Name>

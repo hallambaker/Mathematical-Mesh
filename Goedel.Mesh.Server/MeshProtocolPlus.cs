@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Goedel.Protocol;
 
-namespace Goedel.Mesh {
+namespace Goedel.Mesh.Server {
 
     public partial class MeshProtocol {
 
@@ -14,24 +14,11 @@ namespace Goedel.Mesh {
     public partial class MeshResponse {
 
         /// <summary>
-        /// Numeric status return code value
+        /// Dictionary mapping tags to factory methods
         /// </summary>
-        public override int StatusCode {
-            get { return Status; }
-            set { Status = value; }
-            }
+        public new static Dictionary<string, JSONFactoryDelegate> _TagDictionary { get; set; }  =
+                MeshProtocol._TagDictionary;
 
-        /// <summary>
-        /// Description of the status code (for debugging).
-        /// </summary>
-        public override string StatusDescriptionCode {
-            get {
-                return StatusDescription;
-                }
-            set {
-                StatusDescription = value;
-                }
-            }
 
         /// <summary>
         /// Default constructor
@@ -51,13 +38,20 @@ namespace Goedel.Mesh {
             var Text = ToString();
 
             // Convert text back to an object:
-            var Result = MeshResponse.FromTagged(Text);
+            var Result = MeshResponse.FromJSON(Text.JSONReader());
 
             return Result;
             }
         }
 
     public partial class MeshRequest {
+
+        /// <summary>
+        /// Dictionary mapping tags to factory methods
+        /// </summary>
+        public static new Dictionary<string, JSONFactoryDelegate> _TagDictionary { get; set; } =
+                MeshProtocol._TagDictionary;
+
         /// <summary>
         /// Performs a deep recursive copy of the structure.
         /// </summary>
@@ -68,7 +62,7 @@ namespace Goedel.Mesh {
             var Text = ToString();
 
             // Convert text back to an object:
-            var Result = MeshRequest.FromTagged(Text);
+            var Result = MeshRequest.FromJSON(Text.JSONReader());
 
             return Result;
             }

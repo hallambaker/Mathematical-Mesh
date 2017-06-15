@@ -22,24 +22,46 @@
 
 using System.Collections.Generic;
 using Goedel.Persistence;
-
+using Goedel.Protocol;
 
 namespace Goedel.Mesh {
+    public partial class MeshItem {
+        /// <summary>
+        /// Static initializer
+        /// </summary>
+        static MeshItem () {
 
+            Append(MeshMail._TagDictionary);
+            Append(MeshConfirm._TagDictionary);
+            Append(MeshNetwork._TagDictionary);
+            Append(MeshPassword._TagDictionary);
+            Append(MeshRecrypt._TagDictionary);
+            Append(MeshSSH._TagDictionary);
+            }
+
+        static void Append (
+                 Dictionary<string, JSONFactoryDelegate> Source) {
+            foreach (var Entry in Source) {
+                _TagDictionary.Add(Entry.Key, Entry.Value);
+                }
+
+            }
+
+        }
 
     public partial class Entry  {
         /// <summary>
         /// Is true if the Entry passed validation checking.
         /// </summary>
         public virtual bool Valid {
-            get { return true; }
+            get => true;
             }
 
         /// <summary>
         /// The set of keys under which the Entry is to be cataloged.
         /// </summary>
         public virtual List<IndexTerm> Keys {
-            get { return new List<IndexTerm> (); }
+            get => new List<IndexTerm> (); 
             }
         }
 
@@ -49,7 +71,7 @@ namespace Goedel.Mesh {
         /// Is true if the Entry passed validation checking.
         /// </summary>
         public override bool Valid {
-            get { return true; }
+            get => true;
             }
         }
 
@@ -58,7 +80,7 @@ namespace Goedel.Mesh {
         /// Is true if the Entry passed validation checking.
         /// </summary>
         public override bool Valid {
-            get { return true; }
+            get => true;
             }
         }
 

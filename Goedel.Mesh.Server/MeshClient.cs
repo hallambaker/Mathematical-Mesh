@@ -27,8 +27,9 @@ using System.Collections.Generic;
 using System.Text;
 using Goedel.Protocol;
 using Goedel.Utilities;
+using Goedel.Mesh;
 
-namespace Goedel.Mesh {
+namespace Goedel.Mesh.Server {
 
     public partial class KeyValue {
 
@@ -86,19 +87,10 @@ namespace Goedel.Mesh {
         /// </summary>
         public bool Connected { get=> MeshService != null; } 
 
-        private SignedPersonalProfile _SignedPersonalProfile;
-
         /// <summary>
         /// The active personal profile (with signature).
         /// </summary>
-        public SignedPersonalProfile SignedPersonalProfile { get; set;
-            //get {
-            //    if (_SignedPersonalProfile == null) {
-            //        GetPersonalProfile();
-            //        }
-            //    return _SignedPersonalProfile;
-            //    }
-            }
+        public SignedPersonalProfile SignedPersonalProfile { get; set; }
 
         /// <summary>
         /// The active personal profile.
@@ -267,14 +259,14 @@ namespace Goedel.Mesh {
 
             var GetResponse = MeshService.Get(GetRequest);
 
-            if (GetResponse.Entries.Count == 0) { return null; }
+            if ((GetResponse.Entries == null || GetResponse.Entries.Count == 0)) { return null; }
 
-            _SignedPersonalProfile = GetResponse.Entries[0] as SignedPersonalProfile;
+            SignedPersonalProfile = GetResponse.Entries[0] as SignedPersonalProfile;
 
             if (PersonalProfile != null) {
                 PersonalProfile.DeviceProfile = SignedDeviceProfile?.DeviceProfile;
                 }
-            return _SignedPersonalProfile;
+            return SignedPersonalProfile;
             }
 
         /// <summary>
@@ -299,94 +291,41 @@ namespace Goedel.Mesh {
             return SignedApplicationProfile;
             }
 
-        ///// <summary>
-        ///// Retreive the default password profile.
-        ///// </summary>
-        ///// <returns>The password profile if found and valid, otherwise null.</returns>
-        //public PasswordProfile GetPasswordProfile() {
-        //    if (PersonalProfile == null) {
-        //        return null;
-        //        }
-
-        //    var PasswordProfileEntry = PersonalProfile.GetPasswordProfile();
-        //    if (PasswordProfileEntry == null) {
-        //        return null;
-        //        }
-
-        //    var SignedApplicationProfile = GetApplicationProfile(
-        //        PasswordProfileEntry.Identifier);
-        //    if (SignedApplicationProfile == null) {
-        //        return null;
-        //        }
-
-        //    var Result = PasswordProfile.Get(SignedApplicationProfile,
-        //            PersonalProfile);
-
-        //    return Result;
-        //    }
-
-        ///// <summary>
-        ///// Retreive the default mail profile.
-        ///// </summary>
-        ///// <returns>The mail profile if found and valid, otherwise null.</returns>
-        //public MailProfile GetMailProfile() {
-        //    if (PersonalProfile == null) {
-        //        return null;
-        //        }
-
-        //    var PasswordProfileEntry = PersonalProfile.GetMailProfile();
-        //    if (PasswordProfileEntry == null) {
-        //        return null;
-        //        }
-
-        //    var SignedApplicationProfile = GetApplicationProfile(
-        //        PasswordProfileEntry.Identifier);
-        //    if (SignedApplicationProfile == null) {
-        //        return null;
-        //        }
-
-        //    return null;
-        //    }
-
-        ///// <summary>
-        ///// Retreive the default network profile.
-        ///// </summary>
-        ///// <returns>The network profile if found and valid, otherwise null.</returns>
-        //public NetworkProfile GetNetworkProfile() {
-        //    if (PersonalProfile == null) {
-        //        return null;
-        //        }
-
-        //    var PasswordProfileEntry = PersonalProfile.GetNetworkProfile();
-        //    if (PasswordProfileEntry == null) {
-        //        return null;
-        //        }
-
-        //    var SignedApplicationProfile = GetApplicationProfile(
-        //        PasswordProfileEntry.Identifier);
-        //    if (SignedApplicationProfile == null) {
-        //        return null;
-        //        }
-
-        //    return null;
-        //    }
 
         /// <summary>
         /// Initiate a device connection request.
         /// </summary>
         /// <param name="SignedDeviceProfile">The device profile to register.</param>
+        /// <param name="DeviceData">List of application data</param>
+        /// <param name="DeviceRequest">The device request data</param>
         /// <returns>The service response.</returns>
-        public ConnectStartResponse ConnectRequest (SignedDeviceProfile SignedDeviceProfile) {
+        public ConnectStartResponse ConnectRequest (
+                            SignedDeviceProfile SignedDeviceProfile,
+                            out ConnectStartRequest DeviceRequest,
+                            List<ApplicationDevicePublic> DeviceData = null) {
             this.SignedDeviceProfile = SignedDeviceProfile;
 
-            var ConnectionRequest = new ConnectionRequest(AccountID, SignedDeviceProfile);
+            var PersonalProfile = GetPersonalProfile();
 
-            var DeviceRequest = new ConnectStartRequest() {
-                SignedRequest = ConnectionRequest.Signed,
+
+            if (DeviceData == null) {
+                DeviceData = new List<ApplicationDevicePublic>();
+
+                //NYI: Fill device data 
+                }
+
+            // Create the request 
+            var ConnectionRequest = new ConnectionRequest() {
+                ParentUDF = PersonalProfile.UDF,
+                Device = SignedDeviceProfile,
+                DeviceData = DeviceData
+                };
+
+            DeviceRequest = new ConnectStartRequest() {
+                SignedRequest = ConnectionRequest.SignedConnectionRequest,
                 AccountID = AccountID
                 };
             var DeviceResponse = MeshService.ConnectStart(DeviceRequest);
-
 
             return DeviceResponse;
             }
@@ -434,6 +373,7 @@ namespace Goedel.Mesh {
 
             var ConnectionResult = new ConnectionResult() {
                 Result = ConnectionStatus.ToString(),
+                Profile = PersonalProfile.SignedPersonalProfile,
                 Device = Device
                 };
             var SignedConnectionResult = new SignedConnectionResult(ConnectionResult,

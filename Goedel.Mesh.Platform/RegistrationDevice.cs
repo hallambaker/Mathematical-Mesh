@@ -26,6 +26,7 @@ using System.Linq;
 using System.IO;
 using Goedel.Utilities;
 using Goedel.Mesh;
+using Goedel.Mesh.Server;
 
 namespace Goedel.Mesh.Platform {
 
@@ -44,7 +45,7 @@ namespace Goedel.Mesh.Platform {
         /// </summary>
         public SignedDeviceProfile SignedDeviceProfile { get; set; }
 
-        public override RegistrationMachine RegistrationMachine { get; }
+        public override RegistrationMachine RegistrationMachine { get; set; }
 
 
         /// <summary>
@@ -70,7 +71,7 @@ namespace Goedel.Mesh.Platform {
             var SignedPersonalProfile = MeshClient.GetPersonalProfile();
             MeshClient.SignedPersonalProfile = SignedPersonalProfile;
 
-            var PendingResponse = MeshClient.ConnectRequest(SignedDeviceProfile);
+            var PendingResponse = MeshClient.ConnectRequest(SignedDeviceProfile, out var DeviceRequest);
 
             // Copy the MeshClient to the unconnected profile
             var RegisteredPersonal = RegistrationMachine.Add(SignedPersonalProfile);
@@ -90,6 +91,22 @@ namespace Goedel.Mesh.Platform {
 
         public override void Read() {
             }
+
+        public virtual bool IsDefault { get; set; } = true; // Hack: Should work out if it is default
+
+        public virtual SerializationDevice Serialize () {
+            var Result = new SerializationDevice() {
+                Profile = SignedDeviceProfile,
+                };
+
+            if (IsDefault) {
+                Result.Default = DateTime.Now;
+                }
+            return Result;
+
+            }
+
+
         }
 
     }

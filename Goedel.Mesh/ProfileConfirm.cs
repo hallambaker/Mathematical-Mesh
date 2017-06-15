@@ -37,23 +37,25 @@ namespace Goedel.Mesh {
     public partial class ConfirmProfile : ApplicationProfile {
 
         /// <summary>
-        /// The public type tag as a static element for efficiency
+        /// The public parameter entry for this particular device.
         /// </summary>
-        public static string TypeTag { get => "SSHProfile"; } 
-
-        private SSHProfilePrivate _Private;
+        public ConfirmDevicePublic ConfirmDevicePublic {
+            get => ApplicationDevicePublic as ConfirmDevicePublic;
+            }
 
         /// <summary>
         /// The portion of the profile that is encrypted in the mesh.
         /// </summary>
-        public SSHProfilePrivate Private {
-            get {
-                if (_Private == null) {
-                    var Plaintext = DecryptPrivate();
-                    _Private = SSHProfilePrivate.FromTagged(Plaintext);
-                    }
-                return _Private;
-                }
+        public ConfirmPrivate Private {
+            get => ApplicationProfilePrivate as ConfirmPrivate;
+            set => ApplicationProfilePrivate = value;
+            }
+
+        /// <summary>
+        /// The portion of the profile that is encrypted in the mesh.
+        /// </summary>
+        public ConfirmDevicePrivate DecryptedDevicePrivate {
+            get => ApplicationDevicePrivate as ConfirmDevicePrivate;
             }
 
         /// <summary>
@@ -70,49 +72,8 @@ namespace Goedel.Mesh {
         /// <param name="MakePrivate">If true, a private profile will be created.</param>
         public ConfirmProfile(bool MakePrivate=false) {
             if (MakePrivate) {
-                _Private = new SSHProfilePrivate();
+                Private = new ConfirmPrivate();
                 }
-            }
-
-
-        /// <summary>
-        /// Add the specified device to the linked personal profile and 
-        /// create any device specific entries in the private profile.
-        /// </summary>
-        /// <param name="DeviceProfile">The device to add.</param>
-        /// <param name="Administration">If true, enroll as an administration device.</param>
-        /// <param name="ApplicationDevicePublic">Per device public data,  if required.</param>
-        public override void AddDevice (DeviceProfile DeviceProfile,
-                        bool Administration = false, 
-                        ApplicationDevicePublic ApplicationDevicePublic = null) {
-            if (ApplicationDevicePublic == null) {
-
-                ApplicationDevicePublic = CreateDeviceProfiles(DeviceProfile, out var ApplicationDevicePrivate);
-
-                if (ApplicationDevicePrivate != null) {
-                    // NYI: wrap private and add to DevicePrivate
-
-                    var DevicePrivateBytes = ApplicationDevicePrivate.GetBytes();
-
-                    var DeviceEncrypt = new JoseWebEncryption(DevicePrivateBytes);
-                    DeviceEncrypt.AddRecipient(DeviceProfile.DeviceEncryptiontionKey.KeyPair);
-                    DevicePrivate = DevicePrivate ?? new List<JoseWebEncryption>();
-                    DevicePrivate.Add(DeviceEncrypt);
-                    }
-
-                }
-
-            switch (ApplicationDevicePublic) {
-                case ConfirmDevicePublic ConfirmDevicePublic: {
-                    Signature = Signature ?? new List<PublicKey>();
-                    Authentication = Authentication ?? new List<PublicKey>();
-                    Signature.Add(ConfirmDevicePublic.SignPublicKey);
-                    Authentication.Add(ConfirmDevicePublic.AuthPublicKey);
-                    break;
-                    }
-                }
-
-            ApplicationProfileEntry.AddDevice(DeviceProfile, Administration);
             }
 
         /// <summary>
@@ -152,15 +113,5 @@ namespace Goedel.Mesh {
         }
 
 
-
-
-    public partial class SSHProfilePrivate {
-        ///// <summary>
-        ///// Initializer
-        ///// </summary>
-        //protected override void _Initialize () {
-        //    HostEntries = new List<HostEntry>();
-        //    }
-        }
 
     }

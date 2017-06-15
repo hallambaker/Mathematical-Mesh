@@ -47,8 +47,24 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <returns>The tag value</returns>
 		public override string Tag () {
-			return "Portal";
+			return _Tag;
 			}
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public override string _Tag { get; } = "Portal";
+
+		/// <summary>
+        /// Dictionary mapping tags to factory methods
+        /// </summary>
+		public static Dictionary<string, JSONFactoryDelegate> _TagDictionary = 
+				new Dictionary<string, JSONFactoryDelegate> () {
+
+			{"PortalEntry", PortalEntry._Factory},
+			{"Account", Account._Factory},
+			{"AccountProfile", AccountProfile._Factory},
+			{"ConnectionsPending", ConnectionsPending._Factory}			};
 
 		/// <summary>
         /// Construct an instance from the specified tagged JSONReader stream.
@@ -56,49 +72,7 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">Input stream</param>
         /// <param name="Out">The created object</param>
         public static void Deserialize(JSONReader JSONReader, out JSONObject Out) {
-	
-			JSONReader.StartObject ();
-            if (JSONReader.EOR) {
-                Out = null;
-                return;
-                }
-
-			string token = JSONReader.ReadToken ();
-			Out = null;
-
-			switch (token) {
-
-				case "PortalEntry" : {
-					Out = null;
-					throw new Exception ("Can't create abstract type");
-					}
-
-
-				case "Account" : {
-					Out = new Account ();
-					Out.Deserialize (JSONReader);
-					break;
-					}
-
-
-				case "AccountProfile" : {
-					Out = new AccountProfile ();
-					Out.Deserialize (JSONReader);
-					break;
-					}
-
-
-				case "ConnectionsPending" : {
-					Out = new ConnectionsPending ();
-					Out.Deserialize (JSONReader);
-					break;
-					}
-
-				default : {
-					throw new Exception ("Not supported");
-					}
-				}	
-			JSONReader.EndObject ();
+			Out = JSONReader.ReadTaggedObject (_TagDictionary);
             }
 		}
 
@@ -134,15 +108,19 @@ namespace Goedel.Mesh {
 			get {return _Modified;}
 			set {_Modified = value; __Modified = true; }
 			}
-
-        /// <summary>
-        /// Tag identifying this class.
+		
+		/// <summary>
+        /// Tag identifying this class
         /// </summary>
-        /// <returns>The tag</returns>
-		public override string Tag () {
-			return "PortalEntry";
-			}
+		public override string _Tag { get; } = "PortalEntry";
 
+		/// <summary>
+        /// Factory method. Throws exception as this is an abstract class.
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JSONObject _Factory () {
+			throw new CannotCreateAbstract();
+			}
 
 
         /// <summary>
@@ -185,82 +163,19 @@ namespace Goedel.Mesh {
 			}
 
 
-
-        /// <summary>
-		/// Create a new instance from tagged byte input.
-		/// i.e. { "PortalEntry" : {... data ... } }
-        /// </summary>	
-        /// <param name="_Data">The input data.</param>
-        /// <returns>The created object.</returns>				
-		public static new PortalEntry FromTagged (byte[] _Data) {
-			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
-			return FromTagged (_Input);
-			}
-
-        /// <summary>
-        /// Create a new instance from tagged string input.
-		/// i.e. { "PortalEntry" : {... data ... } }
-        /// </summary>
-        /// <param name="_Input">The input data.</param>
-        /// <returns>The created object.</returns>		
-		public static new PortalEntry FromTagged (string _Input) {
-			//PortalEntry _Result;
-			//Deserialize (_Input, out _Result);
-			StringReader _Reader = new StringReader (_Input);
-            JSONReader JSONReader = new JSONReader (_Reader);
-			return FromTagged (JSONReader) ;
-			}
-
-
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader">The input stream</param>
+		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new PortalEntry  FromTagged (JSONReader JSONReader) {
-			PortalEntry Out = null;
-
-			JSONReader.StartObject ();
-            if (JSONReader.EOR) {
-                return null;
-                }
-
-			string token = JSONReader.ReadToken ();
-
-			switch (token) {
-
-				case "PortalEntry" : {
-					Out = null;
-					throw new Exception ("Can't create abstract type");
-					}
-
-				case "Account" : {
-					Out = new Account ();
-					Out.Deserialize (JSONReader);
-					break;
-					}
-
-				case "AccountProfile" : {
-					Out = new AccountProfile ();
-					Out.Deserialize (JSONReader);
-					break;
-					}
-
-				case "ConnectionsPending" : {
-					Out = new ConnectionsPending ();
-					Out.Deserialize (JSONReader);
-					break;
-					}
-
-				default : {
-                    break;
-					}
+        public static new PortalEntry FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (Tagged) {
+				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				return Out as PortalEntry;
 				}
-			JSONReader.EndObject ();
-
-			return Out;
+			throw new CannotCreateAbstract();
 			}
-
 
         /// <summary>
         /// Having read a tag, process the corresponding value data.
@@ -312,15 +227,19 @@ namespace Goedel.Mesh {
         /// </summary>
 
 		public virtual string						Status  {get; set;}
-
-        /// <summary>
-        /// Tag identifying this class.
+		
+		/// <summary>
+        /// Tag identifying this class
         /// </summary>
-        /// <returns>The tag</returns>
-		public override string Tag () {
-			return "Account";
-			}
+		public override string _Tag { get; } = "Account";
 
+		/// <summary>
+        /// Factory method
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JSONObject _Factory () {
+			return new Account();
+			}
 
 
         /// <summary>
@@ -369,103 +288,21 @@ namespace Goedel.Mesh {
 			}
 
 
-
-        /// <summary>
-		/// Create a new instance from untagged byte input.
-		/// i.e. {... data ... }
-        /// </summary>	
-        /// <param name="_Data">The input data.</param>
-        /// <returns>The created object.</returns>		
-		public static new Account From (byte[] _Data) {
-			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
-			return From (_Input);
-			}
-
-        /// <summary>
-		/// Create a new instance from untagged string input.
-		/// i.e. {... data ... }
-        /// </summary>	
-        /// <param name="_Input">The input data.</param>
-        /// <returns>The created object.</returns>				
-		public static new Account From (string _Input) {
-			StringReader _Reader = new StringReader (_Input);
-            JSONReader JSONReader = new JSONReader (_Reader);
-			var Result = new Account ();
-			Result.Deserialize (JSONReader);
-			return Result;
-			// return new Account (JSONReader);
-			}
-
-        /// <summary>
-		/// Create a new instance from tagged byte input.
-		/// i.e. { "Account" : {... data ... } }
-        /// </summary>	
-        /// <param name="_Data">The input data.</param>
-        /// <returns>The created object.</returns>				
-		public static new Account FromTagged (byte[] _Data) {
-			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
-			return FromTagged (_Input);
-			}
-
-        /// <summary>
-        /// Create a new instance from tagged string input.
-		/// i.e. { "Account" : {... data ... } }
-        /// </summary>
-        /// <param name="_Input">The input data.</param>
-        /// <returns>The created object.</returns>		
-		public static new Account FromTagged (string _Input) {
-			//Account _Result;
-			//Deserialize (_Input, out _Result);
-			StringReader _Reader = new StringReader (_Input);
-            JSONReader JSONReader = new JSONReader (_Reader);
-			return FromTagged (JSONReader) ;
-			}
-
-
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader">The input stream</param>
+		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new Account  FromTagged (JSONReader JSONReader) {
-			Account Out = null;
-
-			JSONReader.StartObject ();
-            if (JSONReader.EOR) {
-                return null;
-                }
-
-			string token = JSONReader.ReadToken ();
-
-			switch (token) {
-
-				case "Account" : {
-					Out = new Account ();
-					Out.Deserialize (JSONReader);
-					break;
-					}
-
-				case "AccountProfile" : {
-					Out = new AccountProfile ();
-					Out.Deserialize (JSONReader);
-					break;
-					}
-
-				case "ConnectionsPending" : {
-					Out = new ConnectionsPending ();
-					Out.Deserialize (JSONReader);
-					break;
-					}
-
-				default : {
-                    break;
-					}
+        public static new Account FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (Tagged) {
+				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				return Out as Account;
 				}
-			JSONReader.EndObject ();
-
-			return Out;
+		    var Result = new Account ();
+			Result.Deserialize (JSONReader);
+			return Result;
 			}
-
 
         /// <summary>
         /// Having read a tag, process the corresponding value data.
@@ -508,15 +345,19 @@ namespace Goedel.Mesh {
         /// </summary>
 
 		public virtual SignedPersonalProfile						Profile  {get; set;}
-
-        /// <summary>
-        /// Tag identifying this class.
+		
+		/// <summary>
+        /// Tag identifying this class
         /// </summary>
-        /// <returns>The tag</returns>
-		public override string Tag () {
-			return "AccountProfile";
-			}
+		public override string _Tag { get; } = "AccountProfile";
 
+		/// <summary>
+        /// Factory method
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JSONObject _Factory () {
+			return new AccountProfile();
+			}
 
 
         /// <summary>
@@ -555,91 +396,21 @@ namespace Goedel.Mesh {
 			}
 
 
-
-        /// <summary>
-		/// Create a new instance from untagged byte input.
-		/// i.e. {... data ... }
-        /// </summary>	
-        /// <param name="_Data">The input data.</param>
-        /// <returns>The created object.</returns>		
-		public static new AccountProfile From (byte[] _Data) {
-			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
-			return From (_Input);
-			}
-
-        /// <summary>
-		/// Create a new instance from untagged string input.
-		/// i.e. {... data ... }
-        /// </summary>	
-        /// <param name="_Input">The input data.</param>
-        /// <returns>The created object.</returns>				
-		public static new AccountProfile From (string _Input) {
-			StringReader _Reader = new StringReader (_Input);
-            JSONReader JSONReader = new JSONReader (_Reader);
-			var Result = new AccountProfile ();
-			Result.Deserialize (JSONReader);
-			return Result;
-			// return new AccountProfile (JSONReader);
-			}
-
-        /// <summary>
-		/// Create a new instance from tagged byte input.
-		/// i.e. { "AccountProfile" : {... data ... } }
-        /// </summary>	
-        /// <param name="_Data">The input data.</param>
-        /// <returns>The created object.</returns>				
-		public static new AccountProfile FromTagged (byte[] _Data) {
-			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
-			return FromTagged (_Input);
-			}
-
-        /// <summary>
-        /// Create a new instance from tagged string input.
-		/// i.e. { "AccountProfile" : {... data ... } }
-        /// </summary>
-        /// <param name="_Input">The input data.</param>
-        /// <returns>The created object.</returns>		
-		public static new AccountProfile FromTagged (string _Input) {
-			//AccountProfile _Result;
-			//Deserialize (_Input, out _Result);
-			StringReader _Reader = new StringReader (_Input);
-            JSONReader JSONReader = new JSONReader (_Reader);
-			return FromTagged (JSONReader) ;
-			}
-
-
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader">The input stream</param>
+		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new AccountProfile  FromTagged (JSONReader JSONReader) {
-			AccountProfile Out = null;
-
-			JSONReader.StartObject ();
-            if (JSONReader.EOR) {
-                return null;
-                }
-
-			string token = JSONReader.ReadToken ();
-
-			switch (token) {
-
-				case "AccountProfile" : {
-					Out = new AccountProfile ();
-					Out.Deserialize (JSONReader);
-					break;
-					}
-
-				default : {
-                    break;
-					}
+        public static new AccountProfile FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (Tagged) {
+				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				return Out as AccountProfile;
 				}
-			JSONReader.EndObject ();
-
-			return Out;
+		    var Result = new AccountProfile ();
+			Result.Deserialize (JSONReader);
+			return Result;
 			}
-
 
         /// <summary>
         /// Having read a tag, process the corresponding value data.
@@ -679,15 +450,19 @@ namespace Goedel.Mesh {
         /// </summary>
 
 		public virtual List<SignedConnectionRequest>				Requests  {get; set;}
-
-        /// <summary>
-        /// Tag identifying this class.
+		
+		/// <summary>
+        /// Tag identifying this class
         /// </summary>
-        /// <returns>The tag</returns>
-		public override string Tag () {
-			return "ConnectionsPending";
-			}
+		public override string _Tag { get; } = "ConnectionsPending";
 
+		/// <summary>
+        /// Factory method
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JSONObject _Factory () {
+			return new ConnectionsPending();
+			}
 
 
         /// <summary>
@@ -738,91 +513,21 @@ namespace Goedel.Mesh {
 			}
 
 
-
-        /// <summary>
-		/// Create a new instance from untagged byte input.
-		/// i.e. {... data ... }
-        /// </summary>	
-        /// <param name="_Data">The input data.</param>
-        /// <returns>The created object.</returns>		
-		public static new ConnectionsPending From (byte[] _Data) {
-			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
-			return From (_Input);
-			}
-
-        /// <summary>
-		/// Create a new instance from untagged string input.
-		/// i.e. {... data ... }
-        /// </summary>	
-        /// <param name="_Input">The input data.</param>
-        /// <returns>The created object.</returns>				
-		public static new ConnectionsPending From (string _Input) {
-			StringReader _Reader = new StringReader (_Input);
-            JSONReader JSONReader = new JSONReader (_Reader);
-			var Result = new ConnectionsPending ();
-			Result.Deserialize (JSONReader);
-			return Result;
-			// return new ConnectionsPending (JSONReader);
-			}
-
-        /// <summary>
-		/// Create a new instance from tagged byte input.
-		/// i.e. { "ConnectionsPending" : {... data ... } }
-        /// </summary>	
-        /// <param name="_Data">The input data.</param>
-        /// <returns>The created object.</returns>				
-		public static new ConnectionsPending FromTagged (byte[] _Data) {
-			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
-			return FromTagged (_Input);
-			}
-
-        /// <summary>
-        /// Create a new instance from tagged string input.
-		/// i.e. { "ConnectionsPending" : {... data ... } }
-        /// </summary>
-        /// <param name="_Input">The input data.</param>
-        /// <returns>The created object.</returns>		
-		public static new ConnectionsPending FromTagged (string _Input) {
-			//ConnectionsPending _Result;
-			//Deserialize (_Input, out _Result);
-			StringReader _Reader = new StringReader (_Input);
-            JSONReader JSONReader = new JSONReader (_Reader);
-			return FromTagged (JSONReader) ;
-			}
-
-
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader">The input stream</param>
+		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new ConnectionsPending  FromTagged (JSONReader JSONReader) {
-			ConnectionsPending Out = null;
-
-			JSONReader.StartObject ();
-            if (JSONReader.EOR) {
-                return null;
-                }
-
-			string token = JSONReader.ReadToken ();
-
-			switch (token) {
-
-				case "ConnectionsPending" : {
-					Out = new ConnectionsPending ();
-					Out.Deserialize (JSONReader);
-					break;
-					}
-
-				default : {
-                    break;
-					}
+        public static new ConnectionsPending FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (Tagged) {
+				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				return Out as ConnectionsPending;
 				}
-			JSONReader.EndObject ();
-
-			return Out;
+		    var Result = new ConnectionsPending ();
+			Result.Deserialize (JSONReader);
+			return Result;
 			}
-
 
         /// <summary>
         /// Having read a tag, process the corresponding value data.

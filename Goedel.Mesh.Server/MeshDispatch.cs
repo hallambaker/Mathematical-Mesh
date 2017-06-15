@@ -26,16 +26,15 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using Goedel.Protocol;
+using Goedel.Mesh;
 
-
-namespace Goedel.Mesh {
+namespace Goedel.Mesh.Server {
 
     /// <summary>
     /// The host class. Receives a stream from the HTTP server caller and 
     /// dispatches the specified server.
     /// </summary>
     public class PublicMeshServiceProvider : MeshServiceProvider {
-        Mesh _Mesh;
         /// <summary>
         /// Initialize a Mesh Service Provider.
         /// </summary>
@@ -43,21 +42,13 @@ namespace Goedel.Mesh {
         /// <param name="MeshStore">The mesh persistence store filename.</param>
         /// <param name="PortalStore">The portal persistence store fielname.</param>
         public PublicMeshServiceProvider(string Domain, string MeshStore, string PortalStore) {
-            _Mesh = new Mesh(Domain, MeshStore, PortalStore);
+            Mesh = new Mesh(Domain, MeshStore, PortalStore);
             }
 
         /// <summary>
         /// The mesh persistence provider.
         /// </summary>
-        public Mesh Mesh {
-            get {
-                return _Mesh;
-                }
-
-            set {
-                _Mesh = value;
-                }
-            }
+        public Mesh Mesh { get; set; }
 
 
         }
@@ -96,14 +87,14 @@ namespace Goedel.Mesh {
                 HelloRequest Request) {
 
             var HelloResponse = new HelloResponse() {
-                Version = new Version() {
+                Version = new Goedel.Protocol.Version() {
                     Major = 0,
                     Minor = 7,
-                    Encodings = new List<Encoding>()
+                    Encodings = new List<Goedel.Protocol.Encoding>()
                     }
                 };
 
-            var Encoding = new Encoding() {
+            var Encoding = new Goedel.Protocol.Encoding() {
                 ID = new List<string> { "application/json" }
                 };
             HelloResponse.Version.Encodings.Add(Encoding);

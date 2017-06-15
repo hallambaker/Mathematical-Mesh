@@ -22,7 +22,7 @@
 using Goedel.Utilities;
 using System;
 using System.Collections.Generic;
-
+using Goedel.Mesh.Server;
 
 namespace Goedel.Mesh.Platform {
     public class RegistrationMachineCached : RegistrationMachine {
@@ -30,12 +30,11 @@ namespace Goedel.Mesh.Platform {
         /// <summary>
         /// Return a new machine registration.
         /// </summary>
-        public override RegistrationMachine Reload () {
-            return new RegistrationMachineCached();
+        public override void Reload () {
             }
 
         /// <summary>The abstract machine a profile registration is attached to</summary>
-        public override RegistrationMachine RegistrationMachine { get; }
+        public override RegistrationMachine RegistrationMachine { get; set; }
 
         /// <summary>
         /// The registered signed profile. This is always null for a machine registration
@@ -55,7 +54,6 @@ namespace Goedel.Mesh.Platform {
         public override Dictionary<string, RegistrationPersonal> PersonalProfilesPortal { get; } =
             new Dictionary<string, RegistrationPersonal>();
 
-
         /// <summary>
         /// A dictionary of application profiles indexed by fingerprint.
         /// </summary>
@@ -74,28 +72,64 @@ namespace Goedel.Mesh.Platform {
         public override Dictionary<string, RegistrationDevice> DeviceProfiles { get; } =
             new Dictionary<string, RegistrationDevice>();
 
-        // The default profile
+        /// <summary>The default personal profile</summary>
         public override RegistrationPersonal Personal {
             get { return _Personal; }
             set {
-                var Value = value;
-                _Personal = Value;
-                Value.MakeDefault();
+                if (value != _Personal) {
+                    _Personal = value;
+                    value.MakeDefault();
+                    }
                 }
             }
-        RegistrationPersonal _Personal;
+        private RegistrationPersonal _Personal;
 
-        // The default device
+        /// <summary>
+        /// Set the default personal profile registration.
+        /// </summary>
+        /// <param name="Registration">The registration to set as default</param>
+        /// <param name="DefaultTime">If non-null, the registration is only set to be default</param>
+        public void SetDefaultPersonal (RegistrationPersonal Registration,
+                            DateTime? DefaultTime = null) {
+            if ((_Personal == null) || (DefaultTime == null) || 
+                        (DefaultTime > PersonalDefaultTime)) {
+                _Personal = Registration;
+                }
+            }
+        DateTime PersonalDefaultTime = DateTime.MinValue;
+
+        /// <summary>The default device profile</summary>
         public override RegistrationDevice Device {
             get { return _Device; }
             set {
-                var Value = value;
-                _Device = Value;
-                Value.MakeDefault();
+                if (value != _Device) {
+                    _Device = value;
+                    value.MakeDefault();
+                    }
                 }
             }
-        RegistrationDevice _Device;
+        private RegistrationDevice _Device;
 
+        /// <summary>
+        /// Set the default device profile registration.
+        /// </summary>
+        /// <param name="Registration">The registration to set as default</param>
+        /// <param name="DefaultTime">If non-null, the registration is only set to be default</param>
+        public void SetDefaultDevice (RegistrationDevice Registration,
+                            DateTime? DefaultTime = null) {
+            if ((DefaultTime == null) || (DefaultTime > PersonalDeviceTime)) {
+                _Device = Registration;
+                }
+            }
+        DateTime PersonalDeviceTime = DateTime.MinValue;
+
+
+        /// <summary>
+        /// Make this the default personal profile for future operations.
+        /// </summary>
+        /// <param name="Force"></param>
+        public override void MakeDefault () {
+            }
 
         // Interaction with the static machine store.
 
@@ -115,9 +149,12 @@ namespace Goedel.Mesh.Platform {
 
         /// <summary>Erase the profile and associated keys.</summary>
         public override void Erase() {
-            // Do nothing as this is cached only
+            PersonalProfilesUDF.Clear();
+            PersonalProfilesPortal.Clear();
+            ApplicationProfiles.Clear();
+            ApplicationProfilesDefault.Clear();
+            DeviceProfiles.Clear();
             }
-
 
         // Add profiles
 
@@ -128,9 +165,14 @@ namespace Goedel.Mesh.Platform {
         /// <returns>Registration for the created profile.</returns>
         public override RegistrationDevice Add(SignedDeviceProfile SignedProfile) {
             var Registration = new RegistrationDeviceCached(SignedProfile, this);
-            DeviceProfiles.AddSafe(SignedProfile.Identifier, Registration); // NYI check if present
+            Register(Registration);
             return Registration;
             }
+
+        protected void Register (RegistrationDevice Registration) {
+            DeviceProfiles.AddSafe(Registration.UDF, Registration); // NYI check if present
+            }
+
 
         /// <summary>
         /// Add the associated profile to the machine store.
@@ -139,15 +181,11 @@ namespace Goedel.Mesh.Platform {
         /// <returns>Registration for the created profile.</returns>
         public override RegistrationPersonal Add(SignedPersonalProfile SignedProfile) {
             var Registration = new RegistrationPersonalCached(SignedProfile, this);
-            RegisterPersonal(Registration);
+            Register(Registration);
             return Registration;
             }
 
-
-
-
-
-        protected void RegisterPersonal(RegistrationPersonal Profile) {
+        protected void Register(RegistrationPersonal Profile) {
             PersonalProfilesUDF.AddSafe(Profile.UDF, Profile); // NYI check if already entered
             if (Profile.Portals != null) {
                 foreach (var Name in Profile.Portals) {
@@ -164,10 +202,18 @@ namespace Goedel.Mesh.Platform {
         /// <returns>Registration for the created profile.</returns>
         public override RegistrationApplication Add(ApplicationProfile ApplicationProfile) {
             var Registration = new RegistrationApplicationCached(ApplicationProfile, this);
-            ApplicationProfiles.AddSafe(ApplicationProfile.Identifier, Registration); // NYI check if present
-            ApplicationProfilesDefault.AddSafe(ApplicationProfile.Tag(), ApplicationProfile.Identifier);
+            Register(Registration);
             return Registration;
             }
+
+
+        protected void Register (RegistrationApplication Registration) {
+            var ApplicationProfile = Registration.ApplicationProfile;
+            ApplicationProfiles.AddSafe(ApplicationProfile.Identifier, Registration); // NYI check if present
+            ApplicationProfilesDefault.AddSafe(ApplicationProfile.Tag(), ApplicationProfile.Identifier);
+            }
+
+
 
         /// <summary>
         /// Locate a device profile by identifier
@@ -208,7 +254,7 @@ namespace Goedel.Mesh.Platform {
     /// </summary>
     public class RegistrationDeviceCached : RegistrationDevice {
         /// <summary>The abstract machine a profile registration is attached to</summary>
-        public override RegistrationMachine RegistrationMachine { get; }
+        public override RegistrationMachine RegistrationMachine { get; set; }
 
 
         /// <summary>
@@ -219,6 +265,13 @@ namespace Goedel.Mesh.Platform {
                     RegistrationMachine RegistrationMachine) {
             base.SignedDeviceProfile = SignedDeviceProfile;
             this.RegistrationMachine = RegistrationMachine;
+            }
+
+        /// <summary>
+        /// Make this the default personal profile for future operations.
+        /// </summary>
+        /// <param name="Force"></param>
+        public override void MakeDefault () {
             }
 
         }
@@ -240,7 +293,7 @@ namespace Goedel.Mesh.Platform {
         public override PortalCollection Portals { get; }
 
         /// <summary>The abstract machine a profile registration is attached to</summary>
-        public override RegistrationMachine RegistrationMachine { get; }
+        public override RegistrationMachine RegistrationMachine { get; set; }
 
         /// <summary>
         /// Register a personal profile in the Windows registry
@@ -265,6 +318,14 @@ namespace Goedel.Mesh.Platform {
 
             Portals.Add(AccountID);
             }
+
+
+        /// <summary>
+        /// Make this the default personal profile for future operations.
+        /// </summary>
+        /// <param name="Force"></param>
+        public override void MakeDefault () {
+            }
         }
 
 
@@ -274,13 +335,13 @@ namespace Goedel.Mesh.Platform {
     public class RegistrationApplicationCached : RegistrationApplication {
 
         /// <summary>The abstract machine a profile registration is attached to</summary>
-        public override RegistrationMachine RegistrationMachine { get; }
+        public override RegistrationMachine RegistrationMachine { get; set; }
 
         /// <summary>
         /// Register request to register an application.
         /// </summary>
         /// <param name="ApplicationProfile">The application profile</param>
-        public RegistrationApplicationCached(ApplicationProfile ApplicationProfile, 
+        public RegistrationApplicationCached (ApplicationProfile ApplicationProfile,
                         RegistrationMachine Machine) {
             RegistrationMachine = Machine;
             this.SignedApplicationProfile = ApplicationProfile.SignedApplicationProfile;
@@ -290,13 +351,18 @@ namespace Goedel.Mesh.Platform {
         /// <summary>
         /// Fetch the latest version of the profile version
         /// </summary>
-        public override void GetFromPortal() { }
+        public override void GetFromPortal () { }
 
 
         /// <summary>
         /// Update the associated profile in the registry
         /// </summary>
-        public override void WriteToPortal() { }
+        public override void WriteToPortal () { }
 
+        /// <summary>
+        /// Make this the default personal profile for future operations.
+
+        public override void MakeDefault () {
+            }
         }
     }

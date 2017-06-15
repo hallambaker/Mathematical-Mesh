@@ -8,8 +8,8 @@
 		DefaultCommand
 		Brief "Start Mesh server"
 
-		Parameter PortalAddress "portal" String
-			Brief "Portal DNS address"
+		Parameter PortalAddress "service" String
+			Brief "Service DNS address"
 
 		Parameter HostAddress "host" String
 			Brief "Host address for Web Service Endpoint"

@@ -22,6 +22,7 @@
 
 using System;
 using System.Collections.Generic;
+using Goedel.Protocol;
 
 namespace Goedel.Persistence {
     public partial class IndexTerm {
@@ -73,6 +74,11 @@ namespace Goedel.Persistence {
         /// Default Constructor
         /// </summary>
         public DataItem () { }
+
+        /// <summary>
+        /// Returns a new JSONReader for the data entry.
+        /// </summary>
+        public JSONReader JSONReader { get => new JSONReader(Data); }
 
         /// <summary>
         /// Construct a data item with the specified transaction identifier, uniqueID, text data and keys.

@@ -27,6 +27,7 @@ using System.IO;
 using Goedel.Utilities;
 using Goedel.Mesh;
 using Goedel.Protocol;
+using Goedel.Mesh.Server;
 
 namespace Goedel.Mesh.Platform {
 
@@ -47,12 +48,11 @@ namespace Goedel.Mesh.Platform {
         /// <summary>
         /// The most recent cached profile data, if available.
         /// </summary>
-        public virtual PersonalProfile PersonalProfile {
-            get => SignedPersonalProfile.PersonalProfile; 
-            }
+        public virtual PersonalProfile PersonalProfile { get; set; }
 
 
         public MeshCatalog MeshCatalog { get; set; }
+
 
         /// <summary>
         /// Client which may be used to interact with the portal on which this
@@ -72,7 +72,10 @@ namespace Goedel.Mesh.Platform {
         /// <summary>
         /// The most recent cached profile data, if available.
         /// </summary>
-        public virtual SignedPersonalProfile SignedPersonalProfile { get; set; }
+        public virtual SignedPersonalProfile SignedPersonalProfile {
+            get => PersonalProfile.SignedPersonalProfile;
+            set => PersonalProfile = value.PersonalProfile;
+            }
 
         /// <summary>
         /// The profile fingerprint
@@ -133,7 +136,7 @@ namespace Goedel.Mesh.Platform {
         /// Complete process of connecting to a profile.
         /// </summary>
         public List<ConnectionRequest> GetPending() {
-            throw new NYI();
+            throw new Goedel.Utilities.NYI();
             }
 
         /// <summary>
@@ -150,7 +153,7 @@ namespace Goedel.Mesh.Platform {
         /// Provide a PIN for authenticating the specified account ID
         /// </summary>
         public string GetPin (string AccountID, int length) {
-            throw new NYI();
+            throw new Goedel.Utilities.NYI();
             }
 
         /// <summary>
@@ -173,6 +176,20 @@ namespace Goedel.Mesh.Platform {
             MeshClient.Publish(SignedPersonalProfile);
             }
 
+        public virtual bool IsDefault { get; set; }  = true; // Hack: Should work out if it is default
+
+        public virtual SerializationPersonal Serialize () {
+            var Result = new SerializationPersonal() {
+                Profile = SignedPersonalProfile,
+                Portals = Portals.Serialize()
+                };
+
+            if (IsDefault) {
+                Result.Default = DateTime.Now;
+                }
+            return Result;
+
+            }
         }
 
     }

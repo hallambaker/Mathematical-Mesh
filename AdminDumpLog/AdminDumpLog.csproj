@@ -28,7 +28,7 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <AssemblyVersion>1.0.0.116</AssemblyVersion>
+    <AssemblyVersion>1.0.0.125</AssemblyVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -64,41 +64,6 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Goedel.Cryptography">
-      <HintPath>..\..\Library\Goedel.Cryptography.dll</HintPath>
-    </Reference>
-    <Reference Include="Goedel.Cryptography.Framework">
-      <HintPath>..\..\Library\Goedel.Cryptography.Framework.dll</HintPath>
-    </Reference>
-    <Reference Include="Goedel.Cryptography.Jose">
-      <HintPath>..\..\Library\Goedel.Cryptography.Jose.dll</HintPath>
-    </Reference>
-    <Reference Include="Goedel.FSR">
-      <HintPath>..\..\Library\Goedel.FSR.dll</HintPath>
-    </Reference>
-    <Reference Include="Goedel.IO, Version=1.0.6128.30690, Culture=neutral, PublicKeyToken=9ac84b9f2535680b, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Library\Goedel.IO.dll</HintPath>
-    </Reference>
-    <Reference Include="Goedel.Platform">
-      <HintPath>..\..\Library\Goedel.Platform.dll</HintPath>
-    </Reference>
-    <Reference Include="Goedel.Platform.Framework">
-      <HintPath>..\..\Library\Goedel.Platform.Framework.dll</HintPath>
-    </Reference>
-    <Reference Include="Goedel.Protocol">
-      <HintPath>..\..\Library\Goedel.Protocol.dll</HintPath>
-    </Reference>
-    <Reference Include="Goedel.Protocol.Framework">
-      <HintPath>..\..\Library\Goedel.Protocol.Framework.dll</HintPath>
-    </Reference>
-    <Reference Include="Goedel.Registry">
-      <HintPath>..\..\Library\Goedel.Registry.dll</HintPath>
-    </Reference>
-    <Reference Include="Goedel.Utilities, Version=1.0.6128.30690, Culture=neutral, PublicKeyToken=9ac84b9f2535680b, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Library\Goedel.Utilities.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -119,16 +84,6 @@
     <None Include="VS.Make" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Goedel.Persistence\Goedel.Persistence.csproj">
-      <Project>{81e30b95-c59d-4a04-925e-85877fd37fdd}</Project>
-      <Name>Goedel.Persistence</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Goedel.Mesh\Goedel.Mesh.csproj">
-      <Project>{0d8dd801-65d2-497c-8379-2d6adf3867c3}</Project>
-      <Name>Goedel.Mesh</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6">
       <Visible>False</Visible>
       <ProductName>Microsoft .NET Framework 4.6 %28x86 and x64%29</ProductName>
@@ -139,6 +94,36 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\buildtools\Libraries\Goedel.Command\Goedel.Command.csproj">
+      <Project>{e7d4d1f4-e41a-44e2-abbd-f6a9e1d3f1ac}</Project>
+      <Name>Goedel.Command</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\buildtools\Libraries\Goedel.IO\Goedel.IO.csproj">
+      <Project>{c4824513-f416-4ead-be82-f2df23641f6a}</Project>
+      <Name>Goedel.IO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\buildtools\Libraries\Goedel.Protocol.Framework\Goedel.Protocol.Framework.csproj">
+      <Project>{c1d2c847-ee62-430c-82dc-a4bd5ab38a44}</Project>
+      <Name>Goedel.Protocol.Framework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\buildtools\Libraries\Goedel.Protocol\Goedel.Protocol.csproj">
+      <Project>{18cb2a21-48f4-4862-ae95-94efbd209ab3}</Project>
+      <Name>Goedel.Protocol</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\buildtools\Libraries\Goedel.Utilities\Goedel.Utilities.csproj">
+      <Project>{2b20317b-39d5-4c20-8e06-dd4bc7573a73}</Project>
+      <Name>Goedel.Utilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Goedel.Mesh\Goedel.Mesh.csproj">
+      <Project>{0d8dd801-65d2-497c-8379-2d6adf3867c3}</Project>
+      <Name>Goedel.Mesh</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Goedel.Persistence\Goedel.Persistence.csproj">
+      <Project>{81e30b95-c59d-4a04-925e-85877fd37fdd}</Project>
+      <Name>Goedel.Persistence</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

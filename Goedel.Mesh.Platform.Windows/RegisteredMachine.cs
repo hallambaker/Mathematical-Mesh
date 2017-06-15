@@ -22,7 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.IO;
+using Goedel.IO;
 using Goedel.Utilities;
 using Goedel.Cryptography;
 
@@ -94,8 +94,9 @@ namespace Goedel.Mesh.Platform.Windows {
         /// <summary>
         /// Return a new machine registration.
         /// </summary>
-        public override RegistrationMachine Reload () {
-            return new RegistrationMachineWindows();
+        public override void Reload () {
+            base.Erase();
+            Fill();
             }
 
         /// <summary>
@@ -106,9 +107,9 @@ namespace Goedel.Mesh.Platform.Windows {
 
             // Hack: Check to see that default personal etc. profile is set.
 
-            var ProfileKeys = Register.GetSubKeys(Constants.RegistryPersonal);
-            var DeviceKeys = Register.GetKeys(Constants.RegistryDevice);
-            var ApplicationKeys = Register.GetKeys(Constants.RegistryApplication);
+            var ProfileKeys = Windows.Register.GetSubKeys(Constants.RegistryPersonal);
+            var DeviceKeys = Windows.Register.GetKeys(Constants.RegistryDevice);
+            var ApplicationKeys = Windows.Register.GetKeys(Constants.RegistryApplication);
             string DefaultDevice = null;
 
             foreach (var KeySet in ProfileKeys) {
@@ -118,7 +119,7 @@ namespace Goedel.Mesh.Platform.Windows {
                     var Portals = KeySet.GetValueMultiString("Portals");
                     var Profile = new RegistrationPersonalWindows (this, KeySet.Key, Filename, Portals);
                     if (Profile != null) {
-                        RegisterPersonal(Profile);
+                        Register(Profile);
                         // add Archive
                         var Archive = KeySet.GetValueString("Archive");
                         Profile.Archive = Archive;
@@ -131,7 +132,7 @@ namespace Goedel.Mesh.Platform.Windows {
 
             foreach (var Key in ApplicationKeys) {
                 if (Key.Key.Length > 10) {
-                    var Profile = new RegistrationApplicationWindows(Key.Key, Key.Value);
+                    var Profile = new RegistrationApplicationWindows(this, Key.Key, Key.Value);
                     if (Profile != null) {
                         ApplicationProfiles.AddSafe(Key.Key, Profile); // NYI check if present
                         }
@@ -171,8 +172,8 @@ namespace Goedel.Mesh.Platform.Windows {
                 return; //
                 }
 
-            DirectoryDelete(Constants.RoamingRoot);        // Personal and application profiles
-            DirectoryDelete(Constants.NonRoamingRoot);     // Device specific profiles
+            DirectoryTools.DirectoryDelete(Constants.RoamingRoot);        // Personal and application profiles
+            DirectoryTools.DirectoryDelete(Constants.NonRoamingRoot);     // Device specific profiles
 
             var Hive = Microsoft.Win32.Registry.CurrentUser;
 
@@ -189,24 +190,6 @@ namespace Goedel.Mesh.Platform.Windows {
             }
 
 
-        private static void DirectoryDelete(string Path) {
-            if (!Directory.Exists(Path)) {
-                return;
-                }
-
-            try {
-                var DirectoryInfo = new DirectoryInfo(Path);
-                foreach (var Entry in DirectoryInfo.GetFiles()) {
-                    Entry.Delete();
-                    }
-
-                Directory.Delete(Path, true);
-                }
-            catch {
-                // Ignore failures, we have done as much as possible
-                }
-
-            }
         
 
         /// <summary>
@@ -227,7 +210,7 @@ namespace Goedel.Mesh.Platform.Windows {
         /// <returns>Registration for the created profile.</returns>
         public override RegistrationPersonal Add(SignedPersonalProfile SignedProfile) {
             var Registration = new RegistrationPersonalWindows(SignedProfile, this);
-            RegisterPersonal(Registration);
+            Register(Registration);
             return Registration;
             }
 
@@ -239,7 +222,7 @@ namespace Goedel.Mesh.Platform.Windows {
         /// <param name="ApplicationProfile">Profile to add.</param>
         /// <returns>Registration for the created profile.</returns>
         public override RegistrationApplication Add(ApplicationProfile ApplicationProfile) {
-            var Registration = new RegistrationApplicationWindows(ApplicationProfile);
+            var Registration = new RegistrationApplicationWindows(ApplicationProfile,this);
             ApplicationProfiles.AddSafe(ApplicationProfile.Identifier, Registration); // NYI check if present
 
             ApplicationProfilesDefault.AddSafe(ApplicationProfile.Tag(), ApplicationProfile.Identifier);

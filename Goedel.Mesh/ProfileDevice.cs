@@ -53,6 +53,11 @@ namespace Goedel.Mesh {
         public DeviceProfile () { }
 
         /// <summary>
+        /// The name of this device (defaults to first in the list of names if specified).
+        /// </summary>
+        public string Name { get => Names == null ? null : (Names.Count < 1 ? null : Names[0]); }
+
+        /// <summary>
         /// Construct profile for the specified device.
         /// </summary>
         /// <param name="Name">The name of the device within profiles.</param>

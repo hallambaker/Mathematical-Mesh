@@ -27,6 +27,7 @@ using Goedel.Utilities;
 using Goedel.Protocol;
 using Goedel.Mesh;
 using Goedel.Cryptography;
+using Goedel.Mesh.Server;
 
 namespace Goedel.Mesh.Platform {
 
@@ -34,7 +35,7 @@ namespace Goedel.Mesh.Platform {
     /// Provides the interface layer between the application and all Mesh 
     /// functions.
     /// </summary>
-    public class MeshCatalog {
+    public class MeshCatalog { // Hack: This should be merged into RegistrationMachine
 
         /// <summary>The cached machine registration data</summary>
         public RegistrationMachine Machine { get; private set; }
@@ -69,12 +70,12 @@ namespace Goedel.Mesh.Platform {
             Machine.Erase();
             }
 
-        /// <summary>
-        /// Erase all configuration data from the current machine.
-        /// </summary>
-        public void Reload () {
-            Machine = Machine.Reload ();
-            }
+        ///// <summary>
+        ///// Erase all configuration data from the current machine.
+        ///// </summary>
+        //public void Reload () {
+        //    Machine = Machine.Reload ();
+        //    }
 
 
         /// <summary>
@@ -179,6 +180,7 @@ namespace Goedel.Mesh.Platform {
             MeshClient = MeshClient ?? new MeshClient(PortalAccount: PortalAddress);
             var RegistrationPersonal = AddPersonal(Profile);
 
+            MeshClient.CreatePortalAccount(PortalAddress, Profile.SignedPersonalProfile);
             RegistrationPersonal.AddPortal(PortalAddress, MeshClient, true);
 
             return RegistrationPersonal;

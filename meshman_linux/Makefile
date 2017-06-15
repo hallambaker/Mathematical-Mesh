@@ -1,5 +1,5 @@
 #
-# Makefile for Visual Studio Project meshman_windows
+# Makefile for Visual Studio Project meshman_linux
 #
 # This file is generated automatically from the Visual Studio Project
 # File. If you make changes to this file and do not update the project
@@ -114,6 +114,7 @@ SourceFiles = \
 
 LinkFiles = \
     $(LIBRARYBIN)/Goedel.ASN.dll\
+    $(LIBRARYBIN)/Goedel.Command.dll\
     $(LIBRARYBIN)/Goedel.Cryptography.dll\
     $(LIBRARYBIN)/Goedel.Cryptography.Framework.dll\
     $(LIBRARYBIN)/Goedel.Cryptography.Jose.dll\
@@ -134,20 +135,20 @@ LinkFiles = \
     $(TARGETBIN)/Goedel.Mesh.dll\
     $(TARGETBIN)/Goedel.Persistence.dll
 
-LinkFilesComma = $(LIBRARYBIN)/Goedel.ASN.dll,$(LIBRARYBIN)/Goedel.Cryptography.dll,$(LIBRARYBIN)/Goedel.Cryptography.Framework.dll,$(LIBRARYBIN)/Goedel.Cryptography.Jose.dll,$(LIBRARYBIN)/Goedel.Cryptography.KeyFile.dll,$(LIBRARYBIN)/Goedel.FSR.dll,$(LIBRARYBIN)/Goedel.IO.dll,$(LIBRARYBIN)/Goedel.Platform.dll,$(LIBRARYBIN)/Goedel.Platform.Framework.dll,$(LIBRARYBIN)/Goedel.Protocol.dll,$(LIBRARYBIN)/Goedel.Protocol.Framework.dll,$(LIBRARYBIN)/Goedel.Registry.dll,$(LIBRARYBIN)/Goedel.Utilities.dll,$(TARGETBIN)/Goedel.Mesh.Client.dll,$(TARGETBIN)/Goedel.Mesh.Platform.Windows.dll,$(TARGETBIN)/Goedel.Mesh.Platform.dll,$(TARGETBIN)/Goedel.Mesh.Server.dll,$(TARGETBIN)/Goedel.Mesh.Shell.MeshMan.dll,$(TARGETBIN)/Goedel.Mesh.dll,$(TARGETBIN)/Goedel.Persistence.dll
+LinkFilesComma = $(LIBRARYBIN)/Goedel.ASN.dll,$(LIBRARYBIN)/Goedel.Command.dll,$(LIBRARYBIN)/Goedel.Cryptography.dll,$(LIBRARYBIN)/Goedel.Cryptography.Framework.dll,$(LIBRARYBIN)/Goedel.Cryptography.Jose.dll,$(LIBRARYBIN)/Goedel.Cryptography.KeyFile.dll,$(LIBRARYBIN)/Goedel.FSR.dll,$(LIBRARYBIN)/Goedel.IO.dll,$(LIBRARYBIN)/Goedel.Platform.dll,$(LIBRARYBIN)/Goedel.Platform.Framework.dll,$(LIBRARYBIN)/Goedel.Protocol.dll,$(LIBRARYBIN)/Goedel.Protocol.Framework.dll,$(LIBRARYBIN)/Goedel.Registry.dll,$(LIBRARYBIN)/Goedel.Utilities.dll,$(TARGETBIN)/Goedel.Mesh.Client.dll,$(TARGETBIN)/Goedel.Mesh.Platform.Windows.dll,$(TARGETBIN)/Goedel.Mesh.Platform.dll,$(TARGETBIN)/Goedel.Mesh.Server.dll,$(TARGETBIN)/Goedel.Mesh.Shell.MeshMan.dll,$(TARGETBIN)/Goedel.Mesh.dll,$(TARGETBIN)/Goedel.Persistence.dll
 
 
 NugetFiles = 
 NugetFilesComa = 
 
 # A) Main target packaged
-$(TARGETEXE)/meshman_windows :| $(TARGETEXE)
-$(TARGETEXE)/meshman_windows : $(TARGETBIN)/meshman_windows.exe 
+$(TARGETEXE)/meshman_linux :| $(TARGETEXE)
+$(TARGETEXE)/meshman_linux : $(TARGETBIN)/meshman_linux.exe 
 ! $(BUNDLE) $@ $^ $(LinkFiles)  $(NugetFiles)
 
 # B) Main target executable
-$(TARGETBIN)/meshman_windows.exe :| $(TARGETBIN)
-$(TARGETBIN)/meshman_windows.exe : $(SourceFiles) $(LinkFiles) $(NugetFiles)
+$(TARGETBIN)/meshman_linux.exe :| $(TARGETBIN)
+$(TARGETBIN)/meshman_linux.exe : $(SourceFiles) $(LinkFiles) $(NugetFiles)
 ! $(CSHARPEXE) /out:$@  $(SourceFiles) -reference:$(LinkFilesComma) 
 
 
@@ -255,10 +256,10 @@ clean :
 # Install files to a tools directory. Default is ~/.local/bin
 
 
-install : $(INSTALL_PROGRAM)/meshman_windows 
+install : $(INSTALL_PROGRAM)/meshman_linux 
 
-$(INSTALL_PROGRAM)/meshman_windows  :| $(INSTALL_PROGRAM)
-$(INSTALL_PROGRAM)/meshman_windows  : $(TARGETEXE)/meshman_windows 
+$(INSTALL_PROGRAM)/meshman_linux  :| $(INSTALL_PROGRAM)
+$(INSTALL_PROGRAM)/meshman_linux  : $(TARGETEXE)/meshman_linux 
 ! cp $^ $@ 
 
 

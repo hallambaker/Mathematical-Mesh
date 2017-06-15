@@ -8,7 +8,7 @@ namespace Goedel.Mesh.MeshMan {
         /// Create a new web application profile.
         /// </summary>
         /// <param name="Options">Command line parameters</param>
-        public override void Password(Password Options) {
+        public override void PasswordCreate(PasswordCreate Options) {
             SetReporting(Options);
             var RegistrationPersonal = GetPersonal(Options);
 

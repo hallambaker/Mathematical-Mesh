@@ -122,6 +122,28 @@
 				|For example, a SignedDeviceProfile object MUST contain a Payload field that
 				|contains a DeviceProfile object.
 
+		Struct Advice Unauthenticated
+			Description
+				|Additional data that is not authenticated.
+
+	Structure Advice
+		Description
+			|Additional data bound to a signed profile that is not authenticated.
+		DateTime Default
+			Description
+				|If specified, the profile was the default profile at the specified 
+				|date and time. The current default for that type of profile is the
+				|profile with the most recent Default timestamp.
+
+
+	Structure PortalAdvice
+		Inherits Advice
+		String PortalAddress
+			Multiple
+			Description
+				|A portal address at which this profile is registered.
+
+
 	Structure Profile
 		Abstract
 		Inherits Entry
@@ -271,13 +293,18 @@
 		Inherits Profile
 		Description 
 			|Parent class from which all application profiles inherit.
-		Struct JoseWebEncryption SharedPrivate
+		TStruct ApplicationDevicePublic Devices
+			Multiple
 			Description
-				|Encrypted application data	shared between all devices
-		Struct JoseWebEncryption DevicePrivate
+				|Public per device information
+		TStruct JoseWebEncryption SharedPrivate
+			Description
+				|Encrypted application data	shared between all device
+		TStruct JoseWebEncryption DevicePrivate
 			Multiple
 			Description
 				|Encrypted application data	specific to one device
+
 
 	Structure ApplicationProfilePrivate
 		Inherits Entry
@@ -288,6 +315,12 @@
 		Inherits Entry
 		Description
 			|Describes the public per device data
+		String DeviceDescription
+			Description
+				|Description of the device for convenience of the user.
+		String DeviceUDF
+			Description
+				|Fingerprint of device that this key corresponds to.
 
 	Structure ApplicationDevicePrivate
 		Inherits Entry
@@ -341,6 +374,10 @@
 		Struct SignedDeviceProfile Device
 			Description
 				|The Device profile to be connected
+		TStruct ApplicationDevicePublic DeviceData
+			Multiple
+			Description 
+				|List of device specific application data.
 
 	Structure SignedConnectionRequest
 		Inherits SignedProfile
@@ -356,6 +393,9 @@
 			Description
 				|The result of the connection request. Valid responses are:
 				|Accepted, Refused, Query.
+		TStruct SignedProfile Profile
+			Description
+				|The updated profile if changed.
 
 	Structure SignedConnectionResult
 		Inherits SignedProfile

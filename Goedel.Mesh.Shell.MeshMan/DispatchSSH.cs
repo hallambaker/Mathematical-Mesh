@@ -1,5 +1,5 @@
 ﻿using Goedel.Utilities;
-using Goedel.Mesh;
+using Goedel.IO;
 using Goedel.Mesh.Platform;
 using Goedel.Cryptography.KeyFile;
 
@@ -9,10 +9,10 @@ namespace Goedel.Mesh.MeshMan {
         /// Create a new web application profile.
         /// </summary>
         /// <param name="Options">Command line parameters</param>
-        public override void SSH (SSH Options) {
+        public override void SSHCreate (SSHCreate Options) {
             SetReporting(Options);
             var RegistrationPersonal = GetPersonal(Options);
-            RegistrationPersonal.CreateSSH();
+            var RegistrationApplication = RegistrationPersonal.CreateSSH();
 
             //var SSHProfile = new SSHProfile(true);
             //Register(RegistrationPersonal, SSHProfile);
@@ -40,8 +40,6 @@ namespace Goedel.Mesh.MeshMan {
                 Report("Host {0}", Host.Identifier);
                 }
 
-
-
             }
 
 
@@ -54,11 +52,16 @@ namespace Goedel.Mesh.MeshMan {
             var SSHProfile = RegistrationApplication?.ApplicationProfile as SSHProfile;
             Assert.NotNull(SSHProfile, ProfileNotFound.Throw);
 
+            Debug.WriteLine("udf {0} mmm:{1}", PersonalProfile.DeviceProfile.UDF, PortalID);
             foreach (var Device in SSHProfile.Devices) {
-                Report("Authorize {0}", Device.Identifier);
+
+                switch (Device) {
+                    case SSHDevicePublic SSHDevicePublic: {
+                        Debug.WriteLine(SSHDevicePublic.ToOpenSSH(PortalID));
+                        break;
+                        }
+                    }
                 }
-
-
             }
 
         /// Write out the SSH public key for this device
@@ -69,15 +72,13 @@ namespace Goedel.Mesh.MeshMan {
             var RegistrationApplication = GetApplication(Options, "SSHProfile");
             var SSHProfile = RegistrationApplication?.ApplicationProfile as SSHProfile;
             Assert.NotNull(SSHProfile, ProfileNotFound.Throw);
-
-            // Get the device specific data
-
-            // NYI: We need an identifier to specify which device key was used to 
-            // decrypt the profile.
-
-            // Dump the public key corresponding to the device.
-
+            var SSHDevicePublic = SSHProfile.SSHDevicePublic;
+            Assert.NotNull(SSHDevicePublic, ProfileNotFound.Throw);
+            Debug.WriteLine(SSHDevicePublic.ToOpenSSH(PortalID));
             }
+
+        
+
 
         /// Create a new web application profile.
         /// </summary>
@@ -87,10 +88,12 @@ namespace Goedel.Mesh.MeshMan {
             var RegistrationApplication = GetApplication(Options, "SSHProfile");
             var SSHProfile = RegistrationApplication?.ApplicationProfile as SSHProfile;
             Assert.NotNull(SSHProfile, ProfileNotFound.Throw);
+            var SSHDevicePublic = SSHProfile.SSHDevicePublic;
+            Assert.NotNull(SSHDevicePublic, ProfileNotFound.Throw);
 
-            // Get the device specific data
-
-            // Dump the private key corresponding to the device.
+            var KeyPair = SSHDevicePublic.PublicKey.KeyPair;
+            var PEMPrivate = KeyPair.ToPEMPrivate();
+            Debug.WriteLine(PEMPrivate);
 
             }
 

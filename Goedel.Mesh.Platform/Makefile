@@ -116,7 +116,8 @@ SourceFiles = \
      RegistrationDevice.cs\
      RegistrationApplication.cs\
      RegistrationMachine.cs\
-     RegistrationPersonal.cs
+     RegistrationPersonal.cs\
+     RegistrationSSH.cs
 
 LinkFiles = \
     $(LIBRARYBIN)/Goedel.Cryptography.dll\

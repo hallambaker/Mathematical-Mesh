@@ -47,7 +47,7 @@ namespace Goedel.Mesh.Platform.Windows {
         /// <param name="UDF">File fingerprint</param>
         /// <param name="File">Filename on local machine</param>
         public RegistrationDeviceWindows(string UDF = null, string File = null) {
-            SignedDeviceProfile = SignedDeviceProfile.FromFile(UDF, File);
+            SignedDeviceProfile = SignedDeviceProfile.FromFile(File, UDF);
             }
 
 
@@ -99,15 +99,10 @@ namespace Goedel.Mesh.Platform.Windows {
             }
 
 
-        public override bool MakeDefault (bool Force = true) {
+        public override void MakeDefault () {
             var Hive = Microsoft.Win32.Registry.CurrentUser;
             var Key = Hive.CreateSubKey(Constants.RegistryDevice);
-            var Exists = Key.GetValue("") == null;
-            if (Exists | Force) {
-                Key.SetValue("", UDF);
-                return true;
-                }
-            return false;
+            Key.SetValue("", UDF);
             }
 
 

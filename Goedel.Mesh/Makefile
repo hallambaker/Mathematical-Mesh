@@ -114,6 +114,8 @@ SourceFiles = \
      ConnectionRequest.cs\
      Constants.cs\
      Exceptions.cs\
+     Initialize.cs\
+     PublicKeyUtils.cs\
      Portal.cs\
      ProfileApplication.cs\
      ProfileDevice.cs\
@@ -145,7 +147,9 @@ SourceFiles = \
 LinkFiles = \
     $(LIBRARYBIN)/Goedel.ASN.dll\
     $(LIBRARYBIN)/Goedel.Cryptography.dll\
+    $(LIBRARYBIN)/Goedel.Cryptography.Framework.dll\
     $(LIBRARYBIN)/Goedel.Cryptography.Jose.dll\
+    $(LIBRARYBIN)/Goedel.Cryptography.KeyFile.dll\
     $(LIBRARYBIN)/Goedel.IO.dll\
     $(LIBRARYBIN)/Goedel.Platform.dll\
     $(LIBRARYBIN)/Goedel.Protocol.dll\
@@ -153,7 +157,7 @@ LinkFiles = \
     $(LIBRARYBIN)/Goedel.Utilities.dll\
     $(TARGETBIN)/Goedel.Persistence.dll
 
-LinkFilesComma = $(LIBRARYBIN)/Goedel.ASN.dll,$(LIBRARYBIN)/Goedel.Cryptography.dll,$(LIBRARYBIN)/Goedel.Cryptography.Jose.dll,$(LIBRARYBIN)/Goedel.IO.dll,$(LIBRARYBIN)/Goedel.Platform.dll,$(LIBRARYBIN)/Goedel.Protocol.dll,$(LIBRARYBIN)/Goedel.Registry.dll,$(LIBRARYBIN)/Goedel.Utilities.dll,$(TARGETBIN)/Goedel.Persistence.dll
+LinkFilesComma = $(LIBRARYBIN)/Goedel.ASN.dll,$(LIBRARYBIN)/Goedel.Cryptography.dll,$(LIBRARYBIN)/Goedel.Cryptography.Framework.dll,$(LIBRARYBIN)/Goedel.Cryptography.Jose.dll,$(LIBRARYBIN)/Goedel.Cryptography.KeyFile.dll,$(LIBRARYBIN)/Goedel.IO.dll,$(LIBRARYBIN)/Goedel.Platform.dll,$(LIBRARYBIN)/Goedel.Protocol.dll,$(LIBRARYBIN)/Goedel.Registry.dll,$(LIBRARYBIN)/Goedel.Utilities.dll,$(TARGETBIN)/Goedel.Persistence.dll
 
 
 NugetFiles = 

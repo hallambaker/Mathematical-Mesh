@@ -108,5 +108,14 @@ namespace Goedel.Mesh.Platform.Windows {
         public readonly static string FileProfilesDevice = NonRoamingRoot + @"\DeviceProfiles";
 
 
+        /// <summary>Extension for personal profile files</summary>
+        public const string PersonalExtension = ".mmmp";
+
+        /// <summary>Extension for device profile files</summary>
+        public const string DeviceExtension = ".mmmd";
+
+        /// <summary>Extension for application profile files</summary>
+        public const string ApplicationExtension = ".mmma";
+
         }
     }

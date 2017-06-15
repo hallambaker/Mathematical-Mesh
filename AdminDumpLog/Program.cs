@@ -22,6 +22,7 @@
 using System;
 using Goedel.Persistence;
 using Goedel.Mesh;
+using Goedel.Protocol;
 
 namespace DumpLog {
 
@@ -77,16 +78,16 @@ namespace DumpLog {
 
 
         public static void Dump(DataItem Item) {
-            if (Item == null) return;
+            if (Item == null) { return; }
             Console.WriteLine("    {0}", Item.Action);
 
 
-            var Profile = Entry.FromTagged(Item.Text);
+            var Profile = Entry.FromJSON(Item.Text.JSONReader());
             Dump(Profile as SignedProfile);
             }
 
         public static void Dump(SignedProfile Item) {
-            if (Item == null) return;
+            if (Item == null) { return; }
 
             // elide signature for now.
             Dump(Item as SignedPersonalProfile);
@@ -94,26 +95,26 @@ namespace DumpLog {
             }
 
         public static void Dump(SignedPersonalProfile Item) {
-            if (Item == null) return;
+            if (Item == null) { return; }
 
             Dump (Item.PersonalProfile);
             }
 
         public static void Dump(PersonalProfile Item) {
-            if (Item == null) return;
+            if (Item == null) { return; }
 
             Console.WriteLine(Item.ToString ());
             }
 
 
         public static void Dump(SignedApplicationProfile Item) {
-            if (Item == null) return;
+            if (Item == null) { return; }
 
             Dump(Item.ApplicationProfile);
             }
 
         public static void Dump(ApplicationProfile Item) {
-            if (Item == null) return;
+            if (Item == null) { return; }
 
             Console.WriteLine(Item.ToString());
             }

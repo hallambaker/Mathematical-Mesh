@@ -6,6 +6,7 @@ using System.Text;
 using Goedel.Mesh;
 using Goedel.Cryptography;
 using Goedel.Protocol.Debug;
+using Goedel.Mesh.Server;
 
 namespace ExampleGenerator {
     public partial class CreateExamples {
@@ -91,7 +92,7 @@ namespace ExampleGenerator {
         void PublishProfile() {
             Portal.Label(LabelValidate);
             // Check that Portal Account ID is available
-            MeshClient.Validate (AccountID);
+            MeshClient.Validate(AccountID);
 
             Portal.Label(LabelCreatePersonal);
             // Publish to the Portal

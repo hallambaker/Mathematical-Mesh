@@ -25,6 +25,7 @@ using System.Collections.Generic;
 using Goedel.Cryptography;
 using Goedel.Cryptography.Jose;
 using Goedel.Utilities;
+using Goedel.Protocol;
 
 namespace Goedel.Mesh {
     public partial class OfflineEscrowEntry {
@@ -86,7 +87,7 @@ namespace Goedel.Mesh {
 
             var Plaintext = Decrypt.ToUTF8();
 
-            var Result = EscrowedKeySet.FromTagged(Decrypt);
+            var Result = EscrowedKeySet.FromJSON(new JSONReader(Decrypt));
 
 
             return Result;

@@ -26,6 +26,7 @@ using System.Linq;
 using System.IO;
 using Goedel.Utilities;
 using Goedel.Mesh;
+using Goedel.Mesh.Server;
 
 namespace Goedel.Mesh.Platform {
 
@@ -56,7 +57,7 @@ namespace Goedel.Mesh.Platform {
     /// current machine.
     /// </summary>
     public abstract class RegistrationMachine : Registration {
-
+        public List<ConnectStartRequest> ConnectStartRequests = new List<ConnectStartRequest>();
 
         /// <summary>
         /// The a dictionary of personal profiles indexed by fingerprint.
@@ -111,9 +112,9 @@ namespace Goedel.Mesh.Platform {
         public abstract void Erase();
 
         /// <summary>
-        /// Erase the (test) configuration data on the current machine.
+        /// Reload configuration data from the current machine persistent store.
         /// </summary>
-        public abstract RegistrationMachine Reload ();
+        public abstract void Reload ();
 
         /// <summary>
         /// Add the associated profile to the machine store.
@@ -121,6 +122,13 @@ namespace Goedel.Mesh.Platform {
         /// <param name="SignedProfile">Profile to add.</param>
         /// <returns>Registration for the created profile.</returns>
         public abstract RegistrationDevice Add(SignedDeviceProfile SignedProfile);
+
+
+        public virtual RegistrationPersonal Add (SignedPersonalProfile SignedProfile,
+                ConnectStartRequest Request) {
+            ConnectStartRequests.Add(Request);
+            return Add(SignedProfile);
+            }
 
         /// <summary>
         /// Bind the associated profile to the machine store.
@@ -213,7 +221,7 @@ namespace Goedel.Mesh.Platform {
         //public virtual MeshCatalog MeshCatalog { get; }
 
         /// <summary>The abstract machine a profile registration is attached to</summary>
-        public abstract RegistrationMachine RegistrationMachine { get; }
+        public abstract RegistrationMachine RegistrationMachine { get; set; }
 
         /// <summary>
         /// The registered signed profile.
@@ -238,9 +246,7 @@ namespace Goedel.Mesh.Platform {
         /// <summary>
         /// Make this the default registration for its type
         /// </summary>
-        public virtual bool MakeDefault(bool Force = true) {
-            return Force;
-            }
+        public abstract void MakeDefault ();
 
         /// <summary>
         /// Delete the associated profile from the registry
@@ -337,7 +343,7 @@ namespace Goedel.Mesh.Platform {
         /// Create empty list
         /// </summary>
         /// <param name="Portals"></param>
-        public PortalCollection() {
+        public PortalCollection () {
             }
 
         /// <summary>
@@ -346,7 +352,7 @@ namespace Goedel.Mesh.Platform {
         /// registered.
         /// </summary>
         /// <param name="Portals"></param>
-        public PortalCollection(IEnumerable<string> Portals) {
+        public PortalCollection (IEnumerable<string> Portals) {
             Default = null;
             if (Portals != null) {
                 foreach (var Portal in Portals) {
@@ -357,10 +363,28 @@ namespace Goedel.Mesh.Platform {
             }
 
         /// <summary>
+        /// Create from an initialized list of portals. This mechanism simply
+        /// adds the portal to the collection, it does not cause it to be
+        /// registered.
+        /// </summary>
+        /// <param name="Portals"></param>
+        public PortalCollection (IEnumerable<SerializationPortal> Portals) {
+            Default = null;
+            if (Portals != null) {
+                foreach (var Portal in Portals) {
+                    Default = Default ?? Portal.Address;
+                    Collection.Add(Portal.Address);
+                    }
+                }
+            }
+
+
+
+        /// <summary>
         /// Add a portal to the collection
         /// </summary>
         /// <param name="Portal"></param>
-        public virtual void Add(string Portal) {
+        public virtual void Add (string Portal) {
             Collection.Add(Portal);
             Default = Default ?? Portal; // Hack: Does not currently support multiple portals.
             }
@@ -370,7 +394,7 @@ namespace Goedel.Mesh.Platform {
         /// </summary>
         /// <param name="Portal"></param>
         /// <returns></returns>
-        public virtual bool Remove(string Portal) {
+        public virtual bool Remove (string Portal) {
             return Collection.Remove(Portal);
             }
 
@@ -386,17 +410,30 @@ namespace Goedel.Mesh.Platform {
         /// Return the portal collection as a list
         /// </summary>
         /// <returns></returns>
-        public virtual string[] ToArray() {
+        public virtual string[] ToArray () {
             return Collection.ToArray();
             }
 
         // Implementation for the GetEnumerator method.
-        IEnumerator IEnumerable.GetEnumerator() {
+        IEnumerator IEnumerable.GetEnumerator () {
             return GetEnumerator();
             }
 
-        public SortedSet<string>.Enumerator GetEnumerator() {
+        public SortedSet<string>.Enumerator GetEnumerator () {
             return Collection.GetEnumerator();
+            }
+
+
+        public List<SerializationPortal> Serialize () {
+            var Result = new List<SerializationPortal>();
+            foreach (var Portal in Collection) {
+                var Entry = new SerializationPortal() {
+                    Address = Portal
+                    };
+                Result.Add(Entry);
+                }
+            return Result;
+
             }
 
         }

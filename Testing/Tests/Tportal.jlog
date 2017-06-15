@@ -2,22 +2,4 @@
   "Header": {
     "Type": "Data",
     "Content": "application/mesh-portal",
-    "Comment": "Persistence store for Mesh Portal"}}{
-  "DataItem": {
-    "TransactionID": "TID:1",
-    "PrimaryKey": "Account$klaus@vonFuckwit.com",
-    "Action": "New",
-    "Added": "2017-04-18T23:09:38Z",
-    "Text": "{\n  \"Account\": {\n    \"Created\": \"2017-04-18T23:09:38Z\",\n    \"Modified\": \"2017-04-18T23:09:38Z\",\n    \"AccountID\": \"klaus@vonFuckwit.com\",\n    \"UserProfileUDF\": \"MDVH3-YH2DJ-U4CS5-PJNIW-6X5SR-XD4FP\",\n    \"Status\": \"Open\"}}"}}{
-  "DataItem": {
-    "TransactionID": "TID:1",
-    "PrimaryKey": "Account$TestSSH@example.com",
-    "Action": "New",
-    "Added": "2017-04-19T13:49:30Z",
-    "Text": "{\n  \"Account\": {\n    \"Created\": \"2017-04-19T13:49:30Z\",\n    \"Modified\": \"2017-04-19T13:49:30Z\",\n    \"AccountID\": \"TestSSH@example.com\",\n    \"UserProfileUDF\": \"MDXZP-HL4SY-J6HX6-UCFB2-R6GIV-4AD6Y\",\n    \"Status\": \"Open\"}}"}}{
-  "DataItem": {
-    "TransactionID": "TID:1",
-    "PrimaryKey": "Account$TestSSH@example.com",
-    "Action": "New",
-    "Added": "2017-04-19T17:02:03Z",
-    "Text": "{\n  \"Account\": {\n    \"Created\": \"2017-04-19T17:02:03Z\",\n    \"Modified\": \"2017-04-19T17:02:03Z\",\n    \"AccountID\": \"TestSSH@example.com\",\n    \"UserProfileUDF\": \"MB2EA-EFU6Y-MV2RL-Q2O3A-FONQU-T45HR\",\n    \"Status\": \"Open\"}}"}}
+    "Comment": "Persistence store for Mesh Portal"}}

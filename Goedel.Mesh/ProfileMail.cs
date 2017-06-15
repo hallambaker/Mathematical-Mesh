@@ -44,12 +44,8 @@ namespace Goedel.Mesh {
         /// </summary>
 
         public MailProfilePrivate Private {
-            get {
-                if (_Private == null) {
-                    _Private = MailProfilePrivate.FromTagged(DecryptPrivate());
-                    }
-                return _Private;
-                }
+            get => ApplicationProfilePrivate as MailProfilePrivate;
+            set => ApplicationProfilePrivate = value;
             }
 
         /// <summary>

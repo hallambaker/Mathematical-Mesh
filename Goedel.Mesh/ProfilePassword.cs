@@ -35,33 +35,16 @@ namespace Goedel.Mesh {
     // as being part of the same application profile. 
     public partial class PasswordProfile : ApplicationProfile {
 
-        /// <summary>
-        /// The public type tag
-        /// </summary>
-        public static string TypeTag { get => "PasswordProfile";  }
-
         private PasswordProfilePrivate _Private;
 
         /// <summary>
         /// The portion of the profile that is encrypted in the mesh.
         /// </summary>
         public PasswordProfilePrivate Private {
-            get {
-                if (_Private == null) {
-                    var Plaintext = DecryptPrivate();
-                    _Private = PasswordProfilePrivate.FromTagged(Plaintext);
-                    }
-                return _Private;
-                }
+            get => ApplicationProfilePrivate as PasswordProfilePrivate;
+            set => ApplicationProfilePrivate = value;
             }
 
-        /// <summary>
-        /// Returns the private profile as a block of JSON encoded bytes ready for
-        /// encryption.
-        /// </summary>
-        protected override byte[] GetPrivateData {
-            get => Private.GetBytes();
-            }
 
         /// <summary>
         /// Create a new personal profile.
@@ -140,23 +123,7 @@ namespace Goedel.Mesh {
             return SignedProfile.Profile as PasswordProfile;
             }
 
-        ///// <summary>
-        ///// Convenience function that converts a generic Signed Profile returned
-        ///// by the Mesh to a PasswordProfile.
-        ///// </summary>
-        ///// <param name="SignedProfile">A signed password profile.</param>
-        ///// <param name="PersonalProfile">The personal profile to link the Password Profile to.</param>
-        ///// <returns>Inner PasswordProfile if the Signed Profile contains one,
-        ///// otherwise null.</returns>
-        //public static PasswordProfile Get(SignedProfile SignedProfile,
-        //            PersonalProfile PersonalProfile) {
-        //    var Result = SignedProfile.Profile as PasswordProfile;
 
-        //    Assert.NotNull(Result, NotValidProfile.Throw);
-
-        //    Result.Link(PersonalProfile);
-        //    return (Result);
-        //    }
 
         }
 

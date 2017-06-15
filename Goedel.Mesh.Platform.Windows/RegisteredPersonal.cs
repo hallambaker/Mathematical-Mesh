@@ -25,6 +25,7 @@ using System.Linq;
 using System.IO;
 using Goedel.Utilities;
 using Goedel.Cryptography;
+using Goedel.Mesh.Server;
 
 namespace Goedel.Mesh.Platform.Windows {
 
@@ -72,15 +73,15 @@ namespace Goedel.Mesh.Platform.Windows {
         public RegistrationPersonalWindows(RegistrationMachine Machine, 
                     string UDF, string File, IEnumerable<string> Portals = null) {
 
-
-            SignedPersonalProfile = SignedPersonalProfile.FromFile (UDF, File);
+            RegistrationMachine = Machine;
+            SignedPersonalProfile = SignedPersonalProfile.FromFile(File, UDF);
             if (SignedPersonalProfile == null) { return; }   // TTHROW: Proper exception
 
             this.Portals = new PortalCollectionWindows(Portals);
             }
 
         /// <summary>The abstract machine a profile registration is attached to</summary>
-        public override RegistrationMachine RegistrationMachine { get; }
+        public override RegistrationMachine RegistrationMachine { get; set; }
 
         /// <summary>
         /// Register a personal profile in the Windows registry
@@ -94,16 +95,14 @@ namespace Goedel.Mesh.Platform.Windows {
             RegistrationMachine = Machine;
             this.Portals = new PortalCollectionWindows(Portals);
             WriteToLocal();
-            var Default = MakeDefault();
-            if (Default) {
-                Machine.Personal = this;
-                }
+            RegistrationMachine.Personal = RegistrationMachine.Personal ?? this;
             }
 
 
 
         /// <summary>
-        /// Add a portal to this registration.
+        /// Add a portal to this registration. The portal account must have been 
+        /// created previously. Only the local portal is written to.
         /// </summary>
         /// <param name="AccountID"></param>
         /// <param name="MeshClient"></param>
@@ -152,15 +151,11 @@ namespace Goedel.Mesh.Platform.Windows {
         /// Make this the default personal profile for future operations.
         /// </summary>
         /// <param name="Force"></param>
-        public override bool MakeDefault(bool Force=true) {
+        public override void MakeDefault() {
             var Hive = Microsoft.Win32.Registry.CurrentUser;
             var Key = Hive.CreateSubKey(Constants.RegistryPersonal);
             var Exists = Key.GetValue("") == null;
-            if (Exists | Force ) {
-                Key.SetValue("", UDF);
-                return true;
-                }
-            return false;
+            Key.SetValue("", UDF);
             }
         }
 

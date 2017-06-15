@@ -1,4 +1,4 @@
-﻿//   Copyright © 2015 by Comodo Group Inc.
+﻿//   Copyright © 2017 by Comodo Group Inc.
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -26,6 +26,7 @@ using Goedel.Protocol;
 using Goedel.Protocol.Framework;
 
 using System.Diagnostics;
+using Goedel.Mesh.Server;
 
 namespace MeshServerShell {
     public partial class MeshServerShell {

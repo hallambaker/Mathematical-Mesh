@@ -10,6 +10,7 @@ using Goedel.Cryptography.Jose;
 using Goedel.Protocol;
 using Goedel.Protocol.Framework;
 using Test.Common;
+using Goedel.Mesh.Server;
 
 namespace Test.Goedel.Mesh {
     [TestClass]
@@ -402,7 +403,7 @@ namespace Test.Goedel.Mesh {
 
         PersonalProfile FromData(PersonalProfile PersonalProfile) {
             var Bytes = PersonalProfile.SignedPersonalProfile.GetBytes();
-            return SignedPersonalProfile.FromTagged(Bytes).PersonalProfile;
+            return SignedPersonalProfile.FromJSON(Bytes.JSONReader()).PersonalProfile;
             }
 
         MeshCatalog NewCatalog() {

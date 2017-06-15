@@ -46,8 +46,24 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <returns>The tag value</returns>
 		public override string Tag () {
-			return "MeshRecrypt";
+			return _Tag;
 			}
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public override string _Tag { get; } = "MeshRecrypt";
+
+		/// <summary>
+        /// Dictionary mapping tags to factory methods
+        /// </summary>
+		public static Dictionary<string, JSONFactoryDelegate> _TagDictionary = 
+				new Dictionary<string, JSONFactoryDelegate> () {
+
+			{"RecryptProfile", RecryptProfile._Factory},
+			{"RecryptDevicePublic", RecryptDevicePublic._Factory},
+			{"RecryptProfilePrivate", RecryptProfilePrivate._Factory},
+			{"RecryptDevicePrivate", RecryptDevicePrivate._Factory}			};
 
 		/// <summary>
         /// Construct an instance from the specified tagged JSONReader stream.
@@ -55,50 +71,7 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">Input stream</param>
         /// <param name="Out">The created object</param>
         public static void Deserialize(JSONReader JSONReader, out JSONObject Out) {
-	
-			JSONReader.StartObject ();
-            if (JSONReader.EOR) {
-                Out = null;
-                return;
-                }
-
-			string token = JSONReader.ReadToken ();
-			Out = null;
-
-			switch (token) {
-
-				case "RecryptProfile" : {
-					Out = new RecryptProfile ();
-					Out.Deserialize (JSONReader);
-					break;
-					}
-
-
-				case "RecryptDevicePublic" : {
-					Out = new RecryptDevicePublic ();
-					Out.Deserialize (JSONReader);
-					break;
-					}
-
-
-				case "RecryptProfilePrivate" : {
-					Out = new RecryptProfilePrivate ();
-					Out.Deserialize (JSONReader);
-					break;
-					}
-
-
-				case "RecryptDevicePrivate" : {
-					Out = new RecryptDevicePrivate ();
-					Out.Deserialize (JSONReader);
-					break;
-					}
-
-				default : {
-					throw new Exception ("Not supported");
-					}
-				}	
-			JSONReader.EndObject ();
+			Out = JSONReader.ReadTaggedObject (_TagDictionary);
             }
 		}
 
@@ -119,20 +92,19 @@ namespace Goedel.Mesh {
         /// </summary>
 
 		public virtual string						Account  {get; set;}
-        /// <summary>
-        ///Public device keys
+		
+		/// <summary>
+        /// Tag identifying this class
         /// </summary>
+		public override string _Tag { get; } = "RecryptProfile";
 
-		public virtual List<RecryptDevicePublic>				Devices  {get; set;}
-
-        /// <summary>
-        /// Tag identifying this class.
+		/// <summary>
+        /// Factory method
         /// </summary>
-        /// <returns>The tag</returns>
-		public override string Tag () {
-			return "RecryptProfile";
+        /// <returns>Object of this type</returns>
+		public static new JSONObject _Factory () {
+			return new RecryptProfile();
 			}
-
 
 
         /// <summary>
@@ -165,79 +137,9 @@ namespace Goedel.Mesh {
 				_Writer.WriteToken ("Account", 1);
 					_Writer.WriteString (Account);
 				}
-			if (Devices != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("Devices", 1);
-				_Writer.WriteArrayStart ();
-				bool _firstarray = true;
-				foreach (var _index in Devices) {
-					_Writer.WriteArraySeparator (ref _firstarray);
-					// This is an untagged structure. Cannot inherit.
-                    //_Writer.WriteObjectStart();
-                    //_Writer.WriteToken(_index.Tag(), 1);
-					bool firstinner = true;
-					_index.Serialize (_Writer, true, ref firstinner);
-                    //_Writer.WriteObjectEnd();
-					}
-				_Writer.WriteArrayEnd ();
-				}
-
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
 				}
-			}
-
-
-
-        /// <summary>
-		/// Create a new instance from untagged byte input.
-		/// i.e. {... data ... }
-        /// </summary>	
-        /// <param name="_Data">The input data.</param>
-        /// <returns>The created object.</returns>		
-		public static new RecryptProfile From (byte[] _Data) {
-			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
-			return From (_Input);
-			}
-
-        /// <summary>
-		/// Create a new instance from untagged string input.
-		/// i.e. {... data ... }
-        /// </summary>	
-        /// <param name="_Input">The input data.</param>
-        /// <returns>The created object.</returns>				
-		public static new RecryptProfile From (string _Input) {
-			StringReader _Reader = new StringReader (_Input);
-            JSONReader JSONReader = new JSONReader (_Reader);
-			var Result = new RecryptProfile ();
-			Result.Deserialize (JSONReader);
-			return Result;
-			// return new RecryptProfile (JSONReader);
-			}
-
-        /// <summary>
-		/// Create a new instance from tagged byte input.
-		/// i.e. { "RecryptProfile" : {... data ... } }
-        /// </summary>	
-        /// <param name="_Data">The input data.</param>
-        /// <returns>The created object.</returns>				
-		public static new RecryptProfile FromTagged (byte[] _Data) {
-			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
-			return FromTagged (_Input);
-			}
-
-        /// <summary>
-        /// Create a new instance from tagged string input.
-		/// i.e. { "RecryptProfile" : {... data ... } }
-        /// </summary>
-        /// <param name="_Input">The input data.</param>
-        /// <returns>The created object.</returns>		
-		public static new RecryptProfile FromTagged (string _Input) {
-			//RecryptProfile _Result;
-			//Deserialize (_Input, out _Result);
-			StringReader _Reader = new StringReader (_Input);
-            JSONReader JSONReader = new JSONReader (_Reader);
-			return FromTagged (JSONReader) ;
 			}
 
 
@@ -245,34 +147,17 @@ namespace Goedel.Mesh {
         /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader">The input stream</param>
+		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new RecryptProfile  FromTagged (JSONReader JSONReader) {
-			RecryptProfile Out = null;
-
-			JSONReader.StartObject ();
-            if (JSONReader.EOR) {
-                return null;
-                }
-
-			string token = JSONReader.ReadToken ();
-
-			switch (token) {
-
-				case "RecryptProfile" : {
-					Out = new RecryptProfile ();
-					Out.Deserialize (JSONReader);
-					break;
-					}
-
-				default : {
-                    break;
-					}
+        public static new RecryptProfile FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (Tagged) {
+				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				return Out as RecryptProfile;
 				}
-			JSONReader.EndObject ();
-
-			return Out;
+		    var Result = new RecryptProfile ();
+			Result.Deserialize (JSONReader);
+			return Result;
 			}
-
 
         /// <summary>
         /// Having read a tag, process the corresponding value data.
@@ -284,20 +169,6 @@ namespace Goedel.Mesh {
 			switch (Tag) {
 				case "Account" : {
 					Account = JSONReader.ReadString ();
-					break;
-					}
-				case "Devices" : {
-					// Have a sequence of values
-					bool _Going = JSONReader.StartArray ();
-					Devices = new List <RecryptDevicePublic> ();
-					while (_Going) {
-						// an untagged structure.
-						var _Item = new  RecryptDevicePublic ();
-						_Item.Deserialize (JSONReader);
-						// var _Item = new RecryptDevicePublic (JSONReader);
-						Devices.Add (_Item);
-						_Going = JSONReader.NextArray ();
-						}
 					break;
 					}
 				default : {
@@ -328,15 +199,19 @@ namespace Goedel.Mesh {
         /// </summary>
 
 		public virtual PublicKey						AuthKey  {get; set;}
-
-        /// <summary>
-        /// Tag identifying this class.
+		
+		/// <summary>
+        /// Tag identifying this class
         /// </summary>
-        /// <returns>The tag</returns>
-		public override string Tag () {
-			return "RecryptDevicePublic";
-			}
+		public override string _Tag { get; } = "RecryptDevicePublic";
 
+		/// <summary>
+        /// Factory method
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JSONObject _Factory () {
+			return new RecryptDevicePublic();
+			}
 
 
         /// <summary>
@@ -380,91 +255,21 @@ namespace Goedel.Mesh {
 			}
 
 
-
-        /// <summary>
-		/// Create a new instance from untagged byte input.
-		/// i.e. {... data ... }
-        /// </summary>	
-        /// <param name="_Data">The input data.</param>
-        /// <returns>The created object.</returns>		
-		public static new RecryptDevicePublic From (byte[] _Data) {
-			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
-			return From (_Input);
-			}
-
-        /// <summary>
-		/// Create a new instance from untagged string input.
-		/// i.e. {... data ... }
-        /// </summary>	
-        /// <param name="_Input">The input data.</param>
-        /// <returns>The created object.</returns>				
-		public static new RecryptDevicePublic From (string _Input) {
-			StringReader _Reader = new StringReader (_Input);
-            JSONReader JSONReader = new JSONReader (_Reader);
-			var Result = new RecryptDevicePublic ();
-			Result.Deserialize (JSONReader);
-			return Result;
-			// return new RecryptDevicePublic (JSONReader);
-			}
-
-        /// <summary>
-		/// Create a new instance from tagged byte input.
-		/// i.e. { "RecryptDevicePublic" : {... data ... } }
-        /// </summary>	
-        /// <param name="_Data">The input data.</param>
-        /// <returns>The created object.</returns>				
-		public static new RecryptDevicePublic FromTagged (byte[] _Data) {
-			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
-			return FromTagged (_Input);
-			}
-
-        /// <summary>
-        /// Create a new instance from tagged string input.
-		/// i.e. { "RecryptDevicePublic" : {... data ... } }
-        /// </summary>
-        /// <param name="_Input">The input data.</param>
-        /// <returns>The created object.</returns>		
-		public static new RecryptDevicePublic FromTagged (string _Input) {
-			//RecryptDevicePublic _Result;
-			//Deserialize (_Input, out _Result);
-			StringReader _Reader = new StringReader (_Input);
-            JSONReader JSONReader = new JSONReader (_Reader);
-			return FromTagged (JSONReader) ;
-			}
-
-
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader">The input stream</param>
+		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new RecryptDevicePublic  FromTagged (JSONReader JSONReader) {
-			RecryptDevicePublic Out = null;
-
-			JSONReader.StartObject ();
-            if (JSONReader.EOR) {
-                return null;
-                }
-
-			string token = JSONReader.ReadToken ();
-
-			switch (token) {
-
-				case "RecryptDevicePublic" : {
-					Out = new RecryptDevicePublic ();
-					Out.Deserialize (JSONReader);
-					break;
-					}
-
-				default : {
-                    break;
-					}
+        public static new RecryptDevicePublic FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (Tagged) {
+				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				return Out as RecryptDevicePublic;
 				}
-			JSONReader.EndObject ();
-
-			return Out;
+		    var Result = new RecryptDevicePublic ();
+			Result.Deserialize (JSONReader);
+			return Result;
 			}
-
 
         /// <summary>
         /// Having read a tag, process the corresponding value data.
@@ -505,15 +310,19 @@ namespace Goedel.Mesh {
 	/// registered accounts at some point or may not.
 	/// </summary>
 	public partial class RecryptProfilePrivate : ApplicationProfilePrivate {
-
-        /// <summary>
-        /// Tag identifying this class.
+		
+		/// <summary>
+        /// Tag identifying this class
         /// </summary>
-        /// <returns>The tag</returns>
-		public override string Tag () {
-			return "RecryptProfilePrivate";
-			}
+		public override string _Tag { get; } = "RecryptProfilePrivate";
 
+		/// <summary>
+        /// Factory method
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JSONObject _Factory () {
+			return new RecryptProfilePrivate();
+			}
 
 
         /// <summary>
@@ -547,91 +356,21 @@ namespace Goedel.Mesh {
 			}
 
 
-
-        /// <summary>
-		/// Create a new instance from untagged byte input.
-		/// i.e. {... data ... }
-        /// </summary>	
-        /// <param name="_Data">The input data.</param>
-        /// <returns>The created object.</returns>		
-		public static new RecryptProfilePrivate From (byte[] _Data) {
-			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
-			return From (_Input);
-			}
-
-        /// <summary>
-		/// Create a new instance from untagged string input.
-		/// i.e. {... data ... }
-        /// </summary>	
-        /// <param name="_Input">The input data.</param>
-        /// <returns>The created object.</returns>				
-		public static new RecryptProfilePrivate From (string _Input) {
-			StringReader _Reader = new StringReader (_Input);
-            JSONReader JSONReader = new JSONReader (_Reader);
-			var Result = new RecryptProfilePrivate ();
-			Result.Deserialize (JSONReader);
-			return Result;
-			// return new RecryptProfilePrivate (JSONReader);
-			}
-
-        /// <summary>
-		/// Create a new instance from tagged byte input.
-		/// i.e. { "RecryptProfilePrivate" : {... data ... } }
-        /// </summary>	
-        /// <param name="_Data">The input data.</param>
-        /// <returns>The created object.</returns>				
-		public static new RecryptProfilePrivate FromTagged (byte[] _Data) {
-			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
-			return FromTagged (_Input);
-			}
-
-        /// <summary>
-        /// Create a new instance from tagged string input.
-		/// i.e. { "RecryptProfilePrivate" : {... data ... } }
-        /// </summary>
-        /// <param name="_Input">The input data.</param>
-        /// <returns>The created object.</returns>		
-		public static new RecryptProfilePrivate FromTagged (string _Input) {
-			//RecryptProfilePrivate _Result;
-			//Deserialize (_Input, out _Result);
-			StringReader _Reader = new StringReader (_Input);
-            JSONReader JSONReader = new JSONReader (_Reader);
-			return FromTagged (JSONReader) ;
-			}
-
-
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader">The input stream</param>
+		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new RecryptProfilePrivate  FromTagged (JSONReader JSONReader) {
-			RecryptProfilePrivate Out = null;
-
-			JSONReader.StartObject ();
-            if (JSONReader.EOR) {
-                return null;
-                }
-
-			string token = JSONReader.ReadToken ();
-
-			switch (token) {
-
-				case "RecryptProfilePrivate" : {
-					Out = new RecryptProfilePrivate ();
-					Out.Deserialize (JSONReader);
-					break;
-					}
-
-				default : {
-                    break;
-					}
+        public static new RecryptProfilePrivate FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (Tagged) {
+				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				return Out as RecryptProfilePrivate;
 				}
-			JSONReader.EndObject ();
-
-			return Out;
+		    var Result = new RecryptProfilePrivate ();
+			Result.Deserialize (JSONReader);
+			return Result;
 			}
-
 
         /// <summary>
         /// Having read a tag, process the corresponding value data.
@@ -669,15 +408,19 @@ namespace Goedel.Mesh {
         /// </summary>
 
 		public virtual PublicKey						AuthKey  {get; set;}
-
-        /// <summary>
-        /// Tag identifying this class.
+		
+		/// <summary>
+        /// Tag identifying this class
         /// </summary>
-        /// <returns>The tag</returns>
-		public override string Tag () {
-			return "RecryptDevicePrivate";
-			}
+		public override string _Tag { get; } = "RecryptDevicePrivate";
 
+		/// <summary>
+        /// Factory method
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JSONObject _Factory () {
+			return new RecryptDevicePrivate();
+			}
 
 
         /// <summary>
@@ -721,91 +464,21 @@ namespace Goedel.Mesh {
 			}
 
 
-
-        /// <summary>
-		/// Create a new instance from untagged byte input.
-		/// i.e. {... data ... }
-        /// </summary>	
-        /// <param name="_Data">The input data.</param>
-        /// <returns>The created object.</returns>		
-		public static new RecryptDevicePrivate From (byte[] _Data) {
-			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
-			return From (_Input);
-			}
-
-        /// <summary>
-		/// Create a new instance from untagged string input.
-		/// i.e. {... data ... }
-        /// </summary>	
-        /// <param name="_Input">The input data.</param>
-        /// <returns>The created object.</returns>				
-		public static new RecryptDevicePrivate From (string _Input) {
-			StringReader _Reader = new StringReader (_Input);
-            JSONReader JSONReader = new JSONReader (_Reader);
-			var Result = new RecryptDevicePrivate ();
-			Result.Deserialize (JSONReader);
-			return Result;
-			// return new RecryptDevicePrivate (JSONReader);
-			}
-
-        /// <summary>
-		/// Create a new instance from tagged byte input.
-		/// i.e. { "RecryptDevicePrivate" : {... data ... } }
-        /// </summary>	
-        /// <param name="_Data">The input data.</param>
-        /// <returns>The created object.</returns>				
-		public static new RecryptDevicePrivate FromTagged (byte[] _Data) {
-			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
-			return FromTagged (_Input);
-			}
-
-        /// <summary>
-        /// Create a new instance from tagged string input.
-		/// i.e. { "RecryptDevicePrivate" : {... data ... } }
-        /// </summary>
-        /// <param name="_Input">The input data.</param>
-        /// <returns>The created object.</returns>		
-		public static new RecryptDevicePrivate FromTagged (string _Input) {
-			//RecryptDevicePrivate _Result;
-			//Deserialize (_Input, out _Result);
-			StringReader _Reader = new StringReader (_Input);
-            JSONReader JSONReader = new JSONReader (_Reader);
-			return FromTagged (JSONReader) ;
-			}
-
-
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader">The input stream</param>
+		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new RecryptDevicePrivate  FromTagged (JSONReader JSONReader) {
-			RecryptDevicePrivate Out = null;
-
-			JSONReader.StartObject ();
-            if (JSONReader.EOR) {
-                return null;
-                }
-
-			string token = JSONReader.ReadToken ();
-
-			switch (token) {
-
-				case "RecryptDevicePrivate" : {
-					Out = new RecryptDevicePrivate ();
-					Out.Deserialize (JSONReader);
-					break;
-					}
-
-				default : {
-                    break;
-					}
+        public static new RecryptDevicePrivate FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (Tagged) {
+				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				return Out as RecryptDevicePrivate;
 				}
-			JSONReader.EndObject ();
-
-			return Out;
+		    var Result = new RecryptDevicePrivate ();
+			Result.Deserialize (JSONReader);
+			return Result;
 			}
-
 
         /// <summary>
         /// Having read a tag, process the corresponding value data.

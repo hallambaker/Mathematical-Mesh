@@ -15,6 +15,7 @@
 
 LinkFiles = \
     Goedel.ASN.dll\
+    Goedel.Command.dll\
     Goedel.Cryptography.dll\
     Goedel.Cryptography.Framework.dll\
     Goedel.Cryptography.Jose.dll\
@@ -39,6 +40,6 @@ prebuild :
     echo "Do Prebuild"
 
 postbuild : 
-	powershell publishtarget meshman_windows.exe $(LinkFiles) 
+	powershell publishtarget meshman_linux.exe $(LinkFiles) 
 
 

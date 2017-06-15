@@ -44,7 +44,22 @@ namespace Goedel.Mesh {
         /// The active device profile of the local machine that is attached to this
         /// profile.
         /// </summary>
-        public DeviceProfile DeviceProfile { get; set; }
+        public DeviceProfile DeviceProfile {
+            get { _DeviceProfile = _DeviceProfile ?? GetDevice(); return _DeviceProfile; }
+            set => _DeviceProfile = value; }
+        DeviceProfile _DeviceProfile = null;
+
+        DeviceProfile GetDevice () {
+            foreach (var Device in Devices) {
+                if (Device.DeviceProfile.DeviceSignatureKey.PrivateKey != null) {
+                    return Device.DeviceProfile;
+                    }
+                }
+            return null;
+
+            }
+
+
 
         /// <summary>
         /// The active device profile of the local machine that is attached to this
@@ -88,6 +103,12 @@ namespace Goedel.Mesh {
         public MasterProfile MasterProfile { get => SignedMasterProfile.MasterProfile;  }
 
         /// <summary>
+        /// Get the list of administration keys.
+        /// </summary>
+        public List<PublicKey> AdministrationKeys { get => MasterProfile.OnlineSignatureKeys; }
+
+
+        /// <summary>
         /// Default Constructor
         /// </summary>
         public PersonalProfile () { }
@@ -129,10 +150,6 @@ namespace Goedel.Mesh {
             return SignedPersonalProfile;
             }
 
-
-
-
-
         /// <summary>
         /// Find the Application Profile Entry that matches an identifier.
         /// </summary>
@@ -143,23 +160,6 @@ namespace Goedel.Mesh {
             foreach (var Entry in Applications) {
                 if (Entry.Identifier == Identifier) {
                     return Entry;
-                    }
-                }
-            return null;
-            }
-
-        /// <summary>
-        /// Find the Application Profile Entry that matches an identifier.
-        /// </summary>
-        /// <param name="Identifier">The profile identifier</param>
-        /// <returns>The matching application profile entry if found, otherwise null.</returns>
-        public ApplicationProfileEntry GetApplicationEntryPassword(string Identifier) {
-
-            foreach (var Entry in Applications) {
-                if (Entry.Type == PasswordProfile.TypeTag) {
-                    if (Identifier == null | Entry.Identifier == Identifier) {
-                        return Entry;
-                        }
                     }
                 }
             return null;
@@ -204,6 +204,18 @@ namespace Goedel.Mesh {
             }
 
         /// <summary>
+        /// Add a device to the profile.
+        /// </summary>
+        /// <param name="Request">The connection request for the device.</param>
+        public void Add (ConnectionRequest Request) {
+            Devices.Add(Request.Device);
+            // NYI: add the application data here
+
+            ClearSignature();
+            }
+
+
+        /// <summary>
         /// Add an application to the profile
         /// </summary>
         /// <param name="ApplicationProfile">The application profile to add.</param>
@@ -243,52 +255,6 @@ namespace Goedel.Mesh {
             return null;
 
             }
-
-        ///// <summary>
-        ///// Get the named application entry.
-        ///// </summary>
-        ///// <param name="Type">The application type.</param>
-        ///// <param name="MatchName">The friendly name to match</param>
-        ///// <returns>The application profile entry (if found) or null otherwise.</returns>
-        //public ApplicationProfileEntry GetApplication(System.Type Type, string MatchName) {
-        //    foreach (var App in Applications) {
-        //        //if (App.GetType() == Type) {
-        //        //    foreach (var Name in App.Names) {
-        //        //        if (Name == MatchName) {
-        //        //            return App;
-        //        //            }
-        //        //        }
-        //        //    }
-        //        }
-        //    return null;
-        //    }
-
-        ///// <summary>
-        ///// Get the default password profile.
-        ///// </summary>
-        ///// <returns>The application profile entry (if found) or null otherwise.</returns>
-        //public ApplicationProfileEntry GetPasswordProfile () {
-        //    var Profile = GetApplication(typeof(PasswordProfile).Name);
-        //    return Profile;
-        //    }
-
-        ///// <summary>
-        ///// Get the default network profile.
-        ///// </summary>
-        ///// <returns>The application profile entry (if found) or null otherwise.</returns>
-        //public ApplicationProfileEntry GetNetworkProfile() {
-        //    var Profile = GetApplication(typeof(NetworkProfile).Name);
-        //    return Profile;
-        //    }
-
-        ///// <summary>
-        ///// Get the default mail profile.
-        ///// </summary>
-        ///// <returns>The application profile entry (if found) or null otherwise.</returns>
-        //public ApplicationProfileEntry GetMailProfile() {
-        //    var Profile = GetApplication(typeof(MailProfile).Name);
-        //    return Profile;
-        //    }
 
         /// <summary>
         /// The Administration key (if null, this is not an administration profile)

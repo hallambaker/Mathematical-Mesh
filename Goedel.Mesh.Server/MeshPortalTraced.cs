@@ -26,7 +26,7 @@ using System.Collections.Generic;
 using Goedel.Protocol;
 using Goedel.Protocol.Debug;
 
-namespace Goedel.Mesh {
+namespace Goedel.Mesh.Server {
     /// <summary>
     /// Direct connection to service provider via API calls. 
     /// </summary>
@@ -59,8 +59,9 @@ namespace Goedel.Mesh {
         /// <param name="Service">The service to get the service from.</param> 
         /// <returns>The service instance</returns>
         public override MeshService GetService(string Service, string Account) {
-            Session = new DebugLocalSession(MeshServiceHost, ServiceName, Account);
-            Session.Traces = Traces;
+            Session = new DebugLocalSession(MeshServiceHost, ServiceName, Account) {
+                Traces = Traces
+                };
 
             MeshServiceClient = new MeshServiceClient(Session);
 

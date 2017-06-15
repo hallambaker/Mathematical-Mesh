@@ -22,6 +22,7 @@
 				|The current S/MIME encryption key
 
 	Structure MailProfilePrivate
+		Inherits ApplicationProfilePrivate
 		Description
 			|Describes a mail account configuration
 		Description

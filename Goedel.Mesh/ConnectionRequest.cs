@@ -100,7 +100,7 @@ namespace Goedel.Mesh {
 
             var Reader = JSONReader.OfData(SignedData.Payload);
 
-            _Signed = ConnectionResult.FromTagged(Reader);
+            _Signed = ConnectionResult.FromJSON(Reader);
             return _Signed;
             }
 
@@ -158,7 +158,7 @@ namespace Goedel.Mesh {
 
 
             var Reader = JSONReader.OfData(SignedData.Payload);
-            var Profile = ConnectionRequest.FromTagged(Reader);
+            var Profile = ConnectionRequest.FromJSON(Reader);
 
             _Signed = Profile;
             return _Signed;
@@ -191,7 +191,7 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Return a signed version of the data.
         /// </summary>
-        public SignedConnectionRequest Signed {
+        public SignedConnectionRequest SignedConnectionRequest {
             get => new SignedConnectionRequest(this); 
             }
 
@@ -200,39 +200,6 @@ namespace Goedel.Mesh {
         /// </summary>
         public string UniqueID {
             get => ParentUDF;  
-            }
-
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-        public ConnectionRequest () { }
-
-        /// <summary>
-        /// Construct a connection request to attach a device to the 
-        /// personal profile of the specified account.
-        /// </summary>
-        /// <param name="Account">Account to request connection to.</param>
-        /// <param name="Device">Device to connect.</param>
-        public ConnectionRequest (Account Account, SignedDeviceProfile Device) {
-
-            ParentUDF = Account.UserProfileUDF;
-            this.Device = Device;
-
-
-            }
-
-        /// <summary>
-        /// Construct a connection request to attach a device to the 
-        /// personal profile of the specified account.
-        /// </summary>
-        /// <param name="AccountID">Account to request connection to.</param>
-        /// <param name="Device">Device to connect.</param>
-        public ConnectionRequest(string AccountID, SignedDeviceProfile Device) {
-
-            ParentUDF = AccountID;
-            this.Device = Device;
-
-
             }
 
 

@@ -18,10 +18,6 @@
 		String Account
 			Description 
 				|The account to which the profile is bound
-		Struct RecryptDevicePublic Devices
-			Multiple
-			Description
-				|Public device keys
 
 	Structure RecryptDevicePublic
 		Description

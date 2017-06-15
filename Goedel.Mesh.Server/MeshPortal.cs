@@ -26,7 +26,7 @@ using Goedel.Protocol;
 using Goedel.Protocol.Framework;
 using Goedel.Mesh;
 
-namespace Goedel.Mesh {
+namespace Goedel.Mesh.Server {
 
     /// <summary>
     /// Abstract interface to a service that supports the MeshPortal API calls.

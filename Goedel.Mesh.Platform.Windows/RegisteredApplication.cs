@@ -32,7 +32,7 @@ namespace Goedel.Mesh.Platform.Windows {
     /// <summary>
     /// Describes the registration of a device profile on a machine.
     /// </summary>
-    public class RegistrationApplicationWindows : RegistrationApplication {
+    public class RegistrationApplicationWindows : RegistrationApplicationCached {
 
 
         /// <summary>
@@ -45,7 +45,8 @@ namespace Goedel.Mesh.Platform.Windows {
         /// Register request to register an application.
         /// </summary>
         /// <param name="ApplicationProfile">The application profile</param>
-        public RegistrationApplicationWindows(ApplicationProfile ApplicationProfile) {
+        public RegistrationApplicationWindows(ApplicationProfile ApplicationProfile, 
+                            RegistrationMachine Machine) : base(ApplicationProfile, Machine)  {
             this.ApplicationProfile = ApplicationProfile;
             }
 
@@ -55,37 +56,21 @@ namespace Goedel.Mesh.Platform.Windows {
         /// </summary>
         /// <param name="UDF">File fingerprint</param>
         /// <param name="File">Filename on local machine</param>
-        public RegistrationApplicationWindows(string UDF=null, string File=null) {
+        public RegistrationApplicationWindows(RegistrationMachine Machine, 
+                    string UDF=null, string File=null) : base (GetFromLocal(UDF, File), Machine) {
+            }
+
+
+
+        private static ApplicationProfile GetFromLocal (string UDF = null, string File = null) {
             if (File == null) {
                 var FileName = Microsoft.Win32.Registry.GetValue(@"HKEY_CURRENT_USER\"
                             + Constants.RegistryApplication, UDF, null);
                 File = FileName as string;
                 }
-            SignedApplicationProfile = SignedApplicationProfile.FromFile(UDF, File);
+            var SignedProfile = SignedApplicationProfile.FromFile(File, UDF);
+            return SignedProfile.ApplicationProfile;
             }
-
-
-        ///// <summary>
-        ///// Factory method to create from an identifier.
-        ///// </summary>
-        ///// <param name="UDF">Profile identifier, if null, the default profile is used.</param>
-        ///// <param name="File">Filename, if null, a default filename is constructed from
-        ///// the identifier.</param>
-        ///// <returns>The registration object</returns>
-        //public static RegistrationApplication Factory(string UDF = null, string File = null) {
-        //    return new RegistrationApplicationWindows(UDF, File);
-        //    }
-
-        ///// <summary>
-        ///// Factory method to create from a profile
-        ///// </summary>
-        ///// <param name="Profile">The profile to register</param>
-        ///// <param name="Portals">The portals at which the profile is registered.</param>
-        ///// <returns>The registration object</returns>
-        //public static RegistrationApplication Factory(
-        //                    SignedApplicationProfile Profile) {
-        //    return new RegistrationApplicationWindows(Profile);
-        //    }
 
         /// <summary>Write to registry.</summary>
         public override void WriteToLocal(bool Default = true) {
@@ -100,11 +85,5 @@ namespace Goedel.Mesh.Platform.Windows {
             File.WriteAllText(FileName, SignedApplicationProfile.ToString());
 
             }
-
-
-
-
-
         }
-
     }
