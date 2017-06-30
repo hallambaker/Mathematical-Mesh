@@ -1,17 +1,25 @@
 ﻿
 
-#Cryptographic Data Objects
+#Shared Classes
 
-##Public Key Objects
+The following classes are used as common elements in
+Mesh profile specifications.a
+
+##Cryptographic Data Classes
+
+Most Mesh objects are signed and/or encrypted. For consistency
+all Mesh classes make use of the cryptographic data classes
+described in this section.
 
 ###Structure: PublicKey
 
-Container for public key pair data
+The PublicKey class is used to describe public key pairs and 
+trust assertions associated with a public key.
 
 
 UDF: String (Optional)
 
-:UDF fingerprint of the key
+:UDF fingerprint of the public key parameters/
 
 X509Certificate: Binary (Optional)
 
@@ -25,8 +33,6 @@ X509CSR: Binary (Optional)
 
 :X.509 Certificate Signing Request.
 
-##JOSE Signature Objects
-
 ###Structure: SignedData
 
 Container for JOSE signed data and related attributes.
@@ -34,7 +40,7 @@ Container for JOSE signed data and related attributes.
 
 Data: Binary (Optional)
 
-##JOSE Encryption Objects
+:The signed data
 
 ###Structure: EncryptedData
 
@@ -42,6 +48,57 @@ Container for JOSE encrypted data and related attributes.
 
 
 Data: Binary (Optional)
+
+:The encrypted data
+
+##Common Application Classes
+
+###Structure: Connection
+
+Describes network connection parameters for an application
+
+
+ServiceName: String (Optional)
+
+:DNS address of the server
+
+Port: Integer (Optional)
+
+:TCP/UDP Port number
+
+Prefix: String (Optional)
+
+:DNS service prefix as described in [!RFC6335]
+
+Security: String [0..Many]
+
+:Describes the security mode to use. Valid choices are Direct/Upgrade/None
+
+UserName: String (Optional)
+
+:Username to present to the service for authentication
+
+Password: String (Optional)
+
+:Password to present to the service for authentication
+
+URI: String (Optional)
+
+:Service connection parameters in URI format
+
+Authentication: String (Optional)
+
+:List of the supported/acceptable authentication mechanisms,
+preferred mechanism first.
+
+TimeOut: Integer (Optional)
+
+:Service timeout in seconds.
+
+Polling: Boolean (Optional)
+
+:If set, the client should poll the specified service intermittently
+for updates.
 
 #Mesh Profile Objects
 
@@ -73,6 +130,30 @@ of the SignedData object contain an object of a specific type.
 For example, a SignedDeviceProfile object MUST contain a Payload field that
 contains a DeviceProfile object.
 
+Unauthenticated: Advice (Optional)
+
+:Additional data that is not authenticated.
+
+###Structure: Advice
+
+Additional data bound to a signed profile that is not authenticated.
+
+
+Default: DateTime (Optional)
+
+:If specified, the profile was the default profile at the specified 
+date and time. The current default for that type of profile is the
+profile with the most recent Default timestamp.
+
+###Structure: PortalAdvice
+
+* Inherits: Advice
+
+
+PortalAddress: String [0..Many]
+
+:A portal address at which this profile is registered.
+
 ###Structure: Profile
 
 * Inherits: Entry
@@ -95,7 +176,7 @@ NotaryToken: String (Optional)
 :A Uniform Notary Token providing evidence that a signature
 was performed after the notary token was created.
 
-##Device Profile Objects
+##Device Profile Classes
 
 ###Structure: SignedDeviceProfile
 
@@ -213,39 +294,9 @@ Applications: ApplicationProfileEntry [0..Many]
 
 :Application profiles connected to this profile.
 
-##Application Profile Objects
-
-###Structure: SignedApplicationProfile
-
-* Inherits: SignedProfile
-
-Contains a signed device profile
-
-[None]
-
-###Structure: EncryptedProfile
-
-* Inherits: Entry
-
-Contains an encrypted profile entry
-
-
-EncryptedData: JoseWebEncryption (Optional)
-
-:The signed and encrypted profile
-
-###Structure: ApplicationProfile
-
-* Inherits: Profile
-
-Parent class from which all application profiles inherit.
-
-
-EncryptedData: JoseWebEncryption (Optional)
-
-:Encrypted application data	
-
 ###Structure: ApplicationProfileEntry
+
+Personal profile entry describing the privileges of specific devices.
 
 
 Identifier: String (Optional)
@@ -267,213 +318,56 @@ SignID: String [0..Many]
 DecryptID: String [0..Many]
 
 :List of devices authorized to read private parts of application 
-profiles					
+profiles		
 
-##Common Application Objects
+##Application Profile Objects
 
-###Structure: Connection
+###Structure: SignedApplicationProfile
 
-Describes network connection parameters for an application
+* Inherits: SignedProfile
 
-
-ServiceName: String (Optional)
-
-:DNS address of the server
-
-Port: Integer (Optional)
-
-:TCP/UDP Port number
-
-Prefix: String (Optional)
-
-:DNS service prefix as described in [!RFC6335]
-
-Security: String [0..Many]
-
-:Describes the security mode to use. Valid choices are Direct/Upgrade/None
-
-UserName: String (Optional)
-
-:Username to present to the service for authentication
-
-Password: String (Optional)
-
-:Password to present to the service for authentication
-
-URI: String (Optional)
-
-:Service connection parameters in URI format
-
-Authentication: String (Optional)
-
-:List of the supported/acceptable authentication mechanisms,
-preferred mechanism first.
-
-TimeOut: Integer (Optional)
-
-:Service timeout in seconds.
-
-Polling: Boolean (Optional)
-
-:If set, the client should poll the specified service intermittently
-for updates.
-
-##Password Application Profile Objects
-
-###Structure: PasswordProfile
-
-* Inherits: ApplicationProfile
-
-Stores usernames and passwords
+Contains a signed device profile
 
 [None]
 
-###Structure: PasswordProfilePrivate
+###Structure: ApplicationProfile
 
+* Inherits: Profile
 
-AutoGenerate: Boolean (Optional)
-
-:If true, a client MAY offer to automatically generate strong
-(i.e. not memorable) passwords for a user. A user would not
-normally want to use this feature unless they have access to
-Mesh password management on every device they use to browse
-the Web
-
-Entries: PasswordEntry [0..Many]
-
-:A list of password credential entries.
-
-NeverAsk: String [0..Many]
-
-:A list of domain names of sites for which clients MUST NOT
-ask to store passwords for.
-
-###Structure: PasswordEntry
-
-Username password entry for a single site
-
-
-Sites: String [0..Many]
-
-:DNS name of site *.example.com matches www.example.com
-etc.
-
-Username: String (Optional)
-
-:Case sensitive username
-
-Password: String (Optional)
-
-:Case sensitive password.
-
-##Mail Application Profile Objects
-
-###Structure: MailProfile
-
-* Inherits: ApplicationProfile
-
-Public profile describes mail receipt policy. Private describes
-Sending policy
-
-
-EncryptionPGP: PublicKey (Optional)
-
-:The current OpenPGP encryption key
-
-EncryptionSMIME: PublicKey (Optional)
-
-:The current S/MIME encryption key
-
-###Structure: MailProfilePrivate
-
-Describes a mail account configuration
-
-Private profile contains connection settings for the inbound and
-outbound mail server(s) and cryptographic private keys. Public
-profile may contain security policy information for the sender.
-
-
-EmailAddress: String (Optional)
-
-:The RFC822 Email address. [e.g. "alice@example.com"]
-
-ReplyToAddress: String (Optional)
-
-:The RFC822 Reply toEmail address. [e.g. "alice@example.com"]
-
-:When set, allows a sender to tell the receiver that replies to
-this account should be directed to this address.
-
-DisplayName: String (Optional)
-
-:The Display Name. [e.g. "Alice Example"]
-
-AccountName: String (Optional)
-
-:The Account Name for display to the app user [e.g. "Work Account"]
-
-Inbound: Connection [0..Many]
-
-:The Inbound Mail Connection(s). This is typically IMAP4 or POP3
-
-:If multiple connections are specified, the order in the sequence
-indicates the preference order.
-
-Outbound: Connection [0..Many]
-
-:The Outbound Mail Connection(s). This is typically SMTP/SUBMIT
-
-:If multiple connections are specified, the order in the sequence
-indicates the preference order.
-
-Sign: PublicKey [0..Many]
-
-:The public keypair(s) for signing and decrypting email.
-
-:If multiple public keys are specified, the order indicates preference.
-
-Encrypt: PublicKey [0..Many]
-
-:The public keypairs for encrypting and decrypting email.
-
-:If multiple public keys are specified, the order indicates preference.							
-
-##Network Application Profile Objects
-
-###Structure: NetworkProfile
-
-* Inherits: ApplicationProfile
-
-Describes the network profile to follow
+Parent class from which all application profiles inherit.
 
 [None]
 
-###Structure: NetworkProfilePrivate
+###Structure: ApplicationProfilePrivate
 
-Describes the network profile to follow
+* Inherits: Entry
+
+The base class for all private profiles.
+
+[None]
+
+###Structure: ApplicationDevicePublic
+
+* Inherits: Entry
+
+Describes the public per device data
 
 
-Sites: String [0..Many]
+DeviceDescription: String (Optional)
 
-:DNS name of sites to which profile applies *.example.com matches www.example.com
-etc.		
+:Description of the device for convenience of the user.
 
-DNS: Connection [0..Many]
+DeviceUDF: String (Optional)
 
-:DNS Resolution Services
+:Fingerprint of device that this key corresponds to.
 
-Prefix: String [0..Many]
+###Structure: ApplicationDevicePrivate
 
-:DNS prefixes to search
+* Inherits: Entry
 
-CTL: Binary (Optional)
+Describes the private per device data
 
-:Certificate Trust List giving WebPKI roots to trust
-
-WebPKI: String [0..Many]
-
-:List of UDF fingerprints of keys making up the trust roots
-to be accepted for Web PKI purposes.
+[None]
 
 ##Key Escrow Objects
 
@@ -485,6 +379,8 @@ Contains escrowed data
 
 
 EncryptedData: JoseWebEncryption (Optional)
+
+:The encrypted escrow data 
 
 ###Structure: OfflineEscrowEntry
 
@@ -504,12 +400,9 @@ Contains data escrowed using the online escrow mechanism.
 
 ###Structure: EscrowedKeySet
 
-A set of escrowed keys.
+A set of escrowed keys. 
 
-
-PrivateKeys: Key [0..Many]
-
-:The escrowed keys.
+[None]
 
 #Portal Connection
 

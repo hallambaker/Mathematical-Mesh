@@ -28,14 +28,14 @@ She creates two accounts:
 The JSON encoding of the password data is as follows:
 
 ~~~~
-#{Example.PasswordProfilePrivate1}
+#{Example.PasswordProfile1.Private.ToString()}
 ~~~~
 
 The JSON encoded password data is then encrypted and stored in an
 application profile as follows:
 
 ~~~~
-#{Example.PasswordProfile}
+#{Example.PasswordProfile1}
 ~~~~
 
 As we saw earlier, Alice really needs to start using stronger passwords. 
@@ -51,7 +51,7 @@ Alice chooses to use password generation. Her password manager profile is
 updated to reflect this new choice.
 
 ~~~~
-#{Example.PasswordProfilePrivate2}
+#{Example.PasswordProfile2.Private.ToString()}
 ~~~~
 
 Alice is happy to use the password manager for her general Web sites but
@@ -60,7 +60,7 @@ if the password should be stored in the Mesh, Alice declines and asks
 not to be asked in the future.
 
 ~~~~
-#{Example.PasswordProfilePrivate3}
+#{Example.PasswordProfile3.Private.ToString()}
 ~~~~
 
 #end method
@@ -111,19 +111,15 @@ a subsequent account creation request MAY still fail.
 
 #{Point.Messages[1].String()}
 
-
-
 #% Example.Traces.Level = 5;
 [Note that for the sake of concise presentation, the HTTP binding
 information is omitted from future examples.]
 
-
 ####Creating a new user profile
 #% Point = Example.Traces.Get (Example.LabelCreatePersonal);
-#% Point = Example.Traces.Get (Example.LabelCreatePersonal);
-#% var CreateRequest = Point.Messages[0].Payload as Goedel.Mesh.CreateRequest;
-#% var SignedProfile = CreateRequest.Profile as SignedPersonalProfile;
-#% var Profile = SignedProfile.PersonalProfile;
+#% var CreateRequest = Point.Messages[0].Payload as Goedel.Mesh.Server.CreateRequest;
+#% var SignedProfile = CreateRequest?.Profile as SignedPersonalProfile;
+#% var Profile = SignedProfile?.PersonalProfile;
 
 The first step in creating a new personal profile is to create a
 Master Profile object. This contains the long term Master Signing
@@ -138,13 +134,13 @@ PKIX based applications to make use of PKIX certificate chains
 to express the same trust relationships described in the Mesh.
 
 ~~~~
-#{JSONDebugWriter.Write (Profile.MasterProfile)}
+#{JSONDebugWriter.Write (Profile?.MasterProfile)}
 ~~~~
 
 The Master Profile is always signed using the Master Signing Key:
 
 ~~~~
-#{JSONDebugWriter.Write (Profile.SignedMasterProfile)}
+#{JSONDebugWriter.Write (Profile?.SignedMasterProfile)}
 ~~~~
 
 Since the device used to create the personal profile is typically
@@ -152,9 +148,9 @@ connected to the profile, a Device profile entry is created
 for it. This contains a Device Signing Key, a Device Encryption Key
 and a Device Authentication Key:
 
-#% var DeviceProfile = Profile.Devices[0];
+#% var DeviceProfile = Profile?.Devices[0];
 ~~~~
-#{JSONDebugWriter.Write (DeviceProfile.SignedData)}
+#{JSONDebugWriter.Write (DeviceProfile?.SignedData)}
 ~~~~
 
 The Device Profile is signed using the Device Signing Key:
@@ -236,13 +232,13 @@ device can make use of the deencryption and authentication keys
 but these private keys cannot be extracted from the device:
 
 ~~~~
-#{JSONDebugWriter.Write (Example.SignedDeviceProfile2.SignedData)}
+#{JSONDebugWriter.Write (Example.Shell2.DeviceProfile)}
 ~~~~
 
 The device profile is then signed:
 
 ~~~~
-#{JSONDebugWriter.Write (Example.SignedDeviceProfile2)}
+#{JSONDebugWriter.Write (Example.Shell2.DeviceProfile.SignedDeviceProfile)}
 ~~~~
 
 ######Profile Authentication
@@ -361,7 +357,7 @@ then signed by the online signing key. The administration
 client publishes the updated profile to the Mesh through the
 portal:
 
-#% Point = Example.Traces.Get (Example.LabelConnectPublish);
+#% Point = Example.Traces.Get (Example.LabelConnectAccept);
 #{Point.Messages[0].String()}
 
 As usual, the service returns the response code:
@@ -374,12 +370,11 @@ Having accepted the device and connected it to the profile, the
 administration client creates and signs a connection completion
 result which is posted to the portal using ConnectCompleteRequest:
 
-#% Point = Example.Traces.Get (Example.LabelConnectAccept);
-#{Point.Messages[0].String()}
+#{Point.Messages[2].String()}
 
 Again, the service returns the response code:
 
-#{Point.Messages[1].String()}
+#{Point.Messages[3].String()}
 
 ######Connecting device polls for status update.
 
@@ -387,7 +382,7 @@ As stated previously, the connecting device polls the portal
 periodically to determine the status of the pending request
 using ConnectStatusRequest:
 
-#% Point = Example.Traces.Get (Example.LabelConnectStatus);
+#% Point = Example.Traces.Get (Example.LabelConnectComplete);
 #{Point.Messages[0].String()}
 
 If the response is that the connection status has not changed,
@@ -432,12 +427,12 @@ decrypted by the devices that hold a decryption key.
 The application profile is published to the Mesh in the same
 way as any other profile update, via a a Publish transaction:
 
-#% Point = Example.Traces.Get (Example.LabelApplicationPublish);
-#{Point.Messages[0].String()}
+#% Point = Example.Traces.Get (Example.LabelApplicationWeb1);
+{Point.Messages[0].String()}
 
 The service returns a status response.
 
-#{Point.Messages[1].String()}
+{Point.Messages[1].String()}
 
 Note that the degree of verification to be performed by the service
 when an application profile is published is an open question.
@@ -445,8 +440,7 @@ when an application profile is published is an open question.
 Having created the application profile, the administration client
 adds it to the personal profile and publishes it:
 
-#% Point = Example.Traces.Get (Example.LabelApplicationProfile);
-#{Point.Messages[0].String()}
+{Point.Messages[0].String()}
 
 Note that if the publication was to happen in the reverse order,
 with the personal profile being published before the application
@@ -456,7 +450,7 @@ Though the value of such a check is debatable. It might well
 be preferable to not make such checks as it permits an application
 profile to have a degree of anonymity.
 
-#{Point.Messages[1].String()}
+{Point.Messages[1].String()}
 
 ####Creating a recovery profile
 
@@ -496,11 +490,11 @@ The OfflineEscrowEntry is published using the usual Publish
 transaction:
 
 #% Point = Example.Traces.Get (Example.LabelEscrow);
-#{Point.Messages[0].String()}
+{Point.Messages[0].String()}
 
 The response indicates success or failure:
 
-#{Point.Messages[1].String()}
+{Point.Messages[1].String()}
 
 
 ####Recovering a profile
@@ -511,12 +505,12 @@ to use as the locator in a Get transaction:
 
 
 #% Point = Example.Traces.Get (Example.LabelRecover);
-#{Point.Messages[0].String()}
+{Point.Messages[0].String()}
 
 If the transaction succeeds, GetResponse is returned with the 
 requested data.
 
-#{Point.Messages[1].String()}
+{Point.Messages[1].String()}
 
 The client can now decrypt the OfflineEscrowEntry to recover the 
 private key(s).

@@ -4,9 +4,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using Goedel.Mesh;
-using Goedel.Cryptography;
+using Goedel.Utilities;
 using Goedel.Protocol.Debug;
 using Goedel.Mesh.Server;
+using Goedel.Mesh.MeshMan;
+using Goedel.Mesh.Platform;
 
 namespace ExampleGenerator {
     public partial class CreateExamples {
@@ -16,10 +18,11 @@ namespace ExampleGenerator {
             StartService();
 
             CreateProfile();
-            PublishProfile();
             ConnectDevice();
-            AddApplicationWeb();
-            KeyRecovery();
+            AddApplicationWeb();  
+            AddApplicationSSH();  // Todo: check, implement
+            //AddApplicationMail(); // Todo: implement
+            KeyRecovery(); // Todo: implement
 
             Traces = Portal.Traces;
 
@@ -51,160 +54,156 @@ namespace ExampleGenerator {
             File.Delete(LogMesh);
             File.Delete(LogPortal);
 
-
             Portal = new MeshPortalTraced(NameService, LogMesh, LogPortal);
             MeshPortal.Default = Portal;
 
-            MeshClient = new MeshClient(PortalAccount: NameService);
+            MeshClient = new MeshClient(PortalAccount: AccountID);
             }
 
-        public string Device1 = "Alice Desktop";
-        public string Device1Description = 
-            "A desktop computer built by Acme Computer Co.";
+        public static string Device1Name = "AliceDesktop";
+        public static string Device1Description = "A desktop computer built by Acme Computer Co.";
 
-        public string Device2 = "Alice Ring";
-        public string Device2Description =
-            "A wearable ring computer bought.";
+        public static string Device2Name = "AliceRing";
+        public static string Device2Description = "A wearable ring computer";
 
-        public SignedDeviceProfile SignedDeviceProfile1, SignedDeviceProfile2;
-        public PersonalProfile PersonalProfile;
-        public SignedPersonalProfile SignedPersonalProfile;
+        public static string Device3Name = "AliceLaptop";
+        public static string Device3Description = "A laptop computer";
+
+
+        //public SignedDeviceProfile SignedDeviceProfile1
+        //public SignedDeviceProfile2;
+        //public PersonalProfile PersonalProfile;
+        //public SignedPersonalProfile SignedPersonalProfile;
+
+        CommandLineInterpreter CommandLineInterpreter = new CommandLineInterpreter();
+
+        public Shell Shell1 = new Shell() {
+            MeshCatalog = new MeshCatalog(new RegistrationMachineCached()),
+            DefaultDescription = Device1Description
+            };
+        public string Device1 (string Command) {
+            return Device1(Command, out var Forget);
+            }
+        public string Device1 (string Command, out string Tag) {
+            Tag = Label(Command);
+            return Shell1.Dispatch(Command);
+            }
+
+        public Shell Shell2 = new Shell() {
+            MeshCatalog = new MeshCatalog(new RegistrationMachineCached()),
+            DefaultDescription = Device2Description
+            };
+        public string Device2 (string Command, out string Tag) {
+            Tag = Label(Command);
+            return Shell2.Dispatch(Command);
+            }
+
+        public Shell Shell3 = new Shell() {
+            MeshCatalog = new MeshCatalog(new RegistrationMachineCached()),
+            DefaultDescription = Device3Description
+            };
+        public string Device3 (string Command, out string Tag) {
+            Tag = Label(Command);
+            return Shell3.Dispatch(Command);
+            }
+
+        static int Count = 0;
+        string Label (string Command) {
+            var Tag = Count++.ToString();
+            Portal.Label(Tag);
+            Portal.Traces.Current.Command = Command;
+            return Tag;
+            }
+
+        public string LabelValidate;
+        public string LabelCreatePersonal;
+        public string CommandValidate;
 
         /// <summary>
         /// Create a new profile for alice@example.com
         /// </summary>
         void CreateProfile() {
-            // Create device profile
-            var DeviceProfile1 = new DeviceProfile(Device1, Device1Description);
-            SignedDeviceProfile1 = DeviceProfile1.SignedDeviceProfile;
-            // Create master profile
+            // check that the name is available
+            Device1("verify test@prismproof.org", out LabelValidate);
 
-            PersonalProfile = new PersonalProfile(DeviceProfile1);
-            SignedPersonalProfile = PersonalProfile.SignedPersonalProfile;
+            // create the profile
+            Device1("personal create test@prismproof.org \\id=" + Device1Name, out LabelCreatePersonal);
             }
 
 
-        public string LabelValidate = "Validate";
-        public string LabelCreatePersonal = "CreatePersonal";
-        /// <summary>
-        /// Publish profile
-        /// </summary>
-        void PublishProfile() {
-            Portal.Label(LabelValidate);
-            // Check that Portal Account ID is available
-            MeshClient.Validate(AccountID);
-
-            Portal.Label(LabelCreatePersonal);
-            // Publish to the Portal
-            MeshClient.CreatePortalAccount(NameAccount, SignedPersonalProfile);
-            }
-
-
-        public string LabelConnectRequest = "Connect Request";
-        public string LabelConnectPending = "Connect Pending";
-        public string LabelConnectPublish = "Connect Publish";
-        public string LabelConnectAccept = "Connect Accept";
-        public string LabelConnectStatus = "Connect Status";
+        public string LabelConnectRequest;
+        public string LabelConnectPending;
+        public string LabelConnectAccept;
+        public string LabelConnectComplete;
         /// <summary>
         /// Add a second device
         /// </summary>
         void ConnectDevice() {
-            
-            //// Create device profile
-            //SignedDeviceProfile2 = new SignedDeviceProfile(Device2, Device2Description);
 
-            //Portal.Label(LabelConnectRequest);
-            //// Post connection request
-            //MeshClient.ConnectRequest (SignedDeviceProfile2);
+            // Connect the second device
+            Device2("connect start test@prismproof.org", out LabelConnectRequest);
+            Device1("connect pending", out LabelConnectPending);
 
-            //Portal.Label(LabelConnectPending);
-            //// Poll for list of connection requests
-            //var ConnectPendingResult = MeshClient.ConnectPending();
-
-
-            //var FirstRequest = ConnectPendingResult.Pending[0];
-
-            //// Publish the updated profile to the Mesh.
-            //Portal.Label(LabelConnectPublish);
-            //PersonalProfile.Add(FirstRequest.Data.Device);
-            //SignedPersonalProfile = PersonalProfile.SignedPersonalProfile;
-            //MeshClient.Publish(SignedPersonalProfile);
-
-            //Portal.Label(LabelConnectAccept);
-            //// Post acceptance for first request
-            //MeshClient.ConnectClose(FirstRequest, ConnectionStatus.Accepted);
-            //Portal.Label(LabelConnectStatus);
-            //// Retrieve acceptance
-            //MeshClient.ConnectStatus(SignedDeviceProfile2.UDF);
+            Device1("connect accept " + Shell2.Authenticator, out LabelConnectAccept);
+            Device2("connect Complete", out LabelConnectComplete);
             }
 
+        
+        public string LabelApplicationWeb1;
+        public string LabelApplicationWeb2;
+        public string LabelApplicationWeb3;
+        public string LabelApplicationWeb4;
+        public string LabelApplicationWeb5;
 
-        public string LabelApplicationPublish = "Publish application";
-        public string LabelApplicationProfile = "Publish update profile";
+
+        public string LabelApplicationProfile;
 
         public PasswordProfile PasswordProfile;
-        public string PasswordProfilePrivate1;
-        public string PasswordProfilePrivate2;
-        public string PasswordProfilePrivate3;
+        public PasswordProfile PasswordProfile1 ;
+        public PasswordProfile PasswordProfile2 ;
+        public PasswordProfile PasswordProfile3 ;
 
         /// <summary>
         /// Create a Web credential profile.
         /// </summary>
         void AddApplicationWeb() {
 
-            //// Create basic application
-            //PasswordProfile = new PasswordProfile(true);
-            //var ApplicationProfileEntry = PersonalProfile.Add(PasswordProfile);
-
-
-            //// Add decryption blobs for each device granted access
-            //PasswordProfile.AddDevice(SignedDeviceProfile1);
-            //PasswordProfile.AddDevice(SignedDeviceProfile2);
-
-            //Portal.Label(LabelApplicationPublish);
-            //// Publish the application profile to the Mesh
-            //MeshClient.Publish(PasswordProfile.SignedApplicationProfile);
-
-            //Portal.Label(LabelApplicationProfile);
-            //// Publish the user profile to the Mesh
-            ////PersonalProfile.Add(SignedPasswordProfile);
-            //MeshClient.Publish(SignedPersonalProfile);
-
-
-            //PasswordProfile.Add("example.com", "alice", "secret");
-            //PasswordProfile.Add("cnn.com", "alice1", "secret");
-
-            //PasswordProfilePrivate1 = PasswordProfile.Private.ToString();
-            //PasswordProfile.Private.AutoGenerate = true;
-
-            //PasswordProfilePrivate2 = PasswordProfile.Private.ToString();
-
-            //PasswordProfile.Private.NeverAsk = new List<string> { "bank.com" };
-
-            //PasswordProfilePrivate3 = PasswordProfile.Private.ToString();
+            Device1("password create", out LabelApplicationWeb1);
+            Device1("password add example.com alice password1", out LabelApplicationWeb1);
+            PasswordProfile1 = PasswordProfile;
+            Device1("password add example.com alice password2", out LabelApplicationWeb2);
+            Device1("password add example.net alice password3", out LabelApplicationWeb3);
+            PasswordProfile2 = PasswordProfile;
+            Device1("password add example.com alice password2", out LabelApplicationWeb4);
+            Device1("password delete example.net", out LabelApplicationWeb5);
+            PasswordProfile3 = PasswordProfile;
             }
 
-        SSHProfile SSHProfile;
+        //SSHProfile SSHProfile;
 
         /// <summary>
         /// Create a SSH credential profile.
         /// </summary>
         void AddApplicationSSH() {
 
-            // Create basic application
-            SSHProfile = new SSHProfile();
-            var ApplicationProfileEntry = PersonalProfile.Add(SSHProfile);
-
-
-
+            Device1("ssh create");
+            Device1("ssh known");
+            Device1("ssh public ");
+            Device1("ssh private");
             }
 
+        /// <summary>
+        /// Create a SSH credential profile.
+        /// </summary>
+        void AddApplicationMail () {
+            throw new NYI();
+            }
 
 
         /// <summary>
         /// The offline escrow entry data.
         /// </summary>
-        public OfflineEscrowEntry OfflineEscrowEntry;
+        public OfflineEscrowEntry OfflineEscrowEntry { get => Shell1.OfflineEscrowEntry;  }
 
 
         public string LabelEscrow = "Publish escrow";
@@ -215,29 +214,39 @@ namespace ExampleGenerator {
         /// </summary>
         void KeyRecovery() {
 
-            // Create escrow keyshares for 2 our of 3
-            OfflineEscrowEntry = new OfflineEscrowEntry(PersonalProfile, 3, 2);
+            Device1("personal escrow /quorum 2 /shares 3 /file=escrow.json", out LabelEscrow);
 
-            Portal.Label(LabelEscrow);
-            // Publish key escrow to the Mesh
-            MeshClient.Publish(OfflineEscrowEntry);
+            var Params = OfflineEscrowEntry.KeyShares[0].Text + " " +
+                OfflineEscrowEntry.KeyShares[1].Text;
+            Device1("personal recover " + Params, out LabelRecover);
 
-            // Recover encryption key from two shares
-            var share1 = OfflineEscrowEntry.KeyShares[0].Text;
-            var share2 = OfflineEscrowEntry.KeyShares[1].Text;
+            //throw new NYI();
 
-            // Get recovery data
-            string[] TestShares = { share1, share2 };
-            var RecoveryKey = new Secret (TestShares);
 
-            // Determine identifier
-            var Identifier = UDF.ToString(UDF.FromEscrowed(
-                RecoveryKey.Key, 150));
 
-            // Here need a call to pull the data
-            Portal.Label(LabelRecover);
+            //// Create escrow keyshares for 2 our of 3
+            //OfflineEscrowEntry = new OfflineEscrowEntry(PersonalProfile, 3, 2);
 
-            MeshClient.Recover(Identifier);
+            //Portal.Label(LabelEscrow);
+            //// Publish key escrow to the Mesh
+            //MeshClient.Publish(OfflineEscrowEntry);
+
+            //// Recover encryption key from two shares
+            //var share1 = OfflineEscrowEntry.KeyShares[0].Text;
+            //var share2 = OfflineEscrowEntry.KeyShares[1].Text;
+
+            //// Get recovery data
+            //string[] TestShares = { share1, share2 };
+            //var RecoveryKey = new Secret (TestShares);
+
+            //// Determine identifier
+            //var Identifier = UDF.ToString(UDF.FromEscrowed(
+            //    RecoveryKey.Key, 150));
+
+            //// Here need a call to pull the data
+            //Portal.Label(LabelRecover);
+
+            //MeshClient.Recover(Identifier);
             }
 
         }

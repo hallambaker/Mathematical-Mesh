@@ -1,55 +1,49 @@
 setlocal
 cd %~dp0
 
+
+echo Generate schemas etc.
+cd Generated 
+
+protogen ../Goedel.Mesh/SchemaConfirm.protocol /md
+protogen ../Goedel.Mesh/SchemaMail.protocol /md
+protogen ../Goedel.Mesh/SchemaMesh.protocol /md
+protogen ../Goedel.Mesh/SchemaNetwork.protocol /md
+protogen ../Goedel.Mesh/SchemaPassword.protocol /md
+protogen ../Goedel.Mesh/SchemaSSH.protocol /md
+protogen ../Goedel.Mesh/SchemaRecrypt.protocol /md
+protogen ../Goedel.Mesh.Platform/Serialization.protocol /md
+protogen ../Goedel.Mesh.Server/MeshProtocol.protocol /md
+
 echo Convert documents to TXT, XML and HTML formats
+cd ..\Publish
+
+echo sin
+rfctool O:\Documents\Mesh\hallambaker-sin.docx /html /xml /txt
+
 
 echo jsonbcd
-rfctool O:\Documents\IETF\hallambaker-jsonbcd.docx ^
-	/html Publish\hallambaker-jsonbcd.html ^
-	/xml Publish\hallambaker-jsonbcd.xml ^
-	/txt Publish\hallambaker-jsonbcd.txt
-
+rfctool O:\Documents\IETF\hallambaker-jsonbcd.docx /html /xml /txt
 
 echo udf
-rfctool O:\Documents\Mesh\hallambaker-udf.docx ^
-	/html Publish\hallambaker-udf.html ^
-	/xml Publish\hallambaker-udf.xml ^
-	/txt Publish\hallambaker-udf.txt
+rfctool O:\Documents\Mesh\hallambaker-udf.docx /html /xml /txt
 
 echo Web App
-rfctool O:\Documents\Mesh\hallambaker-mesh-app-web.docx ^
-	/html Publish\hallambaker-mesh-app-web.html ^
-	/xml Publish\hallambaker-mesh-app-web.xml ^
-	/txt Publish\hallambaker-mesh-app-web.txt
+rfctool O:\Documents\Mesh\hallambaker-mesh-app-web.docx /html /xml /txt
 
 echo Platform
-rfctool O:\Documents\Mesh\hallambaker-mesh-platform.docx ^
-	/html Publish\hallambaker-mesh-platform.html ^
-	/xml Publish\hallambaker-mesh-platform.xml ^
-	/txt Publish\hallambaker-mesh-platform.txt
+rfctool O:\Documents\Mesh\hallambaker-mesh-platform.docx /html /xml /txt
 
 echo architecture
-rfctool O:\Documents\Mesh\hallambaker-mesh-architecture.docx ^
-	/html Publish\hallambaker-mesh-architecture.html ^
-	/xml Publish\hallambaker-mesh-architecture.xml ^
-	/txt Publish\hallambaker-mesh-architecture.txt
+rfctool O:\Documents\Mesh\hallambaker-mesh-architecture.docx /html /xml /txt
 
 echo developer
-rfctool O:\Documents\Mesh\hallambaker-mesh-developer.docx ^
-	/html Publish\hallambaker-mesh-developer.html ^
-	/xml Publish\hallambaker-mesh-developer.xml ^
-	/txt Publish\hallambaker-mesh-developer.txt
+rfctool O:\Documents\Mesh\hallambaker-mesh-developer.docx /html /xml /txt
 
 echo reference
-rfctool O:\Documents\Mesh\hallambaker-mesh-reference.docx ^
-	/html Publish\hallambaker-mesh-reference.html ^
-	/xml Publish\hallambaker-mesh-reference.xml ^
-	/txt Publish\hallambaker-mesh-reference.txt
+rfctool O:\Documents\Mesh\hallambaker-mesh-reference.docx /html /xml /txt
 
-echo reference
-rfctool O:\Documents\Mesh\hallambaker-json-web-service.docx ^
-	/html Publish\hallambaker-json-web-service.html ^
-	/xml Publish\hallambaker-json-web-service.xml ^
-	/txt Publish\hallambaker-json-web-service.txt
+echo JSON Web Service 
+rfctool O:\Documents\Mesh\hallambaker-json-web-service.docx /html /xml /txt
 
 exit /b 0

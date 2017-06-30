@@ -17,6 +17,9 @@ namespace ExampleGenerator {
 
 
         static void Main(string[] args) {
+            Goedel.IO.Debug.Initialize();
+            MeshWindows.Initialize(true);
+
             var Program = new CreateExamples();
             Program.Go();
             }
