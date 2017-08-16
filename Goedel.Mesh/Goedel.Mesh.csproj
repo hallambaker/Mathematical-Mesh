@@ -119,10 +119,10 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="SchemaPassword.cs">
+    <Compile Include="SchemaWeb.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>SchemaPassword.protocol</DependentUpon>
+      <DependentUpon>SchemaWeb.protocol</DependentUpon>
     </Compile>
     <Compile Include="SchemaSSH.cs">
       <AutoGen>True</AutoGen>
@@ -152,9 +152,9 @@
       <Generator>protogen</Generator>
       <LastGenOutput>SchemaNetwork.cs</LastGenOutput>
     </None>
-    <None Include="SchemaPassword.protocol">
+    <None Include="SchemaWeb.protocol">
       <Generator>protogen</Generator>
-      <LastGenOutput>SchemaPassword.cs</LastGenOutput>
+      <LastGenOutput>SchemaWeb.cs</LastGenOutput>
     </None>
     <None Include="SchemaMail.protocol">
       <Generator>protogen</Generator>

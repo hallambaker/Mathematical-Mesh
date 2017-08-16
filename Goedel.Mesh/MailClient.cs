@@ -86,11 +86,7 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Does the account have S/MIME parameters already?
         /// </summary>
-        public virtual bool GotSMIME {
-            get {
-                return false;
-                }
-            }
+        public virtual bool GotSMIME {get =>false; }
 
         /// <summary>
         /// List of keys for signing.
@@ -195,16 +191,14 @@ namespace Goedel.Mesh {
                                 CryptoCatalog.Default.AlgorithmSignature);
             SignKey.SignCertificate(Application.EmailSignature |
                         Application.DataSignature, EmailAddress, RootKey);
-            SignKey.X509Chain = new List<byte[]>();
-            SignKey.X509Chain.Add(RootKeyCertificate);
+            SignKey.X509Chain = new List<byte[]>() { RootKeyCertificate };
 
 
             var EncryptKey = PublicKey.Generate(KeyType.AEK, 
                                 CryptoCatalog.Default.AlgorithmExchange);
             EncryptKey.SignCertificate(Application.EmailEncryption |
                         Application.DataEncryption, EmailAddress, RootKey);
-            EncryptKey.X509Chain = new List<byte[]>();
-            EncryptKey.X509Chain.Add(RootKeyCertificate);
+            EncryptKey.X509Chain = new List<byte[]>() { RootKeyCertificate };
 
 
             //var SigningCSR = new CertificationRequest(SignKey.Certificate);

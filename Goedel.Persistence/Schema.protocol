@@ -32,9 +32,9 @@
 			Multiple
 			Description
 				|Index terms for data item
-		Binary			Data
-			Description
-				|Binary data.
+		//Binary			Data
+		//	Description
+		//		|Binary data.
 		String			Text
 			Description
 				|Text data.

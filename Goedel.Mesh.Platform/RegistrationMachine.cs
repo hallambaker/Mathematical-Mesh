@@ -180,12 +180,14 @@ namespace Goedel.Mesh.Platform {
         /// <param name="SignedProfile">Profile to add.</param>
         /// <returns>Registration for the created profile.</returns>
         public override RegistrationPersonal Add(SignedPersonalProfile SignedProfile) {
-            var Registration = new RegistrationPersonalCached(SignedProfile, this);
+         var Registration = new RegistrationPersonalCached(SignedProfile, this);
             Register(Registration);
             return Registration;
             }
 
         protected void Register(RegistrationPersonal Profile) {
+            _Personal = _Personal ?? Profile; // Make default if none specified
+            Profile.RegistrationMachine = this;
             PersonalProfilesUDF.AddSafe(Profile.UDF, Profile); // NYI check if already entered
             if (Profile.Portals != null) {
                 foreach (var Name in Profile.Portals) {
@@ -344,7 +346,7 @@ namespace Goedel.Mesh.Platform {
         public RegistrationApplicationCached (ApplicationProfile ApplicationProfile,
                         RegistrationMachine Machine) {
             RegistrationMachine = Machine;
-            this.SignedApplicationProfile = ApplicationProfile.SignedApplicationProfile;
+            this.ApplicationProfile = ApplicationProfile;
             }
 
 

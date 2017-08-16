@@ -447,7 +447,7 @@ namespace ExampleGenerator {
 			_Output.Write ("decrypted by the devices that hold a decryption key.\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("~~~~\n{0}", _Indent);
-			_Output.Write ("{1}\n{0}", _Indent, Example.PasswordProfile);
+			_Output.Write ("{1}\n{0}", _Indent, Example.PasswordProfile1);
 			_Output.Write ("~~~~\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("The application profile is published to the Mesh in the same\n{0}", _Indent);

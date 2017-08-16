@@ -166,6 +166,10 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <returns>Decrypted bytes.</returns>
         public virtual ApplicationProfilePrivate GetProfilePrivate () {
+            if (SharedPrivate == null) {
+                return null;
+                }
+
             var Key = SharedPrivate.GetKey();
             Assert.NotNull(Key, MeshException.Throw);
             var Result = SharedPrivate.Decrypt(Key);

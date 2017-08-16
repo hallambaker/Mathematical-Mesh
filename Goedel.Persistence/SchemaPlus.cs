@@ -78,7 +78,7 @@ namespace Goedel.Persistence {
         /// <summary>
         /// Returns a new JSONReader for the data entry.
         /// </summary>
-        public JSONReader JSONReader { get => new JSONReader(Data); }
+        public JSONReader JSONReader { get => new JSONReader(Text); }
 
         /// <summary>
         /// Construct a data item with the specified transaction identifier, uniqueID, text data and keys.

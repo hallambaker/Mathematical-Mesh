@@ -58,6 +58,7 @@ namespace Goedel.Mesh.MeshMan {
 				{"fingerprint", _Fingerprint._DescribeCommand },
 				{"sync", _Sync._DescribeCommand },
 				{"escrow", _Escrow._DescribeCommand },
+				{"recover", _Recover._DescribeCommand },
 				{"export", _Export._DescribeCommand },
 				{"import", _Import._DescribeCommand }
 				} // End Entries
@@ -262,6 +263,14 @@ namespace Goedel.Mesh.MeshMan {
 			Escrow		Options = new Escrow ();
 			ProcessOptions (Args, Index, Options);
 			Dispatch.Escrow (Options);
+			}
+
+		public static void Handle_Recover (
+					DispatchShell  DispatchIn, string[] Args, int Index) {
+			Shell Dispatch =	DispatchIn as Shell;
+			Recover		Options = new Recover ();
+			ProcessOptions (Args, Index, Options);
+			Dispatch.Recover (Options);
 			}
 
 		public static void Handle_Export (
@@ -1495,6 +1504,213 @@ namespace Goedel.Mesh.MeshMan {
 
     public partial class Escrow : _Escrow {
         } // class Escrow
+
+    public class _Recover : Goedel.Command.Dispatch  {
+
+		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new String (),
+			new String (),
+			new String (),
+			new String (),
+			new String (),
+			new String (),
+			new String (),
+			new String (),
+			new String (),
+			new String (),
+			new String ()			} ;
+
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual String S0 {
+			get => _Data[0] as String;
+			set => _Data[0]  = value;
+			}
+
+		public virtual string _S0 {
+			set => _Data[0].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual String S1 {
+			get => _Data[1] as String;
+			set => _Data[1]  = value;
+			}
+
+		public virtual string _S1 {
+			set => _Data[1].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual String S2 {
+			get => _Data[2] as String;
+			set => _Data[2]  = value;
+			}
+
+		public virtual string _S2 {
+			set => _Data[2].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual String S3 {
+			get => _Data[3] as String;
+			set => _Data[3]  = value;
+			}
+
+		public virtual string _S3 {
+			set => _Data[3].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual String S4 {
+			get => _Data[4] as String;
+			set => _Data[4]  = value;
+			}
+
+		public virtual string _S4 {
+			set => _Data[4].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual String S5 {
+			get => _Data[5] as String;
+			set => _Data[5]  = value;
+			}
+
+		public virtual string _S5 {
+			set => _Data[5].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual String S6 {
+			get => _Data[6] as String;
+			set => _Data[6]  = value;
+			}
+
+		public virtual string _S6 {
+			set => _Data[6].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual String S7 {
+			get => _Data[7] as String;
+			set => _Data[7]  = value;
+			}
+
+		public virtual string _S7 {
+			set => _Data[7].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual String S8 {
+			get => _Data[8] as String;
+			set => _Data[8]  = value;
+			}
+
+		public virtual string _S8 {
+			set => _Data[8].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual String S9 {
+			get => _Data[9] as String;
+			set => _Data[9]  = value;
+			}
+
+		public virtual string _S9 {
+			set => _Data[9].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual String S10 {
+			get => _Data[10] as String;
+			set => _Data[10]  = value;
+			}
+
+		public virtual string _S10 {
+			set => _Data[10].Parameter (value);
+			}
+		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
+			Identifier = "recover",
+			Brief =  "Recover a previously escrowed key",
+			HandleDelegate =  CommandLineInterpreter.Handle_Recover,
+			Lazy =  false,
+			Entries = new List<DescribeEntry> () {
+				new DescribeEntryParameter () {
+					Identifier = "S0", 
+					Default = null, // null if null
+					Brief = "<Unspecified>",
+					Index = 0,
+					Key = ""
+					},
+				new DescribeEntryParameter () {
+					Identifier = "S1", 
+					Default = null, // null if null
+					Brief = "<Unspecified>",
+					Index = 1,
+					Key = ""
+					},
+				new DescribeEntryParameter () {
+					Identifier = "S2", 
+					Default = null, // null if null
+					Brief = "<Unspecified>",
+					Index = 2,
+					Key = ""
+					},
+				new DescribeEntryParameter () {
+					Identifier = "S3", 
+					Default = null, // null if null
+					Brief = "<Unspecified>",
+					Index = 3,
+					Key = ""
+					},
+				new DescribeEntryParameter () {
+					Identifier = "S4", 
+					Default = null, // null if null
+					Brief = "<Unspecified>",
+					Index = 4,
+					Key = ""
+					},
+				new DescribeEntryParameter () {
+					Identifier = "S5", 
+					Default = null, // null if null
+					Brief = "<Unspecified>",
+					Index = 5,
+					Key = ""
+					},
+				new DescribeEntryParameter () {
+					Identifier = "S6", 
+					Default = null, // null if null
+					Brief = "<Unspecified>",
+					Index = 6,
+					Key = ""
+					},
+				new DescribeEntryParameter () {
+					Identifier = "S7", 
+					Default = null, // null if null
+					Brief = "<Unspecified>",
+					Index = 7,
+					Key = ""
+					},
+				new DescribeEntryParameter () {
+					Identifier = "S8", 
+					Default = null, // null if null
+					Brief = "<Unspecified>",
+					Index = 8,
+					Key = ""
+					},
+				new DescribeEntryParameter () {
+					Identifier = "S9", 
+					Default = null, // null if null
+					Brief = "<Unspecified>",
+					Index = 9,
+					Key = ""
+					},
+				new DescribeEntryParameter () {
+					Identifier = "S10", 
+					Default = null, // null if null
+					Brief = "<Unspecified>",
+					Index = 10,
+					Key = ""
+					}
+				}
+			};
+
+		}
+
+    public partial class Recover : _Recover {
+        } // class Recover
 
     public class _Export : Goedel.Command.Dispatch ,
 							IPortalAccount,
@@ -4966,6 +5182,10 @@ namespace Goedel.Mesh.MeshMan {
 			}
 
 		public virtual void Escrow ( Escrow Options) {
+			CommandLineInterpreter.DescribeValues (Options);
+			}
+
+		public virtual void Recover ( Recover Options) {
 			CommandLineInterpreter.DescribeValues (Options);
 			}
 

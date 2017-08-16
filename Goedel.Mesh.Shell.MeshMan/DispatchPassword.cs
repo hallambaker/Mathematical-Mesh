@@ -5,15 +5,20 @@ using Goedel.Mesh.Platform;
 namespace Goedel.Mesh.MeshMan {
 
     public partial class Shell {
-        /// Create a new web application profile.
-        /// </summary>
-        /// <param name="Options">Command line parameters</param>
-        public override void PasswordCreate(PasswordCreate Options) {
+
+        RegistrationApplication RegistrationApplication;
+        public PasswordProfile PasswordProfile { get => 
+                        RegistrationApplication?.ApplicationProfile as PasswordProfile; }
+
+    /// Create a new web application profile.
+    /// </summary>
+    /// <param name="Options">Command line parameters</param>
+    public override void PasswordCreate(PasswordCreate Options) {
             SetReporting(Options);
             var RegistrationPersonal = GetPersonal(Options);
 
             var PasswordProfile = new PasswordProfile(true);
-            Register(RegistrationPersonal, PasswordProfile);
+            RegistrationApplication = Register(RegistrationPersonal, PasswordProfile);
             }
 
 
@@ -25,8 +30,7 @@ namespace Goedel.Mesh.MeshMan {
             SetReporting(Options.Report, Options.Verbose);
             GetProfile(Options.Portal, Options.UDF);
 
-            var RegistrationApplication = GetApplication(Options, "PasswordProfile");
-            var PasswordProfile = RegistrationApplication?.ApplicationProfile as PasswordProfile;
+            RegistrationApplication = GetApplication(Options, "PasswordProfile");
             var PasswordProfilePrivate = PasswordProfile.Private;
 
             if (PasswordProfilePrivate.Entries == null) {
@@ -50,8 +54,7 @@ namespace Goedel.Mesh.MeshMan {
             SetReporting(Options.Report, Options.Verbose);
             GetProfile(Options.Portal, Options.UDF);
             GetMeshClient();
-            var RegistrationApplication = GetApplication(Options, "PasswordProfile");
-            var PasswordProfile = RegistrationApplication?.ApplicationProfile as PasswordProfile;
+            RegistrationApplication = GetApplication(Options, "PasswordProfile");
 
             PasswordProfile.Add(Options.Site.Value, Options.Username.Value,
                 Options.Password.Value);
@@ -67,8 +70,7 @@ namespace Goedel.Mesh.MeshMan {
             SetReporting(Options.Report, Options.Verbose);
             GetProfile(Options.Portal, Options.UDF);
             GetMeshClient();
-            var RegistrationApplication = GetApplication(Options, "PasswordProfile");
-            var PasswordProfile = RegistrationApplication?.ApplicationProfile as PasswordProfile;
+            RegistrationApplication = GetApplication(Options, "PasswordProfile");
 
             var Entry = PasswordProfile.Get(Options.Site.Value);
 
@@ -83,8 +85,7 @@ namespace Goedel.Mesh.MeshMan {
             SetReporting(Options.Report, Options.Verbose);
             GetProfile(Options.Portal, Options.UDF);
             GetMeshClient();
-            var RegistrationApplication = GetApplication(Options, "PasswordProfile");
-            var PasswordProfile = RegistrationApplication?.ApplicationProfile as PasswordProfile;
+            RegistrationApplication = GetApplication(Options, "PasswordProfile");
 
 
             PasswordProfile.Delete(Options.Site.Value);

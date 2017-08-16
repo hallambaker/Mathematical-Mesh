@@ -86,7 +86,7 @@ namespace Goedel.Mesh {
 
         CommandLineInterpreter CommandLineInterpreter = new CommandLineInterpreter ();
 
-        Shell Shell1 = new Shell() {
+        public Shell Shell1 = new Shell() {
             MeshCatalog = new MeshCatalog()
             };
         public void Device1 (string Command) {
@@ -95,7 +95,7 @@ namespace Goedel.Mesh {
             CommandLineInterpreter.MainMethod(Shell1, Args);
             }
 
-        Shell Shell2 = new Shell() {
+        public Shell Shell2 = new Shell() {
             MeshCatalog = new MeshCatalog(new RegistrationMachineCached())
             };
         public void Device2 (string Command) {
@@ -104,7 +104,7 @@ namespace Goedel.Mesh {
             CommandLineInterpreter.MainMethod(Shell2, Args);
             }
 
-        Shell Shell3 = new Shell() {
+        public Shell Shell3 = new Shell() {
             MeshCatalog = new MeshCatalog(new RegistrationMachineCached())
             };
         public void Device3 (string Command) {
@@ -168,7 +168,8 @@ namespace Goedel.Mesh {
             Device1("password add example.com alice password2");
             Device1("password add example.net alice password3");
             Device1("password dump");
-            Device1("password delete example.com");
+            Device1("password add example.com alice password2");
+            Device1("password add example.net alice password3");
             Device1("password dump");
 
             // Test Recrypt operations

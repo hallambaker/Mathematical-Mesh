@@ -91,7 +91,7 @@ namespace Goedel.Mesh.MeshMan {
             var SSHDevicePublic = SSHProfile.SSHDevicePublic;
             Assert.NotNull(SSHDevicePublic, ProfileNotFound.Throw);
 
-            var KeyPair = SSHDevicePublic.PublicKey.KeyPair;
+            var KeyPair = SSHDevicePublic.PublicKey.PrivateKey;
             var PEMPrivate = KeyPair.ToPEMPrivate();
             Debug.WriteLine(PEMPrivate);
 

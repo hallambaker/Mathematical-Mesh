@@ -1,0 +1,28 @@
+﻿Protocol Goedel.Mesh.Platform MeshItem MeshItem
+	Description 
+		|Serialization of registered profile
+
+    Using Goedel.Cryptography.Jose 
+    Using Goedel.Mesh
+
+	Structure Serialization
+		Abstract
+		DateTime Default;
+
+	Structure SerializationPersonal
+		Inherits Serialization
+		Struct SignedPersonalProfile Profile
+
+		Struct SerializationPortal Portals
+			Multiple
+
+	Structure SerializationPortal
+		String Address
+
+	Structure SerializationApplication
+		Inherits Serialization
+		Struct SignedApplicationProfile Profile
+
+	Structure SerializationDevice
+		Inherits Serialization
+		Struct SignedDeviceProfile Profile

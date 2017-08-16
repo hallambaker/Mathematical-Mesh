@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Goedel.Utilities;
+using Goedel.Command;
 using Goedel.Protocol;
 using Goedel.Mesh;
 using Goedel.Mesh.Platform;
@@ -25,11 +26,31 @@ namespace Goedel.Mesh.MeshMan {
         public MeshClient MeshClient;
 
         public MeshCatalog MeshCatalog;
+        CommandLineInterpreter CommandLineInterpreter = new CommandLineInterpreter();
+
+        public string DefaultID {
+            get => _PersonalCreate._DescribeCommand.GetDefault("did");
+            set => _PersonalCreate._DescribeCommand.SetDefault("did", value);
+            }
+        public string DefaultDescription {
+            get => _PersonalCreate._DescribeCommand.GetDefault("dd");
+            set => _PersonalCreate._DescribeCommand.SetDefault("dd", value);
+            }
 
         public Shell () {
             MeshCatalog = new MeshCatalog();
             }
 
+        public string CommandLine { get; set; }
+        public string Dispatch (string Command) {
+            CommandLine = "meshman " + Command;
+            CommandLineInterpreter.MainMethod(this, CommandSplitLex.Split(Command));
+            return CommandLine;
+            }
+
+
+        public RegistrationDevice RegistrationDevice { get => Machine.Device; }
+        public DeviceProfile DeviceProfile { get => RegistrationDevice.DeviceProfile; }
 
         /// <summary>
         /// Erase all test profiles
@@ -50,35 +71,22 @@ namespace Goedel.Mesh.MeshMan {
             bool? Default = Options.Default.Value;
 
             MeshCatalog.CreateDevice(DeviceID, DeviceDescription, Default);
-
-            //var ProfileDevice = new SignedDeviceProfile(DeviceID, DeviceDescription);
-            //var RegistrationDevice = Machine.Add(ProfileDevice);
-
-            //if (Options.Default.Value) {
-            //    Machine.Device = RegistrationDevice;
-            //    }
-
-
             }
+
         /// <summary>
         /// Create a new personal profile
         /// </summary>
         /// <param name="Options">Command line parameters</param>
         public override void Deregister (Deregister Options) {
 
+            SetReporting(Options.Report, Options.Verbose);
+            var Address = Options.Portal.Value;
+            Assert.True((Address != null & Address != ""), NoPortalAccount.Throw);
 
+            var ProfileRegistration = MeshCatalog.GetPersonal(Address, Portal: false);
+            Assert.NotNull(ProfileRegistration, ProfileNotFound.Throw);
 
-                SetReporting(Options.Report, Options.Verbose);
-                var Address = Options.Portal.Value;
-                Assert.True((Address != null & Address != ""), NoPortalAccount.Throw);
-
-                var ProfileRegistration = MeshCatalog.GetPersonal(Address, Portal: false);
-                Assert.NotNull(ProfileRegistration, ProfileNotFound.Throw);
-
-                ProfileRegistration.Delete();
-
-
-
+            ProfileRegistration.Delete();
             }
 
 

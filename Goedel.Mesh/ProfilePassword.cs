@@ -35,8 +35,6 @@ namespace Goedel.Mesh {
     // as being part of the same application profile. 
     public partial class PasswordProfile : ApplicationProfile {
 
-        private PasswordProfilePrivate _Private;
-
         /// <summary>
         /// The portion of the profile that is encrypted in the mesh.
         /// </summary>
@@ -52,7 +50,7 @@ namespace Goedel.Mesh {
         /// <param name="MakePrivate">If true, a private profile will be created.</param>
         public PasswordProfile(bool MakePrivate=false) {
             if (MakePrivate) {
-                _Private = new PasswordProfilePrivate();
+                Private = new PasswordProfilePrivate();
                 }
             }
 
@@ -65,6 +63,7 @@ namespace Goedel.Mesh {
         /// <param name="Password">Password</param>
         public void Add(
             string Site, string Username, string Password) {
+            Private = Private ?? new PasswordProfilePrivate();
             Private.Add(Site, Username, Password);
             }
 

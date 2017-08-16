@@ -117,26 +117,16 @@ namespace Goedel.Persistence {
         /// </summary>
 
 		public virtual string						Action  {get; set;}
-		bool								__Added = false;
-		private DateTime						_Added;
         /// <summary>
         ///Time at which the item was added to the log
         /// </summary>
 
-		public virtual DateTime						Added {
-			get {return _Added;}
-			set {_Added = value; __Added = true; }
-			}
+		public virtual DateTime?						Added  {get; set;}
         /// <summary>
         ///Index terms for data item
         /// </summary>
 
 		public virtual List<IndexTerm>				Keys  {get; set;}
-        /// <summary>
-        ///Binary data.
-        /// </summary>
-
-		public virtual byte[]						Data  {get; set;}
         /// <summary>
         ///Text data.
         /// </summary>
@@ -234,7 +224,7 @@ namespace Goedel.Persistence {
 				_Writer.WriteToken ("Action", 1);
 					_Writer.WriteString (Action);
 				}
-			if (__Added){
+			if (Added != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("Added", 1);
 					_Writer.WriteDateTime (Added);
@@ -255,11 +245,6 @@ namespace Goedel.Persistence {
 				_Writer.WriteArrayEnd ();
 				}
 
-			if (Data != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("Data", 1);
-					_Writer.WriteBinary (Data);
-				}
 			if (Text != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("Text", 1);
@@ -285,7 +270,6 @@ namespace Goedel.Persistence {
 				}
 			}
 
-
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
@@ -293,6 +277,9 @@ namespace Goedel.Persistence {
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
         public static new DataItem FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
 				return Out as DataItem;
@@ -339,10 +326,6 @@ namespace Goedel.Persistence {
 						Keys.Add (_Item);
 						_Going = JSONReader.NextArray ();
 						}
-					break;
-					}
-				case "Data" : {
-					Data = JSONReader.ReadBinary ();
 					break;
 					}
 				case "Text" : {
@@ -481,7 +464,6 @@ namespace Goedel.Persistence {
 				}
 			}
 
-
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
@@ -489,6 +471,9 @@ namespace Goedel.Persistence {
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
         public static new Header FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
 				return Out as Header;
@@ -613,7 +598,6 @@ namespace Goedel.Persistence {
 				}
 			}
 
-
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
@@ -621,6 +605,9 @@ namespace Goedel.Persistence {
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
         public static new Delta FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
 				return Out as Delta;
@@ -725,7 +712,6 @@ namespace Goedel.Persistence {
 				}
 			}
 
-
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
@@ -733,6 +719,9 @@ namespace Goedel.Persistence {
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
         public static new IndexTerm FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
 				return Out as IndexTerm;
@@ -828,7 +817,6 @@ namespace Goedel.Persistence {
 				}
 			}
 
-
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
@@ -836,6 +824,9 @@ namespace Goedel.Persistence {
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
         public static new Final FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
 				return Out as Final;
@@ -939,7 +930,6 @@ namespace Goedel.Persistence {
 				}
 			}
 
-
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
@@ -947,6 +937,9 @@ namespace Goedel.Persistence {
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
         public static new Terminal FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
 				return Out as Terminal;
@@ -1062,7 +1055,6 @@ namespace Goedel.Persistence {
 				}
 			}
 
-
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
@@ -1070,6 +1062,9 @@ namespace Goedel.Persistence {
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
         public static new IndexIndex FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
 				return Out as IndexIndex;
@@ -1187,7 +1182,6 @@ namespace Goedel.Persistence {
 				}
 			}
 
-
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
@@ -1195,6 +1189,9 @@ namespace Goedel.Persistence {
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
         public static new Index FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
 				return Out as Index;
@@ -1316,7 +1313,6 @@ namespace Goedel.Persistence {
 				}
 			}
 
-
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
@@ -1324,6 +1320,9 @@ namespace Goedel.Persistence {
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
         public static new IndexEntry FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
 				return Out as IndexEntry;

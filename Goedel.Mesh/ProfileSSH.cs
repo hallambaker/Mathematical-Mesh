@@ -107,8 +107,8 @@ namespace Goedel.Mesh {
 
             var IsLocal = Device.DeviceSignatureKey.PrivateKey != null;
 
-            var KeyStorage = IsLocal ? KeyType.DAK : KeyType.AAK;
-
+            //var KeyStorage = IsLocal ? KeyType.DAK : KeyType.AAK;
+            var KeyStorage = KeyType.AAK;
             var KeyPair = PublicKey.Generate(KeyStorage, CryptoAlgorithmID.RSASign);
 
             var KeyPublic = new PublicKey() {

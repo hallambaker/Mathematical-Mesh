@@ -116,6 +116,20 @@
 			Option Shares "shares" Integer
 			Option File "file" NewFile
 
+		Command Recover "recover"
+			Brief "Recover a previously escrowed key"
+			Parameter S0 "s0" String
+			Parameter S1 "s1" String
+			Parameter S2 "s2" String
+			Parameter S3 "s3" String
+			Parameter S4 "s4" String
+			Parameter S5 "s5" String
+			Parameter S6 "s6" String
+			Parameter S7 "s7" String
+			Parameter S8 "s8" String
+			Parameter S9 "s9" String
+			Parameter S10 "s10" String
+
 		Command Export "export"
 			Brief "Export the specified profile data to the specified file"
 			Parameter File "file" NewFile

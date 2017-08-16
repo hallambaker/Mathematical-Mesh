@@ -158,7 +158,7 @@ namespace ExampleGenerator {
 
         public string LabelApplicationProfile;
 
-        public PasswordProfile PasswordProfile;
+
         public PasswordProfile PasswordProfile1 ;
         public PasswordProfile PasswordProfile2 ;
         public PasswordProfile PasswordProfile3 ;
@@ -170,13 +170,13 @@ namespace ExampleGenerator {
 
             Device1("password create", out LabelApplicationWeb1);
             Device1("password add example.com alice password1", out LabelApplicationWeb1);
-            PasswordProfile1 = PasswordProfile;
+            PasswordProfile1 = Shell1.PasswordProfile;
             Device1("password add example.com alice password2", out LabelApplicationWeb2);
             Device1("password add example.net alice password3", out LabelApplicationWeb3);
-            PasswordProfile2 = PasswordProfile;
+            PasswordProfile2 = Shell1.PasswordProfile;
             Device1("password add example.com alice password2", out LabelApplicationWeb4);
             Device1("password delete example.net", out LabelApplicationWeb5);
-            PasswordProfile3 = PasswordProfile;
+            PasswordProfile3 = Shell1.PasswordProfile;
             }
 
         //SSHProfile SSHProfile;

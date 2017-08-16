@@ -1,0 +1,97 @@
+  <reference anchor="FedRes2016">
+  <front>
+    <title>The Federal Reserve Payments Study 2016</title>
+    <author>
+      <organization abbrev='Federal Reserve'>Federal Reserve</organization>
+    </author>
+    <date month='December' year='2016' />    
+  </front>
+  <format type="pdf" target="https://www.federalreserve.gov/newsevents/press/other/2016-payments-study-20161222.pdf"/>
+</reference>
+
+<reference anchor="ECMA-262">
+  <front>
+    <title>
+      ECMAScript® 2017
+      Language Specification
+    </title>
+    <author>
+      <organization abbrev='Ecma International'>Ecma International</organization>
+    </author>
+    <date month='June' year='2017' />
+  </front>
+  <format type="pdf" target="https://www.ecma-international.org/publications/files/ECMA-ST/Ecma-262.pdf"/>
+</reference>
+
+<reference anchor="Dobertin95">
+  <front>
+    <title>
+      Cryptanalysis of MD5 Compress
+    </title>
+    <author>
+      <organization abbrev=''>Eurocrypt 1996</organization>
+    </author>
+  </front>
+  <format type="ps" target="ftp://ftp.iks-jena.de/mitarb/lutz/crypt/hash/dobbertin.ps"/>
+</reference>
+
+<reference anchor="SHA-2">
+  <front>
+    <title>
+      Secure Hash Standard
+    </title>
+    <author>
+      <organization abbrev='NIST'>NIST</organization>
+    </author>
+    <date month='August' year='2015' />
+  </front>
+  <format type="pdf" target="https://dx.doi.org/10.6028/NIST.FIPS.180-4"/>
+</reference>
+
+
+<reference anchor="SHA-3">
+  <front>
+    <title>
+      SHA-3 Standard: Permutation-Based Hash and Extendable-Output Functions
+    </title>
+    <author fullname="Morris J. Dworkin" initials="M. J." surname="Dworkin">
+      
+      <organization abbrev='NIST'>NIST</organization>
+    </author>
+    <date month='August' year='2015' />
+  </front>
+  <format type="pdf" target="https://dx.doi.org/10.6028/NIST.FIPS.202"/>
+</reference>
+
+<reference anchor="PHB2008">
+  <front>
+    <title>The dotCrime Manifesto: How to Stop Internet Crime</title>
+    <author initials='P' surname='Hallam_Baker' fullname='Phillip Hallam_Baker'>
+      <date month='January' year='2008' />
+    </author>
+    <date month='September' year='2013' />
+  </front>
+</reference>
+
+<reference anchor="IEEE754">
+  <front>
+    <title>IEEE Standard for Floating-Point Arithmetic</title>
+    <author>
+      <organization>IEEE Computer Society </organization>
+    </author>
+    <date day="29" month="August" year="2008"/>
+  </front>
+  <seriesInfo name="IEEE" value="754-2008"/>
+  <seriesInfo name="DOI" value="10.1109/IEEESTD.2008.4610935"/>
+</reference>
+
+<reference anchor="INTEL">
+  <front>
+    <title>
+      <title>Unknown</title>
+    </title>
+    <author>
+      <organization>Intel Corp.</organization>
+    </author>
+  </front>
+</reference>

@@ -555,7 +555,7 @@ namespace Goedel.Persistence {
         /// </summary>
         /// <param name="DataItem">Data item to add.</param>
         public virtual void Delete(DataItem DataItem) {
-            DataItem.Data = null; // zero out the data
+            DataItem.Text = null; // zero out the data
             DataItem.Action = "Delete";
             DataItem.Added = DateTime.Now;
             Store(DataItem);

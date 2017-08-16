@@ -421,7 +421,7 @@ the Password Profile is encrypted end to end and can only be
 decrypted by the devices that hold a decryption key.
 
 ~~~~
-#{Example.PasswordProfile}
+#{Example.PasswordProfile1}
 ~~~~
 
 The application profile is published to the Mesh in the same

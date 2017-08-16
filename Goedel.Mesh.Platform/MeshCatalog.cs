@@ -180,7 +180,6 @@ namespace Goedel.Mesh.Platform {
             MeshClient = MeshClient ?? new MeshClient(PortalAccount: PortalAddress);
             var RegistrationPersonal = AddPersonal(Profile);
 
-            MeshClient.CreatePortalAccount(PortalAddress, Profile.SignedPersonalProfile);
             RegistrationPersonal.AddPortal(PortalAddress, MeshClient, true);
 
             return RegistrationPersonal;

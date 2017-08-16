@@ -79,6 +79,10 @@
       <LastGenOutput>MakeVersion.cs</LastGenOutput>
     </None>
     <None Include="MeshSchemaWeb.md" />
+    <Content Include="Bib.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Bibold.xml" />
     <Content Include="Publish\hallambaker-json-web-service.html" />
     <Content Include="Publish\hallambaker-json-web-service.txt" />
     <Content Include="Publish\hallambaker-json-web-service.xml" />
@@ -114,8 +118,9 @@
     <Content Include="Publish\hallambaker-udf.txt" />
     <Content Include="Publish\hallambaker-udf.xml" />
     <Content Include="ReadMe.txt" />
-    <None Include="Postbuild.bat" />
-    <None Include="Prebuild.bat" />
+    <None Include="OLDPostbuild.bat" />
+    <None Include="OLDPrebuild.bat" />
+    <None Include="ToDo.md" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Static\" />

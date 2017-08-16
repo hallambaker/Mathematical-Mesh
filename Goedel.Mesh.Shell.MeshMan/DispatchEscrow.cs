@@ -16,6 +16,8 @@ namespace Goedel.Mesh.MeshMan {
 
     public partial class Shell {
 
+        public OfflineEscrowEntry OfflineEscrowEntry;
+
         /// <summary>
         /// Create an offline key escrow record and associated key shares.
         /// </summary>
@@ -30,7 +32,7 @@ namespace Goedel.Mesh.MeshMan {
             Assert.True(Shares>=2 & Shares < 16, InvalidShares.Throw, Int: Shares);
             Assert.True((Quorum >= 1) & (Quorum <= Shares), InvalidQuorum.Throw, Int: Quorum);
 
-            var OfflineEscrowEntry = new OfflineEscrowEntry(
+            OfflineEscrowEntry = new OfflineEscrowEntry(
                 RegistrationPersonal.PersonalProfile, Shares, Quorum);
             // Push to the Portal
 
@@ -52,6 +54,7 @@ namespace Goedel.Mesh.MeshMan {
                 }
             }
 
-
+        public override void Recover (Recover Options) {
+            }
         }
     }

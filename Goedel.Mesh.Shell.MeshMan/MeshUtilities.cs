@@ -106,7 +106,7 @@ namespace Goedel.Mesh.MeshMan {
 
 
 
-        public void Register (RegistrationPersonal RegistrationPersonal,
+        public RegistrationApplication Register (RegistrationPersonal RegistrationPersonal,
                ApplicationProfile ApplicationProfile) {
 
 
@@ -118,9 +118,10 @@ namespace Goedel.Mesh.MeshMan {
             // Add this device to the registration in the personal profile.
             var DeviceProfile = RegistrationPersonal.PersonalProfile.DeviceProfile;
             RegistrationApplication.AddDevice(DeviceProfile, Administration: true);
-
             RegistrationPersonal.Write();
             RegistrationApplication.Write();
+
+            return RegistrationApplication;
             }
 
 
@@ -220,11 +221,13 @@ namespace Goedel.Mesh.MeshMan {
         //    }
 
 
-
         public RegistrationApplication GetApplication (IApplicationProfile Options, string Type) {
 
             Machine.Find (out var RegistrationApplication, Type,
                     Options.Portal.Value, Options.UDF.Value, Options.ID.Value);
+
+            this.RegistrationApplication = RegistrationApplication;
+            //PasswordProfile = RegistrationApplication?.ApplicationProfile as PasswordProfile;
 
             RegistrationPersonal = Machine.Personal;
             PortalID = RegistrationPersonal?.Portals?.Default;
