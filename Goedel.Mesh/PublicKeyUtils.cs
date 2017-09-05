@@ -44,7 +44,7 @@ namespace Goedel.Mesh {
         /// <returns>The decryption key (if found)</returns>
         public static KeyPair GetKey (this JoseWebEncryption JWE) {
             foreach (var Recipient in JWE.Recipients) {
-                var KeyPair = Cryptography.KeyPair.FindLocal(Recipient.Header.kid);
+                var KeyPair = Cryptography.KeyPair.FindLocal(Recipient.Header.Kid);
                 if (KeyPair != null) {
                     return KeyPair;
                     }

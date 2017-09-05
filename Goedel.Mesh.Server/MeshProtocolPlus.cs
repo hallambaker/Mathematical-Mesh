@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Goedel.Protocol;
+using Goedel.Utilities;
 
 namespace Goedel.Mesh.Server {
 
@@ -16,7 +17,7 @@ namespace Goedel.Mesh.Server {
         /// <summary>
         /// Dictionary mapping tags to factory methods
         /// </summary>
-        public new static Dictionary<string, JSONFactoryDelegate> _TagDictionary { get; set; }  =
+        public new static Dictionary<string, JSONFactoryDelegate> _TagDictionary { get; set; } =
                 MeshProtocol._TagDictionary;
 
 
@@ -33,7 +34,7 @@ namespace Goedel.Mesh.Server {
         /// </summary>
         /// <returns>Deep copy of the object with all referenced objects
         /// copied.</returns>
-        public override JSONObject DeepCopy() {
+        public override JSONObject DeepCopy () {
             // Convert this object to text:
             var Text = ToString();
 
@@ -57,7 +58,7 @@ namespace Goedel.Mesh.Server {
         /// </summary>
         /// <returns>Deep copy of the object with all referenced objects
         /// copied.</returns>
-        public override JSONObject DeepCopy() {
+        public override JSONObject DeepCopy () {
             // Convert this object to text:
             var Text = ToString();
 
@@ -71,7 +72,7 @@ namespace Goedel.Mesh.Server {
     ///
     /// Reports the success or failure of a ConnectPending transaction.
     /// </summary>
-    public partial class ConnectPendingResponse { 
+    public partial class ConnectPendingResponse {
 
         /// <summary>
         /// Find connection request matching a request.
@@ -87,5 +88,16 @@ namespace Goedel.Mesh.Server {
             return null;
             }
 
+        }
+
+
+    public partial class ConnectStartRequest : MeshRequest {
+        /// <summary>
+        /// Poll for completion message
+        /// </summary>
+        /// <param name="TimeOut">Timeout value in seconds</param>
+        public void Await (int TimeOut = -1) {
+            throw new NYI();
+            }
         }
     }

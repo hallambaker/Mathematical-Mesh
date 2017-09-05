@@ -125,7 +125,7 @@ namespace Test.Goedel.Mesh {
 
             if (Key as PublicKeyRSA != null) {
                 var PublicKeyRSA = Key as PublicKeyRSA;
-                PublicKeyRSA.n[0] ^= (byte)1;
+                PublicKeyRSA.N[0] ^= (byte)1;
                 return;
                 }
             throw new Exception();

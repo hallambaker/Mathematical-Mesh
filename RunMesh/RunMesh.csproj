@@ -105,6 +105,10 @@
       <Project>{c4824513-f416-4ead-be82-f2df23641f6a}</Project>
       <Name>Goedel.IO</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\buildtools\Libraries\Goedel.Protocol\Goedel.Protocol.csproj">
+      <Project>{18cb2a21-48f4-4862-ae95-94efbd209ab3}</Project>
+      <Name>Goedel.Protocol</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\buildtools\Libraries\Goedel.Registry\Goedel.Registry.csproj">
       <Project>{ebda947e-d7a9-4a93-aef1-aea9d56b9225}</Project>
       <Name>Goedel.Registry</Name>

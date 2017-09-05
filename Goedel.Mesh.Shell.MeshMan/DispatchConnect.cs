@@ -153,7 +153,7 @@ namespace Goedel.Mesh.MeshMan {
                 }
 
             var SignedProfile = Result.Data.Profile as SignedPersonalProfile;
-            MeshCatalog.CreateAccount(ConnectStartRequest.AccountID, SignedProfile.PersonalProfile, MeshClient);
+            MeshSession.CreateAccount(ConnectStartRequest.AccountID, SignedProfile.PersonalProfile, MeshClient);
 
 
             }

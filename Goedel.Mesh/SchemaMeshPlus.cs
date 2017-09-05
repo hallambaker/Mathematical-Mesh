@@ -32,14 +32,16 @@ namespace Goedel.Mesh {
         static MeshItem () {
 
             Append(MeshMail._TagDictionary);
-            Append(MeshConfirm._TagDictionary);
             Append(MeshNetwork._TagDictionary);
             Append(MeshPassword._TagDictionary);
-            Append(MeshRecrypt._TagDictionary);
             Append(MeshSSH._TagDictionary);
             }
 
-        static void Append (
+        /// <summary>
+        /// Append entries to the current tag dictionary
+        /// </summary>
+        /// <param name="Source"></param>
+        public static void Append (
                  Dictionary<string, JSONFactoryDelegate> Source) {
             foreach (var Entry in Source) {
                 _TagDictionary.Add(Entry.Key, Entry.Value);

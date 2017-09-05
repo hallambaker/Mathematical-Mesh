@@ -56,24 +56,24 @@ namespace Goedel.Mesh.Platform {
     /// Describes a set of registered profiles on a particular machine, usually the
     /// current machine.
     /// </summary>
-    public abstract class RegistrationMachine : Registration {
+    public abstract class MeshMachine : Registration {
         public List<ConnectStartRequest> ConnectStartRequests = new List<ConnectStartRequest>();
 
         /// <summary>
         /// The a dictionary of personal profiles indexed by fingerprint.
         /// </summary>
-        public abstract Dictionary<string, RegistrationPersonal> PersonalProfilesUDF { get; }
+        public abstract Dictionary<string, SessionPersonal> PersonalProfilesUDF { get; }
 
         /// <summary>
         /// The a dictionary of personal profiles indexed by portal account.
         /// </summary>
-        public abstract Dictionary<string, RegistrationPersonal> PersonalProfilesPortal { get; } 
+        public abstract Dictionary<string, SessionPersonal> PersonalProfilesPortal { get; } 
 
 
         /// <summary>
         /// A dictionary of application profiles indexed by fingerprint.
         /// </summary>
-        public abstract Dictionary<string, RegistrationApplication> ApplicationProfiles { get; } 
+        public abstract Dictionary<string, SessionApplication> ApplicationProfiles { get; } 
 
 
         /// <summary>
@@ -94,7 +94,7 @@ namespace Goedel.Mesh.Platform {
 
 
         // The default profile
-        public virtual RegistrationPersonal Personal { get; set; }
+        public virtual SessionPersonal Personal { get; set; }
 
         // The default device
         public virtual RegistrationDevice Device {get; set;}
@@ -103,7 +103,7 @@ namespace Goedel.Mesh.Platform {
         /// The registration on the current machine. This will be read from either
         /// the Windows registry (Windows) or the ~/.mmm directory (OSX, Linux).
         /// </summary>
-        public static RegistrationMachine Current { get; set; }
+        public static MeshMachine Current { get; set; }
 
 
         /// <summary>
@@ -124,7 +124,7 @@ namespace Goedel.Mesh.Platform {
         public abstract RegistrationDevice Add(SignedDeviceProfile SignedProfile);
 
 
-        public virtual RegistrationPersonal Add (SignedPersonalProfile SignedProfile,
+        public virtual SessionPersonal Add (SignedPersonalProfile SignedProfile,
                 ConnectStartRequest Request) {
             ConnectStartRequests.Add(Request);
             return Add(SignedProfile);
@@ -136,14 +136,14 @@ namespace Goedel.Mesh.Platform {
         /// <param name="SignedProfile">Profile to add.</param>
         /// <param name="Portals">Portals to bind the profile to.</param>
         /// <returns>Registration for the created profile.</returns>
-        public abstract RegistrationPersonal Add(SignedPersonalProfile SignedProfile);
+        public abstract SessionPersonal Add(SignedPersonalProfile SignedProfile);
 
         /// <summary>
         /// Add the associated profile to the machine store.
         /// </summary>
         /// <param name="ApplicationProfile">Profile to add.</param>
         /// <returns>Registration for the created profile.</returns>
-        public abstract RegistrationApplication Add(ApplicationProfile ApplicationProfile);
+        public abstract SessionApplication Add(ApplicationProfile ApplicationProfile);
 
         /// <summary>
         /// Locate a device profile by identifier
@@ -159,7 +159,7 @@ namespace Goedel.Mesh.Platform {
         /// <param name="RegistrationDevice">The returned profile.</param>
         /// <param name="ID">UDF fingerprint of the profile or short form ID</param>
         /// <returns>True if the profile is found, otherwise false.</returns>
-        public abstract bool Find(string ID, out RegistrationApplication RegistrationApplication);
+        public abstract bool Find(string ID, out SessionApplication RegistrationApplication);
 
         /// <summary>
         /// Locate a device profile by identifier
@@ -167,7 +167,7 @@ namespace Goedel.Mesh.Platform {
         /// <param name="RegistrationDevice">The returned profile.</param>
         /// <param name="ID">UDF fingerprint of the profile or short form ID</param>
         /// <returns>True if the profile is found, otherwise false.</returns>
-        public abstract bool Find(string ID, out RegistrationPersonal RegistrationPersonal);
+        public abstract bool Find(string ID, out SessionPersonal RegistrationPersonal);
 
 
 
@@ -180,7 +180,7 @@ namespace Goedel.Mesh.Platform {
         /// <param name="UDF"></param>
         /// <param name="ShortId"></param>
         public bool Find (
-                    out RegistrationApplication RegistrationApplication,
+                    out SessionApplication RegistrationApplication,
                     string Type,
                     string PortalAddress = null,
                     string UDF = null,
@@ -221,7 +221,7 @@ namespace Goedel.Mesh.Platform {
         //public virtual MeshCatalog MeshCatalog { get; }
 
         /// <summary>The abstract machine a profile registration is attached to</summary>
-        public abstract RegistrationMachine RegistrationMachine { get; set; }
+        public abstract MeshMachine MeshMachine { get; set; }
 
         /// <summary>
         /// The registered signed profile.

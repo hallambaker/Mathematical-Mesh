@@ -16,13 +16,13 @@ namespace Test.Goedel.Mesh {
     [TestClass]
     public class TestServices {
 
-        static MeshCatalog MeshCatalog;
+        static MeshSession MeshCatalog;
         //static DeviceProfile DeviceProfile;
         //static PersonalProfile PersonalProfile;
 
         static TestConstant TestConstant;
 
-        RegistrationPersonal RegistrationPersonal = null;
+        SessionPersonal RegistrationPersonal = null;
 
         [AssemblyInitialize]
         public static void InitializeClass(TestContext context) {
@@ -31,7 +31,7 @@ namespace Test.Goedel.Mesh {
             MeshWindows.Initialize(true);
 
             // List of all the accounts on the current machine
-            MeshCatalog = new MeshCatalog();
+            MeshCatalog = new MeshSession();
 
             MeshCatalog.EraseTest(); // remove previous test data
 
@@ -96,7 +96,7 @@ namespace Test.Goedel.Mesh {
             UT.Assert.IsNotNull(PersonalRegistration);
             UT.Assert.IsNotNull(PersonalRegistration.SignedPersonalProfile);
 
-            var MeshCatalog2 = new MeshCatalog();
+            var MeshCatalog2 = new MeshSession();
 
 
             var PersonalMesh = MeshCatalog2.GetPersonal(TestConstant.AccountID);
@@ -264,42 +264,42 @@ namespace Test.Goedel.Mesh {
             }
 
 
-        /// <summary>
-        /// Test the Mesh/Confirm profile generation
-        /// </summary>
-        [TestMethod]
-        public void TestConfirm() {
-            var PersonalProfile = RegistrationPersonal.PersonalProfile;
+        ///// <summary>
+        ///// Test the Mesh/Confirm profile generation
+        ///// </summary>
+        //[TestMethod]
+        //public void TestConfirm() {
+        //    var PersonalProfile = RegistrationPersonal.PersonalProfile;
 
-            var ConfirmProfile = new ConfirmProfile();
-            var ApplicationRegistration = RegistrationPersonal.Add(ConfirmProfile);
+        //    var ConfirmProfile = new ConfirmProfile();
+        //    var ApplicationRegistration = RegistrationPersonal.Add(ConfirmProfile);
 
 
-            // Generate Keyset for this device
+        //    // Generate Keyset for this device
 
-            // Add to application entry
+        //    // Add to application entry
 
-            // Update
-            ApplicationRegistration.WriteToPortal();
-            }
+        //    // Update
+        //    ApplicationRegistration.WriteToPortal();
+        //    }
 
-        /// <summary>
-        /// Test the Mesh/Recrypt profile generation
-        /// </summary>
-        [TestMethod]
-        public void TestRecrypt() {
-            var PersonalProfile = RegistrationPersonal.PersonalProfile;
+        ///// <summary>
+        ///// Test the Mesh/Recrypt profile generation
+        ///// </summary>
+        //[TestMethod]
+        //public void TestRecrypt() {
+        //    var PersonalProfile = RegistrationPersonal.PersonalProfile;
 
-            var RecryptProfile = new RecryptProfile();
-            var ApplicationRegistration = RegistrationPersonal.Add(RecryptProfile);
+        //    var RecryptProfile = new RecryptProfile();
+        //    var ApplicationRegistration = RegistrationPersonal.Add(RecryptProfile);
 
-            // Generate Keyset for this device
+        //    // Generate Keyset for this device
 
-            // Add to application entry
+        //    // Add to application entry
 
-            // Update
-            ApplicationRegistration.WriteToPortal();
-            }
+        //    // Update
+        //    ApplicationRegistration.WriteToPortal();
+        //    }
 
 
 
@@ -314,7 +314,7 @@ namespace Test.Goedel.Mesh {
             var Registration = CreateAndRegister(BaseCatalog, MeshClient, TestConstant.Device1, TestConstant.Device1Description,
                 TestConstant.AccountID);
 
-            var Devs = new List<RegistrationPersonal>() {
+            var Devs = new List<SessionPersonal>() {
                 Registration,
                 ConnectDevice(Registration, TestConstant.AccountID)
                 };
@@ -337,7 +337,7 @@ namespace Test.Goedel.Mesh {
             var Registration = CreateAndRegister(BaseCatalog, MeshClient, TestConstant.Device1, TestConstant.Device1Description,
                 TestConstant.AccountID);
 
-            var Devs = new List<RegistrationPersonal>() {
+            var Devs = new List<SessionPersonal>() {
                                 Registration,
                 ConnectDevice(Registration, TestConstant.AccountID),
                 ConnectDevice(Registration, TestConstant.AccountID),
@@ -361,7 +361,7 @@ namespace Test.Goedel.Mesh {
             var Registration = CreateAndRegister(BaseCatalog, MeshClient, TestConstant.Device1, TestConstant.Device1Description,
                 TestConstant.AccountID);
 
-            var Devs = new List<RegistrationPersonal>() {
+            var Devs = new List<SessionPersonal>() {
                 Registration,
                 ConnectDevice(Registration, TestConstant.AccountID)
                 };
@@ -386,7 +386,7 @@ namespace Test.Goedel.Mesh {
             var Registration = CreateAndRegister(BaseCatalog, MeshClient, TestConstant.Device1, TestConstant.Device1Description,
                 TestConstant.AccountID);
 
-            var Devs = new List<RegistrationPersonal>() {
+            var Devs = new List<SessionPersonal>() {
                 Registration,
                 ConnectDevice(Registration, TestConstant.AccountID),
                 ConnectDevice(Registration, TestConstant.AccountID),
@@ -406,20 +406,20 @@ namespace Test.Goedel.Mesh {
             return SignedPersonalProfile.FromJSON(Bytes.JSONReader()).PersonalProfile;
             }
 
-        MeshCatalog NewCatalog() {
-            var EmptyRegistration = new RegistrationMachineCached();
-            return new MeshCatalog(EmptyRegistration);
+        MeshSession NewCatalog() {
+            var EmptyRegistration = new MeshMachineCached();
+            return new MeshSession(EmptyRegistration);
             }
 
 
-        RegistrationPersonal CreateAndRegister(string AccountID) {
+        SessionPersonal CreateAndRegister (string AccountID) {
             var BaseCatalog = NewCatalog();
             var MeshClient = new MeshClient(TestConstant.Service);
             return CreateAndRegister(BaseCatalog, MeshClient, "TestDevice",
                     "Just a test", AccountID);
             }
 
-        RegistrationPersonal CreateAndRegister(MeshCatalog MeshCatalog, MeshClient MeshClient,
+        SessionPersonal CreateAndRegister (MeshSession MeshCatalog, MeshClient MeshClient,
                     string DeviceID, string DeviceDescription, string AccountID) {
 
             var DeviceRegistration = MeshCatalog.GetDevice(DeviceNew: true,
@@ -435,7 +435,7 @@ namespace Test.Goedel.Mesh {
         /// <param name="AdminClient">The administration client</param>
         /// <param name="AccountID">The account ID to bind to</param>
         /// <returns>The registration context for the new device.</returns>
-        RegistrationPersonal ConnectDevice (RegistrationPersonal Admin, string AccountID) {
+        SessionPersonal ConnectDevice (SessionPersonal Admin, string AccountID) {
 
 
             var AdminClient = Admin.MeshClient;
@@ -447,19 +447,21 @@ namespace Test.Goedel.Mesh {
 
             var Requests = AdminClient.ConnectPending();
             var Request = Requests.Match(DeviceRegistration.UDF);
-            Admin.Confirm(Request);
 
-            Personal.CompleteConnect();
+            throw new NYI();
+            //Admin.Confirm(Request);
 
-            return Personal;
+            //Personal.CompleteConnect();
+
+            //return Personal;
             }
 
 
-        void ConnectApplications(RegistrationPersonal Personal) {
+        void ConnectApplications(SessionPersonal Personal) {
 
             }
 
-        void CheckApplications(List<RegistrationPersonal> Personal, int Connected) {
+        void CheckApplications(List<SessionPersonal> Personal, int Connected) {
 
             }
 

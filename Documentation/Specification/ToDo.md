@@ -10,9 +10,12 @@
 <li>The MUST SHOULD, etc. markup is not happening
 <li>Missing uris for some RFCs in references. URIs are not hypertexted.
 <li>Make zipped files
+<li>Sort references
+<li>Write out comments / todo to a log file
 </ul>
 
 ###Protogen glitches
+
 
 Need to update to fix format issues
 
@@ -23,6 +26,7 @@ Need to provide examples for use of authentication and encryption using mesh pro
 keys.
 
 ###draft-hallambaker-udf
+
 
 The examples need to be generated from running code using the udf library.
 

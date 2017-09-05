@@ -270,15 +270,15 @@
 		String Friendly
 			Description
 				|Optional friendly name identifying the application.
-		String SignID
+		String AdminDeviceUDF
 			Multiple
 			Description
 				|List of devices authorized to sign application profiles
-		String DecryptID
+		String DecryptDeviceUDF
 			Multiple
 			Description
 				|List of devices authorized to read private parts of application 
-				|profiles		
+				|profiles.
 
 
 	Section 2 "Application Profile Objects"

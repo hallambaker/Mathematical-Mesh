@@ -68,7 +68,7 @@ namespace Goedel.Mesh.Platform.Windows {
         }
 
 
-    public partial class RegistrationMachineWindows : RegistrationMachineCached {
+    public partial class RegistrationMachineWindows : MeshMachineCached {
 
 
         /// <summary>
@@ -208,7 +208,7 @@ namespace Goedel.Mesh.Platform.Windows {
         /// </summary>
         /// <param name="SignedProfile">Profile to add.</param>
         /// <returns>Registration for the created profile.</returns>
-        public override RegistrationPersonal Add(SignedPersonalProfile SignedProfile) {
+        public override SessionPersonal Add(SignedPersonalProfile SignedProfile) {
             var Registration = new RegistrationPersonalWindows(SignedProfile, this);
             Register(Registration);
             return Registration;
@@ -221,7 +221,7 @@ namespace Goedel.Mesh.Platform.Windows {
         /// </summary>
         /// <param name="ApplicationProfile">Profile to add.</param>
         /// <returns>Registration for the created profile.</returns>
-        public override RegistrationApplication Add(ApplicationProfile ApplicationProfile) {
+        public override SessionApplication Add(ApplicationProfile ApplicationProfile) {
             var Registration = new RegistrationApplicationWindows(ApplicationProfile,this);
             ApplicationProfiles.AddSafe(ApplicationProfile.Identifier, Registration); // NYI check if present
 
@@ -245,7 +245,7 @@ namespace Goedel.Mesh.Platform.Windows {
         /// <param name="RegistrationDevice">The returned profile.</param>
         /// <param name="ID">UDF fingerprint of the profile or short form ID</param>
         /// <returns>True if the profile is found, otherwise false.</returns>
-        public override bool Find(string ID, out RegistrationApplication RegistrationApplication) {
+        public override bool Find(string ID, out SessionApplication RegistrationApplication) {
             return ApplicationProfiles.TryGetValue(ID, out RegistrationApplication);
             }
 
@@ -255,7 +255,7 @@ namespace Goedel.Mesh.Platform.Windows {
         /// <param name="RegistrationDevice">The returned profile.</param>
         /// <param name="ID">UDF fingerprint of the profile or short form ID</param>
         /// <returns>True if the profile is found, otherwise false.</returns>
-        public override bool Find(string ID, out RegistrationPersonal RegistrationPersonal) {
+        public override bool Find(string ID, out SessionPersonal RegistrationPersonal) {
             return PersonalProfilesUDF.TryGetValue(ID, out RegistrationPersonal);
             }
 

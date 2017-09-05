@@ -38,7 +38,7 @@ namespace Goedel.Mesh {
 
             Goedel.Cryptography.Linux.CryptographyLinux.Initialize(TestMode);
             PlatformFramework.Initialize(TestMode);
-            RegistrationMachineLinux.Initialize(TestMode);
+            MeshMachineLinux.Initialize(TestMode);
             }
 
         }

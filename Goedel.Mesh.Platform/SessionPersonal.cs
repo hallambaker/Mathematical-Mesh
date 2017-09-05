@@ -37,7 +37,7 @@ namespace Goedel.Mesh.Platform {
     /// the fingerprint, the cached profile data and the list of portal entries
     /// to which the profile is bound.
     /// </summary>
-    public abstract partial class RegistrationPersonal : PortalRegistration {
+    public abstract partial class SessionPersonal : PortalRegistration {
 
         /// <summary>
         /// The registered signed profile.
@@ -51,7 +51,7 @@ namespace Goedel.Mesh.Platform {
         public virtual PersonalProfile PersonalProfile { get; set; }
 
 
-        public MeshCatalog MeshCatalog { get; set; }
+        public MeshSession MeshCatalog { get; set; }
 
 
         /// <summary>
@@ -80,7 +80,7 @@ namespace Goedel.Mesh.Platform {
         /// <summary>
         /// The profile fingerprint
         /// </summary>
-        public override string UDF { get => SignedPersonalProfile?.UDF; } 
+        public override string UDF { get => SignedPersonalProfile?.UDF; }
 
         /// <summary>
         /// Profiles associated with this account in chronological order.
@@ -94,7 +94,7 @@ namespace Goedel.Mesh.Platform {
             return Escrow(OfflineEscrowEntry);
             }
 
-        public virtual bool Escrow(OfflineEscrowEntry OfflineEscrowEntry) {
+        public virtual bool Escrow (OfflineEscrowEntry OfflineEscrowEntry) {
             var Result = MeshClient.Publish(OfflineEscrowEntry);
             return Result.Status.StatusSuccess();
             }
@@ -106,7 +106,7 @@ namespace Goedel.Mesh.Platform {
         /// <param name="AccountID"></param>
         /// <param name="MeshClient"></param>
         /// <param name="Create">If true, the mesh client </param>
-        public abstract void AddPortal(string AccountID, MeshClient MeshClient = null, bool Create=false);
+        public abstract void AddPortal (string AccountID, MeshClient MeshClient = null, bool Create = false);
 
         /// <summary>
         /// Add an application to this profile
@@ -114,13 +114,11 @@ namespace Goedel.Mesh.Platform {
         /// <param name="Profile"></param>
         /// <param name="Delay"></param>
         /// <returns></returns>
-        public virtual RegistrationApplication Add(
+        public virtual SessionApplication Add (
                     ApplicationProfile Profile, bool Write = true) {
 
-            var Entry = PersonalProfile.Add(Profile);
-
-            var RegistrationApplication = RegistrationMachine.Add(Profile);
-            RegistrationApplication.RegistrationPersonal = this;
+            var RegistrationApplication = MeshMachine.Add(Profile);
+            RegistrationApplication.SessionPersonal = this;
 
             if (Write) {
                 this.Write();
@@ -131,22 +129,21 @@ namespace Goedel.Mesh.Platform {
             }
 
 
-
         /// <summary>
         /// Complete process of connecting to a profile.
         /// </summary>
-        public List<ConnectionRequest> GetPending() {
+        public ConnectPendingResponse ConnectPending () {
             throw new Goedel.Utilities.NYI();
             }
 
         /// <summary>
         /// Complete process of connecting to a profile.
         /// </summary>
-        public void Confirm(ConnectionRequest Request) {
-            PersonalProfile.Add(Request.Device.DeviceProfile);
+        public ConnectStatusResponse ConnectClose (SignedConnectionRequest Request, ConnectionStatus Status) {
+            //PersonalProfile.Add(Request.Device.DeviceProfile);
 
-            Write();
-           
+            //Write();
+            throw new Goedel.Utilities.NYI();
             }
 
         /// <summary>
@@ -159,25 +156,29 @@ namespace Goedel.Mesh.Platform {
         /// <summary>
         /// Complete process of connecting to a profile.
         /// </summary>
-        public void CompleteConnect() {
+        public void CompleteConnect () {
             GetFromPortal();
             }
 
         /// <summary>
         /// Fetch the latest version of the profile version
         /// </summary>
-        public override void GetFromPortal() {
+        public override void GetFromPortal () {
             SignedPersonalProfile = MeshClient.GetPersonalProfile();
             }
         /// <summary>
         /// Update the associated profile in the registry
         /// </summary>
-        public override void WriteToPortal() {
+        public override void WriteToPortal () {
             MeshClient.Publish(SignedPersonalProfile);
             }
 
-        public virtual bool IsDefault { get; set; }  = true; // Hack: Should work out if it is default
+        public virtual bool IsDefault { get; set; } = true; // Hack: Should work out if it is default
 
+        /// <summary>
+        /// Serialize for storage in a file.
+        /// </summary>
+        /// <returns></returns>
         public virtual SerializationPersonal Serialize () {
             var Result = new SerializationPersonal() {
                 Profile = SignedPersonalProfile,
@@ -188,9 +189,93 @@ namespace Goedel.Mesh.Platform {
                 Result.Default = DateTime.Now;
                 }
             return Result;
-
             }
-        }
 
+        /// <summary>
+        /// Obtain an application session for the specified identifier.
+        /// </summary>
+        /// <param name="Identifier"></param>
+        /// <returns></returns>
+        public SessionApplication GetApplication (string Identifier) {
+            MeshMachine.Find(Identifier, out SessionApplication Result);
+            return Result;
+            }
+
+
+        /// <summary>
+        /// Obtain an application session for the specified identifier.
+        /// </summary>
+        /// <param name="Type">The type of application</param>
+        /// <returns></returns>
+        public List<SessionApplication> GetApplicationsByType (string Type) {
+
+            var Result = new List<SessionApplication>();
+
+            foreach (var Application in PersonalProfile.Applications) {
+                if (Application.Type == Type) {
+
+                    var Session = GetSession(Application);
+                    if (Session != null) {
+                        Result.Add(Session);
+                        }
+                    }
+                }
+
+            return Result;
+            }
+
+        SessionApplication GetSession (ApplicationProfileEntry Application) {
+            var Result = GetApplication(Application.Identifier);
+
+            Result.DecryptDeviceProfiles = MatchDevices(Application.DecryptDeviceUDF);
+            Result.AdminDeviceProfiles = MatchDevices(Application.DecryptDeviceUDF);
+
+            return Result;
+            }
+
+
+
+
+        public List<RegistrationDevice> MatchDevices (List<string> DeviceIdentifiers) {
+            var Result = new List<RegistrationDevice>();
+
+            foreach (var Identifier in DeviceIdentifiers) {
+                if (MeshMachine.DeviceProfiles.TryGetValue(Identifier, out var Registration)) {
+                    Result.Add(Registration);
+                    }
+                }
+
+            return Result;
+            }
+
+
+        public static void GetUserProfile (string UDF, List<string> Portal, string ApplicationId,
+                out PersonalProfile PersonalProfile, out ApplicationProfile ApplicationProfile) {
+
+            Assert.True(Portal.Count > 0, ProfileNotFound.Throw);
+            var PortalID = Portal[0];
+
+            var Client = new MeshClient(PortalAccount: PortalID);
+            var PersonalResponse = Client.GetPersonalProfile();
+            PersonalProfile = PersonalResponse.PersonalProfile;
+
+            var ApplicationProfileEntry = PersonalProfile.GetApplication(ApplicationId);
+
+            var ApplicationResponse = Client.GetApplicationProfile(ApplicationProfileEntry.Identifier);
+            ApplicationProfile = ApplicationResponse.ApplicationProfile;
+
+            // NYI: Validate against the UDF
+            }
+
+
+        //public ApplicationProfile GetApplicationProfile (string ApplicationId) {
+
+        //    var ApplicationProfileEntry = PersonalProfile.GetApplication(ApplicationId);
+
+        //    var ApplicationResponse = MeshClient.GetApplicationProfile(ApplicationProfileEntry.Identifier);
+        //    return ApplicationResponse.ApplicationProfile;
+
+        //    }
+        }
     }
 

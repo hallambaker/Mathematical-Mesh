@@ -10,7 +10,7 @@
 		|forms.
 
 	Section 1 "Web Password Application Profile Objects"
-
+	Section 2 "Subsection"
 	Structure PasswordProfile
 		Inherits ApplicationProfile
 		Description 

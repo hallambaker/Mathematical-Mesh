@@ -77,26 +77,26 @@ namespace Goedel.Mesh.MeshMan {
 
             if (!Options.DeviceUDF.ByDefault) {
                 // Fingerprint specified so must use existing.
-                return MeshCatalog.GetDevice(Options.DeviceUDF.Value);
+                return MeshSession.GetDevice(Options.DeviceUDF.Value);
                 }
             if (Options.DeviceID.ByDefault | Options.DeviceNew.Value) {
                 // Either no Device ID specified or the new flag specified so create new.
                 var DeviceID = Options.DeviceID.Value ?? "Default";     // Feature: Pull from platform
                 var DeviceDescription = Options.DeviceDescription.Value ?? "Unknown";  // Feature: Pull from platform
-                return MeshCatalog.CreateDevice(DeviceID, DeviceDescription, true);
+                return MeshSession.CreateDevice(DeviceID, DeviceDescription, true);
                 }
             // DeviceID specified without new so look for existing profile.
-            return MeshCatalog.GetDevice(DeviceID: Options.DeviceID.Value);
+            return MeshSession.GetDevice(DeviceID: Options.DeviceID.Value);
             }
 
 
-        public RegistrationPersonal GetPersonal (IPortalAccount Options) {
+        public SessionPersonal GetPersonal (IPortalAccount Options) {
             return GetPersonal(Options.Portal.Value);
             }
 
-        public RegistrationPersonal GetPersonal (string Address) {
-            var RegistrationPersonal =  MeshCatalog.GetPersonal(Address);
-            RegistrationPersonal.MeshCatalog = MeshCatalog;
+        public SessionPersonal GetPersonal (string Address) {
+            var RegistrationPersonal =  MeshSession.GetPersonal(Address);
+            RegistrationPersonal.MeshCatalog = MeshSession;
 
             Assert.NotNull(RegistrationPersonal, ProfileNotFound.Throw,
                 new ExceptionData() { String = Address ?? "<default>" });
@@ -106,7 +106,7 @@ namespace Goedel.Mesh.MeshMan {
 
 
 
-        public RegistrationApplication Register (RegistrationPersonal RegistrationPersonal,
+        public SessionApplication Register (SessionPersonal RegistrationPersonal,
                ApplicationProfile ApplicationProfile) {
 
 
@@ -198,7 +198,7 @@ namespace Goedel.Mesh.MeshMan {
             return AccountAvailable.Valid;
             }
 
-        RegistrationPersonal RegistrationPersonal;
+        SessionPersonal RegistrationPersonal;
         PersonalProfile PersonalProfile;
 
         private void GetProfile(String Portal, String UDF) {
@@ -221,7 +221,7 @@ namespace Goedel.Mesh.MeshMan {
         //    }
 
 
-        public RegistrationApplication GetApplication (IApplicationProfile Options, string Type) {
+        public SessionApplication GetApplication (IApplicationProfile Options, string Type) {
 
             Machine.Find (out var RegistrationApplication, Type,
                     Options.Portal.Value, Options.UDF.Value, Options.ID.Value);

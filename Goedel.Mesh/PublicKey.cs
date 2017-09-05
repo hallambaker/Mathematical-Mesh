@@ -113,7 +113,7 @@ namespace Goedel.Mesh {
                     }
                 case KeyType.DAK:
                 case KeyType.AAK: {
-                    return CryptoAlgorithmClass.Signature;
+                    return CryptoAlgorithmClass.Exchange;
                     }
                 }
             return CryptoAlgorithmClass.NULL;
@@ -247,10 +247,13 @@ namespace Goedel.Mesh {
 
 
         private KeyPair GetKeyPair () {
+            if (PrivateParameters != null) {
+                return PrivateParameters.GetKeyPair();
+                }
             if (PublicParameters != null) {
                 return PublicParameters.GetKeyPair();
                 }
-
+            Assert.Fail(NYI.Throw,"Need to construct from the private parameters.");
 
             return null;
             }

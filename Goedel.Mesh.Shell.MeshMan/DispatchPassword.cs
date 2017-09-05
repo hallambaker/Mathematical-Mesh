@@ -6,7 +6,7 @@ namespace Goedel.Mesh.MeshMan {
 
     public partial class Shell {
 
-        RegistrationApplication RegistrationApplication;
+        SessionApplication RegistrationApplication;
         public PasswordProfile PasswordProfile { get => 
                         RegistrationApplication?.ApplicationProfile as PasswordProfile; }
 

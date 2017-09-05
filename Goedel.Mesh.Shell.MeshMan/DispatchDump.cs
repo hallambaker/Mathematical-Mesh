@@ -45,7 +45,7 @@ namespace Goedel.Mesh.MeshMan {
                 }
             }
 
-        void Report (RegistrationPersonal Registration, bool Detail) {
+        void Report (SessionPersonal Registration, bool Detail) {
             var SignedPersonalProfile = Registration.SignedPersonalProfile;
             var PersonalProfile = SignedPersonalProfile.PersonalProfile;
 
@@ -79,13 +79,13 @@ namespace Goedel.Mesh.MeshMan {
                 Report("    Type {0}, Friendly {1}", ApplicationProfileEntry.Type,
                         ApplicationProfileEntry.Friendly);
                 Report("    Identifier: {0}", ApplicationProfileEntry.Identifier);
-                Report("        Sign IDs: ", ApplicationProfileEntry.SignID);
-                Report("        Decrypt IDs: ", ApplicationProfileEntry.DecryptID);
+                Report("        Sign IDs: ", ApplicationProfileEntry.AdminDeviceUDF);
+                Report("        Decrypt IDs: ", ApplicationProfileEntry.DecryptDeviceUDF);
                 }
 
             }
 
-        void Report (RegistrationApplication Registration) {
+        void Report (SessionApplication Registration) {
             Report(Registration.SignedApplicationProfile);
             }
 

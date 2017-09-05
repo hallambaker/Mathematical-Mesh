@@ -42,8 +42,6 @@ namespace ExampleGenerator {
         public static string NameService = "example.com";
         public readonly string AccountID = Account.ID(NameAccount, NameService);
 
-        //public Mesh Mesh;
-
         MeshClient MeshClient;
         MeshPortalTraced Portal;
         /// <summary>
@@ -78,7 +76,7 @@ namespace ExampleGenerator {
         CommandLineInterpreter CommandLineInterpreter = new CommandLineInterpreter();
 
         public Shell Shell1 = new Shell() {
-            MeshCatalog = new MeshCatalog(new RegistrationMachineCached()),
+            MeshSession = new MeshSession(new MeshMachineCached()),
             DefaultDescription = Device1Description
             };
         public string Device1 (string Command) {
@@ -90,7 +88,7 @@ namespace ExampleGenerator {
             }
 
         public Shell Shell2 = new Shell() {
-            MeshCatalog = new MeshCatalog(new RegistrationMachineCached()),
+            MeshSession = new MeshSession(new MeshMachineCached()),
             DefaultDescription = Device2Description
             };
         public string Device2 (string Command, out string Tag) {
@@ -99,7 +97,7 @@ namespace ExampleGenerator {
             }
 
         public Shell Shell3 = new Shell() {
-            MeshCatalog = new MeshCatalog(new RegistrationMachineCached()),
+            MeshSession = new MeshSession(new MeshMachineCached()),
             DefaultDescription = Device3Description
             };
         public string Device3 (string Command, out string Tag) {

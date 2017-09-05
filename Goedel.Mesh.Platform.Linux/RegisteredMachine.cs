@@ -29,7 +29,7 @@ using Goedel.Cryptography;
 namespace Goedel.Mesh.Platform.Linux {
 
 
-    public partial class RegistrationMachineLinux : RegistrationMachineCached {
+    public partial class MeshMachineLinux : MeshMachineCached {
         public string RootDirectory { get; }
 
         /// <summary>
@@ -70,22 +70,23 @@ namespace Goedel.Mesh.Platform.Linux {
         /// </summary>
         /// <param name="TestMode">If true, the application will be initialized in
         /// test/debug mode.</param>
-        public static void Initialize(bool TestMode = false) {
+        public static void Initialize(bool TestMode = false, bool Load = true) {
 
             if (Current == null) {
-                Current = new RegistrationMachineLinux();
+                Current = new MeshMachineLinux(Load : Load);
                 }
             }
 
         /// <summary>
         /// Default constructor, get values from the current machine.
         /// </summary>
-        public RegistrationMachineLinux (string RootDirectory = null) {
+        public MeshMachineLinux (string RootDirectory = null, bool Load =true) {
             this.RootDirectory = RootDirectory ??
                 System.IO.Path.Combine (Environment.GetFolderPath (Environment.SpecialFolder.UserProfile),
                         Constants.MeshProfiles) ;
-
-            Fill();
+            if (Load ) {
+                Fill();
+                }
             }
 
 
@@ -113,7 +114,7 @@ namespace Goedel.Mesh.Platform.Linux {
             // Map personal profiles
             var PersonalFiles = Directory.GetFiles(RootDirectory, Constants.PersonalExtensionSearch);
             foreach (var File in PersonalFiles) {
-                var PersonalReg = new RegistrationPersonalLinux(this, File);
+                var PersonalReg = new PersonalSessionLinux(this, File);
 
                 if (PersonalReg != null) {
                     Register(PersonalReg);
@@ -191,8 +192,8 @@ namespace Goedel.Mesh.Platform.Linux {
         /// </summary>
         /// <param name="SignedProfile">Profile to add.</param>
         /// <returns>Registration for the created profile.</returns>
-        public override RegistrationPersonal Add(SignedPersonalProfile SignedProfile) {
-            var Registration = new RegistrationPersonalLinux(SignedProfile, this);
+        public override SessionPersonal Add (SignedPersonalProfile SignedProfile) {
+            var Registration = new PersonalSessionLinux(SignedProfile, this);
             Register(Registration);
             return Registration;
             }
@@ -202,7 +203,7 @@ namespace Goedel.Mesh.Platform.Linux {
         /// </summary>
         /// <param name="ApplicationProfile">Profile to add.</param>
         /// <returns>Registration for the created profile.</returns>
-        public override RegistrationApplication Add(ApplicationProfile ApplicationProfile) {
+        public override SessionApplication Add(ApplicationProfile ApplicationProfile) {
             var Registration = new RegistrationApplicationLinux(ApplicationProfile, this);
             ApplicationProfiles.AddSafe(ApplicationProfile.Identifier, Registration); // NYI check if present
 

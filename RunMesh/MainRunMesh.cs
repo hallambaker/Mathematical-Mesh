@@ -29,7 +29,6 @@ using Goedel.Mesh.Platform;
 using Goedel.Mesh.Platform.Windows;
 using Goedel.Cryptography;
 using Goedel.Cryptography.Windows;
-using Goedel.Cryptography.KeyFile;
 using Test.Common;
 using UT = Microsoft.VisualStudio.TestTools.UnitTesting;
 using Goedel.Persistence;
@@ -55,7 +54,71 @@ namespace Goedel.Mesh {
 
     class Program {
         static TestConstant TestConstant;
-        static MeshCatalog MeshCatalog = null;
+        static MeshSession MeshSession = null;
+
+        static void ApplicationInit () {
+            MeshWindows.Initialize(true);
+            MeshSession = new MeshSession();
+            }
+
+        static void DebugApplicationInit () {
+
+            MeshPortal.Default = new MeshPortalDirect("example.com",
+                "MeshLog.jlog", "PortalLog.jlog");
+
+            MeshWindows.Initialize(true);
+            MeshSession = new MeshSession();
+            MeshSession.EraseTest();
+            }
+
+
+
+        PersonalProfile PersonalProfile;
+        SessionPersonal PersonalSession;
+        OfflineEscrowEntry OfflineEscrowEntry;
+        void DebugCreateProfile (string Address) {
+            var Response = MeshSession.Validate(Address);
+            if (!Response.Valid) {
+                throw new Exception();
+                }
+
+            var DeviceRegistration = MeshSession.CreateDevice();
+            PersonalProfile = new PersonalProfile(DeviceRegistration.DeviceProfile);
+            PersonalSession = MeshSession.CreateAccount("alice@example.com", PersonalProfile);
+
+            OfflineEscrowEntry = new OfflineEscrowEntry(PersonalProfile, 2, 4);
+            PersonalSession.Escrow(OfflineEscrowEntry);
+
+            var PasswordProfile = new PasswordProfile(true);
+            var RegistrationApplication =
+                    PersonalSession.Add(PasswordProfile, false);
+
+            PersonalSession.Delete();
+
+            var RecoveryShares = new KeyShare[] {
+                OfflineEscrowEntry.KeyShares[0],
+                OfflineEscrowEntry.KeyShares[2] };
+            var Secret = new Secret(RecoveryShares);
+            MeshSession.Recover(Secret);
+            }
+
+        void RequestConnect (string Address) {
+            var DeviceRegistration = MeshSession.CreateDevice();
+            var Connect = MeshSession.Connect(DeviceRegistration, 
+                    Address, out var Authenticator);
+
+            Connect.Await();
+            }
+
+
+        void AcceptPending () {
+            var Pending = PersonalSession.ConnectPending();
+            foreach (var Request in Pending.Pending) {
+                var Result = PersonalSession.ConnectClose(Request, 
+                    ConnectionStatus.Accepted);
+                }
+            }
+
 
         static void Main (string[] args) {
             Goedel.IO.Debug.Initialize();
@@ -71,8 +134,8 @@ namespace Goedel.Mesh {
                 TestConstant.LogMesh, TestConstant.LogPortal);
             MeshPortal.Default = Portal;
 
-            MeshCatalog = new MeshCatalog();
-            MeshCatalog.EraseTest(); // remove previous test data
+            MeshSession = new MeshSession();
+            MeshSession.EraseTest(); // remove previous test data
 
             //// Connect to a direct, in process portal.
             //var Portal = new MeshPortalDirect(TestConstant.NameService, TestConstant.LogMesh, TestConstant.LogPortal);
@@ -84,10 +147,13 @@ namespace Goedel.Mesh {
 
             }
 
+
+
+
         CommandLineInterpreter CommandLineInterpreter = new CommandLineInterpreter ();
 
         public Shell Shell1 = new Shell() {
-            MeshCatalog = new MeshCatalog()
+            MeshSession = new MeshSession()
             };
         public void Device1 (string Command) {
             var Args = Command.Split();
@@ -96,7 +162,7 @@ namespace Goedel.Mesh {
             }
 
         public Shell Shell2 = new Shell() {
-            MeshCatalog = new MeshCatalog(new RegistrationMachineCached())
+            MeshSession = new MeshSession(new MeshMachineCached())
             };
         public void Device2 (string Command) {
             var Args = Command.Split();
@@ -105,7 +171,7 @@ namespace Goedel.Mesh {
             }
 
         public Shell Shell3 = new Shell() {
-            MeshCatalog = new MeshCatalog(new RegistrationMachineCached())
+            MeshSession = new MeshSession(new MeshMachineCached())
             };
         public void Device3 (string Command) {
             var Args = Command.Split();

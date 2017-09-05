@@ -71,15 +71,13 @@ namespace Goedel.Mesh.Server {
             return MeshServiceClient;
             }
 
-
         /// <summary>
         /// Label the following interactions
         /// </summary>
         /// <param name="Name">The label name to use</param>
+        /// <param name="Command">Optional command value</param>
         /// <returns>The trace point marker created</returns>
-        public TracePoint Label(string Name) {
-            return Traces.Label (Name);
-            }
+        public TracePoint Label (string Name, string Command = null) => Traces.Label(Name, Command);
 
 
         }

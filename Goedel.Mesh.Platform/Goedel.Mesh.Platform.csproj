@@ -42,13 +42,13 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="MeshCatalog.cs" />
+    <Compile Include="MeshSession.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="AbstractRegistration.cs" />
     <Compile Include="RegistrationDevice.cs" />
-    <Compile Include="RegistrationApplication.cs" />
-    <Compile Include="RegistrationMachine.cs" />
-    <Compile Include="RegistrationPersonal.cs" />
+    <Compile Include="SessionApplication.cs" />
+    <Compile Include="SessionMachine.cs" />
+    <Compile Include="SessionPersonal.cs" />
     <Compile Include="RegistrationSSH.cs" />
     <Compile Include="Serialization.cs">
       <AutoGen>True</AutoGen>

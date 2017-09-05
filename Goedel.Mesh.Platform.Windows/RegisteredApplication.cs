@@ -46,7 +46,7 @@ namespace Goedel.Mesh.Platform.Windows {
         /// </summary>
         /// <param name="ApplicationProfile">The application profile</param>
         public RegistrationApplicationWindows(ApplicationProfile ApplicationProfile, 
-                            RegistrationMachine Machine) : base(ApplicationProfile, Machine)  {
+                            MeshMachine Machine) : base(ApplicationProfile, Machine)  {
             this.ApplicationProfile = ApplicationProfile;
             }
 
@@ -56,7 +56,7 @@ namespace Goedel.Mesh.Platform.Windows {
         /// </summary>
         /// <param name="UDF">File fingerprint</param>
         /// <param name="File">Filename on local machine</param>
-        public RegistrationApplicationWindows(RegistrationMachine Machine, 
+        public RegistrationApplicationWindows(MeshMachine Machine, 
                     string UDF=null, string File=null) : base (GetFromLocal(UDF, File), Machine) {
             }
 

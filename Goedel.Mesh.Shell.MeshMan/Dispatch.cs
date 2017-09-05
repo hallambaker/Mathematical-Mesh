@@ -16,8 +16,8 @@ namespace Goedel.Mesh.MeshMan {
     public partial class Shell {
 
         public List<ConnectionRequest> PendingRequests;
-        RegistrationMachine Machine {
-            get => MeshCatalog.Machine;
+        MeshMachine Machine {
+            get => MeshSession.Machine;
             }
 
         string PortalID;
@@ -25,7 +25,7 @@ namespace Goedel.Mesh.MeshMan {
 
         public MeshClient MeshClient;
 
-        public MeshCatalog MeshCatalog;
+        public MeshSession MeshSession;
         CommandLineInterpreter CommandLineInterpreter = new CommandLineInterpreter();
 
         public string DefaultID {
@@ -38,7 +38,7 @@ namespace Goedel.Mesh.MeshMan {
             }
 
         public Shell () {
-            MeshCatalog = new MeshCatalog();
+            MeshSession = new MeshSession();
             }
 
         public string CommandLine { get; set; }
@@ -57,7 +57,7 @@ namespace Goedel.Mesh.MeshMan {
         /// </summary>
         /// <param name="Options">Command line parameters</param>
         public override void Reset (Reset Options) {
-            MeshCatalog.EraseTest();
+            MeshSession.EraseTest();
             }
 
 
@@ -70,7 +70,7 @@ namespace Goedel.Mesh.MeshMan {
             var DeviceDescription = Options.DeviceDescription.Value ?? "Unknown";
             bool? Default = Options.Default.Value;
 
-            MeshCatalog.CreateDevice(DeviceID, DeviceDescription, Default);
+            MeshSession.CreateDevice(DeviceID, DeviceDescription, Default);
             }
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace Goedel.Mesh.MeshMan {
             var Address = Options.Portal.Value;
             Assert.True((Address != null & Address != ""), NoPortalAccount.Throw);
 
-            var ProfileRegistration = MeshCatalog.GetPersonal(Address, Portal: false);
+            var ProfileRegistration = MeshSession.GetPersonal(Address, Portal: false);
             Assert.NotNull(ProfileRegistration, ProfileNotFound.Throw);
 
             ProfileRegistration.Delete();
@@ -100,7 +100,7 @@ namespace Goedel.Mesh.MeshMan {
                 var Address = Options.Portal.Value;
                 Assert.True((Address != null & Address != ""), NoPortalAccount.Throw);
 
-                var Response = MeshCatalog.Validate(Address);
+                var Response = MeshSession.Validate(Address);
 
                 if (Response.Valid) {
                     Report("Accepted: {0}", Address);

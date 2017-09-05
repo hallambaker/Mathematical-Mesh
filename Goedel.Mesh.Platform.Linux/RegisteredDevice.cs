@@ -34,8 +34,8 @@ namespace Goedel.Mesh.Platform.Linux {
     public class RegistrationDeviceLinux : RegistrationDevice {
         
 
-        public RegistrationMachineLinux RegistrationMachineLinux {
-            get => RegistrationMachine as RegistrationMachineLinux;
+        public MeshMachineLinux RegistrationMachineLinux {
+            get => MeshMachine as MeshMachineLinux;
             }
 
         /// <summary>Return the fingerprint.</summary>
@@ -50,8 +50,8 @@ namespace Goedel.Mesh.Platform.Linux {
         /// </summary>
         /// <param name="File">Filename on local machine</param>
         /// <param name="UDF">File fingerprint</param>
-        public RegistrationDeviceLinux (RegistrationMachineLinux Machine, string File = null, string UDF = null) {
-            RegistrationMachine = Machine;
+        public RegistrationDeviceLinux (MeshMachineLinux Machine, string File = null, string UDF = null) {
+            MeshMachine = Machine;
             File = File ?? RegistrationMachineLinux.FileDeviceProfile(UDF);
             var Serialization = SerializationDevice.FromFile(File);
             WasMadeDefault = Serialization.Default;
@@ -65,9 +65,9 @@ namespace Goedel.Mesh.Platform.Linux {
         /// <param name="SignedDeviceProfile">The device profile</param>
         public RegistrationDeviceLinux (
                         SignedDeviceProfile SignedDeviceProfile,
-                        RegistrationMachineLinux Machine) {
+                        MeshMachineLinux Machine) {
             base.SignedDeviceProfile = SignedDeviceProfile;
-            RegistrationMachine = Machine;
+            MeshMachine = Machine;
             WriteToLocal();
             }
 

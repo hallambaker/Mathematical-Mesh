@@ -5,7 +5,7 @@ using Goedel.Mesh.Platform;
 namespace Goedel.Mesh.Platform {
 
 
-    public partial class RegistrationPersonal {
+    public partial class SessionPersonal {
 
         /// <summary>
         /// Convenience method to create and register a new SSHProfile
@@ -13,7 +13,7 @@ namespace Goedel.Mesh.Platform {
         /// <param name="RegistrationPersonal"></param>
         /// <param name="Write">If true, updates are written to local store and portal</param>
         /// <returns></returns>
-        public virtual RegistrationApplication CreateSSH (
+        public virtual SessionApplication CreateSSH (
                     bool Write=true) {
             var Profile = SSHProfile.Create(PersonalProfile);
             var RegistrationApplication = Add(Profile, false);

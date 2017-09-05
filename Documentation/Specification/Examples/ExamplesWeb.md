@@ -27,7 +27,7 @@ application profile as follows:
 ~~~~
 {
   "PasswordProfile": {
-    "Identifier": "MBX6T-3G6YY-57VFN-FNENK-S5S7M-WUNYY-A"}}
+    "Identifier": "MDUVE-HF4Y2-RBBMK-EKVDB-4VGPX-G32PQ-A"}}
 ~~~~
 
 As we saw earlier, Alice really needs to start using stronger passwords. 

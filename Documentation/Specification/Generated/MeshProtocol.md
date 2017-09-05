@@ -2,13 +2,13 @@
 
 #Mesh Portal Service  Reference
 
-SRV Prefix:
+<dl><dt>SRV Prefix: 
+<dd>_mmm._tcp</dl>
 
-:_mmm._tcp
+<dl><dt>HTTP Well Known Service Prefix: 
+<dd>/.well-known/mmm</dl>
 
-HTTP Well Known Service Prefix:
 
-:/.well-known/mmm
 
 Every Mesh Portal Service transaction consists of exactly one
 request followed by exactly one response.
@@ -32,9 +32,11 @@ address in the HTTP Host field.
 Base class for all request messages.
 
 
-Portal: String (Optional)
+<dl><dt>Portal: 
+<dd>String (Optional)
 
-:Name of the Mesh Portal Service to which the request 
+
+Name of the Mesh Portal Service to which the request 
 is directed.
 
 ##Response Messages
@@ -69,13 +71,17 @@ Describes a Key/Value structure used to make queries
 for records matching one or more selection criteria.
 
 
-Key: String (Optional)
+<dl><dt>Key: 
+<dd>String (Optional)
 
-:The data retrieval key.
 
-Value: String (Optional)
+The data retrieval key.
 
-:The data value to match.
+<dl><dt>Value: 
+<dd>String (Optional)
+
+
+The data value to match.
 
 ###Structure: SearchConstraints
 
@@ -84,30 +90,41 @@ allow a client to limit the number of records returned, the quantity
 of data returned, the earliest and latest data returned, etc.
 
 
-NotBefore: DateTime (Optional)
+<dl><dt>NotBefore: 
+<dd>DateTime (Optional)
 
-:Only data published on or after the specified time instant 
+
+Only data published on or after the specified time instant 
 is requested.
 
-Before: DateTime (Optional)
+<dl><dt>Before: 
+<dd>DateTime (Optional)
 
-:Only data published before the specified time instant is
+
+Only data published before the specified time instant is
 requested. This excludes data published at the specified time instant.
 
-MaxEntries: Integer (Optional)
+<dl><dt>MaxEntries: 
+<dd>Integer (Optional)
 
-:Maximum number of data entries to return.
 
-MaxBytes: Integer (Optional)
+Maximum number of data entries to return.
 
-:Maximum number of data bytes to return.
+<dl><dt>MaxBytes: 
+<dd>Integer (Optional)
 
-PageKey: String (Optional)
 
-:Specifies a page key returned in a previous search operation
+Maximum number of data bytes to return.
+
+<dl><dt>PageKey: 
+<dd>String (Optional)
+
+
+Specifies a page key returned in a previous search operation
 in which the number of responses exceeded the specified bounds.
 
-:When a page key is specified, all the other search parameters
+
+When a page key is specified, all the other search parameters
 except for MaxEntries and MaxBytes are ignored and the service
 returns the next set of data responding to the earlier query.
 
@@ -115,7 +132,7 @@ returns the next set of data responding to the earlier query.
 
 Request: HelloRequest
 
-Response:HelloResponse
+Response: HelloResponse
 
 Report service and version information. 
 
@@ -127,7 +144,7 @@ the service.
 
 Request: ValidateRequest
 
-Response:ValidateResponse
+Response: ValidateResponse
 
 Request validation of a proposed name for a new account.
 
@@ -141,19 +158,25 @@ Describes the proposed account properties. Currently, these are limited
 to the account name but could be extended in future versions of the protocol.
 
 
-Account: String (Optional)
+<dl><dt>Account: 
+<dd>String (Optional)
 
-:Account name requested
 
-Reserve: Boolean (Optional)
+Account name requested
 
-:If true, request a reservation for the specified account name.
+<dl><dt>Reserve: 
+<dd>Boolean (Optional)
+
+
+If true, request a reservation for the specified account name.
 Note that the service is not obliged to honor reservation 
 requests.
 
-Language: String [0..Many]
+<dl><dt>Language: 
+<dd>String [0..Many]
 
-:List of ISO language codes in order of preference. For creating
+
+List of ISO language codes in order of preference. For creating
 explanatory text.
 
 ###Message: ValidateResponse
@@ -172,35 +195,45 @@ created. For example, checking with the authoritative list of
 current accounts rather than a cached copy.
 
 
-Valid: Boolean (Optional)
+<dl><dt>Valid: 
+<dd>Boolean (Optional)
 
-:If true, the specified account identifier is acceptable. If false,
+
+If true, the specified account identifier is acceptable. If false,
 the account identifier is rejected.
 
-Minimum: Integer (Optional)
+<dl><dt>Minimum: 
+<dd>Integer (Optional)
 
-:Specifies the minimum length of an account name.
 
-Maximum: Integer (Optional)
+Specifies the minimum length of an account name.
 
-:Specifies the maximum length of an account name.
+<dl><dt>Maximum: 
+<dd>Integer (Optional)
 
-InvalidCharacters: String (Optional)
 
-:A list of characters that the service 
+Specifies the maximum length of an account name.
+
+<dl><dt>InvalidCharacters: 
+<dd>String (Optional)
+
+
+A list of characters that the service 
 does not accept in account names. The list of characters 
 MAY not be exhaustive but SHOULD include any illegal characters
 in the proposed account name.
 
-Reason: String (Optional)
+<dl><dt>Reason: 
+<dd>String (Optional)
 
-:Text explaining the reason an account name was rejected.
+
+Text explaining the reason an account name was rejected.
 
 ##Transaction: CreateAccount
 
 Request: CreateRequest
 
-Response:CreateResponse
+Response: CreateResponse
 
 Request creation of a new portal account.
 
@@ -217,9 +250,11 @@ with the account.
 * Inherits: MeshRequest
 
 
-Account: String (Optional)
+<dl><dt>Account: 
+<dd>String (Optional)
 
-:Account identifier requested.
+
+Account identifier requested.
 
 ###Message: CreateResponse
 
@@ -233,7 +268,7 @@ Reports the success or failure of a Create transaction.
 
 Request: DeleteRequest
 
-Response:DeleteResponse
+Response: DeleteResponse
 
 Request deletion of a portal account.
 
@@ -248,9 +283,11 @@ the requested account identifier.
 * Inherits: MeshRequest
 
 
-Account: String (Optional)
+<dl><dt>Account: 
+<dd>String (Optional)
 
-:Account identifier to be deleted.
+
+Account identifier to be deleted.
 
 ###Message: DeleteResponse
 
@@ -264,7 +301,7 @@ Reports the success or failure of a Delete transaction.
 
 Request: GetRequest
 
-Response:GetResponse
+Response: GetResponse
 
 Search for data in the mesh that matches a set of properties
 described by a sequence of key/value pairs.
@@ -276,30 +313,42 @@ Describes the Portal or Mesh data to be retreived.
 * Inherits: MeshRequest
 
 
-Identifier: String (Optional)
+<dl><dt>Identifier: 
+<dd>String (Optional)
 
-:Lookup by profile ID
 
-Account: String (Optional)
+Lookup by profile ID
 
-:Lookup by Account ID
+<dl><dt>Account: 
+<dd>String (Optional)
 
-KeyValues: KeyValue [0..Many]
 
-:List of KeyValue pairs specifying the conditions to be met
+Lookup by Account ID
 
-SearchConstraints: SearchConstraints (Optional)
+<dl><dt>KeyValues: 
+<dd>KeyValue [0..Many]
 
-:Constrain the search to a specific time interval and/or 
+
+List of KeyValue pairs specifying the conditions to be met
+
+<dl><dt>SearchConstraints: 
+<dd>SearchConstraints (Optional)
+
+
+Constrain the search to a specific time interval and/or 
 limit the number and/or total size of data records returned.
 
-Multiple: Boolean (Optional)
+<dl><dt>Multiple: 
+<dd>Boolean (Optional)
 
-:If true return multiple responses if available
 
-Full: Boolean (Optional)
+If true return multiple responses if available
 
-:If true, the client requests that the full Mesh data record 
+<dl><dt>Full: 
+<dd>Boolean (Optional)
+
+
+If true, the client requests that the full Mesh data record 
 be returned containing both the Mesh entry itself and the 
 Mesh metadata that allows the date and time of the 
 publication of the Mesh entry to be verified.
@@ -313,13 +362,17 @@ matching the request.
 * Inherits: MeshResponse
 
 
-DataItems: DataItem [0..Many]
+<dl><dt>DataItems: 
+<dd>DataItem [0..Many]
 
-:List of mesh data records matching the request.
 
-PageKey: String (Optional)
+List of mesh data records matching the request.
 
-:If non-null, indicates that the number and/or size of the data records
+<dl><dt>PageKey: 
+<dd>String (Optional)
+
+
+If non-null, indicates that the number and/or size of the data records
 returned exceeds either the SearchConstraints specified in the
 request or internal server limits.
 
@@ -327,7 +380,7 @@ request or internal server limits.
 
 Request: PublishRequest
 
-Response:PublishResponse
+Response: PublishResponse
 
 Publish a profile or key escrow entry to the mesh.
 
@@ -351,7 +404,7 @@ Reports the success or failure of a Publish transaction.
 
 Request: StatusRequest
 
-Response:StatusResponse
+Response: StatusResponse
 
 Request the current status of the mesh as seen by the portal to which it
 is directed.
@@ -376,27 +429,35 @@ Reports the success or failure of a Status transaction.
 * Inherits: MeshResponse
 
 
-LastWriteTime: DateTime (Optional)
+<dl><dt>LastWriteTime: 
+<dd>DateTime (Optional)
 
-:Time that the last write update was made to the Mesh
 
-LastCheckpointTime: DateTime (Optional)
+Time that the last write update was made to the Mesh
 
-:Time that the last Mesh checkpoint was calculated.
+<dl><dt>LastCheckpointTime: 
+<dd>DateTime (Optional)
 
-NextCheckpointTime: DateTime (Optional)
 
-:Time at which the next Mesh checkpoint should be calculated.
+Time that the last Mesh checkpoint was calculated.
 
-CheckpointValue: String (Optional)
+<dl><dt>NextCheckpointTime: 
+<dd>DateTime (Optional)
 
-:Last checkpoint value.
+
+Time at which the next Mesh checkpoint should be calculated.
+
+<dl><dt>CheckpointValue: 
+<dd>String (Optional)
+
+
+Last checkpoint value.
 
 ##Transaction: ConnectStart
 
 Request: ConnectStartRequest
 
-Response:ConnectStartResponse
+Response: ConnectStartResponse
 
 Request connection of a new device to a mesh profile
 
@@ -407,14 +468,18 @@ Request connection of a new device to a mesh profile
 Initial device connection request.
 
 
-SignedRequest: SignedConnectionRequest (Optional)
+<dl><dt>SignedRequest: 
+<dd>SignedConnectionRequest (Optional)
 
-:Device connection request signed by thesignature key of the 
+
+Device connection request signed by thesignature key of the 
 device requesting connection.
 
-AccountID: String (Optional)
+<dl><dt>AccountID: 
+<dd>String (Optional)
 
-:Account identifier of account to which the device is requesting
+
+Account identifier of account to which the device is requesting
 connection.
 
 ###Message: ConnectStartResponse
@@ -429,7 +494,7 @@ Reports the success or failure of a ConnectStart transaction.
 
 Request: ConnectStatusRequest
 
-Response:ConnectStatusResponse
+Response: ConnectStatusResponse
 
 Request status of pending connection request of a new device 
 to a mesh profile
@@ -442,14 +507,18 @@ Request status information for a pending request posted
 previously.
 
 
-AccountID: String (Optional)
+<dl><dt>AccountID: 
+<dd>String (Optional)
 
-:Account identifier for which pending connection information
+
+Account identifier for which pending connection information
 is requested.
 
-DeviceID: String (Optional)
+<dl><dt>DeviceID: 
+<dd>String (Optional)
 
-:Device identifier of device requesting status information.
+
+Device identifier of device requesting status information.
 
 ###Message: ConnectStatusResponse
 
@@ -458,15 +527,17 @@ Reports the success or failure of a ConnectStatus transaction.
 * Inherits: MeshRequest
 
 
-Result: SignedConnectionResult (Optional)
+<dl><dt>Result: 
+<dd>SignedConnectionResult (Optional)
 
-:The signed ConnectionResult object.
+
+The signed ConnectionResult object.
 
 ##Transaction: ConnectPending
 
 Request: ConnectPendingRequest
 
-Response:ConnectPendingResponse
+Response: ConnectPendingResponse
 
 Request a list of pending requests for an administration profile.
 
@@ -477,14 +548,18 @@ Request a list of pending requests for an administration profile.
 Specify the criteria for pending requests.
 
 
-AccountID: String (Optional)
+<dl><dt>AccountID: 
+<dd>String (Optional)
 
-:The account identifier of the account for which
+
+The account identifier of the account for which
 pending connection requests are requested.
 
-SearchConstraints: SearchConstraints (Optional)
+<dl><dt>SearchConstraints: 
+<dd>SearchConstraints (Optional)
 
-:Constrain the search to a specific time interval and/or 
+
+Constrain the search to a specific time interval and/or 
 limit the number and/or total size of data records returned.
 
 ###Message: ConnectPendingResponse
@@ -494,14 +569,18 @@ Reports the success or failure of a ConnectPending transaction.
 * Inherits: MeshRequest
 
 
-Pending: SignedConnectionRequest [0..Many]
+<dl><dt>Pending: 
+<dd>SignedConnectionRequest [0..Many]
 
-:A list of pending requests satisfying the criteria set out
+
+A list of pending requests satisfying the criteria set out
 in the request.
 
-PageKey: String (Optional)
+<dl><dt>PageKey: 
+<dd>String (Optional)
 
-:If non-null, indicates that the number and/or size of the data records
+
+If non-null, indicates that the number and/or size of the data records
 returned exceeds either the SearchConstraints specified in the
 request or internal server limits.
 
@@ -509,7 +588,7 @@ request or internal server limits.
 
 Request: ConnectCompleteRequest
 
-Response:ConnectCompleteResponse
+Response: ConnectCompleteResponse
 
 Post response to a pending connection request.
 
@@ -520,14 +599,18 @@ Reports the success or failure of a ConnectComplete transaction.
 * Inherits: MeshRequest
 
 
-Result: SignedConnectionResult (Optional)
+<dl><dt>Result: 
+<dd>SignedConnectionResult (Optional)
 
-:The connection result to be posted to the portal. The result MUST
+
+The connection result to be posted to the portal. The result MUST
 be signed by a valid administration key for the Mesh profile.
 
-AccountID: String (Optional)
+<dl><dt>AccountID: 
+<dd>String (Optional)
 
-:The account identifier to which the connection result is
+
+The account identifier to which the connection result is
 posted.
 
 ###Message: ConnectCompleteResponse
@@ -542,7 +625,7 @@ Reports the success or failure of a ConnectComplete transaction.
 
 Request: TransferRequest
 
-Response:TransferResponse
+Response: TransferResponse
 
 Perform a bulk transfer of the log between the specified transaction
 identifiers. Requires appropriate authorization
@@ -557,9 +640,11 @@ identifiers. Requires appropriate authorization
 * Inherits: MeshRequest
 
 
-SearchConstraints: SearchConstraints (Optional)
+<dl><dt>SearchConstraints: 
+<dd>SearchConstraints (Optional)
 
-:Constrain the search to a specific time interval and/or 
+
+Constrain the search to a specific time interval and/or 
 limit the number and/or total size of data records returned.
 
 ###Message: TransferResponse
@@ -570,13 +655,17 @@ Reports the success or failure of a Transfer transaction.
 If successful, contains the list of Mesh records to be transferred.
 
 
-DataItems: DataItem [0..Many]
+<dl><dt>DataItems: 
+<dd>DataItem [0..Many]
 
-:List of mesh data records matching the request.
 
-PageKey: String (Optional)
+List of mesh data records matching the request.
 
-:If non-null, indicates that the number and/or size of the data records
+<dl><dt>PageKey: 
+<dd>String (Optional)
+
+
+If non-null, indicates that the number and/or size of the data records
 returned exceeds either the SearchConstraints specified in the
 request or internal server limits.
 

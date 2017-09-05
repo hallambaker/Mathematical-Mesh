@@ -35,7 +35,7 @@ namespace Goedel.Mesh.Platform.Windows {
     /// the fingerprint, the cached profile data and the list of portal entries
     /// to which the profile is bound.
     /// </summary>
-    public partial class RegistrationPersonalWindows : RegistrationPersonal {
+    public partial class RegistrationPersonalWindows : SessionPersonal {
 
 
         /// <summary>
@@ -70,10 +70,10 @@ namespace Goedel.Mesh.Platform.Windows {
         /// </summary>
         /// <param name="UDF">File fingerprint</param>
         /// <param name="File">Filename on local machine</param>
-        public RegistrationPersonalWindows(RegistrationMachine Machine, 
+        public RegistrationPersonalWindows(MeshMachine Machine, 
                     string UDF, string File, IEnumerable<string> Portals = null) {
 
-            RegistrationMachine = Machine;
+            MeshMachine = Machine;
             SignedPersonalProfile = SignedPersonalProfile.FromFile(File, UDF);
             if (SignedPersonalProfile == null) { return; }   // TTHROW: Proper exception
 
@@ -81,7 +81,7 @@ namespace Goedel.Mesh.Platform.Windows {
             }
 
         /// <summary>The abstract machine a profile registration is attached to</summary>
-        public override RegistrationMachine RegistrationMachine { get; set; }
+        public override MeshMachine MeshMachine { get; set; }
 
         /// <summary>
         /// Register a personal profile in the Windows registry
@@ -89,13 +89,13 @@ namespace Goedel.Mesh.Platform.Windows {
         /// <param name="Profile">The personal profile</param>
         /// <param name="Portals">The list of portals.</param>
         public RegistrationPersonalWindows(SignedPersonalProfile Profile, 
-                        RegistrationMachine Machine,
+                        MeshMachine Machine,
                         IEnumerable<string> Portals = null) {
             this.SignedPersonalProfile = Profile;
-            RegistrationMachine = Machine;
+            MeshMachine = Machine;
             this.Portals = new PortalCollectionWindows(Portals);
             WriteToLocal();
-            RegistrationMachine.Personal = RegistrationMachine.Personal ?? this;
+            MeshMachine.Personal = MeshMachine.Personal ?? this;
             }
 
 

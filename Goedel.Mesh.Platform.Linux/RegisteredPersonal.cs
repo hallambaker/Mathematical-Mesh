@@ -35,7 +35,7 @@ namespace Goedel.Mesh.Platform.Linux {
     /// the fingerprint, the cached profile data and the list of portal entries
     /// to which the profile is bound.
     /// </summary>
-    public partial class RegistrationPersonalLinux : RegistrationPersonal {
+    public partial class PersonalSessionLinux : SessionPersonal {
 
 
         /// <summary>
@@ -73,10 +73,10 @@ namespace Goedel.Mesh.Platform.Linux {
         /// </summary>
         /// <param name="UDF">File fingerprint</param>
         /// <param name="File">Filename on local machine</param>
-        public RegistrationPersonalLinux (RegistrationMachine Machine, 
+        public PersonalSessionLinux (MeshMachine Machine, 
                         string File, IEnumerable<string> Portals = null) {
 
-            RegistrationMachine = Machine;
+            MeshMachine = Machine;
             var Serialization = SerializationPersonal.FromFile(File);
             WasMadeDefault = Serialization.Default;
             RegistrationMachineLinux.SetDefaultPersonal(this, Serialization.Default);
@@ -85,26 +85,26 @@ namespace Goedel.Mesh.Platform.Linux {
             }
 
 
-        public RegistrationMachineLinux RegistrationMachineLinux {
-            get => RegistrationMachine as RegistrationMachineLinux;
+        public MeshMachineLinux RegistrationMachineLinux {
+            get => MeshMachine as MeshMachineLinux;
             }
 
         /// <summary>The abstract machine a profile registration is attached to</summary>
-        public override RegistrationMachine RegistrationMachine { get; set; }
+        public override MeshMachine MeshMachine { get; set; }
 
         /// <summary>
         /// Register a personal profile in the Windows registry
         /// </summary>
         /// <param name="Profile">The personal profile</param>
         /// <param name="Portals">The list of portals.</param>
-        public RegistrationPersonalLinux (SignedPersonalProfile Profile, 
-                        RegistrationMachine Machine,
+        public PersonalSessionLinux (SignedPersonalProfile Profile,
+                        MeshMachine Machine,
                         IEnumerable<string> Portals = null) {
             SignedPersonalProfile = Profile;
-            RegistrationMachine = Machine;
+            MeshMachine = Machine;
             this.Portals = new PortalCollectionLinux(Portals);
             WriteToLocal();
-            RegistrationMachine.Personal = RegistrationMachine.Personal ?? this;
+            MeshMachine.Personal = MeshMachine.Personal ?? this;
             }
 
 

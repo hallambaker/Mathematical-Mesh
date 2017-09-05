@@ -98,5 +98,16 @@ namespace Goedel.Mesh {
             return SignedDeviceProfile;
             }
 
+
+        /// <summary>
+        /// Encrypt object under the device encryption key. 
+        /// </summary>
+        /// <param name="Object"></param>
+        /// <returns></returns>
+        public JoseWebEncryption Encrypt (JSONObject Object) {
+            return new JoseWebEncryption(
+                    Object, EncryptionKey: DeviceEncryptiontionKey.KeyPair);
+            }
+
         }
     }

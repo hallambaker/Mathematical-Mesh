@@ -5,13 +5,11 @@ cd %~dp0
 echo Generate schemas etc.
 cd Generated 
 
-protogen ../../../Goedel.Mesh/SchemaConfirm.protocol /md
 protogen ../../../Goedel.Mesh/SchemaMail.protocol /md
 protogen ../../../Goedel.Mesh/SchemaMesh.protocol /md
 protogen ../../../Goedel.Mesh/SchemaNetwork.protocol /md
 protogen ../../../Goedel.Mesh/SchemaWeb.protocol /md
 protogen ../../../Goedel.Mesh/SchemaSSH.protocol /md
-protogen ../../../Goedel.Mesh/SchemaRecrypt.protocol /md
 protogen ../../../Goedel.Mesh.Platform/Serialization.protocol /md
 protogen ../../../Goedel.Mesh.Server/MeshProtocol.protocol /md
 

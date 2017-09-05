@@ -35,10 +35,10 @@ namespace Goedel.Mesh.Platform {
     /// Provides the interface layer between the application and all Mesh 
     /// functions.
     /// </summary>
-    public class MeshCatalog { // Hack: This should be merged into RegistrationMachine
+    public class MeshSession {
 
         /// <summary>The cached machine registration data</summary>
-        public RegistrationMachine Machine { get; private set; }
+        public MeshMachine Machine { get; private set; }
 
         /// <summary>
         /// Return an interface populated with all the profiles and portal
@@ -46,8 +46,8 @@ namespace Goedel.Mesh.Platform {
         /// </summary>
         /// <param name="Machine">Machine registration to use. If null, the default
         /// registration is used.</param>
-        public MeshCatalog (RegistrationMachine Machine = null) {
-            this.Machine = Machine ?? RegistrationMachine.Current;
+        public MeshSession (MeshMachine Machine = null) {
+            this.Machine = Machine ?? MeshMachine.Current;
             }
 
 
@@ -172,7 +172,7 @@ namespace Goedel.Mesh.Platform {
         /// </summary>
         /// <param name="PortalAddress"></param>
         /// <returns>Registration created account (if successful)</returns>
-        public RegistrationPersonal CreateAccount (
+        public SessionPersonal CreateAccount (
                     string PortalAddress,
                     PersonalProfile Profile,
                     MeshClient MeshClient = null) {
@@ -181,6 +181,9 @@ namespace Goedel.Mesh.Platform {
             var RegistrationPersonal = AddPersonal(Profile);
 
             RegistrationPersonal.AddPortal(PortalAddress, MeshClient, true);
+
+            MeshClient.CreatePortalAccount(PortalAddress, Profile.SignedPersonalProfile);
+
 
             return RegistrationPersonal;
             }
@@ -194,7 +197,7 @@ namespace Goedel.Mesh.Platform {
             }
 
 
-        public RegistrationPersonal AddPersonal(
+        public SessionPersonal AddPersonal (
                     bool DeviceNew = false,
                     string DeviceUDF = null,
                     string DeviceID = null,
@@ -204,7 +207,7 @@ namespace Goedel.Mesh.Platform {
             return AddPersonal(RegistrationDevice);
             }
 
-        public RegistrationPersonal AddPersonal(
+        public SessionPersonal AddPersonal (
                     RegistrationDevice RegistrationDevice) {
 
             var ProfileDevice = RegistrationDevice.SignedDeviceProfile;
@@ -220,7 +223,7 @@ namespace Goedel.Mesh.Platform {
         /// <param name="PortalAddress">The portal at which to register the profile</param>
         /// <param name="PersonalProfile">The profile to register.</param>
         /// <returns>The profile registration.</returns>
-        public RegistrationPersonal AddPersonal(
+        public SessionPersonal AddPersonal (
             PersonalProfile PersonalProfile) {
 
             var SignedPersonalProfile = PersonalProfile.SignedPersonalProfile;
@@ -233,7 +236,7 @@ namespace Goedel.Mesh.Platform {
 
 
 
-        public RegistrationPersonal Recover (
+        public SessionPersonal Recover (
                     Secret Secret) {
 
             var Identifier = UDF.ToString(UDF.FromEscrowed(Secret.Key, 150));
@@ -256,7 +259,7 @@ namespace Goedel.Mesh.Platform {
         /// Attempt to synchronize the catalog to get the authoritative sources.
         /// </summary>
         /// <returns>True if synchronization attempt succeeded.</returns>
-        public bool Sync() {
+        public bool Sync () {
             return false;
             }
 
@@ -264,7 +267,7 @@ namespace Goedel.Mesh.Platform {
         /// Commit local changes to upstream.
         /// </summary>
         /// <returns>True if synchronization attempt succeeded.</returns>
-        public bool Commit() {
+        public bool Commit () {
             return false;
             }
 
@@ -272,7 +275,7 @@ namespace Goedel.Mesh.Platform {
         /// Add a personal profile to the current machine
         /// </summary>
         /// <param name="Profile">Profile to add.</param>
-        public void Add(PersonalProfile Profile) {
+        public void Add (PersonalProfile Profile) {
             }
 
         /// <summary>
@@ -281,12 +284,12 @@ namespace Goedel.Mesh.Platform {
         /// <param name="UDF">Profile fingerprint.</param>
         /// <param name="PortalID">Portal account.</param>
         /// <returns>The personal profile.</returns>
-        public RegistrationPersonal GetPersonal(
-                        string PortalID=null, 
-                        string UDF=null,
-                        bool Cached=true,
-                        bool Portal=true) {
-            RegistrationPersonal Result = null;
+        public SessionPersonal GetPersonal (
+                        string PortalID = null,
+                        string UDF = null,
+                        bool Cached = true,
+                        bool Portal = true) {
+            SessionPersonal Result = null;
 
             if (Cached) {
                 if (UDF != null) {
@@ -301,24 +304,33 @@ namespace Goedel.Mesh.Platform {
                     }
                 return Machine.Personal;
                 }
-            //if (Portal) {
-            //    MeshClient.GetPersonalProfile();
-
-            //    throw new NYI();
-            //    }
 
             return Result;
             }
 
-        ///// <summary>
-        ///// Get an application profile.
-        ///// </summary>
-        ///// <param name="UDF">Fingerprint of profile.</param>
-        ///// <returns>The profile (if found).</returns>
-        //public MeshApplication GetApplication(string UDF) {
-        //    return null;
-        //    }
 
+
+        public ConnectStartRequest Connect (RegistrationDevice Device, string Address, out string Authenticator) {
+            var MeshClient = new MeshClient(PortalAccount: Address);
+
+            var ConnectStartResponse = MeshClient.ConnectRequest(
+                    Device.SignedDeviceProfile,
+                    out var DeviceRequest);
+
+            Machine.ConnectStartRequests.Add(DeviceRequest);
+
+            Authenticator = UDF.FromUDFPair(
+                Device.UDF,
+                MeshClient.PersonalProfile.UDF
+                );
+
+            return DeviceRequest;
+            }
+
+
+        public ConnectionStatus Await (ConnectStartRequest Connect, int TimeOut = -1) {
+            throw new NYI();
+            }
 
 
 
@@ -339,164 +351,6 @@ namespace Goedel.Mesh.Platform {
         /// <summary>Mesh/Remesh profile</summary>
         Remesh
         }
-
-
-    ///// <summary>
-    ///// Base class for Mesh application profiles.
-    ///// </summary>
-    //public class MeshApplication {
-    //    //MeshPersonal MeshPersonal;
-    //    //MeshDevice MeshDevice;
-
-    //    /// <summary>If true a change to the profile has not been synced.</summary>
-    //    public bool Changed = false;
-
-    //    /// <summary>The signed application profile</summary>
-    //    protected SignedApplicationProfile SignedProfile;
-
-    //    /// <summary>
-    //    /// Generic accessor for contained profile
-    //    /// </summary>
-    //    public virtual ApplicationProfile ApplicationProfile {
-    //        get => _ApplicationProfile; }
-            
-    //    ApplicationProfile _ApplicationProfile = null;
-
-    //    /// <summary>
-    //    /// Update profile.
-    //    /// </summary>
-    //    public virtual void Update() {
-    //        }
-
-    //    /// <summary>delete profile</summary>
-    //    public void Delete() {
-    //        }
-
-    //    }
-
-    ///// <summary>
-    ///// Password waplication profile interface.
-    ///// </summary>
-    //public class MeshApplicationPassword : MeshApplication {
-
-    //    /// <summary>
-    //    /// Generic accessor for contained profile
-    //    /// </summary>
-    //    public override ApplicationProfile ApplicationProfile {
-    //        get => Profile; 
-    //        }
-
-    //    /// <summary>Public profile</summary>
-    //    public PasswordProfile Profile;
-
-    //    /// <summary>Private profile</summary>
-    //    public PasswordProfilePrivate Private {
-    //        get => Profile?.Private; 
-    //        }
-
-    //    /// <summary>
-    //    /// Add username and password entry for a site.
-    //    /// </summary>
-    //    /// <param name="Site">Site for which the credential applies</param>
-    //    /// <param name="Username">Username part of credential</param>
-    //    /// <param name="Password">Password part of credential</param>
-    //    public void Add(string Site, string Username, string Password) {
-    //        Changed = true;
-    //        }
-
-    //    /// <summary>
-    //    /// Add username and password entry for a site.
-    //    /// </summary>
-    //    /// <param name="Sites">List of sites for which the credential applies</param>
-    //    /// <param name="Username">Username part of credential</param>
-    //    /// <param name="Password">Password part of credential</param>
-    //    public void Add(List<string> Sites, string Username, string Password) {
-    //        Changed = true;
-    //        }
-
-    //    /// <summary>
-    //    /// Delete credential entry for a site.
-    //    /// </summary>
-    //    /// <param name="Site">Name of site to delete credentials for</param>
-    //    public void Delete(string Site) {
-    //        Changed = true;
-    //        }
-
-    //    /// <summary>
-    //    /// Get credential for a site.
-    //    /// </summary>
-    //    /// <param name="Site">Name of site to get credentials for</param>
-    //    public void Get(string Site) {
-    //        }
-
-
-
-    //    }
-
-
-    ///// <summary>
-    ///// Wrapper class for SSH application profile.
-    ///// </summary>
-    //public class MeshApplicationSSH : MeshApplication {
-
-    //    /// <summary>
-    //    /// Generic accessor for contained profile
-    //    /// </summary>
-    //    public override ApplicationProfile ApplicationProfile {
-    //        get => Profile; 
-    //        }
-
-    //    /// <summary>The public part of the profile.</summary>
-    //    public SSHProfile Profile;
-    //    /// <summary>The private part of the profile</summary>
-    //    public PasswordProfilePrivate Private;
-
-    //    }
-
-    ///// <summary>
-    ///// Interface class for mail profile.
-    ///// </summary>
-    //public class MeshApplicationMail : MeshApplication {
-
-    //    /// <summary>
-    //    /// Generic accessor for contained profile
-    //    /// </summary>
-    //    public override ApplicationProfile ApplicationProfile {
-    //        get => Profile; 
-    //        }
-
-    //    /// <summary>The public profile</summary>
-    //    public MailProfile Profile;
-
-    //    /// <summary>The private profile.</summary>
-    //    public MailProfilePrivate Private {
-    //        get => Profile?.Private; 
-    //        }
-
-    //    }
-
-    ///// <summary>
-    ///// Network application profile interface.
-    ///// </summary>
-    //public class MeshApplicationNetwork : MeshApplication {
-
-    //    /// <summary>
-    //    /// Generic accessor for contained profile
-    //    /// </summary>
-    //    public override ApplicationProfile ApplicationProfile {
-    //        get => Profile; 
-    //        }
-
-    //    /// <summary>Public profile</summary>
-    //    public NetworkProfile Profile;
-
-    //    /// <summary>Private profile</summary>
-    //    public NetworkProfilePrivate Private {
-    //        get => Profile?.Private; 
-    //        }
-
-    //    }
-
 
 
 

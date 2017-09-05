@@ -45,7 +45,7 @@ namespace Goedel.Mesh.Platform {
         /// </summary>
         public SignedDeviceProfile SignedDeviceProfile { get; set; }
 
-        public override RegistrationMachine RegistrationMachine { get; set; }
+        public override MeshMachine MeshMachine { get; set; }
 
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace Goedel.Mesh.Platform {
         /// </summary>
         /// <param name="PortalID">The portal to connect to</param>
         /// <param name="PIN">Optional one time authenticator.</param>
-        public RegistrationPersonal BeginConnect(string PortalID, string PIN = null) {
+        public SessionPersonal BeginConnect(string PortalID, string PIN = null) {
 
             // Create a portal for the PortalID
             var MeshClient = new MeshClient(PortalAccount: PortalID) {
@@ -74,7 +74,7 @@ namespace Goedel.Mesh.Platform {
             var PendingResponse = MeshClient.ConnectRequest(SignedDeviceProfile, out var DeviceRequest);
 
             // Copy the MeshClient to the unconnected profile
-            var RegisteredPersonal = RegistrationMachine.Add(SignedPersonalProfile);
+            var RegisteredPersonal = MeshMachine.Add(SignedPersonalProfile);
             RegisteredPersonal.MeshClient = MeshClient;
 
             return RegisteredPersonal;

@@ -10,13 +10,17 @@ Public profile describes mail receipt policy. Private describes
 Sending policy
 
 
-EncryptionPGP: PublicKey (Optional)
+<dl><dt>EncryptionPGP: 
+<dd>PublicKey (Optional)
 
-:The current OpenPGP encryption key
 
-EncryptionSMIME: PublicKey (Optional)
+The current OpenPGP encryption key
 
-:The current S/MIME encryption key
+<dl><dt>EncryptionSMIME: 
+<dd>PublicKey (Optional)
+
+
+The current S/MIME encryption key
 
 ###Structure: MailProfilePrivate
 
@@ -29,48 +33,69 @@ outbound mail server(s) and cryptographic private keys. Public
 profile may contain security policy information for the sender.
 
 
-EmailAddress: String (Optional)
+<dl><dt>EmailAddress: 
+<dd>String (Optional)
 
-:The RFC822 Email address. [e.g. "alice@example.com"]
 
-ReplyToAddress: String (Optional)
+The RFC822 Email address. [e.g. "alice@example.com"]
 
-:The RFC822 Reply toEmail address. [e.g. "alice@example.com"]
+<dl><dt>ReplyToAddress: 
+<dd>String (Optional)
 
-:When set, allows a sender to tell the receiver that replies to
+
+The RFC822 Reply toEmail address. [e.g. "alice@example.com"]
+
+
+When set, allows a sender to tell the receiver that replies to
 this account should be directed to this address.
 
-DisplayName: String (Optional)
+<dl><dt>DisplayName: 
+<dd>String (Optional)
 
-:The Display Name. [e.g. "Alice Example"]
 
-AccountName: String (Optional)
+The Display Name. [e.g. "Alice Example"]
 
-:The Account Name for display to the app user [e.g. "Work Account"]
+<dl><dt>AccountName: 
+<dd>String (Optional)
 
-Inbound: Connection [0..Many]
 
-:The Inbound Mail Connection(s). This is typically IMAP4 or POP3
+The Account Name for display to the app user [e.g. "Work Account"]
 
-:If multiple connections are specified, the order in the sequence
+<dl><dt>Inbound: 
+<dd>Connection [0..Many]
+
+
+The Inbound Mail Connection(s). This is typically IMAP4 or POP3
+
+
+If multiple connections are specified, the order in the sequence
 indicates the preference order.
 
-Outbound: Connection [0..Many]
+<dl><dt>Outbound: 
+<dd>Connection [0..Many]
 
-:The Outbound Mail Connection(s). This is typically SMTP/SUBMIT
 
-:If multiple connections are specified, the order in the sequence
+The Outbound Mail Connection(s). This is typically SMTP/SUBMIT
+
+
+If multiple connections are specified, the order in the sequence
 indicates the preference order.
 
-Sign: PublicKey [0..Many]
+<dl><dt>Sign: 
+<dd>PublicKey [0..Many]
 
-:The public keypair(s) for signing and decrypting email.
 
-:If multiple public keys are specified, the order indicates preference.
+The public keypair(s) for signing and decrypting email.
 
-Encrypt: PublicKey [0..Many]
 
-:The public keypairs for encrypting and decrypting email.
+If multiple public keys are specified, the order indicates preference.
 
-:If multiple public keys are specified, the order indicates preference.	
+<dl><dt>Encrypt: 
+<dd>PublicKey [0..Many]
+
+
+The public keypairs for encrypting and decrypting email.
+
+
+If multiple public keys are specified, the order indicates preference.	
 

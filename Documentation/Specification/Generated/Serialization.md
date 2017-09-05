@@ -3,33 +3,39 @@
 ###Structure: Serialization
 
 
-Default: DateTime (Optional)
+<dl><dt>Default: 
+<dd>DateTime (Optional)
 
 ###Structure: SerializationPersonal
 
 * Inherits: Serialization
 
 
-Profile: SignedPersonalProfile (Optional)
+<dl><dt>Profile: 
+<dd>SignedPersonalProfile (Optional)
 
-Portals: SerializationPortal [0..Many]
+<dl><dt>Portals: 
+<dd>SerializationPortal [0..Many]
 
 ###Structure: SerializationPortal
 
 
-Address: String (Optional)
+<dl><dt>Address: 
+<dd>String (Optional)
 
 ###Structure: SerializationApplication
 
 * Inherits: Serialization
 
 
-Profile: SignedApplicationProfile (Optional)
+<dl><dt>Profile: 
+<dd>SignedApplicationProfile (Optional)
 
 ###Structure: SerializationDevice
 
 * Inherits: Serialization
 
 
-Profile: SignedDeviceProfile (Optional)
+<dl><dt>Profile: 
+<dd>SignedDeviceProfile (Optional)
 

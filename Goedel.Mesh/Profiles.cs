@@ -147,7 +147,7 @@ namespace Goedel.Mesh {
         /// <param name="Encoding">The encoding for the inner data</param>
         public virtual SignedProfile Sign(string UDF=null,  KeyPair KeyPair = null,
                         DataEncoding Encoding = DataEncoding.JSON) {
-            throw new Goedel.Protocol.NYI();
+            throw new NYI();
             }
 
         }

@@ -27,7 +27,7 @@ namespace Goedel.Mesh.MeshMan {
 
             var PersonalProfile = new PersonalProfile(DeviceRegistration.DeviceProfile);
 
-            var Registration = MeshCatalog.CreateAccount(Address, PersonalProfile);
+            var Registration = MeshSession.CreateAccount(Address, PersonalProfile);
 
             Report("Created new personal profile {0}", Registration.UDF);
             Report("Profile registered to {0}", Address);

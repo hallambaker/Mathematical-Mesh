@@ -59,8 +59,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CreateExamples.cs" />
-    <Compile Include="MakeVersion.cs">
-      <DependentUpon>MakeVersion.script</DependentUpon>
+    <Compile Include="MakeExamplesDeveloper.cs">
+      <DependentUpon>MakeExamplesDeveloper.script</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="MakeExamplesReference.cs">
+      <DependentUpon>MakeExamplesReference.script</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
@@ -72,11 +77,23 @@
     <None Include="Examples\Examples.md" />
     <None Include="Examples\ExamplesWeb.md" />
     <None Include="Generated\MeshProtocol.md" />
+    <None Include="Generated\SchemaConfirm.md" />
+    <None Include="Generated\SchemaMail.md" />
+    <None Include="Generated\SchemaMesh.md" />
+    <None Include="Generated\SchemaNetwork.md" />
+    <None Include="Generated\SchemaRecrypt.md" />
+    <None Include="Generated\SchemaSSH.md" />
+    <None Include="Generated\SchemaWeb.md" />
+    <None Include="Generated\Serialization.md" />
     <None Include="MakeClean.bat" />
     <None Include="MakeDocs.bat" />
-    <None Include="MakeVersion.script">
+    <None Include="MakeExamplesDeveloper.script">
       <Generator>gscript</Generator>
-      <LastGenOutput>MakeVersion.cs</LastGenOutput>
+      <LastGenOutput>MakeExamplesDeveloper.cs</LastGenOutput>
+    </None>
+    <None Include="MakeExamplesReference.script">
+      <Generator>gscript</Generator>
+      <LastGenOutput>MakeExamplesReference.cs</LastGenOutput>
     </None>
     <None Include="MeshSchemaWeb.md" />
     <Content Include="Bib.xml">

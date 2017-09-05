@@ -56,7 +56,6 @@ namespace Goedel.Mesh {
                     }
                 }
             return null;
-
             }
 
 
@@ -153,13 +152,32 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Find the Application Profile Entry that matches an identifier.
         /// </summary>
-        /// <param name="Identifier">The profile identifier</param>
+        /// <param name="Identifier">The profile identifier</param>\
         /// <returns>The matching application profile entry if found, otherwise null.</returns>
         public ApplicationProfileEntry GetApplicationEntry(string Identifier) {
 
             foreach (var Entry in Applications) {
                 if (Entry.Identifier == Identifier) {
                     return Entry;
+                    }
+                }
+            return null;
+            }
+
+
+        /// <summary>
+        /// Find the Application Profile Entry that matches an identifier.
+        /// </summary>
+        /// <param name="Type">The profile identifier</param>\
+        /// <param name="AccountID">If not null, specifies the friendly name that the profile must match.</param>
+        /// <returns>The matching application profile entry if found, otherwise null.</returns>
+        public ApplicationProfileEntry GetNamedApplicationEntry (string Type, string AccountID = null) {
+
+            foreach (var Entry in Applications) {
+                if (Entry.Type == Type) {
+                    if (AccountID == null | Entry.Friendly == AccountID) {
+                        return Entry;
+                        }
                     }
                 }
             return null;
@@ -321,17 +339,17 @@ namespace Goedel.Mesh {
         public virtual void AddDevice(DeviceProfile Device, bool Administration=false) {
             // Create admin entry for this device
             if (Administration) {
-                if (SignID == null) {
-                    SignID = new List<string>();
+                if (AdminDeviceUDF == null) {
+                    AdminDeviceUDF = new List<string>();
                     }
-                SignID.Add(Device.Identifier);
+                AdminDeviceUDF.Add(Device.Identifier);
                 }
 
             // Create device entry for this device
-            if (DecryptID == null) {
-                DecryptID = new List<string>();
+            if (DecryptDeviceUDF == null) {
+                DecryptDeviceUDF = new List<string>();
                 }
-            DecryptID.Add(Device.Identifier);
+            DecryptDeviceUDF.Add(Device.Identifier);
             }
 
         }

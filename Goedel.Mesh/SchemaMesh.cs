@@ -241,7 +241,6 @@ namespace Goedel.Mesh {
 				}
 			}
 
-
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
@@ -249,6 +248,9 @@ namespace Goedel.Mesh {
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
         public static new PublicKey FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
 				return Out as PublicKey;
@@ -366,7 +368,6 @@ namespace Goedel.Mesh {
 				}
 			}
 
-
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
@@ -374,6 +375,9 @@ namespace Goedel.Mesh {
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
         public static new SignedData FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
 				return Out as SignedData;
@@ -464,7 +468,6 @@ namespace Goedel.Mesh {
 				}
 			}
 
-
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
@@ -472,6 +475,9 @@ namespace Goedel.Mesh {
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
         public static new EncryptedData FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
 				return Out as EncryptedData;
@@ -676,7 +682,6 @@ namespace Goedel.Mesh {
 				}
 			}
 
-
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
@@ -684,6 +689,9 @@ namespace Goedel.Mesh {
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
         public static new Connection FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
 				return Out as Connection;
@@ -818,7 +826,6 @@ namespace Goedel.Mesh {
 				}
 			}
 
-
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
@@ -826,6 +833,9 @@ namespace Goedel.Mesh {
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
         public static new Entry FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
 				return Out as Entry;
@@ -931,7 +941,6 @@ namespace Goedel.Mesh {
 				}
 			}
 
-
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
@@ -939,6 +948,9 @@ namespace Goedel.Mesh {
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
         public static new SignedProfile FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
 				return Out as SignedProfile;
@@ -986,18 +998,13 @@ namespace Goedel.Mesh {
 	/// Additional data bound to a signed profile that is not authenticated.
 	/// </summary>
 	public partial class Advice : MeshItem {
-		bool								__Default = false;
-		private DateTime						_Default;
         /// <summary>
         ///If specified, the profile was the default profile at the specified 
         ///date and time. The current default for that type of profile is the
         ///profile with the most recent Default timestamp.
         /// </summary>
 
-		public virtual DateTime						Default {
-			get {return _Default;}
-			set {_Default = value; __Default = true; }
-			}
+		public virtual DateTime?						Default  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -1037,7 +1044,7 @@ namespace Goedel.Mesh {
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
-			if (__Default){
+			if (Default != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("Default", 1);
 					_Writer.WriteDateTime (Default);
@@ -1047,7 +1054,6 @@ namespace Goedel.Mesh {
 				}
 			}
 
-
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
@@ -1055,6 +1061,9 @@ namespace Goedel.Mesh {
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
         public static new Advice FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
 				return Out as Advice;
@@ -1151,7 +1160,6 @@ namespace Goedel.Mesh {
 				}
 			}
 
-
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
@@ -1159,6 +1167,9 @@ namespace Goedel.Mesh {
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
         public static new PortalAdvice FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
 				return Out as PortalAdvice;
@@ -1210,16 +1221,11 @@ namespace Goedel.Mesh {
         /// </summary>
 
 		public virtual List<string>				Names  {get; set;}
-		bool								__Updated = false;
-		private DateTime						_Updated;
         /// <summary>
         ///The time instant the profile was last modified.
         /// </summary>
 
-		public virtual DateTime						Updated {
-			get {return _Updated;}
-			set {_Updated = value; __Updated = true; }
-			}
+		public virtual DateTime?						Updated  {get; set;}
         /// <summary>
         ///A Uniform Notary Token providing evidence that a signature
         ///was performed after the notary token was created.
@@ -1278,7 +1284,7 @@ namespace Goedel.Mesh {
 				_Writer.WriteArrayEnd ();
 				}
 
-			if (__Updated){
+			if (Updated != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("Updated", 1);
 					_Writer.WriteDateTime (Updated);
@@ -1293,7 +1299,6 @@ namespace Goedel.Mesh {
 				}
 			}
 
-
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
@@ -1301,6 +1306,9 @@ namespace Goedel.Mesh {
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
         public static new Profile FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
 				return Out as Profile;
@@ -1396,7 +1404,6 @@ namespace Goedel.Mesh {
 				}
 			}
 
-
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
@@ -1404,6 +1411,9 @@ namespace Goedel.Mesh {
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
         public static new SignedDeviceProfile FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
 				return Out as SignedDeviceProfile;
@@ -1524,7 +1534,6 @@ namespace Goedel.Mesh {
 				}
 			}
 
-
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
@@ -1532,6 +1541,9 @@ namespace Goedel.Mesh {
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
         public static new DeviceProfile FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
 				return Out as DeviceProfile;
@@ -1664,7 +1676,6 @@ namespace Goedel.Mesh {
 				}
 			}
 
-
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
@@ -1672,6 +1683,9 @@ namespace Goedel.Mesh {
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
         public static new DevicePrivateProfile FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
 				return Out as DevicePrivateProfile;
@@ -1770,7 +1784,6 @@ namespace Goedel.Mesh {
 				}
 			}
 
-
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
@@ -1778,6 +1791,9 @@ namespace Goedel.Mesh {
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
         public static new SignedMasterProfile FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
 				return Out as SignedMasterProfile;
@@ -1915,7 +1931,6 @@ namespace Goedel.Mesh {
 				}
 			}
 
-
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
@@ -1923,6 +1938,9 @@ namespace Goedel.Mesh {
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
         public static new MasterProfile FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
 				return Out as MasterProfile;
@@ -2036,7 +2054,6 @@ namespace Goedel.Mesh {
 				}
 			}
 
-
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
@@ -2044,6 +2061,9 @@ namespace Goedel.Mesh {
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
         public static new SignedPersonalProfile FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
 				return Out as SignedPersonalProfile;
@@ -2179,7 +2199,6 @@ namespace Goedel.Mesh {
 				}
 			}
 
-
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
@@ -2187,6 +2206,9 @@ namespace Goedel.Mesh {
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
         public static new PersonalProfile FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
 				return Out as PersonalProfile;
@@ -2274,13 +2296,13 @@ namespace Goedel.Mesh {
         ///List of devices authorized to sign application profiles
         /// </summary>
 
-		public virtual List<string>				SignID  {get; set;}
+		public virtual List<string>				AdminDeviceUDF  {get; set;}
         /// <summary>
         ///List of devices authorized to read private parts of application 
-        ///profiles		
+        ///profiles.
         /// </summary>
 
-		public virtual List<string>				DecryptID  {get; set;}
+		public virtual List<string>				DecryptDeviceUDF  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -2335,24 +2357,24 @@ namespace Goedel.Mesh {
 				_Writer.WriteToken ("Friendly", 1);
 					_Writer.WriteString (Friendly);
 				}
-			if (SignID != null) {
+			if (AdminDeviceUDF != null) {
 				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("SignID", 1);
+				_Writer.WriteToken ("AdminDeviceUDF", 1);
 				_Writer.WriteArrayStart ();
 				bool _firstarray = true;
-				foreach (var _index in SignID) {
+				foreach (var _index in AdminDeviceUDF) {
 					_Writer.WriteArraySeparator (ref _firstarray);
 					_Writer.WriteString (_index);
 					}
 				_Writer.WriteArrayEnd ();
 				}
 
-			if (DecryptID != null) {
+			if (DecryptDeviceUDF != null) {
 				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("DecryptID", 1);
+				_Writer.WriteToken ("DecryptDeviceUDF", 1);
 				_Writer.WriteArrayStart ();
 				bool _firstarray = true;
-				foreach (var _index in DecryptID) {
+				foreach (var _index in DecryptDeviceUDF) {
 					_Writer.WriteArraySeparator (ref _firstarray);
 					_Writer.WriteString (_index);
 					}
@@ -2364,7 +2386,6 @@ namespace Goedel.Mesh {
 				}
 			}
 
-
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
@@ -2372,6 +2393,9 @@ namespace Goedel.Mesh {
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
         public static new ApplicationProfileEntry FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
 				return Out as ApplicationProfileEntry;
@@ -2401,24 +2425,24 @@ namespace Goedel.Mesh {
 					Friendly = JSONReader.ReadString ();
 					break;
 					}
-				case "SignID" : {
+				case "AdminDeviceUDF" : {
 					// Have a sequence of values
 					bool _Going = JSONReader.StartArray ();
-					SignID = new List <string> ();
+					AdminDeviceUDF = new List <string> ();
 					while (_Going) {
 						string _Item = JSONReader.ReadString ();
-						SignID.Add (_Item);
+						AdminDeviceUDF.Add (_Item);
 						_Going = JSONReader.NextArray ();
 						}
 					break;
 					}
-				case "DecryptID" : {
+				case "DecryptDeviceUDF" : {
 					// Have a sequence of values
 					bool _Going = JSONReader.StartArray ();
-					DecryptID = new List <string> ();
+					DecryptDeviceUDF = new List <string> ();
 					while (_Going) {
 						string _Item = JSONReader.ReadString ();
-						DecryptID.Add (_Item);
+						DecryptDeviceUDF.Add (_Item);
 						_Going = JSONReader.NextArray ();
 						}
 					break;
@@ -2483,7 +2507,6 @@ namespace Goedel.Mesh {
 				}
 			}
 
-
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
@@ -2491,6 +2514,9 @@ namespace Goedel.Mesh {
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
         public static new SignedApplicationProfile FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
 				return Out as SignedApplicationProfile;
@@ -2629,7 +2655,6 @@ namespace Goedel.Mesh {
 				}
 			}
 
-
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
@@ -2637,6 +2662,9 @@ namespace Goedel.Mesh {
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
         public static new ApplicationProfile FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
 				return Out as ApplicationProfile;
@@ -2741,7 +2769,6 @@ namespace Goedel.Mesh {
 				}
 			}
 
-
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
@@ -2749,6 +2776,9 @@ namespace Goedel.Mesh {
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
         public static new ApplicationProfilePrivate FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
 				return Out as ApplicationProfilePrivate;
@@ -2847,7 +2877,6 @@ namespace Goedel.Mesh {
 				}
 			}
 
-
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
@@ -2855,6 +2884,9 @@ namespace Goedel.Mesh {
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
         public static new ApplicationDevicePublic FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
 				return Out as ApplicationDevicePublic;
@@ -2941,7 +2973,6 @@ namespace Goedel.Mesh {
 				}
 			}
 
-
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
@@ -2949,6 +2980,9 @@ namespace Goedel.Mesh {
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
         public static new ApplicationDevicePrivate FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
 				return Out as ApplicationDevicePrivate;
@@ -3037,7 +3071,6 @@ namespace Goedel.Mesh {
 				}
 			}
 
-
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
@@ -3045,6 +3078,9 @@ namespace Goedel.Mesh {
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
         public static new EscrowEntry FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
 				return Out as EscrowEntry;
@@ -3130,7 +3166,6 @@ namespace Goedel.Mesh {
 				}
 			}
 
-
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
@@ -3138,6 +3173,9 @@ namespace Goedel.Mesh {
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
         public static new OfflineEscrowEntry FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
 				return Out as OfflineEscrowEntry;
@@ -3216,7 +3254,6 @@ namespace Goedel.Mesh {
 				}
 			}
 
-
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
@@ -3224,6 +3261,9 @@ namespace Goedel.Mesh {
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
         public static new OnlineEscrowEntry FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
 				return Out as OnlineEscrowEntry;
@@ -3340,7 +3380,6 @@ namespace Goedel.Mesh {
 				}
 			}
 
-
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
@@ -3348,6 +3387,9 @@ namespace Goedel.Mesh {
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
         public static new EscrowedKeySet FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
 				return Out as EscrowedKeySet;
@@ -3480,7 +3522,6 @@ namespace Goedel.Mesh {
 				}
 			}
 
-
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
@@ -3488,6 +3529,9 @@ namespace Goedel.Mesh {
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
         public static new ConnectionRequest FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
 				return Out as ConnectionRequest;
@@ -3588,7 +3632,6 @@ namespace Goedel.Mesh {
 				}
 			}
 
-
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
@@ -3596,6 +3639,9 @@ namespace Goedel.Mesh {
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
         public static new SignedConnectionRequest FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
 				return Out as SignedConnectionRequest;
@@ -3703,7 +3749,6 @@ namespace Goedel.Mesh {
 				}
 			}
 
-
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
@@ -3711,6 +3756,9 @@ namespace Goedel.Mesh {
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
         public static new ConnectionResult FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
 				return Out as ConnectionResult;
@@ -3797,7 +3845,6 @@ namespace Goedel.Mesh {
 				}
 			}
 
-
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
@@ -3805,6 +3852,9 @@ namespace Goedel.Mesh {
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
         public static new SignedConnectionResult FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
 				return Out as SignedConnectionResult;

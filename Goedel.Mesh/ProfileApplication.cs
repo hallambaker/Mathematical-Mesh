@@ -105,7 +105,7 @@ namespace Goedel.Mesh {
         /// Return the private data of this profile as raw data bytes.
         /// </summary>
         protected virtual byte[] GetPrivateData {
-            get => ApplicationProfilePrivate.GetJson (Tagged:true);
+            get => ApplicationProfilePrivate?.GetJson (Tagged:true);
             }
 
 
@@ -124,10 +124,10 @@ namespace Goedel.Mesh {
         /// <returns>An authorized key pair.</returns>
         public KeyPair GetSignatureKey() {
             Assert.NotNull(ApplicationProfileEntry, MeshException.Throw);
-            if (ApplicationProfileEntry.SignID == null) {
+            if (ApplicationProfileEntry.AdminDeviceUDF == null) {
                 return null;
                 }
-            foreach (var SignID in ApplicationProfileEntry.SignID) {
+            foreach (var SignID in ApplicationProfileEntry.AdminDeviceUDF) {
                 var SignKey = KeyPair.FindLocal(SignID);
                 if (SignKey != null) {
                     return SignKey;
@@ -143,11 +143,16 @@ namespace Goedel.Mesh {
         /// </summary>
         public virtual void EncryptPrivate() {
             Assert.NotNull(ApplicationProfileEntry, MeshException.Throw);
-            Assert.NotNull(ApplicationProfileEntry.DecryptID, MeshException.Throw);
+            Assert.NotNull(ApplicationProfileEntry.DecryptDeviceUDF, MeshException.Throw);
 
-            SharedPrivate = new JoseWebEncryption(GetPrivateData);
+            var PrivateData = GetPrivateData;
+            if (PrivateData == null) {
+                return;
+                }
 
-            foreach (var Recipient in ApplicationProfileEntry.DecryptID) {
+            SharedPrivate = new JoseWebEncryption(PrivateData);
+
+            foreach (var Recipient in ApplicationProfileEntry.DecryptDeviceUDF) {
                 // extract the device profile from the personal profile
                 var SignedDeviceProfile = PersonalProfile.GetDeviceProfile(Recipient);
                 var DeviceProfile = SignedDeviceProfile.DeviceProfile;
@@ -207,6 +212,41 @@ namespace Goedel.Mesh {
                 }
             return null;
             }
+
+
+        /// <summary>
+        /// Generate a public key pair for use in an application bound to a specific device, 
+        /// using co-generation if supported by the device.
+        /// </summary>
+        /// <param name="KeyType">The cryptographic usage the key is intended for.</param>
+        /// <param name="CryptoAlgorithmID">The Cryptographic algorithm to use.</param>
+        /// <param name="DeviceProfile">The device to generate the key for.</param>
+        /// <param name="Public">The public key</param>
+        /// <param name="Private">The private key or key contribution.</param>
+        /// <returns>The public key pair. Note that if co-generation is used, this may differ from the public key.</returns>
+        public PublicKey MakeApplicationKeyPair (KeyType KeyType, CryptoAlgorithmID CryptoAlgorithmID,
+                    DeviceProfile DeviceProfile, out PublicKey Public, out PublicKey Private) {
+            //NYI: Should check to see if the device key supports co-generation and use it if so.
+            var KeyPair = PublicKey.Generate(KeyType, CryptoAlgorithmID);
+            Public = new PublicKey() { PrivateParameters = KeyPair.PublicParameters };
+            Private = new PublicKey() { PrivateParameters = KeyPair.PrivateParameters };
+            return KeyPair;
+            }
+
+
+        /// <summary>
+        /// Create a private keypair for a specific device using co-generation if supported by the device.
+        /// </summary>
+        /// <param name="KeyPair"></param>
+        /// <param name="DeviceProfile"></param>
+        /// <returns></returns>
+        public PublicKey MakeDevicePrivateKey (PublicKey KeyPair, DeviceProfile DeviceProfile) {
+            var Private = KeyPair?.PrivateKey?.PKIXPrivateKey;
+            var JKey = Key.Factory(Private);
+
+            return new PublicKey() { PrivateParameters = JKey };
+            }
+
 
 
         /// <summary>

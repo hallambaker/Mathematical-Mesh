@@ -20,9 +20,11 @@ Contains public device description
 * Inherits: ApplicationDevicePublic
 
 
-PublicKey: PublicKey (Optional)
+<dl><dt>PublicKey: 
+<dd>PublicKey (Optional)
 
-:Public authentication key for a device.
+
+Public authentication key for a device.
 
 ###Structure: SSHProfilePrivate
 
@@ -31,13 +33,17 @@ Private portion or profile.
 * Inherits: ApplicationProfilePrivate
 
 
-Account: String (Optional)
+<dl><dt>Account: 
+<dd>String (Optional)
 
-:The account to which the profile is bound
 
-HostEntries: HostEntry [0..Many]
+The account to which the profile is bound
 
-:Hosts bound to the profile
+<dl><dt>HostEntries: 
+<dd>HostEntry [0..Many]
+
+
+Hosts bound to the profile
 
 ###Structure: HostEntry
 
@@ -47,17 +53,23 @@ that the user will access using the credential.
 * Inherits: Entry
 
 
-Address: String (Optional)
+<dl><dt>Address: 
+<dd>String (Optional)
 
-:The DNS address or IP address of the host
 
-AlgorithmID: String (Optional)
+The DNS address or IP address of the host
 
-:The SSH Algorithm identifier
+<dl><dt>AlgorithmID: 
+<dd>String (Optional)
 
-PublicKey: String (Optional)
 
-:The Base64 encoded public key
+The SSH Algorithm identifier
+
+<dl><dt>PublicKey: 
+<dd>String (Optional)
+
+
+The Base64 encoded public key
 
 ###Structure: SSHDevicePrivate
 
@@ -66,12 +78,16 @@ Private data specific to the device
 * Inherits: ApplicationDevicePrivate
 
 
-DevicePrivateKey: PublicKey (Optional)
+<dl><dt>DevicePrivateKey: 
+<dd>PublicKey (Optional)
 
-:A private keypair or keypair contribution created for exclusive use 
+
+A private keypair or keypair contribution created for exclusive use 
 of this device.
 
-KeyUDF: String (Optional)
+<dl><dt>KeyUDF: 
+<dd>String (Optional)
 
-:Fingerprint of device that this key corresponds to.
+
+Fingerprint of device that this key corresponds to.
 

@@ -81,23 +81,11 @@
     <Compile Include="ProfileDevice.cs" />
     <Compile Include="Escrow.cs" />
     <Compile Include="MailClient.cs" />
-    <Compile Include="ProfileConfirm.cs" />
-    <Compile Include="ProfileRecrypt.cs" />
     <Compile Include="ProfileSSH.cs" />
-    <Compile Include="SchemaConfirm.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>SchemaConfirm.protocol</DependentUpon>
-    </Compile>
     <Compile Include="SchemaMesh.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>SchemaMesh.protocol</DependentUpon>
-    </Compile>
-    <Compile Include="SchemaRecrypt.cs">
-      <DependentUpon>SchemaRecrypt.protocol</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="SchemaNetwork.cs">
       <DependentUpon>SchemaNetwork.protocol</DependentUpon>
@@ -144,10 +132,6 @@
       <LastGenOutput>Portal.cs</LastGenOutput>
     </None>
     <None Include="Profiles.md" />
-    <None Include="SchemaRecrypt.protocol">
-      <Generator>protogen</Generator>
-      <LastGenOutput>SchemaRecrypt.cs</LastGenOutput>
-    </None>
     <None Include="SchemaNetwork.protocol">
       <Generator>protogen</Generator>
       <LastGenOutput>SchemaNetwork.cs</LastGenOutput>
@@ -159,10 +143,6 @@
     <None Include="SchemaMail.protocol">
       <Generator>protogen</Generator>
       <LastGenOutput>SchemaMail.cs</LastGenOutput>
-    </None>
-    <None Include="SchemaConfirm.protocol">
-      <Generator>protogen</Generator>
-      <LastGenOutput>SchemaConfirm.cs</LastGenOutput>
     </None>
     <None Include="SchemaSSH.protocol">
       <Generator>Protogen</Generator>

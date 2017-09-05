@@ -350,73 +350,13 @@ namespace Goedel.Mesh {
         /// <param name="Data">The input stream</param>
         /// <returns>The created object.</returns>		
         public static ApplicationProfile ReadProfile (byte[] Data) {
-            ApplicationProfile Out = null;
+            var Reader = Data.JSONReader();
 
-            var _Reader = new System.IO.StringReader(Data.ToUTF8());
-            var JSONReader = new JSONReader(_Reader);
+            Deserialize(Reader, out var Result);
+            return Result as ApplicationProfile;
 
-            JSONReader.StartObject();
-            if (JSONReader.EOR) {
-                return null;
-                }
 
-            string token = JSONReader.ReadToken();
 
-            switch (token) {
-
-                case "ApplicationProfile": {
-                    var Result = new ApplicationProfile();
-                    Result.Deserialize(JSONReader);
-                    Out = Result;
-                    break;
-                    }
-
-                case "SSHProfile": {
-                    var Result = new SSHProfile();
-                    Result.Deserialize(JSONReader);
-                    Out = Result;
-                    break;
-                    }
-
-                case "MailProfile": {
-                    var Result = new MailProfile();
-                    Result.Deserialize(JSONReader);
-                    Out = Result;
-                    break;
-                    }
-                case "NetworkProfile": {
-                    var Result = new NetworkProfile();
-                    Result.Deserialize(JSONReader);
-                    Out = Result;
-                    break;
-                    }
-                case "PasswordProfile": {
-                    var Result = new PasswordProfile();
-                    Result.Deserialize(JSONReader);
-                    Out = Result;
-                    break;
-                    }
-                case "RecryptProfile": {
-                    var Result = new RecryptProfile();
-                    Result.Deserialize(JSONReader);
-                    Out = Result;
-                    break;
-                    }
-                case "ConfirmProfile": {
-                    var Result = new ConfirmProfile();
-                    Result.Deserialize(JSONReader);
-                    Out = Result;
-                    break;
-                    }
-
-                default: {
-                    break;
-                    }
-                }
-
-            JSONReader.EndObject();
-
-            return Out;
             }
 
 
@@ -563,8 +503,8 @@ namespace Goedel.Mesh {
 
             
             foreach (var Signature in SignedData.Signatures) {
-                var KeyID = Signature.Header.kid;
-                var AdminKey = MasterProfile.AdministrationKeyPair(Signature.Header.kid);
+                var KeyID = Signature.Header.Kid;
+                var AdminKey = MasterProfile.AdministrationKeyPair(Signature.Header.Kid);
 
                 // Check that this is a valid admin key
                 Assert.NotNull(AdminKey, InvalidProfileSignature.Throw);
