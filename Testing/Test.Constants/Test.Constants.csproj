@@ -58,7 +58,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Goedel.Mesh\Goedel.Mesh.csproj">
+    <ProjectReference Include="..\..\Mesh\Goedel.Mesh\Goedel.Mesh.csproj">
       <Project>{0d8dd801-65d2-497c-8379-2d6adf3867c3}</Project>
       <Name>Goedel.Mesh</Name>
     </ProjectReference>

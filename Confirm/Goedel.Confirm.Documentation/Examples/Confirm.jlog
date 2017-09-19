@@ -1,0 +1,5 @@
+{
+  "Header": {
+    "Type": "Data",
+    "Content": "application/goedel-account",
+    "Comment": "Persistence store for Confirm data"}}

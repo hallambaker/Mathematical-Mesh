@@ -1,0 +1,166 @@
+﻿#using System.Text
+#using Goedel.Mesh
+#using Goedel.Confirm
+#using Goedel.Protocol
+#using Goedel.Utilities
+#xclass RunMeshApps ExampleGenerator
+
+
+#method MakeExamplesRecrypt MakeExamples MakeExamples
+#% Traces = MakeExamples.RecryptPortal.Traces;
+#% Traces.Level = 0;
+
+<h1>Using Recryption
+
+Use of recryption is essentially the same as the use of public key encryption with the
+proviso that instead of one private key being sufficient to decrypt the message,
+two are required. For the sake of convenience, these are refered to as the recryption
+key (held by the key service) and the decryption key (held by the end user).
+
+<h2>Creating a Recryption Group
+
+A recryption group consists of 
+
+<ul>
+<li>A public key pair for an encryption algorithm that supports
+recryption
+<li>An address in &<user>@&<domain> format that specifies the Key service and 
+user account.
+<li>A set of user entries.
+</ul>
+
+To create a recryption group with the recryption tool, Alice enters:
+
+~~~~
+#% var Point = Traces.Get (MakeExamples.RecryptCreateGroup);
+#{Point.Command}
+~~~~
+
+A recryption group is created and registered to the Key service. A new public key pair 
+is generated for the group.
+The list of user
+entries consists of an entry for Alice as the administrator of the group. Although
+Alice has custody of the corresponding decryption key and can decrypt messages
+without the use of the recryption service, she might not want to provision this key
+to every one of her devices. So she creates a recryption user entry for herself.
+
+The client requests creation of the recryption group at the key service. The request
+is authenticated under an authentication key connected to Alice's account for use in 
+recryption:
+
+
+#{Point.Messages[0].String()}
+
+The service authenticates the request, determines if Alice is authorized to create 
+new recryption groups and if these are satisfactory creates the group entry,
+returns the result of the transaction:
+
+
+#{Point.Messages[1].String()}
+
+
+<h2>Encrypting files
+
+At this point, anyone who knows the recryption key can start sending encrypted messages.
+
+To encrypt a test message, Bob enters:
+
+~~~~
+#% Point = Traces.Get (MakeExamples.RecryptEncryptFile1);
+#% Traces.Level = 1;
+#{Point.Command}
+~~~~
+
+The plaintext file, <tt>file1.txt</tt> contains the following text.
+
+~~~~
+#{MakeExamples.PlaintextFileData}
+~~~~
+
+The UTF representation of the text is:
+
+#{MakeExamples.ToHexString(MakeExamples.PlaintextFileData)}
+
+The client feteches the encryption key from the service:
+
+#{Point.Messages[0].String()}
+
+The service responds with the key:
+
+#{Point.Messages[1].String()}
+
+The encryption key is used to encrypt the data:
+
+~~~~
+#{MakeExamples.CiphertextFileData}
+~~~~
+
+Here, an ephemeral key has been generated to encrypt the data against the public
+group key. An ephemeral key MAY be used to establish a shared secret used to 
+encrypt multiple pieces of data.
+
+<h2>Adding users to a recryption group
+
+Alice can add members to the group at any time. To add  Mallet, she uses the commands:
+
+~~~~
+#% Point = Traces.Get (MakeExamples.RecryptAddMember2);
+#{Point.Command}
+~~~~
+
+This creates a recryption entry for Mallet which is pushed to the service:
+
+
+#{Point.Messages[0].String()}
+
+
+Mallet can now decrypt the message Bob sent before he was added to the group.
+
+<h2>Decrypting files
+
+To decrypt Bob's message, Mallet uses the command:
+
+~~~~
+#% Point = Traces.Get (MakeExamples.RecryptDecryptionSuccess);
+#% Traces.Level = 1;
+#{Point.Command}
+~~~~
+
+The client reads the message and determines that it needs recryption data from
+the key server example.com. It requests the necessary material.
+
+{Point.Messages[0].String()}
+
+The key server checks to see that Mallet is authorized to read the message. If
+the user entry for the group included additional constraints such as limiting
+the number of documents Mallet could read in a day, these would also be checked.
+
+The Key server accepts the request and returns the response:
+
+{Point.Messages[1].String()}
+
+The client decrypts the recryption blob using Mallet's private key and uses the
+decrypted key and the recryption data to complete the decryption of the data
+
+<h2>Deleting a user
+
+#if (true.False())
+Alice discovers that Mallet is a mole working for an attacker. She removes Mallet
+from the group:
+
+~~~~
+#% Point = Traces.Get (MakeExamples.RecryptDeleteMember);
+#% Traces.Level = 1;
+#{Point.Command}
+~~~~
+
+When Mallet attempts to decrypt file1.txt a second time, the Key server refuses:
+
+{Point.Messages[1].String()}
+#end if
+
+
+#end method
+
+
+#end xclass

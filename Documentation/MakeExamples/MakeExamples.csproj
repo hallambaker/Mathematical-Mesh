@@ -1,0 +1,219 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C26ACE75-2B6C-4553-944B-2C95986E103A}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>InternetDrafts</RootNamespace>
+    <AssemblyName>InternetDrafts</AssemblyName>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+    <AssemblyVersion>1.0.0.2</AssemblyVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <PropertyGroup>
+    <RunPostBuildEvent>Always</RunPostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Publish|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Publish\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CreateExamples.cs" />
+    <Compile Include="MakeExamplesApplications.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MakeExamplesApplications.script</DependentUpon>
+    </Compile>
+    <Compile Include="MakeExamplesDeveloper.cs">
+      <DependentUpon>MakeExamplesDeveloper.script</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="MakeExamplesReference.cs">
+      <DependentUpon>MakeExamplesReference.script</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="MakeClean.bat" />
+    <None Include="MakeDocs.bat" />
+    <None Include="MakeExamplesApplications.script">
+      <Generator>gscript</Generator>
+      <LastGenOutput>MakeExamplesApplications.cs</LastGenOutput>
+    </None>
+    <None Include="MakeExamplesDeveloper.script">
+      <Generator>gscript</Generator>
+      <LastGenOutput>MakeExamplesDeveloper.cs</LastGenOutput>
+    </None>
+    <None Include="MakeExamplesReference.script">
+      <Generator>gscript</Generator>
+      <LastGenOutput>MakeExamplesReference.cs</LastGenOutput>
+    </None>
+    <None Include="MeshSchemaWeb.md" />
+    <Content Include="Bib.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Bibold.xml" />
+    <Content Include="ReadMe.txt" />
+    <None Include="ToDo.md" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.ASN\Goedel.ASN.csproj">
+      <Project>{251f8ca0-9f59-4026-a203-0de006e0a1e3}</Project>
+      <Name>Goedel.ASN</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Command\Goedel.Command.csproj">
+      <Project>{e7d4d1f4-e41a-44e2-abbd-f6a9e1d3f1ac}</Project>
+      <Name>Goedel.Command</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Cryptography.Framework\Goedel.Cryptography.Framework.csproj">
+      <Project>{b12ad19f-0e50-4d1d-99de-30c63886e718}</Project>
+      <Name>Goedel.Cryptography.Framework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Cryptography.Jose\Goedel.Cryptography.Jose.csproj">
+      <Project>{b1a5a847-2d13-4142-9267-582028f93f32}</Project>
+      <Name>Goedel.Cryptography.Jose</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Cryptography.KeyFile\Goedel.Cryptography.KeyFile.csproj">
+      <Project>{73d40f24-a492-4081-b58e-b2af30762c78}</Project>
+      <Name>Goedel.Cryptography.KeyFile</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Cryptography.Ticket\Goedel.Cryptography.Ticket.csproj">
+      <Project>{2b32ae07-7db7-4deb-8650-e9152bf85978}</Project>
+      <Name>Goedel.Cryptography.Ticket</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Cryptography.Windows\Goedel.Cryptography.Windows.csproj">
+      <Project>{fd1d6ce2-8a10-45a5-a473-f5517b8ab3d5}</Project>
+      <Name>Goedel.Cryptography.Windows</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Cryptography\Goedel.Cryptography.csproj">
+      <Project>{0039b613-3071-493f-a51b-fb75f7ca56c2}</Project>
+      <Name>Goedel.Cryptography</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.FSR\Goedel.FSR.csproj">
+      <Project>{97b7261d-3779-4564-90a4-64a2fad01295}</Project>
+      <Name>Goedel.FSR</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.IO\Goedel.IO.csproj">
+      <Project>{c4824513-f416-4ead-be82-f2df23641f6a}</Project>
+      <Name>Goedel.IO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Platform.Framework\Goedel.Platform.Framework.csproj">
+      <Project>{168a9984-6dbc-4683-9e43-c3e077066933}</Project>
+      <Name>Goedel.Platform.Framework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Platform\Goedel.Platform.csproj">
+      <Project>{b806fca3-aa82-4fd4-aa56-9d53250bda4a}</Project>
+      <Name>Goedel.Platform</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Protocol.Debug\Goedel.Protocol.Debug.csproj">
+      <Project>{0586b4c1-814c-4d98-b6f1-180cd4e2faab}</Project>
+      <Name>Goedel.Protocol.Debug</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Protocol\Goedel.Protocol.csproj">
+      <Project>{18cb2a21-48f4-4862-ae95-94efbd209ab3}</Project>
+      <Name>Goedel.Protocol</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Registry\Goedel.Registry.csproj">
+      <Project>{ebda947e-d7a9-4a93-aef1-aea9d56b9225}</Project>
+      <Name>Goedel.Registry</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Test\Goedel.Test.csproj">
+      <Project>{93b6b9fd-822f-4fd1-bdad-16eb81b6df25}</Project>
+      <Name>Goedel.Test</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Utilities\Goedel.Utilities.csproj">
+      <Project>{2b20317b-39d5-4c20-8e06-dd4bc7573a73}</Project>
+      <Name>Goedel.Utilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Client\Goedel.Mesh.Client.csproj">
+      <Project>{a803fe85-50d9-4ccd-8ffc-f653a4bd73e3}</Project>
+      <Name>Goedel.Mesh.Client</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Platform.Windows\Goedel.Mesh.Platform.Windows.csproj">
+      <Project>{c378c917-f41d-4388-b467-efd6677c4459}</Project>
+      <Name>Goedel.Mesh.Platform.Windows</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Platform\Goedel.Mesh.Platform.csproj">
+      <Project>{90e3d724-811e-41cb-ae8d-91fd0677187c}</Project>
+      <Name>Goedel.Mesh.Platform</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Server\Goedel.Mesh.Server.csproj">
+      <Project>{f6343f1b-d03d-4965-9113-5120a8054e9e}</Project>
+      <Name>Goedel.Mesh.Server</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Shells\Goedel.Mesh.Shell.MeshMan\Goedel.Mesh.Shell.MeshMan.csproj">
+      <Project>{64ef7e6f-1d8e-449c-90e7-5c974e50533f}</Project>
+      <Name>Goedel.Mesh.Shell.MeshMan</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Mesh\Goedel.Mesh\Goedel.Mesh.csproj">
+      <Project>{0d8dd801-65d2-497c-8379-2d6adf3867c3}</Project>
+      <Name>Goedel.Mesh</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Goedel.Persistence\Goedel.Persistence.csproj">
+      <Project>{81e30b95-c59d-4a04-925e-85877fd37fdd}</Project>
+      <Name>Goedel.Persistence</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

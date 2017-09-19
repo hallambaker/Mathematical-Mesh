@@ -167,17 +167,17 @@ namespace Test.Goedel.Mesh {
         /// </summary>
         [TestMethod]
         public void TestWeb() {
-            var PersonalProfile = RegistrationPersonal.PersonalProfile;
+            //var PersonalProfile = RegistrationPersonal.PersonalProfile;
 
-            var PasswordProfile = new PasswordProfile(true);
-            //var ApplicationProfileEntry = PersonalProfile.Add(PasswordProfile);
+            //var PasswordProfile = new PasswordProfile(true);
+            ////var ApplicationProfileEntry = PersonalProfile.Add(PasswordProfile);
 
-            var ApplicationRegistration = RegistrationPersonal.Add(PasswordProfile);
+            //var ApplicationRegistration = RegistrationPersonal.Add(PasswordProfile);
 
 
-            PasswordProfile.Add("example.com", "alice", "secret");
-            PasswordProfile.Add("cnn.com", "alice1", "secret");
-            ApplicationRegistration.WriteToPortal();
+            //PasswordProfile.Add("example.com", "alice", "secret");
+            //PasswordProfile.Add("cnn.com", "alice1", "secret");
+            //ApplicationRegistration.WriteToPortal();
 
             //TestPasswordAdd(PasswordProfile.UDF);
             //TestPasswordDelete(PasswordProfile.UDF);
@@ -252,7 +252,7 @@ namespace Test.Goedel.Mesh {
             var PersonalProfile = RegistrationPersonal.PersonalProfile;
 
 
-            var MailProfile = new MailProfile(true);
+            var MailProfile = new MailProfile();
 
             var ApplicationRegistration = RegistrationPersonal.Add(MailProfile);
 

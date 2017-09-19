@@ -1,17 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{F6343F1B-D03D-4965-9113-5120A8054E9E}</ProjectGuid>
+    <ProjectGuid>{B0DF5E7E-BFB5-4243-9D87-AF22196ECC98}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Goedel.Mesh.Portal</RootNamespace>
-    <AssemblyName>Goedel.Mesh.Portal</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <RootNamespace>Goedel.Recrypt.Server</RootNamespace>
+    <AssemblyName>Goedel.Recrypt.Server</AssemblyName>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
+    <AssemblyVersion>1.0.0.32</AssemblyVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -21,7 +22,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\Goedel.Mesh.Portal.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -32,10 +32,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Goedel.Registry, Version=1.0.5856.42846, Culture=neutral, PublicKeyToken=00ce4cbe0647f41a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Goedel.Registry.1.0.5856.42846\lib\net40\Goedel.Registry.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -46,54 +42,57 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MeshDispatch.cs" />
+    <Compile Include="RecryptLocalPortal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RecryptService.cs" />
+    <Compile Include="RecryptProvider.cs" />
+    <Compile Include="RecryptPersist.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <None Include="ExceptionsRecryptServer.Exceptional" />
+    <None Include="Makefile" />
+    <None Include="RecryptPersist.g4" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadata Include="Service References\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Goedel.Protocol.Debug\Goedel.Protocol.Debug.csproj">
-      <Project>{0586b4c1-814c-4d98-b6f1-180cd4e2faab}</Project>
-      <Name>Goedel.Protocol.Debug</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Goedel.Cryptography.Jose\Goedel.Cryptography.Jose.csproj">
-      <Project>{59f7f1a5-abbc-4830-b7a3-140fd8e4c369}</Project>
+    <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Cryptography.Jose\Goedel.Cryptography.Jose.csproj">
+      <Project>{263752c7-9d81-4284-bff6-58f6dbb1dfa0}</Project>
       <Name>Goedel.Cryptography.Jose</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Goedel.Cryptography\Goedel.Cryptography.csproj">
-      <Project>{1babc0e9-d939-4de5-82a3-16752104b14b}</Project>
+    <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Cryptography\Goedel.Cryptography.csproj">
+      <Project>{5ef04838-200d-4175-a0f8-2e8c156f74e4}</Project>
       <Name>Goedel.Cryptography</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Goedel.Debug\Goedel.Debug.csproj">
-      <Project>{a8090b80-d658-45f6-bda1-4f9dfd2b976f}</Project>
-      <Name>Goedel.Debug</Name>
+    <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.IO\Goedel.IO.csproj">
+      <Project>{c4824513-f416-4ead-be82-f2df23641f6a}</Project>
+      <Name>Goedel.IO</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Goedel.Persistence\Goedel.Persistence.csproj">
+    <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Platform.Framework\Goedel.Platform.Framework.csproj">
+      <Project>{168a9984-6dbc-4683-9e43-c3e077066933}</Project>
+      <Name>Goedel.Platform.Framework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Protocol.Framework\Goedel.Protocol.Framework.csproj">
+      <Project>{c1d2c847-ee62-430c-82dc-a4bd5ab38a44}</Project>
+      <Name>Goedel.Protocol.Framework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Protocol\Goedel.Protocol.csproj">
+      <Project>{567327ec-fdcd-4b2d-bae3-d19a0bf4e11f}</Project>
+      <Name>Goedel.Protocol</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Utilities\Goedel.Utilities.csproj">
+      <Project>{972ec886-903e-4857-b058-8637d3cba08f}</Project>
+      <Name>Goedel.Utilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Goedel.Persistence\Goedel.Persistence.csproj">
       <Project>{81e30b95-c59d-4a04-925e-85877fd37fdd}</Project>
       <Name>Goedel.Persistence</Name>
     </ProjectReference>
     <ProjectReference Include="..\Goedel.Recrypt\Goedel.Recrypt.csproj">
-      <Project>{0d8dd801-65d2-497c-8379-2d6adf3867c3}</Project>
+      <Project>{211e2437-701e-4232-956f-a4cdbeb21b00}</Project>
       <Name>Goedel.Recrypt</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Goedel.Protocol\Goedel.Protocol.csproj">
-      <Project>{24419f2d-f425-4e0f-a0ea-9d3e7a57e12f}</Project>
-      <Name>Goedel.Protocol</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>powershell publishtarget "$(TargetPath)"</PostBuildEvent>
   </PropertyGroup>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>

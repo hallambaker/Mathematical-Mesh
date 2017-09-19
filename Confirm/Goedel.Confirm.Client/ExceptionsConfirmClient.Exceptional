@@ -1,0 +1,4 @@
+﻿Namespace Goedel.Recrypt.Client
+    
+	Exception RecryptClientException
+        Console "Error occurred in Mesh library"

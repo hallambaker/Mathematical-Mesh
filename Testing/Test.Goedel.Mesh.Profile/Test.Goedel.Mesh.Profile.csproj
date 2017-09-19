@@ -90,15 +90,15 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Goedel.Mesh.Platform.Windows\Goedel.Mesh.Platform.Windows.csproj">
+    <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Platform.Windows\Goedel.Mesh.Platform.Windows.csproj">
       <Project>{c378c917-f41d-4388-b467-efd6677c4459}</Project>
       <Name>Goedel.Mesh.Platform.Windows</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Goedel.Mesh.Platform\Goedel.Mesh.Platform.csproj">
+    <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Platform\Goedel.Mesh.Platform.csproj">
       <Project>{90e3d724-811e-41cb-ae8d-91fd0677187c}</Project>
       <Name>Goedel.Mesh.Platform</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Goedel.Mesh\Goedel.Mesh.csproj">
+    <ProjectReference Include="..\..\Mesh\Goedel.Mesh\Goedel.Mesh.csproj">
       <Project>{0d8dd801-65d2-497c-8379-2d6adf3867c3}</Project>
       <Name>Goedel.Mesh</Name>
     </ProjectReference>

@@ -1,0 +1,5 @@
+﻿Namespace Goedel.Recrypt.Server
+    
+	Exception RecryptServerException
+        Console "Error occurred in Mesh library"
+

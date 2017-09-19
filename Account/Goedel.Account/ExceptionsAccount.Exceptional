@@ -1,0 +1,7 @@
+﻿Namespace Goedel.Account
+    
+	Exception AccountException
+        Console "Error occurred in Account library"
+
+		Exception ProfileInvalid
+			Console "Profile not valid"

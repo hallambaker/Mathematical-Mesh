@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{AA998386-175B-4F97-B705-0E5EC67B2585}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>Goedel.Confirm.Shell.Server</RootNamespace>
+    <AssemblyName>Goedel.Confirm.Shell.Server</AssemblyName>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
+    <AssemblyVersion>1.0.0.40</AssemblyVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="ConfirmServer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ConfirmServer.command</DependentUpon>
+    </Compile>
+    <Compile Include="DispatchConfirm.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="ConfirmServer.command">
+      <Generator>CommandCS</Generator>
+      <LastGenOutput>ConfirmServer.cs</LastGenOutput>
+    </None>
+    <None Include="VS.Make" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Command\Goedel.Command.csproj">
+      <Project>{e7d4d1f4-e41a-44e2-abbd-f6a9e1d3f1ac}</Project>
+      <Name>Goedel.Command</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Protocol.Framework\Goedel.Protocol.Framework.csproj">
+      <Project>{c1d2c847-ee62-430c-82dc-a4bd5ab38a44}</Project>
+      <Name>Goedel.Protocol.Framework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Protocol\Goedel.Protocol.csproj">
+      <Project>{567327ec-fdcd-4b2d-bae3-d19a0bf4e11f}</Project>
+      <Name>Goedel.Protocol</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Registry\Goedel.Registry.csproj">
+      <Project>{ebda947e-d7a9-4a93-aef1-aea9d56b9225}</Project>
+      <Name>Goedel.Registry</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Utilities\Goedel.Utilities.csproj">
+      <Project>{972ec886-903e-4857-b058-8637d3cba08f}</Project>
+      <Name>Goedel.Utilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Goedel.Persistence\Goedel.Persistence.csproj">
+      <Project>{81e30b95-c59d-4a04-925e-85877fd37fdd}</Project>
+      <Name>Goedel.Persistence</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Goedel.Confirm.Server\Goedel.Confirm.Server.csproj">
+      <Project>{cc370d0e-37b0-404c-851b-cd91c9ab38f8}</Project>
+      <Name>Goedel.Confirm.Server</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Goedel.Confirm\Goedel.Confirm.csproj">
+      <Project>{ffdc52ab-912a-4f9c-85a7-82d1847d3235}</Project>
+      <Name>Goedel.Confirm</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>call postbuild</PostBuildEvent>
+  </PropertyGroup>
+</Project>

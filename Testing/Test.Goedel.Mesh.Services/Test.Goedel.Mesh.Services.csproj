@@ -93,27 +93,27 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Goedel.Mesh.Client\Goedel.Mesh.Client.csproj">
+    <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Client\Goedel.Mesh.Client.csproj">
       <Project>{a803fe85-50d9-4ccd-8ffc-f653a4bd73e3}</Project>
       <Name>Goedel.Mesh.Client</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Goedel.Mesh.Platform.Windows\Goedel.Mesh.Platform.Windows.csproj">
+    <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Platform.Windows\Goedel.Mesh.Platform.Windows.csproj">
       <Project>{c378c917-f41d-4388-b467-efd6677c4459}</Project>
       <Name>Goedel.Mesh.Platform.Windows</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Goedel.Mesh.Platform\Goedel.Mesh.Platform.csproj">
+    <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Platform\Goedel.Mesh.Platform.csproj">
       <Project>{90e3d724-811e-41cb-ae8d-91fd0677187c}</Project>
       <Name>Goedel.Mesh.Platform</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Goedel.Mesh.Server\Goedel.Mesh.Server.csproj">
+    <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Server\Goedel.Mesh.Server.csproj">
       <Project>{f6343f1b-d03d-4965-9113-5120a8054e9e}</Project>
       <Name>Goedel.Mesh.Server</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Goedel.Mesh\Goedel.Mesh.csproj">
+    <ProjectReference Include="..\..\Mesh\Goedel.Mesh\Goedel.Mesh.csproj">
       <Project>{0d8dd801-65d2-497c-8379-2d6adf3867c3}</Project>
       <Name>Goedel.Mesh</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Goedel.Persistence\Goedel.Persistence.csproj">
+    <ProjectReference Include="..\..\Libraries\Goedel.Persistence\Goedel.Persistence.csproj">
       <Project>{81e30b95-c59d-4a04-925e-85877fd37fdd}</Project>
       <Name>Goedel.Persistence</Name>
     </ProjectReference>

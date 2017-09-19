@@ -1,0 +1,276 @@
+﻿Protocol Goedel.Recrypt RecryptProtocol RecryptProtocol
+    Using Goedel.Cryptography.Jose 
+	Using Goedel.Mesh
+
+	Description 
+		|Mesh/Recrypt group administration protocol
+
+	Section 1 "Mesh/Recrypt/Admin Service"
+		Description
+			|The Mesh/Recrypt administration service supports transactions to 
+			|Add and Delete members from a group and to list all the members in a group.
+
+    Service RecryptService "_recrypt._tcp" "recrypt" RecryptRequest RecryptResponse
+		Description
+			|Every Recrypt Service transaction consists of exactly one
+			|request followed by exactly one response.
+		Description
+			|Mesh Service transactions MAY cause modification
+			|of the data stored in the Mesh Portal or the Mesh itself
+			|but do not cause changes to the connection state. The protocol
+			|itself is thus idempotent. There is no set sequence
+			|in which operations are required to be performed. It is not
+			|necessary to perform a Hello transaction prior to
+			|a CreateGroup, AddMember or any other transaction.
+
+
+
+	Section 2 "Request Messages"
+		Description
+			|A Mesh/Recrypt administration Service request consists of a payload object
+			|that inherits from the MeshRequest class. When using the 
+			|HTTP binding, the request MUST specify the portal DNS
+			|address in the HTTP Host field. 
+
+	Message RecryptRequest
+		Description
+			|Base class for all request messages.
+		External Goedel.Protocol.Request
+
+	Section 2 "Response Messages"
+		Description
+			|A Mesh/Recrypt administration Service response consists of a payload object that
+			|inherits from the MeshResponse class. When using the
+			|HTTP binding, the response SHOULD
+			|report the Status response code in the HTTP response 
+			|message. However the response code returned in the
+			|payload object MUST always be considered authoritative.
+
+	Message RecryptResponse
+		External Goedel.Protocol.Response		
+		Description
+			|Base class for all response messages. Contains only the
+			|status code and status description fields.
+
+
+	Section 2 "Imported Objects"
+		Description
+			|The Recrypt Administration Sercice makes use of JSON objects
+			|defined in the JOSE Signatgure and Encryption specifications.
+
+	Section 2 "Common classes"
+		Description
+			|The following classes are referenced at multiple points in the protocol.
+
+
+	Section 2 "Administrator Transactions"
+
+    Transaction Admin Hello HelloRequest HelloResponse
+		Description
+			|Report service and version information. 
+		Description
+			|The Hello transaction provides a means of determining which protocol
+			|versions, message encodings and transport protocols are supported by
+			|the service.
+
+
+    Transaction Admin CreateGroup CreateGroupRequest CreateGroupResponse
+		Description
+			|Create a new recryption group.
+		Description
+
+	Message CreateGroupRequest
+		Inherits RecryptRequest
+		Description
+			|Request creation of a recryption group. The only
+			|request parameter describes the group to be created.
+		Struct RecryptionGroup RecryptionGroup
+			Description
+				|The Recryption Group to create	
+
+	Message CreateGroupResponse
+		Inherits RecryptResponse
+		Description
+			|Reports the success or failure of a CreateGroup request. The
+			|operation either succeeds or fails, there are no returned
+			|parameters
+
+
+    Transaction Admin UpdateGroup UpdateGroupRequest UpdateGroupResponse
+		Description
+			|Update the information describing a recryption group.
+		Description
+
+	Message UpdateGroupRequest
+		Inherits RecryptRequest
+		Description
+			|Request an update to a recryption group. 
+		Description
+			|Note that the update 
+			|process is currently limited to 'strike and replace'. This is 
+			|likely to become cumbersome if groups with very large numbers 
+			|of entries are being maintained. It is likely that a future 
+			|version of the protocol will support update requests that
+			|implement commonly occurring tasks such as updates to 
+			|add a new encryption key, etc.
+		Struct RecryptionGroup RecryptionGroup
+			Description
+				|The Recryption Group to create	
+
+	Message UpdateGroupResponse
+		Inherits RecryptResponse
+		Description
+			|Reports the success or failure of a UpdateGroup request. The
+			|operation either succeeds or fails, there are no returned
+			|parameters
+
+
+	Transaction Admin GetGroup GetGroupRequest GetGroupResponse
+		Description
+			|Request a recryption group record.
+
+	Message GetGroupRequest
+		Inherits RecryptRequest
+		Description
+		String GroupID
+			Description
+				|The UDF fingerprint of the recryption group to add the member to.
+
+	Message GetGroupResponse
+		Inherits RecryptResponse
+		Description
+			|
+		Struct RecryptionGroup RecryptionGroup
+			Description
+				|The Recryption Group to create	
+
+
+    Transaction Admin AddMember AddMemberRequest AddMemberResponse
+		Description
+			|Add a member or members to an existing recryption group.
+
+	Message AddMemberRequest
+		Inherits RecryptRequest
+		Description
+		String RecryptionGroup
+			Description
+				|The UDF fingerprint of the recryption group to add the member to.
+		Struct MemberEntry MemberEntry
+			Multiple
+			Description
+				|Describes the member(s) to add
+
+	Message AddMemberResponse
+		Inherits RecryptResponse
+		Description
+			|Reports the success or failure of a AddMember request. The
+			|operation either succeeds or fails, there are no returned
+			|parameters
+
+
+    Transaction Admin UpdateMember UpdateMemberRequest UpdateMemberResponse
+		Description
+			|Update a one or more member entries
+		Description
+			|This transaction may be used to make member entries inactive by 
+			|posting REVOKED or SUSPENDED status to their member entry.
+
+	Message UpdateMemberRequest
+		Inherits RecryptRequest
+		Description
+		String RecryptionGroup
+			Description
+				|The UDF fingerprint of the recryption group in which the member entries is to be updated
+		Struct MemberEntry MemberEntry
+			Multiple
+			Description
+				|Describes the member(s) to add
+
+	Message UpdateMemberResponse
+		Inherits RecryptResponse
+		Description
+			|Reports the success or failure of a UpdateMember request. The
+			|operation either succeeds or fails, there are no returned
+			|parameters
+
+	Section 2 "Future work"
+		Description
+			|At present the protocol does not provide a mechanism for 
+			|modifying administrator privileges or requesting statistics
+			|on use of recryption services. These are obviously important.
+			|Whether these should be part of the base protocol or a separate
+			|protocol is another matter.
+
+	Section 1 "User Service"
+		Description
+			|The only transaction supported by the user facing service at this point are the ability
+			|to request a recryption operation and the ability to request a group encryption
+			|key.
+
+    Transaction User GetKey GetKeyRequest GetKeyResponse
+		Description
+			|Request that the service provide a recryption result for the specified
+			|encrypted data and return it encrypted under the user's public key.
+
+
+	Message GetKeyRequest
+		Inherits RecryptRequest
+		Description
+			|Request the current recryption key for the specified recryption group.
+			|NB: At present the group key is NOT authenticated and thus a MITM can
+			|perform a key substituition attack. This will be fixed in the next 
+			|release.
+		String GroupID
+			Description
+				|The recryption group for which the key data is requested.
+
+
+	Message GetKeyResponse
+		Inherits RecryptResponse
+		Description
+		Struct JoseWebSignature SignedKey
+			Description
+				|The signed key entry
+
+
+
+    Transaction User RecryptData RecryptDataRequest RecryptDataResponse
+		Description
+			|Request that the service provide a recryption result for the specified
+			|encrypted data and return it encrypted under the user's public key.
+
+
+	Message RecryptDataRequest
+		Inherits RecryptRequest
+		Description
+			|Request that the service provide a recryption result for the specified
+			|encrypted data and return it encrypted under the user's public key.
+		String MemberUDF
+			Description
+				|The member Mesh profile UDF
+		String MemberKeyUDF
+			Description
+				|The member key fingerprint
+		String GroupKeyID
+			Description
+				|The key identifier of the group key to which the data is encrypted
+		TStruct Key EphemeralKey
+			Description
+				|The ephemeral key 
+
+	Message RecryptDataResponse
+		Inherits RecryptResponse
+		Description
+		Binary Partial
+			Description
+				|The partial decryption information to use to complete the key agreement
+		Struct JoseWebEncryption EncryptedPartial
+			Description
+				|The partial decryption information to use to complete the key agreement encrypted
+				|under the user's key.
+		Struct JoseWebEncryption DecryptionKey
+			Description
+				|The decryption key to use to complete the decryption encrypted
+				|under the user's key.
+
+

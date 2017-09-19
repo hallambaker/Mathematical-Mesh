@@ -222,9 +222,9 @@ namespace Test.Goedel.Mesh {
 
         [TestMethod]
         public void CheckAddPasswordSign() {
-            var PasswordProfile = new PasswordProfile();
-            PersonalProfile.Add(PasswordProfile);
-            var SignedProfile = PersonalProfile.SignedPersonalProfile;
+            //var PasswordProfile = new PasswordProfile();
+            //PersonalProfile.Add(PasswordProfile);
+            //var SignedProfile = PersonalProfile.SignedPersonalProfile;
             }
 
         [TestMethod]

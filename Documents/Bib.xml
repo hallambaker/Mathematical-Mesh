@@ -1,0 +1,802 @@
+  <reference anchor="FedRes2016">
+  <front>
+    <title>The Federal Reserve Payments Study 2016</title>
+    <author>
+      <organization abbrev='Federal Reserve'>Federal Reserve</organization>
+    </author>
+    <date month='December' year='2016' />    
+  </front>
+  <format type="pdf" target="https://www.federalreserve.gov/newsevents/press/other/2016-payments-study-20161222.pdf"/>
+</reference>
+
+<reference anchor="ECMA-262">
+  <front>
+    <title>
+      ECMAScript® 2017
+      Language Specification
+    </title>
+    <author>
+      <organization abbrev='Ecma International'>Ecma International</organization>
+    </author>
+    <date month='June' year='2017' />
+  </front>
+  <format type="pdf" target="https://www.ecma-international.org/publications/files/ECMA-ST/Ecma-262.pdf"/>
+</reference>
+
+<reference anchor="Dobertin95">
+  <front>
+    <title>
+      Cryptanalysis of MD5 Compress
+    </title>
+    <author>
+      <organization abbrev=''>Eurocrypt 1996</organization>
+    </author>
+  </front>
+  <format type="ps" target="ftp://ftp.iks-jena.de/mitarb/lutz/crypt/hash/dobbertin.ps"/>
+</reference>
+
+<reference anchor="SHA-2">
+  <front>
+    <title>
+      Secure Hash Standard
+    </title>
+    <author>
+      <organization abbrev='NIST'>NIST</organization>
+    </author>
+    <date month='August' year='2015' />
+  </front>
+  <format type="pdf" target="https://dx.doi.org/10.6028/NIST.FIPS.180-4"/>
+</reference>
+
+
+<reference anchor="SHA-3">
+  <front>
+    <title>
+      SHA-3 Standard: Permutation-Based Hash and Extendable-Output Functions
+    </title>
+    <author fullname="Morris J. Dworkin" initials="M. J." surname="Dworkin">
+      
+      <organization abbrev='NIST'>NIST</organization>
+    </author>
+    <date month='August' year='2015' />
+  </front>
+  <format type="pdf" target="https://dx.doi.org/10.6028/NIST.FIPS.202"/>
+</reference>
+
+<reference anchor="PHB2008">
+  <front>
+    <title>The dotCrime Manifesto: How to Stop Internet Crime</title>
+    <author initials='P' surname='Hallam_Baker' fullname='Phillip Hallam_Baker'>
+      <date month='January' year='2008' />
+    </author>
+    <date month='September' year='2013' />
+  </front>
+</reference>
+
+<reference anchor="IEEE754">
+  <front>
+    <title>IEEE Standard for Floating-Point Arithmetic</title>
+    <author>
+      <organization>IEEE Computer Society </organization>
+    </author>
+    <date day="29" month="August" year="2008"/>
+  </front>
+  <seriesInfo name="IEEE" value="754-2008"/>
+  <seriesInfo name="DOI" value="10.1109/IEEESTD.2008.4610935"/>
+</reference>
+
+<reference anchor="INTEL">
+  <front>
+    <title>
+      <title>Unknown</title>
+    </title>
+    <author>
+      <organization>Intel Corp.</organization>
+    </author>
+  </front>
+</reference><!-- RFC2119 Added Wed, 23 Aug 2017 13:38:47 GMT -->
+<!-- Source: http://xml.resource.org/public/rfc/bibxml/reference.RFC.2119.xml -->
+
+
+<reference  anchor='RFC2119' target='https://www.rfc-editor.org/info/rfc2119'>
+<front>
+<title>Key words for use in RFCs to Indicate Requirement Levels</title>
+<author initials='S.' surname='Bradner' fullname='S. Bradner'><organization /></author>
+<date year='1997' month='March' />
+<abstract><t>In many standards track documents several words are used to signify the requirements in the specification.  These words are often capitalized. This document defines these words as they should be interpreted in IETF documents.  This document specifies an Internet Best Current Practices for the Internet Community, and requests discussion and suggestions for improvements.</t></abstract>
+</front>
+<seriesInfo name='BCP' value='14'/>
+<seriesInfo name='RFC' value='2119'/>
+<seriesInfo name='DOI' value='10.17487/RFC2119'/>
+</reference>
+
+<!-- draft-hallambaker-mesh-architecture Added Wed, 23 Aug 2017 13:38:47 GMT -->
+<!-- Source: https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.hallambaker-mesh-architecture.xml -->
+
+
+<reference anchor='I-D.hallambaker-mesh-architecture'>
+<front>
+<title>Mathematical Mesh: Architecture</title>
+
+<author initials='P' surname='Hallam-Baker' fullname='Phillip Hallam-Baker'>
+    <organization />
+</author>
+
+<date month='May' day='9' year='2017' />
+
+<abstract><t>The Mathematical Mesh 'The Mesh' is an end-to-end secure infrastructure that facilitates the exchange of configuration and credential data between multiple user devices.  The architecture of the Mesh and examples of typical applications are described.</t></abstract>
+
+</front>
+
+<seriesInfo name='Internet-Draft' value='draft-hallambaker-mesh-architecture-03' />
+<format type='TXT'
+        target='http://www.ietf.org/internet-drafts/draft-hallambaker-mesh-architecture-03.txt' />
+</reference>
+
+<!-- draft-hallambaker-mesh-developer Added Wed, 23 Aug 2017 13:38:47 GMT -->
+<!-- Source: https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.hallambaker-mesh-developer.xml -->
+
+
+<reference anchor='I-D.hallambaker-mesh-developer'>
+<front>
+<title>Mathematical Mesh: Reference Implementation</title>
+
+<author initials='P' surname='Hallam-Baker' fullname='Phillip Hallam-Baker'>
+    <organization />
+</author>
+
+<date month='August' day='18' year='2017' />
+
+<abstract><t>The Mathematical Mesh ?The Mesh? is an end-to-end secure infrastructure that facilitates the exchange of configuration and credential data between multiple user devices.  This document describes the Mesh reference code and how to install, run and make use of it in applications.  It does not form a part of the Mesh specifications and is not normative.</t></abstract>
+
+</front>
+
+<seriesInfo name='Internet-Draft' value='draft-hallambaker-mesh-developer-03' />
+<format type='TXT'
+        target='http://www.ietf.org/internet-drafts/draft-hallambaker-mesh-developer-03.txt' />
+</reference>
+
+<!-- draft-hallambaker-mesh-architecture Added Wed, 23 Aug 2017 13:39:57 GMT -->
+<!-- Source: https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.hallambaker-mesh-architecture.xml -->
+
+
+<reference anchor='I-D.hallambaker-mesh-architecture'>
+<front>
+<title>Mathematical Mesh: Architecture</title>
+
+<author initials='P' surname='Hallam-Baker' fullname='Phillip Hallam-Baker'>
+    <organization />
+</author>
+
+<date month='May' day='9' year='2017' />
+
+<abstract><t>The Mathematical Mesh 'The Mesh' is an end-to-end secure infrastructure that facilitates the exchange of configuration and credential data between multiple user devices.  The architecture of the Mesh and examples of typical applications are described.</t></abstract>
+
+</front>
+
+<seriesInfo name='Internet-Draft' value='draft-hallambaker-mesh-architecture-03' />
+<format type='TXT'
+        target='http://www.ietf.org/internet-drafts/draft-hallambaker-mesh-architecture-03.txt' />
+</reference>
+
+<!-- draft-hallambaker-mesh-developer Added Wed, 23 Aug 2017 13:39:57 GMT -->
+<!-- Source: https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.hallambaker-mesh-developer.xml -->
+
+
+<reference anchor='I-D.hallambaker-mesh-developer'>
+<front>
+<title>Mathematical Mesh: Reference Implementation</title>
+
+<author initials='P' surname='Hallam-Baker' fullname='Phillip Hallam-Baker'>
+    <organization />
+</author>
+
+<date month='August' day='18' year='2017' />
+
+<abstract><t>The Mathematical Mesh ?The Mesh? is an end-to-end secure infrastructure that facilitates the exchange of configuration and credential data between multiple user devices.  This document describes the Mesh reference code and how to install, run and make use of it in applications.  It does not form a part of the Mesh specifications and is not normative.</t></abstract>
+
+</front>
+
+<seriesInfo name='Internet-Draft' value='draft-hallambaker-mesh-developer-03' />
+<format type='TXT'
+        target='http://www.ietf.org/internet-drafts/draft-hallambaker-mesh-developer-03.txt' />
+</reference>
+
+<!-- draft-hallambaker-mesh-architecture Added Wed, 23 Aug 2017 13:40:28 GMT -->
+<!-- Source: https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.hallambaker-mesh-architecture.xml -->
+
+
+<reference anchor='I-D.hallambaker-mesh-architecture'>
+<front>
+<title>Mathematical Mesh: Architecture</title>
+
+<author initials='P' surname='Hallam-Baker' fullname='Phillip Hallam-Baker'>
+    <organization />
+</author>
+
+<date month='May' day='9' year='2017' />
+
+<abstract><t>The Mathematical Mesh 'The Mesh' is an end-to-end secure infrastructure that facilitates the exchange of configuration and credential data between multiple user devices.  The architecture of the Mesh and examples of typical applications are described.</t></abstract>
+
+</front>
+
+<seriesInfo name='Internet-Draft' value='draft-hallambaker-mesh-architecture-03' />
+<format type='TXT'
+        target='http://www.ietf.org/internet-drafts/draft-hallambaker-mesh-architecture-03.txt' />
+</reference>
+
+<!-- draft-hallambaker-mesh-developer Added Wed, 23 Aug 2017 13:40:28 GMT -->
+<!-- Source: https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.hallambaker-mesh-developer.xml -->
+
+
+<reference anchor='I-D.hallambaker-mesh-developer'>
+<front>
+<title>Mathematical Mesh: Reference Implementation</title>
+
+<author initials='P' surname='Hallam-Baker' fullname='Phillip Hallam-Baker'>
+    <organization />
+</author>
+
+<date month='August' day='18' year='2017' />
+
+<abstract><t>The Mathematical Mesh ?The Mesh? is an end-to-end secure infrastructure that facilitates the exchange of configuration and credential data between multiple user devices.  This document describes the Mesh reference code and how to install, run and make use of it in applications.  It does not form a part of the Mesh specifications and is not normative.</t></abstract>
+
+</front>
+
+<seriesInfo name='Internet-Draft' value='draft-hallambaker-mesh-developer-03' />
+<format type='TXT'
+        target='http://www.ietf.org/internet-drafts/draft-hallambaker-mesh-developer-03.txt' />
+</reference>
+
+<!-- draft-hallambaker-mesh-architecture Added Wed, 23 Aug 2017 13:41:11 GMT -->
+<!-- Source: https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.hallambaker-mesh-architecture.xml -->
+
+
+<reference anchor='I-D.hallambaker-mesh-architecture'>
+<front>
+<title>Mathematical Mesh: Architecture</title>
+
+<author initials='P' surname='Hallam-Baker' fullname='Phillip Hallam-Baker'>
+    <organization />
+</author>
+
+<date month='May' day='9' year='2017' />
+
+<abstract><t>The Mathematical Mesh 'The Mesh' is an end-to-end secure infrastructure that facilitates the exchange of configuration and credential data between multiple user devices.  The architecture of the Mesh and examples of typical applications are described.</t></abstract>
+
+</front>
+
+<seriesInfo name='Internet-Draft' value='draft-hallambaker-mesh-architecture-03' />
+<format type='TXT'
+        target='http://www.ietf.org/internet-drafts/draft-hallambaker-mesh-architecture-03.txt' />
+</reference>
+
+<!-- draft-hallambaker-mesh-developer Added Wed, 23 Aug 2017 13:41:11 GMT -->
+<!-- Source: https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.hallambaker-mesh-developer.xml -->
+
+
+<reference anchor='I-D.hallambaker-mesh-developer'>
+<front>
+<title>Mathematical Mesh: Reference Implementation</title>
+
+<author initials='P' surname='Hallam-Baker' fullname='Phillip Hallam-Baker'>
+    <organization />
+</author>
+
+<date month='August' day='18' year='2017' />
+
+<abstract><t>The Mathematical Mesh ?The Mesh? is an end-to-end secure infrastructure that facilitates the exchange of configuration and credential data between multiple user devices.  This document describes the Mesh reference code and how to install, run and make use of it in applications.  It does not form a part of the Mesh specifications and is not normative.</t></abstract>
+
+</front>
+
+<seriesInfo name='Internet-Draft' value='draft-hallambaker-mesh-developer-03' />
+<format type='TXT'
+        target='http://www.ietf.org/internet-drafts/draft-hallambaker-mesh-developer-03.txt' />
+</reference>
+
+<!-- draft-hallambaker-mesh-architecture Added Wed, 23 Aug 2017 13:41:44 GMT -->
+<!-- Source: https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.hallambaker-mesh-architecture.xml -->
+
+
+<reference anchor='I-D.hallambaker-mesh-architecture'>
+<front>
+<title>Mathematical Mesh: Architecture</title>
+
+<author initials='P' surname='Hallam-Baker' fullname='Phillip Hallam-Baker'>
+    <organization />
+</author>
+
+<date month='May' day='9' year='2017' />
+
+<abstract><t>The Mathematical Mesh 'The Mesh' is an end-to-end secure infrastructure that facilitates the exchange of configuration and credential data between multiple user devices.  The architecture of the Mesh and examples of typical applications are described.</t></abstract>
+
+</front>
+
+<seriesInfo name='Internet-Draft' value='draft-hallambaker-mesh-architecture-03' />
+<format type='TXT'
+        target='http://www.ietf.org/internet-drafts/draft-hallambaker-mesh-architecture-03.txt' />
+</reference>
+
+<!-- draft-hallambaker-mesh-developer Added Wed, 23 Aug 2017 13:41:44 GMT -->
+<!-- Source: https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.hallambaker-mesh-developer.xml -->
+
+
+<reference anchor='I-D.hallambaker-mesh-developer'>
+<front>
+<title>Mathematical Mesh: Reference Implementation</title>
+
+<author initials='P' surname='Hallam-Baker' fullname='Phillip Hallam-Baker'>
+    <organization />
+</author>
+
+<date month='August' day='18' year='2017' />
+
+<abstract><t>The Mathematical Mesh ?The Mesh? is an end-to-end secure infrastructure that facilitates the exchange of configuration and credential data between multiple user devices.  This document describes the Mesh reference code and how to install, run and make use of it in applications.  It does not form a part of the Mesh specifications and is not normative.</t></abstract>
+
+</front>
+
+<seriesInfo name='Internet-Draft' value='draft-hallambaker-mesh-developer-03' />
+<format type='TXT'
+        target='http://www.ietf.org/internet-drafts/draft-hallambaker-mesh-developer-03.txt' />
+</reference>
+
+<!-- draft-hallambaker-mesh-architecture Added Tue, 05 Sep 2017 15:36:28 GMT -->
+<!-- Source: https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.hallambaker-mesh-architecture.xml -->
+
+
+<reference anchor='I-D.hallambaker-mesh-architecture'>
+<front>
+<title>Mathematical Mesh: Architecture</title>
+
+<author initials='P' surname='Hallam-Baker' fullname='Phillip Hallam-Baker'>
+    <organization />
+</author>
+
+<date month='May' day='9' year='2017' />
+
+<abstract><t>The Mathematical Mesh 'The Mesh' is an end-to-end secure infrastructure that facilitates the exchange of configuration and credential data between multiple user devices.  The architecture of the Mesh and examples of typical applications are described.</t></abstract>
+
+</front>
+
+<seriesInfo name='Internet-Draft' value='draft-hallambaker-mesh-architecture-03' />
+<format type='TXT'
+        target='http://www.ietf.org/internet-drafts/draft-hallambaker-mesh-architecture-03.txt' />
+</reference>
+
+<!-- draft-hallambaker-mesh-developer Added Tue, 05 Sep 2017 15:36:28 GMT -->
+<!-- Source: https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.hallambaker-mesh-developer.xml -->
+
+
+<reference anchor='I-D.hallambaker-mesh-developer'>
+<front>
+<title>Mathematical Mesh: Reference Implementation</title>
+
+<author initials='P' surname='Hallam-Baker' fullname='Phillip Hallam-Baker'>
+    <organization />
+</author>
+
+<date month='August' day='18' year='2017' />
+
+<abstract><t>The Mathematical Mesh ?The Mesh? is an end-to-end secure infrastructure that facilitates the exchange of configuration and credential data between multiple user devices.  This document describes the Mesh reference code and how to install, run and make use of it in applications.  It does not form a part of the Mesh specifications and is not normative.</t></abstract>
+
+</front>
+
+<seriesInfo name='Internet-Draft' value='draft-hallambaker-mesh-developer-03' />
+<format type='TXT'
+        target='http://www.ietf.org/internet-drafts/draft-hallambaker-mesh-developer-03.txt' />
+</reference>
+
+<!-- draft-hallambaker-mesh-architecture Added Tue, 05 Sep 2017 15:40:21 GMT -->
+<!-- Source: https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.hallambaker-mesh-architecture.xml -->
+
+
+<reference anchor='I-D.hallambaker-mesh-architecture'>
+<front>
+<title>Mathematical Mesh: Architecture</title>
+
+<author initials='P' surname='Hallam-Baker' fullname='Phillip Hallam-Baker'>
+    <organization />
+</author>
+
+<date month='May' day='9' year='2017' />
+
+<abstract><t>The Mathematical Mesh 'The Mesh' is an end-to-end secure infrastructure that facilitates the exchange of configuration and credential data between multiple user devices.  The architecture of the Mesh and examples of typical applications are described.</t></abstract>
+
+</front>
+
+<seriesInfo name='Internet-Draft' value='draft-hallambaker-mesh-architecture-03' />
+<format type='TXT'
+        target='http://www.ietf.org/internet-drafts/draft-hallambaker-mesh-architecture-03.txt' />
+</reference>
+
+<!-- draft-hallambaker-mesh-developer Added Tue, 05 Sep 2017 15:40:21 GMT -->
+<!-- Source: https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.hallambaker-mesh-developer.xml -->
+
+
+<reference anchor='I-D.hallambaker-mesh-developer'>
+<front>
+<title>Mathematical Mesh: Reference Implementation</title>
+
+<author initials='P' surname='Hallam-Baker' fullname='Phillip Hallam-Baker'>
+    <organization />
+</author>
+
+<date month='August' day='18' year='2017' />
+
+<abstract><t>The Mathematical Mesh ?The Mesh? is an end-to-end secure infrastructure that facilitates the exchange of configuration and credential data between multiple user devices.  This document describes the Mesh reference code and how to install, run and make use of it in applications.  It does not form a part of the Mesh specifications and is not normative.</t></abstract>
+
+</front>
+
+<seriesInfo name='Internet-Draft' value='draft-hallambaker-mesh-developer-03' />
+<format type='TXT'
+        target='http://www.ietf.org/internet-drafts/draft-hallambaker-mesh-developer-03.txt' />
+</reference>
+
+<!-- draft-hallambaker-mesh-architecture Added Tue, 05 Sep 2017 15:43:56 GMT -->
+<!-- Source: https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.hallambaker-mesh-architecture.xml -->
+
+
+<reference anchor='I-D.hallambaker-mesh-architecture'>
+<front>
+<title>Mathematical Mesh: Architecture</title>
+
+<author initials='P' surname='Hallam-Baker' fullname='Phillip Hallam-Baker'>
+    <organization />
+</author>
+
+<date month='May' day='9' year='2017' />
+
+<abstract><t>The Mathematical Mesh 'The Mesh' is an end-to-end secure infrastructure that facilitates the exchange of configuration and credential data between multiple user devices.  The architecture of the Mesh and examples of typical applications are described.</t></abstract>
+
+</front>
+
+<seriesInfo name='Internet-Draft' value='draft-hallambaker-mesh-architecture-03' />
+<format type='TXT'
+        target='http://www.ietf.org/internet-drafts/draft-hallambaker-mesh-architecture-03.txt' />
+</reference>
+
+<!-- draft-hallambaker-mesh-developer Added Tue, 05 Sep 2017 15:43:56 GMT -->
+<!-- Source: https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.hallambaker-mesh-developer.xml -->
+
+
+<reference anchor='I-D.hallambaker-mesh-developer'>
+<front>
+<title>Mathematical Mesh: Reference Implementation</title>
+
+<author initials='P' surname='Hallam-Baker' fullname='Phillip Hallam-Baker'>
+    <organization />
+</author>
+
+<date month='August' day='18' year='2017' />
+
+<abstract><t>The Mathematical Mesh ?The Mesh? is an end-to-end secure infrastructure that facilitates the exchange of configuration and credential data between multiple user devices.  This document describes the Mesh reference code and how to install, run and make use of it in applications.  It does not form a part of the Mesh specifications and is not normative.</t></abstract>
+
+</front>
+
+<seriesInfo name='Internet-Draft' value='draft-hallambaker-mesh-developer-03' />
+<format type='TXT'
+        target='http://www.ietf.org/internet-drafts/draft-hallambaker-mesh-developer-03.txt' />
+</reference>
+
+<!-- draft-hallambaker-mesh-architecture Added Tue, 05 Sep 2017 16:04:20 GMT -->
+<!-- Source: https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.hallambaker-mesh-architecture.xml -->
+
+
+<reference anchor='I-D.hallambaker-mesh-architecture'>
+<front>
+<title>Mathematical Mesh: Architecture</title>
+
+<author initials='P' surname='Hallam-Baker' fullname='Phillip Hallam-Baker'>
+    <organization />
+</author>
+
+<date month='May' day='9' year='2017' />
+
+<abstract><t>The Mathematical Mesh 'The Mesh' is an end-to-end secure infrastructure that facilitates the exchange of configuration and credential data between multiple user devices.  The architecture of the Mesh and examples of typical applications are described.</t></abstract>
+
+</front>
+
+<seriesInfo name='Internet-Draft' value='draft-hallambaker-mesh-architecture-03' />
+<format type='TXT'
+        target='http://www.ietf.org/internet-drafts/draft-hallambaker-mesh-architecture-03.txt' />
+</reference>
+
+<!-- draft-hallambaker-mesh-developer Added Tue, 05 Sep 2017 16:04:20 GMT -->
+<!-- Source: https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.hallambaker-mesh-developer.xml -->
+
+
+<reference anchor='I-D.hallambaker-mesh-developer'>
+<front>
+<title>Mathematical Mesh: Reference Implementation</title>
+
+<author initials='P' surname='Hallam-Baker' fullname='Phillip Hallam-Baker'>
+    <organization />
+</author>
+
+<date month='August' day='18' year='2017' />
+
+<abstract><t>The Mathematical Mesh ?The Mesh? is an end-to-end secure infrastructure that facilitates the exchange of configuration and credential data between multiple user devices.  This document describes the Mesh reference code and how to install, run and make use of it in applications.  It does not form a part of the Mesh specifications and is not normative.</t></abstract>
+
+</front>
+
+<seriesInfo name='Internet-Draft' value='draft-hallambaker-mesh-developer-03' />
+<format type='TXT'
+        target='http://www.ietf.org/internet-drafts/draft-hallambaker-mesh-developer-03.txt' />
+</reference>
+
+<!-- draft-hallambaker-mesh-architecture Added Tue, 05 Sep 2017 16:43:08 GMT -->
+<!-- Source: https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.hallambaker-mesh-architecture.xml -->
+
+
+<reference anchor='I-D.hallambaker-mesh-architecture'>
+<front>
+<title>Mathematical Mesh: Architecture</title>
+
+<author initials='P' surname='Hallam-Baker' fullname='Phillip Hallam-Baker'>
+    <organization />
+</author>
+
+<date month='May' day='9' year='2017' />
+
+<abstract><t>The Mathematical Mesh 'The Mesh' is an end-to-end secure infrastructure that facilitates the exchange of configuration and credential data between multiple user devices.  The architecture of the Mesh and examples of typical applications are described.</t></abstract>
+
+</front>
+
+<seriesInfo name='Internet-Draft' value='draft-hallambaker-mesh-architecture-03' />
+<format type='TXT'
+        target='http://www.ietf.org/internet-drafts/draft-hallambaker-mesh-architecture-03.txt' />
+</reference>
+
+<!-- draft-hallambaker-mesh-developer Added Tue, 05 Sep 2017 16:43:08 GMT -->
+<!-- Source: https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.hallambaker-mesh-developer.xml -->
+
+
+<reference anchor='I-D.hallambaker-mesh-developer'>
+<front>
+<title>Mathematical Mesh: Reference Implementation</title>
+
+<author initials='P' surname='Hallam-Baker' fullname='Phillip Hallam-Baker'>
+    <organization />
+</author>
+
+<date month='August' day='18' year='2017' />
+
+<abstract><t>The Mathematical Mesh ?The Mesh? is an end-to-end secure infrastructure that facilitates the exchange of configuration and credential data between multiple user devices.  This document describes the Mesh reference code and how to install, run and make use of it in applications.  It does not form a part of the Mesh specifications and is not normative.</t></abstract>
+
+</front>
+
+<seriesInfo name='Internet-Draft' value='draft-hallambaker-mesh-developer-03' />
+<format type='TXT'
+        target='http://www.ietf.org/internet-drafts/draft-hallambaker-mesh-developer-03.txt' />
+</reference>
+
+<!-- draft-hallambaker-mesh-architecture Added Tue, 05 Sep 2017 16:46:11 GMT -->
+<!-- Source: https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.hallambaker-mesh-architecture.xml -->
+
+
+<reference anchor='I-D.hallambaker-mesh-architecture'>
+<front>
+<title>Mathematical Mesh: Architecture</title>
+
+<author initials='P' surname='Hallam-Baker' fullname='Phillip Hallam-Baker'>
+    <organization />
+</author>
+
+<date month='May' day='9' year='2017' />
+
+<abstract><t>The Mathematical Mesh 'The Mesh' is an end-to-end secure infrastructure that facilitates the exchange of configuration and credential data between multiple user devices.  The architecture of the Mesh and examples of typical applications are described.</t></abstract>
+
+</front>
+
+<seriesInfo name='Internet-Draft' value='draft-hallambaker-mesh-architecture-03' />
+<format type='TXT'
+        target='http://www.ietf.org/internet-drafts/draft-hallambaker-mesh-architecture-03.txt' />
+</reference>
+
+<!-- draft-hallambaker-mesh-developer Added Tue, 05 Sep 2017 16:46:11 GMT -->
+<!-- Source: https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.hallambaker-mesh-developer.xml -->
+
+
+<reference anchor='I-D.hallambaker-mesh-developer'>
+<front>
+<title>Mathematical Mesh: Reference Implementation</title>
+
+<author initials='P' surname='Hallam-Baker' fullname='Phillip Hallam-Baker'>
+    <organization />
+</author>
+
+<date month='August' day='18' year='2017' />
+
+<abstract><t>The Mathematical Mesh ?The Mesh? is an end-to-end secure infrastructure that facilitates the exchange of configuration and credential data between multiple user devices.  This document describes the Mesh reference code and how to install, run and make use of it in applications.  It does not form a part of the Mesh specifications and is not normative.</t></abstract>
+
+</front>
+
+<seriesInfo name='Internet-Draft' value='draft-hallambaker-mesh-developer-03' />
+<format type='TXT'
+        target='http://www.ietf.org/internet-drafts/draft-hallambaker-mesh-developer-03.txt' />
+</reference>
+
+<!-- draft-hallambaker-mesh-architecture Added Tue, 05 Sep 2017 16:47:06 GMT -->
+<!-- Source: https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.hallambaker-mesh-architecture.xml -->
+
+
+<reference anchor='I-D.hallambaker-mesh-architecture'>
+<front>
+<title>Mathematical Mesh: Architecture</title>
+
+<author initials='P' surname='Hallam-Baker' fullname='Phillip Hallam-Baker'>
+    <organization />
+</author>
+
+<date month='May' day='9' year='2017' />
+
+<abstract><t>The Mathematical Mesh 'The Mesh' is an end-to-end secure infrastructure that facilitates the exchange of configuration and credential data between multiple user devices.  The architecture of the Mesh and examples of typical applications are described.</t></abstract>
+
+</front>
+
+<seriesInfo name='Internet-Draft' value='draft-hallambaker-mesh-architecture-03' />
+<format type='TXT'
+        target='http://www.ietf.org/internet-drafts/draft-hallambaker-mesh-architecture-03.txt' />
+</reference>
+
+<!-- draft-hallambaker-mesh-developer Added Tue, 05 Sep 2017 16:47:06 GMT -->
+<!-- Source: https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.hallambaker-mesh-developer.xml -->
+
+
+<reference anchor='I-D.hallambaker-mesh-developer'>
+<front>
+<title>Mathematical Mesh: Reference Implementation</title>
+
+<author initials='P' surname='Hallam-Baker' fullname='Phillip Hallam-Baker'>
+    <organization />
+</author>
+
+<date month='August' day='18' year='2017' />
+
+<abstract><t>The Mathematical Mesh ?The Mesh? is an end-to-end secure infrastructure that facilitates the exchange of configuration and credential data between multiple user devices.  This document describes the Mesh reference code and how to install, run and make use of it in applications.  It does not form a part of the Mesh specifications and is not normative.</t></abstract>
+
+</front>
+
+<seriesInfo name='Internet-Draft' value='draft-hallambaker-mesh-developer-03' />
+<format type='TXT'
+        target='http://www.ietf.org/internet-drafts/draft-hallambaker-mesh-developer-03.txt' />
+</reference>
+
+<!-- draft-hallambaker-mesh-architecture Added Tue, 05 Sep 2017 16:51:59 GMT -->
+<!-- Source: https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.hallambaker-mesh-architecture.xml -->
+
+
+<reference anchor='I-D.hallambaker-mesh-architecture'>
+<front>
+<title>Mathematical Mesh: Architecture</title>
+
+<author initials='P' surname='Hallam-Baker' fullname='Phillip Hallam-Baker'>
+    <organization />
+</author>
+
+<date month='May' day='9' year='2017' />
+
+<abstract><t>The Mathematical Mesh 'The Mesh' is an end-to-end secure infrastructure that facilitates the exchange of configuration and credential data between multiple user devices.  The architecture of the Mesh and examples of typical applications are described.</t></abstract>
+
+</front>
+
+<seriesInfo name='Internet-Draft' value='draft-hallambaker-mesh-architecture-03' />
+<format type='TXT'
+        target='http://www.ietf.org/internet-drafts/draft-hallambaker-mesh-architecture-03.txt' />
+</reference>
+
+<!-- draft-hallambaker-mesh-developer Added Tue, 05 Sep 2017 16:51:59 GMT -->
+<!-- Source: https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.hallambaker-mesh-developer.xml -->
+
+
+<reference anchor='I-D.hallambaker-mesh-developer'>
+<front>
+<title>Mathematical Mesh: Reference Implementation</title>
+
+<author initials='P' surname='Hallam-Baker' fullname='Phillip Hallam-Baker'>
+    <organization />
+</author>
+
+<date month='August' day='18' year='2017' />
+
+<abstract><t>The Mathematical Mesh ?The Mesh? is an end-to-end secure infrastructure that facilitates the exchange of configuration and credential data between multiple user devices.  This document describes the Mesh reference code and how to install, run and make use of it in applications.  It does not form a part of the Mesh specifications and is not normative.</t></abstract>
+
+</front>
+
+<seriesInfo name='Internet-Draft' value='draft-hallambaker-mesh-developer-03' />
+<format type='TXT'
+        target='http://www.ietf.org/internet-drafts/draft-hallambaker-mesh-developer-03.txt' />
+</reference>
+
+<!-- draft-hallambaker-mesh-architecture Added Tue, 05 Sep 2017 16:55:16 GMT -->
+<!-- Source: https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.hallambaker-mesh-architecture.xml -->
+
+
+<reference anchor='I-D.hallambaker-mesh-architecture'>
+<front>
+<title>Mathematical Mesh: Architecture</title>
+
+<author initials='P' surname='Hallam-Baker' fullname='Phillip Hallam-Baker'>
+    <organization />
+</author>
+
+<date month='May' day='9' year='2017' />
+
+<abstract><t>The Mathematical Mesh 'The Mesh' is an end-to-end secure infrastructure that facilitates the exchange of configuration and credential data between multiple user devices.  The architecture of the Mesh and examples of typical applications are described.</t></abstract>
+
+</front>
+
+<seriesInfo name='Internet-Draft' value='draft-hallambaker-mesh-architecture-03' />
+<format type='TXT'
+        target='http://www.ietf.org/internet-drafts/draft-hallambaker-mesh-architecture-03.txt' />
+</reference>
+
+<!-- draft-hallambaker-mesh-developer Added Tue, 05 Sep 2017 16:55:16 GMT -->
+<!-- Source: https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.hallambaker-mesh-developer.xml -->
+
+
+<reference anchor='I-D.hallambaker-mesh-developer'>
+<front>
+<title>Mathematical Mesh: Reference Implementation</title>
+
+<author initials='P' surname='Hallam-Baker' fullname='Phillip Hallam-Baker'>
+    <organization />
+</author>
+
+<date month='August' day='18' year='2017' />
+
+<abstract><t>The Mathematical Mesh ?The Mesh? is an end-to-end secure infrastructure that facilitates the exchange of configuration and credential data between multiple user devices.  This document describes the Mesh reference code and how to install, run and make use of it in applications.  It does not form a part of the Mesh specifications and is not normative.</t></abstract>
+
+</front>
+
+<seriesInfo name='Internet-Draft' value='draft-hallambaker-mesh-developer-03' />
+<format type='TXT'
+        target='http://www.ietf.org/internet-drafts/draft-hallambaker-mesh-developer-03.txt' />
+</reference>
+
+<!-- draft-hallambaker-mesh-architecture Added Tue, 05 Sep 2017 16:59:34 GMT -->
+<!-- Source: https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.hallambaker-mesh-architecture.xml -->
+
+
+<reference anchor='I-D.hallambaker-mesh-architecture'>
+<front>
+<title>Mathematical Mesh: Architecture</title>
+
+<author initials='P' surname='Hallam-Baker' fullname='Phillip Hallam-Baker'>
+    <organization />
+</author>
+
+<date month='May' day='9' year='2017' />
+
+<abstract><t>The Mathematical Mesh 'The Mesh' is an end-to-end secure infrastructure that facilitates the exchange of configuration and credential data between multiple user devices.  The architecture of the Mesh and examples of typical applications are described.</t></abstract>
+
+</front>
+
+<seriesInfo name='Internet-Draft' value='draft-hallambaker-mesh-architecture-03' />
+<format type='TXT'
+        target='http://www.ietf.org/internet-drafts/draft-hallambaker-mesh-architecture-03.txt' />
+</reference>
+
+<!-- draft-hallambaker-mesh-developer Added Tue, 05 Sep 2017 16:59:34 GMT -->
+<!-- Source: https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.hallambaker-mesh-developer.xml -->
+
+
+<reference anchor='I-D.hallambaker-mesh-developer'>
+<front>
+<title>Mathematical Mesh: Reference Implementation</title>
+
+<author initials='P' surname='Hallam-Baker' fullname='Phillip Hallam-Baker'>
+    <organization />
+</author>
+
+<date month='August' day='18' year='2017' />
+
+<abstract><t>The Mathematical Mesh ?The Mesh? is an end-to-end secure infrastructure that facilitates the exchange of configuration and credential data between multiple user devices.  This document describes the Mesh reference code and how to install, run and make use of it in applications.  It does not form a part of the Mesh specifications and is not normative.</t></abstract>
+
+</front>
+
+<seriesInfo name='Internet-Draft' value='draft-hallambaker-mesh-developer-03' />
+<format type='TXT'
+        target='http://www.ietf.org/internet-drafts/draft-hallambaker-mesh-developer-03.txt' />
+</reference>
+

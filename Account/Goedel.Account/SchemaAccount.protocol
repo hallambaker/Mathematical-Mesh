@@ -1,0 +1,165 @@
+﻿Protocol Goedel.Account AccountProtocol AccountProtocol
+    Using Goedel.Cryptography.Jose 
+
+
+	Section 1 "Mesh/Account Service"
+		Description
+			|The Mesh/Account Service is used to manage accounts. All operations
+			|are regarded as privileged and will require appropriate access controls.
+
+
+    Service AccountService "_mmmaccount._tcp" "mmmaccount" AccountRequest AccountResponse
+		Description
+			|Every Mesh/Account Service transaction consists of exactly one
+			|request followed by exactly one response.
+
+	Section 2 "Request Messages"
+		Description
+			|
+
+	Message AccountRequest
+		External Goedel.Protocol.Request
+		Description
+			|Base class for all request messages.
+
+	Section 2 "Response Messages"
+		Description
+			|
+
+	Message AccountResponse
+		External Goedel.Protocol.Response		
+		Description
+			|Base class for all response messages. Contains only the
+			|status code and status description fields.
+		Description
+			|A service MAY return either the response message specified
+			|for that transaction or any parent of that message. 
+			|Thus the RecryptResponse message MAY be returned in response 
+			|to any request.
+
+
+	Section 2 "Imported Objects"
+		Description
+
+
+	Section 2 "Common classes"
+		Description
+			|The following classes are referenced at multiple points in the protocol.
+
+
+	Structure AccountData
+		Description
+			|The data associated with an account
+		String AccountId
+			Description
+				|The account identifier
+		DateTime Created
+			Description
+				|Date and time that the account identifier was created.
+		String Status
+			Description
+				|Account status
+		String MeshUDF
+			Description
+				|Fingerprint of the user's mesh profile
+		String Portal
+			Multiple
+			Description
+				|Mesh Portal identifier
+		Struct AccountDataEntry Entries 
+			Multiple
+			Description
+				|Service specific data
+
+	Structure AccountDataEntry
+		Description
+			|Superclass for all account data entry objects
+
+
+	Section 2 "Utility Transactions"
+
+    Transaction Admin Hello HelloRequest HelloResponse
+		Description
+			|Report service and version information. 
+		Description
+			|The Hello transaction provides a means of determining which protocol
+			|versions, message encodings and transport protocols are supported by
+			|the service.
+
+	Section 2 "Administration Transactions"
+
+	Transaction Admin Create CreateRequest CreateResponse
+		Description
+			|Create new account
+
+	Message CreateRequest
+		Inherits AccountRequest
+		Description
+			|Create a new account
+
+		Struct AccountData Data
+			Description
+				|Describes the account to be created
+
+	Message CreateResponse
+		Inherits AccountResponse
+		Description
+			|Response to create request
+		String UDF
+			Description
+				|Unique identifier of the account
+
+	Transaction Admin Delete DeleteRequest DeleteResponse
+		Description
+			|Delete an account
+
+	Message DeleteRequest
+		Inherits AccountRequest
+		Description
+			|Delete an account
+		String AccountId
+			Description
+				|The account to delete
+
+	Message DeleteResponse
+		Inherits AccountResponse
+		Description
+			|Result
+
+	Transaction Admin Update UpdateRequest UpdateResponse
+		Description
+
+
+	Message UpdateRequest
+		Inherits AccountRequest
+		Description
+			|Update an account profile
+
+		Struct AccountData Data
+			Description
+				|The account to update
+
+	Message UpdateResponse
+		Inherits AccountResponse
+		Description
+			|Result
+
+	Transaction Admin Get GetRequest GetResponse
+		Description
+
+
+	Message GetRequest
+		Inherits AccountRequest
+		Description
+			|Fetches an account profile.
+		String AccountId
+			Description
+				|The account to fetch
+
+	Message GetResponse
+		Inherits AccountResponse
+		Description
+			|Result
+		Struct AccountData Data
+			Description
+				|Describes the account (if found)

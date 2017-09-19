@@ -1,0 +1,118 @@
+﻿#using System.Text
+#using Goedel.Mesh
+#using Goedel.Protocol
+#xclass ExampleGenerator ExampleGenerator
+
+#file MakeExamplesCatalog "Examples\\examples_catalog.md" CreateExamples Examples
+
+<h2>Catalog Example
+
+Alice creates a new bookmarks profile which is shared between her laptop and
+her phone. The initial profile is empty:
+
+~~~~
+#% var Bookmarks1 = new BookmarkProfilePrivate () {Entries = new List <BookmarkEntry>()};
+#{Bookmarks1.ToString()}
+~~~~
+
+Alice adds a bookmark entry to her profile on the browser on her laptop:
+
+~~~~
+#% var Added = DateTime.Now;
+#% var BookmarkEntry1 = new BookmarkEntry () { Added=Added, Title="First Site", 
+#%  Uri = "http://example.com/" };
+#% Bookmarks1.Entries.Add (BookmarkEntry1);
+#{Bookmarks1.ToString()}
+~~~~
+
+Later, Alice is attempting to connect to a site on her phone but has no network 
+connection. She decides to bookmark the site instead. 
+
+~~~~
+#% Added = Added.AddSeconds (5678);
+#% var Bookmarks2 = new BookmarkProfilePrivate () {Entries = new List <BookmarkEntry>()};
+#% var BookmarkEntry2 = new BookmarkEntry () {Added=Added,  Title="Second Site", 
+#%   Uri = "https://example.com/" };
+#% Bookmarks1.Entries.Add (BookmarkEntry2);
+#% Bookmarks2.Entries.Add (BookmarkEntry2);
+#{Bookmarks2.ToString()}
+~~~~
+
+At this point, the profiles on Alice's two devices are out of sync. When the phone is
+finally able to connect to the network, the profiles are merged:
+
+~~~~
+#{Bookmarks1.ToString()}
+~~~~
+
+
+#end file
+
+#file MakeExamplesBookmark "Examples\\examples_bookmarks.md" CreateExamples Examples
+
+<b>tbs</b>
+
+#end file
+
+
+#file MakeExamplesCredential "Examples\\examples_credentials.md" CreateExamples Examples
+
+<h3>Credentials Example
+
+
+~~~~
+#% var CredentialProfilePrivate = new CredentialProfilePrivate () {
+#%   NeverAsk = new List<String> { "secure.example.com", "bank.example.com" },
+#%   AutoGenerate = true,
+#%   Entries = new List<CredentialEntry>() {
+#%       new CredentialEntry () {Username ="Alice", Password="12345",
+#%           Sites = new List<String> {"luggage.example.net"}},
+#%       new CredentialEntry () {Username ="BitAlice", Password="password",
+#%           Sites = new List<String> {"host.example.net"}, Protocol="ssh",
+#%           Label = new List<String> {"Linux"}}
+#%       }};
+#{CredentialProfilePrivate.ToString()}
+~~~~
+
+#end file
+
+
+#file MakeExamplesContact "Examples\\examples_contacts.md" CreateExamples Examples
+#% var AliceName = new PersonalName (){First="Alice"};
+#% var BobName = new PersonalName (){First="Bob"};
+#% var Contact1 = new ContactEntry (){ Personals =  new List<PersonalName >{AliceName},
+#%    Internets = new List<Internet> () {new Internet() { Uri="mailto:alice@example.com"}}};
+#% var Contact2 = new ContactEntry (){ Personals =  new List<PersonalName >{BobName},
+#%    Internets = new List<Internet> () {new Internet() { Uri="mailto:bob@example.com"}}};
+#% var ContactProfilePrivate = new ContactProfilePrivate () {
+#%  Entries = new List<ContactEntry> {Contact1, Contact2}};
+<h3>Contacts Example
+
+~~~~
+#{ContactProfilePrivate.ToString()}
+~~~~
+#end file
+
+
+#file MakeExamplesCalendar "Examples\\examples_calendar.md" CreateExamples Examples
+
+<h3>Calendar Example
+
+#end file
+
+
+#file MakeExamplesMail "Examples\\examples_mail.md" CreateExamples Examples
+
+<h2>Mail Example
+
+#end file
+
+
+#file MakeExamplesSSH "Examples\\examples_ssh.md" CreateExamples Examples
+
+<h2>SSH Example
+
+#end file
+
+#end xclass
+#end using

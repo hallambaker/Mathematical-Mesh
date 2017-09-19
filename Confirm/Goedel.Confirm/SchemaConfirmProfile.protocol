@@ -1,0 +1,64 @@
+﻿Protocol Goedel.Confirm MeshConfirm MeshConfirm
+    Using Goedel.Cryptography.Jose 
+	Using Goedel.Mesh
+	Extern ApplicationProfile
+	Extern ApplicationProfilePrivate
+	Extern ApplicationDevicePublic
+	Extern ApplicationDevicePrivate
+	Extern Entry
+
+	Description 
+		|Mesh profile for Confirm applications.
+
+	Section 1 "Mesh/Confirm Application Profile Objects"
+
+
+	Structure ConfirmProfile
+		Description 
+			|Application profile for Confirm
+		Inherits ApplicationProfile
+		String Account
+			Description 
+				|The account to which the profile is bound
+		Struct PublicKey AuthenticationKeys
+			Multiple
+			Description
+				|Authorized Authentication keys for this account. Authentication
+				|keys provide authentication without providing non-repudiability.
+				|This permits their use in cases where it is desirable to avoid
+				|the possibility of contractual binding.
+		Struct PublicKey SignatureKeys
+			Multiple
+			Description
+				|Authorized Signature keys for this account.Signature keys
+				|provide non-repudiable authentication of a response. This permits
+				|their use in cases where it is desirable to provide the possibility
+				|of contractual binding.
+
+	Structure ConfirmPrivate
+		Description 
+			|Private portion of profile. This is unused. Decryption keys are 
+			|provisioned on a per device basis to allow the use of co-generation techniques.
+		Inherits ApplicationProfilePrivate
+
+
+	Structure ConfirmDevicePublic
+		Description 
+		Description
+			|Contains public device description. This is unused as there is
+			|no requirement to disclose the binding of keys to devices.
+		Inherits ApplicationDevicePublic
+
+
+	Structure ConfirmDevicePrivate
+		Description 
+			|Private data specific to the device
+		Inherits ApplicationDevicePrivate
+		Struct PublicKey SignPrivateKey
+			Description
+				|A private keypair or keypair contribution created for exclusive use 
+				|of this device.
+		Struct PublicKey AuthPrivateKey
+			Description
+				|A private keypair or keypair contribution created for exclusive use 
+				|of this device.
