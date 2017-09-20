@@ -17,10 +17,10 @@ namespace Goedel.Mesh {
         /// Search a list of encrypted data blobs and return the first keypair that
         /// can be decrypted and the coresponding key
         /// </summary>
-        /// <param name="JWEs"></param>
-        /// <param name="KeyPair"></param>
-        /// <param name="JoseWebEncryption"></param>
-        /// <returns></returns>
+        /// <param name="JWEs">Keypairs to search</param>
+        /// <param name="KeyPair">Matching keypair.</param>
+        /// <param name="JoseWebEncryption">Matching encrypted data</param>
+        /// <returns>True if found, otherwise false.</returns>
         public static bool GetKey (this List<JoseWebEncryption> JWEs,
                     out KeyPair KeyPair,
                     out JoseWebEncryption JoseWebEncryption) {

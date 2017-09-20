@@ -13,7 +13,7 @@
     <RootNamespace>MeshLibraries</RootNamespace>
     <Name>MeshLibraries</Name>
     <!-- SHFB properties -->
-    <FrameworkVersion>.NET Framework 4.6</FrameworkVersion>
+    <FrameworkVersion>.NET Framework 4.6.2</FrameworkVersion>
     <OutputPath>.\Help\</OutputPath>
     <HtmlHelpName>MeshLibraries</HtmlHelpName>
     <Language>en-US</Language>
@@ -27,20 +27,7 @@
       <Argument Key="maxVersionParts" Value="" xmlns="" />
     </TransformComponentArguments>
     <DocumentationSources>
-      <DocumentationSource sourceFile="..\..\Goedel.Mesh\Goedel.Mesh.csproj" />
-      <DocumentationSource sourceFile="..\..\Goedel.Mesh\bin\Publish\Goedel.Mesh.dll" />
-      <DocumentationSource sourceFile="..\..\Goedel.Mesh\bin\Publish\Goedel.Mesh.xml" />
-      <DocumentationSource sourceFile="..\..\Goedel.Mesh.Platform.Windows\Goedel.Mesh.Platform.Windows.csproj" />
-      <DocumentationSource sourceFile="..\..\Goedel.Mesh.Platform.Windows\bin\Publish\Goedel.Mesh.Platform.Windows.XML" />
-      <DocumentationSource sourceFile="..\..\Goedel.Mesh.Platform.Windows\bin\Publish\Goedel.Mesh.Platform.Windows.dll" />
-      <DocumentationSource sourceFile="..\..\Goedel.Mesh.Server\Goedel.Mesh.Server.csproj" />
-      <DocumentationSource sourceFile="..\..\Goedel.Mesh.Server\bin\Publish\Goedel.Mesh.Server.xml" />
-      <DocumentationSource sourceFile="..\..\Goedel.Mesh.Server\bin\Publish\Goedel.Mesh.Server.dll" />
-      <DocumentationSource sourceFile="..\..\Goedel.Persistence\Goedel.Persistence.csproj" />
-      <DocumentationSource sourceFile="..\..\Goedel.Persistence\bin\Publish\Goedel.Persistence.xml" />
-      <DocumentationSource sourceFile="..\..\Goedel.Persistence\bin\Publish\Goedel.Persistence.dll" />
-      <DocumentationSource sourceFile="..\..\Goedel.Platform.Windows\bin\Publish\Goedel.Platform.Windows.XML" />
-      <DocumentationSource sourceFile="..\..\Goedel.Platform.Windows\bin\Publish\Goedel.Platform.Windows.dll" />
+      <DocumentationSource sourceFile="..\..\Mesh\Goedel.Mesh\Goedel.Mesh.csproj" />
     </DocumentationSources>
     <PlugInConfigurations>
       <PlugInConfig id="Assembly Binding Redirection" enabled="True">
@@ -70,13 +57,23 @@
     <DisableCodeBlockComponent>False</DisableCodeBlockComponent>
     <CleanIntermediates>True</CleanIntermediates>
     <NamespaceSummaries>
-      <NamespaceSummaryItem name="Goedel.Mesh" isDocumented="True" xmlns="">Mathematical Mesh profile classes and support methods.</NamespaceSummaryItem>
-      <NamespaceSummaryItem name="Goedel.Mesh.Integration.LiveMail" isDocumented="True" xmlns="">Mesh support for Windows Live Mail Application</NamespaceSummaryItem>
-      <NamespaceSummaryItem name="Goedel.Mesh.Platform" isDocumented="True" xmlns="">Platform specific Mesh operations.</NamespaceSummaryItem>
-      <NamespaceSummaryItem name="Goedel.Persistence" isDocumented="True" xmlns="">Persist JSON objects in an append only log for future retrieval.</NamespaceSummaryItem>
-      <NamespaceSummaryItem name="Goedel.Platform" isDocumented="True" xmlns="">Platform specific code, will be merged into the Goedel libraries in due course.</NamespaceSummaryItem>
-    </NamespaceSummaries>
+      <NamespaceSummaryItem name="Goedel.Mesh" isDocumented="True">Mathematical Mesh profile classes and support methods.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Goedel.Mesh.Integration.LiveMail" isDocumented="True">Mesh support for Windows Live Mail Application</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Goedel.Mesh.Platform" isDocumented="True">Platform specific Mesh operations.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Goedel.Persistence" isDocumented="True">Persist JSON objects in an append only log for future retrieval.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="(global)" isDocumented="False" /></NamespaceSummaries>
     <WarnOnMissingSourceContext>False</WarnOnMissingSourceContext>
+    <HelpFileVersion>1.0.0.0</HelpFileVersion>
+    <MaximumGroupParts>2</MaximumGroupParts>
+    <NamespaceGrouping>False</NamespaceGrouping>
+    <SyntaxFilters>Standard</SyntaxFilters>
+    <SdkLinkTarget>Blank</SdkLinkTarget>
+    <RootNamespaceContainer>False</RootNamespaceContainer>
+    <PresentationStyle>VS2013</PresentationStyle>
+    <Preliminary>False</Preliminary>
+    <NamingMethod>Guid</NamingMethod>
+    <HelpTitle>Mathematical Mesh Reference Library</HelpTitle>
+    <ContentPlacement>AboveNamespaces</ContentPlacement>
   </PropertyGroup>
   <!-- There are no properties for these groups.  AnyCPU needs to appear in order for Visual Studio to perform
 			 the build.  The others are optional common platform types that may appear. -->
@@ -112,6 +109,88 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="icons\Help.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.ASN\Goedel.ASN.csproj">
+      <Name>Goedel.ASN</Name>
+      <Project>{251f8ca0-9f59-4026-a203-0de006e0a1e3}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Cryptography\Goedel.Cryptography.csproj">
+      <Name>Goedel.Cryptography</Name>
+      <Project>{0039b613-3071-493f-a51b-fb75f7ca56c2}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.FSR\Goedel.FSR.csproj">
+      <Name>Goedel.FSR</Name>
+      <Project>{97b7261d-3779-4564-90a4-64a2fad01295}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.IO\Goedel.IO.csproj">
+      <Name>Goedel.IO</Name>
+      <Project>{c4824513-f416-4ead-be82-f2df23641f6a}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Platform\Goedel.Platform.csproj">
+      <Name>Goedel.Platform</Name>
+      <Project>{b806fca3-aa82-4fd4-aa56-9d53250bda4a}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Protocol\Goedel.Protocol.csproj">
+      <Name>Goedel.Protocol</Name>
+      <Project>{18cb2a21-48f4-4862-ae95-94efbd209ab3}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Registry\Goedel.Registry.csproj">
+      <Name>Goedel.Registry</Name>
+      <Project>{ebda947e-d7a9-4a93-aef1-aea9d56b9225}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Utilities\Goedel.Utilities.csproj">
+      <Name>Goedel.Utilities</Name>
+      <Project>{2b20317b-39d5-4c20-8e06-dd4bc7573a73}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Goedel.Persistence\Goedel.Persistence.csproj">
+      <Name>Goedel.Persistence</Name>
+      <Project>{81e30b95-c59d-4a04-925e-85877fd37fdd}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Client\Goedel.Mesh.Client.csproj">
+      <Name>Goedel.Mesh.Client</Name>
+      <Project>{a803fe85-50d9-4ccd-8ffc-f653a4bd73e3}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Platform.Linux\Goedel.Mesh.Platform.Linux.csproj">
+      <Name>Goedel.Mesh.Platform.Linux</Name>
+      <Project>{ef3b3ddd-7b25-423c-8236-4819e55e09c7}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Platform.Windows\Goedel.Mesh.Platform.Windows.csproj">
+      <Name>Goedel.Mesh.Platform.Windows</Name>
+      <Project>{c378c917-f41d-4388-b467-efd6677c4459}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Platform\Goedel.Mesh.Platform.csproj">
+      <Name>Goedel.Mesh.Platform</Name>
+      <Project>{90e3d724-811e-41cb-ae8d-91fd0677187c}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Server\Goedel.Mesh.Server.csproj">
+      <Name>Goedel.Mesh.Server</Name>
+      <Project>{f6343f1b-d03d-4965-9113-5120a8054e9e}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Mesh\Goedel.Mesh\Goedel.Mesh.csproj">
+      <Name>Goedel.Mesh</Name>
+      <Project>{0d8dd801-65d2-497c-8379-2d6adf3867c3}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Shells\Goedel.Mesh.Shell.MeshMan\Goedel.Mesh.Shell.MeshMan.csproj">
+      <Name>Goedel.Mesh.Shell.MeshMan</Name>
+      <Project>{64ef7e6f-1d8e-449c-90e7-5c974e50533f}</Project>
+      <Private>True</Private>
+    </ProjectReference>
   </ItemGroup>
   <!-- Import the SHFB build targets -->
   <Import Project="$(SHFBROOT)\SandcastleHelpFileBuilder.targets" />

@@ -135,8 +135,8 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Convert to SSH file entry.
         /// </summary>
-        /// <param name="PortalID"></param>
-        /// <returns></returns>
+        /// <param name="PortalID">Portal identifier</param>
+        /// <returns>Portal identifier in SSH format.</returns>
         public string ToOpenSSH (string PortalID) {
             var KeyPair = PublicKey.KeyPair;
             var Text = KeyPair.ToOpenSSH();

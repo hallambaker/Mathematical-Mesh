@@ -104,9 +104,8 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Return the private data of this profile as raw data bytes.
         /// </summary>
-        protected virtual byte[] GetPrivateData {
-            get => ApplicationProfilePrivate?.GetJson (Tagged:true);
-            }
+        protected virtual byte[] GetPrivateData => ApplicationProfilePrivate?.GetJson (Tagged:true);
+
 
 
         /// <summary>
@@ -237,9 +236,9 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Create a private keypair for a specific device using co-generation if supported by the device.
         /// </summary>
-        /// <param name="KeyPair"></param>
-        /// <param name="DeviceProfile"></param>
-        /// <returns></returns>
+        /// <param name="KeyPair">The contributed key pair.</param>
+        /// <param name="DeviceProfile">The device profile of the base device.</param>
+        /// <returns>The created key</returns>
         public PublicKey MakeDevicePrivateKey (PublicKey KeyPair, DeviceProfile DeviceProfile) {
             var Private = KeyPair?.PrivateKey?.PKIXPrivateKey;
             var JKey = Key.Factory(Private);
@@ -288,6 +287,7 @@ namespace Goedel.Mesh {
         /// <param name="UDF">Specify the signature key by identifier</param>
         /// <param name="KeyPair">Specify the signature key by key handle</param>
         /// <param name="Encoding">The encoding for the inner data</param>
+        /// <returns>The signed profile.</returns>
         public override SignedProfile Sign (string UDF = null, KeyPair KeyPair = null,
                         DataEncoding Encoding = DataEncoding.JSON) {
             this.SignedApplicationProfile = new SignedApplicationProfile(this);

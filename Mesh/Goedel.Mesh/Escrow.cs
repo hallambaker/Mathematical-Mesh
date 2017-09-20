@@ -78,8 +78,8 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Recover the encrypted profile.
         /// </summary>
-        /// <param name="Secret"></param>
-        /// <returns></returns>
+        /// <param name="Secret">The secret recovery key</param>
+        /// <returns>The escrowed key set.</returns>
         public EscrowedKeySet Decrypt(Secret Secret) {
 
             var Decrypt = EncryptedData.Decrypt(Secret.Key);
@@ -102,9 +102,8 @@ namespace Goedel.Mesh {
         /// <summary>
         /// The associated key shares for reconstructing the key.
         /// </summary>
-        public KeyShare[] KeyShares {
-            get => _KeyShares;
-            }
+        public KeyShare[] KeyShares => _KeyShares;
+
 
 
 

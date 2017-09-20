@@ -79,6 +79,7 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Rereate a MasterProfile from the specified escrow data
         /// </summary>
+        /// <param name="EscrowedKeySet">Escrowed key set to create from.</param>
         public MasterProfile(EscrowedKeySet EscrowedKeySet) {
             var MasterSignatureKeyPair =  EscrowedKeySet.MasterSignatureKey.GetKeyPair();
             MasterSignatureKey = new PublicKey(MasterSignatureKeyPair);

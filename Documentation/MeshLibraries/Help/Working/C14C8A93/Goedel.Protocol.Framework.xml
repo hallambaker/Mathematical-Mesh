@@ -1,0 +1,346 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Goedel.Protocol.Framework</name>
+    </assembly>
+    <members>
+        <member name="T:Goedel.Protocol.Framework.FileCharacterTextStream">
+            <summary>
+            Character stream from file
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.Framework.FileCharacterTextStream.Mark">
+            <summary>
+            Mark the current reader position.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.Framework.FileCharacterTextStream.Restore">
+            <summary>
+            Restore reader to previous reader position.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.Framework.FileCharacterTextStream.#ctor(System.IO.FileStream)">
+            <summary>
+            Construct from file stream.
+            </summary>
+            <param name="FileStream">Input file.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Framework.FileCharacterTextStream.ReadChar">
+            <summary>
+            Read a character.
+            </summary>
+            <returns>The character value.</returns>
+        </member>
+        <member name="T:Goedel.Protocol.Framework.MessageType">
+            <summary>
+            Message types
+            </summary>
+        </member>
+        <member name="F:Goedel.Protocol.Framework.MessageType.Request">
+            <summary>Request</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Framework.MessageType.Response">
+            <summary>Response</summary>
+        </member>
+        <member name="T:Goedel.Protocol.Framework.BoundMessage">
+            <summary>
+            Message bound to transport context
+            </summary>
+        </member>
+        <member name="F:Goedel.Protocol.Framework.BoundMessage.Payload">
+            <summary>The payload data</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Framework.BoundMessage.Ticket">
+            <summary>The authentication ticket</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Framework.BoundMessage.MAC">
+            <summary>The message authentication code.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.Framework.BoundMessage.HTTPBinding">
+            <summary>The message as a HTTP string.</summary>
+        </member>
+        <member name="M:Goedel.Protocol.Framework.BoundMessage.HTTP">
+            <summary>Convert message to HTTP</summary>
+            <returns>The HTTP message value.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Framework.BoundMessage.#ctor">
+            <summary>Default constructor.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.Framework.BoundMessage.ByteCount">
+            <summary>The length of the payload data.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.Framework.BoundMessage.Base64Ticket">
+            <summary>The ticket in Base64.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.Framework.BoundMessage.Base64Mac">
+            <summary>The message authentication code in Base64.</summary>
+        </member>
+        <member name="M:Goedel.Protocol.Framework.BoundMessage.#ctor(System.String)">
+            <summary>Construct from a payload string.</summary>
+            <param name="PayloadIn">The payload to construct from</param>
+        </member>
+        <member name="T:Goedel.Protocol.Framework.BoundRequest">
+            <summary>The request message</summary>
+        </member>
+        <member name="M:Goedel.Protocol.Framework.BoundRequest.#ctor(System.String)">
+            <summary>Construct from string payload.</summary>
+            <param name="PayloadIn">The string payload to wrap.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Framework.BoundRequest.HTTP">
+            <summary>Present message as HTTP</summary>
+            <returns>The formatted message.</returns>
+        </member>
+        <member name="T:Goedel.Protocol.Framework.BoundResponse">
+            <summary>The response message</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Framework.BoundResponse.ErrorBadMac">
+            <summary>Constant for invalid Mac response.</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Framework.BoundResponse.ErrorUnknown">
+            <summary>Constant for invalid message error.</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Framework.BoundResponse.ErrorSyntax">
+            <summary>Constant for bad request.</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Framework.BoundResponse.Status">
+            <summary>The status value (defaults to 200)</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Framework.BoundResponse.StatusDescription">
+            <summary>The status description.</summary>
+        </member>
+        <member name="M:Goedel.Protocol.Framework.BoundResponse.#ctor(System.String)">
+            <summary>Construct response for the specified payload.</summary>
+            <param name="PayloadIn">The message payload.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Framework.BoundResponse.#ctor(System.Int32,System.String)">
+            <summary>Construct response for the specified result code.</summary>
+            <param name="ErrorCode">The error code to return.</param>
+            <param name="Explanation">Description of the error.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Framework.BoundResponse.HTTP">
+            <summary>Present message as HTTP</summary>
+            <returns>The message value.</returns>
+        </member>
+        <member name="T:Goedel.Protocol.Framework.PortRegistration">
+            <summary>
+            Describes a server port connection.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.Framework.PortRegistration.Open">
+            <summary>
+            Register this port on the server.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.Framework.PortRegistration.Close">
+            <summary>
+            Close this port and deregister.
+            </summary>
+        </member>
+        <member name="F:Goedel.Protocol.Framework.PortRegistration.Interface">
+            <summary>
+            The Registered service.
+            </summary>
+        </member>
+        <member name="F:Goedel.Protocol.Framework.PortRegistration.Provider">
+            <summary>
+            The provider to dispatch to.
+            </summary>
+        </member>
+        <member name="T:Goedel.Protocol.Framework.HTTPPortRegistration">
+            <summary>
+            Describes a HTTP server port connection.
+            </summary>
+        </member>
+        <member name="F:Goedel.Protocol.Framework.HTTPPortRegistration.URI">
+            <summary>
+            The HTTP service URI stem
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.Framework.HTTPPortRegistration.#ctor(System.String,Goedel.Protocol.Framework.InterfaceRegistration)">
+            <summary>
+            Register this port with the server. Note the port will not 
+            be called until it is registered.
+            </summary>
+            <param name="URI">HTTP URI to register.</param>
+            <param name="Host">Service Provider to register.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Framework.HTTPPortRegistration.Open">
+            <summary>
+            Open this port and Register.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.Framework.HTTPPortRegistration.Close">
+            <summary>
+            Close this port and deregister.
+            </summary>
+        </member>
+        <member name="T:Goedel.Protocol.Framework.InterfaceRegistration">
+            <summary>
+            Track registration of an interface.
+            </summary>
+        </member>
+        <member name="F:Goedel.Protocol.Framework.InterfaceRegistration.ProviderRegistration">
+            <summary>The provider of the service. A provider may be registered
+            at more than one server.</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Framework.InterfaceRegistration.Interface">
+            <summary>The provider interface</summary>
+        </member>
+        <member name="M:Goedel.Protocol.Framework.InterfaceRegistration.#ctor(Goedel.Protocol.JPCInterface,Goedel.Protocol.Framework.ProviderRegistration)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="Interface">The provider interface.</param>
+            <param name="ProviderRegistration">The provider.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Framework.InterfaceRegistration.AddHTTP(System.String)">
+            <summary>
+            Register a HTTP Port.
+            </summary>
+            <param name="URI">URI to register port at. If zero, a 
+            random port is chosen and may be read from the port
+            registration structure returned.</param>
+            <returns>The port registration structure.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Framework.InterfaceRegistration.AddService(System.String)">
+            <summary>
+            Register a service at the standard HTTP port.
+            </summary>
+            <param name="Domain">DNS domain to register service to</param>
+            <returns>The port registration structure.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Framework.InterfaceRegistration.AddUDP(System.Int32)">
+            <summary>
+            Register a UDP Port, not currently implemented.
+            </summary>
+            <param name="port">The UDP port to register the service at.
+            </param>
+            <returns>The port registration created</returns>
+            <exception cref="T:Goedel.Utilities.NYI">Not Yet Implemented</exception> 
+        </member>
+        <member name="M:Goedel.Protocol.Framework.InterfaceRegistration.Open">
+            <summary>
+            Register connected ports.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.Framework.InterfaceRegistration.Close">
+            <summary>
+            Deregister connected ports.
+            </summary>
+        </member>
+        <member name="T:Goedel.Protocol.Framework.ProviderRegistration">
+            <summary>
+            Represents a specific service provider.
+            </summary>
+        </member>
+        <member name="F:Goedel.Protocol.Framework.ProviderRegistration.JPCServer">
+            <summary>The JPC Server</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Framework.ProviderRegistration.JPCProvider">
+            <summary>The JPC Provider.</summary>
+        </member>
+        <member name="M:Goedel.Protocol.Framework.ProviderRegistration.#ctor(Goedel.Protocol.JPCProvider,Goedel.Protocol.Framework.JPCServer)">
+            <summary>
+            Create a host registration.
+            </summary>
+            <param name="JPCHost">Service provider to register</param>
+            <param name="JPCServer">Server to register to.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Framework.ProviderRegistration.Add(Goedel.Protocol.JPCInterface)">
+            <summary>
+            Add an interface.
+            </summary>
+            <param name="Interface">Interface to add,</param>
+            <returns>Registration of interface.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Framework.ProviderRegistration.Open">
+            <summary>
+            Register connected ports.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.Framework.ProviderRegistration.Close">
+            <summary>
+            Deregister connected ports.
+            </summary>
+        </member>
+        <member name="T:Goedel.Protocol.Framework.JPCServer">
+            <summary>
+            Server object for multiple objects and services.
+            </summary>
+            <example>
+            var Server = new JPCServer ();
+            var HostReg = Server.Add (MyServiceProvider);
+            var PortReg = HostReg.AddHTTP ("http://localhost/MyService/");
+            </example>
+        </member>
+        <member name="M:Goedel.Protocol.Framework.JPCServer.#ctor">
+            <summary>
+            Create a server.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.Framework.JPCServer.Add(Goedel.Protocol.JPCProvider)">
+            <summary>
+            Add a service provider.
+            </summary>
+            <param name="JPCHost">The Service provider to add.</param>
+            <returns>Host registration object.</returns>
+        </member>
+        <member name="F:Goedel.Protocol.Framework.JPCServer.HttpListener">
+            <summary>
+            The HTTP Listener.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.Framework.JPCServer.ListenBlocking">
+            <summary>
+            Blocking listener, reads one request at a time, blocking
+            between each read.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.Framework.JPCServer.StartAsync">
+            <summary>
+            Start the server. Note that the server runs in a separate
+            thread and so control returns to the main loop.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.Framework.JPCServer.RunBlocking">
+            <summary>
+            Start the server and wait for completion using the unthreaded
+            listener. Useful for tracking down locking and synchronization 
+            bugs.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.Framework.JPCServer.Stop">
+            <summary>
+            Stop the server.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.Framework.JPCServer.Register(Goedel.Protocol.Framework.HTTPPortRegistration)">
+            <summary>
+            Register listener port.
+            </summary>
+            <param name="Port">Port to add listener on.</param>
+        </member>
+        <member name="T:Goedel.Protocol.Framework.WebRemoteSession">
+            <summary>
+            Manage JPC session to a remote Web Service.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.Framework.WebRemoteSession.#ctor(System.String,System.String,System.String,System.String)">
+            <summary>
+            Create a remote session with authentication under the
+            specified credential.
+            </summary>
+            <param name="Domain">Domain</param>
+            <param name="Service">The IANA Well Known service identifier</param>
+            <param name="Account">Account name</param>
+            <param name="UDF">Fingerprint of authentication key.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Framework.WebRemoteSession.Post(Goedel.Protocol.StreamBuffer)">
+            <summary>
+            Post a request and retrieve the response.
+            </summary>
+            <param name="Content">StreamBuffer object containing JSON encoded request.</param>
+            <returns>StreamBuffer object containing JSON encoded response.</returns>
+        </member>
+    </members>
+</doc>

@@ -92,16 +92,14 @@ namespace Goedel.Mesh {
         /// <summary>
         /// List of all the index terms this profile can be retrieved through.
         /// </summary>
-        public List<IndexTerm> IndexTerms {
-            get => GetIndex(); 
-            }
+        public List<IndexTerm> IndexTerms  => GetIndex(); 
+
 
         /// <summary>
         /// Get the unique identifier for this object.
         /// </summary>
-        public string UniqueID {
-            get => Identifier; 
-            }
+        public string UniqueID  => Identifier; 
+
 
         /// <summary>
         /// Get a list of indexes for this profile.
@@ -145,6 +143,7 @@ namespace Goedel.Mesh {
         /// <param name="UDF">Specify the signature key by identifier</param>
         /// <param name="KeyPair">Specify the signature key by key handle</param>
         /// <param name="Encoding">The encoding for the inner data</param>
+        /// <returns>The signed profile.</returns>
         public virtual SignedProfile Sign(string UDF=null,  KeyPair KeyPair = null,
                         DataEncoding Encoding = DataEncoding.JSON) {
             throw new NYI();

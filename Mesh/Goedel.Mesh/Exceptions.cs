@@ -7,6 +7,7 @@ namespace Goedel.Mesh {
 
 
     /// <summary>
+    /// Generic error in Mesh reference library
     /// </summary>
     public class MeshException : global::System.Exception {
 
@@ -57,6 +58,7 @@ namespace Goedel.Mesh {
 
 
     /// <summary>
+    /// Profile not valid
     /// </summary>
     public class ProfileInvalid : MeshException {
 
@@ -103,6 +105,7 @@ namespace Goedel.Mesh {
 
 
     /// <summary>
+    /// Invalid response from server
     /// </summary>
     public class InvalidResponse : MeshException {
 
@@ -149,6 +152,7 @@ namespace Goedel.Mesh {
 
 
     /// <summary>
+    /// Profile not found
     /// </summary>
     public class ProfileNotFound : MeshException {
 
@@ -195,6 +199,7 @@ namespace Goedel.Mesh {
 
 
     /// <summary>
+    /// Profile is not valid
     /// </summary>
     public class NotValidProfile : MeshException {
 
@@ -241,6 +246,7 @@ namespace Goedel.Mesh {
 
 
     /// <summary>
+    /// Public key could not be found
     /// </summary>
     public class PublicKeyNotFound : MeshException {
 
@@ -287,6 +293,7 @@ namespace Goedel.Mesh {
 
 
     /// <summary>
+    /// Private key could not be found
     /// </summary>
     public class PrivateKeyNotFound : MeshException {
 
@@ -333,6 +340,7 @@ namespace Goedel.Mesh {
 
 
     /// <summary>
+    /// Key does not match fingerprint
     /// </summary>
     public class KeyFingerprintMismatch : MeshException {
 
@@ -379,6 +387,7 @@ namespace Goedel.Mesh {
 
 
     /// <summary>
+    /// Profile signature is invalid
     /// </summary>
     public class InvalidProfileSignature : MeshException {
 
@@ -425,6 +434,7 @@ namespace Goedel.Mesh {
 
 
     /// <summary>
+    /// Administration operation attempted on non administration device
     /// </summary>
     public class NotAdministrationDevice : MeshException {
 
@@ -471,6 +481,7 @@ namespace Goedel.Mesh {
 
 
     /// <summary>
+    /// Profile chain is not valid
     /// </summary>
     public class InvalidProfileChain : MeshException {
 
@@ -517,6 +528,7 @@ namespace Goedel.Mesh {
 
 
     /// <summary>
+    /// No master profile
     /// </summary>
     public class NoMasterProfile : MeshException {
 
@@ -563,6 +575,7 @@ namespace Goedel.Mesh {
 
 
     /// <summary>
+    /// No device profile
     /// </summary>
     public class NoDeviceProfile : MeshException {
 
@@ -609,6 +622,7 @@ namespace Goedel.Mesh {
 
 
     /// <summary>
+    /// Not a valid portal address
     /// </summary>
     public class InvalidPortalAddress : MeshException {
 
@@ -655,6 +669,7 @@ namespace Goedel.Mesh {
 
 
     /// <summary>
+    /// Could not connect to portal
     /// </summary>
     public class PortalConnectFail : MeshException {
 
@@ -701,6 +716,7 @@ namespace Goedel.Mesh {
 
 
     /// <summary>
+    /// A registry entry was of unexpcected type
     /// </summary>
     public class UnexpectedRegistryType : MeshException {
 

@@ -249,7 +249,7 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Unpack the profile.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The unpacked profile.</returns>
         public override Profile Unpack() {
             return UnpackMasterProfile(); 
             }
@@ -317,8 +317,8 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Package and sign the 
         /// </summary>
-        /// <param name="SigningKey"></param>
-        /// <param name="Encoding"></param>
+        /// <param name="SigningKey">The signature key</param>
+        /// <param name="Encoding">The encoding</param>
         public void Sign (KeyPair SigningKey=null, DataEncoding Encoding = DataEncoding.JSON) {
             SigningKey = SigningKey ?? ApplicationProfile.GetSignatureKey();
             Assert.NotNull(SigningKey, NotAdministrationDevice.Throw);
@@ -469,7 +469,7 @@ namespace Goedel.Mesh {
         /// <para>The Personal profile is signed with a valid admin key.</para>
         /// <para>Each signing key matches the specified UDF.</para>
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The unpacked personal profile.</returns>
         public virtual PersonalProfile UnpackPersonalProfile() {
             var Unpacked = PersonalProfile.FromJSON(new JSONReader(SignedData.Payload));
 

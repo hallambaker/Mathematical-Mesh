@@ -138,6 +138,7 @@ namespace Goedel.Mesh {
         /// <param name="UDF">Specify the signature key by identifier</param>
         /// <param name="KeyPair">Specify the signature key by key handle</param>
         /// <param name="Encoding">The encoding for the inner data</param>
+        /// <returns>The signed profile.</returns>
         public override SignedProfile Sign (string UDF = null, KeyPair KeyPair = null,
                         DataEncoding Encoding = DataEncoding.JSON) {
             // Locate the administration key for this device.

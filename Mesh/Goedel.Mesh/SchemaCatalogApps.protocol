@@ -6,6 +6,9 @@
 	Extern ApplicationDevicePrivate
 	Extern Entry
 
+	Description 
+		|Base clases for Mesh Catalog applications.
+
 	Section 1 "Catalog Application Profiles"
 		Description 
 			|Catalogues are application profiles that consist of a set of related
@@ -32,6 +35,9 @@
 				|The person to which this profile is bound
 
 	Structure CatalogEntry
+		Description
+			|Base class for catalog entries, contains base information on which
+			|catalog operations are performed.
 		String ID
 			Description
 				|Unique identifier for the entry. If present, overrides the identifier 
@@ -55,6 +61,8 @@
 				|Source data for the entry
 
 	Structure TypedData
+		Description
+			|Typed content.
 		String ContentType
 			Description
 				|IANA Content Type identifier
@@ -174,6 +182,8 @@
 			|Contact entry
 		Struct PersonalName Personals
 			Multiple
+			Description
+				|Personal names.
 		String MeshUDFs
 			Multiple
 			Description
@@ -189,11 +199,21 @@
 				|List of postal addresses for this party
 
 	Structure PersonalName
+		Description
+			|Personal name structure.
 		String First
+			Description
+				|First name
 		String Last
+			Description
+				|Last name
 		String Midle
+			Description
+				|Middle names (if used).
 
 	Structure Address
+		Description
+			|Contact address.
 		String Label
 			Multiple
 			Description
@@ -205,12 +225,16 @@
 				|Attributes describing the mode in which the contact address may be used.
 
 	Structure Internet
+		Description
+			|Internet contact address
 		Inherits Address
 		String Uri
 			Description
 				|The resource identifier describing the mode of contact
 			
 	Structure Postal
+		Description
+			|Postal or geographic address.
 		Inherits Address
 		String Adressee
 			Description

@@ -1,0 +1,1613 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Goedel.Registry</name>
+    </assembly>
+    <members>
+        <member name="T:Goedel.Registry.ExtensionMethods">
+            <summary>
+            Extension methods to create labels, escaped strings, etc. in a specified
+            target language.
+            </summary>
+        </member>
+        <member name="P:Goedel.Registry.ExtensionMethods.Target">
+            <summary>
+            Sets the code generation target type. This ensures that labels,
+            etc have the correct prefixes and formatting style for the target
+            language. The default is 'CS' to generate for C#.
+            </summary>
+        </member>
+        <member name="M:Goedel.Registry.ExtensionMethods.Label(System.Object)">
+            <summary>
+            Generate a label for the currently specified code generation target.
+            The default is to generate for C#.
+            </summary>
+            <param name="Base">Base string</param>
+            <returns>Appropriately escaped label for current target language.</returns>
+        </member>
+        <member name="M:Goedel.Registry.ExtensionMethods.CS(System.Object)">
+            <summary>
+            Convert an arbitrary string to a label suitable for use in C# code
+            avoiding collisions with reserved words and labels reserved to 
+            implementation code.
+            
+            All spaces are converted to underscores. Labels that begin with a 
+            number or a leading underscore or are a reserved word are prefixed
+            by an underscore.
+            </summary>
+            <param name="Base">Input string</param>
+            <returns>Character safe label.</returns>
+        </member>
+        <member name="M:Goedel.Registry.ExtensionMethods.QuotedNull(System.String)">
+            <summary>
+            Create a quoted, escaped string in the current language
+            </summary>
+            <param name="Base">Unescaped string</param>
+            <returns>Quoted escaped string.</returns>
+        </member>
+        <member name="M:Goedel.Registry.ExtensionMethods.Quoted(System.String)">
+            <summary>
+            Create a quoted, escaped string in the current language
+            </summary>
+            <param name="Base">Unescaped string</param>
+            <returns>Quoted escaped string.</returns>
+        </member>
+        <member name="M:Goedel.Registry.ExtensionMethods.Quoted(System.Collections.Generic.List{System.String})">
+            <summary>
+            Create an escaped string in the current language
+            </summary>
+            <param name="Base">Unescaped string</param>
+            <returns>Escaped string.</returns>
+        </member>
+        <member name="M:Goedel.Registry.ExtensionMethods.If(System.Boolean,System.String)">
+            <summary>
+            Return the string value if a condition is met, otherwise return an
+            empty string.
+            </summary>
+            <param name="Value">The condition value.</param>
+            <param name="Text">The string to return if Value is true.</param>
+            <returns>The string Text if Value is true, otherwise a null string.</returns>
+        </member>
+        <member name="M:Goedel.Registry.ExtensionMethods.If(System.Boolean,System.String,System.String)">
+            <summary>
+            Return the string value if a condition is met, otherwise return an
+            empty string.
+            </summary>
+            <param name="Value">The condition value.</param>
+            <param name="TrueText">The string to return if Value is true.</param>
+            <param name="FalseText">The string to return if Value is false.</param>
+            <returns>The string Text if Value is true, otherwise a null string.</returns>
+        </member>
+        <member name="M:Goedel.Registry.ExtensionMethods.TBS(System.String,System.Boolean)">
+            <summary>
+            To Be Specified stub. Writes out the value to the console an returns the string.
+            </summary>
+            <param name="Value">Value to write</param>
+            <param name="Bold">If true, wrap value in bold style tags</param>
+            <returns>The resulting formatted string.</returns>
+        </member>
+        <member name="T:Goedel.Registry.Separator">
+            <summary>
+            The separator class prints as one value the first time ToString() is called
+            and a different value thereafter.
+            </summary>
+        </member>
+        <member name="F:Goedel.Registry.Separator.First">
+            <summary>
+            Value to return the first time ToString() is called
+            </summary>
+        </member>
+        <member name="F:Goedel.Registry.Separator.Next">
+            <summary>
+            Value to return after the first time ToString() is called
+            </summary>
+        </member>
+        <member name="F:Goedel.Registry.Separator.IsFirst">
+            <summary>
+            Is this the first time ToString was called?
+            </summary>
+        </member>
+        <member name="M:Goedel.Registry.Separator.#ctor(System.String,System.String)">
+            <summary>
+            Create a separator class.
+            </summary>
+            <param name="First">String to return on the first call to ToString()</param>
+            <param name="Next">String to return after the first call to ToString()</param>
+        </member>
+        <member name="M:Goedel.Registry.Separator.#ctor(System.String)">
+            <summary>
+            Create a separactor class that returns an empty string the first
+            time ToString is called.
+            </summary>
+            <param name="Next">String to return after the first call to ToString()</param>
+        </member>
+        <member name="M:Goedel.Registry.Separator.ToString">
+            <summary>
+            Return the value First if this is the first time the
+            method is called or Next otherwise.
+            </summary>
+            <returns>The string value</returns>
+        </member>
+        <member name="T:Goedel.Registry.ParserException">
+            <summary>
+            The user command could not be parsed
+            </summary>
+        </member>
+        <member name="M:Goedel.Registry.ParserException.#ctor">
+            <summary>
+            Construct instance for exception "The user command could not be parsed"
+            </summary>		
+        </member>
+        <member name="M:Goedel.Registry.ParserException.#ctor(System.String)">
+            <summary>
+            Construct instance for exception "The user command could not be parsed"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Registry.ParserException.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
+        </member>
+        <member name="F:Goedel.Registry.ParserException.UserData">
+            <summary>
+            User data associated with the exception.
+            </summary>	
+        </member>
+        <member name="F:Goedel.Registry.ParserException.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Registry.FileReadError">
+            <summary>
+            The file could not be read.
+            </summary>
+        </member>
+        <member name="M:Goedel.Registry.FileReadError.#ctor">
+            <summary>
+            Construct instance for exception "The file could not be read"
+            </summary>		
+        </member>
+        <member name="M:Goedel.Registry.FileReadError.#ctor(System.String)">
+            <summary>
+            Construct instance for exception "The file could not be read"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Registry.FileReadError.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
+        </member>
+        <member name="M:Goedel.Registry.FileReadError.#ctor(Goedel.Utilities.ExceptionData)">
+            <summary>
+            Construct instance for exception using a userdata parameter of
+            type ExceptionData and the format string "The file {0} could not be read"
+            </summary>		
+            <param name="Object">User data</param>	
+        </member>
+        <member name="M:Goedel.Registry.FileReadError.#ctor(Goedel.Utilities.ExceptionData,System.Exception)">
+            <summary>
+            Construct instance for exception using a userdata parameter of
+            type ExceptionData and the format string "The file {0} could not be read"
+            </summary>		
+            <param name="Object">User data</param>	
+            <param name="Inner">Inner Exception</param>	
+        </member>
+        <member name="F:Goedel.Registry.FileReadError.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Registry.UnknownCommand">
+            <summary>
+            User entered an unknown command
+            </summary>
+        </member>
+        <member name="M:Goedel.Registry.UnknownCommand.#ctor">
+            <summary>
+            Construct instance for exception "Unknown command"
+            </summary>		
+        </member>
+        <member name="M:Goedel.Registry.UnknownCommand.#ctor(System.String)">
+            <summary>
+            Construct instance for exception "Unknown command"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Registry.UnknownCommand.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
+        </member>
+        <member name="M:Goedel.Registry.UnknownCommand.#ctor(Goedel.Utilities.ExceptionData)">
+            <summary>
+            Construct instance for exception using a userdata parameter of
+            type ExceptionData and the format string "The command {0} is not known."
+            </summary>		
+            <param name="Object">User data</param>	
+        </member>
+        <member name="M:Goedel.Registry.UnknownCommand.#ctor(Goedel.Utilities.ExceptionData,System.Exception)">
+            <summary>
+            Construct instance for exception using a userdata parameter of
+            type ExceptionData and the format string "The command {0} is not known."
+            </summary>		
+            <param name="Object">User data</param>	
+            <param name="Inner">Inner Exception</param>	
+        </member>
+        <member name="F:Goedel.Registry.UnknownCommand.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Registry.UnknownOption">
+            <summary>
+            User entered an unknown option
+            </summary>
+        </member>
+        <member name="M:Goedel.Registry.UnknownOption.#ctor">
+            <summary>
+            Construct instance for exception "Unknown option"
+            </summary>		
+        </member>
+        <member name="M:Goedel.Registry.UnknownOption.#ctor(System.String)">
+            <summary>
+            Construct instance for exception "Unknown option"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Registry.UnknownOption.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
+        </member>
+        <member name="M:Goedel.Registry.UnknownOption.#ctor(Goedel.Utilities.ExceptionData)">
+            <summary>
+            Construct instance for exception using a userdata parameter of
+            type ExceptionData and the format string "The option {0} is not known."
+            </summary>		
+            <param name="Object">User data</param>	
+        </member>
+        <member name="M:Goedel.Registry.UnknownOption.#ctor(Goedel.Utilities.ExceptionData,System.Exception)">
+            <summary>
+            Construct instance for exception using a userdata parameter of
+            type ExceptionData and the format string "The option {0} is not known."
+            </summary>		
+            <param name="Object">User data</param>	
+            <param name="Inner">Inner Exception</param>	
+        </member>
+        <member name="F:Goedel.Registry.UnknownOption.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Registry.NoCommand">
+            <summary>
+            No command specified
+            </summary>
+        </member>
+        <member name="M:Goedel.Registry.NoCommand.#ctor">
+            <summary>
+            Construct instance for exception "No command specified"
+            </summary>		
+        </member>
+        <member name="M:Goedel.Registry.NoCommand.#ctor(System.String)">
+            <summary>
+            Construct instance for exception "No command specified"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Registry.NoCommand.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
+        </member>
+        <member name="F:Goedel.Registry.NoCommand.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Registry.SchemaParse">
+            <summary>
+            Schema parsing exception
+            </summary>
+        </member>
+        <member name="M:Goedel.Registry.SchemaParse.#ctor">
+            <summary>
+            Construct instance for exception "The schema could not be parsed"
+            </summary>		
+        </member>
+        <member name="M:Goedel.Registry.SchemaParse.#ctor(System.String)">
+            <summary>
+            Construct instance for exception "The schema could not be parsed"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Registry.SchemaParse.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
+        </member>
+        <member name="F:Goedel.Registry.SchemaParse.UserData">
+            <summary>
+            User data associated with the exception.
+            </summary>	
+        </member>
+        <member name="F:Goedel.Registry.SchemaParse.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Registry.NotFoundReserved">
+            <summary>
+            A reserved word was expected but a different token was encountered.
+            </summary>
+        </member>
+        <member name="M:Goedel.Registry.NotFoundReserved.#ctor">
+            <summary>
+            Construct instance for exception "An error occurred"
+            </summary>		
+        </member>
+        <member name="M:Goedel.Registry.NotFoundReserved.#ctor(System.String)">
+            <summary>
+            Construct instance for exception "An error occurred"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Registry.NotFoundReserved.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
+        </member>
+        <member name="M:Goedel.Registry.NotFoundReserved.#ctor(Goedel.Utilities.ExceptionData)">
+            <summary>
+            Construct instance for exception using a userdata parameter of
+            type ExceptionData and the format string "Expected reserved word, token {0} was not found"
+            </summary>		
+            <param name="Object">User data</param>	
+        </member>
+        <member name="M:Goedel.Registry.NotFoundReserved.#ctor(Goedel.Utilities.ExceptionData,System.Exception)">
+            <summary>
+            Construct instance for exception using a userdata parameter of
+            type ExceptionData and the format string "Expected reserved word, token {0} was not found"
+            </summary>		
+            <param name="Object">User data</param>	
+            <param name="Inner">Inner Exception</param>	
+        </member>
+        <member name="F:Goedel.Registry.NotFoundReserved.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Registry.InternalError">
+            <summary>
+            An internal parser error occured, this code should not have been reached.
+            </summary>
+        </member>
+        <member name="M:Goedel.Registry.InternalError.#ctor">
+            <summary>
+            Construct instance for exception "An internal parser error occurred"
+            </summary>		
+        </member>
+        <member name="M:Goedel.Registry.InternalError.#ctor(System.String)">
+            <summary>
+            Construct instance for exception "An internal parser error occurred"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Registry.InternalError.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
+        </member>
+        <member name="F:Goedel.Registry.InternalError.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Registry.InvalidToken">
+            <summary>
+            The input token was not valid.
+            </summary>
+        </member>
+        <member name="M:Goedel.Registry.InvalidToken.#ctor">
+            <summary>
+            Construct instance for exception "An invalid token was encountered"
+            </summary>		
+        </member>
+        <member name="M:Goedel.Registry.InvalidToken.#ctor(System.String)">
+            <summary>
+            Construct instance for exception "An invalid token was encountered"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Registry.InvalidToken.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
+        </member>
+        <member name="F:Goedel.Registry.InvalidToken.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Registry.ExpectedStart">
+            <summary>
+            Expected a block start token.
+            </summary>
+        </member>
+        <member name="M:Goedel.Registry.ExpectedStart.#ctor">
+            <summary>
+            Construct instance for exception "Start token expected"
+            </summary>		
+        </member>
+        <member name="M:Goedel.Registry.ExpectedStart.#ctor(System.String)">
+            <summary>
+            Construct instance for exception "Start token expected"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Registry.ExpectedStart.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
+        </member>
+        <member name="F:Goedel.Registry.ExpectedStart.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Registry.ExpectedClass">
+            <summary>
+            A class token was expected.
+            </summary>
+        </member>
+        <member name="M:Goedel.Registry.ExpectedClass.#ctor">
+            <summary>
+            Construct instance for exception "Parser Error Expected [Class]"
+            </summary>		
+        </member>
+        <member name="M:Goedel.Registry.ExpectedClass.#ctor(System.String)">
+            <summary>
+            Construct instance for exception "Parser Error Expected [Class]"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Registry.ExpectedClass.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
+        </member>
+        <member name="F:Goedel.Registry.ExpectedClass.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Registry.Expected">
+            <summary>
+            A token was expected.
+            </summary>
+        </member>
+        <member name="M:Goedel.Registry.Expected.#ctor">
+            <summary>
+            Construct instance for exception "Parser Error Expected [Class]"
+            </summary>		
+        </member>
+        <member name="M:Goedel.Registry.Expected.#ctor(System.String)">
+            <summary>
+            Construct instance for exception "Parser Error Expected [Class]"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Registry.Expected.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
+        </member>
+        <member name="F:Goedel.Registry.Expected.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Registry.TooManyClose">
+            <summary>
+            More block close tokens were encountered than open tokens.
+            </summary>
+        </member>
+        <member name="M:Goedel.Registry.TooManyClose.#ctor">
+            <summary>
+            Construct instance for exception "Too Many Closing Braces"
+            </summary>		
+        </member>
+        <member name="M:Goedel.Registry.TooManyClose.#ctor(System.String)">
+            <summary>
+            Construct instance for exception "Too Many Closing Braces"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Registry.TooManyClose.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
+        </member>
+        <member name="F:Goedel.Registry.TooManyClose.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Registry.UnreachableCode">
+            <summary>
+            Unreachable code was encountered.
+            </summary>
+        </member>
+        <member name="M:Goedel.Registry.UnreachableCode.#ctor">
+            <summary>
+            Construct instance for exception "Unreachable code reached"
+            </summary>		
+        </member>
+        <member name="M:Goedel.Registry.UnreachableCode.#ctor(System.String)">
+            <summary>
+            Construct instance for exception "Unreachable code reached"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Registry.UnreachableCode.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
+        </member>
+        <member name="F:Goedel.Registry.UnreachableCode.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Registry.Boilerplate">
+            <summary>A Goedel script.</summary>
+        </member>
+        <member name="M:Goedel.Registry.Boilerplate.#ctor">
+            <summary>Default constructor.</summary>
+        </member>
+        <member name="M:Goedel.Registry.Boilerplate.#ctor(System.IO.TextWriter)">
+            <summary>Constructor with output stream.</summary>
+            <param name="Output">The output stream</param>
+        </member>
+        <member name="M:Goedel.Registry.Boilerplate.License(System.IO.TextWriter,System.String,System.String)">
+            <summary>Write license to output.The 
+            copyright information is extracted from the assembly.</summary>
+            <param name="_Output">The outout stream</param>
+            <param name="Comment">Line comment prefix</param>
+            <param name="Name">Name of the license to use. Valid values 
+            are MITLicense, BSD2License, BSD3License, Apache2License, ISCLicense.</param>
+        </member>
+        <member name="M:Goedel.Registry.Boilerplate.Header(System.IO.TextWriter,System.String,System.DateTime)">
+            <summary>Write boilerplate header for generated code to file. The assembly tile,
+            version and copyright information are extracted from the assembly.</summary>
+            <param name="_Output">The outout stream</param>
+            <param name="Comment">Line comment prefix</param>
+            <param name="GenerateTime">Time code was generated.</param>
+        </member>
+        <member name="M:Goedel.Registry.Boilerplate.MITLicense(System.IO.TextWriter,System.String,System.String,System.String)">
+            <summary>Write MIT license text to output.</summary>
+            <param name="_Output">The outout stream</param>
+            <param name="Comment">Line comment prefix</param>
+            <param name="Copyright">Copyright date</param>
+            <param name="Holder">Copyright holder</param>
+        </member>
+        <member name="M:Goedel.Registry.Boilerplate.BSD3License(System.IO.TextWriter,System.String,System.String,System.String)">
+            <summary>Write BSD 3 paragraph license text to output.</summary>
+            <param name="_Output">The outout stream</param>
+            <param name="Comment">Line comment prefix</param>
+            <param name="Copyright">Copyright date</param>
+            <param name="Holder">Copyright holder</param>
+        </member>
+        <member name="M:Goedel.Registry.Boilerplate.BSD2License(System.IO.TextWriter,System.String,System.String,System.String)">
+            <summary>Write BSD 2 paragraph license text to output.</summary>
+            <param name="_Output">The outout stream</param>
+            <param name="Comment">Line comment prefix</param>
+            <param name="Copyright">Copyright date</param>
+            <param name="Holder">Copyright holder</param>
+        </member>
+        <member name="M:Goedel.Registry.Boilerplate.Apache2License(System.IO.TextWriter,System.String,System.String,System.String)">
+            <summary>Write Apache license text to output.</summary>
+            <param name="_Output">The outout stream</param>
+            <param name="Comment">Line comment prefix</param>
+            <param name="Copyright">Copyright date</param>
+            <param name="Holder">Copyright holder</param>
+        </member>
+        <member name="M:Goedel.Registry.Boilerplate.ISCLicense(System.IO.TextWriter,System.String,System.String,System.String)">
+            <summary>Write ISC license text to output.</summary>
+            <param name="_Output">The outout stream</param>
+            <param name="Comment">Line comment prefix</param>
+            <param name="Copyright">Copyright date</param>
+            <param name="Holder">Copyright holder</param>
+        </member>
+        <member name="T:Goedel.Registry.ScriptOutput">
+            <summary>
+            Preformatted headers to write to scrupt file output.
+            </summary>
+        </member>
+        <member name="F:Goedel.Registry.ScriptOutput._Output">
+            <summary>The text writer to output text to.</summary>
+        </member>
+        <member name="F:Goedel.Registry.ScriptOutput._Indent">
+            <summary>The current indent prefix.</summary>
+        </member>
+        <member name="M:Goedel.Registry.ScriptOutput.#ctor(System.IO.TextWriter)">
+            <summary>
+            Constructor to write to the specified output.
+            </summary>
+            <param name="Output">The output stream</param>
+        </member>
+        <member name="T:Goedel.Registry.TokenType">
+            <summary>Token types</summary>
+        </member>
+        <member name="F:Goedel.Registry.TokenType.BEGIN">
+            <summary>A begin token. This is either a start brace or an increase in indent level.</summary>
+        </member>
+        <member name="F:Goedel.Registry.TokenType.END">
+            <summary>An end token, this is either a close brace or a return to a previous indent level.</summary>
+        </member>
+        <member name="F:Goedel.Registry.TokenType.LABEL">
+            <summary>A label token.</summary>
+        </member>
+        <member name="F:Goedel.Registry.TokenType.LITERAL">
+            <summary>A literal token.</summary>
+        </member>
+        <member name="F:Goedel.Registry.TokenType.STRING">
+            <summary>A quoted string</summary>
+        </member>
+        <member name="F:Goedel.Registry.TokenType.INTEGER">
+            <summary>An integer</summary>
+        </member>
+        <member name="F:Goedel.Registry.TokenType.FLOAT">
+            <summary>A floating point number</summary>
+        </member>
+        <member name="F:Goedel.Registry.TokenType.INVALID">
+            <summary>An invalid token</summary>
+        </member>
+        <member name="F:Goedel.Registry.TokenType.COMMENT">
+            <summary>A comment</summary>
+        </member>
+        <member name="F:Goedel.Registry.TokenType.NULL">
+            <summary>Null</summary>
+        </member>
+        <member name="F:Goedel.Registry.TokenType.SEPARATOR">
+            <summary>A separator</summary>
+        </member>
+        <member name="F:Goedel.Registry.TokenType.TEXT">
+            <summary>Block text</summary>
+        </member>
+        <member name="T:Goedel.Registry.GoedelParseException">
+            <summary>Exceptions. These need to be fixed up.</summary>
+        </member>
+        <member name="M:Goedel.Registry.GoedelParseException.#ctor(System.String)">
+            <summary>General parse error</summary>
+            <param name="Message">Message for user</param>/// 
+        </member>
+        <member name="M:Goedel.Registry.GoedelParseException.#ctor(System.String,Goedel.Registry.Position)">
+            <summary>General parse error</summary>
+            <param name="Message">Message for user</param>
+            <param name="Position">position in the file</param>
+        </member>
+        <member name="T:Goedel.Registry.Lexer">
+            <summary>Finite state analyzer</summary>
+        </member>
+        <member name="T:Goedel.Registry.Lexer.CharType">
+            <summary>Character types</summary>
+        </member>
+        <member name="F:Goedel.Registry.Lexer.CharType.WhiteSpace">
+            <summary>Whitespace, spaces, tabs</summary>
+        </member>
+        <member name="F:Goedel.Registry.Lexer.CharType.Digit">
+            <summary>0-9</summary>
+        </member>
+        <member name="F:Goedel.Registry.Lexer.CharType.Lower">
+            <summary>a-z</summary>
+        </member>
+        <member name="F:Goedel.Registry.Lexer.CharType.Upper">
+            <summary>A-Z</summary>
+        </member>
+        <member name="F:Goedel.Registry.Lexer.CharType.Underscore">
+            <summary>_</summary>
+        </member>
+        <member name="F:Goedel.Registry.Lexer.CharType.Slash">
+            <summary>/</summary>
+        </member>
+        <member name="F:Goedel.Registry.Lexer.CharType.BackSlash">
+            <summary>\</summary>
+        </member>
+        <member name="F:Goedel.Registry.Lexer.CharType.DoubleQuote">
+            <summary>"</summary>
+        </member>
+        <member name="F:Goedel.Registry.Lexer.CharType.At">
+            <summary>@</summary>
+        </member>
+        <member name="F:Goedel.Registry.Lexer.CharType.Left">
+            <summary>{</summary>
+        </member>
+        <member name="F:Goedel.Registry.Lexer.CharType.Right">
+            <summary>}</summary>
+        </member>
+        <member name="F:Goedel.Registry.Lexer.CharType.Period">
+            <summary>.</summary>
+        </member>
+        <member name="F:Goedel.Registry.Lexer.CharType.Comma">
+            <summary>,</summary>
+        </member>
+        <member name="F:Goedel.Registry.Lexer.CharType.Line">
+            <summary>Linefeed</summary>
+        </member>
+        <member name="F:Goedel.Registry.Lexer.CharType.CR">
+            <summary>Carriage Return</summary>
+        </member>
+        <member name="F:Goedel.Registry.Lexer.CharType.Other">
+            <summary>Any other character</summary>
+        </member>
+        <member name="F:Goedel.Registry.Lexer.Position">
+            <summary>Position in the file.</summary>
+        </member>
+        <member name="M:Goedel.Registry.Lexer.#ctor(System.String)">
+            <summary>
+            Create FSR from file.
+            </summary>
+            <param name="filename">The file to read.</param>
+        </member>
+        <member name="M:Goedel.Registry.Lexer.Process(System.IO.Stream,Goedel.Registry.Parser)">
+            <summary>
+            Process the input to create a parse tree.
+            </summary>
+            <param name="Input">Input file.</param>
+            <param name="Parse">Parse tree.</param>
+        </member>
+        <member name="M:Goedel.Registry.Lexer.Process(System.IO.TextReader,Goedel.Registry.Parser)">
+            <summary>
+            Process the input to create a parse tree.
+            </summary>
+            <param name="Reader">Input reader.</param>
+            <param name="Parse">Parse tree.</param>
+        </member>
+        <member name="T:Goedel.Registry.Parser">
+            <summary>
+            Base class for all Goedel parsers.
+            </summary>
+        </member>
+        <member name="F:Goedel.Registry.Parser.Options">
+            <summary>Start and elapsed time</summary>
+        </member>
+        <member name="M:Goedel.Registry.Parser.Process(Goedel.Registry.TokenType,Goedel.Registry.Position,System.String)">
+            <summary>
+            Process a an input token. This is a push parser that is fed tokens
+            each time it is called.
+            </summary>
+            <param name="Token">The token to process</param>
+            <param name="Position">Position in the file</param>
+            <param name="Text">Token text</param>
+        </member>
+        <member name="M:Goedel.Registry.Parser.Init">
+            <summary>Initialize.</summary>
+        </member>
+        <member name="T:Goedel.Registry.Dispatch">
+            <summary>Track start and end time of parse.</summary>
+        </member>
+        <member name="F:Goedel.Registry.Dispatch.Started">
+            <summary>Record start time.</summary>
+        </member>
+        <member name="P:Goedel.Registry.Dispatch.Elapsed">
+            <summary>Calculate elapsed time.</summary>
+        </member>
+        <member name="T:Goedel.Registry.Source">
+            <summary>
+            Track a data source
+            </summary>
+        </member>
+        <member name="P:Goedel.Registry.Source.Name">
+            <summary>The source name</summary>
+        </member>
+        <member name="M:Goedel.Registry.Source.#ctor(System.String)">
+            <summary>
+            Create a source
+            </summary>
+            <param name="NameIn">The source name</param>
+        </member>
+        <member name="T:Goedel.Registry.Position">
+            <summary>Track position in a source file.</summary>
+        </member>
+        <member name="F:Goedel.Registry.Position.File">
+            <summary>The input source</summary>
+        </member>
+        <member name="F:Goedel.Registry.Position.Ln">
+            <summary>Line number</summary>
+        </member>
+        <member name="F:Goedel.Registry.Position.Col">
+            <summary>Column number</summary>
+        </member>
+        <member name="F:Goedel.Registry.Position.Ch">
+            <summary>The current character</summary>
+        </member>
+        <member name="M:Goedel.Registry.Position.ToString">
+            <summary>
+            Convert position to text.
+            </summary>
+            <returns>The string value</returns>
+        </member>
+        <member name="M:Goedel.Registry.Position.#ctor(System.String)">
+            <summary>
+            Create new position.
+            </summary>
+            <param name="NameIn">Name of the source.</param>
+        </member>
+        <member name="T:Goedel.Registry.Registry`1">
+            <summary>
+            Goedel parser type and instance registry.
+            </summary>
+            <typeparam name="T">The parse tree type.</typeparam>
+        </member>
+        <member name="F:Goedel.Registry.Registry`1.Files">
+            <summary>The input sources</summary>
+        </member>
+        <member name="F:Goedel.Registry.Registry`1.Types">
+            <summary>The types</summary>
+        </member>
+        <member name="F:Goedel.Registry.Registry`1.IDs">
+            <summary>The identifiers.</summary>
+        </member>
+        <member name="M:Goedel.Registry.Registry`1.#ctor">
+            <summary>Construct new registry.</summary>
+        </member>
+        <member name="M:Goedel.Registry.Registry`1.SetFile(System.String)">
+            <summary>
+            Set the current source file.
+            </summary>
+            <param name="file">The file name.</param>
+            <returns>The source record.</returns>
+        </member>
+        <member name="M:Goedel.Registry.Registry`1.FindType(System.String)">
+            <summary>
+            Locate a type by name
+            </summary>
+            <param name="Token">the type name</param>
+            <returns>the type if found.</returns>
+        </member>
+        <member name="M:Goedel.Registry.Registry`1.FindID(System.String,Goedel.Registry.TYPE{`0})">
+            <summary>
+            Find identifier.
+            </summary>
+            <param name="Token">The name to find</param>
+            <param name="Type">The type that must be matched.</param>
+            <returns>The identifier record (if found).</returns>
+        </member>
+        <member name="M:Goedel.Registry.Registry`1.TYPE(System.String)">
+            <summary>
+            Find type and create if unknown.
+            </summary>
+            <param name="Text">The name to find</param>
+            <returns>The type label.</returns>
+        </member>
+        <member name="M:Goedel.Registry.Registry`1.ID(Goedel.Registry.Position,System.String,Goedel.Registry.TYPE{`0},`0)">
+            <summary>
+            Create identifier at a given source position.
+            </summary>
+            <param name="Position">Position in the source.</param>
+            <param name="Text">The name</param>
+            <param name="Type">The type</param>
+            <param name="ObjectIn">The parse tree being constructed.</param>
+            <returns>The identifier created</returns>
+        </member>
+        <member name="M:Goedel.Registry.Registry`1.REF(Goedel.Registry.Position,System.String,Goedel.Registry.TYPE{`0},`0)">
+            <summary>
+            Create reference of specified type
+            </summary>
+            <param name="Position">Position in the source.</param>
+            <param name="Text">The name</param>
+            <param name="Type">The type</param>
+            <param name="ObjectIn">The parse tree being constructed.</param>
+            <returns>The reference created</returns>
+        </member>
+        <member name="M:Goedel.Registry.Registry`1.TOKEN(Goedel.Registry.Position,System.String,Goedel.Registry.TYPE{`0},`0)">
+            <summary>
+            Create token of specified type
+            </summary>
+            <param name="Position">Position in the source.</param>
+            <param name="Text">The name</param>
+            <param name="Type">The type</param>
+            <param name="ObjectIn">The parse tree being constructed.</param>
+            <returns>The token created</returns>
+        </member>
+        <member name="T:Goedel.Registry.TYPE`1">
+            <summary>
+            A type.
+            </summary>
+            <typeparam name="T">The parser output type</typeparam>
+        </member>
+        <member name="F:Goedel.Registry.TYPE`1.Label">
+            <summary>The type label</summary>
+        </member>
+        <member name="F:Goedel.Registry.TYPE`1.IDs">
+            <summary>List of all references.</summary>
+        </member>
+        <member name="T:Goedel.Registry.ID`1">
+            <summary>
+            An identifier
+            </summary>
+            <typeparam name="T">The parser output type</typeparam>
+        </member>
+        <member name="F:Goedel.Registry.ID`1.Position">
+            <summary>Position in the source</summary>
+        </member>
+        <member name="F:Goedel.Registry.ID`1.Label">
+            <summary>The label.</summary>
+        </member>
+        <member name="F:Goedel.Registry.ID`1.Type">
+            <summary>The declared type.</summary>
+        </member>
+        <member name="F:Goedel.Registry.ID`1.REFs">
+            <summary>List of all references to this identifier</summary>
+        </member>
+        <member name="F:Goedel.Registry.ID`1.Declared">
+            <summary>If true, the identifier has been declared in the
+            source.</summary>
+        </member>
+        <member name="F:Goedel.Registry.ID`1.Object">
+            <summary>The parse tree being constructed.</summary>
+        </member>
+        <member name="M:Goedel.Registry.ID`1.#ctor(Goedel.Registry.Position,System.String,Goedel.Registry.TYPE{`0},System.Boolean,`0)">
+            <summary>
+            Construct identifier at position in a source.
+            </summary>
+            <param name="Position">Position in the source.</param>
+            <param name="Label">The name</param>
+            <param name="Type">The type</param>
+            <param name="Declared">If true, this is a declaration for the ID.</param>
+            <param name="ObjectIn">The parse tree being constructed.</param>
+        </member>
+        <member name="M:Goedel.Registry.ID`1.ToString">
+            <summary>
+            Return the label value
+            </summary>
+            <returns>The label</returns>
+        </member>
+        <member name="T:Goedel.Registry.REF`1">
+            <summary>
+            Reference to an identifier
+            </summary>
+            <typeparam name="T">The parser output type</typeparam>
+        </member>
+        <member name="F:Goedel.Registry.REF`1.Position">
+            <summary>Position the reference occurs in the source.</summary>
+        </member>
+        <member name="F:Goedel.Registry.REF`1.ID">
+            <summary>The identifier.</summary>
+        </member>
+        <member name="F:Goedel.Registry.REF`1.Object">
+            <summary>The parse tree being constructed.</summary>
+        </member>
+        <member name="P:Goedel.Registry.REF`1.Definition">
+            <summary>
+            Get the object being defined.
+            </summary>
+        </member>
+        <member name="M:Goedel.Registry.REF`1.#ctor">
+            <summary>
+            Default constructor.
+            </summary>
+        </member>
+        <member name="M:Goedel.Registry.REF`1.#ctor(Goedel.Registry.Position,Goedel.Registry.ID{`0},`0)">
+            <summary>
+            Construct a reference at a position in the source. Note that 
+            references must be defined by exactly one identifier.
+            </summary>
+            <param name="Position">Position in the source.</param>
+            <param name="ID">The identifier</param>
+            <param name="ObjectIn">The parse tree being constructed.</param>
+        </member>
+        <member name="M:Goedel.Registry.REF`1.ToString">
+            <summary>
+            Return the label value
+            </summary>
+            <returns>The label</returns>
+        </member>
+        <member name="P:Goedel.Registry.REF`1.Label">
+            <summary>
+            Return the label value
+            </summary>
+        </member>
+        <member name="T:Goedel.Registry.TOKEN`1">
+            <summary>
+            Token class
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:Goedel.Registry.TOKEN`1.#ctor(Goedel.Registry.Position,Goedel.Registry.ID{`0},`0)">
+            <summary>
+            Construct a token at a position in the source. A token MAY be defined
+            but not defining a token does not cause an error to be thrown.
+            </summary>
+            <param name="Position">Position in the source.</param>
+            <param name="ID">The identifier</param>
+            <param name="ObjectIn">The parse tree being constructed.</param>
+        </member>
+        <member name="M:Goedel.Registry.TOKEN`1.ToString">
+            <summary>
+            Return the label value
+            </summary>
+            <returns>The label</returns>
+        </member>
+        <member name="T:Goedel.Registry.Script">
+            <summary>
+            Script output class
+            </summary>
+        </member>
+        <member name="P:Goedel.Registry.Script._Output">
+            <summary>The script output writer</summary>
+        </member>
+        <member name="P:Goedel.Registry.Script._Indent">
+            <summary>The current indent string, this is prefixed to each line.</summary>
+        </member>
+        <member name="P:Goedel.Registry.Script._Filename">
+            <summary>The output filename.</summary>
+        </member>
+        <member name="M:Goedel.Registry.Script.#ctor">
+            <summary>
+            Default constructor
+            </summary>
+        </member>
+        <member name="M:Goedel.Registry.Script.#ctor(System.IO.TextWriter)">
+            <summary>
+            Constructor with specified output.
+            </summary>
+            <param name="Output">The output stream</param>
+        </member>
+        <member name="M:Goedel.Registry.Script.SetTextWriter(System.IO.TextWriter)">
+            <summary>
+            Set the output.
+            </summary>
+            <param name="Output">The output stream</param>
+        </member>
+        <member name="M:Goedel.Registry.Script.SetTextWriter(System.String)">
+            <summary>
+            Constructor with specified output file
+            </summary>
+            <param name="FileName">The output file </param>
+        </member>
+        <member name="M:Goedel.Registry.Script.Close">
+            <summary>
+            Close the current output file.
+            </summary>
+        </member>
+        <member name="F:Goedel.Registry.Script._TestEntryAssembly">
+            <summary>If true, the entry assembly is unknown.</summary>
+        </member>
+        <member name="F:Goedel.Registry.Script._EntryAssembly">
+            <summary>The entry assembly</summary>
+        </member>
+        <member name="P:Goedel.Registry.Script.EntryAssembly">
+            <summary>
+            Get the current entry assembly.
+            </summary>
+        </member>
+        <member name="F:Goedel.Registry.Script.OperatingSystem">
+            <summary>The operating system version.</summary>
+        </member>
+        <member name="P:Goedel.Registry.Script.Platform">
+            <summary>The operating system platform name.</summary>
+        </member>
+        <member name="P:Goedel.Registry.Script.PlatformVersion">
+            <summary>The operating system version.</summary>
+        </member>
+        <member name="P:Goedel.Registry.Script.AssemblyTitle">
+            <summary>The assembly title.</summary>
+        </member>
+        <member name="M:Goedel.Registry.Script.GetAssemblyTitle(System.Reflection.Assembly)">
+            <summary>Get assembly title.</summary>
+            <param name="Assembly">The assembly being queried.</param>
+            <returns>The assembly title.</returns>
+        </member>
+        <member name="P:Goedel.Registry.Script.AssemblyVersion">
+            <summary>The assembly version</summary>
+        </member>
+        <member name="M:Goedel.Registry.Script.GetAssemblyVersion(System.Reflection.Assembly)">
+            <summary>Get assembly version</summary>
+            <param name="Assembly">The assembly being queried.</param>
+            <returns>The assembly version</returns>
+        </member>
+        <member name="P:Goedel.Registry.Script.AssemblyDescription">
+            <summary>The Assembly Description</summary>
+        </member>
+        <member name="M:Goedel.Registry.Script.GetAssemblyDescription(System.Reflection.Assembly)">
+            <summary>Get Assembly Description</summary>
+            <param name="Assembly">The assembly being queried.</param>
+            <returns>The Assembly Description</returns>
+        </member>
+        <member name="P:Goedel.Registry.Script.AssemblyProduct">
+            <summary>The Assembly Product</summary>
+        </member>
+        <member name="M:Goedel.Registry.Script.GetAssemblyProduct(System.Reflection.Assembly)">
+            <summary>Get Assembly Product</summary>
+            <param name="Assembly">The assembly being queried.</param>
+            <returns>The Assembly Product</returns>
+        </member>
+        <member name="P:Goedel.Registry.Script.AssemblyCopyright">
+            <summary>The Assembly Copyright</summary>
+        </member>
+        <member name="M:Goedel.Registry.Script.GetAssemblyCopyright(System.Reflection.Assembly)">
+            <summary>Get Assembly Copyright</summary>
+            <param name="Assembly">The assembly being queried.</param>
+            <returns>The Assembly Copyright</returns>
+        </member>
+        <member name="P:Goedel.Registry.Script.AssemblyCompany">
+            <summary>The Assembly Company</summary>
+        </member>
+        <member name="M:Goedel.Registry.Script.GetAssemblyCompany(System.Reflection.Assembly)">
+            <summary>Get Assembly Company</summary>
+            <param name="Assembly">The assembly being queried.</param>
+            <returns>The Assembly Company</returns>
+        </member>
+        <member name="M:Goedel.Registry.Script.AssemblyBuildTime(System.Reflection.Assembly)">
+            <summary>
+            Return the assembly build time.
+            </summary>
+            <param name="Assembly">The assembly being queried.</param>
+            <returns>The assembly build time</returns>
+        </member>
+        <member name="M:Goedel.Registry.Script.LocalizeTime(System.DateTime,System.Boolean)">
+            <summary>
+            Convert a time to a localized string.
+            </summary>
+            <param name="Time">Time to convert.</param>
+            <param name="UTC">If true, use UTC, otherwise use the platform time.</param>
+            <returns>The localized time.</returns>
+        </member>
+        <member name="M:Goedel.Registry.Script.CommentSummary(System.Int32,System.String)">
+            <summary>
+            Build an indented summary comment string at the current position
+            for the currently selected language.
+            </summary>
+            <param name="Spaces">Number of spaces to indent text</param>
+            <param name="Text">Text to add</param>
+            <returns>The comment string.</returns>
+        </member>
+        <member name="M:Goedel.Registry.Script.CommentSummary(System.Int32,System.Collections.Generic.List{System.String})">
+            <summary>
+            Build an indented summary comment string at the current position
+            for the currently selected language.
+            </summary>
+            <param name="Spaces">Number of spaces to indent text</param>
+            <param name="Text">Text to add</param>
+            <returns>The comment string.</returns>
+        </member>
+        <member name="T:Goedel.Registry.OutputFormat">
+            <summary>
+            Output format types
+            </summary>
+        </member>
+        <member name="F:Goedel.Registry.OutputFormat.Goedel">
+            <summary>Goedel input file format.</summary>
+        </member>
+        <member name="F:Goedel.Registry.OutputFormat.XML">
+            <summary>XML</summary>
+        </member>
+        <member name="F:Goedel.Registry.OutputFormat.JSON">
+            <summary>JSON</summary>
+        </member>
+        <member name="F:Goedel.Registry.OutputFormat.MD">
+            <summary>Markdown</summary>
+        </member>
+        <member name="T:Goedel.Registry.StructureWriter">
+            <summary>
+            Base class for Formatting writer. Used to create output documents in multiple
+            encoding formats.
+            </summary>
+        </member>
+        <member name="F:Goedel.Registry.StructureWriter.Indent">
+            <summary>
+            Indent is the character string that will be written out to indent 
+            blocks of code. Default is four spaces but can be set to two spaces, 
+            a tab character or other text as required.
+            </summary>
+        </member>
+        <member name="F:Goedel.Registry.StructureWriter.TextWriter">
+            <summary>The output writer</summary>
+        </member>
+        <member name="F:Goedel.Registry.StructureWriter.Level">
+            <summary>Current indent level</summary>
+        </member>
+        <member name="F:Goedel.Registry.StructureWriter.StartOfLine">
+            <summary>If true, output is at start of line.</summary>
+        </member>
+        <member name="M:Goedel.Registry.StructureWriter.StartLine">
+            <summary>
+            Called to start the line
+            </summary>
+        </member>
+        <member name="M:Goedel.Registry.StructureWriter.GetStructureWriter(System.IO.TextWriter,Goedel.Registry.OutputFormat)">
+            <summary>
+            Factory method for specified output stream and output format.
+            </summary>
+            <param name="TextWriter">The output</param>
+            <param name="OutputFormat">Format to write output in.</param>
+            <returns>The created output writer.</returns>
+        </member>
+        <member name="M:Goedel.Registry.StructureWriter.#ctor">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="M:Goedel.Registry.StructureWriter.#ctor(System.IO.TextWriter)">
+            <summary>
+            Set the output textwriter.
+            </summary>
+            <param name="TextWriter">The output</param>
+        </member>
+        <member name="M:Goedel.Registry.StructureWriter.StartDocument(System.String)">
+            <summary>
+            Called at the start of the document.
+            </summary>
+            <param name="Tag">Encoding specific document preamble.</param>
+        </member>
+        <member name="M:Goedel.Registry.StructureWriter.StartDocument">
+            <summary>Write document preamble</summary>
+        </member>
+        <member name="M:Goedel.Registry.StructureWriter.EndDocument(System.String)">
+            <summary>
+            Called at the end of the document;
+            </summary>
+            <param name="Tag">Encoding specific .</param>
+        </member>
+        <member name="M:Goedel.Registry.StructureWriter.EndDocument">
+            <summary>Write end of document.</summary>
+        </member>
+        <member name="M:Goedel.Registry.StructureWriter.StartList(System.String)">
+            <summary>Begin list</summary>
+            <param name="Tag">Tag to write</param>
+        </member>
+        <member name="M:Goedel.Registry.StructureWriter.EndList(System.String)">
+            <summary>End list</summary>
+            <param name="Tag">Tag to write</param>
+        </member>
+        <member name="M:Goedel.Registry.StructureWriter.StartElement(System.String)">
+            <summary>Start element</summary>
+            <param name="Tag">Tag to write</param>
+        </member>
+        <member name="M:Goedel.Registry.StructureWriter.EndElement(System.String)">
+            <summary>End element</summary>
+            <param name="Tag">Tag to write</param>
+        </member>
+        <member name="M:Goedel.Registry.StructureWriter.WriteId(System.String,System.String)">
+            <summary>Write identifier</summary>
+            <param name="Tag">Tag to write</param>
+            <param name="Data">Data to write</param>
+        </member>
+        <member name="M:Goedel.Registry.StructureWriter.WriteAttribute(System.String,System.String)">
+            <summary>Write string attribute</summary>
+            <param name="Tag">Tag to write</param>
+            <param name="Data">Data to write</param>
+        </member>
+        <member name="M:Goedel.Registry.StructureWriter.WriteAttribute(System.String,System.Int32)">
+            <summary>Write integer attribute</summary>
+            <param name="Tag">Tag to write</param>
+            <param name="Data">Data to write</param>
+        </member>
+        <member name="M:Goedel.Registry.StructureWriter.WriteAttribute(System.String,System.Single)">
+            <summary>Write float attribute</summary>
+            <param name="Tag">Tag to write</param>
+            <param name="Data">Data to write</param>
+        </member>
+        <member name="T:Goedel.Registry.IndentWriter">
+            <summary>
+            Indenting structured writer.
+            </summary>
+        </member>
+        <member name="M:Goedel.Registry.IndentWriter.#ctor(System.IO.TextWriter)">
+            <summary>
+            Constructor for specified output stream and output format.
+            </summary>
+            <param name="TextWriter">The output</param>
+        </member>
+        <member name="M:Goedel.Registry.IndentWriter.StartDocument(System.String)">
+            <summary>
+            Called at the start of the document.
+            </summary>
+            <param name="Tag">Encoding specific document preamble.</param>        
+        </member>
+        <member name="M:Goedel.Registry.IndentWriter.EndDocument(System.String)">
+            <summary>
+            Called at the end of the document;
+            </summary>
+            <param name="Tag">Encoding specific .</param>        
+        </member>
+        <member name="M:Goedel.Registry.IndentWriter.StartList(System.String)">
+            <summary>Begin list</summary>
+            <param name="Tag">Tag to write</param>
+        </member>
+        <member name="M:Goedel.Registry.IndentWriter.EndList(System.String)">
+            <summary>End list</summary>
+            <param name="Tag">Tag to write</param>
+        </member>
+        <member name="M:Goedel.Registry.IndentWriter.StartElement(System.String)">
+            <summary>Start element</summary>
+            <param name="Tag">Tag to write</param>
+        </member>
+        <member name="M:Goedel.Registry.IndentWriter.EndElement(System.String)">
+            <summary>End element</summary>
+            <param name="Tag">Tag to write</param>
+        </member>
+        <member name="M:Goedel.Registry.IndentWriter.WriteId(System.String,System.String)">
+            <summary>Write identifier</summary>
+            <param name="Tag">Tag to write</param>
+            <param name="Data">Data to write</param>
+        </member>
+        <member name="M:Goedel.Registry.IndentWriter.WriteAttribute(System.String,System.String)">
+            <summary>Write string attribute</summary>
+            <param name="Tag">Tag to write</param>
+            <param name="Data">Data to write</param>
+        </member>
+        <member name="M:Goedel.Registry.IndentWriter.WriteAttribute(System.String,System.Int32)">
+            <summary>Write integer attribute</summary>
+            <param name="Tag">Tag to write</param>
+            <param name="Data">Data to write</param>
+        </member>
+        <member name="M:Goedel.Registry.IndentWriter.WriteAttribute(System.String,System.Single)">
+            <summary>Write float attribute</summary>
+            <param name="Tag">Tag to write</param>
+            <param name="Data">Data to write</param>
+        </member>
+        <member name="T:Goedel.Registry.XMLWriter">
+            <summary>
+            Currently unimplemented XML output writer class.
+            </summary>
+        </member>
+        <member name="M:Goedel.Registry.XMLWriter.#ctor(System.IO.TextWriter)">
+            <summary>
+            Create XML writer with specified output
+            </summary>
+            <param name="TextWriterIn">The output stream</param>
+        </member>
+        <member name="M:Goedel.Registry.XMLWriter.StartDocument(System.String)">
+            <summary>
+            Starts the document.
+            </summary>
+            <param name="Tag">XML declaration string, if null a default value is used.</param>
+        </member>
+        <member name="M:Goedel.Registry.XMLWriter.EndDocument(System.String)">
+            <summary>
+            Called at the end of the document;
+            </summary>
+            <param name="Tag">Encoding specific .</param>
+        </member>
+        <member name="M:Goedel.Registry.XMLWriter.StartList(System.String)">
+            <summary>Begin list</summary>
+            <param name="Tag">Tag to write</param>
+        </member>
+        <member name="M:Goedel.Registry.XMLWriter.EndList(System.String)">
+            <summary>End list</summary>
+            <param name="Tag">Tag to write</param>
+        </member>
+        <member name="M:Goedel.Registry.XMLWriter.StartElement(System.String)">
+            <summary>Start element</summary>
+            <param name="Tag">Tag to write</param>
+        </member>
+        <member name="M:Goedel.Registry.XMLWriter.EndElement(System.String)">
+            <summary>End element</summary>
+            <param name="Tag">Tag to write</param>
+        </member>
+        <member name="M:Goedel.Registry.XMLWriter.WriteId(System.String,System.String)">
+            <summary>Write identifier</summary>
+            <param name="Tag">Tag to write</param>
+            <param name="Data">Data to write</param>
+        </member>
+        <member name="M:Goedel.Registry.XMLWriter.WriteAttribute(System.String,System.String)">
+            <summary>Write string attribute</summary>
+            <param name="Tag">Tag to write</param>
+            <param name="Data">Data to write</param>
+        </member>
+        <member name="M:Goedel.Registry.XMLWriter.WriteAttribute(System.String,System.Int32)">
+            <summary>Write integer attribute</summary>
+            <param name="Tag">Tag to write</param>
+            <param name="Data">Data to write</param>
+        </member>
+        <member name="M:Goedel.Registry.XMLWriter.WriteAttribute(System.String,System.Single)">
+            <summary>Write float attribute</summary>
+            <param name="Tag">Tag to write</param>
+            <param name="Data">Data to write</param>
+        </member>
+        <member name="T:Goedel.Registry.XMLEscape">
+            <summary>
+            Extension methods for escaping XML Text
+            </summary>
+        </member>
+        <member name="M:Goedel.Registry.XMLEscape.AsXML(System.String)">
+            <summary>
+            Convert a string to XML escaped form for body content.
+            </summary>
+            <param name="Text">The input</param>
+            <returns>The escaped string.</returns>
+        </member>
+        <member name="M:Goedel.Registry.XMLEscape.AsXMLAttribute(System.String)">
+            <summary>
+            Convert a string to XML escaped form for attribute values.
+            </summary>
+            <param name="Text">The input</param>
+            <returns>The escaped string.</returns>
+        </member>
+        <member name="T:Goedel.Registry.XMLTextWriter">
+            <summary>
+            Write XML tags out using the 
+            </summary>
+        </member>
+        <member name="P:Goedel.Registry.XMLTextWriter.Stack">
+            <summary>Tracks the indentation level.</summary>
+        </member>
+        <member name="P:Goedel.Registry.XMLTextWriter.IndentIncrement">
+            <summary>
+            Defines the indent increment. These are spaces that are prepended to the
+            next line.
+            </summary>
+        </member>
+        <member name="P:Goedel.Registry.XMLTextWriter.Indent">
+            <summary>
+            Convenience accessor for the Indent value
+            </summary>
+        </member>
+        <member name="F:Goedel.Registry.XMLTextWriter.Output">
+            <summary>The underlying output stream.</summary>
+        </member>
+        <member name="M:Goedel.Registry.XMLTextWriter.#ctor(System.IO.TextWriter,System.Boolean)">
+            <summary>
+            Constructor specifying underlying stream.
+            </summary>
+            <param name="Output">The underlying ourput stream to wrap.</param>
+            <param name="Header">If true, output an XML header.</param>
+        </member>
+        <member name="M:Goedel.Registry.XMLTextWriter.WriteElementEmpty(System.String,System.String[])">
+            <summary>
+            Write out a complete element with start and closing tag. If
+            the text value is omitted or null an empty tag &lt;Name/&gt;
+            is produced. Otherwise the tag wraps the supplied text.
+            </summary>
+            <param name="Tag">Tag to wrap text with.</param>
+            <param name="Attributes">List of tag/value pairs.</param>
+        </member>
+        <member name="M:Goedel.Registry.XMLTextWriter.WriteElementIfTrim(System.String,System.String,System.String[])">
+            <summary>
+            Write out an XML element if the specified text is not null and trim the text.
+            </summary>
+            <param name="Tag">Tag to wrap text with.</param>
+            <param name="Text">The text to wrap (after trimming)</param>
+            <param name="Attributes">List of tag/value pairs.</param>
+        </member>
+        <member name="M:Goedel.Registry.XMLTextWriter.WriteElementIf(System.String,System.String,System.String[])">
+            <summary>
+            Write out an XML element if the specified text is not null writing the verbatim text.
+            </summary>
+            <param name="Tag">Tag to wrap text with.</param>
+            <param name="Text">The text to wrap (verbatim)</param>
+            <param name="Attributes">List of tag/value pairs.</param>
+        </member>
+        <member name="M:Goedel.Registry.XMLTextWriter.WriteElement(System.String,System.String,System.String[])">
+            <summary>
+            Write out a complete element with start and closing tag. If
+            the text value is omitted or null an empty tag &lt;Name/&gt;
+            is produced. Otherwise the tag wraps the supplied text.
+            </summary>
+            <param name="Tag">Tag to wrap text with.</param>
+            <param name="Text">The text to wrap (verbatim)</param>
+            <param name="Attributes">List of tag/value pairs.</param>
+        </member>
+        <member name="M:Goedel.Registry.XMLTextWriter.WriteElement(System.String,System.Collections.Generic.List{System.String},System.String[])">
+            <summary>
+            Write out a complete element with start and closing tag. If
+            the text value is omitted or null an empty tag &lt;Name/&gt;
+            is produced. Otherwise the tag wraps the supplied text.
+            </summary>
+            <param name="Tag">Tag to wrap text with.</param>
+            <param name="Texts">List of text strings to wrap, each string being wrapped separately.</param>
+            <param name="Attributes">List of tag/value pairs.</param>
+        </member>
+        <member name="M:Goedel.Registry.XMLTextWriter.WriteElement(System.String,System.Boolean,System.Boolean,System.String,System.String[])">
+            <summary>
+            Write out a complete element with start and closing tag. If
+            the text value is omitted or null an empty tag &lt;Name/&gt;
+            is produced. Otherwise the tag wraps the supplied text.
+            </summary>
+            <param name="Tag">Tag to wrap text with.</param>
+            <param name="Text">The text to wrap (verbatim)</param>
+            <param name="Start">If true, write out start of line whitespace.</param>
+            <param name="End">If true, write out end of line whitespace.</param>
+            <param name="Attributes">List of tag/value pairs.</param>
+        </member>
+        <member name="M:Goedel.Registry.XMLTextWriter.WriteInlineElement(System.String,System.String,System.String[])">
+            <summary>
+            Write out a complete element with start and closing tag. If
+            the text value is omitted or null an empty tag &lt;Name/&gt;
+            is produced. Otherwise the tag wraps the supplied text.
+            </summary>
+            <param name="Tag">Tag to wrap text with.</param>
+            <param name="Text">The text to wrap (verbatim)</param>
+            <param name="Attributes">List of tag/value pairs.</param>
+        </member>
+        <member name="M:Goedel.Registry.XMLTextWriter.Start(System.String,System.String[])">
+            <summary>
+            Write an element start tag with optional attributes.
+            </summary>
+            <param name="Tag">Tag to wrap text with.</param>
+            <param name="Attributes">List of tag/value pairs.</param>
+        </member>
+        <member name="M:Goedel.Registry.XMLTextWriter.Start(System.String,System.Boolean,System.Boolean,System.String[])">
+            <summary>
+            Write an element start tag with optional attributes.
+            </summary>
+            <param name="Tag">Tag to wrap text with.</param>
+            <param name="Start">If true, write out start of line whitespace.</param>
+            <param name="End">If true, write out end of line whitespace.</param>
+            <param name="Attributes">List of tag/value pairs.</param>
+        </member>
+        <member name="M:Goedel.Registry.XMLTextWriter.Comment(System.String)">
+            <summary>
+            Write out comment text.
+            </summary>
+            <param name="Text">Text to write.</param>
+        </member>
+        <member name="M:Goedel.Registry.XMLTextWriter.Write(System.String,System.Boolean,System.Boolean)">
+            <summary>
+            Write out text performing XML escaping.
+            </summary>
+            <param name="Text">Text to write.</param>
+            <param name="Start">If true, write out start of line whitespace.</param>
+            <param name="End">If true, write out end of line whitespace.</param>
+        </member>
+        <member name="M:Goedel.Registry.XMLTextWriter.WriteVerbatim(System.String)">
+            <summary>
+             Write out text performing XML escaping as CDATA section.
+            </summary>
+            <param name="Text">Text to write.</param>
+        </member>
+        <member name="M:Goedel.Registry.XMLTextWriter.End(System.Boolean,System.Boolean)">
+            <summary>
+            Close an open tag
+            </summary>
+            <param name="Start">If true, write out start of line whitespace.</param>
+            <param name="End">If true, write out end of line whitespace.</param>        
+        </member>
+        <member name="M:Goedel.Registry.XMLTextWriter.StartLine(System.Boolean)">
+            <summary>
+            Write out the start of line indentation if the condition is true.
+            </summary>
+            <param name="Write">If true write out line start</param>
+        </member>
+        <member name="M:Goedel.Registry.XMLTextWriter.EndLine(System.Boolean)">
+            <summary>
+            Write out the end of line sequence if the condition is true.
+            </summary>
+            <param name="Write">If true write out line end.</param>
+        </member>
+    </members>
+</doc>

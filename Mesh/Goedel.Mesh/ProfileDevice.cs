@@ -92,6 +92,7 @@ namespace Goedel.Mesh {
         /// <param name="UDF">Specify the signature key by identifier</param>
         /// <param name="KeyPair">Specify the signature key by key handle</param>
         /// <param name="Encoding">The encoding for the inner data</param>
+        /// <returns>The signed profile.</returns>
         public override SignedProfile Sign (string UDF = null, KeyPair KeyPair = null,
                         DataEncoding Encoding = DataEncoding.JSON) {
             SignedDeviceProfile = new SignedDeviceProfile(this, Encoding);
@@ -102,8 +103,8 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Encrypt object under the device encryption key. 
         /// </summary>
-        /// <param name="Object"></param>
-        /// <returns></returns>
+        /// <param name="Object">The object to encrypt.</param>
+        /// <returns>The encryption object.</returns>
         public JoseWebEncryption Encrypt (JSONObject Object) {
             return new JoseWebEncryption(
                     Object, EncryptionKey: DeviceEncryptiontionKey.KeyPair);

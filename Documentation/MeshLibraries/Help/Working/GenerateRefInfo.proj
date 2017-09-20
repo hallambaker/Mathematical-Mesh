@@ -1,0 +1,100 @@
+﻿<Project ToolsVersion="14.0" DefaultTargets="Generate" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!-- Sandcastle Tools MSBuild Tasks.  https://GitHub.com/EWSoftware/SHFB -->
+  <UsingTask TaskName="Microsoft.Ddue.Tools.MSBuild.MRefBuilder" AssemblyFile="C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\\MRefBuilder.exe" />
+  <UsingTask TaskName="Microsoft.Ddue.Tools.MSBuild.XslTransform" AssemblyFile="C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\\XslTransform.exe" />
+  <!-- Task properties -->
+  <PropertyGroup>
+    <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <AddXamlSyntaxData>
+    </AddXamlSyntaxData>
+    <WorkingFolder>C:\Users\hallam\Work\mmm\Documentation\MeshLibraries\Help\Working\</WorkingFolder>
+    <ReferencePath Condition=" '$(ReferencePath)' == '' ">
+    </ReferencePath>
+    <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
+    <UseTargetPlatformAsNuGetTargetMoniker>false</UseTargetPlatformAsNuGetTargetMoniker>
+  </PropertyGroup>
+  <!-- The common targets require OutputPath to be valid -->
+  <PropertyGroup>
+    <OutputPath>.\</OutputPath>
+  </PropertyGroup>
+  <!-- Import the common targets -->
+  <Import Project="$(MSBuildBinPath)\Microsoft.Common.targets" />
+  <!-- This defines the dependencies for the Generate target -->
+  <PropertyGroup>
+    <GenerateDependsOn>
+			ResolveReferences;
+			BeforeGenerateRefInfo;
+			GenerateRefInfo;
+			AfterGenerateRefInfo
+		</GenerateDependsOn>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Goedel.ASN">
+      <HintPath>C:\Users\hallam\Work\buildtools\Libraries\Goedel.ASN\bin\Release\netstandard1.4\Goedel.ASN.dll</HintPath>
+    </Reference>
+    <Reference Include="Goedel.Cryptography">
+      <HintPath>C:\Users\hallam\Work\buildtools\Libraries\Goedel.Cryptography\bin\Release\netstandard1.4\Goedel.Cryptography.dll</HintPath>
+    </Reference>
+    <Reference Include="Goedel.FSR">
+      <HintPath>C:\Users\hallam\Work\buildtools\Libraries\Goedel.FSR\bin\Release\netstandard1.4\Goedel.FSR.dll</HintPath>
+    </Reference>
+    <Reference Include="Goedel.IO">
+      <HintPath>C:\Users\hallam\Work\buildtools\Libraries\Goedel.IO\bin\Publish\Goedel.IO.dll</HintPath>
+    </Reference>
+    <Reference Include="Goedel.Mesh">
+      <HintPath>C:\Users\hallam\Work\mmm\Mesh\Goedel.Mesh\bin\Publish\Goedel.Mesh.dll</HintPath>
+    </Reference>
+    <Reference Include="Goedel.Mesh.Client">
+      <HintPath>C:\Users\hallam\Work\mmm\Mesh\Goedel.Mesh.Client\bin\Release\Goedel.Mesh.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Goedel.Mesh.Platform">
+      <HintPath>C:\Users\hallam\Work\mmm\Mesh\Goedel.Mesh.Platform\bin\Release\Goedel.Mesh.Platform.dll</HintPath>
+    </Reference>
+    <Reference Include="Goedel.Mesh.Platform.Linux">
+      <HintPath>C:\Users\hallam\Work\mmm\Mesh\Goedel.Mesh.Platform.Linux\bin\Release\Goedel.Mesh.Platform.Linux.dll</HintPath>
+    </Reference>
+    <Reference Include="Goedel.Mesh.Platform.Windows">
+      <HintPath>C:\Users\hallam\Work\mmm\Mesh\Goedel.Mesh.Platform.Windows\bin\Release\Goedel.Mesh.Platform.Windows.dll</HintPath>
+    </Reference>
+    <Reference Include="Goedel.Mesh.Server">
+      <HintPath>C:\Users\hallam\Work\mmm\Mesh\Goedel.Mesh.Server\bin\Release\Goedel.Mesh.Server.dll</HintPath>
+    </Reference>
+    <Reference Include="Goedel.Mesh.Shell.MeshMan">
+      <HintPath>C:\Users\hallam\Work\mmm\Shells\Goedel.Mesh.Shell.MeshMan\bin\Release\Goedel.Mesh.Shell.MeshMan.dll</HintPath>
+    </Reference>
+    <Reference Include="Goedel.Persistence">
+      <HintPath>C:\Users\hallam\Work\mmm\Libraries\Goedel.Persistence\bin\Release\Goedel.Persistence.dll</HintPath>
+    </Reference>
+    <Reference Include="Goedel.Platform">
+      <HintPath>C:\Users\hallam\Work\buildtools\Libraries\Goedel.Platform\bin\Release\netstandard1.4\Goedel.Platform.dll</HintPath>
+    </Reference>
+    <Reference Include="Goedel.Protocol">
+      <HintPath>C:\Users\hallam\Work\buildtools\Libraries\Goedel.Protocol\bin\Release\netstandard1.4\Goedel.Protocol.dll</HintPath>
+    </Reference>
+    <Reference Include="Goedel.Registry">
+      <HintPath>C:\Users\hallam\Work\buildtools\Libraries\Goedel.Registry\bin\Publish\Goedel.Registry.dll</HintPath>
+    </Reference>
+    <Reference Include="Goedel.Utilities">
+      <HintPath>C:\Users\hallam\Work\buildtools\Libraries\Goedel.Utilities\bin\Release\netstandard1.4\Goedel.Utilities.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Assembly Include="C:\Users\hallam\Work\mmm\Mesh\Goedel.Mesh\bin\Publish\Goedel.Mesh.dll" />
+  </ItemGroup>
+  <Target Name="Generate" DependsOnTargets="$(GenerateDependsOn)" />
+  <!-- The Generate Ref Info target -->
+  <Target Name="GenerateRefInfo">
+    <!-- Run MRefBuilder.  Reference build items are added to this template by the build process.  The
+				 ResolveReferences dependency target will resolve them to absolute paths that can be passed to
+				 MRefBuilder using the /dep command line option.  Assembly build items are added by the build
+				 process to define the assemblies to reflect. -->
+    <Microsoft.Ddue.Tools.MSBuild.MRefBuilder WorkingFolder="$(WorkingFolder)" ConfigurationFile="MRefBuilder.config" ReflectionFilename="reflection.org" Assemblies="@(Assembly)" References="@(ReferencePath)" />
+    <!-- Merge duplicate topics (if any) and add XAML syntax data if needed -->
+    <Copy SourceFiles="reflection.org" DestinationFiles="reflection.all" />
+    <Microsoft.Ddue.Tools.MSBuild.XslTransform WorkingFolder="$(WorkingFolder)" Transformations="~\ProductionTransforms\MergeDuplicates.xsl$(AddXamlSyntaxData)" InputFile="reflection.all" OutputFile="reflection.org" />
+  </Target>
+  <!-- The following targets may be overridden or replaced to perform additional processing. -->
+  <Target Name="BeforeGenerateRefInfo" />
+  <Target Name="AfterGenerateRefInfo" />
+</Project>

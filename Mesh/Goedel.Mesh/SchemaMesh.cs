@@ -1095,7 +1095,8 @@ namespace Goedel.Mesh {
 
 		}
 
-	/// <summary>
+	/// <summary>A portal address at which this profile is registered. As with all
+    /// advice data, this is not signed or encrypted.
 	/// </summary>
 	public partial class PortalAdvice : Advice {
         /// <summary>

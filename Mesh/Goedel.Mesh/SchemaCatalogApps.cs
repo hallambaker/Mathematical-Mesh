@@ -36,6 +36,8 @@ namespace Goedel.Mesh {
 
 
 	/// <summary>
+	///
+	/// Base clases for Mesh Catalog applications.
 	/// </summary>
 	public abstract partial class MeshCatalog : global::Goedel.Protocol.JSONObject {
 
@@ -210,6 +212,9 @@ namespace Goedel.Mesh {
 		}
 
 	/// <summary>
+	///
+	/// Base class for catalog entries, contains base information on which
+	/// catalog operations are performed.
 	/// </summary>
 	public partial class CatalogEntry : MeshCatalog {
         /// <summary>
@@ -415,6 +420,8 @@ namespace Goedel.Mesh {
 		}
 
 	/// <summary>
+	///
+	/// Typed content.
 	/// </summary>
 	public partial class TypedData : MeshCatalog {
         /// <summary>
@@ -1523,6 +1530,7 @@ namespace Goedel.Mesh {
 	/// </summary>
 	public partial class ContactEntry : CatalogEntry {
         /// <summary>
+        ///Personal names.
         /// </summary>
 
 		public virtual List<PersonalName>				Personals  {get; set;}
@@ -1741,17 +1749,22 @@ namespace Goedel.Mesh {
 		}
 
 	/// <summary>
+	///
+	/// Personal name structure.
 	/// </summary>
 	public partial class PersonalName : MeshCatalog {
         /// <summary>
+        ///First name
         /// </summary>
 
 		public virtual string						First  {get; set;}
         /// <summary>
+        ///Last name
         /// </summary>
 
 		public virtual string						Last  {get; set;}
         /// <summary>
+        ///Middle names (if used).
         /// </summary>
 
 		public virtual string						Midle  {get; set;}
@@ -1864,6 +1877,8 @@ namespace Goedel.Mesh {
 		}
 
 	/// <summary>
+	///
+	/// Contact address.
 	/// </summary>
 	public partial class Address : MeshCatalog {
         /// <summary>
@@ -2005,6 +2020,8 @@ namespace Goedel.Mesh {
 		}
 
 	/// <summary>
+	///
+	/// Internet contact address
 	/// </summary>
 	public partial class Internet : Address {
         /// <summary>
@@ -2105,6 +2122,8 @@ namespace Goedel.Mesh {
 		}
 
 	/// <summary>
+	///
+	/// Postal or geographic address.
 	/// </summary>
 	public partial class Postal : Address {
         /// <summary>

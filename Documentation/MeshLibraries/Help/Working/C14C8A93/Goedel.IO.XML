@@ -1,0 +1,184 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Goedel.IO</name>
+    </assembly>
+    <members>
+        <member name="T:Goedel.IO.Debug">
+            <summary>
+            Class containing static helper methods. This should inherit from the Trace class
+            but that is sealed.
+            </summary>
+        </member>
+        <member name="M:Goedel.IO.Debug.Initialize">
+            <summary>
+            Perform standard initialization
+            </summary>
+        </member>
+        <member name="M:Goedel.IO.Debug.WriteLine(System.String,System.Object[])">
+            <summary>
+            Convenience method to do formatted write to the trace output
+            </summary>
+            <param name="Format">A composite format string </param>
+            <param name="Arg">An array of objects to write using format</param>
+        </member>
+        <member name="M:Goedel.IO.Debug.Write(System.String,System.Object[])">
+            <summary>
+            Convenience method to do formatted write to the trace output
+            </summary>
+            <param name="Format">A composite format string </param>
+            <param name="Arg">An array of objects to write using format</param>
+        </member>
+        <member name="T:Goedel.IO.DirectoryTools">
+            <summary>
+            Tools for managing directories
+            </summary>
+        </member>
+        <member name="M:Goedel.IO.DirectoryTools.DirectoryDelete(System.String)">
+            <summary>
+            Delete a directory ignoring errors.
+            </summary>
+            <param name="Path">The directory to delete.</param>
+        </member>
+        <member name="T:Goedel.IO.Extension">
+            <summary>
+            Extension methods to simplify file operations. While there 
+            is a combinatorial explosion of file access modes and sharing
+            permissions, only a few of these combinations make sense.
+            </summary>
+        </member>
+        <member name="M:Goedel.IO.Extension.OpenFileRead(System.String)">
+            <summary>
+            Open a file for read access allowing other processes to read the file..
+            </summary>
+            <param name="Filename">The file name</param>
+            <returns>A file stream</returns>
+        </member>
+        <member name="M:Goedel.IO.Extension.OpenFileReadShared(System.String)">
+            <summary>
+            Open a file for read access in shared mode, allowing concurrent 
+            reads and writes.
+            </summary>
+            <param name="Filename">The file name</param>
+            <returns>A file stream</returns>
+        </member>
+        <member name="M:Goedel.IO.Extension.OpenTextReader(System.IO.FileStream)">
+            <summary>
+            Create a text reader on a file stream.
+            </summary>
+            <param name="FileStream">The base file.</param>
+            <returns>The text reader.</returns>
+        </member>
+        <member name="M:Goedel.IO.Extension.OpenTextReader(System.String)">
+            <summary>
+            Create a text reader for a file permitting other processes to
+            perform concurrent reads.
+            </summary>
+            <param name="Filename">The file to read.</param>
+            <returns>The text reader.</returns>
+        </member>
+        <member name="M:Goedel.IO.Extension.OpenReadToEnd(System.String)">
+            <summary>
+            Create a text reader for a file permitting other processes to
+            perform concurrent reads.
+            </summary>
+            <param name="Filename">The file to read.</param>
+            <returns>The text reader.</returns>
+        </member>
+        <member name="M:Goedel.IO.Extension.OpenReadToEnd(System.String,System.Byte[]@)">
+            <summary>
+            Create a text reader for a file permitting other processes to
+            perform concurrent reads.
+            </summary>
+            <param name="Filename">The file to read.</param>
+            <param name="Data">The data that was read</param>
+            <returns>The text reader.</returns>
+        </member>
+        <member name="M:Goedel.IO.Extension.OpenFileNew(System.String)">
+            <summary>
+            Create a new file for exclusive write access, overwriting 
+            any existing file.
+            </summary>
+            <param name="Filename">The new file name.</param>
+            <returns>File stream to write to the file.</returns>
+        </member>
+        <member name="M:Goedel.IO.Extension.OpenFileWrite(System.String)">
+            <summary>
+            Open an existing file for exclusive write access, or create new file.
+            </summary>
+            <param name="Filename">The file to write to.</param>
+            <returns>File stream to write to the file.</returns>
+        </member>
+        <member name="M:Goedel.IO.Extension.OpenFileWriteShare(System.String)">
+            <summary>
+            Open an existing file for exclusive write access, or create new file.
+            </summary>
+            <param name="Filename">The file to write to.</param>
+            <returns>File stream to write to the file.</returns>
+        </member>
+        <member name="M:Goedel.IO.Extension.OpenFileAppend(System.String)">
+            <summary>
+            Open a new or existing file for append only write access. Permit
+            concurrent reads but not writes.
+            </summary>
+            <param name="Filename">The file to write to.</param>
+            <returns>File stream to write to the file.</returns>
+        </member>
+        <member name="M:Goedel.IO.Extension.OpenFileAppendShare(System.String)">
+            <summary>
+            Open a new or existing file for append only write access. Permit
+            concurrent reads and writes.
+            </summary>
+            <param name="Filename">The file to write to.</param>
+            <returns>File stream to write to the file.</returns>
+        </member>
+        <member name="M:Goedel.IO.Extension.OpenTextWriter(System.IO.FileStream)">
+            <summary>
+            Open a text writer to the specified file stream.
+            </summary>
+            <param name="FileStream">The file stream to write to.</param>
+            <returns>The text writer.</returns>
+        </member>
+        <member name="M:Goedel.IO.Extension.OpenTextWriter(System.String)">
+            <summary>
+            Open a text writer to the specified file in append mode permitting
+            shared reads but not writes.
+            </summary>
+            <param name="Filename">The file to write to.</param>
+            <returns>The text writer.</returns>
+        </member>
+        <member name="M:Goedel.IO.Extension.OpenTextWriterNew(System.String)">
+            <summary>
+            Open a text writer to the specified file in append mode permitting
+            shared reads but not writes.
+            </summary>
+            <param name="Filename">The file to write to.</param>
+            <returns>The text writer.</returns>
+        </member>
+        <member name="M:Goedel.IO.Extension.WriteFileNew(System.String,System.String)">
+            <summary>
+            Create a new file for exclusive write access, overwriting 
+            any existing file.
+            </summary>
+            <param name="Filename">The new file name.</param>
+            <param name="Text">Text to write to file.</param>
+            <returns>File stream to write to the file.</returns>
+        </member>
+        <member name="M:Goedel.IO.Extension.WriteFileNew(System.String,System.Byte[])">
+            <summary>
+            Create a new file for exclusive write access, overwriting 
+            any existing file.
+            </summary>
+            <param name="Filename">The new file name.</param>
+            <param name="Data">Data to write to file</param>
+            <returns>File stream to write to the file.</returns>
+        </member>
+        <member name="M:Goedel.IO.Extension.Write(System.IO.FileStream,System.Byte[])">
+            <summary>
+            Write binary data to filestream.
+            </summary>
+            <param name="FileStream">Filestream to write to</param>
+            <param name="Data">Data to write.</param>
+        </member>
+    </members>
+</doc>

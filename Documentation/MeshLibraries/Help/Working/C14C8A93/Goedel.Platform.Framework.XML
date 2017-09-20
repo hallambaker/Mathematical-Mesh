@@ -1,0 +1,146 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Goedel.Platform.Framework</name>
+    </assembly>
+    <members>
+        <member name="T:Goedel.Platform.Framework.ClientUDP">
+            <summary>
+            UDP Client wrapper. Performs buffering on reads.
+            </summary>
+        </member>
+        <member name="M:Goedel.Platform.Framework.ClientUDP.#ctor(System.Net.IPAddress,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="Address">IP Address to bind to</param>
+            <param name="Port">UDP Port to bind to.</param>
+            <param name="TimeOut">Optional timeout value, if zero reads will not timeout.</param>
+            <param name="MaxRead">Maximum number of data values to accept</param>
+        </member>
+        <member name="M:Goedel.Platform.Framework.ClientUDP.Listen">
+            <summary>
+            The listener thread
+            </summary>
+        </member>
+        <member name="T:Goedel.Platform.Framework.DNSClientUDP">
+            <summary>
+            DNS client implementation
+            </summary>
+        </member>
+        <member name="F:Goedel.Platform.Framework.DNSClientUDP.ListIPAddress">
+            <summary>
+            List of IP addresses to contact.
+            </summary>
+        </member>
+        <member name="F:Goedel.Platform.Framework.DNSClientUDP.Port">
+            <summary>
+            Port number to contact.
+            </summary>
+        </member>
+        <member name="M:Goedel.Platform.Framework.DNSClientUDP.#ctor">
+            <summary>
+            Default constructor using platform default DNS.
+            </summary>
+        </member>
+        <member name="M:Goedel.Platform.Framework.DNSClientUDP.#ctor(System.String)">
+            <summary>
+            Constructor from server name.
+            </summary>
+            <param name="Server">Address of DNS server</param>
+        </member>
+        <member name="M:Goedel.Platform.Framework.DNSClientUDP.#ctor(System.Net.IPAddress)">
+            <summary>
+            Constructor from IP Address using default DNS port (53).
+            </summary>
+            <param name="IPAddress">Address of DNS server</param>
+        </member>
+        <member name="M:Goedel.Platform.Framework.DNSClientUDP.#ctor(System.Collections.Generic.List{System.Net.IPAddress})">
+            <summary>
+            Constructor from list of IP Addresses
+            </summary>
+            <param name="ListIPAddress">List of addresses of DNS server</param>
+        </member>
+        <member name="M:Goedel.Platform.Framework.DNSClientUDP.#ctor(System.Net.IPAddress,System.UInt16)">
+            <summary>
+            Constructor from IP Address and port.
+            </summary>
+            <param name="IPAddress">Address of DNS server</param>
+            <param name="Port">Port number</param>
+        </member>
+        <member name="M:Goedel.Platform.Framework.DNSClientUDP.GetHostDNS">
+            <summary>
+            Stub method for non portable function to get the host DNS server address.
+            </summary>
+            <returns>List of DNS servers.</returns>
+        </member>
+        <member name="M:Goedel.Platform.Framework.DNSClientUDP.GetContext">
+            <summary>Return a DNS Client Context in which to make a set of queries.
+            </summary>
+            <returns>The DNS Client Context</returns>
+        </member>
+        <member name="T:Goedel.Platform.Framework.DNSContextUDP">
+            <summary>
+            DNS client implementation
+            </summary>
+        </member>
+        <member name="M:Goedel.Platform.Framework.DNSContextUDP.#ctor(System.Collections.Generic.List{System.Net.IPAddress},System.UInt16)">
+            <summary>
+            Default Constructor
+            </summary>
+            <param name="ListIPAddress">List of IP addresses to contact.</param>
+            <param name="Port">Port number.</param>
+        </member>
+        <member name="M:Goedel.Platform.Framework.DNSContextUDP.Close">
+            <summary>
+            Close the context.
+            </summary>
+        </member>
+        <member name="M:Goedel.Platform.Framework.DNSContextUDP.SendRequest(Goedel.Platform.DNSRequest)">
+            <summary>
+            Make a DNS request to the default client without waiting for a response
+            </summary>
+            <param name="Request">DNS request set</param>
+            <returns>Task instance.</returns>
+        </member>
+        <member name="M:Goedel.Platform.Framework.DNSContextUDP.GetResponseAsync">
+            <summary>
+            Make DNS query and wait for response.
+            </summary>
+            <returns>The first valid response received.</returns>
+        </member>
+        <member name="M:Goedel.Platform.Framework.DNSContextUDP.GetResponseRawAsync">
+            <summary>
+            Get asynchronous raw response.
+            </summary>
+            <returns>The first valid response received.</returns>
+        </member>
+        <member name="T:Goedel.Platform.PlatformFramework">
+            <summary>
+            Network initialization. Bind the .Net implementation methods
+            to the static delegates in the portable libraries.
+            </summary>
+        </member>
+        <member name="M:Goedel.Platform.PlatformFramework.Initialize(System.Boolean)">
+            <summary>
+            Initialize the network and cryptography stacks for use with a
+            .NET Framework or Mono app.
+            (if this can be found)
+            </summary>
+            <param name="TestMode">If true, the application will be initialized in test/debug mode.</param>
+        </member>
+        <member name="F:Goedel.Platform.PlatformFramework.RNGCryptoServiceProvider">
+            <summary>
+            Cryptographic random number generator.
+            </summary>
+        </member>
+        <member name="M:Goedel.Platform.PlatformFramework.GetRandomBytes(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Fill a byte array with cryptographically strong random data.
+            </summary>
+            <param name="Data">The array to fill with cryptographically strong random bytes.</param>
+            <param name="Offset">The index of the array to start the fill operation.</param>
+            <param name="Count">The number of bytes to fill</param>
+        </member>
+    </members>
+</doc>

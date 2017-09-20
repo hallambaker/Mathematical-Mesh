@@ -39,7 +39,7 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Append entries to the current tag dictionary
         /// </summary>
-        /// <param name="Source"></param>
+        /// <param name="Source">Source to append tags from.</param>
         public static void Append (
                  Dictionary<string, JSONFactoryDelegate> Source) {
             foreach (var Entry in Source) {
