@@ -10,12 +10,17 @@ using Goedel.Cryptography.Jose;
 
 namespace Goedel.Recrypt {
     public partial class RecryptionGroup {
+        
+        /// <summary>The recryption service provider.</summary>
         public CryptoProviderRecryption RecryptionProvider;
+        
+        /// <summary>The recryption key pair.</summary>
         public PublicKey RecryptionKeyPair;
 
         /// <summary>
         /// Initialize a newly created Recryption group.
         /// </summary>
+        /// <param name="DeviceProfile">Initial device profile.</param>
         public void Generate (DeviceProfile DeviceProfile) {
             Master = new MasterProfile(CryptoCatalog.Default);
 
@@ -35,7 +40,8 @@ namespace Goedel.Recrypt {
 
             }
 
-        public KeyPair ValidatedCurrentEncryptionKey { get => GetValidatedCurrentEncryptionKey(); }
+        /// <summary>Get the current encryption key.</summary>
+        public KeyPair ValidatedCurrentEncryptionKey  => GetValidatedCurrentEncryptionKey(); 
 
         KeyPair _ValidatedCurrentEncryptionKey;
         KeyPair GetValidatedCurrentEncryptionKey () {
@@ -50,7 +56,12 @@ namespace Goedel.Recrypt {
             return _ValidatedCurrentEncryptionKey;
             }
 
-
+        /// <summary>
+        /// Add member to the recryption group.
+        /// </summary>
+        /// <param name="Personal">Member's personal profile.</param>
+        /// <param name="Recrypt">Member's recryption profile.</param>
+        /// <returns>The new member</returns>
         public MemberEntry AddMember (PersonalProfile Personal, RecryptProfile Recrypt) {
             Members = Members ?? new List<MemberEntry>();
 
@@ -85,7 +96,12 @@ namespace Goedel.Recrypt {
             }
 
 
-
+        /// <summary>
+        /// Create a decryption entry for the specified member.
+        /// </summary>
+        /// <param name="GroupPrivate">The group private key</param>
+        /// <param name="EncryptKey">The member's encryption key</param>
+        /// <returns>The user decryption data</returns>
         public UserDecryptionEntry MakeUserDecryptionEntry (KeyPair GroupPrivate, PublicKey EncryptKey) {
             var RecryptionProvider = new CryptoProviderExchangeDH(GroupPrivate);
 
@@ -114,15 +130,16 @@ namespace Goedel.Recrypt {
 
             return Result;
             }
-
-
-
-
         }
 
 
     public partial class RecryptionKey {
-
+        
+        /// <summary>
+        /// Get encryption key from signed data.
+        /// </summary>
+        /// <param name="SignedRecryptionKey">The signed recryption key.</param>
+        /// <returns>The recryption key.</returns>
         public static PublicKey GetEncryptionKey (JoseWebSignature SignedRecryptionKey) {
 
             var Keydata = FromJSON(SignedRecryptionKey.Payload.JSONReader());

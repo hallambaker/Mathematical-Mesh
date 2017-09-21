@@ -716,6 +716,8 @@ namespace Goedel.Confirm {
 		}
 
 	/// <summary>
+	///
+	/// Base class for entries.
 	/// </summary>
 	public partial class EntryBase : ConfirmProtocol {
         /// <summary>
@@ -1087,6 +1089,8 @@ namespace Goedel.Confirm {
 		}
 
 	/// <summary>
+	///
+	/// Some to be specified request?
 	/// </summary>
 	public partial class TBSRequest : ConfirmProtocol {
         /// <summary>
@@ -1213,6 +1217,8 @@ namespace Goedel.Confirm {
 		}
 
 	/// <summary>
+	///
+	/// Some TBS response.
 	/// </summary>
 	public partial class TBSResponse : ConfirmProtocol {
         /// <summary>

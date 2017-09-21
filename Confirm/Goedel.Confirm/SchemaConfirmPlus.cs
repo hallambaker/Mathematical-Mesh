@@ -15,6 +15,9 @@ namespace Goedel.Confirm {
     /// </summary>
     public abstract partial class MeshConfirm {
 
+        /// <summary>
+        /// Initialize the Mesh/Confirm libraries.
+        /// </summary>
         public static void Initialize () {
             MeshItem.Append(_TagDictionary);
             }
@@ -83,6 +86,8 @@ namespace Goedel.Confirm {
         }
 
     public partial class ConfirmRequest {
+
+        /// <summary>The tag dictionary.</summary>
         public static new Dictionary<string, JSONFactoryDelegate> _TagDictionary =
             Merge(Message._TagDictionary, ConfirmProtocol._TagDictionary);  // Hack: should fix the generator
 

@@ -12,6 +12,8 @@ using Goedel.Cryptography.Jose;
 using Goedel.Persistence;
 
 namespace Goedel.Confirm.Server {
+
+    /// <summary>Confirmation persistence store.</summary>
     public class ConfirmStore {
 
         /// <summary>The default store file name</summary>
@@ -70,8 +72,8 @@ namespace Goedel.Confirm.Server {
         /// <summary>
         /// Confirmation store, wraps the actual persistent transactions.
         /// </summary>
-        /// <param name="Domain"></param>
-        /// <param name="File"></param>
+        /// <param name="Domain">The service domain.</param>
+        /// <param name="Store">The persistence log file.</param>
         public ConfirmStore (string Domain, string Store = DefaultStore) {
             this.Domain = Domain;
             Confirm = new LogPersistenceStore(Store, StoreType, StoreComment);
@@ -118,7 +120,7 @@ namespace Goedel.Confirm.Server {
         /// </summary>
         /// <param name="BrokerID">Identifier of request to respond to.</param>
         /// <param name="Cancel">If true, the request will be cancelled.</param>
-        /// <returns></returns>
+        /// <returns>The response entry.</returns>
         public ResponseEntry EnquiryStatus (
                 string BrokerID,
                 bool Cancel) {
@@ -175,10 +177,10 @@ namespace Goedel.Confirm.Server {
         /// <summary>
         /// Get list of pending requests
         /// </summary>
-        /// <param name="AccountID"></param>
-        /// <param name="MaxResponse"></param>
-        /// <param name="AfterId"></param>
-        /// <returns></returns>
+        /// <param name="AccountID">The account identifier</param>
+        /// <param name="MaxResponse">The maximum number of responses</param>
+        /// <param name="AfterId">Return responses after the specified identifier</param>
+        /// <returns>The list of request entries</returns>
         public List<RequestEntry> GetPending (
                 string AccountID,
                 int MaxResponse,
@@ -234,7 +236,7 @@ namespace Goedel.Confirm.Server {
         /// <summary>
         /// Post response to a request
         /// </summary>
-        /// <param name="Response"></param>
+        /// <param name="ResponseEntry">The response entry to post.</param>
         public void Response (
                 ResponseEntry ResponseEntry) {
 

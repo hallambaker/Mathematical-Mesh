@@ -11,13 +11,14 @@ namespace Goedel.Recrypt.Server {
     /// dispatches the specified server.
     /// </summary>
     public class RecryptLocalServiceProvider : RecryptServiceProvider {
+
+        /// <summary>The recryption service store.</summary>
         public RecryptStore RecryptStore { get; }
         /// <summary>
         /// Initialize a Mesh Service Provider.
         /// </summary>
         /// <param name="Domain">The domain of the service provider.</param>
-        /// <param name="MeshStore">The mesh persistence store filename.</param>
-        /// <param name="PortalStore">The portal persistence store fielname.</param>
+        /// <param name="Store">The persistence store filename.</param>
         public RecryptLocalServiceProvider (string Domain, string Store="Recrypt.jlog") {
             RecryptStore = new RecryptStore(Domain, Store);
             }

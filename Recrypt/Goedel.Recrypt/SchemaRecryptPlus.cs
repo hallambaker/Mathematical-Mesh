@@ -17,6 +17,8 @@ namespace Goedel.Recrypt {
     public abstract partial class MeshRecrypt {
 
         static bool _Initialized = false;
+
+        /// <summary>Initialize the Mesh/Recrypt libraries.</summary>
         public static void Initialize () {
             if (!_Initialized) {
                 MeshItem.Append(_TagDictionary);
@@ -28,7 +30,12 @@ namespace Goedel.Recrypt {
 
 
     public partial class RecryptionGroup {
-        public override string _PrimaryKey { get => PrimaryKey(GroupName); }
+        /// <summary>The primary key for this object </summary>
+        public override string _PrimaryKey  => PrimaryKey(GroupName); 
+        
+        /// <summary>The primary key for an object</summary>
+        /// <param name="GroupName">The group name</param>
+        /// <returns>The primary key</returns>
         public static string PrimaryKey (string GroupName) => "Group$" + GroupName;
         }
 
@@ -41,11 +48,23 @@ namespace Goedel.Recrypt {
 
 
     public partial class UserDecryptionEntry {
-        public override string _PrimaryKey { get => PrimaryKey(EncryptionKeyUDF, MemberKeyUDF); }
+
+        /// <summary>The primary key for this object </summary>
+   
+        public override string _PrimaryKey  => PrimaryKey(EncryptionKeyUDF, MemberKeyUDF);
+
+        /// <summary>The primary key for an object </summary>
+        /// <param name="GroupKey">The group key</param>
+        /// <param name="MemberKey">The member key.</param>
+        /// <returns>The primary key.</returns>
         public static string PrimaryKey (string GroupKey, string MemberKey) =>
             "Member$" + GroupKey + "$" + MemberKey;
 
-
+        /// <summary>
+        /// Perform a RecryptData transaction.
+        /// </summary>
+        /// <param name="Request">The request object</param>
+        /// <returns>The response object</returns>
         public RecryptDataResponse RecryptData (RecryptDataRequest Request) {
 
             var EphemeralKey = Request.EphemeralKey.GetKeyPair() ;
@@ -67,8 +86,10 @@ namespace Goedel.Recrypt {
 
         }
 
+
     public partial class RecryptResponse {
 
+        /// <summary>The tag dictionary.</summary>
         public static new Dictionary<string, JSONFactoryDelegate> _TagDictionary =
             Merge(Message._TagDictionary, RecryptProtocol._TagDictionary);  // Hack: should fix the generator
 
@@ -119,6 +140,7 @@ namespace Goedel.Recrypt {
 
     public partial class RecryptRequest {
 
+        /// <summary>The tag dictionary.</summary>
         public static new Dictionary<string, JSONFactoryDelegate> _TagDictionary =
             Merge(Message._TagDictionary, RecryptProtocol._TagDictionary);  // Hack: should fix the generator
 

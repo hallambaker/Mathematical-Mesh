@@ -7,10 +7,18 @@ using Goedel.Protocol;
 
 
 namespace Goedel.Confirm.Server {
+
+    /// <summary>Copnfirmation service running on the local host.</summary>
     public class ConfirmServiceLocal : ConfirmService {
         ConfirmLocalServiceProvider Provider;
-        ConfirmStore ConfirmStore { get => Provider.ConfirmStore; }
 
+        ConfirmStore ConfirmStore  => Provider.ConfirmStore; 
+
+        /// <summary>
+        /// Construct a service from a service provider and a JPCsession.
+        /// </summary>
+        /// <param name="ServiceProvider">The service provider</param>
+        /// <param name="Session">The JPC Session.</param>
         public ConfirmServiceLocal (
                     ConfirmLocalServiceProvider ServiceProvider,
                     JPCSession Session) {
@@ -42,10 +50,10 @@ namespace Goedel.Confirm.Server {
             }
 
         /// <summary>
-        /// 
+        /// Enquire transaction dispatch
         /// </summary>
-        /// <param name="Request"></param>
-        /// <returns>The response object from the service</returns>
+        /// <param name="Request">The request object.</param>
+        /// <returns>The response object.</returns>
         public override EnquireResponse Enquire (
                 EnquireRequest Request) {
 
@@ -57,11 +65,12 @@ namespace Goedel.Confirm.Server {
 
             return Response;
             }
+
         /// <summary>
-        /// 
+        /// Status transaction dispatch
         /// </summary>
-        /// <param name="Request"></param>
-        /// <returns>The response object from the service</returns>
+        /// <param name="Request">The request object.</param>
+        /// <returns>The response object.</returns>
         public override StatusResponse Status (
                 StatusRequest Request) {
 
@@ -76,10 +85,10 @@ namespace Goedel.Confirm.Server {
 
 
         /// <summary>
-        /// 
+        /// Pending transaction dispatch
         /// </summary>
-        /// <param name="Request"></param>
-        /// <returns>The response object from the service</returns>
+        /// <param name="Request">The request object.</param>
+        /// <returns>The response object.</returns>
         public override PendingResponse Pending (
                 PendingRequest Request) {
 
@@ -94,10 +103,10 @@ namespace Goedel.Confirm.Server {
             }
 
         /// <summary>
-        /// 
+        /// Respond transaction dispatch
         /// </summary>
-        /// <param name="Request"></param>
-        /// <returns>The response object from the service</returns>
+        /// <param name="Request">The request object.</param>
+        /// <returns>The response object.</returns>
         public override RespondResponse Respond (
                 RespondRequest Request) {
 

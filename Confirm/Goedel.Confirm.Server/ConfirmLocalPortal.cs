@@ -13,6 +13,8 @@ namespace Goedel.Confirm.Server {
     /// Abstract interface to a local service provider.
     /// </summary>
     public abstract class ConfirmLocalPortal : ConfirmPortal {
+
+        /// <summary>The service name.</summary>
         public string ServiceName { get; set; }
 
         /// <summary>
@@ -63,6 +65,7 @@ namespace Goedel.Confirm.Server {
         /// <summary>
         /// Create new portal using the default stores.
         /// </summary>
+        /// <param name="ServiceName">The service name</param>
         public ConfirmPortalLocal (string ServiceName) {
             this.ServiceName = ServiceName;
             ConfirmServiceHost = new ConfirmLocalServiceProvider(ServiceName);

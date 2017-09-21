@@ -8,9 +8,16 @@ using Goedel.Mesh;
 using Goedel.Mesh.Platform;
 
 namespace Goedel.Confirm {
-    public static class Convenience {
 
+    /// <summary>Extension methods.</summary>
+    public static partial class Extension {
 
+        /// <summary>
+        /// Get the confirmation profile
+        /// </summary>
+        /// <param name="PersonalSession">The personal profile session.</param>
+        /// <param name="AccountID">The recryption account.</param>
+        /// <returns>The confirmation profile (if found).</returns>
         public static ConfirmProfile GetConfirmProfile (this SessionPersonal PersonalSession, string AccountID) {
             var Personal = PersonalSession.PersonalProfile;
             var Entry = Personal.GetNamedApplicationEntry("ConfirmProfile", AccountID);

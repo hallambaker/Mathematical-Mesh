@@ -13,6 +13,8 @@ namespace Goedel.Recrypt.Server {
     /// Abstract interface to a local service provider.
     /// </summary>
     public abstract class RecryptLocalPortal : RecryptPortal {
+
+        /// <summary>The service name</summary>
         public string ServiceName { get; set; }
 
         /// <summary>
@@ -63,6 +65,7 @@ namespace Goedel.Recrypt.Server {
         /// <summary>
         /// Create new portal using the default stores.
         /// </summary>
+        /// <param name="ServiceName">The service name</param>
         public RecryptPortalLocal (string ServiceName) {
             this.ServiceName = ServiceName;
             RecryptServiceHost = new RecryptLocalServiceProvider(ServiceName);

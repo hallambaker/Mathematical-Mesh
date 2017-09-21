@@ -98,7 +98,13 @@
 <NamespaceSummaryItem name="Goedel.Mesh.Server" isDocumented="True">Mesh server API</NamespaceSummaryItem>
 <NamespaceSummaryItem name="Goedel.Account" isDocumented="True">Mesh/Account shared libraries.</NamespaceSummaryItem>
 <NamespaceSummaryItem name="Goedel.Account.Client" isDocumented="True">Mesh/Account Client Libraries.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Goedel.Account.Server" isDocumented="True">Mesh/Account Server Libraries.</NamespaceSummaryItem></NamespaceSummaries>
+<NamespaceSummaryItem name="Goedel.Account.Server" isDocumented="True">Mesh/Account Server Libraries.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Goedel.Confirm" isDocumented="True">Mesh/Account shared libraries.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Goedel.Confirm.Client" isDocumented="True">Mesh/Account client libraries.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Goedel.Confirm.Server" isDocumented="True">Mesh/Account server libraries.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Goedel.Recrypt" isDocumented="True">Mesh/Account shared libraries.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Goedel.Recrypt.Client" isDocumented="True">Mesh/Account client libraries.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Goedel.Recrypt.Server" isDocumented="True">Mesh/Account server libraries.</NamespaceSummaryItem></NamespaceSummaries>
     <ProjectSummary>The Mathematical Mesh is a project that makes computers easier to use by making them more secure.</ProjectSummary>
   </PropertyGroup>
   <!-- There are no properties for these groups.  AnyCPU needs to appear in order for Visual Studio to perform

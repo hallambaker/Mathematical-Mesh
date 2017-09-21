@@ -2,4 +2,6 @@
     
 	Exception RecryptServerException
         Console "Error occurred in Mesh library"
-
+		Description
+			|Base class for confirm server exceptions. These include
+			|all the classes that throw protocol errors.

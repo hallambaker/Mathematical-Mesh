@@ -1783,6 +1783,7 @@ namespace Goedel.Recrypt {
 
 	/// <summary>
 	///
+	/// Response to get key request.
 	/// </summary>
 	public partial class GetKeyResponse : RecryptResponse {
         /// <summary>

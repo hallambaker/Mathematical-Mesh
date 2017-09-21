@@ -2,10 +2,15 @@
     
 	Exception RecryptException
         Console "Error occurred in Recrypt library"
-
+		Description
+			|Error occurred in Recrypt library
 		Exception ProfileInvalid
 			Console "Profile not valid"
+			Description
+				|Profile not valid
+
 		Exception NoRecryptionRecord
 			Console "There is no recryption record for the specified key combination"
-
+			Description
+				|There is no recryption record for the specified key combination
 

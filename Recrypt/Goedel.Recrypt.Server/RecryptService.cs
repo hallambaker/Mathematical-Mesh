@@ -9,9 +9,13 @@ using Goedel.Cryptography;
 using Goedel.Cryptography.Jose;
 
 namespace Goedel.Recrypt.Server {
+
+    /// <summary>Recryption service running on the local host.</summary>
     public class RecryptServiceLocal : RecryptService {
         RecryptLocalServiceProvider Provider;
-        RecryptStore RecryptStore { get => Provider.RecryptStore; }
+
+
+        RecryptStore RecryptStore  => Provider.RecryptStore; 
 
         /// <summary>
         /// The mesh service dispatcher.
@@ -78,7 +82,11 @@ namespace Goedel.Recrypt.Server {
             return Response;
             }
 
-
+        /// <summary>
+        /// GetGroup Transaction Dispatch.
+        /// </summary>
+        /// <param name="Request">The request object</param>
+        /// <returns>The response object</returns>
         public override GetGroupResponse GetGroup (GetGroupRequest Request) {
 
             var GroupID = Request.GroupID;
@@ -91,6 +99,11 @@ namespace Goedel.Recrypt.Server {
             return Response;
             }
 
+        /// <summary>
+        /// GetKey Transaction Dispatch.
+        /// </summary>
+        /// <param name="Request">The request object</param>
+        /// <returns>The response object</returns>
         public override GetKeyResponse GetKey (GetKeyRequest Request) {
             var RecryptionGroup = RecryptStore.GetGroup(Request.GroupID);
 

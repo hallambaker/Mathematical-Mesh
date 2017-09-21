@@ -233,6 +233,7 @@
 	Message GetKeyResponse
 		Inherits RecryptResponse
 		Description
+			|Response to get key request.
 		Struct JoseWebSignature SignedKey
 			Description
 				|The signed key entry

@@ -10,14 +10,15 @@ namespace Goedel.Confirm.Server {
     /// The service provider class, exposes the persistent state.
     /// </summary>
     public class ConfirmLocalServiceProvider : ConfirmServiceProvider {
+
+        /// <summary>The confirmation persistence store.</summary>
         public ConfirmStore ConfirmStore { get; }
 
         /// <summary>
         /// Initialize a Mesh Service Provider.
         /// </summary>
         /// <param name="Domain">The domain of the service provider.</param>
-        /// <param name="MeshStore">The mesh persistence store filename.</param>
-        /// <param name="PortalStore">The portal persistence store fielname.</param>
+        /// <param name="Store">The persistence store filename.</param>
         public ConfirmLocalServiceProvider (string Domain, string Store="Confirm.jlog") {
             ConfirmStore = new ConfirmStore(Domain, Store);
             }

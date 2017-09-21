@@ -18,10 +18,12 @@ namespace Goedel.Recrypt.Client {
     /// </summary>
     public class RecryptClient {
         RecryptService Service;
+
+        /// <summary>The service address</summary>
         public string Address;
 
         /// <summary>
-        /// Defaultr constructor, create a MeshClient for the specified service.
+        /// Coinstruct a RecryptClient for the specified service.
         /// </summary>
         /// <param name="Address">The recryption service to connect to.</param>
         public RecryptClient (string Address) {
@@ -29,6 +31,10 @@ namespace Goedel.Recrypt.Client {
             this.Address = Address;
             }
 
+        /// <summary>
+        /// Coinstruct a RecryptClient for the specified service.
+        /// </summary>
+        /// <param name="RecryptProfile">The recryption profile.</param>
         public RecryptClient (RecryptProfile RecryptProfile) {
             Service = RecryptPortal.Default.GetService(RecryptProfile.Account);
             }
@@ -46,6 +52,7 @@ namespace Goedel.Recrypt.Client {
         /// <summary>
         /// Create a new recryption group.
         /// </summary>
+        /// <param name="RecryptionGroup">The recryption group to be created.</param>
         /// <returns>The service response</returns>
         public CreateGroupResponse CreateGroup (
                     RecryptionGroup RecryptionGroup) {
@@ -58,6 +65,7 @@ namespace Goedel.Recrypt.Client {
         /// <summary>
         /// Update a recryption group definition.
         /// </summary>
+        /// <param name="RecryptionGroup">The recryption group.</param>
         /// <returns>The service response</returns>
         public UpdateGroupResponse UpdateGroup (
                     RecryptionGroup RecryptionGroup) {
@@ -71,6 +79,7 @@ namespace Goedel.Recrypt.Client {
         /// <summary>
         /// Update a recryption group definition.
         /// </summary>
+        /// <param name="GroupID">The group identifier.</param>
         /// <returns>The service response</returns>
         public GetGroupResponse GetGroup (
                     string GroupID){
@@ -84,6 +93,7 @@ namespace Goedel.Recrypt.Client {
         /// <summary>
         /// Create a new recryption group.
         /// </summary>
+        /// <param name="GroupID">The group identifier</param>
         /// <returns>The service response</returns>
         public GetKeyResponse RecryptKey (string GroupID) {
 
@@ -125,6 +135,8 @@ namespace Goedel.Recrypt.Client {
         /// <summary>
         /// Add a member to an existing recryption group
         /// </summary>
+        /// <param name="GroupID">The group identifier.</param>
+        /// <param name="MeshID">The member's Mesh fingerprint.</param>
         /// <returns>The service response</returns>
         public AddMemberResponse AddMember (
                     string GroupID,
@@ -147,10 +159,10 @@ namespace Goedel.Recrypt.Client {
         /// <summary>
         /// Encrypt a file under a recryption group ID
         /// </summary>
-        /// <param name="GroupID"></param>
-        /// <param name="FileName"></param>
-        /// <returns></returns>
-        public bool EncryptData (
+        /// <param name="GroupID">The recryption group to encrypt to.</param>
+        /// <param name="Input">The input file name</param>
+        /// <param name="Output">The output file name</param>
+        public void EncryptData (
                     string GroupID,
                     string Input,
                     string Output) {

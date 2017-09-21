@@ -12,6 +12,7 @@ using Goedel.Persistence;
 
 namespace Goedel.Recrypt.Server {
 
+    /// <summary>Recryption persistence store.</summary>
     public class RecryptStore {
 
         /// <summary>The default store file name</summary>
@@ -78,7 +79,7 @@ namespace Goedel.Recrypt.Server {
         /// <summary>
         /// Create a new recryption group
         /// </summary>
-        /// <param name="RecryptionGroup"></param>
+        /// <param name="RecryptionGroup">The parameters of the group to create</param>
         public void CreateGroup (RecryptionGroup RecryptionGroup) {
             Recrypt.New(RecryptionGroup);
             }
@@ -86,7 +87,7 @@ namespace Goedel.Recrypt.Server {
         /// <summary>
         /// Replace recryption group definition.
         /// </summary>
-        /// <param name="RecryptionGroup"></param>
+        /// <param name="RecryptionGroup">The parameters of the group to update</param>
         public void UpdateGroup (RecryptionGroup RecryptionGroup) {
             Recrypt.Update(RecryptionGroup);
             }
@@ -94,8 +95,8 @@ namespace Goedel.Recrypt.Server {
         /// <summary>
         /// Return group data by group name
         /// </summary>
-        /// <param name="GroupName"></param>
-        /// <returns></returns>
+        /// <param name="GroupName">The group name.</param>
+        /// <returns>The group name</returns>
         public RecryptionGroup GetGroup (string GroupName) {
             return GetGroupEntry(GroupName);
             }
@@ -104,8 +105,9 @@ namespace Goedel.Recrypt.Server {
         /// <summary>
         /// Get the member with the specified UDF
         /// </summary>
-        /// <param name="MemberID"></param>
-        /// <returns></returns>
+        /// <param name="RecryptionGroup">The recryption group to search</param>
+        /// <param name="MemberID">The member identifier.</param>
+        /// <returns>The member entry.</returns>
         public MemberEntry GetMember (RecryptionGroup RecryptionGroup, string MemberID) {
             return RecryptionGroup.Members?.Find(x => x.UDF.CompareUDF(MemberID));
             }
@@ -114,8 +116,10 @@ namespace Goedel.Recrypt.Server {
         /// <summary>
         /// Get the member with the specified UDF
         /// </summary>
-        /// <param name="MemberID"></param>
-        /// <returns></returns>
+        /// <param name="MemberEntry">The member entry.</param>
+        /// <param name="EncryptionKeyUDF">The encryption key fingerprint.</param>
+        /// <param name="MemberKeyUDF">The member key fingerprint.</param>
+        /// <returns>Decryption information for the specified user.</returns>
         public UserDecryptionEntry GetUserDecryptionEntry (MemberEntry MemberEntry, 
                     string EncryptionKeyUDF, string MemberKeyUDF) {
             return MemberEntry.Entries?.Find(x => 
@@ -123,7 +127,13 @@ namespace Goedel.Recrypt.Server {
                     x.MemberKeyUDF.CompareUDF(MemberKeyUDF));
             }
 
-
+        /// <summary>
+        /// Get the member with the specified identifiers.
+        /// </summary>
+        /// <param name="GroupKeyID">The group key.</param>
+        /// <param name="MemberID">The member identifier</param>
+        /// <param name="MemberKeyUDF">The member key fingerprint.</param>
+        /// <returns>Decryption information for the specified user.</returns>
         public UserDecryptionEntry GetUserDecryptionEntry (string GroupKeyID,
                     string MemberID, string MemberKeyUDF) {
 

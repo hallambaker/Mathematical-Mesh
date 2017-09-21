@@ -31,6 +31,8 @@ using Goedel.Mesh.Platform;
 using Goedel.Protocol;
 
 namespace Goedel.Recrypt {
+
+    /// <summary>Extension methods for recryption</summary>
     public static partial class Extension {
 
         /// <summary>
@@ -51,7 +53,10 @@ namespace Goedel.Recrypt {
     /// </summary>
     public partial class SessionRecryption {
 
+        /// <summary>The personal session</summary>
         public SessionPersonal SessionPersonal;
+
+        /// <summary>The list of application sessions.</summary>
         public List<SessionApplication> SessionApplications;
 
 
@@ -69,7 +74,10 @@ namespace Goedel.Recrypt {
         // Save the encryption key to decrypt the returned data.
         List<SessionApplication> Result = new List<SessionApplication>();
 
-
+        /// <summary>
+        /// Construct a SessionRecryption from a personal session.
+        /// </summary>
+        /// <param name="SessionPersonal">The personal session to construct from.</param>
         public SessionRecryption (SessionPersonal SessionPersonal) {
             this.SessionPersonal = SessionPersonal;
             SessionApplications = SessionPersonal.GetApplicationsByType("RecryptProfile");
@@ -113,7 +121,11 @@ namespace Goedel.Recrypt {
                 }
             }
 
-
+        /// <summary>
+        /// Get the encryption key
+        /// </summary>
+        /// <param name="Recipients">List of recipients.</param>
+        /// <returns>The encryption key pair</returns>
         public KeyPair GetEncryptionKey (List<Recipient> Recipients) {
 
             return DecryptionKeyPairFudge;
@@ -143,8 +155,10 @@ namespace Goedel.Recrypt {
         public RecryptProfile () {
             }
 
-
+        /// <summary>The encryption pair</summary>
         public PublicKey EncryptPair {set; private get;}
+
+        /// <summary>The signature pair</summary>
         public PublicKey SignPair { set; private get; }
 
         /// <summary>
@@ -152,8 +166,9 @@ namespace Goedel.Recrypt {
         /// At present a single recryption key is generated that is accessible to every 
         /// authorized device.
         /// </summary>
-        /// <param name="PersonalProfile"></param>
-        /// <param name="AccountID"></param>
+        /// <param name="PersonalProfile">The personal profile</param>
+        /// <param name="AccountID">The account identifier</param>
+        /// <param name="Friendly">The friendly name</param>
         public RecryptProfile (PersonalProfile PersonalProfile, string AccountID, string Friendly = null) {
             Account = AccountID;
             this.PersonalProfile = PersonalProfile;
@@ -195,12 +210,5 @@ namespace Goedel.Recrypt {
             // Create entries for administrative, decryption keys
             ApplicationProfileEntry.AddDevice(Device, Administration);
             }
-
-
-
-
         }
-
-
-
     }

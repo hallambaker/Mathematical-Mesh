@@ -7,6 +7,7 @@ namespace Goedel.Recrypt {
 
 
     /// <summary>
+    /// Error occurred in Recrypt library
     /// </summary>
     public class RecryptException : global::System.Exception {
 
@@ -57,6 +58,7 @@ namespace Goedel.Recrypt {
 
 
     /// <summary>
+    /// Profile not valid
     /// </summary>
     public class ProfileInvalid : RecryptException {
 
@@ -103,6 +105,7 @@ namespace Goedel.Recrypt {
 
 
     /// <summary>
+    /// There is no recryption record for the specified key combination
     /// </summary>
     public class NoRecryptionRecord : RecryptException {
 

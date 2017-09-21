@@ -7,6 +7,7 @@ namespace Goedel.Confirm {
 
 
     /// <summary>
+    /// Error occurred in Recrypt library
     /// </summary>
     public class RecryptException : global::System.Exception {
 
@@ -57,6 +58,7 @@ namespace Goedel.Confirm {
 
 
     /// <summary>
+    /// Profile not valid
     /// </summary>
     public class ProfileInvalid : RecryptException {
 
@@ -103,6 +105,7 @@ namespace Goedel.Confirm {
 
 
     /// <summary>
+    /// The responder could not be found
     /// </summary>
     public class ResponderNotFound : RecryptException {
 
@@ -149,6 +152,7 @@ namespace Goedel.Confirm {
 
 
     /// <summary>
+    /// The enquiry could not be found
     /// </summary>
     public class BrokerIDNotFound : RecryptException {
 
@@ -195,6 +199,7 @@ namespace Goedel.Confirm {
 
 
     /// <summary>
+    /// The enquiry has already been responded to
     /// </summary>
     public class AlreadyResponded : RecryptException {
 
