@@ -9,7 +9,6 @@ namespace Goedel.Mesh.Platform {
     /// <summary>
     /// An internal assertion check failed.
     /// </summary>
-    [Serializable]
     public class Internal : global::System.Exception {
 
 		/// <summary>
@@ -59,6 +58,7 @@ namespace Goedel.Mesh.Platform {
 
 
     /// <summary>
+    /// Error occurred in Gateway
     /// </summary>
     public class Gateway : global::System.Exception {
 
@@ -109,6 +109,7 @@ namespace Goedel.Mesh.Platform {
 
 
     /// <summary>
+    /// No Portal account specified
     /// </summary>
     public class NoPortalAccount : Gateway {
 
@@ -155,6 +156,7 @@ namespace Goedel.Mesh.Platform {
 
 
     /// <summary>
+    /// Could not connect to portal
     /// </summary>
     public class PortalConnectFail : Gateway {
 
@@ -201,6 +203,7 @@ namespace Goedel.Mesh.Platform {
 
 
     /// <summary>
+    /// Portal refused profile publication request
     /// </summary>
     public class PublicationRequestRefused : Gateway {
 

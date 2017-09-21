@@ -30,8 +30,17 @@ using Goedel.Mesh.Platform.Windows;
 
 namespace Goedel.Mesh {
 
+    /// <summary>Initialization class for Mesh libraries on the Windows platform.</summary>
     public static class MeshWindows {
 
+        /// <summary>
+        /// Initialize the cryptography, platform and Mesh machine libraries to
+        /// use the Windows native platform features. This library is only supported
+        /// on the Windows platform.
+        /// </summary>
+        /// <param name="TestMode">If true, use the test directory and registry key and
+        /// key store. This allows the machine to be reset after testing is complete
+        /// without risk to production data.</param>
         public static void Initialize(bool TestMode = false) {
             KeyPair.TestMode = TestMode;
 

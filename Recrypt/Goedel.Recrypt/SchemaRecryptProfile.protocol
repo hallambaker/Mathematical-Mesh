@@ -6,6 +6,9 @@
 	Extern ApplicationDevicePublic
 	Extern ApplicationDevicePrivate
 	Extern Entry
+	Description
+		|Mesh/Recrypt Profile Schema
+
 
 	Description 
 		|Mesh profile for Recrypt applications.

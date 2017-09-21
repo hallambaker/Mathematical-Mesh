@@ -42,7 +42,7 @@ namespace Goedel.Mesh.Platform {
         /// <summary>
         /// The registered signed profile.
         /// </summary>
-        public override SignedProfile SignedProfile { get => SignedPersonalProfile; }
+        public override SignedProfile SignedProfile  => SignedPersonalProfile; 
 
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace Goedel.Mesh.Platform {
         /// </summary>
         public virtual PersonalProfile PersonalProfile { get; set; }
 
-
+        /// <summary>The Mech catalog for this session.</summary>
         public MeshSession MeshCatalog { get; set; }
 
 
@@ -80,20 +80,31 @@ namespace Goedel.Mesh.Platform {
         /// <summary>
         /// The profile fingerprint
         /// </summary>
-        public override string UDF { get => SignedPersonalProfile?.UDF; }
+        public override string UDF  => SignedPersonalProfile?.UDF; 
 
         /// <summary>
         /// Profiles associated with this account in chronological order.
         /// </summary>
         public abstract SortedList<DateTime, SignedProfile> Profiles { get; set; }
 
-
+        /// <summary>
+        /// Escrow the personal profile to the bound portal.
+        /// </summary>
+        /// <param name="Shares">Number of escrow shares (must be greater than Quorum)</param>
+        /// <param name="Quorum">Quorum required for recovery.</param>
+        /// <returns>True if escrow record was accepted.</returns>
         public virtual bool Escrow (int Shares, int Quorum) {
             var OfflineEscrowEntry = new OfflineEscrowEntry(
                PersonalProfile, Shares, Quorum);
             return Escrow(OfflineEscrowEntry);
             }
 
+        /// <summary>
+        /// Push an OfflineEscrowEntry to the bound portal. This may be a personal profile or 
+        /// other data to be escrowed.
+        /// </summary>
+        /// <param name="OfflineEscrowEntry">The offline escrow entry to register.</param>
+        /// <returns>True if escrow record was accepted.</returns>
         public virtual bool Escrow (OfflineEscrowEntry OfflineEscrowEntry) {
             var Result = MeshClient.Publish(OfflineEscrowEntry);
             return Result.Status.StatusSuccess();
@@ -103,17 +114,17 @@ namespace Goedel.Mesh.Platform {
         /// <summary>
         /// Add a portal to this registration
         /// </summary>
-        /// <param name="AccountID"></param>
-        /// <param name="MeshClient"></param>
-        /// <param name="Create">If true, the mesh client </param>
+        /// <param name="AccountID">The portal account.</param>
+        /// <param name="MeshClient">A Mesh Client connected to the portal.</param>
+        /// <param name="Create">If true, the mesh client should request the account be created.</param>
         public abstract void AddPortal (string AccountID, MeshClient MeshClient = null, bool Create = false);
 
         /// <summary>
         /// Add an application to this profile
         /// </summary>
-        /// <param name="Profile"></param>
-        /// <param name="Delay"></param>
-        /// <returns></returns>
+        /// <param name="Profile">Application session to add</param>
+        /// <param name="Write">If true, write to persistent store.</param>
+        /// <returns>The new application session.</returns>
         public virtual SessionApplication Add (
                     ApplicationProfile Profile, bool Write = true) {
 
@@ -132,6 +143,7 @@ namespace Goedel.Mesh.Platform {
         /// <summary>
         /// Complete process of connecting to a profile.
         /// </summary>
+        /// <returns>The result of the pending connections query.</returns>
         public ConnectPendingResponse ConnectPending () {
             throw new Goedel.Utilities.NYI();
             }
@@ -139,6 +151,9 @@ namespace Goedel.Mesh.Platform {
         /// <summary>
         /// Complete process of connecting to a profile.
         /// </summary>
+        /// <param name="Request">The connection request</param>
+        /// <param name="Status">The connection status result.</param>
+        /// <returns>The response from the service.</returns>
         public ConnectStatusResponse ConnectClose (SignedConnectionRequest Request, ConnectionStatus Status) {
             //PersonalProfile.Add(Request.Device.DeviceProfile);
 
@@ -149,6 +164,9 @@ namespace Goedel.Mesh.Platform {
         /// <summary>
         /// Provide a PIN for authenticating the specified account ID
         /// </summary>
+        /// <param name="AccountID">The account identifier</param>
+        /// <param name="length">The PIN length</param>
+        /// <returns>The PIN value.</returns>
         public string GetPin (string AccountID, int length) {
             throw new Goedel.Utilities.NYI();
             }
@@ -173,12 +191,15 @@ namespace Goedel.Mesh.Platform {
             MeshClient.Publish(SignedPersonalProfile);
             }
 
+        /// <summary>
+        /// Report if the profile is the default personal profile or not.
+        /// </summary>
         public virtual bool IsDefault { get; set; } = true; // Hack: Should work out if it is default
 
         /// <summary>
         /// Serialize for storage in a file.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The serialization object</returns>
         public virtual SerializationPersonal Serialize () {
             var Result = new SerializationPersonal() {
                 Profile = SignedPersonalProfile,
@@ -194,8 +215,8 @@ namespace Goedel.Mesh.Platform {
         /// <summary>
         /// Obtain an application session for the specified identifier.
         /// </summary>
-        /// <param name="Identifier"></param>
-        /// <returns></returns>
+        /// <param name="Identifier">The type of application session to get.</param>
+        /// <returns>The application session.</returns>
         public SessionApplication GetApplication (string Identifier) {
             MeshMachine.Find(Identifier, out SessionApplication Result);
             return Result;
@@ -206,7 +227,7 @@ namespace Goedel.Mesh.Platform {
         /// Obtain an application session for the specified identifier.
         /// </summary>
         /// <param name="Type">The type of application</param>
-        /// <returns></returns>
+        /// <returns>List of applications matching the specified type.</returns>
         public List<SessionApplication> GetApplicationsByType (string Type) {
 
             var Result = new List<SessionApplication>();
@@ -235,7 +256,12 @@ namespace Goedel.Mesh.Platform {
 
 
 
-
+        /// <summary>
+        /// Return a list of device sessions with fingerprints that match the specified
+        /// list of device identifiers.
+        /// </summary>
+        /// <param name="DeviceIdentifiers">The device identifier fingerprints to match.</param>
+        /// <returns>The list of matching devices.</returns>
         public List<RegistrationDevice> MatchDevices (List<string> DeviceIdentifiers) {
             var Result = new List<RegistrationDevice>();
 
@@ -248,7 +274,14 @@ namespace Goedel.Mesh.Platform {
             return Result;
             }
 
-
+        /// <summary>
+        /// Get a user and application profile matching the specified parameters.
+        /// </summary>
+        /// <param name="UDF">NYI</param>
+        /// <param name="Portal">List of portals to check</param>
+        /// <param name="ApplicationId">Application to fetch</param>
+        /// <param name="PersonalProfile">Returned personal profile.</param>
+        /// <param name="ApplicationProfile">Returned application profile.</param>
         public static void GetUserProfile (string UDF, List<string> Portal, string ApplicationId,
                 out PersonalProfile PersonalProfile, out ApplicationProfile ApplicationProfile) {
 
@@ -267,15 +300,6 @@ namespace Goedel.Mesh.Platform {
             // NYI: Validate against the UDF
             }
 
-
-        //public ApplicationProfile GetApplicationProfile (string ApplicationId) {
-
-        //    var ApplicationProfileEntry = PersonalProfile.GetApplication(ApplicationId);
-
-        //    var ApplicationResponse = MeshClient.GetApplicationProfile(ApplicationProfileEntry.Identifier);
-        //    return ApplicationResponse.ApplicationProfile;
-
-        //    }
         }
     }
 

@@ -38,6 +38,7 @@ namespace Goedel.Recrypt {
 
 	/// <summary>
 	///
+	/// Mesh/Recrypt Profile Schema
 	/// Mesh profile for Recrypt applications.
 	/// </summary>
 	public abstract partial class MeshRecrypt : global::Goedel.Protocol.JSONObject {

@@ -33,15 +33,12 @@ namespace Goedel.Mesh.Platform.Linux {
     /// </summary>
     public class RegistrationDeviceLinux : RegistrationDevice {
         
-
-        public MeshMachineLinux RegistrationMachineLinux {
-            get => MeshMachine as MeshMachineLinux;
-            }
+        /// <summary>The machine session.</summary>
+        public MeshMachineLinux RegistrationMachineLinux  => MeshMachine as MeshMachineLinux;
 
         /// <summary>Return the fingerprint.</summary>
-        public override string UDF {
-            get => SignedDeviceProfile?.UDF;
-            }
+        public override string UDF  => SignedDeviceProfile?.UDF;
+
 
         DateTime? WasMadeDefault = null;
 
@@ -50,6 +47,7 @@ namespace Goedel.Mesh.Platform.Linux {
         /// </summary>
         /// <param name="File">Filename on local machine</param>
         /// <param name="UDF">File fingerprint</param>
+        /// <param name="Machine">The machine session to bind to.</param>
         public RegistrationDeviceLinux (MeshMachineLinux Machine, string File = null, string UDF = null) {
             MeshMachine = Machine;
             File = File ?? RegistrationMachineLinux.FileDeviceProfile(UDF);
@@ -63,6 +61,7 @@ namespace Goedel.Mesh.Platform.Linux {
         /// Add the associated profile to the machine store.
         /// </summary>
         /// <param name="SignedDeviceProfile">The device profile</param>
+        /// <param name="Machine">The machine session to bind to.</param>
         public RegistrationDeviceLinux (
                         SignedDeviceProfile SignedDeviceProfile,
                         MeshMachineLinux Machine) {

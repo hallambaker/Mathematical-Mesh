@@ -38,6 +38,7 @@ namespace Goedel.Recrypt {
 
 	/// <summary>
 	///
+	/// Mesh/Recrypt Protocol Schema
 	/// Mesh/Recrypt group administration protocol
 	/// </summary>
 	public abstract partial class RecryptProtocol : global::Goedel.Protocol.JSONObject {
@@ -1014,6 +1015,7 @@ namespace Goedel.Recrypt {
 
 	/// <summary>
 	///
+	/// Obtain recryption group data
 	/// </summary>
 	public partial class GetGroupRequest : RecryptRequest {
         /// <summary>
@@ -1115,7 +1117,7 @@ namespace Goedel.Recrypt {
 
 	/// <summary>
 	///
-	/// 
+	/// Obtain recryption group response.
 	/// </summary>
 	public partial class GetGroupResponse : RecryptResponse {
         /// <summary>
@@ -1220,6 +1222,7 @@ namespace Goedel.Recrypt {
 
 	/// <summary>
 	///
+	/// Add a member to a recryption group (not currently used)
 	/// </summary>
 	public partial class AddMemberRequest : RecryptRequest {
         /// <summary>
@@ -1447,6 +1450,7 @@ namespace Goedel.Recrypt {
 
 	/// <summary>
 	///
+	/// Update a recryption group member entry (not currently used)
 	/// </summary>
 	public partial class UpdateMemberRequest : RecryptRequest {
         /// <summary>
@@ -2036,6 +2040,7 @@ namespace Goedel.Recrypt {
 
 	/// <summary>
 	///
+	/// Result of recryption request.
 	/// </summary>
 	public partial class RecryptDataResponse : RecryptResponse {
         /// <summary>

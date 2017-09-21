@@ -10,6 +10,7 @@ using Goedel.Protocol;
 using Goedel.Persistence;
 
 namespace Goedel.Account.Server {
+    /// <summary>Base store for accounts (non persistent)</summary>
     public class AccountStore {
 
         /// <summary>The default store file name</summary>
@@ -47,13 +48,17 @@ namespace Goedel.Account.Server {
         /// to CheckAccount succeeded as the account name may have been issued in the 
         /// interim or may fail for other reasons.
         /// </summary>
-        /// <param name="AccountID">The requested account name</param>
+        /// <param name="AccountId">The requested account name</param>
         /// <returns>True is the name is available, otherwise false.</returns>
         public bool CheckAccount (string AccountId) {
             return !IndexAccountID.Contains(AccountId);
             }
 
-
+        /// <summary>
+        /// Create a new account record.
+        /// </summary>
+        /// <param name="AccountData">Account data to record.</param>
+        /// <returns>True if successful, otherwise false.</returns>
         public bool CreateAccount (AccountData AccountData) {
 
             AccountData.Created = DateTime.Now;
@@ -62,7 +67,11 @@ namespace Goedel.Account.Server {
             return true;
             }
 
-
+        /// <summary>
+        /// Delete an account record.
+        /// </summary>
+        /// <param name="AccountId">Identifier of account to delete.</param>
+        /// <returns>True if successful, otherwise false.</returns>
         public bool DeleteAccount (string AccountId) {
             var AccountDataItem = IndexAccountID.Get(AccountId);
             if (AccountDataItem == null) {
@@ -74,7 +83,11 @@ namespace Goedel.Account.Server {
             return true;
             }
 
-
+        /// <summary>
+        /// Get an account record.
+        /// </summary>
+        /// <param name="AccountId">Identifier of account to delete.</param>
+        /// <returns>The account record or null if not found.</returns>
         public AccountData GetAccount (string AccountId) {
             var AccountDataItem = IndexAccountID.Get(AccountId);
             if (AccountDataItem == null) {
@@ -85,7 +98,10 @@ namespace Goedel.Account.Server {
 
             }
 
-
+        /// <summary>
+        /// Update an account record.
+        /// </summary>
+        /// <param name="AccountData">Account data to write.</param>
         public void UpdateAccount (AccountData AccountData) {
             Account.Update(AccountData, AccountData.AccountId, null);
             }

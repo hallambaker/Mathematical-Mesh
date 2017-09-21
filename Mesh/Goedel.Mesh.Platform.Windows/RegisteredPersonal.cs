@@ -41,7 +41,7 @@ namespace Goedel.Mesh.Platform.Windows {
         /// <summary>
         /// The profile fingerprint
         /// </summary>
-        public override string UDF { get => SignedPersonalProfile?.UDF;  } 
+        public override string UDF => SignedPersonalProfile?.UDF;   
 
         /// <summary>
         /// Profiles associated with this account in chronological order.
@@ -63,14 +63,17 @@ namespace Goedel.Mesh.Platform.Windows {
             SignedPersonalProfile = NewPersonal;
             }
 
-        public string Archive { get; set; }
+        /// <summary>Path to the archive data (not yet implemented)</summary>
+        public string Archive { get; set; } // NYI: Archive mesh profiles.
 
         /// <summary>
         /// Read a personal registration from a file
         /// </summary>
         /// <param name="UDF">File fingerprint</param>
         /// <param name="File">Filename on local machine</param>
-        public RegistrationPersonalWindows(MeshMachine Machine, 
+        /// <param name="Machine">The machine session</param>
+        /// <param name="Portals">The portals to which the profile is registered.</param>
+        public RegistrationPersonalWindows (MeshMachine Machine, 
                     string UDF, string File, IEnumerable<string> Portals = null) {
 
             MeshMachine = Machine;
@@ -88,7 +91,8 @@ namespace Goedel.Mesh.Platform.Windows {
         /// </summary>
         /// <param name="Profile">The personal profile</param>
         /// <param name="Portals">The list of portals.</param>
-        public RegistrationPersonalWindows(SignedPersonalProfile Profile, 
+        /// <param name="Machine">The machine session</param>
+        public RegistrationPersonalWindows (SignedPersonalProfile Profile, 
                         MeshMachine Machine,
                         IEnumerable<string> Portals = null) {
             this.SignedPersonalProfile = Profile;
@@ -104,8 +108,9 @@ namespace Goedel.Mesh.Platform.Windows {
         /// Add a portal to this registration. The portal account must have been 
         /// created previously. Only the local portal is written to.
         /// </summary>
-        /// <param name="AccountID"></param>
-        /// <param name="MeshClient"></param>
+        /// <param name="AccountID">Account identifier to bind to.</param>
+        /// <param name="MeshClient">unused</param>
+        /// <param name="Create">If true do what??</param>
         public override void AddPortal(string AccountID, MeshClient MeshClient = null, bool Create = false) {
             Portals.Add(AccountID);
             WriteToLocal();
@@ -126,6 +131,7 @@ namespace Goedel.Mesh.Platform.Windows {
             }
 
         /// <summary>Write values to registry</summary>
+        /// <param name="Default">If true, make this the default.</param>
         public override void WriteToLocal(bool Default=true) {
 
             var KeyName = Constants.RegistryPersonal;
@@ -150,7 +156,6 @@ namespace Goedel.Mesh.Platform.Windows {
         /// <summary>
         /// Make this the default personal profile for future operations.
         /// </summary>
-        /// <param name="Force"></param>
         public override void MakeDefault() {
             var Hive = Microsoft.Win32.Registry.CurrentUser;
             var Key = Hive.CreateSubKey(Constants.RegistryPersonal);

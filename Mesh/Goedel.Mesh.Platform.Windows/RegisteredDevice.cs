@@ -35,11 +35,8 @@ namespace Goedel.Mesh.Platform.Windows {
 
 
         /// <summary>Return the fingerprint.</summary>
-        public override string UDF {
-            get => SignedDeviceProfile?.UDF;
-            }
-
-
+        public override string UDF  => SignedDeviceProfile?.UDF;
+  
 
         /// <summary>
         /// Read a personal registration from a file
@@ -75,7 +72,6 @@ namespace Goedel.Mesh.Platform.Windows {
         /// Factory method to create from a profile
         /// </summary>
         /// <param name="Profile">The profile to register</param>
-        /// <param name="Portals">The portals at which the profile is registered.</param>
         /// <returns>The registration object</returns>
         public static RegistrationDevice Factory(
                             SignedDeviceProfile Profile) {
@@ -86,6 +82,7 @@ namespace Goedel.Mesh.Platform.Windows {
         /// <summary>
         /// Write values to registry.
         /// </summary>
+        /// <param name="Default">If true, make this the default.</param>
         public override void WriteToLocal(bool Default = true) {
             var Hive = Microsoft.Win32.Registry.CurrentUser;
             var Key = Hive.CreateSubKey(Constants.RegistryDevice);
@@ -98,7 +95,9 @@ namespace Goedel.Mesh.Platform.Windows {
             File.WriteAllText(FileName, SignedDeviceProfile.ToString());
             }
 
-
+        /// <summary>
+        /// Register this profile as the default device profile.
+        /// </summary>
         public override void MakeDefault () {
             var Hive = Microsoft.Win32.Registry.CurrentUser;
             var Key = Hive.CreateSubKey(Constants.RegistryDevice);

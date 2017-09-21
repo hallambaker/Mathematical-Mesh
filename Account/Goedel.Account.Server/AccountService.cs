@@ -7,10 +7,19 @@ using Goedel.Protocol;
 using Goedel.Account;
 
 namespace Goedel.Account.Server {
+
+    /// <summary>Account service using local provider.</summary>
     public class AccountServiceLocal : AccountService {
         AccountLocalServiceProvider Provider;
-        AccountStore AccountStore { get => Provider.AccountStore; }
 
+        /// <summary>The persistence store.</summary>
+        AccountStore AccountStore  => Provider.AccountStore; 
+
+        /// <summary>
+        /// Main constructor.
+        /// </summary>
+        /// <param name="Host">The host name for the service/</param>
+        /// <param name="Session">The JPC session.</param>
         public AccountServiceLocal (
                     AccountLocalServiceProvider Host,
                     JPCSession Session) {

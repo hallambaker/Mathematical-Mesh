@@ -36,6 +36,7 @@ namespace Goedel.Mesh.Platform.Linux {
         /// <summary>
         /// Default constructor
         /// </summary>
+        /// <param name="Portals">List of portal addresses</param>
         public PortalCollectionLinux (IEnumerable<string> Portals) : base (Portals) {
 
             }
@@ -44,6 +45,7 @@ namespace Goedel.Mesh.Platform.Linux {
         /// <summary>
         /// Default constructor
         /// </summary>
+        /// <param name="Portals">List of portal description serializations</param>
         public PortalCollectionLinux (IEnumerable<SerializationPortal> Portals) : base(Portals) {
 
             }

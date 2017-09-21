@@ -57,6 +57,8 @@ namespace Goedel.Mesh.Platform {
     /// current machine.
     /// </summary>
     public abstract class MeshMachine : Registration {
+
+        /// <summary>List of pending connection requests.</summary>
         public List<ConnectStartRequest> ConnectStartRequests = new List<ConnectStartRequest>();
 
         /// <summary>
@@ -88,15 +90,14 @@ namespace Goedel.Mesh.Platform {
 
 
         /// <summary>The fingerprint of the device</summary>
-        public override string UDF {
-            get => Device?.UDF; 
-            }
+        public override string UDF  => Device?.UDF;
 
 
-        // The default profile
+        /// <summary>The default profile</summary>
         public virtual SessionPersonal Personal { get; set; }
 
-        // The default device
+
+        /// <summary>The default device</summary>
         public virtual RegistrationDevice Device {get; set;}
 
         /// <summary>
@@ -104,7 +105,6 @@ namespace Goedel.Mesh.Platform {
         /// the Windows registry (Windows) or the ~/.mmm directory (OSX, Linux).
         /// </summary>
         public static MeshMachine Current { get; set; }
-
 
         /// <summary>
         /// Erase the (test) configuration data on the current machine.
@@ -123,7 +123,12 @@ namespace Goedel.Mesh.Platform {
         /// <returns>Registration for the created profile.</returns>
         public abstract RegistrationDevice Add(SignedDeviceProfile SignedProfile);
 
-
+        /// <summary>
+        /// Add the associated profile to the machine store.
+        /// </summary>
+        /// <param name="SignedProfile">Profile to add.</param>
+        /// <param name="Request">The connection start request.</param>
+        /// <returns>Registration for the created profile.</returns>
         public virtual SessionPersonal Add (SignedPersonalProfile SignedProfile,
                 ConnectStartRequest Request) {
             ConnectStartRequests.Add(Request);
@@ -134,7 +139,6 @@ namespace Goedel.Mesh.Platform {
         /// Bind the associated profile to the machine store.
         /// </summary>
         /// <param name="SignedProfile">Profile to add.</param>
-        /// <param name="Portals">Portals to bind the profile to.</param>
         /// <returns>Registration for the created profile.</returns>
         public abstract SessionPersonal Add(SignedPersonalProfile SignedProfile);
 
@@ -154,17 +158,17 @@ namespace Goedel.Mesh.Platform {
         public abstract bool Find(string ID, out RegistrationDevice RegistrationDevice);
 
         /// <summary>
-        /// Locate a device profile by identifier
+        /// Locate an application profile by identifier
         /// </summary>
-        /// <param name="RegistrationDevice">The returned profile.</param>
+        /// <param name="RegistrationApplication">The returned profile.</param>
         /// <param name="ID">UDF fingerprint of the profile or short form ID</param>
         /// <returns>True if the profile is found, otherwise false.</returns>
         public abstract bool Find(string ID, out SessionApplication RegistrationApplication);
 
         /// <summary>
-        /// Locate a device profile by identifier
+        /// Locate a personal profile by identifier
         /// </summary>
-        /// <param name="RegistrationDevice">The returned profile.</param>
+        /// <param name="RegistrationPersonal">The returned profile.</param>
         /// <param name="ID">UDF fingerprint of the profile or short form ID</param>
         /// <returns>True if the profile is found, otherwise false.</returns>
         public abstract bool Find(string ID, out SessionPersonal RegistrationPersonal);
@@ -173,12 +177,14 @@ namespace Goedel.Mesh.Platform {
 
 
         /// <summary>
-        /// 
+        /// Find an application profile of a given type.
         /// </summary>
-        /// <param name="Type"></param>
-        /// <param name="PortalAddress"></param>
-        /// <param name="UDF"></param>
-        /// <param name="ShortId"></param>
+        /// <param name="Type">The type of profile to find.</param>
+        /// <param name="PortalAddress">The portal address to fetch the profile from.</param>
+        /// <param name="UDF">The profile fingerprint.</param>
+        /// <param name="ShortId">The profile short name.</param>
+        /// <param name="RegistrationApplication">The returned profile.</param>
+        /// <returns>True if a matching profile is found, otherwise, false.</returns>
         public bool Find (
                     out SessionApplication RegistrationApplication,
                     string Type,
@@ -256,6 +262,7 @@ namespace Goedel.Mesh.Platform {
         /// <summary>
         /// Write data to the local machine.
         /// </summary>
+        /// <param name="Default">If true, make this the default.</param>        
         public virtual void WriteToLocal(bool Default = true) {
             }
 
@@ -264,6 +271,7 @@ namespace Goedel.Mesh.Platform {
         /// <summary>
         /// Write out the configuration to the portal and the current machine
         /// </summary>
+        /// <param name="Default">If true, make this the default.</param>
         public abstract void Write(bool Default = true);
 
         /// <summary>
@@ -298,17 +306,15 @@ namespace Goedel.Mesh.Platform {
         /// </summary>
         public abstract void GetFromPortal();
 
-
-
         /// <summary>Update remote and persistence store</summary>
         public virtual void WriteToPortal() {
             MeshClient.Publish(SignedProfile);
             }
 
-
         /// <summary>
         /// Write out the configuration to the portal and the current machine
         /// </summary>
+        /// <param name="Default">If true, make this the default.</param>
         public override void Write(bool Default = true) {
             WriteToLocal(Default); // NYI flag to record if a pending update should be pushed out
             WriteToPortal();
@@ -320,7 +326,6 @@ namespace Goedel.Mesh.Platform {
         public override void Read() {
             throw new NYI();
             }
-
 
         }
 
@@ -342,7 +347,6 @@ namespace Goedel.Mesh.Platform {
         /// <summary>
         /// Create empty list
         /// </summary>
-        /// <param name="Portals"></param>
         public PortalCollection () {
             }
 
@@ -351,7 +355,7 @@ namespace Goedel.Mesh.Platform {
         /// adds the portal to the collection, it does not cause it to be
         /// registered.
         /// </summary>
-        /// <param name="Portals"></param>
+        /// <param name="Portals">Initialized list of portal addresses</param>
         public PortalCollection (IEnumerable<string> Portals) {
             Default = null;
             if (Portals != null) {
@@ -367,7 +371,7 @@ namespace Goedel.Mesh.Platform {
         /// adds the portal to the collection, it does not cause it to be
         /// registered.
         /// </summary>
-        /// <param name="Portals"></param>
+        /// <param name="Portals">Initialized list of portal descriptions.</param>
         public PortalCollection (IEnumerable<SerializationPortal> Portals) {
             Default = null;
             if (Portals != null) {
@@ -383,17 +387,17 @@ namespace Goedel.Mesh.Platform {
         /// <summary>
         /// Add a portal to the collection
         /// </summary>
-        /// <param name="Portal"></param>
+        /// <param name="Portal">The portal to add.</param>
         public virtual void Add (string Portal) {
             Collection.Add(Portal);
             Default = Default ?? Portal; // Hack: Does not currently support multiple portals.
             }
 
         /// <summary>
-        /// Remove a portal from the collection, return false if not found
+        /// Remove a portal address from the collection, return false if not found
         /// </summary>
-        /// <param name="Portal"></param>
-        /// <returns></returns>
+        /// <param name="Portal">The portal address to remove.</param>
+        /// <returns>True if the portal was found, otherwise false.</returns>
         public virtual bool Remove (string Portal) {
             return Collection.Remove(Portal);
             }
@@ -401,15 +405,15 @@ namespace Goedel.Mesh.Platform {
         /// <summary>
         /// Return the portal collection as a list
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The list of portals.</returns>
         public virtual List<string> ToList () {
             return Collection.ToList();
             }
 
         /// <summary>
-        /// Return the portal collection as a list
+        /// Return the portal collection as an array
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The array of portals.</returns>
         public virtual string[] ToArray () {
             return Collection.ToArray();
             }
@@ -419,11 +423,14 @@ namespace Goedel.Mesh.Platform {
             return GetEnumerator();
             }
 
+        /// <summary>Enumerator method.</summary>
+        /// <returns>The enumerator.</returns>
         public SortedSet<string>.Enumerator GetEnumerator () {
             return Collection.GetEnumerator();
             }
 
-
+        /// <summary>Serialize the registration to a portal</summary>
+        /// <returns>The list of serialized portal entries.</returns>
         public List<SerializationPortal> Serialize () {
             var Result = new List<SerializationPortal>();
             foreach (var Portal in Collection) {

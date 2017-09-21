@@ -6,6 +6,8 @@
 	Extern ApplicationDevicePublic
 	Extern ApplicationDevicePrivate
 	Extern Entry
+	Description
+		|Mesh/Confirm Protocol Schema
 
 	Description 
 		|Mesh profile for Confirm applications.
@@ -43,7 +45,6 @@
 
 
 	Structure ConfirmDevicePublic
-		Description 
 		Description
 			|Contains public device description. This is unused as there is
 			|no requirement to disclose the binding of keys to devices.

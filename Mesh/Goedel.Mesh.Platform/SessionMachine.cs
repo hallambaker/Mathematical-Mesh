@@ -25,6 +25,11 @@ using System.Collections.Generic;
 using Goedel.Mesh.Server;
 
 namespace Goedel.Mesh.Platform {
+
+    /// <summary>
+    /// A Mesh machine that is maintained entirely in memory. This is the parent 
+    /// class for most production MeshMachine classes.
+    /// </summary>
     public class MeshMachineCached : MeshMachine {
 
         /// <summary>
@@ -40,7 +45,7 @@ namespace Goedel.Mesh.Platform {
         /// The registered signed profile. This is always null for a machine registration
         /// as it reflects a collection of profiles rather than a single profile.
         /// </summary>
-        public override SignedProfile SignedProfile { get => null; }
+        public override SignedProfile SignedProfile  => null; 
 
         /// <summary>
         /// The a dictionary of personal profiles indexed by fingerprint.
@@ -127,7 +132,6 @@ namespace Goedel.Mesh.Platform {
         /// <summary>
         /// Make this the default personal profile for future operations.
         /// </summary>
-        /// <param name="Force"></param>
         public override void MakeDefault () {
             }
 
@@ -136,6 +140,7 @@ namespace Goedel.Mesh.Platform {
         /// <summary>
         /// Write out the configuration to the current machine.
         /// </summary>
+        /// <param name="Default">If true, make this the default profile.</param>
         public override void Write(bool Default = true) {
             // Do nothing as this is cached only
             }
@@ -169,8 +174,12 @@ namespace Goedel.Mesh.Platform {
             return Registration;
             }
 
-        protected void Register (RegistrationDevice Registration) {
-            DeviceProfiles.AddSafe(Registration.UDF, Registration); // NYI check if present
+        /// <summary>
+        /// Register the specified device session in the local persistent store.
+        /// </summary>
+        /// <param name="Profile">The profile to add</param>
+        protected void Register (RegistrationDevice Profile) {
+            DeviceProfiles.AddSafe(Profile.UDF, Profile); // NYI check if present
             }
 
 
@@ -185,6 +194,10 @@ namespace Goedel.Mesh.Platform {
             return Registration;
             }
 
+        /// <summary>
+        /// Register the specified personal session in the local persistent store.
+        /// </summary>
+        /// <param name="Profile">The profile to add</param>
         protected void Register(SessionPersonal Profile) {
             _Personal = _Personal ?? Profile; // Make default if none specified
             Profile.MeshMachine = this;
@@ -209,9 +222,13 @@ namespace Goedel.Mesh.Platform {
             }
 
 
-        protected void Register (SessionApplication Registration) {
-            var ApplicationProfile = Registration.ApplicationProfile;
-            ApplicationProfiles.AddSafe(ApplicationProfile.Identifier, Registration); // NYI check if present
+        /// <summary>
+        /// Register the specified application session in the local persistent store.
+        /// </summary>
+        /// <param name="Profile">The profile to add</param>
+        protected void Register (SessionApplication Profile) {
+            var ApplicationProfile = Profile.ApplicationProfile;
+            ApplicationProfiles.AddSafe(ApplicationProfile.Identifier, Profile); // NYI check if present
             ApplicationProfilesDefault.AddSafe(ApplicationProfile.Tag(), ApplicationProfile.Identifier);
             }
 
@@ -230,7 +247,7 @@ namespace Goedel.Mesh.Platform {
         /// <summary>
         /// Locate a device profile by identifier
         /// </summary>
-        /// <param name="RegistrationDevice">The returned profile.</param>
+        /// <param name="RegistrationApplication">The returned profile.</param>
         /// <param name="ID">UDF fingerprint of the profile or short form ID</param>
         /// <returns>True if the profile is found, otherwise false.</returns>
         public override bool Find(string ID, out SessionApplication RegistrationApplication) {
@@ -240,7 +257,7 @@ namespace Goedel.Mesh.Platform {
         /// <summary>
         /// Locate a device profile by identifier
         /// </summary>
-        /// <param name="RegistrationDevice">The returned profile.</param>
+        /// <param name="RegistrationPersonal">The returned profile.</param>
         /// <param name="ID">UDF fingerprint of the profile or short form ID</param>
         /// <returns>True if the profile is found, otherwise false.</returns>
         public override bool Find(string ID, out SessionPersonal RegistrationPersonal) {
@@ -263,6 +280,7 @@ namespace Goedel.Mesh.Platform {
         /// Add the associated profile to the machine store.
         /// </summary>
         /// <param name="SignedDeviceProfile">The device profile</param>
+        /// <param name="RegistrationMachine">The machine session.</param>
         public RegistrationDeviceCached(SignedDeviceProfile SignedDeviceProfile,
                     MeshMachine RegistrationMachine) {
             base.SignedDeviceProfile = SignedDeviceProfile;
@@ -272,7 +290,6 @@ namespace Goedel.Mesh.Platform {
         /// <summary>
         /// Make this the default personal profile for future operations.
         /// </summary>
-        /// <param name="Force"></param>
         public override void MakeDefault () {
             }
 
@@ -300,7 +317,8 @@ namespace Goedel.Mesh.Platform {
         /// <summary>
         /// Register a personal profile in the Windows registry
         /// </summary>
-        /// <param name="Profile">The personal profile</param>
+        /// <param name="Profile">The personal profile.</param>
+        /// <param name="Machine">The machine session.</param>
         /// <param name="Portals">The list of portals.</param>
         public RegistrationPersonalCached(SignedPersonalProfile Profile, 
                         MeshMachine Machine,
@@ -310,6 +328,12 @@ namespace Goedel.Mesh.Platform {
             this.Portals = new PortalCollection(Portals);
             }
 
+        /// <summary>
+        /// Add a portal to this registration
+        /// </summary>
+        /// <param name="AccountID">The portal account.</param>
+        /// <param name="MeshClient">A Mesh Client connected to the portal.</param>
+        /// <param name="Create">If true, the mesh client should request the account be created.</param>
         public override void AddPortal(string AccountID, MeshClient MeshClient = null, bool Create = false) {
             MeshClient = MeshClient ?? new MeshClient(AccountID);
             this.MeshClient = MeshClient;
@@ -325,7 +349,6 @@ namespace Goedel.Mesh.Platform {
         /// <summary>
         /// Make this the default personal profile for future operations.
         /// </summary>
-        /// <param name="Force"></param>
         public override void MakeDefault () {
             }
         }
@@ -342,7 +365,8 @@ namespace Goedel.Mesh.Platform {
         /// <summary>
         /// Register request to register an application.
         /// </summary>
-        /// <param name="ApplicationProfile">The application profile</param>
+        /// <param name="ApplicationProfile">The application profile.</param>
+        /// <param name="Machine">The machine session.</param>
         public RegistrationApplicationCached (ApplicationProfile ApplicationProfile,
                         MeshMachine Machine) {
             MeshMachine = Machine;
@@ -366,7 +390,7 @@ namespace Goedel.Mesh.Platform {
 
         /// <summary>
         /// Make this the default personal profile for future operations.
-
+        /// </summary>
         public override void MakeDefault () {
             }
         }

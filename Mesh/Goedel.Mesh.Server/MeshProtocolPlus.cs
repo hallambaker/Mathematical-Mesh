@@ -77,8 +77,8 @@ namespace Goedel.Mesh.Server {
         /// <summary>
         /// Find connection request matching a request.
         /// </summary>
-        /// <param name="UDF"></param>
-        /// <returns></returns>
+        /// <param name="UDF">Request identifier to match.</param>
+        /// <returns>The response value</returns>
         public ConnectionRequest Match (string UDF) {
             foreach (var Request in Pending) {
                 if (Request.Identifier == UDF) { // ToDo: audit use of identifier vs UDF

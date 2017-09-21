@@ -1,6 +1,7 @@
 ﻿Protocol Goedel.Account AccountProtocol AccountProtocol
     Using Goedel.Cryptography.Jose 
-
+	Description
+		|Mesh/Account protocol schema.
 
 	Section 1 "Mesh/Account Service"
 		Description

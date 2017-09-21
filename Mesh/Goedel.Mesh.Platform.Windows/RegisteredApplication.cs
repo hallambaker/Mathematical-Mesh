@@ -44,8 +44,9 @@ namespace Goedel.Mesh.Platform.Windows {
         /// <summary>
         /// Register request to register an application.
         /// </summary>
+        /// <param name="Machine">The machine session to bind to.</param>
         /// <param name="ApplicationProfile">The application profile</param>
-        public RegistrationApplicationWindows(ApplicationProfile ApplicationProfile, 
+        public RegistrationApplicationWindows (ApplicationProfile ApplicationProfile, 
                             MeshMachine Machine) : base(ApplicationProfile, Machine)  {
             this.ApplicationProfile = ApplicationProfile;
             }
@@ -54,6 +55,7 @@ namespace Goedel.Mesh.Platform.Windows {
         /// <summary>
         /// Read a personal registration from a file
         /// </summary>
+        /// <param name="Machine">The machine session to bind to.</param>
         /// <param name="UDF">File fingerprint</param>
         /// <param name="File">Filename on local machine</param>
         public RegistrationApplicationWindows(MeshMachine Machine, 
@@ -73,6 +75,7 @@ namespace Goedel.Mesh.Platform.Windows {
             }
 
         /// <summary>Write to registry.</summary>
+        /// <param name="Default">If true, make this the default.</param>
         public override void WriteToLocal(bool Default = true) {
             var Hive = Microsoft.Win32.Registry.CurrentUser;
             var Key = Hive.CreateSubKey(Constants.RegistryApplication);

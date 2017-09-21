@@ -38,28 +38,29 @@ namespace Goedel.Mesh.Platform {
         /// <summary>
         /// The registered signed profile.
         /// </summary>
-        public override SignedProfile SignedProfile { get => SignedDeviceProfile; }
+        public override SignedProfile SignedProfile  => SignedDeviceProfile; 
 
         /// <summary>
         /// The Device profile
         /// </summary>
         public SignedDeviceProfile SignedDeviceProfile { get; set; }
 
+        /// <summary>Machine session to which the device session is bound.</summary>
         public override MeshMachine MeshMachine { get; set; }
 
-
+        
         /// <summary>
         /// The most recent cached profile data, if available.
         /// </summary>
-        public virtual DeviceProfile DeviceProfile {
-            get => SignedDeviceProfile.DeviceProfile;
-            }
+        public virtual DeviceProfile DeviceProfile  => SignedDeviceProfile.DeviceProfile;
+
 
         /// <summary>
         /// Begin the process of connecting to a profile at the specified portal
         /// </summary>
         /// <param name="PortalID">The portal to connect to</param>
         /// <param name="PIN">Optional one time authenticator.</param>
+        /// <returns>Personal Session.</returns>
         public SessionPersonal BeginConnect(string PortalID, string PIN = null) {
 
             // Create a portal for the PortalID
@@ -83,17 +84,31 @@ namespace Goedel.Mesh.Platform {
         /// <summary>
         /// The profile fingerprint
         /// </summary>
-        public override string UDF { get => SignedDeviceProfile?.UDF; }
+        public override string UDF => SignedDeviceProfile?.UDF; 
 
+        /// <summary>
+        /// Write to the local persistent cache.
+        /// </summary>
+        /// <param name="Default">If true, make this profile the default.</param>
         public override void Write(bool Default = true) {
             WriteToLocal(Default);
             }
 
+        /// <summary>
+        /// No idea.
+        /// </summary>
         public override void Read() {
             }
 
+        /// <summary>
+        /// If true, this is the default profile.
+        /// </summary>
         public virtual bool IsDefault { get; set; } = true; // Hack: Should work out if it is default
 
+        /// <summary>
+        /// Return a serialization of the session data for this profile.
+        /// </summary>
+        /// <returns>The serialization object.</returns>
         public virtual SerializationDevice Serialize () {
             var Result = new SerializationDevice() {
                 Profile = SignedDeviceProfile,

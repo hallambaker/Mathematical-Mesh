@@ -1,5 +1,7 @@
 ﻿Protocol Goedel.Confirm ConfirmProtocol ConfirmProtocol
     Using Goedel.Cryptography.Jose 
+	Description
+		|Mesh/Confirm Profile Schema.
 
 	Section 1 "Mesh/Confirm Service"
 		Description
@@ -18,7 +20,7 @@
 
 	Section 2 "Request Messages"
 		Description
-			|
+			|Base class for request messages.
 
 	Message ConfirmRequest
 		Description
@@ -27,7 +29,8 @@
 
 	Section 2 "Response Messages"
 		Description
-			|
+			|Base class for all response messages. Contains only the
+			|status code and status description fields.
 
 	Message ConfirmResponse
 		External Goedel.Protocol.Response		
@@ -119,12 +122,18 @@
 				|Text of the request
 		String FromID
 			Description
+				|The sender ID
 		String ToID
 			Description
+				|The recipient ID
 
 	Structure TBSResponse 
 		Struct JoseWebSignature SignedRequest
+			Description
+				|The signed request.
 		Boolean Value
+			Description
+				|No idea???
 
 	Section 2 "Utility Transactions"
 
@@ -146,7 +155,7 @@
 	Message EnquireRequest
 		Inherits ConfirmRequest
 		Description
-			|
+			|Post a confirmation request.
 		Struct RequestEntry Request
 			Description
 				|The request
@@ -188,7 +197,8 @@
 		Description
 			|The result of a status request.
 		Struct ResponseEntry Response
-
+			Description
+				|The result from the responder.
 
 	Section 2 "Responder Transactions"
 

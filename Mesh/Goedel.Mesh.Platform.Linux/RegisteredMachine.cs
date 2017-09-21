@@ -28,14 +28,15 @@ using Goedel.Cryptography;
 
 namespace Goedel.Mesh.Platform.Linux {
 
-
+    /// <summary>Machine session for Linux platform.</summary>
     public partial class MeshMachineLinux : MeshMachineCached {
+
+        /// <summary>Returns the root directory for the profile data.</summary>
         public string RootDirectory { get; }
 
         /// <summary>
         /// Construct filename for a mesh personal profile
         /// </summary>
-        /// <param name="Path">Path to write file to</param>
         /// <param name="Fingerprint">Fingerprint identifying data</param>
         /// <returns>The file name.</returns>
         public string FilePersonalProfile (string Fingerprint) {
@@ -45,7 +46,6 @@ namespace Goedel.Mesh.Platform.Linux {
         /// <summary>
         /// Construct filename for a mesh personal profile
         /// </summary>
-        /// <param name="Path">Path to write file to</param>
         /// <param name="Fingerprint">Fingerprint identifying data</param>
         /// <returns>The file name.</returns>
         public string FileDeviceProfile (string Fingerprint) {
@@ -55,7 +55,6 @@ namespace Goedel.Mesh.Platform.Linux {
         /// <summary>
         /// Construct filename for a mesh personal profile
         /// </summary>
-        /// <param name="Path">Path to write file to</param>
         /// <param name="Fingerprint">Fingerprint identifying data</param>
         /// <returns>The file name.</returns>
         public string FileApplicationlProfile (string Fingerprint) {
@@ -70,6 +69,7 @@ namespace Goedel.Mesh.Platform.Linux {
         /// </summary>
         /// <param name="TestMode">If true, the application will be initialized in
         /// test/debug mode.</param>
+        /// <param name="Load">Load data from the machine store.</param>
         public static void Initialize(bool TestMode = false, bool Load = true) {
 
             if (Current == null) {
@@ -80,6 +80,8 @@ namespace Goedel.Mesh.Platform.Linux {
         /// <summary>
         /// Default constructor, get values from the current machine.
         /// </summary>
+        /// <param name="RootDirectory">The root directory for the session information</param>
+        /// <param name="Load">If true load the data from the machine stores.</param>
         public MeshMachineLinux (string RootDirectory = null, bool Load =true) {
             this.RootDirectory = RootDirectory ??
                 System.IO.Path.Combine (Environment.GetFolderPath (Environment.SpecialFolder.UserProfile),

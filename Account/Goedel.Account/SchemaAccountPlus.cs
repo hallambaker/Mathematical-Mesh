@@ -62,7 +62,9 @@ namespace Goedel.Account {
 
     public partial class AccountRequest {
 
-
+        /// <summary>
+        /// The tag dictionary for decoding
+        /// </summary>
         public static new Dictionary<string, JSONFactoryDelegate> _TagDictionary =
             Merge(Message._TagDictionary, AccountProtocol._TagDictionary);  // Hack: should fix the generator
 

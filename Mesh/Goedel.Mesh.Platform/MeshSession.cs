@@ -50,8 +50,9 @@ namespace Goedel.Mesh.Platform {
             this.Machine = Machine ?? MeshMachine.Current;
             }
 
-
-
+        /// <summary>Bind the session to the specified portal.</summary>
+        /// <param name="Portal">The portal to bind to.</param>
+        /// <returns>The mesh client.</returns>
         public MeshClient Bind (string Portal) {
             Assert.NotNull(Portal, NoPortalAccount.Throw);
             Goedel.Mesh.Account.SplitAccountID(Portal, out var Account, out var Service);
@@ -70,13 +71,6 @@ namespace Goedel.Mesh.Platform {
             Machine.Erase();
             }
 
-        ///// <summary>
-        ///// Erase all configuration data from the current machine.
-        ///// </summary>
-        //public void Reload () {
-        //    Machine = Machine.Reload ();
-        //    }
-
 
         /// <summary>
         /// Create a new device profile and register it to the current machine.
@@ -87,7 +81,7 @@ namespace Goedel.Mesh.Platform {
         /// the default. If null, the new profile will become the default
         /// if there is no default specified already. Otherwise, the default
         /// is unchanged.</param>
-        /// <returns></returns>
+        /// <returns>Session for the newly created device profile.</returns>
         public RegistrationDevice CreateDevice (
                             string ID = null,
                             string Description = "Unknown",
@@ -124,7 +118,7 @@ namespace Goedel.Mesh.Platform {
         /// <param name="DeviceUDF">Specify the device profile by UDF fingerprint.</param>
         /// <param name="DeviceID">The identifier for device profile if created.</param>
         /// <param name="DeviceDescription">The device description for the device profile if created.</param>
-        /// <returns></returns>
+        /// <returns>A device session for the newly created profile.</returns>
         public RegistrationDevice GetDevice (bool DeviceNew = false,
                     string DeviceUDF = null,
                     string DeviceID = null,
@@ -168,9 +162,11 @@ namespace Goedel.Mesh.Platform {
             }
 
         /// <summary>
-        /// Begin creation of a portal account
+        /// Begin creation of a portal account.
         /// </summary>
-        /// <param name="PortalAddress"></param>
+        /// <param name="PortalAddress">The portal address to bind to.</param>
+        /// <param name="MeshClient">The Mesh Client to use (if available)</param>
+        /// <param name="Profile">The profile to bind.</param>
         /// <returns>Registration created account (if successful)</returns>
         public SessionPersonal CreateAccount (
                     string PortalAddress,
@@ -188,6 +184,14 @@ namespace Goedel.Mesh.Platform {
             return RegistrationPersonal;
             }
 
+        /// <summary>
+        /// Request validation of a proposed portal account name. Note that reporting the
+        /// account name as available neither commits the service to reserve the name for
+        /// the user or even create an account for them at all.
+        /// </summary>
+        /// <param name="PortalAddress">The portal address</param>
+        /// <param name="MeshClient">The Mesh Client to use (if available)</param>
+        /// <returns>The validation response message returned by the service.</returns>
         public ValidateResponse Validate (
                     string PortalAddress,
                     MeshClient MeshClient = null) {
@@ -196,7 +200,15 @@ namespace Goedel.Mesh.Platform {
             return MeshClient.Validate(PortalAddress);
             }
 
-
+        /// <summary>
+        /// Create a new personal profile and register to the local (non-persistent) cache,
+        /// creating a new device profile if required and registering to persistent storage.
+        /// </summary>
+        /// <param name="DeviceNew">If true, force creation of a new device profile.</param>
+        /// <param name="DeviceUDF">The device profile fingerprint.</param>
+        /// <param name="DeviceID">The device identifier to use if a new device profile is created.</param>
+        /// <param name="DeviceDescription">The device description to use if a new device profile is created.</param>
+        /// <returns>Session for the created Personal profile.</returns>
         public SessionPersonal AddPersonal (
                     bool DeviceNew = false,
                     string DeviceUDF = null,
@@ -207,6 +219,12 @@ namespace Goedel.Mesh.Platform {
             return AddPersonal(RegistrationDevice);
             }
 
+        /// <summary>
+        /// Create a new personal profile and register to the local (non-persistent) cache.
+        /// The profile created is typically 
+        /// </summary>
+        /// <param name="RegistrationDevice">The initial administration device.</param>
+        /// <returns>Session for the created Personal profile.</returns>
         public SessionPersonal AddPersonal (
                     RegistrationDevice RegistrationDevice) {
 
@@ -220,7 +238,6 @@ namespace Goedel.Mesh.Platform {
         /// <summary>
         /// Register the specified personal profile
         /// </summary>
-        /// <param name="PortalAddress">The portal at which to register the profile</param>
         /// <param name="PersonalProfile">The profile to register.</param>
         /// <returns>The profile registration.</returns>
         public SessionPersonal AddPersonal (
@@ -235,7 +252,11 @@ namespace Goedel.Mesh.Platform {
 
 
 
-
+        /// <summary>
+        /// Recover profile using a recovery secret as search key and decryption key.
+        /// </summary>
+        /// <param name="Secret">The recovery secret.</param>
+        /// <returns>Session for the created Personal profile.</returns>
         public SessionPersonal Recover (
                     Secret Secret) {
 
@@ -283,6 +304,8 @@ namespace Goedel.Mesh.Platform {
         /// </summary>
         /// <param name="UDF">Profile fingerprint.</param>
         /// <param name="PortalID">Portal account.</param>
+        /// <param name="Cached">Search local cache</param>
+        /// <param name="Portal">Search portal</param>
         /// <returns>The personal profile.</returns>
         public SessionPersonal GetPersonal (
                         string PortalID = null,
@@ -309,7 +332,13 @@ namespace Goedel.Mesh.Platform {
             }
 
 
-
+        /// <summary>
+        /// Initiate a connection request.
+        /// </summary>
+        /// <param name="Device">The device profile to register.</param>
+        /// <param name="Address">The portal address to connect to.</param>
+        /// <param name="Authenticator">Authenticator string to be used to validate the connection.</param>
+        /// <returns>The connection start request object.</returns>
         public ConnectStartRequest Connect (RegistrationDevice Device, string Address, out string Authenticator) {
             var MeshClient = new MeshClient(PortalAccount: Address);
 
@@ -327,7 +356,12 @@ namespace Goedel.Mesh.Platform {
             return DeviceRequest;
             }
 
-
+        /// <summary>
+        /// Complete a connection request.
+        /// </summary>
+        /// <param name="Connect">The connection start request information.</param>
+        /// <param name="TimeOut">Timeout in seconds. Wait forever if timeout is -1.</param>
+        /// <returns>The returned connection status.</returns>
         public ConnectionStatus Await (ConnectStartRequest Connect, int TimeOut = -1) {
             throw new NYI();
             }

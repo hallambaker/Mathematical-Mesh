@@ -34,8 +34,12 @@ namespace Goedel.Account.Client {
             }
 
         /// <summary>
-        /// Create a new recryption group.
+        /// Create a new account.
         /// </summary>
+        /// <param name="AccountID">The account identifier</param>
+        /// <param name="UDF">The user's Mesh fingerprint.</param>
+        /// <param name="ProfilePortal">The user's Personal Profile</param>
+        /// <param name="PIN">PIN validator (if used).</param>
         /// <returns>The service response</returns>
         public CreateResponse Create (
                     string AccountID,
@@ -55,8 +59,9 @@ namespace Goedel.Account.Client {
             }
 
         /// <summary>
-        /// Update a recryption group definition.
+        /// Update an account definition.
         /// </summary>
+        /// <param name="AccountID">The account identifier</param>
         /// <returns>The service response</returns>
         public DeleteResponse Delete (string AccountID) {
             var Request = new DeleteRequest() { };
@@ -67,6 +72,7 @@ namespace Goedel.Account.Client {
         /// <summary>
         /// Update a member entry in an existing recryption group
         /// </summary>
+        /// <param name="AccountID">The identifier of the member entry to update (what??)</param>
         /// <returns>The service response</returns>
         public UpdateResponse Update (string AccountID) {
             var Request = new UpdateRequest() { };
@@ -76,6 +82,7 @@ namespace Goedel.Account.Client {
         /// <summary>
         /// Request the account associated with the specified account ID.
         /// </summary>
+        /// <param name="AccountID">The account identifier</param>
         /// <returns>The service response</returns>
         public GetResponse Get (string AccountID) {
             var Request = new GetRequest() { AccountId = AccountID};

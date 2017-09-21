@@ -41,7 +41,7 @@ namespace Goedel.Mesh.Platform.Linux {
         /// <summary>
         /// The profile fingerprint
         /// </summary>
-        public override string UDF { get => SignedPersonalProfile?.UDF;  } 
+        public override string UDF  => SignedPersonalProfile?.UDF;  
 
         /// <summary>
         /// Profiles associated with this account in chronological order.
@@ -63,6 +63,7 @@ namespace Goedel.Mesh.Platform.Linux {
             SignedPersonalProfile = NewPersonal;
             }
 
+        /// <summary>Unused at present</summary>
         public string Archive { get; set; }
 
 
@@ -71,8 +72,9 @@ namespace Goedel.Mesh.Platform.Linux {
         /// <summary>
         /// Read a personal registration from a file
         /// </summary>
-        /// <param name="UDF">File fingerprint</param>
         /// <param name="File">Filename on local machine</param>
+        /// <param name="Machine">The machine session</param>
+        /// <param name="Portals">List of portal addresses.</param>
         public PersonalSessionLinux (MeshMachine Machine, 
                         string File, IEnumerable<string> Portals = null) {
 
@@ -84,10 +86,9 @@ namespace Goedel.Mesh.Platform.Linux {
             this.Portals = new PortalCollectionLinux(Serialization.Portals);
             }
 
+        /// <summary>Returns the machine session.</summary>
+        public MeshMachineLinux RegistrationMachineLinux  => MeshMachine as MeshMachineLinux;
 
-        public MeshMachineLinux RegistrationMachineLinux {
-            get => MeshMachine as MeshMachineLinux;
-            }
 
         /// <summary>The abstract machine a profile registration is attached to</summary>
         public override MeshMachine MeshMachine { get; set; }
@@ -97,6 +98,7 @@ namespace Goedel.Mesh.Platform.Linux {
         /// </summary>
         /// <param name="Profile">The personal profile</param>
         /// <param name="Portals">The list of portals.</param>
+        /// <param name="Machine">The machine session</param>
         public PersonalSessionLinux (SignedPersonalProfile Profile,
                         MeshMachine Machine,
                         IEnumerable<string> Portals = null) {
@@ -112,8 +114,9 @@ namespace Goedel.Mesh.Platform.Linux {
         /// Add a portal to this registration. The portal account must have been 
         /// created previously. Only the local portal is written to.
         /// </summary>
-        /// <param name="AccountID"></param>
-        /// <param name="MeshClient"></param>
+        /// <param name="AccountID">Identifier of account to add portal to.</param>
+        /// <param name="MeshClient">unused</param>
+        /// <param name="Create">unknown</param>
         public override void AddPortal(string AccountID, MeshClient MeshClient = null, bool Create = false) {
             Portals.Add(AccountID);
             WriteToLocal();
@@ -143,7 +146,6 @@ namespace Goedel.Mesh.Platform.Linux {
         /// <summary>
         /// Make this the default personal profile for future operations.
         /// </summary>
-        /// <param name="Force"></param>
         public override void MakeDefault () {
             WasMadeDefault = DateTime.Now;
             }

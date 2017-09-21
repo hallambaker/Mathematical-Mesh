@@ -76,11 +76,18 @@ namespace Goedel.Mesh.Platform {
 
         /*  Derrived properties */
 
+        /// <summary>Find a device registration that can decrypt the specified data.</summary>
+        /// <param name="DecryptionUDF">Data to decrypt</param>
+        /// <returns>Device session</returns>
         public RegistrationDevice FindByDecryption (string DecryptionUDF) =>
             DecryptDeviceProfiles.Find(
                 x => x.DeviceProfile.DeviceEncryptiontionKey.UDF.CompareUDF(DecryptionUDF));
 
-
+        /// <summary>
+        /// Find a device session that can decrypt JWE data.
+        /// </summary>
+        /// <param name="Recipients">The JWE Recipients list.</param>
+        /// <returns>The first device registration that can decrypt the data (if found)</returns>
         public RegistrationDevice FindByDecryption (List<Recipient> Recipients) {
             foreach (var Recipient in Recipients) {
                 var RegistrationDevice = FindByDecryption(Recipient?.Header?.Kid);
@@ -101,8 +108,7 @@ namespace Goedel.Mesh.Platform {
 
 
         /// <summary>The abstract machine a profile registration is attached to</summary>
-        public override MeshMachine MeshMachine {
-                get => SessionPersonal?.MeshMachine; }
+        public override MeshMachine MeshMachine  => SessionPersonal?.MeshMachine; 
 
 
         PersonalProfile PersonalProfile  => SessionPersonal?.PersonalProfile;
@@ -115,15 +121,24 @@ namespace Goedel.Mesh.Platform {
         /// <summary>
         /// The profile fingerprint
         /// </summary>
-        public override string UDF { get => ApplicationProfile?.UDF; }
+        public override string UDF => ApplicationProfile?.UDF;
 
+        /// <summary>
+        /// Add a new device to the access list for this application.
+        /// </summary>
+        /// <param name="DeviceProfile">The device to add.</param>
+        /// <param name="Administration">If true, give the device administration rights.</param>
         public void AddDevice (
                     DeviceProfile DeviceProfile,
                     bool Administration = false) {
             ApplicationProfile.AddDevice(DeviceProfile, Administration);
             }
 
+
+        /// <summary>Return the private portion of the application profile that is common to all devices.</summary>
         public ApplicationProfilePrivate ApplicationProfilePrivate { get; set; }
+
+        /// <summary>Return the private portion of the application profile that is specific to this device.</summary>
         public ApplicationDevicePrivate ApplicationDevicePrivate { get; set; }
 
 

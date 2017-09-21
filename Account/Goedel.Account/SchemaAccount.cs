@@ -36,6 +36,8 @@ namespace Goedel.Account {
 
 
 	/// <summary>
+	///
+	/// Mesh/Account protocol schema.
 	/// </summary>
 	public abstract partial class AccountProtocol : global::Goedel.Protocol.JSONObject {
 

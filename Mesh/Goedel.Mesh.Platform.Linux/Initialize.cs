@@ -31,8 +31,16 @@ using Goedel.Mesh.Platform.Linux;
 
 namespace Goedel.Mesh {
 
+    /// <summary>Initialiation class for Linux Mesh Libraries.</summary>
     public static class MeshLinux {
 
+        /// <summary>
+        /// Initialize the Mesh Libraries to use Linux file system and native features for
+        /// key storage, etc.
+        /// </summary>
+        /// <param name="TestMode">If true, use the test directory and registry key and
+        /// key store. This allows the machine to be reset after testing is complete
+        /// without risk to production data.</param>
         public static void Initialize(bool TestMode = false) {
             KeyPair.TestMode = TestMode;
 

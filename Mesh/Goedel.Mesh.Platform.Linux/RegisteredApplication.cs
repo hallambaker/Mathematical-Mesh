@@ -34,9 +34,9 @@ namespace Goedel.Mesh.Platform.Linux {
     /// </summary>
     public class RegistrationApplicationLinux : RegistrationApplicationCached {
 
-        public MeshMachineLinux RegistrationMachineLinux {
-            get => MeshMachine as MeshMachineLinux;
-            }
+        /// <summary>Return the Mesh Machine registration</summary>
+        public MeshMachineLinux RegistrationMachineLinux  => MeshMachine as MeshMachineLinux;
+
 
         /// <summary>
         /// Fetch the latest version of the profile version
@@ -47,6 +47,7 @@ namespace Goedel.Mesh.Platform.Linux {
         /// <summary>
         /// Register request to register an application.
         /// </summary>
+        /// <param name="Machine">The machine session to bind to.</param>
         /// <param name="ApplicationProfile">The application profile</param>
         public RegistrationApplicationLinux (ApplicationProfile ApplicationProfile,
                         MeshMachineLinux Machine) : base(ApplicationProfile, Machine) {
@@ -55,8 +56,8 @@ namespace Goedel.Mesh.Platform.Linux {
         /// <summary>
         /// Read a personal registration from a file
         /// </summary>
-        /// <param name="UDF">File fingerprint</param>
         /// <param name="File">Filename on local machine</param>
+        /// <param name="Machine">The machine session to bind to.</param>
         public RegistrationApplicationLinux (MeshMachineLinux Machine, string File = null)
                     : base(SignedApplicationProfile.FromFile(File).ApplicationProfile, Machine) {
             }

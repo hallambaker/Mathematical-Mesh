@@ -36,6 +36,7 @@ namespace Goedel.Mesh.Platform.Windows {
         /// <summary>
         /// Default constructor
         /// </summary>
+        /// <param name="Portals">List of portal addresses</param>
         public PortalCollectionWindows (IEnumerable<string> Portals) : base (Portals) {
 
             }

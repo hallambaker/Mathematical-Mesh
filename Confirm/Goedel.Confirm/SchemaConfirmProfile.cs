@@ -38,6 +38,7 @@ namespace Goedel.Confirm {
 
 	/// <summary>
 	///
+	/// Mesh/Confirm Protocol Schema
 	/// Mesh profile for Confirm applications.
 	/// </summary>
 	public abstract partial class MeshConfirm : global::Goedel.Protocol.JSONObject {

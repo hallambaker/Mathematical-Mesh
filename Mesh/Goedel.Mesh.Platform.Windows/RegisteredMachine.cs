@@ -28,17 +28,12 @@ using Goedel.Cryptography;
 
 namespace Goedel.Mesh.Platform.Windows {
 
+    /// <summary>Windows specific constants and functions.</summary>
     public static class MeshWindows {
-
-        //    public static void Initialize () {
-
-        //RegistrationMachineWindows.Initialize();
-        //}
 
         /// <summary>
         /// Construct filename for a mesh personal profile
         /// </summary>
-        /// <param name="Path">Path to write file to</param>
         /// <param name="Fingerprint">Fingerprint identifying data</param>
         /// <returns>The file name.</returns>
         public static string FilePersonalProfile(string Fingerprint) {
@@ -48,7 +43,6 @@ namespace Goedel.Mesh.Platform.Windows {
         /// <summary>
         /// Construct filename for a mesh personal profile
         /// </summary>
-        /// <param name="Path">Path to write file to</param>
         /// <param name="Fingerprint">Fingerprint identifying data</param>
         /// <returns>The file name.</returns>
         public static string FileDeviceProfile(string Fingerprint) {
@@ -58,7 +52,6 @@ namespace Goedel.Mesh.Platform.Windows {
         /// <summary>
         /// Construct filename for a mesh personal profile
         /// </summary>
-        /// <param name="Path">Path to write file to</param>
         /// <param name="Fingerprint">Fingerprint identifying data</param>
         /// <returns>The file name.</returns>
         public static string FileApplicationlProfile(string Fingerprint) {
@@ -67,9 +60,8 @@ namespace Goedel.Mesh.Platform.Windows {
 
         }
 
-
+    /// <summary>Machine session class for Windows in native mode.</summary>
     public partial class RegistrationMachineWindows : MeshMachineCached {
-
 
         /// <summary>
         /// Register the delegates for handling Windows native registrations with
@@ -242,7 +234,7 @@ namespace Goedel.Mesh.Platform.Windows {
         /// <summary>
         /// Locate a device profile by identifier
         /// </summary>
-        /// <param name="RegistrationDevice">The returned profile.</param>
+        /// <param name="RegistrationApplication">The returned profile.</param>
         /// <param name="ID">UDF fingerprint of the profile or short form ID</param>
         /// <returns>True if the profile is found, otherwise false.</returns>
         public override bool Find(string ID, out SessionApplication RegistrationApplication) {
@@ -252,7 +244,7 @@ namespace Goedel.Mesh.Platform.Windows {
         /// <summary>
         /// Locate a device profile by identifier
         /// </summary>
-        /// <param name="RegistrationDevice">The returned profile.</param>
+        /// <param name="RegistrationPersonal">The returned profile.</param>
         /// <param name="ID">UDF fingerprint of the profile or short form ID</param>
         /// <returns>True if the profile is found, otherwise false.</returns>
         public override bool Find(string ID, out SessionPersonal RegistrationPersonal) {

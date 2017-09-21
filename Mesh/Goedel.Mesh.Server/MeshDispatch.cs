@@ -63,7 +63,7 @@ namespace Goedel.Mesh.Server {
         /// <summary>
         /// The mesh persistence provider.
         /// </summary>
-        public Mesh Mesh { get =>Provider.Mesh; }
+        public Mesh Mesh =>Provider.Mesh;
 
         /// <summary>
         /// The mesh service dispatcher.
@@ -142,8 +142,8 @@ namespace Goedel.Mesh.Server {
         /// <summary>
         /// Delete an account from a portal.
         /// </summary>
-        /// <param name="Request"></param>
-        /// <returns></returns>
+        /// <param name="Request">The request object.</param>
+        /// <returns>The result object</returns>
         public override DeleteResponse DeleteAccount (DeleteRequest Request) {
             var Response = new DeleteResponse();
             var Success = Mesh.DeleteAccount(Request.Account);

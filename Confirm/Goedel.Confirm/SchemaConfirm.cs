@@ -1,4 +1,4 @@
-﻿
+
 //  Copyright (c) 2016 by .
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -36,6 +36,8 @@ namespace Goedel.Confirm {
 
 
 	/// <summary>
+	///
+	/// Mesh/Confirm Profile Schema.
 	/// </summary>
 	public abstract partial class ConfirmProtocol : global::Goedel.Protocol.JSONObject {
 
@@ -103,7 +105,9 @@ namespace Goedel.Confirm {
         /// <summary>
         /// Well Known service identifier.
         /// </summary>
-		public override string GetWellKnown  => WellKnown;
+		public override string GetWellKnown {
+			get => WellKnown;
+			}
 
         /// <summary>
         /// Well Known service identifier.
@@ -113,7 +117,9 @@ namespace Goedel.Confirm {
         /// <summary>
         /// Well Known service identifier.
         /// </summary>
-		public override string GetDiscovery  => Discovery;
+		public override string GetDiscovery {
+			get => Discovery;
+			}
 
         /// <summary>
         /// The active JPCSession.
@@ -1089,10 +1095,12 @@ namespace Goedel.Confirm {
 
 		public virtual string						Text  {get; set;}
         /// <summary>
+        ///The sender ID
         /// </summary>
 
 		public virtual string						FromID  {get; set;}
         /// <summary>
+        ///The recipient ID
         /// </summary>
 
 		public virtual string						ToID  {get; set;}
@@ -1208,12 +1216,14 @@ namespace Goedel.Confirm {
 	/// </summary>
 	public partial class TBSResponse : ConfirmProtocol {
         /// <summary>
+        ///The signed request.
         /// </summary>
 
 		public virtual JoseWebSignature						SignedRequest  {get; set;}
 		bool								__Value = false;
 		private bool						_Value;
         /// <summary>
+        ///No idea???
         /// </summary>
 
 		public virtual bool						Value {
@@ -1324,7 +1334,7 @@ namespace Goedel.Confirm {
 
 	/// <summary>
 	///
-	/// 
+	/// Post a confirmation request.
 	/// </summary>
 	public partial class EnquireRequest : ConfirmRequest {
         /// <summary>
@@ -1664,6 +1674,7 @@ namespace Goedel.Confirm {
 	/// </summary>
 	public partial class StatusResponse : ConfirmResponse {
         /// <summary>
+        ///The result from the responder.
         /// </summary>
 
 		public virtual ResponseEntry						Response  {get; set;}

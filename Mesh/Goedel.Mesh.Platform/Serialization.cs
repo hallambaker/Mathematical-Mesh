@@ -1,4 +1,4 @@
-﻿
+
 //  Copyright (c) 2016 by .
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -85,9 +85,14 @@ namespace Goedel.Mesh.Platform {
 
 		// Transaction Classes
 	/// <summary>
+	///
+	/// Base class for profile serialization
 	/// </summary>
 	abstract public partial class Serialization : MeshItem {
         /// <summary>
+        ///If present, the profile was made default at the specified date and time. 
+        ///The default profile being the profile with the latest value for
+        ///Default.
         /// </summary>
 
 		public virtual DateTime?						Default  {get; set;}
@@ -140,7 +145,6 @@ namespace Goedel.Mesh.Platform {
 				}
 			}
 
-
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
@@ -148,6 +152,9 @@ namespace Goedel.Mesh.Platform {
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
         public static new Serialization FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
 				return Out as Serialization;
@@ -178,13 +185,17 @@ namespace Goedel.Mesh.Platform {
 		}
 
 	/// <summary>
+	///
+	/// Serialize personal profile.
 	/// </summary>
 	public partial class SerializationPersonal : Serialization {
         /// <summary>
+        ///The profile being serialized.
         /// </summary>
 
 		public virtual SignedPersonalProfile						Profile  {get; set;}
         /// <summary>
+        ///List of portals the profile is registered to.
         /// </summary>
 
 		public virtual List<SerializationPortal>				Portals  {get; set;}
@@ -255,7 +266,6 @@ namespace Goedel.Mesh.Platform {
 				}
 			}
 
-
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
@@ -263,6 +273,9 @@ namespace Goedel.Mesh.Platform {
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
         public static new SerializationPersonal FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
 				return Out as SerializationPersonal;
@@ -313,9 +326,12 @@ namespace Goedel.Mesh.Platform {
 		}
 
 	/// <summary>
+	///
+	/// Describe a portal connection.
 	/// </summary>
 	public partial class SerializationPortal : MeshItem {
         /// <summary>
+        ///Portal address.
         /// </summary>
 
 		public virtual string						Address  {get; set;}
@@ -368,7 +384,6 @@ namespace Goedel.Mesh.Platform {
 				}
 			}
 
-
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
@@ -376,6 +391,9 @@ namespace Goedel.Mesh.Platform {
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
         public static new SerializationPortal FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
 				return Out as SerializationPortal;
@@ -408,9 +426,12 @@ namespace Goedel.Mesh.Platform {
 		}
 
 	/// <summary>
+	///
+	/// Serialize application profile.
 	/// </summary>
 	public partial class SerializationApplication : Serialization {
         /// <summary>
+        ///The profile being serialized.
         /// </summary>
 
 		public virtual SignedApplicationProfile						Profile  {get; set;}
@@ -464,7 +485,6 @@ namespace Goedel.Mesh.Platform {
 				}
 			}
 
-
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
@@ -472,6 +492,9 @@ namespace Goedel.Mesh.Platform {
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
         public static new SerializationApplication FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
 				return Out as SerializationApplication;
@@ -508,9 +531,12 @@ namespace Goedel.Mesh.Platform {
 		}
 
 	/// <summary>
+	///
+	/// Serialize device profile.
 	/// </summary>
 	public partial class SerializationDevice : Serialization {
         /// <summary>
+        ///The profile being serialized.
         /// </summary>
 
 		public virtual SignedDeviceProfile						Profile  {get; set;}
@@ -564,7 +590,6 @@ namespace Goedel.Mesh.Platform {
 				}
 			}
 
-
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
@@ -572,6 +597,9 @@ namespace Goedel.Mesh.Platform {
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
         public static new SerializationDevice FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
 				return Out as SerializationDevice;

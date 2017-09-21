@@ -13,6 +13,8 @@ namespace Goedel.Account.Server {
     /// Abstract interface to a local service provider.
     /// </summary>
     public abstract class AccountLocalPortal : AccountPortal {
+
+        /// <summary>The service name</summary>
         public string ServiceName { get; set; }
 
         /// <summary>
@@ -63,6 +65,7 @@ namespace Goedel.Account.Server {
         /// <summary>
         /// Create new portal using the default stores.
         /// </summary>
+        /// <param name="ServiceName">The service name.</param>
         public AccountPortalLocal (string ServiceName) {
             this.ServiceName = ServiceName;
             AccountServiceHost = new AccountLocalServiceProvider(ServiceName);

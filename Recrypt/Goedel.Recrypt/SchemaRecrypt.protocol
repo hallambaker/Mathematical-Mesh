@@ -1,6 +1,8 @@
 ﻿Protocol Goedel.Recrypt RecryptProtocol RecryptProtocol
     Using Goedel.Cryptography.Jose 
 	Using Goedel.Mesh
+	Description
+		|Mesh/Recrypt Protocol Schema
 
 	Description 
 		|Mesh/Recrypt group administration protocol
@@ -77,7 +79,7 @@
     Transaction Admin CreateGroup CreateGroupRequest CreateGroupResponse
 		Description
 			|Create a new recryption group.
-		Description
+
 
 	Message CreateGroupRequest
 		Inherits RecryptRequest
@@ -99,7 +101,7 @@
     Transaction Admin UpdateGroup UpdateGroupRequest UpdateGroupResponse
 		Description
 			|Update the information describing a recryption group.
-		Description
+
 
 	Message UpdateGroupRequest
 		Inherits RecryptRequest
@@ -132,6 +134,7 @@
 	Message GetGroupRequest
 		Inherits RecryptRequest
 		Description
+			|Obtain recryption group data
 		String GroupID
 			Description
 				|The UDF fingerprint of the recryption group to add the member to.
@@ -139,7 +142,7 @@
 	Message GetGroupResponse
 		Inherits RecryptResponse
 		Description
-			|
+			|Obtain recryption group response.
 		Struct RecryptionGroup RecryptionGroup
 			Description
 				|The Recryption Group to create	
@@ -152,6 +155,7 @@
 	Message AddMemberRequest
 		Inherits RecryptRequest
 		Description
+			|Add a member to a recryption group (not currently used)
 		String RecryptionGroup
 			Description
 				|The UDF fingerprint of the recryption group to add the member to.
@@ -178,6 +182,7 @@
 	Message UpdateMemberRequest
 		Inherits RecryptRequest
 		Description
+			|Update a recryption group member entry (not currently used)
 		String RecryptionGroup
 			Description
 				|The UDF fingerprint of the recryption group in which the member entries is to be updated
@@ -261,6 +266,7 @@
 	Message RecryptDataResponse
 		Inherits RecryptResponse
 		Description
+			|Result of recryption request.
 		Binary Partial
 			Description
 				|The partial decryption information to use to complete the key agreement

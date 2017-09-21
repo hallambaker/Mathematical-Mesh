@@ -1,9 +1,6 @@
 ﻿
 Namespace Goedel.Mesh.Platform
 
-
-
-
 	Exception Internal
         Console "An internal error occurred"
 		Description
@@ -11,13 +8,20 @@ Namespace Goedel.Mesh.Platform
 
 	Exception Gateway
         Console "Error occurred in Gateway"
+		Description
+			|Error occurred in Gateway
 
 		Exception NoPortalAccount
 			Console "No Portal account specified"
-
+			Description
+				|No Portal account specified
 		
 		Exception PortalConnectFail
 			Console "Could not connect to portal"
+			Description
+				|Could not connect to portal
 
 		Exception PublicationRequestRefused
 			Console "Portal refused profile publication request"
+			Description
+				|Portal refused profile publication request
