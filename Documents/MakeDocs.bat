@@ -20,6 +20,7 @@ copy ..\xml2rfc.js .
 copy ..\bib.xml .
 copy ..\favicon.png .
 
+rfctool O:\Documents\Mesh\hallambaker-container.docx /auto /cache=bib.xml
 rfctool O:\Documents\Mesh\hallambaker-sin.docx /auto /cache=bib.xml
 rfctool O:\Documents\Mesh\hallambaker-jsonbcd.docx /auto /cache=bib.xml
 rfctool O:\Documents\Mesh\hallambaker-udf.docx /auto /cache=bib.xml

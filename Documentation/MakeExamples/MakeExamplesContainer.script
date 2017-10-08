@@ -1,0 +1,199 @@
+﻿#using System.Text
+#using Goedel.Mesh
+#using Goedel.Protocol
+#using Goedel.Utilities
+#using Goedel.Cryptography
+#using Goedel.Cryptography.Container
+#xclass ExampleGenerator ExampleGenerator
+
+#file MeshExamplesUDF "Examples\\ExamplesUDF.md" CreateExamples Example
+#% var ContentType = "text/plain";
+#% var ContentTypeString = ContentType.ToUTF8().ToBase16String(Spaced:true);
+#% var DataString = "UDF Data Value";
+#% var DataBytes = DataString.ToUTF8();
+#% var DataBytesString = DataBytes.ToBase16String(Spaced:true);
+#% var HashData = Goedel.Cryptography.Platform.SHA2_512.Process(DataBytes).ToBase16String(Spaced:true);
+#% var UDFDataBuffer = UDF.UDFBuffer(ContentType, DataBytes);
+#% var UDFDataBufferString = UDFDataBuffer.ToBase16String(Spaced:true);
+#% var UDFData = Goedel.Cryptography.Platform.SHA2_512.Process(UDFDataBuffer).ToBase16String(Spaced:true);
+In the following examples, &<Content-ID> is the UTF8 encoding of the string 
+"#{ContentType}" and &<Data> is the UTF8 encoding of the string "#{DataString}"
+
+~~~~
+Data = #{DataBytesString}
+
+ContentType = #{ContentTypeString}
+~~~~
+
+######Using SHA-2-512 Digest
+
+~~~~
+H( &lt;Data&gt; ) = 
+#{HashData}
+
+H (&lt;Content-ID&gt; + ‘:’ + H(&lt;Data&gt;))= 
+#{UDFDataBufferString}
+
+H (&lt;Content-ID&gt; + ‘:’ + H(&lt;Data&gt;))= 
+#{UDFData}
+~~~~
+
+<dl>
+
+<dt>Text Presentation (100 bit)
+<dd>#{UDF.ToString (ContentType, DataBytes, 100)}
+<dt>Text Presentation (125 bit)
+<dd>#{UDF.ToString (ContentType, DataBytes, 125)}
+<dt>Text Presentation (150 bit)
+<dd>#{UDF.ToString (ContentType, DataBytes, 150)}
+<dt>Text Presentation (250 bit)
+<dd>#{UDF.ToString (ContentType, DataBytes, 250)}
+</dl>
+
+#end file
+
+#file MeshExamplesUDFCompressed "Examples\\ExamplesUDFCompressed.md" CreateExamples Example
+#% var ContentType = "text/plain";
+#% var ContentTypeString = ContentType.ToUTF8().ToBase16String(Spaced:true);
+#% var DataString = "290668103";
+#% var DataBytes = DataString.ToUTF8();
+#% var DataBytesString = DataBytes.ToBase16String(Spaced:true);
+#% var HashData = Goedel.Cryptography.Platform.SHA2_512.Process(DataBytes).ToBase16String(Spaced:true);
+#% var UDFDataBuffer = UDF.UDFBuffer(ContentType, DataBytes);
+#% var UDFDataBufferString = UDFDataBuffer.ToBase16String(Spaced:true);
+#% var UDFData = Goedel.Cryptography.Platform.SHA2_512.Process(UDFDataBuffer).ToBase16String(Spaced:true);
+
+######Example
+
+The string "290668103" has a SHA-2-512 UDF fingerprint with 29 leading zero bits. The inputs
+to the fingerprint are:
+
+~~~~
+Data = #{DataBytesString}
+
+ContentType = #{ContentTypeString}
+~~~~
+
+The 100 bit UDF fingerprint is:
+
+<dt>Text Presentation (100 bit)
+<dd>MF3VV-FOFE2-CLRW (Maybe)
+#!<dd> #{UDF.ToString (ContentType, DataBytes, 100)} 
+</dl>
+
+<B>NB: The above is not generated from code and might well be incorrect.
+
+#end file
+
+#file MeshExamplesSIN "Examples\\ExamplesSIN.md" CreateExamples Example
+
+A SIN is an Internet Identifier that contains a fingerprint of a root of trust that may be used to verify the interpretation of the identifier. This section describes the manner in which SINs are used. The following section describes their construction using Uniform Data Fingerprints [I-D.hallambaker-udf]
+
+For example, Example Inc holds the domain name example.com and has deployed a private CA whose root of trust is a PKIX certificate with the UDF fingerprint MB2GK-6DUF5-YGYYL-JNY5E-RWSHZ.
+
+Alice is an employee of Example Inc., she uses three email addresses:
+
+alice@example.com
+A regular email address (not a SIN).
+alice@mm--mb2gk-6duf5-ygyyl-jny5e-rwshz.example.com
+A strong email address that is backwards compatible.
+alice@example.com.mm--mb2gk-6duf5-ygyyl-jny5e-rwshz
+A strong email address that is backwards incompatible.
+All three forms of the address are valid RFC822 addresses and may be used in a legacy email client, stored in an address book application, etc. But the ability of a legacy client to make use of the address differs. Addresses of the first type may always be used. Addresses of the second type may only be used if an appropriate MX record is provisioned. Addresses of the third type will always fail unless the resolver understands that it is a SIN requiring special processing.
+
+When specified as the destination address in a Mail User Application (MUA), these addresses have the following interpretations:
+
+alice@example.com
+Send mail to Alice without requiring security enhancements.
+alice@mm--mb2gk-6duf5-ygyyl-jny5e-rwshz.example.com
+Send mail to Alice. If the MUA is SIN-Aware, it MUST resolve the security policy specified by the fingerprint and apply security enhancements as mandated by that policy.
+alice@example.com.mm--mb2gk-6duf5-ygyyl-jny5e-rwshz
+Only send mail to Alice if the MUA is SIN-Aware, it MUST resolve the security policy specified by the fingerprint and apply security enhancements as mandated by that policy.
+These rules allow Bob to send email to Alice with either ‘best effort’ security or mandatory security as the circumstances demand
+
+#end file
+
+#file MeshExamplesSIN2 "Examples\\ExamplesSIN2.md" CreateExamples Example
+
+A security policy may be implicit or explicit depending on the root of trust referenced and the context in which it is used.
+
+Since many Internet applications are already designed to make use of a PKIX based trust infrastructure, the fingerprint of a PKIX root of trust provides sufficient information to deduce an appropriate security policy in many instances. For example:
+
+https://mb2gk-6duf5-ygyyl-jny5e-rwshz.example.com/
+Connect to example.com using a TLS connection with a certificate that is valid in a chain of trust that contains a certificate with the fingerprint mb2gk.
+IMAP Server: mb2gk-6duf5-ygyyl-jny5e-rwshz.example.com
+Connect to the IMAP server example.com over a TLS connection with a certificate that is valid in a chain of trust that contains a certificate with the fingerprint mb2gk.
+mailto:alice@example.com.mm--mb2gk-6duf5-ygyyl-jny5e-rwshz
+Encrypt mail messages using S/MIME using an S/MIME certificate that is valid in a chain of trust that contains a certificate with the fingerprint mb2gk.
+
+#end file
+
+
+#file MeshExamplesContainer "Examples\\ExamplesContainer.md" CreateExamples Example
+#% var ExampleGenerator = new ExampleGenerator () { _Output = _Output };
+The data payloads in all the following examples are identical, only the
+authentication and/or encryption is different. 
+
+* Frame 0 is omitted in each case
+
+* Frame 1..n consists of 300 bytes being the byte sequence 00, 01, 02, etc. 
+repeating after 256 bytes.
+
+For conciseness, the wire format is omitted for examples after the first, except
+where the data payload has been transformed, (i.e. encrypted).
+
+
+####Simple container
+
+Here the simple container:
+
+~~~~
+#{Example.ContainerFramingSimple}
+
+~~~~
+
+The header values are:
+
+#call ExampleGenerator.DumpHeaders Example.ContainerHeadersSimple
+
+
+####Payload and chain digests
+
+#call ExampleGenerator.DumpHeaders Example.ContainerHeadersChain
+
+####Merkle Tree
+
+#call ExampleGenerator.DumpHeaders Example.ContainerHeadersMerkleTree
+
+####Signed container
+
+
+####Encrypted container
+
+
+#end file
+
+
+#method DumpHeaders List<ContainerHeader> Headers
+#foreach (var Header in Headers)
+Frame #{Header.Index}
+
+~~~~
+#{Header}
+~~~~
+
+#end foreach
+#end method
+
+#method DumpHeader ContainerHeader Header
+Frame #{Header.Index}
+
+~~~~
+#{Header}
+~~~~
+
+#end method
+
+
+#end xclass
+#end using

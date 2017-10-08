@@ -73,9 +73,9 @@ namespace Goedel.Mesh {
 
 
 
-        PersonalProfile PersonalProfile;
-        SessionPersonal PersonalSession;
-        OfflineEscrowEntry OfflineEscrowEntry;
+        //PersonalProfile PersonalProfile=null;
+        //SessionPersonal PersonalSession;
+        //OfflineEscrowEntry OfflineEscrowEntry;
         void DebugCreateProfile (string Address) {
             //var Response = MeshSession.Validate(Address);
             //if (!Response.Valid) {
@@ -102,22 +102,22 @@ namespace Goedel.Mesh {
             //MeshSession.Recover(Secret);
             }
 
-        void RequestConnect (string Address) {
-            var DeviceRegistration = MeshSession.CreateDevice();
-            var Connect = MeshSession.Connect(DeviceRegistration, 
-                    Address, out var Authenticator);
+        //void RequestConnect (string Address) {
+        //    var DeviceRegistration = MeshSession.CreateDevice();
+        //    var Connect = MeshSession.Connect(DeviceRegistration, 
+        //            Address, out var Authenticator);
 
-            Connect.Await();
-            }
+        //    Connect.Await();
+        //    }
 
 
-        void AcceptPending () {
-            var Pending = PersonalSession.ConnectPending();
-            foreach (var Request in Pending.Pending) {
-                var Result = PersonalSession.ConnectClose(Request, 
-                    ConnectionStatus.Accepted);
-                }
-            }
+        //void AcceptPending () {
+        //    var Pending = PersonalSession.ConnectPending();
+        //    foreach (var Request in Pending.Pending) {
+        //        var Result = PersonalSession.ConnectClose(Request, 
+        //            ConnectionStatus.Accepted);
+        //        }
+        //    }
 
 
         static void Main (string[] args) {

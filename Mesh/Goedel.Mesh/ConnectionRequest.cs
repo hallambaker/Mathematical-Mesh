@@ -191,16 +191,14 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Return a signed version of the data.
         /// </summary>
-        public SignedConnectionRequest SignedConnectionRequest {
-            get => new SignedConnectionRequest(this); 
-            }
+        public SignedConnectionRequest SignedConnectionRequest => new SignedConnectionRequest(this); 
+
 
         /// <summary>
         /// A unique object ID.
         /// </summary>
-        public string UniqueID {
-            get => ParentUDF;  
-            }
+        public string UniqueID => ParentUDF;  
+
 
 
         }
@@ -213,9 +211,8 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Unique identifier for connections pending object.
         /// </summary>
-        public override string UniqueID {
-            get => UserProfileUDF; 
-            }
+        public override string UniqueID  => UserProfileUDF; 
+
 
         /// <summary>
         /// Get the primary key.

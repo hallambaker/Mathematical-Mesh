@@ -15,7 +15,6 @@
 
 LinkFiles = \
     Goedel.Protocol.dll\
-    Goedel.Registry.dll\
     Goedel.Utilities.dll
 
 prebuild : 

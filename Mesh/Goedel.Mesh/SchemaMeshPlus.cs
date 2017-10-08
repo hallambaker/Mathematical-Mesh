@@ -54,16 +54,14 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Is true if the Entry passed validation checking.
         /// </summary>
-        public virtual bool Valid {
-            get => true;
-            }
+        public virtual bool Valid => true;
+
 
         /// <summary>
         /// The set of keys under which the Entry is to be cataloged.
         /// </summary>
-        public virtual List<IndexTerm> Keys {
-            get => new List<IndexTerm> (); 
-            }
+        public virtual List<IndexTerm> Keys => new List<IndexTerm> (); 
+
         }
 
     public partial class SignedProfile {
@@ -71,18 +69,16 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Is true if the Entry passed validation checking.
         /// </summary>
-        public override bool Valid {
-            get => true;
-            }
+        public override bool Valid  => true;
+
         }
 
     public partial class EscrowEntry {
         /// <summary>
         /// Is true if the Entry passed validation checking.
         /// </summary>
-        public override bool Valid {
-            get => true;
-            }
+        public override bool Valid  => true;
+
         }
 
 

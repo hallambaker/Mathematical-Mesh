@@ -28,6 +28,9 @@ account profile
 </dl>
 ###Structure: CatalogEntry
 
+Base class for catalog entries, contains base information on which
+catalog operations are performed.
+
 <dl>
 <dt>ID: String (Optional)
 <dd>Unique identifier for the entry. If present, overrides the identifier 
@@ -44,6 +47,8 @@ specified in the entry.
 <dd>Source data for the entry
 </dl>
 ###Structure: TypedData
+
+Typed content.
 
 <dl>
 <dt>ContentType: String (Optional)
@@ -185,6 +190,7 @@ Contact entry
 
 <dl>
 <dt>Personals: PersonalName [0..Many]
+<dd>Personal names.
 <dt>MeshUDFs: String [0..Many]
 <dd>List of mesh profiles fingerprints for the user.
 <dt>Internets: Internet [0..Many]
@@ -194,12 +200,19 @@ Contact entry
 </dl>
 ###Structure: PersonalName
 
+Personal name structure.
+
 <dl>
 <dt>First: String (Optional)
+<dd>First name
 <dt>Last: String (Optional)
+<dd>Last name
 <dt>Midle: String (Optional)
+<dd>Middle names (if used).
 </dl>
 ###Structure: Address
+
+Contact address.
 
 <dl>
 <dt>Label: String [0..Many]
@@ -210,6 +223,8 @@ e.g. Home, Business, Mobile
 </dl>
 ###Structure: Internet
 
+Internet contact address
+
 <dl>
 <dt>Inherits:  Address
 </dl>
@@ -219,6 +234,8 @@ e.g. Home, Business, Mobile
 <dd>The resource identifier describing the mode of contact
 </dl>
 ###Structure: Postal
+
+Postal or geographic address.
 
 <dl>
 <dt>Inherits:  Address

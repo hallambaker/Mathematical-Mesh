@@ -124,7 +124,7 @@ LinkFiles = \
     $(LIBRARYBIN)/Goedel.Test.dll\
     $(LIBRARYBIN)/Goedel.Utilities.dll
 
-LinkFilesComma = $(LIBRARYBIN)/Goedel.Cryptography.dll,$(LIBRARYBIN)/Goedel.Cryptography.Framework.dll,$(LIBRARYBIN)/Goedel.Cryptography.Jose.dll,$(LIBRARYBIN)/Goedel.Cryptography.KeyFile.dll,$(LIBRARYBIN)/Goedel.IO.dll,$(LIBRARYBIN)/Goedel.Platform.Framework.dll,$(LIBRARYBIN)/Goedel.Protocol.dll,$(LIBRARYBIN)/Goedel.Protocol.Framework.dll,$(LIBRARYBIN)/Goedel.Test.dll,$(LIBRARYBIN)/Goedel.Utilities.dll
+LinkFilesComma = $(LIBRARYBIN)/Goedel.Cryptography.dll,$(LIBRARYBIN)/Goedel.Cryptography.Framework.dll,$(LIBRARYBIN)/Goedel.Cryptography.Jose.dll,$(LIBRARYBIN)/Goedel.Cryptography.KeyFile.dll,$(LIBRARYBIN)/Goedel.IO.dll,$(LIBRARYBIN)/Goedel.Platform.Framework.dll,$(LIBRARYBIN)/Goedel.Protocol.dll,$(LIBRARYBIN)/Goedel.Protocol.Framework.dll,$(LIBRARYBIN)/Goedel.Test.dll,$(LIBRARYBIN)/Goedel.Utilities.dll,Microsoft.VisualStudio.QualityTools.UnitTestFramework,Microsoft.VisualStudio.QualityTools.UnitTestFramework
 
 
 NugetFiles = 

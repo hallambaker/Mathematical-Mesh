@@ -14,19 +14,9 @@
 #   * Copy executables
 
 LinkFiles = \
-    Goedel.ASN.dll\
-    Goedel.Cryptography.dll\
+    Goedel.Command.dll\
     Goedel.Cryptography.Jose.dll\
-    Goedel.Cryptography.Windows.dll\
-    Goedel.FSR.dll\
-    Goedel.IO.dll\
-    Goedel.Platform.dll\
-    Goedel.Platform.Framework.dll\
-    Goedel.Protocol.dll\
-    Goedel.Protocol.Framework.dll\
-    Goedel.Registry.dll\
     Goedel.Utilities.dll\
-    Goedel.Recrypt.Client.dll\
     Goedel.Recrypt.dll
 
 prebuild : 

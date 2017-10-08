@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MeshServer</RootNamespace>
     <AssemblyName>ServerMesh</AssemblyName>
-    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworkProfile />
@@ -51,7 +51,6 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
@@ -91,10 +90,6 @@
     <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Cryptography\Goedel.Cryptography.csproj">
       <Project>{0039b613-3071-493f-a51b-fb75f7ca56c2}</Project>
       <Name>Goedel.Cryptography</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Protocol.Framework\Goedel.Protocol.Framework.csproj">
-      <Project>{c1d2c847-ee62-430c-82dc-a4bd5ab38a44}</Project>
-      <Name>Goedel.Protocol.Framework</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Protocol\Goedel.Protocol.csproj">
       <Project>{18cb2a21-48f4-4862-ae95-94efbd209ab3}</Project>

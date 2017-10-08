@@ -9,14 +9,129 @@ using Goedel.Protocol.Debug;
 using Goedel.Mesh.Server;
 using Goedel.Mesh.MeshMan;
 using Goedel.Mesh.Platform;
+using Goedel.Cryptography;
+using Goedel.Cryptography.Jose;
+using Goedel.Cryptography.Container;
+using Goedel.Protocol;
+using Goedel.Protocol.Exchange;
+using Goedel.Protocol.Exchange.Server;
+using Goedel.IO;
 
 namespace ExampleGenerator {
 
 
     public partial class CreateExamples {
 
+        public string ContainerFramingSimple = "";
+        StringWriter ConsoleWriter ;
 
-        void Go(string Output1, string Output2) {
+        public List<ContainerHeader> ContainerHeadersSimple = new List<ContainerHeader>();
+        public List<ContainerHeader> ContainerHeadersChain = new List<ContainerHeader>();
+        public List<ContainerHeader> ContainerHeadersTree = new List<ContainerHeader>();
+        public List<ContainerHeader> ContainerHeadersMerkleTree = new List<ContainerHeader>();
+
+        void GoContainer () {
+            // Simple
+            var TContainer = MakeContainer("Test1List", ContainerType.List);
+            var Data = TestData(300);
+            TContainer.Append(Data);
+            ReadContainer(TContainer, ContainerHeadersSimple);
+            ContainerFramingSimple = ConsoleWriter.ToString();
+
+
+            // Digest
+            TContainer = MakeContainer("Test1Chain", ContainerType.Chain);
+            TContainer.Append(Data);
+            TContainer.Append(Data);
+            TContainer.Append(Data);
+            ReadContainer(TContainer, ContainerHeadersChain);
+
+
+            // Tree
+            TContainer = MakeContainer("Test1Tree", ContainerType.Tree);
+            TContainer.Append(Data);
+            TContainer.Append(Data);
+            TContainer.Append(Data);
+            TContainer.Append(Data);
+            TContainer.Append(Data);
+            TContainer.Append(Data);
+            ReadContainer(TContainer, ContainerHeadersTree);
+
+
+            // Merkle Tree
+            TContainer = MakeContainer("Test1Merkle", ContainerType.MerkleTree);
+            TContainer.Append(Data);
+            TContainer.Append(Data);
+            TContainer.Append(Data);
+            TContainer.Append(Data);
+            TContainer.Append(Data);
+            TContainer.Append(Data);
+            ReadContainer(TContainer, ContainerHeadersMerkleTree);
+
+
+            ExampleGenerator.MeshExamplesContainer(this);
+            ExampleGenerator.MeshExamplesUDF(this);
+            ExampleGenerator.MeshExamplesUDFCompressed(this);
+            ExampleGenerator.MakeExamplesKeyExchange(this);
+            }
+
+        KeyExchangeClient KeyExchangeClient;
+        KeyExchangePortalTraced KeyExchangePortalTraced;
+
+        public TraceDictionary KeyExchangeTraces;
+        public Key ClientDHIdentity;
+        public string TraceDH = "DiffieHellman";
+
+        void GoKeyExchange () {
+
+            Message.Append(ExchangeMessage._TagDictionary);
+
+            KeyExchangePortalTraced = new KeyExchangePortalTraced(NameService);
+            KeyExchangePortal.Default = KeyExchangePortalTraced;
+
+            KeyExchangeClient = new KeyExchangeClient(AccountID);
+
+            KeyExchangeTraces = KeyExchangePortalTraced.Traces;
+            KeyExchangeTraces.Label(TraceDH);
+
+            var DHProvider = CryptoCatalog.Default.GetRecryption(CryptoAlgorithmID.DH);
+            DHProvider.Generate(KeySecurity.Exportable, 2048);
+
+            var ClientIdentity = DHProvider.KeyPair;
+
+
+            var Ticket = KeyExchangeClient.GetTicket(DHProvider);
+            }
+
+
+        public Container MakeContainer (string FileName, ContainerType ContainerType = ContainerType.Chain) {
+            ConsoleWriter = new StringWriter();
+
+            var FileStream = FileName.FileStream(FileStatus.Overwrite);
+            var JBCDStream = new JBCDStreamDebug(FileStream, ConsoleWriter);
+            return Container.NewContainer(JBCDStream, ContainerType);
+
+            }
+
+
+        public byte[] TestData (int MaxSize) {
+            var Data = new byte[MaxSize];
+            for (var i = 0; i < MaxSize; i++) {
+                Data[i] = (byte)(i & 0xff);
+                }
+            return Data;
+            }
+
+
+        public void ReadContainer (Container Container, List<ContainerHeader> ContainerHeaders) {
+            Container.First();
+            while (!Container.EOF) {
+                ContainerHeaders.Add(Container.ContainerHeader);
+                Container.Next();
+                }
+            }
+
+        void GoMesh () {
             ExampleGenerator.MakeExamplesCatalog(this);
             ExampleGenerator.MakeExamplesBookmark(this);
             ExampleGenerator.MakeExamplesCredential(this);

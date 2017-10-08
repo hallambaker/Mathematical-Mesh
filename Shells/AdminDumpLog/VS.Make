@@ -14,19 +14,13 @@
 #   * Copy executables
 
 LinkFiles = \
-    Goedel.Cryptography.dll\
-    Goedel.Cryptography.Framework.dll\
-    Goedel.Cryptography.Jose.dll\
-    Goedel.FSR.dll\
+    Goedel.Command.dll\
     Goedel.IO.dll\
-    Goedel.Platform.dll\
-    Goedel.Platform.Framework.dll\
-    Goedel.Protocol.dll\
     Goedel.Protocol.Framework.dll\
-    Goedel.Registry.dll\
+    Goedel.Protocol.dll\
     Goedel.Utilities.dll\
-    Goedel.Persistence.dll\
-    Goedel.Mesh.dll
+    Goedel.Mesh.dll\
+    Goedel.Persistence.dll
 
 prebuild : 
     echo "Do Prebuild"

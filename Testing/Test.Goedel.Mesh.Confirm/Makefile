@@ -125,7 +125,7 @@ LinkFiles = \
     $(LIBRARYBIN)/Goedel.Utilities.dll\
     $(TARGETBIN)/Goedel.Mesh.dll
 
-LinkFilesComma = $(LIBRARYBIN)/Goedel.Cryptography.dll,$(LIBRARYBIN)/Goedel.Cryptography.Framework.dll,$(LIBRARYBIN)/Goedel.Cryptography.Jose.dll,$(LIBRARYBIN)/Goedel.Cryptography.KeyFile.dll,$(LIBRARYBIN)/Goedel.IO.dll,$(LIBRARYBIN)/Goedel.Platform.Framework.dll,$(LIBRARYBIN)/Goedel.Protocol.dll,$(LIBRARYBIN)/Goedel.Protocol.Framework.dll,$(LIBRARYBIN)/Goedel.Test.dll,$(LIBRARYBIN)/Goedel.Utilities.dll,$(TARGETBIN)/Goedel.Mesh.dll
+LinkFilesComma = $(LIBRARYBIN)/Goedel.Cryptography.dll,$(LIBRARYBIN)/Goedel.Cryptography.Framework.dll,$(LIBRARYBIN)/Goedel.Cryptography.Jose.dll,$(LIBRARYBIN)/Goedel.Cryptography.KeyFile.dll,$(LIBRARYBIN)/Goedel.IO.dll,$(LIBRARYBIN)/Goedel.Platform.Framework.dll,$(LIBRARYBIN)/Goedel.Protocol.dll,$(LIBRARYBIN)/Goedel.Protocol.Framework.dll,$(LIBRARYBIN)/Goedel.Test.dll,$(LIBRARYBIN)/Goedel.Utilities.dll,$(TARGETBIN)/Goedel.Mesh.dll,Microsoft.VisualStudio.QualityTools.UnitTestFramework,Microsoft.VisualStudio.QualityTools.UnitTestFramework
 
 
 NugetFiles = 
@@ -174,14 +174,14 @@ endif
 # Recursive make targets, do not execute if the variable NORECURSE is defined
 ifndef NORECURSE
 
-../../Goedel.Mesh/$(TARGETBIN)/Goedel.Mesh.dll : recursive
-! $(MAKE) -C ../../Goedel.Mesh
+../../Mesh/Goedel.Mesh/$(TARGETBIN)/Goedel.Mesh.dll : recursive
+! $(MAKE) -C ../../Mesh/Goedel.Mesh
 
 endif
 
 $(TARGETBIN)/Goedel.Mesh.dll :| $(TARGETBIN)
-$(TARGETBIN)/Goedel.Mesh.dll : ../../Goedel.Mesh/$(TARGETBIN)/Goedel.Mesh.dll
-!  cp ../../Goedel.Mesh/$(TARGETBIN)/Goedel.Mesh.dll $(TARGETBIN)/Goedel.Mesh.dll
+$(TARGETBIN)/Goedel.Mesh.dll : ../../Mesh/Goedel.Mesh/$(TARGETBIN)/Goedel.Mesh.dll
+!  cp ../../Mesh/Goedel.Mesh/$(TARGETBIN)/Goedel.Mesh.dll $(TARGETBIN)/Goedel.Mesh.dll
 
 
 # Referenced Libraries

@@ -110,26 +110,19 @@ export Custom_TrojanGTK_FLAG	?= /cs
 
 SourceFiles = \
      ConfirmServer.cs\
+     DispatchConfirm.cs\
      Properties/AssemblyInfo.cs
 
 LinkFiles = \
-    $(LIBRARYBIN)/Goedel.ASN.dll\
-    $(LIBRARYBIN)/Goedel.Cryptography.dll\
-    $(LIBRARYBIN)/Goedel.Cryptography.Jose.dll\
-    $(LIBRARYBIN)/Goedel.Cryptography.Windows.dll\
-    $(LIBRARYBIN)/Goedel.FSR.dll\
-    $(LIBRARYBIN)/Goedel.IO.dll\
-    $(LIBRARYBIN)/Goedel.Platform.dll\
-    $(LIBRARYBIN)/Goedel.Platform.Framework.dll\
-    $(LIBRARYBIN)/Goedel.Protocol.dll\
-    $(LIBRARYBIN)/Goedel.Protocol.Debug.dll\
-    $(LIBRARYBIN)/Goedel.Protocol.Framework.dll\
-    $(LIBRARYBIN)/Goedel.Registry.dll\
-    $(LIBRARYBIN)/Goedel.Utilities.dll\
+    $(TARGETBIN)/Goedel.Command.dll\
+    $(TARGETBIN)/Goedel.Protocol.dll\
+    $(TARGETBIN)/Goedel.Registry.dll\
+    $(TARGETBIN)/Goedel.Utilities.dll\
+    $(TARGETBIN)/Goedel.Persistence.dll\
     $(TARGETBIN)/Goedel.Confirm.Server.dll\
     $(TARGETBIN)/Goedel.Confirm.dll
 
-LinkFilesComma = $(LIBRARYBIN)/Goedel.ASN.dll,$(LIBRARYBIN)/Goedel.Cryptography.dll,$(LIBRARYBIN)/Goedel.Cryptography.Jose.dll,$(LIBRARYBIN)/Goedel.Cryptography.Windows.dll,$(LIBRARYBIN)/Goedel.FSR.dll,$(LIBRARYBIN)/Goedel.IO.dll,$(LIBRARYBIN)/Goedel.Platform.dll,$(LIBRARYBIN)/Goedel.Platform.Framework.dll,$(LIBRARYBIN)/Goedel.Protocol.dll,$(LIBRARYBIN)/Goedel.Protocol.Debug.dll,$(LIBRARYBIN)/Goedel.Protocol.Framework.dll,$(LIBRARYBIN)/Goedel.Registry.dll,$(LIBRARYBIN)/Goedel.Utilities.dll,$(TARGETBIN)/Goedel.Confirm.Server.dll,$(TARGETBIN)/Goedel.Confirm.dll
+LinkFilesComma = $(TARGETBIN)/Goedel.Command.dll,$(TARGETBIN)/Goedel.Protocol.dll,$(TARGETBIN)/Goedel.Registry.dll,$(TARGETBIN)/Goedel.Utilities.dll,$(TARGETBIN)/Goedel.Persistence.dll,$(TARGETBIN)/Goedel.Confirm.Server.dll,$(TARGETBIN)/Goedel.Confirm.dll
 
 
 NugetFiles = 
@@ -181,6 +174,21 @@ endif
 # Recursive make targets, do not execute if the variable NORECURSE is defined
 ifndef NORECURSE
 
+../../../buildtools/Libraries/Goedel.Command/$(TARGETBIN)/Goedel.Command.dll : recursive
+! $(MAKE) -C ../../../buildtools/Libraries/Goedel.Command
+
+../../../buildtools/Libraries/Goedel.Protocol/$(TARGETBIN)/Goedel.Protocol.dll : recursive
+! $(MAKE) -C ../../../buildtools/Libraries/Goedel.Protocol
+
+../../../buildtools/Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll : recursive
+! $(MAKE) -C ../../../buildtools/Libraries/Goedel.Registry
+
+../../../buildtools/Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll : recursive
+! $(MAKE) -C ../../../buildtools/Libraries/Goedel.Utilities
+
+../../Libraries/Goedel.Persistence/$(TARGETBIN)/Goedel.Persistence.dll : recursive
+! $(MAKE) -C ../../Libraries/Goedel.Persistence
+
 ../Goedel.Confirm.Server/$(TARGETBIN)/Goedel.Confirm.Server.dll : recursive
 ! $(MAKE) -C ../Goedel.Confirm.Server
 
@@ -188,6 +196,26 @@ ifndef NORECURSE
 ! $(MAKE) -C ../Goedel.Confirm
 
 endif
+
+$(TARGETBIN)/Goedel.Command.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.Command.dll : ../../../buildtools/Libraries/Goedel.Command/$(TARGETBIN)/Goedel.Command.dll
+!  cp ../../../buildtools/Libraries/Goedel.Command/$(TARGETBIN)/Goedel.Command.dll $(TARGETBIN)/Goedel.Command.dll
+
+$(TARGETBIN)/Goedel.Protocol.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.Protocol.dll : ../../../buildtools/Libraries/Goedel.Protocol/$(TARGETBIN)/Goedel.Protocol.dll
+!  cp ../../../buildtools/Libraries/Goedel.Protocol/$(TARGETBIN)/Goedel.Protocol.dll $(TARGETBIN)/Goedel.Protocol.dll
+
+$(TARGETBIN)/Goedel.Registry.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.Registry.dll : ../../../buildtools/Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll
+!  cp ../../../buildtools/Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll $(TARGETBIN)/Goedel.Registry.dll
+
+$(TARGETBIN)/Goedel.Utilities.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.Utilities.dll : ../../../buildtools/Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
+!  cp ../../../buildtools/Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll $(TARGETBIN)/Goedel.Utilities.dll
+
+$(TARGETBIN)/Goedel.Persistence.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.Persistence.dll : ../../Libraries/Goedel.Persistence/$(TARGETBIN)/Goedel.Persistence.dll
+!  cp ../../Libraries/Goedel.Persistence/$(TARGETBIN)/Goedel.Persistence.dll $(TARGETBIN)/Goedel.Persistence.dll
 
 $(TARGETBIN)/Goedel.Confirm.Server.dll :| $(TARGETBIN)
 $(TARGETBIN)/Goedel.Confirm.Server.dll : ../Goedel.Confirm.Server/$(TARGETBIN)/Goedel.Confirm.Server.dll

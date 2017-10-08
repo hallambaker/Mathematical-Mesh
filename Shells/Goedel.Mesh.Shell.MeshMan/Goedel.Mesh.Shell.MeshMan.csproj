@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Goedel.Mesh.Shell.MeshMan</RootNamespace>
     <AssemblyName>Goedel.Mesh.Shell.MeshMan</AssemblyName>
-    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
     <AssemblyVersion>1.0.0.272</AssemblyVersion>
@@ -104,17 +104,9 @@
       <Project>{c4824513-f416-4ead-be82-f2df23641f6a}</Project>
       <Name>Goedel.IO</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Platform.Framework\Goedel.Platform.Framework.csproj">
-      <Project>{168a9984-6dbc-4683-9e43-c3e077066933}</Project>
-      <Name>Goedel.Platform.Framework</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Platform\Goedel.Platform.csproj">
       <Project>{b806fca3-aa82-4fd4-aa56-9d53250bda4a}</Project>
       <Name>Goedel.Platform</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Protocol.Framework\Goedel.Protocol.Framework.csproj">
-      <Project>{c1d2c847-ee62-430c-82dc-a4bd5ab38a44}</Project>
-      <Name>Goedel.Protocol.Framework</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Protocol\Goedel.Protocol.csproj">
       <Project>{18cb2a21-48f4-4862-ae95-94efbd209ab3}</Project>

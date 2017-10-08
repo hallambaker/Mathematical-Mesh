@@ -136,7 +136,7 @@ LinkFiles = \
     $(TARGETBIN)/Goedel.Persistence.dll\
     $(TARGETBIN)/Test.Constants.dll
 
-LinkFilesComma = $(LIBRARYBIN)/Goedel.ASN.dll,$(LIBRARYBIN)/Goedel.Cryptography.dll,$(LIBRARYBIN)/Goedel.Cryptography.Framework.dll,$(LIBRARYBIN)/Goedel.Cryptography.Jose.dll,$(LIBRARYBIN)/Goedel.Cryptography.KeyFile.dll,$(LIBRARYBIN)/Goedel.Cryptography.Windows.dll,$(LIBRARYBIN)/Goedel.FSR.dll,$(LIBRARYBIN)/Goedel.IO.dll,$(LIBRARYBIN)/Goedel.Platform.dll,$(LIBRARYBIN)/Goedel.Platform.Framework.dll,$(LIBRARYBIN)/Goedel.Protocol.dll,$(LIBRARYBIN)/Goedel.Protocol.Framework.dll,$(LIBRARYBIN)/Goedel.Test.dll,$(LIBRARYBIN)/Goedel.Utilities.dll,$(TARGETBIN)/Goedel.Mesh.Client.dll,$(TARGETBIN)/Goedel.Mesh.Platform.Windows.dll,$(TARGETBIN)/Goedel.Mesh.Platform.dll,$(TARGETBIN)/Goedel.Mesh.Server.dll,$(TARGETBIN)/Goedel.Mesh.Shell.MeshMan.dll,$(TARGETBIN)/Goedel.Mesh.dll,$(TARGETBIN)/Goedel.Persistence.dll,$(TARGETBIN)/Test.Constants.dll
+LinkFilesComma = $(LIBRARYBIN)/Goedel.ASN.dll,$(LIBRARYBIN)/Goedel.Cryptography.dll,$(LIBRARYBIN)/Goedel.Cryptography.Framework.dll,$(LIBRARYBIN)/Goedel.Cryptography.Jose.dll,$(LIBRARYBIN)/Goedel.Cryptography.KeyFile.dll,$(LIBRARYBIN)/Goedel.Cryptography.Windows.dll,$(LIBRARYBIN)/Goedel.FSR.dll,$(LIBRARYBIN)/Goedel.IO.dll,$(LIBRARYBIN)/Goedel.Platform.dll,$(LIBRARYBIN)/Goedel.Platform.Framework.dll,$(LIBRARYBIN)/Goedel.Protocol.dll,$(LIBRARYBIN)/Goedel.Protocol.Framework.dll,$(LIBRARYBIN)/Goedel.Test.dll,$(LIBRARYBIN)/Goedel.Utilities.dll,$(TARGETBIN)/Goedel.Mesh.Client.dll,$(TARGETBIN)/Goedel.Mesh.Platform.Windows.dll,$(TARGETBIN)/Goedel.Mesh.Platform.dll,$(TARGETBIN)/Goedel.Mesh.Server.dll,$(TARGETBIN)/Goedel.Mesh.Shell.MeshMan.dll,$(TARGETBIN)/Goedel.Mesh.dll,$(TARGETBIN)/Goedel.Persistence.dll,$(TARGETBIN)/Test.Constants.dll,Microsoft.VisualStudio.QualityTools.UnitTestFramework,Microsoft.VisualStudio.QualityTools.UnitTestFramework
 
 
 NugetFiles = 
@@ -185,26 +185,26 @@ endif
 # Recursive make targets, do not execute if the variable NORECURSE is defined
 ifndef NORECURSE
 
-../../Goedel.Mesh.Client/$(TARGETBIN)/Goedel.Mesh.Client.dll : recursive
-! $(MAKE) -C ../../Goedel.Mesh.Client
+../../Mesh/Goedel.Mesh.Client/$(TARGETBIN)/Goedel.Mesh.Client.dll : recursive
+! $(MAKE) -C ../../Mesh/Goedel.Mesh.Client
 
-../../Goedel.Mesh.Platform.Windows/$(TARGETBIN)/Goedel.Mesh.Platform.Windows.dll : recursive
-! $(MAKE) -C ../../Goedel.Mesh.Platform.Windows
+../../Mesh/Goedel.Mesh.Platform.Windows/$(TARGETBIN)/Goedel.Mesh.Platform.Windows.dll : recursive
+! $(MAKE) -C ../../Mesh/Goedel.Mesh.Platform.Windows
 
-../../Goedel.Mesh.Platform/$(TARGETBIN)/Goedel.Mesh.Platform.dll : recursive
-! $(MAKE) -C ../../Goedel.Mesh.Platform
+../../Mesh/Goedel.Mesh.Platform/$(TARGETBIN)/Goedel.Mesh.Platform.dll : recursive
+! $(MAKE) -C ../../Mesh/Goedel.Mesh.Platform
 
-../../Goedel.Mesh.Server/$(TARGETBIN)/Goedel.Mesh.Server.dll : recursive
-! $(MAKE) -C ../../Goedel.Mesh.Server
+../../Mesh/Goedel.Mesh.Server/$(TARGETBIN)/Goedel.Mesh.Server.dll : recursive
+! $(MAKE) -C ../../Mesh/Goedel.Mesh.Server
 
-../../Goedel.Mesh.Shell.MeshMan/$(TARGETBIN)/Goedel.Mesh.Shell.MeshMan.dll : recursive
-! $(MAKE) -C ../../Goedel.Mesh.Shell.MeshMan
+../../Shells/Goedel.Mesh.Shell.MeshMan/$(TARGETBIN)/Goedel.Mesh.Shell.MeshMan.dll : recursive
+! $(MAKE) -C ../../Shells/Goedel.Mesh.Shell.MeshMan
 
-../../Goedel.Mesh/$(TARGETBIN)/Goedel.Mesh.dll : recursive
-! $(MAKE) -C ../../Goedel.Mesh
+../../Mesh/Goedel.Mesh/$(TARGETBIN)/Goedel.Mesh.dll : recursive
+! $(MAKE) -C ../../Mesh/Goedel.Mesh
 
-../../Goedel.Persistence/$(TARGETBIN)/Goedel.Persistence.dll : recursive
-! $(MAKE) -C ../../Goedel.Persistence
+../../Libraries/Goedel.Persistence/$(TARGETBIN)/Goedel.Persistence.dll : recursive
+! $(MAKE) -C ../../Libraries/Goedel.Persistence
 
 ../Test.Constants/$(TARGETBIN)/Test.Constants.dll : recursive
 ! $(MAKE) -C ../Test.Constants
@@ -212,32 +212,32 @@ ifndef NORECURSE
 endif
 
 $(TARGETBIN)/Goedel.Mesh.Client.dll :| $(TARGETBIN)
-$(TARGETBIN)/Goedel.Mesh.Client.dll : ../../Goedel.Mesh.Client/$(TARGETBIN)/Goedel.Mesh.Client.dll
-!  cp ../../Goedel.Mesh.Client/$(TARGETBIN)/Goedel.Mesh.Client.dll $(TARGETBIN)/Goedel.Mesh.Client.dll
+$(TARGETBIN)/Goedel.Mesh.Client.dll : ../../Mesh/Goedel.Mesh.Client/$(TARGETBIN)/Goedel.Mesh.Client.dll
+!  cp ../../Mesh/Goedel.Mesh.Client/$(TARGETBIN)/Goedel.Mesh.Client.dll $(TARGETBIN)/Goedel.Mesh.Client.dll
 
 $(TARGETBIN)/Goedel.Mesh.Platform.Windows.dll :| $(TARGETBIN)
-$(TARGETBIN)/Goedel.Mesh.Platform.Windows.dll : ../../Goedel.Mesh.Platform.Windows/$(TARGETBIN)/Goedel.Mesh.Platform.Windows.dll
-!  cp ../../Goedel.Mesh.Platform.Windows/$(TARGETBIN)/Goedel.Mesh.Platform.Windows.dll $(TARGETBIN)/Goedel.Mesh.Platform.Windows.dll
+$(TARGETBIN)/Goedel.Mesh.Platform.Windows.dll : ../../Mesh/Goedel.Mesh.Platform.Windows/$(TARGETBIN)/Goedel.Mesh.Platform.Windows.dll
+!  cp ../../Mesh/Goedel.Mesh.Platform.Windows/$(TARGETBIN)/Goedel.Mesh.Platform.Windows.dll $(TARGETBIN)/Goedel.Mesh.Platform.Windows.dll
 
 $(TARGETBIN)/Goedel.Mesh.Platform.dll :| $(TARGETBIN)
-$(TARGETBIN)/Goedel.Mesh.Platform.dll : ../../Goedel.Mesh.Platform/$(TARGETBIN)/Goedel.Mesh.Platform.dll
-!  cp ../../Goedel.Mesh.Platform/$(TARGETBIN)/Goedel.Mesh.Platform.dll $(TARGETBIN)/Goedel.Mesh.Platform.dll
+$(TARGETBIN)/Goedel.Mesh.Platform.dll : ../../Mesh/Goedel.Mesh.Platform/$(TARGETBIN)/Goedel.Mesh.Platform.dll
+!  cp ../../Mesh/Goedel.Mesh.Platform/$(TARGETBIN)/Goedel.Mesh.Platform.dll $(TARGETBIN)/Goedel.Mesh.Platform.dll
 
 $(TARGETBIN)/Goedel.Mesh.Server.dll :| $(TARGETBIN)
-$(TARGETBIN)/Goedel.Mesh.Server.dll : ../../Goedel.Mesh.Server/$(TARGETBIN)/Goedel.Mesh.Server.dll
-!  cp ../../Goedel.Mesh.Server/$(TARGETBIN)/Goedel.Mesh.Server.dll $(TARGETBIN)/Goedel.Mesh.Server.dll
+$(TARGETBIN)/Goedel.Mesh.Server.dll : ../../Mesh/Goedel.Mesh.Server/$(TARGETBIN)/Goedel.Mesh.Server.dll
+!  cp ../../Mesh/Goedel.Mesh.Server/$(TARGETBIN)/Goedel.Mesh.Server.dll $(TARGETBIN)/Goedel.Mesh.Server.dll
 
 $(TARGETBIN)/Goedel.Mesh.Shell.MeshMan.dll :| $(TARGETBIN)
-$(TARGETBIN)/Goedel.Mesh.Shell.MeshMan.dll : ../../Goedel.Mesh.Shell.MeshMan/$(TARGETBIN)/Goedel.Mesh.Shell.MeshMan.dll
-!  cp ../../Goedel.Mesh.Shell.MeshMan/$(TARGETBIN)/Goedel.Mesh.Shell.MeshMan.dll $(TARGETBIN)/Goedel.Mesh.Shell.MeshMan.dll
+$(TARGETBIN)/Goedel.Mesh.Shell.MeshMan.dll : ../../Shells/Goedel.Mesh.Shell.MeshMan/$(TARGETBIN)/Goedel.Mesh.Shell.MeshMan.dll
+!  cp ../../Shells/Goedel.Mesh.Shell.MeshMan/$(TARGETBIN)/Goedel.Mesh.Shell.MeshMan.dll $(TARGETBIN)/Goedel.Mesh.Shell.MeshMan.dll
 
 $(TARGETBIN)/Goedel.Mesh.dll :| $(TARGETBIN)
-$(TARGETBIN)/Goedel.Mesh.dll : ../../Goedel.Mesh/$(TARGETBIN)/Goedel.Mesh.dll
-!  cp ../../Goedel.Mesh/$(TARGETBIN)/Goedel.Mesh.dll $(TARGETBIN)/Goedel.Mesh.dll
+$(TARGETBIN)/Goedel.Mesh.dll : ../../Mesh/Goedel.Mesh/$(TARGETBIN)/Goedel.Mesh.dll
+!  cp ../../Mesh/Goedel.Mesh/$(TARGETBIN)/Goedel.Mesh.dll $(TARGETBIN)/Goedel.Mesh.dll
 
 $(TARGETBIN)/Goedel.Persistence.dll :| $(TARGETBIN)
-$(TARGETBIN)/Goedel.Persistence.dll : ../../Goedel.Persistence/$(TARGETBIN)/Goedel.Persistence.dll
-!  cp ../../Goedel.Persistence/$(TARGETBIN)/Goedel.Persistence.dll $(TARGETBIN)/Goedel.Persistence.dll
+$(TARGETBIN)/Goedel.Persistence.dll : ../../Libraries/Goedel.Persistence/$(TARGETBIN)/Goedel.Persistence.dll
+!  cp ../../Libraries/Goedel.Persistence/$(TARGETBIN)/Goedel.Persistence.dll $(TARGETBIN)/Goedel.Persistence.dll
 
 $(TARGETBIN)/Test.Constants.dll :| $(TARGETBIN)
 $(TARGETBIN)/Test.Constants.dll : ../Test.Constants/$(TARGETBIN)/Test.Constants.dll

@@ -16,9 +16,8 @@ namespace Goedel.Mesh.MeshMan {
     public partial class Shell {
 
         public List<ConnectionRequest> PendingRequests;
-        MeshMachine Machine {
-            get => MeshSession.Machine;
-            }
+        MeshMachine Machine=> MeshSession.Machine;
+
 
         string PortalID;
         string AccountID;
@@ -49,8 +48,8 @@ namespace Goedel.Mesh.MeshMan {
             }
 
 
-        public RegistrationDevice RegistrationDevice { get => Machine.Device; }
-        public DeviceProfile DeviceProfile { get => RegistrationDevice.DeviceProfile; }
+        public RegistrationDevice RegistrationDevice  => Machine.Device; 
+        public DeviceProfile DeviceProfile => RegistrationDevice.DeviceProfile; 
 
         /// <summary>
         /// Erase all test profiles

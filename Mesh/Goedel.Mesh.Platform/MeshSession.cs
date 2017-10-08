@@ -55,7 +55,7 @@ namespace Goedel.Mesh.Platform {
         /// <returns>The mesh client.</returns>
         public MeshClient Bind (string Portal) {
             Assert.NotNull(Portal, NoPortalAccount.Throw);
-            Goedel.Mesh.Account.SplitAccountID(Portal, out var Account, out var Service);
+            Portal.SplitAccountID(out var Account, out var Service);
             Assert.NotNull(Account, InvalidPortalAddress.Throw);
             var MeshClient = new MeshClient(PortalAccount: Portal);
             Assert.NotNull(MeshClient, PortalConnectFail.Throw);

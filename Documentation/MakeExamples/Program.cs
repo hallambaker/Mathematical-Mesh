@@ -9,12 +9,10 @@ using Goedel.Protocol.Debug;
 namespace ExampleGenerator {
     public partial class CreateExamples {
 
-        string Output1 = @"Examples\Examples.md";
-        string Output2 = @"Examples\ExamplesWeb.md";
 
         string LogPortal = "Portal.jlog";
         string LogMesh = "Mesh.jlog";
-
+        public bool All = false;
 
         static void Main(string[] args) {
             Goedel.IO.Debug.Initialize();
@@ -27,12 +25,14 @@ namespace ExampleGenerator {
         public TraceDictionary Traces;
 
         public void Go () {
-            // Delete data from previous runs
-            MakeClean();
+            //// Delete data from previous runs
+            //MakeClean();
+            GoKeyExchange();
+            GoContainer();
 
-            //// here make the examples
-            //MakeExamples ();
-            Go(Output1, Output2);
+            ////// here make the examples
+            ////MakeExamples ();
+            //GoMesh();
 
             // Make the documentation
             MakeDocs();
@@ -45,7 +45,8 @@ namespace ExampleGenerator {
             }
 
         public void MakeDocs () {
-            var Process = System.Diagnostics.Process.Start("CMD.exe", "/C MakeDocs");
+            var Process = All ? System.Diagnostics.Process.Start("CMD.exe", "/C MakeDocs") :
+                System.Diagnostics.Process.Start("CMD.exe", "/C MakeOneDoc");
             Process.WaitForExit();
             }
 

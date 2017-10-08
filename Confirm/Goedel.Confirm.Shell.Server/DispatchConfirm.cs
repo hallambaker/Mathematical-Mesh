@@ -22,7 +22,6 @@
 
 using System;
 using Goedel.Protocol;
-using Goedel.Protocol.Framework;
 using Goedel.Confirm;
 using Goedel.Confirm.Server;
 

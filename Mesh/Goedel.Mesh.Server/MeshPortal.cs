@@ -23,7 +23,6 @@
 using System;
 using System.Collections.Generic;
 using Goedel.Protocol;
-using Goedel.Protocol.Framework;
 using Goedel.Mesh;
 
 namespace Goedel.Mesh.Server {

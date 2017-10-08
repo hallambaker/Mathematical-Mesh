@@ -113,20 +113,11 @@ SourceFiles = \
      RecryptClient.cs
 
 LinkFiles = \
-    $(LIBRARYBIN)/Goedel.ASN.dll\
-    $(LIBRARYBIN)/Goedel.Cryptography.dll\
-    $(LIBRARYBIN)/Goedel.Cryptography.Jose.dll\
-    $(LIBRARYBIN)/Goedel.Cryptography.Windows.dll\
-    $(LIBRARYBIN)/Goedel.FSR.dll\
-    $(LIBRARYBIN)/Goedel.Platform.dll\
-    $(LIBRARYBIN)/Goedel.Platform.Framework.dll\
-    $(LIBRARYBIN)/Goedel.Protocol.dll\
-    $(LIBRARYBIN)/Goedel.Protocol.Framework.dll\
-    $(LIBRARYBIN)/Goedel.Registry.dll\
-    $(LIBRARYBIN)/Goedel.Utilities.dll\
+    $(TARGETBIN)/Goedel.Protocol.dll\
+    $(TARGETBIN)/Goedel.Utilities.dll\
     $(TARGETBIN)/Goedel.Confirm.dll
 
-LinkFilesComma = $(LIBRARYBIN)/Goedel.ASN.dll,$(LIBRARYBIN)/Goedel.Cryptography.dll,$(LIBRARYBIN)/Goedel.Cryptography.Jose.dll,$(LIBRARYBIN)/Goedel.Cryptography.Windows.dll,$(LIBRARYBIN)/Goedel.FSR.dll,$(LIBRARYBIN)/Goedel.Platform.dll,$(LIBRARYBIN)/Goedel.Platform.Framework.dll,$(LIBRARYBIN)/Goedel.Protocol.dll,$(LIBRARYBIN)/Goedel.Protocol.Framework.dll,$(LIBRARYBIN)/Goedel.Registry.dll,$(LIBRARYBIN)/Goedel.Utilities.dll,$(TARGETBIN)/Goedel.Confirm.dll
+LinkFilesComma = $(TARGETBIN)/Goedel.Protocol.dll,$(TARGETBIN)/Goedel.Utilities.dll,$(TARGETBIN)/Goedel.Confirm.dll
 
 
 NugetFiles = 
@@ -175,10 +166,24 @@ endif
 # Recursive make targets, do not execute if the variable NORECURSE is defined
 ifndef NORECURSE
 
+../../../buildtools/Libraries/Goedel.Protocol/$(TARGETBIN)/Goedel.Protocol.dll : recursive
+! $(MAKE) -C ../../../buildtools/Libraries/Goedel.Protocol
+
+../../../buildtools/Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll : recursive
+! $(MAKE) -C ../../../buildtools/Libraries/Goedel.Utilities
+
 ../Goedel.Confirm/$(TARGETBIN)/Goedel.Confirm.dll : recursive
 ! $(MAKE) -C ../Goedel.Confirm
 
 endif
+
+$(TARGETBIN)/Goedel.Protocol.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.Protocol.dll : ../../../buildtools/Libraries/Goedel.Protocol/$(TARGETBIN)/Goedel.Protocol.dll
+!  cp ../../../buildtools/Libraries/Goedel.Protocol/$(TARGETBIN)/Goedel.Protocol.dll $(TARGETBIN)/Goedel.Protocol.dll
+
+$(TARGETBIN)/Goedel.Utilities.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.Utilities.dll : ../../../buildtools/Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
+!  cp ../../../buildtools/Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll $(TARGETBIN)/Goedel.Utilities.dll
 
 $(TARGETBIN)/Goedel.Confirm.dll :| $(TARGETBIN)
 $(TARGETBIN)/Goedel.Confirm.dll : ../Goedel.Confirm/$(TARGETBIN)/Goedel.Confirm.dll

@@ -14,13 +14,13 @@
 #   * Copy executables
 
 LinkFiles = \
-    Goedel.Cryptography.dll\
-    Goedel.Cryptography.Framework.dll\
+    Goedel.Cryptography.Jose.dll\
     Goedel.Cryptography.KeyFile.dll\
     Goedel.Cryptography.Windows.dll\
+    Goedel.Cryptography.dll\
+    Goedel.FSR.dll\
     Goedel.IO.dll\
     Goedel.Platform.dll\
-    Goedel.Platform.Framework.dll\
     Goedel.Protocol.dll\
     Goedel.Utilities.dll\
     Goedel.Mesh.Client.dll\

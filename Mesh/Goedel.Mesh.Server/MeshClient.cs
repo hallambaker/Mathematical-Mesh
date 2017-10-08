@@ -85,7 +85,7 @@ namespace Goedel.Mesh.Server {
         /// <summary>
         /// True if the client is connected to an active MeshService.
         /// </summary>
-        public bool Connected { get=> MeshService != null; } 
+        public bool Connected=> MeshService != null; 
 
         /// <summary>
         /// The active personal profile (with signature).
@@ -95,9 +95,8 @@ namespace Goedel.Mesh.Server {
         /// <summary>
         /// The active personal profile.
         /// </summary>
-        public PersonalProfile PersonalProfile {
-            get => SignedPersonalProfile?.PersonalProfile;
-            }
+        public PersonalProfile PersonalProfile  => SignedPersonalProfile?.PersonalProfile;
+
 
         private SignedDeviceProfile _SignedDeviceProfile;
         /// <summary>
@@ -135,7 +134,7 @@ namespace Goedel.Mesh.Server {
         /// <param name="PortalAccount">The portal to connect to.</param>
         public MeshClient(string Service = null, string PortalAccount = null) {
             if (Service == null) {
-                Goedel.Mesh.Account.SplitAccountID(PortalAccount, out var Account, out Service);
+                PortalAccount.SplitAccountID( out var Account, out Service);
                 }
             Assert.NotNull(Service, InvalidPortalAddress.Throw);
             

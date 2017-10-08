@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--This file was generated using RFCTool-->
+<topic id="2592eb79-3d76-4064-9960-f50f2393a267" revisionNumber="1">
+  <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!--The Abstract-->
+    <introduction>
+      <para>
+        Mesh/Mail projects 
+      </para>
+    </introduction>
+    <!--The Body-->
+    <!--References-->
+    <relatedTopics>
+    </relatedTopics>
+  </developerConceptualDocument>
+</topic>

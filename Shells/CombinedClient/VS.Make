@@ -14,26 +14,35 @@
 #   * Copy executables
 
 LinkFiles = \
-    Goedel.ASN.dll\
-    Goedel.Cryptography.dll\
+    Goedel.Command.dll\
+    Goedel.Cryptography.Framework.dll\
     Goedel.Cryptography.Jose.dll\
+    Goedel.Cryptography.KeyFile.dll\
     Goedel.Cryptography.Windows.dll\
+    Goedel.Cryptography.dll\
     Goedel.FSR.dll\
     Goedel.IO.dll\
     Goedel.Platform.dll\
-    Goedel.Platform.Framework.dll\
-    Goedel.Protocol.dll\
-    Goedel.Protocol.Debug.dll\
     Goedel.Protocol.Framework.dll\
+    Goedel.Protocol.dll\
     Goedel.Registry.dll\
     Goedel.Utilities.dll\
+    Goedel.Mesh.Client.dll\
+    Goedel.Mesh.Platform.Windows.dll\
+    Goedel.Mesh.Platform.dll\
+    Goedel.Mesh.Server.dll\
+    Goedel.Mesh.dll\
+    Goedel.Account.Client.dll\
+    Goedel.Account.dll\
     Goedel.Confirm.Client.dll\
-    Goedel.Confirm.dll
+    Goedel.Confirm.dll\
+    Goedel.Recrypt.Client.dll\
+    Goedel.Recrypt.dll
 
 prebuild : 
     echo "Do Prebuild"
 
 postbuild : 
-	powershell publishtarget confirmclient.exe $(LinkFiles) 
+	powershell publishtarget CombinedClient.dll
 
 

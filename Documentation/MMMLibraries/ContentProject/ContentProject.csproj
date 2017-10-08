@@ -1,0 +1,194 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{1D184FDB-2B58-465F-8AEB-191B27C0A58E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ContentProject</RootNamespace>
+    <AssemblyName>ContentProject</AssemblyName>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Class1.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <None Include="Applications.aml">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Applications.md</DependentUpon>
+    </None>
+    <None Include="Applications.md">
+      <Generator>MD2AML</Generator>
+      <LastGenOutput>Applications.aml</LastGenOutput>
+    </None>
+    <None Include="Applications\Account.aml">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Account.md</DependentUpon>
+    </None>
+    <None Include="Applications\Account.md">
+      <Generator>MD2AML</Generator>
+      <LastGenOutput>Account.aml</LastGenOutput>
+    </None>
+    <None Include="Applications\Confirm.aml">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Confirm.md</DependentUpon>
+    </None>
+    <None Include="Applications\Confirm.md">
+      <Generator>MD2AML</Generator>
+      <LastGenOutput>Confirm.aml</LastGenOutput>
+    </None>
+    <None Include="Applications\Catalog.aml">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Catalog.md</DependentUpon>
+    </None>
+    <None Include="Applications\Catalog.md">
+      <Generator>MD2AML</Generator>
+      <LastGenOutput>Catalog.aml</LastGenOutput>
+    </None>
+    <None Include="Applications\Mail.aml">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Mail.md</DependentUpon>
+    </None>
+    <None Include="Applications\Mail.md">
+      <Generator>MD2AML</Generator>
+      <LastGenOutput>Mail.aml</LastGenOutput>
+    </None>
+    <None Include="Applications\Recrypt.aml">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Recrypt.md</DependentUpon>
+    </None>
+    <None Include="Applications\Recrypt.md">
+      <Generator>MD2AML</Generator>
+      <LastGenOutput>Recrypt.aml</LastGenOutput>
+    </None>
+    <None Include="Applications\SSH.aml">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SSH.md</DependentUpon>
+    </None>
+    <None Include="Applications\SSH.md">
+      <Generator>MD2AML</Generator>
+      <LastGenOutput>SSH.aml</LastGenOutput>
+    </None>
+    <None Include="Platforms.aml">
+      <DependentUpon>Platforms.md</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </None>
+    <None Include="Platforms.md">
+      <Generator>MD2AML</Generator>
+      <LastGenOutput>Platforms.aml</LastGenOutput>
+    </None>
+    <None Include="Meshifying.aml">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Meshifying.md</DependentUpon>
+    </None>
+    <None Include="Meshifying.md">
+      <Generator>MD2AML</Generator>
+      <LastGenOutput>Meshifying.aml</LastGenOutput>
+    </None>
+    <None Include="Platforms\Linux.aml">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Linux.md</DependentUpon>
+    </None>
+    <None Include="Platforms\Linux.md">
+      <Generator>MD2AML</Generator>
+      <LastGenOutput>Linux.aml</LastGenOutput>
+    </None>
+    <None Include="Platforms\OSX.aml">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>OSX.md</DependentUpon>
+    </None>
+    <None Include="Platforms\OSX.md">
+      <Generator>MD2AML</Generator>
+      <LastGenOutput>OSX.aml</LastGenOutput>
+    </None>
+    <None Include="Platforms\Windows.aml">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Windows.md</DependentUpon>
+    </None>
+    <None Include="Platforms\Windows.md">
+      <Generator>MD2AML</Generator>
+      <LastGenOutput>Windows.aml</LastGenOutput>
+    </None>
+    <None Include="Profiles.aml">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Profiles.md</DependentUpon>
+    </None>
+    <None Include="Profiles.md">
+      <Generator>MD2AML</Generator>
+      <LastGenOutput>Profiles.aml</LastGenOutput>
+    </None>
+    <None Include="Services.aml">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Services.md</DependentUpon>
+    </None>
+    <None Include="Services.md">
+      <Generator>MD2AML</Generator>
+      <LastGenOutput>Services.aml</LastGenOutput>
+    </None>
+    <None Include="ToDo.aml">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ToDo.md</DependentUpon>
+    </None>
+    <None Include="ToDo.md">
+      <Generator>MD2AML</Generator>
+      <LastGenOutput>ToDo.aml</LastGenOutput>
+    </None>
+    <None Include="Welcome.aml">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Welcome.md</DependentUpon>
+    </None>
+    <None Include="Welcome.md">
+      <Generator>MD2AML</Generator>
+      <LastGenOutput>Welcome.aml</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

@@ -16,7 +16,7 @@ Alice adds a bookmark entry to her profile on the browser on her laptop:
 {
   "BookmarkProfilePrivate": {
     "Entries": [{
-        "Added": "2017-09-18T13:07:25Z",
+        "Added": "2017-09-30T23:12:27Z",
         "Title": "First Site",
         "Uri": "http://example.com/"}]}}
 ~~~~
@@ -28,7 +28,7 @@ connection. She decides to bookmark the site instead.
 {
   "BookmarkProfilePrivate": {
     "Entries": [{
-        "Added": "2017-09-18T14:42:03Z",
+        "Added": "2017-10-01T00:47:05Z",
         "Title": "Second Site",
         "Uri": "https://example.com/"}]}}
 ~~~~
@@ -40,11 +40,11 @@ finally able to connect to the network, the profiles are merged:
 {
   "BookmarkProfilePrivate": {
     "Entries": [{
-        "Added": "2017-09-18T13:07:25Z",
+        "Added": "2017-09-30T23:12:27Z",
         "Title": "First Site",
         "Uri": "http://example.com/"},
       {
-        "Added": "2017-09-18T14:42:03Z",
+        "Added": "2017-10-01T00:47:05Z",
         "Title": "Second Site",
         "Uri": "https://example.com/"}]}}
 ~~~~

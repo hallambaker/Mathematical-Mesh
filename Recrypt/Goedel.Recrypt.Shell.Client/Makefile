@@ -109,26 +109,16 @@ export Custom_TrojanGTK_FLAG	?= /cs
 # The main target 
 
 SourceFiles = \
-     Program.cs\
-     Properties/AssemblyInfo.cs
+     Properties/AssemblyInfo.cs\
+     RecryptClient.cs
 
 LinkFiles = \
-    $(LIBRARYBIN)/Goedel.ASN.dll\
-    $(LIBRARYBIN)/Goedel.Cryptography.dll\
-    $(LIBRARYBIN)/Goedel.Cryptography.Jose.dll\
-    $(LIBRARYBIN)/Goedel.Cryptography.Windows.dll\
-    $(LIBRARYBIN)/Goedel.FSR.dll\
-    $(LIBRARYBIN)/Goedel.IO.dll\
-    $(LIBRARYBIN)/Goedel.Platform.dll\
-    $(LIBRARYBIN)/Goedel.Platform.Framework.dll\
-    $(LIBRARYBIN)/Goedel.Protocol.dll\
-    $(LIBRARYBIN)/Goedel.Protocol.Framework.dll\
-    $(LIBRARYBIN)/Goedel.Registry.dll\
-    $(LIBRARYBIN)/Goedel.Utilities.dll\
-    $(TARGETBIN)/Goedel.Recrypt.Client.dll\
+    $(TARGETBIN)/Goedel.Command.dll\
+    $(TARGETBIN)/Goedel.Cryptography.Jose.dll\
+    $(TARGETBIN)/Goedel.Utilities.dll\
     $(TARGETBIN)/Goedel.Recrypt.dll
 
-LinkFilesComma = $(LIBRARYBIN)/Goedel.ASN.dll,$(LIBRARYBIN)/Goedel.Cryptography.dll,$(LIBRARYBIN)/Goedel.Cryptography.Jose.dll,$(LIBRARYBIN)/Goedel.Cryptography.Windows.dll,$(LIBRARYBIN)/Goedel.FSR.dll,$(LIBRARYBIN)/Goedel.IO.dll,$(LIBRARYBIN)/Goedel.Platform.dll,$(LIBRARYBIN)/Goedel.Platform.Framework.dll,$(LIBRARYBIN)/Goedel.Protocol.dll,$(LIBRARYBIN)/Goedel.Protocol.Framework.dll,$(LIBRARYBIN)/Goedel.Registry.dll,$(LIBRARYBIN)/Goedel.Utilities.dll,$(TARGETBIN)/Goedel.Recrypt.Client.dll,$(TARGETBIN)/Goedel.Recrypt.dll
+LinkFilesComma = $(TARGETBIN)/Goedel.Command.dll,$(TARGETBIN)/Goedel.Cryptography.Jose.dll,$(TARGETBIN)/Goedel.Utilities.dll,$(TARGETBIN)/Goedel.Recrypt.dll
 
 
 NugetFiles = 
@@ -166,6 +156,8 @@ $(LIBRARYBIN) :
 
 ifdef PHB_BUILD
 
+RecryptClient.cs : RecryptClient.command
+!  $(Custom_CommandCS) RecryptClient.command $(Custom_CommandCS_FLAG) RecryptClient.cs 
 
 endif
 
@@ -178,17 +170,31 @@ endif
 # Recursive make targets, do not execute if the variable NORECURSE is defined
 ifndef NORECURSE
 
-../Goedel.Recrypt.Client/$(TARGETBIN)/Goedel.Recrypt.Client.dll : recursive
-! $(MAKE) -C ../Goedel.Recrypt.Client
+../../../buildtools/Libraries/Goedel.Command/$(TARGETBIN)/Goedel.Command.dll : recursive
+! $(MAKE) -C ../../../buildtools/Libraries/Goedel.Command
+
+../../../buildtools/Libraries/Goedel.Cryptography.Jose/$(TARGETBIN)/Goedel.Cryptography.Jose.dll : recursive
+! $(MAKE) -C ../../../buildtools/Libraries/Goedel.Cryptography.Jose
+
+../../../buildtools/Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll : recursive
+! $(MAKE) -C ../../../buildtools/Libraries/Goedel.Utilities
 
 ../Goedel.Recrypt/$(TARGETBIN)/Goedel.Recrypt.dll : recursive
 ! $(MAKE) -C ../Goedel.Recrypt
 
 endif
 
-$(TARGETBIN)/Goedel.Recrypt.Client.dll :| $(TARGETBIN)
-$(TARGETBIN)/Goedel.Recrypt.Client.dll : ../Goedel.Recrypt.Client/$(TARGETBIN)/Goedel.Recrypt.Client.dll
-!  cp ../Goedel.Recrypt.Client/$(TARGETBIN)/Goedel.Recrypt.Client.dll $(TARGETBIN)/Goedel.Recrypt.Client.dll
+$(TARGETBIN)/Goedel.Command.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.Command.dll : ../../../buildtools/Libraries/Goedel.Command/$(TARGETBIN)/Goedel.Command.dll
+!  cp ../../../buildtools/Libraries/Goedel.Command/$(TARGETBIN)/Goedel.Command.dll $(TARGETBIN)/Goedel.Command.dll
+
+$(TARGETBIN)/Goedel.Cryptography.Jose.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.Cryptography.Jose.dll : ../../../buildtools/Libraries/Goedel.Cryptography.Jose/$(TARGETBIN)/Goedel.Cryptography.Jose.dll
+!  cp ../../../buildtools/Libraries/Goedel.Cryptography.Jose/$(TARGETBIN)/Goedel.Cryptography.Jose.dll $(TARGETBIN)/Goedel.Cryptography.Jose.dll
+
+$(TARGETBIN)/Goedel.Utilities.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.Utilities.dll : ../../../buildtools/Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
+!  cp ../../../buildtools/Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll $(TARGETBIN)/Goedel.Utilities.dll
 
 $(TARGETBIN)/Goedel.Recrypt.dll :| $(TARGETBIN)
 $(TARGETBIN)/Goedel.Recrypt.dll : ../Goedel.Recrypt/$(TARGETBIN)/Goedel.Recrypt.dll

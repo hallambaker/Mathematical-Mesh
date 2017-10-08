@@ -1,5 +1,5 @@
 #
-# Makefile for Visual Studio Project confirmclient
+# Makefile for Visual Studio Project CombinedClient
 #
 # This file is generated automatically from the Visual Studio Project
 # File. If you make changes to this file and do not update the project
@@ -109,41 +109,52 @@ export Custom_TrojanGTK_FLAG	?= /cs
 # The main target 
 
 SourceFiles = \
-     ConfirmClient.cs\
+     CombinedClient.cs\
+     CombinedDispatch.cs\
+     CombinedUtilities.cs\
+     ExceptionsCombined.cs\
      Properties/AssemblyInfo.cs
 
 LinkFiles = \
-    $(LIBRARYBIN)/Goedel.ASN.dll\
-    $(LIBRARYBIN)/Goedel.Cryptography.dll\
-    $(LIBRARYBIN)/Goedel.Cryptography.Jose.dll\
-    $(LIBRARYBIN)/Goedel.Cryptography.Windows.dll\
-    $(LIBRARYBIN)/Goedel.FSR.dll\
-    $(LIBRARYBIN)/Goedel.IO.dll\
-    $(LIBRARYBIN)/Goedel.Platform.dll\
-    $(LIBRARYBIN)/Goedel.Platform.Framework.dll\
-    $(LIBRARYBIN)/Goedel.Protocol.dll\
-    $(LIBRARYBIN)/Goedel.Protocol.Debug.dll\
-    $(LIBRARYBIN)/Goedel.Protocol.Framework.dll\
-    $(LIBRARYBIN)/Goedel.Registry.dll\
-    $(LIBRARYBIN)/Goedel.Utilities.dll\
+    $(TARGETBIN)/Goedel.Command.dll\
+    $(TARGETBIN)/Goedel.Cryptography.Framework.dll\
+    $(TARGETBIN)/Goedel.Cryptography.Jose.dll\
+    $(TARGETBIN)/Goedel.Cryptography.KeyFile.dll\
+    $(TARGETBIN)/Goedel.Cryptography.Windows.dll\
+    $(TARGETBIN)/Goedel.Cryptography.dll\
+    $(TARGETBIN)/Goedel.FSR.dll\
+    $(TARGETBIN)/Goedel.IO.dll\
+    $(TARGETBIN)/Goedel.Platform.dll\
+    $(TARGETBIN)/Goedel.Protocol.Framework.dll\
+    $(TARGETBIN)/Goedel.Protocol.dll\
+    $(TARGETBIN)/Goedel.Registry.dll\
+    $(TARGETBIN)/Goedel.Utilities.dll\
+    $(TARGETBIN)/Goedel.Mesh.Client.dll\
+    $(TARGETBIN)/Goedel.Mesh.Platform.Windows.dll\
+    $(TARGETBIN)/Goedel.Mesh.Platform.dll\
+    $(TARGETBIN)/Goedel.Mesh.Server.dll\
+    $(TARGETBIN)/Goedel.Mesh.dll\
+    $(TARGETBIN)/Goedel.Account.Client.dll\
+    $(TARGETBIN)/Goedel.Account.dll\
     $(TARGETBIN)/Goedel.Confirm.Client.dll\
-    $(TARGETBIN)/Goedel.Confirm.dll
+    $(TARGETBIN)/Goedel.Confirm.dll\
+    $(TARGETBIN)/Goedel.Recrypt.Client.dll\
+    $(TARGETBIN)/Goedel.Recrypt.dll
 
-LinkFilesComma = $(LIBRARYBIN)/Goedel.ASN.dll,$(LIBRARYBIN)/Goedel.Cryptography.dll,$(LIBRARYBIN)/Goedel.Cryptography.Jose.dll,$(LIBRARYBIN)/Goedel.Cryptography.Windows.dll,$(LIBRARYBIN)/Goedel.FSR.dll,$(LIBRARYBIN)/Goedel.IO.dll,$(LIBRARYBIN)/Goedel.Platform.dll,$(LIBRARYBIN)/Goedel.Platform.Framework.dll,$(LIBRARYBIN)/Goedel.Protocol.dll,$(LIBRARYBIN)/Goedel.Protocol.Debug.dll,$(LIBRARYBIN)/Goedel.Protocol.Framework.dll,$(LIBRARYBIN)/Goedel.Registry.dll,$(LIBRARYBIN)/Goedel.Utilities.dll,$(TARGETBIN)/Goedel.Confirm.Client.dll,$(TARGETBIN)/Goedel.Confirm.dll
+LinkFilesComma = $(TARGETBIN)/Goedel.Command.dll,$(TARGETBIN)/Goedel.Cryptography.Framework.dll,$(TARGETBIN)/Goedel.Cryptography.Jose.dll,$(TARGETBIN)/Goedel.Cryptography.KeyFile.dll,$(TARGETBIN)/Goedel.Cryptography.Windows.dll,$(TARGETBIN)/Goedel.Cryptography.dll,$(TARGETBIN)/Goedel.FSR.dll,$(TARGETBIN)/Goedel.IO.dll,$(TARGETBIN)/Goedel.Platform.dll,$(TARGETBIN)/Goedel.Protocol.Framework.dll,$(TARGETBIN)/Goedel.Protocol.dll,$(TARGETBIN)/Goedel.Registry.dll,$(TARGETBIN)/Goedel.Utilities.dll,$(TARGETBIN)/Goedel.Mesh.Client.dll,$(TARGETBIN)/Goedel.Mesh.Platform.Windows.dll,$(TARGETBIN)/Goedel.Mesh.Platform.dll,$(TARGETBIN)/Goedel.Mesh.Server.dll,$(TARGETBIN)/Goedel.Mesh.dll,$(TARGETBIN)/Goedel.Account.Client.dll,$(TARGETBIN)/Goedel.Account.dll,$(TARGETBIN)/Goedel.Confirm.Client.dll,$(TARGETBIN)/Goedel.Confirm.dll,$(TARGETBIN)/Goedel.Recrypt.Client.dll,$(TARGETBIN)/Goedel.Recrypt.dll
 
 
 NugetFiles = 
 NugetFilesComa = 
 
 # A) Main target packaged
-$(TARGETEXE)/confirmclient :| $(TARGETEXE)
-$(TARGETEXE)/confirmclient : $(TARGETBIN)/confirmclient.exe 
-! $(BUNDLE) $@ $^ $(LinkFiles)  $(NugetFiles)
 
-# B) Main target executable
-$(TARGETBIN)/confirmclient.exe :| $(TARGETBIN)
-$(TARGETBIN)/confirmclient.exe : $(SourceFiles) $(LinkFiles) $(NugetFiles)
-! $(CSHARPEXE) /out:$@  $(SourceFiles) -reference:$(LinkFilesComma) 
+$(TARGETBIN)/CombinedClient.dll :| $(LIBRARYBIN)
+$(TARGETBIN)/CombinedClient.dll :| $(TARGETBIN)
+
+$(TARGETBIN)/CombinedClient.dll :  $(SourceFiles) $(LinkFiles) $(NugetFiles)
+! $(CSHARPDLL) /out:$@  $(SourceFiles) -reference:$(LinkFilesComma) 
+! cp $(TARGETBIN)/CombinedClient.dll $(LIBRARYBIN)/CombinedClient.dll
 
 
 # Directories etc.
@@ -167,8 +178,10 @@ $(LIBRARYBIN) :
 
 ifdef PHB_BUILD
 
-ConfirmClient.cs : ConfirmClient.command
-!  $(Custom_CommandCS) ConfirmClient.command $(Custom_CommandCS_FLAG) ConfirmClient.cs 
+CombinedClient.cs : CombinedClient.command
+!  $(Custom_CommandCS) CombinedClient.command $(Custom_CommandCS_FLAG) CombinedClient.cs 
+ExceptionsCombined.cs : ExceptionsCombined.Exceptional
+!  $(Custom_Exceptional) ExceptionsCombined.Exceptional $(Custom_Exceptional_FLAG) ExceptionsCombined.cs 
 
 endif
 
@@ -181,21 +194,175 @@ endif
 # Recursive make targets, do not execute if the variable NORECURSE is defined
 ifndef NORECURSE
 
-../Goedel.Confirm.Client/$(TARGETBIN)/Goedel.Confirm.Client.dll : recursive
-! $(MAKE) -C ../Goedel.Confirm.Client
+../../../buildtools/Libraries/Goedel.Command/$(TARGETBIN)/Goedel.Command.dll : recursive
+! $(MAKE) -C ../../../buildtools/Libraries/Goedel.Command
 
-../Goedel.Confirm/$(TARGETBIN)/Goedel.Confirm.dll : recursive
-! $(MAKE) -C ../Goedel.Confirm
+../../../buildtools/Libraries/Goedel.Cryptography.Framework/$(TARGETBIN)/Goedel.Cryptography.Framework.dll : recursive
+! $(MAKE) -C ../../../buildtools/Libraries/Goedel.Cryptography.Framework
+
+../../../buildtools/Libraries/Goedel.Cryptography.Jose/$(TARGETBIN)/Goedel.Cryptography.Jose.dll : recursive
+! $(MAKE) -C ../../../buildtools/Libraries/Goedel.Cryptography.Jose
+
+../../../buildtools/Libraries/Goedel.Cryptography.KeyFile/$(TARGETBIN)/Goedel.Cryptography.KeyFile.dll : recursive
+! $(MAKE) -C ../../../buildtools/Libraries/Goedel.Cryptography.KeyFile
+
+../../../buildtools/Libraries/Goedel.Cryptography.Windows/$(TARGETBIN)/Goedel.Cryptography.Windows.dll : recursive
+! $(MAKE) -C ../../../buildtools/Libraries/Goedel.Cryptography.Windows
+
+../../../buildtools/Libraries/Goedel.Cryptography/$(TARGETBIN)/Goedel.Cryptography.dll : recursive
+! $(MAKE) -C ../../../buildtools/Libraries/Goedel.Cryptography
+
+../../../buildtools/Libraries/Goedel.FSR/$(TARGETBIN)/Goedel.FSR.dll : recursive
+! $(MAKE) -C ../../../buildtools/Libraries/Goedel.FSR
+
+../../../buildtools/Libraries/Goedel.IO/$(TARGETBIN)/Goedel.IO.dll : recursive
+! $(MAKE) -C ../../../buildtools/Libraries/Goedel.IO
+
+../../../buildtools/Libraries/Goedel.Platform/$(TARGETBIN)/Goedel.Platform.dll : recursive
+! $(MAKE) -C ../../../buildtools/Libraries/Goedel.Platform
+
+../../../buildtools/Libraries/Goedel.Protocol.Framework/$(TARGETBIN)/Goedel.Protocol.Framework.dll : recursive
+! $(MAKE) -C ../../../buildtools/Libraries/Goedel.Protocol.Framework
+
+../../../buildtools/Libraries/Goedel.Protocol/$(TARGETBIN)/Goedel.Protocol.dll : recursive
+! $(MAKE) -C ../../../buildtools/Libraries/Goedel.Protocol
+
+../../../buildtools/Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll : recursive
+! $(MAKE) -C ../../../buildtools/Libraries/Goedel.Registry
+
+../../../buildtools/Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll : recursive
+! $(MAKE) -C ../../../buildtools/Libraries/Goedel.Utilities
+
+../../Mesh/Goedel.Mesh.Client/$(TARGETBIN)/Goedel.Mesh.Client.dll : recursive
+! $(MAKE) -C ../../Mesh/Goedel.Mesh.Client
+
+../../Mesh/Goedel.Mesh.Platform.Windows/$(TARGETBIN)/Goedel.Mesh.Platform.Windows.dll : recursive
+! $(MAKE) -C ../../Mesh/Goedel.Mesh.Platform.Windows
+
+../../Mesh/Goedel.Mesh.Platform/$(TARGETBIN)/Goedel.Mesh.Platform.dll : recursive
+! $(MAKE) -C ../../Mesh/Goedel.Mesh.Platform
+
+../../Mesh/Goedel.Mesh.Server/$(TARGETBIN)/Goedel.Mesh.Server.dll : recursive
+! $(MAKE) -C ../../Mesh/Goedel.Mesh.Server
+
+../../Mesh/Goedel.Mesh/$(TARGETBIN)/Goedel.Mesh.dll : recursive
+! $(MAKE) -C ../../Mesh/Goedel.Mesh
+
+../../Account/Goedel.Account.Client/$(TARGETBIN)/Goedel.Account.Client.dll : recursive
+! $(MAKE) -C ../../Account/Goedel.Account.Client
+
+../../Account/Goedel.Account/$(TARGETBIN)/Goedel.Account.dll : recursive
+! $(MAKE) -C ../../Account/Goedel.Account
+
+../../Confirm/Goedel.Confirm.Client/$(TARGETBIN)/Goedel.Confirm.Client.dll : recursive
+! $(MAKE) -C ../../Confirm/Goedel.Confirm.Client
+
+../../Confirm/Goedel.Confirm/$(TARGETBIN)/Goedel.Confirm.dll : recursive
+! $(MAKE) -C ../../Confirm/Goedel.Confirm
+
+../../Recrypt/Goedel.Recrypt.Client/$(TARGETBIN)/Goedel.Recrypt.Client.dll : recursive
+! $(MAKE) -C ../../Recrypt/Goedel.Recrypt.Client
+
+../../Recrypt/Goedel.Recrypt/$(TARGETBIN)/Goedel.Recrypt.dll : recursive
+! $(MAKE) -C ../../Recrypt/Goedel.Recrypt
 
 endif
 
+$(TARGETBIN)/Goedel.Command.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.Command.dll : ../../../buildtools/Libraries/Goedel.Command/$(TARGETBIN)/Goedel.Command.dll
+!  cp ../../../buildtools/Libraries/Goedel.Command/$(TARGETBIN)/Goedel.Command.dll $(TARGETBIN)/Goedel.Command.dll
+
+$(TARGETBIN)/Goedel.Cryptography.Framework.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.Cryptography.Framework.dll : ../../../buildtools/Libraries/Goedel.Cryptography.Framework/$(TARGETBIN)/Goedel.Cryptography.Framework.dll
+!  cp ../../../buildtools/Libraries/Goedel.Cryptography.Framework/$(TARGETBIN)/Goedel.Cryptography.Framework.dll $(TARGETBIN)/Goedel.Cryptography.Framework.dll
+
+$(TARGETBIN)/Goedel.Cryptography.Jose.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.Cryptography.Jose.dll : ../../../buildtools/Libraries/Goedel.Cryptography.Jose/$(TARGETBIN)/Goedel.Cryptography.Jose.dll
+!  cp ../../../buildtools/Libraries/Goedel.Cryptography.Jose/$(TARGETBIN)/Goedel.Cryptography.Jose.dll $(TARGETBIN)/Goedel.Cryptography.Jose.dll
+
+$(TARGETBIN)/Goedel.Cryptography.KeyFile.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.Cryptography.KeyFile.dll : ../../../buildtools/Libraries/Goedel.Cryptography.KeyFile/$(TARGETBIN)/Goedel.Cryptography.KeyFile.dll
+!  cp ../../../buildtools/Libraries/Goedel.Cryptography.KeyFile/$(TARGETBIN)/Goedel.Cryptography.KeyFile.dll $(TARGETBIN)/Goedel.Cryptography.KeyFile.dll
+
+$(TARGETBIN)/Goedel.Cryptography.Windows.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.Cryptography.Windows.dll : ../../../buildtools/Libraries/Goedel.Cryptography.Windows/$(TARGETBIN)/Goedel.Cryptography.Windows.dll
+!  cp ../../../buildtools/Libraries/Goedel.Cryptography.Windows/$(TARGETBIN)/Goedel.Cryptography.Windows.dll $(TARGETBIN)/Goedel.Cryptography.Windows.dll
+
+$(TARGETBIN)/Goedel.Cryptography.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.Cryptography.dll : ../../../buildtools/Libraries/Goedel.Cryptography/$(TARGETBIN)/Goedel.Cryptography.dll
+!  cp ../../../buildtools/Libraries/Goedel.Cryptography/$(TARGETBIN)/Goedel.Cryptography.dll $(TARGETBIN)/Goedel.Cryptography.dll
+
+$(TARGETBIN)/Goedel.FSR.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.FSR.dll : ../../../buildtools/Libraries/Goedel.FSR/$(TARGETBIN)/Goedel.FSR.dll
+!  cp ../../../buildtools/Libraries/Goedel.FSR/$(TARGETBIN)/Goedel.FSR.dll $(TARGETBIN)/Goedel.FSR.dll
+
+$(TARGETBIN)/Goedel.IO.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.IO.dll : ../../../buildtools/Libraries/Goedel.IO/$(TARGETBIN)/Goedel.IO.dll
+!  cp ../../../buildtools/Libraries/Goedel.IO/$(TARGETBIN)/Goedel.IO.dll $(TARGETBIN)/Goedel.IO.dll
+
+$(TARGETBIN)/Goedel.Platform.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.Platform.dll : ../../../buildtools/Libraries/Goedel.Platform/$(TARGETBIN)/Goedel.Platform.dll
+!  cp ../../../buildtools/Libraries/Goedel.Platform/$(TARGETBIN)/Goedel.Platform.dll $(TARGETBIN)/Goedel.Platform.dll
+
+$(TARGETBIN)/Goedel.Protocol.Framework.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.Protocol.Framework.dll : ../../../buildtools/Libraries/Goedel.Protocol.Framework/$(TARGETBIN)/Goedel.Protocol.Framework.dll
+!  cp ../../../buildtools/Libraries/Goedel.Protocol.Framework/$(TARGETBIN)/Goedel.Protocol.Framework.dll $(TARGETBIN)/Goedel.Protocol.Framework.dll
+
+$(TARGETBIN)/Goedel.Protocol.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.Protocol.dll : ../../../buildtools/Libraries/Goedel.Protocol/$(TARGETBIN)/Goedel.Protocol.dll
+!  cp ../../../buildtools/Libraries/Goedel.Protocol/$(TARGETBIN)/Goedel.Protocol.dll $(TARGETBIN)/Goedel.Protocol.dll
+
+$(TARGETBIN)/Goedel.Registry.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.Registry.dll : ../../../buildtools/Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll
+!  cp ../../../buildtools/Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll $(TARGETBIN)/Goedel.Registry.dll
+
+$(TARGETBIN)/Goedel.Utilities.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.Utilities.dll : ../../../buildtools/Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
+!  cp ../../../buildtools/Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll $(TARGETBIN)/Goedel.Utilities.dll
+
+$(TARGETBIN)/Goedel.Mesh.Client.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.Mesh.Client.dll : ../../Mesh/Goedel.Mesh.Client/$(TARGETBIN)/Goedel.Mesh.Client.dll
+!  cp ../../Mesh/Goedel.Mesh.Client/$(TARGETBIN)/Goedel.Mesh.Client.dll $(TARGETBIN)/Goedel.Mesh.Client.dll
+
+$(TARGETBIN)/Goedel.Mesh.Platform.Windows.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.Mesh.Platform.Windows.dll : ../../Mesh/Goedel.Mesh.Platform.Windows/$(TARGETBIN)/Goedel.Mesh.Platform.Windows.dll
+!  cp ../../Mesh/Goedel.Mesh.Platform.Windows/$(TARGETBIN)/Goedel.Mesh.Platform.Windows.dll $(TARGETBIN)/Goedel.Mesh.Platform.Windows.dll
+
+$(TARGETBIN)/Goedel.Mesh.Platform.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.Mesh.Platform.dll : ../../Mesh/Goedel.Mesh.Platform/$(TARGETBIN)/Goedel.Mesh.Platform.dll
+!  cp ../../Mesh/Goedel.Mesh.Platform/$(TARGETBIN)/Goedel.Mesh.Platform.dll $(TARGETBIN)/Goedel.Mesh.Platform.dll
+
+$(TARGETBIN)/Goedel.Mesh.Server.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.Mesh.Server.dll : ../../Mesh/Goedel.Mesh.Server/$(TARGETBIN)/Goedel.Mesh.Server.dll
+!  cp ../../Mesh/Goedel.Mesh.Server/$(TARGETBIN)/Goedel.Mesh.Server.dll $(TARGETBIN)/Goedel.Mesh.Server.dll
+
+$(TARGETBIN)/Goedel.Mesh.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.Mesh.dll : ../../Mesh/Goedel.Mesh/$(TARGETBIN)/Goedel.Mesh.dll
+!  cp ../../Mesh/Goedel.Mesh/$(TARGETBIN)/Goedel.Mesh.dll $(TARGETBIN)/Goedel.Mesh.dll
+
+$(TARGETBIN)/Goedel.Account.Client.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.Account.Client.dll : ../../Account/Goedel.Account.Client/$(TARGETBIN)/Goedel.Account.Client.dll
+!  cp ../../Account/Goedel.Account.Client/$(TARGETBIN)/Goedel.Account.Client.dll $(TARGETBIN)/Goedel.Account.Client.dll
+
+$(TARGETBIN)/Goedel.Account.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.Account.dll : ../../Account/Goedel.Account/$(TARGETBIN)/Goedel.Account.dll
+!  cp ../../Account/Goedel.Account/$(TARGETBIN)/Goedel.Account.dll $(TARGETBIN)/Goedel.Account.dll
+
 $(TARGETBIN)/Goedel.Confirm.Client.dll :| $(TARGETBIN)
-$(TARGETBIN)/Goedel.Confirm.Client.dll : ../Goedel.Confirm.Client/$(TARGETBIN)/Goedel.Confirm.Client.dll
-!  cp ../Goedel.Confirm.Client/$(TARGETBIN)/Goedel.Confirm.Client.dll $(TARGETBIN)/Goedel.Confirm.Client.dll
+$(TARGETBIN)/Goedel.Confirm.Client.dll : ../../Confirm/Goedel.Confirm.Client/$(TARGETBIN)/Goedel.Confirm.Client.dll
+!  cp ../../Confirm/Goedel.Confirm.Client/$(TARGETBIN)/Goedel.Confirm.Client.dll $(TARGETBIN)/Goedel.Confirm.Client.dll
 
 $(TARGETBIN)/Goedel.Confirm.dll :| $(TARGETBIN)
-$(TARGETBIN)/Goedel.Confirm.dll : ../Goedel.Confirm/$(TARGETBIN)/Goedel.Confirm.dll
-!  cp ../Goedel.Confirm/$(TARGETBIN)/Goedel.Confirm.dll $(TARGETBIN)/Goedel.Confirm.dll
+$(TARGETBIN)/Goedel.Confirm.dll : ../../Confirm/Goedel.Confirm/$(TARGETBIN)/Goedel.Confirm.dll
+!  cp ../../Confirm/Goedel.Confirm/$(TARGETBIN)/Goedel.Confirm.dll $(TARGETBIN)/Goedel.Confirm.dll
+
+$(TARGETBIN)/Goedel.Recrypt.Client.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.Recrypt.Client.dll : ../../Recrypt/Goedel.Recrypt.Client/$(TARGETBIN)/Goedel.Recrypt.Client.dll
+!  cp ../../Recrypt/Goedel.Recrypt.Client/$(TARGETBIN)/Goedel.Recrypt.Client.dll $(TARGETBIN)/Goedel.Recrypt.Client.dll
+
+$(TARGETBIN)/Goedel.Recrypt.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.Recrypt.dll : ../../Recrypt/Goedel.Recrypt/$(TARGETBIN)/Goedel.Recrypt.dll
+!  cp ../../Recrypt/Goedel.Recrypt/$(TARGETBIN)/Goedel.Recrypt.dll $(TARGETBIN)/Goedel.Recrypt.dll
 
 
 # Referenced Libraries
@@ -217,10 +384,10 @@ clean :
 # Install files to a tools directory. Default is ~/.local/bin
 
 
-install : $(INSTALL_PROGRAM)/confirmclient 
+install : $(INSTALL_DATA)/CombinedClient.dll
 
-$(INSTALL_PROGRAM)/confirmclient  :| $(INSTALL_PROGRAM)
-$(INSTALL_PROGRAM)/confirmclient  : $(TARGETEXE)/confirmclient 
+$(INSTALL_DATA)/CombinedClient.dll :| $(INSTALL_DATA)
+$(INSTALL_DATA)/CombinedClient.dll : $(TARGETBIN)/CombinedClient.dll
 ! cp $^ $@ 
 
 

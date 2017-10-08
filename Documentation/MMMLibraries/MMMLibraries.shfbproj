@@ -76,35 +76,36 @@
     <WarnOnMissingSourceContext>False</WarnOnMissingSourceContext>
     <NamespaceSummaries>
       <NamespaceSummaryItem name="(global)" isDocumented="False" />
-<NamespaceSummaryItem name="Goedel.Protocol" isDocumented="True">Web Service support libraries.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Goedel.ASN" isDocumented="True">ASN.1 handling routines</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Goedel.Cryptography" isDocumented="True">Generic cryptography library.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Goedel.Cryptography.Framework" isDocumented="True">Framnework (and mono) specific cryptography.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Goedel.Cryptography.Jose" isDocumented="True">JSON Object Signing and Encryption.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Goedel.Cryptography.KeyFile" isDocumented="True">Read and write various popular key file formats.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Goedel.Cryptography.PKIX" isDocumented="True">PKIX/ASN.1 based cryptographic formats.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Goedel.FSR" isDocumented="True">Finite State Recognizer support library</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Goedel.IO" isDocumented="True">IO utility routines.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Goedel.Platform" isDocumented="True">Platform specific apis.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Goedel.Registry" isDocumented="True">Support for command line syntax parsing and Goedel schema files.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Goedel.Utilities" isDocumented="True">Utilities common to all Goedel projects.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Goedel.Mesh" isDocumented="True">Core library for Mathematical Mesh Reference implementation.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Goedel.Persistence" isDocumented="True">Lightweight persistence mechanism for testing and reference code. The current implementation is not suited for production use but could be modified to make it so.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Goedel.Mesh.Client" isDocumented="True">Client library for Mesh operations.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Goedel.Mesh.Integration.LiveMail" isDocumented="False" />
-<NamespaceSummaryItem name="Goedel.Mesh.Platform" isDocumented="True">Abstract interface to platform specific features.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Goedel.Mesh.Platform.Linux" isDocumented="True">Implementation of platform specific features for Linux</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Goedel.Mesh.Platform.Windows" isDocumented="True">Implementation of platform specific features for Windows</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Goedel.Mesh.Server" isDocumented="True">Mesh server API</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Goedel.Account" isDocumented="True">Mesh/Account shared libraries.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Goedel.Account.Client" isDocumented="True">Mesh/Account Client Libraries.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Goedel.Account.Server" isDocumented="True">Mesh/Account Server Libraries.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Goedel.Confirm" isDocumented="True">Mesh/Account shared libraries.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Goedel.Confirm.Client" isDocumented="True">Mesh/Account client libraries.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Goedel.Confirm.Server" isDocumented="True">Mesh/Account server libraries.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Goedel.Recrypt" isDocumented="True">Mesh/Account shared libraries.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Goedel.Recrypt.Client" isDocumented="True">Mesh/Account client libraries.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Goedel.Recrypt.Server" isDocumented="True">Mesh/Account server libraries.</NamespaceSummaryItem></NamespaceSummaries>
+      <NamespaceSummaryItem name="Goedel.Protocol" isDocumented="True">Web Service support libraries.</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Goedel.ASN" isDocumented="True">ASN.1 handling routines</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Goedel.Cryptography" isDocumented="True">Generic cryptography library.</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Goedel.Cryptography.Framework" isDocumented="True">Framnework (and mono) specific cryptography.</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Goedel.Cryptography.Jose" isDocumented="True">JSON Object Signing and Encryption.</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Goedel.Cryptography.KeyFile" isDocumented="True">Read and write various popular key file formats.</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Goedel.Cryptography.PKIX" isDocumented="True">PKIX/ASN.1 based cryptographic formats.</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Goedel.FSR" isDocumented="True">Finite State Recognizer support library</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Goedel.IO" isDocumented="True">IO utility routines.</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Goedel.Platform" isDocumented="True">Platform specific apis.</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Goedel.Registry" isDocumented="True">Support for command line syntax parsing and Goedel schema files.</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Goedel.Utilities" isDocumented="True">Utilities common to all Goedel projects.</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Goedel.Mesh" isDocumented="True">Core library for Mathematical Mesh Reference implementation.</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Goedel.Persistence" isDocumented="True">Lightweight persistence mechanism for testing and reference code. The current implementation is not suited for production use but could be modified to make it so.</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Goedel.Mesh.Client" isDocumented="True">Client library for Mesh operations.</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Goedel.Mesh.Integration.LiveMail" isDocumented="False" />
+      <NamespaceSummaryItem name="Goedel.Mesh.Platform" isDocumented="True">Abstract interface to platform specific features.</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Goedel.Mesh.Platform.Linux" isDocumented="True">Implementation of platform specific features for Linux</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Goedel.Mesh.Platform.Windows" isDocumented="True">Implementation of platform specific features for Windows</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Goedel.Mesh.Server" isDocumented="True">Mesh server API</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Goedel.Account" isDocumented="True">Mesh/Account shared libraries.</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Goedel.Account.Client" isDocumented="True">Mesh/Account Client Libraries.</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Goedel.Account.Server" isDocumented="True">Mesh/Account Server Libraries.</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Goedel.Confirm" isDocumented="True">Mesh/Account shared libraries.</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Goedel.Confirm.Client" isDocumented="True">Mesh/Account client libraries.</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Goedel.Confirm.Server" isDocumented="True">Mesh/Account server libraries.</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Goedel.Recrypt" isDocumented="True">Mesh/Account shared libraries.</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Goedel.Recrypt.Client" isDocumented="True">Mesh/Account client libraries.</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Goedel.Recrypt.Server" isDocumented="True">Mesh/Account server libraries.</NamespaceSummaryItem>
+    </NamespaceSummaries>
     <ProjectSummary>The Mathematical Mesh is a project that makes computers easier to use by making them more secure.</ProjectSummary>
   </PropertyGroup>
   <!-- There are no properties for these groups.  AnyCPU needs to appear in order for Visual Studio to perform
@@ -127,11 +128,30 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="Content" />
+    <Folder Include="ContentProject\" />
+    <Folder Include="ContentProject\Applications\" />
+    <Folder Include="ContentProject\Platforms\" />
     <Folder Include="Content\VersionHistory" />
     <Folder Include="icons" />
     <Folder Include="media" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ContentProject\Applications\Account.aml" />
+    <None Include="ContentProject\Applications\SSH.aml" />
+    <None Include="ContentProject\Platforms.aml" />
+    <None Include="ContentProject\Platforms\Windows.aml" />
+    <None Include="ContentProject\Platforms\OSX.aml" />
+    <None Include="ContentProject\Platforms\Linux.aml" />
+    <None Include="ContentProject\Applications\Recrypt.aml" />
+    <None Include="ContentProject\Applications\Mail.aml" />
+    <None Include="ContentProject\Applications\Credential.aml" />
+    <None Include="ContentProject\Applications\Confirm.aml" />
+    <None Include="ContentProject\ToDo.aml" />
+    <None Include="ContentProject\Services.aml" />
+    <None Include="ContentProject\Profiles.aml" />
+    <None Include="ContentProject\Meshifying.aml" />
+    <None Include="ContentProject\Applications.aml" />
+    <None Include="ContentProject\Welcome.aml" />
     <None Include="Content\VersionHistory\v1.0.0.0.aml" />
     <None Include="Content\VersionHistory\VersionHistory.aml" />
     <None Include="Content\Welcome.aml" />
@@ -178,19 +198,9 @@
       <Project>{c4824513-f416-4ead-be82-f2df23641f6a}</Project>
       <Private>True</Private>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Platform.Framework\Goedel.Platform.Framework.csproj">
-      <Name>Goedel.Platform.Framework</Name>
-      <Project>{168a9984-6dbc-4683-9e43-c3e077066933}</Project>
-      <Private>True</Private>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Platform\Goedel.Platform.csproj">
       <Name>Goedel.Platform</Name>
       <Project>{b806fca3-aa82-4fd4-aa56-9d53250bda4a}</Project>
-      <Private>True</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Protocol.Framework\Goedel.Protocol.Framework.csproj">
-      <Name>Goedel.Protocol.Framework</Name>
-      <Project>{c1d2c847-ee62-430c-82dc-a4bd5ab38a44}</Project>
       <Private>True</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Protocol\Goedel.Protocol.csproj">

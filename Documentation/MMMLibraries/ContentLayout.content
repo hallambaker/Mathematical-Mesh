@@ -1,9 +1,26 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Topics>
-  <Topic id="89758373-3fa3-4eab-b18d-7d2bed665839" visible="True" isDefault="true" isSelected="true" title="Welcome to the [TODO: Add project name]">
+  <Topic id="12cd4543-7aeb-41b3-81cf-4f828b2f76d7" visible="True" isDefault="true" title="The Mathematical Mesh Reference Library">
     <HelpKeywords>
       <HelpKeyword index="K" term="Welcome" />
     </HelpKeywords>
+  </Topic>
+  <Topic id="51d8c99a-51dc-4096-8685-2108ec2892b4" visible="True" title="Converting applications and services to use the Mesh" />
+  <Topic id="83ad038a-a806-4d03-8f45-3ace3f1db8ca" visible="True" title="Mesh Profiles" />
+  <Topic id="0cc9563f-55ea-4fe1-84d7-cdefd3c04ede" visible="True" title="Mesh Services" />
+  <Topic id="0695f76e-4221-4514-aa03-e49c20375202" visible="True" title="To Do: Mesh Libraries." />
+  <Topic id="43B8497A-BD11-46E5-997B-51CEBB983CE7" visible="True" isExpanded="true" title="Mesh Applications">
+    <Topic id="4de8bec4-1e2f-4d1a-8d2d-dcc32b4bc8ae" visible="True" title="Mesh/Confirm" />
+    <Topic id="bfa7192b-9d08-4147-bb92-0fb5d3c549ed" visible="True" title="Mesh/Credential" />
+    <Topic id="2592eb79-3d76-4064-9960-f50f2393a267" visible="True" title="Mesh/Mail" />
+    <Topic id="4286b096-0c48-4ed6-9dbe-fdd62d280a4b" visible="True" title="Mesh/Recrypt" />
+    <Topic id="68888558-dae0-44b5-94d7-1b7f60d7ea16" visible="True" isSelected="true" title="Mesh/SSH" />
+    <Topic id="27f3a1b5-6d97-4dde-b996-57399a4dbd26" visible="True" title="Mesh/Account" />
+  </Topic>
+  <Topic id="2397c1a8-7c99-4eb5-a540-913a4e9ee8ba" visible="True" isExpanded="true" title="Platforms">
+    <Topic id="ecfe1ed5-40eb-405b-899b-715f94f6ddb1" visible="True" title="Linux" />
+    <Topic id="af8c4bb4-ac98-4f5f-a509-ffe9d7dc5f5f" visible="True" title="OSX" />
+    <Topic id="dc96eacc-aa64-4231-93eb-21bafdb6bd82" visible="True" title="Windows" />
   </Topic>
   <Topic id="301c4c00-3434-40c7-97c4-be6fffe6001a" visible="True" isExpanded="true" title="Version History">
     <HelpKeywords>

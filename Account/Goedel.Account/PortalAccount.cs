@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Goedel.Protocol;
-using Goedel.Protocol.Framework;
+
 
 namespace Goedel.Account {
 
@@ -40,7 +40,7 @@ namespace Goedel.Account {
             public static AccountPortal Default {
                 get {
                     if (_Default == null) {
-                        _Default = new RecryptPortalRemote();
+                        _Default = new AccountPortalRemote();
                         }
                     return _Default;
                     }
@@ -60,12 +60,12 @@ namespace Goedel.Account {
         /// <summary>
         /// Connection to network service using HTTP client.
         /// </summary>
-        public class RecryptPortalRemote : AccountPortal {
+        public class AccountPortalRemote : AccountPortal {
 
             /// <summary>
             /// Default constructor.
             /// </summary>
-            public RecryptPortalRemote () {
+            public AccountPortalRemote () {
 
                 }
 

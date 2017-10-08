@@ -9,10 +9,11 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>InternetDrafts</RootNamespace>
     <AssemblyName>InternetDrafts</AssemblyName>
-    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
     <AssemblyVersion>1.0.0.2</AssemblyVersion>
+	<AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects> 
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -54,11 +55,15 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CreateExamples.cs" />
+    <Compile Include="MakeExamplesKeyExchange.cs">
+      <DependentUpon>MakeExamplesKeyExchange.script</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="MakeExamplesApplications.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -69,19 +74,27 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="MakeExamplesContainer.cs">
+      <DependentUpon>MakeExamplesContainer.script</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="MakeExamplesReference.cs">
       <DependentUpon>MakeExamplesReference.script</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="KeyExchangePortalTraced.cs" />
     <Compile Include="MeshPortalTraced.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="MakeClean.bat" />
-    <None Include="MakeDocs.bat" />
+    <None Include="MakeExamplesKeyExchange.script">
+      <Generator>gscript</Generator>
+      <LastGenOutput>MakeExamplesKeyExchange.cs</LastGenOutput>
+    </None>
     <None Include="MakeExamplesApplications.script">
       <Generator>gscript</Generator>
       <LastGenOutput>MakeExamplesApplications.cs</LastGenOutput>
@@ -89,6 +102,10 @@
     <None Include="MakeExamplesDeveloper.script">
       <Generator>gscript</Generator>
       <LastGenOutput>MakeExamplesDeveloper.cs</LastGenOutput>
+    </None>
+    <None Include="MakeExamplesContainer.script">
+      <Generator>gscript</Generator>
+      <LastGenOutput>MakeExamplesContainer.cs</LastGenOutput>
     </None>
     <None Include="MakeExamplesReference.script">
       <Generator>gscript</Generator>
@@ -111,6 +128,10 @@
     <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Command\Goedel.Command.csproj">
       <Project>{e7d4d1f4-e41a-44e2-abbd-f6a9e1d3f1ac}</Project>
       <Name>Goedel.Command</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Cryptography.Container\Goedel.Cryptography.Container.csproj">
+      <Project>{6bb41505-dedb-46e7-85e5-99f7d99f57e2}</Project>
+      <Name>Goedel.Cryptography.Container</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Cryptography.Framework\Goedel.Cryptography.Framework.csproj">
       <Project>{b12ad19f-0e50-4d1d-99de-30c63886e718}</Project>
@@ -144,10 +165,6 @@
       <Project>{c4824513-f416-4ead-be82-f2df23641f6a}</Project>
       <Name>Goedel.IO</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Platform.Framework\Goedel.Platform.Framework.csproj">
-      <Project>{168a9984-6dbc-4683-9e43-c3e077066933}</Project>
-      <Name>Goedel.Platform.Framework</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Platform\Goedel.Platform.csproj">
       <Project>{b806fca3-aa82-4fd4-aa56-9d53250bda4a}</Project>
       <Name>Goedel.Platform</Name>
@@ -155,6 +172,14 @@
     <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Protocol.Debug\Goedel.Protocol.Debug.csproj">
       <Project>{0586b4c1-814c-4d98-b6f1-180cd4e2faab}</Project>
       <Name>Goedel.Protocol.Debug</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Protocol.Exchange.Server\Goedel.Protocol.Exchange.Server.csproj">
+      <Project>{da00c857-80ec-4542-8188-7c2a9982d97f}</Project>
+      <Name>Goedel.Protocol.Exchange.Server</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Protocol.Exchange\Goedel.Protocol.Exchange.csproj">
+      <Project>{3d59c3c8-119d-4a4c-aaa2-7d71024de604}</Project>
+      <Name>Goedel.Protocol.Exchange</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Protocol\Goedel.Protocol.csproj">
       <Project>{18cb2a21-48f4-4862-ae95-94efbd209ab3}</Project>

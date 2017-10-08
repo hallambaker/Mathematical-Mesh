@@ -115,49 +115,46 @@ SourceFiles = \
      Constants.cs\
      Exceptions.cs\
      Initialize.cs\
+     ProfileAppCatalog.cs\
      PublicKeyUtils.cs\
      Portal.cs\
      ProfileApplication.cs\
      ProfileDevice.cs\
      Escrow.cs\
      MailClient.cs\
-     ProfileConfirm.cs\
-     ProfileRecrypt.cs\
-     ProfileSSH.cs\
-     SchemaConfirm.cs\
+     ProfileAppSSH.cs\
+     SchemaCatalogApps.cs\
+     SchemaAppMail.cs\
      SchemaMesh.cs\
-     SchemaRecrypt.cs\
-     SchemaNetwork.cs\
      SchemaMeshPlus.cs\
-     ProfileNetwork.cs\
+     OLDProfileNetwork.cs\
      ProfileMaster.cs\
      PublicKey.cs\
-     ProfileMail.cs\
+     ProfileAppMail.cs\
      MeshLib.cs\
-     ProfilePassword.cs\
+     OLDProfilePassword.cs\
      ProfilePersonal.cs\
      Profiles.cs\
      Properties/AssemblyInfo.cs\
-     SchemaMail.cs\
-     SchemaPassword.cs\
-     SchemaSSH.cs\
+     SchemaAppSSH.cs\
      SignProfile.cs\
      WindowsNetworkProfile.cs
 
 LinkFiles = \
-    $(LIBRARYBIN)/Goedel.ASN.dll\
-    $(LIBRARYBIN)/Goedel.Cryptography.dll\
-    $(LIBRARYBIN)/Goedel.Cryptography.Framework.dll\
-    $(LIBRARYBIN)/Goedel.Cryptography.Jose.dll\
-    $(LIBRARYBIN)/Goedel.Cryptography.KeyFile.dll\
-    $(LIBRARYBIN)/Goedel.IO.dll\
-    $(LIBRARYBIN)/Goedel.Platform.dll\
-    $(LIBRARYBIN)/Goedel.Protocol.dll\
-    $(LIBRARYBIN)/Goedel.Registry.dll\
-    $(LIBRARYBIN)/Goedel.Utilities.dll\
+    $(TARGETBIN)/Goedel.ASN.dll\
+    $(TARGETBIN)/Goedel.Cryptography.Framework.dll\
+    $(TARGETBIN)/Goedel.Cryptography.Jose.dll\
+    $(TARGETBIN)/Goedel.Cryptography.KeyFile.dll\
+    $(TARGETBIN)/Goedel.Cryptography.dll\
+    $(TARGETBIN)/Goedel.FSR.dll\
+    $(TARGETBIN)/Goedel.IO.dll\
+    $(TARGETBIN)/Goedel.Platform.dll\
+    $(TARGETBIN)/Goedel.Protocol.dll\
+    $(TARGETBIN)/Goedel.Registry.dll\
+    $(TARGETBIN)/Goedel.Utilities.dll\
     $(TARGETBIN)/Goedel.Persistence.dll
 
-LinkFilesComma = $(LIBRARYBIN)/Goedel.ASN.dll,$(LIBRARYBIN)/Goedel.Cryptography.dll,$(LIBRARYBIN)/Goedel.Cryptography.Framework.dll,$(LIBRARYBIN)/Goedel.Cryptography.Jose.dll,$(LIBRARYBIN)/Goedel.Cryptography.KeyFile.dll,$(LIBRARYBIN)/Goedel.IO.dll,$(LIBRARYBIN)/Goedel.Platform.dll,$(LIBRARYBIN)/Goedel.Protocol.dll,$(LIBRARYBIN)/Goedel.Registry.dll,$(LIBRARYBIN)/Goedel.Utilities.dll,$(TARGETBIN)/Goedel.Persistence.dll
+LinkFilesComma = $(TARGETBIN)/Goedel.ASN.dll,$(TARGETBIN)/Goedel.Cryptography.Framework.dll,$(TARGETBIN)/Goedel.Cryptography.Jose.dll,$(TARGETBIN)/Goedel.Cryptography.KeyFile.dll,$(TARGETBIN)/Goedel.Cryptography.dll,$(TARGETBIN)/Goedel.FSR.dll,$(TARGETBIN)/Goedel.IO.dll,$(TARGETBIN)/Goedel.Platform.dll,$(TARGETBIN)/Goedel.Protocol.dll,$(TARGETBIN)/Goedel.Registry.dll,$(TARGETBIN)/Goedel.Utilities.dll,$(TARGETBIN)/Goedel.Persistence.dll
 
 
 NugetFiles = 
@@ -198,18 +195,12 @@ Exceptions.cs : Exceptions.Exceptional
 !  $(Custom_Exceptional) Exceptions.Exceptional $(Custom_Exceptional_FLAG) Exceptions.cs 
 Portal.cs : Portal.Protocol
 !  $(Custom_protogen) Portal.Protocol $(Custom_protogen_FLAG) Portal.cs 
-SchemaRecrypt.cs : SchemaRecrypt.protocol
-!  $(Custom_protogen) SchemaRecrypt.protocol $(Custom_protogen_FLAG) SchemaRecrypt.cs 
-SchemaNetwork.cs : SchemaNetwork.protocol
-!  $(Custom_protogen) SchemaNetwork.protocol $(Custom_protogen_FLAG) SchemaNetwork.cs 
-SchemaPassword.cs : SchemaPassword.protocol
-!  $(Custom_protogen) SchemaPassword.protocol $(Custom_protogen_FLAG) SchemaPassword.cs 
-SchemaMail.cs : SchemaMail.protocol
-!  $(Custom_protogen) SchemaMail.protocol $(Custom_protogen_FLAG) SchemaMail.cs 
-SchemaConfirm.cs : SchemaConfirm.protocol
-!  $(Custom_protogen) SchemaConfirm.protocol $(Custom_protogen_FLAG) SchemaConfirm.cs 
-SchemaSSH.cs : SchemaSSH.protocol
-!  $(Custom_Protogen) SchemaSSH.protocol $(Custom_Protogen_FLAG) SchemaSSH.cs 
+SchemaCatalogApps.cs : SchemaCatalogApps.protocol
+!  $(Custom_protogen) SchemaCatalogApps.protocol $(Custom_protogen_FLAG) SchemaCatalogApps.cs 
+SchemaAppMail.cs : SchemaAppMail.protocol
+!  $(Custom_protogen) SchemaAppMail.protocol $(Custom_protogen_FLAG) SchemaAppMail.cs 
+SchemaAppSSH.cs : SchemaAppSSH.protocol
+!  $(Custom_Protogen) SchemaAppSSH.protocol $(Custom_Protogen_FLAG) SchemaAppSSH.cs 
 SchemaMesh.cs : SchemaMesh.protocol
 !  $(Custom_Protogen) SchemaMesh.protocol $(Custom_Protogen_FLAG) SchemaMesh.cs 
 
@@ -224,14 +215,91 @@ endif
 # Recursive make targets, do not execute if the variable NORECURSE is defined
 ifndef NORECURSE
 
-../Goedel.Persistence/$(TARGETBIN)/Goedel.Persistence.dll : recursive
-! $(MAKE) -C ../Goedel.Persistence
+../../../buildtools/Libraries/Goedel.ASN/$(TARGETBIN)/Goedel.ASN.dll : recursive
+! $(MAKE) -C ../../../buildtools/Libraries/Goedel.ASN
+
+../../../buildtools/Libraries/Goedel.Cryptography.Framework/$(TARGETBIN)/Goedel.Cryptography.Framework.dll : recursive
+! $(MAKE) -C ../../../buildtools/Libraries/Goedel.Cryptography.Framework
+
+../../../buildtools/Libraries/Goedel.Cryptography.Jose/$(TARGETBIN)/Goedel.Cryptography.Jose.dll : recursive
+! $(MAKE) -C ../../../buildtools/Libraries/Goedel.Cryptography.Jose
+
+../../../buildtools/Libraries/Goedel.Cryptography.KeyFile/$(TARGETBIN)/Goedel.Cryptography.KeyFile.dll : recursive
+! $(MAKE) -C ../../../buildtools/Libraries/Goedel.Cryptography.KeyFile
+
+../../../buildtools/Libraries/Goedel.Cryptography/$(TARGETBIN)/Goedel.Cryptography.dll : recursive
+! $(MAKE) -C ../../../buildtools/Libraries/Goedel.Cryptography
+
+../../../buildtools/Libraries/Goedel.FSR/$(TARGETBIN)/Goedel.FSR.dll : recursive
+! $(MAKE) -C ../../../buildtools/Libraries/Goedel.FSR
+
+../../../buildtools/Libraries/Goedel.IO/$(TARGETBIN)/Goedel.IO.dll : recursive
+! $(MAKE) -C ../../../buildtools/Libraries/Goedel.IO
+
+../../../buildtools/Libraries/Goedel.Platform/$(TARGETBIN)/Goedel.Platform.dll : recursive
+! $(MAKE) -C ../../../buildtools/Libraries/Goedel.Platform
+
+../../../buildtools/Libraries/Goedel.Protocol/$(TARGETBIN)/Goedel.Protocol.dll : recursive
+! $(MAKE) -C ../../../buildtools/Libraries/Goedel.Protocol
+
+../../../buildtools/Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll : recursive
+! $(MAKE) -C ../../../buildtools/Libraries/Goedel.Registry
+
+../../../buildtools/Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll : recursive
+! $(MAKE) -C ../../../buildtools/Libraries/Goedel.Utilities
+
+../../Libraries/Goedel.Persistence/$(TARGETBIN)/Goedel.Persistence.dll : recursive
+! $(MAKE) -C ../../Libraries/Goedel.Persistence
 
 endif
 
+$(TARGETBIN)/Goedel.ASN.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.ASN.dll : ../../../buildtools/Libraries/Goedel.ASN/$(TARGETBIN)/Goedel.ASN.dll
+!  cp ../../../buildtools/Libraries/Goedel.ASN/$(TARGETBIN)/Goedel.ASN.dll $(TARGETBIN)/Goedel.ASN.dll
+
+$(TARGETBIN)/Goedel.Cryptography.Framework.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.Cryptography.Framework.dll : ../../../buildtools/Libraries/Goedel.Cryptography.Framework/$(TARGETBIN)/Goedel.Cryptography.Framework.dll
+!  cp ../../../buildtools/Libraries/Goedel.Cryptography.Framework/$(TARGETBIN)/Goedel.Cryptography.Framework.dll $(TARGETBIN)/Goedel.Cryptography.Framework.dll
+
+$(TARGETBIN)/Goedel.Cryptography.Jose.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.Cryptography.Jose.dll : ../../../buildtools/Libraries/Goedel.Cryptography.Jose/$(TARGETBIN)/Goedel.Cryptography.Jose.dll
+!  cp ../../../buildtools/Libraries/Goedel.Cryptography.Jose/$(TARGETBIN)/Goedel.Cryptography.Jose.dll $(TARGETBIN)/Goedel.Cryptography.Jose.dll
+
+$(TARGETBIN)/Goedel.Cryptography.KeyFile.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.Cryptography.KeyFile.dll : ../../../buildtools/Libraries/Goedel.Cryptography.KeyFile/$(TARGETBIN)/Goedel.Cryptography.KeyFile.dll
+!  cp ../../../buildtools/Libraries/Goedel.Cryptography.KeyFile/$(TARGETBIN)/Goedel.Cryptography.KeyFile.dll $(TARGETBIN)/Goedel.Cryptography.KeyFile.dll
+
+$(TARGETBIN)/Goedel.Cryptography.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.Cryptography.dll : ../../../buildtools/Libraries/Goedel.Cryptography/$(TARGETBIN)/Goedel.Cryptography.dll
+!  cp ../../../buildtools/Libraries/Goedel.Cryptography/$(TARGETBIN)/Goedel.Cryptography.dll $(TARGETBIN)/Goedel.Cryptography.dll
+
+$(TARGETBIN)/Goedel.FSR.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.FSR.dll : ../../../buildtools/Libraries/Goedel.FSR/$(TARGETBIN)/Goedel.FSR.dll
+!  cp ../../../buildtools/Libraries/Goedel.FSR/$(TARGETBIN)/Goedel.FSR.dll $(TARGETBIN)/Goedel.FSR.dll
+
+$(TARGETBIN)/Goedel.IO.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.IO.dll : ../../../buildtools/Libraries/Goedel.IO/$(TARGETBIN)/Goedel.IO.dll
+!  cp ../../../buildtools/Libraries/Goedel.IO/$(TARGETBIN)/Goedel.IO.dll $(TARGETBIN)/Goedel.IO.dll
+
+$(TARGETBIN)/Goedel.Platform.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.Platform.dll : ../../../buildtools/Libraries/Goedel.Platform/$(TARGETBIN)/Goedel.Platform.dll
+!  cp ../../../buildtools/Libraries/Goedel.Platform/$(TARGETBIN)/Goedel.Platform.dll $(TARGETBIN)/Goedel.Platform.dll
+
+$(TARGETBIN)/Goedel.Protocol.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.Protocol.dll : ../../../buildtools/Libraries/Goedel.Protocol/$(TARGETBIN)/Goedel.Protocol.dll
+!  cp ../../../buildtools/Libraries/Goedel.Protocol/$(TARGETBIN)/Goedel.Protocol.dll $(TARGETBIN)/Goedel.Protocol.dll
+
+$(TARGETBIN)/Goedel.Registry.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.Registry.dll : ../../../buildtools/Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll
+!  cp ../../../buildtools/Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll $(TARGETBIN)/Goedel.Registry.dll
+
+$(TARGETBIN)/Goedel.Utilities.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.Utilities.dll : ../../../buildtools/Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
+!  cp ../../../buildtools/Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll $(TARGETBIN)/Goedel.Utilities.dll
+
 $(TARGETBIN)/Goedel.Persistence.dll :| $(TARGETBIN)
-$(TARGETBIN)/Goedel.Persistence.dll : ../Goedel.Persistence/$(TARGETBIN)/Goedel.Persistence.dll
-!  cp ../Goedel.Persistence/$(TARGETBIN)/Goedel.Persistence.dll $(TARGETBIN)/Goedel.Persistence.dll
+$(TARGETBIN)/Goedel.Persistence.dll : ../../Libraries/Goedel.Persistence/$(TARGETBIN)/Goedel.Persistence.dll
+!  cp ../../Libraries/Goedel.Persistence/$(TARGETBIN)/Goedel.Persistence.dll $(TARGETBIN)/Goedel.Persistence.dll
 
 
 # Referenced Libraries

@@ -8,7 +8,7 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>Goedel.Recrypt.Shell.Server</RootNamespace>
     <AssemblyName>Goedel.Recrypt.Shell.Server</AssemblyName>
-    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworkProfile />
@@ -40,7 +40,6 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
@@ -73,17 +72,9 @@
       <Project>{5ef04838-200d-4175-a0f8-2e8c156f74e4}</Project>
       <Name>Goedel.Cryptography</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Platform.Framework\Goedel.Platform.Framework.csproj">
-      <Project>{168a9984-6dbc-4683-9e43-c3e077066933}</Project>
-      <Name>Goedel.Platform.Framework</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Platform\Goedel.Platform.csproj">
       <Project>{f1db0266-4c0b-498b-9ad3-7edc2057b45b}</Project>
       <Name>Goedel.Platform</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Protocol.Framework\Goedel.Protocol.Framework.csproj">
-      <Project>{c1d2c847-ee62-430c-82dc-a4bd5ab38a44}</Project>
-      <Name>Goedel.Protocol.Framework</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Protocol\Goedel.Protocol.csproj">
       <Project>{567327ec-fdcd-4b2d-bae3-d19a0bf4e11f}</Project>
