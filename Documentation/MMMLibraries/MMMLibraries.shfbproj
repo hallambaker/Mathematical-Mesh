@@ -13,7 +13,7 @@
     <RootNamespace>MMMLibraries</RootNamespace>
     <Name>MMMLibraries</Name>
     <!-- SHFB properties -->
-    <FrameworkVersion>.NET Framework 4.6.2</FrameworkVersion>
+    <FrameworkVersion>.NET Framework 4.7</FrameworkVersion>
     <OutputPath>..\..\..\WebPublish\PrismProof\code\mmm\</OutputPath>
     <HtmlHelpName>MMMLibraries</HtmlHelpName>
     <Language>en-US</Language>
@@ -54,6 +54,8 @@
       <DocumentationSource sourceFile="..\..\Recrypt\Goedel.Recrypt\Goedel.Recrypt.csproj" />
       <DocumentationSource sourceFile="..\..\Recrypt\Goedel.Recrypt.Client\Goedel.Recrypt.Client.csproj" />
       <DocumentationSource sourceFile="..\..\Recrypt\Goedel.Recrypt.Server\Goedel.Recrypt.Server.csproj" />
+      <DocumentationSource sourceFile="..\..\..\buildtools\Libraries\Goedel.Protocol.Exchange\Goedel.Protocol.Exchange.csproj" />
+      <DocumentationSource sourceFile="..\..\..\buildtools\Libraries\Goedel.Protocol.Exchange.Server\Goedel.Protocol.Exchange.Server.csproj" />
     </DocumentationSources>
     <SaveComponentCacheCapacity>100</SaveComponentCacheCapacity>
     <BuildAssemblerVerbosity>OnlyWarningsAndErrors</BuildAssemblerVerbosity>
@@ -201,6 +203,16 @@
     <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Platform\Goedel.Platform.csproj">
       <Name>Goedel.Platform</Name>
       <Project>{b806fca3-aa82-4fd4-aa56-9d53250bda4a}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Protocol.Exchange.Server\Goedel.Protocol.Exchange.Server.csproj">
+      <Name>Goedel.Protocol.Exchange.Server</Name>
+      <Project>{da00c857-80ec-4542-8188-7c2a9982d97f}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Protocol.Exchange\Goedel.Protocol.Exchange.csproj">
+      <Name>Goedel.Protocol.Exchange</Name>
+      <Project>{3d59c3c8-119d-4a4c-aaa2-7d71024de604}</Project>
       <Private>True</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Protocol\Goedel.Protocol.csproj">

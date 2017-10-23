@@ -4,6 +4,8 @@ cd %~dp0
 echo Generate schemas etc.
 cd Generated 
 
+protogen ../../../BuildTools/Libraries/Goedel.Cryptography.Container/ContainerEntry.pschema /md
+protogen ../../../BuildTools/Libraries/Goedel.Protocol.Exchange/KeyExchange.protocol /md
 protogen ../../Mesh/Goedel.Mesh/SchemaMesh.protocol /md
 protogen ../../Mesh/Goedel.Mesh/SchemaAppMail.protocol /md
 protogen ../../Mesh/Goedel.Mesh/SchemaAppSSH.protocol /md
@@ -20,6 +22,7 @@ copy ..\xml2rfc.js .
 copy ..\bib.xml .
 copy ..\favicon.png .
 
+rfctool O:\Documents\Mesh\hallambaker-json-key-exchange.docx /auto /cache=bib.xml
 rfctool O:\Documents\Mesh\hallambaker-container.docx /auto /cache=bib.xml
 rfctool O:\Documents\Mesh\hallambaker-sin.docx /auto /cache=bib.xml
 rfctool O:\Documents\Mesh\hallambaker-jsonbcd.docx /auto /cache=bib.xml

@@ -12,7 +12,7 @@ namespace ExampleGenerator {
 
         string LogPortal = "Portal.jlog";
         string LogMesh = "Mesh.jlog";
-        public bool All = false;
+        public bool All = true;
 
         static void Main(string[] args) {
             Goedel.IO.Debug.Initialize();
@@ -32,7 +32,7 @@ namespace ExampleGenerator {
 
             ////// here make the examples
             ////MakeExamples ();
-            //GoMesh();
+            GoMesh();
 
             // Make the documentation
             MakeDocs();
