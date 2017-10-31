@@ -126,7 +126,7 @@ namespace Goedel.Mesh {
         /// Debug routine, writes data to the console.
         /// </summary>
         public virtual void Dump() {
-            Debug.WriteLine("    Server {0} : Port {1} : Protocol", ServiceName, Port, AppProtocol);
+            Debug.WriteLine("    Server {0} : Port {1} : Protocol {2}", ServiceName, Port, AppProtocol);
             Debug.WriteLine("        Username {0}/{1}", UserName, Password);
             Debug.WriteLine("        Timeout {0} : Poll {1}", TimeOut, Polling);
             }
