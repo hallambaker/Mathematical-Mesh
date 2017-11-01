@@ -59,14 +59,8 @@
     <Reference Include="Goedel.IO">
       <HintPath>..\..\..\Library\Goedel.IO.dll</HintPath>
     </Reference>
-    <Reference Include="Goedel.Platform.Framework">
-      <HintPath>..\..\..\Library\Goedel.Platform.Framework.dll</HintPath>
-    </Reference>
     <Reference Include="Goedel.Protocol">
       <HintPath>..\..\..\Library\Goedel.Protocol.dll</HintPath>
-    </Reference>
-    <Reference Include="Goedel.Protocol.Framework">
-      <HintPath>..\..\..\Library\Goedel.Protocol.Framework.dll</HintPath>
     </Reference>
     <Reference Include="Goedel.Test">
       <HintPath>..\..\..\Library\Goedel.Test.dll</HintPath>
@@ -112,10 +106,6 @@
     <ProjectReference Include="..\..\Mesh\Goedel.Mesh\Goedel.Mesh.csproj">
       <Project>{0d8dd801-65d2-497c-8379-2d6adf3867c3}</Project>
       <Name>Goedel.Mesh</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\Goedel.Persistence\Goedel.Persistence.csproj">
-      <Project>{81e30b95-c59d-4a04-925e-85877fd37fdd}</Project>
-      <Name>Goedel.Persistence</Name>
     </ProjectReference>
     <ProjectReference Include="..\Test.Constants\Test.Constants.csproj">
       <Project>{e4f332ed-4cfe-487f-9c22-e38105c18fc5}</Project>

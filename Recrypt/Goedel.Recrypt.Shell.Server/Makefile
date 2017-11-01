@@ -115,16 +115,13 @@ SourceFiles = \
 
 LinkFiles = \
     $(TARGETBIN)/Goedel.Command.dll\
-    $(TARGETBIN)/Goedel.Cryptography.Jose.dll\
-    $(TARGETBIN)/Goedel.Cryptography.dll\
-    $(TARGETBIN)/Goedel.Platform.dll\
-    $(TARGETBIN)/Goedel.Protocol.Framework.dll\
+    $(TARGETBIN)/Goedel.Discovery.dll\
     $(TARGETBIN)/Goedel.Protocol.dll\
     $(TARGETBIN)/Goedel.Utilities.dll\
     $(TARGETBIN)/Goedel.Recrypt.Server.dll\
     $(TARGETBIN)/Goedel.Recrypt.dll
 
-LinkFilesComma = $(TARGETBIN)/Goedel.Command.dll,$(TARGETBIN)/Goedel.Cryptography.Jose.dll,$(TARGETBIN)/Goedel.Cryptography.dll,$(TARGETBIN)/Goedel.Platform.dll,$(TARGETBIN)/Goedel.Protocol.Framework.dll,$(TARGETBIN)/Goedel.Protocol.dll,$(TARGETBIN)/Goedel.Utilities.dll,$(TARGETBIN)/Goedel.Recrypt.Server.dll,$(TARGETBIN)/Goedel.Recrypt.dll
+LinkFilesComma = $(TARGETBIN)/Goedel.Command.dll,$(TARGETBIN)/Goedel.Discovery.dll,$(TARGETBIN)/Goedel.Protocol.dll,$(TARGETBIN)/Goedel.Utilities.dll,$(TARGETBIN)/Goedel.Recrypt.Server.dll,$(TARGETBIN)/Goedel.Recrypt.dll
 
 
 NugetFiles = 
@@ -179,17 +176,8 @@ ifndef NORECURSE
 ../../../buildtools/Libraries/Goedel.Command/$(TARGETBIN)/Goedel.Command.dll : recursive
 ! $(MAKE) -C ../../../buildtools/Libraries/Goedel.Command
 
-../../../buildtools/Libraries/Goedel.Cryptography.Jose/$(TARGETBIN)/Goedel.Cryptography.Jose.dll : recursive
-! $(MAKE) -C ../../../buildtools/Libraries/Goedel.Cryptography.Jose
-
-../../../buildtools/Libraries/Goedel.Cryptography/$(TARGETBIN)/Goedel.Cryptography.dll : recursive
-! $(MAKE) -C ../../../buildtools/Libraries/Goedel.Cryptography
-
-../../../buildtools/Libraries/Goedel.Platform/$(TARGETBIN)/Goedel.Platform.dll : recursive
-! $(MAKE) -C ../../../buildtools/Libraries/Goedel.Platform
-
-../../../buildtools/Libraries/Goedel.Protocol.Framework/$(TARGETBIN)/Goedel.Protocol.Framework.dll : recursive
-! $(MAKE) -C ../../../buildtools/Libraries/Goedel.Protocol.Framework
+../../../buildtools/Libraries/Goedel.Discovery/$(TARGETBIN)/Goedel.Discovery.dll : recursive
+! $(MAKE) -C ../../../buildtools/Libraries/Goedel.Discovery
 
 ../../../buildtools/Libraries/Goedel.Protocol/$(TARGETBIN)/Goedel.Protocol.dll : recursive
 ! $(MAKE) -C ../../../buildtools/Libraries/Goedel.Protocol
@@ -209,21 +197,9 @@ $(TARGETBIN)/Goedel.Command.dll :| $(TARGETBIN)
 $(TARGETBIN)/Goedel.Command.dll : ../../../buildtools/Libraries/Goedel.Command/$(TARGETBIN)/Goedel.Command.dll
 !  cp ../../../buildtools/Libraries/Goedel.Command/$(TARGETBIN)/Goedel.Command.dll $(TARGETBIN)/Goedel.Command.dll
 
-$(TARGETBIN)/Goedel.Cryptography.Jose.dll :| $(TARGETBIN)
-$(TARGETBIN)/Goedel.Cryptography.Jose.dll : ../../../buildtools/Libraries/Goedel.Cryptography.Jose/$(TARGETBIN)/Goedel.Cryptography.Jose.dll
-!  cp ../../../buildtools/Libraries/Goedel.Cryptography.Jose/$(TARGETBIN)/Goedel.Cryptography.Jose.dll $(TARGETBIN)/Goedel.Cryptography.Jose.dll
-
-$(TARGETBIN)/Goedel.Cryptography.dll :| $(TARGETBIN)
-$(TARGETBIN)/Goedel.Cryptography.dll : ../../../buildtools/Libraries/Goedel.Cryptography/$(TARGETBIN)/Goedel.Cryptography.dll
-!  cp ../../../buildtools/Libraries/Goedel.Cryptography/$(TARGETBIN)/Goedel.Cryptography.dll $(TARGETBIN)/Goedel.Cryptography.dll
-
-$(TARGETBIN)/Goedel.Platform.dll :| $(TARGETBIN)
-$(TARGETBIN)/Goedel.Platform.dll : ../../../buildtools/Libraries/Goedel.Platform/$(TARGETBIN)/Goedel.Platform.dll
-!  cp ../../../buildtools/Libraries/Goedel.Platform/$(TARGETBIN)/Goedel.Platform.dll $(TARGETBIN)/Goedel.Platform.dll
-
-$(TARGETBIN)/Goedel.Protocol.Framework.dll :| $(TARGETBIN)
-$(TARGETBIN)/Goedel.Protocol.Framework.dll : ../../../buildtools/Libraries/Goedel.Protocol.Framework/$(TARGETBIN)/Goedel.Protocol.Framework.dll
-!  cp ../../../buildtools/Libraries/Goedel.Protocol.Framework/$(TARGETBIN)/Goedel.Protocol.Framework.dll $(TARGETBIN)/Goedel.Protocol.Framework.dll
+$(TARGETBIN)/Goedel.Discovery.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.Discovery.dll : ../../../buildtools/Libraries/Goedel.Discovery/$(TARGETBIN)/Goedel.Discovery.dll
+!  cp ../../../buildtools/Libraries/Goedel.Discovery/$(TARGETBIN)/Goedel.Discovery.dll $(TARGETBIN)/Goedel.Discovery.dll
 
 $(TARGETBIN)/Goedel.Protocol.dll :| $(TARGETBIN)
 $(TARGETBIN)/Goedel.Protocol.dll : ../../../buildtools/Libraries/Goedel.Protocol/$(TARGETBIN)/Goedel.Protocol.dll

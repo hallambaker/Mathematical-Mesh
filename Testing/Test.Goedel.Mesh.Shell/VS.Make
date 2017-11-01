@@ -23,7 +23,6 @@ LinkFiles = \
     Goedel.FSR.dll\
     Goedel.IO.dll\
     Goedel.Platform.dll\
-    Goedel.Platform.Framework.dll\
     Goedel.Protocol.dll\
     Goedel.Protocol.Framework.dll\
     Goedel.Test.dll\
@@ -34,7 +33,6 @@ LinkFiles = \
     Goedel.Mesh.Server.dll\
     Goedel.Mesh.Shell.MeshMan.dll\
     Goedel.Mesh.dll\
-    Goedel.Persistence.dll\
     Test.Constants.dll
 
 prebuild : 

@@ -15,10 +15,7 @@
 
 LinkFiles = \
     Goedel.Command.dll\
-    Goedel.Cryptography.Jose.dll\
-    Goedel.Cryptography.dll\
-    Goedel.Platform.dll\
-    Goedel.Protocol.Framework.dll\
+    Goedel.Discovery.dll\
     Goedel.Protocol.dll\
     Goedel.Utilities.dll\
     Goedel.Recrypt.Server.dll\

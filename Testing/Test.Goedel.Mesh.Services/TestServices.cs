@@ -8,7 +8,6 @@ using Goedel.Utilities;
 using Goedel.Cryptography;
 using Goedel.Cryptography.Jose;
 using Goedel.Protocol;
-using Goedel.Protocol.Framework;
 using Test.Common;
 using Goedel.Mesh.Server;
 

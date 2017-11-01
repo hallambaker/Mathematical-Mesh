@@ -13,7 +13,7 @@
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
     <AssemblyVersion>1.0.0.137</AssemblyVersion>
-	<AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects> 
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -49,44 +49,12 @@
       <Project>{e7d4d1f4-e41a-44e2-abbd-f6a9e1d3f1ac}</Project>
       <Name>Goedel.Command</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Cryptography.Framework\Goedel.Cryptography.Framework.csproj">
-      <Project>{b12ad19f-0e50-4d1d-99de-30c63886e718}</Project>
-      <Name>Goedel.Cryptography.Framework</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Cryptography.Jose\Goedel.Cryptography.Jose.csproj">
-      <Project>{b1a5a847-2d13-4142-9267-582028f93f32}</Project>
-      <Name>Goedel.Cryptography.Jose</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Cryptography.KeyFile\Goedel.Cryptography.KeyFile.csproj">
-      <Project>{73d40f24-a492-4081-b58e-b2af30762c78}</Project>
-      <Name>Goedel.Cryptography.KeyFile</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Cryptography.Linux\Goedel.Cryptography.Linux.csproj">
-      <Project>{328bd6ee-ed86-4980-8683-b4a6d86bf72c}</Project>
-      <Name>Goedel.Cryptography.Linux</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Cryptography\Goedel.Cryptography.csproj">
-      <Project>{0039b613-3071-493f-a51b-fb75f7ca56c2}</Project>
-      <Name>Goedel.Cryptography</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.FSR\Goedel.FSR.csproj">
-      <Project>{97b7261d-3779-4564-90a4-64a2fad01295}</Project>
-      <Name>Goedel.FSR</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.IO\Goedel.IO.csproj">
-      <Project>{c4824513-f416-4ead-be82-f2df23641f6a}</Project>
-      <Name>Goedel.IO</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Platform\Goedel.Platform.csproj">
-      <Project>{b806fca3-aa82-4fd4-aa56-9d53250bda4a}</Project>
-      <Name>Goedel.Platform</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Registry\Goedel.Registry.csproj">
-      <Project>{ebda947e-d7a9-4a93-aef1-aea9d56b9225}</Project>
-      <Name>Goedel.Registry</Name>
+    <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Discovery\Goedel.Discovery.csproj">
+      <Project>{f2ceda09-f5ed-4813-8666-eebdcef55e95}</Project>
+      <Name>Goedel.Discovery</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Utilities\Goedel.Utilities.csproj">
-      <Project>{2b20317b-39d5-4c20-8e06-dd4bc7573a73}</Project>
+      <Project>{71c0dce3-3f2a-4545-af77-1b89bcff7c1e}</Project>
       <Name>Goedel.Utilities</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Client\Goedel.Mesh.Client.csproj">
@@ -112,10 +80,6 @@
     <ProjectReference Include="..\..\Mesh\Goedel.Mesh\Goedel.Mesh.csproj">
       <Project>{0d8dd801-65d2-497c-8379-2d6adf3867c3}</Project>
       <Name>Goedel.Mesh</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\Goedel.Persistence\Goedel.Persistence.csproj">
-      <Project>{81e30b95-c59d-4a04-925e-85877fd37fdd}</Project>
-      <Name>Goedel.Persistence</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -16,6 +16,7 @@ using Goedel.Protocol;
 using Goedel.Protocol.Exchange;
 using Goedel.Protocol.Exchange.Server;
 using Goedel.IO;
+using Goedel.Command;
 
 namespace ExampleGenerator {
 
@@ -84,8 +85,7 @@ namespace ExampleGenerator {
 
         void GoKeyExchange () {
 
-            Message.Append(ExchangeMessage._TagDictionary);
-
+            Message.Append(Message._TagDictionary, ExchangeMessage._TagDictionary);
             KeyExchangePortalTraced = new KeyExchangePortalTraced(NameService);
             KeyExchangePortal.Default = KeyExchangePortalTraced;
 
@@ -153,20 +153,6 @@ namespace ExampleGenerator {
 
             ExampleGenerator.MeshExamples(this);
             ExampleGenerator.MeshExamplesWeb(this);
-
-
-            //using (var Writer = new StreamWriter (Output1)) {
-            //    var ExampleGenerator = new ExampleGenerator(Writer);
-            //    ExampleGenerator.MeshExamples(this);
-            //    }
-
-            //using (var Writer = new StreamWriter(Output2)) {
-            //    var ExampleGenerator = new ExampleGenerator(Writer);
-            //    ExampleGenerator.MeshExamplesWeb(this);
-            //    }
-
-
-
             }
 
         public static string NameAccount = "alice";

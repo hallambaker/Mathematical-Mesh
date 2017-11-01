@@ -5,7 +5,7 @@ using Goedel.IO;
 using Goedel.Protocol.Debug;
 using Goedel.Mesh;
 using Goedel.Cryptography;
-using Goedel.Platform;
+using Goedel.Discovery;
 using Goedel.Mesh.Platform.Linux;
 using Goedel.Recrypt;
 using Goedel.Confirm;

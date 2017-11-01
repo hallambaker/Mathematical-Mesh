@@ -13,7 +13,9 @@
 #   * Postprocess VSIX projects
 #   * Copy executables
 
-LinkFiles = 
+LinkFiles = \
+    Goedel.Protocol.dll\
+    Goedel.Utilities.dll
 
 prebuild : 
     echo "Do Prebuild"

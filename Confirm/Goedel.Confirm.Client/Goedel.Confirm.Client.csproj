@@ -50,11 +50,11 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Protocol\Goedel.Protocol.csproj">
-      <Project>{567327ec-fdcd-4b2d-bae3-d19a0bf4e11f}</Project>
+      <Project>{4b69fe54-50a2-4f72-bf24-ba9bcd0c0949}</Project>
       <Name>Goedel.Protocol</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Utilities\Goedel.Utilities.csproj">
-      <Project>{972ec886-903e-4857-b058-8637d3cba08f}</Project>
+      <Project>{71c0dce3-3f2a-4545-af77-1b89bcff7c1e}</Project>
       <Name>Goedel.Utilities</Name>
     </ProjectReference>
     <ProjectReference Include="..\Goedel.Confirm\Goedel.Confirm.csproj">

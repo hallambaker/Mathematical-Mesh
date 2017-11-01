@@ -50,19 +50,19 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Cryptography.Jose\Goedel.Cryptography.Jose.csproj">
-      <Project>{263752c7-9d81-4284-bff6-58f6dbb1dfa0}</Project>
+      <Project>{5b273c47-8653-46d3-97a0-f96858bed256}</Project>
       <Name>Goedel.Cryptography.Jose</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Cryptography\Goedel.Cryptography.csproj">
-      <Project>{5ef04838-200d-4175-a0f8-2e8c156f74e4}</Project>
+      <Project>{16b48fbd-94ee-45b5-8eec-ea234f5774b5}</Project>
       <Name>Goedel.Cryptography</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Protocol\Goedel.Protocol.csproj">
-      <Project>{567327ec-fdcd-4b2d-bae3-d19a0bf4e11f}</Project>
+      <Project>{4b69fe54-50a2-4f72-bf24-ba9bcd0c0949}</Project>
       <Name>Goedel.Protocol</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Utilities\Goedel.Utilities.csproj">
-      <Project>{972ec886-903e-4857-b058-8637d3cba08f}</Project>
+      <Project>{71c0dce3-3f2a-4545-af77-1b89bcff7c1e}</Project>
       <Name>Goedel.Utilities</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Mesh\Goedel.Mesh\Goedel.Mesh.csproj">

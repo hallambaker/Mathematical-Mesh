@@ -155,6 +155,8 @@ Applications.aml : Applications.md
 !  $(Custom_MD2AML) Applications.md $(Custom_MD2AML_FLAG) Applications.aml 
 Account.aml : Applications\Account.md
 !  $(Custom_MD2AML) Applications\Account.md $(Custom_MD2AML_FLAG) Account.aml 
+Credential.aml : Applications\Credential.md
+!  $(Custom_MD2AML) Applications\Credential.md $(Custom_MD2AML_FLAG) Credential.aml 
 Confirm.aml : Applications\Confirm.md
 !  $(Custom_MD2AML) Applications\Confirm.md $(Custom_MD2AML_FLAG) Confirm.aml 
 Catalog.aml : Applications\Catalog.md

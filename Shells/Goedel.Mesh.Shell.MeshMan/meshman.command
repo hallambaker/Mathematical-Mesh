@@ -53,6 +53,10 @@
 			Brief "Device description"
 		Option Default "default" Flag
 			Brief "Make the new device profile the default"
+		Option Barcode "barcode" String
+			Brief "Create a barcode URL with the specified prefix"
+
+
 
 	Command Verify "verify"
 		Brief "Verify requested portal address"
@@ -117,6 +121,10 @@
 			Option File "file" NewFile
 
 		Command Recover "recover"
+			Parameter Portal "portal" String
+				Brief "New portal account"
+			Parameter Description "pd" String
+				Brief "Device description"
 			Brief "Recover a previously escrowed key"
 			Parameter S0 "s0" String
 			Parameter S1 "s1" String
@@ -130,15 +138,36 @@
 			Parameter S9 "s9" String
 			Parameter S10 "s10" String
 
+		Command Purge "purge"
+			Parameter Portal "portal" String
+				Brief "New portal account"
+			Parameter Description "pd" String
+				Brief "Device description"
+			Brief "Recover a previously escrowed key"
+			Parameter S0 "s0" String
+			Parameter S1 "s1" String
+			Parameter S2 "s2" String
+			Parameter S3 "s3" String
+			Parameter S4 "s4" String
+			Parameter S5 "s5" String
+			Parameter S6 "s6" String
+			Parameter S7 "s7" String
+			Parameter S8 "s8" String
+			Parameter S9 "s9" String
+			Parameter S10 "s10" String
+			Option Force "force" Flag
+
 		Command Export "export"
 			Brief "Export the specified profile data to the specified file"
 			Parameter File "file" NewFile
+			Option Password "password" String
 			Include PortalAccount
 			Include Reporting
 
 		Command Import "import"
 			Brief "Import the specified profile data to the specified file"
 			Parameter File "file" NewFile
+			Option Password "password" String
 			Include PortalAccount
 			Include Reporting
 
@@ -157,8 +186,17 @@
 				Brief "New portal account"
 			Option PIN "pin" String
 				Brief "One time use authenticator"
+			Option Reboot "reboot" Flag
+				Brief "Reconnect using a bootstrap profile"
 			Include Reporting
 			Include DeviceProfileInfo
+
+		Command Bootstrap "bootstrap"
+			Brief "Create a bootstrap profile"
+			Include Reporting
+			Include PortalAccount
+
+
 
 		Command Accept "accept"
 			Brief "Accept a pending connection"
@@ -166,14 +204,23 @@
 				Brief "Fingerprint of connection to accept"
 			Include Reporting
 			Include PortalAccount
+			Option PreAuthorized "pre" Flag
+				Brief "Accept all pre-authorized requests"
 
 		Command Complete "complete"
 			Brief "Complete a pending connection request"
 			Include Reporting
 			Include PortalAccount
 
+		Command PIN "generate"
+			Brief "Generate a PIN pre-authorizing a connection request"
+			Include Reporting
+			Include PortalAccount
+
+
 	// Application profiles
 	CommandSet PasswordSet "password"
+
 		Command PasswordCreate "create"
 			Brief "Add a web application profile to a personal profile"
 			Include PortalAccount
@@ -219,6 +266,25 @@
 			Include PortalAccount
 			Include Reporting
 
+		Command MailSetData "set"
+			Include PortalAccount
+			Include Reporting
+			Parameter File "file" ExistingFile
+				Brief "Input file"
+			Option Password "pass" String
+				Brief "Password used to encrypt private data"
+
+		Command MailGetData "get"
+			Include PortalAccount
+			Include Reporting
+			Parameter File "file" NewFile
+				Brief "Output file"
+			Option Password "pass" String
+				Brief "Password used to encrypt private data"
+			Parameter P12 "p12" Flag
+				Brief "If set, include keydata in PKCS12 format."
+			Parameter OpenPGP "openpgp" Flag
+				Brief "If set, include keydata in OpenPGP format."
 
 	// SSH
 	CommandSet SSHSet "ssh"
@@ -226,8 +292,9 @@
 			Brief "Add a ssh application profile to a personal profile"
 			Include PortalAccount
 			Include Reporting
-			Parameter Install "install" Flag
-		
+			Option Install "install" String
+				Brief "Format"
+				
 		Command SSHSync "sync"
 			Brief "Synchronize this machine to SSH parameters from the mesh"
 			Include PortalAccount
@@ -239,6 +306,8 @@
 			Include ApplicationProfile
 			Include Reporting
 			Parameter Host "host" String
+			Option Format "format" String
+				Brief "Format"
 
 		Command SSHKnown "known"
 			Brief "List the SSH Known Hosts"
@@ -246,6 +315,8 @@
 			Include Reporting
 			Parameter Host "host" Flag
 				Brief "If specified, only list keys for this host"
+			Option Format "format" String
+				Brief "Format"
 
 		Command SSHAdd "add"
 			Brief "Add an SSH host"

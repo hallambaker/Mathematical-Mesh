@@ -117,16 +117,13 @@ LinkFiles = \
     $(LIBRARYBIN)/Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll\
     $(TARGETBIN)/Goedel.Cryptography.Jose.dll\
     $(TARGETBIN)/Goedel.Cryptography.dll\
-    $(TARGETBIN)/Goedel.IO.dll\
-    $(TARGETBIN)/Goedel.Protocol.Debug.dll\
     $(TARGETBIN)/Goedel.Protocol.dll\
-    $(TARGETBIN)/Goedel.Test.dll\
     $(TARGETBIN)/Goedel.Utilities.dll\
     $(TARGETBIN)/Goedel.Recrypt.Client.dll\
     $(TARGETBIN)/Goedel.Recrypt.Server.dll\
     $(TARGETBIN)/Goedel.Recrypt.dll
 
-LinkFilesComma = $(LIBRARYBIN)/Microsoft.VisualStudio.TestPlatform.TestFramework.dll,$(LIBRARYBIN)/Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll,$(TARGETBIN)/Goedel.Cryptography.Jose.dll,$(TARGETBIN)/Goedel.Cryptography.dll,$(TARGETBIN)/Goedel.IO.dll,$(TARGETBIN)/Goedel.Protocol.Debug.dll,$(TARGETBIN)/Goedel.Protocol.dll,$(TARGETBIN)/Goedel.Test.dll,$(TARGETBIN)/Goedel.Utilities.dll,$(TARGETBIN)/Goedel.Recrypt.Client.dll,$(TARGETBIN)/Goedel.Recrypt.Server.dll,$(TARGETBIN)/Goedel.Recrypt.dll
+LinkFilesComma = $(LIBRARYBIN)/Microsoft.VisualStudio.TestPlatform.TestFramework.dll,$(LIBRARYBIN)/Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll,$(TARGETBIN)/Goedel.Cryptography.Jose.dll,$(TARGETBIN)/Goedel.Cryptography.dll,$(TARGETBIN)/Goedel.Protocol.dll,$(TARGETBIN)/Goedel.Utilities.dll,$(TARGETBIN)/Goedel.Recrypt.Client.dll,$(TARGETBIN)/Goedel.Recrypt.Server.dll,$(TARGETBIN)/Goedel.Recrypt.dll
 
 
 NugetFiles = 
@@ -181,17 +178,8 @@ ifndef NORECURSE
 ../../../buildtools/Libraries/Goedel.Cryptography/$(TARGETBIN)/Goedel.Cryptography.dll : recursive
 ! $(MAKE) -C ../../../buildtools/Libraries/Goedel.Cryptography
 
-../../../buildtools/Libraries/Goedel.IO/$(TARGETBIN)/Goedel.IO.dll : recursive
-! $(MAKE) -C ../../../buildtools/Libraries/Goedel.IO
-
-../../../buildtools/Libraries/Goedel.Protocol.Debug/$(TARGETBIN)/Goedel.Protocol.Debug.dll : recursive
-! $(MAKE) -C ../../../buildtools/Libraries/Goedel.Protocol.Debug
-
 ../../../buildtools/Libraries/Goedel.Protocol/$(TARGETBIN)/Goedel.Protocol.dll : recursive
 ! $(MAKE) -C ../../../buildtools/Libraries/Goedel.Protocol
-
-../../../buildtools/Libraries/Goedel.Test/$(TARGETBIN)/Goedel.Test.dll : recursive
-! $(MAKE) -C ../../../buildtools/Libraries/Goedel.Test
 
 ../../../buildtools/Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll : recursive
 ! $(MAKE) -C ../../../buildtools/Libraries/Goedel.Utilities
@@ -215,21 +203,9 @@ $(TARGETBIN)/Goedel.Cryptography.dll :| $(TARGETBIN)
 $(TARGETBIN)/Goedel.Cryptography.dll : ../../../buildtools/Libraries/Goedel.Cryptography/$(TARGETBIN)/Goedel.Cryptography.dll
 !  cp ../../../buildtools/Libraries/Goedel.Cryptography/$(TARGETBIN)/Goedel.Cryptography.dll $(TARGETBIN)/Goedel.Cryptography.dll
 
-$(TARGETBIN)/Goedel.IO.dll :| $(TARGETBIN)
-$(TARGETBIN)/Goedel.IO.dll : ../../../buildtools/Libraries/Goedel.IO/$(TARGETBIN)/Goedel.IO.dll
-!  cp ../../../buildtools/Libraries/Goedel.IO/$(TARGETBIN)/Goedel.IO.dll $(TARGETBIN)/Goedel.IO.dll
-
-$(TARGETBIN)/Goedel.Protocol.Debug.dll :| $(TARGETBIN)
-$(TARGETBIN)/Goedel.Protocol.Debug.dll : ../../../buildtools/Libraries/Goedel.Protocol.Debug/$(TARGETBIN)/Goedel.Protocol.Debug.dll
-!  cp ../../../buildtools/Libraries/Goedel.Protocol.Debug/$(TARGETBIN)/Goedel.Protocol.Debug.dll $(TARGETBIN)/Goedel.Protocol.Debug.dll
-
 $(TARGETBIN)/Goedel.Protocol.dll :| $(TARGETBIN)
 $(TARGETBIN)/Goedel.Protocol.dll : ../../../buildtools/Libraries/Goedel.Protocol/$(TARGETBIN)/Goedel.Protocol.dll
 !  cp ../../../buildtools/Libraries/Goedel.Protocol/$(TARGETBIN)/Goedel.Protocol.dll $(TARGETBIN)/Goedel.Protocol.dll
-
-$(TARGETBIN)/Goedel.Test.dll :| $(TARGETBIN)
-$(TARGETBIN)/Goedel.Test.dll : ../../../buildtools/Libraries/Goedel.Test/$(TARGETBIN)/Goedel.Test.dll
-!  cp ../../../buildtools/Libraries/Goedel.Test/$(TARGETBIN)/Goedel.Test.dll $(TARGETBIN)/Goedel.Test.dll
 
 $(TARGETBIN)/Goedel.Utilities.dll :| $(TARGETBIN)
 $(TARGETBIN)/Goedel.Utilities.dll : ../../../buildtools/Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll

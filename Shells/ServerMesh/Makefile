@@ -115,20 +115,14 @@ SourceFiles = \
 
 LinkFiles = \
     $(TARGETBIN)/Goedel.Command.dll\
-    $(TARGETBIN)/Goedel.Cryptography.Framework.dll\
-    $(TARGETBIN)/Goedel.Cryptography.Jose.dll\
-    $(TARGETBIN)/Goedel.Cryptography.dll\
-    $(TARGETBIN)/Goedel.Protocol.Framework.dll\
     $(TARGETBIN)/Goedel.Protocol.dll\
-    $(TARGETBIN)/Goedel.Registry.dll\
     $(TARGETBIN)/Goedel.Utilities.dll\
     $(TARGETBIN)/Goedel.Mesh.Platform.Windows.dll\
     $(TARGETBIN)/Goedel.Mesh.Platform.dll\
-    $(TARGETBIN)/Goedel.Persistence.dll\
     $(TARGETBIN)/Goedel.Mesh.Server.dll\
     $(TARGETBIN)/Goedel.Mesh.dll
 
-LinkFilesComma = $(TARGETBIN)/Goedel.Command.dll,$(TARGETBIN)/Goedel.Cryptography.Framework.dll,$(TARGETBIN)/Goedel.Cryptography.Jose.dll,$(TARGETBIN)/Goedel.Cryptography.dll,$(TARGETBIN)/Goedel.Protocol.Framework.dll,$(TARGETBIN)/Goedel.Protocol.dll,$(TARGETBIN)/Goedel.Registry.dll,$(TARGETBIN)/Goedel.Utilities.dll,$(TARGETBIN)/Goedel.Mesh.Platform.Windows.dll,$(TARGETBIN)/Goedel.Mesh.Platform.dll,$(TARGETBIN)/Goedel.Persistence.dll,$(TARGETBIN)/Goedel.Mesh.Server.dll,$(TARGETBIN)/Goedel.Mesh.dll
+LinkFilesComma = $(TARGETBIN)/Goedel.Command.dll,$(TARGETBIN)/Goedel.Protocol.dll,$(TARGETBIN)/Goedel.Utilities.dll,$(TARGETBIN)/Goedel.Mesh.Platform.Windows.dll,$(TARGETBIN)/Goedel.Mesh.Platform.dll,$(TARGETBIN)/Goedel.Mesh.Server.dll,$(TARGETBIN)/Goedel.Mesh.dll
 
 
 NugetFiles = 
@@ -183,23 +177,8 @@ ifndef NORECURSE
 ../../../buildtools/Libraries/Goedel.Command/$(TARGETBIN)/Goedel.Command.dll : recursive
 ! $(MAKE) -C ../../../buildtools/Libraries/Goedel.Command
 
-../../../buildtools/Libraries/Goedel.Cryptography.Framework/$(TARGETBIN)/Goedel.Cryptography.Framework.dll : recursive
-! $(MAKE) -C ../../../buildtools/Libraries/Goedel.Cryptography.Framework
-
-../../../buildtools/Libraries/Goedel.Cryptography.Jose/$(TARGETBIN)/Goedel.Cryptography.Jose.dll : recursive
-! $(MAKE) -C ../../../buildtools/Libraries/Goedel.Cryptography.Jose
-
-../../../buildtools/Libraries/Goedel.Cryptography/$(TARGETBIN)/Goedel.Cryptography.dll : recursive
-! $(MAKE) -C ../../../buildtools/Libraries/Goedel.Cryptography
-
-../../../buildtools/Libraries/Goedel.Protocol.Framework/$(TARGETBIN)/Goedel.Protocol.Framework.dll : recursive
-! $(MAKE) -C ../../../buildtools/Libraries/Goedel.Protocol.Framework
-
 ../../../buildtools/Libraries/Goedel.Protocol/$(TARGETBIN)/Goedel.Protocol.dll : recursive
 ! $(MAKE) -C ../../../buildtools/Libraries/Goedel.Protocol
-
-../../../buildtools/Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll : recursive
-! $(MAKE) -C ../../../buildtools/Libraries/Goedel.Registry
 
 ../../../buildtools/Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll : recursive
 ! $(MAKE) -C ../../../buildtools/Libraries/Goedel.Utilities
@@ -209,9 +188,6 @@ ifndef NORECURSE
 
 ../../Mesh/Goedel.Mesh.Platform/$(TARGETBIN)/Goedel.Mesh.Platform.dll : recursive
 ! $(MAKE) -C ../../Mesh/Goedel.Mesh.Platform
-
-../../Libraries/Goedel.Persistence/$(TARGETBIN)/Goedel.Persistence.dll : recursive
-! $(MAKE) -C ../../Libraries/Goedel.Persistence
 
 ../../Mesh/Goedel.Mesh.Server/$(TARGETBIN)/Goedel.Mesh.Server.dll : recursive
 ! $(MAKE) -C ../../Mesh/Goedel.Mesh.Server
@@ -225,29 +201,9 @@ $(TARGETBIN)/Goedel.Command.dll :| $(TARGETBIN)
 $(TARGETBIN)/Goedel.Command.dll : ../../../buildtools/Libraries/Goedel.Command/$(TARGETBIN)/Goedel.Command.dll
 !  cp ../../../buildtools/Libraries/Goedel.Command/$(TARGETBIN)/Goedel.Command.dll $(TARGETBIN)/Goedel.Command.dll
 
-$(TARGETBIN)/Goedel.Cryptography.Framework.dll :| $(TARGETBIN)
-$(TARGETBIN)/Goedel.Cryptography.Framework.dll : ../../../buildtools/Libraries/Goedel.Cryptography.Framework/$(TARGETBIN)/Goedel.Cryptography.Framework.dll
-!  cp ../../../buildtools/Libraries/Goedel.Cryptography.Framework/$(TARGETBIN)/Goedel.Cryptography.Framework.dll $(TARGETBIN)/Goedel.Cryptography.Framework.dll
-
-$(TARGETBIN)/Goedel.Cryptography.Jose.dll :| $(TARGETBIN)
-$(TARGETBIN)/Goedel.Cryptography.Jose.dll : ../../../buildtools/Libraries/Goedel.Cryptography.Jose/$(TARGETBIN)/Goedel.Cryptography.Jose.dll
-!  cp ../../../buildtools/Libraries/Goedel.Cryptography.Jose/$(TARGETBIN)/Goedel.Cryptography.Jose.dll $(TARGETBIN)/Goedel.Cryptography.Jose.dll
-
-$(TARGETBIN)/Goedel.Cryptography.dll :| $(TARGETBIN)
-$(TARGETBIN)/Goedel.Cryptography.dll : ../../../buildtools/Libraries/Goedel.Cryptography/$(TARGETBIN)/Goedel.Cryptography.dll
-!  cp ../../../buildtools/Libraries/Goedel.Cryptography/$(TARGETBIN)/Goedel.Cryptography.dll $(TARGETBIN)/Goedel.Cryptography.dll
-
-$(TARGETBIN)/Goedel.Protocol.Framework.dll :| $(TARGETBIN)
-$(TARGETBIN)/Goedel.Protocol.Framework.dll : ../../../buildtools/Libraries/Goedel.Protocol.Framework/$(TARGETBIN)/Goedel.Protocol.Framework.dll
-!  cp ../../../buildtools/Libraries/Goedel.Protocol.Framework/$(TARGETBIN)/Goedel.Protocol.Framework.dll $(TARGETBIN)/Goedel.Protocol.Framework.dll
-
 $(TARGETBIN)/Goedel.Protocol.dll :| $(TARGETBIN)
 $(TARGETBIN)/Goedel.Protocol.dll : ../../../buildtools/Libraries/Goedel.Protocol/$(TARGETBIN)/Goedel.Protocol.dll
 !  cp ../../../buildtools/Libraries/Goedel.Protocol/$(TARGETBIN)/Goedel.Protocol.dll $(TARGETBIN)/Goedel.Protocol.dll
-
-$(TARGETBIN)/Goedel.Registry.dll :| $(TARGETBIN)
-$(TARGETBIN)/Goedel.Registry.dll : ../../../buildtools/Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll
-!  cp ../../../buildtools/Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll $(TARGETBIN)/Goedel.Registry.dll
 
 $(TARGETBIN)/Goedel.Utilities.dll :| $(TARGETBIN)
 $(TARGETBIN)/Goedel.Utilities.dll : ../../../buildtools/Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
@@ -260,10 +216,6 @@ $(TARGETBIN)/Goedel.Mesh.Platform.Windows.dll : ../../Mesh/Goedel.Mesh.Platform.
 $(TARGETBIN)/Goedel.Mesh.Platform.dll :| $(TARGETBIN)
 $(TARGETBIN)/Goedel.Mesh.Platform.dll : ../../Mesh/Goedel.Mesh.Platform/$(TARGETBIN)/Goedel.Mesh.Platform.dll
 !  cp ../../Mesh/Goedel.Mesh.Platform/$(TARGETBIN)/Goedel.Mesh.Platform.dll $(TARGETBIN)/Goedel.Mesh.Platform.dll
-
-$(TARGETBIN)/Goedel.Persistence.dll :| $(TARGETBIN)
-$(TARGETBIN)/Goedel.Persistence.dll : ../../Libraries/Goedel.Persistence/$(TARGETBIN)/Goedel.Persistence.dll
-!  cp ../../Libraries/Goedel.Persistence/$(TARGETBIN)/Goedel.Persistence.dll $(TARGETBIN)/Goedel.Persistence.dll
 
 $(TARGETBIN)/Goedel.Mesh.Server.dll :| $(TARGETBIN)
 $(TARGETBIN)/Goedel.Mesh.Server.dll : ../../Mesh/Goedel.Mesh.Server/$(TARGETBIN)/Goedel.Mesh.Server.dll

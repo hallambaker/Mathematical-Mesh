@@ -1,0 +1,94 @@
+﻿#using System.Text
+#using Goedel.Mesh
+#using Goedel.Protocol
+#xclass ExampleGenerator ExampleGenerator
+
+
+#file UserGuideConfirm "Apps/confirm.md" CreateExamples Examples
+<title>Confirm
+<titlebanner><h1>Mesh/Confirm
+
+<h4>Second factor authentication done right
+</titlebanner>
+<leftmain>
+
+This document provides an introduction to the Mesh/Confirm application. For a
+more complete description and a detailed reference guide, consult the 
+<a="/Documents/draft-hallambaker-mesh-confirm.html">Internet Draft</a>.
+
+Traditional second factor authentication mechanism offer limited security and are 
+tedious to use.
+
+Any security mechanism that requires users to carry an additional item is inevitably
+inconvenient. When an employee arrives at a facility having forgotten their token,
+an employer has no choice but to allow them access or lose the employee's work for
+that day.
+
+One Time Passcode (OTP) tokens using a clock or a button to advance a four, six or
+eight digit passcode provide a reasonably high degree of confidence that the token was
+at least involved in the authentication process in some fashion. Secure use of OTP 
+tokens require users to be aware of and detect man-in-the-middle attacks,
+an impossible task in many of the applications for which they are commonly used.
+
+'Smartokens' such as a smartcard or USB token using public key technology provide a 
+more reliable means of  authentication than OTP tokens but typically require 
+installation of third party drivers  and software and all the reliability issues 
+that inevitably incurs. 
+
+Most users who use an OTP token have a smart phone that has a display, a means of 
+keyboard input and network connectivity. We can use these devices to emulate the 
+obsolete OTP token technology created in the 1970s or we can use these capabilities
+to address the actual problem we are trying to solve.
+
+Mesh/Confirm is a second factor authentication mechanism that allows an Enquirer
+to request confirmation of a specific action. The User is then asked if they wish
+to confirm that action and their signed response is returned to the Enquirer.
+
+<img="/Graphics/Confirm.svg">
+
+The user experience is straightforward. They are asked a question with two options
+(accept or reject) and they give their response.
+
+<img="/Graphics/ConfirmSummary.svg">
+
+<h1>Using the confirmation service
+
+Use of the confirmation service requires the user to have a Mesh/Account with that service.
+Alice creates an account using the meshapp tool:
+
+#{Examples.Example("AccountAlice")}
+
+To request a confirmation from Alice, the Enquirer must know Alice's account. We assume 
+that this has been configured out of band through some previous interaction.
+
+The Enquirer requests posts a confirmation request to Alice's account.
+
+#{Examples.Example("ConfirmPost")}
+
+The Enquirer can poll to determine the status of the request immediately but this doesn't
+return Alice's response because she hasn't given it yet:
+
+#{Examples.Example("ConfirmStatus1")}
+
+The user side of the confirmation service is intended for implementation as a GUI 
+application on a moble device such as a phone or watch. For purposes of demonstration,
+we use the command line client:
+
+Alice requests a list of pending confirmation requests.
+
+#{Examples.Example("ConfirmPending")}
+
+Alice accepts the request.
+
+#{Examples.Example("ConfirmAccept")}
+
+When the Enquirer polls a second time, Alice's response is returned:
+
+#{Examples.Example("ConfirmStatus2")}
+
+
+
+#end file
+
+#end xclass
+#end using

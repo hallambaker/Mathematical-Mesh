@@ -21,9 +21,7 @@ LinkFiles = \
     Goedel.Cryptography.KeyFile.dll\
     Goedel.Cryptography.Windows.dll\
     Goedel.IO.dll\
-    Goedel.Platform.Framework.dll\
     Goedel.Protocol.dll\
-    Goedel.Protocol.Framework.dll\
     Goedel.Test.dll\
     Goedel.Utilities.dll\
     Goedel.Mesh.Client.dll\
@@ -31,7 +29,6 @@ LinkFiles = \
     Goedel.Mesh.Platform.dll\
     Goedel.Mesh.Server.dll\
     Goedel.Mesh.dll\
-    Goedel.Persistence.dll\
     Test.Constants.dll
 
 prebuild : 

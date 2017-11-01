@@ -16,11 +16,9 @@
 LinkFiles = \
     Goedel.Cryptography.Jose.dll\
     Goedel.Cryptography.dll\
-    Goedel.IO.dll\
-    Goedel.Protocol.Framework.dll\
+    Goedel.Persistence.dll\
     Goedel.Protocol.dll\
     Goedel.Utilities.dll\
-    Goedel.Persistence.dll\
     Goedel.Recrypt.dll
 
 prebuild : 

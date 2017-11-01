@@ -79,28 +79,12 @@
       <Project>{e7d4d1f4-e41a-44e2-abbd-f6a9e1d3f1ac}</Project>
       <Name>Goedel.Command</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Cryptography.Framework\Goedel.Cryptography.Framework.csproj">
-      <Project>{b12ad19f-0e50-4d1d-99de-30c63886e718}</Project>
-      <Name>Goedel.Cryptography.Framework</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Cryptography.Jose\Goedel.Cryptography.Jose.csproj">
-      <Project>{b1a5a847-2d13-4142-9267-582028f93f32}</Project>
-      <Name>Goedel.Cryptography.Jose</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Cryptography\Goedel.Cryptography.csproj">
-      <Project>{0039b613-3071-493f-a51b-fb75f7ca56c2}</Project>
-      <Name>Goedel.Cryptography</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Protocol\Goedel.Protocol.csproj">
-      <Project>{18cb2a21-48f4-4862-ae95-94efbd209ab3}</Project>
+      <Project>{4b69fe54-50a2-4f72-bf24-ba9bcd0c0949}</Project>
       <Name>Goedel.Protocol</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Registry\Goedel.Registry.csproj">
-      <Project>{ebda947e-d7a9-4a93-aef1-aea9d56b9225}</Project>
-      <Name>Goedel.Registry</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Utilities\Goedel.Utilities.csproj">
-      <Project>{2b20317b-39d5-4c20-8e06-dd4bc7573a73}</Project>
+      <Project>{71c0dce3-3f2a-4545-af77-1b89bcff7c1e}</Project>
       <Name>Goedel.Utilities</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Platform.Windows\Goedel.Mesh.Platform.Windows.csproj">
@@ -110,10 +94,6 @@
     <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Platform\Goedel.Mesh.Platform.csproj">
       <Project>{90e3d724-811e-41cb-ae8d-91fd0677187c}</Project>
       <Name>Goedel.Mesh.Platform</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\Goedel.Persistence\Goedel.Persistence.csproj">
-      <Project>{81e30b95-c59d-4a04-925e-85877fd37fdd}</Project>
-      <Name>Goedel.Persistence</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Server\Goedel.Mesh.Server.csproj">
       <Project>{f6343f1b-d03d-4965-9113-5120a8054e9e}</Project>

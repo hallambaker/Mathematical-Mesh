@@ -15,18 +15,14 @@
 
 LinkFiles = \
     Goedel.Command.dll\
-    Goedel.Cryptography.Framework.dll\
-    Goedel.Cryptography.Jose.dll\
-    Goedel.Cryptography.KeyFile.dll\
-    PHB Framework Library.dll\
     Goedel.Cryptography.Windows.dll\
     Goedel.Cryptography.dll\
-    Goedel.FSR.dll\
+    Goedel.Discovery.dll\
     Goedel.IO.dll\
+    Goedel.Persistence.dll\
     Goedel.Protocol.Debug.dll\
     Goedel.Protocol.dll\
     Goedel.Registry.dll\
-    Goedel.Test.dll\
     Goedel.Utilities.dll\
     Goedel.Mesh.Client.dll\
     Goedel.Mesh.Platform.Linux.dll\

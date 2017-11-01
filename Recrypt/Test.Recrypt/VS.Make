@@ -18,10 +18,7 @@ LinkFiles = \
     Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll\
     Goedel.Cryptography.Jose.dll\
     Goedel.Cryptography.dll\
-    Goedel.IO.dll\
-    Goedel.Protocol.Debug.dll\
     Goedel.Protocol.dll\
-    Goedel.Test.dll\
     Goedel.Utilities.dll\
     Goedel.Recrypt.Client.dll\
     Goedel.Recrypt.Server.dll\

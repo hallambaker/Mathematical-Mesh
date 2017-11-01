@@ -14,10 +14,11 @@
 #   * Copy executables
 
 LinkFiles = \
-    Goedel.IO.dll\
+    Goedel.Cryptography.Jose.dll\
+    Goedel.Cryptography.dll\
+    Goedel.Persistence.dll\
     Goedel.Protocol.dll\
     Goedel.Utilities.dll\
-    Goedel.Persistence.dll\
     Goedel.Account.dll
 
 prebuild : 

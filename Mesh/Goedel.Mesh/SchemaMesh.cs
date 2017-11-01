@@ -1096,6 +1096,8 @@ namespace Goedel.Mesh {
 		}
 
 	/// <summary>
+	///
+	/// Describes the portal(s) at which the profile is registered.
 	/// </summary>
 	public partial class PortalAdvice : Advice {
         /// <summary>

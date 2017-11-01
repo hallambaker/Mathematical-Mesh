@@ -112,9 +112,11 @@ SourceFiles = \
      ManagedProfile.cs\
      Properties/AssemblyInfo.cs
 
-LinkFiles = 
+LinkFiles = \
+    $(TARGETBIN)/Goedel.Protocol.dll\
+    $(TARGETBIN)/Goedel.Utilities.dll
 
-LinkFilesComma = 
+LinkFilesComma = $(TARGETBIN)/Goedel.Protocol.dll,$(TARGETBIN)/Goedel.Utilities.dll
 
 
 NugetFiles = 
@@ -126,7 +128,7 @@ $(TARGETBIN)/Goedel.Mesh.Client.dll :| $(LIBRARYBIN)
 $(TARGETBIN)/Goedel.Mesh.Client.dll :| $(TARGETBIN)
 
 $(TARGETBIN)/Goedel.Mesh.Client.dll :  $(SourceFiles) $(LinkFiles) $(NugetFiles)
-! $(CSHARPDLL) /out:$@  $(SourceFiles) 
+! $(CSHARPDLL) /out:$@  $(SourceFiles) -reference:$(LinkFilesComma) 
 ! cp $(TARGETBIN)/Goedel.Mesh.Client.dll $(LIBRARYBIN)/Goedel.Mesh.Client.dll
 
 
@@ -163,7 +165,21 @@ endif
 # Recursive make targets, do not execute if the variable NORECURSE is defined
 ifndef NORECURSE
 
+../../../buildtools/Libraries/Goedel.Protocol/$(TARGETBIN)/Goedel.Protocol.dll : recursive
+! $(MAKE) -C ../../../buildtools/Libraries/Goedel.Protocol
+
+../../../buildtools/Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll : recursive
+! $(MAKE) -C ../../../buildtools/Libraries/Goedel.Utilities
+
 endif
+
+$(TARGETBIN)/Goedel.Protocol.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.Protocol.dll : ../../../buildtools/Libraries/Goedel.Protocol/$(TARGETBIN)/Goedel.Protocol.dll
+!  cp ../../../buildtools/Libraries/Goedel.Protocol/$(TARGETBIN)/Goedel.Protocol.dll $(TARGETBIN)/Goedel.Protocol.dll
+
+$(TARGETBIN)/Goedel.Utilities.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.Utilities.dll : ../../../buildtools/Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
+!  cp ../../../buildtools/Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll $(TARGETBIN)/Goedel.Utilities.dll
 
 
 # Referenced Libraries

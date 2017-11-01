@@ -19,13 +19,11 @@ LinkFiles = \
     Goedel.Cryptography.Jose.dll\
     Goedel.Cryptography.KeyFile.dll\
     Goedel.Cryptography.dll\
-    Goedel.FSR.dll\
     Goedel.IO.dll\
-    Goedel.Platform.dll\
+    Goedel.Persistence.dll\
     Goedel.Protocol.dll\
     Goedel.Registry.dll\
-    Goedel.Utilities.dll\
-    Goedel.Persistence.dll
+    Goedel.Utilities.dll
 
 prebuild : 
     echo "Do Prebuild"

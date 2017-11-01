@@ -62,7 +62,7 @@ namespace Goedel.Mesh {
             var Secret = new Secret(128);
             _KeyShares = Secret.Split(Shares, Quorum);
 
-            var share1 = KeyShares[0].Text;
+            var share1 = KeyShares[0].Text; // Hack only test for quorum = 2.
             var share2 = KeyShares[1].Text;
 
             // Get recovery data

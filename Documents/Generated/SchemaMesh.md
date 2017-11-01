@@ -115,6 +115,8 @@ profile with the most recent Default timestamp.
 </dl>
 ###Structure: PortalAdvice
 
+Describes the portal(s) at which the profile is registered.
+
 <dl>
 <dt>Inherits:  Advice
 </dl>

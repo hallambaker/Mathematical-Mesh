@@ -16,11 +16,10 @@
 LinkFiles = \
     Goedel.Command.dll\
     Goedel.IO.dll\
-    Goedel.Protocol.Framework.dll\
+    Goedel.Persistence.dll\
     Goedel.Protocol.dll\
     Goedel.Utilities.dll\
-    Goedel.Mesh.dll\
-    Goedel.Persistence.dll
+    Goedel.Mesh.dll
 
 prebuild : 
     echo "Do Prebuild"

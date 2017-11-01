@@ -19,9 +19,7 @@ LinkFiles = \
     Goedel.Cryptography.Jose.dll\
     Goedel.Cryptography.KeyFile.dll\
     Goedel.IO.dll\
-    Goedel.Platform.Framework.dll\
     Goedel.Protocol.dll\
-    Goedel.Protocol.Framework.dll\
     Goedel.Test.dll\
     Goedel.Utilities.dll\
     Goedel.Mesh.dll

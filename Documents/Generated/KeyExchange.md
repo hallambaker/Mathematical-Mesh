@@ -18,6 +18,11 @@ request followed by exactly one response.
 
 ###Structure: Algorithms
 
+Describes an algorithm suite. Each suite consists of sets of authentication and
+encryption algorithms which are mutually compatible. i.e. the counterparty MAY
+select any one of the encryption algorithms and use it with any one of the 
+authentication algorithms.
+
 <dl>
 <dt>Encryption: String [0..Many]
 <dd>Algorithm identifiers of encryption and authenticated encryption algorithms offered

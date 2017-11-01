@@ -68,6 +68,15 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Confirm.md</DependentUpon>
     </None>
+    <None Include="Applications\Credential.aml">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Credential.md</DependentUpon>
+    </None>
+    <None Include="Applications\Credential.md">
+      <Generator>MD2AML</Generator>
+      <LastGenOutput>Credential.aml</LastGenOutput>
+    </None>
     <None Include="Applications\Confirm.md">
       <Generator>MD2AML</Generator>
       <LastGenOutput>Confirm.aml</LastGenOutput>

@@ -26,7 +26,7 @@ using System.IO;
 using Goedel.Utilities;
 using Goedel.Cryptography;
 using Goedel.Cryptography.Linux;
-using Goedel.Platform;
+using Goedel.Discovery;
 using Goedel.Mesh.Platform.Linux;
 
 namespace Goedel.Mesh {

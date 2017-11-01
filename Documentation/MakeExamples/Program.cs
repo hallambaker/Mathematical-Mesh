@@ -27,11 +27,10 @@ namespace ExampleGenerator {
         public void Go () {
             //// Delete data from previous runs
             //MakeClean();
+
+
             GoKeyExchange();
             GoContainer();
-
-            ////// here make the examples
-            ////MakeExamples ();
             GoMesh();
 
             // Make the documentation

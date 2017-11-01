@@ -137,6 +137,8 @@
 
 
 	Structure PortalAdvice
+		Description
+			|Describes the portal(s) at which the profile is registered.
 		Inherits Advice
 		String PortalAddress
 			Multiple

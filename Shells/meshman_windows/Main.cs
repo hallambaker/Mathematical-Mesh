@@ -15,7 +15,7 @@ namespace Meshman_Windows {
     public class _Main {
 
         static _Main() {
-            Goedel.Platform.PlatformFramework.Initialize();
+            Goedel.Discovery.PlatformFramework.Initialize();
             CryptographyWindows.Initialize();
             Goedel.Mesh.MeshWindows.Initialize();
             }

@@ -52,14 +52,8 @@
     <Reference Include="Goedel.IO">
       <HintPath>..\..\..\Library\Goedel.IO.dll</HintPath>
     </Reference>
-    <Reference Include="Goedel.Platform.Framework">
-      <HintPath>..\..\..\Library\Goedel.Platform.Framework.dll</HintPath>
-    </Reference>
     <Reference Include="Goedel.Protocol">
       <HintPath>..\..\..\Library\Goedel.Protocol.dll</HintPath>
-    </Reference>
-    <Reference Include="Goedel.Protocol.Framework">
-      <HintPath>..\..\..\Library\Goedel.Protocol.Framework.dll</HintPath>
     </Reference>
     <Reference Include="Goedel.Test">
       <HintPath>..\..\..\Library\Goedel.Test.dll</HintPath>

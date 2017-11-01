@@ -18,13 +18,8 @@ LinkFiles = \
     Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll\
     Goedel.Cryptography.Jose.dll\
     Goedel.Cryptography.dll\
-    Goedel.IO.dll\
-    Goedel.Platform.dll\
-    Goedel.Protocol.Framework.dll\
     Goedel.Protocol.dll\
-    Goedel.Test.dll\
     Goedel.Utilities.dll\
-    Goedel.Persistence.dll\
     Goedel.Confirm.Client.dll\
     Goedel.Confirm.Server.dll\
     Goedel.Confirm.dll

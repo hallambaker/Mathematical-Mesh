@@ -1,6 +1,6 @@
 ﻿using System;
 using Goedel.Cryptography;
-using Goedel.Platform;
+using Goedel.Discovery;
 using Goedel.Mesh;
 using Goedel.Mesh.MeshMan;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

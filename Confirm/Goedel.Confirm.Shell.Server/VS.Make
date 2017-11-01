@@ -16,9 +16,7 @@
 LinkFiles = \
     Goedel.Command.dll\
     Goedel.Protocol.dll\
-    Goedel.Registry.dll\
     Goedel.Utilities.dll\
-    Goedel.Persistence.dll\
     Goedel.Confirm.Server.dll\
     Goedel.Confirm.dll
 

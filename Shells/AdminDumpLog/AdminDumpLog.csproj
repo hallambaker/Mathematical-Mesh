@@ -103,21 +103,21 @@
       <Project>{c4824513-f416-4ead-be82-f2df23641f6a}</Project>
       <Name>Goedel.IO</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Persistence\Goedel.Persistence.csproj">
+      <Project>{81e30b95-c59d-4a04-925e-85877fd37fdd}</Project>
+      <Name>Goedel.Persistence</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Protocol\Goedel.Protocol.csproj">
-      <Project>{18cb2a21-48f4-4862-ae95-94efbd209ab3}</Project>
+      <Project>{4b69fe54-50a2-4f72-bf24-ba9bcd0c0949}</Project>
       <Name>Goedel.Protocol</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Utilities\Goedel.Utilities.csproj">
-      <Project>{2b20317b-39d5-4c20-8e06-dd4bc7573a73}</Project>
+      <Project>{71c0dce3-3f2a-4545-af77-1b89bcff7c1e}</Project>
       <Name>Goedel.Utilities</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Mesh\Goedel.Mesh\Goedel.Mesh.csproj">
       <Project>{0d8dd801-65d2-497c-8379-2d6adf3867c3}</Project>
       <Name>Goedel.Mesh</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\Goedel.Persistence\Goedel.Persistence.csproj">
-      <Project>{81e30b95-c59d-4a04-925e-85877fd37fdd}</Project>
-      <Name>Goedel.Persistence</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
