@@ -13,9 +13,9 @@ using Goedel.Mesh.Server;
 namespace Goedel.Mesh.MeshMan {
 
     public partial class Shell {
-        public List<SignedConnectionRequest> SignedConnectionRequests;
+        //public List<SignedConnectionRequest> SignedConnectionRequests;
 
-        public string Authenticator;
+        //public string Authenticator;
 
         /// <summary>
         /// Begin the connection process
@@ -37,14 +37,19 @@ namespace Goedel.Mesh.MeshMan {
 
             Machine.ConnectStartRequests.Add(DeviceRequest);
 
-            Authenticator = UDF.FromUDFPair(
+            var Authenticator = UDF.FromUDFPair(
                     DeviceRegistration.UDF,
                     MeshClient.PersonalProfile.UDF
                     );
-            Console.WriteLine("Connect Request  {0}", Authenticator);
-            Console.WriteLine("    Device       {0}", DeviceRegistration.UDF);
-            Console.WriteLine("    Profile      {0}", MeshClient.PersonalProfile.UDF);
 
+            var Result = new ResultConnectStart() {
+                Request = DeviceRequest.SignedRequest,
+                Response = ConnectStartResponse,
+                ProfileUDF = MeshClient.PersonalProfile.UDF
+                };
+            LastResult = Result;
+
+            ReportWrite(LastResult.ToString());
             }
 
         /// <summary>
@@ -57,17 +62,15 @@ namespace Goedel.Mesh.MeshMan {
             GetMeshClient();
 
             var Pending = MeshClient.ConnectPending();
-            SignedConnectionRequests = Pending.Pending;
-            foreach (var Request in SignedConnectionRequests) {
-                var Device = Request.Data.Device;
-                var Authenticator = UDF.FromUDFPair(
-                        Device.UDF,
-                        PersonalProfile.UDF
-                        );
-                Console.WriteLine("Connect Request  {0}", Authenticator);
-                Console.WriteLine("    Device       {0}", Device.UDF);
-                Console.WriteLine("    Profile      {0}", PersonalProfile.UDF);
-                }
+            //SignedConnectionRequests = Pending.Pending;
+
+            var Result = new ResultConnectPending() {
+                Response = Pending,
+                ProfileUDF = PersonalProfile.UDF
+                };
+            LastResult = Result;
+
+            ReportWrite(LastResult.ToString());
             }
 
         /// <summary>
@@ -81,6 +84,8 @@ namespace Goedel.Mesh.MeshMan {
             GetProfile(Options.Portal, Options.UDF);
             GetMeshClient();
 
+
+
             var DeviceUDF = Options.DeviceUDF.Value;
             Assert.NotNull(DeviceUDF);
             Assert.True(DeviceUDF.Length >= 5);
@@ -92,7 +97,7 @@ namespace Goedel.Mesh.MeshMan {
             MeshClient.SignedPersonalProfile = PersonalProfile.SignedPersonalProfile;
 
             var Pending = MeshClient.ConnectPending();
-            SignedConnectionRequests = Pending.Pending;
+            var SignedConnectionRequests = Pending.Pending;
 
             SignedConnectionRequest Choice=null;
             foreach (var Request in SignedConnectionRequests) {
@@ -105,10 +110,6 @@ namespace Goedel.Mesh.MeshMan {
 
                 if (System.String.Compare(DeviceUDF, 0, Authenticator, 0, DeviceUDF.Length) == 0) {
                     Choice = Request;
-
-                    Console.WriteLine("Connect Request  {0}", Authenticator);
-                    Console.WriteLine("    Device       {0}", Device.UDF);
-                    Console.WriteLine("    Profile      {0}", PersonalProfile.UDF);
                     }
 
                 }
@@ -118,9 +119,18 @@ namespace Goedel.Mesh.MeshMan {
 
             PersonalProfile.Add(Choice.Data);
 
-            var Result = MeshClient.ConnectClose(Choice, ConnectionStatus.Accepted);
+            var ConnectClose = MeshClient.ConnectClose(Choice, ConnectionStatus.Accepted);
 
             RegistrationPersonal.WriteToLocal(); // Push the changes to the Mesh
+
+            var Result = new ResultConnectAccept() {
+                ProfileUDF = MeshClient.PersonalProfile.UDF,
+                Request = Choice
+                };
+            LastResult = Result;
+
+
+            ReportWrite(LastResult.ToString());
             }
 
         /// <summary>
@@ -148,14 +158,19 @@ namespace Goedel.Mesh.MeshMan {
 
             var Result = Response.Result;
             if (Result == null) {
-                Console.WriteLine("Request still pending"); // NYI: shjould expire request etc.
-                return;
+                ReportWriteLine("Request still pending"); // NYI: should expire request etc.
+                }
+            else {
+                var SignedProfile = Result.Data.Profile as SignedPersonalProfile;
+                MeshSession.CreateAccount(ConnectStartRequest.AccountID, SignedProfile.PersonalProfile, MeshClient);
                 }
 
-            var SignedProfile = Result.Data.Profile as SignedPersonalProfile;
-            MeshSession.CreateAccount(ConnectStartRequest.AccountID, SignedProfile.PersonalProfile, MeshClient);
+            var ResultConnect = new ResultConnectComplete() {
+                Response = Response
+                };
+            LastResult = Result;
 
-
+            ReportWrite(ResultConnect.ToString());
             }
 
 

@@ -14,7 +14,7 @@ namespace ExampleGenerator {
 		// UserGuideCreate
 		//
 		public static void UserGuideCreate (CreateExamples Examples) { /* File  */
-			using (var _Output = new StreamWriter ("create.md")) {
+			using (var _Output = new StreamWriter ("Mesh/create.md")) {
 				var _Indent = ""; 
 				_Output.Write ("<title>Creating\n{0}", _Indent);
 				_Output.Write ("<titlebanner><h1>Creating and Managing Mesh Profiles\n{0}", _Indent);

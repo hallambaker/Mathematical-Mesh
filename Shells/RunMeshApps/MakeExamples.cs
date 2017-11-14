@@ -105,11 +105,11 @@ namespace RunMeshApps {
             // Create the server instances and traced direct portals
             MeshPortal = new MeshPortalTraced(PortalService, LogMesh, LogPortal);
             Goedel.Mesh.Server.MeshPortal.Default = MeshPortal;
-            AccountPortal = new AccountPortalTraced(AppService, LogMesh, LogPortal);
+            AccountPortal = new AccountPortalTraced(AppService);
             Goedel.Account.AccountPortal.Default = AccountPortal;
-            ConfirmPortal = new ConfirmPortalTraced(AppService, LogMesh, LogPortal);
+            ConfirmPortal = new ConfirmPortalTraced(AppService);
             Goedel.Confirm.ConfirmPortal.Default = ConfirmPortal;
-            RecryptPortal = new RecryptPortalTraced(AppService, LogMesh, LogPortal);
+            RecryptPortal = new RecryptPortalTraced(AppService);
             Goedel.Recrypt.RecryptPortal.Default = RecryptPortal;
 
 

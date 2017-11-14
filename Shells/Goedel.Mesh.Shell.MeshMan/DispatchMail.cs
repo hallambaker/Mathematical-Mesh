@@ -15,6 +15,11 @@ namespace Goedel.Mesh.MeshMan {
             var MailProfile = new MailProfile();
 
             Register(RegistrationPersonal, MailProfile);
+
+            LastResult = new ResultApplicationCreate() {
+                ApplicationProfile = MailProfile
+                };
+            ReportWrite(LastResult.ToString());
             }
         }
     }

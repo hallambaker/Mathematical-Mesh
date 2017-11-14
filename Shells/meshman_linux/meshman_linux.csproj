@@ -61,9 +61,9 @@
       <Project>{a803fe85-50d9-4ccd-8ffc-f653a4bd73e3}</Project>
       <Name>Goedel.Mesh.Client</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Platform.Windows\Goedel.Mesh.Platform.Windows.csproj">
-      <Project>{c378c917-f41d-4388-b467-efd6677c4459}</Project>
-      <Name>Goedel.Mesh.Platform.Windows</Name>
+    <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Platform.Linux\Goedel.Mesh.Platform.Linux.csproj">
+      <Project>{ef3b3ddd-7b25-423c-8236-4819e55e09c7}</Project>
+      <Name>Goedel.Mesh.Platform.Linux</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Platform\Goedel.Mesh.Platform.csproj">
       <Project>{90e3d724-811e-41cb-ae8d-91fd0677187c}</Project>

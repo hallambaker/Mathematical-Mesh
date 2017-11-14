@@ -122,7 +122,9 @@ SourceFiles = \
      meshman.cs\
      MeshUtilities.cs\
      NYI.cs\
+     OutputResult.cs\
      Properties/AssemblyInfo.cs\
+     SchemaResults.cs\
      DispatchExport.cs
 
 LinkFiles = \
@@ -181,6 +183,8 @@ Exceptions.cs : Exceptions.Exceptional
 !  $(Custom_Exceptional) Exceptions.Exceptional $(Custom_Exceptional_FLAG) Exceptions.cs 
 meshman.cs : meshman.command
 !  $(Custom_CommandCS) meshman.command $(Custom_CommandCS_FLAG) meshman.cs 
+SchemaResults.cs : SchemaResults.protocol
+!  $(Custom_Protogen) SchemaResults.protocol $(Custom_Protogen_FLAG) SchemaResults.cs 
 
 endif
 

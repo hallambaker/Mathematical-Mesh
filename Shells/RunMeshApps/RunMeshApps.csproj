@@ -181,9 +181,9 @@
       <Project>{211e2437-701e-4232-956f-a4cdbeb21b00}</Project>
       <Name>Goedel.Recrypt</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CombinedClient\CombinedClient.csproj">
+    <ProjectReference Include="..\CombinedClient\Goedel.Combined.Shell.Client.csproj">
       <Project>{1533caae-484a-4027-b2d3-ec874485a86b}</Project>
-      <Name>CombinedClient</Name>
+      <Name>Goedel.Combined.Shell.Client</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

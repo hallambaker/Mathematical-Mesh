@@ -410,4 +410,28 @@
     "PrimaryKey": "Account$bob@example.com",
     "Action": "Update",
     "Added": "2017-09-18T13:01:07Z",
+    "Text": "{\n  \"AccountEntry\": {\n    \"ResponderAccount\": \"bob@example.com\",\n    \"RequestIDs\": []}}"}}{
+  "DataItem": {
+    "TransactionID": "TID:33",
+    "PrimaryKey": "Account$bob@example.com",
+    "Action": "Update",
+    "Added": "2017-11-09T09:48:10Z",
+    "Text": "{\n  \"AccountEntry\": {\n    \"ResponderAccount\": \"bob@example.com\",\n    \"RequestIDs\": [\"RBA5D-4AWLX-QWLZA-P6YG7-ZDGVV-PE52R\"]}}"}}{
+  "DataItem": {
+    "TransactionID": "TID:34",
+    "PrimaryKey": "Request$RBA5D-4AWLX-QWLZA-P6YG7-ZDGVV-PE52R",
+    "Action": "New",
+    "Added": "2017-11-09T09:48:10Z",
+    "Text": "{\n  \"RequestEntry\": {\n    \"BrokerID\": \"RBA5D-4AWLX-QWLZA-P6YG7-ZDGVV-PE52R\",\n    \"Request\": {\n      \"unprotected\": {\n        \"dig\": \"S512\"},\n      \"payload\": \"\newogICJUQlNSZXF1ZXN0IjogewogICAgIlRleHQiOiAiPHNybWw-PGgxPk9wZW4g\ncG9kIGJheSBkb29yczwvaDE-PC9zcm1sPiIsCiAgICAiRnJvbUlEIjogImFsaWNl\nQGV4YW1wbGUubmV0IiwKICAgICJUb0lEIjogImJvYkBleGFtcGxlLmNvbSJ9fQ\",\n      \"signatures\": [{\n          \"header\": {\n            \"kid\": \"MCP7Y-PTSWC-RLIYY-ECVFD-IZ6BZ-GUW5M\"},\n          \"protected\": \"\newogICJhbGciOiAiUlM1MTIiLAogICJ2YWwiOiAiCmpHWmlYMU5EeGxLMmtfUm1H\ndUV4NEtWSTMybkxMUmZYVnJZbXVUMDQwR1VIa3p6dEVtWG43eW1pQXh3dVl0cEUK\nZXBpUGNNNEhWMFRZbTM4TlFRdjlodyJ9\",\n          \"signature\": \"\nq84_k_Dtt6zXR0VMyWKzkemz6B4c62aFnXmwsVXQCpczcSVt9EJMqUXvzT2dhzEy\nscDDU1_Z7OVPIbnuHoEvXz2FheYROhL33mquf9T9kQ5vrRwHuaXwHvhqLlUt6WLc\nMUB0o2-WpkGzkijtJjwwBxemt8XQ2z6Mty1MIXajWfdfwFG7Bk3GxX5weHzPV4MK\nkavGGeOXIO49nNsjDQkCE_Gvdzp2WvVqw128X4yId6rLNkNXsHY_tKlVOA-A9ifM\naqVXUzNtJKryg4a5Do6Dksl9rD1z1hwmLD3_baC8g3Qwex2iXLenCrUbD0_BUSk_\nZe-K-GB_Wusbe-t0lhK38A\"}]},\n    \"ResponderAccount\": \"bob@example.com\",\n    \"Expire\": \"2017-11-09T18:48:10Z\"}}"}}{
+  "DataItem": {
+    "TransactionID": "TID:35",
+    "PrimaryKey": "Respomse$RBA5D-4AWLX-QWLZA-P6YG7-ZDGVV-PE52R",
+    "Action": "New",
+    "Added": "2017-11-09T09:48:10Z",
+    "Text": "{\n  \"ResponseEntry\": {\n    \"BrokerID\": \"RBA5D-4AWLX-QWLZA-P6YG7-ZDGVV-PE52R\",\n    \"RequestStatus\": \"Reply\",\n    \"Response\": {\n      \"unprotected\": {\n        \"dig\": \"S512\"},\n      \"payload\": \"\newogICJUQlNSZXNwb25zZSI6IHsKICAgICJTaWduZWRSZXF1ZXN0IjogewogICAg\nICAidW5wcm90ZWN0ZWQiOiB7CiAgICAgICAgImRpZyI6ICJTNTEyIn0sCiAgICAg\nICJwYXlsb2FkIjogIgpld29nSUNKVVFsTlNaWEYxWlhOMElqb2dld29nSUNBZ0ls\nUmxlSFFpT2lBaVBITnliV3ctUEdneFBrOXdaVzRnCmNHOWtJR0poZVNCa2IyOXlj\nend2YURFLVBDOXpjbTFzUGlJc0NpQWdJQ0FpUm5KdmJVbEVJam9nSW1Gc2FXTmwK\nUUdWNFlXMXdiR1V1Ym1WMElpd0tJQ0FnSUNKVWIwbEVJam9nSW1KdllrQmxlR0Z0\nY0d4bExtTnZiU0o5ZlEiLAogICAgICAic2lnbmF0dXJlcyI6IFt7CiAgICAgICAg\nICAiaGVhZGVyIjogewogICAgICAgICAgICAia2lkIjogIk1DUDdZLVBUU1dDLVJM\nSVlZLUVDVkZELUlaNkJaLUdVVzVNIn0sCiAgICAgICAgICAicHJvdGVjdGVkIjog\nIgpld29nSUNKaGJHY2lPaUFpVWxNMU1USWlMQW9nSUNKMllXd2lPaUFpQ21wSFdt\nbFlNVTVFZUd4TE1tdGZVbTFICmRVVjRORXRXU1RNeWJreE1VbVpZVm5KWmJYVlVN\nRFF3UjFWSWEzcDZkRVZ0V0c0M2VXMXBRWGgzZFZsMGNFVUsKWlhCcFVHTk5ORWhX\nTUZSWmJUTTRUbEZSZGpsb2R5SjkiLAogICAgICAgICAgInNpZ25hdHVyZSI6ICIK\ncTg0X2tfRHR0NnpYUjBWTXlXS3prZW16NkI0YzYyYUZuWG13c1ZYUUNwY3pjU1Z0\nOUVKTXFVWHZ6VDJkaHpFeQpzY0REVTFfWjdPVlBJYm51SG9Fdlh6MkZoZVlST2hM\nMzNtcXVmOVQ5a1E1dnJSd0h1YVh3SHZocUxsVXQ2V0xjCk1VQjBvMi1XcGtHemtp\nanRKand3QnhlbXQ4WFEyejZNdHkxTUlYYWpXZmRmd0ZHN0JrM0d4WDV3ZUh6UFY0\nTUsKa2F2R0dlT1hJTzQ5bk5zakRRa0NFX0d2ZHpwMld2VnF3MTI4WDR5SWQ2ckxO\na05Yc0hZX3RLbFZPQS1BOWlmTQphcVZYVXpOdEpLcnlnNGE1RG82RGtzbDlyRDF6\nMWh3bUxEM19iYUM4ZzNRd2V4MmlYTGVuQ3JVYkQwX0JVU2tfClplLUstR0JfV3Vz\nYmUtdDBsaEszOEEifV19LAogICAgIlZhbHVlIjogdHJ1ZX19\",\n      \"signatures\": [{\n          \"header\": {\n            \"kid\": \"MCUJI-GNXNA-2UNWU-U6EVR-HK6MN-YJOBP\"},\n          \"protected\": \"\newogICJhbGciOiAiUlM1MTIiLAogICJ2YWwiOiAiCm8waVdGYjRLVld4SGRGUnZG\nQjBFYU5waDJFcEpROEFKdlVPbU13VzNvLUxHaHYyRHhqbnk3WTRNaWNWWEExbjQK\nS0hRUW9wZUg0LUlRSlRydHFrbWdyQSJ9\",\n          \"signature\": \"\nSA1Kri_ZNsSdCFdX5-OnaxI5mdWfnYyUA5umqHJsuLbrvqyCGqn1MpgerF37BgCt\nL0d_6mPUzD_0buCWmLS2eBFY93vE-W0hz-zL_OkXFwtNggbpC6PPeUzA0tk14iex\nDQDyL3Smtm2e1oIemA_zTb8X_J8NRC-0QJ4DIlpVNORVdX5WmMRqg-X6fNoh_zQl\nSHUxK-PrzvqXaaoc0dpM2zHZYI2DoSbW7PkIwteNq6j7zg6Qc13GP-FeffGuWWAg\nWRFk7x6e01dGrPG6I7TX1mAvmQ4uQOEwv12tPwdvUheE1CCiXidO0i20dd1crbRj\n7u4ojNOtk9cO4pdDasDdOQ\"}]}}}"}}{
+  "DataItem": {
+    "TransactionID": "TID:36",
+    "PrimaryKey": "Account$bob@example.com",
+    "Action": "Update",
+    "Added": "2017-11-09T09:48:10Z",
     "Text": "{\n  \"AccountEntry\": {\n    \"ResponderAccount\": \"bob@example.com\",\n    \"RequestIDs\": []}}"}}

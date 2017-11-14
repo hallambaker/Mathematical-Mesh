@@ -146,9 +146,9 @@ LinkFiles = \
     $(TARGETBIN)/Goedel.Recrypt.Client.dll\
     $(TARGETBIN)/Goedel.Recrypt.Server.dll\
     $(TARGETBIN)/Goedel.Recrypt.dll\
-    $(TARGETBIN)/CombinedClient.dll
+    $(TARGETBIN)/Goedel.Combined.Shell.Client.dll
 
-LinkFilesComma = $(TARGETBIN)/Goedel.Command.dll,$(TARGETBIN)/Goedel.Cryptography.Windows.dll,$(TARGETBIN)/Goedel.Cryptography.dll,$(TARGETBIN)/Goedel.Discovery.dll,$(TARGETBIN)/Goedel.IO.dll,$(TARGETBIN)/Goedel.Persistence.dll,$(TARGETBIN)/Goedel.Protocol.Debug.dll,$(TARGETBIN)/Goedel.Protocol.dll,$(TARGETBIN)/Goedel.Registry.dll,$(TARGETBIN)/Goedel.Utilities.dll,$(TARGETBIN)/Goedel.Mesh.Client.dll,$(TARGETBIN)/Goedel.Mesh.Platform.Linux.dll,$(TARGETBIN)/Goedel.Mesh.Platform.Windows.dll,$(TARGETBIN)/Goedel.Mesh.Platform.dll,$(TARGETBIN)/Goedel.Mesh.Server.dll,$(TARGETBIN)/Goedel.Mesh.dll,$(TARGETBIN)/Goedel.Account.Client.dll,$(TARGETBIN)/Goedel.Account.Server.dll,$(TARGETBIN)/Goedel.Account.dll,$(TARGETBIN)/Goedel.Confirm.Client.dll,$(TARGETBIN)/Goedel.Confirm.Server.dll,$(TARGETBIN)/Goedel.Confirm.dll,$(TARGETBIN)/Goedel.Recrypt.Client.dll,$(TARGETBIN)/Goedel.Recrypt.Server.dll,$(TARGETBIN)/Goedel.Recrypt.dll,$(TARGETBIN)/CombinedClient.dll
+LinkFilesComma = $(TARGETBIN)/Goedel.Command.dll,$(TARGETBIN)/Goedel.Cryptography.Windows.dll,$(TARGETBIN)/Goedel.Cryptography.dll,$(TARGETBIN)/Goedel.Discovery.dll,$(TARGETBIN)/Goedel.IO.dll,$(TARGETBIN)/Goedel.Persistence.dll,$(TARGETBIN)/Goedel.Protocol.Debug.dll,$(TARGETBIN)/Goedel.Protocol.dll,$(TARGETBIN)/Goedel.Registry.dll,$(TARGETBIN)/Goedel.Utilities.dll,$(TARGETBIN)/Goedel.Mesh.Client.dll,$(TARGETBIN)/Goedel.Mesh.Platform.Linux.dll,$(TARGETBIN)/Goedel.Mesh.Platform.Windows.dll,$(TARGETBIN)/Goedel.Mesh.Platform.dll,$(TARGETBIN)/Goedel.Mesh.Server.dll,$(TARGETBIN)/Goedel.Mesh.dll,$(TARGETBIN)/Goedel.Account.Client.dll,$(TARGETBIN)/Goedel.Account.Server.dll,$(TARGETBIN)/Goedel.Account.dll,$(TARGETBIN)/Goedel.Confirm.Client.dll,$(TARGETBIN)/Goedel.Confirm.Server.dll,$(TARGETBIN)/Goedel.Confirm.dll,$(TARGETBIN)/Goedel.Recrypt.Client.dll,$(TARGETBIN)/Goedel.Recrypt.Server.dll,$(TARGETBIN)/Goedel.Recrypt.dll,$(TARGETBIN)/Goedel.Combined.Shell.Client.dll
 
 
 NugetFiles = 
@@ -279,7 +279,7 @@ ifndef NORECURSE
 ../../Recrypt/Goedel.Recrypt/$(TARGETBIN)/Goedel.Recrypt.dll : recursive
 ! $(MAKE) -C ../../Recrypt/Goedel.Recrypt
 
-../CombinedClient/$(TARGETBIN)/CombinedClient.dll : recursive
+../CombinedClient/$(TARGETBIN)/Goedel.Combined.Shell.Client.dll : recursive
 ! $(MAKE) -C ../CombinedClient
 
 endif
@@ -384,9 +384,9 @@ $(TARGETBIN)/Goedel.Recrypt.dll :| $(TARGETBIN)
 $(TARGETBIN)/Goedel.Recrypt.dll : ../../Recrypt/Goedel.Recrypt/$(TARGETBIN)/Goedel.Recrypt.dll
 !  cp ../../Recrypt/Goedel.Recrypt/$(TARGETBIN)/Goedel.Recrypt.dll $(TARGETBIN)/Goedel.Recrypt.dll
 
-$(TARGETBIN)/CombinedClient.dll :| $(TARGETBIN)
-$(TARGETBIN)/CombinedClient.dll : ../CombinedClient/$(TARGETBIN)/CombinedClient.dll
-!  cp ../CombinedClient/$(TARGETBIN)/CombinedClient.dll $(TARGETBIN)/CombinedClient.dll
+$(TARGETBIN)/Goedel.Combined.Shell.Client.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.Combined.Shell.Client.dll : ../CombinedClient/$(TARGETBIN)/Goedel.Combined.Shell.Client.dll
+!  cp ../CombinedClient/$(TARGETBIN)/Goedel.Combined.Shell.Client.dll $(TARGETBIN)/Goedel.Combined.Shell.Client.dll
 
 
 # Referenced Libraries

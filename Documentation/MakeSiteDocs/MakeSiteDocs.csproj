@@ -95,6 +95,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="ToDo.cs">
+      <DependentUpon>ToDo.script</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="UserGuide.cs">
       <DependentUpon>UserGuide.script</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -189,6 +194,10 @@
       <Generator>gscript</Generator>
       <LastGenOutput>UserGuideWindows.cs</LastGenOutput>
     </None>
+    <None Include="ToDo.script">
+      <Generator>gscript</Generator>
+      <LastGenOutput>ToDo.cs</LastGenOutput>
+    </None>
     <None Include="UserGuide.script">
       <Generator>gscript</Generator>
       <LastGenOutput>UserGuide.cs</LastGenOutput>
@@ -271,6 +280,18 @@
       <Project>{c4824513-f416-4ead-be82-f2df23641f6a}</Project>
       <Name>Goedel.IO</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Protocol.Debug\Goedel.Protocol.Debug.csproj">
+      <Project>{0586b4c1-814c-4d98-b6f1-180cd4e2faab}</Project>
+      <Name>Goedel.Protocol.Debug</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Protocol.Exchange.Server\Goedel.Protocol.Exchange.Server.csproj">
+      <Project>{da00c857-80ec-4542-8188-7c2a9982d97f}</Project>
+      <Name>Goedel.Protocol.Exchange.Server</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Protocol.Exchange\Goedel.Protocol.Exchange.csproj">
+      <Project>{3d59c3c8-119d-4a4c-aaa2-7d71024de604}</Project>
+      <Name>Goedel.Protocol.Exchange</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Protocol\Goedel.Protocol.csproj">
       <Project>{4b69fe54-50a2-4f72-bf24-ba9bcd0c0949}</Project>
       <Name>Goedel.Protocol</Name>
@@ -315,6 +336,10 @@
       <Project>{c378c917-f41d-4388-b467-efd6677c4459}</Project>
       <Name>Goedel.Mesh.Platform.Windows</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Platform\Goedel.Mesh.Platform.csproj">
+      <Project>{90e3d724-811e-41cb-ae8d-91fd0677187c}</Project>
+      <Name>Goedel.Mesh.Platform</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Server\Goedel.Mesh.Server.csproj">
       <Project>{f6343f1b-d03d-4965-9113-5120a8054e9e}</Project>
       <Name>Goedel.Mesh.Server</Name>
@@ -334,6 +359,14 @@
     <ProjectReference Include="..\..\Recrypt\Goedel.Recrypt\Goedel.Recrypt.csproj">
       <Project>{211e2437-701e-4232-956f-a4cdbeb21b00}</Project>
       <Name>Goedel.Recrypt</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Shells\CombinedClient\Goedel.Combined.Shell.Client.csproj">
+      <Project>{1533caae-484a-4027-b2d3-ec874485a86b}</Project>
+      <Name>Goedel.Combined.Shell.Client</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Shells\Goedel.Mesh.Shell.MeshMan\Goedel.Mesh.Shell.MeshMan.csproj">
+      <Project>{64ef7e6f-1d8e-449c-90e7-5c974e50533f}</Project>
+      <Name>Goedel.Mesh.Shell.MeshMan</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

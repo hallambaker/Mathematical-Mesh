@@ -22,11 +22,10 @@ LinkFiles = \
     Goedel.Cryptography.Windows.dll\
     Goedel.FSR.dll\
     Goedel.IO.dll\
-    Goedel.Platform.dll\
     Goedel.Protocol.dll\
-    Goedel.Protocol.Framework.dll\
     Goedel.Test.dll\
     Goedel.Utilities.dll\
+    Goedel.Discovery.dll\
     Goedel.Mesh.Client.dll\
     Goedel.Mesh.Platform.Windows.dll\
     Goedel.Mesh.Platform.dll\

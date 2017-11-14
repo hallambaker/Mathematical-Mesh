@@ -121,11 +121,10 @@ LinkFiles = \
     $(LIBRARYBIN)/Goedel.Cryptography.Windows.dll\
     $(LIBRARYBIN)/Goedel.FSR.dll\
     $(LIBRARYBIN)/Goedel.IO.dll\
-    $(LIBRARYBIN)/Goedel.Platform.dll\
     $(LIBRARYBIN)/Goedel.Protocol.dll\
-    $(LIBRARYBIN)/Goedel.Protocol.Framework.dll\
     $(LIBRARYBIN)/Goedel.Test.dll\
     $(LIBRARYBIN)/Goedel.Utilities.dll\
+    $(TARGETBIN)/Goedel.Discovery.dll\
     $(TARGETBIN)/Goedel.Mesh.Client.dll\
     $(TARGETBIN)/Goedel.Mesh.Platform.Windows.dll\
     $(TARGETBIN)/Goedel.Mesh.Platform.dll\
@@ -134,7 +133,7 @@ LinkFiles = \
     $(TARGETBIN)/Goedel.Mesh.dll\
     $(TARGETBIN)/Test.Constants.dll
 
-LinkFilesComma = $(LIBRARYBIN)/Goedel.ASN.dll,$(LIBRARYBIN)/Goedel.Cryptography.dll,$(LIBRARYBIN)/Goedel.Cryptography.Framework.dll,$(LIBRARYBIN)/Goedel.Cryptography.Jose.dll,$(LIBRARYBIN)/Goedel.Cryptography.KeyFile.dll,$(LIBRARYBIN)/Goedel.Cryptography.Windows.dll,$(LIBRARYBIN)/Goedel.FSR.dll,$(LIBRARYBIN)/Goedel.IO.dll,$(LIBRARYBIN)/Goedel.Platform.dll,$(LIBRARYBIN)/Goedel.Protocol.dll,$(LIBRARYBIN)/Goedel.Protocol.Framework.dll,$(LIBRARYBIN)/Goedel.Test.dll,$(LIBRARYBIN)/Goedel.Utilities.dll,$(TARGETBIN)/Goedel.Mesh.Client.dll,$(TARGETBIN)/Goedel.Mesh.Platform.Windows.dll,$(TARGETBIN)/Goedel.Mesh.Platform.dll,$(TARGETBIN)/Goedel.Mesh.Server.dll,$(TARGETBIN)/Goedel.Mesh.Shell.MeshMan.dll,$(TARGETBIN)/Goedel.Mesh.dll,$(TARGETBIN)/Test.Constants.dll,Microsoft.VisualStudio.QualityTools.UnitTestFramework,Microsoft.VisualStudio.QualityTools.UnitTestFramework
+LinkFilesComma = $(LIBRARYBIN)/Goedel.ASN.dll,$(LIBRARYBIN)/Goedel.Cryptography.dll,$(LIBRARYBIN)/Goedel.Cryptography.Framework.dll,$(LIBRARYBIN)/Goedel.Cryptography.Jose.dll,$(LIBRARYBIN)/Goedel.Cryptography.KeyFile.dll,$(LIBRARYBIN)/Goedel.Cryptography.Windows.dll,$(LIBRARYBIN)/Goedel.FSR.dll,$(LIBRARYBIN)/Goedel.IO.dll,$(LIBRARYBIN)/Goedel.Protocol.dll,$(LIBRARYBIN)/Goedel.Test.dll,$(LIBRARYBIN)/Goedel.Utilities.dll,$(TARGETBIN)/Goedel.Discovery.dll,$(TARGETBIN)/Goedel.Mesh.Client.dll,$(TARGETBIN)/Goedel.Mesh.Platform.Windows.dll,$(TARGETBIN)/Goedel.Mesh.Platform.dll,$(TARGETBIN)/Goedel.Mesh.Server.dll,$(TARGETBIN)/Goedel.Mesh.Shell.MeshMan.dll,$(TARGETBIN)/Goedel.Mesh.dll,$(TARGETBIN)/Test.Constants.dll,Microsoft.VisualStudio.QualityTools.UnitTestFramework,Microsoft.VisualStudio.QualityTools.UnitTestFramework
 
 
 NugetFiles = 
@@ -183,6 +182,9 @@ endif
 # Recursive make targets, do not execute if the variable NORECURSE is defined
 ifndef NORECURSE
 
+../../../buildtools/Libraries/Goedel.Discovery/$(TARGETBIN)/Goedel.Discovery.dll : recursive
+! $(MAKE) -C ../../../buildtools/Libraries/Goedel.Discovery
+
 ../../Mesh/Goedel.Mesh.Client/$(TARGETBIN)/Goedel.Mesh.Client.dll : recursive
 ! $(MAKE) -C ../../Mesh/Goedel.Mesh.Client
 
@@ -205,6 +207,10 @@ ifndef NORECURSE
 ! $(MAKE) -C ../Test.Constants
 
 endif
+
+$(TARGETBIN)/Goedel.Discovery.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.Discovery.dll : ../../../buildtools/Libraries/Goedel.Discovery/$(TARGETBIN)/Goedel.Discovery.dll
+!  cp ../../../buildtools/Libraries/Goedel.Discovery/$(TARGETBIN)/Goedel.Discovery.dll $(TARGETBIN)/Goedel.Discovery.dll
 
 $(TARGETBIN)/Goedel.Mesh.Client.dll :| $(TARGETBIN)
 $(TARGETBIN)/Goedel.Mesh.Client.dll : ../../Mesh/Goedel.Mesh.Client/$(TARGETBIN)/Goedel.Mesh.Client.dll

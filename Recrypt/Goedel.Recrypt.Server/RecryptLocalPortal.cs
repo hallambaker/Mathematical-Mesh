@@ -32,8 +32,8 @@ namespace Goedel.Recrypt.Server {
         /// <summary>
         /// Create new portal using the default stores.
         /// </summary>
-        public RecryptPortalDirect () {
-            RecryptServiceHost = new RecryptLocalServiceProvider(ServiceName);
+        public RecryptPortalDirect (string ServiceName, string Store = "Recrypt.jlog") {
+            RecryptServiceHost = new RecryptLocalServiceProvider(ServiceName, Store);
             }
 
 

@@ -198,7 +198,9 @@ namespace Goedel.Mesh {
             Device2("connect start test@prismproof.org");
             Device1("connect pending");
 
-            Device1("connect accept " + Shell2.Authenticator);
+            var Authenticator = (Shell2.LastResult as ResultConnectAccept).Authenticator;
+
+            Device1("connect accept " + Authenticator);
             Device2("connect Complete");
             // Hack: The caching onlyu machine does not do portal lookup as it should
 

@@ -32,8 +32,8 @@ namespace Goedel.Confirm.Server {
         /// <summary>
         /// Create new portal using the default stores.
         /// </summary>
-        public ConfirmPortalDirect () {
-            ConfirmServiceHost = new ConfirmLocalServiceProvider(ServiceName);
+        public ConfirmPortalDirect (string ServiceName = null, string Store = "Confirm.jlog") {
+            ConfirmServiceHost = new ConfirmLocalServiceProvider(ServiceName, Store);
             }
 
 

@@ -32,8 +32,8 @@ namespace Goedel.Account.Server {
         /// <summary>
         /// Create new portal using the default stores.
         /// </summary>
-        public AccountPortalDirect () {
-            AccountServiceHost = new AccountLocalServiceProvider(ServiceName);
+        public AccountPortalDirect (string ServiceName=null, string Store = "Account.jlog") {
+            AccountServiceHost = new AccountLocalServiceProvider(ServiceName, Store);
             }
 
 

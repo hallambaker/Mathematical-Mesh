@@ -7,7 +7,13 @@ using Goedel.Utilities;
 
 namespace Goedel.Recrypt.Shell.Client {
     public partial class CommandLineInterpreter : CommandLineInterpreterBase {
-
+        
+		/// <summary>The command entries</summary>
+        public static SortedDictionary<string, DescribeCommand> Entries;
+        /// <summary>The default command.</summary>
+        public static DescribeCommandEntry DefaultCommand;
+        /// <summary>Description of the comman</summary>
+        public static string Description = "<Not specified>";
 
 		static char UnixFlag = '-';
 		static char WindowsFlag = '/';
@@ -20,12 +26,12 @@ namespace Goedel.Recrypt.Shell.Client {
         /// <param name="args"></param>
         /// <param name="index"></param>
         public static void Help (DispatchShell Dispatch, string[] args, int index) {
-            Brief();
+            Brief(Description, DefaultCommand, Entries);
             }
 
         public static DescribeCommandEntry DescribeHelp = new DescribeCommandEntry() {
             Identifier = "help",
-            HandleDelegate = Brief,
+            HandleDelegate = Help,
             Entries = new List<DescribeEntry>() { }
             };
 
@@ -70,7 +76,7 @@ namespace Goedel.Recrypt.Shell.Client {
 
 
         public void MainMethod(Shell Dispatch, string[] Args) {
-			Dispatcher (Entries, Dispatch, Args, 0);
+			Dispatcher (Entries, DefaultCommand, Dispatch, Args, 0);
             } // Main
 
 

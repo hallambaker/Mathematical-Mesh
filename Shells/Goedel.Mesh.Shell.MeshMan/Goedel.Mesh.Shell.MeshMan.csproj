@@ -58,7 +58,13 @@
     </Compile>
     <Compile Include="MeshUtilities.cs" />
     <Compile Include="NYI.cs" />
+    <Compile Include="OutputResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SchemaResults.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SchemaResults.protocol</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DispatchExport.cs" />
@@ -69,6 +75,10 @@
     <None Include="meshman.command">
       <Generator>CommandCS</Generator>
       <LastGenOutput>meshman.cs</LastGenOutput>
+    </None>
+    <None Include="SchemaResults.protocol">
+      <Generator>Protogen</Generator>
+      <LastGenOutput>SchemaResults.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>

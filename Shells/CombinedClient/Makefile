@@ -1,5 +1,5 @@
 #
-# Makefile for Visual Studio Project CombinedClient
+# Makefile for Visual Studio Project Goedel.Combined.Shell.Client
 #
 # This file is generated automatically from the Visual Studio Project
 # File. If you make changes to this file and do not update the project
@@ -113,7 +113,9 @@ SourceFiles = \
      CombinedDispatch.cs\
      CombinedUtilities.cs\
      ExceptionsCombined.cs\
-     Properties/AssemblyInfo.cs
+     OutputResults.cs\
+     Properties/AssemblyInfo.cs\
+     SchemaResults.cs
 
 LinkFiles = \
     $(TARGETBIN)/Goedel.Command.dll\
@@ -143,12 +145,12 @@ NugetFilesComa =
 
 # A) Main target packaged
 
-$(TARGETBIN)/CombinedClient.dll :| $(LIBRARYBIN)
-$(TARGETBIN)/CombinedClient.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.Combined.Shell.Client.dll :| $(LIBRARYBIN)
+$(TARGETBIN)/Goedel.Combined.Shell.Client.dll :| $(TARGETBIN)
 
-$(TARGETBIN)/CombinedClient.dll :  $(SourceFiles) $(LinkFiles) $(NugetFiles)
+$(TARGETBIN)/Goedel.Combined.Shell.Client.dll :  $(SourceFiles) $(LinkFiles) $(NugetFiles)
 ! $(CSHARPDLL) /out:$@  $(SourceFiles) -reference:$(LinkFilesComma) 
-! cp $(TARGETBIN)/CombinedClient.dll $(LIBRARYBIN)/CombinedClient.dll
+! cp $(TARGETBIN)/Goedel.Combined.Shell.Client.dll $(LIBRARYBIN)/Goedel.Combined.Shell.Client.dll
 
 
 # Directories etc.
@@ -176,6 +178,8 @@ CombinedClient.cs : CombinedClient.command
 !  $(Custom_CommandCS) CombinedClient.command $(Custom_CommandCS_FLAG) CombinedClient.cs 
 ExceptionsCombined.cs : ExceptionsCombined.Exceptional
 !  $(Custom_Exceptional) ExceptionsCombined.Exceptional $(Custom_Exceptional_FLAG) ExceptionsCombined.cs 
+SchemaResults.cs : SchemaResults.protocol
+!  $(Custom_Protogen) SchemaResults.protocol $(Custom_Protogen_FLAG) SchemaResults.cs 
 
 endif
 
@@ -336,10 +340,10 @@ clean :
 # Install files to a tools directory. Default is ~/.local/bin
 
 
-install : $(INSTALL_DATA)/CombinedClient.dll
+install : $(INSTALL_DATA)/Goedel.Combined.Shell.Client.dll
 
-$(INSTALL_DATA)/CombinedClient.dll :| $(INSTALL_DATA)
-$(INSTALL_DATA)/CombinedClient.dll : $(TARGETBIN)/CombinedClient.dll
+$(INSTALL_DATA)/Goedel.Combined.Shell.Client.dll :| $(INSTALL_DATA)
+$(INSTALL_DATA)/Goedel.Combined.Shell.Client.dll : $(TARGETBIN)/Goedel.Combined.Shell.Client.dll
 ! cp $^ $@ 
 
 

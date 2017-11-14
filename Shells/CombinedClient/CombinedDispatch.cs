@@ -36,11 +36,13 @@ namespace Goedel.Combined.Shell.Client {
         public PersonalProfile PersonalProfile => PersonalSession.PersonalProfile; 
         public DeviceProfile DeviceProfile => PersonalProfile.DeviceProfile; 
 
-        public void Dispatch (string Command) {
-            CommandLine = Command;
+        public string Dispatch (string Command) {
+            CommandLine = "meshapp" + Command;
             CommandLineInterpreter.MainMethod(this, CommandSplitLex.Split(Command));
+            return CommandLine;
             }
 
+        public ResultBase LastResult;
 
         public CombinedShell (MeshMachine RegistrationMachine = null) {
             this.MeshMachine = RegistrationMachine ?? new MeshMachineCached();
@@ -63,6 +65,12 @@ namespace Goedel.Combined.Shell.Client {
 
             Report("Created new personal profile {0}", Registration.UDF);
             Report("Profile registered to {0}", Address);
+
+            LastResult = new ResultPersonalCreate() {
+                PersonalProfile = PersonalProfile,
+                PortalAccount = Address
+                };
+            LastResult.Display(Options);
 
             }
 
@@ -91,10 +99,17 @@ namespace Goedel.Combined.Shell.Client {
 
             var AccountClient = new AccountClient(AccountID);
 
-            var Response = AccountClient.Create(Options.AccountID.Value, 
+            var Response = AccountClient.Create(
+                AccountID, 
                 PersonalProfile.UDF,
                 DefaultMeshPortalAccount,
                 Options.PIN.Value);
+
+            LastResult = new ResultAccountCreate() {
+                Response = Response,
+                AccountID = AccountID
+                };
+            LastResult.Display(Options);
             }
 
         public override void AccountDelete (AccountDelete Options) {
@@ -102,6 +117,11 @@ namespace Goedel.Combined.Shell.Client {
             var AccountClient = new AccountClient(AccountID);
 
             var Response = AccountClient.Delete(DefaultMeshPortalAccount);
+            LastResult = new ResultAccountCreate() {
+                Response = Response,
+                AccountID = AccountID
+                };
+            LastResult.Display(Options);
             }
 
         public override void AccountUpdate (AccountUpdate Options) {
@@ -110,6 +130,10 @@ namespace Goedel.Combined.Shell.Client {
 
             // not sure what to update right now.
             var Response = AccountClient.Update(DefaultMeshPortalAccount);
+            LastResult = new ResultAccountCreate() {
+                Response = Response
+                };
+            LastResult.Display(Options);
             }
 
         public override void AccountGet (AccountGet Options) {
@@ -117,7 +141,11 @@ namespace Goedel.Combined.Shell.Client {
             var AccountClient = new AccountClient(AccountID);
 
 
-            var Response = AccountClient.Update(DefaultMeshPortalAccount);
+            var Response = AccountClient.Get(DefaultMeshPortalAccount);
+            LastResult = new ResultAccountCreate() {
+                Response = Response
+                };
+            LastResult.Display(Options);
             }
 
 
@@ -146,6 +174,10 @@ namespace Goedel.Combined.Shell.Client {
             var Response = ConfirmClient.Enquire(RequestEntry);
 
             LastID = Response.BrokerID;
+            LastResult = new ResultAccountCreate() {
+                Response = Response
+                };
+            LastResult.Display(Options);
             }
 
         public override void ConfirmStatus (ConfirmStatus Options) {
@@ -154,6 +186,10 @@ namespace Goedel.Combined.Shell.Client {
             var Response = ConfirmClient.Status(Options.ID.Text, Options.Cancel.Value);
 
             Report("Status {0}: {1}", Options.ID.Text, Response.Response.RequestStatus);
+            LastResult = new ResultAccountCreate() {
+                Response = Response
+                };
+            LastResult.Display(Options);
             }
 
         public override void ConfirmPending (ConfirmPending Options) {
@@ -162,36 +198,27 @@ namespace Goedel.Combined.Shell.Client {
 
             var Response = ConfirmClient.Pending(Options.AccountID.Value);
 
-            foreach (var Entry in Response.Entries) {
-                Report(Entry);
-                }
+            LastResult = new ResultConfirmPending() {
+                Response = Response
+                };
+            LastResult.Display(Options);
             }
 
-        void Report (RequestEntry Entry) {
-            var Request = TBSRequest.FromJSON(Entry.Request.JSONReader);
-            Report("ID: {0}", Entry.BrokerID);
-            Report("    From: {0}", Request.FromID);
-            Report("    To: {0}", Request.ToID);
-            Report("    Text: {0}", Request.Text);
-            }
 
 
         public override void ConfirmAccept (ConfirmAccept Options) {
-            var Response = Respond(Options.AccountID.Value, Options.ID.Value, true, DeviceProfile.DeviceSignatureKey.KeyPair);
+            var Response = Respond(Options, Options.AccountID.Value, Options.ID.Value, true, DeviceProfile.DeviceSignatureKey.KeyPair);
             }
 
         public override void ConfirmReject (ConfirmReject Options) {
-            var Response = Respond(Options.AccountID.Value, Options.ID.Value, false, DeviceProfile.DeviceSignatureKey.KeyPair);
+            var Response = Respond(Options, Options.AccountID.Value, Options.ID.Value, false, DeviceProfile.DeviceSignatureKey.KeyPair);
+
             }
 
 
 
-        public RespondResponse Respond (string AccountID, string BrokerID, bool Accept, KeyPair SignatureKey) {
+        public RespondResponse Respond (IReporting Options, string AccountID, string BrokerID, bool Accept, KeyPair SignatureKey) {
             var ConfirmClient = new ConfirmClient(AccountID);
-
-            var PendingRequest = new PendingRequest() {
-                BrokerID = BrokerID
-                };
 
             var Response = ConfirmClient.Pending(AccountID);
             var SignedRequest = Response.Entries.Find(Entry => Entry.BrokerID == BrokerID);
@@ -211,7 +238,15 @@ namespace Goedel.Combined.Shell.Client {
                 Response =SignedResponse
                 };
 
-            return ConfirmClient.Respond(ResponseEntry);
+            var TransactionResponse = ConfirmClient.Respond(ResponseEntry);
+
+            LastResult = new ResultConfirmRespond() {
+                Pending = Response,
+                Response = TransactionResponse
+                };
+            LastResult.Display(Options);
+
+            return (TransactionResponse);
             }
 
 
@@ -233,7 +268,10 @@ namespace Goedel.Combined.Shell.Client {
             RecryptionGroup.AddMember(PersonalSession.PersonalProfile, RecryptProfile);
 
             var Response = RecryptClient.CreateGroup(RecryptionGroup);
-
+            LastResult = new ResultCreateGroup() {
+                Response = Response
+                };
+            LastResult.Display(Options);
             }
 
         public override void RecryptAdd (RecryptAdd Options) {
@@ -261,6 +299,10 @@ namespace Goedel.Combined.Shell.Client {
             RecryptionGroup.AddMember(AddPersonal, AddApplication as RecryptProfile);
 
             var UpdateResponse = RecryptClient.UpdateGroup(RecryptionGroup);
+            LastResult = new ResultRecryptAdd() {
+                Response = Response
+                };
+            LastResult.Display(Options);
             }
 
 
@@ -287,6 +329,10 @@ namespace Goedel.Combined.Shell.Client {
             var KeyPair = EncryptionKey.KeyPair;
             var Encrypted = new JoseWebEncryption(Plaintext, EncryptionKey: KeyPair, KID: KID);
             Out.WriteFileNew(Encrypted.ToJson());
+            LastResult = new ResultEncrypt() {
+                Response = Response
+                };
+            LastResult.Display(Options);
             }
 
         public override void Decrypt (Decrypt Options) {
@@ -327,23 +373,28 @@ namespace Goedel.Combined.Shell.Client {
             // decrypt the data
             var Plaintext = Encrypted.Decrypt(Recipient, CompletionKey.KeyPair, 
                 PartialAgreement.KeyAgreementResult);
+
+            LastResult = new ResultDecrypt() {
+                Response = Response
+                };
+            LastResult.Display(Options);
             }
 
 
 
-        AccountClient GetAccountClient (IReporting Options) {
-            return null;
-            }
+        //AccountClient GetAccountClient (IReporting Options) {
+        //    return null;
+        //    }
 
 
-        ConfirmClient GetConfirmClient (IReporting Options) {
-            return null;
-            }
+        //ConfirmClient GetConfirmClient (IReporting Options) {
+        //    return null;
+        //    }
 
 
-        RecryptClient GetRecryptClient (IReporting Options) {
-            return null;
-            }
+        //RecryptClient GetRecryptClient (IReporting Options) {
+        //    return null;
+        //    }
 
         //public override void RecryptDelete (RecryptDelete Options) {
         //    var Response = RecryptClient.UpdateGroup();

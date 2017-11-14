@@ -11,34 +11,34 @@ The Key exchange request is:
 ~~~~
 POST /.well-known/jwcexchange/HTTP/1.1
 Host: example.com
-Content-Length: 1070
+Content-Length: 1068
 
 {
   "ExchangeRequest": {
     "ClientCredential": {
       "PublicKeyDH": {
-        "kid": "MCYH4-7QXL6-U3OJU-FR3RZ-X5Z7G-MDYSR",
+        "kid": "MBPYH-H2LPG-VWBJF-MA7GC-NZG4X-M3G2A",
         "Domain": "
 YE6bnq1MlX5ojaJto6PLP_PEwA",
         "Public": "
-JZVsCJJfE8Nka_OMVcixjiDV45TlsrpvZkuGEfbjjdcSojjMLBC_aP5WXtt-RVZ1
--B1ABJxv2clmK8gXks8tZZ49xob5CVmJUk_-Un_ck5BuI4YQ6Sa9Xd0FZMRTcS4v
-SFO9rIlHwRHukdAa83TO_u9uWsWmnIj_KTxyFBQ5jZT_XRqiVZAsGYPhdsSvLV3F
-Dt5Ukznft2LEB3dD4apkpheeaiz0Oj3tPi8j0dNm0c0XKdit8mDoq7WAKRhpAygz
-YzxbCJcRYF4J_F8HpNKUamF-9233VWRxRlrs-YYZDX-UkuMn1DhVcV3vZpm3FNal
-3_hW5-itTo5ZGyFQ22cr5wA"}},
+DOYRlkYn6wlvbT-H_9i8jZAtCqqhwEZR92Q267qnRRycoZSGYH7FJzIvocEx1v-u
+F_05IpYxmSjpkEVDU0nFw7LswqmBDnwcQaV-JWPTdWCbFChW0OiTvwTG1SIgEg62
+0OvneArUyMCEujimB9Y9hAWOkFD6AXFUk15MBaMrJRyzCHnrQDnbC2SRBHInuyeP
+RiRcIJqfMO2nQeMwT5yTH1STb1_kLzu_hpHJ3EWwfxsqqjjScSq5TrshFtJ5__kL
+XAgepGXuwmLBB6sXEm0sxdwBf3lWa-kyYmTfcpzR3C-AXDp4irZ0t2_c8Bzg8fX9
+nudLU-QNEzb5AWBr2dWOBw"}},
     "ClientNonce": {
       "PublicKeyDH": {
-        "kid": "MAQD3-EJYNT-DK2PU-M7HSK-3EZ5Q-MV3S5",
+        "kid": "MAGDI-IMZJX-3QNLR-62K7E-BBSGW-GKCM6",
         "Domain": "
 YE6bnq1MlX5ojaJto6PLP_PEwA",
         "Public": "
-9kg1-4_PhgQN6A3VZNOigHzTuRuWp9nXxu3EaucJxdmmB-U_db-_HrGv7JycEFwn
-dxU0vlxJBu-8ltzFLgvMEMlC0bRuTxgMwz50E0l7tKo6ImiIT16ES3ITwtNtG743
-6Z19fYjbtwD1i3HeHMfagxWEV8mu4w4eTyZKyDHp9uxoW5FxnuWbJYudEqMiJE0l
-0epAKaMW_v5-dK0MCIMTV8peQbEJQLimLrFxdsfj8TGG_iTRejeM42Fq4NuYXtBQ
-cIIYBzFkmNNhEdJRVcq-COVcajWergMsklbrAxD2lullUoYseRK3C3-AfT75seKT
-6ONEmzrZ5VtmEOZopLXt3AA"}}}}
+Rv7ABgNIQtyis5TFe3y7vZ5evFg0BKhgtyuJ-vr1aCuMyyFyGyMIaQfKxlsZawkt
+zuiqej2RYV1LQb6rljnP3z7H-WdqK9l3onuJuR1S_bvBkosjD1KtUxGY_Dm1MkvQ
+BHUBnTOt3KTIpcOORZmsyiQmtvHqXYUdoiSD6Fv-R3zRZ2XrSClBGoZEra7-7aAs
+s9xwGy_bNI9iEPEWL59XuSdmSwkJmeMyCGFj_tLq4CwYdoyBFpvHB78RxJBXxmRY
+MWdpWW8D-171YzB_Yp8vBnJQ9akVVyfXoHCRa8nIfq43snyJdOGZGGe-KbNVmoha
+ZvkF4B-4PuiDyuFoQMHcAg"}}}}
 ~~~~
 
 
@@ -47,7 +47,7 @@ The Keyu Exchange response is
 
 ~~~~
 HTTP/1.1 200 OK
-Date: Wed 25 Oct 2017 08:29:48
+Date: Fri 10 Nov 2017 08:25:12
 Content-Length: 1359
 
 {
@@ -57,31 +57,31 @@ Content-Length: 1359
     "Ticket": "
 T3BhcXVlIHZhbHVlIG91dHNpZGUgc2NvcGUgb2Ygc3BlY2lmaWNhdGlvbg",
     "Witness": "
-tKWAnl6bVFQj_qOun-BBUiedIUbrLkN4B9QyHno4KGU",
+uTDCL_X_WOfx0TtwfiF5bNZYBTAco7fcRkxyXpDV9kA",
     "ServerCredential": {
       "PublicKeyDH": {
-        "kid": "MDEQE-X23VF-TIR7J-DF5S2-56CWQ-TLTM6",
+        "kid": "MC7JQ-NDPOL-QZ6D6-RQMST-AFKOB-YDDYE",
         "Domain": "
 YE6bnq1MlX5ojaJto6PLP_PEwA",
         "Public": "
-KANgoKLN2Tj-bKp3qldHdMT8YHeJpD93_iy7tDnMpkANbzgNTRLESWBZOwfOHzqR
-gJWuXKLn25l5J2yaAsm5Gkqgq7iioiCSLxtuOQwoNJS-MRETXX41maRGo_zbYJJW
-zPr0YonR6GZgMRQJionO-IAfz0XV7DUaroXHjl7PpHPfbJtD_eFTjBYZrelhLsAg
-uEqoD_oM8Y_8tcSrtjynqA_JHGGsgPhdIfFsHtQtH0E16dR6Ob4WtUYr17obJJXr
-0w2bVRe8pHoeF9UK7AN5dIsPGyFQ6dm_UsWNxn8BSE5pqAoQYYh6QTcs5SD11rBG
-8r3tLVdeyWQ_wdwq1yhpWQ"}},
+YjM0m-TunuiRX6TK4pNJf8j5Y9XlrHG9WU-VprX9tgsVP6baQzVp9Hmhqr5ASnNg
+PWvd2S19Q2vtih35V2cVnwvLHnpEJH5X95DRHqMp-S_RkQLrJU57a_OhKGSjvBtI
+halMHKBTXbIgZ-QZrvodp9z3LLYm3OfXlesnSNKcdPWwZFXCYDrhDRZWsxQt_SVP
+QvwFHwXEHZYcA649yIB7JFSZw_gbza8M1W5U_lCw5VW-hLAUb4SogNUmynnpopnV
+xlgFUwevq7wNO7mt55UaQDsfFz9Da1UeuwEy89uduHjshFvCC_Fhb8QTJuQbAIvJ
+5Xa70y3BCoMzJS9RtglKUA"}},
     "ServerNonce": {
       "PublicKeyDH": {
-        "kid": "MDKP2-WP5DN-MRO6Q-35RD6-XQ5NL-ZYJQU",
+        "kid": "MCETO-ASH24-Z73CX-U33NC-WETKU-57SWJ",
         "Domain": "
 YE6bnq1MlX5ojaJto6PLP_PEwA",
         "Public": "
-BiEUN2V2Ol6xP9Ar2Jdk0imug6gKJB9HVM8kaYAcuYk6ozUjwIGNhkA7ePaPTKE6
-81KL7a6QKGQL8UUnBSdOhti0JEAakLr2ErlJK_2P50QVZf8w4QPbv-hKFTAl1lft
-hB4v0pOJWjBw-AYSewudS9dAihZIZQ68XyJIQWfSW0u2vAfhHi6MsNDfmJ2K2auP
-1O8E0PIrMQxDJk9Zt7IGKhICion3LT0OnpSJNlsH7Aunro0xOeY3B4M6EE2yERGJ
-rbGHLu07rfhnTSqVkMPOJRDRmBZpyKThfiauEeSO_jvN1aurQvBJFfQB18qoXnLS
-1ToCVgKj8lg-13P5X_yVag"}},
+J4NP-n0RRPMQ2GyOiUKjYuTYiFAEKj_vaQCydDsvqKRtvAv-NTIWSfrE40i-60dI
+J2wKV4uwMlhebM8N3byGBoe22NDKAuOHYoBv9X1gVtQWfN8bTTOu87QKfch6IhlW
+KVs9cpabmYTms_lzK0KY88EH-hOMaTnxsb6kPt3W8l84RnvJdpQSHIOQuXF4DNjL
+7bv1FnqYmWhGXnTGy7plknOq2nNYpP7YoPXMqK5n3rj7yLPQFZC6zKviS2ri6CaV
+3E5rfyUHO3boAO_QlnzBm3pxRFpQyeV6qogfkU8hY7g08EtC3TgFi5wDYL7E0CCM
+yUUVNXSh9X2a6cjsfP8dRA"}},
     "Encryption": ["A256CBC-HS512"],
     "Authentication": ["HS512"]}}
 ~~~~

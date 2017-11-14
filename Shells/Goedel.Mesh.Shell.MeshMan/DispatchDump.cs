@@ -31,15 +31,15 @@ namespace Goedel.Mesh.MeshMan {
         public override void List (List Options) {
             SetReporting(Options);
 
-            Report("Personal Profiles");
+            ReportWriteLine("Personal Profiles");
             foreach (var Registration in Machine.PersonalProfilesUDF) {
                 Report(Registration.Value, false);
                 }
-            Report("Device Profiles"); 
+            ReportWriteLine("Device Profiles"); 
             foreach (var Registration in Machine.DeviceProfiles) {
                 Report(Registration.Value);
                 }
-            Report("Application Profiles");
+            ReportWriteLine("Application Profiles");
             foreach (var Registration in Machine.ApplicationProfiles) {
                 Report(Registration.Value);
                 }
@@ -54,31 +54,31 @@ namespace Goedel.Mesh.MeshMan {
             var UDF = PersonalProfile.UDF ?? "<null>";
 
 
-            Report("Profile {0}", Identifier);
-            Report("    UDF : {0}", UDF);
-            Report("    Updated : {0}", Updated);
+            ReportWriteLine("Profile {0}", Identifier);
+            ReportWriteLine("    UDF : {0}", UDF);
+            ReportWriteLine("    Updated : {0}", Updated);
 
             ReportWrite("    PortalIDs :");
             foreach (var Portal in Registration.Portals) {
                 ReportWrite(" ");
                 ReportWrite(Portal);
                 }
-            Report("");
+            ReportWriteLine("");
 
             if (!Detail) {
                 return;
                 }
 
-            Report("Devices");
+            ReportWriteLine("Devices");
             foreach (var Device in PersonalProfile.Devices) {
                 Report(Device.DeviceProfile);
                 }
 
-            Report("Applications");
+            ReportWriteLine("Applications");
             foreach (var ApplicationProfileEntry in PersonalProfile.Applications) {
-                Report("    Type {0}, Friendly {1}", ApplicationProfileEntry.Type,
+                ReportWriteLine("    Type {0}, Friendly {1}", ApplicationProfileEntry.Type,
                         ApplicationProfileEntry.Friendly);
-                Report("    Identifier: {0}", ApplicationProfileEntry.Identifier);
+                ReportWriteLine("    Identifier: {0}", ApplicationProfileEntry.Identifier);
                 Report("        Sign IDs: ", ApplicationProfileEntry.AdminDeviceUDF);
                 Report("        Decrypt IDs: ", ApplicationProfileEntry.DecryptDeviceUDF);
                 }
@@ -90,7 +90,7 @@ namespace Goedel.Mesh.MeshMan {
             }
 
         void Report (SignedApplicationProfile Application) {
-            Report("    Profile {0}", Application.UDF);
+            ReportWriteLine("    Profile {0}", Application.UDF);
             }
 
         void Report (RegistrationDevice Registration) {
@@ -98,10 +98,10 @@ namespace Goedel.Mesh.MeshMan {
             }
 
         void Report (DeviceProfile Device) {
-            Report("    Profile {0}", Device.UDF);
-            Report("        Description {0}", Device.Description);
+            ReportWriteLine("    Profile {0}", Device.UDF);
+            ReportWriteLine("        Description {0}", Device.Description);
             foreach (var Name in Device.Names) {
-                Report("        Name {0}", Name);
+                ReportWriteLine("        Name {0}", Name);
                 }
             }
 

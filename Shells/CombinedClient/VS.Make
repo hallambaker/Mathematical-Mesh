@@ -37,6 +37,6 @@ prebuild :
     echo "Do Prebuild"
 
 postbuild : 
-	powershell publishtarget CombinedClient.dll
+	powershell publishtarget Goedel.Combined.Shell.Client.dll
 
 

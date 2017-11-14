@@ -27,9 +27,11 @@ namespace Goedel.Mesh.MeshMan {
             var Filename = Options.File.Value;
             Assert.NotNull(Filename != null);
 
-
             Filename.WriteFileNew(RegistrationPersonal.SignedPersonalProfile.GetBytes());
 
+            var ResultObject = new ResultExport();
+            LastResult = ResultObject;
+            ReportWrite(LastResult.ToString());
             }
 
         /// <summary>
@@ -38,6 +40,11 @@ namespace Goedel.Mesh.MeshMan {
         /// <param name="Options">Command line parameters</param>
         public override void Import(Import Options) {
             SetReporting(Options.Report, Options.Verbose);
+
+            var ResultObject = new ResultImport();
+            LastResult = ResultObject;
+            ReportWrite(LastResult.ToString());
+
             throw new NYI("");
             }
 

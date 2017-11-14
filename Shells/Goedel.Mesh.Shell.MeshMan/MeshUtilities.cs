@@ -8,15 +8,16 @@ using Goedel.Mesh;
 using Goedel.Utilities;
 using Goedel.Mesh.Platform;
 using Goedel.Mesh.Server;
-
+using Goedel.Protocol;
 
 namespace Goedel.Mesh.MeshMan {
 
     public partial class Shell {
 
-        bool VerboseOutput = false;
-        bool ReportOutput = true;
-        bool ActiveListener = false;
+        protected bool VerboseOutput = false;
+        protected bool ReportOutput = true;
+        protected bool ActiveListener = false;
+
 
         private void SetReporting (Goedel.Mesh.MeshMan.IReporting Reporting) {
             SetReporting(Reporting.Report, Reporting.Verbose);
@@ -38,9 +39,15 @@ namespace Goedel.Mesh.MeshMan {
                 }
             }
 
-        public void ReportWrite (string Text) {
+        public virtual void ReportWrite (string Text) {
             if (ReportOutput) {
                 Console.Write(Text);
+                }
+            }
+
+        public virtual void ReportWriteLine (string Text, params object[] Data) {
+            if (ReportOutput) {
+                Console.WriteLine(Text, Data);
                 }
             }
 
@@ -48,25 +55,16 @@ namespace Goedel.Mesh.MeshMan {
             if (!ReportOutput) {
                 return;
                 }
-            Console.Write(Text);
+            ReportWrite(Text);
             foreach (var Item in Items) {
-                Console.Write(" ");
-                Console.Write(Item);
+                ReportWrite(" ");
+                ReportWrite(Item);
                 }
-            Console.WriteLine();
+            ReportWriteLine("");
             }
 
-        public void Report (string Text, params object[] Data) {
-            if (ReportOutput) {
-                Console.WriteLine(Text, Data);
-                }
-            }
 
-        public void Report (string Text) {
-            if (ReportOutput) {
-                Console.WriteLine(Text);
-                }
-            }
+        public JSONObject LastResult;
 
 
         public RegistrationDevice GetDevice (IDeviceProfileInfo Options) {

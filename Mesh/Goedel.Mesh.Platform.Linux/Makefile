@@ -120,7 +120,7 @@ SourceFiles = \
 
 LinkFiles = \
     $(TARGETBIN)/Goedel.Cryptography.Jose.dll\
-    $(TARGETBIN)/PHB Framework Library.dll\
+    $(TARGETBIN)/Goedel.Cryptography.Linux.dll\
     $(TARGETBIN)/Goedel.Cryptography.dll\
     $(TARGETBIN)/Goedel.Discovery.dll\
     $(TARGETBIN)/Goedel.Protocol.dll\
@@ -130,7 +130,7 @@ LinkFiles = \
     $(TARGETBIN)/Goedel.Mesh.Server.dll\
     $(TARGETBIN)/Goedel.Mesh.dll
 
-LinkFilesComma = $(TARGETBIN)/Goedel.Cryptography.Jose.dll,$(TARGETBIN)/PHB Framework Library.dll,$(TARGETBIN)/Goedel.Cryptography.dll,$(TARGETBIN)/Goedel.Discovery.dll,$(TARGETBIN)/Goedel.Protocol.dll,$(TARGETBIN)/Goedel.Utilities.dll,$(TARGETBIN)/Goedel.Mesh.Client.dll,$(TARGETBIN)/Goedel.Mesh.Platform.dll,$(TARGETBIN)/Goedel.Mesh.Server.dll,$(TARGETBIN)/Goedel.Mesh.dll
+LinkFilesComma = $(TARGETBIN)/Goedel.Cryptography.Jose.dll,$(TARGETBIN)/Goedel.Cryptography.Linux.dll,$(TARGETBIN)/Goedel.Cryptography.dll,$(TARGETBIN)/Goedel.Discovery.dll,$(TARGETBIN)/Goedel.Protocol.dll,$(TARGETBIN)/Goedel.Utilities.dll,$(TARGETBIN)/Goedel.Mesh.Client.dll,$(TARGETBIN)/Goedel.Mesh.Platform.dll,$(TARGETBIN)/Goedel.Mesh.Server.dll,$(TARGETBIN)/Goedel.Mesh.dll
 
 
 NugetFiles = 
@@ -182,7 +182,7 @@ ifndef NORECURSE
 ../../../buildtools/Libraries/Goedel.Cryptography.Jose/$(TARGETBIN)/Goedel.Cryptography.Jose.dll : recursive
 ! $(MAKE) -C ../../../buildtools/Libraries/Goedel.Cryptography.Jose
 
-../../../buildtools/Libraries/Goedel.Cryptography.Linux/$(TARGETBIN)/PHB Framework Library.dll : recursive
+../../../buildtools/Libraries/Goedel.Cryptography.Linux/$(TARGETBIN)/Goedel.Cryptography.Linux.dll : recursive
 ! $(MAKE) -C ../../../buildtools/Libraries/Goedel.Cryptography.Linux
 
 ../../../buildtools/Libraries/Goedel.Cryptography/$(TARGETBIN)/Goedel.Cryptography.dll : recursive
@@ -215,9 +215,9 @@ $(TARGETBIN)/Goedel.Cryptography.Jose.dll :| $(TARGETBIN)
 $(TARGETBIN)/Goedel.Cryptography.Jose.dll : ../../../buildtools/Libraries/Goedel.Cryptography.Jose/$(TARGETBIN)/Goedel.Cryptography.Jose.dll
 !  cp ../../../buildtools/Libraries/Goedel.Cryptography.Jose/$(TARGETBIN)/Goedel.Cryptography.Jose.dll $(TARGETBIN)/Goedel.Cryptography.Jose.dll
 
-$(TARGETBIN)/PHB Framework Library.dll :| $(TARGETBIN)
-$(TARGETBIN)/PHB Framework Library.dll : ../../../buildtools/Libraries/Goedel.Cryptography.Linux/$(TARGETBIN)/PHB Framework Library.dll
-!  cp ../../../buildtools/Libraries/Goedel.Cryptography.Linux/$(TARGETBIN)/PHB Framework Library.dll $(TARGETBIN)/PHB Framework Library.dll
+$(TARGETBIN)/Goedel.Cryptography.Linux.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.Cryptography.Linux.dll : ../../../buildtools/Libraries/Goedel.Cryptography.Linux/$(TARGETBIN)/Goedel.Cryptography.Linux.dll
+!  cp ../../../buildtools/Libraries/Goedel.Cryptography.Linux/$(TARGETBIN)/Goedel.Cryptography.Linux.dll $(TARGETBIN)/Goedel.Cryptography.Linux.dll
 
 $(TARGETBIN)/Goedel.Cryptography.dll :| $(TARGETBIN)
 $(TARGETBIN)/Goedel.Cryptography.dll : ../../../buildtools/Libraries/Goedel.Cryptography/$(TARGETBIN)/Goedel.Cryptography.dll

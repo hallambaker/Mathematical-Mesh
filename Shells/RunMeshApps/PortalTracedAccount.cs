@@ -42,7 +42,7 @@ namespace Goedel.Account.Server {
         /// <param name="ServiceName">DNS service name</param>
         /// <param name="MeshStore">File name for the Mesh Store.</param>
         /// <param name="PortalStore">File name for the Portal Store.</param>
-        public AccountPortalTraced (string ServiceName, string MeshStore, string PortalStore) {
+        public AccountPortalTraced (string ServiceName, string Store = "Account.jlog") {
             var URI = JPCProvider.WellKnownToURI(ServiceName, AccountService.WellKnown,
                         AccountService.Discovery, false, true);
 

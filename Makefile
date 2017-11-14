@@ -529,6 +529,8 @@ Shells/meshman_osx/$(TARGETBIN)/meshman_osx.exe : always
 
 all : Testing/Test.Goedel.Mesh.Profile/$(TARGETBIN)/Test.Goedel.Mesh.dll
 
+Testing/Test.Goedel.Mesh.Profile/$(TARGETBIN)/Test.Goedel.Mesh.dll : Testing/Test.Goedel.Mesh.Profile/../../Mesh/$(TARGETBIN)/Goedel.Mesh.Platform.Windows.dll
+
 Testing/Test.Goedel.Mesh.Profile/$(TARGETBIN)/Test.Goedel.Mesh.dll : Testing/Test.Goedel.Mesh.Profile/../../Mesh/$(TARGETBIN)/Goedel.Mesh.Platform.dll
 
 Testing/Test.Goedel.Mesh.Profile/$(TARGETBIN)/Test.Goedel.Mesh.dll : Testing/Test.Goedel.Mesh.Profile/../../Mesh/$(TARGETBIN)/Goedel.Mesh.dll
@@ -620,6 +622,8 @@ Testing/Test.Constants/$(TARGETBIN)/Test.Constants.dll : always
 # Output :     Testing/Test.Goedel.Mesh.Shell/$(TARGETBIN)/Test.Goedel.Mesh.dll
 
 all : Testing/Test.Goedel.Mesh.Shell/$(TARGETBIN)/Test.Goedel.Mesh.dll
+
+Testing/Test.Goedel.Mesh.Shell/$(TARGETBIN)/Test.Goedel.Mesh.dll : Testing/Test.Goedel.Mesh.Shell/../../../buildtools/Libraries/$(TARGETBIN)/Goedel.Discovery.dll
 
 Testing/Test.Goedel.Mesh.Shell/$(TARGETBIN)/Test.Goedel.Mesh.dll : Testing/Test.Goedel.Mesh.Shell/../../Mesh/$(TARGETBIN)/Goedel.Mesh.Client.dll
 
@@ -1019,7 +1023,7 @@ Shells/RunMeshApps/$(TARGETBIN)/RunMeshApps.exe : Shells/RunMeshApps/../../Recry
 
 Shells/RunMeshApps/$(TARGETBIN)/RunMeshApps.exe : Shells/RunMeshApps/../../Recrypt/$(TARGETBIN)/Goedel.Recrypt.dll
 
-Shells/RunMeshApps/$(TARGETBIN)/RunMeshApps.exe : Shells/RunMeshApps/../$(TARGETBIN)/CombinedClient.dll
+Shells/RunMeshApps/$(TARGETBIN)/RunMeshApps.exe : Shells/RunMeshApps/../$(TARGETBIN)/Goedel.Combined.Shell.Client.dll
 
 
 Shells/RunMeshApps/$(TARGETBIN)/RunMeshApps.exe : always
@@ -1035,7 +1039,7 @@ all : Mesh/Goedel.Mesh.Platform.Linux/$(TARGETBIN)/Goedel.Mesh.Platform.Linux.dl
 
 Mesh/Goedel.Mesh.Platform.Linux/$(TARGETBIN)/Goedel.Mesh.Platform.Linux.dll : Mesh/Goedel.Mesh.Platform.Linux/../../../buildtools/Libraries/$(TARGETBIN)/Goedel.Cryptography.Jose.dll
 
-Mesh/Goedel.Mesh.Platform.Linux/$(TARGETBIN)/Goedel.Mesh.Platform.Linux.dll : Mesh/Goedel.Mesh.Platform.Linux/../../../buildtools/Libraries/$(TARGETBIN)/PHB Framework Library.dll
+Mesh/Goedel.Mesh.Platform.Linux/$(TARGETBIN)/Goedel.Mesh.Platform.Linux.dll : Mesh/Goedel.Mesh.Platform.Linux/../../../buildtools/Libraries/$(TARGETBIN)/Goedel.Cryptography.Linux.dll
 
 Mesh/Goedel.Mesh.Platform.Linux/$(TARGETBIN)/Goedel.Mesh.Platform.Linux.dll : Mesh/Goedel.Mesh.Platform.Linux/../../../buildtools/Libraries/$(TARGETBIN)/Goedel.Cryptography.dll
 
@@ -1059,50 +1063,50 @@ Mesh/Goedel.Mesh.Platform.Linux/$(TARGETBIN)/Goedel.Mesh.Platform.Linux.dll : al
 ! echo "*** Directory Mesh/Goedel.Mesh.Platform.Linux" >&2
 ! make NORECURSE=true -C Mesh/Goedel.Mesh.Platform.Linux
 
-# Project : CombinedClient.dll
+# Project : Goedel.Combined.Shell.Client.dll
 # Item :  Shells/CombinedClient
-# Output :     Shells/CombinedClient/$(TARGETBIN)/CombinedClient.dll
+# Output :     Shells/CombinedClient/$(TARGETBIN)/Goedel.Combined.Shell.Client.dll
 
-all : Shells/CombinedClient/$(TARGETBIN)/CombinedClient.dll
+all : Shells/CombinedClient/$(TARGETBIN)/Goedel.Combined.Shell.Client.dll
 
-Shells/CombinedClient/$(TARGETBIN)/CombinedClient.dll : Shells/CombinedClient/../../../buildtools/Libraries/$(TARGETBIN)/Goedel.Command.dll
+Shells/CombinedClient/$(TARGETBIN)/Goedel.Combined.Shell.Client.dll : Shells/CombinedClient/../../../buildtools/Libraries/$(TARGETBIN)/Goedel.Command.dll
 
-Shells/CombinedClient/$(TARGETBIN)/CombinedClient.dll : Shells/CombinedClient/../../../buildtools/Libraries/$(TARGETBIN)/Goedel.Cryptography.Jose.dll
+Shells/CombinedClient/$(TARGETBIN)/Goedel.Combined.Shell.Client.dll : Shells/CombinedClient/../../../buildtools/Libraries/$(TARGETBIN)/Goedel.Cryptography.Jose.dll
 
-Shells/CombinedClient/$(TARGETBIN)/CombinedClient.dll : Shells/CombinedClient/../../../buildtools/Libraries/$(TARGETBIN)/Goedel.Cryptography.dll
+Shells/CombinedClient/$(TARGETBIN)/Goedel.Combined.Shell.Client.dll : Shells/CombinedClient/../../../buildtools/Libraries/$(TARGETBIN)/Goedel.Cryptography.dll
 
-Shells/CombinedClient/$(TARGETBIN)/CombinedClient.dll : Shells/CombinedClient/../../../buildtools/Libraries/$(TARGETBIN)/Goedel.FSR.dll
+Shells/CombinedClient/$(TARGETBIN)/Goedel.Combined.Shell.Client.dll : Shells/CombinedClient/../../../buildtools/Libraries/$(TARGETBIN)/Goedel.FSR.dll
 
-Shells/CombinedClient/$(TARGETBIN)/CombinedClient.dll : Shells/CombinedClient/../../../buildtools/Libraries/$(TARGETBIN)/Goedel.IO.dll
+Shells/CombinedClient/$(TARGETBIN)/Goedel.Combined.Shell.Client.dll : Shells/CombinedClient/../../../buildtools/Libraries/$(TARGETBIN)/Goedel.IO.dll
 
-Shells/CombinedClient/$(TARGETBIN)/CombinedClient.dll : Shells/CombinedClient/../../../buildtools/Libraries/$(TARGETBIN)/Goedel.Protocol.dll
+Shells/CombinedClient/$(TARGETBIN)/Goedel.Combined.Shell.Client.dll : Shells/CombinedClient/../../../buildtools/Libraries/$(TARGETBIN)/Goedel.Protocol.dll
 
-Shells/CombinedClient/$(TARGETBIN)/CombinedClient.dll : Shells/CombinedClient/../../../buildtools/Libraries/$(TARGETBIN)/Goedel.Utilities.dll
+Shells/CombinedClient/$(TARGETBIN)/Goedel.Combined.Shell.Client.dll : Shells/CombinedClient/../../../buildtools/Libraries/$(TARGETBIN)/Goedel.Utilities.dll
 
-Shells/CombinedClient/$(TARGETBIN)/CombinedClient.dll : Shells/CombinedClient/../../Mesh/$(TARGETBIN)/Goedel.Mesh.Client.dll
+Shells/CombinedClient/$(TARGETBIN)/Goedel.Combined.Shell.Client.dll : Shells/CombinedClient/../../Mesh/$(TARGETBIN)/Goedel.Mesh.Client.dll
 
-Shells/CombinedClient/$(TARGETBIN)/CombinedClient.dll : Shells/CombinedClient/../../Mesh/$(TARGETBIN)/Goedel.Mesh.Platform.Windows.dll
+Shells/CombinedClient/$(TARGETBIN)/Goedel.Combined.Shell.Client.dll : Shells/CombinedClient/../../Mesh/$(TARGETBIN)/Goedel.Mesh.Platform.Windows.dll
 
-Shells/CombinedClient/$(TARGETBIN)/CombinedClient.dll : Shells/CombinedClient/../../Mesh/$(TARGETBIN)/Goedel.Mesh.Platform.dll
+Shells/CombinedClient/$(TARGETBIN)/Goedel.Combined.Shell.Client.dll : Shells/CombinedClient/../../Mesh/$(TARGETBIN)/Goedel.Mesh.Platform.dll
 
-Shells/CombinedClient/$(TARGETBIN)/CombinedClient.dll : Shells/CombinedClient/../../Mesh/$(TARGETBIN)/Goedel.Mesh.Server.dll
+Shells/CombinedClient/$(TARGETBIN)/Goedel.Combined.Shell.Client.dll : Shells/CombinedClient/../../Mesh/$(TARGETBIN)/Goedel.Mesh.Server.dll
 
-Shells/CombinedClient/$(TARGETBIN)/CombinedClient.dll : Shells/CombinedClient/../../Mesh/$(TARGETBIN)/Goedel.Mesh.dll
+Shells/CombinedClient/$(TARGETBIN)/Goedel.Combined.Shell.Client.dll : Shells/CombinedClient/../../Mesh/$(TARGETBIN)/Goedel.Mesh.dll
 
-Shells/CombinedClient/$(TARGETBIN)/CombinedClient.dll : Shells/CombinedClient/../../Account/$(TARGETBIN)/Goedel.Account.Client.dll
+Shells/CombinedClient/$(TARGETBIN)/Goedel.Combined.Shell.Client.dll : Shells/CombinedClient/../../Account/$(TARGETBIN)/Goedel.Account.Client.dll
 
-Shells/CombinedClient/$(TARGETBIN)/CombinedClient.dll : Shells/CombinedClient/../../Account/$(TARGETBIN)/Goedel.Account.dll
+Shells/CombinedClient/$(TARGETBIN)/Goedel.Combined.Shell.Client.dll : Shells/CombinedClient/../../Account/$(TARGETBIN)/Goedel.Account.dll
 
-Shells/CombinedClient/$(TARGETBIN)/CombinedClient.dll : Shells/CombinedClient/../../Confirm/$(TARGETBIN)/Goedel.Confirm.Client.dll
+Shells/CombinedClient/$(TARGETBIN)/Goedel.Combined.Shell.Client.dll : Shells/CombinedClient/../../Confirm/$(TARGETBIN)/Goedel.Confirm.Client.dll
 
-Shells/CombinedClient/$(TARGETBIN)/CombinedClient.dll : Shells/CombinedClient/../../Confirm/$(TARGETBIN)/Goedel.Confirm.dll
+Shells/CombinedClient/$(TARGETBIN)/Goedel.Combined.Shell.Client.dll : Shells/CombinedClient/../../Confirm/$(TARGETBIN)/Goedel.Confirm.dll
 
-Shells/CombinedClient/$(TARGETBIN)/CombinedClient.dll : Shells/CombinedClient/../../Recrypt/$(TARGETBIN)/Goedel.Recrypt.Client.dll
+Shells/CombinedClient/$(TARGETBIN)/Goedel.Combined.Shell.Client.dll : Shells/CombinedClient/../../Recrypt/$(TARGETBIN)/Goedel.Recrypt.Client.dll
 
-Shells/CombinedClient/$(TARGETBIN)/CombinedClient.dll : Shells/CombinedClient/../../Recrypt/$(TARGETBIN)/Goedel.Recrypt.dll
+Shells/CombinedClient/$(TARGETBIN)/Goedel.Combined.Shell.Client.dll : Shells/CombinedClient/../../Recrypt/$(TARGETBIN)/Goedel.Recrypt.dll
 
 
-Shells/CombinedClient/$(TARGETBIN)/CombinedClient.dll : always
+Shells/CombinedClient/$(TARGETBIN)/Goedel.Combined.Shell.Client.dll : always
 ! echo "" >&2
 ! echo "*** Directory Shells/CombinedClient" >&2
 ! make NORECURSE=true -C Shells/CombinedClient
@@ -1251,30 +1255,30 @@ all : ../buildtools/Libraries/Goedel.Cryptography.KeyFile/$(TARGETBIN)/Goedel.Cr
 ! echo "*** Directory ../buildtools/Libraries/Goedel.Cryptography.KeyFile" >&2
 ! make NORECURSE=true -C ../buildtools/Libraries/Goedel.Cryptography.KeyFile
 
-# Project : PHB Framework Library.dll
+# Project : Goedel.Cryptography.Linux.dll
 # Item :  ../buildtools/Libraries/Goedel.Cryptography.Linux
-# Output :     ../buildtools/Libraries/Goedel.Cryptography.Linux/$(TARGETBIN)/PHB Framework Library.dll
+# Output :     ../buildtools/Libraries/Goedel.Cryptography.Linux/$(TARGETBIN)/Goedel.Cryptography.Linux.dll
 
-all : ../buildtools/Libraries/Goedel.Cryptography.Linux/$(TARGETBIN)/PHB Framework Library.dll
+all : ../buildtools/Libraries/Goedel.Cryptography.Linux/$(TARGETBIN)/Goedel.Cryptography.Linux.dll
 
-../buildtools/Libraries/Goedel.Cryptography.Linux/$(TARGETBIN)/PHB Framework Library.dll : ../buildtools/Libraries/Goedel.Cryptography.Linux/../$(TARGETBIN)/Goedel.Cryptography.Jose.dll
+../buildtools/Libraries/Goedel.Cryptography.Linux/$(TARGETBIN)/Goedel.Cryptography.Linux.dll : ../buildtools/Libraries/Goedel.Cryptography.Linux/../$(TARGETBIN)/Goedel.Cryptography.Jose.dll
 
-../buildtools/Libraries/Goedel.Cryptography.Linux/$(TARGETBIN)/PHB Framework Library.dll : ../buildtools/Libraries/Goedel.Cryptography.Linux/../$(TARGETBIN)/Goedel.Cryptography.dll
+../buildtools/Libraries/Goedel.Cryptography.Linux/$(TARGETBIN)/Goedel.Cryptography.Linux.dll : ../buildtools/Libraries/Goedel.Cryptography.Linux/../$(TARGETBIN)/Goedel.Cryptography.dll
 
-../buildtools/Libraries/Goedel.Cryptography.Linux/$(TARGETBIN)/PHB Framework Library.dll : ../buildtools/Libraries/Goedel.Cryptography.Linux/../$(TARGETBIN)/Goedel.Discovery.dll
+../buildtools/Libraries/Goedel.Cryptography.Linux/$(TARGETBIN)/Goedel.Cryptography.Linux.dll : ../buildtools/Libraries/Goedel.Cryptography.Linux/../$(TARGETBIN)/Goedel.Discovery.dll
 
-../buildtools/Libraries/Goedel.Cryptography.Linux/$(TARGETBIN)/PHB Framework Library.dll : ../buildtools/Libraries/Goedel.Cryptography.Linux/../$(TARGETBIN)/Goedel.Protocol.dll
+../buildtools/Libraries/Goedel.Cryptography.Linux/$(TARGETBIN)/Goedel.Cryptography.Linux.dll : ../buildtools/Libraries/Goedel.Cryptography.Linux/../$(TARGETBIN)/Goedel.Protocol.dll
 
-../buildtools/Libraries/Goedel.Cryptography.Linux/$(TARGETBIN)/PHB Framework Library.dll : ../buildtools/Libraries/Goedel.Cryptography.Linux/../$(TARGETBIN)/Goedel.Utilities.dll
+../buildtools/Libraries/Goedel.Cryptography.Linux/$(TARGETBIN)/Goedel.Cryptography.Linux.dll : ../buildtools/Libraries/Goedel.Cryptography.Linux/../$(TARGETBIN)/Goedel.Utilities.dll
 
-../buildtools/Libraries/Goedel.Cryptography.Linux/$(TARGETBIN)/PHB Framework Library.dll : ../buildtools/Libraries/Goedel.Cryptography.Linux/../$(TARGETBIN)/Goedel.Cryptography.Framework.dll
+../buildtools/Libraries/Goedel.Cryptography.Linux/$(TARGETBIN)/Goedel.Cryptography.Linux.dll : ../buildtools/Libraries/Goedel.Cryptography.Linux/../$(TARGETBIN)/Goedel.Cryptography.Framework.dll
 
-../buildtools/Libraries/Goedel.Cryptography.Linux/$(TARGETBIN)/PHB Framework Library.dll : ../buildtools/Libraries/Goedel.Cryptography.Linux/../$(TARGETBIN)/Goedel.Cryptography.KeyFile.dll
+../buildtools/Libraries/Goedel.Cryptography.Linux/$(TARGETBIN)/Goedel.Cryptography.Linux.dll : ../buildtools/Libraries/Goedel.Cryptography.Linux/../$(TARGETBIN)/Goedel.Cryptography.KeyFile.dll
 
-../buildtools/Libraries/Goedel.Cryptography.Linux/$(TARGETBIN)/PHB Framework Library.dll : ../buildtools/Libraries/Goedel.Cryptography.Linux/../$(TARGETBIN)/Goedel.IO.dll
+../buildtools/Libraries/Goedel.Cryptography.Linux/$(TARGETBIN)/Goedel.Cryptography.Linux.dll : ../buildtools/Libraries/Goedel.Cryptography.Linux/../$(TARGETBIN)/Goedel.IO.dll
 
 
-../buildtools/Libraries/Goedel.Cryptography.Linux/$(TARGETBIN)/PHB Framework Library.dll : always
+../buildtools/Libraries/Goedel.Cryptography.Linux/$(TARGETBIN)/Goedel.Cryptography.Linux.dll : always
 ! echo "" >&2
 ! echo "*** Directory ../buildtools/Libraries/Goedel.Cryptography.Linux" >&2
 ! make NORECURSE=true -C ../buildtools/Libraries/Goedel.Cryptography.Linux
@@ -1485,6 +1489,84 @@ all : ../buildtools/Libraries/Goedel.Persistence/$(TARGETBIN)/Goedel.Persistence
 ! echo "*** Directory ../buildtools/Libraries/Goedel.Persistence" >&2
 ! make NORECURSE=true -C ../buildtools/Libraries/Goedel.Persistence
 
+# Project : MakeSiteDocs.exe
+# Item :  Documentation/MakeSiteDocs
+# Output :     Documentation/MakeSiteDocs/$(TARGETEXE)/MakeSiteDocs.exe
+
+all : Documentation/MakeSiteDocs/$(TARGETBIN)/MakeSiteDocs.exe
+
+Documentation/MakeSiteDocs/$(TARGETBIN)/MakeSiteDocs.exe : Documentation/MakeSiteDocs/../../../buildtools/Libraries/$(TARGETBIN)/Goedel.ASN.dll
+
+Documentation/MakeSiteDocs/$(TARGETBIN)/MakeSiteDocs.exe : Documentation/MakeSiteDocs/../../../buildtools/Libraries/$(TARGETBIN)/Goedel.Command.dll
+
+Documentation/MakeSiteDocs/$(TARGETBIN)/MakeSiteDocs.exe : Documentation/MakeSiteDocs/../../../buildtools/Libraries/$(TARGETBIN)/Goedel.Cryptography.Container.dll
+
+Documentation/MakeSiteDocs/$(TARGETBIN)/MakeSiteDocs.exe : Documentation/MakeSiteDocs/../../../buildtools/Libraries/$(TARGETBIN)/Goedel.Cryptography.Framework.dll
+
+Documentation/MakeSiteDocs/$(TARGETBIN)/MakeSiteDocs.exe : Documentation/MakeSiteDocs/../../../buildtools/Libraries/$(TARGETBIN)/Goedel.Cryptography.Jose.dll
+
+Documentation/MakeSiteDocs/$(TARGETBIN)/MakeSiteDocs.exe : Documentation/MakeSiteDocs/../../../buildtools/Libraries/$(TARGETBIN)/Goedel.Cryptography.KeyFile.dll
+
+Documentation/MakeSiteDocs/$(TARGETBIN)/MakeSiteDocs.exe : Documentation/MakeSiteDocs/../../../buildtools/Libraries/$(TARGETBIN)/Goedel.Cryptography.Windows.dll
+
+Documentation/MakeSiteDocs/$(TARGETBIN)/MakeSiteDocs.exe : Documentation/MakeSiteDocs/../../../buildtools/Libraries/$(TARGETBIN)/Goedel.Cryptography.dll
+
+Documentation/MakeSiteDocs/$(TARGETBIN)/MakeSiteDocs.exe : Documentation/MakeSiteDocs/../../../buildtools/Libraries/$(TARGETBIN)/Goedel.Discovery.dll
+
+Documentation/MakeSiteDocs/$(TARGETBIN)/MakeSiteDocs.exe : Documentation/MakeSiteDocs/../../../buildtools/Libraries/$(TARGETBIN)/Goedel.FSR.dll
+
+Documentation/MakeSiteDocs/$(TARGETBIN)/MakeSiteDocs.exe : Documentation/MakeSiteDocs/../../../buildtools/Libraries/$(TARGETBIN)/Goedel.IO.dll
+
+Documentation/MakeSiteDocs/$(TARGETBIN)/MakeSiteDocs.exe : Documentation/MakeSiteDocs/../../../buildtools/Libraries/$(TARGETBIN)/Goedel.Protocol.Debug.dll
+
+Documentation/MakeSiteDocs/$(TARGETBIN)/MakeSiteDocs.exe : Documentation/MakeSiteDocs/../../../buildtools/Libraries/$(TARGETBIN)/Goedel.Protocol.Exchange.Server.dll
+
+Documentation/MakeSiteDocs/$(TARGETBIN)/MakeSiteDocs.exe : Documentation/MakeSiteDocs/../../../buildtools/Libraries/$(TARGETBIN)/Goedel.Protocol.Exchange.dll
+
+Documentation/MakeSiteDocs/$(TARGETBIN)/MakeSiteDocs.exe : Documentation/MakeSiteDocs/../../../buildtools/Libraries/$(TARGETBIN)/Goedel.Protocol.dll
+
+Documentation/MakeSiteDocs/$(TARGETBIN)/MakeSiteDocs.exe : Documentation/MakeSiteDocs/../../../buildtools/Libraries/$(TARGETBIN)/Goedel.Registry.dll
+
+Documentation/MakeSiteDocs/$(TARGETBIN)/MakeSiteDocs.exe : Documentation/MakeSiteDocs/../../../buildtools/Libraries/$(TARGETBIN)/Goedel.Utilities.dll
+
+Documentation/MakeSiteDocs/$(TARGETBIN)/MakeSiteDocs.exe : Documentation/MakeSiteDocs/../../Account/$(TARGETBIN)/Goedel.Account.Client.dll
+
+Documentation/MakeSiteDocs/$(TARGETBIN)/MakeSiteDocs.exe : Documentation/MakeSiteDocs/../../Account/$(TARGETBIN)/Goedel.Account.Server.dll
+
+Documentation/MakeSiteDocs/$(TARGETBIN)/MakeSiteDocs.exe : Documentation/MakeSiteDocs/../../Account/$(TARGETBIN)/Goedel.Account.dll
+
+Documentation/MakeSiteDocs/$(TARGETBIN)/MakeSiteDocs.exe : Documentation/MakeSiteDocs/../../Confirm/$(TARGETBIN)/Goedel.Confirm.Client.dll
+
+Documentation/MakeSiteDocs/$(TARGETBIN)/MakeSiteDocs.exe : Documentation/MakeSiteDocs/../../Confirm/$(TARGETBIN)/Goedel.Confirm.Server.dll
+
+Documentation/MakeSiteDocs/$(TARGETBIN)/MakeSiteDocs.exe : Documentation/MakeSiteDocs/../../Confirm/$(TARGETBIN)/Goedel.Confirm.dll
+
+Documentation/MakeSiteDocs/$(TARGETBIN)/MakeSiteDocs.exe : Documentation/MakeSiteDocs/../../Mesh/$(TARGETBIN)/Goedel.Mesh.Client.dll
+
+Documentation/MakeSiteDocs/$(TARGETBIN)/MakeSiteDocs.exe : Documentation/MakeSiteDocs/../../Mesh/$(TARGETBIN)/Goedel.Mesh.Platform.Windows.dll
+
+Documentation/MakeSiteDocs/$(TARGETBIN)/MakeSiteDocs.exe : Documentation/MakeSiteDocs/../../Mesh/$(TARGETBIN)/Goedel.Mesh.Platform.dll
+
+Documentation/MakeSiteDocs/$(TARGETBIN)/MakeSiteDocs.exe : Documentation/MakeSiteDocs/../../Mesh/$(TARGETBIN)/Goedel.Mesh.Server.dll
+
+Documentation/MakeSiteDocs/$(TARGETBIN)/MakeSiteDocs.exe : Documentation/MakeSiteDocs/../../Mesh/$(TARGETBIN)/Goedel.Mesh.dll
+
+Documentation/MakeSiteDocs/$(TARGETBIN)/MakeSiteDocs.exe : Documentation/MakeSiteDocs/../../Recrypt/$(TARGETBIN)/Goedel.Recrypt.Client.dll
+
+Documentation/MakeSiteDocs/$(TARGETBIN)/MakeSiteDocs.exe : Documentation/MakeSiteDocs/../../Recrypt/$(TARGETBIN)/Goedel.Recrypt.Server.dll
+
+Documentation/MakeSiteDocs/$(TARGETBIN)/MakeSiteDocs.exe : Documentation/MakeSiteDocs/../../Recrypt/$(TARGETBIN)/Goedel.Recrypt.dll
+
+Documentation/MakeSiteDocs/$(TARGETBIN)/MakeSiteDocs.exe : Documentation/MakeSiteDocs/../../Shells/$(TARGETBIN)/Goedel.Combined.Shell.Client.dll
+
+Documentation/MakeSiteDocs/$(TARGETBIN)/MakeSiteDocs.exe : Documentation/MakeSiteDocs/../../Shells/$(TARGETBIN)/Goedel.Mesh.Shell.MeshMan.dll
+
+
+Documentation/MakeSiteDocs/$(TARGETBIN)/MakeSiteDocs.exe : always
+! echo "" >&2
+! echo "*** Directory Documentation/MakeSiteDocs" >&2
+! make NORECURSE=true -C Documentation/MakeSiteDocs
+
 
 
 # clean all projects
@@ -1547,6 +1629,7 @@ clean :
 ! make clean NORECURSE=true -C ../buildtools/Libraries/Goedel.Test
 ! make clean NORECURSE=true -C ../buildtools/Libraries/Goedel.Protocol.Exchange.Server
 ! make clean NORECURSE=true -C ../buildtools/Libraries/Goedel.Persistence
+! make clean NORECURSE=true -C Documentation/MakeSiteDocs
 
 # publish all projects
 publish : all
@@ -1608,6 +1691,7 @@ publish : all
 ! make publish NORECURSE=true -C ../buildtools/Libraries/Goedel.Test
 ! make publish NORECURSE=true -C ../buildtools/Libraries/Goedel.Protocol.Exchange.Server
 ! make publish NORECURSE=true -C ../buildtools/Libraries/Goedel.Persistence
+! make publish NORECURSE=true -C Documentation/MakeSiteDocs
 
 # install all projects
 install : all
@@ -1669,4 +1753,5 @@ install : all
 ! make install NORECURSE=true -C ../buildtools/Libraries/Goedel.Test
 ! make install NORECURSE=true -C ../buildtools/Libraries/Goedel.Protocol.Exchange.Server
 ! make install NORECURSE=true -C ../buildtools/Libraries/Goedel.Persistence
+! make install NORECURSE=true -C Documentation/MakeSiteDocs
 

@@ -7,7 +7,13 @@ using Goedel.Utilities;
 
 namespace Goedel.Combined.Shell.Client {
     public partial class CommandLineInterpreter : CommandLineInterpreterBase {
-
+        
+		/// <summary>The command entries</summary>
+        public static SortedDictionary<string, DescribeCommand> Entries;
+        /// <summary>The default command.</summary>
+        public static DescribeCommandEntry DefaultCommand;
+        /// <summary>Description of the comman</summary>
+        public static string Description = "<Not specified>";
 
 		static char UnixFlag = '-';
 		static char WindowsFlag = '/';
@@ -20,12 +26,12 @@ namespace Goedel.Combined.Shell.Client {
         /// <param name="args"></param>
         /// <param name="index"></param>
         public static void Help (DispatchShell Dispatch, string[] args, int index) {
-            Brief();
+            Brief(Description, DefaultCommand, Entries);
             }
 
         public static DescribeCommandEntry DescribeHelp = new DescribeCommandEntry() {
             Identifier = "help",
-            HandleDelegate = Brief,
+            HandleDelegate = Help,
             Entries = new List<DescribeEntry>() { }
             };
 
@@ -110,7 +116,7 @@ namespace Goedel.Combined.Shell.Client {
 
 
         public void MainMethod(CombinedShell Dispatch, string[] Args) {
-			Dispatcher (Entries, Dispatch, Args, 0);
+			Dispatcher (Entries, DefaultCommand, Dispatch, Args, 0);
             } // Main
 
 
@@ -832,29 +838,50 @@ namespace Goedel.Combined.Shell.Client {
     public partial class AccountGet : _AccountGet {
         } // class AccountGet
 
-    public class _ConfirmPost : Goedel.Command.Dispatch  {
+    public class _ConfirmPost : Goedel.Command.Dispatch ,
+							IReporting {
 
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new Flag (),
+			new Flag (),
 			new String (),
 			new String ()			} ;
 
-		/// <summary>Field accessor for parameter []</summary>
-		public virtual String AccountID {
-			get => _Data[0] as String;
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
+			get => _Data[0] as Flag;
 			set => _Data[0]  = value;
 			}
 
-		public virtual string _AccountID {
+		public virtual string _Verbose {
 			set => _Data[0].Parameter (value);
 			}
-		/// <summary>Field accessor for parameter []</summary>
-		public virtual String Text {
-			get => _Data[1] as String;
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
+			get => _Data[1] as Flag;
 			set => _Data[1]  = value;
 			}
 
-		public virtual string _Text {
+		public virtual string _Report {
 			set => _Data[1].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual String AccountID {
+			get => _Data[2] as String;
+			set => _Data[2]  = value;
+			}
+
+		public virtual string _AccountID {
+			set => _Data[2].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual String Text {
+			get => _Data[3] as String;
+			set => _Data[3]  = value;
+			}
+
+		public virtual string _Text {
+			set => _Data[3].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -864,18 +891,32 @@ namespace Goedel.Combined.Shell.Client {
 			HandleDelegate =  CommandLineInterpreter.Handle_ConfirmPost,
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
+				new DescribeEntryOption () {
+					Identifier = "Verbose", 
+					Default = "false", // null if null
+					Brief = "Verbose reports (default)",
+					Index = 0,
+					Key = "verbose"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Report", 
+					Default = "true", // null if null
+					Brief = "Report results (default)",
+					Index = 1,
+					Key = "report"
+					},
 				new DescribeEntryParameter () {
 					Identifier = "AccountID", 
 					Default = null, // null if null
 					Brief = "The responder account identifier in name@example.com format",
-					Index = 0,
+					Index = 2,
 					Key = ""
 					},
 				new DescribeEntryParameter () {
 					Identifier = "Text", 
 					Default = null, // null if null
 					Brief = "The text of the confirmation request",
-					Index = 1,
+					Index = 3,
 					Key = ""
 					}
 				}
@@ -886,29 +927,50 @@ namespace Goedel.Combined.Shell.Client {
     public partial class ConfirmPost : _ConfirmPost {
         } // class ConfirmPost
 
-    public class _ConfirmStatus : Goedel.Command.Dispatch  {
+    public class _ConfirmStatus : Goedel.Command.Dispatch ,
+							IReporting {
 
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new Flag (),
+			new Flag (),
 			new String (),
 			new Flag ()			} ;
 
-		/// <summary>Field accessor for parameter []</summary>
-		public virtual String ID {
-			get => _Data[0] as String;
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
+			get => _Data[0] as Flag;
 			set => _Data[0]  = value;
 			}
 
-		public virtual string _ID {
+		public virtual string _Verbose {
 			set => _Data[0].Parameter (value);
 			}
-		/// <summary>Field accessor for option [cancel]</summary>
-		public virtual Flag Cancel {
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
 			get => _Data[1] as Flag;
 			set => _Data[1]  = value;
 			}
 
-		public virtual string _Cancel {
+		public virtual string _Report {
 			set => _Data[1].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual String ID {
+			get => _Data[2] as String;
+			set => _Data[2]  = value;
+			}
+
+		public virtual string _ID {
+			set => _Data[2].Parameter (value);
+			}
+		/// <summary>Field accessor for option [cancel]</summary>
+		public virtual Flag Cancel {
+			get => _Data[3] as Flag;
+			set => _Data[3]  = value;
+			}
+
+		public virtual string _Cancel {
+			set => _Data[3].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -918,18 +980,32 @@ namespace Goedel.Combined.Shell.Client {
 			HandleDelegate =  CommandLineInterpreter.Handle_ConfirmStatus,
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
+				new DescribeEntryOption () {
+					Identifier = "Verbose", 
+					Default = "false", // null if null
+					Brief = "Verbose reports (default)",
+					Index = 0,
+					Key = "verbose"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Report", 
+					Default = "true", // null if null
+					Brief = "Report results (default)",
+					Index = 1,
+					Key = "report"
+					},
 				new DescribeEntryParameter () {
 					Identifier = "ID", 
 					Default = null, // null if null
 					Brief = "The broker ID of the confirmation request",
-					Index = 0,
+					Index = 2,
 					Key = ""
 					},
 				new DescribeEntryOption () {
 					Identifier = "Cancel", 
 					Default = null, // null if null
 					Brief = "Cancel the request if no response has been received.",
-					Index = 1,
+					Index = 3,
 					Key = "cancel"
 					}
 				}
@@ -940,19 +1016,40 @@ namespace Goedel.Combined.Shell.Client {
     public partial class ConfirmStatus : _ConfirmStatus {
         } // class ConfirmStatus
 
-    public class _ConfirmPending : Goedel.Command.Dispatch  {
+    public class _ConfirmPending : Goedel.Command.Dispatch ,
+							IReporting {
 
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new Flag (),
+			new Flag (),
 			new String ()			} ;
 
-		/// <summary>Field accessor for option [id]</summary>
-		public virtual String AccountID {
-			get => _Data[0] as String;
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
+			get => _Data[0] as Flag;
 			set => _Data[0]  = value;
 			}
 
-		public virtual string _AccountID {
+		public virtual string _Verbose {
 			set => _Data[0].Parameter (value);
+			}
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
+			get => _Data[1] as Flag;
+			set => _Data[1]  = value;
+			}
+
+		public virtual string _Report {
+			set => _Data[1].Parameter (value);
+			}
+		/// <summary>Field accessor for option [id]</summary>
+		public virtual String AccountID {
+			get => _Data[2] as String;
+			set => _Data[2]  = value;
+			}
+
+		public virtual string _AccountID {
+			set => _Data[2].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -963,10 +1060,24 @@ namespace Goedel.Combined.Shell.Client {
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
 				new DescribeEntryOption () {
+					Identifier = "Verbose", 
+					Default = "false", // null if null
+					Brief = "Verbose reports (default)",
+					Index = 0,
+					Key = "verbose"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Report", 
+					Default = "true", // null if null
+					Brief = "Report results (default)",
+					Index = 1,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
 					Identifier = "AccountID", 
 					Default = null, // null if null
 					Brief = "The responder account identifier in name@example.com format",
-					Index = 0,
+					Index = 2,
 					Key = "id"
 					}
 				}
@@ -977,29 +1088,50 @@ namespace Goedel.Combined.Shell.Client {
     public partial class ConfirmPending : _ConfirmPending {
         } // class ConfirmPending
 
-    public class _ConfirmAccept : Goedel.Command.Dispatch  {
+    public class _ConfirmAccept : Goedel.Command.Dispatch ,
+							IReporting {
 
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new Flag (),
+			new Flag (),
 			new String (),
 			new String ()			} ;
 
-		/// <summary>Field accessor for parameter []</summary>
-		public virtual String ID {
-			get => _Data[0] as String;
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
+			get => _Data[0] as Flag;
 			set => _Data[0]  = value;
 			}
 
-		public virtual string _ID {
+		public virtual string _Verbose {
 			set => _Data[0].Parameter (value);
 			}
-		/// <summary>Field accessor for option [id]</summary>
-		public virtual String AccountID {
-			get => _Data[1] as String;
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
+			get => _Data[1] as Flag;
 			set => _Data[1]  = value;
 			}
 
-		public virtual string _AccountID {
+		public virtual string _Report {
 			set => _Data[1].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual String ID {
+			get => _Data[2] as String;
+			set => _Data[2]  = value;
+			}
+
+		public virtual string _ID {
+			set => _Data[2].Parameter (value);
+			}
+		/// <summary>Field accessor for option [id]</summary>
+		public virtual String AccountID {
+			get => _Data[3] as String;
+			set => _Data[3]  = value;
+			}
+
+		public virtual string _AccountID {
+			set => _Data[3].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -1009,18 +1141,32 @@ namespace Goedel.Combined.Shell.Client {
 			HandleDelegate =  CommandLineInterpreter.Handle_ConfirmAccept,
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
+				new DescribeEntryOption () {
+					Identifier = "Verbose", 
+					Default = "false", // null if null
+					Brief = "Verbose reports (default)",
+					Index = 0,
+					Key = "verbose"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Report", 
+					Default = "true", // null if null
+					Brief = "Report results (default)",
+					Index = 1,
+					Key = "report"
+					},
 				new DescribeEntryParameter () {
 					Identifier = "ID", 
 					Default = null, // null if null
 					Brief = "The broker ID of the confirmation request",
-					Index = 0,
+					Index = 2,
 					Key = ""
 					},
 				new DescribeEntryOption () {
 					Identifier = "AccountID", 
 					Default = null, // null if null
 					Brief = "The responder account identifier in name@example.com format",
-					Index = 1,
+					Index = 3,
 					Key = "id"
 					}
 				}
@@ -1031,29 +1177,50 @@ namespace Goedel.Combined.Shell.Client {
     public partial class ConfirmAccept : _ConfirmAccept {
         } // class ConfirmAccept
 
-    public class _ConfirmReject : Goedel.Command.Dispatch  {
+    public class _ConfirmReject : Goedel.Command.Dispatch ,
+							IReporting {
 
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new Flag (),
+			new Flag (),
 			new String (),
 			new String ()			} ;
 
-		/// <summary>Field accessor for parameter []</summary>
-		public virtual String ID {
-			get => _Data[0] as String;
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
+			get => _Data[0] as Flag;
 			set => _Data[0]  = value;
 			}
 
-		public virtual string _ID {
+		public virtual string _Verbose {
 			set => _Data[0].Parameter (value);
 			}
-		/// <summary>Field accessor for option [id]</summary>
-		public virtual String AccountID {
-			get => _Data[1] as String;
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
+			get => _Data[1] as Flag;
 			set => _Data[1]  = value;
 			}
 
-		public virtual string _AccountID {
+		public virtual string _Report {
 			set => _Data[1].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual String ID {
+			get => _Data[2] as String;
+			set => _Data[2]  = value;
+			}
+
+		public virtual string _ID {
+			set => _Data[2].Parameter (value);
+			}
+		/// <summary>Field accessor for option [id]</summary>
+		public virtual String AccountID {
+			get => _Data[3] as String;
+			set => _Data[3]  = value;
+			}
+
+		public virtual string _AccountID {
+			set => _Data[3].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -1063,18 +1230,32 @@ namespace Goedel.Combined.Shell.Client {
 			HandleDelegate =  CommandLineInterpreter.Handle_ConfirmReject,
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
+				new DescribeEntryOption () {
+					Identifier = "Verbose", 
+					Default = "false", // null if null
+					Brief = "Verbose reports (default)",
+					Index = 0,
+					Key = "verbose"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Report", 
+					Default = "true", // null if null
+					Brief = "Report results (default)",
+					Index = 1,
+					Key = "report"
+					},
 				new DescribeEntryParameter () {
 					Identifier = "ID", 
 					Default = null, // null if null
 					Brief = "The broker ID of the confirmation request",
-					Index = 0,
+					Index = 2,
 					Key = ""
 					},
 				new DescribeEntryOption () {
 					Identifier = "AccountID", 
 					Default = null, // null if null
 					Brief = "The responder account identifier in name@example.com format",
-					Index = 1,
+					Index = 3,
 					Key = "id"
 					}
 				}
@@ -1086,10 +1267,13 @@ namespace Goedel.Combined.Shell.Client {
         } // class ConfirmReject
 
     public class _CreateGroup : Goedel.Command.Dispatch ,
-							IMeshProfile {
+							IMeshProfile,
+							IReporting {
 
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
 			new String (),
+			new Flag (),
+			new Flag (),
 			new String (),
 			new String ()			} ;
 
@@ -1102,23 +1286,41 @@ namespace Goedel.Combined.Shell.Client {
 		public virtual string _MeshID {
 			set => _Data[0].Parameter (value);
 			}
-		/// <summary>Field accessor for parameter []</summary>
-		public virtual String GroupID {
-			get => _Data[1] as String;
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
+			get => _Data[1] as Flag;
 			set => _Data[1]  = value;
 			}
 
-		public virtual string _GroupID {
+		public virtual string _Verbose {
 			set => _Data[1].Parameter (value);
 			}
-		/// <summary>Field accessor for parameter []</summary>
-		public virtual String AccountID {
-			get => _Data[2] as String;
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
+			get => _Data[2] as Flag;
 			set => _Data[2]  = value;
 			}
 
-		public virtual string _AccountID {
+		public virtual string _Report {
 			set => _Data[2].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual String GroupID {
+			get => _Data[3] as String;
+			set => _Data[3]  = value;
+			}
+
+		public virtual string _GroupID {
+			set => _Data[3].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual String AccountID {
+			get => _Data[4] as String;
+			set => _Data[4]  = value;
+			}
+
+		public virtual string _AccountID {
+			set => _Data[4].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -1135,18 +1337,32 @@ namespace Goedel.Combined.Shell.Client {
 					Index = 0,
 					Key = "mesh"
 					},
+				new DescribeEntryOption () {
+					Identifier = "Verbose", 
+					Default = "false", // null if null
+					Brief = "Verbose reports (default)",
+					Index = 1,
+					Key = "verbose"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Report", 
+					Default = "true", // null if null
+					Brief = "Report results (default)",
+					Index = 2,
+					Key = "report"
+					},
 				new DescribeEntryParameter () {
 					Identifier = "GroupID", 
 					Default = null, // null if null
 					Brief = "The group identifier in name@example.com format",
-					Index = 1,
+					Index = 3,
 					Key = ""
 					},
 				new DescribeEntryParameter () {
 					Identifier = "AccountID", 
 					Default = null, // null if null
 					Brief = "The initial account administrator",
-					Index = 2,
+					Index = 4,
 					Key = ""
 					}
 				}
@@ -1158,10 +1374,13 @@ namespace Goedel.Combined.Shell.Client {
         } // class CreateGroup
 
     public class _RecryptAdd : Goedel.Command.Dispatch ,
-							IMeshProfile {
+							IMeshProfile,
+							IReporting {
 
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
 			new String (),
+			new Flag (),
+			new Flag (),
 			new String (),
 			new String ()			} ;
 
@@ -1174,23 +1393,41 @@ namespace Goedel.Combined.Shell.Client {
 		public virtual string _MeshID {
 			set => _Data[0].Parameter (value);
 			}
-		/// <summary>Field accessor for parameter []</summary>
-		public virtual String GroupID {
-			get => _Data[1] as String;
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
+			get => _Data[1] as Flag;
 			set => _Data[1]  = value;
 			}
 
-		public virtual string _GroupID {
+		public virtual string _Verbose {
 			set => _Data[1].Parameter (value);
 			}
-		/// <summary>Field accessor for parameter []</summary>
-		public virtual String AccountID {
-			get => _Data[2] as String;
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
+			get => _Data[2] as Flag;
 			set => _Data[2]  = value;
 			}
 
-		public virtual string _AccountID {
+		public virtual string _Report {
 			set => _Data[2].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual String GroupID {
+			get => _Data[3] as String;
+			set => _Data[3]  = value;
+			}
+
+		public virtual string _GroupID {
+			set => _Data[3].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual String AccountID {
+			get => _Data[4] as String;
+			set => _Data[4]  = value;
+			}
+
+		public virtual string _AccountID {
+			set => _Data[4].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -1207,18 +1444,32 @@ namespace Goedel.Combined.Shell.Client {
 					Index = 0,
 					Key = "mesh"
 					},
+				new DescribeEntryOption () {
+					Identifier = "Verbose", 
+					Default = "false", // null if null
+					Brief = "Verbose reports (default)",
+					Index = 1,
+					Key = "verbose"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Report", 
+					Default = "true", // null if null
+					Brief = "Report results (default)",
+					Index = 2,
+					Key = "report"
+					},
 				new DescribeEntryParameter () {
 					Identifier = "GroupID", 
 					Default = null, // null if null
 					Brief = "The recryption group identifier in name@example.com format",
-					Index = 1,
+					Index = 3,
 					Key = ""
 					},
 				new DescribeEntryParameter () {
 					Identifier = "AccountID", 
 					Default = null, // null if null
 					Brief = "The user account identifier in name@example.com format",
-					Index = 2,
+					Index = 4,
 					Key = ""
 					}
 				}
@@ -1230,10 +1481,13 @@ namespace Goedel.Combined.Shell.Client {
         } // class RecryptAdd
 
     public class _RecryptDelete : Goedel.Command.Dispatch ,
-							IMeshProfile {
+							IMeshProfile,
+							IReporting {
 
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
 			new String (),
+			new Flag (),
+			new Flag (),
 			new String (),
 			new String ()			} ;
 
@@ -1246,23 +1500,41 @@ namespace Goedel.Combined.Shell.Client {
 		public virtual string _MeshID {
 			set => _Data[0].Parameter (value);
 			}
-		/// <summary>Field accessor for parameter []</summary>
-		public virtual String GroupID {
-			get => _Data[1] as String;
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
+			get => _Data[1] as Flag;
 			set => _Data[1]  = value;
 			}
 
-		public virtual string _GroupID {
+		public virtual string _Verbose {
 			set => _Data[1].Parameter (value);
 			}
-		/// <summary>Field accessor for parameter []</summary>
-		public virtual String AccountID {
-			get => _Data[2] as String;
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
+			get => _Data[2] as Flag;
 			set => _Data[2]  = value;
 			}
 
-		public virtual string _AccountID {
+		public virtual string _Report {
 			set => _Data[2].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual String GroupID {
+			get => _Data[3] as String;
+			set => _Data[3]  = value;
+			}
+
+		public virtual string _GroupID {
+			set => _Data[3].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual String AccountID {
+			get => _Data[4] as String;
+			set => _Data[4]  = value;
+			}
+
+		public virtual string _AccountID {
+			set => _Data[4].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -1279,18 +1551,32 @@ namespace Goedel.Combined.Shell.Client {
 					Index = 0,
 					Key = "mesh"
 					},
+				new DescribeEntryOption () {
+					Identifier = "Verbose", 
+					Default = "false", // null if null
+					Brief = "Verbose reports (default)",
+					Index = 1,
+					Key = "verbose"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Report", 
+					Default = "true", // null if null
+					Brief = "Report results (default)",
+					Index = 2,
+					Key = "report"
+					},
 				new DescribeEntryParameter () {
 					Identifier = "GroupID", 
 					Default = null, // null if null
 					Brief = "The recryption group identifier in name@example.com format",
-					Index = 1,
+					Index = 3,
 					Key = ""
 					},
 				new DescribeEntryParameter () {
 					Identifier = "AccountID", 
 					Default = null, // null if null
 					Brief = "The user account identifier in name@example.com format",
-					Index = 2,
+					Index = 4,
 					Key = ""
 					}
 				}
@@ -1302,9 +1588,12 @@ namespace Goedel.Combined.Shell.Client {
         } // class RecryptDelete
 
     public class _Encrypt : Goedel.Command.Dispatch ,
+							IReporting,
 							IInputSpecifier {
 
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new Flag (),
+			new Flag (),
 			new String (),
 			new ExistingFile (),
 			new NewFile (),
@@ -1312,59 +1601,77 @@ namespace Goedel.Combined.Shell.Client {
 			new Flag (),
 			new String ()			} ;
 
-		/// <summary>Field accessor for parameter []</summary>
-		public virtual String GroupID {
-			get => _Data[0] as String;
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
+			get => _Data[0] as Flag;
 			set => _Data[0]  = value;
 			}
 
-		public virtual string _GroupID {
+		public virtual string _Verbose {
 			set => _Data[0].Parameter (value);
 			}
-		/// <summary>Field accessor for option [in]</summary>
-		public virtual ExistingFile In {
-			get => _Data[1] as ExistingFile;
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
+			get => _Data[1] as Flag;
 			set => _Data[1]  = value;
 			}
 
-		public virtual string _In {
+		public virtual string _Report {
 			set => _Data[1].Parameter (value);
 			}
-		/// <summary>Field accessor for option [out]</summary>
-		public virtual NewFile Out {
-			get => _Data[2] as NewFile;
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual String GroupID {
+			get => _Data[2] as String;
 			set => _Data[2]  = value;
 			}
 
-		public virtual string _Out {
+		public virtual string _GroupID {
 			set => _Data[2].Parameter (value);
 			}
-		/// <summary>Field accessor for option [Recurse]</summary>
-		public virtual Flag Recurse {
-			get => _Data[3] as Flag;
+		/// <summary>Field accessor for option [in]</summary>
+		public virtual ExistingFile In {
+			get => _Data[3] as ExistingFile;
 			set => _Data[3]  = value;
 			}
 
-		public virtual string _Recurse {
+		public virtual string _In {
 			set => _Data[3].Parameter (value);
 			}
-		/// <summary>Field accessor for option [Upload]</summary>
-		public virtual Flag Upload {
-			get => _Data[4] as Flag;
+		/// <summary>Field accessor for option [out]</summary>
+		public virtual NewFile Out {
+			get => _Data[4] as NewFile;
 			set => _Data[4]  = value;
 			}
 
-		public virtual string _Upload {
+		public virtual string _Out {
 			set => _Data[4].Parameter (value);
 			}
-		/// <summary>Field accessor for option [path]</summary>
-		public virtual String Path {
-			get => _Data[5] as String;
+		/// <summary>Field accessor for option [Recurse]</summary>
+		public virtual Flag Recurse {
+			get => _Data[5] as Flag;
 			set => _Data[5]  = value;
 			}
 
-		public virtual string _Path {
+		public virtual string _Recurse {
 			set => _Data[5].Parameter (value);
+			}
+		/// <summary>Field accessor for option [Upload]</summary>
+		public virtual Flag Upload {
+			get => _Data[6] as Flag;
+			set => _Data[6]  = value;
+			}
+
+		public virtual string _Upload {
+			set => _Data[6].Parameter (value);
+			}
+		/// <summary>Field accessor for option [path]</summary>
+		public virtual String Path {
+			get => _Data[7] as String;
+			set => _Data[7]  = value;
+			}
+
+		public virtual string _Path {
+			set => _Data[7].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -1374,46 +1681,60 @@ namespace Goedel.Combined.Shell.Client {
 			HandleDelegate =  CommandLineInterpreter.Handle_Encrypt,
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
+				new DescribeEntryOption () {
+					Identifier = "Verbose", 
+					Default = "false", // null if null
+					Brief = "Verbose reports (default)",
+					Index = 0,
+					Key = "verbose"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Report", 
+					Default = "true", // null if null
+					Brief = "Report results (default)",
+					Index = 1,
+					Key = "report"
+					},
 				new DescribeEntryParameter () {
 					Identifier = "GroupID", 
 					Default = null, // null if null
 					Brief = "The recryption group identifier in name@example.com format",
-					Index = 0,
+					Index = 2,
 					Key = ""
 					},
 				new DescribeEntryOption () {
 					Identifier = "In", 
 					Default = null, // null if null
 					Brief = "The input file",
-					Index = 1,
+					Index = 3,
 					Key = "in"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Out", 
 					Default = null, // null if null
 					Brief = "The output file",
-					Index = 2,
+					Index = 4,
 					Key = "out"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Recurse", 
 					Default = null, // null if null
 					Brief = "Perform operation recursively on subdirectories",
-					Index = 3,
+					Index = 5,
 					Key = "recurse"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Upload", 
 					Default = null, // null if null
 					Brief = "Upload the encrypted file to the service",
-					Index = 4,
+					Index = 6,
 					Key = "upload"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Path", 
 					Default = null, // null if null
 					Brief = "Path to store the encrypted file to",
-					Index = 5,
+					Index = 7,
 					Key = "path"
 					}
 				}
@@ -1425,60 +1746,81 @@ namespace Goedel.Combined.Shell.Client {
         } // class Encrypt
 
     public class _Decrypt : Goedel.Command.Dispatch ,
+							IReporting,
 							IInputSpecifier,
 							IMeshProfile {
 
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new Flag (),
+			new Flag (),
 			new ExistingFile (),
 			new NewFile (),
 			new Flag (),
 			new String (),
 			new String ()			} ;
 
-		/// <summary>Field accessor for option [in]</summary>
-		public virtual ExistingFile In {
-			get => _Data[0] as ExistingFile;
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
+			get => _Data[0] as Flag;
 			set => _Data[0]  = value;
 			}
 
-		public virtual string _In {
+		public virtual string _Verbose {
 			set => _Data[0].Parameter (value);
 			}
-		/// <summary>Field accessor for option [out]</summary>
-		public virtual NewFile Out {
-			get => _Data[1] as NewFile;
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
+			get => _Data[1] as Flag;
 			set => _Data[1]  = value;
 			}
 
-		public virtual string _Out {
+		public virtual string _Report {
 			set => _Data[1].Parameter (value);
 			}
-		/// <summary>Field accessor for option [Recurse]</summary>
-		public virtual Flag Recurse {
-			get => _Data[2] as Flag;
+		/// <summary>Field accessor for option [in]</summary>
+		public virtual ExistingFile In {
+			get => _Data[2] as ExistingFile;
 			set => _Data[2]  = value;
 			}
 
-		public virtual string _Recurse {
+		public virtual string _In {
 			set => _Data[2].Parameter (value);
 			}
-		/// <summary>Field accessor for option [mesh]</summary>
-		public virtual String MeshID {
-			get => _Data[3] as String;
+		/// <summary>Field accessor for option [out]</summary>
+		public virtual NewFile Out {
+			get => _Data[3] as NewFile;
 			set => _Data[3]  = value;
 			}
 
-		public virtual string _MeshID {
+		public virtual string _Out {
 			set => _Data[3].Parameter (value);
 			}
-		/// <summary>Field accessor for option [path]</summary>
-		public virtual String Path {
-			get => _Data[4] as String;
+		/// <summary>Field accessor for option [Recurse]</summary>
+		public virtual Flag Recurse {
+			get => _Data[4] as Flag;
 			set => _Data[4]  = value;
 			}
 
-		public virtual string _Path {
+		public virtual string _Recurse {
 			set => _Data[4].Parameter (value);
+			}
+		/// <summary>Field accessor for option [mesh]</summary>
+		public virtual String MeshID {
+			get => _Data[5] as String;
+			set => _Data[5]  = value;
+			}
+
+		public virtual string _MeshID {
+			set => _Data[5].Parameter (value);
+			}
+		/// <summary>Field accessor for option [path]</summary>
+		public virtual String Path {
+			get => _Data[6] as String;
+			set => _Data[6]  = value;
+			}
+
+		public virtual string _Path {
+			set => _Data[6].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -1489,38 +1831,52 @@ namespace Goedel.Combined.Shell.Client {
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
 				new DescribeEntryOption () {
+					Identifier = "Verbose", 
+					Default = "false", // null if null
+					Brief = "Verbose reports (default)",
+					Index = 0,
+					Key = "verbose"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Report", 
+					Default = "true", // null if null
+					Brief = "Report results (default)",
+					Index = 1,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
 					Identifier = "In", 
 					Default = null, // null if null
 					Brief = "The input file",
-					Index = 0,
+					Index = 2,
 					Key = "in"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Out", 
 					Default = null, // null if null
 					Brief = "The output file",
-					Index = 1,
+					Index = 3,
 					Key = "out"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Recurse", 
 					Default = null, // null if null
 					Brief = "Perform operation recursively on subdirectories",
-					Index = 2,
+					Index = 4,
 					Key = "recurse"
 					},
 				new DescribeEntryOption () {
 					Identifier = "MeshID", 
 					Default = null, // null if null
 					Brief = "Mesh account identified by fingerprint or portal ID",
-					Index = 3,
+					Index = 5,
 					Key = "mesh"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Path", 
 					Default = null, // null if null
 					Brief = "Path to store the decrypted file to",
-					Index = 4,
+					Index = 6,
 					Key = "path"
 					}
 				}

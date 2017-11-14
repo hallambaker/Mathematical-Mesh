@@ -260,9 +260,10 @@ namespace ExampleGenerator {
 
             // Connect the second device
             Device2("connect start test@prismproof.org", out LabelConnectRequest);
-            Device1("connect pending", out LabelConnectPending);
+            var Authenticator = (Shell2.LastResult as ResultConnectStart).Authenticator;
 
-            Device1("connect accept " + Shell2.Authenticator, out LabelConnectAccept);
+            Device1("connect pending", out LabelConnectPending);
+            Device1("connect accept " + Authenticator, out LabelConnectAccept);
             Device2("connect Complete", out LabelConnectComplete);
             }
 

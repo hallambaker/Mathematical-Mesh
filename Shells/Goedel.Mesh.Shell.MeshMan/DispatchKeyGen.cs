@@ -31,7 +31,8 @@ namespace Goedel.Mesh.MeshMan {
                 case "":
                 case "random": {
                     var Result = UDF.Random();
-                    Console.WriteLine(Result);
+                    LastResult = new ResultKeyGenPassword() { UDF = Result };
+                    ReportWrite(LastResult.ToString());
                     break;
                     }
 

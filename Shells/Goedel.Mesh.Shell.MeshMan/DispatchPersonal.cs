@@ -29,8 +29,8 @@ namespace Goedel.Mesh.MeshMan {
 
             var Registration = MeshSession.CreateAccount(Address, PersonalProfile);
 
-            Report("Created new personal profile {0}", Registration.UDF);
-            Report("Profile registered to {0}", Address);
+            ReportWriteLine("Created new personal profile {0}", Registration.UDF);
+            ReportWriteLine("Profile registered to {0}", Address);
 
             }
 

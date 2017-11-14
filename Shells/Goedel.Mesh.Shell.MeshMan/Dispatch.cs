@@ -100,16 +100,17 @@ namespace Goedel.Mesh.MeshMan {
                 Assert.True((Address != null & Address != ""), NoPortalAccount.Throw);
 
                 var Response = MeshSession.Validate(Address);
+                LastResult = Response;
 
                 if (Response.Valid) {
-                    Report("Accepted: {0}", Address);
+                    ReportWriteLine("Accepted: {0}", Address);
                     }
                 else {
                     if (Response.StatusDescription == null) {
-                        Report("Refused {0}", Address);
+                        ReportWriteLine("Refused {0}", Address);
                         }
                     else {
-                        Report("Refused {0} because {1}", Address, Response.StatusDescription);
+                        ReportWriteLine("Refused {0} because {1}", Address, Response.StatusDescription);
                         }
                     }
                 }

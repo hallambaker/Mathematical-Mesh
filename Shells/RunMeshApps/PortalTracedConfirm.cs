@@ -42,7 +42,7 @@ namespace Goedel.Confirm.Server {
         /// <param name="ServiceName">DNS service name</param>
         /// <param name="MeshStore">File name for the Mesh Store.</param>
         /// <param name="PortalStore">File name for the Portal Store.</param>
-        public ConfirmPortalTraced (string ServiceName, string MeshStore, string PortalStore) {
+        public ConfirmPortalTraced (string ServiceName, string Store = "Confirm.jlog") {
             var URI = JPCProvider.WellKnownToURI(ServiceName, ConfirmService.WellKnown,
                         ConfirmService.Discovery, false, true);
 

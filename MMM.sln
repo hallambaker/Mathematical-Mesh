@@ -153,7 +153,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RunMeshApps", "Shells\RunMe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Mesh.Platform.Linux", "Mesh\Goedel.Mesh.Platform.Linux\Goedel.Mesh.Platform.Linux.csproj", "{EF3B3DDD-7B25-423C-8236-4819E55E09C7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CombinedClient", "Shells\CombinedClient\CombinedClient.csproj", "{1533CAAE-484A-4027-B2D3-EC874485A86B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Combined.Shell.Client", "Shells\CombinedClient\Goedel.Combined.Shell.Client.csproj", "{1533CAAE-484A-4027-B2D3-EC874485A86B}"
 EndProject
 Project("{7CF6DF6D-3B04-46F8-A40B-537D21BCA0B4}") = "MMMLibraries", "Documentation\MMMLibraries\MMMLibraries.shfbproj", "{D3012757-4A5D-4969-AA87-79F64E7F6BFF}"
 EndProject
@@ -200,6 +200,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Persistence", "..\buildtools\Libraries\Goedel.Persistence\Goedel.Persistence.csproj", "{81E30B95-C59D-4A04-925E-85877FD37FDD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MakeSiteDocs", "Documentation\MakeSiteDocs\MakeSiteDocs.csproj", "{4CB48933-8A02-420D-A85A-72B10B57AB15}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp1", "ConsoleApp1\ConsoleApp1.csproj", "{B19FC449-32BC-4147-983B-B327A92E229A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -1060,6 +1062,7 @@ Global
 		{65815600-4757-42E6-94C2-CFB72884C419}.Release|x86.ActiveCfg = Release|Any CPU
 		{65815600-4757-42E6-94C2-CFB72884C419}.Release|x86.Build.0 = Release|Any CPU
 		{650D7E56-64FB-4DED-B32F-37AF54D5E50E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{650D7E56-64FB-4DED-B32F-37AF54D5E50E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{650D7E56-64FB-4DED-B32F-37AF54D5E50E}.Debug|x64.ActiveCfg = Debug|Any CPU
 		{650D7E56-64FB-4DED-B32F-37AF54D5E50E}.Debug|x64.Build.0 = Debug|Any CPU
 		{650D7E56-64FB-4DED-B32F-37AF54D5E50E}.Debug|x86.ActiveCfg = Debug|Any CPU
@@ -1676,6 +1679,30 @@ Global
 		{4CB48933-8A02-420D-A85A-72B10B57AB15}.Release|x64.Build.0 = Release|Any CPU
 		{4CB48933-8A02-420D-A85A-72B10B57AB15}.Release|x86.ActiveCfg = Release|Any CPU
 		{4CB48933-8A02-420D-A85A-72B10B57AB15}.Release|x86.Build.0 = Release|Any CPU
+		{B19FC449-32BC-4147-983B-B327A92E229A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B19FC449-32BC-4147-983B-B327A92E229A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B19FC449-32BC-4147-983B-B327A92E229A}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{B19FC449-32BC-4147-983B-B327A92E229A}.Debug|x64.Build.0 = Debug|Any CPU
+		{B19FC449-32BC-4147-983B-B327A92E229A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B19FC449-32BC-4147-983B-B327A92E229A}.Debug|x86.Build.0 = Debug|Any CPU
+		{B19FC449-32BC-4147-983B-B327A92E229A}.Publish|Any CPU.ActiveCfg = Debug|Any CPU
+		{B19FC449-32BC-4147-983B-B327A92E229A}.Publish|Any CPU.Build.0 = Debug|Any CPU
+		{B19FC449-32BC-4147-983B-B327A92E229A}.Publish|x64.ActiveCfg = Debug|Any CPU
+		{B19FC449-32BC-4147-983B-B327A92E229A}.Publish|x64.Build.0 = Debug|Any CPU
+		{B19FC449-32BC-4147-983B-B327A92E229A}.Publish|x86.ActiveCfg = Debug|Any CPU
+		{B19FC449-32BC-4147-983B-B327A92E229A}.Publish|x86.Build.0 = Debug|Any CPU
+		{B19FC449-32BC-4147-983B-B327A92E229A}.RaspberryPi|Any CPU.ActiveCfg = Release|Any CPU
+		{B19FC449-32BC-4147-983B-B327A92E229A}.RaspberryPi|Any CPU.Build.0 = Release|Any CPU
+		{B19FC449-32BC-4147-983B-B327A92E229A}.RaspberryPi|x64.ActiveCfg = Release|Any CPU
+		{B19FC449-32BC-4147-983B-B327A92E229A}.RaspberryPi|x64.Build.0 = Release|Any CPU
+		{B19FC449-32BC-4147-983B-B327A92E229A}.RaspberryPi|x86.ActiveCfg = Release|Any CPU
+		{B19FC449-32BC-4147-983B-B327A92E229A}.RaspberryPi|x86.Build.0 = Release|Any CPU
+		{B19FC449-32BC-4147-983B-B327A92E229A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B19FC449-32BC-4147-983B-B327A92E229A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B19FC449-32BC-4147-983B-B327A92E229A}.Release|x64.ActiveCfg = Release|Any CPU
+		{B19FC449-32BC-4147-983B-B327A92E229A}.Release|x64.Build.0 = Release|Any CPU
+		{B19FC449-32BC-4147-983B-B327A92E229A}.Release|x86.ActiveCfg = Release|Any CPU
+		{B19FC449-32BC-4147-983B-B327A92E229A}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1747,6 +1774,7 @@ Global
 		{DA00C857-80EC-4542-8188-7C2A9982D97F} = {6701013C-C37E-4EFB-8075-899D2941EE6A}
 		{81E30B95-C59D-4A04-925E-85877FD37FDD} = {6701013C-C37E-4EFB-8075-899D2941EE6A}
 		{4CB48933-8A02-420D-A85A-72B10B57AB15} = {ED594FED-B95F-4EF7-8818-F7D8593BD371}
+		{B19FC449-32BC-4147-983B-B327A92E229A} = {363B3D86-F9EF-4AE3-978A-809EAE1796AF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2A403449-1804-4F92-8DE7-4005CC3E15AD}

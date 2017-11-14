@@ -7,7 +7,13 @@ using Goedel.Utilities;
 
 namespace Goedel.Mesh.MeshMan {
     public partial class CommandLineInterpreter : CommandLineInterpreterBase {
-
+        
+		/// <summary>The command entries</summary>
+        public static SortedDictionary<string, DescribeCommand> Entries;
+        /// <summary>The default command.</summary>
+        public static DescribeCommandEntry DefaultCommand;
+        /// <summary>Description of the comman</summary>
+        public static string Description = "<Not specified>";
 
 		static char UnixFlag = '-';
 		static char WindowsFlag = '/';
@@ -20,22 +26,22 @@ namespace Goedel.Mesh.MeshMan {
         /// <param name="args"></param>
         /// <param name="index"></param>
         public static void Help (DispatchShell Dispatch, string[] args, int index) {
-            Brief();
+            Brief(Description, DefaultCommand, Entries);
             }
 
         public static DescribeCommandEntry DescribeHelp = new DescribeCommandEntry() {
             Identifier = "help",
-            HandleDelegate = Brief,
+            HandleDelegate = Help,
             Entries = new List<DescribeEntry>() { }
             };
 
         /// <summary>
-        /// 
+        /// Describe the application invoked by the command.
         /// </summary>
-        /// <param name="Dispatch"></param>
-        /// <param name="args"></param>
-        /// <param name="index"></param>
-        public static new void About (DispatchShell Dispatch, string[] args, int index) {
+        /// <param name="Dispatch">The command description.</param>
+        /// <param name="args">The set of arguments.</param>
+        /// <param name="index">The first unparsed argument.</param>
+        public static void About (DispatchShell Dispatch, string[] args, int index) {
             FileTools.About();
             }
 
@@ -154,7 +160,7 @@ namespace Goedel.Mesh.MeshMan {
 
 
         public void MainMethod(Shell Dispatch, string[] Args) {
-			Dispatcher (Entries, Dispatch, Args, 0);
+			Dispatcher (Entries, DefaultCommand, Dispatch, Args, 0);
             } // Main
 
 

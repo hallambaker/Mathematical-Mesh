@@ -84,6 +84,7 @@
 		Brief "Perform a confirmation service operation"
 
 		Command ConfirmPost "post"
+			Include Reporting
 			Brief "Post a confirmation request"
 			Parameter AccountID "id" String
 				Brief "The responder account identifier in name@example.com format"
@@ -91,6 +92,7 @@
 				Brief "The text of the confirmation request"
 
 		Command ConfirmStatus "status"
+			Include Reporting
 			Brief "Obtain the satus of a previously posted request."
 			Parameter ID "id" String
 				Brief "The broker ID of the confirmation request"
@@ -98,11 +100,13 @@
 				Brief "Cancel the request if no response has been received."
 
 		Command ConfirmPending "pending"
+			Include Reporting
 			Brief "Get pending confirmation requests"
 			Option AccountID "id" String
 				Brief "The responder account identifier in name@example.com format"
 
 		Command ConfirmAccept "accept"
+			Include Reporting
 			Brief "Accept a pending confirmation request"
 			Parameter ID "id" String
 				Brief "The broker ID of the confirmation request"
@@ -110,6 +114,7 @@
 				Brief "The responder account identifier in name@example.com format"
 
 		Command ConfirmReject "reject"
+			Include Reporting
 			Brief "Reject a pending confirmation request"
 			Parameter ID "id" String
 				Brief "The broker ID of the confirmation request"
@@ -117,11 +122,12 @@
 				Brief "The responder account identifier in name@example.com format"
 
 	CommandSet Recrypt "recrypt"
+
 		Brief "Perform recryption operations."
 		Command CreateGroup "create"
 			Brief "Create a recryption group"
 			Include MeshProfile
-
+			Include Reporting
 			Parameter GroupID "group" String
 				Brief "The group identifier in name@example.com format"
 			Parameter AccountID "profile" String
@@ -130,6 +136,7 @@
 		Command RecryptAdd "add"
 			Brief "Add a member to a recryption group."
 			Include MeshProfile
+			Include Reporting
 			Parameter GroupID "id" String
 				Brief "The recryption group identifier in name@example.com format"
 			Parameter AccountID "id" String
@@ -138,12 +145,14 @@
 		Command RecryptDelete "delete"
 			Brief "Delete a member from a recryption group."
 			Include MeshProfile
+			Include Reporting
 			Parameter GroupID "id" String
 				Brief "The recryption group identifier in name@example.com format"
 			Parameter AccountID "id" String
 				Brief "The user account identifier in name@example.com format"
 
 		Command Encrypt "encrypt"
+			Include Reporting
 			Brief "Encrypt a file or files"
 			Parameter GroupID "id" String
 				Brief "The recryption group identifier in name@example.com format"
@@ -154,6 +163,7 @@
 				Brief "Path to store the encrypted file to"
 
 		Command Decrypt "decrypt"
+			Include Reporting
 			Brief "Decrypt a file or files"
 			Include InputSpecifier
 			Include MeshProfile

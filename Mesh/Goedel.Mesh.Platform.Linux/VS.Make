@@ -15,7 +15,7 @@
 
 LinkFiles = \
     Goedel.Cryptography.Jose.dll\
-    PHB Framework Library.dll\
+    Goedel.Cryptography.Linux.dll\
     Goedel.Cryptography.dll\
     Goedel.Discovery.dll\
     Goedel.Protocol.dll\

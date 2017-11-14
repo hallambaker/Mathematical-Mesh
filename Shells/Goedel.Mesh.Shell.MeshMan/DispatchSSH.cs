@@ -18,6 +18,12 @@ namespace Goedel.Mesh.MeshMan {
                 SSHProfile.AddDevice(Device.DeviceProfile, true);
                 }
             var RegistrationApplication = SessionPersonal.Add(SSHProfile);
+
+
+            LastResult = new ResultApplicationCreate() {
+                ApplicationProfile = SSHProfile
+                };
+            ReportWrite(LastResult.ToString());
             }
 
         /// Create a new web application profile.
@@ -32,7 +38,7 @@ namespace Goedel.Mesh.MeshMan {
             var Private = SSHProfile.Private;
 
             if (Private == null) {
-                Report("No hosts");
+                ReportWriteLine("No hosts");
 
                 }
 
@@ -40,9 +46,14 @@ namespace Goedel.Mesh.MeshMan {
 
             Assert.NotNull(Private, ProfileNotReadable.Throw);
             foreach (var Host in Private.HostEntries) {
-                Report("Host {0}", Host.Identifier);
+                ReportWriteLine("Host {0}", Host.Identifier);
                 }
 
+            var ResultObject = new ResultSSHKnown() {
+                SSHProfile = SSHProfile
+                };
+            LastResult = ResultObject;
+            ReportWrite(LastResult.ToString());
             }
 
 
@@ -65,6 +76,12 @@ namespace Goedel.Mesh.MeshMan {
                         }
                     }
                 }
+
+            var ResultObject = new ResultSSHAuth() {
+                SSHProfile = SSHProfile
+                };
+            LastResult = ResultObject;
+            ReportWrite(LastResult.ToString());
             }
 
         /// Write out the SSH public key for this device
@@ -78,6 +95,13 @@ namespace Goedel.Mesh.MeshMan {
             var SSHDevicePublic = SSHProfile.SSHDevicePublic;
             Assert.NotNull(SSHDevicePublic, ProfileNotFound.Throw);
             Debug.WriteLine(SSHDevicePublic.ToOpenSSH(PortalID));
+
+            var ResultObject = new ResultSSHPublic() {
+                SSHProfile = SSHProfile,
+                Filename = Options.File.Value
+                };
+            LastResult = ResultObject;
+            ReportWrite(LastResult.ToString());
             }
 
         
@@ -98,6 +122,13 @@ namespace Goedel.Mesh.MeshMan {
             var PEMPrivate = KeyPair.ToPEMPrivate();
             Debug.WriteLine(PEMPrivate);
 
+
+            var ResultObject = new ResultSSHPrivate() {
+                SSHProfile = SSHProfile,
+                Filename = Options.File.Value
+                };
+            LastResult = ResultObject;
+            ReportWrite(LastResult.ToString());
             }
 
         }

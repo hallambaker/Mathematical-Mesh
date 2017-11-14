@@ -21,7 +21,7 @@ namespace Test.Recrypt {
 
             string ServiceAddress = "recrypt.example.com";
 
-            Portal = new RecryptPortalDirect();
+            Portal = new RecryptPortalDirect(ServiceAddress);
             RecryptPortal.Default = Portal;
             RecryptClient = new RecryptClient(ServiceAddress);
             }

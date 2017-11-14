@@ -39,7 +39,7 @@ LinkFiles = \
     Goedel.Recrypt.Client.dll\
     Goedel.Recrypt.Server.dll\
     Goedel.Recrypt.dll\
-    CombinedClient.dll
+    Goedel.Combined.Shell.Client.dll
 
 prebuild : 
     echo "Do Prebuild"

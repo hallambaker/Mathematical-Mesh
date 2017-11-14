@@ -3,20 +3,29 @@ using System.Collections.Generic;
 using Goedel.Utilities;
 using Goedel.Command;
 using ExampleGenerator;
-
+using Goedel.Mesh;
+using Goedel.Recrypt;
+using Goedel.Confirm;
 
 namespace ExampleGenerator {
     public partial class MakeSiteDocs {
 
         public override void DefaultCommand (DefaultCommand Options) {
+            Goedel.IO.Debug.Initialize();
+            MeshWindows.Initialize(true);
+
+            MeshRecrypt.Initialize();
+            MeshConfirm.Initialize();
+
 
             var CreateExamples = new CreateExamples();
 
             Directory.CreateDirectory("Mesh");
             Directory.CreateDirectory("Apps");
             Directory.CreateDirectory("Platform");
-
+            ExampleGenerator.UserGuideCreate(CreateExamples);
             ExampleGenerator.UserGuide(CreateExamples);
+
 
             ExampleGenerator.UserGuideApps(CreateExamples);
 
@@ -27,6 +36,7 @@ namespace ExampleGenerator {
             ExampleGenerator.UserGuideMail(CreateExamples);
 
             ExampleGenerator.UserGuideMesh(CreateExamples);
+
 
             ExampleGenerator.UserGuideServer(CreateExamples);
             ExampleGenerator.UserGuideQuickStart(CreateExamples);
@@ -39,11 +49,14 @@ namespace ExampleGenerator {
             ExampleGenerator.UserGuideDocker(CreateExamples);
             ExampleGenerator.UserGuideWindows(CreateExamples);
             ExampleGenerator.UserGuideOSX(CreateExamples);
+
+
+            // This MUST be the last file created so that it can include the entries created 
+            // in the others.
+            ExampleGenerator.ToDo(CreateExamples);
             }
 
 
 
         }
-
-
     }

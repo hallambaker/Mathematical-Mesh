@@ -36,25 +36,41 @@ namespace Goedel.Mesh.MeshMan {
                 RegistrationPersonal.PersonalProfile, Shares, Quorum);
             // Push to the Portal
 
-            Report("Created offline escrow entry Shares={0}, quorum={1}", Shares, Quorum);
+            var ResultEscrow = new ResultEscrow() {
+                Shares = new List<string>(),
+                Quorum = Quorum
+                };
+            LastResult = ResultEscrow;
+
+            ReportWriteLine("Created offline escrow entry Shares={0}, quorum={1}", Shares, Quorum);
 
             var Filename = Options.File.Value;
             if (Filename != null) {
+                ResultEscrow.Filename = Filename;
                 Filename.WriteFileNew(OfflineEscrowEntry.GetJson());
-                Report("Written to file {0}", Filename);
+                ReportWriteLine("Written to file {0}", Filename);
                 }
             else {
+                ResultEscrow.Portal = true;
                 var Escrow = RegistrationPersonal.Escrow(OfflineEscrowEntry);
-                Report("Written to portal");
+                ReportWriteLine("Written to portal");
                 }
 
 
             foreach (var Share in OfflineEscrowEntry.KeyShares) {
-                Report("Share {0}", Share.Text);
+                ResultEscrow.Shares.Add(Share.Text);
                 }
+
+
+            ReportWrite(LastResult.ToString());
             }
 
         public override void Recover (Recover Options) {
+            var ResultRecover = new ResultRecover();
+            LastResult = ResultRecover;
+            ReportWrite(LastResult.ToString());
+
+            //throw new NYI();
             }
         }
     }

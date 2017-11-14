@@ -40,9 +40,9 @@ namespace Goedel.Recrypt.Server {
         /// Create a new portal using the specified stores.
         /// </summary>
         /// <param name="ServiceName">DNS service name</param>
-        /// <param name="MeshStore">File name for the Mesh Store.</param>
-        /// <param name="PortalStore">File name for the Portal Store.</param>
-        public RecryptPortalTraced (string ServiceName, string MeshStore, string PortalStore) {
+        /// <param name="Store">File name for the Mesh Store.</param>
+        public RecryptPortalTraced (string ServiceName, string Store = "Recrypt.jlog") 
+                    : base (ServiceName, Store){
             var URI = JPCProvider.WellKnownToURI(ServiceName, RecryptService.WellKnown,
                         RecryptService.Discovery, false, true);
 
