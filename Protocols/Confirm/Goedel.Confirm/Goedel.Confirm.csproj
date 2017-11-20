@@ -1,0 +1,47 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Libraries\Core\Goedel.Utilities\Goedel.Utilities.csproj" />
+    <ProjectReference Include="..\..\..\Libraries\Goedel.Mesh\Goedel.Mesh.csproj" />
+    <ProjectReference Include="..\..\..\Libraries\Goedel.Protocol\Goedel.Protocol.csproj" />
+    <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Portal.Client\Goedel.Mesh.Portal.Client.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="ExceptionsConfirm.cs">
+      <DependentUpon>ExceptionsConfirm.Exceptional</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="SchemaConfirm.cs">
+      <DependentUpon>SchemaConfirm.protocol</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="SchemaConfirmProfile.cs">
+      <DependentUpon>SchemaConfirmProfile.protocol</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="ExceptionsConfirm.Exceptional">
+      <LastGenOutput>ExceptionsConfirm.cs</LastGenOutput>
+      <Generator>Exceptional</Generator>
+    </None>
+    <None Update="SchemaConfirm.protocol">
+      <LastGenOutput>SchemaConfirm.cs</LastGenOutput>
+      <Generator>Protogen</Generator>
+    </None>
+    <None Update="SchemaConfirmProfile.protocol">
+      <LastGenOutput>SchemaConfirmProfile.cs</LastGenOutput>
+      <Generator>protogen</Generator>
+    </None>
+  </ItemGroup>
+
+</Project>

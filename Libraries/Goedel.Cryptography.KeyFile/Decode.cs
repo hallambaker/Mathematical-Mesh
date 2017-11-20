@@ -1,0 +1,121 @@
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
+using Goedel.Cryptography;
+using Goedel.Cryptography.Framework;
+using Goedel.Cryptography.PKIX;
+using Goedel.FSR;
+using Goedel.IO;
+
+namespace Goedel.Cryptography.KeyFile {
+
+    // Feature: Read Bitvise private key
+    // Feature: Read PuTTY format private keys.
+
+    /// <summary>
+    /// Encoders and decoders for various key file formats
+    /// </summary>
+    public static class KeyFileDecode {
+
+        /// <summary>
+        /// Decode SSH Authorized Key file format
+        /// </summary>
+        /// <param name="FileName">File to decode.</param>
+        /// <returns>List of authorized keys</returns>
+        public static List<AuthorizedKey> DecodeAuthHost(string FileName) {
+            using (var TextReader = FileName.OpenFileReadShared()) {
+                LexReader LexReader = new LexReader(TextReader);
+                return DecodeAuthHost(LexReader);
+                }
+            }
+
+        /// <summary>
+        /// Decode an authorized hosts format file.
+        /// </summary>
+        /// <param name="LexReader">Input</param>
+        /// <returns>List of authorized keys</returns>
+        public static List<AuthorizedKey> DecodeAuthHost(LexReader LexReader) {
+            List<AuthorizedKey> Result = new List<AuthorizedKey>();
+
+            try {
+                var Lexer = new AuthKeysFileLex(LexReader);
+
+                var Token = Lexer.GetToken();
+                while (Token == AuthKeysFileLex.Token.Data) {
+                    var TaggedData = Lexer.GetTaggedData();
+                    Result.Add(TaggedData);
+                    Token = Lexer.GetToken();
+                    }
+                }
+            catch (System.Exception Inner) {
+                throw new ParseError(LexReader, Inner);
+                }
+
+            return Result;
+            }
+
+
+
+        /// <summary>
+        /// Decode PEM format key file.
+        /// </summary>
+        /// <param name="FileName">Name of the file</param>
+        /// <returns>Public key information</returns>
+        public static KeyPair DecodePEM(string FileName) {
+            using (var TextReader = FileName.OpenFileReadShared()) {
+                LexReader LexReader = new LexReader(TextReader);
+                return DecodePEM(LexReader);
+                }
+            }
+
+        /// <summary>
+        /// Decode PEM format key file.
+        /// </summary>
+        /// <param name="Text">Text input.</param>
+        /// <returns>Public key information</returns>
+        public static KeyPair DecodePEMText(string Text) {
+            var Reader = new System.IO.StringReader(Text);
+            LexReader LexReader = new LexReader(Reader);
+            return DecodePEM(LexReader);
+            }
+
+
+        /// <summary>
+        /// Decode PEM format key file.
+        /// </summary>
+        /// <param name="LexReader">Input file.</param>
+        /// <returns>Public key information</returns>
+        public static KeyPair DecodePEM(LexReader LexReader) {
+            var Lexer = new KeyFileLex(LexReader);
+            var Token = Lexer.GetToken();
+
+            if (Token == KeyFileLex.Token.Data) {
+                var TaggedData = Lexer.GetTaggedData();
+                if (!TaggedData.Strict) {
+                    Console.WriteLine("Some yukky data here");
+                    }
+
+                if (TaggedData.Tag == "RSAPRIVATEKEY") {
+                    // is ASN.1 format DER modulus/exponent etc.
+
+                    var RSAPrivate = new PKIXPrivateKeyRSA(TaggedData.Data);
+                    return new RSAKeyPair (RSAPrivate);
+                    }
+                else if (TaggedData.Tag == "RSAPUBLICKEY") {
+                    // is ASN.1 format DER modulus/exponent
+                    var RSAPrivate = new PKIXPrivateKeyRSA(TaggedData.Data);
+                    return new RSAKeyPair(RSAPrivate);
+                    }
+                else if (TaggedData.Tag == "SSH2PUBLICKEY") {
+                    var SSH_Public_Key = SSHData.Decode (TaggedData.Data);
+                    return SSH_Public_Key.KeyPair;
+                    }
+                }
+
+            return null;
+            }
+
+
+        }
+    }

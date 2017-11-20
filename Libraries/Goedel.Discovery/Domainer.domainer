@@ -1,0 +1,320 @@
+﻿
+
+	 
+RR	A			1		"Host address"									"RFC1035"
+	IPv4			Address
+	
+RR	NS			2		"Authoritative name server"						"RFC1035"
+	Domain			NSDNAME
+		
+RR	MD			3		"Mail destination"								"RFC1035"
+	Domain			MADNAME
+	Obsolete
+
+RR	MF			4		"Mail forwarder"								"RFC1035"
+	Domain			MADNAME
+	Obsolete
+
+RR	CNAME		5		"Canonical name for an alias"					"RFC1035"
+	Domain			CNAME
+
+RR	SOA			6		"Start of a zone of authority"					"RFC1035"
+	Domain			MNAME
+	Domain			RNAME
+	Int32			SERIAL
+	Int32			REFRESH
+	Int32			RETRY
+	Int32			EXPIRE
+	Int32			MINIMUM
+	
+RR	MB			7		"Mailbox domain name"							"RFC1035"
+	Domain			MadName
+	Experimental
+
+RR	MG			8		"Mail group member"								"RFC1035"
+	Domain			MGMNAME
+	Experimental
+
+RR	MR			9		"Mail rename domain name"						"RFC1035"
+	Domain			NEWNAME
+	Experimental
+
+RR	NULL		10		"Null RR"										"RFC1035"
+	Binary			Anything
+	Experimental
+
+RR	WKS			11		"Well known service description"				"RFC1035"
+	IPv4			Address
+	Byte			Protocol
+	Binary			BITMAP
+	
+RR	PTR			12		"Domain name pointer"							"RFC1035"
+	Domain			PTRDNAME
+	
+RR	HINFO		13		"Host information"								"RFC1035"
+	String		CPU
+	String		OS
+
+RR	MINFO		14		"Mailbox or mail list information"				"RFC1035"
+	Domain	RMAILBX
+	Domain	EMAILBX
+	Experimental
+	
+RR	MX			15		"Mail exchange"									"RFC1035"
+	Int16		Preference
+	Domain		Exchange
+	
+RR	TXT			16		"Text strings"									"RFC1035"
+	Strings		Text
+
+RR	RP			17		"Responsible Person"							"RFC1183"
+	Mail		MBox
+	Domain		Txt
+	
+RR	AFSDB		18		"AFS Data Base location"						"RFC1183,RFC5864"
+	Int16		SubType
+	Domain		HostName
+
+RR	X25			19		"X.25 PSDN address"								"RFC1183"
+	String		PSDN
+	Experimental
+
+RR	ISDN		20		"ISDN address"									"RFC1183"
+	String				ISDN
+	OptionalString		SA
+	Experimental
+
+RR	RT			21		"Route Through"									"RFC1183"
+	Int16		Preference
+	Domain		Exchange
+	Experimental
+
+IG	NSAP		22		"NSAP address, NSAP style A record"				"RFC1706"
+IG	NSAPPTR	  23		"Domain name pointer, NSAP style"				"RFC1348,RFC1637,RFC1706"
+	
+RR	SIG			24		"Security signature"                            "RFC2535"
+	Int16		TypeCovered
+	Byte		Algorithm
+	Byte		Labels
+	Int32		OriginalTTL
+	Time32		SignatureExpiration
+	Time32		SignatureInception
+	Int16		KeyTag
+	String		SignersName
+	Binary		Signature
+
+RR	KEY			25		"Security key"									"RFC2535"
+	Int16		Flags
+	Byte		Protocol
+	Byte		Algorithm
+	Binary		PublicKey
+		
+IG	PX			26		"X.400 mail mapping information"				"RFC2163"
+IG	GPOS		27		"Geographical Position"							"RFC1712"
+
+RR	AAAA		28		"IP6 Address"									"RFC3596"
+	IPv6			Address
+
+IG	LOC			29		"Location Information"							"RFC1876"
+IG	NXT			30		"Next Domain"									"RFC3755 sRFC2535"
+IG	EID			31		"Endpoint Identifier"							"http://ana-3.lcs.mit.edu/~jnc/nimrod/dns.txt"
+IG	NIMLOC		32		"Nimrod Locator"								"http://ana-3.lcs.mit.edu/~jnc/nimrod/dns.txt"
+
+RR	SRV			33		"Server Selection"								"RFC2782"
+	Int16		Priority
+	Int16		Weight
+	Int16		Port
+	Domain		Target
+
+IG	ATMA		34		"ATM Address"									"Obsolete"
+
+RR	NAPTR		35		"Naming Authority Pointer"						"RFC2915,RFC2168,RFC3403"
+	Int16		Order
+	Int16		Preference
+	String		Flags
+	String		Services
+	String		Regexp	
+	Domain		Replacement
+
+RR	KX			36		"Key Exchanger"									"RFC2230"
+	Int16		Preference
+	Domain		Exchange
+
+RR	CERT		37		"CERT"											"RFC4398"	
+	Int16		Type
+	Int16		KeyTag
+	Byte		Algorithm
+	Binary		Certificate
+
+IG	A6			38		"A6 (OBSOLETE - use AAAA)"						"RFC3226,RFC2874,RFC6563"	
+
+RR	DNAME		39		"DNAME"											"RFC6672"
+	Domain		Target
+	
+IG	SINK		40		"SINK"											"Donald_E_Eastlake"
+
+RR	OPT			41		"OPT"											"RFC2671,RFC3225"
+	Pseudo
+	OptionList Options
+		
+IG	APL			42		"APL"											"RFC3123"
+
+RR	DS			43		"Delegation Signer"								"RFC4034,RFC3658"
+	Int16		KeyTag
+	Byte		Algorithm
+	Byte		DigestType
+	Hex			Digest
+
+RR	SSHFP		44		"SSH Key Fingerprint"							"RFC4255"
+	Byte		Algorithm
+	Byte		FPType
+	Hex			Fingerprint
+
+RR	IPSECKEY	45		"IPSECKEY"										"RFC4025"
+	Byte		Precedence
+	Byte		GatewayType
+	Byte		Algorithm
+	Gateway		GatewayType Gateway
+	Binary		PublicKey
+
+RR	RRSIG		46		"RRSIG"											"RFC4034,RFC3755"
+	Int16	TypeCovered
+	Byte	Algorithm
+	Byte	Labels
+	Int32	OriginalTTL
+	Time32	SignatureExpiration
+	Time32	SignatureInception
+	Int16	KeyTag
+	String	SignersName
+	Binary	Signature
+	
+
+RR	NSEC		47		"NSEC"											"RFC4034,RFC3755"
+	Domain		NextDomain
+	Binary		TypeBitMaps
+	Obsolete
+
+RR	DNSKEY		48		"DNSKEY"										"RFC4034,RFC3755"
+	Int16		Flags
+	Byte		Protocol
+	Byte		Algorithm
+	Binary		PublicKey
+
+RR	DHCID		49		"DHCID"											"RFC4701"
+	Binary		Identifier
+
+RR	NSEC3		50		"NSEC3"											"RFC5155"
+	Byte		HashAlgorithm
+	Byte		Flags
+	Int16		Iterations
+	Binary8		Salt
+	Binary8		NextHashedOwnerName
+	Binary		TypeBitMaps
+
+RR	NSEC3PARAM	51		"NSEC3PARAM"									"RFC5155"
+	Byte		HashAlgorithm
+	Byte		Flags
+	Int16		Iterations
+	Binary8		Salt	
+
+RR	TLSA		52		"TLSA"											"RFC6698"
+	Byte		CertificateUsage
+	Byte		Selector
+	Byte		MatchingType
+	Binary		Certificate
+
+NA	Unassigned	53 54	
+		
+//RR	HIP			55		"Host Identity Protocol"						"RFC5205"	
+//	LByte		HIT HITLength
+//	Byte		PublicKeyAlgorithm
+//	LInt16		PublicKey PublicKeyLength
+//	LBinary		HITLength  HIT
+//	LBinary		PublicKeyLength PublicKey
+//	Binary		RendezvousServers
+
+
+IG	NINFO		56		"NINFO"											"Jim_Reid"
+IG	RKEY		57		"RKEY"											"Jim_Reid"
+
+IG	TALINK		58		"Trust Anchor LINK"								"Wouter_Wijngaards"
+IG	CDS			59		"Child DS"										"George_Barwood"
+NA	Unassigned	60 98
+			
+RR	SPF			99		"Sender Policy Framework"						"RFC4408"
+	Strings		Text
+
+IG	UINFO		100		"TBS"											"IANA-Reserved"
+IG	UID			101		"TBS"											"IANA-Reserved"
+IG	GID			102		"TBS"											"IANA-Reserved"
+IG	UNSPEC		103		"TBS"											"IANA-Reserved"
+
+RR	NID			104		""												"RFC6742"
+	Int16		Preference
+	NodeID		NodeID
+
+RR	L32			105		""												"RFC6742"
+	Int16		Preference
+	IPv4		Locator
+	
+RR	L64			106		""												"RFC6742"
+	Int16		Preference
+	NodeID		Locator
+		
+RR	LP			107		""												"RFC6742"
+	Int16		Preference
+	Domain		FQDN
+		
+NA	Unassigned	108 248			
+RR	TKEY		249		"Transaction Key"								"RFC2930"
+	Domain		Algorithm
+	Time32		Inception
+	Time32		Expiration
+	Int16		Mode
+	Int16		Error
+	Binary16		KeyData
+	Binary16		OtherData
+
+RR	TSIG		250		"Transaction Signature"							"RFC2845"
+	Domain		Algorithm
+	Time48		TimeSigned
+	Int16		Fudge
+	Binary16		MAC
+	Int16		OriginalID
+	Int16		Error
+	Binary16		OtherData		
+		
+Q	IXFR		251		"Incremental transfer"							"RFC1995"	
+Q	AXFR		252		"Transfer of an entire zone"					"RFC1035,RFC5936"
+Q	MAILB		253		"Mailbox-related RRs (MB, MG or MR)"			"RFC1035"
+Q	MAILA		254		"Mail agent RRs"								"RFC1035"	
+Q   ALL			255		"A request for all records"						"RFC1035"
+
+RR	URI			256		"URI"											"Patrik_Faltstrom"
+	Int16		Priority
+	Int16		Weight
+	Strings		Target
+
+RR	CAA			257		"Certification Authority Restriction"			"RFC-ietf-pkix-caa-15"
+	Byte		Flags
+	String		Tag
+	StringX		Value
+
+NA	Unassigned	258 32767
+			
+RR	TA			32768	"DNSSEC Trust Authorities"						"Sam_Weiler"
+	Int16		KeyTag
+	Byte		Algorithm
+	Byte		DigestType
+	Hex			Digest
+	Obsolete
+
+RR	DLV			32769	"DNSSEC Lookaside Validation"					"RFC4431"
+	Int16		KeyTag
+	Byte		Algorithm
+	Byte		DigestType
+	Hex			Digest
+
+NA	Unassigned	32770 65279			
+NA	Private		65280 65534			
+NA	Reserved	65535 65535

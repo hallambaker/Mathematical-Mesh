@@ -1,0 +1,312 @@
+﻿Protocol Goedel.Cryptography.Jose  Jose Jose
+
+	Description
+		|Support classes for JSON Object Signing and Encryption
+
+	Structure JoseWebSignature
+		Description
+			|A signed JOSE data object. The data contents are all binary encoded to 
+			|enable direct authentication of the contents.
+		// Parametric Object
+		Struct Header Unprotected
+			Tag "unprotected"
+			Description
+				|Data not protected by the signature
+		Binary Payload
+			Tag "payload"
+			Description
+				|The signed data
+		Struct Signature Signatures
+			Multiple
+			Tag "signatures"
+			Description
+				|The signature value
+	
+
+	Structure JoseWebEncryption
+		Inherits JoseWebSignature
+
+		Description
+			|A signed JOSE data object. The encrypted data contents are all binary encoded.
+
+		// Parametric Object
+
+		Binary Protected
+			Tag "protected"
+			Description
+				|Data protected by the signature
+
+		Binary IV
+			Tag "iv"
+			Description
+				|The initialization vector for the bulk cipher.
+		Struct Recipient Recipients
+			Tag "recipients"
+			Multiple
+			Description
+				|Per recipient decryption data.
+		Binary EncryptedKey 
+			Tag "encrypted_key"
+			Description
+				|The decryption data for use by this recipient.
+		Binary AdditionalAuthenticatedData
+			Tag "aad"
+			Description
+				|Additional data that is included in the authentication scope but not the encryption
+		Binary CipherText
+			Tag "ciphertext"
+			Description
+				|The encrypted data
+		Binary JTag
+			Tag "tag"
+			Description
+				|Authentication tag
+
+	Structure Signed
+		Description
+			|Compact representation for signed data
+
+		Binary Protected
+			Tag "protected"
+			Description
+				|Data protected by the signature
+		Binary Payload
+			Tag "payload"
+			Description
+				|The authenticated data
+		Binary Signature
+			Tag "signature"
+			Description
+				|The signature data
+
+	Structure Encrypted
+		Description
+			|Compact representation for encrypted data
+
+		Struct Header Header
+			Tag "header"
+			Description
+				|Header
+		Binary IV
+			Tag "iv"
+			Description
+				|The initialization vector for the cipher
+		Binary CipherText
+			Tag "ciphertext"
+			Description
+				|The encrypted data 
+		Binary Signature
+			Tag "signature"
+			Description
+				|The signature data
+
+	Structure KeyData
+		Description
+			|Describe a cryptographic key
+		String Enc
+			Tag "enc"
+			Description
+				|Bulk encryption algorithm for content
+		String Dig
+			Tag "dig"
+			Description
+				|Digest algorithm hint
+		String Alg
+			Tag "alg"
+			Description
+				|Key exchange algorithm
+		String Kid
+			Tag "kid"
+			Description
+				|Key identifier. If a UDF fingerprint is used to identify the 
+				|key it is placed in this field.
+		String X5u
+			Tag "x5u"
+			Description
+				|URL identifying an X.509 public key certificate
+		Binary X5c
+			Tag "x5c"
+			Description
+				|An X.509 public key certificate
+		Binary X5t
+			Tag "x5t"
+			Description
+				|SHA-1 fingerprint of X.509 certificate
+		Binary X5tS256
+			Tag "x5t#S256"
+			Description
+				|SHA-2-256 fingerprint of X.509 certificate
+
+
+	Structure Header
+		Description
+			|A JOSE Header.
+		Inherits KeyData
+
+		String Jku
+			Tag "jku"
+			Description
+				|JWK Set URL
+		TStruct Key Jwk
+			Tag "jwk"
+			Description
+				|The key parameters
+		TStruct Key Epk
+			Tag "epk"
+			Description
+				|The key parameters of the ephemeral key
+		String Typ
+			Tag "typ"
+			Description
+				|Another IANA content type parameter
+		String Cty
+			Tag "cty"
+			Description
+				|Content type parameter
+		String Crit
+			Tag "crit"
+			Multiple
+			Description
+				|List of header parameters that a recipient MUST understand to interpret
+				|the authentication portion of the JOSE object.
+		Binary Val
+			Tag "val"
+			Description
+				|The digest value
+
+	Structure Signature
+		Description
+			|The signature value
+		Struct Header Header
+			Tag "header"
+			Description
+				|The signature header
+		Binary Protected
+			Tag "protected"
+			Description
+				|Data protected by the signature
+		Binary SignatureValue
+			Tag "signature"
+			Description
+				|The signature value
+
+
+	Structure KeyContainer
+		Description
+			|A wrapper object for storing key data.
+		Boolean Exportable
+			Description
+				|If false a handler library MUST NOT permit the private key to be exported.
+		Binary KeyData
+			Description
+				|The key data.
+
+			
+
+
+	Structure Key
+		Description
+			|A JOSE key. All fields map onto the equivalent fields defined in
+			|RFC 7517
+		Inherits KeyData		
+		String Kty
+			Tag "kty"
+			Description
+				|Key type
+		String Use
+			Tag "use"
+			Description
+				|Public Key use
+		String Key_ops
+			Tag "key_ops"
+			Description
+				|Key operations
+		Binary K
+			Tag "k"
+			Description
+				|Symmetric key value.
+
+
+	Structure Recipient
+		Description
+			|Recipient information
+		Struct Header Header
+			Description
+				|Specify the recipient and per recipient data
+		Binary EncryptedKey
+			Tag "encrypted_key"
+			Description
+				|The decryption data for use by this recipient.
+
+	Structure PublicKeyRSA
+		Description
+			|An RSA Public key
+		Inherits Key
+		Binary N
+			Tag "n"
+			Description
+				|The public modulus
+		Binary E
+			Tag "e"
+			Description
+				|The public exponent
+
+	Structure PrivateKeyRSA
+		Description
+			|RSA private key parameters
+		Inherits PublicKeyRSA
+		Binary D
+			Tag "d"
+			Description
+				|The parameter d
+		Binary P
+			Tag "p"
+			Description
+				|The parameter p
+		Binary Q
+			Tag "q"
+			Description
+				|The parameter q
+		Binary DP
+			Tag "dp"
+			Description
+				|The parameter dp
+		Binary DQ
+			Tag "dq"
+			Description
+				|The parameter dq
+		Binary QI
+			Tag "qi"
+			Description
+				|The parameter QInverse
+
+	Structure PublicKeyDH
+		Description
+			|A Diffie Helllman Public key
+		Inherits Key
+		Binary Domain
+			Description
+				|The fingerprint of the domain
+		Binary Public
+			Description
+				|The public key
+
+	Structure PrivateKeyDH
+		Description
+			|Diffie Helllman private key parameters
+		Inherits PublicKeyDH
+		Binary Private
+			Description
+				|The private key
+
+	Structure KeyAgreement
+		Description
+			|Result of applying a key agreement.
+
+	Structure KeyAgreementDH
+		Description
+			|Result of applying a key agreement.
+		Inherits KeyAgreement
+		Binary Result
+			Description
+				|The result

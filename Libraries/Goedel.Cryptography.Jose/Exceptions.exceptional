@@ -1,0 +1,6 @@
+﻿Namespace Goedel.Cryptography.Jose
+    
+	Exception InternalError
+        Console "An internal error occurred"
+		Description
+			|An internal error occurred. This error cannot be recovered from.

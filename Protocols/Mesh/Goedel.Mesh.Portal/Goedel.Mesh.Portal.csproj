@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Libraries\Core\Goedel.Discovery\Goedel.Discovery.csproj" />
+    <ProjectReference Include="..\..\..\Libraries\Core\Goedel.IO\Goedel.IO.csproj" />
+    <ProjectReference Include="..\..\..\Libraries\Core\Goedel.Utilities\Goedel.Utilities.csproj" />
+    <ProjectReference Include="..\..\..\Libraries\Goedel.Cryptography.Jose\Goedel.Cryptography.Jose.csproj" />
+    <ProjectReference Include="..\..\..\Libraries\Goedel.Cryptography\Goedel.Cryptography.csproj" />
+    <ProjectReference Include="..\..\..\Libraries\Goedel.Mesh\Goedel.Mesh.csproj" />
+    <ProjectReference Include="..\..\..\Libraries\Goedel.Persistence\Goedel.Persistence.csproj" />
+    <ProjectReference Include="..\..\..\Libraries\Goedel.Protocol\Goedel.Protocol.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="MeshProtocol.cs">
+      <DependentUpon>MeshProtocol.Protocol</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="MeshProtocol.Protocol">
+      <LastGenOutput>MeshProtocol.cs</LastGenOutput>
+      <Generator>Protogen</Generator>
+    </None>
+  </ItemGroup>
+
+</Project>

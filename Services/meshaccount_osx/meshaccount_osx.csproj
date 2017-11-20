@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <Import Project="..\meshaccount\meshaccount.projitems" Label="Shared" />
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Libraries\Core\Goedel.Command\Goedel.Command.csproj" />
+    <ProjectReference Include="..\..\Libraries\Core\Goedel.Registry\Goedel.Registry.csproj" />
+    <ProjectReference Include="..\..\Libraries\Core\Goedel.Utilities\Goedel.Utilities.csproj" />
+    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Jose\Goedel.Cryptography.Jose.csproj" />
+    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.OSX\Goedel.Cryptography.OSX.csproj" />
+    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Standard\Goedel.Cryptography.Standard.csproj" />
+    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography\Goedel.Cryptography.csproj" />
+    <ProjectReference Include="..\..\Libraries\Goedel.Mesh.Platform.OSX\Goedel.Mesh.Platform.OSX.csproj" />
+    <ProjectReference Include="..\..\Libraries\Goedel.Mesh\Goedel.Mesh.csproj" />
+    <ProjectReference Include="..\..\Libraries\Goedel.Persistence\Goedel.Persistence.csproj" />
+    <ProjectReference Include="..\..\Libraries\Goedel.Protocol\Goedel.Protocol.csproj" />
+    <ProjectReference Include="..\..\Protocols\Account\Goedel.Account.Server\Goedel.Account.Server.csproj" />
+    <ProjectReference Include="..\..\Protocols\Account\Goedel.Account\Goedel.Account.csproj" />
+    <ProjectReference Include="..\..\Protocols\Confirm\Goedel.Confirm.Server\Goedel.Confirm.Server.csproj" />
+    <ProjectReference Include="..\..\Protocols\Confirm\Goedel.Confirm\Goedel.Confirm.csproj" />
+    <ProjectReference Include="..\..\Protocols\Mesh\Goedel.Mesh.Portal.Client\Goedel.Mesh.Portal.Client.csproj" />
+    <ProjectReference Include="..\..\Protocols\Mesh\Goedel.Mesh.Portal\Goedel.Mesh.Portal.csproj" />
+    <ProjectReference Include="..\..\Protocols\Recrypt\Goedel.Recrypt\Goedel.Recrypt.csproj" />
+  </ItemGroup>
+
+</Project>

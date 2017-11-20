@@ -1,6 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<srml xmlns="http://hallambaker.com/Schemas/srml.xsd">
-  <h1>Grant Administrator</h1>
-  <p>Host: example.net</p>
-  <button value="Access">Access</button>
-</srml>

@@ -1,0 +1,21 @@
+﻿
+Namespace Goedel.Utilities
+
+
+	Exception NYI
+        Console "The feature has not been implemented"
+		Description
+			|This feature has not been implemented
+
+	Exception Internal
+        Console "An internal error occurred"
+		Description
+			|An internal assertion check failed.
+
+	Exception FileReadError
+		Console "The file could not be read"
+		Description
+			|The file could not be read.
+		Object ExceptionData "The file {0} could not be read"
+			String
+			

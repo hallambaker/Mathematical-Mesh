@@ -1,0 +1,11 @@
+﻿
+
+Namespace Goedel.Cryptography.Ticket
+    
+	Exception TicketException
+        Console "A cryptographic ticket exception occurred"
+
+		Exception BadTicket
+			Console "The ticket could not be read"
+			Description
+				|

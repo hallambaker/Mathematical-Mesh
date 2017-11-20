@@ -1,0 +1,47 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>bin\Debug\netstandard2.0\Goedel.Command.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>bin\Release\netstandard2.0\Goedel.Command.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Goedel.FSR\Goedel.FSR.csproj" />
+    <ProjectReference Include="..\Goedel.Registry\Goedel.Registry.csproj" />
+    <ProjectReference Include="..\Goedel.Utilities\Goedel.Utilities.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="CommandLex.cs">
+      <DependentUpon>CommandLex.fsm</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="CommandSplit.cs">
+      <DependentUpon>CommandSplit.fsm</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="CommandLex.fsm">
+      <LastGenOutput>CommandLex.cs</LastGenOutput>
+      <Generator>fsrcs</Generator>
+    </None>
+    <None Update="CommandSplit.fsm">
+      <LastGenOutput>CommandSplit.cs</LastGenOutput>
+      <Generator>fsrcs</Generator>
+    </None>
+  </ItemGroup>
+
+  <Import Project="..\..\Goedel.Command\Goedel.Command.projitems" Label="Shared" />
+
+</Project>

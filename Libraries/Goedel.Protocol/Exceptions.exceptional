@@ -1,0 +1,41 @@
+﻿
+Namespace Goedel.Protocol
+    
+	Exception Dechunking
+        Console "Key could not be read"
+		Description
+			|A dechunking exception occurred.
+
+		Exception UnknownOperation
+			Console "The requested operation is not known to this server."
+			Description
+				|The requested operation is not known to this server.
+
+		Exception MessageTooBig
+			Console "Message is too big"
+			Description
+				|Message exceeds permitted size limit
+
+	Exception ConnectionFail
+		Object ExceptionData "Connection to host [{0}] Failed."
+			String
+
+		Console "Connection to host failed."
+		Description
+			|Could not reach the specified host
+
+
+	Exception CannotCreateAbstract
+		Console "Deserialzer encountered tag describing abstract type"
+		Description
+			|A serialized data stream contains a type tag describing an abstract type that cannot be constructed.
+
+	Exception UnknownTag
+		Console "Deserialzer encountered unknown tag"
+		Description
+			|An unknown tag was encountered.
+
+	Exception InvalidInput
+		Console "Deserialzer encountered invalid input"
+		Description
+			|The input is not valid in the specified encoding.

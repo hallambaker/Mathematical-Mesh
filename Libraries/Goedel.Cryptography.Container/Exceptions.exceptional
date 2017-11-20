@@ -1,0 +1,27 @@
+﻿
+
+Namespace Goedel.Cryptography.Container
+    
+
+	Exception InvalidContainerTypeException
+        Console "This class does not support the specified container type."
+		Description
+			|An attempt was made to access a container type that is not supported by the
+			|class.
+
+	Exception FrameTooLargeException
+        Console "The frame was too large for this implementation to handle"
+		Description
+			|An attempt was made to create a frame that is larger than the maximum frame size allowed by
+			|the application
+
+	Exception InvalidFileModeException
+        Console "The file mode is invalid for creating a new file"
+		Description
+			|An attempt was made to create a new container file in a mode that did not
+			|allow creation of a new file.
+
+	Exception InvalidFileFormatException
+        Console "An error was encountered in reading the container file"
+		Description
+			|The file format was found to be invalid or otherwise corrupt.

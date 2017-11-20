@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Goedel.Cryptography.Framework\Goedel.Cryptography.Framework.csproj" />
+    <ProjectReference Include="..\Goedel.Cryptography.Windows\Goedel.Cryptography.Windows.csproj" />
+    <ProjectReference Include="..\Goedel.Cryptography\Goedel.Cryptography.csproj" />
+    <ProjectReference Include="..\Goedel.Discovery\Goedel.Discovery.csproj" />
+    <ProjectReference Include="..\Goedel.IO\Goedel.IO.csproj" />
+    <ProjectReference Include="..\Goedel.Utilities\Goedel.Utilities.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Exceptions.cs">
+      <DependentUpon>Exceptions.exceptional</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Exceptions.exceptional">
+      <LastGenOutput>Exceptions.cs</LastGenOutput>
+      <Generator>exceptional</Generator>
+    </None>
+  </ItemGroup>
+
+</Project>

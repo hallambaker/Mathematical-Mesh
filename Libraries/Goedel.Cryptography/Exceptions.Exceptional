@@ -1,0 +1,145 @@
+﻿
+
+Namespace Goedel.Cryptography
+    
+	Exception CryptographicException
+        Console "A cryptographic exception occurred"
+		Description
+			|Base class for cryptographic exceptions.
+		
+		Exception ImplementationLimit
+			Console "Some implementation limit hit"
+			Description
+				|Placeholder exception to be thrown as a placeholder to mark
+				|code needing improvement.
+
+		Exception InvalidQuorum
+			Console "Quorum parameters invalid"
+			Description
+				|Some or all of the quorum parameters are incorrect.
+
+			Exception InsufficientShares
+				Console "Not enough shares to recover key"
+				Description
+					|The recovery attempt failed because there weren't enough shares
+					|to recover the key.
+
+			Exception QuorumExceedsShares
+				Console "Quorum can't exceed shares"
+				Description
+					|The number of shares required to create a quorum must be 
+					|equal to or smaller than the number of shares
+					.
+
+			Exception QuorumInsufficient
+				Console "Quorum must be at least 2"
+				Description
+					|The quorum must require at least 2 shares.
+
+			Exception SharesInsufficient
+				Console "Shares must be at least 2"
+				Description
+					|There must be at least two key shares.
+
+			Exception QuorumExceeded
+				Console "Too many shares specified"
+				Description
+					|This implementation does not support the number of shares
+					|that were requested.
+
+
+			Exception QuorumDegreeExceeded
+				Console "Degree too high"
+				Description
+					|The number of shares required to create a quorum exceeds the maximum
+					|permitted polynomial degree.
+
+			Exception MismatchedShares
+				Console "Keys must have same threshold"
+				Description
+					|The shares presented are not from the same set of shares.
+
+
+		
+		Exception InsufficientResults
+			Console "There must be at least one result"
+			Description
+				|A recryption attempt failed because there were no result values to combine.
+
+		Exception FingerprintMatchFailed
+			Console "Data did not match expected fingerprint value"
+			Description
+				|Thje data presented did not match the expected fingerprint
+				|value.			
+
+		Exception CipherModeNotSupported
+			Console "The requested cipher mode is not supported by the provider"
+			Description
+				|A request was made for a cipher mode that the registered provider 
+				|does not support.
+		
+		Exception CryptographicOperationNotSupported
+			Console "The requested cryptographic operation is not supported by the provider"
+			Description
+				|A request was made for a cipher mode that the registered provider 
+				|does not support.			
+
+		Exception KeyTypeMismatch
+			Console "The encryption key type does not match the recryption key type"
+			Description
+				|The encryption key type does not match the recryption key type
+
+		Exception NoProviderSpecified
+			Console "No provider specified"
+			Description
+				|The specified key did not have a valid cryptographic
+				|provider. This may be because the key algorithm is 
+				|not supported or the key parameters were found to be invalid.
+
+
+		Exception KeySizeNotSupported
+			Console "The requested key size is not supported"
+			Description
+				|The implementation does not support the requested key size
+
+		Exception InitializationFailed
+			Console "Initialization of the cryptographic support library failed."
+			Description
+				|Initialization of the cryptographic support library failed.
+				|This is a fatal error that cannot be recovered from.
+
+		Exception InvalidKeyPairType
+			Console "The keypair presented was not of the expected type"
+			Description
+				|The keypair presented was not of the expected type.
+		
+		Exception RecryptionShareLimitExceeded 
+			Console "The number of recryption shares requested exceeds the implementation limit"
+			Description
+				|An attempt was made to create more recryption shares than the implementation supports.
+
+
+		Exception InvalidOperation
+			Console "The cryptographic provider does not support the requested operation"
+			Description
+				|The cryptographic provider does not support the requested operation
+
+		Exception PrivateKeyNotFound
+			Console "The operation requested requires a private key that could not be found"
+			Description
+				|The operation requested requires a private key that could not be found
+
+		Exception UnwrapFailed
+			Console "The key unwrap operation returned an invalid value."
+			Description
+				|The key unwrap operation returned an invalid value.
+
+		Exception UnknownNamedParameters
+			Console "The named parameters specified in an operation are not known"
+			Description
+				|The named parameters specified in an operation are not known
+
+		Exception NotExportable
+			Console "The cryptographic provider does not permit export of the private key parameters"
+			Description
+				|The cryptographic provider does not permit export of the private key parameters

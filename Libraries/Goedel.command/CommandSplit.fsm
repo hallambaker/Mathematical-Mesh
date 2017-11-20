@@ -1,0 +1,68 @@
+﻿FSR Goedel.Command CommandSplitLex
+
+	Charset Digit		"0" "9"
+	Charset alpha		"a" "z"
+	Charset ALPHA		"A" "Z"
+
+	Token Empty		""
+	Token Value		"Parameter"
+
+
+	
+	State ItemStart AddParam Empty		// Start of file
+		On " \t\n" GoTo ItemStart
+		On "\"" GoTo StartQuoted
+		On "\\" GoTo UnquotedEscape
+		Any GoTo Unquoted
+
+	State StartQuoted BeginValue Value
+		On "\"" GoTo QuotedQuote
+		On "\\" GoTo QuotedEscape
+		Any GoTo Quoted
+
+	State Quoted AddValue Value
+		On "\"" GoTo QuotedQuote
+		On "\\" GoTo QuotedEscape
+		Any GoTo Quoted
+
+	State QuotedQuote Ignore Value
+		On " \t\n" GoTo ItemStart			// An end quote
+		On "\"" GoTo Quoted
+		On "\\" GoTo QuotedEscape
+		Any GoTo Quoted
+
+	State QuotedEscape AddEscape Value
+		On "\"" GoTo QuotedEscapeReturn
+		On "\\" GoTo QuotedEscape
+		Any GoTo QuotedEscapeReturn
+
+	State QuotedEscapeReturn AddEscapedValue Value
+		On "\"" GoTo QuotedQuote
+		On "\\" GoTo QuotedEscape
+		Any GoTo Quoted
+
+
+
+
+	State Unquoted AddValue Value
+		On "\\" GoTo UnquotedEscape
+		On "\"" GoTo UnquotedQuote
+		On " \t\n" GoTo ItemStart
+		Any GoTo Unquoted
+
+	State UnquotedQuote Ignore Value
+		On "\"" GoTo UnquotedQuote
+		On "\\" GoTo UnquotedEscape
+		On " \t\n" GoTo ItemStart
+		Any GoTo Unquoted
+
+	State UnquotedEscape AddEscape Value
+		On "\\" GoTo UnquotedEscape
+		On "\"" GoTo UnquotedEscapeReturn
+		On " \t\n" GoTo ItemStart
+		Any GoTo UnquotedEscapeReturn
+
+	State UnquotedEscapeReturn AddEscapedValue Value
+		On "\\" GoTo UnquotedEscape
+		On "\"" GoTo UnquotedQuote
+		Any GoTo Unquoted

@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>2b5532b5-5f59-4298-8de7-e5cafbf08e53</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>MeshApps</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)CombinedClient.command">
+      <LastGenOutput>CombinedClient.cs</LastGenOutput>
+      <Generator>
+      </Generator>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)ExceptionsCombined.Exceptional">
+      <LastGenOutput>ExceptionsCombined.cs</LastGenOutput>
+      <Generator>
+      </Generator>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)SchemaResults.protocol">
+      <LastGenOutput>SchemaResults.cs</LastGenOutput>
+      <Generator>Protogen</Generator>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)CombinedClient.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CombinedDispatch.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CombinedUtilities.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ExceptionsCombined.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OutputResults.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SchemaResults.cs" />
+  </ItemGroup>
+</Project>

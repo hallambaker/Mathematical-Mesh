@@ -1,0 +1,105 @@
+﻿FSR Goedel.Cryptography.KeyFile KeyFileLex
+
+	// To save effort, we just strip out CR characters as worthless and beneath
+	// contempt before the lexer
+
+	Charset Digit		"0" "9"
+	Charset alpha		"a" "z"
+	Charset ALPHA		"A" "Z"
+
+	Token Empty		""
+	Token Tag		"BEGIN WHATEVER"
+	Token Armor		"----"
+
+
+	State FileStart Reset Empty		// Start of file
+		On "\n" GoTo Fail
+		On "-" GoTo ArmorStart1
+
+
+	// The following states process files with PEM style armor
+	// The result is a tag and a binary data blob plus flags
+	// to show if the armor has the correct number of dashes,
+	// the start and end tags are consistent, etc.
+	State ArmorStart1 Count1 Armor
+		On "-" GoTo ArmorStart1
+		alpha GoTo TagStartBegin
+		ALPHA GoTo TagStartBegin		
+		Digit GoTo TagStartBegin
+		On " " GoTo TagStartBegin
+
+	State TagStartBegin Begin Armor
+		ALPHA GoTo TagStartBegin
+		alpha GoTo TagStartBegin
+		ALPHA GoTo TagStartBegin		
+		Digit GoTo TagStartBegin
+		On " " GoTo TagStart
+
+	State TagStart Tag1 Data
+		alpha GoTo TagStart
+		ALPHA GoTo TagStart		
+		Digit GoTo TagStart
+		On " " GoTo TagStart
+		On "-" GoTo ArmorStart2
+
+	State ArmorStart2 Count2 Tag
+		On "-" GoTo ArmorStart2
+		On "\n" GoTo Base64Data
+
+	State Base64Data Base64 Data
+		alpha GoTo Base64Data
+		ALPHA GoTo Base64Data
+		Digit GoTo Base64Data
+		On ":" GoTo IsHeader
+		On "+/ \n\t=" GoTo Base64Data
+		On "-" GoTo ArmorEnd1
+
+
+    State IsHeader StartHeader Data
+		On "\n" GoTo HeaderEnd
+		Any GoTo HeaderData
+			
+	State HeaderData HeaderAdd Data
+		On "\n" GoTo HeaderEnd
+		Any GoTo HeaderData
+
+	State HeaderEnd CopyHeader Data
+		alpha GoTo Base64Data
+		ALPHA GoTo Base64Data
+		Digit GoTo Base64Data
+		On ":" GoTo IsHeader
+		On "+/ \n\t=" GoTo Base64Data
+		On "-" GoTo ArmorEnd1	 
+
+
+	State ArmorEnd1 Count3 Data
+		On "-" GoTo ArmorEnd1
+		alpha GoTo TagEndEnd
+		ALPHA GoTo TagEndEnd		
+		Digit GoTo TagEndEnd
+		On " " GoTo TagEndEnd
+
+
+	State TagEndEnd End Armor
+		ALPHA GoTo TagEndEnd
+		alpha GoTo TagEndEnd
+		ALPHA GoTo TagEndEnd		
+		Digit GoTo TagEndEnd
+		On " " GoTo TagEnd
+
+	State TagEnd Tag2 Data
+		alpha GoTo TagEnd
+		ALPHA GoTo TagEnd		
+		Digit GoTo TagEnd
+		On " " GoTo TagEnd
+		On "-" GoTo ArmorEnd2
+
+	State ArmorEnd2 Count4 Data
+		On "-" GoTo ArmorEnd2
+		On "\n" GoTo Base64Data
+
+
+	State StartTag AddTag Tag
+		
+	State Fail Abort Empty
+		

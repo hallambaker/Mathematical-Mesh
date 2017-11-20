@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+
+  meshportal_windows:
+    image: meshportal_windows
+    build:
+      context: ./Services/meshportal_windows
+      dockerfile: Dockerfile
+
+  meshapps_windows:
+    image: meshapps_windows
+    build:
+      context: ./Applications/meshapps_windows
+      dockerfile: Dockerfile
+
+  meshaccount_linux:
+    image: meshaccount_linux
+    build:
+      context: ./Services/meshaccount_linux
+      dockerfile: Dockerfile
+
+  meshportal_linux:
+    image: meshportal_linux
+    build:
+      context: ./Services/meshportal_linux
+      dockerfile: Dockerfile

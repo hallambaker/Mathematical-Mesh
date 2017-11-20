@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>e0560a9e-5a6c-464d-8114-10e9889882b3</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Goedel.Discovery</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Canonicalize.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ClientUDP.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DNSBuffer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DNSClient.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DNSClientUDP.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DNSStructures.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Domainer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DomainerAPIPlus.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Exceptions.cs">
+      <DependentUpon>Exceptions.exceptional</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Initialize.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)NamespaceDoc.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Parse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Platform.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ServiceDescription.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)Domainer.domainer" />
+    <None Include="$(MSBuildThisFileDirectory)Exceptions.exceptional">
+      <LastGenOutput>Exceptions.cs</LastGenOutput>
+      <Generator>Exceptional</Generator>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Index.md" />
+    <None Include="$(MSBuildThisFileDirectory)Makefile" />
+    <None Include="$(MSBuildThisFileDirectory)todo.md" />
+  </ItemGroup>
+</Project>

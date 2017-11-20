@@ -1,8 +1,0 @@
-﻿Namespace Goedel.Recrypt.Server
-    
-	Exception RecryptServerException
-        Console "Error occurred in Mesh library"
-		Description
-			|Base class for recryption server exceptions. These include
-			|all the classes that throw protocol errors.
-

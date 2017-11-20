@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>4c6afee4-5839-4ab0-b4a4-6ff10e0a8ffd</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Goedel.Command</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Command.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CommandLex.cs">
+      <DependentUpon>CommandLex.fsm</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)CommandLexPlus.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CommandSplit.cs">
+      <DependentUpon>CommandSplit.fsm</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)CommandSplitLexPlus.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Dispatch.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Exceptions.cs">
+      <DependentUpon>Exceptions.exceptional</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)FileTools.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)NamespaceDoc.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Type.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)CommandLex.fsm">
+      <LastGenOutput>CommandLex.cs</LastGenOutput>
+      <Generator>fsrcs</Generator>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)CommandSplit.fsm">
+      <LastGenOutput>CommandSplit.cs</LastGenOutput>
+      <Generator>fsrcs</Generator>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Exceptions.exceptional">
+      <LastGenOutput>Exceptions.cs</LastGenOutput>
+      <Generator>exceptional</Generator>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Parse.md" />
+  </ItemGroup>
+</Project>
