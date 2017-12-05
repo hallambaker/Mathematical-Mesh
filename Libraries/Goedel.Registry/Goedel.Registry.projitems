@@ -21,7 +21,6 @@
       <AutoGen>True</AutoGen>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Lexer.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)NamespaceDoc.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)RegistryT.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Script.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)StructureWriter.cs" />
@@ -37,5 +36,6 @@
       <LastGenOutput>Headers.cs</LastGenOutput>
       <Generator>GScript</Generator>
     </None>
+    <None Include="$(MSBuildThisFileDirectory)VS.Make" />
   </ItemGroup>
 </Project>

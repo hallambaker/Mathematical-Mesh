@@ -1,0 +1,51 @@
+﻿
+Namespace Goedel.Platformsa
+    
+
+	Exception PlatformException
+		Console "An exception occurred in the platform library"
+		Description
+			|Base class for protocol exceptions.
+
+
+		Exception BufferWriteOverflow
+			Console "Buffer write overflow"
+			Description
+				|An attempt was made to write past the end of a buffer.
+
+		Exception BufferReadOverflow
+			Console "Buffer read overflow"
+			Description
+				|An attempt was made to read past the end of a buffer.
+
+
+		Exception LabelTooLong
+			Console "A message contained a label longer than the permitted length"
+			Description
+				|A message contained a label longer than the permitted length
+
+		Exception TagTooLong
+			Console "A message contained a tag longer than the permitted length"
+			Description
+				|A message contained a tag longer than the permitted length
+
+		Exception UnicodeNotSupported
+			Console "Unicode labels are not supported"
+			Description
+				|Unicode labels are not supported
+
+
+		Exception IllegalCharacter
+			Console "An illegal character was encountered"
+			Description
+				|An illegal character was encountered
+
+		Exception InvalidIPv4
+			Console "Not a valid IPv4 Address"
+			Description
+				|A message contained an invalid IPv4 address
+
+		Exception InvalidIPv6
+			Console "Not a valid IPv6 Address"
+			Description
+				|A message contained an invalid IPv6 address

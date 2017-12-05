@@ -1,0 +1,170 @@
+<?xml version='1.0'?>
+<!DOCTYPE rfc SYSTEM 'rfc2629.dtd'>
+<rfc ipr="trust200902" docName="draft-hallambaker-mesh-confirm-00" category="info">
+<?rfc toc="yes"?>  
+<?rfc symrefs="yes"?>  
+<?rfc sortrefs="yes"?>  
+<?rfc compact="yes"?>  
+<?rfc subcompact="no"?>  
+<front>
+<title abbrev="Mesh/Confirm">Mesh Confirmation Protocol (Mesh/Confirm)</title>
+<author fullname="Phillip Hallam-Baker" initials="P. M." surname="Hallam-Baker">
+<organization>Comodo Group Inc.</organization>
+<address>
+<email>philliph@comodo.com</email>
+</address>
+</author>
+<date day="24" month="June" year="2017"/>
+<area>General</area>
+<workgroup/>
+<keyword>Cryptography</keyword>
+<keyword>PKI</keyword>
+<keyword>PKIX</keyword>
+<abstract>
+<t>Mesh Confirmation Protocol (Mesh/Confirm) is a three-party Web Service that supports a transactional second factor confirmation mechanism that provides a superset of the capabilities of traditional second factor authentication schemes. The three parties in the protocol are Enquirer who posts a confirmation request, a Responder who may or may not respond to the request and the Broker where the requests and responses are posted.</t>
+</abstract>
+</front>
+<middle>
+<section title="Background" anchor="Section_1">
+<t>Authentication of end users is one of the biggest challenges for Internet and Web security today. Despite an abundance of technology that offers authentication mechanisms that are more robust, more secure and easier to use, the default mechanism for user authentication is the use of usernames and passwords.</t>
+<t>Unlike traditional schemes, Mesh/Confirm is designed for implementation on a device that has at least the capabilities of a modern 'smartphone'. In particular, a Mesh/Confirm client device MUST support a means of presenting text output to and accepting text input from the user and an Internet connection.</t>
+<t>While mobile devices offering this degree of functionality were rare in 2007, they have since become ubiquitous. In addition to smartphones, many users now carry smart watches and the class of wearable electronics is expected to expand further in years to come. It is thus now a practical proposition for a site requiring second factor authentication to support at least a part of its users using a technology that requires such affordances. </t>
+<section title="Second Factor Authentication" anchor="Section_1_1">
+<t>Second factor authentication mechanisms offer greater security over the use of passwords alone by combining a first factor (typically a password) with a second factor, typically a biometric or proof of possession of a physical token.</t>
+<t>Traditional second factor authentication techniques have suffered from the need to distribute physical tokens and the difficulty of ensuring that a biometric authentication is presented to a trustworthy terminal.</t>
+<t>The usability of traditional second factor authentication techniques has been poor or worse. Even the simplest scheme in which the user is required to read in a 'one time use' numeric code from the authentication token device and enter it into a password field. While such operations are relatively simple they require the user to engage in a sequence of operations that bears no necessary or natural relationship to the underlying task for which the authentication is required.</t>
+<t>Nor does the act of engaging in a traditional second factor scheme offer proof of anything other than that the user was authenticated. Any correspondence between the act of authentication and the purpose for which the authentication was provided must be maintained separately.</t>
+</section>
+<section title="Confirmation vs. Authentication" anchor="Section_1_2">
+<t>A confirmation service addresses by cryptographically binding responses to the request that they reply to.</t>
+<t>A confirmation service allows the user experience to be precisely matched to the action that the user is attempted. This is simpler and more secure than a traditional second factor authentication scheme. Instead of being asked to read a random number from one device and enter it into another, the user is asked if they really want to perform the action for which authentication is requested.</t>
+<t>A confirmation service offers better accountability for end users than a traditional second factor authentication scheme. An authentication service only provides an assertion that the user was present. A confirmation service provides an assertion that the user was present and that they confirmed (or refused) a specific request.</t>
+<t>For example, Alice has been granted access to a machine storing classified data. If an authentication service is used for access control, the authentication service log will only record the dates and times that Alice accessed the system. to find out if Alice accessed a particular file on a particular day it is necessary to consult and correlate both the authentication log of the system and the activity log for the application.</t>
+<t>If instead a confirmation service is used the confirmation log contains an authenticated record of both the authentication events and the transactions for which the authentication was requested.</t>
+</section>
+<section title="Use Scenarios" anchor="Section_1_3">
+<t>A confirmation service complements rather than replaces a traditional authentication scheme. Providing a highly secure and convenient means of authenticating requests that carry a high degree of risk mitigates the risk of using convenient but intrinsically low security techniques for other actions.</t>
+</section>
+<section title="Use in Financial Services" anchor="Section_1_4">
+<t>If an attacker is to profit from breaching an account with a financial service such as a bank or a brokerage they must find a way to move money out of the account. Thus, adding bill payment recipients, initiating wire transfers and trading in low volume 'penny stocks' represent high risk activities.</t>
+<t>For example: Bank of Ethel might permit customers to use a simple username and password scheme to gain access to their account to check their balance or to send payments to existing recipients but require use of the second factor confirmation device for a high-risk transaction such as adding a new payee or making a substantially higher payment than normal.</t>
+</section>
+<section title="Machine Binding" anchor="Section_1_5">
+<t>A second factor confirmation service may be combined with a machine level authentication scheme to permit a transparent form of authentication for low risk transactions.</t>
+<t>For example: Alice stores her low risk authentication credentials (e.g. usernames and passwords) using a 'cloud' service. When she wishes to use those credentials an agent on her personal machine fetches credentials from the cloud service as necessary. When Alice wishes to access a site from a different machine she receives a confirmation request on her mobile device to grant access from that machine.</t>
+<t>Use of such a mechanism is clearly more satisfactory when suitable cryptographic protocols such as SAML or Kerberos are employed to limit the disclosure and hence possible compromise of the credentials. The specification of such protocols is outside the scope of this document.</t>
+</section>
+<section title="Tethered Use" anchor="Section_1_6">
+<t>Although Mesh/Confirm is designed for use in a three-party scenario, there are situations in which a two party mode may be preferred.</t>
+<t>For example: Bob is a roadwarrior who requires access to confidential documents stored on his laptop device from anywhere in the world, including locations where Internet access is not possible. To permit access in such circumstances, Bob's Mesh/Confirm client supports use of a tethered mode in which the mobile device is connected via Bluetooth or plugged into his laptop via a USB port.</t>
+<t>For example: Carol is a network manager of a large computing facility that uses Mesh/Confirm to authenticate and track all changes to critical resources. Since Mesh/Confirm is itself a network resource a bootstrap consideration arises: How can Carol confirm her network configuration requests using Mesh/Confirm when the network itself is down? Support for a tethered mode in which the Mesh/Confirm device communicates via USB or similar wired protocol allows this use case to be supported.</t>
+<t>While availability of a tethered mode is clearly essential if Mesh/Confirm is to be used in certain applications, support for this feature outside the scope of this version of the specification.</t>
+</section>
+<section title="Co-Browser" anchor="Section_1_7">
+<t>While Mesh/Confirm is designed for deployment on a secondary device, deployment on the same device as the one for which confirmation is being requested is also possible and can provide security benefits.</t>
+<t>Modern Web browsers are large and complex with many features such as support for mobile code that are incompatible with a high security environment. Separating the confirmation protocol from the Web Browsing protocol permits implementation in a minimal client designed to permit detailed security analysis. Such a client might be embedded in or support means of secure interaction with a trustworthy operating system component.</t>
+<t>While this means of deployment does not provide a true second factor confirmation, it is likely to provide a sufficient degree of authentication for many transactions.</t>
+</section>
+</section>
+<section title="Architecture" anchor="Section_2">
+<t>Mesh/Confirm is a Web Service that permits an Enquirer to request that a User confirm or reject a specified action. If the user responds, the response is signed with a digital signature under a key that is unique to the user account, the client and the device.</t>
+<section title="Parties" anchor="Section_2_1">
+<t>Each Mesh/Confirm protocol interaction takes place between a connection pair of the following parties:</t>
+<t>Enquirer</t>
+<t>A party that initiates a confirmation request.</t>
+<t>User</t>
+<t>The User is the person being asked to grant or refuse confirmation. A User MAY have multiple accounts with multiple Broker Services.</t>
+<t>User Device</t>
+<t>A device that the user has bound to their broker account.</t>
+<t>Broker</t>
+<t>A clearing house that stores and forwards requests from Initiators to Users Device and responses from Users to Initiators. The Broker is only trusted to perform routing filtering and recording of requests and responses. The Broker is not trusted with respect to the responses returned.</t>
+<t>The communication between the parties is shown in Figure 1.</t>
+<figure>
+<artwork>
+<![CDATA[+-------------+         +------------+         +-------------+
+|  Enquirer   | <-----> |   Broker   | <------ |   Device    |
++-------------+         +------------+         +-------------+
+                                                      ^
+                                                      |
+                                                      V
+                                               +-------------+
+                                               |     User    |
+                                               +-------------+]]></artwork>
+</figure>
+<t>Figure 1. Mesh/Confirm Parties</t>
+</section>
+<section title="Accounts" anchor="Section_2_2">
+<t>Users are identified by means of an account identifier. The display presentation of an account identifier is the form of an RFC2822 email address identifier without the enclosing angle braces, for example:</t>
+<t>alice@example.com</t>
+<t>The account identifier is used by the User when registering the use of the confirmation service with a Broker.</t>
+</section>
+<section title="Open and Closed Services" anchor="Section_2_3">
+<t>A Mesh/Confirm service MAY be Open or Closed. An Open service provider provides Mesh/Confirm service to the general public. A Closed service provider only provides service to a specific community.</t>
+<t>For example: An Internet Service Provider or DNS Registrar might provide an open Mesh/Confirm service as a part of their standard service offering to customers. An employer might operate a closed Mesh/Confirm service to be used for company business.</t>
+<t>include=Examples\ExamplesConfirm.md</t>
+<t>include=Generated\SchemaConfirm.md</t>
+</section>
+</section>
+<section title="Simple Request Markup Language (SRMLv1)" anchor="Section_3">
+<t>Confirmation requests are posted in SRML, a deliberately limited subset of HTML. SRML is limited to four elements and one attribute. These are:</t>
+<t/>
+<t>The top-level element for an SRML request</t>
+<t/>
+</section>
+<section title="Heading Text&lt;/h1&gt;" anchor="Section_4">
+<t>Heading</t>
+<t/>
+<t>Running text</t>
+<t/>
+<t>Paragraph</t>
+<t>User option</t>
+<t>Button specifying a value that the user can select.</t>
+<t>While SRML is loosely based on the HTML forms markup, there are important differences. The HTML markup model supports multiple document types of which forms are only one and a single document may contain multiple forms with multiple different action values. In an SRML document is a single form and the form action to be performed is impicit in the presentation of the document to the user.</t>
+<section title="XML Schema and Content Type Identifier" anchor="Section_4_1">
+<t>The MIME Content Type and schema identifier for SRML are</t>
+<t>Content-Type</t>
+<t>text/xml    </t>
+<t>xmlns</t>
+<t>http://hallambaker.com/Schemas/srml.xsd</t>
+<t>The schema is</t>
+<t>include=Schemas\srml.md</t>
+</section>
+<section title="Design considerations and future options" anchor="Section_4_2">
+<t>The capabilities of SRML are intentionally limited to the bare minimum. It should be possible to make use of SRML to display options to the user on a smartwatch or other device with a highly constrained display.</t>
+<t>The function of the confirmation service is to provide confirmation of an action that was initiated elsewhere. It is therefore inappropriate for this or any future version of SRML to offer extensive data entry or validation capabilities. SRML applications MUST NOT support any form of scripting or active code extensions to SRML content.</t>
+<t>It might prove advantageous in the future to extend the input types to include simple form elements such as checkboxes, numeric fields, text choices and possibly free form text.</t>
+</section>
+</section>
+<section title="Request Authentication and Authorization" anchor="Section_5">
+<t>The current version of the protocol does not address the question of how service requests are to be authorized or authenticated.</t>
+<t>A triple lock security approach is anticipated in which cryptographic enhancements are applied at three separate levels to provide different security controls:</t>
+<t>Transport Layer</t>
+<t>Basic confidentiality and integrity controls are provided using TLS with a server side certificate. It is necessary to provide encryption at this layer to protect confidentiality of meta-data.</t>
+<t>Presentation Layer</t>
+<t>Mutual authentication of the client and service is provided at the presentation layer. In the default JWB binding, this is provided within the HTTP content payload. The use of encryption at the presentation is optional.</t>
+<t>Data Layer</t>
+<t>Confirmation requests and responses are signed by the Enquirer and Responder respectively. This provides for non-repudiation of messages. </t>
+<section title="Service Authentication" anchor="Section_5_1">
+<t>Since the responder is identified by the responder's account, Minimal Validation is sufficient but Domain Validation is preferred. These credentials MAY be bound using a strong DNS name.</t>
+</section>
+<section title="Responder Authentication" anchor="Section_5_2">
+<t>The responder is authenticated by means of the user's Mesh profile.</t>
+<t>The ability to delegate access to a confirmation account might be useful in certain circumstances. </t>
+</section>
+<section title="Enquirer Authentication" anchor="Section_5_3">
+<t>Authentication of the Enquirer presents very different challenges to authentication of the Service or the Responder as it is the only part of the service that is 'open'. It is thus likely to be the target of abuse (i.e. spam). It is therefore important that the authentication mechanism enable appropriate authorization and accountability strategies.</t>
+<t>For example, one strategy to control abuse might be to permit enquirers to post requests if they were signed with a key authenticated by an Extended Validation certificate or were sent by an enquirer approved by the responder to whom the request was directed. In the first case, abuse is mitigated by an accountability control, in the second by explicit authorization of the sender.</t>
+<t>While it is possible to implement such a strategy in the responder application, this approach is clearly limiting. Filtering of messages in the service avoids the need to synchronize policy across the user's confirmation devices and protects possibly limited wireless bandwidth by performing policy enforcement in the service rather than the responder's device.</t>
+<t>Mesh/Confirm does not provide a mechanism for specifying such a security policy. Leaving this requirement to a separate service allows for a protocol that can specify policy for multiple modes of communication. For instance, a customer of a bank might permit the bank to send confirmation messages and to deliver statements by email but not to make contact by voice or video calls.</t>
+</section>
+</section>
+<section title="Security Considerations" anchor="Section_6">
+<t>Consider spam control, how do users prevent unwanted requests? (EV accreditation, filtering at Broker)</t>
+<t>People deploying Mesh/Confirm as a means of controlling access to networking infrastructure must consider the bootstrap issue. In particular since Mesh/Confirm requires Internet access the network administrator must ensure that it is possible to manage the network resources necessary to support an SXS service when that service is down.</t>
+</section>
+<section title="Acknowledgements" anchor="Section_7">
+</section>
+</middle>
+<back>
+</back>
+</rfc>

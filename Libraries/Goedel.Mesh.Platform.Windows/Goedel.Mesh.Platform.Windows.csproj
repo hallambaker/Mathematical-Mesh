@@ -47,6 +47,7 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="MailClientCatalog.cs" />
+    <Compile Include="NamespaceDoc.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RegisteredApplication.cs" />
     <Compile Include="RegisteredDevice.cs" />
@@ -102,4 +103,10 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>cd ..\..\  &amp;&amp; VSPreBuild</PreBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent>VSPostBuild</PostBuildEvent>
+  </PropertyGroup>
 </Project>

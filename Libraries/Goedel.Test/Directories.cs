@@ -10,12 +10,12 @@ namespace Goedel.Test {
         /// <summary>
         /// Directory for common test input data
         /// </summary>
-        public static string CommonData = @"..\..\..\CommonData\";
+        public static string CommonData = @"..\..\..\..\CommonData\";
 
         /// <summary>
         /// Directory for test output data
         /// </summary>
-        public static string Results = @"..\..\..\Results\";
+        public static string Results = @"..\..\..\..\Results\";
 
 
         public static string TestKey_SSH2 = CommonData + "TestKey_ssh2.pub";

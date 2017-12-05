@@ -1,0 +1,243 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Libraries\Core\Goedel.ASN\Goedel.ASN.csproj" />
+    <ProjectReference Include="..\..\Libraries\Core\Goedel.Command\Goedel.Command.csproj" />
+    <ProjectReference Include="..\..\Libraries\Core\Goedel.Discovery\Goedel.Discovery.csproj" />
+    <ProjectReference Include="..\..\Libraries\Core\Goedel.FSR\Goedel.FSR.csproj" />
+    <ProjectReference Include="..\..\Libraries\Core\Goedel.IO\Goedel.IO.csproj" />
+    <ProjectReference Include="..\..\Libraries\Core\Goedel.Registry\Goedel.Registry.csproj" />
+    <ProjectReference Include="..\..\Libraries\Core\Goedel.Utilities\Goedel.Utilities.csproj" />
+    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Container\Goedel.Cryptography.Container.csproj" />
+    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Jose\Goedel.Cryptography.Jose.csproj" />
+    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.KeyFile\Goedel.Cryptography.KeyFile.csproj" />
+    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Standard\Goedel.Cryptography.Standard.csproj" />
+    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Ticket\Goedel.Cryptography.Ticket.csproj" />
+    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Windows\Goedel.Cryptography.Windows.csproj" />
+    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography\Goedel.Cryptography.csproj" />
+    <ProjectReference Include="..\..\Libraries\Goedel.Mesh.Platform.Windows\Goedel.Mesh.Platform.Windows.csproj" />
+    <ProjectReference Include="..\..\Libraries\Goedel.Mesh\Goedel.Mesh.csproj" />
+    <ProjectReference Include="..\..\Libraries\Goedel.Persistence\Goedel.Persistence.csproj" />
+    <ProjectReference Include="..\..\Libraries\Goedel.Protocol.Debug\Goedel.Protocol.Debug.csproj" />
+    <ProjectReference Include="..\..\Libraries\Goedel.Protocol.Exchange.Server\Goedel.Protocol.Exchange.Server.csproj" />
+    <ProjectReference Include="..\..\Libraries\Goedel.Protocol.Exchange\Goedel.Protocol.Exchange.csproj" />
+    <ProjectReference Include="..\..\Libraries\Goedel.Protocol\Goedel.Protocol.csproj" />
+    <ProjectReference Include="..\..\Protocols\Account\Goedel.Account.Client\Goedel.Account.Client.csproj" />
+    <ProjectReference Include="..\..\Protocols\Account\Goedel.Account.Server\Goedel.Account.Server.csproj" />
+    <ProjectReference Include="..\..\Protocols\Account\Goedel.Account\Goedel.Account.csproj" />
+    <ProjectReference Include="..\..\Protocols\Confirm\Goedel.Confirm.Client\Goedel.Confirm.Client.csproj" />
+    <ProjectReference Include="..\..\Protocols\Confirm\Goedel.Confirm.Server\Goedel.Confirm.Server.csproj" />
+    <ProjectReference Include="..\..\Protocols\Confirm\Goedel.Confirm\Goedel.Confirm.csproj" />
+    <ProjectReference Include="..\..\Protocols\Mesh\Goedel.Mesh.Portal.Client\Goedel.Mesh.Portal.Client.csproj" />
+    <ProjectReference Include="..\..\Protocols\Mesh\Goedel.Mesh.Portal.Server\Goedel.Mesh.Portal.Server.csproj" />
+    <ProjectReference Include="..\..\Protocols\Mesh\Goedel.Mesh.Portal\Goedel.Mesh.Portal.csproj" />
+    <ProjectReference Include="..\..\Protocols\Recrypt\Goedel.Recrypt.Client\Goedel.Recrypt.Client.csproj" />
+    <ProjectReference Include="..\..\Protocols\Recrypt\Goedel.Recrypt.Server\Goedel.Recrypt.Server.csproj" />
+    <ProjectReference Include="..\..\Protocols\Recrypt\Goedel.Recrypt\Goedel.Recrypt.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Apps\UserGuideApps.cs">
+      <DependentUpon>UserGuideApps.script</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Apps\UserGuideCatalog.cs">
+      <DependentUpon>UserGuideCatalog.script</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Apps\UserGuideConfirm.cs">
+      <DependentUpon>UserGuideConfirm.script</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Apps\UserGuideMail.cs">
+      <DependentUpon>UserGuideMail.script</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Apps\UserGuideRecrypt.cs">
+      <DependentUpon>UserGuideRecrypt.script</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Apps\UserGuideSSH.cs">
+      <DependentUpon>UserGuideSSH.script</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Exceptions.cs">
+      <DependentUpon>Exceptions.exceptional</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Main.cs">
+      <DependentUpon>Main.command</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Mesh\UserGuideConnecting.cs">
+      <DependentUpon>UserGuideConnecting.script</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Mesh\UserGuideCreate.cs">
+      <DependentUpon>UserGuideCreate.script</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Mesh\UserGuideDisaster.cs">
+      <DependentUpon>UserGuideDisaster.script</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Mesh\UserGuideMesh.cs">
+      <DependentUpon>UserGuideMesh.script</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Mesh\UserGuideQuickStart.cs">
+      <DependentUpon>UserGuideQuickStart.script</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Mesh\UserGuideServer.cs">
+      <DependentUpon>UserGuideServer.script</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Platform\UserGuideDocker.cs">
+      <DependentUpon>UserGuideDocker.script</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Platform\UserGuideLinux.cs">
+      <DependentUpon>UserGuideLinux.script</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Platform\UserGuideOSX.cs">
+      <DependentUpon>UserGuideOSX.script</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Platform\UserGuidePlatform.cs">
+      <DependentUpon>UserGuidePlatform.script</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Platform\UserGuideWindows.cs">
+      <DependentUpon>UserGuideWindows.script</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="ToDo.cs">
+      <DependentUpon>ToDo.script</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="UserGuide.cs">
+      <DependentUpon>UserGuide.script</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Apps\UserGuideApps.script">
+      <LastGenOutput>UserGuideApps.cs</LastGenOutput>
+      <Generator>gscript</Generator>
+    </None>
+    <None Update="Apps\UserGuideCatalog.script">
+      <LastGenOutput>UserGuideCatalog.cs</LastGenOutput>
+      <Generator>gscript</Generator>
+    </None>
+    <None Update="Apps\UserGuideConfirm.script">
+      <LastGenOutput>UserGuideConfirm.cs</LastGenOutput>
+      <Generator>gscript</Generator>
+    </None>
+    <None Update="Apps\UserGuideMail.script">
+      <LastGenOutput>UserGuideMail.cs</LastGenOutput>
+      <Generator>gscript</Generator>
+    </None>
+    <None Update="Apps\UserGuideRecrypt.script">
+      <LastGenOutput>UserGuideRecrypt.cs</LastGenOutput>
+      <Generator>gscript</Generator>
+    </None>
+    <None Update="Apps\UserGuideSSH.script">
+      <LastGenOutput>UserGuideSSH.cs</LastGenOutput>
+      <Generator>gscript</Generator>
+    </None>
+    <None Update="Exceptions.exceptional">
+      <LastGenOutput>Exceptions.cs</LastGenOutput>
+      <Generator>exceptional</Generator>
+    </None>
+    <None Update="Main.command">
+      <LastGenOutput>Main.cs</LastGenOutput>
+      <Generator>CommandCS</Generator>
+    </None>
+    <None Update="Mesh\UserGuideConnecting.script">
+      <LastGenOutput>UserGuideConnecting.cs</LastGenOutput>
+      <Generator>gscript</Generator>
+    </None>
+    <None Update="Mesh\UserGuideCreate.script">
+      <LastGenOutput>UserGuideCreate.cs</LastGenOutput>
+      <Generator>gscript</Generator>
+    </None>
+    <None Update="Mesh\UserGuideDisaster.script">
+      <LastGenOutput>UserGuideDisaster.cs</LastGenOutput>
+      <Generator>gscript</Generator>
+    </None>
+    <None Update="Mesh\UserGuideMesh.script">
+      <LastGenOutput>UserGuideMesh.cs</LastGenOutput>
+      <Generator>gscript</Generator>
+    </None>
+    <None Update="Mesh\UserGuideQuickStart.script">
+      <LastGenOutput>UserGuideQuickStart.cs</LastGenOutput>
+      <Generator>gscript</Generator>
+    </None>
+    <None Update="Mesh\UserGuideServer.script">
+      <LastGenOutput>UserGuideServer.cs</LastGenOutput>
+      <Generator>gscript</Generator>
+    </None>
+    <None Update="Platform\UserGuideDocker.script">
+      <LastGenOutput>UserGuideDocker.cs</LastGenOutput>
+      <Generator>gscript</Generator>
+    </None>
+    <None Update="Platform\UserGuideLinux.script">
+      <LastGenOutput>UserGuideLinux.cs</LastGenOutput>
+      <Generator>gscript</Generator>
+    </None>
+    <None Update="Platform\UserGuideOSX.script">
+      <LastGenOutput>UserGuideOSX.cs</LastGenOutput>
+      <Generator>gscript</Generator>
+    </None>
+    <None Update="Platform\UserGuidePlatform.script">
+      <LastGenOutput>UserGuidePlatform.cs</LastGenOutput>
+      <Generator>gscript</Generator>
+    </None>
+    <None Update="Platform\UserGuideWindows.script">
+      <LastGenOutput>UserGuideWindows.cs</LastGenOutput>
+      <Generator>gscript</Generator>
+    </None>
+    <None Update="ToDo.script">
+      <LastGenOutput>ToDo.cs</LastGenOutput>
+      <Generator>gscript</Generator>
+    </None>
+    <None Update="UserGuide.script">
+      <LastGenOutput>UserGuide.cs</LastGenOutput>
+      <Generator>gscript</Generator>
+    </None>
+  </ItemGroup>
+
+  <Import Project="..\..\Libraries\MeshApps\MeshApps.projitems" Label="Shared" />
+
+  <Import Project="..\..\Libraries\MeshMan\MeshMan.projitems" Label="Shared" />
+
+</Project>

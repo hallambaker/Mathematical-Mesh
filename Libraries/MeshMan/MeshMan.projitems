@@ -51,5 +51,6 @@
       <LastGenOutput>SchemaResults.cs</LastGenOutput>
       <Generator>Protogen</Generator>
     </None>
+    <None Include="$(MSBuildThisFileDirectory)VS.Make" />
   </ItemGroup>
 </Project>

@@ -40,11 +40,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="NamespaceDoc.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="VS.Make" />
   </ItemGroup>
   <Import Project="..\..\Goedel.Command\Goedel.Command.projitems" Label="Shared" />
   <Import Project="..\..\Goedel.FSR\Goedel.FSR.projitems" Label="Shared" />
   <Import Project="..\..\Goedel.Registry\Goedel.Registry.projitems" Label="Shared" />
   <Import Project="..\..\Goedel.Utilities\Goedel.Utilities.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>cd ..\..\  &amp;&amp; VSPreBuild</PreBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent>VSPostBuild</PostBuildEvent>
+  </PropertyGroup>
 </Project>

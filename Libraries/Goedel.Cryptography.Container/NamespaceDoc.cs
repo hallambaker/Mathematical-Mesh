@@ -1,4 +1,8 @@
-﻿namespace Goedel.Cryptography.Container {
+﻿#if !(__MonoCS__)
+[assembly: System.Reflection.AssemblyKeyName("SigningKeyDeveloper")]
+#endif
+
+namespace Goedel.Cryptography.Container {
 
     /// <summary>
     /// Classes to manage a JBCD Container file.

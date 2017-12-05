@@ -18,30 +18,14 @@
     <ProjectReference Include="..\Goedel.Utilities\Goedel.Utilities.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Compile Update="CommandLex.cs">
-      <DependentUpon>CommandLex.fsm</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Update="CommandSplit.cs">
-      <DependentUpon>CommandSplit.fsm</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="CommandLex.fsm">
-      <LastGenOutput>CommandLex.cs</LastGenOutput>
-      <Generator>fsrcs</Generator>
-    </None>
-    <None Update="CommandSplit.fsm">
-      <LastGenOutput>CommandSplit.cs</LastGenOutput>
-      <Generator>fsrcs</Generator>
-    </None>
-  </ItemGroup>
-
   <Import Project="..\..\Goedel.Command\Goedel.Command.projitems" Label="Shared" />
+
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="VSPreBuild" />
+  </Target>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="VSPostBuild" />
+  </Target>
 
 </Project>

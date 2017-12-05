@@ -1,4 +1,8 @@
-﻿namespace Goedel.Cryptography.Linux {
+﻿#if !(__MonoCS__)
+[assembly: System.Reflection.AssemblyKeyName("SigningKeyDeveloper")]
+#endif
+
+namespace Goedel.Cryptography.Linux {
 
     /// <summary>
     /// Cryptographic implementation bound to the Linux platform. Although the 

@@ -16,7 +16,6 @@
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Lexer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)LexReader.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)NamespaceDoc.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)Exceptions.exceptional">

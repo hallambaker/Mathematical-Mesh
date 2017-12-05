@@ -3,6 +3,7 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.0</TargetFramework>
+    <AssemblyName>meshportal</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
@@ -23,24 +24,20 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="ServerCommands.cs">
-      <DependentUpon>ServerCommands.command</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
     <None Update=".dockerignore">
       <DependentUpon>Dockerfile</DependentUpon>
-    </None>
-    <None Update="ServerCommands.command">
-      <LastGenOutput>ServerCommands.cs</LastGenOutput>
-      <Generator>CommandCS</Generator>
     </None>
   </ItemGroup>
 
   <Import Project="..\meshportal\meshportal.projitems" Label="Shared" />
+
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="VSPreBuild" />
+  </Target>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="cd $(ProjectDir) &amp;&amp; VSPostBuildWindows $(TargetDir)" />
+  </Target>
 
 
 </Project>

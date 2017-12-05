@@ -20,7 +20,6 @@
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)IsTrue.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Linewrap.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)NamespaceDoc.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)NumberSplit.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)RFC3339.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)RFC822.cs" />
@@ -33,5 +32,6 @@
     </None>
     <None Include="$(MSBuildThisFileDirectory)Index.md" />
     <None Include="$(MSBuildThisFileDirectory)Makefile" />
+    <None Include="$(MSBuildThisFileDirectory)VS.Make" />
   </ItemGroup>
 </Project>

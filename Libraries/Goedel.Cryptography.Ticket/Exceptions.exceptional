@@ -8,4 +8,4 @@ Namespace Goedel.Cryptography.Ticket
 		Exception BadTicket
 			Console "The ticket could not be read"
 			Description
-				|
+				|The ticket was in an unrecognized format or has been corrupted.

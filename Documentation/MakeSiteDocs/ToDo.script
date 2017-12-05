@@ -1,0 +1,31 @@
+﻿#using System.Text
+#using Goedel.Mesh
+#using Goedel.Protocol
+#xclass ExampleGenerator ExampleGenerator
+
+
+#file ToDo "todo.md" CreateExamples Index
+<title>User Guide
+<titlebanner><h1>To Do List
+
+<h4>Issues noted in the documentation.
+</titlebanner>
+<leftmain>
+
+<h1>Current count #{ToDoList.Count}
+
+<ul>
+#foreach (var Entry in ToDoList)
+
+<li><b>#{Entry.Key}</b>#{Entry.Value}
+
+#end foreach 
+</ul>
+
+#% ToDoList = null; // Cause future attempts to add entries to cause an error.
+#end file
+
+
+
+#end xclass
+#end using

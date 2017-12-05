@@ -1,0 +1,10 @@
+﻿
+
+Namespace Goedel.Protocol.Exchange  
+
+
+	Exception InvalidAddress
+        Console "Invalid service address"
+		Description
+			|The service address specified is invalid.	
+    

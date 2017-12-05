@@ -1,4 +1,8 @@
-﻿namespace Goedel.Test {
+﻿#if !(__MonoCS__)
+[assembly: System.Reflection.AssemblyKeyName("SigningKeyDeveloper")]
+#endif
+
+namespace Goedel.Test {
 
     /// <summary>
     /// Various functions to support unit testing.

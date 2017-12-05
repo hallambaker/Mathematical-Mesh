@@ -1,0 +1,45 @@
+﻿#using System.Text
+#using Goedel.Mesh
+#using Goedel.Protocol
+#xclass ExampleGenerator ExampleGenerator
+
+
+#file UserGuideLinux "Platform/Linux.md" CreateExamples Examples
+<title>Linux
+<titlebanner><h1>Linux
+
+<h4>Using the Mesh on Linux
+</titlebanner>
+<leftmain>
+
+<h1>Installation
+
+Currently only a tar file is provided.
+
+<h1>Platform specific features
+
+<h2>Profile storage
+
+Profiles are stored in the directory <tt>~/.Mesh/Profiles</tt>.
+
+<h2>Key storage
+
+Profiles are stored in the directory <tt>~/.Mesh/Keystore</tt>.
+
+<h1>Further work
+
+Use of an encrypting file system to protect the keys is highly desirable. 
+
+On Ubuntu, the <a="https://help.ubuntu.com/community/EncryptedPrivateDirectory">Encrypted
+Private Directory</a> <tt>~/.private</tt> seems to be ideal.
+
+For this to be regarded as being supported, the meshman tool should support 
+configuration of encrypted file system directories with escrow of the private key.
+
+
+
+#end file
+
+
+#end xclass
+#end using

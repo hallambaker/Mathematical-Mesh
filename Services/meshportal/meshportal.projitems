@@ -18,6 +18,7 @@
       <LastGenOutput>ServerCommands.cs</LastGenOutput>
       <Generator>CommandCS</Generator>
     </None>
+    <None Include="$(MSBuildThisFileDirectory)VS.Make" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)DispatchServerMesh.cs" />

@@ -1,4 +1,8 @@
-﻿namespace Goedel.Cryptography {
+﻿#if !(__MonoCS__)
+[assembly: System.Reflection.AssemblyKeyName("SigningKeyDeveloper")]
+#endif
+
+namespace Goedel.Cryptography {
 
     /// <summary>
     /// Core class for cryptographic algorithm handling. Although .NET provides classes

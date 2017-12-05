@@ -18,42 +18,16 @@ namespace Goedel.Command {
     /// </summary>
     public abstract class CommandLineInterpreterBase {
 
-
-        ///// <summary>The command entries</summary>
-        //public static SortedDictionary<string, DescribeCommand> Entries;
-        ///// <summary>The default command.</summary>
-        //public static DescribeCommandEntry DefaultCommand;
-        ///// <summary>Description of the comman</summary>
-        //public static string Description = "<Not specified>";
-
         /// <summary>The default flag indicator for display to terminal, this is a forward slash / for Windows
         /// and a double dash -- for UNIX.</summary>
         public static char FlagIndicator = '/';
 
-        ///// <summary>
-        ///// Provide the summary of the command.
-        ///// </summary>
-        ///// <param name="Dispatch">The command description.</param>
-        ///// <param name="args">The set of arguments.</param>
-        ///// <param name="index">The first unparsed argument.</param>
-        //public static void Brief (DispatchShell Dispatch, string[] args, int index) {
-        //    Brief();
-        //    }
-
-        ///// <summary>
-        ///// Describe the application invoked by the command.
-        ///// </summary>
-        ///// <param name="Dispatch">The command description.</param>
-        ///// <param name="args">The set of arguments.</param>
-        ///// <param name="index">The first unparsed argument.</param>
-        //public static void About (DispatchShell Dispatch, string[] args, int index) {
-        //    FileTools.About();
-        //    }
-
-
         /// <summary>
-        /// Provide the summary of the command.
+        /// Provide the summary of a command set
         /// </summary>
+        /// <param name="DefaultCommand">The description of the default command.</param>
+        /// <param name="Description">The command description</param>
+        /// <param name="Entries">The command entries</param>
         public static void Brief (
                     string Description, 
                     DescribeCommandEntry DefaultCommand,

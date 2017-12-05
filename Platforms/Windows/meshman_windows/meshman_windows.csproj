@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{F05C2BC9-6737-47BB-8C25-37628F3CE02A}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>meshman_windows</RootNamespace>
+    <AssemblyName>meshman</AssemblyName>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Main.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="VS.Make" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Libraries\Core\Goedel.Command\Goedel.Command.csproj">
+      <Project>{92374241-b365-4366-8c08-6db92b0460b7}</Project>
+      <Name>Goedel.Command</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Libraries\Core\Goedel.FSR\Goedel.FSR.csproj">
+      <Project>{70abeecf-b15c-4d36-83d3-df9508bee1c5}</Project>
+      <Name>Goedel.FSR</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Libraries\Core\Goedel.IO\Goedel.IO.csproj">
+      <Project>{e9341173-6212-4a7a-8a59-21fd11c32360}</Project>
+      <Name>Goedel.IO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Libraries\Core\Goedel.Utilities\Goedel.Utilities.csproj">
+      <Project>{171f782c-4d04-40bd-8d12-ead48eefb79a}</Project>
+      <Name>Goedel.Utilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Libraries\Goedel.Cryptography.KeyFile\Goedel.Cryptography.KeyFile.csproj">
+      <Project>{8340d6c4-d1ba-4369-b9cc-0e0eb36387d7}</Project>
+      <Name>Goedel.Cryptography.KeyFile</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Libraries\Goedel.Cryptography.Windows\Goedel.Cryptography.Windows.csproj">
+      <Project>{b0e63b96-6d97-44ff-bc12-1538c3633997}</Project>
+      <Name>Goedel.Cryptography.Windows</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Libraries\Goedel.Cryptography\Goedel.Cryptography.csproj">
+      <Project>{b8319c05-ea98-405d-94eb-acb9de6da975}</Project>
+      <Name>Goedel.Cryptography</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Libraries\Goedel.Mesh.Platform.Windows\Goedel.Mesh.Platform.Windows.csproj">
+      <Project>{544eed84-501e-4b48-8ae4-ddaf459dee28}</Project>
+      <Name>Goedel.Mesh.Platform.Windows</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Libraries\Goedel.Mesh\Goedel.Mesh.csproj">
+      <Project>{a93fe437-9540-49a5-8fce-a190436db5db}</Project>
+      <Name>Goedel.Mesh</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Libraries\Goedel.Protocol\Goedel.Protocol.csproj">
+      <Project>{5b919409-8341-4d0a-bcdf-43a6841b6d7b}</Project>
+      <Name>Goedel.Protocol</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Protocols\Mesh\Goedel.Mesh.Portal.Client\Goedel.Mesh.Portal.Client.csproj">
+      <Project>{d1a9200f-a58b-410b-b8cc-52346c4741ac}</Project>
+      <Name>Goedel.Mesh.Portal.Client</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Protocols\Mesh\Goedel.Mesh.Portal\Goedel.Mesh.Portal.csproj">
+      <Project>{87066fce-63e6-4118-9e38-18e978ef039d}</Project>
+      <Name>Goedel.Mesh.Portal</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="..\..\..\Libraries\MeshMan\MeshMan.projitems" Label="Shared" />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>cd $(ProjectDir) &amp;&amp; VSPreBuild</PreBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent>cd $(ProjectDir) &amp;&amp; VSPostBuildWindows $(TargetDir)</PostBuildEvent>
+  </PropertyGroup>
+</Project>

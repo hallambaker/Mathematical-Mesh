@@ -1,0 +1,1 @@
+<Playlist Version="1.0"><Add Test="UnitTestProject1.Tests.TestDpapi_Description" /><Add Test="UnitTestProject1.Tests.TestDpapi_Entropy" /><Add Test="UnitTestProject1.Tests.TestDapi" /><Add Test="UnitTestProject1.Tests.TestDpapi_Fail" /></Playlist>

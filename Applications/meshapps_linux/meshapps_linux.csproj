@@ -3,6 +3,7 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.0</TargetFramework>
+    <AssemblyName>meshapps</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
@@ -22,5 +23,13 @@
   </ItemGroup>
 
   <Import Project="..\..\Libraries\MeshApps\MeshApps.projitems" Label="Shared" />
+
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="VSPreBuild" />
+  </Target>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="VSPostBuildLinux" />
+  </Target>
 
 </Project>

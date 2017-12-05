@@ -1,0 +1,1 @@
+<Playlist Version="1.0"><Add Test="Goedel.Cryptography.Test.TestCryptography.TestDH1" /><Add Test="Goedel.Cryptography.Test.TestCryptography.TestDH2" /></Playlist>

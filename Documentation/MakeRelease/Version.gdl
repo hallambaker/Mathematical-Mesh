@@ -1,0 +1,24 @@
+﻿Copyright "Comodo Group Inc." "2017" MITLicense
+
+Class Goedel.Tool.Version Release
+	TopType Version
+		Code			String
+		Entries			List Choice
+			Platform
+			Description
+			Stable
+	
+	Type Platform
+		Name			String
+		Entries			List Choice
+			File
+	
+	Type File
+		Name			String
+		RID				String
+		Type			String
+
+	Type Description
+		Text			Text
+	
+	Type Stable

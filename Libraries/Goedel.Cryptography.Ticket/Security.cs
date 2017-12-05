@@ -79,10 +79,12 @@ namespace Goedel.Cryptography.Ticket {
 
 
         /// <summary>Convert base 64 encoded string to byte array.</summary>
-        public static byte[] ConvertFromBase64String(String s) {
+        /// <param name="Base64Data">The string to convert</param>
+        /// <returns>The converted string.</returns>
+        public static byte[] ConvertFromBase64String(String Base64Data) {
             byte[] result;
             try {
-                result = BaseConvert.FromBase64urlString(s);
+                result = BaseConvert.FromBase64urlString(Base64Data);
                 return result;
                 }
             catch {

@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "MakeSiteDocs": {
+      "commandName": "Project",
+      "workingDirectory": "C:\\Users\\hallam\\Work\\WebPublish\\Sources\\prismproof\\UserGuide\\"
+    }
+  }
+}

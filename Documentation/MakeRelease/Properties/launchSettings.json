@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "MakeRelease": {
+      "commandName": "Project",
+      "workingDirectory": "C:\\Users\\hallam\\Work\\WebPublish"
+    }
+  }
+}

@@ -23,7 +23,6 @@
       <AutoGen>True</AutoGen>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Initialize.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)NamespaceDoc.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Parse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Platform.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ServiceDescription.cs" />
@@ -37,5 +36,6 @@
     <None Include="$(MSBuildThisFileDirectory)Index.md" />
     <None Include="$(MSBuildThisFileDirectory)Makefile" />
     <None Include="$(MSBuildThisFileDirectory)todo.md" />
+    <None Include="$(MSBuildThisFileDirectory)VS.Make" />
   </ItemGroup>
 </Project>

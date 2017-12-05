@@ -12,6 +12,5 @@
     <Compile Include="$(MSBuildThisFileDirectory)Debug.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DeleteDirectory.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extension.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)NamespaceDoc.cs" />
   </ItemGroup>
 </Project>

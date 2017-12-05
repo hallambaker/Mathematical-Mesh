@@ -1,0 +1,98 @@
+﻿#script 1.0
+#license MITLicense
+#xclass Goedel.Tool.Version MakeRelease
+
+#method MakeIndex Distribution Distribution
+<title>Downloads
+<titlebanner><h1>Downloads
+
+<h4><icon="windows"> <icon="apple"> <icon="linux"> 
+</titlebanner>
+<leftmain>
+
+Currently, only the line mode Mesh tools are being developed, the GUI tool provided earlier will 
+be re-launched in due course.
+
+During the beta test period, it seems simplest to deliver the binary distributions as simple ZIP files.
+To use them, simply unpack the file to a directory and either add that directory to the shell
+search path or copy the contents to a directory already in the search path. 
+
+When distribution of the GUI tool resumes, there will be platform specific installers for each platform
+once again.
+
+The Mathematical Mesh reference tools are written in C# under the Microsoft .NET Core 2.0 framework
+as Standalone Distribution files. All the files required to run the distribution are provided. It is not
+necessary to install .NET Core first.
+
+There is no separate source file distribution, nor is this planned. To access the source files, clone the 
+<a="https://github.com/hallambaker/Mathematical-Mesh">GitHub repository</a>.
+
+##Latest Stable #!
+#if (Distribution.Stable != null) 
+(#{Distribution.Stable.Code})
+
+#call Describe Distribution.Stable
+#else 
+
+
+&<none&>
+#end if
+
+##Latest Build #!
+#if (Distribution.Latest != null) 
+(#{Distribution.Latest.Code})
+
+#call Describe Distribution.Latest
+#else 
+
+
+&<none&>
+#end if
+
+#!call Describe Distribution.Latest
+
+##Previous Builds
+
+#if (Distribution.Versions.Count ==0) 
+&<none&>
+#else
+#foreach (var Version in Distribution.Versions)
+#call Describe Version
+#end foreach
+#end if
+
+</leftmain>
+#end method
+
+
+#method MakeVersion Version Version
+<title>Downloads
+<titlebanner><h1>Release #{Version}
+
+<h4><icon="windows"> <icon="apple"> <icon="linux"> 
+</titlebanner>
+<leftmain>
+
+#call Describe Version
+
+</leftmain>
+#end method
+
+
+#method Describe Version Version
+
+#foreach (var Platform in Version.Platforms) 
+#####{Platform.PlatformName}
+
+<ul>
+#foreach (var File in Platform.Files) 
+<li> <b>#{File.PlatformDescription}</b> <a="v#{Version.Code}/#{File.Name}" download="#{File.Name}">#{File.Name} <icon="file-archive-o"></a>
+#end foreach
+<ul>
+
+#end foreach
+
+
+#end method
+
+#end xclass
