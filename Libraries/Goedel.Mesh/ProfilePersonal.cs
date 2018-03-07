@@ -64,16 +64,12 @@ namespace Goedel.Mesh {
         /// The active device profile of the local machine that is attached to this
         /// profile.
         /// </summary>
-        public SignedDeviceProfile SignedDeviceProfile {
-            get => DeviceProfile?.SignedDeviceProfile; 
-            }
+        public SignedDeviceProfile SignedDeviceProfile => DeviceProfile?.SignedDeviceProfile;
 
         /// <summary>
         /// Get UDF fingerprint of the profile.
         /// </summary>
-        public override string UDF {
-            get => MasterProfile.Identifier; 
-            }
+        public override string UDF => MasterProfile.Identifier;
 
 
         /// <summary>
@@ -99,12 +95,12 @@ namespace Goedel.Mesh {
         /// <summary>
         /// The parsed master profile associated with this profile
         /// </summary>
-        public MasterProfile MasterProfile { get => SignedMasterProfile.MasterProfile;  }
+        public MasterProfile MasterProfile => SignedMasterProfile.MasterProfile;
 
         /// <summary>
         /// Get the list of administration keys.
         /// </summary>
-        public List<PublicKey> AdministrationKeys { get => MasterProfile.OnlineSignatureKeys; }
+        public List<PublicKey> AdministrationKeys => MasterProfile.OnlineSignatureKeys;
 
 
         /// <summary>
@@ -278,9 +274,7 @@ namespace Goedel.Mesh {
         /// <summary>
         /// The Administration key (if null, this is not an administration profile)
         /// </summary>
-        public KeyPair AdministrationKey {
-            get => MasterProfile.AdministrationKey;
-            }
+        public KeyPair AdministrationKey => MasterProfile.AdministrationKey;
 
 
         /// <summary>
@@ -297,10 +291,6 @@ namespace Goedel.Mesh {
                 Device.UnpackDeviceProfile();
                 }
             }
-
-
-
-
 
         }
 

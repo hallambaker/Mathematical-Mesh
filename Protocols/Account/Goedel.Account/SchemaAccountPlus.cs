@@ -8,6 +8,16 @@ using Goedel.Utilities;
 
 namespace Goedel.Account {
 
+    public partial class AccountData {
+
+        public override string _PrimaryKey => AccountId;
+
+        public override List<KeyValuePair<string, string>> _KeyValues => null ;
+
+
+        }
+
+
     public partial class AccountResponse {
 
         /// <summary>

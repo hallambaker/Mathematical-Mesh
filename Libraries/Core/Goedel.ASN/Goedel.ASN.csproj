@@ -3,9 +3,14 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>Goedel.ASN</RootNamespace>
+    <Configurations>Debug;Release;Focus</Configurations>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>bin\Debug\netstandard2.0\Goedel.ASN.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Focus|AnyCPU'">
     <DocumentationFile>bin\Debug\netstandard2.0\Goedel.ASN.xml</DocumentationFile>
   </PropertyGroup>
 

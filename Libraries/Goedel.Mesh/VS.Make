@@ -39,22 +39,22 @@ ToolTargets = \
 	SchemaMesh.cs
 
 Exceptions.cs : Exceptions.Exceptional 
-	exceptional Exceptions.Exceptional  Exceptions.cs
+	exceptional Exceptions.Exceptional  /cs  Exceptions.cs
 
 Portal.cs : Portal.Protocol 
-	protogen Portal.Protocol  Portal.cs
+	protogen Portal.Protocol  /cs  Portal.cs
 
 SchemaAppMail.cs : SchemaAppMail.protocol 
-	protogen SchemaAppMail.protocol  SchemaAppMail.cs
+	protogen SchemaAppMail.protocol  /cs  SchemaAppMail.cs
 
 SchemaAppSSH.cs : SchemaAppSSH.protocol 
-	protogen SchemaAppSSH.protocol  SchemaAppSSH.cs
+	protogen SchemaAppSSH.protocol  /cs  SchemaAppSSH.cs
 
 SchemaCatalogApps.cs : SchemaCatalogApps.protocol 
-	protogen SchemaCatalogApps.protocol  SchemaCatalogApps.cs
+	protogen SchemaCatalogApps.protocol  /cs  SchemaCatalogApps.cs
 
 SchemaMesh.cs : SchemaMesh.protocol 
-	protogen SchemaMesh.protocol  SchemaMesh.cs
+	protogen SchemaMesh.protocol  /cs  SchemaMesh.cs
 
 
 prebuildRecurse : 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Collections.Generic;
 using UT = Microsoft.VisualStudio.TestTools.UnitTesting;
 using Goedel.Cryptography;
@@ -9,6 +10,15 @@ namespace Goedel.Test {
 
 
     public static class Crypto {
+
+        static int IDCount = 0;
+        public static string MakeUnique (this string Base) {
+            var Count = Interlocked.Increment(ref IDCount);
+            var Split = Base.Split('@');
+
+            return Split[0] + "_" + Count.ToString() + "@" + Split [1];
+            }
+
 
         static Crypto() {
             }

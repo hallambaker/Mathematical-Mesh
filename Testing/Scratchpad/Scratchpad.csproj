@@ -1,0 +1,52 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <Configurations>Debug;Release;Focus</Configurations>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Libraries\Core\Goedel.IO\Goedel.IO.csproj" />
+    <ProjectReference Include="..\..\Libraries\Core\Goedel.Utilities\Goedel.Utilities.csproj" />
+    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Container\Goedel.Cryptography.Container.csproj" />
+    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Windows\Goedel.Cryptography.Windows.csproj" />
+    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography\Goedel.Cryptography.csproj" />
+    <ProjectReference Include="..\..\Libraries\Goedel.Mesh.Platform.Windows\Goedel.Mesh.Platform.Windows.csproj" />
+    <ProjectReference Include="..\..\Libraries\Goedel.Mesh\Goedel.Mesh.csproj" />
+    <ProjectReference Include="..\..\Libraries\Goedel.Test\Goedel.Test.csproj" />
+    <ProjectReference Include="..\..\Protocols\Mesh\Goedel.Mesh.Portal.Client\Goedel.Mesh.Portal.Client.csproj" />
+    <ProjectReference Include="..\..\Protocols\Mesh\Goedel.Mesh.Portal.Server\Goedel.Mesh.Portal.Server.csproj" />
+    <ProjectReference Include="..\..\Protocols\Mesh\Goedel.Mesh.Portal\Goedel.Mesh.Portal.csproj" />
+    <ProjectReference Include="..\Test.Constants\Test.Common.csproj" />
+    <ProjectReference Include="..\Test.Cryptography.Algorithms\Test.Cryptography.Algorithms.csproj" />
+    <ProjectReference Include="..\Test.Goedel.ASN\Test.Goedel.ASN.csproj" />
+    <ProjectReference Include="..\Test.Goedel.Cryptography.Container\Test.Goedel.Cryptography.Container.csproj" />
+    <ProjectReference Include="..\Test.Goedel.Cryptography.DH\Test.Goedel.Cryptography.DH.csproj" />
+    <ProjectReference Include="..\Test.Goedel.Cryptography.Jose\Test.Goedel.Cryptography.Jose.csproj" />
+    <ProjectReference Include="..\Test.Goedel.Cryptography.KeyFile\Test.Goedel.Cryptography.KeyFile.csproj" />
+    <ProjectReference Include="..\Test.Goedel.Cryptography.Linux\Test.Goedel.Cryptography.Linux.csproj" />
+    <ProjectReference Include="..\Test.Goedel.Cryptography.Windows\Test.Goedel.Cryptography.Windows.csproj" />
+    <ProjectReference Include="..\Test.Goedel.Cryptography\Test.Goedel.Cryptography.csproj" />
+    <ProjectReference Include="..\Test.Goedel.Discovery\Test.Goedel.Discovery.csproj" />
+    <ProjectReference Include="..\Test.Goedel.Mesh.Catalog\Test.Goedel.Mesh.Catalog.csproj" />
+    <ProjectReference Include="..\Test.Goedel.Mesh.Confirm\Test.Goedel.Mesh.Confirm.csproj" />
+    <ProjectReference Include="..\Test.Goedel.Mesh.Mail\Test.Goedel.Mesh.Mail.csproj" />
+    <ProjectReference Include="..\Test.Goedel.Mesh.Network\Test.Goedel.Mesh.Network.csproj" />
+    <ProjectReference Include="..\Test.Goedel.Mesh.Profile\Test.Goedel.Mesh.Profile.csproj" />
+    <ProjectReference Include="..\Test.Goedel.Mesh.Proxy\Test.Goedel.Mesh.Proxy.csproj" />
+    <ProjectReference Include="..\Test.Goedel.Mesh.Recrypt\Test.Goedel.Mesh.Recrypt.csproj" />
+    <ProjectReference Include="..\Test.Goedel.Mesh.Services\Test.Goedel.Mesh.Services.csproj" />
+    <ProjectReference Include="..\Test.Goedel.Mesh.Shell\Test.Goedel.Mesh.Shell.csproj" />
+    <ProjectReference Include="..\Test.Goedel.Mesh.SSH\Test.Goedel.Mesh.SSH.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Test\" />
+  </ItemGroup>
+
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="VSPreBuild" />
+  </Target>
+
+</Project>

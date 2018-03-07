@@ -1,4 +1,4 @@
-
+﻿
 //  Copyright (c) 2016 by .
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -33,7 +33,7 @@ using Goedel.Cryptography.Jose;
 using Goedel.Mesh;
 
 
-namespace Goedel.Mesh.Platform {
+namespace Goedel.Mesh.Portal.Client {
 
 
 	/// <summary>

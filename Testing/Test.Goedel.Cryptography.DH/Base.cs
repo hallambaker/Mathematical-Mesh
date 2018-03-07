@@ -4,14 +4,15 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using GU=Goedel.Utilities;
 using Goedel.Cryptography;
 using Goedel.Cryptography.Framework;
+using Goedel.Cryptography.Algorithms;
 
 namespace Goedel.Cryptography.Test {
     [TestClass]
     public partial class TestCryptography {
 
-        static DHKeyPair AliceKeyPair;
-        static DHKeyPair BobKeyPair;
-        static DHKeyPair GroupKeyPair;
+        static KeyPairDH AliceKeyPair;
+        static KeyPairDH BobKeyPair;
+        static KeyPairDH GroupKeyPair;
 
         static DiffeHellmanPrivate AlicePrivate;
         static DiffeHellmanPrivate BobPrivate;
@@ -32,9 +33,9 @@ namespace Goedel.Cryptography.Test {
             BobPrivate = new DiffeHellmanPrivate();
             GroupPrivate = new DiffeHellmanPrivate();
 
-            AliceKeyPair = new DHKeyPair(AlicePrivate);
-            BobKeyPair = new DHKeyPair(BobPrivate);
-            GroupKeyPair = new DHKeyPair(GroupPrivate);
+            AliceKeyPair = new KeyPairDH(AlicePrivate);
+            BobKeyPair = new KeyPairDH(BobPrivate);
+            GroupKeyPair = new KeyPairDH(GroupPrivate);
 
             AlicePublic = AlicePrivate.DiffeHellmanPublic;
             BobPublic = BobPrivate.DiffeHellmanPublic;

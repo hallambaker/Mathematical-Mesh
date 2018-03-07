@@ -10,6 +10,11 @@ using Goedel.Protocol;
 using Goedel.Persistence;
 
 namespace Goedel.Account.Server {
+
+
+
+
+
     /// <summary>Base store for accounts (non persistent)</summary>
     public class AccountStore {
 
@@ -62,7 +67,7 @@ namespace Goedel.Account.Server {
         public bool CreateAccount (AccountData AccountData) {
 
             AccountData.Created = DateTime.Now;
-            Account.New(AccountData, AccountData.AccountId, null);
+            Account.New(AccountData);
 
             return true;
             }
@@ -73,14 +78,7 @@ namespace Goedel.Account.Server {
         /// <param name="AccountId">Identifier of account to delete.</param>
         /// <returns>True if successful, otherwise false.</returns>
         public bool DeleteAccount (string AccountId) {
-            var AccountDataItem = IndexAccountID.Get(AccountId);
-            if (AccountDataItem == null) {
-                return false;
-                }
-
-            Account.Delete(AccountDataItem);
-
-            return true;
+            return Account.Delete(AccountId);
             }
 
         /// <summary>
@@ -103,7 +101,7 @@ namespace Goedel.Account.Server {
         /// </summary>
         /// <param name="AccountData">Account data to write.</param>
         public void UpdateAccount (AccountData AccountData) {
-            Account.Update(AccountData, AccountData.AccountId, null);
+            Account.Update(AccountData);
             }
 
         }

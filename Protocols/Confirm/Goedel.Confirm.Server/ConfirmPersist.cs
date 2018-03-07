@@ -27,13 +27,16 @@ namespace Goedel.Confirm.Server {
         PersistenceStore Confirm;
         PersistenceObjectIndex IndexAccountID;
 
-        string GetAccountKey (string AccountID) => "Account$" + AccountID;
-        string GetRequestKey (string BrokerID) => "Request$" + BrokerID;
-        string GetResponseKey (string BrokerID) => "Respomse$" + BrokerID;
+        //string GetAccountKey (string AccountID) => "Account$" + AccountID;
+        //string GetRequestKey (string BrokerID) => "Request$" + BrokerID;
+        //string GetResponseKey (string BrokerID) => "Respomse$" + BrokerID;
 
-        DataItem GetAccountData (string AccountID) => IndexAccountID.Get(GetAccountKey(AccountID));
-        DataItem GetRequestData (string BrokerID) => IndexAccountID.Get(GetRequestKey(BrokerID));
-        DataItem GetResponseData (string BrokerID) => IndexAccountID.Get(GetResponseKey(BrokerID));
+        DataItem GetAccountData (string AccountID) => 
+                IndexAccountID.Get(AccountEntry.GetPrimaryKey(AccountID));
+        DataItem GetRequestData (string BrokerID) =>
+                IndexAccountID.Get(AccountEntry.GetPrimaryKey(BrokerID));
+        DataItem GetResponseData (string BrokerID) =>
+                IndexAccountID.Get(AccountEntry.GetPrimaryKey(BrokerID));
 
 
         AccountEntry GetAccountEntry (string AccountID) {
@@ -46,22 +49,22 @@ namespace Goedel.Confirm.Server {
         
 
         void NewAccountData (AccountEntry AccountEntry) {
-            Confirm.New(AccountEntry, GetAccountKey(AccountEntry.ResponderAccount), null);
+            Confirm.New(AccountEntry);
             }
         void UpdateAccountData (AccountEntry AccountEntry) {
-            Confirm.Update(AccountEntry, GetAccountKey(AccountEntry.ResponderAccount), null);
+            Confirm.Update(AccountEntry);
             }
         void NewRequestData (RequestEntry RequestEntry) {
-            Confirm.New(RequestEntry, GetRequestKey(RequestEntry.BrokerID), null);
+            Confirm.New(RequestEntry);
             }
         void UpdateRequestData (RequestEntry RequestEntry) {
-            Confirm.Update(RequestEntry, GetRequestKey(RequestEntry.BrokerID), null);
+            Confirm.Update(RequestEntry);
             }
         void NewResponseData (ResponseEntry ResponseEntry) {
-            Confirm.New(ResponseEntry, GetResponseKey(ResponseEntry.BrokerID), null);
+            Confirm.New(ResponseEntry);
             }
         void UpdateResponseData (ResponseEntry ResponseEntry) {
-            Confirm.Update(ResponseEntry, GetResponseKey(ResponseEntry.BrokerID), null);
+            Confirm.Update(ResponseEntry);
             }
 
         /// <summary>

@@ -13,13 +13,31 @@ namespace Goedel.Cryptography.Container {
     public class JBCDStreamDebug : JBCDStream {
         TextWriter Output;
 
+        /// <summary>
+        /// Output flag. 
+        /// </summary>
+        public bool Active = true;
 
+        /// <summary>
+        /// Constructor from a file
+        /// </summary>
+        /// <param name="FileName">The file to open.</param>
+        /// <param name="FileStatus">The file access mode.</param>
+        /// <param name="WriteOnly">If true, the file is only opened in write mode.</param>
+        /// <param name="Output">The additional output stream.</param>
+        public JBCDStreamDebug (string FileName, FileStatus FileStatus = FileStatus.Read, 
+                            bool WriteOnly = false, TextWriter Output = null) 
+            : base (FileName, FileStatus, WriteOnly) {
+            Output = Output ?? Console.Out;
+
+            this.Output = Output;
+            }
         /// <summary>
         /// Constructor from a stream
         /// </summary>
         /// <param name="Stream">The underlying stream. This must support the seek operation.</param>
         /// <param name="Output">The additional output stream.</param>
-        public JBCDStreamDebug (Stream Stream, TextWriter Output=null) : base(Stream) {
+        public JBCDStreamDebug (Stream Stream, TextWriter Output=null) : base(Stream, null) {
             Output = Output ?? Console.Out;
 
             this.Output = Output;
@@ -33,11 +51,13 @@ namespace Goedel.Cryptography.Container {
         public override int ReadByte () {
             var Result = base.ReadByte();
 
-            if (Result < 0) {
-                Output.Write("[EOF] ");
-                }
-            else {
-                Output.Write("{0:x2} ", Result);
+            if (Active) {
+                if (Result < 0) {
+                    Output.Write("[EOF] ");
+                    }
+                else {
+                    Output.Write("{0:x2} ", Result);
+                    }
                 }
             
 
@@ -51,11 +71,13 @@ namespace Goedel.Cryptography.Container {
         /// <returns>The byte read or -1.</returns>
         /// <exception cref="InvalidFileFormatException">The record data read from disk was invalid</exception>
         public override int ReadByteReverse () {
-
-            Output.Write(" >");
+            if (Active) {
+                Output.Write(" >");
+                }
             var Result = base.ReadByteReverse();
-            Output.Write("< ");
-
+            if (Active) {
+                Output.Write("< ");
+                }
             return Result;
             }
 
@@ -71,7 +93,7 @@ namespace Goedel.Cryptography.Container {
         public override int Read (byte[] Buffer, int Offset, int Count) {
             var Result = base.Read(Buffer, Offset, Count);
 
-
+            
             WriteBytes(Buffer, Offset, Count);
 
             return Result;
@@ -88,6 +110,10 @@ namespace Goedel.Cryptography.Container {
         public int DisplayBytesSummary { get; set; } = 28;
 
         void WriteBytes (byte[] Buffer, int Offset, int Count) {
+
+            if (!Active) {
+                return;
+                }
 
             if (DisplayBytesMax >= 0 & (Count > DisplayBytesMax)) {
                 WriteBytes(Buffer, Offset, DisplayBytesSummary);
@@ -121,7 +147,9 @@ namespace Goedel.Cryptography.Container {
         /// <exception cref="InvalidFileFormatException">The record data read from disk was invalid</exception>
         public override bool ReadTag (out int Code, out long Length) {
             var Result = base.ReadTag(out Code, out Length);
-            Output.WriteLine();
+            if (Active) {
+                Output.WriteLine();
+                }
             return Result;
             }
 
@@ -135,7 +163,9 @@ namespace Goedel.Cryptography.Container {
         /// <exception cref="InvalidFileFormatException">The record data read from disk was invalid</exception>
         public override bool CheckReversedLength (int Code, long LengthIn) {
             var Result = base.CheckReversedLength(Code, LengthIn);
-            Output.WriteLine();
+            if (Active) {
+                Output.WriteLine();
+                }
             return Result;
             }
 

@@ -8,7 +8,8 @@ using Goedel.Utilities;
 using Goedel.Cryptography;
 using Goedel.Mesh;
 using Goedel.Mesh.Platform;
-using Goedel.Mesh.Server;
+using Goedel.Mesh.Portal.Client;
+using Goedel.Mesh.Portal;
 
 namespace Goedel.Mesh.MeshMan {
 

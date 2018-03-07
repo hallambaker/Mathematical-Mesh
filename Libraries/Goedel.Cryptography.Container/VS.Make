@@ -22,6 +22,7 @@ LinkFiles = \
     Goedel.IO.dll\
     Goedel.Utilities.dll\
     Goedel.Cryptography.Jose.dll\
+    Goedel.Persistence.dll\
     Goedel.Protocol.dll
 
 ToolTargets = \
@@ -29,10 +30,10 @@ ToolTargets = \
 	Exceptions.cs
 
 ContainerEntry.cs : ContainerEntry.pschema 
-	protogen ContainerEntry.pschema  ContainerEntry.cs
+	protogen ContainerEntry.pschema  /cs  ContainerEntry.cs
 
 Exceptions.cs : Exceptions.exceptional 
-	exceptional Exceptions.exceptional  Exceptions.cs
+	exceptional Exceptions.exceptional  /cs  Exceptions.cs
 
 
 prebuildRecurse : 

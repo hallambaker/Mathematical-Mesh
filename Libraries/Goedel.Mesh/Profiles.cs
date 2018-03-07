@@ -116,9 +116,7 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Every profile has a unique UDF identifier.
         /// </summary>
-        public virtual string UDF {
-            get => Identifier; 
-            }
+        public virtual string UDF => Identifier;
 
 
         /// <summary>

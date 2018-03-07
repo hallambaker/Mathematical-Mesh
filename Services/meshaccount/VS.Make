@@ -24,7 +24,7 @@ ToolTargets = \
 	ConfirmServer.cs
 
 ConfirmServer.cs : ConfirmServer.command 
-	commandparse ConfirmServer.command  ConfirmServer.cs
+	commandparse ConfirmServer.command  /cs  ConfirmServer.cs
 
 
 prebuildRecurse : 

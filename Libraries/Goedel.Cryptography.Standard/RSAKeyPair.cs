@@ -31,7 +31,7 @@ namespace Goedel.Cryptography.Framework {
     /// <summary>
     /// RSA Key Pair
     /// </summary>
-    public partial class RSAKeyPair : RSAKeyPairBase {
+    public partial class KeyPairRSA : KeyPairBaseRSA {
         /// <summary>
         /// Return the underlying .NET cryptographic provider.
         /// </summary>
@@ -121,10 +121,10 @@ namespace Goedel.Cryptography.Framework {
         /// </summary>
         /// <param name="UDF">Fingerprint of key.</param>
         /// <returns>RSAKeyPair</returns>
-        public static new RSAKeyPair FindLocal(string UDF) {
+        public static new KeyPairRSA FindLocal(string UDF) {
             var Provider = PlatformLocateRSAProvider(UDF);
             if (Provider == null) { return null; }
-            return new RSAKeyPair(Provider);
+            return new KeyPairRSA(Provider);
             }
 
         /// <summary>
@@ -158,7 +158,7 @@ namespace Goedel.Cryptography.Framework {
         /// </summary>
         /// <param name="KeySecurity">The key security mode</param>
         /// <param name="KeySize">Size of key in multiples of 64 bits.</param>
-        public RSAKeyPair(KeySecurity KeySecurity, int KeySize = 2048) {
+        public KeyPairRSA(KeySecurity KeySecurity, int KeySize = 2048) {
             var CSPParameters = new CspParameters();
             bool Persist = false;
 
@@ -220,7 +220,7 @@ namespace Goedel.Cryptography.Framework {
         /// Generate an ephemeral RSA key with the specified key size.
         /// </summary>
         /// <param name="KeySize">Size of key in multiples of 64 bits.</param>
-        public RSAKeyPair(int KeySize)
+        public KeyPairRSA(int KeySize)
             : this(KeySize, true) {
             }
 
@@ -229,7 +229,7 @@ namespace Goedel.Cryptography.Framework {
         /// </summary>
         /// <param name="KeySize">Size of key in multiples of 64 bits.</param>
         /// <param name="Exportable">If true, key may be exported, otherwise machine bound.</param>
-        public RSAKeyPair(int KeySize, bool Exportable) {
+        public KeyPairRSA(int KeySize, bool Exportable) {
             var CSPParameters = new CspParameters();
             if (Exportable) {
                 CSPParameters.Flags = CspProviderFlags.UseArchivableKey | CspProviderFlags.CreateEphemeralKey;
@@ -246,7 +246,7 @@ namespace Goedel.Cryptography.Framework {
         /// Create a new KeyPair with the specified container fingerprint.
         /// </summary>
         /// <param name="UDF">Fingerprint of key.</param>
-        public RSAKeyPair(string UDF) {
+        public KeyPairRSA(string UDF) {
             _Provider = PlatformLocateRSAProvider(UDF);
             PublicParameters = _Provider.ExportParameters(false);
             }
@@ -256,7 +256,7 @@ namespace Goedel.Cryptography.Framework {
         /// Generate a KeyPair from a .NET Provider.
         /// </summary>
         /// <param name="RSACryptoServiceProvider">The platform cryptographic provider.</param>
-        public RSAKeyPair(RSACryptoServiceProvider RSACryptoServiceProvider) {
+        public KeyPairRSA(RSACryptoServiceProvider RSACryptoServiceProvider) {
             _Provider = RSACryptoServiceProvider;
             PublicParameters = _Provider.ExportParameters(false);
             }
@@ -266,7 +266,7 @@ namespace Goedel.Cryptography.Framework {
         /// Generate a KeyPair from a .NET set of parameters.
         /// </summary>
         /// <param name="RSAParameters">The RSA parameters.</param>
-        public RSAKeyPair(RSAParameters RSAParameters) {
+        public KeyPairRSA(RSAParameters RSAParameters) {
             PublicParameters = RSAParameters;
 
             _Provider = new RSACryptoServiceProvider();
@@ -278,7 +278,7 @@ namespace Goedel.Cryptography.Framework {
         /// Generate a KeyPair from a .NET set of parameters.
         /// </summary>
         /// <param name="PKIXParameters">The RSA parameters as a PKIX structure</param>
-        public RSAKeyPair(PKIXPublicKeyRSA PKIXParameters) {
+        public KeyPairRSA(PKIXPublicKeyRSA PKIXParameters) {
             PublicParameters = PKIXParameters.RSAParameters();
 
             _Provider = new RSACryptoServiceProvider();
@@ -290,7 +290,7 @@ namespace Goedel.Cryptography.Framework {
         /// Generate a KeyPair from a .NET set of parameters.
         /// </summary>
         /// <param name="PKIXParameters">The RSA parameters as a PKIX structure</param>
-        public RSAKeyPair(PKIXPrivateKeyRSA PKIXParameters) {
+        public KeyPairRSA(PKIXPrivateKeyRSA PKIXParameters) {
             PublicParameters = PKIXParameters.RSAParameters();
 
             _Provider = new RSACryptoServiceProvider();
@@ -306,7 +306,7 @@ namespace Goedel.Cryptography.Framework {
         public static new KeyPair KeyPairPublicFactory (PKIXPublicKeyRSA PKIXParameters) {
 
             var RSAParameters = PKIXParameters.RSAParameters();
-            return new RSAKeyPair(RSAParameters);
+            return new KeyPairRSA(RSAParameters);
             }
 
         /// <summary>
@@ -317,7 +317,7 @@ namespace Goedel.Cryptography.Framework {
         public static new KeyPair KeyPairPrivateFactory (PKIXPrivateKeyRSA PKIXParameters) {
 
             var RSAParameters = PKIXParameters.RSAParameters();
-            return new RSAKeyPair(RSAParameters);
+            return new KeyPairRSA(RSAParameters);
             }
 
 

@@ -14,7 +14,7 @@ namespace ExampleGenerator {
 		// UserGuideWindows
 		//
 		public static void UserGuideWindows (CreateExamples Examples) { /* File  */
-			using (var _Output = new StreamWriter ("Platform/Windows.md")) {
+			using (var _Output = new StreamWriter ("UserGuide/Platform/Windows.md")) {
 				var _Indent = ""; 
 				_Output.Write ("<title>Windows\n{0}", _Indent);
 				_Output.Write ("<titlebanner><h1>Windows Platform\n{0}", _Indent);

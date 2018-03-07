@@ -1,11 +1,29 @@
 ﻿using System;
 using System.Threading;
 using Goedel.Utilities;
-using Goedel.Cryptography.Framework;
+using Goedel.Cryptography.Linux;
 
 
+namespace Goedel.Cryptography{
 
-namespace Goedel.Cryptography.Linux{
+    /// <summary>
+    /// Base class for initialization.
+    /// </summary>
+    public static class Cryptography {
+
+
+        /// <summary>
+        /// Perform initialization of the Goedel.Cryptography portable class
+        /// with delegates to the .NET framework methods.
+        /// </summary>
+        /// <param name="TestMode">If true, the application will be initialized in test/debug mode.</param>
+        public static void Initialize (bool TestMode = false) {
+            CryptographyLinux.Initialize(TestMode);
+
+            }
+        }
+
+
 
     /// <summary>
     /// Initialize for the Linux style key store

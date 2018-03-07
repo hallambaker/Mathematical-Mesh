@@ -27,10 +27,10 @@ ToolTargets = \
 	PKIX\PKIX.cs
 
 Exceptions.cs : Exceptions.exceptional 
-	exceptional Exceptions.exceptional  Exceptions.cs
+	exceptional Exceptions.exceptional  /cs  Exceptions.cs
 
 PKIX\PKIX.cs : PKIX\PKIX.asn2 
-	asn2 PKIX\PKIX.asn2  PKIX\PKIX.cs
+	asn2 PKIX\PKIX.asn2  /cs  PKIX\PKIX.cs
 
 
 prebuildRecurse : 

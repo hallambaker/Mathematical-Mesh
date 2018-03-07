@@ -136,12 +136,14 @@ namespace Goedel.Cryptography.Jose {
             CipherText = EncryptEncoder.OutputData;
 
             if (SigningKey != null) {
-
                 _CryptoDataDigest = DigestProvider.Process(CipherText);
                 AddSignature(SigningKey, DigestProvider.CryptoAlgorithmID);
                 }
 
             }
+
+
+
 
         /// <summary>
         /// Construct a JWE instance from binary data. 
@@ -220,6 +222,67 @@ namespace Goedel.Cryptography.Jose {
                         EncryptionKey, SigningKey, ContentType, Algorithm) { }
 
 
+        /// <summary>
+        /// Create encryption info
+        /// </summary>
+        /// <param name="Data">Data to be encrypted.</param>
+        /// <param name="Recipients">The recipient information entries.</param>
+        /// <param name="Protected">The protected encryption header</param>
+        /// <param name="EncryptionKeys">The encryption key.</param>
+        /// <param name="ContentType">Content type identifier.</param>
+        /// <param name="EncryptID">Encryption algorithm to use.</param>
+        /// <param name="KID">The key identifier.</param>
+        /// <returns>The encrypted data info block.</returns>
+        public static CryptoData Encrypt (byte[] Data,
+                    out List<Recipient> Recipients,
+                    out Header Protected,
+                    List<KeyPair> EncryptionKeys = null,
+                    string ContentType = null,
+                    CryptoAlgorithmID EncryptID = CryptoAlgorithmID.Default,
+                    string KID = null
+                    ) {
+
+
+            var Provider = CryptoCatalog.Default.GetEncryption(EncryptID);
+            var EncryptEncoder = Provider.MakeEncoder(Algorithm: EncryptID);
+            Protected = JoseWebEncryption.ProtectedHeader(EncryptEncoder, ContentType, null);
+
+            Recipients = new List<Cryptography.Jose.Recipient>();
+
+            foreach (var EncryptionKey in EncryptionKeys) {
+                var Recipient = JoseWebEncryption.Recipient(
+                        EncryptEncoder, EncryptionKey, KID: KID, ProviderAlgorithm: EncryptID);               
+                Recipients.Add(Recipient);
+                }
+
+            EncryptEncoder.Write(Data);
+            EncryptEncoder.Complete();
+
+            return EncryptEncoder;
+            }
+
+
+
+
+        /// <summary>
+        /// Add a recipient to an existing JWE header.
+        /// </summary>
+        /// <remarks>If custom crypto suites are used, the caller is responsible for 
+        /// ensuring that the exchange algorithm is compatible with the bulk algorithm 
+        /// already selected. </remarks>
+        /// <param name="CryptoData">The encryption data.</param>
+        /// <param name="EncryptionKey">The recipient key to add.</param>
+        /// <param name="ProviderAlgorithm">Algorithm parameters (if supported)</param>
+        /// <param name="KID">Key ID</param>
+        /// <returns>The recipient instance</returns>
+        static Recipient Recipient (CryptoData CryptoData, KeyPair EncryptionKey, string KID = null,
+                CryptoAlgorithmID ProviderAlgorithm = CryptoAlgorithmID.Default) {
+
+            var ExchangeData = EncryptionKey.EncryptKey(CryptoData, ProviderAlgorithm);
+            var Recipient = new Recipient(ExchangeData, KID);
+
+            return Recipient;
+            }
 
         /// <summary>
         /// Add a recipient to an existing JWE header.
@@ -284,6 +347,27 @@ namespace Goedel.Cryptography.Jose {
 
             // Sign here?
             }
+
+
+        static Header ProtectedHeader (CryptoData Data, 
+                    string ContentType,
+                    CryptoProviderDigest Digest) {
+
+
+            var enc = Data.AlgorithmIdentifier.Bulk();
+            var encID = enc.ToJoseID();
+
+            var ProtectedTBW = new Header() {
+                Cty = ContentType,
+                Enc = encID
+                };
+            if (Digest != null) {
+                ProtectedTBW.Dig = Digest.CryptoAlgorithmID.ToJoseID();
+                }
+
+            return ProtectedTBW;
+            }
+
 
         void BindCryptoData (CryptoData Data, string ContentType,
                     CryptoProviderDigest Digest) {
@@ -451,6 +535,10 @@ namespace Goedel.Cryptography.Jose {
     /// </summary>
     public partial class Recipient {
 
+        /// <summary>
+        /// The corresponding decryption key (if located).
+        /// </summary>
+        public KeyPair DecryptionKey { get; set; }
 
         /// <summary>
         /// Default Constructor

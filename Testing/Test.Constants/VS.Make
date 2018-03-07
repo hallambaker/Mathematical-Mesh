@@ -20,14 +20,19 @@ MSBuildThisFileDirectory =
 
 LinkFiles = \
     Goedel.Utilities.dll\
+    Goedel.Mesh.Platform.Windows.dll\
     Goedel.Mesh.dll\
-    Goedel.Protocol.dll
+    Goedel.Protocol.dll\
+    Goedel.Test.dll\
+    Goedel.Mesh.Portal.Client.dll\
+    Goedel.Mesh.Portal.Server.dll\
+    Goedel.Mesh.Portal.dll
 
 ToolTargets = \
 	Exceptions.cs
 
 Exceptions.cs : Exceptions.exceptional 
-	exceptional Exceptions.exceptional  Exceptions.cs
+	exceptional Exceptions.exceptional  /cs  Exceptions.cs
 
 
 prebuildRecurse : 
@@ -42,5 +47,5 @@ postbuild : postbuildRecurse
 
 
 postbuildwindows : 
-	powershell publishtarget Test.Constants.dll
+	powershell publishtarget Test.Common.dll
 

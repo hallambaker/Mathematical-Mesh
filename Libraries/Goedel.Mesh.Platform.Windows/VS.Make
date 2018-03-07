@@ -20,6 +20,7 @@ MSBuildThisFileDirectory =
 
 LinkFiles = \
     Goedel.Mesh.Portal.Client.dll\
+    Goedel.Mesh.Portal.Server.dll\
     Goedel.Mesh.Portal.dll\
     Goedel.Discovery.dll\
     Goedel.IO.dll\

@@ -14,7 +14,7 @@ namespace ExampleGenerator {
 		// UserGuide
 		//
 		public static void UserGuide (CreateExamples Index) { /* File  */
-			using (var _Output = new StreamWriter ("index.md")) {
+			using (var _Output = new StreamWriter ("UserGuide/index.md")) {
 				var _Indent = ""; 
 				_Output.Write ("<title>User Guide\n{0}", _Indent);
 				_Output.Write ("<titlebanner><h1>Mathemetical Mesh User Guide\n{0}", _Indent);

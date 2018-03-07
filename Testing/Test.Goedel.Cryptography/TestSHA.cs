@@ -27,6 +27,7 @@ namespace Test.Goedel.Cryptography {
             };
 
         // http://csrc.nist.gov/groups/ST/toolkit/documents/Examples/SHA_All.pdf
+        // https://www.di-mgt.com.au/sha_testvectors.html
         List<TestVectorSHA> TestVectors_SHA_NIST = new List<TestVectorSHA>() {
 
             new TestVectorSHA() {

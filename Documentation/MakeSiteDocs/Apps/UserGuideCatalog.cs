@@ -14,7 +14,7 @@ namespace ExampleGenerator {
 		// UserGuideCredential
 		//
 		public static void UserGuideCredential (CreateExamples Examples) { /* File  */
-			using (var _Output = new StreamWriter ("Apps/catalog.md")) {
+			using (var _Output = new StreamWriter ("UserGuide/Apps/catalog.md")) {
 				var _Indent = ""; 
 				_Output.Write ("<title>Catalog\n{0}", _Indent);
 				_Output.Write ("<titlebanner><h1>Mesh/Catalog\n{0}", _Indent);

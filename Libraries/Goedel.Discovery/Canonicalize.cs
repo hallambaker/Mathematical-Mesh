@@ -27,7 +27,7 @@ namespace Goedel.Discovery {
             }
 
         public Canonicalize  (string Tag, Domain Domain) {
-            Build = new StringBuilder(Domain.Name + "    " + Tag);
+            Build = new StringBuilder(Domain.Name + ".    " + Tag);
             }
 
         public void IPv4 (IPAddress Data) {

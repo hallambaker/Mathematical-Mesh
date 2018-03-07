@@ -6,7 +6,10 @@ using System.Text;
 using Goedel.Mesh;
 using Goedel.Utilities;
 using Goedel.Protocol.Debug;
-using Goedel.Mesh.Server;
+using Goedel.Mesh.Portal;
+using Goedel.Mesh.Portal.Client;
+using Goedel.Mesh.Portal.Server;
+
 using Goedel.Account.Server;
 using Goedel.Confirm.Server;
 using Goedel.Recrypt.Server;
@@ -61,7 +64,7 @@ namespace ExampleGenerator {
                     if (Text[i] != null) {
                         Builder.Append("<rsp>");
                         Builder.Append(Text[i]);
-                        Builder.Append("\n");
+
                         }
                     }
                 }
@@ -69,6 +72,13 @@ namespace ExampleGenerator {
 
             Builder.Append("</div>\n~~~~\n");
             return Builder.ToString();
+            }
+
+
+        public void Add (DocumentationEntry Entry) {
+            foreach (var Text in Entry.Texts) {
+                Texts.Add(Text);
+                }
             }
         }
 
@@ -166,15 +176,16 @@ namespace ExampleGenerator {
             var CommandLine = Shell.Dispatch(Command);
             var Result = Shell.Result;
 
-            return MakeExample(Terminal, Tag, Command, Result);
+            return MakeExample(Terminal, Tag, CommandLine, Result);
             }
 
 
 
 
         DocumentationEntry DocumentationEntry1;
-        public void Device1 (string Command, string Tag = null, bool NYI = false) {
+        public DocumentationEntry Device1 (string Command, string Tag = null, bool NYI = false) {
             DocumentationEntry1 = DeviceMesh(ShellAlice1, "terminal", Command, Tag, NYI);
+            return DocumentationEntry1;
             }
 
         DocumentationEntry DocumentationEntry2;
@@ -237,6 +248,18 @@ namespace ExampleGenerator {
             return Entry;
             }
 
+
+        public DocumentationEntry MakeExampleSet (string Terminal, string Tag) {
+            var Entry = new DocumentationEntry() {
+                DeviceName = Terminal,
+                Tag = Tag,
+                NYI = false
+                };
+
+            Examples.Add(Tag, Entry);
+            return Entry;
+            }
+
         public string Example (string Tag) {
             if (Examples.TryGetValue(Tag, out var Result)) {
                 return Result.ToString();
@@ -263,12 +286,14 @@ namespace ExampleGenerator {
 
         public void CreateExamplesMesh () {
 
+            var IndexExample = MakeExampleSet("terminal", "IndexSet");
+
             Device1($"keygen", "NewKeygen");
 
 
             // Create profile
             Device1($"verify {PortalIdAlice}", "CreateVerify");
-            Device1($"personal create  {PortalIdAlice}", "Create1");
+            IndexExample.Add (Device1($"personal create  {PortalIdAlice}", "Create1"));
             Device1($"personal sync", "CreateSync", NYI:true);
             Device1($"personal register  {PortalIdAlice2}", "CreateRegister", NYI: true);
             Device1($"personal deregister  {PortalIdAlice2}", "CreateDeregister", NYI: true);
@@ -283,14 +308,14 @@ namespace ExampleGenerator {
             Device2($"connect complete", "ConnectBasic4");
 
             // Mail 
-            Device1($"mail create", "MailCreate", NYI: true);
+            IndexExample.Add(Device1($"mail create", "MailCreate", NYI: true));
             Device1($"mail create alice@example.net /ca=ca.example.com", "MailCreateCA", NYI: true);
             Device1($"keygen", "MailKeygen");
             KeyGenPasswordMail = (ShellAlice1.LastResult as ResultKeyGenPassword).UDF;
             Device1($"mail get alice@example.net /pass={KeyGenPasswordMail}", "MailGet", NYI: true);
 
             // SSH
-            Device1($"ssh create", "SSHCreate");
+            IndexExample.Add(Device1($"ssh create", "SSHCreate"));
             Device2($"ssh sync", "SSHSync");
 
             Device1($"ssh auth", "SSHAuth");
@@ -303,7 +328,8 @@ namespace ExampleGenerator {
             Device1($"ssh add known_hosts", "SSHKnownAdd");
 
             // Catalog
-            Device1($"password add ftp.example.com alice badpassword", "PasswordAdd");
+
+            IndexExample.Add(Device1($"password add ftp.example.com alice badpassword", "PasswordAdd"));
             Device1($"password get ftp.example.com", "PasswordGet");
             Device1($"keygen", "PasswordKeygen");
             KeyGenPasswordPassword = (ShellAlice1.LastResult as ResultKeyGenPassword).UDF;
@@ -416,7 +442,7 @@ namespace ExampleGenerator {
             File.Delete(LogPortal);
 
             MeshPortal = new MeshPortalDirect(PortalServiceDNS, LogMesh, LogPortal);
-            Goedel.Mesh.Server.MeshPortal.Default = MeshPortal;
+            Goedel.Mesh.Portal.MeshPortal.Default = MeshPortal;
             AccountPortal = new AccountPortalDirect(AccountServiceDNS);
             Goedel.Account.AccountPortal.Default = AccountPortal;
             ConfirmPortal = new ConfirmPortalDirect(AccountServiceDNS);

@@ -2,6 +2,7 @@
 using System.IO;
 using System.Numerics;
 using Goedel.Utilities;
+using Goedel.Cryptography.Algorithms;
 
 namespace Goedel.Cryptography {
 
@@ -26,7 +27,7 @@ namespace Goedel.Cryptography {
  
 
         static CryptoAlgorithm CryptoAlgorithmAny = new CryptoAlgorithm(
-                    Goedel.Cryptography.CryptoAlgorithmID.DH, 2048, _AlgorithmClass, Factory);
+                    Goedel.Cryptography.CryptoAlgorithmID.DH, _AlgorithmClass, Factory, 2048);
 
         /// <summary>
         /// Register this provider in the specified crypto catalog. A provider may 
@@ -70,7 +71,7 @@ namespace Goedel.Cryptography {
         public override string UDF  => DHKeyPair.UDF; 
  
 
-        DHKeyPair DHKeyPair;
+        KeyPairDH DHKeyPair;
 
         /// <summary>
         /// Return the provider key.
@@ -78,7 +79,7 @@ namespace Goedel.Cryptography {
         public override KeyPair KeyPair {
             get => DHKeyPair; 
             set {
-                var DHKeyPair = value as DHKeyPair;
+                var DHKeyPair = value as KeyPairDH;
                 Assert.NotNull(DHKeyPair, InvalidKeyPairType.Throw, "DH keypair expected");
                 this.DHKeyPair = DHKeyPair;
                 }
@@ -114,7 +115,7 @@ namespace Goedel.Cryptography {
         /// <param name="KeySize">The Key size</param>
         public override void Generate(KeySecurity KeySecurity, int KeySize = 2048) {
             KeySize = KeySize > 0 ? KeySize : 2048;
-            DHKeyPair = new DHKeyPair(KeySecurity, KeySize);
+            DHKeyPair = new KeyPairDH(KeySecurity, KeySize);
             }
 
         /// <summary>
@@ -150,15 +151,15 @@ namespace Goedel.Cryptography {
             
             var Result = new CryptoDataExchange(Algorithm, Data, this) {
                 Exchange = Exchange,
-                Ephemeral = new DHKeyPair(Agreement.DiffeHellmanPublic)
+                Ephemeral = new KeyPairDH(Agreement.DiffeHellmanPublic)
                 };
             return Result;
             }
 
         /// <summary>
-        /// Perform a key exchange to encrypt a bulk or wrapped key under this one.
+        /// Perform a key exchange to decrypt a bulk or wrapped key under this one.
         /// </summary>
-        /// <param name="EncryptedKey">The encrypted session</param>
+        /// <param name="EncryptedKey">The encrypted session key</param>
         /// <param name="Ephemeral">Ephemeral key input (required for DH)</param>
         /// <param name="AlgorithmID">The algorithm to use.</param>
         /// <param name="Partial">Partial key agreement value (for recryption)</param>
@@ -169,8 +170,11 @@ namespace Goedel.Cryptography {
                     CryptoAlgorithmID AlgorithmID = CryptoAlgorithmID.Default,
                     KeyAgreementResult Partial = null) {
 
-            var DHPublic = Ephemeral as DHKeyPair;
+            var DHPublic = Ephemeral as KeyPairDH;
+            Assert.NotNull(DHPublic, KeyTypeMismatch.Throw);
+
             var Agreement = DHKeyPair.Agreement(DHPublic, Partial as DiffieHellmanResult);
+
             var KeyDerive = Agreement.KeyDerive;
             var KeySize = (EncryptedKey.Length * 8) - 64;
 

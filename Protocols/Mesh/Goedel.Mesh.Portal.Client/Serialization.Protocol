@@ -1,4 +1,4 @@
-﻿Protocol Goedel.Mesh.Platform MeshItem MeshItem
+﻿Protocol Goedel.Mesh.Portal.Client MeshItem MeshItem
 	Description 
 		|Serialization of registered profile
 

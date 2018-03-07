@@ -4,7 +4,7 @@
 #xclass ExampleGenerator ExampleGenerator
 
 
-#file UserGuideCredential "Apps/catalog.md" CreateExamples Examples
+#file UserGuideCredential "UserGuide/Apps/catalog.md" CreateExamples Examples
 <title>Catalog
 <titlebanner><h1>Mesh/Catalog
 

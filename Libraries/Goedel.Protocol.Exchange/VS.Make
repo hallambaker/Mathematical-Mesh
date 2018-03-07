@@ -29,10 +29,10 @@ ToolTargets = \
 	KeyExchange.cs
 
 Exceptions.cs : Exceptions.exceptional 
-	exceptional Exceptions.exceptional  Exceptions.cs
+	exceptional Exceptions.exceptional  /cs  Exceptions.cs
 
 KeyExchange.cs : KeyExchange.protocol 
-	protogen KeyExchange.protocol  KeyExchange.cs
+	protogen KeyExchange.protocol  /cs  KeyExchange.cs
 
 
 prebuildRecurse : 

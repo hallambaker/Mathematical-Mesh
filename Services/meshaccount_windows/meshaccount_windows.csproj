@@ -4,6 +4,7 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <AssemblyName>meshaccount</AssemblyName>
+    <Configurations>Debug;Release;Focus</Configurations>
   </PropertyGroup>
 
   <ItemGroup>
@@ -28,6 +29,12 @@
     <ProjectReference Include="..\..\Protocols\Mesh\Goedel.Mesh.Portal\Goedel.Mesh.Portal.csproj" />
     <ProjectReference Include="..\..\Protocols\Recrypt\Goedel.Recrypt.Server\Goedel.Recrypt.Server.csproj" />
     <ProjectReference Include="..\..\Protocols\Recrypt\Goedel.Recrypt\Goedel.Recrypt.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update=".dockerignore">
+      <DependentUpon>Dockerfile</DependentUpon>
+    </None>
   </ItemGroup>
 
   <Import Project="..\meshaccount\meshaccount.projitems" Label="Shared" />

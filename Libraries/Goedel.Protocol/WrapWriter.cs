@@ -77,9 +77,7 @@ namespace Goedel.Protocol {
         /// <summary>
         /// Column count.
         /// </summary>
-        public int Column {
-            get => Leading.Length + Buffer.Length + SpaceBuffer.Length + BreakBuffer.Length;
-            }
+        public int Column => Leading.Length + Buffer.Length + SpaceBuffer.Length + BreakBuffer.Length;
 
         /// <summary>
         /// Column width.
@@ -107,7 +105,7 @@ namespace Goedel.Protocol {
         /// <summary>
         /// The output charater encoding.
         /// </summary>
-        public override System.Text.Encoding Encoding { get =>  System.Text.Encoding.UTF8;} 
+        public override System.Text.Encoding Encoding => System.Text.Encoding.UTF8;
 
         /// <summary>
         /// Dispose method.

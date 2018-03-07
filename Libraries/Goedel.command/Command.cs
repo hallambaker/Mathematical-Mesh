@@ -151,6 +151,17 @@ namespace Goedel.Command {
             // NYI: This may not be required.
             }
 
+        ///// <summary>
+        ///// The main dispatch point
+        ///// </summary>
+        ///// <param name="Entries">Dictionary describing the shell commands and dispatchers.</param>
+        ///// <param name="Dispatch">The command description.</param>
+        ///// <param name="Args">The set of arguments.</param>
+        ///// <param name="Index">The first unparsed argument.</param>
+        //public void nuDispatcher (SortedDictionary<string, DescribeCommand> Entries, DispatchShell Dispatch, string[] Args, int Index) {
+        //    }
+
+
         /// <summary>
         /// Return true iff the text value is flagged.
         /// </summary>

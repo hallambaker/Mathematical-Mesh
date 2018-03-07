@@ -148,7 +148,7 @@ namespace ExampleGenerator {
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("##Creating a new user profile\n{0}", _Indent);
 				 Point = Example.Traces.Get (Example.LabelCreatePersonal);
-				 var CreateRequest = Point.Messages[0].Payload as Goedel.Mesh.Server.CreateRequest;
+				 var CreateRequest = Point.Messages[0].Payload as Goedel.Mesh.Portal.CreateRequest;
 				 var SignedProfile = CreateRequest?.Profile as SignedPersonalProfile;
 				 var Profile = SignedProfile?.PersonalProfile;
 				_Output.Write ("\n{0}", _Indent);

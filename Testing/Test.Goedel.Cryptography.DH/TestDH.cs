@@ -100,7 +100,7 @@ namespace Goedel.Cryptography.Test {
         public void TestDH_KeyGen() {
             var Encrypter = CryptoCatalog.Default.GetExchange(CryptoAlgorithmID.DH);
             Encrypter.Generate(KeySecurity.Ephemeral, KeySize: 2048);
-            var EncrypterKeyPair = Encrypter.KeyPair as DHKeyPair;
+            var EncrypterKeyPair = Encrypter.KeyPair as KeyPairDH;
 
             EncrypterKeyPair.Test_EncryptDecrypt();
             }
@@ -110,7 +110,7 @@ namespace Goedel.Cryptography.Test {
         public void TestDH_ReadKey() {
             var PublicPKIX = AliceKeyPair.PKIXPublicKeyDH;
 
-            var NewSigner = DHKeyPairBase.KeyPairPublicFactory(PublicPKIX);
+            var NewSigner = KeyPairBaseDH.KeyPairPublicFactory(PublicPKIX);
 
             UT.Assert.IsNotNull(NewSigner);
             }

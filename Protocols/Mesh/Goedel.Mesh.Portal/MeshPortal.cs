@@ -25,7 +25,7 @@ using System.Collections.Generic;
 using Goedel.Protocol;
 using Goedel.Mesh;
 
-namespace Goedel.Mesh.Server {
+namespace Goedel.Mesh.Portal {
 
     /// <summary>
     /// Abstract interface to a service that supports the MeshPortal API calls.
@@ -76,122 +76,6 @@ namespace Goedel.Mesh.Server {
 
         }
 
-
-    /// <summary>
-    /// Abstract interface to a local service provider.
-    /// </summary>
-    public abstract class MeshLocalPortal : MeshPortal{
-        /// <summary>
-        /// File name for local access to the mesh store.
-        /// </summary>
-        protected string MeshStore = "mesh.jlog";
-
-        /// <summary>
-        /// File name for local access to the portal store.
-        /// </summary>
-        protected string PortalStore = "portal.jlog";
-
-        /// <summary>
-        /// The service name (default to mesh.prismproof.org)
-        /// </summary>
-        protected string ServiceName = "mesh.prismproof.org";
-
-        /// <summary>
-        /// The local PublicMeshServiceHost.
-        /// </summary>
-        public PublicMeshServiceProvider MeshServiceHost;
-        }
-
-
-    /// <summary>
-    /// Direct connection to service provider via API calls. 
-    /// </summary>
-    public class MeshPortalDirect: MeshLocalPortal {
-
-        /// <summary>
-        /// Create new portal using the default stores.
-        /// </summary>
-        public MeshPortalDirect () {
-            Init(ServiceName, MeshStore, PortalStore);
-            }
-
-        /// <summary>
-        /// Create a new portal using the specified stores.
-        /// </summary>
-        /// <param name="ServiceName">DNS service name</param>
-        /// <param name="MeshStore">File name for the Mesh Store.</param>
-        /// <param name="PortalStore">File name for the Portal Store.</param>
-        public MeshPortalDirect(string ServiceName, string MeshStore, string PortalStore) {
-            Init(ServiceName, MeshStore, PortalStore);
-            }
-
-        /// <summary>
-        /// Create a new portal using the specified stores.
-        /// </summary>
-        /// <param name="MeshStore">File name for the Mesh Store.</param>
-        /// <param name="PortalStore">File name for the Portal Store.</param>
-        public MeshPortalDirect(string MeshStore, string PortalStore) {
-            Init(ServiceName, MeshStore, PortalStore);
-            }
-
-        /// <summary>
-        /// Initialize the portal
-        /// </summary>
-        /// <param name="ServiceName">DNS service name</param>
-        /// <param name="MeshStore">File name for the Mesh Store.</param>
-        /// <param name="PortalStore">File name for the Portal Store.</param>
-        protected void Init (string ServiceName, string MeshStore, string PortalStore) {
-            this.ServiceName = ServiceName;
-            this.MeshStore = MeshStore;
-            this.PortalStore = PortalStore;
-            MeshServiceHost = new PublicMeshServiceProvider(ServiceName, MeshStore, PortalStore);
-            }
-
-        /// <summary>
-        /// Return a MeshService object for the named portal service.
-        /// </summary>
-        /// <param name="Account">The account to get.</param>
-        /// <param name="Portal">The portal to get the service from.</param>
-        /// <returns>The service instance</returns> 
-        public override MeshService GetService(string Portal, string Account) {
-            var Session = new DirectSession(null);
-            MeshServiceClient = new PublicMeshService(MeshServiceHost, Session);
-            return MeshServiceClient;
-            }
-
-        }
-
-
-
-
-
-
-    /// <summary>
-    /// Direct connection to service provider via JSON encoding, decoding and dispatch.
-    /// Useful for producing documentation and for testing.
-    /// </summary>
-    public class MeshPortalLocal : MeshLocalPortal {
-
-        /// <summary>
-        /// Create new portal using the default stores.
-        /// </summary>
-        public MeshPortalLocal() {
-            MeshServiceHost = new PublicMeshServiceProvider(ServiceName, MeshStore, PortalStore);
-            }
-
-        /// <summary>
-        /// Return a MeshService object for the named portal service.
-        /// </summary>
-        /// <param name="Account">The account to get.</param>
-        /// <param name="Service">The service to get the service from.</param> 
-        /// <returns>The service instance</returns>
-        public override MeshService GetService(string Service, string Account) {
-            var Session = new LocalRemoteSession(MeshServiceHost, ServiceName, Account);
-            MeshServiceClient = new MeshServiceClient(Session);
-            return MeshServiceClient;
-            }
-
-        }
 
     /// <summary>
     /// Connection to network service using HTTP client.

@@ -14,7 +14,7 @@ namespace ExampleGenerator {
 		// UserGuideDisaster
 		//
 		public static void UserGuideDisaster (CreateExamples Examples) { /* File  */
-			using (var _Output = new StreamWriter ("Mesh/disaster.md")) {
+			using (var _Output = new StreamWriter ("UserGuide/Mesh/disaster.md")) {
 				var _Indent = ""; 
 				_Output.Write ("<title>Disaster\n{0}", _Indent);
 				_Output.Write ("<titlebanner><h1>Recovering from disaster\n{0}", _Indent);

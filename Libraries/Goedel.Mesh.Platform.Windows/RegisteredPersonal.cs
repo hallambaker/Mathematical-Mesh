@@ -25,7 +25,8 @@ using System.Linq;
 using System.IO;
 using Goedel.Utilities;
 using Goedel.Cryptography;
-using Goedel.Mesh.Server;
+using Goedel.Mesh.Portal;
+using Goedel.Mesh.Portal.Client;
 
 namespace Goedel.Mesh.Platform.Windows {
 
@@ -113,6 +114,7 @@ namespace Goedel.Mesh.Platform.Windows {
         /// <param name="Create">If true do what??</param>
         public override void AddPortal(string AccountID, MeshClient MeshClient = null, bool Create = false) {
             Portals.Add(AccountID);
+            MeshCatalog.AddPortal(this, AccountID);
             WriteToLocal();
             }
 

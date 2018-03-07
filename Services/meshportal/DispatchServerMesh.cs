@@ -26,7 +26,8 @@ using Goedel.Protocol;
 
 
 using System.Diagnostics;
-using Goedel.Mesh.Server;
+using Goedel.Mesh.Portal;
+using Goedel.Mesh.Portal.Server;
 
 namespace MeshServerShell {
     public partial class MeshServerShell {

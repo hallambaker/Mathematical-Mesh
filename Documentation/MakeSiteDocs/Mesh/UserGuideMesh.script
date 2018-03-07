@@ -4,7 +4,7 @@
 #xclass ExampleGenerator ExampleGenerator
 
 
-#file UserGuideMesh "Mesh/index.md" CreateExamples Index
+#file UserGuideMesh "UserGuide/Mesh/index.md" CreateExamples Index
 <title>Mesh User Guide
 <titlebanner><h1>Mesh User Guide
 

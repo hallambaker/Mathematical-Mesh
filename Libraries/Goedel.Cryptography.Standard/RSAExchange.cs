@@ -48,7 +48,7 @@ namespace Goedel.Cryptography.Framework {
         public override CryptoAlgorithm CryptoAlgorithm => CryptoAlgorithmAny; 
 
         static CryptoAlgorithm CryptoAlgorithmAny = new CryptoAlgorithm(
-                    CryptoAlgorithmID.RSAExch, 2048, _AlgorithmClass, Factory);
+                    CryptoAlgorithmID.RSAExch, _AlgorithmClass, Factory, 2048);
 
         /// <summary>
         /// Register this provider in the specified crypto catalog. A provider may 
@@ -64,14 +64,14 @@ namespace Goedel.Cryptography.Framework {
             }
 
 
-        RSAKeyPair _RSAKeyPair;
+        KeyPairRSA _RSAKeyPair;
 
         /// <summary>
         /// Return the key as a RSAKeyPair;
         /// </summary>
         public override Goedel.Cryptography.KeyPair KeyPair {
             get { return _RSAKeyPair; }
-            set { _RSAKeyPair = value as RSAKeyPair; }
+            set { _RSAKeyPair = value as KeyPairRSA; }
             }
 
         /// <summary>
@@ -114,7 +114,7 @@ namespace Goedel.Cryptography.Framework {
         /// Create an instance of the RSA crypto provider.
         /// </summary>
         /// <param name="RSAKeyPair">RSAKeyPair to use.</param>
-        public CryptoProviderExchangeRSA(RSAKeyPair RSAKeyPair) {
+        public CryptoProviderExchangeRSA(KeyPairRSA RSAKeyPair) {
             this.KeyPair = RSAKeyPair;
             this.OAEP = true;
             }
@@ -138,7 +138,7 @@ namespace Goedel.Cryptography.Framework {
         /// <param name="Size">The key size (2048 or 4096), if zero the default is used.</param>
         public override void Generate(KeySecurity KeySecurity, int Size=0) {
             KeySize = (Size == 0) ? KeySize : Size;
-            _RSAKeyPair = new RSAKeyPair(KeySecurity, KeySize);
+            _RSAKeyPair = new KeyPairRSA(KeySecurity, KeySize);
             //_RSAKeyPair.Persist(KeySecurity);
             }
 
@@ -148,7 +148,7 @@ namespace Goedel.Cryptography.Framework {
         /// <param name="UDF">Fingerprint of key</param>
         /// <returns>true if found, otherwise false.</returns>
         public override bool FindLocal(string UDF) {
-            _RSAKeyPair = new RSAKeyPair(UDF);
+            _RSAKeyPair = new KeyPairRSA(UDF);
             return _RSAKeyPair.Provider != null;
             }
 

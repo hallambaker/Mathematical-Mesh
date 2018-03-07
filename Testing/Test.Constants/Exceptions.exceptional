@@ -1,12 +1,6 @@
 ﻿
 Namespace Template
 
-
-	Exception NYI
-        Console "The feature has not been implemented"
-		Description
-			|This feature has not been implemented
-
 	Exception Internal
         Console "An internal error occurred"
 		Description

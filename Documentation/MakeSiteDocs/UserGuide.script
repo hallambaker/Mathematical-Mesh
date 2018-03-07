@@ -4,7 +4,7 @@
 #xclass ExampleGenerator ExampleGenerator
 
 
-#file UserGuide "index.md" CreateExamples Index
+#file UserGuide "UserGuide/index.md" CreateExamples Index
 <title>User Guide
 <titlebanner><h1>Mathemetical Mesh User Guide
 
@@ -48,4 +48,4 @@ enabled applications.
 
 
 #end xclass
-#end using
+

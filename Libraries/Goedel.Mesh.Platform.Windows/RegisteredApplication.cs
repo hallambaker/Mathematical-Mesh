@@ -25,6 +25,7 @@ using System.Linq;
 using System.IO;
 using Goedel.Utilities;
 using Goedel.Cryptography;
+using Goedel.Mesh.Portal.Client;
 
 namespace Goedel.Mesh.Platform.Windows {
 

@@ -32,10 +32,10 @@ ToolTargets = \
 	Serialization.cs
 
 Exceptions.cs : Exceptions.exceptional 
-	exceptional Exceptions.exceptional  Exceptions.cs
+	exceptional Exceptions.exceptional  /cs  Exceptions.cs
 
 Serialization.cs : Serialization.Protocol 
-	protogen Serialization.Protocol  Serialization.cs
+	protogen Serialization.Protocol  /cs  Serialization.cs
 
 
 prebuildRecurse : 

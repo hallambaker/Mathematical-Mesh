@@ -30,7 +30,7 @@ using Goedel.Protocol;
 
 
 using Goedel.Mesh;
-using Goedel.Mesh.Server;
+using Goedel.Mesh.Portal;
 
 
 namespace Goedel.Mesh.MeshMan {

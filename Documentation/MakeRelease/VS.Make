@@ -21,6 +21,7 @@ MSBuildThisFileDirectory =
 LinkFiles = \
     Goedel.Command.dll\
     Goedel.FSR.dll\
+    Goedel.IO.dll\
     Goedel.Registry.dll\
     Goedel.Utilities.dll
 

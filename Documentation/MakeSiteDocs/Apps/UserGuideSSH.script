@@ -4,7 +4,7 @@
 #xclass ExampleGenerator ExampleGenerator
 
 
-#file UserGuideSSH "Apps/ssh.md" CreateExamples Examples
+#file UserGuideSSH "UserGuide/Apps/ssh.md" CreateExamples Examples
 <title>SSH
 <titlebanner><h1>Mesh/SSH
 

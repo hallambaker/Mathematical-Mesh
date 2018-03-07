@@ -22,6 +22,7 @@ LinkFiles = \
     Goedel.Discovery.dll\
     Goedel.IO.dll\
     Goedel.Utilities.dll\
+    Goedel.Cryptography.Container.dll\
     Goedel.Cryptography.Jose.dll\
     Goedel.Cryptography.dll\
     Goedel.Mesh.dll\
@@ -32,7 +33,7 @@ ToolTargets = \
 	MeshProtocol.cs
 
 MeshProtocol.cs : MeshProtocol.Protocol 
-	protogen MeshProtocol.Protocol  MeshProtocol.cs
+	protogen MeshProtocol.Protocol  /cs  MeshProtocol.cs
 
 
 prebuildRecurse : 

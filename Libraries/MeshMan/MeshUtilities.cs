@@ -7,7 +7,8 @@ using System.Diagnostics;
 using Goedel.Mesh;
 using Goedel.Utilities;
 using Goedel.Mesh.Platform;
-using Goedel.Mesh.Server;
+using Goedel.Mesh.Portal;
+using Goedel.Mesh.Portal.Client;
 using Goedel.Protocol;
 
 namespace Goedel.Mesh.MeshMan {
@@ -206,7 +207,7 @@ namespace Goedel.Mesh.MeshMan {
             PersonalProfile = RegistrationPersonal.PersonalProfile;
             }
 
-        public SessionApplication GetApplication (IApplicationProfile Options, string Type) {
+        public SessionApplication GetApplication (IPortalAccount Options, string Type) {
             Machine.Find (out var RegistrationApplication, Type,
                     Options.Portal.Value, Options.UDF.Value, Options.ID.Value);
 

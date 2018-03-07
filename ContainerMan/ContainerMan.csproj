@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{97675CA1-19F0-46AC-A658-540936D09FD6}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>ContainerMan</RootNamespace>
+    <AssemblyName>ContainerMan</AssemblyName>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Focus|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Focus\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Libraries\Core\Goedel.ASN\Goedel.ASN.csproj">
+      <Project>{8c3faaaa-4187-4368-8c10-4f3f7c31ab51}</Project>
+      <Name>Goedel.ASN</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Libraries\Core\Goedel.Command\Goedel.Command.csproj">
+      <Project>{92374241-b365-4366-8c08-6db92b0460b7}</Project>
+      <Name>Goedel.Command</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Libraries\Core\Goedel.IO\Goedel.IO.csproj">
+      <Project>{e9341173-6212-4a7a-8a59-21fd11c32360}</Project>
+      <Name>Goedel.IO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Libraries\Core\Goedel.Utilities\Goedel.Utilities.csproj">
+      <Project>{171f782c-4d04-40bd-8d12-ead48eefb79a}</Project>
+      <Name>Goedel.Utilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Libraries\Goedel.Cryptography.Container\Goedel.Cryptography.Container.csproj">
+      <Project>{5766d752-9296-42e0-a016-69f27fb45167}</Project>
+      <Name>Goedel.Cryptography.Container</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Libraries\Goedel.Cryptography.Jose\Goedel.Cryptography.Jose.csproj">
+      <Project>{2ba97c8a-2fa2-4d02-a977-566848ed2d55}</Project>
+      <Name>Goedel.Cryptography.Jose</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Libraries\Goedel.Cryptography.Windows\Goedel.Cryptography.Windows.csproj">
+      <Project>{b0e63b96-6d97-44ff-bc12-1538c3633997}</Project>
+      <Name>Goedel.Cryptography.Windows</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Libraries\Goedel.Cryptography\Goedel.Cryptography.csproj">
+      <Project>{b8319c05-ea98-405d-94eb-acb9de6da975}</Project>
+      <Name>Goedel.Cryptography</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Libraries\Goedel.Protocol\Goedel.Protocol.csproj">
+      <Project>{5b919409-8341-4d0a-bcdf-43a6841b6d7b}</Project>
+      <Name>Goedel.Protocol</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Protocols\Recrypt\Goedel.Recrypt.Client\Goedel.Recrypt.Client.csproj">
+      <Project>{c1748c76-8109-4eb1-b0ef-39462903a24d}</Project>
+      <Name>Goedel.Recrypt.Client</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Protocols\Recrypt\Goedel.Recrypt\Goedel.Recrypt.csproj">
+      <Project>{fc5a5407-02c3-43a0-b4de-bb68dc7c1ee7}</Project>
+      <Name>Goedel.Recrypt</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="..\Libraries\ContainerMan\ContainerMan.projitems" Label="Shared" />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

@@ -34,12 +34,6 @@ namespace Goedel.Mesh {
     public partial class Account {
 
         /// <summary>
-        /// Return the unique ID for the account.
-        /// </summary>
-        public virtual string UniqueID  => AccountID; 
-
-
-        /// <summary>
         /// Construct an account identifier from an account name and
         /// a portal name.
         /// </summary>
@@ -58,6 +52,11 @@ namespace Goedel.Mesh {
         public static string PrimaryKey (string UniqueID) {
             return "Account$" + UniqueID;
             }
+
+        /// <summary>
+        /// The primary key
+        /// </summary>
+        public override string _PrimaryKey => PrimaryKey (AccountID);
 
         }
     }

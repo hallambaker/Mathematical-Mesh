@@ -9,7 +9,7 @@ using Goedel.Command;
 using Goedel.Protocol;
 using Goedel.Mesh;
 using Goedel.Mesh.Platform;
-using Goedel.Mesh.Server;
+using Goedel.Mesh.Portal.Client;
 
 namespace Goedel.Mesh.MeshMan {
 
@@ -72,52 +72,52 @@ namespace Goedel.Mesh.MeshMan {
             MeshSession.CreateDevice(DeviceID, DeviceDescription, Default);
             }
 
-        /// <summary>
-        /// Create a new personal profile
-        /// </summary>
-        /// <param name="Options">Command line parameters</param>
-        public override void Deregister (Deregister Options) {
+        ///// <summary>
+        ///// Create a new personal profile
+        ///// </summary>
+        ///// <param name="Options">Command line parameters</param>
+        //public override void Deregister (Deregister Options) {
 
-            SetReporting(Options.Report, Options.Verbose);
-            var Address = Options.Portal.Value;
-            Assert.True((Address != null & Address != ""), NoPortalAccount.Throw);
+        //    SetReporting(Options.Report, Options.Verbose);
+        //    var Address = Options.Portal.Value;
+        //    Assert.True((Address != null & Address != ""), NoPortalAccount.Throw);
 
-            var ProfileRegistration = MeshSession.GetPersonal(Address, Portal: false);
-            Assert.NotNull(ProfileRegistration, ProfileNotFound.Throw);
+        //    var ProfileRegistration = MeshSession.GetPersonal(Address, Portal: false);
+        //    Assert.NotNull(ProfileRegistration, ProfileNotFound.Throw);
 
-            ProfileRegistration.Delete();
-            }
+        //    ProfileRegistration.Delete();
+        //    }
 
 
-        /// <summary>
-        /// Create a new personal profile
-        /// </summary>
-        /// <param name="Options">Command line parameters</param>
-        public override void Verify (Verify Options) {
-            SetReporting(Options.Report, Options.Verbose);
-            try {
-                var Address = Options.Portal.Value;
-                Assert.True((Address != null & Address != ""), NoPortalAccount.Throw);
+        ///// <summary>
+        ///// Create a new personal profile
+        ///// </summary>
+        ///// <param name="Options">Command line parameters</param>
+        //public override void Verify (Verify Options) {
+        //    SetReporting(Options.Report, Options.Verbose);
+        //    try {
+        //        var Address = Options.Portal.Value;
+        //        Assert.True((Address != null & Address != ""), NoPortalAccount.Throw);
 
-                var Response = MeshSession.Validate(Address);
-                LastResult = Response;
+        //        var Response = MeshSession.Validate(Address);
+        //        LastResult = Response;
 
-                if (Response.Valid) {
-                    ReportWriteLine("Accepted: {0}", Address);
-                    }
-                else {
-                    if (Response.StatusDescription == null) {
-                        ReportWriteLine("Refused {0}", Address);
-                        }
-                    else {
-                        ReportWriteLine("Refused {0} because {1}", Address, Response.StatusDescription);
-                        }
-                    }
-                }
-            catch (Exception Exception) {
-                Error(Exception);
-                }
-            }
+        //        if (Response.Valid) {
+        //            ReportWriteLine("Accepted: {0}", Address);
+        //            }
+        //        else {
+        //            if (Response.StatusDescription == null) {
+        //                ReportWriteLine("Refused {0}", Address);
+        //                }
+        //            else {
+        //                ReportWriteLine("Refused {0} because {1}", Address, Response.StatusDescription);
+        //                }
+        //            }
+        //        }
+        //    catch (Exception Exception) {
+        //        Error(Exception);
+        //        }
+        //    }
 
 
 

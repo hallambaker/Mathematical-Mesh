@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Goedel.Utilities;
 
 
@@ -57,7 +57,7 @@ namespace Goedel.Cryptography.Ticket {
 
 
     /// <summary>
-    /// 
+    /// The ticket was in an unrecognized format or has been corrupted.
     /// </summary>
     public class BadTicket : TicketException {
 

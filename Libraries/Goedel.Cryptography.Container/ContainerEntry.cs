@@ -1,4 +1,4 @@
-
+﻿
 //  Copyright (c) 2016 by .
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -60,12 +60,13 @@ namespace Goedel.Cryptography.Container {
 		public static Dictionary<string, JSONFactoryDelegate> _TagDictionary = 
 				new Dictionary<string, JSONFactoryDelegate> () {
 
-			{"ContainerFrame", ContainerFrame._Factory},
 			{"ContainerHeader", ContainerHeader._Factory},
+			{"ContentMeta", ContentMeta._Factory},
 			{"ContainerIndex", ContainerIndex._Factory},
 			{"IndexPosition", IndexPosition._Factory},
 			{"KeyValue", KeyValue._Factory},
-			{"IndexMeta", IndexMeta._Factory}			};
+			{"IndexMeta", IndexMeta._Factory},
+			{"ContainerHeaderFirst", ContainerHeaderFirst._Factory}			};
 
 		/// <summary>
         /// Construct an instance from the specified tagged JSONReader stream.
@@ -84,123 +85,6 @@ namespace Goedel.Cryptography.Container {
 
 
 		// Transaction Classes
-	/// <summary>
-	///
-	/// Describes a container frame
-	/// </summary>
-	public partial class ContainerFrame : ContainerData {
-        /// <summary>
-        ///The frame header
-        /// </summary>
-
-		public virtual ContainerHeader						Header  {get; set;}
-        /// <summary>
-        ///The frame payload
-        /// </summary>
-
-		public virtual byte[]						Payload  {get; set;}
-		
-		/// <summary>
-        /// Tag identifying this class
-        /// </summary>
-		public override string _Tag { get; } = "ContainerFrame";
-
-		/// <summary>
-        /// Factory method
-        /// </summary>
-        /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () {
-			return new ContainerFrame();
-			}
-
-
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// </summary>
-        /// <param name="Writer">Output stream</param>
-        /// <param name="wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
-			SerializeX (Writer, wrap, ref first);
-			}
-
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// Unlike the Serlialize() method, this method is not inherited from the
-        /// parent class allowing a specific version of the method to be called.
-        /// </summary>
-        /// <param name="_Writer">Output stream</param>
-        /// <param name="_wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="_first">If true, item is the first entry in a list.</param>
-		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
-			if (_wrap) {
-				_Writer.WriteObjectStart ();
-				}
-			if (Header != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("Header", 1);
-					Header.Serialize (_Writer, false);
-				}
-			if (Payload != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("Payload", 1);
-					_Writer.WriteBinary (Payload);
-				}
-			if (_wrap) {
-				_Writer.WriteObjectEnd ();
-				}
-			}
-
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="JSONReader">The input stream</param>
-		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
-        /// <returns>The created object.</returns>		
-        public static new ContainerFrame FromJSON (JSONReader JSONReader, bool Tagged=true) {
-			if (JSONReader == null) {
-				return null;
-				}
-			if (Tagged) {
-				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
-				return Out as ContainerFrame;
-				}
-		    var Result = new ContainerFrame ();
-			Result.Deserialize (JSONReader);
-			return Result;
-			}
-
-        /// <summary>
-        /// Having read a tag, process the corresponding value data.
-        /// </summary>
-        /// <param name="JSONReader">The input stream</param>
-        /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
-			
-			switch (Tag) {
-				case "Header" : {
-					// An untagged structure
-					Header = new ContainerHeader ();
-					Header.Deserialize (JSONReader);
- 
-					break;
-					}
-				case "Payload" : {
-					Payload = JSONReader.ReadBinary ();
-					break;
-					}
-				default : {
-					break;
-					}
-				}
-			// check up that all the required elements are present
-			}
-
-
-		}
-
 	/// <summary>
 	///
 	/// Describes a container header
@@ -235,6 +119,16 @@ namespace Goedel.Cryptography.Container {
 			get {return _IsMeta;}
 			set {_IsMeta = value; __IsMeta = true; }
 			}
+        /// <summary>
+        ///Unique object identifier
+        /// </summary>
+
+		public virtual string						UniqueID  {get; set;}
+        /// <summary>
+        ///Content meta data.
+        /// </summary>
+
+		public virtual ContentMeta						ContentMeta  {get; set;}
 		bool								__TreePosition = false;
 		private int						_TreePosition;
         /// <summary>
@@ -290,15 +184,10 @@ namespace Goedel.Cryptography.Container {
 
 		public virtual byte[]						TreeDigest  {get; set;}
         /// <summary>
-        ///Content type parameter
+        ///Unique object identifier
         /// </summary>
 
-		public virtual string						ContentType  {get; set;}
-        /// <summary>
-        ///List of filename paths for the payload of the frame.
-        /// </summary>
-
-		public virtual List<string>				Paths  {get; set;}
+		public virtual string						Event  {get; set;}
         /// <summary>
         ///List of labels that are applied to the payload of the frame.
         /// </summary>
@@ -309,6 +198,26 @@ namespace Goedel.Cryptography.Container {
         /// </summary>
 
 		public virtual List<KeyValue>				KeyValues  {get; set;}
+		bool								__First = false;
+		private int						_First;
+        /// <summary>
+        ///Frame number of the first object instance value.
+        /// </summary>
+
+		public virtual int						First {
+			get {return _First;}
+			set {_First = value; __First = true; }
+			}
+		bool								__Previous = false;
+		private int						_Previous;
+        /// <summary>
+        ///Frame number of the immediately prior object instance value	
+        /// </summary>
+
+		public virtual int						Previous {
+			get {return _Previous;}
+			set {_Previous = value; __Previous = true; }
+			}
         /// <summary>
         ///Session key encrypted under a key exchange specified in the Recipients 
         ///list of this frame (if present) or the frame at the position specified by
@@ -317,15 +226,25 @@ namespace Goedel.Cryptography.Container {
 
 		public virtual byte[]						EncryptedKey  {get; set;}
         /// <summary>
-        ///Per signer signature data
+        ///Initialization vector for ciphertext.
         /// </summary>
 
-		public virtual List<Signature>				Signatures  {get; set;}
+		public virtual byte[]						IV  {get; set;}
+        /// <summary>
+        ///Protected header 
+        /// </summary>
+
+		public virtual byte[]						Protected  {get; set;}
         /// <summary>
         ///Per recipient key exchange data.
         /// </summary>
 
 		public virtual List<Recipient>				Recipients  {get; set;}
+        /// <summary>
+        ///Per signer signature data
+        /// </summary>
+
+		public virtual List<Signature>				Signatures  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -380,6 +299,16 @@ namespace Goedel.Cryptography.Container {
 				_Writer.WriteToken ("IsMeta", 1);
 					_Writer.WriteBoolean (IsMeta);
 				}
+			if (UniqueID != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("UniqueID", 1);
+					_Writer.WriteString (UniqueID);
+				}
+			if (ContentMeta != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("ContentMeta", 1);
+					ContentMeta.Serialize (_Writer, false);
+				}
 			if (__TreePosition){
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("TreePosition", 1);
@@ -415,23 +344,11 @@ namespace Goedel.Cryptography.Container {
 				_Writer.WriteToken ("TreeDigest", 1);
 					_Writer.WriteBinary (TreeDigest);
 				}
-			if (ContentType != null) {
+			if (Event != null) {
 				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("ContentType", 1);
-					_Writer.WriteString (ContentType);
+				_Writer.WriteToken ("Event", 1);
+					_Writer.WriteString (Event);
 				}
-			if (Paths != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("Paths", 1);
-				_Writer.WriteArrayStart ();
-				bool _firstarray = true;
-				foreach (var _index in Paths) {
-					_Writer.WriteArraySeparator (ref _firstarray);
-					_Writer.WriteString (_index);
-					}
-				_Writer.WriteArrayEnd ();
-				}
-
 			if (Labels != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("Labels", 1);
@@ -461,17 +378,37 @@ namespace Goedel.Cryptography.Container {
 				_Writer.WriteArrayEnd ();
 				}
 
+			if (__First){
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("First", 1);
+					_Writer.WriteInteger32 (First);
+				}
+			if (__Previous){
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Previous", 1);
+					_Writer.WriteInteger32 (Previous);
+				}
 			if (EncryptedKey != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("EncryptedKey", 1);
 					_Writer.WriteBinary (EncryptedKey);
 				}
-			if (Signatures != null) {
+			if (IV != null) {
 				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("Signatures", 1);
+				_Writer.WriteToken ("IV", 1);
+					_Writer.WriteBinary (IV);
+				}
+			if (Protected != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Protected", 1);
+					_Writer.WriteBinary (Protected);
+				}
+			if (Recipients != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Recipients", 1);
 				_Writer.WriteArrayStart ();
 				bool _firstarray = true;
-				foreach (var _index in Signatures) {
+				foreach (var _index in Recipients) {
 					_Writer.WriteArraySeparator (ref _firstarray);
 					// This is an untagged structure. Cannot inherit.
                     //_Writer.WriteObjectStart();
@@ -483,12 +420,12 @@ namespace Goedel.Cryptography.Container {
 				_Writer.WriteArrayEnd ();
 				}
 
-			if (Recipients != null) {
+			if (Signatures != null) {
 				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("Recipients", 1);
+				_Writer.WriteToken ("Signatures", 1);
 				_Writer.WriteArrayStart ();
 				bool _firstarray = true;
-				foreach (var _index in Recipients) {
+				foreach (var _index in Signatures) {
 					_Writer.WriteArraySeparator (ref _firstarray);
 					// This is an untagged structure. Cannot inherit.
                     //_Writer.WriteObjectStart();
@@ -544,6 +481,17 @@ namespace Goedel.Cryptography.Container {
 					IsMeta = JSONReader.ReadBoolean ();
 					break;
 					}
+				case "UniqueID" : {
+					UniqueID = JSONReader.ReadString ();
+					break;
+					}
+				case "ContentMeta" : {
+					// An untagged structure
+					ContentMeta = new ContentMeta ();
+					ContentMeta.Deserialize (JSONReader);
+ 
+					break;
+					}
 				case "TreePosition" : {
 					TreePosition = JSONReader.ReadInteger32 ();
 					break;
@@ -575,19 +523,8 @@ namespace Goedel.Cryptography.Container {
 					TreeDigest = JSONReader.ReadBinary ();
 					break;
 					}
-				case "ContentType" : {
-					ContentType = JSONReader.ReadString ();
-					break;
-					}
-				case "Paths" : {
-					// Have a sequence of values
-					bool _Going = JSONReader.StartArray ();
-					Paths = new List <string> ();
-					while (_Going) {
-						string _Item = JSONReader.ReadString ();
-						Paths.Add (_Item);
-						_Going = JSONReader.NextArray ();
-						}
+				case "Event" : {
+					Event = JSONReader.ReadString ();
 					break;
 					}
 				case "Labels" : {
@@ -615,8 +552,38 @@ namespace Goedel.Cryptography.Container {
 						}
 					break;
 					}
+				case "First" : {
+					First = JSONReader.ReadInteger32 ();
+					break;
+					}
+				case "Previous" : {
+					Previous = JSONReader.ReadInteger32 ();
+					break;
+					}
 				case "EncryptedKey" : {
 					EncryptedKey = JSONReader.ReadBinary ();
+					break;
+					}
+				case "IV" : {
+					IV = JSONReader.ReadBinary ();
+					break;
+					}
+				case "Protected" : {
+					Protected = JSONReader.ReadBinary ();
+					break;
+					}
+				case "Recipients" : {
+					// Have a sequence of values
+					bool _Going = JSONReader.StartArray ();
+					Recipients = new List <Recipient> ();
+					while (_Going) {
+						// an untagged structure.
+						var _Item = new  Recipient ();
+						_Item.Deserialize (JSONReader);
+						// var _Item = new Recipient (JSONReader);
+						Recipients.Add (_Item);
+						_Going = JSONReader.NextArray ();
+						}
 					break;
 					}
 				case "Signatures" : {
@@ -633,18 +600,172 @@ namespace Goedel.Cryptography.Container {
 						}
 					break;
 					}
-				case "Recipients" : {
+				default : {
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
+	/// <summary>
+	/// </summary>
+	public partial class ContentMeta : ContainerData {
+        /// <summary>
+        ///Content type parameter
+        /// </summary>
+
+		public virtual string						ContentType  {get; set;}
+        /// <summary>
+        ///List of filename paths for the payload of the frame.
+        /// </summary>
+
+		public virtual List<string>				Paths  {get; set;}
+        /// <summary>
+        ///Unique object identifier
+        /// </summary>
+
+		public virtual string						UniqueID  {get; set;}
+        /// <summary>
+        ///Initial creation date.
+        /// </summary>
+
+		public virtual DateTime?						Created  {get; set;}
+        /// <summary>
+        ///Date of last modification.
+        /// </summary>
+
+		public virtual DateTime?						Modified  {get; set;}
+		
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public override string _Tag { get; } = "ContentMeta";
+
+		/// <summary>
+        /// Factory method
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JSONObject _Factory () {
+			return new ContentMeta();
+			}
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="Writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
+			SerializeX (Writer, wrap, ref first);
+			}
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_Writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			if (_wrap) {
+				_Writer.WriteObjectStart ();
+				}
+			if (ContentType != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("ContentType", 1);
+					_Writer.WriteString (ContentType);
+				}
+			if (Paths != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Paths", 1);
+				_Writer.WriteArrayStart ();
+				bool _firstarray = true;
+				foreach (var _index in Paths) {
+					_Writer.WriteArraySeparator (ref _firstarray);
+					_Writer.WriteString (_index);
+					}
+				_Writer.WriteArrayEnd ();
+				}
+
+			if (UniqueID != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("UniqueID", 1);
+					_Writer.WriteString (UniqueID);
+				}
+			if (Created != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Created", 1);
+					_Writer.WriteDateTime (Created);
+				}
+			if (Modified != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Modified", 1);
+					_Writer.WriteDateTime (Modified);
+				}
+			if (_wrap) {
+				_Writer.WriteObjectEnd ();
+				}
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <returns>The created object.</returns>		
+        public static new ContentMeta FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
+			if (Tagged) {
+				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				return Out as ContentMeta;
+				}
+		    var Result = new ContentMeta ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			}
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
+		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+			
+			switch (Tag) {
+				case "ContentType" : {
+					ContentType = JSONReader.ReadString ();
+					break;
+					}
+				case "Paths" : {
 					// Have a sequence of values
 					bool _Going = JSONReader.StartArray ();
-					Recipients = new List <Recipient> ();
+					Paths = new List <string> ();
 					while (_Going) {
-						// an untagged structure.
-						var _Item = new  Recipient ();
-						_Item.Deserialize (JSONReader);
-						// var _Item = new Recipient (JSONReader);
-						Recipients.Add (_Item);
+						string _Item = JSONReader.ReadString ();
+						Paths.Add (_Item);
 						_Going = JSONReader.NextArray ();
 						}
+					break;
+					}
+				case "UniqueID" : {
+					UniqueID = JSONReader.ReadString ();
+					break;
+					}
+				case "Created" : {
+					Created = JSONReader.ReadDateTime ();
+					break;
+					}
+				case "Modified" : {
+					Modified = JSONReader.ReadDateTime ();
 					break;
 					}
 				default : {
@@ -1251,6 +1372,107 @@ namespace Goedel.Cryptography.Container {
 					break;
 					}
 				default : {
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
+	/// <summary>
+	/// </summary>
+	public partial class ContainerHeaderFirst : ContainerHeader {
+        /// <summary>
+        ///Specifies the data encoding for the header section of for the following frames.
+        ///This value is ONLY valid in Frame 0 which MUST have a header encoded in JSON.
+        /// </summary>
+
+		public virtual string						DataEncoding  {get; set;}
+		
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public override string _Tag { get; } = "ContainerHeaderFirst";
+
+		/// <summary>
+        /// Factory method
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JSONObject _Factory () {
+			return new ContainerHeaderFirst();
+			}
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="Writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
+			SerializeX (Writer, wrap, ref first);
+			}
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_Writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			if (_wrap) {
+				_Writer.WriteObjectStart ();
+				}
+			((ContainerHeader)this).SerializeX(_Writer, false, ref _first);
+			if (DataEncoding != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("DataEncoding", 1);
+					_Writer.WriteString (DataEncoding);
+				}
+			if (_wrap) {
+				_Writer.WriteObjectEnd ();
+				}
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <returns>The created object.</returns>		
+        public static new ContainerHeaderFirst FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
+			if (Tagged) {
+				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				return Out as ContainerHeaderFirst;
+				}
+		    var Result = new ContainerHeaderFirst ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			}
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
+		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+			
+			switch (Tag) {
+				case "DataEncoding" : {
+					DataEncoding = JSONReader.ReadString ();
+					break;
+					}
+				default : {
+					base.DeserializeToken(JSONReader, Tag);
 					break;
 					}
 				}

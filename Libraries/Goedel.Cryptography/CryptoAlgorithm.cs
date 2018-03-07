@@ -78,14 +78,14 @@ namespace Goedel.Cryptography {
         /// Create an instance with the specified property values.
         /// </summary>
         /// <param name="CryptoAlgorithmID">CryptoAlgorithmID Identifier.</param>
-        /// <param name="KeySize">Default algorithm key size.</param>
         /// <param name="AlgorithmClass">Algorithm type.</param>
         /// <param name="CryptoProviderFactory">Delegate returning the default crypto provider.</param>
-        public CryptoAlgorithm(
+        /// <param name="KeySize">Default algorithm key size.</param>
+        public CryptoAlgorithm (
                     CryptoAlgorithmID CryptoAlgorithmID,
-                    int KeySize,
-                    CryptoAlgorithmClass AlgorithmClass,
-                    CryptoProviderFactoryDelegate CryptoProviderFactory) {
+            CryptoAlgorithmClass AlgorithmClass,
+            CryptoProviderFactoryDelegate CryptoProviderFactory,
+            int KeySize=0) {
             this.CryptoAlgorithmID = CryptoAlgorithmID;
             this.KeySize = KeySize;
             this.AlgorithmClass = AlgorithmClass;

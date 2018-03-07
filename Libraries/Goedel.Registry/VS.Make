@@ -25,7 +25,7 @@ ToolTargets = \
 	Headers.cs
 
 Exceptions.cs : Exceptions.exceptional 
-	exceptional Exceptions.exceptional  Exceptions.cs
+	exceptional Exceptions.exceptional  /cs  Exceptions.cs
 
 Headers.cs : Headers.script 
 	gscript Headers.script  Headers.cs

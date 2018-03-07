@@ -23,6 +23,7 @@
 using System;
 using System.Collections.Generic;
 using Goedel.Cryptography.PKIX;
+using Goedel.Cryptography.Algorithms;
 using Goedel.Utilities;
 using Goedel.Protocol;
 
@@ -51,11 +52,11 @@ namespace Goedel.Cryptography.Jose {
         /// <param name="KeyPair">The key pair.</param>
         /// <returns>Public portion.</returns>
         public static Key GetPublic(KeyPair KeyPair) {
-            if (KeyPair as RSAKeyPairBase != null) {
-                return new PublicKeyRSA (KeyPair as RSAKeyPairBase);
+            if (KeyPair as KeyPairBaseRSA != null) {
+                return new PublicKeyRSA (KeyPair as KeyPairBaseRSA);
                 }
-            if (KeyPair as DHKeyPairBase != null) {
-                return new PublicKeyDH(KeyPair as DHKeyPairBase);
+            if (KeyPair as KeyPairBaseDH != null) {
+                return new PublicKeyDH(KeyPair as KeyPairBaseDH);
                 }
             return null;
             }
@@ -66,11 +67,11 @@ namespace Goedel.Cryptography.Jose {
         /// <param name="KeyPair">The key pair.</param>
         /// <returns>The private data.</returns>
         public static Key GetPrivate(KeyPair KeyPair) {
-            if (KeyPair as RSAKeyPairBase != null) {
-                return new PrivateKeyRSA (KeyPair as RSAKeyPairBase);
+            if (KeyPair as KeyPairBaseRSA != null) {
+                return new PrivateKeyRSA (KeyPair as KeyPairBaseRSA);
                 }
-            if (KeyPair as DHKeyPairBase != null) {
-                return new PrivateKeyDH(KeyPair as DHKeyPairBase);
+            if (KeyPair as KeyPairBaseDH != null) {
+                return new PrivateKeyDH(KeyPair as KeyPairBaseDH);
                 }
             return null;
             }

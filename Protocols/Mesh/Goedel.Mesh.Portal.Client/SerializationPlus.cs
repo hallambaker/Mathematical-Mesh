@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using Goedel.Protocol;
 using Goedel.IO;
 using Goedel.Utilities;
+using Goedel.Mesh.Portal;
 
-
-namespace Goedel.Mesh.Platform {
+namespace Goedel.Mesh.Portal.Client {
     public partial class SerializationPersonal {
 
         /// <summary>

@@ -17,27 +17,27 @@ namespace Test.Goedel.Cryptography.Jose {
         static CryptoProviderExchange Encrypter;
         static CryptoProviderSignature Signer;
 
-        static RSAKeyPairBase EncrypterKeyPair;
-        static RSAKeyPairBase SignerKeyPair;
+        static KeyPairBaseRSA EncrypterKeyPair;
+        static KeyPairBaseRSA SignerKeyPair;
 
-        static DHKeyPair AliceKeyPair;
-        static DHKeyPair BobKeyPair;
-        static DHKeyPair GroupKeyPair;
+        static KeyPairDH AliceKeyPair;
+        static KeyPairDH BobKeyPair;
+        static KeyPairDH GroupKeyPair;
 
         [AssemblyInitialize]
         public static void Initialize(TestContext Context) {
             global::Goedel.IO.Debug.Initialize();
             CryptographyWindows.Initialize();
 
-            SignerKeyPair = (RSAKeyPairBase)KeyFileDecode.DecodePEM(Directories.TestKey_OpenSSH_Private);
+            SignerKeyPair = (KeyPairBaseRSA)KeyFileDecode.DecodePEM(Directories.TestKey_OpenSSH_Private);
             Signer = SignerKeyPair.SignatureProvider();
 
-            EncrypterKeyPair = (RSAKeyPairBase)KeyFileDecode.DecodePEM(Directories.TestKey_OpenSSH_Private);
+            EncrypterKeyPair = (KeyPairBaseRSA)KeyFileDecode.DecodePEM(Directories.TestKey_OpenSSH_Private);
             Encrypter = EncrypterKeyPair.ExchangeProvider();
             
-            AliceKeyPair = new DHKeyPair();
-            BobKeyPair = new DHKeyPair();
-            GroupKeyPair = new DHKeyPair();
+            AliceKeyPair = new KeyPairDH();
+            BobKeyPair = new KeyPairDH();
+            GroupKeyPair = new KeyPairDH();
 
             }
 

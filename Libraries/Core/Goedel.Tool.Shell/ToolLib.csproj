@@ -29,6 +29,15 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Focus|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Focus\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -50,6 +59,7 @@
   <Import Project="..\..\Goedel.FSR\Goedel.FSR.projitems" Label="Shared" />
   <Import Project="..\..\Goedel.Registry\Goedel.Registry.projitems" Label="Shared" />
   <Import Project="..\..\Goedel.Utilities\Goedel.Utilities.projitems" Label="Shared" />
+  <Import Project="..\..\Goedel.Discovery\Goedel.Discovery.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>cd ..\..\  &amp;&amp; VSPreBuild</PreBuildEvent>

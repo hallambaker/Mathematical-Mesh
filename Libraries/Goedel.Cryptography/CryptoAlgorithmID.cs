@@ -127,6 +127,11 @@ namespace Goedel.Cryptography {
         /// <summary>SHA3 512 bit</summary>
         SHA_3_512 = Digest + 6,
 
+        /// <summary>SHA3 512 bit</summary>
+        SHAKE_128 = Digest + 7,
+
+        /// <summary>SHA3 512 bit</summary>
+        SHAKE_256 = Digest + 8,
 
 
 

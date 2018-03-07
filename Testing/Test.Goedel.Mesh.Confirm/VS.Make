@@ -18,7 +18,26 @@
 
 MSBuildThisFileDirectory = 
 
-LinkFiles = 
+LinkFiles = \
+    Goedel.Utilities.dll\
+    Goedel.Cryptography.Container.dll\
+    Goedel.Cryptography.Jose.dll\
+    Goedel.Cryptography.Windows.dll\
+    Goedel.Cryptography.dll\
+    Goedel.Mesh.Platform.Windows.dll\
+    Goedel.Mesh.dll\
+    Goedel.Protocol.dll\
+    Goedel.Test.dll\
+    Goedel.Account.Client.dll\
+    Goedel.Account.Server.dll\
+    Goedel.Account.dll\
+    Goedel.Confirm.Client.dll\
+    Goedel.Confirm.Server.dll\
+    Goedel.Confirm.dll\
+    Goedel.Mesh.Portal.Client.dll\
+    Goedel.Mesh.Portal.Server.dll\
+    Goedel.Mesh.Portal.dll\
+    Test.Common.dll
 
 ToolTargets = 
 

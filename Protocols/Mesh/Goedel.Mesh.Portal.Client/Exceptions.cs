@@ -1,9 +1,9 @@
-using System;
+﻿using System;
 using Goedel.Utilities;
 
 
 
-namespace Goedel.Mesh.Platform {
+namespace Goedel.Mesh.Portal.Client {
 
 
     /// <summary>

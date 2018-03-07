@@ -14,7 +14,7 @@ namespace ExampleGenerator {
 		// UserGuideLinux
 		//
 		public static void UserGuideLinux (CreateExamples Examples) { /* File  */
-			using (var _Output = new StreamWriter ("Platform/Linux.md")) {
+			using (var _Output = new StreamWriter ("UserGuide/Platform/Linux.md")) {
 				var _Indent = ""; 
 				_Output.Write ("<title>Linux\n{0}", _Indent);
 				_Output.Write ("<titlebanner><h1>Linux\n{0}", _Indent);

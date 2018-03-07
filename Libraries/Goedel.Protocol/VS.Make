@@ -26,7 +26,7 @@ ToolTargets = \
 	MessageBase.cs
 
 MessageBase.cs : MessageBase.protocol 
-	protogen MessageBase.protocol  MessageBase.cs
+	protogen MessageBase.protocol  /cs  MessageBase.cs
 
 
 prebuildRecurse : 

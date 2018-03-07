@@ -27,7 +27,7 @@ using Goedel.Mesh;
 using Goedel.Cryptography;
 using Goedel.Cryptography.Jose;
 using Goedel.Cryptography.PKIX;
-using Goedel.Mesh.Platform;
+using Goedel.Mesh.Portal.Client;
 using Goedel.Protocol;
 
 namespace Goedel.Recrypt {
@@ -129,6 +129,23 @@ namespace Goedel.Recrypt {
         public KeyPair GetEncryptionKey (List<Recipient> Recipients) {
 
             return DecryptionKeyPairFudge;
+            }
+
+
+        public CreateGroupResponse CreateGroup (string GroupIdentifier) {
+            throw new NYI();
+            }
+
+        public AddMemberResponse AddMember (string UserIdentifier) {
+            throw new NYI();
+            }
+
+        public AddMemberResponse AddMembers (IEnumerable<string> UserIdentifier) {
+            throw new NYI();
+            }
+
+        public AddMemberResponse RemoveMember (string UserIdentifier) {
+            throw new NYI();
             }
 
         }

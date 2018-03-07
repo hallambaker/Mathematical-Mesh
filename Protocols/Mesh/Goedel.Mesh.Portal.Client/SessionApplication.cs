@@ -26,11 +26,11 @@ using System.Linq;
 using System.IO;
 using Goedel.Utilities;
 using Goedel.Mesh;
-using Goedel.Mesh.Server;
+using Goedel.Mesh.Portal;
 using Goedel.Cryptography;
 using Goedel.Cryptography.Jose;
 
-namespace Goedel.Mesh.Platform {
+namespace Goedel.Mesh.Portal.Client {
 
 
     /// <summary>

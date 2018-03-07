@@ -18,7 +18,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         static Platform () {
             // Add the providers defined in the portable library to the catalog.
-            FindLocalDelegates.Add(DHKeyPair.FindLocalDH);
+            FindLocalDelegates.Add(KeyPairDH.FindLocalDH);
             }
 
         /// <summary>Default SHA-2-512 provider optimized for small data items</summary>
@@ -29,6 +29,14 @@ namespace Goedel.Cryptography {
         /// <remarks>This delegate must bound to the platform
         /// specific implementation by a call to  Platform.Initialize() before use</remarks>
         public static CryptoAlgorithm SHA2_256;
+        /// <summary>Default SHA-3-512 provider optimized for small data items</summary>
+        /// <remarks>This delegate must bound to the platform
+        /// specific implementation by a call to  Platform.Initialize() before use</remarks>
+        public static CryptoAlgorithm SHA3_512;
+        /// <summary>Default SHA-3-256 provider optimized for small data items</summary>
+        /// <remarks>This delegate must bound to the platform
+        /// specific implementation by a call to  Platform.Initialize() before use</remarks>
+        public static CryptoAlgorithm SHA3_256;
         /// <summary>Default SHA-1 provider optimized for small data items</summary>
         /// <remarks>This delegate must bound to the platform
         /// specific implementation by a call to  Platform.Initialize() before use</remarks>
@@ -62,12 +70,12 @@ namespace Goedel.Cryptography {
         /// <param name="Data"></param>
         /// <param name="Offset"></param>
         /// <param name="Count"></param>
-        public delegate void GetRandomBytesDelegateType(byte[] Data, int Offset, int Count);
+        public delegate void FillRandomBytesDelegate(byte[] Data, int Offset, int Count);
 
         /// <summary>Fill byte buffer with cryptographically strong random numbers</summary>
         /// <remarks>This delegate must bound to the platform
         /// specific implementation by a call to  Platform.Initialize() before use</remarks>
-        public static GetRandomBytesDelegateType GetRandomBytesDelegate;
+        public static FillRandomBytesDelegate FillRandom;
 
 
         /// <summary>
@@ -136,7 +144,7 @@ namespace Goedel.Cryptography {
         /// <returns>Random data</returns>
         public static byte[] GetRandomBytes(int Length) {
             var Data = new byte[Length];
-            GetRandomBytesDelegate(Data, 0, Length);
+            FillRandom(Data, 0, Length);
             return Data;
             }
 
@@ -181,13 +189,13 @@ namespace Goedel.Cryptography {
         /// <summary>Find a key by fingerprint in the local key stores</summary>
         /// <param name="UDF"></param>
         /// <returns></returns>
-        public delegate KeyPair FindLocalDelegateType(string UDF);
+        public delegate KeyPair FindLocalDelegate(string UDF);
 
         /// <summary>
         /// Catalog of all local key stores.
         /// </summary>
-        public static List<FindLocalDelegateType> FindLocalDelegates =
-            new List<FindLocalDelegateType>();
+        public static List<FindLocalDelegate> FindLocalDelegates =
+            new List<FindLocalDelegate>();
 
         /// <summary>
         /// Shared RFC 3394 Key Wrap provider.

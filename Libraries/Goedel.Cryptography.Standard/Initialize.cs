@@ -36,12 +36,17 @@ namespace Goedel.Cryptography {
 
                 // This is actually a duplicate of Goedel.Platform but it is 
                 // needed so often as to make this the easiest solution.
-                Goedel.Cryptography.Platform.GetRandomBytesDelegate = GetRandomBytes;
+                Goedel.Cryptography.Platform.FillRandom = GetRandomBytes;
 
                 // Load the default algorithms for each class first
 
                 Platform.SHA2_512 = CryptoProviderSHA2_512.Register();
                 Platform.SHA2_256 = CryptoProviderSHA2_256.Register();
+                Platform.SHA3_512 = CryptoProviderSHA3_512.Register();
+                Platform.SHA3_256 = CryptoProviderSHA3_256.Register();
+                CryptoProviderSHAKE128.Register();
+                CryptoProviderSHAKE256.Register();
+
                 Platform.SHA1 = CryptoProviderSHA1.Register();
 
                 Platform.HMAC_SHA2_512 = CryptoProviderHMACSHA2_512.Register();
@@ -58,13 +63,13 @@ namespace Goedel.Cryptography {
                 // as to allow for the possibility we might override it.
                 CryptoProviderExchangeDH.Register();
 
-                Platform.FindLocalDelegates.Add(RSAKeyPair.FindLocal);
+                Platform.FindLocalDelegates.Add(KeyPairRSA.FindLocal);
 
                 //Configure the key pair factories
-                RSAKeyPairBase.KeyPairPublicFactory = RSAKeyPair.KeyPairPublicFactory;
-                RSAKeyPairBase.KeyPairPrivateFactory = RSAKeyPair.KeyPairPrivateFactory;
-                DHKeyPairBase.KeyPairPublicFactory = DHKeyPair.KeyPairPublicFactory;
-                DHKeyPairBase.KeyPairPrivateFactory = DHKeyPair.KeyPairPrivateFactory;
+                KeyPairBaseRSA.KeyPairPublicFactory = KeyPairRSA.KeyPairPublicFactory;
+                KeyPairBaseRSA.KeyPairPrivateFactory = KeyPairRSA.KeyPairPrivateFactory;
+                KeyPairBaseDH.KeyPairPublicFactory = KeyPairDH.KeyPairPublicFactory;
+                KeyPairBaseDH.KeyPairPrivateFactory = KeyPairDH.KeyPairPrivateFactory;
 
 
 

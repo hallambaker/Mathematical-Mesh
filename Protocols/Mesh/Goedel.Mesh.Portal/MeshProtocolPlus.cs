@@ -5,7 +5,7 @@ using System.Text;
 using Goedel.Protocol;
 using Goedel.Utilities;
 
-namespace Goedel.Mesh.Server {
+namespace Goedel.Mesh.Portal {
 
     public partial class MeshProtocol {
 

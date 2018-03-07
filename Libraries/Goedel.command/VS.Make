@@ -26,13 +26,13 @@ ToolTargets = \
 	Exceptions.cs
 
 CommandLex.cs : CommandLex.fsm 
-	fsrgen CommandLex.fsm  CommandLex.cs
+	fsrgen CommandLex.fsm  /cs  CommandLex.cs
 
 CommandSplit.cs : CommandSplit.fsm 
-	fsrgen CommandSplit.fsm  CommandSplit.cs
+	fsrgen CommandSplit.fsm  /cs  CommandSplit.cs
 
 Exceptions.cs : Exceptions.exceptional 
-	exceptional Exceptions.exceptional  Exceptions.cs
+	exceptional Exceptions.exceptional  /cs  Exceptions.cs
 
 
 prebuildRecurse : 

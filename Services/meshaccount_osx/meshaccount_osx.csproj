@@ -4,6 +4,7 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <AssemblyName>meshaccount</AssemblyName>
+    <Configurations>Debug;Release;Focus</Configurations>
   </PropertyGroup>
 
   <Import Project="..\meshaccount\meshaccount.projitems" Label="Shared" />

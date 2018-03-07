@@ -37,24 +37,9 @@ namespace Goedel.Persistence {
         FileStream FileStream;
 
         /// <summary>
-        /// Open or create a persistence store in read/write mode with 
-        /// the specified file name, content type and optional comment.
+        /// 
         /// </summary>
-        /// <param name="FileName">Log file.</param>
-        /// <param name="Type">Type of data to store (the schema name).</param>
-        /// <param name="Comment">Comment to be written to the log.</param>
-        public LogPersistenceStore(string FileName,
-                string Type, string Comment)
-            : this(FileName, false, Type, Comment) {
-            }
-
-        /// <summary>
-        /// Open a persistence store with the specified file name
-        /// in read only mode.
-        /// </summary>
-        /// <param name="FileName">Log file.</param>
-        public LogPersistenceStore(string FileName)
-            : this(FileName, true, null, null) {
+        protected LogPersistenceStore () {
             }
 
         /// <summary>
@@ -68,24 +53,9 @@ namespace Goedel.Persistence {
         /// if none exists.</param>
         /// <param name="Type">Type of data to store (the schema name).</param>
         /// <param name="Comment">Comment to be written to the log.</param>
-        public LogPersistenceStore(string FileName, bool ReadOnly,
-                string Type, string Comment) {
-            Init(FileName, ReadOnly, Type, Comment);
-            }
-
-
-        /// <summary>
-        /// Initialization method. May be called by subclasses.
-        /// </summary>
-        /// <param name="FileName">Log file.</param>
-        /// <param name="ReadOnly">If true, persistence store must exist
-        /// and will be opened in read-only mode. If false, persistence store
-        /// is opened in read/write mode and a new store will be created
-        /// if none exists.</param>
-        /// <param name="Type">Type of data to store (the schema name).</param>
-        /// <param name="Comment">Comment to be written to the log.</param>
-         void Init(string FileName, bool ReadOnly,
-                string Type, string Comment) {
+        public LogPersistenceStore (string FileName, string Type = null,
+                    string Comment = null, bool ReadOnly = false) {
+            ReadOnly = ReadOnly & (Type != null);
             if (ReadOnly) {
                 //Trace.WriteLine("Open store ReadOnly");
                 FileStream = new FileStream(FileName, FileMode.Open,
@@ -102,9 +72,6 @@ namespace Goedel.Persistence {
                 else {
                     Read();
                     }
-
-
-                //Dump.Write(FileName);
                 }
             }
 
@@ -132,14 +99,21 @@ namespace Goedel.Persistence {
                 }
             }
 
-        private void Write(LogEntry LogEntry) {
+        /// <summary>
+        /// Virtual method that is called to append an entry to the end of the log. 
+        /// </summary>
+        /// <param name="LogEntry">The entry to write.</param>
+        protected void Write (LogEntry LogEntry) {
             var Data = LogEntry.GetBytes();
             FileStream.Seek(0, SeekOrigin.End);
             FileStream.Write(Data, 0, Data.Length);
             FileStream.Flush(true);
             }
 
-        void Read() {
+        /// <summary>
+        /// Read a data record
+        /// </summary>
+        protected void Read () {
             var TextReader = new StreamReader(FileStream);
             var JSONReader = new JSONReader(TextReader);
 
@@ -148,8 +122,13 @@ namespace Goedel.Persistence {
                 LogEntry = ReadRecord(JSONReader);
                 } while (LogEntry != null);
             }
-        
-        LogEntry ReadRecord(JSONReader JSONReader) {
+
+        /// <summary>
+        /// Read a data record.
+        /// </summary>
+        /// <param name="JSONReader"></param>
+        /// <returns></returns>
+        protected LogEntry ReadRecord (JSONReader JSONReader) {
 
             try {
                 LogEntry.Deserialize(JSONReader, out var ResultObject);

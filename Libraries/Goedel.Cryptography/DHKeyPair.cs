@@ -2,14 +2,17 @@
 using System.Collections.Generic;
 using Goedel.Utilities;
 using Goedel.Cryptography.PKIX;
+using Goedel.Cryptography.Algorithms;
 using System;
 
 namespace Goedel.Cryptography {
 
     /// <summary>
-    /// Implementation of Diffie Hellman key exchange with proxy re-encryption support.
+    /// Description of a Diffie Hellman Key Pair. This class exposes methods and properties
+    /// that allow conversion of the public key (and private key if known) values to various
+    /// formats.
     /// </summary>
-    public class DHKeyPair : DHKeyPairBase {
+    public class KeyPairDH : KeyPairBaseDH {
 
 
 
@@ -107,7 +110,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="KeySecurity">The key security model</param>
         /// <param name="KeySize">The key size</param>
-        public DHKeyPair(KeySecurity KeySecurity = KeySecurity.Ephemeral, int KeySize = 2048) :
+        public KeyPairDH(KeySecurity KeySecurity = KeySecurity.Ephemeral, int KeySize = 2048) :
                     this (new DiffeHellmanPrivate(KeySize), KeySecurity) {
             }
 
@@ -117,7 +120,7 @@ namespace Goedel.Cryptography {
         /// <param name="PublicKey">The public key to create a provider for</param>
         /// <param name="KeySecurity">The key security model</param>
 
-        public DHKeyPair(DiffeHellmanPublic PublicKey, KeySecurity KeySecurity = KeySecurity.Ephemeral) {
+        public KeyPairDH(DiffeHellmanPublic PublicKey, KeySecurity KeySecurity = KeySecurity.Ephemeral) {
             this.PublicKey = PublicKey;
             PrivateKey = PublicKey as DiffeHellmanPrivate;
             if (KeySecurity == KeySecurity.Ephemeral) {
@@ -148,7 +151,7 @@ namespace Goedel.Cryptography {
         public static new KeyPair KeyPairPublicFactory(PKIXPublicKeyDH PKIXParameters) {
             var DiffeHellmanPublic = new DiffeHellmanPublic(PKIXParameters);
 
-            return new DHKeyPair(DiffeHellmanPublic);
+            return new KeyPairDH(DiffeHellmanPublic);
             }
 
 
@@ -163,7 +166,7 @@ namespace Goedel.Cryptography {
             var DiffeHellmanPrivate = new DiffeHellmanPrivate(PKIXParameters);
             var KS = Exportable ? KeySecurity.Exportable : KeySecurity.Ephemeral;
 
-            return new DHKeyPair(DiffeHellmanPrivate, KS);
+            return new KeyPairDH(DiffeHellmanPrivate, KS);
             }
 
 
@@ -175,7 +178,7 @@ namespace Goedel.Cryptography {
                 return; // Already got the private value
                 }
 
-            var Private = Platform.FindInKeyStore(UDF, CryptoAlgorithmID.DH) as DHKeyPair;
+            var Private = Platform.FindInKeyStore(UDF, CryptoAlgorithmID.DH) as KeyPairDH;
             PublicKey = Private.PublicKey;
             }
 
@@ -194,7 +197,7 @@ namespace Goedel.Cryptography {
 
             var Result = new KeyPair[Shares];
             for (var i = 0; i < Shares; i++) {
-                Result[i] = new DHKeyPair(Private[i], KeySecurity: KeySecurity.Exportable);
+                Result[i] = new KeyPairDH(Private[i], KeySecurity: KeySecurity.Exportable);
                 }
 
             return Result;
@@ -206,7 +209,7 @@ namespace Goedel.Cryptography {
         /// <param name="KeyPair">The public key to agree to.</param>
         /// <returns>The key agreement result.</returns>
         public override KeyAgreementResult Agreement (KeyPair KeyPair) {
-            var DHKeyPair = KeyPair as DHKeyPair;
+            var DHKeyPair = KeyPair as KeyPairDH;
             Assert.NotNull(DHKeyPair, KeyTypeMismatch.Throw);
             return Agreement(DHKeyPair);
             }
@@ -229,7 +232,7 @@ namespace Goedel.Cryptography {
         /// <param name="Public">Public key parameters</param>
         /// <param name="Carry">Carried result to add in to the agreement (for recryption)</param>
         /// <returns>The key agreement value ZZ</returns>
-        public DiffieHellmanResult Agreement(DHKeyPair Public, DiffieHellmanResult Carry = null) {
+        public DiffieHellmanResult Agreement(KeyPairDH Public, DiffieHellmanResult Carry = null) {
             BigInteger Agreement;
             if (Carry == null) {
                 Agreement = PrivateKey.Agreement(Public.PublicKey);
@@ -260,7 +263,7 @@ namespace Goedel.Cryptography {
         /// <param name="Carry">Recryption carry over value, to be combined with the
         /// result of this key agreement.</param>
         /// <returns>The key agreement value ZZ</returns>
-        public BigInteger Agreement(DHKeyPair Public, BigInteger Carry) {
+        public BigInteger Agreement(KeyPairDH Public, BigInteger Carry) {
             return PrivateKey.Agreement(Public.PublicKey, Carry);
             }
 
@@ -289,9 +292,9 @@ namespace Goedel.Cryptography {
         /// has the public parameters of the new ephemeral keypair but acts as a combined keypair.
         /// </summary>
         /// <returns>The hybrid keypair.</returns>
-        public DHKeyPair MakeEphemeral () {
+        public KeyPairDH MakeEphemeral () {
             var DiffeHellmanPrivate = new DiffeHellmanPrivate(PrivateKey);
-            return new DHKeyPair(DiffeHellmanPrivate);
+            return new KeyPairDH(DiffeHellmanPrivate);
             }
 
         /// <summary>
@@ -299,10 +302,10 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="Contibution">The public key contribution.</param>
         /// <returns>The new public key.</returns>
-        public DHKeyPair Combine (DHKeyPair Contibution) {
+        public KeyPairDH Combine (KeyPairDH Contibution) {
 
             var NewPublic = PublicKey.Combine(Contibution.PublicKey);
-            return new DHKeyPair(NewPublic);
+            return new KeyPairDH(NewPublic);
             }
         }
 

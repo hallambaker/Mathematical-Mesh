@@ -4,20 +4,6 @@
 	Description 
 		|Classes that describe Mail applications.
 
-	Structure ContainerFrame
-
-		Description
-			|Describes a container frame
-		Struct ContainerHeader Header
-			Description
-				|The frame header
-
-		Binary Payload
-			Description
-				|The frame payload
-
-
-
 	Structure ContainerHeader
 		Description
 			|Describes a container header
@@ -38,6 +24,16 @@
 				|Note: Meta frames MAY be present in any container. Applications MUST
 				|accept containers that contain meta frames at any position in the file.
 				|Applications MUST NOT interpret a meta frame as a data frame with an enpty payload.
+
+		// Content Metadata
+
+		String UniqueID
+			Description 
+				|Unique object identifier
+
+		Struct ContentMeta ContentMeta
+			Description
+				|Content meta data.
 
 		// Frame position pointers
 		Integer TreePosition
@@ -71,18 +67,10 @@
 			Description
 				|If present, contains the Binary Merkle Tree digest value.
 
-
-
-
-		// Information describing the content
-		String ContentType
-			Description
-				|Content type parameter
-
-		String Paths
-			Multiple
-			Description
-				|List of filename paths for the payload of the frame.
+		// Information describing the object instance value
+		String Event
+			Description 
+				|Unique object identifier
 
 		String Labels
 			Multiple
@@ -94,6 +82,14 @@
 			Description
 				|List of key/value pairs describing the payload of the frame.
 
+		Integer First
+			Description
+				|Frame number of the first object instance value.
+
+		Integer Previous
+			Description
+				|Frame number of the immediately prior object instance value	
+
 		// Encryption parameters
 		Binary EncryptedKey
 			Description
@@ -101,16 +97,47 @@
 				|list of this frame (if present) or the frame at the position specified by
 				|exchange position (if present) or the first frame.
 
-		Struct Signature Signatures
-			Multiple
+		Binary IV
 			Description
-				|Per signer signature data
+				|Initialization vector for ciphertext.
+
+		Binary Protected
+			Description
+				|Protected header 
 
 		Struct Recipient Recipients
 			Multiple
 			Description
 				|Per recipient key exchange data.
 
+		Struct Signature Signatures
+			Multiple
+			Description
+				|Per signer signature data
+
+
+	Structure ContentMeta
+		// Information describing the object instance
+		String ContentType
+			Description
+				|Content type parameter
+
+		String Paths
+			Multiple
+			Description
+				|List of filename paths for the payload of the frame.
+
+		String UniqueID
+			Description 
+				|Unique object identifier
+		
+		DateTime Created
+			Description
+				|Initial creation date.
+
+		DateTime Modified
+			Description
+				|Date of last modification.
 
 	Structure ContainerIndex
 		Description
@@ -172,3 +199,9 @@
 			Description
 				|List of labels that are applied to the current frame.
 
+	Structure ContainerHeaderFirst
+		Inherits ContainerHeader
+		String DataEncoding
+			Description
+				|Specifies the data encoding for the header section of for the following frames.
+				|This value is ONLY valid in Frame 0 which MUST have a header encoded in JSON.

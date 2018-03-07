@@ -9,7 +9,7 @@ namespace Goedel.Mesh.MeshMan {
         /// Create a new web application profile.
         /// </summary>
         /// <param name="Options">Command line parameters</param>
-        public override void SSHCreate (SSHCreate Options) {
+        public override void SSHAdd (SSHAdd Options) {
             SetReporting(Options);
             var SessionPersonal = GetPersonal(Options);
             var SSHProfile = new SSHProfile(SessionPersonal.PersonalProfile);

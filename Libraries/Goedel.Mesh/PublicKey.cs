@@ -305,8 +305,8 @@ namespace Goedel.Mesh {
         /// private parameters of the key.
         /// </summary>
         public void ExportPrivateParameters() {
-            if (KeyPair.GetType() == typeof(RSAKeyPairBase)) {
-                PrivateParameters = new PrivateKeyRSA(KeyPair as RSAKeyPairBase);
+            if (KeyPair.GetType() == typeof(KeyPairBaseRSA)) {
+                PrivateParameters = new PrivateKeyRSA(KeyPair as KeyPairBaseRSA);
                 }
             }
 
@@ -317,7 +317,7 @@ namespace Goedel.Mesh {
         /// to the certificate.
         /// </summary>
         public void ImportPrivateParameters() {
-            if (KeyPair.GetType() == typeof(RSAKeyPairBase)) {
+            if (KeyPair.GetType() == typeof(KeyPairBaseRSA)) {
                 if (PrivateParameters.GetType() != typeof(PrivateKeyRSA)) {
                     throw new Exception("Invalid key description");
                     }

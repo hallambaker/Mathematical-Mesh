@@ -22,9 +22,9 @@
 using Goedel.Utilities;
 using System;
 using System.Collections.Generic;
-using Goedel.Mesh.Server;
+using Goedel.Mesh.Portal;
 
-namespace Goedel.Mesh.Platform {
+namespace Goedel.Mesh.Portal.Client {
 
     /// <summary>
     /// A Mesh machine that is maintained entirely in memory. This is the parent 

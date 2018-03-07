@@ -34,13 +34,13 @@ ToolTargets = \
 	SchemaRecryptProfile.cs
 
 ExceptionsRecrypt.cs : ExceptionsRecrypt.Exceptional 
-	exceptional ExceptionsRecrypt.Exceptional  ExceptionsRecrypt.cs
+	exceptional ExceptionsRecrypt.Exceptional  /cs  ExceptionsRecrypt.cs
 
 SchemaRecrypt.cs : SchemaRecrypt.protocol 
-	protogen SchemaRecrypt.protocol  SchemaRecrypt.cs
+	protogen SchemaRecrypt.protocol  /cs  SchemaRecrypt.cs
 
 SchemaRecryptProfile.cs : SchemaRecryptProfile.protocol 
-	protogen SchemaRecryptProfile.protocol  SchemaRecryptProfile.cs
+	protogen SchemaRecryptProfile.protocol  /cs  SchemaRecryptProfile.cs
 
 
 prebuildRecurse : 

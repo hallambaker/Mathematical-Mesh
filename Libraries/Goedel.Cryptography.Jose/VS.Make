@@ -27,10 +27,10 @@ ToolTargets = \
 	JoseSchema.cs
 
 Exceptions.cs : Exceptions.exceptional 
-	exceptional Exceptions.exceptional  Exceptions.cs
+	exceptional Exceptions.exceptional  /cs  Exceptions.cs
 
 JoseSchema.cs : JoseSchema.Protocol 
-	protogen JoseSchema.Protocol  JoseSchema.cs
+	protogen JoseSchema.Protocol  /cs  JoseSchema.cs
 
 
 prebuildRecurse : 

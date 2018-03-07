@@ -22,11 +22,20 @@ LinkFiles = \
     Goedel.IO.dll\
     Goedel.Utilities.dll\
     Goedel.Cryptography.Container.dll\
+    Goedel.Cryptography.Windows.dll\
     Goedel.Cryptography.dll\
     Goedel.Protocol.dll\
     Goedel.Test.dll
 
-ToolTargets = 
+ToolTargets = \
+	ExceptionsRecrypt.cs\
+	TestExample.cs
+
+ExceptionsRecrypt.cs : ExceptionsRecrypt.Exceptional 
+	exceptional ExceptionsRecrypt.Exceptional  /cs  ExceptionsRecrypt.cs
+
+TestExample.cs : TestExample.Protocol 
+	protogen TestExample.Protocol  /cs  TestExample.cs
 
 
 prebuildRecurse : 

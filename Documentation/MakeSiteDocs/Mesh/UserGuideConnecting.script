@@ -4,7 +4,7 @@
 #xclass ExampleGenerator ExampleGenerator
 
 
-#file UserGuideConnecting "Mesh/connecting.md" CreateExamples Examples
+#file UserGuideConnecting "UserGuide/Mesh/connecting.md" CreateExamples Examples
 
 <title>Connecting
 <titlebanner><h1>Connecting Devices

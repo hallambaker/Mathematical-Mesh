@@ -9,11 +9,7 @@
     <Import_RootNamespace>meshportal</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="$(MSBuildThisFileDirectory).dockerignore">
-      <DependentUpon>Dockerfile</DependentUpon>
-    </None>
     <None Include="$(MSBuildThisFileDirectory)Configuration.md" />
-    <None Include="$(MSBuildThisFileDirectory)Dockerfile" />
     <None Include="$(MSBuildThisFileDirectory)ServerCommands.command">
       <LastGenOutput>ServerCommands.cs</LastGenOutput>
       <Generator>CommandCS</Generator>

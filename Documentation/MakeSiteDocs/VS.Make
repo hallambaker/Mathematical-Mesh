@@ -74,6 +74,7 @@ ToolTargets = \
 	Platform\UserGuidePlatform.cs\
 	Platform\UserGuideWindows.cs\
 	ToDo.cs\
+	ExampleSession.cs\
 	UserGuide.cs
 
 Apps\UserGuideApps.cs : Apps\UserGuideApps.script 
@@ -95,10 +96,10 @@ Apps\UserGuideSSH.cs : Apps\UserGuideSSH.script
 	gscript Apps\UserGuideSSH.script  Apps\UserGuideSSH.cs
 
 Exceptions.cs : Exceptions.exceptional 
-	exceptional Exceptions.exceptional  Exceptions.cs
+	exceptional Exceptions.exceptional  /cs  Exceptions.cs
 
 Main.cs : Main.command 
-	commandparse Main.command  Main.cs
+	commandparse Main.command  /cs  Main.cs
 
 Mesh\UserGuideConnecting.cs : Mesh\UserGuideConnecting.script 
 	gscript Mesh\UserGuideConnecting.script  Mesh\UserGuideConnecting.cs
@@ -135,6 +136,9 @@ Platform\UserGuideWindows.cs : Platform\UserGuideWindows.script
 
 ToDo.cs : ToDo.script 
 	gscript ToDo.script  ToDo.cs
+
+ExampleSession.cs : ExampleSession.script 
+	gscript ExampleSession.script  ExampleSession.cs
 
 UserGuide.cs : UserGuide.script 
 	gscript UserGuide.script  UserGuide.cs

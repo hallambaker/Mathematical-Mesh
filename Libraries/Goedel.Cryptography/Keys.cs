@@ -133,6 +133,17 @@ namespace Goedel.Cryptography {
     public abstract partial class KeyPair : CryptoKey {
 
         /// <summary>
+        /// The key locator, an Internet name in username@domain format. This is used as the basis 
+        /// for constructing the Strong Internet Name.
+        /// </summary>
+        public string Locator { get; set; }
+
+        /// <summary>
+        /// The strong internet name for the key.
+        /// </summary>
+        public string StrongInternetName => Locator + ".mm--" + UDF;
+
+        /// <summary>
         /// If true, keys will be created in containers prefixed with the name
         /// "test:" to allow them to be easily identified and cleaned up.
         /// </summary>
@@ -352,7 +363,7 @@ namespace Goedel.Cryptography {
     /// <summary>
     /// RSA Key Pair
     /// </summary>
-    public abstract class RSAKeyPairBase : KeyPair {
+    public abstract class KeyPairBaseRSA : KeyPair {
 
         /// <summary>
         /// Return private key parameters in PKIX structure
@@ -400,7 +411,7 @@ namespace Goedel.Cryptography {
     /// <summary>
     /// RSA Key Pair
     /// </summary>
-    public abstract class DHKeyPairBase : KeyPair {
+    public abstract class KeyPairBaseDH : KeyPair {
 
         /// <summary>
         /// ASN.1 Object Identifier for the domain parameters.
@@ -454,13 +465,13 @@ namespace Goedel.Cryptography {
         /// Construct a KeyPair entry from PKIX parameters. Initialized by the cryptographic
         /// platform provider.
         /// </summary>
-        public static FactoryDHPublicKeyDelegate KeyPairPublicFactory = DHKeyPair.KeyPairPublicFactory;
+        public static FactoryDHPublicKeyDelegate KeyPairPublicFactory = KeyPairDH.KeyPairPublicFactory;
 
         /// <summary>
         /// Construct a KeyPair entry from PKIX parameters. Initialized by the cryptographic
         /// platform provider.
         /// </summary>
-        public static FactoryDHPrivateKeyDelegate KeyPairPrivateFactory = DHKeyPair.KeyPairPrivateFactory;
+        public static FactoryDHPrivateKeyDelegate KeyPairPrivateFactory = KeyPairDH.KeyPairPrivateFactory;
 
         }
 

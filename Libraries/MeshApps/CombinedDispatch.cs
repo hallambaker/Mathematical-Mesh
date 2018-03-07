@@ -16,6 +16,9 @@ using Goedel.Confirm;
 using Goedel.Account.Client;
 using Goedel.Recrypt.Client;
 using Goedel.Confirm.Client;
+using Goedel.Mesh.Portal;
+using Goedel.Mesh.Portal.Client;
+using Goedel.Mesh.Portal.Server;
 
 
 namespace Goedel.Combined.Shell.Client {
@@ -150,7 +153,7 @@ namespace Goedel.Combined.Shell.Client {
 
 
         // Confirm dispatch
-
+        #region // Confirm dispatch
         public override void ConfirmPost (ConfirmPost Options) {
             var AccountID = Options.AccountID.Value;
             var ConfirmClient = new ConfirmClient(AccountID);
@@ -248,9 +251,9 @@ namespace Goedel.Combined.Shell.Client {
 
             return (TransactionResponse);
             }
+        #endregion
 
-
-
+        #region // Recrypt dispatch
         // Recrypt dispatch
         public override void CreateGroup (CreateGroup Options) {
             var AccountID = Options.AccountID.Value;
@@ -380,6 +383,7 @@ namespace Goedel.Combined.Shell.Client {
             LastResult.Display(Options);
             }
 
+        #endregion
 
 
         //AccountClient GetAccountClient (IReporting Options) {

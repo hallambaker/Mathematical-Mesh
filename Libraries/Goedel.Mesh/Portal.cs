@@ -1,4 +1,4 @@
-
+﻿
 //  Copyright (c) 2016 by .
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -40,7 +40,7 @@ namespace Goedel.Mesh {
 	///
 	/// Classes that represent data written to the portal log.
 	/// </summary>
-	public abstract partial class Portal : global::Goedel.Protocol.JSONObject {
+	public abstract partial class PortalAccount : global::Goedel.Protocol.JSONObject {
 
         /// <summary>
         /// Schema tag.
@@ -53,7 +53,7 @@ namespace Goedel.Mesh {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public override string _Tag { get; } = "Portal";
+		public override string _Tag { get; } = "PortalAccount";
 
 		/// <summary>
         /// Dictionary mapping tags to factory methods
@@ -87,7 +87,7 @@ namespace Goedel.Mesh {
 	///
 	/// An entry in the portal log
 	/// </summary>
-	abstract public partial class PortalEntry : Portal {
+	abstract public partial class PortalEntry : PortalAccount {
         /// <summary>
         ///Time the pending item was created.
         /// </summary>

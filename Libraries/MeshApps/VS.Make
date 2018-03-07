@@ -24,7 +24,7 @@ ToolTargets = \
 	SchemaResults.cs
 
 SchemaResults.cs : SchemaResults.protocol 
-	protogen SchemaResults.protocol  SchemaResults.cs
+	protogen SchemaResults.protocol  /cs  SchemaResults.cs
 
 
 prebuildRecurse : 

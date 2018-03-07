@@ -22,7 +22,9 @@ LinkFiles = \
     Goedel.Utilities.dll\
     Goedel.Mesh.dll\
     Goedel.Protocol.dll\
-    Goedel.Mesh.Portal.Client.dll
+    Goedel.Mesh.Portal.Client.dll\
+    Goedel.Mesh.Portal.Server.dll\
+    Goedel.Mesh.Portal.dll
 
 ToolTargets = \
 	ExceptionsConfirm.cs\
@@ -30,13 +32,13 @@ ToolTargets = \
 	SchemaConfirmProfile.cs
 
 ExceptionsConfirm.cs : ExceptionsConfirm.Exceptional 
-	exceptional ExceptionsConfirm.Exceptional  ExceptionsConfirm.cs
+	exceptional ExceptionsConfirm.Exceptional  /cs  ExceptionsConfirm.cs
 
 SchemaConfirm.cs : SchemaConfirm.protocol 
-	protogen SchemaConfirm.protocol  SchemaConfirm.cs
+	protogen SchemaConfirm.protocol  /cs  SchemaConfirm.cs
 
 SchemaConfirmProfile.cs : SchemaConfirmProfile.protocol 
-	protogen SchemaConfirmProfile.protocol  SchemaConfirmProfile.cs
+	protogen SchemaConfirmProfile.protocol  /cs  SchemaConfirmProfile.cs
 
 
 prebuildRecurse : 

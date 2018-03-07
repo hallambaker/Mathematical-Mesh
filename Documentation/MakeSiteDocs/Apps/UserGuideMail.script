@@ -5,7 +5,7 @@
 
 
 
-#file UserGuideMail "Apps/mail.md" CreateExamples Examples
+#file UserGuideMail "UserGuide/Apps/mail.md" CreateExamples Examples
 <title>Email
 <titlebanner><h1>Using the Mesh to secure email
 

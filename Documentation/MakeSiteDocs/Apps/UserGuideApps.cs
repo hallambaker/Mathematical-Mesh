@@ -14,7 +14,7 @@ namespace ExampleGenerator {
 		// UserGuideApps
 		//
 		public static void UserGuideApps (CreateExamples Index) { /* File  */
-			using (var _Output = new StreamWriter ("Apps/index.md")) {
+			using (var _Output = new StreamWriter ("UserGuide/Apps/index.md")) {
 				var _Indent = ""; 
 				_Output.Write ("<title>Applications\n{0}", _Indent);
 				_Output.Write ("<titlebanner><h1>Applications User Guide\n{0}", _Indent);

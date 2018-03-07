@@ -19,6 +19,16 @@ namespace Goedel.Cryptography.Container {
     public class ContainerSimple : Container {
 
         /// <summary>
+        /// The label for the container type for use in header declarations
+        /// </summary>
+        public const string Label = "List";
+
+        /// <summary>
+        /// The label for the container type for use in header declarations
+        /// </summary>
+        public const string LabelDigest = "Digest";
+
+        /// <summary>
         /// The digest provider used to calculate the tree value.
         /// </summary>
         public CryptoProviderDigest DigestProvider { get; set; } = null;
@@ -30,40 +40,27 @@ namespace Goedel.Cryptography.Container {
         /// <param name="JBCDStream">The underlying JBCDStream stream. This MUST be opened
         /// in a read access mode and should have exclusive read access. All existing
         /// content in the file will be overwritten.</param>
-        /// <param name="Payload">Optional data payload. </param>
-        /// <param name="ContentType">Content type of the optional data payload</param>
-        /// <param name="DataEncoding">The data encoding algorithm (defaults to JSON).</param>
-        /// <param name="ContainerType">The container type. This MUST be either List or Digest</param>
+        /// <param name="ContainerType">The container type. This determines whether
+        /// a tree index is to be created or not and if so, whether </param>
         /// <param name="DigestAlgorithm">The digest algorithm to be used to calculate the PayloadDigest</param>
-        /// <param name="EncryptedKey">Key used to encrypt the payload.</param>
-        /// <param name="Signatures">List of JWS signatures. Since this is the first block, the signature
-        /// is always over the payload data only.</param>
-        /// <param name="Recipients">List of JWE recipient decryption entries.</param>
         /// <returns>The newly constructed container.</returns>
 
-        public static new Container NewContainer (
+        public static new Container MakeNewContainer (
                         JBCDStream JBCDStream,
                         ContainerType ContainerType = ContainerType.Chain,
-                        byte[] Payload = null,
-                        string ContentType = null,
-                        DataEncoding DataEncoding = DataEncoding.JSON,
-                        CryptoAlgorithmID DigestAlgorithm = CryptoAlgorithmID.Default,
-                        byte[] EncryptedKey = null,
-                        List<Signature> Signatures = null,
-                        List<Recipient> Recipients = null
-                        ) {
+                        CryptoAlgorithmID DigestAlgorithm = CryptoAlgorithmID.Default) {
 
-            var ContainerHeader = new ContainerHeader() {
+            var ContainerHeader = new ContainerHeaderFirst() {
                 };
 
             CryptoProviderDigest DigestProvider = null;
             switch (ContainerType) {
-                case ContainerType.List:  {
-                    ContainerHeader.ContainerType = "List";
+                case ContainerType.List: {
+                    ContainerHeader.ContainerType = Label;
                     break;
                     }
                 case ContainerType.Digest: {
-                    ContainerHeader.ContainerType = "Digest";
+                    ContainerHeader.ContainerType = LabelDigest;
                     DigestProvider = CryptoCatalog.Default.GetDigest(DigestAlgorithm);
                     break;
                     }
@@ -74,42 +71,70 @@ namespace Goedel.Cryptography.Container {
 
             var Container = new ContainerSimple() {
                 JBCDStream = JBCDStream,
-                DataEncoding = DataEncoding,
-                FrameIndex = 0,
                 FrameCount = 0,
-                FramePayload = Payload,
-                DigestProvider = DigestProvider
+                DigestProvider = DigestProvider,
+                ContainerHeaderFirst = ContainerHeader,
                 };
-            Container._ContainerHeader = ContainerHeader;
-            Container.Append(Payload, ContainerHeader);
+
+            // initialize the Frame index dictionary
 
             return Container;
+
+
             }
 
+        // The high and low boundaries of the unknown region.
+        long FrameLowUnknown=0;
+        long FrameHighUnknown=0;
 
+        /// <summary>
+        /// Initialize the dictionaries used to manage the tree by registering the set
+        /// of values leading up to the apex value.
+        /// </summary>
+        /// <param name="Header">Final frame header</param>
+        /// <param name="FirstPosition">Position of frame 1</param>
+        /// <param name="PositionLast">Position of the last frame</param>
+        protected override void FillDictionary (ContainerHeader Header, long FirstPosition, long PositionLast) {
+
+            FrameIndexToPositionDictionary.Add(0, 0);
+            if (Header.Index == 0) {
+                FrameLowUnknown = 0;
+                FrameHighUnknown = 0;
+                return;
+                }
+
+            FrameIndexToPositionDictionary.Add(1, FirstPosition);
+            FrameLowUnknown = 1;
+            
+            if (Header.Index == 1) {
+                FrameHighUnknown = 1;
+                return;
+                }
+
+            FrameHighUnknown = Header.Index;
+            RegisterFrame(Header, PositionLast);
+            }
 
         /// <summary>
         /// Append a new data frame payload to the end of the file.
         /// </summary>
         /// <param name="Data">Data to append.</param>
-        /// <param name="Header">The container header value</param>
+        /// <param name="ContainerHeader">The container header value</param>
         /// <returns>The number of bytes written.</returns>
-        public override long Append (byte[] Data, ContainerHeader Header = null) {
-            Header = Header ?? new ContainerHeader();
-            Header.Index = (int)FrameCount++;
+        public override long AppendFrame (byte[] Data, ContainerHeader ContainerHeader = null) {
+            ContainerHeader = ContainerHeader ?? new ContainerHeader();
+            ContainerHeader.Index = (int)FrameCount++;
 
             if (DigestProvider != null& Data != null) {
-                Header.PayloadDigest = DigestProvider.ProcessData(Data);
+                ContainerHeader.PayloadDigest = DigestProvider.ProcessData(Data);
                 }
 
-            Data = Data ?? Header?.Payload;
+            Data = Data ?? ContainerHeader?.Payload;
 
-            //// Get the container header in the specified data encoding 
-            //// for the container without a type tag prefix.
-            //var HeaderBytes = Header.GetBytes(DataEncoding, false);
+            var Header = ContainerHeader.GetBytes(DataEncoding, false);
 
-            //return AppendFrame(HeaderBytes, Data);
-            return AppendFrame(Data, Header);
+            FrameIndexToPositionDictionary.Add(ContainerHeader.Index, JBCDStream.Length);
+            return AppendFrame(Header, Data);
             }
 
         /// <summary>
@@ -117,8 +142,7 @@ namespace Goedel.Cryptography.Container {
         /// </summary>
         /// <returns>True if a next frame exists, otherwise false</returns>
         public override bool Next () {
-            var Read = JBCDStream.ReadWrappedFrame(out var FrameHeader, out var FrameData);
-            EOF = !Read;
+            var Read = JBCDStream.ReadFrame(out var FrameHeader, out var FrameData);
 
             // NB the order here is critical because we want to bind the payload value into the constructed header.
             this.FrameData = FrameData;
@@ -132,7 +156,7 @@ namespace Goedel.Cryptography.Container {
         /// </summary>
         /// <returns>True if a previous frame exists, otherwise false</returns>
         public override bool Previous () {
-            var Read = JBCDStream.ReadWrappedFrameReverse(out var FrameHeader, out var FrameData);
+            var Read = JBCDStream.ReadFrameReverse(out var FrameHeader, out var FrameData);
 
             // NB the order here is critical because we want to bind the payload value into the constructed header.
             this.FrameData = FrameData;
@@ -148,7 +172,39 @@ namespace Goedel.Cryptography.Container {
         /// <param name="Index">The frame index to move to</param>
         /// <returns>If success, the frame index.</returns>
         public override bool Move (long Index) {
-            throw new NYI();
+
+            if (FrameIndexToPositionDictionary.TryGetValue(Index, out var Position)) {
+                JBCDStream.PositionRead = Position;
+                }
+            else {
+                Assert.True(Index > FrameLowUnknown & Index < FrameHighUnknown);
+
+                if (Index - FrameLowUnknown <= FrameHighUnknown - Index) {
+                    Assert.True(FrameIndexToPositionDictionary.TryGetValue(FrameLowUnknown, out Position));
+                    JBCDStream.PositionRead = Position;
+                    JBCDStream.Next();
+                    for (var Record = FrameLowUnknown + 1; Record < Index; Record++) {
+                        FrameIndexToPositionDictionary.Add(Record, JBCDStream.PositionRead);
+                        JBCDStream.Next();
+                        }
+                    FrameIndexToPositionDictionary.Add(Index, JBCDStream.PositionRead);
+                    FrameLowUnknown = Index;
+
+                    }
+
+                else {
+                    Assert.True(FrameIndexToPositionDictionary.TryGetValue(FrameHighUnknown, out Position));
+                    JBCDStream.PositionRead = Position;
+                    for (var Record = FrameHighUnknown - 1; Record >= Index; Record--) {
+                        JBCDStream.Previous();
+                        FrameIndexToPositionDictionary.Add(Record, JBCDStream.PositionRead);
+                        }
+                    FrameHighUnknown = Index;
+
+                    }
+                }
+            return Next();
+
             }
 
         /// <summary>
@@ -175,6 +231,23 @@ namespace Goedel.Cryptography.Container {
             }
 
 
-        }
+        /// <summary>
+        /// Perform sanity checking on a list of container headers.
+        /// </summary>
+        /// <param name="Headers">List of headers to check</param>
+        public override void CheckContainer (List<ContainerHeader> Headers) {
+            int Index = 1;
+            foreach (var Header in Headers) {
+                Assert.True(Header.Index == Index);
 
+                if (ContainerHeaderFirst.ContainerType == Label) {
+                    Assert.Null(Header.PayloadDigest);
+                    }
+                else {
+                    Assert.NotNull(Header.PayloadDigest);
+                    }
+                Index++;
+                }
+            }
+        }
     }

@@ -4,7 +4,7 @@
 #xclass ExampleGenerator ExampleGenerator
 
 
-#file UserGuideWindows "Platform/Windows.md" CreateExamples Examples
+#file UserGuideWindows "UserGuide/Platform/Windows.md" CreateExamples Examples
 <title>Windows
 <titlebanner><h1>Windows Platform
 

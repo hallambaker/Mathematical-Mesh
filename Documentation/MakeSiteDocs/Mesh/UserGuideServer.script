@@ -4,7 +4,7 @@
 #xclass ExampleGenerator ExampleGenerator
 
 
-#file UserGuideServer "Mesh/server.md" CreateExamples Index
+#file UserGuideServer "UserGuide/Mesh/server.md" CreateExamples Index
 <title>Server
 <titlebanner><h1>Running a Mesh Server
 

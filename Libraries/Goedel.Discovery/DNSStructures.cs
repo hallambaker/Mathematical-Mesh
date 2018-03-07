@@ -237,19 +237,19 @@ namespace Goedel.Discovery {
         public DNSFlags         Flags;
 
         /// <summary>OPCode flags</summary>
-        public DNSFlags OPCODE { get { return (Flags & DNSFlags.OPCODE_Mask); } }
+        public DNSFlags OPCODE => (Flags & DNSFlags.OPCODE_Mask);
         /// <summary>Request code flags</summary>
-        public DNSFlags RCODE { get { return (Flags & DNSFlags.RCODE_Mask); } }
+        public DNSFlags RCODE => (Flags & DNSFlags.RCODE_Mask);
         /// <summary>The QR flag</summary>
-        public bool QR { get { return ((Flags & DNSFlags.QR) == DNSFlags.QR); } }
+        public bool QR => ((Flags & DNSFlags.QR) == DNSFlags.QR);
         /// <summary>The AA flag</summary>
-        public bool AA { get { return ((Flags & DNSFlags.AA) == DNSFlags.AA); } }
+        public bool AA => ((Flags & DNSFlags.AA) == DNSFlags.AA);
         /// <summary>The TC flag</summary>
-        public bool TC { get { return ((Flags & DNSFlags.TC) == DNSFlags.TC); } }
+        public bool TC => ((Flags & DNSFlags.TC) == DNSFlags.TC);
         /// <summary>The RD flag</summary>
-        public bool RD { get { return ((Flags & DNSFlags.RD) == DNSFlags.RD); } }
+        public bool RD => ((Flags & DNSFlags.RD) == DNSFlags.RD);
         /// <summary>The RA flag</summary>
-        public bool RA { get { return ((Flags & DNSFlags.RA) == DNSFlags.RA); } }
+        public bool RA => ((Flags & DNSFlags.RA) == DNSFlags.RA);
 
         /// <summary>The DNS Query</summary>
         public DNSQuery         Query;
@@ -336,7 +336,7 @@ namespace Goedel.Discovery {
             }
 
         /// <summary>The type tag</summary>
-        public virtual string TypeTag { get { return null; } }
+        public virtual string TypeTag => null;
 
         }
 
@@ -347,7 +347,7 @@ namespace Goedel.Discovery {
     public class DNSRequest : DNSMessage {
 
         /// <summary>Text tag describing message type.</summary>
-        public override string TypeTag { get { return "Request"; } }
+        public override string TypeTag => "Request";
 
         /// <summary>Constructor for request</summary>
         /// <param name="Domain">The domain name</param>
@@ -376,7 +376,7 @@ namespace Goedel.Discovery {
     public class DNSResponse : DNSMessage {
 
         /// <summary>The type of the message</summary>
-        public override string TypeTag { get { return "Response"; } }
+        public override string TypeTag => "Response";
 
         /// <summary>Default constructor</summary>
         /// <param name="Data">Input data</param>

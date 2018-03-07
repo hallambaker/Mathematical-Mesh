@@ -14,7 +14,7 @@ namespace ExampleGenerator {
 		// UserGuideOSX
 		//
 		public static void UserGuideOSX (CreateExamples Examples) { /* File  */
-			using (var _Output = new StreamWriter ("Platform/OSX.md")) {
+			using (var _Output = new StreamWriter ("UserGuide/Platform/OSX.md")) {
 				var _Indent = ""; 
 				_Output.Write ("<title>OSX\n{0}", _Indent);
 				_Output.Write ("<titlebanner><h1>Mac OSX Platform\n{0}", _Indent);

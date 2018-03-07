@@ -14,76 +14,150 @@ namespace Goedel.Cryptography.Container {
     /// expected this will be replaced in the future by a version that performs direct 
     /// memory mapping of the files.
     /// </summary>
-    public partial class JBCDStream {
-
-        Stream Stream;
+    public partial class JBCDStream : IDisposable {
 
         /// <summary>
-        /// Default constructor, used to allow subclasses to be created that do not use Stream
+        /// The underlying stream for file write operations
         /// </summary>
-
-        protected JBCDStream () {
-            }
+        Stream StreamWrite;
 
         /// <summary>
-        /// Constructor from a stream
+        /// The underlying stream for file write operations
         /// </summary>
-        /// <param name="Stream">The underlying stream. This must support the seek operation.</param>
-        public JBCDStream (Stream Stream) {
-            this.Stream = Stream;
-            }
+        Stream StreamRead;
 
-        /* Position properties and methods */
-
+        Stream DisposeStreamRead=null;
+        Stream DisposeStreamWrite=null;
 
         /// <summary>
         /// The current position within the stream.
         /// </summary>
-        public long Position {
-            get => Stream.Position;
-            set => Stream.Seek(0, SeekOrigin.Begin);
+        public long PositionWrite {
+            get => StreamWrite.Position;
+            set => StreamWrite.Seek(0, SeekOrigin.Begin);
             }
+
+        /// <summary>
+        /// The current position within the stream.
+        /// </summary>
+        public long PositionRead {
+            get => StreamRead.Position;
+            set => StreamRead.Seek(value, SeekOrigin.Begin);
+            }
+
+        /// <summary>
+        /// Returns true if and only if the stream reader is at the end of the file.
+        /// </summary>
+        public bool EOF => StreamRead.Position >= StreamRead.Length;
 
         /// <summary>
         /// A long value representing the length of the stream in bytes.
         /// </summary>
-        public long Length => Stream.Length;
+        public long Length => StreamWrite != null ? StreamWrite.Length : StreamRead.Length;
 
 
         /// <summary>
-        /// Sets the position within the current stream.
+        /// Constructor from a file
+        /// </summary>
+        /// <param name="FileName">The file to open.</param>
+        /// <param name="FileStatus">The file access mode.</param>
+        /// <param name="WriteOnly">If true, the file is only opened in write mode.</param>
+        public JBCDStream (string FileName, FileStatus FileStatus = FileStatus.Read, bool WriteOnly = false) {
+
+            if (FileStatus != FileStatus.Read) {
+                StreamWrite = FileName.FileStream(FileStatus);
+                DisposeStreamWrite = StreamWrite;
+                StreamWrite.Seek(0, SeekOrigin.End);
+                }
+            if (!WriteOnly) {
+                StreamRead = FileName.FileStream(FileStatus.Read);
+                DisposeStreamRead = StreamRead;
+                }
+            }
+
+
+        /// <summary>
+        /// Constructor from a stream
+        /// </summary>
+        /// <param name="StreamRead">The underlying stream. This must support the seek operation.</param>
+        /// <param name="StreamWrite">The underlying stream. This must support the seek operation.</param>
+        public JBCDStream (Stream StreamRead, Stream StreamWrite) {
+            this.StreamRead = StreamRead;
+            this.StreamWrite = StreamWrite;
+            StreamWrite?.Seek(0, SeekOrigin.End);
+            }
+
+
+        /// <summary>
+        /// Dispose method, frees all resources.
+        /// </summary>
+        public void Dispose () {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+            }
+
+        bool disposed = false;
+        /// <summary>
+        /// Dispose method, frees resources when disposing, 
+        /// </summary>
+        /// <param name="disposing"></param>
+        protected virtual void Dispose (bool disposing) {
+            if (disposed) {
+                return;
+                }
+
+            if (disposing) {
+                //DisposeStreamWrite?.Close();
+                //DisposeStreamRead?.Close();
+
+                DisposeStreamWrite?.Dispose();
+                DisposeStreamRead?.Dispose();
+                }
+
+            disposed = true;
+            }
+
+        /// <summary>
+        /// Destructor.
+        /// </summary>
+        ~JBCDStream () {
+            Dispose(false);
+            }
+
+        /// <summary>
+        /// Sets the read position within the current stream.
         /// </summary>
         /// <param name="Offset">A byte offset relative to the origin parameter.</param>
         /// <param name="Origin">A value of type SeekOrigin indicating the reference point used to obtain the new position.</param>
         /// <returns>The new position within the current stream.</returns>
         public virtual long Seek (long Offset, SeekOrigin Origin) {
-            return Stream.Seek(Offset, Origin);
+            return StreamRead.Seek(Offset, Origin);
             }
 
         /// <summary>
-        /// Move to the beginning of the stream.
+        /// Move the read position to the beginning of the stream.
         /// </summary>
         /// <returns>The new position within the current stream.</returns>
         public virtual long Begin () {
-            return Stream.Seek(0, SeekOrigin.Begin);
+            return StreamRead.Seek(0, SeekOrigin.Begin);
             }
 
         /// <summary>
-        /// Move to the end of the stream.
+        /// Move the read position to the end of the stream.
         /// </summary>
         /// <returns>The new position within the current stream.</returns>
         public virtual long End () {
-            return Stream.Seek(0, SeekOrigin.End);
+            return StreamRead.Seek(0, SeekOrigin.End);
             }
 
         /* Write functions */
 
         /// <summary>
-        /// Writes a byte to the current position in the stream and advances the position within the stream by one byte.
+        /// Writes a byte to the end of the stream.
         /// </summary>
         /// <param name="Value">The byte to write to the stream.</param>
         public virtual void WriteByte (byte Value) {
-            Stream.WriteByte(Value);
+            StreamWrite.WriteByte(Value);
             }
 
         /// <summary>
@@ -95,14 +169,14 @@ namespace Goedel.Cryptography.Container {
         /// <param name="Count">The number of bytes to be written to the current stream.</param>
         public virtual void Write (byte[] Buffer, int Offset = 0, int Count = -1) {
             Count = Count < 0 ? Buffer.Length : Count;
-            Stream.Write(Buffer, Offset, Count);
+            StreamWrite.Write(Buffer, Offset, Count);
             }
 
         /// <summary>
         /// Clears all buffers for this stream and causes any buffered data to be written to the underlying device.
         /// </summary>
         public virtual void Flush () {
-            Stream.Flush();
+            StreamWrite.Flush();
             }
 
         /* Read functions */
@@ -117,9 +191,8 @@ namespace Goedel.Cryptography.Container {
         /// <returns>The total number of bytes read into the buffer. This can be less than the number of bytes requested 
         /// if that many bytes are not currently available, or zero (0) if the end of the stream has been reached.</returns>
         public virtual int Read (byte[] Buffer, int Offset, int Count) {
-            return Stream.Read(Buffer, Offset, Count);
+            return StreamRead.Read(Buffer, Offset, Count);
             }
-
 
         /// <summary>
         /// Reads a byte from the stream and advances the position within the stream by one byte, or returns -1 if 
@@ -127,9 +200,8 @@ namespace Goedel.Cryptography.Container {
         /// </summary>
         /// <returns>The unsigned byte cast to an Int32, or -1 if at the end of the stream.</returns>
         public virtual int ReadByte () {
-            return Stream.ReadByte();
+            return StreamRead.ReadByte();
             }
-
 
         /// <summary>
         /// Read a byte in the reverse direction, i.e. the byte immediately preceding the 
@@ -138,14 +210,12 @@ namespace Goedel.Cryptography.Container {
         /// <returns>The byte read or -1.</returns>
         /// <exception cref="InvalidFileFormatException">The record data read from disk was invalid</exception>
         public virtual int ReadByteReverse () {
-            Assert.True(Position > 0, InvalidFileFormatException.Throw);
+            Assert.True(PositionRead > 0, InvalidFileFormatException.Throw);
             Seek(-1, SeekOrigin.Current);
             var Value = ReadByte();
             Seek(-1, SeekOrigin.Current);
             return Value;
             }
-
-
         }
 
     }

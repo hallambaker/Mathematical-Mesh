@@ -2,7 +2,16 @@
 #license MITLicense
 #xclass Goedel.Tool.Version MakeRelease
 
-#method MakeIndex Distribution Distribution
+#file MakeVersionID "Sources\\prismproof\\Downloads\\release.mdx" Distribution Distribution
+#if (Distribution.Latest != null) 
+<a="Downloads/index.html">Mesh Release #{Distribution.Latest.Code}</a>
+#else
+<none>
+#end if
+#end file
+
+#file MakeIndex "Sources\\prismproof\\Downloads\\index.md" Distribution Distribution
+#% var _Class = new MakeRelease () { _Output = _Output};
 <title>Downloads
 <titlebanner><h1>Downloads
 
@@ -31,7 +40,7 @@ There is no separate source file distribution, nor is this planned. To access th
 #if (Distribution.Stable != null) 
 (#{Distribution.Stable.Code})
 
-#call Describe Distribution.Stable
+#%_Class.Describe(Distribution.Stable);
 #else 
 
 
@@ -42,7 +51,7 @@ There is no separate source file distribution, nor is this planned. To access th
 #if (Distribution.Latest != null) 
 (#{Distribution.Latest.Code})
 
-#call Describe Distribution.Latest
+#% _Class.Describe(Distribution.Latest);
 #else 
 
 
@@ -57,12 +66,12 @@ There is no separate source file distribution, nor is this planned. To access th
 &<none&>
 #else
 #foreach (var Version in Distribution.Versions)
-#call Describe Version
+#% _Class.Describe(Version);
 #end foreach
 #end if
 
 </leftmain>
-#end method
+#end file
 
 
 #method MakeVersion Version Version

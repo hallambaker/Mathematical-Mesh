@@ -14,7 +14,7 @@ namespace ExampleGenerator {
 		// UserGuideDocker
 		//
 		public static void UserGuideDocker (CreateExamples Examples) { /* File  */
-			using (var _Output = new StreamWriter ("Platform/Docker.md")) {
+			using (var _Output = new StreamWriter ("UserGuide/Platform/Docker.md")) {
 				var _Indent = ""; 
 				_Output.Write ("<title>Docker\n{0}", _Indent);
 				_Output.Write ("<titlebanner><h1>Docker Platform\n{0}", _Indent);

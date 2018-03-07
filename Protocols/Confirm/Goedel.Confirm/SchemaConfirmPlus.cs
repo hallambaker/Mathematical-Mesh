@@ -8,6 +8,36 @@ using Goedel.Mesh;
 
 namespace Goedel.Confirm {
 
+    public delegate string GetPrimaryKeyAccountEntryDelegate (string AccountID);
+    public delegate string GetPrimaryKeyRequestEntryDelegate (string BrokerID);
+    public delegate string GetPrimaryKeyResponseEntryDelegate (string BrokerID);
+
+    public partial class AccountEntry {
+        public static GetPrimaryKeyAccountEntryDelegate GetPrimaryKey = GetPrimaryKeyDefault;
+
+        static string GetPrimaryKeyDefault (string AccountID) => 
+                    "Account$" + AccountID;
+
+        public override string _PrimaryKey => GetPrimaryKey(ResponderAccount);
+        }
+
+    public partial class RequestEntry {
+        public static GetPrimaryKeyRequestEntryDelegate GetPrimaryKey = GetPrimaryKeyDefault;
+
+        static string GetPrimaryKeyDefault (string BrokerID) =>
+                    "Request$" + BrokerID;
+
+        public override string _PrimaryKey => GetPrimaryKey(BrokerID);
+        }
+
+    public partial class ResponseEntry {
+        public static GetPrimaryKeyResponseEntryDelegate GetPrimaryKey = GetPrimaryKeyDefault;
+
+        static string GetPrimaryKeyDefault (string BrokerID) =>
+                    "Respomse$" + BrokerID;
+
+        public override string _PrimaryKey => GetPrimaryKey(BrokerID);
+        }
 
     /// <summary>
     ///

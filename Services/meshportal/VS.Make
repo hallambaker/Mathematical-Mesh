@@ -24,7 +24,7 @@ ToolTargets = \
 	ServerCommands.cs
 
 ServerCommands.cs : ServerCommands.command 
-	commandparse ServerCommands.command  ServerCommands.cs
+	commandparse ServerCommands.command  /cs  ServerCommands.cs
 
 
 prebuildRecurse : 

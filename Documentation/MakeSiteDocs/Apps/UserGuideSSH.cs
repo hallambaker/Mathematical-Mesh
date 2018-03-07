@@ -14,7 +14,7 @@ namespace ExampleGenerator {
 		// UserGuideSSH
 		//
 		public static void UserGuideSSH (CreateExamples Examples) { /* File  */
-			using (var _Output = new StreamWriter ("Apps/ssh.md")) {
+			using (var _Output = new StreamWriter ("UserGuide/Apps/ssh.md")) {
 				var _Indent = ""; 
 				_Output.Write ("<title>SSH\n{0}", _Indent);
 				_Output.Write ("<titlebanner><h1>Mesh/SSH\n{0}", _Indent);

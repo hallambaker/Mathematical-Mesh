@@ -31,13 +31,13 @@ ToolTargets = \
 	KeyReader.cs
 
 Exceptions.cs : Exceptions.Exceptional 
-	exceptional Exceptions.Exceptional  Exceptions.cs
+	exceptional Exceptions.Exceptional  /cs  Exceptions.cs
 
 HostsReader.cs : HostsReader.fsm 
-	fsrgen HostsReader.fsm  HostsReader.cs
+	fsrgen HostsReader.fsm  /cs  HostsReader.cs
 
 KeyReader.cs : KeyReader.fsm 
-	fsrgen KeyReader.fsm  KeyReader.cs
+	fsrgen KeyReader.fsm  /cs  KeyReader.cs
 
 
 prebuildRecurse : 

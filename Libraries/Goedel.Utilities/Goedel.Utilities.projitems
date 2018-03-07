@@ -11,6 +11,7 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Array.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Assert.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)BaseClasses.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)BaseConvert.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Character.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Exceptions.cs">
@@ -21,6 +22,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)IsTrue.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Linewrap.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)NumberSplit.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)PathCombine.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)RFC3339.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)RFC822.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TraceX.cs" />

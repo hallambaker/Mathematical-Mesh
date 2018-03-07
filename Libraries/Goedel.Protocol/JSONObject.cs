@@ -64,7 +64,23 @@ namespace Goedel.Protocol {
         /// <summary>
         /// Primary key to use for the object.
         /// </summary>
-        public virtual string _PrimaryKey  => null; 
+        public virtual string _PrimaryKey  => null;
+
+        /// <summary>
+        /// Secondary keys describing the object
+        /// </summary>
+        public virtual List<string> _Keys => null;
+
+        /// <summary>
+        /// Secondary key/values pairs describing the object
+        /// </summary>
+        public virtual List<KeyValuePair<string, string>> _KeyValues => null;
+
+        /// <summary>
+        /// Metadata header describing use in persistence store.
+        /// </summary>
+        public virtual JSONObject _Metadata { get; set; }
+
 
         /// <summary>
         /// Tag value used as substitute for reflection internally.

@@ -12,7 +12,7 @@ namespace ExampleGenerator {
 
         public override void DefaultCommand (DefaultCommand Options) {
             Goedel.IO.Debug.Initialize();
-            MeshWindows.Initialize(true);
+            Mesh.Initialize(true);
 
             MeshRecrypt.Initialize();
             MeshConfirm.Initialize();
@@ -20,12 +20,12 @@ namespace ExampleGenerator {
 
             var CreateExamples = new CreateExamples();
 
-            Directory.CreateDirectory("Mesh");
-            Directory.CreateDirectory("Apps");
-            Directory.CreateDirectory("Platform");
+            Directory.CreateDirectory("UserGuide\\Mesh");
+            Directory.CreateDirectory("UserGuide\\Apps");
+            Directory.CreateDirectory("UserGuide\\Platform");
             ExampleGenerator.UserGuideCreate(CreateExamples);
             ExampleGenerator.UserGuide(CreateExamples);
-
+            ExampleGenerator.ExampleSession(CreateExamples);
 
             ExampleGenerator.UserGuideApps(CreateExamples);
 

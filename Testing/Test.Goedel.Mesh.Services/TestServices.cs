@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using UT = Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -9,45 +10,58 @@ using Goedel.Cryptography;
 using Goedel.Cryptography.Jose;
 using Goedel.Protocol;
 using Test.Common;
-using Goedel.Mesh.Server;
+using Goedel.Mesh.Portal;
+using Goedel.Mesh.Portal.Client;
+using Goedel.Mesh.Portal.Server;
+using Goedel.Test;
 
 namespace Test.Goedel.Mesh {
     [TestClass]
     public class TestServices {
 
-        static MeshSession MeshCatalog;
-        //static DeviceProfile DeviceProfile;
-        //static PersonalProfile PersonalProfile;
-
-        static TestConstant TestConstant;
+        static MeshSession MeshCatalog => MeshProfiles.MeshCatalog;
+        static TestConstant TestConstant = MeshProfiles.TestConstant;
+        static MeshProfiles MeshProfiles = new MeshProfiles ();
 
         SessionPersonal RegistrationPersonal = null;
 
-        [AssemblyInitialize]
-        public static void InitializeClass(TestContext context) {
+        /// <summary>
+        /// 
+        /// </summary>
+        public static void TestServicesDirect () {
 
-            TestConstant = new TestConstant();
-            MeshWindows.Initialize(true);
+            InitializeClass();
+            var TestServices = new TestServices();
 
-            // List of all the accounts on the current machine
-            MeshCatalog = new MeshSession();
+            TestServices.TestConnect4();
 
-            MeshCatalog.EraseTest(); // remove previous test data
-
-            // Connect to a direct, in process portal.
-            var Portal = new MeshPortalDirect(TestConstant.NameService, TestConstant.LogMesh, TestConstant.LogPortal);
-            MeshPortal.Default = Portal;
+            }
 
 
+        [ClassInitialize]
+        public static void InitializeClass (TestContext context) {
+            InitializeClass();
+            }
+
+        public static void InitializeClass () {
             }
 
 
         [AssemblyCleanup]
-        public static void Cleanup() {
+        public static void Cleanup () {
             MeshCatalog.EraseTest();
             }
 
-
+        /// <summary>
+        /// It is not possible to perform more than one test simultaneously when testing the 
+        /// per-account O/S integration. Thus unit testing does not work
+        /// </summary>
+        [TestMethod]
+        public void CombinedTests () {
+            MeshProfiles.NewDevice();
+            MeshProfiles.NewPersonal();
+            MeshProfiles.NewPersonal();
+            }
 
         // Services:
         // TTest: Request Connect device [service]
@@ -56,71 +70,21 @@ namespace Test.Goedel.Mesh {
         // TTest: Connected device gets updates
         // TTest: Sync second device
 
-        /// <summary>
-        /// This illustrates how we manage profiles using the catalog.
-        /// </summary>
-        [TestMethod]
-        public void NewDevice() {
-            var DeviceRegistration = MeshCatalog.GetDevice(DeviceNew: true,
-                        DeviceID: TestConstant.Device1,
-                        DeviceDescription: TestConstant.Device1Description);
 
-            var UDF = DeviceRegistration.DeviceProfile.UDF;
-
-            var DeviceRegistration2 = MeshCatalog.GetDevice(DeviceUDF: UDF);
-            var DeviceProfile1 = DeviceRegistration.DeviceProfile;
-            var DeviceProfile2 = DeviceRegistration2.DeviceProfile;
-
-            UT.Assert.AreEqual(DeviceProfile1.UDF, DeviceProfile2.UDF);
-            UT.Assert.AreEqual(DeviceProfile1.DeviceAuthenticationKey.UDF, DeviceProfile2.DeviceAuthenticationKey.UDF);
-            UT.Assert.AreEqual(DeviceProfile1.DeviceEncryptiontionKey.UDF, DeviceProfile2.DeviceEncryptiontionKey.UDF);
-            UT.Assert.AreEqual(DeviceProfile1.DeviceSignatureKey.UDF, DeviceProfile2.DeviceSignatureKey.UDF);
-            UT.Assert.AreEqual(DeviceProfile1.Description, DeviceProfile2.Description);
-            UT.Assert.IsTrue(DeviceProfile1.Valid);
-            UT.Assert.IsTrue(DeviceProfile2.Valid);
-            }
-
-        /// <summary>
-        /// This illustrates how we manage profiles using the catalog.
-        /// </summary>
-        [TestMethod]
-        public void NewPersonal() {
-            var DeviceRegistration = MeshCatalog.GetDevice(DeviceNew: true,
-                        DeviceID: TestConstant.Device1,
-                        DeviceDescription: TestConstant.Device1Description);
-
-            var PersonalProfile1 = new PersonalProfile(DeviceRegistration.DeviceProfile);
-            var PersonalRegistration = MeshCatalog.CreateAccount(TestConstant.AccountID, PersonalProfile1);
-
-            UT.Assert.IsNotNull(PersonalRegistration);
-            UT.Assert.IsNotNull(PersonalRegistration.SignedPersonalProfile);
-
-            var MeshCatalog2 = new MeshSession();
-
-
-            var PersonalMesh = MeshCatalog2.GetPersonal(TestConstant.AccountID);
-            var PersonalProfile2 = PersonalMesh.PersonalProfile;
-
-            UT.Assert.AreEqual(PersonalProfile1.UDF, PersonalProfile2.UDF);
-            UT.Assert.AreEqual(PersonalProfile1.AdministrationKey.UDF, PersonalProfile2.AdministrationKey.UDF);
-            UT.Assert.AreEqual(PersonalProfile1.DeviceProfile.UDF, PersonalProfile2.DeviceProfile.UDF);
-            UT.Assert.IsTrue(PersonalProfile1.Valid);
-            UT.Assert.IsTrue(PersonalProfile2.Valid);
-            }
 
 
         /// <summary>
         /// This illustrates how we manage profiles using the catalog.
         /// </summary>
-        [TestMethod]
         public void TestEscrow() {
+            var AccountID = TestConstant.AccountID.MakeUnique();
 
             var DeviceRegistration = MeshCatalog.GetDevice(DeviceNew: true,
                         DeviceID: TestConstant.Device1,
                         DeviceDescription: TestConstant.Device1Description);
 
             var PersonalProfile1 = new PersonalProfile(DeviceRegistration.DeviceProfile);
-            var PersonalRegistration = MeshCatalog.CreateAccount(TestConstant.AccountID, PersonalProfile1);
+            var PersonalRegistration = MeshCatalog.CreateAccount(AccountID, PersonalProfile1);
             var Original = PersonalRegistration.PersonalProfile;
 
             UT.Assert.IsNotNull(PersonalRegistration);
@@ -230,7 +194,7 @@ namespace Test.Goedel.Mesh {
         /// </summary>
         [TestMethod]
         public void TestSSH() {
-            var PersonalRegistration = CreateAndRegister("TestSSH@example.com");
+            var PersonalRegistration = MeshProfiles.CreateAndRegister("TestSSH@example.com");
 
             var SSHProfile = new SSHProfile();
             var ApplicationRegistration = PersonalRegistration.Add(SSHProfile);
@@ -308,22 +272,25 @@ namespace Test.Goedel.Mesh {
         /// </summary>
         [TestMethod]
         public void TestConnect1() {
-            var BaseCatalog = NewCatalog();
+            var AccountID = TestConstant.AccountID.MakeUnique();
+
+            var BaseCatalog = MeshProfiles.NewCatalog();
             var MeshClient = new MeshClient(TestConstant.Service);
-            var Registration = CreateAndRegister(BaseCatalog, MeshClient, TestConstant.Device1, TestConstant.Device1Description,
-                TestConstant.AccountID);
+            var Registration = MeshProfiles.CreateAndRegister(BaseCatalog, MeshClient, 
+                TestConstant.Device1, TestConstant.Device1Description,
+                AccountID);
 
             var Devs = new List<SessionPersonal>() {
                 Registration,
-                ConnectDevice(Registration, TestConstant.AccountID)
+                MeshProfiles.ConnectDevice(Registration, AccountID)
                 };
 
             UT.Assert.IsTrue(Registration.PersonalProfile.Devices.Count == 2);
-            var Personal2 = FromData(Registration.PersonalProfile);
+            var Personal2 = MeshProfiles.FromData(Registration.PersonalProfile);
             UT.Assert.IsTrue(Personal2.Devices.Count == 2);
 
             // Check that no applications are connected
-            CheckApplications(Devs, 0);
+            MeshProfiles.CheckApplications(Devs, 0);
             }
 
         /// <summary>
@@ -331,20 +298,24 @@ namespace Test.Goedel.Mesh {
         /// </summary>
         [TestMethod]
         public void TestConnect4() {
-            var BaseCatalog = NewCatalog();
+            var AccountID = TestConstant.AccountID.MakeUnique();
+
+            var BaseCatalog = MeshProfiles.NewCatalog();
             var MeshClient = new MeshClient(TestConstant.Service);
-            var Registration = CreateAndRegister(BaseCatalog, MeshClient, TestConstant.Device1, TestConstant.Device1Description,
-                TestConstant.AccountID);
+            var Registration = MeshProfiles.CreateAndRegister(BaseCatalog, MeshClient, 
+                TestConstant.Device1, TestConstant.Device1Description,
+                AccountID);
+
+            var D1 = MeshProfiles.ConnectDevice(Registration, AccountID);
+            var D2 = MeshProfiles.ConnectDevice(Registration, AccountID);
+            var D3 = MeshProfiles.ConnectDevice(Registration, AccountID);
+            var D4 = MeshProfiles.ConnectDevice(Registration, AccountID);
 
             var Devs = new List<SessionPersonal>() {
-                                Registration,
-                ConnectDevice(Registration, TestConstant.AccountID),
-                ConnectDevice(Registration, TestConstant.AccountID),
-                ConnectDevice(Registration, TestConstant.AccountID),
-                ConnectDevice(Registration, TestConstant.AccountID)
+                                Registration, D1, D2, D3, D4
                 };
 
-            CheckApplications(Devs, 0);
+            MeshProfiles.CheckApplications(Devs, 0);
             }
 
 
@@ -355,23 +326,26 @@ namespace Test.Goedel.Mesh {
         /// </summary>
         [TestMethod]
         public void TestConnect1Apps() {
-            var BaseCatalog = NewCatalog();
+            var AccountID = TestConstant.AccountID.MakeUnique();
+
+            var BaseCatalog = MeshProfiles.NewCatalog();
             var MeshClient = new MeshClient(TestConstant.Service);
-            var Registration = CreateAndRegister(BaseCatalog, MeshClient, TestConstant.Device1, TestConstant.Device1Description,
-                TestConstant.AccountID);
+            var Registration = MeshProfiles.CreateAndRegister(BaseCatalog, MeshClient, 
+                        TestConstant.Device1, TestConstant.Device1Description,
+                        AccountID);
 
             var Devs = new List<SessionPersonal>() {
                 Registration,
-                ConnectDevice(Registration, TestConstant.AccountID)
+                MeshProfiles.ConnectDevice(Registration, AccountID)
                 };
 
             // Check that no applications are connected
-            CheckApplications(Devs, 0);
+            MeshProfiles.CheckApplications(Devs, 0);
 
-            ConnectApplications(Registration);
+            MeshProfiles.ConnectApplications(Registration);
 
             // Check again
-            CheckApplications(Devs, 1);
+            MeshProfiles.CheckApplications(Devs, 1);
             }
 
 
@@ -380,88 +354,26 @@ namespace Test.Goedel.Mesh {
         /// </summary>
         [TestMethod]
         public void TestConnect4Apps() {
-            var BaseCatalog = NewCatalog();
+            var AccountID = TestConstant.AccountID.MakeUnique();
+
+            var BaseCatalog = MeshProfiles.NewCatalog();
             var MeshClient = new MeshClient(TestConstant.Service);
-            var Registration = CreateAndRegister(BaseCatalog, MeshClient, TestConstant.Device1, TestConstant.Device1Description,
-                TestConstant.AccountID);
+            var Registration = MeshProfiles.CreateAndRegister(BaseCatalog, MeshClient, 
+                        TestConstant.Device1, TestConstant.Device1Description,
+                        AccountID);
 
             var Devs = new List<SessionPersonal>() {
                 Registration,
-                ConnectDevice(Registration, TestConstant.AccountID),
-                ConnectDevice(Registration, TestConstant.AccountID),
+                MeshProfiles.ConnectDevice(Registration, AccountID),
+                MeshProfiles.ConnectDevice(Registration, AccountID),
                 };
 
 
-            CheckApplications(Devs, 0);
-            ConnectApplications(Registration);
-            Devs.Add(ConnectDevice(Registration, TestConstant.AccountID));
-            Devs.Add(ConnectDevice(Registration, TestConstant.AccountID));
-            CheckApplications(Devs, 1);
-            }
-
-
-        PersonalProfile FromData(PersonalProfile PersonalProfile) {
-            var Bytes = PersonalProfile.SignedPersonalProfile.GetBytes();
-            return SignedPersonalProfile.FromJSON(Bytes.JSONReader()).PersonalProfile;
-            }
-
-        MeshSession NewCatalog() {
-            var EmptyRegistration = new MeshMachineCached();
-            return new MeshSession(EmptyRegistration);
-            }
-
-
-        SessionPersonal CreateAndRegister (string AccountID) {
-            var BaseCatalog = NewCatalog();
-            var MeshClient = new MeshClient(TestConstant.Service);
-            return CreateAndRegister(BaseCatalog, MeshClient, "TestDevice",
-                    "Just a test", AccountID);
-            }
-
-        SessionPersonal CreateAndRegister (MeshSession MeshCatalog, MeshClient MeshClient,
-                    string DeviceID, string DeviceDescription, string AccountID) {
-
-            var DeviceRegistration = MeshCatalog.GetDevice(DeviceNew: true,
-                    DeviceID: DeviceID, DeviceDescription: DeviceDescription);
-
-            var PersonalProfile1 = new PersonalProfile(DeviceRegistration.DeviceProfile);
-            return MeshCatalog.CreateAccount(AccountID, PersonalProfile1, MeshClient);
-            }
-
-        /// <summary>
-        /// Connect a simulated device.
-        /// </summary>
-        /// <param name="AdminClient">The administration client</param>
-        /// <param name="AccountID">The account ID to bind to</param>
-        /// <returns>The registration context for the new device.</returns>
-        SessionPersonal ConnectDevice (SessionPersonal Admin, string AccountID) {
-
-
-            var AdminClient = Admin.MeshClient;
-            var DeviceCatalog = NewCatalog();
-            var DeviceRegistration = MeshCatalog.GetDevice(DeviceNew: true,
-                        DeviceID: TestConstant.Device2,
-                        DeviceDescription: TestConstant.Device2Description);
-            var Personal = DeviceRegistration.BeginConnect(AccountID);
-
-            var Requests = AdminClient.ConnectPending();
-            var Request = Requests.Match(DeviceRegistration.UDF);
-
-            throw new NYI();
-            //Admin.Confirm(Request);
-
-            //Personal.CompleteConnect();
-
-            //return Personal;
-            }
-
-
-        void ConnectApplications(SessionPersonal Personal) {
-
-            }
-
-        void CheckApplications(List<SessionPersonal> Personal, int Connected) {
-
+            MeshProfiles.CheckApplications(Devs, 0);
+            MeshProfiles.ConnectApplications(Registration);
+            Devs.Add(MeshProfiles.ConnectDevice(Registration, AccountID));
+            Devs.Add(MeshProfiles.ConnectDevice(Registration, AccountID));
+            MeshProfiles.CheckApplications(Devs, 1);
             }
 
 

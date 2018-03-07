@@ -22,14 +22,9 @@ namespace Goedel.Tool.Version {
                 ParseManifest(Directory);
                 }
 
-            var Output = PathSummary + "\\index.md";
-
-            var Generate = new MakeRelease();
-
-            Generate.SetTextWriter(Output);
-
-            Generate.MakeIndex(Distribution);
-            Generate.Close();
+            //var Generate = new MakeRelease();
+            MakeRelease.MakeIndex(Distribution);
+            MakeRelease.MakeVersionID(Distribution);
             }
 
 
@@ -52,7 +47,10 @@ namespace Goedel.Tool.Version {
                     if (Version.Stable) {
                         Distribution.Stable = Distribution.Stable ?? Version;
                         }
-                    if (Distribution.Latest == null) {
+                    if (Version > Distribution.Latest) {
+                        if (Distribution.Latest!=null) {
+                            Distribution.Versions.Add(Distribution.Latest);
+                            }
                         Distribution.Latest = Version;
                         }
                     else {
@@ -70,7 +68,7 @@ namespace Goedel.Tool.Version {
         public Version Latest;
 
 
-        public SortedSet<Version> Versions = new SortedSet<Version>();
+        public SortedSet<Version> Versions = new SortedSet<Version>(new Version());
 
         }
 
@@ -110,6 +108,16 @@ namespace Goedel.Tool.Version {
             }
 
         public int Compare (Version x, Version y) {
+            return Version.CompareV(x, y);
+            }
+
+        public static int CompareV (Version x, Version y) {
+            if (y == null) {
+                return 1;
+                }
+            if (x == null) {
+                return 0;
+                }
             if (x.Major != y.Major) {
                 return x.Major > y.Major ? 1: -1;
                 }
@@ -122,6 +130,9 @@ namespace Goedel.Tool.Version {
             return 0;
             }
 
+
+        public static bool operator < (Version left, Version right) => (CompareV(left, right) < 0);
+        public static bool operator > (Version left, Version right) => (CompareV(left, right) > 0);
         }
 
 

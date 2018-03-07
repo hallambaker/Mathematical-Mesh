@@ -25,6 +25,8 @@ using System.Linq;
 using Goedel.IO;
 using Goedel.Utilities;
 using Goedel.Cryptography;
+using Goedel.Mesh.Portal;
+using Goedel.Mesh.Portal.Client;
 
 namespace Goedel.Mesh.Platform.Windows {
 
@@ -190,7 +192,9 @@ namespace Goedel.Mesh.Platform.Windows {
         /// <param name="SignedProfile">Profile to add.</param>
         /// <returns>Registration for the created profile.</returns>
         public override RegistrationDevice Add(SignedDeviceProfile SignedProfile) {
-            var Registration = new RegistrationDeviceWindows(SignedProfile);
+            var Registration = new RegistrationDeviceWindows(SignedProfile) {
+                MeshMachine = this
+                };
             DeviceProfiles.AddSafe(SignedProfile.Identifier, Registration); // NYI check if present
             return Registration;
             }

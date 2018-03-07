@@ -100,12 +100,12 @@ namespace Goedel.Cryptography.KeyFile {
                     // is ASN.1 format DER modulus/exponent etc.
 
                     var RSAPrivate = new PKIXPrivateKeyRSA(TaggedData.Data);
-                    return new RSAKeyPair (RSAPrivate);
+                    return new KeyPairRSA (RSAPrivate);
                     }
                 else if (TaggedData.Tag == "RSAPUBLICKEY") {
                     // is ASN.1 format DER modulus/exponent
                     var RSAPrivate = new PKIXPrivateKeyRSA(TaggedData.Data);
-                    return new RSAKeyPair(RSAPrivate);
+                    return new KeyPairRSA(RSAPrivate);
                     }
                 else if (TaggedData.Tag == "SSH2PUBLICKEY") {
                     var SSH_Public_Key = SSHData.Decode (TaggedData.Data);

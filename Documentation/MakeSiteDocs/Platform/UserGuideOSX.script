@@ -4,7 +4,7 @@
 #xclass ExampleGenerator ExampleGenerator
 
 
-#file UserGuideOSX "Platform/OSX.md" CreateExamples Examples
+#file UserGuideOSX "UserGuide/Platform/OSX.md" CreateExamples Examples
 <title>OSX
 <titlebanner><h1>Mac OSX Platform
 

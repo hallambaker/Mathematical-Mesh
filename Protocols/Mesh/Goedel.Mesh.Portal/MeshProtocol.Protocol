@@ -1,4 +1,4 @@
-﻿Protocol Goedel.Mesh.Server MeshProtocol MeshProtocol
+﻿Protocol Goedel.Mesh.Portal MeshProtocol MeshProtocol
 	Using Goedel.Mesh
 	Using Goedel.Persistence
 

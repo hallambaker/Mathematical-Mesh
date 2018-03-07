@@ -19,7 +19,9 @@ namespace Goedel.IO {
         /// <summary>Create new file overwriting any existing file. (Alias for Overwrite.)</summary>
         Create=Overwrite,
         /// <summary>Open existing file, abort if file does not exist</summary>
-        Existing
+        Existing,
+        /// <summary>Open existing file or create new if it does not exist</summary>
+        OpenOrCreate
         }
 
     /// <summary>
@@ -45,6 +47,9 @@ namespace Goedel.IO {
                 case FileStatus.Overwrite: {
                     return System.IO.FileMode.Create;
                     }
+                case FileStatus.OpenOrCreate: {
+                    return System.IO.FileMode.OpenOrCreate;
+                    }
                 }
             return System.IO.FileMode.Open;
             }
@@ -56,6 +61,11 @@ namespace Goedel.IO {
         /// <param name="FileStatus">The file status</param>
         /// <returns>The result</returns>
         public static FileStream FileStream (this string FileName, FileStatus FileStatus) {
+
+            var FileMode = FileStatus.FileMode();
+            var FileAccess = FileStatus.FileAccess();
+            var FileShare = FileStatus.FileShare();
+
             return new FileStream(FileName, FileStatus.FileMode(), FileStatus.FileAccess(),
                 FileStatus.FileShare());
             }
@@ -66,7 +76,8 @@ namespace Goedel.IO {
         /// <param name="FileStatus">Status to translate</param>
         /// <returns>The result</returns>
         public static FileAccess FileAccess (this FileStatus FileStatus) {
-            return (FileStatus == FileStatus.Read) ? System.IO.FileAccess.Read : System.IO.FileAccess.ReadWrite;
+            return (FileStatus == FileStatus.Read) ? System.IO.FileAccess.Read :
+                (FileStatus == FileStatus.Append)? System.IO.FileAccess.Write : System.IO.FileAccess.ReadWrite;
             }
 
         /// <summary>
@@ -75,7 +86,7 @@ namespace Goedel.IO {
         /// <param name="FileStatus">Status to translate</param>
         /// <returns>The result</returns>
         public static FileShare FileShare (this FileStatus FileStatus) {
-            return (FileStatus == FileStatus.Read) ? System.IO.FileShare.ReadWrite : System.IO.FileShare.Write;
+            return (FileStatus == FileStatus.Read) ? System.IO.FileShare.ReadWrite : System.IO.FileShare.Read;
             }
 
         /// <summary>

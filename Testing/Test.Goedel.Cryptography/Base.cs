@@ -9,11 +9,26 @@ namespace Test.Goedel.Cryptography {
 
     public partial class TestGoedelCryptography {
 
-        [AssemblyInitialize]
-        public static void Initialize (TestContext Context) {
-            CryptographyFramework.Initialize();
+        /// <summary>
+        /// 
+        /// </summary>
+        public static void TestDirect () {
+            InitializeClass();
+
+            var Instance = new TestGoedelCryptography();
+            Instance.Ed448RecoverX();
+            Instance.TestDHEd448Decode();
             }
 
+
+
+        [AssemblyInitialize]
+        public static void InitializeClass (TestContext Context) {
+            InitializeClass();
+            }
+        public static void InitializeClass () {
+            CryptographyFramework.Initialize();
+            }
 
         [TestMethod]
         public void TestInitialize() {

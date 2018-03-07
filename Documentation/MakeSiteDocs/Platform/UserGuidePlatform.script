@@ -4,7 +4,7 @@
 #xclass ExampleGenerator ExampleGenerator
 
 
-#file UserGuidePlatform "Platform/index.md" CreateExamples Examples
+#file UserGuidePlatform "UserGuide/Platform/index.md" CreateExamples Examples
 <title>Platforms
 <titlebanner><h1>Mesh Platform Specific Features
 

@@ -45,6 +45,7 @@
   <Import Project="..\..\Goedel.Registry\Goedel.Registry.projitems" Label="Shared" />
   <Import Project="..\..\Goedel.Utilities\Goedel.Utilities.projitems" Label="Shared" />
   <Import Project="..\..\Goedel.FSR\Goedel.FSR.projitems" Label="Shared" />
+  <Import Project="..\..\Goedel.Discovery\Goedel.Discovery.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>cd $(ProjectDir) &amp;&amp; VSPreBuild</PreBuildEvent>

@@ -18,7 +18,7 @@ namespace Goedel.Cryptography.Jose {
         /// Construct from the specified RSA Key
         /// </summary>
         /// <param name="KeyPair">An RSA key Pair.</param>
-        public PublicKeyDH(DHKeyPairBase KeyPair) : this (KeyPair.PKIXPublicKeyDH) {
+        public PublicKeyDH(KeyPairBaseDH KeyPair) : this (KeyPair.PKIXPublicKeyDH) {
             }
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace Goedel.Cryptography.Jose {
         public override KeyPair GetKeyPair(bool Exportable=false) {
 
             var PKIXParams = PKIXParameters;
-            var KeyPair = DHKeyPairBase.KeyPairPublicFactory(PKIXParams);
+            var KeyPair = KeyPairBaseDH.KeyPairPublicFactory(PKIXParams);
 
             return KeyPair;
             }
@@ -69,7 +69,7 @@ namespace Goedel.Cryptography.Jose {
         /// Construct from the specified RSA Key
         /// </summary>
         /// <param name="KeyPair">An RSA key Pair.</param>
-        public PrivateKeyDH (DHKeyPairBase KeyPair) : this(KeyPair.PKIXPrivateKeyDH) {
+        public PrivateKeyDH (KeyPairBaseDH KeyPair) : this(KeyPair.PKIXPrivateKeyDH) {
             }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace Goedel.Cryptography.Jose {
         /// <param name="Exportable">If true, private key parameters may be exported</param>
         /// <returns>The extracted key pair</returns>
         public override KeyPair GetKeyPair(bool Exportable = false) {
-            var KeyPair = DHKeyPairBase.KeyPairPrivateFactory(DHPrivateKey, Exportable);
+            var KeyPair = KeyPairBaseDH.KeyPairPrivateFactory(DHPrivateKey, Exportable);
             return KeyPair;
             }
 

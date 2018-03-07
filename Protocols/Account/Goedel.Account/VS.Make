@@ -28,7 +28,7 @@ ToolTargets = \
 	SchemaAccount.cs
 
 SchemaAccount.cs : SchemaAccount.protocol 
-	protogen SchemaAccount.protocol  SchemaAccount.cs
+	protogen SchemaAccount.protocol  /cs  SchemaAccount.cs
 
 
 prebuildRecurse : 

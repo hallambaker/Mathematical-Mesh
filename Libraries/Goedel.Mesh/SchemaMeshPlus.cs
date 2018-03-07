@@ -23,6 +23,7 @@
 using System.Collections.Generic;
 using Goedel.Persistence;
 using Goedel.Protocol;
+using Goedel.Utilities;
 
 namespace Goedel.Mesh {
     public partial class MeshItem {
@@ -56,9 +57,15 @@ namespace Goedel.Mesh {
         /// </summary>
         public virtual bool Valid => true;
 
+        public override List<string> _Keys => throw new NYI();
+
+        public override string _PrimaryKey => Identifier ;
+
+        public override List<KeyValuePair<string, string>> _KeyValues => throw new NYI();
+
 
         /// <summary>
-        /// The set of keys under which the Entry is to be cataloged.
+        /// The set of keys under which the Entry is to be catalogued.
         /// </summary>
         public virtual List<IndexTerm> Keys => new List<IndexTerm> (); 
 

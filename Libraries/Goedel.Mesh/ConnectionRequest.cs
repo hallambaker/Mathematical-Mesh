@@ -55,29 +55,6 @@ namespace Goedel.Mesh {
 
 
     public partial class SignedConnectionResult {
-        /*
-        *
-        * Should consistently tag all profiles /toplevel items in both stores
-
-            SignedProfile
-                Inner -> The inner signed object as toplevel
-                Data -> The inner signed object in that type
-                new (Profile, key) Construct by signing Profile with specified Key
-                new (Profile) Construct by signing Profile with implied key
-
-
-            Profile
-                Signed -> Singed object wrapping this one
-                
-
-            UniqueID - A key uniquely identifying objects of this type
-            PrimaryKey (string) - wrap specified identifier to create globally unique key
-
-            Override comparison operators so List<t> methods work right.
-
-        */
-
-
 
         ConnectionResult _Signed;
 
@@ -112,6 +89,12 @@ namespace Goedel.Mesh {
         public static string PrimaryKey(string UniqueID) {
             return "Result-" + UniqueID;
             }
+
+
+        /// <summary>
+        /// The primary key
+        /// </summary>
+        public override string _PrimaryKey => PrimaryKey(Identifier);
 
         /// <summary>
         /// Default Constructor
@@ -194,13 +177,6 @@ namespace Goedel.Mesh {
         public SignedConnectionRequest SignedConnectionRequest => new SignedConnectionRequest(this); 
 
 
-        /// <summary>
-        /// A unique object ID.
-        /// </summary>
-        public string UniqueID => ParentUDF;  
-
-
-
         }
 
 
@@ -208,10 +184,11 @@ namespace Goedel.Mesh {
     /// Track connections pending.
     /// </summary>
     public partial class ConnectionsPending {
+
         /// <summary>
-        /// Unique identifier for connections pending object.
+        /// The primary key
         /// </summary>
-        public override string UniqueID  => UserProfileUDF; 
+        public override string _PrimaryKey => PrimaryKey(AccountID);
 
 
         /// <summary>
@@ -219,7 +196,7 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="UniqueID">ID of object to construct key for.</param>
         /// <returns>The constructed key.</returns>
-        public static new string PrimaryKey(string UniqueID) {
+        public static new string PrimaryKey (string UniqueID) {
             return "Pending-" + UniqueID;
             }
 

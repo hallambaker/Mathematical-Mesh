@@ -18,7 +18,7 @@ namespace Test.Goedel.Mesh {
 
         [ClassInitialize()]
         public static void InitializeClass(TestContext context) {
-            MeshWindows.Initialize(true);
+            global::Goedel.Mesh.Mesh.Initialize(true);
 
             DeviceProfile = new DeviceProfile(Device1, Device1Description);
             PersonalProfile = new PersonalProfile(DeviceProfile);

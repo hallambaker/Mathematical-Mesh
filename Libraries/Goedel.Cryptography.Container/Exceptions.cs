@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Goedel.Utilities;
 
 
@@ -208,6 +208,159 @@ namespace Goedel.Cryptography.Container {
 				}
 			else {
 				return new InvalidFileFormatException();
+				}
+            }
+        }
+
+
+    /// <summary>
+    /// An attempt was made to create an object with an existing object identifier
+    /// </summary>
+    public class ObjectIdentifierNotUnique : global::System.Exception {
+
+		/// <summary>
+        /// Construct instance for exception "An attempt was made to create an object with an existing object identifier"
+        /// </summary>		
+		public ObjectIdentifierNotUnique () : base ("An attempt was made to create an object with an existing object identifier") {
+			}
+        
+		/// <summary>
+        /// Construct instance for exception "An attempt was made to create an object with an existing object identifier"
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		public ObjectIdentifierNotUnique (string Description) : base (Description) {
+			}
+
+		/// <summary>
+        /// Construct instance for exception 		/// containing an inner exception.
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		/// <param name="Inner">Inner Exception</param>	
+		public ObjectIdentifierNotUnique (string Description, System.Exception Inner) : 
+				base (Description, Inner) {
+			}
+
+		/// <summary>
+        /// User data associated with the exception.
+        /// </summary>	
+		public object UserData;
+
+
+
+		
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+
+        static System.Exception _Throw(object Reason) {
+			if (Reason as string != null) {
+				return new ObjectIdentifierNotUnique(Reason as string);
+				}
+			else {
+				return new ObjectIdentifierNotUnique();
+				}
+            }
+        }
+
+
+    /// <summary>
+    /// No decryption key is available
+    /// </summary>
+    public class NoAvailableDecryptionKey : global::System.Exception {
+
+		/// <summary>
+        /// Construct instance for exception "No decryption key is available"
+        /// </summary>		
+		public NoAvailableDecryptionKey () : base ("No decryption key is available") {
+			}
+        
+		/// <summary>
+        /// Construct instance for exception "No decryption key is available"
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		public NoAvailableDecryptionKey (string Description) : base (Description) {
+			}
+
+		/// <summary>
+        /// Construct instance for exception 		/// containing an inner exception.
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		/// <param name="Inner">Inner Exception</param>	
+		public NoAvailableDecryptionKey (string Description, System.Exception Inner) : 
+				base (Description, Inner) {
+			}
+
+		/// <summary>
+        /// User data associated with the exception.
+        /// </summary>	
+		public object UserData;
+
+
+
+		
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+
+        static System.Exception _Throw(object Reason) {
+			if (Reason as string != null) {
+				return new NoAvailableDecryptionKey(Reason as string);
+				}
+			else {
+				return new NoAvailableDecryptionKey();
+				}
+            }
+        }
+
+
+    /// <summary>
+    /// Access was refused
+    /// </summary>
+    public class AccessRefused : global::System.Exception {
+
+		/// <summary>
+        /// Construct instance for exception "Access was refused"
+        /// </summary>		
+		public AccessRefused () : base ("Access was refused") {
+			}
+        
+		/// <summary>
+        /// Construct instance for exception "Access was refused"
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		public AccessRefused (string Description) : base (Description) {
+			}
+
+		/// <summary>
+        /// Construct instance for exception 		/// containing an inner exception.
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		/// <param name="Inner">Inner Exception</param>	
+		public AccessRefused (string Description, System.Exception Inner) : 
+				base (Description, Inner) {
+			}
+
+		/// <summary>
+        /// User data associated with the exception.
+        /// </summary>	
+		public object UserData;
+
+
+
+		
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+
+        static System.Exception _Throw(object Reason) {
+			if (Reason as string != null) {
+				return new AccessRefused(Reason as string);
+				}
+			else {
+				return new AccessRefused();
 				}
             }
         }

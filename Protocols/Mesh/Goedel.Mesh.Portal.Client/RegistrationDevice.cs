@@ -26,9 +26,9 @@ using System.Linq;
 using System.IO;
 using Goedel.Utilities;
 using Goedel.Mesh;
-using Goedel.Mesh.Server;
+using Goedel.Mesh.Portal;
 
-namespace Goedel.Mesh.Platform {
+namespace Goedel.Mesh.Portal.Client {
 
     /// <summary>
     /// Describes the registration of a device profile on a machine.

@@ -14,7 +14,7 @@ namespace ExampleGenerator {
 		// UserGuideConfirm
 		//
 		public static void UserGuideConfirm (CreateExamples Examples) { /* File  */
-			using (var _Output = new StreamWriter ("Apps/confirm.md")) {
+			using (var _Output = new StreamWriter ("UserGuide/Apps/confirm.md")) {
 				var _Indent = ""; 
 				_Output.Write ("<title>Confirm\n{0}", _Indent);
 				_Output.Write ("<titlebanner><h1>Mesh/Confirm\n{0}", _Indent);

@@ -1,25 +1,4 @@
-﻿//   Copyright © 2015 by Comodo Group Inc.
-//  
-//  Permission is hereby granted, free of charge, to any person obtaining a copy
-//  of this software and associated documentation files (the "Software"), to deal
-//  in the Software without restriction, including without limitation the rights
-//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-//  copies of the Software, and to permit persons to whom the Software is
-//  furnished to do so, subject to the following conditions:
-//  
-//  The above copyright notice and this permission notice shall be included in
-//  all copies or substantial portions of the Software.
-//  
-//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-//  THE SOFTWARE.
-//  
-//  
-
+﻿
 using System;
 using System.Linq;
 using System.Collections;
@@ -46,195 +25,8 @@ namespace Goedel.Persistence {
     //     The "acc" Type has Tags "alice@example.com", "bob@example.com"
     //     The "alice@example.com" Tag has a set of values
 
+    // ToDo: Audit the locking strategy properly
 
-    /// <summary>
-    /// A key entry mapping the specified key to the specified data value.
-    /// </summary>
-    public struct KeyData {
-        /// <summary>
-        /// The key
-        /// </summary>
-        public string Key;
-
-        /// <summary>
-        /// The data value
-        /// </summary>
-        public string Data;
-
-        /// <summary>
-        /// Construct a key entry.
-        /// </summary>
-        /// <param name="Key">The key to be mapped.</param>
-        /// <param name="Data">The data to be mapped.</param>
-        public KeyData (string Key, string Data) {
-            this.Key = Key;
-            this.Data = Data;
-            }
-        }
-
-    /// <summary>
-    /// A collection of data items. 
-    /// </summary>
-    public class DataCollection {
-        /// <summary>
-        /// The items in the collection.
-        /// </summary>
-        public List<DataItem> DataItems = new List<DataItem> ();
-
-        /// <summary>
-        /// Construct a data collection with the specified member.
-        /// </summary>
-        /// <param name="DataItem">Initial member</param>
-        public DataCollection(DataItem DataItem) {
-            Add(DataItem);
-            }
-
-        /// <summary>
-        /// Add the specified member to the collection.
-        /// </summary>
-        /// <param name="DataItem">Data item to add</param>
-        public void Add(DataItem DataItem) {
-            DataItems.Add (DataItem);
-            }
-        }
-
-    /// <summary>
-    /// Tracks persistent objects by unique identifier
-    /// </summary>
-    public class PersistenceObjectIndex {
-
-        /// <summary>
-        /// Dictionary mapping keys to object instances.
-        /// </summary>
-        public SortedDictionary<string, DataItem> Dictionary =
-            new SortedDictionary<string, DataItem>();
-
-        /// <summary>
-        /// Default constructor
-        /// </summary>
-        public PersistenceObjectIndex () {
-
-            }
-
-        /// <summary>
-        /// Add data item to the dictonary, overwriting the existing version
-        /// if any.
-        /// </summary>
-        /// <param name="DataItem">Data item to add.</param>
-        public virtual void Add(DataItem DataItem) {
-            Dictionary.Remove(DataItem.PrimaryKey);
-            Dictionary.AddSafe(DataItem.PrimaryKey, DataItem); // NYI check if null
-
-            return;
-            }
-
-        /// <summary>
-        /// Find the data collection with the specified key value.
-        /// </summary>
-        /// <param name="Value">Key value to find.</param>
-        /// <returns>True if key found, otherwise false.</returns>
-        public virtual bool Contains(string Value) {
-            return Dictionary.ContainsKey(Value);
-            }
-
-        /// <summary>
-        /// Find the data collection with the specified key value.
-        /// </summary>
-        /// <param name="Value">Key value to find.</param>
-        /// <returns>Data item if found.</returns>
-        public virtual DataItem Get(string Value) {
-
-            if (Dictionary.TryGetValue(Value, out var Result)) {
-                return Result;
-                }
-
-            return null;
-            }
-
-        }
-
-
-
-    /// <summary>
-    /// Index to data in a persistence store using in-memory index.
-    /// </summary>
-    public class PersistenceIndex {
-        /// <summary>
-        /// Persistence store this index belongs to.
-        /// </summary>
-        public PersistenceStore Parent;
-
-        /// <summary>
-        /// Type of data being indexed
-        /// </summary>
-        public string Type;
-
-        /// <summary>
-        /// Dictionary mapping keys to data collections.
-        /// </summary>
-        public SortedDictionary<string, DataCollection> DictionaryKeyId =
-                new SortedDictionary<string, DataCollection>();
-
-        /// <summary>
-        /// Construct a new index for the specified store to index data of the
-        /// specified type.
-        /// </summary>
-        /// <param name="Parent">Persistence store to be indexed.</param>
-        /// <param name="Type">Type of data to index.</param>
-        public PersistenceIndex(PersistenceStore Parent, string Type) {
-            this.Parent = Parent;
-            this.Type = Type;
-            }
-
-        /// <summary>
-        /// Find the data collection with the specified key value.
-        /// </summary>
-        /// <param name="Value">Key value to find.</param>
-        /// <returns>True if value found, otherwise null.</returns>
-        public virtual bool Contains(string Value) {
-            return DictionaryKeyId.ContainsKey(Value);
-            }
-
-
-        /// <summary>
-        /// Find the data collection with the specified key value.
-        /// </summary>
-        /// <param name="Value">Key value to find.</param>
-        /// <returns>The data collection if found, null otherwise.</returns>
-        public virtual DataCollection Get(string Value) {
-
-
-            if (DictionaryKeyId.TryGetValue (Value, out var Result))  {
-                return Result;
-                }
-
-            return null;
-            }
-
-        /// <summary>
-        /// Get the most recently added value with a specified key.
-        /// </summary>
-        /// <param name="Value">Key value to find.</param>
-        /// <returns>The data collection if found, null otherwise.</returns>
-        public virtual DataItem GetLast (string Value) {
-            var Collection = Get(Value);
-            if (Collection == null) {
-                return null;
-                }
-
-            return Collection.DataItems.Last();
-            }
-
-
-        }
-
-    /// <summary>
-    /// Temporary store exposing the same methods as the persistence
-    /// store. It simply uses the methods in the base (abstract) class.
-    /// </summary>
-
-    public class TemporaryStore : PersistenceStore {
-        }
 
     /// <summary>
     /// The parent class for all persistence stores.
@@ -377,12 +169,8 @@ namespace Goedel.Persistence {
                 Position = -1;
                 }
 
-            private object Current1 {
-                get => this.Current; 
-                }
-            object IEnumerator.Current {
-                get => Current1; 
-                }
+            private object Current1 => this.Current;
+            object IEnumerator.Current => Current1;
 
             /// <summary>
             /// The current data item.
@@ -415,7 +203,7 @@ namespace Goedel.Persistence {
         /// Protected write to the store.
         /// </summary>
         /// <param name="DataItem">Data item to write.</param>
-        public virtual void Store(DataItem DataItem) {
+        void Store(DataItem DataItem) {
             try {
                 Lock.TryEnterWriteLock(_TimeOut);
                 try {
@@ -509,11 +297,10 @@ namespace Goedel.Persistence {
         /// Add new JSON object to the store with the specified identifier, unique ID and keys.
         /// </summary>
         /// <param name="Object">Object to add.</param>
-        /// <param name="UniqueID">Inique identifier.</param>
-        /// <param name="Keys">Key-Value pairs.</param>
-        public virtual void New(JSONObject Object, string UniqueID=null, List<IndexTerm> Keys=null) {
-            var DataItem = new DataItem(GetTransactionID(), UniqueID ?? Object._PrimaryKey, 
-                    Object.GetUTF8(), Keys);
+        public virtual void New(JSONObject Object) {
+            var DataItem = new DataItem(GetTransactionID(), 
+                    Object._PrimaryKey, 
+                    Object.GetUTF8(), null);
             New(DataItem);
             }
 
@@ -522,11 +309,9 @@ namespace Goedel.Persistence {
         /// Add new JSON object to the store with the specified identifier, unique ID and keys.
         /// </summary>
         /// <param name="Object">Object to add.</param>
-        /// <param name="UniqueID">Inique identifier.</param>
-        /// <param name="Keys">Key-Value pairs.</param>
-        public virtual void Update(JSONObject Object, string UniqueID = null, List<IndexTerm> Keys = null) {
-            var DataItem = new DataItem(GetTransactionID(), UniqueID ?? Object._PrimaryKey, Object.GetUTF8(),
-                Keys);
+        public virtual void Update(JSONObject Object) {
+            var DataItem = new DataItem(GetTransactionID(), Object._PrimaryKey, Object.GetUTF8(),
+                Object._KeyValues.ToIndexTerms());
             Update(DataItem);
             }
 
@@ -550,15 +335,34 @@ namespace Goedel.Persistence {
             Store(DataItem);
             }
 
+        ///// <summary>
+        ///// Delete DataItem from the store.
+        ///// </summary>
+        ///// <param name="DataItem">Data item to add.</param>
+        //public virtual void Delete(DataItem DataItem) {
+        //    DataItem.Text = null; // zero out the data
+        //    DataItem.Action = "Delete";
+        //    DataItem.Added = DateTime.Now;
+        //    Store(DataItem);
+        //    }
+
+
         /// <summary>
         /// Delete DataItem from the store.
         /// </summary>
-        /// <param name="DataItem">Data item to add.</param>
-        public virtual void Delete(DataItem DataItem) {
+        /// <param name="UniqueID">Unique ID of Data item to add.</param>
+        public virtual bool Delete (string UniqueID) {
+            var DataItem = ObjectIndex.Get(UniqueID);
+            if (DataItem == null) {
+                return false;
+                }
+
             DataItem.Text = null; // zero out the data
             DataItem.Action = "Delete";
             DataItem.Added = DateTime.Now;
             Store(DataItem);
+
+            return true;
             }
 
 
@@ -576,14 +380,6 @@ namespace Goedel.Persistence {
             return Index.Get (Value);
             }
 
-        /// <summary>
-        /// Return an index for the specified key, creating it if necessary.
-        /// </summary>
-        /// <param name="Key">The key for which the index is requested.</param>
-        /// <returns>The index.</returns>
-        public virtual PersistenceIndex GetIndex(string Key) {
-            return GetIndex (Key, true);
-            }
 
         // Locates the index for the specified type, creating it if specified
 
@@ -593,7 +389,7 @@ namespace Goedel.Persistence {
         /// <param name="Type">Key to match.</param>
         /// <param name="Create">If true, will create an index if none is found.</param>
         /// <returns>The index if found or created, otherwise null.</returns>
-        public virtual PersistenceIndex GetIndex(string Type, bool Create) {
+        public virtual PersistenceIndex GetIndex(string Type, bool Create=true) {
 
             var Found = Catalog.TryGetValue(Type, out var Index);
 

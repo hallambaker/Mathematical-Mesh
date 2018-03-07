@@ -31,7 +31,7 @@ using Goedel.Mesh.Platform.Windows;
 namespace Goedel.Mesh {
 
     /// <summary>Initialization class for Mesh libraries on the Windows platform.</summary>
-    public static class MeshWindows {
+    public static class Mesh {
 
         /// <summary>
         /// Initialize the cryptography, platform and Mesh machine libraries to

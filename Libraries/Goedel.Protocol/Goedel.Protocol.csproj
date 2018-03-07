@@ -2,9 +2,14 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Configurations>Debug;Release;Focus</Configurations>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>bin\Debug\netstandard2.0\Goedel.Protocol.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Focus|AnyCPU'">
     <DocumentationFile>bin\Debug\netstandard2.0\Goedel.Protocol.xml</DocumentationFile>
   </PropertyGroup>
 
@@ -23,7 +28,7 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Update="MessageBase1.cs">
+    <Compile Update="MessageBase.cs">
       <DependentUpon>MessageBase.protocol</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -32,7 +37,7 @@
 
   <ItemGroup>
     <None Update="MessageBase.protocol">
-      <LastGenOutput>MessageBase1.cs</LastGenOutput>
+      <LastGenOutput>MessageBase.cs</LastGenOutput>
       <Generator>Protogen</Generator>
     </None>
   </ItemGroup>

@@ -38,30 +38,27 @@ namespace Goedel.Mesh {
         /// <summary>
         /// The profile that was signed.
         /// </summary>
-        public virtual Profile Profile {
-            get => null; 
-            }
+        public virtual Profile Profile => null;
 
         /// <summary>
         /// Pass the UDF identifier of the inner profile if it is defined.
         /// </summary>
-        public virtual string UDF {
-            get => Profile?.UDF ; 
-            }
+        public virtual string UDF => Profile?.UDF;
 
         /// <summary>
         /// the list of index terms.
         /// </summary>
-        public virtual List<IndexTerm> IndexTerms {
-            get => Profile?.IndexTerms; 
-            }
+        public virtual List<IndexTerm> IndexTerms => Profile?.IndexTerms;
 
         /// <summary>
         /// The unique identifier for the profile.
         /// </summary>
-        public virtual string UniqueID {
-            get => Profile?.UniqueID;
-            }
+        public virtual string UniqueID => Profile?.UniqueID;
+
+
+        public override string _PrimaryKey => UniqueID;
+
+        public override List<KeyValuePair<string, string>> _KeyValues => IndexTerms?.ToKeyValuePairs();
 
 
         /// <summary>
@@ -89,9 +86,7 @@ namespace Goedel.Mesh {
         /// <summary>
         /// The inner profile object.
         /// </summary>
-        public override Profile Profile {
-            get => DeviceProfile; 
-            }
+        public override Profile Profile => DeviceProfile;
 
         /// <summary>
         /// Gets the inner signed data;
@@ -220,9 +215,7 @@ namespace Goedel.Mesh {
         /// <summary>
         /// The signed profile object.
         /// </summary>
-        public override Profile Profile {
-            get => MasterProfile;
-            }
+        public override Profile Profile => MasterProfile;
 
         /// <summary>
         /// The signed profile object.
@@ -284,9 +277,7 @@ namespace Goedel.Mesh {
         /// <summary>
         /// The signed profile object.
         /// </summary>
-        public override Profile Profile {
-            get => ApplicationProfile; 
-            }
+        public override Profile Profile => ApplicationProfile;
         /// <summary>
         /// The signed profile object.
         /// </summary>
@@ -399,9 +390,7 @@ namespace Goedel.Mesh {
         /// <summary>
         /// The signed profile object.
         /// </summary>
-        public override Profile Profile {
-            get => _Signed; 
-            }
+        public override Profile Profile => _Signed;
 
         /// <summary>
         /// The signed profile object.

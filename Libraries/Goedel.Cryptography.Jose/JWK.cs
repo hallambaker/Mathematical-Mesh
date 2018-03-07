@@ -62,9 +62,7 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
         /// Returns a key handle for the specified Key Data.
         /// </summary>
-        public KeyHandle KeyHandle {
-            get => GetKeyHandle ();
-            }
+        public KeyHandle KeyHandle => GetKeyHandle();
 
         KeyHandle GetKeyHandle() {
             return null;

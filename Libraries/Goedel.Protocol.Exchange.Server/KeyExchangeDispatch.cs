@@ -68,8 +68,8 @@ namespace Goedel.Protocol.Exchange.Server {
 
 
             // Construct the Exchange key
-            var ClientID = Request.ClientCredential.GetKeyPair() as DHKeyPair;
-            var ClientNonce = Request.ClientNonce.GetKeyPair() as DHKeyPair;
+            var ClientID = Request.ClientCredential.GetKeyPair() as KeyPairDH;
+            var ClientNonce = Request.ClientNonce.GetKeyPair() as KeyPairDH;
 
             var Combined = ClientID.Combine(ClientNonce);
 

@@ -14,7 +14,7 @@ namespace ExampleGenerator {
 		// UserGuideConnecting
 		//
 		public static void UserGuideConnecting (CreateExamples Examples) { /* File  */
-			using (var _Output = new StreamWriter ("Mesh/connecting.md")) {
+			using (var _Output = new StreamWriter ("UserGuide/Mesh/connecting.md")) {
 				var _Indent = ""; 
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("<title>Connecting\n{0}", _Indent);

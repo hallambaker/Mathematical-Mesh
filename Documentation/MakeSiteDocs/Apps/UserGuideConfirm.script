@@ -4,7 +4,7 @@
 #xclass ExampleGenerator ExampleGenerator
 
 
-#file UserGuideConfirm "Apps/confirm.md" CreateExamples Examples
+#file UserGuideConfirm "UserGuide/Apps/confirm.md" CreateExamples Examples
 <title>Confirm
 <titlebanner><h1>Mesh/Confirm
 

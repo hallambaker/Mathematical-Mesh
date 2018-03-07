@@ -3,6 +3,7 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.0</TargetFramework>
+    <Configurations>Debug;Release;Focus</Configurations>
   </PropertyGroup>
 
   <ItemGroup>
@@ -142,11 +143,17 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Update="UserGuide.cs">
+      <Compile Update="UserGuide.cs">
       <DependentUpon>UserGuide.script</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
+    <Compile Update="ExampleSession.cs">
+      <DependentUpon>ExampleSession.script</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+  
   </ItemGroup>
 
   <ItemGroup>
@@ -230,6 +237,10 @@
       <LastGenOutput>ToDo.cs</LastGenOutput>
       <Generator>gscript</Generator>
     </None>
+    <None Update="ExampleSession.script">
+      <LastGenOutput>ExampleSession.cs</LastGenOutput>
+      <Generator>gscript</Generator>
+    </None>
     <None Update="UserGuide.script">
       <LastGenOutput>UserGuide.cs</LastGenOutput>
       <Generator>gscript</Generator>
@@ -239,5 +250,9 @@
   <Import Project="..\..\Libraries\MeshApps\MeshApps.projitems" Label="Shared" />
 
   <Import Project="..\..\Libraries\MeshMan\MeshMan.projitems" Label="Shared" />
+
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="VSPreBuild" />
+  </Target>
 
 </Project>

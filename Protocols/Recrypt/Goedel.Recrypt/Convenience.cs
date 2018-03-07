@@ -5,7 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Goedel.Utilities;
 using Goedel.Mesh;
-using Goedel.Mesh.Platform;
+using Goedel.Mesh.Portal;
+using Goedel.Mesh.Portal.Client;
 
 namespace Goedel.Recrypt {
 

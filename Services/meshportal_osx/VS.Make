@@ -32,6 +32,8 @@ LinkFiles = \
     Goedel.Mesh.dll\
     Goedel.Persistence.dll\
     Goedel.Protocol.dll\
+    Goedel.Mesh.Portal.Client.dll\
+    Goedel.Mesh.Portal.Server.dll\
     Goedel.Mesh.Portal.dll
 
 ToolTargets = 

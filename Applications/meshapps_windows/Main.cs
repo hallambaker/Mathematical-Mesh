@@ -14,7 +14,7 @@ namespace Goedel.Combined.Shell.Client {
     public class _Main {
 
         static _Main() {
-            Goedel.Mesh.MeshWindows.Initialize();
+            Goedel.Mesh.Mesh.Initialize();
             }
 
         static void Main(string[] args) {

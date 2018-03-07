@@ -30,6 +30,7 @@ namespace Goedel.Cryptography.Container {
         public const byte TypeMask = 0xFC;
 
         readonly static byte[] CodeSpaces = new byte[] { 2, 3, 5, 9, 4, 6, 10, 18 };
+        readonly static byte[] TagSpaces = new byte[] { 1, 2, 4, 8 };
 
         /* Static methods */
 
@@ -53,6 +54,13 @@ namespace Goedel.Cryptography.Container {
                 }
 
             }
+        /// <summary>
+        /// Return the length of a code
+        /// </summary>
+        /// <param name="Code">Base code.</param>
+        /// <returns>The number of bytes required.</returns>
+        public static int TagSpace (int Code) => TagSpaces[Code & LengthMask];
+
 
         /// <summary>
         /// Return the length of a code
@@ -196,25 +204,33 @@ namespace Goedel.Cryptography.Container {
         /// to the current stream at the current write position. 
         /// The code does not currently support 64 bit frames as it should.
         /// </summary>
-        /// <param name="FrameData">The payload data to write.</param>
         /// <param name="FrameHeader">The header data to write.</param>
+        /// <param name="FrameData1">First data record, contains data content.</param>
+        /// <param name="FrameData2">Second data record, contains protected metadata.</param>
         /// <returns>The total size of the frame.</returns>
-        public long WriteWrappedFrame (byte[] FrameHeader, byte[] FrameData = null) {
+        public long WriteWrappedFrame (
+                    byte[] FrameHeader, 
+                    byte[] FrameData1 = null,
+                    byte[] FrameData2 = null) {
 
             var FrameLength = (FrameHeader == null ? 0 : TotalLength(FrameHeader.Length)) +
-                                (FrameData == null ? 0 : TotalLength(FrameData.Length));
+                                (FrameData1 == null ? 0 : TotalLength(FrameData1.Length)) +
+                                (FrameData2 == null ? 0 : TotalLength(FrameData2.Length));
 
             WriteTag(BFrame, FrameLength);
 
-            var Check = Position;
+            var Check = PositionWrite;
             if (FrameHeader != null) {
                 WriteFrame(FrameHeader);
                 }
-            if (FrameData != null) {
-                WriteFrame(FrameData);
+            if (FrameData1 != null) {
+                WriteFrame(FrameData1);
+                }
+            if (FrameData2 != null) {
+                WriteFrame(FrameData2);
                 }
 
-            Assert.True(Position == Check + FrameLength, Internal.Throw);
+            Assert.True(PositionWrite == Check + FrameLength, Internal.Throw);
 
             WriteTagReverse(BFrame, FrameLength);
 
@@ -294,22 +310,7 @@ namespace Goedel.Cryptography.Container {
                 return false;
                 }
 
-            var LengthCode = Code & LengthMask;
-
-            switch (LengthCode) {
-                case Length8: {
-                    return ReadLength(1, out Length);
-                    }
-                case Length16: {
-                    return ReadLength(2, out Length);
-                    }
-                case Length32: {
-                    return ReadLength(4, out Length);
-                    }
-                default: {
-                    return ReadLength(8, out Length);
-                    }
-                }
+            return ReadLength(TagSpace(Code), out Length);
 
             }
 
@@ -322,6 +323,7 @@ namespace Goedel.Cryptography.Container {
         /// <returns>True if a tag was read or false if EOF was encountered.</returns>
         /// <exception cref="InvalidFileFormatException">The record data read from disk was invalid</exception>
         public bool ReadTagReverse (out int Code, out long Length) {
+
             Code = ReadByteReverse();
 
             if (Code < 0) {
@@ -329,24 +331,11 @@ namespace Goedel.Cryptography.Container {
                 return false;
                 }
 
-            var LengthCode = Code & LengthMask;
-
-            switch (LengthCode) {
-                case Length8: {
-                    return ReadLengthReverse(1, out Length);
-                    }
-                case Length16: {
-                    return ReadLengthReverse(2, out Length);
-                    }
-                case Length32: {
-                    return ReadLengthReverse(4, out Length);
-                    }
-                default: {
-                    return ReadLengthReverse(8, out Length);
-                    }
-                }
+            return ReadLengthReverse(TagSpace(Code), out Length);
 
             }
+
+        static byte[] Empty = new byte[0];
 
         /// <summary>
         ///  Read a frame in the forward direction.
@@ -355,7 +344,7 @@ namespace Goedel.Cryptography.Container {
         /// <param name="Data">The data that was read.</param>
         /// <returns>True if a tag was read or false if EOF was encountered.</returns>
         /// <exception cref="InvalidFileFormatException">The record data read from disk was invalid</exception>
-        public bool ReadFrame (ref long MaxLength, out byte[] Data) {
+        public bool ReadRecord (ref long MaxLength, out byte[] Data) {
             Data = null;
             var Success = ReadTag(out var Code, out var Length);
             if (!Success) {
@@ -370,11 +359,13 @@ namespace Goedel.Cryptography.Container {
                 Assert.True(Bytes == Length, InvalidFileFormatException.Throw);
                 MaxLength -= Length;
                 }
+            else {
+                Data = Empty;
+                }
 
             if ((Code & TypeMask) == BFrame) {
                 CheckReversedLength(Code, Length);
                 }
-
 
             return true;
             }
@@ -386,7 +377,7 @@ namespace Goedel.Cryptography.Container {
         /// <param name="FrameHeader">The header data that was read.</param>
         /// <returns>True if a tag was read or false if EOF was encountered.</returns>
         /// <exception cref="InvalidFileFormatException">The record data read from disk was invalid</exception>
-        public bool ReadWrappedFrame (out byte[] FrameHeader, out byte[] FrameData) {
+        public bool ReadFrame (out byte[] FrameHeader, out byte[] FrameData) {
             FrameHeader = null;
             FrameData = null;
 
@@ -396,10 +387,88 @@ namespace Goedel.Cryptography.Container {
                 return false;
                 }
             if (Length > 0) {
-                ReadFrame(ref Length, out FrameHeader);
+                ReadRecord(ref Length, out FrameHeader);
                 }
             if (Length > 0) {
-                ReadFrame(ref Length, out FrameData);
+                ReadRecord(ref Length, out FrameData);
+                }
+            if ((Code & TypeMask) == BFrame) {
+                CheckReversedLength(Code, OriginalLength);
+                }
+
+            return true;
+            }
+
+        /// <summary>
+        /// Records the start position of the last frame that was read.
+        /// </summary>
+        public long StartLastFrameRead { get; private set; } = 0;
+
+        /// <summary>
+        /// Move to the next position in the stream without reading any part of it.
+        /// </summary>
+        /// <returns></returns>
+        public bool Next () {
+            StartLastFrameRead = PositionRead;
+
+            var Success = ReadTag(out var Code, out var Length);
+            var OriginalLength = Length;
+            if (!Success) {
+                return false;
+                }
+            if (Length > 0) {
+                StreamRead.Seek(Length, System.IO.SeekOrigin.Current);
+                }
+            if ((Code & TypeMask) == BFrame) {
+                CheckReversedLength(Code, OriginalLength);
+                }
+            return true;
+            }
+
+
+        /// <summary>
+        /// Move to the previous position in the stream without reading any part of it.
+        /// </summary>
+        /// <returns></returns>
+        public bool Previous () {
+            var Success = ReadTagReverse(out var Code, out var Length);
+            if (!Success) {
+                return false;
+                }
+
+            // Sanity check
+            var ThePosition = PositionRead;
+            Assert.True(ThePosition >= Length, InvalidFileFormatException.Throw);
+
+            // Make sure we return to the same position.
+            long Start = ThePosition - Length - TagSpace(Code) - 1;
+            PositionRead = Start;
+
+            return true;
+            }
+
+
+
+        /// <summary>
+        /// Read a pair of wrapped frames in the forward direction.
+        /// </summary>
+        /// <param name="FrameHeader">The header data that was read.</param>
+        /// <returns>True if a tag was read or false if EOF was encountered.</returns>
+        /// <exception cref="InvalidFileFormatException">The record data read from disk was invalid</exception>
+        public bool ReadFrame (out byte[] FrameHeader) {
+            FrameHeader = null;
+            StartLastFrameRead = PositionRead;
+
+            var Success = ReadTag(out var Code, out var Length);
+            var OriginalLength = Length;
+            if (!Success) {
+                return false;
+                }
+            if (Length > 0) {
+                ReadRecord(ref Length, out FrameHeader);
+                }
+            if (Length > 0) {
+                StreamRead.Seek(Length, System.IO.SeekOrigin.Current);
                 }
             if ((Code & TypeMask) == BFrame) {
                 CheckReversedLength(Code, OriginalLength);
@@ -417,7 +486,7 @@ namespace Goedel.Cryptography.Container {
         /// <param name="FrameHeader">The header data that was read.</param>
         /// <returns>True if a tag was read or false if EOF was encountered.</returns>
         /// <exception cref="InvalidFileFormatException">The record data read from disk was invalid</exception>
-        public bool ReadWrappedFrameReverse (out byte[] FrameHeader, out byte[] FrameData) {
+        public bool ReadFrameReverse (out byte[] FrameHeader, out byte[] FrameData) {
             var Success = ReadTagReverse(out var Code, out var Length);
             if (!Success) {
                 FrameHeader = null;
@@ -426,17 +495,83 @@ namespace Goedel.Cryptography.Container {
                 }
  
             // Sanity check
-            var ThePosition = Position;
+            var ThePosition = PositionRead;
             Assert.True(ThePosition >= Length, InvalidFileFormatException.Throw);
 
             // Make sure we return to the same position.
-            long Start = ThePosition - Length;
+            long Start = ThePosition - Length - TagSpace(Code)-1;
 
-            Position = Start;
-            ReadWrappedFrame(out FrameHeader, out FrameData);
-            Position = Start;
+            PositionRead = Start;
+            ReadFrame(out FrameHeader, out FrameData);
+            PositionRead = Start;
 
             return true;
+            }
+
+
+        /// <summary>
+        /// Read a pair of wrapped frames in the reverse direction. This is typically done to read the last
+        /// record in a file to see how the file should be extended.
+        /// </summary>
+        /// <param name="FrameHeader">The header data that was read.</param>
+        /// <returns>True if a tag was read or false if EOF was encountered.</returns>
+        /// <exception cref="InvalidFileFormatException">The record data read from disk was invalid</exception>
+        public bool ReadFrameReverse (out byte[] FrameHeader) {
+            var Success = ReadTagReverse(out var Code, out var Length);
+            if (!Success) {
+                FrameHeader = null;
+                return false;
+                }
+
+            // Sanity check
+            var ThePosition = PositionRead;
+            Assert.True(ThePosition >= Length, InvalidFileFormatException.Throw);
+
+            // Make sure we return to the same position.
+            long Start = ThePosition - Length - TagSpace(Code) -1;
+
+            PositionRead = Start;
+            ReadFrame(out FrameHeader);
+            PositionRead = Start;
+
+            return true;
+            }
+
+
+
+        /// <summary>
+        /// Read the final frame header
+        /// </summary>
+        /// <returns>The last frame header</returns>
+        public ContainerHeader ReadFrameHeader () {
+            ReadFrame(out var HeaderData);
+            return ContainerHeader.FromJSON(HeaderData.JSONReader(), false);
+            }
+
+
+        /// <summary>
+        /// Read the final frame header
+        /// </summary>
+        /// <returns>The last frame header</returns>
+        public ContainerHeader ReadFirstFrameHeader () {
+            Begin();
+            ReadFrame(out var HeaderData);
+            Begin();
+            return ContainerHeader.FromJSON(HeaderData.JSONReader(), false);
+            }
+
+        /// <summary>
+        /// Read the final frame header
+        /// </summary>
+        /// <returns>The last frame header</returns>
+        public ContainerHeader ReadLastFrameHeader () {
+            End();
+            ReadFrameReverse(out var HeaderData);
+            End();
+
+            var HeaderText = HeaderData.ToUTF8();
+
+            return ContainerHeader.FromJSON(HeaderData.JSONReader(), false);
             }
 
         }

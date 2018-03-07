@@ -4,7 +4,7 @@
 #xclass ExampleGenerator ExampleGenerator
 
 
-#file UserGuideApps "Apps/index.md" CreateExamples Index
+#file UserGuideApps "UserGuide/Apps/index.md" CreateExamples Index
 <title>Applications
 <titlebanner><h1>Applications User Guide
 

@@ -27,9 +27,9 @@ using Goedel.Utilities;
 using Goedel.Protocol;
 using Goedel.Mesh;
 using Goedel.Cryptography;
-using Goedel.Mesh.Server;
+using Goedel.Mesh.Portal;
 
-namespace Goedel.Mesh.Platform {
+namespace Goedel.Mesh.Portal.Client {
 
     /// <summary>
     /// Provides the interface layer between the application and all Mesh 
@@ -174,11 +174,14 @@ namespace Goedel.Mesh.Platform {
                     MeshClient MeshClient = null) {
 
             MeshClient = MeshClient ?? new MeshClient(PortalAccount: PortalAddress);
+            MeshClient.SignedDeviceProfile = Profile.SignedDeviceProfile;
+            MeshClient.SignedPersonalProfile = Profile.SignedPersonalProfile;
+
             var RegistrationPersonal = AddPersonal(Profile);
 
             RegistrationPersonal.AddPortal(PortalAddress, MeshClient, true);
 
-            MeshClient.CreatePortalAccount(PortalAddress, Profile.SignedPersonalProfile);
+            //MeshClient.CreatePortalAccount(PortalAddress, Profile.SignedPersonalProfile);
 
 
             return RegistrationPersonal;
@@ -330,6 +333,11 @@ namespace Goedel.Mesh.Platform {
 
             return Result;
             }
+
+        public void AddPortal (SessionPersonal SessionPersonal, string AccountID) {
+            Machine.PersonalProfilesPortal.Add(AccountID, SessionPersonal);
+            }
+
 
 
         /// <summary>

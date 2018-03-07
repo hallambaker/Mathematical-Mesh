@@ -32,7 +32,7 @@ namespace Goedel.Recrypt.Client {
             }
 
         /// <summary>
-        /// Coinstruct a RecryptClient for the specified service.
+        /// Construct a RecryptClient for the specified service.
         /// </summary>
         /// <param name="RecryptProfile">The recryption profile.</param>
         public RecryptClient (RecryptProfile RecryptProfile) {

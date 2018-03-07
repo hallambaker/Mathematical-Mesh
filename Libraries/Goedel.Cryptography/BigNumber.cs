@@ -24,12 +24,12 @@ namespace Goedel.Cryptography {
         /// Returns true if there is further work to be completed, otherwise false.
         /// </summary>
         public bool GoingDown => (DownByte > 1) | (DownBit > 0);
- 
+
 
         /// <summary>
         /// Returns true if there is further work to be completed, otherwise false.
         /// </summary>
-        public bool GoingUp => (UpByte < (Length-1) | UpBit <7) ;
+        public bool GoingUp => (UpByte < (Length-1) | UpBit <8) ;
 
 
         /// <summary>
@@ -77,10 +77,12 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <returns>True iff the next bit to be read is 1.</returns>
         public bool Up() {
+            Assert.True(UpByte < Length, InvalidOperation.Throw);
+
             if (UpBit > 7) {
                 UpByte++;
                 UpBit = 0;
-                Assert.True(UpByte < Length, InvalidOperation.Throw);
+                
 
                 DataUp = BitField[UpByte];
                 }

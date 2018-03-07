@@ -8,6 +8,24 @@ using Goedel.Cryptography.Windows;
 namespace Goedel.Cryptography {
 
     /// <summary>
+    /// Base class for initialization.
+    /// </summary>
+    public static class Cryptography {
+
+
+        /// <summary>
+        /// Perform initialization of the Goedel.Cryptography portable class
+        /// with delegates to the .NET framework methods.
+        /// </summary>
+        /// <param name="TestMode">If true, the application will be initialized in test/debug mode.</param>
+        public static void Initialize (bool TestMode = false) {
+            CryptographyWindows.Initialize(TestMode);
+
+            }
+        }
+
+
+    /// <summary>
     /// Windows specific cryptographic routines. These are principally the interfaces to
     /// the registry and the key stores.
     /// </summary>

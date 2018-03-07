@@ -85,7 +85,7 @@ namespace Goedel.Cryptography.Framework {
         /// <returns>Crypto provider wrapping the specified key.</returns>
         public static KeyPair KeyPair(this AsymmetricAlgorithm AsymmetricAlgorithm) {
             if (AsymmetricAlgorithm is RSACryptoServiceProvider AsRSA) {
-                return new RSAKeyPair(AsRSA);
+                return new KeyPairRSA(AsRSA);
                 }
 
             return null;

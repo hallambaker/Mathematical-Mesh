@@ -14,7 +14,7 @@ namespace ExampleGenerator {
 		// UserGuideMail
 		//
 		public static void UserGuideMail (CreateExamples Examples) { /* File  */
-			using (var _Output = new StreamWriter ("Apps/mail.md")) {
+			using (var _Output = new StreamWriter ("UserGuide/Apps/mail.md")) {
 				var _Indent = ""; 
 				_Output.Write ("<title>Email\n{0}", _Indent);
 				_Output.Write ("<titlebanner><h1>Using the Mesh to secure email\n{0}", _Indent);

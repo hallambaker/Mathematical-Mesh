@@ -20,6 +20,8 @@
 			Brief "Portal account"
 		Option UDF "udf" String
 			Brief "Profile fingerprint"
+		Option ID "ID" String
+			Brief "Profile identifier"
 
 	OptionSet DeviceProfileInfo
 		Option DeviceNew "new" Flag
@@ -46,7 +48,7 @@
 		Option Default "default" Flag
 			Brief "Make the new device profile the default"
 
-	Command Personal "personal"
+	Command PersonalCreate "personal"
 		Brief "Create new personal profile"
 		Parameter Portal "portal" String
 			Brief "New portal account"
@@ -84,9 +86,22 @@
 		Brief "Create a set of key escrow shares"
 		Include PortalAccount
 		Include Reporting
-		Option Quorum "quorum" integer
-		Option Shares "shares" integer
+		Option File "file" ExistingFile
+		Option Quorum "quorum" Integer
+		Option Shares "shares" Integer
 
+	Command Recover "recover"
+		Brief "Recover escrowed profile"
+		Include PortalAccount
+		Include Reporting
+		Option Share1 "s1" String
+		Option Share2 "s2" String
+		Option Share3 "s3" String
+		Option Share4 "s4" String
+		Option Share5 "s5" String
+		Option Share6 "s6" String
+		Option Share7 "s7" String
+		Option Share8 "s8" String
 
 	Command Export "export"
 		Brief "Export the specified profile data to the specified file"
@@ -138,6 +153,12 @@
 		Include Reporting
 		Include PortalAccount
 
+	Command KeyGen "keygen"
+		Include Reporting
+		Include PortalAccount
+		Option Algorithm "alg" String
+
+
 	// Application profiles
 	Command Password "password"
 		Brief "Add a web application profile to a personal profile"
@@ -174,19 +195,48 @@
 
 
 	// Mail
-	Command Mail "mail"
-		Brief "Add a mail application profile to a personal profile"
-		Parameter address "address" String
-			Brief "Mail account to create profile from"
-		Include PortalAccount
-		Include Reporting
+	CommandSet Mail "mail"
+		Brief "Manage mail profiles connected to a personal profile"
 
+		Command MailAdd "add"
+			Brief "Add a mail application profile to a personal profile"
+			Parameter Address "address" String
+				Brief "Mail account to create profile from"
+			Include PortalAccount
+			Include Reporting
 
 	// SSH
-	Command SSH "ssh"
-		Brief "Add a ssh application profile to a personal profile"
-		Include PortalAccount
-		Include Reporting
+	CommandSet SSH "ssh"
+		Brief "Manage SSH profiles connected to a personal profile"
 
-		Parameter Host "host" Flag
-		Parameter Client "client" Flag
+		Command SSHAdd "add"
+			Brief "Add a ssh application profile to a personal profile"
+			Include PortalAccount
+			Include Reporting
+
+			Parameter Host "host" Flag
+			Parameter Client "client" Flag
+
+
+
+		Command SSHKnown "known"
+			Brief "List the known SSH sites"
+			Include PortalAccount
+			Include Reporting
+
+		Command SSHAuth "auth"
+			Brief "List the authorized device keys"
+			Include PortalAccount
+			Include Reporting			
+
+		Command SSHPublic "public"
+			Brief "List the public key"
+			Include PortalAccount
+			Include Reporting
+			Option File "file" ExistingFile
+
+		Command SSHPrivate "private"
+			Brief "List the private key"
+			Include PortalAccount
+			Include Reporting
+			Option File "file" ExistingFile

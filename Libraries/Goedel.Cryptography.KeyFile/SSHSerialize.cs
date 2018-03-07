@@ -197,14 +197,14 @@ namespace Goedel.Cryptography.KeyFile {
                     };
 
         /// <summary>The key pair</summary>
-        public override KeyPair KeyPair => new RSAKeyPair (RSAPublicKey );   // NYI convert DSS keypair
+        public override KeyPair KeyPair => new KeyPairRSA (RSAPublicKey );   // NYI convert DSS keypair
 
 
         /// <summary>
         /// Construct an SSH_RSA object from an RSAKeyPair
         /// </summary>
         /// <param name="RSAKeyPair">Keypair to construct from</param>
-        public SSH_RSA (RSAKeyPair RSAKeyPair) {
+        public SSH_RSA (KeyPairRSA RSAKeyPair) {
             var PKIXPublicKeyRSA = RSAKeyPair.PKIXPublicKeyRSA;
             Exponent = PKIXPublicKeyRSA.PublicExponent;
             Modulus = PKIXPublicKeyRSA.Modulus;

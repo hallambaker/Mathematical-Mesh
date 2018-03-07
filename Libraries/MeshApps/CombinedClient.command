@@ -170,3 +170,131 @@
 			Option Path "path" String
 				Brief "Path to store the decrypted file to"
 
+	OptionSet CatalogAccount
+		Option Catalog "catalog" String
+			Brief "Catalog account"
+
+	CommandSet Password "password"
+		Brief "Manage password catalogs connected to an account"
+
+		Command AddPassword "add"
+			Brief "Add password entry"
+			Parameter Site "site" String
+			Parameter Username "user" String
+			Parameter Password "password" String
+			Include CatalogAccount
+			Include PortalAccount
+			Include Reporting
+
+		Command GetUsername "user"
+			Brief "Lookup password entry"
+			Parameter Site "site" String
+			Include CatalogAccount
+			Include PortalAccount
+			Include Reporting
+
+		Command GetPassword "pass"
+			Brief "Lookup password entry"
+			Parameter Site "site" String
+			Include CatalogAccount
+			Include PortalAccount
+			Include Reporting
+
+		Command DeletePassword "delete"
+			Brief "Delete password entry"
+			Parameter Site "site" String
+				Brief "Domain name of Web site"
+			Include CatalogAccount
+			Include PortalAccount
+			Include Reporting
+
+		Command DumpPassword "dump"
+			Brief "List password entries"
+			Parameter Site "site" String
+			Option JSON "json" Flag
+				Brief "Report results as JSON structure."
+			Include CatalogAccount
+			Include PortalAccount
+			Include Reporting
+
+
+
+	CommandSet Contact "contact"
+		Brief "Manage contact catalogs connected to an account"
+
+		Command AddContact "add"
+			Brief "Add contact entry from file"
+			Parameter File "file" ExistingFile
+			Include CatalogAccount
+			Include PortalAccount
+			Include Reporting
+
+		Command DeleteContact "delete"
+			Brief "Delete contact entry"
+			Parameter Identifier "id" String
+				Brief "Contact entry identifier"
+			Include CatalogAccount
+			Include PortalAccount
+			Include Reporting
+
+		Command DumpContact "dump"
+			Brief "List contact entries"
+			Option JSON "json" Flag
+				Brief "Report results as JSON structure."
+			Include CatalogAccount
+			Include PortalAccount
+			Include Reporting
+
+	CommandSet Bookmark "bookmark"
+		Brief "Manage bookmark catalogs connected to an account"
+
+		Command AddBookmark"add"
+			Brief "Add bookmark entry from file"
+			Parameter File "file" ExistingFile
+			Include CatalogAccount
+			Include PortalAccount
+			Include Reporting
+
+		Command DeleteBookmark "delete"
+			Brief "Delete bookmark entry"
+			Parameter Identifier "id" String
+				Brief "Contact entry identifier"
+			Include CatalogAccount
+			Include PortalAccount
+			Include Reporting
+
+		Command DumpBookmark "dump"
+			Brief "List bookmark entries"
+			Option JSON "json" Flag
+				Brief "Report results as JSON structure."
+			Include CatalogAccount
+			Include PortalAccount
+			Include Reporting
+
+
+	CommandSet Calendar "calendar"
+		Brief "Manage calendar catalogs connected to an account"
+
+		Command AddCalendar"add"
+			Brief "Add calendar entry from file"
+			Parameter File "file" ExistingFile
+			Include CatalogAccount
+			Include PortalAccount
+			Include Reporting
+
+		Command DeleteCalendar "delete"
+			Brief "Delete calendar entry"
+			Parameter Identifier "id" String
+				Brief "Contact entry identifier"
+			Include CatalogAccount
+			Include PortalAccount
+			Include Reporting
+
+		Command DumpCalendar "dump"
+			Brief "List calendar entries"
+			Option JSON "json" Flag
+				Brief "Report results as JSON structure."
+			Include CatalogAccount
+			Include PortalAccount
+			Include Reporting
+

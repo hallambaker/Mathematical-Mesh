@@ -14,7 +14,7 @@ namespace ExampleGenerator {
 		// UserGuidePlatform
 		//
 		public static void UserGuidePlatform (CreateExamples Examples) { /* File  */
-			using (var _Output = new StreamWriter ("Platform/index.md")) {
+			using (var _Output = new StreamWriter ("UserGuide/Platform/index.md")) {
 				var _Indent = ""; 
 				_Output.Write ("<title>Platforms\n{0}", _Indent);
 				_Output.Write ("<titlebanner><h1>Mesh Platform Specific Features\n{0}", _Indent);

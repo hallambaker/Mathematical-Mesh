@@ -1,4 +1,4 @@
-﻿Protocol Goedel.Mesh Portal Portal
+﻿Protocol Goedel.Mesh PortalAccount PortalAccount
     Using Goedel.Cryptography.Jose 
 	Using Goedel.Mesh
 	Description

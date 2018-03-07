@@ -27,9 +27,9 @@ using System.IO;
 using Goedel.Utilities;
 using Goedel.Mesh;
 using Goedel.Protocol;
-using Goedel.Mesh.Server;
+using Goedel.Mesh.Portal;
 
-namespace Goedel.Mesh.Platform {
+namespace Goedel.Mesh.Portal.Client {
 
 
     /// <summary>
@@ -60,7 +60,11 @@ namespace Goedel.Mesh.Platform {
         /// </summary>
         public override MeshClient MeshClient {
             get {
-                _MeshClient = _MeshClient ?? MeshCatalog.Bind(Portals.Default);
+                if (_MeshClient == null) {
+                    _MeshClient =  MeshCatalog.Bind(Portals.Default);
+                    _MeshClient.SignedPersonalProfile = SignedPersonalProfile;
+                    }
+                
                 return _MeshClient;
                 }
             set {

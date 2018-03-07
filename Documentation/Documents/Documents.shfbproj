@@ -14,7 +14,7 @@
     <Name>Documents</Name>
     <!-- SHFB properties -->
     <FrameworkVersion>Cross-platform (.NET Core/.NET Standard)</FrameworkVersion>
-    <OutputPath>Help\</OutputPath>
+    <OutputPath>..\..\..\WebPublish\prismproof\code\mmm\</OutputPath>
     <HtmlHelpName>Documents</HtmlHelpName>
     <Language>en-US</Language>
     <TransformComponentArguments>
@@ -101,11 +101,30 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="Content" />
+    <Folder Include="ContentProject\" />
+    <Folder Include="ContentProject\Applications\" />
+    <Folder Include="ContentProject\Platforms\" />
     <Folder Include="Content\VersionHistory" />
     <Folder Include="icons" />
     <Folder Include="media" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ContentProject\Platforms\Windows.aml" />
+    <None Include="ContentProject\Platforms\OSX.aml" />
+    <None Include="ContentProject\Platforms\Linux.aml" />
+    <None Include="ContentProject\Applications\Account.aml" />
+    <None Include="ContentProject\Applications\SSH.aml" />
+    <None Include="ContentProject\Applications\Recrypt.aml" />
+    <None Include="ContentProject\Applications\Mail.aml" />
+    <None Include="ContentProject\Applications\Credential.aml" />
+    <None Include="ContentProject\Applications\Confirm.aml" />
+    <None Include="ContentProject\Platforms.aml" />
+    <None Include="ContentProject\Applications.aml" />
+    <None Include="ContentProject\ToDo.aml" />
+    <None Include="ContentProject\Services.aml" />
+    <None Include="ContentProject\Profiles.aml" />
+    <None Include="ContentProject\Meshifying.aml" />
+    <None Include="ContentProject\Welcome.aml" />
     <None Include="Content\VersionHistory\v1.0.0.0.aml" />
     <None Include="Content\VersionHistory\VersionHistory.aml" />
     <None Include="Content\Welcome.aml" />
@@ -321,5 +340,8 @@
     <PostBuildEvent>
     </PostBuildEvent>
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Focus' ">
+    <OutputPath>bin\Focus\</OutputPath>
   </PropertyGroup>
 </Project>

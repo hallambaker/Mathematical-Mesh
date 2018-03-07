@@ -26,13 +26,13 @@ ToolTargets = \
 	SchemaResults.cs
 
 Exceptions.cs : Exceptions.Exceptional 
-	exceptional Exceptions.Exceptional  Exceptions.cs
+	exceptional Exceptions.Exceptional  /cs  Exceptions.cs
 
 meshman.cs : meshman.command 
-	commandparse meshman.command  meshman.cs
+	commandparse meshman.command  /cs  meshman.cs
 
 SchemaResults.cs : SchemaResults.protocol 
-	protogen SchemaResults.protocol  SchemaResults.cs
+	protogen SchemaResults.protocol  /cs  SchemaResults.cs
 
 
 prebuildRecurse : 

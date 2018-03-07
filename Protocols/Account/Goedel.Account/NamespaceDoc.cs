@@ -7,7 +7,6 @@ namespace Goedel.Account {
     /// <summary>
     /// Goedel Account Protocol Schema
     /// </summary>
-
     [System.Runtime.CompilerServices.CompilerGenerated]
     class NamespaceDoc {
         }

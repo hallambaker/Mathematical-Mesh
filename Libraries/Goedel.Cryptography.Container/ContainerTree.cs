@@ -16,6 +16,11 @@ namespace Goedel.Cryptography.Container {
     /// <threadsafety static="true" instance="false"/>
     public class ContainerTree : ContainerSimple {
 
+        /// <summary>
+        /// The label for the container type for use in header declarations
+        /// </summary>
+        public new const string Label= "Tree";
+
 
         /// <summary>
         /// Create a new container file of the specified type and write the initial
@@ -24,30 +29,17 @@ namespace Goedel.Cryptography.Container {
         /// <param name="JBCDStream">The underlying JBCDStream stream. This MUST be opened
         /// in a read access mode and should have exclusive read access. All existing
         /// content in the file will be overwritten.</param>
-        /// <param name="Payload">Optional data payload. </param>
-        /// <param name="DataEncoding">The data encoding.</param>
-        /// <param name="ContentType">Content type of the optional data payload</param>
-        /// <param name="ContainerType">The container type. This MUST be either List or Digest</param>
+        /// <param name="ContainerType">The container type. This determines whether
+        /// a tree index is to be created or not and if so, whether </param>
         /// <param name="DigestAlgorithm">The digest algorithm to be used to calculate the PayloadDigest</param>
-        /// <param name="EncryptedKey">Key used to encrypt the payload.</param>
-        /// <param name="Signatures">List of JWS signatures. Since this is the first block, the signature
-        /// is always over the payload data only.</param>
-        /// <param name="Recipients">List of JWE recipient decryption entries.</param>
         /// <returns>The newly constructed container.</returns>
-
-        public static new Container NewContainer (
+        public static new Container MakeNewContainer (
                         JBCDStream JBCDStream,
                         ContainerType ContainerType = ContainerType.Chain,
-                        byte[] Payload = null,
-                        string ContentType = null,
-                        DataEncoding DataEncoding = DataEncoding.JSON,
-                        CryptoAlgorithmID DigestAlgorithm = CryptoAlgorithmID.Default,
-                        byte[] EncryptedKey = null,
-                        List<Signature> Signatures = null,
-                        List<Recipient> Recipients = null
-                        ) {
+                        CryptoAlgorithmID DigestAlgorithm = CryptoAlgorithmID.Default) {
 
-            var ContainerHeader = new ContainerHeader() {
+            var ContainerHeader = new ContainerHeaderFirst() {
+                ContainerType = Label,
                 };
 
             CryptoProviderDigest DigestProvider = CryptoCatalog.Default.GetDigest(DigestAlgorithm);
@@ -56,47 +48,191 @@ namespace Goedel.Cryptography.Container {
 
             var Container = new ContainerTree() {
                 JBCDStream = JBCDStream,
-                DataEncoding = DataEncoding,
-                FrameIndex = 0,
                 FrameCount = 0,
-                FramePayload = Payload,
-                DigestProvider = DigestProvider
+                DigestProvider = DigestProvider,
+                ContainerHeaderFirst = ContainerHeader
                 };
-            Container._ContainerHeader = ContainerHeader;
-            Container.Append(Payload, ContainerHeader);
 
             return Container;
             }
 
         readonly static byte[] EmptyBytes = new byte[0];
-        ContainerHeader FinalContainerHeader = null;
+
+        /// <summary>
+        /// Initialize the dictionaries used to manage the tree by registering the set
+        /// of values leading up to the apex value.
+        /// </summary>
+        /// <param name="Header">Final frame header</param>
+        /// <param name="FirstPosition">Position of frame 1</param>
+        /// <param name="PositionLast">Position of the last frame</param>
+        protected override void FillDictionary (ContainerHeader Header, long FirstPosition, long PositionLast) {
+            FrameIndexToPositionDictionary.Add(0, 0);
+            if (Header.Index == 0) {
+                return;
+                }
+
+            FrameIndexToPositionDictionary.Add(1, FirstPosition);
+            if (Header.Index == 1) {
+                return;
+                }
+
+            var Position = PositionLast;
+            var Index = Header.Index;
+            var TreePosition = Header.TreePosition;
+
+            while (!IsApex(Index)) {
+                RegisterFrame(Header, Position);
+
+                // Calculate position of previous node in tree.
+                Position = TreePosition;
+                Index = (int)PreviousFrame(Index);
+
+                // 
+                JBCDStream.PositionRead = TreePosition;
+                Header = JBCDStream.ReadFrameHeader();
+                Assert.True(Index == Header.Index);
+                TreePosition = Header.TreePosition;
+                }
+            RegisterFrame(Header, Position);
+            }
+
+        bool IsApex (long Index) {
+            if (Index == 0) {
+                return true;
+                }
+
+            while (Index != 1) {
+                if ((Index & 1) == 0) {
+                    return false;
+                    }
+                Index >>= 1;
+                }
+
+            return true;
+            }
+
+        /// <summary>
+        /// Move to the frame with index Position in the file. 
+        /// <para>Since the file format only supports sequential access, this is slow.</para>
+        /// </summary>
+        /// <param name="Index">The frame index to move to</param>
+        /// <returns>If success, the frame index.</returns>
+        public override bool Move (long Index) {
+
+            if (FrameIndexToPositionDictionary.TryGetValue(Index, out var Position)) {
+                JBCDStream.PositionRead = Position;
+                return Next();
+                }
+
+            //Obtain the position of the very last record in the file, this must be known.
+            var Record = FrameCount-1;
+            Assert.True(FrameIndexToPositionDictionary.TryGetValue(Record, out Position));
+
+            long NextRecord;
+            bool Found = true;
+
+            Console.WriteLine ("Move to {0}", Index);
+
+            while (Record > Index) {
+                ContainerHeader FrameHeader=null;
+                long NextPosition;
+
+                if (PreviousFrame(Record) < Index) {
+                    // The record we want is the one before the current frame
+                    NextRecord = Record - 1;
+
+                    if (!FrameIndexToPositionDictionary.TryGetValue(NextRecord, out NextPosition)) {
+                        // we do not know the position of the next frame
+                        if (!Found) {
+                            JBCDStream.PositionRead = Position;
+                            FrameHeader = JBCDStream.ReadFrameHeader();
+                            RegisterFrame(FrameHeader, Position);
+                            }
+
+                        JBCDStream.PositionRead = Position;
+                        JBCDStream.Previous();
+                        NextPosition = JBCDStream.PositionRead;
+
+                        FrameHeader = JBCDStream.ReadFrameHeader();
+                        Assert.True(FrameHeader.Index == NextRecord);
+
+                        Found = false;
+                        }
+                    else {
+                        Found = true;
+                        }
+
+                    }
+                else {
+                    NextRecord = PreviousFrame(Record);
+                    if (!FrameIndexToPositionDictionary.TryGetValue(NextRecord, out NextPosition)) {
+                        // we do not know the position of the next frame
+
+                        JBCDStream.PositionRead = Position;
+                        FrameHeader = JBCDStream.ReadFrameHeader();
+                        NextPosition = FrameHeader.TreePosition;
+
+                        if (!Found) {
+                            RegisterFrame(FrameHeader, Position);
+                            }
+                        Found = false;
+                        }
+                    else {
+                        Found = true;
+                        }
+
+                    }
+
+                Position = NextPosition;
+                Record = NextRecord;
+
+                Console.WriteLine("    {0}: {1}", Record, Position);
+                }
+
+            JBCDStream.PositionRead = Position;
+            return Next();
+            }
 
         /// <summary>
         /// Append a new data frame payload to the end of the file.
         /// </summary>
         /// <param name="Data">Data to append.</param>
-        /// <param name="Header">The container header value</param>
+        /// <param name="ContainerHeader">The container header value</param>
         /// <returns>The number of bytes written.</returns>
-        public override long Append (byte[] Data, ContainerHeader Header = null) {
-            Header = Header ?? new ContainerHeader();
-            Header.Index = (int)FrameCount++;
+        public override long AppendFrame (byte[] Data, ContainerHeader ContainerHeader = null) {
+            ContainerHeader = ContainerHeader ?? new ContainerHeader();
+            ContainerHeader.Index = (int)FrameCount++;
             //Header.TreeFrame = (int)PreviousFrame(Header.Index);
-            Header.TreePosition = (int)PreviousFramePosition(Header.Index);
 
+            if (ContainerHeader.Index > 0) {
+                ContainerHeader.TreePosition = (int)PreviousFramePosition(ContainerHeader.Index);
+                }
 
-            Data = Data ?? Header?.Payload;
+            Data = Data ?? ContainerHeader?.Payload;
+            var Header = ContainerHeader.GetBytes(DataEncoding, false);
 
-            FinalContainerHeader = Header;
-
-            //// Get the container header in the specified data encoding 
-            //// for the container without a type tag prefix.
-            //var HeaderBytes = Header.GetBytes(DataEncoding, false);
-
-            return AppendFrame(Data, Header);
+            RegisterFrame(ContainerHeader, JBCDStream.Length);
+            return AppendFrame(Header, Data);
             }
 
 
+        /// <summary>
+        /// Get the frame position.
+        /// </summary>
+        /// <param name="Frame">The frame index</param>
+        /// <returns>The frame position.</returns>
+        public override long GetFramePosition (long Frame) {
 
+
+            var Found = FrameIndexToPositionDictionary.TryGetValue(Frame, out var Position);
+
+            if (!Found) {
+
+                }
+
+            return Position;
+
+            }
 
 
         /// <summary>
@@ -128,7 +264,19 @@ namespace Goedel.Cryptography.Container {
             return 0;
             }
 
+        /// <summary>
+        /// Perform sanity checking on a list of container headers.
+        /// </summary>
+        /// <param name="Headers">List of headers to check</param>
+        public override void CheckContainer (List<ContainerHeader> Headers) {
+            int Index = 1;
+            foreach (var Header in Headers) {
+                Assert.True(Header.Index == Index);
+                Assert.Null(Header.PayloadDigest);
 
+                Index++;
+                }
+            }
         }
 
 

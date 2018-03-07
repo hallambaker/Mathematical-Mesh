@@ -26,7 +26,7 @@ ToolTargets = \
 	Exceptions.cs
 
 Exceptions.cs : Exceptions.exceptional 
-	exceptional Exceptions.exceptional  Exceptions.cs
+	exceptional Exceptions.exceptional  /cs  Exceptions.cs
 
 
 prebuildRecurse : 

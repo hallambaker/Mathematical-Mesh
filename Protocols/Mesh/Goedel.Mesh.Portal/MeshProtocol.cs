@@ -1,4 +1,4 @@
-
+﻿
 //  Copyright (c) 2016 by .
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -33,7 +33,7 @@ using Goedel.Mesh;
 using Goedel.Persistence;
 
 
-namespace Goedel.Mesh.Server {
+namespace Goedel.Mesh.Portal {
 
 
 	/// <summary>
@@ -116,9 +116,7 @@ namespace Goedel.Mesh.Server {
         /// <summary>
         /// Well Known service identifier.
         /// </summary>
-		public override string GetWellKnown {
-			get => WellKnown;
-			}
+		public override string GetWellKnown => WellKnown;
 
         /// <summary>
         /// Well Known service identifier.
@@ -128,9 +126,7 @@ namespace Goedel.Mesh.Server {
         /// <summary>
         /// Well Known service identifier.
         /// </summary>
-		public override string GetDiscovery {
-			get => Discovery;
-			}
+		public override string GetDiscovery => Discovery;
 
         /// <summary>
         /// The active JPCSession.

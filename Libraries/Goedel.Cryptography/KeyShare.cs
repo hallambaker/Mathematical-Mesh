@@ -36,12 +36,12 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Size of key in bits.
         /// </summary>
-        public int KeyBits { get { return Key.Length * 8; } }
+        public int KeyBits => Key.Length * 8;
 
         /// <summary>
         /// Size of key in bytes;
         /// </summary>
-        public int KeyBytes { get { return Key.Length; } }
+        public int KeyBytes => Key.Length;
 
         /// <summary>
         /// The Key value
@@ -51,9 +51,7 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// The Key Value as a Base32 encoded string.
         /// </summary>
-        public string Text {
-            get { return BaseConvert.ToUDF32String(Key); }
-            }
+        public string Text => BaseConvert.ToUDF32String(Key);
         /// <summary>
         /// Create a new random secret with the specified number of bits.
         /// </summary>
@@ -349,16 +347,12 @@ namespace Goedel.Cryptography {
         /// Quorum required to recombine the key shares to recover the secret.
         /// </summary>
 
-        public int Threshold {
-            get { return Key[0] / 16; }
-            }
+        public int Threshold => Key[0] / 16;
 
         /// <summary>
         /// Index of this key share in the collection.
         /// </summary>
-        public int Index {
-            get { return (Key[0] & 0xf) + 1; }
-            }
+        public int Index => (Key[0] & 0xf) + 1;
 
         /// <summary>
         /// The key share data.
@@ -374,9 +368,7 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// The key share data as a BigInteger.
         /// </summary>
-        public BigInteger Value {
-            get { return new BigInteger(Data); }
-            }
+        public BigInteger Value => new BigInteger(Data);
 
         /// <summary>
         /// Construct a key share with the specified number of random bits.

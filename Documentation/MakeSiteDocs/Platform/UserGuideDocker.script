@@ -4,7 +4,7 @@
 #xclass ExampleGenerator ExampleGenerator
 
 
-#file UserGuideDocker "Platform/Docker.md" CreateExamples Examples
+#file UserGuideDocker "UserGuide/Platform/Docker.md" CreateExamples Examples
 <title>Docker
 <titlebanner><h1>Docker Platform
 

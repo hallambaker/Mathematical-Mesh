@@ -14,7 +14,7 @@ namespace ExampleGenerator {
 		// UserGuideQuickStart
 		//
 		public static void UserGuideQuickStart (CreateExamples Examples) { /* File  */
-			using (var _Output = new StreamWriter ("Mesh/quickstart.md")) {
+			using (var _Output = new StreamWriter ("UserGuide/Mesh/quickstart.md")) {
 				var _Indent = ""; 
 				_Output.Write ("<title>Quick Start\n{0}", _Indent);
 				_Output.Write ("<titlebanner><h1>Quick Start Guide\n{0}", _Indent);

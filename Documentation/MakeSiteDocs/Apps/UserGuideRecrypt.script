@@ -4,7 +4,7 @@
 #xclass ExampleGenerator ExampleGenerator
 
 
-#file UserGuideRecrypt "Apps/recrypt.md" CreateExamples Examples
+#file UserGuideRecrypt "UserGuide/Apps/recrypt.md" CreateExamples Examples
 <title>Recrypt
 <titlebanner><h1>Mesh/Recrypt
 
