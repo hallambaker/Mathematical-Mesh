@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Goedel.Protocol;
+using Goedel.Account;
+using Goedel.Utilities;
 
 namespace Goedel.Account.Client {
 
@@ -85,9 +87,25 @@ namespace Goedel.Account.Client {
         /// <param name="AccountID">The account identifier</param>
         /// <returns>The service response</returns>
         public GetResponse Get (string AccountID) {
-            var Request = new GetRequest() { AccountId = AccountID};
+            var Request = new GetRequest() { AccountId = AccountID };
             return Service.Get(Request);
             }
 
+
+        /// <summary>
+        /// Resolve an account identifier by making an account data request to the
+        /// corresponding Account server.
+        /// </summary>
+        /// <param name="AccountID"></param>
+        /// <returns></returns>
+        public static AccountData GetAccountPofile (string AccountID) {
+
+            AccountID.SplitAccountID(out var Account, out var Portal);
+
+            var AccountClient = new AccountClient(Portal);
+
+            var Response = AccountClient.Get(AccountID);
+            return Response.Data;
+            }
         }
     }

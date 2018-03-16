@@ -105,9 +105,7 @@ namespace Goedel.Confirm {
         /// <summary>
         /// Well Known service identifier.
         /// </summary>
-		public override string GetWellKnown {
-			get => WellKnown;
-			}
+		public override string GetWellKnown => WellKnown;
 
         /// <summary>
         /// Well Known service identifier.
@@ -117,9 +115,7 @@ namespace Goedel.Confirm {
         /// <summary>
         /// Well Known service identifier.
         /// </summary>
-		public override string GetDiscovery {
-			get => Discovery;
-			}
+		public override string GetDiscovery => Discovery;
 
         /// <summary>
         /// The active JPCSession.

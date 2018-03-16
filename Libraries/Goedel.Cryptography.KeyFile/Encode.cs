@@ -10,6 +10,8 @@ namespace Goedel.Cryptography.KeyFile {
     /// Recognized key file formats
     /// </summary>
     public enum KeyFileFormat {
+        /// <summary>Default format according to context.</summary>
+        Default,
         /// <summary>PEM private key file, used for many SSH implementations</summary>
         PEMPrivate,
         /// <summary>PEM public key file</summary>
@@ -17,7 +19,13 @@ namespace Goedel.Cryptography.KeyFile {
         /// <summary>PuTTY private key file</summary>
         PuTTY,
         /// <summary>OpenSSH native format</summary>
-        OpenSSH
+        OpenSSH,
+        /// <summary>X509</summary>
+        X509DER,
+        /// <summary>PKCS 12 / PFX</summary>
+        PKCS12,
+        /// <summary>PKCS 7</summary>
+        PKCS7
         }
 
     /// <summary>Extension methods</summary>

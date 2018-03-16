@@ -11,13 +11,6 @@ namespace Goedel.Recrypt {
 
     public static partial class Extension {
 
-        public static SessionRecryption SessionRecryption (
-                this SessionPersonal SessionPersonal,
-                string RecrytionAccount = null) {
-
-            throw new NYI();
-            }
-
         public static RecryptionKey GetEncryptionKey (
                 this SessionPersonal SessionPersonal, 
                 string RecrytionAccount) {

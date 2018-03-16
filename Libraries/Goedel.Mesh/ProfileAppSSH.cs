@@ -56,9 +56,7 @@ namespace Goedel.Mesh {
         /// <summary>
         /// The public parameter entry for this particular device.
         /// </summary>
-        public SSHDevicePublic SSHDevicePublic {
-            get => ApplicationDevicePublic as SSHDevicePublic;
-            }
+        public SSHDevicePublic SSHDevicePublic => ApplicationDevicePublic as SSHDevicePublic;
 
         /// <summary>
         /// The portion of the profile that is encrypted in the mesh.
@@ -71,9 +69,7 @@ namespace Goedel.Mesh {
         /// <summary>
         /// The portion of the profile that is encrypted in the mesh.
         /// </summary>
-        public SSHDevicePrivate DecryptedDevicePrivate {
-            get => ApplicationDevicePrivate as SSHDevicePrivate;
-            }
+        public SSHDevicePrivate DecryptedDevicePrivate => ApplicationDevicePrivate as SSHDevicePrivate;
 
         /// <summary>
         /// Create a new personal profile.

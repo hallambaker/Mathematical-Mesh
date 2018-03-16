@@ -14,7 +14,7 @@ using Goedel.Mesh.Portal;
 using Goedel.Mesh.Portal.Client;
 using Goedel.Mesh.Portal.Server;
 using Goedel.Test;
-
+using Goedel.Cryptography.KeyFile;
 
 namespace Goedel.Mesh.Mail.Test {
 
@@ -38,54 +38,107 @@ namespace Goedel.Mesh.Mail.Test {
             InitializeClass();
             var Instance = new TestMail();
 
-            Instance.MailCreate();
+            Instance.MailCreateSelfSigned();
 
             }
 
 
         #region // Initialization
 
-        static MeshSession MeshCatalog => MeshProfiles.MeshCatalog;
-        static TestConstant TestConstant = MeshProfiles.TestConstant;
-        static MeshProfiles MeshProfiles = new MeshProfiles();
+        static string ServicePortalDNS = "portal.example.com";
+        static string ServiceSSHDNS = "mail.example.com";
 
-        [ClassInitialize]
-        public static void InitializeClass (TestContext context) {
-            InitializeClass();
-            }
-
-        static string AccountServiceDNS = "example.com";
-
-        static string AliceAccountID = $"AliceRecrypt@{AccountServiceDNS}";
-        static string BobAccountID = $"BobRecrypt@{AccountServiceDNS}";
-        static string CarolAccountID = $"CarolRecrypt@{AccountServiceDNS}";
+        static string IDAlice = $"AliceMail";
 
 
-        static SessionPersonal AlicePersonal;
-        static SessionPersonal BobPersonal;
-        static SessionPersonal CarolPersonal;
 
+        static string IDPortalAlice = $"{IDAlice}@{ServicePortalDNS}";
+
+        static string IDMailAlice = $"{IDAlice}@{ServiceSSHDNS}";
+
+        static SessionPersonal AliceMeshDevice1;
+        static SessionPersonal AliceMeshDevice2;
+
+        static MailProfile AliceRecryptProfile;
+        static MeshProfiles MeshProfiles;
 
         public static void InitializeClass () {
+            MeshProfiles = new MeshProfiles();
 
-            //MeshConfirm.Initialize();
 
-            MakeUser(AliceAccountID, out AlicePersonal);
-            MakeUser(BobAccountID, out BobPersonal);
-            MakeUser(CarolAccountID, out CarolPersonal);
+            //MakeUser(IDMailAlice, out AliceMeshDevice1);
             }
 
-        static void MakeUser (string AccountID, out SessionPersonal SessionPersonal) {
-            SessionPersonal = MeshProfiles.CreateAndRegister(AccountID);
-            SessionPersonal.Write();
-            }
+        //static void MakeUser (string AccountID, out SessionPersonal SessionPersonal) {
+        //    //SessionPersonal = MeshProfiles.CreateAndRegister(AccountID);
+        //    //SessionPersonal.Write();
+        //    }
 
 
         #endregion
 
 
         [TestMethod]
-        public void MailCreate() {
+        public void MailCreateSelfSigned () {
+            // Add mail profile for account
+            var AliceMailProfile = new MailProfile() { };
+
+            var AliceMailSession = AliceMeshDevice1.Create(AliceMailProfile);
+            MakeFiles("SelfSigned_", AliceMailSession);
             }
+
+
+        [TestMethod]
+        public void MailCreateSelfSignedConnect () {
+
+            // Add mail profile for account
+            var AliceMailProfile = new MailProfile() { };
+
+            var AliceMailSession = AliceMeshDevice1.Create(AliceMailProfile);
+
+            // Check S/Mime credential
+            MakeFiles("SelfSigned_Device1", AliceMailSession);
+
+            // Add second device
+            AliceMeshDevice2 = MeshProfiles.ConnectDevice(AliceMeshDevice1, IDPortalAlice);
+
+            var AliceMailSession2 = AliceMeshDevice2.SessionMail(IDMailAlice);
+
+            // Check S/Mime credential
+            MakeFiles("SelfSigned_Device2", AliceMailSession);
+
+            }
+
+
+        void MakeFiles (string Base, SessionMail SessionMail) {
+            // Check S/Mime credential
+            SessionMail.Export(Base + "PEMPrivate", KeyFileFormat.PEMPrivate, true);
+            SessionMail.Export(Base + "PEMPublic", KeyFileFormat.PEMPublic, true);
+            SessionMail.Export(Base + "X509DER", KeyFileFormat.X509DER, true);
+            SessionMail.Export(Base + "PKCS12", KeyFileFormat.PKCS12, true);
+            SessionMail.Export(Base + "PKCS7", KeyFileFormat.PKCS7, true);
+            }
+
+
+        [TestMethod]
+        public void MailCreateCA () {
+
+            throw new NYI();
+
+            // Add mail profile for account
+
+            // Check S/Mime credential
+
+            // Check OpenPGP Credential
+
+            // Add second device
+
+            // Check S/Mime credential
+
+            // Check OpenPGP Credential
+
+            }
+
+
         }
     }

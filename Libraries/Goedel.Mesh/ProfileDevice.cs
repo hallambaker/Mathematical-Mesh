@@ -43,9 +43,7 @@ namespace Goedel.Mesh {
         /// <summary>
         /// The profile fingerprint value is the device signature key.
         /// </summary>
-        public override string UDF {
-            get => DeviceSignatureKey?.UDF; 
-            }
+        public override string UDF => DeviceSignatureKey?.UDF;
 
         /// <summary>
         /// Default Constructor
@@ -55,7 +53,7 @@ namespace Goedel.Mesh {
         /// <summary>
         /// The name of this device (defaults to first in the list of names if specified).
         /// </summary>
-        public string Name { get => Names == null ? null : (Names.Count < 1 ? null : Names[0]); }
+        public string Name => Names == null ? null : (Names.Count < 1 ? null : Names[0]);
 
         /// <summary>
         /// Construct profile for the specified device.
@@ -66,15 +64,15 @@ namespace Goedel.Mesh {
         /// <param name="ExchangeAlgorithmID">The public key algorithm to use for encryption keys.</param>
         /// <param name="SignedDeviceProfile">The enclosing signed device profile</param>
         public DeviceProfile (string Name, string Description,
-                    CryptoAlgorithmID SignatureAlgorithmID = CryptoAlgorithmID.Default, 
+                    CryptoAlgorithmID SignatureAlgorithmID = CryptoAlgorithmID.Default,
                     CryptoAlgorithmID ExchangeAlgorithmID = CryptoAlgorithmID.Default,
                     SignedDeviceProfile SignedDeviceProfile = null) {
 
-            Names = new List<string>() { Name};
+            Names = new List<string>() { Name };
 
             this.Description = Description;
 
-            DeviceSignatureKey = PublicKey.Generate (KeyType.DSK, SignatureAlgorithmID);
+            DeviceSignatureKey = PublicKey.Generate(KeyType.DSK, SignatureAlgorithmID);
             DeviceAuthenticationKey = PublicKey.Generate(KeyType.DAK, SignatureAlgorithmID);
             DeviceEncryptiontionKey = PublicKey.Generate(KeyType.DEK, ExchangeAlgorithmID);
 

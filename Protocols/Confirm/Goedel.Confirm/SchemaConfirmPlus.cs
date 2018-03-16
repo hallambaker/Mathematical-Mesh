@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Goedel.Protocol;
 using Goedel.Mesh;
+using Goedel.Utilities;
 
 namespace Goedel.Confirm {
 
@@ -138,4 +139,18 @@ namespace Goedel.Confirm {
             return Result;
             }
         }
+
+
+    public partial class PendingResponse {
+        public List<RequestEntry> Select (string ID) {
+            throw new NYI();
+            }
+
+        public void Accept (RequestEntry RequestEntry) {
+            }
+
+        }
+
+
+
     }

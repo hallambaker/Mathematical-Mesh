@@ -32,7 +32,6 @@
     <ProjectReference Include="..\Test.Goedel.Mesh.Catalog\Test.Goedel.Mesh.Catalog.csproj" />
     <ProjectReference Include="..\Test.Goedel.Mesh.Confirm\Test.Goedel.Mesh.Confirm.csproj" />
     <ProjectReference Include="..\Test.Goedel.Mesh.Mail\Test.Goedel.Mesh.Mail.csproj" />
-    <ProjectReference Include="..\Test.Goedel.Mesh.Network\Test.Goedel.Mesh.Network.csproj" />
     <ProjectReference Include="..\Test.Goedel.Mesh.Profile\Test.Goedel.Mesh.Profile.csproj" />
     <ProjectReference Include="..\Test.Goedel.Mesh.Proxy\Test.Goedel.Mesh.Proxy.csproj" />
     <ProjectReference Include="..\Test.Goedel.Mesh.Recrypt\Test.Goedel.Mesh.Recrypt.csproj" />
@@ -43,6 +42,10 @@
 
   <ItemGroup>
     <Folder Include="Test\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="UnmanagedExports" Version="1.2.7" />
   </ItemGroup>
 
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">

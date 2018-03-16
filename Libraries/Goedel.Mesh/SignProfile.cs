@@ -154,7 +154,7 @@ namespace Goedel.Mesh {
         /// consistency. Check the signature.
         /// </summary>
         /// <returns>The inner profile (if valid) otherwise null.</returns>
-        public virtual DeviceProfile UnpackDeviceProfile() {
+        public virtual DeviceProfile UnpackDeviceProfile () {
             _Signed = null;
 
             var Profile = DeviceProfile.FromJSON(new JSONReader (SignedData.Payload));

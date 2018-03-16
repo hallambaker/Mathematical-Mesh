@@ -30,6 +30,8 @@ using Goedel.Mesh;
 
 namespace Goedel.Confirm {
 
+
+
     /// <summary>
     /// Describes the profile for the Mesh/Confirm application. 
     /// </summary>
@@ -116,47 +118,6 @@ namespace Goedel.Confirm {
             // Create entries for administrative, decryption keys
             ApplicationProfileEntry.AddDevice(Device, Administration);
             }
-
-
-        
-
-
-
-        ///// <summary>
-        ///// Create the public (and private) profiles for a device. This may be called by either
-        ///// the administrator or on the device itself, depending on when the application is being
-        ///// initialized.
-        ///// </summary>
-        ///// <param name="Device">The profile of the device to initialize</param>
-        ///// <param name="ApplicationDevicePrivate"></param>
-        ///// <returns></returns>
-        //public override ApplicationDevicePublic CreateDeviceProfiles(DeviceProfile Device,
-        //            out ApplicationDevicePrivate ApplicationDevicePrivate) {
-
-        //    throw new NYI();
-
-        //    //var SignPair = PublicKey.Generate(KeyType.AAK, CryptoAlgorithmID.RSASign);
-        //    //var SignPrivate = new PublicKey() { PrivateParameters = SignPair.PrivateParameters };
-        //    //var SignPublic = new PublicKey() { PrivateParameters = SignPair.PublicParameters };
-
-        //    //var AuthPair = PublicKey.Generate(KeyType.AAK, CryptoAlgorithmID.RSASign);
-        //    //var AuthPrivate = new PublicKey() { PrivateParameters = AuthPair.PrivateParameters };
-        //    //var AuthPublic = new PublicKey() { PrivateParameters = AuthPair.PublicParameters };
-
-        //    //ApplicationDevicePrivate = new ConfirmDevicePrivate() {
-        //    //    SignPrivateKey = SignPrivate,
-        //    //    AuthPrivateKey = AuthPrivate
-        //    //    };
-
-        //    //var ApplicationDevicePublic = new ConfirmDevicePublic() {
-        //    //    Identifier = Device.UDF,
-        //    //    SignPublicKey = SignPublic,
-        //    //    AuthPublicKey = AuthPublic
-        //    //    };
-
-        //    //return ApplicationDevicePublic;
-        //    }
-
 
         }
 

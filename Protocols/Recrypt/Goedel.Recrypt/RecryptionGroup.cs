@@ -23,7 +23,7 @@ namespace Goedel.Recrypt {
         /// Initialize a newly created Recryption group.
         /// </summary>
         /// <param name="DeviceProfile">Initial device profile.</param>
-        public void Generate (DeviceProfile DeviceProfile) {
+        public void Generate () {
             Master = new MasterProfile(CryptoCatalog.Default);
 
             RecryptionProvider = new CryptoProviderExchangeDH(KeySecurity: KeySecurity.Application);
@@ -61,24 +61,20 @@ namespace Goedel.Recrypt {
         /// <summary>
         /// Add member to the recryption group.
         /// </summary>
-        /// <param name="Personal">Member's personal profile.</param>
         /// <param name="Recrypt">Member's recryption profile.</param>
         /// <returns>The new member</returns>
-        public MemberEntry AddMember (PersonalProfile Personal, RecryptProfile Recrypt) {
+        public MemberEntry AddMember (RecryptProfile Recrypt) {
             Members = Members ?? new List<MemberEntry>();
 
 
             var GroupPrivate = GetGroupPrivate();
 
             var MemberEntry = new MemberEntry() {
-                UDF = Personal.UDF,
+                UDF = Recrypt.PersonalUDF,
                 RecryptUDF = Recrypt.Identifier,
                 Status = "Active",
                 Entries = new List<UserDecryptionEntry>()
                 };
-
-
-
 
             foreach (var EncryptKey in Recrypt.EncryptKeys) {
                 MemberEntry.Entries.Add(MakeUserDecryptionEntry(GroupPrivate, EncryptKey));

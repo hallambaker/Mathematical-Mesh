@@ -45,7 +45,7 @@ namespace Test.Goedel.Mesh {
             InitializeClass();
             var Instance = new TestConfirm();
 
-            Instance.TestRecryptCreate();
+            Instance.ConfirmAccept();
 
             }
 
@@ -60,35 +60,35 @@ namespace Test.Goedel.Mesh {
             InitializeClass();
             }
 
-        static string AccountServiceDNS = "example.com";
+        static string ServicePortalDNS = "portal.example.com";
+        static string ServiceConfirmDNS = "confirm.example.com";
 
-        static string AliceAccountID = $"AliceRecrypt@{AccountServiceDNS}";
-        static string BobAccountID = $"BobRecrypt@{AccountServiceDNS}";
-        static string CarolAccountID = $"CarolRecrypt@{AccountServiceDNS}";
+        static string IDAlice = $"AliceConfirm";
+        static string IDBob = $"BobConfirm";
 
 
-        static SessionPersonal AliceRecrypt;
-        static SessionPersonal BobRecrypt;
-        static SessionPersonal CarolRecrypt;
+        static string IDPortalAlice = $"{IDAlice}@{ServicePortalDNS}";
+        static string IDPortalBob = $"{IDBob}@{ServicePortalDNS}";
+
+        static string IDConfirmAlice = $"{IDAlice}@{ServiceConfirmDNS}";
+        static string IDConfirmBob = $"{IDBob}@{ServiceConfirmDNS}";
+
+        static SessionPersonal AliceMeshDevice1;
+        static SessionPersonal BobMeshDevice;
 
         static ConfirmProfile AliceRecryptProfile;
         static ConfirmProfile BobRecryptProfile;
-        static ConfirmProfile CarolRecryptProfile;
 
         public static void InitializeClass () {
             MeshConfirm.Initialize();
 
-
-            var AccountPortal = new AccountPortalDirect(AccountServiceDNS);
+            var AccountPortal = new AccountPortalDirect(ServiceConfirmDNS);
             global::Goedel.Account.AccountPortal.Default = AccountPortal;
-            var ConfirmPortal = new ConfirmPortalDirect(AccountServiceDNS);
+            var ConfirmPortal = new ConfirmPortalDirect(ServiceConfirmDNS);
             global::Goedel.Confirm.ConfirmPortal.Default = ConfirmPortal;
 
-            //MeshConfirm.Initialize();
-
-            MakeUser(AliceAccountID, out AliceRecrypt, out AliceRecryptProfile);
-            MakeUser(BobAccountID, out BobRecrypt, out BobRecryptProfile);
-            MakeUser(CarolAccountID, out CarolRecrypt, out CarolRecryptProfile);
+            MakeUser(IDPortalAlice, out AliceMeshDevice1, out AliceRecryptProfile);
+            MakeUser(IDPortalBob, out BobMeshDevice, out BobRecryptProfile);
             }
 
         static void MakeUser (string AccountID, out SessionPersonal SessionPersonal,
@@ -110,99 +110,106 @@ namespace Test.Goedel.Mesh {
 
 
         #endregion
-        /*
-         
-        public override void AccountCreate (AccountCreate Options) {
-            var AccountID = Options.AccountID.Value;
-            var PersonalSession = GetPersonal(Options);
-            var PersonalProfile = PersonalSession.PersonalProfile;
-
-            // Create the empty profiles
-            var RecryptProfile = new RecryptProfile(PersonalSession.PersonalProfile, AccountID);
-            var ConfirmProfile = new ConfirmProfile(PersonalSession.PersonalProfile, AccountID);
-
-            // Because we are lazy, make every device an administrator device for both apps.
-            foreach (var Device in PersonalProfile.Devices) {
-                RecryptProfile.AddDevice(Device.DeviceProfile, true);
-                ConfirmProfile.AddDevice(Device.DeviceProfile, true);
-                }
-
-            var RecryptSession = PersonalSession.Add(RecryptProfile);
-            var ConfirmSession = PersonalSession.Add(ConfirmProfile);
-            PersonalSession.Write();
-            RecryptSession.Write();
-            ConfirmSession.Write();
-
-            var AccountClient = new AccountClient(AccountID);
-
-            var Response = AccountClient.Create(
-                AccountID, 
-                PersonalProfile.UDF,
-                DefaultMeshPortalAccount,
-                Options.PIN.Value);
-
-            LastResult = new ResultAccountCreate() {
-                Response = Response,
-                AccountID = AccountID
-                };
-            LastResult.Display(Options);
-            }
-
-
-                    public override void ConfirmPost (ConfirmPost Options) {
-            var AccountID = Options.AccountID.Value;
-            var ConfirmClient = new ConfirmClient(AccountID);
-
-
-            var UnsignedRequest = new TBSRequest() {
-                FromID = DefaultMeshPortalAccount,
-                ToID = Options.AccountID.Value,
-                Text = ConfirmClient.ToRequestText (Options.Text.Value)
-                };
-
-            var SignedRequest = new JoseWebSignature(UnsignedRequest, 
-                        SigningKey: DeviceProfile.DeviceSignatureKey.KeyPair);
-
-            var RequestEntry = new RequestEntry() {
-                ResponderAccount = Options.AccountID.Value,
-                Request = SignedRequest,
-                Expire = DateTime.UtcNow.AddHours(4)
-                };
-
-            var Response = ConfirmClient.Enquire(RequestEntry);
-
-            LastID = Response.BrokerID;
-            LastResult = new ResultAccountCreate() {
-                Response = Response
-                };
-            LastResult.Display(Options);
-            }
-         */
 
         [TestMethod]
-        public void TestRecryptCreate () {
+        public void ConfirmAccept () {
+
+
+            // A: Post confirmation Request
+            var AliceConfirmSession = AliceMeshDevice1.GetConfirm(IDConfirmAlice);
+
+
+            var RequestEntry = new RequestEntry() { ResponderAccount = IDConfirmBob };
+            var RequestHandle = AliceConfirmSession.PostRequest(RequestEntry);
+
+            // A: Get response - pending
+            var Result1 = AliceConfirmSession.CheckStatus(RequestHandle);
+
+            // B: Get pending
+            var BobConfirmSession = BobMeshDevice.GetConfirm(IDConfirmBob);
+            var Pending = BobConfirmSession.CheckPending();
+
+            // B: Accept
+            var AliceRequest = Pending.Select(IDConfirmAlice);
+            Pending.Accept(AliceRequest[0]);
+
+            // A: Get response - success accept
+
+            // This is a little complex. Not doing this in detail at this point.
+            //var Result2 = AliceConfirmSession.CheckStatus(RequestHandle);
+            //UT.Assert.IsTrue(Result2.Status = true);
+
+            throw new NYI();
+
+
+            }
+
+        [TestMethod]
+        public void ConfirmReject () {
+            //// A: Post confirmation Request
+            //var AliceConfirmSession = AliceMeshDevice1.SessionConfirm(IDConfirmAlice);
+            //var RequestHandle = AliceConfirmSession.PostRequest(IDConfirmBob);
+
+            //// A: Get response - pending
+            //var Result1 = AliceConfirmSession.CheckStatus(RequestHandle);
+
+            //// B: Get pending
+            //var BobConfirmSession = BobMeshDevice.SessionConfirm(IDConfirmBob);
+            //var Pending = BobConfirmSession.CheckPending();
+
+            //// B: Accept
+            //var AliceRequest = Pending.Select(IDConfirmAlice);
+            //AliceRequest.Reject();
+
+            //// A: Get response - success accept
+            //var Result2 = AliceConfirmSession.CheckStatus(RequestHandle);
+            //UT.Assert.IsTrue(Result2.Status = Accepted);
+
+            throw new NYI();
+
             }
 
 
-        //[TestMethod]
-        //public void TestEncryption () {
-        //    }
+        [TestMethod]
+        public void ConfirmAcceptMultipleDevice () {
 
-        //[TestMethod]
-        //public void TestRecryption () {
-        //    }
+            // Create profile
+            // Add device
+
+            // A: Post confirmation Request
+
+            // A: Get response - pending
+
+            // B: Get pending
+
+            // B: Accept
+
+            // A: Get response - success accept
 
 
-        //[TestMethod]
-        //public void TestRecryptionRefused () {
-        //    }
+            }
 
-        //[TestMethod]
-        //public void FailRecryptionNeverAuthorized () {
-        //    }
 
-        //[TestMethod]
-        //public void FailRecryptionAuthorizationWithdrawn () {
-        //    }
+        [TestMethod]
+        public void ConfirmMuli () {
+            TestMultiple(20, 10, 10);
+
+            }
+
+        void TestMultiple (int Requesters, int Responders, int Messages) {
+            throw new NYI();
+            // generate Responders
+
+
+            // set off multiple threads
+
+            }
+
+
+        void TestRequester (List<SessionConfirm> Responders, int Messages) {
+
+            throw new NYI();
+            }
+
         }
     }

@@ -25,6 +25,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="ExceptionsAccount.Exceptional">
+      <Generator>Exceptional</Generator>
+    </None>
     <None Update="SchemaAccount.protocol">
       <LastGenOutput>SchemaAccount.cs</LastGenOutput>
       <Generator>Protogen</Generator>

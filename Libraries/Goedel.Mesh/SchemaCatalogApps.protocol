@@ -275,4 +275,32 @@
 			Description
 				|The name of the organization
 
+	Structure NetworkProfile
+		Inherits ApplicationProfileCatalog
+		Description 
+			|Stores usernames and passwords. There are no public fields.
+
+
+	Structure NetworkProfilePrivate
+		Inherits ApplicationProfilePrivate
+		Description 
+			|Private part of the profile.
+		Struct NetworkEntry AccessPoints
+			Multiple
+			Description
+				|A list of access point entries
+		Struct NetworkEntry VPNs
+			Multiple
+			Description
+				|A list of VPN entries
+
+	Structure NetworkEntry
+		Inherits CredentialEntry
+		Description
+			|Describes network access credentials
+		String Configuration
+			Description
+				|Network configuration data.
+
+
 

@@ -1,10 +1,4 @@
-﻿// SSH:
-// TTest: Add application to profile - SSH 
-// TTest: Create client credential (private key) for device
-// TTest: Expand device credentials to authorized hosts file
-// TTest: Import shared credential from auth hosts.
-// TTest: Expand shared credential to authorized hosts file
-
+﻿
 using System;
 using System.IO;
 using System.Collections.Generic;
@@ -21,11 +15,12 @@ using Goedel.Mesh.Portal;
 using Goedel.Mesh.Portal.Client;
 using Goedel.Mesh.Portal.Server;
 using Goedel.Test;
-
+using Goedel.Cryptography.KeyFile;
 
 namespace Goedel.Mesh.Mail.Test {
 
-
+    // To make these tests feasible, it is going to be necessary to import keys from 
+    // a file rather than generating new ones.
 
 
     [TestClass]
@@ -39,7 +34,7 @@ namespace Goedel.Mesh.Mail.Test {
             InitializeClass();
             var Instance = new TestMail();
 
-            Instance.MailCreate();
+            Instance.SSHTestSingleDevice();
 
             }
 
@@ -55,25 +50,30 @@ namespace Goedel.Mesh.Mail.Test {
             InitializeClass();
             }
 
-        static string AccountServiceDNS = "example.com";
+        static string ServicePortalDNS = "portal.example.com";
+        static string ServiceSSHDNS = "ssh.example.com";
 
-        static string AliceAccountID = $"AliceRecrypt@{AccountServiceDNS}";
-        static string BobAccountID = $"BobRecrypt@{AccountServiceDNS}";
-        static string CarolAccountID = $"CarolRecrypt@{AccountServiceDNS}";
+        static string IDAlice = $"AliceMail";
 
 
-        static SessionPersonal AlicePersonal;
-        static SessionPersonal BobPersonal;
-        static SessionPersonal CarolPersonal;
 
+        static string IDPortalAlice = $"{IDAlice}@{ServicePortalDNS}";
+
+        static string IDSSHAlice = $"{IDAlice}@{ServiceSSHDNS}";
+
+        static SessionPersonal AliceMeshDevice1;
+        static SessionPersonal AliceMeshDevice2;
+
+        static SessionPersonal ServerDevice;
+
+        static MailProfile AliceRecryptProfile;
 
         public static void InitializeClass () {
 
             //MeshConfirm.Initialize();
 
-            MakeUser(AliceAccountID, out AlicePersonal);
-            MakeUser(BobAccountID, out BobPersonal);
-            MakeUser(CarolAccountID, out CarolPersonal);
+            MakeUser(IDSSHAlice, out AliceMeshDevice1);
+
             }
 
         static void MakeUser (string AccountID, out SessionPersonal SessionPersonal) {
@@ -85,17 +85,67 @@ namespace Goedel.Mesh.Mail.Test {
         #endregion
 
 
-        // Mail:
-        // TTest: Add application to profile - Mail
-        // TTest: Create S/MIME credential
-        // TTest: Create CSR
-        // TTest: Submit CSR, respond to challenge, retrieve cert
-        // TTest: Create OpenPGP key
-        // TTest: Create OpenPGP key and submit to MIT key servers
+        [TestMethod]
+        public void SSHTestSingleDevice () {
+
+            // Add ssh profile for account
+            var AliceSSHProfile = new SSHProfile() { };
+
+            var AliceSSHSession = AliceMeshDevice1.Create(AliceSSHProfile);
+
+            // Export private key
+            // Export public key
+            AliceSSHSession.Export("SSH_Public", KeyFileFormat.OpenSSH, false );
+            AliceSSHSession.Export("SSH_Private", KeyFileFormat.OpenSSH, true);
+            AliceSSHSession.Export("PEM_Public", KeyFileFormat.PEMPublic, false);
+            AliceSSHSession.Export("PEM_Private", KeyFileFormat.PEMPrivate, true);
+
+
+            // Check expansion of authorized keys - blank base file
+            ServerDevice.SSHExpand("file_1");
+
+            // Check expansion of authorized keys - base file has existing entries
+            ServerDevice.SSHExpand("file_2");
+
+            // Rekey the profile
+            AliceSSHSession.Rekey();
+
+            // Check correct update 
+            // Check expansion of authorized keys - blank base file
+            ServerDevice.SSHExpand("file_1");
+
+            // Check expansion of authorized keys - base file has existing entries
+            ServerDevice.SSHExpand("file_2");
+
+            throw new NYI();
+            }
+
 
         [TestMethod]
-        public void MailCreate () {
+        public void SSHTestMultiDevice () {
+            throw new NYI();
+
+            // Create a profile
+
+            // Add second device
+
+
+            // Check expansion of authorized keys - blank base file
+
+            // Check expansion of authorized keys - base file has existing entries
+
+            // Rekey first device
+
+            // Check correct update 
+
+            // Remove second device
+
+            // Check correct update 
+
             }
+
+
+
         }
     }
 

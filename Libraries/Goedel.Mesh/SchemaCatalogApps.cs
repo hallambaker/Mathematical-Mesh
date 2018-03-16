@@ -1,4 +1,4 @@
-
+﻿
 //  Copyright (c) 2016 by .
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -77,7 +77,10 @@ namespace Goedel.Mesh {
 			{"Internet", Internet._Factory},
 			{"Postal", Postal._Factory},
 			{"ContactPerson", ContactPerson._Factory},
-			{"ContactOrganization", ContactOrganization._Factory}			};
+			{"ContactOrganization", ContactOrganization._Factory},
+			{"NetworkProfile", NetworkProfile._Factory},
+			{"NetworkProfilePrivate", NetworkProfilePrivate._Factory},
+			{"NetworkEntry", NetworkEntry._Factory}			};
 
 		/// <summary>
         /// Construct an instance from the specified tagged JSONReader stream.
@@ -2512,6 +2515,356 @@ namespace Goedel.Mesh {
 			switch (Tag) {
 				case "FullName" : {
 					FullName = JSONReader.ReadString ();
+					break;
+					}
+				default : {
+					base.DeserializeToken(JSONReader, Tag);
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
+	/// <summary>
+	///
+	/// Stores usernames and passwords. There are no public fields.
+	/// </summary>
+	public partial class NetworkProfile : ApplicationProfileCatalog {
+		
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public override string _Tag { get; } = "NetworkProfile";
+
+		/// <summary>
+        /// Factory method
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JSONObject _Factory () {
+			return new NetworkProfile();
+			}
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="Writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
+			SerializeX (Writer, wrap, ref first);
+			}
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_Writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			if (_wrap) {
+				_Writer.WriteObjectStart ();
+				}
+			((ApplicationProfileCatalog)this).SerializeX(_Writer, false, ref _first);
+			if (_wrap) {
+				_Writer.WriteObjectEnd ();
+				}
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <returns>The created object.</returns>		
+        public static new NetworkProfile FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
+			if (Tagged) {
+				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				return Out as NetworkProfile;
+				}
+		    var Result = new NetworkProfile ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			}
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
+		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+			
+			switch (Tag) {
+				default : {
+					base.DeserializeToken(JSONReader, Tag);
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
+	/// <summary>
+	///
+	/// Private part of the profile.
+	/// </summary>
+	public partial class NetworkProfilePrivate : ApplicationProfilePrivate {
+        /// <summary>
+        ///A list of access point entries
+        /// </summary>
+
+		public virtual List<NetworkEntry>				AccessPoints  {get; set;}
+        /// <summary>
+        ///A list of VPN entries
+        /// </summary>
+
+		public virtual List<NetworkEntry>				VPNs  {get; set;}
+		
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public override string _Tag { get; } = "NetworkProfilePrivate";
+
+		/// <summary>
+        /// Factory method
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JSONObject _Factory () {
+			return new NetworkProfilePrivate();
+			}
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="Writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
+			SerializeX (Writer, wrap, ref first);
+			}
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_Writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			if (_wrap) {
+				_Writer.WriteObjectStart ();
+				}
+			((ApplicationProfilePrivate)this).SerializeX(_Writer, false, ref _first);
+			if (AccessPoints != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("AccessPoints", 1);
+				_Writer.WriteArrayStart ();
+				bool _firstarray = true;
+				foreach (var _index in AccessPoints) {
+					_Writer.WriteArraySeparator (ref _firstarray);
+					// This is an untagged structure. Cannot inherit.
+                    //_Writer.WriteObjectStart();
+                    //_Writer.WriteToken(_index.Tag(), 1);
+					bool firstinner = true;
+					_index.Serialize (_Writer, true, ref firstinner);
+                    //_Writer.WriteObjectEnd();
+					}
+				_Writer.WriteArrayEnd ();
+				}
+
+			if (VPNs != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("VPNs", 1);
+				_Writer.WriteArrayStart ();
+				bool _firstarray = true;
+				foreach (var _index in VPNs) {
+					_Writer.WriteArraySeparator (ref _firstarray);
+					// This is an untagged structure. Cannot inherit.
+                    //_Writer.WriteObjectStart();
+                    //_Writer.WriteToken(_index.Tag(), 1);
+					bool firstinner = true;
+					_index.Serialize (_Writer, true, ref firstinner);
+                    //_Writer.WriteObjectEnd();
+					}
+				_Writer.WriteArrayEnd ();
+				}
+
+			if (_wrap) {
+				_Writer.WriteObjectEnd ();
+				}
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <returns>The created object.</returns>		
+        public static new NetworkProfilePrivate FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
+			if (Tagged) {
+				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				return Out as NetworkProfilePrivate;
+				}
+		    var Result = new NetworkProfilePrivate ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			}
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
+		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+			
+			switch (Tag) {
+				case "AccessPoints" : {
+					// Have a sequence of values
+					bool _Going = JSONReader.StartArray ();
+					AccessPoints = new List <NetworkEntry> ();
+					while (_Going) {
+						// an untagged structure.
+						var _Item = new  NetworkEntry ();
+						_Item.Deserialize (JSONReader);
+						// var _Item = new NetworkEntry (JSONReader);
+						AccessPoints.Add (_Item);
+						_Going = JSONReader.NextArray ();
+						}
+					break;
+					}
+				case "VPNs" : {
+					// Have a sequence of values
+					bool _Going = JSONReader.StartArray ();
+					VPNs = new List <NetworkEntry> ();
+					while (_Going) {
+						// an untagged structure.
+						var _Item = new  NetworkEntry ();
+						_Item.Deserialize (JSONReader);
+						// var _Item = new NetworkEntry (JSONReader);
+						VPNs.Add (_Item);
+						_Going = JSONReader.NextArray ();
+						}
+					break;
+					}
+				default : {
+					base.DeserializeToken(JSONReader, Tag);
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
+	/// <summary>
+	///
+	/// Describes network access credentials
+	/// </summary>
+	public partial class NetworkEntry : CredentialEntry {
+        /// <summary>
+        ///Network configuration data.
+        /// </summary>
+
+		public virtual string						Configuration  {get; set;}
+		
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public override string _Tag { get; } = "NetworkEntry";
+
+		/// <summary>
+        /// Factory method
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JSONObject _Factory () {
+			return new NetworkEntry();
+			}
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="Writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
+			SerializeX (Writer, wrap, ref first);
+			}
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_Writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			if (_wrap) {
+				_Writer.WriteObjectStart ();
+				}
+			((CredentialEntry)this).SerializeX(_Writer, false, ref _first);
+			if (Configuration != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Configuration", 1);
+					_Writer.WriteString (Configuration);
+				}
+			if (_wrap) {
+				_Writer.WriteObjectEnd ();
+				}
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <returns>The created object.</returns>		
+        public static new NetworkEntry FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
+			if (Tagged) {
+				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				return Out as NetworkEntry;
+				}
+		    var Result = new NetworkEntry ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			}
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
+		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+			
+			switch (Tag) {
+				case "Configuration" : {
+					Configuration = JSONReader.ReadString ();
 					break;
 					}
 				default : {

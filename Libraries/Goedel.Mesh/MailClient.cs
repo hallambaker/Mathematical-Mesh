@@ -86,7 +86,7 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Does the account have S/MIME parameters already?
         /// </summary>
-        public virtual bool GotSMIME {get =>false; }
+        public virtual bool GotSMIME => false;
 
         /// <summary>
         /// List of keys for signing.

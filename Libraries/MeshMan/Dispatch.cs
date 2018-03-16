@@ -48,8 +48,8 @@ namespace Goedel.Mesh.MeshMan {
             }
 
 
-        public RegistrationDevice RegistrationDevice  => Machine.Device; 
-        public DeviceProfile DeviceProfile => RegistrationDevice.DeviceProfile; 
+        public RegistrationDevice RegistrationDevice  => Machine.Device;
+        public DeviceProfile DeviceProfile => RegistrationDevice.DeviceProfile;
 
         /// <summary>
         /// Erase all test profiles

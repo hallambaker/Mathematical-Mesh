@@ -240,33 +240,6 @@ namespace Test.Goedel.Mesh {
             UT.Assert.IsTrue(SignedPersonal2.PersonalProfile.Devices.Count == 2);
             }
 
-        // add email 
-        // delete key
-        // recover key
-        // Add S/MIME
-
-        // add password
-        // delete key
-        // recover key
-        // create / update / delete / lookup entry
-
-
-        // add SSH
-        // add client
-        // add host
-        // update authhosts
-
-        // add Confirm
-        // delete confirm
-
-        // add Recrypt
-        // delete key / recover from escrow
-
-        // Test Master Escrow
-        // Escrow key
-        // Delete key 
-        // Recover key
-
 
         }
     }

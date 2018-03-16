@@ -85,7 +85,7 @@ namespace Goedel.Combined.Shell.Client {
             var PersonalProfile = PersonalSession.PersonalProfile;
 
             // Create the empty profiles
-            var RecryptProfile = new RecryptProfile(PersonalSession.PersonalProfile, AccountID);
+            var RecryptProfile = new Recrypt.RecryptProfile(PersonalSession.PersonalProfile, AccountID);
             var ConfirmProfile = new ConfirmProfile(PersonalSession.PersonalProfile, AccountID);
 
             // Because we are lazy, make every device an administrator device for both apps.
@@ -267,8 +267,8 @@ namespace Goedel.Combined.Shell.Client {
                 GroupName = Options.GroupID.Value
                 };
 
-            RecryptionGroup.Generate(DeviceProfile);
-            RecryptionGroup.AddMember(PersonalSession.PersonalProfile, RecryptProfile);
+            RecryptionGroup.Generate();
+            RecryptionGroup.AddMember(RecryptProfile);
 
             var Response = RecryptClient.CreateGroup(RecryptionGroup);
             LastResult = new ResultCreateGroup() {
@@ -299,7 +299,7 @@ namespace Goedel.Combined.Shell.Client {
             // NYI: mechanism to tell the user that they have been added to the recryption group
             var Response = RecryptClient.GetGroup(GroupID); 
             var RecryptionGroup = Response.RecryptionGroup;
-            RecryptionGroup.AddMember(AddPersonal, AddApplication as RecryptProfile);
+            RecryptionGroup.AddMember(AddApplication as RecryptProfile);
 
             var UpdateResponse = RecryptClient.UpdateGroup(RecryptionGroup);
             LastResult = new ResultRecryptAdd() {

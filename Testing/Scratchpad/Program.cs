@@ -22,11 +22,13 @@ namespace Scratchpad {
 
     partial class Program {
         static void Main (string[] args) {
+            TestPersistenceContainers.TestDirect();
+
             TestRecrypt.TestDirect();
 
 
 
-            //TestServices.TestServicesDirect();
+            
             //TestFileContainer.TestFileContainerDirect();
             //TestServices.TestServicesDirect();
 

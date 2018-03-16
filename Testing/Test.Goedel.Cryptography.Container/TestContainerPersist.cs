@@ -11,6 +11,21 @@ using Test.Goedel.Mesh;
 namespace Test.Goedel.Cryptography.Container {
     [MT.TestClass]
     public class TestPersistenceContainers {
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static void TestDirect () {
+            InitializeClass();
+            var Instance = new TestPersistenceContainers();
+
+            Instance.TestPersistenceStore();
+            }
+
+        public static void InitializeClass () {
+            CryptographyWindows.Initialize();
+            }
+
         static string FileTest = "TestStore.jcx";
         static string AccountIDAlice = "alice@whatever";
         static string AccountIDBob = "bob@whatever";
@@ -108,16 +123,19 @@ namespace Test.Goedel.Cryptography.Container {
                 Assert.Null(AccountTestB);
                 }
 
-            bool CheckEqual (TestItem v1, TestItem v2) {
-                var t1 = (v1.AccountID == v2.AccountID);
-                var t2 = (v1.Status == v2.Status);
-                var t3 = (v1.Created.ToString() == v2.Created.ToString());
-                var t4 = (v1.Modified.ToString() == v2.Modified.ToString());
-                var t5 = (v1.UserProfileUDF == v2.UserProfileUDF);
-                var Result = t1 & t2 & t3 & t4 & t5;
 
-                return Result;
-                }
+            }
+
+
+        bool CheckEqual (TestItem v1, TestItem v2) {
+            var t1 = (v1.AccountID == v2.AccountID);
+            var t2 = (v1.Status == v2.Status);
+            var t3 = (v1.Created.ToString() == v2.Created.ToString());
+            var t4 = (v1.Modified.ToString() == v2.Modified.ToString());
+            var t5 = (v1.UserProfileUDF == v2.UserProfileUDF);
+            var Result = t1 & t2 & t3 & t4 & t5;
+
+            return Result;
             }
         }
     }
