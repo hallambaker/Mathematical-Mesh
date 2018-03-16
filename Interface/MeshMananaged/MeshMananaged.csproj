@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{7E2E0D13-7C2B-4A5E-A28C-7E37B74EB2A1}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MeshMananaged</RootNamespace>
+    <AssemblyName>MeshMananaged</AssemblyName>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="RGiesecke.DllExport.Metadata, Version=1.0.0.0, Culture=neutral, PublicKeyToken=8f52d83c1a22df51, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\UnmanagedExports.1.2.7\lib\net\RGiesecke.DllExport.Metadata.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Interface.cs" />
+    <Compile Include="Extension.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Libraries\Core\Goedel.FSR\Goedel.FSR.csproj">
+      <Project>{70abeecf-b15c-4d36-83d3-df9508bee1c5}</Project>
+      <Name>Goedel.FSR</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Core\Goedel.IO\Goedel.IO.csproj">
+      <Project>{e9341173-6212-4a7a-8a59-21fd11c32360}</Project>
+      <Name>Goedel.IO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Core\Goedel.Utilities\Goedel.Utilities.csproj">
+      <Project>{171f782c-4d04-40bd-8d12-ead48eefb79a}</Project>
+      <Name>Goedel.Utilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Container\Goedel.Cryptography.Container.csproj">
+      <Project>{5766d752-9296-42e0-a016-69f27fb45167}</Project>
+      <Name>Goedel.Cryptography.Container</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Jose\Goedel.Cryptography.Jose.csproj">
+      <Project>{2ba97c8a-2fa2-4d02-a977-566848ed2d55}</Project>
+      <Name>Goedel.Cryptography.Jose</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.KeyFile\Goedel.Cryptography.KeyFile.csproj">
+      <Project>{8340d6c4-d1ba-4369-b9cc-0e0eb36387d7}</Project>
+      <Name>Goedel.Cryptography.KeyFile</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography\Goedel.Cryptography.csproj">
+      <Project>{b8319c05-ea98-405d-94eb-acb9de6da975}</Project>
+      <Name>Goedel.Cryptography</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Goedel.Mesh\Goedel.Mesh.csproj">
+      <Project>{a93fe437-9540-49a5-8fce-a190436db5db}</Project>
+      <Name>Goedel.Mesh</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Protocols\Mesh\Goedel.Mesh.Portal.Client\Goedel.Mesh.Portal.Client.csproj">
+      <Project>{d1a9200f-a58b-410b-b8cc-52346c4741ac}</Project>
+      <Name>Goedel.Mesh.Portal.Client</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Protocols\Mesh\Goedel.Mesh.Portal\Goedel.Mesh.Portal.csproj">
+      <Project>{87066fce-63e6-4118-9e38-18e978ef039d}</Project>
+      <Name>Goedel.Mesh.Portal</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Protocols\Recrypt\Goedel.Recrypt.Client\Goedel.Recrypt.Client.csproj">
+      <Project>{c1748c76-8109-4eb1-b0ef-39462903a24d}</Project>
+      <Name>Goedel.Recrypt.Client</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Protocols\Recrypt\Goedel.Recrypt\Goedel.Recrypt.csproj">
+      <Project>{fc5a5407-02c3-43a0-b4de-bb68dc7c1ee7}</Project>
+      <Name>Goedel.Recrypt</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="../../packages/UnmanagedExports.1.2.7/tools/RGiesecke.DllExport.targets" Condition="Exists('../../packages/UnmanagedExports.1.2.7/tools/RGiesecke.DllExport.targets')" />
+</Project>
