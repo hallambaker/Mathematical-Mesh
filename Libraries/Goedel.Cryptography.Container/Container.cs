@@ -603,10 +603,6 @@ namespace Goedel.Cryptography.Container {
         /// <param name="Header">The container header value</param>
         /// <returns>The number of bytes written.</returns>
         public long AppendFrame (byte[] Header, byte[] Data = null) {
-
-            // Move to end of file to append.
-            JBCDStream.Seek(0, SeekOrigin.End);
-
             // Write the frame ensuring the results get written out.
             var Length = JBCDStream.WriteWrappedFrame(Header, Data);
             JBCDStream.Flush();

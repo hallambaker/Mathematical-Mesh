@@ -42,6 +42,22 @@ namespace Goedel.Confirm.Client {
     public partial class SessionConfirm : SessionApplication {
         public override MeshMachine MeshMachine { set => throw new NotImplementedException(); }
 
+        ConfirmProfile ConfirmProfile;
+
+
+        /// <summary>
+        /// Construct a SessionRecryption from a personal session.
+        /// </summary>
+        /// <param name="SessionPersonal">The personal session to construct from.</param>
+        public SessionConfirm (SessionPersonal SessionPersonal, ConfirmProfile ConfirmProfile) {
+            this.SessionPersonal = SessionPersonal;
+            this.ConfirmProfile = ConfirmProfile;
+
+            SessionPersonal.Add(this);  // The point at which the writes to the local disk, portal are performed.
+            }
+
+
+
         public override void GetFromPortal () {
             throw new NotImplementedException();
             }

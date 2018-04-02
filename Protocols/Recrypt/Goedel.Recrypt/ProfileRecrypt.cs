@@ -54,6 +54,8 @@ namespace Goedel.Recrypt {
     // as being part of the same application profile. 
     public partial class RecryptProfile : ApplicationProfile {
 
+        public override string ShortID => Account;
+
 
         /// <summary>
         /// The root of trust to which the profile is bound
@@ -104,22 +106,25 @@ namespace Goedel.Recrypt {
         /// </summary>
         /// <param name="Device">The device to add.</param>
         /// <param name="Administration">If true, create an administration entry</param>
-        public void AddDevice (RecryptProfile Device, bool Administration=true) {
-            //DevicePrivate = DevicePrivate ?? new List<JoseWebEncryption>();
+        public override void AddDevice (DeviceProfile Device, 
+                    bool Administration=true,
+                    ApplicationDevicePublic ApplicationDevicePublic = null) {
 
-            //var EncryptPrivate = MakeDevicePrivateKey(EncryptPair, Device);
-            //var SignPrivate = MakeDevicePrivateKey(SignPair, Device);
+            DevicePrivate = DevicePrivate ?? new List<JoseWebEncryption>();
 
-            //var DevicePrivateEntry = new RecryptDevicePrivate() {
-            //    DecryptKeys = new List<PublicKey> { EncryptPrivate },
-            //    SignKeys = new List<PublicKey> { SignPrivate }
-            //    };
+            var EncryptPrivate = MakeDevicePrivateKey(EncryptPair, Device);
+            var SignPrivate = MakeDevicePrivateKey(SignPair, Device);
 
-            //var EncryptedDevicePrivate = Device.Encrypt(DevicePrivateEntry);
-            //DevicePrivate.Add(EncryptedDevicePrivate);
+            var DevicePrivateEntry = new RecryptDevicePrivate() {
+                DecryptKeys = new List<PublicKey> { EncryptPrivate },
+                SignKeys = new List<PublicKey> { SignPrivate }
+                };
 
-            //// Create entries for administrative, decryption keys
-            //ApplicationProfileEntry.AddDevice(Device, Administration);
+            var EncryptedDevicePrivate = Device.Encrypt(DevicePrivateEntry);
+            DevicePrivate.Add(EncryptedDevicePrivate);
+
+            // Create entries for administrative, decryption keys
+            ApplicationProfileEntry.AddDevice(Device, Administration);
             }
         }
     }

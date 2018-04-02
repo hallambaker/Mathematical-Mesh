@@ -128,7 +128,7 @@ namespace Goedel.Mesh.Platform.Windows {
                 if (Key.Key.Length > 10) {
                     var Profile = new RegistrationApplicationWindows(this, Key.Key, Key.Value);
                     if (Profile != null) {
-                        ApplicationProfiles.AddSafe(Key.Key, Profile); // NYI check if present
+                        ApplicationProfilesByUDF.AddSafe(Key.Key, Profile); // NYI check if present
                         }
                     }
                 else {
@@ -178,7 +178,7 @@ namespace Goedel.Mesh.Platform.Windows {
 
             PersonalProfilesUDF.Clear();
             PersonalProfilesPortal.Clear();
-            ApplicationProfiles.Clear();
+            ApplicationProfilesByUDF.Clear();
             ApplicationProfilesDefault.Clear();
             DeviceProfiles.Clear();
             }
@@ -212,18 +212,7 @@ namespace Goedel.Mesh.Platform.Windows {
 
 
 
-        /// <summary>
-        /// Add the associated profile to the machine store.
-        /// </summary>
-        /// <param name="ApplicationProfile">Profile to add.</param>
-        /// <returns>Registration for the created profile.</returns>
-        public override SessionApplication Add(ApplicationProfile ApplicationProfile) {
-            var Registration = new RegistrationApplicationWindows(ApplicationProfile,this);
-            ApplicationProfiles.AddSafe(ApplicationProfile.Identifier, Registration); // NYI check if present
 
-            ApplicationProfilesDefault.AddSafe(ApplicationProfile.Tag(), ApplicationProfile.Identifier);
-            return Registration;
-            }
 
         /// <summary>
         /// Locate a device profile by identifier
@@ -242,7 +231,7 @@ namespace Goedel.Mesh.Platform.Windows {
         /// <param name="ID">UDF fingerprint of the profile or short form ID</param>
         /// <returns>True if the profile is found, otherwise false.</returns>
         public override bool Find(string ID, out SessionApplication RegistrationApplication) {
-            return ApplicationProfiles.TryGetValue(ID, out RegistrationApplication);
+            return ApplicationProfilesByUDF.TryGetValue(ID, out RegistrationApplication);
             }
 
         /// <summary>

@@ -153,6 +153,16 @@ namespace Goedel.Cryptography.Container {
         /* Write functions */
 
         /// <summary>
+        /// Set the write pointer to the end of the container.
+        /// </summary>
+        public virtual void SeekWrite () {
+            if (StreamWrite != null) {
+                StreamWrite.Seek(0, SeekOrigin.End);
+                }
+            }
+
+
+        /// <summary>
         /// Writes a byte to the end of the stream.
         /// </summary>
         /// <param name="Value">The byte to write to the stream.</param>

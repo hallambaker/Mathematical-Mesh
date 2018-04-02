@@ -62,8 +62,15 @@ namespace Goedel.Mesh.Portal.Client {
         /// <summary>
         /// A dictionary of application profiles indexed by fingerprint.
         /// </summary>
-        public override Dictionary<string, SessionApplication> ApplicationProfiles { get; } =
+        public override Dictionary<string, SessionApplication> ApplicationProfilesByUDF { get; } =
             new Dictionary<string, SessionApplication>();
+
+        /// <summary>
+        /// A dictionary of application profiles indexed by account ID.
+        /// </summary>
+        public override Dictionary<string, SessionApplication> ApplicationProfilesByAccount { get; } =
+            new Dictionary<string, SessionApplication>();
+
 
         /// <summary>
         /// A dictionary of default application profiles indexed by application identifier;
@@ -156,7 +163,7 @@ namespace Goedel.Mesh.Portal.Client {
         public override void Erase() {
             PersonalProfilesUDF.Clear();
             PersonalProfilesPortal.Clear();
-            ApplicationProfiles.Clear();
+            ApplicationProfilesByUDF.Clear();
             ApplicationProfilesDefault.Clear();
             DeviceProfiles.Clear();
             }
@@ -215,22 +222,13 @@ namespace Goedel.Mesh.Portal.Client {
         /// </summary>
         /// <param name="ApplicationProfile">Profile to add.</param>
         /// <returns>Registration for the created profile.</returns>
-        public override SessionApplication Add(ApplicationProfile ApplicationProfile) {
-            var Registration = new RegistrationApplicationCached(ApplicationProfile, this);
-            Register(Registration);
-            return Registration;
-            }
-
-
-        /// <summary>
-        /// Register the specified application session in the local persistent store.
-        /// </summary>
-        /// <param name="Profile">The profile to add</param>
-        protected void Register (SessionApplication Profile) {
-            var ApplicationProfile = Profile.ApplicationProfile;
-            ApplicationProfiles.AddSafe(ApplicationProfile.Identifier, Profile); // NYI check if present
+        public override void Add (SessionApplication SessionApplication) {
+            var ApplicationProfile = SessionApplication.ApplicationProfile;
+            ApplicationProfilesByUDF.AddSafe(ApplicationProfile.Identifier, SessionApplication);
+            ApplicationProfilesByAccount.AddSafe(ApplicationProfile.ShortID, SessionApplication);
             ApplicationProfilesDefault.AddSafe(ApplicationProfile.Tag(), ApplicationProfile.Identifier);
             }
+
 
 
 
@@ -251,7 +249,7 @@ namespace Goedel.Mesh.Portal.Client {
         /// <param name="ID">UDF fingerprint of the profile or short form ID</param>
         /// <returns>True if the profile is found, otherwise false.</returns>
         public override bool Find(string ID, out SessionApplication RegistrationApplication) {
-            return ApplicationProfiles.TryGetValue(ID, out RegistrationApplication);
+            return ApplicationProfilesByUDF.TryGetValue(ID, out RegistrationApplication);
             }
 
         /// <summary>
@@ -264,8 +262,15 @@ namespace Goedel.Mesh.Portal.Client {
             return PersonalProfilesUDF.TryGetValue(ID, out RegistrationPersonal);
             }
 
+        public override void GetFromPortal (SessionApplication SessionApplication) {
+            }
 
+        public override void WriteToPortal (SessionApplication SessionApplication) {
+            SessionApplication.MeshClient.Publish(SessionApplication.SignedProfile);
+            }
 
+        public override void MakeDefault (SessionApplication SessionApplication) {
+            }
         }
 
     /// <summary>

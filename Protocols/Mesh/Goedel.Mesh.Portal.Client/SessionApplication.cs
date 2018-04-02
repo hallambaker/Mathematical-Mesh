@@ -148,14 +148,23 @@ namespace Goedel.Mesh.Portal.Client {
         /// Fetch the latest version of the profile version
         /// </summary>
         public override void GetFromPortal () {
-            throw new NYI();
+            MeshMachine.GetFromPortal(this);
+            }
+
+
+        /// <summary>
+        /// Update the associated profile in the registry
+        /// </summary>
+        public override void WriteToPortal () {
+            MeshMachine.WriteToPortal(this);
+
             }
 
         /// <summary>
         /// Make this the default registration for its type
         /// </summary>
         public override void MakeDefault () {
-            throw new NYI();
+            MeshMachine.MakeDefault(this);
             }
         }
 
@@ -324,6 +333,18 @@ namespace Goedel.Mesh.Portal.Client {
 
     public partial class SessionMail : SessionCatalog {
 
+        MailProfile MailProfile;
+
+        /// <summary>
+        /// Construct a SessionRecryption from a personal session.
+        /// </summary>
+        /// <param name="SessionPersonal">The personal session to construct from.</param>
+        public SessionMail (SessionPersonal SessionPersonal, MailProfile MailProfile) {
+            this.SessionPersonal = SessionPersonal;
+            this.MailProfile = MailProfile;
+
+            SessionPersonal.Add(this);  // The point at which the writes to the local disk, portal are performed.
+            }
 
         public void Export (
                     TextWriter TextWriter,
@@ -350,6 +371,19 @@ namespace Goedel.Mesh.Portal.Client {
 
 
     public partial class SessionSSH : SessionCatalog {
+
+        SSHProfile SSHProfile;
+
+        /// <summary>
+        /// Construct a SessionRecryption from a personal session.
+        /// </summary>
+        /// <param name="SessionPersonal">The personal session to construct from.</param>
+        public SessionSSH (SessionPersonal SessionPersonal, SSHProfile SSHProfile) {
+            this.SessionPersonal = SessionPersonal;
+            this.SSHProfile = SSHProfile;
+
+            SessionPersonal.Add(this);  // The point at which the writes to the local disk, portal are performed.
+            }
 
 
         public void Export (
@@ -381,6 +415,20 @@ namespace Goedel.Mesh.Portal.Client {
 
     public partial class SessionCredential : SessionCatalog {
 
+        CredentialProfile CredentialProfile;
+
+        /// <summary>
+        /// Construct a SessionRecryption from a personal session.
+        /// </summary>
+        /// <param name="SessionPersonal">The personal session to construct from.</param>
+        public SessionCredential (SessionPersonal SessionPersonal, CredentialProfile CredentialProfile) {
+            this.SessionPersonal = SessionPersonal;
+            this.CredentialProfile = CredentialProfile;
+
+            SessionPersonal.Add(this);  // The point at which the writes to the local disk, portal are performed.
+            }
+
+
         public void Add (CredentialEntry CredentialEntry) {
             throw new NYI();
             }
@@ -400,6 +448,19 @@ namespace Goedel.Mesh.Portal.Client {
         }
 
     public partial class SessionBookmark : SessionCatalog {
+
+        BookmarkProfile BookmarkProfile;
+
+        /// <summary>
+        /// Construct a SessionRecryption from a personal session.
+        /// </summary>
+        /// <param name="SessionPersonal">The personal session to construct from.</param>
+        public SessionBookmark (SessionPersonal SessionPersonal, BookmarkProfile BookmarkProfile) {
+            this.SessionPersonal = SessionPersonal;
+            this.BookmarkProfile = BookmarkProfile;
+
+            SessionPersonal.Add(this);  // The point at which the writes to the local disk, portal are performed.
+            }
 
         public void Add (BookmarkEntry CredentialEntry) {
             throw new NYI();
@@ -421,6 +482,19 @@ namespace Goedel.Mesh.Portal.Client {
 
     public partial class SessionContact : SessionCatalog {
 
+        ContactProfile ContactProfile;
+
+        /// <summary>
+        /// Construct a SessionRecryption from a personal session.
+        /// </summary>
+        /// <param name="SessionPersonal">The personal session to construct from.</param>
+        public SessionContact (SessionPersonal SessionPersonal, ContactProfile ContactProfile) {
+            this.SessionPersonal = SessionPersonal;
+            this.ContactProfile = ContactProfile;
+
+            SessionPersonal.Add(this);  // The point at which the writes to the local disk, portal are performed.
+            }
+
         public void Add (ContactEntry CredentialEntry) {
             throw new NYI();
             }
@@ -440,6 +514,19 @@ namespace Goedel.Mesh.Portal.Client {
         }
 
     public partial class SessionNetwork : SessionCatalog {
+
+        NetworkProfile NetworkProfile;
+
+        /// <summary>
+        /// Construct a SessionRecryption from a personal session.
+        /// </summary>
+        /// <param name="SessionPersonal">The personal session to construct from.</param>
+        public SessionNetwork (SessionPersonal SessionPersonal, NetworkProfile NetworkProfile) {
+            this.SessionPersonal = SessionPersonal;
+            this.NetworkProfile = NetworkProfile;
+
+            SessionPersonal.Add(this);  // The point at which the writes to the local disk, portal are performed.
+            }
 
         public void Add (NetworkEntry CredentialEntry) {
             throw new NYI();

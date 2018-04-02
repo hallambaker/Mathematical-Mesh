@@ -44,7 +44,6 @@ LinkFiles = \
     Test.Goedel.Mesh.Catalog.dll\
     Test.Goedel.Mesh.Confirm.dll\
     Test.Goedel.Mesh.Mail.dll\
-    Test.Goedel.Mesh.Network.dll\
     Test.Goedel.Mesh.Profile.dll\
     Test.Goedel.Mesh.Proxy.dll\
     Test.Goedel.Mesh.Recrypt.dll\

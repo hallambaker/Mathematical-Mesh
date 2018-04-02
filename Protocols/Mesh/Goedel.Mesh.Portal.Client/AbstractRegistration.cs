@@ -75,8 +75,13 @@ namespace Goedel.Mesh.Portal.Client {
         /// <summary>
         /// A dictionary of application profiles indexed by fingerprint.
         /// </summary>
-        public abstract Dictionary<string, SessionApplication> ApplicationProfiles { get; } 
+        public abstract Dictionary<string, SessionApplication> ApplicationProfilesByUDF { get; }
 
+
+        /// <summary>
+        /// A dictionary of application profiles indexed by account ID.
+        /// </summary>
+        public abstract Dictionary<string, SessionApplication> ApplicationProfilesByAccount { get; } 
 
         /// <summary>
         /// A dictionary of default application profiles indexed by application identifier;
@@ -147,7 +152,7 @@ namespace Goedel.Mesh.Portal.Client {
         /// </summary>
         /// <param name="ApplicationProfile">Profile to add.</param>
         /// <returns>Registration for the created profile.</returns>
-        public abstract SessionApplication Add(ApplicationProfile ApplicationProfile);
+        public abstract void Add (SessionApplication SessionApplication);
 
         /// <summary>
         /// Locate a device profile by identifier
@@ -174,6 +179,9 @@ namespace Goedel.Mesh.Portal.Client {
         public abstract bool Find(string ID, out SessionPersonal RegistrationPersonal);
 
 
+        public abstract void GetFromPortal (SessionApplication SessionApplication);
+        public abstract void WriteToPortal (SessionApplication SessionApplication);
+        public abstract void MakeDefault (SessionApplication SessionApplication);
 
 
         /// <summary>
@@ -193,16 +201,20 @@ namespace Goedel.Mesh.Portal.Client {
                     string ShortId = null) {
 
             // If an application matches by UDF then it is the result, return it.
-            if (UDF != null && ApplicationProfiles.TryGetValue(UDF, out RegistrationApplication)) {
+            if (UDF != null && ApplicationProfilesByUDF.TryGetValue(UDF, out RegistrationApplication)) {
                 return true;
                 }
 
             // NYI: ignore short names for the time being.
+            // If an application matches by UDF then it is the result, return it.
+            if (ShortId != null && ApplicationProfilesByAccount.TryGetValue(ShortId, out RegistrationApplication)) {
+                return true;
+                }
 
             // Return the default profile for this application type
             // Hack: ignores the Personal Profile value.
             if (Type != null && ApplicationProfilesDefault.TryGetValue(Type, out UDF)) {
-                if (ApplicationProfiles.TryGetValue(UDF, out RegistrationApplication)) {
+                if (ApplicationProfilesByUDF.TryGetValue(UDF, out RegistrationApplication)) {
                     return true;
                     }
                 }

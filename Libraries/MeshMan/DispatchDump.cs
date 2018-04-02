@@ -41,7 +41,7 @@ namespace Goedel.Mesh.MeshMan {
                 Report(Registration.Value);
                 }
             ReportWriteLine("Application Profiles");
-            foreach (var Registration in Machine.ApplicationProfiles) {
+            foreach (var Registration in Machine.ApplicationProfilesByUDF) {
                 Report(Registration.Value);
                 }
             }

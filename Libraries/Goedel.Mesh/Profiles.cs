@@ -98,8 +98,12 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Get the unique identifier for this object.
         /// </summary>
-        public string UniqueID  => Identifier; 
+        public string UniqueID  => Identifier;
 
+        /// <summary>
+        /// The short identifier for this profile
+        /// </summary>
+        public virtual string ShortID => null;
 
         /// <summary>
         /// Get a list of indexes for this profile.

@@ -94,8 +94,9 @@ namespace Goedel.Combined.Shell.Client {
                 ConfirmProfile.AddDevice(Device.DeviceProfile, true);
                 }
 
-            var RecryptSession = PersonalSession.Add(RecryptProfile);
-            var ConfirmSession = PersonalSession.Add(ConfirmProfile);
+            var RecryptSession = new SessionRecrypt (PersonalSession, RecryptProfile);
+            var ConfirmSession = new SessionConfirm (PersonalSession, ConfirmProfile);
+
             PersonalSession.Write();
             RecryptSession.Write();
             ConfirmSession.Write();
@@ -355,7 +356,7 @@ namespace Goedel.Combined.Shell.Client {
             var Recipient = Encrypted.GetRecrypted(out var Address, out var UDF);
             var RecryptClient = new RecryptClient(Address);
 
-            var SessionRecryption = new SessionRecryption(PersonalSession);
+            var SessionRecryption = new SessionRecrypt(PersonalSession);
             var EncryptionKey = SessionRecryption.GetEncryptionKey(Encrypted.Recipients);
 
 

@@ -17,6 +17,7 @@ using Goedel.Test;
 using Goedel.Recrypt;
 using Goedel.Recrypt.Client;
 using Goedel.Recrypt.Server;
+using Goedel.Account;
 using Goedel.Account.Server;
 using Goedel.Cryptography.Container;
 
@@ -43,7 +44,7 @@ namespace Test.Goedel.Mesh {
             InitializeClass();
             var Instance = new TestRecrypt();
 
-            Instance.TestEncryption();
+            Instance.TestRecryption();
 
             }
 
@@ -105,7 +106,15 @@ namespace Test.Goedel.Mesh {
         static void MakeUser (string PortalID, string AccountID, out SessionPersonal SessionPersonal,
                 out RecryptProfile RecryptProfile) {
 
-            SessionPersonal = MeshProfiles.CreateAndRegister(AccountID);
+            SessionPersonal = MeshProfiles.CreateAndRegister(PortalID);
+            //var AccountData = new AccountData() {
+            //    AccountId = AccountID,
+            //    Created = DateTime.Now,
+            //    Status = "Active",
+            //    MeshUDF = SessionPersonal.UDF,
+            //    Portal = new List<string> { PortalID },
+
+            //    };
             RecryptProfile = new RecryptProfile(SessionPersonal.PersonalProfile, AccountID);
 
             // Add all devices as administrator devices
@@ -116,13 +125,7 @@ namespace Test.Goedel.Mesh {
             Console.WriteLine(RecryptProfile);
 
             //fails here, need to make sure that we use new and not update.
-            var RecryptSession = SessionPersonal.Add(RecryptProfile);
-            SessionPersonal.Write();
-            RecryptSession.Write();
-
-
-            // BUG! does not create the account on the Recryption Service
-
+            var SessionRecrypt = new SessionRecrypt (SessionPersonal, RecryptProfile);
             }
 
 
@@ -142,6 +145,8 @@ namespace Test.Goedel.Mesh {
             var AliceRecryptSession = AliceMesh.SessionRecryption(IDAccountAlice);
 
             // Create the recryption group
+
+            var RecryptProfiles = new List<RecryptProfile>() { AliceRecryptSession.RecryptProfile };
             var Response = AliceRecryptSession.CreateGroup(GroupName);
             
             // Bob encrypts content 
@@ -186,28 +191,28 @@ namespace Test.Goedel.Mesh {
                 }
 
             // Add Bob, test
-            AliceRecryptSession.AddMember(AliceGroup, IDAccountBob);
+            AliceRecryptSession.AddMember(AliceGroup, IDPortalBob);
             using (var Reader = BobMesh.RecryptReader(Filename)) {
                 Reader.Read(out var ReadData, out var contentMeta);
                 UT.Assert.IsTrue(ReadData.IsEqualTo(TestData));
                 }
 
             // Add Carol, test
-            AliceRecryptSession.AddMember(AliceGroup, IDAccountCarol);
+            AliceRecryptSession.AddMember(AliceGroup, IDPortalCarol);
             using (var Reader = CarolMesh.RecryptReader(Filename)) {
                 Reader.Read(out var ReadData, out var contentMeta);
                 UT.Assert.IsTrue(ReadData.IsEqualTo(TestData));
                 }
 
-
             // Remove Carol, test
-            AliceRecryptSession.RemoveMember(AliceGroup, IDAccountCarol);
+            AliceRecryptSession.RemoveMember(AliceGroup, IDPortalCarol);
 
             // check Alice can decrypt
             using (var Reader = AliceMesh.DecryptReader(Filename)) {
                 Reader.Read(out var ReadData, out var contentMeta);
                 UT.Assert.IsTrue(ReadData.IsEqualTo(TestData));
                 }
+
             // check Bob can decrypt
             using (var Reader = BobMesh.RecryptReader(Filename)) {
                 Reader.Read(out var ReadData, out var contentMeta);

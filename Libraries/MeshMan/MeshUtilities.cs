@@ -102,23 +102,23 @@ namespace Goedel.Mesh.MeshMan {
 
 
 
-        public SessionApplication Register (SessionPersonal RegistrationPersonal,
-               ApplicationProfile ApplicationProfile) {
+        //public SessionApplication Register (SessionPersonal RegistrationPersonal,
+        //       ApplicationProfile ApplicationProfile) {
 
 
-            // Add the application to the personal profile.
-            // By default we add all the admin devices for the personal profile to be admin for 
-            // the app profile.
-            var RegistrationApplication = RegistrationPersonal.Add(ApplicationProfile, false);
+        //    // Add the application to the personal profile.
+        //    // By default we add all the admin devices for the personal profile to be admin for 
+        //    // the app profile.
+        //    var RegistrationApplication = RegistrationPersonal.Add(ApplicationProfile, false);
 
-            // Add this device to the registration in the personal profile.
-            var DeviceProfile = RegistrationPersonal.PersonalProfile.DeviceProfile;
-            RegistrationApplication.AddDevice(DeviceProfile, Administration: true);
-            RegistrationPersonal.Write();
-            RegistrationApplication.Write();
+        //    // Add this device to the registration in the personal profile.
+        //    var DeviceProfile = RegistrationPersonal.PersonalProfile.DeviceProfile;
+        //    RegistrationApplication.AddDevice(DeviceProfile, Administration: true);
+        //    RegistrationPersonal.Write();
+        //    RegistrationApplication.Write();
 
-            return RegistrationApplication;
-            }
+        //    return RegistrationApplication;
+        //    }
 
 
         public MeshClient GetMeshClient() {

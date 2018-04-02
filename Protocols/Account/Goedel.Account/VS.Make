@@ -25,7 +25,11 @@ LinkFiles = \
     Goedel.Protocol.dll
 
 ToolTargets = \
+	ExceptionsAccount.cs\
 	SchemaAccount.cs
+
+ExceptionsAccount.cs : ExceptionsAccount.Exceptional 
+	exceptional ExceptionsAccount.Exceptional  /cs  ExceptionsAccount.cs
 
 SchemaAccount.cs : SchemaAccount.protocol 
 	protogen SchemaAccount.protocol  /cs  SchemaAccount.cs

@@ -44,10 +44,6 @@
     <Folder Include="Test\" />
   </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="UnmanagedExports" Version="1.2.7" />
-  </ItemGroup>
-
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
     <Exec Command="VSPreBuild" />
   </Target>

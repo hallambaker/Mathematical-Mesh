@@ -123,25 +123,32 @@ namespace Goedel.Mesh.Portal.Client {
         /// <param name="Create">If true, the mesh client should request the account be created.</param>
         public abstract void AddPortal (string AccountID, MeshClient MeshClient = null, bool Create = false);
 
-        /// <summary>
-        /// Add an application to this profile
-        /// </summary>
-        /// <param name="Profile">Application session to add</param>
-        /// <param name="Write">If true, write to persistent store.</param>
-        /// <returns>The new application session.</returns>
-        public virtual SessionApplication Add (
-                    ApplicationProfile Profile, bool Write = true) {
 
-            var RegistrationApplication = MeshMachine.Add(Profile);
-            RegistrationApplication.SessionPersonal = this;
+        public virtual void Add (SessionApplication SessionApplication) {
 
-            if (Write) {
-                this.Write();
-                RegistrationApplication.Write();
-                }
-
-            return RegistrationApplication;
+            MeshMachine.Add(SessionApplication);
             }
+
+
+        ///// <summary>
+        ///// Add an application to this profile
+        ///// </summary>
+        ///// <param name="Profile">Application session to add</param>
+        ///// <param name="Write">If true, write to persistent store.</param>
+        ///// <returns>The new application session.</returns>
+        //public virtual SessionApplication Add (
+        //            ApplicationProfile Profile, bool Write = true) {
+
+        //    var RegistrationApplication = MeshMachine.Add(Profile);
+        //    RegistrationApplication.SessionPersonal = this;
+
+        //    if (Write) {
+        //        this.Write();
+        //        RegistrationApplication.Write();
+        //        }
+
+        //    return RegistrationApplication;
+        //    }
 
 
         /// <summary>

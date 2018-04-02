@@ -102,10 +102,7 @@ namespace Test.Goedel.Mesh {
                 ConfirmProfile.AddDevice(Device.DeviceProfile, true);
                 }
 
-            var ConfirmSession = SessionPersonal.Add(ConfirmProfile);
-            SessionPersonal.Write();
-            ConfirmSession.Write();
-
+            var ConfirmSession = new SessionConfirm (SessionPersonal, ConfirmProfile);
             }
 
 

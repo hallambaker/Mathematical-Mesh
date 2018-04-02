@@ -21,6 +21,8 @@ MSBuildThisFileDirectory =
 LinkFiles = \
     Goedel.Utilities.dll\
     Goedel.Protocol.dll\
+    Goedel.Account.Client.dll\
+    Goedel.Account.dll\
     Goedel.Recrypt.dll
 
 ToolTargets = 

@@ -231,15 +231,13 @@ namespace Goedel.Cryptography.Jose {
         /// <param name="EncryptionKeys">The encryption key.</param>
         /// <param name="ContentType">Content type identifier.</param>
         /// <param name="EncryptID">Encryption algorithm to use.</param>
-        /// <param name="KID">The key identifier.</param>
         /// <returns>The encrypted data info block.</returns>
         public static CryptoData Encrypt (byte[] Data,
                     out List<Recipient> Recipients,
                     out Header Protected,
                     List<KeyPair> EncryptionKeys = null,
                     string ContentType = null,
-                    CryptoAlgorithmID EncryptID = CryptoAlgorithmID.Default,
-                    string KID = null
+                    CryptoAlgorithmID EncryptID = CryptoAlgorithmID.Default
                     ) {
 
 
@@ -250,6 +248,7 @@ namespace Goedel.Cryptography.Jose {
             Recipients = new List<Cryptography.Jose.Recipient>();
 
             foreach (var EncryptionKey in EncryptionKeys) {
+                var KID = EncryptionKey.Name ?? EncryptionKey.UDF;
                 var Recipient = JoseWebEncryption.Recipient(
                         EncryptEncoder, EncryptionKey, KID: KID, ProviderAlgorithm: EncryptID);               
                 Recipients.Add(Recipient);

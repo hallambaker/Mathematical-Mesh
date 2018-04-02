@@ -22,13 +22,18 @@ namespace Scratchpad {
 
     partial class Program {
         static void Main (string[] args) {
-            TestPersistenceContainers.TestDirect();
+            //CryptographyWindows.Initialize();
+
+            //TestEncryptDecrypt();
+
+
+            //TestPersistenceContainers.TestDirect();
 
             TestRecrypt.TestDirect();
 
 
 
-            
+
             //TestFileContainer.TestFileContainerDirect();
             //TestServices.TestServicesDirect();
 
@@ -46,7 +51,29 @@ namespace Scratchpad {
 
             }
 
+        static KeyPair CreateKeyPair () {
+            var Result = new KeyPairDH();
+            KeyCollection.Default.Add(Result);
 
+            return Result;
+            }
+
+
+        static void TestEncryptDecrypt () {
+            //string FileName = "TopSecret.jcx";
+            string TestData = "<h1>Tippety Top Secret</h1>";
+            KeyPair EncryptionKey = CreateKeyPair();
+
+            var Recipients = EncryptionKey == null ? null : new List<KeyPair> { EncryptionKey };
+
+            // Create container
+            var CipherText = FileContainerWriter.Data(TestData.ToBytes(), null, Recipients: Recipients);
+
+
+            FileContainerReader.Data(CipherText, out var ReadData, out var ContentMetaOut);
+
+            var Result = ReadData.ToUTF8();
+            }
 
 
 

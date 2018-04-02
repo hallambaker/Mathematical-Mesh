@@ -2,6 +2,7 @@
 using Goedel.IO;
 using Goedel.Mesh.Platform;
 using Goedel.Cryptography.KeyFile;
+using Goedel.Mesh.Portal.Client;
 
 namespace Goedel.Mesh.MeshMan {
 
@@ -17,7 +18,8 @@ namespace Goedel.Mesh.MeshMan {
             foreach (var Device in PersonalProfile.Devices) {
                 SSHProfile.AddDevice(Device.DeviceProfile, true);
                 }
-            var RegistrationApplication = SessionPersonal.Add(SSHProfile);
+
+            var RegistrationApplication = new SessionSSH (SessionPersonal, SSHProfile);
 
 
             LastResult = new ResultApplicationCreate() {

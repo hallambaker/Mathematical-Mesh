@@ -42,10 +42,14 @@
     <OutputPath>bin\x86\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
+    <DebugType>full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <DebugSymbols>true</DebugSymbols>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <DocumentationFile>bin\x86\Release\MeshMananaged.xml</DocumentationFile>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="RGiesecke.DllExport.Metadata, Version=1.0.0.0, Culture=neutral, PublicKeyToken=8f52d83c1a22df51, processorArchitecture=MSIL">
@@ -95,9 +99,17 @@
       <Project>{b8319c05-ea98-405d-94eb-acb9de6da975}</Project>
       <Name>Goedel.Cryptography</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Goedel.Mesh.Platform.Windows\Goedel.Mesh.Platform.Windows.csproj">
+      <Project>{544eed84-501e-4b48-8ae4-ddaf459dee28}</Project>
+      <Name>Goedel.Mesh.Platform.Windows</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Libraries\Goedel.Mesh\Goedel.Mesh.csproj">
       <Project>{a93fe437-9540-49a5-8fce-a190436db5db}</Project>
       <Name>Goedel.Mesh</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Goedel.Protocol\Goedel.Protocol.csproj">
+      <Project>{5b919409-8341-4d0a-bcdf-43a6841b6d7b}</Project>
+      <Name>Goedel.Protocol</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Protocols\Mesh\Goedel.Mesh.Portal.Client\Goedel.Mesh.Portal.Client.csproj">
       <Project>{d1a9200f-a58b-410b-b8cc-52346c4741ac}</Project>

@@ -9,17 +9,20 @@ namespace Goedel.Mesh.MeshMan {
         /// </summary>
         /// <param name="Options">Command line parameters</param>
         public override void MailAdd (MailAdd Options) {
-            SetReporting(Options);
-            var RegistrationPersonal = GetPersonal(Options);
 
-            var MailProfile = new MailProfile();
+            throw new NYI();
 
-            Register(RegistrationPersonal, MailProfile);
+            //SetReporting(Options);
+            //var RegistrationPersonal = GetPersonal(Options);
 
-            LastResult = new ResultApplicationCreate() {
-                ApplicationProfile = MailProfile
-                };
-            ReportWrite(LastResult.ToString());
+            //var MailProfile = new MailProfile();
+
+            //Register(RegistrationPersonal, MailProfile);
+
+            //LastResult = new ResultApplicationCreate() {
+            //    ApplicationProfile = MailProfile
+            //    };
+            //ReportWrite(LastResult.ToString());
             }
         }
     }

@@ -197,14 +197,9 @@ namespace Test.Goedel.Mesh {
             var PersonalRegistration = MeshProfiles.CreateAndRegister("TestSSH@example.com");
 
             var SSHProfile = new SSHProfile();
-            var ApplicationRegistration = PersonalRegistration.Add(SSHProfile);
-
-            // Create key for each device in the profile
+            var ApplicationRegistration = new SessionSSH(PersonalRegistration, SSHProfile);
 
 
-            // Generate the authorized hosts entry for this profile
-            PersonalRegistration.Write();
-            ApplicationRegistration.Write();
             }
 
         /// <summary>
@@ -217,7 +212,8 @@ namespace Test.Goedel.Mesh {
 
             var MailProfile = new MailProfile();
 
-            var ApplicationRegistration = RegistrationPersonal.Add(MailProfile);
+
+            var ApplicationRegistration = new SessionMail(RegistrationPersonal, MailProfile);
 
             // Generate S/MIME certificates for account
 
@@ -225,44 +221,6 @@ namespace Test.Goedel.Mesh {
 
             ApplicationRegistration.WriteToPortal();
             }
-
-
-        ///// <summary>
-        ///// Test the Mesh/Confirm profile generation
-        ///// </summary>
-        //[TestMethod]
-        //public void TestConfirm() {
-        //    var PersonalProfile = RegistrationPersonal.PersonalProfile;
-
-        //    var ConfirmProfile = new ConfirmProfile();
-        //    var ApplicationRegistration = RegistrationPersonal.Add(ConfirmProfile);
-
-
-        //    // Generate Keyset for this device
-
-        //    // Add to application entry
-
-        //    // Update
-        //    ApplicationRegistration.WriteToPortal();
-        //    }
-
-        ///// <summary>
-        ///// Test the Mesh/Recrypt profile generation
-        ///// </summary>
-        //[TestMethod]
-        //public void TestRecrypt() {
-        //    var PersonalProfile = RegistrationPersonal.PersonalProfile;
-
-        //    var RecryptProfile = new RecryptProfile();
-        //    var ApplicationRegistration = RegistrationPersonal.Add(RecryptProfile);
-
-        //    // Generate Keyset for this device
-
-        //    // Add to application entry
-
-        //    // Update
-        //    ApplicationRegistration.WriteToPortal();
-        //    }
 
 
 

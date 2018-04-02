@@ -123,7 +123,10 @@ namespace Goedel.Cryptography {
         /// </summary>
         public virtual string UDF  => null;
 
-
+        /// <summary>
+        /// The key name.
+        /// </summary>
+        public virtual string Name { get; set; }  = null;
         }
 
 

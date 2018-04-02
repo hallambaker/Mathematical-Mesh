@@ -31,27 +31,6 @@ using Goedel.Mesh;
 
 namespace Goedel.Mesh.Portal.Client {
 
-    //public partial class KeyValue {
-
-    //    /// <summary>
-    //    /// Default Constructor
-    //    /// </summary>
-    //    public KeyValue () { }
-
-    //    /// <summary>
-    //    /// Constructor from principal fields.
-    //    /// </summary>
-    //    /// <param name="Key">The initial value of the Key field.</param>
-    //    /// <param name="Value">The initial value of the Value field.</param>
-    //    public KeyValue(string Key, string Value) {
-    //        this.Key = Key;
-    //        this.Value = Value;
-    //        }
-
-
-    //    }
-
-
     /// <summary>
     /// High level Mesh Client interface.
     /// </summary>
@@ -116,17 +95,6 @@ namespace Goedel.Mesh.Portal.Client {
             }
 
 
-        ///// <summary>
-        ///// Connect up to a specified Mesh Portal and account.
-        ///// </summary>
-        ///// <param name="Portal">The portal to connect to.</param>
-        ///// <param name="AccountID">The account identifier.</param>
-        //public MeshClient(string Portal, string AccountID) {
-        //    MeshService = MeshPortal.Default.GetService(Portal, AccountID);
-        //    this.AccountID = AccountID;
-        //    }
-
-
         /// <summary>
         /// Connect up to the specified Mesh Portal
         /// </summary>
@@ -142,6 +110,13 @@ namespace Goedel.Mesh.Portal.Client {
             AccountID = PortalAccount;
             }
 
+
+        public static SignedProfile GetProfile (string AccountID) {
+            var Client = new MeshClient(PortalAccount: AccountID);
+            var Profile = Client.GetPersonalProfile();
+
+            return Profile;
+            }
 
 
         /// <summary>

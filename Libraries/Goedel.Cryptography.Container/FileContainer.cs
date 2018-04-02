@@ -73,6 +73,33 @@ namespace Goedel.Cryptography.Container {
             }
 
 
+        /// <summary>
+        /// Open a new file container for write access.
+        /// </summary>
+        /// <param name="JBCDStream">The stream to use to write the container.</param>
+        /// <param name="Archive">If true, the container is intended to be used to create a multi-file
+        /// archive.</param>
+        /// <param name="Digest">If true, construct a digest </param>
+        /// <param name="FileStatus">The mode to open the file in, this must be a mode
+        /// that permits write access.</param>
+        /// <param name="ContainerType">The container type to use. If unspecified,
+        /// a type appropriate for the type of use will be selected.</param>
+        /// <returns>File Container instance</returns>
+        /// <param name="Recipients">List of JWE recipient decryption entries.</param>
+        /// <returns>The newly constructed container.</returns>
+        public FileContainerWriter (
+                JBCDStream JBCDStream,
+                bool Archive = false,
+                bool Digest = true,
+                FileStatus FileStatus = FileStatus.Overwrite,
+                List<KeyPair> Recipients = null,
+                ContainerType ContainerType = ContainerType.Unknown) {
+            if (ContainerType == ContainerType.Unknown) {
+                ContainerType = Digest ? Archive ? ContainerType.MerkleTree : ContainerType.Chain :
+                    Archive ? ContainerType.Tree : ContainerType.List;
+                }
+            Container = Container.NewContainer(JBCDStream, ContainerType);
+            }
 
         /// <summary>
         /// Open a new file container for write access and write a single file entry.
@@ -88,7 +115,7 @@ namespace Goedel.Cryptography.Container {
         public static void File (
                 string FileName,
                 byte[] Data,
-                ContentMeta ContentMeta,
+                ContentMeta ContentMeta=null,
                 FileStatus FileStatus = FileStatus.Overwrite,
                 List<KeyPair> Recipients = null
                 ) {
@@ -98,6 +125,36 @@ namespace Goedel.Cryptography.Container {
                 Writer.Add(Data, ContentMeta, Recipients);
                 }
             }
+
+
+        /// <summary>
+        /// Open a new file container for write access and write a single file entry.
+        /// </summary>
+        /// <param name="DataIn">The content data</param>
+        /// <param name="ContentMeta">The content metadata</param>
+        /// <param name="FileStatus">The mode to open the file in, this must be a mode
+        /// that permits write access.</param>
+        /// <param name="Recipients">List of JWE recipient decryption entries.</param>
+        /// <returns>The newly constructed container.</returns>
+        /// <returns>File Container instance</returns>
+        public static byte[] Data (
+                byte[] DataIn,
+                ContentMeta ContentMeta=null,
+                FileStatus FileStatus = FileStatus.Overwrite,
+                List<KeyPair> Recipients = null
+                ) {
+
+            var Stream = new MemoryStream();
+            var JBCDStream = new JBCDStream(null, Stream);
+
+            using (var Writer = new FileContainerWriter(JBCDStream, Archive: false, Digest: false,
+                            FileStatus: FileStatus, ContainerType: ContainerType.List)) {
+                Writer.Add(DataIn, ContentMeta, Recipients);
+                }
+
+            return Stream.ToArray();
+            }
+
 
         /// <summary>
         /// Append a file entry.
@@ -153,6 +210,7 @@ namespace Goedel.Cryptography.Container {
     /// 
     /// </summary>
     public class FileContainerReader : FileContainer {
+
         Container Container;
 
         /// <summary>
@@ -185,6 +243,20 @@ namespace Goedel.Cryptography.Container {
                 }
             }
 
+
+        /// <summary>
+        /// Open 
+        /// </summary>
+        /// <param name="Data"></param>
+        public FileContainerReader (
+                byte[] Data) {
+
+            var Stream = new MemoryStream(Data, 0, Data.Length, false);
+            var JBCDStream = new JBCDStream(Stream, null);
+            Container = Goedel.Cryptography.Container.Container.OpenExisting(JBCDStream);
+
+            }
+
         /// <summary>
         /// Open a file container and then read and return the last entry in the file.
         /// </summary>
@@ -197,6 +269,24 @@ namespace Goedel.Cryptography.Container {
                 out ContentMeta ContentMeta) {
 
             using (var Reader = new FileContainerReader(FileName, ReadIndex: false)) {
+                Reader.Read(out Data, out ContentMeta);
+                }
+
+            }
+
+        /// <summary>
+        /// Create a FileReader for an in memory data source.
+        /// </summary>
+        /// <param name="DataIn"></param>
+        /// <param name="Data"></param>
+        /// <param name="ContentMeta"></param>
+        public static void Data (
+                byte[] DataIn,
+
+                out byte[] Data,
+                out ContentMeta ContentMeta) {
+
+            using (var Reader = new FileContainerReader(DataIn)) {
                 Reader.Read(out Data, out ContentMeta);
                 }
 
@@ -234,9 +324,8 @@ namespace Goedel.Cryptography.Container {
             var BulkID = Protected.Enc.FromJoseID();
 
 
-
-            var Exchange = KeyCollection.Default.Decrypt(ContainerHeader.Recipients,
-                        AlgorithmID: BulkID);
+            // This is breaking here because we don't yet know how to translate the key ID to a Key.
+            var Exchange = GetExchange(ContainerHeader.Recipients, AlgorithmID: BulkID);
 
             var Provider = CryptoCatalog.Default.GetEncryption(BulkID);
 
@@ -244,9 +333,18 @@ namespace Goedel.Cryptography.Container {
 
             }
 
+        /// <summary>
+        /// Perform a Key Exchange
+        /// </summary>
+        /// <param name="Recipients">The list of recipients</param>
+        /// <param name="AlgorithmID">The bulk encryption algorithm</param>
+        /// <returns>The result of the key exchange.</returns>
+        public virtual byte[] GetExchange (List<Recipient> Recipients, CryptoAlgorithmID AlgorithmID) {
+            return KeyCollection.Default.Decrypt(Recipients, AlgorithmID);
+            }
 
 
-        
+
         }
 
     /// <summary>
@@ -321,7 +419,7 @@ namespace Goedel.Cryptography.Container {
         public KeyPair TryMatchRecipient (Recipient Recipient) {
             var KID = Recipient.Header.Kid;
 
-            // Search our 
+            // Search our this.SessionPersonal = SessionPersonal;
             if (DictionaryKeyPairByUDF.TryGetValue(KID, out var KeyPair)) {
                 return KeyPair;
                 }

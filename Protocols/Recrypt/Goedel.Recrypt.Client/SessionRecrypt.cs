@@ -15,24 +15,24 @@ namespace Goedel.Recrypt.Client {
 
     public static partial class Extension {
 
-        public static SessionRecryption SessionRecryption (
+        public static SessionRecrypt SessionRecryption (
                 this SessionPersonal SessionPersonal,
-                string UDF = null,
-                string ShortId = null) {
+                string ShortId = null,
+                string UDF = null) {
 
             var Found = SessionPersonal.MeshMachine.Find(
                 out var Result,
-                "SessionRecryption",
-                UDF:UDF,
+                "RecryptProfile",
+                UDF: UDF,
                 ShortId: ShortId);
 
-            return Result as SessionRecryption;
+            return Result as SessionRecrypt;
             }
 
-        public static SessionRecryption Create (
+        public static SessionRecrypt Create (
                 this SessionPersonal SessionPersonal,
                 RecryptProfile Profile) {
-            return new SessionRecryption(SessionPersonal, Profile);
+            return new SessionRecrypt(SessionPersonal, Profile);
             }
 
         public static RecryptClient RecryptClient (this SessionPersonal SessionPersonal) {
@@ -64,13 +64,24 @@ namespace Goedel.Recrypt.Client {
     /// Manage a set of application sessions that are recryption sessions bound to
     /// a single personal session. This allows for methods such as 'get set of candidate keys'
     /// </summary>
-    public partial class SessionRecryption : SessionApplication {
+    public partial class SessionRecrypt : SessionApplication {
 
         /// <summary>The list of application sessions.</summary>
         public List<SessionApplication> SessionApplications;
 
-        RecryptClient RecryptClient => throw new NYI();
-        AccountClient AccountClient => throw new NYI();
+        public RecryptProfile RecryptProfile => ApplicationProfile as RecryptProfile;
+
+        RecryptClient _RecryptClient = null;
+
+        RecryptClient RecryptClient {
+            get {
+                _RecryptClient = _RecryptClient ?? new RecryptClient(RecryptProfile.Account);
+                return _RecryptClient;
+                }
+            }
+
+
+        AccountClient AccountClient => throw new NYI(); // Currently unused, all accounts are stored at portal.
 
         //Dictionary<string, RecryptDevicePrivate> DevicePrivate;
         Dictionary<string, KeyPair> DecryptKeyByID =
@@ -91,12 +102,11 @@ namespace Goedel.Recrypt.Client {
         /// Construct a SessionRecryption from a personal session.
         /// </summary>
         /// <param name="SessionPersonal">The personal session to construct from.</param>
-        public SessionRecryption (SessionPersonal SessionPersonal, RecryptProfile Profile) {
-
+        public SessionRecrypt (SessionPersonal SessionPersonal, RecryptProfile RecryptProfile) {
             this.SessionPersonal = SessionPersonal;
-            var RecryptSession = SessionPersonal.Add(Profile);
-            Write();
-            SessionPersonal.Write();
+            ApplicationProfile = RecryptProfile;
+
+            SessionPersonal.Add(this);  // The point at which the writes to the local disk, portal are performed.
             }
 
 
@@ -104,7 +114,7 @@ namespace Goedel.Recrypt.Client {
         /// Construct a SessionRecryption from a personal session.
         /// </summary>
         /// <param name="SessionPersonal">The personal session to construct from.</param>
-        public SessionRecryption (SessionPersonal SessionPersonal) {
+        public SessionRecrypt (SessionPersonal SessionPersonal) {
             this.SessionPersonal = SessionPersonal;
             SessionApplications = SessionPersonal.GetApplicationsByType("RecryptProfile");
 
@@ -185,8 +195,10 @@ namespace Goedel.Recrypt.Client {
                 };
             RecryptionGroup.Generate();
 
-            foreach (var RecryptProfile in RecryptProfiles) {
-                RecryptionGroup.AddMember(RecryptProfile);
+            if (RecryptProfiles != null) {
+                foreach (var RecryptProfile in RecryptProfiles) {
+                    RecryptionGroup.AddMember(RecryptProfile);
+                    }
                 }
 
             RecryptClient.CreateGroup(RecryptionGroup);
@@ -198,8 +210,11 @@ namespace Goedel.Recrypt.Client {
                             RecryptionGroup RecryptionGroup, 
                             string AccountID) {
 
-            var MemberProfile = AccountClient.GetAccountPofile(AccountID);
-            Assert.NotNull(MemberProfile);
+            var Profile = MeshClient.GetProfile(AccountID);
+
+
+            //var MemberProfile = AccountClient.GetAccountPofile(AccountID);
+            //Assert.NotNull(MemberProfile);
 
             throw new NYI();
             //var RecryptProfile = MemberProfile.GetRecryptionProfile(AccountID);

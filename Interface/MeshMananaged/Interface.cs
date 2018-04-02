@@ -7,11 +7,53 @@ using RGiesecke.DllExport;
 using System.Runtime.InteropServices;
 using Goedel.Utilities;
 
-namespace MeshMananaged {
-    public class Interface {
+using Goedel.Mesh.Portal.Client;
+using Goedel.Recrypt;
+using Goedel.Recrypt.Client;
+using Goedel.Mesh.Platform.Windows;
 
-        static bool DecryptTurn = false;
-        const string Refused = "<h1>Access Denied</h1>";
+namespace MeshMananaged {
+
+    /// <summary>
+    /// Interface to Mesh Decryption Functions. Note that the project settings currently
+    /// only cause the interop interface to be created, they do not cause the dll to
+    /// be registered as that requires administrative privileges.
+    /// 
+    /// https://docs.microsoft.com/en-us/dotnet/framework/interop/how-to-register-primary-interop-assemblies
+    /// </summary>
+    public class Interface {
+        static MeshMachine MeshMachine;
+        static SessionPersonal MeshSessionPersonal = null;
+
+        /// <summary>
+        /// One time initialization.
+        /// </summary>
+        static Interface () {
+            MeshMachine = new RegistrationMachineWindows();
+
+            // Get the default Mesh profile.
+            MeshSessionPersonal = MeshMachine.Personal;
+
+            MeshRecrypt.Initialize();
+            }
+
+
+        /// <summary>
+        /// Read the input container and decrypt it using local keys (if found). Then
+        /// return the decrypted data and the content type.
+        /// </summary>
+        /// <param name="InputData"></param>
+        /// <param name="OutputData"></param>
+        /// <param name="ContentType"></param>
+        static void DecryptManaged (
+            byte[] InputData,
+            out byte[] OutputData,
+            out string ContentType) {
+            MeshSessionPersonal.DecryptDARE(InputData, out OutputData, out ContentType);
+            }
+
+
+        // Non COM interface
 
         /// <summary>
         /// Decrypt an encrypted container.
@@ -21,26 +63,25 @@ namespace MeshMananaged {
         /// <param name="OutputArray">The decrypted content data. The caller must free this data using
         /// a call to the unmanaged free data routine.</param>
         /// <param name="OutputLength">The decrypted content length.</param>
+        /// <param name="ContentType">A null terminated string specifying the content type if known,
+        /// otherwise null</param>
         [DllExport(ExportName = "Decrypt", CallingConvention = CallingConvention.StdCall)]
-        static void Decrypt (
+        static void DecryptUnmanaged (
                 IntPtr InputArray,
                 int InputLength,
                 out IntPtr OutputArray,
-                out int OutputLength) {
+                out int OutputLength,
+                out IntPtr ContentType) {
 
-            byte[] Input;
+            // The input data
+            var Input = InputArray.ToManagedByte(InputLength);
+            DecryptManaged(Input, out var OutputManaged, out var ContentTypeManaged);
 
-            if (DecryptTurn) {
-                Input = InputArray.ToManagedByte(InputLength);
-                }
-            else {
-                Input = Refused.ToBytes();
-                }
+            // Convert to unmanaged
+            OutputArray = OutputManaged.ToUnmanaged();
+            OutputLength = OutputManaged.Length;
 
-            OutputArray = Input.ToUnmanaged();
-            OutputLength = Input.Length;
-
-            DecryptTurn = !DecryptTurn;
+            ContentType = ContentTypeManaged.ToUnmanaged();
             }
 
 
