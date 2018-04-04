@@ -174,6 +174,25 @@ namespace Goedel.Recrypt {
 
 
         /// <summary>
+        /// Decrypt a Data At Rest Encrypted (DARE) container.
+        /// </summary>
+        /// <param name="SessionPersonal">The Mesh Personal Profile to use to 
+        /// obtain decryption keys</param>
+        /// <param name="InputFile">File containing the ciphertext wrapped in a DARE container.</param>
+        /// <param name="OutputFile">The file to write the output to. If null, the routine will attempt to 
+        /// create a file with the name given in the archive or if unspecified by constructing a filename
+        /// from the content type and the input file name.</param>
+
+        public static void DecryptDARE (
+                    this SessionPersonal SessionPersonal,
+                    string InputFile,
+                    string OutputFile) {
+            SessionPersonal.DecryptDARE(InputFile, out var ContentData, out var ContentType);
+            OutputFile.WriteFileNew(ContentData);
+
+            }
+
+        /// <summary>
         /// Return a FileContainerReader for the specified file with access to decryption keys 
         /// in the key collection associated with the specified personal session
         /// </summary>

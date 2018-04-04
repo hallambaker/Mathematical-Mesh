@@ -64,6 +64,7 @@ namespace Goedel.Mesh {
 			{"PortalEntry", PortalEntry._Factory},
 			{"Account", Account._Factory},
 			{"AccountProfile", AccountProfile._Factory},
+			{"AccountApplicationProfile", AccountApplicationProfile._Factory},
 			{"ConnectionsPending", ConnectionsPending._Factory}			};
 
 		/// <summary>
@@ -419,6 +420,111 @@ namespace Goedel.Mesh {
 				case "Profile" : {
 					// An untagged structure
 					Profile = new SignedPersonalProfile ();
+					Profile.Deserialize (JSONReader);
+ 
+					break;
+					}
+				default : {
+					base.DeserializeToken(JSONReader, Tag);
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
+	/// <summary>
+	///
+	/// An account profile entry.
+	/// </summary>
+	public partial class AccountApplicationProfile : Account {
+        /// <summary>
+        ///The application profile associated with the account.
+        /// </summary>
+
+		public virtual SignedApplicationProfile						Profile  {get; set;}
+		
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public override string _Tag { get; } = "AccountApplicationProfile";
+
+		/// <summary>
+        /// Factory method
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JSONObject _Factory () {
+			return new AccountApplicationProfile();
+			}
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="Writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
+			SerializeX (Writer, wrap, ref first);
+			}
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_Writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			if (_wrap) {
+				_Writer.WriteObjectStart ();
+				}
+			((Account)this).SerializeX(_Writer, false, ref _first);
+			if (Profile != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Profile", 1);
+					Profile.Serialize (_Writer, false);
+				}
+			if (_wrap) {
+				_Writer.WriteObjectEnd ();
+				}
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <returns>The created object.</returns>		
+        public static new AccountApplicationProfile FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
+			if (Tagged) {
+				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				return Out as AccountApplicationProfile;
+				}
+		    var Result = new AccountApplicationProfile ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			}
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
+		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+			
+			switch (Tag) {
+				case "Profile" : {
+					// An untagged structure
+					Profile = new SignedApplicationProfile ();
 					Profile.Deserialize (JSONReader);
  
 					break;

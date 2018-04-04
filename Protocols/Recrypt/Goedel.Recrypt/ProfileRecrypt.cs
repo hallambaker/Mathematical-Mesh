@@ -45,6 +45,11 @@ namespace Goedel.Recrypt {
         public static RecryptProfile RecryptProfile (this SignedProfile SignedProfile) {
             return SignedProfile.Profile as RecryptProfile;
             }
+
+
+
+
+
         }
 
 
@@ -98,6 +103,9 @@ namespace Goedel.Recrypt {
             // Register with the application.
             ApplicationProfileEntry = PersonalProfile.Add(this);
             ApplicationProfileEntry.Friendly = Friendly ?? AccountID;
+
+
+
             }
 
 

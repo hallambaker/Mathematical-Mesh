@@ -40,18 +40,6 @@ namespace Goedel.Recrypt.Client {
             throw new NYI();
             }
 
-        /// <summary>
-        /// Search all associated recryption profiles to find if there is a matching group attached.
-        /// </summary>
-        /// <param name="SessionPersonal"></param>
-        /// <param name="GroupID"></param>
-        /// <returns></returns>
-        public static RecryptionGroup RecryptionGroup (
-                this SessionPersonal SessionPersonal,
-                string GroupID) {
-            throw new NYI();
-            }
-
 
         }
 
@@ -169,7 +157,17 @@ namespace Goedel.Recrypt.Client {
 
             return DecryptionKeyPairFudge;
             }
+        /// <summary>
+        /// Locate an existing recryption group.
+        /// </summary>
+        /// <param name="GroupIdentifier">The group identifier</param>
+        /// <returns></returns>
+        public RecryptionGroup GetRecryptionGroup (string GroupIdentifier) {
+            // request the recryption key
+            var Response = RecryptClient.GetGroup(GroupIdentifier);
 
+            return Response.RecryptionGroup;
+            }
 
         /// <summary>
         /// Create a new recryption group.
@@ -212,8 +210,12 @@ namespace Goedel.Recrypt.Client {
 
             var Profile = MeshClient.GetProfile(AccountID);
 
+            // Issues - have not updated the profile to the mesh after adding Recrypt
+            //    Have not published recryption profile
 
-            //var MemberProfile = AccountClient.GetAccountPofile(AccountID);
+            var MemberProfile = AccountClient.GetAccountPofile(AccountID);
+
+
             //Assert.NotNull(MemberProfile);
 
             throw new NYI();

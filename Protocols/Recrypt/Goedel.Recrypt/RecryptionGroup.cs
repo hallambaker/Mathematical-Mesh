@@ -191,6 +191,7 @@ namespace Goedel.Recrypt {
             Output = FileContainerWriter.Data(Input, Recipients: Recipients);
             }
 
+
         /// <summary>
         /// Encrypt content. The input is read from a file. The output is written to a file.
         /// </summary>

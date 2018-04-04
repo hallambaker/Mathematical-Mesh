@@ -1,5 +1,4 @@
 ﻿Class Goedel.Mesh.DareMan Shell
-	Library
 
 	Type NewFile			"file"
 	Type ExistingFile		"file"
@@ -17,16 +16,20 @@
 
 		Command Create "create"
 			Brief "Create recryption group"
-			Parameter AccountID "name" String
+			Parameter GroupID "group" String
 				Brief "Recryption group name in user@example.com format"
 
 		Command Add "add"
 			Brief "Add user to recryption group"
+			Parameter GroupID "group" String
+				Brief "Recryption group name in user@example.com format"
 			Parameter AccountID "account" String
 				Brief "User to add"
 
 		Command Delete "delete"
 			Brief "Remove user from recryption group"
+			Parameter GroupID "group" String
+				Brief "Recryption group name in user@example.com format"			
 			Parameter AccountID "account" String
 				Brief "User to delete"
 

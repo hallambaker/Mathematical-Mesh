@@ -77,17 +77,12 @@ namespace Test.Goedel.Mesh {
 
 
 
-        static SessionPersonal AliceMesh;
-        static SessionPersonal BobMesh;
-        static SessionPersonal CarolMesh;
-
-        static global::Goedel.Recrypt.RecryptProfile AliceRecryptProfile;
-        static global::Goedel.Recrypt.RecryptProfile BobRecryptProfile;
-        static global::Goedel.Recrypt.RecryptProfile CarolRecryptProfile;
+        static SessionPersonal AliceSessionPersonal;
+        static SessionPersonal BobSessionPersonal;
+        static SessionPersonal CarolSessionPersonal;
 
         public static void InitializeClass () {
             MeshRecrypt.Initialize();
-
 
             var AccountPortal = new AccountPortalDirect(ServiceRecryptDNS);
             global::Goedel.Account.AccountPortal.Default = AccountPortal;
@@ -98,34 +93,17 @@ namespace Test.Goedel.Mesh {
 
             //MeshConfirm.Initialize();
 
-            MakeUser(IDPortalAlice, IDAccountAlice, out AliceMesh, out AliceRecryptProfile);
-            MakeUser(IDPortalBob, IDAccountBob, out BobMesh, out BobRecryptProfile);
-            MakeUser(IDPortalCarol, IDAccountCarol, out CarolMesh, out CarolRecryptProfile);
+            MakeUser(IDPortalAlice, IDAccountAlice, out AliceSessionPersonal);
+            MakeUser(IDPortalBob, IDAccountBob, out BobSessionPersonal);
+            MakeUser(IDPortalCarol, IDAccountCarol, out CarolSessionPersonal);
             }
 
-        static void MakeUser (string PortalID, string AccountID, out SessionPersonal SessionPersonal,
-                out RecryptProfile RecryptProfile) {
-
+        static void MakeUser (string PortalID, string AccountID, out SessionPersonal SessionPersonal) {
             SessionPersonal = MeshProfiles.CreateAndRegister(PortalID);
-            //var AccountData = new AccountData() {
-            //    AccountId = AccountID,
-            //    Created = DateTime.Now,
-            //    Status = "Active",
-            //    MeshUDF = SessionPersonal.UDF,
-            //    Portal = new List<string> { PortalID },
+            SessionPersonal.CreateRecryptProfile();
 
-            //    };
-            RecryptProfile = new RecryptProfile(SessionPersonal.PersonalProfile, AccountID);
 
-            // Add all devices as administrator devices
-            foreach (var Device in SessionPersonal.PersonalProfile.Devices) {
-                RecryptProfile.AddDevice(Device.DeviceProfile, true);
-                }
 
-            Console.WriteLine(RecryptProfile);
-
-            //fails here, need to make sure that we use new and not update.
-            var SessionRecrypt = new SessionRecrypt (SessionPersonal, RecryptProfile);
             }
 
 
@@ -142,7 +120,7 @@ namespace Test.Goedel.Mesh {
             var TestData = CreateBytes(10000);
 
             // Implement this as an extension method
-            var AliceRecryptSession = AliceMesh.SessionRecryption(IDAccountAlice);
+            var AliceRecryptSession = AliceSessionPersonal.SessionRecryption(IDAccountAlice);
 
             // Create the recryption group
 
@@ -151,14 +129,14 @@ namespace Test.Goedel.Mesh {
             
             // Bob encrypts content 
             // specify 
-            var BobRecryptSession = BobMesh.SessionRecryption(IDAccountBob);
-            var RecryptionKey = BobMesh.GetEncryptionKey(GroupName);
+            var BobRecryptSession = BobSessionPersonal.SessionRecryption(IDAccountBob);
+            var RecryptionKey = BobSessionPersonal.GetEncryptionKey(GroupName);
 
             // The encryption is a method off the recryption key
             RecryptionKey.Encrypt(TestData, Filename);
 
             // Alice decrypts content
-            using (var Reader = AliceMesh.DecryptReader(Filename)) {
+            using (var Reader = AliceSessionPersonal.DecryptReader(Filename)) {
                 Reader.Read(out var ReadData, out var contentMeta);
                 UT.Assert.IsTrue(ReadData.IsEqualTo(TestData));
                 }
@@ -171,53 +149,61 @@ namespace Test.Goedel.Mesh {
             var TestData = CreateBytes(2000);
 
             // Implement this as an extension method
-            var AliceRecryptSession = AliceMesh.SessionRecryption(IDAccountAlice);
+            var AliceRecryptSession = AliceSessionPersonal.SessionRecryption(IDAccountAlice);
 
             // Create the recryption group
             var AliceGroup = AliceRecryptSession.CreateGroup(GroupName);
 
             // Bob encrypts content 
             // specify 
-            var BobRecryptSession = BobMesh.SessionRecryption(IDAccountBob);
-            var RecryptionKey = BobMesh.GetEncryptionKey(GroupName);
+            var BobRecryptSession = BobSessionPersonal.SessionRecryption(IDAccountBob);
+            var RecryptionKey = BobSessionPersonal.GetEncryptionKey(GroupName);
 
             // The encryption is a method off the recryption key
             RecryptionKey.Encrypt(TestData, Filename);
 
             // Alice decrypts content
-            using (var Reader = AliceMesh.DecryptReader(Filename)) {
-                Reader.Read(out var ReadData, out var contentMeta);
+                {
+                AliceSessionPersonal.DecryptDARE(Filename, out var ReadData, out var contentMeta);
                 UT.Assert.IsTrue(ReadData.IsEqualTo(TestData));
                 }
 
+
+            // var AliceGroup2 = AliceRecryptSession.FindGroup(GroupName);
+
             // Add Bob, test
             AliceRecryptSession.AddMember(AliceGroup, IDPortalBob);
-            using (var Reader = BobMesh.RecryptReader(Filename)) {
-                Reader.Read(out var ReadData, out var contentMeta);
+
+                {
+                BobSessionPersonal.DecryptDARE(Filename, out var ReadData, out var contentMeta);
                 UT.Assert.IsTrue(ReadData.IsEqualTo(TestData));
                 }
 
             // Add Carol, test
             AliceRecryptSession.AddMember(AliceGroup, IDPortalCarol);
-            using (var Reader = CarolMesh.RecryptReader(Filename)) {
-                Reader.Read(out var ReadData, out var contentMeta);
+
+                {
+                CarolSessionPersonal.DecryptDARE(Filename, out var ReadData, out var contentMeta);
                 UT.Assert.IsTrue(ReadData.IsEqualTo(TestData));
                 }
+
 
             // Remove Carol, test
             AliceRecryptSession.RemoveMember(AliceGroup, IDPortalCarol);
 
             // check Alice can decrypt
-            using (var Reader = AliceMesh.DecryptReader(Filename)) {
-                Reader.Read(out var ReadData, out var contentMeta);
+                {
+                AliceSessionPersonal.DecryptDARE(Filename, out var ReadData, out var contentMeta);
                 UT.Assert.IsTrue(ReadData.IsEqualTo(TestData));
                 }
 
+
             // check Bob can decrypt
-            using (var Reader = BobMesh.RecryptReader(Filename)) {
-                Reader.Read(out var ReadData, out var contentMeta);
+                {
+                BobSessionPersonal.DecryptDARE(Filename, out var ReadData, out var contentMeta);
                 UT.Assert.IsTrue(ReadData.IsEqualTo(TestData));
                 }
+
 
             }
 
@@ -230,15 +216,15 @@ namespace Test.Goedel.Mesh {
             var TestData = CreateBytes(2000);
 
             // Implement this as an extension method
-            var AliceRecryptSession = AliceMesh.SessionRecryption(IDAccountAlice);
+            var AliceRecryptSession = AliceSessionPersonal.SessionRecryption(IDAccountAlice);
 
             // Create the recryption group
             var AliceGroup = AliceRecryptSession.CreateGroup(GroupName);
 
             // Bob encrypts content 
             // specify 
-            var BobRecryptSession = BobMesh.SessionRecryption(IDAccountBob);
-            var RecryptionKey = BobMesh.GetEncryptionKey(GroupName);
+            var BobRecryptSession = BobSessionPersonal.SessionRecryption(IDAccountBob);
+            var RecryptionKey = BobSessionPersonal.GetEncryptionKey(GroupName);
 
             // The encryption is a method off the recryption key
             RecryptionKey.Encrypt(TestData, Filename);
@@ -252,7 +238,7 @@ namespace Test.Goedel.Mesh {
             AliceRecryptSession.RemoveMember(AliceGroup, IDAccountCarol);
 
             // check Carol cannot decrypt
-            using (var Reader = CarolMesh.DecryptReader(Filename)) {
+            using (var Reader = CarolSessionPersonal.DecryptReader(Filename)) {
                 Reader.Read(out var ReadData, out var contentMeta);
                 }
 
@@ -266,21 +252,21 @@ namespace Test.Goedel.Mesh {
             var TestData = CreateBytes(2000);
 
             // Implement this as an extension method
-            var AliceRecryptSession = AliceMesh.SessionRecryption(IDAccountAlice);
+            var AliceRecryptSession = AliceSessionPersonal.SessionRecryption(IDAccountAlice);
 
             // Create the recryption group
             var Response = AliceRecryptSession.CreateGroup(GroupName);
 
             // Bob encrypts content 
             // specify 
-            var BobRecryptSession = BobMesh.SessionRecryption(IDAccountBob);
-            var RecryptionKey = BobMesh.GetEncryptionKey(GroupName);
+            var BobRecryptSession = BobSessionPersonal.SessionRecryption(IDAccountBob);
+            var RecryptionKey = BobSessionPersonal.GetEncryptionKey(GroupName);
 
             // The encryption is a method off the recryption key
             RecryptionKey.Encrypt(TestData, Filename);
 
             // check Carol cannot decrypt
-            using (var Reader = CarolMesh.DecryptReader(Filename)) {
+            using (var Reader = CarolSessionPersonal.DecryptReader(Filename)) {
                 Reader.Read(out var ReadData, out var contentMeta);
 
                 }

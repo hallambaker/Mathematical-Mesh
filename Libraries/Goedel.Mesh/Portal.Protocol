@@ -62,7 +62,13 @@
 			Description
 				|The personal profile associated with the account.
 
-
+	Structure AccountApplicationProfile
+		Description
+			|An account profile entry.
+		Inherits Account
+		Struct SignedApplicationProfile Profile
+			Description
+				|The application profile associated with the account.
 
 	Structure ConnectionsPending
 		Description

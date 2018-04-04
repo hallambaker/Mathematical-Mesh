@@ -49,6 +49,8 @@ namespace Goedel.Recrypt.Client {
             return Service.Hello(Request);
             }
 
+
+
         /// <summary>
         /// Create a new recryption group.
         /// </summary>

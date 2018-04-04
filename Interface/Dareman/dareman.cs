@@ -91,7 +91,10 @@ namespace Goedel.Mesh.DareMan {
 
             }
 
-
+        static void Main(string[] args) {
+			var CLI = new CommandLineInterpreter ();
+			CLI.MainMethod (args);
+			}
 
         public void MainMethod(string[] Args) {
 			Shell Dispatch = new Shell ();
@@ -217,12 +220,12 @@ namespace Goedel.Mesh.DareMan {
 			new String ()			} ;
 
 		/// <summary>Field accessor for parameter []</summary>
-		public virtual String AccountID {
+		public virtual String GroupID {
 			get => _Data[0] as String;
 			set => _Data[0]  = value;
 			}
 
-		public virtual string _AccountID {
+		public virtual string _GroupID {
 			set => _Data[0].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
@@ -234,7 +237,7 @@ namespace Goedel.Mesh.DareMan {
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
 				new DescribeEntryParameter () {
-					Identifier = "AccountID", 
+					Identifier = "GroupID", 
 					Default = null, // null if null
 					Brief = "Recryption group name in user@example.com format",
 					Index = 0,
@@ -251,16 +254,26 @@ namespace Goedel.Mesh.DareMan {
     public class _Add : Goedel.Command.Dispatch  {
 
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new String (),
 			new String ()			} ;
 
 		/// <summary>Field accessor for parameter []</summary>
-		public virtual String AccountID {
+		public virtual String GroupID {
 			get => _Data[0] as String;
 			set => _Data[0]  = value;
 			}
 
-		public virtual string _AccountID {
+		public virtual string _GroupID {
 			set => _Data[0].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual String AccountID {
+			get => _Data[1] as String;
+			set => _Data[1]  = value;
+			}
+
+		public virtual string _AccountID {
+			set => _Data[1].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -271,10 +284,17 @@ namespace Goedel.Mesh.DareMan {
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
 				new DescribeEntryParameter () {
+					Identifier = "GroupID", 
+					Default = null, // null if null
+					Brief = "Recryption group name in user@example.com format",
+					Index = 0,
+					Key = ""
+					},
+				new DescribeEntryParameter () {
 					Identifier = "AccountID", 
 					Default = null, // null if null
 					Brief = "User to add",
-					Index = 0,
+					Index = 1,
 					Key = ""
 					}
 				}
@@ -288,16 +308,26 @@ namespace Goedel.Mesh.DareMan {
     public class _Delete : Goedel.Command.Dispatch  {
 
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new String (),
 			new String ()			} ;
 
 		/// <summary>Field accessor for parameter []</summary>
-		public virtual String AccountID {
+		public virtual String GroupID {
 			get => _Data[0] as String;
 			set => _Data[0]  = value;
 			}
 
-		public virtual string _AccountID {
+		public virtual string _GroupID {
 			set => _Data[0].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual String AccountID {
+			get => _Data[1] as String;
+			set => _Data[1]  = value;
+			}
+
+		public virtual string _AccountID {
+			set => _Data[1].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -308,10 +338,17 @@ namespace Goedel.Mesh.DareMan {
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
 				new DescribeEntryParameter () {
+					Identifier = "GroupID", 
+					Default = null, // null if null
+					Brief = "Recryption group name in user@example.com format",
+					Index = 0,
+					Key = ""
+					},
+				new DescribeEntryParameter () {
 					Identifier = "AccountID", 
 					Default = null, // null if null
 					Brief = "User to delete",
-					Index = 0,
+					Index = 1,
 					Key = ""
 					}
 				}

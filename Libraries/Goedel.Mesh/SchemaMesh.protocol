@@ -281,7 +281,9 @@
 			Description
 				|List of devices authorized to read private parts of application 
 				|profiles.
-
+		String AccountID
+			Description
+				|The account at which the profile is located.
 
 	Section 2 "Application Profile Objects"
 
