@@ -250,7 +250,7 @@ namespace Goedel.Cryptography.Jose {
             foreach (var EncryptionKey in EncryptionKeys) {
                 var KID = EncryptionKey.Name ?? EncryptionKey.UDF;
                 var Recipient = JoseWebEncryption.Recipient(
-                        EncryptEncoder, EncryptionKey, KID: KID, ProviderAlgorithm: EncryptID);               
+                        EncryptEncoder, EncryptionKey, KID: KID, ProviderAlgorithm: EncryptID);
                 Recipients.Add(Recipient);
                 }
 
@@ -348,7 +348,7 @@ namespace Goedel.Cryptography.Jose {
             }
 
 
-        static Header ProtectedHeader (CryptoData Data, 
+        static Header ProtectedHeader (CryptoData Data,
                     string ContentType,
                     CryptoProviderDigest Digest) {
 
@@ -394,23 +394,38 @@ namespace Goedel.Cryptography.Jose {
 
             }
 
-        /// <summary>
-        /// Decrypt the content using the corresponding private key in the local 
-        /// key store (if found). Throws exception otherwise.
-        /// </summary>
-        /// <returns>The decrypted data</returns>
-        public byte[] Decrypt () {
-            throw new Goedel.Utilities.NYI();
+
+
+
+        public static KeyPair MatchDecryptionKey (List<Recipient> Recipients, out Recipient RecipientOut) {
+            foreach (var Recipient in Recipients) {
+                var KID = Recipient.Header.Kid;
+                KID.SplitAccountID(out var Domain, out var Account);
+
+                if (Account == null) {
+                    var DecryptionKey = Cryptography.KeyPair.FindLocal(KID);
+                    if (DecryptionKey != null) {
+                        RecipientOut = Recipient;
+                        return DecryptionKey;
+                        }
+                    }
+                }
+
+            RecipientOut = null;
+            return null;
             }
+
 
         /// <summary>
         /// Decrypt the content using the specified private key.
         /// </summary>
         /// <param name="DecryptionKey">The decryption key.</param>
         /// <returns>The decrypted data</returns>
-        public byte[] Decrypt (KeyPair DecryptionKey) {
+        public byte[] Decrypt (KeyPair DecryptionKey=null, Recipient Recipient=null) {
 
-            var Recipient = MatchRecipient(DecryptionKey);
+            DecryptionKey = DecryptionKey ?? MatchDecryptionKey(Recipients, out Recipient);
+
+            Recipient = Recipient ?? MatchRecipient(DecryptionKey);
             var AlgorithmJose = Recipient?.Header.Alg;
             var ExchangeID = AlgorithmJose.FromJoseID();
 
@@ -428,6 +443,8 @@ namespace Goedel.Cryptography.Jose {
 
             return Result;
             }
+
+
 
 
         /// <summary>

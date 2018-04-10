@@ -103,14 +103,11 @@ namespace Goedel.Combined.Shell.Client {
 
             var AccountClient = new AccountClient(AccountID);
 
-            var Response = AccountClient.Create(
-                AccountID, 
-                PersonalProfile.UDF,
-                DefaultMeshPortalAccount,
-                Options.PIN.Value);
+            SessionAccount.Create(PersonalSession, AccountID,
+                new List<string> { DefaultMeshPortalAccount },
+                new List<SignedApplicationProfile> { RecryptProfile.SignedApplicationProfile });
 
             LastResult = new ResultAccountCreate() {
-                Response = Response,
                 AccountID = AccountID
                 };
             LastResult.Display(Options);
@@ -361,7 +358,8 @@ namespace Goedel.Combined.Shell.Client {
 
 
             // Get the recryption data
-            var Response = RecryptClient.RecryptData(PersonalProfile.UDF, EncryptionKey.UDF, Recipient);
+            var Response = RecryptClient.RecryptData(PersonalProfile.UDF, 
+                    new List<string>() { EncryptionKey.UDF }, Recipient);
 
             // Complete the decryption
             var EncryptedDecryptionKey = Response.DecryptionKey;

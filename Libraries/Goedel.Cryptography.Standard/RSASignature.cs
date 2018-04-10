@@ -149,8 +149,8 @@ namespace Goedel.Cryptography.Framework {
         /// <param name="Size">The key size (2048 or 4096), if zero the default is used.</param>
         public override void Generate(KeySecurity KeySecurity, int Size = 0) {
             KeySize = (Size == 0) ? KeySize : Size;
-            _RSAKeyPair = new KeyPairRSA(KeySize);
-            _RSAKeyPair.Persist(KeySecurity);
+            _RSAKeyPair = new KeyPairRSA(KeySecurity, KeySize);
+            //_RSAKeyPair.Persist(KeySecurity);
             }
 
         /// <summary>

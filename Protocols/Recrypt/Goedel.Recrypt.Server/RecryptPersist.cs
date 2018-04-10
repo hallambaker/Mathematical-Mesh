@@ -43,6 +43,9 @@ namespace Goedel.Recrypt.Server {
 
         RecryptionGroup GetGroupEntry (string AccountID) =>
             RecryptionGroup.FromJSON(GetGroupData(AccountID)?.JSONReader);
+
+
+
         //CombinedToGroup GetCombinedToGroup (string GroupKey, string MemberKey) =>
         //    GetCombinedToGroup (CombinedToGroup.PrimaryKey(GroupKey, MemberKey));
         //CombinedToGroup GetCombinedToGroup (string CombinedKey) =>
@@ -102,15 +105,26 @@ namespace Goedel.Recrypt.Server {
             }
 
 
-        /// <summary>
-        /// Get the member with the specified UDF
-        /// </summary>
-        /// <param name="RecryptionGroup">The recryption group to search</param>
-        /// <param name="MemberID">The member identifier.</param>
-        /// <returns>The member entry.</returns>
-        public MemberEntry GetMember (RecryptionGroup RecryptionGroup, string MemberID) {
-            return RecryptionGroup.Members?.Find(x => x.UDF.CompareUDF(MemberID));
+        public RecryptionGroup GetGroupByKey (string KeyUDF) {
+            var DataCollection = Recrypt.Get(RecryptionGroup.EncryptionIndexTerm, KeyUDF.ToUpper());
+            if (DataCollection == null || DataCollection?.DataItems.Count == 0) {
+                return null;
+                }
+
+            return RecryptionGroup.FromJSON(DataCollection.DataItems[0].JSONReader);
+
             }
+
+
+        ///// <summary>
+        ///// Get the member with the specified UDF
+        ///// </summary>
+        ///// <param name="RecryptionGroup">The recryption group to search</param>
+        ///// <param name="MemberID">The member identifier.</param>
+        ///// <returns>The member entry.</returns>
+        //public MemberEntry GetDecryptionEntry (RecryptionGroup RecryptionGroup, string MemberID) {
+        //    return RecryptionGroup.Members?.Find(x => x.UDF.CompareUDF(MemberID));
+        //    }
 
 
         /// <summary>
@@ -118,13 +132,27 @@ namespace Goedel.Recrypt.Server {
         /// </summary>
         /// <param name="MemberEntry">The member entry.</param>
         /// <param name="EncryptionKeyUDF">The encryption key fingerprint.</param>
-        /// <param name="MemberKeyUDF">The member key fingerprint.</param>
+        /// <param name="MemberKeyUDF">List of member key fingerprints.</param>
         /// <returns>Decryption information for the specified user.</returns>
-        public UserDecryptionEntry GetUserDecryptionEntry (MemberEntry MemberEntry, 
-                    string EncryptionKeyUDF, string MemberKeyUDF) {
-            return MemberEntry.Entries?.Find(x => 
-                    x.EncryptionKeyUDF.CompareUDF(EncryptionKeyUDF) & 
-                    x.MemberKeyUDF.CompareUDF(MemberKeyUDF));
+        public UserDecryptionEntry GetUserDecryptionEntry (
+                        RecryptionGroup RecryptionGroup,
+                    string EncryptionKeyUDF, List<string> MemberKeyUDFs) {
+
+            // Hack: Need to completely reorganize the Recryption group store so that this is efficient.
+
+            foreach (var Member in RecryptionGroup.Members) {
+                foreach (var Entry in Member.Entries) {
+                    if (Entry.EncryptionKeyUDF.CompareUDF(EncryptionKeyUDF)) {
+                        foreach (var MemberKeyUDF in MemberKeyUDFs) {
+                            if (Entry.MemberKeyUDF.CompareUDF(MemberKeyUDF)) {
+                                return Entry;
+                                }
+                            }
+                        }
+                    }
+                }
+
+            return null;
             }
 
         /// <summary>
@@ -135,21 +163,24 @@ namespace Goedel.Recrypt.Server {
         /// <param name="MemberKeyUDF">The member key fingerprint.</param>
         /// <returns>Decryption information for the specified user.</returns>
         public UserDecryptionEntry GetUserDecryptionEntry (string GroupKeyID,
-                    string MemberID, string MemberKeyUDF) {
+                    string MemberID, List<string> MemberKeyUDF) {
 
-            UDF.ParseStrongRFC822(GroupKeyID, out var GroupName, out var EncryptionKeyUDF);
+            GroupKeyID.SplitAccountID (out var Service, out var KeyName);
 
-            var RecryptionGroup = GetGroup(GroupName);
+            var NastyHack = GetGroupByKey(KeyName);   // HACK: the indexing is done wrong.
+            var RecryptionGroup = GetGroup(NastyHack.GroupName);
+
             if (RecryptionGroup == null) {
                 return null;
                 }
 
-            var MemberEntry = GetMember(RecryptionGroup, MemberID);
-            if (MemberEntry == null) {
-                return null;
-                }
 
-            var UserDecryptionEntry = GetUserDecryptionEntry(MemberEntry, EncryptionKeyUDF, MemberKeyUDF);
+            //var MemberEntry = GetDecryptionEntry(RecryptionGroup, MemberID);
+            //if (MemberEntry == null) {
+            //    return null;
+            //    }
+
+            var UserDecryptionEntry = GetUserDecryptionEntry(RecryptionGroup, KeyName, MemberKeyUDF);
             return UserDecryptionEntry;
             }
 

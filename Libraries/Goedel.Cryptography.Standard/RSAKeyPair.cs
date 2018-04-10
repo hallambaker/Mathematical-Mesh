@@ -164,7 +164,7 @@ namespace Goedel.Cryptography.Framework {
 
             switch (KeySecurity) {
                 case KeySecurity.Master: {
-                    CSPParameters.Flags = CspProviderFlags.UseArchivableKey;
+                    //CSPParameters.Flags = CspProviderFlags.UseArchivableKey;
                     CSPParameters.Flags = CspProviderFlags.NoFlags;
                     Persist = true;
                     break;
@@ -184,7 +184,8 @@ namespace Goedel.Cryptography.Framework {
                     break;
                     }
                 case KeySecurity.Exportable: {
-                    CSPParameters.Flags = CspProviderFlags.CreateEphemeralKey | CspProviderFlags.UseArchivableKey;
+                    CSPParameters.Flags = CspProviderFlags.NoFlags;
+                    Persist = true;
                     break;
                     }
                 }
@@ -323,46 +324,46 @@ namespace Goedel.Cryptography.Framework {
 
 
 
-        /// <summary>
-        /// Makes a key persistent on the local machine with the specified level of
-        /// protection.
-        /// </summary>
-        /// <param name="KeySecurity">Key protection level to be applied.</param>
-        public void Persist(KeySecurity KeySecurity) {
+        ///// <summary>
+        ///// Makes a key persistent on the local machine with the specified level of
+        ///// protection.
+        ///// </summary>
+        ///// <param name="KeySecurity">Key protection level to be applied.</param>
+        //public void Persist(KeySecurity KeySecurity) {
 
-            Assert.NotNull(Provider, NoProviderSpecified.Throw);
+        //    Assert.NotNull(Provider, NoProviderSpecified.Throw);
 
-            var Parameters = new CspParameters();
-            switch (KeySecurity) {
-                case KeySecurity.Master:
-                Parameters.Flags = CspProviderFlags.UseArchivableKey | CspProviderFlags.UseUserProtectedKey;
-                Parameters.Flags = CspProviderFlags.NoFlags;
-                break;
-                case KeySecurity.Admin:
-                Parameters.Flags = CspProviderFlags.UseArchivableKey | CspProviderFlags.UseUserProtectedKey;
-                Parameters.Flags = CspProviderFlags.NoFlags;
-                break;
-                case KeySecurity.Device:
-                Parameters.Flags = CspProviderFlags.UseNonExportableKey;
-                break;
-                case KeySecurity.Ephemeral:
-                Parameters.Flags = CspProviderFlags.UseNonExportableKey;
-                break;
-                }
+        //    var Parameters = new CspParameters();
+        //    switch (KeySecurity) {
+        //        case KeySecurity.Master:
+        //        Parameters.Flags = CspProviderFlags.UseArchivableKey | CspProviderFlags.UseUserProtectedKey;
+        //        Parameters.Flags = CspProviderFlags.NoFlags;
+        //        break;
+        //        case KeySecurity.Admin:
+        //        Parameters.Flags = CspProviderFlags.UseArchivableKey | CspProviderFlags.UseUserProtectedKey;
+        //        Parameters.Flags = CspProviderFlags.NoFlags;
+        //        break;
+        //        case KeySecurity.Device:
+        //        Parameters.Flags = CspProviderFlags.UseNonExportableKey;
+        //        break;
+        //        case KeySecurity.Ephemeral:
+        //        Parameters.Flags = CspProviderFlags.UseNonExportableKey;
+        //        break;
+        //        }
 
-            Parameters.KeyContainerName = ContainerFramework.Name(UDF);
+        //    Parameters.KeyContainerName = ContainerFramework.Name(UDF);
 
-            var NewProvider = new RSACryptoServiceProvider(Parameters);
-            var KeyParams = Provider.ExportParameters(true);
+        //    var NewProvider = new RSACryptoServiceProvider(Parameters);
+        //    var KeyParams = Provider.ExportParameters(true);
 
-            NewProvider.ImportParameters(KeyParams);
-            Provider.Dispose();
-            _Provider = NewProvider;
+        //    NewProvider.ImportParameters(KeyParams);
+        //    Provider.Dispose();
+        //    _Provider = NewProvider;
 
-            if (KeySecurity == KeySecurity.Master) {
-                KeyParams = Provider.ExportParameters(true);
-                }
-            }
+        //    if (KeySecurity == KeySecurity.Master) {
+        //        KeyParams = Provider.ExportParameters(true);
+        //        }
+        //    }
 
         /// <summary>
         /// Locate a key stored in the platform cryptographic key store.
@@ -375,7 +376,8 @@ namespace Goedel.Cryptography.Framework {
                     KeyContainerName = ContainerFramework.Name(UDF),
                     Flags = CspProviderFlags.UseExistingKey
                     };
-                return new RSACryptoServiceProvider(Parameters);
+                var Provider =  new RSACryptoServiceProvider(Parameters);
+                return Provider;
                 }
             catch (System.Security.Cryptography.CryptographicException) { // Key not found
                 return null; 

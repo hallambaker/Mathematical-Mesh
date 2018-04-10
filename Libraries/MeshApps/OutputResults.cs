@@ -71,13 +71,13 @@ namespace Goedel.Combined.Shell.Client {
             var AccountData = GetResponse.Data;
             var Buffer = new StringBuilder();
 
-            Buffer.Append($" {AccountData.AccountId}\n");
+            Buffer.Append($" {AccountData.AccountID}\n");
             Buffer.Append($" {AccountData.Created}\n");
             Buffer.Append($" {AccountData.Status}\n");
             Buffer.Append($" {AccountData.MeshUDF}\n");
             Buffer.Append($" {AccountData.Portal}\n");
 
-            foreach (var Entry in AccountData.Entries) {
+            foreach (var Entry in AccountData.Profiles) {
                 //Buffer.Append($" {AccountData.}\n");
                 //Buffer.Append($" {AccountData.}\n");
                 }

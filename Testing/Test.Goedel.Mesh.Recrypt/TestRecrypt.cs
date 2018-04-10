@@ -100,9 +100,11 @@ namespace Test.Goedel.Mesh {
 
         static void MakeUser (string PortalID, string AccountID, out SessionPersonal SessionPersonal) {
             SessionPersonal = MeshProfiles.CreateAndRegister(PortalID);
-            SessionPersonal.CreateRecryptProfile();
+            var Recrypt = SessionPersonal.CreateRecryptProfile(AccountID);
 
-
+            SessionAccount.Create(SessionPersonal, AccountID,
+                new List<string> { PortalID },
+                new List<SignedApplicationProfile> { Recrypt.SignedApplicationProfile });
 
             }
 
@@ -172,24 +174,24 @@ namespace Test.Goedel.Mesh {
             // var AliceGroup2 = AliceRecryptSession.FindGroup(GroupName);
 
             // Add Bob, test
-            AliceRecryptSession.AddMember(AliceGroup, IDPortalBob);
+            AliceRecryptSession.AddMember(AliceGroup, IDAccountBob);
 
                 {
-                BobSessionPersonal.DecryptDARE(Filename, out var ReadData, out var contentMeta);
+                BobSessionPersonal.RecryptDARE(Filename, out var ReadData, out var contentMeta);
                 UT.Assert.IsTrue(ReadData.IsEqualTo(TestData));
                 }
 
             // Add Carol, test
-            AliceRecryptSession.AddMember(AliceGroup, IDPortalCarol);
+            AliceRecryptSession.AddMember(AliceGroup, IDAccountCarol);
 
                 {
-                CarolSessionPersonal.DecryptDARE(Filename, out var ReadData, out var contentMeta);
+                CarolSessionPersonal.RecryptDARE(Filename, out var ReadData, out var contentMeta);
                 UT.Assert.IsTrue(ReadData.IsEqualTo(TestData));
                 }
 
 
             // Remove Carol, test
-            AliceRecryptSession.RemoveMember(AliceGroup, IDPortalCarol);
+            AliceRecryptSession.RemoveMember(AliceGroup, IDAccountCarol);
 
             // check Alice can decrypt
                 {

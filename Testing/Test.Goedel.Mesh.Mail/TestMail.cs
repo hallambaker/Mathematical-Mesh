@@ -56,10 +56,10 @@ namespace Goedel.Mesh.Mail.Test {
 
         static string IDMailAlice = $"{IDAlice}@{ServiceSSHDNS}";
 
-        static SessionPersonal AliceMeshDevice1;
+        static SessionPersonal AliceMeshDevice1=null;
         static SessionPersonal AliceMeshDevice2;
 
-        static MailProfile AliceRecryptProfile;
+        //static MailProfile AliceMailProfile;
         static MeshProfiles MeshProfiles;
 
         public static void InitializeClass () {

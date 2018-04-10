@@ -1,4 +1,4 @@
-
+﻿
 //  Copyright (c) 2016 by .
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -107,9 +107,7 @@ namespace Goedel.Recrypt {
         /// <summary>
         /// Well Known service identifier.
         /// </summary>
-		public override string GetWellKnown {
-			get => WellKnown;
-			}
+		public override string GetWellKnown => WellKnown;
 
         /// <summary>
         /// Well Known service identifier.
@@ -119,9 +117,7 @@ namespace Goedel.Recrypt {
         /// <summary>
         /// Well Known service identifier.
         /// </summary>
-		public override string GetDiscovery {
-			get => Discovery;
-			}
+		public override string GetDiscovery => Discovery;
 
         /// <summary>
         /// The active JPCSession.
@@ -1893,7 +1889,7 @@ namespace Goedel.Recrypt {
 	/// </summary>
 	public partial class RecryptDataRequest : RecryptRequest {
         /// <summary>
-        ///The member Mesh profile UDF
+        ///The member Mesh profile UDF. Is this actually useful or necessary
         /// </summary>
 
 		public virtual string						MemberUDF  {get; set;}
@@ -1901,7 +1897,7 @@ namespace Goedel.Recrypt {
         ///The member key fingerprint
         /// </summary>
 
-		public virtual string						MemberKeyUDF  {get; set;}
+		public virtual List<string>				MemberKeyUDF  {get; set;}
         /// <summary>
         ///The key identifier of the group key to which the data is encrypted
         /// </summary>
@@ -1960,8 +1956,15 @@ namespace Goedel.Recrypt {
 			if (MemberKeyUDF != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("MemberKeyUDF", 1);
-					_Writer.WriteString (MemberKeyUDF);
+				_Writer.WriteArrayStart ();
+				bool _firstarray = true;
+				foreach (var _index in MemberKeyUDF) {
+					_Writer.WriteArraySeparator (ref _firstarray);
+					_Writer.WriteString (_index);
+					}
+				_Writer.WriteArrayEnd ();
 				}
+
 			if (GroupKeyID != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("GroupKeyID", 1);
@@ -2017,7 +2020,14 @@ namespace Goedel.Recrypt {
 					break;
 					}
 				case "MemberKeyUDF" : {
-					MemberKeyUDF = JSONReader.ReadString ();
+					// Have a sequence of values
+					bool _Going = JSONReader.StartArray ();
+					MemberKeyUDF = new List <string> ();
+					while (_Going) {
+						string _Item = JSONReader.ReadString ();
+						MemberKeyUDF.Add (_Item);
+						_Going = JSONReader.NextArray ();
+						}
 					break;
 					}
 				case "GroupKeyID" : {

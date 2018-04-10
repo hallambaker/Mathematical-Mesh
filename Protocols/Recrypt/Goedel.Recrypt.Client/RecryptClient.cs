@@ -93,7 +93,7 @@ namespace Goedel.Recrypt.Client {
 
 
         /// <summary>
-        /// Create a new recryption group.
+        /// Get the encryption key corresponding to a recryption group.
         /// </summary>
         /// <param name="GroupID">The group identifier</param>
         /// <returns>The service response</returns>
@@ -116,7 +116,7 @@ namespace Goedel.Recrypt.Client {
         /// <returns>The service response</returns>
         public RecryptDataResponse RecryptData (
                     string MemberUDF,
-                    string MemberKeyUDF,
+                    List<string> MemberKeyUDF,
                     Recipient Recipient) {
 
 
@@ -134,42 +134,42 @@ namespace Goedel.Recrypt.Client {
 
         /*********************************************************/
 
-        /// <summary>
-        /// Add a member to an existing recryption group
-        /// </summary>
-        /// <param name="GroupID">The group identifier.</param>
-        /// <param name="MeshID">The member's Mesh fingerprint.</param>
-        /// <returns>The service response</returns>
-        public AddMemberResponse AddMember (
-                    string GroupID,
-                    string MeshID) {
-            var Request = new AddMemberRequest() { };
-            return Service.AddMember(Request);
-            }
+        ///// <summary>
+        ///// Add a member to an existing recryption group
+        ///// </summary>
+        ///// <param name="GroupID">The group identifier.</param>
+        ///// <param name="MeshID">The member's Mesh fingerprint.</param>
+        ///// <returns>The service response</returns>
+        //public AddMemberResponse AddMember (
+        //            string GroupID,
+        //            string MeshID) {
+        //    var Request = new AddMemberRequest() { };
+        //    return Service.AddMember(Request);
+        //    }
 
-        /// <summary>
-        /// Update a member entry in an existing recryption group
-        /// </summary>
-        /// <returns>The service response</returns>
-        public UpdateMemberResponse UpdateMember () {
-            var Request = new UpdateMemberRequest() { };
-            return Service.UpdateMember(Request);
-            }
+        ///// <summary>
+        ///// Update a member entry in an existing recryption group
+        ///// </summary>
+        ///// <returns>The service response</returns>
+        //public UpdateMemberResponse UpdateMember () {
+        //    var Request = new UpdateMemberRequest() { };
+        //    return Service.UpdateMember(Request);
+        //    }
 
 
 
-        /// <summary>
-        /// Encrypt a file under a recryption group ID
-        /// </summary>
-        /// <param name="GroupID">The recryption group to encrypt to.</param>
-        /// <param name="Input">The input file name</param>
-        /// <param name="Output">The output file name</param>
-        public void EncryptData (
-                    string GroupID,
-                    string Input,
-                    string Output) {
-            throw new Goedel.Utilities.NYI();
-            }
+        ///// <summary>
+        ///// Encrypt a file under a recryption group ID
+        ///// </summary>
+        ///// <param name="GroupID">The recryption group to encrypt to.</param>
+        ///// <param name="Input">The input file name</param>
+        ///// <param name="Output">The output file name</param>
+        //public void EncryptData (
+        //            string GroupID,
+        //            string Input,
+        //            string Output) {
+        //    throw new Goedel.Utilities.NYI();
+        //    }
 
         }
     }

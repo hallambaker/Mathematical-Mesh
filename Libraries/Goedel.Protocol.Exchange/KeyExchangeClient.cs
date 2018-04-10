@@ -22,7 +22,7 @@ namespace Goedel.Protocol.Exchange {
         /// <param name="AccountID">The identity to claim.</param>
         public KeyExchangeClient (string Service = null, string AccountID = null) {
             if (Service == null) {
-                AccountID.SplitAccountID(out var Account, out Service);
+                AccountID.SplitAccountID(out Service, out var Account);
                 }
             Assert.NotNull(Service, InvalidAddress.Throw);
 

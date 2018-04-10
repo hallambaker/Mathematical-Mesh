@@ -1,4 +1,4 @@
-
+﻿
 //  Copyright (c) 2016 by .
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -30,6 +30,7 @@ using Goedel.Protocol;
 
 
 using Goedel.Cryptography.Jose;
+using Goedel.Mesh;
 
 
 namespace Goedel.Account {
@@ -63,7 +64,6 @@ namespace Goedel.Account {
 			{"AccountRequest", AccountRequest._Factory},
 			{"AccountResponse", AccountResponse._Factory},
 			{"AccountData", AccountData._Factory},
-			{"AccountDataEntry", AccountDataEntry._Factory},
 			{"CreateRequest", CreateRequest._Factory},
 			{"CreateResponse", CreateResponse._Factory},
 			{"DeleteRequest", DeleteRequest._Factory},
@@ -101,9 +101,7 @@ namespace Goedel.Account {
         /// <summary>
         /// Well Known service identifier.
         /// </summary>
-		public override string GetWellKnown {
-			get => WellKnown;
-			}
+		public override string GetWellKnown => WellKnown;
 
         /// <summary>
         /// Well Known service identifier.
@@ -113,9 +111,7 @@ namespace Goedel.Account {
         /// <summary>
         /// Well Known service identifier.
         /// </summary>
-		public override string GetDiscovery {
-			get => Discovery;
-			}
+		public override string GetDiscovery => Discovery;
 
         /// <summary>
         /// The active JPCSession.
@@ -532,7 +528,7 @@ namespace Goedel.Account {
         ///The account identifier
         /// </summary>
 
-		public virtual string						AccountId  {get; set;}
+		public virtual string						AccountID  {get; set;}
         /// <summary>
         ///Date and time that the account identifier was created.
         /// </summary>
@@ -557,7 +553,13 @@ namespace Goedel.Account {
         ///Service specific data
         /// </summary>
 
-		public virtual List<AccountDataEntry>				Entries  {get; set;}
+		public virtual List<SignedApplicationProfile>				Profiles  {get; set;}
+        /// <summary>
+        ///The Unique identifier for the account assigned by the service.
+        ///UDF val
+        /// </summary>
+
+		public virtual string						UDF  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -597,10 +599,10 @@ namespace Goedel.Account {
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
-			if (AccountId != null) {
+			if (AccountID != null) {
 				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("AccountId", 1);
-					_Writer.WriteString (AccountId);
+				_Writer.WriteToken ("AccountID", 1);
+					_Writer.WriteString (AccountID);
 				}
 			if (Created != null) {
 				_Writer.WriteObjectSeparator (ref _first);
@@ -629,12 +631,12 @@ namespace Goedel.Account {
 				_Writer.WriteArrayEnd ();
 				}
 
-			if (Entries != null) {
+			if (Profiles != null) {
 				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("Entries", 1);
+				_Writer.WriteToken ("Profiles", 1);
 				_Writer.WriteArrayStart ();
 				bool _firstarray = true;
-				foreach (var _index in Entries) {
+				foreach (var _index in Profiles) {
 					_Writer.WriteArraySeparator (ref _firstarray);
 					// This is an untagged structure. Cannot inherit.
                     //_Writer.WriteObjectStart();
@@ -646,6 +648,11 @@ namespace Goedel.Account {
 				_Writer.WriteArrayEnd ();
 				}
 
+			if (UDF != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("UDF", 1);
+					_Writer.WriteString (UDF);
+				}
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
 				}
@@ -678,8 +685,8 @@ namespace Goedel.Account {
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
-				case "AccountId" : {
-					AccountId = JSONReader.ReadString ();
+				case "AccountID" : {
+					AccountID = JSONReader.ReadString ();
 					break;
 					}
 				case "Created" : {
@@ -705,106 +712,24 @@ namespace Goedel.Account {
 						}
 					break;
 					}
-				case "Entries" : {
+				case "Profiles" : {
 					// Have a sequence of values
 					bool _Going = JSONReader.StartArray ();
-					Entries = new List <AccountDataEntry> ();
+					Profiles = new List <SignedApplicationProfile> ();
 					while (_Going) {
 						// an untagged structure.
-						var _Item = new  AccountDataEntry ();
+						var _Item = new  SignedApplicationProfile ();
 						_Item.Deserialize (JSONReader);
-						// var _Item = new AccountDataEntry (JSONReader);
-						Entries.Add (_Item);
+						// var _Item = new SignedApplicationProfile (JSONReader);
+						Profiles.Add (_Item);
 						_Going = JSONReader.NextArray ();
 						}
 					break;
 					}
-				default : {
+				case "UDF" : {
+					UDF = JSONReader.ReadString ();
 					break;
 					}
-				}
-			// check up that all the required elements are present
-			}
-
-
-		}
-
-	/// <summary>
-	///
-	/// Superclass for all account data entry objects
-	/// </summary>
-	public partial class AccountDataEntry : AccountProtocol {
-		
-		/// <summary>
-        /// Tag identifying this class
-        /// </summary>
-		public override string _Tag { get; } = "AccountDataEntry";
-
-		/// <summary>
-        /// Factory method
-        /// </summary>
-        /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () {
-			return new AccountDataEntry();
-			}
-
-
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// </summary>
-        /// <param name="Writer">Output stream</param>
-        /// <param name="wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
-			SerializeX (Writer, wrap, ref first);
-			}
-
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// Unlike the Serlialize() method, this method is not inherited from the
-        /// parent class allowing a specific version of the method to be called.
-        /// </summary>
-        /// <param name="_Writer">Output stream</param>
-        /// <param name="_wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="_first">If true, item is the first entry in a list.</param>
-		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
-			if (_wrap) {
-				_Writer.WriteObjectStart ();
-				}
-			if (_wrap) {
-				_Writer.WriteObjectEnd ();
-				}
-			}
-
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="JSONReader">The input stream</param>
-		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
-        /// <returns>The created object.</returns>		
-        public static new AccountDataEntry FromJSON (JSONReader JSONReader, bool Tagged=true) {
-			if (JSONReader == null) {
-				return null;
-				}
-			if (Tagged) {
-				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
-				return Out as AccountDataEntry;
-				}
-		    var Result = new AccountDataEntry ();
-			Result.Deserialize (JSONReader);
-			return Result;
-			}
-
-        /// <summary>
-        /// Having read a tag, process the corresponding value data.
-        /// </summary>
-        /// <param name="JSONReader">The input stream</param>
-        /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
-			
-			switch (Tag) {
 				default : {
 					break;
 					}

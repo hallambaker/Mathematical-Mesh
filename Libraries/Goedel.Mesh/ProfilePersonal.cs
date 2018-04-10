@@ -237,10 +237,13 @@ namespace Goedel.Mesh {
         /// <returns>The appliccation profile entry</returns>
         public ApplicationProfileEntry Add(ApplicationProfile ApplicationProfile) {
 
+            // Hack: This should be done differently. first, accounts should be registered as AccountProfiles with the sub-apps specified.
+
             var ApplicationProfileEntry = new ApplicationProfileEntry() {
                 Identifier = ApplicationProfile.Identifier,
                 Type = ApplicationProfile.Tag(),
-                AccountID = ApplicationProfile.ShortID
+                ApplicationProfile = ApplicationProfile,   // Hack: This is temporary for the RSAConf profile should be fetched from the account
+                AccountID = ApplicationProfile.ShortID  // ToDo: Should have separate calls for creating local and remote accounts
                 };
 
             if (Applications == null) {

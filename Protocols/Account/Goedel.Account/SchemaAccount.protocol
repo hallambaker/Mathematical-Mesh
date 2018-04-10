@@ -1,5 +1,7 @@
 ﻿Protocol Goedel.Account AccountProtocol AccountProtocol
     Using Goedel.Cryptography.Jose 
+	Using Goedel.Mesh
+
 	Description
 		|Mesh/Account protocol schema.
 
@@ -51,7 +53,7 @@
 	Structure AccountData
 		Description
 			|The data associated with an account
-		String AccountId
+		String AccountID
 			Description
 				|The account identifier
 		DateTime Created
@@ -67,14 +69,15 @@
 			Multiple
 			Description
 				|Mesh Portal identifier
-		Struct AccountDataEntry Entries 
+		Struct SignedApplicationProfile Profiles 
 			Multiple
 			Description
 				|Service specific data
+		String UDF
+			Description
+				|The Unique identifier for the account assigned by the service.
+				|UDF val
 
-	Structure AccountDataEntry
-		Description
-			|Superclass for all account data entry objects
 
 
 	Section 2 "Utility Transactions"

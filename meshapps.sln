@@ -226,6 +226,7 @@ Global
 		Libraries\MeshApps\MeshApps.projitems*{2b5532b5-5f59-4298-8de7-e5cafbf08e53}*SharedItemsImports = 13
 		Libraries\Goedel.Utilities\Goedel.Utilities.projitems*{415214fc-4792-4519-a93f-315f2ea97cff}*SharedItemsImports = 13
 		Libraries\Goedel.Command\Goedel.Command.projitems*{573f1f3c-c0a9-4272-b054-068caa8ef8aa}*SharedItemsImports = 4
+		Libraries\Goedel.Discovery\Goedel.Discovery.projitems*{573f1f3c-c0a9-4272-b054-068caa8ef8aa}*SharedItemsImports = 4
 		Libraries\Goedel.FSR\Goedel.FSR.projitems*{573f1f3c-c0a9-4272-b054-068caa8ef8aa}*SharedItemsImports = 4
 		Libraries\Goedel.Registry\Goedel.Registry.projitems*{573f1f3c-c0a9-4272-b054-068caa8ef8aa}*SharedItemsImports = 4
 		Libraries\Goedel.Utilities\Goedel.Utilities.projitems*{573f1f3c-c0a9-4272-b054-068caa8ef8aa}*SharedItemsImports = 4

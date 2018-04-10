@@ -16,14 +16,15 @@ namespace Goedel.Account.Client {
     /// attempt retry etc.
     /// </summary>
     public class AccountClient {
-        AccountService Service;
+        AccountService AccountService;
 
         /// <summary>
-        /// Defaultr constructor, create a MeshClient for the specified service.
+        /// Default constructor, create a MeshClient for the specified service.
         /// </summary>
         /// <param name="Address">The recryption service to connect to.</param>
         public AccountClient (string Address) {
-            Service = AccountPortal.Default.GetService(Address);
+            Address.SplitAccountIDService(out var Service, out var Account);
+            AccountService = AccountPortal.Default.GetService(Service, Account);
             }
 
         /// <summary>
@@ -32,7 +33,7 @@ namespace Goedel.Account.Client {
         /// <returns>The service response</returns>
         public HelloResponse Hello () {
             var Request = new HelloRequest() { };
-            return Service.Hello(Request);
+            return AccountService.Hello(Request);
             }
 
         /// <summary>
@@ -40,24 +41,17 @@ namespace Goedel.Account.Client {
         /// </summary>
         /// <param name="AccountID">The account identifier</param>
         /// <param name="UDF">The user's Mesh fingerprint.</param>
-        /// <param name="ProfilePortal">The user's Personal Profile</param>
+        /// <param name="PortalID">The user's portal account</param>
         /// <param name="PIN">PIN validator (if used).</param>
         /// <returns>The service response</returns>
         public CreateResponse Create (
-                    string AccountID,
-                    string UDF,
-                    string ProfilePortal,
-                    string PIN) {
+                    AccountData AccountData) {
 
-            var AccountData = new AccountData() {
-                AccountId = AccountID,
-                MeshUDF = UDF,
-                Portal = new List<string> { ProfilePortal }
-                };
+
             var Request = new CreateRequest() {
                 Data = AccountData
                 };
-            return Service.Create(Request);
+            return AccountService.Create(Request);
             }
 
         /// <summary>
@@ -67,7 +61,7 @@ namespace Goedel.Account.Client {
         /// <returns>The service response</returns>
         public DeleteResponse Delete (string AccountID) {
             var Request = new DeleteRequest() { };
-            return Service.Delete(Request);
+            return AccountService.Delete(Request);
             }
 
 
@@ -78,7 +72,7 @@ namespace Goedel.Account.Client {
         /// <returns>The service response</returns>
         public UpdateResponse Update (string AccountID) {
             var Request = new UpdateRequest() { };
-            return Service.Update(Request);
+            return AccountService.Update(Request);
             }
 
         /// <summary>
@@ -88,24 +82,10 @@ namespace Goedel.Account.Client {
         /// <returns>The service response</returns>
         public GetResponse Get (string AccountID) {
             var Request = new GetRequest() { AccountId = AccountID };
-            return Service.Get(Request);
+            return AccountService.Get(Request);
             }
 
 
-        /// <summary>
-        /// Resolve an account identifier by making an account data request to the
-        /// corresponding Account server.
-        /// </summary>
-        /// <param name="AccountID"></param>
-        /// <returns></returns>
-        public static AccountData GetAccountPofile (string AccountID) {
 
-            AccountID.SplitAccountID(out var Account, out var Portal);
-
-            var AccountClient = new AccountClient(Portal);
-
-            var Response = AccountClient.Get(AccountID);
-            return Response.Data;
-            }
         }
     }

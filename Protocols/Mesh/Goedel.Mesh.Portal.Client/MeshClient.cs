@@ -102,7 +102,7 @@ namespace Goedel.Mesh.Portal.Client {
         /// <param name="PortalAccount">The portal to connect to.</param>
         public MeshClient(string Service = null, string PortalAccount = null) {
             if (Service == null) {
-                PortalAccount.SplitAccountID( out var Account, out Service);
+                PortalAccount.SplitAccountID(out Service, out var Account);
                 }
             Assert.NotNull(Service, InvalidPortalAddress.Throw);
             

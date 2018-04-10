@@ -253,8 +253,9 @@
 			|encrypted data and return it encrypted under the user's public key.
 		String MemberUDF
 			Description
-				|The member Mesh profile UDF
+				|The member Mesh profile UDF. Is this actually useful or necessary
 		String MemberKeyUDF
+			Multiple
 			Description
 				|The member key fingerprint
 		String GroupKeyID

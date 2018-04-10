@@ -139,7 +139,6 @@ namespace Goedel.Cryptography.Framework {
         public override void Generate(KeySecurity KeySecurity, int Size=0) {
             KeySize = (Size == 0) ? KeySize : Size;
             _RSAKeyPair = new KeyPairRSA(KeySecurity, KeySize);
-            //_RSAKeyPair.Persist(KeySecurity);
             }
 
         /// <summary>

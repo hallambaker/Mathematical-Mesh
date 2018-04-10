@@ -73,7 +73,8 @@ namespace Goedel.Recrypt {
                 UDF = Recrypt.PersonalUDF,
                 RecryptUDF = Recrypt.Identifier,
                 Status = "Active",
-                Entries = new List<UserDecryptionEntry>()
+                Entries = new List<UserDecryptionEntry>(),
+                Name= Recrypt.ShortID
                 };
 
             foreach (var EncryptKey in Recrypt.EncryptKeys) {
@@ -91,6 +92,17 @@ namespace Goedel.Recrypt {
                 }
 
             return KeyPair.FindLocal(ValidatedCurrentEncryptionKey.UDF);
+            }
+
+        /// <summary>
+        /// Remove a member from the group.
+        /// </summary>
+        /// <param name="UserIdentifier"></param>
+        public void RemoveMember (string UserIdentifier) {
+            var Member = Members.SingleOrDefault(M => M.Name == UserIdentifier);
+            if (Member != null) {
+                Members.Remove(Member);
+                }
             }
 
 
@@ -141,7 +153,7 @@ namespace Goedel.Recrypt {
         public string RecrytionGroup { get; set; }
 
         public KeyPair NamedKeyPair () {
-            RecrytionGroup.SplitAccountID(out var Account, out var Domain);
+            RecrytionGroup.SplitAccountID(out var Domain, out var Account);
             var KeyPair = EncryptionKey.KeyPair;
             KeyPair.Name = KeyPair.UDF.ToLower() + "@" + Domain;
 

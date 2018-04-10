@@ -34,8 +34,11 @@ namespace Goedel.Persistence {
         /// <returns>The input list as a KeyValue Pair.</returns>
         public static List<IndexTerm> ToIndexTerms (
                 this List<KeyValuePair<string, string>> Data) {
-            var Result = new List<IndexTerm>();
+            if (Data == null) {
+                return null;        // null list for null list.
+                }
 
+            var Result = new List<IndexTerm>();
             foreach (var Entry in Data) {
                 Result.Add(new IndexTerm() { Type = Entry.Key, Term = Entry.Value} );
                 }

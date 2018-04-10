@@ -31,12 +31,40 @@ namespace Goedel.Recrypt {
 
     public partial class RecryptionGroup {
         /// <summary>The primary key for this object </summary>
-        public override string _PrimaryKey  => PrimaryKey(GroupName); 
-        
+        public override string _PrimaryKey => PrimaryKey(GroupName);
+
         /// <summary>The primary key for an object</summary>
         /// <param name="GroupName">The group name</param>
         /// <returns>The primary key</returns>
         public static string PrimaryKey (string GroupName) => "Group$" + GroupName;
+
+
+        public const string EncryptionIndexTerm = "EncryptKey";
+
+        /// <summary>
+        /// There is one key index mapping encryption keys to groups.
+        /// </summary>
+        readonly List<string> Keys = new List<string> { EncryptionIndexTerm };
+        public override List<string> _Keys => Keys;
+
+        /// <summary>
+        /// The key values map encryption Key UDFs to the group that they are assigned to.
+        /// </summary>
+        public override List<KeyValuePair<string, string>> _KeyValues => KeyValues();
+        List<KeyValuePair<string, string>> KeyValues () {
+            var Result = new List<KeyValuePair<string, string>>
+                { new KeyValuePair<string, string> (
+                    EncryptionIndexTerm, ValidatedCurrentEncryptionKey.UDF)};
+
+            if (ArchivedKeys != null) {
+                throw new NYI(); // HACK: Should respecify a Recryption group as a profile
+                // will need to do a lot more to add key rollover!
+                }
+            return Result;
+            }
+
+
+
         }
 
 

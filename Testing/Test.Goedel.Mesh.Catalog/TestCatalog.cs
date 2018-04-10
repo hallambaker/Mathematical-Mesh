@@ -57,8 +57,8 @@ namespace Goedel.Mesh.Mail.Test {
 
         //static SessionPersonal AlicePersonal;
 
-        static SessionPersonal AliceMeshDevice1;
-        static SessionPersonal AliceMeshDevice2;
+        static SessionPersonal AliceMeshDevice1=null;
+        static SessionPersonal AliceMeshDevice2=null;
 
 
         public static void InitializeClass () {

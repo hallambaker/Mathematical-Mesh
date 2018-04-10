@@ -298,9 +298,11 @@ namespace Goedel.Persistence {
         /// </summary>
         /// <param name="Object">Object to add.</param>
         public virtual void New(JSONObject Object) {
-            var DataItem = new DataItem(GetTransactionID(), 
-                    Object._PrimaryKey, 
-                    Object.GetUTF8(), null);
+            var DataItem = new DataItem(
+                    GetTransactionID(),                     // Interlocked safe assignment
+                    Object._PrimaryKey,                     // The primary key
+                    Object.GetUTF8(),                       // The data
+                    Object?._KeyValues.ToIndexTerms());     // The index terms
             New(DataItem);
             }
 
@@ -310,8 +312,11 @@ namespace Goedel.Persistence {
         /// </summary>
         /// <param name="Object">Object to add.</param>
         public virtual void Update(JSONObject Object) {
-            var DataItem = new DataItem(GetTransactionID(), Object._PrimaryKey, Object.GetUTF8(),
-                Object._KeyValues.ToIndexTerms());
+            var DataItem = new DataItem(
+                GetTransactionID(), 
+                Object._PrimaryKey, 
+                Object.GetUTF8(),
+                Object._KeyValues?.ToIndexTerms());
             Update(DataItem);
             }
 

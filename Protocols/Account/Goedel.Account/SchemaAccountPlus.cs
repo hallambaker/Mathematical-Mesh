@@ -10,7 +10,7 @@ namespace Goedel.Account {
 
     public partial class AccountData {
 
-        public override string _PrimaryKey => AccountId;
+        public override string _PrimaryKey => AccountID;
 
         public override List<KeyValuePair<string, string>> _KeyValues => null ;
 

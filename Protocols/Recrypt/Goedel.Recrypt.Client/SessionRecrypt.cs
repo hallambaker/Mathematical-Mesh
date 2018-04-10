@@ -127,6 +127,8 @@ namespace Goedel.Recrypt.Client {
 
         KeyPair DecryptionKeyPairFudge; // Hack: only supports one key at the 
 
+
+
         public override MeshMachine MeshMachine { set => throw new NotImplementedException(); }
 
         // moment because we have no mapping to the recryption group
@@ -182,12 +184,6 @@ namespace Goedel.Recrypt.Client {
                         CryptoAlgorithmID cryptoAlgorithmID = CryptoAlgorithmID.Default,
                         int KeySize=0) {
 
-
-            //var AccountID = Options.AccountID.Value;
-            //var RecryptClient = new RecryptClient(AccountID);
-
-            //Assert.NotNull(Options.GroupID.Value, NoGroupSpecified.Throw);
-
             var RecryptionGroup = new RecryptionGroup() {
                 GroupName = GroupIdentifier
                 };
@@ -213,50 +209,34 @@ namespace Goedel.Recrypt.Client {
             // Issues - have not updated the profile to the mesh after adding Recrypt
             //    Have not published recryption profile
 
-            var MemberProfile = AccountClient.GetAccountPofile(AccountID);
+            var SignedProfile = SessionAccount.GetAccountPofile(AccountID, "RecryptProfile");
+            Assert.NotNull(SignedProfile);
 
-
-            //Assert.NotNull(MemberProfile);
-
-            throw new NYI();
-            //var RecryptProfile = MemberProfile.GetRecryptionProfile(AccountID);
-            //Assert.NotNull(RecryptProfile);
-
-            //RecryptionGroup.AddMember(RecryptProfile);
-
-            //return RecryptClient.UpdateGroup(RecryptionGroup);
+            RecryptionGroup.AddMember(SignedProfile.RecryptProfile());
+            return RecryptClient.UpdateGroup(RecryptionGroup);
             }
 
         public UpdateGroupResponse AddMembers (
                             RecryptionGroup RecryptionGroup, 
                             IEnumerable<string> AccountIDs) {
 
-            throw new NYI();
+            foreach (var AccountID in AccountIDs) {
+                var Profile = MeshClient.GetProfile(AccountID);
 
-            //foreach (var AccountID in AccountIDs) {
-            //    var MemberProfile = AccountClient.GetAccountPofile(AccountID);
-            //    Assert.NotNull(MemberProfile);
+                var SignedProfile = SessionAccount.GetAccountPofile(AccountID, "RecryptProfile");
+                Assert.NotNull(SignedProfile);
 
+                RecryptionGroup.AddMember(SignedProfile.RecryptProfile());
+                }
 
-            //    var RecryptProfile = MemberProfile.GetRecryptionProfile(AccountID);
-            //    Assert.NotNull(RecryptProfile);
-
-            //    RecryptionGroup.AddMember(RecryptProfile);
-            //    }
-
-            //return RecryptClient.UpdateGroup(RecryptionGroup);
-
-
-            //throw new NYI();
+            return RecryptClient.UpdateGroup(RecryptionGroup);
             }
 
-        public AddMemberResponse RemoveMember (RecryptionGroup RecryptionGroup, string UserIdentifier) {
+        public UpdateGroupResponse RemoveMember (RecryptionGroup RecryptionGroup, string UserIdentifier) {
 
-            //RecryptionGroup.RemoveMember(UserIdentifier);
+            RecryptionGroup.RemoveMember(UserIdentifier);
 
-            //return RecryptClient.UpdateGroup(RecryptionGroup);
-
-            throw new NYI();
+            return RecryptClient.UpdateGroup(RecryptionGroup);
             }
 
         }

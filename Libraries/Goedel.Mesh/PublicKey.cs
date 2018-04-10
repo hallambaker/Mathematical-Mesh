@@ -183,8 +183,8 @@ namespace Goedel.Mesh {
         /// </summary>
         public virtual KeyPair PrivateKey {
             get {
-                _KeyPair.GetPrivate();
-                return _KeyPair;
+                KeyPair?.GetPrivate();
+                return KeyPair;
                 }
             }
 
@@ -277,8 +277,8 @@ namespace Goedel.Mesh {
             else {
                 CryptoProvider = CryptoCatalog.Default.GetExchange(CryptoAlgorithmID);
                 }
-
-            CryptoProvider.Generate(GetKeySecurity(KeyType));
+            var KeySecurity = GetKeySecurity(KeyType);
+            CryptoProvider.Generate(KeySecurity);
             var KeyPair = CryptoProvider.KeyPair;
             return new PublicKey (KeyPair);
             }
