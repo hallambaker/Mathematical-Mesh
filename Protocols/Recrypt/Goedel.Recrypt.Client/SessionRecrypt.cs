@@ -21,12 +21,10 @@ namespace Goedel.Recrypt.Client {
                 string UDF = null) {
 
             var Found = SessionPersonal.MeshMachine.Find(
-                out var Result,
-                "RecryptProfile",
-                UDF: UDF,
-                ShortId: ShortId);
 
-            return Result as SessionRecrypt;
+                "RecryptProfile");
+
+            return new SessionRecrypt(Found, SessionPersonal);
             }
 
         public static SessionRecrypt Create (
@@ -35,10 +33,10 @@ namespace Goedel.Recrypt.Client {
             return new SessionRecrypt(SessionPersonal, Profile);
             }
 
-        public static RecryptClient RecryptClient (this SessionPersonal SessionPersonal) {
+        //public static RecryptClient RecryptClient (this SessionPersonal SessionPersonal) {
 
-            throw new NYI();
-            }
+        //    throw new NYI();
+        //    }
 
 
         }
@@ -87,49 +85,45 @@ namespace Goedel.Recrypt.Client {
 
 
         /// <summary>
-        /// Construct a SessionRecryption from a personal session.
+        /// Construct a new SessionRecryption from a profile specification.
         /// </summary>
         /// <param name="SessionPersonal">The personal session to construct from.</param>
-        public SessionRecrypt (SessionPersonal SessionPersonal, RecryptProfile RecryptProfile) {
-            this.SessionPersonal = SessionPersonal;
-            ApplicationProfile = RecryptProfile;
-
-            SessionPersonal.Add(this);  // The point at which the writes to the local disk, portal are performed.
+        public SessionRecrypt (
+                    SessionPersonal SessionPersonal, 
+                    RecryptProfile RecryptProfile,
+                    bool Write = true) : base (SessionPersonal, RecryptProfile, Write) {
             }
 
 
         /// <summary>
-        /// Construct a SessionRecryption from a personal session.
+        /// Construct a SessionRecryption from a cached profile
         /// </summary>
         /// <param name="SessionPersonal">The personal session to construct from.</param>
-        public SessionRecrypt (SessionPersonal SessionPersonal) {
-            this.SessionPersonal = SessionPersonal;
-            SessionApplications = SessionPersonal.GetApplicationsByType("RecryptProfile");
+        public SessionRecrypt (ApplicationProfile ApplicationProfile, SessionPersonal SessionPersonal) : 
+                                base (ApplicationProfile, SessionPersonal) {
 
-            foreach (var Session in SessionApplications) {
-                var Profile = Session.ApplicationProfile as RecryptProfile;
+            // ToDo: sort out this covfefe
 
+            //SessionApplications = SessionPersonal.GetApplicationsByType("RecryptProfile");
 
-                foreach (var EncryptedDevicePrivate in Profile.DevicePrivate) {
-                    var KeyID = Session.FindByDecryption(EncryptedDevicePrivate.Recipients);
+            //foreach (var Session in SessionApplications) {
+            //    var Profile = Session.ApplicationProfile as RecryptProfile;
+            //    foreach (var EncryptedDevicePrivate in Profile.DevicePrivate) {
+            //        var KeyID = Session.FindByDecryption(EncryptedDevicePrivate.Recipients);
 
-                    var Plaintext = EncryptedDevicePrivate.Decrypt(
-                        KeyID.DeviceProfile.DeviceEncryptiontionKey.KeyPair);
+            //        var Plaintext = EncryptedDevicePrivate.Decrypt(
+            //            KeyID.DeviceProfile.DeviceEncryptiontionKey.KeyPair);
 
-                    var DevicePrivate = RecryptDevicePrivate.FromJSON(Plaintext.JSONReader());
-                    Session.ApplicationDevicePrivate = DevicePrivate;
+            //        var DevicePrivate = RecryptDevicePrivate.FromJSON(Plaintext.JSONReader());
+            //        Session.ApplicationDevicePrivate = DevicePrivate;
 
-                    AddDevicePrivate(DevicePrivate);
-                    }
-                }
+            //        AddDevicePrivate(DevicePrivate);
+            //        }
+            //    }
             }
 
 
         KeyPair DecryptionKeyPairFudge; // Hack: only supports one key at the 
-
-
-
-        public override MeshMachine MeshMachine { set => throw new NotImplementedException(); }
 
         // moment because we have no mapping to the recryption group
 

@@ -70,22 +70,22 @@ namespace Goedel.Combined.Shell.Client {
             }
 
 
-        public RegistrationDevice GetDevice (IDeviceProfileInfo Options) {
+        public SessionDevice GetDevice (IDeviceProfileInfo Options) {
 
             // Feature: Should allow user to specify if device profile should be the default.
 
             if (!Options.DeviceUDF.ByDefault) {
                 // Fingerprint specified so must use existing.
-                return MeshSession.GetDevice(Options.DeviceUDF.Value);
+                return MeshMachine.GetDevice(Options.DeviceUDF.Value);
                 }
             if (Options.DeviceID.ByDefault | Options.DeviceNew.Value) {
                 // Either no Device ID specified or the new flag specified so create new.
                 var DeviceID = Options.DeviceID.Value ?? "Default";     // Feature: Pull from platform
                 var DeviceDescription = Options.DeviceDescription.Value ?? "Unknown";  // Feature: Pull from platform
-                return MeshSession.CreateDevice(DeviceID, DeviceDescription, true);
+                return MeshMachine.CreateDevice(DeviceID, DeviceDescription, true);
                 }
             // DeviceID specified without new so look for existing profile.
-            return MeshSession.GetDevice(DeviceID: Options.DeviceID.Value);
+            return MeshMachine.GetDevice(DeviceID: Options.DeviceID.Value);
             }
 
 
@@ -94,8 +94,7 @@ namespace Goedel.Combined.Shell.Client {
             }
 
         public SessionPersonal GetPersonal (string Address) {
-            var RegistrationPersonal = MeshSession.GetPersonal(Address);
-            RegistrationPersonal.MeshCatalog = MeshSession;
+            var RegistrationPersonal = MeshMachine.GetPersonal(Address);
 
             Assert.NotNull(RegistrationPersonal, ProfileNotFound.Throw,
                 new ExceptionData() { String = Address ?? "<default>" });

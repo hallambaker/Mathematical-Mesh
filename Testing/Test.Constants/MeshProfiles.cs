@@ -18,7 +18,7 @@ namespace Test.Common {
     /// </summary>
     public class MeshProfiles {
 
-        public static MeshSession MeshCatalog;
+        public static MeshMachine MeshCatalog = MeshMachine.Current;
         public static TestConstant TestConstant = new TestConstant();
 
 
@@ -26,7 +26,6 @@ namespace Test.Common {
             Mesh.Initialize(true);
 
             // List of all the accounts on the current machine
-            MeshCatalog = new MeshSession();
             MeshCatalog.EraseTest(); // remove previous test data
 
             // Delete the server logs to reset system
@@ -81,7 +80,7 @@ namespace Test.Common {
             UT.Assert.IsNotNull(PersonalRegistration);
             UT.Assert.IsNotNull(PersonalRegistration.SignedPersonalProfile);
 
-            var MeshCatalog2 = new MeshSession();
+            var MeshCatalog2 = NewCatalog();
 
 
             var PersonalMesh = MeshCatalog2.GetPersonal(AccountID);
@@ -102,9 +101,8 @@ namespace Test.Common {
             return SignedPersonalProfile.FromJSON(Bytes.JSONReader()).PersonalProfile;
             }
 
-        public MeshSession NewCatalog () {
-            var EmptyRegistration = new MeshMachineCached();
-            return new MeshSession(EmptyRegistration);
+        public MeshMachine NewCatalog () {
+            return new MeshMachineCached();
             }
 
 
@@ -115,7 +113,7 @@ namespace Test.Common {
                     "Just a test", AccountID);
             }
 
-        public SessionPersonal CreateAndRegister (MeshSession MeshCatalog, MeshClient MeshClient,
+        public SessionPersonal CreateAndRegister (MeshMachine MeshCatalog, MeshClient MeshClient,
                     string DeviceID, string DeviceDescription, string AccountID) {
 
             var DeviceRegistration = MeshCatalog.GetDevice(DeviceNew: true,

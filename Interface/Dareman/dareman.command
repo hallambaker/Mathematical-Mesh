@@ -1,10 +1,14 @@
 ﻿Class Goedel.Mesh.DareMan Shell
+	Library
 
 	Type NewFile			"file"
 	Type ExistingFile		"file"
 
 	About "About"
 	Brief		"brief"
+
+	Command Erase "erase"
+		Brief "Erase test data"
 
 	Command Register "register"
 		Brief "Register new mesh/recryption account data"
@@ -45,6 +49,14 @@
 
 	Command Decrypt "decrypt"
 		Brief "Decrypt a DARE package."
+		Parameter Input "in" ExistingFile
+			Brief "Encrypted File"
+		Parameter Output "out" NewFile
+			Brief "Decrypted File"
+
+
+	Command Recrypt "recrypt"
+		Brief "Decrypt a DARE package using recryption."
 		Parameter Input "in" ExistingFile
 			Brief "Encrypted File"
 		Parameter Output "out" NewFile

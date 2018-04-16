@@ -89,7 +89,8 @@ namespace Goedel.Cryptography.PKIX {
         /// </summary>
         public byte[] UDFData {
             get {
-                _UDFData = _UDFData ?? UDF.FromKeyInfo(DER());
+                var DEREncoded = DER();
+                _UDFData = _UDFData ?? UDF.FromKeyInfo(DEREncoded);
                 return _UDFData;
                 }
             }

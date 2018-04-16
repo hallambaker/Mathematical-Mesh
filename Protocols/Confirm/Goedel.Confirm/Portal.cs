@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Goedel.Confirm;
+using Goedel.Utilities;
 using Goedel.Protocol;
 
 
@@ -16,22 +16,23 @@ namespace Goedel.Confirm {
         /// </summary>
         public abstract class ConfirmPortal {
 
-            /// <summary>
-            /// Return a RecryptService object for the named portal service.
-            /// </summary>
-            /// <param name="Portal">Address of the portal service.</param>
-            /// <returns>Recrypt service object for API access to the service.</returns>
-            public virtual ConfirmService GetService (string Portal) {
-                return GetService(Portal, null);
-                }
+        /// <summary>
+        /// Return a RecryptService object for the named portal service.
+        /// </summary>
+        /// <param name="Address">Address of the portal service.</param>
+        /// <returns>Recrypt service object for API access to the service.</returns>
+        public virtual ConfirmService GetService (string Address) {
+            Address.SplitAccountIDService(out var Service, out var Account);
+            return GetService(Service, Account);
+            }
 
-            /// <summary>
-            /// Return a RecryptService object for the named portal service.
-            /// </summary>
-            /// <param name="Portal">Address of the portal service.</param>
-            /// <param name="Account">Account name.</param>
-            /// <returns>Recrypt service object for API access to the service.</returns>
-            public abstract ConfirmService GetService (string Portal, string Account);
+        /// <summary>
+        /// Return a RecryptService object for the named portal service.
+        /// </summary>
+        /// <param name="Portal">Address of the portal service.</param>
+        /// <param name="Account">Account name.</param>
+        /// <returns>Recrypt service object for API access to the service.</returns>
+        public abstract ConfirmService GetService (string Portal, string Account);
 
             private static ConfirmPortal _Default;
             /// <summary>

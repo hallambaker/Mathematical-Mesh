@@ -38,50 +38,71 @@ namespace Goedel.Mesh.Portal.Client {
     /// <summary>
     /// Describes the registration of a device profile on a machine.
     /// </summary>
-    public abstract class SessionApplication : PortalRegistration {
+    public class SessionApplication : PortalRegistration {
 
         /// <summary>The personal session</summary>
         public SessionPersonal SessionPersonal;
+        MeshMachine MeshMachine;
 
         /// <summary>
         /// The most recent cached profile data, if available.
         /// </summary>
-        public ApplicationProfile ApplicationProfile { get; set; }
-
+        public virtual ApplicationProfile ApplicationProfile { get;}
 
         /// <summary>
         /// The Device profile
         /// </summary>
-        public SignedApplicationProfile SignedApplicationProfile {
-            get => ApplicationProfile.SignedApplicationProfile;
-            set => ApplicationProfile = value.ApplicationProfile;
-            }
+        public SignedApplicationProfile SignedApplicationProfile => 
+                    ApplicationProfile.SignedApplicationProfile;
+
 
         /// <summary>
-        /// Client which may be used to interact with the portal on which this
-        /// profile is registered.
+        /// Constuct session from a new profile.
         /// </summary>
-        public override MeshClient MeshClient {
-            get => SessionPersonal.MeshClient;
-            set => SessionPersonal.MeshClient = value;
+        /// <param name="SessionPersonal"></param>
+        /// <param name="ApplicationProfile"></param>
+        /// <param name="Write"></param>
+        public SessionApplication (
+                    SessionPersonal SessionPersonal, 
+                    ApplicationProfile ApplicationProfile,
+                    bool Write = true) {
+            this.ApplicationProfile = ApplicationProfile;
+            this.SessionPersonal = SessionPersonal;
+            MeshMachine = SessionPersonal.MeshMachine;
+            SessionPersonal.Add(this, Write); // The point at which the writes to the local disk, portal are performed.
             }
+
+
+        /// <summary>
+        /// Construct a session from the local storage
+        /// </summary>
+        /// <param name="SessionPersonal">The personal session to construct from.</param>
+        public SessionApplication (ApplicationProfile ApplicationProfile, 
+                        SessionPersonal SessionPersonal) {
+            this.ApplicationProfile = ApplicationProfile;
+            this.SessionPersonal = SessionPersonal;
+            }
+
+
+
+
 
         /// <summary>
         /// The list of decrypt devices registered for this application.
         /// </summary>
-        public List<RegistrationDevice> DecryptDeviceProfiles;
+        public List<SessionDevice> DecryptDeviceProfiles;
 
         /// <summary>
         /// The list of administration devices registered for this application.
         /// </summary>
-        public List<RegistrationDevice> AdminDeviceProfiles;
+        public List<SessionDevice> AdminDeviceProfiles;
 
         /*  Derrived properties */
 
         /// <summary>Find a device registration that can decrypt the specified data.</summary>
         /// <param name="DecryptionUDF">Data to decrypt</param>
         /// <returns>Device session</returns>
-        public RegistrationDevice FindByDecryption (string DecryptionUDF) =>
+        public SessionDevice FindByDecryption (string DecryptionUDF) =>
             DecryptDeviceProfiles.Find(
                 x => x.DeviceProfile.DeviceEncryptiontionKey.UDF.CompareUDF(DecryptionUDF));
 
@@ -90,7 +111,7 @@ namespace Goedel.Mesh.Portal.Client {
         /// </summary>
         /// <param name="Recipients">The JWE Recipients list.</param>
         /// <returns>The first device registration that can decrypt the data (if found)</returns>
-        public RegistrationDevice FindByDecryption (List<Recipient> Recipients) {
+        public SessionDevice FindByDecryption (List<Recipient> Recipients) {
             foreach (var Recipient in Recipients) {
                 var RegistrationDevice = FindByDecryption(Recipient?.Header?.Kid);
                 if (RegistrationDevice != null) {
@@ -109,8 +130,8 @@ namespace Goedel.Mesh.Portal.Client {
 
 
 
-        /// <summary>The abstract machine a profile registration is attached to</summary>
-        public override MeshMachine MeshMachine => SessionPersonal?.MeshMachine;
+        ///// <summary>The abstract machine a profile registration is attached to</summary>
+        //public override MeshMachine MeshMachine => SessionPersonal?.MeshMachine;
 
 
         PersonalProfile PersonalProfile => SessionPersonal?.PersonalProfile;
@@ -148,16 +169,22 @@ namespace Goedel.Mesh.Portal.Client {
         /// Fetch the latest version of the profile version
         /// </summary>
         public override void GetFromPortal () {
-            MeshMachine.GetFromPortal(this);
+            throw new NYI();
             }
 
 
         /// <summary>
         /// Update the associated profile in the registry
         /// </summary>
-        public override void WriteToPortal () {
-            MeshMachine.WriteToPortal(this);
+        public override void WriteToLocal (bool Default=false) {
+            MeshMachine.WriteToLocal(this, Default);
+            }
 
+        /// <summary>
+        /// Update the associated profile in the registry
+        /// </summary>
+        public override void WriteToPortal () {
+            SessionPersonal.MeshClient.Publish(this.SignedProfile);
             }
 
         /// <summary>
@@ -320,7 +347,13 @@ namespace Goedel.Mesh.Portal.Client {
 
     public abstract class SessionCatalog : SessionApplication {
 
-        public override MeshMachine MeshMachine { set => throw new NotImplementedException(); }
+
+        protected SessionCatalog (
+                    SessionPersonal SessionPersonal,
+                    ApplicationProfile ApplicationProfile,
+                    bool Write = true) : base (
+                        SessionPersonal, ApplicationProfile, Write) {
+            }
 
         public override void GetFromPortal () {
             throw new NotImplementedException();
@@ -339,7 +372,11 @@ namespace Goedel.Mesh.Portal.Client {
         /// Construct a SessionRecryption from a personal session.
         /// </summary>
         /// <param name="SessionPersonal">The personal session to construct from.</param>
-        public SessionMail (SessionPersonal SessionPersonal, MailProfile MailProfile) {
+        public SessionMail (
+                        SessionPersonal SessionPersonal, 
+                        MailProfile MailProfile,
+                        bool Write = true) : base(
+                            SessionPersonal, MailProfile, Write) {
             this.SessionPersonal = SessionPersonal;
             this.MailProfile = MailProfile;
 
@@ -378,7 +415,11 @@ namespace Goedel.Mesh.Portal.Client {
         /// Construct a SessionRecryption from a personal session.
         /// </summary>
         /// <param name="SessionPersonal">The personal session to construct from.</param>
-        public SessionSSH (SessionPersonal SessionPersonal, SSHProfile SSHProfile) {
+        public SessionSSH (
+                        SessionPersonal SessionPersonal,
+                        SSHProfile SSHProfile,
+                        bool Write = true) : base(
+                            SessionPersonal, SSHProfile, Write) {
             this.SessionPersonal = SessionPersonal;
             this.SSHProfile = SSHProfile;
 
@@ -421,7 +462,11 @@ namespace Goedel.Mesh.Portal.Client {
         /// Construct a SessionRecryption from a personal session.
         /// </summary>
         /// <param name="SessionPersonal">The personal session to construct from.</param>
-        public SessionCredential (SessionPersonal SessionPersonal, CredentialProfile CredentialProfile) {
+        public SessionCredential (
+                        SessionPersonal SessionPersonal,
+                        CredentialProfile CredentialProfile,
+                        bool Write = true) : base(
+                            SessionPersonal, CredentialProfile, Write) {
             this.SessionPersonal = SessionPersonal;
             this.CredentialProfile = CredentialProfile;
 
@@ -455,7 +500,11 @@ namespace Goedel.Mesh.Portal.Client {
         /// Construct a SessionRecryption from a personal session.
         /// </summary>
         /// <param name="SessionPersonal">The personal session to construct from.</param>
-        public SessionBookmark (SessionPersonal SessionPersonal, BookmarkProfile BookmarkProfile) {
+        public SessionBookmark (
+                        SessionPersonal SessionPersonal,
+                        BookmarkProfile BookmarkProfile,
+                        bool Write = true) : base(
+                            SessionPersonal, BookmarkProfile, Write) {
             this.SessionPersonal = SessionPersonal;
             this.BookmarkProfile = BookmarkProfile;
 
@@ -488,7 +537,11 @@ namespace Goedel.Mesh.Portal.Client {
         /// Construct a SessionRecryption from a personal session.
         /// </summary>
         /// <param name="SessionPersonal">The personal session to construct from.</param>
-        public SessionContact (SessionPersonal SessionPersonal, ContactProfile ContactProfile) {
+        public SessionContact (
+                        SessionPersonal SessionPersonal,
+                        ContactProfile ContactProfile,
+                        bool Write = true) : base(
+                            SessionPersonal, ContactProfile, Write) {
             this.SessionPersonal = SessionPersonal;
             this.ContactProfile = ContactProfile;
 
@@ -521,7 +574,11 @@ namespace Goedel.Mesh.Portal.Client {
         /// Construct a SessionRecryption from a personal session.
         /// </summary>
         /// <param name="SessionPersonal">The personal session to construct from.</param>
-        public SessionNetwork (SessionPersonal SessionPersonal, NetworkProfile NetworkProfile) {
+        public SessionNetwork (
+                        SessionPersonal SessionPersonal,
+                        NetworkProfile NetworkProfile,
+                        bool Write = true) : base(
+                            SessionPersonal, NetworkProfile, Write) {
             this.SessionPersonal = SessionPersonal;
             this.NetworkProfile = NetworkProfile;
 

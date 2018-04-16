@@ -13,9 +13,13 @@
 #% var DataBytes = DataString.ToUTF8();
 #% var DataBytesString = DataBytes.ToBase16String(Spaced:true);
 #% var HashData = Goedel.Cryptography.Platform.SHA2_512.Process(DataBytes).ToBase16String(Spaced:true);
+#% var HashData3 = Goedel.Cryptography.Platform.SHA3_512.Process(DataBytes).ToBase16String(Spaced:true);
 #% var UDFDataBuffer = UDF.UDFBuffer(ContentType, DataBytes);
+#% var UDFDataBuffer3 = UDF.UDFBuffer3(ContentType, DataBytes);
 #% var UDFDataBufferString = UDFDataBuffer.ToBase16String(Spaced:true);
+#% var UDFDataBufferString3 = UDFDataBuffer3.ToBase16String(Spaced:true);
 #% var UDFData = Goedel.Cryptography.Platform.SHA2_512.Process(UDFDataBuffer).ToBase16String(Spaced:true);
+#% var UDFData3 = Goedel.Cryptography.Platform.SHA3_512.Process(UDFDataBuffer).ToBase16String(Spaced:true);
 In the following examples, &<Content-ID> is the UTF8 encoding of the string 
 "#{ContentType}" and &<Data> is the UTF8 encoding of the string "#{DataString}"
 
@@ -28,13 +32,13 @@ ContentType = #{ContentTypeString}
 ######Using SHA-2-512 Digest
 
 ~~~~
-H( &lt;Data&gt; ) = 
+H(&<Data> ) = 
 #{HashData}
 
-H (&lt;Content-ID&gt; + ‘:’ + H(&lt;Data&gt;))= 
+H (&<Content-ID> + ‘:’ + H(&<Data>))= 
 #{UDFDataBufferString}
 
-H (&lt;Content-ID&gt; + ‘:’ + H(&lt;Data&gt;))= 
+H ( &<Content-ID> + ‘:’ + H(&<Data>))= 
 #{UDFData}
 ~~~~
 
@@ -50,6 +54,30 @@ H (&lt;Content-ID&gt; + ‘:’ + H(&lt;Data&gt;))=
 <dd>#{UDF.ToString (ContentType, DataBytes, 250)}
 </dl>
 
+######Using SHA-3-512 Digest
+
+~~~~
+H(&<Data> ) = 
+#{HashData3}
+
+H (&<Content-ID> + ‘:’ + H(&<Data>))= 
+#{UDFDataBufferString3}
+
+H ( &<Content-ID> + ‘:’ + H(&<Data>))= 
+#{UDFData3}
+~~~~
+
+<dl>
+
+<dt>Text Presentation (100 bit)
+<dd>#{UDF.ToString3 (ContentType, DataBytes, 100)}
+<dt>Text Presentation (125 bit)
+<dd>#{UDF.ToString3 (ContentType, DataBytes, 125)}
+<dt>Text Presentation (150 bit)
+<dd>#{UDF.ToString3 (ContentType, DataBytes, 150)}
+<dt>Text Presentation (250 bit)
+<dd>#{UDF.ToString3 (ContentType, DataBytes, 250)}
+</dl>
 #end file
 
 #file MeshExamplesUDFCompressed "Examples\\ExamplesUDFCompressed.md" CreateExamples Example

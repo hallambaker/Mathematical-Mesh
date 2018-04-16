@@ -298,11 +298,15 @@ namespace Goedel.Persistence {
         /// </summary>
         /// <param name="Object">Object to add.</param>
         public virtual void New(JSONObject Object) {
+            var Key = Object._PrimaryKey;
+            var ObjectEncoded = Object.GetUTF8();
+            var Keys = Object._KeyValues?.ToIndexTerms();
+
             var DataItem = new DataItem(
                     GetTransactionID(),                     // Interlocked safe assignment
-                    Object._PrimaryKey,                     // The primary key
-                    Object.GetUTF8(),                       // The data
-                    Object?._KeyValues.ToIndexTerms());     // The index terms
+                    Key,                     // The primary key
+                    ObjectEncoded,                       // The data
+                    Keys);     // The index terms
             New(DataItem);
             }
 

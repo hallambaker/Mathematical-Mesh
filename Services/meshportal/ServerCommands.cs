@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -35,6 +35,21 @@ namespace MeshServerShell {
             Entries = new List<DescribeEntry>() { }
             };
 
+        /// <summary>
+        /// Describe the application invoked by the command.
+        /// </summary>
+        /// <param name="Dispatch">The command description.</param>
+        /// <param name="args">The set of arguments.</param>
+        /// <param name="index">The first unparsed argument.</param>
+        public static void About (DispatchShell Dispatch, string[] args, int index) {
+            FileTools.About();
+            }
+
+        public static DescribeCommandEntry DescribeAbout = new DescribeCommandEntry() {
+            Identifier = "about",
+            HandleDelegate = About,
+            Entries = new List<DescribeEntry>() { }
+            };
 
         static bool IsFlag(char c) {
             return (c == UnixFlag) | (c == WindowsFlag) ;
@@ -56,8 +71,8 @@ namespace MeshServerShell {
 				Description = "MatheMatical Mesh Server";
 
 			Entries = new  SortedDictionary<string, DescribeCommand> () {
+				{"about", DescribeAbout },
 				{"start", _Start._DescribeCommand },
-				{"about", _About._DescribeCommand },
 				{"help", DescribeHelp }
 				}; // End Entries
 
@@ -73,7 +88,15 @@ namespace MeshServerShell {
         public void MainMethod(string[] Args) {
 			MeshServerShell Dispatch = new MeshServerShell ();
 
-			MainMethod (Dispatch, Args);
+			try {
+				MainMethod (Dispatch, Args);
+				}
+            catch (Goedel.Command.ParserException) {
+			    Brief(Description, DefaultCommand, Entries);
+				}
+            catch (System.Exception Exception) {
+                Console.WriteLine("Application: {0}", Exception.Message);
+                }
 			}
 
 
@@ -89,14 +112,6 @@ namespace MeshServerShell {
 			Start		Options = new Start ();
 			ProcessOptions (Args, Index, Options);
 			Dispatch.Start (Options);
-			}
-
-		public static void Handle_About (
-					DispatchShell  DispatchIn, string[] Args, int Index) {
-			MeshServerShell Dispatch =	DispatchIn as MeshServerShell;
-			About		Options = new About ();
-			ProcessOptions (Args, Index, Options);
-			Dispatch.About (Options);
 			}
 
 
@@ -250,26 +265,6 @@ namespace MeshServerShell {
     public partial class Start : _Start {
         } // class Start
 
-    public class _About : Goedel.Command.Dispatch  {
-
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {			} ;
-
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
-
-		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
-			Identifier = "about",
-			Brief =  "Report version and build date",
-			HandleDelegate =  CommandLineInterpreter.Handle_About,
-			Lazy =  false,
-			Entries = new List<DescribeEntry> () {
-				}
-			};
-
-		}
-
-    public partial class About : _About {
-        } // class About
-
 
     public partial class  NewFile : _NewFile {
         public static NewFile Factory (string Value) {
@@ -316,10 +311,6 @@ namespace MeshServerShell {
     public class _MeshServerShell : global::Goedel.Command.DispatchShell {
 
 		public virtual void Start ( Start Options) {
-			CommandLineInterpreter.DescribeValues (Options);
-			}
-
-		public virtual void About ( About Options) {
 			CommandLineInterpreter.DescribeValues (Options);
 			}
 

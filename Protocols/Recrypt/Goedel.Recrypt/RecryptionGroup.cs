@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Goedel.Mesh;
+using Goedel.IO;
 using Goedel.Protocol;
 using Goedel.Cryptography;
 using Goedel.Cryptography.Jose;
@@ -182,7 +183,8 @@ namespace Goedel.Recrypt {
         /// <param name="Input">Filename of the file to read the plaintext from.</param>
         /// <param name="Output">Filename of the file to write the ciphertext to.</param>
         public void Encrypt (string Input, string Output) {
-            throw new NYI();
+            Input.OpenReadToEnd(out var Data);
+            Encrypt(Data, Output);
             }
 
         /// <summary>

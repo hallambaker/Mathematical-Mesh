@@ -33,45 +33,46 @@ namespace ExampleGenerator {
         public List<ContainerHeader> ContainerHeadersMerkleTree = new List<ContainerHeader>();
 
         void GoContainer () {
-            // Simple
-            var TContainer = MakeContainer("Test1List", ContainerType.List);
-            var Data = TestData(300);
-            TContainer.Append(Data);
-            ReadContainer(TContainer, ContainerHeadersSimple);
-            ContainerFramingSimple = ConsoleWriter.ToString();
+            //// Simple
+            //var TContainer = MakeContainer("Test1List", ContainerType.List);
+            //var Data = TestData(300);
+            //TContainer.Append(Data);
+            //ReadContainer(TContainer, ContainerHeadersSimple);
+            //ContainerFramingSimple = ConsoleWriter.ToString();
 
 
-            // Digest
-            TContainer = MakeContainer("Test1Chain", ContainerType.Chain);
-            TContainer.Append(Data);
-            TContainer.Append(Data);
-            TContainer.Append(Data);
-            ReadContainer(TContainer, ContainerHeadersChain);
+            //// Digest
+            //TContainer = MakeContainer("Test1Chain", ContainerType.Chain);
+            //TContainer.Append(Data);
+            //TContainer.Append(Data);
+            //TContainer.Append(Data);
+            //ReadContainer(TContainer, ContainerHeadersChain);
 
 
-            // Tree
-            TContainer = MakeContainer("Test1Tree", ContainerType.Tree);
-            TContainer.Append(Data);
-            TContainer.Append(Data);
-            TContainer.Append(Data);
-            TContainer.Append(Data);
-            TContainer.Append(Data);
-            TContainer.Append(Data);
-            ReadContainer(TContainer, ContainerHeadersTree);
+            //// Tree
+            //TContainer = MakeContainer("Test1Tree", ContainerType.Tree);
+            //TContainer.Append(Data);
+            //TContainer.Append(Data);
+            //TContainer.Append(Data);
+            //TContainer.Append(Data);
+            //TContainer.Append(Data);
+            //TContainer.Append(Data);
+            //ReadContainer(TContainer, ContainerHeadersTree);
 
 
-            // Merkle Tree
-            TContainer = MakeContainer("Test1Merkle", ContainerType.MerkleTree);
-            TContainer.Append(Data);
-            TContainer.Append(Data);
-            TContainer.Append(Data);
-            TContainer.Append(Data);
-            TContainer.Append(Data);
-            TContainer.Append(Data);
-            ReadContainer(TContainer, ContainerHeadersMerkleTree);
+            //// Merkle Tree
+            //TContainer = MakeContainer("Test1Merkle", ContainerType.MerkleTree);
+            //TContainer.Append(Data);
+            //TContainer.Append(Data);
+            //TContainer.Append(Data);
+            //TContainer.Append(Data);
+            //TContainer.Append(Data);
+            //TContainer.Append(Data);
+            //ReadContainer(TContainer, ContainerHeadersMerkleTree);
 
 
-            ExampleGenerator.MeshExamplesContainer(this);
+            //ExampleGenerator.MeshExamplesContainer(this);
+
             ExampleGenerator.MeshExamplesUDF(this);
             ExampleGenerator.MeshExamplesUDFCompressed(this);
             ExampleGenerator.MakeExamplesKeyExchange(this);
@@ -108,8 +109,8 @@ namespace ExampleGenerator {
         public Container MakeContainer (string FileName, ContainerType ContainerType = ContainerType.Chain) {
             ConsoleWriter = new StringWriter();
 
-            var FileStream = FileName.FileStream(FileStatus.Overwrite);
-            var JBCDStream = new JBCDStreamDebug(FileStream, ConsoleWriter);
+            //var FileStream = FileName.FileStream(FileStatus.Overwrite);
+            var JBCDStream = new JBCDStreamDebug(FileName, FileStatus.Overwrite, Output:ConsoleWriter);
             return Container.NewContainer(JBCDStream, ContainerType);
 
             }
@@ -125,6 +126,9 @@ namespace ExampleGenerator {
 
 
         public void ReadContainer (Container Container, List<ContainerHeader> ContainerHeaders) {
+
+            Goedel.Protocol.JSONReader.Trace = true; // HACK: 
+
             Container.First();
             while (!Container.EOF) {
                 ContainerHeaders.Add(Container.ContainerHeader);
@@ -141,19 +145,19 @@ namespace ExampleGenerator {
             ExampleGenerator.MakeExamplesMail(this);
             ExampleGenerator.MakeExamplesSSH(this);
 
-            StartService();
+            //StartService();
 
-            CreateProfile();
-            ConnectDevice();
-            //AddApplicationWeb();  
-            AddApplicationSSH();  // Todo: check, implement
-            //AddApplicationMail(); // Todo: implement
-            KeyRecovery(); // Todo: implement
+            //CreateProfile();
+            //ConnectDevice();
+            ////AddApplicationWeb();  
+            //AddApplicationSSH();  // Todo: check, implement
+            ////AddApplicationMail(); // Todo: implement
+            //KeyRecovery(); // Todo: implement
 
-            Traces = Portal.Traces;
+            //Traces = Portal.Traces;
 
-            ExampleGenerator.MeshExamples(this);
-            ExampleGenerator.MeshExamplesWeb(this);
+            //ExampleGenerator.MeshExamples(this);
+            //ExampleGenerator.MeshExamplesWeb(this);
             }
 
         public static string NameAccount = "alice";
@@ -194,7 +198,7 @@ namespace ExampleGenerator {
         CommandLineInterpreter CommandLineInterpreter = new CommandLineInterpreter();
 
         public Shell Shell1 = new Shell() {
-            MeshSession = new MeshSession(new MeshMachineCached()),
+            MeshMachine = new MeshMachineCached(),
             DefaultDescription = Device1Description
             };
         public string Device1 (string Command) {
@@ -206,7 +210,7 @@ namespace ExampleGenerator {
             }
 
         public Shell Shell2 = new Shell() {
-            MeshSession = new MeshSession(new MeshMachineCached()),
+            MeshMachine = new MeshMachineCached(),
             DefaultDescription = Device2Description
             };
         public string Device2 (string Command, out string Tag) {
@@ -215,7 +219,7 @@ namespace ExampleGenerator {
             }
 
         public Shell Shell3 = new Shell() {
-            MeshSession = new MeshSession(new MeshMachineCached()),
+            MeshMachine = new MeshMachineCached(),
             DefaultDescription = Device3Description
             };
         public string Device3 (string Command, out string Tag) {

@@ -396,7 +396,12 @@ namespace Goedel.Cryptography.Jose {
 
 
 
-
+        /// <summary>
+        /// Find a keypair on the local machine that can decrypt a recipient entry in the supplied list.
+        /// </summary>
+        /// <param name="Recipients">The list of recipients</param>
+        /// <param name="RecipientOut">The recipient entry that matched</param>
+        /// <returns>The matching keypair</returns>
         public static KeyPair MatchDecryptionKey (List<Recipient> Recipients, out Recipient RecipientOut) {
             foreach (var Recipient in Recipients) {
                 var KID = Recipient.Header.Kid;
@@ -420,6 +425,7 @@ namespace Goedel.Cryptography.Jose {
         /// Decrypt the content using the specified private key.
         /// </summary>
         /// <param name="DecryptionKey">The decryption key.</param>
+        /// <param name="Recipient">The recipient</param>
         /// <returns>The decrypted data</returns>
         public byte[] Decrypt (KeyPair DecryptionKey=null, Recipient Recipient=null) {
 

@@ -87,7 +87,7 @@ namespace Goedel.Command {
             if (Specified != null) {
                 return Specified;
                 }
-            return DefaultFile(Default, Extension);
+            return DefaultFile(Extension, Default);
             }
 
 

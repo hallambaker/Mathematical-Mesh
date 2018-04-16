@@ -24,6 +24,7 @@ using System;
 using System.Collections.Generic;
 using Goedel.Protocol;
 using Goedel.Mesh;
+using Goedel.Utilities;
 
 namespace Goedel.Mesh.Portal {
 
@@ -37,19 +38,20 @@ namespace Goedel.Mesh.Portal {
         /// <summary>
         /// Return a MeshService object for the named portal service.
         /// </summary>
-        /// <param name="Portal">Address of the portal service.</param>
+        /// <param name="Address">Portal account address or domain name</param>
         /// <returns>Mesh service object for API access to the service.</returns>
-        public virtual MeshService GetService(string Portal) {
-            return GetService(Portal, null);
+        public virtual MeshService GetService(string Address) {
+            Address.SplitAccountIDService(out var Service, out var Account);
+            return GetService(Service, Account);
             }
 
         /// <summary>
         /// Return a MeshService object for the named portal service.
         /// </summary>
-        /// <param name="Portal">Address of the portal service.</param>
+        /// <param name="Service">Address of the portal service.</param>
         /// <param name="Account">Account name.</param>
         /// <returns>Mesh service object for API access to the service.</returns>
-        public abstract MeshService GetService(string Portal, string Account);
+        public abstract MeshService GetService(string Service, string Account);
 
         private static MeshPortal _Default;
         /// <summary>

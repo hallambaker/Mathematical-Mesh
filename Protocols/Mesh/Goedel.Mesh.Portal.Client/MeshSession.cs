@@ -32,23 +32,24 @@ using Goedel.Mesh.Portal;
 namespace Goedel.Mesh.Portal.Client {
 
     /// <summary>
-    /// Provides the interface layer between the application and all Mesh 
-    /// functions.
+    /// The MeshSession is a MeshMachine bound to a particular portal which supports Mesh
+    /// portal operations such as write to portal and read from portal.
     /// </summary>
-    public class MeshSession {
+    public abstract partial class MeshMachine {
 
-        /// <summary>The cached machine registration data</summary>
-        public MeshMachine Machine { get; private set; }
+        ///// <summary>The cached machine registration data</summary>
+        //public MeshMachine MeshMachine { get; private set; }
 
-        /// <summary>
-        /// Return an interface populated with all the profiles and portal
-        /// accounts on the current machine
-        /// </summary>
-        /// <param name="Machine">Machine registration to use. If null, the default
-        /// registration is used.</param>
-        public MeshSession (MeshMachine Machine = null) {
-            this.Machine = Machine ?? MeshMachine.Current;
-            }
+        ///// <summary>
+        ///// Return an interface populated with all the profiles and portal
+        ///// accounts on the current machine
+        ///// </summary>
+        ///// <param name="Machine">Machine registration to use. If null, the default
+        ///// registration is used.</param>
+        //public MeshSession (MeshMachine Machine = null) {
+        //    this.MeshMachine = Machine ?? MeshMachine.Current;
+        //    }
+
 
         /// <summary>Bind the session to the specified portal.</summary>
         /// <param name="Portal">The portal to bind to.</param>
@@ -68,7 +69,7 @@ namespace Goedel.Mesh.Portal.Client {
         /// Erase all configuration data from the current machine.
         /// </summary>
         public void EraseTest () {
-            Machine.Erase();
+            Erase();
             }
 
 
@@ -82,16 +83,16 @@ namespace Goedel.Mesh.Portal.Client {
         /// if there is no default specified already. Otherwise, the default
         /// is unchanged.</param>
         /// <returns>Session for the newly created device profile.</returns>
-        public RegistrationDevice CreateDevice (
+        public SessionDevice CreateDevice (
                             string ID = null,
                             string Description = "Unknown",
                             bool? Default = null) {
 
             var ProfileDevice = new SignedDeviceProfile(ID, Description);
-            var RegistrationDevice = Machine.Add(ProfileDevice);
+            var RegistrationDevice = Add(ProfileDevice);
 
-            if (Default == true | (Default == null & Machine.Device == null)) {
-                Machine.Device = RegistrationDevice;
+            if (Default == true | (Default == null & Device == null)) {
+                Device = RegistrationDevice;
                 }
 
             return RegistrationDevice;
@@ -103,8 +104,8 @@ namespace Goedel.Mesh.Portal.Client {
         /// </summary>
         /// <param name="UDF">Fingerprint of profile.</param>
         /// <returns>The profile (if found).</returns>
-        public RegistrationDevice GetDevice (string UDF) {
-            var Found = Machine.Find(UDF, out RegistrationDevice RegistrationDevice);
+        public SessionDevice GetDevice (string UDF) {
+            var Found = FindByUDF(UDF, out SessionDevice RegistrationDevice);
             Assert.True(Found, ProfileNotFound.Throw);
             return RegistrationDevice;
             }
@@ -119,29 +120,29 @@ namespace Goedel.Mesh.Portal.Client {
         /// <param name="DeviceID">The identifier for device profile if created.</param>
         /// <param name="DeviceDescription">The device description for the device profile if created.</param>
         /// <returns>A device session for the newly created profile.</returns>
-        public RegistrationDevice GetDevice (bool DeviceNew = false,
+        public SessionDevice GetDevice (bool DeviceNew = false,
                     string DeviceUDF = null,
                     string DeviceID = null,
                     string DeviceDescription = null
                     ) {
 
-            RegistrationDevice RegistrationDevice = null;
+            SessionDevice RegistrationDevice = null;
             bool Generate = false;
             if (DeviceNew) {
                 Generate = true;
                 }
             else if (DeviceUDF != null) {
                 // use the profile with the specified fingerprint
-                var Found = Machine.Find(DeviceUDF, out RegistrationDevice);
+                var Found = FindByUDF(DeviceUDF, out RegistrationDevice);
                 Assert.NotNull(Found, ProfileNotFound.Throw);
                 }
             else if (DeviceID != null) {
                 // use the profile with the specified ID
-                var Found = Machine.Find(DeviceID, out RegistrationDevice);
+                var Found = FindByUDF(DeviceID, out RegistrationDevice);
                 Assert.True(Found, ProfileNotFound.Throw);
                 }
-            else if (Machine.Device != null) {
-                RegistrationDevice = Machine.Device;
+            else if (Device != null) {
+                RegistrationDevice = Device;
                 }
             else {
                 Generate = true;
@@ -150,12 +151,12 @@ namespace Goedel.Mesh.Portal.Client {
             // Generate a new device profile
             if (Generate) {
                 var NewProfileDevice = new SignedDeviceProfile(DeviceID, DeviceDescription);
-                RegistrationDevice = Machine.Add(NewProfileDevice);
+                RegistrationDevice = Add(NewProfileDevice);
                 }
 
             // Always make the device profile the default if one is not specified.
-            if (Machine.Device == null) {
-                Machine.Device = RegistrationDevice;
+            if (Device == null) {
+                Device = RegistrationDevice;
                 }
 
             return RegistrationDevice;
@@ -177,14 +178,24 @@ namespace Goedel.Mesh.Portal.Client {
             MeshClient.SignedDeviceProfile = Profile.SignedDeviceProfile;
             MeshClient.SignedPersonalProfile = Profile.SignedPersonalProfile;
 
-            var RegistrationPersonal = AddPersonal(Profile);
+            var SessionPersonal = AddPersonal(Profile);
 
-            RegistrationPersonal.AddPortal(PortalAddress, MeshClient, true);
+            SessionPersonal.AddPortal(PortalAddress, MeshClient, true);
 
             //MeshClient.CreatePortalAccount(PortalAddress, Profile.SignedPersonalProfile);
 
 
-            return RegistrationPersonal;
+            return SessionPersonal;
+            }
+
+
+
+        public void Update (string PortalAddress,
+                    SignedProfile SignedProfile,
+                    MeshClient MeshClient = null
+                    ) {
+            MeshClient = MeshClient ?? new MeshClient(PortalAccount: PortalAddress);
+            MeshClient.Publish(SignedProfile);
             }
 
         /// <summary>
@@ -218,7 +229,7 @@ namespace Goedel.Mesh.Portal.Client {
                     string DeviceID = null,
                     string DeviceDescription = null
                     ) {
-            RegistrationDevice RegistrationDevice = GetDevice(DeviceNew, DeviceUDF, DeviceID, DeviceDescription);
+            SessionDevice RegistrationDevice = GetDevice(DeviceNew, DeviceUDF, DeviceID, DeviceDescription);
             return AddPersonal(RegistrationDevice);
             }
 
@@ -229,7 +240,7 @@ namespace Goedel.Mesh.Portal.Client {
         /// <param name="RegistrationDevice">The initial administration device.</param>
         /// <returns>Session for the created Personal profile.</returns>
         public SessionPersonal AddPersonal (
-                    RegistrationDevice RegistrationDevice) {
+                    SessionDevice RegistrationDevice) {
 
             var ProfileDevice = RegistrationDevice.SignedDeviceProfile;
 
@@ -247,8 +258,8 @@ namespace Goedel.Mesh.Portal.Client {
             PersonalProfile PersonalProfile) {
 
             var SignedPersonalProfile = PersonalProfile.SignedPersonalProfile;
-            var Registration = Machine.Add(SignedPersonalProfile);
-            Registration.MeshCatalog = this;
+            var Registration = Add(SignedPersonalProfile);
+            Registration.MeshMachine = this;
 
             return Registration;
             }
@@ -263,7 +274,8 @@ namespace Goedel.Mesh.Portal.Client {
         public SessionPersonal Recover (
                     Secret Secret) {
 
-            var Identifier = UDF.ToString(UDF.FromEscrowed(Secret.Key, 150));
+            var Bytes = Goedel.Cryptography.UDF.FromEscrowed(Secret.Key, 150);
+            var Identifier = Goedel.Cryptography.UDF.ToString(Bytes);
 
             var MeshClient = Bind(Identifier);
             var EscrowEntry = MeshClient.Recover(Identifier);
@@ -319,23 +331,23 @@ namespace Goedel.Mesh.Portal.Client {
 
             if (Cached) {
                 if (UDF != null) {
-                    if (Machine.PersonalProfilesUDF.TryGetValue(UDF, out Result)) {
+                    if (PersonalProfilesUDF.TryGetValue(UDF, out Result)) {
                         return Result;
                         }
                     }
                 if (PortalID != null) {
-                    if (Machine.PersonalProfilesPortal.TryGetValue(PortalID, out Result)) {
+                    if (PersonalProfilesPortal.TryGetValue(PortalID, out Result)) {
                         return Result;
                         }
                     }
-                return Machine.Personal;
+                return Personal;
                 }
 
             return Result;
             }
 
         public void AddPortal (SessionPersonal SessionPersonal, string AccountID) {
-            Machine.PersonalProfilesPortal.Add(AccountID, SessionPersonal);
+            PersonalProfilesPortal.Add(AccountID, SessionPersonal);
             }
 
 
@@ -347,16 +359,16 @@ namespace Goedel.Mesh.Portal.Client {
         /// <param name="Address">The portal address to connect to.</param>
         /// <param name="Authenticator">Authenticator string to be used to validate the connection.</param>
         /// <returns>The connection start request object.</returns>
-        public ConnectStartRequest Connect (RegistrationDevice Device, string Address, out string Authenticator) {
+        public ConnectStartRequest Connect (SessionDevice Device, string Address, out string Authenticator) {
             var MeshClient = new MeshClient(PortalAccount: Address);
 
             var ConnectStartResponse = MeshClient.ConnectRequest(
                     Device.SignedDeviceProfile,
                     out var DeviceRequest);
 
-            Machine.ConnectStartRequests.Add(DeviceRequest);
+            ConnectStartRequests.Add(DeviceRequest);
 
-            Authenticator = UDF.FromUDFPair(
+            Authenticator = Goedel.Cryptography.UDF.FromUDFPair(
                 Device.UDF,
                 MeshClient.PersonalProfile.UDF
                 );

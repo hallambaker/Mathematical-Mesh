@@ -1,6 +1,8 @@
 ﻿Class Goedel.Combined.Shell.Client CombinedShell
 	Library
 
+	About "about"
+
 	Brief		"Client for Mesh/Confirm service"
 	Command Null "null"
 		Brief "Do nothing yet"

@@ -25,9 +25,13 @@ namespace ExampleGenerator {
 				 var DataBytes = DataString.ToUTF8();
 				 var DataBytesString = DataBytes.ToBase16String(Spaced:true);
 				 var HashData = Goedel.Cryptography.Platform.SHA2_512.Process(DataBytes).ToBase16String(Spaced:true);
+				 var HashData3 = Goedel.Cryptography.Platform.SHA3_512.Process(DataBytes).ToBase16String(Spaced:true);
 				 var UDFDataBuffer = UDF.UDFBuffer(ContentType, DataBytes);
+				 var UDFDataBuffer3 = UDF.UDFBuffer3(ContentType, DataBytes);
 				 var UDFDataBufferString = UDFDataBuffer.ToBase16String(Spaced:true);
+				 var UDFDataBufferString3 = UDFDataBuffer3.ToBase16String(Spaced:true);
 				 var UDFData = Goedel.Cryptography.Platform.SHA2_512.Process(UDFDataBuffer).ToBase16String(Spaced:true);
+				 var UDFData3 = Goedel.Cryptography.Platform.SHA3_512.Process(UDFDataBuffer).ToBase16String(Spaced:true);
 				_Output.Write ("In the following examples, &<Content-ID> is the UTF8 encoding of the string \n{0}", _Indent);
 				_Output.Write ("\"{1}\" and &<Data> is the UTF8 encoding of the string \"{2}\"\n{0}", _Indent, ContentType, DataString);
 				_Output.Write ("\n{0}", _Indent);
@@ -40,13 +44,13 @@ namespace ExampleGenerator {
 				_Output.Write ("###Using SHA-2-512 Digest\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("~~~~\n{0}", _Indent);
-				_Output.Write ("H( &lt;Data&gt; ) = \n{0}", _Indent);
+				_Output.Write ("H(&<Data> ) = \n{0}", _Indent);
 				_Output.Write ("{1}\n{0}", _Indent, HashData);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("H (&lt;Content-ID&gt; + ‘:’ + H(&lt;Data&gt;))= \n{0}", _Indent);
+				_Output.Write ("H (&<Content-ID> + ‘:’ + H(&<Data>))= \n{0}", _Indent);
 				_Output.Write ("{1}\n{0}", _Indent, UDFDataBufferString);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("H (&lt;Content-ID&gt; + ‘:’ + H(&lt;Data&gt;))= \n{0}", _Indent);
+				_Output.Write ("H ( &<Content-ID> + ‘:’ + H(&<Data>))= \n{0}", _Indent);
 				_Output.Write ("{1}\n{0}", _Indent, UDFData);
 				_Output.Write ("~~~~\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
@@ -62,6 +66,30 @@ namespace ExampleGenerator {
 				_Output.Write ("<dd>{1}\n{0}", _Indent, UDF.ToString (ContentType, DataBytes, 250));
 				_Output.Write ("</dl>\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("###Using SHA-3-512 Digest\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("H(&<Data> ) = \n{0}", _Indent);
+				_Output.Write ("{1}\n{0}", _Indent, HashData3);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("H (&<Content-ID> + ‘:’ + H(&<Data>))= \n{0}", _Indent);
+				_Output.Write ("{1}\n{0}", _Indent, UDFDataBufferString3);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("H ( &<Content-ID> + ‘:’ + H(&<Data>))= \n{0}", _Indent);
+				_Output.Write ("{1}\n{0}", _Indent, UDFData3);
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("<dl>\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("<dt>Text Presentation (100 bit)\n{0}", _Indent);
+				_Output.Write ("<dd>{1}\n{0}", _Indent, UDF.ToString3 (ContentType, DataBytes, 100));
+				_Output.Write ("<dt>Text Presentation (125 bit)\n{0}", _Indent);
+				_Output.Write ("<dd>{1}\n{0}", _Indent, UDF.ToString3 (ContentType, DataBytes, 125));
+				_Output.Write ("<dt>Text Presentation (150 bit)\n{0}", _Indent);
+				_Output.Write ("<dd>{1}\n{0}", _Indent, UDF.ToString3 (ContentType, DataBytes, 150));
+				_Output.Write ("<dt>Text Presentation (250 bit)\n{0}", _Indent);
+				_Output.Write ("<dd>{1}\n{0}", _Indent, UDF.ToString3 (ContentType, DataBytes, 250));
+				_Output.Write ("</dl>\n{0}", _Indent);
 				}
 			}
 		

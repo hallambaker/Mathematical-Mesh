@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Goedel.Protocol;
-
+using Goedel.Utilities;
 
 namespace Goedel.Account {
 
@@ -15,22 +15,23 @@ namespace Goedel.Account {
         /// </summary>
         public abstract class AccountPortal {
 
-            /// <summary>
-            /// Return a RecryptService object for the named portal service.
-            /// </summary>
-            /// <param name="Portal">Address of the portal service.</param>
-            /// <returns>Recrypt service object for API access to the service.</returns>
-            public virtual AccountService GetService (string Portal) {
-                return GetService(Portal, null);
-                }
+        /// <summary>
+        /// Return a RecryptService object for the named portal service.
+        /// </summary>
+        /// <param name="Address">Address of the portal service.</param>
+        /// <returns>Recrypt service object for API access to the service.</returns>
+        public virtual AccountService GetService (string Address) {
+            Address.SplitAccountIDService(out var Service, out var Account);
+            return GetService(Service, Account);
+            }
 
-            /// <summary>
-            /// Return a RecryptService object for the named portal service.
-            /// </summary>
-            /// <param name="Portal">Address of the portal service.</param>
-            /// <param name="Account">Account name.</param>
-            /// <returns>Recrypt service object for API access to the service.</returns>
-            public abstract AccountService GetService (string Portal, string Account);
+        /// <summary>
+        /// Return a RecryptService object for the named portal service.
+        /// </summary>
+        /// <param name="Portal">Address of the portal service.</param>
+        /// <param name="Account">Account name.</param>
+        /// <returns>Recrypt service object for API access to the service.</returns>
+        public abstract AccountService GetService (string Portal, string Account);
 
             private static AccountPortal _Default;
             /// <summary>

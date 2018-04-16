@@ -36,7 +36,7 @@ namespace Goedel.Mesh.MeshMan {
                     DeviceRegistration.SignedDeviceProfile,
                     out var DeviceRequest);
 
-            Machine.ConnectStartRequests.Add(DeviceRequest);
+            MeshMachine.ConnectStartRequests.Add(DeviceRequest);
 
             var Authenticator = UDF.FromUDFPair(
                     DeviceRegistration.UDF,
@@ -143,13 +143,13 @@ namespace Goedel.Mesh.MeshMan {
 
             int Index = -1;
             if (Options.Portal.ByDefault) {
-                Assert.True(Machine.ConnectStartRequests.Count > 0);
+                Assert.True(MeshMachine.ConnectStartRequests.Count > 0);
                 Index = 0;
                 }
             else {
                 throw new NYI(); // NYI: Handle multiple simultaneous connection requests.
                 }
-            var ConnectStartRequest = Machine.ConnectStartRequests[Index];
+            var ConnectStartRequest = MeshMachine.ConnectStartRequests[Index];
 
             MeshClient = new MeshClient(PortalAccount: ConnectStartRequest.AccountID);
 
@@ -163,7 +163,7 @@ namespace Goedel.Mesh.MeshMan {
                 }
             else {
                 var SignedProfile = Result.Data.Profile as SignedPersonalProfile;
-                MeshSession.CreateAccount(ConnectStartRequest.AccountID, SignedProfile.PersonalProfile, MeshClient);
+                MeshMachine.CreateAccount(ConnectStartRequest.AccountID, SignedProfile.PersonalProfile, MeshClient);
                 }
 
             var ResultConnect = new ResultConnectComplete() {

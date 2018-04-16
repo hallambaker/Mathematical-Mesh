@@ -1,6 +1,6 @@
 ﻿Class Goedel.Container.Shell ContainerShell
 	Brief		"Container management tool"
-
+	About "about"
 
 	Command ListContent "list"
 		Brief		"List the container contents"

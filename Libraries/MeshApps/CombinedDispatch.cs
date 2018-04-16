@@ -25,7 +25,6 @@ namespace Goedel.Combined.Shell.Client {
     public partial class CombinedShell {
 
         CommandLineInterpreter CommandLineInterpreter = new CommandLineInterpreter();
-        MeshSession MeshSession = null;
         public MeshMachine MeshMachine = null;
 
 
@@ -49,7 +48,6 @@ namespace Goedel.Combined.Shell.Client {
 
         public CombinedShell (MeshMachine RegistrationMachine = null) {
             this.MeshMachine = RegistrationMachine ?? new MeshMachineCached();
-            MeshSession = new MeshSession(this.MeshMachine);
             }
 
 
@@ -63,7 +61,7 @@ namespace Goedel.Combined.Shell.Client {
 
             var PersonalProfile = new PersonalProfile(DeviceRegistration.DeviceProfile);
 
-            var Registration = MeshSession.CreateAccount(Address, PersonalProfile);
+            var Registration = MeshMachine.CreateAccount(Address, PersonalProfile);
 
 
             Report("Created new personal profile {0}", Registration.UDF);
@@ -353,7 +351,12 @@ namespace Goedel.Combined.Shell.Client {
             var Recipient = Encrypted.GetRecrypted(out var Address, out var UDF);
             var RecryptClient = new RecryptClient(Address);
 
-            var SessionRecryption = new SessionRecrypt(PersonalSession);
+
+            // This is obviously wrong here
+            // Need to pull the new way to do things from DAREMan
+
+            var RecryptProfile = new RecryptProfile();
+            var SessionRecryption = new SessionRecrypt(PersonalSession, RecryptProfile, true);
             var EncryptionKey = SessionRecryption.GetEncryptionKey(Encrypted.Recipients);
 
 

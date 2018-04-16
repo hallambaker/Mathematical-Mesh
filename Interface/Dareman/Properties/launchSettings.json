@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "Dareman": {
+      "commandName": "Project",
+      "commandLineArgs": "/recrypt recrypt.dare recrypt2.html",
+      "workingDirectory": "C:\\Users\\hallam\\test"
+    }
+  }
+}

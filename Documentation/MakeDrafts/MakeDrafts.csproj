@@ -102,5 +102,13 @@
 
   <Import Project="..\..\Libraries\MeshApps\MeshApps.projitems" Label="Shared" />
 
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="VSPreBuild" />
+  </Target>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="VSPostBuild" />
+  </Target>
+
 
 </Project>

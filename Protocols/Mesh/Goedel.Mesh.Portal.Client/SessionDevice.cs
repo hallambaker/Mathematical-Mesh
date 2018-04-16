@@ -33,7 +33,7 @@ namespace Goedel.Mesh.Portal.Client {
     /// <summary>
     /// Describes the registration of a device profile on a machine.
     /// </summary>
-    public abstract class RegistrationDevice : Registration {
+    public class SessionDevice : Registration {
 
         /// <summary>
         /// The registered signed profile.
@@ -44,15 +44,26 @@ namespace Goedel.Mesh.Portal.Client {
         /// The Device profile
         /// </summary>
         public SignedDeviceProfile SignedDeviceProfile { get; set; }
-
-        /// <summary>Machine session to which the device session is bound.</summary>
-        public override MeshMachine MeshMachine { get; set; }
-
         
         /// <summary>
         /// The most recent cached profile data, if available.
         /// </summary>
         public virtual DeviceProfile DeviceProfile  => SignedDeviceProfile.DeviceProfile;
+
+
+        public MeshMachine MeshMachine { get; set; }
+
+        /// <summary>
+        /// Add the associated profile to the machine store.
+        /// </summary>
+        /// <param name="SignedDeviceProfile">The device profile</param>
+        /// <param name="RegistrationMachine">The machine session.</param>
+        public SessionDevice (SignedDeviceProfile SignedDeviceProfile,
+                    MeshMachine RegistrationMachine) {
+            this.SignedDeviceProfile = SignedDeviceProfile;
+            MeshMachine = RegistrationMachine;
+            }
+
 
 
         /// <summary>
@@ -121,7 +132,13 @@ namespace Goedel.Mesh.Portal.Client {
 
             }
 
+        public override void MakeDefault () {
+            MeshMachine.MakeDefault(this);
+            }
 
+        public override void WriteToLocal (bool Default = true) {
+            MeshMachine.WriteToLocal(this, Default);
+            }
         }
 
     }

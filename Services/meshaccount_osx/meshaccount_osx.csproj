@@ -27,6 +27,7 @@
     <ProjectReference Include="..\..\Protocols\Confirm\Goedel.Confirm\Goedel.Confirm.csproj" />
     <ProjectReference Include="..\..\Protocols\Mesh\Goedel.Mesh.Portal.Client\Goedel.Mesh.Portal.Client.csproj" />
     <ProjectReference Include="..\..\Protocols\Mesh\Goedel.Mesh.Portal\Goedel.Mesh.Portal.csproj" />
+    <ProjectReference Include="..\..\Protocols\Recrypt\Goedel.Recrypt.Server\Goedel.Recrypt.Server.csproj" />
     <ProjectReference Include="..\..\Protocols\Recrypt\Goedel.Recrypt\Goedel.Recrypt.csproj" />
   </ItemGroup>
 

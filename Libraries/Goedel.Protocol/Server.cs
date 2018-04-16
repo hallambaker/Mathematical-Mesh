@@ -321,15 +321,20 @@ namespace Goedel.Protocol {
 
             }
 
+        private PortRegistration GetPort (List<PortRegistration> Ports, Uri URI) {
+            foreach (var Port in Ports) {
+                var HTTPPort = Port as HTTPPortRegistration;
+                if (URI.AbsoluteUri == HTTPPort.URI) {
+                    return Port;
+                    }
+                }
+            return null;
+            }
+
 
         private void Handle (HttpListenerContext Context) {
             Stream RequestStream = null, ResponseStream=null;
             try {
-                // Which provider handles this URI?
-
-                var Port = Ports[0];    // Should search the prefix list but this 
-                                        // is OK for now.
-
                 // Get request data
 
                 // This is not a very good implementation since it
@@ -339,6 +344,8 @@ namespace Goedel.Protocol {
                 var Request = Context.Request;
                 var Encoding = Request.ContentEncoding;
                 RequestStream = Request.InputStream;
+
+                var Port = GetPort  (Ports, Request.Url);   
 
                 //var Reader = new StreamReader(RequestStream, Encoding);
                 //var RequestBody = Reader.ReadToEnd();

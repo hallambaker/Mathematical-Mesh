@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -35,6 +35,21 @@ namespace Goedel.Confirm.Shell.Server {
             Entries = new List<DescribeEntry>() { }
             };
 
+        /// <summary>
+        /// Describe the application invoked by the command.
+        /// </summary>
+        /// <param name="Dispatch">The command description.</param>
+        /// <param name="args">The set of arguments.</param>
+        /// <param name="index">The first unparsed argument.</param>
+        public static void About (DispatchShell Dispatch, string[] args, int index) {
+            FileTools.About();
+            }
+
+        public static DescribeCommandEntry DescribeAbout = new DescribeCommandEntry() {
+            Identifier = "about",
+            HandleDelegate = About,
+            Entries = new List<DescribeEntry>() { }
+            };
 
         static bool IsFlag(char c) {
             return (c == UnixFlag) | (c == WindowsFlag) ;
@@ -55,6 +70,7 @@ namespace Goedel.Confirm.Shell.Server {
 				Description = "Mesh/Confirm service";
 
 			Entries = new  SortedDictionary<string, DescribeCommand> () {
+				{"about", DescribeAbout },
 				{"start", _Start._DescribeCommand },
 				{"help", DescribeHelp }
 				}; // End Entries
@@ -71,7 +87,15 @@ namespace Goedel.Confirm.Shell.Server {
         public void MainMethod(string[] Args) {
 			ConfirmShell Dispatch = new ConfirmShell ();
 
-			MainMethod (Dispatch, Args);
+			try {
+				MainMethod (Dispatch, Args);
+				}
+            catch (Goedel.Command.ParserException) {
+			    Brief(Description, DefaultCommand, Entries);
+				}
+            catch (System.Exception Exception) {
+                Console.WriteLine("Application: {0}", Exception.Message);
+                }
 			}
 
 

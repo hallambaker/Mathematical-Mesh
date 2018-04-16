@@ -37,31 +37,31 @@ namespace Goedel.Mesh.Portal.Client {
     /// the fingerprint, the cached profile data and the list of portal entries
     /// to which the profile is bound.
     /// </summary>
-    public abstract partial class SessionPersonal : PortalRegistration {
+    public partial class SessionPersonal : PortalRegistration {
+
+        /// <summary>
+        /// Shortcut for the Mesh Machine
+        /// </summary>
+        public MeshMachine MeshMachine { get; set; }
 
         /// <summary>
         /// The registered signed profile.
         /// </summary>
         public override SignedProfile SignedProfile  => SignedPersonalProfile; 
 
-
         /// <summary>
         /// The most recent cached profile data, if available.
         /// </summary>
         public virtual PersonalProfile PersonalProfile { get; set; }
 
-        /// <summary>The Mech catalog for this session.</summary>
-        public MeshSession MeshCatalog { get; set; }
-
-
         /// <summary>
         /// Client which may be used to interact with the portal on which this
         /// profile is registered.
         /// </summary>
-        public override MeshClient MeshClient {
+        public virtual MeshClient MeshClient {
             get {
                 if (_MeshClient == null) {
-                    _MeshClient =  MeshCatalog.Bind(Portals.Default);
+                    _MeshClient = MeshMachine.Bind(Portals.Default);
                     _MeshClient.SignedPersonalProfile = SignedPersonalProfile;
                     }
                 
@@ -89,7 +89,40 @@ namespace Goedel.Mesh.Portal.Client {
         /// <summary>
         /// Profiles associated with this account in chronological order.
         /// </summary>
-        public abstract SortedList<DateTime, SignedProfile> Profiles { get; set; }
+        public SortedList<DateTime, SignedProfile> Profiles { get; set; }
+
+
+        /// <summary>
+        /// Register a personal profile in the Windows registry
+        /// </summary>
+        /// <param name="Profile">The personal profile.</param>
+        /// <param name="MeshMachine">The machine session.</param>
+        /// <param name="Portals">The list of portals.</param>
+        public SessionPersonal (SignedPersonalProfile Profile,
+                        MeshMachine MeshMachine,
+                        IEnumerable<string> Portals = null) {
+            this.MeshMachine = MeshMachine;
+            SignedPersonalProfile = Profile;
+            this.Portals = new PortalCollection(Portals);
+            }
+
+
+        public ApplicationProfile GetApplicationProfile (
+                    ApplicationProfileEntry applicationProfileEntry) {
+            var UDF = applicationProfileEntry.Identifier;
+
+            foreach (var Profile in MeshMachine.ApplicationProfiles) {
+                if (Profile.Identifier == UDF) {
+                    return Profile;
+                    }
+                }
+
+
+            return null;
+
+            }
+
+
 
         /// <summary>
         /// Escrow the personal profile to the bound portal.
@@ -121,34 +154,28 @@ namespace Goedel.Mesh.Portal.Client {
         /// <param name="AccountID">The portal account.</param>
         /// <param name="MeshClient">A Mesh Client connected to the portal.</param>
         /// <param name="Create">If true, the mesh client should request the account be created.</param>
-        public abstract void AddPortal (string AccountID, MeshClient MeshClient = null, bool Create = false);
+        public virtual void AddPortal (string AccountID, MeshClient MeshClient = null, bool Create = false) {
+            MeshClient = MeshClient ?? new MeshClient(AccountID);
+            this.MeshClient = MeshClient;
 
+            Assert.NotNull(MeshClient, PortalConnectFail.Throw);
 
-        public virtual void Add (SessionApplication SessionApplication) {
+            var PortalRegister = MeshClient.CreatePortalAccount(AccountID, PersonalProfile.SignedPersonalProfile);
 
-            MeshMachine.Add(SessionApplication);
+            Portals.Add(AccountID);
             }
 
 
-        ///// <summary>
-        ///// Add an application to this profile
-        ///// </summary>
-        ///// <param name="Profile">Application session to add</param>
-        ///// <param name="Write">If true, write to persistent store.</param>
-        ///// <returns>The new application session.</returns>
-        //public virtual SessionApplication Add (
-        //            ApplicationProfile Profile, bool Write = true) {
+        public virtual void Add (
+                        SessionApplication SessionApplication,
+                        bool Write = true) {
 
-        //    var RegistrationApplication = MeshMachine.Add(Profile);
-        //    RegistrationApplication.SessionPersonal = this;
-
-        //    if (Write) {
-        //        this.Write();
-        //        RegistrationApplication.Write();
-        //        }
-
-        //    return RegistrationApplication;
-        //    }
+            MeshMachine.Add(SessionApplication);
+            if (Write) {
+                SessionApplication.Write();
+                this.Write();
+                }
+            }
 
 
         /// <summary>
@@ -207,11 +234,13 @@ namespace Goedel.Mesh.Portal.Client {
         /// </summary>
         public virtual bool IsDefault { get; set; } = true; // Hack: Should work out if it is default
 
-        /// <summary>
-        /// Serialize for storage in a file.
-        /// </summary>
-        /// <returns>The serialization object</returns>
-        public virtual SerializationPersonal Serialize () {
+        public override PortalCollection Portals { get; }
+
+    /// <summary>
+    /// Serialize for storage in a file.
+    /// </summary>
+    /// <returns>The serialization object</returns>
+    public virtual SerializationPersonal Serialize () {
             var Result = new SerializationPersonal() {
                 Profile = SignedPersonalProfile,
                 Portals = Portals.Serialize()
@@ -229,7 +258,7 @@ namespace Goedel.Mesh.Portal.Client {
         /// <param name="Identifier">The type of application session to get.</param>
         /// <returns>The application session.</returns>
         public SessionApplication GetApplication (string Identifier) {
-            MeshMachine.Find(Identifier, out SessionApplication Result);
+            MeshMachine.FindByUDF (Identifier, out SessionApplication Result);
             return Result;
             }
 
@@ -273,8 +302,8 @@ namespace Goedel.Mesh.Portal.Client {
         /// </summary>
         /// <param name="DeviceIdentifiers">The device identifier fingerprints to match.</param>
         /// <returns>The list of matching devices.</returns>
-        public List<RegistrationDevice> MatchDevices (List<string> DeviceIdentifiers) {
-            var Result = new List<RegistrationDevice>();
+        public List<SessionDevice> MatchDevices (List<string> DeviceIdentifiers) {
+            var Result = new List<SessionDevice>();
 
             foreach (var Identifier in DeviceIdentifiers) {
                 if (MeshMachine.DeviceProfiles.TryGetValue(Identifier, out var Registration)) {
@@ -311,6 +340,13 @@ namespace Goedel.Mesh.Portal.Client {
             // NYI: Validate against the UDF
             }
 
+        public override void MakeDefault () {
+            throw new NotImplementedException();
+            }
+
+        public override void WriteToLocal (bool Default = false) {
+            MeshMachine.WriteToLocal(this, Default);
+            }
         }
     }
 

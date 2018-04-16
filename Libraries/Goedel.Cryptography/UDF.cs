@@ -113,6 +113,39 @@ namespace Goedel.Cryptography {
             }
 
 
+        /// <summary>
+        /// Compute UDF from binary data and content type with specified precision.
+        /// </summary>
+        /// <param name="ContentType">MIME media type. See 
+        /// http://www.iana.org/assignments/media-types/media-types.xhtml for list.</param>
+        /// <param name="Data">Data to be fingerprinted.</param>
+        /// <param name="Bits">Precision, must be a multiple of 25 bits.</param>
+        /// <returns>The binary UDF fingerprint.</returns>
+        public static byte[] From3 (string ContentType, byte[] Data, int Bits) {
+            Bits = Bits == 0 ? DefaultBits : Bits;
+
+            var UDFDataBuffer = UDFBuffer3(ContentType, Data);
+            var UDFData = Platform.SHA3_512.Process(UDFDataBuffer);
+
+            var TotalBits = Bits;
+            var FullBytes = TotalBits / 8;
+            var ExtraBits = TotalBits % 8;
+            var TotalBytes = ExtraBits == 0 ? FullBytes : FullBytes + 1;
+
+            byte[] Output = new byte[TotalBytes];
+            Output[0] = (byte)UDFConstants.KeyIdentifierAlgSHA_3_512;
+            for (var j = 0; j < FullBytes - 1; j++) {
+                Output[j + 1] = UDFData[j];
+                }
+
+            if (ExtraBits > 0) {
+                Output[TotalBytes - 1] = (byte)(UDFData[FullBytes - 1] << (8 - ExtraBits) & 0xff);
+                }
+
+            return Output;
+            }
+
+
         static int CountLeadingZeros (int Data) {
             int Result = 0;
             for (var i = 0; i < 8; i++) {
@@ -154,6 +187,26 @@ namespace Goedel.Cryptography {
         /// <returns>SHA2-512 (UTF8(ContentType) + ":" + SHA2512(Data))</returns>
         public static byte[] UDFBuffer (string ContentType, byte[] Data) {
             var HashData = Platform.SHA2_512.Process(Data);
+            var Tag = Encoding.UTF8.GetBytes(ContentType);
+            var Input = new byte[HashData.Length + Tag.Length + 1];
+
+            Input.AppendChecked(0, Tag);
+            Input[Tag.Length] = (byte)':';
+            Input.AppendChecked(Tag.Length + 1, HashData);
+            return Input;
+
+            }
+
+
+        /// <summary>
+        /// Calculate a UDF Hash value without prefixing the version.
+        /// </summary>
+        /// <param name="ContentType">MIME media type. See 
+        /// http://www.iana.org/assignments/media-types/media-types.xhtml for list.</param>
+        /// <param name="Data">Data to be fingerprinted.</param>
+        /// <returns>SHA2-512 (UTF8(ContentType) + ":" + SHA2512(Data))</returns>
+        public static byte[] UDFBuffer3 (string ContentType, byte[] Data) {
+            var HashData = Platform.SHA3_512.Process(Data);
             var Tag = Encoding.UTF8.GetBytes(ContentType);
             var Input = new byte[HashData.Length + Tag.Length + 1];
 
@@ -249,6 +302,22 @@ namespace Goedel.Cryptography {
 
             return BaseConvert.ToUDF32String(Bytes, Length);
             }
+
+        /// <summary>
+        /// Calculate a UDF fingerprint from an OpenPGP key with specified precision.
+        /// </summary>
+        /// <param name="ContentType">MIME media type of data being fingerprinted.</param>
+        /// <param name="Data">Data to be fingerprinted.</param>
+        /// <param name="Bits">Precision, must be a multiple of 25 bits.</param>
+        /// <returns>The binary UDF fingerprint.</returns>
+        public static string ToString3 (string ContentType, byte[] Data, int Bits = 0) {
+            Bits = Bits == 0 ? DefaultBits : Bits;
+            var Bytes = From3(ContentType, Data, Bits);
+            var Length = (6 * (Bits / 25)) - 1;
+
+            return BaseConvert.ToUDF32String(Bytes, Length);
+            }
+
 
         /// <summary>
         /// Convert a binary UDF to a string.

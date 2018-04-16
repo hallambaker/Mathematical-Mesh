@@ -73,7 +73,7 @@ dareman decrypt file1.dare
 On Alice's machine type:
 
 ~~~~
-dareman group add bob@prismproof.org
+dareman /group /add bob@prismproof.org
 ~~~~
 
 <h2>Check it can be decrypted by new member
@@ -81,6 +81,6 @@ dareman group add bob@prismproof.org
 On Bob's machine type:
 
 ~~~~
-dareman decrypt file1.dare
+dareman /recrypt recrypt.dare recrypt2.html
 [succeeds]
 ~~~~

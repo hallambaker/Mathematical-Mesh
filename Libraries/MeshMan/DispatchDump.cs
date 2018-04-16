@@ -33,15 +33,15 @@ namespace Goedel.Mesh.MeshMan {
             SetReporting(Options);
 
             ReportWriteLine("Personal Profiles");
-            foreach (var Registration in Machine.PersonalProfilesUDF) {
+            foreach (var Registration in MeshMachine.PersonalProfilesUDF) {
                 Report(Registration.Value, false);
                 }
             ReportWriteLine("Device Profiles"); 
-            foreach (var Registration in Machine.DeviceProfiles) {
+            foreach (var Registration in MeshMachine.DeviceProfiles) {
                 Report(Registration.Value);
                 }
             ReportWriteLine("Application Profiles");
-            foreach (var Registration in Machine.ApplicationProfilesByUDF) {
+            foreach (var Registration in MeshMachine.ApplicationProfilesByUDF) {
                 Report(Registration.Value);
                 }
             }
@@ -94,7 +94,7 @@ namespace Goedel.Mesh.MeshMan {
             ReportWriteLine("    Profile {0}", Application.UDF);
             }
 
-        void Report (RegistrationDevice Registration) {
+        void Report (SessionDevice Registration) {
             Report(Registration.DeviceProfile);
             }
 

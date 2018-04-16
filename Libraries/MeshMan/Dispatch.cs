@@ -16,15 +16,24 @@ namespace Goedel.Mesh.MeshMan {
     public partial class Shell {
 
         public List<ConnectionRequest> PendingRequests;
-        MeshMachine Machine=> MeshSession.Machine;
 
+        MeshMachine _MeshMachine = null;
+        public MeshMachine MeshMachine {
+            get {
+
+                _MeshMachine = _MeshMachine ?? MeshMachine.Current;
+                return _MeshMachine;
+                }
+            set {
+                _MeshMachine = value;
+                }
+            }
 
         string PortalID;
         string AccountID;
 
         public MeshClient MeshClient;
 
-        public MeshSession MeshSession;
         CommandLineInterpreter CommandLineInterpreter = new CommandLineInterpreter();
 
         public string DefaultID {
@@ -37,7 +46,7 @@ namespace Goedel.Mesh.MeshMan {
             }
 
         public Shell () {
-            MeshSession = new MeshSession();
+            Mesh.Initialize(true);  // Hack is in test mode right now
             }
 
         public string CommandLine { get; set; }
@@ -48,7 +57,7 @@ namespace Goedel.Mesh.MeshMan {
             }
 
 
-        public RegistrationDevice RegistrationDevice  => Machine.Device;
+        public SessionDevice RegistrationDevice  => MeshMachine.Device;
         public DeviceProfile DeviceProfile => RegistrationDevice.DeviceProfile;
 
         /// <summary>
@@ -56,7 +65,7 @@ namespace Goedel.Mesh.MeshMan {
         /// </summary>
         /// <param name="Options">Command line parameters</param>
         public override void Reset (Reset Options) {
-            MeshSession.EraseTest();
+            MeshMachine.EraseTest();
             }
 
 
@@ -69,7 +78,7 @@ namespace Goedel.Mesh.MeshMan {
             var DeviceDescription = Options.DeviceDescription.Value ?? "Unknown";
             bool? Default = Options.Default.Value;
 
-            MeshSession.CreateDevice(DeviceID, DeviceDescription, Default);
+            MeshMachine.CreateDevice(DeviceID, DeviceDescription, Default);
             }
 
         ///// <summary>

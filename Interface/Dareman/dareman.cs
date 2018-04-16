@@ -80,10 +80,12 @@ namespace Goedel.Mesh.DareMan {
 
 			Entries = new  SortedDictionary<string, DescribeCommand> () {
 				{"about", DescribeAbout },
+				{"erase", _Erase._DescribeCommand },
 				{"register", _Register._DescribeCommand },
 				{"group", DescribeCommandSet_Group},
 				{"encrypt", _Encrypt._DescribeCommand },
 				{"decrypt", _Decrypt._DescribeCommand },
+				{"recrypt", _Recrypt._DescribeCommand },
 				{"help", DescribeHelp }
 				}; // End Entries
 
@@ -91,10 +93,7 @@ namespace Goedel.Mesh.DareMan {
 
             }
 
-        static void Main(string[] args) {
-			var CLI = new CommandLineInterpreter ();
-			CLI.MainMethod (args);
-			}
+
 
         public void MainMethod(string[] Args) {
 			Shell Dispatch = new Shell ();
@@ -116,6 +115,14 @@ namespace Goedel.Mesh.DareMan {
             } // Main
 
 
+
+		public static void Handle_Erase (
+					DispatchShell  DispatchIn, string[] Args, int Index) {
+			Shell Dispatch =	DispatchIn as Shell;
+			Erase		Options = new Erase ();
+			ProcessOptions (Args, Index, Options);
+			Dispatch.Erase (Options);
+			}
 
 		public static void Handle_Register (
 					DispatchShell  DispatchIn, string[] Args, int Index) {
@@ -165,6 +172,14 @@ namespace Goedel.Mesh.DareMan {
 			Dispatch.Decrypt (Options);
 			}
 
+		public static void Handle_Recrypt (
+					DispatchShell  DispatchIn, string[] Args, int Index) {
+			Shell Dispatch =	DispatchIn as Shell;
+			Recrypt		Options = new Recrypt ();
+			ProcessOptions (Args, Index, Options);
+			Dispatch.Recrypt (Options);
+			}
+
 
 	} // class Main
 
@@ -176,6 +191,26 @@ namespace Goedel.Mesh.DareMan {
 	// All subclasses inherit from the abstract classes Goedel.Regisrty.Dispatch 
 	// and Goedel.Command.Type
 
+
+    public class _Erase : Goedel.Command.Dispatch  {
+
+		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {			} ;
+
+		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
+			Identifier = "erase",
+			Brief =  "Erase test data",
+			HandleDelegate =  CommandLineInterpreter.Handle_Erase,
+			Lazy =  false,
+			Entries = new List<DescribeEntry> () {
+				}
+			};
+
+		}
+
+    public partial class Erase : _Erase {
+        } // class Erase
 
     public class _Register : Goedel.Command.Dispatch  {
 
@@ -484,6 +519,60 @@ namespace Goedel.Mesh.DareMan {
     public partial class Decrypt : _Decrypt {
         } // class Decrypt
 
+    public class _Recrypt : Goedel.Command.Dispatch  {
+
+		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new ExistingFile (),
+			new NewFile ()			} ;
+
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual ExistingFile Input {
+			get => _Data[0] as ExistingFile;
+			set => _Data[0]  = value;
+			}
+
+		public virtual string _Input {
+			set => _Data[0].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual NewFile Output {
+			get => _Data[1] as NewFile;
+			set => _Data[1]  = value;
+			}
+
+		public virtual string _Output {
+			set => _Data[1].Parameter (value);
+			}
+		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
+			Identifier = "recrypt",
+			Brief =  "Decrypt a DARE package using recryption.",
+			HandleDelegate =  CommandLineInterpreter.Handle_Recrypt,
+			Lazy =  false,
+			Entries = new List<DescribeEntry> () {
+				new DescribeEntryParameter () {
+					Identifier = "Input", 
+					Default = null, // null if null
+					Brief = "Encrypted File",
+					Index = 0,
+					Key = ""
+					},
+				new DescribeEntryParameter () {
+					Identifier = "Output", 
+					Default = null, // null if null
+					Brief = "Decrypted File",
+					Index = 1,
+					Key = ""
+					}
+				}
+			};
+
+		}
+
+    public partial class Recrypt : _Recrypt {
+        } // class Recrypt
+
 
     public partial class  NewFile : _NewFile {
         public static NewFile Factory (string Value) {
@@ -520,6 +609,10 @@ namespace Goedel.Mesh.DareMan {
 	// to eliminate the redundant code
     public class _Shell : global::Goedel.Command.DispatchShell {
 
+		public virtual void Erase ( Erase Options) {
+			CommandLineInterpreter.DescribeValues (Options);
+			}
+
 		public virtual void Register ( Register Options) {
 			CommandLineInterpreter.DescribeValues (Options);
 			}
@@ -541,6 +634,10 @@ namespace Goedel.Mesh.DareMan {
 			}
 
 		public virtual void Decrypt ( Decrypt Options) {
+			CommandLineInterpreter.DescribeValues (Options);
+			}
+
+		public virtual void Recrypt ( Recrypt Options) {
 			CommandLineInterpreter.DescribeValues (Options);
 			}
 

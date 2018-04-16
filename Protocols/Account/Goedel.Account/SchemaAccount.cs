@@ -96,7 +96,7 @@ namespace Goedel.Account {
         /// <summary>
         /// Well Known service identifier.
         /// </summary>
-		public const string WellKnown = "mmmaccount";
+		public const string WellKnown = "account";
 
         /// <summary>
         /// Well Known service identifier.
@@ -106,7 +106,7 @@ namespace Goedel.Account {
         /// <summary>
         /// Well Known service identifier.
         /// </summary>
-		public const string Discovery = "_mmmaccount._tcp";
+		public const string Discovery = "_account._tcp";
 
         /// <summary>
         /// Well Known service identifier.

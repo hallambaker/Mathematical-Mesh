@@ -24,6 +24,8 @@ using System;
 using Goedel.Protocol;
 using Goedel.Confirm;
 using Goedel.Confirm.Server;
+using Goedel.Account.Server;
+using Goedel.Recrypt.Server;
 
 using System.Diagnostics;
 namespace Goedel.Confirm.Shell.Server {
@@ -42,28 +44,53 @@ namespace Goedel.Confirm.Shell.Server {
 
             System.Diagnostics.Trace.Listeners.Add(new TextWriterTraceListener(Console.Out));
 
+            // Create the server, add the provider, create service port.
+
+            Goedel.Cryptography.Cryptography.Initialize();
+            var Server = new JPCServer();
+
 
             // Create the provider object.
             var ConfirmServiceProvider = new ConfirmLocalServiceProvider(
+                        Options.ServiceAddress.Value);
+            var ConfirmHostReg = Server.Add(ConfirmServiceProvider);
+
+            var AccountServiceProvider = new AccountLocalServiceProvider(
+                        Options.ServiceAddress.Value);
+            var AccountHostReg = Server.Add(AccountServiceProvider);
+
+            var RecryptServiceProvider = new RecryptLocalServiceProvider(
                         Options.ServiceAddress.Value,
                         Options.Store.Value);
+            var RecryptHostReg = Server.Add(RecryptServiceProvider);
 
-
-            // Create the server, add the provider, create service port.
-            var Server = new JPCServer();
-            var HostReg = Server.Add(ConfirmServiceProvider);
 
             // Create the interface dispatcher for the provider.
-            var Interface = new ConfirmServiceLocal(ConfirmServiceProvider, null);
-            var InterfaceReg = HostReg.Add(Interface);
+            var Confirm = new ConfirmServiceLocal(ConfirmServiceProvider, null);
+            var ConfirmInterfaceReg = ConfirmHostReg.Add(Confirm);
+
+            // Create the interface dispatcher for the provider.
+            var Account = new AccountServiceLocal(AccountServiceProvider, null);
+            var AccountInterfaceReg = AccountHostReg.Add(Account);
+
+            // Create the interface dispatcher for the provider.
+            var Recrypt = new RecryptServiceLocal(RecryptServiceProvider, null);
+            var RecryptInterfaceReg = RecryptHostReg.Add(Recrypt);
+
 
             // Register the network port.
             if (Options.HostAddress.Value != null) {
-                InterfaceReg.AddService(Options.HostAddress.Value);
+                ConfirmInterfaceReg.AddService(Options.HostAddress.Value);
+                AccountInterfaceReg.AddService(Options.HostAddress.Value);
+                RecryptInterfaceReg.AddService(Options.HostAddress.Value);
                 }
             if (Options.Fallback.Value) {
-                var Fallback = "Confirm." + Options.ServiceAddress.Value;
-                InterfaceReg.AddService(Fallback);
+                var FallbackConfirm = "Confirm." + Options.ServiceAddress.Value;
+                ConfirmInterfaceReg.AddService(FallbackConfirm);
+                var FallbackAccount = "Account." + Options.ServiceAddress.Value;
+                AccountInterfaceReg.AddService(FallbackAccount);
+                var FallbackRecrypt = "Recrypt." + Options.ServiceAddress.Value;
+                RecryptInterfaceReg.AddService(FallbackRecrypt);
                 }
 
             // Run until abort in async or multithread mode.

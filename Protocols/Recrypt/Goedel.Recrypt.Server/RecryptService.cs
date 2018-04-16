@@ -126,6 +126,10 @@ namespace Goedel.Recrypt.Server {
 
             var UserDecryptionEntry = RecryptStore.GetUserDecryptionEntry(
                     Request.GroupKeyID, Request.MemberUDF, Request.MemberKeyUDF);
+            if (UserDecryptionEntry == null) {
+                return new RecryptDataResponse () {
+                    };
+                }
 
             // Perform the recryption
             return UserDecryptionEntry.RecryptData(Request);

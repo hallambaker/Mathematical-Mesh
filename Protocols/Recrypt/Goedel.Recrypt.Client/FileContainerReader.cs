@@ -105,15 +105,17 @@ namespace Goedel.Recrypt.Client {
                 if (ApplicationProfileEntry.Type == "RecryptProfile") {
                     RecryptionProfiles.Add(ApplicationProfileEntry);
                     RecryptionAccounts.Add(ApplicationProfileEntry.Friendly);
-                    AddKeys(ApplicationProfileEntry);
+                    var ApplicationProfile = SessionPersonal.GetApplicationProfile(ApplicationProfileEntry);
+
+                    AddKeys(ApplicationProfile);
 
                     }
                 }
             }
 
-        void AddKeys (ApplicationProfileEntry ApplicationProfileEntry) {
+        void AddKeys (ApplicationProfile ApplicationProfile) {
 
-            var RecryptProfile = ApplicationProfileEntry.ApplicationProfile as RecryptProfile;
+            var RecryptProfile = ApplicationProfile as RecryptProfile;
 
             Assert.NotNull(RecryptProfile);
 

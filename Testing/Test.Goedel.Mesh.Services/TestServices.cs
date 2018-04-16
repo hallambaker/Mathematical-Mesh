@@ -19,7 +19,7 @@ namespace Test.Goedel.Mesh {
     [TestClass]
     public class TestServices {
 
-        static MeshSession MeshCatalog => MeshProfiles.MeshCatalog;
+        static MeshMachine MeshCatalog => MeshMachine.Current;
         static TestConstant TestConstant = MeshProfiles.TestConstant;
         static MeshProfiles MeshProfiles = new MeshProfiles ();
 

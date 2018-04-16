@@ -56,7 +56,7 @@ namespace Goedel.Mesh.Portal.Client {
     /// Describes a set of registered profiles on a particular machine, usually the
     /// current machine.
     /// </summary>
-    public abstract class MeshMachine : Registration {
+    public abstract partial class MeshMachine : Registration {
 
         /// <summary>List of pending connection requests.</summary>
         public List<ConnectStartRequest> ConnectStartRequests = new List<ConnectStartRequest>();
@@ -69,7 +69,14 @@ namespace Goedel.Mesh.Portal.Client {
         /// <summary>
         /// The a dictionary of personal profiles indexed by portal account.
         /// </summary>
-        public abstract Dictionary<string, SessionPersonal> PersonalProfilesPortal { get; } 
+        public abstract Dictionary<string, SessionPersonal> PersonalProfilesPortal { get; }
+
+
+
+        /// <summary>
+        /// A dictionary of application profiles indexed by fingerprint.
+        /// </summary>
+        public List<ApplicationProfile> ApplicationProfiles { get; } = new List<ApplicationProfile>();
 
 
         /// <summary>
@@ -91,7 +98,7 @@ namespace Goedel.Mesh.Portal.Client {
         /// <summary>
         /// A dictionary of device profiles indexed by fingerprint.
         /// </summary>
-        public abstract Dictionary<string, RegistrationDevice> DeviceProfiles { get; } 
+        public abstract Dictionary<string, SessionDevice> DeviceProfiles { get; } 
 
 
         /// <summary>The fingerprint of the device</summary>
@@ -103,7 +110,7 @@ namespace Goedel.Mesh.Portal.Client {
 
 
         /// <summary>The default device</summary>
-        public virtual RegistrationDevice Device {get; set;}
+        public virtual SessionDevice Device {get; set;}
 
         /// <summary>
         /// The registration on the current machine. This will be read from either
@@ -126,7 +133,7 @@ namespace Goedel.Mesh.Portal.Client {
         /// </summary>
         /// <param name="SignedProfile">Profile to add.</param>
         /// <returns>Registration for the created profile.</returns>
-        public abstract RegistrationDevice Add(SignedDeviceProfile SignedProfile);
+        public abstract SessionDevice Add(SignedDeviceProfile SignedProfile);
 
         /// <summary>
         /// Add the associated profile to the machine store.
@@ -150,7 +157,7 @@ namespace Goedel.Mesh.Portal.Client {
         /// <summary>
         /// Add the associated profile to the machine store.
         /// </summary>
-        /// <param name="ApplicationProfile">Profile to add.</param>
+        /// <param name="SessionApplication">Profile to add.</param>
         /// <returns>Registration for the created profile.</returns>
         public abstract void Add (SessionApplication SessionApplication);
 
@@ -160,28 +167,87 @@ namespace Goedel.Mesh.Portal.Client {
         /// <param name="RegistrationDevice">The returned profile.</param>
         /// <param name="ID">UDF fingerprint of the profile or short form ID</param>
         /// <returns>True if the profile is found, otherwise false.</returns>
-        public abstract bool Find(string ID, out RegistrationDevice RegistrationDevice);
-
+        public virtual bool FindByUDF(string ID, out SessionDevice RegistrationDevice) {
+            return DeviceProfiles.TryGetValue(ID, out RegistrationDevice);
+            }
         /// <summary>
         /// Locate an application profile by identifier
         /// </summary>
-        /// <param name="RegistrationApplication">The returned profile.</param>
+        /// <param name="SessionApplication">The returned profile.</param>
         /// <param name="ID">UDF fingerprint of the profile or short form ID</param>
         /// <returns>True if the profile is found, otherwise false.</returns>
-        public abstract bool Find(string ID, out SessionApplication RegistrationApplication);
+        public virtual bool FindByUDF (string ID, out SessionApplication SessionApplication) {
+            return ApplicationProfilesByUDF.TryGetValue(ID, out SessionApplication);
+            }
 
         /// <summary>
         /// Locate a personal profile by identifier
         /// </summary>
-        /// <param name="RegistrationPersonal">The returned profile.</param>
+        /// <param name="SessionPersonal">The returned profile.</param>
         /// <param name="ID">UDF fingerprint of the profile or short form ID</param>
         /// <returns>True if the profile is found, otherwise false.</returns>
-        public abstract bool Find(string ID, out SessionPersonal RegistrationPersonal);
+        public virtual bool FindByUDF (string ID, out SessionPersonal SessionPersonal) {
+            return PersonalProfilesUDF.TryGetValue(ID, out SessionPersonal);
+            }
+
+        /// <summary>
+        /// Locate a device profile by identifier
+        /// </summary>
+        /// <param name="SessionPersonal">The returned profile.</param>
+        /// <param name="ID">UDF fingerprint of the profile or short form ID</param>
+        /// <returns>True if the profile is found, otherwise false.</returns>
+        public virtual bool FindByAccount (string ID, out SessionPersonal SessionPersonal) {
+            return PersonalProfilesPortal.TryGetValue(ID, out SessionPersonal);
+            }
+
+        /// <summary>
+        /// Make the specified device the default for this mackine.
+        /// </summary>
+        /// <param name="SessionDevice">The device to make the default</param>
+        public abstract void MakeDefault (SessionDevice SessionDevice);
 
 
-        public abstract void GetFromPortal (SessionApplication SessionApplication);
-        public abstract void WriteToPortal (SessionApplication SessionApplication);
+        /// <summary>
+        /// Make the specified personal profile the default for this mackine.
+        /// </summary>
+        /// <param name="SessionPersonal">The personal profile to make the default</param>
+        public abstract void MakeDefault (SessionPersonal SessionPersonal);
+        
+        /// <summary>
+        /// Write personal profile to local storage.
+        /// </summary>
+        /// <param name="SessionPersonal">The profile to write</param>
+        /// <param name="Default">If true, make this the default profile.</param>
+        public abstract void WriteToLocal (SessionPersonal SessionPersonal, bool Default = false);
+
+        //public abstract ApplicationProfile GetFromLocal (string UDF = null, string File = null);
+
+        /// <summary>
+        /// Write application profile to local storage.
+        /// </summary>
+        /// <param name="SessionApplication">The profile to write</param>
+        /// <param name="Default">If true, make this the default profile.</param>
+        public abstract void WriteToLocal (SessionApplication SessionApplication, bool Default=false);
+
+
+
+        /// <summary>
+        /// Write device profile to local storage.
+        /// </summary>
+        /// <param name="Device">The profile to write</param>
+        /// <param name="Default">If true, make this the default profile.</param>
+        public abstract void WriteToLocal (SessionDevice Device, bool Default = false);
+
+        /// <summary>
+        /// Make the specified personal profile the default for this mackine.
+        /// </summary>
+        /// <param name="SessionApplication">The application profile to make the default</param>
         public abstract void MakeDefault (SessionApplication SessionApplication);
+
+        // These should be on the MeshSession not the MeshMachine
+        //public abstract void GetFromLocal (SessionApplication SessionApplication);
+        
+        
 
 
         /// <summary>
@@ -219,8 +285,37 @@ namespace Goedel.Mesh.Portal.Client {
                     }
                 }
 
+            foreach (var Entry in ApplicationProfilesByUDF) {
+                if (Entry.Value.ApplicationProfile._Tag == Type) {
+                    RegistrationApplication = Entry.Value;
+                    return true;
+                    }
+                }
+
             RegistrationApplication = null;
             return false;
+            }
+
+
+        /// <summary>
+        /// Find an application profile of a given type.
+        /// </summary>
+        /// <param name="Type">The type of profile to find.</param>
+        /// <param name="PortalAddress">The portal address to fetch the profile from.</param>
+        /// <param name="UDF">The profile fingerprint.</param>
+        /// <param name="ShortId">The profile short name.</param>
+        /// <param name="RegistrationApplication">The returned profile.</param>
+        /// <returns>True if a matching profile is found, otherwise, false.</returns>
+        public ApplicationProfile Find (
+                    string Type) {
+
+
+            foreach (var Entry in ApplicationProfiles) {
+                if (Entry._Tag == Type) {
+                    return Entry;
+                    }
+                }
+            return null;
             }
 
 
@@ -238,8 +333,7 @@ namespace Goedel.Mesh.Portal.Client {
         ///// </summary>
         //public virtual MeshCatalog MeshCatalog { get; }
 
-        /// <summary>The abstract machine a profile registration is attached to</summary>
-        public abstract MeshMachine MeshMachine { get; set; }
+
 
         /// <summary>
         /// The registered signed profile.
@@ -275,10 +369,7 @@ namespace Goedel.Mesh.Portal.Client {
         /// Write data to the local machine.
         /// </summary>
         /// <param name="Default">If true, make this the default.</param>        
-        public virtual void WriteToLocal(bool Default = true) {
-            }
-
-
+        public abstract void WriteToLocal (bool Default = true);
 
         /// <summary>
         /// Write out the configuration to the portal and the current machine
@@ -304,30 +395,21 @@ namespace Goedel.Mesh.Portal.Client {
         /// </summary>
         public abstract PortalCollection Portals { get; }
 
-
-        /// <summary>
-        /// Client which may be used to interact with the portal on which this
-        /// profile is registered.
-        /// </summary>
-        public abstract MeshClient MeshClient {get; set;
-            }
-
-
         /// <summary>
         /// Fetch the latest version of the profile version
         /// </summary>
         public abstract void GetFromPortal();
 
-        /// <summary>Update remote and persistence store</summary>
-        public virtual void WriteToPortal() {
-            MeshClient.Publish(SignedProfile);
-            }
+        /// <summary>Update remote store</summary>
+        public abstract void WriteToPortal ();
+
+
 
         /// <summary>
         /// Write out the configuration to the portal and the current machine
         /// </summary>
         /// <param name="Default">If true, make this the default.</param>
-        public override void Write(bool Default = true) {
+        public override void Write(bool Default = false) {
             WriteToLocal(Default); // NYI flag to record if a pending update should be pushed out
             WriteToPortal();
             }

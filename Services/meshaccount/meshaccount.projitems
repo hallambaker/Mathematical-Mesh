@@ -21,5 +21,6 @@
       <LastGenOutput>ConfirmServer.cs</LastGenOutput>
       <Generator>CommandCS</Generator>
     </None>
+    <None Include="$(MSBuildThisFileDirectory)VS.Make" />
   </ItemGroup>
 </Project>

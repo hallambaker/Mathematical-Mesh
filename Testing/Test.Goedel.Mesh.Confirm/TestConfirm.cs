@@ -51,7 +51,7 @@ namespace Test.Goedel.Mesh {
 
         #region // Initialization
 
-        static MeshSession MeshCatalog => MeshProfiles.MeshCatalog;
+
         static TestConstant TestConstant = MeshProfiles.TestConstant;
         static MeshProfiles MeshProfiles = new MeshProfiles();
 

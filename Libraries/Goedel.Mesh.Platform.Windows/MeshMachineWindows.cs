@@ -22,11 +22,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 using Goedel.IO;
 using Goedel.Utilities;
 using Goedel.Cryptography;
 using Goedel.Mesh.Portal;
 using Goedel.Mesh.Portal.Client;
+
 
 namespace Goedel.Mesh.Platform.Windows {
 
@@ -63,7 +65,7 @@ namespace Goedel.Mesh.Platform.Windows {
         }
 
     /// <summary>Machine session class for Windows in native mode.</summary>
-    public partial class RegistrationMachineWindows : MeshMachineCached {
+    public partial class MeshMachineWindows : MeshMachineCached {
 
         /// <summary>
         /// Register the delegates for handling Windows native registrations with
@@ -73,17 +75,16 @@ namespace Goedel.Mesh.Platform.Windows {
         /// test/debug mode.</param>
         public static void Initialize(bool TestMode = false) {
             if (Current == null) {
-                Current = new RegistrationMachineWindows();
+                Current = new MeshMachineWindows();
                 }
             }
 
         /// <summary>
         /// Default constructor, get values from the current machine.
         /// </summary>
-        public RegistrationMachineWindows() {
+        public MeshMachineWindows() {
             Fill();
             }
-
 
         /// <summary>
         /// Return a new machine registration.
@@ -97,8 +98,6 @@ namespace Goedel.Mesh.Platform.Windows {
         /// Fetch the latest version of the profile version
         /// </summary>
         void Fill() {
-
-
             // Hack: Check to see that default personal etc. profile is set.
 
             var ProfileKeys = Windows.Register.GetSubKeys(Constants.RegistryPersonal);
@@ -111,12 +110,15 @@ namespace Goedel.Mesh.Platform.Windows {
 
                 if (Filename != "") {
                     var Portals = KeySet.GetValueMultiString("Portals");
-                    var Profile = new RegistrationPersonalWindows (this, KeySet.Key, Filename, Portals);
+                    var SignedProfile = SignedPersonalProfile.FromFile(Filename, KeySet.Key);
+
+                    var Profile = new SessionPersonal (SignedProfile, this, Portals);
                     if (Profile != null) {
                         Register(Profile);
-                        // add Archive
-                        var Archive = KeySet.GetValueString("Archive");
-                        Profile.Archive = Archive;
+                        // ToDo: implement archiving of profiles
+                        //// add Archive n 
+                        //var Archive = KeySet.GetValueString("Archive");
+                        //Profile.Archive = Archive;
                         if (KeySet.Default) {
                             Personal = Profile;
                             }
@@ -126,20 +128,25 @@ namespace Goedel.Mesh.Platform.Windows {
 
             foreach (var Key in ApplicationKeys) {
                 if (Key.Key.Length > 10) {
-                    var Profile = new RegistrationApplicationWindows(this, Key.Key, Key.Value);
-                    if (Profile != null) {
-                        ApplicationProfilesByUDF.AddSafe(Key.Key, Profile); // NYI check if present
-                        }
+                    var ApplicationProfile = GetLocalApplicationProfile(Key.Value, Key.Key);
+
+                    ApplicationProfiles.Add(ApplicationProfile);
+
+                    //var Profile = new SessionApplication(ApplicationProfile, this);
+                    //if (Profile != null) {
+                    //    ApplicationProfilesByUDF.AddSafe(Key.Key, Profile); // NYI check if present
+                    //    }
                     }
                 else {
                     ApplicationProfilesDefault.AddSafe(Key.Key, Key.Value); // NYI check if present
                     }
                 }
 
-
             foreach (var Key in DeviceKeys) {
                 if (Key.Key != "") {
-                    var Profile = new RegistrationDeviceWindows (Key.Key, Key.Value);
+                    //Key.Key, Key.Value
+                    var DeviceProfile = SignedDeviceProfile.FromFile(Key.Value, Key.Key);
+                    var Profile = new SessionDevice (DeviceProfile, this);
                     if (Profile != null) {
                         DeviceProfiles.AddSafe(Key.Key, Profile); // NYI check if present
                         }
@@ -155,6 +162,22 @@ namespace Goedel.Mesh.Platform.Windows {
                 }
 
             return;
+            }
+
+        private static ApplicationProfile GetLocalApplicationProfile (string File = null, string UDF = null) {
+            if (File == null) {
+                var FileName = Microsoft.Win32.Registry.GetValue(@"HKEY_CURRENT_USER\"
+                            + Constants.RegistryApplication, UDF, null);
+                File = FileName as string;
+                }
+            var SignedProfile = SignedApplicationProfile.FromFile(File, UDF);
+
+            try {
+                return SignedProfile.ApplicationProfile;
+                }
+            catch {
+                return null;
+                }
             }
 
 
@@ -183,20 +206,16 @@ namespace Goedel.Mesh.Platform.Windows {
             DeviceProfiles.Clear();
             }
 
-
-        
-
         /// <summary>
         /// Add the associated profile to the machine store.
         /// </summary>
         /// <param name="SignedProfile">Profile to add.</param>
         /// <returns>Registration for the created profile.</returns>
-        public override RegistrationDevice Add(SignedDeviceProfile SignedProfile) {
-            var Registration = new RegistrationDeviceWindows(SignedProfile) {
-                MeshMachine = this
-                };
-            DeviceProfiles.AddSafe(SignedProfile.Identifier, Registration); // NYI check if present
-            return Registration;
+        public override SessionDevice Add(SignedDeviceProfile SignedProfile) {
+            var SessionDevice = new SessionDevice(SignedProfile, this);
+            DeviceProfiles.AddSafe(SignedProfile.Identifier, SessionDevice);
+            WriteToLocal(SessionDevice);
+            return SessionDevice;
             }
 
         /// <summary>
@@ -205,45 +224,105 @@ namespace Goedel.Mesh.Platform.Windows {
         /// <param name="SignedProfile">Profile to add.</param>
         /// <returns>Registration for the created profile.</returns>
         public override SessionPersonal Add(SignedPersonalProfile SignedProfile) {
-            var Registration = new RegistrationPersonalWindows(SignedProfile, this);
+            var Registration = new SessionPersonal(SignedProfile, this);
             Register(Registration);
             return Registration;
             }
 
+        public override void WriteToLocal (SessionPersonal SessionPersonal, bool Default = false) {
+            var UDF = SessionPersonal.UDF;
+            var KeyName = Constants.RegistryPersonal;
+
+            var Hive = Microsoft.Win32.Registry.CurrentUser;
+            var FileName = MeshWindows.FilePersonalProfile(UDF);
+
+            Directory.CreateDirectory(Constants.FileProfilesPersonal);
+            var SubKeyName = KeyName + @"\" + UDF;
+            var SubKey = Hive.CreateSubKey(SubKeyName);
+
+            SubKey.SetValue("", FileName);
+            if (SessionPersonal.Portals != null) {
+                SubKey.SetValue("Portals", SessionPersonal.Portals.ToArray(),
+                        Microsoft.Win32.RegistryValueKind.MultiString);
+                }
+            SubKey.SetValue("Archive", "TBS");
+
+            File.WriteAllText(FileName, SessionPersonal.SignedPersonalProfile.ToString());
+
+            if (Default) {
+                MakeDefault(SessionPersonal);
+                }
+            }
+
+        public override void MakeDefault (SessionPersonal SessionPersonal) {
+            var Hive = Microsoft.Win32.Registry.CurrentUser;
+            var Key = Hive.CreateSubKey(Constants.RegistryPersonal);
+            var Exists = Key.GetValue("") == null;
+            Key.SetValue("", SessionPersonal.UDF);
+            }
 
 
+        public override void WriteToLocal (SessionApplication SessionApplication, bool Default = false) {
+            var Hive = Microsoft.Win32.Registry.CurrentUser;
+            var Key = Hive.CreateSubKey(Constants.RegistryApplication);
+            var UDF = SessionApplication.UDF;
+            var FileName = MeshWindows.FileApplicationlProfile(UDF);
+
+            Directory.CreateDirectory(Constants.FileProfilesApplication);
+
+            Key.SetValue(UDF, FileName);
+
+            File.WriteAllText(FileName, SessionApplication.SignedApplicationProfile.ToString());
+
+            if (Default) {
+                MakeDefault(SessionApplication);
+                }
+            }
+
+        public override void MakeDefault (SessionApplication SessionApplication) {
+            throw new NYI(); // Do we even make defaujlt application sessions on the machine?
+            }
+
+
+        public override void MakeDefault (SessionDevice SessionDevice) {
+            var Hive = Microsoft.Win32.Registry.CurrentUser;
+            var Key = Hive.CreateSubKey(Constants.RegistryDevice);
+            Key.SetValue("", SessionDevice.UDF);
+            }
 
 
         /// <summary>
-        /// Locate a device profile by identifier
+        /// Write values to registry.
         /// </summary>
-        /// <param name="RegistrationDevice">The returned profile.</param>
-        /// <param name="ID">UDF fingerprint of the profile or short form ID</param>
-        /// <returns>True if the profile is found, otherwise false.</returns>
-        public override bool Find(string ID, out RegistrationDevice RegistrationDevice) {
-            return DeviceProfiles.TryGetValue (ID, out RegistrationDevice);
+        /// <param name="Default">If true, make this the default.</param>
+        public override void WriteToLocal (SessionDevice Device, bool Default = false) {
+            var UDF = Device.UDF;
+
+            var Hive = Microsoft.Win32.Registry.CurrentUser;
+            var Key = Hive.CreateSubKey(Constants.RegistryDevice);
+            var FileName = MeshWindows.FileDeviceProfile(UDF);
+
+            Directory.CreateDirectory(Constants.FileProfilesDevice);
+
+            Key.SetValue(UDF, FileName);
+
+            File.WriteAllText(FileName, Device.SignedDeviceProfile.ToString());
+
+            if (Default) {
+                MakeDefault(Device);
+                }
             }
 
-        /// <summary>
-        /// Locate a device profile by identifier
-        /// </summary>
-        /// <param name="RegistrationApplication">The returned profile.</param>
-        /// <param name="ID">UDF fingerprint of the profile or short form ID</param>
-        /// <returns>True if the profile is found, otherwise false.</returns>
-        public override bool Find(string ID, out SessionApplication RegistrationApplication) {
-            return ApplicationProfilesByUDF.TryGetValue(ID, out RegistrationApplication);
-            }
+        // May or may not need to override these
 
-        /// <summary>
-        /// Locate a device profile by identifier
-        /// </summary>
-        /// <param name="RegistrationPersonal">The returned profile.</param>
-        /// <param name="ID">UDF fingerprint of the profile or short form ID</param>
-        /// <returns>True if the profile is found, otherwise false.</returns>
-        public override bool Find(string ID, out SessionPersonal RegistrationPersonal) {
-            return PersonalProfilesUDF.TryGetValue(ID, out RegistrationPersonal);
-            }
+        //public override void GetFromPortal (SessionApplication SessionApplication) {
+        //    }
+        //public override void WriteToPortal (SessionApplication SessionApplication) {
+        //    }
+
+        //public override void MakeDefault (SessionApplication SessionApplication) {
+        //    }
+
 
         }
-
     }

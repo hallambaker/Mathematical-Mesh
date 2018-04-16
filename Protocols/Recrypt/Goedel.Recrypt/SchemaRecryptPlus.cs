@@ -38,7 +38,9 @@ namespace Goedel.Recrypt {
         /// <returns>The primary key</returns>
         public static string PrimaryKey (string GroupName) => "Group$" + GroupName;
 
-
+        /// <summary>
+        /// Index term key.
+        /// </summary>
         public const string EncryptionIndexTerm = "EncryptKey";
 
         /// <summary>

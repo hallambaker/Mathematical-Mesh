@@ -1,5 +1,6 @@
 ﻿Class MeshServerShell MeshServerShell
 	Brief		"MatheMatical Mesh Server"
+	About "about"
 
 	Type NewFile			"file"
 	Type ExistingFile		"file"
@@ -33,5 +34,3 @@
 			Brief "run as multithreaded service (default)"
 			Default "true"
 
-	Command About "about"
-		Brief "Report version and build date"

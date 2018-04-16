@@ -325,11 +325,17 @@ namespace Goedel.Cryptography.Container {
 
 
             // This is breaking here because we don't yet know how to translate the key ID to a Key.
-            var Exchange = GetExchange(ContainerHeader.Recipients, AlgorithmID: BulkID);
+            try {
+                var Exchange = GetExchange(ContainerHeader.Recipients, AlgorithmID: BulkID);
 
-            var Provider = CryptoCatalog.Default.GetEncryption(BulkID);
+                var Provider = CryptoCatalog.Default.GetEncryption(BulkID);
 
-            Data = Provider.Decrypt(Container.FrameData, Exchange, ContainerHeader.IV);
+                Data = Provider.Decrypt(Container.FrameData, Exchange, ContainerHeader.IV);
+                }
+            catch {
+                throw new NoAvailableDecryptionKey();
+                }
+
 
             }
 

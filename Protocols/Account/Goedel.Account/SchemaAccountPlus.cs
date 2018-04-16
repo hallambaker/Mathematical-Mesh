@@ -10,8 +10,14 @@ namespace Goedel.Account {
 
     public partial class AccountData {
 
+        /// <summary>
+        /// The primary key is the AccountID
+        /// </summary>
         public override string _PrimaryKey => AccountID;
 
+        /// <summary>
+        /// There are (currently) no key values
+        /// </summary>
         public override List<KeyValuePair<string, string>> _KeyValues => null ;
 
 

@@ -29,7 +29,7 @@ namespace MeshMananaged {
         /// One time initialization.
         /// </summary>
         static Interface () {
-            MeshMachine = new RegistrationMachineWindows();
+            MeshMachine = new MeshMachineWindows();
 
             // Get the default Mesh profile.
             MeshSessionPersonal = MeshMachine.Personal;
@@ -37,6 +37,8 @@ namespace MeshMananaged {
             MeshRecrypt.Initialize();
             }
 
+
+        static byte ToLower (byte In) => (In < 0x41 | In > 0x5a) ? In : (byte)(In + 0x20); 
 
         /// <summary>
         /// Read the input container and decrypt it using local keys (if found). Then
@@ -49,7 +51,14 @@ namespace MeshMananaged {
             byte[] InputData,
             out byte[] OutputData,
             out string ContentType) {
-            MeshSessionPersonal.DecryptDARE(InputData, out OutputData, out ContentType);
+
+            ContentType = "text/html";
+            OutputData = new byte[InputData.Length];
+            for (var i = 0; i < InputData.Length; i++) {
+                OutputData[i] = ToLower(InputData[i]);
+                }
+
+            //MeshSessionPersonal.DecryptDARE(InputData, out OutputData, out ContentType);
             }
 
 

@@ -15,7 +15,7 @@ namespace Meshman_Linux {
     public class _Main {
 
         static _Main() {
-            Goedel.Mesh.MeshLinux.Initialize();
+            Goedel.Mesh.Mesh.Initialize();
             }
 
         static void Main(string[] args) {

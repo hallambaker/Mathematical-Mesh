@@ -30,64 +30,64 @@ using Goedel.Mesh.Portal.Client;
 namespace Goedel.Mesh.Platform.Windows {
 
 
-    /// <summary>
-    /// Describes the registration of a device profile on a machine.
-    /// </summary>
-    public class RegistrationApplicationWindows : RegistrationApplicationCached {
+    ///// <summary>
+    ///// Describes the registration of a device profile on a machine.
+    ///// </summary>
+    //public class RegistrationApplicationWindows : RegistrationApplicationCached {
 
 
-        /// <summary>
-        /// Fetch the latest version of the profile version
-        /// </summary>
-        public override void GetFromPortal() {
-            }
+    //    ///// <summary>
+    //    ///// Fetch the latest version of the profile version
+    //    ///// </summary>
+    //    //public override void GetFromPortal() {
+    //    //    }
 
-        /// <summary>
-        /// Register request to register an application.
-        /// </summary>
-        /// <param name="Machine">The machine session to bind to.</param>
-        /// <param name="ApplicationProfile">The application profile</param>
-        public RegistrationApplicationWindows (ApplicationProfile ApplicationProfile, 
-                            MeshMachine Machine) : base(ApplicationProfile, Machine)  {
-            this.ApplicationProfile = ApplicationProfile;
-            }
-
-
-        /// <summary>
-        /// Read a personal registration from a file
-        /// </summary>
-        /// <param name="Machine">The machine session to bind to.</param>
-        /// <param name="UDF">File fingerprint</param>
-        /// <param name="File">Filename on local machine</param>
-        public RegistrationApplicationWindows(MeshMachine Machine, 
-                    string UDF=null, string File=null) : base (GetFromLocal(UDF, File), Machine) {
-            }
+    //    /// <summary>
+    //    /// Register request to register an application.
+    //    /// </summary>
+    //    /// <param name="Machine">The machine session to bind to.</param>
+    //    /// <param name="ApplicationProfile">The application profile</param>
+    //    public RegistrationApplicationWindows (ApplicationProfile ApplicationProfile, 
+    //                        MeshMachine Machine) : base(ApplicationProfile, Machine)  {
+    //        this.ApplicationProfile = ApplicationProfile;
+    //        }
 
 
+    //    ///// <summary>
+    //    ///// Read a personal registration from a file
+    //    ///// </summary>
+    //    ///// <param name="Machine">The machine session to bind to.</param>
+    //    ///// <param name="UDF">File fingerprint</param>
+    //    ///// <param name="File">Filename on local machine</param>
+    //    //public RegistrationApplicationWindows(MeshMachine Machine, 
+    //    //            string UDF=null, string File=null) : base (GetFromLocal(UDF, File), Machine) {
+    //    //    }
 
-        private static ApplicationProfile GetFromLocal (string UDF = null, string File = null) {
-            if (File == null) {
-                var FileName = Microsoft.Win32.Registry.GetValue(@"HKEY_CURRENT_USER\"
-                            + Constants.RegistryApplication, UDF, null);
-                File = FileName as string;
-                }
-            var SignedProfile = SignedApplicationProfile.FromFile(File, UDF);
-            return SignedProfile.ApplicationProfile;
-            }
 
-        /// <summary>Write to registry.</summary>
-        /// <param name="Default">If true, make this the default.</param>
-        public override void WriteToLocal(bool Default = true) {
-            var Hive = Microsoft.Win32.Registry.CurrentUser;
-            var Key = Hive.CreateSubKey(Constants.RegistryApplication);
-            var FileName = MeshWindows.FileApplicationlProfile(UDF);
 
-            Directory.CreateDirectory(Constants.FileProfilesApplication);
+    //    //private static ApplicationProfile GetFromLocal (string UDF = null, string File = null) {
+    //    //    if (File == null) {
+    //    //        var FileName = Microsoft.Win32.Registry.GetValue(@"HKEY_CURRENT_USER\"
+    //    //                    + Constants.RegistryApplication, UDF, null);
+    //    //        File = FileName as string;
+    //    //        }
+    //    //    var SignedProfile = SignedApplicationProfile.FromFile(File, UDF);
+    //    //    return SignedProfile.ApplicationProfile;
+    //    //    }
 
-            Key.SetValue(UDF, FileName);
+    //    ///// <summary>Write to registry.</summary>
+    //    ///// <param name="Default">If true, make this the default.</param>
+    //    //public override void WriteToLocal(bool Default = true) {
+    //    //    var Hive = Microsoft.Win32.Registry.CurrentUser;
+    //    //    var Key = Hive.CreateSubKey(Constants.RegistryApplication);
+    //    //    var FileName = MeshWindows.FileApplicationlProfile(UDF);
 
-            File.WriteAllText(FileName, SignedApplicationProfile.ToString());
+    //    //    Directory.CreateDirectory(Constants.FileProfilesApplication);
 
-            }
-        }
+    //    //    Key.SetValue(UDF, FileName);
+
+    //    //    File.WriteAllText(FileName, SignedApplicationProfile.ToString());
+
+    //    //    }
+    //    }
     }

@@ -11,7 +11,7 @@
 			|are regarded as privileged and will require appropriate access controls.
 
 
-    Service AccountService "_mmmaccount._tcp" "mmmaccount" AccountRequest AccountResponse
+    Service AccountService "_account._tcp" "account" AccountRequest AccountResponse
 		Description
 			|Every Mesh/Account Service transaction consists of exactly one
 			|request followed by exactly one response.

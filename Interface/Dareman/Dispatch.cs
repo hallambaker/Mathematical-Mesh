@@ -6,25 +6,45 @@ using Goedel.IO;
 using Goedel.Mesh;
 using Goedel.Mesh.Portal.Client;
 using Goedel.Recrypt;
+//using Goedel.Confirm;
 using Goedel.Recrypt.Client;
 using Goedel.Mesh.Platform.Windows;
+using Goedel.Cryptography;
 
 namespace Goedel.Mesh.DareMan {
 
     public partial class Shell : _Shell {
 
         static MeshMachine MeshMachine;     // The actual machine details
-        static MeshSession MeshSession;     // The interface to the machine.
 
         SessionPersonal SessionPersonal = MeshMachine?.Personal;    // Always the default profile.
 
 
-        public Shell () {
-            MeshMachine = new RegistrationMachineWindows();
-            MeshSession = new MeshSession(MeshMachine);
-            SessionPersonal = MeshMachine.Personal;
 
+        static void Main (string[] Args) {
+            var CLI = new CommandLineInterpreter();
+            var Dispatch = new Shell();
+            CLI.MainMethod(Dispatch, Args);
+            }
+
+
+        public Shell () {
             MeshRecrypt.Initialize();
+            
+
+            //MeshConfirm.Initialize();
+
+            Mesh.Initialize(true);
+
+            MeshMachine = MeshMachine.Current;
+            
+
+            
+            }
+
+
+        public override void Erase (Erase Options) {
+            MeshMachine.EraseTest(); // remove previous test data
             }
 
         /// <summary>
@@ -34,13 +54,13 @@ namespace Goedel.Mesh.DareMan {
         public override void Register (Register Options) {
             var AccountID = Options.AccountID.Value;
 
-            var DeviceRegistration = MeshSession.GetDevice(DeviceNew: true,
+            var DeviceRegistration = MeshMachine.GetDevice(DeviceNew: true,
                     DeviceID: "Default", DeviceDescription: "A test device");
 
             var PersonalProfile1 = new PersonalProfile(DeviceRegistration.DeviceProfile);
 
             var MeshClient = new MeshClient(AccountID);
-            var SessionPersonal = MeshSession.CreateAccount(AccountID, PersonalProfile1, MeshClient);
+            var SessionPersonal = MeshMachine.CreateAccount(AccountID, PersonalProfile1, MeshClient);
 
             var RecryptProfile = new RecryptProfile(SessionPersonal.PersonalProfile, AccountID);
 
@@ -49,9 +69,12 @@ namespace Goedel.Mesh.DareMan {
                 RecryptProfile.AddDevice(Device.DeviceProfile, true);
                 }
 
-            Console.WriteLine(RecryptProfile);
-
             var SessionRecrypt = new SessionRecrypt(SessionPersonal, RecryptProfile);
+
+            SessionAccount.Create(SessionPersonal, AccountID,
+                new List<string> { AccountID },
+                new List<SignedApplicationProfile> { RecryptProfile.SignedApplicationProfile });
+
             }
 
 
@@ -64,6 +87,7 @@ namespace Goedel.Mesh.DareMan {
         public override void Create (Create Options) {
             // Process the command line data
             var GroupID = Options.GroupID.Value;
+            SessionPersonal = MeshMachine.GetPersonal("alice@cryptomesh.org");
 
             var RecryptSession = SessionPersonal.SessionRecryption();
             var Group = RecryptSession.CreateGroup(GroupID);
@@ -77,6 +101,7 @@ namespace Goedel.Mesh.DareMan {
             // Process the command line data
             var GroupID = Options.GroupID.Value;
             var AccountID = Options.AccountID.Value;
+            SessionPersonal = MeshMachine.GetPersonal("alice@cryptomesh.org");
 
             var RecryptSession = SessionPersonal.SessionRecryption();
             var Group = RecryptSession.GetRecryptionGroup(GroupID);
@@ -104,7 +129,7 @@ namespace Goedel.Mesh.DareMan {
         public override void Encrypt (Encrypt Options) {
             // Process the command line data,
             var InputFile = Options.Input.Value;
-            var OutputFile = FileTools.DefaultFile(Options.Output.Value, Options.Input.Value, ".dare");
+            var OutputFile = FileTools.DefaultFile(Options.Output.Value, Options.Input.Value, "dare");
             var Group = Options.Group.Value;
 
             var RecryptionKey = SessionPersonal.GetEncryptionKey(Group);
@@ -120,9 +145,30 @@ namespace Goedel.Mesh.DareMan {
             var InputFile = Options.Input.Value;
             var OutputFile = Options.Output.Value;
 
+            SessionPersonal = MeshMachine.GetPersonal("bob@cryptomesh.org");
             SessionPersonal.DecryptDARE(InputFile, OutputFile);
             }
 
+
+        /// <summary>
+        /// Decrypt a file using decryption and/or recryption keys available to the user.
+        /// </summary>
+        /// <param name="Options">Command line options</param>
+        public override void Recrypt (Recrypt Options) {
+            // Process the command line data,
+            var InputFile = Options.Input.Value;
+            var OutputFile = Options.Output.Value;
+
+            try {
+                SessionPersonal = MeshMachine.GetPersonal("bob@cryptomesh.org");
+                SessionPersonal.RecryptDARE(InputFile, OutputFile);
+                }
+            catch {
+
+                Console.WriteLine("Could not find decryption key");
+                }
+
+            }
 
         }
 

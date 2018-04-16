@@ -40,20 +40,20 @@ namespace Goedel.Confirm.Client {
     /// a single personal session. This allows for methods such as 'get set of candidate keys'
     /// </summary>
     public partial class SessionConfirm : SessionApplication {
-        public override MeshMachine MeshMachine { set => throw new NotImplementedException(); }
 
-        ConfirmProfile ConfirmProfile;
+        public override ApplicationProfile ApplicationProfile => ConfirmProfile;
+        public ConfirmProfile ConfirmProfile;
 
 
         /// <summary>
         /// Construct a SessionRecryption from a personal session.
         /// </summary>
         /// <param name="SessionPersonal">The personal session to construct from.</param>
-        public SessionConfirm (SessionPersonal SessionPersonal, ConfirmProfile ConfirmProfile) {
-            this.SessionPersonal = SessionPersonal;
+        public SessionConfirm (
+                    SessionPersonal SessionPersonal, 
+                    ConfirmProfile ConfirmProfile, 
+                    bool Write = true) : base(SessionPersonal, ConfirmProfile, Write) {
             this.ConfirmProfile = ConfirmProfile;
-
-            SessionPersonal.Add(this);  // The point at which the writes to the local disk, portal are performed.
             }
 
 

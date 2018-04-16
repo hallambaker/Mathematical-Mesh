@@ -38,9 +38,6 @@ namespace Goedel.Mesh.Portal.Client {
         public override void Reload () {
             }
 
-        /// <summary>The abstract machine a profile registration is attached to</summary>
-        public override MeshMachine MeshMachine { get; set; }
-
         /// <summary>
         /// The registered signed profile. This is always null for a machine registration
         /// as it reflects a collection of profiles rather than a single profile.
@@ -81,8 +78,8 @@ namespace Goedel.Mesh.Portal.Client {
         /// <summary>
         /// A dictionary of device profiles indexed by fingerprint.
         /// </summary>
-        public override Dictionary<string, RegistrationDevice> DeviceProfiles { get; } =
-            new Dictionary<string, RegistrationDevice>();
+        public override Dictionary<string, SessionDevice> DeviceProfiles { get; } =
+            new Dictionary<string, SessionDevice>();
 
         /// <summary>The default personal profile</summary>
         public override SessionPersonal Personal {
@@ -111,7 +108,7 @@ namespace Goedel.Mesh.Portal.Client {
         DateTime PersonalDefaultTime = DateTime.MinValue;
 
         /// <summary>The default device profile</summary>
-        public override RegistrationDevice Device {
+        public override SessionDevice Device {
             get { return _Device; }
             set {
                 if (value != _Device) {
@@ -120,14 +117,14 @@ namespace Goedel.Mesh.Portal.Client {
                     }
                 }
             }
-        private RegistrationDevice _Device;
+        private SessionDevice _Device;
 
         /// <summary>
         /// Set the default device profile registration.
         /// </summary>
         /// <param name="Registration">The registration to set as default</param>
         /// <param name="DefaultTime">If non-null, the registration is only set to be default</param>
-        public void SetDefaultDevice (RegistrationDevice Registration,
+        public void SetDefaultDevice (SessionDevice Registration,
                             DateTime? DefaultTime = null) {
             if ((DefaultTime == null) || (DefaultTime > PersonalDeviceTime)) {
                 _Device = Registration;
@@ -175,8 +172,8 @@ namespace Goedel.Mesh.Portal.Client {
         /// </summary>
         /// <param name="SignedProfile">Profile to add.</param>
         /// <returns>Registration for the created profile.</returns>
-        public override RegistrationDevice Add(SignedDeviceProfile SignedProfile) {
-            var Registration = new RegistrationDeviceCached(SignedProfile, this);
+        public override SessionDevice Add(SignedDeviceProfile SignedProfile) {
+            var Registration = new SessionDevice(SignedProfile, this);
             Register(Registration);
             return Registration;
             }
@@ -185,7 +182,7 @@ namespace Goedel.Mesh.Portal.Client {
         /// Register the specified device session in the local persistent store.
         /// </summary>
         /// <param name="Profile">The profile to add</param>
-        protected void Register (RegistrationDevice Profile) {
+        protected void Register (SessionDevice Profile) {
             DeviceProfiles.AddSafe(Profile.UDF, Profile); // NYI check if present
             }
 
@@ -196,7 +193,7 @@ namespace Goedel.Mesh.Portal.Client {
         /// <param name="SignedProfile">Profile to add.</param>
         /// <returns>Registration for the created profile.</returns>
         public override SessionPersonal Add(SignedPersonalProfile SignedProfile) {
-         var Registration = new RegistrationPersonalCached(SignedProfile, this);
+         var Registration = new SessionPersonal(SignedProfile, this);
             Register(Registration);
             return Registration;
             }
@@ -207,7 +204,7 @@ namespace Goedel.Mesh.Portal.Client {
         /// <param name="Profile">The profile to add</param>
         protected void Register(SessionPersonal Profile) {
             _Personal = _Personal ?? Profile; // Make default if none specified
-            Profile.MeshMachine = this;
+            //Profile.MeshMachine = this;
             PersonalProfilesUDF.AddSafe(Profile.UDF, Profile); // NYI check if already entered
             if (Profile.Portals != null) {
                 foreach (var Name in Profile.Portals) {
@@ -230,173 +227,164 @@ namespace Goedel.Mesh.Portal.Client {
             }
 
 
-
-
-        /// <summary>
-        /// Locate a device profile by identifier
-        /// </summary>
-        /// <param name="RegistrationDevice">The returned profile.</param>
-        /// <param name="ID">UDF fingerprint of the profile or short form ID</param>
-        /// <returns>True if the profile is found, otherwise false.</returns>
-        public override bool Find(string ID, out RegistrationDevice RegistrationDevice) {
-            return DeviceProfiles.TryGetValue(ID, out RegistrationDevice);
-            }
-
-        /// <summary>
-        /// Locate a device profile by identifier
-        /// </summary>
-        /// <param name="RegistrationApplication">The returned profile.</param>
-        /// <param name="ID">UDF fingerprint of the profile or short form ID</param>
-        /// <returns>True if the profile is found, otherwise false.</returns>
-        public override bool Find(string ID, out SessionApplication RegistrationApplication) {
-            return ApplicationProfilesByUDF.TryGetValue(ID, out RegistrationApplication);
-            }
-
-        /// <summary>
-        /// Locate a device profile by identifier
-        /// </summary>
-        /// <param name="RegistrationPersonal">The returned profile.</param>
-        /// <param name="ID">UDF fingerprint of the profile or short form ID</param>
-        /// <returns>True if the profile is found, otherwise false.</returns>
-        public override bool Find(string ID, out SessionPersonal RegistrationPersonal) {
-            return PersonalProfilesUDF.TryGetValue(ID, out RegistrationPersonal);
-            }
-
-        public override void GetFromPortal (SessionApplication SessionApplication) {
-            }
-
-        public override void WriteToPortal (SessionApplication SessionApplication) {
-            SessionApplication.MeshClient.Publish(SessionApplication.SignedProfile);
-            }
-
         public override void MakeDefault (SessionApplication SessionApplication) {
             }
-        }
 
-    /// <summary>
-    /// Describes the registration of a device profile on a machine.
-    /// </summary>
-    public class RegistrationDeviceCached : RegistrationDevice {
-        /// <summary>The abstract machine a profile registration is attached to</summary>
-        public override MeshMachine MeshMachine { get; set; }
+        public override void MakeDefault (SessionPersonal SessionPersonal) {
+            }
 
-
-        /// <summary>
-        /// Add the associated profile to the machine store.
-        /// </summary>
-        /// <param name="SignedDeviceProfile">The device profile</param>
-        /// <param name="RegistrationMachine">The machine session.</param>
-        public RegistrationDeviceCached(SignedDeviceProfile SignedDeviceProfile,
-                    MeshMachine RegistrationMachine) {
-            base.SignedDeviceProfile = SignedDeviceProfile;
-            this.MeshMachine = RegistrationMachine;
+        public override void MakeDefault (SessionDevice SessionDevice) {
             }
 
         /// <summary>
-        /// Make this the default personal profile for future operations.
+        /// Write profile to persistent storage. Since this is an ephemeral store, do nothing.
         /// </summary>
-        public override void MakeDefault () {
-            }
-
-        }
-
-
-    /// <summary>
-    /// Describes the registration of a device profile on a machine.
-    /// </summary>
-    public class RegistrationPersonalCached : SessionPersonal {
-
-        /// <summary>
-        /// Profiles associated with this account in chronological order.
-        /// </summary>
-        public override SortedList<DateTime, SignedProfile> Profiles { get; set; }
-
-        /// <summary>
-        /// List of the accounts through which the profile is registered.
-        /// </summary>
-        public override PortalCollection Portals { get; }
-
-        /// <summary>The abstract machine a profile registration is attached to</summary>
-        public override MeshMachine MeshMachine { get; set; }
-
-        /// <summary>
-        /// Register a personal profile in the Windows registry
-        /// </summary>
-        /// <param name="Profile">The personal profile.</param>
-        /// <param name="Machine">The machine session.</param>
-        /// <param name="Portals">The list of portals.</param>
-        public RegistrationPersonalCached(SignedPersonalProfile Profile, 
-                        MeshMachine Machine,
-                        IEnumerable<string> Portals = null)  {
-            MeshMachine = MeshMachine;
-            SignedPersonalProfile = Profile;
-            this.Portals = new PortalCollection(Portals);
+        /// <param name="SessionPersonal">The profile data to write.</param>
+        /// <param name="Default">If true, make this the default profile.</param>
+        public override void WriteToLocal (SessionPersonal SessionPersonal, bool Default = false) {
             }
 
         /// <summary>
-        /// Add a portal to this registration
+        /// Write profile to persistent storage. Since this is an ephemeral store, do nothing.
         /// </summary>
-        /// <param name="AccountID">The portal account.</param>
-        /// <param name="MeshClient">A Mesh Client connected to the portal.</param>
-        /// <param name="Create">If true, the mesh client should request the account be created.</param>
-        public override void AddPortal(string AccountID, MeshClient MeshClient = null, bool Create = false) {
-            MeshClient = MeshClient ?? new MeshClient(AccountID);
-            this.MeshClient = MeshClient;
+        /// <param name="SessionApplication">The profile data to write.</param>
+        /// <param name="Default">If true, make this the default profile.</param>
+        public override void WriteToLocal (SessionApplication SessionApplication, bool Default = false) {
+            }
 
-            Assert.NotNull(MeshClient, PortalConnectFail.Throw);
-
-            var PortalRegister = MeshClient.CreatePortalAccount(AccountID, PersonalProfile.SignedPersonalProfile);
-
-            Portals.Add(AccountID);
+        /// <summary>
+        /// Write values to registry.
+        /// </summary>
+        /// <param name="Default">If true, make this the default.</param>
+        public override void WriteToLocal (SessionDevice Device, bool Default = false) {
             }
 
 
-        /// <summary>
-        /// Make this the default personal profile for future operations.
-        /// </summary>
-        public override void MakeDefault () {
+        public override void WriteToLocal (bool Default = true) {
             }
         }
 
-
-    /// <summary>
-    /// Describes the registration of a device profile on a machine.
-    /// </summary>
-    public class RegistrationApplicationCached : SessionApplication {
-
-        /// <summary>The abstract machine a profile registration is attached to</summary>
-        public override MeshMachine MeshMachine { get; set; }
-
-        /// <summary>
-        /// Register request to register an application.
-        /// </summary>
-        /// <param name="ApplicationProfile">The application profile.</param>
-        /// <param name="Machine">The machine session.</param>
-        public RegistrationApplicationCached (ApplicationProfile ApplicationProfile,
-                        MeshMachine Machine) {
-            MeshMachine = Machine;
-            this.ApplicationProfile = ApplicationProfile;
-            }
+    ///// <summary>
+    ///// Describes the registration of a device profile on a machine.
+    ///// </summary>
+    //public class RegistrationDeviceCached : RegistrationDevice {
+    //    /// <summary>The abstract machine a profile registration is attached to</summary>
+    //    public override MeshMachine MeshMachine { get; set; }
 
 
-        /// <summary>
-        /// Fetch the latest version of the profile version
-        /// </summary>
-        public override void GetFromPortal () { }
+    //    /// <summary>
+    //    /// Add the associated profile to the machine store.
+    //    /// </summary>
+    //    /// <param name="SignedDeviceProfile">The device profile</param>
+    //    /// <param name="RegistrationMachine">The machine session.</param>
+    //    public RegistrationDeviceCached (SignedDeviceProfile SignedDeviceProfile,
+    //                MeshMachine RegistrationMachine) {
+    //        base.SignedDeviceProfile = SignedDeviceProfile;
+    //        this.MeshMachine = RegistrationMachine;
+    //        }
+
+    //    /// <summary>
+    //    /// Make this the default personal profile for future operations.
+    //    /// </summary>
+    //    public override void MakeDefault () {
+    //        }
+
+    //    }
 
 
-        /// <summary>
-        /// Update the associated profile in the registry
-        /// </summary>
-        public override void WriteToPortal () {
-            MeshClient.Publish(SignedProfile);
+    ///// <summary>
+    ///// Describes the registration of a device profile on a machine.
+    ///// </summary>
+    //public class RegistrationPersonalCached : SessionPersonal {
 
-            }
+    //    /// <summary>
+    //    /// Profiles associated with this account in chronological order.
+    //    /// </summary>
+    //    public override SortedList<DateTime, SignedProfile> Profiles { get; set; }
 
-        /// <summary>
-        /// Make this the default personal profile for future operations.
-        /// </summary>
-        public override void MakeDefault () {
-            }
-        }
+    //    /// <summary>
+    //    /// List of the accounts through which the profile is registered.
+    //    /// </summary>
+    //    public override PortalCollection Portals { get; }
+
+    //    /// <summary>
+    //    /// Register a personal profile in the Windows registry
+    //    /// </summary>
+    //    /// <param name="Profile">The personal profile.</param>
+    //    /// <param name="Machine">The machine session.</param>
+    //    /// <param name="Portals">The list of portals.</param>
+    //    public RegistrationPersonalCached(SignedPersonalProfile Profile, 
+    //                    MeshMachine Machine,
+    //                    IEnumerable<string> Portals = null)  {
+    //        MeshMachine = MeshMachine;
+    //        SignedPersonalProfile = Profile;
+    //        this.Portals = new PortalCollection(Portals);
+    //        }
+
+    //    /// <summary>
+    //    /// Add a portal to this registration
+    //    /// </summary>
+    //    /// <param name="AccountID">The portal account.</param>
+    //    /// <param name="MeshClient">A Mesh Client connected to the portal.</param>
+    //    /// <param name="Create">If true, the mesh client should request the account be created.</param>
+    //    public override void AddPortal(string AccountID, MeshClient MeshClient = null, bool Create = false) {
+    //        MeshClient = MeshClient ?? new MeshClient(AccountID);
+    //        this.MeshClient = MeshClient;
+
+    //        Assert.NotNull(MeshClient, PortalConnectFail.Throw);
+
+    //        var PortalRegister = MeshClient.CreatePortalAccount(AccountID, PersonalProfile.SignedPersonalProfile);
+
+    //        Portals.Add(AccountID);
+    //        }
+
+
+    //    /// <summary>
+    //    /// Make this the default personal profile for future operations.
+    //    /// </summary>
+    //    public override void MakeDefault () {
+    //        }
+    //    }
+
+
+    ///// <summary>
+    ///// Describes the registration of a device profile on a machine.
+    ///// </summary>
+    //public class RegistrationApplicationCached : SessionApplication {
+
+    //    /// <summary>The abstract machine a profile registration is attached to</summary>
+    //    public override MeshMachine MeshMachine { get; set; }
+
+    //    /// <summary>
+    //    /// Register request to register an application.
+    //    /// </summary>
+    //    /// <param name="ApplicationProfile">The application profile.</param>
+    //    /// <param name="Machine">The machine session.</param>
+    //    public RegistrationApplicationCached (ApplicationProfile ApplicationProfile,
+    //                    MeshMachine Machine) {
+    //        MeshMachine = Machine;
+    //        this.ApplicationProfile = ApplicationProfile;
+    //        }
+
+
+    //    /// <summary>
+    //    /// Fetch the latest version of the profile version
+    //    /// </summary>
+    //    public override void GetFromPortal () { }
+
+
+    //    /// <summary>
+    //    /// Update the associated profile in the registry
+    //    /// </summary>
+    //    public override void WriteToPortal () {
+    //        MeshClient.Publish(SignedProfile);
+
+    //        }
+
+    //    /// <summary>
+    //    /// Make this the default personal profile for future operations.
+    //    /// </summary>
+    //    public override void MakeDefault () {
+    //        }
+    //    }
     }

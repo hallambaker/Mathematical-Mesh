@@ -31,139 +31,139 @@ using Goedel.Mesh.Portal.Client;
 namespace Goedel.Mesh.Platform.Windows {
 
 
-    /// <summary>
-    /// Describes the registration of as profile on as machine. This includes
-    /// the fingerprint, the cached profile data and the list of portal entries
-    /// to which the profile is bound.
-    /// </summary>
-    public partial class RegistrationPersonalWindows : SessionPersonal {
+    ///// <summary>
+    ///// Describes the registration of as profile on as machine. This includes
+    ///// the fingerprint, the cached profile data and the list of portal entries
+    ///// to which the profile is bound.
+    ///// </summary>
+    //public partial class RegistrationPersonalWindows : SessionPersonal {
 
 
-        /// <summary>
-        /// The profile fingerprint
-        /// </summary>
-        public override string UDF => SignedPersonalProfile?.UDF;   
+    //    /// <summary>
+    //    /// The profile fingerprint
+    //    /// </summary>
+    //    public override string UDF => SignedPersonalProfile?.UDF;   
 
-        /// <summary>
-        /// Profiles associated with this account in chronological order.
-        /// </summary>
-        public override SortedList<DateTime, SignedProfile> Profiles { get; set; }
-
-
-        /// <summary>
-        /// List of the accounts through which the profile is registered.
-        /// </summary>
-        public override PortalCollection Portals { get; }
-
-        /// <summary>
-        /// Fetch the latest version of the profile version
-        /// </summary>
-        public override void GetFromPortal() {
-            var NewPersonal = MeshClient.GetPersonalProfile();
-            // NYI: Here should check to see which is more recent.
-            SignedPersonalProfile = NewPersonal;
-            }
-
-        /// <summary>Path to the archive data (not yet implemented)</summary>
-        public string Archive { get; set; } // NYI: Archive mesh profiles.
-
-        /// <summary>
-        /// Read a personal registration from a file
-        /// </summary>
-        /// <param name="UDF">File fingerprint</param>
-        /// <param name="File">Filename on local machine</param>
-        /// <param name="Machine">The machine session</param>
-        /// <param name="Portals">The portals to which the profile is registered.</param>
-        public RegistrationPersonalWindows (MeshMachine Machine, 
-                    string UDF, string File, IEnumerable<string> Portals = null) {
-
-            MeshMachine = Machine;
-            SignedPersonalProfile = SignedPersonalProfile.FromFile(File, UDF);
-            if (SignedPersonalProfile == null) { return; }   // TTHROW: Proper exception
-
-            this.Portals = new PortalCollectionWindows(Portals);
-            }
-
-        /// <summary>The abstract machine a profile registration is attached to</summary>
-        public override MeshMachine MeshMachine { get; set; }
-
-        /// <summary>
-        /// Register a personal profile in the Windows registry
-        /// </summary>
-        /// <param name="Profile">The personal profile</param>
-        /// <param name="Portals">The list of portals.</param>
-        /// <param name="Machine">The machine session</param>
-        public RegistrationPersonalWindows (SignedPersonalProfile Profile, 
-                        MeshMachine Machine,
-                        IEnumerable<string> Portals = null) {
-            this.SignedPersonalProfile = Profile;
-            MeshMachine = Machine;
-            this.Portals = new PortalCollectionWindows(Portals);
-            WriteToLocal();
-            MeshMachine.Personal = MeshMachine.Personal ?? this;
-            }
+    //    /// <summary>
+    //    /// Profiles associated with this account in chronological order.
+    //    /// </summary>
+    //    public override SortedList<DateTime, SignedProfile> Profiles { get; set; }
 
 
+    //    /// <summary>
+    //    /// List of the accounts through which the profile is registered.
+    //    /// </summary>
+    //    public override PortalCollection Portals { get; }
 
-        /// <summary>
-        /// Add a portal to this registration. The portal account must have been 
-        /// created previously. Only the local portal is written to.
-        /// </summary>
-        /// <param name="AccountID">Account identifier to bind to.</param>
-        /// <param name="MeshClient">unused</param>
-        /// <param name="Create">If true do what??</param>
-        public override void AddPortal(string AccountID, MeshClient MeshClient = null, bool Create = false) {
-            Portals.Add(AccountID);
-            MeshCatalog.AddPortal(this, AccountID);
-            WriteToLocal();
-            }
+    //    /// <summary>
+    //    /// Fetch the latest version of the profile version
+    //    /// </summary>
+    //    public override void GetFromPortal() {
+    //        var NewPersonal = MeshClient.GetPersonalProfile();
+    //        // NYI: Here should check to see which is more recent.
+    //        SignedPersonalProfile = NewPersonal;
+    //        }
+
+    //    /// <summary>Path to the archive data (not yet implemented)</summary>
+    //    public string Archive { get; set; } // NYI: Archive mesh profiles.
+
+    //    /// <summary>
+    //    /// Read a personal registration from a file
+    //    /// </summary>
+    //    /// <param name="UDF">File fingerprint</param>
+    //    /// <param name="File">Filename on local machine</param>
+    //    /// <param name="Machine">The machine session</param>
+    //    /// <param name="Portals">The portals to which the profile is registered.</param>
+    //    public RegistrationPersonalWindows (MeshMachine Machine, 
+    //                string UDF, string File, IEnumerable<string> Portals = null) {
+
+    //        MeshMachine = Machine;
+    //        SignedPersonalProfile = SignedPersonalProfile.FromFile(File, UDF);
+    //        if (SignedPersonalProfile == null) { return; }   // TTHROW: Proper exception
+
+    //        this.Portals = new PortalCollectionWindows(Portals);
+    //        }
+
+    //    /// <summary>The abstract machine a profile registration is attached to</summary>
+    //    public override MeshMachine MeshMachine { get; set; }
+
+    //    /// <summary>
+    //    /// Register a personal profile in the Windows registry
+    //    /// </summary>
+    //    /// <param name="Profile">The personal profile</param>
+    //    /// <param name="Portals">The list of portals.</param>
+    //    /// <param name="Machine">The machine session</param>
+    //    public RegistrationPersonalWindows (SignedPersonalProfile Profile, 
+    //                    MeshMachine Machine,
+    //                    IEnumerable<string> Portals = null) {
+    //        this.SignedPersonalProfile = Profile;
+    //        MeshMachine = Machine;
+    //        this.Portals = new PortalCollectionWindows(Portals);
+    //        MeshMachine.WriteToLocal(this);
+    //        MeshMachine.Personal = MeshMachine.Personal ?? this;
+    //        }
 
 
-        /// <summary>Update portal entries.</summary>
-        public override void WriteToPortal() {
 
-            var PersonalProfile = SignedPersonalProfile.PersonalProfile;
-            PersonalProfile.Sign();
+    //    /// <summary>
+    //    /// Add a portal to this registration. The portal account must have been 
+    //    /// created previously. Only the local portal is written to.
+    //    /// </summary>
+    //    /// <param name="AccountID">Account identifier to bind to.</param>
+    //    /// <param name="MeshClient">unused</param>
+    //    /// <param name="Create">If true do what??</param>
+    //    public override void AddPortal(string AccountID, MeshClient MeshClient = null, bool Create = false) {
+    //        Portals.Add(AccountID);
+    //        MeshSession.AddPortal(this, AccountID);
+    //        MeshMachine.WriteToLocal(this);
+    //        }
 
-            SignedPersonalProfile = PersonalProfile.SignedPersonalProfile;
 
-            WriteToLocal();
+    //    /// <summary>Update portal entries.</summary>
+    //    public override void WriteToPortal() {
 
-            MeshClient.Publish(SignedPersonalProfile);
-            }
+    //        var PersonalProfile = SignedPersonalProfile.PersonalProfile;
+    //        PersonalProfile.Sign();
 
-        /// <summary>Write values to registry</summary>
-        /// <param name="Default">If true, make this the default.</param>
-        public override void WriteToLocal(bool Default=true) {
+    //        SignedPersonalProfile = PersonalProfile.SignedPersonalProfile;
 
-            var KeyName = Constants.RegistryPersonal;
+    //        MeshMachine.WriteToLocal(this);
 
-            var Hive = Microsoft.Win32.Registry.CurrentUser;
-            var FileName = MeshWindows.FilePersonalProfile (UDF);
+    //        MeshClient.Publish(SignedPersonalProfile);
+    //        }
 
-            Directory.CreateDirectory(Constants.FileProfilesPersonal);
-            var SubKeyName = KeyName + @"\" + UDF;
-            var SubKey = Hive.CreateSubKey(SubKeyName);
+    //    ///// <summary>Write values to registry</summary>
+    //    ///// <param name="Default">If true, make this the default.</param>
+    //    //public override void WriteToLocal(bool Default=true) {
 
-            SubKey.SetValue("", FileName);
-            if (Portals != null) {
-                SubKey.SetValue("Portals", Portals.ToArray(), 
-                        Microsoft.Win32.RegistryValueKind.MultiString);
-                }
-            SubKey.SetValue("Archive", "TBS");
+    //    //    var KeyName = Constants.RegistryPersonal;
 
-            File.WriteAllText(FileName, SignedPersonalProfile.ToString());
-            }
+    //    //    var Hive = Microsoft.Win32.Registry.CurrentUser;
+    //    //    var FileName = MeshWindows.FilePersonalProfile (UDF);
 
-        /// <summary>
-        /// Make this the default personal profile for future operations.
-        /// </summary>
-        public override void MakeDefault() {
-            var Hive = Microsoft.Win32.Registry.CurrentUser;
-            var Key = Hive.CreateSubKey(Constants.RegistryPersonal);
-            var Exists = Key.GetValue("") == null;
-            Key.SetValue("", UDF);
-            }
-        }
+    //    //    Directory.CreateDirectory(Constants.FileProfilesPersonal);
+    //    //    var SubKeyName = KeyName + @"\" + UDF;
+    //    //    var SubKey = Hive.CreateSubKey(SubKeyName);
+
+    //    //    SubKey.SetValue("", FileName);
+    //    //    if (Portals != null) {
+    //    //        SubKey.SetValue("Portals", Portals.ToArray(), 
+    //    //                Microsoft.Win32.RegistryValueKind.MultiString);
+    //    //        }
+    //    //    SubKey.SetValue("Archive", "TBS");
+
+    //    //    File.WriteAllText(FileName, SignedPersonalProfile.ToString());
+    //    //    }
+
+    //    /// <summary>
+    //    /// Make this the default personal profile for future operations.
+    //    /// </summary>
+    //    //public override void MakeDefault() {
+    //    //    var Hive = Microsoft.Win32.Registry.CurrentUser;
+    //    //    var Key = Hive.CreateSubKey(Constants.RegistryPersonal);
+    //    //    var Exists = Key.GetValue("") == null;
+    //    //    Key.SetValue("", UDF);
+    //    //    }
+    //    }
 
     }

@@ -7,7 +7,7 @@ using Goedel.Mesh.MeshMan;
 /// <summary>
 /// 
 /// </summary>
-namespace Meshman_Windows {
+namespace Meshman_OSX {
 
     /// <summary>
     /// 
@@ -15,7 +15,7 @@ namespace Meshman_Windows {
     public class _Main {
 
         static _Main() {
-            Goedel.Mesh.MeshOSX.Initialize();
+            Goedel.Mesh.Mesh.Initialize();
             }
 
         static void Main(string[] args) {

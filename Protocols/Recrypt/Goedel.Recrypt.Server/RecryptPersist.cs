@@ -139,6 +139,9 @@ namespace Goedel.Recrypt.Server {
                     string EncryptionKeyUDF, List<string> MemberKeyUDFs) {
 
             // Hack: Need to completely reorganize the Recryption group store so that this is efficient.
+            if (RecryptionGroup.Members == null) {
+                return null;
+                }
 
             foreach (var Member in RecryptionGroup.Members) {
                 foreach (var Entry in Member.Entries) {

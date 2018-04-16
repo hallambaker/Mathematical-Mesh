@@ -137,19 +137,19 @@ namespace ExampleGenerator {
 
 
         public MeshManShell ShellAlice1 = new MeshManShell() {
-            MeshSession = new MeshSession(new MeshMachineCached()),
+            MeshMachine = new MeshMachineCached(),
             DefaultDescription = Device1Description,
             OutputClass = "terminal"
             };
 
         public MeshManShell ShellAlice2 = new MeshManShell() {
-            MeshSession = new MeshSession(new MeshMachineCached()),
+            MeshMachine = new MeshMachineCached(),
             DefaultDescription = Device2Description,
             OutputClass = "terminal2"
             };
 
         public MeshManShell ShellAlice3 = new MeshManShell() {
-            MeshSession = new MeshSession(new MeshMachineCached()),
+            MeshMachine = new MeshMachineCached(),
             DefaultDescription = Device2Description,
             OutputClass = "terminal2"
             };

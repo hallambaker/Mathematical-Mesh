@@ -1,6 +1,6 @@
 ﻿Class Goedel.Confirm.Shell.Server ConfirmShell
 	Brief		"Mesh/Confirm service"
-
+	About "about"
 
 	Command Start "start"
 		Brief "Start the Mesh/Confirm service"
@@ -29,3 +29,4 @@
 		Option Multithread		"multi"	Flag
 			Brief "run as multithreaded service (default)"
 			Default "true"
+

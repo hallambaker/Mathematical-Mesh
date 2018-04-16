@@ -33,6 +33,8 @@ namespace Goedel.Mesh {
     /// <summary>Initialization class for Mesh libraries on the Windows platform.</summary>
     public static class Mesh {
 
+
+
         /// <summary>
         /// Initialize the cryptography, platform and Mesh machine libraries to
         /// use the Windows native platform features. This library is only supported
@@ -45,7 +47,7 @@ namespace Goedel.Mesh {
             KeyPair.TestMode = TestMode;
 
             CryptographyWindows.Initialize(TestMode);
-            RegistrationMachineWindows.Initialize(TestMode);
+            MeshMachineWindows.Initialize(TestMode);
             }
 
         }
