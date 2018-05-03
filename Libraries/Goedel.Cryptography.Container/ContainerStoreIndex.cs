@@ -8,7 +8,7 @@ using Goedel.Protocol;
 using Goedel.Persistence;
 using System.Collections;
 
-namespace Goedel.Cryptography.Container {
+namespace Goedel.Cryptography.Dare {
 
     /// <summary>
     /// Index entry for Item.

@@ -6,7 +6,7 @@ using Goedel.IO;
 using Goedel.Protocol;
 using Goedel.Cryptography.Jose;
 
-namespace Goedel.Cryptography.Container {
+namespace Goedel.Cryptography.Dare {
 
     /// <summary>Specify chunking mode.</summary>
     public enum ChunkMode {
@@ -169,24 +169,26 @@ namespace Goedel.Cryptography.Container {
                 ContentMeta ContentMeta,
                 List<KeyPair> EncryptionKeys = null) {
 
-            if (EncryptionKeys != null) {
-                var Encoder = JoseWebEncryption.Encrypt(Data, out var Recipients, out var Protected, EncryptionKeys);
+            throw new NYI(); // To do: implement add frame
 
-                var ContainerHeader = new ContainerHeader() {
-                    ContentMeta = ContentMeta,
-                    Recipients = Recipients,
-                    Protected = Protected.ToJson(),
-                    IV = Encoder.IV
-                    };
-                Container.Append(Encoder.OutputData, ContainerHeader);
-                }
-            else {
+            //if (EncryptionKeys != null) {
+            //    var Encoder = DAREMessage.Encrypt(Data, out var Recipients, out var Protected, EncryptionKeys);
 
-                var ContainerHeader = new ContainerHeader() {
-                    ContentMeta = ContentMeta
-                    };
-                Container.Append(Data, ContainerHeader);
-                }
+            //    var ContainerHeader = new ContainerHeader() {
+            //        ContentMeta = ContentMeta,
+            //        Recipients = Recipients,
+            //        Protected = Protected.ToJson(),
+            //        IV = Encoder.IV
+            //        };
+            //    Container.Append(Encoder.OutputData, ContainerHeader);
+            //    }
+            //else {
+
+            //    var ContainerHeader = new ContainerHeader() {
+            //        ContentMeta = ContentMeta
+            //        };
+            //    Container.Append(Data, ContainerHeader);
+            //    }
 
             }
 
@@ -234,7 +236,7 @@ namespace Goedel.Cryptography.Container {
                 FileStatus FileStatus = FileStatus.Read) {
 
             var JBCDStream = new JBCDStream(FileName, FileStatus);
-            Container = Goedel.Cryptography.Container.Container.OpenExisting(JBCDStream);
+            Container = Goedel.Cryptography.Dare.Container.OpenExisting(JBCDStream);
 
             if (ReadIndex) {
                 // here we read in the container index. Either from an archive referenced 
@@ -253,7 +255,7 @@ namespace Goedel.Cryptography.Container {
 
             var Stream = new MemoryStream(Data, 0, Data.Length, false);
             var JBCDStream = new JBCDStream(Stream, null);
-            Container = Goedel.Cryptography.Container.Container.OpenExisting(JBCDStream);
+            Container = Goedel.Cryptography.Dare.Container.OpenExisting(JBCDStream);
 
             }
 
@@ -305,36 +307,38 @@ namespace Goedel.Cryptography.Container {
                 int Index = -1,
                 string Path = null) {
 
-            if (Index >= 0 | Path != null) {
-                throw new NYI();
-                }
-            else {
-                Container.Last();
-                }
+            throw new NYI(); // to do implement read
 
-            var ContainerHeader = Container.ContainerHeader;
-            ContentMeta = ContainerHeader.ContentMeta;
+            //if (Index >= 0 | Path != null) {
+            //    throw new NYI();
+            //    }
+            //else {
+            //    Container.Last();
+            //    }
 
-            if (ContainerHeader.Protected == null) {
-                Data = Container.FrameData;    
-                return;
-                }
+            //var ContainerHeader = Container.ContainerHeader;
+            //ContentMeta = ContainerHeader.ContentMeta;
 
-            var Protected = Header.FromJSON(ContainerHeader.Protected.JSONReader(),false);
-            var BulkID = Protected.Enc.FromJoseID();
+            //if (ContainerHeader.Protected == null) {
+            //    Data = Container.FrameData;    
+            //    return;
+            //    }
+
+            //var Protected = Header.FromJSON(ContainerHeader.Protected.JSONReader(),false);
+            //var BulkID = Protected.Enc.FromJoseID();
 
 
-            // This is breaking here because we don't yet know how to translate the key ID to a Key.
-            try {
-                var Exchange = GetExchange(ContainerHeader.Recipients, AlgorithmID: BulkID);
+            //// This is breaking here because we don't yet know how to translate the key ID to a Key.
+            //try {
+            //    var Exchange = GetExchange(ContainerHeader.Recipients, AlgorithmID: BulkID);
 
-                var Provider = CryptoCatalog.Default.GetEncryption(BulkID);
+            //    var Provider = CryptoCatalog.Default.GetEncryption(BulkID);
 
-                Data = Provider.Decrypt(Container.FrameData, Exchange, ContainerHeader.IV);
-                }
-            catch {
-                throw new NoAvailableDecryptionKey();
-                }
+            //    Data = Provider.Decrypt(Container.FrameData, Exchange, ContainerHeader.IV);
+            //    }
+            //catch {
+            //    throw new NoAvailableDecryptionKey();
+            //    }
 
 
             }

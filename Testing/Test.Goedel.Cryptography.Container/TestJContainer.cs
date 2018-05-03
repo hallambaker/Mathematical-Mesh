@@ -3,7 +3,7 @@ using System.Text;
 using System.Collections.Generic;
 using MT = Microsoft.VisualStudio.TestTools.UnitTesting;
 using Goedel.Cryptography;
-using Goedel.Cryptography.Container;
+using Goedel.Cryptography.Dare;
 using Goedel.Utilities;
 using Goedel.IO;
 
@@ -116,7 +116,7 @@ namespace Test.Goedel.Cryptography.Container {
             int Record;
 
             // Write initial set of records
-            using (var XContainer = global::Goedel.Cryptography.Container.Container.NewContainer(FileName, FileStatus.Overwrite, ContainerType)) {
+            using (var XContainer = global::Goedel.Cryptography.Dare.Container.NewContainer(FileName, FileStatus.Overwrite, ContainerType)) {
                 for (Record = 0; Record < ReOpen; Record++) {
                     var Test = MakeConstant("Test ", ((Record + 1) % MaxSize));
                     XContainer.Append(Test);
@@ -125,7 +125,7 @@ namespace Test.Goedel.Cryptography.Container {
 
             // Write additional records
             while (Record < Records) {
-                using (var XContainer = global::Goedel.Cryptography.Container.Container.Open(FileName, FileStatus.Append)) {
+                using (var XContainer = global::Goedel.Cryptography.Dare.Container.Open(FileName, FileStatus.Append)) {
                     for (var i = 0; (Record < Records) & i < ReOpen; i++) {
                         var Test = MakeConstant("Test ", ((Record + 1) % MaxSize));
                         XContainer.Append(Test);
@@ -140,7 +140,7 @@ namespace Test.Goedel.Cryptography.Container {
 
 
             // Read records 
-            using (var XContainer = global::Goedel.Cryptography.Container.Container.Open(FileName, FileStatus.Read)) {
+            using (var XContainer = global::Goedel.Cryptography.Dare.Container.Open(FileName, FileStatus.Read)) {
                 for (Record = 0; Record < Records; Record++) {
                     var Test = MakeConstant("Test ", ((Record + 1) % MaxSize));
                     var Result = XContainer.Next();
@@ -160,7 +160,7 @@ namespace Test.Goedel.Cryptography.Container {
                 }
 
             if (MoveStep > 0) {
-                using (var XContainer = global::Goedel.Cryptography.Container.Container.Open(FileName, FileStatus.Read)) {
+                using (var XContainer = global::Goedel.Cryptography.Dare.Container.Open(FileName, FileStatus.Read)) {
                     for (Record = MoveStep; Record < Records; Record+= MoveStep) {
 
                         XContainer.Move(Record);
@@ -172,7 +172,7 @@ namespace Test.Goedel.Cryptography.Container {
                 }
 
             // check last record.
-            using (var XContainer = global::Goedel.Cryptography.Container.Container.Open(FileName, FileStatus.Read)) {
+            using (var XContainer = global::Goedel.Cryptography.Dare.Container.Open(FileName, FileStatus.Read)) {
                 var Last = XContainer.Last();
                 if (Records == 0) {
                     Assert.False(Last);

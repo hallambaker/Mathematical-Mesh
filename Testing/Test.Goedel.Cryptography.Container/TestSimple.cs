@@ -1,7 +1,7 @@
 ﻿using System;
 using MT=Microsoft.VisualStudio.TestTools.UnitTesting;
 using Goedel.Cryptography;
-using GCC=Goedel.Cryptography.Container;
+using GCC=Goedel.Cryptography.Dare;
 using Goedel.Utilities;
 using Goedel.IO;
 

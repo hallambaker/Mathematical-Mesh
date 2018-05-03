@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 using System.Collections.Generic;
-using Goedel.Cryptography.Container;
+using Goedel.Cryptography.Dare;
 using Goedel.Mesh;
 using Goedel.Cryptography;
 using Goedel.Cryptography.Framework;
@@ -112,13 +112,13 @@ namespace Scratchpad.Old {
                 }
 
             if (MoveStep > 0) {
-                using (var XContainer = global::Goedel.Cryptography.Container.Container.Open(FileName, FileStatus.Read)) {
+                using (var XContainer = global::Goedel.Cryptography.Dare.Container.Open(FileName, FileStatus.Read)) {
                     for (Record = MoveStep; Record < Records; Record += MoveStep) {
                         XContainer.Move(Record);
                         Assert.True(XContainer.ContainerHeader.Index == Record);
                         }
                     }
-                using (var XContainer = global::Goedel.Cryptography.Container.Container.Open(FileName, FileStatus.Read)) {
+                using (var XContainer = global::Goedel.Cryptography.Dare.Container.Open(FileName, FileStatus.Read)) {
                     for (Record = Records; Record > 0; Record -= MoveStep) {
                         XContainer.Move(Record);
                         Assert.True(XContainer.ContainerHeader.Index == Record);
@@ -271,7 +271,7 @@ namespace Scratchpad.Old {
 
                 var JBCDStream = new JBCDStreamDebug(FileStream) { Active = true };
 
-                var Container = Goedel.Cryptography.Container.Container.OpenExisting(JBCDStream);
+                var Container = Goedel.Cryptography.Dare.Container.OpenExisting(JBCDStream);
 
                 Console.WriteLine("--Container Header--");
                 Console.WriteLine(Container.ContainerHeaderFirst.ToString());

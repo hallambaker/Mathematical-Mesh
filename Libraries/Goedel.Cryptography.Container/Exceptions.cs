@@ -3,7 +3,7 @@ using Goedel.Utilities;
 
 
 
-namespace Goedel.Cryptography.Container {
+namespace Goedel.Cryptography.Dare {
 
 
     /// <summary>

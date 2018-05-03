@@ -7,7 +7,7 @@ using Goedel.IO;
 using Goedel.Protocol;
 using Goedel.Persistence;
 
-namespace Goedel.Cryptography.Container {
+namespace Goedel.Cryptography.Dare {
 
 
     /// <summary>

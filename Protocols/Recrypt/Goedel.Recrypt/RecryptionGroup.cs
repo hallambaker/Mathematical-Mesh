@@ -8,7 +8,7 @@ using Goedel.IO;
 using Goedel.Protocol;
 using Goedel.Cryptography;
 using Goedel.Cryptography.Jose;
-using Goedel.Cryptography.Container;
+using Goedel.Cryptography.Dare;
 using Goedel.Utilities;
 
 namespace Goedel.Recrypt {

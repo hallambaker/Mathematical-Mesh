@@ -1,6 +1,6 @@
 ﻿
 
-Namespace Goedel.Cryptography.Container
+Namespace Goedel.Cryptography.Dare
     
 
 	Exception InvalidContainerTypeException

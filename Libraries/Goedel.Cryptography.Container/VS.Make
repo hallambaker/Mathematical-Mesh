@@ -27,10 +27,14 @@ LinkFiles = \
 
 ToolTargets = \
 	ContainerEntry.cs\
+	DareSchema.cs\
 	Exceptions.cs
 
 ContainerEntry.cs : ContainerEntry.pschema 
 	protogen ContainerEntry.pschema  /cs  ContainerEntry.cs
+
+DareSchema.cs : DareSchema.Protocol 
+	protogen DareSchema.Protocol  /cs  DareSchema.cs
 
 Exceptions.cs : Exceptions.exceptional 
 	exceptional Exceptions.exceptional  /cs  Exceptions.cs

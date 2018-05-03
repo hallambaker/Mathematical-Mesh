@@ -36,6 +36,7 @@ LinkFiles = \
     Goedel.Confirm.dll\
     Goedel.Mesh.Portal.Client.dll\
     Goedel.Mesh.Portal.dll\
+    Goedel.Recrypt.Server.dll\
     Goedel.Recrypt.dll
 
 ToolTargets = 

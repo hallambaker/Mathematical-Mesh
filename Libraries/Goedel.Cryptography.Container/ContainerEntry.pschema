@@ -1,12 +1,34 @@
-﻿Protocol Goedel.Cryptography.Container ContainerData ContainerData
+﻿Protocol Goedel.Cryptography.Dare ContainerData ContainerData
     Using Goedel.Cryptography.Jose 
+	Extern DAREHeader
+	Extern DARERecipient
+	Extern DARESignature
 
 	Description 
-		|Classes that describe Mail applications.
+		|Classes that describe the DARE Container Format.
+
+	Section 1 "Reference"
+		Description
+			|TBS stuff
+
+	Section 2 "Container Headers"
+		Description
+			|TBS stuff
+
+	Structure ContainerHeaderFirst
+		Inherits ContainerHeader
+		String DataEncoding
+			Description
+				|Specifies the data encoding for the header section of for the following frames.
+				|This value is ONLY valid in Frame 0 which MUST have a header encoded in JSON.
 
 	Structure ContainerHeader
+		Inherits DAREHeader
+		
 		Description
-			|Describes a container header
+			|Describes a container header. A container header MAY contain any 
+			|DARE Message header.
+
 
 		Integer Index
 			Description
@@ -39,6 +61,7 @@
 		Integer TreePosition
 			Description
 				|Position of the frame containing the apex of the preceding sub-tree.
+		
 		Integer IndexPosition
 			Description
 				|Specifies the position in the file at which the last index entry is
@@ -48,6 +71,7 @@
 			Description
 				|Specifies the position in the file at which the key exchange data is
 				|to be found
+
 		Struct ContainerIndex ContainerIndex
 			Description
 				|An index of records in the current container up to but not including
@@ -66,6 +90,7 @@
 		Binary TreeDigest
 			Description
 				|If present, contains the Binary Merkle Tree digest value.
+
 
 		// Information describing the object instance value
 		String Event
@@ -91,37 +116,43 @@
 				|Frame number of the immediately prior object instance value	
 
 		// Encryption parameters
-		Binary EncryptedKey
-			Description
-				|Session key encrypted under a key exchange specified in the Recipients 
-				|list of this frame (if present) or the frame at the position specified by
-				|exchange position (if present) or the first frame.
+		//Binary EncryptedKey
+		//	Description
+		//		|Session key encrypted under a key exchange specified in the Recipients 
+		//		|list of this frame (if present) or the frame at the position specified by
+		//		|exchange position (if present) or the first frame.
 
-		Binary IV
-			Description
-				|Initialization vector for ciphertext.
+		//Binary IV
+		//	Description
+		//		|Initialization vector for ciphertext.
 
-		Binary Protected
-			Description
-				|Protected header 
+		//Binary Protected
+		//	Description
+		//		|Protected header 
 
-		Struct Recipient Recipients
-			Multiple
-			Description
-				|Per recipient key exchange data.
+		//Struct DARERecipient Recipients
+		//	Multiple
+		//	Description
+		//		|Per recipient key exchange data.
 
-		Struct Signature Signatures
-			Multiple
-			Description
-				|Per signer signature data
+		//Struct DARESignature Signatures
+		//	Multiple
+		//	Description
+		//		|Per signer signature data
 
+
+	Section 2 "Content Metadata Structure"
+		Description
+			|TBS stuff
 
 	Structure ContentMeta
-		// Information describing the object instance
+		Description
+			|Information describing the object instance
+		
 		String ContentType
+			Tag "cty"
 			Description
-				|Content type parameter
-
+				|The content type field as specified in JWE
 		String Paths
 			Multiple
 			Description
@@ -139,6 +170,10 @@
 			Description
 				|Date of last modification.
 
+
+	Section 2 "Index Structures"
+		Description
+			|TBS stuff
 	Structure ContainerIndex
 		Description
 			|A container index
@@ -199,9 +234,4 @@
 			Description
 				|List of labels that are applied to the current frame.
 
-	Structure ContainerHeaderFirst
-		Inherits ContainerHeader
-		String DataEncoding
-			Description
-				|Specifies the data encoding for the header section of for the following frames.
-				|This value is ONLY valid in Frame 0 which MUST have a header encoded in JSON.
+

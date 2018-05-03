@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 using System.Collections.Generic;
-using Goedel.Cryptography.Container;
+using Goedel.Cryptography.Dare;
 using Goedel.Mesh;
 using Goedel.Cryptography;
 using Goedel.Cryptography.Framework;
@@ -186,7 +186,7 @@ namespace Scratchpad {
 
                 var JBCDStream = new JBCDStreamDebug(FileStream) { Active = true };
 
-                var Container = Goedel.Cryptography.Container.Container.OpenExisting(JBCDStream);
+                var Container = Goedel.Cryptography.Dare.Container.OpenExisting(JBCDStream);
 
                 Console.WriteLine("--Container Header--");
                 Console.WriteLine(Container.ContainerHeaderFirst.ToString());

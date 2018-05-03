@@ -6,7 +6,7 @@ using Goedel.Protocol;
 using Goedel.IO;
 using Goedel.Cryptography.Jose;
 
-namespace Goedel.Cryptography.Container {
+namespace Goedel.Cryptography.Dare {
 
 
 
@@ -320,7 +320,7 @@ namespace Goedel.Cryptography.Container {
         public static Container OpenExisting (
                         JBCDStream JBCDStream) {
             var Found = JBCDStream.ReadFrame(out var Header, out var FrameData);
-            var ContainerHeader = Cryptography.Container.ContainerHeaderFirst.FromJSON(Header.JSONReader(), false);
+            var ContainerHeader = Cryptography.Dare.ContainerHeaderFirst.FromJSON(Header.JSONReader(), false);
 
 
             var Position1 = JBCDStream.PositionRead; // is always positioned after the first record on entry.

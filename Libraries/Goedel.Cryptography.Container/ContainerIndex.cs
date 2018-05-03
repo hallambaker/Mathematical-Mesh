@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Goedel.Utilities;
 
 
-namespace Goedel.Cryptography.Container {
+namespace Goedel.Cryptography.Dare {
 
     public partial class ContainerIndex {
 

@@ -29,7 +29,7 @@ namespace Goedel.Cryptography{
     /// </summary>
     public static class CryptographyOSX {
 
-        static bool Initialized = false;
+        //static bool Initialized = false;
         static Mutex InitializationLock = new Mutex();
 
         /// <summary>

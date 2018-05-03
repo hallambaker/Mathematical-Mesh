@@ -2,7 +2,7 @@
 [assembly: System.Reflection.AssemblyKeyName("SigningKeyDeveloper")]
 #endif
 
-namespace Goedel.Cryptography.Container {
+namespace Goedel.Cryptography.Dare {
 
     /// <summary>
     /// Classes to manage a JBCD Container file.

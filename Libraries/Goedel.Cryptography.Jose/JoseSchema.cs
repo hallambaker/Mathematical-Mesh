@@ -459,7 +459,7 @@ namespace Goedel.Cryptography.Jose {
 	///
 	/// Compact representation for signed data
 	/// </summary>
-	public partial class Signed : Jose {
+	public class Signed : Jose {
         /// <summary>
         ///Data protected by the signature
         /// </summary>

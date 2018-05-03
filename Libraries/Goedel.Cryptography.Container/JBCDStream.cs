@@ -5,7 +5,7 @@ using Goedel.Utilities;
 using Goedel.Protocol;
 
 
-namespace Goedel.Cryptography.Container {
+namespace Goedel.Cryptography.Dare {
 
     /// <summary>
     /// Implements a highly restricted stream that supports exactly the functionality
