@@ -129,7 +129,7 @@ namespace Goedel.Protocol {
     /// </summary>
     public abstract class Writer {
 
-        /// <summary>Output tream</summary>
+        /// <summary>Output stream</summary>
         protected StreamBuffer Output;
 
         /// <summary>Convert output stream to byte array</summary>

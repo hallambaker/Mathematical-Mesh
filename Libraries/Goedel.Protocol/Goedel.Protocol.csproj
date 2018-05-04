@@ -36,6 +36,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Exceptions.exceptional">
+      <Generator>exceptional</Generator>
+    </None>
     <None Update="MessageBase.protocol">
       <LastGenOutput>MessageBase.cs</LastGenOutput>
       <Generator>Protogen</Generator>

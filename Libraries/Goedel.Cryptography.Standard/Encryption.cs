@@ -29,7 +29,10 @@ using Goedel.Utilities;
 
 namespace Goedel.Cryptography.Framework {
     /// <summary>
-    /// Provider for bulk encryption algorithms (e.g. AES).
+    /// Provider for bulk encryption algorithms (e.g. AES). Prior to the introduction of
+    /// .NET Standard and the unification of the cryptographic processing algorithms, this
+    /// class was necessary as a means of enabling the use of different providers. It is
+    /// now redundant and will be removed in due course.
     /// </summary>
     public abstract class CryptoProviderEncryption : 
                 Goedel.Cryptography.CryptoProviderEncryption {
@@ -70,6 +73,46 @@ namespace Goedel.Cryptography.Framework {
         /// Since we don't currently have a GCM mode, this isn't currently used.
         /// </summary>
         public bool AppendIntegrity = false;
+
+
+        /// <summary>
+        /// Return the padded output length for a specified input length.
+        /// </summary>
+        /// <remarks>Only implemented for PKCS#7 padding.</remarks>
+        /// <param name="Input">The input length in bytes</param>
+        /// <returns>The output length in bytes.</returns>
+        public override long OutputLength (long Input) {
+            if (Provider.Padding == PaddingMode.PKCS7) {
+                return (Input + 1) % Provider.BlockSize;
+                }
+
+            throw new NYI();
+
+            }
+
+
+        /// <summary>
+        /// Return a block Encryptor for the specified key and IV. This is required for
+        /// constructing certain types of streaming encoder on block algorithms.
+        /// </summary>
+        /// <param name="Key">The encryption key.</param>
+        /// <param name="IV">The initialization vector. Must be of a legal size for the algorithm</param>
+        /// <returns>The transformation object instance.</returns>
+        public override ICryptoTransform CreateEncryptor (byte[] Key, byte[] IV) {
+            return Provider.CreateEncryptor(Key, IV);
+            }
+
+
+        /// <summary>
+        /// Return a block decryptor for the specified key and IV. This is required for
+        /// constructing certain types of streaming encoder on block algorithms.
+        /// </summary>
+        /// <param name="Key">The encryption key.</param>
+        /// <param name="IV">The initialization vector. Must be of a legal size for the algorithm</param>
+        /// <returns>The transformation object instance.</returns>
+        public override ICryptoTransform CreateDecryptor (byte[] Key, byte[] IV) {
+            return Provider.CreateDecryptor(Key, IV);
+            }
 
 
         /// <summary>

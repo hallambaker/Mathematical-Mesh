@@ -23,7 +23,11 @@ LinkFiles = \
     Goedel.Utilities.dll
 
 ToolTargets = \
+	Exceptions.cs\
 	MessageBase.cs
+
+Exceptions.cs : Exceptions.exceptional 
+	exceptional Exceptions.exceptional  /cs  Exceptions.cs
 
 MessageBase.cs : MessageBase.protocol 
 	protogen MessageBase.protocol  /cs  MessageBase.cs

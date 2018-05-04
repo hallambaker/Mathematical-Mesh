@@ -24,13 +24,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
+using System.Security.Cryptography;
 
 namespace Goedel.Cryptography {
 
 
     /// <summary>
     /// Base class for providers of bulk cryptographic algorithms, e.g. encryption,
-    /// digest, authentication.
+    /// digest, authentication
     /// </summary>
     public abstract class CryptoProviderBulk : CryptoProvider {
 
@@ -150,6 +151,31 @@ namespace Goedel.Cryptography {
         /// </summary>
         public abstract int BlockSize { get; }
 
+        /// <summary>
+        /// Return the padded output length for a specified input length.
+        /// </summary>
+        /// <param name="Input"></param>
+        /// <returns></returns>
+        public abstract long OutputLength (long Input);
+
+        /// <summary>
+        /// Return a block Encryptor for the specified key and IV. This is required for
+        /// constructing certain types of streaming encoder on block algorithms.
+        /// </summary>
+        /// <param name="Key">The encryption key.</param>
+        /// <param name="IV">The initialization vector. Must be of a legal size for the algorithm</param>
+        /// <returns>The transformation object instance.</returns>
+        public abstract ICryptoTransform CreateEncryptor (byte[] Key, byte[] IV);
+
+
+        /// <summary>
+        /// Return a block decryptor for the specified key and IV. This is required for
+        /// constructing certain types of streaming encoder on block algorithms.
+        /// </summary>
+        /// <param name="Key">The encryption key.</param>
+        /// <param name="IV">The initialization vector. Must be of a legal size for the algorithm</param>
+        /// <returns>The transformation object instance.</returns>
+        public abstract ICryptoTransform CreateDecryptor (byte[] Key, byte[] IV);
 
         /// <summary>
         /// Encrypts the specified byte array

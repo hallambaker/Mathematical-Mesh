@@ -7,6 +7,15 @@ using Goedel.Protocol;
 
 namespace Goedel.Cryptography.Dare {
 
+    //public partial class JBCDStreamWriter : JBCDStream {
+
+    //    public JBCDStreamWriter (
+    //                Stream OutputStream = null) : base(null, OutputStream) {
+    //        }
+
+    //    }
+
+
     /// <summary>
     /// Implements a highly restricted stream that supports exactly the functionality
     /// required by the JBCD Reader/Writer extensions. In the base class, the underlying
@@ -17,14 +26,14 @@ namespace Goedel.Cryptography.Dare {
     public partial class JBCDStream : IDisposable {
 
         /// <summary>
-        /// The underlying stream for file write operations
+        /// The underlying stream for stream write operations
         /// </summary>
-        Stream StreamWrite;
+        public Stream StreamWrite;
 
         /// <summary>
-        /// The underlying stream for file write operations
+        /// The underlying stream for stream write operations
         /// </summary>
-        Stream StreamRead;
+        public Stream StreamRead;
 
         Stream DisposeStreamRead=null;
         Stream DisposeStreamWrite=null;

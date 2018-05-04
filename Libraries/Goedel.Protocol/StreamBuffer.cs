@@ -29,12 +29,14 @@ namespace Goedel.Protocol {
 
     /// <summary>Stream buffer. Data written to buffer is written to the
     /// stream as it fills.</summary>
-    public class StreamBuffer {
+    public class StreamBuffer  {
 
         /// <summary>Current index</summary>
         public int              Index = 0;
+
         /// <summary>Length of buffered data</summary>
-        public int              Length = 0;
+        public int Length = 0;
+
         /// <summary>Space in the current buffer</summary>
         public int              Space  =>Current.Length - Index; 
         
@@ -248,7 +250,17 @@ namespace Goedel.Protocol {
             }
 
         /// <summary>If true, have rad to end of buffer.</summary>
-        public bool EndOfBuffer  => (ReadBuffer >= BufferList.Count) & (ReadIndex >= Current.Length); 
+        public bool EndOfBuffer  => (ReadBuffer >= BufferList.Count) & (ReadIndex >= Current.Length);
+
+        //public override bool CanRead => throw new NotImplementedException();
+
+        //public override bool CanSeek => throw new NotImplementedException();
+
+        //public override bool CanWrite => throw new NotImplementedException();
+
+        //public override long Length => throw new NotImplementedException();
+
+        //public override long Position { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         /// <summary>Read a byte from the buffer.</summary>
         /// <returns>The data value read</returns>
@@ -351,5 +363,25 @@ namespace Goedel.Protocol {
                 }
             throw new Exception ("Not UTF-8");
             }
+
+        //public override void Flush () {
+        //    throw new NotImplementedException();
+        //    }
+
+        //public override int Read (byte[] buffer, int offset, int count) {
+        //    throw new NotImplementedException();
+        //    }
+
+        //public override long Seek (long offset, SeekOrigin origin) {
+        //    throw new NotImplementedException();
+        //    }
+
+        //public override void SetLength (long value) {
+        //    throw new NotImplementedException();
+        //    }
+
+        //public override void Write (byte[] buffer, int offset, int count) {
+        //    throw new NotImplementedException();
+        //    }
         }
     }

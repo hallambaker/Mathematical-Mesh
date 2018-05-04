@@ -39,3 +39,8 @@ Namespace Goedel.Protocol
 		Console "Deserialzer encountered invalid input"
 		Description
 			|The input is not valid in the specified encoding.
+	
+	Exception BadPartLength
+		Console "Data length did not match data presented."
+		Description
+			|Data length did not match data presented.
