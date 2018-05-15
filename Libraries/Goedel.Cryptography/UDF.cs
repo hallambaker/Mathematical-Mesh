@@ -298,9 +298,9 @@ namespace Goedel.Cryptography {
         public static string ToString(string ContentType, byte[] Data, int Bits=0) {
             Bits = Bits == 0 ? DefaultBits : Bits;
             var Bytes = From(ContentType, Data, Bits);
-            var Length = (6 * (Bits / 25)) - 1;
+            var Length = 5 * (Bits / 25);
 
-            return BaseConvert.ToUDF32String(Bytes, Length);
+            return Bytes.ToStringBase32(Format: ConversionFormat.Dash5, OutputMax: Length);
             }
 
         /// <summary>
@@ -313,9 +313,9 @@ namespace Goedel.Cryptography {
         public static string ToString3 (string ContentType, byte[] Data, int Bits = 0) {
             Bits = Bits == 0 ? DefaultBits : Bits;
             var Bytes = From3(ContentType, Data, Bits);
-            var Length = (6 * (Bits / 25)) - 1;
+            var Length = 5 * (Bits / 25);
 
-            return BaseConvert.ToUDF32String(Bytes, Length);
+            return Bytes.ToStringBase32(Format: ConversionFormat.Dash5, OutputMax: Length);
             }
 
 
@@ -325,8 +325,7 @@ namespace Goedel.Cryptography {
         /// <param name="Data">Input data.</param>
         /// <returns>The UDF value as a string.</returns>
         public static string ToString(byte[] Data) {
-            int Length = (6 * ((Data.Length * 8) / 25)) - 1;
-            return BaseConvert.ToUDF32String(Data, Length);
+            return Data.ToStringBase32(Format: ConversionFormat.Dash5);
             }
 
 

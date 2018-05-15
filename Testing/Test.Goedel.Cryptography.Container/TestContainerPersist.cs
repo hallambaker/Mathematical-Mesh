@@ -10,21 +10,26 @@ using Test.Goedel.Mesh;
 
 namespace Test.Goedel.Cryptography.Container {
     [MT.TestClass]
-    public class TestPersistenceContainers {
+    public partial class TestDare {
 
         /// <summary>
         /// 
         /// </summary>
         public static void TestDirect () {
             InitializeClass();
-            var Instance = new TestPersistenceContainers();
+            var Instance = new TestDare();
+            Instance.MessagePlaintext();
+            }
 
-            Instance.TestPersistenceStore();
+        [MT.AssemblyInitialize]
+        public static void Initialize (MT.TestContext Context) {
+            InitializeClass();
             }
 
         public static void InitializeClass () {
             CryptographyWindows.Initialize();
             }
+
 
         static string FileTest = "TestStore.jcx";
         static string AccountIDAlice = "alice@whatever";
@@ -38,7 +43,7 @@ namespace Test.Goedel.Cryptography.Container {
             Status = "Open",
             Created = Now,
             Modified = Now,
-            UserProfileUDF = AccountIDAlice.ToBytes().ToUDF32String()
+            UserProfileUDF = AccountIDAlice.ToBytes().ToStringUDF32()
             };
 
         readonly static TestItem AccountBob = new TestItem() {
@@ -46,7 +51,7 @@ namespace Test.Goedel.Cryptography.Container {
             Status = "Open",
             Created = Now,
             Modified = Now,
-            UserProfileUDF = AccountIDBob.ToBytes().ToUDF32String()
+            UserProfileUDF = AccountIDBob.ToBytes().ToStringUDF32()
             };
 
         [MT.TestMethod]

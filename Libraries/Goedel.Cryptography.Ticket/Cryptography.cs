@@ -246,7 +246,7 @@ namespace Goedel.Cryptography.Ticket {
             var Bytes = Text.ToBytes();
             var Hash = Platform.HMAC_SHA2_512.Process(Bytes, key);
 
-            return BaseConvert.ToBase32hsString (Hash, length);
+            return BaseConvert.ToStringBase32hs (Hash, length);
             }
 
         }

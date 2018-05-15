@@ -83,7 +83,10 @@ namespace Goedel.Cryptography.Framework {
         /// <returns>The output length in bytes.</returns>
         public override long OutputLength (long Input) {
             if (Provider.Padding == PaddingMode.PKCS7) {
-                return (Input + 1) % Provider.BlockSize;
+                var Bytes = Provider.BlockSize / 8;
+                var Blocks = (Input / Bytes) + 1;
+                var Result = Blocks * Bytes;
+                return Result;
                 }
 
             throw new NYI();

@@ -34,6 +34,9 @@
       <LastGenOutput>Exceptions.cs</LastGenOutput>
       <Generator>exceptional</Generator>
     </None>
+    <None Update="Index.md">
+      <Generator>doesnotwork</Generator>
+    </None>
   </ItemGroup>
 
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">

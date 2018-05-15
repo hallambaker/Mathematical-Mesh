@@ -45,7 +45,7 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <returns>Current buffered contents as string</returns>
         public override string ToString() {
-            return Output.GetUTF8;
+            return Output.GetUTF8();
             }
 
         /// <summary>
@@ -54,9 +54,9 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <param name="Output">Output buffer</param>
         /// <param name="TagDictionary">Tag dictionary to ues for compression</param>
-        public JSONCWriter(StreamBuffer Output = null, 
+        public JSONCWriter(MemoryStream Output = null, 
                     Dictionary<string, int> TagDictionary = null) {
-            this.Output = Output  ?? new StreamBuffer();
+            this.Output = Output  ?? new MemoryStream();
             this.TagDictionary = TagDictionary ?? new Dictionary<string, int>();
             }
 

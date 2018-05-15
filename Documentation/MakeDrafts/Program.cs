@@ -28,9 +28,10 @@ namespace ExampleGenerator {
             //// Delete data from previous runs
             //MakeClean();
 
+            GoDareMessage();
 
-            GoKeyExchange();
-            GoContainer();
+            //GoKeyExchange();
+            //GoContainer();
             GoMesh();
 
             // Make the documentation

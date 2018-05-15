@@ -23,12 +23,8 @@ LinkFiles = \
     Goedel.Protocol.dll
 
 ToolTargets = \
-	DareSchema.cs\
 	Exceptions.cs\
 	JoseSchema.cs
-
-DareSchema.cs : DareSchema.Protocol 
-	protogen DareSchema.Protocol  /cs  DareSchema.cs
 
 Exceptions.cs : Exceptions.exceptional 
 	exceptional Exceptions.exceptional  /cs  Exceptions.cs

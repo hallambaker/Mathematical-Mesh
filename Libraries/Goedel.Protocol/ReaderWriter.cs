@@ -22,6 +22,7 @@
 
 using System;
 using System.IO;
+using Goedel.Utilities;
 
 namespace Goedel.Protocol {
 
@@ -130,11 +131,13 @@ namespace Goedel.Protocol {
     public abstract class Writer {
 
         /// <summary>Output stream</summary>
-        protected StreamBuffer Output;
+        protected Stream Output;
 
         /// <summary>Convert output stream to byte array</summary>
         /// <returns>Output stream as byte array</returns>
-        public byte[] GetBytes => Output.GetBytes;
+        public byte[] GetBytes => Output as MemoryStream == null ? null :
+            (Output as MemoryStream).ToArray();
+
 
         /// <summary>Write out the start of a token.</summary>
         /// <param name="Tag">Tag to write</param>
@@ -168,6 +171,13 @@ namespace Goedel.Protocol {
         /// <summary>Write integer value token</summary>
         /// <param name="Data">Value to write</param>
         abstract public void WriteBinary(byte[] Data);
+
+        readonly static byte[] NullBuffer = new byte[0];
+        /// <summary>Write empty binary data sequence</summary>
+        public void WriteBinary () {
+            WriteBinary(NullBuffer);
+            }
+
 
         /// <summary>Write integer value token</summary>
         /// <param name="Data">Value to write</param>

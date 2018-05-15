@@ -175,6 +175,18 @@ namespace Goedel.Cryptography.Framework {
             }
 
         /// <summary>
+        /// Perform a standalone encryption of a master key.
+        /// </summary>
+        /// <param name="Key">The key data to encrypt</param>
+        /// <param name="Exchange">The result of the encryption operation.</param>
+        /// <param name="Ephemeral">Always null, not required for RSA.</param>
+        public override void Encrypt (byte[] Key, out byte[] Exchange, out KeyPair Ephemeral) {
+            Exchange = Provider.Encrypt(Key, OAEP);
+            Ephemeral = null;
+            }
+
+
+        /// <summary>
         /// Perform a key exchange to encrypt a bulk or wrapped key under this one.
         /// </summary>
         /// <param name="EncryptedKey">The encrypted session</param>

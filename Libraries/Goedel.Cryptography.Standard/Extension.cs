@@ -112,7 +112,7 @@ namespace Goedel.Cryptography.Framework {
 
             var TBSCertificate = new TBSCertificate() {
                 Version = X509Cert.Version,
-                SerialNumber = BaseConvert.FromBase16String(X509Cert.SerialNumber),
+                SerialNumber = BaseConvert.FromBase16(X509Cert.SerialNumber),
                 Signature = X509Cert.SignatureAlgorithm.AlgorithmIdentifier(),
                 //Issuer = Parse(X509Cert.IssuerName),
                 Validity = new Validity(X509Cert.NotBefore, X509Cert.NotAfter),

@@ -149,7 +149,7 @@ namespace Goedel.Cryptography.KeyFile {
 
             var Builder = new StringBuilder();
             Builder.Append("ssh-rsa ");
-            Builder.ToBase64String(Data, 0, Data.Length, false);
+            Builder.ToStringBase64(Data, 0, Data.Length);
             Builder.Append(" ");
             Builder.Append(Tag ?? "");
             return Builder.ToString();
@@ -190,7 +190,7 @@ namespace Goedel.Cryptography.KeyFile {
 
             Builder.Append("-----BEGIN RSA PRIVATE KEY-----");
             var KeyDER = RSAPrivateKey.DER();
-            Builder.AppendBase64(KeyDER);
+            Builder.ToStringBase64(KeyDER);
             Builder.Append("\n-----END RSA PRIVATE KEY-----\n");
 
             return Builder.ToString();

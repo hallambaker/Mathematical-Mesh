@@ -70,11 +70,11 @@ namespace Goedel.Protocol {
 
 
         /// <summary>The ticket in Base64.</summary>
-        public string Base64Ticket => BaseConvert.ToBase64urlString(Ticket); 
+        public string Base64Ticket => BaseConvert.ToStringBase64url(Ticket); 
 
 
         /// <summary>The message authentication code in Base64.</summary>
-        public string Base64Mac  => BaseConvert.ToBase64urlString(MAC); 
+        public string Base64Mac  => BaseConvert.ToStringBase64url(MAC); 
 
 
         ///// <summary></summary>

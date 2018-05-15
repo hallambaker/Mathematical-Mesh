@@ -3,23 +3,126 @@
 #using Goedel.Protocol
 #using Goedel.Utilities
 #using Goedel.Cryptography
-#using Goedel.Cryptography.Container
+#using Goedel.Cryptography.Dare
 #xclass ExampleGenerator ExampleGenerator
+
+#file MeshExamplesMessage "Examples\\ExamplesDAREMessage.md" CreateExamples Example
+
+##Test Examples
+
+In the following examples, Alice's public key parameters are:
+
+~~~~
+#{JSONDebugWriter.Write (Example.DareMessageAliceKey)}
+~~~~
+
+The body of the test message is the UTF8 representation of the following string:
+
+~~~~
+"#{Example.DareMessageTest1.ToUTF8()}"
+~~~~
+
+The EDS sequences, are the UTF8 representation of the following strings:
+
+~~~~
+"#{Example.DareMessageTest2.ToUTF8()}"
+"#{Example.DareMessageTest3.ToUTF8()}"
+~~~~
+
+#### Plaintext Message
+
+A plaintext message without associated EDS sequences is an empty header
+followed by the message body:
+
+~~~~
+#{JSONDebugWriter.Write (Example.DAREMessageAtomic)}
+~~~~
+
+#### Plaintext Message with EDS
+
+If a plaintext message contains EDS sequences, these are also in plaintext:
+
+~~~~
+#{JSONDebugWriter.Write (Example.MessageAtomicDS)}
+~~~~
+
+#### Encrypted Message
+
+The creator generates a master session key:
+
+~~~~
+#{Example.MasterSecret.ToStringBase16FormatHex()}
+~~~~
+
+
+The creator generates an ephemeral key:
+
+~~~~
+#{JSONDebugWriter.Write (Example.EphemeralPrivateKey)}
+~~~~
+
+The key agreement value is calculated:
+
+~~~~
+#{Example.DareEncryptAgreement}
+~~~~
+
+The key agreement value is used as the input to a HKDF key
+derivation function with the info parameter "master".
+
+~~~~
+#{Example.DareEncrypEncryptionKey.ToStringBase16FormatHex()}
+~~~~
+
+To create the first EDS, a salt value is assigned. In this case a single octet 
+with the value '01'. The salt value is then used to create the encryption key
+and IV as follows:
+
+~~~~
+Salt: 
+Example.DareEDSSalt.ToStringBase16FormatHex()
+
+Encryption Key:
+Example.DareMessageKeyEncrypt.ToStringBase16FormatHex()
+
+IV:
+Example.DareMessageKeyIV.ToStringBase16FormatHex()
+~~~~
+
+The output sequence is the salt followed by the ciphertext:
+
+~~~~
+#{Example.DareMessageBody.ToStringBase16FormatHex()}
+~~~~
+
+The completed message is:
+
+
+~~~~
+#{JSONDebugWriter.Write (Example.MessageAtomicDSEnc)}
+~~~~
+
+#### Signed Messages
+
+This is not yet implemented.
+
+#end file
+
 
 #file MeshExamplesUDF "Examples\\ExamplesUDF.md" CreateExamples Example
 #% var ContentType = "text/plain";
-#% var ContentTypeString = ContentType.ToUTF8().ToBase16String(Spaced:true);
+#% var ContentTypeString = ContentType.ToUTF8().ToStringBase16FormatHex();
 #% var DataString = "UDF Data Value";
 #% var DataBytes = DataString.ToUTF8();
-#% var DataBytesString = DataBytes.ToBase16String(Spaced:true);
-#% var HashData = Goedel.Cryptography.Platform.SHA2_512.Process(DataBytes).ToBase16String(Spaced:true);
-#% var HashData3 = Goedel.Cryptography.Platform.SHA3_512.Process(DataBytes).ToBase16String(Spaced:true);
+#% var DataBytesString = DataBytes.ToStringBase16FormatHex();
+#% var HashData = Goedel.Cryptography.Platform.SHA2_512.Process(DataBytes).ToStringBase16FormatHex();
+#% var HashData3 = Goedel.Cryptography.Platform.SHA3_512.Process(DataBytes).ToStringBase16FormatHex();
 #% var UDFDataBuffer = UDF.UDFBuffer(ContentType, DataBytes);
 #% var UDFDataBuffer3 = UDF.UDFBuffer3(ContentType, DataBytes);
-#% var UDFDataBufferString = UDFDataBuffer.ToBase16String(Spaced:true);
-#% var UDFDataBufferString3 = UDFDataBuffer3.ToBase16String(Spaced:true);
-#% var UDFData = Goedel.Cryptography.Platform.SHA2_512.Process(UDFDataBuffer).ToBase16String(Spaced:true);
-#% var UDFData3 = Goedel.Cryptography.Platform.SHA3_512.Process(UDFDataBuffer).ToBase16String(Spaced:true);
+#% var UDFDataBufferString = UDFDataBuffer.ToStringBase16FormatHex();
+#% var UDFDataBufferString3 = UDFDataBuffer3.ToStringBase16FormatHex();
+#% var UDFData = Goedel.Cryptography.Platform.SHA2_512.Process(UDFDataBuffer).ToStringBase16FormatHex();
+#% var UDFData3 = Goedel.Cryptography.Platform.SHA3_512.Process(UDFDataBuffer).ToStringBase16FormatHex();
 In the following examples, &<Content-ID> is the UTF8 encoding of the string 
 "#{ContentType}" and &<Data> is the UTF8 encoding of the string "#{DataString}"
 
@@ -82,14 +185,14 @@ H ( &<Content-ID> + ‘:’ + H(&<Data>))=
 
 #file MeshExamplesUDFCompressed "Examples\\ExamplesUDFCompressed.md" CreateExamples Example
 #% var ContentType = "text/plain";
-#% var ContentTypeString = ContentType.ToUTF8().ToBase16String(Spaced:true);
+#% var ContentTypeString = ContentType.ToUTF8().ToStringBase16FormatHex();
 #% var DataString = "290668103";
 #% var DataBytes = DataString.ToUTF8();
-#% var DataBytesString = DataBytes.ToBase16String(Spaced:true);
-#% var HashData = Goedel.Cryptography.Platform.SHA2_512.Process(DataBytes).ToBase16String(Spaced:true);
+#% var DataBytesString = DataBytes.ToStringBase16FormatHex();
+#% var HashData = Goedel.Cryptography.Platform.SHA2_512.Process(DataBytes).ToStringBase16FormatHex();
 #% var UDFDataBuffer = UDF.UDFBuffer(ContentType, DataBytes);
-#% var UDFDataBufferString = UDFDataBuffer.ToBase16String(Spaced:true);
-#% var UDFData = Goedel.Cryptography.Platform.SHA2_512.Process(UDFDataBuffer).ToBase16String(Spaced:true);
+#% var UDFDataBufferString = UDFDataBuffer.ToStringBase16FormatHex();
+#% var UDFData = Goedel.Cryptography.Platform.SHA2_512.Process(UDFDataBuffer).ToStringBase16FormatHex();
 
 ######Example
 
@@ -224,4 +327,3 @@ Frame #{Header.Index}
 
 
 #end xclass
-#end using

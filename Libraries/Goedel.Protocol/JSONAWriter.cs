@@ -41,14 +41,14 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <returns>Current buffered contents as string</returns>
         public override string ToString() {
-            return Output.GetUTF8;
+            return Output.GetUTF8();
             }
 
         /// <summary>
         /// Create a new JSON Writer.
         /// </summary>
         public JSONAWriter() {
-            this.Output = new StreamBuffer ();
+            this.Output = new MemoryStream();
             }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace Goedel.Protocol {
         /// an output stream defined, text will be written to the stream.
         /// </summary>
         /// <param name="Output">Output buffer</param>
-        public JSONAWriter(StreamBuffer Output) {
+        public JSONAWriter(MemoryStream Output) {
             this.Output = Output;
             }
 
@@ -146,7 +146,7 @@ namespace Goedel.Protocol {
         /// <param name="Data">Value to write</param>
         public override void WriteBinary(byte[] Data) {
             Output.Write("\"");
-            Output.Write(BaseConvert.ToBase64urlString(Data));
+            Output.Write(BaseConvert.ToStringBase64url(Data));
             Output.Write("\"");
             }
 

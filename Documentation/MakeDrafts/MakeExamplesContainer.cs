@@ -14,24 +14,133 @@ namespace ExampleGenerator {
 		
 
 		//
+		// MeshExamplesMessage
+		//
+		public static void MeshExamplesMessage (CreateExamples Example) { /* File  */
+			using (var _Output = new StreamWriter ("Examples\\ExamplesDAREMessage.md")) {
+				var _Indent = ""; 
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("#Test Examples\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("In the following examples, Alice's public key parameters are:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("{1}\n{0}", _Indent, JSONDebugWriter.Write (Example.DareMessageAliceKey));
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The body of the test message is the UTF8 representation of the following string:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("\"{1}\"\n{0}", _Indent, Example.DareMessageTest1.ToUTF8());
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The EDS sequences, are the UTF8 representation of the following strings:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("\"{1}\"\n{0}", _Indent, Example.DareMessageTest2.ToUTF8());
+				_Output.Write ("\"{1}\"\n{0}", _Indent, Example.DareMessageTest3.ToUTF8());
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("## Plaintext Message\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("A plaintext message without associated EDS sequences is an empty header\n{0}", _Indent);
+				_Output.Write ("followed by the message body:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("{1}\n{0}", _Indent, JSONDebugWriter.Write (Example.DAREMessageAtomic));
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("## Plaintext Message with EDS\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("If a plaintext message contains EDS sequences, these are also in plaintext:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("{1}\n{0}", _Indent, JSONDebugWriter.Write (Example.MessageAtomicDS));
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("## Encrypted Message\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The creator generates a master session key:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("{1}\n{0}", _Indent, Example.MasterSecret.ToStringBase16FormatHex());
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The creator generates an ephemeral key:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("{1}\n{0}", _Indent, JSONDebugWriter.Write (Example.EphemeralPrivateKey));
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The key agreement value is calculated:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("{1}\n{0}", _Indent, Example.DareEncryptAgreement);
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The key agreement value is used as the input to a HKDF key\n{0}", _Indent);
+				_Output.Write ("derivation function with the info parameter \"master\".\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("{1}\n{0}", _Indent, Example.DareEncrypEncryptionKey.ToStringBase16FormatHex());
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("To create the first EDS, a salt value is assigned. In this case a single octet \n{0}", _Indent);
+				_Output.Write ("with the value '01'. The salt value is then used to create the encryption key\n{0}", _Indent);
+				_Output.Write ("and IV as follows:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("Salt: \n{0}", _Indent);
+				_Output.Write ("Example.DareEDSSalt.ToStringBase16FormatHex()\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("Encryption Key:\n{0}", _Indent);
+				_Output.Write ("Example.DareMessageKeyEncrypt.ToStringBase16FormatHex()\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("IV:\n{0}", _Indent);
+				_Output.Write ("Example.DareMessageKeyIV.ToStringBase16FormatHex()\n{0}", _Indent);
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The output sequence is the salt followed by the ciphertext:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("{1}\n{0}", _Indent, Example.DareMessageBody.ToStringBase16FormatHex());
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The completed message is:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("{1}\n{0}", _Indent, JSONDebugWriter.Write (Example.MessageAtomicDSEnc));
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("## Signed Messages\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("This is not yet implemented.\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				}
+			}
+		
+
+		//
 		// MeshExamplesUDF
 		//
 		public static void MeshExamplesUDF (CreateExamples Example) { /* File  */
 			using (var _Output = new StreamWriter ("Examples\\ExamplesUDF.md")) {
 				var _Indent = ""; 
 				 var ContentType = "text/plain";
-				 var ContentTypeString = ContentType.ToUTF8().ToBase16String(Spaced:true);
+				 var ContentTypeString = ContentType.ToUTF8().ToStringBase16FormatHex();
 				 var DataString = "UDF Data Value";
 				 var DataBytes = DataString.ToUTF8();
-				 var DataBytesString = DataBytes.ToBase16String(Spaced:true);
-				 var HashData = Goedel.Cryptography.Platform.SHA2_512.Process(DataBytes).ToBase16String(Spaced:true);
-				 var HashData3 = Goedel.Cryptography.Platform.SHA3_512.Process(DataBytes).ToBase16String(Spaced:true);
+				 var DataBytesString = DataBytes.ToStringBase16FormatHex();
+				 var HashData = Goedel.Cryptography.Platform.SHA2_512.Process(DataBytes).ToStringBase16FormatHex();
+				 var HashData3 = Goedel.Cryptography.Platform.SHA3_512.Process(DataBytes).ToStringBase16FormatHex();
 				 var UDFDataBuffer = UDF.UDFBuffer(ContentType, DataBytes);
 				 var UDFDataBuffer3 = UDF.UDFBuffer3(ContentType, DataBytes);
-				 var UDFDataBufferString = UDFDataBuffer.ToBase16String(Spaced:true);
-				 var UDFDataBufferString3 = UDFDataBuffer3.ToBase16String(Spaced:true);
-				 var UDFData = Goedel.Cryptography.Platform.SHA2_512.Process(UDFDataBuffer).ToBase16String(Spaced:true);
-				 var UDFData3 = Goedel.Cryptography.Platform.SHA3_512.Process(UDFDataBuffer).ToBase16String(Spaced:true);
+				 var UDFDataBufferString = UDFDataBuffer.ToStringBase16FormatHex();
+				 var UDFDataBufferString3 = UDFDataBuffer3.ToStringBase16FormatHex();
+				 var UDFData = Goedel.Cryptography.Platform.SHA2_512.Process(UDFDataBuffer).ToStringBase16FormatHex();
+				 var UDFData3 = Goedel.Cryptography.Platform.SHA3_512.Process(UDFDataBuffer).ToStringBase16FormatHex();
 				_Output.Write ("In the following examples, &<Content-ID> is the UTF8 encoding of the string \n{0}", _Indent);
 				_Output.Write ("\"{1}\" and &<Data> is the UTF8 encoding of the string \"{2}\"\n{0}", _Indent, ContentType, DataString);
 				_Output.Write ("\n{0}", _Indent);
@@ -101,14 +210,14 @@ namespace ExampleGenerator {
 			using (var _Output = new StreamWriter ("Examples\\ExamplesUDFCompressed.md")) {
 				var _Indent = ""; 
 				 var ContentType = "text/plain";
-				 var ContentTypeString = ContentType.ToUTF8().ToBase16String(Spaced:true);
+				 var ContentTypeString = ContentType.ToUTF8().ToStringBase16FormatHex();
 				 var DataString = "290668103";
 				 var DataBytes = DataString.ToUTF8();
-				 var DataBytesString = DataBytes.ToBase16String(Spaced:true);
-				 var HashData = Goedel.Cryptography.Platform.SHA2_512.Process(DataBytes).ToBase16String(Spaced:true);
+				 var DataBytesString = DataBytes.ToStringBase16FormatHex();
+				 var HashData = Goedel.Cryptography.Platform.SHA2_512.Process(DataBytes).ToStringBase16FormatHex();
 				 var UDFDataBuffer = UDF.UDFBuffer(ContentType, DataBytes);
-				 var UDFDataBufferString = UDFDataBuffer.ToBase16String(Spaced:true);
-				 var UDFData = Goedel.Cryptography.Platform.SHA2_512.Process(UDFDataBuffer).ToBase16String(Spaced:true);
+				 var UDFDataBufferString = UDFDataBuffer.ToStringBase16FormatHex();
+				 var UDFData = Goedel.Cryptography.Platform.SHA2_512.Process(UDFDataBuffer).ToStringBase16FormatHex();
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("###Example\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);

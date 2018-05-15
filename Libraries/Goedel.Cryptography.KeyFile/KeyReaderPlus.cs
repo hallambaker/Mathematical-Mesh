@@ -181,7 +181,7 @@ namespace Goedel.Cryptography.KeyFile {
                 BuildTagEnd.ToString() == "END";
 
             var Base64Data = BuildBase64.ToString();
-            var Data = BaseConvert.FromBase64urlString(Base64Data);
+            var Data = BaseConvert.FromBase64(Base64Data);
 
             var Result = new TaggedData {
                 Strict = Strict,

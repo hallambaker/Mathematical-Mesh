@@ -112,14 +112,14 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <returns>Current buffered contents as string</returns>
         public override string ToString() {
-            return Output.GetUTF8;
+            return Output.GetUTF8();
             }
 
         /// <summary>
         /// Create a new JSON Writer.
         /// </summary>
         public JSONBWriter() {
-            this.Output = new StreamBuffer ();
+            this.Output = new MemoryStream();
             }
 
         /// <summary>
@@ -127,17 +127,19 @@ namespace Goedel.Protocol {
         /// an output stream defined, text will be written to the stream.
         /// </summary>
         /// <param name="Output">Output buffer</param> 
-        public JSONBWriter(StreamBuffer Output) {
+        public JSONBWriter(MemoryStream Output) {
             this.Output = Output;
             }
 
         /// <summary>
         /// Create a new JSON Writer using the specified output buffer. If the buffer has
-        /// an output stream defined, text will be written to the stream.
+        /// an output stream defined, text will be written to the stream. Note that
+        /// the property GetBytes will return null unless the specified stream is a 
+        /// memory stream.
         /// </summary>
         /// <param name="Output">Output buffer</param> 
         public JSONBWriter (Stream Output) {
-            throw new NYI();
+            this.Output = Output;
             }
 
 
@@ -247,14 +249,16 @@ namespace Goedel.Protocol {
 
         long PartLength = 0;
         /// <summary>Write binary data as length-data item.</summary>
-        public void WriteBinaryBegin (long Length, bool Terminal=true) {
+        public override void WriteBinaryBegin (long Length, bool Terminal=true) {
             WriteTag(Terminal ? JSONBCD.DataTerm : JSONBCD.DataChunk, Length);
             PartLength = Length;
             }
 
         /// <summary>Write binary data as length-data item.</summary>
         /// <param name="Data">Value to write</param>
-        public void WriteBinaryPart(byte[] Data) {
+        /// <param name="First">The index position of the first byte in the input data to process</param>
+        /// <param name="Length">The number of bytes to process</param>
+        public override void WriteBinaryPart (byte[] Data, long First = 0, long Length = -1) {
             PartLength -= Data.LongLength;
             Assert.True(PartLength >= 0, BadPartLength.Throw);
             Output.Write(Data);

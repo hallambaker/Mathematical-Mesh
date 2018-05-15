@@ -60,6 +60,7 @@ namespace Goedel.Cryptography.Dare {
 		public static Dictionary<string, JSONFactoryDelegate> _TagDictionary = 
 				new Dictionary<string, JSONFactoryDelegate> () {
 
+			{"DAREMessageObject", DAREMessageObject._Factory},
 			{"DARETrailer", DARETrailer._Factory},
 			{"DAREHeader", DAREHeader._Factory},
 			{"DARESigner", DARESigner._Factory},
@@ -84,6 +85,143 @@ namespace Goedel.Cryptography.Dare {
 
 
 		// Transaction Classes
+	/// <summary>
+	///
+	/// A DARE Message containing Header, EDS and Trailer in JSON object encoding.
+	/// Since a DAREMessage is almost invariably presented in JSON sequence or
+	/// compact encoding, use of the DAREMessage subclass is preferred.
+	/// </summary>
+	public partial class DAREMessageObject : Dare {
+        /// <summary>
+        ///The message header. May specify the key exchange data, pre-signature 
+        ///or signature data, cloaked headers and/or encrypted data sequences.
+        /// </summary>
+
+		public virtual DAREHeader						Header  {get; set;}
+        /// <summary>
+        ///The message body
+        /// </summary>
+
+		public virtual byte[]						Body  {get; set;}
+        /// <summary>
+        ///The message trailer. If present, this contains the signature.
+        /// </summary>
+
+		public virtual DARETrailer						Trailer  {get; set;}
+		
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public override string _Tag { get; } = "DAREMessageObject";
+
+		/// <summary>
+        /// Factory method
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JSONObject _Factory () {
+			return new DAREMessageObject();
+			}
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="Writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
+			SerializeX (Writer, wrap, ref first);
+			}
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_Writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			if (_wrap) {
+				_Writer.WriteObjectStart ();
+				}
+			if (Header != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Header", 1);
+					Header.Serialize (_Writer, false);
+				}
+			if (Body != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Body", 1);
+					_Writer.WriteBinary (Body);
+				}
+			if (Trailer != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Trailer", 1);
+					Trailer.Serialize (_Writer, false);
+				}
+			if (_wrap) {
+				_Writer.WriteObjectEnd ();
+				}
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <returns>The created object.</returns>		
+        public static new DAREMessageObject FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
+			if (Tagged) {
+				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				return Out as DAREMessageObject;
+				}
+		    var Result = new DAREMessageObject ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			}
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
+		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+			
+			switch (Tag) {
+				case "Header" : {
+					// An untagged structure
+					Header = new DAREHeader ();
+					Header.Deserialize (JSONReader);
+ 
+					break;
+					}
+				case "Body" : {
+					Body = JSONReader.ReadBinary ();
+					break;
+					}
+				case "Trailer" : {
+					// An untagged structure
+					Trailer = new DARETrailer ();
+					Trailer.Deserialize (JSONReader);
+ 
+					break;
+					}
+				default : {
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
 	/// <summary>
 	///
 	/// A DARE Message Trailer
@@ -863,7 +1001,7 @@ namespace Goedel.Cryptography.Dare {
         ///The wrapped master key. The master key is encrypted under the result of the key exchange.
         /// </summary>
 
-		public virtual string						WrappedMasterKey  {get; set;}
+		public virtual byte[]						WrappedMasterKey  {get; set;}
         /// <summary>
         ///The per-recipient key exchange data.
         /// </summary>
@@ -934,7 +1072,7 @@ namespace Goedel.Cryptography.Dare {
 			if (WrappedMasterKey != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("wmk", 1);
-					_Writer.WriteString (WrappedMasterKey);
+					_Writer.WriteBinary (WrappedMasterKey);
 				}
 			if (RecipientKeyData != null) {
 				_Writer.WriteObjectSeparator (ref _first);
@@ -986,7 +1124,7 @@ namespace Goedel.Cryptography.Dare {
 					break;
 					}
 				case "wmk" : {
-					WrappedMasterKey = JSONReader.ReadString ();
+					WrappedMasterKey = JSONReader.ReadBinary ();
 					break;
 					}
 				case "rkd" : {

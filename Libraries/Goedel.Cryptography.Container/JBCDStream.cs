@@ -7,15 +7,6 @@ using Goedel.Protocol;
 
 namespace Goedel.Cryptography.Dare {
 
-    //public partial class JBCDStreamWriter : JBCDStream {
-
-    //    public JBCDStreamWriter (
-    //                Stream OutputStream = null) : base(null, OutputStream) {
-    //        }
-
-    //    }
-
-
     /// <summary>
     /// Implements a highly restricted stream that supports exactly the functionality
     /// required by the JBCD Reader/Writer extensions. In the base class, the underlying

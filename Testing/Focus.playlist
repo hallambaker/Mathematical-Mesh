@@ -1,1 +1,1 @@
-<Playlist Version="1.0"><Add Test="Test.Goedel.Mesh.TestRecrypt.TestRecryption" /><Add Test="Test.Goedel.Mesh.TestRecrypt.TestRecryptionAuthorizationWithdrawn" /><Add Test="Test.Goedel.Mesh.TestRecrypt.TestEncryption" /><Add Test="Test.Goedel.Cryptography.Container.TestPersistenceContainers.TestPersistenceStore" /><Add Test="Test.Goedel.Mesh.TestRecrypt.FailRecryptionNeverAuthorized" /></Playlist>
+<Playlist Version="1.0"><Add Test="Test.Goedel.Cryptography.Container.TestDare.MessagePlaintext" /></Playlist>

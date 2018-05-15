@@ -54,7 +54,7 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <returns>Current buffered contents as string</returns>
         public override string ToString() {
-            return Output.GetUTF8;
+            return Output.GetUTF8();
             }
 
 
@@ -62,13 +62,13 @@ namespace Goedel.Protocol {
         /// Return the contents of the writer as a string.
         /// </summary>
         /// <returns>Current buffered contents as string</returns>
-        public string GetUTF8  => Output.GetUTF8; 
+        public string GetUTF8  => Output.GetUTF8(); 
 
         /// <summary>
         /// Create a new JSON Writer.
         /// </summary>
         public JSONWriter() {
-            this.Output = new StreamBuffer ();
+            this.Output = new MemoryStream();
             }
 
         /// <summary>
@@ -76,7 +76,7 @@ namespace Goedel.Protocol {
         /// an output stream defined, text will be written to the stream.
         /// </summary>
         /// <param name="Output">The output stream.</param>
-        public JSONWriter(StreamBuffer Output) {
+        public JSONWriter(MemoryStream Output) {
             this.Output = Output;
             }
 
@@ -167,9 +167,25 @@ namespace Goedel.Protocol {
         /// <param name="Data">Value to write</param>
         public override void WriteBinary(byte[] Data) {
             Output.Write("\"");
-            Output.Write(BaseConvert.ToBase64urlString(Data));
+            Output.Write(BaseConvert.ToStringBase64url(Data));
             Output.Write("\"");
             }
+
+        /// <summary>Begin partial write of binary data. 
+        /// This is not yet implemented for standard streams.</summary>
+        public virtual void WriteBinaryBegin (long Length, bool Terminal = true) {
+            throw new NYI();
+            }
+
+        /// <summary>Write binary data as length-data item.</summary>
+        /// <param name="Data">Value to write</param>
+        /// <param name="First">The index position of the first byte in the input data to process</param>
+        /// <param name="Length">The number of bytes to process</param>
+        public virtual void WriteBinaryPart (byte[] Data, long First = 0, long Length = -1) {
+
+            throw new NYI();
+            }
+
 
         /// <summary>Write Date-Time value in RFC3339 format.</summary>
         /// <param name="Data">Value to write</param>

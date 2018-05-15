@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -66,9 +66,9 @@ namespace Goedel.Protocol.Debug {
         /// </summary>
         /// <param name="Data">StreamBuffer object containing JSON encoded request.</param>
         /// <returns>StreamBuffer object containing JSON encoded response.</returns>
-        public override StreamBuffer Post(StreamBuffer Data) {
+        public override Stream Post(MemoryStream Data) {
 
-            var DataText = Data.GetUTF8;
+            var DataText = Data.GetUTF8();
             var JSONReader = new JSONReader(DataText);
 
             var ResultObject = Host.Dispatch(this, JSONReader);
@@ -84,7 +84,7 @@ namespace Goedel.Protocol.Debug {
         /// <returns>JSON encoded response.</returns>
         public override string Post(string Tag, JSONObject Request) {
 
-            var Buffer = new StreamBuffer();
+            var Buffer = new MemoryStream();
             var JSONWriter = new JSONWriter(Buffer);
 
             // Wrap the request object with the transaction name.
@@ -94,7 +94,7 @@ namespace Goedel.Protocol.Debug {
             JSONWriter.WriteObjectEnd();
 
             // Now prepare a reader so that the data can be unpacked
-            var DataText = Buffer.GetUTF8;
+            var DataText = Buffer.GetUTF8();
             var JSONReader = new JSONReader(DataText);
 
             // Send the request

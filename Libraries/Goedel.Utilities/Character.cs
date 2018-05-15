@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 
 namespace Goedel.Utilities {
+
+    /// <summary>
+    /// 
+    /// </summary>
     public static partial class Extension {
 
         /// <summary>

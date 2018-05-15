@@ -51,7 +51,7 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// The Key Value as a Base32 encoded string.
         /// </summary>
-        public string Text => BaseConvert.ToUDF32String(Key);
+        public string Text => BaseConvert.ToStringUDF32(Key);
         /// <summary>
         /// Create a new random secret with the specified number of bits.
         /// </summary>
@@ -86,7 +86,7 @@ namespace Goedel.Cryptography {
 
             int i = 0;
             foreach (var Share in Shares) {
-                var Bytes = BaseConvert.FromBase32String(Share);
+                var Bytes = BaseConvert.FromBase32(Share);
                 KeyShares[i++] = new KeyShare(Bytes);
                 }
 
@@ -155,9 +155,11 @@ namespace Goedel.Cryptography {
             Assert.False(K > N, QuorumExceedsShares.Throw);
             Assert.False(K < 2, QuorumInsufficient.Throw); 
             Assert.False(N < 2, SharesInsufficient.Throw); 
-            Assert.False(N > 15, QuorumExceeded.Throw); 
+            Assert.False(N > 15, QuorumExceeded.Throw);
 
-            if (N == K) return Split(N); //Special case
+            if (N == K) {
+                return Split(N); //Special case
+                }
 
             Assert.False(K > 15, QuorumDegreeExceeded.Throw);
 
@@ -302,7 +304,10 @@ namespace Goedel.Cryptography {
 
                 BigInteger Numerator = 1, Denominator = 1;
                 for (var Count = 0; Count < Threshold; Count++) {
-                    if (Formula == Count) continue;  // If not the same value
+                    if (Formula == Count) {
+                        continue;  // If not the same value
+                        }
+
                     var Start = Shares[Formula].Index;
                     var Next = Shares[Count].Index;
 

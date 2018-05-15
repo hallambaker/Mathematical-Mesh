@@ -135,6 +135,15 @@ namespace Goedel.Cryptography {
             CryptoAlgorithmID Algorithm = CryptoAlgorithmID.Default, bool Wrap =false);
 
         /// <summary>
+        /// Encrypt the bulk key.
+        /// </summary>
+        /// <returns>The encoder</returns>
+        public abstract void Encrypt (byte[] Key,
+            out byte[] Exchange, out KeyPair Ephemeral);
+
+
+
+        /// <summary>
         /// Perform a key exchange to encrypt a bulk or wrapped key under this one.
         /// </summary>
         /// <param name="EncryptedKey">The encrypted session</param>

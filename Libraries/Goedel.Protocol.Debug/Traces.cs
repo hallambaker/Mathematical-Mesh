@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using Goedel.Protocol;
@@ -264,7 +264,7 @@ namespace Goedel.Protocol.Debug {
         /// limited to two start lines and a last line.</param>
         /// <returns>the formatted message</returns>
         public string StringJSON(bool Redact) {
-            var Buffer = new StreamBuffer();
+            var Buffer = new MemoryStream();
             JSONWriter JSONWriter;
 
             if (Redact) {

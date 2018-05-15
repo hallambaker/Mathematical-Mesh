@@ -56,7 +56,7 @@ namespace Goedel.Cryptography.KeyFile {
         public AuthorizedKey GetTaggedData() {
 
             var Base64Data = BuildBase64.ToString();
-            var Data = BaseConvert.FromBase64urlString(Base64Data);
+            var Data = BaseConvert.FromBase64(Base64Data);
             var Decoded = SSHData.Decode(Data);
 
             var Result = new AuthorizedKey {

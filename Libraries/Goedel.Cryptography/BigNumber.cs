@@ -171,7 +171,7 @@ namespace Goedel.Cryptography {
         /// <param name="Text">The hexadecimal string to convert</param>
         /// <returns>The resulting integer</returns>
         public static BigInteger HexToBigInteger(this string Text) {
-            var Bytes = BaseConvert.FromBase16String(Text);
+            var Bytes = BaseConvert.FromBase16(Text);
             Array.Reverse(Bytes);
             return new BigInteger(Bytes);
             }

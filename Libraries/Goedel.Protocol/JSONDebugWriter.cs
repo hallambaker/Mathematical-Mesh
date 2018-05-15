@@ -44,7 +44,7 @@ namespace Goedel.Protocol {
         /// Create a new JSON Writer.
         /// </summary>
         public JSONDebugWriter() {
-            this.Output = new StreamBuffer ();
+            this.Output = new MemoryStream();
             }
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace Goedel.Protocol {
         /// an output stream defined, text will be written to the stream.
         /// </summary>
         /// <param name="Output">The output stream.</param>
-        public JSONDebugWriter(StreamBuffer Output) {
+        public JSONDebugWriter(MemoryStream Output) {
             this.Output = Output;
             }
 
@@ -62,16 +62,16 @@ namespace Goedel.Protocol {
         public override void WriteBinary(byte[] Data) {
             Output.Write("\"");
             if (Data.Length < Threshold) {
-                Output.Write(BaseConvert.ToBase64urlString(Data));
+                Output.Write(BaseConvert.ToStringBase64url(Data, Format: ConversionFormat.Draft));
                 }
             else {
-                Output.Write(BaseConvert.ToBase64urlString(Data,0,96,true));
+                Output.Write(BaseConvert.ToStringBase64url(Data,0,96, Format:ConversionFormat.Draft));
                 Output.Write("\n...");
                 int Start = 48 * (Data.Length / 48);
                 // If the last line is null, make it a full line.
                 Start = (Data.Length % 48) == 0 ? Start - 48 : Start;
                 int Length = Data.Length - Start;
-                Output.Write(BaseConvert.ToBase64urlString(Data, Start, Length, true));
+                Output.Write(BaseConvert.ToStringBase64url(Data, Start, Length, Format: ConversionFormat.Draft));
                 }
             Output.Write("\"");
             Output.Write("\n");
@@ -88,10 +88,10 @@ namespace Goedel.Protocol {
                 return "$$$$ Empty $$$$";
                 }
 
-            var Buffer = new StreamBuffer();
+            var Buffer = new MemoryStream();
             var JSONWriter = new JSONDebugWriter(Buffer);
             JSONObject.Serialize(JSONWriter, true);
-            return JSONWriter.GetUTF8;
+            return Buffer.ToArray().ToUTF8();
             }
 
         }

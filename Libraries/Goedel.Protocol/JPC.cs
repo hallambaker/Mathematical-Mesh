@@ -20,7 +20,7 @@
 //  
 //  
 
-using System;
+using System.IO;
 using System.Collections.Generic;
 
 namespace Goedel.Protocol {
@@ -189,7 +189,7 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <param name="Data">Input data</param>
         /// <returns>The response data</returns>
-        public abstract StreamBuffer Post(StreamBuffer Data);
+        public abstract Stream Post(MemoryStream Data);
 
         /// <summary>
         /// Construct a Post string.
@@ -199,7 +199,7 @@ namespace Goedel.Protocol {
         /// <returns>string returned in response.</returns>
         public virtual string Post (string Tag, JSONObject Request) {
 
-            var Buffer = new StreamBuffer();
+            var Buffer = new MemoryStream();
             var JSONWriter = new JSONWriter(Buffer);
 
             // Wrap the request object with the transaction name.
@@ -210,7 +210,8 @@ namespace Goedel.Protocol {
 
             // Send the request
             var ResponseBuffer = Post(Buffer);
-            return ResponseBuffer.GetUTF8;
+
+            return ResponseBuffer.GetUTF8();
             }
 
         }
@@ -260,9 +261,9 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <param name="Data">StreamBuffer object containing JSON encoded request.</param>
         /// <returns>StreamBuffer object containing JSON encoded response.</returns>
-        public override StreamBuffer Post(StreamBuffer Data) {
+        public override Stream Post(MemoryStream Data) {
 
-            var DataText = Data.GetUTF8;
+            var DataText = Data.GetUTF8();
             var JSONReader = new JSONReader(DataText);
 
             Host.Dispatch(this, JSONReader);

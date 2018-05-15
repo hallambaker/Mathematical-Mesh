@@ -13,6 +13,24 @@
 		Description
 			|TBS stuff
 
+
+	Structure DAREMessageObject
+		Description
+			|A DARE Message containing Header, EDS and Trailer in JSON object encoding.
+			|Since a DAREMessage is almost invariably presented in JSON sequence or
+			|compact encoding, use of the DAREMessage subclass is preferred.
+		Struct DAREHeader Header
+			Description
+				|The message header. May specify the key exchange data, pre-signature 
+				|or signature data, cloaked headers and/or encrypted data sequences.
+		Binary Body
+			Description
+				|The message body
+		Struct DARETrailer Trailer
+			Description
+				|The message trailer. If present, this contains the signature.
+
+
 	Structure DARETrailer
 		Description
 			|A DARE Message Trailer
@@ -138,7 +156,7 @@
 			Tag "epk"
 			Description
 				|The key parameters of the ephemeral key as specified in JWE
-		String WrappedMasterKey
+		Binary WrappedMasterKey
 			Tag "wmk"
 			Description
 				|The wrapped master key. The master key is encrypted under the result of the key exchange.

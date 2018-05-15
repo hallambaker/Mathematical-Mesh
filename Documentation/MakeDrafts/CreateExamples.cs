@@ -2,7 +2,7 @@
 
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
+using System.Numerics;
 using Goedel.Mesh;
 using Goedel.Utilities;
 using Goedel.Protocol.Debug;
@@ -18,11 +18,283 @@ using Goedel.Protocol.Exchange;
 using Goedel.Protocol.Exchange.Server;
 using Goedel.IO;
 using Goedel.Command;
+using Goedel.Cryptography.Algorithms;
 
 namespace ExampleGenerator {
 
+    public partial class DAREHeaderDebug : DAREHeader {
+
+        byte[] MasterSecret;
+        ///// <summary>
+        ///// The authentication algorithm
+        ///// </summary>
+        //public CryptoAlgorithmID AuthenticateID;
+
+        public DAREHeaderDebug (byte[] MasterSecret,
+                    CryptoAlgorithmID EncryptID = CryptoAlgorithmID.Default,
+                    CryptoAlgorithmID AuthenticateID = CryptoAlgorithmID.Default) {
+            this.MasterSecret = MasterSecret;
+            ProviderEncryption = CryptoCatalog.Default.GetEncryption(EncryptID);
+
+            }
+        }
+
+    public partial class EnhancedDataSequenceWriterDebug : EnhancedDataSequenceWriter {
+
+        /// <summary>
+        /// Create a buffered writer for an Enhanced Data Sequence
+        /// </summary>
+        /// <param name="MasterSecret"></param>
+        /// <param name="ProviderEncrypt">Crypto algorithm provider</param>
+        /// <param name="Salt"></param>
+        /// <param name="Plaintext"></param>
+        /// <param name="OutputStream">The output stream</param>
+        /// <param name="ContentLength">The content length. If this value is 0 or greater, the 
+        /// PayloadLength property will be set to the value of the payload data length field. </param>
+        public EnhancedDataSequenceWriterDebug (
+                    JSONWriter OutputStream,
+                    byte[] MasterSecret,
+                    CryptoProviderEncryption ProviderEncrypt = null,
+                    byte[] Salt = null,
+                    byte[] Plaintext = null,
+                    long ContentLength = -1
+                    ) : base(OutputStream, MasterSecret, ProviderEncrypt, Salt, Plaintext, ContentLength) {
+            }
+
+        public byte[] RevealKeyEncrypt => KeyEncrypt;
+        public byte[] RevealKeyKeyMac => KeyMac;
+        public byte[] RevealKeyIV => IV;
+
+
+        /// <summary>
+        /// Enhance the specified plaintext data under the specified Master Secret and Sale (if specified).
+        /// </summary>
+        /// <param name="MasterSecret">The Master Secret from which the necessary cryptographic parameters 
+        /// are generated.</param>
+        /// <param name="ProviderEncrypt">Crypto algorithm provider</param>
+        /// <param name="Plaintext">The input</param>
+        /// <param name="Salt"></param>
+        /// <returns>The result of applying the enhancement.</returns>
+        public static byte[] Enhance (
+                    byte[] MasterSecret,
+                    byte[] Plaintext,
+                    out byte[] KeyEncrypt,
+                    out byte[] KeyMac,
+                    out byte[] IV,
+                    byte[] Salt = null,
+                    CryptoProviderEncryption ProviderEncrypt = null
+                    ) {
+            var Output = new MemoryStream();
+            var JSONBWriter = new JSONBWriter(Output);
+            var EDS = new EnhancedDataSequenceWriterDebug(
+                        JSONBWriter, MasterSecret, ProviderEncrypt, Salt, Plaintext);
+            KeyEncrypt = EDS.RevealKeyEncrypt;
+            KeyMac = EDS.KeyMac;
+            IV = EDS.RevealKeyIV;
+
+            return Output.ToArray();
+            }
+
+        }
 
     public partial class CreateExamples {
+
+        public byte[] MessagePlaintext = "This is a sample Plaintext".ToBytes();
+
+        public string MessageTestPlaintext              = "TBS";
+        public string MessageTestRSAMAC                 = "TBS";
+        public string MessageTestRSAEncrypted           = "TBS";
+        public string MessageTestRSAEncryptedMAC        = "TBS";
+        public string MessageTestRSASigned              = "TBS";
+        public string MessageTestRSAEncryptedSigned     = "TBS";
+
+        void GoMessage () {
+
+
+            // Plaintext content, no digest
+
+
+            // Complete Message, RSA key exchange, MAC
+
+            // Complete Message, RSA key exchange, Encrypted
+
+
+            // Complete Message, RSA key exchange, Encrypted + MAC
+
+
+            // Plaintext Signed 
+
+            // Complete Message, RSA key exchange, Encrypted + Signature
+
+
+
+            }
+
+        public readonly byte[] DareMessageTest1 = "This is a test long enough to require multiple blocks".ToUTF8();
+        public readonly byte[] DareMessageTest2 = "Subject: Message metadata should be encrypted".ToUTF8();
+        public readonly byte[] DareMessageTest3 = "2018-02-01".ToUTF8();
+        public DiffeHellmanPrivate DareMessageAlicePrivate;
+        public DiffeHellmanPublic DareMessageAlicePublic;
+        
+        public KeyPairDH DareMessageAliceKeypair;
+        public Key DareMessageAliceKey;
+
+        public DAREMessage DAREMessageAtomic;
+        public DAREMessage MessageAtomicDS;
+        public DAREMessage MessageEnc;
+        public DAREMessage MessageAtomicDSEnc;
+
+        public byte[] MasterSecret;
+        public byte[] DareMessageBody;
+        public byte[] DareEDSSalt;
+
+        void GoDareMessage () {
+            DareMessageAlicePrivate = new DiffeHellmanPrivate();
+            var DareMessageAlicePrivateKeyPair = new KeyPairDH(DareMessageAlicePrivate, KeySecurity: KeySecurity.Exportable);
+            DareMessageAliceKey = Key.GetPrivate(DareMessageAlicePrivateKeyPair);
+
+            DareMessageAlicePublic = DareMessageAlicePrivate.DiffeHellmanPublic;
+            DareMessageAliceKeypair = new KeyPairDH(DareMessageAlicePublic);
+            var EncryptionKeys = new List<KeyPair> { DareMessageAliceKeypair };
+
+            var DataSequences = new List<byte[]> { DareMessageTest2, DareMessageTest3 };
+
+            // Plaintext atomic
+            DAREMessageAtomic = new DAREMessage(DareMessageTest1);
+
+            // Plaintext atomic EDS
+            MessageAtomicDS = new DAREMessage(DareMessageTest1, DataSequences: DataSequences);
+
+
+            //var Header = new DAREHeader(EncryptionKeys, ContentLength: -1, DataSequences: DataSequences);
+
+            MasterSecret = Platform.GetRandomBits(256);
+            var Header = new DAREHeaderDebug(MasterSecret);
+            var KeyBits = Header.EncryptionKeySize;
+
+            var Recipients = new List<DARERecipient>() {
+                    MakeRecipient(MasterSecret, DareMessageAliceKeypair)
+                    };
+            Header.Recipients = Recipients;
+
+
+            DareEDSSalt = new byte[] { 1 };
+            var ProviderEncryption = CryptoCatalog.Default.GetEncryption(CryptoAlgorithmID.AES256CBC);
+            DareMessageBody = Enhance(MasterSecret, DareMessageTest1, DareEDSSalt, ProviderEncryption);
+
+            MessageAtomicDSEnc = new DAREMessage() { Header = Header, Body = DareMessageBody };
+
+
+            //// Plaintext atomic
+            //MessageEnc = new DAREMessage(DareMessageTest1, EncryptionKeys: EncryptionKeys);
+
+            //// Plaintext atomic EDS
+            //MessageAtomicDSEnc = new DAREMessage(DareMessageTest1, EncryptionKeys: EncryptionKeys, DataSequences: DataSequences);
+
+            ExampleGenerator.MeshExamplesMessage(this);
+
+            }
+
+        public byte[] DareMessageKeyEncrypt;
+        byte[] DareMessageKeyMac;
+        byte[] DareMessageKeyIV;
+
+        /// <summary>
+        /// Enhance the specified plaintext data under the specified Master Secret and Sale (if specified).
+        /// </summary>
+        /// <param name="MasterSecret">The Master Secret from which the necessary cryptographic parameters 
+        /// are generated.</param>
+        /// <param name="ProviderEncrypt">Crypto algorithm provider</param>
+        /// <param name="Plaintext">The input</param>
+        /// <param name="Salt"></param>
+        /// <returns>The result of applying the enhancement.</returns>
+        public byte[] Enhance (
+                    byte[] MasterSecret,
+                    byte[] Plaintext,
+                    byte[] Salt = null,
+                    CryptoProviderEncryption ProviderEncrypt = null
+                    ) {
+            var Output = new MemoryStream();
+            var JSONBWriter = new JSONBWriter(Output);
+            return EnhancedDataSequenceWriterDebug.Enhance(MasterSecret, Plaintext,
+                out DareMessageKeyEncrypt, out DareMessageKeyMac, out DareMessageKeyIV, Salt, ProviderEncrypt);
+            }
+
+
+        static readonly byte[] MasterKeyInfo = "master".ToUTF8();
+
+        public Key EphemeralPrivateKey;
+        public BigInteger DareEncryptAgreement;
+        public KeyDerive DareEncrypt;
+        public byte[] DareEncrypEncryptionKey;
+
+        DARERecipient MakeRecipient (byte[] MasterKey, KeyPairDH PublicKey) {
+
+            //ExchangeProvider.Encrypt(MasterKey, out var Exchange, out var Ephemeral);
+
+            //var ExchangeProvider = new CryptoProviderExchangeDH(PublicKey);
+
+            var EphemeralPrivate = new DiffeHellmanPrivate(PublicKey.DHDomain);
+            EphemeralPrivateKey = Key.GetPrivate(new KeyPairDH(EphemeralPrivate, KeySecurity: KeySecurity.Exportable));
+
+            var EphemeralPublic = EphemeralPrivate.DiffeHellmanPublic;
+
+            DareEncryptAgreement = EphemeralPrivate.Agreement(PublicKey.PublicKey);
+
+            var Result = new DiffieHellmanResult() {
+                DiffeHellmanPublic = EphemeralPublic,
+                Agreement = DareEncryptAgreement
+                };
+
+            var DareEncryptKeyDerive = Result.KeyDerive;
+            DareEncrypEncryptionKey = DareEncryptKeyDerive.Derive(MasterKeyInfo, Length: 256);
+            var Exchange = Platform.KeyWrapRFC3394.Wrap(DareEncrypEncryptionKey, MasterKey);
+
+
+            var JoseKey = Key.GetPublic(new KeyPairDH(EphemeralPublic));
+
+            return new DARERecipient() {
+                KeyIdentifier = PublicKey.UDF,
+                Epk = JoseKey,
+                WrappedMasterKey = Exchange
+                };
+            }
+
+        ///// <summary>
+        ///// Encrypt the bulk key.
+        ///// </summary>
+        ///// <returns>The encoder</returns>
+        //public override void Encrypt (byte[] Key,
+        //    out byte[] Exchange, out KeyPair Ephemeral) {
+
+        //    var Agreement = DHKeyPair.Agreement();
+        //    var KeyDerive = Agreement.KeyDerive;
+
+        //    // Need to do some form of key derrivation here.
+
+        //    var EncryptionKey = KeyDerive.Derive(MasterKeyInfo, Length: 256);
+
+        //    Exchange = Platform.KeyWrapRFC3394.Wrap(EncryptionKey, Key);
+        //    Ephemeral = new KeyPairDH(Agreement.DiffeHellmanPublic);
+        //    }
+
+        ///// <summary>
+        ///// Create a new ephemeral private key and use it to perform a key
+        ///// agreement.
+        ///// </summary>
+        ///// <returns>The key agreement parameters, the public key value and the
+        ///// key agreement.</returns>
+        //public DiffieHellmanResult Agreement () {
+        //    var Private = new DiffeHellmanPrivate(this);
+        //    var DiffeHellmanPublic = Private.DiffeHellmanPublic;
+
+        //    var Result = new DiffieHellmanResult() {
+        //        DiffeHellmanPublic = DiffeHellmanPublic,
+        //        Agreement = Private.Agreement(this)
+        //        };
+
+        //    return Result;
+        //    }
 
         public string ContainerFramingSimple = "";
         StringWriter ConsoleWriter ;
@@ -32,46 +304,50 @@ namespace ExampleGenerator {
         public List<ContainerHeader> ContainerHeadersTree = new List<ContainerHeader>();
         public List<ContainerHeader> ContainerHeadersMerkleTree = new List<ContainerHeader>();
 
+
+
+
+
         void GoContainer () {
-            //// Simple
-            //var TContainer = MakeContainer("Test1List", ContainerType.List);
-            //var Data = TestData(300);
-            //TContainer.Append(Data);
-            //ReadContainer(TContainer, ContainerHeadersSimple);
-            //ContainerFramingSimple = ConsoleWriter.ToString();
+            // Simple
+            var TContainer = MakeContainer("Test1List", ContainerType.List);
+            var Data = TestData(300);
+            TContainer.Append(Data);
+            ReadContainer(TContainer, ContainerHeadersSimple);
+            ContainerFramingSimple = ConsoleWriter.ToString();
 
 
-            //// Digest
-            //TContainer = MakeContainer("Test1Chain", ContainerType.Chain);
-            //TContainer.Append(Data);
-            //TContainer.Append(Data);
-            //TContainer.Append(Data);
-            //ReadContainer(TContainer, ContainerHeadersChain);
+            // Digest
+            TContainer = MakeContainer("Test1Chain", ContainerType.Chain);
+            TContainer.Append(Data);
+            TContainer.Append(Data);
+            TContainer.Append(Data);
+            ReadContainer(TContainer, ContainerHeadersChain);
 
 
-            //// Tree
-            //TContainer = MakeContainer("Test1Tree", ContainerType.Tree);
-            //TContainer.Append(Data);
-            //TContainer.Append(Data);
-            //TContainer.Append(Data);
-            //TContainer.Append(Data);
-            //TContainer.Append(Data);
-            //TContainer.Append(Data);
-            //ReadContainer(TContainer, ContainerHeadersTree);
+            // Tree
+            TContainer = MakeContainer("Test1Tree", ContainerType.Tree);
+            TContainer.Append(Data);
+            TContainer.Append(Data);
+            TContainer.Append(Data);
+            TContainer.Append(Data);
+            TContainer.Append(Data);
+            TContainer.Append(Data);
+            ReadContainer(TContainer, ContainerHeadersTree);
 
 
-            //// Merkle Tree
-            //TContainer = MakeContainer("Test1Merkle", ContainerType.MerkleTree);
-            //TContainer.Append(Data);
-            //TContainer.Append(Data);
-            //TContainer.Append(Data);
-            //TContainer.Append(Data);
-            //TContainer.Append(Data);
-            //TContainer.Append(Data);
-            //ReadContainer(TContainer, ContainerHeadersMerkleTree);
+            // Merkle Tree
+            TContainer = MakeContainer("Test1Merkle", ContainerType.MerkleTree);
+            TContainer.Append(Data);
+            TContainer.Append(Data);
+            TContainer.Append(Data);
+            TContainer.Append(Data);
+            TContainer.Append(Data);
+            TContainer.Append(Data);
+            ReadContainer(TContainer, ContainerHeadersMerkleTree);
 
 
-            //ExampleGenerator.MeshExamplesContainer(this);
+            ExampleGenerator.MeshExamplesContainer(this);
 
             ExampleGenerator.MeshExamplesUDF(this);
             ExampleGenerator.MeshExamplesUDFCompressed(this);

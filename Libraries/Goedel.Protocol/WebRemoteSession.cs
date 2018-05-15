@@ -66,7 +66,7 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <param name="Content">StreamBuffer object containing JSON encoded request.</param>
         /// <returns>StreamBuffer object containing JSON encoded response.</returns>
-        public override StreamBuffer Post(StreamBuffer Content) {
+        public override Stream Post(MemoryStream Content) {
 
             try {
                 var BaseAddress = new Uri(URI);
@@ -80,7 +80,7 @@ namespace Goedel.Protocol {
                     };
 
 
-                byte[] buffer = Content.GetBytes;
+                byte[] buffer = Content.ToArray();
                 var HTTPContent = new ByteArrayContent(buffer);
                 HTTPContent.Headers.ContentType = new MediaTypeHeaderValue ("application/json");
 
@@ -100,9 +100,7 @@ namespace Goedel.Protocol {
                 var ContentTask = HTTPResponse.Content.ReadAsStreamAsync();
                 ContentTask.Wait();
 
-                var ReadBuffer = new StreamBuffer(ContentTask.Result);
-
-                return ReadBuffer;
+                return ContentTask.Result;
                 }
             catch {
                 throw new ConnectionFail(new ExceptionData() {String = URI});

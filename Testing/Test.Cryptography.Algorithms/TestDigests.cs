@@ -252,7 +252,7 @@ namespace Test.Cryptography.Algorithms {
 
         public TestVector (CryptoAlgorithmID CryptoAlgorithmID, String Digest) {
             ID = CryptoAlgorithmID;
-            this.Digest = Digest.FromBase16String();
+            this.Digest = Digest.FromBase16();
 
 
             }

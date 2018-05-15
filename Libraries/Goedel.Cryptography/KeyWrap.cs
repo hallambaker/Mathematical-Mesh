@@ -322,7 +322,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <returns>The text string representing the block value</returns>
         public override string ToString() {
-            return BaseConvert.ToBase16String(Data);
+            return BaseConvert.ToStringBase16(Data);
 
             }
         }

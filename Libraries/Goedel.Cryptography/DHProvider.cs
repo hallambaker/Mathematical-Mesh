@@ -156,6 +156,27 @@ namespace Goedel.Cryptography {
             return Result;
             }
 
+        static readonly byte[] MasterKeyInfo = "master".ToUTF8();
+
+        /// <summary>
+        /// Encrypt the bulk key.
+        /// </summary>
+        /// <returns>The encoder</returns>
+        public override void Encrypt (byte[] Key,
+            out byte[] Exchange, out KeyPair Ephemeral) {
+
+            var Agreement = DHKeyPair.Agreement();
+            var KeyDerive = Agreement.KeyDerive;
+
+            // Need to do some form of key derrivation here.
+
+            var EncryptionKey = KeyDerive.Derive(MasterKeyInfo, Length: 256);
+
+            Exchange = Platform.KeyWrapRFC3394.Wrap(EncryptionKey, Key);
+            Ephemeral = new KeyPairDH(Agreement.DiffeHellmanPublic);
+            }
+
+
         /// <summary>
         /// Perform a key exchange to decrypt a bulk or wrapped key under this one.
         /// </summary>

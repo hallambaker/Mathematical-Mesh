@@ -190,7 +190,7 @@ namespace Goedel.Mesh {
                     }
                 case "BINARY":
                     {
-                    return Set(Key, BaseConvert.FromBase16String(Value));
+                    return Set(Key, BaseConvert.FromBase16(Value));
                     }
                 default:
                 throw new Exception("Unknown Type");

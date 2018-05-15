@@ -85,7 +85,7 @@ namespace Scratchpad {
                 Status = "Open",
                 Created = Now,
                 Modified = Now,
-                UserProfileUDF = AccountIDAlice.ToBytes().ToUDF32String()
+                UserProfileUDF = AccountIDAlice.ToBytes().ToStringUDF32()
                 };
 
             var AccountBob = new TestItem() {
@@ -93,7 +93,7 @@ namespace Scratchpad {
                 Status = "Open",
                 Created = Now,
                 Modified = Now,
-                UserProfileUDF = AccountIDBob.ToBytes().ToUDF32String()
+                UserProfileUDF = AccountIDBob.ToBytes().ToStringUDF32()
                 };
 
             using (var TestStore = new TestItemContainerPersistenceStore(

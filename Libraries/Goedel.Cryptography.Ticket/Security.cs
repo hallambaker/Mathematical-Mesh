@@ -84,7 +84,7 @@ namespace Goedel.Cryptography.Ticket {
         public static byte[] ConvertFromBase64String(String Base64Data) {
             byte[] result;
             try {
-                result = BaseConvert.FromBase64urlString(Base64Data);
+                result = BaseConvert.FromBase64(Base64Data);
                 return result;
                 }
             catch {
@@ -110,8 +110,8 @@ namespace Goedel.Cryptography.Ticket {
         /// <param name="data">Data to generate integrity value for.</param>
         /// <returns>The integrity header.</returns>
         public string GetIntegrityHeader(byte[] data) {
-            return "Session: Value=" + BaseConvert.ToBase64urlString(MAC(data), false)
-                + "; Id=" + BaseConvert.ToBase64urlString(Ticket, false);
+            return "Session: Value=" + BaseConvert.ToStringBase64url(MAC(data))
+                + "; Id=" + BaseConvert.ToStringBase64url(Ticket);
             }
 
 

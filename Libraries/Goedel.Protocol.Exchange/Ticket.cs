@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.IO;
 using System.Collections.Generic;
 using Goedel.Utilities;
 using Goedel.Cryptography;
@@ -84,7 +84,7 @@ namespace Goedel.Protocol.Exchange {
         /// Begin message encoding to stream.
         /// </summary>
         /// <param name="Stream">Output stream</param>
-        public virtual void BeginMessage (StreamBuffer Stream) {
+        public virtual void BeginMessage (MemoryStream Stream) {
             var Data = BeginMessage();
             Stream.Write(Data, 0, Data.Length);
             return;
@@ -95,8 +95,8 @@ namespace Goedel.Protocol.Exchange {
         /// </summary>
         /// <param name="Stream">Output stream</param>
         /// <param name="Content">Input content.</param>
-        public virtual void Encode (StreamBuffer Stream, StreamBuffer Content) {
-            var Data = Content.GetBytes;
+        public virtual void Encode (MemoryStream Stream, MemoryStream Content) {
+            var Data = Content.ToArray();
             Stream.Write(Data, 0, Data.Length);
             return;
             }
@@ -105,7 +105,7 @@ namespace Goedel.Protocol.Exchange {
         /// End message encoding to stream
         /// </summary>
         /// <param name="Stream">Output stream</param>
-        public virtual void EndMessage (StreamBuffer Stream) {
+        public virtual void EndMessage (MemoryStream Stream) {
             var Data = EndMessage();
             Stream.Write(Data, 0, Data.Length);
             return;

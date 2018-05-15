@@ -587,7 +587,7 @@ namespace Goedel.Protocol {
             if (TokenType != Token.String) {
                 throw new Exception ("Expected BASE64 encoded binary");
                 }
-            return BaseConvert.FromBase64urlString (TokenString);
+            return BaseConvert.FromBase64 (TokenString);
             }
 
         /// <summary>
