@@ -60,7 +60,7 @@ namespace Goedel.Cryptography.Dare {
 		public static Dictionary<string, JSONFactoryDelegate> _TagDictionary = 
 				new Dictionary<string, JSONFactoryDelegate> () {
 
-			{"DAREMessageObject", DAREMessageObject._Factory},
+			{"DAREMessageSequence", DAREMessageSequence._Factory},
 			{"DARETrailer", DARETrailer._Factory},
 			{"DAREHeader", DAREHeader._Factory},
 			{"DARESigner", DARESigner._Factory},
@@ -90,8 +90,12 @@ namespace Goedel.Cryptography.Dare {
 	/// A DARE Message containing Header, EDS and Trailer in JSON object encoding.
 	/// Since a DAREMessage is almost invariably presented in JSON sequence or
 	/// compact encoding, use of the DAREMessage subclass is preferred.
+	/// Although a DARE Message is functionally an object, it is serialized as 
+	/// an ordered sequence. This ensures that the message header field will always
+	/// precede the body in a serialization, this allowing processing of the header
+	/// information to be performed before the entire body has been received.
 	/// </summary>
-	public partial class DAREMessageObject : Dare {
+	public partial class DAREMessageSequence : Dare {
         /// <summary>
         ///The message header. May specify the key exchange data, pre-signature 
         ///or signature data, cloaked headers and/or encrypted data sequences.
@@ -112,14 +116,14 @@ namespace Goedel.Cryptography.Dare {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public override string _Tag { get; } = "DAREMessageObject";
+		public override string _Tag { get; } = "DAREMessageSequence";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
 		public static new JSONObject _Factory () {
-			return new DAREMessageObject();
+			return new DAREMessageSequence();
 			}
 
 
@@ -173,15 +177,15 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new DAREMessageObject FromJSON (JSONReader JSONReader, bool Tagged=true) {
+        public static new DAREMessageSequence FromJSON (JSONReader JSONReader, bool Tagged=true) {
 			if (JSONReader == null) {
 				return null;
 				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
-				return Out as DAREMessageObject;
+				return Out as DAREMessageSequence;
 				}
-		    var Result = new DAREMessageObject ();
+		    var Result = new DAREMessageSequence ();
 			Result.Deserialize (JSONReader);
 			return Result;
 			}
@@ -606,7 +610,8 @@ namespace Goedel.Cryptography.Dare {
 	/// </summary>
 	public partial class DARESigner : Dare {
         /// <summary>
-        ///Digest algorithm hint
+        ///Digest algorithm hint. Specifying the digest algorithm to be applied
+        ///to the message body allows the body to be processed in streaming mode.
         /// </summary>
 
 		public virtual string						Dig  {get; set;}

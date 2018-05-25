@@ -2,7 +2,7 @@
 Namespace Goedel.Protocol
     
 	Exception Dechunking
-        Console "Key could not be read"
+        Console "Key could not be read."
 		Description
 			|A dechunking exception occurred.
 
@@ -44,3 +44,9 @@ Namespace Goedel.Protocol
 		Console "Data length did not match data presented."
 		Description
 			|Data length did not match data presented.
+	
+	
+	Exception StreamMarkerError
+		Console "Stream reader error, position not correctly marked."
+		Description
+			|Stream reader error, position not correctly marked.

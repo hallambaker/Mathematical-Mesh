@@ -57,12 +57,29 @@ namespace Goedel.Protocol {
             }
 
 
+        int OutputCol; 
+
+        /// <summary>
+        /// Write Tag to the stream
+        /// </summary>
+        /// <param name="Tag">Tag text.</param>
+        /// <param name="IndentIn">Current indent level.</param>
+        public override void WriteToken (string Tag, int IndentIn) {
+            NewLine();
+            Output.Write("\"");
+            Output.Write(Tag);
+            Output.Write("\": ");
+            OutputCol = (IndentIn*2) + 6 + Tag.Length;
+            }
+
+
         /// <summary>Write binary data as Base64Url encoded string.</summary>
         /// <param name="Data">Value to write</param>
         public override void WriteBinary(byte[] Data) {
             Output.Write("\"");
             if (Data.Length < Threshold) {
-                Output.Write(BaseConvert.ToStringBase64url(Data, Format: ConversionFormat.Draft));
+                Output.Write(BaseConvert.ToStringBase64url(Data, Format: ConversionFormat.Draft,
+                    OutputCol: OutputCol, OutputMax:66));
                 }
             else {
                 Output.Write(BaseConvert.ToStringBase64url(Data,0,96, Format:ConversionFormat.Draft));
@@ -74,7 +91,6 @@ namespace Goedel.Protocol {
                 Output.Write(BaseConvert.ToStringBase64url(Data, Start, Length, Format: ConversionFormat.Draft));
                 }
             Output.Write("\"");
-            Output.Write("\n");
             }
 
         /// <summary>

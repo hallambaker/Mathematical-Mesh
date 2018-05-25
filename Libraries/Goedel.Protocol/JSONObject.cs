@@ -125,8 +125,8 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <returns>Data as string.</returns>
 		public override string ToString () {
-            JSONWriter _JSONWriter = new JSONWriter();
-            Serialize(_JSONWriter, true);
+            JSONWriter _JSONWriter = new JSONDebugWriter();
+            Serialize(_JSONWriter, false);
             return _JSONWriter.GetUTF8;
             }
 
@@ -248,6 +248,7 @@ namespace Goedel.Protocol {
                 }
             // JSONReader.EndObject (); Implicit 
             }
+
 
         /// <summary>
         /// Deserialize the input stream to populate this object having recieved the specified tag.

@@ -167,18 +167,14 @@ namespace Goedel.Mesh.Portal.Client {
         /// <param name="RegistrationDevice">The returned profile.</param>
         /// <param name="ID">UDF fingerprint of the profile or short form ID</param>
         /// <returns>True if the profile is found, otherwise false.</returns>
-        public virtual bool FindByUDF(string ID, out SessionDevice RegistrationDevice) {
-            return DeviceProfiles.TryGetValue(ID, out RegistrationDevice);
-            }
+        public virtual bool FindByUDF(string ID, out SessionDevice RegistrationDevice) => DeviceProfiles.TryGetValue(ID, out RegistrationDevice);
         /// <summary>
         /// Locate an application profile by identifier
         /// </summary>
         /// <param name="SessionApplication">The returned profile.</param>
         /// <param name="ID">UDF fingerprint of the profile or short form ID</param>
         /// <returns>True if the profile is found, otherwise false.</returns>
-        public virtual bool FindByUDF (string ID, out SessionApplication SessionApplication) {
-            return ApplicationProfilesByUDF.TryGetValue(ID, out SessionApplication);
-            }
+        public virtual bool FindByUDF(string ID, out SessionApplication SessionApplication) => ApplicationProfilesByUDF.TryGetValue(ID, out SessionApplication);
 
         /// <summary>
         /// Locate a personal profile by identifier
@@ -186,9 +182,7 @@ namespace Goedel.Mesh.Portal.Client {
         /// <param name="SessionPersonal">The returned profile.</param>
         /// <param name="ID">UDF fingerprint of the profile or short form ID</param>
         /// <returns>True if the profile is found, otherwise false.</returns>
-        public virtual bool FindByUDF (string ID, out SessionPersonal SessionPersonal) {
-            return PersonalProfilesUDF.TryGetValue(ID, out SessionPersonal);
-            }
+        public virtual bool FindByUDF(string ID, out SessionPersonal SessionPersonal) => PersonalProfilesUDF.TryGetValue(ID, out SessionPersonal);
 
         /// <summary>
         /// Locate a device profile by identifier
@@ -196,9 +190,7 @@ namespace Goedel.Mesh.Portal.Client {
         /// <param name="SessionPersonal">The returned profile.</param>
         /// <param name="ID">UDF fingerprint of the profile or short form ID</param>
         /// <returns>True if the profile is found, otherwise false.</returns>
-        public virtual bool FindByAccount (string ID, out SessionPersonal SessionPersonal) {
-            return PersonalProfilesPortal.TryGetValue(ID, out SessionPersonal);
-            }
+        public virtual bool FindByAccount(string ID, out SessionPersonal SessionPersonal) => PersonalProfilesPortal.TryGetValue(ID, out SessionPersonal);
 
         /// <summary>
         /// Make the specified device the default for this mackine.
@@ -417,9 +409,7 @@ namespace Goedel.Mesh.Portal.Client {
         /// <summary>
         /// Read the configuration from the portal using the current machine as backup
         /// </summary>
-        public override void Read() {
-            throw new NYI();
-            }
+        public override void Read() => throw new NYI();
 
         }
 
@@ -492,36 +482,26 @@ namespace Goedel.Mesh.Portal.Client {
         /// </summary>
         /// <param name="Portal">The portal address to remove.</param>
         /// <returns>True if the portal was found, otherwise false.</returns>
-        public virtual bool Remove (string Portal) {
-            return Collection.Remove(Portal);
-            }
+        public virtual bool Remove(string Portal) => Collection.Remove(Portal);
 
         /// <summary>
         /// Return the portal collection as a list
         /// </summary>
         /// <returns>The list of portals.</returns>
-        public virtual List<string> ToList () {
-            return Collection.ToList();
-            }
+        public virtual List<string> ToList() => Collection.ToList();
 
         /// <summary>
         /// Return the portal collection as an array
         /// </summary>
         /// <returns>The array of portals.</returns>
-        public virtual string[] ToArray () {
-            return Collection.ToArray();
-            }
+        public virtual string[] ToArray() => Collection.ToArray();
 
         // Implementation for the GetEnumerator method.
-        IEnumerator IEnumerable.GetEnumerator () {
-            return GetEnumerator();
-            }
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
         /// <summary>Enumerator method.</summary>
         /// <returns>The enumerator.</returns>
-        public SortedSet<string>.Enumerator GetEnumerator () {
-            return Collection.GetEnumerator();
-            }
+        public SortedSet<string>.Enumerator GetEnumerator() => Collection.GetEnumerator();
 
         /// <summary>Serialize the registration to a portal</summary>
         /// <returns>The list of serialized portal entries.</returns>

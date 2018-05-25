@@ -57,6 +57,36 @@ namespace Goedel.Cryptography.Dare {
         /// header.</summary>
         public byte[] Payload;
 
+        //ExchangePosition
+
+        /// <summary>
+        /// Use information from the specified 
+        /// </summary>
+        /// <param name="DAREHeader"></param>
+        public override void SetDefaultContext (DAREHeader DAREHeader) {
+            if (DAREHeader.Encrypt) {
+                base.SetDefaultContext(DAREHeader);
+                if (DAREHeader as ContainerHeader != null) {
+                    ExchangePosition = (DAREHeader as ContainerHeader).Index;
+                    }
+                }
+            }
+
+
+        /// <summary>
+        /// Initialize the encryption context.
+        /// </summary>
+        /// <param name="EncryptionKeys">The keys to be used to encrypt the message body.</param>
+        /// <param name="EncryptID">The bulk encryption algorithm to use.</param>
+        public override void SetRecipients (List<KeyPair> EncryptionKeys,
+            CryptoAlgorithmID EncryptID = CryptoAlgorithmID.Default) {
+            if (EncryptionKeys != null) {
+                base.SetRecipients(EncryptionKeys, EncryptID);
+                __ExchangePosition = false;
+                }
+            
+            }
+
         }
 
 
@@ -114,17 +144,50 @@ namespace Goedel.Cryptography.Dare {
         /// Append a new data frame payload to the end of the file.
         /// </summary>
         /// <param name="Data">Data to append.</param>
-        /// <param name="Header">The container header value</param>
-        /// <returns>The number of bytes written.</returns>
-        long Append (byte[] Data, ContainerHeader Header = null);
+        /// <param name="EncryptionKeys">The keys to be used to encrypt the message body.</param>
+        /// <param name="SignerKeys">The keys to be used to sign the message body.</param>
+        /// <param name="EncryptID">The bulk encryption algorithm to use.</param>
+        /// <param name="AuthenticateID">The bulk authentication algorithm to use. If the 
+        /// encryption algorithm is an authenticated encryption algorithm, and 
+        /// CryptoAlgorithmID.Default is specified, the value CryptoAlgorithmID.NULL
+        /// is used.</param>
+        /// <param name="ContentType">The payload content type.</param>
+        /// <param name="Cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
+        /// <param name="DataSequences">Data sequences to be converted to an EDS and presented 
+        ///     as an EDSS header entry.</param>
+        long Append (byte[] Data,
+            List<KeyPair> EncryptionKeys = null,
+                        List<KeyPair> SignerKeys = null,
+                        CryptoAlgorithmID EncryptID = CryptoAlgorithmID.Default,
+                        CryptoAlgorithmID AuthenticateID = CryptoAlgorithmID.Default,
+                        string ContentType = null, 
+                        byte[] Cloaked = null,
+                        List<byte[]> DataSequences = null);
 
         /// <summary>
         /// Append a new data frame payload to the end of the file.
         /// </summary>
         /// <param name="Data">Data to append.</param>
-        /// <param name="Header">The container header value</param>
+        /// <param name="EncryptionKeys">The keys to be used to encrypt the message body.</param>
+        /// <param name="SignerKeys">The keys to be used to sign the message body.</param>
+        /// <param name="EncryptID">The bulk encryption algorithm to use.</param>
+        /// <param name="AuthenticateID">The bulk authentication algorithm to use. If the 
+        /// encryption algorithm is an authenticated encryption algorithm, and 
+        /// CryptoAlgorithmID.Default is specified, the value CryptoAlgorithmID.NULL
+        /// is used.</param>
+        /// <param name="ContentType">The payload content type.</param>
+        /// <param name="Cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
+        /// <param name="DataSequences">Data sequences to be converted to an EDS and presented 
+        ///     as an EDSS header entry.</param>
         /// <returns>The number of bytes written.</returns>
-        long Append (JSONObject Data, ContainerHeader Header = null);
+        long Append (JSONObject Data,
+            List<KeyPair> EncryptionKeys = null,
+                        List<KeyPair> SignerKeys = null,
+                        CryptoAlgorithmID EncryptID = CryptoAlgorithmID.Default,
+                        CryptoAlgorithmID AuthenticateID = CryptoAlgorithmID.Default,
+                        string ContentType = null,
+                        byte[] Cloaked = null,
+                        List<byte[]> DataSequences = null);
 
         /// <summary>
         /// Read the data in the current file 
@@ -227,7 +290,7 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>The current frame header as a parsed object.</summary>
         public virtual ContainerHeader ContainerHeader {
             get {
-                _ContainerHeader = _ContainerHeader ?? ContainerHeader.FromJSON(_FrameHeader.JSONReader(), false);
+                _ContainerHeader = _ContainerHeader ?? ContainerHeaderFirst.FromJSON(_FrameHeader.JSONReader(), false);
                 return _ContainerHeader;
                 }
             }
@@ -341,57 +404,57 @@ namespace Goedel.Cryptography.Dare {
             Container Container;
             switch (ContainerHeader.ContainerType) {
                 case ContainerSimple.Label: {
-                    Container = new ContainerSimple() {
-                        JBCDStream = JBCDStream,
-                        ContainerHeaderFirst = ContainerHeader,
-                        StartOfData = Position1,
-                        FrameCount = FrameCount
-                        };
-                    break;
-                    }
+                        Container = new ContainerSimple() {
+                            JBCDStream = JBCDStream,
+                            ContainerHeaderFirst = ContainerHeader,
+                            StartOfData = Position1,
+                            FrameCount = FrameCount
+                            };
+                        break;
+                        }
                 case ContainerSimple.LabelDigest: {
-                    Container = new ContainerSimple() {
-                        JBCDStream = JBCDStream,
-                        DigestProvider = DigestProvider,
-                        ContainerHeaderFirst = ContainerHeader,
-                        StartOfData = Position1,
-                        FrameCount = FrameCount
-                        };
-                    break;
-                    }
+                        Container = new ContainerSimple() {
+                            JBCDStream = JBCDStream,
+                            DigestProvider = DigestProvider,
+                            ContainerHeaderFirst = ContainerHeader,
+                            StartOfData = Position1,
+                            FrameCount = FrameCount
+                            };
+                        break;
+                        }
                 case ContainerChain.Label: {
-                    Container = new ContainerChain() {
-                        JBCDStream = JBCDStream,
-                        DigestProvider = DigestProvider,
-                        ContainerHeaderFirst = ContainerHeader,
-                        StartOfData = Position1,
-                        FrameCount = FrameCount
-                        };
-                    break;
-                    }
+                        Container = new ContainerChain() {
+                            JBCDStream = JBCDStream,
+                            DigestProvider = DigestProvider,
+                            ContainerHeaderFirst = ContainerHeader,
+                            StartOfData = Position1,
+                            FrameCount = FrameCount
+                            };
+                        break;
+                        }
                 case ContainerTree.Label: {
-                    Container = new ContainerTree() {
-                        JBCDStream = JBCDStream,
-                        DigestProvider = DigestProvider,
-                        ContainerHeaderFirst = ContainerHeader,
-                        StartOfData = Position1,
-                        FrameCount = FrameCount
-                        };
-                    break;
-                    }
+                        Container = new ContainerTree() {
+                            JBCDStream = JBCDStream,
+                            DigestProvider = DigestProvider,
+                            ContainerHeaderFirst = ContainerHeader,
+                            StartOfData = Position1,
+                            FrameCount = FrameCount
+                            };
+                        break;
+                        }
                 case ContainerMerkleTree.Label: {
-                    Container = new ContainerMerkleTree() {
-                        JBCDStream = JBCDStream,
-                        DigestProvider = DigestProvider,
-                        ContainerHeaderFirst = ContainerHeader,
-                        StartOfData = Position1,
-                        FrameCount = FrameCount
-                        };
-                    break;
-                    }
+                        Container = new ContainerMerkleTree() {
+                            JBCDStream = JBCDStream,
+                            DigestProvider = DigestProvider,
+                            ContainerHeaderFirst = ContainerHeader,
+                            StartOfData = Position1,
+                            FrameCount = FrameCount
+                            };
+                        break;
+                        }
                 default: {
-                    throw new NYI();
-                    }
+                        throw new NYI();
+                        }
                 }
 
             // initialize the Frame index dictionary
@@ -411,12 +474,16 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="ContentType">Content type of the optional data payload</param>
         /// <param name="ContainerType">The container type.</param>
         /// <param name="DataEncoding">The data encoding.</param>
-        /// <param name="DigestAlgorithm">The digest algorithm to be used to calculate the PayloadDigest</param>
-        /// <param name="EncryptedKey">Key used to encrypt the payload.</param>
-        /// <param name="Signatures">List of JWS signatures. Since this is the first block, the signature
-        /// is always over the payload data only.</param>
-        /// <param name="Recipients">List of JWE recipient decryption entries.</param>
-        /// <returns>The newly constructed container.</returns>
+        /// <param name="Cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
+        /// <param name="DataSequences">Data sequences to be converted to an EDS and presented 
+        ///     as an EDSS header entry.</param>
+        /// <param name="EncryptionKeys">The keys to be used to encrypt the message body.</param>
+        /// <param name="SignerKeys">The keys to be used to sign the message body.</param>
+        /// <param name="EncryptID">The bulk encryption algorithm to use.</param>
+        /// <param name="AuthenticateID">The bulk authentication algorithm to use. If the 
+        /// encryption algorithm is an authenticated encryption algorithm, and 
+        /// CryptoAlgorithmID.Default is specified, the value CryptoAlgorithmID.NULL
+        /// is used.</param>
         /// <exception cref="InvalidFileModeException">The file mode specified was not valid.</exception>
         public static Container NewContainer (
                         string Filename,
@@ -425,19 +492,21 @@ namespace Goedel.Cryptography.Dare {
                         byte[] Payload = null,
                         string ContentType = null,
                         DataEncoding DataEncoding = DataEncoding.JSON,
-                        CryptoAlgorithmID DigestAlgorithm = CryptoAlgorithmID.Default,
-                        byte[] EncryptedKey = null,
-                        List<Signature> Signatures = null,
-                        List<Recipient> Recipients = null
+                        List<KeyPair> EncryptionKeys = null,
+                        List<KeyPair> SignerKeys = null,
+                        CryptoAlgorithmID EncryptID = CryptoAlgorithmID.Default,
+                        CryptoAlgorithmID AuthenticateID = CryptoAlgorithmID.Default,
+                        byte[] Cloaked = null,
+                        List<byte[]> DataSequences = null
                         ) {
 
             Assert.True(FileStatus == FileStatus.New | FileStatus == FileStatus.Overwrite,
                 InvalidFileModeException.Throw);
 
             var JBCDStream = new JBCDStream(Filename, FileStatus);
-            var Container =  NewContainer(
+            var Container = NewContainer(
                 JBCDStream, ContainerType, Payload, ContentType, DataEncoding,
-                DigestAlgorithm, EncryptedKey, Signatures, Recipients);
+                EncryptionKeys, SignerKeys, EncryptID, AuthenticateID, Cloaked, DataSequences);
             Container.DisposeJBCDStream = JBCDStream;
 
             return Container;
@@ -455,36 +524,54 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="ContentType">Content type of the optional data payload</param>
         /// <param name="ContainerType">The container type. This determines whether
         /// a tree index is to be created or not and if so, whether </param>
-        /// <param name="DigestAlgorithm">The digest algorithm to be used to calculate the PayloadDigest</param>
-        /// <param name="EncryptedKey">Key used to encrypt the payload.</param>
-        /// <param name="Signatures">List of JWS signatures. Since this is the first block, the signature
-        /// is always over the payload data only.</param>
-        /// <param name="Recipients">List of JWE recipient decryption entries.</param>
-        /// <returns>The newly constructed container.</returns>
+        /// <param name="EncryptionKeys">The keys to be used to encrypt the message body.</param>
+        /// <param name="SignerKeys">The keys to be used to sign the message body.</param>
+        /// <param name="EncryptID">The bulk encryption algorithm to use.</param>
+        /// <param name="AuthenticateID">The bulk authentication algorithm to use. If the 
+        /// encryption algorithm is an authenticated encryption algorithm, and 
+        /// CryptoAlgorithmID.Default is specified, the value CryptoAlgorithmID.NULL
+        /// is used.</param>
+        /// <param name="Cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
+        /// <param name="DataSequences">Data sequences to be converted to an EDS and presented 
+        ///     as an EDSS header entry.</param>
         public static Container NewContainer (
                         JBCDStream JBCDStream,
                         ContainerType ContainerType = ContainerType.Chain,
                         byte[] Payload = null,
                         string ContentType = null,
                         DataEncoding DataEncoding = DataEncoding.JSON,
-                        CryptoAlgorithmID DigestAlgorithm = CryptoAlgorithmID.Default,
-                        byte[] EncryptedKey = null,
-                        List<Signature> Signatures = null,
-                        List<Recipient> Recipients = null
+                        List<KeyPair> EncryptionKeys = null,
+                        List<KeyPair> SignerKeys = null,
+                        CryptoAlgorithmID EncryptID = CryptoAlgorithmID.Default,
+                        CryptoAlgorithmID AuthenticateID = CryptoAlgorithmID.Default,
+                        byte[] Cloaked = null,
+                        List<byte[]> DataSequences = null
                         ) {
 
             var Container = MakeNewContainer(JBCDStream, ContainerType);
             Container.DataEncoding = DataEncoding;
+            var ContainerHeaderFirst = Container.ContainerHeaderFirst;
+
+            ContainerHeaderFirst.DataEncoding = DataEncoding.ToString();
+            ContainerHeaderFirst.ContentMeta = new ContentMeta() {
+                ContentType = ContentType
+                };
+
+            ContainerHeaderFirst.SetRecipients(EncryptionKeys, EncryptID);
+            ContainerHeaderFirst.SetSigners(SignerKeys, AuthenticateID);
+            ContainerHeaderFirst.SetEnhancedData(Cloaked, DataSequences);
+
+            // Make this a specific encryption call.
+            Payload = ContainerHeaderFirst.Enhance(Payload);
             Container.FrameData = Payload;
 
-            Container.ContainerHeaderFirst.DataEncoding = DataEncoding.ToString();
-            Container.ContainerHeaderFirst.ContentMeta = new ContentMeta() {
-                ContentType = ContentType
-                } ;
-            Container.Append(Payload, Container.ContainerHeaderFirst);
+            Container.AppendFrame(Payload, ContainerHeaderFirst);
 
             return Container;
             }
+
+
+
 
         /// <summary>
         /// Initialize the dictionaries used to manage the tree by registering the set
@@ -570,15 +657,51 @@ namespace Goedel.Cryptography.Dare {
             }
 
 
+
         /// <summary>
         /// Append a new data frame payload to the end of the file.
         /// </summary>
-        /// <param name="Data">Data to append.</param>
-        /// <param name="ContainerHeader">The container header value</param>
+        /// <param name="Data">Ciphertext data to append.</param>
+        /// <param name="EncryptionKeys">The keys to be used to encrypt the message body.</param>
+        /// <param name="SignerKeys">The keys to be used to sign the message body.</param>
+        /// <param name="EncryptID">The bulk encryption algorithm to use.</param>
+        /// <param name="AuthenticateID">The bulk authentication algorithm to use. If the 
+        /// encryption algorithm is an authenticated encryption algorithm, and 
+        /// CryptoAlgorithmID.Default is specified, the value CryptoAlgorithmID.NULL
+        /// is used.</param>
+        /// <param name="ContentType">The payload content type.</param>
+        /// <param name="Cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
+        /// <param name="DataSequences">Data sequences to be converted to an EDS and presented </param>
         /// <returns>The number of bytes written.</returns>
-        public long Append (byte[] Data, ContainerHeader ContainerHeader = null) {
-            return AppendFrame(Data, ContainerHeader);
+        public long Append(byte[] Data,
+                        List<KeyPair> EncryptionKeys = null,
+                        List<KeyPair> SignerKeys = null,
+                        CryptoAlgorithmID EncryptID = CryptoAlgorithmID.Default,
+                        CryptoAlgorithmID AuthenticateID = CryptoAlgorithmID.Default,
+                        string ContentType = null,
+                        byte[] Cloaked = null,
+                        List<byte[]> DataSequences = null) {
+
+            var ContainerHeader = new ContainerHeader();
+            ContainerHeader.SetDefaultContext(ContainerHeaderFirst);
+            ContainerHeader.SetRecipients(EncryptionKeys, EncryptID);
+            ContainerHeader.SetSigners(SignerKeys, AuthenticateID);
+            ContainerHeader.SetEnhancedData(Cloaked, DataSequences);
+
+            var Payload = ContainerHeader.Enhance(Data);
+            return AppendFrame(Payload, ContainerHeader);
             }
+
+
+        ///// <summary>
+        ///// Append a new data frame payload to the end of the file.
+        ///// </summary>
+        ///// <param name="Data">Data to append.</param>
+        ///// <param name="ContainerHeader">The container header value</param>
+        ///// <returns>The number of bytes written.</returns>
+        //public long Append (byte[] Data, ContainerHeader ContainerHeader) {
+        //    return AppendFrame(Data, ContainerHeader);
+        //    }
 
         /// <summary>
         /// Append a new data frame payload to the end of the file.
@@ -614,10 +737,26 @@ namespace Goedel.Cryptography.Dare {
         /// Append a new data frame payload to the end of the file.
         /// </summary>
         /// <param name="Data">Data to append.</param>
-        /// <param name="Header">The container header value</param>
+        /// <param name="EncryptionKeys">The keys to be used to encrypt the message body.</param>
+        /// <param name="SignerKeys">The keys to be used to sign the message body.</param>
+        /// <param name="EncryptID">The bulk encryption algorithm to use.</param>
+        /// <param name="AuthenticateID">The bulk authentication algorithm to use. If the 
+        /// encryption algorithm is an authenticated encryption algorithm, and 
+        /// CryptoAlgorithmID.Default is specified, the value CryptoAlgorithmID.NULL
+        /// is used.</param>
+        /// <param name="ContentType">The payload content type.</param>
+        /// <param name="Cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
+        /// <param name="DataSequences">Data sequences to be converted to an EDS and presented 
+        ///     as an EDSS header entry.</param>
         /// <returns>The number of bytes written.</returns>
-        public virtual long Append (JSONObject Data, ContainerHeader Header = null) {
-            return Append(Data.GetJson(), Header);
+        public virtual long Append (JSONObject Data, List<KeyPair> EncryptionKeys = null,
+                        List<KeyPair> SignerKeys = null,
+                        CryptoAlgorithmID EncryptID = CryptoAlgorithmID.Default,
+                        CryptoAlgorithmID AuthenticateID = CryptoAlgorithmID.Default,
+                        string ContentType = null, 
+                        byte[] Cloaked = null,
+                        List<byte[]> DataSequences = null) {
+            return Append(Data.GetJson(), EncryptionKeys, SignerKeys, EncryptID, AuthenticateID, ContentType, Cloaked, DataSequences);
             }
 
         /// <summary>

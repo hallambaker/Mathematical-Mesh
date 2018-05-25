@@ -40,27 +40,24 @@ namespace Goedel.Mesh.Platform.Windows {
         /// </summary>
         /// <param name="Fingerprint">Fingerprint identifying data</param>
         /// <returns>The file name.</returns>
-        public static string FilePersonalProfile(string Fingerprint) {
-            return Constants.FileProfilesPersonal + "\\" + Fingerprint + ".mmmp";
-            }
+        public static string FilePersonalProfile(string Fingerprint) => 
+            Constants.FileProfilesPersonal + "\\" + Fingerprint + ".mmmp";
 
         /// <summary>
         /// Construct filename for a mesh personal profile
         /// </summary>
         /// <param name="Fingerprint">Fingerprint identifying data</param>
         /// <returns>The file name.</returns>
-        public static string FileDeviceProfile(string Fingerprint) {
-            return Constants.FileProfilesDevice + "\\" + Fingerprint + ".mmmd";
-            }
+        public static string FileDeviceProfile(string Fingerprint) => 
+            Constants.FileProfilesDevice + "\\" + Fingerprint + ".mmmd";
 
         /// <summary>
         /// Construct filename for a mesh personal profile
         /// </summary>
         /// <param name="Fingerprint">Fingerprint identifying data</param>
         /// <returns>The file name.</returns>
-        public static string FileApplicationlProfile(string Fingerprint) {
-            return Constants.FileProfilesApplication + "\\" + Fingerprint + ".mmma";
-            }
+        public static string FileApplicationlProfile(string Fingerprint) => 
+            Constants.FileProfilesApplication + "\\" + Fingerprint + ".mmma";
 
         }
 
@@ -82,9 +79,7 @@ namespace Goedel.Mesh.Platform.Windows {
         /// <summary>
         /// Default constructor, get values from the current machine.
         /// </summary>
-        public MeshMachineWindows() {
-            Fill();
-            }
+        public MeshMachineWindows() => Fill();
 
         /// <summary>
         /// Return a new machine registration.
@@ -279,9 +274,7 @@ namespace Goedel.Mesh.Platform.Windows {
                 }
             }
 
-        public override void MakeDefault (SessionApplication SessionApplication) {
-            throw new NYI(); // Do we even make defaujlt application sessions on the machine?
-            }
+        public override void MakeDefault(SessionApplication SessionApplication) => throw new NYI(); // Do we even make defaujlt application sessions on the machine?
 
 
         public override void MakeDefault (SessionDevice SessionDevice) {

@@ -110,7 +110,7 @@ namespace Goedel.Confirm {
             var Text = ToString();
 
             // Convert text back to an object:
-            var Result = FromJSON(Text.JSONReader());
+            var Result = Response.FromJSON(Text.JSONReader());
 
             return Result;
             }
@@ -134,7 +134,7 @@ namespace Goedel.Confirm {
             var Text = ToString();
 
             // Convert text back to an object:
-            var Result = FromJSON(Text.JSONReader());
+            var Result = Request.FromJSON(Text.JSONReader());
 
             return Result;
             }

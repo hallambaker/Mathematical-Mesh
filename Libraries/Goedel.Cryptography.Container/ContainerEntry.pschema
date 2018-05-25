@@ -11,7 +11,7 @@
 		Description
 			|TBS stuff
 
-	Section 2 "Container Headers"
+	Section 2 "Container Headers" 
 		Description
 			|TBS stuff
 
@@ -114,31 +114,6 @@
 		Integer Previous
 			Description
 				|Frame number of the immediately prior object instance value	
-
-		// Encryption parameters
-		//Binary EncryptedKey
-		//	Description
-		//		|Session key encrypted under a key exchange specified in the Recipients 
-		//		|list of this frame (if present) or the frame at the position specified by
-		//		|exchange position (if present) or the first frame.
-
-		//Binary IV
-		//	Description
-		//		|Initialization vector for ciphertext.
-
-		//Binary Protected
-		//	Description
-		//		|Protected header 
-
-		//Struct DARERecipient Recipients
-		//	Multiple
-		//	Description
-		//		|Per recipient key exchange data.
-
-		//Struct DARESignature Signatures
-		//	Multiple
-		//	Description
-		//		|Per signer signature data
 
 
 	Section 2 "Content Metadata Structure"

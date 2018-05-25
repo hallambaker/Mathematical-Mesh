@@ -108,28 +108,6 @@ namespace ExampleGenerator {
         public string MessageTestRSASigned              = "TBS";
         public string MessageTestRSAEncryptedSigned     = "TBS";
 
-        void GoMessage () {
-
-
-            // Plaintext content, no digest
-
-
-            // Complete Message, RSA key exchange, MAC
-
-            // Complete Message, RSA key exchange, Encrypted
-
-
-            // Complete Message, RSA key exchange, Encrypted + MAC
-
-
-            // Plaintext Signed 
-
-            // Complete Message, RSA key exchange, Encrypted + Signature
-
-
-
-            }
-
         public readonly byte[] DareMessageTest1 = "This is a test long enough to require multiple blocks".ToUTF8();
         public readonly byte[] DareMessageTest2 = "Subject: Message metadata should be encrypted".ToUTF8();
         public readonly byte[] DareMessageTest3 = "2018-02-01".ToUTF8();
@@ -147,6 +125,10 @@ namespace ExampleGenerator {
         public byte[] MasterSecret;
         public byte[] DareMessageBody;
         public byte[] DareEDSSalt;
+
+        public string ContainerFramingEncrypted = "";
+        public string ContainerFramingEncryptedIndependent;
+        byte[] TestData300 = TestData(300);
 
         void GoDareMessage () {
             DareMessageAlicePrivate = new DiffeHellmanPrivate();
@@ -193,7 +175,23 @@ namespace ExampleGenerator {
 
             ExampleGenerator.MeshExamplesMessage(this);
 
+
+            var EncryptingContainer = MakeContainer("Test1Enc", ContainerType.List, EncryptionKeys);
+            EncryptingContainer.Append(TestData300);
+            EncryptingContainer.Append(TestData300);
+            ReadContainer(EncryptingContainer, ContainerHeadersEncryptSingleSession);
+            ContainerFramingEncrypted = ConsoleWriter.ToString();
+
+            var EncryptedContainer = MakeContainer("Test1EncSep", ContainerType.List);
+            EncryptedContainer.Append(TestData300, EncryptionKeys);
+            EncryptedContainer.Append(TestData300, EncryptionKeys);
+            ReadContainer(EncryptedContainer, ContainerHeadersEncryptIndependentSession);
+            ContainerFramingEncryptedIndependent = ConsoleWriter.ToString();
             }
+
+        //public string ContainerFramingEncrypted;
+        public List<ContainerHeader> ContainerHeadersEncryptSingleSession = new List<ContainerHeader>();
+        public List<ContainerHeader> ContainerHeadersEncryptIndependentSession = new List<ContainerHeader>();
 
         public byte[] DareMessageKeyEncrypt;
         byte[] DareMessageKeyMac;
@@ -305,45 +303,44 @@ namespace ExampleGenerator {
         public List<ContainerHeader> ContainerHeadersMerkleTree = new List<ContainerHeader>();
 
 
-
+        
 
 
         void GoContainer () {
             // Simple
             var TContainer = MakeContainer("Test1List", ContainerType.List);
-            var Data = TestData(300);
-            TContainer.Append(Data);
+            TContainer.Append(TestData300);
             ReadContainer(TContainer, ContainerHeadersSimple);
             ContainerFramingSimple = ConsoleWriter.ToString();
 
 
             // Digest
             TContainer = MakeContainer("Test1Chain", ContainerType.Chain);
-            TContainer.Append(Data);
-            TContainer.Append(Data);
-            TContainer.Append(Data);
+            TContainer.Append(TestData300);
+            TContainer.Append(TestData300);
+            TContainer.Append(TestData300);
             ReadContainer(TContainer, ContainerHeadersChain);
 
 
             // Tree
             TContainer = MakeContainer("Test1Tree", ContainerType.Tree);
-            TContainer.Append(Data);
-            TContainer.Append(Data);
-            TContainer.Append(Data);
-            TContainer.Append(Data);
-            TContainer.Append(Data);
-            TContainer.Append(Data);
+            TContainer.Append(TestData300);
+            TContainer.Append(TestData300);
+            TContainer.Append(TestData300);
+            TContainer.Append(TestData300);
+            TContainer.Append(TestData300);
+            TContainer.Append(TestData300);
             ReadContainer(TContainer, ContainerHeadersTree);
 
 
             // Merkle Tree
             TContainer = MakeContainer("Test1Merkle", ContainerType.MerkleTree);
-            TContainer.Append(Data);
-            TContainer.Append(Data);
-            TContainer.Append(Data);
-            TContainer.Append(Data);
-            TContainer.Append(Data);
-            TContainer.Append(Data);
+            TContainer.Append(TestData300);
+            TContainer.Append(TestData300);
+            TContainer.Append(TestData300);
+            TContainer.Append(TestData300);
+            TContainer.Append(TestData300);
+            TContainer.Append(TestData300);
             ReadContainer(TContainer, ContainerHeadersMerkleTree);
 
 
@@ -351,7 +348,7 @@ namespace ExampleGenerator {
 
             ExampleGenerator.MeshExamplesUDF(this);
             ExampleGenerator.MeshExamplesUDFCompressed(this);
-            ExampleGenerator.MakeExamplesKeyExchange(this);
+            //ExampleGenerator.MakeExamplesKeyExchange(this);
             }
 
         KeyExchangeClient KeyExchangeClient;
@@ -382,17 +379,21 @@ namespace ExampleGenerator {
             }
 
 
-        public Container MakeContainer (string FileName, ContainerType ContainerType = ContainerType.Chain) {
+        public Container MakeContainer (
+                    string FileName, 
+                    ContainerType ContainerType = ContainerType.Chain,
+                    List<KeyPair> EncryptionKeys=null) {
             ConsoleWriter = new StringWriter();
 
             //var FileStream = FileName.FileStream(FileStatus.Overwrite);
             var JBCDStream = new JBCDStreamDebug(FileName, FileStatus.Overwrite, Output:ConsoleWriter);
-            return Container.NewContainer(JBCDStream, ContainerType);
+            return Container.NewContainer(JBCDStream, ContainerType, EncryptionKeys:EncryptionKeys);
 
             }
 
 
-        public byte[] TestData (int MaxSize) {
+
+        public static byte[] TestData (int MaxSize) {
             var Data = new byte[MaxSize];
             for (var i = 0; i < MaxSize; i++) {
                 Data[i] = (byte)(i & 0xff);
@@ -403,12 +404,13 @@ namespace ExampleGenerator {
 
         public void ReadContainer (Container Container, List<ContainerHeader> ContainerHeaders) {
 
-            Goedel.Protocol.JSONReader.Trace = true; // HACK: 
+            //Goedel.Protocol.JSONReader.Trace = true; // HACK: 
 
             Container.First();
+            ContainerHeaders.Add(Container.ContainerHeader);
             while (!Container.EOF) {
-                ContainerHeaders.Add(Container.ContainerHeader);
                 Container.Next();
+                ContainerHeaders.Add(Container.ContainerHeader);
                 }
             }
 

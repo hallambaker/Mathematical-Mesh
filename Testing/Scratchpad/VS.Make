@@ -26,10 +26,12 @@ LinkFiles = \
     Goedel.Cryptography.dll\
     Goedel.Mesh.Platform.Windows.dll\
     Goedel.Mesh.dll\
+    Goedel.Protocol.dll\
     Goedel.Test.dll\
     Goedel.Mesh.Portal.Client.dll\
     Goedel.Mesh.Portal.Server.dll\
     Goedel.Mesh.Portal.dll\
+    Goedel.Protocol.Test.dll\
     Test.Common.dll\
     Test.Cryptography.Algorithms.dll\
     Test.Goedel.ASN.dll\

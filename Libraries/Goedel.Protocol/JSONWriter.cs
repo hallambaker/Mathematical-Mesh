@@ -53,32 +53,26 @@ namespace Goedel.Protocol {
         /// Return the contents of the writer as a string.
         /// </summary>
         /// <returns>Current buffered contents as string</returns>
-        public override string ToString() {
-            return Output.GetUTF8();
-            }
+        public override string ToString() => Output.GetUTF8();
 
 
         /// <summary>
         /// Return the contents of the writer as a string.
         /// </summary>
         /// <returns>Current buffered contents as string</returns>
-        public string GetUTF8  => Output.GetUTF8(); 
+        public string GetUTF8  => (Output as MemoryStream).ToArray().ToUTF8() ;
 
         /// <summary>
         /// Create a new JSON Writer.
         /// </summary>
-        public JSONWriter() {
-            this.Output = new MemoryStream();
-            }
+        public JSONWriter() => Output = new MemoryStream();
 
         /// <summary>
         /// Create a new JSON Writer using the specified output buffer. If the buffer has
         /// an output stream defined, text will be written to the stream.
         /// </summary>
         /// <param name="Output">The output stream.</param>
-        public JSONWriter(MemoryStream Output) {
-            this.Output = Output;
-            }
+        public JSONWriter(MemoryStream Output) => this.Output = Output;
 
 
         /// <summary>
@@ -95,27 +89,19 @@ namespace Goedel.Protocol {
 
         /// <summary>Write 32 bit integer.</summary>
         /// <param name="Data">Value to write</param>
-        public override void WriteInteger32(int Data) {
-            Output.Write(Data.ToString());
-            }
+        public override void WriteInteger32(int Data) => Output.Write(Data.ToString());
 
         /// <summary>Write 64 bit integer</summary>
         /// <param name="Data">Value to write</param>
-        public override void WriteInteger64(long Data) {
-            Output.Write(Data.ToString());
-            }
+        public override void WriteInteger64(long Data) => Output.Write(Data.ToString());
 
         /// <summary>Write float32</summary>
         /// <param name="Data">Value to write</param>
-        public override void WriteFloat32(float Data) {
-            Output.Write(Data.ToString());
-            }
+        public override void WriteFloat32(float Data) => Output.Write(Data.ToString());
 
         /// <summary>Write float64</summary>
         /// <param name="Data">Value to write</param>
-        public override void WriteFloat64(double Data) {
-            Output.Write(Data.ToString());
-            }
+        public override void WriteFloat64(double Data) => Output.Write(Data.ToString());
 
         /// <summary>Write boolean.</summary>
         /// <param name="Data">Value to write</param>
@@ -173,18 +159,13 @@ namespace Goedel.Protocol {
 
         /// <summary>Begin partial write of binary data. 
         /// This is not yet implemented for standard streams.</summary>
-        public virtual void WriteBinaryBegin (long Length, bool Terminal = true) {
-            throw new NYI();
-            }
+        public virtual void WriteBinaryBegin(long Length, bool Terminal = true) => throw new NYI();
 
         /// <summary>Write binary data as length-data item.</summary>
         /// <param name="Data">Value to write</param>
         /// <param name="First">The index position of the first byte in the input data to process</param>
         /// <param name="Length">The number of bytes to process</param>
-        public virtual void WriteBinaryPart (byte[] Data, long First = 0, long Length = -1) {
-
-            throw new NYI();
-            }
+        public virtual void WriteBinaryPart(byte[] Data, long First = 0, long Length = -1) => throw new NYI();
 
 
         /// <summary>Write Date-Time value in RFC3339 format.</summary>

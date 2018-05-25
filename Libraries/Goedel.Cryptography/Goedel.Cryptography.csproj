@@ -30,6 +30,8 @@
       <AutoGen>True</AutoGen>
     </Compile>
     <Compile Update="PKIX\PKIX.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
       <DependentUpon>PKIX.asn2</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -40,8 +42,8 @@
       <Generator>exceptional</Generator>
     </None>
     <None Update="PKIX\PKIX.asn2">
-      <LastGenOutput>PKIX.cs</LastGenOutput>
       <Generator>ASN2CS</Generator>
+      <LastGenOutput>PKIX.cs</LastGenOutput>
     </None>
   </ItemGroup>
 

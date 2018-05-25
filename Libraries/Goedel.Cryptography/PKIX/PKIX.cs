@@ -1,4 +1,4 @@
-﻿
+
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -2303,15 +2303,16 @@ namespace Goedel.Cryptography.PKIX {
 	/// Name 
     /// </summary>
 	public partial class Name : Goedel.ASN.Root {
-        /// <summary>
-        /// The OID value
-        /// </summary>
-        public override int[] OID => Constants.OID__id_at;
+		/// <summary>
+		/// The OID value
+		/// </summary>
+		public override int [] OID { 
+			get => Constants.OID__id_at; } 
 
-        /// <summary>
-        /// ASN.1 member Member 
-        /// </summary>
-        public List <Goedel.Cryptography.PKIX.AttributeTypeValue > Member ;
+		/// <summary>
+		/// ASN.1 member Member 
+		/// </summary>
+		public List <Goedel.Cryptography.PKIX.AttributeTypeValue > Member ;
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
 		///
@@ -2416,15 +2417,16 @@ namespace Goedel.Cryptography.PKIX {
 	/// AnyString 
     /// </summary>
 	public partial class AnyString : Goedel.ASN.Root {
-        /// <summary>
-        /// The OID value
-        /// </summary>
-        public override int[] OID => Constants.OID__id_at;
+		/// <summary>
+		/// The OID value
+		/// </summary>
+		public override int [] OID { 
+			get => Constants.OID__id_at; } 
 
-        /// <summary>
-        /// ASN.1 member IA5String 
-        /// </summary>
-        public string IA5String ;
+		/// <summary>
+		/// ASN.1 member IA5String 
+		/// </summary>
+		public string IA5String ;
 		/// <summary>
 		/// ASN.1 member BMPString 
 		/// </summary>
@@ -2733,15 +2735,16 @@ namespace Goedel.Cryptography.PKIX {
 	/// AuthorityKeyIdentifier 
     /// </summary>
 	public partial class AuthorityKeyIdentifier : Goedel.ASN.Root {
-        /// <summary>
-        /// The OID value
-        /// </summary>
-        public override int[] OID => Constants.OID__id_ce_authorityKeyIdentifier;
+		/// <summary>
+		/// The OID value
+		/// </summary>
+		public override int [] OID { 
+			get => Constants.OID__id_ce_authorityKeyIdentifier; }  
 
-        /// <summary>
-        /// ASN.1 member KeyIdentifier 
-        /// </summary>
-        public byte []  KeyIdentifier ;
+		/// <summary>
+		/// ASN.1 member KeyIdentifier 
+		/// </summary>
+		public byte []  KeyIdentifier ;
 		/// <summary>
 		/// ASN.1 member AuthorityCertIssuer 
 		/// </summary>
@@ -2815,15 +2818,16 @@ namespace Goedel.Cryptography.PKIX {
 	/// SubjectKeyIdentifier 
     /// </summary>
 	public partial class SubjectKeyIdentifier : Goedel.ASN.Root {
-        /// <summary>
-        /// The OID value
-        /// </summary>
-        public override int[] OID => Constants.OID__id_ce_subjectKeyIdentifier;
+		/// <summary>
+		/// The OID value
+		/// </summary>
+		public override int [] OID { 
+			get => Constants.OID__id_ce_subjectKeyIdentifier; } 
 
-        /// <summary>
-        /// ASN.1 member Value 
-        /// </summary>
-        public byte []  Value ;
+		/// <summary>
+		/// ASN.1 member Value 
+		/// </summary>
+		public byte []  Value ;
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
 		///
@@ -2858,15 +2862,16 @@ namespace Goedel.Cryptography.PKIX {
 	/// KeyUsage 
     /// </summary>
 	public partial class KeyUsage : Goedel.ASN.Root {
-        /// <summary>
-        /// The OID value
-        /// </summary>
-        public override int[] OID => Constants.OID__id_ce_keyUsage;
+		/// <summary>
+		/// The OID value
+		/// </summary>
+		public override int [] OID { 
+			get => Constants.OID__id_ce_keyUsage; } 
 
-        /// <summary>
-        /// ASN.1 member Value 
-        /// </summary>
-        public byte []  Value ;
+		/// <summary>
+		/// ASN.1 member Value 
+		/// </summary>
+		public byte []  Value ;
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
 		///
@@ -2901,15 +2906,16 @@ namespace Goedel.Cryptography.PKIX {
 	/// certificatePolicies 
     /// </summary>
 	public partial class certificatePolicies : Goedel.ASN.Root {
-        /// <summary>
-        /// The OID value
-        /// </summary>
-        public override int[] OID => Constants.OID__id_ce_certificatePolicies;
+		/// <summary>
+		/// The OID value
+		/// </summary>
+		public override int [] OID { 
+			get => Constants.OID__id_ce_certificatePolicies; } 
 
-        /// <summary>
-        /// ASN.1 member Value 
-        /// </summary>
-        public List <Goedel.Cryptography.PKIX.PolicyInformation > Value ;
+		/// <summary>
+		/// ASN.1 member Value 
+		/// </summary>
+		public List <Goedel.Cryptography.PKIX.PolicyInformation > Value ;
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
 		///
@@ -3084,15 +3090,16 @@ namespace Goedel.Cryptography.PKIX {
 	/// SubjectAltName 
     /// </summary>
 	public partial class SubjectAltName : Goedel.ASN.Root {
-        /// <summary>
-        /// The OID value
-        /// </summary>
-        public override int[] OID => Constants.OID__id_ce_subjectAltName;
+		/// <summary>
+		/// The OID value
+		/// </summary>
+		public override int [] OID { 
+			get => Constants.OID__id_ce_subjectAltName; } 
 
-        /// <summary>
-        /// ASN.1 member Names 
-        /// </summary>
-        public List <Goedel.Cryptography.PKIX.GeneralName > Names ;
+		/// <summary>
+		/// ASN.1 member Names 
+		/// </summary>
+		public List <Goedel.Cryptography.PKIX.GeneralName > Names ;
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
 		///
@@ -3147,15 +3154,16 @@ namespace Goedel.Cryptography.PKIX {
 	/// GeneralName 
     /// </summary>
 	public partial class GeneralName : Goedel.ASN.Root {
-        /// <summary>
-        /// The OID value
-        /// </summary>
-        public override int[] OID => Constants.OID__id_ce_subjectAltName;
+		/// <summary>
+		/// The OID value
+		/// </summary>
+		public override int [] OID { 
+			get => Constants.OID__id_ce_subjectAltName; } 
 
-        /// <summary>
-        /// ASN.1 member RFC822Name 
-        /// </summary>
-        public string RFC822Name ;
+		/// <summary>
+		/// ASN.1 member RFC822Name 
+		/// </summary>
+		public string RFC822Name ;
 		/// <summary>
 		/// ASN.1 member DNSName 
 		/// </summary>
@@ -3197,15 +3205,16 @@ namespace Goedel.Cryptography.PKIX {
 	/// BasicConstraints 
     /// </summary>
 	public partial class BasicConstraints : Goedel.ASN.Root {
-        /// <summary>
-        /// The OID value
-        /// </summary>
-        public override int[] OID => Constants.OID__id_ce_basicConstraints;
+		/// <summary>
+		/// The OID value
+		/// </summary>
+		public override int [] OID { 
+			get => Constants.OID__id_ce_basicConstraints; }  
 
-        /// <summary>
-        /// ASN.1 member CA 
-        /// </summary>
-        public bool  CA ;
+		/// <summary>
+		/// ASN.1 member CA 
+		/// </summary>
+		public bool  CA ;
 		/// <summary>
 		/// ASN.1 member PathLenConstraint 
 		/// </summary>
@@ -3254,15 +3263,16 @@ namespace Goedel.Cryptography.PKIX {
 	/// NameConstraints 
     /// </summary>
 	public partial class NameConstraints : Goedel.ASN.Root {
-        /// <summary>
-        /// The OID value
-        /// </summary>
-        public override int[] OID => Constants.OID__id_ce_nameConstraints;
+		/// <summary>
+		/// The OID value
+		/// </summary>
+		public override int [] OID { 
+			get => Constants.OID__id_ce_nameConstraints; }  
 
-        /// <summary>
-        /// ASN.1 member PermittedSubtrees 
-        /// </summary>
-        public Goedel.Cryptography.PKIX.GeneralSubtrees PermittedSubtrees ;
+		/// <summary>
+		/// ASN.1 member PermittedSubtrees 
+		/// </summary>
+		public Goedel.Cryptography.PKIX.GeneralSubtrees PermittedSubtrees ;
 		/// <summary>
 		/// ASN.1 member ExcludedSubtrees 
 		/// </summary>
@@ -3367,15 +3377,16 @@ namespace Goedel.Cryptography.PKIX {
 	/// ExtendedKeyUsage 
     /// </summary>
 	public partial class ExtendedKeyUsage : Goedel.ASN.Root {
-        /// <summary>
-        /// The OID value
-        /// </summary>
-        public override int[] OID => Constants.OID__id_ce_extKeyUsage;
+		/// <summary>
+		/// The OID value
+		/// </summary>
+		public override int [] OID { 
+			get => Constants.OID__id_ce_extKeyUsage; } 
 
-        /// <summary>
-        /// ASN.1 member KeyPurpose 
-        /// </summary>
-        public List <int []  > KeyPurpose ;
+		/// <summary>
+		/// ASN.1 member KeyPurpose 
+		/// </summary>
+		public List <int []  > KeyPurpose ;
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
 		///

@@ -6,19 +6,29 @@
 
 	Section 1 "Reference"
 		Description
-			|TBS stuff
-
-
-	Section 2 "Header and Trailer fields"
+			|A DARE Message consists of a Header, an Enhanced Data Sequence (EDS) and 
+			|an optional trailer. This section describes the JSON data fields used to 
+			|construct headers, trailers and complete messages.
 		Description
-			|TBS stuff
+			|Wherever possible, fields from JWE, JWS and JWK have been used. In these cases,
+			|the fields have the exact same semantics. Note however that the classes in 
+			|which these fields are presented have different structure and nesting.
 
+	Section 2 "Message Classes"
+		Description
+			|A DARE Message contains a single DAREMessageSequence in either the JSON or 
+			|Compact serialization as directed by the protocol in which it is applied.
 
-	Structure DAREMessageObject
+	Structure DAREMessageSequence
 		Description
 			|A DARE Message containing Header, EDS and Trailer in JSON object encoding.
 			|Since a DAREMessage is almost invariably presented in JSON sequence or
 			|compact encoding, use of the DAREMessage subclass is preferred.
+		Description
+			|Although a DARE Message is functionally an object, it is serialized as 
+			|an ordered sequence. This ensures that the message header field will always
+			|precede the body in a serialization, this allowing processing of the header
+			|information to be performed before the entire body has been received.
 		Struct DAREHeader Header
 			Description
 				|The message header. May specify the key exchange data, pre-signature 
@@ -30,6 +40,11 @@
 			Description
 				|The message trailer. If present, this contains the signature.
 
+
+	Section 2 "Header and Trailer Classes"
+		Description
+			|A DARE Message sequence MUST contain a (possibly empty) DAREHeader and MAY contain
+			|a DARETrailer. 
 
 	Structure DARETrailer
 		Description
@@ -93,7 +108,9 @@
 
 	Section 2 "Cryptographic Data"
 		Description
-			|TBS stuff
+			|DARE Message uses the same fields as JWE and JWS but with different
+			|structure. In particular, DARE messages MAY have multiple recipients
+			|and multiple signers.
 
 
 	Structure DARESigner
@@ -102,7 +119,8 @@
 		String Dig
 			Tag "dig"
 			Description
-				|Digest algorithm hint
+				|Digest algorithm hint. Specifying the digest algorithm to be applied
+				|to the message body allows the body to be processed in streaming mode.
 		String Alg
 			Tag "alg"
 			Description

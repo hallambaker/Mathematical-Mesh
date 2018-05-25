@@ -52,12 +52,8 @@ namespace Goedel.Recrypt.Server {
         //    CombinedToGroup.FromJSON(GetMemberData(CombinedKey)?.JSONReader);
 
 
-        void New (RecryptionGroup RecryptionGroup) {
-            Recrypt.New(RecryptionGroup);
-            }
-        void Update (RecryptionGroup RecryptionGroup) {
-            Recrypt.Update(RecryptionGroup);
-            }
+        void New(RecryptionGroup RecryptionGroup) => Recrypt.New(RecryptionGroup);
+        void Update(RecryptionGroup RecryptionGroup) => Recrypt.Update(RecryptionGroup);
 
         /// <summary>
         /// The DNS name of this service.
@@ -83,26 +79,20 @@ namespace Goedel.Recrypt.Server {
         /// Create a new recryption group
         /// </summary>
         /// <param name="RecryptionGroup">The parameters of the group to create</param>
-        public void CreateGroup (RecryptionGroup RecryptionGroup) {
-            Recrypt.New(RecryptionGroup);
-            }
+        public void CreateGroup(RecryptionGroup RecryptionGroup) => Recrypt.New(RecryptionGroup);
 
         /// <summary>
         /// Replace recryption group definition.
         /// </summary>
         /// <param name="RecryptionGroup">The parameters of the group to update</param>
-        public void UpdateGroup (RecryptionGroup RecryptionGroup) {
-            Recrypt.Update(RecryptionGroup);
-            }
+        public void UpdateGroup(RecryptionGroup RecryptionGroup) => Recrypt.Update(RecryptionGroup);
 
         /// <summary>
         /// Return group data by group name
         /// </summary>
         /// <param name="GroupName">The group name.</param>
         /// <returns>The group name</returns>
-        public RecryptionGroup GetGroup (string GroupName) {
-            return GetGroupEntry(GroupName);
-            }
+        public RecryptionGroup GetGroup(string GroupName) => GetGroupEntry(GroupName);
 
 
         public RecryptionGroup GetGroupByKey (string KeyUDF) {

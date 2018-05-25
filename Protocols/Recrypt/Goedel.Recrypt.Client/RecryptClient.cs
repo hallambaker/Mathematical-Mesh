@@ -35,9 +35,7 @@ namespace Goedel.Recrypt.Client {
         /// Construct a RecryptClient for the specified service.
         /// </summary>
         /// <param name="RecryptProfile">The recryption profile.</param>
-        public RecryptClient (RecryptProfile RecryptProfile) {
-            Service = RecryptPortal.Default.GetService(RecryptProfile.Account);
-            }
+        public RecryptClient(RecryptProfile RecryptProfile) => Service = RecryptPortal.Default.GetService(RecryptProfile.Account);
 
 
         /// <summary>

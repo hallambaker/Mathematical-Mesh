@@ -36,13 +36,7 @@ namespace Goedel.Protocol {
     /// </summary>
     public class JSONAWriter : JSONWriter {
         
-        /// <summary>
-        /// Return the contents of the writer as a string.
-        /// </summary>
-        /// <returns>Current buffered contents as string</returns>
-        public override string ToString() {
-            return Output.GetUTF8();
-            }
+
 
         /// <summary>
         /// Create a new JSON Writer.

@@ -43,9 +43,7 @@ namespace Goedel.Mesh.DareMan {
             }
 
 
-        public override void Erase (Erase Options) {
-            MeshMachine.EraseTest(); // remove previous test data
-            }
+        public override void Erase(Erase Options) => MeshMachine.EraseTest(); // remove previous test data
 
         /// <summary>
         /// Register a new account.

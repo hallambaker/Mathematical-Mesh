@@ -97,7 +97,18 @@
 </reference><!-- draft-hallambaker-mesh-architecture Added Mon, 21 Aug 2017 16:36:15 GMT -->
 <!-- Source: https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.hallambaker-mesh-architecture.xml -->
 
+<reference anchor="IANAJOSE">
+  <front>
+    <title>JSON Object Signing and Encryption IANA registry </title>
+    <author>
+      <organization>IANA</organization>
+    </author>
+  </front>
+<format type='HTML'
+        target='https://www.iana.org/assignments/jose/jose.xhtml' />
+</reference>
 
+  
 <reference anchor='I-D.hallambaker-mesh-architecture'>
 <front>
 <title>Mathematical Mesh: Architecture</title>

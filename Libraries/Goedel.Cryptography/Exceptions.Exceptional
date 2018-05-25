@@ -3,7 +3,7 @@
 Namespace Goedel.Cryptography
     
 	Exception CryptographicException
-        Console "A cryptographic exception occurred"
+        Console "A cryptographic exception occurred.."
 		Description
 			|Base class for cryptographic exceptions.
 		

@@ -40,13 +40,7 @@ namespace Goedel.Protocol {
 
         Dictionary<string, int> TagDictionary;
 
-        /// <summary>
-        /// Return the contents of the writer as a string.
-        /// </summary>
-        /// <returns>Current buffered contents as string</returns>
-        public override string ToString() {
-            return Output.GetUTF8();
-            }
+
 
         /// <summary>
         /// Create a new JSON Writer using the specified output buffer. If the buffer has

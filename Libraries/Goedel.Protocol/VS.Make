@@ -20,14 +20,20 @@ MSBuildThisFileDirectory =
 
 LinkFiles = \
     Goedel.Discovery.dll\
+    Goedel.FSR.dll\
+    Goedel.IO.dll\
     Goedel.Utilities.dll
 
 ToolTargets = \
 	Exceptions.cs\
+	JSONTokenizer.cs\
 	MessageBase.cs
 
 Exceptions.cs : Exceptions.exceptional 
 	exceptional Exceptions.exceptional  /cs  Exceptions.cs
+
+JSONTokenizer.cs : JSONTokenizer.fsm 
+	fsrgen JSONTokenizer.fsm  /cs  JSONTokenizer.cs
 
 MessageBase.cs : MessageBase.protocol 
 	protogen MessageBase.protocol  /cs  MessageBase.cs

@@ -55,9 +55,7 @@ namespace Test.Goedel.Mesh {
         static MeshProfiles MeshProfiles = new MeshProfiles();
 
         [ClassInitialize]
-        public static void InitializeClass (TestContext context) {
-            InitializeClass();
-            }
+        public static void InitializeClass(TestContext context) => InitializeClass();
 
         static string ServicePortalDNS = "portal.example.com";
         static string ServiceAccountDNS = "account.example.com";

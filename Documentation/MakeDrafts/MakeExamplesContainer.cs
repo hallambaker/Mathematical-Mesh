@@ -345,6 +345,25 @@ namespace ExampleGenerator {
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("##Encrypted container\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The following example shows a container in which all the frame payloads are encrypted \n{0}", _Indent);
+				_Output.Write ("under the same master secret established in a key agreement specified in the first frame.\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				ExampleGenerator.DumpHeaders (Example.ContainerHeadersEncryptSingleSession);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("Here are the container bytes. Note that the content is now encrypted and has expanded by\n{0}", _Indent);
+				_Output.Write ("25 bytes. These are the salt (16 bytes), the AES padding (4 bytes) and the \n{0}", _Indent);
+				_Output.Write ("JSON-B framing (5 bytes).\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("{1}\n{0}", _Indent, Example.ContainerFramingEncrypted);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The following example shows a container in which all the frame payloads are encrypted \n{0}", _Indent);
+				_Output.Write ("under separate key agreements specified in the payload frames.\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				ExampleGenerator.DumpHeaders (Example.ContainerHeadersEncryptIndependentSession);
 				_Output.Write ("\n{0}", _Indent);
 				}
 			}

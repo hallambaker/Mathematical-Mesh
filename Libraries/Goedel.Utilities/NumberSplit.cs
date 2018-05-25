@@ -12,6 +12,24 @@ namespace Goedel.Utilities {
     public static class NumberSplit {
 
         /// <summary>
+        /// Calculate the upper bound for an array index given a specified first position and
+        /// length.
+        /// </summary>
+        /// <param name="Array">The array for which the index value will be calculated.</param>
+        /// <param name="First">The first element to be read.</param>
+        /// <param name="Length">The maximum number of elements to be read. If less 
+        /// than zero, defaults to the size of the array.</param>
+        /// <returns>The upper bound, that is one higher than the last element to
+        /// be read.</returns>
+        public static int GetLast(this Array Array, int First, int Length) {
+            if (Length < 0) {
+                return Array.Length;
+                }
+            return Math.Min(Array.Length, First + Length);
+            }
+
+
+        /// <summary>
         /// Extract bits 0-7 from an integer value
         /// </summary>
         /// <param name="Data">Input</param>
@@ -83,8 +101,19 @@ namespace Goedel.Utilities {
             return (byte)((Data >> 24) & 0xff);
             }
 
-
-
+        /// <summary>
+        /// Convert an array of bytes in bigendian format to an unsigned integer value.
+        /// </summary>
+        /// <param name="Data">The data to convert</param>
+        /// <param name="Count">The number of bytes to convert.</param>
+        /// <returns>The integer value.</returns>
+        public static long BigEndianInt(this byte[] Data, int Count) {
+            long Result = 0;
+            for (var i = 0; i < Count; i++) {
+                Count = (Count << 8) | Data[i];
+                }
+            return Result;
+            }
 
 
         /// <summary>

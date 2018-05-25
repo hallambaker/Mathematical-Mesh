@@ -18,10 +18,13 @@ namespace Goedel.Utilities {
         /// <returns>true if and only if the two arrays are of the same size and each
         /// element is equal.</returns>
         public static bool IsEqualTo(this byte[] Test1, byte[] Test2) {
-            if ((Test1 == null) & (Test2 != null)) {
-                return false;
+            if ((Test1 == null) & (Test2 == null)) {
+                return true;
                 }
             if (Test2 == null) {
+                return false;
+                }
+            if (Test1 == null) {
                 return false;
                 }
             if (Test1.Length != Test2.Length) {

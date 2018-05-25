@@ -83,7 +83,7 @@ namespace Goedel.Mesh.Portal.Client {
 
         /// <summary>The default personal profile</summary>
         public override SessionPersonal Personal {
-            get { return _Personal; }
+            get => _Personal;
             set {
                 if (value != _Personal) {
                     _Personal = value;
@@ -109,7 +109,7 @@ namespace Goedel.Mesh.Portal.Client {
 
         /// <summary>The default device profile</summary>
         public override SessionDevice Device {
-            get { return _Device; }
+            get => _Device;
             set {
                 if (value != _Device) {
                     _Device = value;
@@ -182,9 +182,7 @@ namespace Goedel.Mesh.Portal.Client {
         /// Register the specified device session in the local persistent store.
         /// </summary>
         /// <param name="Profile">The profile to add</param>
-        protected void Register (SessionDevice Profile) {
-            DeviceProfiles.AddSafe(Profile.UDF, Profile); // NYI check if present
-            }
+        protected void Register(SessionDevice Profile) => DeviceProfiles.AddSafe(Profile.UDF, Profile); // NYI check if present
 
 
         /// <summary>

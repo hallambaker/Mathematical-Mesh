@@ -13,9 +13,7 @@ namespace Goedel.Combined.Shell.Client {
     /// </summary>
     public class _Main {
 
-        static _Main() {
-            Goedel.Mesh.Mesh.Initialize();
-            }
+        static _Main() => Mesh.Mesh.Initialize();
 
         static void Main(string[] args) {
             var CommandLineInterpreter = new CommandLineInterpreter();

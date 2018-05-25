@@ -8,6 +8,21 @@ using Goedel.Utilities;
 /// </summary>
 namespace Goedel.Test {
 
+
+    public static class Extensions {
+
+        public static long SecondsInCE (this DateTime Time) => Time.Ticks / 10_000_000;
+        public static long SecondsInCE (this DateTime? Time) => 
+                    Time == null ? -1 : SecondsInCE((DateTime)Time);
+
+        public static bool IsEqualTo (this DateTime First, DateTime Second) =>
+            First.SecondsInCE() == Second.SecondsInCE();
+
+        public static bool IsEqualTo (this DateTime? First, DateTime? Second) =>
+                    First.SecondsInCE() == Second.SecondsInCE();
+
+        }
+
     /// <summary>
     /// 
     /// </summary>

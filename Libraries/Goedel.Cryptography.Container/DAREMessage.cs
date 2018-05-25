@@ -13,7 +13,7 @@ namespace Goedel.Cryptography.Dare {
     /// <summary>
     /// DARE Message class.
     /// </summary>
-    public partial class DAREMessage : DAREMessageObject, IDisposable {
+    public partial class DAREMessage : DAREMessageSequence, IDisposable {
 
 
         /// <summary>
@@ -33,8 +33,8 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// Create a DARE Message instance.
         /// </summary>
-        /// <param name="EncryptionKeys"></param>
-        /// <param name="SignerKeys"></param>
+        /// <param name="EncryptionKeys">List of public keys to create recipient information objects for.</param>
+        /// <param name="SignerKeys">List of private keys to be used to sign the container frame.</param>
         /// <param name="EncryptID">The bulk encryption algorithm to use.</param>
         /// <param name="AuthenticateID">The bulk authentication algorithm to use. If the 
         /// encryption algorithm is an authenticated encryption algorithm, and 
@@ -58,7 +58,7 @@ namespace Goedel.Cryptography.Dare {
                     ) {
 
             Header = new DAREHeader(EncryptionKeys, SignerKeys, EncryptID, AuthenticateID,
-                ContentType, -1,  Cloaked, DataSequences);
+                ContentType, Cloaked, DataSequences);
             Body = Header.Enhance(Plaintext);
             }
 
@@ -95,11 +95,13 @@ namespace Goedel.Cryptography.Dare {
                     byte[] Cloaked = null,
                     List<byte[]> DataSequences = null
                     ) {
+            // NB: This cannot be merged with the JSONBWriter version as it is necessary to
+            // assign JSONBWriter to a local variable so that it is correctly disposed. 
 
             Header = new DAREHeader(EncryptionKeys, SignerKeys, EncryptID, AuthenticateID,
-                ContentType, ContentLength, Cloaked, DataSequences);
+                ContentType, Cloaked, DataSequences);
             JSONBWriter = new JSONBWriter(OutputStream);
-            Writer = Header.EnhancedDataSequenceWriter(JSONBWriter);
+            InitializeStream(JSONBWriter, Plaintext, ContentLength);
             }
 
         JSONBWriter JSONBWriter = null;
@@ -136,13 +138,21 @@ namespace Goedel.Cryptography.Dare {
                     byte[] Cloaked = null,
                     List<byte[]> DataSequences = null
                     ) {
-
             Header = new DAREHeader(EncryptionKeys, SignerKeys, EncryptID, AuthenticateID,
-                ContentType, ContentLength, Cloaked, DataSequences);
-            Writer = Header.EnhancedDataSequenceWriter(OutputStream);
+                ContentType, Cloaked, DataSequences);
+            InitializeStream(OutputStream, Plaintext, ContentLength);
             }
 
+        void InitializeStream (
+            JSONWriter OutputStream,
+            byte[] Plaintext = null,
+            long ContentLength = -1) {
 
+
+            Writer = Header.EnhancedDataSequenceWriter(OutputStream);
+            throw new NYI();
+
+            }
 
         #region IDisposable boilerplate code.
         /// <summary>
@@ -265,10 +275,28 @@ namespace Goedel.Cryptography.Dare {
         public static new DAREMessage FromJSON (JSONReader JSONReader, bool Tagged = true) {
             Assert.False(Tagged, NYI.Throw);
 
+            bool _Going = JSONReader.StartArray();
+
             var Message = ReadHeader(JSONReader);
-            while (!Message.Complete) {
-                var Chunk = Message.ReadChunk();
+
+            _Going = JSONReader.NextArray();
+            if (_Going) {
+                using (var Buffer = new MemoryStream()) {
+                    var More = JSONReader.ReadBinaryIncremental(out var Chunk);
+                    Buffer.Write(Chunk);
+                    while (More) {
+                        More = JSONReader.ReadBinaryIncremental(out Chunk);
+                        Buffer.Write(Chunk);
+                        }
+                    Message.Body = Buffer.ToArray();
+                    }
                 }
+            _Going = JSONReader.NextArray();
+            if (_Going) {
+                throw new NYI(); // NYI: handle message trailers.
+                // read signature from trailer
+                }
+
             return Message;
             }
 
@@ -279,7 +307,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="JSONReader">The stream from which data is to be read.</param>
         /// <returns>The DAREMessage instance.</returns>
         public static DAREMessage ReadHeader (JSONReader JSONReader) {
-            var Header = DAREHeader.FromJSON(JSONReader);
+            var Header = DAREHeader.FromJSON(JSONReader, false);
             return new DAREMessage() {
                 Header = Header
                 };
@@ -289,14 +317,10 @@ namespace Goedel.Cryptography.Dare {
         /// 
         /// </summary>
         /// <returns></returns>
-        public byte[] ReadChunk () {
+        public bool ReadChunk (out byte[] Chunk) {
             throw new NYI();
             }
 
-        /// <summary>
-        /// Used for stream reading, is set when the stream read is complete.
-        /// </summary>
-        public bool Complete => throw new NYI();
 
 
         }

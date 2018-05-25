@@ -17,11 +17,13 @@ namespace Goedel.IO {
             if (Initialized) {
                 return;
                 }
-            Trace.Listeners.Add(new TextWriterTraceListener(Console.Out));
+            Trace.Listeners.Add(new GoedelTraceListener());
 
             var TraceFileStream = "LastTrace.txt".OpenFileWriteShare();
             var TraceWriter = TraceFileStream.OpenTextWriter();
             Trace.Listeners.Add(new TextWriterTraceListener(TraceWriter));
+
+            Initialized = true;
             }
 
         /// <summary>
@@ -45,5 +47,26 @@ namespace Goedel.IO {
             Trace.Write(Text);
             }
 
+        }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public class GoedelTraceListener : TraceListener {
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="message"></param>
+        public override void Write(string message) => Console.Write (message);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="message"></param>
+        public override void WriteLine(string message) {
+
+            Console.WriteLine(message);
+            }
         }
     }

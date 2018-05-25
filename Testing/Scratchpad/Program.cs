@@ -1,5 +1,5 @@
 ﻿using System;
-using System.IO;
+using System.Diagnostics;
 using System.Collections.Generic;
 using Goedel.Cryptography.Dare;
 using Goedel.Mesh;
@@ -8,7 +8,7 @@ using Goedel.Cryptography.Framework;
 using Goedel.Cryptography.KeyFile;
 using Goedel.IO;
 using Goedel.Utilities;
-using Goedel.Protocol;
+using Goedel.Protocol.Test;
 using Goedel.Mesh.Portal.Server;
 using Test.Goedel.Mesh;
 using Test.Goedel.Cryptography.Container;
@@ -21,131 +21,108 @@ namespace Scratchpad {
 
 
     partial class Program {
-        static void Main (string[] args) {
-            CryptographyWindows.Initialize();
-            var Test1 = Platform.GetRandomBytes(1000);
-            var Test2 = Platform.GetRandomBytes(100);
-            var Test3 = Platform.GetRandomBytes(50);
-            var DataSequences = new List<byte[]> { Test2, Test3 };
-            var AlicePrivate = new DiffeHellmanPrivate();
-            var AliceKeypair = new KeyPairDH(AlicePrivate);
-            var AlicePublic = AlicePrivate.DiffeHellmanPublic;
-            var AlicePublicKeypair = new KeyPairDH(AlicePublic);
-            var EncryptionKeys = new List<KeyPair> { AlicePublicKeypair };
+        static void Main(string[] args) {
+            Console.WriteLine("Hello World");
 
-            Console.WriteLine("Blank");
-
-            // Plaintext atomic
-            var Message = new DAREMessage(Test1);
-            Console.WriteLine("Plaintext Atomic");
-            Console.WriteLine(Message.GetJson(false).ToUTF8());
-
-            // Plaintext atomic EDS
-            var MessageAtomicDS = new DAREMessage(Test1, DataSequences: DataSequences);
-            Console.WriteLine("Plaintext Atomic");
-            Console.WriteLine(MessageAtomicDS.GetJson(false).ToUTF8());
-
-
-            // Plaintext atomic
-            var MessageEnc = new DAREMessage(Test1, EncryptionKeys: EncryptionKeys);
-            Console.WriteLine("Plaintext Atomic");
-            Console.WriteLine(MessageEnc.GetJson(false).ToUTF8());
-
-
-            // Plaintext atomic EDS
-            var MessageAtomicDSEnc = new DAREMessage(Test1, EncryptionKeys: EncryptionKeys, DataSequences: DataSequences);
-            Console.WriteLine("Plaintext Atomic");
-            Console.WriteLine(MessageAtomicDSEnc.GetJson(false).ToUTF8());
-
-
-            //// Plaintext fixed
-            //var OutputStreamFixed = new MemoryStream();
-            //var MessageFixed = new DAREMessage(OutputStreamFixed);
-            //WriteBody(MessageFixed, Test1);
-            //Console.WriteLine("Plaintext Fixed");
-            //Console.WriteLine(OutputStreamFixed.ToArray().ToUTF8());
-
-            //// Plaintext variable
-            //var OutputStreamVariable = new MemoryStream();
-            //var MessageVariable = new DAREMessage(OutputStreamVariable);
-            //WriteBody(MessageVariable, Test1, 23);
-            //Console.WriteLine("Plaintext Variable");
-            //Console.WriteLine(OutputStreamVariable.ToArray().ToUTF8());
-
-            //Console.WriteLine();
-            //Console.WriteLine("WithDS");
-
-
-            //// Plaintext fixed
-            //var OutputStreamFixedDS = new MemoryStream();
-            //var MessageFixedDS = new DAREMessage(OutputStreamFixedDS);
-            //WriteBody(MessageFixedDS, Test1);
-            //Console.WriteLine("Plaintext Fixed");
-            //Console.WriteLine(OutputStreamFixedDS.ToArray().ToUTF8());
-
-            //// Plaintext variable
-            //var OutputStreamVariableDS = new MemoryStream();
-            //var MessageVariableDS = new DAREMessage(OutputStreamVariableDS);
-            //WriteBody(MessageVariableDS, Test1, 23);
-            //Console.WriteLine(OutputStreamVariableDS.ToArray().ToUTF8());
-
-            //Console.WriteLine();
-            //Console.WriteLine("Encrypted");
-
-
-            //// Plaintext fixed
-            //var OutputStreamFixedEnc = new MemoryStream();
-            //var MessageFixedEnc = new DAREMessage(OutputStreamFixedEnc, EncryptionKeys: EncryptionKeys);
-            //WriteBody(MessageFixedEnc, Test1);
-            //Console.WriteLine("Plaintext Fixed");
-            //Console.WriteLine(OutputStreamFixedEnc.ToArray().ToUTF8());
-
-            //// Plaintext variable
-            //var OutputStreamVariableEnc = new MemoryStream();
-            //var MessageVariableEnc = new DAREMessage(OutputStreamVariableEnc, EncryptionKeys: EncryptionKeys);
-            //WriteBody(MessageVariableEnc, Test1, 23);
-            //Console.WriteLine("Plaintext Variable");
-            //Console.WriteLine(OutputStreamVariableEnc.ToArray().ToUTF8());
-
-            //Console.WriteLine();
-            //Console.WriteLine("WithDS");
-
-
-
-            //// Plaintext fixed
-            //var OutputStreamFixedDSEnc = new MemoryStream();
-            //var MessageFixedDSEnc = new DAREMessage(OutputStreamFixedDSEnc, EncryptionKeys: EncryptionKeys);
-            //WriteBody(MessageFixedDSEnc, Test1);
-            //Console.WriteLine("Plaintext Fixed");
-            //Console.WriteLine(OutputStreamFixedDSEnc.ToArray().ToUTF8());
-
-            //// Plaintext variable
-            //var OutputStreamVariableDSEnc = new MemoryStream();
-            //var MessageVariableDSEnc = new DAREMessage(OutputStreamVariableDSEnc, EncryptionKeys: EncryptionKeys);
-            //WriteBody(MessageVariableDSEnc, Test1, 23);
-            //Console.WriteLine(OutputStreamVariableDSEnc.ToArray().ToUTF8());
-
-
-            //var Message2 = DAREMessage.FromJSON(MessageBytes.JSONReader());
-
-            //TestDare.TestDirect();
-
-
-            //TestEncryptDecrypt();
-            //TestRecrypt.TestDirect();
-            //TestFileContainer.TestFileContainerDirect();
-            //TestServices.TestServicesDirect();
-            //TestConfirm.TestServicesDirect();
-
-
-            // These test TRD
-            //TestCatalog.TestServicesDirect();
-            //TestSSH.TestServicesDirect();
-            //TestMail.TestServicesDirect();
-            //TestDigests.TestDirect();
-            //TestGoedelCryptography.TestDirect();
-
+            Goedel.IO.Debug.Initialize();
+            GoedelProtocol.TestDirect();
             }
+        
+        //CryptographyWindows.Initialize();
+        //var Test1 = Platform.GetRandomBytes(1000);
+        //var Test2 = Platform.GetRandomBytes(100);
+        //var Test3 = Platform.GetRandomBytes(50);
+        //var DataSequences = new List<byte[]> { Test2, Test3 };
+        //var AlicePrivate = new DiffeHellmanPrivate();
+        //var AliceKeypair = new KeyPairDH(AlicePrivate);
+        //var AlicePublic = AlicePrivate.DiffeHellmanPublic;
+        //var AlicePublicKeypair = new KeyPairDH(AlicePublic);
+        //var EncryptionKeys = new List<KeyPair> { AlicePublicKeypair };
+        //Console.WriteLine("Blank");
+        //JSONReader.Trace = true;
+        
+        //// Plaintext atomic
+        //var Message = new DAREMessage(Test1);
+        //var MessageJSON = Message.GetJson(false);
+        //Console.WriteLine("Plaintext Atomic");
+        //Console.WriteLine(MessageJSON.ToUTF8());
+        //TestDare.CheckDecodeDirect(MessageJSON, Test1);
+        
+        //// Plaintext atomic EDS
+        //var MessageAtomicDS = new DAREMessage(Test1, DataSequences: DataSequences);
+        //Console.WriteLine("Plaintext Atomic");
+        //Console.WriteLine(MessageAtomicDS.GetJson(false).ToUTF8());
+        
+            //// Plaintext atomic
+        //var MessageEnc = new DAREMessage(Test1, EncryptionKeys: EncryptionKeys);
+        //Console.WriteLine("Plaintext Atomic");
+        //Console.WriteLine(MessageEnc.GetJson(false).ToUTF8());
+        //// Plaintext atomic EDS
+        //var MessageAtomicDSEnc = new DAREMessage(Test1, EncryptionKeys: EncryptionKeys, DataSequences: DataSequences);
+        //Console.WriteLine("Plaintext Atomic");
+        //Console.WriteLine(MessageAtomicDSEnc.GetJson(false).ToUTF8());
+        //// Plaintext fixed
+        //var OutputStreamFixed = new MemoryStream();
+        //var MessageFixed = new DAREMessage(OutputStreamFixed);
+        //WriteBody(MessageFixed, Test1);
+        //Console.WriteLine("Plaintext Fixed");
+        //Console.WriteLine(OutputStreamFixed.ToArray().ToUTF8());
+        //// Plaintext variable
+        //var OutputStreamVariable = new MemoryStream();
+        //var MessageVariable = new DAREMessage(OutputStreamVariable);
+        //WriteBody(MessageVariable, Test1, 23);//Console.WriteLine("Plaintext Variable");
+        //Console.WriteLine(OutputStreamVariable.ToArray().ToUTF8());//Console.WriteLine();
+        //Console.WriteLine("WithDS");
+        //// Plaintext fixed
+        //var OutputStreamFixedDS = new MemoryStream();
+        //var MessageFixedDS = new DAREMessage(OutputStreamFixedDS);
+        //WriteBody(MessageFixedDS, Test1);
+        //Console.WriteLine("Plaintext Fixed");
+        //Console.WriteLine(OutputStreamFixedDS.ToArray().ToUTF8());
+        //// Plaintext variable
+        //var OutputStreamVariableDS = new MemoryStream();
+        //var MessageVariableDS = new DAREMessage(OutputStreamVariableDS);
+        //WriteBody(MessageVariableDS, Test1, 23);
+        //Console.WriteLine(OutputStreamVariableDS.ToArray().ToUTF8());
+        //Console.WriteLine();
+        //Console.WriteLine("Encrypted");
+        //// Plaintext fixed
+        //var OutputStreamFixedEnc = new MemoryStream();
+        //var MessageFixedEnc = new DAREMessage(OutputStreamFixedEnc, EncryptionKeys: EncryptionKeys);
+        //WriteBody(MessageFixedEnc, Test1);
+        //Console.WriteLine("Plaintext Fixed");
+        //Console.WriteLine(OutputStreamFixedEnc.ToArray().ToUTF8());
+        //// Plaintext variable
+        //var OutputStreamVariableEnc = new MemoryStream();
+        //var MessageVariableEnc = new DAREMessage(OutputStreamVariableEnc, EncryptionKeys: EncryptionKeys);
+        //WriteBody(MessageVariableEnc, Test1, 23);
+        //Console.WriteLine("Plaintext Variable");
+        //Console.WriteLine(OutputStreamVariableEnc.ToArray().ToUTF8());
+        //Console.WriteLine();
+        //Console.WriteLine("WithDS");
+        //// Plaintext fixed
+        //var OutputStreamFixedDSEnc = new MemoryStream();
+        //var MessageFixedDSEnc = new DAREMessage(OutputStreamFixedDSEnc, EncryptionKeys: EncryptionKeys);//WriteBody(MessageFixedDSEnc, Test1);
+        //Console.WriteLine("Plaintext Fixed");
+        //Console.WriteLine(OutputStreamFixedDSEnc.ToArray().ToUTF8());
+        //// Plaintext variable
+        //var OutputStreamVariableDSEnc = new MemoryStream();
+        //var MessageVariableDSEnc = new DAREMessage(OutputStreamVariableDSEnc, EncryptionKeys: EncryptionKeys);
+        //WriteBody(MessageVariableDSEnc, Test1, 23);
+        //Console.WriteLine(OutputStreamVariableDSEnc.ToArray().ToUTF8());
+        //var Message2 = DAREMessage.FromJSON(MessageBytes.JSONReader());
+        //TestDare.TestDirect();
+        //TestEncryptDecrypt();
+        //TestRecrypt.TestDirect();
+        //TestFileContainer.TestFileContainerDirect();
+        //TestServices.TestServicesDirect();
+        //TestConfirm.TestServicesDirect();
+        // These test TRD
+        //TestCatalog.TestServicesDirect();
+        //TestSSH.TestServicesDirect();
+        //TestMail.TestServicesDirect();
+        //TestDigests.TestDirect();
+        //TestGoedelCryptography.TestDirect();
 
 
 

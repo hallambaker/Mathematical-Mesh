@@ -217,8 +217,6 @@
 			Parameter Host "host" Flag
 			Parameter Client "client" Flag
 
-
-
 		Command SSHKnown "known"
 			Brief "List the known SSH sites"
 			Include PortalAccount

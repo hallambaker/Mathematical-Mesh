@@ -28,77 +28,6 @@ using Goedel.Utilities;
 
 namespace Goedel.Protocol {
 
-    /// <summary>Constants for tagging of JBCD encoded data</summary>
-    public partial class JSONBCD {
-
-
-        /// <summary>8 bit length modifier</summary>
-        public const byte Length8 = 0x00;
-        /// <summary>16 bit length modifier</summary>
-        public const byte Length16 = 0x01;
-        /// <summary>32 bit length modifier</summary>
-        public const byte Length32 = 0x02;
-        /// <summary>64 bit length modifier</summary>
-        public const byte Length64 = 0x03;
-        /// <summary>Bignum length modifier. The following two bytes will give the length of the length,</summary>
-        public const byte LengthBig = 0x05;
-
-        /// <summary>Terminal UTF8 data string chunk</summary>
-        public const byte StringTerm = 0x80;
-        /// <summary>Non-terminal UTF8 data string chunk</summary>
-        public const byte StringChunk = 0x84;
-        /// <summary>Terminal binary data chunk</summary>
-        public const byte DataTerm = 0x88;
-        /// <summary>Non-terminal UTF8 data chunk</summary>
-        public const byte DataChunk = 0x8A;
-
-        /// <summary>Unidirectional frame record</summary>
-        public const byte UFrame = 0xF0;
-        /// <summary>Bidirectional frame record</summary>
-        public const byte BFrame = 0xF4;
-
-        /// <summary>Positive integer base</summary>
-        public const byte PositiveInteger = 0xA0;
-        /// <summary>Negative integer base</summary>
-        public const byte NegativeInteger = 0xA8;
-
-        /// <summary>True boolean value</summary>
-        public const byte True = 0xB0;
-        /// <summary>False boolean value</summary>
-        public const byte False = 0xB1;
-        /// <summary>Null object value</summary>
-        public const byte Null = 0xB2;
-
-        /// <summary>Insert data from tag with specified code.</summary>
-        public const byte TagCode = 0xC0;
-        /// <summary>Define a tag code</summary>
-        public const byte TagDefinition = 0xC4;
-        /// <summary>Define a tag code and insert corresponding data.</summary>
-        public const byte TagCodeDefinition = 0xC8;
-        /// <summary>Define a code dictionary</summary>
-        public const byte TagDictionaryDefinition = 0xCC;
-
-        /// <summary>Insert dictionary with specified hash.</summary>
-        public const byte DictionaryHash = 0xD0;
-
-        /// <summary>16 bit binary floating point value</summary>
-        public const byte BinaryFloat16 = 0x90;
-        /// <summary>32 bit binary floating point value</summary>
-        public const byte BinaryFloat32 = 0x91;
-        /// <summary>64 bit binary floating point value</summary>
-        public const byte BinaryFloat64 = 0x92;
-        /// <summary>128 bit binary floating point value</summary>
-        public const byte BinaryFloat128 = 0x94;
-        /// <summary>80 bit binary floating point value</summary>
-        public const byte Intel80 = 0x95;
-        /// <summary>32 bit decimal floating point value</summary>
-        public const byte DecimalFloat32 = 0x96;
-        /// <summary>64 bit decimal floating point value</summary>
-        public const byte DecimalFloat64 = 0x97;
-        /// <summary>128 bit decimal floating point value</summary>
-        public const byte DecimalFloat128 = 0x98;
-        }
-
     /// <summary>
     /// JSON Writer for JSON-B, a superset of JSON encoding with codes that permit
     /// efficient encoding of binary data and strings and encoding of floating point
@@ -106,14 +35,7 @@ namespace Goedel.Protocol {
     /// </summary>
     public class JSONBWriter : JSONWriter {
 
-        /// <summary>
-        /// Return the contents of the writer as a string. This is not recommended
-        /// as transcoding binary data will lead to errors.
-        /// </summary>
-        /// <returns>Current buffered contents as string</returns>
-        public override string ToString() {
-            return Output.GetUTF8();
-            }
+
 
         /// <summary>
         /// Create a new JSON Writer.
@@ -195,7 +117,8 @@ namespace Goedel.Protocol {
         /// <param name="Tag">Tag text.</param>
         /// <param name="IndentIn">Current indent level.</param>
         public override void WriteToken(string Tag, int IndentIn) {
-            WriteString(Tag);
+            WriteTag(JSONBCD.TagString, Tag.Length);
+            Output.Write(Tag);
             }
 
         /// <summary>Write 32 bit integer.</summary>

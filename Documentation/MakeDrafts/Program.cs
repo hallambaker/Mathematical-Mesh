@@ -1,9 +1,11 @@
 ﻿using System;
 using System.IO;
 using Goedel.Mesh;
+
 //using Goedel.Mesh.Local;
 //using Goedel.Mesh.Client;
 //using Goedel.Mesh.Server;
+using Goedel.Protocol;
 using Goedel.Protocol.Debug;
 
 namespace ExampleGenerator {
@@ -29,9 +31,14 @@ namespace ExampleGenerator {
             //MakeClean();
 
             GoDareMessage();
+            //JSONReader.Trace = true;
+
+            GoContainer();
+
+
 
             //GoKeyExchange();
-            //GoContainer();
+
             GoMesh();
 
             // Make the documentation

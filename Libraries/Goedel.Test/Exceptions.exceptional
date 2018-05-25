@@ -1,13 +1,10 @@
 ﻿
-Namespace Template
+Namespace Goedel.Test
 
 
-	Exception NYI
-        Console "The feature has not been implemented"
+
+
+	Exception Compare
+        Console "An comparison check on the produced result failed"
 		Description
-			|This feature has not been implemented
-
-	Exception Internal
-        Console "An internal error occurred"
-		Description
-			|An internal assertion check failed.
+			|An comparison check on the produced result failed

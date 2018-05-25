@@ -31,51 +31,42 @@ namespace Goedel.Protocol {
     /// </summary>
     public abstract class Reader {
 
-        /// <summary>Input stream</summary>
-        protected CharacterStream Input;
 
-        /// <summary>Get next character without advancing stream</summary>
-        /// <returns>The next character in the stream</returns> 
-        protected char LookNext() {
-            return Input.LookNext();
-            }
+        ///// <summary>Input stream</summary>
+        //protected CharacterStream InputCS;
 
-        /// <summary>Get next character and advance stream</summary>
-        /// <returns>The character received</returns>
-        protected char GetNext() {
-            return Input.GetNext();
-            }
+        ///// <summary>Get next character without advancing stream</summary>
+        ///// <returns>The next character in the stream</returns> 
+        //protected char LookNext() => InputCS.LookNext();
 
-        /// <summary>If true, end of file has been reached</summary>
-        protected bool EOF => Input.EOF;
+        ///// <summary>Get next character and advance stream</summary>
+        ///// <returns>The character received</returns>
+        //protected char GetNext() => InputCS.GetNext();
 
-        /// <summary>Set the input reader</summary>
-        /// <param name="InputIn">Input source</param>
-        protected void SetReader(TextReader InputIn) {
-            Input = new TextCharacterTextStream(InputIn);
-            }
+        ///// <summary>If true, end of file has been reached</summary>
+        //protected bool EOF => InputCS.EOF;
 
-        /// <summary>Set the input reader</summary>
-        /// <param name="InputIn">Input source</param>
-        protected void SetReader(string InputIn) {
-            Input = new StringCharacterStream(InputIn);
-            }
+        ///// <summary>Set the input reader</summary>
+        ///// <param name="InputIn">Input source</param>
+        //protected void SetReader(TextReader InputIn) => InputCS = new TextCharacterTextStream(InputIn);
 
-        /// <summary>Default constructor</summary>
-        public Reader() {
-            }
+        ///// <summary>Set the input reader</summary>
+        ///// <param name="InputIn">Input source</param>
+        //protected void SetReader(string InputIn) {
+        //    InputCS = new StringCharacterStream(InputIn);
+        //    }
 
-        /// <summary>Constructor from string source</summary>
-        /// <param name="BufferIn">Input source</param>
-        public Reader(string BufferIn) {
-            SetReader(BufferIn);
-            }
+        ///// <summary>Default constructor</summary>
+        //public Reader() {
+        //    }
 
-        /// <summary>Constructor from stream source</summary>
-        /// <param name="InputIn">Input source</param>
-        public Reader(TextReader InputIn) {
-            SetReader(InputIn);
-            }
+        ///// <summary>Constructor from string source</summary>
+        ///// <param name="BufferIn">Input source</param>
+        //public Reader(string BufferIn) => SetReader(BufferIn);
+
+        ///// <summary>Constructor from stream source</summary>
+        ///// <param name="InputIn">Input source</param>
+        //public Reader(TextReader InputIn) => SetReader(InputIn);
 
         /// <summary>Get start of object</summary>
         /// <returns>True if start of object found</returns>
@@ -107,6 +98,13 @@ namespace Goedel.Protocol {
         /// <summary>Read binary date</summary>
         /// <returns>Value read</returns>
         abstract public byte[] ReadBinary();
+
+        /// <summary>
+        /// Attempt to read a binary object in incremental mode.
+        /// </summary>
+        /// <param name="Chunk">The data read.</param>
+        /// <returns>True if there is more data to be read</returns>
+        abstract public bool ReadBinaryIncremental (out byte[] Chunk);
 
         /// <summary>Read string</summary>
         /// <returns>Value read</returns>
@@ -174,9 +172,7 @@ namespace Goedel.Protocol {
 
         readonly static byte[] NullBuffer = new byte[0];
         /// <summary>Write empty binary data sequence</summary>
-        public void WriteBinary () {
-            WriteBinary(NullBuffer);
-            }
+        public void WriteBinary() => WriteBinary(NullBuffer);
 
 
         /// <summary>Write integer value token</summary>

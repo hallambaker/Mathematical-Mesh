@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Goedel.Utilities;
 
 
@@ -12,13 +12,13 @@ namespace Goedel.Cryptography {
     public class CryptographicException : global::System.Exception {
 
 		/// <summary>
-        /// Construct instance for exception "A cryptographic exception occurred"
+        /// Construct instance for exception "A cryptographic exception occurred.."
         /// </summary>		
-		public CryptographicException () : base ("A cryptographic exception occurred") {
+		public CryptographicException () : base ("A cryptographic exception occurred..") {
 			}
         
 		/// <summary>
-        /// Construct instance for exception "A cryptographic exception occurred"
+        /// Construct instance for exception "A cryptographic exception occurred.."
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
 		public CryptographicException (string Description) : base (Description) {

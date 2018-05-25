@@ -54,23 +54,27 @@ namespace Goedel.Utilities  {
 
         #region // Conversion table constants
 
-        private static char[] BASE16 = new char[]{
+        /// <summary></summary>
+        public static readonly char[] BASE16 = new char[]{
                     '0', '1', '2', '3', '4', '5', '6', '7',
                     '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
 
-        private static char[] BASE32 = new char[]{
+        /// <summary></summary>
+        public static readonly char[] BASE32 = new char[]{
                     'A' , 'B', 'C', 'D', 'E', 'F', 'G', 'H',
                      'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
                      'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X',
                      'Y', 'Z', '2', '3', '4', '5', '6', '7'};
 
-        private static char[] BASE32HEX = new char[]{
+        /// <summary></summary>
+        public static readonly char[] BASE32HEX = new char[]{
                     '0' , '1', '2', '3', '4', '5', '6', '7',
                      '8', '9', 'A', 'B', 'C', 'D', 'E', 'F',
                      'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N',
                      'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V'};
 
-        private static char[] BASE64URL = new char[]{
+        /// <summary></summary>
+        public static readonly char[] BASE64URL = new char[]{
                     'A' , 'B', 'C', 'D', 'E', 'F', 'G', 'H',
                      'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
                      'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X',
@@ -80,7 +84,8 @@ namespace Goedel.Utilities  {
                      'w', 'x', 'y', 'z', '0', '1', '2', '3',
                      '4', '5', '6', '7', '8', '9', '-', '_'};
 
-        private static char[] BASE64 = new char[]{
+        /// <summary></summary>
+        public static readonly char[] BASE64 = new char[]{
                     'A' , 'B', 'C', 'D', 'E', 'F', 'G', 'H',
                      'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
                      'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X',
@@ -90,7 +95,8 @@ namespace Goedel.Utilities  {
                      'w', 'x', 'y', 'z', '0', '1', '2', '3',
                      '4', '5', '6', '7', '8', '9', '+', '/'};
 
-        private static byte[] BASE16Value = new byte[] {
+        /// <summary></summary>
+        public static readonly byte[] BASE16Value = new byte[] {
                     255, 255, 255, 255,  255, 255, 255, 255,   //  0-7
                     255, 255, 255, 255,  255, 255, 255, 255,   //  8-15
                     255, 255, 255, 255,  255, 255, 255, 255,   //  16-23
@@ -109,7 +115,8 @@ namespace Goedel.Utilities  {
                     255, 255, 255, 255,  255, 255, 255, 255,   // 120-127
         };
 
-        private static byte[] BASE32Value = new byte[] {
+        /// <summary></summary>
+        public static readonly byte[] BASE32Value = new byte[] {
                     255, 255, 255, 255,  255, 255, 255, 255,   //  0-7
                     255, 255, 255, 255,  255, 255, 255, 255,   //  8-15
                     255, 255, 255, 255,  255, 255, 255, 255,   //  16-23
@@ -152,7 +159,8 @@ namespace Goedel.Utilities  {
         // For reverse conversion permit either Base64 (+/) 
         // or Base64Url (-_) encodings of 62 and 63
         // 
-        private static byte[] BASE64Value = new byte[] {
+        /// <summary></summary>
+        public static readonly byte[] BASE64Value = new byte[] {
                     255, 255, 255, 255,  255, 255, 255, 255,   //  0-7
                     255, 255, 255, 255,  255, 255, 255, 255,   //  8-15
                     255, 255, 255, 255,  255, 255, 255, 255,   //  16-23
@@ -476,13 +484,17 @@ namespace Goedel.Utilities  {
         /// <param name="First">The index position of the first byte to convert.</param>
         /// <param name="Length">The number of bytes to convert</param>
         /// <param name="Format">Specifies the output format</param>
+        /// <param name="OutputCol">The initial ouput column</param>
+        /// <param name="OutputMax">The maximum output width.</param>
         /// <returns>The encoded data</returns>
         public static string ToStringBase64url (
                 this byte[] Data,
                 int First = 0,
                 int Length = -1,
-                ConversionFormat Format = ConversionFormat.None) => StringBuilderConvertBits.Convert(
-                        BASE64URL, 6, Format, Data, First, Length);
+                ConversionFormat Format = ConversionFormat.None,
+                int OutputCol=0, int OutputMax=70) => 
+                    StringBuilderConvertBits.Convert(BASE64URL, 6, Format, Data, First, Length,
+                        OutputCol, OutputMax);
 
         /// <summary>
         /// Convert data to Base64URL and append to the specified stringbuilder.
