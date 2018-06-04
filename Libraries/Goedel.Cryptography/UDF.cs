@@ -70,15 +70,10 @@ namespace Goedel.Cryptography {
     /// Class implementing the Uniform Data Fingerprint spec.
     /// </summary>
     public static class UDF {
-
-        static int _DefaultBits = 150;
         /// <summary>
         /// Default number of UDF bits (usually 150).
         /// </summary>
-        public static int DefaultBits {
-            get { return _DefaultBits; }
-            set { _DefaultBits = value; }
-            }
+        public static int DefaultBits { get; set; } = 150;
 
         /// <summary>
         /// Compute UDF from binary data and content type with specified precision.
@@ -247,9 +242,7 @@ namespace Goedel.Cryptography {
         /// <param name="Data">Data to be fingerprinted.</param>
         /// <param name="Bits">Precision, must be a multiple of 25 bits.</param>
         /// <returns>The binary UDF fingerprint.</returns>
-        public static byte[] FromEscrowed(byte[] Data, int Bits=0) {
-            return From(UDFConstants.EscrowedKey, Data, Bits);
-            }
+        public static byte[] FromEscrowed(byte[] Data, int Bits = 0) => From(UDFConstants.EscrowedKey, Data, Bits);
 
 
         /// <summary>
@@ -257,9 +250,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="Data">Data to be fingerprinted.</param>
         /// <returns>The binary UDF fingerprint.</returns>
-        public static byte[] FromKeyInfo(byte[] Data) {
-            return From(UDFConstants.PKIXKey, Data, DefaultBits);
-            }
+        public static byte[] FromKeyInfo(byte[] Data) => From(UDFConstants.PKIXKey, Data, DefaultBits);
 
         /// <summary>
         /// Calculate a UDF fingerprint from a PKIX KeyInfo blob with specified precision.
@@ -267,9 +258,7 @@ namespace Goedel.Cryptography {
         /// <param name="Data">Data to be fingerprinted.</param>
         /// <param name="Bits">Precision, must be a multiple of 25 bits.</param>
         /// <returns>The binary UDF fingerprint.</returns>
-        public static byte[] FromKeyInfo(byte[] Data, int Bits=0) {
-            return From(UDFConstants.PKIXKey, Data, Bits);
-            }
+        public static byte[] FromKeyInfo(byte[] Data, int Bits = 0) => From(UDFConstants.PKIXKey, Data, Bits);
 
         /// <summary>
         /// Calculate a UDF fingerprint from a pair of fingerprints with specified precision.
@@ -324,18 +313,14 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="Data">Input data.</param>
         /// <returns>The UDF value as a string.</returns>
-        public static string ToString(byte[] Data) {
-            return Data.ToStringBase32(Format: ConversionFormat.Dash5);
-            }
+        public static string ToString(byte[] Data) => Data.ToStringBase32(Format: ConversionFormat.Dash5);
 
 
         /// <summary>
         /// Return a random sequence as a UDF 
         /// </summary>
         /// <returns>A randomly generated UDF string.</returns>
-        public static string Random() {
-            return Random(DefaultBits);
-            }
+        public static string Random() => Random(DefaultBits);
 
         /// <summary>
         /// Return a random sequence as a UDF 
@@ -357,18 +342,13 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="Test">Expected value</param>
         /// <param name="Value">Comparison value.</param>
-        public static void Validate (string Test, string Value) {
-            Assert.False(Test != Value, FingerprintMatchFailed.Throw);
-
-            }
+        public static void Validate(string Test, string Value) => Assert.False(Test != Value, FingerprintMatchFailed.Throw);
 
         /// <summary>Convert address and fingerprint value to Strong Internet Name.</summary>
         /// <param name="Address">DNS address.</param>
         /// <param name="UDF">Fingerprint value.</param>
         /// <returns>The strong name.</returns>
-        public static string MakeStrongName (string Address, string UDF) {
-            return Address + ".mm--" + UDF.ToLower();
-            }
+        public static string MakeStrongName(string Address, string UDF) => Address + ".mm--" + UDF.ToLower();
 
         /// <summary>Parse an RFC822 address to extract strong name component if present.</summary>
         /// <param name="Address">The Internet address.</param>
@@ -443,9 +423,7 @@ namespace Goedel.Cryptography {
         /// <param name="Data">Data to be fingerprinted.</param>
         /// <param name="Bits">Precision, must be a multiple of 25 bits.</param>
         /// <returns>The UDF fingerprint.</returns>
-        public static string UTF8String (this byte[] Data, string ContentType, int Bits = 125) {
-            return UDF.ToString(ContentType, Data, Bits);
-            }
+        public static string UTF8String(this byte[] Data, string ContentType, int Bits = 125) => UDF.ToString(ContentType, Data, Bits);
 
         }
     }

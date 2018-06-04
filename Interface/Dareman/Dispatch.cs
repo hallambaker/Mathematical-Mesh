@@ -6,6 +6,7 @@ using Goedel.IO;
 using Goedel.Mesh;
 using Goedel.Mesh.Portal.Client;
 using Goedel.Recrypt;
+
 //using Goedel.Confirm;
 using Goedel.Recrypt.Client;
 using Goedel.Mesh.Platform.Windows;
@@ -29,6 +30,8 @@ namespace Goedel.Mesh.DareMan {
 
 
         public Shell () {
+
+            
             MeshRecrypt.Initialize();
             
 

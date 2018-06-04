@@ -34,7 +34,7 @@ namespace Goedel.Mesh.Mail.Test {
             InitializeClass();
             var Instance = new TestMail();
 
-            Instance.CatalogCredential();
+            //Instance.CatalogCredential();
 
             }
 
@@ -56,8 +56,8 @@ namespace Goedel.Mesh.Mail.Test {
 
         //static SessionPersonal AlicePersonal;
 
-        static SessionPersonal AliceMeshDevice1=null;
-        static SessionPersonal AliceMeshDevice2=null;
+        //static SessionPersonal AliceMeshDevice1=null;
+        //static SessionPersonal AliceMeshDevice2=null;
 
 
         public static void InitializeClass () {
@@ -76,38 +76,38 @@ namespace Goedel.Mesh.Mail.Test {
         #endregion
 
 
-        [TestMethod]
-        public void CatalogCredential () {
+        //[TestMethod]
+        //public void CatalogCredential () {
 
-            // create profile
-            var CredentialProfile = new CredentialProfile() { };
-            var CredentialSession = AliceMeshDevice1.Create(CredentialProfile);
+        //    // create profile
+        //    var CredentialProfile = new CredentialProfile() { };
+        //    var CredentialSession = AliceMeshDevice1.Create(CredentialProfile);
 
-            // add  entry
-            var CatalogEntry = new CredentialEntry() {
-                    Sites=new List<string>() { "Site"},
-                    Password="First"};
-            CredentialSession.Add(CatalogEntry);
+        //    // add  entry
+        //    var CatalogEntry = new CredentialEntry() {
+        //            Sites=new List<string>() { "Site"},
+        //            Password="First"};
+        //    CredentialSession.Add(CatalogEntry);
 
-            // get  entry
-            var CredentialSession2 = AliceMeshDevice2.SessionCredential();
-            var Result1 = CredentialSession.Get ("Site");
+        //    // get  entry
+        //    var CredentialSession2 = AliceMeshDevice2.SessionCredential();
+        //    var Result1 = CredentialSession.Get ("Site");
 
 
-            // update  entry
-            CatalogEntry.Password = "new";
-            CredentialSession.Update(CatalogEntry);
+        //    // update  entry
+        //    CatalogEntry.Password = "new";
+        //    CredentialSession.Update(CatalogEntry);
 
-            // get  entry
-            var CredentialSession3 = AliceMeshDevice2.SessionCredential();
-            var Result2 = CredentialSession.Get("Site");
+        //    // get  entry
+        //    var CredentialSession3 = AliceMeshDevice2.SessionCredential();
+        //    var Result2 = CredentialSession.Get("Site");
 
-            // delete entry - not found
-            CredentialSession.Delete("Site");
-            var Result3 = CredentialSession.Get("Site");
+        //    // delete entry - not found
+        //    CredentialSession.Delete("Site");
+        //    var Result3 = CredentialSession.Get("Site");
 
-            throw new NYI();
-            }
+        //    throw new NYI();
+        //    }
 
 
         [TestMethod]

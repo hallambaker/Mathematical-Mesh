@@ -13,7 +13,7 @@
     <ProjectReference Include="..\..\..\Libraries\Core\Goedel.Discovery\Goedel.Discovery.csproj" />
     <ProjectReference Include="..\..\..\Libraries\Core\Goedel.IO\Goedel.IO.csproj" />
     <ProjectReference Include="..\..\..\Libraries\Core\Goedel.Utilities\Goedel.Utilities.csproj" />
-    <ProjectReference Include="..\..\..\Libraries\Goedel.Cryptography.Container\Goedel.Cryptography.Container.csproj" />
+    <ProjectReference Include="..\..\..\Libraries\Goedel.Cryptography.Dare\Goedel.Cryptography.Dare.csproj" />
     <ProjectReference Include="..\..\..\Libraries\Goedel.Cryptography.Jose\Goedel.Cryptography.Jose.csproj" />
     <ProjectReference Include="..\..\..\Libraries\Goedel.Cryptography\Goedel.Cryptography.csproj" />
     <ProjectReference Include="..\..\..\Libraries\Goedel.Mesh\Goedel.Mesh.csproj" />
@@ -23,16 +23,16 @@
 
   <ItemGroup>
     <Compile Update="MeshProtocol.cs">
-      <DependentUpon>MeshProtocol.Protocol</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
+      <DependentUpon>MeshProtocol.Protocol</DependentUpon>
     </Compile>
   </ItemGroup>
 
   <ItemGroup>
     <None Update="MeshProtocol.Protocol">
+      <Generator>ProtoGen</Generator>
       <LastGenOutput>MeshProtocol.cs</LastGenOutput>
-      <Generator>Protogen</Generator>
     </None>
   </ItemGroup>
 

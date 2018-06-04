@@ -21,7 +21,7 @@
 //  
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 using System.Numerics;
 using Goedel.Utilities;
 
@@ -56,34 +56,26 @@ namespace Goedel.Cryptography {
         /// Create a new random secret with the specified number of bits.
         /// </summary>
         /// <param name="Bits">Nyumber of bits in the secret</param>
-        public Secret(int Bits) {
-            Key = CryptoCatalog.GetBits(Bits);
-            }
+        public Secret(int Bits) => Key = CryptoCatalog.GetBits(Bits);
 
         /// <summary>
         /// Create a secret from the specified key value.
         /// </summary>
         /// <param name="Key">The key value.</param>
-        public Secret(byte[] Key) {
-            this.Key = Key;
-            }
+        public Secret(byte[] Key) => this.Key = Key;
 
         /// <summary>
         /// Recreate a secret from the specified shares.
         /// </summary>
         /// <param name="Shares">The shares to be recombined.</param>
-        public Secret(KeyShare[] Shares) {
-            this.Key = Combine(Shares);
-            }
+        public Secret(KeyShare[] Shares) => Key = Combine(Shares);
 
         /// <summary>
         /// Recreate a secret from shares specified as Base32 encoded strings.
         /// </summary>
         /// <param name="Shares">The shares to be recombined.</param>
-        public Secret (string[] Shares) {
-
-            var KeyShares = new KeyShare[Shares.Length];
-
+        public Secret (IEnumerable<string> Shares) {
+            var KeyShares = new KeyShare[Shares.Count()];
             int i = 0;
             foreach (var Share in Shares) {
                 var Bytes = BaseConvert.FromBase32(Share);
@@ -105,9 +97,7 @@ namespace Goedel.Cryptography {
         /// Hash code of the current class.
         /// </summary>
         /// <returns>Hash code of object instance.</returns>
-        public override int GetHashCode() {
-            return Text.GetHashCode();
-            }
+        public override int GetHashCode() => Text.GetHashCode();
 
         /// <summary>Test for equality
         /// </summary>
@@ -117,8 +107,7 @@ namespace Goedel.Cryptography {
             if (obj == null) {
                 return false;
                 }
-            Secret p = obj as Secret;
-            if ((System.Object)p == null) {
+            if (!(obj is Secret p)) {
                 return false;
                 }
             if (KeyBytes != p.KeyBytes) {
@@ -209,9 +198,7 @@ namespace Goedel.Cryptography {
         /// Create a set of 2 key shares with a quorum of 2.
         /// </summary>
         /// <returns>The key shares created.</returns> 
-        public KeyShare[] Split() {
-            return Split(2);
-            }
+        public KeyShare[] Split() => Split(2);
 
         /// <summary>
         /// Create a set of N key shares with a quorum of N.
@@ -246,7 +233,7 @@ namespace Goedel.Cryptography {
                 }
             }
 
-        static byte[] Combine(KeyShare[] Shares) {
+        static byte[] Combine( KeyShare[] Shares) {
             //var KeyBytes = 16; //Shares[0].Key.Length;
             var Threshold = Shares[0].Threshold;
             foreach (var Share in Shares) {

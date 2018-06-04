@@ -31,15 +31,10 @@ namespace Goedel.Cryptography {
     /// </summary>
     public class KeyHandle {
 
-        string _UDF;
-
         /// <summary>
         /// UDF fingerprint of the key
         /// </summary>
-        public string UDF {
-            get { return _UDF; }
-            set { _UDF = value; }
-            }
+        public string UDF { get; set; }
 
         /// <summary>
         /// Construct by key fingerprint
@@ -82,26 +77,15 @@ namespace Goedel.Cryptography {
 
             }
 
-        Certificate _Certificate;
-
         /// <summary>
         /// X.509 v3 Certificate for this key and set of uses.
         /// </summary>
-        public Certificate Certificate {
-            get { return _Certificate; }
-            set { _Certificate = value; }
-            }
-
-
-        List<Certificate> _CertificateChain;
+        public Certificate Certificate { get; set; }
 
         /// <summary>
         /// X.509 v3 Certificate chain validating this certificate.
         /// </summary>
-        public List<Certificate> CertificateChain {
-            get { return _CertificateChain; }
-            set { _CertificateChain = value; }
-            }
+        public List<Certificate> CertificateChain { get; set; }
 
         }
 
@@ -177,9 +161,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="Base">The base identifier.</param>
         /// <returns>The computed CryptoAlgorithmID</returns>
-        public virtual CryptoAlgorithmID SignatureAlgorithmID(CryptoAlgorithmID Base) {
-            return Base;
-            }
+        public virtual CryptoAlgorithmID SignatureAlgorithmID(CryptoAlgorithmID Base) => Base;
 
 
 
@@ -340,9 +322,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="KeyPair">Public key pair to perform agreement to.</param>
         /// <returns>The result of the key agreement.</returns>
-        public virtual KeyAgreementResult Agreement (KeyPair KeyPair) {
-            throw new CryptographicOperationNotSupported();
-            }
+        public virtual KeyAgreementResult Agreement(KeyPair KeyPair) => throw new CryptographicOperationNotSupported();
 
         }
 

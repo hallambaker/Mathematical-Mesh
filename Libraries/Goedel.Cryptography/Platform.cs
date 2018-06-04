@@ -16,10 +16,9 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Static initializer
         /// </summary>
-        static Platform () {
+        static Platform() =>
             // Add the providers defined in the portable library to the catalog.
             FindLocalDelegates.Add(KeyPairDH.FindLocalDH);
-            }
 
         /// <summary>Default SHA-2-512 provider optimized for small data items</summary>
         /// <remarks>This delegate must bound to the platform
@@ -154,9 +153,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="Length">Number of bits to get</param>
         /// <returns>Random data</returns>
-        public static byte[] GetRandomBits(int Length) {
-            return GetRandomBytes(Length/8);
-            }
+        public static byte[] GetRandomBits(int Length) => GetRandomBytes(Length / 8);
 
         /// <summary>
         /// Get a Big integer with a specified number of random bits.

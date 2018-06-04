@@ -27,12 +27,14 @@ prebuildRecurse :
 	cd ..\..\Goedel.Registry && nmake /c /f VS.make prebuild 
 	cd ..\..\Goedel.Utilities && nmake /c /f VS.make prebuild 
 	cd ..\..\Goedel.FSR && nmake /c /f VS.make prebuild 
+	cd ..\..\Goedel.Discovery && nmake /c /f VS.make prebuild 
 
 
 postbuildRecurse :
 	cd ..\..\Goedel.Registry && nmake /c /f VS.make postbuild 
 	cd ..\..\Goedel.Utilities && nmake /c /f VS.make postbuild 
 	cd ..\..\Goedel.FSR && nmake /c /f VS.make postbuild 
+	cd ..\..\Goedel.Discovery && nmake /c /f VS.make postbuild 
 
 
 prebuild : prebuildRecurse $(ToolTargets)

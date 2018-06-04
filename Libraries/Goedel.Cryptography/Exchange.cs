@@ -42,7 +42,7 @@ namespace Goedel.Cryptography {
             CryptoAlgorithmClass.Exchange;
 
         /// <summary>Return the crypto algorithm class.</summary>
-        public override CryptoAlgorithmClass AlgorithmClass => _AlgorithmClass; 
+        public override CryptoAlgorithmClass AlgorithmClass => _AlgorithmClass;
 
         /// <summary>
         /// Extract the actual algorithm ID from the requested Algorithm ID. This allows
@@ -50,9 +50,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="BaseAlgorithm">Base ID</param>
         /// <returns>Selected ID.</returns>
-        protected virtual CryptoAlgorithmID SetOptions (CryptoAlgorithmID BaseAlgorithm) {
-            return BaseAlgorithm.Meta();
-            }
+        protected virtual CryptoAlgorithmID SetOptions(CryptoAlgorithmID BaseAlgorithm) => BaseAlgorithm.Meta();
 
 
         /// <summary>
@@ -119,9 +117,7 @@ namespace Goedel.Cryptography {
         /// <param name="Text">Text to be converted to UTF8 and encrypted.</param>
         /// <param name="Algorithm">The enncryption algorithm to use.</param>
         /// <returns>The encoder</returns>
-        public CryptoDataEncoder Encrypt(string Text, CryptoAlgorithmID Algorithm = CryptoAlgorithmID.Default) {
-            return Encrypt(Encoding.UTF8.GetBytes(Text), Algorithm);
-            }
+        public CryptoDataEncoder Encrypt(string Text, CryptoAlgorithmID Algorithm = CryptoAlgorithmID.Default) => Encrypt(Encoding.UTF8.GetBytes(Text), Algorithm);
 
         /// <summary>
         /// Encrypt the bulk key.

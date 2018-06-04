@@ -31,30 +31,22 @@ namespace Goedel.Cryptography {
         /// to the server.</summary>
         /// <param name="Length">The key length in bits</param>
         /// <returns>The key value</returns>
-        public virtual byte[] ClientToServerAuthenticate(int Length) {
-            return Derive(SaltClientToServerAuthenticate, Length);
-            }
+        public virtual byte[] ClientToServerAuthenticate(int Length) => Derive(SaltClientToServerAuthenticate, Length);
         /// <summary>Key used to authenticate messages send by the server, i.e. the responder
         /// to the client.</summary>
         /// <param name="Length">The key length in bits</param>
         /// <returns>The key value</returns>
-        public virtual byte[] ClientToServerToClientAuthenticate(int Length) {
-            return Derive(SaltServerToClientAuthenticate, Length);
-            }
+        public virtual byte[] ClientToServerToClientAuthenticate(int Length) => Derive(SaltServerToClientAuthenticate, Length);
         /// <summary>Key used to encrypt messages send by the client, i.e. the initiator
         /// to the server.</summary>
         /// <param name="Length">The key length in bits</param>
         /// <returns>The key value</returns>
-        public virtual byte[] ClientToServerEncrypt(int Length) {
-            return Derive(SaltClientToServerEncrypt, Length);
-            }
+        public virtual byte[] ClientToServerEncrypt(int Length) => Derive(SaltClientToServerEncrypt, Length);
         /// <summary>Key used to encrypt messages send by the server, i.e. the responder
         /// to the client.</summary>
         /// <param name="Length">The key length in bits</param>
         /// <returns>The key value</returns>
-        public virtual byte[] ServerToClientEncrypt(int Length) {
-            return Derive(SaltServerToClientEncrypt, Length);
-            }
+        public virtual byte[] ServerToClientEncrypt(int Length) => Derive(SaltServerToClientEncrypt, Length);
 
         /// <summary>
         /// Key Derivation function

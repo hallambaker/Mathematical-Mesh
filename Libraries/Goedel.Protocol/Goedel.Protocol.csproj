@@ -17,14 +17,6 @@
     <DocumentationFile>bin\Release\netstandard2.0\Goedel.Protocol.xml</DocumentationFile>
   </PropertyGroup>
 
-
-
-  <ItemGroup>
-    <ApplicationDefinition Include="JSONTokenizer.fsm">
-      <Generator>fsrcs</Generator>
-    </ApplicationDefinition>
-  </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\Core\Goedel.Discovery\Goedel.Discovery.csproj" />
     <ProjectReference Include="..\Core\Goedel.FSR\Goedel.FSR.csproj" />
@@ -42,20 +34,12 @@
       <DependentUpon>MessageBase.protocol</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Update="JSONTokenizer.cs">
-      <DependentUpon>JSONTokenizer.fsm</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
     </Compile>  
   </ItemGroup>
 
   <ItemGroup>
     <None Update="Exceptions.exceptional">
       <Generator>exceptional</Generator>
-    </None>
-    <None Update="JSONTokenizer.fsm">
-      <Generator>fsrcs</Generator>
     </None>
     <None Update="MessageBase.protocol">
       <LastGenOutput>MessageBase.cs</LastGenOutput>

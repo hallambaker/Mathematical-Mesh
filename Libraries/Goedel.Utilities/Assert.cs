@@ -47,6 +47,20 @@ namespace Goedel.Utilities {
     /// </summary>
     public static class Assert {
 
+        /// <summary>
+        /// Cache and return a value. This is used to produce compact expression
+        /// body methods for properties that are only evaluated the first time
+        /// they are called.
+        /// </summary>
+        /// <typeparam name="T">The type of data to be cached.</typeparam>
+        /// <param name="Value">The value to be stored.</param>
+        /// <param name="Store">The store that the value is to be written to.</param>
+        /// <returns>The stored value.</returns>
+        public static T CacheValue <T> (this T Value, out T Store) where T : class {
+            Store = Value;
+            return Value;
+            }
+
 
         /// <summary>Throw an exception if the specified condition is true. 
         ///Assert.False (test, NYIException.Throw, "test was true")
@@ -73,10 +87,7 @@ namespace Goedel.Utilities {
         /// <param name="Reason">Reason data for filling throw template</param>
         /// <param name="Int">Integer default parameter</param>
         /// <param name="String">String default parameter</param>
-        public static void NYI (object Reason = null, string String = null, int Int = -1) {
-
-            Fail(Utilities.NYI.Throw, Reason, String, Int);
-            }
+        public static void NYI(object Reason = null, string String = null, int Int = -1) => Fail(Utilities.NYI.Throw, Reason, String, Int);
 
         /// <summary>Throw an exception if the specified condition is true. 
         ///Assert.False (test, NYIException.Throw, "test was true")
@@ -118,10 +129,8 @@ namespace Goedel.Utilities {
         /// <param name="Reason">Reason data for filling throw template</param>
         /// <param name="Int">Integer default parameter</param>
         /// <param name="String">String default parameter</param>
-        public static void Null(object Object, ThrowDelegate Throw=null,
-                    object Reason = null, string String = null, int Int = -1) {
-            True(Object == null, Throw, Reason, String, Int);
-            }
+        public static void Null(object Object, ThrowDelegate Throw = null,
+                    object Reason = null, string String = null, int Int = -1) => True(Object == null, Throw, Reason, String, Int);
 
         /// <summary>Throw an exception if the specified object is not null. 
         /// </summary>
@@ -131,10 +140,8 @@ namespace Goedel.Utilities {
         /// <param name="Reason">Reason data for filling throw template</param>
         /// <param name="Int">Integer default parameter</param>
         /// <param name="String">String default parameter</param>
-        public static void NotNull(object Object, ThrowDelegate Throw=null,
-                    object Reason = null, string String = null, int Int = -1) {
-            True(Object != null, Throw, Reason, String, Int);
-            }
+        public static void NotNull(object Object, ThrowDelegate Throw = null,
+                    object Reason = null, string String = null, int Int = -1) => True(Object != null, Throw, Reason, String, Int);
 
         }
 

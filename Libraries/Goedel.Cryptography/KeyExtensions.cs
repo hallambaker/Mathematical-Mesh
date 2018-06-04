@@ -19,10 +19,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="Key">The key to calculate the fingerprint of</param>
         /// <returns>The binary fingerprint value</returns>
-        public static byte [] UDFBytes (this IPKIXPublicKey Key) {
-            return Cryptography.UDF.FromKeyInfo(Key.PublicParameters.DER());
-
-            }
+        public static byte[] UDFBytes(this IPKIXPublicKey Key) => Cryptography.UDF.FromKeyInfo(Key.PublicParameters.DER());
 
         /// <summary>
         /// Calculate UDF fingerprint presentation for public key parameters
@@ -40,14 +37,12 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="Key">Key to wrap.</param>
         /// <returns>The PrivateKeyInfo structure.</returns>
-        public static PrivateKeyInfo PrivateKeyInfo (this IPKIXPrivateKey Key) {
-            return new PrivateKeyInfo() {
-                Version = 0,
-                PrivateKeyAlgorithm = new AlgorithmIdentifier(Key.OID),
-                PrivateKey = Key.DER(),
-                Attributes = null
-                };
-            }
+        public static PrivateKeyInfo PrivateKeyInfo(this IPKIXPrivateKey Key) => new PrivateKeyInfo() {
+            Version = 0,
+            PrivateKeyAlgorithm = new AlgorithmIdentifier(Key.OID),
+            PrivateKey = Key.DER(),
+            Attributes = null
+            };
 
 
         /// <summary>
@@ -55,20 +50,16 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="KeySecurity">The key security specifier.</param>
         /// <returns>True if the value is KeySecurity.Master or Exportable</returns>
-        public static bool IsExportable (this KeySecurity KeySecurity) {
-            return (KeySecurity == KeySecurity.Master | KeySecurity == KeySecurity.Exportable
+        public static bool IsExportable(this KeySecurity KeySecurity) => (KeySecurity == KeySecurity.Master | KeySecurity == KeySecurity.Exportable
                 | KeySecurity == KeySecurity.Application);
-            }
 
         /// <summary>
         /// Returns true if the key is persisted, otherwise false.
         /// </summary>
         /// <param name="KeySecurity">The key security specifier.</param>
         /// <returns>True if the value is KeySecurity.Master, Admin or Device</returns>
-        public static bool IsPersisted(this KeySecurity KeySecurity) {
-            return (KeySecurity == KeySecurity.Master | KeySecurity == KeySecurity.Admin |
+        public static bool IsPersisted(this KeySecurity KeySecurity) => (KeySecurity == KeySecurity.Master | KeySecurity == KeySecurity.Admin |
                     KeySecurity == KeySecurity.Device | KeySecurity == KeySecurity.Application);
-            }
 
 
         }

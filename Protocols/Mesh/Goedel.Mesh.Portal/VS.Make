@@ -22,7 +22,7 @@ LinkFiles = \
     Goedel.Discovery.dll\
     Goedel.IO.dll\
     Goedel.Utilities.dll\
-    Goedel.Cryptography.Container.dll\
+    Goedel.Cryptography.Dare.dll\
     Goedel.Cryptography.Jose.dll\
     Goedel.Cryptography.dll\
     Goedel.Mesh.dll\

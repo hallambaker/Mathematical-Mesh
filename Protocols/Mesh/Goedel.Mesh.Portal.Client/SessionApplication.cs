@@ -221,96 +221,96 @@ namespace Goedel.Mesh.Portal.Client {
             }
 
 
-        public static SessionCredential Create (
-                    this SessionPersonal SessionPersonal,
-                    CredentialProfile MailProfile) {
+        //public static SessionCredential Create (
+        //            this SessionPersonal SessionPersonal,
+        //            CredentialProfile MailProfile) {
 
-            throw new NYI();
+        //    throw new NYI();
 
-            }
+        //    }
 
-        public static SessionCredential SessionCredential (
-                this SessionPersonal SessionPersonal,
-                string UDF = null,
-                string ShortId = null) {
+        //public static SessionCredential SessionCredential (
+        //        this SessionPersonal SessionPersonal,
+        //        string UDF = null,
+        //        string ShortId = null) {
 
-            var Found = SessionPersonal.MeshMachine.Find(
-                out var Result,
-                "SessionCredential",
-                UDF: UDF,
-                ShortId: ShortId);
+        //    var Found = SessionPersonal.MeshMachine.Find(
+        //        out var Result,
+        //        "SessionCredential",
+        //        UDF: UDF,
+        //        ShortId: ShortId);
 
-            return Result as SessionCredential;
-            }
-
-
-        public static SessionBookmark Create (
-                    this SessionPersonal SessionPersonal,
-                    BookmarkProfile MailProfile) {
-
-            throw new NYI();
-
-            }
-
-        public static SessionBookmark SessionBookmark (
-                this SessionPersonal SessionPersonal,
-                string UDF = null,
-                string ShortId = null) {
-
-            var Found = SessionPersonal.MeshMachine.Find(
-                out var Result,
-                "SessionBookmark",
-                UDF: UDF,
-                ShortId: ShortId);
-
-            return Result as SessionBookmark;
-            }
+        //    return Result as SessionCredential;
+        //    }
 
 
-        public static SessionContact Create (
-                    this SessionPersonal SessionPersonal,
-                    ContactProfile MailProfile) {
+        //public static SessionBookmark Create (
+        //            this SessionPersonal SessionPersonal,
+        //            BookmarkProfile MailProfile) {
 
-            throw new NYI();
+        //    throw new NYI();
 
-            }
+        //    }
 
-        public static SessionContact SessionContact (
-                this SessionPersonal SessionPersonal,
-                string UDF = null,
-                string ShortId = null) {
+        //public static SessionBookmark SessionBookmark (
+        //        this SessionPersonal SessionPersonal,
+        //        string UDF = null,
+        //        string ShortId = null) {
 
-            var Found = SessionPersonal.MeshMachine.Find(
-                out var Result,
-                "SessionContact",
-                UDF: UDF,
-                ShortId: ShortId);
+        //    var Found = SessionPersonal.MeshMachine.Find(
+        //        out var Result,
+        //        "SessionBookmark",
+        //        UDF: UDF,
+        //        ShortId: ShortId);
 
-            return Result as SessionContact;
-            }
+        //    return Result as SessionBookmark;
+        //    }
 
 
-        public static SessionNetwork Create (
-                    this SessionPersonal SessionPersonal,
-                    NetworkProfile MailProfile) {
+        //public static SessionContact Create (
+        //            this SessionPersonal SessionPersonal,
+        //            ContactProfile MailProfile) {
 
-            throw new NYI();
+        //    throw new NYI();
 
-            }
+        //    }
 
-        public static SessionNetwork SessionNetwork (
-                this SessionPersonal SessionPersonal,
-                string UDF = null,
-                string ShortId = null) {
+        //public static SessionContact SessionContact (
+        //        this SessionPersonal SessionPersonal,
+        //        string UDF = null,
+        //        string ShortId = null) {
 
-            var Found = SessionPersonal.MeshMachine.Find(
-                out var Result,
-                "SessionNetwork",
-                UDF: UDF,
-                ShortId: ShortId);
+        //    var Found = SessionPersonal.MeshMachine.Find(
+        //        out var Result,
+        //        "SessionContact",
+        //        UDF: UDF,
+        //        ShortId: ShortId);
 
-            return Result as SessionNetwork;
-            }
+        //    return Result as SessionContact;
+        //    }
+
+
+        //public static SessionNetwork Create (
+        //            this SessionPersonal SessionPersonal,
+        //            NetworkProfile MailProfile) {
+
+        //    throw new NYI();
+
+        //    }
+
+        //public static SessionNetwork SessionNetwork (
+        //        this SessionPersonal SessionPersonal,
+        //        string UDF = null,
+        //        string ShortId = null) {
+
+        //    var Found = SessionPersonal.MeshMachine.Find(
+        //        out var Result,
+        //        "SessionNetwork",
+        //        UDF: UDF,
+        //        ShortId: ShortId);
+
+        //    return Result as SessionNetwork;
+        //    }
 
         public static SessionSSH Create (
             this SessionPersonal SessionPersonal,
@@ -454,153 +454,153 @@ namespace Goedel.Mesh.Portal.Client {
 
 
 
-    public partial class SessionCredential : SessionCatalog {
+    //public partial class SessionCredential : SessionCatalog {
 
-        CredentialProfile CredentialProfile;
+    //    CredentialProfile CredentialProfile;
 
-        /// <summary>
-        /// Construct a SessionRecryption from a personal session.
-        /// </summary>
-        /// <param name="SessionPersonal">The personal session to construct from.</param>
-        public SessionCredential (
-                        SessionPersonal SessionPersonal,
-                        CredentialProfile CredentialProfile,
-                        bool Write = true) : base(
-                            SessionPersonal, CredentialProfile, Write) {
-            this.SessionPersonal = SessionPersonal;
-            this.CredentialProfile = CredentialProfile;
+    //    /// <summary>
+    //    /// Construct a SessionRecryption from a personal session.
+    //    /// </summary>
+    //    /// <param name="SessionPersonal">The personal session to construct from.</param>
+    //    public SessionCredential (
+    //                    SessionPersonal SessionPersonal,
+    //                    CredentialProfile CredentialProfile,
+    //                    bool Write = true) : base(
+    //                        SessionPersonal, CredentialProfile, Write) {
+    //        this.SessionPersonal = SessionPersonal;
+    //        this.CredentialProfile = CredentialProfile;
 
-            SessionPersonal.Add(this);  // The point at which the writes to the local disk, portal are performed.
-            }
+    //        SessionPersonal.Add(this);  // The point at which the writes to the local disk, portal are performed.
+    //        }
 
 
-        public void Add (CredentialEntry CredentialEntry) {
-            throw new NYI();
-            }
+    //    public void Add (CredentialEntry CredentialEntry) {
+    //        throw new NYI();
+    //        }
 
-        public void Update (CredentialEntry CredentialEntry, bool Create=true) {
-            throw new NYI();
-            }
+    //    public void Update (CredentialEntry CredentialEntry, bool Create=true) {
+    //        throw new NYI();
+    //        }
 
-        public CredentialEntry Get (string Identifier) {
-            throw new NYI();
-            }
+    //    public CredentialEntry Get (string Identifier) {
+    //        throw new NYI();
+    //        }
 
-        public void Delete (string Identifier) {
-            throw new NYI();
-            }
+    //    public void Delete (string Identifier) {
+    //        throw new NYI();
+    //        }
 
-        }
+    //    }
 
-    public partial class SessionBookmark : SessionCatalog {
+    //public partial class SessionBookmark : SessionCatalog {
 
-        BookmarkProfile BookmarkProfile;
+    //    BookmarkProfile BookmarkProfile;
 
-        /// <summary>
-        /// Construct a SessionRecryption from a personal session.
-        /// </summary>
-        /// <param name="SessionPersonal">The personal session to construct from.</param>
-        public SessionBookmark (
-                        SessionPersonal SessionPersonal,
-                        BookmarkProfile BookmarkProfile,
-                        bool Write = true) : base(
-                            SessionPersonal, BookmarkProfile, Write) {
-            this.SessionPersonal = SessionPersonal;
-            this.BookmarkProfile = BookmarkProfile;
+    //    /// <summary>
+    //    /// Construct a SessionRecryption from a personal session.
+    //    /// </summary>
+    //    /// <param name="SessionPersonal">The personal session to construct from.</param>
+    //    public SessionBookmark (
+    //                    SessionPersonal SessionPersonal,
+    //                    BookmarkProfile BookmarkProfile,
+    //                    bool Write = true) : base(
+    //                        SessionPersonal, BookmarkProfile, Write) {
+    //        this.SessionPersonal = SessionPersonal;
+    //        this.BookmarkProfile = BookmarkProfile;
 
-            SessionPersonal.Add(this);  // The point at which the writes to the local disk, portal are performed.
-            }
+    //        SessionPersonal.Add(this);  // The point at which the writes to the local disk, portal are performed.
+    //        }
 
-        public void Add (BookmarkEntry CredentialEntry) {
-            throw new NYI();
-            }
+    //    public void Add (BookmarkEntry CredentialEntry) {
+    //        throw new NYI();
+    //        }
 
-        public void Update (BookmarkEntry CredentialEntry, bool Create = true) {
-            throw new NYI();
-            }
+    //    public void Update (BookmarkEntry CredentialEntry, bool Create = true) {
+    //        throw new NYI();
+    //        }
 
-        public BookmarkEntry Get (string Identifier) {
-            throw new NYI();
-            }
+    //    public BookmarkEntry Get (string Identifier) {
+    //        throw new NYI();
+    //        }
 
-        public void Delete (string Identifier) {
-            throw new NYI();
-            }
+    //    public void Delete (string Identifier) {
+    //        throw new NYI();
+    //        }
 
-        }
+    //    }
 
-    public partial class SessionContact : SessionCatalog {
+    //public partial class SessionContact : SessionCatalog {
 
-        ContactProfile ContactProfile;
+    //    ContactProfile ContactProfile;
 
-        /// <summary>
-        /// Construct a SessionRecryption from a personal session.
-        /// </summary>
-        /// <param name="SessionPersonal">The personal session to construct from.</param>
-        public SessionContact (
-                        SessionPersonal SessionPersonal,
-                        ContactProfile ContactProfile,
-                        bool Write = true) : base(
-                            SessionPersonal, ContactProfile, Write) {
-            this.SessionPersonal = SessionPersonal;
-            this.ContactProfile = ContactProfile;
+    //    /// <summary>
+    //    /// Construct a SessionRecryption from a personal session.
+    //    /// </summary>
+    //    /// <param name="SessionPersonal">The personal session to construct from.</param>
+    //    public SessionContact (
+    //                    SessionPersonal SessionPersonal,
+    //                    ContactProfile ContactProfile,
+    //                    bool Write = true) : base(
+    //                        SessionPersonal, ContactProfile, Write) {
+    //        this.SessionPersonal = SessionPersonal;
+    //        this.ContactProfile = ContactProfile;
 
-            SessionPersonal.Add(this);  // The point at which the writes to the local disk, portal are performed.
-            }
+    //        SessionPersonal.Add(this);  // The point at which the writes to the local disk, portal are performed.
+    //        }
 
-        public void Add (ContactEntry CredentialEntry) {
-            throw new NYI();
-            }
+    //    public void Add (ContactEntry CredentialEntry) {
+    //        throw new NYI();
+    //        }
 
-        public void Update (ContactEntry CredentialEntry, bool Create = true) {
-            throw new NYI();
-            }
+    //    public void Update (ContactEntry CredentialEntry, bool Create = true) {
+    //        throw new NYI();
+    //        }
 
-        public ContactEntry Get (string Identifier) {
-            throw new NYI();
-            }
+    //    public ContactEntry Get (string Identifier) {
+    //        throw new NYI();
+    //        }
 
-        public void Delete (string Identifier) {
-            throw new NYI();
-            }
+    //    public void Delete (string Identifier) {
+    //        throw new NYI();
+    //        }
 
-        }
+    //    }
 
-    public partial class SessionNetwork : SessionCatalog {
+    //public partial class SessionNetwork : SessionCatalog {
 
-        NetworkProfile NetworkProfile;
+    //    NetworkProfile NetworkProfile;
 
-        /// <summary>
-        /// Construct a SessionRecryption from a personal session.
-        /// </summary>
-        /// <param name="SessionPersonal">The personal session to construct from.</param>
-        public SessionNetwork (
-                        SessionPersonal SessionPersonal,
-                        NetworkProfile NetworkProfile,
-                        bool Write = true) : base(
-                            SessionPersonal, NetworkProfile, Write) {
-            this.SessionPersonal = SessionPersonal;
-            this.NetworkProfile = NetworkProfile;
+    //    /// <summary>
+    //    /// Construct a SessionRecryption from a personal session.
+    //    /// </summary>
+    //    /// <param name="SessionPersonal">The personal session to construct from.</param>
+    //    public SessionNetwork (
+    //                    SessionPersonal SessionPersonal,
+    //                    NetworkProfile NetworkProfile,
+    //                    bool Write = true) : base(
+    //                        SessionPersonal, NetworkProfile, Write) {
+    //        this.SessionPersonal = SessionPersonal;
+    //        this.NetworkProfile = NetworkProfile;
 
-            SessionPersonal.Add(this);  // The point at which the writes to the local disk, portal are performed.
-            }
+    //        SessionPersonal.Add(this);  // The point at which the writes to the local disk, portal are performed.
+    //        }
 
-        public void Add (NetworkEntry CredentialEntry) {
-            throw new NYI();
-            }
+    //    public void Add (NetworkEntry CredentialEntry) {
+    //        throw new NYI();
+    //        }
 
-        public void Update (NetworkEntry CredentialEntry, bool Create = true) {
-            throw new NYI();
-            }
+    //    public void Update (NetworkEntry CredentialEntry, bool Create = true) {
+    //        throw new NYI();
+    //        }
 
-        public NetworkEntry Get (string Identifier) {
-            throw new NYI();
-            }
+    //    public NetworkEntry Get (string Identifier) {
+    //        throw new NYI();
+    //        }
 
-        public void Delete (string Identifier) {
-            throw new NYI();
-            }
+    //    public void Delete (string Identifier) {
+    //        throw new NYI();
+    //        }
 
-        }
+    //    }
 
     }

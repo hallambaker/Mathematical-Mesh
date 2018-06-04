@@ -29,7 +29,6 @@ using Goedel.Protocol;
 
 namespace Goedel.Mesh {
     public partial class OfflineEscrowEntry {
-        private KeyShare[] _KeyShares;
         /// <summary>
         /// Default Constructor
         /// </summary>
@@ -60,7 +59,7 @@ namespace Goedel.Mesh {
             var Plaintext = EscrowedKeySet.GetBytes(true);
 
             var Secret = new Secret(128);
-            _KeyShares = Secret.Split(Shares, Quorum);
+            KeyShares = Secret.Split(Shares, Quorum);
 
             var share1 = KeyShares[0].Text; // Hack only test for quorum = 2.
             var share2 = KeyShares[1].Text;
@@ -102,10 +101,6 @@ namespace Goedel.Mesh {
         /// <summary>
         /// The associated key shares for reconstructing the key.
         /// </summary>
-        public KeyShare[] KeyShares => _KeyShares;
-
-
-
-
+        public KeyShare[] KeyShares { get; }
         }
     }

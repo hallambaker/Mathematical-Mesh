@@ -43,11 +43,6 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Update="SchemaCatalogApps.cs">
-      <DependentUpon>SchemaCatalogApps.protocol</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
     <Compile Update="SchemaMesh.cs">
       <DependentUpon>SchemaMesh.protocol</DependentUpon>
       <DesignTime>True</DesignTime>
@@ -71,10 +66,6 @@
     <None Update="SchemaAppSSH.protocol">
       <LastGenOutput>SchemaAppSSH.cs</LastGenOutput>
       <Generator>Protogen</Generator>
-    </None>
-    <None Update="SchemaCatalogApps.protocol">
-      <LastGenOutput>SchemaCatalogApps.cs</LastGenOutput>
-      <Generator>protogen</Generator>
     </None>
     <None Update="SchemaMesh.protocol">
       <LastGenOutput>SchemaMesh.cs</LastGenOutput>

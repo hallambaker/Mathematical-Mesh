@@ -35,7 +35,6 @@ ToolTargets = \
 	Portal.cs\
 	SchemaAppMail.cs\
 	SchemaAppSSH.cs\
-	SchemaCatalogApps.cs\
 	SchemaMesh.cs
 
 Exceptions.cs : Exceptions.Exceptional 
@@ -49,9 +48,6 @@ SchemaAppMail.cs : SchemaAppMail.protocol
 
 SchemaAppSSH.cs : SchemaAppSSH.protocol 
 	protogen SchemaAppSSH.protocol  /cs  SchemaAppSSH.cs
-
-SchemaCatalogApps.cs : SchemaCatalogApps.protocol 
-	protogen SchemaCatalogApps.protocol  /cs  SchemaCatalogApps.cs
 
 SchemaMesh.cs : SchemaMesh.protocol 
 	protogen SchemaMesh.protocol  /cs  SchemaMesh.cs

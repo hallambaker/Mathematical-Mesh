@@ -32,6 +32,18 @@ namespace Goedel.IO {
     public  static partial class Extension {
 
         /// <summary>
+        /// Write the specified number of spaces to the output stream
+        /// </summary>
+        /// <param name="Output">Stream to write to</param>
+        /// <param name="Spaces">Number of spaces to write</param>
+        public static void WriteSpaces(this TextWriter Output, int Spaces) {
+            for (var i = 0; i < Spaces; i++) {
+                Output.Write(' ');
+                }
+            }
+
+
+        /// <summary>
         /// Return the file mode corresponding to the specified status.
         /// </summary>
         /// <param name="FileStatus">Status to translate</param>

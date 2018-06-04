@@ -156,10 +156,7 @@ namespace Goedel.Cryptography {
         /// <param name="Text">Text to apply digest to.</param>
         /// <param name="Key">The key to apply</param>
         /// <returns>Result of digest operation.</returns>
-        public byte[] Process(string Text, byte[] Key = null) {
-            return Process(Encoding.UTF8.GetBytes(Text), Key);
-
-            }
+        public byte[] Process(string Text, byte[] Key = null) => Process(Encoding.UTF8.GetBytes(Text), Key);
         }
 
     }

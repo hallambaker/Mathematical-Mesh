@@ -130,10 +130,8 @@ namespace Goedel.Cryptography {
         /// <param name="Text">Text to be converted to UTF8 and signed.</param>
         /// <param name="Digest">Digest algorithm identifier</param>
         /// <returns>Signature.</returns>
-        public CryptoDataSignature Sign(string Text, 
-                    CryptoAlgorithmID Digest = CryptoAlgorithmID.Default) {
-            return Sign(Encoding.UTF8.GetBytes(Text), Digest);
-            }
+        public CryptoDataSignature Sign(string Text,
+                    CryptoAlgorithmID Digest = CryptoAlgorithmID.Default) => Sign(Encoding.UTF8.GetBytes(Text), Digest);
 
 
         /// <summary>
@@ -142,9 +140,7 @@ namespace Goedel.Cryptography {
         /// <param name="Text">Purported signed data</param>
         /// <param name="Signature">Signature to verify</param>
         /// <returns>True if verification succeeded, otherwise false</returns>
-        public virtual bool Verify(string Text, byte[] Signature) {
-            return Verify(Text.ToBytes(), Signature);
-            }
+        public virtual bool Verify(string Text, byte[] Signature) => Verify(Text.ToBytes(), Signature);
 
         /// <summary>
         /// Verify a signature

@@ -47,7 +47,7 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Default algorithm key or output size.
         /// </summary>
-        public override int Size => 2048; 
+        public override int Size => 2048;
 
         /// <summary>
         /// Delegate to create a cryptographic provider with optional key size and/or
@@ -56,9 +56,7 @@ namespace Goedel.Cryptography {
         /// <param name="KeySize">Key size parameter (if needed).</param>
         /// <param name="BulkAlgorithmID">Algorithm identifier of bulk algorithm (if needed).</param>
         /// <returns>The cryptographic provider created.</returns>
-        private static CryptoProvider Factory(int KeySize, CryptoAlgorithmID BulkAlgorithmID) {
-            return new CryptoProviderExchangeDH(KeySize:KeySize);
-            }
+        private static CryptoProvider Factory(int KeySize, CryptoAlgorithmID BulkAlgorithmID) => new CryptoProviderExchangeDH(KeySize: KeySize);
 
 
         /// <summary>
@@ -101,10 +99,8 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="KeySecurity">Specifies the protection level for the key.</param>
         /// <param name="KeySize">The Key size</param>
-        public CryptoProviderExchangeDH(KeySecurity KeySecurity= KeySecurity.Ephemeral,
-                    int  KeySize=2048) {
-            Generate(KeySecurity, KeySize);
-            }
+        public CryptoProviderExchangeDH(KeySecurity KeySecurity = KeySecurity.Ephemeral,
+                    int KeySize = 2048) => Generate(KeySecurity, KeySize);
 
         // From CryptoProviderAsymmetric
 
@@ -233,11 +229,9 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="CryptoData">The data to recrypt.</param>
         /// <returns>The partially decrypted data</returns>
-        public override CryptoDataExchange Recrypt(CryptoDataExchange CryptoData) {
+        public override CryptoDataExchange Recrypt(CryptoDataExchange CryptoData) =>
             // NYI: DH Recrypt
             throw new NYI("To do");
-
-            }
 
 
 
@@ -249,10 +243,9 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="CryptoDatas">The data to recrypt.</param>
         /// <returns>The partially decrypted data</returns>
-        public override CryptoDataExchange Recrypt(CryptoDataExchange[] CryptoDatas) {
+        public override CryptoDataExchange Recrypt(CryptoDataExchange[] CryptoDatas) =>
             // NYI: DH Recrypt
             throw new NYI("To do");
-            }
 
 
 
@@ -277,10 +270,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="Public">The data to recrypt.</param>
         /// <returns>The partially decrypted data</returns>
-        public override KeyAgreementResult Exchange (KeyPair Public) {
-
-            return DHKeyPair.Agreement(Public);
-            }
+        public override KeyAgreementResult Exchange(KeyPair Public) => DHKeyPair.Agreement(Public);
 
         }
     }

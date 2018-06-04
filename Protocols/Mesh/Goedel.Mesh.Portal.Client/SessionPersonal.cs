@@ -192,7 +192,9 @@ namespace Goedel.Mesh.Portal.Client {
         /// <param name="Request">The connection request</param>
         /// <param name="Status">The connection status result.</param>
         /// <returns>The response from the service.</returns>
-        public ConnectStatusResponse ConnectClose (SignedConnectionRequest Request, ConnectionStatus Status) {
+        public ConnectStatusResponse ConnectClose (
+                string CompletionCode, 
+                ConnectionStatus Status) {
             //PersonalProfile.Add(Request.Device.DeviceProfile);
 
             //Write();
@@ -202,18 +204,18 @@ namespace Goedel.Mesh.Portal.Client {
         /// <summary>
         /// Provide a PIN for authenticating the specified account ID
         /// </summary>
-        /// <param name="AccountID">The account identifier</param>
         /// <param name="length">The PIN length</param>
         /// <returns>The PIN value.</returns>
-        public string GetPin (string AccountID, int length) {
+        public string GetPin (int length) {
             throw new Goedel.Utilities.NYI();
             }
 
         /// <summary>
         /// Complete process of connecting to a profile.
         /// </summary>
-        public void CompleteConnect () {
+        public ConnectionStatus CompleteConnect () {
             GetFromPortal();
+            throw new Goedel.Utilities.NYI();
             }
 
         /// <summary>

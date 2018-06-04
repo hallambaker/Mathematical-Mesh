@@ -83,10 +83,6 @@
       <Project>{171f782c-4d04-40bd-8d12-ead48eefb79a}</Project>
       <Name>Goedel.Utilities</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Container\Goedel.Cryptography.Container.csproj">
-      <Project>{5766d752-9296-42e0-a016-69f27fb45167}</Project>
-      <Name>Goedel.Cryptography.Container</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Jose\Goedel.Cryptography.Jose.csproj">
       <Project>{2ba97c8a-2fa2-4d02-a977-566848ed2d55}</Project>
       <Name>Goedel.Cryptography.Jose</Name>

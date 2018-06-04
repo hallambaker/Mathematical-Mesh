@@ -247,18 +247,15 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// The Bulk Identifier
         /// </summary>
-        public override CryptoAlgorithmID BulkID  => BulkData.BulkID; 
+        public override CryptoAlgorithmID BulkID  => BulkData.BulkID;
 
         /// <summary>
         /// Create and populate a result.
         /// </summary>
         /// <param name="Identifier">The Goedel Cryptography identifier.</param>
         /// <param name="BulkData">Provider to use to process the bulk data</param>
-        public CryptoDataMeta(CryptoAlgorithmID Identifier, CryptoData BulkData) : 
-                    base (Identifier, BulkData.ProviderBulk) {
-            this.BulkData = BulkData;
-
-            }
+        public CryptoDataMeta(CryptoAlgorithmID Identifier, CryptoData BulkData) :
+                    base(Identifier, BulkData.ProviderBulk) => this.BulkData = BulkData;
         }
 
 
@@ -330,7 +327,7 @@ namespace Goedel.Cryptography {
         public CryptoProviderExchange ExchangeProvider { get; }
 
 
-        
+
         /// <summary>
         /// Create and populate a result.
         /// </summary>
@@ -338,10 +335,8 @@ namespace Goedel.Cryptography {
         /// <param name="Bulk">Encoder for the bulk data</param>
         /// <param name="Meta">The Key Exchange Provider</param>
         public CryptoDataExchange(CryptoAlgorithmID Identifier,
-                      CryptoData Bulk, CryptoProviderExchange Meta) : 
-                            base (Identifier, Bulk) {
-            ExchangeProvider = Meta;
-            }
+                      CryptoData Bulk, CryptoProviderExchange Meta) :
+                            base(Identifier, Bulk) => ExchangeProvider = Meta;
         }
 
     /// <summary>
@@ -357,12 +352,9 @@ namespace Goedel.Cryptography {
         /// signature operations where the asymmetric operation is performed after the
         /// bulk operation completes.</param> 
 
-        public CryptoDataEncoder (CryptoAlgorithmID Identifier, 
+        public CryptoDataEncoder(CryptoAlgorithmID Identifier,
                         CryptoProviderBulk Bulk) :
-                             base (Identifier, Bulk) {
-            this.AlgorithmIdentifier = Identifier;
-            }
-
+                             base(Identifier, Bulk) => AlgorithmIdentifier = Identifier;
         }
 
     /// <summary>

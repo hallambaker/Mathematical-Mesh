@@ -22,7 +22,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.IO;
 using Goedel.Cryptography;
 using Goedel.Cryptography.Jose;
 using Goedel.Persistence;
@@ -33,7 +33,7 @@ using Goedel.Utilities;
 namespace Goedel.Mesh {
 
     public partial class SignedProfile {
-
+        public static int IndentSpaces = 4;
 
         /// <summary>
         /// The profile that was signed.
@@ -77,6 +77,11 @@ namespace Goedel.Mesh {
         /// <returns>The device profile object.</returns>
         public virtual Profile Unpack() {
             throw new Goedel.Utilities.NYI("Need to unpack the profile");
+            }
+
+        public virtual void Describe(TextWriter Output, int Indent=0) {
+            Output.WriteSpaces(Indent * IndentSpaces);
+            Output.WriteLine($"Profile {UDF} type {_Tag}");
             }
 
         }
@@ -206,6 +211,12 @@ namespace Goedel.Mesh {
                 }
             }
 
+        public override void Describe(TextWriter Output, int Indent = 0) {
+            Output.WriteSpaces(Indent * IndentSpaces);
+            Output.WriteLine($"Profile {UDF} type {_Tag}");
+            Output.WriteLine($"Device Profile {UDF} type {_Tag}");
+            }
+
         }
 
 
@@ -283,7 +294,7 @@ namespace Goedel.Mesh {
         /// </summary>
         public ApplicationProfile ApplicationProfile {
             get {
-                _ApplicationProfile = _ApplicationProfile?? UnpackAndVerify();
+                _ApplicationProfile = _ApplicationProfile ?? UnpackAndVerify();
                 return _ApplicationProfile;
                 }
             }
@@ -292,14 +303,14 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Default Constructor
         /// </summary>
-        public SignedApplicationProfile () { }
+        public SignedApplicationProfile() { }
 
         /// <summary>
         /// Construct a signed profile from the specified profile.
         /// </summary>
         /// <param name="Encoding">The encoding for the inner data</param>
         /// <param name="Data">The profile to sign.</param>
-        public SignedApplicationProfile (ApplicationProfile Data, 
+        public SignedApplicationProfile(ApplicationProfile Data,
                     DataEncoding Encoding = DataEncoding.JSON) {
             _ApplicationProfile = Data;
             Sign(Encoding: Encoding);
@@ -310,7 +321,7 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="SigningKey">The signature key</param>
         /// <param name="Encoding">The encoding</param>
-        public void Sign (KeyPair SigningKey=null, DataEncoding Encoding = DataEncoding.JSON) {
+        public void Sign(KeyPair SigningKey = null, DataEncoding Encoding = DataEncoding.JSON) {
             SigningKey = SigningKey ?? ApplicationProfile.GetSignatureKey();
             Assert.NotNull(SigningKey, NotAdministrationDevice.Throw);
 
@@ -340,7 +351,7 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="Data">The input stream</param>
         /// <returns>The created object.</returns>		
-        public static ApplicationProfile ReadProfile (byte[] Data) {
+        public static ApplicationProfile ReadProfile(byte[] Data) {
             var Reader = Data.JSONReader();
 
             Deserialize(Reader, out var Result);
@@ -360,7 +371,7 @@ namespace Goedel.Mesh {
         /// <param name="FileName">The name of the file</param>
         /// <param name="UDF">Fingerprint of the profile to find.</param>
         /// <returns>The signed profile if found or null otherwise.</returns>
-        public static SignedApplicationProfile FromFile (string FileName, string UDF=null) {
+        public static SignedApplicationProfile FromFile(string FileName, string UDF = null) {
             try {
                 using (var FileReader = FileName.OpenFileReadShared()) {
                     using (var TextReader = FileReader.OpenTextReader()) {
@@ -376,7 +387,11 @@ namespace Goedel.Mesh {
 
             }
 
-
+        public override void Describe(TextWriter Output, int Indent = 0) {
+            Output.WriteSpaces(Indent * IndentSpaces);
+            Output.WriteLine($"Profile {UDF} type {_Tag}");
+            Output.WriteLine($"Application Profile {UDF} type {_Tag}");
+            }
 
         }
 
@@ -505,6 +520,10 @@ namespace Goedel.Mesh {
 
             }
 
-
+        public override void Describe(TextWriter Output, int Indent = 0) {
+            Output.WriteSpaces(Indent * IndentSpaces);
+            Output.WriteLine($"Profile {UDF} type {_Tag}");
+            Output.WriteLine($"Perdonal Profile {UDF} type {_Tag}");
+            }
         }
     }

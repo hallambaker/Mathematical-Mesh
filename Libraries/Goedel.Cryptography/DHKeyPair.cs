@@ -89,9 +89,7 @@ namespace Goedel.Cryptography {
         /// <param name="Bulk">The digest algorithm to use</param>
         /// <returns>The cryptographic provider.</returns>
         public override CryptoProviderSignature SignatureProvider(
-                    CryptoAlgorithmID Bulk = CryptoAlgorithmID.Default) {
-            throw new InvalidOperation("DHKeyPair does not support signature operations. ");
-            }
+                    CryptoAlgorithmID Bulk = CryptoAlgorithmID.Default) => throw new InvalidOperation("DHKeyPair does not support signature operations. ");
 
 
         /// <summary>
@@ -100,9 +98,7 @@ namespace Goedel.Cryptography {
         /// <param name="Bulk">The encryption algorithm to use</param>
         /// <returns>The cryptographic provider.</returns>
         public override CryptoProviderExchange ExchangeProvider(
-                    CryptoAlgorithmID Bulk = CryptoAlgorithmID.Default) {
-            return new CryptoProviderExchangeDH(this, Bulk);
-            }
+                    CryptoAlgorithmID Bulk = CryptoAlgorithmID.Default) => new CryptoProviderExchangeDH(this, Bulk);
 
 
         /// <summary>
@@ -221,9 +217,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="Private">Private key parameters</param>
         /// <returns>The key agreement value ZZ</returns>
-        public BigInteger Agreement(DiffeHellmanPrivate Private) {
-            return Private.Agreement(PublicKey);
-            }
+        public BigInteger Agreement(DiffeHellmanPrivate Private) => Private.Agreement(PublicKey);
 
 
         /// <summary>
@@ -251,9 +245,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <returns>The key agreement parameters, the public key value and the
         /// key agreement.</returns>
-        public DiffieHellmanResult Agreement() {
-            return PublicKey.Agreement();
-            }
+        public DiffieHellmanResult Agreement() => PublicKey.Agreement();
 
 
         /// <summary>
@@ -263,16 +255,12 @@ namespace Goedel.Cryptography {
         /// <param name="Carry">Recryption carry over value, to be combined with the
         /// result of this key agreement.</param>
         /// <returns>The key agreement value ZZ</returns>
-        public BigInteger Agreement(KeyPairDH Public, BigInteger Carry) {
-            return PrivateKey.Agreement(Public.PublicKey, Carry);
-            }
+        public BigInteger Agreement(KeyPairDH Public, BigInteger Carry) => PrivateKey.Agreement(Public.PublicKey, Carry);
 
         /// <summary>
         /// Erase the key from the local machine
         /// </summary>
-        public override void EraseFromDevice() {
-            Platform.EraseFromKeyStore(UDF); 
-            }
+        public override void EraseFromDevice() => Platform.EraseFromKeyStore(UDF);
 
 
         /// <summary>
@@ -281,10 +269,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="UDF">Fingerprint of key</param>
         /// <returns>The key pair found</returns>
-        public static KeyPair FindLocalDH(string UDF) {
-
-            return Platform.FindInKeyStore(UDF, CryptoAlgorithmID.DH);
-            }
+        public static KeyPair FindLocalDH(string UDF) => Platform.FindInKeyStore(UDF, CryptoAlgorithmID.DH);
 
 
         /// <summary>

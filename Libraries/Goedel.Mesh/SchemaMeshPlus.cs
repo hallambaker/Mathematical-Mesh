@@ -34,7 +34,6 @@ namespace Goedel.Mesh {
 
             Append(MeshMail._TagDictionary);
             Append(MeshSSH._TagDictionary);
-            Append(MeshCatalog._TagDictionary);
             }
 
         /// <summary>

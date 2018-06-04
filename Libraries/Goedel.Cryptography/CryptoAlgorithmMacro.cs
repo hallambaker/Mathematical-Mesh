@@ -63,9 +63,7 @@ namespace Goedel.Cryptography {
             return ID.Bulk();
             }
 
-        internal static object Type(CryptoAlgorithmID bulk, int v) {
-            throw new NotImplementedException();
-            }
+        internal static object Type(CryptoAlgorithmID bulk, int v) => throw new NotImplementedException();
 
 
         /// <summary>
@@ -73,18 +71,14 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="ID">Composite identifier</param>
         /// <returns>The bulk component.</returns>
-        public static CryptoAlgorithmID Bulk (this CryptoAlgorithmID ID) {
-            return ID < 0? ID :ID & CryptoAlgorithmID.BulkMask;
-            }
+        public static CryptoAlgorithmID Bulk(this CryptoAlgorithmID ID) => ID < 0 ? ID : ID & CryptoAlgorithmID.BulkMask;
 
         /// <summary>
         /// Get the Meta algorithm
         /// </summary>
         /// <param name="ID">Composite identifier</param>
         /// <returns>The meta component.</returns>
-        public static CryptoAlgorithmID Meta(this CryptoAlgorithmID ID) {
-            return ID < 0 ? ID : ID & CryptoAlgorithmID.MetaMask;
-            }
+        public static CryptoAlgorithmID Meta(this CryptoAlgorithmID ID) => ID < 0 ? ID : ID & CryptoAlgorithmID.MetaMask;
 
         /// <summary>
         /// Set algorithm defaults
@@ -141,9 +135,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="ID">The identifier to process.</param>
         /// <returns>The base part.</returns>
-        public static CryptoAlgorithmID Base (this CryptoAlgorithmID ID) {
-            return ID < 0 ? ID : ID & CryptoAlgorithmID.BaseMask;
-            }
+        public static CryptoAlgorithmID Base(this CryptoAlgorithmID ID) => ID < 0 ? ID : ID & CryptoAlgorithmID.BaseMask;
 
         /// <summary>
         /// Get the bulk algorithm

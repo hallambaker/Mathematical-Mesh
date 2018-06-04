@@ -72,18 +72,14 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="Base">The base id</param>
         /// <returns>The defaulted algorithm relative to the base.</returns>
-        public CryptoAlgorithmID SignatureDefaults (CryptoAlgorithmID Base) {
-            return Base.Default(AlgorithmDigest, AlgorithmSignature);
-            }
+        public CryptoAlgorithmID SignatureDefaults(CryptoAlgorithmID Base) => Base.Default(AlgorithmDigest, AlgorithmSignature);
 
         /// <summary>
         /// Set undefined identifier components to default exchange and encryption.
         /// </summary>
         /// <param name="Base">The base id</param>
         /// <returns>The defaulted algorithm relative to the base.</returns>
-        public CryptoAlgorithmID EncryptionDefaults(CryptoAlgorithmID Base) {
-            return Base.Default(AlgorithmExchange, AlgorithmEncryption);
-            }
+        public CryptoAlgorithmID EncryptionDefaults(CryptoAlgorithmID Base) => Base.Default(AlgorithmExchange, AlgorithmEncryption);
 
 
         CryptoAlgorithmID SetDefault(CryptoAlgorithmID Current, CryptoAlgorithm New, CryptoAlgorithmID ID,
@@ -174,27 +170,21 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="ID">Algorithm identifier</param>
         /// <returns>Cryptographic provider if found or null otherwise.</returns>
-        public CryptoProviderDigest GetDigest(CryptoAlgorithmID ID) {
-            return Get(ID.DefaultBulk(AlgorithmDigest)) as CryptoProviderDigest;
-            }
+        public CryptoProviderDigest GetDigest(CryptoAlgorithmID ID) => Get(ID.DefaultBulk(AlgorithmDigest)) as CryptoProviderDigest;
 
         /// <summary>
         /// Get a cryptographic provider  by algorithm identifier
         /// </summary>
         /// <param name="ID">Algorithm identifier</param>
         /// <returns>Cryptographic provider if found or null otherwise.</returns>
-        public CryptoProviderAuthentication GetAuthentication(CryptoAlgorithmID ID) {
-            return Get(ID.DefaultBulk(AlgorithmMAC)) as CryptoProviderAuthentication;
-            }
+        public CryptoProviderAuthentication GetAuthentication(CryptoAlgorithmID ID) => Get(ID.DefaultBulk(AlgorithmMAC)) as CryptoProviderAuthentication;
 
         /// <summary>
         /// Get a cryptographic provider  by algorithm identifier
         /// </summary>
         /// <param name="ID">Algorithm identifier</param>
         /// <returns>Cryptographic provider if found or null otherwise.</returns>
-        public CryptoProviderEncryption GetEncryption(CryptoAlgorithmID ID) {
-            return Get(ID.DefaultBulk(AlgorithmEncryption)) as CryptoProviderEncryption;
-            }
+        public CryptoProviderEncryption GetEncryption(CryptoAlgorithmID ID) => Get(ID.DefaultBulk(AlgorithmEncryption)) as CryptoProviderEncryption;
 
 
         /// <summary>
@@ -212,9 +202,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="ID">Algorithm identifier</param>
         /// <returns>Cryptographic provider if found or null otherwise.</returns>
-        public CryptoProviderSignature GetSignature(CryptoAlgorithmID ID) {
-            return Get(ID.DefaultMeta(AlgorithmSignature)) as CryptoProviderSignature;
-            }
+        public CryptoProviderSignature GetSignature(CryptoAlgorithmID ID) => Get(ID.DefaultMeta(AlgorithmSignature)) as CryptoProviderSignature;
 
         /// <summary>
         /// Get a signature provider by algorithm identifier
@@ -223,9 +211,7 @@ namespace Goedel.Cryptography {
         /// <param name="Digest">Digest algorithm identifier.</param>
         /// <returns>Cryptographic provider if found or null otherwise.</returns>
         public CryptoProviderSignature GetSignature(CryptoAlgorithmID Signature,
-                    CryptoAlgorithmID Digest) {
-            return GetSignature(Signature.Meta() | Digest.Bulk());
-            }
+                    CryptoAlgorithmID Digest) => GetSignature(Signature.Meta() | Digest.Bulk());
 
         /// <summary>
         /// Get a signature provider by algorithm identifier
@@ -234,9 +220,7 @@ namespace Goedel.Cryptography {
         /// <param name="Bulk">Encryption algorithm identifier.</param>
         /// <returns>Cryptographic provider if found or null otherwise.</returns>
         public CryptoProviderExchange GetExchange(CryptoAlgorithmID Exchange,
-                    CryptoAlgorithmID Bulk) {
-            return GetExchange(Exchange.Meta() | Bulk.Bulk());
-            }
+                    CryptoAlgorithmID Bulk) => GetExchange(Exchange.Meta() | Bulk.Bulk());
 
         /// <summary>
         /// Get a signature provider by key fingerprint.
@@ -269,36 +253,28 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="ID">Algorithm identifier</param>
         /// <returns>Cryptographic provider if found or null otherwise.</returns>
-        public CryptoProviderExchange GetExchange(CryptoAlgorithmID ID) {
-            return Get(ID.DefaultMeta(AlgorithmExchange)) as CryptoProviderExchange;
-            }
+        public CryptoProviderExchange GetExchange(CryptoAlgorithmID ID) => Get(ID.DefaultMeta(AlgorithmExchange)) as CryptoProviderExchange;
 
         /// <summary>
         /// Get a cryptographic provider  by algorithm identifier
         /// </summary>
         /// <param name="ID">Algorithm identifier</param>
         /// <returns>Cryptographic provider if found or null otherwise.</returns>
-        public CryptoProviderRecryption GetRecryption (CryptoAlgorithmID ID) {
-            return Get(ID.DefaultMeta(AlgorithmExchange)) as CryptoProviderRecryption;
-            }
+        public CryptoProviderRecryption GetRecryption(CryptoAlgorithmID ID) => Get(ID.DefaultMeta(AlgorithmExchange)) as CryptoProviderRecryption;
 
         /// <summary>
         /// Returns a byte array with the specified number of random bits.
         /// </summary>
         /// <param name="Bits">Number of bits</param>
         /// <returns>A byte array with the specified number of bits.</returns>
-        public static byte[] GetBits(int Bits) {
-            return GetBytes((Bits + 7) / 8);
-            }
+        public static byte[] GetBits(int Bits) => GetBytes((Bits + 7) / 8);
 
         /// <summary>
         /// Returns a byte array with the specified number of random bytes.
         /// </summary>
         /// <param name="Bytes">Number of bytes</param>
         /// <returns>A byte array with the specified number of bytes.</returns>        
-        public static byte[] GetBytes(int Bytes) {
-            return Platform.GetRandomBytes(Bytes);
-            }
+        public static byte[] GetBytes(int Bytes) => Platform.GetRandomBytes(Bytes);
 
 
         }
@@ -355,7 +331,7 @@ namespace Goedel.Cryptography {
         /// Return the provider key.
         /// </summary>
         public virtual KeyPair KeyPair {
-            get { return null; }
+            get => null;
             set { }
             }
 

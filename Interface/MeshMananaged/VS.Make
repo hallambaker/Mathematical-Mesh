@@ -23,7 +23,6 @@ LinkFiles = \
     Goedel.FSR.dll\
     Goedel.IO.dll\
     Goedel.Utilities.dll\
-    Goedel.Cryptography.Container.dll\
     Goedel.Cryptography.Jose.dll\
     Goedel.Cryptography.KeyFile.dll\
     Goedel.Cryptography.dll\

@@ -53,9 +53,7 @@ namespace Goedel.Cryptography {
         /// <param name="Kek">The key encryption key</param>
         /// <param name="Plaintext">The Key to wrap</param>
         /// <returns>The wrapped key</returns>
-        public override byte[] Wrap(byte[] Kek, byte[] Plaintext) {
-            return WrapKey(Kek, Plaintext);
-            }
+        public override byte[] Wrap(byte[] Kek, byte[] Plaintext) => WrapKey(Kek, Plaintext);
 
 
         /// <summary>Wrap a symmetric key</summary>
@@ -121,9 +119,7 @@ namespace Goedel.Cryptography {
         /// <param name="Kek">The key encryption key</param>
         /// <param name="Ciphertext">The encrypted key to unwrap</param>
         /// <returns>The unwrapped key</returns>
-        public override byte[] Unwrap(byte[] Kek, byte[] Ciphertext) {
-            return UnwrapKey(Kek, Ciphertext);
-            }
+        public override byte[] Unwrap(byte[] Kek, byte[] Ciphertext) => UnwrapKey(Kek, Ciphertext);
 
         /// <summary>Wrap a symmetric key</summary>
         /// <param name="Kek">The key encryption key</param>
@@ -219,9 +215,7 @@ namespace Goedel.Cryptography {
         /// Constructor from binary data.
         /// </summary>
         /// <param name="Data">The data to process</param>
-        public Block(byte[] Data) {
-            this.Data = Data;
-            }
+        public Block(byte[] Data) => this.Data = Data;
 
         /// <summary>
         /// Constructor from integer data.
@@ -289,18 +283,14 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="Source">The cipher block to extract from</param>
         /// <returns>The result</returns>
-        public void MSB (byte[] Source) {
-            Array.Copy(Source, 0, Data, 0, 8);
-            }
+        public void MSB(byte[] Source) => Array.Copy(Source, 0, Data, 0, 8);
 
         /// <summary>
         /// Extract the LSB from a cipher block.
         /// </summary>
         /// <param name="Source">The cipher block to extract from</param>
         /// <returns>The result</returns>
-        public void LSB(byte[] Source) {
-            Array.Copy(Source, 8, Data, 0, 8);
-            }
+        public void LSB(byte[] Source) => Array.Copy(Source, 8, Data, 0, 8);
 
         /// <summary>
         /// Convert the result to an array
@@ -321,9 +311,6 @@ namespace Goedel.Cryptography {
         /// Convert block value to hexadecimal string
         /// </summary>
         /// <returns>The text string representing the block value</returns>
-        public override string ToString() {
-            return BaseConvert.ToStringBase16(Data);
-
-            }
+        public override string ToString() => BaseConvert.ToStringBase16(Data);
         }
     }

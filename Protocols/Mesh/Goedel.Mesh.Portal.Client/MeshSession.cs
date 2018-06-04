@@ -162,6 +162,23 @@ namespace Goedel.Mesh.Portal.Client {
             return RegistrationDevice;
             }
 
+
+        /// <summary>
+        /// Begin creation of a portal account.
+        /// </summary>
+        /// <param name="PortalAddress">The portal address to bind to.</param>
+        /// <param name="MeshClient">The Mesh Client to use (if available)</param>
+        /// <param name="Profile">The profile to bind.</param>
+        /// <returns>Registration created account (if successful)</returns>
+        public SessionPersonal CreateAccount(
+                    string PortalAddress,
+                    SessionPersonal SessionPersonal,
+                    MeshClient MeshClient = null) {
+
+            throw new NYI();
+            }
+
+
         /// <summary>
         /// Begin creation of a portal account.
         /// </summary>
@@ -266,6 +283,7 @@ namespace Goedel.Mesh.Portal.Client {
 
 
 
+
         /// <summary>
         /// Recover profile using a recovery secret as search key and decryption key.
         /// </summary>
@@ -296,6 +314,7 @@ namespace Goedel.Mesh.Portal.Client {
         /// </summary>
         /// <returns>True if synchronization attempt succeeded.</returns>
         public bool Sync () {
+            Assert.NYI("Synchronize profiles with upstream");
             return false;
             }
 
@@ -304,6 +323,7 @@ namespace Goedel.Mesh.Portal.Client {
         /// </summary>
         /// <returns>True if synchronization attempt succeeded.</returns>
         public bool Commit () {
+            Assert.NYI("Commit changes");
             return false;
             }
 
@@ -312,6 +332,7 @@ namespace Goedel.Mesh.Portal.Client {
         /// </summary>
         /// <param name="Profile">Profile to add.</param>
         public void Add (PersonalProfile Profile) {
+            Assert.NYI("Add existing profile");
             }
 
         /// <summary>
@@ -361,6 +382,8 @@ namespace Goedel.Mesh.Portal.Client {
         /// <returns>The connection start request object.</returns>
         public ConnectStartRequest Connect (SessionDevice Device, string Address, out string Authenticator) {
             var MeshClient = new MeshClient(PortalAccount: Address);
+
+            //ToDo: Rejig so that we now use the CATALOG for this
 
             var ConnectStartResponse = MeshClient.ConnectRequest(
                     Device.SignedDeviceProfile,
