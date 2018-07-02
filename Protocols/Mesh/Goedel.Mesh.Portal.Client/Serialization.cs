@@ -42,18 +42,15 @@ namespace Goedel.Mesh.Portal.Client {
 	/// </summary>
 	public abstract partial class MeshItem : global::Goedel.Protocol.JSONObject {
 
-        /// <summary>
-        /// Schema tag.
+		/// <summary>
+        /// Tag identifying this class
         /// </summary>
-        /// <returns>The tag value</returns>
-		public override string Tag () {
-			return _Tag;
-			}
+		public override string _Tag =>__Tag;
 
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public override string _Tag { get; } = "MeshItem";
+		public new const string __Tag = "MeshItem";
 
 		/// <summary>
         /// Dictionary mapping tags to factory methods
@@ -72,9 +69,9 @@ namespace Goedel.Mesh.Portal.Client {
         /// </summary>
         /// <param name="JSONReader">Input stream</param>
         /// <param name="Out">The created object</param>
-        public static void Deserialize(JSONReader JSONReader, out JSONObject Out) {
-			Out = JSONReader.ReadTaggedObject (_TagDictionary);
-            }
+        public static void Deserialize(JSONReader JSONReader, out JSONObject Out) => 
+			Out = JSONReader.ReadTaggedObject(_TagDictionary);
+
 		}
 
 
@@ -100,15 +97,18 @@ namespace Goedel.Mesh.Portal.Client {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public override string _Tag { get; } = "Serialization";
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "Serialization";
 
 		/// <summary>
         /// Factory method. Throws exception as this is an abstract class.
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () {
-			throw new CannotCreateAbstract();
-			}
+		public static new JSONObject _Factory () => throw new CannotCreateAbstract();
 
 
         /// <summary>
@@ -118,9 +118,9 @@ namespace Goedel.Mesh.Portal.Client {
         /// <param name="wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
 			SerializeX (Writer, wrap, ref first);
-			}
+
 
         /// <summary>
         /// Serialize this object to the specified output stream.
@@ -203,15 +203,18 @@ namespace Goedel.Mesh.Portal.Client {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public override string _Tag { get; } = "SerializationPersonal";
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "SerializationPersonal";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () {
-			return new SerializationPersonal();
-			}
+		public static new JSONObject _Factory () => new SerializationPersonal();
 
 
         /// <summary>
@@ -221,9 +224,9 @@ namespace Goedel.Mesh.Portal.Client {
         /// <param name="wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
 			SerializeX (Writer, wrap, ref first);
-			}
+
 
         /// <summary>
         /// Serialize this object to the specified output stream.
@@ -253,7 +256,7 @@ namespace Goedel.Mesh.Portal.Client {
 					_Writer.WriteArraySeparator (ref _firstarray);
 					// This is an untagged structure. Cannot inherit.
                     //_Writer.WriteObjectStart();
-                    //_Writer.WriteToken(_index.Tag(), 1);
+                    //_Writer.WriteToken(_index._Tag, 1);
 					bool firstinner = true;
 					_index.Serialize (_Writer, true, ref firstinner);
                     //_Writer.WriteObjectEnd();
@@ -339,15 +342,18 @@ namespace Goedel.Mesh.Portal.Client {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public override string _Tag { get; } = "SerializationPortal";
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "SerializationPortal";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () {
-			return new SerializationPortal();
-			}
+		public static new JSONObject _Factory () => new SerializationPortal();
 
 
         /// <summary>
@@ -357,9 +363,9 @@ namespace Goedel.Mesh.Portal.Client {
         /// <param name="wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
 			SerializeX (Writer, wrap, ref first);
-			}
+
 
         /// <summary>
         /// Serialize this object to the specified output stream.
@@ -439,15 +445,18 @@ namespace Goedel.Mesh.Portal.Client {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public override string _Tag { get; } = "SerializationApplication";
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "SerializationApplication";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () {
-			return new SerializationApplication();
-			}
+		public static new JSONObject _Factory () => new SerializationApplication();
 
 
         /// <summary>
@@ -457,9 +466,9 @@ namespace Goedel.Mesh.Portal.Client {
         /// <param name="wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
 			SerializeX (Writer, wrap, ref first);
-			}
+
 
         /// <summary>
         /// Serialize this object to the specified output stream.
@@ -544,15 +553,18 @@ namespace Goedel.Mesh.Portal.Client {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public override string _Tag { get; } = "SerializationDevice";
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "SerializationDevice";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () {
-			return new SerializationDevice();
-			}
+		public static new JSONObject _Factory () => new SerializationDevice();
 
 
         /// <summary>
@@ -562,9 +574,9 @@ namespace Goedel.Mesh.Portal.Client {
         /// <param name="wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
 			SerializeX (Writer, wrap, ref first);
-			}
+
 
         /// <summary>
         /// Serialize this object to the specified output stream.

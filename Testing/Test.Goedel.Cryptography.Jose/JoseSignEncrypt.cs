@@ -13,9 +13,9 @@ using Goedel.Cryptography.Framework;
 
 
 
-namespace Test.Goedel.Cryptography.Jose {
+namespace Goedel.Cryptography.Jose.Test {
 
-    public partial class TestCryptography {
+    public partial class TestCryptographyJose {
 
 
         string TestString = "This is a test";
@@ -28,7 +28,7 @@ namespace Test.Goedel.Cryptography.Jose {
             var JWEText = JWE.ToString();
             var JWEProt = JWE.Protected.ToUTF8();
 
-            var JWE2 = JoseWebEncryption.FromJSON(JWEText.JSONReader());
+            var JWE2 = JoseWebEncryption.FromJSON(JWEText.JSONReader(),false);
             var Data = JWE2.Decrypt(EncrypterKeyPair);
             var Text = Data.ToUTF8();
 
@@ -44,7 +44,7 @@ namespace Test.Goedel.Cryptography.Jose {
             var JWE = new JoseWebEncryption(TestString, Key);
             var JWEText = JWE.ToString();
 
-            var JWE2 = JoseWebEncryption.FromJSON(JWEText.JSONReader());
+            var JWE2 = JoseWebEncryption.FromJSON(JWEText.JSONReader(), false);
 
             var Data = JWE2.Decrypt(Key);
             var Text = Data.ToUTF8();
@@ -62,7 +62,7 @@ namespace Test.Goedel.Cryptography.Jose {
                 var JWSProt = Signer.Protected.ToUTF8();
                 }
 
-            var JWS2 = JoseWebSignature.FromJSON(JWSText.JSONReader());
+            var JWS2 = JoseWebSignature.FromJSON(JWSText.JSONReader(), false);
 
             var Verify1 = JWS2.Verify(SignerKeyPair);
             UT.Assert.IsTrue(Verify1);
@@ -84,7 +84,7 @@ namespace Test.Goedel.Cryptography.Jose {
                 var JWSProt = Signer.Protected.ToUTF8();
                 }
 
-            var JWES2 = JoseWebEncryption.FromJSON(JWESText.JSONReader());
+            var JWES2 = JoseWebEncryption.FromJSON(JWESText.JSONReader(), false);
 
             var Data2 = JWES2.Decrypt(EncrypterKeyPair);
             var Text = Data2.ToUTF8();
@@ -100,30 +100,43 @@ namespace Test.Goedel.Cryptography.Jose {
 
         [TestMethod]
         public void Test_Write_RSA_Public() {
-            var Key = new PublicKeyRSA(SignerKeyPair.PKIXPublicKeyRSA);
+            var Key = new PublicKeyRSA(TestKeyPairRSA.PKIXPublicKeyRSA);
 
             var Text = Key.ToJson();
             (Directories.Results + "Test_Write_RSA_Public.jpub").WriteFileNew(Text);
+
+            // TEST: check that the key can be read back and used???
             }
 
         [TestMethod]
         public void Test_Write_RSA_Private() {
-            var Key = new PrivateKeyRSA(SignerKeyPair.PKIXPrivateKeyRSA);
+            var Key = new PrivateKeyRSA(TestKeyPairRSA.PKIXPrivateKeyRSA);
 
             var Text = Key.ToJson(true);
             (Directories.Results + "Test_Write_RSA_Private.jprv").WriteFileNew(Text);
+
+            // TEST: check that the key can be read back and used???
             }
 
         [TestMethod]
         public void Test_Write_DH_Public() {
 
+            var Key = new PublicKeyDH(TestKeyPairDH.PKIXPublicKeyDH);
 
+            var Text = Key.ToJson();
+            (Directories.Results + "Test_Write_RSA_Public.jpub").WriteFileNew(Text);
+
+            // TEST: check that the key can be read back and used???
             }
 
         [TestMethod]
         public void Test_Write_DH_Private() {
+            var Key = new PrivateKeyDH(TestKeyPairDH.PKIXPrivateKeyDH);
 
+            var Text = Key.ToJson(true);
+            (Directories.Results + "Test_Write_RSA_Private.jprv").WriteFileNew(Text);
 
+            // TEST: check that the key can be read back and used???
             }
 
         }

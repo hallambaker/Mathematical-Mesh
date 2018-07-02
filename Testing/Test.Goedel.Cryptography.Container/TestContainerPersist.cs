@@ -9,26 +9,8 @@ using Goedel.IO;
 using Test.Goedel.Mesh;
 
 namespace Test.Goedel.Cryptography.Container {
-    [MT.TestClass]
     public partial class TestDare {
 
-        /// <summary>
-        /// 
-        /// </summary>
-        public static void TestDirect () {
-            InitializeClass();
-            var Instance = new TestDare();
-            Instance.MessagePlaintext();
-            }
-
-        [MT.AssemblyInitialize]
-        public static void Initialize (MT.TestContext Context) {
-            InitializeClass();
-            }
-
-        public static void InitializeClass () {
-            CryptographyWindows.Initialize();
-            }
 
 
         static string FileTest = "TestStore.jcx";

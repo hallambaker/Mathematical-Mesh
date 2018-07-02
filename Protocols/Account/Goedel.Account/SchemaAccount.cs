@@ -42,18 +42,15 @@ namespace Goedel.Account {
 	/// </summary>
 	public abstract partial class AccountProtocol : global::Goedel.Protocol.JSONObject {
 
-        /// <summary>
-        /// Schema tag.
+		/// <summary>
+        /// Tag identifying this class
         /// </summary>
-        /// <returns>The tag value</returns>
-		public override string Tag () {
-			return _Tag;
-			}
+		public override string _Tag =>__Tag;
 
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public override string _Tag { get; } = "AccountProtocol";
+		public new const string __Tag = "AccountProtocol";
 
 		/// <summary>
         /// Dictionary mapping tags to factory methods
@@ -78,9 +75,9 @@ namespace Goedel.Account {
         /// </summary>
         /// <param name="JSONReader">Input stream</param>
         /// <param name="Out">The created object</param>
-        public static void Deserialize(JSONReader JSONReader, out JSONObject Out) {
-			Out = JSONReader.ReadTaggedObject (_TagDictionary);
-            }
+        public static void Deserialize(JSONReader JSONReader, out JSONObject Out) => 
+			Out = JSONReader.ReadTaggedObject(_TagDictionary);
+
 		}
 
 
@@ -125,9 +122,7 @@ namespace Goedel.Account {
         /// <param name="Request">The request object to send to the host.</param>
 		/// <returns>The response object from the service</returns>
         public virtual HelloResponse Hello (
-                HelloRequest Request) {
-            return null;
-            }
+                HelloRequest Request) => null;
 
         /// <summary>
 		/// Base method for implementing the transaction  Create.
@@ -135,9 +130,7 @@ namespace Goedel.Account {
         /// <param name="Request">The request object to send to the host.</param>
 		/// <returns>The response object from the service</returns>
         public virtual CreateResponse Create (
-                CreateRequest Request) {
-            return null;
-            }
+                CreateRequest Request) => null;
 
         /// <summary>
 		/// Base method for implementing the transaction  Delete.
@@ -145,9 +138,7 @@ namespace Goedel.Account {
         /// <param name="Request">The request object to send to the host.</param>
 		/// <returns>The response object from the service</returns>
         public virtual DeleteResponse Delete (
-                DeleteRequest Request) {
-            return null;
-            }
+                DeleteRequest Request) => null;
 
         /// <summary>
 		/// Base method for implementing the transaction  Update.
@@ -155,9 +146,7 @@ namespace Goedel.Account {
         /// <param name="Request">The request object to send to the host.</param>
 		/// <returns>The response object from the service</returns>
         public virtual UpdateResponse Update (
-                UpdateRequest Request) {
-            return null;
-            }
+                UpdateRequest Request) => null;
 
         /// <summary>
 		/// Base method for implementing the transaction  Get.
@@ -165,9 +154,7 @@ namespace Goedel.Account {
         /// <param name="Request">The request object to send to the host.</param>
 		/// <returns>The response object from the service</returns>
         public virtual GetResponse Get (
-                GetRequest Request) {
-            return null;
-            }
+                GetRequest Request) => null;
 
         }
 
@@ -181,7 +168,7 @@ namespace Goedel.Account {
         /// The active JPCSession.
         /// </summary>		
 		public override JPCSession JPCSession {
-			get {return JPCRemoteSession;}
+			get => JPCRemoteSession;
 			set {JPCRemoteSession = value as JPCRemoteSession; }
 			}
 
@@ -347,15 +334,18 @@ namespace Goedel.Account {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public override string _Tag { get; } = "AccountRequest";
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "AccountRequest";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () {
-			return new AccountRequest();
-			}
+		public static new JSONObject _Factory () => new AccountRequest();
 
 
         /// <summary>
@@ -365,9 +355,9 @@ namespace Goedel.Account {
         /// <param name="wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
 			SerializeX (Writer, wrap, ref first);
-			}
+
 
         /// <summary>
         /// Serialize this object to the specified output stream.
@@ -440,15 +430,18 @@ namespace Goedel.Account {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public override string _Tag { get; } = "AccountResponse";
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "AccountResponse";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () {
-			return new AccountResponse();
-			}
+		public static new JSONObject _Factory () => new AccountResponse();
 
 
         /// <summary>
@@ -458,9 +451,9 @@ namespace Goedel.Account {
         /// <param name="wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
 			SerializeX (Writer, wrap, ref first);
-			}
+
 
         /// <summary>
         /// Serialize this object to the specified output stream.
@@ -564,15 +557,18 @@ namespace Goedel.Account {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public override string _Tag { get; } = "AccountData";
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "AccountData";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () {
-			return new AccountData();
-			}
+		public static new JSONObject _Factory () => new AccountData();
 
 
         /// <summary>
@@ -582,9 +578,9 @@ namespace Goedel.Account {
         /// <param name="wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
 			SerializeX (Writer, wrap, ref first);
-			}
+
 
         /// <summary>
         /// Serialize this object to the specified output stream.
@@ -640,7 +636,7 @@ namespace Goedel.Account {
 					_Writer.WriteArraySeparator (ref _firstarray);
 					// This is an untagged structure. Cannot inherit.
                     //_Writer.WriteObjectStart();
-                    //_Writer.WriteToken(_index.Tag(), 1);
+                    //_Writer.WriteToken(_index._Tag, 1);
 					bool firstinner = true;
 					_index.Serialize (_Writer, true, ref firstinner);
                     //_Writer.WriteObjectEnd();
@@ -754,15 +750,18 @@ namespace Goedel.Account {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public override string _Tag { get; } = "CreateRequest";
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "CreateRequest";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () {
-			return new CreateRequest();
-			}
+		public static new JSONObject _Factory () => new CreateRequest();
 
 
         /// <summary>
@@ -772,9 +771,9 @@ namespace Goedel.Account {
         /// <param name="wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
 			SerializeX (Writer, wrap, ref first);
-			}
+
 
         /// <summary>
         /// Serialize this object to the specified output stream.
@@ -859,15 +858,18 @@ namespace Goedel.Account {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public override string _Tag { get; } = "CreateResponse";
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "CreateResponse";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () {
-			return new CreateResponse();
-			}
+		public static new JSONObject _Factory () => new CreateResponse();
 
 
         /// <summary>
@@ -877,9 +879,9 @@ namespace Goedel.Account {
         /// <param name="wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
 			SerializeX (Writer, wrap, ref first);
-			}
+
 
         /// <summary>
         /// Serialize this object to the specified output stream.
@@ -961,15 +963,18 @@ namespace Goedel.Account {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public override string _Tag { get; } = "DeleteRequest";
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "DeleteRequest";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () {
-			return new DeleteRequest();
-			}
+		public static new JSONObject _Factory () => new DeleteRequest();
 
 
         /// <summary>
@@ -979,9 +984,9 @@ namespace Goedel.Account {
         /// <param name="wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
 			SerializeX (Writer, wrap, ref first);
-			}
+
 
         /// <summary>
         /// Serialize this object to the specified output stream.
@@ -1058,15 +1063,18 @@ namespace Goedel.Account {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public override string _Tag { get; } = "DeleteResponse";
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "DeleteResponse";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () {
-			return new DeleteResponse();
-			}
+		public static new JSONObject _Factory () => new DeleteResponse();
 
 
         /// <summary>
@@ -1076,9 +1084,9 @@ namespace Goedel.Account {
         /// <param name="wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
 			SerializeX (Writer, wrap, ref first);
-			}
+
 
         /// <summary>
         /// Serialize this object to the specified output stream.
@@ -1151,15 +1159,18 @@ namespace Goedel.Account {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public override string _Tag { get; } = "UpdateRequest";
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "UpdateRequest";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () {
-			return new UpdateRequest();
-			}
+		public static new JSONObject _Factory () => new UpdateRequest();
 
 
         /// <summary>
@@ -1169,9 +1180,9 @@ namespace Goedel.Account {
         /// <param name="wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
 			SerializeX (Writer, wrap, ref first);
-			}
+
 
         /// <summary>
         /// Serialize this object to the specified output stream.
@@ -1251,15 +1262,18 @@ namespace Goedel.Account {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public override string _Tag { get; } = "UpdateResponse";
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "UpdateResponse";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () {
-			return new UpdateResponse();
-			}
+		public static new JSONObject _Factory () => new UpdateResponse();
 
 
         /// <summary>
@@ -1269,9 +1283,9 @@ namespace Goedel.Account {
         /// <param name="wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
 			SerializeX (Writer, wrap, ref first);
-			}
+
 
         /// <summary>
         /// Serialize this object to the specified output stream.
@@ -1344,15 +1358,18 @@ namespace Goedel.Account {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public override string _Tag { get; } = "GetRequest";
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "GetRequest";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () {
-			return new GetRequest();
-			}
+		public static new JSONObject _Factory () => new GetRequest();
 
 
         /// <summary>
@@ -1362,9 +1379,9 @@ namespace Goedel.Account {
         /// <param name="wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
 			SerializeX (Writer, wrap, ref first);
-			}
+
 
         /// <summary>
         /// Serialize this object to the specified output stream.
@@ -1446,15 +1463,18 @@ namespace Goedel.Account {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public override string _Tag { get; } = "GetResponse";
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "GetResponse";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () {
-			return new GetResponse();
-			}
+		public static new JSONObject _Factory () => new GetResponse();
 
 
         /// <summary>
@@ -1464,9 +1484,9 @@ namespace Goedel.Account {
         /// <param name="wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
 			SerializeX (Writer, wrap, ref first);
-			}
+
 
         /// <summary>
         /// Serialize this object to the specified output stream.

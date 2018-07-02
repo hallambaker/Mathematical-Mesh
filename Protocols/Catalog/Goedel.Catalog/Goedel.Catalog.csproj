@@ -1,0 +1,43 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Libraries\Core\Goedel.Utilities\Goedel.Utilities.csproj" />
+    <ProjectReference Include="..\..\..\Libraries\Goedel.Cryptography.Dare\Goedel.Cryptography.Dare.csproj" />
+    <ProjectReference Include="..\..\..\Libraries\Goedel.Cryptography\Goedel.Cryptography.csproj" />
+    <ProjectReference Include="..\..\..\Libraries\Goedel.Mesh\Goedel.Mesh.csproj" />
+    <ProjectReference Include="..\..\..\Libraries\Goedel.Persistence\Goedel.Persistence.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="SchemaCatalog.cs">
+      <DependentUpon>SchemaCatalog.protocol</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="SchemaCatalogData.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>SchemaCatalogData.protocol</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="SchemaCatalog.protocol">
+      <LastGenOutput>SchemaCatalog.cs</LastGenOutput>
+      <Generator>ProtoGen</Generator>
+    </None>
+    <None Update="SchemaCatalogData.protocol">
+      <Generator>ProtoGen</Generator>
+      <LastGenOutput>SchemaCatalogData.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="VSPrebuild" />
+  </Target>
+
+</Project>

@@ -1,0 +1,204 @@
+﻿Protocol Goedel.Async MeshAsync MeshAsync
+	Using Goedel.Mesh
+    Using Goedel.Cryptography.Dare
+	Extern DAREHeader
+	
+	Description
+		|Mesh/Async Protocol Schema
+
+
+	Section 1 "Mesh/Recrypt/Admin Service"
+		Description
+
+
+    Service AsyncService "_mmm_async._tcp" "mmm_async" AsyncRequest AsyncResponse
+		Description
+
+	Section 2 "Request Messages"
+		Description
+			|A Mesh/Recrypt administration Service request consists of a payload object
+			|that inherits from the MeshRequest class. When using the 
+			|HTTP binding, the request MUST specify the portal DNS
+			|address in the HTTP Host field. 
+
+	Message AsyncRequest
+		Description
+			|Base class for all request messages.
+		External Goedel.Protocol.Request
+
+	Section 2 "Response Messages"
+		Description
+			|A Mesh/Recrypt administration Service response consists of a payload object that
+			|inherits from the MeshResponse class. When using the
+			|HTTP binding, the response SHOULD
+			|report the Status response code in the HTTP response 
+			|message. However the response code returned in the
+			|payload object MUST always be considered authoritative.
+
+	Message AsyncResponse
+		External Goedel.Protocol.Response		
+		Description
+			|Base class for all response messages. Contains only the
+			|status code and status description fields.
+
+	//Hello
+    Transaction Admin Hello HelloRequest HelloResponse
+		Description
+			|Report service and version information. 
+		Description
+			|The Hello transaction provides a means of determining which protocol
+			|versions, message encodings and transport protocols are supported by
+			|the service.
+
+
+	//Post
+    Transaction Async PrePost PrePostRequest PrePostResponse
+		Description
+			|Request permission to post a message to a user.
+		Description
+			|The PrePost transaction is used to determine if a service will accept a
+			|message before attempting transmission. A service MAY specify the types
+			|of message that it will accept without pre-approval in its service 
+			|description.
+		Description
+			|Note that granting a pre-post request is only an indication that the
+			|receiving service will accept the content messages. It is not a binding
+			|undertaking to present the data to the user.
+
+	Structure MessageHeader
+		Inherits DAREHeader
+		String MessageID
+			Description
+				|Unique message identifier.
+		String TransactionID
+			Description
+				|Unique transaction identifier.
+		String InReplyTo
+			Description
+				|Specifies a transaction ID that this message is a response to.
+
+		Integer Length
+			Description
+				|The length of the content the sender intends to send. This MAY be greater
+				|than the actual message length but MUST NOT be less.			
+		String Type
+			Description
+				|The type of message being sent. Valid values include "Connect",
+				|"Confirm", "Mail", "Notify".
+		String Sponsor
+			Description
+				|The party sponsoring the post request and is willing to be held accountable
+				|in the case of abuse. This MAY be the sender or another
+				|party vouching for the actual sender.
+		String PP
+			Description
+				|The original sender if different from the sponsor.
+
+	Message PrePostRequest
+		Inherits AsyncRequest
+		Description
+			|
+		Struct MessageHeader Header
+			Description
+				|The Message header
+		Integer Offset
+			Description
+				|If present, specifies an offset within the message body at which the
+				|sender wishes to resume a previous Post transaction that did not complete.
+
+	Message PrePostResponse
+		Inherits AsyncResponse
+		Description
+			|
+		Boolean Accepted
+			Description
+				|If true, the pre-post request was accepted and the sender MAY 
+				|make a post request for the specified content.
+		Boolean Immediate
+			Description
+				|If true, the sender may transfer the actual message content immediately.
+				|Otherwise, a reference to the content should be sent instead.
+		Integer Chunk
+			Description
+				|If specified and greater than 0, specifies that the content MUST be
+				|broken into chunks of no more than the specified number of kilobytes.
+		Integer Offset
+			Description
+				|If present, specifies an offset within the message body at which the
+				|receiver is willing to resume a previous transfer. This value MUST NOT
+				|be presented if the request did not contain an offset field and MUST
+				|have a value less than or equal to the value specified in the request.
+		DateTime Expires
+			Description
+				|Time at which the pre-posting approval will expire.	
+
+	//Post
+    Transaction Async Post PostRequest PostResponse
+		Description
+			|Post a message to one or more recipients.
+		Description
+			|The post command is used for messages of any size. Large messages and 
+			|messages that contain active content MAY require pre-approval by means
+			|of the PrePost transaction.
+		Description
+			|Messages that are typically sent as short messages include notifications
+			|that a user has been added to a recryption group, contact exchange requests
+			|and confirmation requests.
+
+
+	Message PostRequest
+		Inherits AsyncRequest
+		Description
+			|A PostRequest MUST contain either a Body field or a Location field but not both. 
+		Struct MessageHeader Header
+			Description
+				|The message header. This is required.
+		Binary Body
+			Description
+				|Optional message body.
+		String Location
+			Description
+				|URL specifying a location from which the message body MAY be retrieved,
+		Integer Offset
+			Description
+				|Byte offset within the message body from which the specified
+				|content begins. This field is only valid if a PrePost request 
+				|proposing to resume transmission at the specified offset has 
+				|already been received.
+		String Recipients
+			Multiple
+			Description
+				|The account identifiers of the intended recipients.
+
+	Message PostResponse
+		Inherits AsyncResponse
+		Description
+			|Response to a post request.
+		String StatusID
+			Description
+				|Unique identifier that MAY be used to retreive a status response
+				|if supported by the message type.
+
+	// Status of post request
+	Transaction Async Status StatusRequest StatusResponse
+		Description
+			|Request a status response for a previously posted message.
+
+	Message StatusRequest
+		Inherits AsyncRequest
+		Description
+			|Initiates a status transaction.
+
+	Message StatusResponse
+		Inherits AsyncResponse
+		Description
+			|Reports the success or failure of a Status transaction.
+		Struct MessageHeader Header
+			Description
+				|The message header. This is required.
+		Binary Body
+			Description
+				|The response body
+
+
+

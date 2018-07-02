@@ -43,18 +43,15 @@ namespace Goedel.Recrypt {
 	/// </summary>
 	public abstract partial class RecryptProtocol : global::Goedel.Protocol.JSONObject {
 
-        /// <summary>
-        /// Schema tag.
+		/// <summary>
+        /// Tag identifying this class
         /// </summary>
-        /// <returns>The tag value</returns>
-		public override string Tag () {
-			return _Tag;
-			}
+		public override string _Tag =>__Tag;
 
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public override string _Tag { get; } = "RecryptProtocol";
+		public new const string __Tag = "RecryptProtocol";
 
 		/// <summary>
         /// Dictionary mapping tags to factory methods
@@ -84,9 +81,9 @@ namespace Goedel.Recrypt {
         /// </summary>
         /// <param name="JSONReader">Input stream</param>
         /// <param name="Out">The created object</param>
-        public static void Deserialize(JSONReader JSONReader, out JSONObject Out) {
-			Out = JSONReader.ReadTaggedObject (_TagDictionary);
-            }
+        public static void Deserialize(JSONReader JSONReader, out JSONObject Out) => 
+			Out = JSONReader.ReadTaggedObject(_TagDictionary);
+
 		}
 
 
@@ -131,9 +128,7 @@ namespace Goedel.Recrypt {
         /// <param name="Request">The request object to send to the host.</param>
 		/// <returns>The response object from the service</returns>
         public virtual HelloResponse Hello (
-                HelloRequest Request) {
-            return null;
-            }
+                HelloRequest Request) => null;
 
         /// <summary>
 		/// Base method for implementing the transaction  CreateGroup.
@@ -141,9 +136,7 @@ namespace Goedel.Recrypt {
         /// <param name="Request">The request object to send to the host.</param>
 		/// <returns>The response object from the service</returns>
         public virtual CreateGroupResponse CreateGroup (
-                CreateGroupRequest Request) {
-            return null;
-            }
+                CreateGroupRequest Request) => null;
 
         /// <summary>
 		/// Base method for implementing the transaction  UpdateGroup.
@@ -151,9 +144,7 @@ namespace Goedel.Recrypt {
         /// <param name="Request">The request object to send to the host.</param>
 		/// <returns>The response object from the service</returns>
         public virtual UpdateGroupResponse UpdateGroup (
-                UpdateGroupRequest Request) {
-            return null;
-            }
+                UpdateGroupRequest Request) => null;
 
         /// <summary>
 		/// Base method for implementing the transaction  GetGroup.
@@ -161,9 +152,7 @@ namespace Goedel.Recrypt {
         /// <param name="Request">The request object to send to the host.</param>
 		/// <returns>The response object from the service</returns>
         public virtual GetGroupResponse GetGroup (
-                GetGroupRequest Request) {
-            return null;
-            }
+                GetGroupRequest Request) => null;
 
         /// <summary>
 		/// Base method for implementing the transaction  AddMember.
@@ -171,9 +160,7 @@ namespace Goedel.Recrypt {
         /// <param name="Request">The request object to send to the host.</param>
 		/// <returns>The response object from the service</returns>
         public virtual AddMemberResponse AddMember (
-                AddMemberRequest Request) {
-            return null;
-            }
+                AddMemberRequest Request) => null;
 
         /// <summary>
 		/// Base method for implementing the transaction  UpdateMember.
@@ -181,9 +168,7 @@ namespace Goedel.Recrypt {
         /// <param name="Request">The request object to send to the host.</param>
 		/// <returns>The response object from the service</returns>
         public virtual UpdateMemberResponse UpdateMember (
-                UpdateMemberRequest Request) {
-            return null;
-            }
+                UpdateMemberRequest Request) => null;
 
         /// <summary>
 		/// Base method for implementing the transaction  GetKey.
@@ -191,9 +176,7 @@ namespace Goedel.Recrypt {
         /// <param name="Request">The request object to send to the host.</param>
 		/// <returns>The response object from the service</returns>
         public virtual GetKeyResponse GetKey (
-                GetKeyRequest Request) {
-            return null;
-            }
+                GetKeyRequest Request) => null;
 
         /// <summary>
 		/// Base method for implementing the transaction  RecryptData.
@@ -201,9 +184,7 @@ namespace Goedel.Recrypt {
         /// <param name="Request">The request object to send to the host.</param>
 		/// <returns>The response object from the service</returns>
         public virtual RecryptDataResponse RecryptData (
-                RecryptDataRequest Request) {
-            return null;
-            }
+                RecryptDataRequest Request) => null;
 
         }
 
@@ -217,7 +198,7 @@ namespace Goedel.Recrypt {
         /// The active JPCSession.
         /// </summary>		
 		public override JPCSession JPCSession {
-			get {return JPCRemoteSession;}
+			get => JPCRemoteSession;
 			set {JPCRemoteSession = value as JPCRemoteSession; }
 			}
 
@@ -443,15 +424,18 @@ namespace Goedel.Recrypt {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public override string _Tag { get; } = "RecryptRequest";
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "RecryptRequest";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () {
-			return new RecryptRequest();
-			}
+		public static new JSONObject _Factory () => new RecryptRequest();
 
 
         /// <summary>
@@ -461,9 +445,9 @@ namespace Goedel.Recrypt {
         /// <param name="wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
 			SerializeX (Writer, wrap, ref first);
-			}
+
 
         /// <summary>
         /// Serialize this object to the specified output stream.
@@ -532,15 +516,18 @@ namespace Goedel.Recrypt {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public override string _Tag { get; } = "RecryptResponse";
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "RecryptResponse";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () {
-			return new RecryptResponse();
-			}
+		public static new JSONObject _Factory () => new RecryptResponse();
 
 
         /// <summary>
@@ -550,9 +537,9 @@ namespace Goedel.Recrypt {
         /// <param name="wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
 			SerializeX (Writer, wrap, ref first);
-			}
+
 
         /// <summary>
         /// Serialize this object to the specified output stream.
@@ -626,15 +613,18 @@ namespace Goedel.Recrypt {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public override string _Tag { get; } = "CreateGroupRequest";
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "CreateGroupRequest";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () {
-			return new CreateGroupRequest();
-			}
+		public static new JSONObject _Factory () => new CreateGroupRequest();
 
 
         /// <summary>
@@ -644,9 +634,9 @@ namespace Goedel.Recrypt {
         /// <param name="wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
 			SerializeX (Writer, wrap, ref first);
-			}
+
 
         /// <summary>
         /// Serialize this object to the specified output stream.
@@ -728,15 +718,18 @@ namespace Goedel.Recrypt {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public override string _Tag { get; } = "CreateGroupResponse";
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "CreateGroupResponse";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () {
-			return new CreateGroupResponse();
-			}
+		public static new JSONObject _Factory () => new CreateGroupResponse();
 
 
         /// <summary>
@@ -746,9 +739,9 @@ namespace Goedel.Recrypt {
         /// <param name="wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
 			SerializeX (Writer, wrap, ref first);
-			}
+
 
         /// <summary>
         /// Serialize this object to the specified output stream.
@@ -828,15 +821,18 @@ namespace Goedel.Recrypt {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public override string _Tag { get; } = "UpdateGroupRequest";
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "UpdateGroupRequest";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () {
-			return new UpdateGroupRequest();
-			}
+		public static new JSONObject _Factory () => new UpdateGroupRequest();
 
 
         /// <summary>
@@ -846,9 +842,9 @@ namespace Goedel.Recrypt {
         /// <param name="wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
 			SerializeX (Writer, wrap, ref first);
-			}
+
 
         /// <summary>
         /// Serialize this object to the specified output stream.
@@ -930,15 +926,18 @@ namespace Goedel.Recrypt {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public override string _Tag { get; } = "UpdateGroupResponse";
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "UpdateGroupResponse";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () {
-			return new UpdateGroupResponse();
-			}
+		public static new JSONObject _Factory () => new UpdateGroupResponse();
 
 
         /// <summary>
@@ -948,9 +947,9 @@ namespace Goedel.Recrypt {
         /// <param name="wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
 			SerializeX (Writer, wrap, ref first);
-			}
+
 
         /// <summary>
         /// Serialize this object to the specified output stream.
@@ -1023,15 +1022,18 @@ namespace Goedel.Recrypt {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public override string _Tag { get; } = "GetGroupRequest";
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "GetGroupRequest";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () {
-			return new GetGroupRequest();
-			}
+		public static new JSONObject _Factory () => new GetGroupRequest();
 
 
         /// <summary>
@@ -1041,9 +1043,9 @@ namespace Goedel.Recrypt {
         /// <param name="wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
 			SerializeX (Writer, wrap, ref first);
-			}
+
 
         /// <summary>
         /// Serialize this object to the specified output stream.
@@ -1125,15 +1127,18 @@ namespace Goedel.Recrypt {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public override string _Tag { get; } = "GetGroupResponse";
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "GetGroupResponse";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () {
-			return new GetGroupResponse();
-			}
+		public static new JSONObject _Factory () => new GetGroupResponse();
 
 
         /// <summary>
@@ -1143,9 +1148,9 @@ namespace Goedel.Recrypt {
         /// <param name="wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
 			SerializeX (Writer, wrap, ref first);
-			}
+
 
         /// <summary>
         /// Serialize this object to the specified output stream.
@@ -1235,15 +1240,18 @@ namespace Goedel.Recrypt {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public override string _Tag { get; } = "AddMemberRequest";
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "AddMemberRequest";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () {
-			return new AddMemberRequest();
-			}
+		public static new JSONObject _Factory () => new AddMemberRequest();
 
 
         /// <summary>
@@ -1253,9 +1261,9 @@ namespace Goedel.Recrypt {
         /// <param name="wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
 			SerializeX (Writer, wrap, ref first);
-			}
+
 
         /// <summary>
         /// Serialize this object to the specified output stream.
@@ -1285,7 +1293,7 @@ namespace Goedel.Recrypt {
 					_Writer.WriteArraySeparator (ref _firstarray);
 					// This is an untagged structure. Cannot inherit.
                     //_Writer.WriteObjectStart();
-                    //_Writer.WriteToken(_index.Tag(), 1);
+                    //_Writer.WriteToken(_index._Tag, 1);
 					bool firstinner = true;
 					_index.Serialize (_Writer, true, ref firstinner);
                     //_Writer.WriteObjectEnd();
@@ -1365,15 +1373,18 @@ namespace Goedel.Recrypt {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public override string _Tag { get; } = "AddMemberResponse";
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "AddMemberResponse";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () {
-			return new AddMemberResponse();
-			}
+		public static new JSONObject _Factory () => new AddMemberResponse();
 
 
         /// <summary>
@@ -1383,9 +1394,9 @@ namespace Goedel.Recrypt {
         /// <param name="wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
 			SerializeX (Writer, wrap, ref first);
-			}
+
 
         /// <summary>
         /// Serialize this object to the specified output stream.
@@ -1463,15 +1474,18 @@ namespace Goedel.Recrypt {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public override string _Tag { get; } = "UpdateMemberRequest";
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "UpdateMemberRequest";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () {
-			return new UpdateMemberRequest();
-			}
+		public static new JSONObject _Factory () => new UpdateMemberRequest();
 
 
         /// <summary>
@@ -1481,9 +1495,9 @@ namespace Goedel.Recrypt {
         /// <param name="wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
 			SerializeX (Writer, wrap, ref first);
-			}
+
 
         /// <summary>
         /// Serialize this object to the specified output stream.
@@ -1513,7 +1527,7 @@ namespace Goedel.Recrypt {
 					_Writer.WriteArraySeparator (ref _firstarray);
 					// This is an untagged structure. Cannot inherit.
                     //_Writer.WriteObjectStart();
-                    //_Writer.WriteToken(_index.Tag(), 1);
+                    //_Writer.WriteToken(_index._Tag, 1);
 					bool firstinner = true;
 					_index.Serialize (_Writer, true, ref firstinner);
                     //_Writer.WriteObjectEnd();
@@ -1593,15 +1607,18 @@ namespace Goedel.Recrypt {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public override string _Tag { get; } = "UpdateMemberResponse";
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "UpdateMemberResponse";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () {
-			return new UpdateMemberResponse();
-			}
+		public static new JSONObject _Factory () => new UpdateMemberResponse();
 
 
         /// <summary>
@@ -1611,9 +1628,9 @@ namespace Goedel.Recrypt {
         /// <param name="wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
 			SerializeX (Writer, wrap, ref first);
-			}
+
 
         /// <summary>
         /// Serialize this object to the specified output stream.
@@ -1689,15 +1706,18 @@ namespace Goedel.Recrypt {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public override string _Tag { get; } = "GetKeyRequest";
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "GetKeyRequest";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () {
-			return new GetKeyRequest();
-			}
+		public static new JSONObject _Factory () => new GetKeyRequest();
 
 
         /// <summary>
@@ -1707,9 +1727,9 @@ namespace Goedel.Recrypt {
         /// <param name="wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
 			SerializeX (Writer, wrap, ref first);
-			}
+
 
         /// <summary>
         /// Serialize this object to the specified output stream.
@@ -1791,15 +1811,18 @@ namespace Goedel.Recrypt {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public override string _Tag { get; } = "GetKeyResponse";
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "GetKeyResponse";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () {
-			return new GetKeyResponse();
-			}
+		public static new JSONObject _Factory () => new GetKeyResponse();
 
 
         /// <summary>
@@ -1809,9 +1832,9 @@ namespace Goedel.Recrypt {
         /// <param name="wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
 			SerializeX (Writer, wrap, ref first);
-			}
+
 
         /// <summary>
         /// Serialize this object to the specified output stream.
@@ -1912,15 +1935,18 @@ namespace Goedel.Recrypt {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public override string _Tag { get; } = "RecryptDataRequest";
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "RecryptDataRequest";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () {
-			return new RecryptDataRequest();
-			}
+		public static new JSONObject _Factory () => new RecryptDataRequest();
 
 
         /// <summary>
@@ -1930,9 +1956,9 @@ namespace Goedel.Recrypt {
         /// <param name="wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
 			SerializeX (Writer, wrap, ref first);
-			}
+
 
         /// <summary>
         /// Serialize this object to the specified output stream.
@@ -1977,7 +2003,7 @@ namespace Goedel.Recrypt {
 					//EphemeralKey.Serialize (_Writer, false);
 					{
 						_Writer.WriteObjectStart();
-						_Writer.WriteToken(EphemeralKey.Tag(), 1);
+						_Writer.WriteToken(EphemeralKey._Tag, 1);
 						bool firstinner = true;
 						EphemeralKey.Serialize (_Writer, true, ref firstinner);
 						_Writer.WriteObjectEnd();
@@ -2075,15 +2101,18 @@ namespace Goedel.Recrypt {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public override string _Tag { get; } = "RecryptDataResponse";
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "RecryptDataResponse";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () {
-			return new RecryptDataResponse();
-			}
+		public static new JSONObject _Factory () => new RecryptDataResponse();
 
 
         /// <summary>
@@ -2093,9 +2122,9 @@ namespace Goedel.Recrypt {
         /// <param name="wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
 			SerializeX (Writer, wrap, ref first);
-			}
+
 
         /// <summary>
         /// Serialize this object to the specified output stream.

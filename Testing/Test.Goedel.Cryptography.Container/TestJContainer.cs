@@ -8,83 +8,87 @@ using Goedel.Utilities;
 using Goedel.IO;
 
 namespace Test.Goedel.Cryptography.Container {
-    [MT.TestClass]
-    public class TestContainers {
+    public partial class TestContainers {
         [MT.ClassInitialize]
-        public static void Initialize (MT.TestContext Context) {
+        public static void Initialize(MT.TestContext Context) {
             global::Goedel.IO.Debug.Initialize();
             global::Goedel.Cryptography.Cryptography.Initialize();
             }
 
         [MT.TestMethod]
-        public void ContainerTestList () {
-            var n = 0;
-            TestContainer($"ContainerList-{n}", ContainerType.List, n);
+        public void ContainerTestList() {
+            TestContainer($"ContainerList", ContainerType.List, 0);
+            TestContainer($"ContainerList", ContainerType.List, 1);
+            TestContainer($"ContainerList", ContainerType.List, 10);
             }
 
         [MT.TestMethod]
-        public void ContainerTestDigest () {
-            var n = 0;
-            TestContainer($"ContainerDigest-{n}", ContainerType.Digest, n);
-            }
-
-
-        [MT.TestMethod]
-        public void ContainerTestChain () {
-            var n = 0;
-            TestContainer($"ContainerChain-{n}", ContainerType.Chain, n);
-            }
-
-        [MT.TestMethod]
-        public void ContainerTestTree () {
-            var n = 0;
-            TestContainer($"ContainerTree-{n}", ContainerType.Tree, n);
-            }
-
-        [MT.TestMethod]
-        public void ContainerTestMerkleTree () {
-            var n = 0;
-            TestContainer($"ContainerMerkle-{n}", ContainerType.MerkleTree, n);
+        public void ContainerTestDigest() {
+            TestContainer($"ContainerDigest", ContainerType.Digest, 0);
+            TestContainer($"ContainerDigest", ContainerType.Digest, 1);
+            TestContainer($"ContainerDigest", ContainerType.Digest, 10);
             }
 
 
         [MT.TestMethod]
-        public void ContainerTest0 () {
-            var n = 0;
-            TestContainer($"ContainerList{n}", ContainerType.List, n);
-            TestContainer($"ContainerDigest{n}", ContainerType.Digest, n);
-            TestContainer($"ContainerChain{n}", ContainerType.Chain, n);
-            TestContainer($"ContainerTree{n}", ContainerType.Tree, n);
-            TestContainer($"ContainerMerkle{n}", ContainerType.MerkleTree, n);
+        public void ContainerTestChain() {
+            TestContainer($"ContainerChain", ContainerType.Chain, 0);
+            TestContainer($"ContainerChain", ContainerType.Chain, 1);
+            TestContainer($"ContainerChain", ContainerType.Chain, 10);
             }
 
         [MT.TestMethod]
-        public void ContainerTest1 () {
+        public void ContainerTestTree() {
+            TestContainer($"ContainerTree", ContainerType.Tree, 0);
+            TestContainer($"ContainerTree", ContainerType.Tree, 1);
+            TestContainer($"ContainerTree", ContainerType.Tree, 10);
+            }
+
+        [MT.TestMethod]
+        public void ContainerTestMerkleTree() {
+            TestContainer($"ContainerMerkle", ContainerType.MerkleTree, 0);
+            TestContainer($"ContainerMerkle", ContainerType.MerkleTree, 1);
+            TestContainer($"ContainerMerkle", ContainerType.MerkleTree, 10);
+            }
+
+
+        [MT.TestMethod]
+        public void ContainerTest0() {
+            var n = 0;
+            TestContainer($"ContainerList-", ContainerType.List, n);
+            TestContainer($"ContainerDigest-", ContainerType.Digest, n);
+            TestContainer($"ContainerChain-", ContainerType.Chain, n);
+            TestContainer($"ContainerTree-", ContainerType.Tree, n);
+            TestContainer($"ContainerMerkle-", ContainerType.MerkleTree, n);
+            }
+
+        [MT.TestMethod]
+        public void ContainerTest1() {
             var n = 1;
-            TestContainer($"ContainerList{n}", ContainerType.List, n);
-            TestContainer($"ContainerDigest{n}", ContainerType.Digest, n);
-            TestContainer($"ContainerChain{n}", ContainerType.Chain, n);
-            TestContainer($"ContainerTree{n}", ContainerType.Tree, n);
-            TestContainer($"ContainerMerkle{n}", ContainerType.MerkleTree, n);
+            TestContainer($"ContainerList-", ContainerType.List, n);
+            TestContainer($"ContainerDigest-", ContainerType.Digest, n);
+            TestContainer($"ContainerChain-", ContainerType.Chain, n);
+            TestContainer($"ContainerTree-", ContainerType.Tree, n);
+            TestContainer($"ContainerMerkle-", ContainerType.MerkleTree, n);
             }
 
         [MT.TestMethod]
-        public void ContainerTest10 () {
+        public void ContainerTest10() {
             var n = 10;
-            TestContainer($"ContainerList{n}", ContainerType.List, n);
-            TestContainer($"ContainerDigest{n}", ContainerType.Digest, n);
-            TestContainer($"ContainerChain{n}", ContainerType.Chain, n);
-            TestContainer($"ContainerTree{n}", ContainerType.Tree, n);
-            TestContainer($"ContainerMerkle{n}", ContainerType.MerkleTree, n);
+            TestContainer($"ContainerList-", ContainerType.List, n);
+            TestContainer($"ContainerDigest-", ContainerType.Digest, n);
+            TestContainer($"ContainerChain-", ContainerType.Chain, n);
+            TestContainer($"ContainerTree-", ContainerType.Tree, n);
+            TestContainer($"ContainerMerkle-", ContainerType.MerkleTree, n);
             }
 
 
         [MT.TestMethod]
-        public void ContainerTest500 () {
+        public void ContainerTest500() {
             var Records = 500;
             var ReOpen = 13;
             var MoveStep = 27;
-            TestContainer($"ContainerList{Records}-{ReOpen}-{MoveStep}", ContainerType.List, 
+            TestContainer($"ContainerList{Records}-{ReOpen}-{MoveStep}", ContainerType.List,
                 Records, ReOpen: ReOpen, MoveStep: MoveStep);
             TestContainer($"ContainerDigest{Records}-{ReOpen}-{MoveStep}", ContainerType.Digest,
                 Records, ReOpen: ReOpen, MoveStep: MoveStep);
@@ -97,7 +101,7 @@ namespace Test.Goedel.Cryptography.Container {
             }
 
 
-        byte[] MakeConstant (string Text, int Repeat) {
+        byte[] MakeConstant(string Text, int Repeat) {
 
             var Builder = new StringBuilder();
             for (var i = 0; i < Repeat; i++) {
@@ -108,10 +112,14 @@ namespace Test.Goedel.Cryptography.Container {
 
             }
 
-        public void TestContainer (string FileName, ContainerType ContainerType,
+
+
+        public void TestContainer(string FileName, ContainerType ContainerType,
                     int Records = 1, int MaxSize = 0, int ReOpen = 0, int MoveStep = 0) {
             ReOpen = ReOpen == 0 ? Records : ReOpen;
             MaxSize = MaxSize == 0 ? Records + 1 : MaxSize;
+
+            FileName = FileName + $"-{Records}";
 
             int Record;
 

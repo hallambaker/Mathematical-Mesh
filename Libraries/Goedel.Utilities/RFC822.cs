@@ -9,6 +9,50 @@ namespace Goedel.Utilities {
     public static partial class Extension {
 
         /// <summary>
+        /// If the input string contains the separator, return the string leading up 
+        /// to the separator. Otherwise return null.
+        /// </summary>
+        /// <param name="Input">The string to split.</param>
+        /// <param name="Separator">The separator character</param>
+        /// <returns>If the separator is found, returns the input string up to but not 
+        /// including the separator, otherwise null.</returns>
+        public static string Left(this string Input, char Separator) {
+            var Index = Input.IndexOf(Separator);
+            return Index < 0? null : Input.Substring(0, Index);
+            }
+
+        /// <summary>
+        /// If the input string contains the separator, return the string leading up 
+        /// to the separator. Otherwise return null.
+        /// </summary>
+        /// <param name="Input">The string to split.</param>
+        /// <param name="Separator">The separator character</param>
+        /// <returns>If the separator is found, returns the input string up to but not 
+        /// including the separator, otherwise null.</returns>
+        public static string Right(this string Input, char Separator) {
+            var Index = Input.IndexOf(Separator);
+            return Index < 0 ? null : Input.Substring(Index+1);
+            }
+
+
+        /// <summary>
+        /// If the input string contains the separator, return the string leading up 
+        /// to the separator. Otherwise return null.
+        /// </summary>
+        /// <param name="Input">The string to split.</param>
+        /// <param name="Separator">The separator character</param>
+        /// <param name="Right">The string to the right of the separator</param>
+        /// <param name="Left">The string to the left of the separator</param>
+        /// <returns>If the separator is found, returns the input string up to but not 
+        /// including the separator, otherwise null.</returns>
+        public static void Separate(this string Input, char Separator, 
+            out string Left, out string Right) {
+            var Index = Input.IndexOf(Separator);
+            Left = Index < 0 ? null : Input.Substring(0, Index);
+            Right = Index < 0 ? null : Input.Substring(Index + 1);
+            }
+
+        /// <summary>
         /// Extract the Account and Portal components from the specified AccountID.
         /// </summary>
         /// <param name="AccountID">The AccountID to split.</param>

@@ -183,8 +183,8 @@ namespace ExampleGenerator {
             ContainerFramingEncrypted = ConsoleWriter.ToString();
 
             var EncryptedContainer = MakeContainer("Test1EncSep", ContainerType.List);
-            EncryptedContainer.Append(TestData300, EncryptionKeys);
-            EncryptedContainer.Append(TestData300, EncryptionKeys);
+            EncryptedContainer.Append(TestData300, EncryptionKeys:EncryptionKeys);
+            EncryptedContainer.Append(TestData300, EncryptionKeys:EncryptionKeys);
             ReadContainer(EncryptedContainer, ContainerHeadersEncryptIndependentSession);
             ContainerFramingEncryptedIndependent = ConsoleWriter.ToString();
             }
@@ -479,9 +479,7 @@ namespace ExampleGenerator {
             MeshMachine = new MeshMachineCached(),
             DefaultDescription = Device1Description
             };
-        public string Device1 (string Command) {
-            return Device1(Command, out var Forget);
-            }
+        public string Device1(string Command) => Device1(Command, out var Forget);
         public string Device1 (string Command, out string Tag) {
             Tag = Label(Command);
             return Shell1.Dispatch(Command);
@@ -603,9 +601,7 @@ namespace ExampleGenerator {
         /// <summary>
         /// Create a SSH credential profile.
         /// </summary>
-        void AddApplicationMail () {
-            throw new NYI();
-            }
+        void AddApplicationMail() => throw new NYI();
 
 
         /// <summary>

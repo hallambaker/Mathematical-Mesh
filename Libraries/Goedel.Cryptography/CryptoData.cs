@@ -215,9 +215,15 @@ namespace Goedel.Cryptography {
         /// Write the binary data to the input stream.
         /// </summary>
         /// <param name="Data">The data to write</param>
-        public void Write (byte[] Data) {
+        /// <param name="Count">Number of bytes to process</param>
+        /// <param name="Offset">Offset to begin processing at.</param>
+        public void Write (byte[] Data, int Offset=0, int Count=-1) {
+            if (Count < 0) {
+                Count = Data.Length - Offset;
+                }
+
             if (Data != null) {
-                InputStream.Write(Data, 0, Data.Length);
+                InputStream.Write(Data, Offset, Count);
                 }
             }
 

@@ -1,10 +1,8 @@
-using System;
+﻿using System;
 using Goedel.Utilities;
 
 
-/// <summary>
-/// /
-/// </summary>
+
 namespace Goedel.Mesh {
 
 

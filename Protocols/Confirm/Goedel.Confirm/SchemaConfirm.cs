@@ -1,4 +1,4 @@
-
+﻿
 //  Copyright (c) 2016 by .
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -41,18 +41,15 @@ namespace Goedel.Confirm {
 	/// </summary>
 	public abstract partial class ConfirmProtocol : global::Goedel.Protocol.JSONObject {
 
-        /// <summary>
-        /// Schema tag.
+		/// <summary>
+        /// Tag identifying this class
         /// </summary>
-        /// <returns>The tag value</returns>
-		public override string Tag () {
-			return _Tag;
-			}
+		public override string _Tag =>__Tag;
 
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public override string _Tag { get; } = "ConfirmProtocol";
+		public new const string __Tag = "ConfirmProtocol";
 
 		/// <summary>
         /// Dictionary mapping tags to factory methods
@@ -82,9 +79,9 @@ namespace Goedel.Confirm {
         /// </summary>
         /// <param name="JSONReader">Input stream</param>
         /// <param name="Out">The created object</param>
-        public static void Deserialize(JSONReader JSONReader, out JSONObject Out) {
-			Out = JSONReader.ReadTaggedObject (_TagDictionary);
-            }
+        public static void Deserialize(JSONReader JSONReader, out JSONObject Out) => 
+			Out = JSONReader.ReadTaggedObject(_TagDictionary);
+
 		}
 
 
@@ -129,9 +126,7 @@ namespace Goedel.Confirm {
         /// <param name="Request">The request object to send to the host.</param>
 		/// <returns>The response object from the service</returns>
         public virtual HelloResponse Hello (
-                HelloRequest Request) {
-            return null;
-            }
+                HelloRequest Request) => null;
 
         /// <summary>
 		/// Base method for implementing the transaction  Enquire.
@@ -139,9 +134,7 @@ namespace Goedel.Confirm {
         /// <param name="Request">The request object to send to the host.</param>
 		/// <returns>The response object from the service</returns>
         public virtual EnquireResponse Enquire (
-                EnquireRequest Request) {
-            return null;
-            }
+                EnquireRequest Request) => null;
 
         /// <summary>
 		/// Base method for implementing the transaction  Status.
@@ -149,9 +142,7 @@ namespace Goedel.Confirm {
         /// <param name="Request">The request object to send to the host.</param>
 		/// <returns>The response object from the service</returns>
         public virtual StatusResponse Status (
-                StatusRequest Request) {
-            return null;
-            }
+                StatusRequest Request) => null;
 
         /// <summary>
 		/// Base method for implementing the transaction  Pending.
@@ -159,9 +150,7 @@ namespace Goedel.Confirm {
         /// <param name="Request">The request object to send to the host.</param>
 		/// <returns>The response object from the service</returns>
         public virtual PendingResponse Pending (
-                PendingRequest Request) {
-            return null;
-            }
+                PendingRequest Request) => null;
 
         /// <summary>
 		/// Base method for implementing the transaction  Respond.
@@ -169,9 +158,7 @@ namespace Goedel.Confirm {
         /// <param name="Request">The request object to send to the host.</param>
 		/// <returns>The response object from the service</returns>
         public virtual RespondResponse Respond (
-                RespondRequest Request) {
-            return null;
-            }
+                RespondRequest Request) => null;
 
         }
 
@@ -185,7 +172,7 @@ namespace Goedel.Confirm {
         /// The active JPCSession.
         /// </summary>		
 		public override JPCSession JPCSession {
-			get {return JPCRemoteSession;}
+			get => JPCRemoteSession;
 			set {JPCRemoteSession = value as JPCRemoteSession; }
 			}
 
@@ -351,15 +338,18 @@ namespace Goedel.Confirm {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public override string _Tag { get; } = "ConfirmRequest";
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "ConfirmRequest";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () {
-			return new ConfirmRequest();
-			}
+		public static new JSONObject _Factory () => new ConfirmRequest();
 
 
         /// <summary>
@@ -369,9 +359,9 @@ namespace Goedel.Confirm {
         /// <param name="wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
 			SerializeX (Writer, wrap, ref first);
-			}
+
 
         /// <summary>
         /// Serialize this object to the specified output stream.
@@ -444,15 +434,18 @@ namespace Goedel.Confirm {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public override string _Tag { get; } = "ConfirmResponse";
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "ConfirmResponse";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () {
-			return new ConfirmResponse();
-			}
+		public static new JSONObject _Factory () => new ConfirmResponse();
 
 
         /// <summary>
@@ -462,9 +455,9 @@ namespace Goedel.Confirm {
         /// <param name="wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
 			SerializeX (Writer, wrap, ref first);
-			}
+
 
         /// <summary>
         /// Serialize this object to the specified output stream.
@@ -556,15 +549,18 @@ namespace Goedel.Confirm {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public override string _Tag { get; } = "AccountEntry";
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "AccountEntry";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () {
-			return new AccountEntry();
-			}
+		public static new JSONObject _Factory () => new AccountEntry();
 
 
         /// <summary>
@@ -574,9 +570,9 @@ namespace Goedel.Confirm {
         /// <param name="wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
 			SerializeX (Writer, wrap, ref first);
-			}
+
 
         /// <summary>
         /// Serialize this object to the specified output stream.
@@ -734,15 +730,18 @@ namespace Goedel.Confirm {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public override string _Tag { get; } = "EntryBase";
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "EntryBase";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () {
-			return new EntryBase();
-			}
+		public static new JSONObject _Factory () => new EntryBase();
 
 
         /// <summary>
@@ -752,9 +751,9 @@ namespace Goedel.Confirm {
         /// <param name="wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
 			SerializeX (Writer, wrap, ref first);
-			}
+
 
         /// <summary>
         /// Serialize this object to the specified output stream.
@@ -855,15 +854,18 @@ namespace Goedel.Confirm {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public override string _Tag { get; } = "RequestEntry";
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "RequestEntry";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () {
-			return new RequestEntry();
-			}
+		public static new JSONObject _Factory () => new RequestEntry();
 
 
         /// <summary>
@@ -873,9 +875,9 @@ namespace Goedel.Confirm {
         /// <param name="wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
 			SerializeX (Writer, wrap, ref first);
-			}
+
 
         /// <summary>
         /// Serialize this object to the specified output stream.
@@ -984,15 +986,18 @@ namespace Goedel.Confirm {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public override string _Tag { get; } = "ResponseEntry";
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "ResponseEntry";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () {
-			return new ResponseEntry();
-			}
+		public static new JSONObject _Factory () => new ResponseEntry();
 
 
         /// <summary>
@@ -1002,9 +1007,9 @@ namespace Goedel.Confirm {
         /// <param name="wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
 			SerializeX (Writer, wrap, ref first);
-			}
+
 
         /// <summary>
         /// Serialize this object to the specified output stream.
@@ -1108,15 +1113,18 @@ namespace Goedel.Confirm {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public override string _Tag { get; } = "TBSRequest";
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "TBSRequest";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () {
-			return new TBSRequest();
-			}
+		public static new JSONObject _Factory () => new TBSRequest();
 
 
         /// <summary>
@@ -1126,9 +1134,9 @@ namespace Goedel.Confirm {
         /// <param name="wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
 			SerializeX (Writer, wrap, ref first);
-			}
+
 
         /// <summary>
         /// Serialize this object to the specified output stream.
@@ -1229,22 +1237,25 @@ namespace Goedel.Confirm {
         /// </summary>
 
 		public virtual bool						Value {
-			get {return _Value;}
+			get => _Value;
 			set {_Value = value; __Value = true; }
 			}
 		
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public override string _Tag { get; } = "TBSResponse";
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "TBSResponse";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () {
-			return new TBSResponse();
-			}
+		public static new JSONObject _Factory () => new TBSResponse();
 
 
         /// <summary>
@@ -1254,9 +1265,9 @@ namespace Goedel.Confirm {
         /// <param name="wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
 			SerializeX (Writer, wrap, ref first);
-			}
+
 
         /// <summary>
         /// Serialize this object to the specified output stream.
@@ -1348,15 +1359,18 @@ namespace Goedel.Confirm {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public override string _Tag { get; } = "EnquireRequest";
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "EnquireRequest";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () {
-			return new EnquireRequest();
-			}
+		public static new JSONObject _Factory () => new EnquireRequest();
 
 
         /// <summary>
@@ -1366,9 +1380,9 @@ namespace Goedel.Confirm {
         /// <param name="wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
 			SerializeX (Writer, wrap, ref first);
-			}
+
 
         /// <summary>
         /// Serialize this object to the specified output stream.
@@ -1454,15 +1468,18 @@ namespace Goedel.Confirm {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public override string _Tag { get; } = "EnquireResponse";
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "EnquireResponse";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () {
-			return new EnquireResponse();
-			}
+		public static new JSONObject _Factory () => new EnquireResponse();
 
 
         /// <summary>
@@ -1472,9 +1489,9 @@ namespace Goedel.Confirm {
         /// <param name="wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
 			SerializeX (Writer, wrap, ref first);
-			}
+
 
         /// <summary>
         /// Serialize this object to the specified output stream.
@@ -1559,7 +1576,7 @@ namespace Goedel.Confirm {
         /// </summary>
 
 		public virtual bool						Cancel {
-			get {return _Cancel;}
+			get => _Cancel;
 			set {_Cancel = value; __Cancel = true; }
 			}
         /// <summary>
@@ -1573,15 +1590,18 @@ namespace Goedel.Confirm {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public override string _Tag { get; } = "StatusRequest";
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "StatusRequest";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () {
-			return new StatusRequest();
-			}
+		public static new JSONObject _Factory () => new StatusRequest();
 
 
         /// <summary>
@@ -1591,9 +1611,9 @@ namespace Goedel.Confirm {
         /// <param name="wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
 			SerializeX (Writer, wrap, ref first);
-			}
+
 
         /// <summary>
         /// Serialize this object to the specified output stream.
@@ -1684,15 +1704,18 @@ namespace Goedel.Confirm {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public override string _Tag { get; } = "StatusResponse";
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "StatusResponse";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () {
-			return new StatusResponse();
-			}
+		public static new JSONObject _Factory () => new StatusResponse();
 
 
         /// <summary>
@@ -1702,9 +1725,9 @@ namespace Goedel.Confirm {
         /// <param name="wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
 			SerializeX (Writer, wrap, ref first);
-			}
+
 
         /// <summary>
         /// Serialize this object to the specified output stream.
@@ -1798,7 +1821,7 @@ namespace Goedel.Confirm {
         /// </summary>
 
 		public virtual int						MaxResponse {
-			get {return _MaxResponse;}
+			get => _MaxResponse;
 			set {_MaxResponse = value; __MaxResponse = true; }
 			}
 		bool								__BeforeId = false;
@@ -1809,7 +1832,7 @@ namespace Goedel.Confirm {
         /// </summary>
 
 		public virtual int						BeforeId {
-			get {return _BeforeId;}
+			get => _BeforeId;
 			set {_BeforeId = value; __BeforeId = true; }
 			}
 		bool								__AfterId = false;
@@ -1820,22 +1843,25 @@ namespace Goedel.Confirm {
         /// </summary>
 
 		public virtual int						AfterId {
-			get {return _AfterId;}
+			get => _AfterId;
 			set {_AfterId = value; __AfterId = true; }
 			}
 		
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public override string _Tag { get; } = "PendingRequest";
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "PendingRequest";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () {
-			return new PendingRequest();
-			}
+		public static new JSONObject _Factory () => new PendingRequest();
 
 
         /// <summary>
@@ -1845,9 +1871,9 @@ namespace Goedel.Confirm {
         /// <param name="wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
 			SerializeX (Writer, wrap, ref first);
-			}
+
 
         /// <summary>
         /// Serialize this object to the specified output stream.
@@ -1965,15 +1991,18 @@ namespace Goedel.Confirm {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public override string _Tag { get; } = "PendingResponse";
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "PendingResponse";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () {
-			return new PendingResponse();
-			}
+		public static new JSONObject _Factory () => new PendingResponse();
 
 
         /// <summary>
@@ -1983,9 +2012,9 @@ namespace Goedel.Confirm {
         /// <param name="wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
 			SerializeX (Writer, wrap, ref first);
-			}
+
 
         /// <summary>
         /// Serialize this object to the specified output stream.
@@ -2010,7 +2039,7 @@ namespace Goedel.Confirm {
 					_Writer.WriteArraySeparator (ref _firstarray);
 					// This is an untagged structure. Cannot inherit.
                     //_Writer.WriteObjectStart();
-                    //_Writer.WriteToken(_index.Tag(), 1);
+                    //_Writer.WriteToken(_index._Tag, 1);
 					bool firstinner = true;
 					_index.Serialize (_Writer, true, ref firstinner);
                     //_Writer.WriteObjectEnd();
@@ -2089,15 +2118,18 @@ namespace Goedel.Confirm {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public override string _Tag { get; } = "RespondRequest";
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "RespondRequest";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () {
-			return new RespondRequest();
-			}
+		public static new JSONObject _Factory () => new RespondRequest();
 
 
         /// <summary>
@@ -2107,9 +2139,9 @@ namespace Goedel.Confirm {
         /// <param name="wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
 			SerializeX (Writer, wrap, ref first);
-			}
+
 
         /// <summary>
         /// Serialize this object to the specified output stream.
@@ -2189,15 +2221,18 @@ namespace Goedel.Confirm {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public override string _Tag { get; } = "RespondResponse";
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "RespondResponse";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () {
-			return new RespondResponse();
-			}
+		public static new JSONObject _Factory () => new RespondResponse();
 
 
         /// <summary>
@@ -2207,9 +2242,9 @@ namespace Goedel.Confirm {
         /// <param name="wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
 			SerializeX (Writer, wrap, ref first);
-			}
+
 
         /// <summary>
         /// Serialize this object to the specified output stream.

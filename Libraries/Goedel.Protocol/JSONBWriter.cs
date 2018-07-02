@@ -172,6 +172,8 @@ namespace Goedel.Protocol {
 
         long PartLength = 0;
         /// <summary>Write binary data as length-data item.</summary>
+        /// <param name="Length">The length of the chunk to be written.</param>
+        /// <param name="Terminal">If true, this is the last chunk in a sequence.</param>
         public override void WriteBinaryBegin (long Length, bool Terminal=true) {
             WriteTag(Terminal ? JSONBCD.DataTerm : JSONBCD.DataChunk, Length);
             PartLength = Length;
@@ -182,9 +184,11 @@ namespace Goedel.Protocol {
         /// <param name="First">The index position of the first byte in the input data to process</param>
         /// <param name="Length">The number of bytes to process</param>
         public override void WriteBinaryPart (byte[] Data, long First = 0, long Length = -1) {
-            PartLength -= Data.LongLength;
+            Length = Length < 0 ? Data.Length : Length;
+
+            PartLength -= Length;
             Assert.True(PartLength >= 0, BadPartLength.Throw);
-            Output.Write(Data);
+            Output.Write(Data, (int)First, (int) Length);
             }
 
 

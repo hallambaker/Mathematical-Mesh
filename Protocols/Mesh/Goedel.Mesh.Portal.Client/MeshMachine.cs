@@ -221,7 +221,7 @@ namespace Goedel.Mesh.Portal.Client {
             var ApplicationProfile = SessionApplication.ApplicationProfile;
             ApplicationProfilesByUDF.AddSafe(ApplicationProfile.Identifier, SessionApplication);
             ApplicationProfilesByAccount.AddSafe(ApplicationProfile.ShortID, SessionApplication);
-            ApplicationProfilesDefault.AddSafe(ApplicationProfile.Tag(), ApplicationProfile.Identifier);
+            ApplicationProfilesDefault.AddSafe(ApplicationProfile._Tag, ApplicationProfile.Identifier);
             }
 
 

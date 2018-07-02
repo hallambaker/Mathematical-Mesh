@@ -13,6 +13,20 @@ namespace Goedel.Utilities {
     public static partial class Extension {
 
         /// <summary>
+        /// Convert a list of strings to a comma separated string.
+        /// </summary>
+        /// <param name="Texts">The input strings.</param>
+        /// <returns>If Texts is not null, the string values separated by commas, otherwise null.</returns>
+        public static string ToCommaSeparated(this List<string> Texts) {
+            if (Texts == null) {
+                return null;
+                }
+            return string.Join(", ", Texts);
+
+
+            }
+
+        /// <summary>
         /// Convert UTF8 encoded bytes to string
         /// </summary>
         /// <param name="Data">The encoded bytes to convert.</param>

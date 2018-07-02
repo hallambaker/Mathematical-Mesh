@@ -30,7 +30,7 @@ using Goedel.Protocol;
 
 
 using Goedel.Cryptography.Jose;
-
+using Goedel.Mesh;
 
 
 namespace Test.Goedel.Mesh {
@@ -42,18 +42,15 @@ namespace Test.Goedel.Mesh {
 	/// </summary>
 	public abstract partial class TestSchema : global::Goedel.Protocol.JSONObject {
 
-        /// <summary>
-        /// Schema tag.
+		/// <summary>
+        /// Tag identifying this class
         /// </summary>
-        /// <returns>The tag value</returns>
-		public override string Tag () {
-			return _Tag;
-			}
+		public override string _Tag =>__Tag;
 
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public override string _Tag { get; } = "TestSchema";
+		public new const string __Tag = "TestSchema";
 
 		/// <summary>
         /// Dictionary mapping tags to factory methods
@@ -69,9 +66,9 @@ namespace Test.Goedel.Mesh {
         /// </summary>
         /// <param name="JSONReader">Input stream</param>
         /// <param name="Out">The created object</param>
-        public static void Deserialize(JSONReader JSONReader, out JSONObject Out) {
-			Out = JSONReader.ReadTaggedObject (_TagDictionary);
-            }
+        public static void Deserialize(JSONReader JSONReader, out JSONObject Out) => 
+			Out = JSONReader.ReadTaggedObject(_TagDictionary);
+
 		}
 
 
@@ -100,15 +97,18 @@ namespace Test.Goedel.Mesh {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public override string _Tag { get; } = "TestEntry";
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "TestEntry";
 
 		/// <summary>
         /// Factory method. Throws exception as this is an abstract class.
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () {
-			throw new CannotCreateAbstract();
-			}
+		public static new JSONObject _Factory () => throw new CannotCreateAbstract();
 
 
         /// <summary>
@@ -118,9 +118,9 @@ namespace Test.Goedel.Mesh {
         /// <param name="wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
 			SerializeX (Writer, wrap, ref first);
-			}
+
 
         /// <summary>
         /// Serialize this object to the specified output stream.
@@ -219,15 +219,18 @@ namespace Test.Goedel.Mesh {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public override string _Tag { get; } = "TestItem";
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "TestItem";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () {
-			return new TestItem();
-			}
+		public static new JSONObject _Factory () => new TestItem();
 
 
         /// <summary>
@@ -237,9 +240,9 @@ namespace Test.Goedel.Mesh {
         /// <param name="wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
 			SerializeX (Writer, wrap, ref first);
-			}
+
 
         /// <summary>
         /// Serialize this object to the specified output stream.

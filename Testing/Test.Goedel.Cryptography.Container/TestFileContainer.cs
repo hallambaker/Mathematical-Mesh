@@ -14,7 +14,7 @@ namespace Test.Goedel.Cryptography.Container {
     /// Test routines for file containers
     /// </summary>
     [MT.TestClass]
-    public class TestFileContainer {
+    public partial class TestFileContainer {
 
         /// <summary>
         /// 
@@ -29,16 +29,7 @@ namespace Test.Goedel.Cryptography.Container {
             }
 
 
-        [MT.ClassInitialize]
-        public static void InitializeClass (MT.TestContext context) {
-            InitializeClass();
-            }
-
-        public static void InitializeClass () {
-            CryptographyFramework.Initialize();
-
-
-            }
+        public static void InitializeClass() => CryptographyFramework.Initialize();
 
         /// <summary>
         /// Test a single plaintext singleton containers.
@@ -107,25 +98,19 @@ namespace Test.Goedel.Cryptography.Container {
         /// Test empty archive
         /// </summary>
         [MT.TestMethod]
-        public void TestArchive0 () {
-            ReadWriteArchive("TestArchive_", 0);
-            }
+        public void TestArchive0() => ReadWriteArchive("TestArchive_", 0);
 
         /// <summary>
         /// Test single file archive
         /// </summary>
         [MT.TestMethod]
-        public void TestArchive1 () {
-            ReadWriteArchive("TestArchive_", 1);
-            }
+        public void TestArchive1() => ReadWriteArchive("TestArchive_", 1);
 
         /// <summary>
         /// Test file archive with 10 plaintext entries 
         /// </summary>
         [MT.TestMethod]
-        public void TestArchive10 () {
-            ReadWriteArchive("TestArchive_", 10);
-            }
+        public void TestArchive10() => ReadWriteArchive("TestArchive_", 10);
 
         /// <summary>
         /// Test file archive with 10 encrypted entries encrypted under one key exchange

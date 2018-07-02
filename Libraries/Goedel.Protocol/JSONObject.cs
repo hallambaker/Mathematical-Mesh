@@ -81,28 +81,21 @@ namespace Goedel.Protocol {
         /// </summary>
         public virtual JSONObject _Metadata { get; set; }
 
+        /// <summary>
+        /// Tag value used as substitute for reflection internally.
+        /// </summary>
+        public virtual string _Tag => __Tag;
 
         /// <summary>
         /// Tag value used as substitute for reflection internally.
         /// </summary>
-        /// <returns>The object tag.</returns>
-		public virtual string Tag () {
-            return null;
-            }
-
-        /// <summary>
-        /// Tag value used as substitute for reflection internally.
-        /// </summary>
-        public virtual string _Tag { get; }
-
+        public const string __Tag = null;
 
         /// <summary>
         /// Factory method. Throws exception as this is an abstract class.
         /// </summary>
         /// <returns>Object of this type</returns>
-        public static JSONObject _Factory () {
-            throw new CannotCreateAbstract();
-            }
+        public static JSONObject _Factory() => throw new CannotCreateAbstract();
 
         /// <summary>
         /// Base constructor.
@@ -116,9 +109,7 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <returns>Deep copy of the object with all referenced objects
         /// copied.</returns>
-        public virtual JSONObject DeepCopy () {
-            return null;
-            }
+        public virtual JSONObject DeepCopy() => null;
 
         /// <summary>
         /// Convert object to string in JSON form
@@ -160,7 +151,7 @@ namespace Goedel.Protocol {
             bool first = true;
             if (tag) {
                 Writer.WriteObjectStart();
-                Writer.WriteToken(Tag(), 0);
+                Writer.WriteToken(_Tag, 0);
                 }
 
             Serialize(Writer, true, ref first);
@@ -196,18 +187,14 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <param name="_Data">Source</param>
         /// <returns>Constructed object</returns>
-        public static JSONObject From (byte[] _Data) {
-            return null;
-            }
+        public static JSONObject From(byte[] _Data) => null;
 
         /// <summary>
         /// Factory method to construct object from string data.
         /// </summary>
         /// <param name="Input">Source</param>
         /// <returns>Constructed object</returns>
-        public static JSONObject From (string Input) {
-            return null;
-            }
+        public static JSONObject From(string Input) => null;
 
         /// <summary>
         /// Deserialize a tagged stream
@@ -215,9 +202,7 @@ namespace Goedel.Protocol {
         /// <param name="Input">The input stream</param>
         /// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static JSONObject FromJSON (JSONReader Input, bool Tagged) {
-            return null;
-            }
+        public static JSONObject FromJSON(JSONReader Input, bool Tagged) => null;
 
         /// <summary>
         /// Deserialize the input string to populate this object

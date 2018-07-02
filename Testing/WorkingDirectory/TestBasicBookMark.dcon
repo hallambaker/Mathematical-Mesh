@@ -1,0 +1,28 @@
+ôvðt{
+  "Index": 0,
+  "ContainerType": "Chain",
+  "ContentMeta": {
+    "cty": "CatalogEntry"},
+  "DataEncoding": "JSON"}vôô®ðK{
+  "UniqueID": "EntryBookmark$#http://www.example.com/",
+  "Event": "New"}ð_{
+  "EntryBookmark": {
+    "Title": "A sample Web site",
+    "Uri": "http://www.example.com/"}}®ôô²ðL{
+  "UniqueID": "EntryBookmark$#http://www.example.com/2",
+  "Event": "New"}ðb{
+  "EntryBookmark": {
+    "Title": "A sample Web site 2",
+    "Uri": "http://www.example.com/2"}}²ôôÒðT{
+  "UniqueID": "EntryBookmark$Examples#http://www.example.com/3",
+  "Event": "New"}ðz{
+  "EntryBookmark": {
+    "Title": "A sample Web site 3",
+    "Uri": "http://www.example.com/3",
+    "Path": "Examples"}}ÒôôÒðT{
+  "UniqueID": "EntryBookmark$Examples#http://www.example.com/4",
+  "Event": "New"}ðz{
+  "EntryBookmark": {
+    "Title": "A sample Web site 3",
+    "Uri": "http://www.example.com/4",
+    "Path": "Examples"}}Òô

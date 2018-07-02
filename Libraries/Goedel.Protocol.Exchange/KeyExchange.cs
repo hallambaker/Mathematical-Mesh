@@ -41,18 +41,15 @@ namespace Goedel.Protocol.Exchange {
 	/// </summary>
 	public abstract partial class ExchangeMessage : global::Goedel.Protocol.JSONObject {
 
-        /// <summary>
-        /// Schema tag.
+		/// <summary>
+        /// Tag identifying this class
         /// </summary>
-        /// <returns>The tag value</returns>
-		public override string Tag () {
-			return _Tag;
-			}
+		public override string _Tag =>__Tag;
 
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public override string _Tag { get; } = "ExchangeMessage";
+		public new const string __Tag = "ExchangeMessage";
 
 		/// <summary>
         /// Dictionary mapping tags to factory methods
@@ -69,9 +66,9 @@ namespace Goedel.Protocol.Exchange {
         /// </summary>
         /// <param name="JSONReader">Input stream</param>
         /// <param name="Out">The created object</param>
-        public static void Deserialize(JSONReader JSONReader, out JSONObject Out) {
-			Out = JSONReader.ReadTaggedObject (_TagDictionary);
-            }
+        public static void Deserialize(JSONReader JSONReader, out JSONObject Out) => 
+			Out = JSONReader.ReadTaggedObject(_TagDictionary);
+
 		}
 
 
@@ -116,9 +113,7 @@ namespace Goedel.Protocol.Exchange {
         /// <param name="Request">The request object to send to the host.</param>
 		/// <returns>The response object from the service</returns>
         public virtual ExchangeResponse Exchange (
-                ExchangeRequest Request) {
-            return null;
-            }
+                ExchangeRequest Request) => null;
 
         }
 
@@ -132,7 +127,7 @@ namespace Goedel.Protocol.Exchange {
         /// The active JPCSession.
         /// </summary>		
 		public override JPCSession JPCSession {
-			get {return JPCRemoteSession;}
+			get => JPCRemoteSession;
 			set {JPCRemoteSession = value as JPCRemoteSession; }
 			}
 
@@ -231,15 +226,18 @@ namespace Goedel.Protocol.Exchange {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public override string _Tag { get; } = "Algorithms";
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "Algorithms";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () {
-			return new Algorithms();
-			}
+		public static new JSONObject _Factory () => new Algorithms();
 
 
         /// <summary>
@@ -249,9 +247,9 @@ namespace Goedel.Protocol.Exchange {
         /// <param name="wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
 			SerializeX (Writer, wrap, ref first);
-			}
+
 
         /// <summary>
         /// Serialize this object to the specified output stream.
@@ -378,15 +376,18 @@ namespace Goedel.Protocol.Exchange {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public override string _Tag { get; } = "ExchangeRequest";
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "ExchangeRequest";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () {
-			return new ExchangeRequest();
-			}
+		public static new JSONObject _Factory () => new ExchangeRequest();
 
 
         /// <summary>
@@ -396,9 +397,9 @@ namespace Goedel.Protocol.Exchange {
         /// <param name="wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
 			SerializeX (Writer, wrap, ref first);
-			}
+
 
         /// <summary>
         /// Serialize this object to the specified output stream.
@@ -421,7 +422,7 @@ namespace Goedel.Protocol.Exchange {
 					//ClientCredential.Serialize (_Writer, false);
 					{
 						_Writer.WriteObjectStart();
-						_Writer.WriteToken(ClientCredential.Tag(), 1);
+						_Writer.WriteToken(ClientCredential._Tag, 1);
 						bool firstinner = true;
 						ClientCredential.Serialize (_Writer, true, ref firstinner);
 						_Writer.WriteObjectEnd();
@@ -434,7 +435,7 @@ namespace Goedel.Protocol.Exchange {
 					//ClientNonce.Serialize (_Writer, false);
 					{
 						_Writer.WriteObjectStart();
-						_Writer.WriteToken(ClientNonce.Tag(), 1);
+						_Writer.WriteToken(ClientNonce._Tag, 1);
 						bool firstinner = true;
 						ClientNonce.Serialize (_Writer, true, ref firstinner);
 						_Writer.WriteObjectEnd();
@@ -449,7 +450,7 @@ namespace Goedel.Protocol.Exchange {
 					_Writer.WriteArraySeparator (ref _firstarray);
 					// This is an untagged structure. Cannot inherit.
                     //_Writer.WriteObjectStart();
-                    //_Writer.WriteToken(_index.Tag(), 1);
+                    //_Writer.WriteToken(_index._Tag, 1);
 					bool firstinner = true;
 					_index.Serialize (_Writer, true, ref firstinner);
                     //_Writer.WriteObjectEnd();
@@ -561,15 +562,18 @@ namespace Goedel.Protocol.Exchange {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public override string _Tag { get; } = "ExchangeResponse";
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "ExchangeResponse";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () {
-			return new ExchangeResponse();
-			}
+		public static new JSONObject _Factory () => new ExchangeResponse();
 
 
         /// <summary>
@@ -579,9 +583,9 @@ namespace Goedel.Protocol.Exchange {
         /// <param name="wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
 			SerializeX (Writer, wrap, ref first);
-			}
+
 
         /// <summary>
         /// Serialize this object to the specified output stream.
@@ -614,7 +618,7 @@ namespace Goedel.Protocol.Exchange {
 					//ServerCredential.Serialize (_Writer, false);
 					{
 						_Writer.WriteObjectStart();
-						_Writer.WriteToken(ServerCredential.Tag(), 1);
+						_Writer.WriteToken(ServerCredential._Tag, 1);
 						bool firstinner = true;
 						ServerCredential.Serialize (_Writer, true, ref firstinner);
 						_Writer.WriteObjectEnd();
@@ -627,7 +631,7 @@ namespace Goedel.Protocol.Exchange {
 					//ServerNonce.Serialize (_Writer, false);
 					{
 						_Writer.WriteObjectStart();
-						_Writer.WriteToken(ServerNonce.Tag(), 1);
+						_Writer.WriteToken(ServerNonce._Tag, 1);
 						bool firstinner = true;
 						ServerNonce.Serialize (_Writer, true, ref firstinner);
 						_Writer.WriteObjectEnd();

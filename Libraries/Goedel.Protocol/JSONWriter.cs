@@ -60,7 +60,7 @@ namespace Goedel.Protocol {
         /// Return the contents of the writer as a string.
         /// </summary>
         /// <returns>Current buffered contents as string</returns>
-        public string GetUTF8  => (Output as MemoryStream).ToArray().ToUTF8() ;
+        public string GetUTF8  => (Output as MemoryStream)?.ToArray().ToUTF8() ;
 
         /// <summary>
         /// Create a new JSON Writer.
@@ -72,7 +72,7 @@ namespace Goedel.Protocol {
         /// an output stream defined, text will be written to the stream.
         /// </summary>
         /// <param name="Output">The output stream.</param>
-        public JSONWriter(MemoryStream Output) => this.Output = Output;
+        public JSONWriter(Stream Output) => this.Output = Output;
 
 
         /// <summary>

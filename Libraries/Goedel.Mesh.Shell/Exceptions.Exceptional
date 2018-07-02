@@ -1,0 +1,16 @@
+﻿Namespace Goedel.Mesh.Shell
+    
+	Exception MeshShellException
+        Console "Unknown error occured."
+		Description
+			|Generic error in Mesh Shell library
+
+		Exception AccountNotFound
+			Console "Profile not found"
+			Description
+				|Account not valid
+
+		Exception ProfileNotFound
+			Console "No profile defined."
+			Description
+				|Account not valid

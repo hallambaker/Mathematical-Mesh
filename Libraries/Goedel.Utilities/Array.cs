@@ -107,6 +107,33 @@ namespace Goedel.Utilities {
             }
 
         /// <summary>
+        /// Wrapper for the Dictionary Add method to signal success or failure by means of a
+        /// boolean return value rather than throwing an error.
+        /// </summary>
+        /// <typeparam name="TKey">The Key type</typeparam>
+        /// <typeparam name="TValue">The Value type, null values are pruned.</typeparam>
+        /// <param name="Dictionary">The dictionary to add to</param>
+        /// <param name="Key">The key to add</param>
+        /// <param name="Value">The value to add</param>
+        /// <returns>True if a new entry was added, otherwise false.</returns>
+        public static bool ReplaceSafe<TKey, TValue>(this IDictionary<TKey, TValue> Dictionary, TKey Key, TValue Value) {
+            if (Value == null) {
+                return false;
+                }
+
+            try {
+                Dictionary.Remove(Key);
+                Dictionary.Add(Key, Value);
+                return true;
+                }
+            catch {
+                return false;
+                }
+
+            }
+
+
+        /// <summary>
         /// Concatenate the two arrays
         /// </summary>
         /// <param name="First">First array</param>

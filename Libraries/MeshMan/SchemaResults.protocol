@@ -1,6 +1,6 @@
 ﻿Protocol  Goedel.Mesh.MeshMan MeshManResult MeshManResult
 	Using Goedel.Mesh
-	Using Goedel.Mesh.Server
+	Using Goedel.Mesh.Portal
 	Extern ConnectStartResponse
 	Extern ConnectPendingResponse
 	Description 

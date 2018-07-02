@@ -1,9 +1,10 @@
 ﻿Protocol  Goedel.Combined.Shell.Client MeshAppResult MeshAppResult
 	Using Goedel.Mesh
-	Using Goedel.Mesh.Server
+	Using Goedel.Mesh.Portal
 	Using Goedel.Account
 	Using Goedel.Recrypt
 	Using Goedel.Confirm
+
 	Extern ConnectStartResponse
 	Extern ConnectPendingResponse
 	Description 

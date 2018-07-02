@@ -1,0 +1,44 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Protocols\Async\Goedel.Async.Client\Goedel.Async.Client.csproj" />
+    <ProjectReference Include="..\..\Protocols\Catalog\Goedel.Catalog.Client\Goedel.Catalog.Client.csproj" />
+    <ProjectReference Include="..\..\Protocols\Mesh\Goedel.Mesh.Portal.Client\Goedel.Mesh.Portal.Client.csproj" />
+    <ProjectReference Include="..\Core\Goedel.Utilities\Goedel.Utilities.csproj" />
+    <ProjectReference Include="..\Goedel.Mesh\Goedel.Mesh.csproj" />
+    <ProjectReference Include="..\Goedel.Protocol\Goedel.Protocol.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Exceptions.cs">
+      <DependentUpon>Exceptions.Exceptional</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Results.cs">
+      <DependentUpon>Results.protogen</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Exceptions.Exceptional">
+      <LastGenOutput>Exceptions.cs</LastGenOutput>
+      <Generator>Exceptional</Generator>
+    </None>
+    <None Update="Results.protogen">
+      <LastGenOutput>Results.cs</LastGenOutput>
+      <Generator>ProtoGen</Generator>
+    </None>
+  </ItemGroup>
+
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="VSPrebuild" />
+  </Target>
+
+</Project>

@@ -78,9 +78,7 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="KeyDatas">Keys to set</param>
         /// <param name="ID">Identifier target.</param>
-        public static void SetUnique(List<IndexTerm> KeyDatas, string ID) {
-            throw new Goedel.Utilities.NYI();
-            }
+        public static void SetUnique(List<IndexTerm> KeyDatas, string ID) => throw new Goedel.Utilities.NYI();
 
         }
 
@@ -112,7 +110,7 @@ namespace Goedel.Mesh {
         public virtual List<IndexTerm> GetIndex () {
             var Result = new List<IndexTerm>() {
                 new IndexTerm(MeshIndexTerm.UniqueID, UniqueID), // as uniqueID
-                new IndexTerm(Tag(), Identifier) // as profile type
+                new IndexTerm(_Tag, Identifier) // as profile type
                 };
             return Result;
             }
@@ -146,10 +144,8 @@ namespace Goedel.Mesh {
         /// <param name="KeyPair">Specify the signature key by key handle</param>
         /// <param name="Encoding">The encoding for the inner data</param>
         /// <returns>The signed profile.</returns>
-        public virtual SignedProfile Sign(string UDF=null,  KeyPair KeyPair = null,
-                        DataEncoding Encoding = DataEncoding.JSON) {
-            throw new NYI();
-            }
+        public virtual SignedProfile Sign(string UDF = null, KeyPair KeyPair = null,
+                        DataEncoding Encoding = DataEncoding.JSON) => throw new NYI();
 
         }
 

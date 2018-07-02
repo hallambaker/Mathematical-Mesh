@@ -145,8 +145,8 @@ UserGuide.cs : UserGuide.script
 
 
 prebuildRecurse : 
-	cd ..\..\Libraries\MeshApps && nmake /c /f VS.make prebuild 
-	cd ..\..\Libraries\MeshMan && nmake /c /f VS.make prebuild 
+	cd ..\..\Libraries\MeshApps && nmake /A /c /f VS.make prebuild 
+	cd ..\..\Libraries\MeshMan && nmake /A /c /f VS.make prebuild 
 
 
 postbuildRecurse :

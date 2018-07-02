@@ -70,24 +70,20 @@ namespace Goedel.Cryptography.Framework {
         /// Return the key as a RSAKeyPair;
         /// </summary>
         public override Goedel.Cryptography.KeyPair KeyPair {
-            get { return _RSAKeyPair; }
-            set { _RSAKeyPair = value as KeyPairRSA; }
+            get => _RSAKeyPair;
+            set => _RSAKeyPair = value as KeyPairRSA;
             }
 
         /// <summary>
         /// The wrapped provider class.
         /// </summary>
-        RSACryptoServiceProvider Provider =>_RSAKeyPair.Provider; 
+        RSA Provider =>_RSAKeyPair.Provider;
 
         /// <summary>
         /// The default key size
         /// </summary>
-        
-        public int KeySize {
-            get { return _KeySize; }
-            set { _KeySize = value; }
-            }
-        private int _KeySize;
+
+        public int KeySize { get; set; }
 
         /// <summary>
         /// The key fingerprint.
@@ -99,7 +95,7 @@ namespace Goedel.Cryptography.Framework {
         /// If true (default), OAEP padding will be used. If false, deprecated PKCS#1.5 
         /// padding is used.
         /// </summary>
-        protected bool OAEP;
+        protected RSAEncryptionPadding OAEP = RSAEncryptionPadding.OaepSHA1;
 
         /// <summary>
         /// Return a provider with the specified key size.
@@ -107,7 +103,6 @@ namespace Goedel.Cryptography.Framework {
         /// <param name="KeySize">Key length in bits.</param>
         public CryptoProviderExchangeRSA(int KeySize) {
             this.KeySize = KeySize;
-            this.OAEP = true;
             }
 
         /// <summary>
@@ -116,7 +111,6 @@ namespace Goedel.Cryptography.Framework {
         /// <param name="RSAKeyPair">RSAKeyPair to use.</param>
         public CryptoProviderExchangeRSA(KeyPairRSA RSAKeyPair) {
             this.KeyPair = RSAKeyPair;
-            this.OAEP = true;
             }
 
 
@@ -214,16 +208,14 @@ namespace Goedel.Cryptography.Framework {
         /// </summary>
         public override CryptoAlgorithmID CryptoAlgorithmID => CryptoAlgorithmID.RSAExch_P15;
 
-        
+
         /// <summary>
         /// RSA provider that defaults to the PKCS#1.5 padding. For compatibility use only.
         /// </summary>
         /// <param name="KeySize">The key size in bits. Note that implementations are only
         /// required to support 2048 and 4096 bits.</param>
-        public CryptoProviderExchangeRSAPKCS(int KeySize) : base(KeySize) {
-            this.OAEP = false;
-            }
-        
+        public CryptoProviderExchangeRSAPKCS(int KeySize) : base(KeySize) => OAEP = RSAEncryptionPadding.Pkcs1;
+
         private static CryptoProvider Factory(int KeySize, CryptoAlgorithmID Ignore) {
             return new CryptoProviderExchangeRSAPKCS(KeySize);
             }

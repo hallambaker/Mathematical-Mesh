@@ -1,0 +1,4 @@
+﻿=Encoding data
+
+
+

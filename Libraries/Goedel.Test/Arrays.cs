@@ -21,6 +21,13 @@ namespace Goedel.Test {
         public static bool IsEqualTo (this DateTime? First, DateTime? Second) =>
                     First.SecondsInCE() == Second.SecondsInCE();
 
+        //public static bool IsEqualTo(byte[] Data1, byte[] Data2) {
+
+
+
+        //    }
+
+
         }
 
     /// <summary>

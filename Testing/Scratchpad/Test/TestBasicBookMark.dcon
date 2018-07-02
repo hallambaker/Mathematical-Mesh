@@ -1,0 +1,30 @@
+υOρL{
+  "Index": 0,
+  "ContainerType": "Chain",
+  "ContentMeta": {
+    "cty": "CatalogEntry"},
+  "PayloadDigest": "z4PhNX7vuL3xVChQ1m2AB9Yg5AULVxXcg_SpIdNs6c5H0NE8XYXysP-DGNKHfuwvY7kxvUdBeoGlODJ6-SfaPg",
+  "ChainDigest": "FEHy24Y6cLModDXWH31kVc2a3TdhjXPooKHpLAb2JbsO1YQnJolmowXAYHhkOGY0kg3jrKNTjds0myf4Dw1sdg",
+  "DataEncoding": "JSON"}Oυτ®πK{
+  "UniqueID": "EntryBookmark$#http://www.example.com/",
+  "Event": "New"}π_{
+  "EntryBookmark": {
+    "Title": "A sample Web site",
+    "Uri": "http://www.example.com/"}}®ττ²πL{
+  "UniqueID": "EntryBookmark$#http://www.example.com/2",
+  "Event": "New"}πb{
+  "EntryBookmark": {
+    "Title": "A sample Web site 2",
+    "Uri": "http://www.example.com/2"}}²ττÒπT{
+  "UniqueID": "EntryBookmark$Examples#http://www.example.com/3",
+  "Event": "New"}πz{
+  "EntryBookmark": {
+    "Title": "A sample Web site 3",
+    "Uri": "http://www.example.com/3",
+    "Path": "Examples"}}ÒττÒπT{
+  "UniqueID": "EntryBookmark$Examples#http://www.example.com/4",
+  "Event": "New"}πz{
+  "EntryBookmark": {
+    "Title": "A sample Web site 3",
+    "Uri": "http://www.example.com/4",
+    "Path": "Examples"}}Òτ

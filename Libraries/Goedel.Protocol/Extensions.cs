@@ -83,9 +83,7 @@ namespace Goedel.Protocol {
         /// <param name="Object">The object to convert</param>
         /// <param name="Tagged">If true, serialization is tagged with the object type.</param>
         /// <returns>Data as byte sequence.</returns>
-        public static byte[] GetJson (this JSONObject Object, bool Tagged = true) {
-            return Object.GetBytes(Tagged);
-            }
+        public static byte[] GetJson(this JSONObject Object, bool Tagged = true) => Object.GetBytes(Tagged);
 
         /// <summary>
         /// Convert object to byte sequence in JSON form.

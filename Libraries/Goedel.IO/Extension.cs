@@ -32,6 +32,61 @@ namespace Goedel.IO {
     public  static partial class Extension {
 
         /// <summary>
+        /// Delegate method for processing a block of data. The data block is limited in 
+        /// size to a 32 bit length.
+        /// </summary>
+        /// <param name="Data">The data to be processed</param>
+        /// <param name="Offset">Byte offset from the start of the data block.</param>
+        /// <param name="Count">The number of bytes to process</param>
+        public delegate void ProcessBlock32DelegatePut(byte[] Data, int Offset, int Count);
+
+        /// <summary>
+        /// Delegate method for processing a block of data. The data block is limited in 
+        /// size to a 32 bit length.
+        /// </summary>
+        /// <param name="Data">The data to be processed</param>
+        /// <param name="Offset">Byte offset from the start of the data block.</param>
+        /// <param name="Count">The number of bytes to process</param>
+        public delegate int ProcessBlock32DelegateGet(byte[] Data, int Offset, int Count);
+
+
+        /// <summary>
+        /// Process data read from the input stream using the specified delegate.
+        /// </summary>
+        /// <param name="Input">The input stream to be read</param>
+        /// <param name="Delegate">The delegate to call</param>
+        /// <param name="BufferSize">The suggested buffer size.</param>
+        public static void ProcessRead(this Stream Input, ProcessBlock32DelegatePut Delegate,
+                    int BufferSize = 4096) {
+
+            var Buffer = new byte[BufferSize];
+            var Length = Input.Read(Buffer, 0 , BufferSize);
+            while (Length > 0) {
+                Delegate(Buffer, 0, Length);
+                Length = Input.Read(Buffer, 0, BufferSize);
+                }
+
+            }
+
+        /// <summary>
+        /// Process data read from the input stream using the specified delegate.
+        /// </summary>
+        /// <param name="Output">The input stream to be read</param>
+        /// <param name="Delegate">The delegate to call</param>
+        /// <param name="BufferSize">The suggested buffer size.</param>
+        public static void ProcessWrite(this Stream Output, ProcessBlock32DelegateGet Delegate,
+                    int BufferSize = 4096) {
+
+            var Buffer = new byte[BufferSize];
+            var Length = Delegate(Buffer, 0, BufferSize);
+            while (Length > 0) {
+                Output.Write(Buffer, 0, Length);
+                Length = Delegate(Buffer, 0, BufferSize);
+                }
+
+            }
+
+        /// <summary>
         /// Write the specified number of spaces to the output stream
         /// </summary>
         /// <param name="Output">Stream to write to</param>
@@ -87,28 +142,22 @@ namespace Goedel.IO {
         /// </summary>
         /// <param name="FileStatus">Status to translate</param>
         /// <returns>The result</returns>
-        public static FileAccess FileAccess (this FileStatus FileStatus) {
-            return (FileStatus == FileStatus.Read) ? System.IO.FileAccess.Read :
-                (FileStatus == FileStatus.Append)? System.IO.FileAccess.Write : System.IO.FileAccess.ReadWrite;
-            }
+        public static FileAccess FileAccess(this FileStatus FileStatus) => (FileStatus == FileStatus.Read) ? System.IO.FileAccess.Read :
+                (FileStatus == FileStatus.Append) ? System.IO.FileAccess.Write : System.IO.FileAccess.ReadWrite;
 
         /// <summary>
         /// Return the file sharing mode corresponding to the specified status.
         /// </summary>
         /// <param name="FileStatus">Status to translate</param>
         /// <returns>The result</returns>
-        public static FileShare FileShare (this FileStatus FileStatus) {
-            return (FileStatus == FileStatus.Read) ? System.IO.FileShare.ReadWrite : System.IO.FileShare.Read;
-            }
+        public static FileShare FileShare(this FileStatus FileStatus) => (FileStatus == FileStatus.Read) ? System.IO.FileShare.ReadWrite : System.IO.FileShare.Read;
 
         /// <summary>
         /// Open a file for read access allowing other processes to read the file..
         /// </summary>
         /// <param name="Filename">The file name</param>
         /// <returns>A file stream</returns>
-        public static FileStream OpenFileRead(this string Filename) {
-            return new FileStream(Filename, System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.Read);
-            }
+        public static FileStream OpenFileRead(this string Filename) => new FileStream(Filename, System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.Read);
 
         /// <summary>
         /// Open a file for read access in shared mode, allowing concurrent 
@@ -116,18 +165,14 @@ namespace Goedel.IO {
         /// </summary>
         /// <param name="Filename">The file name</param>
         /// <returns>A file stream</returns>
-        public static FileStream OpenFileReadShared(this string Filename) {
-            return new FileStream(Filename, System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.ReadWrite);
-            }
+        public static FileStream OpenFileReadShared(this string Filename) => new FileStream(Filename, System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.ReadWrite);
 
         /// <summary>
         /// Create a text reader on a file stream.
         /// </summary>
         /// <param name="FileStream">The base file.</param>
         /// <returns>The text reader.</returns>
-        public static TextReader OpenTextReader(this FileStream FileStream) {
-            return new StreamReader(FileStream);
-            }
+        public static TextReader OpenTextReader(this FileStream FileStream) => new StreamReader(FileStream);
 
         /// <summary>
         /// Create a text reader for a file permitting other processes to
@@ -172,28 +217,23 @@ namespace Goedel.IO {
         /// </summary>
         /// <param name="Filename">The new file name.</param>
         /// <returns>File stream to write to the file.</returns>
-        public static FileStream OpenFileNew(this string Filename) {
-            return new FileStream(Filename, System.IO.FileMode.Create, System.IO.FileAccess.Write);
-            }
+        public static FileStream OpenFileNew(this string Filename) => new FileStream(Filename, System.IO.FileMode.Create, System.IO.FileAccess.Write);
 
         /// <summary>
         /// Open an existing file for exclusive write access, or create new file.
         /// </summary>
         /// <param name="Filename">The file to write to.</param>
         /// <returns>File stream to write to the file.</returns>
-        public static FileStream OpenFileWrite(this string Filename) {
-            return new FileStream(Filename, System.IO.FileMode.OpenOrCreate, System.IO.FileAccess.Write);
-            }
+        public static FileStream OpenFileWrite(this string Filename) => new FileStream(Filename, System.IO.FileMode.OpenOrCreate, System.IO.FileAccess.Write);
+
 
         /// <summary>
         /// Open an existing file for exclusive write access, or create new file.
         /// </summary>
         /// <param name="Filename">The file to write to.</param>
         /// <returns>File stream to write to the file.</returns>
-        public static FileStream OpenFileWriteShare(this string Filename) {
-            return new FileStream(Filename, System.IO.FileMode.OpenOrCreate, System.IO.FileAccess.Write,
+        public static FileStream OpenFileWriteShare(this string Filename) => new FileStream(Filename, System.IO.FileMode.OpenOrCreate, System.IO.FileAccess.Write,
                 System.IO.FileShare.Read);
-            }
 
         /// <summary>
         /// Open a new or existing file for append only write access. Permit
@@ -201,10 +241,8 @@ namespace Goedel.IO {
         /// </summary>
         /// <param name="Filename">The file to write to.</param>
         /// <returns>File stream to write to the file.</returns>
-        public static FileStream OpenFileAppend(this string Filename) {
-            return new FileStream(Filename, System.IO.FileMode.Append, System.IO.FileAccess.Write,
+        public static FileStream OpenFileAppend(this string Filename) => new FileStream(Filename, System.IO.FileMode.Append, System.IO.FileAccess.Write,
                 System.IO.FileShare.Read);
-            }
 
         /// <summary>
         /// Open a new or existing file for append only write access. Permit
@@ -212,19 +250,15 @@ namespace Goedel.IO {
         /// </summary>
         /// <param name="Filename">The file to write to.</param>
         /// <returns>File stream to write to the file.</returns>
-        public static FileStream OpenFileAppendShare(this string Filename) {
-            return new FileStream(Filename, System.IO.FileMode.Append, System.IO.FileAccess.Write,
+        public static FileStream OpenFileAppendShare(this string Filename) => new FileStream(Filename, System.IO.FileMode.Append, System.IO.FileAccess.Write,
                 System.IO.FileShare.ReadWrite);
-            }
 
         /// <summary>
         /// Open a text writer to the specified file stream.
         /// </summary>
         /// <param name="FileStream">The file stream to write to.</param>
         /// <returns>The text writer.</returns>
-        public static TextWriter OpenTextWriter(this FileStream FileStream) {
-            return new StreamWriter(FileStream);
-            }
+        public static TextWriter OpenTextWriter(this FileStream FileStream) => new StreamWriter(FileStream);
 
         /// <summary>
         /// Open a text writer to the specified file in append mode permitting
@@ -280,8 +314,6 @@ namespace Goedel.IO {
         /// </summary>
         /// <param name="FileStream">Filestream to write to</param>
         /// <param name="Data">Data to write.</param>
-        public static void Write (this FileStream FileStream, byte[] Data) {
-            FileStream.Write(Data, 0, Data.Length);
-            }
+        public static void Write(this FileStream FileStream, byte[] Data) => FileStream.Write(Data, 0, Data.Length);
         }
     }

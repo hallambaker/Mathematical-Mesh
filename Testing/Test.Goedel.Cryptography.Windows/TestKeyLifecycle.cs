@@ -45,9 +45,14 @@ namespace Goedel.Cryptography.Test {
             CryptoAlgorithmID.RSAExch.Test_LifecycleEphemeral();
             }
 
-        /// <summary>Test key lifecycles</summary>
+        /// <summary>The reason this test fails is that the doofus RSACryptoServiceProvider
+        /// does not allow ephemeral keys to be imported. It is stupid, stupid, stupid.
+        /// Fixing this will require transitioning to the RSACng provider which
+        /// will take some time and should probably be done at the same time
+        /// that the ECDH keys are added.</summary>
         [TestMethod]
         public void Test_Windows_LifecycleExportable_RSA() {
+            
             CryptoAlgorithmID.RSAExch.Test_LifecycleExportable();
             }
 

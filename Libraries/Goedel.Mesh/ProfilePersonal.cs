@@ -82,14 +82,12 @@ namespace Goedel.Mesh {
                     }
                 return _SignedPersonalProfile;
                 }
-            set { _SignedPersonalProfile = value; }
+            set => _SignedPersonalProfile = value;
             }
 
         SignedPersonalProfile _SignedPersonalProfile;
 
-        void ClearSignature () {
-            _SignedPersonalProfile = null;
-            }
+        void ClearSignature() => _SignedPersonalProfile = null;
 
 
         /// <summary>
@@ -241,7 +239,7 @@ namespace Goedel.Mesh {
 
             var ApplicationProfileEntry = new ApplicationProfileEntry() {
                 Identifier = ApplicationProfile.Identifier,
-                Type = ApplicationProfile.Tag(),
+                Type = ApplicationProfile._Tag,
                 ApplicationProfile = ApplicationProfile,   // Hack: This is temporary for the RSAConf profile should be fetched from the account
                 AccountID = ApplicationProfile.ShortID  // ToDo: Should have separate calls for creating local and remote accounts
                 };
@@ -320,7 +318,7 @@ namespace Goedel.Mesh {
         public ApplicationProfileEntry(ApplicationProfile ApplicationProfile) {
 
             Identifier = ApplicationProfile.Identifier;
-            Type = ApplicationProfile.Tag();
+            Type = ApplicationProfile._Tag;
             this.ApplicationProfile = ApplicationProfile;
             }
 
