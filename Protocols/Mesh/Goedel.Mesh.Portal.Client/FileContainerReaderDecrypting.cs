@@ -28,8 +28,7 @@ namespace Goedel.Mesh.Portal.Client {
         public FileContainerReaderDecrypting (
                 SessionPersonal SessionPersonal,
                 string FileName,
-                bool ReadIndex = true,
-                FileStatus FileStatus = FileStatus.Read) : base(FileName, ReadIndex, FileStatus) {
+                FileStatus FileStatus = FileStatus.Read) : base(FileName, FileStatus) {
             this.SessionPersonal = SessionPersonal;
             }
 

@@ -66,16 +66,19 @@ namespace Goedel.Cryptography {
 
 
         /// <summary>Fill byte buffer with cryptographically strong random numbers.</summary>
-        /// <param name="Data"></param>
-        /// <param name="Offset"></param>
-        /// <param name="Count"></param>
+        /// <param name="Data">The buffer to fill.</param>
+        /// <param name="Offset">First byte to fill.</param>
+        /// <param name="Count">Number of bytes to fill.</param>
         public delegate void FillRandomBytesDelegate(byte[] Data, int Offset, int Count);
 
         /// <summary>Fill byte buffer with cryptographically strong random numbers</summary>
         /// <remarks>This delegate must bound to the platform
         /// specific implementation by a call to  Platform.Initialize() before use</remarks>
-        public static FillRandomBytesDelegate FillRandom;
+        public static FillRandomBytesDelegate FillRandom = FillRandomBytesDefault;
 
+
+        static void FillRandomBytesDefault(byte[] Data, int Offset, int Count) =>
+                    throw new PlatformNotInitialized();
 
         /// <summary>
         /// Write a key to the machine keystore
@@ -89,7 +92,10 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <remarks>This delegate must bound to the platform
         /// specific implementation by a call to  Platform.Initialize() before use</remarks>
-        public static WriteToKeyStoreDelegate WriteToKeyStore;
+        public static WriteToKeyStoreDelegate WriteToKeyStore = WriteToKeyStoreDefault;
+
+        static void WriteToKeyStoreDefault(IPKIXPrivateKey KeyPair, KeySecurity KeySecurity) =>
+                    throw new PlatformNotInitialized();
 
 
         /// <summary>
@@ -106,7 +112,11 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <remarks>This delegate must bound to the platform
         /// specific implementation by a call to  Platform.Initialize() before use</remarks>
-        public static FindInKeyStoreDelegate FindInKeyStore;
+        public static FindInKeyStoreDelegate FindInKeyStore = FindInKeyStoreDefault;
+
+        static KeyPair FindInKeyStoreDefault(string UDF,
+                CryptoAlgorithmID KeyType = CryptoAlgorithmID.Default) =>
+                    throw new PlatformNotInitialized();
 
 
         /// <summary>
@@ -123,7 +133,12 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <remarks>This delegate must bound to the platform
         /// specific implementation by a call to  Platform.Initialize() before use</remarks>
-        public static EraseFromKeyStoreDelegate EraseFromKeyStore;
+        public static EraseFromKeyStoreDelegate EraseFromKeyStore = EraseFromKeyStoreDefault;
+
+        static bool EraseFromKeyStoreDefault(string UDF,
+                CryptoAlgorithmID KeyType = CryptoAlgorithmID.Default) =>
+                    throw new PlatformNotInitialized();
+
 
 
         /// <summary>

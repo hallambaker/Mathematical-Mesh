@@ -107,7 +107,7 @@ namespace Goedel.Recrypt.Client {
                 string FileName) {
 
 
-            return new FileContainerReaderDecrypting(SessionPersonal, FileName, false);
+            return new FileContainerReaderDecrypting(SessionPersonal, FileName);
             }
 
         /// <summary>
@@ -121,7 +121,7 @@ namespace Goedel.Recrypt.Client {
                 this SessionPersonal SessionPersonal,
                 string FileName) {
 
-            return new FileContainerReaderRecrypting(SessionPersonal, FileName, false);
+            return new FileContainerReaderRecrypting(SessionPersonal, FileName);
             }
 
         /// <summary>

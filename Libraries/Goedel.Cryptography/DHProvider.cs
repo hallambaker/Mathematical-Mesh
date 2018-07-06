@@ -163,11 +163,12 @@ namespace Goedel.Cryptography {
 
             var Agreement = DHKeyPair.Agreement();
             var KeyDerive = Agreement.KeyDerive;
-
+            Console.Write($"PRK Encrypt is {Agreement.IKM.ToStringBase16()}");
             // Need to do some form of key derrivation here.
 
             var EncryptionKey = KeyDerive.Derive(MasterKeyInfo, Length: 256);
-
+            Console.Write($"EncryptionKey Encrypt is {EncryptionKey.ToStringBase16()}");
+            
             Exchange = Platform.KeyWrapRFC3394.Wrap(EncryptionKey, Key);
             Ephemeral = new KeyPairDH(Agreement.DiffeHellmanPublic);
             }
@@ -191,12 +192,17 @@ namespace Goedel.Cryptography {
             Assert.NotNull(DHPublic, KeyTypeMismatch.Throw);
 
             var Agreement = DHKeyPair.Agreement(DHPublic, Partial as DiffieHellmanResult);
+            Console.Write($"PRK Encrypt is {Agreement.IKM.ToStringBase16()}");
 
             var KeyDerive = Agreement.KeyDerive;
+            Console.Write($"PRK Encrypt is {Agreement.IKM.ToStringBase16()}");
+
+            var EncryptionKey = KeyDerive.Derive(MasterKeyInfo, Length: 256);
+            Console.Write($"EncryptionKey Encrypt is {EncryptionKey.ToStringBase16()}");
+
             var KeySize = (EncryptedKey.Length * 8) - 64;
 
-            return Platform.KeyWrapRFC3394.Unwrap(
-                        KeyDerive.ClientToServerEncrypt(KeySize), EncryptedKey);
+            return Platform.KeyWrapRFC3394.Unwrap(EncryptionKey, EncryptedKey);
 
             }
 

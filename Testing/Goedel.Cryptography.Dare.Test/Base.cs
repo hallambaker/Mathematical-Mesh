@@ -17,24 +17,20 @@ namespace Goedel.Cryptography.Dare.Test {
         public static void TestDirect() {
             InitializeClass();
 
-            var TestDare = new TestFileContainer();
-            TestDare.TestFileContainer1();
-            //TestContainers.ContainerTestMerkleTree();
+            var TestDare = new TestDare();
 
-
-            //var TestFileContainer = new TestFileContainer();
-
-            //TestFileContainer.TestFileContainer1();
-            //TestFileContainer.TestFileContainerEncrypted1();
+            //TestDare.MessageEncryptedWithData();
+            //TestDare.MessagePlaintext();
+            TestDare.MessageEncryptedAtomic();
+            //TestDare.TestFileContainerEncrypted1();
+            //TestDare.TestFileContainerEncrypted16();
             }
 
 
 
         [MT.AssemblyInitialize]
         public static void InitializeClass(MT.TestContext Context) => InitializeClass();
-        public static void InitializeClass() {
-            CryptographyFramework.Initialize();
-            }
+        public static void InitializeClass() => CryptographyWindows.Initialize();
 
 
         }

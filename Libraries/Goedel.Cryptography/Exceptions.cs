@@ -58,6 +58,147 @@ namespace Goedel.Cryptography {
 
 
     /// <summary>
+    /// The operation requires cryptographic catalog initialization"
+    /// </summary>
+    public class CatalogNotInitialized : CryptographicException {
+
+		/// <summary>
+        /// Construct instance for exception "The operation requires cryptographic catalog initialization"
+        /// </summary>		
+		public CatalogNotInitialized () : base ("The operation requires cryptographic catalog initialization") {
+			}
+        
+		/// <summary>
+        /// Construct instance for exception "The operation requires cryptographic catalog initialization"
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		public CatalogNotInitialized (string Description) : base (Description) {
+			}
+
+		/// <summary>
+        /// Construct instance for exception 		/// containing an inner exception.
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		/// <param name="Inner">Inner Exception</param>	
+		public CatalogNotInitialized (string Description, System.Exception Inner) : 
+				base (Description, Inner) {
+			}
+
+
+
+
+		
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+
+        static System.Exception _Throw(object Reason) {
+			if (Reason as string != null) {
+				return new CatalogNotInitialized(Reason as string);
+				}
+			else {
+				return new CatalogNotInitialized();
+				}
+            }
+        }
+
+
+    /// <summary>
+    /// The operation requires platform initialization
+    /// </summary>
+    public class PlatformNotInitialized : CryptographicException {
+
+		/// <summary>
+        /// Construct instance for exception "The operation requires platform initialization"
+        /// </summary>		
+		public PlatformNotInitialized () : base ("The operation requires platform initialization") {
+			}
+        
+		/// <summary>
+        /// Construct instance for exception "The operation requires platform initialization"
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		public PlatformNotInitialized (string Description) : base (Description) {
+			}
+
+		/// <summary>
+        /// Construct instance for exception 		/// containing an inner exception.
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		/// <param name="Inner">Inner Exception</param>	
+		public PlatformNotInitialized (string Description, System.Exception Inner) : 
+				base (Description, Inner) {
+			}
+
+
+
+
+		
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+
+        static System.Exception _Throw(object Reason) {
+			if (Reason as string != null) {
+				return new PlatformNotInitialized(Reason as string);
+				}
+			else {
+				return new PlatformNotInitialized();
+				}
+            }
+        }
+
+
+    /// <summary>
+    /// No decryption key is available
+    /// </summary>
+    public class NoAvailableDecryptionKey : CryptographicException {
+
+		/// <summary>
+        /// Construct instance for exception "No decryption key is available"
+        /// </summary>		
+		public NoAvailableDecryptionKey () : base ("No decryption key is available") {
+			}
+        
+		/// <summary>
+        /// Construct instance for exception "No decryption key is available"
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		public NoAvailableDecryptionKey (string Description) : base (Description) {
+			}
+
+		/// <summary>
+        /// Construct instance for exception 		/// containing an inner exception.
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		/// <param name="Inner">Inner Exception</param>	
+		public NoAvailableDecryptionKey (string Description, System.Exception Inner) : 
+				base (Description, Inner) {
+			}
+
+
+
+
+		
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+
+        static System.Exception _Throw(object Reason) {
+			if (Reason as string != null) {
+				return new NoAvailableDecryptionKey(Reason as string);
+				}
+			else {
+				return new NoAvailableDecryptionKey();
+				}
+            }
+        }
+
+
+    /// <summary>
     /// Placeholder exception to be thrown as a placeholder to mark
     /// code needing improvement.
     /// </summary>

@@ -565,7 +565,7 @@ namespace Goedel.Cryptography.Dare {
             ContainerHeaderFirst.SetEnhancedData(Cloaked, DataSequences);
 
             // Make this a specific encryption call.
-            Payload = ContainerHeaderFirst.Enhance(Payload);
+            Payload = ContainerHeaderFirst.EnhanceSequence(Payload);
             Container.FrameData = Payload;
 
             // May have issues here because we are not calling thje old append frame.

@@ -7,6 +7,23 @@ Namespace Goedel.Cryptography
 		Description
 			|Base class for cryptographic exceptions.
 		
+
+		Exception CatalogNotInitialized
+			Console "The operation requires cryptographic catalog initialization"
+			Description
+				|The operation requires cryptographic catalog initialization"
+
+		Exception PlatformNotInitialized
+			Console "The operation requires platform initialization"
+			Description
+				|The operation requires platform initialization
+
+
+		Exception NoAvailableDecryptionKey
+			Console "No decryption key is available"
+			Description
+				|No decryption key is available
+
 		Exception ImplementationLimit
 			Console "Some implementation limit hit"
 			Description

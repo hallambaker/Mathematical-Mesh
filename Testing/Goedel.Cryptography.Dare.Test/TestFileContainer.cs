@@ -4,16 +4,17 @@ using System.Collections.Generic;
 using MT = Microsoft.VisualStudio.TestTools.UnitTesting;
 using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
+using Goedel.Cryptography.Jose;
 using Goedel.Utilities;
 using Goedel.IO;
+using Goedel.Test;
 
 namespace Goedel.Cryptography.Dare.Test {
 
     /// <summary>
     /// Test routines for file containers
     /// </summary>
-    [MT.TestClass]
-    public partial class TestFileContainer {
+    public partial class TestDare {
 
         /// <summary>
         /// Test a single plaintext singleton containers.
@@ -52,13 +53,13 @@ namespace Goedel.Cryptography.Dare.Test {
         /// </summary>
         [MT.TestMethod]
         public void TestFileContainerEncrypted1 () {
-            var EncryptionKey = CreateKeyPair();
+            var TestKeys = new TestKeys();
+            TestKeys.AddEncrypt();
 
             var Bytes = CreateBytes(100);
-            ReadWriteContainer("TestFileEncrypted_100", Bytes, EncryptionKey);
+            ReadWriteContainer("TestFileEncrypted_100", Bytes, TestKeys.EncryptionKeys);
 
             throw new NYI(); // Does not currently encrypt!!
-
             }
 
 
@@ -67,16 +68,17 @@ namespace Goedel.Cryptography.Dare.Test {
         /// </summary>
         [MT.TestMethod]
         public void TestFileContainerEncrypted16 () {
-            var EncryptionKey = CreateKeyPair();
+            var TestKeys = new TestKeys();
+            TestKeys.AddEncrypt();
 
             byte[] Bytes = new byte[0];
-            ReadWriteContainer("TestFileEncrypted_0", Bytes, EncryptionKey);
+            ReadWriteContainer("TestFileEncrypted_0", Bytes, TestKeys.EncryptionKeys);
 
             int Length = 1;
             for (var i = 1; i < 16; i++) {
                 var Filename = $"TestFileEncrypted_{Length}";
                 Bytes = CreateBytes(Length);
-                ReadWriteContainer(Filename, Bytes, EncryptionKey);
+                ReadWriteContainer(Filename, Bytes, TestKeys.EncryptionKeys);
                 Length = Length * 2;
                 }
 
@@ -87,25 +89,19 @@ namespace Goedel.Cryptography.Dare.Test {
         /// Test empty archive
         /// </summary>
         [MT.TestMethod]
-        public void TestArchive0 () {
-            ReadWriteArchive("TestArchive_", 0);
-            }
+        public void TestArchive0() => ReadWriteArchive("TestArchive_", 0);
 
         /// <summary>
         /// Test single file archive
         /// </summary>
         [MT.TestMethod]
-        public void TestArchive1 () {
-            ReadWriteArchive("TestArchive_", 1);
-            }
+        public void TestArchive1() => ReadWriteArchive("TestArchive_", 1);
 
         /// <summary>
         /// Test file archive with 10 plaintext entries 
         /// </summary>
         [MT.TestMethod]
-        public void TestArchive10 () {
-            ReadWriteArchive("TestArchive_", 10);
-            }
+        public void TestArchive10() => ReadWriteArchive("TestArchive_", 10);
 
         /// <summary>
         /// Test file archive with 10 encrypted entries encrypted under one key exchange
@@ -150,12 +146,9 @@ namespace Goedel.Cryptography.Dare.Test {
         static Random Random = new Random();
         byte[] CreateBytes (int Length) => CryptoCatalog.GetBytes(Length);
        
-        void ReadWriteContainer (string FileName, byte[] TestData, KeyPair EncryptionKey) {
-
-            var Recipients = EncryptionKey == null? null : new List <KeyPair> { EncryptionKey };
-
+        void ReadWriteContainer (string FileName, byte[] TestData, List<KeyPair> EncryptionKeys) {
             // Create container
-            FileContainerWriter.File(FileName, TestData, null, Recipients: Recipients);
+            FileContainerWriter.File(FileName, TestData, null, Recipients: EncryptionKeys);
 
             // Read Container
             FileContainerReader.File(FileName, out var ReadData, out var ContentMetaOut);
@@ -185,10 +178,12 @@ namespace Goedel.Cryptography.Dare.Test {
                     }
                 }
 
+            // Test retrieval by index number. Note that since record 0 has the 
+            // container header data, the data items run through [1..Entries]
             using (var Reader = new FileContainerReader(Filename)) {
                 for (var i = 0; i < Entries; i++) {
-                    // this will fail because Read does not work sequentially.
-                    Reader.Read(out var ReadData, out var ContentMeta, Index: i);
+
+                    Reader.Read(out var ReadData, out var ContentMeta, Index: i+1);
                     Assert.True(ReadData.IsEqualTo(TestData[i]));
                     }
                 }

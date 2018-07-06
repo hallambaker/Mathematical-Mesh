@@ -23,12 +23,26 @@ namespace Goedel.Cryptography.Dare {
 
         EnhancedDataSequence Writer;
 
+
+
+        ///// <summary>
+        ///// The decrypted message body.
+        ///// </summary>
+        //public byte[] Plaintext {
+        //    get { _Plaintext = _Plaintext ?? DecryptData(); return _Plaintext; } 
+        //    }
+        //byte[] _Plaintext;
+
         /// <summary>
         /// Create an empty DARE Message (for use by deserializers)
         /// </summary>
         public DAREMessage () {
             }
 
+
+        //byte[] DecryptData() {
+        //    throw new NYI();
+        //    }
 
         /// <summary>
         /// Create a DARE Message instance.
@@ -59,7 +73,7 @@ namespace Goedel.Cryptography.Dare {
 
             Header = new DAREHeader(EncryptionKeys, SignerKeys, EncryptID, AuthenticateID,
                 ContentType, Cloaked, DataSequences);
-            Body = Header.Enhance(Plaintext);
+            Body = Header.EnhanceBody(Plaintext, Header.Salt);
             }
 
 
@@ -162,7 +176,7 @@ namespace Goedel.Cryptography.Dare {
             Header.Serialize(OutputStream, false);
             var First = false;
             OutputStream.WriteArraySeparator(ref First);
-            Writer = Header.EnhancedDataSequenceWriter(OutputStream, ContentLength);
+            Writer = Header.EnhancedDataSequenceWriter(OutputStream, ContentLength, Salt: Header.Salt);
 
             if (Plaintext != null) {
                 Writer.Process(Plaintext, Final: true);
@@ -352,10 +366,13 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="Data">The data to deserialize</param>
         /// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <param name="Decrypt">If true, attempt to decrypt the message body as it is read.</param>
+        /// <param name="KeyCollection">Key collection to be used to discover decryption keys</param>
         /// <returns>The created object.</returns>	
-        public static DAREMessage FromJSON(byte[] Data, bool Tagged = true) {
+        public static DAREMessage FromJSON(byte[] Data, bool Tagged = true, 
+                bool Decrypt = false, KeyCollection KeyCollection = null) {
             var JSONBCDReader = new JSONBCDReader(Data);
-            return FromJSON(JSONBCDReader, Tagged);
+            return FromJSON(JSONBCDReader, Tagged, Decrypt, KeyCollection);
             }
 
         /// <summary>
@@ -363,10 +380,13 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="Stream">The input stream</param>
         /// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <param name="Decrypt">If true, attempt to decrypt the message body as it is read.</param>
+        /// <param name="KeyCollection">Key collection to be used to discover decryption keys</param>
         /// <returns>The created object.</returns>	
-        public static DAREMessage FromJSON(Stream Stream, bool Tagged = true) {
+        public static DAREMessage FromJSON(Stream Stream, bool Tagged = true, 
+                bool Decrypt = false, KeyCollection KeyCollection = null) {
             var JSONBCDReader = new JSONBCDReader(Stream);
-            return FromJSON(JSONBCDReader, Tagged);
+            return FromJSON(JSONBCDReader, Tagged, Decrypt, KeyCollection);
             }
 
         /// <summary>
@@ -374,25 +394,38 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="JSONReader">The input stream</param>
         /// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <param name="Decrypt">If true, attempt to decrypt the message body as it is read.</param>
+        /// <param name="KeyCollection">Key collection to be used to discover decryption keys</param>
         /// <returns>The created object.</returns>		
-        public static DAREMessage FromJSON(JSONBCDReader JSONReader, bool Tagged = true) {
+        public static DAREMessage FromJSON(JSONBCDReader JSONReader, bool Tagged = true, 
+                bool Decrypt=false, KeyCollection KeyCollection=null) {
             Assert.False(Tagged, NYI.Throw);
+
 
             // DecodeHeader checks for start of array
             //bool _Going = JSONReader.StartArray();
 
             var Message = DecodeHeader(JSONReader);
+
             using (var Buffer = new MemoryStream()) {
-                Message.ReadToStream(Buffer);
+                if (Decrypt& Message.Header.Encrypt) {
+                    KeyCollection = KeyCollection ?? KeyCollection.Default;
+                    Message.Header.DecryptMaster(KeyCollection);
+                    Message.ReadToStreamDecrypting(Buffer);
+                    }
+                else {
+                    Message.ReadToStream(Buffer);
+                    }
                 Message.Body = Buffer.ToArray();
                 }
-            while (JSONReader.NextArray()) {
-                JSONReader.ReadBinary();
-                }       // discard any trailer data.
 
+            //while (JSONReader.NextArray()) {
+            //    JSONReader.ReadBinary();
+            //    }       // discard any trailer data.
             return Message;
             }
 
+        KeyCollection KeyCollection = null;
 
         /// <summary>
         /// Read a DAREMessage from a stream in incremental mode. The header of the 
@@ -413,7 +446,6 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="Output">The stream to write the output to.</param>
         public void ReadToStream(Stream Output) {
-            //var Salt = JSONReader.ReadBinary();
 
 
             var More = JSONReader.ReadBinaryIncremental(out var Chunk);
@@ -422,8 +454,30 @@ namespace Goedel.Cryptography.Dare {
                 More = JSONReader.ReadBinaryIncremental(out Chunk);
                 Output.Write(Chunk);
                 }
+
             }
-        
+
+
+
+
+        /// <summary>
+        /// Read the body of the message to the specified stream
+        /// </summary>
+        /// <param name="Output">The stream to write the output to.</param>
+        public void ReadToStreamDecrypting(Stream Output) {
+            var Reader = Header.GetReader(Output, Header.Salt);
+
+            // We are getting back the entire buffer, not just the chunk
+
+            var More = JSONReader.ReadBinaryIncremental(out var Chunk);
+            Reader.Process(Chunk, !More);
+            while (More) {
+                More = JSONReader.ReadBinaryIncremental(out Chunk);
+                Reader.Process(Chunk, !More);
+                }
+
+            }
+
 
 
         /// <summary>

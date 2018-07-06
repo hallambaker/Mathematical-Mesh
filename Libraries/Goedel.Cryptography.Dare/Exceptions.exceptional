@@ -32,10 +32,6 @@ Namespace Goedel.Cryptography.Dare
 		Description 
 			|An attempt was made to create an object with an existing object identifier
 
-	Exception NoAvailableDecryptionKey
-		Console "No decryption key is available"
-		Description
-			|No decryption key is available
 
 	Exception AccessRefused
 		Console "Access was refused"

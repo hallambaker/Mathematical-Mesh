@@ -101,22 +101,16 @@ namespace Goedel.Cryptography.Framework {
         /// Return a provider with the specified key size.
         /// </summary>
         /// <param name="KeySize">Key length in bits.</param>
-        public CryptoProviderExchangeRSA(int KeySize) {
-            this.KeySize = KeySize;
-            }
+        public CryptoProviderExchangeRSA(int KeySize) => this.KeySize = KeySize;
 
         /// <summary>
         /// Create an instance of the RSA crypto provider.
         /// </summary>
         /// <param name="RSAKeyPair">RSAKeyPair to use.</param>
-        public CryptoProviderExchangeRSA(KeyPairRSA RSAKeyPair) {
-            this.KeyPair = RSAKeyPair;
-            }
+        public CryptoProviderExchangeRSA(KeyPairRSA RSAKeyPair) => KeyPair = RSAKeyPair;
 
 
-        private static CryptoProvider Factory(int KeySize, CryptoAlgorithmID DigestAlgorithm) {
-            return new CryptoProviderExchangeRSA(KeySize);
-            }
+        private static CryptoProvider Factory(int KeySize, CryptoAlgorithmID DigestAlgorithm) => new CryptoProviderExchangeRSA(KeySize);
 
         /// <summary>
         /// Default algorithm key size.
@@ -192,9 +186,7 @@ namespace Goedel.Cryptography.Framework {
                     byte[] EncryptedKey,
                     KeyPair Ephemeral = null,
                     CryptoAlgorithmID AlgorithmID = CryptoAlgorithmID.Default,
-                    KeyAgreementResult Partial = null) {
-            return Provider.Decrypt(EncryptedKey, OAEP);
-            }
+                    KeyAgreementResult Partial = null) => Provider.Decrypt(EncryptedKey, OAEP);
 
         }
 
@@ -216,9 +208,7 @@ namespace Goedel.Cryptography.Framework {
         /// required to support 2048 and 4096 bits.</param>
         public CryptoProviderExchangeRSAPKCS(int KeySize) : base(KeySize) => OAEP = RSAEncryptionPadding.Pkcs1;
 
-        private static CryptoProvider Factory(int KeySize, CryptoAlgorithmID Ignore) {
-            return new CryptoProviderExchangeRSAPKCS(KeySize);
-            }
+        private static CryptoProvider Factory(int KeySize, CryptoAlgorithmID Ignore) => new CryptoProviderExchangeRSAPKCS(KeySize);
         }
 
 

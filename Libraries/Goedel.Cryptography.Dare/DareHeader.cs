@@ -10,9 +10,14 @@ using System.Security.Cryptography;
 
 namespace Goedel.Cryptography.Dare {
 
+    // Feature: Support encryption algorithms other than AES256 by including the algorithmID in the header
+
     public partial class DAREHeader {
 
         byte[] MasterSecret;
+
+
+
 
         /// <summary>
         /// The cryptography provider.
@@ -22,7 +27,7 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// If true, the header specifies a key exchange.
         /// </summary>
-        public bool Encrypt => ProviderEncryption != null;
+        public bool Encrypt => EncryptionAlgorithm!=null;
 
         /// <summary>
         /// The encryption key size
@@ -147,6 +152,7 @@ namespace Goedel.Cryptography.Dare {
                 return;
                 }
 
+            Salt = Platform.GetRandomBits(128);
             EncryptID = EncryptID == CryptoAlgorithmID.Default ? CryptoAlgorithmID.AES256CBC : EncryptID;
             EncryptionAlgorithm = EncryptID.ToJoseID();
             ProviderEncryption = CryptoCatalog.Default.GetEncryption(EncryptID);
@@ -182,12 +188,12 @@ namespace Goedel.Cryptography.Dare {
                     List<byte[]> DataSequences = null) {
 
             if (Cloaked != null) {
-                this.Cloaked = Enhance(Cloaked);
+                this.Cloaked = EnhanceSequence(Cloaked);
                 }
             if (DataSequences != null) {
                 this.EDSS = new List<byte[]>();
                 foreach (var DataSequence in DataSequences) {
-                    EDSS.Add (Enhance(DataSequence));
+                    EDSS.Add (EnhanceSequence(DataSequence));
                     }
                 }
 
@@ -198,21 +204,45 @@ namespace Goedel.Cryptography.Dare {
         /// unique salt will be assigned.
         /// </summary>
         /// <param name="Plaintext">The EDS plaintext.</param>
+        /// <param name="Salt">The salt value to be used.</param>
         /// <returns>The EDS</returns>
-        public byte[] Enhance(byte[] Plaintext) => ProviderEncryption == null ? Plaintext :
-                EnhancedDataSequence.Enhance(MasterSecret, Plaintext, MakeSalt(), ProviderEncryption);
+        public byte[] EnhanceBody(byte[] Plaintext, byte[] Salt = null) => ProviderEncryption == null ? Plaintext :
+                EnhancedDataSequence.Encrypt(ProviderEncryption, MasterSecret,
+                        Salt, Plaintext);
+
+
+
+            
+            //Enhance(MasterSecret, Plaintext, Salt ?? MakeSalt(), ProviderEncryption,
+            //        BodyMode: true);
+
+        /// <summary>
+        /// Return a binary EDS sequence of the specified plaintext under this header. A
+        /// unique salt will be assigned.
+        /// </summary>
+        /// <param name="Plaintext">The EDS plaintext.</param>
+        /// <param name="Salt">The salt value to be used.</param>
+        /// <returns>The EDS</returns>
+        public byte[] EnhanceSequence(byte[] Plaintext, byte[] Salt = null) => ProviderEncryption == null ? Plaintext :
+                EnhancedDataSequence.Enhance(MasterSecret, Plaintext, Salt ?? MakeSalt(), ProviderEncryption,
+                    BodyMode: false);
+
+
+
         /// <summary>
         /// Return an EDSWriter to output the message body.
         /// </summary>
         /// <param name="OutputStream"></param>
         /// <param name="ContentLength"></param>
+        /// <param name="Salt"></param>
         /// <returns></returns>
         public EnhancedDataSequence EnhancedDataSequenceWriter(
                     JSONWriter OutputStream,
-                    long ContentLength = -1) => MasterSecret == null ?
+                    long ContentLength = -1,
+                    byte[] Salt = null) => MasterSecret == null ?
                 new EnhancedDataSequenceWriter(OutputStream, ContentLength: ContentLength) :
                 new EnhancedDataSequenceWriter(OutputStream, MasterSecret, ProviderEncryption,
-                        MakeSalt(), ContentLength: ContentLength);
+                        Salt??MakeSalt(), ContentLength: ContentLength);
 
 
 
@@ -244,49 +274,74 @@ namespace Goedel.Cryptography.Dare {
 
             }
 
+        CryptoAlgorithmID EncryptId;
 
-        ///// <summary>
-        ///// Create encryption info
-        ///// </summary>
-        ///// <param name="Data">Data to be encrypted.</param>
-        ///// <param name="Recipients">The recipient information entries.</param>
-        ///// <param name="Protected">The protected encryption header</param>
-        ///// <param name="EncryptionKeys">The encryption key.</param>
-        ///// <param name="ContentType">Content type identifier.</param>
-        ///// <param name="EncryptID">Encryption algorithm to use.</param>
-        ///// <returns>The encrypted data info block.</returns>
-        //public static CryptoData Encrypt (byte[] Data,
-        //            out List<DARERecipient> Recipients,
-        //            out Header Protected,
-        //            List<KeyPair> EncryptionKeys = null,
-        //            string ContentType = null,
-        //            CryptoAlgorithmID EncryptID = CryptoAlgorithmID.Default
-        //            ) {
+        /// <summary>
+        /// Attempt decryption of the master key by matching a recipient entry to the 
+        /// keys in the specified key collection.
+        /// </summary>
+        /// <param name="KeyCollection">The key collection to use or the default collection
+        /// if null.</param>
+        public void DecryptMaster(KeyCollection KeyCollection) {
+            EncryptId = EncryptionAlgorithm.FromJoseID();
 
-        //    throw new NYI();
-
-        //    //var Provider = CryptoCatalog.Default.GetEncryption(EncryptID);
-        //    //var EncryptEncoder = Provider.MakeEncoder(Algorithm: EncryptID);
-        //    //Protected = JoseWebEncryption.ProtectedHeader(EncryptEncoder, ContentType, null);
-
-        //    //Recipients = new List<Cryptography.Jose.Recipient>();
-
-        //    //foreach (var EncryptionKey in EncryptionKeys) {
-        //    //    var KID = EncryptionKey.Name ?? EncryptionKey.UDF;
-        //    //    var Recipient = JoseWebEncryption.Recipient(
-        //    //            EncryptEncoder, EncryptionKey, KID: KID, ProviderAlgorithm: EncryptID);
-        //    //    Recipients.Add(Recipient);
-        //    //    }
-
-        //    //EncryptEncoder.Write(Data);
-        //    //EncryptEncoder.Complete();
-
-        //    //return EncryptEncoder;
-        //    }
+            MasterSecret = KeyCollection.Decrypt(Recipients, EncryptId);
+            ProviderEncryption = CryptoCatalog.Default.GetEncryption(EncryptId);
+            }
 
 
+        /// <summary>
+        /// Obtain an EDS reader for the current key information. 
+        /// </summary>
+        /// <param name="OutputStream">The output stream</param>
+        /// <param name="Salt">The salt value. If null, the first binary data item in the
+        /// stream is used as the salt.</param>
+        /// <returns>The EDS reader.</returns>
+        public EnhancedDataSequenceReader GetReader(Stream OutputStream, byte[] Salt = null) {
+
+            if (Salt == null) {
+                // read the salt from the stream.
+
+                }
+            return new EnhancedDataSequenceReader(OutputStream, MasterSecret, ProviderEncryption,
+                Salt);
+
+            }
 
 
+        }
+
+    /// <summary>
+    /// Extensions classes.
+    /// </summary>
+    public static class Extensions {
+        // ToDo: Make Recipients into an interface...
+
+        /// <summary>
+        /// Attempt to decrypt a decryption blob from a list of recipient entries.
+        /// </summary>
+        /// <param name="KeyCollection">The key collection to be used to resolve keys.</param>
+        /// <param name="Recipients">The recipient entry.</param>
+        /// <param name="AlgorithmID">The symmetric encryption cipher (used to decrypt the wrapped key).</param>
+        /// <returns></returns>
+        public static byte[] Decrypt(this KeyCollection KeyCollection, List<DARERecipient> Recipients, CryptoAlgorithmID AlgorithmID) {
+            foreach (var Recipient in Recipients) {
+
+                var DecryptionKey = KeyCollection.TryMatchRecipient(Recipient.KeyIdentifier);
+
+                // Recipient has the following fields of interest
+                // Recipient.EncryptedKey -- The RFC3394 wrapped symmetric key
+                // Recipient.Header.Epk  -- The ephemeral public key
+                // Recipient.Header.Epk.KeyPair  -- The ephemeral public key
+
+                if (DecryptionKey != null) {
+                    return DecryptionKey.Decrypt(Recipient.WrappedMasterKey, Recipient.Epk.KeyPair, AlgorithmID: AlgorithmID);
+                    }
+                }
+
+
+            throw new NoAvailableDecryptionKey();
+            }
         }
 
     }

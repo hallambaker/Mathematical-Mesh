@@ -321,7 +321,7 @@ namespace Goedel.Protocol {
         public bool EOF => CharacterInput.EOF;
 
         /// <summary>If true, emit trace value for debugging.</summary>
-        public static bool Trace = true;
+        public static bool Trace = false;
 
         /// <summary>
         /// Delegate method for creating structured readers

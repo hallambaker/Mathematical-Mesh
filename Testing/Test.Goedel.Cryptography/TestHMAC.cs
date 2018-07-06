@@ -1,4 +1,5 @@
 ﻿using System.Numerics;
+using System.Diagnostics;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using UT=Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -192,9 +193,9 @@ namespace Test.Goedel.Cryptography {
                 System.Array.Resize(ref Result, Expected.Length);
                 }
 
-            TraceX.WriteLine("Key = {0}", Key.ToStringBase16());
-            TraceX.WriteLine("Data = {0}", Data.ToStringBase16());
-            TraceX.WriteLine("Result = {0}", Result.ToStringBase16());
+            Debug.WriteLine("Key = {0}", Key.ToStringBase16());
+            Debug.WriteLine("Data = {0}", Data.ToStringBase16());
+            Debug.WriteLine("Result = {0}", Result.ToStringBase16());
 
             UT.Assert.IsTrue(Result.IsEqualTo(Expected));
             }

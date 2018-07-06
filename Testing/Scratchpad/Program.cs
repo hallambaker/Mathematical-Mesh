@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Goedel.Cryptography.Dare;
 using Goedel.Mesh;
 using Goedel.Cryptography;
-using Goedel.Cryptography.Framework;
+using Goedel.Cryptography.Jose;
 using Goedel.Cryptography.KeyFile;
 using Goedel.IO;
 using Goedel.Utilities;
@@ -34,7 +34,7 @@ namespace Scratchpad {
 
 
 
-        static void WriteBody (DAREMessage Message, byte[] Plaintext, int Stride=0) {
+        static void WriteBody(DAREMessage Message, byte[] Plaintext, int Stride = 0) {
             if (Stride <= 0) {
                 Message.Process(Plaintext, true);
                 return;
@@ -52,10 +52,16 @@ namespace Scratchpad {
             }
 
 
-        static KeyPair CreateKeyPair () {
-            var Result = new KeyPairDH();
-            KeyCollection.Default.Add(Result);
 
+
+
+
+
+        static KeyPair CreateKeyPair(bool Register=true) {
+            var Result = new KeyPairDH();
+            if (Register) {
+                KeyCollection.Default.Add(Result);
+                }
             return Result;
             }
 

@@ -18,4 +18,9 @@ Namespace Goedel.Utilities
 			|The file could not be read.
 		Object ExceptionData "The file {0} could not be read"
 			String
-			
+	
+	Exception Not64Bit
+		Console "Item too large"
+		Description
+			|A call was made to a routine that has not yet been made
+			|64 bit clean with a value that exceeds the Int32 limits.

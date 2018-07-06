@@ -4,9 +4,15 @@ using System.Collections.Generic;
 using Goedel.Utilities;
 using Goedel.IO;
 using Goedel.Protocol;
+using Goedel.Cryptography;
 using Goedel.Cryptography.Jose;
 
 namespace Goedel.Cryptography.Dare {
+
+    // Feature: Record filenames when creating containers
+    // Feature: Extract file by name
+    // Feature: Sign and verify archives by Merkle tree
+    // Feature: Use cloaked headers to conceal file names
 
     /// <summary>Specify chunking mode.</summary>
     public enum ChunkMode {
@@ -44,9 +50,7 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// The class specific disposal routine.
         /// </summary>
-        protected override void Disposing() {
-            Container?.Dispose();
-            }
+        protected override void Disposing() => Container?.Dispose();
 
         /// <summary>
         /// Open a new file container for write access.
@@ -211,9 +215,7 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// The class specific disposal routine.
         /// </summary>
-        protected override void Disposing() {
-            Container?.Dispose();
-            }
+        protected override void Disposing() => Container?.Dispose();
 
         /// <summary>
         /// The number of entries in the container. Note that this will have to be 
@@ -226,23 +228,21 @@ namespace Goedel.Cryptography.Dare {
         /// Open an existing file container in read mode.
         /// </summary>
         /// <param name="FileName">The file name to read</param>
-        /// <param name="ReadIndex">If true, read the container index to permit random access</param>
         /// <param name="FileStatus">The mode to open the file in, this must be a mode
         /// that permits read access.</param>
         /// <returns>File Container instance</returns>
         public FileContainerReader (
                 string FileName,
-                bool ReadIndex = true,
                 FileStatus FileStatus = FileStatus.Read) {
 
             var JBCDStream = new JBCDStream(FileName, FileStatus);
             Container = Goedel.Cryptography.Dare.Container.OpenExisting(JBCDStream);
 
-            if (ReadIndex) {
-                // here we read in the container index. Either from an archive referenced 
-                // in the last frame or by scanning the entier container.
-                throw new NYI();
-                }
+            //if (ReadIndex) {
+            //    // here we read in the container index. Either from an archive referenced 
+            //    // in the last frame or by scanning the entier container.
+            //    throw new NYI();
+            //    }
             }
 
 
@@ -270,7 +270,7 @@ namespace Goedel.Cryptography.Dare {
                 out byte[] Data,
                 out ContentMeta ContentMeta) {
 
-            using (var Reader = new FileContainerReader(FileName, ReadIndex: false)) {
+            using (var Reader = new FileContainerReader(FileName)) {
                 Reader.Read(out Data, out ContentMeta);
                 }
 
@@ -299,7 +299,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="Data">The data read.</param>
         /// <param name="ContentMeta">The metadata of the entry.</param>
-        /// <param name="Index">Specify the index of the entry to read.</param>
+        /// <param name="Index">Specify the index of the entry to read</param>
         /// <param name="Path">Specify a path value of an entry to read.</param>
         public void Read (
                 out byte[] Data,
@@ -307,8 +307,11 @@ namespace Goedel.Cryptography.Dare {
                 int Index = -1,
                 string Path = null) {
 
-            if (Index >= 0 | Path != null) {
-                throw new NYI();
+            if (Index >= 0) {
+                Container.Move(Index);
+                }
+            else if(Path != null) {
+                throw new NYI();  // ToDo: retrieve index by path val
                 }
             else {
                 Container.Last();
@@ -324,99 +327,10 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="Recipients">The list of recipients</param>
         /// <param name="AlgorithmID">The bulk encryption algorithm</param>
         /// <returns>The result of the key exchange.</returns>
-        public virtual byte[] GetExchange (List<Recipient> Recipients, CryptoAlgorithmID AlgorithmID) {
-            return KeyCollection.Default.Decrypt(Recipients, AlgorithmID);
-            }
+        public virtual byte[] GetExchange(List<Recipient> Recipients, CryptoAlgorithmID AlgorithmID) => KeyCollection.Default.Decrypt(Recipients, AlgorithmID);
 
 
 
         }
 
-    /// <summary>
-    /// Track a collection of keys from various sources allowing recall when required for recryption use.
-    /// </summary>
-    public class KeyCollection {
-
-        /// <summary>
-        /// The default collection.
-        /// </summary>
-        public static KeyCollection Default = new KeyCollection();
-
-        Dictionary<string, KeyPair> DictionaryKeyPairByUDF = new Dictionary<string, KeyPair>();
-        Dictionary<string, KeyPair> DictionaryKeyPairBySIN = new Dictionary<string, KeyPair>();
-        Dictionary<string, KeyPair> DictionaryKeyPairByAccount = new Dictionary<string, KeyPair>();
-
-        /// <summary>
-        /// Add a keypair to the collection.
-        /// </summary>
-        /// <param name="KeyPair">The key pair to add.</param>
-        public void Add (KeyPair KeyPair) {
-            DictionaryKeyPairByUDF.AddSafe(KeyPair.UDF, KeyPair);
-            if (KeyPair.Locator != null) {
-                DictionaryKeyPairBySIN.AddSafe(KeyPair.StrongInternetName, KeyPair);
-                DictionaryKeyPairByAccount.AddSafe(KeyPair.Locator, KeyPair);
-                }
-
-            }
-
-        /// <summary>
-        /// Add a recryption group account to the group.
-        /// </summary>
-        /// <param name="RecryptionGroup"></param>
-        public void Add (string RecryptionGroup) {
-            }
-
-
-
-
-        /// <summary>
-        /// Attempt to decrypt a decryption blob from a list of recipient entries.
-        /// </summary>
-        /// <param name="Recipients">The recipient entry.</param>
-        /// <param name="AlgorithmID">The symmetric encryption cipher (used to decrypt the wrapped key).</param>
-        /// <returns></returns>
-        public byte[] Decrypt (List<Recipient> Recipients, CryptoAlgorithmID AlgorithmID) {
-            foreach (var Recipient in Recipients) {
-
-                var DecryptionKey = TryMatchRecipient(Recipient);
-
-                // Recipient has the following fields of interest
-                // Recipient.EncryptedKey -- The RFC3394 wrapped symmetric key
-                // Recipient.Header.Epk  -- The ephemeral public key
-                // Recipient.Header.Epk.KeyPair  -- The ephemeral public key
-
-                if (DecryptionKey != null) {
-                    return DecryptionKey.Decrypt(Recipient.EncryptedKey, Recipient.Header.Epk.KeyPair, AlgorithmID: AlgorithmID);
-                    }
-                }
-
-
-            return null;
-            }
-
-
-
-        /// <summary>
-        /// Attempt to find a private key for the specified recipient entry.
-        /// </summary>
-        /// <param name="Recipient">The recipient to match</param>
-        /// <returns>True if a match is found, otherwise false.</returns>
-        public KeyPair TryMatchRecipient (Recipient Recipient) {
-            var KID = Recipient.Header.Kid;
-
-            // Search our this.SessionPersonal = SessionPersonal;
-            if (DictionaryKeyPairByUDF.TryGetValue(KID, out var KeyPair)) {
-                return KeyPair;
-                }
-            if (DictionaryKeyPairBySIN.TryGetValue(KID, out KeyPair)) {
-                return KeyPair;
-                }
-            if (DictionaryKeyPairByAccount.TryGetValue(KID, out KeyPair)) {
-                return KeyPair;
-                }
-
-            // finally search local persistence stores.
-            return KeyPair.FindLocal(KID);
-            }
-        }
     }

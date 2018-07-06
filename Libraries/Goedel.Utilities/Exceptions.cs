@@ -1,6 +1,8 @@
 ﻿using System;
 using Goedel.Utilities;
 
+
+
 namespace Goedel.Utilities {
 
 
@@ -178,6 +180,58 @@ namespace Goedel.Utilities {
 				}
 			else {
 				return new FileReadError();
+				}
+            }
+        }
+
+
+    /// <summary>
+    /// A call was made to a routine that has not yet been made
+    /// 64 bit clean with a value that exceeds the Int32 limits.
+    /// </summary>
+    public class Not64Bit : global::System.Exception {
+
+		/// <summary>
+        /// Construct instance for exception "Item too large"
+        /// </summary>		
+		public Not64Bit () : base ("Item too large") {
+			}
+        
+		/// <summary>
+        /// Construct instance for exception "Item too large"
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		public Not64Bit (string Description) : base (Description) {
+			}
+
+		/// <summary>
+        /// Construct instance for exception 		/// containing an inner exception.
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		/// <param name="Inner">Inner Exception</param>	
+		public Not64Bit (string Description, System.Exception Inner) : 
+				base (Description, Inner) {
+			}
+
+		/// <summary>
+        /// User data associated with the exception.
+        /// </summary>	
+		public object UserData;
+
+
+
+		
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+
+        static System.Exception _Throw(object Reason) {
+			if (Reason as string != null) {
+				return new Not64Bit(Reason as string);
+				}
+			else {
+				return new Not64Bit();
 				}
             }
         }

@@ -24,9 +24,7 @@ namespace Goedel.Cryptography.Windows {
             }
 
 
-        static string FileName (string UDF) {
-            return Path.Combine(KeystoreUserPrivate, UDF);
-            }
+        static string FileName(string UDF) => Path.Combine(KeystoreUserPrivate, UDF);
 
         /// <summary>
         /// Write a key to the machine keystore

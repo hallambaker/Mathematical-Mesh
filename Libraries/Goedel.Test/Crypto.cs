@@ -3,10 +3,45 @@ using System.Threading;
 using System.Collections.Generic;
 using UT = Microsoft.VisualStudio.TestTools.UnitTesting;
 using Goedel.Cryptography;
+using Goedel.Cryptography.Jose;
 using Goedel.Cryptography.PKIX;
 using Goedel.Utilities;
+using Goedel.Cryptography.Algorithms;
 
 namespace Goedel.Test {
+
+    public class TestKeys {
+
+        KeyCollection KeyCollection;
+
+        public List<KeyPair> EncryptionKeys;
+        public List<KeyPair> SignerKeys;
+
+        public TestKeys(KeyCollection KeyCollection = null) => this.KeyCollection = KeyCollection ?? KeyCollection.Default;
+
+        public void AddEncrypt(bool Register = true) {
+            EncryptionKeys = EncryptionKeys ?? new List<KeyPair>();
+
+            var Keypair = new KeyPairDH();
+            var Public = Keypair.PKIXPublicKeyDH;
+            var PublicKeyKeypair = KeyPairDH.KeyPairPublicFactory(Public);
+            EncryptionKeys.Add(PublicKeyKeypair);
+
+            Console.WriteLine($"Keypair is {Keypair.UDF}");
+            Console.WriteLine($"  Public {Keypair.PKIXPublicKeyDH}");
+            Console.WriteLine($"  Public {PublicKeyKeypair.UDF}");
+
+            if (Register) {
+                KeyCollection.Default.Add(Keypair);
+                }
+            }
+
+        public void AddSign(bool Register = true) {
+            SignerKeys = SignerKeys ?? new List<KeyPair>();
+
+            throw new NYI();
+            }
+        }
 
 
     public static class Crypto {

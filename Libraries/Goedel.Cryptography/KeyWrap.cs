@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Goedel.Utilities;
+using System.Diagnostics;
 
 namespace Goedel.Cryptography {
 
@@ -62,6 +63,9 @@ namespace Goedel.Cryptography {
         /// <returns>The wrapped key</returns>
         public static byte[] WrapKey(byte[] Kek, byte[] Plaintext) {
 
+            Console.WriteLine($"Kek    {Kek.ToStringBase16()}");
+            Console.WriteLine($"Master {Plaintext.ToStringBase16()}");
+
             var Encryptor = Platform.BlockProviderFactoryAes(Kek, true);
 
             int n = Plaintext.Length / 8; // The length in blocks
@@ -113,6 +117,8 @@ namespace Goedel.Cryptography {
             var Result = Block.ToByte(R);
             //TraceX.WriteLine("Result {0}", BaseConvert.ToBase16String(Result));
 
+            Console.WriteLine($"Ciphertext {Result.ToStringBase16()}");
+
             return Result;
             }
         /// <summary>Wrap a symmetric key</summary>
@@ -126,6 +132,9 @@ namespace Goedel.Cryptography {
         /// <param name="Ciphertext">The encrypted key to unwrap</param>
         /// <returns>The unwrapped key</returns>
         public static byte[] UnwrapKey (byte[] Kek, byte[] Ciphertext) {
+
+            Console.WriteLine($"Kek    {Kek.ToStringBase16()}");
+            Console.WriteLine($"Ciphertext {Ciphertext.ToStringBase16()}");
 
             var Decryptor = Platform.BlockProviderFactoryAes(Kek, false);
 
@@ -186,6 +195,8 @@ namespace Goedel.Cryptography {
             var Result = Block.ToByte(R, 1);
             //TraceX.WriteLine("Result {0}", BaseConvert.ToBase16String(Result));
 
+            Console.WriteLine($"Master {Result.ToStringBase16()}");
+
             return Result;
             }
 
@@ -199,7 +210,7 @@ namespace Goedel.Cryptography {
                 Builder.Append(R[i].ToString());
                 Builder.Append("  ");
                 }
-            TraceX.WriteLine(Builder.ToString());
+            Debug.WriteLine(Builder.ToString());
             }
         
 

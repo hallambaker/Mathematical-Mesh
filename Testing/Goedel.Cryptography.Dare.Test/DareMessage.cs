@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Goedel.Utilities;
 using Goedel.Cryptography;
 using Goedel.Protocol;
+using Goedel.Test;
 using Goedel.Cryptography.Algorithms;
 using Goedel.Cryptography.Dare;
 using MT = Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -28,39 +29,79 @@ namespace Goedel.Cryptography.Dare.Test {
             }
 
         [MT.TestMethod]
-        public void MessageEncrypted () {
-            var AlicePrivate = new DiffeHellmanPrivate();
-            var AliceKeypair = new KeyPairDH(AlicePrivate);
-            var AlicePublic = AlicePrivate.DiffeHellmanPublic;
-            var AlicePublicKeypair = new KeyPairDH(AlicePublic);
-
-            var EncryptionKeys = new List<KeyPair> { AlicePublicKeypair };
+        public void MessageEncryptedAtomic() {
+            var TestKeys = new TestKeys();
+            TestKeys.AddEncrypt();
 
             var Test1 = Platform.GetRandomBytes(1000);
-            TestMessageAtomic(Test1, EncryptionKeys: EncryptionKeys);
-            TestMessageFixed(Test1, EncryptionKeys: EncryptionKeys);
-            TestMessageVariable(Test1, EncryptionKeys: EncryptionKeys);
+            TestMessageAtomic(Test1, EncryptionKeys: TestKeys.EncryptionKeys);
 
-            TestMessageFixed(Test1, 13, EncryptionKeys: EncryptionKeys);
-            TestMessageVariable(Test1, 13, EncryptionKeys: EncryptionKeys);
+            // does not write Salt
+            // read does not attempt decrypt. This needs to be a separate stream
+            // from RAW.
+            }
 
-            TestMessageFixed(Test1, 42, EncryptionKeys: EncryptionKeys);
-            TestMessageVariable(Test1, 42, EncryptionKeys: EncryptionKeys);
+
+        [MT.TestMethod]
+        [MT.ExpectedException(typeof(NoAvailableDecryptionKey))]
+        public void MessageEncryptedAtomicFail() {
+            var TestKeys = new TestKeys();
+            TestKeys.AddEncrypt(false); // Do not add the decryption key to the keys collection
+
+            var Test1 = Platform.GetRandomBytes(1000);
+            TestMessageAtomic(Test1, EncryptionKeys: TestKeys.EncryptionKeys);
+            }
+
+        [MT.TestMethod]
+        public void MessageEncryptedFixed() {
+            var TestKeys = new TestKeys();
+            TestKeys.AddEncrypt();
+
+            var Test1 = Platform.GetRandomBytes(1000);
+            TestMessageFixed(Test1, EncryptionKeys: TestKeys.EncryptionKeys);
+            TestMessageFixed(Test1, 13, EncryptionKeys: TestKeys.EncryptionKeys);
+            TestMessageFixed(Test1, 42, EncryptionKeys: TestKeys.EncryptionKeys);
+            }
+
+        [MT.TestMethod]
+        public void MessageEncryptedVariable() {
+            var TestKeys = new TestKeys();
+            TestKeys.AddEncrypt();
+            var Test1 = Platform.GetRandomBytes(1000);
+
+            TestMessageVariable(Test1, EncryptionKeys: TestKeys.EncryptionKeys);
+            TestMessageVariable(Test1, 13, EncryptionKeys: TestKeys.EncryptionKeys);
+            TestMessageVariable(Test1, 42, EncryptionKeys: TestKeys.EncryptionKeys);
+            }
+
+
+        [MT.TestMethod]
+        public void MessageEncrypted () {
+            var TestKeys = new TestKeys();
+            TestKeys.AddEncrypt();
+
+            var Test1 = Platform.GetRandomBytes(1000);
+            TestMessageAtomic(Test1, EncryptionKeys: TestKeys.EncryptionKeys);
+            TestMessageFixed(Test1, EncryptionKeys: TestKeys.EncryptionKeys);
+            TestMessageVariable(Test1, EncryptionKeys: TestKeys.EncryptionKeys);
+
+            TestMessageFixed(Test1, 13, EncryptionKeys: TestKeys.EncryptionKeys);
+            TestMessageVariable(Test1, 13, EncryptionKeys: TestKeys.EncryptionKeys);
+
+            TestMessageFixed(Test1, 42, EncryptionKeys: TestKeys.EncryptionKeys);
+            TestMessageVariable(Test1, 42, EncryptionKeys: TestKeys.EncryptionKeys);
             }
 
         [MT.TestMethod]
         public void MessageEncryptedWithData () {
-            var AlicePrivate = new DiffeHellmanPrivate();
-            var AliceKeypair = new KeyPairDH(AlicePrivate);
-            var AlicePublic = AlicePrivate.DiffeHellmanPublic;
-            var AlicePublicKeypair = new KeyPairDH(AlicePublic);
-            var EncryptionKeys = new List<KeyPair> { AlicePublicKeypair };
+            var TestKeys = new TestKeys();
+            TestKeys.AddEncrypt();
 
             var Test1 = Platform.GetRandomBytes(1000);
             var Test2 = Platform.GetRandomBytes(100);
             var Test3 = Platform.GetRandomBytes(50);
             var DataSequences = new List<byte[]> { Test2, Test3 };
-            TestMessageAtomic(Test1, EncryptionKeys:EncryptionKeys, DataSequences: DataSequences);
+            TestMessageAtomic(Test1, EncryptionKeys: TestKeys.EncryptionKeys, DataSequences: DataSequences);
 
             }
 
@@ -82,15 +123,17 @@ namespace Goedel.Cryptography.Dare.Test {
                     List<byte[]> DataSequences = null,
                     string ContentType = null) {
 
-            var Message = new DAREMessage(Plaintext);
+            var Message = new DAREMessage(Plaintext, EncryptionKeys:EncryptionKeys);
 
             var MessageBytes = Message.GetJson(false);
 
             Console.WriteLine(MessageBytes.ToUTF8());
-            CheckDecodeDirect(MessageBytes, Plaintext, DataSequences, ContentType);
+            CheckDecodeDirect(MessageBytes, Plaintext, DataSequences, ContentType,
+                EncryptionKeys != null);
 
             var MessageBytesB = Message.GetJsonB(false);
-            CheckDecodeDirect(MessageBytesB, Plaintext, DataSequences, ContentType);
+            CheckDecodeDirect(MessageBytesB, Plaintext, DataSequences, ContentType,
+                EncryptionKeys != null);
             }
 
         void TestMessageFixed (byte[] Plaintext, int Stride = -1,
@@ -105,7 +148,8 @@ namespace Goedel.Cryptography.Dare.Test {
             Message.Process(Plaintext, true);
             var MessageBytes = OutputStream.ToArray();
 
-            CheckDecodeDirect(MessageBytes, Plaintext, DataSequences, ContentType);
+            CheckDecodeDirect(MessageBytes, Plaintext, DataSequences, ContentType,
+                EncryptionKeys != null);
 
             }
 
@@ -121,7 +165,8 @@ namespace Goedel.Cryptography.Dare.Test {
             Message.Process(Plaintext, true);
             var MessageBytes = OutputStream.ToArray();
 
-            CheckDecodeDirect(MessageBytes, Plaintext, DataSequences, ContentType);
+            CheckDecodeDirect(MessageBytes, Plaintext, DataSequences, ContentType,
+                EncryptionKeys != null);
             }
 
 
@@ -146,27 +191,31 @@ namespace Goedel.Cryptography.Dare.Test {
             byte[] Serialization,
             byte[] Plaintext,
             List<byte[]> DataSequences = null,
-            string ContentType = null) {
+            string ContentType = null,
+            bool Encrypted = false) {
 
-            var Message = DAREMessage.FromJSON(Serialization, false);
+            var Message = DAREMessage.FromJSON(Serialization, false, Decrypt:true);
             CheckDecodeResult(Message, DataSequences, ContentType);
 
             Assert.True(Plaintext.IsEqualTo(Message.Body));
+
+            // Minimal check that the plaintext has at least been transformed if
+            // encryption was specified. Problem is that checking for encryption 
+            // properly requires an implementation.
+            //Assert.True(!Encrypted | !Message.Body.IsEqualTo(Message.Plaintext));
             }
 
-        public static void CheckDecodeStreamed (
+        public static void CheckDecodeStreamed(
             byte[] Serialization,
             byte[] Plaintext,
             List<byte[]> DataSequences = null,
-            string ContentType = null) {
+            string ContentType = null) =>
 
             //var Message = DAREMessage.ReadHeader(Serialization.JSONReader());
             //while (Message.ReadChunk(out var Chunk)) {
 
             //    }
             throw new NYI();
-
-            }
 
 
         public static void CheckDecodeResult (

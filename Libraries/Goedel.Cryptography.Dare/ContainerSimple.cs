@@ -201,7 +201,9 @@ namespace Goedel.Cryptography.Dare {
         /// a Next or Previous method operates on the stream.</summary>
         long FrameReadStartPosition = -1;
 
-
+        /// <summary>
+        /// Get or set the read position in the stream.
+        /// </summary>
         protected long PositionRead {
             get => JBCDStream.PositionRead;
             set {

@@ -1,4 +1,5 @@
 ﻿using System.Numerics;
+using System.Diagnostics;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using UT=Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -115,7 +116,7 @@ namespace Test.Goedel.Cryptography {
             var OKM = KDF.Derive(Info, L * 8);
 
 
-            TraceX.WriteLine("PRK = {0}", KDF.PRK.ToStringBase16());
+            Debug.WriteLine("PRK = {0}", KDF.PRK.ToStringBase16());
 
             UT.Assert.IsTrue(KDF.PRK.IsEqualTo(Result_PRK));
             UT.Assert.IsTrue(OKM.IsEqualTo(Result_OKM));
@@ -127,7 +128,7 @@ namespace Test.Goedel.Cryptography {
             var KDF = new KeyDeriveHKDF(IKM, Salt, Provider);
             var OKM = KDF.Derive(Info, L * 8);
 
-            TraceX.WriteLine("PRK = {0}", KDF.PRK.ToStringBase16());
+            Debug.WriteLine("PRK = {0}", KDF.PRK.ToStringBase16());
 
             UT.Assert.IsTrue(KDF.PRK.IsEqualTo(Result_PRK));
             UT.Assert.IsTrue(OKM.IsEqualTo(Result_OKM));

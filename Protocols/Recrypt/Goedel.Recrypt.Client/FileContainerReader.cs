@@ -14,6 +14,9 @@ using Goedel.Protocol;
 
 namespace Goedel.Recrypt.Client {
 
+
+
+
     public static partial class Extension {
 
         /// <summary>
@@ -81,8 +84,7 @@ namespace Goedel.Recrypt.Client {
         public FileContainerReaderRecrypting (
                 SessionPersonal SessionPersonal,
                 string FileName,
-                bool ReadIndex = true,
-                FileStatus FileStatus = FileStatus.Read) : base(SessionPersonal, FileName, ReadIndex, FileStatus) {
+                FileStatus FileStatus = FileStatus.Read) : base(SessionPersonal, FileName, FileStatus) {
             SetPersonalSession(SessionPersonal);
             }
 
