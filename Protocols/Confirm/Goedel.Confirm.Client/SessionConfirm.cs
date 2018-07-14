@@ -25,13 +25,9 @@ namespace Goedel.Confirm.Client {
             return Result as SessionConfirm;
             }
 
-        public static SessionConfirm GetConfirm (
+        public static SessionConfirm GetConfirm(
             this SessionPersonal SessionPersonal,
-            string Identifier = null) {
-
-            throw new NYI();
-
-            }
+            string Identifier = null) => throw new NYI();
 
         }
 
@@ -49,38 +45,24 @@ namespace Goedel.Confirm.Client {
         /// Construct a SessionRecryption from a personal session.
         /// </summary>
         /// <param name="SessionPersonal">The personal session to construct from.</param>
-        public SessionConfirm (
-                    SessionPersonal SessionPersonal, 
-                    ConfirmProfile ConfirmProfile, 
-                    bool Write = true) : base(SessionPersonal, ConfirmProfile, Write) {
-            this.ConfirmProfile = ConfirmProfile;
-            }
+        public SessionConfirm(
+                    SessionPersonal SessionPersonal,
+                    ConfirmProfile ConfirmProfile,
+                    bool Write = true) : base(SessionPersonal, ConfirmProfile, Write) => this.ConfirmProfile = ConfirmProfile;
 
 
 
-        public override void GetFromPortal () {
-            throw new NotImplementedException();
-            }
+        public override void GetFromPortal() => throw new NotImplementedException();
 
-        public override void MakeDefault () {
-            throw new NotImplementedException();
-            }
+        public override void MakeDefault() => throw new NotImplementedException();
 
-        public EnquireResponse PostRequest (RequestEntry RequestEntry) {
-            throw new NYI();
-            }
+        public EnquireResponse PostRequest(RequestEntry RequestEntry) => throw new NYI();
 
-        public StatusResponse CheckStatus (EnquireResponse EnquireResponse) {
-            throw new NYI();
-            }
+        public StatusResponse CheckStatus(EnquireResponse EnquireResponse) => throw new NYI();
 
-        public StatusResponse CheckStatus (string BrokerID, bool Cancel) {
-            throw new NYI();
-            }
+        public StatusResponse CheckStatus(string BrokerID, bool Cancel) => throw new NYI();
 
-        public PendingResponse CheckPending () {
-            throw new NYI();
-            }
+        public PendingResponse CheckPending() => throw new NYI();
 
         }
 

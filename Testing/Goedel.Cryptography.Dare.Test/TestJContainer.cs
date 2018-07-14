@@ -160,9 +160,9 @@ namespace Goedel.Cryptography.Dare.Test {
                     Console.WriteLine("====");
                     Console.WriteLine(XContainer.ContainerHeader.ToString());
                     Headers.Add(XContainer.ContainerHeader);
-
+                    var FrameData = XContainer.ReadFrameData();
                     Assert.True(Result);
-                    Assert.True(XContainer.FrameData.IsEqualTo(Test));
+                    Assert.True(FrameData.IsEqualTo(Test));
                     }
 
                 var Last = XContainer.Next();
@@ -192,7 +192,8 @@ namespace Goedel.Cryptography.Dare.Test {
                 else {
                     Assert.True(Last);
                     var Test = MakeConstant("Test ", (Records % MaxSize));
-                    Assert.True(XContainer.FrameData.IsEqualTo(Test));
+                    var FrameData = XContainer.ReadFrameData();
+                    Assert.True(FrameData.IsEqualTo(Test));
                     }
 
                 

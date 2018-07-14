@@ -7,7 +7,6 @@ using UT=Microsoft.VisualStudio.TestTools.UnitTesting;
 using Goedel.Utilities;
 using Goedel.Test;
 using Goedel.Cryptography;
-using Goedel.Cryptography.Framework;
 
 namespace Test.Goedel.Cryptography {
     public partial class TestGoedelCryptography {

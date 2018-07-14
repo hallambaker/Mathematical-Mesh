@@ -21,7 +21,7 @@
     <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Jose\Goedel.Cryptography.Jose.csproj" />
     <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.KeyFile\Goedel.Cryptography.KeyFile.csproj" />
     <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Standard\Goedel.Cryptography.Standard.csproj" />
-    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Windows\Goedel.Cryptography.Windows.csproj" />
+    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.WindowsFramework\Goedel.Cryptography.WindowsFramework.csproj" />
     <ProjectReference Include="..\..\Libraries\Goedel.Cryptography\Goedel.Cryptography.csproj" />
     <ProjectReference Include="..\..\Libraries\Goedel.Protocol\Goedel.Protocol.csproj" />
     <ProjectReference Include="..\..\Libraries\Goedel.Test\Goedel.Test.csproj" />

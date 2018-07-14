@@ -174,13 +174,13 @@ namespace Test.Goedel.Cryptography {
             var By = "46316835694926478169428394003475163141307993866256225615783033603165251855960".DecimalToBigInteger();
             var p = "57896044618658097711785492504343953926634992332820282019728792003956564819949".DecimalToBigInteger();
 
-            UT.Assert.AreEqual(Curve25519.d, D);
+            UT.Assert.AreEqual(Curve25519.D, D);
             UT.Assert.AreEqual(Curve25519.By, By);
-            UT.Assert.AreEqual(Curve25519.p, p);
+            UT.Assert.AreEqual(Curve25519.P, p);
 
-            var M1M = (-1).Mod(Curve25519.p);
-            var M1 = Curve25519.p - 1;
-            var RM1S = (Curve25519.SqrtMinus1 * Curve25519.SqrtMinus1).Mod(Curve25519.p);
+            var M1M = (-1).Mod(Curve25519.P);
+            var M1 = Curve25519.P - 1;
+            var RM1S = (Curve25519.SqrtMinus1 * Curve25519.SqrtMinus1).Mod(Curve25519.P);
 
             UT.Assert.AreEqual(M1, RM1S);
             UT.Assert.AreEqual(M1, M1M);
@@ -209,18 +209,18 @@ namespace Test.Goedel.Cryptography {
         public void TestSquareRoot() {
             var Curve25519 = DomainParameters.Curve25519;
 
-            var D2 = (Curve25519.By* Curve25519.By).Mod(Curve25519.p);
-            var Da = D2.Sqrt(Curve25519.p, Curve25519.SqrtMinus1);
-            var Db = D2.Sqrt(Curve25519.p);
-            var Dp = D2.Sqrt(Curve25519.p, Curve25519.SqrtMinus1, false);
-            var Dn = D2.Sqrt(Curve25519.p, Curve25519.SqrtMinus1, true);
+            var D2 = (Curve25519.By* Curve25519.By).Mod(Curve25519.P);
+            var Da = D2.Sqrt(Curve25519.P, Curve25519.SqrtMinus1);
+            var Db = D2.Sqrt(Curve25519.P);
+            var Dp = D2.Sqrt(Curve25519.P, Curve25519.SqrtMinus1, false);
+            var Dn = D2.Sqrt(Curve25519.P, Curve25519.SqrtMinus1, true);
 
             UT.Assert.IsTrue(Dp.IsEven);
             UT.Assert.IsFalse(Dn.IsEven);
-            UT.Assert.IsTrue(D2 == (Da * Da).Mod(Curve25519.p));
-            UT.Assert.IsTrue(D2 == (Db * Db).Mod(Curve25519.p));
-            UT.Assert.IsTrue(D2 == (Dp * Dp).Mod(Curve25519.p));
-            UT.Assert.IsTrue(D2 == (Dn * Dn).Mod(Curve25519.p));
+            UT.Assert.IsTrue(D2 == (Da * Da).Mod(Curve25519.P));
+            UT.Assert.IsTrue(D2 == (Db * Db).Mod(Curve25519.P));
+            UT.Assert.IsTrue(D2 == (Dp * Dp).Mod(Curve25519.P));
+            UT.Assert.IsTrue(D2 == (Dn * Dn).Mod(Curve25519.P));
 
             }
 

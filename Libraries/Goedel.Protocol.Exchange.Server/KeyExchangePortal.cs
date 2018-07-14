@@ -53,17 +53,13 @@ namespace Goedel.Protocol.Exchange.Server {
         /// <summary>
         /// Create new portal using the default stores.
         /// </summary>
-        public KeyExchangePortalDirect () {
-            Init(ServiceName);
-            }
+        public KeyExchangePortalDirect() => Init(ServiceName);
 
         /// <summary>
         /// Create a new portal using the specified stores.
         /// </summary>
         /// <param name="ServiceName">DNS service name</param>
-        public KeyExchangePortalDirect (string ServiceName) {
-            Init(ServiceName);
-            }
+        public KeyExchangePortalDirect(string ServiceName) => Init(ServiceName);
 
 
         /// <summary>
@@ -104,9 +100,7 @@ namespace Goedel.Protocol.Exchange.Server {
         /// <summary>
         /// Create new portal using the default stores.
         /// </summary>
-        public KeyExchangePortalLocal () {
-            KeyExchangeServiceHost = new PublicKeyExchangeServiceProvider(ServiceName);
-            }
+        public KeyExchangePortalLocal() => KeyExchangeServiceHost = new PublicKeyExchangeServiceProvider(ServiceName);
 
         /// <summary>
         /// Return a KeyExchangeService object for the named portal service.

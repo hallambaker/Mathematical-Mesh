@@ -17,9 +17,7 @@ namespace Goedel.Registry {
         /// Constructor to write to the specified output.
         /// </summary>
         /// <param name="Output">The output stream</param>
-        public ScriptOutput (TextWriter Output) {
-            this._Output = Output;
-            }
+        public ScriptOutput(TextWriter Output) => this._Output = Output;
 
         }
 
@@ -234,9 +232,7 @@ namespace Goedel.Registry {
         /// Create FSR from file.
         /// </summary>
         /// <param name="filename">The file to read.</param>
-        public Lexer(string filename) {
-            Position = new Position(filename);
-            }
+        public Lexer(string filename) => Position = new Position(filename);
 
 
         static int TabSize = 4;

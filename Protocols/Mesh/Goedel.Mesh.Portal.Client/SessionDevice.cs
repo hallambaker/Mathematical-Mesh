@@ -95,15 +95,13 @@ namespace Goedel.Mesh.Portal.Client {
         /// <summary>
         /// The profile fingerprint
         /// </summary>
-        public override string UDF => SignedDeviceProfile?.UDF; 
+        public override string UDF => SignedDeviceProfile?.UDF;
 
         /// <summary>
         /// Write to the local persistent cache.
         /// </summary>
         /// <param name="Default">If true, make this profile the default.</param>
-        public override void Write(bool Default = true) {
-            WriteToLocal(Default);
-            }
+        public override void Write(bool Default = true) => WriteToLocal(Default);
 
         /// <summary>
         /// No idea.
@@ -132,13 +130,9 @@ namespace Goedel.Mesh.Portal.Client {
 
             }
 
-        public override void MakeDefault () {
-            MeshMachine.MakeDefault(this);
-            }
+        public override void MakeDefault() => MeshMachine.MakeDefault(this);
 
-        public override void WriteToLocal (bool Default = true) {
-            MeshMachine.WriteToLocal(this, Default);
-            }
+        public override void WriteToLocal(bool Default = true) => MeshMachine.WriteToLocal(this, Default);
         }
 
     }

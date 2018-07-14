@@ -25,22 +25,18 @@ namespace Goedel.Mesh.Portal.Client {
         /// <param name="FileStatus">The mode to open the file in, this must be a mode
         /// that permits read access.</param>
         /// <returns>File Container instance</returns>
-        public FileContainerReaderDecrypting (
+        public FileContainerReaderDecrypting(
                 SessionPersonal SessionPersonal,
                 string FileName,
-                FileStatus FileStatus = FileStatus.Read) : base(FileName, FileStatus) {
-            this.SessionPersonal = SessionPersonal;
-            }
+                FileStatus FileStatus = FileStatus.Read) : base(FileName, FileStatus) => this.SessionPersonal = SessionPersonal;
 
         /// <summary>
         /// Open 
         /// </summary>
         /// <param name="Data"></param>
-        public FileContainerReaderDecrypting (
+        public FileContainerReaderDecrypting(
                 SessionPersonal SessionPersonal,
-                byte[] Data) : base(Data) {
-            this.SessionPersonal = SessionPersonal;
-            }
+                byte[] Data) : base(Data) => this.SessionPersonal = SessionPersonal;
 
 
         /// <summary>

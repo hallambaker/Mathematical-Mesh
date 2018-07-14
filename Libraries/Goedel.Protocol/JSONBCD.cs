@@ -30,7 +30,7 @@ namespace Goedel.Protocol {
         /// <summary>Terminal binary data chunk</summary>
         public const byte DataTerm = 0x88;
         /// <summary>Non-terminal UTF8 data chunk</summary>
-        public const byte DataChunk = 0x8A;
+        public const byte DataChunk = 0x8C;
 
         /// <summary>Unidirectional frame record</summary>
         public const byte UFrame = 0xF0;

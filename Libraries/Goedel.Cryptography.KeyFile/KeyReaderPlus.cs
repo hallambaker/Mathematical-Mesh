@@ -38,33 +38,25 @@ namespace Goedel.Cryptography.KeyFile {
         /// Count the inital staring armor tag
         /// </summary>
         /// <param name="c">Character that was read</param>
-        public virtual void Count1(int c) {
-            Armor1++;
-            }
+        public virtual void Count1(int c) => Armor1++;
 
         /// <summary>
         /// Count the inital finishing armor tag;
         /// </summary>
         /// <param name="c">Character that was read</param>
-        public virtual void Count2(int c) {
-            Armor2++;
-            }
+        public virtual void Count2(int c) => Armor2++;
 
         /// <summary>
         /// Count the final staring armor tag;
         /// </summary>
         /// <param name="c">Character that was read</param>
-        public virtual void Count3(int c) {
-            Armor3++;
-            }
+        public virtual void Count3(int c) => Armor3++;
 
         /// <summary>
         /// Count the final finishing armor tag;
         /// </summary>
         /// <param name="c">Character that was read</param>
-        public virtual void Count4(int c) {
-            Armor4++;
-            }
+        public virtual void Count4(int c) => Armor4++;
 
         /// <summary>
         /// Record the initial item description
@@ -152,9 +144,7 @@ namespace Goedel.Cryptography.KeyFile {
         /// Do nothing
         /// </summary>
         /// <param name="c">Character value read</param>
-        public virtual void HeaderAdd(int c) {
-            BuildHeaderValue.Append(c.ToASCII());
-            }
+        public virtual void HeaderAdd(int c) => BuildHeaderValue.Append(c.ToASCII());
 
         /// <summary>
         /// Do nothing

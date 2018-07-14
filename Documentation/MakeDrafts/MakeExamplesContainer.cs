@@ -76,7 +76,7 @@ namespace ExampleGenerator {
 				_Output.Write ("The key agreement value is calculated:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("~~~~\n{0}", _Indent);
-				_Output.Write ("{1}\n{0}", _Indent, Example.DareEncryptAgreement);
+				_Output.Write ("{1}\n{0}", _Indent, Linewrap.Wrap(Example.DareEncryptAgreement.ToString()));
 				_Output.Write ("~~~~\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The key agreement value is used as the input to a HKDF key\n{0}", _Indent);

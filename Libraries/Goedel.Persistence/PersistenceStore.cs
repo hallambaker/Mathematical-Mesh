@@ -94,13 +94,9 @@ namespace Goedel.Persistence {
         /// Timeout for acquiring lock in miliseconds.
         /// </summary>
         public int TimeOut {
-            get {
-                return _TimeOut;
-                }
+            get => _TimeOut;
 
-            set {
-                _TimeOut = value;
-                }
+            set => _TimeOut = value;
             }
 
         /// <summary>
@@ -116,18 +112,12 @@ namespace Goedel.Persistence {
         /// Return an enumerator.
         /// </summary>
         /// <returns>The enumerator.</returns>
-        public IEnumerator<DataItem> GetEnumerator() {
-            return new KeyEntryEnum(this);
-            }
+        public IEnumerator<DataItem> GetEnumerator() => new KeyEntryEnum(this);
         //public KeyEntryEnum GetEnumerator() {
         //    return new KeyEntryEnum(this);
         //    }
-        private IEnumerator GetEnumerator1() {
-            return GetEnumerator();
-            }
-        IEnumerator IEnumerable.GetEnumerator() {
-            return GetEnumerator1();
-            }
+        private IEnumerator GetEnumerator1() => GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator1();
 
         /// <summary>
         /// The enumeration entry.
@@ -140,9 +130,7 @@ namespace Goedel.Persistence {
             /// Create an enumerator for the specified store.
             /// </summary>
             /// <param name="KeyStore">The store to enumerate.</param>
-            public KeyEntryEnum(PersistenceStore KeyStore) {
-                this.KeyStore = KeyStore;
-                }
+            public KeyEntryEnum(PersistenceStore KeyStore) => this.KeyStore = KeyStore;
 
             ///// <summary>
             ///// Finalize.
@@ -165,9 +153,7 @@ namespace Goedel.Persistence {
             /// <summary>
             /// Return the enumerator to the first entry.
             /// </summary>
-            public void Reset() {
-                Position = -1;
-                }
+            public void Reset() => Position = -1;
 
             private object Current1 => this.Current;
             object IEnumerator.Current => Current1;

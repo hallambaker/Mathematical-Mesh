@@ -39,9 +39,7 @@ namespace Goedel.Protocol {
         /// Construct a new WrapWriter.
         /// </summary>
         /// <param name="Output">Base textwriter stream to write output to.</param>
-        public WrapWriter(TextWriter Output) {
-            this.Output = Output;
-            }
+        public WrapWriter(TextWriter Output) => this.Output = Output;
 
         //
         // The following declarations override the base class to 

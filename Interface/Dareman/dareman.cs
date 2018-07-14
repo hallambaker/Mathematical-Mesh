@@ -25,9 +25,8 @@ namespace Goedel.Mesh.DareMan {
         /// <param name="Dispatch"></param>
         /// <param name="args"></param>
         /// <param name="index"></param>
-        public static void Help (DispatchShell Dispatch, string[] args, int index) {
+        public static void Help (DispatchShell Dispatch, string[] args, int index) =>
             Brief(Description, DefaultCommand, Entries);
-            }
 
         public static DescribeCommandEntry DescribeHelp = new DescribeCommandEntry() {
             Identifier = "help",
@@ -41,9 +40,9 @@ namespace Goedel.Mesh.DareMan {
         /// <param name="Dispatch">The command description.</param>
         /// <param name="args">The set of arguments.</param>
         /// <param name="index">The first unparsed argument.</param>
-        public static void About (DispatchShell Dispatch, string[] args, int index) {
+        public static void About (DispatchShell Dispatch, string[] args, int index) =>
             FileTools.About();
-            }
+
 
         public static DescribeCommandEntry DescribeAbout = new DescribeCommandEntry() {
             Identifier = "about",
@@ -51,9 +50,9 @@ namespace Goedel.Mesh.DareMan {
             Entries = new List<DescribeEntry>() { }
             };
 
-        static bool IsFlag(char c) {
-            return (c == UnixFlag) | (c == WindowsFlag) ;
-            }
+        static bool IsFlag(char c) =>
+            (c == UnixFlag) | (c == WindowsFlag) ;
+
 
 		static DescribeCommandSet DescribeCommandSet_Group = new DescribeCommandSet () {
             Identifier = "group",
@@ -110,9 +109,9 @@ namespace Goedel.Mesh.DareMan {
 			}
 
 
-        public void MainMethod(Shell Dispatch, string[] Args) {
+        public void MainMethod(Shell Dispatch, string[] Args) =>
 			Dispatcher (Entries, DefaultCommand, Dispatch, Args, 0);
-            } // Main
+
 
 
 
@@ -609,37 +608,29 @@ namespace Goedel.Mesh.DareMan {
 	// to eliminate the redundant code
     public class _Shell : global::Goedel.Command.DispatchShell {
 
-		public virtual void Erase ( Erase Options) {
+		public virtual void Erase ( Erase Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void Register ( Register Options) {
+		public virtual void Register ( Register Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void Create ( Create Options) {
+		public virtual void Create ( Create Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void Add ( Add Options) {
+		public virtual void Add ( Add Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void Delete ( Delete Options) {
+		public virtual void Delete ( Delete Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void Encrypt ( Encrypt Options) {
+		public virtual void Encrypt ( Encrypt Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void Decrypt ( Decrypt Options) {
+		public virtual void Decrypt ( Decrypt Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void Recrypt ( Recrypt Options) {
+		public virtual void Recrypt ( Recrypt Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
 
         } // class _Shell

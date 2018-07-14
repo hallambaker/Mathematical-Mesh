@@ -82,9 +82,7 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <param name="Stream">The stream to be read.</param>
         /// <returns>The array data.</returns>
-        public static byte [] ReadChunked (Stream Stream) {
-            throw new NYI();
-            }
+        public static byte[] ReadChunked(Stream Stream) => throw new NYI();
 
         }
     }

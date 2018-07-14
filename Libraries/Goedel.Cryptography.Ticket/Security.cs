@@ -54,10 +54,7 @@ namespace Goedel.Cryptography.Ticket {
         /// <returns>Cryptographic context.</returns>
         public static CryptographicContext MakeCryptographicContext(
             byte[] Ticket, byte[] Key,
-            CryptoAlgorithmID AuthenticationIn, CryptoAlgorithmID EncryptionIn) {
-
-            return new CryptographicContext(Ticket, Key, AuthenticationIn, EncryptionIn);
-            }
+            CryptoAlgorithmID AuthenticationIn, CryptoAlgorithmID EncryptionIn) => new CryptographicContext(Ticket, Key, AuthenticationIn, EncryptionIn);
 
 
         /// <summary>
@@ -109,10 +106,8 @@ namespace Goedel.Cryptography.Ticket {
         /// </summary>
         /// <param name="data">Data to generate integrity value for.</param>
         /// <returns>The integrity header.</returns>
-        public string GetIntegrityHeader(byte[] data) {
-            return "Session: Value=" + BaseConvert.ToStringBase64url(MAC(data))
+        public string GetIntegrityHeader(byte[] data) => "Session: Value=" + BaseConvert.ToStringBase64url(MAC(data))
                 + "; Id=" + BaseConvert.ToStringBase64url(Ticket);
-            }
 
 
         /// <summary>

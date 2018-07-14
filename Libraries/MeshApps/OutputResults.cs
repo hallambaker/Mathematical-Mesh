@@ -13,9 +13,7 @@ namespace Goedel.Combined.Shell.Client {
     /// </summary>
     public partial class ResultBase {
 
-        public virtual void Display (IReporting Options=null) {
-            Console.Write(ToString());
-            }
+        public virtual void Display(IReporting Options = null) => Console.Write(ToString());
 
         }
 

@@ -59,9 +59,7 @@ namespace Goedel.Protocol {
         public abstract string HTTP() ;
 
         /// <summary>Default constructor.</summary>
-        public BoundMessage() {
-            Payload = "{NOT-YET-IMPLEMENTED}";
-            }
+        public BoundMessage() => Payload = "{NOT-YET-IMPLEMENTED}";
 
         System.Text.Encoding UTF8 = new UTF8Encoding(false);
 
@@ -74,7 +72,7 @@ namespace Goedel.Protocol {
 
 
         /// <summary>The message authentication code in Base64.</summary>
-        public string Base64Mac  => BaseConvert.ToStringBase64url(MAC); 
+        public string Base64Mac  => BaseConvert.ToStringBase64url(MAC);
 
 
         ///// <summary></summary>
@@ -104,9 +102,7 @@ namespace Goedel.Protocol {
 
         /// <summary>Construct from a payload string.</summary>
         /// <param name="PayloadIn">The payload to construct from</param>
-        public BoundMessage(string PayloadIn) {
-            Payload = PayloadIn;
-            }
+        public BoundMessage(string PayloadIn) => Payload = PayloadIn;
 
 
         ///// <summary></summary>

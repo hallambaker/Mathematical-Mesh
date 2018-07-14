@@ -94,9 +94,7 @@ namespace Goedel.Discovery {
         /// Constructor from existing data set
         /// </summary>
         /// <param name="BufferIn">Data buffer</param>
-        public DNSBufferIndex (DNSBuffer BufferIn) {
-            Buffer = BufferIn;
-            }
+        public DNSBufferIndex(DNSBuffer BufferIn) => Buffer = BufferIn;
 
         /// <summary>
         /// Constructor from existing data set
@@ -125,9 +123,7 @@ namespace Goedel.Discovery {
                 }
             }
 
-        void CheckSpaceRead(int bytes) {
-            Assert.False(Pointer + bytes > MaxRead, BufferReadOverflow.Throw);
-            }
+        void CheckSpaceRead(int bytes) => Assert.False(Pointer + bytes > MaxRead, BufferReadOverflow.Throw);
 
 
         /// <summary>
@@ -156,15 +152,11 @@ namespace Goedel.Discovery {
             //Buffer.Pointer = Pointer;
             return b;
             }
-        void Write (byte b) {
-            Buffer.Buffer[Pointer++] = b;
-            }
+        void Write(byte b) => Buffer.Buffer[Pointer++] = b;
 
         /// <summary>Write 16 bit integer value</summary>
         /// <param name="data">Data to write</param>
-        public void Write (ushort data) {
-            WriteInt16 (data);
-            }
+        public void Write(ushort data) => WriteInt16(data);
 
         /// <summary>Write string value with no length prefix (length specified otherwise)</summary>
         /// <param name="data">Data to write</param>
@@ -213,27 +205,19 @@ namespace Goedel.Discovery {
 
         /// <summary>Write DNS code value</summary>
         /// <param name="data">Data to write</param>
-        public void WriteInt16 (DNSTypeCode data) {
-            WriteInt16 ((UInt16)data);
-            }
+        public void WriteInt16(DNSTypeCode data) => WriteInt16((UInt16)data);
 
         /// <summary>Write DNC Class value</summary>
         /// <param name="data">Data to write</param>
-        public void WriteInt16 (DNSClass data) {
-            WriteInt16 ((UInt16)data);
-            }
+        public void WriteInt16(DNSClass data) => WriteInt16((UInt16)data);
 
         /// <summary>Write DNS Flags value</summary>
         /// <param name="data">Data to write</param>
-        public void WriteInt16 (DNSFlags data) {
-            WriteInt16 ((UInt16)data);
-            }
+        public void WriteInt16(DNSFlags data) => WriteInt16((UInt16)data);
 
         /// <summary>Write int 16 value</summary>
         /// <param name="data">Data to write</param>
-        public void WriteInt16 (int data) {
-            WriteInt16 ((UInt16)data);
-            }
+        public void WriteInt16(int data) => WriteInt16((UInt16)data);
 
         /// <summary>Write int 32 value</summary>
         /// <param name="data">Data to write</param>
@@ -273,15 +257,11 @@ namespace Goedel.Discovery {
 
         /// <summary>Write domain name value</summary>
         /// <param name="Domain">Data to write</param>
-        public void WriteDomain(Domain Domain) {
-            WriteName (Domain.Name);
-            }
+        public void WriteDomain(Domain Domain) => WriteName(Domain.Name);
 
         /// <summary>Write Mail address value</summary>
         /// <param name="Data">Data to write</param>
-        public void WriteMail(string Data) {
-            WriteName (Data);
-            }
+        public void WriteMail(string Data) => WriteName(Data);
 
         /// <summary>Write DNS name value</summary>
         /// <param name="Name">Data to write</param>
@@ -363,9 +343,7 @@ namespace Goedel.Discovery {
 
         /// <summary>Read byte value</summary>
         /// <param name="data">Data read</param>
-        public void ReadByte (out byte data) {
-            data = ReadByte ();
-            }
+        public void ReadByte(out byte data) => data = ReadByte();
 
         /// <summary>Read 16 bit integer value</summary>
         /// <returns>The value read</returns>
@@ -377,33 +355,23 @@ namespace Goedel.Discovery {
 
         /// <summary>Read 16 bit integer value</summary>
         /// <param name="data">Data read</param>
-        public void ReadInt16 (out UInt16 data) {
-            data = ReadInt16 ();
-            }
+        public void ReadInt16(out UInt16 data) => data = ReadInt16();
 
         /// <summary>Read DNS Type value</summary>
         /// <param name="data">Data read</param>
-        public void ReadInt16 (out DNSTypeCode data) {
-            data = (DNSTypeCode)ReadInt16 ();
-            }
+        public void ReadInt16(out DNSTypeCode data) => data = (DNSTypeCode)ReadInt16();
 
         /// <summary>Read DNS Class value</summary>
         /// <param name="data">Data read</param>
-        public void ReadInt16 (out DNSClass data) {
-            data = (DNSClass)ReadInt16 ();
-            }
+        public void ReadInt16(out DNSClass data) => data = (DNSClass)ReadInt16();
 
         /// <summary>Read DNS Flags value</summary>
         /// <param name="data">Data read</param>
-        public void ReadInt16 (out DNSFlags data) {
-            data = (DNSFlags)ReadInt16 ();
-            }
+        public void ReadInt16(out DNSFlags data) => data = (DNSFlags)ReadInt16();
 
         /// <summary>Read 16 bit integer value</summary>
         /// <param name="data">Data read</param>
-        public void ReadInt16 (out int data) {
-            data = (int)ReadInt16 ();
-            }
+        public void ReadInt16(out int data) => data = (int)ReadInt16();
 
         /// <summary>Read 32 bit integer value</summary>
         /// <returns>The value read</returns>
@@ -422,21 +390,15 @@ namespace Goedel.Discovery {
 
         /// <summary>Read 32 bit integer value</summary>
         /// <param name="data">The value read</param>
-        public void ReadInt32 (out UInt32 data) {
-            data = ReadInt32 ();
-            }
+        public void ReadInt32(out UInt32 data) => data = ReadInt32();
 
         /// <summary>Read 64 bit integer value</summary>
         /// <param name="data">Data to write</param>
-        public void ReadInt64 (out UInt64 data) {
-            data = ReadInt64 ();
-            }
+        public void ReadInt64(out UInt64 data) => data = ReadInt64();
 
         /// <summary>Read 64 bit node identifier value</summary>
         /// <param name="data">The value read</param>
-        public void ReadNodeID (out UInt64 data) {
-            data = ReadInt64 ();
-            }
+        public void ReadNodeID(out UInt64 data) => data = ReadInt64();
 
         /// <summary>Read Node identifier value</summary>
         /// <returns>The value read</returns>
@@ -447,9 +409,7 @@ namespace Goedel.Discovery {
 
         /// <summary>Read Domain name value</summary>
         /// <returns>The value read</returns>
-        public Domain ReadDomain() {
-            return new Domain (ReadName ());
-            }
+        public Domain ReadDomain() => new Domain(ReadName());
 
         /// <summary>Read name value</summary>
         /// <returns>The value read</returns>
@@ -546,10 +506,9 @@ namespace Goedel.Discovery {
 
         /// <summary>Read binary data value (remainder of the buffer)</summary>
         /// <returns>The value read</returns>
-        public byte[] ReadData () {
+        public byte[] ReadData() =>
             // Read the remainder of the buffer
-            return ReadData (MaxRead - Pointer);
-            }
+            ReadData(MaxRead - Pointer);
 
         /// <summary>Read remainder of the buffer as binary data value</summary>
         /// <param name="Length">Number of bytes to read</param>
@@ -623,30 +582,22 @@ namespace Goedel.Discovery {
         /// <summary>Read value</summary>
         /// <returns>The value read</returns>
         /// <remarks>Not yet implemented</remarks>
-        public string ReadMail  () {
-            return null;
-            }
+        public string ReadMail() => null;
 
         /// <summary>Read value</summary>
         /// <returns>The value read</returns>
         /// <remarks>Not yet implemented</remarks>
-        public string ReadOptionalString  () {
-            return null;
-            }
+        public string ReadOptionalString() => null;
 
         /// <summary>Read 32 bit time value</summary>
         /// <returns>The value read</returns>
         /// <remarks>Not yet implemented</remarks>
-        public uint ReadTime32  () {
-            return 0;
-            }
+        public uint ReadTime32() => 0;
 
         /// <summary>Read 48 bit time value</summary>
         /// <returns>The value read</returns>
         /// <remarks>Not yet implemented</remarks>
-        public ulong ReadTime48  () {
-            return 0;
-            }
+        public ulong ReadTime48() => 0;
 
 
 

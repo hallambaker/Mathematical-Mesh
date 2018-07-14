@@ -197,7 +197,8 @@ namespace Goedel.Cryptography.Dare {
         void ReadContainer (JBCDStream Stream) {
 
             for (var Found = Container.First(); Found; Found = Container.Next()) {
-                CommitTransaction(Container.ContainerHeader, Container.FrameData);
+                var Data = Container.ReadFrameData();
+                CommitTransaction(Container.ContainerHeader, Data);
                 }
 
             }

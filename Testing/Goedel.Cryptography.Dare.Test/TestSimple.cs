@@ -24,7 +24,7 @@ namespace Goedel.Cryptography.Dare.Test {
 
 
 
-        public void TestContainer (GCC.IContainer Container, int Count, int MaxSize) {
+        public void TestContainer (Container Container, int Count, int MaxSize) {
             var Start = (int)Container.FrameCount;
             MakeContainer(Container, Count, MaxSize);
             VerifyContainer(Container, Count+ Start, MaxSize);
@@ -33,7 +33,7 @@ namespace Goedel.Cryptography.Dare.Test {
 
 
 
-        public void MakeContainer (GCC.IContainer Container, int Count, int MaxSize) {
+        public void MakeContainer (Container Container, int Count, int MaxSize) {
             for (int i = 0; i < Count; i++) {
                 var Data = TestData(Count, MaxSize);
                 Container.Append(Data);
@@ -51,7 +51,7 @@ namespace Goedel.Cryptography.Dare.Test {
             }
 
 
-        public void VerifyContainer (GCC.IContainer Container, int Count, int MaxSize) {
+        public void VerifyContainer (Container Container, int Count, int MaxSize) {
             Container.First();
             for (int i = 0; i < Count; i++) {
                 Assert.False(Container.EOF, Internal.Throw, "Expected EOF clear");
@@ -62,7 +62,7 @@ namespace Goedel.Cryptography.Dare.Test {
             Assert.True(Container.EOF, Internal.Throw, "Expected EOF set");
             }
 
-        public void VerifyContainerReverse (GCC.IContainer Container, int Count, int MaxSize) {
+        public void VerifyContainerReverse (Container Container, int Count, int MaxSize) {
             Container.Last();
 
             Assert.True(Container.EOF, Internal.Throw, "Expected EOF set");

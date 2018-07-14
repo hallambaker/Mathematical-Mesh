@@ -190,9 +190,8 @@ namespace Goedel.Protocol {
         /// <param name="Object">User data</param>	
 		public ConnectionFail (ExceptionData Object) : 
 				base (global::System.String.Format ("Connection to host [{0}] Failed.",
-					Object.String					)) {
-			UserData = Object;
-			}
+					Object.String					)) => UserData = Object;
+
 
 		/// <summary>
         /// Construct instance for exception using a userdata parameter of
@@ -202,9 +201,7 @@ namespace Goedel.Protocol {
 		/// <param name="Inner">Inner Exception</param>	
 		public ConnectionFail (ExceptionData Object, System.Exception Inner) : 
 				base (global::System.String.Format ("Connection to host [{0}] Failed.",
-					Object.String					), Inner) {
-			UserData = Object;
-			}
+					Object.String					), Inner) => UserData = Object;
 
 
 

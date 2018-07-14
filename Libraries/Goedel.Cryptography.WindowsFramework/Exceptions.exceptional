@@ -1,0 +1,18 @@
+﻿
+
+Namespace Goedel.Cryptography.Windows
+    
+	Exception DecryptionFailed
+        Console "Could not decrypt user data"
+		Description
+			|Encrypted data could not be decrypted. 
+
+	Exception EncryptionFailed
+        Console "Could not encrypt user data"
+		Description
+			|Data could not be encrypted. 
+
+	Exception InsufficientMemory
+        Console "Memory allocation failed"
+		Description
+			|Memory allocation failed.

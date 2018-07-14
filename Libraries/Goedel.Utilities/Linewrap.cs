@@ -14,7 +14,7 @@ namespace Goedel.Utilities {
         /// <param name="Input">The input string.</param>
         /// <param name="Length">Maximum line length</param>
         /// <returns>The wrapped string.</returns>
-        public static string Wrap (this string Input, int Length=72) {
+        public static string Wrap (this string Input, int Length=68) {
             var Buffer = new StringBuilder();
             var Line = new StringBuilder();
             var Space = new StringBuilder();
@@ -36,6 +36,11 @@ namespace Goedel.Utilities {
                         Current.Clear();
                         Space.Append(c);
                         }
+                    }
+                else if (Current.Length > Length) {
+                    Buffer.Append(Current);
+                    Buffer.Append("\n");
+                    Current.Clear();
                     }
                 else {
                     Line.Append(Space);

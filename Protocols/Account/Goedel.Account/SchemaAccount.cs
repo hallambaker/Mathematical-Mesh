@@ -169,7 +169,7 @@ namespace Goedel.Account {
         /// </summary>		
 		public override JPCSession JPCSession {
 			get => JPCRemoteSession;
-			set {JPCRemoteSession = value as JPCRemoteSession; }
+			set => JPCRemoteSession = value as JPCRemoteSession; 
 			}
 
 
@@ -177,9 +177,9 @@ namespace Goedel.Account {
 		/// Create a client connection to the specified service.
         /// </summary>	
         /// <param name="JPCRemoteSession">The remote session to connect to</param>
-		public AccountServiceClient (JPCRemoteSession JPCRemoteSession) {
+		public AccountServiceClient (JPCRemoteSession JPCRemoteSession) =>
 			this.JPCRemoteSession = JPCRemoteSession;
-			}
+
 
 
         /// <summary>

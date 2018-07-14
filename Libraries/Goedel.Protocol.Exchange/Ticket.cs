@@ -49,26 +49,20 @@ namespace Goedel.Protocol.Exchange {
         /// Begin a message
         /// </summary>
         /// <returns>Encoded bytes</returns>
-        public virtual byte[] BeginMessage () {
-            return EmptyBytes;
-            }
+        public virtual byte[] BeginMessage() => EmptyBytes;
 
         /// <summary>
         /// Encode payload.
         /// </summary>
         /// <param name="Payload">The payload to encode.</param>
         /// <returns>Encoded bytes</returns>
-        public virtual byte[] Encode (byte[] Payload) {
-            return Payload;
-            }
+        public virtual byte[] Encode(byte[] Payload) => Payload;
 
         /// <summary>
         /// Encode trailer
         /// </summary>
         /// <returns>Encoded bytes</returns>
-        public virtual byte[] EndMessage () {
-            return EmptyBytes;
-            }
+        public virtual byte[] EndMessage() => EmptyBytes;
 
 
         /// <summary>
@@ -76,9 +70,7 @@ namespace Goedel.Protocol.Exchange {
         /// </summary>
         /// <param name="PayloadObject">The object to encode.</param>
         /// <returns>Encoded bytes</returns>
-        public byte[] Encode (JSONObject PayloadObject) {
-            return Encode(PayloadObject.GetBytes());
-            }
+        public byte[] Encode(JSONObject PayloadObject) => Encode(PayloadObject.GetBytes());
 
         /// <summary>
         /// Begin message encoding to stream.

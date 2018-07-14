@@ -30,10 +30,8 @@ namespace Goedel.Catalog.Client {
                     string Comment = null, bool ReadOnly = false,
                     FileStatus FileStatus = FileStatus.OpenOrCreate,
                     ContainerType ContainerType = ContainerType.Chain,
-                    DataEncoding DataEncoding = DataEncoding.JSON) : base (
-                       FileName, Type, Comment, ReadOnly, FileStatus, ContainerType, DataEncoding) {
-            this.CatalogSession = CatalogSession;
-            }
+                    DataEncoding DataEncoding = DataEncoding.JSON) : base(
+                       FileName, Type, Comment, ReadOnly, FileStatus, ContainerType, DataEncoding) => this.CatalogSession = CatalogSession;
 
 
         public override void CommitTransaction(ContainerHeader ContainerHeader, byte[] Data) => 

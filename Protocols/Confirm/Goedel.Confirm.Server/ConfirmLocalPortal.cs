@@ -34,9 +34,7 @@ namespace Goedel.Confirm.Server {
         /// </summary>
         /// <param name="ServiceName">The canonical service name</param>
         /// <param name="Store">The file to store the account data to</param>
-        public ConfirmPortalDirect (string ServiceName = null, string Store = "Confirm.jlog") {
-            ConfirmServiceHost = new ConfirmLocalServiceProvider(ServiceName, Store);
-            }
+        public ConfirmPortalDirect(string ServiceName = null, string Store = "Confirm.jlog") => ConfirmServiceHost = new ConfirmLocalServiceProvider(ServiceName, Store);
 
 
         /// <summary>

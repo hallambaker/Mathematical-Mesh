@@ -66,7 +66,7 @@
          rdf:about="">
         <dc:format>image/svg+xml</dc:format>
         <dc:type
-           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+           rdf:resource]="http://purl.org/dc/dcmitype/StillImage" />
         <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
@@ -105,7 +105,7 @@
              id="rect3344"
              style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:95.07985687px;line-height:125%;font-family:'Bauhaus 93';-inkscape-font-specification:'Bauhaus 93, Normal';text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#ffffff" /></flowRegion><flowPara
            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:95.07985687px;line-height:125%;font-family:'Bauhaus 93';-inkscape-font-specification:'Bauhaus 93, Normal';text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#ffffff"
-           id="flowPara3346">PHB</flowPara></flowRoot>    </g>
+  ]         id="flowPara3346">PHB</flowPara></flowRoot>    </g>
     <rect
        style="fill:#ffffff"
        id="rect3400"
@@ -115,4 +115,4 @@
        y="972.36218"
        ry="14.965998" />
   </g>
-</svg>
+</svg

@@ -3,7 +3,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using GU=Goedel.Utilities;
 using Goedel.Cryptography;
-using Goedel.Cryptography.Framework;
 
 namespace Test.Goedel.Cryptography {
 
@@ -23,17 +22,11 @@ namespace Test.Goedel.Cryptography {
 
 
         [AssemblyInitialize]
-        public static void InitializeClass (TestContext Context) {
-            InitializeClass();
-            }
-        public static void InitializeClass () {
-            CryptographyFramework.Initialize();
-            }
+        public static void InitializeClass(TestContext Context) => InitializeClass();
+        public static void InitializeClass() => CryptographyWindows.Initialize();
 
         [TestMethod]
-        public void TestInitialize() {
-            CryptographyFramework.Initialize();
-            }
+        public void TestInitialize() => CryptographyWindows.Initialize();
 
 
         [TestMethod]

@@ -103,10 +103,8 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="Object">The object to encrypt.</param>
         /// <returns>The encryption object.</returns>
-        public JoseWebEncryption Encrypt (JSONObject Object) {
-            return new JoseWebEncryption(
+        public JoseWebEncryption Encrypt(JSONObject Object) => new JoseWebEncryption(
                     Object, EncryptionKey: DeviceEncryptiontionKey.KeyPair);
-            }
 
         }
     }

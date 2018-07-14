@@ -25,9 +25,8 @@ namespace Goedel.Mesh.MeshMan {
         /// <param name="Dispatch"></param>
         /// <param name="args"></param>
         /// <param name="index"></param>
-        public static void Help (DispatchShell Dispatch, string[] args, int index) {
+        public static void Help (DispatchShell Dispatch, string[] args, int index) =>
             Brief(Description, DefaultCommand, Entries);
-            }
 
         public static DescribeCommandEntry DescribeHelp = new DescribeCommandEntry() {
             Identifier = "help",
@@ -41,9 +40,9 @@ namespace Goedel.Mesh.MeshMan {
         /// <param name="Dispatch">The command description.</param>
         /// <param name="args">The set of arguments.</param>
         /// <param name="index">The first unparsed argument.</param>
-        public static void About (DispatchShell Dispatch, string[] args, int index) {
+        public static void About (DispatchShell Dispatch, string[] args, int index) =>
             FileTools.About();
-            }
+
 
         public static DescribeCommandEntry DescribeAbout = new DescribeCommandEntry() {
             Identifier = "about",
@@ -51,9 +50,9 @@ namespace Goedel.Mesh.MeshMan {
             Entries = new List<DescribeEntry>() { }
             };
 
-        static bool IsFlag(char c) {
-            return (c == UnixFlag) | (c == WindowsFlag) ;
-            }
+        static bool IsFlag(char c) =>
+            (c == UnixFlag) | (c == WindowsFlag) ;
+
 
 		static DescribeCommandSet DescribeCommandSet_Mail = new DescribeCommandSet () {
             Identifier = "mail",
@@ -137,9 +136,9 @@ namespace Goedel.Mesh.MeshMan {
 			}
 
 
-        public void MainMethod(Shell Dispatch, string[] Args) {
+        public void MainMethod(Shell Dispatch, string[] Args) =>
 			Dispatcher (Entries, DefaultCommand, Dispatch, Args, 0);
-            } // Main
+
 
 
 
@@ -3832,117 +3831,89 @@ namespace Goedel.Mesh.MeshMan {
 	// to eliminate the redundant code
     public class _Shell : global::Goedel.Command.DispatchShell {
 
-		public virtual void Reset ( Reset Options) {
+		public virtual void Reset ( Reset Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void Device ( Device Options) {
+		public virtual void Device ( Device Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void PersonalCreate ( PersonalCreate Options) {
+		public virtual void PersonalCreate ( PersonalCreate Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void Register ( Register Options) {
+		public virtual void Register ( Register Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void Fingerprint ( Fingerprint Options) {
+		public virtual void Fingerprint ( Fingerprint Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void Sync ( Sync Options) {
+		public virtual void Sync ( Sync Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void Escrow ( Escrow Options) {
+		public virtual void Escrow ( Escrow Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void Recover ( Recover Options) {
+		public virtual void Recover ( Recover Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void Export ( Export Options) {
+		public virtual void Export ( Export Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void Import ( Import Options) {
+		public virtual void Import ( Import Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void List ( List Options) {
+		public virtual void List ( List Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void Dump ( Dump Options) {
+		public virtual void Dump ( Dump Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void Pending ( Pending Options) {
+		public virtual void Pending ( Pending Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void Connect ( Connect Options) {
+		public virtual void Connect ( Connect Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void Accept ( Accept Options) {
+		public virtual void Accept ( Accept Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void Complete ( Complete Options) {
+		public virtual void Complete ( Complete Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void KeyGen ( KeyGen Options) {
+		public virtual void KeyGen ( KeyGen Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void Password ( Password Options) {
+		public virtual void Password ( Password Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void AddPassword ( AddPassword Options) {
+		public virtual void AddPassword ( AddPassword Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void GetPassword ( GetPassword Options) {
+		public virtual void GetPassword ( GetPassword Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void DeletePassword ( DeletePassword Options) {
+		public virtual void DeletePassword ( DeletePassword Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void DumpPassword ( DumpPassword Options) {
+		public virtual void DumpPassword ( DumpPassword Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void MailAdd ( MailAdd Options) {
+		public virtual void MailAdd ( MailAdd Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void SSHAdd ( SSHAdd Options) {
+		public virtual void SSHAdd ( SSHAdd Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void SSHKnown ( SSHKnown Options) {
+		public virtual void SSHKnown ( SSHKnown Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void SSHAuth ( SSHAuth Options) {
+		public virtual void SSHAuth ( SSHAuth Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void SSHPublic ( SSHPublic Options) {
+		public virtual void SSHPublic ( SSHPublic Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void SSHPrivate ( SSHPrivate Options) {
+		public virtual void SSHPrivate ( SSHPrivate Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
 
         } // class _Shell

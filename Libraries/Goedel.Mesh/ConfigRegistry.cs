@@ -62,9 +62,7 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="Name">The topmost element of the registry.</param>
         /// <param name="FileName">The file to read</param>/// 
-        public ConfigRegistry(string Name, string FileName) : this (Name) {
-            Read(FileName);
-            }
+        public ConfigRegistry(string Name, string FileName) : this(Name) => Read(FileName);
 
 
         /// <summary>
@@ -156,10 +154,7 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="Key">The key to lookup.</param>
         /// <returns>Registry value or 0 (default value) if not found.</returns>
-        public uint GetDWORD(string Key) {
-            var Entry = Get(Key) as ConfigRegistryEntryDWORD;
-            return Entry == null ? 0 : Entry.Value;
-            }
+        public uint GetDWORD(string Key) => !(Get(Key) is ConfigRegistryEntryDWORD Entry) ? 0 : Entry.Value;
 
         /// <summary>
         /// Lookup the key value and return the corresponding value.
@@ -288,9 +283,7 @@ namespace Goedel.Mesh {
         /// Construct a new instance.
         /// </summary>
         /// <param name="Value">the initial value of the entry.</param>
-        public ConfigRegistryEntrySZ(string Value) {
-            this.Value = Value;
-            }
+        public ConfigRegistryEntrySZ(string Value) => this.Value = Value;
 
         /// <summary>
         /// Write the formatted value to an XML stream.
@@ -320,9 +313,7 @@ namespace Goedel.Mesh {
         /// Construct a new instance.
         /// </summary>
         /// <param name="Value">the initial value of the entry.</param>
-        public ConfigRegistryEntryDWORD(uint Value) {
-            this.Value = Value;
-            }
+        public ConfigRegistryEntryDWORD(uint Value) => this.Value = Value;
 
         /// <summary>
         /// Write the formatted value to an XML stream.
@@ -350,9 +341,7 @@ namespace Goedel.Mesh {
         /// Construct a new instance.
         /// </summary>
         /// <param name="Value">the initial value of the entry.</param>
-        public ConfigRegistryEntryBINARY(byte[] Value) {
-            this.Value = Value;
-            }
+        public ConfigRegistryEntryBINARY(byte[] Value) => this.Value = Value;
 
         /// <summary>
         /// Write the formatted value to an XML stream.

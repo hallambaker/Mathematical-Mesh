@@ -102,13 +102,9 @@ namespace Goedel.Recrypt.Client {
         /// </summary>
         /// <param name="FileName">The file to open</param>
         /// <returns>The reader instance</returns>
-        public static FileContainerReader DecryptReader (
+        public static FileContainerReader DecryptReader(
                 this SessionPersonal SessionPersonal,
-                string FileName) {
-
-
-            return new FileContainerReaderDecrypting(SessionPersonal, FileName);
-            }
+                string FileName) => new FileContainerReaderDecrypting(SessionPersonal, FileName);
 
         /// <summary>
         /// Return a FileContainerReader for the specified file with access to decryption keys 
@@ -117,12 +113,9 @@ namespace Goedel.Recrypt.Client {
         /// </summary>
         /// <param name="FileName">The file to open</param>
         /// <returns>The reader instance</returns>
-        public static FileContainerReader RecryptReader (
+        public static FileContainerReader RecryptReader(
                 this SessionPersonal SessionPersonal,
-                string FileName) {
-
-            return new FileContainerReaderRecrypting(SessionPersonal, FileName);
-            }
+                string FileName) => new FileContainerReaderRecrypting(SessionPersonal, FileName);
 
         /// <summary>
         /// Return a FileContainerReader for the specified stream with access to decryption keys 
@@ -130,11 +123,9 @@ namespace Goedel.Recrypt.Client {
         /// </summary>
         /// <param name="FileName">The stream to read. This must support seek operations.</param>
         /// <returns>The reader instance</returns>
-        public static FileContainerReader DecryptReader (
+        public static FileContainerReader DecryptReader(
                 this SessionPersonal SessionPersonal,
-                Stream FileName) {
-            throw new NYI();
-            }
+                Stream FileName) => throw new NYI();
 
         /// <summary>
         /// Return a FileContainerReader for the specified stream with access to decryption keys 
@@ -143,11 +134,9 @@ namespace Goedel.Recrypt.Client {
         /// </summary>
         /// <param name="FileName">The stream to read. This must support seek operations.</param>
         /// <returns>The reader instance</returns>
-        public static FileContainerReader RecryptReader (
+        public static FileContainerReader RecryptReader(
                 this SessionPersonal SessionPersonal,
-                Stream FileName) {
-            throw new NYI();
-            }
+                Stream FileName) => throw new NYI();
 
 
         /// <summary>

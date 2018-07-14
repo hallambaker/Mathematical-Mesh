@@ -178,7 +178,7 @@ namespace Goedel.Utilities  {
                 this.Table = Table;
                 this.Bits = Bits;
                 this.Format = Format;
-                this.OutputMax = OutputMax; 
+                this.OutputMax = OutputMax;
 
                 Terminal = (Format & ConversionFormat.Terminal) > 0;
 
@@ -259,9 +259,7 @@ namespace Goedel.Utilities  {
 
 
 
-            public void FormatCharDirect (char c) {
-                WriteChar(c);
-                }
+            public void FormatCharDirect(char c) => WriteChar(c);
 
             public void FormatCharDash (char c) {
                 if (OutputMax >= 0 & (OutputCount >= OutputMax)) {
@@ -316,28 +314,15 @@ namespace Goedel.Utilities  {
 
             Stream Output;
 
-            //public StreamConvertBits (
-            //        Stream Output, 
-            //        char[] Table, 
-            //        int Bits,
-            //        bool Newline = false,
-            //        bool Terminal = false) : base (Table, Bits, Newline, Terminal) {
-            //    this.Output = Output;
-            //    }
-
-            public StreamConvertBits (
+            public StreamConvertBits(
                     Stream Output,
                     char[] Table,
                     int Bits,
                     ConversionFormat Format,
                     int OutputCol = -1,
-                    int OutputMax = -1) : base(Table, Bits, Format, OutputCol, OutputMax) {
-                this.Output = Output;
-                }
+                    int OutputMax = -1) : base(Table, Bits, Format, OutputCol, OutputMax) => this.Output = Output;
 
-            public override void WriteChar (char c) {
-                Output.WriteByte((byte)c);
-                }
+            public override void WriteChar(char c) => Output.WriteByte((byte)c);
             }
 
 
@@ -349,24 +334,13 @@ namespace Goedel.Utilities  {
 
             StringBuilder Output;
 
-            //public StringBuilderConvertBits (
-            //        StringBuilder Output,
-            //        char[] Table,
-            //        int Bits,
-            //        bool Newline = false,
-            //        bool Terminal = false) : base(Table, Bits, Newline, Terminal) {
-            //    this.Output = Output;
-            //    }
-
-            public StringBuilderConvertBits (
+            public StringBuilderConvertBits(
                     StringBuilder Output,
                     char[] Table,
                     int Bits,
                     ConversionFormat Format,
                     int OutputCol = -1,
-                    int OutputMax = -1) : base(Table, Bits, Format, OutputCol, OutputMax) {
-                this.Output = Output;
-                }
+                    int OutputMax = -1) : base(Table, Bits, Format, OutputCol, OutputMax) => this.Output = Output;
 
             public static string Convert (
                     char[] Table,
@@ -397,9 +371,7 @@ namespace Goedel.Utilities  {
                 Converter.Final();
                 }
 
-            public override void WriteChar (char c) {
-                Output.Append(c);
-                }
+            public override void WriteChar(char c) => Output.Append(c);
             }
         }
     }

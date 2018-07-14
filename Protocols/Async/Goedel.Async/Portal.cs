@@ -39,22 +39,20 @@ namespace Goedel.Async {
             /// make a remote connection.
             /// </summary>
             public static AsyncPortal Default {
-                get {
-                    if (_Default == null) {
-                        _Default = new AsyncPortalRemote();
-                        }
-                    return _Default;
+            get {
+                if (_Default == null) {
+                    _Default = new AsyncPortalRemote();
                     }
-
-                set {
-                    _Default = value;
-                    }
+                return _Default;
                 }
 
-            /// <summary>
-            /// May be set to the default RecryptService by a calling application.
-            /// </summary>
-            public AsyncService RecryptServiceClient;
+            set => _Default = value;
+            }
+
+        /// <summary>
+        /// May be set to the default RecryptService by a calling application.
+        /// </summary>
+        public AsyncService RecryptServiceClient;
 
             }
 

@@ -362,6 +362,11 @@ namespace Goedel.Protocol {
         /// <param name="Input">The data to be read.</param>
         public JSONReader(byte[] Input) => CharacterInput = new CharacterStreamDataReader(Input);
 
+        /// <summary>
+        /// If true, the last token returned was a non-terminal, i.e. chunked production.
+        /// </summary>
+        public bool Terminal { get; protected set; }  = true;
+
 
         /// <summary>Get the next token.</summary>
         public virtual void PeekToken() {

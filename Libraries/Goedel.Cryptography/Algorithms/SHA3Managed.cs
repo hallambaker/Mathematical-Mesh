@@ -72,10 +72,8 @@ namespace Goedel.Cryptography.Algorithms {
         /// in 64 bit increments with a work factor of 2^128
         /// </summary>
         /// <param name="hashBitLength">The number of output bits</param>
-        public SHAKE128 (int hashBitLength = 256)
-            : base(hashBitLength) {
-            KeccakR = 1344;
-            }
+        public SHAKE128(int hashBitLength = 256)
+            : base(hashBitLength) => KeccakR = 1344;
 
         /// <summary>
         /// Convenience routine to preform one stop processing.
@@ -105,10 +103,8 @@ namespace Goedel.Cryptography.Algorithms {
         /// in 64 bit increments with a work factor of 2^256
         /// </summary>
         /// <param name="hashBitLength">The number of output bits</param>
-        public SHAKE256 (int hashBitLength = 512)
-            : base(hashBitLength) {
-            KeccakR = 1088;
-            }
+        public SHAKE256(int hashBitLength = 512)
+            : base(hashBitLength) => KeccakR = 1088;
 
         /// <summary>
         /// Convenience routine to preform one stop processing.

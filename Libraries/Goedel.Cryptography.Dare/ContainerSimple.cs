@@ -34,10 +34,10 @@ namespace Goedel.Cryptography.Dare {
         public CryptoProviderDigest DigestProvider { get; set; } = null;
 
 
-        
+
 
         /// <summary>The current frame data</summary>
-        public override byte[] FrameData {
+        public  byte[] FrameData {
             get {
                 _FrameData = _FrameData ?? ReadFrameData();
                 return _FrameData;
@@ -223,19 +223,25 @@ namespace Goedel.Cryptography.Dare {
         long PayloadData;
 
 
-        byte[] ReadFrameData() {
-            var TotalLength = (int) ReadDataBegin();
-            var Buffer = new byte[TotalLength];
+        /// <summary>
+        /// Return a stream reader for the frame data.
+        /// </summary>
+        /// <returns></returns>
+        public override Stream ReadGetStream(KeyCollection KeyCollection = null) {
+            // Set the key collection using the container and platform defaults.
+            KeyCollection = KeyCollection ?? this.KeyCollection ?? KeyCollection.Default;
 
-            int Offset = 0;
-            var Length = ReadData(Buffer, Offset, TotalLength);
-            while ((Length > 0) & TotalLength>0){ 
-                TotalLength -= Length;
-                Offset += Length;
-                Length = ReadData(Buffer, Offset, TotalLength);
+            Stream Result = new JBCDFrameReader(JBCDStream, ref FrameRemaining);
+
+            if (ContainerHeader.Encrypt) {
+                ContainerHeader.DecryptMaster(KeyCollection);
+                Result = ContainerHeader.GetCryptoStream(Result, false,
+                    false, ContainerHeader.Salt);
                 }
-            return Buffer;
+
+            return Result;
             }
+
 
 
         /// <summary>
@@ -244,6 +250,9 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <returns></returns>
         public override long ReadDataBegin() {
+            // Do key management here.
+
+
             PayloadData = JBCDStream.ReadRecordBegin(ref FrameRemaining);
             return PayloadData;
             }
@@ -256,8 +265,11 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="Offset">index to begin writing.</param>
         /// <param name="Count">Maximum number of bytes to read.</param>
         /// <returns>The number of bytes read.</returns>
-        public override int ReadData(byte[] Buffer, int Offset, int Count) => JBCDStream.ReadRecordData(Buffer, Offset, Count);
+        public override int ReadData(byte[] Buffer, int Offset, int Count) =>
+            // process data here.
 
+
+            JBCDStream.ReadRecordData(Buffer, Offset, Count);
 
 
         /// <summary>

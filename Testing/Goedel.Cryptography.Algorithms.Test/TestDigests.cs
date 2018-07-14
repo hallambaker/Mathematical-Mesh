@@ -24,14 +24,11 @@ namespace Test.Cryptography.Algorithms {
 
 
         [ClassInitialize]
-        public static void InitializeClass (TestContext context) {
-            InitializeClass();
-            }
+        public static void InitializeClass(TestContext context) => InitializeClass();
 
-        public static void InitializeClass () {
+        public static void InitializeClass() =>
             //CryptographyFramework.Initialize();
             CryptographyWindows.Initialize();
-            }
 
         static string Message1 = "abc";
         static string Message2 = "";

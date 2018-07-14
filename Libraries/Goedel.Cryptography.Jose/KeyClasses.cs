@@ -40,10 +40,7 @@ namespace Goedel.Cryptography.Jose {
         /// </summary>
         /// <param name="Exportable">If true, private key parameters may be exported</param>
         /// <returns>The extracted key pair</returns>
-        public virtual KeyPair GetKeyPair (bool Exportable=false) {
-
-            throw new InternalError("GetKeyPair method not implemented in child class");
-            }
+        public virtual KeyPair GetKeyPair(bool Exportable = false) => throw new InternalError("GetKeyPair method not implemented in child class");
 
 
         /// <summary>
@@ -214,9 +211,7 @@ namespace Goedel.Cryptography.Jose {
         /// Constructor from the specified Goedel.Cryptography result.
         /// </summary>
         /// <param name="DiffieHellmanResult">The Goedel.Cryptography result.</param>
-        public KeyAgreementDH (DiffieHellmanResult DiffieHellmanResult) {
-            Result = DiffieHellmanResult.Agreement.ToByteArray();
-            }
+        public KeyAgreementDH(DiffieHellmanResult DiffieHellmanResult) => Result = DiffieHellmanResult.Agreement.ToByteArray();
         }
 
     }

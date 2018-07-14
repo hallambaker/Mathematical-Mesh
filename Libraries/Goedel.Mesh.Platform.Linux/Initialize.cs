@@ -41,13 +41,7 @@ namespace Goedel.Mesh {
         /// <param name="TestMode">If true, use the test directory and registry key and
         /// key store. This allows the machine to be reset after testing is complete
         /// without risk to production data.</param>
-        public static void Initialize(bool TestMode = false) {
-            KeyPair.TestMode = TestMode;
-
-            //CryptographyLinux.Initialize(TestMode);
-            //PlatformFramework.Initialize(TestMode);
-            //RegistrationMachineLinux.Initialize(TestMode);
-            }
+        public static void Initialize(bool TestMode = false) => KeyPair.TestMode = TestMode;//CryptographyLinux.Initialize(TestMode);//PlatformFramework.Initialize(TestMode);//RegistrationMachineLinux.Initialize(TestMode);
 
         }
 

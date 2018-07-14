@@ -40,9 +40,7 @@ namespace Goedel.Cryptography.Jose {
         /// Initialize the alg parameter to match the specified provider.
         /// </summary>
         /// <param name="Provider">The encryption provider</param>
-        public Header(CryptoProviderEncryption Provider) {
-            Alg = Provider.CryptoAlgorithmID.ToJoseID();
-            }
+        public Header(CryptoProviderEncryption Provider) => Alg = Provider.CryptoAlgorithmID.ToJoseID();
         }
 
     /// <summary>

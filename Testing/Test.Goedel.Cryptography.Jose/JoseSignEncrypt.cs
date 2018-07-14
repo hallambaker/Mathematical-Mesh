@@ -8,8 +8,6 @@ using Goedel.IO;
 using Goedel.Protocol;
 using Goedel.Cryptography;
 using Goedel.Cryptography.Jose;
-using Goedel.Cryptography.Framework;
-
 
 
 
@@ -23,6 +21,8 @@ namespace Goedel.Cryptography.Jose.Test {
 
         [TestMethod]
         public void Test_Jose_Encrypt() {
+
+            // ToDo - make use of KeyCollection.
 
             var JWE = new JoseWebEncryption(TestString, EncrypterKeyPair);
             var JWEText = JWE.ToString();

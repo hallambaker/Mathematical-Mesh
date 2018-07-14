@@ -86,9 +86,7 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="UniqueID">The unique key</param>
         /// <returns>The key as an ID</returns>
-        public static string PrimaryKey(string UniqueID) {
-            return "Result-" + UniqueID;
-            }
+        public static string PrimaryKey(string UniqueID) => "Result-" + UniqueID;
 
 
         /// <summary>
@@ -196,9 +194,7 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="UniqueID">ID of object to construct key for.</param>
         /// <returns>The constructed key.</returns>
-        public static new string PrimaryKey (string UniqueID) {
-            return "Pending-" + UniqueID;
-            }
+        public static new string PrimaryKey(string UniqueID) => "Pending-" + UniqueID;
 
         ///// <summary>
         ///// Construct object for the specified account.

@@ -15,9 +15,7 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <param name="Stream">The memory stream object</param>
         /// <returns>The output data.</returns>
-        public static string GetUTF8 (this MemoryStream Stream) {
-            return Stream.ToArray().ToUTF8();
-            }
+        public static string GetUTF8(this MemoryStream Stream) => Stream.ToArray().ToUTF8();
 
         /// <summary>
         /// Convert the contents of a memory stream buffer containing UTF8 data to a string.
@@ -44,18 +42,14 @@ namespace Goedel.Protocol {
         /// <summary>Write buffer to to the output stream</summary>
         /// <param name="Output">The stream to write the output to</param>
         /// <param name="buffer">Data to write</param>
-        public static void Write (this Stream Output, byte[] buffer) {
-            Output.Write(buffer, 0, buffer.Length);
-            }
+        public static void Write(this Stream Output, byte[] buffer) => Output.Write(buffer, 0, buffer.Length);
 
         /// <summary>Write buffer to to the output stream</summary>
         /// <param name="Output">The stream to write the output to</param>
         /// <param name="buffer">Data to write</param>
         /// <param name="Start">Index of first byte to write</param>
         /// <param name="Count">Number of bytes to write.</param>
-        public static void Write (this Stream Output, byte[] buffer, int Start, int Count) {
-            Output.Write(buffer, Start, Count);
-            }
+        public static void Write(this Stream Output, byte[] buffer, int Start, int Count) => Output.Write(buffer, Start, Count);
 
 
         /// <summary>
@@ -102,27 +96,17 @@ namespace Goedel.Protocol {
 
         /// <summary>Write newline</summary>
         /// <param name="Output">The stream to write the output to</param>
-        public static void WriteLine (this Stream Output) {
-            Output.Write('\n');
-            }
+        public static void WriteLine(this Stream Output) => Output.Write('\n');
 
         /// <summary>Write string</summary>
         /// <param name="Output">The stream to write the output to</param>
         /// <param name="s">Data to write</param>
-        public static void Write (this Stream Output, string s) {
-            Output.Write(s.ToUTF8());
-
-            //foreach (char c in s) {
-            //    Output.Write(c);
-            //    }
-            }
+        public static void Write(this Stream Output, string s) => Output.Write(s.ToUTF8());//foreach (char c in s) {//    Output.Write(c);//    }
 
         /// <summary>Write out the Date Time as a string in RFC3339 Format</summary>
         /// <param name="Output">The stream to write the output to</param>
         /// <param name="Data">Data to write</param>
-        public static void Write (this Stream Output, DateTime Data) {
-            Output.Write(Data.ToString("yyyy-MM-dd'T'HH:mm:ssZ"));
-            }
+        public static void Write(this Stream Output, DateTime Data) => Output.Write(Data.ToString("yyyy-MM-dd'T'HH:mm:ssZ"));
         }
 
     }

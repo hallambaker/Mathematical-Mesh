@@ -46,9 +46,7 @@ namespace Goedel.Catalog {
                 return _Default;
                 }
 
-            set {
-                _Default = value;
-                }
+            set => _Default = value;
             }
 
         /// <summary>

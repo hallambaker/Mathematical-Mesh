@@ -19,9 +19,7 @@ namespace Goedel.Recrypt.Server {
         /// </summary>
         /// <param name="Domain">The domain of the service provider.</param>
         /// <param name="Store">The persistence store filename.</param>
-        public RecryptLocalServiceProvider (string Domain, string Store="Recrypt.jlog") {
-            RecryptStore = new RecryptStore(Domain, Store);
-            }
+        public RecryptLocalServiceProvider(string Domain, string Store = "Recrypt.jlog") => RecryptStore = new RecryptStore(Domain, Store);
         }
 
     }

@@ -42,9 +42,7 @@ namespace Goedel.Mesh.Portal.Server {
         /// <param name="Domain">The domain of the service provider.</param>
         /// <param name="MeshStore">The mesh persistence store filename.</param>
         /// <param name="PortalStore">The portal persistence store fielname.</param>
-        public PublicMeshServiceProvider(string Domain, string MeshStore, string PortalStore) {
-            Mesh = new MeshPersist(Domain, MeshStore, PortalStore);
-            }
+        public PublicMeshServiceProvider(string Domain, string MeshStore, string PortalStore) => Mesh = new MeshPersist(Domain, MeshStore, PortalStore);
 
         /// <summary>
         /// The mesh persistence provider.

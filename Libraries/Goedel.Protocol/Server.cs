@@ -171,11 +171,7 @@ namespace Goedel.Protocol {
         /// </param>
         /// <returns>The port registration created</returns>
         /// <exception cref="NYI">Not Yet Implemented</exception> 
-        public PortRegistration AddUDP(int port) {
-            throw NYI.Throw("Need to add implementation of Add UDP");
-
-            //return null;
-            }
+        public PortRegistration AddUDP(int port) => throw NYI.Throw("Need to add implementation of Add UDP");//return null;
 
         /// <summary>
         /// Register connected ports.
@@ -400,16 +396,12 @@ namespace Goedel.Protocol {
         /// listener. Useful for tracking down locking and synchronization 
         /// bugs.
         /// </summary>
-        public void RunBlocking () {
-            ListenBlocking();
-            }
+        public void RunBlocking() => ListenBlocking();
 
         /// <summary>
         /// Stop the server.
         /// </summary>
-        public void Stop () {
-            Active = false;
-            }
+        public void Stop() => Active = false;
 
         /// <summary>
         /// Register listener port.

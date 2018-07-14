@@ -40,22 +40,20 @@ namespace Goedel.Confirm {
             /// make a remote connection.
             /// </summary>
             public static ConfirmPortal Default {
-                get {
-                    if (_Default == null) {
-                        _Default = new ConfirmPortalRemote();
-                        }
-                    return _Default;
+            get {
+                if (_Default == null) {
+                    _Default = new ConfirmPortalRemote();
                     }
-
-                set {
-                    _Default = value;
-                    }
+                return _Default;
                 }
 
-            /// <summary>
-            /// May be set to the default RecryptService by a calling application.
-            /// </summary>
-            public ConfirmService ConfirmServiceClient;
+            set => _Default = value;
+            }
+
+        /// <summary>
+        /// May be set to the default RecryptService by a calling application.
+        /// </summary>
+        public ConfirmService ConfirmServiceClient;
 
             }
 

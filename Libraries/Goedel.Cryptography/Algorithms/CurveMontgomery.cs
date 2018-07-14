@@ -44,7 +44,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// <summary>Sixe of the modular field in bits.</summary>
         public int Bits;
         /// <summary>The paameter p</summary>
-        public int p;
+        public int P;
         /// <summary>The parameter A24</summary>
         public int A24;
 
@@ -93,7 +93,7 @@ namespace Goedel.Cryptography.Algorithms {
 
             Cswap(swap, ref x_2, ref x_3);
             Cswap(swap, ref z_2, ref z_3);
-            var U2 = (x_2 * (BigInteger.ModPow ( z_2,  (p - 2), p))) % p;
+            var U2 = (x_2 * (BigInteger.ModPow ( z_2,  (P - 2), P))) % P;
 
             return Factory(U2);
             }
@@ -129,9 +129,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// </summary>
         /// <param name="U">The U value</param>
         /// <returns>Created point</returns>
-        public override CurveMontgomery Factory(BigInteger U) {
-            return new CurveMontgomery25519() { U = U};
-            }
+        public override CurveMontgomery Factory(BigInteger U) => new CurveMontgomery25519() { U = U };
         }
 
     /// <summary>
@@ -147,9 +145,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// </summary>
         /// <param name="U">The U value</param>
         /// <returns>Created point</returns>
-        public override CurveMontgomery Factory(BigInteger U) {
-            return new CurveMontgomery448() { U = U };
-            }
+        public override CurveMontgomery Factory(BigInteger U) => new CurveMontgomery448() { U = U };
         }
 
 
@@ -161,7 +157,7 @@ namespace Goedel.Cryptography.Algorithms {
     public struct DomainParameters {
 
         /// <summary>The prime field</summary>
-        public BigInteger p { get; }
+        public BigInteger P { get; }
 
         /// <summary>The number of bits in the prime field</summary>
         public int Bits { get; }
@@ -173,7 +169,7 @@ namespace Goedel.Cryptography.Algorithms {
         public BigInteger A24 { get; }
 
         /// <summary>The Edwards curve coeffient D</summary>
-        public BigInteger d { get; }
+        public BigInteger D { get; }
 
         /// <summary>The Montgomery initial point U value</summary>
         public BigInteger U { get; }
@@ -197,10 +193,10 @@ namespace Goedel.Cryptography.Algorithms {
         /// <param name="Bits">The number of bits in the prime.</param>
         public DomainParameters(BigInteger p, BigInteger A, BigInteger U, BigInteger d, 
                         BigInteger By,  int Bits) {
-            this.p = p;
+            this.P = p;
             this.A = A;
             this.U = U;
-            this.d = d;
+            this.D = d;
             this.By = By;
             A24 = (A - 2) / 4;
             this.Bits = Bits;

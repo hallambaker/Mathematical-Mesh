@@ -35,8 +35,8 @@ namespace Goedel.Cryptography.Jose {
         /// The signed data.
         /// </summary>
         public virtual byte[] Data {
-            get { return Payload; }
-            set { Payload = value; } }
+            get => Payload;
+            set => Payload = value; }
 
         /// <summary>The JSONReader.</summary>
         public virtual JSONReader JSONReader  => new JSONReader(Data);
@@ -160,9 +160,7 @@ namespace Goedel.Cryptography.Jose {
         /// Recalculate the CryptoData object parameters. This causes 
         /// </summary>
         /// <returns>The result of the cryptographic operation.</returns>
-        public CryptoData GetCryptoData () {
-            return _CryptoDataDigest;
-            }
+        public CryptoData GetCryptoData() => _CryptoDataDigest;
 
 
 
@@ -222,9 +220,7 @@ namespace Goedel.Cryptography.Jose {
         /// </summary>
         /// <param name="SigningKey">Key</param>
         /// <returns>The Recipient data for the specified key, if found.</returns>
-        public Signature MatchSigner(KeyPair SigningKey) {
-            return MatchSigner(SigningKey.UDF);
-            }
+        public Signature MatchSigner(KeyPair SigningKey) => MatchSigner(SigningKey.UDF);
 
         /// <summary>
         /// Match a recipient header by key identifier.

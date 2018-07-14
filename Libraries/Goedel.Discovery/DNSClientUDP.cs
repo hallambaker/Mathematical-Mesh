@@ -153,11 +153,9 @@ namespace Goedel.Discovery {
         /// <summary>Return a DNS Client Context in which to make a set of queries.
         /// </summary>
         /// <returns>The DNS Client Context</returns>
-        public override DNSContext GetContext () {
-            return new DNSContextUDP(ListIPAddress, Port);
-            }
+        public override DNSContext GetContext() => new DNSContextUDP(ListIPAddress, Port);
 
-               
+
 
         }
 
@@ -193,9 +191,7 @@ namespace Goedel.Discovery {
         /// </summary>
         /// <param name="Request">DNS request set</param>
         /// <returns>Task instance.</returns>
-        public override void SendRequest(DNSRequest Request) {
-            UdpClient.Send(Request.Buffer.Buffer, Request.Buffer.Length);
-            }
+        public override void SendRequest(DNSRequest Request) => UdpClient.Send(Request.Buffer.Buffer, Request.Buffer.Length);
 
 
         /// <summary>
@@ -222,9 +218,7 @@ namespace Goedel.Discovery {
         /// Get asynchronous raw response.
         /// </summary>
         /// <returns>The first valid response received.</returns>
-        public override async Task<byte[]> GetResponseRawAsync() {
-            return (await UdpClient.ReceiveAsync()).Buffer;
-            }
+        public override async Task<byte[]> GetResponseRawAsync() => (await UdpClient.ReceiveAsync()).Buffer;
 
 
         // This is the blocking version of the query implementation that is used to 

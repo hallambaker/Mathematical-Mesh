@@ -21,25 +21,19 @@ namespace Goedel.Command {
         /// Convert value to string.
         /// </summary>
         /// <returns>The string value.</returns>
-        public override string ToString () {
-            return Text;
-            }
+        public override string ToString() => Text;
 
         /// <summary>
         /// Set parameter text.
         /// </summary>
         /// <param name="TextIn">Text to set.</param>
-        public virtual void Parameter (string TextIn) {
-            Text = TextIn;
-            }
+        public virtual void Parameter(string TextIn) => Text = TextIn;
 
         /// <summary>
         /// Set the default value for the type.
         /// </summary>
         /// <param name="TextIn">The default value as it would be given on the command line.</param>
-        public virtual void Default (string TextIn) {
-            Parameter(TextIn);
-            }
+        public virtual void Default(string TextIn) => Parameter(TextIn);
 
 
         /// <summary>
@@ -79,9 +73,7 @@ namespace Goedel.Command {
         /// Construct flag with specified value
         /// </summary>
         /// <param name="Value">The flag value to set</param>
-        public _Flag (string Value) {
-            Default(Value);
-            }
+        public _Flag(string Value) => Default(Value);
 
         /// <summary>
         /// The flag value.
@@ -127,9 +119,7 @@ namespace Goedel.Command {
         /// Convert value to string.
         /// </summary>
         /// <returns>the string value</returns>
-        public override string ToString () {
-            return Text;
-            }
+        public override string ToString() => Text;
 
 
 
@@ -150,9 +140,7 @@ namespace Goedel.Command {
         /// Constructor with specified default value.
         /// </summary>
         /// <param name="Value">The default value text for this entry</param>
-        public _File (string Value) {
-            Default(Value);
-            }
+        public _File(string Value) => Default(Value);
 
         /// <summary>
         /// The default extension.
@@ -163,9 +151,7 @@ namespace Goedel.Command {
         /// Set the default.
         /// </summary>
         /// <param name="TextIn">The default value text for this entry</param>
-        public override void Default (string TextIn) {
-            Extension = TextIn;
-            }
+        public override void Default(string TextIn) => Extension = TextIn;
 
         /// <summary>
         /// The value.
@@ -178,9 +164,7 @@ namespace Goedel.Command {
         /// </summary>
         /// <param name="Source">The source file.</param>
         /// <returns>File name.</returns>
-        public string DefaultFile (_File Source) {
-            return DefaultFile(Source.Text);
-            }
+        public string DefaultFile(_File Source) => DefaultFile(Source.Text);
 
         /// <summary>
         /// Construct extension defaulted file name for specified file.
@@ -210,18 +194,14 @@ namespace Goedel.Command {
         /// Set the negated flag
         /// </summary>
         /// <param name="Negated">if true, is negated.</param>
-        public override void SetFlag (bool Negated) {
-            Flagged = true;
-            }
+        public override void SetFlag(bool Negated) => Flagged = true;
 
 
         /// <summary>
         /// Set the default value for the type.
         /// </summary>
         /// <param name="TextIn">The default value as it would be given on the command line.</param>
-        public override void Default (string TextIn) {
-            Extension = TextIn;
-            }
+        public override void Default(string TextIn) => Extension = TextIn;
 
 
         /// <summary>

@@ -148,9 +148,7 @@ namespace Goedel.Protocol {
         /// Create a direct session for the specified account.
         /// </summary>
         /// <param name="Account">The account name</param>
-        public DirectSession (string Account) {
-            this.Account = Account;
-            }
+        public DirectSession(string Account) => this.Account = Account;
 
         /// <summary>
         /// Authenticate session using the specified credentials

@@ -373,7 +373,7 @@ SingularObject SubjectKeyIdentifier id_ce_subjectKeyIdentifier
 SingularObject KeyUsage id_ce_keyUsage 
 	Value VBits
 
-SingularObject certificatePolicies id_ce_certificatePolicies 
+SingularObject CertificatePolicies id_ce_certificatePolicies 
 	Value List PolicyInformation
 
 Class PolicyInformation

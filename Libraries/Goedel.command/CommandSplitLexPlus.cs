@@ -80,9 +80,7 @@ namespace Goedel.Command {
         /// Reset the value buffers to start a new parse.
         /// </summary>
         /// <param name="c">The character read</param>
-        public virtual void AddParam (int c) {
-            AddParam();
-            }
+        public virtual void AddParam(int c) => AddParam();
 
         void AddParam () {
             // Add any pending escape characters
@@ -111,9 +109,7 @@ namespace Goedel.Command {
         /// Start a quoted parameter, this can be null
         /// </summary>
         /// <param name="c">The character read</param>
-        public virtual void BeginValue (int c) {
-            Pending = true;
-            }
+        public virtual void BeginValue(int c) => Pending = true;
 
         /// <summary>
         /// Add a character to the value buffer

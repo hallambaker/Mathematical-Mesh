@@ -82,9 +82,7 @@ namespace Goedel.Mesh.Portal.Client {
         /// The active device profile (with signature).
         /// </summary>
         public SignedDeviceProfile SignedDeviceProfile {
-            get {
-                return _SignedDeviceProfile;
-                }
+            get => _SignedDeviceProfile;
 
             set {
                 if (PersonalProfile != null) {
@@ -259,8 +257,7 @@ namespace Goedel.Mesh.Portal.Client {
             if (GetResponse.Entries == null) { return null; }
             if (GetResponse.Entries.Count == 0) { return null; }
 
-            var SignedApplicationProfile = GetResponse.Entries[0] as SignedApplicationProfile;
-            if (SignedApplicationProfile == null) { return null; }
+            if (!(GetResponse.Entries[0] is SignedApplicationProfile SignedApplicationProfile)) { return null; }
 
             return SignedApplicationProfile;
             }

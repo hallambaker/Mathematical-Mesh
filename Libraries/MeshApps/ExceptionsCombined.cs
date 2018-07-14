@@ -451,33 +451,29 @@ namespace Goedel.Combined.Shell.Client {
 			}
 
 
-		/// <summary>
+        /// <summary>
         /// Construct instance for exception using a userdata parameter of
-		/// type ExceptionData and the format string "The personal profile {0} could not be found"
+        /// type ExceptionData and the format string "The personal profile {0} could not be found"
         /// </summary>		
         /// <param name="Object">User data</param>	
-		public ProfileNotFound (ExceptionData Object) : 
-				base (global::System.String.Format ("The personal profile {0} could not be found",
-					Object.String					)) {
-			UserData = Object;
-			}
+        public ProfileNotFound(ExceptionData Object) :
+                base(global::System.String.Format("The personal profile {0} could not be found",
+                    Object.String)) => UserData = Object;
 
-		/// <summary>
+        /// <summary>
         /// Construct instance for exception using a userdata parameter of
-		/// type ExceptionData and the format string "The personal profile {0} could not be found"
+        /// type ExceptionData and the format string "The personal profile {0} could not be found"
         /// </summary>		
         /// <param name="Object">User data</param>	
-		/// <param name="Inner">Inner Exception</param>	
-		public ProfileNotFound (ExceptionData Object, System.Exception Inner) : 
-				base (global::System.String.Format ("The personal profile {0} could not be found",
-					Object.String					), Inner) {
-			UserData = Object;
-			}
+        /// <param name="Inner">Inner Exception</param>	
+        public ProfileNotFound(ExceptionData Object, System.Exception Inner) :
+                base(global::System.String.Format("The personal profile {0} could not be found",
+                    Object.String), Inner) => UserData = Object;
 
 
 
-		
-		/// <summary>
+
+        /// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;

@@ -18,16 +18,14 @@ namespace Goedel.Combined.Shell.Client {
 		static char UnixFlag = '-';
 		static char WindowsFlag = '/';
 
-		
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="Dispatch"></param>
         /// <param name="args"></param>
         /// <param name="index"></param>
-        public static void Help (DispatchShell Dispatch, string[] args, int index) {
-            Brief(Description, DefaultCommand, Entries);
-            }
+        public static void Help(DispatchShell Dispatch, string[] args, int index) => Brief(Description, DefaultCommand, Entries);
 
         public static DescribeCommandEntry DescribeHelp = new DescribeCommandEntry() {
             Identifier = "help",
@@ -36,11 +34,9 @@ namespace Goedel.Combined.Shell.Client {
             };
 
 
-        static bool IsFlag(char c) {
-            return (c == UnixFlag) | (c == WindowsFlag) ;
-            }
+        static bool IsFlag(char c) => (c == UnixFlag) | (c == WindowsFlag);
 
-		static DescribeCommandSet DescribeCommandSet_Mesh = new DescribeCommandSet () {
+        static DescribeCommandSet DescribeCommandSet_Mesh = new DescribeCommandSet () {
             Identifier = "mesh",
 			Entries = new  SortedDictionary<string, DescribeCommand> () {
 				{"create", _PersonalCreate._DescribeCommand }
@@ -115,13 +111,11 @@ namespace Goedel.Combined.Shell.Client {
 			}
 
 
-        public void MainMethod(CombinedShell Dispatch, string[] Args) {
-			Dispatcher (Entries, DefaultCommand, Dispatch, Args, 0);
-            } // Main
+        public void MainMethod(CombinedShell Dispatch, string[] Args) => Dispatcher(Entries, DefaultCommand, Dispatch, Args, 0); // Main
 
 
 
-		public static void Handle_Null (
+        public static void Handle_Null (
 					DispatchShell  DispatchIn, string[] Args, int Index) {
 			CombinedShell Dispatch =	DispatchIn as CombinedShell;
 			Null		Options = new Null ();
@@ -1932,69 +1926,37 @@ namespace Goedel.Combined.Shell.Client {
 	// to eliminate the redundant code
     public class _CombinedShell : global::Goedel.Command.DispatchShell {
 
-		public virtual void Null ( Null Options) {
-			CommandLineInterpreter.DescribeValues (Options);
-			}
+        public virtual void Null(Null Options) => CommandLineInterpreter.DescribeValues(Options);
 
-		public virtual void PersonalCreate ( PersonalCreate Options) {
-			CommandLineInterpreter.DescribeValues (Options);
-			}
+        public virtual void PersonalCreate(PersonalCreate Options) => CommandLineInterpreter.DescribeValues(Options);
 
-		public virtual void AccountCreate ( AccountCreate Options) {
-			CommandLineInterpreter.DescribeValues (Options);
-			}
+        public virtual void AccountCreate(AccountCreate Options) => CommandLineInterpreter.DescribeValues(Options);
 
-		public virtual void AccountDelete ( AccountDelete Options) {
-			CommandLineInterpreter.DescribeValues (Options);
-			}
+        public virtual void AccountDelete(AccountDelete Options) => CommandLineInterpreter.DescribeValues(Options);
 
-		public virtual void AccountUpdate ( AccountUpdate Options) {
-			CommandLineInterpreter.DescribeValues (Options);
-			}
+        public virtual void AccountUpdate(AccountUpdate Options) => CommandLineInterpreter.DescribeValues(Options);
 
-		public virtual void AccountGet ( AccountGet Options) {
-			CommandLineInterpreter.DescribeValues (Options);
-			}
+        public virtual void AccountGet(AccountGet Options) => CommandLineInterpreter.DescribeValues(Options);
 
-		public virtual void ConfirmPost ( ConfirmPost Options) {
-			CommandLineInterpreter.DescribeValues (Options);
-			}
+        public virtual void ConfirmPost(ConfirmPost Options) => CommandLineInterpreter.DescribeValues(Options);
 
-		public virtual void ConfirmStatus ( ConfirmStatus Options) {
-			CommandLineInterpreter.DescribeValues (Options);
-			}
+        public virtual void ConfirmStatus(ConfirmStatus Options) => CommandLineInterpreter.DescribeValues(Options);
 
-		public virtual void ConfirmPending ( ConfirmPending Options) {
-			CommandLineInterpreter.DescribeValues (Options);
-			}
+        public virtual void ConfirmPending(ConfirmPending Options) => CommandLineInterpreter.DescribeValues(Options);
 
-		public virtual void ConfirmAccept ( ConfirmAccept Options) {
-			CommandLineInterpreter.DescribeValues (Options);
-			}
+        public virtual void ConfirmAccept(ConfirmAccept Options) => CommandLineInterpreter.DescribeValues(Options);
 
-		public virtual void ConfirmReject ( ConfirmReject Options) {
-			CommandLineInterpreter.DescribeValues (Options);
-			}
+        public virtual void ConfirmReject(ConfirmReject Options) => CommandLineInterpreter.DescribeValues(Options);
 
-		public virtual void CreateGroup ( CreateGroup Options) {
-			CommandLineInterpreter.DescribeValues (Options);
-			}
+        public virtual void CreateGroup(CreateGroup Options) => CommandLineInterpreter.DescribeValues(Options);
 
-		public virtual void RecryptAdd ( RecryptAdd Options) {
-			CommandLineInterpreter.DescribeValues (Options);
-			}
+        public virtual void RecryptAdd(RecryptAdd Options) => CommandLineInterpreter.DescribeValues(Options);
 
-		public virtual void RecryptDelete ( RecryptDelete Options) {
-			CommandLineInterpreter.DescribeValues (Options);
-			}
+        public virtual void RecryptDelete(RecryptDelete Options) => CommandLineInterpreter.DescribeValues(Options);
 
-		public virtual void Encrypt ( Encrypt Options) {
-			CommandLineInterpreter.DescribeValues (Options);
-			}
+        public virtual void Encrypt(Encrypt Options) => CommandLineInterpreter.DescribeValues(Options);
 
-		public virtual void Decrypt ( Decrypt Options) {
-			CommandLineInterpreter.DescribeValues (Options);
-			}
+        public virtual void Decrypt(Decrypt Options) => CommandLineInterpreter.DescribeValues(Options);
 
 
         } // class _CombinedShell

@@ -34,11 +34,8 @@ namespace Goedel.Cryptography.Dare.Test {
             TestKeys.AddEncrypt();
 
             var Test1 = Platform.GetRandomBytes(1000);
-            TestMessageAtomic(Test1, EncryptionKeys: TestKeys.EncryptionKeys);
 
-            // does not write Salt
-            // read does not attempt decrypt. This needs to be a separate stream
-            // from RAW.
+            TestMessageAtomic(Test1, EncryptionKeys: TestKeys.EncryptionKeys);
             }
 
 
@@ -58,6 +55,8 @@ namespace Goedel.Cryptography.Dare.Test {
             TestKeys.AddEncrypt();
 
             var Test1 = Platform.GetRandomBytes(1000);
+
+
             TestMessageFixed(Test1, EncryptionKeys: TestKeys.EncryptionKeys);
             TestMessageFixed(Test1, 13, EncryptionKeys: TestKeys.EncryptionKeys);
             TestMessageFixed(Test1, 42, EncryptionKeys: TestKeys.EncryptionKeys);
@@ -68,7 +67,6 @@ namespace Goedel.Cryptography.Dare.Test {
             var TestKeys = new TestKeys();
             TestKeys.AddEncrypt();
             var Test1 = Platform.GetRandomBytes(1000);
-
             TestMessageVariable(Test1, EncryptionKeys: TestKeys.EncryptionKeys);
             TestMessageVariable(Test1, 13, EncryptionKeys: TestKeys.EncryptionKeys);
             TestMessageVariable(Test1, 42, EncryptionKeys: TestKeys.EncryptionKeys);
@@ -121,9 +119,11 @@ namespace Goedel.Cryptography.Dare.Test {
         void TestMessageAtomic (byte[] Plaintext, int Stride = -1,
                     List<KeyPair> EncryptionKeys = null,
                     List<byte[]> DataSequences = null,
-                    string ContentType = null) {
+                    string ContentType = null,
+                    CryptoAlgorithmID EncryptID = CryptoAlgorithmID.AES256CBC) {
 
-            var Message = new DAREMessage(Plaintext, EncryptionKeys:EncryptionKeys);
+            var Message = new DAREMessage(Plaintext, EncryptID: EncryptID,
+                    EncryptionKeys:EncryptionKeys, DataSequences: DataSequences);
 
             var MessageBytes = Message.GetJson(false);
 
@@ -139,11 +139,12 @@ namespace Goedel.Cryptography.Dare.Test {
         void TestMessageFixed (byte[] Plaintext, int Stride = -1,
                     List<KeyPair> EncryptionKeys = null,
                     List<byte[]> DataSequences = null,
-                    string ContentType = null) {
+                    string ContentType = null,
+                    CryptoAlgorithmID EncryptID = CryptoAlgorithmID.AES256CBC) {
 
             var OutputStream = new MemoryStream();
 
-            var Message = new DAREMessage(OutputStream, EncryptionKeys,
+            var Message = new DAREMessage(OutputStream, EncryptionKeys, EncryptID: EncryptID,
                         ContentLength: Plaintext.LongLength, DataSequences: DataSequences);
             Message.Process(Plaintext, true);
             var MessageBytes = OutputStream.ToArray();
@@ -156,11 +157,12 @@ namespace Goedel.Cryptography.Dare.Test {
         void TestMessageVariable (byte[] Plaintext, int Stride = -1,
                     List<KeyPair> EncryptionKeys = null,
                     List<byte[]> DataSequences = null,
-                    string ContentType = null) {
+                    string ContentType = null,
+                    CryptoAlgorithmID EncryptID = CryptoAlgorithmID.AES256CBC) {
 
             var OutputStream = new MemoryStream();
 
-            var Message = new DAREMessage(OutputStream, EncryptionKeys,
+            var Message = new DAREMessage(OutputStream, EncryptionKeys, EncryptID: EncryptID,
                         DataSequences: DataSequences);
             Message.Process(Plaintext, true);
             var MessageBytes = OutputStream.ToArray();
@@ -229,7 +231,8 @@ namespace Goedel.Cryptography.Dare.Test {
             else {
                 Assert.True(DataSequences.Count == Message.DataSequences);
                 for (var i = 0; i < DataSequences.Count; i++) {
-                    Assert.True(DataSequences[i] == Message.DataSequence (i));
+                    var MEDSS = Message.DataSequence(i);
+                    Assert.True(DataSequences[i].IsEqualTo(MEDSS));
                     }
                 }
             }

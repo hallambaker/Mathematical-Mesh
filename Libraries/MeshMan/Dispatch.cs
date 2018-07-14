@@ -24,9 +24,7 @@ namespace Goedel.Mesh.MeshMan {
                 _MeshMachine = _MeshMachine ?? MeshMachine.Current;
                 return _MeshMachine;
                 }
-            set {
-                _MeshMachine = value;
-                }
+            set => _MeshMachine = value;
             }
 
         string PortalID;
@@ -45,9 +43,7 @@ namespace Goedel.Mesh.MeshMan {
             set => _PersonalCreate._DescribeCommand.SetDefault("dd", value);
             }
 
-        public Shell () {
-            Mesh.Initialize(true);  // Hack is in test mode right now
-            }
+        public Shell() => Mesh.Initialize(true);  // Hack is in test mode right now
 
         public string CommandLine { get; set; }
         public string Dispatch (string Command) {
@@ -64,9 +60,7 @@ namespace Goedel.Mesh.MeshMan {
         /// Erase all test profiles
         /// </summary>
         /// <param name="Options">Command line parameters</param>
-        public override void Reset (Reset Options) {
-            MeshMachine.EraseTest();
-            }
+        public override void Reset(Reset Options) => MeshMachine.EraseTest();
 
 
         /// <summary>

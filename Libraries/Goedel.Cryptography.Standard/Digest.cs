@@ -28,7 +28,7 @@ using System.Security.Cryptography;
 using Goedel.Utilities;
 using Goedel.Cryptography.Algorithms;
 
-namespace Goedel.Cryptography.Framework {
+namespace Goedel.Cryptography.Standard {
 
     /// <summary>
     /// <para>Base class for all cryptographic hash providers.</para>
@@ -152,11 +152,7 @@ namespace Goedel.Cryptography.Framework {
         /// <summary>
         /// Close the crypto stream and get the digest value.
         /// </summary>
-        public override void Complete () {
-            InputStream.Close();
-            
-
-            }
+        public override void Complete() => InputStream.Close();
         }
 
 
@@ -206,9 +202,7 @@ namespace Goedel.Cryptography.Framework {
         public override int Size => 256;
 
 
-        private static CryptoProvider Factory(int KeySize, CryptoAlgorithmID DigestAlgorithm) {
-            return new CryptoProviderSHA2_256();
-            }
+        private static CryptoProvider Factory(int KeySize, CryptoAlgorithmID DigestAlgorithm) => new CryptoProviderSHA2_256();
 
 
         }
@@ -252,13 +246,9 @@ namespace Goedel.Cryptography.Framework {
         /// </summary>
         public override int Size => Truncate >0 ? Truncate: 512;
 
-        private static CryptoProvider Factory(int KeySize, 
-                            CryptoAlgorithmID ID = CryptoAlgorithmID.SHA_2_512) {
-            
+        private static CryptoProvider Factory(int KeySize,
+                            CryptoAlgorithmID ID = CryptoAlgorithmID.SHA_2_512) => new CryptoProviderSHA2_512(KeySize, ID);
 
-            return new CryptoProviderSHA2_512(KeySize, ID);
-            }
-        
         /// <summary>
         /// Create a SHA-2-256 digest provider.
         /// </summary>
@@ -324,9 +314,7 @@ namespace Goedel.Cryptography.Framework {
 
 
 
-        private static CryptoProvider Factory(int KeySize, CryptoAlgorithmID DigestAlgorithm) {
-            return new CryptoProviderSHA1();
-            }
+        private static CryptoProvider Factory(int KeySize, CryptoAlgorithmID DigestAlgorithm) => new CryptoProviderSHA1();
 
 
         }
@@ -380,9 +368,7 @@ namespace Goedel.Cryptography.Framework {
         public override int Size => 256;
 
 
-        private static CryptoProvider Factory (int KeySize, CryptoAlgorithmID DigestAlgorithm) {
-            return new CryptoProviderSHA3_256();
-            }
+        private static CryptoProvider Factory(int KeySize, CryptoAlgorithmID DigestAlgorithm) => new CryptoProviderSHA3_256();
 
 
         }
@@ -434,9 +420,7 @@ namespace Goedel.Cryptography.Framework {
         public override int Size => 512;
 
 
-        private static CryptoProvider Factory (int KeySize, CryptoAlgorithmID DigestAlgorithm) {
-            return new CryptoProviderSHA3_512();
-            }
+        private static CryptoProvider Factory(int KeySize, CryptoAlgorithmID DigestAlgorithm) => new CryptoProviderSHA3_512();
 
 
         }
@@ -489,9 +473,7 @@ namespace Goedel.Cryptography.Framework {
         public override int Size => 128;
 
 
-        private static CryptoProvider Factory (int KeySize, CryptoAlgorithmID DigestAlgorithm) {
-            return new CryptoProviderSHAKE128();
-            }
+        private static CryptoProvider Factory(int KeySize, CryptoAlgorithmID DigestAlgorithm) => new CryptoProviderSHAKE128();
 
         }
 
@@ -541,9 +523,7 @@ namespace Goedel.Cryptography.Framework {
         /// </summary>
         public override int Size => 256;
 
-        private static CryptoProvider Factory (int KeySize, CryptoAlgorithmID DigestAlgorithm) {
-            return new CryptoProviderSHAKE256();
-            }
+        private static CryptoProvider Factory(int KeySize, CryptoAlgorithmID DigestAlgorithm) => new CryptoProviderSHAKE256();
 
         }
 

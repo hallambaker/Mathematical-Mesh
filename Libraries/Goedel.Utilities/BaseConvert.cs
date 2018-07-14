@@ -248,14 +248,12 @@ namespace Goedel.Utilities  {
         /// <param name="Length">Position of last byte to send. If less than zero, read to end.</param>
         /// <param name="Data">The data to be encoded.</param>
         /// <param name="Format">Specifies the output format</param>
-        public static void ToStringBase16 (
+        public static void ToStringBase16(
                     this StringBuilder StringBuilder,
                     byte[] Data,
                     int First = 0,
                     int Length = -1,
-                    ConversionFormat Format = ConversionFormat.None) {
-            StringBuilderConvertBits.Append(StringBuilder, BASE16, 4, Format, Data, First, Length);
-            }
+                    ConversionFormat Format = ConversionFormat.None) => StringBuilderConvertBits.Append(StringBuilder, BASE16, 4, Format, Data, First, Length);
 
         #endregion
         #region // Base32
@@ -315,15 +313,13 @@ namespace Goedel.Utilities  {
         /// <param name="Data">The data to be encoded.</param>
         /// <param name="Format">Specifies the output format</param>
         /// <param name="OutputMax">The maximum number of significant bits in the output.</param>
-        public static void ToStringBase32 (
+        public static void ToStringBase32(
                     this StringBuilder StringBuilder,
                     byte[] Data,
                     int First = 0,
                     int Length = -1,
                     ConversionFormat Format = ConversionFormat.None,
-                    int OutputMax = -1) {
-            StringBuilderConvertBits.Append(StringBuilder, BASE32, 5, Format, Data, First, Length, OutputMax: OutputMax);
-            }
+                    int OutputMax = -1) => StringBuilderConvertBits.Append(StringBuilder, BASE32, 5, Format, Data, First, Length, OutputMax: OutputMax);
 
         #endregion
         #region // Base32Hex
@@ -378,14 +374,12 @@ namespace Goedel.Utilities  {
         /// <param name="Length">Position of last byte to send. If less than zero, read to end.</param>
         /// <param name="Data">The data to be encoded.</param>
         /// <param name="Format">Specifies the output format</param>
-        public static void ToStringBase32Hex (
+        public static void ToStringBase32Hex(
                     this StringBuilder StringBuilder,
                     byte[] Data,
                     int First = 0,
                     int Length = -1,
-                    ConversionFormat Format = ConversionFormat.None) {
-            StringBuilderConvertBits.Append(StringBuilder, BASE32HEX, 5, Format, Data, First, Length);
-            }
+                    ConversionFormat Format = ConversionFormat.None) => StringBuilderConvertBits.Append(StringBuilder, BASE32HEX, 5, Format, Data, First, Length);
 
         #endregion
         #region // Base64
@@ -439,14 +433,12 @@ namespace Goedel.Utilities  {
         /// <param name="Length">Position of last byte to send. If less than zero, read to end.</param>
         /// <param name="Data">The data to be encoded.</param>
         /// <param name="Format">Specifies the output format</param>
-        public static void ToStringBase64 (
+        public static void ToStringBase64(
                     this StringBuilder StringBuilder,
                     byte[] Data,
                     int First = 0,
                     int Length = -1,
-                    ConversionFormat Format = ConversionFormat.None) {
-            StringBuilderConvertBits.Append(StringBuilder, BASE64, 6, Format, Data, First, Length);
-            }
+                    ConversionFormat Format = ConversionFormat.None) => StringBuilderConvertBits.Append(StringBuilder, BASE64, 6, Format, Data, First, Length);
 
         #endregion
         #region // Base64Url
@@ -504,14 +496,12 @@ namespace Goedel.Utilities  {
         /// <param name="Length">Position of last byte to send. If less than zero, read to end.</param>
         /// <param name="Data">The data to be encoded.</param>
         /// <param name="Format">Specifies the output format</param>
-        public static void ToStringBase64URL (
+        public static void ToStringBase64URL(
                     this StringBuilder StringBuilder,
                     byte[] Data,
                     int First = 0,
                     int Length = -1,
-                    ConversionFormat Format = ConversionFormat.None) {
-            StringBuilderConvertBits.Append(StringBuilder, BASE64URL, 6, Format, Data, First, Length);
-            }
+                    ConversionFormat Format = ConversionFormat.None) => StringBuilderConvertBits.Append(StringBuilder, BASE64URL, 6, Format, Data, First, Length);
 
         #endregion
 
@@ -542,10 +532,7 @@ namespace Goedel.Utilities  {
         /// </summary>
         /// <param name="Data">The data to convert</param>
         /// <returns>The resulting string.</returns>
-        public static string ToStringUDF32 (this byte[] Data) {
-
-            return Data.ToStringBase32(Format: ConversionFormat.Dash5);
-            }
+        public static string ToStringUDF32(this byte[] Data) => Data.ToStringBase32(Format: ConversionFormat.Dash5);
 
         /// <summary>
         /// Convert data to Base32HS string. This is probably not necessary as 

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Security.Cryptography;
-using Goedel.Cryptography.Framework;
+using Goedel.Cryptography.Standard;
 
 
 namespace Goedel.Cryptography {
@@ -56,18 +56,15 @@ namespace Goedel.Cryptography {
 
                 Platform.BlockProviderFactoryAes = AesBlock.Factory;
 
-                CryptoProviderSignatureRSA.Register();
-                CryptoProviderExchangeRSA.Register();
 
                 // Although this is in the portable library, we register it here so
                 // as to allow for the possibility we might override it.
                 CryptoProviderExchangeDH.Register();
 
-                Platform.FindLocalDelegates.Add(KeyPairRSA.FindLocal);
+
 
                 //Configure the key pair factories
-                KeyPairBaseRSA.KeyPairPublicFactory = KeyPairRSA.KeyPairPublicFactory;
-                KeyPairBaseRSA.KeyPairPrivateFactory = KeyPairRSA.KeyPairPrivateFactory;
+
                 KeyPairBaseDH.KeyPairPublicFactory = KeyPairDH.KeyPairPublicFactory;
                 KeyPairBaseDH.KeyPairPrivateFactory = KeyPairDH.KeyPairPrivateFactory;
 
@@ -98,9 +95,7 @@ namespace Goedel.Cryptography {
         /// <param name="Data">The array to fill with cryptographically strong random bytes.</param>
         /// <param name="Offset">The index of the array to start the fill operation.</param>
         /// <param name="Count">The number of bytes to fill</param>
-        public static void GetRandomBytes(byte[] Data, int Offset, int Count) {
-            RNGCryptoServiceProvider.GetBytes(Data, Offset, Count);
-            }
+        public static void GetRandomBytes(byte[] Data, int Offset, int Count) => RNGCryptoServiceProvider.GetBytes(Data, Offset, Count);
 
 
         }

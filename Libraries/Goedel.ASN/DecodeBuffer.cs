@@ -52,9 +52,7 @@ namespace Goedel.ASN {
         /// Read a byte from the input stream
         /// </summary>
         /// <returns></returns>
-        byte Read () {
-            return Input[ReadPointer++];
-            }
+        byte Read() => Input[ReadPointer++];
 
         /// <summary>
         /// Read an ASN.1 Length value
@@ -224,9 +222,7 @@ namespace Goedel.ASN {
         /// <param name="Flags">ASN.1 Flags</param>
         /// <param name="Code">ASN.1 Code</param>
         /// <returns>Big integer decoded to buffer with MSB in index 0 </returns>
-        public virtual byte[] Decode__Octets(int Flags, int Code) {
-            throw new NotImplementedException();
-            }
+        public virtual byte[] Decode__Octets(int Flags, int Code) => throw new NotImplementedException();
 
 
         /// <summary>
@@ -235,9 +231,7 @@ namespace Goedel.ASN {
         /// <param name="Flags">ASN.1 Flags</param>
         /// <param name="Code">ASN.1 Code</param>
         /// <returns>Big integer decoded to buffer with MSB in index 0 </returns>
-        public virtual Goedel.ASN.Root Decode__Object(int Flags, int Code) {
-            throw new NotImplementedException();
-            }
+        public virtual Goedel.ASN.Root Decode__Object(int Flags, int Code) => throw new NotImplementedException();
 
 
         /// <summary>
@@ -246,9 +240,7 @@ namespace Goedel.ASN {
         /// <param name="Flags">ASN.1 Flags</param>
         /// <param name="Code">ASN.1 Code</param>
         /// <returns>Big integer decoded to buffer with MSB in index 0 </returns>
-        public virtual Goedel.ASN.Root Decode__OIDRef(int Flags, int Code) {
-            throw new NotImplementedException();
-            }
+        public virtual Goedel.ASN.Root Decode__OIDRef(int Flags, int Code) => throw new NotImplementedException();
 
 
         /// <summary>
@@ -257,9 +249,7 @@ namespace Goedel.ASN {
         /// <param name="Flags">ASN.1 Flags</param>
         /// <param name="Code">ASN.1 Code</param>
         /// <returns>Big integer decoded to buffer with MSB in index 0 </returns>
-        public virtual byte[] Decode__Bits(int Flags, int Code) {
-            throw new NotImplementedException();
-            }
+        public virtual byte[] Decode__Bits(int Flags, int Code) => throw new NotImplementedException();
 
         /// <summary>
         /// Decode a sequence of octets.
@@ -267,9 +257,7 @@ namespace Goedel.ASN {
         /// <param name="Flags">ASN.1 Flags</param>
         /// <param name="Code">ASN.1 Code</param>
         /// <returns>Big integer decoded to buffer with MSB in index 0 </returns>
-        public virtual DateTime Decode__Time(int Flags, int Code) {
-            throw new NotImplementedException();
-            }
+        public virtual DateTime Decode__Time(int Flags, int Code) => throw new NotImplementedException();
 
 
         }

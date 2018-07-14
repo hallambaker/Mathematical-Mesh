@@ -128,7 +128,7 @@ namespace Goedel.Protocol.Exchange {
         /// </summary>		
 		public override JPCSession JPCSession {
 			get => JPCRemoteSession;
-			set {JPCRemoteSession = value as JPCRemoteSession; }
+			set => JPCRemoteSession = value as JPCRemoteSession; 
 			}
 
 
@@ -136,9 +136,9 @@ namespace Goedel.Protocol.Exchange {
 		/// Create a client connection to the specified service.
         /// </summary>	
         /// <param name="JPCRemoteSession">The remote session to connect to</param>
-		public KeyExchangeServiceClient (JPCRemoteSession JPCRemoteSession) {
+		public KeyExchangeServiceClient (JPCRemoteSession JPCRemoteSession) =>
 			this.JPCRemoteSession = JPCRemoteSession;
-			}
+
 
 
         /// <summary>

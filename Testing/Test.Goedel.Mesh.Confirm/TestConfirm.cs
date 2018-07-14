@@ -56,9 +56,7 @@ namespace Test.Goedel.Mesh {
         static MeshProfiles MeshProfiles = new MeshProfiles();
 
         [ClassInitialize]
-        public static void InitializeClass (TestContext context) {
-            InitializeClass();
-            }
+        public static void InitializeClass(TestContext context) => InitializeClass();
 
         static string ServicePortalDNS = "portal.example.com";
         static string ServiceConfirmDNS = "confirm.example.com";
@@ -142,7 +140,7 @@ namespace Test.Goedel.Mesh {
             }
 
         [TestMethod]
-        public void ConfirmReject () {
+        public void ConfirmReject() =>
             //// A: Post confirmation Request
             //var AliceConfirmSession = AliceMeshDevice1.SessionConfirm(IDConfirmAlice);
             //var RequestHandle = AliceConfirmSession.PostRequest(IDConfirmBob);
@@ -163,8 +161,6 @@ namespace Test.Goedel.Mesh {
             //UT.Assert.IsTrue(Result2.Status = Accepted);
 
             throw new NYI();
-
-            }
 
 
         [TestMethod]
@@ -188,25 +184,12 @@ namespace Test.Goedel.Mesh {
 
 
         [TestMethod]
-        public void ConfirmMuli () {
-            TestMultiple(20, 10, 10);
+        public void ConfirmMuli() => TestMultiple(20, 10, 10);
 
-            }
-
-        void TestMultiple (int Requesters, int Responders, int Messages) {
-            throw new NYI();
-            // generate Responders
+        void TestMultiple(int Requesters, int Responders, int Messages) => throw new NYI();// generate Responders// set off multiple threads
 
 
-            // set off multiple threads
-
-            }
-
-
-        void TestRequester (List<SessionConfirm> Responders, int Messages) {
-
-            throw new NYI();
-            }
+        void TestRequester(List<SessionConfirm> Responders, int Messages) => throw new NYI();
 
         }
     }

@@ -98,9 +98,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="Pinned">If true, maintain the persistence store in memory
         /// even when there are no outstanding access handles.</param>
-        protected ContainerPersistenceStoreHandleRead (bool Pinned = true) {
-            this.Pinned = Pinned;
-            }
+        protected ContainerPersistenceStoreHandleRead(bool Pinned = true) => this.Pinned = Pinned;
 
         /// <summary>
         /// Construct a read handle for the specified persistence store.
@@ -128,18 +126,14 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="UniqueID">The unique identifier of the object instance to locate.</param>
         /// <returns>True if found, otherwise false.</returns>
-        public bool Contains (string UniqueID) {
-            return PersistenceStore.Contains(UniqueID);
-            }
+        public bool Contains(string UniqueID) => PersistenceStore.Contains(UniqueID);
 
         /// <summary>
         /// Get object instance by unique identifier
         /// </summary>
         /// <param name="UniqueID">The unique identifier of the object instance to locate.</param>
         /// <returns>True if found, otherwise false.</returns>
-        public IPersistenceEntry Get (string UniqueID) {
-            return Get(UniqueID);
-            }
+        public IPersistenceEntry Get(string UniqueID) => Get(UniqueID);
 
         /// <summary>
         /// Return an index for the specified key, creating it if necessary.
@@ -147,9 +141,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="Key">The key for which the index is requested.</param>
         /// <param name="Create">If true, will create an index if none is found.</param>
         /// <returns>The index.</returns>
-        public IPersistenceIndex GetIndex (string Key, bool Create = true) {
-            return GetIndex(Key, Create);
-            }
+        public IPersistenceIndex GetIndex(string Key, bool Create = true) => GetIndex(Key, Create);
 
         /// <summary>
         /// The last object instance that matches the specified key/value condition.
@@ -157,9 +149,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="Key">The key</param>
         /// <param name="Value">The value to match</param>
         /// <returns>The object instance if found, otherwise false.</returns>
-        public IPersistenceIndexEntry Last (string Key, string Value) {
-            return Last(Key, Value);
-            }
+        public IPersistenceIndexEntry Last(string Key, string Value) => Last(Key, Value);
         }
 
     /// <summary>
@@ -292,9 +282,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="Pinned">If true, maintain the persistence store in memory
         /// even when there are no outstanding access handles.</param>
         /// <returns>The read handle</returns>
-        public ContainerPersistenceStoreHandleRead GetHandleRead (bool Pinned = true) {
-            return new ContainerPersistenceStoreHandleRead(this, Pinned);
-            }
+        public ContainerPersistenceStoreHandleRead GetHandleRead(bool Pinned = true) => new ContainerPersistenceStoreHandleRead(this, Pinned);
 
         /// <summary>
         /// Return a write handle for the persistence store
@@ -302,9 +290,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="Pinned">If true, maintain the persistence store in memory
         /// even when there are no outstanding access handles.</param>
         /// <returns>The read handle</returns>
-        public ContainerPersistenceStoreHandleWrite GetHandleWrite (bool Pinned = true) {
-            return new ContainerPersistenceStoreHandleWrite(this, Pinned);
-            }
+        public ContainerPersistenceStoreHandleWrite GetHandleWrite(bool Pinned = true) => new ContainerPersistenceStoreHandleWrite(this, Pinned);
 
         }
 

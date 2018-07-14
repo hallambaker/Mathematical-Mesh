@@ -121,7 +121,10 @@ namespace Goedel.Mesh.Platform.Windows {
         /// instance for each account.
         /// </summary>
         public override void EnumerateAccounts() {
-            if (StoreRoot == null) return;
+            if (StoreRoot == null) {
+                return;
+                }
+
             var Directories = Directory.EnumerateDirectories(StoreRoot);
 
             foreach (var DirectoryEntry in Directories) {
@@ -164,61 +167,41 @@ namespace Goedel.Mesh.Platform.Windows {
         /// The RFC822 Email address. [e.g. "alice@example.com"]
         /// </summary>
         public override string EmailAddress {
-            get {
-                return MessageAccount.SMTP_Email_Address;
-                }
-            set {
-                MessageAccount.SMTP_Email_Address = value;
-                }
+            get => MessageAccount.SMTP_Email_Address;
+            set => MessageAccount.SMTP_Email_Address = value;
             }
 
         /// <summary>
         /// The RFC822 Email address. [e.g. "alice@example.com"]
         /// </summary>
         public override string ReplyToAddress {
-            get {
-                return MessageAccount.SMTP_Reply_To_Email_Address;
-                }
-            set {
-                MessageAccount.SMTP_Reply_To_Email_Address = value;
-                }
+            get => MessageAccount.SMTP_Reply_To_Email_Address;
+            set => MessageAccount.SMTP_Reply_To_Email_Address = value;
             }
 
         /// <summary>
         /// The Display Name. [e.g. "Alice Example"]
         /// </summary>
         public override string DisplayName {
-            get {
-                return MessageAccount.SMTP_Display_Name;
-                }
-            set {
-                MessageAccount.SMTP_Display_Name = value;
-                }
+            get => MessageAccount.SMTP_Display_Name;
+            set => MessageAccount.SMTP_Display_Name = value;
             }
 
         /// <summary>
         /// The Account Name for display to the app user [e.g. "Example.com"]
         /// </summary>
         public override string AccountName {
-            get {
-                return MessageAccount.Account_Name;
-                }
-            set {
-                MessageAccount.Account_Name = value;
-                }
+            get => MessageAccount.Account_Name;
+            set => MessageAccount.Account_Name = value;
             }
 
         /// <summary>
         /// Inbound Mail Connection
         /// </summary>
         public override List<Connection> Inbound {
-            get {
-                return GetInbound ();
-                }
+            get => GetInbound();
 
-            set {
-                SetInbound (value);
-                }
+            set => SetInbound(value);
             }
         //private Connection _Inbound;
 
@@ -226,39 +209,29 @@ namespace Goedel.Mesh.Platform.Windows {
         /// Outbound Mail Connection
         /// </summary>
         public override List<Connection> Outbound {
-            get {
-                return GetOutbound();
-                }
+            get => GetOutbound();
 
-            set {
-                SetOutbound(value);
-                }
+            set => SetOutbound(value);
             }
         //private Connection _Outbound;
 
         /// <summary>
         /// Does the account have S/MIME parameters already?
         /// </summary>
-        public override bool GotSMIME {
-            get {
-                return true;
-                //return MessageAccount.SMTP_Certificate != null;
-                }
-            }
+        public override bool GotSMIME => true;//return MessageAccount.SMTP_Certificate != null;
 
         /// <summary>
         /// Signing Certificate.
         /// </summary>
         public override PublicKey CertificateSign {
-            get {
+            get =>
                 // Here, need to use the SHA1 of the cert to locate the
                 // certificate in the store.
-                return _CertificateSign;
-                }
+                _CertificateSign;
 
             set {
                 _CertificateSign = value;
-                MessageAccount.SMTP_Certificate = 
+                MessageAccount.SMTP_Certificate =
                     _CertificateSign.Certificate.SHA1;
 
                 }
@@ -269,15 +242,14 @@ namespace Goedel.Mesh.Platform.Windows {
         /// Encryption Certificate.
         /// </summary>
         public override PublicKey CertificateEncrypt {
-            get {
+            get =>
                 // Here, need to use the SHA1 of the cert to locate the
                 // certificate in the store.
-                return _CertificateEncrypt;
-                }
+                _CertificateEncrypt;
 
             set {
                 _CertificateEncrypt = value;
-                MessageAccount.SMTP_Encryption_Certificate = 
+                MessageAccount.SMTP_Encryption_Certificate =
                         _CertificateEncrypt.Certificate.SHA1;
                 }
             }
@@ -299,15 +271,12 @@ namespace Goedel.Mesh.Platform.Windows {
         /// <summary>
         /// Construct an empty account information object.
         /// </summary>
-        public MailAccountInfoWLM() {
+        public MailAccountInfoWLM() =>
             // General settings
-            MessageAccount = new MessageAccount ();
-            MessageAccount.Connection_Type = 3;
-            MessageAccount.Make_Available_Offline = 1;
-
-            // 
-
-            }
+            MessageAccount = new MessageAccount {
+                Connection_Type = 3,
+                Make_Available_Offline = 1
+                };// 
 
         //static readonly List<string> UseTLS = { "
 
@@ -390,8 +359,9 @@ namespace Goedel.Mesh.Platform.Windows {
         /// Write out all settings to the console for debug purposes.
         /// </summary>
         public override void Dump() {
-            var XmlWriterSettings = new XmlWriterSettings();
-            XmlWriterSettings.Indent = true;
+            var XmlWriterSettings = new XmlWriterSettings {
+                Indent = true
+                };
             var Writer = XmlWriter.Create(Console.Out, XmlWriterSettings);
             MessageAccount.Write(Writer);
             }
@@ -408,9 +378,7 @@ namespace Goedel.Mesh.Platform.Windows {
         /// <summary>
         /// Update an existing .oeaccount file.
         /// </summary>
-        public override void Update() {
-            MessageAccount.Write(FileName);
-            }
+        public override void Update() => MessageAccount.Write(FileName);
 
         /// <summary>
         /// Create a new account by writing the account settings to a .oeaccount 

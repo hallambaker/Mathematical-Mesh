@@ -16,19 +16,17 @@ namespace Goedel.Protocol.Debug {
     public class TraceDictionary {
 
         TracePoint _Current;
-        string _HostName;
-        string _URI;
 
         /// <summary>
         /// The Service Host Name
         /// </summary>
-        public string HostName  => _HostName;
+        public string HostName { get; }
 
 
         /// <summary>
         /// The HTTP Web Service URI
         /// </summary>
-        public string URI => _URI;
+        public string URI { get; }
 
 
         /// <summary>
@@ -59,8 +57,8 @@ namespace Goedel.Protocol.Debug {
         /// <param name="HostName">The host name for the example</param>
         /// <param name="URI">The web service end point.</param>
         public TraceDictionary(string HostName, string URI) {
-            _HostName = HostName;
-            _URI = URI;
+            this.HostName = HostName;
+            this.URI = URI;
             Traces = new Dictionary<string, TracePoint>();
             }
 
@@ -98,9 +96,7 @@ namespace Goedel.Protocol.Debug {
         /// </summary>
         /// <param name="Payload">The message Payload</param>
         /// <returns>The trace message entry</returns>
-        public TraceMessage Request(JSONObject Payload) {
-            return new TraceMessage(Current, Payload, DateTime.Now, true);
-            }
+        public TraceMessage Request(JSONObject Payload) => new TraceMessage(Current, Payload, DateTime.Now, true);
 
 
         /// <summary>
@@ -124,9 +120,6 @@ namespace Goedel.Protocol.Debug {
     /// Capture a related set of traces.
     /// </summary>
     public class TracePoint {
-        TraceDictionary _TraceDictionary;
-        List<TraceMessage> _Messages;
-
         string _Tag;
 
         /// <summary>
@@ -137,15 +130,7 @@ namespace Goedel.Protocol.Debug {
         /// <summary>
         /// The text of the message
         /// </summary>
-        public List<TraceMessage> Messages {
-            get {
-                return _Messages;
-                }
-
-            set {
-                _Messages = value;
-                }
-            }
+        public List<TraceMessage> Messages { get; set; }
 
         /// <summary>
         /// Current level of trace detail
@@ -157,7 +142,7 @@ namespace Goedel.Protocol.Debug {
         /// <summary>
         /// The current Trace Dictionary
         /// </summary>
-        public TraceDictionary TraceDictionary => _TraceDictionary;
+        public TraceDictionary TraceDictionary { get; }
 
 
         /// <summary>
@@ -166,8 +151,8 @@ namespace Goedel.Protocol.Debug {
         /// <param name="TraceDictionary">The parent dictionary</param>
         /// <param name="Tag">Locator tag within the trace dictionary</param>
         public TracePoint(TraceDictionary TraceDictionary, string Tag) {
-            _TraceDictionary = TraceDictionary;
-            _Messages = new List<TraceMessage>();
+            this.TraceDictionary = TraceDictionary;
+            Messages = new List<TraceMessage>();
             _Tag = Tag;
             }
 

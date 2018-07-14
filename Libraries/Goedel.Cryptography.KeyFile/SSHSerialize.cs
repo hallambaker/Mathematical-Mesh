@@ -1,5 +1,4 @@
-﻿using Goedel.Cryptography.Framework;  // NYI remove dependency by putting factory methods on keypairs
-using Goedel.Cryptography.PKIX;
+﻿using Goedel.Cryptography.PKIX;
 using Goedel.Utilities;
 using System;
 using System.Text;
@@ -26,33 +25,25 @@ namespace Goedel.Cryptography.KeyFile {
         /// Constructor for use decoding the specified input buffer
         /// </summary>
         /// <param name="Data">Data input</param>
-        public DataBuffer(byte[] Data) {
-            this.Data = Data;
-            }
+        public DataBuffer(byte[] Data) => this.Data = Data;
 
         /// <summary>
         /// Reserve space for a data item
         /// </summary>
         /// <param name="Data">Byte array.</param>
-        public void Size(byte[] Data) {
-            Length += (uint) (4 + Data.Length);
-            }
+        public void Size(byte[] Data) => Length += (uint)(4 + Data.Length);
 
         /// <summary>
         /// Reserve space for a data item
         /// </summary>
         /// <param name="Data">UTF8 string data</param>
-        public void Size(string Data) {
-            Length += (uint)(4 + Data.CountUTF8());
-            }
+        public void Size(string Data) => Length += (uint)(4 + Data.CountUTF8());
 
         /// <summary>
         /// Allocate a new data buffer for encoding with enough space for the 
         /// data items whose space has been reserved using the Size() method.
         /// </summary>
-        public void Allocate() {
-            Data = new byte[Length];
-            }
+        public void Allocate() => Data = new byte[Length];
 
         /// <summary>
         /// Encode a 32 bit length
@@ -197,14 +188,14 @@ namespace Goedel.Cryptography.KeyFile {
                     };
 
         /// <summary>The key pair</summary>
-        public override KeyPair KeyPair => new KeyPairRSA (RSAPublicKey );   // NYI convert DSS keypair
+        public override KeyPair KeyPair => KeyPairBaseRSA.Create(RSAPublicKey );   // NYI convert DSS keypair
 
 
         /// <summary>
         /// Construct an SSH_RSA object from an RSAKeyPair
         /// </summary>
         /// <param name="RSAKeyPair">Keypair to construct from</param>
-        public SSH_RSA (KeyPairRSA RSAKeyPair) {
+        public SSH_RSA (KeyPairBaseRSA RSAKeyPair) {
             var PKIXPublicKeyRSA = RSAKeyPair.PKIXPublicKeyRSA;
             Exponent = PKIXPublicKeyRSA.PublicExponent;
             Modulus = PKIXPublicKeyRSA.Modulus;

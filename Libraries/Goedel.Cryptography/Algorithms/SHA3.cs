@@ -45,9 +45,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// <summary>
         /// Initializes a new instance of <see cref="T:System.Security.Cryptography.SHA3" />.
         /// </summary>
-        protected SHA3 () {
-            base.HashSizeValue = 512;
-            }
+        protected SHA3() => HashSizeValue = 512;
 
         /// <summary>
         /// The Padding value
@@ -158,9 +156,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// <param name="a"></param>
         /// <param name="offset"></param>
         /// <returns></returns>
-        protected ulong ROL (ulong a, int offset) {
-            return (((a) << ((offset) % KeccakLaneSizeInBits)) ^ ((a) >> (KeccakLaneSizeInBits - ((offset) % KeccakLaneSizeInBits))));
-            }
+        protected ulong ROL(ulong a, int offset) => (((a) << ((offset) % KeccakLaneSizeInBits)) ^ ((a) >> (KeccakLaneSizeInBits - ((offset) % KeccakLaneSizeInBits))));
 
         /// <summary>
         /// 

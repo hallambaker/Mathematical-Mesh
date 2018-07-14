@@ -38,17 +38,13 @@ namespace Goedel.FSR {
         /// Create new lexical analyzer
         /// </summary>
         /// <param name="Stream">Input data</param>
-        public LexReader(Stream Stream) {
-            Init(Stream);
-            }
+        public LexReader(Stream Stream) => Init(Stream);
 
         /// <summary>
         /// Create new lexical analyzer
         /// </summary>
         /// <param name="TextReader">Input data</param>
-        public LexReader(TextReader TextReader) {
-            Init(TextReader);
-            }
+        public LexReader(TextReader TextReader) => Init(TextReader);
 
         /// <summary>
         /// Initialize the reader
@@ -63,9 +59,7 @@ namespace Goedel.FSR {
         /// Initialize the reader
         /// </summary>
         /// <param name="TextReader">Input data</param>
-        protected void Init(TextReader TextReader) {
-            this.TextReader = TextReader;
-            }
+        protected void Init(TextReader TextReader) => this.TextReader = TextReader;
 
         /// <summary>
         /// Free resources.
@@ -118,9 +112,7 @@ namespace Goedel.FSR {
         /// Unget the last character read. Only one character is buffered, multiple calls to 
         /// unget without calling get() have no effect.
         /// </summary>
-        public virtual void UnGet() {
-            Pending = true;
-            }
+        public virtual void UnGet() => Pending = true;
 
         }
 
@@ -146,9 +138,7 @@ namespace Goedel.FSR {
         /// Constructor
         /// </summary>
         /// <param name="Data">The string to be read.</param>
-        public LexStringReader(string Data) {
-            String = Data;
-            }
+        public LexStringReader(string Data) => String = Data;
 
         /// <summary>
         /// Dispose method.

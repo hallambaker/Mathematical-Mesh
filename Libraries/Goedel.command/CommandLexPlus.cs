@@ -65,9 +65,7 @@ namespace Goedel.Command {
         /// Reset the value buffers to start a new parse.
         /// </summary>
         /// <param name="c">The character read</param>
-        public virtual void Reset (int c) {
-            Reset();
-            }
+        public virtual void Reset(int c) => Reset();
 
         /// <summary>
         /// Do nothing
@@ -80,25 +78,19 @@ namespace Goedel.Command {
         /// Add a character to the value buffer
         /// </summary>
         /// <param name="c">The character read</param>
-        public virtual void AddValue (int c) {
-            BuildValue.Append((char)c);
-            }
+        public virtual void AddValue(int c) => BuildValue.Append((char)c);
 
         /// <summary>
         /// Add a character to the flag buffer
         /// </summary>
         /// <param name="c">The character read</param>
-        public virtual void AddFlag (int c) {
-            BuildFlag.Append((char)c);
-            }
+        public virtual void AddFlag(int c) => BuildFlag.Append((char)c);
 
         /// <summary>
         /// N of possible NO flag
         /// </summary>
         /// <param name="c">The character read</param>
-        public virtual void AddFlagN (int c) {
-            BuildFlag.Append((char)c);
-            }
+        public virtual void AddFlagN(int c) => BuildFlag.Append((char)c);
 
         /// <summary>
         /// O of possible NO flag

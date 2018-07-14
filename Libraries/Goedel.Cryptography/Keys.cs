@@ -324,6 +324,18 @@ namespace Goedel.Cryptography {
         /// <returns>The result of the key agreement.</returns>
         public virtual KeyAgreementResult Agreement(KeyPair KeyPair) => throw new CryptographicOperationNotSupported();
 
+
+        /// <summary>
+        /// Returns a new KeyPair instance which only has the public values.
+        /// </summary>
+        /// <returns></returns>
+        public abstract KeyPair KeyPairPublic();
+
+        /// <summary>
+        /// If true, the provider only provides the public key values.
+        /// </summary>
+        public abstract bool PublicOnly { get; }
+
         }
 
 
@@ -369,6 +381,22 @@ namespace Goedel.Cryptography {
         /// platform provider.
         /// </summary>
         public static FactoryRSAPrivateKeyDelegate KeyPairPrivateFactory;
+
+        /// <summary>
+        /// Create a KeyPair for the specified parameters.
+        /// </summary>
+        /// <param name="Public">The public key parameters.</param>
+        /// <returns>The created key pair.</returns>
+        public static KeyPair Create(PKIXPublicKeyRSA Public) =>
+            KeyPairPublicFactory(Public);
+
+        /// <summary>
+        /// Create a KeyPair for the specified parameters.
+        /// </summary>
+        /// <param name="Private">The private key parameters.</param>
+        /// <returns>The created key pair.</returns>
+        public static KeyPair Create(PKIXPrivateKeyRSA Private) =>
+            KeyPairPrivateFactory(Private);
 
         }
 
@@ -455,6 +483,9 @@ namespace Goedel.Cryptography {
         /// platform provider.
         /// </summary>
         public static FactoryDHPrivateKeyDelegate KeyPairPrivateFactory = KeyPairDH.KeyPairPrivateFactory;
+
+
+
 
         }
 

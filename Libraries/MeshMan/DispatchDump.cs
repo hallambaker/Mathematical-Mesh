@@ -86,17 +86,11 @@ namespace Goedel.Mesh.MeshMan {
 
             }
 
-        void Report (SessionApplication Registration) {
-            Report(Registration.SignedApplicationProfile);
-            }
+        void Report(SessionApplication Registration) => Report(Registration.SignedApplicationProfile);
 
-        void Report (SignedApplicationProfile Application) {
-            ReportWriteLine("    Profile {0}", Application.UDF);
-            }
+        void Report(SignedApplicationProfile Application) => ReportWriteLine("    Profile {0}", Application.UDF);
 
-        void Report (SessionDevice Registration) {
-            Report(Registration.DeviceProfile);
-            }
+        void Report(SessionDevice Registration) => Report(Registration.DeviceProfile);
 
         void Report (DeviceProfile Device) {
             ReportWriteLine("    Profile {0}", Device.UDF);

@@ -96,8 +96,6 @@ namespace Goedel.Mesh.Portal {
         /// Poll for completion message
         /// </summary>
         /// <param name="TimeOut">Timeout value in seconds</param>
-        public void Await (int TimeOut = -1) {
-            throw new NYI();
-            }
+        public void Await(int TimeOut = -1) => throw new NYI();
         }
     }

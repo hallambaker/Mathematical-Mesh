@@ -128,30 +128,6 @@ namespace Goedel.Cryptography {
         public override int SharesMaximum  => 16;
 
 
-        /// <summary>
-        /// Encrypt the bulk key.
-        /// </summary>
-        /// <param name="Data">The data to encrypt.</param>
-        /// <param name="Algorithm">Composite encryption algorithm.</param>
-        /// <param name="Wrap">If true create a new CryptoData instance that
-        /// wraps the parameters supplied in Data.</param> 
-        /// <returns>The encoder</returns>
-        public override CryptoDataExchange Encrypt(CryptoData Data,
-            CryptoAlgorithmID Algorithm = CryptoAlgorithmID.Default, bool Wrap = false) {
-
-            var Agreement = DHKeyPair.Agreement();
-            var KeyDerive = Agreement.KeyDerive;
-
-            var Exchange = Platform.KeyWrapRFC3394.Wrap(
-                        KeyDerive.ClientToServerEncrypt(Data.Key.Length*8), Data.Key);
-            
-            var Result = new CryptoDataExchange(Algorithm, Data, this) {
-                Exchange = Exchange,
-                Ephemeral = new KeyPairDH(Agreement.DiffeHellmanPublic)
-                };
-            return Result;
-            }
-
         static readonly byte[] MasterKeyInfo = "master".ToUTF8();
 
         /// <summary>
@@ -159,14 +135,16 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <returns>The encoder</returns>
         public override void Encrypt (byte[] Key,
-            out byte[] Exchange, out KeyPair Ephemeral) {
+            out byte[] Exchange, out KeyPair Ephemeral, byte[] Salt=null) {
+
+            Salt = Salt ?? MasterKeyInfo;
 
             var Agreement = DHKeyPair.Agreement();
             var KeyDerive = Agreement.KeyDerive;
             Console.Write($"PRK Encrypt is {Agreement.IKM.ToStringBase16()}");
             // Need to do some form of key derrivation here.
 
-            var EncryptionKey = KeyDerive.Derive(MasterKeyInfo, Length: 256);
+            var EncryptionKey = KeyDerive.Derive(Salt, Length: 256);
             Console.Write($"EncryptionKey Encrypt is {EncryptionKey.ToStringBase16()}");
             
             Exchange = Platform.KeyWrapRFC3394.Wrap(EncryptionKey, Key);
@@ -181,12 +159,15 @@ namespace Goedel.Cryptography {
         /// <param name="Ephemeral">Ephemeral key input (required for DH)</param>
         /// <param name="AlgorithmID">The algorithm to use.</param>
         /// <param name="Partial">Partial key agreement value (for recryption)</param>
+        /// <param name="Salt">Optional salt value for use in key derivation. If specified
+        /// must match the salt used to encrypt.</param>
         /// <returns>The decoded data instance</returns>
         public override byte[] Decrypt(
                     byte[] EncryptedKey,
                     KeyPair Ephemeral,
                     CryptoAlgorithmID AlgorithmID = CryptoAlgorithmID.Default,
-                    KeyAgreementResult Partial = null) {
+                    KeyAgreementResult Partial = null, 
+                    byte[] Salt = null) {
 
             var DHPublic = Ephemeral as KeyPairDH;
             Assert.NotNull(DHPublic, KeyTypeMismatch.Throw);

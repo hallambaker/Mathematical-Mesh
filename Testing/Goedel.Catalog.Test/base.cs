@@ -58,7 +58,7 @@ namespace Goedel.Catalog.Test {
             Directory.CreateDirectory(DirectoryDecrypted);
             Directory.CreateDirectory(DirectoryTarget);
             Directory.CreateDirectory(DirectoryArchive);
-            CryptographyFramework.Initialize();
+            CryptographyWindows.Initialize();
 
             ShellDispatchCommon = GetShell("TestFile.dcon");
             // OK so here create ourselves a set of test keys for encryption and signature

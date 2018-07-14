@@ -238,9 +238,8 @@ namespace Goedel.Cryptography.KeyFile {
         /// <param name="Object">User data</param>	
 		public ParseError (LexReader Object) : 
 				base (global::System.String.Format ("The file {0} could not be read",
-					Object.FilePath					)) {
-			UserData = Object;
-			}
+					Object.FilePath					)) => UserData = Object;
+
 
 		/// <summary>
         /// Construct instance for exception using a userdata parameter of
@@ -250,9 +249,7 @@ namespace Goedel.Cryptography.KeyFile {
 		/// <param name="Inner">Inner Exception</param>	
 		public ParseError (LexReader Object, System.Exception Inner) : 
 				base (global::System.String.Format ("The file {0} could not be read",
-					Object.FilePath					), Inner) {
-			UserData = Object;
-			}
+					Object.FilePath					), Inner) => UserData = Object;
 
 
 

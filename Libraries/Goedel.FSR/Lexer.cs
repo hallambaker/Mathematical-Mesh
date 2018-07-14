@@ -217,16 +217,12 @@ namespace Goedel.FSR {
         /// Create new instance for the specified reader.
         /// </summary>
         /// <param name="Reader">Input data</param>
-        public Lexer (LexReader Reader) : this () {
-            this.Reader = Reader;
-            }
+        public Lexer(LexReader Reader) : this() => this.Reader = Reader;
 
         /// <summary>
         /// Create new instance for the specified reader.
         /// </summary>
-        public Lexer() {
-            Init();
-            }
+        public Lexer() => Init();
 
         /// <summary>
         /// Reset method. Is called at the start of each

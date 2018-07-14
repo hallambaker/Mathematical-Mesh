@@ -53,9 +53,7 @@ namespace Goedel.Mesh.Platform.Windows {
         /// <param name="KeyName">The Registry key to write to.</param>
         /// <param name="Path">The Registry Path to write to</param>
         /// <returns>File name of the stored file.</returns>
-        public static string ReadFile(string KeyName, string Path) {
-            return ReadFile(KeyName, Path, null);
-            }
+        public static string ReadFile(string KeyName, string Path) => ReadFile(KeyName, Path, null);
 
         /// <summary>
         /// Get the file name to read a file from the specified keyname and path.
@@ -72,7 +70,7 @@ namespace Goedel.Mesh.Platform.Windows {
                 return null;
                 }
 
-            UDF = UDF != null? UDF : Key.GetValue("") as string;
+            UDF = UDF ?? Key.GetValue("") as string;
             var FileName = Key.GetValue(UDF) as string;
             return FileName;
             }
@@ -96,9 +94,7 @@ namespace Goedel.Mesh.Platform.Windows {
         /// <param name="KeyName">The Registry key to write to.</param>
         /// <param name="UDF">The fingerprint of the data object.</param>
         /// <returns>The registry value</returns>
-        public static string Read(string KeyName, out string UDF) {
-            return Read(KeyName, null, out UDF);
-            }
+        public static string Read(string KeyName, out string UDF) => Read(KeyName, null, out UDF);
 
         /// <summary>
         /// Read registry entries for the specified parameters.
@@ -116,7 +112,7 @@ namespace Goedel.Mesh.Platform.Windows {
                 return null;
                 }
 
-            Entry = Entry != null ? Entry : Key.GetValue("") as string;
+            Entry = Entry ?? Key.GetValue("") as string;
             UDF = Key.GetValue(Entry) as string;
 
             return Entry;
@@ -131,10 +127,14 @@ namespace Goedel.Mesh.Platform.Windows {
             var Result = new Dictionary<string, string>();
 
             var Hive = Microsoft.Win32.Registry.CurrentUser;
-            if (Hive == null) return Result;
+            if (Hive == null) {
+                return Result;
+                }
 
             var Key = Hive.OpenSubKey(KeyName);
-            if (Key == null) return Result;
+            if (Key == null) {
+                return Result;
+                }
 
             foreach (var SubKey in Key.GetValueNames()) {
                 var Value = Key.GetValue(SubKey);
@@ -155,17 +155,22 @@ namespace Goedel.Mesh.Platform.Windows {
             var Result = new List<RegistryKeySet>();
 
             var Hive = Microsoft.Win32.Registry.CurrentUser;
-            if (Hive == null) return Result;
+            if (Hive == null) {
+                return Result;
+                }
 
             var Key = Hive.OpenSubKey(KeyName);
-            if (Key == null) return Result;
+            if (Key == null) {
+                return Result;
+                }
 
             string Default = Key.GetValue("") as string;
 
             foreach (var SubKey in Key.GetSubKeyNames()) {
                 var Value = Key.OpenSubKey(SubKey);
-                var RegistryKeySet = new RegistryKeySet(SubKey, Value);
-                RegistryKeySet.Default = SubKey == Default;
+                var RegistryKeySet = new RegistryKeySet(SubKey, Value) {
+                    Default = SubKey == Default
+                    };
                 Result.Add(RegistryKeySet);
                 }
 
@@ -238,18 +243,14 @@ namespace Goedel.Mesh.Platform.Windows {
         /// </summary>
         /// <param name="Key">The Key</param>
         /// <param name="Value">The value.</param>
-        public void Write(string Key, string Value) {
-            RegistryKey.SetValue(Key, Value);
-            }
+        public void Write(string Key, string Value) => RegistryKey.SetValue(Key, Value);
 
         /// <summary>
         /// Write a multiple string value
         /// </summary>
         /// <param name="Key">The Key</param>
         /// <param name="Value">The value.</param>
-        public void Write(string Key, List<string> Value) {
-            RegistryKey.SetValue(Key, Value);
-            }
+        public void Write(string Key, List<string> Value) => RegistryKey.SetValue(Key, Value);
 
         }
     }

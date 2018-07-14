@@ -62,19 +62,13 @@ namespace Goedel.Cryptography.Dare.Test {
         /// <param name="Comment">Comment to be written to the log.</param>
         /// <param name="ContainerType">The Container type.</param>
         /// <param name="FileStatus">The file status in which to open the container.</param>
-        public TestItemContainerPersistenceStore (string FileName, string Type = null,
+        public TestItemContainerPersistenceStore(string FileName, string Type = null,
                     string Comment = null, bool ReadOnly = false,
                     FileStatus FileStatus = FileStatus.OpenOrCreate,
                     ContainerType ContainerType = ContainerType.Chain) : base(
-                        FileName, Type, Comment, ReadOnly, FileStatus, ContainerType) {
-            IndexKeyUserProfileUDF = GetIndex(TestItem.KeyUserProfileUDF);
-            }
+                        FileName, Type, Comment, ReadOnly, FileStatus, ContainerType) => IndexKeyUserProfileUDF = GetIndex(TestItem.KeyUserProfileUDF);
 
-        TestItem Get (IPersistenceEntry DataItem) {
-
-            return TestItem.FromJSON(DataItem.JSONReader, true);
-
-            }
+        TestItem Get(IPersistenceEntry DataItem) => TestItem.FromJSON(DataItem.JSONReader, true);
 
 
         /// <summary>
@@ -105,19 +99,16 @@ namespace Goedel.Cryptography.Dare.Test {
         /// <param name="MaxResult">Maximum number of results to return.</param>
         /// <param name="OnOrAfter">Only return versions that are on or after the specified value.</param>
         /// <returns>The list of previous versions.</returns>
-        public List<TestItem> GetPrevious (TestItem TestItem, int MaxResult, DateTime OnOrAfter) {
-            throw new NYI();
-            }
+        public List<TestItem> GetPrevious(TestItem TestItem, int MaxResult, DateTime OnOrAfter) => throw new NYI();
 
 
-        public TestItem GetRecord (int Record) {
+        public TestItem GetRecord(int Record) =>
             // read the header and data from container
 
             //
 
 
             throw new NYI();
-            }
 
 
 

@@ -25,9 +25,8 @@ namespace ExampleGenerator {
         /// <param name="Dispatch"></param>
         /// <param name="args"></param>
         /// <param name="index"></param>
-        public static void Help (DispatchShell Dispatch, string[] args, int index) {
+        public static void Help (DispatchShell Dispatch, string[] args, int index) =>
             Brief(Description, DefaultCommand, Entries);
-            }
 
         public static DescribeCommandEntry DescribeHelp = new DescribeCommandEntry() {
             Identifier = "help",
@@ -41,9 +40,9 @@ namespace ExampleGenerator {
         /// <param name="Dispatch">The command description.</param>
         /// <param name="args">The set of arguments.</param>
         /// <param name="index">The first unparsed argument.</param>
-        public static void About (DispatchShell Dispatch, string[] args, int index) {
+        public static void About (DispatchShell Dispatch, string[] args, int index) =>
             FileTools.About();
-            }
+
 
         public static DescribeCommandEntry DescribeAbout = new DescribeCommandEntry() {
             Identifier = "about",
@@ -51,9 +50,9 @@ namespace ExampleGenerator {
             Entries = new List<DescribeEntry>() { }
             };
 
-        static bool IsFlag(char c) {
-            return (c == UnixFlag) | (c == WindowsFlag) ;
-            }
+        static bool IsFlag(char c) =>
+            (c == UnixFlag) | (c == WindowsFlag) ;
+
 
 
         static CommandLineInterpreter () {
@@ -100,9 +99,9 @@ namespace ExampleGenerator {
 			}
 
 
-        public void MainMethod(MakeSiteDocs Dispatch, string[] Args) {
+        public void MainMethod(MakeSiteDocs Dispatch, string[] Args) =>
 			Dispatcher (Entries, DefaultCommand, Dispatch, Args, 0);
-            } // Main
+
 
 
 
@@ -192,9 +191,8 @@ namespace ExampleGenerator {
 	// to eliminate the redundant code
     public class _MakeSiteDocs : global::Goedel.Command.DispatchShell {
 
-		public virtual void DefaultCommand ( DefaultCommand Options) {
+		public virtual void DefaultCommand ( DefaultCommand Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
 
         } // class _MakeSiteDocs

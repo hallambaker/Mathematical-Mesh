@@ -103,18 +103,68 @@ namespace Goedel.Cryptography.Dare {
 
             }
 
-        static void CalculateParameters(
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ProviderEncrypt"></param>
+        /// <param name="MasterSecret"></param>
+        /// <param name="Salt"></param>
+        /// <param name="KeyEncrypt"></param>
+        /// <param name="KeyMac"></param>
+        /// <param name="IV"></param>
+        public static void CalculateParameters(
                 CryptoProviderEncryption ProviderEncrypt, byte[] MasterSecret, byte[] Salt,
+                out byte[] KeyEncrypt, out byte[] KeyMac, out byte[] IV) =>
+            CalculateParameters (ProviderEncrypt.KeySize, ProviderEncrypt.BlockSize,
+                MasterSecret, Salt, out KeyEncrypt, out KeyMac, out IV) ;
+            
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="KeySize"></param>
+        /// <param name="BlockSize"></param>
+        /// <param name="MasterSecret"></param>
+        /// <param name="Salt"></param>
+        /// <param name="KeyEncrypt"></param>
+        /// <param name="KeyMac"></param>
+        /// <param name="IV"></param>
+        public static void CalculateParameters(
+                int KeySize, int BlockSize, byte[] MasterSecret, byte[] Salt,
                 out byte[] KeyEncrypt, out byte[] KeyMac, out byte[] IV) {
 
             var KDF = new KeyDeriveHKDF(MasterSecret, Salt, CryptoAlgorithmID.HMAC_SHA_2_256);
             KeyEncrypt = KDF.Derive(InfoKeyEncrypt, 256);
-            KeyMac = KDF.Derive(InfoKeyMAC, ProviderEncrypt.KeySize);
-            IV = KDF.Derive(InfoKeyIV, ProviderEncrypt.BlockSize);
-
-            
+            KeyMac = KDF.Derive(InfoKeyMAC, KeySize);
+            IV = KDF.Derive(InfoKeyIV, BlockSize);
             Console.WriteLine($"Encryption Session\n   Master {MasterSecret.ToStringBase16()}\n  Salt{Salt.ToStringBase16()}\n  IV  {IV.ToStringBase16()}\n  Key {KeyEncrypt.ToStringBase16()}");
+            }
 
+        /// <summary>
+        /// Create a .NET CryptoStream for the specified parameters.
+        /// </summary>
+        /// <param name="Stream">The stream to bind.</param>
+        /// <param name="ProviderEncrypt">The encryption provider.</param>
+        /// <param name="MasterSecret">The master secret value.</param>
+        /// <param name="Salt">The salt value to be used to derrive the specififc parameters.</param>
+        /// <param name="Write">If true, this is a write stream and the <paramref name="Stream"/> is 
+        /// only written to. Otherwise, it is a read stream and only read operations are
+        /// performed.</param>
+        /// <param name="Encrypt">If true, create an encryption stream, otherwise
+        /// create a decryption stream.</param>
+        /// <returns>The CryptoStream that was created.</returns>
+        public static CryptoStream GetCryptoStream(
+                Stream Stream, 
+                CryptoProviderEncryption ProviderEncrypt,
+                byte[] MasterSecret,
+                byte[] Salt,
+                bool Write,
+                bool Encrypt) {
+            CalculateParameters(ProviderEncrypt, MasterSecret, Salt,
+                    out var KeyEncrypt, out var KeyMac, out var IV);
+            var Mode = Write ? CryptoStreamMode.Write : CryptoStreamMode.Read;
+            return Encrypt ? ProviderEncrypt.GetEncryptionStream(Stream, KeyEncrypt, IV, Mode) :
+                ProviderEncrypt.GetDecryptionStream(Stream, KeyEncrypt, IV, Mode);
             }
 
 
@@ -137,9 +187,52 @@ namespace Goedel.Cryptography.Dare {
             return ProviderEncrypt.Encrypt(Data, KeyEncrypt, IV);
             }
 
+        /// <summary>
+        /// Encrypt an array of bytes using the specified crypto provider, key and salt.
+        /// </summary>
+        /// <param name="Output">The stream to which the output is to be written</param>
+        /// <param name="ProviderEncrypt">The encryption provider to use</param>
+        /// <param name="MasterSecret">The master secret from which the key and IV are derived.</param>
+        /// <param name="Salt">The salt value</param>
+        /// <returns>The encrypted data without any additional padding beyond that required by the
+        /// encryption mode.</returns>
+        public static CryptoStream GetEncryptor (
+                Stream Output,
+                CryptoProviderEncryption ProviderEncrypt,
+                byte[] MasterSecret,
+                byte[] Salt) {
+            CalculateParameters(ProviderEncrypt, MasterSecret, Salt,
+                    out var KeyEncrypt, out var _KeyMac, out var IV);
+            var EncryptionTransform = ProviderEncrypt.CreateEncryptor(KeyEncrypt, IV);
+            return new CryptoStream(Output, EncryptionTransform, CryptoStreamMode.Write);
+            }
 
 
 
+        /// <summary>
+        /// Encrypt an array of bytes using the specified crypto provider, key and salt.
+        /// </summary>
+        /// <param name="ProviderEncrypt">The encryption provider to use</param>
+        /// <param name="MasterSecret">The master secret from which the key and IV are derived.</param>
+        /// <param name="Salt">The salt value</param>
+        /// <param name="Data">The data to encrypt.</param>
+        /// <returns>The encrypted data without any additional padding beyond that required by the
+        /// encryption mode.</returns>
+        public static byte[] Decrypt(
+                CryptoProviderEncryption ProviderEncrypt,
+                byte[] MasterSecret,
+                byte[] Salt,
+                byte[] Data) {
+            CalculateParameters(ProviderEncrypt, MasterSecret, Salt,
+                    out var KeyEncrypt, out var _KeyMac, out var IV);
+            return ProviderEncrypt.Decrypt(Data, KeyEncrypt, IV);
+            }
+
+        /// <summary>
+        /// The output crypto stream.
+        /// </summary>
+        protected CryptoStream CryptoStreamWrite;
+        bool Finalized = false;
 
         /// <summary>
         /// Process a data chunk and obtain a partial result.
@@ -152,7 +245,20 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="Length">The number of bytes to process</param>
         /// <returns>The result of processing the partial message. 
         /// This MAY be a zero length byte array.</returns>
-        public abstract void Process(byte[] Input, bool Final, long First = 0, long Length = -1);
+        public virtual void Process(byte[] Input, bool Final, long First = 0, long Length = -1) {
+
+            Assert.False(Finalized);
+            Assert.True(Input.LongLength < Int32.MaxValue);
+
+            Length = Length < 0 ? Input.LongLength - First : Length;
+
+            CryptoStreamWrite.Write(Input, (int)First, (int)Length);
+            if (Final) {
+                CryptoStreamWrite.Close();
+                CryptoStreamWrite.Dispose();
+                Finalized = true;
+                }
+            }
 
         /// <summary>
         /// Enhance the specified plaintext data under the specified Master Secret and Sale (if specified).
@@ -298,6 +404,27 @@ namespace Goedel.Cryptography.Dare {
             }
 
 
+
+        JBCDStream JBCDStream;
+
+        /// <summary>
+        /// Create a buffered writer for an Enhanced Data Sequence
+        /// </summary>
+        /// <param name="MasterSecret"></param>
+        /// <param name="ProviderEncrypt">Crypto algorithm provider</param>
+        /// <param name="Salt"></param>
+        /// <param name="OutputStream">The output stream</param>
+        /// <param name="ContentLength">The content length. If this value is 0 or greater, the 
+        /// PayloadLength property will be set to the value of the payload data length field. </param>
+        public EnhancedDataSequenceWriter(
+                    JBCDStream OutputStream,
+                    byte[] MasterSecret,
+                    CryptoProviderEncryption ProviderEncrypt = null,
+                    byte[] Salt = null,
+                    long ContentLength = -1
+                    ) : base(ProviderEncrypt, MasterSecret, true, Salt) => JBCDStream = OutputStream;
+
+
         /// <summary>
         /// Process a data chunk and obtain a partial result.
         /// </summary>
@@ -341,7 +468,7 @@ namespace Goedel.Cryptography.Dare {
             Assert.True(Final | Remainder == 0); // Hack, constrain input length to multiple of whole blocks
 
             if (Final) {
-                var FinalBlock = EncryptionTransform.TransformFinalBlock(Input, (int)First,(int) Length);
+                var FinalBlock = EncryptionTransform.TransformFinalBlock(Input, (int)First, (int)Length);
                 if (PayloadLength < 0) {
                     OutputStream.WriteBinaryBegin(FinalBlock.Length, true);
                     }
@@ -357,6 +484,7 @@ namespace Goedel.Cryptography.Dare {
                 OutputStream.WriteBinaryPart(OutputBuffer);
                 }
             }
+
 
 
 
@@ -394,20 +522,13 @@ namespace Goedel.Cryptography.Dare {
             }
 
 
-
-
-
-        void ProcessPlaintext(byte[] Input, bool Final, long First, long Length) {
-            }
-
-
         }
     /// <summary>
     /// 
     /// </summary>
     public class EnhancedDataSequenceReader : EnhancedDataSequence {
 
-        bool Finalized = false;
+
         Stream OutputStream;
 
         /// <summary>
@@ -417,11 +538,13 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="MasterSecret"></param>
         /// <param name="ProviderDecrypt"></param>
         /// <param name="Salt"></param>
+        /// <param name="Write"></param>
         public EnhancedDataSequenceReader(
                     Stream OutputStream,
                     byte[] MasterSecret,
                     CryptoProviderEncryption ProviderDecrypt = null,
-                    byte[] Salt = null) : base () {
+                    byte[] Salt = null,
+                    bool Write=true) : base () {
             this.OutputStream = OutputStream;
             if (Salt == null) {
                 // read the salt from the stream
@@ -429,65 +552,9 @@ namespace Goedel.Cryptography.Dare {
 
             SetParameters(ProviderDecrypt, MasterSecret, false, Salt);
 
-            CryptoStreamWrite = new CryptoStream(OutputStream, EncryptionTransform, CryptoStreamMode.Write);
+            CryptoStreamWrite = new CryptoStream(OutputStream, EncryptionTransform, 
+                    Write ? CryptoStreamMode.Write : CryptoStreamMode.Read);
             }
-
-        CryptoStream CryptoStreamWrite;
-
-        /// <summary>
-        /// Process a data chunk and obtain a partial result.
-        /// </summary>
-        /// <param name="Input">The input data to process. Currently limited to 2^32 bytes. This is unlikely to
-        /// be a concern since the need to buffer the data internally makes presenting input data in large chunks 
-        /// highly undesirable.</param>
-        /// <param name="Final">If true, this is the final data chunk.</param>
-        /// <param name="First">The index position of the first byte in the input data to process</param>
-        /// <param name="Length">The number of bytes to process</param>
-        /// <returns>The result of processing the partial message. 
-        /// This MAY be a zero length byte array.</returns>
-        public override void Process(byte[] Input, bool Final, long First = 0, long Length = -1) {
-
-            Assert.False(Finalized);
-            Assert.True(Input.LongLength < Int32.MaxValue);
-
-            Length = Length < 0 ? Input.LongLength - First : Length;
-
-            CryptoStreamWrite.Write(Input, (int) First, (int) Length);
-            if (Final) {
-                //CryptoStreamWrite.FlushFinalBlock();
-                CryptoStreamWrite.Close();
-                CryptoStreamWrite.Dispose();
-                }
-
-
-
-            //int BlockSize = EncryptionTransform.InputBlockSize;
-            //int Blocks = (int)Length / BlockSize;
-            //if (Final) {
-            //    // need to process the initial blocks first then the final
-
-            //    int InputLength = (Blocks-1) * BlockSize;
-            //    var OutputBuffer = new byte[InputLength];
-            //    EncryptionTransform.TransformBlock(Input, (int)First, InputLength, OutputBuffer, 0);
-            //    OutputStream.Write(OutputBuffer);
-
-            //    var FinalBlock = EncryptionTransform.TransformFinalBlock(Input, (int)First+InputLength, BlockSize);
-            //    OutputStream.Write(FinalBlock);
-            //    Finalized = true;
-            //    }
-            //else {
-
-
-            //    int InputLength = Blocks * BlockSize;
-            //    int Remainder = (int)Length - InputLength;
-            //    Assert.True(Final | Remainder == 0); // Hack, constrain input length to multiple of whole blocks
-
-            //    var OutputBuffer = new byte[InputLength];
-            //    EncryptionTransform.TransformBlock(Input, (int)First, InputLength, OutputBuffer, 0);
-            //    OutputStream.Write(OutputBuffer);
-            //    }
-            }
-
 
         }
     }

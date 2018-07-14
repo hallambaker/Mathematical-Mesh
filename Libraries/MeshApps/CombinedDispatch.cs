@@ -46,9 +46,7 @@ namespace Goedel.Combined.Shell.Client {
 
         public ResultBase LastResult;
 
-        public CombinedShell (MeshMachine RegistrationMachine = null) {
-            this.MeshMachine = RegistrationMachine ?? new MeshMachineCached();
-            }
+        public CombinedShell(MeshMachine RegistrationMachine = null) => this.MeshMachine = RegistrationMachine ?? new MeshMachineCached();
 
 
         public override void PersonalCreate (PersonalCreate Options) {

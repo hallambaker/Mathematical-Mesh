@@ -34,8 +34,8 @@ namespace Goedel.Cryptography.Jose {
 
         /// <summary>The signed data.</summary>
         public override byte[] Data {
-            get { return CipherText; }
-            set { CipherText = value; }
+            get => CipherText;
+            set => CipherText = value;
             }
 
 
@@ -511,9 +511,7 @@ namespace Goedel.Cryptography.Jose {
         /// </summary>
         /// <param name="DecryptionKey">Key</param>
         /// <returns>The Recipient data for the specified key, if found.</returns>
-        public Recipient MatchRecipient(KeyPair DecryptionKey) {
-            return MatchRecipient(DecryptionKey.UDF);
-            }
+        public Recipient MatchRecipient(KeyPair DecryptionKey) => MatchRecipient(DecryptionKey.UDF);
 
         /// <summary>
         /// Match a recipient header by key identifier.

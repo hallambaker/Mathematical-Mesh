@@ -27,7 +27,7 @@ using System.Threading.Tasks;
 using System.Security.Cryptography;
 using Goedel.Utilities;
 
-namespace Goedel.Cryptography.Framework {
+namespace Goedel.Cryptography.Standard {
     /// <summary>
     /// Provider for bulk authentication algorithms (e.g. HMAC-SHA256).
     /// </summary>
@@ -63,9 +63,7 @@ namespace Goedel.Cryptography.Framework {
         /// implementation.
         /// </summary>
         /// <param name="KeyedHashAlgorithm">The hash algorithm to construct provider for.</param>
-        protected CryptoProviderAuthentication(KeyedHashAlgorithm KeyedHashAlgorithm) {
-            this.KeyedHashAlgorithm = KeyedHashAlgorithm;
-            }
+        protected CryptoProviderAuthentication(KeyedHashAlgorithm KeyedHashAlgorithm) => this.KeyedHashAlgorithm = KeyedHashAlgorithm;
 
         /// <summary>Create an encoder for the specified data</summary>
         /// <param name="Algorithm">The key wrap algorithm</param>
@@ -184,9 +182,7 @@ namespace Goedel.Cryptography.Framework {
         public override int Size => 256;
 
 
-        private static CryptoProvider Factory(int KeySize, CryptoAlgorithmID Ignore) {
-            return new CryptoProviderHMACSHA2_256();
-            }
+        private static CryptoProvider Factory(int KeySize, CryptoAlgorithmID Ignore) => new CryptoProviderHMACSHA2_256();
 
         /// <summary>
         /// Constructor, algorithm takes no parameters.
@@ -243,9 +239,7 @@ namespace Goedel.Cryptography.Framework {
         /// <param name="KeySize">The key size (ignored)</param>
         /// <param name="Ignore">The cryptographic algorithn (ignored)</param>
         /// <returns></returns>
-        private static CryptoProvider Factory(int KeySize, CryptoAlgorithmID Ignore) {
-            return new CryptoProviderHMACSHA2_512();
-            }
+        private static CryptoProvider Factory(int KeySize, CryptoAlgorithmID Ignore) => new CryptoProviderHMACSHA2_512();
 
         /// <summary>
         /// Constructor, algorithm takes no parameters.

@@ -101,9 +101,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// Crete a new point with the same parameters as this.
         /// </summary>
         /// <returns>The copied point.</returns>
-        public CurveEdwards448 Copy() {
-            return new CurveEdwards448() { X = X, Y = Y, Z = Z };
-            }
+        public CurveEdwards448 Copy() => new CurveEdwards448() { X = X, Y = Y, Z = Z };
 
 
         /// <summary>
@@ -211,9 +209,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// </summary>
         /// <param name="Private">The extended private key</param>
         /// <returns>The public key corresponding to Private (s.B)</returns>
-        public static CurveEdwards448 GetPublic(BigInteger Private) {
-            return Base.Multiply(Private);
-            }
+        public static CurveEdwards448 GetPublic(BigInteger Private) => Base.Multiply(Private);
 
         /// <summary>
         /// Encode this point in the compressed buffer representation
@@ -374,9 +370,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// Check that the public key parameters presented match those of this Key.
         /// </summary>
         /// <param name="Key">The key to verify.</param>
-        public void Verify(CurveEdwards448Public Key) {
-            throw new NYI(); // NYI:
-            }
+        public void Verify(CurveEdwards448Public Key) => throw new NYI(); // NYI:
 
 
         /// <summary>
@@ -432,9 +426,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// </summary>
         /// <param name="Exportable">If true, the private key is exportable</param>
         public CurveEdwards448Private(bool Exportable = false) :
-                this(Platform.GetRandomBytes(32), Exportable) {
-            Secret = Platform.GetRandomBytes(32);
-            }
+                this(Platform.GetRandomBytes(32), Exportable) => Secret = Platform.GetRandomBytes(32);
 
         /// <summary>
         /// Construct a private key from the specified binary representation.
@@ -496,7 +488,7 @@ namespace Goedel.Cryptography.Algorithms {
             var SecretLocal = ExtractPrivate(Platform.GetRandomBytes(32));
             var SecretBlind = ExtractPrivate(Blind);
 
-            var SecretValue = (SecretLocal + SecretBlind).Mod(DomainParameters.Curve448.p);
+            var SecretValue = (SecretLocal + SecretBlind).Mod(DomainParameters.Curve448.P);
             var Secret = ValidatePrivateBytes(SecretValue.ToByteArray());
             PreSecret = Secret;
 
@@ -538,9 +530,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// </summary>
         /// <param name="Hash">The hash value</param>
         /// <returns>The private key.</returns>
-        public BigInteger ExtractPrivate(byte[] Hash) {
-            return ValidatePrivateBytes(Hash).BigIntegerLittleEndian();
-            }
+        public BigInteger ExtractPrivate(byte[] Hash) => ValidatePrivateBytes(Hash).BigIntegerLittleEndian();
 
 
         /// <summary>
@@ -633,9 +623,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// </summary>
         /// <param name="Public">Public key parameters</param>
         /// <returns>The key agreement value ZZ</returns>
-        public CurveEdwards448 Agreement(CurveEdwards448Public Public) {
-            return (CurveEdwards448)Public.Public.Multiply(Private);
-            }
+        public CurveEdwards448 Agreement(CurveEdwards448Public Public) => (CurveEdwards448)Public.Public.Multiply(Private);
 
 
         /// <summary>
@@ -690,10 +678,9 @@ namespace Goedel.Cryptography.Algorithms {
                 _KeyDerive = _KeyDerive ?? new KeyDeriveHKDF(IKM, _Salt);
                 return _KeyDerive;
                 }
-            set {
-                _KeyDerive = value;
-                }
+            set => _KeyDerive = value;
             }
+
 
         }
 

@@ -186,15 +186,15 @@ namespace Goedel.Discovery {
         string _Address;
         /// <summary>The DNS Address to resolve</summary>
         public virtual string Address {
-            get { return _Address ?? ServiceDescription?.Default.Address; }
-            set { _Address = value; }
+            get => _Address ?? ServiceDescription?.Default.Address;
+            set => _Address = value;
             }
 
         int? _Port;
         /// <summary>The port number to connect to</summary>
         public virtual int? Port {
-            get { return _Port ?? ServiceDescription?.Default.Port; }
-            set { _Port = value; }
+            get => _Port ?? ServiceDescription?.Default.Port;
+            set => _Port = value;
             }
 
         /// <summary>Priority of this service entry</summary>
@@ -205,36 +205,36 @@ namespace Goedel.Discovery {
         string _Path;
         /// <summary>URI path to connect to (will default to /.well-known/&lt;Service&gt;</summary>
         public virtual string Path {
-            get { return _Path ?? ServiceDescription?.Default.Path; }
-            set { _Path = value; }
+            get => _Path ?? ServiceDescription?.Default.Path;
+            set => _Path = value;
             }
 
         TransportSecurity? _TransportSecurity;
         /// <summary>Transport security setting</summary>
         public virtual TransportSecurity? TransportSecurity {
-            get { return _TransportSecurity ?? ServiceDescription?.Default.TransportSecurity; }
-            set { _TransportSecurity = value; }
+            get => _TransportSecurity ?? ServiceDescription?.Default.TransportSecurity;
+            set => _TransportSecurity = value;
             }
 
         Transport? _Transport;
         /// <summary>Transport setting</summary>
         public virtual Transport? Transport {
-            get { return _Transport ?? ServiceDescription?.Default.Transport; }
-            set { _Transport = value; }
+            get => _Transport ?? ServiceDescription?.Default.Transport;
+            set => _Transport = value;
             }
 
         string _URI;
         /// <summary>Security policy URI</summary>
         public virtual string URI {
-            get { return _URI ?? ServiceDescription?.Default.URI; }
-            set { _URI = value; }
+            get => _URI ?? ServiceDescription?.Default.URI;
+            set => _URI = value;
             }
 
         string _UDF;
         /// <summary>Security policy fingerprint</summary>
         public virtual string UDF {
-            get { return _UDF ?? ServiceDescription?.Default.UDF; }
-            set { _UDF = value; }
+            get => _UDF ?? ServiceDescription?.Default.UDF;
+            set => _UDF = value;
             }
 
         List<string> _TXT = new List<string>();

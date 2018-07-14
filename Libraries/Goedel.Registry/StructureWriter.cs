@@ -80,9 +80,7 @@ namespace Goedel.Registry {
         /// Set the output textwriter.
         /// </summary>
         /// <param name="TextWriter">The output</param>
-        public StructureWriter(TextWriter TextWriter) {
-            this.TextWriter = TextWriter;
-            }
+        public StructureWriter(TextWriter TextWriter) => this.TextWriter = TextWriter;
 
         /// <summary>
         /// Called at the start of the document.
@@ -90,18 +88,14 @@ namespace Goedel.Registry {
         /// <param name="Tag">Encoding specific document preamble.</param>
         public abstract void StartDocument (string Tag);
         /// <summary>Write document preamble</summary>
-        public void StartDocument() {
-            StartDocument (null);
-            }
+        public void StartDocument() => StartDocument(null);
         /// <summary>
         /// Called at the end of the document;
         /// </summary>
         /// <param name="Tag">Encoding specific .</param>
         public abstract void EndDocument (string Tag);
         /// <summary>Write end of document.</summary>
-        public void EndDocument() {
-            EndDocument (null);
-            }
+        public void EndDocument() => EndDocument(null);
         /// <summary>Begin list</summary>
         /// <param name="Tag">Tag to write</param>
         public abstract void StartList (string Tag);
@@ -154,9 +148,7 @@ namespace Goedel.Registry {
         /// Constructor for specified output stream and output format.
         /// </summary>
         /// <param name="TextWriter">The output</param>
-        public IndentWriter(TextWriter TextWriter) {
-            base.TextWriter = TextWriter;
-            }
+        public IndentWriter(TextWriter TextWriter) => base.TextWriter = TextWriter;
 
         /// <summary>
         /// Called at the start of the document.
@@ -174,9 +166,7 @@ namespace Goedel.Registry {
             }
         /// <summary>Begin list</summary>
         /// <param name="Tag">Tag to write</param>
-        public override void StartList(string Tag) {
-            Level++;
-            }
+        public override void StartList(string Tag) => Level++;
         /// <summary>End list</summary>
         /// <param name="Tag">Tag to write</param>
         public override void EndList(string Tag) { }
@@ -194,27 +184,19 @@ namespace Goedel.Registry {
         /// <summary>Write identifier</summary>
         /// <param name="Tag">Tag to write</param>
         /// <param name="Data">Data to write</param>
-        public override void WriteId(string Tag, string Data) {
-            Write(Data);
-            }
+        public override void WriteId(string Tag, string Data) => Write(Data);
         /// <summary>Write string attribute</summary>
         /// <param name="Tag">Tag to write</param>
         /// <param name="Data">Data to write</param>
-        public override void WriteAttribute(string Tag, string Data) {
-            Write("\"" + Data + "\"");
-            }
+        public override void WriteAttribute(string Tag, string Data) => Write("\"" + Data + "\"");
         /// <summary>Write integer attribute</summary>
         /// <param name="Tag">Tag to write</param>
         /// <param name="Data">Data to write</param>
-        public override void WriteAttribute(string Tag, int Data) {
-            Write(Convert.ToString(Data));
-            }
+        public override void WriteAttribute(string Tag, int Data) => Write(Convert.ToString(Data));
         /// <summary>Write float attribute</summary>
         /// <param name="Tag">Tag to write</param>
         /// <param name="Data">Data to write</param>
-        public override void WriteAttribute(string Tag, float Data) {
-            Write(Convert.ToString(Data));
-            }
+        public override void WriteAttribute(string Tag, float Data) => Write(Convert.ToString(Data));
         }
 
     /// <summary>
@@ -226,9 +208,7 @@ namespace Goedel.Registry {
         /// Create XML writer with specified output
         /// </summary>
         /// <param name="TextWriterIn">The output stream</param>
-        public XMLWriter (TextWriter TextWriterIn) {
-            TextWriter = TextWriterIn;
-            }
+        public XMLWriter(TextWriter TextWriterIn) => TextWriter = TextWriterIn;
 
         /// <summary>
         /// Starts the document.

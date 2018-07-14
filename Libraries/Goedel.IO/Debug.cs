@@ -64,9 +64,6 @@ namespace Goedel.IO {
         /// 
         /// </summary>
         /// <param name="message"></param>
-        public override void WriteLine(string message) {
-
-            Console.WriteLine(message);
-            }
+        public override void WriteLine(string message) => Console.WriteLine(message);
         }
     }

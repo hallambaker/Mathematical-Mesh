@@ -43,17 +43,13 @@ namespace Goedel.Confirm.Client {
         /// Construct a confirmation client for the specified service address.
         /// </summary>
         /// <param name="Address">The service address.</param>
-        public ConfirmClient (string Address) {
-            Service = ConfirmPortal.Default.GetService(Address);
-            }
+        public ConfirmClient(string Address) => Service = ConfirmPortal.Default.GetService(Address);
 
         /// <summary>
         /// Construct a confirmation client for the specified recryption profile.
         /// </summary>
         /// <param name="RecryptProfile">The recryption profile.</param>
-        public ConfirmClient (ConfirmProfile RecryptProfile) {
-            Service = ConfirmPortal.Default.GetService(RecryptProfile.Account);
-            }
+        public ConfirmClient(ConfirmProfile RecryptProfile) => Service = ConfirmPortal.Default.GetService(RecryptProfile.Account);
 
         /// <summary>
         /// Post a Hello transaction.

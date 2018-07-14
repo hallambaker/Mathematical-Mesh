@@ -45,9 +45,7 @@ namespace Goedel.Mesh.Mail.Test {
         static MeshProfiles MeshProfiles = new MeshProfiles();
 
         [ClassInitialize]
-        public static void InitializeClass (TestContext context) {
-            InitializeClass();
-            }
+        public static void InitializeClass(TestContext context) => InitializeClass();
 
         static string ServicePortalDNS = "portal.example.com";
         static string ServiceSSHDNS = "ssh.example.com";
@@ -67,13 +65,11 @@ namespace Goedel.Mesh.Mail.Test {
 
         //static MailProfile AliceRecryptProfile;
 
-        public static void InitializeClass () {
+        public static void InitializeClass() =>
 
             //MeshConfirm.Initialize();
 
             MakeUser(IDSSHAlice, out AliceMeshDevice1);
-
-            }
 
         static void MakeUser (string AccountID, out SessionPersonal SessionPersonal) {
             SessionPersonal = MeshProfiles.CreateAndRegister(AccountID);
@@ -121,27 +117,7 @@ namespace Goedel.Mesh.Mail.Test {
 
 
         [TestMethod]
-        public void SSHTestMultiDevice () {
-            throw new NYI();
-
-            // Create a profile
-
-            // Add second device
-
-
-            // Check expansion of authorized keys - blank base file
-
-            // Check expansion of authorized keys - base file has existing entries
-
-            // Rekey first device
-
-            // Check correct update 
-
-            // Remove second device
-
-            // Check correct update 
-
-            }
+        public void SSHTestMultiDevice() => throw new NYI();// Create a profile// Add second device// Check expansion of authorized keys - blank base file// Check expansion of authorized keys - base file has existing entries// Rekey first device// Check correct update // Remove second device// Check correct update 
 
 
 

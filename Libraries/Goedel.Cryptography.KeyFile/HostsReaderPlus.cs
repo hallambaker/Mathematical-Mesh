@@ -21,25 +21,19 @@ namespace Goedel.Cryptography.KeyFile {
         /// Add characters to the algorithm
         /// </summary>
         /// <param name="c">The character read</param>
-        public virtual void AddAlgorithm(int c) {
-            BuildTag1.Append(c.ToASCII());
-            }
+        public virtual void AddAlgorithm(int c) => BuildTag1.Append(c.ToASCII());
 
         /// <summary>
         /// Add characters to the base64 encoded data section
         /// </summary>
         /// <param name="c">The character read</param>
-        public virtual void AddData(int c) {
-            BuildBase64.Append(c.ToASCII());
-            }
+        public virtual void AddData(int c) => BuildBase64.Append(c.ToASCII());
 
         /// <summary>
         /// Add characters to the comment section
         /// </summary>
         /// <param name="c">The character read</param>
-        public virtual void AddComment(int c) {
-            BuildTag2.Append(c.ToASCII());
-            }
+        public virtual void AddComment(int c) => BuildTag2.Append(c.ToASCII());
 
         /// <summary>
         /// Do nothing

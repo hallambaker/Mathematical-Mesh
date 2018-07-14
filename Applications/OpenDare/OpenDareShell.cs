@@ -25,9 +25,8 @@ namespace Goedel.Dare.Shell {
         /// <param name="Dispatch"></param>
         /// <param name="args"></param>
         /// <param name="index"></param>
-        public static void Help (DispatchShell Dispatch, string[] args, int index) {
+        public static void Help (DispatchShell Dispatch, string[] args, int index) =>
             Brief(Description, DefaultCommand, Entries);
-            }
 
         public static DescribeCommandEntry DescribeHelp = new DescribeCommandEntry() {
             Identifier = "help",
@@ -41,9 +40,9 @@ namespace Goedel.Dare.Shell {
         /// <param name="Dispatch">The command description.</param>
         /// <param name="args">The set of arguments.</param>
         /// <param name="index">The first unparsed argument.</param>
-        public static void About (DispatchShell Dispatch, string[] args, int index) {
+        public static void About (DispatchShell Dispatch, string[] args, int index) =>
             FileTools.About();
-            }
+
 
         public static DescribeCommandEntry DescribeAbout = new DescribeCommandEntry() {
             Identifier = "about",
@@ -51,9 +50,9 @@ namespace Goedel.Dare.Shell {
             Entries = new List<DescribeEntry>() { }
             };
 
-        static bool IsFlag(char c) {
-            return (c == UnixFlag) | (c == WindowsFlag) ;
-            }
+        static bool IsFlag(char c) =>
+            (c == UnixFlag) | (c == WindowsFlag) ;
+
 
 		static DescribeCommandSet DescribeCommandSet_Profile = new DescribeCommandSet () {
             Identifier = "profile",
@@ -268,9 +267,9 @@ namespace Goedel.Dare.Shell {
 			}
 
 
-        public void MainMethod(DareShell Dispatch, string[] Args) {
+        public void MainMethod(DareShell Dispatch, string[] Args) =>
 			Dispatcher (Entries, DefaultCommand, Dispatch, Args, 0);
-            } // Main
+
 
 
 
@@ -10102,273 +10101,206 @@ namespace Goedel.Dare.Shell {
 	// to eliminate the redundant code
     public class _DareShell : global::Goedel.Command.DispatchShell {
 
-		public virtual void ProfileReset ( ProfileReset Options) {
+		public virtual void ProfileReset ( ProfileReset Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void DeviceCreate ( DeviceCreate Options) {
+		public virtual void DeviceCreate ( DeviceCreate Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void PersonalCreate ( PersonalCreate Options) {
+		public virtual void PersonalCreate ( PersonalCreate Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void ProfileRegister ( ProfileRegister Options) {
+		public virtual void ProfileRegister ( ProfileRegister Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void ProfileSync ( ProfileSync Options) {
+		public virtual void ProfileSync ( ProfileSync Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void ProfileEscrow ( ProfileEscrow Options) {
+		public virtual void ProfileEscrow ( ProfileEscrow Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void ProfileRecover ( ProfileRecover Options) {
+		public virtual void ProfileRecover ( ProfileRecover Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void ProfileExport ( ProfileExport Options) {
+		public virtual void ProfileExport ( ProfileExport Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void ProfileImport ( ProfileImport Options) {
+		public virtual void ProfileImport ( ProfileImport Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void ProfileList ( ProfileList Options) {
+		public virtual void ProfileList ( ProfileList Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void ProfileDump ( ProfileDump Options) {
+		public virtual void ProfileDump ( ProfileDump Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void ProfilePending ( ProfilePending Options) {
+		public virtual void ProfilePending ( ProfilePending Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void ProfileConnect ( ProfileConnect Options) {
+		public virtual void ProfileConnect ( ProfileConnect Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void ProfileAccept ( ProfileAccept Options) {
+		public virtual void ProfileAccept ( ProfileAccept Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void ProfileReject ( ProfileReject Options) {
+		public virtual void ProfileReject ( ProfileReject Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void ProfileGetPIN ( ProfileGetPIN Options) {
+		public virtual void ProfileGetPIN ( ProfileGetPIN Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void ProfileComplete ( ProfileComplete Options) {
+		public virtual void ProfileComplete ( ProfileComplete Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void MailAdd ( MailAdd Options) {
+		public virtual void MailAdd ( MailAdd Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void MailUpdate ( MailUpdate Options) {
+		public virtual void MailUpdate ( MailUpdate Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void SMIMEPrivate ( SMIMEPrivate Options) {
+		public virtual void SMIMEPrivate ( SMIMEPrivate Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void SMIMEPublic ( SMIMEPublic Options) {
+		public virtual void SMIMEPublic ( SMIMEPublic Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void PGPPrivate ( PGPPrivate Options) {
+		public virtual void PGPPrivate ( PGPPrivate Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void PGPPublic ( PGPPublic Options) {
+		public virtual void PGPPublic ( PGPPublic Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void SSHAddHost ( SSHAddHost Options) {
+		public virtual void SSHAddHost ( SSHAddHost Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void SSHAddClient ( SSHAddClient Options) {
+		public virtual void SSHAddClient ( SSHAddClient Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void SSHHost ( SSHHost Options) {
+		public virtual void SSHHost ( SSHHost Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void SSHCreate ( SSHCreate Options) {
+		public virtual void SSHCreate ( SSHCreate Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void SSHKnown ( SSHKnown Options) {
+		public virtual void SSHKnown ( SSHKnown Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void SSHAuth ( SSHAuth Options) {
+		public virtual void SSHAuth ( SSHAuth Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void SSHPrivate ( SSHPrivate Options) {
+		public virtual void SSHPrivate ( SSHPrivate Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void SSHPublic ( SSHPublic Options) {
+		public virtual void SSHPublic ( SSHPublic Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void PasswordAdd ( PasswordAdd Options) {
+		public virtual void PasswordAdd ( PasswordAdd Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void PasswordGet ( PasswordGet Options) {
+		public virtual void PasswordGet ( PasswordGet Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void PasswordDelete ( PasswordDelete Options) {
+		public virtual void PasswordDelete ( PasswordDelete Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void PasswordDump ( PasswordDump Options) {
+		public virtual void PasswordDump ( PasswordDump Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void ContactAdd ( ContactAdd Options) {
+		public virtual void ContactAdd ( ContactAdd Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void ContactDelete ( ContactDelete Options) {
+		public virtual void ContactDelete ( ContactDelete Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void ContactdGet ( ContactdGet Options) {
+		public virtual void ContactdGet ( ContactdGet Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void ContactDump ( ContactDump Options) {
+		public virtual void ContactDump ( ContactDump Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void BookmarkAdd ( BookmarkAdd Options) {
+		public virtual void BookmarkAdd ( BookmarkAdd Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void BookmarkDelete ( BookmarkDelete Options) {
+		public virtual void BookmarkDelete ( BookmarkDelete Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void BookmarkDump ( BookmarkDump Options) {
+		public virtual void BookmarkDump ( BookmarkDump Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void CalendarAdd ( CalendarAdd Options) {
+		public virtual void CalendarAdd ( CalendarAdd Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void CalendarDelete ( CalendarDelete Options) {
+		public virtual void CalendarDelete ( CalendarDelete Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void CalendarDump ( CalendarDump Options) {
+		public virtual void CalendarDump ( CalendarDump Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void NetworkAdd ( NetworkAdd Options) {
+		public virtual void NetworkAdd ( NetworkAdd Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void NetworkDelete ( NetworkDelete Options) {
+		public virtual void NetworkDelete ( NetworkDelete Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void NetworkDump ( NetworkDump Options) {
+		public virtual void NetworkDump ( NetworkDump Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void MessageConnect ( MessageConnect Options) {
+		public virtual void MessageConnect ( MessageConnect Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void MessageConfirm ( MessageConfirm Options) {
+		public virtual void MessageConfirm ( MessageConfirm Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void MessageStatus ( MessageStatus Options) {
+		public virtual void MessageStatus ( MessageStatus Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void MessagePending ( MessagePending Options) {
+		public virtual void MessagePending ( MessagePending Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void MessageAccept ( MessageAccept Options) {
+		public virtual void MessageAccept ( MessageAccept Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void MessageReject ( MessageReject Options) {
+		public virtual void MessageReject ( MessageReject Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void MessageBlock ( MessageBlock Options) {
+		public virtual void MessageBlock ( MessageBlock Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void GroupAdd ( GroupAdd Options) {
+		public virtual void GroupAdd ( GroupAdd Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void GroupCreate ( GroupCreate Options) {
+		public virtual void GroupCreate ( GroupCreate Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void GroupUser ( GroupUser Options) {
+		public virtual void GroupUser ( GroupUser Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void GroupDelete ( GroupDelete Options) {
+		public virtual void GroupDelete ( GroupDelete Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void FileEncrypt ( FileEncrypt Options) {
+		public virtual void FileEncrypt ( FileEncrypt Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void FileDecrypt ( FileDecrypt Options) {
+		public virtual void FileDecrypt ( FileDecrypt Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void ContainerCreate ( ContainerCreate Options) {
+		public virtual void ContainerCreate ( ContainerCreate Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void ContainerArchive ( ContainerArchive Options) {
+		public virtual void ContainerArchive ( ContainerArchive Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void ContainerAppend ( ContainerAppend Options) {
+		public virtual void ContainerAppend ( ContainerAppend Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void ContainerExtract ( ContainerExtract Options) {
+		public virtual void ContainerExtract ( ContainerExtract Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void ContainerCopy ( ContainerCopy Options) {
+		public virtual void ContainerCopy ( ContainerCopy Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void ContainerVerify ( ContainerVerify Options) {
+		public virtual void ContainerVerify ( ContainerVerify Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
 
         } // class _DareShell

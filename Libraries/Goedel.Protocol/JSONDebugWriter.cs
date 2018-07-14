@@ -43,21 +43,28 @@ namespace Goedel.Protocol {
         /// <summary>
         /// Create a new JSON Writer.
         /// </summary>
-        public JSONDebugWriter() {
-            this.Output = new MemoryStream();
-            }
+        public JSONDebugWriter() => this.Output = new MemoryStream();
 
         /// <summary>
         /// Create a new JSON Writer using the specified output buffer. If the buffer has
         /// an output stream defined, text will be written to the stream.
         /// </summary>
         /// <param name="Output">The output stream.</param>
-        public JSONDebugWriter(MemoryStream Output) {
-            this.Output = Output;
+        public JSONDebugWriter(MemoryStream Output) => this.Output = Output;
+
+
+        int OutputCol=0;
+
+
+        /// <summary>Write newline character</summary>
+        protected override void NewLine() {
+            Output.WriteLine();
+            OutputCol = 0;
+            for (int i = 0; i < Indent; i++) {
+                OutputCol += 2;
+                Output.Write("  ");
+                }
             }
-
-
-        int OutputCol; 
 
         /// <summary>
         /// Write Tag to the stream
@@ -66,29 +73,36 @@ namespace Goedel.Protocol {
         /// <param name="IndentIn">Current indent level.</param>
         public override void WriteToken (string Tag, int IndentIn) {
             NewLine();
-            Output.Write("\"");
-            Output.Write(Tag);
-            Output.Write("\": ");
-            OutputCol = (IndentIn*2) + 6 + Tag.Length;
+            var String = $"\"{Tag}\":";
+            Output.Write(String);
+            OutputCol += String.Length;
             }
 
 
         /// <summary>Write binary data as Base64Url encoded string.</summary>
         /// <param name="Data">Value to write</param>
-        public override void WriteBinary(byte[] Data) {
+        /// <param name="offset">The zero-based byte offset in <paramref name="buffer"/>
+        /// at which to begin copying bytes to the current stream.</param>
+        /// <param name="count">The number of bytes to be written to the current stream.</param> 
+        public override void WriteBinary(byte[] Data, int offset = 0, int count = -1) {
+            var Length = count < 0 ? Data.Length : count;
+
             Output.Write("\"");
             if (Data.Length < Threshold) {
-                Output.Write(BaseConvert.ToStringBase64url(Data, Format: ConversionFormat.Draft,
+                Output.Write(BaseConvert.ToStringBase64url(
+                    Data, offset, Length, Format: ConversionFormat.Draft,
                     OutputCol: OutputCol, OutputMax:66));
                 }
             else {
-                Output.Write(BaseConvert.ToStringBase64url(Data,0,96, Format:ConversionFormat.Draft));
-                Output.Write("\n...");
-                int Start = 48 * (Data.Length / 48);
-                // If the last line is null, make it a full line.
-                Start = (Data.Length % 48) == 0 ? Start - 48 : Start;
-                int Length = Data.Length - Start;
-                Output.Write(BaseConvert.ToStringBase64url(Data, Start, Length, Format: ConversionFormat.Draft));
+                throw new NYI();
+
+                //Output.Write(BaseConvert.ToStringBase64url(Data,0,96, Format:ConversionFormat.Draft));
+                //Output.Write("\n...");
+                //int Start = 48 * (Data.Length / 48);
+                //// If the last line is null, make it a full line.
+                //Start = (Data.Length % 48) == 0 ? Start - 48 : Start;
+                //int Length = Data.Length - Start;
+                //Output.Write(BaseConvert.ToStringBase64url(Data, Start, Length, Format: ConversionFormat.Draft));
                 }
             Output.Write("\"");
             }
@@ -108,6 +122,13 @@ namespace Goedel.Protocol {
             var JSONWriter = new JSONDebugWriter(Buffer);
             JSONObject.Serialize(JSONWriter, true);
             return Buffer.ToArray().ToUTF8();
+            }
+
+        /// <summary>Mark end of array element</summary>
+        public override void WriteArrayEnd() {
+            NewLine();
+            Output.Write("]");
+            Indent--;
             }
 
         }

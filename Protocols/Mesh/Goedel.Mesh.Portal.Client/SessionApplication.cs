@@ -151,11 +151,9 @@ namespace Goedel.Mesh.Portal.Client {
         /// </summary>
         /// <param name="DeviceProfile">The device to add.</param>
         /// <param name="Administration">If true, give the device administration rights.</param>
-        public void AddDevice (
+        public void AddDevice(
                     DeviceProfile DeviceProfile,
-                    bool Administration = false) {
-            ApplicationProfile.AddDevice(DeviceProfile, Administration);
-            }
+                    bool Administration = false) => ApplicationProfile.AddDevice(DeviceProfile, Administration);
 
 
         /// <summary>Return the private portion of the application profile that is common to all devices.</summary>
@@ -168,43 +166,31 @@ namespace Goedel.Mesh.Portal.Client {
         /// <summary>
         /// Fetch the latest version of the profile version
         /// </summary>
-        public override void GetFromPortal () {
-            throw new NYI();
-            }
+        public override void GetFromPortal() => throw new NYI();
 
 
         /// <summary>
         /// Update the associated profile in the registry
         /// </summary>
-        public override void WriteToLocal (bool Default=false) {
-            MeshMachine.WriteToLocal(this, Default);
-            }
+        public override void WriteToLocal(bool Default = false) => MeshMachine.WriteToLocal(this, Default);
 
         /// <summary>
         /// Update the associated profile in the registry
         /// </summary>
-        public override void WriteToPortal () {
-            SessionPersonal.MeshClient.Publish(this.SignedProfile);
-            }
+        public override void WriteToPortal() => SessionPersonal.MeshClient.Publish(this.SignedProfile);
 
         /// <summary>
         /// Make this the default registration for its type
         /// </summary>
-        public override void MakeDefault () {
-            MeshMachine.MakeDefault(this);
-            }
+        public override void MakeDefault() => MeshMachine.MakeDefault(this);
         }
 
 
     public static partial class Extension {
 
-        public static SessionMail Create (
+        public static SessionMail Create(
                     this SessionPersonal SessionPersonal,
-                    MailProfile MailProfile) {
-
-            throw new NYI();
-
-            }
+                    MailProfile MailProfile) => throw new NYI();
 
         public static SessionMail SessionMail (
                 this SessionPersonal SessionPersonal,
@@ -312,13 +298,9 @@ namespace Goedel.Mesh.Portal.Client {
         //    return Result as SessionNetwork;
         //    }
 
-        public static SessionSSH Create (
+        public static SessionSSH Create(
             this SessionPersonal SessionPersonal,
-            SSHProfile MailProfile) {
-
-            throw new NYI();
-
-            }
+            SSHProfile MailProfile) => throw new NYI();
 
         public static SessionSSH SessionSSH (
                 this SessionPersonal SessionPersonal,
@@ -335,13 +317,9 @@ namespace Goedel.Mesh.Portal.Client {
             }
 
 
-        public static void SSHExpand (
+        public static void SSHExpand(
                     this SessionPersonal SessionPersonal,
-                    string FileName = null) {
-
-            throw new NYI();
-
-            }
+                    string FileName = null) => throw new NYI();
 
         }
 
@@ -355,13 +333,9 @@ namespace Goedel.Mesh.Portal.Client {
                         SessionPersonal, ApplicationProfile, Write) {
             }
 
-        public override void GetFromPortal () {
-            throw new NotImplementedException();
-            }
+        public override void GetFromPortal() => throw new NotImplementedException();
 
-        public override void MakeDefault () {
-            throw new NotImplementedException();
-            }
+        public override void MakeDefault() => throw new NotImplementedException();
         }
 
     public partial class SessionMail : SessionCatalog {
@@ -383,14 +357,11 @@ namespace Goedel.Mesh.Portal.Client {
             SessionPersonal.Add(this);  // The point at which the writes to the local disk, portal are performed.
             }
 
-        public void Export (
+        public void Export(
                     TextWriter TextWriter,
                     KeyFileFormat KeyFileFormat,
                     bool Private = false,
-                    byte[] Password = null) {
-
-            throw new NYI();
-            }
+                    byte[] Password = null) => throw new NYI();
 
         public void Export (
             string Filename,
@@ -427,14 +398,11 @@ namespace Goedel.Mesh.Portal.Client {
             }
 
 
-        public void Export (
+        public void Export(
                     TextWriter TextWriter,
                     KeyFileFormat KeyFileFormat,
                     bool Private = false,
-                    byte[] Password = null) {
-
-            throw new NYI();
-            }
+                    byte[] Password = null) => throw new NYI();
 
         public void Export (
             string Filename,
@@ -447,9 +415,7 @@ namespace Goedel.Mesh.Portal.Client {
                 }
             }
 
-        public void Rekey () {
-            throw new NYI();
-            }
+        public void Rekey() => throw new NYI();
         }
 
 

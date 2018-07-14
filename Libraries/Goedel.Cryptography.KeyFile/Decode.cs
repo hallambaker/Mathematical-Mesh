@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using Goedel.Cryptography;
-using Goedel.Cryptography.Framework;
+using Goedel.Cryptography.Standard;
 using Goedel.Cryptography.PKIX;
 using Goedel.FSR;
 using Goedel.IO;
@@ -100,12 +100,12 @@ namespace Goedel.Cryptography.KeyFile {
                     // is ASN.1 format DER modulus/exponent etc.
 
                     var RSAPrivate = new PKIXPrivateKeyRSA(TaggedData.Data);
-                    return new KeyPairRSA (RSAPrivate);
+                    return KeyPairBaseRSA.Create(RSAPrivate);
                     }
                 else if (TaggedData.Tag == "RSAPUBLICKEY") {
                     // is ASN.1 format DER modulus/exponent
                     var RSAPrivate = new PKIXPrivateKeyRSA(TaggedData.Data);
-                    return new KeyPairRSA(RSAPrivate);
+                    return KeyPairBaseRSA.Create(RSAPrivate);
                     }
                 else if (TaggedData.Tag == "SSH2PUBLICKEY") {
                     var SSH_Public_Key = SSHData.Decode (TaggedData.Data);

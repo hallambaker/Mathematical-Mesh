@@ -129,7 +129,7 @@ namespace Goedel.Protocol {
     public abstract class Writer {
 
         /// <summary>Output stream</summary>
-        protected Stream Output;
+        public Stream Output;
 
         /// <summary>Convert output stream to byte array</summary>
         /// <returns>Output stream as byte array</returns>
@@ -165,10 +165,15 @@ namespace Goedel.Protocol {
         /// <summary>Write integer value token</summary>
         /// <param name="Data">Value to write</param>
         abstract public void WriteString(string Data);
- 
+
         /// <summary>Write integer value token</summary>
-        /// <param name="Data">Value to write</param>
-        abstract public void WriteBinary(byte[] Data);
+
+        /// <param name="buffer">Value to write</param>
+        /// <param name="offset">The zero-based byte offset in <paramref name="buffer"/>
+        /// at which to begin copying bytes to the current stream.</param>
+        /// <param name="count">The number of bytes to be written to the current stream.</param> 
+
+        abstract public void WriteBinary(byte[] buffer, int offset = 0, int count = -1);
 
         readonly static byte[] NullBuffer = new byte[0];
         /// <summary>Write empty binary data sequence</summary>
@@ -184,6 +189,12 @@ namespace Goedel.Protocol {
         abstract public void WriteArrayStart();
 
         /// <summary>Write array separator</summary>
+        public void WriteArraySeparator() {
+            var First = false;
+            WriteArraySeparator(ref First);
+            }
+
+        /// <summary>Write array separator</summary>
         /// <param name="first">If true, is the first item in array, set to false on exit</param>
         abstract public void WriteArraySeparator(ref bool first);
 
@@ -192,6 +203,12 @@ namespace Goedel.Protocol {
 
         /// <summary>Write object start</summary>
         abstract public void WriteObjectStart();
+
+        /// <summary>Write array separator</summary>
+        public void WriteObjectSeparator() {
+            var First = false;
+            WriteObjectSeparator(ref First);
+            }
 
         /// <summary>Write object separator.</summary>
         /// <param name="first">If true, is the first item in array, set to false on exit</param>

@@ -27,11 +27,9 @@ namespace Goedel.Recrypt.Client {
             return new SessionRecrypt(Found, SessionPersonal);
             }
 
-        public static SessionRecrypt Create (
+        public static SessionRecrypt Create(
                 this SessionPersonal SessionPersonal,
-                RecryptProfile Profile) {
-            return new SessionRecrypt(SessionPersonal, Profile);
-            }
+                RecryptProfile Profile) => new SessionRecrypt(SessionPersonal, Profile);
 
         //public static RecryptClient RecryptClient (this SessionPersonal SessionPersonal) {
 
@@ -149,10 +147,7 @@ namespace Goedel.Recrypt.Client {
         /// </summary>
         /// <param name="Recipients">List of recipients.</param>
         /// <returns>The encryption key pair</returns>
-        public KeyPair GetEncryptionKey (List<Recipient> Recipients) {
-
-            return DecryptionKeyPairFudge;
-            }
+        public KeyPair GetEncryptionKey(List<Recipient> Recipients) => DecryptionKeyPairFudge;
         /// <summary>
         /// Locate an existing recryption group.
         /// </summary>

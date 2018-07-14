@@ -11,19 +11,13 @@ namespace Goedel.Cryptography.Dare.Test {
     public class TestJBCD {
 
         [MT.TestMethod]
-        public void Test0 () {
-            TestJBCDStream("JBCD0.jbcd", 0);
-            }
+        public void Test0() => TestJBCDStream("JBCD0.jbcd", 0);
 
         [MT.TestMethod]
-        public void Test1 () {
-            TestJBCDStream("JBCD0.jbcd", 1);
-            }
+        public void Test1() => TestJBCDStream("JBCD0.jbcd", 1);
 
         [MT.TestMethod]
-        public void Test10 () {
-            TestJBCDStream("JBCD0.jbcd", 10);
-            }
+        public void Test10() => TestJBCDStream("JBCD0.jbcd", 10);
 
 
         byte[] MakeConstant (string Text, int Repeat) {

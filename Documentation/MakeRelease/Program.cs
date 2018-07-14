@@ -99,17 +99,11 @@ namespace Goedel.Tool.Version {
                 }
             }
 
-        public override string ToString () {
-            return $"{Major}.{Minor}.{Revision}";
-            }
+        public override string ToString() => $"{Major}.{Minor}.{Revision}";
 
-        public int CompareTo (Version y) {
-            return Compare(this, y);
-            }
+        public int CompareTo(Version y) => Compare(this, y);
 
-        public int Compare (Version x, Version y) {
-            return Version.CompareV(x, y);
-            }
+        public int Compare(Version x, Version y) => Version.CompareV(x, y);
 
         public static int CompareV (Version x, Version y) {
             if (y == null) {
@@ -179,9 +173,7 @@ namespace Goedel.Tool.Version {
         public string PlatformDescription = "unknown";
 
 
-        public void Parse () {
-            MapRID.TryGetValue(RID, out PlatformDescription );
-            }
+        public void Parse() => MapRID.TryGetValue(RID, out PlatformDescription);
 
 
         }

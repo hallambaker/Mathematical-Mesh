@@ -20,9 +20,7 @@ namespace Goedel.Mesh.MeshMan {
         protected bool ActiveListener = false;
 
 
-        private void SetReporting (Goedel.Mesh.MeshMan.IReporting Reporting) {
-            SetReporting(Reporting.Report, Reporting.Verbose);
-            }
+        private void SetReporting(Goedel.Mesh.MeshMan.IReporting Reporting) => SetReporting(Reporting.Report, Reporting.Verbose);
 
         private void SetReporting (Flag Report, Flag Verbose) {
             ReportOutput = Report.Value;
@@ -86,9 +84,7 @@ namespace Goedel.Mesh.MeshMan {
             return MeshMachine.GetDevice(DeviceID: Options.DeviceID.Value);
             }
 
-        public SessionPersonal GetPersonal (IPortalAccount Options) {
-            return GetPersonal(Options.Portal.Value);
-            }
+        public SessionPersonal GetPersonal(IPortalAccount Options) => GetPersonal(Options.Portal.Value);
 
         public SessionPersonal GetPersonal (string Address) {
             var SessionPersonal = MeshMachine.GetPersonal(Address);
@@ -120,9 +116,7 @@ namespace Goedel.Mesh.MeshMan {
         //    }
 
 
-        public MeshClient GetMeshClient() {
-            return GetMeshClient(PortalID);
-            }
+        public MeshClient GetMeshClient() => GetMeshClient(PortalID);
 
 
         public void Error (Exception Exception) {
@@ -183,9 +177,7 @@ namespace Goedel.Mesh.MeshMan {
 
             }
 
-        private string MakeAccountID(int I) {
-            return AccountID + "_" + I.ToString("x");
-            }
+        private string MakeAccountID(int I) => AccountID + "_" + I.ToString("x");
 
         private bool CheckAccount(int I) {
             //var TestID = MakeAccountID(I);

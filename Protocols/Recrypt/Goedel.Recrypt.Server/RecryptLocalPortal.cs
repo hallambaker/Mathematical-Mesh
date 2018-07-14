@@ -34,9 +34,7 @@ namespace Goedel.Recrypt.Server {
         /// </summary>
         /// <param name="ServiceName">The canonical service name</param>
         /// <param name="Store">The file to store the account data to</param>
-        public RecryptPortalDirect (string ServiceName, string Store = "Recrypt.jlog") {
-            RecryptServiceHost = new RecryptLocalServiceProvider(ServiceName, Store);
-            }
+        public RecryptPortalDirect(string ServiceName, string Store = "Recrypt.jlog") => RecryptServiceHost = new RecryptLocalServiceProvider(ServiceName, Store);
 
 
         /// <summary>

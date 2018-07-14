@@ -77,9 +77,9 @@
       <Project>{dd13e278-f9e6-49f0-81b9-7a5bd5817818}</Project>
       <Name>Goedel.Cryptography.Standard</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Windows\Goedel.Cryptography.Windows.csproj">
-      <Project>{b0e63b96-6d97-44ff-bc12-1538c3633997}</Project>
-      <Name>Goedel.Cryptography.Windows</Name>
+    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.WindowsFramework\Goedel.Cryptography.WindowsFramework.csproj">
+      <Project>{701f5551-e749-4985-acc8-5a3c02d10d14}</Project>
+      <Name>Goedel.Cryptography.WindowsFramework</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Libraries\Goedel.Cryptography\Goedel.Cryptography.csproj">
       <Project>{b8319c05-ea98-405d-94eb-acb9de6da975}</Project>

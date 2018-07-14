@@ -9,13 +9,12 @@ namespace Goedel.Discovery {
     class TextBuffer {
         public string Buffer;
         int pointer;
-        bool _EOF;
-        public bool EOF => _EOF; 
+        public bool EOF { get; private set; }
 
         public TextBuffer(string Buffer) {
             this.Buffer = Buffer;
             pointer = 0;
-            _EOF = false;
+            EOF = false;
             }
 
         public bool Get(out char c) {
@@ -24,7 +23,7 @@ namespace Goedel.Discovery {
                 return true;
                 }
             c = (char)0;
-            _EOF = true;
+            EOF = true;
             return false;
             }
 
@@ -122,9 +121,7 @@ namespace Goedel.Discovery {
 
         /// <summary>Construct from specified string.</summary>
         /// <param name="Buffer">Input data to parse.</param>
-        public Parse(string Buffer) {
-            TextBuffer = new TextBuffer (Buffer);
-            }
+        public Parse(string Buffer) => TextBuffer = new TextBuffer(Buffer);
         // codes for Next State
         // -1 End of current production (token is valid)
         // -2 Invalid token
@@ -334,14 +331,12 @@ namespace Goedel.Discovery {
 
         /// <summary>Get IPv4Address</summary>
         /// <returns>The value returned</returns>
-        public IPAddress IPv4 () {
-            return null;
-            }
+        public IPAddress IPv4() => null;
+
         /// <summary>Get IPv6Address</summary>
         /// <returns>The value returned</returns>
-        public IPAddress IPv6 () {
-            return null;
-            }
+        public IPAddress IPv6() => null;
+
         /// <summary>Get Domain name</summary>
         /// <returns>The value returned</returns>
         public Domain Domain ( ) {
@@ -351,21 +346,15 @@ namespace Goedel.Discovery {
 
         /// <summary>Get Mail Address</summary>
         /// <returns>The value returned</returns>
-        public string Mail ( ) {
-            return null;
-            }
+        public string Mail() => null;
 
         /// <summary>Get Node ID</summary>
         /// <returns>The value returned</returns>
-        public ulong NodeID ( ) {
-            return 0;
-            }
+        public ulong NodeID() => 0;
 
         /// <summary>Get Byte</summary>
         /// <returns>The value returned</returns>
-        public byte Byte ( ) {
-            return 0;
-            }
+        public byte Byte() => 0;
 
         /// <summary>Get Int16</summary>
         /// <returns>The value returned</returns>
@@ -385,31 +374,24 @@ namespace Goedel.Discovery {
 
         /// <summary>Get Time32</summary>
         /// <returns>The value returned</returns>
-        public uint Time32 ( ) {return 0;
-            }
+        public uint Time32() => 0;
         // Same as for Time32 (resolution is still seconds, just a longer interval)
 
         /// <summary>Get Time48</summary>
         /// <returns>The value returned</returns>
-        public ulong Time48() {
-            return 0;
-            }
+        public ulong Time48() => 0;
 
         /// <summary>Get String</summary>
         /// <returns>The value returned</returns>
-        public string String ( ) {
-            return null;
-            }
+        public string String() => null;
 
         /// <summary>Get Optional String</summary>
         /// <returns>The value returned</returns>
-        public string OptionalString ( ) {return String();
-            }
+        public string OptionalString() => String();
 
         /// <summary>Get String with otherwise specified length</summary>
         /// <returns>The value returned</returns>
-        public string StringX ( ) {return String();
-            }
+        public string StringX() => String();
 
         /// <summary>Get multiple strings</summary>
         /// <returns>The value returned</returns>
@@ -427,32 +409,31 @@ namespace Goedel.Discovery {
 
         /// <summary>Get Binary data</summary>
         /// <returns>The value returned</returns>
-        public byte[] Binary () {return null;
-            }
+        public byte[] Binary() => null;
+
         /// <summary>Get Binary data with 8 bit length value</summary>
         /// <returns>The value returned</returns>
-        public byte[] Binary8 () {return Binary();
-            }
+        public byte[] Binary8() => Binary();
+
         /// <summary>Get Binary data with 16 bit length value</summary>
         /// <returns>The value returned</returns>
-        public byte[] Binary16 () {return Binary();
-            }
+        public byte[] Binary16() => Binary();
+
         /// <summary>Get Binary data with L production</summary>
         /// <returns>The value returned</returns>
-        public byte[] LBinary () {return null;
-            }
+        public byte[] LBinary() => null;
+
         /// <summary>Get Hex data</summary>
         /// <returns>The value returned</returns>>
-        public byte[] Hex () {return null;
-            }
+        public byte[] Hex() => null;
+
         /// <summary>Get Hex data with 8 bit length value</summary>
         /// <returns>The value returned</returns>
-        public byte[] Hex8 () {return Hex();
-            }
+        public byte[] Hex8() => Hex();
+
         /// <summary>Get Hex data with 8 bit length value</summary>
         /// <returns>The value returned</returns>
-        public byte[] Hex16 () {return Hex();
-            }
+        public byte[] Hex16() => Hex();
 
         }
     }

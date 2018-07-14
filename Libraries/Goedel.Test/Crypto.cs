@@ -103,7 +103,7 @@ namespace Goedel.Test {
             var UDF = Encrypter.UDF;
 
             ExportPrivate(UDF, true);
-            Persist(UDF, true);
+            CheckPersisted(UDF, true);
 
 
             }
@@ -115,7 +115,7 @@ namespace Goedel.Test {
             var UDF = Encrypter.UDF;
 
             ExportPrivate(UDF, false);
-            Persist(UDF, true);
+            CheckPersisted(UDF, true);
             }
 
 
@@ -127,7 +127,7 @@ namespace Goedel.Test {
             var UDF = Encrypter.UDF;
 
             ExportPrivate(UDF, false);
-            Persist(UDF, true);
+            CheckPersisted(UDF, true);
             }
 
 
@@ -140,7 +140,7 @@ namespace Goedel.Test {
             Encrypter.Test_EncryptDecrypt();
             var UDF = Encrypter.UDF;
 
-            Persist(UDF, false);
+            CheckPersisted(UDF, false);
 
             IPKIXPrivateKey Private = null;
             try {
@@ -163,7 +163,7 @@ namespace Goedel.Test {
             Encrypter.Test_EncryptDecrypt();
             var UDF = Encrypter.UDF;
 
-            Persist(UDF, false);
+            CheckPersisted(UDF, false);
             var Private = Encrypter.KeyPair.PKIXPrivateKey;
             UT.Assert.IsNotNull(Private);
             }
@@ -175,7 +175,7 @@ namespace Goedel.Test {
         /// then that it cannot be found after deletion.
         /// </summary>
         /// <param name="UDF"></param>
-        static void Persist(string UDF, bool Succeed) {
+        static void CheckPersisted(string UDF, bool Succeed) {
             var Encrypter2 = KeyPair.FindLocal(UDF);
 
             if (!Succeed) {

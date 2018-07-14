@@ -18,19 +18,11 @@ namespace Goedel.Protocol.Debug {
     /// for documentation.
     /// </summary>
     public  class DebugLocalSession :LocalRemoteSession  {
-        TraceDictionary _Traces;
 
         /// <summary>
         /// Trace Dictionary for this session
         /// </summary>
-        public TraceDictionary Traces {
-            get {
-                return _Traces;
-                }
-            set {
-                _Traces = value;
-                }
-            }
+        public TraceDictionary Traces { get; set; }
 
 
         /// <summary>
@@ -100,9 +92,9 @@ namespace Goedel.Protocol.Debug {
             // Send the request
             var ResultObject = Host.Dispatch(this, JSONReader);
 
-            if (_Traces != null) {
-                _Traces.Request(Request);
-                _Traces.Response("200 OK", ResultObject);
+            if (Traces != null) {
+                Traces.Request(Request);
+                Traces.Response("200 OK", ResultObject);
                 }
 
             // Return the response as a string for disassembly

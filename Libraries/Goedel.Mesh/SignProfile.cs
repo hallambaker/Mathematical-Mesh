@@ -65,19 +65,13 @@ namespace Goedel.Mesh {
         /// Validate this profile to check that it is internally consistent.
         /// </summary>
         /// <returns>True if the profile passed validation, otherwise false.</returns>
-        public virtual bool Validate() {
-
-            throw new Goedel.Utilities.NYI("Need to validate the profile");
-
-            }
+        public virtual bool Validate() => throw new Goedel.Utilities.NYI("Need to validate the profile");
 
         /// <summary>
         /// Deserialize the signed data.
         /// </summary>
         /// <returns>The device profile object.</returns>
-        public virtual Profile Unpack() {
-            throw new Goedel.Utilities.NYI("Need to unpack the profile");
-            }
+        public virtual Profile Unpack() => throw new Goedel.Utilities.NYI("Need to unpack the profile");
 
         public virtual void Describe(TextWriter Output, int Indent=0) {
             Output.WriteSpaces(Indent * IndentSpaces);
@@ -115,10 +109,8 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="DeviceProfile">The device profile to sign.</param>
         /// <param name="Encoding">The encoding for the inner data</param>
-        public SignedDeviceProfile (DeviceProfile DeviceProfile, 
-                    DataEncoding Encoding = DataEncoding.JSON) {
-            Sign(DeviceProfile, Encoding);
-            }
+        public SignedDeviceProfile(DeviceProfile DeviceProfile,
+                    DataEncoding Encoding = DataEncoding.JSON) => Sign(DeviceProfile, Encoding);
 
         /// <summary>
         /// Create a new device profile
@@ -148,9 +140,7 @@ namespace Goedel.Mesh {
         /// Deserialize the signed data.
         /// </summary>
         /// <returns>The device profile object.</returns>
-        public override Profile Unpack() {
-            return UnpackDeviceProfile();
-            }
+        public override Profile Unpack() => UnpackDeviceProfile();
 
 
 
@@ -254,9 +244,7 @@ namespace Goedel.Mesh {
         /// Unpack the profile.
         /// </summary>
         /// <returns>The unpacked profile.</returns>
-        public override Profile Unpack() {
-            return UnpackMasterProfile(); 
-            }
+        public override Profile Unpack() => UnpackMasterProfile();
 
         /// <summary>
         /// Unpack the signed data and verify its consistency.
@@ -490,11 +478,7 @@ namespace Goedel.Mesh {
         /// Validate this profile to check that it is internally consistent.
         /// </summary>
         /// <returns>True if the profile passed validation, otherwise false.</returns>
-        public override bool Validate() {
-
-            return true; // Hack: Must implemenmt this.
-
-            }
+        public override bool Validate() => true; // Hack: Must implemenmt this.
 
 
         private void Validate(PersonalProfile Unpacked) {

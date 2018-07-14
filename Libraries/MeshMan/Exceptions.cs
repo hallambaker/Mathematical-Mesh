@@ -458,9 +458,8 @@ namespace Goedel.Mesh.MeshMan {
         /// <param name="Object">User data</param>	
 		public ProfileNotFound (ExceptionData Object) : 
 				base (global::System.String.Format ("The personal profile {0} could not be found",
-					Object.String					)) {
-			UserData = Object;
-			}
+					Object.String					)) => UserData = Object;
+
 
 		/// <summary>
         /// Construct instance for exception using a userdata parameter of
@@ -470,9 +469,7 @@ namespace Goedel.Mesh.MeshMan {
 		/// <param name="Inner">Inner Exception</param>	
 		public ProfileNotFound (ExceptionData Object, System.Exception Inner) : 
 				base (global::System.String.Format ("The personal profile {0} could not be found",
-					Object.String					), Inner) {
-			UserData = Object;
-			}
+					Object.String					), Inner) => UserData = Object;
 
 
 
@@ -622,9 +619,8 @@ namespace Goedel.Mesh.MeshMan {
         /// <param name="Object">User data</param>	
 		public InvalidShares (ExceptionData Object) : 
 				base (global::System.String.Format ("The number of shares is invalid: {0}",
-					Object.Int					)) {
-			UserData = Object;
-			}
+					Object.Int					)) => UserData = Object;
+
 
 		/// <summary>
         /// Construct instance for exception using a userdata parameter of
@@ -634,9 +630,7 @@ namespace Goedel.Mesh.MeshMan {
 		/// <param name="Inner">Inner Exception</param>	
 		public InvalidShares (ExceptionData Object, System.Exception Inner) : 
 				base (global::System.String.Format ("The number of shares is invalid: {0}",
-					Object.Int					), Inner) {
-			UserData = Object;
-			}
+					Object.Int					), Inner) => UserData = Object;
 
 
 
@@ -694,9 +688,8 @@ namespace Goedel.Mesh.MeshMan {
         /// <param name="Object">User data</param>	
 		public InvalidQuorum (ExceptionData Object) : 
 				base (global::System.String.Format ("The quorum is invalid: {0}",
-					Object.Int					)) {
-			UserData = Object;
-			}
+					Object.Int					)) => UserData = Object;
+
 
 		/// <summary>
         /// Construct instance for exception using a userdata parameter of
@@ -706,9 +699,7 @@ namespace Goedel.Mesh.MeshMan {
 		/// <param name="Inner">Inner Exception</param>	
 		public InvalidQuorum (ExceptionData Object, System.Exception Inner) : 
 				base (global::System.String.Format ("The quorum is invalid: {0}",
-					Object.Int					), Inner) {
-			UserData = Object;
-			}
+					Object.Int					), Inner) => UserData = Object;
 
 
 

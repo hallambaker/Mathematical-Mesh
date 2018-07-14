@@ -99,7 +99,16 @@ namespace Goedel.Cryptography.Algorithms {
 
             }
 
-
+        /// <summary>
+        /// Create a copy of a key that is guaranteed to only have the public parameters.
+        /// </summary>
+        /// <param name="Private"></param>
+        public DiffeHellmanPublic(DiffeHellmanPublic Private) {
+            DHDomain = Private.DHDomain;
+            Modulus = Private.Modulus;
+            Generator = Private.Generator;
+            Public = Private.Public;
+            }
 
         /// <summary>
         /// Create a new ephemeral private key and use it to perform a key
@@ -331,9 +340,7 @@ namespace Goedel.Cryptography.Algorithms {
 
         /// <summary>Constructor from ASN.1 parameters</summary>
         /// <param name="AgreementDH">The key agreement parameters.</param>
-        public DiffieHellmanResult (AgreementDH AgreementDH) {
-            Agreement = new BigInteger(AgreementDH.Result);
-            }
+        public DiffieHellmanResult(AgreementDH AgreementDH) => Agreement = new BigInteger(AgreementDH.Result);
 
         /// <summary>The key agreement result</summary>
         public BigInteger Agreement;
@@ -353,12 +360,11 @@ namespace Goedel.Cryptography.Algorithms {
         /// <summary>Salt to use in HKDF key derivation. If set will set the 
         /// Key derivation function to HKDF with the specified salt.</summary>
         public override byte[] Salt {
-            get {
-                return _Salt;
-                }
+            get => _Salt;
             set {
                 _Salt = value;
-                _KeyDerive = new KeyDeriveHKDF(IKM, _Salt); }
+                _KeyDerive = new KeyDeriveHKDF(IKM, _Salt);
+                }
             }
 
         /// <summary>Key derivation function. May be overridden, defaults to KDF.</summary>
@@ -367,9 +373,7 @@ namespace Goedel.Cryptography.Algorithms {
                 _KeyDerive = _KeyDerive ?? new KeyDeriveHKDF(IKM, _Salt);
                 return _KeyDerive;
                 }
-            set {
-                _KeyDerive = value;
-                }
+            set => _KeyDerive = value;
             }
 
         }

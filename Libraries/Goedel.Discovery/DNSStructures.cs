@@ -26,29 +26,28 @@ namespace Goedel.Discovery {
 
     /// <summary>DNS Gateway</summary>
     public partial struct DNSGateway {
-        
-        private DNSGatewayType _Type;
         /// <summary>The type of gateway</summary>
-        public DNSGatewayType Type {
-            get { return _Type; }
-            set { _Type = value; }
-            }
-        
+        public DNSGatewayType Type { get; set; }
+
         IPAddress               _IPAddress;
         string                  _DomainName;
 
         /// <summary>The IP address of the gateway</summary>
         public IPAddress        IPAddress {
-            set {_DomainName = null; _IPAddress = value;
-                _Type = DNSGatewayType.IPv4;}
-            get {return _IPAddress;}
-            
+            set {
+                _DomainName = null; _IPAddress = value;
+                Type = DNSGatewayType.IPv4;
+                }
+            get => _IPAddress;
+
             }
         /// <summary>The DNS address of the gateway</summary>
         public string           DomainName {
-            set {_DomainName = value; _IPAddress = null; _Type = 
-                DNSGatewayType.DomainName;}
-            get {return _DomainName;}
+            set {
+                _DomainName = value; _IPAddress = null; Type =
+               DNSGatewayType.DomainName;
+                }
+            get => _DomainName;
             }
 
         }
@@ -202,9 +201,7 @@ namespace Goedel.Discovery {
 
         /// <summary>Constructor from string</summary>
         /// <param name="Name">The DNS name in UNICODE format.</param>
-        public Domain(string Name) {
-            this.Name = Name;
-            }
+        public Domain(string Name) => this.Name = Name;
         }
 
 

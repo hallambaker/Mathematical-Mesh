@@ -39,18 +39,14 @@ namespace Test.Goedel.Mesh {
 
 
         [ClassInitialize]
-        public static void InitializeClass (TestContext context) {
-            InitializeClass();
-            }
+        public static void InitializeClass(TestContext context) => InitializeClass();
 
         public static void InitializeClass () {
             }
 
 
         [AssemblyCleanup]
-        public static void Cleanup () {
-            MeshCatalog.EraseTest();
-            }
+        public static void Cleanup() => MeshCatalog.EraseTest();
 
         /// <summary>
         /// It is not possible to perform more than one test simultaneously when testing the 

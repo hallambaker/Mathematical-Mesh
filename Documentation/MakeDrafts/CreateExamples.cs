@@ -185,7 +185,7 @@ namespace ExampleGenerator {
             var EncryptedContainer = MakeContainer("Test1EncSep", ContainerType.List);
             EncryptedContainer.Append(TestData300, EncryptionKeys:EncryptionKeys);
             EncryptedContainer.Append(TestData300, EncryptionKeys:EncryptionKeys);
-            ReadContainer(EncryptedContainer, ContainerHeadersEncryptIndependentSession);
+            //ReadContainer(EncryptedContainer, ContainerHeadersEncryptIndependentSession);
             ContainerFramingEncryptedIndependent = ConsoleWriter.ToString();
             }
 

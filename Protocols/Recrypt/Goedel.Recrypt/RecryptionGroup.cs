@@ -192,18 +192,14 @@ namespace Goedel.Recrypt {
         /// </summary>
         /// <param name="Input">The input data</param>
         /// <param name="Output">Filename of the file to write the ciphertext to.</param>
-        public void Encrypt (byte[] Input, string Output) {
-            FileContainerWriter.File(Output, Input, Recipients: Recipients);
-            }
+        public void Encrypt(byte[] Input, string Output) => FileContainerWriter.File(Output, Input, Recipients: Recipients);
 
         /// <summary>
         /// Encrypt content. The input and outputs are byte arrays.
         /// </summary>
         /// <param name="Input">The input data</param>
         /// <param name="Output">The output data</param>
-        public void Encrypt (byte[] Input, byte[] Output) {
-            Output = FileContainerWriter.Data(Input, Recipients: Recipients);
-            }
+        public void Encrypt(byte[] Input, byte[] Output) => Output = FileContainerWriter.Data(Input, Recipients: Recipients);
 
 
         /// <summary>
@@ -212,9 +208,7 @@ namespace Goedel.Recrypt {
         /// <param name="Input">The directory to read files from</param>
         /// <param name="Output">The output. This is a single file if SingleFile is true, 
         /// otherwise is a directory.</param>
-        public void EncryptDirectory (string InputDirectory, string Output, bool SingleFile) {
-            throw new NYI();
-            }
+        public void EncryptDirectory(string InputDirectory, string Output, bool SingleFile) => throw new NYI();
 
 
         }

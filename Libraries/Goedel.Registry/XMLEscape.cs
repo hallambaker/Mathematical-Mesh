@@ -152,11 +152,9 @@ namespace Goedel.Registry {
         /// <param name="Tag">Tag to wrap text with.</param>
         /// <param name="Text">The text to wrap (verbatim)</param>
         /// <param name="Attributes">List of tag/value pairs.</param>
-        public void WriteElement (string Tag,
+        public void WriteElement(string Tag,
             string Text = null,
-            params string[] Attributes) {
-            WriteElement(Tag, true, true, Text, Attributes);
-            }
+            params string[] Attributes) => WriteElement(Tag, true, true, Text, Attributes);
 
 
         /// <summary>

@@ -18,7 +18,6 @@
     <ProjectReference Include="..\..\Libraries\Core\Goedel.Utilities\Goedel.Utilities.csproj" />
     <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Dare\Goedel.Cryptography.Dare.csproj" />
     <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Jose\Goedel.Cryptography.Jose.csproj" />
-    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Windows\Goedel.Cryptography.Windows.csproj" />
     <ProjectReference Include="..\..\Libraries\Goedel.Cryptography\Goedel.Cryptography.csproj" />
     <ProjectReference Include="..\..\Libraries\Goedel.Mesh.Platform.Windows\Goedel.Mesh.Platform.Windows.csproj" />
     <ProjectReference Include="..\..\Libraries\Goedel.Mesh\Goedel.Mesh.csproj" />

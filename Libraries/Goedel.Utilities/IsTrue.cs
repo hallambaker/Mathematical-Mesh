@@ -22,9 +22,7 @@ namespace Goedel.Utilities {
         /// </summary>
         /// <param name="Value">The test value</param>
         /// <returns>True if the test value is true, false otherwise.</returns>
-        public static bool True (this bool Value) {
-            return (Value & AlwaysTrue);
-            }
+        public static bool True(this bool Value) => (Value & AlwaysTrue);
 
         /// <summary>
         /// Convert constant truth value to static. This allows the programmer 
@@ -32,8 +30,6 @@ namespace Goedel.Utilities {
         /// </summary>
         /// <param name="Value">The test value</param>
         /// <returns>False if the test value is true, true otherwise.</returns>
-        public static bool False(this bool Value) {
-            return (!Value & AlwaysTrue);
-            }
+        public static bool False(this bool Value) => (!Value & AlwaysTrue);
         }
     }

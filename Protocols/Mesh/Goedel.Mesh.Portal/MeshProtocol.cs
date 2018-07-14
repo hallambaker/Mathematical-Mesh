@@ -240,7 +240,7 @@ namespace Goedel.Mesh.Portal {
         /// </summary>		
 		public override JPCSession JPCSession {
 			get => JPCRemoteSession;
-			set {JPCRemoteSession = value as JPCRemoteSession; }
+			set => JPCRemoteSession = value as JPCRemoteSession; 
 			}
 
 
@@ -248,9 +248,9 @@ namespace Goedel.Mesh.Portal {
 		/// Create a client connection to the specified service.
         /// </summary>	
         /// <param name="JPCRemoteSession">The remote session to connect to</param>
-		public MeshServiceClient (JPCRemoteSession JPCRemoteSession) {
+		public MeshServiceClient (JPCRemoteSession JPCRemoteSession) =>
 			this.JPCRemoteSession = JPCRemoteSession;
-			}
+
 
 
         /// <summary>

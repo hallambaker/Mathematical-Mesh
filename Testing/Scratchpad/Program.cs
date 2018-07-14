@@ -18,6 +18,8 @@ using Goedel.Cryptography.Algorithms;
 using Test.Goedel.Cryptography;
 using Goedel.Cryptography.Jose.Test;
 using Goedel.Cryptography.KeyFile.Test;
+using Goedel.Cryptography.DH.Test;
+using Goedel.Cryptography.Windows.Test;
 
 namespace Scratchpad {
 
@@ -28,6 +30,8 @@ namespace Scratchpad {
             Console.WriteLine("Hello World");
 
             Goedel.IO.Debug.Initialize();
+
+            //TestCryptography.TestDirect();
             TestDare.TestDirect();
             }
 

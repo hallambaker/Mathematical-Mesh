@@ -37,30 +37,28 @@ namespace Goedel.Cryptography {
         /// setting KeyPair.TestMode will automatically set certificate store into test
         /// mode.
         /// </summary>
-        public static bool TestMode  {
-            get { return KeyPair.TestMode | _TestMode; }
-            set { _TestMode = value; }
+        public static bool TestMode {
+            get => KeyPair.TestMode | _TestMode;
+            set => _TestMode = value;
             }
 
         /// <summary>
         /// Register a certificate in the default Windows store and location
         /// for that type of certificate.
         /// </summary>
-        protected delegate void DelegateRegister (GCP.Certificate Certificate) ;
+        protected delegate void RegisterDelegate (GCP.Certificate Certificate) ;
 
         /// <summary>
         /// The delegate for Register(GCP.Certificate Certificate)
         /// </summary>
-        protected static DelegateRegister PlatformRegister;
+        protected static RegisterDelegate PlatformRegister;
 
         /// <summary>
         /// Register a certificate in the default Windows store and location
         /// for that type of certificate.
         /// </summary>
         /// <param name="Certificate">Certificate to register.</param>
-        public static void Register(GCP.Certificate Certificate) {
-            PlatformRegister(Certificate);
-            }
+        public static void Register(GCP.Certificate Certificate) => PlatformRegister(Certificate);
 
 
 
@@ -68,12 +66,12 @@ namespace Goedel.Cryptography {
         /// Register a certificate in the default Windows store and location
         /// for that type of certificate.
         /// </summary>
-        protected delegate void DelegateRegisterTrustedRoot(GCP.Certificate Certificate);
+        protected delegate void RegisterTrustedRootDelegate(GCP.Certificate Certificate);
 
         /// <summary>
         /// The delegate for Register(GCP.Certificate Certificate)
         /// </summary>
-        protected static DelegateRegisterTrustedRoot PlatformRegisterTrustedRoot;
+        protected static RegisterTrustedRootDelegate PlatformRegisterTrustedRoot;
 
 
         /// <summary>
@@ -81,21 +79,19 @@ namespace Goedel.Cryptography {
         /// for that type of certificate.
         /// </summary>
         /// <param name="Certificate">Certificate to register.</param>
-        public static void RegisterTrustedRoot(GCP.Certificate Certificate) {
-            PlatformRegisterTrustedRoot(Certificate);
-            }
+        public static void RegisterTrustedRoot(GCP.Certificate Certificate) => PlatformRegisterTrustedRoot(Certificate);
 
 
         /// <summary>
         /// Register a certificate in the default Windows store and location
         /// for that type of certificate.
         /// </summary>
-        protected delegate void DelegateRegisterTrustedRootByte(byte[] Data);
+        protected delegate void RegisterTrustedRootByteDelegate(byte[] Data);
 
         /// <summary>
         /// The delegate for Register(GCP.Certificate Certificate)
         /// </summary>
-        protected static DelegateRegisterTrustedRootByte PlatformRegisterTrustedRootByte;
+        protected static RegisterTrustedRootByteDelegate PlatformRegisterTrustedRootByte;
 
         /// <summary>
         /// Register a certificate in the default Windows store and location
@@ -109,12 +105,12 @@ namespace Goedel.Cryptography {
         /// Register a certificate in the default Windows store and location
         /// for that type of certificate.
         /// </summary>
-        protected delegate GCP.Certificate DelegateGet(string Fingerprint);
+        protected delegate GCP.Certificate GetDelegate(string Fingerprint);
 
         /// <summary>
         /// The delegate for Register(GCP.Certificate Certificate)
         /// </summary>
-        protected static DelegateGet PlatformGet;
+        protected static GetDelegate PlatformGet;
 
 
         /// <summary>
@@ -122,28 +118,24 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="Fingerprint">Fingerprint of public key</param>
         /// <returns>Parsed certificate</returns>
-        public static GCP.Certificate Get(string Fingerprint) {
-            return PlatformGet (Fingerprint);
-            }
+        public static GCP.Certificate Get(string Fingerprint) => PlatformGet(Fingerprint);
 
 
         /// <summary>
         /// Register a certificate in the default Windows store and location
         /// for that type of certificate.
         /// </summary>
-        protected delegate void DelegateClean();
+        protected delegate void CleanDelegate();
 
         /// <summary>
         /// The delegate for Register(GCP.Certificate Certificate)
         /// </summary>
-        protected static DelegateClean PlatformClean;
+        protected static CleanDelegate PlatformClean;
 
         /// <summary>
         /// Clean all certificate stores to remove test certificates
         /// </summary>
-        public static void Clean() {
-            PlatformClean();
-            }
+        public static void Clean() => PlatformClean();
 
         }
     }

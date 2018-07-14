@@ -178,9 +178,6 @@ namespace Goedel.Cryptography.PKIX {
         /// </summary>
         /// <param name="ID">The identifier to compare</param>
         /// <returns>true if the UDF value matches the specified identifier.</returns>
-        public bool Match (byte[] ID) {
-            return ID.SequenceEqual(UDFData);
-
-            }
+        public bool Match(byte[] ID) => ID.SequenceEqual(UDFData);
         }
     }

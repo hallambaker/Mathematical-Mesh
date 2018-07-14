@@ -126,8 +126,7 @@ namespace Goedel.Cryptography {
         /// <param name="URL">XML Signature and Encryption algorithm identifier</param>
         /// <returns>Algorithm Identifier</returns>
         public static CryptoAlgorithmID FromXMLID (this string URL) {
-            CryptoAlgorithmID Result;
-            var Found = XMLToID.TryGetValue(URL, out Result);
+            var Found = XMLToID.TryGetValue(URL, out var Result);
             return Found ? Result : CryptoAlgorithmID.NULL;
             }
 
@@ -138,8 +137,7 @@ namespace Goedel.Cryptography {
         /// <param name="ID">Algorithm Identifier</param>
         /// <returns>XML Signature and Encryption algorithm identifier</returns>
         public static string ToXMLID(this CryptoAlgorithmID ID) {
-            string Result;
-            var Found = IDToXML.TryGetValue(ID, out Result);
+            var Found = IDToXML.TryGetValue(ID, out var Result);
             return Found ? Result : null;
             }
 
@@ -149,8 +147,7 @@ namespace Goedel.Cryptography {
         /// <param name="URL">XML Signature and Encryption algorithm identifier</param>
         /// <returns>Algorithm Identifier</returns>
         public static CryptoAlgorithmID FromOID(this string URL) {
-            CryptoAlgorithmID Result;
-            var Found = OIDToID.TryGetValue(URL, out Result);
+            var Found = OIDToID.TryGetValue(URL, out var Result);
             return Found ? Result : CryptoAlgorithmID.NULL;
             }
 
@@ -160,8 +157,7 @@ namespace Goedel.Cryptography {
         /// <param name="ID">Algorithm Identifier</param>
         /// <returns>XML Signature and Encryption algorithm identifier</returns>
         public static string ToOID(this CryptoAlgorithmID ID) {
-            string Result;
-            var Found = IDToOID.TryGetValue(ID, out Result);
+            var Found = IDToOID.TryGetValue(ID, out var Result);
             return Found ? Result : null;
             }
 

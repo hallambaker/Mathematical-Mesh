@@ -22,10 +22,7 @@ namespace Goedel.Recrypt.Client {
         //    return new SessionAccount(SessionPersonal, Profile);
         //    }
 
-        public static AccountClient AccountClient (this SessionPersonal SessionPersonal) {
-
-            throw new NYI();
-            }
+        public static AccountClient AccountClient(this SessionPersonal SessionPersonal) => throw new NYI();
 
         }
 
@@ -56,15 +53,7 @@ namespace Goedel.Recrypt.Client {
         /// Construct a SessionRecryption from a personal session.
         /// </summary>
         /// <param name="SessionPersonal">The personal session to construct from.</param>
-        SessionAccount (SessionPersonal SessionPersonal, AccountProfile AccountProfile) {
-
-            throw new NYI();
-
-            //this.SessionPersonal = SessionPersonal;
-            //ApplicationProfile = AccountProfile;
-
-            //SessionPersonal.Add(this);  // The point at which the writes to the local disk, portal are performed.
-            }
+        SessionAccount(SessionPersonal SessionPersonal, AccountProfile AccountProfile) => throw new NYI();//this.SessionPersonal = SessionPersonal;//ApplicationProfile = AccountProfile;//SessionPersonal.Add(this);  // The point at which the writes to the local disk, portal are performed.
 
         /// <summary>
         /// Constrcut a SessionAccount by fetching the specified account from the Account service.
@@ -72,15 +61,7 @@ namespace Goedel.Recrypt.Client {
         /// </summary>
         /// <param name="SessionPersonal">The personal session (for credentials etc.)</param>
         /// <param name="AccountID">The account identifier.</param>
-        public SessionAccount (SessionPersonal SessionPersonal, string AccountID) {
-
-            throw new NYI();
-
-            //this.SessionPersonal = SessionPersonal;
-            //ApplicationProfile = AccountProfile;
-
-            //SessionPersonal.Add(this);  // The point at which the writes to the local disk, portal are performed.
-            }
+        public SessionAccount(SessionPersonal SessionPersonal, string AccountID) => throw new NYI();//this.SessionPersonal = SessionPersonal;//ApplicationProfile = AccountProfile;//SessionPersonal.Add(this);  // The point at which the writes to the local disk, portal are performed.
 
 
         SessionAccount (SessionPersonal SessionPersonal, AccountClient AccountClient) {

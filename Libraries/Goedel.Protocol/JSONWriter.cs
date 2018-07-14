@@ -41,7 +41,7 @@ namespace Goedel.Protocol {
         protected int Indent = 0;
 
         /// <summary>Write newline character</summary>
-        protected void NewLine() {
+        protected virtual void NewLine() {
             Output.WriteLine();
             for (int i = 0; i < Indent; i++) {
                 Output.Write("  ");
@@ -150,10 +150,14 @@ namespace Goedel.Protocol {
             }
 
         /// <summary>Write binary data as Base64Url encoded string.</summary>
-        /// <param name="Data">Value to write</param>
-        public override void WriteBinary(byte[] Data) {
+        /// <param name="buffer">Value to write</param>
+        /// <param name="offset">The zero-based byte offset in <paramref name="buffer"/>
+        /// at which to begin copying bytes to the current stream.</param>
+        /// <param name="count">The number of bytes to be written to the current stream.</param> 
+        public override void WriteBinary(byte[] buffer, int offset = 0, int count = -1) {
+            var Length = count < 0 ? buffer.Length : count;
             Output.Write("\"");
-            Output.Write(BaseConvert.ToStringBase64url(Data));
+            Output.Write(BaseConvert.ToStringBase64url(buffer, offset, Length));
             Output.Write("\"");
             }
 

@@ -36,20 +36,16 @@ namespace Goedel.Account {
         /// Numeric status return code value
         /// </summary>
         public override int StatusCode {
-            get { return Status; }
-            set { Status = value; }
+            get => Status;
+            set => Status = value;
             }
 
         /// <summary>
         /// Description of the status code (for debugging).
         /// </summary>
         public override string StatusDescriptionCode {
-            get {
-                return StatusDescription;
-                }
-            set {
-                StatusDescription = value;
-                }
+            get => StatusDescription;
+            set => StatusDescription = value;
             }
 
         /// <summary>

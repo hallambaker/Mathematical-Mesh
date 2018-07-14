@@ -64,12 +64,10 @@ namespace Goedel.Mesh.Portal.Client {
                     _MeshClient = MeshMachine.Bind(Portals.Default);
                     _MeshClient.SignedPersonalProfile = SignedPersonalProfile;
                     }
-                
+
                 return _MeshClient;
                 }
-            set {
-                _MeshClient = value;
-                }
+            set => _MeshClient = value;
             }
         MeshClient _MeshClient = null;
 
@@ -182,9 +180,7 @@ namespace Goedel.Mesh.Portal.Client {
         /// Complete process of connecting to a profile.
         /// </summary>
         /// <returns>The result of the pending connections query.</returns>
-        public ConnectPendingResponse ConnectPending () {
-            throw new Goedel.Utilities.NYI();
-            }
+        public ConnectPendingResponse ConnectPending() => throw new Goedel.Utilities.NYI();
 
         /// <summary>
         /// Complete process of connecting to a profile.
@@ -192,23 +188,20 @@ namespace Goedel.Mesh.Portal.Client {
         /// <param name="Request">The connection request</param>
         /// <param name="Status">The connection status result.</param>
         /// <returns>The response from the service.</returns>
-        public ConnectStatusResponse ConnectClose (
-                string CompletionCode, 
-                ConnectionStatus Status) {
+        public ConnectStatusResponse ConnectClose(
+                string CompletionCode,
+                ConnectionStatus Status) =>
             //PersonalProfile.Add(Request.Device.DeviceProfile);
 
             //Write();
             throw new Goedel.Utilities.NYI();
-            }
 
         /// <summary>
         /// Provide a PIN for authenticating the specified account ID
         /// </summary>
         /// <param name="length">The PIN length</param>
         /// <returns>The PIN value.</returns>
-        public string GetPin (int length) {
-            throw new Goedel.Utilities.NYI();
-            }
+        public string GetPin(int length) => throw new Goedel.Utilities.NYI();
 
         /// <summary>
         /// Complete process of connecting to a profile.
@@ -221,15 +214,11 @@ namespace Goedel.Mesh.Portal.Client {
         /// <summary>
         /// Fetch the latest version of the profile version
         /// </summary>
-        public override void GetFromPortal () {
-            SignedPersonalProfile = MeshClient.GetPersonalProfile();
-            }
+        public override void GetFromPortal() => SignedPersonalProfile = MeshClient.GetPersonalProfile();
         /// <summary>
         /// Update the associated profile in the registry
         /// </summary>
-        public override void WriteToPortal () {
-            MeshClient.Publish(SignedPersonalProfile);
-            }
+        public override void WriteToPortal() => MeshClient.Publish(SignedPersonalProfile);
 
         /// <summary>
         /// Report if the profile is the default personal profile or not.
@@ -342,13 +331,9 @@ namespace Goedel.Mesh.Portal.Client {
             // NYI: Validate against the UDF
             }
 
-        public override void MakeDefault () {
-            throw new NotImplementedException();
-            }
+        public override void MakeDefault() => throw new NotImplementedException();
 
-        public override void WriteToLocal (bool Default = false) {
-            MeshMachine.WriteToLocal(this, Default);
-            }
+        public override void WriteToLocal(bool Default = false) => MeshMachine.WriteToLocal(this, Default);
         }
     }
 

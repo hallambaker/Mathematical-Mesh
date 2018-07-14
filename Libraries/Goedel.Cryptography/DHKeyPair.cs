@@ -81,6 +81,21 @@ namespace Goedel.Cryptography {
         public override SubjectPublicKeyInfo PrivateKeyInfoData  => PKIXPrivateKeyDH.SubjectPublicKeyInfo();
 
 
+        /// <summary>
+        /// Returns a new KeyPair instance which only has the public values.
+        /// </summary>
+        /// <returns></returns>
+        public override KeyPair KeyPairPublic() {
+            var Result = new KeyPairDH(PublicKey);
+            Assert.True(Result.PublicOnly);
+            return Result;
+            }
+
+        /// <summary>
+        /// If true, the provider only provides the public key values.
+        /// </summary>
+        public override bool PublicOnly => PrivateKey==null;
+
 
         /// <summary>
         /// Stub method to return a signature provider. This provider does not implement

@@ -85,33 +85,29 @@ namespace Goedel.Command {
 			}
 
 
-		/// <summary>
+        /// <summary>
         /// Construct instance for exception using a userdata parameter of
-		/// type ExceptionData and the format string "The file {0} could not be read"
+        /// type ExceptionData and the format string "The file {0} could not be read"
         /// </summary>		
         /// <param name="Object">User data</param>	
-		public FileReadError (ExceptionData Object) : 
-				base (global::System.String.Format ("The file {0} could not be read",
-					Object.String					)) {
-			UserData = Object;
-			}
+        public FileReadError(ExceptionData Object) :
+                base(global::System.String.Format("The file {0} could not be read",
+                    Object.String)) => UserData = Object;
 
-		/// <summary>
+        /// <summary>
         /// Construct instance for exception using a userdata parameter of
-		/// type ExceptionData and the format string "The file {0} could not be read"
+        /// type ExceptionData and the format string "The file {0} could not be read"
         /// </summary>		
         /// <param name="Object">User data</param>	
-		/// <param name="Inner">Inner Exception</param>	
-		public FileReadError (ExceptionData Object, System.Exception Inner) : 
-				base (global::System.String.Format ("The file {0} could not be read",
-					Object.String					), Inner) {
-			UserData = Object;
-			}
+        /// <param name="Inner">Inner Exception</param>	
+        public FileReadError(ExceptionData Object, System.Exception Inner) :
+                base(global::System.String.Format("The file {0} could not be read",
+                    Object.String), Inner) => UserData = Object;
 
 
 
-		
-		/// <summary>
+
+        /// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
@@ -158,33 +154,29 @@ namespace Goedel.Command {
 			}
 
 
-		/// <summary>
+        /// <summary>
         /// Construct instance for exception using a userdata parameter of
-		/// type ExceptionData and the format string "The command {0} is not known."
+        /// type ExceptionData and the format string "The command {0} is not known."
         /// </summary>		
         /// <param name="Object">User data</param>	
-		public UnknownCommand (ExceptionData Object) : 
-				base (global::System.String.Format ("The command {0} is not known.",
-					Object.String					)) {
-			UserData = Object;
-			}
+        public UnknownCommand(ExceptionData Object) :
+                base(global::System.String.Format("The command {0} is not known.",
+                    Object.String)) => UserData = Object;
 
-		/// <summary>
+        /// <summary>
         /// Construct instance for exception using a userdata parameter of
-		/// type ExceptionData and the format string "The command {0} is not known."
+        /// type ExceptionData and the format string "The command {0} is not known."
         /// </summary>		
         /// <param name="Object">User data</param>	
-		/// <param name="Inner">Inner Exception</param>	
-		public UnknownCommand (ExceptionData Object, System.Exception Inner) : 
-				base (global::System.String.Format ("The command {0} is not known.",
-					Object.String					), Inner) {
-			UserData = Object;
-			}
+        /// <param name="Inner">Inner Exception</param>	
+        public UnknownCommand(ExceptionData Object, System.Exception Inner) :
+                base(global::System.String.Format("The command {0} is not known.",
+                    Object.String), Inner) => UserData = Object;
 
 
 
-		
-		/// <summary>
+
+        /// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
@@ -231,33 +223,29 @@ namespace Goedel.Command {
 			}
 
 
-		/// <summary>
+        /// <summary>
         /// Construct instance for exception using a userdata parameter of
-		/// type ExceptionData and the format string "The option {0} is not known."
+        /// type ExceptionData and the format string "The option {0} is not known."
         /// </summary>		
         /// <param name="Object">User data</param>	
-		public UnknownOption (ExceptionData Object) : 
-				base (global::System.String.Format ("The option {0} is not known.",
-					Object.String					)) {
-			UserData = Object;
-			}
+        public UnknownOption(ExceptionData Object) :
+                base(global::System.String.Format("The option {0} is not known.",
+                    Object.String)) => UserData = Object;
 
-		/// <summary>
+        /// <summary>
         /// Construct instance for exception using a userdata parameter of
-		/// type ExceptionData and the format string "The option {0} is not known."
+        /// type ExceptionData and the format string "The option {0} is not known."
         /// </summary>		
         /// <param name="Object">User data</param>	
-		/// <param name="Inner">Inner Exception</param>	
-		public UnknownOption (ExceptionData Object, System.Exception Inner) : 
-				base (global::System.String.Format ("The option {0} is not known.",
-					Object.String					), Inner) {
-			UserData = Object;
-			}
+        /// <param name="Inner">Inner Exception</param>	
+        public UnknownOption(ExceptionData Object, System.Exception Inner) :
+                base(global::System.String.Format("The option {0} is not known.",
+                    Object.String), Inner) => UserData = Object;
 
 
 
-		
-		/// <summary>
+
+        /// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;

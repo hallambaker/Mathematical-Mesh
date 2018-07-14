@@ -59,9 +59,7 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <param name="Tag">Tag text.</param>
         /// <param name="IndentIn">Current indent level.</param>
-        public override void WriteToken(string Tag, int IndentIn) {
-            WriteString(Tag);
-            }
+        public override void WriteToken(string Tag, int IndentIn) => WriteString(Tag);
 
         /// <summary>Write string.</summary>
         /// <param name="Data">Value to write</param>

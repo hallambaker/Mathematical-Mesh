@@ -50,17 +50,12 @@ namespace Goedel.Cryptography.PKIX {
         /// <summary>
         /// High level description of key use.
         /// </summary>
-        public Application Application {
-            get { return _Application; }
-            set { _Application = value; }
-            }
-        Application _Application;
+        public Application Application { get; set; }
 
         /// <summary>
         /// The UDF fingerprint of the keyInfo element.
         /// </summary>
-        public string UDF => _UDF; 
-        string _UDF;
+        public string UDF { get; }
 
         /// <summary>
         /// The SHA1 fingerprint of the certificate.
@@ -87,15 +82,10 @@ namespace Goedel.Cryptography.PKIX {
                 }
             }
         byte[] _SHA256;
-
-        KeyPair _KeyPair;
         /// <summary>
         /// The Certificate Public Key
         /// </summary>
-        public KeyPair KeyPair {
-            get { return _KeyPair; }
-            set { _KeyPair = value; }
-            }
+        public KeyPair KeyPair { get; set; }
 
         CryptoProviderSignature _CryptoProviderSignature = null;
 
@@ -145,7 +135,7 @@ namespace Goedel.Cryptography.PKIX {
         public Certificate(KeyPair SubjectKey, Application Application,
                     Certificate SigningCertificate) :
                 this(SubjectKey, Application) {
-            _UDF = SubjectKey.UDF;
+            UDF = SubjectKey.UDF;
             TBSCertificate.SetValidity(20);
 
             Sign(SigningCertificate);
@@ -161,7 +151,7 @@ namespace Goedel.Cryptography.PKIX {
         /// <param name="SubjectKey">Cryptographic provider for the subject key.</param>
         /// <param name="Application">Certificate application(s).</param>
         public Certificate(KeyPair SubjectKey, Application Application) {
-            _KeyPair = SubjectKey;
+            KeyPair = SubjectKey;
 
             var SubjectName = new Name(SubjectKey).ToList();
             TBSCertificate = new TBSCertificate(SubjectKey, SubjectName);
@@ -178,7 +168,7 @@ namespace Goedel.Cryptography.PKIX {
         public Certificate(KeyPair SubjectKey, Application Application,
                     string Subject,
                     string SubjectAltName) {
-            _KeyPair = SubjectKey;
+            KeyPair = SubjectKey;
 
             var SubjectName = new Name(Subject).ToList();
             TBSCertificate = new TBSCertificate(SubjectKey, SubjectName);
@@ -195,7 +185,7 @@ namespace Goedel.Cryptography.PKIX {
         /// <param name="SubjectKey">Cryptographic provider for the subject key.</param>
         /// <param name="Application">Certificate application(s).</param>
         public Certificate(CryptoProvider SubjectKey, Application Application) {
-            _KeyPair = SubjectKey.KeyPair;
+            KeyPair = SubjectKey.KeyPair;
             if (SubjectKey as CryptoProviderSignature != null) {
                 _CryptoProviderSignature = SubjectKey as CryptoProviderSignature;
                 }
@@ -335,9 +325,7 @@ namespace Goedel.Cryptography.PKIX {
         /// <summary>
         /// Construct a certification request.
         /// </summary>
-        public CertificationRequest() {
-            CertificationRequestInfo = new CertificationRequestInfo();
-            }
+        public CertificationRequest() => CertificationRequestInfo = new CertificationRequestInfo();
 
         /// <summary>
         /// Construct a certification request for the specified certificate.
@@ -366,9 +354,7 @@ namespace Goedel.Cryptography.PKIX {
         /// Set the subject name.
         /// </summary>
         /// <param name="name">The subject name to set.</param>
-        public void SetSubject(string name) {
-            CertificationRequestInfo.Subject = Name.ToName(name);
-            }
+        public void SetSubject(string name) => CertificationRequestInfo.Subject = Name.ToName(name);
 
 
         }
@@ -378,8 +364,6 @@ namespace Goedel.Cryptography.PKIX {
         /// <summary>
         /// Create an empty CertificationRequestInfo class with version 1.0
         /// </summary>
-        public CertificationRequestInfo() {
-            Version = 0;
-            }
+        public CertificationRequestInfo() => Version = 0;
         }
     }

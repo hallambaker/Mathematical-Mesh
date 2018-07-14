@@ -140,33 +140,29 @@ namespace Goedel.Utilities {
         /// </summary>	
 		public object UserData;
 
-		/// <summary>
+        /// <summary>
         /// Construct instance for exception using a userdata parameter of
-		/// type ExceptionData and the format string "The file {0} could not be read"
+        /// type ExceptionData and the format string "The file {0} could not be read"
         /// </summary>		
         /// <param name="Object">User data</param>	
-		public FileReadError (ExceptionData Object) : 
-				base (global::System.String.Format ("The file {0} could not be read",
-					Object.String					)) {
-			UserData = Object;
-			}
+        public FileReadError(ExceptionData Object) :
+                base(global::System.String.Format("The file {0} could not be read",
+                    Object.String)) => UserData = Object;
 
-		/// <summary>
+        /// <summary>
         /// Construct instance for exception using a userdata parameter of
-		/// type ExceptionData and the format string "The file {0} could not be read"
+        /// type ExceptionData and the format string "The file {0} could not be read"
         /// </summary>		
         /// <param name="Object">User data</param>	
-		/// <param name="Inner">Inner Exception</param>	
-		public FileReadError (ExceptionData Object, System.Exception Inner) : 
-				base (global::System.String.Format ("The file {0} could not be read",
-					Object.String					), Inner) {
-			UserData = Object;
-			}
+        /// <param name="Inner">Inner Exception</param>	
+        public FileReadError(ExceptionData Object, System.Exception Inner) :
+                base(global::System.String.Format("The file {0} could not be read",
+                    Object.String), Inner) => UserData = Object;
 
 
 
-		
-		/// <summary>
+
+        /// <summary>
         /// The public fatory delegate
         /// </summary>
         public static global::Goedel.Utilities.ThrowDelegate Throw = _Throw;

@@ -44,10 +44,7 @@ namespace Goedel.Persistence {
 
             }
 
-        public static void Write (IndexTerm IndexTerm) {
-            Console.WriteLine("    [{0}]/[{1}]", IndexTerm.Type, IndexTerm.Term);
-
-            }
+        public static void Write(IndexTerm IndexTerm) => Console.WriteLine("    [{0}]/[{1}]", IndexTerm.Type, IndexTerm.Term);
 
 
         }

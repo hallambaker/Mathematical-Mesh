@@ -1,4 +1,4 @@
-﻿using Goedel.Cryptography.Framework;
+﻿using Goedel.Cryptography;
 using Goedel.Utilities;
 using System;
 using System.Security.Cryptography;
@@ -62,8 +62,7 @@ namespace Goedel.Cryptography.KeyFile {
         /// <param name="KeyPair">Key pair to convert</param>
         /// <returns>The keyfile data</returns>
         public static string ToOpenSSH (this KeyPair KeyPair) {
-            if (KeyPair is KeyPairRSA) {
-                var RSAKeyPair = KeyPair as KeyPairRSA;
+            if (KeyPair is KeyPairBaseRSA RSAKeyPair) {
                 return ToOpenSSH(RSAKeyPair);
                 }
 
@@ -80,8 +79,7 @@ namespace Goedel.Cryptography.KeyFile {
         /// <param name="KeyPair">Key pair to convert</param>
         /// <returns>The keyfile data</returns>
         public static string ToPEMPrivate (this KeyPair KeyPair) {
-            if (KeyPair is KeyPairRSA) {
-                var RSAKeyPair = KeyPair as KeyPairRSA;
+            if (KeyPair is KeyPairBaseRSA RSAKeyPair) {
                 return ToPEMPrivate(RSAKeyPair);
                 }
 
@@ -98,8 +96,7 @@ namespace Goedel.Cryptography.KeyFile {
         /// <param name="KeyPair">Key pair to convert</param>
         /// <returns>The keyfile data</returns>
         public static string ToPEMPublic (this KeyPair KeyPair) {
-            if (KeyPair is KeyPairRSA) {
-                var RSAKeyPair = KeyPair as KeyPairRSA;
+            if (KeyPair is KeyPairBaseRSA RSAKeyPair) {
                 return ToPEMPublic(RSAKeyPair);
                 }
 
@@ -116,8 +113,7 @@ namespace Goedel.Cryptography.KeyFile {
         /// <param name="KeyPair">Key pair to convert</param>
         /// <returns>The keyfile data</returns>
         public static string ToPuTTY (this KeyPair KeyPair) {
-            if (KeyPair is KeyPairRSA) {
-                var RSAKeyPair = KeyPair as KeyPairRSA;
+            if (KeyPair is KeyPairBaseRSA RSAKeyPair) {
                 return ToPuTTY(RSAKeyPair);
                 }
 
@@ -133,9 +129,7 @@ namespace Goedel.Cryptography.KeyFile {
         /// </summary>
         /// <param name="RSAKeyPair">A  Key pair</param>
         /// <returns>Key Pair in PEM format</returns>
-        public static string ToPuTTY (this KeyPairRSA RSAKeyPair) {
-            return null;
-            }
+        public static string ToPuTTY(this KeyPairBaseRSA RSAKeyPair) => null;
 
         /// <summary>
         /// Convert key pair to OpenSSH formatted string.
@@ -143,7 +137,7 @@ namespace Goedel.Cryptography.KeyFile {
         /// <param name="RSAKeyPair">A  Key pair</param>
         /// <param name="Tag">Tag to label key with</param>
         /// <returns>Key Pair in PEM format</returns>
-        public static string ToOpenSSH (this KeyPairRSA RSAKeyPair, string Tag = null) {
+        public static string ToOpenSSH (this KeyPairBaseRSA RSAKeyPair, string Tag = null) {
             var SSH_RSA = new SSH_RSA(RSAKeyPair);
             var Data = SSH_RSA.Encode();
 
@@ -160,31 +154,30 @@ namespace Goedel.Cryptography.KeyFile {
         /// </summary>
         /// <param name="RSAKeyPair">A  Key pair</param>
         /// <returns>Key Pair in PEM format</returns>
-        public static string ToPEMPublic (this KeyPairRSA RSAKeyPair) {
-            
-            return null;
-            }
+        public static string ToPEMPublic(this KeyPairBaseRSA RSAKeyPair) => null;
 
         /// <summary>
         /// Convert key pair to PEM formatted string.
         /// </summary>
         /// <param name="RSAKeyPair">An RSA Key pair</param>
         /// <returns>Key Pair in PEM format</returns>
-        public static string ToPEMPrivate (KeyPairRSA RSAKeyPair) {
+        public static string ToPEMPrivate (KeyPairBaseRSA RSAKeyPair) {
+            //throw new NYI();
+            //RSACryptoServiceProvider Provider = RSAKeyPair.Provider;
+            //Assert.NotNull(Provider, NoProviderSpecified.Throw);
 
-            var Provider = RSAKeyPair.Provider;
-            Assert.NotNull(Provider, NoProviderSpecified.Throw);
+            //var RSAParameters = Provider.ExportParameters(true);
+            //Assert.NotNull(RSAParameters, PrivateKeyNotAvailable.Throw);
 
-            var RSAParameters = Provider.ExportParameters(true);
-            Assert.NotNull(RSAParameters, PrivateKeyNotAvailable.Throw);
-
-            var NewProvider = new RSACryptoServiceProvider();
-            NewProvider.ImportParameters(RSAParameters);
+            //var NewProvider = new RSACryptoServiceProvider();
+            //NewProvider.ImportParameters(RSAParameters);
 
 
-            //RSAParameters.Dump();
+            ////RSAParameters.Dump();
 
-            var RSAPrivateKey = RSAParameters.RSAPrivateKey();
+            //var RSAPrivateKey = RSAParameters.RSAPrivateKey();
+
+            var RSAPrivateKey = RSAKeyPair.PKIXPrivateKey;
 
             var Builder = new StringBuilder();
 
@@ -216,10 +209,8 @@ namespace Goedel.Cryptography.KeyFile {
         /// </summary>
         /// <param name="Data">Data to print</param>
         /// <param name="Tag">Tag to prepend to data</param>
-        public static void Dump (this byte[] Data, string Tag) {
-            Console.WriteLine("{0} : [{1}]  {2}.{3}.{4} ... {5}.{6}.{7}",
+        public static void Dump(this byte[] Data, string Tag) => Console.WriteLine("{0} : [{1}]  {2}.{3}.{4} ... {5}.{6}.{7}",
                 Tag, Data.Length, Data[0], Data[1], Data[2],
                     Data[Data.Length - 3], Data[Data.Length - 2], Data[Data.Length - 1]);
-            }
         }
     }

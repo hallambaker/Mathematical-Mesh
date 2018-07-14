@@ -40,18 +40,14 @@ namespace Goedel.Mesh {
         /// <param name="Account">The account name.</param>
         /// <param name="Portal">The dns address of the portal.</param>
         /// <returns>The account identifier - Account@Portal.</returns>
-        public static string ID(string Account, string Portal) {
-            return Account + "@" + Portal;
-            }
+        public static string ID(string Account, string Portal) => Account + "@" + Portal;
 
         /// <summary>
         /// Construct a Primary Key from the specified Unique ID.
         /// </summary>
         /// <param name="UniqueID">The AccountID</param>
         /// <returns>The Primary Key Value.</returns>
-        public static string PrimaryKey (string UniqueID) {
-            return "Account$" + UniqueID;
-            }
+        public static string PrimaryKey(string UniqueID) => "Account$" + UniqueID;
 
         /// <summary>
         /// The primary key

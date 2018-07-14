@@ -55,9 +55,7 @@ namespace Goedel.Account.Server {
         /// </summary>
         /// <param name="AccountId">The requested account name</param>
         /// <returns>True is the name is available, otherwise false.</returns>
-        public bool CheckAccount (string AccountId) {
-            return !IndexAccountID.Contains(AccountId);
-            }
+        public bool CheckAccount(string AccountId) => !IndexAccountID.Contains(AccountId);
 
         /// <summary>
         /// Create a new account record.
@@ -77,9 +75,7 @@ namespace Goedel.Account.Server {
         /// </summary>
         /// <param name="AccountId">Identifier of account to delete.</param>
         /// <returns>True if successful, otherwise false.</returns>
-        public bool DeleteAccount (string AccountId) {
-            return Account.Delete(AccountId);
-            }
+        public bool DeleteAccount(string AccountId) => Account.Delete(AccountId);
 
         /// <summary>
         /// Get an account record.
@@ -100,9 +96,7 @@ namespace Goedel.Account.Server {
         /// Update an account record.
         /// </summary>
         /// <param name="AccountData">Account data to write.</param>
-        public void UpdateAccount (AccountData AccountData) {
-            Account.Update(AccountData);
-            }
+        public void UpdateAccount(AccountData AccountData) => Account.Update(AccountData);
 
         }
     }

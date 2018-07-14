@@ -27,7 +27,7 @@ using System.Threading.Tasks;
 using System.Security.Cryptography;
 using Goedel.Utilities;
 
-namespace Goedel.Cryptography.Framework {
+namespace Goedel.Cryptography.Standard {
     /// <summary>
     /// Provider for bulk encryption algorithms (e.g. AES). Prior to the introduction of
     /// .NET Standard and the unification of the cryptographic processing algorithms, this
@@ -101,9 +101,7 @@ namespace Goedel.Cryptography.Framework {
         /// <param name="Key">The encryption key.</param>
         /// <param name="IV">The initialization vector. Must be of a legal size for the algorithm</param>
         /// <returns>The transformation object instance.</returns>
-        public override ICryptoTransform CreateEncryptor (byte[] Key, byte[] IV) {
-            return Provider.CreateEncryptor(Key, IV);
-            }
+        public override ICryptoTransform CreateEncryptor(byte[] Key, byte[] IV) => Provider.CreateEncryptor(Key, IV);
 
 
         /// <summary>
@@ -113,9 +111,7 @@ namespace Goedel.Cryptography.Framework {
         /// <param name="Key">The encryption key.</param>
         /// <param name="IV">The initialization vector. Must be of a legal size for the algorithm</param>
         /// <returns>The transformation object instance.</returns>
-        public override ICryptoTransform CreateDecryptor (byte[] Key, byte[] IV) {
-            return Provider.CreateDecryptor(Key, IV);
-            }
+        public override ICryptoTransform CreateDecryptor(byte[] Key, byte[] IV) => Provider.CreateDecryptor(Key, IV);
 
 
         /// <summary>
@@ -146,11 +142,8 @@ namespace Goedel.Cryptography.Framework {
                             CryptoProviderBulk Bulk = null,
                             CryptoAlgorithmID Algorithm = CryptoAlgorithmID.Default,
                             Stream OutputStream = null
-                            ) {
-
-            return MakeEncryptor(Provider.Key, Provider.IV,
+                            ) => MakeEncryptor(Provider.Key, Provider.IV,
                 Algorithm, OutputStream);
-            }
 
         /// <summary>
         /// Create an encoder for a bulk algorithm and optional key wrap or exchange.

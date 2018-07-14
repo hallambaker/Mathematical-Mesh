@@ -17,6 +17,9 @@ namespace Goedel.Protocol {
         public static new JSONReaderFactoryDelegate JSONReaderFactory => ReaderFactoryMethod;
         static JSONReader ReaderFactoryMethod(byte[] Data) => new JSONBCDReader(Data);
 
+
+
+
         IBinaryStream ByteInput => CharacterInput as IBinaryStream;
 
         /// <summary>
@@ -191,10 +194,12 @@ namespace Goedel.Protocol {
             return Token.Integer;
             }
 
+
         Token LexerTag(int Code, bool Terminal) {
             var Length = (int)GetInteger(Code);
             var Buffer = ByteInput.ReadBinary(Length);
             ResultString = Buffer.ToUTF8();
+            this.Terminal = Terminal;
             return Token.Tag;
             }
 
@@ -202,12 +207,14 @@ namespace Goedel.Protocol {
             var Length = (int) GetInteger(Code);
             var Buffer = ByteInput.ReadBinary(Length);
             ResultString = Buffer.ToUTF8();
+            this.Terminal = Terminal;
             return Token.String;
             }
 
         Token LexerBinary (int Code, bool Terminal) {
             var Length = (int)GetInteger(Code);
             ResultBinary = ByteInput.ReadBinary(Length);
+            this.Terminal = Terminal;
             return Token.Binary;
             }
 
@@ -272,6 +279,39 @@ namespace Goedel.Protocol {
                 }
             return true;
             }
+
+        /// <summary>
+        /// Attempt to read a binary object in incremental mode.
+        /// </summary>
+        /// <param name="Chunk">The data read.</param>
+        /// <returns>True if there is more data to be read</returns>
+        public override bool ReadBinaryIncremental(out byte[] Chunk) {
+            Chunk = ReadBinary();
+            return !Terminal;
+            }
+
+
+        /// <summary>
+        /// Attempt to read binary data from input.
+        /// </summary>
+        /// <returns>The data read</returns>
+        public override byte[] ReadBinary() => base.ReadBinary();
+
+            //{
+            //GetToken(true);
+            //switch (TokenType) {
+            //    case Token.String:
+            //    case Token.Binary:
+            //        return ResultBinary;
+            //    }
+            //throw new Exception("Expected BASE64 encoded binary");
+            //}
+
+        /// <summary>
+        /// Attempt to read string from input.
+        /// </summary>
+        /// <returns>The data read</returns>
+        public override string ReadString() => base.ReadString();
 
 
         }

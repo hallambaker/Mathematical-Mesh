@@ -52,21 +52,15 @@ namespace Goedel.Registry {
     /// Track a data source
     /// </summary>
     public class Source {
-        string _Name;
 
         /// <summary>The source name</summary>
-        public string Name {
-            get { return _Name;}
-            private set { _Name = value;}
-            }
+        public string Name { get; private set; }
 
         /// <summary>
         /// Create a source
         /// </summary>
         /// <param name="NameIn">The source name</param>
-        public Source(string NameIn) {
-            Name = NameIn;
-            }
+        public Source(string NameIn) => Name = NameIn;
         }
 
     /// <summary>Track position in a source file.</summary>
@@ -84,17 +78,13 @@ namespace Goedel.Registry {
         /// Convert position to text.
         /// </summary>
         /// <returns>The string value</returns>
-        public override string ToString() {
-            return ("Line "+ Ln.ToString() + " Col "+ Col.ToString () + " in :" + File.Name );
-            }
+        public override string ToString() => ("Line " + Ln.ToString() + " Col " + Col.ToString() + " in :" + File.Name);
 
         /// <summary>
         /// Create new position.
         /// </summary>
         /// <param name="NameIn">Name of the source.</param>
-        public Position(string NameIn) {
-            File = new Source (NameIn);
-            }
+        public Position(string NameIn) => File = new Source(NameIn);
         }
 
     /// <summary>
@@ -299,9 +289,7 @@ namespace Goedel.Registry {
         /// Return the label value
         /// </summary>
         /// <returns>The label</returns>
-        public override string ToString() {
-            return Label;
-            }
+        public override string ToString() => Label;
         }
 
     /// <summary>
@@ -346,9 +334,7 @@ namespace Goedel.Registry {
         /// Return the label value
         /// </summary>
         /// <returns>The label</returns>
-        public override string ToString() {
-            return ID.Label;
-            }
+        public override string ToString() => ID.Label;
 
         /// <summary>
         /// Return the label value
@@ -381,9 +367,7 @@ namespace Goedel.Registry {
         /// Return the label value
         /// </summary>
         /// <returns>The label</returns>
-        public override string ToString() {
-            return ID.Label;
-            }
+        public override string ToString() => ID.Label;
         }
 
     }

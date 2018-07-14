@@ -19,12 +19,8 @@ namespace Goedel.Registry {
         /// language. The default is 'CS' to generate for C#.
         /// </summary>
         public static string Target {
-            get {
-                return _Target.ToUpper();
-                }
-            set {
-                _Target = value;
-                }
+            get => _Target.ToUpper();
+            set => _Target = value;
             }
 
         /// <summary>
@@ -54,18 +50,14 @@ namespace Goedel.Registry {
         /// </summary>
         /// <param name="Base">Input string</param>
         /// <returns>Character safe label.</returns>
-        public static string CS (this object Base) {
-            return Base.ToString();
-            }
+        public static string CS(this object Base) => Base.ToString();
 
         /// <summary>
         /// Create a quoted, escaped string in the current language
         /// </summary>
         /// <param name="Base">Unescaped string</param>
         /// <returns>Quoted escaped string.</returns>
-        public static string QuotedNull (this string Base) {
-            return Base == null ? "null": Quoted(Base);
-            }
+        public static string QuotedNull(this string Base) => Base == null ? "null" : Quoted(Base);
 
 
         /// <summary>
@@ -128,9 +120,7 @@ namespace Goedel.Registry {
         /// <param name="Value">The condition value.</param>
         /// <param name="Text">The string to return if Value is true.</param>
         /// <returns>The string Text if Value is true, otherwise a null string.</returns>
-        public static string If(this bool Value, string Text) {
-            return If(Value, Text, "");
-            }
+        public static string If(this bool Value, string Text) => If(Value, Text, "");
 
         /// <summary>
         /// Return the first string value if a condition is met, otherwise return the second
@@ -139,10 +129,7 @@ namespace Goedel.Registry {
         /// <param name="TrueText">The string to return if Value is true.</param>
         /// <param name="FalseText">The string to return if Value is false.</param>
         /// <returns>The string Text if Value is true, otherwise a null string.</returns>
-        public static string If(this bool Value, string TrueText, string FalseText) {
-
-            return Value ? TrueText : FalseText;
-            }
+        public static string If(this bool Value, string TrueText, string FalseText) => Value ? TrueText : FalseText;
 
         /// <summary>
         /// To Be Specified stub. Writes out the value to the console an returns the string.

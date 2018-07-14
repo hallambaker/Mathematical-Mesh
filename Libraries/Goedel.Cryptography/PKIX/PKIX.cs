@@ -8,7 +8,7 @@ using Goedel.ASN;
 
 
 // Generate OID declarations
-
+#pragma warning disable IDE0022
 namespace Goedel.ASN {  // default namespace
 
 	}
@@ -2306,8 +2306,7 @@ namespace Goedel.Cryptography.PKIX {
 		/// <summary>
 		/// The OID value
 		/// </summary>
-		public override int [] OID { 
-			get => Constants.OID__id_at; } 
+		public override int [] OID  => Constants.OID__id_at;  
 
 		/// <summary>
 		/// ASN.1 member Member 
@@ -2420,8 +2419,7 @@ namespace Goedel.Cryptography.PKIX {
 		/// <summary>
 		/// The OID value
 		/// </summary>
-		public override int [] OID { 
-			get => Constants.OID__id_at; } 
+		public override int [] OID  => Constants.OID__id_at;  
 
 		/// <summary>
 		/// ASN.1 member IA5String 
@@ -2738,8 +2736,7 @@ namespace Goedel.Cryptography.PKIX {
 		/// <summary>
 		/// The OID value
 		/// </summary>
-		public override int [] OID { 
-			get => Constants.OID__id_ce_authorityKeyIdentifier; }  
+		public override int [] OID => Constants.OID__id_ce_authorityKeyIdentifier; 
 
 		/// <summary>
 		/// ASN.1 member KeyIdentifier 
@@ -2821,8 +2818,7 @@ namespace Goedel.Cryptography.PKIX {
 		/// <summary>
 		/// The OID value
 		/// </summary>
-		public override int [] OID { 
-			get => Constants.OID__id_ce_subjectKeyIdentifier; } 
+		public override int [] OID  => Constants.OID__id_ce_subjectKeyIdentifier;  
 
 		/// <summary>
 		/// ASN.1 member Value 
@@ -2865,8 +2861,7 @@ namespace Goedel.Cryptography.PKIX {
 		/// <summary>
 		/// The OID value
 		/// </summary>
-		public override int [] OID { 
-			get => Constants.OID__id_ce_keyUsage; } 
+		public override int [] OID  => Constants.OID__id_ce_keyUsage;  
 
 		/// <summary>
 		/// ASN.1 member Value 
@@ -2903,14 +2898,13 @@ namespace Goedel.Cryptography.PKIX {
 
 	// Singular, no sequence boundaries
     /// <summary>
-	/// certificatePolicies 
+	/// CertificatePolicies 
     /// </summary>
-	public partial class certificatePolicies : Goedel.ASN.Root {
+	public partial class CertificatePolicies : Goedel.ASN.Root {
 		/// <summary>
 		/// The OID value
 		/// </summary>
-		public override int [] OID { 
-			get => Constants.OID__id_ce_certificatePolicies; } 
+		public override int [] OID  => Constants.OID__id_ce_certificatePolicies;  
 
 		/// <summary>
 		/// ASN.1 member Value 
@@ -3093,8 +3087,7 @@ namespace Goedel.Cryptography.PKIX {
 		/// <summary>
 		/// The OID value
 		/// </summary>
-		public override int [] OID { 
-			get => Constants.OID__id_ce_subjectAltName; } 
+		public override int [] OID  => Constants.OID__id_ce_subjectAltName;  
 
 		/// <summary>
 		/// ASN.1 member Names 
@@ -3157,8 +3150,7 @@ namespace Goedel.Cryptography.PKIX {
 		/// <summary>
 		/// The OID value
 		/// </summary>
-		public override int [] OID { 
-			get => Constants.OID__id_ce_subjectAltName; } 
+		public override int [] OID  => Constants.OID__id_ce_subjectAltName;  
 
 		/// <summary>
 		/// ASN.1 member RFC822Name 
@@ -3208,8 +3200,7 @@ namespace Goedel.Cryptography.PKIX {
 		/// <summary>
 		/// The OID value
 		/// </summary>
-		public override int [] OID { 
-			get => Constants.OID__id_ce_basicConstraints; }  
+		public override int [] OID => Constants.OID__id_ce_basicConstraints; 
 
 		/// <summary>
 		/// ASN.1 member CA 
@@ -3266,8 +3257,7 @@ namespace Goedel.Cryptography.PKIX {
 		/// <summary>
 		/// The OID value
 		/// </summary>
-		public override int [] OID { 
-			get => Constants.OID__id_ce_nameConstraints; }  
+		public override int [] OID => Constants.OID__id_ce_nameConstraints; 
 
 		/// <summary>
 		/// ASN.1 member PermittedSubtrees 
@@ -3380,8 +3370,7 @@ namespace Goedel.Cryptography.PKIX {
 		/// <summary>
 		/// The OID value
 		/// </summary>
-		public override int [] OID { 
-			get => Constants.OID__id_ce_extKeyUsage; } 
+		public override int [] OID  => Constants.OID__id_ce_extKeyUsage;  
 
 		/// <summary>
 		/// ASN.1 member KeyPurpose 
@@ -4562,4 +4551,4 @@ namespace Goedel.Cryptography.PKIX {
 
 		}
 	}
-
+#pragma warning restore IDE0022	

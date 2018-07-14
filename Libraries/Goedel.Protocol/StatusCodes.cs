@@ -17,9 +17,7 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <param name="Status">Status code returned by transaction.</param>
         /// <returns>true if and only iff the transaction succeeded.</returns>
-        public static bool StatusInformation(this int Status) {
-            return (Status >= 100) & (Status <= 199);
-            }
+        public static bool StatusInformation(this int Status) => (Status >= 100) & (Status <= 199);
 
         /// <summary>
         /// Extension method to report the success or failure of transaction.
@@ -27,9 +25,7 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <param name="Status">Status code returned by transaction.</param>
         /// <returns>true if and only iff the transaction succeeded.</returns>
-        public static bool StatusSuccess(this int Status) {
-            return (Status >= 200) & (Status <= 299);
-            }
+        public static bool StatusSuccess(this int Status) => (Status >= 200) & (Status <= 299);
 
         /// <summary>
         /// Extension method to report the success or failure of transaction.
@@ -37,9 +33,7 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <param name="Status">Status code returned by transaction.</param>
         /// <returns>true if and only iff the transaction succeeded.</returns>
-        public static bool StatusIncomplete(this int Status) {
-            return (Status >= 300) & (Status <= 399);
-            }
+        public static bool StatusIncomplete(this int Status) => (Status >= 300) & (Status <= 399);
 
         /// <summary>
         /// Extension method to report the success or failure of transaction.
@@ -47,9 +41,7 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <param name="Status">Status code returned by transaction.</param>
         /// <returns>true if and only iff the transaction succeeded.</returns>
-        public static bool StatusClientError(this int Status) {
-            return (Status >= 400) & (Status <= 499);
-            }
+        public static bool StatusClientError(this int Status) => (Status >= 400) & (Status <= 499);
 
         /// <summary>
         /// Extension method to report the success or failure of transaction.
@@ -57,9 +49,7 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <param name="Status">Status code returned by transaction.</param>
         /// <returns>true if and only iff the transaction succeeded.</returns>
-        public static bool StatusServerError(this int Status) {
-            return (Status >= 500) & (Status <= 599);
-            }
+        public static bool StatusServerError(this int Status) => (Status >= 500) & (Status <= 599);
 
         }
 

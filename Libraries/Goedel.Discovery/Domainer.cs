@@ -139,13 +139,11 @@ namespace Goedel.Discovery {
             return 0;
             }
 
-		/// <summary>Convert RR type code to text code.</summary>
+        /// <summary>Convert RR type code to text code.</summary>
         /// <param name="Code">Type code</param>
         /// <returns>DNS text code</returns>
-        public static string TypeCode(int Code ) {
-            return DictionaryCode[(ushort)Code];
-            }
-		}
+        public static string TypeCode(int Code) => DictionaryCode[(ushort)Code];
+        }
 
 	/// <summary>DNT Type codes</summary>
 	public enum DNSTypeCode : ushort {
@@ -768,15 +766,11 @@ namespace Goedel.Discovery {
         /// <summary>Convert to wire form</summary>
 		/// <param name="Index">Output buffer</param>
         /// <returns>Canonical form of record data contents</returns>
-        public override void Encode(DNSBufferIndex Index) {
+        public override void Encode(DNSBufferIndex Index) => Index.WriteIPv4(Address);
 
-			Index.WriteIPv4 (Address);
-
-            }
-
-		/// <summary>Decode record or query from byte form buffer</summary>	
+        /// <summary>Decode record or query from byte form buffer</summary>	
         /// <param name="Index">Input data</param>
-		/// <param name="Length">Maximum amount of data to read</param>
+        /// <param name="Length">Maximum amount of data to read</param>
         /// <returns>Parsed record.</returns>
         public static  DNSRecord_A Decode (DNSBufferIndex Index, int Length) {
 			DNSRecord_A NewRecord = new DNSRecord_A ()  {
@@ -826,15 +820,11 @@ namespace Goedel.Discovery {
         /// <summary>Convert to wire form</summary>
 		/// <param name="Index">Output buffer</param>
         /// <returns>Canonical form of record data contents</returns>
-        public override void Encode(DNSBufferIndex Index) {
+        public override void Encode(DNSBufferIndex Index) => Index.WriteDomain(NSDNAME);
 
-			Index.WriteDomain (NSDNAME);
-
-            }
-
-		/// <summary>Decode record or query from byte form buffer</summary>	
+        /// <summary>Decode record or query from byte form buffer</summary>	
         /// <param name="Index">Input data</param>
-		/// <param name="Length">Maximum amount of data to read</param>
+        /// <param name="Length">Maximum amount of data to read</param>
         /// <returns>Parsed record.</returns>
         public static  DNSRecord_NS Decode (DNSBufferIndex Index, int Length) {
 			DNSRecord_NS NewRecord = new DNSRecord_NS ()  {
@@ -884,16 +874,11 @@ namespace Goedel.Discovery {
         /// <summary>Convert to wire form</summary>
 		/// <param name="Index">Output buffer</param>
         /// <returns>Canonical form of record data contents</returns>
-        public override void Encode(DNSBufferIndex Index) {
+        public override void Encode(DNSBufferIndex Index) => Index.WriteDomain(MADNAME);
 
-			Index.WriteDomain (MADNAME);
-
-
-            }
-
-		/// <summary>Decode record or query from byte form buffer</summary>	
+        /// <summary>Decode record or query from byte form buffer</summary>	
         /// <param name="Index">Input data</param>
-		/// <param name="Length">Maximum amount of data to read</param>
+        /// <param name="Length">Maximum amount of data to read</param>
         /// <returns>Parsed record.</returns>
         public static  DNSRecord_MD Decode (DNSBufferIndex Index, int Length) {
 			DNSRecord_MD NewRecord = new DNSRecord_MD ()  {
@@ -943,16 +928,11 @@ namespace Goedel.Discovery {
         /// <summary>Convert to wire form</summary>
 		/// <param name="Index">Output buffer</param>
         /// <returns>Canonical form of record data contents</returns>
-        public override void Encode(DNSBufferIndex Index) {
+        public override void Encode(DNSBufferIndex Index) => Index.WriteDomain(MADNAME);
 
-			Index.WriteDomain (MADNAME);
-
-
-            }
-
-		/// <summary>Decode record or query from byte form buffer</summary>	
+        /// <summary>Decode record or query from byte form buffer</summary>	
         /// <param name="Index">Input data</param>
-		/// <param name="Length">Maximum amount of data to read</param>
+        /// <param name="Length">Maximum amount of data to read</param>
         /// <returns>Parsed record.</returns>
         public static  DNSRecord_MF Decode (DNSBufferIndex Index, int Length) {
 			DNSRecord_MF NewRecord = new DNSRecord_MF ()  {
@@ -1002,15 +982,11 @@ namespace Goedel.Discovery {
         /// <summary>Convert to wire form</summary>
 		/// <param name="Index">Output buffer</param>
         /// <returns>Canonical form of record data contents</returns>
-        public override void Encode(DNSBufferIndex Index) {
+        public override void Encode(DNSBufferIndex Index) => Index.WriteDomain(CNAME);
 
-			Index.WriteDomain (CNAME);
-
-            }
-
-		/// <summary>Decode record or query from byte form buffer</summary>	
+        /// <summary>Decode record or query from byte form buffer</summary>	
         /// <param name="Index">Input data</param>
-		/// <param name="Length">Maximum amount of data to read</param>
+        /// <param name="Length">Maximum amount of data to read</param>
         /// <returns>Parsed record.</returns>
         public static  DNSRecord_CNAME Decode (DNSBufferIndex Index, int Length) {
 			DNSRecord_CNAME NewRecord = new DNSRecord_CNAME ()  {
@@ -1160,16 +1136,11 @@ namespace Goedel.Discovery {
         /// <summary>Convert to wire form</summary>
 		/// <param name="Index">Output buffer</param>
         /// <returns>Canonical form of record data contents</returns>
-        public override void Encode(DNSBufferIndex Index) {
+        public override void Encode(DNSBufferIndex Index) => Index.WriteDomain(MadName);
 
-			Index.WriteDomain (MadName);
-
-
-            }
-
-		/// <summary>Decode record or query from byte form buffer</summary>	
+        /// <summary>Decode record or query from byte form buffer</summary>	
         /// <param name="Index">Input data</param>
-		/// <param name="Length">Maximum amount of data to read</param>
+        /// <param name="Length">Maximum amount of data to read</param>
         /// <returns>Parsed record.</returns>
         public static  DNSRecord_MB Decode (DNSBufferIndex Index, int Length) {
 			DNSRecord_MB NewRecord = new DNSRecord_MB ()  {
@@ -1219,16 +1190,11 @@ namespace Goedel.Discovery {
         /// <summary>Convert to wire form</summary>
 		/// <param name="Index">Output buffer</param>
         /// <returns>Canonical form of record data contents</returns>
-        public override void Encode(DNSBufferIndex Index) {
+        public override void Encode(DNSBufferIndex Index) => Index.WriteDomain(MGMNAME);
 
-			Index.WriteDomain (MGMNAME);
-
-
-            }
-
-		/// <summary>Decode record or query from byte form buffer</summary>	
+        /// <summary>Decode record or query from byte form buffer</summary>	
         /// <param name="Index">Input data</param>
-		/// <param name="Length">Maximum amount of data to read</param>
+        /// <param name="Length">Maximum amount of data to read</param>
         /// <returns>Parsed record.</returns>
         public static  DNSRecord_MG Decode (DNSBufferIndex Index, int Length) {
 			DNSRecord_MG NewRecord = new DNSRecord_MG ()  {
@@ -1278,16 +1244,11 @@ namespace Goedel.Discovery {
         /// <summary>Convert to wire form</summary>
 		/// <param name="Index">Output buffer</param>
         /// <returns>Canonical form of record data contents</returns>
-        public override void Encode(DNSBufferIndex Index) {
+        public override void Encode(DNSBufferIndex Index) => Index.WriteDomain(NEWNAME);
 
-			Index.WriteDomain (NEWNAME);
-
-
-            }
-
-		/// <summary>Decode record or query from byte form buffer</summary>	
+        /// <summary>Decode record or query from byte form buffer</summary>	
         /// <param name="Index">Input data</param>
-		/// <param name="Length">Maximum amount of data to read</param>
+        /// <param name="Length">Maximum amount of data to read</param>
         /// <returns>Parsed record.</returns>
         public static  DNSRecord_MR Decode (DNSBufferIndex Index, int Length) {
 			DNSRecord_MR NewRecord = new DNSRecord_MR ()  {
@@ -1337,16 +1298,11 @@ namespace Goedel.Discovery {
         /// <summary>Convert to wire form</summary>
 		/// <param name="Index">Output buffer</param>
         /// <returns>Canonical form of record data contents</returns>
-        public override void Encode(DNSBufferIndex Index) {
+        public override void Encode(DNSBufferIndex Index) => Index.WriteData(Anything);
 
-			Index.WriteData (Anything);
-
-
-            }
-
-		/// <summary>Decode record or query from byte form buffer</summary>	
+        /// <summary>Decode record or query from byte form buffer</summary>	
         /// <param name="Index">Input data</param>
-		/// <param name="Length">Maximum amount of data to read</param>
+        /// <param name="Length">Maximum amount of data to read</param>
         /// <returns>Parsed record.</returns>
         public static  DNSRecord_NULL Decode (DNSBufferIndex Index, int Length) {
 			DNSRecord_NULL NewRecord = new DNSRecord_NULL ()  {
@@ -1468,15 +1424,11 @@ namespace Goedel.Discovery {
         /// <summary>Convert to wire form</summary>
 		/// <param name="Index">Output buffer</param>
         /// <returns>Canonical form of record data contents</returns>
-        public override void Encode(DNSBufferIndex Index) {
+        public override void Encode(DNSBufferIndex Index) => Index.WriteDomain(PTRDNAME);
 
-			Index.WriteDomain (PTRDNAME);
-
-            }
-
-		/// <summary>Decode record or query from byte form buffer</summary>	
+        /// <summary>Decode record or query from byte form buffer</summary>	
         /// <param name="Index">Input data</param>
-		/// <param name="Length">Maximum amount of data to read</param>
+        /// <param name="Length">Maximum amount of data to read</param>
         /// <returns>Parsed record.</returns>
         public static  DNSRecord_PTR Decode (DNSBufferIndex Index, int Length) {
 			DNSRecord_PTR NewRecord = new DNSRecord_PTR ()  {
@@ -1912,16 +1864,11 @@ namespace Goedel.Discovery {
         /// <summary>Convert to wire form</summary>
 		/// <param name="Index">Output buffer</param>
         /// <returns>Canonical form of record data contents</returns>
-        public override void Encode(DNSBufferIndex Index) {
+        public override void Encode(DNSBufferIndex Index) => Index.WriteString8(PSDN);
 
-			Index.WriteString8 (PSDN);
-
-
-            }
-
-		/// <summary>Decode record or query from byte form buffer</summary>	
+        /// <summary>Decode record or query from byte form buffer</summary>	
         /// <param name="Index">Input data</param>
-		/// <param name="Length">Maximum amount of data to read</param>
+        /// <param name="Length">Maximum amount of data to read</param>
         /// <returns>Parsed record.</returns>
         public static  DNSRecord_X25 Decode (DNSBufferIndex Index, int Length) {
 			DNSRecord_X25 NewRecord = new DNSRecord_X25 ()  {
@@ -2298,15 +2245,11 @@ namespace Goedel.Discovery {
         /// <summary>Convert to wire form</summary>
 		/// <param name="Index">Output buffer</param>
         /// <returns>Canonical form of record data contents</returns>
-        public override void Encode(DNSBufferIndex Index) {
+        public override void Encode(DNSBufferIndex Index) => Index.WriteIPv6(Address);
 
-			Index.WriteIPv6 (Address);
-
-            }
-
-		/// <summary>Decode record or query from byte form buffer</summary>	
+        /// <summary>Decode record or query from byte form buffer</summary>	
         /// <param name="Index">Input data</param>
-		/// <param name="Length">Maximum amount of data to read</param>
+        /// <param name="Length">Maximum amount of data to read</param>
         /// <returns>Parsed record.</returns>
         public static  DNSRecord_AAAA Decode (DNSBufferIndex Index, int Length) {
 			DNSRecord_AAAA NewRecord = new DNSRecord_AAAA ()  {
@@ -2672,15 +2615,11 @@ namespace Goedel.Discovery {
         /// <summary>Convert to wire form</summary>
 		/// <param name="Index">Output buffer</param>
         /// <returns>Canonical form of record data contents</returns>
-        public override void Encode(DNSBufferIndex Index) {
+        public override void Encode(DNSBufferIndex Index) => Index.WriteDomain(Target);
 
-			Index.WriteDomain (Target);
-
-            }
-
-		/// <summary>Decode record or query from byte form buffer</summary>	
+        /// <summary>Decode record or query from byte form buffer</summary>	
         /// <param name="Index">Input data</param>
-		/// <param name="Length">Maximum amount of data to read</param>
+        /// <param name="Length">Maximum amount of data to read</param>
         /// <returns>Parsed record.</returns>
         public static  DNSRecord_DNAME Decode (DNSBufferIndex Index, int Length) {
 			DNSRecord_DNAME NewRecord = new DNSRecord_DNAME ()  {
@@ -3282,15 +3221,11 @@ namespace Goedel.Discovery {
         /// <summary>Convert to wire form</summary>
 		/// <param name="Index">Output buffer</param>
         /// <returns>Canonical form of record data contents</returns>
-        public override void Encode(DNSBufferIndex Index) {
+        public override void Encode(DNSBufferIndex Index) => Index.WriteData(Identifier);
 
-			Index.WriteData (Identifier);
-
-            }
-
-		/// <summary>Decode record or query from byte form buffer</summary>	
+        /// <summary>Decode record or query from byte form buffer</summary>	
         /// <param name="Index">Input data</param>
-		/// <param name="Length">Maximum amount of data to read</param>
+        /// <param name="Length">Maximum amount of data to read</param>
         /// <returns>Parsed record.</returns>
         public static  DNSRecord_DHCID Decode (DNSBufferIndex Index, int Length) {
 			DNSRecord_DHCID NewRecord = new DNSRecord_DHCID ()  {

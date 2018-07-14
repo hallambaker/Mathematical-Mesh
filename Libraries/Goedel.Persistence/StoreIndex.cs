@@ -42,17 +42,13 @@ namespace Goedel.Persistence {
         /// Construct a data collection with the specified member.
         /// </summary>
         /// <param name="DataItem">Initial member</param>
-        public DataCollection(DataItem DataItem) {
-            Add(DataItem);
-            }
+        public DataCollection(DataItem DataItem) => Add(DataItem);
 
         /// <summary>
         /// Add the specified member to the collection.
         /// </summary>
         /// <param name="DataItem">Data item to add</param>
-        public void Add(DataItem DataItem) {
-            DataItems.Add (DataItem);
-            }
+        public void Add(DataItem DataItem) => DataItems.Add(DataItem);
         }
 
     /// <summary>
@@ -90,9 +86,7 @@ namespace Goedel.Persistence {
         /// </summary>
         /// <param name="Value">Key value to find.</param>
         /// <returns>True if key found, otherwise false.</returns>
-        public virtual bool Contains(string Value) {
-            return Dictionary.ContainsKey(Value);
-            }
+        public virtual bool Contains(string Value) => Dictionary.ContainsKey(Value);
 
         /// <summary>
         /// Find the data collection with the specified key value.
@@ -148,9 +142,7 @@ namespace Goedel.Persistence {
         /// </summary>
         /// <param name="Value">Key value to find.</param>
         /// <returns>True if value found, otherwise null.</returns>
-        public virtual bool Contains(string Value) {
-            return DictionaryKeyId.ContainsKey(Value);
-            }
+        public virtual bool Contains(string Value) => DictionaryKeyId.ContainsKey(Value);
 
 
         /// <summary>

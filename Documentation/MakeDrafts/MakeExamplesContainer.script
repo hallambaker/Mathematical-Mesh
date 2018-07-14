@@ -64,7 +64,7 @@ The creator generates an ephemeral key:
 The key agreement value is calculated:
 
 ~~~~
-#{Example.DareEncryptAgreement}
+#{Linewrap.Wrap(Example.DareEncryptAgreement.ToString())}
 ~~~~
 
 The key agreement value is used as the input to a HKDF key

@@ -81,22 +81,18 @@ namespace Goedel.Recrypt.Client {
         /// <param name="FileStatus">The mode to open the file in, this must be a mode
         /// that permits read access.</param>
         /// <returns>File Container instance</returns>
-        public FileContainerReaderRecrypting (
+        public FileContainerReaderRecrypting(
                 SessionPersonal SessionPersonal,
                 string FileName,
-                FileStatus FileStatus = FileStatus.Read) : base(SessionPersonal, FileName, FileStatus) {
-            SetPersonalSession(SessionPersonal);
-            }
+                FileStatus FileStatus = FileStatus.Read) : base(SessionPersonal, FileName, FileStatus) => SetPersonalSession(SessionPersonal);
 
         /// <summary>
         /// Open 
         /// </summary>
         /// <param name="Data"></param>
-        public FileContainerReaderRecrypting (
+        public FileContainerReaderRecrypting(
                 SessionPersonal SessionPersonal,
-                byte[] Data) : base(SessionPersonal, Data) {
-            SetPersonalSession(SessionPersonal);
-            }
+                byte[] Data) : base(SessionPersonal, Data) => SetPersonalSession(SessionPersonal);
 
 
         void SetPersonalSession (SessionPersonal SessionPersonal) {

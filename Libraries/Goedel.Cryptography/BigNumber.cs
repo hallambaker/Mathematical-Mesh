@@ -196,9 +196,7 @@ namespace Goedel.Cryptography {
         /// <param name="p">Modulus</param>
         /// <returns>The modular inverse, i.e. the number y such that 
         /// (x * y) mod p = 1.</returns>
-        public static BigInteger ModularInverse(this BigInteger x, BigInteger p) {
-            return BigInteger.ModPow(x, p - 2, p);
-            }
+        public static BigInteger ModularInverse(this BigInteger x, BigInteger p) => BigInteger.ModPow(x, p - 2, p);
 
         /// <summary>
         /// Calculate the modular inverse of a number using the x(p-2) approach
@@ -207,9 +205,7 @@ namespace Goedel.Cryptography {
         /// <param name="p">Modulus</param>
         /// <returns>The modular inverse, i.e. the number y such that 
         /// (x * y) mod p = 1.</returns>
-        public static BigInteger ModularInverse(this int x, BigInteger p) {
-            return ModularInverse((BigInteger)x, p);
-            }
+        public static BigInteger ModularInverse(this int x, BigInteger p) => ModularInverse((BigInteger)x, p);
 
         /// <summary>
         /// Calculate the modulus of a number with correct handling for negative numbers.
@@ -227,9 +223,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="p">The modulus</param>
         /// <returns>A value x such that x*x mod p = -1 mod p</returns>
-        public static BigInteger SqrtMinus1(this BigInteger p) {
-            return BigInteger.ModPow(2, (p - 1) / 4, p);
-            }
+        public static BigInteger SqrtMinus1(this BigInteger p) => BigInteger.ModPow(2, (p - 1) / 4, p);
 
 
         /// <summary>
@@ -292,9 +286,7 @@ namespace Goedel.Cryptography {
         /// <param name="x">Value</param>
         /// <param name="p">Modulus</param>
         /// <returns>x mod p</returns>
-        public static BigInteger Mod(this int x, BigInteger p) {
-            return Mod((BigInteger)x, p);
-            }
+        public static BigInteger Mod(this int x, BigInteger p) => Mod((BigInteger)x, p);
 
 
 

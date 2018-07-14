@@ -2,7 +2,7 @@
 [assembly: System.Reflection.AssemblyKeyName("SigningKeyDeveloper")]
 #endif
 
-namespace Goedel.Cryptography.Framework {
+namespace Goedel.Cryptography.Standard {
 
     /// <summary>
     /// Implementation of Goedel.Cryptography algorithms using the native .NET Standard

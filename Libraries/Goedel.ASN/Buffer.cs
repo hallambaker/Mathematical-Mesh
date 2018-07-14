@@ -110,9 +110,7 @@ namespace Goedel.ASN {
             }
 
         // Convenience function, only ever adds the lowest byte.
-        void AddByte (int Data) {
-            Add ((byte) (Data & 0xff));
-            }
+        void AddByte(int Data) => Add((byte)(Data & 0xff));
 
         /// <summary>
         /// Add a byte to the stream
@@ -247,9 +245,7 @@ namespace Goedel.ASN {
         /// Start encoding a sequence
         /// </summary>
         /// <returns>Position in the buffer relative to the buffer end (always negative)</returns>
-        public int Encode__Sequence_Start () {
-            return Pointer-Buffered.Length;
-            }
+        public int Encode__Sequence_Start() => Pointer - Buffered.Length;
 
         /// <summary>
         /// Encode end of a sequence. Note that since everything is written out 
@@ -258,26 +254,20 @@ namespace Goedel.ASN {
         /// <param name="Position">Buffer position</param>
         /// <param name="Flags">Flags</param>
         /// <param name="Code">Code</param>
-        public void Encode__Sequence_End (int Position, int Flags, int Code) {
-            AddTagLength (Position+Buffered.Length, Constants.Sequence, TagMode.Constructed, Flags, Code);
-            }
+        public void Encode__Sequence_End(int Position, int Flags, int Code) => AddTagLength(Position + Buffered.Length, Constants.Sequence, TagMode.Constructed, Flags, Code);
 
         /// <summary>
         /// Encode end of a sequence. Note that since everything is written out 
         /// backwards calls to end sequences must preceed the date to begin.
         /// </summary>
         /// <param name="Position">Buffer position</param>
-        public void Encode__Sequence_End (int Position) {
-            AddTagLength (Position + Buffered.Length, Constants.Sequence, TagMode.Constructed, 0, 0);
-            }
+        public void Encode__Sequence_End(int Position) => AddTagLength(Position + Buffered.Length, Constants.Sequence, TagMode.Constructed, 0, 0);
 
         /// <summary>
         /// Start encoding a set
         /// </summary>
         /// <returns>Position in the buffer relative to the buffer end (always negative)</returns>
-        public int Encode__Set_Start () {
-            return Pointer - Buffered.Length;
-            }
+        public int Encode__Set_Start() => Pointer - Buffered.Length;
 
         /// <summary>
         /// Encode end of a set. Note that since everything is written out 
@@ -286,10 +276,8 @@ namespace Goedel.ASN {
         /// <param name="Position">Buffer position</param>
         /// <param name="Flags">Flags</param>
         /// <param name="Code">Code</param>
-        public void Encode__Set_End(int Position, int Flags, int Code) {
-            AddTagLength (Position + Buffered.Length, Constants.Set, TagMode.Constructed, Flags, Code);
-            }
-       
+        public void Encode__Set_End(int Position, int Flags, int Code) => AddTagLength(Position + Buffered.Length, Constants.Set, TagMode.Constructed, Flags, Code);
+
         /// <summary>
         /// Add a tag with length data
         /// </summary>
@@ -497,9 +485,7 @@ namespace Goedel.ASN {
         // Bits must be byte aligned.
 
 
-        private bool IsOptional(int Flags) {
-            return (( Flags & ((int) ASNFlags.Optional)) > 0);
-            }
+        private bool IsOptional(int Flags) => ((Flags & ((int)ASNFlags.Optional)) > 0);
 
         private bool NullCheck(bool IsDefault, int Flags, int Code) {
             if (IsDefault) {

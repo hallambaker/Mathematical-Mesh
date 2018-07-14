@@ -72,27 +72,19 @@ namespace Goedel.Cryptography.PKIX {
             Extensions = new List<Extension>();
             }
 
-
-        byte[] _RawData;
-
         /// <summary>
         /// The raw certificate data, as populated by the 'convert from binary
         /// certificate method.
         /// </summary>
         /// 
-        public byte[] RawData {
-            get { return _RawData; }
-            set { _RawData = value; }
-            }
+        public byte[] RawData { get; set; }
 
 
 
         /// <summary>
         /// Set the default validity interval of 1 year from the present date.
         /// </summary>
-        public void SetValidity() {
-            SetValidity(1);
-            }
+        public void SetValidity() => SetValidity(1);
 
         /// <summary>
         /// Set the validity interval in years from the present date.
@@ -135,9 +127,7 @@ namespace Goedel.Cryptography.PKIX {
         /// </summary>
         /// <param name="NotBefore">First time instant that the certificate is valid.</param>
         /// <param name="NotAfter">Last time instant that the certificate is valid.</param>
-        public void SetValidity(DateTime NotBefore, DateTime NotAfter) {
-            Validity = new Validity(NotBefore, NotAfter);
-            }
+        public void SetValidity(DateTime NotBefore, DateTime NotAfter) => Validity = new Validity(NotBefore, NotAfter);
 
         /// <summary>
         /// Add an X.509v3 extension encty
@@ -157,9 +147,10 @@ namespace Goedel.Cryptography.PKIX {
 
         public void SetAuthorityKeyIdentifier(byte[] ID) {
             AuthorityKeyIdentifier AuthorityKeyIdentifier =
-                        new AuthorityKeyIdentifier();
-            AuthorityKeyIdentifier.AuthorityCertSerialNumber = System.Int32.MinValue;
-            AuthorityKeyIdentifier.KeyIdentifier = ID;
+                        new AuthorityKeyIdentifier {
+                            AuthorityCertSerialNumber = System.Int32.MinValue,
+                            KeyIdentifier = ID
+                            };
             AddExtension(new Extension(AuthorityKeyIdentifier, false));
             }
 
@@ -168,8 +159,9 @@ namespace Goedel.Cryptography.PKIX {
         /// </summary>
         /// <param name="ID">The key identifier</param>
         public void SetSubjectKeyIdentifier (byte[] ID) {
-            SubjectKeyIdentifier SubjectKeyIdentifier = new SubjectKeyIdentifier();
-            SubjectKeyIdentifier.Value = ID;
+            SubjectKeyIdentifier SubjectKeyIdentifier = new SubjectKeyIdentifier {
+                Value = ID
+                };
             AddExtension(new Extension(SubjectKeyIdentifier, false));
             }
 
@@ -183,21 +175,12 @@ namespace Goedel.Cryptography.PKIX {
             AddExtension(new Extension(SubjectAltName, false));
             }
 
-
-        /// <summary>
-        /// Set the profile for an end entity certificate
-        /// </summary>
-        /// <param name="Use">Use for the certificate</param>
-        public void SetProfile(Application Use) {
-            SetProfile(Use, -1);
-            }
-
         /// <summary>
         /// Set the profile for a certificate
         /// </summary>
         /// <param name="Use">Use for the certificate</param>
         /// <param name="PathLen">Path length constraint</param>
-        public void SetProfile(Application Use, int PathLen) {
+        public void SetProfile(Application Use, int PathLen = -1) {
 
             bool CA = false;
 
@@ -289,10 +272,11 @@ namespace Goedel.Cryptography.PKIX {
         /// <param name="PathLength">Maximum path length of a chain.</param>
         public void SetBasicConstraints(bool CA, int PathLength) {
             BasicConstraints BasicConstraints =
-                        new BasicConstraints();
-            BasicConstraints.CA = CA;
-            BasicConstraints.PathLenConstraint = PathLength < 0 ?
-                System.Int32.MinValue : PathLength;
+                        new BasicConstraints {
+                            CA = CA,
+                            PathLenConstraint = PathLength < 0 ?
+                System.Int32.MinValue : PathLength
+                            };
             AddExtension(new Extension(BasicConstraints, true));
             }
 
@@ -305,8 +289,9 @@ namespace Goedel.Cryptography.PKIX {
             int Uses = (int)KeyUses;
             byte[] Value = Assanine_wankathon(Uses);
 
-            KeyUsage KeyUsage = new KeyUsage();
-            KeyUsage.Value = Value;
+            KeyUsage KeyUsage = new KeyUsage {
+                Value = Value
+                };
             AddExtension(new Extension(KeyUsage, true));
             }
 
@@ -315,8 +300,9 @@ namespace Goedel.Cryptography.PKIX {
         /// </summary>
         /// <param name="Values">The key usage values</param>
         public void SetExtendedKeyUsage(List<int[]> Values) {
-            ExtendedKeyUsage ExtendedKeyUsage = new ExtendedKeyUsage();
-            ExtendedKeyUsage.KeyPurpose = Values;
+            ExtendedKeyUsage ExtendedKeyUsage = new ExtendedKeyUsage {
+                KeyPurpose = Values
+                };
             AddExtension(new Extension(ExtendedKeyUsage, false));
             }
 
@@ -401,10 +387,9 @@ namespace Goedel.Cryptography.PKIX {
         /// Construct from a general name.
         /// </summary>
         /// <param name="GeneralName">General name to encode</param>
-        public SubjectAltName(GeneralName GeneralName) {
-            this.Names = new List<GeneralName>();
-            this.Names.Add(GeneralName);
-            }
+        public SubjectAltName(GeneralName GeneralName) => Names = new List<GeneralName> {
+                GeneralName
+                };
         }
 
     /// <summary>

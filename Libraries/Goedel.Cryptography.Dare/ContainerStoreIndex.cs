@@ -33,9 +33,7 @@ namespace Goedel.Cryptography.Dare {
         /// Implement the enumeration interface
         /// </summary>
         /// <returns>The enumerator</returns>
-        public IEnumerator<IPersistenceIndexEntry> GetEnumerator () {
-            throw new NotImplementedException();
-            }
+        public IEnumerator<IPersistenceIndexEntry> GetEnumerator() => throw new NotImplementedException();
 
         IEnumerator IEnumerable.GetEnumerator () => GetEnumerator();
 
@@ -62,9 +60,7 @@ namespace Goedel.Cryptography.Dare {
                 return Current != null;
                 }
 
-            public void Reset () {
-                Current = First;
-                }
+            public void Reset() => Current = First;
             }
 
         /// <summary>

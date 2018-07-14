@@ -39,9 +39,7 @@ namespace Goedel.Protocol.Exchange {
         /// </summary>
         /// <param name="Portal">Address of the portal service.</param>
         /// <returns>Mesh service object for API access to the service.</returns>
-        public virtual KeyExchangeService GetService (string Portal) {
-            return GetService(Portal, null);
-            }
+        public virtual KeyExchangeService GetService(string Portal) => GetService(Portal, null);
 
         /// <summary>
         /// Return a KeyExchangeService object for the named portal service.
@@ -64,9 +62,7 @@ namespace Goedel.Protocol.Exchange {
                 return _Default;
                 }
 
-            set {
-                _Default = value;
-                }
+            set => _Default = value;
             }
 
         /// <summary>

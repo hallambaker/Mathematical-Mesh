@@ -21,9 +21,7 @@ namespace Goedel.Account.Server {
         /// </summary>
         /// <param name="Domain">The domain of the service provider.</param>
         /// <param name="Store">The  persistence store filename.</param>
-        public AccountLocalServiceProvider (string Domain, string Store = "Account.jlog") {
-            AccountStore = new AccountStore(Domain, Store);
-            }
+        public AccountLocalServiceProvider(string Domain, string Store = "Account.jlog") => AccountStore = new AccountStore(Domain, Store);
 
 
 

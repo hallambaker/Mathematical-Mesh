@@ -40,9 +40,7 @@ namespace Goedel.Mesh {
         /// <param name="SignedProfile">Generic signed profile</param>
         /// <returns>Inner PasswordProfile if the Signed Profile contains one,
         /// otherwise null.</returns>
-        public static MailProfile MailProfile (this SignedProfile SignedProfile) {
-            return SignedProfile.Profile as MailProfile;
-            }
+        public static MailProfile MailProfile(this SignedProfile SignedProfile) => SignedProfile.Profile as MailProfile;
         }
 
     /// <summary>

@@ -43,9 +43,7 @@ namespace Goedel.Mesh {
         /// <param name="SignedProfile">Generic signed profile</param>
         /// <returns>Inner PasswordProfile if the Signed Profile contains one,
         /// otherwise null.</returns>
-        public static SSHProfile SSHProfile (this SignedProfile SignedProfile) {
-            return SignedProfile.Profile as SSHProfile;
-            }
+        public static SSHProfile SSHProfile(this SignedProfile SignedProfile) => SignedProfile.Profile as SSHProfile;
         }
 
 
@@ -146,9 +144,7 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Initializer
         /// </summary>
-        public SSHProfilePrivate () {
-            HostEntries = new List<HostEntry>();
-            }
+        public SSHProfilePrivate() => HostEntries = new List<HostEntry>();
         }
 
     }

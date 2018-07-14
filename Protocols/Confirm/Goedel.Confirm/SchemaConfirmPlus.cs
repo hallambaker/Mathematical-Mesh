@@ -49,9 +49,7 @@ namespace Goedel.Confirm {
         /// <summary>
         /// Initialize the Mesh/Confirm libraries.
         /// </summary>
-        public static void Initialize () {
-            MeshItem.Append(_TagDictionary);
-            }
+        public static void Initialize() => MeshItem.Append(_TagDictionary);
         }
 
 
@@ -76,20 +74,16 @@ namespace Goedel.Confirm {
         /// Numeric status return code value
         /// </summary>
         public override int StatusCode {
-            get { return Status; }
-            set { Status = value; }
+            get => Status;
+            set => Status = value;
             }
 
         /// <summary>
         /// Description of the status code (for debugging).
         /// </summary>
         public override string StatusDescriptionCode {
-            get {
-                return StatusDescription;
-                }
-            set {
-                StatusDescription = value;
-                }
+            get => StatusDescription;
+            set => StatusDescription = value;
             }
 
         /// <summary>
@@ -142,9 +136,7 @@ namespace Goedel.Confirm {
 
 
     public partial class PendingResponse {
-        public List<RequestEntry> Select (string ID) {
-            throw new NYI();
-            }
+        public List<RequestEntry> Select(string ID) => throw new NYI();
 
         public void Accept (RequestEntry RequestEntry) {
             }

@@ -79,7 +79,8 @@ namespace Goedel.Cryptography.Dare {
                     Archive ? ContainerType.Tree : ContainerType.List;
                 }
 
-            Container = Container.NewContainer(FileName, FileStatus, ContainerType);
+            Container = Container.NewContainer(FileName, 
+                    FileStatus, ContainerType, EncryptionKeys: Recipients);
 
             }
 
@@ -317,7 +318,7 @@ namespace Goedel.Cryptography.Dare {
                 Container.Last();
                 }
 
-            Data = Container.FrameData;
+            Data = Container.ReadFrameData();
             ContentMeta = Container.ContainerHeader.ContentMeta;
             }
 

@@ -3,7 +3,6 @@ using System.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using Goedel.Cryptography;
-using Goedel.Cryptography.Framework;
 using Goedel.Cryptography.KeyFile;
 using Goedel.IO;
 using Goedel.Test;

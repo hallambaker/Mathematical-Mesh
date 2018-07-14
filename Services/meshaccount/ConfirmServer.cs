@@ -18,16 +18,14 @@ namespace Goedel.Confirm.Shell.Server {
 		static char UnixFlag = '-';
 		static char WindowsFlag = '/';
 
-		
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="Dispatch"></param>
         /// <param name="args"></param>
         /// <param name="index"></param>
-        public static void Help (DispatchShell Dispatch, string[] args, int index) {
-            Brief(Description, DefaultCommand, Entries);
-            }
+        public static void Help(DispatchShell Dispatch, string[] args, int index) => Brief(Description, DefaultCommand, Entries);
 
         public static DescribeCommandEntry DescribeHelp = new DescribeCommandEntry() {
             Identifier = "help",
@@ -41,9 +39,7 @@ namespace Goedel.Confirm.Shell.Server {
         /// <param name="Dispatch">The command description.</param>
         /// <param name="args">The set of arguments.</param>
         /// <param name="index">The first unparsed argument.</param>
-        public static void About (DispatchShell Dispatch, string[] args, int index) {
-            FileTools.About();
-            }
+        public static void About(DispatchShell Dispatch, string[] args, int index) => FileTools.About();
 
         public static DescribeCommandEntry DescribeAbout = new DescribeCommandEntry() {
             Identifier = "about",
@@ -51,9 +47,7 @@ namespace Goedel.Confirm.Shell.Server {
             Entries = new List<DescribeEntry>() { }
             };
 
-        static bool IsFlag(char c) {
-            return (c == UnixFlag) | (c == WindowsFlag) ;
-            }
+        static bool IsFlag(char c) => (c == UnixFlag) | (c == WindowsFlag);
 
 
         static CommandLineInterpreter () {
@@ -99,13 +93,11 @@ namespace Goedel.Confirm.Shell.Server {
 			}
 
 
-        public void MainMethod(ConfirmShell Dispatch, string[] Args) {
-			Dispatcher (Entries, DefaultCommand, Dispatch, Args, 0);
-            } // Main
+        public void MainMethod(ConfirmShell Dispatch, string[] Args) => Dispatcher(Entries, DefaultCommand, Dispatch, Args, 0); // Main
 
 
 
-		public static void Handle_Start (
+        public static void Handle_Start (
 					DispatchShell  DispatchIn, string[] Args, int Index) {
 			ConfirmShell Dispatch =	DispatchIn as ConfirmShell;
 			Start		Options = new Start ();
@@ -300,9 +292,7 @@ namespace Goedel.Confirm.Shell.Server {
 	// to eliminate the redundant code
     public class _ConfirmShell : global::Goedel.Command.DispatchShell {
 
-		public virtual void Start ( Start Options) {
-			CommandLineInterpreter.DescribeValues (Options);
-			}
+        public virtual void Start(Start Options) => CommandLineInterpreter.DescribeValues(Options);
 
 
         } // class _ConfirmShell

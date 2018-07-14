@@ -71,9 +71,7 @@ namespace Goedel.Command {
         /// <param name="Extension">The default extension.</param>
         /// <param name="Default">The base file name.</param>
         /// <returns>The defaulted output file.</returns>
-        public static string DefaultFile(string Extension, string Default) {
-            return Path.GetFileNameWithoutExtension(Default) + "." + Extension;
-            }
+        public static string DefaultFile(string Extension, string Default) => Path.GetFileNameWithoutExtension(Default) + "." + Extension;
 
         /// <summary>
         /// Determine output file name using command line entry and default data.

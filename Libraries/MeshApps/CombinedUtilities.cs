@@ -19,9 +19,7 @@ namespace Goedel.Combined.Shell.Client {
         bool ReportOutput = true;
         bool ActiveListener = false;
 
-        private void SetReporting (IReporting Reporting) {
-            SetReporting(Reporting.Report, Reporting.Verbose);
-            }
+        private void SetReporting(IReporting Reporting) => SetReporting(Reporting.Report, Reporting.Verbose);
 
         private void SetReporting (Flag Report, Flag Verbose) {
             ReportOutput = Report.Value;
@@ -89,9 +87,7 @@ namespace Goedel.Combined.Shell.Client {
             }
 
 
-        public SessionPersonal GetPersonal (IMeshProfile Options) {
-            return GetPersonal(Options.MeshID.Value);
-            }
+        public SessionPersonal GetPersonal(IMeshProfile Options) => GetPersonal(Options.MeshID.Value);
 
         public SessionPersonal GetPersonal (string Address) {
             var RegistrationPersonal = MeshMachine.GetPersonal(Address);

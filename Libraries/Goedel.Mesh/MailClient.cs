@@ -61,26 +61,18 @@ namespace Goedel.Mesh {
         /// Convenience accessor for the first outbound connection
         /// </summary>
         public Connection Out {
-            get {
-                return Outbound[0];
-                }
+            get => Outbound[0];
 
-            set {
-                Outbound = new List<Connection> { value };
-                }
+            set => Outbound = new List<Connection> { value };
             }
 
         /// <summary>
         /// Convenience accessor for the first inbound connection
         /// </summary>
         public Connection In {
-            get {
-                return Inbound[0];
-                }
+            get => Inbound[0];
 
-            set {
-                Inbound = new List<Connection> { value };
-                }
+            set => Inbound = new List<Connection> { value };
             }
 
         /// <summary>
@@ -92,8 +84,9 @@ namespace Goedel.Mesh {
         /// List of keys for signing.
         /// </summary>
         public override List<PublicKey> Sign {
-            get { return _Sign; }
-            set { _Sign = value;
+            get => _Sign;
+            set {
+                _Sign = value;
                 if (_Sign != null && _Sign.Count > 0) {
                     CertificateSign = _Sign[0];
                     }
@@ -105,7 +98,7 @@ namespace Goedel.Mesh {
         /// List of keys for encryption.
         /// </summary>
         public override List<PublicKey> Encrypt {
-            get { return _Encrypt; }
+            get => _Encrypt;
             set {
                 _Encrypt = value;
                 if (_Encrypt != null && _Encrypt.Count > 0) {
@@ -123,9 +116,7 @@ namespace Goedel.Mesh {
         /// Signing Certificate
         /// </summary>
         public virtual PublicKey CertificateSign {
-            get {
-                return _CertificateSign;
-                }
+            get => _CertificateSign;
 
             set {
                 _CertificateSign = value;
@@ -138,9 +129,7 @@ namespace Goedel.Mesh {
         /// Encryption Certificate if different from signing certificate.
         /// </summary>
         public virtual PublicKey CertificateEncrypt {
-            get {
-                return _CertificateEncrypt;
-                }
+            get => _CertificateEncrypt;
 
             set {
                 _CertificateEncrypt = value;

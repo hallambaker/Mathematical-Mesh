@@ -45,9 +45,7 @@ namespace Goedel.Mesh.Mail.Test {
         static MeshProfiles MeshProfiles = new MeshProfiles();
 
         [ClassInitialize]
-        public static void InitializeClass (TestContext context) {
-            InitializeClass();
-            }
+        public static void InitializeClass(TestContext context) => InitializeClass();
 
         static string AccountServiceDNS = "example.com";
 
@@ -111,76 +109,16 @@ namespace Goedel.Mesh.Mail.Test {
 
 
         [TestMethod]
-        public void CatalogBookmark () {
-            throw new NYI();
-            // create profile
-
-            // add  entry
-
-            // get  entry
-
-            // update  entry
-
-            // get  entry
-
-            // delete entry
-
-            // not found
-            }
+        public void CatalogBookmark() => throw new NYI();// create profile// add  entry// get  entry// update  entry// get  entry// delete entry// not found
 
         [TestMethod]
-        public void CatalogContact () {
-            throw new NYI();
-            // create profile
-
-            // add  entry
-
-            // get  entry
-
-            // update  entry
-
-            // get  entry
-
-            // delete entry
-
-            // not found
-            }
+        public void CatalogContact() => throw new NYI();// create profile// add  entry// get  entry// update  entry// get  entry// delete entry// not found
 
         [TestMethod]
-        public void CatalogWiFi () {
-            throw new NYI();
-            // create profile
-
-            // add  entry
-
-            // get  entry
-
-            // update  entry
-
-            // get  entry
-
-            // delete entry
-
-            // not found
-            }
+        public void CatalogWiFi() => throw new NYI();// create profile// add  entry// get  entry// update  entry// get  entry// delete entry// not found
 
         [TestMethod]
-        public void CatalogVPN () {
-            throw new NYI();
-            // create profile
-
-            // add  entry
-
-            // get  entry
-
-            // update  entry
-
-            // get  entry
-
-            // delete entry
-
-            // not found
-            }
+        public void CatalogVPN() => throw new NYI();// create profile// add  entry// get  entry// update  entry// get  entry// delete entry// not found
         }
     }
 

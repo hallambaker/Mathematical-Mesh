@@ -38,11 +38,7 @@ namespace Goedel.Protocol {
         /// <param name="Domain">Domain to resolve</param>
         /// <param name="Prefix">The service prefix to resolve</param>
         /// <returns>Currently the fixed string 192.168.1.39</returns>
-        public static string Resolve (string Domain, string Prefix) {
-
-            return "192.168.1.39";
-
-            }
+        public static string Resolve(string Domain, string Prefix) => "192.168.1.39";
 
         }
     }

@@ -67,9 +67,6 @@ namespace Goedel.Persistence {
 
     public partial class DataItem {
 
-
-        private bool persisted = false;
-
         /// <summary>
         /// Default Constructor
         /// </summary>
@@ -97,15 +94,7 @@ namespace Goedel.Persistence {
         /// <summary>
         /// Has the data item been written to persistent store?
         /// </summary>
-        public bool Persisted {
-            get {
-                return persisted;
-                }
-
-            set {
-                persisted = value;
-                }
-            }
+        public bool Persisted { get; set; } = false;
 
         /// <summary>
         ///  Add a key to the persistence store index

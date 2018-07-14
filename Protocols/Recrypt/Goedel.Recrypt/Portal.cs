@@ -39,22 +39,20 @@ namespace Goedel.Recrypt {
             /// make a remote connection.
             /// </summary>
             public static RecryptPortal Default {
-                get {
-                    if (_Default == null) {
-                        _Default = new RecryptPortalRemote();
-                        }
-                    return _Default;
+            get {
+                if (_Default == null) {
+                    _Default = new RecryptPortalRemote();
                     }
-
-                set {
-                    _Default = value;
-                    }
+                return _Default;
                 }
 
-            /// <summary>
-            /// May be set to the default RecryptService by a calling application.
-            /// </summary>
-            public RecryptService RecryptServiceClient;
+            set => _Default = value;
+            }
+
+        /// <summary>
+        /// May be set to the default RecryptService by a calling application.
+        /// </summary>
+        public RecryptService RecryptServiceClient;
 
             }
 

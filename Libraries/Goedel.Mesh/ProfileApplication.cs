@@ -53,7 +53,7 @@ namespace Goedel.Mesh {
                     }
                 return _SignedApplicationProfile;
                 }
-            set { _SignedApplicationProfile = value; }
+            set => _SignedApplicationProfile = value;
             }
 
         SignedApplicationProfile _SignedApplicationProfile;
@@ -96,9 +96,7 @@ namespace Goedel.Mesh {
         ApplicationProfilePrivate _ApplicationProfilePrivate;
 
 
-        void ClearSignature() {
-            _SignedApplicationProfile = null;
-            }
+        void ClearSignature() => _SignedApplicationProfile = null;
 
 
         /// <summary>
@@ -111,9 +109,7 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Protected initializer
         /// </summary>
-        public ApplicationProfile () {
-            Identifier = Goedel.Cryptography.UDF.Random();
-            }
+        public ApplicationProfile() => Identifier = Goedel.Cryptography.UDF.Random();
 
 
         /// <summary>
@@ -254,13 +250,10 @@ namespace Goedel.Mesh {
         /// <param name="Device">The device to add.</param>
         /// <param name="Administration">If true, enroll as an administration device.</param>
         /// <param name="ApplicationDevicePublic">Per device public data,  if required.</param>
-        public virtual void AddDevice (
+        public virtual void AddDevice(
                 DeviceProfile Device,
                 bool Administration = false,
-                ApplicationDevicePublic ApplicationDevicePublic = null) {
-
-            Assert.NYI("Should never happen. Make this abstract"); // Implement abstract types in protogen
-            }
+                ApplicationDevicePublic ApplicationDevicePublic = null) => Assert.NYI("Should never happen. Make this abstract"); // Implement abstract types in protogen
 
 
 

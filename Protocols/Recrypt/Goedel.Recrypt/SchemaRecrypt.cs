@@ -199,7 +199,7 @@ namespace Goedel.Recrypt {
         /// </summary>		
 		public override JPCSession JPCSession {
 			get => JPCRemoteSession;
-			set {JPCRemoteSession = value as JPCRemoteSession; }
+			set => JPCRemoteSession = value as JPCRemoteSession; 
 			}
 
 
@@ -207,9 +207,9 @@ namespace Goedel.Recrypt {
 		/// Create a client connection to the specified service.
         /// </summary>	
         /// <param name="JPCRemoteSession">The remote session to connect to</param>
-		public RecryptServiceClient (JPCRemoteSession JPCRemoteSession) {
+		public RecryptServiceClient (JPCRemoteSession JPCRemoteSession) =>
 			this.JPCRemoteSession = JPCRemoteSession;
-			}
+
 
 
         /// <summary>

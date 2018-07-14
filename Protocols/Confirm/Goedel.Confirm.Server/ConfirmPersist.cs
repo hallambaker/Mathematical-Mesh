@@ -46,26 +46,14 @@ namespace Goedel.Confirm.Server {
                 }
             return AccountEntry.FromJSON(DataEntry?.JSONReader);
             }
-        
 
-        void NewAccountData (AccountEntry AccountEntry) {
-            Confirm.New(AccountEntry);
-            }
-        void UpdateAccountData (AccountEntry AccountEntry) {
-            Confirm.Update(AccountEntry);
-            }
-        void NewRequestData (RequestEntry RequestEntry) {
-            Confirm.New(RequestEntry);
-            }
-        void UpdateRequestData (RequestEntry RequestEntry) {
-            Confirm.Update(RequestEntry);
-            }
-        void NewResponseData (ResponseEntry ResponseEntry) {
-            Confirm.New(ResponseEntry);
-            }
-        void UpdateResponseData (ResponseEntry ResponseEntry) {
-            Confirm.Update(ResponseEntry);
-            }
+
+        void NewAccountData(AccountEntry AccountEntry) => Confirm.New(AccountEntry);
+        void UpdateAccountData(AccountEntry AccountEntry) => Confirm.Update(AccountEntry);
+        void NewRequestData(RequestEntry RequestEntry) => Confirm.New(RequestEntry);
+        void UpdateRequestData(RequestEntry RequestEntry) => Confirm.Update(RequestEntry);
+        void NewResponseData(ResponseEntry ResponseEntry) => Confirm.New(ResponseEntry);
+        void UpdateResponseData(ResponseEntry ResponseEntry) => Confirm.Update(ResponseEntry);
 
         /// <summary>
         /// The DNS name of this service.

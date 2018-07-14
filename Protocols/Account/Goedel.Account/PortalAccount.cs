@@ -39,22 +39,20 @@ namespace Goedel.Account {
             /// make a remote connection.
             /// </summary>
             public static AccountPortal Default {
-                get {
-                    if (_Default == null) {
-                        _Default = new AccountPortalRemote();
-                        }
-                    return _Default;
+            get {
+                if (_Default == null) {
+                    _Default = new AccountPortalRemote();
                     }
-
-                set {
-                    _Default = value;
-                    }
+                return _Default;
                 }
 
-            /// <summary>
-            /// May be set to the default RecryptService by a calling application.
-            /// </summary>
-            public AccountService AccountServiceClient;
+            set => _Default = value;
+            }
+
+        /// <summary>
+        /// May be set to the default RecryptService by a calling application.
+        /// </summary>
+        public AccountService AccountServiceClient;
 
             }
 

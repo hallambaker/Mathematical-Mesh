@@ -159,7 +159,7 @@ namespace Goedel.Async {
         /// </summary>		
 		public override JPCSession JPCSession {
 			get => JPCRemoteSession;
-			set {JPCRemoteSession = value as JPCRemoteSession; }
+			set => JPCRemoteSession = value as JPCRemoteSession; 
 			}
 
 
@@ -167,9 +167,9 @@ namespace Goedel.Async {
 		/// Create a client connection to the specified service.
         /// </summary>	
         /// <param name="JPCRemoteSession">The remote session to connect to</param>
-		public AsyncServiceClient (JPCRemoteSession JPCRemoteSession) {
+		public AsyncServiceClient (JPCRemoteSession JPCRemoteSession) =>
 			this.JPCRemoteSession = JPCRemoteSession;
-			}
+
 
 
         /// <summary>

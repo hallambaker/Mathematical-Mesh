@@ -74,9 +74,7 @@ namespace Goedel.Mesh.Portal.Server {
         /// </summary>
         /// <param name="AccountID">The requested account name</param>
         /// <returns>True is the name is available, otherwise false.</returns>
-        public bool CheckAccount (string AccountID) {
-            return !PortalStore.Contains(AccountID);
-            }
+        public bool CheckAccount(string AccountID) => !PortalStore.Contains(AccountID);
 
 
         /// <summary>
@@ -350,10 +348,7 @@ namespace Goedel.Mesh.Portal.Server {
         /// in notarized transactions.
         /// </summary>
         /// <returns>The most recent entry in the log chain.</returns>
-        public string GetChainToken () {
-            return "Chain:Start";
-
-            }
+        public string GetChainToken() => "Chain:Start";
 
         }
 

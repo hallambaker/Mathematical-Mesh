@@ -34,6 +34,8 @@ using Goedel.Registry;
 using Goedel.Utilities;
 
 
+
+
 //
 // Namespace Goedel.Tool.Version
 // Class Release
@@ -62,6 +64,7 @@ using Goedel.Utilities;
 //       Text
 //   TokenType
 
+#pragma warning disable IDE0022
 namespace Goedel.Tool.Version {
 
 
@@ -103,9 +106,8 @@ namespace Goedel.Tool.Version {
 		public string					Code;
         public List <_Choice>           Entries = new List<_Choice> ();
 
-        public override ReleaseType _Tag () {
-            return ReleaseType.Version;
-            }
+        public override ReleaseType _Tag () =>ReleaseType.Version;
+
 
 		public override void _InitChildren (_Choice Parent) {
 			Init (Parent);
@@ -136,9 +138,8 @@ namespace Goedel.Tool.Version {
 		public string					Name;
         public List <_Choice>           Entries = new List<_Choice> ();
 
-        public override ReleaseType _Tag () {
-            return ReleaseType.Platform;
-            }
+        public override ReleaseType _Tag () =>ReleaseType.Platform;
+
 
 		public override void _InitChildren (_Choice Parent) {
 			Init (Parent);
@@ -170,9 +171,8 @@ namespace Goedel.Tool.Version {
 		public string					RID;
 		public string					Type;
 
-        public override ReleaseType _Tag () {
-            return ReleaseType.File;
-            }
+        public override ReleaseType _Tag () =>ReleaseType.File;
+
 
 		public override void _InitChildren (_Choice Parent) {
 			Init (Parent);
@@ -196,9 +196,8 @@ namespace Goedel.Tool.Version {
     public partial class Description : _Choice {
 		public List <System.String>			Text = new List <System.String> (); 
 
-        public override ReleaseType _Tag () {
-            return ReleaseType.Description;
-            }
+        public override ReleaseType _Tag () =>ReleaseType.Description;
+
 
 		public override void _InitChildren (_Choice Parent) {
 			Init (Parent);
@@ -221,9 +220,8 @@ namespace Goedel.Tool.Version {
 
     public partial class Stable : _Choice {
 
-        public override ReleaseType _Tag () {
-            return ReleaseType.Stable;
-            }
+        public override ReleaseType _Tag () =>ReleaseType.Stable;
+
 
 		public override void _InitChildren (_Choice Parent) {
 			Init (Parent);
@@ -246,17 +244,11 @@ namespace Goedel.Tool.Version {
 
 		// This method is never called. It exists only to prevent a warning when a
 		// Schema does not contain a ChoiceREF element.
-        public void Reach() {
-            Label = null;
-            }
+        public void Reach() =>  Label = null;
 
-        public override ReleaseType _Tag () {
-            return ReleaseType._Label;
-            }
+        public override ReleaseType _Tag () => ReleaseType._Label;
 
-		public override void Serialize (StructureWriter Output, bool tag) {
-			Output.WriteId ("ID", Label.ToString());
-			}
+		public override void Serialize (StructureWriter Output, bool tag) =>Output.WriteId ("ID", Label.ToString());
         }
 
 
@@ -290,13 +282,7 @@ namespace Goedel.Tool.Version {
         public List <Goedel.Tool.Version._Choice>        Top;
         public Registry	<Goedel.Tool.Version._Choice>	Registry;
 
-
-
-        bool _StartOfEntry;
-        public bool StartOfEntry {
-            get {return _StartOfEntry;}
-            private set { _StartOfEntry = value; }
-            }
+        public bool StartOfEntry {get;  private set;}
 
         StateCode								State;
         Goedel.Tool.Version._Choice				Current;
@@ -304,8 +290,9 @@ namespace Goedel.Tool.Version {
 
 
         public static Release Parse(string File, Goedel.Registry.Dispatch Options) {
-            var Result = new Release();
-            Result.Options = Options;
+            var Result = new Release() {
+				Options = Options
+				};
 
             using (Stream infile =
                         new FileStream(File, FileMode.Open, FileAccess.Read)) {
@@ -333,7 +320,7 @@ namespace Goedel.Tool.Version {
             Registry = new Registry <Goedel.Tool.Version._Choice> ();
             State = StateCode._Start;
             Stack = new List <_StackItem> ();
-            _StartOfEntry = true;
+            StartOfEntry = true;
 
 
 
@@ -413,9 +400,7 @@ namespace Goedel.Tool.Version {
             }
 
 
-		public void Serialize (TextWriter Output) {
-			Serialize (Output, OutputFormat.Goedel);
-			}
+		public void Serialize (TextWriter Output)=> Serialize (Output, OutputFormat.Goedel);
 
 		public void Serialize (TextWriter Output, OutputFormat OutputFormat) {
 
@@ -429,9 +414,10 @@ namespace Goedel.Tool.Version {
 
 
         void Push (Goedel.Tool.Version._Choice Token) {
-            _StackItem Item = new _StackItem ();
-            Item.State = State;
-            Item.Token = Current;
+            _StackItem Item = new _StackItem () {
+					State = State,
+					Token = Current
+					};
 
             Stack.Add (Item);
 
@@ -655,5 +641,5 @@ namespace Goedel.Tool.Version {
             }
         }
 	}
-
+#pragma warning restore IDE0022	
 

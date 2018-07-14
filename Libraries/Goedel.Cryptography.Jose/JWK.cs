@@ -43,13 +43,7 @@ namespace Goedel.Cryptography.Jose {
         /// a certificate reference (URL and hash), a UDF value, etc.
         /// </summary>
         /// <param name="KeyHandle">The key handle</param>
-        public KeyData(KeyHandle KeyHandle) {
-
-
-            Kid = KeyHandle.UDF; // The Key identifier is always the UDF of the key.
-
-
-            }
+        public KeyData(KeyHandle KeyHandle) => Kid = KeyHandle.UDF; // The Key identifier is always the UDF of the key.
 
         /// <summary>
         /// Builds a KeyData object from a key.
@@ -64,9 +58,7 @@ namespace Goedel.Cryptography.Jose {
         /// </summary>
         public KeyHandle KeyHandle => GetKeyHandle();
 
-        KeyHandle GetKeyHandle() {
-            return null;
-            }
+        KeyHandle GetKeyHandle() => null;
         }
 
     }

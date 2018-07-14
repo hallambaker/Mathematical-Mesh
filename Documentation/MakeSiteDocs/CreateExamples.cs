@@ -189,14 +189,10 @@ namespace ExampleGenerator {
             }
 
         DocumentationEntry DocumentationEntry2;
-        public void Device2 (string Command, string Tag = null, string Result = null, bool NYI = false) {
-            DocumentationEntry2 = DeviceMesh(ShellAlice2, "terminal2", Command, Tag, NYI);
-            }
+        public void Device2(string Command, string Tag = null, string Result = null, bool NYI = false) => DocumentationEntry2 = DeviceMesh(ShellAlice2, "terminal2", Command, Tag, NYI);
 
         DocumentationEntry DocumentationEntry3;
-        public void Device3 (string Command, string Tag = null, string Result = null, bool NYI = false) {
-            DocumentationEntry3 = DeviceMesh(ShellAlice3, "terminal3", Command, Tag, NYI);
-            }
+        public void Device3(string Command, string Tag = null, string Result = null, bool NYI = false) => DocumentationEntry3 = DeviceMesh(ShellAlice3, "terminal3", Command, Tag, NYI);
 
 
 
@@ -213,19 +209,13 @@ namespace ExampleGenerator {
 
 
         DocumentationEntry DocumentationEntryA;
-        public void DeviceAlice (string Command, string Tag = null, bool NYI = false) {
-            DocumentationEntryA = DeviceApp(ShellAlice, "terminala", Command, Tag, NYI);
-            }
+        public void DeviceAlice(string Command, string Tag = null, bool NYI = false) => DocumentationEntryA = DeviceApp(ShellAlice, "terminala", Command, Tag, NYI);
 
         DocumentationEntry DocumentationEntryB;
-        public void DeviceBob (string Command, string Tag = null, string Result = null, bool NYI = false) {
-            DocumentationEntryB = DeviceApp(ShellBob, "terminalb", Command, Tag, NYI);
-            }
+        public void DeviceBob(string Command, string Tag = null, string Result = null, bool NYI = false) => DocumentationEntryB = DeviceApp(ShellBob, "terminalb", Command, Tag, NYI);
 
         DocumentationEntry DocumentationEntryC;
-        public void DeviceMallet (string Command, string Tag = null, string Result = null, bool NYI = false) {
-            DocumentationEntryC = DeviceApp(ShellMallet, "terminalm", Command, Tag, NYI);
-            }
+        public void DeviceMallet(string Command, string Tag = null, string Result = null, bool NYI = false) => DocumentationEntryC = DeviceApp(ShellMallet, "terminalm", Command, Tag, NYI);
 
         public DocumentationEntry MakeExample (string Device, string Tag, 
                         string Command, string Result = null, bool NYI = false) {

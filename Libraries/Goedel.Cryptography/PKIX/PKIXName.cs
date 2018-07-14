@@ -29,9 +29,7 @@ namespace Goedel.Cryptography.PKIX {
         /// <summary>
         /// Create a name with an empty segment list.
         /// </summary>
-        public Name() {
-            Member = new List<AttributeTypeValue>();
-            }
+        public Name() => Member = new List<AttributeTypeValue>();
 
 
         /// <summary>
@@ -41,9 +39,7 @@ namespace Goedel.Cryptography.PKIX {
         /// <param name="Value">Text value.</param>
         /// <param name="Type">Text encoding.</param>
         public Name(int[] OID, string Value, StringType Type)
-            : this() {
-            Add(OID, Value, Type);
-            }
+            : this() => Add(OID, Value, Type);
 
 
         /// <summary>
@@ -88,8 +84,9 @@ namespace Goedel.Cryptography.PKIX {
         /// </summary>
         /// <returns>Singleton list with this as the only member.</returns>
         public List<Name> ToList() {
-            List<Name> Result = new List<Name>();
-            Result.Add(this);
+            List<Name> Result = new List<Name> {
+                this
+                };
             return Result;
             }
         }

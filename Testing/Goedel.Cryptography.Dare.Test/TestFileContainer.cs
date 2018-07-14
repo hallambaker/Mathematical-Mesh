@@ -58,8 +58,6 @@ namespace Goedel.Cryptography.Dare.Test {
 
             var Bytes = CreateBytes(100);
             ReadWriteContainer("TestFileEncrypted_100", Bytes, TestKeys.EncryptionKeys);
-
-            throw new NYI(); // Does not currently encrypt!!
             }
 
 
@@ -81,8 +79,6 @@ namespace Goedel.Cryptography.Dare.Test {
                 ReadWriteContainer(Filename, Bytes, TestKeys.EncryptionKeys);
                 Length = Length * 2;
                 }
-
-            throw new NYI(); // Does not currently encrypt!!
             }
 
         /// <summary>

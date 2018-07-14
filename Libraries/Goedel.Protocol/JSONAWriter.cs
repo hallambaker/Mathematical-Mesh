@@ -35,24 +35,20 @@ namespace Goedel.Protocol {
     /// JSON Writer for JSON-A, a format designed to improve human readability.
     /// </summary>
     public class JSONAWriter : JSONWriter {
-        
+
 
 
         /// <summary>
         /// Create a new JSON Writer.
         /// </summary>
-        public JSONAWriter() {
-            this.Output = new MemoryStream();
-            }
+        public JSONAWriter() => this.Output = new MemoryStream();
 
         /// <summary>
         /// Create a new JSON Writer using the specified output buffer. If the buffer has
         /// an output stream defined, text will be written to the stream.
         /// </summary>
         /// <param name="Output">Output buffer</param>
-        public JSONAWriter(MemoryStream Output) {
-            this.Output = Output;
-            }
+        public JSONAWriter(MemoryStream Output) => this.Output = Output;
 
         /// <summary>
         /// Write Tag to the stream
@@ -68,27 +64,19 @@ namespace Goedel.Protocol {
 
         /// <summary>Write 32 bit integer.</summary>
         /// <param name="Data">Value to write</param>
-        public override void WriteInteger32(int Data) {
-            Output.Write(Data.ToString());
-            }
+        public override void WriteInteger32(int Data) => Output.Write(Data.ToString());
 
         /// <summary>Write 64 bit integer</summary>
         /// <param name="Data">Value to write</param>
-        public override void WriteInteger64(long Data) {
-            Output.Write(Data.ToString());
-            }
+        public override void WriteInteger64(long Data) => Output.Write(Data.ToString());
 
         /// <summary>Write float32</summary>
         /// <param name="Data">Value to write</param>
-        public override void WriteFloat32(float Data) {
-            Output.Write(Data.ToString());
-            }
+        public override void WriteFloat32(float Data) => Output.Write(Data.ToString());
 
         /// <summary>Write float64</summary>
         /// <param name="Data">Value to write</param>
-        public override void WriteFloat64(double Data) {
-            Output.Write(Data.ToString());
-            }
+        public override void WriteFloat64(double Data) => Output.Write(Data.ToString());
 
         /// <summary>Write boolean.</summary>
         /// <param name="Data">Value to write</param>
@@ -137,10 +125,14 @@ namespace Goedel.Protocol {
             }
 
         /// <summary>Write binary data as Base64Url encoded string.</summary>
-        /// <param name="Data">Value to write</param>
-        public override void WriteBinary(byte[] Data) {
+        /// <param name="buffer">Value to write</param>
+        /// <param name="offset">The zero-based byte offset in <paramref name="buffer"/>
+        /// at which to begin copying bytes to the current stream.</param>
+        /// <param name="count">The number of bytes to be written to the current stream.</param> 
+        public override void WriteBinary(byte[] buffer, int offset = 0, int count = -1) {
+            var Length = count < 0 ? buffer.Length : count;
             Output.Write("\"");
-            Output.Write(BaseConvert.ToStringBase64url(Data));
+            Output.Write(BaseConvert.ToStringBase64url(buffer, offset, Length));
             Output.Write("\"");
             }
 

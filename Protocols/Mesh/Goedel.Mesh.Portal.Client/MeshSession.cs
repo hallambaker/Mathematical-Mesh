@@ -68,9 +68,7 @@ namespace Goedel.Mesh.Portal.Client {
         /// <summary>
         /// Erase all configuration data from the current machine.
         /// </summary>
-        public void EraseTest () {
-            Erase();
-            }
+        public void EraseTest() => Erase();
 
 
         /// <summary>
@@ -173,10 +171,7 @@ namespace Goedel.Mesh.Portal.Client {
         public SessionPersonal CreateAccount(
                     string PortalAddress,
                     SessionPersonal SessionPersonal,
-                    MeshClient MeshClient = null) {
-
-            throw new NYI();
-            }
+                    MeshClient MeshClient = null) => throw new NYI();
 
 
         /// <summary>
@@ -331,9 +326,7 @@ namespace Goedel.Mesh.Portal.Client {
         /// Add a personal profile to the current machine
         /// </summary>
         /// <param name="Profile">Profile to add.</param>
-        public void Add (PersonalProfile Profile) {
-            Assert.NYI("Add existing profile");
-            }
+        public void Add(PersonalProfile Profile) => Assert.NYI("Add existing profile");
 
         /// <summary>
         /// Get a personal profile.
@@ -367,9 +360,7 @@ namespace Goedel.Mesh.Portal.Client {
             return Result;
             }
 
-        public void AddPortal (SessionPersonal SessionPersonal, string AccountID) {
-            PersonalProfilesPortal.Add(AccountID, SessionPersonal);
-            }
+        public void AddPortal(SessionPersonal SessionPersonal, string AccountID) => PersonalProfilesPortal.Add(AccountID, SessionPersonal);
 
 
 
@@ -405,9 +396,7 @@ namespace Goedel.Mesh.Portal.Client {
         /// <param name="Connect">The connection start request information.</param>
         /// <param name="TimeOut">Timeout in seconds. Wait forever if timeout is -1.</param>
         /// <returns>The returned connection status.</returns>
-        public ConnectionStatus Await (ConnectStartRequest Connect, int TimeOut = -1) {
-            throw new NYI();
-            }
+        public ConnectionStatus Await(ConnectStartRequest Connect, int TimeOut = -1) => throw new NYI();
 
 
 

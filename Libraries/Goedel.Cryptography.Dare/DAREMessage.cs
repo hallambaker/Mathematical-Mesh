@@ -23,26 +23,11 @@ namespace Goedel.Cryptography.Dare {
 
         EnhancedDataSequence Writer;
 
-
-
-        ///// <summary>
-        ///// The decrypted message body.
-        ///// </summary>
-        //public byte[] Plaintext {
-        //    get { _Plaintext = _Plaintext ?? DecryptData(); return _Plaintext; } 
-        //    }
-        //byte[] _Plaintext;
-
         /// <summary>
         /// Create an empty DARE Message (for use by deserializers)
         /// </summary>
         public DAREMessage () {
             }
-
-
-        //byte[] DecryptData() {
-        //    throw new NYI();
-        //    }
 
         /// <summary>
         /// Create a DARE Message instance.
@@ -73,7 +58,7 @@ namespace Goedel.Cryptography.Dare {
 
             Header = new DAREHeader(EncryptionKeys, SignerKeys, EncryptID, AuthenticateID,
                 ContentType, Cloaked, DataSequences);
-            Body = Header.EnhanceBody(Plaintext, Header.Salt);
+            Body = Header.EnhanceBody(Plaintext);
             }
 
 
@@ -115,74 +100,50 @@ namespace Goedel.Cryptography.Dare {
             Header = new DAREHeader(EncryptionKeys, SignerKeys, EncryptID, AuthenticateID,
                 ContentType, Cloaked, DataSequences);
             JSONBWriter = new JSONBWriter(OutputStream);
+
             InitializeStream(JSONBWriter, Plaintext, ContentLength);
             }
 
         JSONBWriter JSONBWriter = null;
 
-        /// <summary>
-        /// Create a DARE Message instance.
-        /// </summary>
-        /// <param name="OutputStream">The stream to which the output will be written.</param>
-        /// <param name="EncryptionKeys">List of public keys to create recipient information objects for.</param>
-        /// <param name="SignerKeys">List of private keys to be used to sign the container frame.</param>
-        /// <param name="EncryptID">The bulk encryption algorithm to use.</param>
-        /// <param name="AuthenticateID">The bulk authentication algorithm to use. If the 
-        /// encryption algorithm is an authenticated encryption algorithm, and 
-        /// CryptoAlgorithmID.Default is specified, the value CryptoAlgorithmID.NULL
-        /// is used.</param>
-        /// <param name="ContentType">The payload content type.</param>
-        /// <param name="ContentLength">The content length. This value is ignored if the Plaintext
-        /// parameter is not null. If the value is less than 0, chunked encoding
-        /// will be used for the payload data. </param>
-        /// <param name="Plaintext">The payload plaintext. If specified, the plaintext will be used to
-        /// create the message body. Otherwise the body is specified by calls to the Process method.</param>
-        /// <param name="Cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
-        /// <param name="DataSequences">Data sequences to be converted to an EDS and presented 
-        ///     as an EDSS header entry.</param>
-        public DAREMessage (
-                    JSONWriter OutputStream,  // add support for partial binary blocks to JSONWriter...
-                    List<KeyPair> EncryptionKeys = null,
-                    List<KeyPair> SignerKeys = null,
-                    CryptoAlgorithmID EncryptID = CryptoAlgorithmID.Default,
-                    CryptoAlgorithmID AuthenticateID = CryptoAlgorithmID.Default,
-                    string ContentType = null,
-                    byte[] Plaintext = null,
-                    long ContentLength = -1,
-                    byte[] Cloaked = null,
-                    List<byte[]> DataSequences = null
-                    ) {
-            Header = new DAREHeader(EncryptionKeys, SignerKeys, EncryptID, AuthenticateID,
-                ContentType, Cloaked, DataSequences);
-            InitializeStream(OutputStream, Plaintext, ContentLength);
-            }
+        ///// <summary>
+        ///// Create a DARE Message instance.
+        ///// </summary>
+        ///// <param name="OutputStream">The stream to which the output will be written.</param>
+        ///// <param name="EncryptionKeys">List of public keys to create recipient information objects for.</param>
+        ///// <param name="SignerKeys">List of private keys to be used to sign the container frame.</param>
+        ///// <param name="EncryptID">The bulk encryption algorithm to use.</param>
+        ///// <param name="AuthenticateID">The bulk authentication algorithm to use. If the 
+        ///// encryption algorithm is an authenticated encryption algorithm, and 
+        ///// CryptoAlgorithmID.Default is specified, the value CryptoAlgorithmID.NULL
+        ///// is used.</param>
+        ///// <param name="ContentType">The payload content type.</param>
+        ///// <param name="ContentLength">The content length. This value is ignored if the Plaintext
+        ///// parameter is not null. If the value is less than 0, chunked encoding
+        ///// will be used for the payload data. </param>
+        ///// <param name="Plaintext">The payload plaintext. If specified, the plaintext will be used to
+        ///// create the message body. Otherwise the body is specified by calls to the Process method.</param>
+        ///// <param name="Cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
+        ///// <param name="DataSequences">Data sequences to be converted to an EDS and presented 
+        /////     as an EDSS header entry.</param>
+        //public DAREMessage (
+        //            JSONWriter OutputStream,  // add support for partial binary blocks to JSONWriter...
+        //            List<KeyPair> EncryptionKeys = null,
+        //            List<KeyPair> SignerKeys = null,
+        //            CryptoAlgorithmID EncryptID = CryptoAlgorithmID.Default,
+        //            CryptoAlgorithmID AuthenticateID = CryptoAlgorithmID.Default,
+        //            string ContentType = null,
+        //            byte[] Plaintext = null,
+        //            long ContentLength = -1,
+        //            byte[] Cloaked = null,
+        //            List<byte[]> DataSequences = null
+        //            ) {
+        //    Header = new DAREHeader(EncryptionKeys, SignerKeys, EncryptID, AuthenticateID,
+        //        ContentType, Cloaked, DataSequences);
+        //    InitializeStream(OutputStream, Plaintext, ContentLength);
+        //    }
 
-        /// <summary>
-        /// Initialize the output stream by writing a sequence consisting of
-        /// an array start tag, header and array separator tag. If the header is
-        /// empty the shortest sequence is thus "[{},"
-        /// </summary>
-        /// <param name="OutputStream">The output stream to write to</param>
-        /// <param name="Plaintext"></param>
-        /// <param name="ContentLength"></param>
-        void InitializeStream (
-            JSONWriter OutputStream,
-            byte[] Plaintext = null,
-            long ContentLength = -1) {
 
-            OutputStream.WriteArrayStart();
-            ContentLength = Plaintext == null ? ContentLength : Plaintext.Length;
-
-            Header.Serialize(OutputStream, false);
-            var First = false;
-            OutputStream.WriteArraySeparator(ref First);
-            Writer = Header.EnhancedDataSequenceWriter(OutputStream, ContentLength, Salt: Header.Salt);
-
-            if (Plaintext != null) {
-                Writer.Process(Plaintext, Final: true);
-                }
-
-            }
 
         #region IDisposable boilerplate code.
         /// <summary>
@@ -223,6 +184,41 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         protected virtual void Disposing() => Writer?.Dispose();
 
+        CryptoStackStreamWriter CryptoStackStream;
+        JSONWriter OutputStream;
+
+        /// <summary>
+        /// Initialize the output stream by writing a sequence consisting of
+        /// an array start tag, header and array separator tag. If the header is
+        /// empty the shortest sequence is thus "[{},"
+        /// </summary>
+        /// <param name="OutputStream">The output stream to write to</param>
+        /// <param name="Plaintext"></param>
+        /// <param name="ContentLength"></param>
+        void InitializeStream(
+            JSONBWriter OutputStream,
+            byte[] Plaintext = null,
+            long ContentLength = -1) {
+
+            this.OutputStream = OutputStream;
+            OutputStream.WriteArrayStart();
+            Header.Serialize(OutputStream, false);
+            OutputStream.WriteArraySeparator();
+
+            CryptoStackStream = Header.CryptoStack.GetEncoder(OutputStream.Output, PackagingFormat.EDS, ContentLength);
+
+
+            //ContentLength = Plaintext == null ? ContentLength : Plaintext.Length;
+
+            //Writer = Header.EnhancedDataSequenceWriter(OutputStream, ContentLength, Salt: Header.Salt);
+
+            //if (Plaintext != null) {
+            //    Writer.Process(Plaintext, Final: true);
+            //    }
+
+            }
+
+
         /// <summary>
         /// Process a data chunk and obtain a partial result.
         /// </summary>
@@ -232,7 +228,18 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="Final">If true, this is the final data chunk.</param>
         /// <returns>The result of processing the partial message. 
         /// This MAY be a zero length byte array.</returns>
-        public void Process(byte[] Input, bool Final = false, long First = 0, long Length = -1) => Writer.Process(Input, Final, First, Length);
+        public void Process(byte[] Input, bool Final = false, long First = 0, long Length = -1) {
+            Length = Length < 0 ? Input.Length - First : Length;
+
+            CryptoStackStream.Writer.Write(Input, First, Length);
+            CryptoStackStream.Close();
+
+            // here decide on whether to append a trailer with the signature.
+
+            OutputStream.WriteArrayEnd();
+            }
+            
+            //=>        Writer.Process(Input, Final, First, Length);
 
         /// <summary>
         /// Return the number of data sequences.
@@ -244,7 +251,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="i"></param>
         /// <returns></returns>
-        public byte[] DataSequence(int i) => throw new NYI();
+        public byte[] DataSequence(int i) => Header.DataSequence(i);
 
 
         /// <summary>
@@ -285,11 +292,6 @@ namespace Goedel.Cryptography.Dare {
                 }
             _Writer.WriteArrayEnd();
             }
-
-
-
-
-
 
 
         /// <summary>
@@ -425,8 +427,6 @@ namespace Goedel.Cryptography.Dare {
             return Message;
             }
 
-        KeyCollection KeyCollection = null;
-
         /// <summary>
         /// Read a DAREMessage from a stream in incremental mode. The header of the 
         /// message is read but not the body.
@@ -465,7 +465,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="Output">The stream to write the output to.</param>
         public void ReadToStreamDecrypting(Stream Output) {
-            var Reader = Header.GetReader(Output, Header.Salt);
+            var Reader = Header.GetReaderPipe(Output, Header.Salt);
 
             // We are getting back the entire buffer, not just the chunk
 

@@ -101,9 +101,7 @@ namespace Test.Common {
             return SignedPersonalProfile.FromJSON(Bytes.JSONReader()).PersonalProfile;
             }
 
-        public MeshMachine NewCatalog () {
-            return new MeshMachineCached();
-            }
+        public MeshMachine NewCatalog() => new MeshMachineCached();
 
 
         public SessionPersonal CreateAndRegister (string AccountID) {

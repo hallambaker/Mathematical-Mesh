@@ -3,7 +3,6 @@ using System.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using Goedel.Cryptography;
-using Goedel.Cryptography.Framework;
 using Goedel.Cryptography.KeyFile;
 using Goedel.IO;
 using Goedel.Test;
@@ -51,7 +50,7 @@ namespace Goedel.Cryptography.KeyFile.Test {
         public static void InitializeClass() {
 
             global::Goedel.IO.Debug.Initialize();
-            CryptographyFramework.Initialize();
+            CryptographyWindows.Initialize();
 
             SignerKeyPair = (KeyPairBaseRSA)KeyFileDecode.DecodePEM(Directories.TestKey_OpenSSH_Private);
             Signer = SignerKeyPair.SignatureProvider();

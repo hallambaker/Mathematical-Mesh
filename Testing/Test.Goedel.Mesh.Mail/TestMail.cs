@@ -62,12 +62,7 @@ namespace Goedel.Mesh.Mail.Test {
         //static MailProfile AliceMailProfile;
         static MeshProfiles MeshProfiles;
 
-        public static void InitializeClass () {
-            MeshProfiles = new MeshProfiles();
-
-
-            //MakeUser(IDMailAlice, out AliceMeshDevice1);
-            }
+        public static void InitializeClass() => MeshProfiles = new MeshProfiles();//MakeUser(IDMailAlice, out AliceMeshDevice1);
 
         //static void MakeUser (string AccountID, out SessionPersonal SessionPersonal) {
         //    //SessionPersonal = MeshProfiles.CreateAndRegister(AccountID);
@@ -121,23 +116,7 @@ namespace Goedel.Mesh.Mail.Test {
 
 
         [TestMethod]
-        public void MailCreateCA () {
-
-            throw new NYI();
-
-            // Add mail profile for account
-
-            // Check S/Mime credential
-
-            // Check OpenPGP Credential
-
-            // Add second device
-
-            // Check S/Mime credential
-
-            // Check OpenPGP Credential
-
-            }
+        public void MailCreateCA() => throw new NYI();// Add mail profile for account// Check S/Mime credential// Check OpenPGP Credential// Add second device// Check S/Mime credential// Check OpenPGP Credential
 
 
         }

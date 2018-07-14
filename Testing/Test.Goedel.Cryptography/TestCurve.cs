@@ -74,20 +74,10 @@ namespace Test.Goedel.Cryptography {
 
 
         [TestMethod]
-        public void TestEd25519() {
-
-            TestEd25519(SignatureTest.Tests25519[0]);
-
-
-            }
+        public void TestEd25519() => TestEd25519(SignatureTest.Tests25519[0]);
 
         [TestMethod]
-        public void TestEd448() {
-
-            TestEd448(SignatureTest.Tests448[0]);
-
-
-            }
+        public void TestEd448() => TestEd448(SignatureTest.Tests448[0]);
 
         void TestEd25519 (SignatureTest Test) {
 

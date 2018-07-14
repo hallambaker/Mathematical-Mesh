@@ -61,8 +61,6 @@ namespace Goedel.Discovery {
 
         /// <summary>Convert to canonical form</summary>
         /// <returns>Canonical form of record data contents</returns>
-        public override string Canonical() {
-            return Unknown();
-            }
+        public override string Canonical() => Unknown();
         }
     }

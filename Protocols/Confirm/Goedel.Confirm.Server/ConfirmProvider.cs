@@ -19,9 +19,7 @@ namespace Goedel.Confirm.Server {
         /// </summary>
         /// <param name="Domain">The domain of the service provider.</param>
         /// <param name="Store">The persistence store filename.</param>
-        public ConfirmLocalServiceProvider (string Domain, string Store="Confirm.jlog") {
-            ConfirmStore = new ConfirmStore(Domain, Store);
-            }
+        public ConfirmLocalServiceProvider(string Domain, string Store = "Confirm.jlog") => ConfirmStore = new ConfirmStore(Domain, Store);
         }
 
 

@@ -19,11 +19,10 @@ namespace Goedel.Cryptography.Dare.Test {
 
             var TestDare = new TestDare();
 
-            //TestDare.MessageEncryptedWithData();
             //TestDare.MessagePlaintext();
-            TestDare.MessageEncryptedAtomic();
-            //TestDare.TestFileContainerEncrypted1();
-            //TestDare.TestFileContainerEncrypted16();
+            TestDare.MessageEncryptedWithData();
+            //TestDare.MessageEncryptedAtomic();
+
             }
 
 

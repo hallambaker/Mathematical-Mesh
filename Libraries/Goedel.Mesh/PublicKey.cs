@@ -188,16 +188,10 @@ namespace Goedel.Mesh {
                 }
             }
 
-
-        private KeyType _KeyType = KeyType.Unknown;
-
         /// <summary>
         /// The type of key
         /// </summary>
-        public KeyType KeyType {
-            get { return _KeyType; }
-            set { _KeyType = value; }
-            }
+        public KeyType KeyType { get; set; } = KeyType.Unknown;
 
         private Certificate _Certificate;
 
@@ -226,9 +220,7 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <returns>true if the verification succeeds, false otherwise.</returns>
 
-        public bool Verify() {
-            return Verify(UDF);
-            }
+        public bool Verify() => Verify(UDF);
 
         /// <summary>
         /// Verify the keypair parameters match the fingerprint.
@@ -349,18 +341,14 @@ namespace Goedel.Mesh {
         /// Create a self signed root certificate
         /// </summary>
         /// <param name="PKIXUse">Bit mask specifying certificate uses.</param>
-        public void SelfSignCertificate(Application PKIXUse) {
-            Certificate = new Certificate(_KeyPair, PKIXUse, null);
-            }
+        public void SelfSignCertificate(Application PKIXUse) => Certificate = new Certificate(_KeyPair, PKIXUse, null);
 
         /// <summary>
         /// Create an application or intermediary certificate
         /// </summary>
         /// <param name="PKIXUse">Bit mask specifying certificate uses.</param>
         /// <param name="Signer">The signing key (which must have an attached certificate).</param>
-        public void SignCertificate(Application PKIXUse, PublicKey Signer) {
-            Certificate = new Certificate(_KeyPair, PKIXUse, Signer.Certificate);
-            }
+        public void SignCertificate(Application PKIXUse, PublicKey Signer) => Certificate = new Certificate(_KeyPair, PKIXUse, Signer.Certificate);
 
         /// <summary>
         /// Create an application certificate with the specified SubjectAltName.

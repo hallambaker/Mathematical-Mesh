@@ -62,9 +62,7 @@ namespace Goedel.Mesh.Portal.Server {
         /// <summary>
         /// Create new portal using the default stores.
         /// </summary>
-        public MeshPortalDirect () {
-            Init(ServiceName, MeshStore, PortalStore);
-            }
+        public MeshPortalDirect() => Init(ServiceName, MeshStore, PortalStore);
 
         /// <summary>
         /// Create a new portal using the specified stores.
@@ -72,18 +70,14 @@ namespace Goedel.Mesh.Portal.Server {
         /// <param name="ServiceName">DNS service name</param>
         /// <param name="MeshStore">File name for the Mesh Store.</param>
         /// <param name="PortalStore">File name for the Portal Store.</param>
-        public MeshPortalDirect(string ServiceName, string MeshStore, string PortalStore) {
-            Init(ServiceName, MeshStore, PortalStore);
-            }
+        public MeshPortalDirect(string ServiceName, string MeshStore, string PortalStore) => Init(ServiceName, MeshStore, PortalStore);
 
         /// <summary>
         /// Create a new portal using the specified stores.
         /// </summary>
         /// <param name="MeshStore">File name for the Mesh Store.</param>
         /// <param name="PortalStore">File name for the Portal Store.</param>
-        public MeshPortalDirect(string MeshStore, string PortalStore) {
-            Init(ServiceName, MeshStore, PortalStore);
-            }
+        public MeshPortalDirect(string MeshStore, string PortalStore) => Init(ServiceName, MeshStore, PortalStore);
 
         /// <summary>
         /// Initialize the portal
@@ -126,9 +120,7 @@ namespace Goedel.Mesh.Portal.Server {
         /// <summary>
         /// Create new portal using the default stores.
         /// </summary>
-        public MeshPortalLocal() {
-            MeshServiceHost = new PublicMeshServiceProvider(ServiceName, MeshStore, PortalStore);
-            }
+        public MeshPortalLocal() => MeshServiceHost = new PublicMeshServiceProvider(ServiceName, MeshStore, PortalStore);
 
         /// <summary>
         /// Return a MeshService object for the named portal service.

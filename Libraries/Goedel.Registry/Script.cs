@@ -29,9 +29,7 @@ namespace Goedel.Registry {
         /// Constructor with specified output.
         /// </summary>
         /// <param name="Output">The output stream</param>
-		public Script (TextWriter Output) {
-			_Output = Output;
-			}
+		public Script(TextWriter Output) => _Output = Output;
 
         /// <summary>
         /// Set the output.
@@ -118,9 +116,7 @@ namespace Goedel.Registry {
         /// <summary>Get assembly version</summary>
         /// <param name="Assembly">The assembly being queried.</param>
         /// <returns>The assembly version</returns>
-        public static string GetAssemblyVersion(Assembly Assembly) {
-            return Assembly.GetName().Version.ToString();
-            }
+        public static string GetAssemblyVersion(Assembly Assembly) => Assembly.GetName().Version.ToString();
 
         /// <summary>The Assembly Description</summary>
         public static string AssemblyDescription => EntryAssembly != null ? GetAssemblyDescription(EntryAssembly) :

@@ -70,9 +70,7 @@ namespace Goedel.Cryptography {
         /// <param name="Data">The input to process</param>
         /// <param name="Key">The key</param>
         /// <returns>The result of the cryptographic operation.</returns>
-        public virtual byte[] ProcessData(byte[] Data, byte[] Key = null) {
-            return ProcessData(Data, 0, Data.Length, Key);
-            }
+        public virtual byte[] ProcessData(byte[] Data, byte[] Key = null) => ProcessData(Data, 0, Data.Length, Key);
 
 
         /// <summary>
@@ -157,6 +155,37 @@ namespace Goedel.Cryptography {
         /// <param name="Input"></param>
         /// <returns></returns>
         public abstract long OutputLength (long Input);
+
+        /// <summary>
+        /// Creates a new instance of the CryptoStream class to encrypt data under the specified
+        /// <paramref name="Key"/> and <paramref name="IV"/>.
+        /// </summary>
+        /// <param name="Output">The stream on which to perform the cryptographic transformation.</param>
+        /// <param name="Key">The encryption key.</param>
+        /// <param name="IV">The initialization vector. Must be of a legal size for the algorithm</param>
+        /// <param name="mode">One of the CryptoStreamMode values.</param>
+        /// <returns>The CryptoStream with the specified parameters.</returns>
+        public CryptoStream GetEncryptionStream(
+                        Stream Output,
+                        byte[] Key, byte[] IV,
+                        CryptoStreamMode mode) => new CryptoStream(Output,
+                            CreateEncryptor(Key, IV), mode);
+
+        /// <summary>
+        /// Creates a new instance of the CryptoStream class to encrypt data under the specified
+        /// <paramref name="Key"/> and <paramref name="IV"/>.
+        /// </summary>
+        /// <param name="Output">The stream on which to perform the cryptographic transformation.</param>
+        /// <param name="Key">The encryption key.</param>
+        /// <param name="IV">The initialization vector. Must be of a legal size for the algorithm</param>
+        /// <param name="mode">One of the CryptoStreamMode values.</param>
+        /// <returns>The CryptoStream with the specified parameters.</returns>
+        public CryptoStream GetDecryptionStream(
+                        Stream Output,
+                        byte[] Key, byte[] IV,
+                        CryptoStreamMode mode) => new CryptoStream(Output,
+                            CreateDecryptor(Key, IV), mode);
+
 
         /// <summary>
         /// Return a block Encryptor for the specified key and IV. This is required for

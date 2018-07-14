@@ -80,9 +80,7 @@ namespace Goedel.Cryptography.Ticket {
                 }
 
             /// <summary>The initialization vector</summary>
-            public byte[] IV() {
-                return Nonce (IVLength);
-                }
+            public byte[] IV() => Nonce(IVLength);
 
             /// <summary>
             /// Encryption method, this should be replaced with the common wrapper classes.
@@ -92,10 +90,7 @@ namespace Goedel.Cryptography.Ticket {
             /// <param name="Ciphertext"></param>
             /// <param name="To"></param>
             public void Encrypt(byte[] IV,
-                    byte[] ClearText, byte[] Ciphertext, int To) {
-
-                throw new NYI();
-                }
+                    byte[] ClearText, byte[] Ciphertext, int To) => throw new NYI();
 
             }
 
@@ -124,10 +119,8 @@ namespace Goedel.Cryptography.Ticket {
 
         /// <summary>Return longest key length of known algorithms.</summary>
         /// <returns>The key length in bits.</returns>
-        public static int KeyLength() {
-            return (KeyLength(Authentication.Unknown) > KeyLength (Encryption.Unknown)) ?
-                KeyLength(Authentication.Unknown) : KeyLength (Encryption.Unknown);
-            }
+        public static int KeyLength() => (KeyLength(Authentication.Unknown) > KeyLength(Encryption.Unknown)) ?
+                KeyLength(Authentication.Unknown) : KeyLength(Encryption.Unknown);
 
         /// <summary>Compressed encryption algorithm identifiers.</summary>
         public enum Encryption {
@@ -225,14 +218,10 @@ namespace Goedel.Cryptography.Ticket {
             }
 
         /// <summary>Return a new nonce with the specified length in bytes.</summary>
-        public static byte[] Nonce(int size) {
-            return Platform.GetRandomBytes(size); 
-            }
+        public static byte[] Nonce(int size) => Platform.GetRandomBytes(size);
 
         /// <summary>Return a new nonce with the default length (16 bytes).</summary>
-        public static byte[] Nonce() {
-            return Nonce (16);
-            }
+        public static byte[] Nonce() => Nonce(16);
 
         /// <summary>
         /// Convert a text string (e.g. 'account@example.com') to a PIN verification code

@@ -22,9 +22,7 @@ namespace Goedel.Mesh.Shell {
             return Builder.ToString();
             }
 
-        public string Verbose() {
-            return "";
-            }
+        public string Verbose() => "";
 
         }
 

@@ -42,9 +42,7 @@ namespace Goedel.Recrypt {
         /// <param name="SignedProfile">Generic signed profile</param>
         /// <returns>Inner PasswordProfile if the Signed Profile contains one,
         /// otherwise null.</returns>
-        public static RecryptProfile RecryptProfile (this SignedProfile SignedProfile) {
-            return SignedProfile.Profile as RecryptProfile;
-            }
+        public static RecryptProfile RecryptProfile(this SignedProfile SignedProfile) => SignedProfile.Profile as RecryptProfile;
 
 
 
