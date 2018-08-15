@@ -179,13 +179,33 @@
 			Brief "Output file"
 
 	OptionSet PrivateKeyOptions
-		Option Format "format" String"
+		Option Format "format" String
 			Brief "File format"
 		Option Password "password" String
 			Brief "Password to encrypt private key"
 		Option File "file" NewFile
 			Brief "Output file"
 
+
+	OptionSet KeyCreateOptions
+		Option AlgKey "alg" String
+			Brief "The public key algorithm"
+		Option LengthKey "size" String
+			Brief "The public key size"
+
+	OptionSet EncryptOptions
+		Option Recipient "recipient" String
+			Brief "Encrypt data for specified recipient"
+		Option Signer "sign" String
+			Brief "Sign data with specified key"
+		Option AlgDigest "algdigest" String
+			Brief "The digest algorithm"
+		Option AlgEncrypt "algencrypt" String
+			Brief "The symmetric encryption algorithm"
+		Option ModeEncrypt "mencrypt" String
+			Brief "The public key encryption mode"
+		Option ModeSign "msign" String
+			Brief "The signature mode"
 	// Mail
 	CommandSet Mail "mail"
 		Brief "Manage mail profiles connected to a personal profile"
@@ -197,6 +217,7 @@
 			Include AccountOptions
 			Include Reporting
 			Include MailOptions
+			Include KeyCreateOptions
 
 		Command MailUpdate "update"
 			Brief "Update an existing mail application profile"
@@ -273,6 +294,7 @@
 			Include AccountOptions
 			Include Reporting
 			Include SSHOptions
+			Include KeyCreateOptions
 			Option ID "id" String
 				Brief "Key identifier"
 
@@ -489,6 +511,7 @@
 			Brief "Create recryption group"
 			Include AccountOptions
 			Include Reporting
+			Include KeyCreateOptions
 			Parameter GroupID "group" String
 				Brief "Recryption group name in user@example.com format"
 
@@ -510,11 +533,7 @@
 			Parameter MemberID "member" String
 				Brief "User to delete"
 
-	OptionSet EncryptOptions
-		Option Recipient "recipient" String
-			Brief "Encrypt data for specified recipient"
-		Option Signer "sign" String
-			Brief "Sign data with specified key"
+
 
 	CommandSet File "File"
 		Brief "DARE Message encryption and decryption commands"

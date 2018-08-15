@@ -156,6 +156,10 @@ namespace Goedel.Cryptography.Jose {
         /// <param name="JoseID">Jose Name</param>
         /// <returns>Identifier</returns>
         public static CryptoAlgorithmID FromJoseID (this string JoseID) {
+            if (JoseID == null) {
+                return CryptoAlgorithmID.NULL;
+                }
+
             var Found = StringtoID.TryGetValue(JoseID, out CryptoAlgorithmID Result);
             return Found ? Result : CryptoAlgorithmID.NULL;
             }

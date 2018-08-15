@@ -25,19 +25,7 @@ namespace Goedel.Cryptography.Dare {
             }
 
 
-        /// <summary>
-        /// Initialize the encryption context.
-        /// </summary>
-        /// <param name="EncryptionKeys">The keys to be used to encrypt the message body.</param>
-        /// <param name="EncryptID">The bulk encryption algorithm to use.</param>
-        public override void SetRecipients(List<KeyPair> EncryptionKeys,
-            CryptoAlgorithmID EncryptID = CryptoAlgorithmID.Default) {
-            if (EncryptionKeys != null) {
-                base.SetRecipients(EncryptionKeys, EncryptID);
-                __ExchangePosition = false;
-                }
 
-            }
 
         }
     }

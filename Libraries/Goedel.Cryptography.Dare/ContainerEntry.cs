@@ -59,7 +59,6 @@ namespace Goedel.Cryptography.Dare {
 
 			{"ContainerHeaderFirst", ContainerHeaderFirst._Factory},
 			{"ContainerEntry", ContainerEntry._Factory},
-			{"ContainerTrailer", ContainerTrailer._Factory},
 			{"ContainerHeader", ContainerHeader._Factory},
 			{"ContentMeta", ContentMeta._Factory},
 			{"ContainerIndex", ContainerIndex._Factory},
@@ -293,144 +292,10 @@ namespace Goedel.Cryptography.Dare {
 
 	/// <summary>
 	///
-	/// If present, a trailer contains only signature and integrity data.
-	/// </summary>
-	public partial class ContainerTrailer : DAREHeader {
-        /// <summary>
-        ///If present, contains the digest of the Payload.
-        /// </summary>
-
-		public virtual byte[]						PayloadDigest  {get; set;}
-        /// <summary>
-        ///If present, contains the digest of the PayloadDigest values of this
-        ///frame and the frame immediately preceding.
-        /// </summary>
-
-		public virtual byte[]						ChainDigest  {get; set;}
-        /// <summary>
-        ///If present, contains the Binary Merkle Tree digest value.
-        /// </summary>
-
-		public virtual byte[]						TreeDigest  {get; set;}
-		
-		/// <summary>
-        /// Tag identifying this class
-        /// </summary>
-		public override string _Tag => __Tag;
-
-		/// <summary>
-        /// Tag identifying this class
-        /// </summary>
-		public new const string __Tag = "ContainerTrailer";
-
-		/// <summary>
-        /// Factory method
-        /// </summary>
-        /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new ContainerTrailer();
-
-
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// </summary>
-        /// <param name="Writer">Output stream</param>
-        /// <param name="wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
-			SerializeX (Writer, wrap, ref first);
-
-
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// Unlike the Serlialize() method, this method is not inherited from the
-        /// parent class allowing a specific version of the method to be called.
-        /// </summary>
-        /// <param name="_Writer">Output stream</param>
-        /// <param name="_wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="_first">If true, item is the first entry in a list.</param>
-		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
-			if (_wrap) {
-				_Writer.WriteObjectStart ();
-				}
-			((DAREHeader)this).SerializeX(_Writer, false, ref _first);
-			if (PayloadDigest != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("PayloadDigest", 1);
-					_Writer.WriteBinary (PayloadDigest);
-				}
-			if (ChainDigest != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("ChainDigest", 1);
-					_Writer.WriteBinary (ChainDigest);
-				}
-			if (TreeDigest != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("TreeDigest", 1);
-					_Writer.WriteBinary (TreeDigest);
-				}
-			if (_wrap) {
-				_Writer.WriteObjectEnd ();
-				}
-			}
-
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="JSONReader">The input stream</param>
-		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
-        /// <returns>The created object.</returns>		
-        public static new ContainerTrailer FromJSON (JSONReader JSONReader, bool Tagged=true) {
-			if (JSONReader == null) {
-				return null;
-				}
-			if (Tagged) {
-				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
-				return Out as ContainerTrailer;
-				}
-		    var Result = new ContainerTrailer ();
-			Result.Deserialize (JSONReader);
-			return Result;
-			}
-
-        /// <summary>
-        /// Having read a tag, process the corresponding value data.
-        /// </summary>
-        /// <param name="JSONReader">The input stream</param>
-        /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
-			
-			switch (Tag) {
-				case "PayloadDigest" : {
-					PayloadDigest = JSONReader.ReadBinary ();
-					break;
-					}
-				case "ChainDigest" : {
-					ChainDigest = JSONReader.ReadBinary ();
-					break;
-					}
-				case "TreeDigest" : {
-					TreeDigest = JSONReader.ReadBinary ();
-					break;
-					}
-				default : {
-					base.DeserializeToken(JSONReader, Tag);
-					break;
-					}
-				}
-			// check up that all the required elements are present
-			}
-
-
-		}
-
-	/// <summary>
-	///
 	/// Describes a container header. A container header MAY contain any 
 	/// DARE Message header.
 	/// </summary>
-	public partial class ContainerHeader : ContainerTrailer {
+	public partial class ContainerHeader : DAREHeader {
 		bool								__Index = false;
 		private int						_Index;
         /// <summary>
@@ -585,7 +450,7 @@ namespace Goedel.Cryptography.Dare {
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
-			((ContainerTrailer)this).SerializeX(_Writer, false, ref _first);
+			((DAREHeader)this).SerializeX(_Writer, false, ref _first);
 			if (__Index){
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("Index", 1);

@@ -52,28 +52,13 @@ namespace Goedel.Cryptography.Dare.Test {
 
 
         public void VerifyContainer (Container Container, int Count, int MaxSize) {
-            Container.First();
-            for (int i = 0; i < Count; i++) {
-                Assert.False(Container.EOF, Internal.Throw, "Expected EOF clear");
-                Assert.True(Container.ContainerHeader.Index == i,  Internal.Throw, "Bad index value");
-                Container.Next();
+            var Index = -1;
+
+            foreach (var ContainerDataReader in Container) {
+                Assert.True(ContainerDataReader.Header.Index > Index, Internal.Throw, "Bad index value");
+                Index = ContainerDataReader.Header.Index;
                 }
-
-            Assert.True(Container.EOF, Internal.Throw, "Expected EOF set");
             }
-
-        public void VerifyContainerReverse (Container Container, int Count, int MaxSize) {
-            Container.Last();
-
-            Assert.True(Container.EOF, Internal.Throw, "Expected EOF set");
-            for (int i = Count-1; i >= 0; i--) {
-                Assert.False(Container.EOF, Internal.Throw, "Expected EOF clear");
-                Assert.True(Container.ContainerHeader.Index == i, Internal.Throw, "Bad index value");
-                Container.Previous();
-                }
-
-            }
-
 
         public void VerifyData (int Count, int MaxSize, byte[] Data) {
             for (var i = 0; i < MaxSize; i++) {

@@ -37,15 +37,15 @@ namespace Goedel.Catalog.Test {
             ShellDispatch ShellDispatch = new ShellDispatch (Catalog: Filename);
 
             ShellDispatch.ContactAdd(Contact1.ID);
-            var Dump1 = ShellDispatch.BookmarkDump();
+            var Dump1 = ShellDispatch.ContactDump();
             TestDump(CatalogContact1, Dump1.Data);
 
             ShellDispatch.ContactAdd(Contact2.ID);
-            var Dump2 = ShellDispatch.BookmarkDump();
+            var Dump2 = ShellDispatch.ContactDump();
             TestDump(CatalogContact2, Dump2.Data);
 
             ShellDispatch.ContactDelete(Contact2.ID);
-            var Dump3 = ShellDispatch.BookmarkDump();
+            var Dump3 = ShellDispatch.ContactDump();
             TestDump(CatalogContact3, Dump3.Data);
 
             }

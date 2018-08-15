@@ -36,15 +36,15 @@ namespace Goedel.Catalog.Test {
             ShellDispatch ShellDispatch = new ShellDispatch (Catalog: Filename);
 
             ShellDispatch.CalendarAdd(Calendar1.ID);
-            var Dump1 = ShellDispatch.BookmarkDump();
+            var Dump1 = ShellDispatch.CalendarDump();
             TestDump(CatalogCalendar1, Dump1.Data);
 
             ShellDispatch.CalendarAdd(Calendar2.ID);
-            var Dump2 = ShellDispatch.BookmarkDump();
+            var Dump2 = ShellDispatch.CalendarDump();
             TestDump(CatalogCalendar2, Dump2.Data);
 
             ShellDispatch.CalendarDelete(Calendar2.ID);
-            var Dump3 = ShellDispatch.BookmarkDump();
+            var Dump3 = ShellDispatch.CalendarDump();
             TestDump(CatalogCalendar3, Dump3.Data);
 
 

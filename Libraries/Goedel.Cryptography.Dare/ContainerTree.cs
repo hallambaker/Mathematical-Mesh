@@ -33,8 +33,9 @@ namespace Goedel.Cryptography.Dare {
         /// a tree index is to be created or not and if so, whether </param>
         /// <param name="DigestAlgorithm">The digest algorithm to be used to calculate the PayloadDigest</param>
         /// <returns>The newly constructed container.</returns>
-        public static new Container MakeNewContainer (
+        public static new Container MakeNewContainer(
                         JBCDStream JBCDStream,
+                        CryptoParameters CryptoParameters,
                         ContainerType ContainerType = ContainerType.Chain,
                         CryptoAlgorithmID DigestAlgorithm = CryptoAlgorithmID.Default) {
 
@@ -111,17 +112,24 @@ namespace Goedel.Cryptography.Dare {
             return true;
             }
 
+
+        public bool Move(long Index) {
+            MoveToIndex(Index);
+            return Next();
+            }
+
         /// <summary>
         /// Move to the frame with index Position in the file. 
         /// <para>Since the file format only supports sequential access, this is slow.</para>
         /// </summary>
         /// <param name="Index">The frame index to move to</param>
         /// <returns>If success, the frame index.</returns>
-        public override bool Move (long Index) {
+        public override bool MoveToIndex (long Index) {
 
             if (FrameIndexToPositionDictionary.TryGetValue(Index, out var Position)) {
                 JBCDStream.PositionRead = Position;
-                return Next();
+                return true;
+                //return Next();
                 }
 
             //Obtain the position of the very last record in the file, this must be known.
@@ -190,7 +198,8 @@ namespace Goedel.Cryptography.Dare {
                 }
 
             PositionRead = Position;
-            return Next();
+            return true;
+            //return Next();
             }
 
         /// <summary>

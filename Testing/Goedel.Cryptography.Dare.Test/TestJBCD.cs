@@ -49,7 +49,7 @@ namespace Goedel.Cryptography.Dare.Test {
                     var Test1 = MakeConstant("Header ", ((i + 1) % MaxSize));
                     var Test2 = MakeConstant("Data ", ((i + 1) % MaxSize));
 
-                    JBCDStream.ReadFrame(out var Header, out var Data);
+                    JBCDStream.ReadFrame(out var Header, out var Data, out var FrameTrailer);
 
                     Assert.True(Header.IsEqualTo(Test1));
                     Assert.True(Data.IsEqualTo(Test2));

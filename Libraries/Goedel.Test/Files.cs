@@ -21,7 +21,11 @@ namespace Goedel.Test {
             CheckDirectroriesEqual(DirInfo1, DirInfo2);
             }
 
+
         public static void CheckDirectroriesEqual(DirectoryInfo DirInfo1, DirectoryInfo DirInfo2) {
+
+            var FileDictionary = new Dictionary<string, FileInfo>();
+            var DirectoryDictionary = new Dictionary<string, DirectoryInfo>();
 
             var Files1 = DirInfo1.GetFiles();
             var Files2 = DirInfo2.GetFiles();
@@ -31,21 +35,24 @@ namespace Goedel.Test {
             Assert.True(Files1.Length == Files2.Length);
             Assert.True(Sub1.Length == Sub2.Length);
 
-            Array.Sort(Files1);
-            Array.Sort(Files2);
-            Array.Sort(Sub1);
-            Array.Sort(Sub2);
-
-
-            for (var i = 0; i < Files1.Length; i++) {
-                Assert.True(Files1[i].Name == Files2[i].Name);
-                CheckFilesEqual(
-                        Path.Combine(DirInfo1.FullName, Files1[i].Name),
-                        Path.Combine(DirInfo2.FullName, Files1[i].Name));
+            //Check the files in the directories
+            foreach (var File in Files1) {
+                FileDictionary.Add(File.Name, File);
+                }
+            foreach (var File2 in Files2) {
+                Assert.True(FileDictionary.TryGetValue(File2.Name, out var File1));
+                CheckFilesEqual(File1.FullName, File2.FullName);
+                FileDictionary.Remove(File1.Name);
                 }
 
-            for (var i = 0; i < Sub1.Length; i++) {
-                CheckDirectroriesEqual(Sub1[i], Sub2[i]);
+            // Check the subdirectories
+            foreach (var File in Sub1) {
+                DirectoryDictionary.Add(File.Name, File);
+                }
+            foreach (var File2 in Sub2) {
+                Assert.True(DirectoryDictionary.TryGetValue(File2.Name, out var File1));
+                CheckDirectroriesEqual(File1.FullName, File2.FullName);
+                FileDictionary.Remove(File1.Name);
                 }
             }
 

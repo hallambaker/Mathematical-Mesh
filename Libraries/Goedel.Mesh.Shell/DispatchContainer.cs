@@ -3,6 +3,7 @@ using System.IO;
 using Goedel.Protocol;
 using Goedel.Utilities;
 using Goedel.Mesh.Portal.Client;
+using Goedel.Cryptography.Jose;
 using Goedel.Cryptography.Dare;
 using Goedel.IO;
 using System.Collections.Generic;
@@ -11,15 +12,19 @@ namespace Goedel.Mesh.Shell {
     public partial class ShellDispatch {
 
         public void ContainerCreate(
-                string Output,
-                List<string> Recipients = null,
-                List<string> Signers = null
+                string ContainerName,
+                CryptoParameters CryptoParameters
                 ) {
             Result Result = null;
 
             // stuff
 
-            using (var C1 = Container.NewContainer(Output, FileStatus.New, ContainerType.Chain)) {
+            //using (var C1 = Container.NewContainer(Output, FileStatus.New, ContainerType.Chain)) {
+            //    }
+
+
+            using (var C1 = new FileContainerWriter(ContainerName, CryptoParameters, Archive: true, FileStatus: FileStatus.New,
+                    ContainerType: ContainerType.Tree)) {
                 }
 
             Result = new Result() {
@@ -31,13 +36,28 @@ namespace Goedel.Mesh.Shell {
             }
 
         public void ContainerArchive(
-                string Container,
-                string Directory,
-                List<string> Recipients = null,
-                List<string> Signers = null) {
+                CryptoParameters CryptoParameters,
+            string ContainerName,
+            string Directory) {
             Result Result = null;
 
-            // stuff
+            using (var C1 = new FileContainerWriter(ContainerName, CryptoParameters, Archive: true, 
+                        FileStatus: FileStatus.Overwrite,
+                    ContainerType: ContainerType.Tree)) {
+
+                var DirectoryInfo = new DirectoryInfo(Directory);
+                Assert.NotNull(DirectoryInfo, DirectoryNotFound.Throw);
+
+                var FileInfos = DirectoryInfo.EnumerateFiles("*", SearchOption.AllDirectories);
+
+
+                foreach (var FileInfo in FileInfos) {
+                    var RelativeFile = RelativePath(DirectoryInfo, FileInfo);
+
+                    C1.Add(FileInfo, RelativeFile);
+                    }
+
+                }
 
             Result = new Result() {
                 Success = true,
@@ -47,16 +67,30 @@ namespace Goedel.Mesh.Shell {
             ReportResult(Result);
             }
 
+
+        public string RelativePath(DirectoryInfo DirectoryInfo, FileInfo FileInfo) {
+
+            var FileName = FileInfo.FullName;
+            var DirectoryName = DirectoryInfo.FullName +"\\";
+
+            Assert.True(FileName.StartsWith(DirectoryName));
+
+            var Result = FileName.Remove(0, DirectoryName.Length);
+
+            return Result;
+            }
+
         public void ContainerAppend(
+                CryptoParameters CryptoParameters,
                 string ContainerName,
-                string File,
-                List<string> Recipients = null,
-                List<string> Signers = null
-                ) {
+                string File) {
             Result Result = null;
 
-            using (var ContainerInstance = Container.Open(ContainerName, FileStatus.Existing)) {
-                ContainerInstance.AppendFile(File);
+            using (var C1 = new FileContainerWriter(ContainerName, 
+                        CryptoParameters, 
+                        Archive: true, FileStatus: FileStatus.Existing,
+                    ContainerType: ContainerType.Tree)) {
+                C1.Add(File);
                 }
 
             Result = new Result() {
@@ -68,70 +102,51 @@ namespace Goedel.Mesh.Shell {
             }
 
         public void ContainerExtract(
-                string ContainerName,
-                string Output,
-                int     Record=-1,
-                string File = null
-                ) {
+            KeyCollection KeyCollection,
+            string ContainerName,
+            string Output,
+            int Record = -1,
+            string File = null) {
             Result Result = null;
-            Assert.True(Record >= 0 | File != null, NYI.Throw);
 
-            using (var ContainerInstance = Container.Open(ContainerName, FileStatus.Existing)) {
-                if (Record >= 1) {
-                    ExtractFile(ContainerInstance, Output, Record);
+            using (var FileContainerReader = new FileContainerReader(ContainerName, KeyCollection)) {
+                if (Record >= 0 | File != null) {
 
+                    FileContainerReader.ReadToFile(Output, Index: Record);
                     }
                 else {
-                    throw new NYI(); // extract particular file by name 
+                    FileContainerReader.UnpackArchive(Output);
+
                     }
-
-
                 }
-
-
-
-            // stuff
 
             Result = new Result() {
                 Success = true,
-                Reason = "Created Device Profile"
+                Reason = "Unpacked archive"
                 };
 
             ReportResult(Result);
             }
 
-        void ExtractFile(Container Container, string Output, int Record) {
-            var Buffer = new byte[4096];
-
-            Container.Move(Record);
-            var TotalLength = Container.ReadDataBegin();
-
-            using (var Filestream = Output.OpenFileWrite()) {
-
-                var Length = Container.ReadData(Buffer, 0, 4096);
-                while (Length > 0) {
-                    TotalLength -= Length;
-                    Filestream.Write(Buffer, 0, Length);
-                    Length = Container.ReadData(Buffer, 0, 4096);
-                    }
-                Assert.True(TotalLength == 0);
-                }
-
-            }
 
 
         public void ContainerCopy(
-                string Input,
-                string Output,
-                List<string> Recipients = null,
-                List<string> Signers = null,
-                bool Decrypt=false,
-                bool Index=false,
-                bool Purge=true
+                CryptoParameters CryptoParameters,
+            string Input,
+            string Output,
+            bool Decrypt = false,
+            bool Index = false,
+            bool Purge = true
                 ) {
             Result Result = null;
 
-            // stuff
+            using (var FileContainerReader = new FileContainerReader(Input, CryptoParameters.KeyCollection)) {
+                using (var FileContainerWriter = new FileContainerWriter(Output, CryptoParameters, Archive: true,
+                        FileStatus: FileStatus.Overwrite, ContainerType: ContainerType.Tree)) {
+
+                    FileContainerReader.CopyArchive(FileContainerWriter);
+                    }
+                }
 
             Result = new Result() {
                 Success = true,
@@ -141,8 +156,8 @@ namespace Goedel.Mesh.Shell {
             ReportResult(Result);
             }
         public void ContainerVerify(
-                string Input
-                ) {
+                KeyCollection KeyCollection,
+                string Input) {
             Result Result = null;
 
             // stuff

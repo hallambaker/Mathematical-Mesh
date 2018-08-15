@@ -10,11 +10,14 @@ namespace Goedel.Mesh.Shell {
         CatalogGroup CatalogGroup => CatalogSession.CatalogGroup;
 
         public void GroupAdd(
-                string GroupID
+                string ID
                 ) {
             Result Result = null;
 
-            // stuff
+            var EntryGroup = new EntryGroup() {
+                ID = ID
+                };
+            CatalogGroup.Update(EntryGroup);
 
             Result = new Result() {
                 Success = true,
@@ -61,7 +64,7 @@ namespace Goedel.Mesh.Shell {
                 ) {
             Result Result = null;
 
-            // stuff
+            CatalogGroup.Delete(GroupID);
 
             Result = new Result() {
                 Success = true,

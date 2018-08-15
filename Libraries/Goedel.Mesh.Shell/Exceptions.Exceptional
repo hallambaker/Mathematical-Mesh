@@ -14,3 +14,14 @@
 			Console "No profile defined."
 			Description
 				|Account not valid
+
+
+		Exception DirectoryNotFound
+			Console "The directory could not be found"
+			Description
+				|The directory could not be found
+
+		Exception FileNotFound
+			Console "The file could not be found"
+			Description
+				|The directory could not be found

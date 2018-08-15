@@ -38,7 +38,7 @@ namespace Goedel.IO {
         /// <param name="Data">The data to be processed</param>
         /// <param name="Offset">Byte offset from the start of the data block.</param>
         /// <param name="Count">The number of bytes to process</param>
-        public delegate void ProcessBlock32DelegatePut(byte[] Data, int Offset, int Count);
+        public delegate void ProcessBlock32PutDelegate(byte[] Data, int Offset, int Count);
 
         /// <summary>
         /// Delegate method for processing a block of data. The data block is limited in 
@@ -47,7 +47,7 @@ namespace Goedel.IO {
         /// <param name="Data">The data to be processed</param>
         /// <param name="Offset">Byte offset from the start of the data block.</param>
         /// <param name="Count">The number of bytes to process</param>
-        public delegate int ProcessBlock32DelegateGet(byte[] Data, int Offset, int Count);
+        public delegate int ProcessBlock32GetDelegate(byte[] Data, int Offset, int Count);
 
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace Goedel.IO {
         /// <param name="Input">The input stream to be read</param>
         /// <param name="Delegate">The delegate to call</param>
         /// <param name="BufferSize">The suggested buffer size.</param>
-        public static void ProcessRead(this Stream Input, ProcessBlock32DelegatePut Delegate,
+        public static void ProcessRead(this Stream Input, ProcessBlock32PutDelegate Delegate,
                     int BufferSize = 4096) {
 
             var Buffer = new byte[BufferSize];
@@ -74,7 +74,7 @@ namespace Goedel.IO {
         /// <param name="Output">The input stream to be read</param>
         /// <param name="Delegate">The delegate to call</param>
         /// <param name="BufferSize">The suggested buffer size.</param>
-        public static void ProcessWrite(this Stream Output, ProcessBlock32DelegateGet Delegate,
+        public static void ProcessWrite(this Stream Output, ProcessBlock32GetDelegate Delegate,
                     int BufferSize = 4096) {
 
             var Buffer = new byte[BufferSize];
@@ -315,5 +315,18 @@ namespace Goedel.IO {
         /// <param name="FileStream">Filestream to write to</param>
         /// <param name="Data">Data to write.</param>
         public static void Write(this FileStream FileStream, byte[] Data) => FileStream.Write(Data, 0, Data.Length);
+
+
+        /// <summary>
+        /// Create a file with the name <paramref name="FileName"/> and read data from the
+        /// stream <paramref name="Input"/> and write it to the file.
+        /// </summary>
+        /// <param name="Input"></param>
+        /// <param name="FileName"></param>
+        public static void CopyToFile(this Stream Input, string FileName) {
+            using (var OutputStream = FileName.OpenFileWrite()) {
+                Input.CopyTo(OutputStream);
+                }
+            }
         }
     }

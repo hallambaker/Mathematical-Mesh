@@ -99,5 +99,27 @@ namespace Goedel.Cryptography.Jose {
             // finally search local persistence stores.
             return KeyPair.FindLocal(KID);
             }
+
+
+        /// <summary>
+        /// Resolve a public key by identifier. This may be a UDF fingerprint of the key,
+        /// an account identifier or strong account identifier.
+        /// </summary>
+        /// <param name="ID">The identifier to resolve.</param>
+        /// <returns>The identifier.</returns>
+        public virtual KeyPair MatchPublic(string ID) {
+            throw new NYI();
+            }
+
+        /// <summary>
+        /// Resolve a private key by identifier. This may be a UDF fingerprint of the key,
+        /// an account identifier or strong account identifier.
+        /// </summary>
+        /// <param name="ID">The identifier to resolve.</param>
+        /// <returns>The identifier.</returns>
+        public virtual KeyPair MatchPrivate(string ID) {
+            throw new NYI();
+            }
+
         }
     }

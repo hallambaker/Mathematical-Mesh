@@ -6,6 +6,8 @@ using Goedel.Protocol;
 using Goedel.Utilities;
 using System.Collections.Generic;
 using Goedel.Test;
+using Goedel.Cryptography.Jose;
+using Goedel.Cryptography.Dare;
 
 namespace Goedel.Catalog.Test {
 
@@ -19,17 +21,40 @@ namespace Goedel.Catalog.Test {
         List<string> Recipients = new List<string>();
         List<string> Signers = new List<string>();
 
-        [MT.TestMethod]
-        public void TestFile() => TestFile("");
+
+
+        //KeyCollection MakeKeyCollection(
+        //                    List<string> Recipients,
+        //                    List<string> Signers) {
+
+        //    var KeyCollection = new KeyCollection();
+
+        //    return KeyCollection;
+        //    }
+
+
+        //CryptoStack MakeCryptoStack(
+        //                    KeyCollection Known,
+        //                    KeyCollection Unknown,
+        //                    List<string> Recipients,
+        //                    List<string> Signers) {
+        //    var CryptoStack = new CryptoStack();
+
+        //    return CryptoStack;
+        //    }
+
 
         [MT.TestMethod]
-        public void TestFileEncrypt() => TestFile("", Recipients: Recipients);
+        public void TestFile() => TestFile("Plaintext");
 
         [MT.TestMethod]
-        public void TestFileSign() => TestFile("", Signers: Signers);
+        public void TestFileEncrypt() => TestFile("Encrypted", Recipients: Recipients);
 
         [MT.TestMethod]
-        public void TestFileSignEncrypt() => TestFile("", Recipients: Recipients, Signers: Signers);
+        public void TestFileSign() => TestFile("Signed", Signers: Signers);
+
+        [MT.TestMethod]
+        public void TestFileSignEncrypt() => TestFile("SignedEncrypted", Recipients: Recipients, Signers: Signers);
 
         [MT.TestMethod]
         public void TestFileMulti() {
@@ -54,14 +79,22 @@ namespace Goedel.Catalog.Test {
         public void TestFile(string Prefix, string FileTest= FileTest1,
                     List<string> Recipients = null,
                     List<string> Signers = null) {
-            Assert.Null(Recipients);     // NYI: so fail this test immediately// NYI: so fail this test immediately
-            Assert.Null(Signers);        // NYI: so fail this test immediately
+
+            var CryptoParameters = new CryptoParametersTest(
+                        Recipients: Recipients,
+                        Signers: Signers);
+
+            var Original = Source(FileTest);
+            var Encoded = Encrypted(Prefix + FileTest);
+            var Decoded = Decrypted(Prefix + FileTest);
+
 
             // encrypt file
-            ShellDispatchCommon.FileEncrypt(Source(FileTest), Encrypted(Prefix+FileTest));
+            ShellDispatchCommon.FileEncrypt(CryptoParameters, Original, Encrypted(Prefix + FileTest));
             // decrypt file
-            ShellDispatchCommon.FileDecrypt(Encrypted(Prefix+FileTest), Decrypted(Prefix+FileTest));
-            Source(FileTest).CheckFilesEqual(Decrypted(Prefix+FileTest));
+            ShellDispatchCommon.FileDecrypt(CryptoParameters.KeyCollection,
+                Encoded, Decoded);
+            Original.CheckFilesEqual(Decoded);
 
             }
 

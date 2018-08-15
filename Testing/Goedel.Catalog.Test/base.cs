@@ -32,11 +32,10 @@ namespace Goedel.Catalog.Test {
         /// </summary>
         public static void TestDirect() {
             InitializeClass();
-
             var Instance = new CatalogTests();
-
-            Instance.TestContainerSerial();
-            //Instance.TestFile();
+            //Instance.TestBasicCalendar();
+            //Instance.TestContainerSerial();
+            Instance.TestContainerArchiveBase();
             //Instance.TestBasicBookMark();
             //Instance.TestBasicCredential();
             }

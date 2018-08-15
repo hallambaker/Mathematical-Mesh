@@ -81,7 +81,7 @@ namespace Goedel.Protocol {
 
         /// <summary>Write binary data as Base64Url encoded string.</summary>
         /// <param name="Data">Value to write</param>
-        /// <param name="offset">The zero-based byte offset in <paramref name="buffer"/>
+        /// <param name="offset">The zero-based byte offset in <paramref name="Data"/>
         /// at which to begin copying bytes to the current stream.</param>
         /// <param name="count">The number of bytes to be written to the current stream.</param> 
         public override void WriteBinary(byte[] Data, int offset = 0, int count = -1) {

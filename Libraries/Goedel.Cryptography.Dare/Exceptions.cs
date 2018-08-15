@@ -315,4 +315,55 @@ namespace Goedel.Cryptography.Dare {
         }
 
 
+    /// <summary>
+    /// A data record could not be read because it was incomplete.
+    /// </summary>
+    public class DataRecordTruncated : global::System.Exception {
+
+		/// <summary>
+        /// Construct instance for exception "A data record could not be read because it was incomplete."
+        /// </summary>		
+		public DataRecordTruncated () : base ("A data record could not be read because it was incomplete.") {
+			}
+        
+		/// <summary>
+        /// Construct instance for exception "A data record could not be read because it was incomplete."
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		public DataRecordTruncated (string Description) : base (Description) {
+			}
+
+		/// <summary>
+        /// Construct instance for exception 		/// containing an inner exception.
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		/// <param name="Inner">Inner Exception</param>	
+		public DataRecordTruncated (string Description, System.Exception Inner) : 
+				base (Description, Inner) {
+			}
+
+		/// <summary>
+        /// User data associated with the exception.
+        /// </summary>	
+		public object UserData;
+
+
+
+		
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+
+        static System.Exception _Throw(object Reason) {
+			if (Reason as string != null) {
+				return new DataRecordTruncated(Reason as string);
+				}
+			else {
+				return new DataRecordTruncated();
+				}
+            }
+        }
+
+
 	}

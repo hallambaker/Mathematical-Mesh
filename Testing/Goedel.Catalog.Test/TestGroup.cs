@@ -35,17 +35,17 @@ namespace Goedel.Catalog.Test {
             File.Delete(Filename);
             ShellDispatch ShellDispatch = new ShellDispatch(Catalog: Filename);
 
-            ShellDispatch.MailAdd(Mail1.ID);
+            ShellDispatch.GroupAdd(Mail1.ID);
             var Dump1 = ShellDispatch.GroupDump();
-            TestDump(CatalogMail1, Dump1.Data);
+            TestDump(CatalogGroup1, Dump1.Data);
 
             ShellDispatch.MailAdd(Mail2.ID);
-            var Dump2 = ShellDispatch.BookmarkDump();
-            TestDump(CatalogMail2, Dump2.Data);
+            var Dump2 = ShellDispatch.GroupDump();
+            TestDump(CatalogGroup2, Dump2.Data);
 
             ShellDispatch.MailDelete(Mail2.ID);
-            var Dump3 = ShellDispatch.BookmarkDump();
-            TestDump(CatalogMail3, Dump3.Data);
+            var Dump3 = ShellDispatch.GroupDump();
+            TestDump(CatalogGroup2, Dump3.Data);
 
 
             }

@@ -52,7 +52,7 @@ namespace Goedel.Mesh.Shell {
         public ResultDump BookmarkDump() {
             var Result = new ResultDump() {
                 Success = true,
-                Reason = "Output credential data",
+                Reason = "Output calendar data",
                 Data = CatalogBookmark.GetJson(true)
                 };
 

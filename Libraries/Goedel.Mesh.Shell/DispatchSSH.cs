@@ -125,5 +125,16 @@ namespace Goedel.Mesh.Shell {
             ReportResult(Result);
             }
 
+        public ResultDump SSHDump() {
+            var Result = new ResultDump() {
+                Success = true,
+                Reason = "Output calendar data",
+                Data = CatalogSSH.GetJson(true)
+                };
+
+            ReportResult(Result);
+            return Result;
+            }
+
         }
     }

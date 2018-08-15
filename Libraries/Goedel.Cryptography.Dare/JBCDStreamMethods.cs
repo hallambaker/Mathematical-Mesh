@@ -1,105 +1,11 @@
 ﻿using System;
 using System.IO;
+using Goedel.IO;
 using Goedel.Utilities;
 using Goedel.Protocol;
-
+using Goedel.Cryptography.Jose;
 
 namespace Goedel.Cryptography.Dare {
-
-    /// <summary>
-    /// A stream that reads from a container record.
-    /// </summary>
-    public partial class JBCDFrameReader : Stream {
-        #region // Boilerplate implementations
-        /// <summary>
-        /// Gets a value indicating whether the current stream supports reading (is always false).
-        /// </summary>
-        public override bool CanRead => true;
-
-        /// <summary>
-        /// Gets a value indicating whether the current stream supports seeking(is always false).
-        /// </summary>
-        public override bool CanSeek => false;
-
-        /// <summary>
-        /// Gets a value indicating whether the current stream supports writing(is always true).
-        /// </summary>
-        public override bool CanWrite => false;
-
-        /// <summary>
-        /// Gets the frame length in bytes. 
-        /// </summary>
-        public override long Length { get; }
-        #endregion
-
-        JBCDStream JBCDStream;
-
-        /// <summary>
-        /// Construct a reader for the specified frame data.
-        /// </summary>
-        /// <param name="JBCDStream">The stream to be read.</param>
-        /// <param name="FrameRemaining">The remaining bytes to be read from the record.
-        /// </param>
-        public JBCDFrameReader(JBCDStream JBCDStream, ref long FrameRemaining) {
-            Length = JBCDStream.ReadRecordBegin(ref FrameRemaining);
-            this.JBCDStream = JBCDStream;
-            }
-
-        /// <summary>
-        /// Copies bytes from the current buffered stream to an array.
-        /// </summary>
-        /// <param name="buffer">An array of bytes. When this method returns, the buffer contains the 
-        /// specified byte array with the values between <paramref name="offset"/> and 
-        /// (<paramref name="offset"/> + <paramref name="count"/> - 1) 
-        /// replaced by the bytes read from the current source.</param>
-        /// <param name="offset">The zero-based byte offset in <paramref name="buffer"/> at which to begin storing 
-        /// the data read from the current stream.</param>
-        /// <param name="count">The maximum number of bytes to be read from the current stream.</param>
-        /// <returns>The total number of bytes read into the buffer. This can be less than the number of bytes 
-        /// requested if that many bytes are not currently available, or zero (0) if the end of the stream 
-        /// has been reached.</returns>
-        public override int Read(byte[] buffer, int offset, int count) => 
-            JBCDStream.ReadRecordData(buffer, offset, count);
-
-        #region // unsupported
-
-        /// <summary>
-        /// Gets the position within the current stream. The set operation is not supported.
-        /// </summary>
-        public override long Position { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-
-        /// <summary>
-        /// Clears all buffers for this stream and causes any buffered data to be written 
-        /// to the underlying device.
-        /// </summary>
-        public override void Flush() { return; }
-
-        /// <summary>
-        /// Sets the position within the current buffered stream (not supported).
-        /// </summary>
-        /// <param name="offset">A byte offset relative to the <paramref name="origin"/> parameter.</param>
-        /// <param name="origin">A value of type SeekOrigin indicating the reference point used to obtain the new position.</param>
-        /// <returns></returns>
-        public override long Seek(long offset, SeekOrigin origin) => throw new NotImplementedException();
-
-        /// <summary>
-        /// Sets the length of the output frame.
-        /// </summary>
-        /// <param name="value"></param>
-        public override void SetLength(long value) => throw new NotImplementedException();
-
-        /// <summary>
-        /// Write data to the output stream.
-        /// </summary>
-        /// <param name="buffer">An array of bytes. This method copies <paramref name="count"/> bytes from 
-        /// <paramref name="buffer"/> to the current stream.</param>
-        /// <param name="offset">The zero-based byte offset in <paramref name="buffer"/>
-        /// at which to begin copying bytes to the current stream.</param>
-        /// <param name="count">The number of bytes to be written to the current stream.</param>
-
-        public override void Write(byte[] buffer, int offset, int count) => throw new NotImplementedException();
-        #endregion
-        }
 
 
     // This file has the methods that operate on the stream
@@ -338,14 +244,18 @@ namespace Goedel.Cryptography.Dare {
         /// The code does not currently support 64 bit frames as it should.
         /// </summary>
         /// <param name="FrameHeader">The header data to write.</param>
-        /// <param name="FrameDataLength1">Length of the first data record, contains data content.</param>
+        /// <param name="FrameDataLength">Length of the first data record, contains data content.</param>
         /// <returns>The total size of the frame.</returns>
         public long WriteWrappedFrameBegin(
                     byte[] FrameHeader,
-                    long FrameDataLength1=-1) {
+                    long FrameDataLength=-1, 
+                    long FrameTrailerLength =-1) {
 
-            FrameLength = (FrameHeader == null ? 0 : TotalLength(FrameHeader.Length)) +
-                                (FrameDataLength1 < 0 ? 0 : TotalLength(FrameDataLength1));
+            var HL = (FrameHeader == null ? 0 : TotalLength(FrameHeader.Length));
+            var DL = (FrameDataLength < 0 ? 0 : TotalLength(FrameDataLength));
+            var TL = (FrameTrailerLength < 0 ? 0 : TotalLength(FrameTrailerLength));
+
+            FrameLength = HL + DL + TL;
 
             WriteTag(BFrame, FrameLength);
 
@@ -353,8 +263,11 @@ namespace Goedel.Cryptography.Dare {
             if (FrameHeader != null) {
                 WriteFrame(FrameHeader);
                 }
+
+            Assert.True(PositionWrite == Check+ HL, Internal.Throw);
+
             // here write out the binary marker for the frame data.
-            WriteTag(UFrame, FrameDataLength1);
+            WriteTag(UFrame, FrameDataLength);
 
             return TotalLength2(FrameLength);
             }
@@ -365,8 +278,13 @@ namespace Goedel.Cryptography.Dare {
         /// does not match the length originally specified, an error is thrown.
         /// </summary>
         /// <returns>The total size of the frame.</returns>
-        public long WriteWrappedFrameEnd() {
-            Assert.True(PositionWrite == Check + FrameLength, Internal.Throw);
+        public long WriteWrappedFrameEnd(byte[]FrameTrailer=null) {
+            if (FrameTrailer != null) {
+                WriteFrame(FrameTrailer);
+                }
+
+            Check += FrameLength;
+            Assert.True(PositionWrite == Check, Internal.Throw);
 
             WriteTagReverse(BFrame, FrameLength);
 
@@ -518,55 +436,16 @@ namespace Goedel.Cryptography.Dare {
             }
 
         /// <summary>
-        /// Begin reading a record frame.
-        /// </summary>
-        /// <param name="MaxLength"></param>
-        /// <returns></returns>
-        public long ReadRecordBegin(ref long MaxLength) {
-            StreamRead.Seek(FrameDataPosition, System.IO.SeekOrigin.Begin);
-
-            var Success = ReadTag(out var Code, out var Length);
-            if (!Success) {
-                return -1;
-                }
-            MaxLength = MaxLength - CodeSpace(Code);
-            Assert.True(Length <= MaxLength, InvalidFileFormatException.Throw);
-            RecordDataRemaining = Length;
-            MaxLength = MaxLength - Length;
-
-            return Length;
-            }
-
-
-        /// <summary>
-        /// Read record data.
-        /// </summary>
-        /// <param name="Buffer">Buffer to store record data.</param>
-        /// <param name="Offset">Index to begin storing data.</param>
-        /// <param name="Length">Maximum number of bytes to read. This will 
-        /// be reduced if necessary to the remaining record to be read.</param>
-        /// <returns>The number of bytes read.</returns>
-        public int ReadRecordData(byte[] Buffer, int Offset=0, int Length=-1) {
-            Length = Length < 0 ? Buffer.Length - Offset : Length;
-            Length = (Length > RecordDataRemaining) ? (int)RecordDataRemaining : Length;
-            RecordDataRemaining -= Length;
-            return Read(Buffer, Offset, Length);
-            }
-
-        long FrameDataPosition;
-        long RecordDataRemaining;
-
-
-        /// <summary>
         /// Read a pair of wrapped frames in the forward direction.
         /// </summary>
         /// <param name="FrameData">The payload data that was read.</param>
         /// <param name="FrameHeader">The header data that was read.</param>
         /// <returns>True if a tag was read or false if EOF was encountered.</returns>
         /// <exception cref="InvalidFileFormatException">The record data read from disk was invalid</exception>
-        public bool ReadFrame (out byte[] FrameHeader, out byte[] FrameData) {
+        public bool ReadFrame (out byte[] FrameHeader, out byte[] FrameData, out byte[] FrameTrailer) {
             FrameHeader = null;
             FrameData = null;
+            FrameTrailer = null;
 
             var Success = ReadTag(out var Code, out var Length);
             var OriginalLength = Length;
@@ -579,6 +458,9 @@ namespace Goedel.Cryptography.Dare {
             if (Length > 0) {
                 ReadRecord(ref Length, out FrameData);
                 }
+            if (Length > 0) {
+                ReadRecord(ref Length, out FrameTrailer);
+                }
             if ((Code & TypeMask) == BFrame) {
                 CheckReversedLength(Code, OriginalLength);
                 }
@@ -586,10 +468,7 @@ namespace Goedel.Cryptography.Dare {
             return true;
             }
 
-        /// <summary>
-        /// Records the start position of the last frame that was read.
-        /// </summary>
-        public long StartLastFrameRead { get; private set; } = 0;
+
 
         /// <summary>
         /// Move to the next position in the stream without reading any part of it.
@@ -633,6 +512,192 @@ namespace Goedel.Cryptography.Dare {
 
             return true;
             }
+
+        #region // Methods that are used by JBCDRecordDataReader
+
+
+        long FrameDataPosition; // Start of the current record.
+        long RecordDataRemaining;
+
+        /// <summary>
+        /// Begin reading a record frame.
+        /// </summary>
+        /// <param name="MaxLength"></param>
+        /// <returns></returns>
+        public long ReadRecordBegin(ref long MaxLength) {
+            StreamRead.Seek(FrameDataPosition, System.IO.SeekOrigin.Begin);
+
+            var Success = ReadTag(out var Code, out var Length);
+            if (!Success) {
+                return -1;
+                }
+            MaxLength = MaxLength - CodeSpace(Code);
+            Assert.True(Length <= MaxLength, InvalidFileFormatException.Throw);
+            RecordDataRemaining = Length;
+            MaxLength = MaxLength - Length;
+
+            return Length;
+            }
+
+
+        /// <summary>
+        /// Read record data.
+        /// </summary>
+        /// <param name="Buffer">Buffer to store record data.</param>
+        /// <param name="Offset">Index to begin storing data.</param>
+        /// <param name="Length">Maximum number of bytes to read. This will 
+        /// be reduced if necessary to the remaining record to be read.</param>
+        /// <returns>The number of bytes read.</returns>
+        public int ReadRecordData(byte[] Buffer, int Offset = 0, int Length = -1) {
+            Length = Length < 0 ? Buffer.Length - Offset : Length;
+            Length = (Length > RecordDataRemaining) ? (int)RecordDataRemaining : Length;
+            RecordDataRemaining -= Length;
+            return Read(Buffer, Offset, Length);
+            }
+
+
+
+        #endregion
+        #region // The methods we want to switch to using.
+
+
+        /// <summary>
+        /// Records the start position of the last frame that was read.
+        /// </summary>
+        public long StartLastFrameRead { get; private set; } = 0;
+
+        bool FramerEndOfStream => StreamRead.Length > StreamRead.Position;
+        long FramerFrameStart;
+        long FramerFrameLength;
+        long FramerFrameEnd;
+        long FramerRecordStart;
+        long FramerRecordData;
+        long FramerRecordNext;
+        long FramerRecordLength;
+        int FramerCode;
+
+        /// <summary>
+        /// Open a frame reader at the position indicated by <paramref name="Position"/>
+        /// and return the frame length.
+        /// </summary>
+        /// <param name="Position">The file position at which to begin reading. If
+        /// less than 0, the frame reader position is reset. This will cause the last
+        /// record read with FramerOpen to be re-read unless FramerClose has been called 
+        /// in which case the next frame in the stream will be read.</param>
+        /// <returns>The length of the frame if it could be read, otherwise -1.</returns>
+        public long FramerOpen (long Position=-1) {
+            FramerFrameStart = Position<0 ? FramerFrameStart : Position;
+            StreamRead.Seek(FramerFrameStart, System.IO.SeekOrigin.Begin);
+            var Success = ReadTag(out FramerCode, out FramerFrameLength);
+            FramerFrameEnd = StreamRead.Position + FramerFrameLength;
+            FramerRecordNext = StreamRead.Position;
+            return FramerFrameLength;
+            }
+
+
+        bool FramerOpenRecord() {
+            FramerRecordStart = FramerRecordNext;
+
+            FrameDataPosition = FramerRecordStart; // just in case, legacy.
+
+            if (FramerRecordStart >= FramerFrameEnd) {
+                return false;
+                }
+
+            StreamRead.Seek(FramerRecordStart, SeekOrigin.Begin);
+            var Success = ReadTag(out var Code, out FramerRecordLength);
+            if (!Success) {
+                return false;
+                }
+            FramerRecordData = PositionRead;
+            FramerRecordNext = FramerRecordData + FramerRecordLength;
+            return true;
+            }
+
+        /// <summary>
+        /// Read the next frame record and return the data as a byte array.
+        /// </summary>
+        /// <returns>The frame record data or <code>null</code> if the data could
+        /// not be read.</returns>
+        public byte[] FramerGetData() {
+            if (!FramerOpenRecord()) {
+                return null;
+                }
+
+            var Result = new byte[FramerRecordLength];
+            var Offset = 0;
+            var Length = StreamRead.Read(Result, Offset, FramerRecordLength);
+            while (Length > 0) {
+                Offset += (int)Length;
+                Length = StreamRead.Read(Result, Offset, FramerRecordLength-Offset);
+                }
+            Assert.True(Length == 0, DataRecordTruncated.Throw);
+
+
+            return Result;
+            }
+
+
+        /// <summary>
+        /// Get a record reader for the next frame record.
+        /// </summary>
+        /// <returns>The record data reader</returns>
+        public StreamReaderBounded FramerGetReader() {
+            if (!FramerOpenRecord()) {
+                return null;
+                }
+            return new StreamReaderBounded(StreamRead, FramerRecordData, FramerRecordLength);
+            }
+
+        /// <summary>
+        /// Skip all remaining records in the frame and move to the next record.
+        /// The
+        /// </summary>
+        /// <returns>If <code>true</code>, there are more frames to be read. If 
+        /// <code>false</code> the end of the stream has been reached.</returns>
+        public bool FramerNext() {
+            StreamRead.Seek(FramerFrameEnd, System.IO.SeekOrigin.Begin);
+            if ((FramerCode & TypeMask) == BFrame) {
+                CheckReversedLength(FramerCode, FramerFrameLength);
+                }
+            FramerFrameStart = StreamRead.Position;
+            return StreamRead.Length > StreamRead.Position;
+            }
+
+
+        /// <summary>
+        /// Skip all remaining records in the frame and move to the next record.
+        /// The
+        /// </summary>
+        /// <returns>If <code>true</code>, there are more frames to be read. If 
+        /// <code>false</code> the end of the stream has been reached.</returns>
+        public bool FramerPrevious() {
+            StreamRead.Seek(FramerFrameStart, System.IO.SeekOrigin.Begin);
+            var Success = ReadTagReverse(out var Code, out var Length);
+            if (!Success) {
+                return false;
+                }
+
+            // Sanity check
+            var ThePosition = PositionRead;
+            Assert.True(ThePosition >= Length, InvalidFileFormatException.Throw);
+
+            // Make sure we return to the same position.
+            long Start = ThePosition - Length - TagSpace(Code) - 1;
+            FramerFrameStart = Start;
+            PositionRead = Start;
+
+            return true;
+            }
+
+
+
+
+        #endregion
+
+
+
+
 
 
 
@@ -690,7 +755,7 @@ namespace Goedel.Cryptography.Dare {
             long Start = ThePosition - Length - TagSpace(Code)-1;
 
             PositionRead = Start;
-            ReadFrame(out FrameHeader, out FrameData);
+            ReadFrame(out FrameHeader, out FrameData, out var FrameTrailer);
             PositionRead = Start;
 
             return true;

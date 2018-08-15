@@ -3,4 +3,12 @@
   "ContainerType": "Chain",
   "ContentMeta": {
     "cty": "CatalogEntry"},
-  "DataEncoding": "JSON"}vτ
+  "DataEncoding": "JSON"}vττ~πD{
+  "UniqueID": "EntryCalendar$alice@example.com",
+  "Event": "New"}π6{
+  "EntryCalendar": {
+    "ID": "alice@example.com"}}~ττ€πE{
+  "UniqueID": "EntryCalendar$alice2@example.net",
+  "Event": "New"}π7{
+  "EntryCalendar": {
+    "ID": "alice2@example.net"}}€τ

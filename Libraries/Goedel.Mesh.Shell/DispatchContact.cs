@@ -54,19 +54,17 @@ namespace Goedel.Mesh.Shell {
 
             ReportResult(Result);
             }
-        public void ContactDump() {
-            Result Result = null;
 
-            // stuff
+        public ResultDump ContactDump() {
 
-            //Output.WriteLine(ContactSession.ContactCatalog.GetJson(true));
-
-            Result = new Result() {
+            var Result = new ResultDump() {
                 Success = true,
-                Reason = "Output bookmark data"
+                Reason = "Output calendar data",
+                Data = CatalogContact.GetJson(true)
                 };
 
             ReportResult(Result);
+            return Result;
             }
 
         }

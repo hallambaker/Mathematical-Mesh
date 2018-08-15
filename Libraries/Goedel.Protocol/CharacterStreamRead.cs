@@ -260,6 +260,9 @@ namespace Goedel.Protocol {
             while (!Stream.EOF) {
                 var c = Stream.ReadChar();
 
+                Console.Write ( $".{c}");
+
+
                 if (c < 127) {
                     var v = BaseConvert.BASE64Value[(int)c];
                     if (v < 64) {

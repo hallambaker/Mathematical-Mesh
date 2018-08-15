@@ -53,11 +53,12 @@ namespace Goedel.Cryptography.Dare.Test {
         /// </summary>
         [MT.TestMethod]
         public void TestFileContainerEncrypted1 () {
-            var TestKeys = new TestKeys();
-            TestKeys.AddEncrypt();
+            var Recipients = new List<string> { "Alice@example.com" };
+            var CryptoParameters = new CryptoParametersTest(
+                        Recipients: Recipients);
 
             var Bytes = CreateBytes(100);
-            ReadWriteContainer("TestFileEncrypted_100", Bytes, TestKeys.EncryptionKeys);
+            ReadWriteContainer("TestFileEncrypted_100", Bytes, CryptoParameters);
             }
 
 
@@ -66,17 +67,18 @@ namespace Goedel.Cryptography.Dare.Test {
         /// </summary>
         [MT.TestMethod]
         public void TestFileContainerEncrypted16 () {
-            var TestKeys = new TestKeys();
-            TestKeys.AddEncrypt();
+            var Recipients = new List<string> { "Alice@example.com" };
+            var CryptoParameters = new CryptoParametersTest(
+                        Recipients: Recipients);
 
             byte[] Bytes = new byte[0];
-            ReadWriteContainer("TestFileEncrypted_0", Bytes, TestKeys.EncryptionKeys);
+            ReadWriteContainer("TestFileEncrypted_0", Bytes, CryptoParameters);
 
             int Length = 1;
             for (var i = 1; i < 16; i++) {
                 var Filename = $"TestFileEncrypted_{Length}";
                 Bytes = CreateBytes(Length);
-                ReadWriteContainer(Filename, Bytes, TestKeys.EncryptionKeys);
+                ReadWriteContainer(Filename, Bytes, CryptoParameters);
                 Length = Length * 2;
                 }
             }
@@ -104,8 +106,10 @@ namespace Goedel.Cryptography.Dare.Test {
         /// </summary>
         [MT.TestMethod]
         public void TestArchiveEncrypted10Bulk () {
-            var EncryptionKey = CreateKeyPair();
-            ReadWriteArchive("TestArchive_", 10, EncryptionKey, false);
+            var Recipients = new List<string> { "Alice@example.com" };
+            var CryptoParameters = new CryptoParametersTest(
+                        Recipients: Recipients);
+            ReadWriteArchive("TestArchive_", 10, CryptoParameters, false);
             }
 
         /// <summary>
@@ -113,8 +117,10 @@ namespace Goedel.Cryptography.Dare.Test {
         /// </summary>
         [MT.TestMethod]
         public void TestArchiveEncrypted10Individual () {
-            var EncryptionKey = CreateKeyPair();
-            ReadWriteArchive("TestArchive_", 10, EncryptionKey, true);
+            var Recipients = new List<string> { "Alice@example.com" };
+            var CryptoParameters = new CryptoParametersTest(
+                        Recipients: Recipients);
+            ReadWriteArchive("TestArchive_", 10, CryptoParameters, true);
             }
 
         /// <summary>
@@ -122,13 +128,15 @@ namespace Goedel.Cryptography.Dare.Test {
         /// </summary>
         [MT.TestMethod]
         public void TestArchiveMulti () {
-            var EncryptionKey = CreateKeyPair();
+            var Recipients = new List<string> { "Alice@example.com" };
+            var CryptoParameters = new CryptoParametersTest(
+                        Recipients: Recipients);
             var Entries = new int[] { 5, 15, 30, 100 };
 
             foreach (var Entry in Entries) {
                 ReadWriteArchive("TestArchive_", Entry);
-                ReadWriteArchive("TestArchive_", Entry, EncryptionKey, false);
-                ReadWriteArchive("TestArchive_", Entry, EncryptionKey, true);
+                ReadWriteArchive("TestArchive_", Entry, CryptoParameters, false);
+                ReadWriteArchive("TestArchive_", Entry, CryptoParameters, true);
                 }
             }
 
@@ -142,12 +150,15 @@ namespace Goedel.Cryptography.Dare.Test {
         static Random Random = new Random();
         byte[] CreateBytes (int Length) => CryptoCatalog.GetBytes(Length);
        
-        void ReadWriteContainer (string FileName, byte[] TestData, List<KeyPair> EncryptionKeys) {
+        void ReadWriteContainer (string FileName, byte[] TestData, CryptoParameters CryptoParameters=null) {
+            CryptoParameters = CryptoParameters ?? new CryptoParameters();
+
             // Create container
-            FileContainerWriter.File(FileName, TestData, null, Recipients: EncryptionKeys);
+            FileContainerWriter.File(FileName, CryptoParameters, TestData, null);
 
             // Read Container
-            FileContainerReader.File(FileName, out var ReadData, out var ContentMetaOut);
+            FileContainerReader.File(FileName, CryptoParameters.KeyCollection,
+                        out var ReadData, out var ContentMetaOut);
 
             // Check for equality
             Assert.True(ReadData.IsEqualTo(TestData));
@@ -155,7 +166,9 @@ namespace Goedel.Cryptography.Dare.Test {
 
 
         void ReadWriteArchive (string FileNameBase, int Entries, 
-                    KeyPair EncryptionKey=null, bool Independent=false) {
+                    CryptoParameters CryptoParameters=null, bool Independent=false) {
+
+            CryptoParameters = CryptoParameters ?? new CryptoParameters();
 
             var TestData = new byte[Entries][];
             for (var i = 0; i < Entries; i++) {
@@ -163,20 +176,20 @@ namespace Goedel.Cryptography.Dare.Test {
                 TestData[i] = CreateBytes(Length);
                 }
 
-            var Mode = EncryptionKey == null ? "" : (Independent ? "_Ind" : "_Bulk");
+            var Mode = CryptoParameters.Encrypt ? "" : (Independent ? "_Ind" : "_Bulk");
             var Filename = FileNameBase + $"{Mode}_{Entries}";
-            var Recipients = EncryptionKey == null ? null : new List<KeyPair> { EncryptionKey };
+
 
             using (var Writer = new FileContainerWriter(
-                    Filename, true, FileStatus: FileStatus.Overwrite, Recipients: Recipients)) {
+                    Filename, CryptoParameters, true, FileStatus: FileStatus.Overwrite)) {
                 for (var i = 0; i < Entries; i++) {
-                    Writer.Add(TestData[i], null, Recipients);
+                    Writer.Add(TestData[i], CryptoParameters);
                     }
                 }
 
             // Test retrieval by index number. Note that since record 0 has the 
             // container header data, the data items run through [1..Entries]
-            using (var Reader = new FileContainerReader(Filename)) {
+            using (var Reader = new FileContainerReader(Filename, CryptoParameters.KeyCollection)) {
                 for (var i = 0; i < Entries; i++) {
 
                     Reader.Read(out var ReadData, out var ContentMeta, Index: i+1);

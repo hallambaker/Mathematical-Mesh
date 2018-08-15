@@ -38,21 +38,21 @@ namespace Goedel.Catalog.Test {
             ShellDispatch ShellDispatch = new ShellDispatch(Catalog: Filename);
 
             ShellDispatch.MailAdd(Mail1.ID);
-            var Dump1 = ShellDispatch.BookmarkDump();
+            var Dump1 = ShellDispatch.MailDump();
             TestDump(CatalogMail1, Dump1.Data);
 
             ShellDispatch.MailAdd(Mail2.ID);
-            var Dump2 = ShellDispatch.BookmarkDump();
+            var Dump2 = ShellDispatch.MailDump();
             TestDump(CatalogMail2, Dump2.Data);
 
             ShellDispatch.MailDelete(Mail2.ID);
-            var Dump3 = ShellDispatch.BookmarkDump();
+            var Dump3 = ShellDispatch.MailDump();
             TestDump(CatalogMail3, Dump3.Data);
             }
 
 
         void TestDump(CatalogMail Reference, string Test) {
-            var Parsed = CatalogCredential.FromJSON(Test.JSONReader(), true);
+            var Parsed = CatalogMail.FromJSON(Test.JSONReader(), true);
             Assert.True(Parsed.GetJson() == Reference.GetJson());
             }
 

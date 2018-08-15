@@ -9,6 +9,8 @@ using Goedel.Mesh.Portal.Client;
 using Goedel.Recrypt;
 using Goedel.Recrypt.Client;
 using Goedel.Mesh.Platform.Windows;
+using Goedel.Cryptography.Dare;
+using Goedel.Cryptography.Jose;
 using Goedel.Mesh.Shell;
 
 namespace Goedel.Dare.Shell {
@@ -67,6 +69,13 @@ namespace Goedel.Dare.Shell {
             (Options.Signer.Value == null) ? null : new List<string> { Options.Signer.Value };
         public List<string> Recipients(IEncryptOptions Options) =>
             (Options.Recipient.Value == null) ? null : new List<string> { Options.Recipient.Value };
+
+
+        public KeyCollection KeyCollection(IAccountOptions Options) => 
+                    Cryptography.Jose.KeyCollection.Default;
+
+        public CryptoParameters CryptoParameters(IEncryptOptions Options) =>
+            throw new NYI();
 
         #region // Profile
         public override void ProfileReset(ProfileReset Options) {
@@ -515,10 +524,9 @@ namespace Goedel.Dare.Shell {
         public override void FileEncrypt(FileEncrypt Options) {
             var ShellDispatch = SetShell(Options);
             ShellDispatch.FileEncrypt(
+                CryptoParameters(Options),
                 Options.Input.Value,
                 Options.Output.Value,
-                Recipients(Options),
-                Signers(Options),
                 Options.Subdirectories.Value
                 );
             }
@@ -526,33 +534,35 @@ namespace Goedel.Dare.Shell {
         public override void FileDecrypt(FileDecrypt Options) {
             var ShellDispatch = SetShell(Options);
             ShellDispatch.FileDecrypt(
+                KeyCollection(Options)
+,
                 Options.Input.Value,
-                Options.Output.Value
-                );
+                Options.Output.Value);
             }
         #endregion
         #region // Container
         public override void ContainerCreate(ContainerCreate Options) {
             var ShellDispatch = SetShell(Options);
             ShellDispatch.ContainerCreate(
-                Options.Output.Value
+                Options.Output.Value,
+                CryptoParameters(Options)
                 );
             }
 
         public override void ContainerArchive(ContainerArchive Options) {
             var ShellDispatch = SetShell(Options);
             ShellDispatch.ContainerArchive(
-                Options.Output.Value
-,
+                CryptoParameters(Options),
+                Options.Output.Value,
                 Options.Input.Value);
             }
 
         public override void ContainerAppend(ContainerAppend Options) {
             var ShellDispatch = SetShell(Options);
             ShellDispatch.ContainerAppend(
+                CryptoParameters(Options),
                 Options.Input.Value,
-                Options.Output.Value
-                );
+                Options.Output.Value);
             }
 
         public override void ContainerExtract(ContainerExtract Options) {
@@ -561,6 +571,7 @@ namespace Goedel.Dare.Shell {
             var Record = Options.Record.Value;
 
             ShellDispatch.ContainerExtract(
+                KeyCollection(Options),
                 Options.Input.Value,
                 Options.Output.Value,
                 Record,
@@ -570,10 +581,9 @@ namespace Goedel.Dare.Shell {
         public override void ContainerCopy(ContainerCopy Options) {
             var ShellDispatch = SetShell(Options);
             ShellDispatch.ContainerCopy(
+                CryptoParameters(Options),
                 Options.Input.Value,
                 Options.Output.Value,
-                Recipients(Options),
-                Signers(Options),
                 Options.Decrypt.Value,
                 Options.Index.Value,
                 Options.Purge.Value
@@ -583,8 +593,9 @@ namespace Goedel.Dare.Shell {
         public override void ContainerVerify(ContainerVerify Options) {
             var ShellDispatch = SetShell(Options);
             ShellDispatch.ContainerVerify(
-                Options.Input.Value
-                );
+                KeyCollection(Options)
+,
+                Options.Input.Value);
             }
         #endregion
 

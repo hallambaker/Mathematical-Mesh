@@ -6,7 +6,7 @@ using Goedel.Mesh;
 using Goedel.Cryptography;
 using Goedel.Cryptography.Jose;
 using Goedel.Cryptography.KeyFile;
-using Goedel.IO;
+using Goedel.Test;
 using Goedel.Utilities;
 using Goedel.Protocol.Test;
 using Goedel.Catalog.Test;
@@ -32,28 +32,29 @@ namespace Scratchpad {
             Goedel.IO.Debug.Initialize();
 
             //TestCryptography.TestDirect();
+            //CatalogTests.TestDirect();
             TestDare.TestDirect();
             }
 
 
 
 
-        static void WriteBody(DAREMessage Message, byte[] Plaintext, int Stride = 0) {
-            if (Stride <= 0) {
-                Message.Process(Plaintext, true);
-                return;
-                }
+        //static void WriteBody(DAREMessage Message, byte[] Plaintext, int Stride = 0) {
+        //    if (Stride <= 0) {
+        //        Message.Process(Plaintext, true);
+        //        return;
+        //        }
 
-            for (long i = 0; i < Plaintext.LongLength; i += Stride) {
-                var Length = Plaintext.LongLength - i;
-                if (Length > Stride) {
-                    Message.Process(Plaintext, false, i, Stride);
-                    }
-                else {
-                    Message.Process(Plaintext, true, i, Length);
-                    }
-                }
-            }
+        //    for (long i = 0; i < Plaintext.LongLength; i += Stride) {
+        //        var Length = Plaintext.LongLength - i;
+        //        if (Length > Stride) {
+        //            Message.Process(Plaintext, false, i, Stride);
+        //            }
+        //        else {
+        //            Message.Process(Plaintext, true, i, Length);
+        //            }
+        //        }
+        //    }
 
 
 
@@ -73,12 +74,14 @@ namespace Scratchpad {
         static void TestEncryptDecrypt () {
             //string FileName = "TopSecret.jcx";
             string TestData = "<h1>Tippety Top Secret</h1>";
-            KeyPair EncryptionKey = CreateKeyPair();
+            var Recipients = new List<string> { "Alice@example.com" };
+            var CryptoParameters = new CryptoParametersTest(
+                        Recipients: Recipients);
 
-            var Recipients = EncryptionKey == null ? null : new List<KeyPair> { EncryptionKey };
 
             // Create container
-            var CipherText = FileContainerWriter.Data(TestData.ToBytes(), null, Recipients: Recipients);
+            var CipherText = FileContainerWriter.Data(
+                        TestData.ToBytes(), null, CryptoParameters: CryptoParameters);
 
 
             FileContainerReader.Data(CipherText, out var ReadData, out var ContentMetaOut);

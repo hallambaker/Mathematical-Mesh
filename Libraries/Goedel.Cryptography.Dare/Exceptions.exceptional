@@ -38,3 +38,7 @@ Namespace Goedel.Cryptography.Dare
 		Description
 			|Access was refused
 
+	Exception DataRecordTruncated
+		Console "A data record could not be read because it was incomplete."
+		Description
+			|A data record could not be read because it was incomplete.

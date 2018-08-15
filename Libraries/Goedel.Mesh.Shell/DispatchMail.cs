@@ -10,15 +10,19 @@ namespace Goedel.Mesh.Shell {
         CatalogMail CatalogMail => CatalogSession.CatalogMail;
 
         public void MailAdd(
-                string Address
+                string ID
                 ) {
             Result Result = null;
 
-            // stuff
+            var EntryCalendar = new EntryMail() {
+                ID = ID
+                };
+
+            CatalogMail.Update(EntryCalendar);
 
             Result = new Result() {
                 Success = true,
-                Reason = "Created Device Profile"
+                Reason = "Added mail account"
                 };
 
             ReportResult(Result);
@@ -112,6 +116,17 @@ namespace Goedel.Mesh.Shell {
                 };
 
             ReportResult(Result);
+            }
+
+        public ResultDump MailDump() {
+            var Result = new ResultDump() {
+                Success = true,
+                Reason = "Output mail data",
+                Data = CatalogMail.GetJson(true)
+                };
+
+            ReportResult(Result);
+            return Result;
             }
 
         }

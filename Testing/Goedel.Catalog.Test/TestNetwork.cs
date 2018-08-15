@@ -38,15 +38,15 @@ namespace Goedel.Catalog.Test {
             ShellDispatch ShellDispatch = new ShellDispatch (Catalog: Filename);
 
             ShellDispatch.NetworkAdd(Network1.ID);
-            var Dump1 = ShellDispatch.BookmarkDump();
+            var Dump1 = ShellDispatch.NetworkDump();
             TestDump(CatalogNetwork1, Dump1.Data);
 
             ShellDispatch.NetworkAdd(Network2.ID);
-            var Dump2 = ShellDispatch.BookmarkDump();
+            var Dump2 = ShellDispatch.NetworkDump();
             TestDump(CatalogNetwork2, Dump2.Data);
 
             ShellDispatch.NetworkDelete(Network2.ID);
-            var Dump3 = ShellDispatch.BookmarkDump();
+            var Dump3 = ShellDispatch.NetworkDump();
             TestDump(CatalogNetwork3, Dump3.Data);
 
 

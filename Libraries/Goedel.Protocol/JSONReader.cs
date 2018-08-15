@@ -619,8 +619,9 @@ namespace Goedel.Protocol {
             GetToken(true);
             switch (TokenType) {
                 case Token.String:
-                case Token.Binary:
                     return ResultBinary;
+                case Token.Binary:
+                    return ReadBinaryData();
                 }
             throw new Exception("Expected BASE64 encoded binary");
             }
@@ -634,6 +635,13 @@ namespace Goedel.Protocol {
             Chunk= ReadBinary();
             return false;
             }
+
+
+        /// <summary>
+        /// Read binary data. This method is not supported on the base JSON reader.
+        /// </summary>
+        /// <returns>The binary data read.</returns>
+        public virtual byte[] ReadBinaryData() => throw new NYI();
 
 
         /// <summary>

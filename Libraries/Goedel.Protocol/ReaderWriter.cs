@@ -29,44 +29,8 @@ namespace Goedel.Protocol {
     /// <summary>
     /// Abstract JSON object deserializer
     /// </summary>
-    public abstract class Reader {
+    public abstract class Reader : Disposable {
 
-
-        ///// <summary>Input stream</summary>
-        //protected CharacterStream InputCS;
-
-        ///// <summary>Get next character without advancing stream</summary>
-        ///// <returns>The next character in the stream</returns> 
-        //protected char LookNext() => InputCS.LookNext();
-
-        ///// <summary>Get next character and advance stream</summary>
-        ///// <returns>The character received</returns>
-        //protected char GetNext() => InputCS.GetNext();
-
-        ///// <summary>If true, end of file has been reached</summary>
-        //protected bool EOF => InputCS.EOF;
-
-        ///// <summary>Set the input reader</summary>
-        ///// <param name="InputIn">Input source</param>
-        //protected void SetReader(TextReader InputIn) => InputCS = new TextCharacterTextStream(InputIn);
-
-        ///// <summary>Set the input reader</summary>
-        ///// <param name="InputIn">Input source</param>
-        //protected void SetReader(string InputIn) {
-        //    InputCS = new StringCharacterStream(InputIn);
-        //    }
-
-        ///// <summary>Default constructor</summary>
-        //public Reader() {
-        //    }
-
-        ///// <summary>Constructor from string source</summary>
-        ///// <param name="BufferIn">Input source</param>
-        //public Reader(string BufferIn) => SetReader(BufferIn);
-
-        ///// <summary>Constructor from stream source</summary>
-        ///// <param name="InputIn">Input source</param>
-        //public Reader(TextReader InputIn) => SetReader(InputIn);
 
         /// <summary>Get start of object</summary>
         /// <returns>True if start of object found</returns>
@@ -121,15 +85,21 @@ namespace Goedel.Protocol {
         /// <summary>Read next item in array</summary>
         /// <returns>If true, is an item to read, otherwise have reached end.</returns>
         abstract public bool NextArray();
+        
         }
 
     /// <summary>
     /// Abstract JSON object serializer
     /// </summary>
-    public abstract class Writer {
+    public abstract class Writer : Disposable {
 
         /// <summary>Output stream</summary>
         public Stream Output;
+
+        /// <summary>
+        /// Flush the output stream.
+        /// </summary>
+        public void Flush() => Output.Flush();
 
         /// <summary>Convert output stream to byte array</summary>
         /// <returns>Output stream as byte array</returns>

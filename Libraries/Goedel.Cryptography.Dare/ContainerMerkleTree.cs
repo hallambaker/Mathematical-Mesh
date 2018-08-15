@@ -34,8 +34,9 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="DigestAlgorithm">The digest algorithm to be used to calculate the PayloadDigest</param>
         /// <returns>The newly constructed container.</returns>
 
-        public static new Container MakeNewContainer (
+        public static new Container MakeNewContainer(
                         JBCDStream JBCDStream,
+                        CryptoParameters CryptoParameters,
                         ContainerType ContainerType = ContainerType.Chain,
                         CryptoAlgorithmID DigestAlgorithm = CryptoAlgorithmID.Default) {
 

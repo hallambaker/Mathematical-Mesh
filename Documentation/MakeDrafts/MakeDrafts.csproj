@@ -33,6 +33,7 @@
     <ProjectReference Include="..\..\Libraries\Goedel.Protocol.Exchange.Server\Goedel.Protocol.Exchange.Server.csproj" />
     <ProjectReference Include="..\..\Libraries\Goedel.Protocol.Exchange\Goedel.Protocol.Exchange.csproj" />
     <ProjectReference Include="..\..\Libraries\Goedel.Protocol\Goedel.Protocol.csproj" />
+    <ProjectReference Include="..\..\Libraries\Goedel.Test\Goedel.Test.csproj" />
     <ProjectReference Include="..\..\Protocols\Account\Goedel.Account.Client\Goedel.Account.Client.csproj" />
     <ProjectReference Include="..\..\Protocols\Account\Goedel.Account.Server\Goedel.Account.Server.csproj" />
     <ProjectReference Include="..\..\Protocols\Account\Goedel.Account\Goedel.Account.csproj" />

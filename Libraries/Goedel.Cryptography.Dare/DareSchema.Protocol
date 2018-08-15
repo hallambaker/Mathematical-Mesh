@@ -56,6 +56,23 @@
 				|A list of signatures.
 				|A message trailer MUST NOT contain a signatures field if the header contains 
 				|a signatures field.
+		Binary SignedData
+			Description
+				|Contains a DAREHeader object 
+
+		// Integrity checks
+		Binary PayloadDigest
+			Description
+				|If present, contains the digest of the Payload.
+		Binary ChainDigest
+			Description
+				|If present, contains the digest of the PayloadDigest values of this
+				|frame and the frame immediately preceding.
+
+		Binary TreeDigest
+			Description
+				|If present, contains the Binary Merkle Tree digest value.
+
 
 	Structure DAREHeader
 		Inherits DARETrailer
@@ -121,7 +138,6 @@
 			|structure. In particular, DARE messages MAY have multiple recipients
 			|and multiple signers.
 
-
 	Structure DARESigner
 		Description
 			|The signature value
@@ -161,6 +177,10 @@
 		Inherits DARESigner
 		Description
 			|The signature value
+
+		Binary Manifest
+			Description
+				|The data description that was signed.
 		Binary SignatureValue
 			Tag "signature"
 			Description

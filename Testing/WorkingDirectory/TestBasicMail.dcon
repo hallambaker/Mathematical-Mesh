@@ -3,4 +3,12 @@
   "ContainerType": "Chain",
   "ContentMeta": {
     "cty": "CatalogEntry"},
-  "DataEncoding": "JSON"}vô
+  "DataEncoding": "JSON"}vôôvð@{
+  "UniqueID": "EntryMail$alice@example.com",
+  "Event": "New"}ð2{
+  "EntryMail": {
+    "ID": "alice@example.com"}}vôôxðA{
+  "UniqueID": "EntryMail$alice2@example.net",
+  "Event": "New"}ð3{
+  "EntryMail": {
+    "ID": "alice2@example.net"}}xô

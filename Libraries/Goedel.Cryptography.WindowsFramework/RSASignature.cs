@@ -161,63 +161,36 @@ namespace Goedel.Cryptography.Windows {
         //    }
 
 
-
-        /// <summary>
-        /// Sign the integrity value specified in the CryptoDataEncoder
-        /// </summary>
-        /// <param name="Data">Data to sign.</param>
-        public override void Sign(CryptoDataSignature Data) {
-
-
+        public override byte[] SignHash(byte[] Data, CryptoAlgorithmID CryptoAlgorithmID) {
             KeyPair.GetPrivate();
 
-            switch (Data.BulkData.BulkID) {
+            switch (CryptoAlgorithmID) {
                 case CryptoAlgorithmID.SHA_2_256: {
-                    Data.Signature = Provider.SignHash(Data.BulkData.Integrity, 
-                        HashAlgorithmName.SHA256,
-                        RSASignaturePadding.Pkcs1);
-                    break;
+                    return  Provider.SignHash(Data, HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
                     }
                 case CryptoAlgorithmID.SHA_2_512: {
-                    Data.Signature = Provider.SignHash(Data.BulkData.Integrity, 
-                        HashAlgorithmName.SHA512,
-                        RSASignaturePadding.Pkcs1);
-                    break;
+                    return Provider.SignHash(Data, HashAlgorithmName.SHA512, RSASignaturePadding.Pkcs1);
                     }
 
                 }
-            return ;
+            throw new NYI();
             }
 
-        /// <summary>
-        /// Verify the signature value
-        /// </summary>
-        /// <param name="Bulk">The provider to wrap.</param>
-        /// <param name="Signature">The signature blob value.</param>
-        /// <param name="AlgorithmID">The algorithm used.</param>
-        /// <returns>True if the verification operation succeeded, otherwise false</returns>
-        public override bool Verify(CryptoData Bulk, Byte[] Signature,
-                CryptoAlgorithmID AlgorithmID = CryptoAlgorithmID.Default) {
+        public override bool VerifyHash(byte[] Data, Byte[] Signature, CryptoAlgorithmID CryptoAlgorithmID) {
+            KeyPair.GetPrivate();
 
-            switch (Bulk.BulkID) {
+            switch (CryptoAlgorithmID) {
                 case CryptoAlgorithmID.SHA_2_256: {
-                    return Provider.VerifyHash(Bulk.Integrity, Signature,
-                        HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
+                    return Provider.VerifyHash(Data, Signature, HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
                     }
                 case CryptoAlgorithmID.SHA_2_512: {
-                    return Provider.VerifyHash(Bulk.Integrity, Signature,
-                        HashAlgorithmName.SHA512, RSASignaturePadding.Pkcs1);
+                    return Provider.VerifyHash(Data, Signature, HashAlgorithmName.SHA512, RSASignaturePadding.Pkcs1);
                     }
 
                 }
-
-
-            throw new NYI("To do");
+            throw new NYI();
             }
 
         }
-
-
-
 
     }

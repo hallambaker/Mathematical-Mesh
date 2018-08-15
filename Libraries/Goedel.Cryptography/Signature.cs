@@ -160,12 +160,27 @@ namespace Goedel.Cryptography {
         /* 
         * Methods that MUST be implemented in instance classes.
         */
+        /// <summary>
+        /// Sign the integrity value specified in the CryptoDataEncoder
+        /// </summary>
+        /// <param name="Data">Digest to be signed.</param>
+        /// <param name="CryptoAlgorithmID">The signing algorithm.</param>
+        public abstract byte[] SignHash(byte[] Data, CryptoAlgorithmID CryptoAlgorithmID);
+
+        /// <summary>
+        /// Sign the integrity value specified in the CryptoDataEncoder
+        /// </summary>
+        /// <param name="Data">Digest to be verified.</param>
+        /// <param name="Signature">The signature blob value.</param>
+        /// <param name="CryptoAlgorithmID">The signing algorithm.</param>
+        public abstract bool VerifyHash(byte[] Data, Byte[] Signature, CryptoAlgorithmID CryptoAlgorithmID);
 
         /// <summary>
         /// Sign the integrity value specified in the CryptoDataEncoder
         /// </summary>
         /// <param name="Data">Data to be signed.</param>
-        public abstract void Sign(CryptoDataSignature Data);
+        public virtual void Sign(CryptoDataSignature Data) => 
+            Data.Signature = SignHash(Data.BulkData.Integrity, Data.BulkData.BulkID);
 
         /// <summary>
         /// Verify the signature value
@@ -174,8 +189,9 @@ namespace Goedel.Cryptography {
         /// <param name="Signature">The signature blob value.</param>
         /// <param name="AlgorithmID">The algorithm used.</param>
         /// <returns>True if the verification operation succeeded, otherwise false</returns>
-        public abstract bool Verify(CryptoData Bulk, Byte[] Signature,
-                CryptoAlgorithmID AlgorithmID = CryptoAlgorithmID.Default);
+        public virtual bool Verify(CryptoData Bulk, Byte[] Signature,
+                CryptoAlgorithmID AlgorithmID = CryptoAlgorithmID.Default) =>
+            VerifyHash(Bulk.Integrity, Signature, Bulk.BulkID);
 
 
 

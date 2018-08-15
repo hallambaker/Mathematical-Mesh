@@ -161,7 +161,9 @@ namespace Goedel.Recrypt {
             return KeyPair;
             }
 
-        List<KeyPair> Recipients => new List<KeyPair>() { NamedKeyPair() };
+        List<KeyPair> EncryptionKeys => new List<KeyPair>() { NamedKeyPair() };
+
+        CryptoParameters CryptoParameters => new CryptoParameters() { EncryptionKeys = EncryptionKeys };
 
         /// <summary>
         /// Get encryption key from signed data.
@@ -192,14 +194,16 @@ namespace Goedel.Recrypt {
         /// </summary>
         /// <param name="Input">The input data</param>
         /// <param name="Output">Filename of the file to write the ciphertext to.</param>
-        public void Encrypt(byte[] Input, string Output) => FileContainerWriter.File(Output, Input, Recipients: Recipients);
+        public void Encrypt(byte[] Input, string Output) => 
+                    FileContainerWriter.File(Output, CryptoParameters, Input);
 
         /// <summary>
         /// Encrypt content. The input and outputs are byte arrays.
         /// </summary>
         /// <param name="Input">The input data</param>
         /// <param name="Output">The output data</param>
-        public void Encrypt(byte[] Input, byte[] Output) => Output = FileContainerWriter.Data(Input, Recipients: Recipients);
+        public void Encrypt(byte[] Input, byte[] Output) => Output = 
+                    FileContainerWriter.Data(Input, CryptoParameters: CryptoParameters);
 
 
         /// <summary>

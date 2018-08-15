@@ -211,11 +211,89 @@ namespace Goedel.Protocol {
             return Token.String;
             }
 
+        int LengthRemainingRead=-1;
+        int BinaryBuffer = -1;
+
         Token LexerBinary (int Code, bool Terminal) {
-            var Length = (int)GetInteger(Code);
-            ResultBinary = ByteInput.ReadBinary(Length);
+            LengthRemainingRead = (int)GetInteger(Code);
             this.Terminal = Terminal;
             return Token.Binary;
+            }
+
+        /// <summary>
+        /// Read binary data in monolithic mode, i.e. return the entire chunk.
+        /// </summary>
+        /// <returns>The binary data.</returns>
+        public override byte[] ReadBinaryData() {
+            ResultBinary = ByteInput.ReadBinary(LengthRemainingRead);
+            LengthRemainingRead = -1;
+            return ResultBinary;
+            }
+
+        /// <summary>
+        /// Begin reading data chunk in incremental mode.
+        /// </summary>
+        /// <returns>If true, this is a terminal chunk and there is no more data to be read.</returns>
+        public virtual bool ReadBinaryToken() {
+            GetToken(true);
+
+            switch (TokenType) {
+                case Token.String: {
+                    BinaryBuffer = 0;
+                    return true;
+                    }
+                case Token.Binary: {
+                    BinaryBuffer = -1;
+                    return Terminal;
+                    }
+                }
+
+            return Terminal;
+            }
+
+
+        /// <summary>
+        /// Read a partial binary value.
+        /// </summary>
+        /// <param name="Data">Buffer to write the data read to.</param>
+        /// <param name="Offset">Byte offset from start of <paramref name="Data"/></param>
+        /// <param name="Count">Number of bytes to be read.</param>
+        /// <returns>Number of bytes read or 0 if the end of the stream is reached.</returns>
+
+        public virtual int ReadBinaryData(
+            byte[] Data, int Offset, int Count) {
+            int Length;
+
+            if (BinaryBuffer >= 0) {
+                Length = Math.Min(Count, ResultBinary.Length - BinaryBuffer);
+
+                Buffer.BlockCopy(ResultBinary, BinaryBuffer, Data, Offset, Length);
+                BinaryBuffer += Length;
+
+                return Length;
+                }
+
+
+            if (LengthRemainingRead < 0) {
+                return 0; // Have completed reading the data.
+                }
+
+            if (LengthRemainingRead == 0) {
+                if (Terminal) {
+                    return 0;
+                    }
+                ReadBinaryToken();
+                }
+
+            // reduce the read count to the smaller of count and the remaining data.
+            Length = Math.Min(Count, LengthRemainingRead);
+
+            LengthRemainingRead -= Length;
+            var Read = ByteInput.ReadBinary(Data, Offset, Length);
+
+            Console.WriteLine("Read ${Read} bytes");
+
+            return Read;
             }
 
 
@@ -296,16 +374,6 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <returns>The data read</returns>
         public override byte[] ReadBinary() => base.ReadBinary();
-
-            //{
-            //GetToken(true);
-            //switch (TokenType) {
-            //    case Token.String:
-            //    case Token.Binary:
-            //        return ResultBinary;
-            //    }
-            //throw new Exception("Expected BASE64 encoded binary");
-            //}
 
         /// <summary>
         /// Attempt to read string from input.

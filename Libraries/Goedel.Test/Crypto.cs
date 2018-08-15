@@ -4,11 +4,66 @@ using System.Collections.Generic;
 using UT = Microsoft.VisualStudio.TestTools.UnitTesting;
 using Goedel.Cryptography;
 using Goedel.Cryptography.Jose;
+using Goedel.Cryptography.Dare;
 using Goedel.Cryptography.PKIX;
 using Goedel.Utilities;
 using Goedel.Cryptography.Algorithms;
 
 namespace Goedel.Test {
+
+
+    public class CryptoParametersTest : CryptoParameters {
+
+
+        public CryptoParametersTest(
+                    List<string> Recipients = null,
+                    List<string> Signers = null,
+                    CryptoAlgorithmID EncryptID = CryptoAlgorithmID.NULL,
+                    CryptoAlgorithmID DigestID = CryptoAlgorithmID.NULL) :
+            base(new KeyCollection(), Recipients, Signers, EncryptID, DigestID) {
+            }
+
+        protected override void AddEncrypt(string AccountId) => AddEncrypt(AccountId, true);
+
+        public void AddEncrypt(string AccountId, bool Register = true) {
+
+
+            var Keypair = new KeyPairDH();
+            var Public = Keypair.PKIXPublicKeyDH;
+            var PublicKeyKeypair = KeyPairDH.KeyPairPublicFactory(Public);
+            EncryptionKeys.Add(PublicKeyKeypair);
+
+            Console.WriteLine($"Keypair is {Keypair.UDF}");
+            Console.WriteLine($"  Public {Keypair.PKIXPublicKeyDH}");
+            Console.WriteLine($"  Public {PublicKeyKeypair.UDF}");
+
+            if (Register) {
+                KeyCollection.Add(Keypair);
+                }
+
+            }
+
+        protected override void AddSign(string AccountId) => AddSign(AccountId, true);
+        public void AddSign(string AccountId, bool Register) {
+
+
+            var Keypair = KeyPairBaseRSA.Create() as KeyPairBaseRSA;
+            var Public = Keypair.PKIXPublicKeyRSA;
+            var PublicKeyKeypair = KeyPairBaseRSA.KeyPairPublicFactory(Public);
+            SignerKeys.Add(Keypair);
+
+            Console.WriteLine($"Keypair is {Keypair.UDF}");
+            Console.WriteLine($"  Public {Keypair.PKIXPublicKeyRSA}");
+            Console.WriteLine($"  Public {PublicKeyKeypair.UDF}");
+
+            if (Register) {
+                KeyCollection.Add(Keypair);
+                }
+            }
+
+        }
+
+
 
     public class TestKeys {
 

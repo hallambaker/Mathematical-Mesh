@@ -28,27 +28,11 @@
 			Description
 				|The container data.
 
-	Structure ContainerTrailer
-		Inherits DAREHeader
-		Description
-			|If present, a trailer contains only signature and integrity data.
 
-		// Integrity checks
-		Binary PayloadDigest
-			Description
-				|If present, contains the digest of the Payload.
 
-		Binary ChainDigest
-			Description
-				|If present, contains the digest of the PayloadDigest values of this
-				|frame and the frame immediately preceding.
-
-		Binary TreeDigest
-			Description
-				|If present, contains the Binary Merkle Tree digest value.
 
 	Structure ContainerHeader
-		Inherits ContainerTrailer
+		Inherits DAREHeader
 		
 		Description
 			|Describes a container header. A container header MAY contain any 
@@ -73,7 +57,6 @@
 				|Applications MUST NOT interpret a meta frame as a data frame with an enpty payload.
 
 		// Content Metadata
-
 		String UniqueID
 			Description 
 				|Unique object identifier
@@ -101,7 +84,6 @@
 			Description
 				|An index of records in the current container up to but not including
 				|this one.
-
 
 
 

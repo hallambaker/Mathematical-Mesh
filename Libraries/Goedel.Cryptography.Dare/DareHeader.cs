@@ -15,9 +15,6 @@ namespace Goedel.Cryptography.Dare {
 
         byte[] MasterSecret;
 
-
-
-
         /// <summary>
         /// The cryptography provider.
         /// </summary>
@@ -28,9 +25,8 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="ContentLength">The unencrypted content length.</param>
         /// <returns>The corresponding payload length.</returns>
-        public long OutputLength(long ContentLength) => Encrypt ?
-            ProviderEncryption.OutputLength(ContentLength) : ContentLength;
-
+        public long OutputLength(long ContentLength) =>
+            CryptoStack == null ? ContentLength : CryptoStack.CipherTextLength(ContentLength);
 
         /// <summary>
         /// If true, the header specifies a key exchange.
@@ -62,32 +58,6 @@ namespace Goedel.Cryptography.Dare {
                 }
             }
 
-
-
-        /// <summary>
-        /// Create a message header with a new key exchange
-        /// </summary>
-        /// <param name="CryptoStackEncoder">The cryptography parameters for encoding.</param>
-        /// <param name="ContentType">The payload content type.</param>
-        /// <param name="Cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
-        /// <param name="DataSequences">Data sequences to be converted to an EDS and presented 
-        ///     as an EDSS header entry.</param>
-        public DAREHeader(
-                    CryptoStack CryptoStackEncoder,
-                    string ContentType = null,
-                    byte[] Cloaked = null,
-                    List<byte[]> DataSequences = null
-                    ) {
-            
-            //SetRecipients(EncryptionKeys, EncryptID);
-            //SetSigners(SignerKeys, AuthenticateID);
-            SetEnhancedData(Cloaked, DataSequences);
-            this.ContentType = ContentType;
-
-            throw new NYI();
-            }
-
-
         /// <summary>
         /// Cryptographic parameters and stream generator for the header.
         /// </summary>
@@ -96,32 +66,38 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// Create a message header with a new key exchange
         /// </summary>
-        /// <param name="EncryptionKeys">The keys to be used to encrypt the message body.</param>
-        /// <param name="SignerKeys">The keys to be used to sign the message body.</param>
-        /// <param name="EncryptID">The bulk encryption algorithm to use.</param>
-        /// <param name="AuthenticateID">The bulk authentication algorithm to use. If the 
-        /// encryption algorithm is an authenticated encryption algorithm, and 
-        /// CryptoAlgorithmID.Default is specified, the value CryptoAlgorithmID.NULL
-        /// is used.</param>
+        /// <param name="CryptoStack">The cryptographic enhancements to apply.</param>
         /// <param name="ContentType">The payload content type.</param>
         /// <param name="Cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
         /// <param name="DataSequences">Data sequences to be converted to an EDS and presented 
         ///     as an EDSS header entry.</param>
-        public DAREHeader (
-                    List<KeyPair> EncryptionKeys = null,
-                    List<KeyPair> SignerKeys = null,
-                    CryptoAlgorithmID EncryptID = CryptoAlgorithmID.Default,
-                    CryptoAlgorithmID AuthenticateID = CryptoAlgorithmID.Default,
+        public DAREHeader(
+                    CryptoStack CryptoStack=null,
                     string ContentType = null,
                     byte[] Cloaked = null,
                     List<byte[]> DataSequences = null
                     ) {
-            //SetRecipients(EncryptionKeys, EncryptID);
-            //SetSigners(SignerKeys, AuthenticateID);
-            //SetEnhancedData(Cloaked, DataSequences);
-
             this.ContentType = ContentType;
-            CryptoStack = new CryptoStack(EncryptionKeys, SignerKeys, EncryptID, AuthenticateID);
+            ApplyCryptoStack(CryptoStack, Cloaked, DataSequences);
+            }
+
+        /// <summary>
+        /// Apply the specified cryptographic options.
+        /// </summary>
+        /// <param name="CryptoStack">The cryptographic enhancements to apply.</param>
+        /// <param name="Cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
+        /// <param name="DataSequences">Data sequences to be converted to an EDS and presented 
+        ///     as an EDSS header entry.</param>
+        public void ApplyCryptoStack(
+                    CryptoStack CryptoStack,
+                    byte[] Cloaked = null,
+                    List<byte[]> DataSequences = null) {
+            this.CryptoStack = CryptoStack;
+
+            if (CryptoStack == null) {
+                EncryptionAlgorithm = null;
+                return; // Hack no EDS on plaintext messages.
+                }
 
             Salt = CryptoStack.Salt;
             Recipients = CryptoStack.Recipients;
@@ -131,42 +107,11 @@ namespace Goedel.Cryptography.Dare {
                 this.Cloaked = CryptoStack.Encode(Cloaked, MakeSalt());
                 }
             if (DataSequences != null) {
-                this.EDSS = new List<byte[]>();
+                EDSS = new List<byte[]>();
                 foreach (var DataSequence in DataSequences) {
                     EDSS.Add(CryptoStack.Encode(DataSequence, MakeSalt()));
                     }
                 }
-            }
-
-
-
-
-        /// <summary>
-        /// Create a message header under a prior key exchange
-        /// </summary>
-        /// <param name="Master">Header instance defining the Master secret and associated context.</param>
-        /// <param name="SignerKeys"></param>
-        /// <param name="ContentType">The payload content type.</param>
-        /// <param name="AuthenticateID">The bulk authentication algorithm to use. If the 
-        /// encryption algorithm is an authenticated encryption algorithm, and 
-        /// CryptoAlgorithmID.Default is specified, the value CryptoAlgorithmID.NULL
-        /// is used.</param>
-        /// <param name="Cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
-        /// <param name="DataSequences">Data sequences to be converted to an EDS and presented 
-        ///     as an EDSS header entry.</param>
-        public DAREHeader (
-                    DAREHeader Master,
-                    List<KeyPair> SignerKeys = null,
-                    CryptoAlgorithmID AuthenticateID = CryptoAlgorithmID.Default,
-                    string ContentType = null,
-                    byte[] Cloaked = null,
-                    List<byte[]> DataSequences = null
-                    ) {
-
-            SetDefaultContext(Master);
-            SetSigners(SignerKeys, AuthenticateID);
-            SetEnhancedData(Cloaked, DataSequences);
-            this.ContentType = ContentType;
             }
 
         void KeyExchange (
@@ -178,8 +123,6 @@ namespace Goedel.Cryptography.Dare {
             foreach (var EncryptionKey in EncryptionKeys) {
                 Recipients.Add(new DARERecipient(MasterSecret, EncryptionKey));
                 }
-
-           
             }
 
         /// <summary>
@@ -194,96 +137,27 @@ namespace Goedel.Cryptography.Dare {
             }
 
         /// <summary>
-        /// Initialize the encryption context.
-        /// </summary>
-        /// <param name="EncryptionKeys">The keys to be used to encrypt the message body.</param>
-        /// <param name="EncryptID">The bulk encryption algorithm to use.</param>
-        public virtual void SetRecipients (
-            List<KeyPair> EncryptionKeys,
-            CryptoAlgorithmID EncryptID = CryptoAlgorithmID.Default) {
-            if (EncryptionKeys == null) {
-                return;
-                }
-
-            Salt = Platform.GetRandomBits(128);
-            EncryptID = EncryptID == CryptoAlgorithmID.Default ? CryptoAlgorithmID.AES256CBC : EncryptID;
-            EncryptionAlgorithm = EncryptID.ToJoseID();
-            ProviderEncryption = CryptoCatalog.Default.GetEncryption(EncryptID);
-            KeyExchange(EncryptionKeys);
-            SaltValue = 0;
-            }
-
-        /// <summary>
-        /// Initialize the signing context.
-        /// </summary>
-        /// <param name="SignerKeys">The keys to be used to sign the message body.</param>
-        /// <param name="AuthenticateID">The bulk authentication algorithm to use. If the 
-        /// encryption algorithm is an authenticated encryption algorithm, and 
-        /// CryptoAlgorithmID.Default is specified, the value CryptoAlgorithmID.NULL
-        /// is used.</param>
-        public virtual void SetSigners (
-                    List<KeyPair> SignerKeys = null,
-                    CryptoAlgorithmID AuthenticateID = CryptoAlgorithmID.Default) {
-            if (SignerKeys == null) {
-                return;
-                }
-            throw new NYI();
-            }
-
-        /// <summary>
-        /// Create encrypted header entries under the specified key.
-        /// </summary>
-        /// <param name="Cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
-        /// <param name="DataSequences">Data sequences to be converted to an EDS and presented 
-        ///     as an EDSS header entry.</param>
-        public void SetEnhancedData (
-                    byte[] Cloaked = null,
-                    List<byte[]> DataSequences = null) {
-
-            if (Cloaked != null) {
-                this.Cloaked = EnhanceSequence(Cloaked);
-                }
-            if (DataSequences != null) {
-                this.EDSS = new List<byte[]>();
-                foreach (var DataSequence in DataSequences) {
-                    EDSS.Add (EnhanceSequence(DataSequence));
-                    }
-                }
-
-            }
-
-
-        /// <summary>
         /// Construct a stream that will write the body data with whatever crypto stream
         /// modules are required.
         /// </summary>
         /// <param name="Output">The ultimate output stream.</param>
         /// <returns></returns>
         public Stream BodyWriter(Stream Output) {
-            if (!Encrypt) {
+            if (CryptoStack == null) {
                 return Output;
                 }
-
-            Stream Result = new CryptoStreamFix(Output);
-
-            // if (Digest)
-            // if (Package)
-            // if (MAC)
-
-            if (Encrypt) {
-                Result = EnhancedDataSequence.GetEncryptor(Result, ProviderEncryption, MasterSecret, Salt);
-                }
-            CurrentBodyWriter = Result;
-            return Result;
+            CurrentBodyWriter = CryptoStack.GetEncoder(Output, PackagingFormat.Direct);
+            return CurrentBodyWriter.Writer;
             }
 
-        Stream CurrentBodyWriter = null;
+        CryptoStackStreamWriter CurrentBodyWriter = null;
 
         /// <summary>
         /// Close the body writer stack and free all associated resources.
         /// </summary>
-        public void CloseBodyWriter() {
-            CurrentBodyWriter?.Close();
+        public void CloseBodyWriter(out DARETrailer DARETrailer) {
+            CurrentBodyWriter.Close();
+            DARETrailer = GetTrailer(CurrentBodyWriter);
             CurrentBodyWriter?.Dispose();
             CurrentBodyWriter = null;
             }
@@ -294,56 +168,8 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="Plaintext">The EDS plaintext.</param>
         /// <returns>The EDS</returns>
-        public byte[] EnhanceBody(byte[] Plaintext) => CryptoStack.Encode(Plaintext, 
-                    PackagingFormat:PackagingFormat.Direct);
-
-        //public byte[] EnhanceBody(byte[] Plaintext) => ProviderEncryption == null ? Plaintext :
-        //        EnhancedDataSequence.Encrypt(ProviderEncryption, MasterSecret,
-        //                Salt, Plaintext);
-
-
-        //Enhance(MasterSecret, Plaintext, Salt ?? MakeSalt(), ProviderEncryption,
-        //        BodyMode: true);
-
-        /// <summary>
-        /// Return a binary EDS sequence of the specified plaintext under this header. A
-        /// unique salt will be assigned.
-        /// </summary>
-        /// <param name="Plaintext">The EDS plaintext.</param>
-        /// <param name="Salt">The salt value to be used.</param>
-        /// <returns>The EDS</returns>
-        public byte[] EnhanceSequence(byte[] Plaintext, byte[] Salt = null) => ProviderEncryption == null ? Plaintext :
-                EnhancedDataSequence.Enhance(MasterSecret, Plaintext, Salt ?? MakeSalt(), ProviderEncryption,
-                    BodyMode: false);
-
-
-
-        ///// <summary>
-        ///// Return an EDSWriter to output the message body.
-        ///// </summary>
-        ///// <param name="OutputStream"></param>
-        ///// <param name="ContentLength"></param>
-        ///// <param name="Salt"></param>
-        ///// <returns></returns>
-        //public EnhancedDataSequenceWriter EnhancedDataSequenceWriter(
-        //            JSONWriter OutputStream,
-        //            long ContentLength = -1,
-        //            byte[] Salt = null) => MasterSecret == null ?
-        //        new EnhancedDataSequenceWriter(OutputStream, ContentLength: ContentLength) :
-        //        new EnhancedDataSequenceWriter(OutputStream, MasterSecret, ProviderEncryption,
-        //                Salt??MakeSalt(), ContentLength: ContentLength);
-
-
-        /// <summary>
-        /// Return an EDSWriter to output the message body.
-        /// </summary>
-        /// <param name="OutputStream"></param>
-        /// <param name="ContentLength"></param>
-        /// <returns></returns>
-        public EnhancedDataSequenceWriter EnhancedDataSequenceWriter(
-                    JBCDStream OutputStream,
-                    long ContentLength) => new EnhancedDataSequenceWriter(OutputStream, MasterSecret, ProviderEncryption,
-                        Salt);
+        public byte[] EnhanceBody(byte[] Plaintext, out DARETrailer DARETrailer) => 
+            CryptoStack.Encode(Plaintext, out DARETrailer, PackagingFormat:PackagingFormat.Direct);
 
 
         /// <summary>
@@ -364,6 +190,7 @@ namespace Goedel.Cryptography.Dare {
 
             Salt = SaltValue;
             Index = 0;
+            Result[Index++] = (byte)(Salt & 0xFF);
             while (Salt > 0xFF) {
                 Result[Index++] = (byte) (Salt & 0xFF);
                 Salt = Salt >> 8; 
@@ -373,6 +200,53 @@ namespace Goedel.Cryptography.Dare {
             }
 
         CryptoAlgorithmID EncryptId;
+
+
+
+        /// <summary>
+        /// Return a decoder for the specified data source.
+        /// </summary>
+        /// <param name="JBCDFrameReader">The data source.</param>
+        /// <param name="Reader">The stream to read the decoded data from.</param>
+        /// <param name="KeyCollection">Key collection to be used to resolve private
+        /// keys.</param>
+        /// <returns>The decoder. </returns>
+        public CryptoStackStream GetDecoder(
+                        Stream JBCDFrameReader,
+                        out Stream Reader,
+                       KeyCollection KeyCollection = null) {
+
+            var EncryptID = EncryptionAlgorithm.FromJoseID();
+
+            CryptoStack = new CryptoStack(EncryptID, CryptoAlgorithmID.NULL,
+                Recipients, Signatures, KeyCollection) {
+                Salt = Salt
+                };
+            return CryptoStack.GetDecoder(JBCDFrameReader, out Reader);
+
+            }
+
+        /// <summary>
+        /// Return a decoder for the specified data source.
+        /// </summary>
+        /// <param name="JSONBCDReader">The data source.</param>
+        /// <param name="Reader">The stream to read the decoded data from.</param>
+        /// <param name="KeyCollection">Key collection to be used to resolve private
+        /// keys.</param>
+        /// <returns>The decoder. </returns>
+        public CryptoStackStream GetDecoder(
+                        JSONBCDReader JSONBCDReader,
+                        out Stream Reader,
+                       KeyCollection KeyCollection = null) {
+
+            var EncryptID = EncryptionAlgorithm.FromJoseID();
+
+            CryptoStack = new CryptoStack(EncryptID, CryptoAlgorithmID.NULL,
+                Recipients, Signatures, KeyCollection) {
+                    Salt = Salt
+                    };
+            return CryptoStack.GetDecoder(JSONBCDReader, out Reader);
+            }
 
         /// <summary>
         /// Attempt decryption of the master key by matching a recipient entry to the 
@@ -387,61 +261,11 @@ namespace Goedel.Cryptography.Dare {
             }
 
         /// <summary>
-        /// Create a .NET CryptoStream for the specified parameters.
-        /// </summary>
-        /// <param name="Stream">The stream to bind.</param>
-        /// <param name="Salt">The salt value to be used to derrive the specififc parameters.
-        /// If null, the header salt is used.</param>
-        /// <param name="Write">If true, this is a write stream and the <paramref name="Stream"/> is 
-        /// only written to. Otherwise, it is a read stream and only read operations are
-        /// performed.</param>
-        /// <param name="Encrypt">If true, create an encryption stream, otherwise
-        /// create a decryption stream.</param>
-        /// <returns>The CryptoStream that was created.</returns>
-        public CryptoStream GetCryptoStream(
-                Stream Stream,
-            bool Write,
-            bool Encrypt,
-            byte[] Salt = null) => EnhancedDataSequence.GetCryptoStream(Stream, ProviderEncryption,
-                    MasterSecret, Salt ?? this.Salt, Write, Encrypt);
-
-
-
-        /// <summary>
-        /// Obtain an EDS reader for the current key information. 
-        /// </summary>
-        /// <param name="OutputStream">The output stream</param>
-        /// <param name="Salt">The salt value. If null, the first binary data item in the
-        /// stream is used as the salt.</param>
-        /// <param name="Write"></param>
-        /// <returns>The EDS reader.</returns>
-        public EnhancedDataSequenceReader GetReaderPipe(
-                Stream OutputStream, 
-                byte[] Salt,
-                bool Write=true) => 
-            new EnhancedDataSequenceReader(OutputStream, MasterSecret, ProviderEncryption,
-                Salt, Write);
-
-
-        /// <summary>
         /// Return the decrypted value of the specified EDSS header.
         /// </summary>
         /// <param name="i">Index of the EDSS entry to decrypt.</param>
         /// <returns>The decrypted data.</returns>
-        public byte[] DataSequence(int i) {
-            var Reader = new JSONBCDReader(EDSS[i]);
-            var EntrySalt = Salt.Concatenate(Reader.ReadBinary());
-            var Data = Reader.ReadBinary();
-
-            if (!Encrypt) {
-                return Data;
-                }
-            return Encrypt ? EnhancedDataSequence.Decrypt(ProviderEncryption, MasterSecret, Salt, Data) :
-                Data ;
-
-            }
-
-
+        public byte[] DataSequence(int i) => CryptoStack.Decode(EDSS[i]);
 
         }
 
@@ -476,6 +300,25 @@ namespace Goedel.Cryptography.Dare {
 
             throw new NoAvailableDecryptionKey();
             }
+        }
+
+    public partial class DARETrailer {
+
+        public DARETrailer() {
+            }
+
+        public static DARETrailer GetTrailer(CryptoStackStreamWriter Writer) {
+            DARETrailer Result = null;
+
+            if (Writer.DigestValue != null) {
+                Result = new DARETrailer() {
+                    PayloadDigest = Writer.DigestValue
+                    };
+                }
+            return Result;
+
+            }
+
         }
 
     }

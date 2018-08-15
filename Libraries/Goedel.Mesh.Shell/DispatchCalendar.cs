@@ -11,14 +11,18 @@ namespace Goedel.Mesh.Shell {
         CatalogCalendar CatalogCalendar => CatalogSession.CatalogCalendar;
 
         public void CalendarAdd(
-                string File) {
+                string ID) {
             Result Result = null;
 
-            // stuff
+            var EntryCalendar = new EntryCalendar() {
+                ID =ID
+                };
+
+            CatalogCalendar.Update(EntryCalendar);
 
             Result = new Result() {
                 Success = true,
-                Reason = "Created Device Profile"
+                Reason = "Added entry to calendar"
                 };
 
             ReportResult(Result);
@@ -29,29 +33,26 @@ namespace Goedel.Mesh.Shell {
                     ) {
             Result Result = null;
 
-            // stuff
+            CatalogCalendar.Delete(Identifier);
 
             Result = new Result() {
                 Success = true,
-                Reason = "Created Device Profile"
+                Reason = "Deleted entry from calendar"
                 };
 
             ReportResult(Result);
             }
 
-        public void CalendarDump() {
-            Result Result = null;
+        public ResultDump CalendarDump() {
 
-            // stuff
-
-            //Output.WriteLine(CalendarSession.CalendarCatalog.GetJson(true));
-
-            Result = new Result() {
+            var Result = new ResultDump() {
                 Success = true,
-                Reason = "Output bookmark data"
+                Reason = "Output calendar data",
+                Data = CatalogCalendar.GetJson(true)
                 };
 
             ReportResult(Result);
+            return Result;
             }
         }
     }

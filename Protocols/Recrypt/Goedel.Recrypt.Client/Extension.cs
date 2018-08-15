@@ -7,6 +7,7 @@ using Goedel.Mesh.Portal.Client;
 using Goedel.Cryptography.Dare;
 using Goedel.Recrypt;
 using Goedel.IO;
+using Goedel.Cryptography.Jose;
 
 namespace Goedel.Recrypt.Client {
 
@@ -104,7 +105,9 @@ namespace Goedel.Recrypt.Client {
         /// <returns>The reader instance</returns>
         public static FileContainerReader DecryptReader(
                 this SessionPersonal SessionPersonal,
-                string FileName) => new FileContainerReaderDecrypting(SessionPersonal, FileName);
+                string FileName,
+                KeyCollection KeyCollection=null) => throw new NYI();
+        //new FileContainerReaderDecrypting(SessionPersonal, FileName, KeyCollection);
 
         /// <summary>
         /// Return a FileContainerReader for the specified file with access to decryption keys 
@@ -115,7 +118,9 @@ namespace Goedel.Recrypt.Client {
         /// <returns>The reader instance</returns>
         public static FileContainerReader RecryptReader(
                 this SessionPersonal SessionPersonal,
-                string FileName) => new FileContainerReaderRecrypting(SessionPersonal, FileName);
+                string FileName,
+                KeyCollection KeyCollection = null) => throw new NYI();
+        //new FileContainerReaderRecrypting(SessionPersonal, FileName, KeyCollection);
 
         /// <summary>
         /// Return a FileContainerReader for the specified stream with access to decryption keys 

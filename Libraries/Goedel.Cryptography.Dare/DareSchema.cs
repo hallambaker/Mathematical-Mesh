@@ -238,6 +238,27 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
 
 		public virtual List<DARESignature>				Signatures  {get; set;}
+        /// <summary>
+        ///Contains a DAREHeader object 
+        /// </summary>
+
+		public virtual byte[]						SignedData  {get; set;}
+        /// <summary>
+        ///If present, contains the digest of the Payload.
+        /// </summary>
+
+		public virtual byte[]						PayloadDigest  {get; set;}
+        /// <summary>
+        ///If present, contains the digest of the PayloadDigest values of this
+        ///frame and the frame immediately preceding.
+        /// </summary>
+
+		public virtual byte[]						ChainDigest  {get; set;}
+        /// <summary>
+        ///If present, contains the Binary Merkle Tree digest value.
+        /// </summary>
+
+		public virtual byte[]						TreeDigest  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -297,6 +318,26 @@ namespace Goedel.Cryptography.Dare {
 				_Writer.WriteArrayEnd ();
 				}
 
+			if (SignedData != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("SignedData", 1);
+					_Writer.WriteBinary (SignedData);
+				}
+			if (PayloadDigest != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("PayloadDigest", 1);
+					_Writer.WriteBinary (PayloadDigest);
+				}
+			if (ChainDigest != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("ChainDigest", 1);
+					_Writer.WriteBinary (ChainDigest);
+				}
+			if (TreeDigest != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("TreeDigest", 1);
+					_Writer.WriteBinary (TreeDigest);
+				}
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
 				}
@@ -341,6 +382,22 @@ namespace Goedel.Cryptography.Dare {
 						Signatures.Add (_Item);
 						_Going = JSONReader.NextArray ();
 						}
+					break;
+					}
+				case "SignedData" : {
+					SignedData = JSONReader.ReadBinary ();
+					break;
+					}
+				case "PayloadDigest" : {
+					PayloadDigest = JSONReader.ReadBinary ();
+					break;
+					}
+				case "ChainDigest" : {
+					ChainDigest = JSONReader.ReadBinary ();
+					break;
+					}
+				case "TreeDigest" : {
+					TreeDigest = JSONReader.ReadBinary ();
 					break;
 					}
 				default : {
@@ -928,6 +985,11 @@ namespace Goedel.Cryptography.Dare {
 	/// </summary>
 	public partial class DARESignature : DARESigner {
         /// <summary>
+        ///The data description that was signed.
+        /// </summary>
+
+		public virtual byte[]						Manifest  {get; set;}
+        /// <summary>
         ///The signature value as an Enhanced Data Sequence under the message Master Key.
         /// </summary>
 
@@ -975,6 +1037,11 @@ namespace Goedel.Cryptography.Dare {
 				_Writer.WriteObjectStart ();
 				}
 			((DARESigner)this).SerializeX(_Writer, false, ref _first);
+			if (Manifest != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Manifest", 1);
+					_Writer.WriteBinary (Manifest);
+				}
 			if (SignatureValue != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("signature", 1);
@@ -1012,6 +1079,10 @@ namespace Goedel.Cryptography.Dare {
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
+				case "Manifest" : {
+					Manifest = JSONReader.ReadBinary ();
+					break;
+					}
 				case "signature" : {
 					SignatureValue = JSONReader.ReadBinary ();
 					break;

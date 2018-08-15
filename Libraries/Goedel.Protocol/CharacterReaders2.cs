@@ -187,6 +187,16 @@ namespace Goedel.Protocol {
         /// <returns>The binary data that was read.</returns>
         public abstract byte[] ReadBinary(int Length);
 
+
+        /// <summary>
+        /// Read a partial binary value.
+        /// </summary>
+        /// <param name="Buffer"></param>
+        /// <param name="offset"></param>
+        /// <param name="count"></param>
+        /// <returns></returns>
+        public abstract int ReadBinary(byte[] Buffer, int offset, int count);
+
         /// <summary>
         /// Get the next byte in the stream and advance the stream.
         /// </summary>
@@ -329,6 +339,16 @@ namespace Goedel.Protocol {
             return Result;
             }
 
+        /// <summary>
+        /// Read a partial binary value.
+        /// </summary>
+        /// <param name="Buffer">Buffer to write the data read to.</param>
+        /// <param name="offset">Byte offset from start of <paramref name="Buffer"/></param>
+        /// <param name="count">Number of bytes to be read.</param>
+        /// <returns>Number of bytes read or 0 if the end of the stream is reached.</returns>
+        public override int ReadBinary(byte[] Buffer, int offset, int count) => Input.Read(Buffer, offset, count);
+
+
 
 
 
@@ -454,6 +474,21 @@ namespace Goedel.Protocol {
             Position += Length;
 
             return Result;
+            }
+
+        /// <summary>
+        /// Read a partial binary value.
+        /// </summary>
+        /// <param name="Data">Buffer to write the data read to.</param>
+        /// <param name="offset">Byte offset from start of <paramref name="Data"/></param>
+        /// <param name="Length">Number of bytes to be read.</param>
+        /// <returns>Number of bytes read or 0 if the end of the stream is reached.</returns>
+        public override int ReadBinary(byte[] Data, int offset, int Length) {
+            Length = Math.Min(Length, Input.Length - Position);
+
+            Buffer.BlockCopy(Input, Position, Data, offset, Length);
+            Position += Length;
+            return Length;
             }
 
 

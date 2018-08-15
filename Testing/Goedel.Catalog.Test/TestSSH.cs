@@ -35,15 +35,15 @@ namespace Goedel.Catalog.Test {
             ShellDispatch ShellDispatch = new ShellDispatch(Catalog: Filename);
 
             ShellDispatch.SSHAddClient(SSH1.ID);
-            var Dump1 = ShellDispatch.BookmarkDump();
+            var Dump1 = ShellDispatch.SSHDump();
             TestDump(CatalogSSH1, Dump1.Data);
 
             ShellDispatch.SSHAddClient(SSH2.ID);
-            var Dump2 = ShellDispatch.BookmarkDump();
+            var Dump2 = ShellDispatch.SSHDump();
             TestDump(CatalogSSH2, Dump2.Data);
 
             ShellDispatch.SSHAddClient(SSH2.ID);
-            var Dump3 = ShellDispatch.BookmarkDump();
+            var Dump3 = ShellDispatch.SSHDump();
             TestDump(CatalogSSH3, Dump3.Data);
 
             }

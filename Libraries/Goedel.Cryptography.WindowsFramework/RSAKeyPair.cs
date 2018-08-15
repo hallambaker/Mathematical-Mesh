@@ -241,7 +241,7 @@ namespace Goedel.Cryptography.Windows {
         /// Generate an ephemeral RSA key with the specified key size.
         /// </summary>
         /// <param name="KeySize">Size of key in multiples of 64 bits.</param>
-        public KeyPairRSA(int KeySize)
+        public KeyPairRSA(int KeySize=2048)
             : this(KeySize, true) {
             }
 
@@ -346,6 +346,10 @@ namespace Goedel.Cryptography.Windows {
         /// <param name="PKIXParameters">The parameters to construct from</param>
         /// <returns>The created key pair</returns>
         public static new KeyPair KeyPairPrivateFactory (PKIXPrivateKeyRSA PKIXParameters) {
+
+            if (PKIXParameters == null) {
+                return new KeyPairRSA();
+                }
 
             var RSAParameters = PKIXParameters.RSAParameters();
             return new KeyPairRSA(RSAParameters);

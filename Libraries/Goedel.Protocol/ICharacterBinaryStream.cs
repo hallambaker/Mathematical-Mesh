@@ -69,6 +69,16 @@
         /// <param name="Length">The number of bytes to read.</param>
         /// <returns>The binary data that was read.</returns>
         byte[] ReadBinary(int Length);
+
+
+        /// <summary>
+        /// Read a partial binary value.
+        /// </summary>
+        /// <param name="Data">Buffer to write the data read to.</param>
+        /// <param name="Offset">Byte offset from start of <paramref name="Data"/></param>
+        /// <param name="Count">Number of bytes to be read.</param>
+        /// <returns>Number of bytes read or 0 if the end of the stream is reached.</returns>
+        int ReadBinary(byte[] Data, int Offset, int Count);
         }
 
 

@@ -215,6 +215,21 @@ namespace Goedel.Cryptography {
             return CachedSignatureProvider.Sign(Data);
             }
 
+        /// <summary>
+        /// Sign a precomputed digest
+        /// </summary>
+        /// <param name="Data">The data to sign.</param>
+        /// <param name="AlgorithmID">The algorithm to use.</param>
+        /// <returns>The signature data</returns>
+        public virtual byte[] SignHash(byte[] Data,
+                CryptoAlgorithmID AlgorithmID = CryptoAlgorithmID.Default) {
+
+            CachedSignatureProvider = CachedSignatureProvider ??
+                        SignatureProvider(AlgorithmID);
+
+            return CachedSignatureProvider.SignHash(Data, AlgorithmID);
+            }
+
 
         /// <summary>
         /// Perform a key exchange to encrypt a bulk or wrapped key under this one.
@@ -395,7 +410,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="Private">The private key parameters.</param>
         /// <returns>The created key pair.</returns>
-        public static KeyPair Create(PKIXPrivateKeyRSA Private) =>
+        public static KeyPair Create(PKIXPrivateKeyRSA Private=null) =>
             KeyPairPrivateFactory(Private);
 
         }

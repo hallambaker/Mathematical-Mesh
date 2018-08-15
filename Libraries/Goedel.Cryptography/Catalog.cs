@@ -141,7 +141,14 @@ namespace Goedel.Cryptography {
 
             }
 
+        public int ResultInBytes(CryptoAlgorithmID ID) {
+            var Found = Dictionary.TryGetValue(ID, out var Meta);
+            if (Found) {
+                return Meta.KeySize / 8;
+                }
+            return -1;
 
+            }
 
         /// <summary>
         /// Get a cryptographic provider by combined algorithm identifier

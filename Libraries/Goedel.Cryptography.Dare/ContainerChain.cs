@@ -37,6 +37,7 @@ namespace Goedel.Cryptography.Dare {
         /// <returns>The newly constructed container.</returns>
         public static new Container MakeNewContainer(
                         JBCDStream JBCDStream,
+                        CryptoParameters CryptoParameters,
                         ContainerType ContainerType = ContainerType.Chain,
                         CryptoAlgorithmID DigestAlgorithm = CryptoAlgorithmID.Default) {
 

@@ -6,15 +6,44 @@ using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
 using Goedel.Utilities;
 using Goedel.IO;
+using Goedel.Test;
 
 namespace Goedel.Cryptography.Dare.Test {
 
     [MT.TestClass]
     public partial class TestContainers {
-        [MT.ClassInitialize]
-        public static void Initialize(MT.TestContext Context) {
-            global::Goedel.IO.Debug.Initialize();
-            global::Goedel.Cryptography.Cryptography.Initialize();
+
+        static List<string> Signers = new List<string> { "Alice@example.com" };
+        static List<string> Recipients = new List<string> { "Alice@example.com" };
+
+        [MT.TestMethod]
+        public void ContainerTestEncrypted() {
+            var CryptoParameters = new CryptoParametersTest(
+                        Recipients: Recipients);
+
+            TestContainer($"ContainerList", ContainerType.List, 0, CryptoParameters: CryptoParameters);
+            TestContainer($"ContainerList", ContainerType.List, 1, CryptoParameters: CryptoParameters);
+            TestContainer($"ContainerList", ContainerType.List, 10, CryptoParameters: CryptoParameters);
+            }
+
+        [MT.TestMethod]
+        public void ContainerTestEncryptedItem() {
+            var CryptoParametersEntry = new CryptoParametersTest(
+                        Recipients: Recipients);
+
+            TestContainer($"ContainerList", ContainerType.List, 0, CryptoParametersEntry: CryptoParametersEntry);
+            TestContainer($"ContainerList", ContainerType.List, 1, CryptoParametersEntry: CryptoParametersEntry);
+            TestContainer($"ContainerList", ContainerType.List, 10, CryptoParametersEntry: CryptoParametersEntry);
+            }
+
+        [MT.TestMethod]
+        public void ContainerTestSigned() {
+            var CryptoParameters = new CryptoParametersTest(
+                        Signers: Signers);
+
+            TestContainer($"ContainerList", ContainerType.List, 0, CryptoParameters: CryptoParameters);
+            TestContainer($"ContainerList", ContainerType.List, 1, CryptoParameters: CryptoParameters);
+            TestContainer($"ContainerList", ContainerType.List, 10, CryptoParameters: CryptoParameters);
             }
 
         [MT.TestMethod]
@@ -56,32 +85,63 @@ namespace Goedel.Cryptography.Dare.Test {
 
         [MT.TestMethod]
         public void ContainerTest0() {
-            var n = 0;
-            TestContainer($"ContainerList-", ContainerType.List, n);
-            TestContainer($"ContainerDigest-", ContainerType.Digest, n);
-            TestContainer($"ContainerChain-", ContainerType.Chain, n);
-            TestContainer($"ContainerTree-", ContainerType.Tree, n);
-            TestContainer($"ContainerMerkle-", ContainerType.MerkleTree, n);
+            var Records = 0;
+            TestContainerMulti($"-{Records}", Records);
             }
 
         [MT.TestMethod]
         public void ContainerTest1() {
-            var n = 1;
-            TestContainer($"ContainerList-", ContainerType.List, n);
-            TestContainer($"ContainerDigest-", ContainerType.Digest, n);
-            TestContainer($"ContainerChain-", ContainerType.Chain, n);
-            TestContainer($"ContainerTree-", ContainerType.Tree, n);
-            TestContainer($"ContainerMerkle-", ContainerType.MerkleTree, n);
+            var Records = 1;
+            TestContainerMulti($"-{Records}", Records);
             }
 
         [MT.TestMethod]
         public void ContainerTest10() {
-            var n = 10;
-            TestContainer($"ContainerList-", ContainerType.List, n);
-            TestContainer($"ContainerDigest-", ContainerType.Digest, n);
-            TestContainer($"ContainerChain-", ContainerType.Chain, n);
-            TestContainer($"ContainerTree-", ContainerType.Tree, n);
-            TestContainer($"ContainerMerkle-", ContainerType.MerkleTree, n);
+            var Records = 10;
+            TestContainerMulti($"-{Records}", Records);
+            }
+
+
+        [MT.TestMethod]
+        public void ContainerTestEncryptedMulti() {
+            
+            var CryptoParameters = new CryptoParametersTest(
+                    Recipients: Recipients);
+
+            var Records = 0;
+            TestContainerMulti($"-Encrypted-{Records}", Records, CryptoParameters: CryptoParameters);
+            Records = 1;
+            TestContainerMulti($"-Encrypted-{Records}", Records, CryptoParameters: CryptoParameters);
+            Records = 10;
+            TestContainerMulti($"-Encrypted-{Records}", Records, CryptoParameters: CryptoParameters);
+            }
+
+        [MT.TestMethod]
+        public void ContainerTestEncryptedEntryMulti() {
+
+            var CryptoParameters = new CryptoParametersTest(
+                    Recipients: Recipients);
+
+            var Records = 0;
+            TestContainerMulti($"-Encrypted-item-{Records}", Records, CryptoParametersEntry: CryptoParameters);
+            Records = 1;
+            TestContainerMulti($"-Encrypted-item-{Records}", Records, CryptoParametersEntry: CryptoParameters);
+            Records = 10;
+            TestContainerMulti($"-Encrypted-item-{Records}", Records, CryptoParametersEntry: CryptoParameters);
+
+            }
+
+        [MT.TestMethod]
+        public void ContainerTestEncryptedSignedMulti() {
+            var CryptoParameters = new CryptoParametersTest(
+                    Recipients: Recipients, Signers: Signers);
+
+            var Records = 0;
+            TestContainerMulti($"-Encrypted-Signed-{Records}", Records, CryptoParametersEntry: CryptoParameters);
+            Records = 1;
+            TestContainerMulti($"-Encrypted-Signed-{Records}", Records, CryptoParametersEntry: CryptoParameters);
+            Records = 10;
+            TestContainerMulti($"-Encrypted-Signed-{Records}", Records, CryptoParametersEntry: CryptoParameters);
             }
 
 
@@ -90,15 +150,7 @@ namespace Goedel.Cryptography.Dare.Test {
             var Records = 100;
             var ReOpen = 13;
             var MoveStep = 27;
-            TestContainer($"ContainerList{Records}-{ReOpen}-{MoveStep}", ContainerType.List,
-                Records, ReOpen: ReOpen, MoveStep: MoveStep);
-            TestContainer($"ContainerDigest{Records}-{ReOpen}-{MoveStep}", ContainerType.Digest,
-                Records, ReOpen: ReOpen, MoveStep: MoveStep);
-            TestContainer($"ContainerChain{Records}-{ReOpen}-{MoveStep}", ContainerType.Chain,
-                Records, ReOpen: ReOpen, MoveStep: MoveStep);
-            TestContainer($"ContainerTree{Records}-{ReOpen}-{MoveStep}", ContainerType.Tree,
-                Records, ReOpen: ReOpen, MoveStep: MoveStep);
-            TestContainer($"ContainerMerkle{Records}-{ReOpen}-{MoveStep}", ContainerType.MerkleTree,
+            TestContainerMulti ($"-{Records}-{ReOpen}-{MoveStep}",
                 Records, ReOpen: ReOpen, MoveStep: MoveStep);
             }
 
@@ -114,10 +166,29 @@ namespace Goedel.Cryptography.Dare.Test {
 
             }
 
+        public void TestContainerMulti(string FileName,
+            int Records = 1, int MaxSize = 0, int ReOpen = 0, int MoveStep = 0,
+            CryptoParameters CryptoParameters = null,
+            CryptoParameters CryptoParametersEntry = null) {
 
+            TestContainer($"Container-List-{FileName}", ContainerType.List, Records, MaxSize, ReOpen, MoveStep,
+                CryptoParameters, CryptoParametersEntry);
+            TestContainer($"Container-Digest-{FileName}", ContainerType.Digest, Records, MaxSize, ReOpen, MoveStep,
+                CryptoParameters, CryptoParametersEntry);
+            TestContainer($"Container-Chain-{FileName}", ContainerType.Chain, Records, MaxSize, ReOpen, MoveStep,
+            CryptoParameters, CryptoParametersEntry);
+            TestContainer($"Container-Tree-{FileName}", ContainerType.Tree, Records, MaxSize, ReOpen, MoveStep,
+                CryptoParameters, CryptoParametersEntry);
+            TestContainer($"Container-MerkleTree-{FileName}", ContainerType.MerkleTree, Records, MaxSize, ReOpen, MoveStep,
+                CryptoParameters, CryptoParametersEntry);
+            }
 
         public void TestContainer(string FileName, ContainerType ContainerType,
-                    int Records = 1, int MaxSize = 0, int ReOpen = 0, int MoveStep = 0) {
+                    int Records = 1, int MaxSize = 0, int ReOpen = 0, int MoveStep = 0, 
+                    CryptoParameters CryptoParameters = null,
+                    CryptoParameters CryptoParametersEntry = null) {
+            CryptoParameters = CryptoParameters ?? new CryptoParameters();
+
             ReOpen = ReOpen == 0 ? Records : ReOpen;
             MaxSize = MaxSize == 0 ? Records + 1 : MaxSize;
 
@@ -126,65 +197,67 @@ namespace Goedel.Cryptography.Dare.Test {
             int Record;
 
             // Write initial set of records
-            using (var XContainer = global::Goedel.Cryptography.Dare.Container.NewContainer(FileName, FileStatus.Overwrite, ContainerType)) {
+            using (var XContainer = Container.NewContainer(
+                            FileName, FileStatus.Overwrite, ContainerType: ContainerType,
+                            CryptoParameters: CryptoParameters)) {
                 for (Record = 0; Record < ReOpen; Record++) {
                     var Test = MakeConstant("Test ", ((Record + 1) % MaxSize));
-                    XContainer.Append(Test);
+                    XContainer.Append(Test, CryptoParameters: CryptoParametersEntry);
                     }
                 }
 
             // Write additional records
             while (Record < Records) {
-                using (var XContainer = global::Goedel.Cryptography.Dare.Container.Open(FileName, FileStatus.Append)) {
+                using (var XContainer = Container.Open(FileName, FileStatus.Append,
+                            CryptoParameters: CryptoParameters)) {
                     for (var i = 0; (Record < Records) & i < ReOpen; i++) {
                         var Test = MakeConstant("Test ", ((Record + 1) % MaxSize));
-                        XContainer.Append(Test);
+                        XContainer.Append(Test, CryptoParameters: CryptoParametersEntry);
                         Record++;
                         }
                     }
                 }
 
-            //CheckContainer(FileName);
-
             var Headers = new List<ContainerHeader>();
-            using (var XContainer = global::Goedel.Cryptography.Dare.Container.Open(FileName, FileStatus.Read)) {
+            using (var XContainer = Container.Open(FileName, FileStatus.Read,
+                            CryptoParameters: CryptoParameters)) {
                 XContainer.VerifyContainer();
                 }
 
             // Read records 
-            using (var XContainer = global::Goedel.Cryptography.Dare.Container.Open(FileName, FileStatus.Read)) {
-                for (Record = 0; Record < Records; Record++) {
-                    var Test = MakeConstant("Test ", ((Record + 1) % MaxSize));
-                    var Result = XContainer.Next();
+            using (var XContainer = Container.Open(FileName, FileStatus.Read,
+                            CryptoParameters: CryptoParameters)) {
 
-                    Console.WriteLine("====");
-                    Console.WriteLine(XContainer.ContainerHeader.ToString());
-                    Headers.Add(XContainer.ContainerHeader);
-                    var FrameData = XContainer.ReadFrameData();
-                    Assert.True(Result);
-                    Assert.True(FrameData.IsEqualTo(Test));
+                Record = 0;
+                foreach (var ContainerDataReader in XContainer) {
+                    if (Record > 0) {
+                        var Test = MakeConstant("Test ", ((Record) % MaxSize));
+
+                        Headers.Add(ContainerDataReader.Header);
+                        var FrameData = ContainerDataReader.ToArray();
+
+                        Assert.True(FrameData.IsEqualTo(Test));
+                        }
                     }
-
-                var Last = XContainer.Next();
-                Assert.False(Last);
 
                 XContainer.CheckContainer(Headers);
                 }
 
             if (MoveStep > 0) {
-                using (var XContainer = global::Goedel.Cryptography.Dare.Container.Open(FileName, FileStatus.Read)) {
+                using (var XContainer = Container.Open(FileName, FileStatus.Read,
+                            CryptoParameters: CryptoParameters)) {
                     for (Record = MoveStep; Record < Records; Record+= MoveStep) {
 
-                        XContainer.Move(Record);
-                        Assert.True(XContainer.ContainerHeader.Index == Record);
-
+                        var ContainerDataReader = XContainer.GetFrameDataReader(Record);
+                        Assert.True(ContainerDataReader.Header.Index == Record);
                         }
 
                     }
                 }
 
             // check last record.
-            using (var XContainer = global::Goedel.Cryptography.Dare.Container.Open(FileName, FileStatus.Read)) {
+            using (var XContainer = Container.Open(FileName, FileStatus.Read,
+                            CryptoParameters: CryptoParameters)) {
                 var Last = XContainer.Last();
                 if (Records == 0) {
                     Assert.False(Last);
@@ -195,14 +268,7 @@ namespace Goedel.Cryptography.Dare.Test {
                     var FrameData = XContainer.ReadFrameData();
                     Assert.True(FrameData.IsEqualTo(Test));
                     }
-
-                
-                
                 }
-
-
             }
-        
-
         }
     }

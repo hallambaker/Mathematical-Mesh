@@ -7,6 +7,7 @@ using Goedel.Utilities;
 using Goedel.IO;
 using Goedel.Protocol;
 using Goedel.Persistence;
+using Goedel.Cryptography.Jose;
 
 namespace Goedel.Cryptography.Dare {
 
@@ -101,7 +102,7 @@ namespace Goedel.Cryptography.Dare {
             }
         #endregion
 
-        #region --- IEnumerable Implementation
+        #region --- IEnumerable Implementation - disabled
 
         //IEnumerator IEnumerable.GetEnumerator () {
         //    return (IEnumerator)GetEnumerator();
@@ -154,12 +155,14 @@ namespace Goedel.Cryptography.Dare {
 
         #endregion
 
-        
+
 
         /// <summary>
         /// Open or create a persistence store in specified mode with 
         /// the specified file name, content type and optional comment.
         /// </summary>
+        /// <param name="CryptoParameters">Specifies the cryptographic enhancements to
+        /// be applied to this message.</param>
         /// <param name="FileName">Log file.</param>
         /// <param name="ReadOnly">If true, persistence store must exist
         /// and will be opened in read-only mode. If false, persistence store
@@ -170,11 +173,14 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="ContainerType">The Container type.</param>
         /// <param name="DataEncoding">The data encoding.</param>
         /// <param name="FileStatus">The file status in which to open the container.</param>
+        /// <param name="KeyCollection">The key collection to use to resolve private keys.</param>
         public ContainerPersistenceStore (string FileName, string Type = null,
                     string Comment = null, bool ReadOnly = false,
                     FileStatus FileStatus = FileStatus.OpenOrCreate,
                     ContainerType ContainerType = ContainerType.Chain,
-                    DataEncoding DataEncoding = DataEncoding.JSON) : base() {
+                    DataEncoding DataEncoding = DataEncoding.JSON,
+                    CryptoParameters CryptoParameters = null,
+                    KeyCollection KeyCollection=null) : base() {
             ReadOnly = ReadOnly & (Type != null);
 
             // Attempt to open file.
@@ -182,10 +188,12 @@ namespace Goedel.Cryptography.Dare {
 
             // Create new container if empty or read the old one.
             if (JBCDStream.Length == 0) {
-                Container = Container.NewContainer(JBCDStream, ContainerType, ContentType: Type);
+                Container = Container.NewContainer(JBCDStream, CryptoParameters, 
+                    ContainerType, ContentType: Type);
                 }
             else {
-                Container = Container.OpenExisting(JBCDStream);
+                KeyCollection = KeyCollection ?? CryptoParameters?.KeyCollection;
+                Container = Container.OpenExisting(JBCDStream, KeyCollection);
                 ReadContainer(JBCDStream);
                 }
             }
@@ -194,12 +202,20 @@ namespace Goedel.Cryptography.Dare {
         /// Read a container from the first frame to the last.
         /// </summary>
         /// <param name="Stream">The stream to read</param>
-        void ReadContainer (JBCDStream Stream) {
+        void ReadContainer(JBCDStream Stream) {
 
-            for (var Found = Container.First(); Found; Found = Container.Next()) {
-                var Data = Container.ReadFrameData();
-                CommitTransaction(Container.ContainerHeader, Data);
+            foreach (var ContainerDataReader in Container) {
+                if (ContainerDataReader.HasPayload) {
+                    var Data = ContainerDataReader.ToArray();
+                    CommitTransaction(ContainerDataReader.Header, Data);
+                    // here check the trailer.
+                    }
                 }
+
+            //for (var Found = Container.First(); Found; Found = Container.Next()) {
+            //    var Data = Container.ReadFrameData();
+            //    CommitTransaction(Container.ContainerHeader, Data);
+            //    }
 
             }
 
