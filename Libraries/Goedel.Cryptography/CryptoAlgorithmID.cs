@@ -232,9 +232,15 @@ namespace Goedel.Cryptography {
         /// <summary>RSA Signature using PSS padding.</summary>
         RSASign_PSS = Signature + Meta,
 
+        /// <summary>Elliptic Curve DSA with curve 25519x</summary>
+        EdDSA = Signature + Meta * 8,
 
         /// <summary>Elliptic Curve DSA with curve 25519x</summary>
-        EDDSA = Signature + Meta * 8,
+        Ed25519 = EdDSA,
+
+        /// <summary>Elliptic Curve DSA with curve Ed448</summary>
+        Ed448 = EdDSA + Meta,
+
 
 
         /// <summary>RSA Signature using PKCS#1.5 padding and SHA-2 256 digest</summary>
@@ -258,11 +264,26 @@ namespace Goedel.Cryptography {
         /// <summary>RSA Encryption using PKCS#1.5 padding</summary>
         RSAExch_P15 = Exchange + Meta,
 
+        ///<summary>Diffie Hellman 2048 bit</summary>
+        DH = Exchange + Meta * 2,
+
+
         /// <summary>Elliptic Curve DH with curve P256</summary>
         ECDH = Exchange + Meta * 8,
 
-        ///<summary>Diffie Hellman 2048 bit</summary>
-        DH = Exchange + Meta * 16,
+        /// <summary>Elliptic Curve DH with curve X25519 (Montgomery)</summary>
+        X25519 = ECDH + Meta * 9,
+
+        /// <summary>Elliptic Curve DH with curve X448 (Montgomery)</summary>
+        X448 = ECDH + Meta * 10,
+
+        /// <summary>Elliptic Curve DH with curve Ed25519 (Edwards)</summary>
+        XEd25519 = ECDH + Meta * 11,
+
+        /// <summary>Elliptic Curve DH with curve Ed448 (Edwards)</summary>
+        XEd448 = ECDH + Meta * 12,
+
+
 
 
 

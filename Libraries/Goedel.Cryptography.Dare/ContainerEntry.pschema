@@ -15,6 +15,12 @@
 		Description
 			|TBS stuff
 
+	Structure ContainerEntry
+		Inherits ContainerHeader
+		Binary Body
+			Description
+				|The container data.
+
 	Structure ContainerHeaderFirst
 		Inherits ContainerHeader
 		String DataEncoding
@@ -22,11 +28,7 @@
 				|Specifies the data encoding for the header section of for the following frames.
 				|This value is ONLY valid in Frame 0 which MUST have a header encoded in JSON.
 
-	Structure ContainerEntry
-		Inherits ContainerHeader
-		Binary Body
-			Description
-				|The container data.
+
 
 
 

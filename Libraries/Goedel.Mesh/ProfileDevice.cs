@@ -24,8 +24,9 @@ using System;
 using System.Collections.Generic;
 using Goedel.Protocol;
 using Goedel.Cryptography;
+using Goedel.Utilities;
 using Goedel.Cryptography.Jose;
-using Goedel.Cryptography.PKIX;
+using Goedel.Cryptography.Dare;
 
 namespace Goedel.Mesh {
 
@@ -105,6 +106,10 @@ namespace Goedel.Mesh {
         /// <returns>The encryption object.</returns>
         public JoseWebEncryption Encrypt(JSONObject Object) => new JoseWebEncryption(
                     Object, EncryptionKey: DeviceEncryptiontionKey.KeyPair);
+
+
+
+        public DAREMessage DareEncrypt(JSONObject Object) => throw new NYI();
 
         }
     }

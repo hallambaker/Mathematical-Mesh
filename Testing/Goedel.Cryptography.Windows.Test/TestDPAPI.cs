@@ -15,9 +15,9 @@ namespace UnitTestProject1 {
 
             var TestData = TestVector.FillCount(42);
 
-            var Cipher = DPAPI.Encrypt(TestData);
+            var Cipher = NativeMethods .Encrypt(TestData);
 
-            var Recovered = DPAPI.Decrypt(Cipher, out var Description);
+            var Recovered = NativeMethods .Decrypt(Cipher, out var Description);
 
             UT.Assert.IsTrue(Recovered.IsEqualTo(TestData));
 
@@ -31,9 +31,9 @@ namespace UnitTestProject1 {
 
             var TestData = TestVector.FillCount(42);
 
-            var Cipher = DPAPI.Encrypt(TestData, Description:Description);
+            var Cipher = NativeMethods .Encrypt(TestData, Description:Description);
 
-            var Recovered = DPAPI.Decrypt(Cipher, out var DescriptionOut);
+            var Recovered = NativeMethods .Decrypt(Cipher, out var DescriptionOut);
 
             UT.Assert.IsTrue(Recovered.IsEqualTo(TestData));
             UT.Assert.IsTrue(Description == DescriptionOut);
@@ -47,9 +47,9 @@ namespace UnitTestProject1 {
             var TestData = TestVector.FillCount(42);
             var Entropy = TestVector.FillCount(32,45);
 
-            var Cipher = DPAPI.Encrypt(TestData, Description: Description, EntropyBytes:Entropy);
+            var Cipher = NativeMethods .Encrypt(TestData, Description: Description, EntropyBytes:Entropy);
 
-            var Recovered = DPAPI.Decrypt(Cipher, out var DescriptionOut, EntropyBytes: Entropy);
+            var Recovered = NativeMethods .Decrypt(Cipher, out var DescriptionOut, EntropyBytes: Entropy);
 
             UT.Assert.IsTrue(Recovered.IsEqualTo(TestData));
             UT.Assert.IsTrue(Description == DescriptionOut);
@@ -64,10 +64,10 @@ namespace UnitTestProject1 {
             var TestData = TestVector.FillCount(42);
             var Entropy = TestVector.FillCount(32, 45);
 
-            var Cipher = DPAPI.Encrypt(TestData, Description: Description, EntropyBytes: Entropy);
+            var Cipher = NativeMethods .Encrypt(TestData, Description: Description, EntropyBytes: Entropy);
 
             Entropy[0] = Entropy[1]; // Cause error
-            var Recovered = DPAPI.Decrypt(Cipher, out var DescriptionOut, EntropyBytes: Entropy);
+            var Recovered = NativeMethods .Decrypt(Cipher, out var DescriptionOut, EntropyBytes: Entropy);
             }
 
 

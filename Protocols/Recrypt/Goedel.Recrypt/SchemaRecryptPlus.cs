@@ -95,23 +95,25 @@ namespace Goedel.Recrypt {
         /// </summary>
         /// <param name="Request">The request object</param>
         /// <returns>The response object</returns>
-        public RecryptDataResponse RecryptData (RecryptDataRequest Request) {
+        public RecryptDataResponse RecryptData(RecryptDataRequest Request) => throw new NYI();
+            
+            //{
 
-            var EphemeralKey = Request.EphemeralKey.GetKeyPair() ;
-            var RecryptKey = RecryptionKey.GetKeyPair();
+            //var EphemeralKey = Request.EphemeralKey.GetKeyPair() ;
+            //var RecryptKey = RecryptionKey.GetKeyPair();
 
 
-            var Agreement = RecryptKey.Agreement(EphemeralKey);
+            //var Agreement = RecryptKey.Agreement(EphemeralKey);
 
-            var Result = KeyAgreement.Factory(Agreement);
+            //var Result = KeyAgreement.Factory(Agreement);
 
-            var RecryptDataResponse = new RecryptDataResponse() {
-                Partial = Result.GetJson(),
-                DecryptionKey = DecryptionKey
-                };
+            //var RecryptDataResponse = new RecryptDataResponse() {
+            //    Partial = Result.GetJson(),
+            //    DecryptionKey = DecryptionKey
+            //    };
 
-            return RecryptDataResponse;
-            }
+            //return RecryptDataResponse;
+            //}
 
 
         }

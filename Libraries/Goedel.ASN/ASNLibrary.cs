@@ -101,6 +101,36 @@ namespace Goedel.ASN {
         }
 
     /// <summary>
+    /// ANS.1 presentation class consisting of a single byte array with no
+    /// sequence boundaries.
+    /// </summary>
+    public class ByteArrayVerbatim : Root {
+
+        /// <summary>
+        /// ASN.1 member Data 
+        /// </summary>
+        public byte[] Data;
+
+
+        /// <summary>
+        /// Write this structure to a buffer.
+        /// </summary>
+        /// <param name="Buffer">Buffer to write to.</param>
+        public override void Encode(Goedel.ASN.Buffer Buffer) => Buffer.Encode__Octets(Data, 0, -1);
+
+
+        /// <summary>
+        /// Decode buffer to populate class members
+        ///
+        /// This is done in the forward direction
+        /// </summary>
+        /// <param name="Buffer">The source buffer</param>
+        public void Decode(global::Goedel.ASN.DecodeBuffer Buffer) =>
+            Data = Buffer.Decode__Octets(0, -1);
+        }
+
+
+    /// <summary>
     /// Utility class containing static methods.
     /// </summary>
     public static class ASN {

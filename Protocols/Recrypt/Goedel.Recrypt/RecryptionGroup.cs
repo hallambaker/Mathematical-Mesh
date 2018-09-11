@@ -114,9 +114,13 @@ namespace Goedel.Recrypt {
         /// <param name="EncryptKey">The member's encryption key</param>
         /// <returns>The user decryption data</returns>
         public UserDecryptionEntry MakeUserDecryptionEntry (KeyPair GroupPrivate, PublicKey EncryptKey) {
-            var RecryptionProvider = new CryptoProviderExchangeDH(GroupPrivate);
 
-            RecryptionProvider.GenerateRecryptionPair(out var Recryption, out var Completion);
+
+
+            //var RecryptionProvider = new CryptoProviderExchangeDH(GroupPrivate);
+
+            var GroupPrivateRecrypt = GroupPrivate as KeyPairAdvanced;
+            GroupPrivateRecrypt.GenerateRecryptionPair(out var Recryption, out var Completion);
             var RecryptionKey = Key.FactoryPrivate(Recryption);
             var CompletionKey = Key.FactoryPrivate(Completion);
 

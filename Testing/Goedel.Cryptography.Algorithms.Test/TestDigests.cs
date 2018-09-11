@@ -7,7 +7,7 @@ using Goedel.Utilities;
 using Goedel.Test;
 using Goedel.Cryptography;
 
-namespace Test.Cryptography.Algorithms {
+namespace Cryptography.Algorithms.Test {
     [TestClass]
     public class TestDigests {
 

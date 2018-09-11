@@ -6,11 +6,13 @@ using Goedel.Utilities;
 
 namespace Goedel.Cryptography.Windows {
 
+#pragma warning disable IDE1006  // Ignore naming convention warnings 
+
     /// <summary>
     /// Provide access to the Windows Data Protection API. This binds data to the user's
     /// public key so that th user's password is required to unlock it.
     /// </summary>
-    public class DPAPI {
+    public class NativeMethods  {
 
         // Wrapper for DPAPI CryptProtectData function.
         [DllImport("crypt32.dll", SetLastError = true, CharSet = CharSet.Auto)]
@@ -224,5 +226,5 @@ namespace Goedel.Cryptography.Windows {
                 }
             }
         }
-
+#pragma warning restore IDE1006
     }

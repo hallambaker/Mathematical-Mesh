@@ -19,7 +19,8 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 //  
-//  
+//  #% var InheritsOverride = "override"; // "virtual"
+
 using System;
 using System.IO;
 using System.Collections;
@@ -422,10 +423,11 @@ namespace Goedel.Cryptography.Dare {
 
 		public virtual string						EncryptionAlgorithm  {get; set;}
         /// <summary>
-        ///Message Authentication Code algorithm
+        ///Digest Algorithm. If specified, tells decoder that the digest algorithm is used to
+        ///construct a signature over the message payload.
         /// </summary>
 
-		public virtual string						AuthenticationAlgorithm  {get; set;}
+		public virtual string						DigestAlgorithm  {get; set;}
         /// <summary>
         ///Salt value used to derrive cryptographic parameters for the content data.
         /// </summary>
@@ -457,7 +459,7 @@ namespace Goedel.Cryptography.Dare {
 
 		public virtual string						ContentType  {get; set;}
         /// <summary>
-        ///If present, the Encrypted Data Segments field contains a sequence of Encrypted Data 
+        ///If present, the Annotations field contains a sequence of Encrypted Data 
         ///Segments encrypted under the message Master Key. The interpretation of these fields 
         ///is application specific.
         /// </summary>
@@ -521,10 +523,10 @@ namespace Goedel.Cryptography.Dare {
 				_Writer.WriteToken ("enc", 1);
 					_Writer.WriteString (EncryptionAlgorithm);
 				}
-			if (AuthenticationAlgorithm != null) {
+			if (DigestAlgorithm != null) {
 				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("mac", 1);
-					_Writer.WriteString (AuthenticationAlgorithm);
+				_Writer.WriteToken ("dig", 1);
+					_Writer.WriteString (DigestAlgorithm);
 				}
 			if (Salt != null) {
 				_Writer.WriteObjectSeparator (ref _first);
@@ -548,7 +550,7 @@ namespace Goedel.Cryptography.Dare {
 				}
 			if (EDSS != null) {
 				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("edss", 1);
+				_Writer.WriteToken ("Annotations", 1);
 				_Writer.WriteArrayStart ();
 				bool _firstarray = true;
 				foreach (var _index in EDSS) {
@@ -628,8 +630,8 @@ namespace Goedel.Cryptography.Dare {
 					EncryptionAlgorithm = JSONReader.ReadString ();
 					break;
 					}
-				case "mac" : {
-					AuthenticationAlgorithm = JSONReader.ReadString ();
+				case "dig" : {
+					DigestAlgorithm = JSONReader.ReadString ();
 					break;
 					}
 				case "Salt" : {
@@ -648,7 +650,7 @@ namespace Goedel.Cryptography.Dare {
 					ContentType = JSONReader.ReadString ();
 					break;
 					}
-				case "edss" : {
+				case "Annotations" : {
 					// Have a sequence of values
 					bool _Going = JSONReader.StartArray ();
 					EDSS = new List <byte[]> ();
@@ -994,6 +996,13 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
 
 		public virtual byte[]						SignatureValue  {get; set;}
+        /// <summary>
+        ///The signature witness value used on an encrypted message to demonstrate that 
+        ///the signature was authorized by a party with actual knowledge of the encryption 
+        ///key used to encrypt the message.
+        /// </summary>
+
+		public virtual byte[]						WitnessValue  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -1047,6 +1056,11 @@ namespace Goedel.Cryptography.Dare {
 				_Writer.WriteToken ("signature", 1);
 					_Writer.WriteBinary (SignatureValue);
 				}
+			if (WitnessValue != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("witness", 1);
+					_Writer.WriteBinary (WitnessValue);
+				}
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
 				}
@@ -1085,6 +1099,10 @@ namespace Goedel.Cryptography.Dare {
 					}
 				case "signature" : {
 					SignatureValue = JSONReader.ReadBinary ();
+					break;
+					}
+				case "witness" : {
+					WitnessValue = JSONReader.ReadBinary ();
 					break;
 					}
 				default : {

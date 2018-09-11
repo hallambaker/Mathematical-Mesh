@@ -1,8 +1,7 @@
 
 # Supplemental Makefile for Visual Studios Projects
 #
-# Visual Studio is responsible for managing rules for production of
-# code but does not provide support for pre and post build actions.
+# Visual Studio runs tools for most projects but not for shared projects.
 # 
 # Prebuild items supported:
 #   [None currently]
@@ -21,9 +20,8 @@ MSBuildThisFileDirectory =
 LinkFiles = \
     Goedel.Utilities.dll\
     Goedel.Cryptography.Jose.dll\
-    Goedel.Cryptography.Windows.dll\
+    Goedel.Cryptography.WindowsFramework.dll\
     Goedel.Cryptography.dll\
-    Goedel.Mesh.Platform.Windows.dll\
     Goedel.Mesh.dll\
     Goedel.Protocol.dll\
     Goedel.Test.dll\
@@ -40,7 +38,7 @@ prebuildRecurse :
 
 postbuildRecurse :
 
-
+# Non shared project, nothing to do
 prebuild : prebuildRecurse $(ToolTargets)
 
 postbuild : postbuildRecurse

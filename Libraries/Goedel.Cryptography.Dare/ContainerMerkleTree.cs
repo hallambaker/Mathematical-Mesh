@@ -29,34 +29,35 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="JBCDStream">The underlying JBCDStream stream. This MUST be opened
         /// in a read access mode and should have exclusive read access. All existing
         /// content in the file will be overwritten.</param>
-        /// <param name="ContainerType">The container type. This determines whether
-        /// a tree index is to be created or not and if so, whether </param>
-        /// <param name="DigestAlgorithm">The digest algorithm to be used to calculate the PayloadDigest</param>
         /// <returns>The newly constructed container.</returns>
 
         public static new Container MakeNewContainer(
-                        JBCDStream JBCDStream,
-                        CryptoParameters CryptoParameters,
-                        ContainerType ContainerType = ContainerType.Chain,
-                        CryptoAlgorithmID DigestAlgorithm = CryptoAlgorithmID.Default) {
+                        JBCDStream JBCDStream) {
 
             var ContainerHeader = new ContainerHeaderFirst() {
                 ContainerType = Label,
                 Index = 0
                 };
 
-            CryptoProviderDigest DigestProvider = CryptoCatalog.Default.GetDigest(DigestAlgorithm);
-
-            Assert.True(ContainerType == ContainerType.MerkleTree, InvalidContainerTypeException.Throw);
-
             var Container = new ContainerMerkleTree() {
                 JBCDStream = JBCDStream,
-                DigestProvider = DigestProvider,
                 ContainerHeaderFirst = ContainerHeader
                 };
 
 
             return Container;
+            }
+
+        /// <summary>
+        /// Create a set of master keys and other cryptographic parameters from the
+        /// specified profile.
+        /// </summary>
+        /// <param name="CryptoParameters">The cryptographic algorithms to use</param>
+        /// <returns>The master parameters.</returns>
+        protected override CryptoStack GetCryptoStack(CryptoParameters CryptoParameters) {
+            var Result = CryptoParameters.GetCryptoStack();
+            Result.Digest = true;
+            return Result;
             }
 
         readonly static byte[] EmptyBytes = new byte[0];
@@ -77,25 +78,31 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         public Dictionary<long, byte[]> FrameDigestDictionary = new Dictionary<long, byte[]>();
 
+
         /// <summary>
-        /// Append the header to the frame. This is called after the payload data
-        /// has been passed using AppendPreprocess.
+        /// Pre-populate the dummy trailer so as to allow the length to be calculated.
         /// </summary>
-        public override void AppendHeader() {
-            if (DigestEncoder != null & AppendContainerHeader.PayloadDigest == null) {
-                DigestEncoder.Complete();
-                var PayloadDigest = DigestEncoder.Integrity;
-                AppendContainerHeader.PayloadDigest = PayloadDigest;
-                if (FrameCount > 0) {
-                    AppendContainerHeader.TreeDigest = GetTreeDigest(FrameCount, PayloadDigest);
-                    }
-                else {
-                    AppendContainerHeader.TreeDigest = CombineDigest(null, PayloadDigest);
-                    }
-                }
-            base.AppendHeader();
+        /// <returns>The dummy trailer.</returns>
+        public override DARETrailer GetDummyTrailer() {
+
+            var Trailer = CryptoStack.GetDummyTrailer();
+            Trailer.TreeDigest = Trailer.PayloadDigest;
+
+            return Trailer;
             }
 
+        /// <summary>
+        /// The dummy trailer to add to the end of the frame.
+        /// </summary>
+        /// <returns></returns>
+        public override void MakeTrailer(ref DARETrailer Trailer) {
+            if (FrameCount > 0) {
+                Trailer.TreeDigest = GetTreeDigest(FrameCount, Trailer.PayloadDigest);
+                }
+            else {
+                Trailer.TreeDigest = CryptoStack.CombineDigest(null, Trailer.PayloadDigest);
+                }
+            }
 
 
         /// <summary>
@@ -118,7 +125,7 @@ namespace Goedel.Cryptography.Dare {
                 d = d * 2;
                 x2 = x2 / 2;
                 }
-            return CombineDigest(null, ContentDigest);
+            return CryptoStack.CombineDigest(null, ContentDigest);
             }
 
         /// <summary>
@@ -129,7 +136,7 @@ namespace Goedel.Cryptography.Dare {
         /// <returns>The calculated digest.</returns>
         public byte[] DigestFrame (long Frame, byte[] Right) {
             var Left = GetFrameDigest(Frame);
-            return CombineDigest(Left, Right);
+            return CryptoStack.CombineDigest(Left, Right);
             }
 
 

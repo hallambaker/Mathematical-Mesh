@@ -26,11 +26,11 @@ namespace Goedel.Test {
         protected override void AddEncrypt(string AccountId) => AddEncrypt(AccountId, true);
 
         public void AddEncrypt(string AccountId, bool Register = true) {
-
+            EncryptionKeys = EncryptionKeys ?? new List<KeyPair>();
 
             var Keypair = new KeyPairDH();
-            var Public = Keypair.PKIXPublicKeyDH;
-            var PublicKeyKeypair = KeyPairDH.KeyPairPublicFactory(Public);
+            var Pub = Keypair.KeyPairPublic();
+            var PublicKeyKeypair = Keypair.KeyPairPublic();
             EncryptionKeys.Add(PublicKeyKeypair);
 
             Console.WriteLine($"Keypair is {Keypair.UDF}");
@@ -45,7 +45,7 @@ namespace Goedel.Test {
 
         protected override void AddSign(string AccountId) => AddSign(AccountId, true);
         public void AddSign(string AccountId, bool Register) {
-
+            SignerKeys = SignerKeys ?? new List<KeyPair>();
 
             var Keypair = KeyPairBaseRSA.Create() as KeyPairBaseRSA;
             var Public = Keypair.PKIXPublicKeyRSA;
@@ -102,11 +102,11 @@ namespace Goedel.Test {
     public static class Crypto {
 
         static int IDCount = 0;
-        public static string MakeUnique (this string Base) {
+        public static string MakeUnique(this string Base) {
             var Count = Interlocked.Increment(ref IDCount);
             var Split = Base.Split('@');
 
-            return Split[0] + "_" + Count.ToString() + "@" + Split [1];
+            return Split[0] + "_" + Count.ToString() + "@" + Split[1];
             }
 
 
@@ -119,6 +119,10 @@ namespace Goedel.Test {
             var Encrypter = KeyPair.ExchangeProvider();
             Encrypter.Test_EncryptDecrypt(Test);
             }
+
+
+
+
 
         public static void Test_EncryptDecrypt(this CryptoProviderExchange Encrypter, string Test = TestString) {
             var Result = Encrypter.Encrypt(Test);
@@ -146,14 +150,18 @@ namespace Goedel.Test {
 
             UT.Assert.IsTrue(Expected == Plaintext.ToUTF8());
             }
+        public static void Test_Lifecycle(this CryptoAlgorithmID CryptoAlgorithmID, int KeySize = 2048) {
+            Test_LifecycleMaster(CryptoAlgorithmID, KeySize);
+            Test_LifecycleAdmin(CryptoAlgorithmID, KeySize);
+            Test_LifecycleDevice(CryptoAlgorithmID, KeySize);
+            Test_LifecycleEphemeral(CryptoAlgorithmID, KeySize);
+            Test_LifecycleExportable(CryptoAlgorithmID, KeySize);
+            }
 
 
 
-
-
-        public static void Test_LifecycleMaster(this CryptoAlgorithmID CryptoAlgorithmID) {
-            var Encrypter = CryptoCatalog.Default.GetExchange(CryptoAlgorithmID);
-            Encrypter.Generate(KeySecurity.Master, KeySize: 2048);
+        public static void Test_LifecycleMaster(this CryptoAlgorithmID CryptoAlgorithmID, int KeySize = 2048) {
+            var Encrypter = KeyPair.Factory(CryptoAlgorithmID, KeySecurity.Master, KeySize);
             Encrypter.Test_EncryptDecrypt();
             var UDF = Encrypter.UDF;
 
@@ -163,9 +171,8 @@ namespace Goedel.Test {
 
             }
 
-        public static void Test_LifecycleAdmin(this CryptoAlgorithmID CryptoAlgorithmID) {
-            var Encrypter = CryptoCatalog.Default.GetExchange(CryptoAlgorithmID);
-            Encrypter.Generate(KeySecurity.Admin, KeySize: 2048);
+        public static void Test_LifecycleAdmin(this CryptoAlgorithmID CryptoAlgorithmID, int KeySize = 2048) {
+            var Encrypter = KeyPair.Factory(CryptoAlgorithmID, KeySecurity.Admin, KeySize);
             Encrypter.Test_EncryptDecrypt();
             var UDF = Encrypter.UDF;
 
@@ -175,9 +182,8 @@ namespace Goedel.Test {
 
 
 
-        public static void Test_LifecycleDevice(this CryptoAlgorithmID CryptoAlgorithmID) {
-            var Encrypter = CryptoCatalog.Default.GetExchange(CryptoAlgorithmID);
-            Encrypter.Generate(KeySecurity.Device, KeySize: 2048);
+        public static void Test_LifecycleDevice(this CryptoAlgorithmID CryptoAlgorithmID, int KeySize = 2048) {
+            var Encrypter = KeyPair.Factory(CryptoAlgorithmID, KeySecurity.Device, KeySize);
             Encrypter.Test_EncryptDecrypt();
             var UDF = Encrypter.UDF;
 
@@ -189,9 +195,8 @@ namespace Goedel.Test {
         /// <summary>Test for lifecycle of ephemeral key. Key can be created and used but FindLocal
         /// fails as the key is never written to the local store</summary>
         /// <param name="CryptoAlgorithmID"></param>
-        public static void Test_LifecycleEphemeral(this CryptoAlgorithmID CryptoAlgorithmID) {
-            var Encrypter = CryptoCatalog.Default.GetExchange(CryptoAlgorithmID);
-            Encrypter.Generate(KeySecurity.Ephemeral, KeySize: 2048);
+        public static void Test_LifecycleEphemeral(this CryptoAlgorithmID CryptoAlgorithmID, int KeySize = 2048) {
+            var Encrypter = KeyPair.Factory(CryptoAlgorithmID, KeySecurity.Ephemeral, KeySize);
             Encrypter.Test_EncryptDecrypt();
             var UDF = Encrypter.UDF;
 
@@ -199,7 +204,7 @@ namespace Goedel.Test {
 
             IPKIXPrivateKey Private = null;
             try {
-                Private = Encrypter.KeyPair.PKIXPrivateKey;
+                Private = Encrypter.PKIXPrivateKey;
                 UT.Assert.Fail();
                 }
             catch (NotExportable) {
@@ -212,14 +217,19 @@ namespace Goedel.Test {
         /// <summary>Test for lifecycle of ephemeral key. Key can be created and used but FindLocal
         /// fails as the key is never written to the local store</summary>
         /// <param name="CryptoAlgorithmID"></param>
-        public static void Test_LifecycleExportable(this CryptoAlgorithmID CryptoAlgorithmID) {
-            var Encrypter = CryptoCatalog.Default.GetExchange(CryptoAlgorithmID);
-            Encrypter.Generate(KeySecurity.Exportable, KeySize: 2048);
+        public static void Test_LifecycleExportable(this CryptoAlgorithmID CryptoAlgorithmID, int KeySize=2048) {
+            //var Encrypter = CryptoCatalog.Default.GetExchange(CryptoAlgorithmID);
+            //Encrypter.Generate(KeySecurity.Exportable, KeySize: 2048);
+
+
+            var Encrypter = KeyPair.Factory(CryptoAlgorithmID, KeySecurity.Exportable, KeySize);
+
+
             Encrypter.Test_EncryptDecrypt();
             var UDF = Encrypter.UDF;
 
             CheckPersisted(UDF, false);
-            var Private = Encrypter.KeyPair.PKIXPrivateKey;
+            var Private = Encrypter.PKIXPrivateKey;
             UT.Assert.IsNotNull(Private);
             }
 

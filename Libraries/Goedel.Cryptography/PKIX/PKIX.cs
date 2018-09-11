@@ -1413,6 +1413,64 @@ namespace Goedel.Cryptography.PKIX {
 
 
 		}
+    /// <summary>
+    /// id_crfg_curve_algs =  iso(1)  identified_organization(3)  Thawte(101) 
+    /// </summary>
+	public partial class Constants {
+		/// <summary>
+		/// id_crfg_curve_algs as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_crfg_curve_algs = new int [] { 1, 3, 101};
+		/// <summary>
+		/// id_crfg_curve_algs as string
+		/// </summary>
+		public const string OIDS__id_crfg_curve_algs = "1.3.101";
+
+
+		/// <summary>
+		/// id_X25519 = id_crfg_curve_algs (110) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_X25519 = new int [] { 1, 3, 101, 110};
+		/// <summary>
+		/// id_X25519 = id_crfg_curve_algs (110) as string
+		/// </summary>
+		public const string OIDS__id_X25519 = "1.3.101.110";
+
+
+
+		/// <summary>
+		/// id_X448 = id_crfg_curve_algs (111) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_X448 = new int [] { 1, 3, 101, 111};
+		/// <summary>
+		/// id_X448 = id_crfg_curve_algs (111) as string
+		/// </summary>
+		public const string OIDS__id_X448 = "1.3.101.111";
+
+
+
+		/// <summary>
+		/// id_Ed25519 = id_crfg_curve_algs (112) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_Ed25519 = new int [] { 1, 3, 101, 112};
+		/// <summary>
+		/// id_Ed25519 = id_crfg_curve_algs (112) as string
+		/// </summary>
+		public const string OIDS__id_Ed25519 = "1.3.101.112";
+
+
+
+		/// <summary>
+		/// id_Ed448 = id_crfg_curve_algs (113) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_Ed448 = new int [] { 1, 3, 101, 113};
+		/// <summary>
+		/// id_Ed448 = id_crfg_curve_algs (113) as string
+		/// </summary>
+		public const string OIDS__id_Ed448 = "1.3.101.113";
+
+
+		}
 	}
 
 

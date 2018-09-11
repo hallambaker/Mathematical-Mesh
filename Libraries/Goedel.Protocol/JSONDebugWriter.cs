@@ -111,8 +111,9 @@ namespace Goedel.Protocol {
         /// Convert a JSONObject to redacted form.
         /// </summary>
         /// <param name="JSONObject">The object to convert</param>
+        /// <param name="Tagged">If true, the object is wrapped with its type tag.</param>
         /// <returns>The input as a redacted JSON encoded string.</returns>
-        public static string Write(JSONObject JSONObject) {
+        public static string Write(JSONObject JSONObject, bool Tagged = true) {
 
             if (JSONObject == null) {
                 return "$$$$ Empty $$$$";
@@ -120,7 +121,7 @@ namespace Goedel.Protocol {
 
             var Buffer = new MemoryStream();
             var JSONWriter = new JSONDebugWriter(Buffer);
-            JSONObject.Serialize(JSONWriter, true);
+            JSONObject.Serialize(JSONWriter, Tagged);
             return Buffer.ToArray().ToUTF8();
             }
 

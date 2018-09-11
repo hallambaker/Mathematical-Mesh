@@ -1,8 +1,7 @@
 
 # Supplemental Makefile for Visual Studios Projects
 #
-# Visual Studio is responsible for managing rules for production of
-# code but does not provide support for pre and post build actions.
+# Visual Studio runs tools for most projects but not for shared projects.
 # 
 # Prebuild items supported:
 #   [None currently]
@@ -30,7 +29,7 @@ LinkFiles = \
     Goedel.Cryptography.Jose.dll\
     Goedel.Cryptography.KeyFile.dll\
     Goedel.Cryptography.Standard.dll\
-    Goedel.Cryptography.Windows.dll\
+    Goedel.Cryptography.WindowsFramework.dll\
     Goedel.Cryptography.dll\
     Goedel.Mesh.Platform.Windows.dll\
     Goedel.Mesh.dll\
@@ -39,6 +38,7 @@ LinkFiles = \
     Goedel.Protocol.Exchange.Server.dll\
     Goedel.Protocol.Exchange.dll\
     Goedel.Protocol.dll\
+    Goedel.Test.dll\
     Goedel.Account.Client.dll\
     Goedel.Account.Server.dll\
     Goedel.Account.dll\
@@ -53,14 +53,41 @@ LinkFiles = \
     Goedel.Recrypt.dll
 
 ToolTargets = \
-	MakeExamplesApplications.cs\
+	Old\MakeExamplesApplications.cs\
+	MakeExamplesAdvanced.cs\
+	MakeExamplesProfile.cs\
+	MakeExamplesPortal.cs\
+	MakeExamplesCatalog.cs\
+	Old\MakeExamplesReferenceOLD.cs\
+	MakeExamplesUDF.cs\
+	Old\MakeExamplesMessage.cs\
 	MakeExamplesContainer.cs\
 	MakeExamplesDeveloper.cs\
-	MakeExamplesKeyExchange.cs\
-	MakeExamplesReference.cs
+	Old\MakeExamplesKeyExchange.cs\
+	MakeExamplesMessaging.cs
+Old\MakeExamplesApplications.cs : Old\MakeExamplesApplications.script 
+	gscript Old\MakeExamplesApplications.script  Old\MakeExamplesApplications.cs
 
-MakeExamplesApplications.cs : MakeExamplesApplications.script 
-	gscript MakeExamplesApplications.script  MakeExamplesApplications.cs
+MakeExamplesAdvanced.cs : MakeExamplesAdvanced.script 
+	gscript MakeExamplesAdvanced.script  MakeExamplesAdvanced.cs
+
+MakeExamplesProfile.cs : MakeExamplesProfile.script 
+	gscript MakeExamplesProfile.script  MakeExamplesProfile.cs
+
+MakeExamplesPortal.cs : MakeExamplesPortal.script 
+	gscript MakeExamplesPortal.script  MakeExamplesPortal.cs
+
+MakeExamplesCatalog.cs : MakeExamplesCatalog.script 
+	gscript MakeExamplesCatalog.script  MakeExamplesCatalog.cs
+
+Old\MakeExamplesReferenceOLD.cs : Old\MakeExamplesReferenceOLD.script 
+	gscript Old\MakeExamplesReferenceOLD.script  Old\MakeExamplesReferenceOLD.cs
+
+MakeExamplesUDF.cs : MakeExamplesUDF.script 
+	gscript MakeExamplesUDF.script  MakeExamplesUDF.cs
+
+Old\MakeExamplesMessage.cs : Old\MakeExamplesMessage.script 
+	gscript Old\MakeExamplesMessage.script  Old\MakeExamplesMessage.cs
 
 MakeExamplesContainer.cs : MakeExamplesContainer.script 
 	gscript MakeExamplesContainer.script  MakeExamplesContainer.cs
@@ -68,11 +95,12 @@ MakeExamplesContainer.cs : MakeExamplesContainer.script
 MakeExamplesDeveloper.cs : MakeExamplesDeveloper.script 
 	gscript MakeExamplesDeveloper.script  MakeExamplesDeveloper.cs
 
-MakeExamplesKeyExchange.cs : MakeExamplesKeyExchange.script 
-	gscript MakeExamplesKeyExchange.script  MakeExamplesKeyExchange.cs
+Old\MakeExamplesKeyExchange.cs : Old\MakeExamplesKeyExchange.script 
+	gscript Old\MakeExamplesKeyExchange.script  Old\MakeExamplesKeyExchange.cs
 
-MakeExamplesReference.cs : MakeExamplesReference.script 
-	gscript MakeExamplesReference.script  MakeExamplesReference.cs
+MakeExamplesMessaging.cs : MakeExamplesMessaging.script 
+	gscript MakeExamplesMessaging.script  MakeExamplesMessaging.cs
+
 
 
 prebuildRecurse : 
@@ -84,7 +112,7 @@ postbuildRecurse :
 	cd ..\..\Libraries\MeshMan && nmake /c /f VS.make postbuild 
 	cd ..\..\Libraries\MeshApps && nmake /c /f VS.make postbuild 
 
-
+# Non shared project, nothing to do
 prebuild : prebuildRecurse $(ToolTargets)
 
 postbuild : postbuildRecurse

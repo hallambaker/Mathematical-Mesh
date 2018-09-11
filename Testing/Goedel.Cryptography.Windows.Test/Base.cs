@@ -14,7 +14,7 @@ namespace Goedel.Cryptography.Windows.Test {
             InitializeClass();
 
             var TestCryptographyWindows = new TestCryptographyWindows();
-            TestCryptographyWindows.Test_Windows_LifecycleEphemeral_RSA();
+            TestCryptographyWindows.Test_Windows_Lifecycle_DH();
             }
         const CryptoAlgorithmID CryptoAlgorithmID = Goedel.Cryptography.CryptoAlgorithmID.RSAExch;
 

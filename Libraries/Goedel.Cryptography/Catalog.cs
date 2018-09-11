@@ -141,6 +141,11 @@ namespace Goedel.Cryptography {
 
             }
 
+        /// <summary>
+        /// Return the length of the output data for the algorithm <paramref name="ID"/> in bytes.
+        /// </summary>
+        /// <param name="ID">The algorithm to return the output data length for.</param>
+        /// <returns>The output data length in bytes.</returns>
         public int ResultInBytes(CryptoAlgorithmID ID) {
             var Found = Dictionary.TryGetValue(ID, out var Meta);
             if (Found) {
@@ -149,6 +154,8 @@ namespace Goedel.Cryptography {
             return -1;
 
             }
+
+
 
         /// <summary>
         /// Get a cryptographic provider by combined algorithm identifier
@@ -194,53 +201,53 @@ namespace Goedel.Cryptography {
         public CryptoProviderEncryption GetEncryption(CryptoAlgorithmID ID) => Get(ID.DefaultBulk(AlgorithmEncryption)) as CryptoProviderEncryption;
 
 
-        /// <summary>
-        /// Get a cryptographic provider  by algorithm identifier
-        /// </summary>
-        /// <param name="ID">Algorithm identifier</param>
-        /// <returns>Cryptographic provider if found or null otherwise.</returns>
-        public CryptoProviderAsymmetric GetAsymmetric(CryptoAlgorithmID ID) {
-            var Result = Get(ID);
-            return Result as CryptoProviderAsymmetric;
-            }
+        ///// <summary>
+        ///// Get a cryptographic provider  by algorithm identifier
+        ///// </summary>
+        ///// <param name="ID">Algorithm identifier</param>
+        ///// <returns>Cryptographic provider if found or null otherwise.</returns>
+        //public CryptoProviderAsymmetric GetAsymmetric(CryptoAlgorithmID ID) {
+        //    var Result = Get(ID);
+        //    return Result as CryptoProviderAsymmetric;
+        //    }
 
-        /// <summary>
-        /// Get a cryptographic provider by algorithm identifier
-        /// </summary>
-        /// <param name="ID">Algorithm identifier</param>
-        /// <returns>Cryptographic provider if found or null otherwise.</returns>
-        public CryptoProviderSignature GetSignature(CryptoAlgorithmID ID) => Get(ID.DefaultMeta(AlgorithmSignature)) as CryptoProviderSignature;
+        ///// <summary>
+        ///// Get a cryptographic provider by algorithm identifier
+        ///// </summary>
+        ///// <param name="ID">Algorithm identifier</param>
+        ///// <returns>Cryptographic provider if found or null otherwise.</returns>
+        //public CryptoProviderSignature GetSignature(CryptoAlgorithmID ID) => Get(ID.DefaultMeta(AlgorithmSignature)) as CryptoProviderSignature;
 
-        /// <summary>
-        /// Get a signature provider by algorithm identifier
-        /// </summary>>
-        /// <param name="Signature">Signature algorithm identifier.</param>
-        /// <param name="Digest">Digest algorithm identifier.</param>
-        /// <returns>Cryptographic provider if found or null otherwise.</returns>
-        public CryptoProviderSignature GetSignature(CryptoAlgorithmID Signature,
-                    CryptoAlgorithmID Digest) => GetSignature(Signature.Meta() | Digest.Bulk());
+        ///// <summary>
+        ///// Get a signature provider by algorithm identifier
+        ///// </summary>>
+        ///// <param name="Signature">Signature algorithm identifier.</param>
+        ///// <param name="Digest">Digest algorithm identifier.</param>
+        ///// <returns>Cryptographic provider if found or null otherwise.</returns>
+        //public CryptoProviderSignature GetSignature(CryptoAlgorithmID Signature,
+        //            CryptoAlgorithmID Digest) => GetSignature(Signature.Meta() | Digest.Bulk());
 
-        /// <summary>
-        /// Get a signature provider by algorithm identifier
-        /// </summary>>
-        /// <param name="Exchange">Exchange algorithm identifier.</param>
-        /// <param name="Bulk">Encryption algorithm identifier.</param>
-        /// <returns>Cryptographic provider if found or null otherwise.</returns>
-        public CryptoProviderExchange GetExchange(CryptoAlgorithmID Exchange,
-                    CryptoAlgorithmID Bulk) => GetExchange(Exchange.Meta() | Bulk.Bulk());
+        ///// <summary>
+        ///// Get a signature provider by algorithm identifier
+        ///// </summary>>
+        ///// <param name="Exchange">Exchange algorithm identifier.</param>
+        ///// <param name="Bulk">Encryption algorithm identifier.</param>
+        ///// <returns>Cryptographic provider if found or null otherwise.</returns>
+        //public CryptoProviderExchange GetExchange(CryptoAlgorithmID Exchange,
+        //            CryptoAlgorithmID Bulk) => GetExchange(Exchange.Meta() | Bulk.Bulk());
 
-        /// <summary>
-        /// Get a signature provider by key fingerprint.
-        /// </summary>
-        /// <param name="UDF">Fingerprint of key</param>
-        /// <returns>Cryptographic provider if found or null otherwise.</returns>
-        public CryptoProviderSignature GetSignature(string UDF) {
-            var Key = KeyPair.FindLocal(UDF);
-            if (Key == null) {
-                return null;
-                }
-            return Key.SignatureProvider();
-            }
+        ///// <summary>
+        ///// Get a signature provider by key fingerprint.
+        ///// </summary>
+        ///// <param name="UDF">Fingerprint of key</param>
+        ///// <returns>Cryptographic provider if found or null otherwise.</returns>
+        //public CryptoProviderSignature GetSignature(string UDF) {
+        //    var Key = KeyPair.FindLocal(UDF);
+        //    if (Key == null) {
+        //        return null;
+        //        }
+        //    return Key.SignatureProvider();
+        //    }
 
         /// <summary>
         /// Get an exchange provider by key fingerprint.
@@ -311,7 +318,7 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Return a CryptoAlgorithm structure with properties describing this provider.
         /// </summary>
-        public virtual CryptoAlgorithm CryptoAlgorithm => null; 
+        public virtual CryptoAlgorithm CryptoAlgorithm { get; }
 
 
         /// <summary>

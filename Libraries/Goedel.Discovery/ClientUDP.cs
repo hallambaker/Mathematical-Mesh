@@ -1,16 +1,17 @@
 ﻿using System.Net;
 using System.Net.Sockets;
 using System.Threading;
+using Goedel.Utilities;
 
 namespace Goedel.Discovery {
 
     /// <summary>
     /// UDP Client wrapper. Performs buffering on reads.
     /// </summary>
-    public class ClientUDP {
+    public class ClientUDP : Disposable {
 
         IPEndPoint EndPoint;
-        UdpClient UdpClient;
+        UdpClient UdpClient=null;
         Thread ListenerThread;
         int MaxRead;
 
@@ -39,6 +40,14 @@ namespace Goedel.Discovery {
 
         bool Active = true;
         int ReadCount = 0;
+
+        /// <summary>
+        /// The class specific disposal routine.
+        /// </summary>
+        protected override void Disposing() {
+            UdpClient?.Dispose();
+            UdpClient = null;
+            }
 
         /// <summary>
         /// The listener thread

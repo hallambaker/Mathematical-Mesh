@@ -137,29 +137,35 @@ namespace Goedel.Cryptography {
         /// <param name="N">Number of key shares to create (max is 32).</param>
         /// <param name="K">Quorum of key shares required to reconstruct the secret.</param>
         /// <returns>The key shares created.</returns>
-        public KeyShare[] Split(int N, int K) {
+        public KeyShare[] Split(int N, int K) => Split(N, K, out var _);
 
-
-
+        /// <summary>
+        /// Create a set of N key shares with a quorum of K.
+        /// </summary>
+        /// <param name="N">Number of key shares to create (max is 32).</param>
+        /// <param name="K">Quorum of key shares required to reconstruct the secret.</param>
+        /// <param name="Polynomial">The polynomial co-efficients generated.</param>
+        /// <returns>The key shares created.</returns>
+        public KeyShare[] Split(int N, int K, out BigInteger[] Polynomial) {
             Assert.False(K > N, QuorumExceedsShares.Throw);
             Assert.False(K < 2, QuorumInsufficient.Throw); 
             Assert.False(N < 2, SharesInsufficient.Throw); 
             Assert.False(N > 15, QuorumExceeded.Throw);
 
-            if (N == K) {
-                return Split(N); //Special case
-                }
+            //if (N == K) {
+            //    return Split(N); //Special case
+            //    }
 
             Assert.False(K > 15, QuorumDegreeExceeded.Throw);
 
-            var PolyNomial = new BigInteger[K];
-            PolyNomial[0] = MakePositive(Key);
+            Polynomial = new BigInteger[K];
+            Polynomial[0] = MakePositive(Key);
             //Console.WriteLine("Key = {0} ", PolyNomial[0]);
 
 
             for (int i = 1; i < K; i++) {
                 var Random = CryptoCatalog.GetBytes(KeyBytes);
-                PolyNomial[i] = MakePositive(Random);
+                Polynomial[i] = MakePositive(Random);
                 }
 
             Assert.False(KeyBits != 128, ImplementationLimit.Throw);
@@ -171,7 +177,7 @@ namespace Goedel.Cryptography {
 
             var KeyShares = new KeyShare[N];
             for (int i = 0; i < N; i++) {
-                var D = PolyMod(i + 1, PolyNomial, Modulus);
+                var D = PolyMod(i + 1, Polynomial, Modulus);
                 KeyShares[i] = new KeyShare((K * 16) + i, D);
 
                 //Console.WriteLine("Share {0} = {1}", i, D);

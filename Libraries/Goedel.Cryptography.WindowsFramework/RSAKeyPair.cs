@@ -145,15 +145,27 @@ namespace Goedel.Cryptography.Windows {
         /// </summary>
 
         public override SubjectPublicKeyInfo PrivateKeyInfoData => new SubjectPublicKeyInfo(CryptoConfig.MapNameToOID("RSA"),
-                        PKIXPrivateKeyRSA.DER()); 
+                        PKIXPrivateKeyRSA.DER());
 
+
+        /// <summary>The key pair supports signing and/or verification operations</summary>
+        public override bool Signature { get; }
+
+        /// <summary>The key pair supports key exchange operations</summary>
+        public override bool Exchange { get; }
 
         /// <summary>
         /// Generate an ephemeral RSA key with the specified key size.
         /// </summary>
         /// <param name="KeySecurity">The key security mode</param>
         /// <param name="KeySize">Size of key in multiples of 64 bits.</param>
-        public KeyPairRSA(KeySecurity KeySecurity, int KeySize = 2048) {
+        /// <param name="Exchange">If true, the key can be used for exchange operations.</param>
+        /// <param name="Signature">If true, the key can be used for signature operations</param>
+        public KeyPairRSA(KeySecurity KeySecurity= KeySecurity.Exportable, int KeySize = 2048,
+                bool Signature=true, bool Exchange=true) {
+
+            this.Signature = Signature;
+            this.Exchange = Exchange;
             var CSPParameters = new CspParameters();
 
             switch (KeySecurity) {
@@ -190,32 +202,6 @@ namespace Goedel.Cryptography.Windows {
                     return;
                     }
                 }
-
-            //if (Persist) {
-            //    var PreCSPParameters = new CspParameters() {
-            //        Flags = CspProviderFlags.UseArchivableKey
-            //        };
-            //    var TempProvider = new RSACryptoServiceProvider(KeySize, PreCSPParameters);
-            //    var PrivateParameters = TempProvider.ExportParameters(true);
-            //    PublicParameters = TempProvider.ExportParameters(false);
-            //    TempProvider.Dispose();
-
-            //    //var RSAPublic = PublicParameters.RSAPublicKey();
-            //    //var SubjectPublicKeyInfo = new SubjectPublicKeyInfo(CryptoConfig.MapNameToOID("RSA"), RSAPublic.DER());
-            //    //var UDFBytes = Goedel.Cryptography.UDF.FromKeyInfo(SubjectPublicKeyInfo.DER());
-            //    //var UDF = Goedel.Cryptography.UDF.ToString(UDFBytes);
-
-            //    CSPParameters.KeyContainerName = ContainerFramework.Name(UDF);
-            //    var NewProvider = new RSACryptoServiceProvider(CSPParameters);
-            //    NewProvider.ImportParameters(PrivateParameters);
-            //    _Provider = NewProvider;
-            //    }
-            //else {
-
-            //    _Provider = new RSACryptoServiceProvider(KeySize, CSPParameters);
-            //    PublicParameters = _Provider.ExportParameters(false);
-            //    }
-
             }
 
 
@@ -236,31 +222,6 @@ namespace Goedel.Cryptography.Windows {
             _Provider = NewProvider;
             }
 
-
-        /// <summary>
-        /// Generate an ephemeral RSA key with the specified key size.
-        /// </summary>
-        /// <param name="KeySize">Size of key in multiples of 64 bits.</param>
-        public KeyPairRSA(int KeySize=2048)
-            : this(KeySize, true) {
-            }
-
-        /// <summary>
-        /// Generate an ephemeral RSA key with the specified key size.
-        /// </summary>
-        /// <param name="KeySize">Size of key in multiples of 64 bits.</param>
-        /// <param name="Exportable">If true, key may be exported, otherwise machine bound.</param>
-        public KeyPairRSA(int KeySize, bool Exportable) {
-            var CSPParameters = new CspParameters();
-            if (Exportable) {
-                CSPParameters.Flags = CspProviderFlags.UseArchivableKey | CspProviderFlags.CreateEphemeralKey;
-                }
-            else {
-                CSPParameters.Flags = CspProviderFlags.UseNonExportableKey | CspProviderFlags.CreateEphemeralKey;
-                }
-            _Provider = new RSACryptoServiceProvider(KeySize, CSPParameters);
-            PublicParameters = _Provider.ExportParameters(false);
-            }
 
 
         /// <summary>
@@ -348,7 +309,7 @@ namespace Goedel.Cryptography.Windows {
         public static new KeyPair KeyPairPrivateFactory (PKIXPrivateKeyRSA PKIXParameters) {
 
             if (PKIXParameters == null) {
-                return new KeyPairRSA();
+                return new KeyPairRSA(KeySecurity.Exportable);
                 }
 
             var RSAParameters = PKIXParameters.RSAParameters();
@@ -362,46 +323,6 @@ namespace Goedel.Cryptography.Windows {
         public override bool PublicOnly => (!(Provider is RSACryptoServiceProvider RSACryptoServiceProvider)
                     || !RSACryptoServiceProvider.PublicOnly);
 
-        ///// <summary>
-        ///// Makes a key persistent on the local machine with the specified level of
-        ///// protection.
-        ///// </summary>
-        ///// <param name="KeySecurity">Key protection level to be applied.</param>
-        //public void Persist(KeySecurity KeySecurity) {
-
-        //    Assert.NotNull(Provider, NoProviderSpecified.Throw);
-
-        //    var Parameters = new CspParameters();
-        //    switch (KeySecurity) {
-        //        case KeySecurity.Master:
-        //        Parameters.Flags = CspProviderFlags.UseArchivableKey | CspProviderFlags.UseUserProtectedKey;
-        //        Parameters.Flags = CspProviderFlags.NoFlags;
-        //        break;
-        //        case KeySecurity.Admin:
-        //        Parameters.Flags = CspProviderFlags.UseArchivableKey | CspProviderFlags.UseUserProtectedKey;
-        //        Parameters.Flags = CspProviderFlags.NoFlags;
-        //        break;
-        //        case KeySecurity.Device:
-        //        Parameters.Flags = CspProviderFlags.UseNonExportableKey;
-        //        break;
-        //        case KeySecurity.Ephemeral:
-        //        Parameters.Flags = CspProviderFlags.UseNonExportableKey;
-        //        break;
-        //        }
-
-        //    Parameters.KeyContainerName = ContainerFramework.Name(UDF);
-
-        //    var NewProvider = new RSACryptoServiceProvider(Parameters);
-        //    var KeyParams = Provider.ExportParameters(true);
-
-        //    NewProvider.ImportParameters(KeyParams);
-        //    Provider.Dispose();
-        //    _Provider = NewProvider;
-
-        //    if (KeySecurity == KeySecurity.Master) {
-        //        KeyParams = Provider.ExportParameters(true);
-        //        }
-        //    }
 
         /// <summary>
         /// Locate a key stored in the platform cryptographic key store.

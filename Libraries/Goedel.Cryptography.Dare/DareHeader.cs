@@ -15,10 +15,10 @@ namespace Goedel.Cryptography.Dare {
 
         byte[] MasterSecret;
 
-        /// <summary>
-        /// The cryptography provider.
-        /// </summary>
-        protected CryptoProviderEncryption ProviderEncryption = null;
+        ///// <summary>
+        ///// The cryptography provider.
+        ///// </summary>
+        //protected CryptoProviderEncryption ProviderEncryption = null;
 
         /// <summary>
         /// Calculate the expected payload length for the specified <paramref name="ContentLength"/>.
@@ -33,10 +33,6 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         public bool Encrypt => EncryptionAlgorithm!=null;
 
-        /// <summary>
-        /// The encryption key size
-        /// </summary>
-        public int EncryptionKeySize => ProviderEncryption.KeySize;
 
 
         long SaltValue=0;
@@ -64,7 +60,13 @@ namespace Goedel.Cryptography.Dare {
         public CryptoStack CryptoStack;
 
         /// <summary>
-        /// Create a message header with a new key exchange
+        /// Create a message header.
+        /// </summary>
+        public DAREHeader() {
+            }
+
+        /// <summary>
+        /// Create a message header.
         /// </summary>
         /// <param name="CryptoStack">The cryptographic enhancements to apply.</param>
         /// <param name="ContentType">The payload content type.</param>
@@ -72,7 +74,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="DataSequences">Data sequences to be converted to an EDS and presented 
         ///     as an EDSS header entry.</param>
         public DAREHeader(
-                    CryptoStack CryptoStack=null,
+                    CryptoStack CryptoStack,
                     string ContentType = null,
                     byte[] Cloaked = null,
                     List<byte[]> DataSequences = null
@@ -88,20 +90,16 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="Cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
         /// <param name="DataSequences">Data sequences to be converted to an EDS and presented 
         ///     as an EDSS header entry.</param>
-        public void ApplyCryptoStack(
+        public virtual void ApplyCryptoStack(
                     CryptoStack CryptoStack,
                     byte[] Cloaked = null,
                     List<byte[]> DataSequences = null) {
             this.CryptoStack = CryptoStack;
 
-            if (CryptoStack == null) {
-                EncryptionAlgorithm = null;
-                return; // Hack no EDS on plaintext messages.
-                }
-
             Salt = CryptoStack.Salt;
             Recipients = CryptoStack.Recipients;
             EncryptionAlgorithm = CryptoStack.EncryptionAlgorithm;
+            DigestAlgorithm = CryptoStack.DigestAlgorithm;
 
             if (Cloaked != null) {
                 this.Cloaked = CryptoStack.Encode(Cloaked, MakeSalt());
@@ -112,26 +110,20 @@ namespace Goedel.Cryptography.Dare {
                     EDSS.Add(CryptoStack.Encode(DataSequence, MakeSalt()));
                     }
                 }
+
             }
 
-        void KeyExchange (
-                    List<KeyPair> EncryptionKeys) {
 
-            var KeyBits = ProviderEncryption.KeySize;
-            MasterSecret = Platform.GetRandomBits(KeyBits);
-            Recipients = Recipients ?? new List<DARERecipient>();
-            foreach (var EncryptionKey in EncryptionKeys) {
-                Recipients.Add(new DARERecipient(MasterSecret, EncryptionKey));
-                }
-            }
+
+        
+
 
         /// <summary>
-        /// Use information from the specified 
+        /// Use information from the specified header to speficy defaults.
         /// </summary>
         /// <param name="DAREHeader"></param>
         public virtual void SetDefaultContext (DAREHeader DAREHeader) {
             SaltValue = -1;
-            ProviderEncryption = DAREHeader.ProviderEncryption;
             MasterSecret = DAREHeader.MasterSecret;
 
             }
@@ -167,9 +159,10 @@ namespace Goedel.Cryptography.Dare {
         /// unique salt will be assigned.
         /// </summary>
         /// <param name="Plaintext">The EDS plaintext.</param>
+        /// <param name="DARETrailer">Prototype trailer containing the calculated digest value.</param>
         /// <returns>The EDS</returns>
         public byte[] EnhanceBody(byte[] Plaintext, out DARETrailer DARETrailer) => 
-            CryptoStack.Encode(Plaintext, out DARETrailer, PackagingFormat:PackagingFormat.Direct);
+            CryptoStack.Encode(Plaintext, out DARETrailer);
 
 
         /// <summary>
@@ -226,6 +219,22 @@ namespace Goedel.Cryptography.Dare {
 
             }
 
+
+        /// <summary>
+        /// Return a CryptoStack using key exchange information specified in this 
+        /// header.
+        /// </summary>
+        /// <returns>The created CryptoStack</returns>
+        public CryptoStack GetCryptoStack(KeyCollection KeyCollection) {
+            var EncryptID = EncryptionAlgorithm.FromJoseID();
+
+            var CryptoStack = new CryptoStack(EncryptID, CryptoAlgorithmID.NULL,
+                Recipients, Signatures, KeyCollection) {
+                Salt = Salt
+                };
+            return CryptoStack;
+            }
+
         /// <summary>
         /// Return a decoder for the specified data source.
         /// </summary>
@@ -240,11 +249,8 @@ namespace Goedel.Cryptography.Dare {
                        KeyCollection KeyCollection = null) {
 
             var EncryptID = EncryptionAlgorithm.FromJoseID();
+            CryptoStack = GetCryptoStack(KeyCollection);
 
-            CryptoStack = new CryptoStack(EncryptID, CryptoAlgorithmID.NULL,
-                Recipients, Signatures, KeyCollection) {
-                    Salt = Salt
-                    };
             return CryptoStack.GetDecoder(JSONBCDReader, out Reader);
             }
 
@@ -257,7 +263,6 @@ namespace Goedel.Cryptography.Dare {
         public void DecryptMaster(KeyCollection KeyCollection) {
             EncryptId = EncryptionAlgorithm.FromJoseID();
             MasterSecret = KeyCollection.Decrypt(Recipients, EncryptId);
-            ProviderEncryption = CryptoCatalog.Default.GetEncryption(EncryptId);
             }
 
         /// <summary>
@@ -304,9 +309,17 @@ namespace Goedel.Cryptography.Dare {
 
     public partial class DARETrailer {
 
+        /// <summary>
+        /// Default constructor used for deserialization.
+        /// </summary>
         public DARETrailer() {
             }
 
+        /// <summary>
+        /// Prototype trailer containing the  digest value calculated by <paramref name="Writer"/>.
+        /// </summary>
+        /// <param name="Writer">The crypto stream used to transform the payload.</param>
+        /// <returns>The prototype trailer.</returns>
         public static DARETrailer GetTrailer(CryptoStackStreamWriter Writer) {
             DARETrailer Result = null;
 

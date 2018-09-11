@@ -1,8 +1,7 @@
 
 # Supplemental Makefile for Visual Studios Projects
 #
-# Visual Studio is responsible for managing rules for production of
-# code but does not provide support for pre and post build actions.
+# Visual Studio runs tools for most projects but not for shared projects.
 # 
 # Prebuild items supported:
 #   [None currently]
@@ -19,11 +18,10 @@
 MSBuildThisFileDirectory = 
 
 LinkFiles = \
-    Goedel.Catalog.Test.dll\
     Goedel.IO.dll\
     Goedel.Utilities.dll\
     Goedel.Cryptography.Dare.dll\
-    Goedel.Cryptography.Windows.dll\
+    Goedel.Cryptography.WindowsFramework.dll\
     Goedel.Cryptography.dll\
     Goedel.Mesh.Platform.Windows.dll\
     Goedel.Mesh.dll\
@@ -32,16 +30,17 @@ LinkFiles = \
     Goedel.Mesh.Portal.Client.dll\
     Goedel.Mesh.Portal.Server.dll\
     Goedel.Mesh.Portal.dll\
+    Goedel.ASN.Test.dll\
+    Goedel.Catalog.Test.dll\
+    Goedel.Cryptography.Algorithms.Test.dll\
+    Goedel.Cryptography.Dare.Test.dll\
+    Goedel.Cryptography.DH.Test.dll\
+    Goedel.Cryptography.KeyFile.Test.dll\
+    Goedel.Cryptography.Windows.Test.dll\
     Goedel.Protocol.Test.dll\
     Test.Common.dll\
-    Test.Cryptography.Algorithms.dll\
-    Test.Goedel.ASN.dll\
-    Test.Goedel.Cryptography.Container.dll\
-    Test.Goedel.Cryptography.DH.dll\
-    Test.Goedel.Cryptography.Jose.dll\
-    Test.Goedel.Cryptography.KeyFile.dll\
+    Goedel.Cryptography.Jose.Test.dll\
     Test.Goedel.Cryptography.Linux.dll\
-    Test.Goedel.Cryptography.Windows.dll\
     Test.Goedel.Cryptography.dll\
     Test.Goedel.Discovery.dll\
     Test.Goedel.Mesh.Mail.dll\
@@ -60,7 +59,7 @@ prebuildRecurse :
 
 postbuildRecurse :
 
-
+# Non shared project, nothing to do
 prebuild : prebuildRecurse $(ToolTargets)
 
 postbuild : postbuildRecurse

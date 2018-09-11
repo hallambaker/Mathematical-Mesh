@@ -59,6 +59,7 @@ namespace Goedel.Cryptography.Windows {
         /// <returns>Description of the principal algorithm registration.</returns>
         public static CryptoAlgorithm Register(CryptoCatalog Catalog = null) {
             Catalog = Catalog ?? CryptoCatalog.Default;
+
             return Catalog.Add(CryptoAlgorithmAny);
             }
 
@@ -140,15 +141,15 @@ namespace Goedel.Cryptography.Windows {
             //_RSAKeyPair.Persist(KeySecurity);
             }
 
-        /// <summary>
-        /// Locate the private key in the local key store.
-        /// </summary>
-        /// <param name="UDF">Fingerprint of key to locate.</param>
-        /// <returns>True if key is found, otherwise false.</returns>
-        public override bool FindLocal(string UDF) {
-            _RSAKeyPair = new KeyPairRSA(UDF);
-            return _RSAKeyPair.Provider != null;
-            }
+        ///// <summary>
+        ///// Locate the private key in the local key store.
+        ///// </summary>
+        ///// <param name="UDF">Fingerprint of key to locate.</param>
+        ///// <returns>True if key is found, otherwise false.</returns>
+        //public override bool FindLocal(string UDF) {
+        //    _RSAKeyPair = new KeyPairRSA(UDF);
+        //    return _RSAKeyPair.Provider != null;
+        //    }
 
         ///// <summary>
         ///// Verify signature.

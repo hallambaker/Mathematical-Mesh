@@ -2,6 +2,7 @@
 
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using System.Numerics;
 using Goedel.Mesh;
 using Goedel.Utilities;
@@ -20,84 +21,38 @@ using Goedel.IO;
 using Goedel.Command;
 using Goedel.Cryptography.Algorithms;
 using Goedel.Test;
+using Goedel.Cryptography.Windows;
 
 namespace ExampleGenerator {
 
-    public partial class DAREHeaderDebug : DAREHeader {
+    public class MailMessage {
+        public string From = "Alice@example.com";
+        public string To = "bob@example.com";
+        public string Subject = "TOP-SECRET Product Launch Today!";
+        public string Body = "The CEO told me the product launch is today. Tell no-one!";
 
-        byte[] MasterSecret;
-        ///// <summary>
-        ///// The authentication algorithm
-        ///// </summary>
-        //public CryptoAlgorithmID AuthenticateID;
-
-        public DAREHeaderDebug (byte[] MasterSecret,
-                    CryptoAlgorithmID EncryptID = CryptoAlgorithmID.Default,
-                    CryptoAlgorithmID AuthenticateID = CryptoAlgorithmID.Default) {
-            this.MasterSecret = MasterSecret;
-            ProviderEncryption = CryptoCatalog.Default.GetEncryption(EncryptID);
-
+        public string GetRFC822() {
+            var Builder = new StringBuilder();
+            Builder.AppendLine($"From: {From}");
+            Builder.AppendLine($"To: {To}");
+            Builder.AppendLine($"Subject: {Subject}");
+            Builder.AppendLine();
+            Builder.AppendLine(Body);
+            return Builder.ToString();
             }
+
+        public DAREMessage GetDAREMessage(CryptoParameters CryptoParameters) {
+            var Data = new List<byte[]>() {
+                MakeData("From", From),MakeData("To", To),MakeData("Subject", Subject)
+                };
+            return new DAREMessage(CryptoParameters, Body.ToUTF8(),
+                ContentType: "application/example-mail", DataSequences: Data);
+            }
+
+
+        byte[] MakeData(string Tag, string Data) => $"{Tag}: {Data}".ToUTF8();
+           
         }
-
-    //public partial class EnhancedDataSequenceWriterDebug : EnhancedDataSequenceWriter {
-
-    //    /// <summary>
-    //    /// Create a buffered writer for an Enhanced Data Sequence
-    //    /// </summary>
-    //    /// <param name="MasterSecret"></param>
-    //    /// <param name="ProviderEncrypt">Crypto algorithm provider</param>
-    //    /// <param name="Salt"></param>
-    //    /// <param name="Plaintext"></param>
-    //    /// <param name="OutputStream">The output stream</param>
-    //    /// <param name="ContentLength">The content length. If this value is 0 or greater, the 
-    //    /// PayloadLength property will be set to the value of the payload data length field. </param>
-    //    public EnhancedDataSequenceWriterDebug (
-    //                JSONWriter OutputStream,
-    //                byte[] MasterSecret,
-    //                CryptoProviderEncryption ProviderEncrypt = null,
-    //                byte[] Salt = null,
-    //                byte[] Plaintext = null,
-    //                long ContentLength = -1
-    //                ) : base(OutputStream, MasterSecret, ProviderEncrypt, Salt, Plaintext, ContentLength) {
-    //        }
-
-    //    public byte[] RevealKeyEncrypt => KeyEncrypt;
-    //    public byte[] RevealKeyKeyMac => KeyMac;
-    //    public byte[] RevealKeyIV => IV;
-
-
-    //    /// <summary>
-    //    /// Enhance the specified plaintext data under the specified Master Secret and Sale (if specified).
-    //    /// </summary>
-    //    /// <param name="MasterSecret">The Master Secret from which the necessary cryptographic parameters 
-    //    /// are generated.</param>
-    //    /// <param name="ProviderEncrypt">Crypto algorithm provider</param>
-    //    /// <param name="Plaintext">The input</param>
-    //    /// <param name="Salt"></param>
-    //    /// <returns>The result of applying the enhancement.</returns>
-    //    public static byte[] Enhance (
-    //                byte[] MasterSecret,
-    //                byte[] Plaintext,
-    //                out byte[] KeyEncrypt,
-    //                out byte[] KeyMac,
-    //                out byte[] IV,
-    //                byte[] Salt = null,
-    //                CryptoProviderEncryption ProviderEncrypt = null
-    //                ) {
-    //        var Output = new MemoryStream();
-    //        var JSONBWriter = new JSONBWriter(Output);
-    //        var EDS = new EnhancedDataSequenceWriterDebug(
-    //                    JSONBWriter, MasterSecret, ProviderEncrypt, Salt, Plaintext);
-    //        KeyEncrypt = EDS.RevealKeyEncrypt;
-    //        KeyMac = EDS.KeyMac;
-    //        IV = EDS.RevealKeyIV;
-
-    //        return Output.ToArray();
-    //        }
-
-    //    }
-
 
 
 
@@ -106,30 +61,39 @@ namespace ExampleGenerator {
 
         public byte[] MessagePlaintext = "This is a sample Plaintext".ToBytes();
 
-        public string MessageTestPlaintext              = "TBS";
-        public string MessageTestRSAMAC                 = "TBS";
-        public string MessageTestRSAEncrypted           = "TBS";
-        public string MessageTestRSAEncryptedMAC        = "TBS";
-        public string MessageTestRSASigned              = "TBS";
-        public string MessageTestRSAEncryptedSigned     = "TBS";
+        public string MessageTestPlaintext = "TBS";
+        public string MessageTestRSAMAC = "TBS";
+        public string MessageTestRSAEncrypted = "TBS";
+        public string MessageTestRSAEncryptedMAC = "TBS";
+        public string MessageTestRSASigned = "TBS";
+        public string MessageTestRSAEncryptedSigned = "TBS";
 
         public readonly byte[] DareMessageTest1 = "This is a test long enough to require multiple blocks".ToUTF8();
         public readonly byte[] DareMessageTest2 = "Subject: Message metadata should be encrypted".ToUTF8();
         public readonly byte[] DareMessageTest3 = "2018-02-01".ToUTF8();
+
         public DiffeHellmanPrivate DareMessageAlicePrivate;
         public DiffeHellmanPublic DareMessageAlicePublic;
-        
         public KeyPairDH DareMessageAliceKeypair;
         public Key DareMessageAliceKey;
 
+        public PrivateKeyRSA SignatureAlicePrivate;
+        public PublicKeyRSA SignatureAlicePublic;
+        public KeyPairBaseRSA SignatureAliceKeyPair;
+        public Key SignatureAliceKey;
+
+
+
         public DAREMessage DAREMessageAtomic;
+        public DAREMessage DAREMessageAtomicSign;
+        public DAREMessage DAREMessageAtomicSignEncrypt;
         public DAREMessage MessageAtomicDS;
         public DAREMessage MessageEnc;
         public DAREMessage MessageAtomicDSEnc;
 
-        public byte[] MasterSecret;
+
         public byte[] DareMessageBody;
-        public byte[] DareEDSSalt;
+
 
         public string ContainerFramingEncrypted = "";
         public string ContainerFramingEncryptedIndependent;
@@ -138,21 +102,111 @@ namespace ExampleGenerator {
         public string AccountAlice = "alice@example.com";
 
 
-        void GoDareMessage () {
-            DareMessageAlicePrivate = new DiffeHellmanPrivate();
-            var DareMessageAlicePrivateKeyPair = new KeyPairDH(DareMessageAlicePrivate, KeySecurity: KeySecurity.Exportable);
-            DareMessageAliceKey = Key.GetPrivate(DareMessageAlicePrivateKeyPair);
+        public CryptoParameters CryptoParametersPlaintext;
+        public CryptoParameters CryptoParametersEncrypt;
+        public CryptoParameters CryptoParametersSign;
+        public CryptoParameters CryptoParametersSignEncrypt;
 
+        public CryptoStackDebug CryptoStackEncrypt;
+
+        KeyCollection KeyCollection;
+
+        List<byte[]> DataSequences;
+
+        public MailMessage MailMessage;
+        public string MailMessageAsRFC822;
+        public DAREMessage MailMessageAsDAREPlaintext;
+        public DAREMessage MailMessageAsDAREEncrypted;
+
+        public string EDSText;
+
+        void GenerateKeys() {
+            // Encryption Key Set.
+
+            DareMessageAlicePrivate = new DiffeHellmanPrivate();
+            var DareMessageAlicePrivateKeyPair = new KeyPairDH(DareMessageAlicePrivate, KeySecurity: KeySecurity.Exportable) {
+                Locator = AccountAlice
+                };
+
+            DareMessageAliceKey = Key.GetPrivate(DareMessageAlicePrivateKeyPair);
             DareMessageAlicePublic = DareMessageAlicePrivate.DiffeHellmanPublic;
             DareMessageAliceKeypair = new KeyPairDH(DareMessageAlicePublic);
-            var EncryptionKeys = new List<KeyPair> { DareMessageAliceKeypair };
 
-            var DataSequences = new List<byte[]> { DareMessageTest2, DareMessageTest3 };
 
-            var CryptoParametersPlaintext = new CryptoParametersTest();
+            // Signature Key Set.
+            SignatureAliceKeyPair = new KeyPairRSA(KeySecurity.Exportable, 2048, true) {
+                Locator = AccountAlice
+                };
+            SignatureAliceKey = Key.GetPrivate(SignatureAliceKeyPair);
+            SignatureAlicePrivate = (PrivateKeyRSA)Key.GetPrivate(SignatureAliceKeyPair);
+            SignatureAlicePublic = (PublicKeyRSA)Key.GetPublic(SignatureAliceKeyPair);
 
-            var CryptoParametersEncrypt = new CryptoParametersTest();
-            CryptoParametersEncrypt.AddEncrypt(AccountAlice);
+            KeyCollection = new KeyCollection();
+            KeyCollection.Add(DareMessageAlicePrivateKeyPair);
+            KeyCollection.Add(SignatureAliceKeyPair);
+
+            // Initialize the crypto parameters.
+
+            var Accounts = new List<string> { AccountAlice };
+            CryptoParametersPlaintext = new CryptoParameters(
+                        KeyCollection: KeyCollection);
+
+            CryptoParametersEncrypt = new CryptoParameters(
+                        KeyCollection: KeyCollection,
+                        Recipients: Accounts);
+
+            CryptoParametersSign = new CryptoParameters(
+                        KeyCollection: KeyCollection,
+                        Signers: Accounts);
+
+            CryptoParametersSignEncrypt = new CryptoParameters(
+                        KeyCollection: KeyCollection,
+                        Recipients: Accounts,
+                        Signers: Accounts);
+
+            // Data Sequences
+            DataSequences = new List<byte[]> { DareMessageTest2, DareMessageTest3 };
+
+            // Dummy Mail Message
+            MailMessage = new MailMessage();
+            MailMessageAsRFC822 = MailMessage.GetRFC822();
+            MailMessageAsDAREPlaintext = MailMessage.GetDAREMessage(CryptoParametersPlaintext);
+            MailMessageAsDAREEncrypted = MailMessage.GetDAREMessage(CryptoParametersEncrypt);
+
+            var EDS1 = MailMessageAsDAREPlaintext.Header.EDSS[0];
+            EDSText = ReadEDS(EDS1);
+
+            ExampleGenerator.MeshExamplesMessageMail(this);
+            ExampleGenerator.MeshExamplesMessageEDS(this);
+            ExampleGenerator.MeshExamplesMessageEncrypted(this);
+            }
+
+
+        byte[] ReadBinary(JBCDStream JBCDStream) {
+            JBCDStream.ReadTag(out var Code, out var Length);
+            var Result = new byte[Length];
+            JBCDStream.Read(Result, 0, (int)Length);
+            return Result;
+            }
+
+        string ReadEDS(byte[] Data) {
+            var TextWriter = new StringWriter();
+
+            using (var Input = new MemoryStream(Data)) {
+                using (var JBCDStream = new JBCDStreamDebug(Input, TextWriter)) {
+
+                    var Salt = ReadBinary(JBCDStream);
+                    var Body = ReadBinary(JBCDStream);
+                    var Tag = ReadBinary(JBCDStream);
+                    }
+                }
+
+
+            return TextWriter.ToString();
+            }
+
+
+        void GoDareMessage() {
 
             // Plaintext atomic
             DAREMessageAtomic = new DAREMessage(CryptoParametersPlaintext, DareMessageTest1);
@@ -160,41 +214,36 @@ namespace ExampleGenerator {
             // Plaintext atomic EDS
             MessageAtomicDS = new DAREMessage(CryptoParametersPlaintext, DareMessageTest1, DataSequences: DataSequences);
 
+            DAREMessageAtomicSign = new DAREMessage(CryptoParametersSign, DareMessageTest1);
+            DAREMessageAtomicSignEncrypt = new DAREMessage(CryptoParametersSignEncrypt, DareMessageTest1);
 
-            //var Header = new DAREHeader(EncryptionKeys, ContentLength: -1, DataSequences: DataSequences);
 
-            MasterSecret = Platform.GetRandomBits(256);
-            var Header = new DAREHeaderDebug(MasterSecret);
-            var KeyBits = Header.EncryptionKeySize;
-
-            var Recipients = new List<DARERecipient>() {
-                    MakeRecipient(MasterSecret, DareMessageAliceKeypair)
-                    };
-            Header.Recipients = Recipients;
-
-            DareMessageBody = Enhance(MasterSecret, DareMessageTest1);
-            MessageAtomicDSEnc = new DAREMessage() { Header = Header, Body = DareMessageBody };
+            CryptoStackEncrypt = new CryptoStackDebug(CryptoParametersEncrypt);
+            MessageEnc = CryptoStackEncrypt.Message(DareMessageTest1);
 
             ExampleGenerator.MeshExamplesMessage(this);
+            }
 
-
+        void GoDareContainer() {
+            // Encrypt a set of data under one key exchange.
             var EncryptingContainer = MakeContainer("Test1Enc", CryptoParametersEncrypt, ContainerType.List);
             EncryptingContainer.Append(TestData300);
             EncryptingContainer.Append(TestData300);
-            ReadContainer(EncryptingContainer, ContainerHeadersEncryptSingleSession);
+            ContainerHeadersEncryptSingleSession = ReadContainer(EncryptingContainer);
             ContainerFramingEncrypted = ConsoleWriter.ToString();
 
-            var EncryptedContainer = MakeContainer("Test1EncSep", CryptoParametersEncrypt, ContainerType.List);
+
+            // Encrypt a sequence of items with a key exchange per item.
+            var EncryptedContainer = MakeContainer("Test1EncSep", CryptoParametersPlaintext, ContainerType.List);
             EncryptedContainer.Append(TestData300, CryptoParameters: CryptoParametersEncrypt);
             EncryptedContainer.Append(TestData300, CryptoParameters: CryptoParametersEncrypt);
-            //ReadContainer(EncryptedContainer, ContainerHeadersEncryptIndependentSession);
+            ContainerHeadersEncryptIndependentSession = ReadContainer(EncryptedContainer);
             ContainerFramingEncryptedIndependent = ConsoleWriter.ToString();
             }
 
         //public string ContainerFramingEncrypted;
-        public List<ContainerHeader> ContainerHeadersEncryptSingleSession = new List<ContainerHeader>();
-        public List<ContainerHeader> ContainerHeadersEncryptIndependentSession = new List<ContainerHeader>();
-
+        public List<ContainerFrame> ContainerHeadersEncryptSingleSession;
+        public List<ContainerFrame> ContainerHeadersEncryptIndependentSession;
 
         public byte[] Enhance(
                     byte[] MasterSecret,
@@ -206,68 +255,33 @@ namespace ExampleGenerator {
                 Salt = Salt ?? Platform.GetRandomBits(128),
                 MasterSecret = MasterSecret
                 };
-            return CryptoStack.Encode(Plaintext, out var Trailer, null, PackagingFormat.EDS);
+            return CryptoStack.EncodeEDS(Plaintext, null);
             }
 
         static readonly byte[] MasterKeyInfo = "master".ToUTF8();
 
-        public Key EphemeralPrivateKey;
-        public BigInteger DareEncryptAgreement;
-        public KeyDerive DareEncrypt;
-        public byte[] DareEncrypEncryptionKey;
 
-        DARERecipient MakeRecipient (byte[] MasterKey, KeyPairDH PublicKey) {
-
-            //ExchangeProvider.Encrypt(MasterKey, out var Exchange, out var Ephemeral);
-
-            //var ExchangeProvider = new CryptoProviderExchangeDH(PublicKey);
-
-            var EphemeralPrivate = new DiffeHellmanPrivate(PublicKey.DHDomain);
-            EphemeralPrivateKey = Key.GetPrivate(new KeyPairDH(EphemeralPrivate, KeySecurity: KeySecurity.Exportable));
-
-            var EphemeralPublic = EphemeralPrivate.DiffeHellmanPublic;
-
-            DareEncryptAgreement = EphemeralPrivate.Agreement(PublicKey.PublicKey);
-
-            var Result = new DiffieHellmanResult() {
-                DiffeHellmanPublic = EphemeralPublic,
-                Agreement = DareEncryptAgreement
-                };
-
-            var DareEncryptKeyDerive = Result.KeyDerive;
-            DareEncrypEncryptionKey = DareEncryptKeyDerive.Derive(MasterKeyInfo, Length: 256);
-            var Exchange = Platform.KeyWrapRFC3394.Wrap(DareEncrypEncryptionKey, MasterKey);
-
-
-            var JoseKey = Key.GetPublic(new KeyPairDH(EphemeralPublic));
-
-            return new DARERecipient() {
-                KeyIdentifier = PublicKey.UDF,
-                Epk = JoseKey,
-                WrappedMasterKey = Exchange
-                };
-            }
 
 
         public string ContainerFramingSimple = "";
-        StringWriter ConsoleWriter ;
+        StringWriter ConsoleWriter;
 
-        public List<ContainerHeader> ContainerHeadersSimple = new List<ContainerHeader>();
-        public List<ContainerHeader> ContainerHeadersChain = new List<ContainerHeader>();
-        public List<ContainerHeader> ContainerHeadersTree = new List<ContainerHeader>();
-        public List<ContainerHeader> ContainerHeadersMerkleTree = new List<ContainerHeader>();
-
-
-        
+        public List<ContainerFrame> ContainerHeadersSimple;
+        public List<ContainerFrame> ContainerHeadersChain;
+        public List<ContainerFrame> ContainerHeadersTree;
+        public List<ContainerFrame> ContainerHeadersMerkleTree;
+        public List<ContainerFrame> ContainerHeadersSigned;
 
 
-        void GoContainer () {
+
+
+        void GoContainer() {
             var CryptoParametersPlaintext = new CryptoParametersTest();
 
             // Simple
             var TContainer = MakeContainer("Test1List", CryptoParametersPlaintext, ContainerType.List);
             TContainer.Append(TestData300);
-            ReadContainer(TContainer, ContainerHeadersSimple);
+            ContainerHeadersSimple = ReadContainer(TContainer);
             ContainerFramingSimple = ConsoleWriter.ToString();
 
 
@@ -276,7 +290,7 @@ namespace ExampleGenerator {
             TContainer.Append(TestData300);
             TContainer.Append(TestData300);
             TContainer.Append(TestData300);
-            ReadContainer(TContainer, ContainerHeadersChain);
+            ContainerHeadersChain = ReadContainer(TContainer);
 
 
             // Tree
@@ -287,7 +301,7 @@ namespace ExampleGenerator {
             TContainer.Append(TestData300);
             TContainer.Append(TestData300);
             TContainer.Append(TestData300);
-            ReadContainer(TContainer, ContainerHeadersTree);
+            ContainerHeadersTree = ReadContainer(TContainer);
 
 
             // Merkle Tree
@@ -298,8 +312,13 @@ namespace ExampleGenerator {
             TContainer.Append(TestData300);
             TContainer.Append(TestData300);
             TContainer.Append(TestData300);
-            ReadContainer(TContainer, ContainerHeadersMerkleTree);
+            ContainerHeadersMerkleTree = ReadContainer(TContainer);
 
+
+            TContainer = MakeContainer("Test1Sign", CryptoParametersPlaintext, ContainerType.MerkleTree);
+            TContainer.Append(TestData300);
+            TContainer.Append(TestData300, CryptoParametersSign);
+            ContainerHeadersSigned = ReadContainer(TContainer);
 
             ExampleGenerator.MeshExamplesContainer(this);
 
@@ -308,32 +327,183 @@ namespace ExampleGenerator {
             //ExampleGenerator.MakeExamplesKeyExchange(this);
             }
 
-        KeyExchangeClient KeyExchangeClient;
-        KeyExchangePortalTraced KeyExchangePortalTraced;
+        //KeyExchangeClient KeyExchangeClient;
+        //KeyExchangePortalTraced KeyExchangePortalTraced;
 
         public TraceDictionary KeyExchangeTraces;
         public Key ClientDHIdentity;
         public string TraceDH = "DiffieHellman";
 
-        void GoKeyExchange () {
+        //AdvancedRecovery
+        public byte[] AdvancedRecoveryMaster;
+        public int AdvancedRecoveryThreshold = 3;
+        public int AdvancedRecoveryCount = 5;
+        public BigInteger[] AdvancedRecoveryPolynomial;
+        public KeyShare[] AdvancedRecoveryShares;
+        public BigInteger[] AdvancedRecoveryShareValues;
+        public byte[][] AdvancedRecoverySharesHex;
+        public string[] AdvancedRecoveryBase32;
 
-            Message.Append(Message._TagDictionary, ExchangeMessage._TagDictionary);
-            KeyExchangePortalTraced = new KeyExchangePortalTraced(NameService);
-            KeyExchangePortal.Default = KeyExchangePortalTraced;
-
-            KeyExchangeClient = new KeyExchangeClient(AccountID);
-
-            KeyExchangeTraces = KeyExchangePortalTraced.Traces;
-            KeyExchangeTraces.Label(TraceDH);
-
-            var DHProvider = CryptoCatalog.Default.GetRecryption(CryptoAlgorithmID.DH);
-            DHProvider.Generate(KeySecurity.Exportable, 2048);
-
-            var ClientIdentity = DHProvider.KeyPair;
+        //AdvancedCogen
+        public DeviceProfile AdvancedCogenDeviceProfile;
+        public byte[] AdvancedCogenPrivateKeySeed;
+        public PrivateKeyECDH AdvancedCogenPrivateKeyValue;
+        public PublicKeyECDH AdvancedCogenCompositeKey;
+        public DAREMessage AdvancedCogenPrivateKeySeedEncrypted;
 
 
-            var Ticket = KeyExchangeClient.GetTicket(DHProvider);
+        //AdvancedRecryption
+        public string AdvancedRecryptionGroupID = "recrypt@example.com";
+        public PersonalProfile AdvancedRecryptionGroup;
+        public string AdvancedRecryptionMessagePlaintext;
+        public DAREMessage AdvancedRecryptionMessageEncrypted;
+        public ApplicationProfile AdvancedRecryptionBobProfile;
+        public Key AdvancedRecryptionBobDecryptionKey;
+        public Key AdvancedRecryptionBobRecryptionKey;
+        public Key AdvancedRecryptionBobRecryptionEntry;
+        public Object AdvancedRecryptionRecryptionAddMemberRequest;
+        public Object AdvancedRecryptionRecryptionRecryptionRequest;
+        public Object AdvancedRecryptionRecryptionRecryptionResponse;
+        public Object AdvancedRecryptionDecryptionValue;
+        public Object AdvancedRecryptionKeyAgreementValue;
+
+        //AdvancedQuantum
+        public byte[] AdvancedQuantumMasterSecret;
+        public string[] AdvancedQuantumShares;
+        public byte[][] AdvancedQuantumPrivate;
+        public byte[] AdvancedQuantumPublic;
+        public string AdvancedQuantumPublicUDF;
+
+        void GoAdvanced() {
+
+            // AdvancedRecovery 
+            var AdvancedRecoveryMaster = CryptoCatalog.GetBits(128);
+            var Secret = new Secret(AdvancedRecoveryMaster);
+            var AdvancedRecoveryShares = Secret.Split(AdvancedRecoveryThreshold,
+                    AdvancedRecoveryCount, out AdvancedRecoveryPolynomial);
+            AdvancedRecoveryShareValues = new BigInteger[AdvancedRecoveryCount];
+            AdvancedRecoverySharesHex = new byte[AdvancedRecoveryCount][];
+            AdvancedRecoveryBase32 = new string[AdvancedRecoveryCount];
+
+            for (var i = 0; i < AdvancedRecoveryCount; i++) {
+                AdvancedRecoveryShareValues[i] = AdvancedRecoveryShares[i].Value;
+                AdvancedRecoverySharesHex[i] = AdvancedRecoveryShares[i].Key;
+                AdvancedRecoveryBase32[i] = AdvancedRecoveryShares[i].Text;
+                }
+
+            // AdvancedCogen
+            AdvancedCogenDeviceProfile = new DeviceProfile(
+                        "AliceWatch", "A wearable watch computer",
+                        CryptoAlgorithmID.Ed25519,
+                        CryptoAlgorithmID.XEd25519);
+
+
+            var AdvancedCogenDeviceSignPublic =
+                (PublicKeyECDH)AdvancedCogenDeviceProfile.DeviceSignatureKey.PublicParameters;
+            var AdvancedCogenDeviceSignPrivate =
+                (PrivateKeyECDH)AdvancedCogenDeviceProfile.DeviceSignatureKey.PrivateParameters;
+
+            AdvancedCogenPrivateKeySeed = CryptoCatalog.GetBits(128);
+            var CogenPrivateKeyValue = new PrivateKeyECDH(AdvancedCogenPrivateKeySeed, true);
+
+            AdvancedCogenPrivateKeyValue = AdvancedCogenDeviceSignPrivate.CombinePrivate(CogenPrivateKeyValue);
+            AdvancedCogenCompositeKey = AdvancedCogenDeviceSignPublic.CombinePublic(CogenPrivateKeyValue);
+
+            AdvancedCogenPrivateKeySeedEncrypted = AdvancedCogenDeviceProfile.DareEncrypt(AdvancedCogenPrivateKeyValue);
+
+
+            //AdvancedRecryption
+            //var AliceProfile = MakeProfile("", out var AliceKeyCollection);
+            //var BobProfile = MakeProfile("", out var BobKeyCollection);
+
+            //AddMessage(AliceProfile);
+            //AddMessage(BobProfile);
+
+            //var RecryptionGroup = new RecryptionGroup ("recrypt@example.com");
+            //RecryptionGroup.AddAdmin(AliceProfile);
+            //RecryptionGroup.AddMember(BobProfile);
+
+            //AdvancedRecryptionMessagePlaintext = $"Welcome to the group {AdvancedRecryptionGroupID}";
+            //AdvancedRecryptionMessageEncrypted = RecryptionGroup.Encrypt(AdvancedRecryptionMessagePlaintext);
+
+            //BobKeyCollection.Decrypt(AdvancedRecryptionMessageEncrypted);
+
+
+            //public ApplicationProfile AdvancedRecryptionGroup;
+            //public string AdvancedRecryptionMessagePlaintext;
+            //public DAREMessage AdvancedRecryptionMessageEncrypted;
+            //public ApplicationProfile AdvancedRecryptionBobProfile;
+            //public Key AdvancedRecryptionBobDecryptionKey;
+            //public Key AdvancedRecryptionBobRecryptionKey;
+            //public Key AdvancedRecryptionBobRecryptionEntry;
+            //public Object AdvancedRecryptionRecryptionAddMemberRequest;
+            //public Object AdvancedRecryptionRecryptionRecryptionRequest;
+            //public Object AdvancedRecryptionRecryptionRecryptionResponse;
+            //public Object AdvancedRecryptionDecryptionValue;
+            //public Object AdvancedRecryptionKeyAgreementValue;
+
+
+
+
+
+            // AdvancedQuantum
+
+            var XMSS = new XMSS();
+            AdvancedQuantumMasterSecret = XMSS.MasterSecret;
+            var AdvancedQuantumKeyShares = Secret.Split(AdvancedRecoveryThreshold,
+                    AdvancedRecoveryCount, out AdvancedRecoveryPolynomial);
+            AdvancedQuantumShares = new string[AdvancedRecoveryCount];
+            for (var i = 0; i < AdvancedRecoveryCount; i++) {
+                AdvancedQuantumShares[i] = AdvancedQuantumKeyShares[i].Text;
+                }
+
+
+            AdvancedQuantumPrivate = XMSS.Private;
+            AdvancedQuantumPublic = XMSS.Public;
+            AdvancedQuantumPublicUDF = XMSS.UDF;
+
+            ExampleGenerator.ExamplesAdvancedSplitting(this);
+            ExampleGenerator.ExamplesAdvancedCoGeneration(this);
+            ExampleGenerator.ExamplesAdvancedRecryption(this);
+            ExampleGenerator.ExamplesAdvancedQuantum(this);
             }
+
+        // make a profile and bind to the specified address
+        PersonalProfile MakeProfile(string Addressl, out KeyCollection keyCollection) => throw new NYI();
+
+        void AddMessage (PersonalProfile PersonalProfile) => throw new NYI();
+
+        void GoReference() {
+            StartService();
+
+
+            ExampleGenerator.ExamplesCatalog(this);
+            ExampleGenerator.ExamplesPortal(this);
+            ExampleGenerator.ExamplesProfile(this);
+            ExampleGenerator.ExamplesMessaging(this);
+            }
+
+
+
+        //void GoKeyExchange () {
+
+        //    Message.Append(Message._TagDictionary, ExchangeMessage._TagDictionary);
+        //    KeyExchangePortalTraced = new KeyExchangePortalTraced(NameService);
+        //    KeyExchangePortal.Default = KeyExchangePortalTraced;
+
+        //    KeyExchangeClient = new KeyExchangeClient(AccountID);
+
+        //    KeyExchangeTraces = KeyExchangePortalTraced.Traces;
+        //    KeyExchangeTraces.Label(TraceDH);
+
+        //    var DHProvider = CryptoCatalog.Default.GetRecryption(CryptoAlgorithmID.DH);
+        //    DHProvider.Generate(KeySecurity.Exportable, 2048);
+
+        //    var ClientIdentity = DHProvider.KeyPair;
+
+
+        //    var Ticket = KeyExchangeClient.GetTicket(DHProvider);
+        //    }
 
 
         public Container MakeContainer (
@@ -359,16 +529,23 @@ namespace ExampleGenerator {
             }
 
 
-        public void ReadContainer (Container Container, List<ContainerHeader> ContainerHeaders) {
+        public List<ContainerFrame>  ReadContainer (Container Container) {
+            var ContainerHeaders = new List<ContainerFrame> {
+                new ContainerFrame {
+                    Header = Container.ContainerHeaderFirst
+                    }
+                };
+            Console.WriteLine($"First Frame {Container.ContainerHeader}");
+            foreach (var ContainerDataReader in Container) {
+                var Trailer = (ContainerDataReader as ContainerFramerReader).GetTrailer();
 
-            //Goedel.Protocol.JSONReader.Trace = true; // HACK: 
-
-            Container.First();
-            ContainerHeaders.Add(Container.ContainerHeader);
-            //while (!Container.EOF) {
-            //    Container.Next();
-            //    ContainerHeaders.Add(Container.ContainerHeader);
-            //    }
+                ContainerHeaders.Add(new ContainerFrame {
+                    Header = ContainerDataReader.Header,
+                    Trailer = Trailer
+                    });
+                Console.WriteLine($"Read Frame {ContainerDataReader.Header}");
+                }
+            return ContainerHeaders;
             }
 
         void GoMesh () {
@@ -379,7 +556,7 @@ namespace ExampleGenerator {
             ExampleGenerator.MakeExamplesCalendar(this);
             ExampleGenerator.MakeExamplesMail(this);
             ExampleGenerator.MakeExamplesSSH(this);
-
+            
             //StartService();
 
             //CreateProfile();
@@ -411,7 +588,7 @@ namespace ExampleGenerator {
 
             Portal = new MeshPortalTraced(NameService, LogMesh, LogPortal);
             MeshPortal.Default = Portal;
-
+            Traces = Portal.Traces;
             MeshClient = new MeshClient(PortalAccount: AccountID);
             }
 

@@ -60,6 +60,7 @@ namespace Goedel.Cryptography.Windows {
     /// <summary>
     /// Data could not be encrypted. 
     /// </summary>
+    [Serializable]
     public class EncryptionFailed : global::System.Exception {
 
 		/// <summary>

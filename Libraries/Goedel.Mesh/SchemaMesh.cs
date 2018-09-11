@@ -19,7 +19,8 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 //  
-//  
+//  #% var InheritsOverride = "override"; // "virtual"
+
 using System;
 using System.IO;
 using System.Collections;
@@ -86,7 +87,10 @@ namespace Goedel.Mesh {
 			{"ConnectionRequest", ConnectionRequest._Factory},
 			{"SignedConnectionRequest", SignedConnectionRequest._Factory},
 			{"ConnectionResult", ConnectionResult._Factory},
-			{"SignedConnectionResult", SignedConnectionResult._Factory}			};
+			{"SignedConnectionResult", SignedConnectionResult._Factory},
+			{"ProfileApplicationMessage", ProfileApplicationMessage._Factory},
+			{"MeshMessage", MeshMessage._Factory},
+			{"MeshMessageConnectionRequest", MeshMessageConnectionRequest._Factory}			};
 
 		/// <summary>
         /// Construct an instance from the specified tagged JSONReader stream.
@@ -3973,6 +3977,388 @@ namespace Goedel.Mesh {
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
+				default : {
+					base.DeserializeToken(JSONReader, Tag);
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
+	/// <summary>
+	///
+	/// Personal profile entries for Mesh messaging
+	/// </summary>
+	public partial class ProfileApplicationMessage : ApplicationProfile {
+        /// <summary>
+        /// </summary>
+
+		public virtual Key						KeyEncryption  {get; set;}
+		
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "ProfileApplicationMessage";
+
+		/// <summary>
+        /// Factory method
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JSONObject _Factory () => new ProfileApplicationMessage();
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="Writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
+			SerializeX (Writer, wrap, ref first);
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_Writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			if (_wrap) {
+				_Writer.WriteObjectStart ();
+				}
+			((ApplicationProfile)this).SerializeX(_Writer, false, ref _first);
+			if (KeyEncryption != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("KeyEncryption", 1);
+					// expand this to a tagged structure
+					//KeyEncryption.Serialize (_Writer, false);
+					{
+						_Writer.WriteObjectStart();
+						_Writer.WriteToken(KeyEncryption._Tag, 1);
+						bool firstinner = true;
+						KeyEncryption.Serialize (_Writer, true, ref firstinner);
+						_Writer.WriteObjectEnd();
+						}
+				}
+			if (_wrap) {
+				_Writer.WriteObjectEnd ();
+				}
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <returns>The created object.</returns>		
+        public static new ProfileApplicationMessage FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
+			if (Tagged) {
+				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				return Out as ProfileApplicationMessage;
+				}
+		    var Result = new ProfileApplicationMessage ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			}
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
+		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+			
+			switch (Tag) {
+				case "KeyEncryption" : {
+					KeyEncryption = Key.FromJSON (JSONReader, true) ;  // A tagged structure
+					break;
+					}
+				default : {
+					base.DeserializeToken(JSONReader, Tag);
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
+	/// <summary>
+	///
+	/// Messages that are sent via Mesh Services.
+	/// </summary>
+	public partial class MeshMessage : MeshItem {
+		
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "MeshMessage";
+
+		/// <summary>
+        /// Factory method
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JSONObject _Factory () => new MeshMessage();
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="Writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
+			SerializeX (Writer, wrap, ref first);
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_Writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			if (_wrap) {
+				_Writer.WriteObjectStart ();
+				}
+			if (_wrap) {
+				_Writer.WriteObjectEnd ();
+				}
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <returns>The created object.</returns>		
+        public static new MeshMessage FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
+			if (Tagged) {
+				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				return Out as MeshMessage;
+				}
+		    var Result = new MeshMessage ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			}
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
+		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+			
+			switch (Tag) {
+				default : {
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
+	/// <summary>
+	/// </summary>
+	public partial class MeshMessageConnectionRequest : MeshMessage {
+        /// <summary>
+        ///The party that is making the request for a connection
+        /// </summary>
+
+		public virtual PersonalProfile						Sender  {get; set;}
+        /// <summary>
+        ///Optional party acting as an introducer. 
+        ///E.g. Alice is Bob's boss. When she hires Carol, she sends Bob
+        ///the introduction as a contact request.
+        /// </summary>
+
+		public virtual PersonalProfile						Introducer  {get; set;}
+        /// <summary>
+        ///List of privileges that the subject is requesting
+        /// </summary>
+
+		public virtual List<string>				Privileges  {get; set;}
+        /// <summary>
+        ///Mesh service address of the intended recipient.
+        /// </summary>
+
+		public virtual List<string>				Recipient  {get; set;}
+		
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "MeshMessageConnectionRequest";
+
+		/// <summary>
+        /// Factory method
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JSONObject _Factory () => new MeshMessageConnectionRequest();
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="Writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
+			SerializeX (Writer, wrap, ref first);
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_Writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			if (_wrap) {
+				_Writer.WriteObjectStart ();
+				}
+			((MeshMessage)this).SerializeX(_Writer, false, ref _first);
+			if (Sender != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Sender", 1);
+					Sender.Serialize (_Writer, false);
+				}
+			if (Introducer != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Introducer", 1);
+					Introducer.Serialize (_Writer, false);
+				}
+			if (Privileges != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Privileges", 1);
+				_Writer.WriteArrayStart ();
+				bool _firstarray = true;
+				foreach (var _index in Privileges) {
+					_Writer.WriteArraySeparator (ref _firstarray);
+					_Writer.WriteString (_index);
+					}
+				_Writer.WriteArrayEnd ();
+				}
+
+			if (Recipient != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Recipient", 1);
+				_Writer.WriteArrayStart ();
+				bool _firstarray = true;
+				foreach (var _index in Recipient) {
+					_Writer.WriteArraySeparator (ref _firstarray);
+					_Writer.WriteString (_index);
+					}
+				_Writer.WriteArrayEnd ();
+				}
+
+			if (_wrap) {
+				_Writer.WriteObjectEnd ();
+				}
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <returns>The created object.</returns>		
+        public static new MeshMessageConnectionRequest FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
+			if (Tagged) {
+				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				return Out as MeshMessageConnectionRequest;
+				}
+		    var Result = new MeshMessageConnectionRequest ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			}
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
+		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+			
+			switch (Tag) {
+				case "Sender" : {
+					// An untagged structure
+					Sender = new PersonalProfile ();
+					Sender.Deserialize (JSONReader);
+ 
+					break;
+					}
+				case "Introducer" : {
+					// An untagged structure
+					Introducer = new PersonalProfile ();
+					Introducer.Deserialize (JSONReader);
+ 
+					break;
+					}
+				case "Privileges" : {
+					// Have a sequence of values
+					bool _Going = JSONReader.StartArray ();
+					Privileges = new List <string> ();
+					while (_Going) {
+						string _Item = JSONReader.ReadString ();
+						Privileges.Add (_Item);
+						_Going = JSONReader.NextArray ();
+						}
+					break;
+					}
+				case "Recipient" : {
+					// Have a sequence of values
+					bool _Going = JSONReader.StartArray ();
+					Recipient = new List <string> ();
+					while (_Going) {
+						string _Item = JSONReader.ReadString ();
+						Recipient.Add (_Item);
+						_Going = JSONReader.NextArray ();
+						}
+					break;
+					}
 				default : {
 					base.DeserializeToken(JSONReader, Tag);
 					break;

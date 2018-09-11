@@ -57,17 +57,10 @@ namespace Goedel.Cryptography {
                 Platform.BlockProviderFactoryAes = AesBlock.Factory;
 
 
-                // Although this is in the portable library, we register it here so
-                // as to allow for the possibility we might override it.
+                // Register the cryptographic algorithm implementations defined in this
+                // library. These may be overriden by platform specific implementations.
                 CryptoProviderExchangeDH.Register();
-
-
-
-                //Configure the key pair factories
-
-                KeyPairBaseDH.KeyPairPublicFactory = KeyPairDH.KeyPairPublicFactory;
-                KeyPairBaseDH.KeyPairPrivateFactory = KeyPairDH.KeyPairPrivateFactory;
-
+                CryptoProviderExchangeECDH.Register();
 
 
                 }

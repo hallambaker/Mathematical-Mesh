@@ -41,7 +41,7 @@ namespace Goedel.Cryptography.Windows {
                     " Private Key " + UDF;
             var JoseKey = Key.Factory(Data);
             var Plaintext = JoseKey.ToJson(true);
-            var CipherText = DPAPI.Encrypt(Plaintext, Description: Description, EntropyBytes: EntropyBytes);
+            var CipherText = NativeMethods .Encrypt(Plaintext, Description: Description, EntropyBytes: EntropyBytes);
             var File = FileName (UDF);
 
             var Directory = System.IO.Directory.CreateDirectory(KeystoreUserPrivate);
@@ -74,7 +74,7 @@ namespace Goedel.Cryptography.Windows {
             Array.Copy(Data, CipherText, Length);
 
             //string Description;
-            var Plaintext = DPAPI.Decrypt(CipherText, out var Description, EntropyBytes);
+            var Plaintext = NativeMethods .Decrypt(CipherText, out var Description, EntropyBytes);
             var PlaintextText = Plaintext.ToUTF8();
             var JoseKey = Key.FromJSON(PlaintextText.JSONReader());
 

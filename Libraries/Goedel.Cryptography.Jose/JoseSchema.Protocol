@@ -297,6 +297,31 @@
 		Inherits PublicKeyDH
 		Binary Private
 			Description
+				|The private key.
+
+	Structure PublicKeyECDH
+		Description
+			|An Elliptic Curve Diffie Hellman public key
+		Inherits Key
+		String Curve
+			Tag "crv"
+			Description
+				|The curve specifier (X25519, Ed25519, X448, Ed448), etc.
+		Binary X
+			Tag "x"
+			Description
+				|The public key x parameter.
+		Binary Y
+			Tag "y"
+			Description
+				|The public key y parameter (if required).
+	
+	Structure PrivateKeyECDH
+		Description
+			|Diffie Helllman private key parameters
+		Inherits PublicKeyECDH
+		Binary Private
+			Description
 				|The private key
 
 	Structure KeyAgreement

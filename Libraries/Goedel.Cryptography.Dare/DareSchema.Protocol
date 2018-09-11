@@ -83,10 +83,11 @@
 			Tag "enc"
 			Description
 				|The encryption algorithm as specified in JWE
-		String AuthenticationAlgorithm
-			Tag "mac"
+		String DigestAlgorithm
+			Tag "dig"
 			Description
-				|Message Authentication Code algorithm
+				|Digest Algorithm. If specified, tells decoder that the digest algorithm is used to
+				|construct a signature over the message payload.
 		Binary Salt
 			Description
 				|Salt value used to derrive cryptographic parameters for the content data.
@@ -114,10 +115,10 @@
 			Description
 				|The content type field as specified in JWE
 		Binary EDSS
-			Tag "edss"
+			Tag "Annotations"
 			Multiple
 			Description
-				|If present, the Encrypted Data Segments field contains a sequence of Encrypted Data 
+				|If present, the Annotations field contains a sequence of Encrypted Data 
 				|Segments encrypted under the message Master Key. The interpretation of these fields 
 				|is application specific.
 
@@ -185,6 +186,13 @@
 			Tag "signature"
 			Description
 				|The signature value as an Enhanced Data Sequence under the message Master Key.
+		Binary WitnessValue
+			Tag "witness"
+			Description
+				|The signature witness value used on an encrypted message to demonstrate that 
+				|the signature was authorized by a party with actual knowledge of the encryption 
+				|key used to encrypt the message.
+
 
 	Structure DARERecipient
 		Description

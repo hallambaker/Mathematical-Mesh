@@ -1,0 +1,117 @@
+﻿#using System.Text
+#using Goedel.Mesh
+#using Goedel.Mesh.Portal
+#using Goedel.Mesh.Portal.Server
+#using Goedel.Protocol
+#xclass ExampleGenerator ExampleGenerator
+
+#file ExamplesProfile "Examples\\ExamplesProfile.md" CreateExamples Example
+
+##Mesh Profiles
+
+Every Mesh user has a Mesh profile which contains all the configuration information
+for all their devices and all their network services. For convenience, the mesh profile 
+is divided into four separate parts, the Master profile, the Personal Profile, Device 
+Profiles and Application Profiles as follows:
+
+####Mesh Master Profile
+
+The Mesh Master Profile describes the criteria for validating an owner's personal 
+profile. In particular, the master profile specifies the Master Signature Key 
+that is used as the root of trust under which the master profile is validated and
+a set of Administration Signature Keys under which the personal profile is 
+validated.
+
+Master Signature Key is immutable. By definition, it is not possible to change 
+the Master Signature Key without creating a new master profile.
+
+The UDF fingerprint of the Master Signature Key is the fingerprint of the Master
+Profile and the Personal Profile created underneath it.
+
+For example, Alice creates the following Master Profile, it has a Master Signature 
+Key and a Master Recovery Key. There is one administration device specified, the 
+correcponding device profile is described in the next section.
+
+~~~~
+{AliceMasterProfile}
+~~~~
+
+The UDF fingerprint of Alice's Master signature key is:
+
+~~~~
+{AliceFingerprint}
+~~~~
+
+A Master Profile MAY be revoked but never expires. It is the intended that a user
+should not normally need to change their master profile.
+
+The only means of expiring a master profile that is currently supported is to 
+sign a 'suicide note' for the profile. This is an assertion that the master 
+profile is invalid that has been signed by the user. An application MAY generate
+such a suicide note at the time that the master profile is created and archive it
+so that the profile owner's executors can revoke the profile after death.
+
+~~~~
+{AliceMasterProfileSuicide}
+~~~~
+
+Since a Master Signature Key is immutable, no provision is made for modifying a Master 
+Signature Key, nor is such provision possible. Should a user lose control of the private
+keys listed in their master profile, the only remediation possible is to create a
+new Master Signature Key and master profile and then persuade parties relying on the 
+original that it is the successor.
+
+
+####Mesh Device Profile
+
+To make use of the Mesh Profile, Alice needs to connect at least one device. Every device
+profile has an encryption, signature and authentication key.
+
+Alice decides to use her desktop personal computer as her first administration device.
+Her device profile is:
+
+~~~~
+{AliceDeviceProfile}
+~~~~
+
+Note that each of the keys is a Diffie-Hellman Key. This enables the use
+of distributed key generation techniques as described in part III. These will
+be transitioned to Elliptic Curve Diffie Hellman keys for production use.
+
+
+####Mesh Personal Profile
+
+Alice's personal profile contains her master profile and a list of device profiles. 
+It is signed by her administration device using its signature key.
+
+
+Alice's personal profile specifies her master profile and the device profile of her 
+personal computer:
+
+~~~~
+{AlicePersonalProfile}
+~~~~
+
+A personal profile instance MUST specify the device profile of the administration profile 
+that signed that instance. 
+
+
+####Mesh Application Profile
+
+Alice also creates one or more application profiles, each of which are signed by her 
+administration key.
+
+Alice creates a credential catalog to allow her to create strong passwords with a work factor
+of 2^128 and use them on multiple devices, in this case, her administration device and
+her 
+
+~~~~
+{AliceApplicationProfile}
+~~~~
+
+
+#end file
+
+
+#end xclass
+

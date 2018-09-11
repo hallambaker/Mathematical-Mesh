@@ -14,7 +14,7 @@ namespace Goedel.Cryptography.Dare {
     /// provide for cryptographic integrity.
     /// </summary>
     /// <threadsafety static="true" instance="false"/>
-    public class ContainerTree : ContainerSimple {
+    public class ContainerTree : ContainerList {
 
         /// <summary>
         /// The label for the container type for use in header declarations
@@ -29,28 +29,18 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="JBCDStream">The underlying JBCDStream stream. This MUST be opened
         /// in a read access mode and should have exclusive read access. All existing
         /// content in the file will be overwritten.</param>
-        /// <param name="ContainerType">The container type. This determines whether
-        /// a tree index is to be created or not and if so, whether </param>
-        /// <param name="DigestAlgorithm">The digest algorithm to be used to calculate the PayloadDigest</param>
         /// <returns>The newly constructed container.</returns>
         public static new Container MakeNewContainer(
-                        JBCDStream JBCDStream,
-                        CryptoParameters CryptoParameters,
-                        ContainerType ContainerType = ContainerType.Chain,
-                        CryptoAlgorithmID DigestAlgorithm = CryptoAlgorithmID.Default) {
+                        JBCDStream JBCDStream) {
 
             var ContainerHeader = new ContainerHeaderFirst() {
                 ContainerType = Label,
                 Index = 0
                 };
 
-            CryptoProviderDigest DigestProvider = CryptoCatalog.Default.GetDigest(DigestAlgorithm);
-
-            Assert.True(ContainerType == ContainerType.Tree, InvalidContainerTypeException.Throw);
 
             var Container = new ContainerTree() {
                 JBCDStream = JBCDStream,
-                DigestProvider = DigestProvider,
                 ContainerHeaderFirst = ContainerHeader
                 };
 
@@ -112,7 +102,12 @@ namespace Goedel.Cryptography.Dare {
             return true;
             }
 
-
+        /// <summary>
+        /// Move to the specified frame index.
+        /// </summary>
+        /// <param name="Index">Frame index to move to</param>
+        /// <returns>If the move to the specified index succeeded, returns <code>true</code>.
+        /// Otherwise, returns <code>false</code>.</returns>
         public bool Move(long Index) {
             MoveToIndex(Index);
             return Next();
@@ -206,14 +201,14 @@ namespace Goedel.Cryptography.Dare {
         /// Append the header to the frame. This is called after the payload data
         /// has been passed using AppendPreprocess.
         /// </summary>
-        public override void AppendHeader() {
+        public override void CompleteHeader() {
 
 
             if (AppendContainerHeader.Index > 0) {
                 AppendContainerHeader.TreePosition = 
                     (int)PreviousFramePosition(AppendContainerHeader.Index);
                 }
-            base.AppendHeader();
+            base.CompleteHeader();
             }
 
 

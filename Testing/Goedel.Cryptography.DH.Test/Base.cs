@@ -33,7 +33,7 @@ namespace Goedel.Cryptography.DH.Test {
 
             var Instance = new TestCryptography();
 
-            Instance.TestDH_Encrypt();
+            Instance.TestDH_KeyGen();
 
             }
 

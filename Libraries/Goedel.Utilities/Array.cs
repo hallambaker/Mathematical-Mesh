@@ -60,6 +60,17 @@ namespace Goedel.Utilities {
             return Offset + Length;
             }
 
+        /// <summary>
+        /// Create a duplicate copy of a byte array. This allows the original data to be modified
+        /// or disposed of.
+        /// </summary>
+        /// <param name="Source">The source array</param>
+        /// <returns>The copied array</returns>
+        public static byte[] Duplicate(this byte[] Source) {
+            var Result = new byte[Source.Length];
+            Array.Copy(Source, Result, Source.Length);
+            return Result;
+            }
 
         /// <summary>
         /// Conditional truncation of an output value. If the value Length is zero,
@@ -71,7 +82,7 @@ namespace Goedel.Utilities {
         /// <returns>Truncated value</returns>
         public static byte[] OrTruncated (this byte[] Source, int Length) {
             if (Length <= 0) {
-                return Source;
+                return Duplicate(Source);
                 }
             Length = Length / 8; // Convert to bytes
             var Result = new byte[Length];

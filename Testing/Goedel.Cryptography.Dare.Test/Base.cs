@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using MT=Microsoft.VisualStudio.TestTools.UnitTesting;
 using Goedel.Cryptography;
 using Goedel.Utilities;
-using System.IO;
+using Goedel.IO;
 using Goedel.Protocol;
 using Goedel.Test;
 
@@ -17,27 +17,45 @@ namespace Goedel.Cryptography.Dare.Test {
         public static void TestDirect() {
             InitializeClass();
 
-            var TestDare = new TestDare();
-            //TestDare.MessagePlaintext();
-
-
-            var TestContainers = new TestContainers();
-
-            var Test1 = Platform.GetRandomBytes(1000);
+            var Test1 = Platform.GetRandomBytes(100);
             var Recipients = new List<string> { "Alice@example.com" };
             var Signers = new List<string> { "Alice@example.com" };
+
+            var TestDare = new TestDare();
+            var TestContainers = new TestContainers();
+            //TestDare.TestArchive1();
+
             var CryptoParameters = new CryptoParametersTest(
-                        //Recipients: Recipients,
+                        Recipients: Recipients
                         //Signers: Signers
                         );
+            TestContainers.TestContainer($"ContainerList", ContainerType.List, 2, 
+                CryptoParametersEntry: CryptoParameters);
+
+            //var EncryptingContainer = Container.NewContainer("Test1Enc", FileStatus.New, CryptoParameters, ContainerType.List);
+            //EncryptingContainer.Append(Test1);
+            //EncryptingContainer.Append(Test1);
+
+
+
+            //TestDare.TestMessageAtomic(Test1, CryptoParameters);
 
             //TestDare.ReadWriteArchive("TestArchive_", 1, CryptoParameters, false);
 
-            TestContainers.TestContainer($"ContainerList", ContainerType.Digest, 1, 
-                CryptoParameters: CryptoParameters);
+
+            //TestDare.TestArchive0();
 
 
-            //TestDare.MessageSignAtomic();
+            //
+
+
+
+
+            //TestContainers.TestContainer($"ContainerTest", ContainerType.List, 1,
+            //        CryptoParameters: CryptoParameters);
+
+
+            //TestContainers.ContainerTest500();
             //TestContainers.TestContainer($"ContainerList", ContainerType.List, 1);
             }
 

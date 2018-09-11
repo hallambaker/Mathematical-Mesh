@@ -21,20 +21,33 @@ namespace Goedel.Cryptography.Dare {
         public List<KeyPair> EncryptionKeys;
         /// <summary>The set of keys to use to sign</summary>
         public List<KeyPair> SignerKeys;
-        /// <summary>The encryption algorithm to use</summary>
-        public CryptoAlgorithmID EncryptID;
+
+
         /// <summary>The authentication algorithm to use</summary>
         public CryptoAlgorithmID DigestID;
 
+        /// <summary>The encryption algorithm to use</summary>
+        public CryptoAlgorithmID EncryptID;
 
-        CryptoAlgorithmID _AuthenticateID;
+
+
         /// <summary>
         /// If true, data is to be encrypted.
         /// </summary>
-        public bool Encrypt => EncryptionKeys != null;
+        public bool Encrypt  => EncryptID != CryptoAlgorithmID.NULL;
 
         /// <summary>
-        /// If true, data is to be encrypted.
+        /// If true, data is to be digested.
+        /// </summary>
+        public bool Digest  => DigestID != CryptoAlgorithmID.NULL;
+
+
+
+        void SetEncrypt () => EncryptID = EncryptID == CryptoAlgorithmID.NULL ? CryptoAlgorithmID.Default : EncryptID;
+        void SetDigest () => DigestID = DigestID == CryptoAlgorithmID.NULL ? CryptoAlgorithmID.Default : DigestID;
+
+        /// <summary>
+        /// If true, data is to be signed.
         /// </summary>
         public bool Sign => SignerKeys != null;
 
@@ -61,12 +74,13 @@ namespace Goedel.Cryptography.Dare {
                         List<string> Signers = null,
                         CryptoAlgorithmID EncryptID = CryptoAlgorithmID.NULL,
                         CryptoAlgorithmID DigestID = CryptoAlgorithmID.NULL) {
+            this.DigestID = DigestID;
+            this.EncryptID = EncryptID;
 
             this.KeyCollection = KeyCollection;
 
             if (Recipients != null) {
-                EncryptID = EncryptID == CryptoAlgorithmID.NULL ? CryptoAlgorithmID.Default : EncryptID;
-                EncryptID = EncryptID == CryptoAlgorithmID.Default ? CryptoAlgorithmID.AES256CBC : EncryptID;
+                SetEncrypt();
 
                 EncryptionKeys = new List<KeyPair>();
                 foreach (var Entry in Recipients) {
@@ -75,24 +89,31 @@ namespace Goedel.Cryptography.Dare {
                 }
 
             if (Signers != null) {
-                DigestID = DigestID == CryptoAlgorithmID.NULL ? CryptoAlgorithmID.Default : DigestID;
+                SetDigest();
 
                 SignerKeys = new List<KeyPair>();
                 foreach (var Entry in Signers) {
                     AddSign(Entry);
                     }
                 }
-
-            this.EncryptID = EncryptID;
-            this.DigestID = DigestID == CryptoAlgorithmID.Default ? CryptoAlgorithmID.SHA_2_512 : DigestID;
             }
 
+        /// <summary>
+        /// Add a recipient entry.
+        /// </summary>
+        /// <param name="AccountId">Identifier of the key to add.</param>
         protected virtual void AddEncrypt(string AccountId) {
-            EncryptionKeys.Add(KeyCollection.MatchPublic(AccountId));
+            EncryptionKeys = EncryptionKeys ?? new List<KeyPair>();
+            EncryptionKeys.Add(KeyCollection.MatchPublicEncrypt(AccountId));
             }
 
+        /// <summary>
+        /// Ad a signer entry.
+        /// </summary>
+        /// <param name="AccountId">Identifier of the key to add.</param>
         protected virtual void AddSign(string AccountId) {
-            SignerKeys.Add(KeyCollection.MatchPrivate(AccountId));
+            SignerKeys = SignerKeys ?? new List<KeyPair>();
+            SignerKeys.Add(KeyCollection.MatchPrivateSign(AccountId));
             }
 
 
@@ -103,24 +124,59 @@ namespace Goedel.Cryptography.Dare {
         public CryptoStack GetCryptoStack() => new CryptoStack(this);
 
 
+        ///// <summary>
+        ///// Calculate the length of the trailer.
+        ///// </summary>
+        ///// <returns></returns>
+        //public DARETrailer GetDummyTrailer() {
+        //    DARETrailer Result = null;
 
-        public int GetTrailerLength() {
-            DARETrailer Result = null;
-
-            var DigestLength = CryptoCatalog.Default.ResultInBytes(DigestID);
+        //    var DigestLength = CryptoCatalog.Default.ResultInBytes(DigestID);
 
 
-            if (DigestLength > 0) {
-                Result = new DARETrailer() {
-                    PayloadDigest = new byte[DigestLength]
-                    };
-                }
+        //    if (DigestLength > 0) {
+        //        Result = new DARETrailer() {
+        //            PayloadDigest = new byte[DigestLength]
+        //            };
+        //        }
 
-            return Result == null ? -1 : Result.GetBytes().Length;
+        //    return Result;
 
-            }
+        //    }
+
+        //CryptoProviderDigest DigestProvider {
+        //    get {
+        //        _DigestProvider = _DigestProvider ?? CryptoCatalog.Default.GetDigest(DigestID);
+        //        return _DigestProvider;
+        //        }
+        //    }
+        //CryptoProviderDigest _DigestProvider;
+
+
+        ///// <summary>
+        ///// Combine digests to produce the digest for a node.
+        ///// </summary>
+        ///// <param name="First">The left hand digest.</param>
+        ///// <param name="Second">The right hand digest.</param>
+        ///// <returns>The digest value.</returns>
+        //public byte[] CombineDigest(byte[] First, byte[] Second) {
+        //    var Length = DigestProvider.Size / 8;
+
+        //    var Buffer = new byte[Length * 2];
+        //    if (First != null) {
+        //        Assert.True(Length == First.Length);
+        //        Array.Copy(First, Buffer, Length);
+        //        }
+        //    if (Second != null) {
+        //        Assert.True(Length == Second.Length);
+        //        Array.Copy(Second, 0, Buffer, Length, Length);
+        //        }
+
+
+        //    return DigestProvider.ProcessData(Buffer); ;
+        //    }
+
         }
-
 
 
     }

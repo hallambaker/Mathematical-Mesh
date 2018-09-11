@@ -21,51 +21,58 @@ namespace Goedel.Cryptography.Windows.Test {
             // Test: Delete all test keys
             }
 
-        /// <summary>Test key lifecycles</summary>
-        [TestMethod]
-        public void Test_Windows_LifecycleMaster_RSA() => CryptoAlgorithmID.RSAExch.Test_LifecycleMaster();
-
-        /// <summary>Test key lifecycles</summary>
-        [TestMethod]
-        public void Test_Windows_LifecycleAdmin_RSA() => CryptoAlgorithmID.RSAExch.Test_LifecycleAdmin();
-
-        /// <summary>Test key lifecycles</summary>
-        [TestMethod]
-        public void Test_Windows_LifecycleDevice_RSA() => CryptoAlgorithmID.RSAExch.Test_LifecycleDevice();
-
-        /// <summary>Test key lifecycles</summary>
-        [TestMethod]
-        public void Test_Windows_LifecycleEphemeral_RSA() => CryptoAlgorithmID.RSAExch.Test_LifecycleEphemeral();
-
-        /// <summary>The reason this test fails is that the doofus RSACryptoServiceProvider
-        /// does not allow ephemeral keys to be imported. It is stupid, stupid, stupid.
-        /// Fixing this will require transitioning to the RSACng provider which
-        /// will take some time and should probably be done at the same time
-        /// that the ECDH keys are added.</summary>
-        [TestMethod]
-        public void Test_Windows_LifecycleExportable_RSA() => CryptoAlgorithmID.RSAExch.Test_LifecycleExportable();
+        public void Test_Windows_Lifecycle_RSAExch() => CryptoAlgorithmID.RSAExch.Test_Lifecycle();
+        public void Test_Windows_Lifecycle_RSASign() => CryptoAlgorithmID.RSASign.Test_Lifecycle();
+        public void Test_Windows_Lifecycle_DH() => CryptoAlgorithmID.DH.Test_Lifecycle();
+        public void Test_Windows_Lifecycle_Ed25519() => CryptoAlgorithmID.Ed25519.Test_Lifecycle();
+        public void Test_Windows_Lifecycle_Ed448() => CryptoAlgorithmID.Ed448.Test_Lifecycle();
 
 
-        /// <summary>Test key lifecycles</summary>
-        [TestMethod]
-        public void Test_Windows_LifecycleMaster_DH() => CryptoAlgorithmID.DH.Test_LifecycleMaster();
+        ///// <summary>Test key lifecycles</summary>
+        //[TestMethod]
+        //public void Test_Windows_LifecycleMaster_RSA() => CryptoAlgorithmID.RSAExch.Test_LifecycleMaster();
 
-        /// <summary>Test key lifecycles</summary>
-        [TestMethod]
-        public void Test_Windows_LifecycleAdmin_DH() => CryptoAlgorithmID.DH.Test_LifecycleAdmin();
+        ///// <summary>Test key lifecycles</summary>
+        //[TestMethod]
+        //public void Test_Windows_LifecycleAdmin_RSA() => CryptoAlgorithmID.RSAExch.Test_LifecycleAdmin();
 
-        /// <summary>Test key lifecycles</summary>
-        [TestMethod]
-        public void Test_Windows_LifecycleDevice_DH() => CryptoAlgorithmID.DH.Test_LifecycleDevice();
+        ///// <summary>Test key lifecycles</summary>
+        //[TestMethod]
+        //public void Test_Windows_LifecycleDevice_RSA() => CryptoAlgorithmID.RSAExch.Test_LifecycleDevice();
 
-        /// <summary>Test key lifecycles</summary>
-        [TestMethod]
-        public void Test_Windows_LifecycleEphemeral_DH() => CryptoAlgorithmID.DH.Test_LifecycleEphemeral();
+        ///// <summary>Test key lifecycles</summary>
+        //[TestMethod]
+        //public void Test_Windows_LifecycleEphemeral_RSA() => CryptoAlgorithmID.RSAExch.Test_LifecycleEphemeral();
+
+        ///// <summary>The reason this test fails is that the doofus RSACryptoServiceProvider
+        ///// does not allow ephemeral keys to be imported. It is stupid, stupid, stupid.
+        ///// Fixing this will require transitioning to the RSACng provider which
+        ///// will take some time and should probably be done at the same time
+        ///// that the ECDH keys are added.</summary>
+        //[TestMethod]
+        //public void Test_Windows_LifecycleExportable_RSA() => CryptoAlgorithmID.RSAExch.Test_LifecycleExportable();
 
 
-        /// <summary>Test key lifecycles</summary>
-        [TestMethod]
-        public void Test_Windows_LifecycleExportable_DH() => CryptoAlgorithmID.DH.Test_LifecycleExportable();
+        ///// <summary>Test key lifecycles</summary>
+        //[TestMethod]
+        //public void Test_Windows_LifecycleMaster_DH() => CryptoAlgorithmID.DH.Test_LifecycleMaster();
+
+        ///// <summary>Test key lifecycles</summary>
+        //[TestMethod]
+        //public void Test_Windows_LifecycleAdmin_DH() => CryptoAlgorithmID.DH.Test_LifecycleAdmin();
+
+        ///// <summary>Test key lifecycles</summary>
+        //[TestMethod]
+        //public void Test_Windows_LifecycleDevice_DH() => CryptoAlgorithmID.DH.Test_LifecycleDevice();
+
+        ///// <summary>Test key lifecycles</summary>
+        //[TestMethod]
+        //public void Test_Windows_LifecycleEphemeral_DH() => CryptoAlgorithmID.DH.Test_LifecycleEphemeral();
+
+
+        ///// <summary>Test key lifecycles</summary>
+        //[TestMethod]
+        //public void Test_Windows_LifecycleExportable_DH() => CryptoAlgorithmID.DH.Test_LifecycleExportable();
 
 
 

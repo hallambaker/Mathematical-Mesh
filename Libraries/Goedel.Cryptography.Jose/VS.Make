@@ -1,8 +1,7 @@
 
 # Supplemental Makefile for Visual Studios Projects
 #
-# Visual Studio is responsible for managing rules for production of
-# code but does not provide support for pre and post build actions.
+# Visual Studio runs tools for most projects but not for shared projects.
 # 
 # Prebuild items supported:
 #   [None currently]
@@ -25,7 +24,6 @@ LinkFiles = \
 ToolTargets = \
 	Exceptions.cs\
 	JoseSchema.cs
-
 Exceptions.cs : Exceptions.exceptional 
 	exceptional Exceptions.exceptional  /cs  Exceptions.cs
 
@@ -33,12 +31,13 @@ JoseSchema.cs : JoseSchema.Protocol
 	protogen JoseSchema.Protocol  /cs  JoseSchema.cs
 
 
+
 prebuildRecurse : 
 
 
 postbuildRecurse :
 
-
+# Non shared project, nothing to do
 prebuild : prebuildRecurse $(ToolTargets)
 
 postbuild : postbuildRecurse

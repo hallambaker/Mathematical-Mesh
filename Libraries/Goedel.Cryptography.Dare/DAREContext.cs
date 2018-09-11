@@ -11,6 +11,11 @@ namespace Goedel.Cryptography.Dare {
     public partial class DARERecipient {
 
         /// <summary>
+        /// Salt value used in the key derrivation function.
+        /// </summary>
+        public static readonly byte[] KDFSalt = "master".ToUTF8();
+
+        /// <summary>
         /// Default constructor. Used for serializatrion.
         /// </summary>
         public DARERecipient () {
@@ -24,7 +29,7 @@ namespace Goedel.Cryptography.Dare {
         /// <returns>The recipient informatin object.</returns>
         public DARERecipient (byte[] MasterKey, KeyPair PublicKey) {
             var ExchangeProvider = PublicKey.ExchangeProvider();
-            ExchangeProvider.Encrypt(MasterKey, out var Exchange, out var Ephemeral);
+            ExchangeProvider.Encrypt(MasterKey, out var Exchange, out var Ephemeral, Salt: KDFSalt);
             var JoseKey = Key.GetPublic(Ephemeral);
 
 

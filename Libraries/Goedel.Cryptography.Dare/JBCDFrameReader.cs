@@ -58,7 +58,9 @@ namespace Goedel.Cryptography.Dare {
         /// <returns></returns>
         public DARETrailer GetTrailer() {
             var HeaderBytes = JBCDStream.FramerGetData();
-            Trailer = DARETrailer.FromJSON(HeaderBytes.JSONReader(), false);
+            if (HeaderBytes != null) {
+                Trailer = DARETrailer.FromJSON(HeaderBytes.JSONReader(), false);
+                }
             return Trailer;
             }
 
@@ -124,7 +126,7 @@ namespace Goedel.Cryptography.Dare {
             }
 
         /// <summary>
-        /// Close the strem and finaliza all cryuptographic contexts.
+        /// Close the strem and finaliza all cryptographic contexts.
         /// </summary>
         public override void Close() {
             JBCDFrameReader?.Close();

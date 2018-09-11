@@ -192,6 +192,10 @@
 			Description
 				|List of postal addresses for this party
 
+		//TStruct EntryContactApplication Applications
+		//	Description
+		//		|Application specific contact data
+
 	Structure PersonalName
 		Description
 			|Personal name structure.
@@ -272,6 +276,7 @@
 		String FullName
 			Description
 				|The name of the organization
+		
 
 
 	// Calendar 
@@ -386,3 +391,4 @@
 		Inherits CatalogEntry
 		Description
 			|Describes network access credentials
+

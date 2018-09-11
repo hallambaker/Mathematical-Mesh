@@ -41,6 +41,18 @@ namespace Goedel.Cryptography {
                 CryptoAlgorithmID Bulk = CryptoAlgorithmID.Default);
 
 
+    ///// <summary>
+    ///// Factory method for creating key pairs.
+    ///// </summary>
+    ///// <param name="KeySize">The key </param>
+    ///// <param name="CryptoAlgorithmID"></param>
+    ///// <returns></returns>
+    //public delegate KeyPair KeyPairFactoryDelegate(
+    //            KeySecurity KeySecurity = KeySecurity.Exportable, int KeySize = 0,
+    //            bool Signature = true, bool Exhange = true,
+    //            CryptoAlgorithmID CryptoAlgorithmID= CryptoAlgorithmID.NULL);
+
+
     /// <summary>
     /// A cryptographic algorithm.
     /// </summary>
@@ -73,6 +85,8 @@ namespace Goedel.Cryptography {
         /// <summary>Factory method to create providers</summary>
         public CryptoProviderFactoryDelegate CryptoProviderFactory { get; }
 
+        ///// <summary>Factory method to create keypairs</summary>
+        //public KeyPairFactoryDelegate KeyPairFactory { get; }
 
         /// <summary>
         /// Create an instance with the specified property values.
@@ -90,6 +104,7 @@ namespace Goedel.Cryptography {
             this.KeySize = KeySize;
             this.AlgorithmClass = AlgorithmClass;
             this.CryptoProviderFactory = CryptoProviderFactory;
+            //this.KeyPairFactory = KeyPairFactory;
             }
 
         /// <summary>

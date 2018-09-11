@@ -404,13 +404,15 @@ namespace Goedel.Cryptography.Dare {
 
             StreamMac = Mac== null ? null : new CryptoStream(new CryptoStackStream(), Mac, CryptoStreamMode.Write);
 
-            this.Output = Output;
+            
 
             if (Digest != null) {
                 StreamDigest = new CryptoStream(
                 new CryptoStackStream(Output), Digest, CryptoStreamMode.Write);
                 Output = StreamDigest;
                 }
+            this.Output = Output;
+
             }
 
 
@@ -440,8 +442,6 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="count">The number of bytes to be written to the current stream.</param>
         public override void Write(byte[] buffer, int offset, int count) {
             StreamMac?.Write(buffer, offset, count);
-            //StreamDigest?.Write(buffer, offset, count);
-
 
             if (PayloadLength > 0 | PackagingFormat == PackagingFormat.Direct) {
                 // ToDo: It would be more efficient to introduce a buffer of 4096 bytes or so to avoid short writes.
@@ -468,12 +468,19 @@ namespace Goedel.Cryptography.Dare {
 
         readonly static byte[] Empty = new byte[0];
 
+        bool Closed = false;
+
         /// <summary>
         /// Closes the current stream, completes calculation of cryptographic values (MAC/Digest)
         /// associated with the current stream. Does not close the target stream because that would
         /// be stupid.
         /// </summary>
         public override void Close() {
+            if (Closed) {
+                return;
+                }
+            Closed = true;
+
             Final = true;
             if (CryptoStream == null) {
                 Writer.Write(Empty, 0, 0);

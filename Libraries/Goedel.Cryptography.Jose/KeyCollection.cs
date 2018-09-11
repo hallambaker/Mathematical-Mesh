@@ -20,19 +20,28 @@ namespace Goedel.Cryptography.Jose {
         public static KeyCollection Default = new KeyCollection();
 
         Dictionary<string, KeyPair> DictionaryKeyPairByUDF = new Dictionary<string, KeyPair>();
-        Dictionary<string, KeyPair> DictionaryKeyPairBySIN = new Dictionary<string, KeyPair>();
-        Dictionary<string, KeyPair> DictionaryKeyPairByAccount = new Dictionary<string, KeyPair>();
+        Dictionary<string, KeyPair> DictionaryKeyPairBySINEncrypt = new Dictionary<string, KeyPair>();
+        Dictionary<string, KeyPair> DictionaryKeyPairByAccountEncrypt = new Dictionary<string, KeyPair>();
+        Dictionary<string, KeyPair> DictionaryKeyPairBySINSign = new Dictionary<string, KeyPair>();
+        Dictionary<string, KeyPair> DictionaryKeyPairByAccountSign = new Dictionary<string, KeyPair>();
+
 
         /// <summary>
         /// Add a keypair to the collection.
         /// </summary>
         /// <param name="KeyPair">The key pair to add.</param>
-        public void Add(KeyPair KeyPair) {
+        public void Add(KeyPair KeyPair ) {
             lock (ExclusiveAccess) {
                 DictionaryKeyPairByUDF.AddSafe(KeyPair.UDF, KeyPair);
                 if (KeyPair.Locator != null) {
-                    DictionaryKeyPairBySIN.AddSafe(KeyPair.StrongInternetName, KeyPair);
-                    DictionaryKeyPairByAccount.AddSafe(KeyPair.Locator, KeyPair);
+                    if (KeyPair.Exchange) {
+                        DictionaryKeyPairBySINEncrypt.AddSafe(KeyPair.StrongInternetName, KeyPair);
+                        DictionaryKeyPairByAccountEncrypt.AddSafe(KeyPair.Locator, KeyPair);
+                        }
+                    if (KeyPair.Signature) {
+                        DictionaryKeyPairBySINSign.AddSafe(KeyPair.StrongInternetName, KeyPair);
+                        DictionaryKeyPairByAccountSign.AddSafe(KeyPair.Locator, KeyPair);
+                        }
                     }
                 }
 
@@ -89,10 +98,10 @@ namespace Goedel.Cryptography.Jose {
             if (DictionaryKeyPairByUDF.TryGetValue(KID, out var KeyPair)) {
                 return KeyPair;
                 }
-            if (DictionaryKeyPairBySIN.TryGetValue(KID, out KeyPair)) {
+            if (DictionaryKeyPairBySINEncrypt.TryGetValue(KID, out KeyPair)) {
                 return KeyPair;
                 }
-            if (DictionaryKeyPairByAccount.TryGetValue(KID, out KeyPair)) {
+            if (DictionaryKeyPairByAccountEncrypt.TryGetValue(KID, out KeyPair)) {
                 return KeyPair;
                 }
 
@@ -107,8 +116,9 @@ namespace Goedel.Cryptography.Jose {
         /// </summary>
         /// <param name="ID">The identifier to resolve.</param>
         /// <returns>The identifier.</returns>
-        public virtual KeyPair MatchPublic(string ID) {
-            throw new NYI();
+        public virtual KeyPair MatchPublicEncrypt(string ID) {
+            var Found = DictionaryKeyPairByAccountEncrypt.TryGetValue(ID, out var Result);
+            return Result;
             }
 
         /// <summary>
@@ -117,8 +127,9 @@ namespace Goedel.Cryptography.Jose {
         /// </summary>
         /// <param name="ID">The identifier to resolve.</param>
         /// <returns>The identifier.</returns>
-        public virtual KeyPair MatchPrivate(string ID) {
-            throw new NYI();
+        public virtual KeyPair MatchPrivateSign(string ID) {
+            var Found = DictionaryKeyPairByAccountSign.TryGetValue(ID, out var Result);
+            return Result;
             }
 
         }

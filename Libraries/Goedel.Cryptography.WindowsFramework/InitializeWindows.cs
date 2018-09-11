@@ -46,6 +46,11 @@ namespace Goedel.Cryptography {
 
             CryptoProviderSignatureRSA.Register();
             CryptoProviderExchangeRSA.Register();
+
+
+
+
+
             KeyPairBaseRSA.KeyPairPublicFactory = KeyPairRSA.KeyPairPublicFactory;
             KeyPairBaseRSA.KeyPairPrivateFactory = KeyPairRSA.KeyPairPrivateFactory;
             Platform.FindLocalDelegates.Add(KeyPairRSA.FindLocal);

@@ -442,18 +442,18 @@ namespace Goedel.Cryptography.Dare {
 
             }
 
-        void SetPosition(int Index = -1,
-                string Path = null) {
-            if (Index >= 0) {
-                Container.MoveToIndex(Index);
-                }
-            else if (Path != null) {
-                throw new NYI();  // ToDo: retrieve index by path val
-                }
-            else {
-                Container.Last();
-                }
-            }
+        //void SetPosition(int Index = -1,
+        //        string Path = null) {
+        //    if (Index >= 0) {
+        //        Container.MoveToIndex(Index);
+        //        }
+        //    else if (Path != null) {
+        //        throw new NYI();  // ToDo: retrieve index by path val
+        //        }
+        //    else {
+        //        Container.Last();
+        //        }
+        //    }
 
 
         /// <summary>

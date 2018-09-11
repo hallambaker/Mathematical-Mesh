@@ -16,7 +16,7 @@ namespace Goedel.Cryptography.Dare {
     /// provide for cryptographic integrity.
     /// </summary>
     /// <threadsafety static="true" instance="false"/>
-    public class ContainerChain : ContainerSimple {
+    public class ContainerChain : ContainerDigest {
 
         /// <summary>
         /// The label for the container type for use in header declarations
@@ -31,30 +31,17 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="JBCDStream">The underlying JBCDStream stream. This MUST be opened
         /// in a read access mode and should have exclusive read access. All existing
         /// content in the file will be overwritten.</param>
-        /// <param name="ContainerType">The container type. This determines whether
-        /// a tree index is to be created or not and if so, whether </param>
-        /// <param name="DigestAlgorithm">The digest algorithm to be used to calculate the PayloadDigest</param>
-        /// <returns>The newly constructed container.</returns>
         public static new Container MakeNewContainer(
-                        JBCDStream JBCDStream,
-                        CryptoParameters CryptoParameters,
-                        ContainerType ContainerType = ContainerType.Chain,
-                        CryptoAlgorithmID DigestAlgorithm = CryptoAlgorithmID.Default) {
-
+                        JBCDStream JBCDStream) {
 
             var ContainerHeader = new ContainerHeaderFirst() {
                 ContainerType = Label,
                 Index = 0
                 };
 
-            CryptoProviderDigest DigestProvider = CryptoCatalog.Default.GetDigest(DigestAlgorithm);
-
-            Assert.True(ContainerType == ContainerType.Chain, InvalidContainerTypeException.Throw);
-
             var Container = new ContainerChain() {
                 JBCDStream = JBCDStream,
-                DigestProvider = DigestProvider,
-                ContainerHeaderFirst = ContainerHeader,
+                ContainerHeaderFirst = ContainerHeader
                 };
 
             return Container;
@@ -80,27 +67,36 @@ namespace Goedel.Cryptography.Dare {
         /// Append the header to the frame. This is called after the payload data
         /// has been passed using AppendPreprocess.
         /// </summary>
-        public override void AppendHeader() {
-            if (DigestEncoder != null & AppendContainerHeader.PayloadDigest == null) {
-                DigestEncoder.Complete();
-                var PayloadDigest = DigestEncoder.Integrity;
-                AppendContainerHeader.PayloadDigest = DigestEncoder.Integrity;
-
-                var PreviousHeader = FinalContainerHeader ?? ContainerHeaderFirst;
-                if (AppendContainerHeader.Index > 0) {
-                    AppendContainerHeader.ChainDigest = CombineDigest(
-                        PreviousHeader.ChainDigest, PayloadDigest);
-                    }
-                else {
-                    AppendContainerHeader.ChainDigest = CombineDigest(
-                        null, PayloadDigest);
-                    }
-                }
+        public override void CompleteHeader() {
             FinalContainerHeader = AppendContainerHeader;
-            base.AppendHeader();
+            base.CompleteHeader();
             }
 
+        /// <summary>
+        /// Pre-populate the dummy trailer so as to allow the length to be calculated.
+        /// </summary>
+        /// <returns>The dummy trailer.</returns>
+        public override DARETrailer GetDummyTrailer() {
 
+            var Trailer = CryptoStack.GetDummyTrailer();
+            Trailer.ChainDigest = Trailer.PayloadDigest;
+
+            return Trailer;
+            }
+
+        /// <summary>
+        /// The dummy trailer to add to the end of the frame.
+        /// </summary>
+        /// <returns></returns>
+        public override void MakeTrailer(ref DARETrailer Trailer) {
+            //var PreviousHeader = FinalContainerHeader ?? ContainerHeaderFirst;
+            if (FinalContainerHeader!=null) {
+                Trailer.ChainDigest = CryptoStack.CombineDigest(FinalContainerHeader.ChainDigest, Trailer.PayloadDigest);
+                }
+            else {
+                Trailer.ChainDigest = CryptoStack.CombineDigest(null, Trailer.PayloadDigest);
+                }
+            }
 
         /// <summary>
         /// Perform sanity checking on a list of container headers.

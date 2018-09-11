@@ -1,8 +1,7 @@
 
 # Supplemental Makefile for Visual Studios Projects
 #
-# Visual Studio is responsible for managing rules for production of
-# code but does not provide support for pre and post build actions.
+# Visual Studio runs tools for most projects but not for shared projects.
 # 
 # Prebuild items supported:
 #   [None currently]
@@ -19,18 +18,12 @@
 MSBuildThisFileDirectory = 
 
 LinkFiles = \
-    Microsoft.VisualStudio.TestPlatform.TestFramework.dll\
-    Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll\
-    Goedel.IO.dll\
     Goedel.Utilities.dll\
+    Goedel.Protocol.Debug.dll\
     Goedel.Protocol.dll\
     Goedel.Test.dll
 
-ToolTargets = \
-	TestExample.cs
-
-TestExample.cs : TestExample.Protocol 
-	protogen TestExample.Protocol  /cs  TestExample.cs
+ToolTargets = 
 
 
 prebuildRecurse : 
@@ -38,7 +31,7 @@ prebuildRecurse :
 
 postbuildRecurse :
 
-
+# Non shared project, nothing to do
 prebuild : prebuildRecurse $(ToolTargets)
 
 postbuild : postbuildRecurse

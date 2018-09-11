@@ -30,16 +30,23 @@ namespace ExampleGenerator {
             //// Delete data from previous runs
             //MakeClean();
 
+            GenerateKeys();
+
+
+            GoDareContainer();
+
+
             GoDareMessage();
             //JSONReader.Trace = true;
 
             GoContainer();
 
-
+            GoReference();
+            GoAdvanced();
 
             //GoKeyExchange();
 
-            GoMesh();
+            //GoMesh();
 
             // Make the documentation
             MakeDocs();

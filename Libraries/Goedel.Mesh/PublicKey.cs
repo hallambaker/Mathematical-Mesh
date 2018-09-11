@@ -261,18 +261,22 @@ namespace Goedel.Mesh {
         /// <returns>The generated key pair</returns>
         public static PublicKey Generate(KeyType KeyType, CryptoAlgorithmID CryptoAlgorithmID) {
 
-            var KeyClass = KeyType.AlgorithmClass();
-            CryptoProviderAsymmetric CryptoProvider;
-            if (KeyClass == CryptoAlgorithmClass.Signature) {
-                CryptoProvider = CryptoCatalog.Default.GetSignature(CryptoAlgorithmID);
-                }
-            else {
-                CryptoProvider = CryptoCatalog.Default.GetExchange(CryptoAlgorithmID);
-                }
-            var KeySecurity = GetKeySecurity(KeyType);
-            CryptoProvider.Generate(KeySecurity);
-            var KeyPair = CryptoProvider.KeyPair;
-            return new PublicKey (KeyPair);
+            //var KeyClass = KeyType.AlgorithmClass();
+            //CryptoProviderAsymmetric CryptoProvider;
+            //if (KeyClass == CryptoAlgorithmClass.Signature) {
+            //    CryptoProvider = CryptoCatalog.Default.GetSignature(CryptoAlgorithmID);
+            //    }
+            //else {
+            //    CryptoProvider = CryptoCatalog.Default.GetExchange(CryptoAlgorithmID);
+            //    }
+            //var KeySecurity = GetKeySecurity(KeyType);
+            //CryptoProvider.Generate(KeySecurity);
+            //var KeyPair = CryptoProvider.KeyPair;
+
+
+
+            var KeyPairNew = KeyPair.Factory(CryptoAlgorithmID, GetKeySecurity(KeyType));
+            return new PublicKey (KeyPairNew);
             }
 
         /// <summary>

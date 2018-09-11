@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -49,11 +49,48 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="MakeExamplesApplications.cs">
+    <Compile Update="Old\MakeExamplesApplications.cs">
       <DependentUpon>MakeExamplesApplications.script</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
+    <Compile Update="Old\MakeExamplesMessage.cs">
+      <DependentUpon>MakeExamplesMessage.script</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="MakeExamplesAdvanced.cs">
+      <DependentUpon>MakeExamplesAdvanced.script</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="MakeExamplesProfile.cs">
+      <DependentUpon>MakeExamplesPortal.script</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="MakeExamplesPortal.cs">
+      <DependentUpon>MakeExamplesPortal.script</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="MakeExamplesCatalog.cs">
+      <DependentUpon>MakeExamplesCatalog.script</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+
+    <Compile Update="MakeExamplesProfile.cs">
+      <DependentUpon>MakeExamplesProfile.script</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+
+    <Compile Update="MakeExamplesUDF.cs">
+      <DependentUpon>MakeExamplesUDF.script</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>    
     <Compile Update="MakeExamplesContainer.cs">
       <DependentUpon>MakeExamplesContainer.script</DependentUpon>
       <DesignTime>True</DesignTime>
@@ -64,21 +101,49 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Update="MakeExamplesKeyExchange.cs">
+    <Compile Update="Old\MakeExamplesKeyExchange.cs">
       <DependentUpon>MakeExamplesKeyExchange.script</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Update="MakeExamplesReference.cs">
-      <DependentUpon>MakeExamplesReference.script</DependentUpon>
+    <Compile Update="MakeExamplesMessaging.cs">
+      <DependentUpon>MakeExamplesMessaging.script</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-    </Compile>
+    </Compile> 
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="MakeExamplesApplications.script">
+    <None Update="Old\MakeExamplesApplications.script">
       <LastGenOutput>MakeExamplesApplications.cs</LastGenOutput>
+      <Generator>gscript</Generator>
+    </None>
+    <None Update="MakeExamplesAdvanced.script">
+      <LastGenOutput>MakeExamplesAdvanced.cs</LastGenOutput>
+      <Generator>gscript</Generator>
+    </None>
+    <None Update="MakeExamplesProfile.script">
+      <LastGenOutput>MakeExamplesProfile.cs</LastGenOutput>
+      <Generator>gscript</Generator>
+    </None>
+    <None Update="MakeExamplesPortal.script">
+      <LastGenOutput>MakeExamplesPortal.cs</LastGenOutput>
+      <Generator>gscript</Generator>
+    </None>
+    <None Update="MakeExamplesCatalog.script">
+      <LastGenOutput>MakeExamplesCatalog.cs</LastGenOutput>
+      <Generator>gscript</Generator>
+    </None>
+    <None Update="Old\MakeExamplesReferenceOLD.script">
+      <LastGenOutput>MakeExamplesReferenceOLD.cs</LastGenOutput>
+      <Generator>gscript</Generator>
+    </None>
+    <None Update="MakeExamplesUDF.script">
+      <LastGenOutput>MakeExamplesUDF.cs</LastGenOutput>
+      <Generator>gscript</Generator>
+    </None>
+    <None Update="Old\MakeExamplesMessage.script">
+      <LastGenOutput>MakeExamplesMessage.cs</LastGenOutput>
       <Generator>gscript</Generator>
     </None>
     <None Update="MakeExamplesContainer.script">
@@ -89,12 +154,12 @@
       <LastGenOutput>MakeExamplesDeveloper.cs</LastGenOutput>
       <Generator>gscript</Generator>
     </None>
-    <None Update="MakeExamplesKeyExchange.script">
+    <None Update="Old\MakeExamplesKeyExchange.script">
       <LastGenOutput>MakeExamplesKeyExchange.cs</LastGenOutput>
       <Generator>gscript</Generator>
     </None>
-    <None Update="MakeExamplesReference.script">
-      <LastGenOutput>MakeExamplesReference.cs</LastGenOutput>
+    <None Update="MakeExamplesMessaging.script">
+      <LastGenOutput>MakeExamplesMessaging.cs</LastGenOutput>
       <Generator>gscript</Generator>
     </None>
   </ItemGroup>

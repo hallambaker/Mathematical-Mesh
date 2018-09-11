@@ -4,6 +4,8 @@ using UT = Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using Goedel.Utilities;
 using Goedel.Test;
+using Goedel.Cryptography;
+using Goedel.Cryptography.Algorithms;
 
 namespace Goedel.Cryptography.DH.Test {
 
@@ -25,7 +27,7 @@ namespace Goedel.Cryptography.DH.Test {
 
             var AliceAgree = BobPublic.Agreement();
 
-            var AliceKey = AliceAgree.DiffeHellmanPublic;
+            var AliceKey = AliceAgree.EphemeralPublicValue;
 
             var BobAgreement = BobPrivate.Agreement(AliceKey);
 
@@ -35,9 +37,9 @@ namespace Goedel.Cryptography.DH.Test {
         [TestMethod]
         public void TestDH_Recryption_2 () {
 
-            var BobSplit = GroupPrivate.MakeRecryption(2);
-            var BobRecryption = BobSplit[0];
-            var BobDecryption = BobSplit[1];
+            var BobSplit = GroupPrivate.MakeRecryptionKeySet(2);
+            var BobRecryption = BobSplit[0] as DiffeHellmanPrivate;
+            var BobDecryption = BobSplit[1] as DiffeHellmanPrivate; 
 
 
             var AliceAgreeW = AlicePrivate.Agreement(GroupKeyPublic);
@@ -72,12 +74,12 @@ namespace Goedel.Cryptography.DH.Test {
             var AliceAgreeW = AlicePrivate.Agreement(GroupKeyPublic);
 
             // Keyset for decryption
-            var KeySet = GroupPrivate.MakeRecryption(Shares);
+            var KeySet = GroupPrivate.MakeRecryptionKeySet(Shares);
 
             // Calculate part results
             var Recrypts = new BigInteger[Shares];
             for (var i = 0; i < Shares; i++) {
-                Recrypts[i] = KeySet[i].Agreement(AlicePublic);
+                Recrypts[i] = (KeySet[i] as DiffeHellmanPrivate ).Agreement(AlicePublic);
                 }
 
             // Combine them
@@ -93,9 +95,9 @@ namespace Goedel.Cryptography.DH.Test {
 
         [TestMethod]
         public void TestDH_KeyGen() {
-            var Encrypter = CryptoCatalog.Default.GetExchange(CryptoAlgorithmID.DH);
-            Encrypter.Generate(KeySecurity.Ephemeral, KeySize: 2048);
-            var EncrypterKeyPair = Encrypter.KeyPair as KeyPairDH;
+            var Encrypter = KeyPair.Factory(CryptoAlgorithmID.DH, KeySecurity.Ephemeral);
+
+            var EncrypterKeyPair = Encrypter as KeyPairDH;
 
             EncrypterKeyPair.Test_EncryptDecrypt();
             }

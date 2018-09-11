@@ -9,7 +9,7 @@ using Goedel.ASN;
 using Goedel.Cryptography.PKIX;
 using Goedel.Cryptography;
 
-namespace Test.Goedel.ASN {
+namespace Goedel.ASN.Test {
     [TestClass]
     public class Buffer {
 

@@ -1,0 +1,36 @@
+﻿#using System.Text
+#using Goedel.Mesh
+#using Goedel.Protocol
+#xclass ExampleGenerator ExampleGenerator
+
+#file MakeExamplesKeyExchange "Examples\\KeyExchangeExamples.md" CreateExamples Example
+#% var Point = Example.KeyExchangeTraces.Get (Example.TraceDH);
+#% Example.KeyExchangeTraces.Level = 0;
+
+<h2>Initial Key Exchange Example
+
+Alice requests access to a service using her account identifier #{Example.AccountID}.
+She has already registered her Mesh personal profile with the service where it is bound
+to her account identifier as the corresponding credential.
+
+The Key exchange request is:
+
+#{Point.Messages[0].String()}
+
+The Keyu Exchange response is
+
+#{Point.Messages[1].String()}
+
+Note that the example has the witness value but does not authenticate the signed 
+result at present. Perhaps it would be better to create the witness value from the 
+ticket data which eliminates the need for authenticating the response??
+
+
+<h2>Rekey Example
+
+(TBS)
+
+#end file
+
+#end xclass
+

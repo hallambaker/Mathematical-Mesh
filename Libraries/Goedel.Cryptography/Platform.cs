@@ -18,7 +18,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         static Platform() =>
             // Add the providers defined in the portable library to the catalog.
-            FindLocalDelegates.Add(KeyPairDH.FindLocalDH);
+            FindLocalDelegates.Add(KeyPairDH.FindLocalAdvanced);
 
         /// <summary>Default SHA-2-512 provider optimized for small data items</summary>
         /// <remarks>This delegate must bound to the platform

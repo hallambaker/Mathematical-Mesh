@@ -366,6 +366,7 @@
 			Description
 				|The escrowed keys.
 
+
 	Section 1 "Portal Connection"
 
 	Section 2 "Connection Request and Response Structures"
@@ -407,4 +408,40 @@
 		Description 
 			|Contains a signed connection result
 
+
+	// Structures to be filled in later on.
+
+
+	Structure ProfileApplicationMessage
+		Description
+			|Personal profile entries for Mesh messaging
+		Inherits ApplicationProfile
+		TStruct Key KeyEncryption
+
+
+
+
+	Structure MeshMessage
+		Description
+			|Messages that are sent via Mesh Services.
+
+	Structure MeshMessageConnectionRequest
+		Inherits MeshMessage
+		Struct PersonalProfile Sender
+			Description
+				|The party that is making the request for a connection
+		Struct PersonalProfile Introducer
+			Description
+				|Optional party acting as an introducer. 
+			Description
+				|E.g. Alice is Bob's boss. When she hires Carol, she sends Bob
+				|the introduction as a contact request.
+		String Privileges
+			Multiple
+			Description
+				|List of privileges that the subject is requesting
+		String Recipient
+			Multiple
+			Description
+				|Mesh service address of the intended recipient.
 

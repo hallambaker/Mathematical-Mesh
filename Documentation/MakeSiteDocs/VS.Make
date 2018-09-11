@@ -1,8 +1,7 @@
 
 # Supplemental Makefile for Visual Studios Projects
 #
-# Visual Studio is responsible for managing rules for production of
-# code but does not provide support for pre and post build actions.
+# Visual Studio runs tools for most projects but not for shared projects.
 # 
 # Prebuild items supported:
 #   [None currently]
@@ -31,7 +30,7 @@ LinkFiles = \
     Goedel.Cryptography.KeyFile.dll\
     Goedel.Cryptography.Standard.dll\
     Goedel.Cryptography.Ticket.dll\
-    Goedel.Cryptography.Windows.dll\
+    Goedel.Cryptography.WindowsFramework.dll\
     Goedel.Cryptography.dll\
     Goedel.Mesh.Platform.Windows.dll\
     Goedel.Mesh.dll\
@@ -76,7 +75,6 @@ ToolTargets = \
 	ToDo.cs\
 	ExampleSession.cs\
 	UserGuide.cs
-
 Apps\UserGuideApps.cs : Apps\UserGuideApps.script 
 	gscript Apps\UserGuideApps.script  Apps\UserGuideApps.cs
 
@@ -144,16 +142,17 @@ UserGuide.cs : UserGuide.script
 	gscript UserGuide.script  UserGuide.cs
 
 
+
 prebuildRecurse : 
-	cd ..\..\Libraries\MeshApps && nmake /A /c /f VS.make prebuild 
-	cd ..\..\Libraries\MeshMan && nmake /A /c /f VS.make prebuild 
+	cd ..\..\Libraries\MeshApps && nmake /c /f VS.make prebuild 
+	cd ..\..\Libraries\MeshMan && nmake /c /f VS.make prebuild 
 
 
 postbuildRecurse :
 	cd ..\..\Libraries\MeshApps && nmake /c /f VS.make postbuild 
 	cd ..\..\Libraries\MeshMan && nmake /c /f VS.make postbuild 
 
-
+# Non shared project, nothing to do
 prebuild : prebuildRecurse $(ToolTargets)
 
 postbuild : postbuildRecurse

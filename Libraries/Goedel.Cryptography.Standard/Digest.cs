@@ -212,11 +212,21 @@ namespace Goedel.Cryptography.Standard {
     /// </summary>
     public class CryptoProviderSHA2_512 : CryptoProviderDigest {
 
-        
+        static CryptoAlgorithmID _CryptoAlgorithmID = CryptoAlgorithmID.SHA_2_512;
+
         /// <summary>
         /// The CryptoAlgorithmID Identifier.
         /// </summary>
-        public override CryptoAlgorithmID CryptoAlgorithmID {get; }
+        public override CryptoAlgorithmID CryptoAlgorithmID => _CryptoAlgorithmID;
+
+        /// <summary>
+        /// Return a CryptoAlgorithm structure with properties describing this provider.
+        /// </summary>
+        public override CryptoAlgorithm CryptoAlgorithm => _CryptoAlgorithm;
+
+
+        static CryptoAlgorithm _CryptoAlgorithm = new CryptoAlgorithm(
+                    _CryptoAlgorithmID, _AlgorithmClass, Factory, 512);
 
         /// <summary>
         /// Hash algorithm provider.
@@ -256,7 +266,6 @@ namespace Goedel.Cryptography.Standard {
         /// <param name="ID">Cryptgraphic algorithm.</param>
         public CryptoProviderSHA2_512(int KeySize=512, 
                     CryptoAlgorithmID ID = CryptoAlgorithmID.SHA_2_512) {
-            CryptoAlgorithmID = ID;
 
             if (KeySize >0 & KeySize < 512) {
                 Truncate = KeySize;

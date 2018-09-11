@@ -71,7 +71,9 @@ namespace Goedel.Cryptography.Jose {
 
                 //EdDSA   EdDSA signature algorithms alg Optional[IESG]
                 //  [RFC - ietf - jose - cfrg - curves - 06, Section 3.1][RFC - irtf - cfrg - eddsa - 08]
-                { "EdDSA", CryptoAlgorithmID.EDDSA},
+                { "EdDSA", CryptoAlgorithmID.EdDSA},
+
+
 
                 ////RSA-OAEP-512	RSA-OAEP using SHA-512 and MGF1 with SHA-512	alg 
                 ////Optional[W3C_Web_Cryptography_Working_Group]    [https://www.w3.org/TR/WebCryptoAPI]	n/a
@@ -88,7 +90,7 @@ namespace Goedel.Cryptography.Jose {
 
                 // Diffie Hellman using HKDF Key derrivation and RFC3394 Key Wrap
                 { "DH", CryptoAlgorithmID.DH},
-
+                { "ECDH", CryptoAlgorithmID.ECDH},
 
                 // Special
 

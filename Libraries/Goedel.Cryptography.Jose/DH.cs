@@ -15,7 +15,7 @@ namespace Goedel.Cryptography.Jose {
         public PublicKeyDH () { }
 
         /// <summary>
-        /// Construct from the specified RSA Key
+        /// Construct from the specified DH Key
         /// </summary>
         /// <param name="KeyPair">An RSA key Pair.</param>
         public PublicKeyDH(KeyPairBaseDH KeyPair) : this (KeyPair.PKIXPublicKeyDH) {
@@ -57,7 +57,7 @@ namespace Goedel.Cryptography.Jose {
         }
 
     /// <summary>
-    /// Represents an RSA Private Key.
+    /// Represents a DHG Private Key.
     /// </summary>
     public partial class PrivateKeyDH {
         /// <summary>

@@ -37,6 +37,10 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         public string EncryptionAlgorithm = null;
 
+        /// <summary>
+        /// The JOSE algorithm identifier for the encryption algorithm.
+        /// </summary>
+        public string DigestAlgorithm = null;
 
         /// <summary>
         /// The Keys to be used to sign the message. 
@@ -54,9 +58,44 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         public byte[] MasterSecret;
 
-        CryptoAlgorithmID EncryptID;
-        CryptoAlgorithmID DigestID;
-        CryptoAlgorithmID SignID;
+
+        /// <summary>
+        /// When used to create encryption parameters for a container, specifies the frame
+        /// index at which the parameter headers for decrypting the data are to be found.
+        /// </summary>
+        public int FrameIndex = -1;
+
+
+        /// <summary>The authentication algorithm to use</summary>
+        public CryptoAlgorithmID DigestID {
+            get => _DigestID == CryptoAlgorithmID.Default ? CryptoAlgorithmID.SHA_2_512 : _DigestID;
+            set => _DigestID = value;
+            }
+        CryptoAlgorithmID _DigestID;
+
+        /// <summary>The encryption algorithm to use</summary>
+        public CryptoAlgorithmID EncryptID {
+            get => _EncryptID == CryptoAlgorithmID.Default ? CryptoAlgorithmID.AES256CBC : _EncryptID;
+            set => _EncryptID = value;
+            }
+        CryptoAlgorithmID _EncryptID;
+
+        /// <summary>
+        /// If true, data is to be encrypted.
+        /// </summary>
+        public bool Encrypt {
+            get => _EncryptID != CryptoAlgorithmID.NULL;
+            set => _EncryptID = _EncryptID == CryptoAlgorithmID.NULL ? CryptoAlgorithmID.Default : _EncryptID;
+            }
+
+        /// <summary>
+        /// If true, data is to be digested.
+        /// </summary>
+        public bool Digest {
+            get => _DigestID != CryptoAlgorithmID.NULL;
+            set => _DigestID = _DigestID == CryptoAlgorithmID.NULL ? CryptoAlgorithmID.Default : _DigestID;
+            }
+
         int KeySize;
         int BlockSize;
         int BlockSizeByte => BlockSize / 8;
@@ -74,11 +113,11 @@ namespace Goedel.Cryptography.Dare {
         /// parameters.
         /// </summary>
         public CryptoStack(
-            CryptoParameters CryptoParameters
+                        CryptoParameters CryptoParameters
                         ) {
 
-            EncryptID = CryptoParameters.EncryptID;
-            DigestID = CryptoParameters.DigestID;
+            _EncryptID = CryptoParameters.EncryptID;
+            _DigestID = CryptoParameters.DigestID;
 
             if (CryptoParameters.EncryptionKeys != null) {
                 Salt = Platform.GetRandomBits(128);
@@ -89,17 +128,44 @@ namespace Goedel.Cryptography.Dare {
 
                 Recipients = Recipients ?? new List<DARERecipient>();
                 foreach (var EncryptionKey in CryptoParameters.EncryptionKeys) {
-                    Recipients.Add(new DARERecipient(MasterSecret, EncryptionKey));
+                    MakeRecipient(MasterSecret, EncryptionKey);
                     }
 
                 }
 
-            DigestID = CryptoParameters.DigestID;
-
-            if (SignerKeys != null) {
+            if (CryptoParameters.SignerKeys != null) {
                 SignerKeys = CryptoParameters.SignerKeys;
+                DigestAlgorithm = DigestID.ToJoseID();
                 }
             }
+
+        /// <summary>
+        /// Return a new CryptoStack instance as a child of <paramref name="Parent"/>.
+        /// The child will incorporate the key exchange data specified in the parent.
+        /// </summary>
+        /// <param name="Parent">The parent CryptoStack</param>
+        public CryptoStack(CryptoStack Parent) {
+            _EncryptID = Parent._EncryptID;
+            _DigestID = Parent._DigestID;
+
+            if (Parent.Encrypt) {
+                Salt = Platform.GetRandomBits(128);
+                EncryptionAlgorithm = EncryptID.ToJoseID();
+
+                (KeySize, BlockSize) = EncryptID.GetKeySize();
+                MasterSecret = Parent.MasterSecret;
+                }
+            }
+
+
+        /// <summary>
+        /// Add a recipient.
+        /// </summary>
+        /// <param name="MasterKey"></param>
+        /// <param name="EncryptionKey"></param>
+        public virtual void MakeRecipient(byte[] MasterKey, KeyPair EncryptionKey) => 
+            Recipients.Add(new DARERecipient(MasterSecret, EncryptionKey));
+
 
         /// <summary>
         /// Create a CryptoStack Instance to decode data with the specified cryptographic
@@ -130,6 +196,27 @@ namespace Goedel.Cryptography.Dare {
             }
 
 
+        /// <summary>
+        /// Calculate key parameters 
+        /// </summary>
+        /// <param name="ThisSalt">The salt value to use</param>
+        /// <param name="KeyEncrypt">The derrived Encryption key.</param>
+        /// <param name="KeyMac">The derrived MAC key.</param>
+        /// <param name="IV">The derrivedIV.</param>
+        protected void CalculateParameters(
+                    byte[] ThisSalt,
+                    out byte[] KeyEncrypt,
+                    out byte[] KeyMac,
+                    out byte[] IV
+                    ) {
+            var KDF = new KeyDeriveHKDF(MasterSecret, ThisSalt, CryptoAlgorithmID.HMAC_SHA_2_256);
+            KeyEncrypt = KDF.Derive(InfoKeyEncrypt, 256);
+            KeyMac = KDF.Derive(InfoKeyMAC, KeySize);
+            IV = KDF.Derive(InfoKeyIV, BlockSize);
+            }
+
+
+
         private void CalculateParameters(
                     bool Encrypt,
                     byte[] ExtraSalt,
@@ -147,14 +234,17 @@ namespace Goedel.Cryptography.Dare {
             // by the extra salt even if the extra salt value is all zeros.
             var ThisSalt = ExtraSalt == null ? Salt : ExtraSalt.Concatenate(Salt);
 
+
+            CalculateParameters (ThisSalt, out var KeyEncrypt, out var KeyMac, out var IV);
+
             //CalculateParameters(KeySize, BlockSize,
             //    MasterSecret, ThisSalt, out var KeyEncrypt, out var KeyMac, out var IV);
 
-            var KDF = new KeyDeriveHKDF(MasterSecret, Salt, CryptoAlgorithmID.HMAC_SHA_2_256);
-            var KeyEncrypt = KDF.Derive(InfoKeyEncrypt, 256);
-            var KeyMac = KDF.Derive(InfoKeyMAC, KeySize);
-            var IV = KDF.Derive(InfoKeyIV, BlockSize);
-            Console.WriteLine($"Encryption Session\n   Master {MasterSecret.ToStringBase16()}\n  Salt{Salt.ToStringBase16()}\n  IV  {IV.ToStringBase16()}\n  Key {KeyEncrypt.ToStringBase16()}");
+            //var KDF = new KeyDeriveHKDF(MasterSecret, Salt, CryptoAlgorithmID.HMAC_SHA_2_256);
+            //var KeyEncrypt = KDF.Derive(InfoKeyEncrypt, 256);
+            //var KeyMac = KDF.Derive(InfoKeyMAC, KeySize);
+            //var IV = KDF.Derive(InfoKeyIV, BlockSize);
+            //Console.WriteLine($"Encryption Session\n   Master {MasterSecret.ToStringBase16()}\n  Salt{Salt.ToStringBase16()}\n  IV  {IV.ToStringBase16()}\n  Key {KeyEncrypt.ToStringBase16()}");
 
 
 
@@ -165,7 +255,12 @@ namespace Goedel.Cryptography.Dare {
 
 
 
-
+        /// <summary>
+        /// Construct the trailer value.
+        /// </summary>
+        /// <param name="Writer">The cryptographic stream used to write the payload
+        /// data.</param>
+        /// <returns>The trailer value.</returns>
         public DARETrailer GetTrailer(CryptoStackStreamWriter Writer) {
             DARETrailer Result = null;
 
@@ -174,12 +269,16 @@ namespace Goedel.Cryptography.Dare {
                     PayloadDigest = Writer.DigestValue
                     };
                 }
+            //WitnessValue
+
+            var KDF = EncryptID == CryptoAlgorithmID.NULL ? null : 
+                new KeyDeriveHKDF(MasterSecret, Salt, CryptoAlgorithmID.HMAC_SHA_2_256);
 
             if (SignerKeys != null) {
                 Result = Result ?? new DARETrailer();
                 Result.Signatures = new List<DARESignature>();
                 foreach (var Key in SignerKeys) {
-                    Result.Signatures.Add(new DARESignature(Key, Writer.DigestValue, DigestID));
+                    Result.Signatures.Add(new DARESignature(Key, Writer.DigestValue, DigestID, KDF));
                     }
                 }
 
@@ -253,22 +352,20 @@ namespace Goedel.Cryptography.Dare {
         readonly static byte[] NullArray = new byte[] { };
 
         /// <summary>
-        /// Encode a data block
+        /// Encode a payload data block
         /// </summary>
         /// <param name="Data">The data to encode.</param>
-        /// <param name="PackagingFormat">The packaging format to use.</param>
-        /// <param name="ExtraSalt">Additional salt value.</param>
+        /// <param name="DARETrailer">Prototype trailer containing the calculated digest value.</param>
         /// <returns>The encoded data.</returns>
-        public byte[] Encode(byte[] Data, out DARETrailer DARETrailer,
-                    byte[] ExtraSalt = null,
-                    PackagingFormat PackagingFormat = PackagingFormat.EDS
-                    
+        public byte[] Encode(
+                    byte[] Data, 
+                    out DARETrailer DARETrailer
                     ) {
             Data = Data ?? NullArray;
             using (var Input = new MemoryStream(Data )) {
                 using (var Output = new MemoryStream()) {
                     //var JSONBWriter = new JSONBWriter(Output);
-                    var EncoderData = GetEncoder(Output, PackagingFormat, Data.LongLength, ExtraSalt);
+                    var EncoderData = GetEncoder(Output, PackagingFormat.Direct, Data.LongLength, null);
                     Input.CopyTo(EncoderData.Writer);
                     EncoderData.Close();
                     Output.Flush();
@@ -279,6 +376,34 @@ namespace Goedel.Cryptography.Dare {
                     }
                 }
             }
+
+
+        /// <summary>
+        /// Encode a data block as an EDS.
+        /// </summary>
+        /// <param name="Data">The data to encode.</param>
+        /// <param name="ExtraSalt">Additional salt value.</param>
+        /// <returns>The encoded data.</returns>
+        public byte[] EncodeEDS(
+                    byte[] Data,
+                    byte[] ExtraSalt = null
+                    ) {
+            Data = Data ?? NullArray;
+            using (var Input = new MemoryStream(Data)) {
+                using (var Output = new MemoryStream()) {
+                    //var JSONBWriter = new JSONBWriter(Output);
+                    var EncoderData = GetEncoder(Output, PackagingFormat.EDS, Data.LongLength, ExtraSalt);
+                    Input.CopyTo(EncoderData.Writer);
+                    EncoderData.Close();
+                    Output.Flush();
+                    //DARETrailer = GetTrailer(EncoderData);
+
+                    return Output.ToArray();
+
+                    }
+                }
+            }
+
 
 
         /// <summary>
@@ -362,7 +487,62 @@ namespace Goedel.Cryptography.Dare {
             }
 
 
+
+        CryptoProviderDigest DigestProvider {
+            get {
+                _DigestProvider = _DigestProvider ?? CryptoCatalog.Default.GetDigest(DigestID);
+                return _DigestProvider;
+                }
+            }
+        CryptoProviderDigest _DigestProvider;
+
+
+        /// <summary>
+        /// Calculate the length of the trailer.
+        /// </summary>
+        /// <returns></returns>
+        public DARETrailer GetDummyTrailer() {
+            DARETrailer Result = null;
+
+            var DigestLength = CryptoCatalog.Default.ResultInBytes(DigestID);
+
+
+            if (DigestLength > 0) {
+                Result = new DARETrailer() {
+                    PayloadDigest = new byte[DigestLength]
+                    };
+                }
+
+            return Result;
+
+            }
+
+
+        /// <summary>
+        /// Combine digests to produce the digest for a node.
+        /// </summary>
+        /// <param name="First">The left hand digest.</param>
+        /// <param name="Second">The right hand digest.</param>
+        /// <returns>The digest value.</returns>
+        public byte[] CombineDigest(byte[] First, byte[] Second) {
+            var Length = DigestProvider.Size / 8;
+
+            var Buffer = new byte[Length * 2];
+            if (First != null) {
+                Assert.True(Length == First.Length);
+                Array.Copy(First, Buffer, Length);
+                }
+            if (Second != null) {
+                Assert.True(Length == Second.Length);
+                Array.Copy(Second, 0, Buffer, Length, Length);
+                }
+
+
+            return DigestProvider.ProcessData(Buffer); ;
+            }
+
         }
 
-
     }
+
+

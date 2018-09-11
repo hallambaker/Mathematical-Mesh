@@ -1,8 +1,7 @@
 
 # Supplemental Makefile for Visual Studios Projects
 #
-# Visual Studio is responsible for managing rules for production of
-# code but does not provide support for pre and post build actions.
+# Visual Studio runs tools for most projects but not for shared projects.
 # 
 # Prebuild items supported:
 #   [None currently]
@@ -34,9 +33,9 @@ LinkFiles = \
 
 ToolTargets = \
 	dareman.cs
-
 dareman.cs : dareman.command 
 	commandparse dareman.command  /cs  dareman.cs
+
 
 
 prebuildRecurse : 
@@ -44,7 +43,7 @@ prebuildRecurse :
 
 postbuildRecurse :
 
-
+# Non shared project, nothing to do
 prebuild : prebuildRecurse $(ToolTargets)
 
 postbuild : postbuildRecurse

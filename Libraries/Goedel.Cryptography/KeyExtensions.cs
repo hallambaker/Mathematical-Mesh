@@ -32,17 +32,17 @@ namespace Goedel.Cryptography {
             }
 
 
-        /// <summary>
-        /// Wrap key in a PrivateKeyInfo structure (unencrypted).
-        /// </summary>
-        /// <param name="Key">Key to wrap.</param>
-        /// <returns>The PrivateKeyInfo structure.</returns>
-        public static PrivateKeyInfo PrivateKeyInfo(this IPKIXPrivateKey Key) => new PrivateKeyInfo() {
-            Version = 0,
-            PrivateKeyAlgorithm = new AlgorithmIdentifier(Key.OID),
-            PrivateKey = Key.DER(),
-            Attributes = null
-            };
+        ///// <summary>
+        ///// Wrap key in a PrivateKeyInfo structure (unencrypted).
+        ///// </summary>
+        ///// <param name="Key">Key to wrap.</param>
+        ///// <returns>The PrivateKeyInfo structure.</returns>
+        //public static PrivateKeyInfo PrivateKeyInfo(this IPKIXPrivateKey Key) => new PrivateKeyInfo() {
+        //    Version = 0,
+        //    PrivateKeyAlgorithm = new AlgorithmIdentifier(Key.OID),
+        //    PrivateKey = Key.DER(),
+        //    Attributes = null
+        //    };
 
 
         /// <summary>

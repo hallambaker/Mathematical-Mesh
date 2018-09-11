@@ -244,7 +244,8 @@ namespace Goedel.Cryptography.Dare {
         /// The code does not currently support 64 bit frames as it should.
         /// </summary>
         /// <param name="FrameHeader">The header data to write.</param>
-        /// <param name="FrameDataLength">Length of the first data record, contains data content.</param>
+        /// <param name="FrameDataLength">Length of the frame payload.</param>
+        /// <param name="FrameTrailerLength">Length of the frame trailer.</param>
         /// <returns>The total size of the frame.</returns>
         public long WriteWrappedFrameBegin(
                     byte[] FrameHeader,
@@ -287,6 +288,7 @@ namespace Goedel.Cryptography.Dare {
             Assert.True(PositionWrite == Check, Internal.Throw);
 
             WriteTagReverse(BFrame, FrameLength);
+            StreamWrite.Flush(); // Force output of data
 
             return TotalLength2(FrameLength);
             }
@@ -440,6 +442,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="FrameData">The payload data that was read.</param>
         /// <param name="FrameHeader">The header data that was read.</param>
+        /// <param name="FrameTrailer">The trailer data that was read.</param>
         /// <returns>True if a tag was read or false if EOF was encountered.</returns>
         /// <exception cref="InvalidFileFormatException">The record data read from disk was invalid</exception>
         public bool ReadFrame (out byte[] FrameHeader, out byte[] FrameData, out byte[] FrameTrailer) {

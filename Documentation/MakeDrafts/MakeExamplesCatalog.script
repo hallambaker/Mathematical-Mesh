@@ -1,0 +1,118 @@
+﻿#using System.Text
+#using Goedel.Mesh
+#using Goedel.Mesh.Portal
+#using Goedel.Mesh.Portal.Server
+#using Goedel.Protocol
+#xclass ExampleGenerator ExampleGenerator
+
+
+#file ExamplesCatalog "Examples\\ExamplesCatalog.md" CreateExamples Example
+
+##Mesh Catalogs
+
+A Mesh Catalog Service contains a set of entries that are created by the user
+for their own use.
+
+A catalog entry MUST be signed by the signature key of a device that is specified in
+the user's Personal Profile.
+
+Each entry in a Mesh catalog has a unique identifier that acts as its primary key. 
+
+Mesh catalogs are typically compact and updated infrequently. Given current storage
+costs and typical network bandwidth, it is to be expected that most users will be
+best served by a model in which every device contains a complete copy of the user's
+catalog(s) that are of interest to it rather than support a model in which connected
+devices hunt an peck for the desired records on the server. Such an approach is in 
+any case likely to be impossible for the majority of Mesh applications in which the 
+server content is end-to-end encrypted.
+
+####Synchronizing a Device to a Catalog
+
+Synchronization of the catalog data stored on a device with that stored by the
+Mesh service is bidirectional. Catalog updates stored on the device are merged
+with those stored on the service and any conflicts reported to the user.
+
+Each device that has the access privilege to update catalog entries thus has two
+separate queues, one containing a (possibly incomplete) copy of the append-only
+log held by the service, the other containing updates that have been made on 
+the device but have not yet been accepted by the service.
+
+When a device synchronizes, it:
+
+* Uploads update requests from the device to the service.
+
+* Downloads relevant updates from the service to the device.
+
+Devices MAY perform these operations in either order or simultaneously (if the 
+service permits). But regardless of the order in which these are performed 
+by a particular device, there is only one catalog and it is maintaind by the service. 
+Thus all updates that are accepted SHALL be applied to the catalog after all
+the previous updates.
+
+Since every object has a distinct and independent lifecycle in the Mesh persistence
+model, detecting a conflict early on in the synchronization process does not 
+invalidate updates to other objects which are independent.
+
+
+For example, consider the scenario in which Alice synchronizes two devices to
+her credential catalog.
+
+Alice is already using the password management features of her browser but this 
+service does not provide end-to-end encryption. Alice's Mesh client provides a 
+feature that allows her to export the usernames and passwords from her browser
+and store them in a Mesh catalog.
+
+Alice's first device creates two credential entries.
+
+~~~~
+{AliceCredential1}
+~~~~
+
+When multiple catalog entries are being encrypted at the same time, these MAY be
+encrypted under a single key agreement or under a separate key agreement for 
+each entry. Here, a single key agreement is shared:
+
+~~~~
+{AliceCredential1Request}
+~~~~
+
+Since the catalog is empty, the service accepts the update entries and responds 
+with the catalog index before and after the items were accepted.
+
+
+~~~~
+{AliceCredential1Response}
+~~~~
+
+Alice then attempts to syncrhonize a second device. The browser on the second device 
+has two entries, one of which maches an entry in the first and the other of
+which is different:
+
+~~~~
+{AliceCredential2}
+~~~~
+
+When the service responds to the second request, the first entry is rejected as
+a possible conflict and the second is accepted. Note that even though the 
+username/password values are identical, the service does not know this because they
+are end-to-end encrypted and the service does not have a decryption key. The service
+responds with a list of the frame numbers of the rejected entries.
+
+~~~~
+{AliceCredential1Response}
+~~~~
+
+Entries are deleted from a catalog with the delete method. The request specifies 
+the catalog to be updated and the list of entries to be deleted:
+
+~~~~
+{AliceDeleteCredential}
+~~~~
+
+
+#end file
+
+
+
+#end xclass
+

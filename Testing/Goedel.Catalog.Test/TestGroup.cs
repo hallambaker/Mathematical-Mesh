@@ -35,17 +35,20 @@ namespace Goedel.Catalog.Test {
             File.Delete(Filename);
             ShellDispatch ShellDispatch = new ShellDispatch(Catalog: Filename);
 
-            ShellDispatch.GroupAdd(Mail1.ID);
-            var Dump1 = ShellDispatch.GroupDump();
-            TestDump(CatalogGroup1, Dump1.Data);
+            throw new NYI();
+            // Need to rethink the recryption workin's
 
-            ShellDispatch.MailAdd(Mail2.ID);
-            var Dump2 = ShellDispatch.GroupDump();
-            TestDump(CatalogGroup2, Dump2.Data);
+            //ShellDispatch.GroupAdd(Mail1.ID);
+            //var Dump1 = ShellDispatch.GroupDump();
+            //TestDump(CatalogGroup1, Dump1.Data);
 
-            ShellDispatch.MailDelete(Mail2.ID);
-            var Dump3 = ShellDispatch.GroupDump();
-            TestDump(CatalogGroup2, Dump3.Data);
+            //ShellDispatch.GroupAdd(Mail2.ID);
+            //var Dump2 = ShellDispatch.GroupDump();
+            //TestDump(CatalogGroup2, Dump2.Data);
+
+            //ShellDispatch.GroupDelete(Mail2.ID);
+            //var Dump3 = ShellDispatch.GroupDump();
+            //TestDump(CatalogGroup2, Dump3.Data);
 
 
             }

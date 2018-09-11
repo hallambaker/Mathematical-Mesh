@@ -45,10 +45,17 @@ namespace Goedel.Cryptography.Windows {
         /// <summary>
         /// Return a CryptoAlgorithm structure with properties describing this provider.
         /// </summary>
-        public override CryptoAlgorithm CryptoAlgorithm => CryptoAlgorithmAny; 
+        public override CryptoAlgorithm CryptoAlgorithm => CryptoAlgorithmThis; 
 
-        static CryptoAlgorithm CryptoAlgorithmAny = new CryptoAlgorithm(
+        static CryptoAlgorithm CryptoAlgorithmThis = new CryptoAlgorithm(
                     CryptoAlgorithmID.RSAExch, _AlgorithmClass, Factory, 2048);
+
+        static KeyPair KeyPairFactory(
+                KeySecurity KeySecurity = KeySecurity.Exportable, int KeySize = 0,
+                bool Signature = true, bool Exchange = true,
+                CryptoAlgorithmID CryptoAlgorithmID = CryptoAlgorithmID.NULL) =>
+                    new KeyPairRSA(KeySecurity, KeySize, Signature, Exchange);
+
 
         /// <summary>
         /// Register this provider in the specified crypto catalog. A provider may 
@@ -60,7 +67,8 @@ namespace Goedel.Cryptography.Windows {
         /// <returns>Description of the principal algorithm registration.</returns>
         public static CryptoAlgorithm Register(CryptoCatalog Catalog = null) {
             Catalog = Catalog ?? CryptoCatalog.Default;
-            return Catalog.Add(CryptoAlgorithmAny);
+            KeyPair.KeyPairFactoryRSA = KeyPairFactory;
+            return Catalog.Add(CryptoAlgorithmThis);
             }
 
 
@@ -129,15 +137,15 @@ namespace Goedel.Cryptography.Windows {
             _RSAKeyPair = new KeyPairRSA(KeySecurity, KeySize);
             }
 
-        /// <summary>
-        /// Locate private key in local key store.
-        /// </summary>
-        /// <param name="UDF">Fingerprint of key</param>
-        /// <returns>true if found, otherwise false.</returns>
-        public override bool FindLocal(string UDF) {
-            _RSAKeyPair = new KeyPairRSA(UDF);
-            return _RSAKeyPair.Provider != null;
-            }
+        ///// <summary>
+        ///// Locate private key in local key store.
+        ///// </summary>
+        ///// <param name="UDF">Fingerprint of key</param>
+        ///// <returns>true if found, otherwise false.</returns>
+        //public override bool FindLocal(string UDF) {
+        //    _RSAKeyPair = new KeyPairRSA(UDF);
+        //    return _RSAKeyPair.Provider != null;
+        //    }
 
 
         /// <summary>

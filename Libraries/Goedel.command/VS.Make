@@ -1,8 +1,7 @@
 
 # Supplemental Makefile for Visual Studios Projects
 #
-# Visual Studio is responsible for managing rules for production of
-# code but does not provide support for pre and post build actions.
+# Visual Studio runs tools for most projects but not for shared projects.
 # 
 # Prebuild items supported:
 #   [None currently]
@@ -24,7 +23,6 @@ ToolTargets = \
 	CommandLex.cs\
 	CommandSplit.cs\
 	Exceptions.cs
-
 CommandLex.cs : CommandLex.fsm 
 	fsrgen CommandLex.fsm  /cs  CommandLex.cs
 
@@ -35,12 +33,13 @@ Exceptions.cs : Exceptions.exceptional
 	exceptional Exceptions.exceptional  /cs  Exceptions.cs
 
 
+
 prebuildRecurse : 
 
 
 postbuildRecurse :
 
-
+# Shared project, create build rules for custom tools.
 prebuild : prebuildRecurse $(ToolTargets)
 
 postbuild : postbuildRecurse

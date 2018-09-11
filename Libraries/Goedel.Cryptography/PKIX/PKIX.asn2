@@ -222,12 +222,25 @@ ROOT dds_arc
 	number					35405 
 
 
+ROOT id_crfg_curve_algs
+	iso							1 
+	identified_organization		3 
+	Thawte						101
+
+
+OID id_X25519		id_crfg_curve_algs 110
+OID id_X448			id_crfg_curve_algs 111
+
+OID id_Ed25519		id_crfg_curve_algs 112
+OID id_Ed448		id_crfg_curve_algs 113
+
 
 OID dds_algorithms			dds_arc	1
 OID dds_algorithms_dh		dds_algorithms	22
 OID id_dh_domain			dds_algorithms_dh	0
 OID id_dh_public			dds_algorithms_dh	1
 OID id_dh_private 			dds_algorithms_dh	2
+
 
 Class Certificate  
 	TBSCertificate			TBSCertificate
@@ -495,6 +508,7 @@ Class PKIXPrivateKeyDH
 	Shared					Octets
 	Public					BigInteger
 	Private					BigInteger
+
 
 Class AgreementDH
 	Result					BigInteger

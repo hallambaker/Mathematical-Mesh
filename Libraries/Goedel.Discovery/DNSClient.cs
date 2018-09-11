@@ -112,7 +112,7 @@ namespace Goedel.Discovery {
     /// <summary>
     /// Multiple managed DNS queries.
     /// </summary>
-    public abstract class DNSContext : IDisposable {
+    public abstract class DNSContext : Disposable {
 
         /// <summary>The DNS client to use</summary>
         public DNSClient DNSClient = Platform.DNSClient;
@@ -187,29 +187,6 @@ namespace Goedel.Discovery {
         /// </summary>
         /// <returns>The first valid response received.</returns>
         public abstract Task<byte[]> GetResponseRawAsync();
-
-        bool Disposed = false;
-
-        /// <summary>
-        /// Dispose method.
-        /// </summary>
-        public void Dispose() {
-            if (Disposed) {
-                return;
-                }
-            Dispose(true);
-            GC.SuppressFinalize(this);
-            }
-
-        /// <summary>
-        /// Destructor, free resources;
-        /// </summary>
-        /// <param name="Disposing">Disposing flag</param>
-        protected virtual void Dispose (bool Disposing) {
-            if(Disposing) {
-                Close();
-                }
-            }
 
         /// <summary>
         /// Close the context.

@@ -11,11 +11,9 @@ using Goedel.Utilities;
 using Goedel.Protocol.Test;
 using Goedel.Catalog.Test;
 using Goedel.Mesh.Portal.Server;
-using Test.Goedel.Mesh;
 using Goedel.Cryptography.Dare.Test;
-using Test.Cryptography.Algorithms;
 using Goedel.Cryptography.Algorithms;
-using Test.Goedel.Cryptography;
+using Goedel.Cryptography.Test;
 using Goedel.Cryptography.Jose.Test;
 using Goedel.Cryptography.KeyFile.Test;
 using Goedel.Cryptography.DH.Test;
@@ -35,29 +33,6 @@ namespace Scratchpad {
             //CatalogTests.TestDirect();
             TestDare.TestDirect();
             }
-
-
-
-
-        //static void WriteBody(DAREMessage Message, byte[] Plaintext, int Stride = 0) {
-        //    if (Stride <= 0) {
-        //        Message.Process(Plaintext, true);
-        //        return;
-        //        }
-
-        //    for (long i = 0; i < Plaintext.LongLength; i += Stride) {
-        //        var Length = Plaintext.LongLength - i;
-        //        if (Length > Stride) {
-        //            Message.Process(Plaintext, false, i, Stride);
-        //            }
-        //        else {
-        //            Message.Process(Plaintext, true, i, Length);
-        //            }
-        //        }
-        //    }
-
-
-
 
 
 

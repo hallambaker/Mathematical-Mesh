@@ -19,7 +19,8 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 //  
-//  
+//  #% var InheritsOverride = "override"; // "virtual"
+
 using System;
 using System.IO;
 using System.Collections;
@@ -70,6 +71,8 @@ namespace Goedel.Cryptography.Jose {
 			{"PrivateKeyRSA", PrivateKeyRSA._Factory},
 			{"PublicKeyDH", PublicKeyDH._Factory},
 			{"PrivateKeyDH", PrivateKeyDH._Factory},
+			{"PublicKeyECDH", PublicKeyECDH._Factory},
+			{"PrivateKeyECDH", PrivateKeyECDH._Factory},
 			{"KeyAgreement", KeyAgreement._Factory},
 			{"KeyAgreementDH", KeyAgreementDH._Factory}			};
 
@@ -2102,7 +2105,7 @@ namespace Goedel.Cryptography.Jose {
 	/// </summary>
 	public partial class PrivateKeyDH : PublicKeyDH {
         /// <summary>
-        ///The private key
+        ///The private key.
         /// </summary>
 
 		public virtual byte[]						Private  {get; set;}
@@ -2174,6 +2177,244 @@ namespace Goedel.Cryptography.Jose {
 				return Out as PrivateKeyDH;
 				}
 		    var Result = new PrivateKeyDH ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			}
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
+		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+			
+			switch (Tag) {
+				case "Private" : {
+					Private = JSONReader.ReadBinary ();
+					break;
+					}
+				default : {
+					base.DeserializeToken(JSONReader, Tag);
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
+	/// <summary>
+	///
+	/// An Elliptic Curve Diffie Hellman public key
+	/// </summary>
+	public partial class PublicKeyECDH : Key {
+        /// <summary>
+        ///The curve specifier (X25519, Ed25519, X448, Ed448), etc.
+        /// </summary>
+
+		public virtual string						Curve  {get; set;}
+        /// <summary>
+        ///The public key x parameter.
+        /// </summary>
+
+		public virtual byte[]						X  {get; set;}
+        /// <summary>
+        ///The public key y parameter (if required).
+        /// </summary>
+
+		public virtual byte[]						Y  {get; set;}
+		
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "PublicKeyECDH";
+
+		/// <summary>
+        /// Factory method
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JSONObject _Factory () => new PublicKeyECDH();
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="Writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
+			SerializeX (Writer, wrap, ref first);
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_Writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			if (_wrap) {
+				_Writer.WriteObjectStart ();
+				}
+			((Key)this).SerializeX(_Writer, false, ref _first);
+			if (Curve != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("crv", 1);
+					_Writer.WriteString (Curve);
+				}
+			if (X != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("x", 1);
+					_Writer.WriteBinary (X);
+				}
+			if (Y != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("y", 1);
+					_Writer.WriteBinary (Y);
+				}
+			if (_wrap) {
+				_Writer.WriteObjectEnd ();
+				}
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <returns>The created object.</returns>		
+        public static new PublicKeyECDH FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
+			if (Tagged) {
+				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				return Out as PublicKeyECDH;
+				}
+		    var Result = new PublicKeyECDH ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			}
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
+		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+			
+			switch (Tag) {
+				case "crv" : {
+					Curve = JSONReader.ReadString ();
+					break;
+					}
+				case "x" : {
+					X = JSONReader.ReadBinary ();
+					break;
+					}
+				case "y" : {
+					Y = JSONReader.ReadBinary ();
+					break;
+					}
+				default : {
+					base.DeserializeToken(JSONReader, Tag);
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
+	/// <summary>
+	///
+	/// Diffie Helllman private key parameters
+	/// </summary>
+	public partial class PrivateKeyECDH : PublicKeyECDH {
+        /// <summary>
+        ///The private key
+        /// </summary>
+
+		public virtual byte[]						Private  {get; set;}
+		
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "PrivateKeyECDH";
+
+		/// <summary>
+        /// Factory method
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JSONObject _Factory () => new PrivateKeyECDH();
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="Writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
+			SerializeX (Writer, wrap, ref first);
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_Writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			if (_wrap) {
+				_Writer.WriteObjectStart ();
+				}
+			((PublicKeyECDH)this).SerializeX(_Writer, false, ref _first);
+			if (Private != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Private", 1);
+					_Writer.WriteBinary (Private);
+				}
+			if (_wrap) {
+				_Writer.WriteObjectEnd ();
+				}
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <returns>The created object.</returns>		
+        public static new PrivateKeyECDH FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
+			if (Tagged) {
+				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				return Out as PrivateKeyECDH;
+				}
+		    var Result = new PrivateKeyECDH ();
 			Result.Deserialize (JSONReader);
 			return Result;
 			}
