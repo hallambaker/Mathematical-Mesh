@@ -44,13 +44,13 @@ namespace Goedel.Cryptography {
             // We have to add these methods here because the .NET Standard 2.0 RSA implementation
             // is broken.
 
-            CryptoProviderSignatureRSA.Register();
-            CryptoProviderExchangeRSA.Register();
+            //CryptoProviderSignatureRSA.Register();
+            //CryptoProviderExchangeRSA.Register();
 
 
 
 
-
+            KeyPair.KeyPairFactoryRSA = Goedel.Cryptography.Windows.KeyPairRSA.KeyPairFactory;
             KeyPairBaseRSA.KeyPairPublicFactory = KeyPairRSA.KeyPairPublicFactory;
             KeyPairBaseRSA.KeyPairPrivateFactory = KeyPairRSA.KeyPairPrivateFactory;
             Platform.FindLocalDelegates.Add(KeyPairRSA.FindLocal);

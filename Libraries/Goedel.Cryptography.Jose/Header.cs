@@ -43,34 +43,34 @@ namespace Goedel.Cryptography.Jose {
         public Header(CryptoProviderEncryption Provider) => Alg = Provider.CryptoAlgorithmID.ToJoseID();
         }
 
-    /// <summary>
-    /// Signature header object
-    /// </summary>
-    public class SignatureHeader : Header {
+    ///// <summary>
+    ///// Signature header object
+    ///// </summary>
+    //public class SignatureHeader : Header {
 
-        /// <summary>
-        /// Initialize the alg and kid parameters to match the specified 
-        /// signature provider.
-        /// </summary>
-        /// <param name="SignatureProvider">The signature provider.</param>
-        public SignatureHeader(CryptoProviderSignature SignatureProvider) {
-            Kid = SignatureProvider.UDF;
-            Alg = SignatureProvider.CryptoAlgorithmID.ToJoseID();
+    //    /// <summary>
+    //    /// Initialize the alg and kid parameters to match the specified 
+    //    /// signature provider.
+    //    /// </summary>
+    //    /// <param name="SignatureProvider">The signature provider.</param>
+    //    public SignatureHeader(CryptoProviderSignature SignatureProvider) {
+    //        Kid = SignatureProvider.UDF;
+    //        Alg = SignatureProvider.CryptoAlgorithmID.ToJoseID();
 
-            }
+    //        }
 
-        /// <summary>
-        /// Initialize the alg and kid parameters to match the specified 
-        /// signature provider.
-        /// </summary>
-        /// <param name="Signature">The signature to add.</param>
-        public SignatureHeader(CryptoDataSignature Signature) {
-            Kid = Signature.Meta.UDF;
-            Alg = Signature.Meta.CryptoAlgorithmID.ToJoseID();
+    //    /// <summary>
+    //    /// Initialize the alg and kid parameters to match the specified 
+    //    /// signature provider.
+    //    /// </summary>
+    //    /// <param name="Signature">The signature to add.</param>
+    //    public SignatureHeader(CryptoDataSignature Signature) {
+    //        Kid = Signature.Meta.UDF;
+    //        Alg = Signature.Meta.CryptoAlgorithmID.ToJoseID();
 
-            }
+    //        }
 
 
-        }
+    //    }
     
     }

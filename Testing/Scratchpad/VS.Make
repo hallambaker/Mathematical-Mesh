@@ -18,38 +18,27 @@
 MSBuildThisFileDirectory = 
 
 LinkFiles = \
+    Goedel.Discovery.dll\
     Goedel.IO.dll\
     Goedel.Utilities.dll\
     Goedel.Cryptography.Dare.dll\
+    Goedel.Cryptography.Jose.dll\
     Goedel.Cryptography.WindowsFramework.dll\
     Goedel.Cryptography.dll\
-    Goedel.Mesh.Platform.Windows.dll\
-    Goedel.Mesh.dll\
     Goedel.Protocol.dll\
     Goedel.Test.dll\
-    Goedel.Mesh.Portal.Client.dll\
-    Goedel.Mesh.Portal.Server.dll\
-    Goedel.Mesh.Portal.dll\
     Goedel.ASN.Test.dll\
     Goedel.Catalog.Test.dll\
     Goedel.Cryptography.Algorithms.Test.dll\
     Goedel.Cryptography.Dare.Test.dll\
     Goedel.Cryptography.DH.Test.dll\
-    Goedel.Cryptography.KeyFile.Test.dll\
-    Goedel.Cryptography.Windows.Test.dll\
-    Goedel.Protocol.Test.dll\
-    Test.Common.dll\
     Goedel.Cryptography.Jose.Test.dll\
-    Test.Goedel.Cryptography.Linux.dll\
-    Test.Goedel.Cryptography.dll\
-    Test.Goedel.Discovery.dll\
-    Test.Goedel.Mesh.Mail.dll\
-    Test.Goedel.Mesh.Profile.dll\
-    Test.Goedel.Mesh.Proxy.dll\
-    Test.Goedel.Mesh.Recrypt.dll\
-    Test.Goedel.Mesh.Services.dll\
-    Test.Goedel.Mesh.Shell.dll\
-    Test.Goedel.Mesh.SSH.dll
+    Goedel.Cryptography.KeyFile.Test.dll\
+    Goedel.Cryptography.Test.dll\
+    Goedel.Cryptography.Windows.Test.dll\
+    Goedel.Discovery.Test.dll\
+    Goedel.Protocol.Test.dll\
+    Test.Common.dll
 
 ToolTargets = 
 

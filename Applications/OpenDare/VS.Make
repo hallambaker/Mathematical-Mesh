@@ -24,19 +24,9 @@ LinkFiles = \
     Goedel.Utilities.dll\
     Goedel.Cryptography.Dare.dll\
     Goedel.Cryptography.dll\
-    Goedel.Mesh.Platform.Windows.dll\
-    Goedel.Mesh.Shell.dll\
-    Goedel.Mesh.dll\
+    Goedel.Mesh.ShellOld.dll\
     Goedel.Persistence.dll\
-    Goedel.Protocol.dll\
-    Goedel.Async.Client.dll\
-    Goedel.Async.dll\
-    Goedel.Catalog.Client.dll\
-    Goedel.Catalog.dll\
-    Goedel.Mesh.Portal.Client.dll\
-    Goedel.Mesh.Portal.dll\
-    Goedel.Recrypt.Client.dll\
-    Goedel.Recrypt.dll
+    Goedel.Protocol.dll
 
 ToolTargets = \
 	OpenDareShell.cs

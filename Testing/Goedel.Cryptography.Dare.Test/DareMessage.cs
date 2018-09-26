@@ -13,6 +13,8 @@ using MT = Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Goedel.Cryptography.Dare.Test {
 
     public partial class TestDare {
+        public static TestDare Test => new TestDare();
+
         static CryptoParameters CryptoParametersNull = new CryptoParametersTest();
 
         [MT.TestMethod]
@@ -167,7 +169,7 @@ namespace Goedel.Cryptography.Dare.Test {
                 string ContentType = null) {
 
             CryptoParameters = CryptoParameters ?? CryptoParametersNull;
-            var Message = new DAREMessage(CryptoParameters, Plaintext);
+            var Message = new DareMessage(CryptoParameters, Plaintext);
 
             var MessageBytes = Message.GetJson(false);
             CheckDecodeDirect(CryptoParameters, MessageBytes, Plaintext, DataSequences, ContentType);
@@ -183,7 +185,7 @@ namespace Goedel.Cryptography.Dare.Test {
 
             CryptoParameters = CryptoParameters ?? CryptoParametersNull;
 
-            var Message = new DAREMessage(CryptoParameters, Plaintext, DataSequences: DataSequences);
+            var Message = new DareMessage(CryptoParameters, Plaintext, DataSequences: DataSequences);
 
             var MessageBytes = Message.GetJson(false);
 
@@ -205,7 +207,7 @@ namespace Goedel.Cryptography.Dare.Test {
             using (var InputStream = new MemoryStream(Plaintext)) {
 
                 using (var OutputStream = new MemoryStream()) {
-                    DAREMessage.Encode(CryptoParameters, InputStream, OutputStream,
+                    DareMessage.Encode(CryptoParameters, InputStream, OutputStream,
                         Plaintext.Length, ContentType, DataSequences: DataSequences);
 
                     var MessageBytes = OutputStream.ToArray();
@@ -223,7 +225,7 @@ namespace Goedel.Cryptography.Dare.Test {
             using (var InputStream = new MemoryStream(Plaintext)) {
 
                 using (var OutputStream = new MemoryStream()) {
-                    DAREMessage.Encode(CryptoParameters, InputStream, OutputStream,
+                    DareMessage.Encode(CryptoParameters, InputStream, OutputStream,
                         ContentType:ContentType, DataSequences: DataSequences);
 
                     var MessageBytes = OutputStream.ToArray();
@@ -241,7 +243,7 @@ namespace Goedel.Cryptography.Dare.Test {
             List<byte[]> DataSequences = null,
             string ContentType = null) {
 
-            var Message = DAREMessage.FromJSON(Serialization, false, 
+            var Message = DareMessage.FromJSON(Serialization, false, 
                     Decrypt: CryptoParameters.Encrypt, KeyCollection: CryptoParameters.KeyCollection );
             CheckDecodeResult(Message, DataSequences, ContentType);
 
@@ -250,7 +252,7 @@ namespace Goedel.Cryptography.Dare.Test {
 
 
         public static void CheckDecodeResult (
-            DAREMessage Message,
+            DareMessage Message,
             List<byte[]> DataSequences = null,
             string ContentType = null) {
 

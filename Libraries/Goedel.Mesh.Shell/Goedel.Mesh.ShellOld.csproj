@@ -5,11 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Protocols\Async\Goedel.Async.Client\Goedel.Async.Client.csproj" />
-    <ProjectReference Include="..\..\Protocols\Catalog\Goedel.Catalog.Client\Goedel.Catalog.Client.csproj" />
-    <ProjectReference Include="..\..\Protocols\Mesh\Goedel.Mesh.Portal.Client\Goedel.Mesh.Portal.Client.csproj" />
     <ProjectReference Include="..\Core\Goedel.Utilities\Goedel.Utilities.csproj" />
-    <ProjectReference Include="..\Goedel.Mesh\Goedel.Mesh.csproj" />
     <ProjectReference Include="..\Goedel.Protocol\Goedel.Protocol.csproj" />
   </ItemGroup>
 

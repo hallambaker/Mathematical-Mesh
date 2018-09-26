@@ -22,7 +22,7 @@ LinkFiles = \
     Goedel.Utilities.dll\
     Goedel.Cryptography.Jose.dll\
     Goedel.Cryptography.dll\
-    Goedel.Mesh.dll\
+    Goedel.MeshOld.dll\
     Goedel.Protocol.dll\
     Goedel.Mesh.Portal.dll
 

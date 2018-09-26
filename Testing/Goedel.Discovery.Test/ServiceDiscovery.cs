@@ -8,12 +8,9 @@ using Goedel.Utilities;
 using Goedel.Test;
 
 namespace Goedel.DNS.Test {
-    [TestClass]
-    public class ServiceDiscovery {
 
-        [AssemblyInitialize]
-        public static void Initialize(TestContext Context) {
-            }
+    public partial class ServiceDiscovery {
+
 
 
         [TestMethod]

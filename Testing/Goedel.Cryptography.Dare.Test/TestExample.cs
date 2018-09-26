@@ -27,8 +27,6 @@ using System.Collections.Generic;
 using System.Text;
 using Goedel.Protocol;
 
-using Goedel.Mesh;
-
 
 namespace Goedel.Cryptography.Dare.Test {
 

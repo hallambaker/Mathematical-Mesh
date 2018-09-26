@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Libraries\Core\Goedel.Utilities\Goedel.Utilities.csproj" />
+    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Dare\Goedel.Cryptography.Dare.csproj" />
+    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Windows\Goedel.Cryptography.Windows.csproj" />
+    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography\Goedel.Cryptography.csproj" />
+    <ProjectReference Include="..\..\Libraries\Goedel.Protocol\Goedel.Protocol.csproj" />
+    <ProjectReference Include="..\Goedel.Mesh\Goedel.Mesh.csproj" />
+  </ItemGroup>
+
+</Project>

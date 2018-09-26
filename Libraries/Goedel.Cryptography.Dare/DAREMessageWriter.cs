@@ -148,7 +148,7 @@ namespace Goedel.Cryptography.Dare {
             this.OutputStream = OutputStream;
 
             var CryptoStack = CryptoParameters.GetCryptoStack();
-            var Header = new DAREHeader(CryptoStack, ContentType, Cloaked, DataSequences);
+            var Header = new DareHeader(CryptoStack, ContentType, Cloaked, DataSequences);
 
             OutputStream.WriteArrayStart();
             Header.Serialize(OutputStream, false);

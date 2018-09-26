@@ -16,34 +16,36 @@ namespace Goedel.Cryptography.Dare.Test {
         /// </summary>
         public static void TestDirect() {
             InitializeClass();
-
-            var Test1 = Platform.GetRandomBytes(100);
-            var Recipients = new List<string> { "Alice@example.com" };
-            var Signers = new List<string> { "Alice@example.com" };
-
-            var TestDare = new TestDare();
-            var TestContainers = new TestContainers();
-            //TestDare.TestArchive1();
-
-            var CryptoParameters = new CryptoParametersTest(
-                        Recipients: Recipients
-                        //Signers: Signers
-                        );
-            TestContainers.TestContainer($"ContainerList", ContainerType.List, 2, 
-                CryptoParametersEntry: CryptoParameters);
-
-            //var EncryptingContainer = Container.NewContainer("Test1Enc", FileStatus.New, CryptoParameters, ContainerType.List);
-            //EncryptingContainer.Append(Test1);
-            //EncryptingContainer.Append(Test1);
+            Test.MessageEncrypted();
 
 
+            //var Test1 = Platform.GetRandomBytes(100);
+            //var Recipients = new List<string> { "Alice@example.com" };
+            //var Signers = new List<string> { "Alice@example.com" };
 
-            //TestDare.TestMessageAtomic(Test1, CryptoParameters);
+            //var TestDare = new TestDare();
+            //var TestContainers = new TestContainers();
+            //////TestDare.TestArchive1();
 
-            //TestDare.ReadWriteArchive("TestArchive_", 1, CryptoParameters, false);
+            //var CryptoParameters = new CryptoParametersTest(
+            //            //Recipients: Recipients,
+            //            //Signers: Signers
+            //            );
+            //TestContainers.TestContainer($"ContainerScratch", ContainerType.Chain, Records:100,
+            //    CryptoParametersEntry: CryptoParameters, MoveStep: 13, ReOpen: 27);
+
+            ////var EncryptingContainer = Container.NewContainer("Test1Enc", FileStatus.New, CryptoParameters, ContainerType.List);
+            ////EncryptingContainer.Append(Test1);
+            ////EncryptingContainer.Append(Test1);
 
 
-            //TestDare.TestArchive0();
+
+            ////TestDare.TestMessageAtomic(Test1, CryptoParameters);
+
+            ////TestDare.ReadWriteArchive("TestArchive_", 1, CryptoParameters, false);
+
+
+            //TestContainers.ContainerTest500();
 
 
             //

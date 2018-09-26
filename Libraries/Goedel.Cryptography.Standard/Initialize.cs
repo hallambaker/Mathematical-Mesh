@@ -57,10 +57,10 @@ namespace Goedel.Cryptography {
                 Platform.BlockProviderFactoryAes = AesBlock.Factory;
 
 
-                // Register the cryptographic algorithm implementations defined in this
-                // library. These may be overriden by platform specific implementations.
-                CryptoProviderExchangeDH.Register();
-                CryptoProviderExchangeECDH.Register();
+                //// Register the cryptographic algorithm implementations defined in this
+                //// library. These may be overriden by platform specific implementations.
+                //CryptoProviderExchangeDH.Register();
+                //CryptoProviderExchangeECDH.Register();
 
 
                 }

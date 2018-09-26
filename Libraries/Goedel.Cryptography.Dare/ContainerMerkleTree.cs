@@ -83,7 +83,7 @@ namespace Goedel.Cryptography.Dare {
         /// Pre-populate the dummy trailer so as to allow the length to be calculated.
         /// </summary>
         /// <returns>The dummy trailer.</returns>
-        public override DARETrailer GetDummyTrailer() {
+        public override DareTrailer FillDummyTrailer(CryptoStack CryptoStack) {
 
             var Trailer = CryptoStack.GetDummyTrailer();
             Trailer.TreeDigest = Trailer.PayloadDigest;
@@ -95,12 +95,12 @@ namespace Goedel.Cryptography.Dare {
         /// The dummy trailer to add to the end of the frame.
         /// </summary>
         /// <returns></returns>
-        public override void MakeTrailer(ref DARETrailer Trailer) {
+        public override void MakeTrailer(ref DareTrailer Trailer) {
             if (FrameCount > 0) {
                 Trailer.TreeDigest = GetTreeDigest(FrameCount, Trailer.PayloadDigest);
                 }
             else {
-                Trailer.TreeDigest = CryptoStack.CombineDigest(null, Trailer.PayloadDigest);
+                Trailer.TreeDigest = CryptoStackContainer.CombineDigest(null, Trailer.PayloadDigest);
                 }
             }
 
@@ -125,7 +125,7 @@ namespace Goedel.Cryptography.Dare {
                 d = d * 2;
                 x2 = x2 / 2;
                 }
-            return CryptoStack.CombineDigest(null, ContentDigest);
+            return CryptoStackContainer.CombineDigest(null, ContentDigest);
             }
 
         /// <summary>
@@ -136,7 +136,7 @@ namespace Goedel.Cryptography.Dare {
         /// <returns>The calculated digest.</returns>
         public byte[] DigestFrame (long Frame, byte[] Right) {
             var Left = GetFrameDigest(Frame);
-            return CryptoStack.CombineDigest(Left, Right);
+            return CryptoStackContainer.CombineDigest(Left, Right);
             }
 
 

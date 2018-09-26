@@ -9,8 +9,6 @@ using Goedel.Cryptography.KeyFile;
 using Goedel.Test;
 using Goedel.Utilities;
 using Goedel.Protocol.Test;
-using Goedel.Catalog.Test;
-using Goedel.Mesh.Portal.Server;
 using Goedel.Cryptography.Dare.Test;
 using Goedel.Cryptography.Algorithms;
 using Goedel.Cryptography.Test;
@@ -18,6 +16,8 @@ using Goedel.Cryptography.Jose.Test;
 using Goedel.Cryptography.KeyFile.Test;
 using Goedel.Cryptography.DH.Test;
 using Goedel.Cryptography.Windows.Test;
+using Goedel.DNS.Test;
+using Goedel.Mesh.xunit;
 
 namespace Scratchpad {
 
@@ -29,9 +29,9 @@ namespace Scratchpad {
 
             Goedel.IO.Debug.Initialize();
 
-            //TestCryptography.TestDirect();
-            //CatalogTests.TestDirect();
             TestDare.TestDirect();
+            //CatalogTests.TestDirect();
+            //TestCryptographyJose.TestDirect();
             }
 
 

@@ -33,7 +33,7 @@ LinkFiles = \
     Goedel.Cryptography.WindowsFramework.dll\
     Goedel.Cryptography.dll\
     Goedel.Mesh.Platform.Windows.dll\
-    Goedel.Mesh.dll\
+    Goedel.MeshOld.dll\
     Goedel.Persistence.dll\
     Goedel.Protocol.Debug.dll\
     Goedel.Protocol.Exchange.Server.dll\

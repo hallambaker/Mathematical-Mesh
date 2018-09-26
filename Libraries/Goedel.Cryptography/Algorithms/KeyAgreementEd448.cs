@@ -349,6 +349,15 @@ namespace Goedel.Cryptography.Algorithms {
             this.Encoding = Encoding;
             }
 
+        /// <summary>
+        /// Verify a signature over the purported data digest.
+        /// </summary>
+        /// <param name="Signature">The signature blob value.</param>
+        /// <param name="Context">Additional data added to the signature scope
+        /// for protocol isolation.</param>
+        /// <param name="Digest">The digest value to be verified.</param>
+        /// <returns>True if the signature is valid, otherwise false.</returns>
+        public bool Verify(byte[] Signature, byte[] Digest, byte[] Context = null) => throw new NYI();
 
         /// <summary>
         /// Create a new ephemeral private key and use it to perform a key
@@ -586,6 +595,7 @@ namespace Goedel.Cryptography.Algorithms {
 
             return Result;
             }
+
 
 
 

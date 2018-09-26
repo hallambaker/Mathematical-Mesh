@@ -19,7 +19,7 @@ MSBuildThisFileDirectory =
 
 LinkFiles = \
     Goedel.Utilities.dll\
-    Goedel.Mesh.dll\
+    Goedel.MeshOld.dll\
     Goedel.Protocol.dll\
     Goedel.Confirm.dll
 

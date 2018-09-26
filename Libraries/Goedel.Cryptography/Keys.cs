@@ -162,11 +162,6 @@ namespace Goedel.Cryptography {
         /// </summary>
         public static FactoryRSAPrivateKeyDelegate KeyPairPrivateFactory;
 
-        /// <summary>
-        /// Generate a new keypair. Initialized by the cryptographic
-        /// platform provider.
-        /// </summary>
-        public static FactoryKeyPairDelegate GenerateKeyPair;
 
 
         /// <summary>
@@ -195,9 +190,12 @@ namespace Goedel.Cryptography {
     /// <param name="KeySize">The key size (ignored if the algorithm supports only one key size)</param>
     /// <param name="Sign">If true, the key may be used for singature operations</param>
     /// <param name="Exchange">If true, the key may be used for exchange operations</param>
+    /// <param name="KeyCollection">The key collection that keys are to be persisted to (dependent on 
+    /// the value of <paramref name="KeySecurity"/></param>
     /// <returns>The created key pair</returns>
     public delegate KeyPair FactoryKeyPairDelegate(
                 KeySecurity KeySecurity = KeySecurity.Ephemeral,
+                KeyCollection KeyCollection=null,
         int KeySize = 0,
         bool Sign = true,
         bool Exchange = true,

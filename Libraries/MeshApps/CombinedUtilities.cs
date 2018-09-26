@@ -5,11 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Goedel.Utilities;
-using Goedel.Mesh.Platform;
-using Goedel.Mesh.Portal;
-using Goedel.Mesh.Portal.Client;
-using Goedel.Mesh.Portal.Server;
-
 
 
 namespace Goedel.Combined.Shell.Client {
@@ -68,35 +63,35 @@ namespace Goedel.Combined.Shell.Client {
             }
 
 
-        public SessionDevice GetDevice (IDeviceProfileInfo Options) {
+        //public SessionDevice GetDevice (IDeviceProfileInfo Options) {
 
-            // Feature: Should allow user to specify if device profile should be the default.
+        //    // Feature: Should allow user to specify if device profile should be the default.
 
-            if (!Options.DeviceUDF.ByDefault) {
-                // Fingerprint specified so must use existing.
-                return MeshMachine.GetDevice(Options.DeviceUDF.Value);
-                }
-            if (Options.DeviceID.ByDefault | Options.DeviceNew.Value) {
-                // Either no Device ID specified or the new flag specified so create new.
-                var DeviceID = Options.DeviceID.Value ?? "Default";     // Feature: Pull from platform
-                var DeviceDescription = Options.DeviceDescription.Value ?? "Unknown";  // Feature: Pull from platform
-                return MeshMachine.CreateDevice(DeviceID, DeviceDescription, true);
-                }
-            // DeviceID specified without new so look for existing profile.
-            return MeshMachine.GetDevice(DeviceID: Options.DeviceID.Value);
-            }
+        //    if (!Options.DeviceUDF.ByDefault) {
+        //        // Fingerprint specified so must use existing.
+        //        return MeshMachine.GetDevice(Options.DeviceUDF.Value);
+        //        }
+        //    if (Options.DeviceID.ByDefault | Options.DeviceNew.Value) {
+        //        // Either no Device ID specified or the new flag specified so create new.
+        //        var DeviceID = Options.DeviceID.Value ?? "Default";     // Feature: Pull from platform
+        //        var DeviceDescription = Options.DeviceDescription.Value ?? "Unknown";  // Feature: Pull from platform
+        //        return MeshMachine.CreateDevice(DeviceID, DeviceDescription, true);
+        //        }
+        //    // DeviceID specified without new so look for existing profile.
+        //    return MeshMachine.GetDevice(DeviceID: Options.DeviceID.Value);
+        //    }
 
 
-        public SessionPersonal GetPersonal(IMeshProfile Options) => GetPersonal(Options.MeshID.Value);
+        //public SessionPersonal GetPersonal(IMeshProfile Options) => GetPersonal(Options.MeshID.Value);
 
-        public SessionPersonal GetPersonal (string Address) {
-            var RegistrationPersonal = MeshMachine.GetPersonal(Address);
+        //public SessionPersonal GetPersonal (string Address) {
+        //    var RegistrationPersonal = MeshMachine.GetPersonal(Address);
 
-            Assert.NotNull(RegistrationPersonal, ProfileNotFound.Throw,
-                new ExceptionData() { String = Address ?? "<default>" });
+        //    Assert.NotNull(RegistrationPersonal, ProfileNotFound.Throw,
+        //        new ExceptionData() { String = Address ?? "<default>" });
 
-            return RegistrationPersonal;
-            }
+        //    return RegistrationPersonal;
+        //    }
 
 
         }

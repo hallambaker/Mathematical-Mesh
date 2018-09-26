@@ -22,6 +22,7 @@ LinkFiles = \
     Goedel.IO.dll\
     Goedel.Registry.dll\
     Goedel.Utilities.dll\
+    Goedel.Cryptography.Dare.dll\
     Goedel.Cryptography.Jose.dll\
     Goedel.Cryptography.KeyFile.dll\
     Goedel.Cryptography.Standard.dll\
@@ -64,5 +65,5 @@ postbuild : postbuildRecurse
 
 
 postbuildwindows : 
-	powershell publishtarget Goedel.Mesh.dll
+	powershell publishtarget Goedel.MeshOld.dll
 

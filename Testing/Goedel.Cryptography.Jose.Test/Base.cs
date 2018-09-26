@@ -23,15 +23,15 @@ namespace Goedel.Cryptography.Jose.Test {
 
             var Instance = new TestCryptographyJose();
 
-            Instance.Test_Write_RSA_Public();
-            Instance.Test_Write_RSA_Private();
-            Instance.Test_Write_DH_Public();
-            Instance.Test_Write_DH_Private();
+            Instance.Test_Jose_Sign();
+            //Instance.Test_Write_RSA_Private();
+            //Instance.Test_Write_DH_Public();
+            //Instance.Test_Write_DH_Private();
             }
 
 
-        static CryptoProviderExchange Encrypter;
-        static CryptoProviderSignature Signer;
+        //static CryptoProviderExchange Encrypter;
+        //static CryptoProviderSignature Signer;
 
         static KeyPairBaseRSA EncrypterKeyPair;
         static KeyPairBaseRSA SignerKeyPair;
@@ -55,10 +55,10 @@ namespace Goedel.Cryptography.Jose.Test {
             CryptographyWindows.Initialize();
 
             SignerKeyPair = (KeyPairBaseRSA)KeyFileDecode.DecodePEM(Directories.TestKey_OpenSSH_Private);
-            Signer = SignerKeyPair.SignatureProvider();
+            //Signer = SignerKeyPair.SignatureProvider();
 
             EncrypterKeyPair = (KeyPairBaseRSA)KeyFileDecode.DecodePEM(Directories.TestKey_OpenSSH_Private);
-            Encrypter = EncrypterKeyPair.ExchangeProvider();
+            //Encrypter = EncrypterKeyPair.ExchangeProvider();
             
             AliceKeyPair = new KeyPairDH();
             BobKeyPair = new KeyPairDH();

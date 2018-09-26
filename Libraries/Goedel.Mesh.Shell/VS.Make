@@ -18,11 +18,7 @@
 MSBuildThisFileDirectory = 
 
 LinkFiles = \
-    Goedel.Async.Client.dll\
-    Goedel.Catalog.Client.dll\
-    Goedel.Mesh.Portal.Client.dll\
     Goedel.Utilities.dll\
-    Goedel.Mesh.dll\
     Goedel.Protocol.dll
 
 ToolTargets = \
@@ -48,5 +44,5 @@ postbuild : postbuildRecurse
 
 
 postbuildwindows : 
-	powershell publishtarget Goedel.Mesh.Shell.dll
+	powershell publishtarget Goedel.Mesh.ShellOld.dll
 

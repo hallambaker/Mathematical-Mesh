@@ -88,21 +88,21 @@ namespace ExampleGenerator {
         StringBuilder Buffer = new StringBuilder();
 
 
-        public override void ReportWrite (string Text) {
-            if (ReportOutput) {
-                Buffer.Append(Text);
-                Console.Write(Text);
-                }
-            }
+        //public override void ReportWrite (string Text) {
+        //    if (ReportOutput) {
+        //        Buffer.Append(Text);
+        //        Console.Write(Text);
+        //        }
+        //    }
 
-        public override void ReportWriteLine (string Text, params object[] Data) {
-            if (ReportOutput) {
-                var Output = System.String.Format(Text, Data);
-                Buffer.Append(Output);
-                Buffer.Append("\n");
-                Console.WriteLine(Output);
-                }
-            }
+        //public override void ReportWriteLine (string Text, params object[] Data) {
+        //    if (ReportOutput) {
+        //        var Output = System.String.Format(Text, Data);
+        //        Buffer.Append(Output);
+        //        Buffer.Append("\n");
+        //        Console.WriteLine(Output);
+        //        }
+        //    }
 
         public string Result {
             get {
@@ -126,7 +126,7 @@ namespace ExampleGenerator {
                 }
             }
 
-        public MeshAppsShell (MeshMachine RegistrationMachine = null) : base (RegistrationMachine) {
+        public MeshAppsShell(MeshMachine RegistrationMachine = null)  {
             }
         }
 
@@ -276,104 +276,104 @@ namespace ExampleGenerator {
 
         public void CreateExamplesMesh () {
 
-            var IndexExample = MakeExampleSet("terminal", "IndexSet");
+            //var IndexExample = MakeExampleSet("terminal", "IndexSet");
 
-            Device1($"keygen", "NewKeygen");
+            //Device1($"keygen", "NewKeygen");
 
 
-            // Create profile
-            Device1($"verify {PortalIdAlice}", "CreateVerify");
-            IndexExample.Add (Device1($"personal create  {PortalIdAlice}", "Create1"));
-            Device1($"personal sync", "CreateSync", NYI:true);
-            Device1($"personal register  {PortalIdAlice2}", "CreateRegister", NYI: true);
-            Device1($"personal deregister  {PortalIdAlice2}", "CreateDeregister", NYI: true);
-            Device1($"personal fingerprint", "CreateFingerprint");
+            //// Create profile
+            //Device1($"verify {PortalIdAlice}", "CreateVerify");
+            //IndexExample.Add (Device1($"personal create  {PortalIdAlice}", "Create1"));
+            //Device1($"personal sync", "CreateSync", NYI:true);
+            //Device1($"personal register  {PortalIdAlice2}", "CreateRegister", NYI: true);
+            //Device1($"personal deregister  {PortalIdAlice2}", "CreateDeregister", NYI: true);
+            //Device1($"personal fingerprint", "CreateFingerprint");
             
 
-            // Connect Device
-            Device2($"connect start {PortalIdAlice}", "ConnectBasic1");
-            var ConnectRequestID = (ShellAlice2.LastResult as ResultConnectStart).Authenticator;
-            Device1($"connect pending", "ConnectBasic2");
-            Device1($"connect accept {ConnectRequestID}", "ConnectBasic3");
-            Device2($"connect complete", "ConnectBasic4");
+            //// Connect Device
+            //Device2($"connect start {PortalIdAlice}", "ConnectBasic1");
+            //var ConnectRequestID = (ShellAlice2.LastResult as ResultConnectStart).Authenticator;
+            //Device1($"connect pending", "ConnectBasic2");
+            //Device1($"connect accept {ConnectRequestID}", "ConnectBasic3");
+            //Device2($"connect complete", "ConnectBasic4");
 
-            // Mail 
-            IndexExample.Add(Device1($"mail create", "MailCreate", NYI: true));
-            Device1($"mail create alice@example.net /ca=ca.example.com", "MailCreateCA", NYI: true);
-            Device1($"keygen", "MailKeygen");
-            KeyGenPasswordMail = (ShellAlice1.LastResult as ResultKeyGenPassword).UDF;
-            Device1($"mail get alice@example.net /pass={KeyGenPasswordMail}", "MailGet", NYI: true);
+            //// Mail 
+            //IndexExample.Add(Device1($"mail create", "MailCreate", NYI: true));
+            //Device1($"mail create alice@example.net /ca=ca.example.com", "MailCreateCA", NYI: true);
+            //Device1($"keygen", "MailKeygen");
+            //KeyGenPasswordMail = (ShellAlice1.LastResult as ResultKeyGenPassword).UDF;
+            //Device1($"mail get alice@example.net /pass={KeyGenPasswordMail}", "MailGet", NYI: true);
 
-            // SSH
-            IndexExample.Add(Device1($"ssh create", "SSHCreate"));
-            Device2($"ssh sync", "SSHSync");
+            //// SSH
+            //IndexExample.Add(Device1($"ssh create", "SSHCreate"));
+            //Device2($"ssh sync", "SSHSync");
 
-            Device1($"ssh auth", "SSHAuth");
-            Device1($"ssh public rsa.pub", "SSHPublic");
-            Device1($"keygen", "SSHKeygen");
-            KeyGenPasswordSSH = (ShellAlice1.LastResult as ResultKeyGenPassword).UDF;
-            Device1($"ssh private rsa.private /pass={KeyGenPasswordSSH}", "SSHPrivate", NYI: true);
+            //Device1($"ssh auth", "SSHAuth");
+            //Device1($"ssh public rsa.pub", "SSHPublic");
+            //Device1($"keygen", "SSHKeygen");
+            //KeyGenPasswordSSH = (ShellAlice1.LastResult as ResultKeyGenPassword).UDF;
+            //Device1($"ssh private rsa.private /pass={KeyGenPasswordSSH}", "SSHPrivate", NYI: true);
 
-            Device2($"ssh known", "SSHKnown", NYI: true);
-            Device1($"ssh add known_hosts", "SSHKnownAdd");
+            //Device2($"ssh known", "SSHKnown", NYI: true);
+            //Device1($"ssh add known_hosts", "SSHKnownAdd");
 
-            // Catalog
+            //// Catalog
 
-            IndexExample.Add(Device1($"password add ftp.example.com alice badpassword", "PasswordAdd"));
-            Device1($"password get ftp.example.com", "PasswordGet");
-            Device1($"keygen", "PasswordKeygen");
-            KeyGenPasswordPassword = (ShellAlice1.LastResult as ResultKeyGenPassword).UDF;
-            Device1($"password add ftp.example.com alice {KeyGenPasswordPassword}", "PasswordUpdate", NYI: true);
+            //IndexExample.Add(Device1($"password add ftp.example.com alice badpassword", "PasswordAdd"));
+            //Device1($"password get ftp.example.com", "PasswordGet");
+            //Device1($"keygen", "PasswordKeygen");
+            //KeyGenPasswordPassword = (ShellAlice1.LastResult as ResultKeyGenPassword).UDF;
+            //Device1($"password add ftp.example.com alice {KeyGenPasswordPassword}", "PasswordUpdate", NYI: true);
 
-            // More connection 
-            ToDoList.Add("Connection", "Delete connection device 2");
-            Device1($"connect generate", "ConnectPIN1", NYI: true);
-            Device2($"connect start {PortalIdAlice} /pin=[Code]", "ConnectPIN2", NYI: true);
-            Device1($"connect accept /pre", "ConnectPIN3", NYI: true);
-            Device2($"connect complete", "ConnectPIN4", NYI: true);
+            //// More connection 
+            //ToDoList.Add("Connection", "Delete connection device 2");
+            //Device1($"connect generate", "ConnectPIN1", NYI: true);
+            //Device2($"connect start {PortalIdAlice} /pin=[Code]", "ConnectPIN2", NYI: true);
+            //Device1($"connect accept /pre", "ConnectPIN3", NYI: true);
+            //Device2($"connect complete", "ConnectPIN4", NYI: true);
 
-            Device1($"connect bootstrap", "ConnectBootstrap1", NYI: true);
-            Device2($"connect start {PortalIdAlice} /reboot", "ConnectBootstrap2", NYI: true);
-            Device1($"connect accept /pre", "ConnectBootstrap3", NYI: true);
-            Device2($"connect complete", "ConnectBootstrap4", NYI: true);
+            //Device1($"connect bootstrap", "ConnectBootstrap1", NYI: true);
+            //Device2($"connect start {PortalIdAlice} /reboot", "ConnectBootstrap2", NYI: true);
+            //Device1($"connect accept /pre", "ConnectBootstrap3", NYI: true);
+            //Device2($"connect complete", "ConnectBootstrap4", NYI: true);
 
-            Device2($"device /barcode=example.net", "ConnectBarcode1", NYI: true);
-            Device1($"connect accept [barcode]", "ConnectBarcode2", NYI: true);
+            //Device2($"device /barcode=example.net", "ConnectBarcode1", NYI: true);
+            //Device1($"connect accept [barcode]", "ConnectBarcode2", NYI: true);
 
-            // Escrow
-            Device1($"personal escrow /shares=3 /quorum=2", "CreateEscrow");
-            EscrowShares = (ShellAlice1.LastResult as ResultEscrow).Shares;
-            Device1($"personal purge {EscrowShares[0]} {EscrowShares[1]}", "PurgeMaster", NYI: true);
-            Device2($"personal alice@example.com recover {EscrowShares[0]} {EscrowShares[1]}", "RecoverEscrow", NYI: true);
-            Device2($"personal purge /force", "PurgeForce", NYI: true);
+            //// Escrow
+            //Device1($"personal escrow /shares=3 /quorum=2", "CreateEscrow");
+            //EscrowShares = (ShellAlice1.LastResult as ResultEscrow).Shares;
+            //Device1($"personal purge {EscrowShares[0]} {EscrowShares[1]}", "PurgeMaster", NYI: true);
+            //Device2($"personal alice@example.com recover {EscrowShares[0]} {EscrowShares[1]}", "RecoverEscrow", NYI: true);
+            //Device2($"personal purge /force", "PurgeForce", NYI: true);
             }
 
         public void CreateExamplesApps () {
-            DeviceAlice($"mesh create {PortalIdAlice}", "CreateAliceApp");
-            DeviceAlice($"account create {AccountIdAlice}", "AccountAlice");
+            //DeviceAlice($"mesh create {PortalIdAlice}", "CreateAliceApp");
+            //DeviceAlice($"account create {AccountIdAlice}", "AccountAlice");
 
-            DeviceBob($"mesh create {PortalIdBob}", "CreateBobApp");
-            DeviceBob($"account create {AccountIdBob}", "CreateBobAccount");
+            //DeviceBob($"mesh create {PortalIdBob}", "CreateBobApp");
+            //DeviceBob($"account create {AccountIdBob}", "CreateBobAccount");
 
-            DeviceMallet($"mesh create {PortalIdMallet}", "CreateMalletApp");
-            DeviceMallet($"account create {AccountIdMallet}", "CreateMalletAccount");
+            //DeviceMallet($"mesh create {PortalIdMallet}", "CreateMalletApp");
+            //DeviceMallet($"account create {AccountIdMallet}", "CreateMalletAccount");
 
-            DeviceBob($"confirm post {AccountIdAlice} \"Log in to Host1\"", "ConfirmPost");
-            var EnquireResponse = ShellBob.LastResult.Response as EnquireResponse;
+            //DeviceBob($"confirm post {AccountIdAlice} \"Log in to Host1\"", "ConfirmPost");
+            //var EnquireResponse = ShellBob.LastResult.Response as EnquireResponse;
 
-            DeviceBob($"confirm status {EnquireResponse.BrokerID}", "ConfirmStatus1");
-            DeviceAlice($"confirm pending /id={AccountIdAlice}", "ConfirmPending");
-            DeviceAlice($"confirm accept {EnquireResponse.BrokerID} /id={AccountIdAlice}", "ConfirmAccept", NYI: true);
-            DeviceBob($"confirm status {EnquireResponse.BrokerID}", "ConfirmStatus2");
+            //DeviceBob($"confirm status {EnquireResponse.BrokerID}", "ConfirmStatus1");
+            //DeviceAlice($"confirm pending /id={AccountIdAlice}", "ConfirmPending");
+            //DeviceAlice($"confirm accept {EnquireResponse.BrokerID} /id={AccountIdAlice}", "ConfirmAccept", NYI: true);
+            //DeviceBob($"confirm status {EnquireResponse.BrokerID}", "ConfirmStatus2");
 
-            RecryptTestFileInitial.WriteFileNew(RecryptTestFileText);
+            //RecryptTestFileInitial.WriteFileNew(RecryptTestFileText);
 
-            DeviceAlice($"recrypt create {RecryptTestFileGroup} {AccountIdAlice}", "recryptCreate");
-            DeviceAlice($"recrypt encrypt {RecryptTestFileGroup} /in={RecryptTestFileInitial}", "recryptEncrypt");
-            DeviceAlice($"recrypt add {RecryptTestFileGroup} {AccountIdMallet}", "recryptAdd");
-            DeviceMallet($"recrypt decrypt /in={RecryptTestFileEncrypted}  /out={RecryptTestFileDecrypted}", "recryptDecrypt");
-            DeviceAlice($"recrypt delete {RecryptTestFileGroup} {AccountIdMallet}", "recryptDelete");
-            DeviceMallet($"recrypt decrypt /in={RecryptTestFileEncrypted}  /out={RecryptTestFileDecryptFail}", "recryptDecryptFail");
+            //DeviceAlice($"recrypt create {RecryptTestFileGroup} {AccountIdAlice}", "recryptCreate");
+            //DeviceAlice($"recrypt encrypt {RecryptTestFileGroup} /in={RecryptTestFileInitial}", "recryptEncrypt");
+            //DeviceAlice($"recrypt add {RecryptTestFileGroup} {AccountIdMallet}", "recryptAdd");
+            //DeviceMallet($"recrypt decrypt /in={RecryptTestFileEncrypted}  /out={RecryptTestFileDecrypted}", "recryptDecrypt");
+            //DeviceAlice($"recrypt delete {RecryptTestFileGroup} {AccountIdMallet}", "recryptDelete");
+            //DeviceMallet($"recrypt decrypt /in={RecryptTestFileEncrypted}  /out={RecryptTestFileDecryptFail}", "recryptDecryptFail");
             }
 
 

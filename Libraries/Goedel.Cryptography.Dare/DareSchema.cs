@@ -58,13 +58,13 @@ namespace Goedel.Cryptography.Dare {
 		public static Dictionary<string, JSONFactoryDelegate> _TagDictionary = 
 				new Dictionary<string, JSONFactoryDelegate> () {
 
-			{"DAREMessageSequence", DAREMessageSequence._Factory},
-			{"DARETrailer", DARETrailer._Factory},
-			{"DAREHeader", DAREHeader._Factory},
-			{"DARESigner", DARESigner._Factory},
+			{"DareMessageSequence", DareMessageSequence._Factory},
+			{"DareTrailer", DareTrailer._Factory},
+			{"DareHeader", DareHeader._Factory},
+			{"DareSigner", DareSigner._Factory},
 			{"X509Certificate", X509Certificate._Factory},
-			{"DARESignature", DARESignature._Factory},
-			{"DARERecipient", DARERecipient._Factory}			};
+			{"DareSignature", DareSignature._Factory},
+			{"DareRecipient", DareRecipient._Factory}			};
 
 		/// <summary>
         /// Construct an instance from the specified tagged JSONReader stream.
@@ -93,13 +93,13 @@ namespace Goedel.Cryptography.Dare {
 	/// precede the body in a serialization, this allowing processing of the header
 	/// information to be performed before the entire body has been received.
 	/// </summary>
-	public partial class DAREMessageSequence : Dare {
+	public partial class DareMessageSequence : Dare {
         /// <summary>
         ///The message header. May specify the key exchange data, pre-signature 
         ///or signature data, cloaked headers and/or encrypted data sequences.
         /// </summary>
 
-		public virtual DAREHeader						Header  {get; set;}
+		public virtual DareHeader						Header  {get; set;}
         /// <summary>
         ///The message body
         /// </summary>
@@ -109,7 +109,7 @@ namespace Goedel.Cryptography.Dare {
         ///The message trailer. If present, this contains the signature.
         /// </summary>
 
-		public virtual DARETrailer						Trailer  {get; set;}
+		public virtual DareTrailer						Trailer  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -119,13 +119,13 @@ namespace Goedel.Cryptography.Dare {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public new const string __Tag = "DAREMessageSequence";
+		public new const string __Tag = "DareMessageSequence";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new DAREMessageSequence();
+		public static new JSONObject _Factory () => new DareMessageSequence();
 
 
         /// <summary>
@@ -178,15 +178,15 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new DAREMessageSequence FromJSON (JSONReader JSONReader, bool Tagged=true) {
+        public static new DareMessageSequence FromJSON (JSONReader JSONReader, bool Tagged=true) {
 			if (JSONReader == null) {
 				return null;
 				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
-				return Out as DAREMessageSequence;
+				return Out as DareMessageSequence;
 				}
-		    var Result = new DAREMessageSequence ();
+		    var Result = new DareMessageSequence ();
 			Result.Deserialize (JSONReader);
 			return Result;
 			}
@@ -201,7 +201,7 @@ namespace Goedel.Cryptography.Dare {
 			switch (Tag) {
 				case "Header" : {
 					// An untagged structure
-					Header = new DAREHeader ();
+					Header = new DareHeader ();
 					Header.Deserialize (JSONReader);
  
 					break;
@@ -212,7 +212,7 @@ namespace Goedel.Cryptography.Dare {
 					}
 				case "Trailer" : {
 					// An untagged structure
-					Trailer = new DARETrailer ();
+					Trailer = new DareTrailer ();
 					Trailer.Deserialize (JSONReader);
  
 					break;
@@ -231,14 +231,14 @@ namespace Goedel.Cryptography.Dare {
 	///
 	/// A DARE Message Trailer
 	/// </summary>
-	public partial class DARETrailer : Dare {
+	public partial class DareTrailer : Dare {
         /// <summary>
         ///A list of signatures.
         ///A message trailer MUST NOT contain a signatures field if the header contains 
         ///a signatures field.
         /// </summary>
 
-		public virtual List<DARESignature>				Signatures  {get; set;}
+		public virtual List<DareSignature>				Signatures  {get; set;}
         /// <summary>
         ///Contains a DAREHeader object 
         /// </summary>
@@ -269,13 +269,13 @@ namespace Goedel.Cryptography.Dare {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public new const string __Tag = "DARETrailer";
+		public new const string __Tag = "DareTrailer";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new DARETrailer();
+		public static new JSONObject _Factory () => new DareTrailer();
 
 
         /// <summary>
@@ -350,15 +350,15 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new DARETrailer FromJSON (JSONReader JSONReader, bool Tagged=true) {
+        public static new DareTrailer FromJSON (JSONReader JSONReader, bool Tagged=true) {
 			if (JSONReader == null) {
 				return null;
 				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
-				return Out as DARETrailer;
+				return Out as DareTrailer;
 				}
-		    var Result = new DARETrailer ();
+		    var Result = new DareTrailer ();
 			Result.Deserialize (JSONReader);
 			return Result;
 			}
@@ -374,12 +374,12 @@ namespace Goedel.Cryptography.Dare {
 				case "signatures" : {
 					// Have a sequence of values
 					bool _Going = JSONReader.StartArray ();
-					Signatures = new List <DARESignature> ();
+					Signatures = new List <DareSignature> ();
 					while (_Going) {
 						// an untagged structure.
-						var _Item = new  DARESignature ();
+						var _Item = new  DareSignature ();
 						_Item.Deserialize (JSONReader);
-						// var _Item = new DARESignature (JSONReader);
+						// var _Item = new DareSignature (JSONReader);
 						Signatures.Add (_Item);
 						_Going = JSONReader.NextArray ();
 						}
@@ -416,7 +416,7 @@ namespace Goedel.Cryptography.Dare {
 	/// A DARE Message Header. Since any field that is present in a trailer MAY be 
 	/// placed in a header instead, the message header inherits from the trailer.
 	/// </summary>
-	public partial class DAREHeader : DARETrailer {
+	public partial class DareHeader : DareTrailer {
         /// <summary>
         ///The encryption algorithm as specified in JWE
         /// </summary>
@@ -469,12 +469,12 @@ namespace Goedel.Cryptography.Dare {
         ///A list of 'presignature'
         /// </summary>
 
-		public virtual List<DARESigner>				Signers  {get; set;}
+		public virtual List<DareSigner>				Signers  {get; set;}
         /// <summary>
         ///A list of recipient key exchange information blocks.
         /// </summary>
 
-		public virtual List<DARERecipient>				Recipients  {get; set;}
+		public virtual List<DareRecipient>				Recipients  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -484,13 +484,13 @@ namespace Goedel.Cryptography.Dare {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public new const string __Tag = "DAREHeader";
+		public new const string __Tag = "DareHeader";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new DAREHeader();
+		public static new JSONObject _Factory () => new DareHeader();
 
 
         /// <summary>
@@ -517,7 +517,7 @@ namespace Goedel.Cryptography.Dare {
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
-			((DARETrailer)this).SerializeX(_Writer, false, ref _first);
+			((DareTrailer)this).SerializeX(_Writer, false, ref _first);
 			if (EncryptionAlgorithm != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("enc", 1);
@@ -605,15 +605,15 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new DAREHeader FromJSON (JSONReader JSONReader, bool Tagged=true) {
+        public static new DareHeader FromJSON (JSONReader JSONReader, bool Tagged=true) {
 			if (JSONReader == null) {
 				return null;
 				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
-				return Out as DAREHeader;
+				return Out as DareHeader;
 				}
-		    var Result = new DAREHeader ();
+		    var Result = new DareHeader ();
 			Result.Deserialize (JSONReader);
 			return Result;
 			}
@@ -664,12 +664,12 @@ namespace Goedel.Cryptography.Dare {
 				case "signatures" : {
 					// Have a sequence of values
 					bool _Going = JSONReader.StartArray ();
-					Signers = new List <DARESigner> ();
+					Signers = new List <DareSigner> ();
 					while (_Going) {
 						// an untagged structure.
-						var _Item = new  DARESigner ();
+						var _Item = new  DareSigner ();
 						_Item.Deserialize (JSONReader);
-						// var _Item = new DARESigner (JSONReader);
+						// var _Item = new DareSigner (JSONReader);
 						Signers.Add (_Item);
 						_Going = JSONReader.NextArray ();
 						}
@@ -678,12 +678,12 @@ namespace Goedel.Cryptography.Dare {
 				case "recipients" : {
 					// Have a sequence of values
 					bool _Going = JSONReader.StartArray ();
-					Recipients = new List <DARERecipient> ();
+					Recipients = new List <DareRecipient> ();
 					while (_Going) {
 						// an untagged structure.
-						var _Item = new  DARERecipient ();
+						var _Item = new  DareRecipient ();
 						_Item.Deserialize (JSONReader);
-						// var _Item = new DARERecipient (JSONReader);
+						// var _Item = new DareRecipient (JSONReader);
 						Recipients.Add (_Item);
 						_Going = JSONReader.NextArray ();
 						}
@@ -704,7 +704,7 @@ namespace Goedel.Cryptography.Dare {
 	///
 	/// The signature value
 	/// </summary>
-	public partial class DARESigner : Dare {
+	public partial class DareSigner : Dare {
         /// <summary>
         ///Digest algorithm hint. Specifying the digest algorithm to be applied
         ///to the message body allows the body to be processed in streaming mode.
@@ -740,13 +740,13 @@ namespace Goedel.Cryptography.Dare {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public new const string __Tag = "DARESigner";
+		public new const string __Tag = "DareSigner";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new DARESigner();
+		public static new JSONObject _Factory () => new DareSigner();
 
 
         /// <summary>
@@ -809,15 +809,15 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new DARESigner FromJSON (JSONReader JSONReader, bool Tagged=true) {
+        public static new DareSigner FromJSON (JSONReader JSONReader, bool Tagged=true) {
 			if (JSONReader == null) {
 				return null;
 				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
-				return Out as DARESigner;
+				return Out as DareSigner;
 				}
-		    var Result = new DARESigner ();
+		    var Result = new DareSigner ();
 			Result.Deserialize (JSONReader);
 			return Result;
 			}
@@ -985,7 +985,7 @@ namespace Goedel.Cryptography.Dare {
 	///
 	/// The signature value
 	/// </summary>
-	public partial class DARESignature : DARESigner {
+	public partial class DareSignature : DareSigner {
         /// <summary>
         ///The data description that was signed.
         /// </summary>
@@ -1012,13 +1012,13 @@ namespace Goedel.Cryptography.Dare {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public new const string __Tag = "DARESignature";
+		public new const string __Tag = "DareSignature";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new DARESignature();
+		public static new JSONObject _Factory () => new DareSignature();
 
 
         /// <summary>
@@ -1045,7 +1045,7 @@ namespace Goedel.Cryptography.Dare {
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
-			((DARESigner)this).SerializeX(_Writer, false, ref _first);
+			((DareSigner)this).SerializeX(_Writer, false, ref _first);
 			if (Manifest != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("Manifest", 1);
@@ -1072,15 +1072,15 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new DARESignature FromJSON (JSONReader JSONReader, bool Tagged=true) {
+        public static new DareSignature FromJSON (JSONReader JSONReader, bool Tagged=true) {
 			if (JSONReader == null) {
 				return null;
 				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
-				return Out as DARESignature;
+				return Out as DareSignature;
 				}
-		    var Result = new DARESignature ();
+		    var Result = new DareSignature ();
 			Result.Deserialize (JSONReader);
 			return Result;
 			}
@@ -1120,7 +1120,7 @@ namespace Goedel.Cryptography.Dare {
 	///
 	/// Recipient information
 	/// </summary>
-	public partial class DARERecipient : Dare {
+	public partial class DareRecipient : Dare {
         /// <summary>
         ///Key identifier for the encryption key.
         ///The Key identifier MUST be either a UDF fingerprint of a key or a Group Key Identifier
@@ -1156,13 +1156,13 @@ namespace Goedel.Cryptography.Dare {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public new const string __Tag = "DARERecipient";
+		public new const string __Tag = "DareRecipient";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new DARERecipient();
+		public static new JSONObject _Factory () => new DareRecipient();
 
 
         /// <summary>
@@ -1233,15 +1233,15 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new DARERecipient FromJSON (JSONReader JSONReader, bool Tagged=true) {
+        public static new DareRecipient FromJSON (JSONReader JSONReader, bool Tagged=true) {
 			if (JSONReader == null) {
 				return null;
 				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
-				return Out as DARERecipient;
+				return Out as DareRecipient;
 				}
-		    var Result = new DARERecipient ();
+		    var Result = new DareRecipient ();
 			Result.Deserialize (JSONReader);
 			return Result;
 			}

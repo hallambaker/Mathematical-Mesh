@@ -1,0 +1,189 @@
+﻿Protocol Goedel.Mesh MeshItem MeshItem
+	Description 
+		|An entry in the Mesh linked logchain.
+
+    Using Goedel.Cryptography.Jose
+    Using Goedel.Cryptography.Dare
+
+	Section 1 "Shared Classes"
+		Description
+			|The following classes are used as common elements in
+			|Mesh profile specifications.a
+
+	Structure PublicKey
+		Description
+			|The PublicKey class is used to describe public key pairs and 
+			|trust assertions associated with a public key.
+		String UDF
+			Description
+				|UDF fingerprint of the public key parameters/
+		Binary X509Certificate
+			Description
+				|List of X.509 Certificates
+		Binary X509Chain
+			Multiple
+			Description
+				|X.509 Certificate chain.
+		Binary X509CSR
+			Description
+				|X.509 Certificate Signing Request.
+		TStruct Key PublicParameters
+			Description
+				|The public key parameters as defined in the JOSE specification.
+		TStruct Key PrivateParameters
+			Description
+				|The private key parameters as defined in the JOSE specification.
+		
+	Section 1 "Mesh Profile Objects"
+		Description 
+			|Base class for all Mesh Profile objects.
+
+
+	Structure Profile
+		Abstract
+		Description 
+			|Parent class from which all profile types are derived
+		String Names
+			Multiple
+			Description
+				|Fingerprints of index terms for profile retrieval. The use of the fingerprint
+				|of the name rather than the name itself is a precaution against enumeration
+				|attacks and other forms of abuse.
+		DateTime Updated
+			Description
+				|The time instant the profile was last modified.
+		String NotaryToken
+			Description
+				|A Uniform Notary Token providing evidence that a signature
+				|was performed after the notary token was created.
+
+	Section 2 "Keyset Classes"
+
+	Structure EscrowedKeySet
+		Description
+			|A set of escrowed keys. 
+		TStruct Key MasterSignatureKey
+			Description
+				|A Master Signature Key
+		TStruct Key MasterEscrowKeys
+			Multiple
+			Description
+				|The escrowed master escrow keys.
+
+	Structure DeviceKeySet
+		Description 
+			|The set of private keys associated with a device.
+		Struct Key DeviceSignatureKey
+			Description
+				|Private portion of the DeviceSignatureKey
+		Struct Key DeviceAuthenticationKey
+			Description
+				|Private portion of the DeviceAuthenticationKey
+		Struct Key DeviceEncryptiontionKey
+			Description
+				|Private portion of the DeviceEncryptiontionKey
+
+
+
+	Section 2 "Profile Classes"
+
+	Structure ProfileMaster
+		Inherits Profile
+		Description 
+			|Describes the long term parameters associated with a personal profile.
+		Description
+			|This profile MUST be signed by 
+		Struct PublicKey MasterSignatureKey
+			Description
+				|The root of trust for the Personal PKI, the public key of the PMSK 
+				|is presented as a self-signed X.509v3 certificate with Certificate 
+				|Signing use enabled. The PMSK is used to sign certificates for the 
+				|PMEK, POSK and PKEK keys.
+		Struct PublicKey MasterEscrowKeys
+			Multiple
+			Description
+				|A Personal Profile MAY contain one or more PMEK keys to enable escrow 
+				|of private keys used for stored data. 
+		Struct PublicKey OnlineSignatureKeys
+			Multiple
+			Description
+				|A Personal profile contains at least one OSK which is used to sign 
+				|device administration application profiles.
+
+	Structure ProfileDevice
+		Inherits Profile
+		Description 
+			|Describes a mesh device.
+		Description
+			|This profile MUST be signed by the DeviceSignatureKey
+		String Description
+			Description
+				|Description of the device
+		Struct PublicKey DeviceSignatureKey
+			Description
+				|Key used to sign certificates for the DAK and DEK. The fingerprint of
+				|the DSK is the UniqueID of the Device Profile
+		Struct PublicKey DeviceAuthenticationKey
+			Description
+				|Key used to authenticate requests made by the device.
+		Struct PublicKey DeviceEncryptiontionKey
+			Description
+				|Key used to pass encrypted data to the device such as a
+				|DeviceUseEntry
+
+	Structure ProfileApplication
+		Abstract
+		Inherits Profile
+		Description 
+			|Contains the public description of a Mesh application.
+		Description
+			|This profile is public and MUST be signed by an Online Signature Key.
+
+
+
+	Section 2 "Catalog Entries"
+
+	Structure CatalogEntryDeviceProfile
+		// The device profile
+
+	Structure CatalogEntryContact
+		// Contact information
+		// Permissions
+
+	Structure CatalogEntryContactRecryption
+		Inherits CatalogEntryContact
+		// Recryption group user has accepted membership of
+		// Describe document stores, chat groups, etc accessible
+
+	Structure CatalogEntryCredential
+		// Protocol, Service, Username, Password
+
+	Structure CatalogEntryTask
+		// Calendar entry
+		// Geolocation entry
+
+
+	Structure CatalogEntryApplication
+		// The application profile
+	Structure CatalogEntryApplicationEntry
+		// Application data specific to a particular device
+		// Only need to sync if it is for the current device or the current device is an admin device.
+
+	Structure CatalogEntryApplicationRecryption
+		// The recryption key
+	Structure CatalogEntryApplicationSSH
+		// The recryption key
+	Structure CatalogEntryApplicationMail
+		// The recryption key
+	Structure CatalogEntryApplicationNetwork
+		// The recryption key
+
+	Section 2 "Messages"
+
+	Structure MessageConnectionRequest
+	Structure MessageContactRequest
+	Structure MessageConfirmationRequest
+	Structure MessageTaskRequest
+
+
+

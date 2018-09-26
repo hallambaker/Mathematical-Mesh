@@ -247,33 +247,28 @@ namespace Goedel.Cryptography.Dare.Test {
                 XContainer.CheckContainer(Headers);
                 }
 
+            // Test random access.
             if (MoveStep > 0) {
+                // Check in forward direction
                 using (var XContainer = Container.Open(FileName, FileStatus.Read,
                             CryptoParameters: CryptoParameters)) {
                     for (Record = MoveStep; Record < Records; Record+= MoveStep) {
-
                         var ContainerDataReader = XContainer.GetFrameDataReader(Record);
                         Assert.True(ContainerDataReader.Header.Index == Record);
                         }
 
                     }
+
+                // Check in backwards direction
+                using (var XContainer = Container.Open(FileName, FileStatus.Read,
+                            CryptoParameters: CryptoParameters)) {
+                    for (Record = Records; Record > 0; Record -= MoveStep) {
+                        var ContainerDataReader = XContainer.GetFrameDataReader(Record);
+                        Assert.True(ContainerDataReader.Header.Index == Record);
+                        }
+                    }
                 }
 
-            //// check last record.
-            //using (var XContainer = Container.Open(FileName, FileStatus.Read,
-            //                CryptoParameters: CryptoParameters,
-            //                KeyCollection: CryptoParameters.KeyCollection)) {
-            //    var Last = XContainer.Last();
-            //    if (Records == 0) {
-            //        Assert.False(Last);
-            //        }
-            //    else {
-            //        Assert.True(Last);
-            //        var Test = MakeConstant("Test ", (Records % MaxSize));
-            //        var FrameData = XContainer.ReadFrameData();
-            //        Assert.True(FrameData.IsEqualTo(Test));
-            //        }
-            //    }
             }
         }
     }

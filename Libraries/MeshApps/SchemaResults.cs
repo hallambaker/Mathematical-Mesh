@@ -30,10 +30,6 @@ using Goedel.Protocol;
 
 
 using Goedel.Mesh;
-using Goedel.Mesh.Portal;
-using Goedel.Account;
-using Goedel.Recrypt;
-using Goedel.Confirm;
 
 
 namespace Goedel.Combined.Shell.Client {
@@ -1096,8 +1092,8 @@ namespace Goedel.Combined.Shell.Client {
 			switch (Tag) {
 				case "Pending" : {
 					// An untagged structure
-					Pending = new PendingResponse ();
-					Pending.Deserialize (JSONReader);
+					//Pending = new PendingResponse ();
+					//Pending.Deserialize (JSONReader);
  
 					break;
 					}

@@ -109,7 +109,7 @@ namespace Goedel.Mesh {
 
 
 
-        public DAREMessage DareEncrypt(JSONObject Object) => throw new NYI();
+        public DareMessage DareEncrypt(JSONObject Object) => throw new NYI();
 
         }
     }

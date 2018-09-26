@@ -30,8 +30,6 @@ LinkFiles = \
     Goedel.Cryptography.Linux.dll\
     Goedel.Cryptography.Standard.dll\
     Goedel.Cryptography.dll\
-    Goedel.Mesh.Platform.Linux.dll\
-    Goedel.Mesh.dll\
     Goedel.Persistence.dll\
     Goedel.Protocol.Debug.dll\
     Goedel.Protocol.dll\

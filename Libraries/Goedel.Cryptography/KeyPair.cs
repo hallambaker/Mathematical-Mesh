@@ -31,30 +31,6 @@ namespace Goedel.Cryptography {
         /// </summary>
         public static bool TestMode { get; set; } = false;
 
-        #region // Provider methods - TO BE DELETED
-
-        /// <summary>
-        /// Returns a signature provider for the key (if the private portion is available).
-        /// </summary>
-        /// <param name="BulkAlgorithm">The digest algorithm to use</param>
-        /// <returns>The signature provider.</returns>
-        public abstract CryptoProviderSignature SignatureProvider(
-                    CryptoAlgorithmID BulkAlgorithm = CryptoAlgorithmID.Default);
-
-        /// <summary>
-        /// Returns an encryption provider for the key (if the public portion is available)
-        /// </summary>
-        /// <param name="BulkAlgorithm">The encryption algorithm to use</param>
-        /// <returns>The encryption provider.</returns>
-        public abstract CryptoProviderExchange ExchangeProvider(
-                    CryptoAlgorithmID BulkAlgorithm = CryptoAlgorithmID.Default);
-
-        CryptoProviderExchange CachedExchangeProvider = null;
-        CryptoProviderSignature CachedSignatureProvider = null;
-
-        #endregion
-
-
         /// <summary>
         /// Return the CryptoAlgorithmID that would be used with the specified base parameters.
         /// </summary>
@@ -62,55 +38,16 @@ namespace Goedel.Cryptography {
         /// <returns>The computed CryptoAlgorithmID</returns>
         public virtual CryptoAlgorithmID SignatureAlgorithmID(CryptoAlgorithmID Base) => Base;
 
-
-
         /// <summary>
-        /// Perform a key exchange to encrypt a bulk or wrapped key under this one.
+        /// Encrypt a bulk key.
         /// </summary>
-        /// <param name="Bulk">The provider to wrap.</param>
-        /// <param name="AlgorithmID">The algorithm to use.</param>
-        /// <returns>The encryption provider</returns>
-        public virtual CryptoDataExchange EncryptKey(CryptoData Bulk,
-                CryptoAlgorithmID AlgorithmID = CryptoAlgorithmID.Default) {
-
-            CachedExchangeProvider = CachedExchangeProvider ?? ExchangeProvider(AlgorithmID);
-            var Exchange = CachedExchangeProvider.Encrypt(Bulk, Wrap: true);
-            Bulk.Exchanges = Bulk.Exchanges ?? new List<CryptoDataExchange>();
-            Bulk.Exchanges.Add(Exchange);
-
-            return Exchange;
-            }
-
-        /// <summary>
-        /// Sign a precomputed digest
-        /// </summary>
-        /// <param name="Data">The data to sign.</param>
-        /// <param name="AlgorithmID">The algorithm to use.</param>
-        /// <returns>The signature data</returns>
-        public virtual CryptoDataSignature Sign(byte[] Data,
-                CryptoAlgorithmID AlgorithmID = CryptoAlgorithmID.Default) {
-
-            CachedSignatureProvider = CachedSignatureProvider ??
-                        SignatureProvider(AlgorithmID);
-
-            return CachedSignatureProvider.Sign(Data);
-            }
-
-        /// <summary>
-        /// Sign a precomputed digest
-        /// </summary>
-        /// <param name="Data">The data to sign.</param>
-        /// <param name="AlgorithmID">The algorithm to use.</param>
-        /// <returns>The signature data</returns>
-        public virtual byte[] SignHash(byte[] Data,
-                CryptoAlgorithmID AlgorithmID = CryptoAlgorithmID.Default) {
-
-            CachedSignatureProvider = CachedSignatureProvider ??
-                        SignatureProvider(AlgorithmID);
-
-            return CachedSignatureProvider.SignHash(Data, AlgorithmID);
-            }
-
+        /// <returns>The encoder</returns>
+        /// <param name="Key">The key to encrypt.</param>
+        /// <param name="Ephemeral">The ephemeral key to use for the exchange (if used)</param>
+        /// <param name="Exchange">The private key to use for the exchange.</param>
+        /// <param name="Salt">Optional salt value for use in key derivation.</param>
+        public abstract void Encrypt(byte[] Key,
+            out byte[] Exchange, out KeyPair Ephemeral, byte[] Salt = null);
 
         /// <summary>
         /// Perform a key exchange to encrypt a bulk or wrapped key under this one.
@@ -119,34 +56,75 @@ namespace Goedel.Cryptography {
         /// <param name="Ephemeral">Ephemeral key input (required for DH)</param>
         /// <param name="AlgorithmID">The algorithm to use.</param>
         /// <param name="Partial">Partial key agreement carry in (for recryption)</param>
+        /// <param name="Salt">Optional salt value for use in key derivation. If specified
+        /// must match the salt used to encrypt.</param>        
         /// <returns>The decoded data instance</returns>
-        public virtual byte[] Decrypt(
+        public abstract byte[] Decrypt(
                     byte[] EncryptedKey,
                     KeyPair Ephemeral = null,
                     CryptoAlgorithmID AlgorithmID = CryptoAlgorithmID.Default,
-                    KeyAgreementResult Partial = null) {
+                    KeyAgreementResult Partial = null,
+                    byte[] Salt = null);
 
-            CachedExchangeProvider = CachedExchangeProvider ??
-                ExchangeProvider(AlgorithmID);
+        /// <summary>
+        /// Sign a precomputed digest
+        /// </summary>
+        /// <param name="Data">The data to sign.</param>
+        /// <param name="AlgorithmID">The algorithm to use.</param>
+        /// <param name="Context">Additional data added to the signature scope
+        /// for protocol isolation.</param>
+        /// <returns>The signature data</returns>
+        public virtual byte[] Sign(byte[] Data,
+                CryptoAlgorithmID AlgorithmID = CryptoAlgorithmID.Default,
+                byte[] Context = null) {
 
-            return CachedExchangeProvider.Decrypt(EncryptedKey, Ephemeral,
-                CryptoAlgorithmID, Partial: Partial);
+            var hash= AlgorithmID.Bulk().GetDigest(Data);
+            return SignHash(hash, AlgorithmID, Context);
+
             }
 
         /// <summary>
-        /// Verify a precomputed digest
+        /// Sign a precomputed digest
         /// </summary>
-        /// <param name="Bulk">The provider to wrap.</param>
-        /// <param name="Signature">The signature blob value.</param>
-        /// <param name="AlgorithmID">The algorithm used.</param>
-        /// <returns>True if the digest is cvalid, otherwise false.</returns>
-        public virtual bool Verify(CryptoData Bulk, byte[] Signature,
-                CryptoAlgorithmID AlgorithmID = CryptoAlgorithmID.Default) {
-            CachedSignatureProvider = CachedSignatureProvider ??
-                        SignatureProvider(AlgorithmID);
+        /// <param name="Data">The data to sign.</param>
+        /// <param name="AlgorithmID">The algorithm to use.</param>
+        /// <param name="Context">Additional data added to the signature scope
+        /// for protocol isolation.</param>
+        /// <returns>The signature data</returns>
+        public abstract byte[] SignHash(byte[] Data,
+                CryptoAlgorithmID AlgorithmID = CryptoAlgorithmID.Default,
+                byte[] Context = null);
 
-            return CachedSignatureProvider.Verify(Bulk, Signature);
+
+
+
+
+        /// <summary>
+        /// Verify a signature over the purported data.
+        /// </summary>
+        /// <param name="Signature">The signature blob value.</param>
+        /// <param name="AlgorithmID">The signature and hash algorithm to use.</param>
+        /// <param name="Context">Additional data added to the signature scope
+        /// for protocol isolation.</param>
+        /// <param name="Data">The data to be digested and verified.</param>
+        /// <returns>True if the signature is valid, otherwise false.</returns>
+        public virtual bool Verify(byte[] Data, byte[] Signature,
+                CryptoAlgorithmID AlgorithmID = CryptoAlgorithmID.Default, byte[] Context = null) {
+            var hash = AlgorithmID.Bulk().GetDigest(Data);
+            return VerifyHash(hash, Signature, AlgorithmID, Context);
             }
+
+        /// <summary>
+        /// Verify a signature over the purported data digest.
+        /// </summary>
+        /// <param name="Signature">The signature blob value.</param>
+        /// <param name="AlgorithmID">The signature and hash algorithm to use.</param>
+        /// <param name="Context">Additional data added to the signature scope
+        /// for protocol isolation.</param>
+        /// <param name="Digest">The digest value to be verified.</param>
+        /// <returns>True if the signature is valid, otherwise false.</returns>
+        public abstract bool VerifyHash(byte[] Digest, byte[] Signature,
+                CryptoAlgorithmID AlgorithmID = CryptoAlgorithmID.Default, byte[] Context = null);
 
         /// <summary>
         /// Search for the local key with the specified UDF fingerprint.
@@ -180,34 +158,37 @@ namespace Goedel.Cryptography {
         /// <param name="KeySize">The key size (ignored if the algorithm supports only one key size)</param>
         /// <param name="Sign">If true, the key may be used for singature operations</param>
         /// <param name="Exchange">If true, the key may be used for exchange operations</param>
+        /// <param name="KeyCollection">The key collection that keys are to be persisted to (dependent on 
+        /// the value of <paramref name="KeySecurity"/></param>
         /// <returns>The created key pair</returns>
         public static KeyPair Factory(
                     CryptoAlgorithmID algorithmID,
                     KeySecurity KeySecurity,
+                    KeyCollection KeyCollection=null,
                     int KeySize = 0,
                     bool Sign = true,
                     bool Exchange = true) {
 
             switch (algorithmID) {
                 case CryptoAlgorithmID.RSAExch: {
-                    return KeyPairFactoryRSA(KeySecurity, KeySize, false, true, algorithmID);
+                    return KeyPairFactoryRSA(KeySecurity, KeyCollection, KeySize, false, true, algorithmID);
 
                     }
 
                 case CryptoAlgorithmID.RSASign: {
-                    return KeyPairFactoryRSA(KeySecurity, KeySize, true, false, algorithmID);
+                    return KeyPairFactoryRSA(KeySecurity, KeyCollection, KeySize, true, false, algorithmID);
 
                     }
                 case CryptoAlgorithmID.DH: {
-                    return KeyPairFactoryDH(KeySecurity, KeySize, Sign, Exchange, algorithmID);
+                    return KeyPairFactoryDH(KeySecurity, KeyCollection, KeySize, Sign, Exchange, algorithmID);
 
                     }
                 case CryptoAlgorithmID.Ed25519: {
-                    return KeyPairFactoryECDH(KeySecurity, 255, Sign, Exchange, algorithmID);
+                    return KeyPairFactoryECDH(KeySecurity, KeyCollection, 255, Sign, Exchange, algorithmID);
 
                     }
                 case CryptoAlgorithmID.Ed448: {
-                    return KeyPairFactoryECDH(KeySecurity, 448, Sign, Exchange, algorithmID);
+                    return KeyPairFactoryECDH(KeySecurity, KeyCollection, 448, Sign, Exchange, algorithmID);
 
                     }
 
@@ -222,7 +203,7 @@ namespace Goedel.Cryptography {
         /// Generate a new keypair. Initialized by the cryptographic
         /// platform provider.
         /// </summary>
-        public static FactoryKeyPairDelegate KeyPairFactoryRSA = KeyPairBaseRSA.GenerateKeyPair;
+        public static FactoryKeyPairDelegate KeyPairFactoryRSA = null;
 
         /// <summary>
         /// Generate a new keypair. Initialized by the cryptographic

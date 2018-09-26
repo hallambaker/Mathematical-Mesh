@@ -1,0 +1,143 @@
+﻿Protocol  Goedel.Mesh.MeshMan MeshManResult MeshManResult
+	Using Goedel.Mesh
+	Using Goedel.Mesh.Portal
+	Extern ConnectStartResponse
+	Extern ConnectPendingResponse
+	Description 
+		|Result of a MeshMan command.
+	
+	Structure ResultBase
+		Description
+			|Base result
+		Boolean Success
+			Description
+				|If true, the action succeeded.
+
+	Structure ResultKeyGenPassword
+		Description
+			|Result of a key generation operation requesting a password.
+		String UDF
+			Description
+				|The random result.
+
+
+	Structure ResultConnectStart
+		Inherits ResultBase
+		Description
+			|Result of a connection start request
+		String ProfileUDF
+			Description
+				|The UDF of the profile the device is requesting a connection to.
+		//Struct SignedConnectionRequest Request
+		//	Description
+		//		|The selected request
+		//Struct ConnectStartResponse Response
+		//	Description
+		//		|The response to the ConnectStart Request
+
+
+	Structure ResultConnectPending
+		Inherits ResultBase
+		Description
+			|Result of a connection pending request
+		//Struct ConnectPendingResponse Response
+		//	Description
+		//		|The response to the ConnectStart Request
+		String ProfileUDF
+			Description
+				|The UDF of the profile the device is requesting a connection to.
+
+
+
+	Structure ResultConnectAccept
+		Inherits ResultBase
+		Description
+			|Result of a connection accept request
+		//Struct SignedConnectionRequest Request
+		//	Description
+		//		|The selected request
+		String ProfileUDF
+			Description
+				|The UDF of the profile the device is requesting a connection to.
+
+
+
+	Structure ResultConnectComplete
+		Inherits ResultBase
+		Description
+			|Result of a connection complete request
+		//Struct ConnectStatusResponse Response
+			
+
+
+	Structure ResultEscrow
+		Inherits ResultBase
+		Description
+			|Result of an escrow request
+		Integer Quorum
+		String Shares
+			Multiple
+			Description
+				|The Escrow shares
+		String Filename
+		Boolean Portal
+
+	Structure ResultRecover
+		Inherits ResultBase
+		Description
+			|Result of an escrow recovery request
+
+
+    // SSH results 
+	Structure ResultApplicationCreate
+		Inherits ResultBase
+		Description
+			|Result of an escrow recovery request
+
+		//TStruct ApplicationProfile ApplicationProfile 
+
+	Structure ResultSSHKnown
+		Inherits ResultBase
+		Description
+			|Result of an escrow recovery request
+		//Struct SSHProfile SSHProfile 
+		
+
+	Structure ResultSSHAuth
+		Inherits ResultBase
+		Description
+			|Result of an escrow recovery request
+		//Struct SSHProfile SSHProfile 
+
+
+	Structure ResultSSHPublic
+		Inherits ResultBase
+		Description
+			|Result of an escrow recovery request
+		//Struct SSHProfile SSHProfile 
+		String Filename
+
+	Structure ResultSSHPrivate
+		Inherits ResultBase
+		Description
+			|Result of an escrow recovery request
+		//Struct SSHProfile SSHProfile 
+		String Filename
+		
+	// Mail results
+	Structure ResultMailCreate
+		Inherits ResultBase
+		Description
+			|Result of an escrow recovery request
+	
+	
+	// Export/Import profile
+	Structure ResultExport
+		Inherits ResultBase
+		Description
+			|Result of an escrow recovery request
+
+	Structure ResultImport
+		Inherits ResultBase
+		Description
+			|Result of an escrow recovery request

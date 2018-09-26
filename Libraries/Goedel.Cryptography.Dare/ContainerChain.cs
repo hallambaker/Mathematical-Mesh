@@ -76,7 +76,7 @@ namespace Goedel.Cryptography.Dare {
         /// Pre-populate the dummy trailer so as to allow the length to be calculated.
         /// </summary>
         /// <returns>The dummy trailer.</returns>
-        public override DARETrailer GetDummyTrailer() {
+        public override DareTrailer FillDummyTrailer(CryptoStack CryptoStack) { // should be complete dummy trailer or sommat... 
 
             var Trailer = CryptoStack.GetDummyTrailer();
             Trailer.ChainDigest = Trailer.PayloadDigest;
@@ -88,13 +88,13 @@ namespace Goedel.Cryptography.Dare {
         /// The dummy trailer to add to the end of the frame.
         /// </summary>
         /// <returns></returns>
-        public override void MakeTrailer(ref DARETrailer Trailer) {
+        public override void MakeTrailer(ref DareTrailer Trailer) {
             //var PreviousHeader = FinalContainerHeader ?? ContainerHeaderFirst;
             if (FinalContainerHeader!=null) {
-                Trailer.ChainDigest = CryptoStack.CombineDigest(FinalContainerHeader.ChainDigest, Trailer.PayloadDigest);
+                Trailer.ChainDigest = CryptoStackContainer.CombineDigest(FinalContainerHeader.ChainDigest, Trailer.PayloadDigest);
                 }
             else {
-                Trailer.ChainDigest = CryptoStack.CombineDigest(null, Trailer.PayloadDigest);
+                Trailer.ChainDigest = CryptoStackContainer.CombineDigest(null, Trailer.PayloadDigest);
                 }
             }
 

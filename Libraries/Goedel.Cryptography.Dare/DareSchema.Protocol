@@ -19,7 +19,7 @@
 			|A DARE Message contains a single DAREMessageSequence in either the JSON or 
 			|Compact serialization as directed by the protocol in which it is applied.
 
-	Structure DAREMessageSequence
+	Structure DareMessageSequence
 		Description
 			|A DARE Message containing Header, EDS and Trailer in JSON object encoding.
 			|Since a DAREMessage is almost invariably presented in JSON sequence or
@@ -29,14 +29,14 @@
 			|an ordered sequence. This ensures that the message header field will always
 			|precede the body in a serialization, this allowing processing of the header
 			|information to be performed before the entire body has been received.
-		Struct DAREHeader Header
+		Struct DareHeader Header
 			Description
 				|The message header. May specify the key exchange data, pre-signature 
 				|or signature data, cloaked headers and/or encrypted data sequences.
 		Binary Body
 			Description
 				|The message body
-		Struct DARETrailer Trailer
+		Struct DareTrailer Trailer
 			Description
 				|The message trailer. If present, this contains the signature.
 
@@ -46,10 +46,10 @@
 			|A DARE Message sequence MUST contain a (possibly empty) DAREHeader and MAY contain
 			|a DARETrailer. 
 
-	Structure DARETrailer
+	Structure DareTrailer
 		Description
 			|A DARE Message Trailer
-		Struct DARESignature Signatures
+		Struct DareSignature Signatures
 			Multiple
 			Tag "signatures"
 			Description
@@ -74,8 +74,8 @@
 				|If present, contains the Binary Merkle Tree digest value.
 
 
-	Structure DAREHeader
-		Inherits DARETrailer
+	Structure DareHeader
+		Inherits DareTrailer
 		Description
 			|A DARE Message Header. Since any field that is present in a trailer MAY be 
 			|placed in a header instead, the message header inherits from the trailer.
@@ -122,12 +122,12 @@
 				|Segments encrypted under the message Master Key. The interpretation of these fields 
 				|is application specific.
 
-		Struct DARESigner Signers
+		Struct DareSigner Signers
 			Multiple
 			Tag "signatures"
 			Description
 				|A list of 'presignature'
-		Struct DARERecipient Recipients
+		Struct DareRecipient Recipients
 			Multiple
 			Tag "recipients"
 			Description
@@ -139,7 +139,7 @@
 			|structure. In particular, DARE messages MAY have multiple recipients
 			|and multiple signers.
 
-	Structure DARESigner
+	Structure DareSigner
 		Description
 			|The signature value
 		String Dig
@@ -174,8 +174,8 @@
 			Description
 				|An X.509 public key certificate
 
-	Structure DARESignature
-		Inherits DARESigner
+	Structure DareSignature
+		Inherits DareSigner
 		Description
 			|The signature value
 
@@ -194,7 +194,7 @@
 				|key used to encrypt the message.
 
 
-	Structure DARERecipient
+	Structure DareRecipient
 		Description
 			|Recipient information
 		String KeyIdentifier

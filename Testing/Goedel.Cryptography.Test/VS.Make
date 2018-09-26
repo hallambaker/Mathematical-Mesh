@@ -39,5 +39,5 @@ postbuild : postbuildRecurse
 
 
 postbuildwindows : 
-	powershell publishtarget Test.Goedel.Cryptography.dll
+	powershell publishtarget Goedel.Cryptography.Test.dll
 

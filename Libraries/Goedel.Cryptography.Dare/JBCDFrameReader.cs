@@ -22,7 +22,7 @@ namespace Goedel.Cryptography.Dare {
         public override long Length { get; }
 
         /// <summary></summary>
-        public DARETrailer Trailer;
+        public DareTrailer Trailer;
 
         /// <summary>
         /// Construct a ContainerDataReader for a JBCDStream using the Framer interface.
@@ -56,10 +56,10 @@ namespace Goedel.Cryptography.Dare {
         /// 
         /// </summary>
         /// <returns></returns>
-        public DARETrailer GetTrailer() {
+        public DareTrailer GetTrailer() {
             var HeaderBytes = JBCDStream.FramerGetData();
             if (HeaderBytes != null) {
-                Trailer = DARETrailer.FromJSON(HeaderBytes.JSONReader(), false);
+                Trailer = DareTrailer.FromJSON(HeaderBytes.JSONReader(), false);
                 }
             return Trailer;
             }

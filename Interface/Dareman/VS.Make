@@ -24,12 +24,7 @@ LinkFiles = \
     Goedel.Cryptography.Dare.dll\
     Goedel.Cryptography.Jose.dll\
     Goedel.Cryptography.dll\
-    Goedel.Mesh.Platform.Windows.dll\
-    Goedel.Mesh.dll\
-    Goedel.Protocol.dll\
-    Goedel.Mesh.Portal.Client.dll\
-    Goedel.Recrypt.Client.dll\
-    Goedel.Recrypt.dll
+    Goedel.Protocol.dll
 
 ToolTargets = \
 	dareman.cs

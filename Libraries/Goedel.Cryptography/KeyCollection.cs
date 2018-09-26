@@ -5,7 +5,7 @@ using Goedel.Utilities;
 using Goedel.Cryptography;
 
 
-namespace Goedel.Cryptography.Jose {
+namespace Goedel.Cryptography {
 
     /// <summary>
     /// Track a collection of keys from various sources allowing recall when required for recryption use.
@@ -24,6 +24,13 @@ namespace Goedel.Cryptography.Jose {
         Dictionary<string, KeyPair> DictionaryKeyPairByAccountEncrypt = new Dictionary<string, KeyPair>();
         Dictionary<string, KeyPair> DictionaryKeyPairBySINSign = new Dictionary<string, KeyPair>();
         Dictionary<string, KeyPair> DictionaryKeyPairByAccountSign = new Dictionary<string, KeyPair>();
+
+
+        /// <summary>
+        /// Add a keypair and bind it to the persistence store.
+        /// </summary>
+        /// <param name="KeyPair">The key pair to add.</param>
+        public void Persist(KeyPair KeyPair) => Add(KeyPair);
 
 
         /// <summary>
@@ -57,32 +64,32 @@ namespace Goedel.Cryptography.Jose {
 
 
 
-        // ToDo: Make Recipients into an interface...
+        //// ToDo: Make Recipients into an interface...
 
-        /// <summary>
-        /// Attempt to decrypt a decryption blob from a list of recipient entries.
-        /// </summary>
-        /// <param name="Recipients">The recipient entry.</param>
-        /// <param name="AlgorithmID">The symmetric encryption cipher (used to decrypt the wrapped key).</param>
-        /// <returns></returns>
-        public byte[] Decrypt(List<Recipient> Recipients, CryptoAlgorithmID AlgorithmID) {
-            foreach (var Recipient in Recipients) {
+        ///// <summary>
+        ///// Attempt to decrypt a decryption blob from a list of recipient entries.
+        ///// </summary>
+        ///// <param name="Recipients">The recipient entry.</param>
+        ///// <param name="AlgorithmID">The symmetric encryption cipher (used to decrypt the wrapped key).</param>
+        ///// <returns></returns>
+        //public byte[] Decrypt(List<Recipient> Recipients, CryptoAlgorithmID AlgorithmID) {
+        //    foreach (var Recipient in Recipients) {
 
-                var DecryptionKey = TryMatchRecipient(Recipient.Header.Kid);
+        //        var DecryptionKey = TryMatchRecipient(Recipient.Header.Kid);
 
-                // Recipient has the following fields of interest
-                // Recipient.EncryptedKey -- The RFC3394 wrapped symmetric key
-                // Recipient.Header.Epk  -- The ephemeral public key
-                // Recipient.Header.Epk.KeyPair  -- The ephemeral public key
+        //        // Recipient has the following fields of interest
+        //        // Recipient.EncryptedKey -- The RFC3394 wrapped symmetric key
+        //        // Recipient.Header.Epk  -- The ephemeral public key
+        //        // Recipient.Header.Epk.KeyPair  -- The ephemeral public key
 
-                if (DecryptionKey != null) {
-                    return DecryptionKey.Decrypt(Recipient.EncryptedKey, Recipient.Header.Epk.KeyPair, AlgorithmID: AlgorithmID);
-                    }
-                }
+        //        if (DecryptionKey != null) {
+        //            return DecryptionKey.Decrypt(Recipient.EncryptedKey, Recipient.Header.Epk.KeyPair, AlgorithmID: AlgorithmID);
+        //            }
+        //        }
 
 
-            throw new NoAvailableDecryptionKey();
-            }
+        //    throw new NoAvailableDecryptionKey();
+        //    }
 
 
 

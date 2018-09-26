@@ -98,10 +98,6 @@
       <Project>{b8319c05-ea98-405d-94eb-acb9de6da975}</Project>
       <Name>Goedel.Cryptography</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\Goedel.Mesh\Goedel.Mesh.csproj">
-      <Project>{a93fe437-9540-49a5-8fce-a190436db5db}</Project>
-      <Name>Goedel.Mesh</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Libraries\Goedel.Persistence\Goedel.Persistence.csproj">
       <Project>{4a0246cb-4964-4343-bda2-0a0eff5860d7}</Project>
       <Name>Goedel.Persistence</Name>

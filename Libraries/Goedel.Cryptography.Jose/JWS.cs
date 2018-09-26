@@ -141,7 +141,8 @@ namespace Goedel.Cryptography.Jose {
                 Alg = Alg.ToJoseID()
                 };
             var Protected = ProtectedTBE.ToJson();
-            var SignatureData = SignerKey.Sign(Protected, ProviderAlgorithm);
+
+            var SignatureValue = SignerKey.Sign(Protected, ProviderAlgorithm);
 
             var Header = new Header() {
                 Kid = SignerKey.UDF
@@ -150,10 +151,11 @@ namespace Goedel.Cryptography.Jose {
             var Signature = new Signature() {
                 Header = Header,
                 Protected = Protected,
-                SignatureValue = SignatureData.Signature
+                SignatureValue = SignatureValue
                 };
             Signatures.Add(Signature);
             return Signature;
+
             }
 
         /// <summary>
@@ -210,8 +212,7 @@ namespace Goedel.Cryptography.Jose {
                 return false; // Digest does not match
                 }
 
-            var DigestOfProtected = Encoder.Process(Signature.Protected);
-            return Public.Verify(DigestOfProtected, Signature.SignatureValue, Algorithm);
+            return Public.Verify(Signature.Protected, Signature.SignatureValue, Algorithm);
             }
 
 

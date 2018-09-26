@@ -222,66 +222,64 @@ namespace Goedel.Cryptography.Jose {
                         EncryptionKey, SigningKey, ContentType, Algorithm) { }
 
 
-        /// <summary>
-        /// Create encryption info
-        /// </summary>
-        /// <param name="Data">Data to be encrypted.</param>
-        /// <param name="Recipients">The recipient information entries.</param>
-        /// <param name="Protected">The protected encryption header</param>
-        /// <param name="EncryptionKeys">The encryption key.</param>
-        /// <param name="ContentType">Content type identifier.</param>
-        /// <param name="EncryptID">Encryption algorithm to use.</param>
-        /// <returns>The encrypted data info block.</returns>
-        public static CryptoData Encrypt (byte[] Data,
-                    out List<Recipient> Recipients,
-                    out Header Protected,
-                    List<KeyPair> EncryptionKeys = null,
-                    string ContentType = null,
-                    CryptoAlgorithmID EncryptID = CryptoAlgorithmID.Default
-                    ) {
+        ///// <summary>
+        ///// Create encryption info
+        ///// </summary>
+        ///// <param name="Data">Data to be encrypted.</param>
+        ///// <param name="Recipients">The recipient information entries.</param>
+        ///// <param name="Protected">The protected encryption header</param>
+        ///// <param name="EncryptionKeys">The encryption key.</param>
+        ///// <param name="ContentType">Content type identifier.</param>
+        ///// <param name="EncryptID">Encryption algorithm to use.</param>
+        ///// <returns>The encrypted data info block.</returns>
+        //public static CryptoData Encrypt (byte[] Data,
+        //            out List<Recipient> Recipients,
+        //            out Header Protected,
+        //            List<KeyPair> EncryptionKeys = null,
+        //            string ContentType = null,
+        //            CryptoAlgorithmID EncryptID = CryptoAlgorithmID.Default
+        //            ) {
 
 
-            var Provider = CryptoCatalog.Default.GetEncryption(EncryptID);
-            var EncryptEncoder = Provider.MakeEncoder(Algorithm: EncryptID);
-            Protected = JoseWebEncryption.ProtectedHeader(EncryptEncoder, ContentType, null);
+        //    var Provider = CryptoCatalog.Default.GetEncryption(EncryptID);
+        //    var EncryptEncoder = Provider.MakeEncoder(Algorithm: EncryptID);
+        //    Protected = JoseWebEncryption.ProtectedHeader(EncryptEncoder, ContentType, null);
 
-            Recipients = new List<Cryptography.Jose.Recipient>();
+        //    Recipients = new List<Cryptography.Jose.Recipient>();
 
-            foreach (var EncryptionKey in EncryptionKeys) {
-                var KID = EncryptionKey.Name ?? EncryptionKey.UDF;
-                var Recipient = JoseWebEncryption.Recipient(
-                        EncryptEncoder, EncryptionKey, KID: KID, ProviderAlgorithm: EncryptID);
-                Recipients.Add(Recipient);
-                }
+        //    foreach (var EncryptionKey in EncryptionKeys) {
+        //        var KID = EncryptionKey.Name ?? EncryptionKey.UDF;
+        //        var Recipient = JoseWebEncryption.Recipient(
+        //                EncryptEncoder, EncryptionKey, KID: KID, ProviderAlgorithm: EncryptID);
+        //        Recipients.Add(Recipient);
+        //        }
 
-            EncryptEncoder.Write(Data);
-            EncryptEncoder.Complete();
+        //    EncryptEncoder.Write(Data);
+        //    EncryptEncoder.Complete();
 
-            return EncryptEncoder;
-            }
+        //    return EncryptEncoder;
+        //    }
 
+        ///// <summary>
+        ///// Add a recipient to an existing JWE header.
+        ///// </summary>
+        ///// <remarks>If custom crypto suites are used, the caller is responsible for 
+        ///// ensuring that the exchange algorithm is compatible with the bulk algorithm 
+        ///// already selected. </remarks>
+        ///// <param name="CryptoData">The encryption data.</param>
+        ///// <param name="EncryptionKey">The recipient key to add.</param>
+        ///// <param name="ProviderAlgorithm">Algorithm parameters (if supported)</param>
+        ///// <param name="KID">Key ID</param>
+        ///// <returns>The recipient instance</returns>
+        //static Recipient Recipient (CryptoData CryptoData, KeyPair EncryptionKey, string KID = null,
+        //        CryptoAlgorithmID ProviderAlgorithm = CryptoAlgorithmID.Default) {
+        //    throw new NYI();
 
+        //    //var ExchangeData = EncryptionKey.EncryptKey(CryptoData, ProviderAlgorithm);
+        //    //var Recipient = new Recipient(ExchangeData, KID);
 
-
-        /// <summary>
-        /// Add a recipient to an existing JWE header.
-        /// </summary>
-        /// <remarks>If custom crypto suites are used, the caller is responsible for 
-        /// ensuring that the exchange algorithm is compatible with the bulk algorithm 
-        /// already selected. </remarks>
-        /// <param name="CryptoData">The encryption data.</param>
-        /// <param name="EncryptionKey">The recipient key to add.</param>
-        /// <param name="ProviderAlgorithm">Algorithm parameters (if supported)</param>
-        /// <param name="KID">Key ID</param>
-        /// <returns>The recipient instance</returns>
-        static Recipient Recipient (CryptoData CryptoData, KeyPair EncryptionKey, string KID = null,
-                CryptoAlgorithmID ProviderAlgorithm = CryptoAlgorithmID.Default) {
-
-            var ExchangeData = EncryptionKey.EncryptKey(CryptoData, ProviderAlgorithm);
-            var Recipient = new Recipient(ExchangeData, KID);
-
-            return Recipient;
-            }
+        //    //return Recipient;
+        //    }
 
         /// <summary>
         /// Add a recipient to an existing JWE header.
@@ -296,9 +294,9 @@ namespace Goedel.Cryptography.Jose {
         public Recipient AddRecipient (KeyPair EncryptionKey, string KID = null,
                 CryptoAlgorithmID ProviderAlgorithm = CryptoAlgorithmID.Default) {
 
-            var ExchangeData = EncryptionKey.EncryptKey(CryptoDataEncrypt, ProviderAlgorithm);
+            EncryptionKey.Encrypt(CryptoDataEncrypt.Key, out var Exchange, out var Ephemeral);
+            var Recipient = new Recipient(Exchange, EncryptionKey, Ephemeral, KID);
 
-            var Recipient = new Recipient(ExchangeData, KID);
             Recipients = Recipients ?? new List<Recipient>();
             Recipients.Add(Recipient);
 
@@ -565,22 +563,41 @@ namespace Goedel.Cryptography.Jose {
         /// </summary>
         public Recipient () { }
 
+        ///// <summary>
+        ///// Encrypt to the specified key of the specified profile.
+        ///// </summary>
+        ///// <param name="RecipientData">KeyPair for the recipient.</param>
+        ///// <param name="KID">Recipient Key ID.</param>
+        //public Recipient(CryptoDataExchange RecipientData, string KID=null) {
+        //    var RecipientKey = RecipientData.Meta;
+        //    Header = new Header() {
+        //        Alg = RecipientKey?.CryptoAlgorithmID.Meta().ToJoseID(),
+        //        Kid = KID ?? RecipientKey?.UDF
+        //        };
+        //    if (RecipientData.Ephemeral != null) {
+        //        Header.Epk = Key.GetPublic(RecipientData.Ephemeral);
+        //        }
+        //    EncryptedKey = RecipientData.Exchange;
+        //    }
+
         /// <summary>
         /// Encrypt to the specified key of the specified profile.
         /// </summary>
-        /// <param name="RecipientData">KeyPair for the recipient.</param>
+        /// <param name="RecipientKey">KeyPair for the recipient.</param>
+        /// <param name="ExchangeData">The key to be exchanged.</param>
+        /// <param name="Ephemeral">The ephemeral key (if required by the algorithm)</param>
         /// <param name="KID">Recipient Key ID.</param>
-        public Recipient(CryptoDataExchange RecipientData, string KID=null) {
-            var RecipientKey = RecipientData.Meta;
+        public Recipient(byte[] ExchangeData, KeyPair RecipientKey, KeyPair Ephemeral, string KID = null) {
             Header = new Header() {
                 Alg = RecipientKey?.CryptoAlgorithmID.Meta().ToJoseID(),
                 Kid = KID ?? RecipientKey?.UDF
                 };
-            if (RecipientData.Ephemeral != null) {
-                Header.Epk = Key.GetPublic(RecipientData.Ephemeral);
+            if (Ephemeral != null) {
+                Header.Epk = Key.GetPublic(Ephemeral);
                 }
-            EncryptedKey = RecipientData.Exchange;
+            EncryptedKey = ExchangeData;
             }
+
 
         /// <summary>
         /// Wrap the specified content encryption key and form the corresponding 

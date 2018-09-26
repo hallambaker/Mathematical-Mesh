@@ -27,7 +27,6 @@ LinkFiles = \
     Goedel.Cryptography.Standard.dll\
     Goedel.Cryptography.WindowsFramework.dll\
     Goedel.Cryptography.dll\
-    Goedel.Mesh.dll\
     Goedel.Persistence.dll\
     Goedel.Protocol.dll\
     Goedel.Test.dll

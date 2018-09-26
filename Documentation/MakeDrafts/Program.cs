@@ -18,7 +18,7 @@ namespace ExampleGenerator {
 
         static void Main(string[] args) {
             Goedel.IO.Debug.Initialize();
-            Mesh.Initialize(true);
+            //Mesh.Initialize(true);
 
             var Program = new CreateExamples();
             Program.Go();
@@ -46,7 +46,7 @@ namespace ExampleGenerator {
 
             //GoKeyExchange();
 
-            //GoMesh();
+            GoMesh();
 
             // Make the documentation
             MakeDocs();

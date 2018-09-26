@@ -106,12 +106,8 @@ namespace Goedel.Cryptography.Dare {
         /// The number of bytes to be reserved for the trailer.
         /// </summary>
         /// <returns>The number of bytes to reserve</returns>
-        public override DARETrailer GetDummyTrailer() {
-            if (CryptoParameters==null) {
-                return null; // no trailer if no crypto!
-                }
-            return CryptoStack.GetDummyTrailer();
-            }
+        public override DareTrailer FillDummyTrailer(CryptoStack CryptoStack) => 
+            CryptoStack?.GetDummyTrailer();
 
 
         /// <summary>If positive, specifies the file position of the next frame.

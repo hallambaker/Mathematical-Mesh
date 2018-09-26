@@ -73,7 +73,7 @@ namespace Goedel.Cryptography.Dare {
         public ContainerHeader Header;
 
         /// <summary>The current frame trailer as a parsed object.</summary>
-        public DARETrailer Trailer;
+        public DareTrailer Trailer;
         }
 
     /// <summary>
@@ -179,12 +179,12 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// The cryptography parameters.
         /// </summary>
-        public CryptoParameters CryptoParameters = null;
+        public CryptoParameters CryptoParametersContainer = null;
 
         /// <summary>
         /// The default cryptographic stack
         /// </summary>
-        public CryptoStack CryptoStack = null;
+        public CryptoStack CryptoStackContainer = null;
 
 
 
@@ -339,7 +339,7 @@ namespace Goedel.Cryptography.Dare {
                         ContainerHeaderFirst = ContainerHeaderFirst,
                         StartOfData = Position1,
                         FrameCount = FrameCount,
-                        CryptoStack = CryptoStack
+                        CryptoStackContainer = CryptoStack
                         };
                     break;
                     }
@@ -351,7 +351,7 @@ namespace Goedel.Cryptography.Dare {
                         ContainerHeaderFirst = ContainerHeaderFirst,
                         StartOfData = Position1,
                         FrameCount = FrameCount,
-                        CryptoStack = CryptoStack
+                        CryptoStackContainer = CryptoStack
                         };
                     break;
                     }
@@ -363,7 +363,7 @@ namespace Goedel.Cryptography.Dare {
                         ContainerHeaderFirst = ContainerHeaderFirst,
                         StartOfData = Position1,
                         FrameCount = FrameCount,
-                        CryptoStack = CryptoStack
+                        CryptoStackContainer = CryptoStack
                         };
                     break;
                     }
@@ -374,7 +374,7 @@ namespace Goedel.Cryptography.Dare {
                         ContainerHeaderFirst = ContainerHeaderFirst,
                         StartOfData = Position1,
                         FrameCount = FrameCount,
-                        CryptoStack = CryptoStack
+                        CryptoStackContainer = CryptoStack
                         };
                     break;
                     }
@@ -386,7 +386,7 @@ namespace Goedel.Cryptography.Dare {
                         ContainerHeaderFirst = ContainerHeaderFirst,
                         StartOfData = Position1,
                         FrameCount = FrameCount,
-                        CryptoStack = CryptoStack
+                        CryptoStackContainer = CryptoStack
                         };
                     break;
                     }
@@ -479,7 +479,7 @@ namespace Goedel.Cryptography.Dare {
             var Container = MakeNewContainer(JBCDStream,
                     CryptoParameters: CryptoParameters, ContainerType: ContainerType);
 
-            Container.CryptoParameters = CryptoParameters;
+            Container.CryptoParametersContainer = CryptoParameters;
             Container.DataEncoding = DataEncoding;
             var ContainerHeaderFirst = Container.ContainerHeaderFirst;
 
@@ -488,7 +488,7 @@ namespace Goedel.Cryptography.Dare {
                 ContentType = ContentType
                 };
 
-            ContainerHeaderFirst.ApplyCryptoStack(Container.CryptoStack, Cloaked, DataSequences);
+            ContainerHeaderFirst.ApplyCryptoStack(Container.CryptoStackContainer, Cloaked, DataSequences);
 
             Payload = ContainerHeaderFirst.EnhanceBody(Payload, out var Trailer);
             Container.MakeTrailer(ref Trailer);
@@ -551,7 +551,7 @@ namespace Goedel.Cryptography.Dare {
                     }
                 }
 
-            Result.CryptoStack = Result.GetCryptoStack(CryptoParameters);
+            Result.CryptoStackContainer = Result.GetCryptoStack(CryptoParameters);
 
             return Result;
 
@@ -588,13 +588,13 @@ namespace Goedel.Cryptography.Dare {
         /// The number of bytes to be reserved for the trailer.
         /// </summary>
         /// <returns>The number of bytes to reserve</returns>
-        public virtual DARETrailer GetDummyTrailer() => null;
+        public virtual DareTrailer FillDummyTrailer(CryptoStack CryptoStack) => null;
 
         /// <summary>
         /// The dummy trailer to add to the end of the frame.
         /// </summary>
         /// <returns></returns>
-        public virtual void MakeTrailer(ref DARETrailer Trailer) {
+        public virtual void MakeTrailer(ref DareTrailer Trailer) {
             }
 
 
@@ -724,7 +724,7 @@ namespace Goedel.Cryptography.Dare {
                 string ContentType = null,
                 byte[] Cloaked = null,
                 List<byte[]> DataSequences = null) {
-            AppendBegin(ContentLength, CryptoParameters, ContainerHeader,
+            AppendBegin(ContentLength, out var CryptoStack, CryptoParameters, ContainerHeader,
                     ContentType, Cloaked, DataSequences);
             
             Input.ProcessRead(AppendProcess);
@@ -763,7 +763,7 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// Trailer of the frame being written
         /// </summary>
-        protected DARETrailer AppendContainerTrailer;
+        protected DareTrailer AppendContainerTrailer;
 
 
         Stream BodyWrite;
@@ -774,10 +774,11 @@ namespace Goedel.Cryptography.Dare {
         /// <remarks>This call is not thread safe. It is the responsibility of the caller
         /// to ensure that only one process writes to the container at once and that no other
         /// process has access.</remarks>
+        /// <param name="CryptoStack">The generated set of cryptographic parameters</param>
         /// <param name="ContentLength">The plaintext payload data length. the final payload
         /// length may be longer as a result of padding.</param>
         /// <param name="ContainerHeader">Pre-populated container header.</param>
-        /// <param name="CryptoParameters">Specifies the cryptographic enhancements to
+        /// <param name="CryptoParametersFrame">Specifies the cryptographic enhancements to
         /// be applied to this message.</param>
         /// <param name="ContentType">The payload content type.</param>
         /// <param name="Cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
@@ -785,7 +786,8 @@ namespace Goedel.Cryptography.Dare {
         ///     as an EDSS header entry.</param>
         public void AppendBegin(
                         long ContentLength,
-                        CryptoParameters CryptoParameters = null,
+                        out CryptoStack CryptoStack,
+                        CryptoParameters CryptoParametersFrame = null,
                         ContainerHeader ContainerHeader = null,
                         string ContentType = null,
                         byte[] Cloaked = null,
@@ -793,8 +795,8 @@ namespace Goedel.Cryptography.Dare {
 
             this.ContentLength = ContentLength;
 
-            var CryptoStack = CryptoParameters == null ? new CryptoStack(this.CryptoStack) :
-                            GetCryptoStack(CryptoParameters);
+            CryptoStack = CryptoParametersFrame == null ? new CryptoStack(this.CryptoStackContainer) :
+                            GetCryptoStack(CryptoParametersFrame);
 
             AppendContainerHeader = ContainerHeader ?? new ContainerHeader();
             AppendContainerHeader.Index = (int)FrameCount++;
@@ -803,8 +805,10 @@ namespace Goedel.Cryptography.Dare {
             CompleteHeader(); // Perform container type specific processing.
 
             var PayloadLength = AppendContainerHeader.OutputLength(ContentLength);
-            var DummyTrailer = GetDummyTrailer();
+            var DummyTrailer = FillDummyTrailer(CryptoStack);
             var LengthTrailer = DummyTrailer == null ? -1 : DummyTrailer.GetBytes(false).Length;
+
+            Console.WriteLine($"And the dummy trailer is {DummyTrailer}");
 
             var DataPayload = AppendContainerHeader.GetBytes(false);
             JBCDStream.WriteWrappedFrameBegin(DataPayload, PayloadLength, LengthTrailer);

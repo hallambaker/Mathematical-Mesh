@@ -26,11 +26,9 @@ LinkFiles = \
     Goedel.Cryptography.Standard.dll\
     Goedel.Cryptography.WindowsFramework.dll\
     Goedel.Cryptography.dll\
-    Goedel.Mesh.Shell.dll\
+    Goedel.Mesh.ShellOld.dll\
     Goedel.Protocol.dll\
-    Goedel.Test.dll\
-    Goedel.Catalog.Client.dll\
-    Goedel.Catalog.dll
+    Goedel.Test.dll
 
 ToolTargets = 
 

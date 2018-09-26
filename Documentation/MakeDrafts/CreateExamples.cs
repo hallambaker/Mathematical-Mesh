@@ -7,16 +7,11 @@ using System.Numerics;
 using Goedel.Mesh;
 using Goedel.Utilities;
 using Goedel.Protocol.Debug;
-using Goedel.Mesh.MeshMan;
-using Goedel.Mesh.Portal;
-using Goedel.Mesh.Portal.Server;
-using Goedel.Mesh.Portal.Client;
 using Goedel.Cryptography;
 using Goedel.Cryptography.Jose;
 using Goedel.Cryptography.Dare;
 using Goedel.Protocol;
-using Goedel.Protocol.Exchange;
-using Goedel.Protocol.Exchange.Server;
+
 using Goedel.IO;
 using Goedel.Command;
 using Goedel.Cryptography.Algorithms;
@@ -41,11 +36,11 @@ namespace ExampleGenerator {
             return Builder.ToString();
             }
 
-        public DAREMessage GetDAREMessage(CryptoParameters CryptoParameters) {
+        public DareMessage GetDAREMessage(CryptoParameters CryptoParameters) {
             var Data = new List<byte[]>() {
                 MakeData("From", From),MakeData("To", To),MakeData("Subject", Subject)
                 };
-            return new DAREMessage(CryptoParameters, Body.ToUTF8(),
+            return new DareMessage(CryptoParameters, Body.ToUTF8(),
                 ContentType: "application/example-mail", DataSequences: Data);
             }
 
@@ -84,12 +79,12 @@ namespace ExampleGenerator {
 
 
 
-        public DAREMessage DAREMessageAtomic;
-        public DAREMessage DAREMessageAtomicSign;
-        public DAREMessage DAREMessageAtomicSignEncrypt;
-        public DAREMessage MessageAtomicDS;
-        public DAREMessage MessageEnc;
-        public DAREMessage MessageAtomicDSEnc;
+        public DareMessage DAREMessageAtomic;
+        public DareMessage DAREMessageAtomicSign;
+        public DareMessage DAREMessageAtomicSignEncrypt;
+        public DareMessage MessageAtomicDS;
+        public DareMessage MessageEnc;
+        public DareMessage MessageAtomicDSEnc;
 
 
         public byte[] DareMessageBody;
@@ -107,7 +102,7 @@ namespace ExampleGenerator {
         public CryptoParameters CryptoParametersSign;
         public CryptoParameters CryptoParametersSignEncrypt;
 
-        public CryptoStackDebug CryptoStackEncrypt;
+        //public CryptoStackDebug CryptoStackEncrypt;
 
         KeyCollection KeyCollection;
 
@@ -115,8 +110,8 @@ namespace ExampleGenerator {
 
         public MailMessage MailMessage;
         public string MailMessageAsRFC822;
-        public DAREMessage MailMessageAsDAREPlaintext;
-        public DAREMessage MailMessageAsDAREEncrypted;
+        public DareMessage MailMessageAsDAREPlaintext;
+        public DareMessage MailMessageAsDAREEncrypted;
 
         public string EDSText;
 
@@ -176,9 +171,9 @@ namespace ExampleGenerator {
             var EDS1 = MailMessageAsDAREPlaintext.Header.EDSS[0];
             EDSText = ReadEDS(EDS1);
 
-            ExampleGenerator.MeshExamplesMessageMail(this);
-            ExampleGenerator.MeshExamplesMessageEDS(this);
-            ExampleGenerator.MeshExamplesMessageEncrypted(this);
+            //ExampleGenerator.MeshExamplesMessageMail(this);
+            //ExampleGenerator.MeshExamplesMessageEDS(this);
+            //ExampleGenerator.MeshExamplesMessageEncrypted(this);
             }
 
 
@@ -209,19 +204,19 @@ namespace ExampleGenerator {
         void GoDareMessage() {
 
             // Plaintext atomic
-            DAREMessageAtomic = new DAREMessage(CryptoParametersPlaintext, DareMessageTest1);
+            DAREMessageAtomic = new DareMessage(CryptoParametersPlaintext, DareMessageTest1);
 
             // Plaintext atomic EDS
-            MessageAtomicDS = new DAREMessage(CryptoParametersPlaintext, DareMessageTest1, DataSequences: DataSequences);
+            MessageAtomicDS = new DareMessage(CryptoParametersPlaintext, DareMessageTest1, DataSequences: DataSequences);
 
-            DAREMessageAtomicSign = new DAREMessage(CryptoParametersSign, DareMessageTest1);
-            DAREMessageAtomicSignEncrypt = new DAREMessage(CryptoParametersSignEncrypt, DareMessageTest1);
+            DAREMessageAtomicSign = new DareMessage(CryptoParametersSign, DareMessageTest1);
+            DAREMessageAtomicSignEncrypt = new DareMessage(CryptoParametersSignEncrypt, DareMessageTest1);
 
 
-            CryptoStackEncrypt = new CryptoStackDebug(CryptoParametersEncrypt);
-            MessageEnc = CryptoStackEncrypt.Message(DareMessageTest1);
+            //CryptoStackEncrypt = new CryptoStackDebug(CryptoParametersEncrypt);
+            //MessageEnc = CryptoStackEncrypt.Message(DareMessageTest1);
 
-            ExampleGenerator.MeshExamplesMessage(this);
+            //ExampleGenerator.MeshExamplesMessage(this);
             }
 
         void GoDareContainer() {
@@ -345,19 +340,19 @@ namespace ExampleGenerator {
         public string[] AdvancedRecoveryBase32;
 
         //AdvancedCogen
-        public DeviceProfile AdvancedCogenDeviceProfile;
+        public ProfileDevice AdvancedCogenDeviceProfile;
         public byte[] AdvancedCogenPrivateKeySeed;
         public PrivateKeyECDH AdvancedCogenPrivateKeyValue;
         public PublicKeyECDH AdvancedCogenCompositeKey;
-        public DAREMessage AdvancedCogenPrivateKeySeedEncrypted;
+        public DareMessage AdvancedCogenPrivateKeySeedEncrypted;
 
 
         //AdvancedRecryption
         public string AdvancedRecryptionGroupID = "recrypt@example.com";
-        public PersonalProfile AdvancedRecryptionGroup;
+        public ProfileMaster AdvancedRecryptionGroup;
         public string AdvancedRecryptionMessagePlaintext;
-        public DAREMessage AdvancedRecryptionMessageEncrypted;
-        public ApplicationProfile AdvancedRecryptionBobProfile;
+        public DareMessage AdvancedRecryptionMessageEncrypted;
+        public ProfileApplication AdvancedRecryptionBobProfile;
         public Key AdvancedRecryptionBobDecryptionKey;
         public Key AdvancedRecryptionBobRecryptionKey;
         public Key AdvancedRecryptionBobRecryptionEntry;
@@ -392,16 +387,16 @@ namespace ExampleGenerator {
                 }
 
             // AdvancedCogen
-            AdvancedCogenDeviceProfile = new DeviceProfile(
-                        "AliceWatch", "A wearable watch computer",
-                        CryptoAlgorithmID.Ed25519,
-                        CryptoAlgorithmID.XEd25519);
+            //AdvancedCogenDeviceProfile = new DeviceProfile(
+            //            "AliceWatch", "A wearable watch computer",
+            //            CryptoAlgorithmID.Ed25519,
+            //            CryptoAlgorithmID.XEd25519);
 
 
             var AdvancedCogenDeviceSignPublic =
-                (PublicKeyECDH)AdvancedCogenDeviceProfile.DeviceSignatureKey.PublicParameters;
+                (PublicKeyECDH)null; //AdvancedCogenDeviceProfile.DeviceSignatureKey.PublicParameters;
             var AdvancedCogenDeviceSignPrivate =
-                (PrivateKeyECDH)AdvancedCogenDeviceProfile.DeviceSignatureKey.PrivateParameters;
+                (PrivateKeyECDH)null; //AdvancedCogenDeviceProfile.DeviceSignatureKey.PrivateParameters;
 
             AdvancedCogenPrivateKeySeed = CryptoCatalog.GetBits(128);
             var CogenPrivateKeyValue = new PrivateKeyECDH(AdvancedCogenPrivateKeySeed, true);
@@ -409,7 +404,7 @@ namespace ExampleGenerator {
             AdvancedCogenPrivateKeyValue = AdvancedCogenDeviceSignPrivate.CombinePrivate(CogenPrivateKeyValue);
             AdvancedCogenCompositeKey = AdvancedCogenDeviceSignPublic.CombinePublic(CogenPrivateKeyValue);
 
-            AdvancedCogenPrivateKeySeedEncrypted = AdvancedCogenDeviceProfile.DareEncrypt(AdvancedCogenPrivateKeyValue);
+            //AdvancedCogenPrivateKeySeedEncrypted = AdvancedCogenDeviceProfile.DareEncrypt(AdvancedCogenPrivateKeyValue);
 
 
             //AdvancedRecryption
@@ -468,10 +463,10 @@ namespace ExampleGenerator {
             ExampleGenerator.ExamplesAdvancedQuantum(this);
             }
 
-        // make a profile and bind to the specified address
-        PersonalProfile MakeProfile(string Addressl, out KeyCollection keyCollection) => throw new NYI();
+        //// make a profile and bind to the specified address
+        //Prof MakeProfile(string Addressl, out KeyCollection keyCollection) => throw new NYI();
 
-        void AddMessage (PersonalProfile PersonalProfile) => throw new NYI();
+        //void AddMessage (PersonalProfile PersonalProfile) => throw new NYI();
 
         void GoReference() {
             StartService();
@@ -549,13 +544,13 @@ namespace ExampleGenerator {
             }
 
         void GoMesh () {
-            ExampleGenerator.MakeExamplesCatalog(this);
-            ExampleGenerator.MakeExamplesBookmark(this);
-            ExampleGenerator.MakeExamplesCredential(this);
-            ExampleGenerator.MakeExamplesContact(this);
-            ExampleGenerator.MakeExamplesCalendar(this);
-            ExampleGenerator.MakeExamplesMail(this);
-            ExampleGenerator.MakeExamplesSSH(this);
+            //ExampleGenerator.MakeExamplesCatalog(this);
+            //ExampleGenerator.MakeExamplesBookmark(this);
+            //ExampleGenerator.MakeExamplesCredential(this);
+            //ExampleGenerator.MakeExamplesContact(this);
+            //ExampleGenerator.MakeExamplesCalendar(this);
+            //ExampleGenerator.MakeExamplesMail(this);
+            //ExampleGenerator.MakeExamplesSSH(this);
             
             //StartService();
 
@@ -574,22 +569,22 @@ namespace ExampleGenerator {
 
         public static string NameAccount = "alice";
         public static string NameService = "example.com";
-        public readonly string AccountID = Account.ID(NameAccount, NameService);
+        //public readonly string AccountID = Account.ID(NameAccount, NameService);
 
-        MeshClient MeshClient;
-        MeshPortalTraced Portal;
+        //MeshClient MeshClient;
+        //MeshPortalTraced Portal;
         /// <summary>
         /// Start the Mesh as a direct service
         /// </summary>
         void StartService() {
-            // Create test Mesh
-            File.Delete(LogMesh);
-            File.Delete(LogPortal);
+            //// Create test Mesh
+            //File.Delete(LogMesh);
+            //File.Delete(LogPortal);
 
-            Portal = new MeshPortalTraced(NameService, LogMesh, LogPortal);
-            MeshPortal.Default = Portal;
-            Traces = Portal.Traces;
-            MeshClient = new MeshClient(PortalAccount: AccountID);
+            //Portal = new MeshPortalTraced(NameService, LogMesh, LogPortal);
+            //MeshPortal.Default = Portal;
+            //Traces = Portal.Traces;
+            //MeshClient = new MeshClient(PortalAccount: AccountID);
             }
 
         public static string Device1Name = "AliceDesktop";
@@ -607,43 +602,46 @@ namespace ExampleGenerator {
         //public PersonalProfile PersonalProfile;
         //public SignedPersonalProfile SignedPersonalProfile;
 
-        CommandLineInterpreter CommandLineInterpreter = new CommandLineInterpreter();
+        //CommandLineInterpreter CommandLineInterpreter = new CommandLineInterpreter();
 
-        public Shell Shell1 = new Shell() {
-            MeshMachine = new MeshMachineCached(),
-            DefaultDescription = Device1Description
-            };
-        public string Device1(string Command) => Device1(Command, out var Forget);
-        public string Device1 (string Command, out string Tag) {
+        //public Shell Shell1 = new Shell() {
+        //    MeshMachine = new MeshMachineCached(),
+        //    DefaultDescription = Device1Description
+        //    };
+        public string Device1(string Command) => Device1(Command, out var _);
+        public string Device1(string Command, out string Tag) {
             Tag = Label(Command);
-            return Shell1.Dispatch(Command);
+            throw new NYI();
+            //return Shell1.Dispatch(Command);
             }
 
-        public Shell Shell2 = new Shell() {
-            MeshMachine = new MeshMachineCached(),
-            DefaultDescription = Device2Description
-            };
-        public string Device2 (string Command, out string Tag) {
+        //public Shell Shell2 = new Shell() {
+        //    MeshMachine = new MeshMachineCached(),
+        //    DefaultDescription = Device2Description
+        //    };
+        public string Device2(string Command, out string Tag) {
             Tag = Label(Command);
-            return Shell2.Dispatch(Command);
+            throw new NYI();
+            //return Shell2.Dispatch(Command);
             }
 
-        public Shell Shell3 = new Shell() {
-            MeshMachine = new MeshMachineCached(),
-            DefaultDescription = Device3Description
-            };
-        public string Device3 (string Command, out string Tag) {
+        //public Shell Shell3 = new Shell() {
+        //    MeshMachine = new MeshMachineCached(),
+        //    DefaultDescription = Device3Description
+        //    };
+        public string Device3(string Command, out string Tag) {
             Tag = Label(Command);
-            return Shell3.Dispatch(Command);
+            throw new NYI();
+            //return Shell3.Dispatch(Command);
             }
 
-        static int Count = 0;
-        string Label (string Command) {
-            var Tag = Count++.ToString();
-            Portal.Label(Tag);
-            Portal.Traces.Current.Command = Command;
-            return Tag;
-            }
+        //static int Count = 0;
+        string Label(string Command) => throw new NYI();
+            //var Tag = Count++.ToString();
+            //Portal.Label(Tag);
+            //Portal.Traces.Current.Command = Command;
+            //return Tag;
+
 
         public string LabelValidate;
         public string LabelCreatePersonal;
@@ -675,10 +673,10 @@ namespace ExampleGenerator {
 
             // Connect the second device
             Device2("connect start test@prismproof.org", out LabelConnectRequest);
-            var Authenticator = (Shell2.LastResult as ResultConnectStart).Authenticator;
+            //var Authenticator = (Shell2.LastResult as ResultConnectStart).Authenticator;
 
             Device1("connect pending", out LabelConnectPending);
-            Device1("connect accept " + Authenticator, out LabelConnectAccept);
+            //Device1("connect accept " + Authenticator, out LabelConnectAccept);
             Device2("connect Complete", out LabelConnectComplete);
             }
 
@@ -741,7 +739,7 @@ namespace ExampleGenerator {
         /// <summary>
         /// The offline escrow entry data.
         /// </summary>
-        public OfflineEscrowEntry OfflineEscrowEntry => Shell1.OfflineEscrowEntry;  
+        //public OfflineEscrowEntry OfflineEscrowEntry => Shell1.OfflineEscrowEntry;  
 
 
         public string LabelEscrow = "Publish escrow";
@@ -752,11 +750,11 @@ namespace ExampleGenerator {
         /// </summary>
         void KeyRecovery() {
 
-            Device1("personal escrow /quorum 2 /shares 3 /file=escrow.json", out LabelEscrow);
+            //Device1("personal escrow /quorum 2 /shares 3 /file=escrow.json", out LabelEscrow);
 
-            var Params = OfflineEscrowEntry.KeyShares[0].Text + " " +
-                OfflineEscrowEntry.KeyShares[1].Text;
-            Device1("personal recover " + Params, out LabelRecover);
+            //var Params = OfflineEscrowEntry.KeyShares[0].Text + " " +
+            //    OfflineEscrowEntry.KeyShares[1].Text;
+            //Device1("personal recover " + Params, out LabelRecover);
 
             //throw new NYI();
 

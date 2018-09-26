@@ -1,0 +1,67 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Libraries\Core\Goedel.Command\Goedel.Command.csproj" />
+    <ProjectReference Include="..\..\Libraries\Core\Goedel.Utilities\Goedel.Utilities.csproj" />
+    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Dare\Goedel.Cryptography.Dare.csproj" />
+    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography\Goedel.Cryptography.csproj" />
+    <ProjectReference Include="..\..\Libraries\Goedel.Protocol\Goedel.Protocol.csproj" />
+    <ProjectReference Include="..\Goedel.Mesh.Protocol.Client\Goedel.Mesh.Protocol.Client.csproj" />
+    <ProjectReference Include="..\Goedel.Mesh\Goedel.Mesh.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Exceptions.cs">
+      <DependentUpon>Exceptions.Exceptional</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="meshman.cs">
+      <DependentUpon>meshman.command</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Results.cs">
+      <DependentUpon>Results.protogen</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="SchemaResults.cs">
+      <DependentUpon>SchemaResults.protocol</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Exceptions.Exceptional">
+      <LastGenOutput>Exceptions.cs</LastGenOutput>
+      <Generator>Exceptional</Generator>
+    </None>
+    <None Update="meshman.command">
+      <LastGenOutput>meshman.cs</LastGenOutput>
+      <Generator>CommandCS</Generator>
+    </None>
+    <None Update="Results.protogen">
+      <LastGenOutput>Results.cs</LastGenOutput>
+      <Generator>ProtoGen</Generator>
+    </None>
+    <None Update="SchemaResults.protocol">
+      <LastGenOutput>SchemaResults.cs</LastGenOutput>
+      <Generator>Protogen</Generator>
+    </None>
+  </ItemGroup>
+
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="VSPreBuild" />
+  </Target>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="VSPostBuild" />
+  </Target>
+
+</Project>

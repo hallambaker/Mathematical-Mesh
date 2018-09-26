@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -60,30 +60,26 @@ namespace Goedel.Cryptography {
                     { PKIX.Constants.OIDS__id_sha256, CryptoAlgorithmID.SHA_2_256},
                     { PKIX.Constants.OIDS__id_sha512, CryptoAlgorithmID.SHA_2_512}
 
-            }; 
+            };
 
+        static readonly Dictionary<CryptoAlgorithmID, HashAlgorithmName> IDtoHashAlgorithmName =
+            new Dictionary<CryptoAlgorithmID, HashAlgorithmName> {
+                    { CryptoAlgorithmID.SHA_1_DEPRECATED, HashAlgorithmName.SHA1},
+                    { CryptoAlgorithmID.SHA_2_256, HashAlgorithmName.SHA256},
+                    { CryptoAlgorithmID.SHA_2_512, HashAlgorithmName.SHA512}
+                };
 
-        ///// <summary>
-        ///// ASN.1 Object Identifier.
-        ///// </summary>
-        //public string OID {
-        //    get {
-        //        switch (BulkAlgorithm) {
-        //            case CryptoAlgorithmID.SHA_1_DEPRECATED:
-        //                return PKIX.Constants.OIDS__sha1WithRSAEncryption;
-        //            case CryptoAlgorithmID.SHA_2_256:
-        //                return PKIX.Constants.OIDS__sha256WithRSAEncryption;
-        //            case CryptoAlgorithmID.SHA_2_512:
-        //                return PKIX.Constants.OIDS__sha512WithRSAEncryption;
-        //            case CryptoAlgorithmID.SHA_3_256:
-        //                return PKIX.Constants.OIDS__sha256WithRSAEncryption;
-        //            case CryptoAlgorithmID.SHA_3_512:
-        //                return PKIX.Constants.OIDS__sha512WithRSAEncryption;
-        //            default:
-        //                return null;
-        //            }
-        //        }
-        //    }
+        /// <summary>
+        /// Calculate the digest of <paramref name="Input"/> using digest <paramref name="CryptoAlgorithmID"/>.
+        /// </summary>
+        /// <param name="CryptoAlgorithmID">The digest algorithm to use.</param>
+        /// <param name="Input">The data to be digested.</param>
+        /// <returns>The digest value.</returns>
+        static public byte[] GetDigest(this CryptoAlgorithmID CryptoAlgorithmID, byte[] Input) {
+            var Provider = CryptoCatalog.Default.GetDigest(CryptoAlgorithmID);
+            return Provider.ProcessData(Input);
+
+            }
 
 
         static readonly Dictionary<CryptoAlgorithmID, string> IDToOID =
@@ -161,6 +157,16 @@ namespace Goedel.Cryptography {
             return Found ? Result : null;
             }
 
+
+        /// <summary>
+        /// Get the .Net Standard Hash algorithm name.
+        /// </summary>
+        /// <param name="ID">The Goedel Algorithm identifier.</param>
+        /// <returns>The corresponding .Net algorithm name.</returns>
+        public static HashAlgorithmName ToHashAlgorithmName(this CryptoAlgorithmID ID) {
+            var Found = IDtoHashAlgorithmName.TryGetValue(ID.Bulk(), out var Result);
+            return Result;
+            }
 
         }
     }

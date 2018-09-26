@@ -25,13 +25,7 @@ LinkFiles = \
     Goedel.Cryptography.Jose.dll\
     Goedel.Cryptography.KeyFile.dll\
     Goedel.Cryptography.dll\
-    Goedel.Mesh.Platform.Windows.dll\
-    Goedel.Mesh.dll\
-    Goedel.Protocol.dll\
-    Goedel.Mesh.Portal.Client.dll\
-    Goedel.Mesh.Portal.dll\
-    Goedel.Recrypt.Client.dll\
-    Goedel.Recrypt.dll
+    Goedel.Protocol.dll
 
 ToolTargets = 
 

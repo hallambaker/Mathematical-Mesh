@@ -22,7 +22,7 @@
     <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.WindowsFramework\Goedel.Cryptography.WindowsFramework.csproj" />
     <ProjectReference Include="..\..\Libraries\Goedel.Cryptography\Goedel.Cryptography.csproj" />
     <ProjectReference Include="..\..\Libraries\Goedel.Mesh.Platform.Windows\Goedel.Mesh.Platform.Windows.csproj" />
-    <ProjectReference Include="..\..\Libraries\Goedel.Mesh\Goedel.Mesh.csproj" />
+    <ProjectReference Include="..\..\Libraries\Goedel.Mesh\Goedel.MeshOld.csproj" />
     <ProjectReference Include="..\..\Libraries\Goedel.Persistence\Goedel.Persistence.csproj" />
     <ProjectReference Include="..\..\Libraries\Goedel.Protocol.Debug\Goedel.Protocol.Debug.csproj" />
     <ProjectReference Include="..\..\Libraries\Goedel.Protocol.Exchange.Server\Goedel.Protocol.Exchange.Server.csproj" />

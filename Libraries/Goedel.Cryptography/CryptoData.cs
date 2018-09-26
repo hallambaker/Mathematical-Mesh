@@ -26,76 +26,76 @@ using Goedel.Utilities;
 
 namespace Goedel.Cryptography {
 
-    /// <summary>
-    /// Describes the mechanism that created a cryptographic output.
-    /// </summary>
-    public enum CryptoOperation {
-        /// <summary>
-        /// Unknown.
-        /// </summary>
-        Unknown,
+    ///// <summary>
+    ///// Describes the mechanism that created a cryptographic output.
+    ///// </summary>
+    //public enum CryptoOperation {
+    //    /// <summary>
+    //    /// Unknown.
+    //    /// </summary>
+    //    Unknown,
 
-        /// <summary>
-        /// Data is plaintext source.
-        /// </summary>
-        Plaintext,
+    //    /// <summary>
+    //    /// Data is plaintext source.
+    //    /// </summary>
+    //    Plaintext,
 
-        /// <summary>
-        /// Cryptographic Digest.
-        /// </summary>
-        Digest,
+    //    /// <summary>
+    //    /// Cryptographic Digest.
+    //    /// </summary>
+    //    Digest,
 
-        /// <summary>
-        /// Message Authentication Code,
-        /// </summary>
-        Authenticate,
+    //    /// <summary>
+    //    /// Message Authentication Code,
+    //    /// </summary>
+    //    Authenticate,
 
-        /// <summary>
-        /// Public key signature.
-        /// </summary>
-        Sign,
+    //    /// <summary>
+    //    /// Public key signature.
+    //    /// </summary>
+    //    Sign,
 
-        /// <summary>
-        /// Signature or Authentication Code verification.
-        /// </summary>
-        Verify,
+    //    /// <summary>
+    //    /// Signature or Authentication Code verification.
+    //    /// </summary>
+    //    Verify,
 
-        /// <summary>
-        /// Encryption.
-        /// </summary>
-        Encrypt,
+    //    /// <summary>
+    //    /// Encryption.
+    //    /// </summary>
+    //    Encrypt,
 
-        /// <summary>
-        /// Authenticated Encryption.
-        /// </summary>
-        AuthenticatedEncrypt,
+    //    /// <summary>
+    //    /// Authenticated Encryption.
+    //    /// </summary>
+    //    AuthenticatedEncrypt,
 
-        /// <summary>
-        /// Decryption or decryption with authentication.
-        /// </summary>
-        Decrypt,
+    //    /// <summary>
+    //    /// Decryption or decryption with authentication.
+    //    /// </summary>
+    //    Decrypt,
 
-        /// <summary>
-        /// Symmetric key wrap.
-        /// </summary>
-        WrapKey,
+    //    /// <summary>
+    //    /// Symmetric key wrap.
+    //    /// </summary>
+    //    WrapKey,
 
-        /// <summary>
-        /// Symmetric key unwrap.
-        /// </summary>
-        UnwrapKey,
+    //    /// <summary>
+    //    /// Symmetric key unwrap.
+    //    /// </summary>
+    //    UnwrapKey,
 
-        /// <summary>
-        /// Derive key.
-        /// </summary>
-        DeriveKey,
+    //    /// <summary>
+    //    /// Derive key.
+    //    /// </summary>
+    //    DeriveKey,
 
-        /// <summary>
-        /// Derive bits not to be used as a key
-        /// </summary>
-        DeriveBits
+    //    /// <summary>
+    //    /// Derive bits not to be used as a key
+    //    /// </summary>
+    //    DeriveBits
 
-        }
+    //    }
 
 
 
@@ -156,11 +156,11 @@ namespace Goedel.Cryptography {
         public virtual CryptoAlgorithmID BulkID  => AlgorithmIdentifier.Bulk(); 
 
 
-        /// <summary>List of signature blobs</summary>
-        public List<CryptoDataSignature> Signatures;
+        ///// <summary>List of signature blobs</summary>
+        //public List<CryptoDataSignature> Signatures;
 
-        /// <summary>List of key exchange blobs</summary>
-        public List<CryptoDataExchange> Exchanges;
+        ///// <summary>List of key exchange blobs</summary>
+        //public List<CryptoDataExchange> Exchanges;
 
         /// <summary>
         /// OID of algorithm that produced the result.
@@ -204,11 +204,6 @@ namespace Goedel.Cryptography {
         /// </summary>
         public virtual void Complete() {
             ProviderBulk.Complete(this);
-            if (Signatures != null) {
-                foreach (var Signature in Signatures) {
-                    Signature.Meta.Complete(Signature);
-                    }
-                }
             }
 
         /// <summary>
@@ -265,85 +260,85 @@ namespace Goedel.Cryptography {
         }
 
 
-    /// <summary>
-    /// Result of a Signature operation.
-    /// </summary>
-    public class CryptoDataSignature : CryptoDataMeta {
-        /// <summary>
-        /// Signature value
-        /// </summary>
-        public byte[] Signature { get; set; }
+    ///// <summary>
+    ///// Result of a Signature operation.
+    ///// </summary>
+    //public class CryptoDataSignature : CryptoDataMeta {
+    //    /// <summary>
+    //    /// Signature value
+    //    /// </summary>
+    //    public byte[] Signature { get; set; }
 
 
-        /// <summary>
-        /// Crypto provider for keying operations (may be null)
-        /// </summary>
-        public override CryptoProvider Meta => SignatureProvider; 
+    //    /// <summary>
+    //    /// Crypto provider for keying operations (may be null)
+    //    /// </summary>
+    //    public override CryptoProvider Meta => SignatureProvider; 
 
-        /// <summary>
-        /// Crypto provider for signature
-        /// </summary>
-        public CryptoProviderSignature SignatureProvider { get; }
-
-
-        /// <summary>
-        /// Create and populate a result.
-        /// </summary>
-        /// <param name="Identifier">The Goedel Cryptography identifier.</param>
-        /// <param name="Bulk">Provider to use to process the bulk data</param>
-        /// <param name="SignatureProvider">The signature provider</param>
-        public CryptoDataSignature(CryptoAlgorithmID Identifier,
-                            CryptoData Bulk, CryptoProviderSignature SignatureProvider) : base (Identifier, Bulk) {
-            Bulk.Signatures = Bulk.Signatures ?? new List<CryptoDataSignature>();
-            Bulk.Signatures.Add(this);
-            this.SignatureProvider = SignatureProvider;
-            }
-
-        }
-
-    /// <summary>
-    /// Result of a key encryption, exchange or wrap operation.
-    /// </summary>
-    public class CryptoDataExchange : CryptoDataMeta {
-
-        /// <summary>Wrapped key, if required.</summary>
-        public byte[] Wrap {
-            get; set;
-            }
-
-        /// <summary>
-        /// The public key exchange parameters
-        /// </summary>
-        public byte[] Exchange { get; set; }
-
-        /// <summary>
-        /// Optional carry result to be used in decryption
-        /// </summary>
-        public byte[] Carry { get; set; }
+    //    /// <summary>
+    //    /// Crypto provider for signature
+    //    /// </summary>
+    //    public CryptoProviderSignature SignatureProvider { get; }
 
 
-        /// <summary>
-        /// Crypto provider for keying operations (may be null)
-        /// </summary>
-        public override CryptoProvider Meta => ExchangeProvider; 
+    //    /// <summary>
+    //    /// Create and populate a result.
+    //    /// </summary>
+    //    /// <param name="Identifier">The Goedel Cryptography identifier.</param>
+    //    /// <param name="Bulk">Provider to use to process the bulk data</param>
+    //    /// <param name="SignatureProvider">The signature provider</param>
+    //    public CryptoDataSignature(CryptoAlgorithmID Identifier,
+    //                        CryptoData Bulk, CryptoProviderSignature SignatureProvider) : base (Identifier, Bulk) {
+    //        Bulk.Signatures = Bulk.Signatures ?? new List<CryptoDataSignature>();
+    //        Bulk.Signatures.Add(this);
+    //        this.SignatureProvider = SignatureProvider;
+    //        }
 
-        /// <summary>
-        /// Crypto provider for signature
-        /// </summary>
-        public CryptoProviderExchange ExchangeProvider { get; }
+    //    }
+
+    ///// <summary>
+    ///// Result of a key encryption, exchange or wrap operation.
+    ///// </summary>
+    //public class CryptoDataExchange : CryptoDataMeta {
+
+    //    /// <summary>Wrapped key, if required.</summary>
+    //    public byte[] Wrap {
+    //        get; set;
+    //        }
+
+    //    /// <summary>
+    //    /// The public key exchange parameters
+    //    /// </summary>
+    //    public byte[] Exchange { get; set; }
+
+    //    /// <summary>
+    //    /// Optional carry result to be used in decryption
+    //    /// </summary>
+    //    public byte[] Carry { get; set; }
+
+
+    //    /// <summary>
+    //    /// Crypto provider for keying operations (may be null)
+    //    /// </summary>
+    //    public override CryptoProvider Meta => ExchangeProvider; 
+
+    //    /// <summary>
+    //    /// Crypto provider for signature
+    //    /// </summary>
+    //    public CryptoProviderExchange ExchangeProvider { get; }
 
 
 
-        /// <summary>
-        /// Create and populate a result.
-        /// </summary>
-        /// <param name="Identifier">The Goedel Cryptography identifier.</param>
-        /// <param name="Bulk">Encoder for the bulk data</param>
-        /// <param name="Meta">The Key Exchange Provider</param>
-        public CryptoDataExchange(CryptoAlgorithmID Identifier,
-                      CryptoData Bulk, CryptoProviderExchange Meta) :
-                            base(Identifier, Bulk) => ExchangeProvider = Meta;
-        }
+    //    /// <summary>
+    //    /// Create and populate a result.
+    //    /// </summary>
+    //    /// <param name="Identifier">The Goedel Cryptography identifier.</param>
+    //    /// <param name="Bulk">Encoder for the bulk data</param>
+    //    /// <param name="Meta">The Key Exchange Provider</param>
+    //    public CryptoDataExchange(CryptoAlgorithmID Identifier,
+    //                  CryptoData Bulk, CryptoProviderExchange Meta) :
+    //                        base(Identifier, Bulk) => ExchangeProvider = Meta;
+    //    }
 
     /// <summary>
     /// Wrapped Crypto Data

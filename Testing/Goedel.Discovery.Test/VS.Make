@@ -37,5 +37,5 @@ postbuild : postbuildRecurse
 
 
 postbuildwindows : 
-	powershell publishtarget Test.Goedel.Discovery.dll
+	powershell publishtarget Goedel.Discovery.Test.dll
 

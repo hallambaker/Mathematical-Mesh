@@ -442,19 +442,6 @@ namespace Goedel.Cryptography.Dare {
 
             }
 
-        //void SetPosition(int Index = -1,
-        //        string Path = null) {
-        //    if (Index >= 0) {
-        //        Container.MoveToIndex(Index);
-        //        }
-        //    else if (Path != null) {
-        //        throw new NYI();  // ToDo: retrieve index by path val
-        //        }
-        //    else {
-        //        Container.Last();
-        //        }
-        //    }
-
 
         /// <summary>
         /// Perform a Key Exchange
@@ -462,8 +449,34 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="Recipients">The list of recipients</param>
         /// <param name="AlgorithmID">The bulk encryption algorithm</param>
         /// <returns>The result of the key exchange.</returns>
-        public virtual byte[] GetExchange(List<Recipient> Recipients, CryptoAlgorithmID AlgorithmID) => KeyCollection.Default.Decrypt(Recipients, AlgorithmID);
+        public virtual byte[] GetExchange(List<Recipient> Recipients, CryptoAlgorithmID AlgorithmID) => Decrypt(Recipients, AlgorithmID);
 
+
+
+        /// <summary>
+        /// Attempt to decrypt a decryption blob from a list of recipient entries.
+        /// </summary>
+        /// <param name="Recipients">The recipient entry.</param>
+        /// <param name="AlgorithmID">The symmetric encryption cipher (used to decrypt the wrapped key).</param>
+        /// <returns></returns>
+        public byte[] Decrypt(List<Recipient> Recipients, CryptoAlgorithmID AlgorithmID) {
+            foreach (var Recipient in Recipients) {
+
+                var DecryptionKey = KeyCollection.Default.TryMatchRecipient(Recipient.Header.Kid);
+
+                // Recipient has the following fields of interest
+                // Recipient.EncryptedKey -- The RFC3394 wrapped symmetric key
+                // Recipient.Header.Epk  -- The ephemeral public key
+                // Recipient.Header.Epk.KeyPair  -- The ephemeral public key
+
+                if (DecryptionKey != null) {
+                    return DecryptionKey.Decrypt(Recipient.EncryptedKey, Recipient.Header.Epk.KeyPair, AlgorithmID: AlgorithmID);
+                    }
+                }
+
+
+            throw new NoAvailableDecryptionKey();
+            }
 
 
         }

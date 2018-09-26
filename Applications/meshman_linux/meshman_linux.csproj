@@ -20,8 +20,6 @@
     <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Linux\Goedel.Cryptography.Linux.csproj" />
     <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Standard\Goedel.Cryptography.Standard.csproj" />
     <ProjectReference Include="..\..\Libraries\Goedel.Cryptography\Goedel.Cryptography.csproj" />
-    <ProjectReference Include="..\..\Libraries\Goedel.Mesh.Platform.Linux\Goedel.Mesh.Platform.Linux.csproj" />
-    <ProjectReference Include="..\..\Libraries\Goedel.Mesh\Goedel.Mesh.csproj" />
     <ProjectReference Include="..\..\Libraries\Goedel.Persistence\Goedel.Persistence.csproj" />
     <ProjectReference Include="..\..\Libraries\Goedel.Protocol.Debug\Goedel.Protocol.Debug.csproj" />
     <ProjectReference Include="..\..\Libraries\Goedel.Protocol\Goedel.Protocol.csproj" />

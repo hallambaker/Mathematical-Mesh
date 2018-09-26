@@ -11,7 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Libraries\Core\Goedel.Utilities\Goedel.Utilities.csproj" />
-    <ProjectReference Include="..\..\..\Libraries\Goedel.Mesh\Goedel.Mesh.csproj" />
+    <ProjectReference Include="..\..\..\Libraries\Goedel.Mesh\Goedel.MeshOld.csproj" />
     <ProjectReference Include="..\..\..\Libraries\Goedel.Protocol\Goedel.Protocol.csproj" />
     <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Portal.Client\Goedel.Mesh.Portal.Client.csproj" />
     <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Portal\Goedel.Mesh.Portal.csproj" />

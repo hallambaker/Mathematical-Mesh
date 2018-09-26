@@ -31,43 +31,23 @@ LinkFiles = \
     Goedel.Cryptography.Standard.dll\
     Goedel.Cryptography.WindowsFramework.dll\
     Goedel.Cryptography.dll\
-    Goedel.Mesh.Platform.Windows.dll\
-    Goedel.Mesh.dll\
-    Goedel.Persistence.dll\
     Goedel.Protocol.Debug.dll\
-    Goedel.Protocol.Exchange.Server.dll\
-    Goedel.Protocol.Exchange.dll\
     Goedel.Protocol.dll\
     Goedel.Test.dll\
-    Goedel.Account.Client.dll\
-    Goedel.Account.Server.dll\
-    Goedel.Account.dll\
-    Goedel.Confirm.Client.dll\
-    Goedel.Confirm.Server.dll\
-    Goedel.Confirm.dll\
-    Goedel.Mesh.Portal.Client.dll\
-    Goedel.Mesh.Portal.Server.dll\
-    Goedel.Mesh.Portal.dll\
-    Goedel.Recrypt.Client.dll\
-    Goedel.Recrypt.Server.dll\
-    Goedel.Recrypt.dll
+    Goedel.Mesh.Protocol.Client.dll\
+    Goedel.Mesh.Protocol.Server.dll\
+    Goedel.Mesh.Protocol.dll\
+    Goedel.Mesh.dll
 
 ToolTargets = \
-	Old\MakeExamplesApplications.cs\
 	MakeExamplesAdvanced.cs\
 	MakeExamplesProfile.cs\
 	MakeExamplesPortal.cs\
-	MakeExamplesCatalog.cs\
-	Old\MakeExamplesReferenceOLD.cs\
+	Old\MakeExamplesCatalog.cs\
 	MakeExamplesUDF.cs\
-	Old\MakeExamplesMessage.cs\
 	MakeExamplesContainer.cs\
 	MakeExamplesDeveloper.cs\
-	Old\MakeExamplesKeyExchange.cs\
 	MakeExamplesMessaging.cs
-Old\MakeExamplesApplications.cs : Old\MakeExamplesApplications.script 
-	gscript Old\MakeExamplesApplications.script  Old\MakeExamplesApplications.cs
-
 MakeExamplesAdvanced.cs : MakeExamplesAdvanced.script 
 	gscript MakeExamplesAdvanced.script  MakeExamplesAdvanced.cs
 
@@ -77,17 +57,11 @@ MakeExamplesProfile.cs : MakeExamplesProfile.script
 MakeExamplesPortal.cs : MakeExamplesPortal.script 
 	gscript MakeExamplesPortal.script  MakeExamplesPortal.cs
 
-MakeExamplesCatalog.cs : MakeExamplesCatalog.script 
-	gscript MakeExamplesCatalog.script  MakeExamplesCatalog.cs
-
-Old\MakeExamplesReferenceOLD.cs : Old\MakeExamplesReferenceOLD.script 
-	gscript Old\MakeExamplesReferenceOLD.script  Old\MakeExamplesReferenceOLD.cs
+Old\MakeExamplesCatalog.cs : Old\MakeExamplesCatalog.script 
+	gscript Old\MakeExamplesCatalog.script  Old\MakeExamplesCatalog.cs
 
 MakeExamplesUDF.cs : MakeExamplesUDF.script 
 	gscript MakeExamplesUDF.script  MakeExamplesUDF.cs
-
-Old\MakeExamplesMessage.cs : Old\MakeExamplesMessage.script 
-	gscript Old\MakeExamplesMessage.script  Old\MakeExamplesMessage.cs
 
 MakeExamplesContainer.cs : MakeExamplesContainer.script 
 	gscript MakeExamplesContainer.script  MakeExamplesContainer.cs
@@ -95,22 +69,15 @@ MakeExamplesContainer.cs : MakeExamplesContainer.script
 MakeExamplesDeveloper.cs : MakeExamplesDeveloper.script 
 	gscript MakeExamplesDeveloper.script  MakeExamplesDeveloper.cs
 
-Old\MakeExamplesKeyExchange.cs : Old\MakeExamplesKeyExchange.script 
-	gscript Old\MakeExamplesKeyExchange.script  Old\MakeExamplesKeyExchange.cs
-
 MakeExamplesMessaging.cs : MakeExamplesMessaging.script 
 	gscript MakeExamplesMessaging.script  MakeExamplesMessaging.cs
 
 
 
 prebuildRecurse : 
-	cd ..\..\Libraries\MeshMan && nmake /c /f VS.make prebuild 
-	cd ..\..\Libraries\MeshApps && nmake /c /f VS.make prebuild 
 
 
 postbuildRecurse :
-	cd ..\..\Libraries\MeshMan && nmake /c /f VS.make postbuild 
-	cd ..\..\Libraries\MeshApps && nmake /c /f VS.make postbuild 
 
 # Non shared project, nothing to do
 prebuild : prebuildRecurse $(ToolTargets)

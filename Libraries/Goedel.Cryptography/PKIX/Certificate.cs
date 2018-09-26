@@ -22,7 +22,7 @@
 using System;
 using System.Collections.Generic;
 using Goedel.Cryptography;
-
+using Goedel.Utilities;
 
 
 namespace Goedel.Cryptography.PKIX {
@@ -87,33 +87,33 @@ namespace Goedel.Cryptography.PKIX {
         /// </summary>
         public KeyPair KeyPair { get; set; }
 
-        CryptoProviderSignature _CryptoProviderSignature = null;
+        //CryptoProviderSignature _CryptoProviderSignature = null;
 
-        /// <summary>
-        /// Returns the signature provider associated with the current certificate.
-        /// </summary>
-        public CryptoProviderSignature CryptoProviderSignature {
-            get {
-                if (_CryptoProviderSignature == null) {
-                    _CryptoProviderSignature = KeyPair.SignatureProvider ();
-                    }
-                return _CryptoProviderSignature;
-                }
-            }
+        ///// <summary>
+        ///// Returns the signature provider associated with the current certificate.
+        ///// </summary>
+        //public CryptoProviderSignature CryptoProviderSignature {
+        //    get {
+        //        if (_CryptoProviderSignature == null) {
+        //            _CryptoProviderSignature = KeyPair.SignatureProvider ();
+        //            }
+        //        return _CryptoProviderSignature;
+        //        }
+        //    }
 
-        CryptoProviderExchange _CryptoProviderExchange = null;
+        //CryptoProviderExchange _CryptoProviderExchange = null;
 
-        /// <summary>
-        /// Returns the exchange provider associated with the current certificate.
-        /// </summary>
-        public CryptoProviderExchange CryptoProviderExchange {
-            get {
-                if (_CryptoProviderExchange == null) {
-                    _CryptoProviderExchange = KeyPair.ExchangeProvider();
-                    }
-                return _CryptoProviderExchange;
-                }
-            }
+        ///// <summary>
+        ///// Returns the exchange provider associated with the current certificate.
+        ///// </summary>
+        //public CryptoProviderExchange CryptoProviderExchange {
+        //    get {
+        //        if (_CryptoProviderExchange == null) {
+        //            _CryptoProviderExchange = KeyPair.ExchangeProvider();
+        //            }
+        //        return _CryptoProviderExchange;
+        //        }
+        //    }
 
 
         /// <summary>
@@ -178,24 +178,24 @@ namespace Goedel.Cryptography.PKIX {
 
 
 
-        /// <summary>
-        /// Create a certificate with the specified subject Key. Note that the template is 
-        /// must be completed with calls to set validity etc. before use.
-        /// </summary>
-        /// <param name="SubjectKey">Cryptographic provider for the subject key.</param>
-        /// <param name="Application">Certificate application(s).</param>
-        public Certificate(CryptoProvider SubjectKey, Application Application) {
-            KeyPair = SubjectKey.KeyPair;
-            if (SubjectKey as CryptoProviderSignature != null) {
-                _CryptoProviderSignature = SubjectKey as CryptoProviderSignature;
-                }
-            if (SubjectKey as CryptoProviderExchange != null) {
-                _CryptoProviderExchange = SubjectKey as CryptoProviderExchange;
-                }
+        ///// <summary>
+        ///// Create a certificate with the specified subject Key. Note that the template is 
+        ///// must be completed with calls to set validity etc. before use.
+        ///// </summary>
+        ///// <param name="SubjectKey">Cryptographic provider for the subject key.</param>
+        ///// <param name="Application">Certificate application(s).</param>
+        //public Certificate(CryptoProvider SubjectKey, Application Application) {
+        //    KeyPair = SubjectKey.KeyPair;
+        //    if (SubjectKey as CryptoProviderSignature != null) {
+        //        _CryptoProviderSignature = SubjectKey as CryptoProviderSignature;
+        //        }
+        //    if (SubjectKey as CryptoProviderExchange != null) {
+        //        _CryptoProviderExchange = SubjectKey as CryptoProviderExchange;
+        //        }
 
-            var SubjectName = new Name(SubjectKey).ToList();
-            TBSCertificate = new TBSCertificate(SubjectKey.KeyPair, SubjectName);
-            }
+        //    var SubjectName = new Name(SubjectKey).ToList();
+        //    TBSCertificate = new TBSCertificate(SubjectKey.KeyPair, SubjectName);
+        //    }
 
 
         /// <summary>
@@ -220,21 +220,14 @@ namespace Goedel.Cryptography.PKIX {
                 TBSCertificate.Issuer = SigningCertificate.TBSCertificate.Subject;
                 TBSCertificate.SetSubjectKeyIdentifier(SubjectKeyIdentifier);
                 TBSCertificate.SetAuthorityKeyIdentifier(SigningCertificate.SubjectKeyIdentifier);
-                Sign(SigningCertificate.CryptoProviderSignature);
-                }
-            else {
-                Sign();
-                }
-            }
 
-        /// <summary>
-        /// Self-sign certificate. The issuer name and key identifier 
-        /// are taken from the TBS certificate.
-        /// </summary>
-        public void Sign() {
+                }
+
+
             TBSCertificate.Issuer = TBSCertificate.Subject;
             TBSCertificate.SetSubjectKeyIdentifier(SubjectKeyIdentifier);
             TBSCertificate.SetAuthorityKeyIdentifier(SubjectKeyIdentifier);
+
             //TBSCertificate.SetKeyUsage();
             //TBSCertificate.SetSubjectAltName();
             //TBSCertificate.SetBasicConstraints(false, 0);
@@ -243,27 +236,31 @@ namespace Goedel.Cryptography.PKIX {
             //subject altname?
             // Basic constraints?
 
+            //KeyPair
 
-            Sign(CryptoProviderSignature);
+            //Sign(CryptoProviderSignature);
+
+            throw new NYI();
             }
 
-        /// <summary>
-        /// Sign certificate.
-        /// </summary>
-        /// <param name="Signer">Cryptographic provider for the signer.</param>
-        public void Sign(CryptoProviderSignature Signer) {
 
-            var Algorithm = CryptoCatalog.Default.SignatureDefaults(Signer.CryptoAlgorithmID);
+        ///// <summary>
+        ///// Sign certificate.
+        ///// </summary>
+        ///// <param name="Signer">Cryptographic provider for the signer.</param>
+        //public void Sign(CryptoProviderSignature Signer) {
+
+        //    var Algorithm = CryptoCatalog.Default.SignatureDefaults(Signer.CryptoAlgorithmID);
 
 
-            TBSCertificate.Signature = new AlgorithmIdentifier(Algorithm);
-            SignatureAlgorithm = TBSCertificate.Signature;
+        //    TBSCertificate.Signature = new AlgorithmIdentifier(Algorithm);
+        //    SignatureAlgorithm = TBSCertificate.Signature;
 
-            var Data = TBSCertificate.DER();
-            Signature = Signer.Sign(Data).Signature;
+        //    var Data = TBSCertificate.DER();
+        //    Signature = Signer.Sign(Data).Signature;
 
-            _Data = this.DER();
-            }
+        //    _Data = this.DER();
+        //    }
 
         ///// <summary>
         ///// Create a self signed root certificate with the specified
@@ -336,19 +333,13 @@ namespace Goedel.Cryptography.PKIX {
                 Subject = Certificate.TBSCertificate.Subject,
                 SubjectPublicKeyInfo = Certificate.TBSCertificate.SubjectPublicKeyInfo
                 };
-            Sign(Certificate.CryptoProviderSignature);
+            //Sign(Certificate.CryptoProviderSignature);
+
+            //SignatureAlgorithm = new AlgorithmIdentifier(SigningKey.CryptoAlgorithmID);
+            //Signature = SigningKey.Sign(CertificationRequestInfo.DER()).Signature;
+            throw new NYI();
             }
 
-
-
-        /// <summary>
-        /// Sign the request
-        /// </summary>
-        /// <param name="SigningKey">The signing key</param>
-        public void Sign(CryptoProviderSignature SigningKey) {
-            SignatureAlgorithm = new AlgorithmIdentifier(SigningKey.CryptoAlgorithmID);
-            Signature = SigningKey.Sign(CertificationRequestInfo.DER()).Signature;
-            }
 
         /// <summary>
         /// Set the subject name.

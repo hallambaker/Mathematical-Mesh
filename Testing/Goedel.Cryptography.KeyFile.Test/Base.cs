@@ -28,9 +28,6 @@ namespace Goedel.Cryptography.KeyFile.Test {
             }
 
 
-        static CryptoProviderExchange Encrypter;
-        static CryptoProviderSignature Signer;
-
         static KeyPairBaseRSA EncrypterKeyPair;
         static KeyPairBaseRSA SignerKeyPair;
 
@@ -53,10 +50,10 @@ namespace Goedel.Cryptography.KeyFile.Test {
             CryptographyWindows.Initialize();
 
             SignerKeyPair = (KeyPairBaseRSA)KeyFileDecode.DecodePEM(Directories.TestKey_OpenSSH_Private);
-            Signer = SignerKeyPair.SignatureProvider();
+            //Signer = SignerKeyPair.SignatureProvider();
 
             EncrypterKeyPair = (KeyPairBaseRSA)KeyFileDecode.DecodePEM(Directories.TestKey_OpenSSH_Private);
-            Encrypter = EncrypterKeyPair.ExchangeProvider();
+            //Encrypter = EncrypterKeyPair.ExchangeProvider();
             
             AliceKeyPair = new KeyPairDH();
             BobKeyPair = new KeyPairDH();

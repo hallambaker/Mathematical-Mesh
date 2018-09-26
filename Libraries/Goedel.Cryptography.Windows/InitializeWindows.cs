@@ -45,7 +45,6 @@ namespace Goedel.Cryptography {
                     return;
                     }
                 Initialized = true;
-
                 Platform.FindInKeyStore = KeyStore.FindInKeyStore;
                 Platform.WriteToKeyStore = KeyStore.WriteToKeyStore;
                 Platform.EraseFromKeyStore = KeyStore.EraseFromDevice;

@@ -136,9 +136,12 @@ namespace Goedel.Cryptography {
         /// <param name="Signature">If true the key MAY be used for signing</param>
         /// <param name="Exchange">If true the key MAY be used for exchange</param>
         /// <param name="CryptoAlgorithmID">The cryptographic algorithm identifier</param>
+        /// <param name="KeyCollection">The key collection that keys are to be persisted to (dependent on 
+        /// the value of <paramref name="KeySecurity"/></param>
         /// <returns>The generated key pair</returns>
         public static KeyPair GenerateKeyPair(
                 KeySecurity KeySecurity = KeySecurity.Ephemeral,
+                KeyCollection KeyCollection = null,
             int KeySize = 0,
             bool Signature = true,
             bool Exchange = true,
@@ -239,24 +242,24 @@ namespace Goedel.Cryptography {
         public override bool PublicOnly => PrivateKey==null;
 
         #region // CryptoProviders (to be deleted)
-        /// <summary>
-        /// Stub method to return a signature provider. This provider does not implement
-        /// signature and so always returns null. 
-        /// </summary>
-        /// <param name="Bulk">The digest algorithm to use</param>
-        /// <returns>The cryptographic provider.</returns>
-        public override CryptoProviderSignature SignatureProvider(
-                    CryptoAlgorithmID Bulk = CryptoAlgorithmID.Default) => throw new InvalidOperation("DHKeyPair does not support signature operations. ");
+        ///// <summary>
+        ///// Stub method to return a signature provider. This provider does not implement
+        ///// signature and so always returns null. 
+        ///// </summary>
+        ///// <param name="Bulk">The digest algorithm to use</param>
+        ///// <returns>The cryptographic provider.</returns>
+        //public override CryptoProviderSignature SignatureProvider(
+        //            CryptoAlgorithmID Bulk = CryptoAlgorithmID.Default) => throw new InvalidOperation("DHKeyPair does not support signature operations. ");
 
 
-        /// <summary>
-        /// Returns an encryption provider for the key (if the public portion is available)
-        /// </summary>
-        /// <param name="Bulk">The encryption algorithm to use</param>
-        /// <returns>The cryptographic provider.</returns>
-        public override CryptoProviderExchange ExchangeProvider(
-                    CryptoAlgorithmID Bulk = CryptoAlgorithmID.Default) => 
-                        new CryptoProviderExchangeDH(this, Bulk);
+        ///// <summary>
+        ///// Returns an encryption provider for the key (if the public portion is available)
+        ///// </summary>
+        ///// <param name="Bulk">The encryption algorithm to use</param>
+        ///// <returns>The cryptographic provider.</returns>
+        //public override CryptoProviderExchange ExchangeProvider(
+        //            CryptoAlgorithmID Bulk = CryptoAlgorithmID.Default) => 
+        //                new CryptoProviderExchangeDH(this, Bulk);
 
         #endregion
 
@@ -369,7 +372,41 @@ namespace Goedel.Cryptography {
             }
 
 
-         }
+        #region // Unsed methods, we don't do DSA
+
+        /// <summary>
+        /// Sign a precomputed digest
+        /// </summary>
+        /// <param name="Data">The data to sign.</param>
+        /// <param name="AlgorithmID">The algorithm to use.</param>
+        /// <param name="Context">Additional data added to the signature scope
+        /// for protocol isolation.</param>
+        /// <returns>The signature data</returns>
+        public override byte[] SignHash(
+            byte[] Data, 
+            CryptoAlgorithmID AlgorithmID = CryptoAlgorithmID.Default, 
+            byte[] Context = null) => throw new NotImplementedException();
+
+
+        /// <summary>
+        /// Verify a signature over the purported data digest.
+        /// </summary>
+        /// <param name="Signature">The signature blob value.</param>
+        /// <param name="AlgorithmID">The signature and hash algorithm to use.</param>
+        /// <param name="Context">Additional data added to the signature scope
+        /// for protocol isolation.</param>
+        /// <param name="Digest">The digest value to be verified.</param>
+        /// <returns>True if the signature is valid, otherwise false.</returns>
+        public override bool VerifyHash(
+            byte[] Digest, 
+            byte[] Signature, 
+            CryptoAlgorithmID AlgorithmID = CryptoAlgorithmID.Default, byte[] Context = null) => throw new NotImplementedException();
+
+
+
+        #endregion
+
+        }
 
 
     }

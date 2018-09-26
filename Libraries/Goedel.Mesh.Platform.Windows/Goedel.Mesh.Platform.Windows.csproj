@@ -108,9 +108,9 @@
       <Project>{b8319c05-ea98-405d-94eb-acb9de6da975}</Project>
       <Name>Goedel.Cryptography</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Goedel.Mesh\Goedel.Mesh.csproj">
+    <ProjectReference Include="..\Goedel.Mesh\Goedel.MeshOld.csproj">
       <Project>{a93fe437-9540-49a5-8fce-a190436db5db}</Project>
-      <Name>Goedel.Mesh</Name>
+      <Name>Goedel.MeshOld</Name>
     </ProjectReference>
     <ProjectReference Include="..\Goedel.Protocol\Goedel.Protocol.csproj">
       <Project>{5b919409-8341-4d0a-bcdf-43a6841b6d7b}</Project>

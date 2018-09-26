@@ -88,33 +88,23 @@ namespace Goedel.Cryptography {
 
         #region // Encryption and Decryption methods
 
-        /// <summary>
-        /// Encrypt a bulk key.
-        /// </summary>
-        /// <returns>The encoder</returns>
-        /// <param name="Key">The key to encrypt.</param>
-        /// <param name="Ephemeral">The ephemeral key to use for the exchange (if used)</param>
-        /// <param name="Exchange">The private key to use for the exchange.</param>
-        /// <param name="Salt">Optional salt value for use in key derivation.</param>
-        public abstract void Encrypt(byte[] Key,
-            out byte[] Exchange, out KeyPair Ephemeral, byte[] Salt = null);
         
-        /// <summary>
-        /// Perform a key exchange to decrypt a bulk or wrapped key under this one.
-        /// </summary>
-        /// <param name="EncryptedKey">The encrypted session key</param>
-        /// <param name="Ephemeral">Ephemeral key input (required for DH)</param>
-        /// <param name="AlgorithmID">The algorithm to use.</param>
-        /// <param name="Partial">Partial key agreement value (for recryption)</param>
-        /// <param name="Salt">Optional salt value for use in key derivation. If specified
-        /// must match the salt used to encrypt.</param>
-        /// <returns>The decoded data instance</returns>
-        public abstract byte[] Decrypt(
-                    byte[] EncryptedKey,
-                    KeyPair Ephemeral,
-                    CryptoAlgorithmID AlgorithmID = CryptoAlgorithmID.Default,
-                    KeyAgreementResult Partial = null,
-                    byte[] Salt = null);
+        ///// <summary>
+        ///// Perform a key exchange to decrypt a bulk or wrapped key under this one.
+        ///// </summary>
+        ///// <param name="EncryptedKey">The encrypted session key</param>
+        ///// <param name="Ephemeral">Ephemeral key input (required for DH)</param>
+        ///// <param name="AlgorithmID">The algorithm to use.</param>
+        ///// <param name="Partial">Partial key agreement value (for recryption)</param>
+        ///// <param name="Salt">Optional salt value for use in key derivation. If specified
+        ///// must match the salt used to encrypt.</param>
+        ///// <returns>The decoded data instance</returns>
+        //public abstract byte[] Decrypt(
+        //            byte[] EncryptedKey,
+        //            KeyPair Ephemeral,
+        //            CryptoAlgorithmID AlgorithmID = CryptoAlgorithmID.Default,
+        //            KeyAgreementResult Partial = null,
+        //            byte[] Salt = null);
 
         #endregion
 

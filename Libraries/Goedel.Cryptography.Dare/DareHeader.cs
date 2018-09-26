@@ -11,7 +11,7 @@ namespace Goedel.Cryptography.Dare {
 
     // Feature: Support encryption algorithms other than AES256 by including the algorithmID in the header
 
-    public partial class DAREHeader {
+    public partial class DareHeader {
 
         byte[] MasterSecret;
 
@@ -62,7 +62,7 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// Create a message header.
         /// </summary>
-        public DAREHeader() {
+        public DareHeader() {
             }
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="Cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
         /// <param name="DataSequences">Data sequences to be converted to an EDS and presented 
         ///     as an EDSS header entry.</param>
-        public DAREHeader(
+        public DareHeader(
                     CryptoStack CryptoStack,
                     string ContentType = null,
                     byte[] Cloaked = null,
@@ -122,7 +122,7 @@ namespace Goedel.Cryptography.Dare {
         /// Use information from the specified header to speficy defaults.
         /// </summary>
         /// <param name="DAREHeader"></param>
-        public virtual void SetDefaultContext (DAREHeader DAREHeader) {
+        public virtual void SetDefaultContext (DareHeader DAREHeader) {
             SaltValue = -1;
             MasterSecret = DAREHeader.MasterSecret;
 
@@ -147,7 +147,7 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// Close the body writer stack and free all associated resources.
         /// </summary>
-        public void CloseBodyWriter(out DARETrailer DARETrailer) {
+        public void CloseBodyWriter(out DareTrailer DARETrailer) {
             CurrentBodyWriter.Close();
             DARETrailer = GetTrailer(CurrentBodyWriter);
             CurrentBodyWriter?.Dispose();
@@ -161,7 +161,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="Plaintext">The EDS plaintext.</param>
         /// <param name="DARETrailer">Prototype trailer containing the calculated digest value.</param>
         /// <returns>The EDS</returns>
-        public byte[] EnhanceBody(byte[] Plaintext, out DARETrailer DARETrailer) => 
+        public byte[] EnhanceBody(byte[] Plaintext, out DareTrailer DARETrailer) => 
             CryptoStack.Encode(Plaintext, out DARETrailer);
 
 
@@ -287,7 +287,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="Recipients">The recipient entry.</param>
         /// <param name="AlgorithmID">The symmetric encryption cipher (used to decrypt the wrapped key).</param>
         /// <returns></returns>
-        public static byte[] Decrypt(this KeyCollection KeyCollection, List<DARERecipient> Recipients, CryptoAlgorithmID AlgorithmID) {
+        public static byte[] Decrypt(this KeyCollection KeyCollection, List<DareRecipient> Recipients, CryptoAlgorithmID AlgorithmID) {
             foreach (var Recipient in Recipients) {
 
                 var DecryptionKey = KeyCollection.TryMatchRecipient(Recipient.KeyIdentifier);
@@ -298,7 +298,8 @@ namespace Goedel.Cryptography.Dare {
                 // Recipient.Header.Epk.KeyPair  -- The ephemeral public key
 
                 if (DecryptionKey != null) {
-                    return DecryptionKey.Decrypt(Recipient.WrappedMasterKey, Recipient.Epk.KeyPair, AlgorithmID: AlgorithmID);
+                    return DecryptionKey.Decrypt(Recipient.WrappedMasterKey, Recipient.Epk.KeyPair, 
+                        AlgorithmID: AlgorithmID, Salt: DareRecipient.KDFSalt);
                     }
                 }
 
@@ -307,12 +308,12 @@ namespace Goedel.Cryptography.Dare {
             }
         }
 
-    public partial class DARETrailer {
+    public partial class DareTrailer {
 
         /// <summary>
         /// Default constructor used for deserialization.
         /// </summary>
-        public DARETrailer() {
+        public DareTrailer() {
             }
 
         /// <summary>
@@ -320,11 +321,11 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="Writer">The crypto stream used to transform the payload.</param>
         /// <returns>The prototype trailer.</returns>
-        public static DARETrailer GetTrailer(CryptoStackStreamWriter Writer) {
-            DARETrailer Result = null;
+        public static DareTrailer GetTrailer(CryptoStackStreamWriter Writer) {
+            DareTrailer Result = null;
 
             if (Writer.DigestValue != null) {
-                Result = new DARETrailer() {
+                Result = new DareTrailer() {
                     PayloadDigest = Writer.DigestValue
                     };
                 }

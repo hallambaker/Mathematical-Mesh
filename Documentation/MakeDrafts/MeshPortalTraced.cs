@@ -44,33 +44,33 @@ namespace Goedel.Mesh.Portal.Server {
         /// <param name="MeshStore">File name for the Mesh Store.</param>
         /// <param name="PortalStore">File name for the Portal Store.</param>
         public MeshPortalTraced(string ServiceName, string MeshStore, string PortalStore) {
-            var URI = JPCProvider.WellKnownToURI(ServiceName, MeshService.WellKnown,
-                        MeshService.Discovery, false, true);
+            //var URI = JPCProvider.WellKnownToURI(ServiceName, MeshService.WellKnown,
+            //            MeshService.Discovery, false, true);
 
-            var ParsedURI = new Uri(URI);
-            Traces = new TraceDictionary(ServiceName, ParsedURI.PathAndQuery);
+            //var ParsedURI = new Uri(URI);
+            //Traces = new TraceDictionary(ServiceName, ParsedURI.PathAndQuery);
             }
 
-        DebugLocalSession Session;
+        //DebugLocalSession Session;
 
-        /// <summary>
-        /// Return a MeshService object for the named portal service.
-        /// </summary>
-        /// <param name="Account">The account to get.</param>
-        /// <param name="Service">The service to get the service from.</param> 
-        /// <returns>The service instance</returns>
-        public override MeshService GetService(string Service, string Account) {
-            Session = new DebugLocalSession(MeshServiceHost, ServiceName, Account) {
-                Traces = Traces
-                };
+        ///// <summary>
+        ///// Return a MeshService object for the named portal service.
+        ///// </summary>
+        ///// <param name="Account">The account to get.</param>
+        ///// <param name="Service">The service to get the service from.</param> 
+        ///// <returns>The service instance</returns>
+        //public override MeshService GetService(string Service, string Account) {
+        //    Session = new DebugLocalSession(MeshServiceHost, ServiceName, Account) {
+        //        Traces = Traces
+        //        };
 
-            MeshServiceClient = new MeshServiceClient(Session);
+        //    MeshServiceClient = new MeshServiceClient(Session);
 
-            // Create a new dispatch client
-            MeshServiceHost.Service = new PublicMeshService(MeshServiceHost, Session);
+        //    // Create a new dispatch client
+        //    MeshServiceHost.Service = new PublicMeshService(MeshServiceHost, Session);
 
-            return MeshServiceClient;
-            }
+        //    return MeshServiceClient;
+        //    }
 
         /// <summary>
         /// Label the following interactions

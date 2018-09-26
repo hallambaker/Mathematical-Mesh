@@ -1,409 +1,403 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using System.Threading.Tasks;
-using Goedel.IO;
-using Goedel.Protocol;
-using Goedel.Utilities;
-using Goedel.Command;
-using Goedel.Recrypt;
-using Goedel.Cryptography;
-using Goedel.Cryptography.Jose;
-using Goedel.Mesh;
-using Goedel.Mesh.Platform;
-using Goedel.Confirm;
-using Goedel.Account.Client;
-using Goedel.Recrypt.Client;
-using Goedel.Confirm.Client;
-using Goedel.Mesh.Portal;
-using Goedel.Mesh.Portal.Client;
-using Goedel.Mesh.Portal.Server;
+﻿//using System;
+//using System.Collections.Generic;
+//using System.IO;
+//using System.Text;
+//using System.Threading.Tasks;
+//using Goedel.IO;
+//using Goedel.Protocol;
+//using Goedel.Utilities;
+//using Goedel.Command;
+//using Goedel.Cryptography;
+//using Goedel.Cryptography.Jose;
+//using Goedel.Mesh;
+//using Goedel.Mesh.Portal;
+//using Goedel.Mesh.Portal.Client;
+//using Goedel.Mesh.Portal.Server;
 
 
-namespace Goedel.Combined.Shell.Client {
-    public partial class CombinedShell {
+//namespace Goedel.Combined.Shell.Client {
+//    public partial class CombinedShell {
 
-        CommandLineInterpreter CommandLineInterpreter = new CommandLineInterpreter();
-        public MeshMachine MeshMachine = null;
+//        CommandLineInterpreter CommandLineInterpreter = new CommandLineInterpreter();
 
 
-        string DefaultMeshPortalAccount  => PersonalSession.Portals.Default; 
-        //static string DefaultApplicationAccount = null;
 
-        public string CommandLine { get; set; }
-        public string LastID { get; private set; }
+//        string DefaultMeshPortalAccount  => PersonalSession.Portals.Default; 
+//        //static string DefaultApplicationAccount = null;
 
-        public SessionPersonal PersonalSession => MeshMachine.Personal; 
-        public PersonalProfile PersonalProfile => PersonalSession.PersonalProfile; 
-        public DeviceProfile DeviceProfile => PersonalProfile.DeviceProfile; 
+//        public string CommandLine { get; set; }
+//        public string LastID { get; private set; }
 
-        public string Dispatch (string Command) {
-            CommandLine = "meshapp" + Command;
-            CommandLineInterpreter.MainMethod(this, CommandSplitLex.Split(Command));
-            return CommandLine;
-            }
-
-        public ResultBase LastResult;
+//        public SessionPersonal PersonalSession => MeshMachine.Personal; 
+//        public PersonalProfile PersonalProfile => PersonalSession.PersonalProfile; 
+//        public DeviceProfile DeviceProfile => PersonalProfile.DeviceProfile; 
 
-        public CombinedShell(MeshMachine RegistrationMachine = null) => this.MeshMachine = RegistrationMachine ?? new MeshMachineCached();
+//        public string Dispatch (string Command) {
+//            CommandLine = "meshapp" + Command;
+//            CommandLineInterpreter.MainMethod(this, CommandSplitLex.Split(Command));
+//            return CommandLine;
+//            }
 
+//        public ResultBase LastResult;
 
-        public override void PersonalCreate (PersonalCreate Options) {
+//        public CombinedShell(MeshMachine RegistrationMachine = null) => this.MeshMachine = RegistrationMachine ?? new MeshMachineCached();
 
-            var Address = Options.Portal.Value;
-            Assert.True((Address != null & Address != ""), NoPortalAccount.Throw);
-            SetReporting(Options.Report, Options.Verbose);
 
-            var DeviceRegistration = GetDevice(Options);
+//        public override void PersonalCreate (PersonalCreate Options) {
 
-            var PersonalProfile = new PersonalProfile(DeviceRegistration.DeviceProfile);
+//            //var Address = Options.Portal.Value;
+//            //Assert.True((Address != null & Address != ""), NoPortalAccount.Throw);
+//            //SetReporting(Options.Report, Options.Verbose);
 
-            var Registration = MeshMachine.CreateAccount(Address, PersonalProfile);
+//            //var DeviceRegistration = GetDevice(Options);
 
+//            //var PersonalProfile = new PersonalProfile(DeviceRegistration.DeviceProfile);
 
-            Report("Created new personal profile {0}", Registration.UDF);
-            Report("Profile registered to {0}", Address);
+//            //var Registration = MeshMachine.CreateAccount(Address, PersonalProfile);
 
-            LastResult = new ResultPersonalCreate() {
-                PersonalProfile = PersonalProfile,
-                PortalAccount = Address
-                };
-            LastResult.Display(Options);
 
-            }
+//            //Report("Created new personal profile {0}", Registration.UDF);
+//            //Report("Profile registered to {0}", Address);
 
-        // Account dispatch
+//            //LastResult = new ResultPersonalCreate() {
+//            //    PersonalProfile = PersonalProfile,
+//            //    PortalAccount = Address
+//            //    };
+//            //LastResult.Display(Options);
 
-        public override void AccountCreate (AccountCreate Options) {
-            var AccountID = Options.AccountID.Value;
-            var PersonalSession = GetPersonal(Options);
-            var PersonalProfile = PersonalSession.PersonalProfile;
-
-            // Create the empty profiles
-            var RecryptProfile = new Recrypt.RecryptProfile(PersonalSession.PersonalProfile, AccountID);
-            var ConfirmProfile = new ConfirmProfile(PersonalSession.PersonalProfile, AccountID);
+//            }
 
-            // Because we are lazy, make every device an administrator device for both apps.
-            foreach (var Device in PersonalProfile.Devices) {
-                RecryptProfile.AddDevice(Device.DeviceProfile, true);
-                ConfirmProfile.AddDevice(Device.DeviceProfile, true);
-                }
+//        // Account dispatch
 
-            var RecryptSession = new SessionRecrypt (PersonalSession, RecryptProfile);
-            var ConfirmSession = new SessionConfirm (PersonalSession, ConfirmProfile);
-
-            PersonalSession.Write();
-            RecryptSession.Write();
-            ConfirmSession.Write();
+//        public override void AccountCreate (AccountCreate Options) {
+//            //var AccountID = Options.AccountID.Value;
+//            //var PersonalSession = GetPersonal(Options);
+//            //var PersonalProfile = PersonalSession.PersonalProfile;
 
-            var AccountClient = new AccountClient(AccountID);
+//            //// Create the empty profiles
+//            //var RecryptProfile = new Recrypt.RecryptProfile(PersonalSession.PersonalProfile, AccountID);
+//            //var ConfirmProfile = new ConfirmProfile(PersonalSession.PersonalProfile, AccountID);
 
-            SessionAccount.Create(PersonalSession, AccountID,
-                new List<string> { DefaultMeshPortalAccount },
-                new List<SignedApplicationProfile> { RecryptProfile.SignedApplicationProfile });
-
-            LastResult = new ResultAccountCreate() {
-                AccountID = AccountID
-                };
-            LastResult.Display(Options);
-            }
-
-        public override void AccountDelete (AccountDelete Options) {
-            var AccountID = Options.AccountID.Value;
-            var AccountClient = new AccountClient(AccountID);
+//            //// Because we are lazy, make every device an administrator device for both apps.
+//            //foreach (var Device in PersonalProfile.Devices) {
+//            //    RecryptProfile.AddDevice(Device.DeviceProfile, true);
+//            //    ConfirmProfile.AddDevice(Device.DeviceProfile, true);
+//            //    }
 
-            var Response = AccountClient.Delete(DefaultMeshPortalAccount);
-            LastResult = new ResultAccountCreate() {
-                Response = Response,
-                AccountID = AccountID
-                };
-            LastResult.Display(Options);
-            }
+//            //var RecryptSession = new SessionRecrypt (PersonalSession, RecryptProfile);
+//            //var ConfirmSession = new SessionConfirm (PersonalSession, ConfirmProfile);
 
-        public override void AccountUpdate (AccountUpdate Options) {
-            var AccountID = Options.AccountID.Value;
-            var AccountClient = new AccountClient(AccountID);
+//            //PersonalSession.Write();
+//            //RecryptSession.Write();
+//            //ConfirmSession.Write();
 
-            // not sure what to update right now.
-            var Response = AccountClient.Update(DefaultMeshPortalAccount);
-            LastResult = new ResultAccountCreate() {
-                Response = Response
-                };
-            LastResult.Display(Options);
-            }
+//            //var AccountClient = new AccountClient(AccountID);
 
-        public override void AccountGet (AccountGet Options) {
-            var AccountID = Options.AccountID.Value;
-            var AccountClient = new AccountClient(AccountID);
+//            //SessionAccount.Create(PersonalSession, AccountID,
+//            //    new List<string> { DefaultMeshPortalAccount },
+//            //    new List<SignedApplicationProfile> { RecryptProfile.SignedApplicationProfile });
 
+//            //LastResult = new ResultAccountCreate() {
+//            //    AccountID = AccountID
+//            //    };
+//            //LastResult.Display(Options);
+//            }
+
+//        public override void AccountDelete (AccountDelete Options) {
+//            var AccountID = Options.AccountID.Value;
+//            var AccountClient = new AccountClient(AccountID);
 
-            var Response = AccountClient.Get(DefaultMeshPortalAccount);
-            LastResult = new ResultAccountCreate() {
-                Response = Response
-                };
-            LastResult.Display(Options);
-            }
+//            var Response = AccountClient.Delete(DefaultMeshPortalAccount);
+//            LastResult = new ResultAccountCreate() {
+//                Response = Response,
+//                AccountID = AccountID
+//                };
+//            LastResult.Display(Options);
+//            }
 
+//        public override void AccountUpdate (AccountUpdate Options) {
+//            var AccountID = Options.AccountID.Value;
+//            var AccountClient = new AccountClient(AccountID);
 
-        // Confirm dispatch
-        #region // Confirm dispatch
-        public override void ConfirmPost (ConfirmPost Options) {
-            var AccountID = Options.AccountID.Value;
-            var ConfirmClient = new ConfirmClient(AccountID);
+//            // not sure what to update right now.
+//            var Response = AccountClient.Update(DefaultMeshPortalAccount);
+//            LastResult = new ResultAccountCreate() {
+//                Response = Response
+//                };
+//            LastResult.Display(Options);
+//            }
 
+//        public override void AccountGet (AccountGet Options) {
+//            var AccountID = Options.AccountID.Value;
+//            var AccountClient = new AccountClient(AccountID);
 
-            var UnsignedRequest = new TBSRequest() {
-                FromID = DefaultMeshPortalAccount,
-                ToID = Options.AccountID.Value,
-                Text = ConfirmClient.ToRequestText (Options.Text.Value)
-                };
 
-            var SignedRequest = new JoseWebSignature(UnsignedRequest, 
-                        SigningKey: DeviceProfile.DeviceSignatureKey.KeyPair);
+//            var Response = AccountClient.Get(DefaultMeshPortalAccount);
+//            LastResult = new ResultAccountCreate() {
+//                Response = Response
+//                };
+//            LastResult.Display(Options);
+//            }
 
-            var RequestEntry = new RequestEntry() {
-                ResponderAccount = Options.AccountID.Value,
-                Request = SignedRequest,
-                Expire = DateTime.UtcNow.AddHours(4)
-                };
 
-            var Response = ConfirmClient.Enquire(RequestEntry);
+//        // Confirm dispatch
+//        #region // Confirm dispatch
+//        public override void ConfirmPost (ConfirmPost Options) {
+//            var AccountID = Options.AccountID.Value;
+//            var ConfirmClient = new ConfirmClient(AccountID);
 
-            LastID = Response.BrokerID;
-            LastResult = new ResultAccountCreate() {
-                Response = Response
-                };
-            LastResult.Display(Options);
-            }
 
-        public override void ConfirmStatus (ConfirmStatus Options) {
-            var ConfirmClient = new ConfirmClient(Options.ID.Value);
+//            var UnsignedRequest = new TBSRequest() {
+//                FromID = DefaultMeshPortalAccount,
+//                ToID = Options.AccountID.Value,
+//                Text = ConfirmClient.ToRequestText (Options.Text.Value)
+//                };
 
-            var Response = ConfirmClient.Status(Options.ID.Text, Options.Cancel.Value);
+//            var SignedRequest = new JoseWebSignature(UnsignedRequest, 
+//                        SigningKey: DeviceProfile.DeviceSignatureKey.KeyPair);
 
-            Report("Status {0}: {1}", Options.ID.Text, Response.Response.RequestStatus);
-            LastResult = new ResultAccountCreate() {
-                Response = Response
-                };
-            LastResult.Display(Options);
-            }
+//            var RequestEntry = new RequestEntry() {
+//                ResponderAccount = Options.AccountID.Value,
+//                Request = SignedRequest,
+//                Expire = DateTime.UtcNow.AddHours(4)
+//                };
 
-        public override void ConfirmPending (ConfirmPending Options) {
-            var AccountID = Options.AccountID.Value;
-            var ConfirmClient = new ConfirmClient(AccountID);
+//            var Response = ConfirmClient.Enquire(RequestEntry);
 
-            var Response = ConfirmClient.Pending(Options.AccountID.Value);
+//            LastID = Response.BrokerID;
+//            LastResult = new ResultAccountCreate() {
+//                Response = Response
+//                };
+//            LastResult.Display(Options);
+//            }
 
-            LastResult = new ResultConfirmPending() {
-                Response = Response
-                };
-            LastResult.Display(Options);
-            }
+//        public override void ConfirmStatus (ConfirmStatus Options) {
+//            var ConfirmClient = new ConfirmClient(Options.ID.Value);
 
+//            var Response = ConfirmClient.Status(Options.ID.Text, Options.Cancel.Value);
 
+//            Report("Status {0}: {1}", Options.ID.Text, Response.Response.RequestStatus);
+//            LastResult = new ResultAccountCreate() {
+//                Response = Response
+//                };
+//            LastResult.Display(Options);
+//            }
 
-        public override void ConfirmAccept (ConfirmAccept Options) {
-            var Response = Respond(Options, Options.AccountID.Value, Options.ID.Value, true, DeviceProfile.DeviceSignatureKey.KeyPair);
-            }
+//        public override void ConfirmPending (ConfirmPending Options) {
+//            var AccountID = Options.AccountID.Value;
+//            var ConfirmClient = new ConfirmClient(AccountID);
 
-        public override void ConfirmReject (ConfirmReject Options) {
-            var Response = Respond(Options, Options.AccountID.Value, Options.ID.Value, false, DeviceProfile.DeviceSignatureKey.KeyPair);
+//            var Response = ConfirmClient.Pending(Options.AccountID.Value);
 
-            }
+//            LastResult = new ResultConfirmPending() {
+//                Response = Response
+//                };
+//            LastResult.Display(Options);
+//            }
 
 
 
-        public RespondResponse Respond (IReporting Options, string AccountID, string BrokerID, bool Accept, KeyPair SignatureKey) {
-            var ConfirmClient = new ConfirmClient(AccountID);
+//        public override void ConfirmAccept (ConfirmAccept Options) {
+//            var Response = Respond(Options, Options.AccountID.Value, Options.ID.Value, true, DeviceProfile.DeviceSignatureKey.KeyPair);
+//            }
 
-            var Response = ConfirmClient.Pending(AccountID);
-            var SignedRequest = Response.Entries.Find(Entry => Entry.BrokerID == BrokerID);
+//        public override void ConfirmReject (ConfirmReject Options) {
+//            var Response = Respond(Options, Options.AccountID.Value, Options.ID.Value, false, DeviceProfile.DeviceSignatureKey.KeyPair);
 
-            var UnsignedResponse = new TBSResponse() {
-                SignedRequest = SignedRequest.Request,
-                Value = Accept
-                };
+//            }
 
-            var SignedResponse = new JoseWebSignature(UnsignedResponse,
-                        SigningKey: DeviceProfile.DeviceSignatureKey.KeyPair);
 
-            var ResponseEntry = new ResponseEntry() {
-                RequestStatus = "Reply",
-                BrokerID = BrokerID,
-                EnquirerID = SignedRequest.EnquirerID,
-                Response =SignedResponse
-                };
 
-            var TransactionResponse = ConfirmClient.Respond(ResponseEntry);
+//        public RespondResponse Respond (IReporting Options, string AccountID, string BrokerID, bool Accept, KeyPair SignatureKey) {
+//            var ConfirmClient = new ConfirmClient(AccountID);
 
-            LastResult = new ResultConfirmRespond() {
-                Pending = Response,
-                Response = TransactionResponse
-                };
-            LastResult.Display(Options);
+//            var Response = ConfirmClient.Pending(AccountID);
+//            var SignedRequest = Response.Entries.Find(Entry => Entry.BrokerID == BrokerID);
 
-            return (TransactionResponse);
-            }
-        #endregion
+//            var UnsignedResponse = new TBSResponse() {
+//                SignedRequest = SignedRequest.Request,
+//                Value = Accept
+//                };
 
-        #region // Recrypt dispatch
-        // Recrypt dispatch
-        public override void CreateGroup (CreateGroup Options) {
-            var AccountID = Options.AccountID.Value;
-            var RecryptClient = new RecryptClient(AccountID);
+//            var SignedResponse = new JoseWebSignature(UnsignedResponse,
+//                        SigningKey: DeviceProfile.DeviceSignatureKey.KeyPair);
 
-            Assert.NotNull(Options.GroupID.Value, NoGroupSpecified.Throw);
+//            var ResponseEntry = new ResponseEntry() {
+//                RequestStatus = "Reply",
+//                BrokerID = BrokerID,
+//                EnquirerID = SignedRequest.EnquirerID,
+//                Response =SignedResponse
+//                };
 
-            var RecryptProfile = PersonalSession.GetRecryptProfile(Options.AccountID.Value);
+//            var TransactionResponse = ConfirmClient.Respond(ResponseEntry);
 
-            var RecryptionGroup = new RecryptionGroup() {
-                GroupName = Options.GroupID.Value
-                };
+//            LastResult = new ResultConfirmRespond() {
+//                Pending = Response,
+//                Response = TransactionResponse
+//                };
+//            LastResult.Display(Options);
 
-            RecryptionGroup.Generate();
-            RecryptionGroup.AddMember(RecryptProfile);
+//            return (TransactionResponse);
+//            }
+//        #endregion
 
-            var Response = RecryptClient.CreateGroup(RecryptionGroup);
-            LastResult = new ResultCreateGroup() {
-                Response = Response
-                };
-            LastResult.Display(Options);
-            }
+//        #region // Recrypt dispatch
+//        // Recrypt dispatch
+//        public override void CreateGroup (CreateGroup Options) {
+//            var AccountID = Options.AccountID.Value;
+//            var RecryptClient = new RecryptClient(AccountID);
 
-        public override void RecryptAdd (RecryptAdd Options) {
-            var GroupID = Options.GroupID.Value;
-            var AccountID = Options.AccountID.Value;
+//            Assert.NotNull(Options.GroupID.Value, NoGroupSpecified.Throw);
 
-            var AccountClient = new AccountClient(AccountID);
-            var RecryptClient = new RecryptClient(GroupID);
+//            var RecryptProfile = PersonalSession.GetRecryptProfile(Options.AccountID.Value);
 
-            // Get the user's recryption profile
+//            var RecryptionGroup = new RecryptionGroup() {
+//                GroupName = Options.GroupID.Value
+//                };
 
-            // Get the account
-            var AccountInfo = AccountClient.Get(AccountID);
-            var AccountData = AccountInfo?.Data;
+//            RecryptionGroup.Generate();
+//            RecryptionGroup.AddMember(RecryptProfile);
 
-            Assert.NotNull(AccountData, ProfileNotFound.Throw);
+//            var Response = RecryptClient.CreateGroup(RecryptionGroup);
+//            LastResult = new ResultCreateGroup() {
+//                Response = Response
+//                };
+//            LastResult.Display(Options);
+//            }
 
+//        public override void RecryptAdd (RecryptAdd Options) {
+//            var GroupID = Options.GroupID.Value;
+//            var AccountID = Options.AccountID.Value;
 
-            SessionPersonal.GetUserProfile(AccountData.MeshUDF, AccountData.Portal, "RecryptProfile",
-                out var AddPersonal, out var AddApplication);
+//            var AccountClient = new AccountClient(AccountID);
+//            var RecryptClient = new RecryptClient(GroupID);
 
-            // NYI: mechanism to tell the user that they have been added to the recryption group
-            var Response = RecryptClient.GetGroup(GroupID); 
-            var RecryptionGroup = Response.RecryptionGroup;
-            RecryptionGroup.AddMember(AddApplication as RecryptProfile);
+//            // Get the user's recryption profile
 
-            var UpdateResponse = RecryptClient.UpdateGroup(RecryptionGroup);
-            LastResult = new ResultRecryptAdd() {
-                Response = Response
-                };
-            LastResult.Display(Options);
-            }
+//            // Get the account
+//            var AccountInfo = AccountClient.Get(AccountID);
+//            var AccountData = AccountInfo?.Data;
 
+//            Assert.NotNull(AccountData, ProfileNotFound.Throw);
 
-        public override void Encrypt (Encrypt Options) {
-            //var Response = RecryptClient.EncryptData(
-            //        Options.GroupID.Value,
-            //        Options.In.Value,
-            //        Options.Out.Value);
 
-            var GroupID = Options.GroupID.Value;
-            var In = Options.In.Value;
-            var Out = Options.Out.Value ?? In + ".mmx";
+//            SessionPersonal.GetUserProfile(AccountData.MeshUDF, AccountData.Portal, "RecryptProfile",
+//                out var AddPersonal, out var AddApplication);
 
-            // Get the recryption key
-            var RecryptClient = new RecryptClient(GroupID);
-            var Response = RecryptClient.RecryptKey(GroupID);
+//            // NYI: mechanism to tell the user that they have been added to the recryption group
+//            var Response = RecryptClient.GetGroup(GroupID); 
+//            var RecryptionGroup = Response.RecryptionGroup;
+//            RecryptionGroup.AddMember(AddApplication as RecryptProfile);
 
+//            var UpdateResponse = RecryptClient.UpdateGroup(RecryptionGroup);
+//            LastResult = new ResultRecryptAdd() {
+//                Response = Response
+//                };
+//            LastResult.Display(Options);
+//            }
 
-            var EncryptionKey = RecryptionKey.GetEncryptionKey(Response.SignedKey);
-            var KID = UDF.MakeStrongName (GroupID, EncryptionKey.PublicParameters.Kid);
 
-            // Encrypt the file
-            In.OpenReadToEnd(out var Plaintext);
-            var KeyPair = EncryptionKey.KeyPair;
-            var Encrypted = new JoseWebEncryption(Plaintext, EncryptionKey: KeyPair, KID: KID);
-            Out.WriteFileNew(Encrypted.ToJson());
-            LastResult = new ResultEncrypt() {
-                Response = Response
-                };
-            LastResult.Display(Options);
-            }
+//        public override void Encrypt (Encrypt Options) {
+//            //var Response = RecryptClient.EncryptData(
+//            //        Options.GroupID.Value,
+//            //        Options.In.Value,
+//            //        Options.Out.Value);
 
-        public override void Decrypt (Decrypt Options) {
-            var In = Options.In.Value;
-            var Out = Options.Out.Value ?? Path.GetFileNameWithoutExtension(In);
+//            var GroupID = Options.GroupID.Value;
+//            var In = Options.In.Value;
+//            var Out = Options.Out.Value ?? In + ".mmx";
 
-            // Read the file encryption entry
-            In.OpenReadToEnd(out var Ciphertext);
-            var Encrypted = JoseWebEncryption.FromJSON(Ciphertext.JSONReader(), false);
+//            // Get the recryption key
+//            var RecryptClient = new RecryptClient(GroupID);
+//            var Response = RecryptClient.RecryptKey(GroupID);
 
-            var PersonalSession = GetPersonal(Options);
-            var PersonalProfile = PersonalSession.PersonalProfile;
 
-            // ok so here we want to turn the set of recryption keys into a
-            // set of account memberships...
+//            var EncryptionKey = RecryptionKey.GetEncryptionKey(Response.SignedKey);
+//            var KID = UDF.MakeStrongName (GroupID, EncryptionKey.PublicParameters.Kid);
 
-            var Recipient = Encrypted.GetRecrypted(out var Address, out var UDF);
-            var RecryptClient = new RecryptClient(Address);
+//            // Encrypt the file
+//            In.OpenReadToEnd(out var Plaintext);
+//            var KeyPair = EncryptionKey.KeyPair;
+//            var Encrypted = new JoseWebEncryption(Plaintext, EncryptionKey: KeyPair, KID: KID);
+//            Out.WriteFileNew(Encrypted.ToJson());
+//            LastResult = new ResultEncrypt() {
+//                Response = Response
+//                };
+//            LastResult.Display(Options);
+//            }
 
+//        public override void Decrypt (Decrypt Options) {
+//            var In = Options.In.Value;
+//            var Out = Options.Out.Value ?? Path.GetFileNameWithoutExtension(In);
 
-            // This is obviously wrong here
-            // Need to pull the new way to do things from DAREMan
+//            // Read the file encryption entry
+//            In.OpenReadToEnd(out var Ciphertext);
+//            var Encrypted = JoseWebEncryption.FromJSON(Ciphertext.JSONReader(), false);
 
-            var RecryptProfile = new RecryptProfile();
-            var SessionRecryption = new SessionRecrypt(PersonalSession, RecryptProfile, true);
-            var EncryptionKey = SessionRecryption.GetEncryptionKey(Encrypted.Recipients);
+//            var PersonalSession = GetPersonal(Options);
+//            var PersonalProfile = PersonalSession.PersonalProfile;
 
+//            // ok so here we want to turn the set of recryption keys into a
+//            // set of account memberships...
 
-            // Get the recryption data
-            var Response = RecryptClient.RecryptData(PersonalProfile.UDF, 
-                    new List<string>() { EncryptionKey.UDF }, Recipient);
+//            var Recipient = Encrypted.GetRecrypted(out var Address, out var UDF);
+//            var RecryptClient = new RecryptClient(Address);
 
-            // Complete the decryption
-            var EncryptedDecryptionKey = Response.DecryptionKey;
-            var Partial = Response.Partial;
 
-            // Decrypt the file
-            var PartialAgreement = KeyAgreement.FromJSON(Partial.JSONReader());
-            var CompletionKeyData = EncryptedDecryptionKey.Decrypt(EncryptionKey);
+//            // This is obviously wrong here
+//            // Need to pull the new way to do things from DAREMan
 
-            // recover the completion key
-            var CompletionKey = Key.FromJSON(CompletionKeyData.JSONReader());
+//            var RecryptProfile = new RecryptProfile();
+//            var SessionRecryption = new SessionRecrypt(PersonalSession, RecryptProfile, true);
+//            var EncryptionKey = SessionRecryption.GetEncryptionKey(Encrypted.Recipients);
 
-            // decrypt the data
-            var Plaintext = Encrypted.Decrypt(Recipient, CompletionKey.KeyPair, 
-                PartialAgreement.KeyAgreementResult);
 
-            LastResult = new ResultDecrypt() {
-                Response = Response
-                };
-            LastResult.Display(Options);
-            }
+//            // Get the recryption data
+//            var Response = RecryptClient.RecryptData(PersonalProfile.UDF, 
+//                    new List<string>() { EncryptionKey.UDF }, Recipient);
 
-        #endregion
+//            // Complete the decryption
+//            var EncryptedDecryptionKey = Response.DecryptionKey;
+//            var Partial = Response.Partial;
 
+//            // Decrypt the file
+//            var PartialAgreement = KeyAgreement.FromJSON(Partial.JSONReader());
+//            var CompletionKeyData = EncryptedDecryptionKey.Decrypt(EncryptionKey);
 
-        //AccountClient GetAccountClient (IReporting Options) {
-        //    return null;
-        //    }
+//            // recover the completion key
+//            var CompletionKey = Key.FromJSON(CompletionKeyData.JSONReader());
 
+//            // decrypt the data
+//            var Plaintext = Encrypted.Decrypt(Recipient, CompletionKey.KeyPair, 
+//                PartialAgreement.KeyAgreementResult);
 
-        //ConfirmClient GetConfirmClient (IReporting Options) {
-        //    return null;
-        //    }
+//            LastResult = new ResultDecrypt() {
+//                Response = Response
+//                };
+//            LastResult.Display(Options);
+//            }
 
+//        #endregion
 
-        //RecryptClient GetRecryptClient (IReporting Options) {
-        //    return null;
-        //    }
 
-        //public override void RecryptDelete (RecryptDelete Options) {
-        //    var Response = RecryptClient.UpdateGroup();
-        //    } 
+//        //AccountClient GetAccountClient (IReporting Options) {
+//        //    return null;
+//        //    }
 
 
-        } // class CombinedShell
-    }
+//        //ConfirmClient GetConfirmClient (IReporting Options) {
+//        //    return null;
+//        //    }
+
+
+//        //RecryptClient GetRecryptClient (IReporting Options) {
+//        //    return null;
+//        //    }
+
+//        //public override void RecryptDelete (RecryptDelete Options) {
+//        //    var Response = RecryptClient.UpdateGroup();
+//        //    } 
+
+
+//        } // class CombinedShell
+//    }

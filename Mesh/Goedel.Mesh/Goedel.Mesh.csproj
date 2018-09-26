@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Libraries\Core\Goedel.Utilities\Goedel.Utilities.csproj" />
+    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Dare\Goedel.Cryptography.Dare.csproj" />
+    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography\Goedel.Cryptography.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="SchemaMesh.cs">
+      <DependentUpon>SchemaMesh.protocol</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="SchemaMesh.protocol">
+      <LastGenOutput>SchemaMesh.cs</LastGenOutput>
+      <Generator>Protogen</Generator>
+    </None>
+  </ItemGroup>
+
+</Project>

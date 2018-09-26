@@ -1,5 +1,5 @@
-﻿Using Goedel.Cryptography.Jose 
-Namespace Goedel.Account
+﻿#Namespace Goedel.Account
+	Using Goedel.Cryptography.Jose
 
 AccountProtocol: Protocol //Mesh/Account Service
 	//The Mesh/Account Service is used to manage accounts. All operations

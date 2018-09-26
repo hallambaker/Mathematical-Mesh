@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{28803E6C-B647-4638-8D2F-E14ECA5CADF0}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Goedel.Mesh.Service</RootNamespace>
+    <AssemblyName>Goedel.Mesh.Service</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="MeshService.cs" />
+    <Compile Include="ProtocolSchema.cs">
+      <DependentUpon>ProtocolSchema.Protocol</DependentUpon>
+    </Compile>
+    <Compile Include="ProtocolSchemaPlus.cs" />
+    <Compile Include="NamespaceDoc.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ProtocolSchema.Protocol">
+      <Generator>ProtoGen</Generator>
+      <LastGenOutput>ProtocolSchema.cs</LastGenOutput>
+    </None>
+    <None Include="save.x" />
+    <None Include="VS.Make" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Libraries\Core\Goedel.IO\Goedel.IO.csproj">
+      <Project>{e9341173-6212-4a7a-8a59-21fd11c32360}</Project>
+      <Name>Goedel.IO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Libraries\Core\Goedel.Utilities\Goedel.Utilities.csproj">
+      <Project>{171f782c-4d04-40bd-8d12-ead48eefb79a}</Project>
+      <Name>Goedel.Utilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Libraries\Goedel.Cryptography.Dare\Goedel.Cryptography.Dare.csproj">
+      <Project>{0fa406e8-ee81-45da-bcf8-1f72c66a2ea0}</Project>
+      <Name>Goedel.Cryptography.Dare</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Libraries\Goedel.Mesh\Goedel.Mesh.csproj">
+      <Project>{a93fe437-9540-49a5-8fce-a190436db5db}</Project>
+      <Name>Goedel.Mesh</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Libraries\Goedel.Protocol\Goedel.Protocol.csproj">
+      <Project>{5b919409-8341-4d0a-bcdf-43a6841b6d7b}</Project>
+      <Name>Goedel.Protocol</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>VSPreBuild</PreBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent>VSPostBuild</PostBuildEvent>
+  </PropertyGroup>
+</Project>

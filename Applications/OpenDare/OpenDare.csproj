@@ -12,19 +12,9 @@
     <ProjectReference Include="..\..\Libraries\Core\Goedel.Utilities\Goedel.Utilities.csproj" />
     <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Dare\Goedel.Cryptography.Dare.csproj" />
     <ProjectReference Include="..\..\Libraries\Goedel.Cryptography\Goedel.Cryptography.csproj" />
-    <ProjectReference Include="..\..\Libraries\Goedel.Mesh.Platform.Windows\Goedel.Mesh.Platform.Windows.csproj" />
-    <ProjectReference Include="..\..\Libraries\Goedel.Mesh.Shell\Goedel.Mesh.Shell.csproj" />
-    <ProjectReference Include="..\..\Libraries\Goedel.Mesh\Goedel.Mesh.csproj" />
+    <ProjectReference Include="..\..\Libraries\Goedel.Mesh.Shell\Goedel.Mesh.ShellOld.csproj" />
     <ProjectReference Include="..\..\Libraries\Goedel.Persistence\Goedel.Persistence.csproj" />
     <ProjectReference Include="..\..\Libraries\Goedel.Protocol\Goedel.Protocol.csproj" />
-    <ProjectReference Include="..\..\Protocols\Async\Goedel.Async.Client\Goedel.Async.Client.csproj" />
-    <ProjectReference Include="..\..\Protocols\Async\Goedel.Async\Goedel.Async.csproj" />
-    <ProjectReference Include="..\..\Protocols\Catalog\Goedel.Catalog.Client\Goedel.Catalog.Client.csproj" />
-    <ProjectReference Include="..\..\Protocols\Catalog\Goedel.Catalog\Goedel.Catalog.csproj" />
-    <ProjectReference Include="..\..\Protocols\Mesh\Goedel.Mesh.Portal.Client\Goedel.Mesh.Portal.Client.csproj" />
-    <ProjectReference Include="..\..\Protocols\Mesh\Goedel.Mesh.Portal\Goedel.Mesh.Portal.csproj" />
-    <ProjectReference Include="..\..\Protocols\Recrypt\Goedel.Recrypt.Client\Goedel.Recrypt.Client.csproj" />
-    <ProjectReference Include="..\..\Protocols\Recrypt\Goedel.Recrypt\Goedel.Recrypt.csproj" />
   </ItemGroup>
 
   <ItemGroup>

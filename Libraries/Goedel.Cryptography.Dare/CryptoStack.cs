@@ -30,7 +30,7 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// The recipient information fields.
         /// </summary>
-        public List<DARERecipient> Recipients;
+        public List<DareRecipient> Recipients;
 
         /// <summary>
         /// The JOSE algorithm identifier for the encryption algorithm.
@@ -126,7 +126,7 @@ namespace Goedel.Cryptography.Dare {
                 (KeySize, BlockSize) = EncryptID.GetKeySize();
                 MasterSecret = Platform.GetRandomBits(KeySize);
 
-                Recipients = Recipients ?? new List<DARERecipient>();
+                Recipients = Recipients ?? new List<DareRecipient>();
                 foreach (var EncryptionKey in CryptoParameters.EncryptionKeys) {
                     MakeRecipient(MasterSecret, EncryptionKey);
                     }
@@ -164,7 +164,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="MasterKey"></param>
         /// <param name="EncryptionKey"></param>
         public virtual void MakeRecipient(byte[] MasterKey, KeyPair EncryptionKey) => 
-            Recipients.Add(new DARERecipient(MasterSecret, EncryptionKey));
+            Recipients.Add(new DareRecipient(MasterSecret, EncryptionKey));
 
 
         /// <summary>
@@ -179,8 +179,8 @@ namespace Goedel.Cryptography.Dare {
         public CryptoStack(
                 CryptoAlgorithmID EncryptID=CryptoAlgorithmID.NULL,
                 CryptoAlgorithmID Digest = CryptoAlgorithmID.NULL,
-                List<DARERecipient> Recipients = null,
-                List<DARESignature> Signatures = null,
+                List<DareRecipient> Recipients = null,
+                List<DareSignature> Signatures = null,
                 KeyCollection KeyCollection = null
                 ) {
             this.EncryptID = EncryptID;
@@ -261,11 +261,11 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="Writer">The cryptographic stream used to write the payload
         /// data.</param>
         /// <returns>The trailer value.</returns>
-        public DARETrailer GetTrailer(CryptoStackStreamWriter Writer) {
-            DARETrailer Result = null;
+        public DareTrailer GetTrailer(CryptoStackStreamWriter Writer) {
+            DareTrailer Result = null;
 
             if (Writer.DigestValue != null) {
-                Result = new DARETrailer() {
+                Result = new DareTrailer() {
                     PayloadDigest = Writer.DigestValue
                     };
                 }
@@ -275,10 +275,10 @@ namespace Goedel.Cryptography.Dare {
                 new KeyDeriveHKDF(MasterSecret, Salt, CryptoAlgorithmID.HMAC_SHA_2_256);
 
             if (SignerKeys != null) {
-                Result = Result ?? new DARETrailer();
-                Result.Signatures = new List<DARESignature>();
+                Result = Result ?? new DareTrailer();
+                Result.Signatures = new List<DareSignature>();
                 foreach (var Key in SignerKeys) {
-                    Result.Signatures.Add(new DARESignature(Key, Writer.DigestValue, DigestID, KDF));
+                    Result.Signatures.Add(new DareSignature(Key, Writer.DigestValue, DigestID, KDF));
                     }
                 }
 
@@ -359,7 +359,7 @@ namespace Goedel.Cryptography.Dare {
         /// <returns>The encoded data.</returns>
         public byte[] Encode(
                     byte[] Data, 
-                    out DARETrailer DARETrailer
+                    out DareTrailer DARETrailer
                     ) {
             Data = Data ?? NullArray;
             using (var Input = new MemoryStream(Data )) {
@@ -501,14 +501,14 @@ namespace Goedel.Cryptography.Dare {
         /// Calculate the length of the trailer.
         /// </summary>
         /// <returns></returns>
-        public DARETrailer GetDummyTrailer() {
-            DARETrailer Result = null;
+        public DareTrailer GetDummyTrailer() {
+            DareTrailer Result = null;
 
             var DigestLength = CryptoCatalog.Default.ResultInBytes(DigestID);
 
 
             if (DigestLength > 0) {
-                Result = new DARETrailer() {
+                Result = new DareTrailer() {
                     PayloadDigest = new byte[DigestLength]
                     };
                 }

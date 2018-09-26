@@ -1,8 +1,8 @@
 ﻿Protocol Goedel.Cryptography.Dare ContainerData ContainerData
     Using Goedel.Cryptography.Jose 
-	Extern DAREHeader
-	Extern DARERecipient
-	Extern DARESignature
+	Extern DareHeader
+	Extern DareRecipient
+	Extern DareSignature
 
 	Description 
 		|Classes that describe the DARE Container Format.
@@ -34,7 +34,7 @@
 
 
 	Structure ContainerHeader
-		Inherits DAREHeader
+		Inherits DareHeader
 		
 		Description
 			|Describes a container header. A container header MAY contain any 

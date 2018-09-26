@@ -296,7 +296,7 @@ namespace Goedel.Cryptography.Dare {
 	/// Describes a container header. A container header MAY contain any 
 	/// DARE Message header.
 	/// </summary>
-	public partial class ContainerHeader : DAREHeader {
+	public partial class ContainerHeader : DareHeader {
 		bool								__Index = false;
 		private int						_Index;
         /// <summary>
@@ -451,7 +451,7 @@ namespace Goedel.Cryptography.Dare {
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
-			((DAREHeader)this).SerializeX(_Writer, false, ref _first);
+			((DareHeader)this).SerializeX(_Writer, false, ref _first);
 			if (__Index){
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("Index", 1);

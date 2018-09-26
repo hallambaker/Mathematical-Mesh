@@ -12,12 +12,7 @@
     <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Dare\Goedel.Cryptography.Dare.csproj" />
     <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Jose\Goedel.Cryptography.Jose.csproj" />
     <ProjectReference Include="..\..\Libraries\Goedel.Cryptography\Goedel.Cryptography.csproj" />
-    <ProjectReference Include="..\..\Libraries\Goedel.Mesh.Platform.Windows\Goedel.Mesh.Platform.Windows.csproj" />
-    <ProjectReference Include="..\..\Libraries\Goedel.Mesh\Goedel.Mesh.csproj" />
     <ProjectReference Include="..\..\Libraries\Goedel.Protocol\Goedel.Protocol.csproj" />
-    <ProjectReference Include="..\..\Protocols\Mesh\Goedel.Mesh.Portal.Client\Goedel.Mesh.Portal.Client.csproj" />
-    <ProjectReference Include="..\..\Protocols\Recrypt\Goedel.Recrypt.Client\Goedel.Recrypt.Client.csproj" />
-    <ProjectReference Include="..\..\Protocols\Recrypt\Goedel.Recrypt\Goedel.Recrypt.csproj" />
   </ItemGroup>
 
   <ItemGroup>

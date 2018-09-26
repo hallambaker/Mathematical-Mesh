@@ -1,4 +1,4 @@
-﻿using System;
+﻿//using System;
 using System.Collections.Generic;
 using Goedel.Utilities;
 using Goedel.Cryptography.Jose;
@@ -8,7 +8,7 @@ namespace Goedel.Cryptography.Dare {
     /// <summary>
     /// 
     /// </summary>
-    public partial class DARERecipient {
+    public partial class DareRecipient {
 
         /// <summary>
         /// Salt value used in the key derrivation function.
@@ -18,7 +18,7 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// Default constructor. Used for serializatrion.
         /// </summary>
-        public DARERecipient () {
+        public DareRecipient () {
             }
 
         /// <summary>
@@ -27,9 +27,14 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="MasterKey">The master key</param>
         /// <param name="PublicKey">The recipient public key.</param>
         /// <returns>The recipient informatin object.</returns>
-        public DARERecipient (byte[] MasterKey, KeyPair PublicKey) {
-            var ExchangeProvider = PublicKey.ExchangeProvider();
-            ExchangeProvider.Encrypt(MasterKey, out var Exchange, out var Ephemeral, Salt: KDFSalt);
+        public DareRecipient (byte[] MasterKey, KeyPair PublicKey) {
+            //var ExchangeProvider = PublicKey.ExchangeProvider();
+            //ExchangeProvider.Encrypt(MasterKey, out var Exchange, out var Ephemeral, Salt: KDFSalt);
+
+
+            PublicKey.Encrypt(MasterKey, out var Exchange, out var Ephemeral, Salt: KDFSalt);
+
+
             var JoseKey = Key.GetPublic(Ephemeral);
 
 

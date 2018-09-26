@@ -58,7 +58,7 @@ namespace Goedel.Cryptography.Dare {
             }
 
         /// <summary>
-        /// Create a CryptoStack instance to encode data for the specified recipients and
+        /// Create a CryptoParameters instance to encode data for the specified recipients and
         /// signers using the specified KeyCollection to resolve the identifiers.
         /// </summary>
         /// <param name="KeyCollection">The Key collection to be used to resolve names.</param>
@@ -69,7 +69,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="DigestID">The digest algorithm to be applied to the message
         /// encoding.</param>
         public CryptoParameters(
-                        KeyCollection KeyCollection = null,
+                        KeyCollection KeyCollection,
                         List<string> Recipients = null,
                         List<string> Signers = null,
                         CryptoAlgorithmID EncryptID = CryptoAlgorithmID.NULL,
@@ -97,6 +97,37 @@ namespace Goedel.Cryptography.Dare {
                     }
                 }
             }
+
+
+        /// <summary>
+        /// Create a CryptoParameters instance to encode data for the specified recipients and
+        /// signers using the specified KeyCollection to resolve the identifiers.
+        /// </summary>
+        /// <param name="Recipient">The public keys to be used to encrypt.</param>
+        /// <param name="Signer">The private keys to be used in signing.</param>
+        /// <param name="EncryptID">The cryptographic enhancement to be applied to the
+        /// content.</param>
+        /// <param name="DigestID">The digest algorithm to be applied to the message
+        /// encoding.</param>
+        public CryptoParameters(
+                KeyPair Recipient = null,
+                KeyPair Signer = null,
+                CryptoAlgorithmID EncryptID = CryptoAlgorithmID.NULL,
+                CryptoAlgorithmID DigestID = CryptoAlgorithmID.NULL) {
+
+            this.DigestID = DigestID;
+            this.EncryptID = EncryptID;
+
+            if (Recipient != null) {
+                SetEncrypt();
+                EncryptionKeys = new List<KeyPair>() { Recipient };
+                }
+            if (Signer != null) {
+                SetDigest();
+                SignerKeys = new List<KeyPair>() { Signer };
+                }
+            }
+
 
         /// <summary>
         /// Add a recipient entry.
