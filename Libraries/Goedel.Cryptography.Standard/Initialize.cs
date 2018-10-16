@@ -11,7 +11,7 @@ namespace Goedel.Cryptography {
     /// <summary>
     /// Initialize the cryptographic framework
     /// </summary>
-    public static class CryptographyFramework {
+    public static class CryptographyCommon {
 
         static bool Initialized = false;
         static Mutex InitializationLock = new Mutex();

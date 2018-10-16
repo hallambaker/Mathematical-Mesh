@@ -39,7 +39,7 @@ namespace Goedel.Cryptography {
         public static void Initialize(bool TestMode = false) {
             InitializationLock.WaitOne();
 
-            CryptographyFramework.Initialize(TestMode);
+            CryptographyCommon.Initialize(TestMode);
 
             // We have to add these methods here because the .NET Standard 2.0 RSA implementation
             // is broken.
@@ -50,10 +50,10 @@ namespace Goedel.Cryptography {
 
 
 
-            KeyPair.KeyPairFactoryRSA = Goedel.Cryptography.Windows.KeyPairRSA.KeyPairFactory;
+            //KeyPair.KeyPairFactoryRSA = Goedel.Cryptography.Windows.KeyPairRSAWindows.KeyPairFactory;
             KeyPairBaseRSA.KeyPairPublicFactory = KeyPairRSA.KeyPairPublicFactory;
             KeyPairBaseRSA.KeyPairPrivateFactory = KeyPairRSA.KeyPairPrivateFactory;
-            Platform.FindLocalDelegates.Add(KeyPairRSA.FindLocal);
+            //Platform.FindLocalDelegates.Add(KeyPairRSA.FindLocal);
 
             try {
                 if (Initialized) {

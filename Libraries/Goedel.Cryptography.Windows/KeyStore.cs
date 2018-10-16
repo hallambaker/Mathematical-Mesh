@@ -81,7 +81,7 @@ namespace Goedel.Cryptography.Windows {
 
             var Exportable = Description.StartsWith(ExportTrue);
 
-            return JoseKey.GetKeyPair(Exportable); 
+            return JoseKey.GetKeyPair(); 
             }
 
         /// <summary>

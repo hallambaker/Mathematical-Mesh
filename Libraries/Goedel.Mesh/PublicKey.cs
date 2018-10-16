@@ -181,12 +181,13 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Accessor mechanism for the private key portion
         /// </summary>
-        public virtual KeyPair PrivateKey {
-            get {
-                KeyPair?.GetPrivate();
-                return KeyPair;
-                }
-            }
+        public virtual KeyPair PrivateKey => throw new NYI();
+            //{
+            //get {
+            //    KeyPair?.GetPrivate(KeyStorage.Bound);
+            //    return KeyPair;
+            //    }
+            //}
 
         /// <summary>
         /// The type of key
@@ -240,10 +241,10 @@ namespace Goedel.Mesh {
 
         private KeyPair GetKeyPair () {
             if (PrivateParameters != null) {
-                return PrivateParameters.GetKeyPair();
+                return PrivateParameters.GetKeyPair(KeyStorage.Bound);
                 }
             if (PublicParameters != null) {
-                return PublicParameters.GetKeyPair();
+                return PublicParameters.GetKeyPair(KeyStorage.Bound);
                 }
             Assert.Fail(NYI.Throw,"Need to construct from the private parameters.");
 

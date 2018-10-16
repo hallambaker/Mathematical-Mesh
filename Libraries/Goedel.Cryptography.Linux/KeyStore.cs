@@ -81,7 +81,7 @@ namespace Goedel.Cryptography.Linux {
             var Plaintext = CipherText;// DPAPI.Decrypt(CipherText, out Description, EntropyBytes);
             var PlaintextText = Plaintext.ToUTF8();
             var Container = KeyContainer.FromJSON(PlaintextText.JSONReader());
-            return Container.Key.GetKeyPair(Container.Exportable); 
+            return Container.Key.GetKeyPair(KeyStorage.Bound); 
             }
 
         /// <summary>

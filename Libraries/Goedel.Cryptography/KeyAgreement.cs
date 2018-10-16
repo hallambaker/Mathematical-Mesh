@@ -56,13 +56,13 @@ namespace Goedel.Cryptography {
         public abstract IKeyAdvancedPrivate IKeyAdvancedPrivate { get; }
 
         /// <summary>
-        /// Factory method to construct a KeyPair for the private key <paramref name="PrivateKey"/>
-        /// with security binding <paramref name="KeySecurity"/>.
+        /// Factory method to construct a KeyPair for the private key <paramref name="PrivateKey"/>.
+        /// The created key pair will have the same security model as the key from which the
+        /// method is invoked.
         /// </summary>
         /// <param name="PrivateKey">The private key to construct parameters for.</param>
-        /// <param name="KeySecurity">The key security.</param>
         /// <returns>The KeyPair that was constructed</returns>
-        public abstract KeyPairAdvanced KeyPair(IKeyAdvancedPrivate PrivateKey, KeySecurity KeySecurity);
+        public abstract KeyPairAdvanced KeyPair(IKeyAdvancedPrivate PrivateKey);
 
         /// <summary>
         /// Factory method to construct a KeyPair for the public key <paramref name="PublicKey"/>.
@@ -71,8 +71,6 @@ namespace Goedel.Cryptography {
         /// <returns>The KeyPair that was constructed</returns>
         public abstract KeyPairAdvanced KeyPair(IKeyAdvancedPublic PublicKey);
 
-
-
         /// <summary>
         /// Search all the local machine stores to find a key pair with the specified
         /// fingerprint
@@ -80,33 +78,6 @@ namespace Goedel.Cryptography {
         /// <param name="UDF">Fingerprint of key</param>
         /// <returns>The key pair found</returns>
         public static KeyPair FindLocalAdvanced(string UDF) => Platform.FindInKeyStore(UDF, CryptoAlgorithmID.DH);
-
-        /// <summary>
-        /// Erase the key from the local machine
-        /// </summary>
-        public override void EraseFromDevice() => Platform.EraseFromKeyStore(UDF);
-
-        #region // Encryption and Decryption methods
-
-        
-        ///// <summary>
-        ///// Perform a key exchange to decrypt a bulk or wrapped key under this one.
-        ///// </summary>
-        ///// <param name="EncryptedKey">The encrypted session key</param>
-        ///// <param name="Ephemeral">Ephemeral key input (required for DH)</param>
-        ///// <param name="AlgorithmID">The algorithm to use.</param>
-        ///// <param name="Partial">Partial key agreement value (for recryption)</param>
-        ///// <param name="Salt">Optional salt value for use in key derivation. If specified
-        ///// must match the salt used to encrypt.</param>
-        ///// <returns>The decoded data instance</returns>
-        //public abstract byte[] Decrypt(
-        //            byte[] EncryptedKey,
-        //            KeyPair Ephemeral,
-        //            CryptoAlgorithmID AlgorithmID = CryptoAlgorithmID.Default,
-        //            KeyAgreementResult Partial = null,
-        //            byte[] Salt = null);
-
-        #endregion
 
         /// <summary>
         /// Split the private key into a number of recryption keys.
@@ -123,7 +94,7 @@ namespace Goedel.Cryptography {
 
             var Result = new KeyPair[Shares];
             for (var i = 0; i < Shares; i++) {
-                Result[i] = KeyPair(Private[i], KeySecurity: KeySecurity.Exportable);
+                Result[i] = KeyPair(Private[i]);
                 }
 
             return Result;
@@ -162,11 +133,10 @@ namespace Goedel.Cryptography {
         /// Combine the private parameters with another private key to create the composite private key pair
         /// </summary>
         /// <param name="Contribution"></param>
-        /// <param name="KeySecurity"></param>
         /// <returns></returns>
-        public KeyPairAdvanced Combine(KeyPairAdvanced Contribution, KeySecurity KeySecurity) {
+        public KeyPairAdvanced Combine(KeyPairAdvanced Contribution) {
             var PrivateKey = IKeyAdvancedPrivate.Combine(Contribution.IKeyAdvancedPrivate);
-            return KeyPair(PrivateKey, KeySecurity);
+            return KeyPair(PrivateKey);
             }
 
 

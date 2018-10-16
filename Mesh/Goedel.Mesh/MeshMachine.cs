@@ -13,32 +13,15 @@ namespace Goedel.Mesh {
 
     public interface IMeshMachine {
 
+        KeyCollection KeyCollection { get; }
+
+
 
 
         void Register(ProfileDevice Device);
+        void Register(ProfileMaster Device);
+        void Register(ProfileApplication Device);
 
-        KeyCollection GetKeyCollection();
-        }
-
-
-    /// <summary>
-    /// Test machine. The cryptographic keys and persistence stores are only 
-    /// stored as in-memory structures and never written to disk.
-    /// </summary>
-    public class MeshMachineTest: IMeshMachine{
-
-        /// <summary>
-        /// Construct a unique test machine with the specified class name.
-        /// Separate persistence stores will be created.
-        /// </summary>
-        /// <param name="Name"></param>
-        public MeshMachineTest(string Name) {
-            }
-
-        public void Register(ProfileDevice Device) {
-            }
-
-        public KeyCollection GetKeyCollection() => new KeyCollection();
 
         }
 

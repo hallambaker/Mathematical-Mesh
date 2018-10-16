@@ -8,6 +8,13 @@ using Goedel.Cryptography.Jose;
 using Goedel.Protocol;
 
 namespace Goedel.Cryptography.Windows {
+
+
+    public class KeyCollectionWindows : KeyCollection {
+        public override void Persist(IPKIXPrivateKey privateKey) => throw new NotImplementedException();
+        }
+
+
     class KeyStore {
 
         readonly static byte[] EntropyBytes = "Mathematical Mesh Encrypted Key".ToBytes();
@@ -81,7 +88,7 @@ namespace Goedel.Cryptography.Windows {
 
             var Exportable = Description.StartsWith(ExportTrue);
 
-            return JoseKey.GetKeyPair(Exportable); 
+            return JoseKey.GetKeyPair(KeyStorage.Bound); 
             }
 
         /// <summary>

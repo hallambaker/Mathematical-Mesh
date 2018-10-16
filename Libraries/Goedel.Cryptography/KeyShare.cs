@@ -52,6 +52,7 @@ namespace Goedel.Cryptography {
         /// The Key Value as a Base32 encoded string.
         /// </summary>
         public string Text => BaseConvert.ToStringUDF32(Key);
+
         /// <summary>
         /// Create a new random secret with the specified number of bits.
         /// </summary>
@@ -148,8 +149,8 @@ namespace Goedel.Cryptography {
         /// <returns>The key shares created.</returns>
         public KeyShare[] Split(int N, int K, out BigInteger[] Polynomial) {
             Assert.False(K > N, QuorumExceedsShares.Throw);
-            Assert.False(K < 2, QuorumInsufficient.Throw); 
-            Assert.False(N < 2, SharesInsufficient.Throw); 
+            Assert.False(K < 1, QuorumInsufficient.Throw); 
+            Assert.False(N < 1, SharesInsufficient.Throw); 
             Assert.False(N > 15, QuorumExceeded.Throw);
 
             //if (N == K) {
@@ -160,7 +161,7 @@ namespace Goedel.Cryptography {
 
             Polynomial = new BigInteger[K];
             Polynomial[0] = MakePositive(Key);
-            //Console.WriteLine("Key = {0} ", PolyNomial[0]);
+            Console.WriteLine("Key = {0} ", Polynomial[0]);
 
 
             for (int i = 1; i < K; i++) {
@@ -180,7 +181,7 @@ namespace Goedel.Cryptography {
                 var D = PolyMod(i + 1, Polynomial, Modulus);
                 KeyShares[i] = new KeyShare((K * 16) + i, D);
 
-                //Console.WriteLine("Share {0} = {1}", i, D);
+                Console.WriteLine("Share {0} = {1}", i, D);
                 }
 
             return KeyShares;
@@ -245,13 +246,13 @@ namespace Goedel.Cryptography {
             foreach (var Share in Shares) {
                 Assert.False(Share.Threshold != Threshold, MismatchedShares.Throw);
                 }
-
-            if (Shares[0].Index == 16) {
-                return CombineN(Shares);
-                }
-            else {
-                return CombineNK(Shares);
-                }
+            return CombineNK(Shares);
+            //if (Shares[0].Index == 16) {
+            //    return CombineN(Shares);
+            //    }
+            //else {
+                
+            //    }
 
             }
 
@@ -293,7 +294,7 @@ namespace Goedel.Cryptography {
             for (var Formula = 0; Formula < Threshold; Formula++) {
 
                 var Value = Shares[Formula].Value;
-                //Console.WriteLine("Value = {0} ", Value);
+                Console.WriteLine("Value = {0} ", Value);
 
                 BigInteger Numerator = 1, Denominator = 1;
                 for (var Count = 0; Count < Threshold; Count++) {
@@ -314,9 +315,9 @@ namespace Goedel.Cryptography {
                 //Console.WriteLine("   Denominator = {0}", Denominator);
                 //Console.WriteLine("   InvDenominator = {0}", InvDenominator);
 
-                Accum = (Modulus + Modulus + Accum + (Value * Numerator * InvDenominator)) % Modulus;
+                Accum = (Accum + (Value * Numerator * InvDenominator)).Mod(Modulus);
                 if (Accum < 0) {
-                    //Console.WriteLine("Accum = {0}\n", Accum);
+                    Console.WriteLine("Accum = {0}\n", Accum);
                     }
                 }
 
@@ -332,6 +333,7 @@ namespace Goedel.Cryptography {
             return Bytes;
 
             }
+
 
         }
 

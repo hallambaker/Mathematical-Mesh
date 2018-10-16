@@ -126,8 +126,10 @@ namespace Goedel.Utilities  {
                 Register = 0;
                 }
 
-            public static byte[] Convert (byte[] Table, int Stride, string Data) {
-
+            public static byte[] Convert(byte[] Table, int Stride, string Data) {
+                if (Data == null) {
+                    return null;
+                    } 
                 var Converter = new StreamConvertString(Table, Stride);
                 Converter.Write(Data);
                 Converter.Final();

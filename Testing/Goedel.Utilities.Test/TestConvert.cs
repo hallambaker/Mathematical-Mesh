@@ -7,7 +7,7 @@ namespace Goedel.Utilities.Test {
     public class UnitTest1 {
 
         [ClassInitialize]
-        public static void Initialize(TestContext Ignore) => CryptographyFramework.Initialize();
+        public static void Initialize(TestContext Ignore) => CryptographyCommon.Initialize();
 
         class TestVectorBaseConvert {
             public byte[] Data;

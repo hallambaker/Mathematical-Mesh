@@ -54,6 +54,12 @@
   <ItemGroup>
     <None Include="VS.Make" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\Goedel.Utilities\Goedel.Utilities.csproj">
+      <Project>{171f782c-4d04-40bd-8d12-ead48eefb79a}</Project>
+      <Name>Goedel.Utilities</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="..\..\Goedel.IO\Goedel.IO.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

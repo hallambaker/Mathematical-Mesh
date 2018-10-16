@@ -32,7 +32,7 @@ namespace Goedel.Cryptography.Dare {
             //ExchangeProvider.Encrypt(MasterKey, out var Exchange, out var Ephemeral, Salt: KDFSalt);
 
 
-            PublicKey.Encrypt(MasterKey, out var Exchange, out var Ephemeral, Salt: KDFSalt);
+            PublicKey.Encrypt(MasterKey, out var Exchange, out var Ephemeral, salt: KDFSalt);
 
 
             var JoseKey = Key.GetPublic(Ephemeral);

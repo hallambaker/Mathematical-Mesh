@@ -470,7 +470,7 @@ namespace Goedel.Cryptography.Dare {
                 // Recipient.Header.Epk.KeyPair  -- The ephemeral public key
 
                 if (DecryptionKey != null) {
-                    return DecryptionKey.Decrypt(Recipient.EncryptedKey, Recipient.Header.Epk.KeyPair, AlgorithmID: AlgorithmID);
+                    return DecryptionKey.Decrypt(Recipient.EncryptedKey, Recipient.Header.Epk.KeyPair, algorithmID: AlgorithmID);
                     }
                 }
 

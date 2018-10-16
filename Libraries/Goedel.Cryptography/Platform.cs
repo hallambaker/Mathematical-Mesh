@@ -213,5 +213,13 @@ namespace Goedel.Cryptography {
         /// Shared RFC 3394 Key Wrap provider.
         /// </summary>
         public static KeyWrapRFC3394 KeyWrapRFC3394 = new KeyWrapRFC3394();
+
+        ///<summary>Returns information used to configure the platform.</summary>
+        public static GetPlatformInformationDelegate GetPlatformInformation;
+
+
         }
+
+
+
     }

@@ -124,6 +124,8 @@ namespace Goedel.Cryptography.Algorithms {
         ///// <summary>The curve parameters (p, A, A24)</summary>
         //public override DomainParameters Domain { get; } = DomainParameters.Curve25519;
 
+        public byte[] Encode() => throw new NYI();
+
         /// <summary>
         /// Create a point from the specified U value.
         /// </summary>
@@ -139,6 +141,9 @@ namespace Goedel.Cryptography.Algorithms {
 
         ///// <summary>The curve parameters (p, A, A24)</summary>
         //public override DomainParameters Domain { get; } = DomainParameters.Curve448;
+
+
+        public byte[] Encode() => throw new NYI();
 
         /// <summary>
         /// Create a point from the specified U value.

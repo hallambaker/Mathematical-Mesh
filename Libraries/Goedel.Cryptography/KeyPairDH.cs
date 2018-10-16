@@ -69,12 +69,8 @@ namespace Goedel.Cryptography {
         /// </summary>
         public static FactoryDHPrivateKeyDelegate KeyPairPrivateFactory = KeyPairDH.KeyPairPrivateFactory;
 
-        /// <summary>The key pair supports signing and/or verification operations</summary>
-        public override bool Signature => false;
-
-        /// <summary>The key pair supports key exchange operations</summary>
-        public override bool Exchange => true;
-
+        /// <summary>The supported key uses (e.g. signing, encryption)</summary>
+        public override KeyUses KeyUses { get; } = KeyUses.Encrypt;
 
         }
 
@@ -87,6 +83,25 @@ namespace Goedel.Cryptography {
     /// </summary>
     public class KeyPairDH : KeyPairBaseDH {
 
+
+        /// <summary>
+        /// The internal Public DH parameters
+        /// </summary>
+        DiffeHellmanPublic PublicKey;
+
+        /// <summary>
+        /// The internal Private DH parameters
+        /// </summary>
+        DiffeHellmanPrivate PrivateKey;
+
+        #region // Properties
+
+        ///<summary>The implementation public key value</summary>
+        public override IKeyAdvancedPublic IKeyAdvancedPublic => PublicKey;
+
+        ///<summary>The implementation private key value (if exportable)</summary>
+        public override IKeyAdvancedPrivate IKeyAdvancedPrivate => PrivateKey;
+
         /// <summary>
         /// The private key data formatted as a PKIX KeyInfo data blob.
         /// </summary>
@@ -97,73 +112,25 @@ namespace Goedel.Cryptography {
                 }
             }
 
-
-
         /// <summary>
         /// The private key data formatted as a PKIX KeyInfo data blob.
         /// </summary>
         public override IPKIXPublicKey PKIXPublicKey => PKIXPublicKeyDH;
 
-        ///<summary>The implementation public key value</summary>
-        public override IKeyAdvancedPublic IKeyAdvancedPublic => PublicKey;
+        /// <summary>The supported key uses (e.g. signing, encryption)</summary>
+        public override KeyUses KeyUses { get; } = KeyUses.Encrypt;
 
-        ///<summary>The implementation private key value (if exportable)</summary>
-        public override IKeyAdvancedPrivate IKeyAdvancedPrivate => PrivateKey;
+        public virtual KeyStorage KeyType { get; } = KeyStorage.Public;
 
-        /// <summary>
-        /// Factory method to produce a key pair from key parameters.
-        /// </summary>
-        /// <param name="PrivateKey">The private key</param>
-        /// <param name="KeySecurity">The Key security model</param>
-        /// <returns>The key pair created.</returns>
+        ///<summary>If true, the key only has access to public key values.</summary>
+        public override bool PublicOnly => PrivateKey == null;
 
-        public override KeyPairAdvanced KeyPair(IKeyAdvancedPrivate PrivateKey, KeySecurity KeySecurity) 
-            => new KeyPairDH((DiffeHellmanPrivate)PrivateKey, KeySecurity: KeySecurity);
-
-        /// <summary>
-        /// Factory method to produce a key pair from implementation public key parameters
-        /// </summary>
-        /// <param name="PublicKey">The public key</param>
-        /// <returns>The key pair created.</returns>
-        public override KeyPairAdvanced KeyPair(IKeyAdvancedPublic PublicKey)
-            => new KeyPairDH((DiffeHellmanPublic)PublicKey);
-
-        /// <summary>
-        /// Generate a key pair for the specified algorithm and key size.
-        /// </summary>
-        /// <param name="KeySize">The Key size, must be 255 or 448</param>
-        /// <param name="KeySecurity">The key security model</param>
-        /// <param name="Signature">If true the key MAY be used for signing</param>
-        /// <param name="Exchange">If true the key MAY be used for exchange</param>
-        /// <param name="CryptoAlgorithmID">The cryptographic algorithm identifier</param>
-        /// <param name="KeyCollection">The key collection that keys are to be persisted to (dependent on 
-        /// the value of <paramref name="KeySecurity"/></param>
-        /// <returns>The generated key pair</returns>
-        public static KeyPair GenerateKeyPair(
-                KeySecurity KeySecurity = KeySecurity.Ephemeral,
-                KeyCollection KeyCollection = null,
-            int KeySize = 0,
-            bool Signature = true,
-            bool Exchange = true,
-            CryptoAlgorithmID CryptoAlgorithmID = CryptoAlgorithmID.NULL) =>
-            new KeyPairDH(KeySecurity, KeySize == 0 ? 2048 : KeySize);
-
-
-        /// <summary>
-        /// The internal Public DH parameters
-        /// </summary>
-        public DiffeHellmanPublic PublicKey { get; private set; }
-
-        /// <summary>
-        /// The internal Private DH parameters
-        /// </summary>
-        DiffeHellmanPrivate PrivateKey { get; set; }
 
 
         /// <summary>
         /// Return private key parameters in PKIX structure
         /// </summary>
-        public override DHDomain DHDomain  => PublicKey.DHDomain;
+        public override DHDomain DHDomain => PublicKey.DHDomain;
 
         #region // PKIX data formats
         /// <summary>
@@ -194,16 +161,83 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// The private key data formatted as a PKIX KeyInfo data blob.
         /// </summary>
-        public override SubjectPublicKeyInfo PrivateKeyInfoData  => PKIXPrivateKeyDH.SubjectPublicKeyInfo();
+        public override SubjectPublicKeyInfo PrivateKeyInfoData => PKIXPrivateKeyDH.SubjectPublicKeyInfo();
 
+
+        #endregion
+
+
+        #region // Constructors
+
+        /// <summary>
+        /// Create a new DH keypair.
+        /// </summary>
+        /// <param name="KeySize">The key size</param>
+        public KeyPairDH(int KeySize = 2048, KeyStorage keyType = KeyStorage.Public) :
+                    this(new DiffeHellmanPrivate(KeySize), keyType) {
+            }
+
+        /// <summary>
+        /// Create a new DH keypair.
+        /// </summary>
+        /// <param name="publicKey">The public key to create a provider for</param>
+
+
+        public KeyPairDH(DiffeHellmanPublic publicKey, KeyStorage keyType = KeyStorage.Public) {
+            PrivateKey = publicKey as DiffeHellmanPrivate;
+            KeyType = keyType;
+
+            if (PrivateKey != null) {
+                PublicKey = PrivateKey.DiffeHellmanPublic;
+                if (keyType.IsExportable()) {
+                    PKIXPrivateKeyDH = new PKIXPrivateKeyDH() {
+                        Domain = DHDomain,
+                        Private = PrivateKey.Private.ToByteArray(),
+                        Public = PrivateKey.Public.ToByteArray(),
+                        };
+                    }
+                }
+            else {
+                PublicKey = publicKey;
+                }
+
+            }
+
+
+        #endregion
+
+        public override void Persist(KeyCollection keyCollection) {
+            Assert.True(KeyType == KeyStorage.Exportable | KeyType == KeyStorage.Persistable);
+            var pkix = new PKIXPrivateKeyDH() {
+                Domain = DHDomain,
+                Private = PrivateKey.Private.ToByteArray(),
+                Public = PrivateKey.Public.ToByteArray(),
+                };
+            keyCollection.Persist(pkix);
+            }
+
+
+        /// <summary>
+        /// Generate a key pair for the specified algorithm and key size.
+        /// </summary>
+        /// <param name="keySize">The Key size, must be 255 or 448</param>
+
+        /// <param name="algorithmID">The cryptographic algorithm identifier</param>
+        /// <returns>The generated key pair</returns>
+        public static KeyPair Generate(
+                    int keySize = 0,
+                    KeyStorage keyType = KeyStorage.Bound,
+                    KeyUses keyUses = KeyUses.Any,
+                    CryptoAlgorithmID algorithmID = CryptoAlgorithmID.NULL) =>
+            new KeyPairDH(keySize, keyType);
 
         /// <summary>
         /// Delegate to create a key pair base
         /// </summary>
-        /// <param name="PKIXParameters">The key parameters</param>
+        /// <param name="pkixParameters">The key parameters</param>
         /// <returns>The created key pair</returns>
-        public static new KeyPair KeyPairPublicFactory(PKIXPublicKeyDH PKIXParameters) {
-            var DiffeHellmanPublic = new DiffeHellmanPublic(PKIXParameters);
+        public static new KeyPair KeyPairPublicFactory(PKIXPublicKeyDH pkixParameters) {
+            var DiffeHellmanPublic = new DiffeHellmanPublic(pkixParameters);
 
             return new KeyPairDH(DiffeHellmanPublic);
             }
@@ -211,18 +245,29 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Delegate to create a key pair base
         /// </summary>
-        /// <param name="PKIXParameters">The key parameters</param>
-        /// <param name="Exportable">If true, private key parameters may be exported</param>
+        /// <param name="pkixParameters">The key parameters</param>
         /// <returns>The created key pair</returns>
-        public static new KeyPair KeyPairPrivateFactory(PKIXPrivateKeyDH PKIXParameters,
-                    bool Exportable = false) {
-            var DiffeHellmanPrivate = new DiffeHellmanPrivate(PKIXParameters);
-            var KS = Exportable ? KeySecurity.Exportable : KeySecurity.Ephemeral;
-
-            return new KeyPairDH(DiffeHellmanPrivate, KS);
-            }
+        public static new KeyPair KeyPairPrivateFactory(PKIXPrivateKeyDH pkixParameters,
+                    KeyStorage keyType = KeyStorage.Public) =>
+            new KeyPairDH(new DiffeHellmanPrivate(pkixParameters), keyType);
 
 
+        /// <summary>
+        /// Factory method to produce a key pair from key parameters.
+        /// </summary>
+        /// <param name="privateKey">The private key</param>
+        /// <returns>The key pair created.</returns>
+
+        public override KeyPairAdvanced KeyPair(IKeyAdvancedPrivate privateKey)
+            => new KeyPairDH((DiffeHellmanPrivate)privateKey);
+
+        /// <summary>
+        /// Factory method to produce a key pair from implementation public key parameters
+        /// </summary>
+        /// <param name="publicKey">The public key</param>
+        /// <returns>The key pair created.</returns>
+        public override KeyPairAdvanced KeyPair(IKeyAdvancedPublic publicKey)
+            => new KeyPairDH((DiffeHellmanPublic)publicKey);
         #endregion
 
 
@@ -236,116 +281,36 @@ namespace Goedel.Cryptography {
             return Result;
             }
 
-        /// <summary>
-        /// If true, the provider only provides the public key values.
-        /// </summary>
-        public override bool PublicOnly => PrivateKey==null;
-
-        #region // CryptoProviders (to be deleted)
-        ///// <summary>
-        ///// Stub method to return a signature provider. This provider does not implement
-        ///// signature and so always returns null. 
-        ///// </summary>
-        ///// <param name="Bulk">The digest algorithm to use</param>
-        ///// <returns>The cryptographic provider.</returns>
-        //public override CryptoProviderSignature SignatureProvider(
-        //            CryptoAlgorithmID Bulk = CryptoAlgorithmID.Default) => throw new InvalidOperation("DHKeyPair does not support signature operations. ");
-
-
-        ///// <summary>
-        ///// Returns an encryption provider for the key (if the public portion is available)
-        ///// </summary>
-        ///// <param name="Bulk">The encryption algorithm to use</param>
-        ///// <returns>The cryptographic provider.</returns>
-        //public override CryptoProviderExchange ExchangeProvider(
-        //            CryptoAlgorithmID Bulk = CryptoAlgorithmID.Default) => 
-        //                new CryptoProviderExchangeDH(this, Bulk);
-
-        #endregion
-
-        #region // Constructors
-        /// <summary>
-        /// Create a new DH keypair.
-        /// </summary>
-        /// <param name="KeySecurity">The key security model</param>
-        /// <param name="KeySize">The key size</param>
-        public KeyPairDH(KeySecurity KeySecurity = KeySecurity.Ephemeral, int KeySize = 2048) :
-                    this (new DiffeHellmanPrivate(KeySize), KeySecurity) {
-            }
-
-        /// <summary>
-        /// Create a new DH keypair.
-        /// </summary>
-        /// <param name="PublicKey">The public key to create a provider for</param>
-        /// <param name="KeySecurity">The key security model</param>
-
-        public KeyPairDH(DiffeHellmanPublic PublicKey, KeySecurity KeySecurity = KeySecurity.Ephemeral) {
-            this.PublicKey = PublicKey;
-            PrivateKey = PublicKey as DiffeHellmanPrivate;
-            if (KeySecurity == KeySecurity.Ephemeral) {
-                return; // Work is complete, do not persist or enable export
-                }
-
-            var PKIXPrivateKeyDH = new PKIXPrivateKeyDH() {
-                Domain = DHDomain,
-                Private = PrivateKey.Private.ToByteArray(),
-                Public = PrivateKey.Public.ToByteArray(),
-                };
-
-            if (KeySecurity.IsExportable()) {
-                this.PKIXPrivateKeyDH = PKIXPrivateKeyDH; // Enable export.
-                }
-
-            if (KeySecurity.IsPersisted()) {
-                Platform.WriteToKeyStore(PKIXPrivateKeyDH, KeySecurity);
-                }
-            }
-        #endregion
-
-
-
-        /// <summary>
-        /// Retrieve the private key from local storage (if not already available)
-        /// </summary>
-        public override void GetPrivate() {
-            if (PrivateKey != null) {
-                return; // Already got the private value
-                }
-
-            var Private = Platform.FindInKeyStore(UDF, CryptoAlgorithmID.DH) as KeyPairDH;
-            PublicKey = Private.PublicKey;
-            }
 
 
         /// <summary>
         /// Perform a Diffie Hellman Key Agreement to a private key
         /// </summary>
-        /// <param name="Public">Public key parameters</param>
-        /// <param name="Carry">Carried result to add in to the agreement (for recryption)</param>
+        /// <param name="public">Public key parameters</param>
+        /// <param name="carry">Carried result to add in to the agreement (for recryption)</param>
         /// <returns>The key agreement value ZZ</returns>
-        DiffieHellmanResult Agreement(KeyPairDH Public, DiffieHellmanResult Carry = null) {
+        ResultDiffieHellman Agreement(KeyPairDH @public, ResultDiffieHellman carry = null) {
             BigInteger Agreement;
-            if (Carry == null) {
-                Agreement = PrivateKey.Agreement(Public.PublicKey);
+            if (carry == null) {
+                Agreement = PrivateKey.Agreement(@public.PublicKey);
                 }
             else {
-                Agreement = PrivateKey.Agreement(Public.PublicKey, Carry.Agreement);
+                Agreement = PrivateKey.Agreement(@public.PublicKey, carry.Agreement);
                 }
-            return new DiffieHellmanResult() { Agreement = Agreement };
+            return new ResultDiffieHellman() { Agreement = Agreement };
             }
 
         /// <summary>
         /// Encrypt the specified exchange key.
         /// </summary>
-        /// <param name="Key"></param>
-        /// <param name="Exchange"></param>
-        /// <param name="Ephemeral"></param>
-        /// <param name="Salt"></param>
-        public override void Encrypt(byte[] Key,
-            out byte[] Exchange,
-            out KeyPair Ephemeral,
-            byte[] Salt = null) => PublicKey.Agreement().Encrypt(Key, out Exchange, out Ephemeral, Salt);
-
+        /// <param name="key"></param>
+        /// <param name="exchange"></param>
+        /// <param name="ephemeral"></param>
+        /// <param name="salt"></param>
+        public override void Encrypt(byte[] key,
+            out byte[] exchange,
+            out KeyPair ephemeral,
+            byte[] salt = null) => PublicKey.Agreement().Encrypt(key, out exchange, out ephemeral, salt);
 
         /// <summary>
         /// Perform a key exchange to decrypt a bulk or wrapped key under this one.
@@ -367,7 +332,7 @@ namespace Goedel.Cryptography {
             var DHPublic = Ephemeral as KeyPairDH;
             Assert.NotNull(DHPublic, KeyTypeMismatch.Throw);
 
-            var Agreementx = Agreement(DHPublic, Partial as DiffieHellmanResult);
+            var Agreementx = Agreement(DHPublic, Partial as ResultDiffieHellman);
             return Agreementx.Decrypt(EncryptedKey, Ephemeral, Partial, Salt);
             }
 
@@ -387,7 +352,6 @@ namespace Goedel.Cryptography {
             CryptoAlgorithmID AlgorithmID = CryptoAlgorithmID.Default, 
             byte[] Context = null) => throw new NotImplementedException();
 
-
         /// <summary>
         /// Verify a signature over the purported data digest.
         /// </summary>
@@ -401,7 +365,6 @@ namespace Goedel.Cryptography {
             byte[] Digest, 
             byte[] Signature, 
             CryptoAlgorithmID AlgorithmID = CryptoAlgorithmID.Default, byte[] Context = null) => throw new NotImplementedException();
-
 
 
         #endregion

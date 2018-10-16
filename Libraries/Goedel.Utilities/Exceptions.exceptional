@@ -24,3 +24,11 @@ Namespace Goedel.Utilities
 		Description
 			|A call was made to a routine that has not yet been made
 			|64 bit clean with a value that exceeds the Int32 limits.
+
+	Exception EnvironmentVariableRequired
+		Console "A required environment variable is undefined."
+		Object ExceptionData "The environment variable {0} must be defined"
+			String
+
+
+	

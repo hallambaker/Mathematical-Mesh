@@ -57,5 +57,20 @@ namespace Goedel.Utilities {
             Stream.Write(buffer, (int)offset, (int)count);
             }
 
+
+        /// <summary>
+        /// Write the entire contents of <paramref name="buffer"/> to <paramref name="stream"/>
+        /// </summary>
+        /// <param name="stream">Stream to write to.</param>
+        /// <param name="buffer">the data to be written.</param>
+        public static void Write(
+            this Stream stream,
+            byte[] buffer) {
+
+            if (buffer != null) {
+                stream.Write(buffer, 0, buffer.Length);
+                }
+            }
+
         }
     }

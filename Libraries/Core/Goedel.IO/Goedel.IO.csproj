@@ -27,4 +27,8 @@
     <Exec Command="VSPostBuild" />
   </Target>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Goedel.Utilities\Goedel.Utilities.csproj" />
+  </ItemGroup>
+
 </Project>

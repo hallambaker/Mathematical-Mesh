@@ -39,7 +39,7 @@ namespace Goedel.Cryptography {
         public static void Initialize(bool TestMode = false) {
             InitializationLock.WaitOne();
 
-            CryptographyFramework.Initialize(TestMode);
+            CryptographyCommon.Initialize(TestMode);
             try {
                 if (Initialized) {
                     return;

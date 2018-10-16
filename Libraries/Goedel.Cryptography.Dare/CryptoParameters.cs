@@ -34,17 +34,17 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// If true, data is to be encrypted.
         /// </summary>
-        public bool Encrypt  => EncryptID != CryptoAlgorithmID.NULL;
+        public bool Encrypt => EncryptID != CryptoAlgorithmID.NULL;
 
         /// <summary>
         /// If true, data is to be digested.
         /// </summary>
-        public bool Digest  => DigestID != CryptoAlgorithmID.NULL;
+        public bool Digest => DigestID != CryptoAlgorithmID.NULL;
 
 
 
-        void SetEncrypt () => EncryptID = EncryptID == CryptoAlgorithmID.NULL ? CryptoAlgorithmID.Default : EncryptID;
-        void SetDigest () => DigestID = DigestID == CryptoAlgorithmID.NULL ? CryptoAlgorithmID.Default : DigestID;
+        void SetEncrypt() => EncryptID = EncryptID == CryptoAlgorithmID.NULL ? CryptoAlgorithmID.Default : EncryptID;
+        void SetDigest() => DigestID = DigestID == CryptoAlgorithmID.NULL ? CryptoAlgorithmID.Default : DigestID;
 
         /// <summary>
         /// If true, data is to be signed.
@@ -129,6 +129,10 @@ namespace Goedel.Cryptography.Dare {
             }
 
 
+
+
+
+
         /// <summary>
         /// Add a recipient entry.
         /// </summary>
@@ -154,58 +158,6 @@ namespace Goedel.Cryptography.Dare {
         /// <returns>The created CryptoStack.</returns>
         public CryptoStack GetCryptoStack() => new CryptoStack(this);
 
-
-        ///// <summary>
-        ///// Calculate the length of the trailer.
-        ///// </summary>
-        ///// <returns></returns>
-        //public DARETrailer GetDummyTrailer() {
-        //    DARETrailer Result = null;
-
-        //    var DigestLength = CryptoCatalog.Default.ResultInBytes(DigestID);
-
-
-        //    if (DigestLength > 0) {
-        //        Result = new DARETrailer() {
-        //            PayloadDigest = new byte[DigestLength]
-        //            };
-        //        }
-
-        //    return Result;
-
-        //    }
-
-        //CryptoProviderDigest DigestProvider {
-        //    get {
-        //        _DigestProvider = _DigestProvider ?? CryptoCatalog.Default.GetDigest(DigestID);
-        //        return _DigestProvider;
-        //        }
-        //    }
-        //CryptoProviderDigest _DigestProvider;
-
-
-        ///// <summary>
-        ///// Combine digests to produce the digest for a node.
-        ///// </summary>
-        ///// <param name="First">The left hand digest.</param>
-        ///// <param name="Second">The right hand digest.</param>
-        ///// <returns>The digest value.</returns>
-        //public byte[] CombineDigest(byte[] First, byte[] Second) {
-        //    var Length = DigestProvider.Size / 8;
-
-        //    var Buffer = new byte[Length * 2];
-        //    if (First != null) {
-        //        Assert.True(Length == First.Length);
-        //        Array.Copy(First, Buffer, Length);
-        //        }
-        //    if (Second != null) {
-        //        Assert.True(Length == Second.Length);
-        //        Array.Copy(Second, 0, Buffer, Length, Length);
-        //        }
-
-
-        //    return DigestProvider.ProcessData(Buffer); ;
-        //    }
 
         }
 

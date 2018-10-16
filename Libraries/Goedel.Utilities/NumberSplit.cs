@@ -11,6 +11,9 @@ namespace Goedel.Utilities {
     /// </summary>
     public static class NumberSplit {
 
+
+
+
         /// <summary>
         /// Calculate the upper bound for an array index given a specified first position and
         /// length.

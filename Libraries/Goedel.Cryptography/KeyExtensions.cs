@@ -50,8 +50,8 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="KeySecurity">The key security specifier.</param>
         /// <returns>True if the value is KeySecurity.Master or Exportable</returns>
-        public static bool IsExportable(this KeySecurity KeySecurity) => (KeySecurity == KeySecurity.Master | KeySecurity == KeySecurity.Exportable
-                | KeySecurity == KeySecurity.Application);
+        public static bool IsExportable(this KeySecurity KeySecurity) => (KeySecurity == KeySecurity.Master |
+            KeySecurity == KeySecurity.Exportable);
 
         /// <summary>
         /// Returns true if the key is persisted, otherwise false.
@@ -59,8 +59,27 @@ namespace Goedel.Cryptography {
         /// <param name="KeySecurity">The key security specifier.</param>
         /// <returns>True if the value is KeySecurity.Master, Admin or Device</returns>
         public static bool IsPersisted(this KeySecurity KeySecurity) => (KeySecurity == KeySecurity.Master | KeySecurity == KeySecurity.Admin |
-                    KeySecurity == KeySecurity.Device | KeySecurity == KeySecurity.Application);
+                    KeySecurity == KeySecurity.Device);
 
 
+        public static KeyStorage Storage(this KeySecurity keySecurity) {
+            switch (keySecurity) {
+                case KeySecurity.Master: return KeyStorage.Exportable;
+                case KeySecurity.Admin: return KeyStorage.Persistable;
+                case KeySecurity.Device: return KeyStorage.Persistable;
+                case KeySecurity.Ephemeral: return KeyStorage.Ephemeral;
+                case KeySecurity.Exportable: return KeyStorage.Exportable;
+                }
+            return KeyStorage.Public;
+
+            }
+
+
+        public static bool IsExportable(this KeyStorage keyStorage) {
+            switch (keyStorage) {
+                case KeyStorage.Exportable: return true;
+                }
+            return false;
+            }
         }
     }

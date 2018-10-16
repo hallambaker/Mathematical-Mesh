@@ -74,7 +74,8 @@ namespace Goedel.Cryptography.Jose {
 			{"PublicKeyECDH", PublicKeyECDH._Factory},
 			{"PrivateKeyECDH", PrivateKeyECDH._Factory},
 			{"KeyAgreement", KeyAgreement._Factory},
-			{"KeyAgreementDH", KeyAgreementDH._Factory}			};
+			{"KeyAgreementDH", KeyAgreementDH._Factory},
+			{"KeyAgreementECDH", KeyAgreementECDH._Factory}			};
 
 		/// <summary>
         /// Construct an instance from the specified tagged JSONReader stream.
@@ -2215,15 +2216,10 @@ namespace Goedel.Cryptography.Jose {
 
 		public virtual string						Curve  {get; set;}
         /// <summary>
-        ///The public key x parameter.
+        ///The public key
         /// </summary>
 
-		public virtual byte[]						X  {get; set;}
-        /// <summary>
-        ///The public key y parameter (if required).
-        /// </summary>
-
-		public virtual byte[]						Y  {get; set;}
+		public virtual byte[]						Public  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -2272,15 +2268,10 @@ namespace Goedel.Cryptography.Jose {
 				_Writer.WriteToken ("crv", 1);
 					_Writer.WriteString (Curve);
 				}
-			if (X != null) {
+			if (Public != null) {
 				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("x", 1);
-					_Writer.WriteBinary (X);
-				}
-			if (Y != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("y", 1);
-					_Writer.WriteBinary (Y);
+				_Writer.WriteToken ("Public", 1);
+					_Writer.WriteBinary (Public);
 				}
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
@@ -2318,12 +2309,8 @@ namespace Goedel.Cryptography.Jose {
 					Curve = JSONReader.ReadString ();
 					break;
 					}
-				case "x" : {
-					X = JSONReader.ReadBinary ();
-					break;
-					}
-				case "y" : {
-					Y = JSONReader.ReadBinary ();
+				case "Public" : {
+					Public = JSONReader.ReadBinary ();
 					break;
 					}
 				default : {
@@ -2609,6 +2596,111 @@ namespace Goedel.Cryptography.Jose {
 				return Out as KeyAgreementDH;
 				}
 		    var Result = new KeyAgreementDH ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			}
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
+		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+			
+			switch (Tag) {
+				case "Result" : {
+					Result = JSONReader.ReadBinary ();
+					break;
+					}
+				default : {
+					base.DeserializeToken(JSONReader, Tag);
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
+	/// <summary>
+	///
+	/// Result of applying a key agreement.
+	/// </summary>
+	public partial class KeyAgreementECDH : KeyAgreement {
+        /// <summary>
+        ///The result
+        /// </summary>
+
+		public virtual byte[]						Result  {get; set;}
+		
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "KeyAgreementECDH";
+
+		/// <summary>
+        /// Factory method
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JSONObject _Factory () => new KeyAgreementECDH();
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="Writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
+			SerializeX (Writer, wrap, ref first);
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_Writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			if (_wrap) {
+				_Writer.WriteObjectStart ();
+				}
+			((KeyAgreement)this).SerializeX(_Writer, false, ref _first);
+			if (Result != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Result", 1);
+					_Writer.WriteBinary (Result);
+				}
+			if (_wrap) {
+				_Writer.WriteObjectEnd ();
+				}
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <returns>The created object.</returns>		
+        public static new KeyAgreementECDH FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
+			if (Tagged) {
+				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				return Out as KeyAgreementECDH;
+				}
+		    var Result = new KeyAgreementECDH ();
 			Result.Deserialize (JSONReader);
 			return Result;
 			}

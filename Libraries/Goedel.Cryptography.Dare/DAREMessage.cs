@@ -51,9 +51,32 @@ namespace Goedel.Cryptography.Dare {
             Header = new DareHeader(CryptoStack, ContentType, Cloaked, DataSequences);
             Body = Header.EnhanceBody(Plaintext, out var Trailer);
             this.Trailer = Trailer;
-
-            
             }
+
+
+        /// <summary>
+        /// Create a DARE Message instance.
+        /// </summary>
+        /// <param name="CryptoStack">Specifies the cryptographic enhancements to
+        /// be applied to this message.</param>
+        /// <param name="ContentType">The payload content type.</param>
+        /// <param name="Plaintext">The payload plaintext. If specified, the plaintext will be used to
+        /// create the message body. Otherwise the body is specified by calls to the Process method.</param>
+        /// <param name="Cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
+        /// <param name="DataSequences">Data sequences to be converted to an EDS and presented 
+        ///     as an EDSS header entry.</param>
+        public DareMessage(
+                    CryptoStack CryptoStack,
+                    byte[] Plaintext,
+                    string ContentType = null,
+                    byte[] Cloaked = null,
+                    List<byte[]> DataSequences = null
+                    ) {
+            Header = new DareHeader(CryptoStack, ContentType, Cloaked, DataSequences);
+            Body = Header.EnhanceBody(Plaintext, out var Trailer);
+            this.Trailer = Trailer;
+            }
+
 
 
         /// <summary>

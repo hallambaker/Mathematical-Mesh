@@ -24,22 +24,47 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
         /// Construct from a PKIX RSAPublicKey structure.
         /// </summary>
-        /// <param name="DHPublicKey">RSA Public Key.</param>
-        public PublicKeyECDH(PKIXPublicKeyECDH DHPublicKey) => throw new NYI();
+        /// <param name="pkixKey">RSA Public Key.</param>
+        public PublicKeyECDH(PKIXPublicKeyECDH pkixKey) {
+            PKIXParametersPublic = pkixKey;
+            Public = pkixKey.Data;
+            Curve = pkixKey.CurveJose;
+            }
 
 
         /// <summary>
         /// Return the parameters as a PKIX RSAPublicKey structure;
         /// </summary>
-        public virtual PKIXPublicKeyECDH PKIXParameters => throw new NYI();
+        public virtual PKIXPublicKeyECDH PKIXParametersPublic { get; }
 
 
         /// <summary>
         /// Extract a KeyPair object from the JOSE data structure.
         /// </summary>
-        /// <param name="Exportable">If true, private key parameters may be exported</param>
+        /// <param name="keySecurity">The key security requirements. If KeySecurity.NULL is specified,
+        /// the key security setting is ignored.</param>
+        /// <param name="keyCollection">The key collection to add the key to.</param>
         /// <returns>The extracted key pair</returns>
-        public override KeyPair GetKeyPair(bool Exportable = false) => throw new NYI();
+        public override KeyPair GetKeyPair(
+                KeyStorage keyStorage, 
+                KeyCollection keyCollection = null) {
+
+            var keyUses = Use.GetUses();
+
+
+            switch (Curve) {
+                case "Ed25519":
+                    return KeyPairEd25519.Generate (KeyStorage.Public, keyUses);
+                case "Ed448":
+                    return KeyPairEd448.Generate(KeyStorage.Public, keyUses);
+                case "X25519":
+                    return KeyPairX25519.Generate(KeyStorage.Public, keyUses);
+                case "X448":
+                    return KeyPairX448.Generate(KeyStorage.Public, keyUses);
+                }
+
+            throw new NotSupportedException();
+            }
 
 
         /// <summary>
@@ -69,16 +94,20 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
         /// Construct from a PKIX PKIXPrivateKeyDH structure.
         /// </summary>
-        /// <param name="PKIXKey">DH Public Key.</param>
-        public PrivateKeyECDH(PKIXPrivateKeyECDH PKIXKey) => throw new NYI();
+        /// <param name="pkixKey">DH Public Key.</param>
+        public PrivateKeyECDH(PKIXPrivateKeyECDH pkixKey) {
+            Private = pkixKey.Data;
+            PKIXParametersPrivate = pkixKey;
+            Curve = pkixKey.CurveJose;
+            }
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="PrivateKey"></param>
-        /// <param name="Export"></param>
-        public PrivateKeyECDH(byte[] PrivateKey, bool Export = false) => throw new NYI();
+        ///// <summary>
+        ///// 
+        ///// </summary>
+        ///// <param name="PrivateKey"></param>
+        ///// <param name="Export"></param>
+        //public PrivateKeyECDH(byte[] PrivateKey, bool Export = false) => throw new NYI();
 
         /// <summary>
         /// 
@@ -91,14 +120,28 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
         /// Return the parameters as PKIX RSAPrivateKey structure;
         /// </summary>
-        public virtual PKIXPrivateKeyECDH DHPrivateKey => throw new NYI();
+        public virtual PKIXPrivateKeyECDH PKIXParametersPrivate { get; }
 
         /// <summary>
         /// Extract a KeyPair object from the JOSE data structure.
         /// </summary>
-        /// <param name="Exportable">If true, private key parameters may be exported</param>
+        /// <param name="keySecurity">The key security rextrictions.</param>
+        /// <param name="keyCollection">The key collection to add the key to.</param>
         /// <returns>The extracted key pair</returns>
-        public override KeyPair GetKeyPair(bool Exportable = false) => throw new NYI();
+        public override KeyPair GetKeyPair(KeyStorage keyStorage, KeyCollection keyCollection) {
+            var keyUses = Use.GetUses();
+            switch (Curve) {
+                case "Ed25519":
+                    return KeyPairEd25519.Generate(keyStorage, keyUses);
+                case "Ed448":
+                    return KeyPairEd448.Generate(keyStorage, keyUses);
+                case "X25519":
+                    return KeyPairX25519.Generate(keyStorage, keyUses);
+                case "X448":
+                    return KeyPairX448.Generate(keyStorage, keyUses);
+                }
+            throw new NotSupportedException();
+            }
 
 
         }

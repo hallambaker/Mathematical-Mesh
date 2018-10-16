@@ -400,13 +400,14 @@ namespace Goedel.Cryptography.Jose {
         /// <param name="Recipients">The list of recipients</param>
         /// <param name="RecipientOut">The recipient entry that matched</param>
         /// <returns>The matching keypair</returns>
-        public static KeyPair MatchDecryptionKey (List<Recipient> Recipients, out Recipient RecipientOut) {
+        public static KeyPair MatchDecryptionKey (List<Recipient> Recipients, out Recipient RecipientOut,
+            KeyCollection keyCollection=null) {
             foreach (var Recipient in Recipients) {
                 var KID = Recipient.Header.Kid;
                 KID.SplitAccountID(out var Domain, out var Account);
 
                 if (Account == null) {
-                    var DecryptionKey = Cryptography.KeyPair.FindLocal(KID);
+                    var DecryptionKey = keyCollection.MatchPrivateSign(KID);
                     if (DecryptionKey != null) {
                         RecipientOut = Recipient;
                         return DecryptionKey;
@@ -439,7 +440,7 @@ namespace Goedel.Cryptography.Jose {
             var BulkID = Header.Enc.FromJoseID();
 
             var Exchange = DecryptionKey.Decrypt(Recipient.EncryptedKey,
-                        AlgorithmID: BulkID);
+                        algorithmID: BulkID);
 
             var Provider = CryptoCatalog.Default.GetEncryption(BulkID);
 
@@ -466,10 +467,10 @@ namespace Goedel.Cryptography.Jose {
             var ProtectedHeader = Header.FromJSON(Protected.JSONReader(), false);
             var BulkID = ProtectedHeader.Enc.FromJoseID();
 
-            var Ephemeral = Recipient.Header.Epk.GetKeyPair();
+            var Ephemeral = Recipient.Header.Epk.GetKeyPair(KeyStorage.Bound);
 
-            var Exchange = DecryptionKey.Decrypt(Recipient.EncryptedKey, Ephemeral: Ephemeral,
-                        AlgorithmID: BulkID, Partial: KeyAgreementResult);
+            var Exchange = DecryptionKey.Decrypt(Recipient.EncryptedKey, ephemeral: Ephemeral,
+                        algorithmID: BulkID, partial: KeyAgreementResult);
 
             var Provider = CryptoCatalog.Default.GetEncryption(BulkID);
 

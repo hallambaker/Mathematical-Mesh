@@ -93,10 +93,11 @@ namespace Goedel.Mesh {
             }
 
 
-        Key GetEscrow (string UDF) {
-            var KP = KeyPair.FindLocal(UDF);
-            return Key.GetPrivate(KP);
-            }
+        Key GetEscrow(string UDF) => throw new NYI();
+            //{
+            //var KP = KeyPair.FindLocal(UDF);
+            //return Key.GetPrivate(KP);
+            //}
 
         /// <summary>
         /// The associated key shares for reconstructing the key.

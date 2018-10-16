@@ -202,9 +202,7 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Terminate the encoding operation and perform the signature.
         /// </summary>
-        public virtual void Complete() {
-            ProviderBulk.Complete(this);
-            }
+        public virtual void Complete() => ProviderBulk.Complete(this);
 
         /// <summary>
         /// Write the binary data to the input stream.

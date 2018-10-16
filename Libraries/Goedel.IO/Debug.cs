@@ -1,29 +1,29 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using Goedel.Utilities;
 
 namespace Goedel.IO {
     /// <summary>
     /// Class containing static helper methods. This should inherit from the Trace class
     /// but that is sealed.
     /// </summary>
-    public class Debug {
-        static bool Initialized = false;
+    public class Debug : Initialization {
+        static bool Flag = false;
+
+
+        public static void Initialize(bool TestMode = false) =>
+            Initialize(ref Flag, Initialization, TestMode);
 
         /// <summary>
         /// Perform standard initialization
         /// </summary>
-        public static void Initialize() {
-            if (Initialized) {
-                return;
-                }
+        public static void Initialization(bool TestMode = false) {
             Trace.Listeners.Add(new GoedelTraceListener());
 
             var TraceFileStream = "LastTrace.txt".OpenFileWriteShare();
             var TraceWriter = TraceFileStream.OpenTextWriter();
             Trace.Listeners.Add(new TextWriterTraceListener(TraceWriter));
-
-            Initialized = true;
             }
 
         /// <summary>

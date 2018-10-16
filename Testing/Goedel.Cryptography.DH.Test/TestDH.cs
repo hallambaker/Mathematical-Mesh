@@ -3,13 +3,23 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using UT = Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using Goedel.Utilities;
-using Goedel.Test;
+using Goedel.Mesh.Test;
 using Goedel.Cryptography;
 using Goedel.Cryptography.Algorithms;
+using Goedel.Cryptography.Core;
+using Goedel.Test.Core;
 
 namespace Goedel.Cryptography.DH.Test {
 
     public partial class TestCryptography {
+
+        public MeshMachineTest MeshMachine;
+        KeyCollection KeyCollection;
+
+        public TestCryptography() {
+            MeshMachine = new MeshMachineTest();
+            KeyCollection = new KeyCollectionTest(MeshMachine);
+            }
 
         [TestMethod]
         public void TestDHAlg_SimpleAgreement() {
@@ -49,6 +59,7 @@ namespace Goedel.Cryptography.DH.Test {
             UT.Assert.IsTrue(AliceAgreeW == BobAgreeW );
 
             }
+
         [TestMethod]
         public void TestDH_Recryption_2_100() {
             for (var i = 0; i < 100; i++) {
@@ -115,24 +126,24 @@ namespace Goedel.Cryptography.DH.Test {
 
         /// <summary>Test key lifecycles</summary>
         [TestMethod]
-        public void Test_LifecycleMaster_DH() => CryptoAlgorithmID.Test_LifecycleMaster();
+        public void Test_LifecycleMaster_DH() => CryptoAlgorithmID.Test_LifecycleMaster(KeyCollection);
 
         /// <summary>Test key lifecycles</summary>
         [TestMethod]
-        public void Test_LifecycleAdmin_DH() => CryptoAlgorithmID.Test_LifecycleAdmin();
+        public void Test_LifecycleAdmin_DH() => CryptoAlgorithmID.Test_LifecycleAdmin(KeyCollection);
 
         /// <summary>Test key lifecycles</summary>
         [TestMethod]
-        public void Test_LifecycleDevice_DH() => CryptoAlgorithmID.Test_LifecycleDevice();
+        public void Test_LifecycleDevice_DH() => CryptoAlgorithmID.Test_LifecycleDevice(KeyCollection);
 
         /// <summary>Test key lifecycles</summary>
         [TestMethod]
-        public void Test_LifecycleEphemeral_DH() => CryptoAlgorithmID.Test_LifecycleEphemeral();
+        public void Test_LifecycleEphemeral_DH() => CryptoAlgorithmID.Test_LifecycleEphemeral(KeyCollection);
 
 
         /// <summary>Test key lifecycles</summary>
         [TestMethod]
-        public void Test_LifecycleExportable_DH() => CryptoAlgorithmID.Test_LifecycleExportable();
+        public void Test_LifecycleExportable_DH() => CryptoAlgorithmID.Test_LifecycleExportable(KeyCollection);
 
         }
     }

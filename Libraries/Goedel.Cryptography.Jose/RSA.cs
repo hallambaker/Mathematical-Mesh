@@ -49,7 +49,7 @@ namespace Goedel.Cryptography.Jose {
         /// </summary>
         /// <param name="Exportable">If true the private key may be exported.</param>
         /// <returns>The extracted key pair</returns>
-        public override KeyPair GetKeyPair(bool Exportable = false) {
+        public override KeyPair GetKeyPair(KeyStorage keyStorage, KeyCollection keyCollection) {
 
             var PKIXParams = PKIXPublicKeyRSA;
             var KeyPair = KeyPairBaseRSA.KeyPairPublicFactory(PKIXParams);
@@ -122,7 +122,7 @@ namespace Goedel.Cryptography.Jose {
         /// </summary>
         /// <param name="Exportable">If true the private key may be exported.</param>
         /// <returns>The extracted key pair</returns>
-        public override KeyPair GetKeyPair (bool Exportable = false) {
+        public override KeyPair GetKeyPair (KeyStorage keyStorage, KeyCollection keyCollection) {
 
             var PKIXParams = PKIXPublicKeyRSA;
             var KeyPair = KeyPairBaseRSA.KeyPairPrivateFactory(PKIXPrivateKeyRSA);

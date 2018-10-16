@@ -228,14 +228,6 @@ namespace Goedel.Cryptography {
 
 
     /// <summary>
-    /// Delegate to create a cryptographic provider with optional key size and/or
-    /// bulk algorithm variants where needed.
-    /// </summary>
-    /// <param name="Key">Reference to Key</param>
-    /// <returns></returns>
-    public delegate CryptoProvider GetCryptoProviderByHandleDelegate (KeyHandle Key);
-
-    /// <summary>
     /// Base class for cryptography providers.
     /// </summary>
     public abstract class CryptoProvider {

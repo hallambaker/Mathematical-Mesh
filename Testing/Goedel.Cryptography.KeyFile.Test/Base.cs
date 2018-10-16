@@ -59,7 +59,7 @@ namespace Goedel.Cryptography.KeyFile.Test {
             BobKeyPair = new KeyPairDH();
             GroupKeyPair = new KeyPairDH();
 
-            TestKeyPairDH = new KeyPairDH(KeySecurity.Exportable);
+            TestKeyPairDH = new KeyPairDH();
             TestKeyPairRSA = SignerKeyPair;
             }
 

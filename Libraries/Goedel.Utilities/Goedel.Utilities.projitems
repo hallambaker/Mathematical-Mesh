@@ -20,6 +20,7 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Initialize.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IsTrue.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Linewrap.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)NumberSplit.cs" />
@@ -28,6 +29,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)RFC822.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Streams.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TraceX.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Unique.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)Exceptions.exceptional">

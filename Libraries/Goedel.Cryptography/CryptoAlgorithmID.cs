@@ -158,7 +158,7 @@ namespace Goedel.Cryptography {
         AES128 = Encryption,
 
         /// <summary>AES 256 bit key</summary>
-        AES256 = Encryption+8,
+        AES256 = Encryption + 8,
 
 
         /// <summary>AES 128 bit in CBC mode</summary>
@@ -202,7 +202,7 @@ namespace Goedel.Cryptography {
         // HMAC Modes
 
         /// <summary>HMAC SHA 2 with 256 bit key.</summary>
-        HMAC_SHA_2_256 = 12 ,
+        HMAC_SHA_2_256 = 12,
 
         /// <summary>HMAC SHA 2 with 512 bit key.</summary>
         HMAC_SHA_2_512 = 13,
@@ -237,10 +237,15 @@ namespace Goedel.Cryptography {
 
         /// <summary>Elliptic Curve DSA with curve 25519x</summary>
         Ed25519 = EdDSA,
+        /// <summary>Elliptic Curve DSA with curve 25519x</summary>
+        Ed25519ctx = Ed25519 + 1,
+        /// <summary>Elliptic Curve DSA with curve 25519x</summary>
+        Ed25519ph = Ed25519 + 2,
 
         /// <summary>Elliptic Curve DSA with curve Ed448</summary>
         Ed448 = EdDSA + Meta,
-
+        /// <summary>Elliptic Curve DSA with curve Ed448</summary>
+        Ed448ph = Ed448 + 1,
 
 
         /// <summary>RSA Signature using PKCS#1.5 padding and SHA-2 256 digest</summary>
@@ -306,12 +311,48 @@ namespace Goedel.Cryptography {
 
         }
 
+    ///<summary>Enumeration specifying whether the key is public or private and if private,
+    ///the storage model.</summary>
+    public enum KeyStorage {
+        ///<summary>Key is public only.</summary>
+        Public,
+        ///<summary>Exportable private key. Permitted operations: Location, Erasure,
+        ///Export, Persistence.</summary>
+        Exportable,
+        ///<summary>Persistable private key, supports persistence operations but does
+        ///not support export. Permitted operations: Location, Erasure,
+        /// Persistence. </summary>
+        Persistable,
+        ///<summary>Private key that was previously persisted and is bound
+        ///to the hose. Permitted operations: Location, Erasure. Prohibited
+        ///operations: Persistence, Export.</summary>
+        Bound,
+        ///<summary>Private key that is not to be stored for later 
+        ///Prohibited operations: Location, Erasure, Persistence, Export.</summary>
+        Ephemeral
+        }
+
+
+    ///<summary>Enumeration specifying permitted key uses</summary>
+    ///[Flags]
+    public enum KeyUses {
+        ///<summary>Signature Use</summary>
+        Sign = 0b0001,
+        ///<summary>Encryption Use</summary>
+        Encrypt = 0b0010,
+
+        ///<summary>Sign or Encrypt</summary>
+        Any = KeyUses.Sign | KeyUses.Encrypt
+
+        }
 
 
     /// <summary>
     /// Defines levels of key protection to be applied.
     /// </summary>
     public enum KeySecurity {
+
+
         /// <summary>
         /// Key is a master key and will be stored in a key container marked 
         /// as archivable and user protected. Master keys SHOULD be deleted after 
@@ -341,12 +382,12 @@ namespace Goedel.Cryptography {
         /// </summary>
         Exportable,
 
-
-        /// <summary>
-        /// Key is persisted for an application but may be exported.
-        /// </summary>
-        Application
+        ///<summary>The private key is not available.</summary>
+        PublicOnly
         }
+
+
+
 
 
     /// <summary>

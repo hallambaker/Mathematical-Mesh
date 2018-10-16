@@ -39,26 +39,12 @@ namespace Goedel.Cryptography.Jose {
         public KeyData () { }
 
         /// <summary>
-        /// Build a KeyData object from a reference to a key. This may be a certificate,
-        /// a certificate reference (URL and hash), a UDF value, etc.
-        /// </summary>
-        /// <param name="KeyHandle">The key handle</param>
-        public KeyData(KeyHandle KeyHandle) => Kid = KeyHandle.UDF; // The Key identifier is always the UDF of the key.
-
-        /// <summary>
         /// Builds a KeyData object from a key.
         /// </summary>
         /// <param name="CryptoKey">The input data</param>
         public KeyData(CryptoKey CryptoKey) {
             }
 
-
-        /// <summary>
-        /// Returns a key handle for the specified Key Data.
-        /// </summary>
-        public KeyHandle KeyHandle => GetKeyHandle();
-
-        KeyHandle GetKeyHandle() => null;
         }
 
     }

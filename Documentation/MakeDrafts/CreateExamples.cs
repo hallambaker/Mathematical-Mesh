@@ -16,7 +16,8 @@ using Goedel.IO;
 using Goedel.Command;
 using Goedel.Cryptography.Algorithms;
 using Goedel.Test;
-using Goedel.Cryptography.Windows;
+using Goedel.Cryptography.Core;
+using Goedel.Test.Core;
 
 namespace ExampleGenerator {
 
@@ -118,8 +119,11 @@ namespace ExampleGenerator {
         void GenerateKeys() {
             // Encryption Key Set.
 
+            var Machine1 = new MeshMachineTest(name: "Machine1");
+
             DareMessageAlicePrivate = new DiffeHellmanPrivate();
-            var DareMessageAlicePrivateKeyPair = new KeyPairDH(DareMessageAlicePrivate, KeySecurity: KeySecurity.Exportable) {
+            var DareMessageAlicePrivateKeyPair = new KeyPairDH(
+                DareMessageAlicePrivate, KeyStorage.Exportable) {
                 Locator = AccountAlice
                 };
 
@@ -129,14 +133,13 @@ namespace ExampleGenerator {
 
 
             // Signature Key Set.
-            SignatureAliceKeyPair = new KeyPairRSA(KeySecurity.Exportable, 2048, true) {
-                Locator = AccountAlice
-                };
+            SignatureAliceKeyPair = KeyPairRSA.Generate(2048, KeyStorage.Exportable);
+            SignatureAliceKeyPair.Locator = AccountAlice;
             SignatureAliceKey = Key.GetPrivate(SignatureAliceKeyPair);
             SignatureAlicePrivate = (PrivateKeyRSA)Key.GetPrivate(SignatureAliceKeyPair);
             SignatureAlicePublic = (PublicKeyRSA)Key.GetPublic(SignatureAliceKeyPair);
 
-            KeyCollection = new KeyCollection();
+            KeyCollection = new KeyCollectionTest(Machine1);
             KeyCollection.Add(DareMessageAlicePrivateKeyPair);
             KeyCollection.Add(SignatureAliceKeyPair);
 
@@ -398,11 +401,11 @@ namespace ExampleGenerator {
             var AdvancedCogenDeviceSignPrivate =
                 (PrivateKeyECDH)null; //AdvancedCogenDeviceProfile.DeviceSignatureKey.PrivateParameters;
 
-            AdvancedCogenPrivateKeySeed = CryptoCatalog.GetBits(128);
-            var CogenPrivateKeyValue = new PrivateKeyECDH(AdvancedCogenPrivateKeySeed, true);
+            //AdvancedCogenPrivateKeySeed = CryptoCatalog.GetBits(128);
+            //var CogenPrivateKeyValue = new PrivateKeyECDH(AdvancedCogenPrivateKeySeed, true);
 
-            AdvancedCogenPrivateKeyValue = AdvancedCogenDeviceSignPrivate.CombinePrivate(CogenPrivateKeyValue);
-            AdvancedCogenCompositeKey = AdvancedCogenDeviceSignPublic.CombinePublic(CogenPrivateKeyValue);
+            //AdvancedCogenPrivateKeyValue = AdvancedCogenDeviceSignPrivate.CombinePrivate(CogenPrivateKeyValue);
+            //AdvancedCogenCompositeKey = AdvancedCogenDeviceSignPublic.CombinePublic(CogenPrivateKeyValue);
 
             //AdvancedCogenPrivateKeySeedEncrypted = AdvancedCogenDeviceProfile.DareEncrypt(AdvancedCogenPrivateKeyValue);
 

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Numerics;
-using System.Text;
+using System.IO;
 using Goedel.ASN;
 using Goedel.Utilities;
 using Goedel.Cryptography.PKIX;
@@ -116,9 +116,9 @@ namespace Goedel.Cryptography.Algorithms {
 
             var P = Copy();
 
-            int i = 0;
+            //int i = 0;
             while (BitIndex.GoingUp) {
-                Console.Write($"{i++}:  ");
+                //Console.Write($"{i++}:  ");
 
 
                 if (BitIndex.Up()) {
@@ -126,7 +126,7 @@ namespace Goedel.Cryptography.Algorithms {
                     }
                 P.Double();
 
-                Console.WriteLine($"{Q.Z}");
+                //Console.WriteLine($"{Q.Z}");
                 }
 
             return Q;
@@ -239,11 +239,15 @@ namespace Goedel.Cryptography.Algorithms {
                 return new CurveEdwards448(Y0, false);
                 }
             var Copy = Data.Duplicate();
+            Copy[56] = (byte)(Data[56] & 0x7f);
             var Y1 = Copy.BigIntegerLittleEndian();
             return new CurveEdwards448(Y1, true);
             }
 
 
+
+
+        readonly static byte[] ZeroByteArray = new byte[0] { };
         /// <summary>
         /// Calculate the SHA-2-512 hash of the inputs, convert to an integer and reduce
         /// modulo the subgroup. This is completely wrong of course because the spec requires
@@ -255,25 +259,15 @@ namespace Goedel.Cryptography.Algorithms {
         /// <param name="A3">Fourth data input, ignored if null</param>
         /// <returns>The hashed and reduced inputs.</returns>
         public static BigInteger HashModQ(byte[] A0, byte[] A1, byte[] A2, byte[] A3 = null) {
-            var SHA512 = Platform.SHA3_512.CryptoProviderDigest();
-            if (A0 != null) {
-                SHA512.ProcessData(A0);
-                }
-            if (A1 != null) {
-                SHA512.ProcessData(A1);
-                }
-            if (A2 != null) {
-                SHA512.ProcessData(A2);
-                }
-            if (A3 != null) {
-                SHA512.ProcessData(A3);
-                }
-            var CryptoData = new CryptoDataEncoder(CryptoAlgorithmID.Default, SHA512);
-            SHA512.Complete(CryptoData);
 
-            var Digest = CryptoData.Integrity;
+            var Buffer = new MemoryStream();
+            Buffer.Write(A0);
+            Buffer.Write(A1);
+            Buffer.Write(A2);
+            Buffer.Write(A3);
+            var Input = Buffer.ToArray();
+            var Digest = SHAKE256.Process(Input, 114 * 8);
             var Result = Digest.BigIntegerLittleEndian();
-
             Result = Result % Q;
 
             return Result;
@@ -291,14 +285,15 @@ namespace Goedel.Cryptography.Algorithms {
         /// <param name="Signature">The encoded signature data.</param>
         /// <param name="Context">Context value, if used.</param>
         /// <returns>True if signature verification succeeded, otherwise false.</returns>
-        public bool Verify(byte[] Public, byte[] Message, byte[] Signature, byte[] Context = null) {
+        public bool VerifySignature(byte[] Public, byte[] Message, byte[] Signature, byte[] Context = null) {
             Assert.True(Public.Length == 57, InvalidOperation.Throw);
             Assert.True(Signature.Length == 114, InvalidOperation.Throw);
 
             var A = Decode(Public);
 
             var Rs = Signature.Duplicate(0, 57);
-            //var R = Decode(Rs);
+            var R = Decode(Rs);
+
 
             var Bs = Signature.Duplicate(57, 57);
             var s = Bs.BigIntegerLittleEndian();
@@ -310,9 +305,12 @@ namespace Goedel.Cryptography.Algorithms {
             var h = HashModQ(Context, Rs, Public, Message);
 
             var sB = Base.Multiply(s);
-            var hA = A.Multiply(h);
+            var hA = Multiply(h);
+            var Rha = hA.Add(R);
 
-            return sB.Equal(hA);
+            var Result = sB.Equal(Rha);
+
+            return Result;
             }
 
 
@@ -357,7 +355,8 @@ namespace Goedel.Cryptography.Algorithms {
         /// for protocol isolation.</param>
         /// <param name="Digest">The digest value to be verified.</param>
         /// <returns>True if the signature is valid, otherwise false.</returns>
-        public bool Verify(byte[] Signature, byte[] Digest, byte[] Context = null) => throw new NYI();
+        public bool Verify(byte[] Signature, byte[] Digest, byte[] Context = null) => 
+                    Public.VerifySignature(Encoding, Digest, Signature, Context);
 
         /// <summary>
         /// Create a new ephemeral private key and use it to perform a key
@@ -563,14 +562,49 @@ namespace Goedel.Cryptography.Algorithms {
             Array.Copy(Hash, Copy, 57); // bytes 0-31
 
             Copy[0] = (byte)(Copy[0] & 0xfC);
-            Copy[56] = (byte)(Copy[56] | 0x80);
+            Copy[55] = (byte)(Copy[55] | 0x80);
             Copy[56] = 0;
             return Copy;
             }
 
+        static byte[] Dom4(byte x, byte[] y) {
+            var Buffer = new MemoryStream("SigEd448".ToBytes());
+            Buffer.WriteByte(x);
+            Buffer.Write(y);
+            return Buffer.ToArray();
+            }
 
         /// <summary>
-        /// Sign a message using the public key according to RFC8032
+        ///    Sign a message using the public key according to RFC8032
+        ///    
+        ///    The inputs to the signing procedure is the private key, a 57-octet
+        ///    string, a flag F, which is 0 for Ed448, 1 for Ed448ph, context C of
+        ///    at most 255 octets, and a message M of arbitrary size.
+        /// 
+        ///    1.  Hash the private key, 57 octets, using SHAKE256(x, 114).  Let h
+        ///        denote the resulting digest.Construct the secret scalar s from
+        ///        the first half of the digest, and the corresponding public key A,
+        ///        as described in the previous section.Let prefix denote the
+        ///        second half of the hash digest, h[57],..., h[113].
+        /// 
+        ///    2.  Compute SHAKE256(dom4(F, C) || prefix || PH(M), 114), where M is
+        ///        the message to be signed, F is 1 for Ed448ph, 0 for Ed448, and C
+        ///        is the context to use.Interpret the 114-octet digest as a
+        ///        little-endian integer r.
+        /// 
+        ///    3.  Compute the point[r] B.  For efficiency, do this by first
+        ///        reducing r modulo L, the group order of B.Let the string R be
+        ///        the encoding of this point.
+        /// 
+        ///    4.  Compute SHAKE256(dom4(F, C) || R || A || PH(M), 114), and
+        ///        interpret the 114-octet digest as a little-endian integer k.
+        /// 
+        ///    5.  Compute S = (r + k * s) mod L.For efficiency, again reduce k
+        ///        modulo L first.
+        /// 
+        ///    6.  Form the signature of the concatenation of R (57 octets) and the
+        ///        little-endian encoding of S(57 octets; the ten most significant
+        ///       bits of the final octets are always zero).
         /// </summary>
         /// <remarks>This method does not prehash the message data since if
         /// prehashing is desired, it is because the data needs to be hashed
@@ -587,11 +621,11 @@ namespace Goedel.Cryptography.Algorithms {
             var h = CurveEdwards448.HashModQ(Context, Rs, Public.Encoding, Message);
             var s = (r + h * Private) % CurveEdwards448.Q;
 
-            var Bs = s.ToByteArray();
+            var Bs = s.ToByteArrayLittleEndian(); // Is little endian conversion.
 
-            var Result = new byte[114];
-            Array.Copy(Rs, Result, 57);
-            Array.Copy(Bs, 0, Result, 57, 57);
+            var Result = new byte[114]; // Is set to zeros
+            Array.Copy(Rs, Result, Rs.Length); // little endian so trailing zeroes don't matter.
+            Array.Copy(Bs, 0, Result, 57, Bs.Length);
 
             return Result;
             }

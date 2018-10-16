@@ -140,29 +140,30 @@ namespace Goedel.Utilities {
         /// </summary>	
 		public object UserData;
 
-        /// <summary>
+		/// <summary>
         /// Construct instance for exception using a userdata parameter of
-        /// type ExceptionData and the format string "The file {0} could not be read"
+		/// type ExceptionData and the format string "The file {0} could not be read"
         /// </summary>		
         /// <param name="Object">User data</param>	
-        public FileReadError(ExceptionData Object) :
-                base(global::System.String.Format("The file {0} could not be read",
-                    Object.String)) => UserData = Object;
+		public FileReadError (ExceptionData Object) : 
+				base (global::System.String.Format ("The file {0} could not be read",
+					Object.String					)) => UserData = Object;
 
-        /// <summary>
+
+		/// <summary>
         /// Construct instance for exception using a userdata parameter of
-        /// type ExceptionData and the format string "The file {0} could not be read"
+		/// type ExceptionData and the format string "The file {0} could not be read"
         /// </summary>		
         /// <param name="Object">User data</param>	
-        /// <param name="Inner">Inner Exception</param>	
-        public FileReadError(ExceptionData Object, System.Exception Inner) :
-                base(global::System.String.Format("The file {0} could not be read",
-                    Object.String), Inner) => UserData = Object;
+		/// <param name="Inner">Inner Exception</param>	
+		public FileReadError (ExceptionData Object, System.Exception Inner) : 
+				base (global::System.String.Format ("The file {0} could not be read",
+					Object.String					), Inner) => UserData = Object;
 
 
 
-
-        /// <summary>
+		
+		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
@@ -228,6 +229,79 @@ namespace Goedel.Utilities {
 				}
 			else {
 				return new Not64Bit();
+				}
+            }
+        }
+
+
+    /// <summary>
+    /// </summary>
+    public class EnvironmentVariableRequired : global::System.Exception {
+
+		/// <summary>
+        /// Construct instance for exception "A required environment variable is undefined."
+        /// </summary>		
+		public EnvironmentVariableRequired () : base ("A required environment variable is undefined.") {
+			}
+        
+		/// <summary>
+        /// Construct instance for exception "A required environment variable is undefined."
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		public EnvironmentVariableRequired (string Description) : base (Description) {
+			}
+
+		/// <summary>
+        /// Construct instance for exception 		/// containing an inner exception.
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		/// <param name="Inner">Inner Exception</param>	
+		public EnvironmentVariableRequired (string Description, System.Exception Inner) : 
+				base (Description, Inner) {
+			}
+
+		/// <summary>
+        /// User data associated with the exception.
+        /// </summary>	
+		public object UserData;
+
+		/// <summary>
+        /// Construct instance for exception using a userdata parameter of
+		/// type ExceptionData and the format string "The environment variable {0} must be defined"
+        /// </summary>		
+        /// <param name="Object">User data</param>	
+		public EnvironmentVariableRequired (ExceptionData Object) : 
+				base (global::System.String.Format ("The environment variable {0} must be defined",
+					Object.String					)) => UserData = Object;
+
+
+		/// <summary>
+        /// Construct instance for exception using a userdata parameter of
+		/// type ExceptionData and the format string "The environment variable {0} must be defined"
+        /// </summary>		
+        /// <param name="Object">User data</param>	
+		/// <param name="Inner">Inner Exception</param>	
+		public EnvironmentVariableRequired (ExceptionData Object, System.Exception Inner) : 
+				base (global::System.String.Format ("The environment variable {0} must be defined",
+					Object.String					), Inner) => UserData = Object;
+
+
+
+		
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+
+        static System.Exception _Throw(object Reason) {
+			if (Reason as string != null) {
+				return new EnvironmentVariableRequired(Reason as string);
+				}
+			else if (Reason as ExceptionData != null) {
+				return new EnvironmentVariableRequired(Reason as ExceptionData);
+				}
+			else {
+				return new EnvironmentVariableRequired();
 				}
             }
         }

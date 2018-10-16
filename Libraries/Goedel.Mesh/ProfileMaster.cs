@@ -23,7 +23,7 @@
 using System;
 using System.Collections.Generic;
 using Goedel.Registry;
-using Goedel.Persistence;
+using Goedel.Utilities;
 using Goedel.Cryptography;
 using Goedel.Cryptography.PKIX;
 
@@ -81,13 +81,13 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="EscrowedKeySet">Escrowed key set to create from.</param>
         public MasterProfile(EscrowedKeySet EscrowedKeySet) {
-            var MasterSignatureKeyPair =  EscrowedKeySet.MasterSignatureKey.GetKeyPair();
+            var MasterSignatureKeyPair =  EscrowedKeySet.MasterSignatureKey.GetKeyPair(KeyStorage.Bound);
             MasterSignatureKey = new PublicKey(MasterSignatureKeyPair);
             MasterSignatureKey.SelfSignCertificate(Application.PersonalMaster);
 
             MasterEscrowKeys = new List<PublicKey>();
             foreach (var EscrowKeyEntry in EscrowedKeySet.MasterEscrowKeys) {
-                var EscrowKeyPair = EscrowKeyEntry.GetKeyPair();
+                var EscrowKeyPair = EscrowKeyEntry.GetKeyPair(KeyStorage.Bound);
                 var EscrowKey = new PublicKey(EscrowKeyPair);
                 EscrowKey.SignCertificate(Application.DataEncryption, MasterSignatureKey);
                 MasterEscrowKeys.Add(EscrowKey);
@@ -131,15 +131,17 @@ namespace Goedel.Mesh {
         /// Get the administration key (if available).
         /// </summary>
         /// <returns>The administration key.</returns>
-        public KeyPair GetAdministrationKey() {
-            foreach (var OnlineKey in OnlineSignatureKeys) {
-                var Key = KeyPair.FindLocal(OnlineKey.UDF);
-                if (Key != null) {
-                    return Key;
-                    }
-                }
-            return null;
-            }
+        public KeyPair GetAdministrationKey() => throw new NYI();
+            //{
+            //foreach (var OnlineKey in OnlineSignatureKeys) => throw new NYI();
+            ////    {
+            //    var Key = KeyPair.FindLocal(OnlineKey.UDF);
+            //    if (Key != null) {
+            //        return Key;
+            //        }
+            //    }
+            //return null;
+            //}
 
 
         }

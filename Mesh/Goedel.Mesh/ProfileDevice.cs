@@ -32,9 +32,9 @@ namespace Goedel.Mesh {
                         KeyPair keyPublicAuthenticate) {
 
             var ProfileDevice = new ProfileDevice() {
-                DeviceSignatureKey = new PublicKey (keyPublicSign),
-                DeviceAuthenticationKey = new PublicKey(keyPublicAuthenticate),
-                DeviceEncryptiontionKey = new PublicKey(keyPublicEncrypt)
+                DeviceSignatureKey = new PublicKey (keyPublicSign.KeyPairPublic()),
+                DeviceAuthenticationKey = new PublicKey(keyPublicAuthenticate.KeyPairPublic()),
+                DeviceEncryptiontionKey = new PublicKey(keyPublicEncrypt.KeyPairPublic())
                 };
 
             var bytes = ProfileDevice.GetBytes(tag:true);
@@ -42,9 +42,7 @@ namespace Goedel.Mesh {
             ProfileDevice.ProfileDeviceSigned = DareMessage.Encode(bytes,
                     SigningKey: keyPublicSign, ContentType: "application/mmm");
 
-
             return ProfileDevice;
-
 
             }
 

@@ -23,10 +23,12 @@
     <ProjectReference Include="..\Goedel.Cryptography.DH.Test\Goedel.Cryptography.DH.Test.csproj" />
     <ProjectReference Include="..\Goedel.Cryptography.Jose.Test\Goedel.Cryptography.Jose.Test.csproj" />
     <ProjectReference Include="..\Goedel.Cryptography.KeyFile.Test\Goedel.Cryptography.KeyFile.Test.csproj" />
+    <ProjectReference Include="..\Goedel.Cryptography.Test-xunit\Goedel.Cryptography.Test-xunit.csproj" />
     <ProjectReference Include="..\Goedel.Cryptography.Test\Goedel.Cryptography.Test.csproj" />
     <ProjectReference Include="..\Goedel.Cryptography.Windows.Test\Goedel.Cryptography.Windows.Test.csproj" />
     <ProjectReference Include="..\Goedel.Discovery.Test\Goedel.Discovery.Test.csproj" />
-    <ProjectReference Include="..\Goedel.Mesh.xunit\Goedel.Mesh.xunit.csproj" />
+    <ProjectReference Include="..\Goedel.Mesh.Test-Windows\Goedel.Mesh.Test-Windows.csproj" />
+    <ProjectReference Include="..\Goedel.Mesh.Test\Goedel.Mesh.Test.csproj" />
     <ProjectReference Include="..\Goedel.Protocol.Test\Goedel.Protocol.Test.csproj" />
     <ProjectReference Include="..\Test.Constants\Test.Common.csproj" />
   </ItemGroup>

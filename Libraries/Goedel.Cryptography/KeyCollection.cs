@@ -3,21 +3,31 @@ using System.IO;
 using System.Collections.Generic;
 using Goedel.Utilities;
 using Goedel.Cryptography;
-
+using Goedel.Cryptography.PKIX;
 
 namespace Goedel.Cryptography {
+
+
+
+    public delegate KeyCollection KeyCollectionDelegate();
 
     /// <summary>
     /// Track a collection of keys from various sources allowing recall when required for recryption use.
     /// </summary>
-    public class KeyCollection {
+    public abstract class KeyCollection {
 
         Object ExclusiveAccess = new Object();
 
         /// <summary>
         /// The default collection.
         /// </summary>
-        public static KeyCollection Default = new KeyCollection();
+        public static KeyCollection Default;
+
+        static KeyCollection _Default = null;
+
+        ///<summary></summary>
+        public static KeyCollectionDelegate NewKeyCollection;
+
 
         Dictionary<string, KeyPair> DictionaryKeyPairByUDF = new Dictionary<string, KeyPair>();
         Dictionary<string, KeyPair> DictionaryKeyPairBySINEncrypt = new Dictionary<string, KeyPair>();
@@ -26,105 +36,96 @@ namespace Goedel.Cryptography {
         Dictionary<string, KeyPair> DictionaryKeyPairByAccountSign = new Dictionary<string, KeyPair>();
 
 
-        /// <summary>
-        /// Add a keypair and bind it to the persistence store.
-        /// </summary>
-        /// <param name="KeyPair">The key pair to add.</param>
-        public void Persist(KeyPair KeyPair) => Add(KeyPair);
+        Dictionary<string, KeyPair> DictionaryKeyPairPrivateByUDF = new Dictionary<string, KeyPair>();
+
 
 
         /// <summary>
         /// Add a keypair to the collection.
         /// </summary>
-        /// <param name="KeyPair">The key pair to add.</param>
-        public void Add(KeyPair KeyPair ) {
+        /// <param name="keyPair">The key pair to add.</param>
+        public virtual void Add(KeyPair keyPair ) {
             lock (ExclusiveAccess) {
-                DictionaryKeyPairByUDF.AddSafe(KeyPair.UDF, KeyPair);
-                if (KeyPair.Locator != null) {
-                    if (KeyPair.Exchange) {
-                        DictionaryKeyPairBySINEncrypt.AddSafe(KeyPair.StrongInternetName, KeyPair);
-                        DictionaryKeyPairByAccountEncrypt.AddSafe(KeyPair.Locator, KeyPair);
+                DictionaryKeyPairByUDF.AddSafe(keyPair.UDF, keyPair);
+                if (keyPair.Locator != null) {
+                    if (keyPair.KeyUses.HasFlag(KeyUses.Encrypt)) {
+                        DictionaryKeyPairBySINEncrypt.AddSafe(keyPair.StrongInternetName, keyPair);
+                        DictionaryKeyPairByAccountEncrypt.AddSafe(keyPair.Locator, keyPair);
                         }
-                    if (KeyPair.Signature) {
-                        DictionaryKeyPairBySINSign.AddSafe(KeyPair.StrongInternetName, KeyPair);
-                        DictionaryKeyPairByAccountSign.AddSafe(KeyPair.Locator, KeyPair);
+                    if (keyPair.KeyUses.HasFlag(KeyUses.Sign)) {
+                        DictionaryKeyPairBySINSign.AddSafe(keyPair.StrongInternetName, keyPair);
+                        DictionaryKeyPairByAccountSign.AddSafe(keyPair.Locator, keyPair);
                         }
                     }
                 }
-
             }
 
         /// <summary>
         /// Add a recryption group account to the group.
         /// </summary>
-        /// <param name="RecryptionGroup"></param>
-        public void Add(string RecryptionGroup) {
+        /// <param name="recryptionGroup"></param>
+        public void Add(string recryptionGroup) {
             }
-
-
-
-
-        //// ToDo: Make Recipients into an interface...
-
-        ///// <summary>
-        ///// Attempt to decrypt a decryption blob from a list of recipient entries.
-        ///// </summary>
-        ///// <param name="Recipients">The recipient entry.</param>
-        ///// <param name="AlgorithmID">The symmetric encryption cipher (used to decrypt the wrapped key).</param>
-        ///// <returns></returns>
-        //public byte[] Decrypt(List<Recipient> Recipients, CryptoAlgorithmID AlgorithmID) {
-        //    foreach (var Recipient in Recipients) {
-
-        //        var DecryptionKey = TryMatchRecipient(Recipient.Header.Kid);
-
-        //        // Recipient has the following fields of interest
-        //        // Recipient.EncryptedKey -- The RFC3394 wrapped symmetric key
-        //        // Recipient.Header.Epk  -- The ephemeral public key
-        //        // Recipient.Header.Epk.KeyPair  -- The ephemeral public key
-
-        //        if (DecryptionKey != null) {
-        //            return DecryptionKey.Decrypt(Recipient.EncryptedKey, Recipient.Header.Epk.KeyPair, AlgorithmID: AlgorithmID);
-        //            }
-        //        }
-
-
-        //    throw new NoAvailableDecryptionKey();
-        //    }
-
-
 
         /// <summary>
         /// Attempt to find a private key for the specified recipient entry.
         /// </summary>
-        /// <param name="KID">The key identifier to match</param>
+        /// <param name="keyID">The key identifier to match</param>
         /// <returns>True if a match is found, otherwise false.</returns>
-        public KeyPair TryMatchRecipient(string KID) {
+        public KeyPair TryMatchRecipient(string keyID) {
 
 
             // Search our this.SessionPersonal = SessionPersonal;
-            if (DictionaryKeyPairByUDF.TryGetValue(KID, out var KeyPair)) {
+            if (DictionaryKeyPairByUDF.TryGetValue(keyID, out var KeyPair)) {
                 return KeyPair;
                 }
-            if (DictionaryKeyPairBySINEncrypt.TryGetValue(KID, out KeyPair)) {
+            if (DictionaryKeyPairBySINEncrypt.TryGetValue(keyID, out KeyPair)) {
                 return KeyPair;
                 }
-            if (DictionaryKeyPairByAccountEncrypt.TryGetValue(KID, out KeyPair)) {
+            if (DictionaryKeyPairByAccountEncrypt.TryGetValue(keyID, out KeyPair)) {
                 return KeyPair;
                 }
 
-            // finally search local persistence stores.
-            return KeyPair.FindLocal(KID);
+            return null;
             }
+
+
+        public virtual KeyPair Locate(string UDF) {
+
+
+            var keyPair = KeyPairRSA.Locate(UDF);
+            if (keyPair != null) {
+                return keyPair;
+                }
+
+            return null;
+            }
+
+        public virtual void Persist(KeyPair keyPair) {
+
+            DictionaryKeyPairPrivateByUDF.AddSafe(keyPair.UDF, keyPair);
+
+            if (keyPair.IsPersisted | keyPair.KeySecurity == KeySecurity.Ephemeral) {
+                return;
+                }
+
+            keyPair.Persist(this);
+
+
+
+            }
+
+        public abstract void Persist(IPKIXPrivateKey privateKey);
 
 
         /// <summary>
         /// Resolve a public key by identifier. This may be a UDF fingerprint of the key,
         /// an account identifier or strong account identifier.
         /// </summary>
-        /// <param name="ID">The identifier to resolve.</param>
+        /// <param name="keyID">The identifier to resolve.</param>
         /// <returns>The identifier.</returns>
-        public virtual KeyPair MatchPublicEncrypt(string ID) {
-            var Found = DictionaryKeyPairByAccountEncrypt.TryGetValue(ID, out var Result);
+        public virtual KeyPair MatchPublicEncrypt(string keyID) {
+            var Found = DictionaryKeyPairByAccountEncrypt.TryGetValue(keyID, out var Result);
             return Result;
             }
 
@@ -132,12 +133,15 @@ namespace Goedel.Cryptography {
         /// Resolve a private key by identifier. This may be a UDF fingerprint of the key,
         /// an account identifier or strong account identifier.
         /// </summary>
-        /// <param name="ID">The identifier to resolve.</param>
+        /// <param name="keyID">The identifier to resolve.</param>
         /// <returns>The identifier.</returns>
-        public virtual KeyPair MatchPrivateSign(string ID) {
-            var Found = DictionaryKeyPairByAccountSign.TryGetValue(ID, out var Result);
+        public virtual KeyPair MatchPrivateSign(string keyID) {
+            var Found = DictionaryKeyPairByAccountSign.TryGetValue(keyID, out var Result);
             return Result;
             }
+
+
+
 
         }
     }

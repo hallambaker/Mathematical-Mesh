@@ -462,6 +462,9 @@ class PureEdDSA:
         for i in range(0,self.c): _a[i//8]&=~(1<<(i%8))
         _a[self.n//8]|=1<<(self.n%8)
         for i in range(self.n+1,self.b): _a[i//8]&=~(1<<(i%8))
+
+        for i in _a:print (i)
+
         return _a
     #Generate a key.  If privkey is None, a random one is generated.
     #In any case, the (privkey, pubkey) pair is returned.
@@ -488,6 +491,9 @@ class PureEdDSA:
         khash=self.H(privkey,None,None)
         a=from_le(self.__clamp(khash[:self.b//8]))
         seed=khash[self.b//8:]
+
+        for i in seed:print (i)
+
         #Calculate r and R (R only used in encoded form).
         r=from_le(self.H(seed+msg,ctx,hflag))%self.l
         R=(self.B*r).encode()
@@ -497,6 +503,11 @@ class PureEdDSA:
         S=((r+h*a)%self.l).to_bytes(self.b//8,byteorder="little")
         #The final signature is a concatenation of R and S.
         return R+S
+    #wev
+    def verifykey(pubkey):
+        A=Edwards448Point.stdbase().decode(pubkey)
+        return 1
+
     #Verify signature with public key.
     def verify(self,pubkey,msg,sig,ctx,hflag):
         #Sanity-check sizes.
@@ -571,7 +582,10 @@ class EdDSA:
     # privkey key, otherwise it uses a specified private key.
     # Returns pair (privkey, pubkey).
     def keygen(self,privkey): return self.__pure.keygen(privkey)
-
+    # Generate a key.  If privkey is none, it generates a random
+    # privkey key, otherwise it uses a specified private key.
+    # Returns pair (privkey, pubkey).
+    def keygen2(self,privkey): return self.__pure.keygen(privkey)
     # Sign message msg using specified key pair.
     def sign(self,privkey,pubkey,msg,ctx=None):
         if ctx is None: ctx=b"";

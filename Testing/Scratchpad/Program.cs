@@ -17,7 +17,9 @@ using Goedel.Cryptography.KeyFile.Test;
 using Goedel.Cryptography.DH.Test;
 using Goedel.Cryptography.Windows.Test;
 using Goedel.DNS.Test;
-using Goedel.Mesh.xunit;
+using Goedel.Mesh.Test_Windows;
+using Goedel.Cryptography.Test_xunit;
+using Goedel.Test.Core;
 
 namespace Scratchpad {
 
@@ -27,9 +29,36 @@ namespace Scratchpad {
         static void Main(string[] args) {
             Console.WriteLine("Hello World");
 
-            Goedel.IO.Debug.Initialize();
 
-            TestDare.TestDirect();
+            TestEnvironment.Initialize(true);
+
+            //var TestSplit = new TestSplit();
+            //TestSplit.TestShares(3, 2);
+
+
+
+            //TestLifecycle.Test.Test_LifecycleMaster(CryptoAlgorithmID.RSAExch);
+            //TestLifecycle.Test.Test_LifecycleAdmin(CryptoAlgorithmID.RSAExch);
+            //TestLifecycle.Test.Test_LifecycleDevice(CryptoAlgorithmID.RSAExch);
+            //TestLifecycle.Test.Test_LifecycleEphemeral(CryptoAlgorithmID.RSAExch);
+            //TestLifecycle.Test.Test_LifecycleExportable(CryptoAlgorithmID.RSAExch);
+
+            TestLifecycle.Test().Test_LifecycleDevice(CryptoAlgorithmID.RSASign);
+            TestLifecycle.Test().Test_LifecycleDevice(CryptoAlgorithmID.Ed25519);
+            TestLifecycle.Test().Test_LifecycleDevice(CryptoAlgorithmID.Ed448);
+            TestLifecycle.Test().Test_LifecycleDevice(CryptoAlgorithmID.DH);
+
+
+
+            //TestProfilesWindows.TestDirect();
+
+
+            //TestAsymmetric.Test.EncryptTest(CryptoAlgorithmID.DH);
+            //foreach (var Test in new RFC8032()) {
+            //    TestAsymmetric.Test.TestRFC8032((TestVectorAsymmetric)Test[0]);
+            //    }
+
+            //TestProfilesWindows.TestDirect();
             //CatalogTests.TestDirect();
             //TestCryptographyJose.TestDirect();
             }

@@ -307,14 +307,9 @@
 			Tag "crv"
 			Description
 				|The curve specifier (X25519, Ed25519, X448, Ed448), etc.
-		Binary X
-			Tag "x"
+		Binary Public
 			Description
-				|The public key x parameter.
-		Binary Y
-			Tag "y"
-			Description
-				|The public key y parameter (if required).
+				|The public key
 	
 	Structure PrivateKeyECDH
 		Description
@@ -329,6 +324,15 @@
 			|Result of applying a key agreement.
 
 	Structure KeyAgreementDH
+		Description
+			|Result of applying a key agreement.
+		Inherits KeyAgreement
+		Binary Result
+			Description
+				|The result
+
+
+	Structure KeyAgreementECDH
 		Description
 			|Result of applying a key agreement.
 		Inherits KeyAgreement

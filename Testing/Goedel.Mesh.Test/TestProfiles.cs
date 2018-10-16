@@ -4,6 +4,8 @@ using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
 using Goedel.Mesh.Protocol.Client;
 using Goedel.Utilities;
+using Goedel.Test.Core;
+
 
 namespace Goedel.Mesh.Test {
 
@@ -16,8 +18,8 @@ namespace Goedel.Mesh.Test {
         public static TestProfiles Test => new TestProfiles();
 
         public  void GenerateMaster() {
-            var MachineAliceAdmin = new MeshMachineTest("Alice Admin");
-            var MachineAliceRecover = new MeshMachineTest("Alice Admin");
+            var MachineAliceAdmin = new MeshMachineTest(name:"Alice Admin");
+            var MachineAliceRecover = new MeshMachineTest(name: "Alice Admin Recovered");
 
             var DeviceAdmin = ContextDevice.Generate(MachineAliceAdmin);
             var MasterAdmin = DeviceAdmin.GenerateMaster();
@@ -25,14 +27,14 @@ namespace Goedel.Mesh.Test {
             var (Escrow, Shares) = MasterAdmin.Escrow(3, 2);
             var RecoverShares = new KeyShare[] { Shares[0], Shares[2] };
 
-            var DeviceAdminRecovered = ContextMaster.Recover(Escrow, RecoverShares);
+            var DeviceAdminRecovered = DeviceAdmin.Recover(Escrow, RecoverShares);
 
             }
 
 
         public  void GenerateDevice() {
-            var MachineAliceAdmin = new MeshMachineTest("Alice Admin");
-            var MachineAliceSecond = new MeshMachineTest("Alice 2");
+            var MachineAliceAdmin = new MeshMachineTest(name: "Alice Admin");
+            var MachineAliceSecond = new MeshMachineTest(name: "Alice 2");
 
             var DeviceAdmin = ContextDevice.Generate(MachineAliceAdmin);
             var MasterAdmin = DeviceAdmin.GenerateMaster();

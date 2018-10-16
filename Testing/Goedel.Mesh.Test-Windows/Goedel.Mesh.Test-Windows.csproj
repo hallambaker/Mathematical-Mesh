@@ -60,6 +60,10 @@
       <Project>{e9341173-6212-4a7a-8a59-21fd11c32360}</Project>
       <Name>Goedel.IO</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Core\Goedel.Utilities\Goedel.Utilities.csproj">
+      <Project>{171f782c-4d04-40bd-8d12-ead48eefb79a}</Project>
+      <Name>Goedel.Utilities</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.WindowsFramework\Goedel.Cryptography.WindowsFramework.csproj">
       <Project>{701f5551-e749-4985-acc8-5a3c02d10d14}</Project>
       <Name>Goedel.Cryptography.WindowsFramework</Name>

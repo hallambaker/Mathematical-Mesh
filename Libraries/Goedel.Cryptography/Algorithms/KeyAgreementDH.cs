@@ -119,11 +119,11 @@ namespace Goedel.Cryptography.Algorithms {
         /// </summary>
         /// <returns>The key agreement parameters, the public key value and the
         /// key agreement.</returns>
-        public DiffieHellmanResult Agreement() {
+        public ResultDiffieHellman Agreement() {
             var Private = new DiffeHellmanPrivate(this);
             var DiffeHellmanPublic = Private.DiffeHellmanPublic;
 
-            var Result = new DiffieHellmanResult() {
+            var Result = new ResultDiffieHellman() {
                 EphemeralPublicValue = Private.DiffeHellmanPublic,
                 Agreement = Private.Agreement(this)
                 };
@@ -326,7 +326,7 @@ namespace Goedel.Cryptography.Algorithms {
     /// <summary>
     /// Represent the result of a Diffie Hellman Key exchange.
     /// </summary>
-    public class DiffieHellmanResult : KeyAgreementResult {
+    public class ResultDiffieHellman : KeyAgreementResult {
 
         /// <summary>The key agreement result</summary>
         public BigInteger Agreement;

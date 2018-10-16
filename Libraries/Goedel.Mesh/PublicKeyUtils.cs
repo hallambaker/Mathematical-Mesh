@@ -42,16 +42,17 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="JWE">The encrypted data</param>
         /// <returns>The decryption key (if found)</returns>
-        public static KeyPair GetKey (this JoseWebEncryption JWE) {
-            foreach (var Recipient in JWE.Recipients) {
-                var KeyPair = Cryptography.KeyPair.FindLocal(Recipient.Header.Kid);
-                if (KeyPair != null) {
-                    return KeyPair;
-                    }
-                }
+        public static KeyPair GetKey (this JoseWebEncryption JWE) => throw new NYI();
+        //{
+        //foreach (var Recipient in JWE.Recipients) {
+        //    var KeyPair = Cryptography.KeyPair.FindLocal(Recipient.Header.Kid);
+        //    if (KeyPair != null) {
+        //        return KeyPair;
+        //        }
+        //    }
 
-            return null;
-            }
+        //return null;
+        //}
 
 
         /// <summary>
@@ -60,15 +61,16 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="UDFs">list of key fingerprints</param>
         /// <returns>First match in the list or null if not found.</returns>
-        public static KeyPair GetLocal (this List<string> UDFs) {
-            foreach (var UDF in UDFs) {
-                var KeyPair = Cryptography.KeyPair.FindLocal(UDF);
-                if (KeyPair != null) {
-                    return KeyPair;
-                    }
-                }
-            return null;
-            }
+        public static KeyPair GetLocal(this List<string> UDFs) => throw new NYI();
+            //{
+            //foreach (var UDF in UDFs) {
+            //    var KeyPair = Cryptography.KeyPair.FindLocal(UDF);
+            //    if (KeyPair != null) {
+            //        return KeyPair;
+            //        }
+            //    }
+            //return null;
+            //}
 
 
 

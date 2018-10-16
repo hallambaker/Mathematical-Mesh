@@ -26,72 +26,6 @@ using Goedel.Utilities;
 
 namespace Goedel.Cryptography {
 
-    /// <summary>
-    /// Describes a reference to a key
-    /// </summary>
-    public class KeyHandle {
-
-
-
-
-
-        /// <summary>
-        /// UDF fingerprint of the key
-        /// </summary>
-        public string UDF { get; set; }
-
-        /// <summary>
-        /// Construct by key fingerprint
-        /// </summary>
-        /// <param name="UDF">Fingerprint of the key.</param>
-        public KeyHandle(string UDF) {
-            }
-
-        /// <summary>
-        /// Construct by key fingerprint and use
-        /// </summary>
-        /// <param name="UDF">Fingerprint of the key.</param>
-        /// <param name="Application">The use.</param>
-        public KeyHandle(string UDF, string Application) {
-            }
-
-        /// <summary>
-        /// Construct by key fingerprint, use and name of key.
-        /// </summary>
-        /// <param name="UDF">Fingerprint of the key.</param>
-        /// <param name="Application">The use.</param>
-        /// <param name="Name">The key friendly name</param>
-        public KeyHandle(string UDF, string Application, string Name) {
-            }
-
-        /// <summary>
-        /// Form a KeyHandle from an end entity certificate 
-        /// </summary>
-        /// <param name="Certificate">The end entity certificate to construct
-        /// the handle from.</param>
-        public KeyHandle(Certificate Certificate) {
-
-            }
-
-        /// <summary>
-        /// Form a KeyHandle from a certificate chain.
-        /// </summary>
-        /// <param name="Certificates">Certificate Chain</param>
-        public KeyHandle(List<Certificate> Certificates) {
-
-            }
-
-        /// <summary>
-        /// X.509 v3 Certificate for this key and set of uses.
-        /// </summary>
-        public Certificate Certificate { get; set; }
-
-        /// <summary>
-        /// X.509 v3 Certificate chain validating this certificate.
-        /// </summary>
-        public List<Certificate> CertificateChain { get; set; }
-
-        }
 
     /// <summary>
     /// Base class for all cryptographic keys.
@@ -123,17 +57,19 @@ namespace Goedel.Cryptography {
     /// <summary>
     /// Delegate to create a key pair base
     /// </summary>
-    /// <param name="PKIXParameters"></param>
+    /// <param name="pkixParameters"></param>
     /// <returns></returns>
-    public delegate KeyPair FactoryRSAPublicKeyDelegate(PKIXPublicKeyRSA PKIXParameters);
+    public delegate KeyPair FactoryRSAPublicKeyDelegate(
+        PKIXPublicKeyRSA pkixParameters);
 
 
     /// <summary>
     /// Delegate to create a key pair base
     /// </summary>
-    /// <param name="PKIXParameters"></param>
+    /// <param name="pkixParameters"></param>
     /// <returns></returns>
-    public delegate KeyPair FactoryRSAPrivateKeyDelegate(PKIXPrivateKeyRSA PKIXParameters);
+    public delegate KeyPair FactoryRSAPrivateKeyDelegate(
+            PKIXPrivateKeyRSA pkixParameters);
 
     /// <summary>
     /// RSA Key Pair
@@ -167,18 +103,18 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Create a KeyPair for the specified parameters.
         /// </summary>
-        /// <param name="Public">The public key parameters.</param>
+        /// <param name="pkixKey">The public key parameters.</param>
         /// <returns>The created key pair.</returns>
-        public static KeyPair Create(PKIXPublicKeyRSA Public) =>
-            KeyPairPublicFactory(Public);
+        public static KeyPair Create(PKIXPublicKeyRSA pkixKey) =>
+            KeyPairPublicFactory(pkixKey);
 
         /// <summary>
         /// Create a KeyPair for the specified parameters.
         /// </summary>
-        /// <param name="Private">The private key parameters.</param>
+        /// <param name="pkixKey">The private key parameters.</param>
         /// <returns>The created key pair.</returns>
-        public static KeyPair Create(PKIXPrivateKeyRSA Private = null) =>
-            KeyPairPrivateFactory(Private);
+        public static KeyPair Create(PKIXPrivateKeyRSA pkixKey = null) =>
+            KeyPairPrivateFactory(pkixKey);
 
         }
 
@@ -186,92 +122,60 @@ namespace Goedel.Cryptography {
     /// Delegate to create a new keypair.
     /// </summary>
     /// <param name="algorithmID">The type of keypair to create.</param>
-    /// <param name="KeySecurity">The key security model</param>
+    /// <param name="keySecurity">The key security model</param>
     /// <param name="KeySize">The key size (ignored if the algorithm supports only one key size)</param>
     /// <param name="Sign">If true, the key may be used for singature operations</param>
     /// <param name="Exchange">If true, the key may be used for exchange operations</param>
-    /// <param name="KeyCollection">The key collection that keys are to be persisted to (dependent on 
-    /// the value of <paramref name="KeySecurity"/></param>
+    /// <param name="keyCollection">The key collection that keys are to be persisted to (dependent on 
+    /// the value of <paramref name="keySecurity"/></param>
     /// <returns>The created key pair</returns>
     public delegate KeyPair FactoryKeyPairDelegate(
-                KeySecurity KeySecurity = KeySecurity.Ephemeral,
-                KeyCollection KeyCollection=null,
-        int KeySize = 0,
-        bool Sign = true,
-        bool Exchange = true,
-        CryptoAlgorithmID algorithmID = CryptoAlgorithmID.NULL);
+                    int keySize = 0,
+                    KeyStorage keyType = KeyStorage.Bound,
+                    KeyUses keyUses = KeyUses.Any,
+                    CryptoAlgorithmID algorithmID = CryptoAlgorithmID.NULL);
 
 
     /// <summary>
     /// Delegate to create a key pair base
     /// </summary>
-    /// <param name="PKIXParameters">The PKIX parameter structure from which to create
+    /// <param name="pkixParameters">The PKIX parameter structure from which to create
     /// the key pair</param>
     /// <returns>The created key pair</returns>
-    public delegate KeyPair FactoryDHPublicKeyDelegate(PKIXPublicKeyDH PKIXParameters);
+    public delegate KeyPair FactoryDHPublicKeyDelegate(PKIXPublicKeyDH pkixParameters);
 
 
     /// <summary>
     /// Delegate to create a key pair base
     /// </summary>
-    /// <param name="Exportable">If true, private key parameters may be exported</param>
-    /// <param name="PKIXParameters">The PKIX parameter structure from which to create
+    /// <param name="keySecurity">The key security rextrictions.</param>
+    /// <param name="keyCollection">The key collection to add the key to.</param>
+    /// <param name="pkixParameters">The PKIX parameter structure from which to create
     /// the key pair</param>
     /// <returns>The created key pair</returns>
-    public delegate KeyPair FactoryDHPrivateKeyDelegate(PKIXPrivateKeyDH PKIXParameters,
-        bool Exportable = false);
+    public delegate KeyPair FactoryDHPrivateKeyDelegate(PKIXPrivateKeyDH pkixParameters,
+        KeyStorage keyType = KeyStorage.Public);
 
 
     /// <summary>
     /// Delegate to create a key pair base
     /// </summary>
-    /// <param name="PKIXParameters">The PKIX parameter structure from which to create
+    /// <param name="pkixParameters">The PKIX parameter structure from which to create
     /// the key pair</param>
     /// <returns>The created key pair</returns>
-    public delegate KeyPair FactoryECDHPublicKeyDelegate(PKIXPublicKeyECDH PKIXParameters);
+    public delegate KeyPair FactoryECDHPublicKeyDelegate(PKIXPublicKeyECDH pkixParameters);
 
 
     /// <summary>
     /// Delegate to create a key pair base
     /// </summary>
-    /// <param name="Exportable">If true, private key parameters may be exported</param>
-    /// <param name="PKIXParameters">The PKIX parameter structure from which to create
+    /// <param name="keySecurity">The key security rextrictions.</param>
+    /// <param name="keyCollection">The key collection to add the key to.</param>
+    /// <param name="pkixParameters">The PKIX parameter structure from which to create
     /// the key pair</param>
     /// <returns>The created key pair</returns>
-    public delegate KeyPair FactoryECDHPrivateKeyDelegate(PKIXPrivateKeyECDH PKIXParameters,
-        bool Exportable = false);
-
-
-    /// <summary>
-    /// Base class for all public key cryptographic providers.
-    /// </summary>
-    public abstract class CryptoProviderAsymmetric : CryptoProvider {
-
-        /// <summary>
-        /// Generates a new signing key pair with the default key size.
-        /// </summary>
-        /// <param name="KeySecurity">Specifies the protection level for the key.</param>
-        /// <param name="KeySize">The key size</param>
-        public abstract void Generate(KeySecurity KeySecurity, int KeySize=0);
-
-        ///// <summary>
-        ///// Locate the private key in the local key store.
-        ///// </summary>
-        ///// <param name="UDF">Fingerprint of key to locate.</param>
-        ///// <returns>True if private key exists.</returns>
-        //public abstract bool FindLocal(string UDF);
-
-
-        /// <summary>
-        /// The default digest algorithm. This may be overridden in subclasses.
-        /// for example, to make a different digest algorithm the default for
-        /// a particular provider.
-        /// </summary>
-        public abstract CryptoAlgorithmID BulkAlgorithmDefault { get; set; }
-
-
-
-        }
+    public delegate KeyPair FactoryECDHPrivateKeyDelegate(PKIXPrivateKeyECDH pkixParameters,
+        KeyStorage keyType = KeyStorage.Public);
 
 
     }

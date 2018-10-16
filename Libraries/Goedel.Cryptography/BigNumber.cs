@@ -45,7 +45,9 @@ namespace Goedel.Cryptography {
             DownBit = Bits % 8;
             UpByte = 0;
             UpBit = 0;
-            BitField = Value.ToByteArray();
+            BitField = Value.ToByteArrayLittleEndian(Length);
+            
+
             DataDown = BitField[DownByte];
             DataUp = BitField[0];
             //this.CountUp = Up;
@@ -240,16 +242,15 @@ namespace Goedel.Cryptography {
                     BigInteger? SqrtMinus1 = null,
                     bool? Odd = null) {
             BigInteger x = 0;
-            if (x2 % 4 == 3) {
+            if (p % 4 == 3) {
                 x = BigInteger.ModPow(x2, (p + 1) / 4, p);
                 }
-            else {
+            else if (p % 8 == 5) {
                 x = Sqrt8k5(x2, p, SqrtMinus1, Odd);
                 }
-            //if (x2%8 == 5) {
-            //    return Sqrt8k5(x2, p, SqrtMinus1, Odd);
-            //    }
-            //throw new NYI("Square root not implemented for p%8 = 1");
+            else {
+                throw new NYI("Square root not implemented for p%8 = 1");
+                }
 
             if (Odd == null) {
                 return x;
@@ -288,7 +289,33 @@ namespace Goedel.Cryptography {
         /// <returns>x mod p</returns>
         public static BigInteger Mod(this int x, BigInteger p) => Mod((BigInteger)x, p);
 
+        /// <summary>
+        /// Convert <paramref name="bigInteger"/> to a byte array in little endian format.
+        /// </summary>
+        /// <param name="bigInteger">The integer to be converted.</param>
+        /// <returns>The byte array.</returns>
+        public static byte[] ToByteArrayLittleEndian(this BigInteger bigInteger) => bigInteger.ToByteArray();
 
+        /// <summary>
+        /// Convert <paramref name="bigInteger"/> to a byte array in little endian format,
+        /// padding the resulting array so that it is at least <paramref name="length"/>
+        /// bytes in length.
+        /// </summary>
+        /// <param name="bigInteger">The integer to be converted.</param>
+        /// <param name="length">The minimum length of the result.</param>
+        /// <returns>The byte array.</returns>
+        public static byte[] ToByteArrayLittleEndian(this BigInteger bigInteger, int length) {
+
+            var Result = bigInteger.ToByteArray();
+            if (Result.Length >= length) {
+                return Result;
+                }
+
+            var Copy = new byte[length];
+            Array.Copy(Result, Copy, Result.Length);
+            return Copy;
+
+            }
 
         }
     }

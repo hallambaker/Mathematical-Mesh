@@ -177,5 +177,16 @@ namespace Goedel.Cryptography.Jose {
             return Found ? Result : null;
             }
 
+
+        public static KeyUses GetUses(this string tag) {
+            switch (tag) {
+                case "enc":
+                    return KeyUses.Encrypt;
+                case "sig":
+                    return KeyUses.Sign;
+                }
+            return KeyUses.Any;
+            }
+
         }
     }

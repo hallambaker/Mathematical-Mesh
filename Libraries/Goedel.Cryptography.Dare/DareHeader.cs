@@ -270,7 +270,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="i">Index of the EDSS entry to decrypt.</param>
         /// <returns>The decrypted data.</returns>
-        public byte[] DataSequence(int i) => CryptoStack.Decode(EDSS[i]);
+        public byte[] DataSequence(int i) => CryptoStack.DecodeEDS(EDSS[i]);
 
         }
 
@@ -299,7 +299,7 @@ namespace Goedel.Cryptography.Dare {
 
                 if (DecryptionKey != null) {
                     return DecryptionKey.Decrypt(Recipient.WrappedMasterKey, Recipient.Epk.KeyPair, 
-                        AlgorithmID: AlgorithmID, Salt: DareRecipient.KDFSalt);
+                        algorithmID: AlgorithmID, salt: DareRecipient.KDFSalt);
                     }
                 }
 
