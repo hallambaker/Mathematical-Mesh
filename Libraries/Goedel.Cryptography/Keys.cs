@@ -69,7 +69,8 @@ namespace Goedel.Cryptography {
     /// <param name="pkixParameters"></param>
     /// <returns></returns>
     public delegate KeyPair FactoryRSAPrivateKeyDelegate(
-            PKIXPrivateKeyRSA pkixParameters);
+            PKIXPrivateKeyRSA pkixParameters,
+            KeyStorage keyStorage, KeyCollection keyCollection);
 
     /// <summary>
     /// RSA Key Pair
@@ -90,13 +91,13 @@ namespace Goedel.Cryptography {
         /// Construct a KeyPair entry from PKIX parameters. Defaults to the built in
         /// provider.
         /// </summary>
-        public static FactoryRSAPublicKeyDelegate KeyPairPublicFactory;
+        public static FactoryRSAPublicKeyDelegate KeyPairPublicFactory = KeyPairRSA.KeyPairPublicFactory;
 
         /// <summary>
         /// Construct a KeyPair entry from PKIX parameters. Initialized by the cryptographic
         /// platform provider.
         /// </summary>
-        public static FactoryRSAPrivateKeyDelegate KeyPairPrivateFactory;
+        public static FactoryRSAPrivateKeyDelegate KeyPairPrivateFactory = KeyPairRSA.KeyPairPrivateFactory;
 
 
 
@@ -114,7 +115,7 @@ namespace Goedel.Cryptography {
         /// <param name="pkixKey">The private key parameters.</param>
         /// <returns>The created key pair.</returns>
         public static KeyPair Create(PKIXPrivateKeyRSA pkixKey = null) =>
-            KeyPairPrivateFactory(pkixKey);
+            KeyPairPrivateFactory(pkixKey, KeyStorage.Exportable, null);
 
         }
 

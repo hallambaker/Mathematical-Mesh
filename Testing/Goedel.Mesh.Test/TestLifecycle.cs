@@ -82,7 +82,7 @@ namespace Goedel.Mesh.Test {
             var Encrypter = KeyPair.Factory(CryptoAlgorithmID, KeySecurity.Ephemeral, keyCollection, keySize: KeySize);
             Encrypter.Test_EncryptDecrypt();
             TestExport(Encrypter, Exportable);
-            CheckPersisted(Encrypter.UDF, keyCollection, true, Exportable);
+            CheckPersisted(Encrypter.UDF, keyCollection, false, Exportable);
             }
 
         /// <summary>Test for lifecycle of ephemeral key. Key can be created and used but FindLocal

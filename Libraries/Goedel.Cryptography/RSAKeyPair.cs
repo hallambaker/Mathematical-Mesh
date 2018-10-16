@@ -42,7 +42,13 @@ namespace Goedel.Cryptography {
 
         #region //Properties
         ///<summary>The private key parameters represented in PKIX form</summary>
-        public override IPKIXPrivateKey PKIXPrivateKey => PKIXPrivateKeyRSA;
+        public override IPKIXPrivateKey PKIXPrivateKey {
+            get {
+                Assert.NotNull(PKIXPrivateKeyRSA, NotExportable.Throw);
+                return PKIXPrivateKeyRSA;
+                }
+            }
+
 
         ///<summary>The public key parameters represented in PKIX form</summary>
         public override IPKIXPublicKey PKIXPublicKey => PKIXPublicKeyRSA;
@@ -50,18 +56,7 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Return private key parameters in PKIX structure
         /// </summary>
-        public override PKIXPrivateKeyRSA PKIXPrivateKeyRSA {
-            get {
-                try {
-
-                    var PrivateParameters = Provider.ExportParameters(true);
-                    return PrivateParameters.RSAPrivateKey();
-                    }
-                catch (System.Security.Cryptography.CryptographicException) {
-                    throw new NotExportable();
-                    }
-                }
-            }
+        public override PKIXPrivateKeyRSA PKIXPrivateKeyRSA { get; }
 
         /// <summary>
         /// Return public key parameters in PKIX structure
@@ -118,6 +113,12 @@ namespace Goedel.Cryptography {
             KeyType = keyType;
             KeyUses = keyUses;
             PublicParameters = rsa.ExportParameters(false);
+
+
+            if (keyType.IsExportable()) {
+                var PrivateParameters = Provider.ExportParameters(true);
+                PKIXPrivateKeyRSA= PrivateParameters.RSAPrivateKey();
+                }
 
             //switch (keyType) {
             //    case KeyStorage.Bound: {
@@ -205,7 +206,7 @@ namespace Goedel.Cryptography {
             Assert.True(KeyType == KeyStorage.Exportable | KeyType == KeyStorage.Persistable);
             var privateParameters = Provider.ExportParameters(true);
             var pkix = privateParameters.RSAPrivateKey();
-            keyCollection.Persist(pkix);
+            keyCollection.Persist(pkix, KeyType.IsExportable());
             }
 
         /// <summary>
@@ -257,9 +258,10 @@ namespace Goedel.Cryptography {
         /// <param name="PKIXParameters">The parameters to construct from</param>
         /// <returns>The created key pair</returns>
         public static new KeyPair KeyPairPrivateFactory (
-                PKIXPrivateKeyRSA PKIXParameters) {
+                PKIXPrivateKeyRSA PKIXParameters,
+        KeyStorage keyStorage, KeyCollection keyCollection) {
             var RSAParameters = PKIXParameters.RSAParameters();
-            return new KeyPairRSA(RSAParameters);
+            return new KeyPairRSA(RSAParameters, keyStorage);
             }
 
 

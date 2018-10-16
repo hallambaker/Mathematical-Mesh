@@ -164,7 +164,7 @@ namespace Goedel.Cryptography {
         public override void Persist(KeyCollection keyCollection) {
             Assert.True(KeyType == KeyStorage.Exportable | KeyType == KeyStorage.Persistable);
             var pkix = PKIXPrivateKeyECDH ?? new PKIXPrivateKeyEd25519() { Data = EncodedPrivateKey };
-            keyCollection.Persist(pkix);
+            keyCollection.Persist(pkix, KeyType.IsExportable());
             }
 
 
@@ -401,7 +401,7 @@ namespace Goedel.Cryptography {
         public override void Persist(KeyCollection keyCollection) {
             Assert.True(KeyType == KeyStorage.Exportable | KeyType == KeyStorage.Persistable);
             var pkix = PKIXPrivateKeyECDH ?? new PKIXPrivateKeyX448() { Data = EncodedPrivateKey };
-            keyCollection.Persist(pkix);
+            keyCollection.Persist(pkix, KeyType.IsExportable());
             }
 
         #region // Operations

@@ -67,19 +67,18 @@ namespace Goedel.Cryptography {
             KeyUses = keyUses;
             if (keyType == KeyStorage.Public) {
                 PublicKey = new CurveEdwards25519Public(key);
+                PKIXPublicKeyECDH = new PKIXPublicKeyEd25519(PublicKey.Encoding);
                 }
             else {
                 EncodedPrivateKey = key;
                 PrivateKey = new CurveEdwards25519Private(key);
                 PublicKey = PrivateKey.Public;
+                PKIXPublicKeyECDH = new PKIXPublicKeyEd25519(PublicKey.Encoding);
                 if (keyType == KeyStorage.Exportable) {
-                    var PKIXPrivateKeyECDH = new PKIXPrivateKeyEd25519() {
-                        Data = key
-                        };
-                    this.PKIXPrivateKeyECDH = PKIXPrivateKeyECDH; // Enable export.
+                    PKIXPrivateKeyECDH = new PKIXPrivateKeyEd25519(key, PKIXPublicKeyECDH);
                     }
                 }
-            PKIXPublicKeyECDH = new PKIXPublicKeyEd25519(PublicKey.Encoding);
+            
             }
 
 
@@ -161,7 +160,7 @@ namespace Goedel.Cryptography {
         public override void Persist(KeyCollection keyCollection) {
             Assert.True(KeyType == KeyStorage.Exportable | KeyType == KeyStorage.Persistable);
             var pkix = PKIXPrivateKeyECDH ?? new PKIXPrivateKeyEd25519(EncodedPrivateKey, PKIXPublicKeyECDH) { };
-            keyCollection.Persist(pkix);
+            keyCollection.Persist(pkix, KeyType.IsExportable());
             }
 
 
@@ -351,18 +350,18 @@ namespace Goedel.Cryptography {
             KeyUses = keyUses;
             if (keyType == KeyStorage.Public) {
                 PublicKey = new CurveEdwards448Public(key);
+                PKIXPublicKeyECDH = new PKIXPublicKeyEd448(PublicKey.Encoding);
                 }
             else {
                 EncodedPrivateKey = key;
                 PrivateKey = new CurveEdwards448Private(key);
                 PublicKey = PrivateKey.Public;
+                PKIXPublicKeyECDH = new PKIXPublicKeyEd448(PublicKey.Encoding);
                 if (keyType == KeyStorage.Exportable) {
-                    PKIXPrivateKeyECDH = new PKIXPrivateKeyEd448() {
-                        Data = key
-                        };
+                    PKIXPrivateKeyECDH = new PKIXPrivateKeyEd448(key, PKIXPublicKeyECDH);
                     }
                 }
-            PKIXPublicKeyECDH = new PKIXPublicKeyEd448(PublicKey.Encoding);
+            
             }
 
 
@@ -442,7 +441,7 @@ namespace Goedel.Cryptography {
         public override void Persist(KeyCollection keyCollection) {
             Assert.True(KeyType == KeyStorage.Exportable | KeyType == KeyStorage.Persistable);
             var pkix = PKIXPrivateKeyECDH ?? new PKIXPrivateKeyEd448(EncodedPrivateKey, PKIXPublicKeyECDH) { };
-            keyCollection.Persist(pkix);
+            keyCollection.Persist(pkix, KeyType.IsExportable());
             }
 
         #region // Operations

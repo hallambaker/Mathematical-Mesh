@@ -1425,6 +1425,17 @@ namespace Goedel.Cryptography.Jose {
 	/// RFC 7517
 	/// </summary>
 	public partial class Key : KeyData {
+		bool								__Exportable = false;
+		private bool						_Exportable;
+        /// <summary>
+        ///If true, a stored key may be exported from the machine on 
+        ///which it is stored.
+        /// </summary>
+
+		public virtual bool						Exportable {
+			get => _Exportable;
+			set {_Exportable = value; __Exportable = true; }
+			}
         /// <summary>
         ///Key type
         /// </summary>
@@ -1488,6 +1499,11 @@ namespace Goedel.Cryptography.Jose {
 				_Writer.WriteObjectStart ();
 				}
 			((KeyData)this).SerializeX(_Writer, false, ref _first);
+			if (__Exportable){
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Exportable", 1);
+					_Writer.WriteBoolean (Exportable);
+				}
 			if (Kty != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("kty", 1);
@@ -1540,6 +1556,10 @@ namespace Goedel.Cryptography.Jose {
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
+				case "Exportable" : {
+					Exportable = JSONReader.ReadBoolean ();
+					break;
+					}
 				case "kty" : {
 					Kty = JSONReader.ReadString ();
 					break;

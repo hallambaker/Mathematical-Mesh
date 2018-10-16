@@ -43,10 +43,10 @@ namespace Scratchpad {
             //TestLifecycle.Test.Test_LifecycleEphemeral(CryptoAlgorithmID.RSAExch);
             //TestLifecycle.Test.Test_LifecycleExportable(CryptoAlgorithmID.RSAExch);
 
-            TestLifecycle.Test().Test_LifecycleDevice(CryptoAlgorithmID.RSASign);
-            TestLifecycle.Test().Test_LifecycleDevice(CryptoAlgorithmID.Ed25519);
-            TestLifecycle.Test().Test_LifecycleDevice(CryptoAlgorithmID.Ed448);
-            TestLifecycle.Test().Test_LifecycleDevice(CryptoAlgorithmID.DH);
+            //TestLifecycle.Test().Test_LifecycleDevice(CryptoAlgorithmID.RSASign);
+            //TestLifecycle.Test().Test_LifecycleEphemeral(CryptoAlgorithmID.Ed25519);
+            TestLifecycle.Test().Test_LifecycleExportable(CryptoAlgorithmID.RSASign);
+            TestLifecycle.Test().Test_LifecycleMaster(CryptoAlgorithmID.RSASign);
 
 
 

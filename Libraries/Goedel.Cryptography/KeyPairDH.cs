@@ -213,7 +213,7 @@ namespace Goedel.Cryptography {
                 Private = PrivateKey.Private.ToByteArray(),
                 Public = PrivateKey.Public.ToByteArray(),
                 };
-            keyCollection.Persist(pkix);
+            keyCollection.Persist(pkix, KeyType.IsExportable());
             }
 
 

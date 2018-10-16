@@ -63,7 +63,7 @@ namespace Goedel.Cryptography.Core {
             }
 
 
-        public override void Persist(IPKIXPrivateKey privateKey) {
+        public override void Persist(IPKIXPrivateKey privateKey, bool exportable) {
 
             var udf = privateKey.UDF();
             var fileName = Path.Combine(DirectoryKeys, udf);
@@ -71,6 +71,7 @@ namespace Goedel.Cryptography.Core {
             // keys are persisted as plaintext for now.
 
             var joseKey = Key.Factory(privateKey);
+            joseKey.Exportable = exportable;
             var plaintext = joseKey.ToJson(true);
 
             Directory.CreateDirectory(DirectoryKeys);
@@ -83,11 +84,16 @@ namespace Goedel.Cryptography.Core {
         public override KeyPair Locate(string udf) {
 
             var fileName = Path.Combine(DirectoryKeys, udf);
-            fileName.OpenReadToEnd(out var data);
-            var key = Key.FromJSON(data.JSONReader(), true);
-            return key.KeyPair;
 
-            return base.Locate(udf);
+            try {
+
+                fileName.OpenReadToEnd(out var data);
+                var key = Key.FromJSON(data.JSONReader(), true);
+                return key.GetKeyPair (key.Exportable ? KeyStorage.Exportable : KeyStorage.Bound, this);
+                }
+            catch {
+                return base.Locate(udf);
+                }
             }
 
         }

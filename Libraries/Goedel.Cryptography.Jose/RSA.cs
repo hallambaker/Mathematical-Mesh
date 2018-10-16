@@ -125,7 +125,7 @@ namespace Goedel.Cryptography.Jose {
         public override KeyPair GetKeyPair (KeyStorage keyStorage, KeyCollection keyCollection) {
 
             var PKIXParams = PKIXPublicKeyRSA;
-            var KeyPair = KeyPairBaseRSA.KeyPairPrivateFactory(PKIXPrivateKeyRSA);
+            var KeyPair = KeyPairBaseRSA.KeyPairPrivateFactory(PKIXPrivateKeyRSA, keyStorage, keyCollection);
 
             return KeyPair;
             }

@@ -115,7 +115,7 @@ namespace Goedel.Cryptography {
 
             }
 
-        public abstract void Persist(IPKIXPrivateKey privateKey);
+        public abstract void Persist(IPKIXPrivateKey privateKey, bool Exportable);
 
 
         /// <summary>

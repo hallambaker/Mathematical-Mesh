@@ -208,7 +208,11 @@
 		Description
 			|A JOSE key. All fields map onto the equivalent fields defined in
 			|RFC 7517
-		Inherits KeyData		
+		Inherits KeyData
+		Boolean Exportable
+			Description
+				|If true, a stored key may be exported from the machine on 
+				|which it is stored.
 		String Kty
 			Tag "kty"
 			Description
