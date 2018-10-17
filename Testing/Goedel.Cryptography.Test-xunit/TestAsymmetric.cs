@@ -10,7 +10,7 @@ namespace Goedel.Cryptography.Test_xunit {
     public class TestAsymmetric {
 
         public TestAsymmetric() => CryptographyCommon.Initialize();
-        public static TestAsymmetric Test => new TestAsymmetric();
+        public static TestAsymmetric Test() => new TestAsymmetric();
 
 
         [Theory]
@@ -26,7 +26,10 @@ namespace Goedel.Cryptography.Test_xunit {
         }
 
     public class TestVectorAsymmetric {
+
+
         public CryptoAlgorithmID Algorithm;
+
 
         public string SecretKey;
         public byte[] SecretKeyData => SecretKey.FromBase16();
@@ -76,11 +79,10 @@ namespace Goedel.Cryptography.Test_xunit {
             Console.WriteLine($"Test Private {SecretKey}");
 
             // Check the public key value is correct
-            var KeyPrivate = KeyPairECDH.KeyPairFactory(SecretKeyData, CryptoAlgorithmID: Algorithm);
+            var KeyPrivate = KeyPairECDH.KeyPairFactory(SecretKeyData, KeyStorage.Ephemeral, CryptoAlgorithmID: Algorithm);
             Xunit.Assert.True(PublicKeyData.IsEqualTo(KeyPrivate.PublicData));
 
-            var KeyPublic = KeyPairECDH.KeyPairFactory(PublicKeyData,
-                        KeyStorage.Bound, CryptoAlgorithmID: Algorithm);
+            var KeyPublic = KeyPairECDH.KeyPairFactory(PublicKeyData, KeyStorage.Public, CryptoAlgorithmID: Algorithm);
 
             //// Sign
             var SignatureTest = KeyPrivate.SignHash(MessageData, Algorithm, ContextData);

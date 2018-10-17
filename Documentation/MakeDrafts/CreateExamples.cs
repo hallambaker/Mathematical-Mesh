@@ -274,7 +274,7 @@ namespace ExampleGenerator {
 
 
         void GoContainer() {
-            var CryptoParametersPlaintext = new CryptoParametersTest();
+            var CryptoParametersPlaintext = new Goedel.Test.CryptoParametersTest();
 
             // Simple
             var TContainer = MakeContainer("Test1List", CryptoParametersPlaintext, ContainerType.List);

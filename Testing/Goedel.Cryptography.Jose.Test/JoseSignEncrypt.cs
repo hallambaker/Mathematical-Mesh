@@ -15,6 +15,7 @@ namespace Goedel.Cryptography.Jose.Test {
 
     public partial class TestCryptographyJose {
 
+        public static TestCryptographyJose Test() => new TestCryptographyJose();
 
         string TestString = "This is a test";
         string TestStringBad = "This is a Test"; // Flip one bit
@@ -124,7 +125,7 @@ namespace Goedel.Cryptography.Jose.Test {
             var Key = new PublicKeyDH(TestKeyPairDH.PKIXPublicKeyDH);
 
             var Text = Key.ToJson();
-            (Directories.Results + "Test_Write_RSA_Public.jpub").WriteFileNew(Text);
+            (Directories.Results + "Test_Write_DH_Public.jpub").WriteFileNew(Text);
 
             // TEST: check that the key can be read back and used???
             }
@@ -134,7 +135,7 @@ namespace Goedel.Cryptography.Jose.Test {
             var Key = new PrivateKeyDH(TestKeyPairDH.PKIXPrivateKeyDH);
 
             var Text = Key.ToJson(true);
-            (Directories.Results + "Test_Write_RSA_Private.jprv").WriteFileNew(Text);
+            (Directories.Results + "Test_Write_DH_Private.jprv").WriteFileNew(Text);
 
             // TEST: check that the key can be read back and used???
             }

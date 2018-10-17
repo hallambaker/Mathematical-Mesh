@@ -41,6 +41,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// <param name="Bits">The number of bits, this identifies the group modulus </param>
         public DiffeHellmanPublic(int Bits=2048) {
             switch (Bits) {
+                case 0:
                 case 2048: {
                     DHDomain = DHDomain.DHDomain2048;
                     break;

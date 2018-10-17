@@ -19,7 +19,6 @@
     <ProjectReference Include="..\..\Mesh\Goedel.Mesh\Goedel.Mesh.csproj" />
     <ProjectReference Include="..\Goedel.ASN.Test\Goedel.ASN.Test.csproj" />
     <ProjectReference Include="..\Goedel.Cryptography.Algorithms.Test\Goedel.Cryptography.Algorithms.Test.csproj" />
-    <ProjectReference Include="..\Goedel.Cryptography.Dare.Test\Goedel.Cryptography.Dare.Test.csproj" />
     <ProjectReference Include="..\Goedel.Cryptography.DH.Test\Goedel.Cryptography.DH.Test.csproj" />
     <ProjectReference Include="..\Goedel.Cryptography.Jose.Test\Goedel.Cryptography.Jose.Test.csproj" />
     <ProjectReference Include="..\Goedel.Cryptography.KeyFile.Test\Goedel.Cryptography.KeyFile.Test.csproj" />

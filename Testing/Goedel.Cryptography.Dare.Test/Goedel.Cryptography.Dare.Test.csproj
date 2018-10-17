@@ -57,7 +57,6 @@
     </Compile>
     <Compile Include="TestExamplePlus.cs" />
     <Compile Include="TestFileContainer.cs" />
-    <Compile Include="TestJBCD.cs" />
     <Compile Include="TestJContainer.cs" />
     <Compile Include="TestSimple.cs" />
   </ItemGroup>

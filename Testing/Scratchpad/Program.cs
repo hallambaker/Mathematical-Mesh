@@ -9,7 +9,6 @@ using Goedel.Cryptography.KeyFile;
 using Goedel.Test;
 using Goedel.Utilities;
 using Goedel.Protocol.Test;
-using Goedel.Cryptography.Dare.Test;
 using Goedel.Cryptography.Algorithms;
 using Goedel.Cryptography.Test;
 using Goedel.Cryptography.Jose.Test;
@@ -29,8 +28,12 @@ namespace Scratchpad {
         static void Main(string[] args) {
             Console.WriteLine("Hello World");
 
+            //TestDare.TestDirect();
+            //TestEnvironment.Initialize(true);
 
-            TestEnvironment.Initialize(true);
+            //TestCryptographyJose.InitializeClass();
+            //TestCryptographyJose.Test().Test_Write_DH_Private();
+            //TestAsymmetric.Test().EncryptTest(CryptoAlgorithmID.DH);
 
             //var TestSplit = new TestSplit();
             //TestSplit.TestShares(3, 2);
@@ -55,7 +58,7 @@ namespace Scratchpad {
 
             //TestAsymmetric.Test.EncryptTest(CryptoAlgorithmID.DH);
             //foreach (var Test in new RFC8032()) {
-            //    TestAsymmetric.Test.TestRFC8032((TestVectorAsymmetric)Test[0]);
+            //    TestAsymmetric.Test().TestRFC8032((TestVectorAsymmetric)Test[0]);
             //    }
 
             //TestProfilesWindows.TestDirect();
@@ -79,7 +82,7 @@ namespace Scratchpad {
             //string FileName = "TopSecret.jcx";
             string TestData = "<h1>Tippety Top Secret</h1>";
             var Recipients = new List<string> { "Alice@example.com" };
-            var CryptoParameters = new CryptoParametersTest(
+            var CryptoParameters = new Goedel.Test.CryptoParametersTest(
                         Recipients: Recipients);
 
 

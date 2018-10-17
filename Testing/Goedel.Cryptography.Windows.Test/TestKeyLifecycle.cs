@@ -13,9 +13,7 @@ namespace Goedel.Cryptography.Windows.Test {
         KeyCollection KeyCollection;
 
         [AssemblyInitialize]
-        public void Initialize() {
-            KeyCollection = new KeyCollectionWindows();
-            }
+        public void Initialize() => KeyCollection = new KeyCollectionWindows();
 
 
         /// <summary>

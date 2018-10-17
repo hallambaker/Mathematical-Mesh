@@ -16,7 +16,7 @@ namespace Goedel.Cryptography.Dare.Test {
         /// </summary>
         public static void TestDirect() {
             InitializeClass();
-            Test.MessageEncrypted();
+            //Test.MessageEncrypted();
 
 
             //var Test1 = Platform.GetRandomBytes(100);
@@ -65,9 +65,10 @@ namespace Goedel.Cryptography.Dare.Test {
 
         [MT.AssemblyInitialize]
         public static void InitializeClass(MT.TestContext Context) => InitializeClass();
+
         public static void InitializeClass() {
             global::Goedel.IO.Debug.Initialize();
-            CryptographyWindows.Initialize();
+            Cryptography.Initialize();
             }
 
         }
@@ -82,7 +83,7 @@ namespace Goedel.Cryptography.Dare.Test {
             var TestContainers = new TestContainers();
 
             //TestDare.MessagePlaintext();
-            TestContainers.ContainerTestList();
+            //TestContainers.ContainerTestList();
             //TestDare.MessageEncryptedAtomic();
 
             }

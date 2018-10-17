@@ -60,11 +60,11 @@ namespace Goedel.Cryptography.Jose.Test {
             EncrypterKeyPair = (KeyPairBaseRSA)KeyFileDecode.DecodePEM(Directories.TestKey_OpenSSH_Private);
             //Encrypter = EncrypterKeyPair.ExchangeProvider();
             
-            AliceKeyPair = new KeyPairDH();
-            BobKeyPair = new KeyPairDH();
-            GroupKeyPair = new KeyPairDH();
+            AliceKeyPair = new KeyPairDH(keyType: KeyStorage.Exportable);
+            BobKeyPair = new KeyPairDH(keyType: KeyStorage.Exportable);
+            GroupKeyPair = new KeyPairDH(keyType: KeyStorage.Exportable);
 
-            TestKeyPairDH = new KeyPairDH();
+            TestKeyPairDH = new KeyPairDH(keyType:KeyStorage.Exportable);
             TestKeyPairRSA = SignerKeyPair;
             }
 
