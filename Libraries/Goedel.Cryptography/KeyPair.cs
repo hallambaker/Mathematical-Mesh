@@ -20,11 +20,11 @@ namespace Goedel.Cryptography {
         public string StrongInternetName => Locator + ".mm--" + UDF;
 
         /// <summary>The supported key uses (e.g. signing, encryption)</summary>
-        public abstract KeyUses KeyUses { get; } 
+        public abstract KeyUses KeyUses { get; }
 
 
-
-        public virtual KeyStorage KeyType { get; } = KeyStorage.Public;
+        ///<summary>The key security model</summary>
+        public virtual KeySecurity KeySecurity { get; protected set; } = KeySecurity.Public;
 
         /// <summary>
         /// If true, keys will be created in containers prefixed with the name
@@ -36,10 +36,17 @@ namespace Goedel.Cryptography {
         /// If true, the key has been written to persistent storage and will be 
         /// locatable by UDF after the application instance has terminated.
         /// </summary>
-        public bool IsPersisted { get; set; } = false;
+        public bool IsPersisted = false;
 
-        ///<summary>The Key Security level.</summary>
-        public KeySecurity KeySecurity { get; private set; } = KeySecurity.PublicOnly;
+        /// <summary>
+        /// If true, the KeySecurity model marks the key to be persisted but the key has not
+        /// (yet) been stored.
+        /// </summary>
+        public bool PersistPending => (KeySecurity.IsPersisted() & !IsPersisted);
+
+
+        /////<summary>The Key Security level.</summary>
+        //public KeyStorage KeySecurity { get; private set; } = KeyStorage.Public;
 
         /// <summary>
         /// Return the CryptoAlgorithmID that would be used with the specified base parameters.
@@ -138,10 +145,11 @@ namespace Goedel.Cryptography {
         /// KeyPair type.
         /// </summary>
         /// <param name="algorithmID">The type of keypair to create.</param>
-        /// <param name="keySecurity">The key security model</param>
         /// <param name="keySize">The key size (ignored if the algorithm supports only one key size)</param>
+        /// <param name="keySecurity">The key security model</param>
         /// <param name="keyCollection">The key collection that keys are to be persisted to (dependent on 
         /// the value of <paramref name="keySecurity"/></param>
+        /// <param name="keyUses">The permitted uses (signing, exchange) for the key.</param>
         /// <returns>The created key pair</returns>
         public static KeyPair Factory(
                     CryptoAlgorithmID algorithmID,
@@ -151,27 +159,26 @@ namespace Goedel.Cryptography {
                     KeyUses keyUses = KeyUses.Any) {
 
             KeyPair keyPair=null;
-            var keyType = keySecurity.Storage();
 
             switch (algorithmID) {
                 case CryptoAlgorithmID.RSAExch: {
-                    keyPair = KeyPairFactoryRSA(keySize, keyType, KeyUses.Encrypt, algorithmID);
+                    keyPair = KeyPairFactoryRSA(keySize, keySecurity, KeyUses.Encrypt, algorithmID);
                     break;
                     }
 
                 case CryptoAlgorithmID.RSASign: {
-                    keyPair = KeyPairFactoryRSA(keySize, keyType, KeyUses.Sign, algorithmID);
+                    keyPair = KeyPairFactoryRSA(keySize, keySecurity, KeyUses.Sign, algorithmID);
                     break;
                     }
                 case CryptoAlgorithmID.DH: {
-                    keyPair = KeyPairFactoryDH(keySize, keyType, keyUses, algorithmID);
+                    keyPair = KeyPairFactoryDH(keySize, keySecurity, keyUses, algorithmID);
                     break;
                     }
                 case CryptoAlgorithmID.X25519:
                 case CryptoAlgorithmID.Ed25519: 
                 case CryptoAlgorithmID.X448:
                 case CryptoAlgorithmID.Ed448: {
-                    keyPair = KeyPairFactoryECDH(keySize, keyType, keyUses, algorithmID);
+                    keyPair = KeyPairFactoryECDH(keySize, keySecurity, keyUses, algorithmID);
                     break;
                     }
 
@@ -180,7 +187,7 @@ namespace Goedel.Cryptography {
             Assert.NotNull(keyPair, NoProviderSpecified.Throw);
             keyPair.KeySecurity = keySecurity;
 
-            if (keyType != KeyStorage.Ephemeral) {
+            if (keySecurity != KeySecurity.Ephemeral) {
                 keyCollection = keyCollection ?? KeyCollection.Default;
 
                 keyCollection.Persist(keyPair);

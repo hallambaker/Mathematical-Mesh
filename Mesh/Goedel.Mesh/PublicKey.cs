@@ -119,32 +119,32 @@ namespace Goedel.Mesh {
 
 
     public partial class PublicKey {
-        /// <summary>
-        /// Return the initial key security level for a key type
-        /// </summary>
-        /// <param name="KeyType">Type of key</param>
-        /// <returns>Initial security level</returns>
-        public static KeySecurity GetKeySecurity(KeyType KeyType) {
-            switch (KeyType) {
-                case KeyType.DSK:
-                case KeyType.DEK:
-                case KeyType.DAK: {
-                    return KeySecurity.Device;
-                    }
-                case KeyType.ASK:
-                case KeyType.AEK:
-                case KeyType.AAK:
-                    {
-                    return KeySecurity.Exportable;
-                    }
-                case KeyType.PMSK:
-                case KeyType.POSK:
-                case KeyType.PMEK: {
-                    return KeySecurity.Master;
-                    }
-                }
-            return KeySecurity.Ephemeral;
-            }
+        ///// <summary>
+        ///// Return the initial key security level for a key type
+        ///// </summary>
+        ///// <param name="KeyType">Type of key</param>
+        ///// <returns>Initial security level</returns>
+        //public static KeyStorage GetKeySecurity(KeyType KeyType) {
+        //    switch (KeyType) {
+        //        case KeyType.DSK:
+        //        case KeyType.DEK:
+        //        case KeyType.DAK: {
+        //            return KeyStorage.Device;
+        //            }
+        //        case KeyType.ASK:
+        //        case KeyType.AEK:
+        //        case KeyType.AAK:
+        //            {
+        //            return KeyStorage.Exportable;
+        //            }
+        //        case KeyType.PMSK:
+        //        case KeyType.POSK:
+        //        case KeyType.PMEK: {
+        //            return KeyStorage.Master;
+        //            }
+        //        }
+        //    return KeyStorage.Ephemeral;
+        //    }
 
         //public List<Certificate> Chain;
 
@@ -226,10 +226,10 @@ namespace Goedel.Mesh {
 
         private KeyPair GetKeyPair () {
             if (PrivateParameters != null) {
-                return PrivateParameters.GetKeyPair(KeyStorage.Bound);
+                return PrivateParameters.GetKeyPair(KeySecurity.Bound);
                 }
             if (PublicParameters != null) {
-                return PublicParameters.GetKeyPair(KeyStorage.Bound);
+                return PublicParameters.GetKeyPair(KeySecurity.Bound);
                 }
             Assert.Fail(NYI.Throw,"Need to construct from the private parameters.");
 
@@ -238,32 +238,32 @@ namespace Goedel.Mesh {
  
 
 
-        /// <summary>
-        /// Generate a new key pair and return a PublicKey object for the public 
-        /// parameters.
-        /// </summary>
-        /// <param name="KeyType">The mest key type.</param>
-        /// <param name="CryptoAlgorithmID">The algorithm to generate keys for.</param>
-        /// <returns>The generated key pair</returns>
-        public static PublicKey Generate(KeyType KeyType, CryptoAlgorithmID CryptoAlgorithmID) {
+        ///// <summary>
+        ///// Generate a new key pair and return a PublicKey object for the public 
+        ///// parameters.
+        ///// </summary>
+        ///// <param name="KeyType">The mest key type.</param>
+        ///// <param name="CryptoAlgorithmID">The algorithm to generate keys for.</param>
+        ///// <returns>The generated key pair</returns>
+        //public static PublicKey Generate(KeyType KeyType, CryptoAlgorithmID CryptoAlgorithmID) {
 
-            //var KeyClass = KeyType.AlgorithmClass();
-            //CryptoProviderAsymmetric CryptoProvider;
-            //if (KeyClass == CryptoAlgorithmClass.Signature) {
-            //    CryptoProvider = CryptoCatalog.Default.GetSignature(CryptoAlgorithmID);
-            //    }
-            //else {
-            //    CryptoProvider = CryptoCatalog.Default.GetExchange(CryptoAlgorithmID);
-            //    }
-            //var KeySecurity = GetKeySecurity(KeyType);
-            //CryptoProvider.Generate(KeySecurity);
-            //var KeyPair = CryptoProvider.KeyPair;
+        //    //var KeyClass = KeyType.AlgorithmClass();
+        //    //CryptoProviderAsymmetric CryptoProvider;
+        //    //if (KeyClass == CryptoAlgorithmClass.Signature) {
+        //    //    CryptoProvider = CryptoCatalog.Default.GetSignature(CryptoAlgorithmID);
+        //    //    }
+        //    //else {
+        //    //    CryptoProvider = CryptoCatalog.Default.GetExchange(CryptoAlgorithmID);
+        //    //    }
+        //    //var KeySecurity = GetKeySecurity(KeyType);
+        //    //CryptoProvider.Generate(KeySecurity);
+        //    //var KeyPair = CryptoProvider.KeyPair;
 
 
 
-            var KeyPairNew = KeyPair.Factory(CryptoAlgorithmID, GetKeySecurity(KeyType));
-            return new PublicKey (KeyPairNew);
-            }
+        //    var KeyPairNew = KeyPair.Factory(CryptoAlgorithmID, GetKeySecurity(KeyType));
+        //    return new PublicKey (KeyPairNew);
+        //    }
 
         /// <summary>
         /// Default Constructor

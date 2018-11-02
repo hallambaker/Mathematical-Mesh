@@ -62,10 +62,14 @@ namespace Goedel.Cryptography.KeyFile {
         /// </summary>
         /// <param name="FileName">Name of the file</param>
         /// <returns>Public key information</returns>
-        public static KeyPair DecodePEM(string FileName) {
+        /// <param name="keySecurity">The key security model</param>
+        /// <param name="keyCollection">The key collection that keys are to be persisted to (dependent on 
+        /// the value of <paramref name="keySecurity"/></param>
+        public static KeyPair DecodePEM(string FileName,
+            KeySecurity keySecurity, KeyCollection keyCollection) {
             using (var TextReader = FileName.OpenFileReadShared()) {
                 LexReader LexReader = new LexReader(TextReader);
-                return DecodePEM(LexReader);
+                return DecodePEM(LexReader, keySecurity, keyCollection);
                 }
             }
 
@@ -74,10 +78,14 @@ namespace Goedel.Cryptography.KeyFile {
         /// </summary>
         /// <param name="Text">Text input.</param>
         /// <returns>Public key information</returns>
-        public static KeyPair DecodePEMText(string Text) {
+        /// <param name="keySecurity">The key security model</param>
+        /// <param name="keyCollection">The key collection that keys are to be persisted to (dependent on 
+        /// the value of <paramref name="keySecurity"/></param>
+        public static KeyPair DecodePEMText(string Text,
+            KeySecurity keySecurity, KeyCollection keyCollection) {
             var Reader = new System.IO.StringReader(Text);
             LexReader LexReader = new LexReader(Reader);
-            return DecodePEM(LexReader);
+            return DecodePEM(LexReader, keySecurity, keyCollection);
             }
 
 
@@ -86,7 +94,11 @@ namespace Goedel.Cryptography.KeyFile {
         /// </summary>
         /// <param name="LexReader">Input file.</param>
         /// <returns>Public key information</returns>
-        public static KeyPair DecodePEM(LexReader LexReader) {
+        /// <param name="keySecurity">The key security model</param>
+        /// <param name="keyCollection">The key collection that keys are to be persisted to (dependent on 
+        /// the value of <paramref name="keySecurity"/></param>
+        public static KeyPair DecodePEM(LexReader LexReader,
+                    KeySecurity keySecurity, KeyCollection keyCollection) {
             var Lexer = new KeyFileLex(LexReader);
             var Token = Lexer.GetToken();
 
@@ -100,12 +112,12 @@ namespace Goedel.Cryptography.KeyFile {
                     // is ASN.1 format DER modulus/exponent etc.
 
                     var RSAPrivate = new PKIXPrivateKeyRSA(TaggedData.Data);
-                    return KeyPairBaseRSA.Create(RSAPrivate);
+                    return KeyPairBaseRSA.KeyPairPrivateFactory(RSAPrivate, keySecurity, keyCollection);
                     }
                 else if (TaggedData.Tag == "RSAPUBLICKEY") {
                     // is ASN.1 format DER modulus/exponent
                     var RSAPrivate = new PKIXPrivateKeyRSA(TaggedData.Data);
-                    return KeyPairBaseRSA.Create(RSAPrivate);
+                    return KeyPairBaseRSA.KeyPairPrivateFactory(RSAPrivate, keySecurity, keyCollection);
                     }
                 else if (TaggedData.Tag == "SSH2PUBLICKEY") {
                     var SSH_Public_Key = SSHData.Decode (TaggedData.Data);

@@ -74,10 +74,6 @@
       <Project>{2ba97c8a-2fa2-4d02-a977-566848ed2d55}</Project>
       <Name>Goedel.Cryptography.Jose</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Goedel.Cryptography.Standard\Goedel.Cryptography.Standard.csproj">
-      <Project>{dd13e278-f9e6-49f0-81b9-7a5bd5817818}</Project>
-      <Name>Goedel.Cryptography.Standard</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Goedel.Cryptography\Goedel.Cryptography.csproj">
       <Project>{b8319c05-ea98-405d-94eb-acb9de6da975}</Project>
       <Name>Goedel.Cryptography</Name>

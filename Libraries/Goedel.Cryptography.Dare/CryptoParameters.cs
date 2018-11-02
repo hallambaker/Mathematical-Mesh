@@ -139,16 +139,16 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="AccountId">Identifier of the key to add.</param>
         protected virtual void AddEncrypt(string AccountId) {
             EncryptionKeys = EncryptionKeys ?? new List<KeyPair>();
-            EncryptionKeys.Add(KeyCollection.MatchPublicEncrypt(AccountId));
+            EncryptionKeys.Add(KeyCollection.GetByAccountEncrypt(AccountId));
             }
 
         /// <summary>
-        /// Ad a signer entry.
+        /// Add a signer entry.
         /// </summary>
         /// <param name="AccountId">Identifier of the key to add.</param>
         protected virtual void AddSign(string AccountId) {
             SignerKeys = SignerKeys ?? new List<KeyPair>();
-            SignerKeys.Add(KeyCollection.MatchPrivateSign(AccountId));
+            SignerKeys.Add(KeyCollection.GetByAccountSign(AccountId));
             }
 
 

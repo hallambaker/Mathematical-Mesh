@@ -117,19 +117,20 @@ namespace Goedel.Mesh {
         /// is authorized to sign this profile.
         /// </summary>
         /// <returns>An authorized key pair.</returns>
-        public KeyPair GetSignatureKey() {
-            //Assert.NotNull(ApplicationProfileEntry, MeshException.Throw);
-            //if (ApplicationProfileEntry.AdminDeviceUDF == null) {
-            //    return null;
-            //    }
-            //foreach (var SignID in ApplicationProfileEntry.AdminDeviceUDF) {
-            //    var SignKey = KeyPair.FindLocal(SignID);
-            //    if (SignKey != null) {
-            //        return SignKey;
-            //        }
-            //    }
-            return null;
-            }
+        public KeyPair GetSignatureKey() => null;
+            //{
+            ////Assert.NotNull(ApplicationProfileEntry, MeshException.Throw);
+            ////if (ApplicationProfileEntry.AdminDeviceUDF == null) {
+            ////    return null;
+            ////    }
+            ////foreach (var SignID in ApplicationProfileEntry.AdminDeviceUDF) {
+            ////    var SignKey = KeyPair.FindLocal(SignID);
+            ////    if (SignKey != null) {
+            ////        return SignKey;
+            ////        }
+            ////    }
+            //return null;
+            //}
 
 
 

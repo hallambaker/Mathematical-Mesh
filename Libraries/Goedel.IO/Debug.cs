@@ -11,7 +11,11 @@ namespace Goedel.IO {
     public class Debug : Initialization {
         static bool Flag = false;
 
-
+        /// <summary>
+        /// Class initialization routine.
+        /// </summary>
+        /// <param name="TestMode">If true the first time the initialization is
+        /// called, initializes parameters in test mode.</param>
         public static void Initialize(bool TestMode = false) =>
             Initialize(ref Flag, Initialization, TestMode);
 

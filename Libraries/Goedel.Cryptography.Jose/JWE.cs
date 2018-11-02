@@ -400,6 +400,7 @@ namespace Goedel.Cryptography.Jose {
         /// <param name="Recipients">The list of recipients</param>
         /// <param name="RecipientOut">The recipient entry that matched</param>
         /// <returns>The matching keypair</returns>
+        /// <param name="keyCollection">The key collection that keys are to be persisted to </param>
         public static KeyPair MatchDecryptionKey (List<Recipient> Recipients, out Recipient RecipientOut,
             KeyCollection keyCollection=null) {
             foreach (var Recipient in Recipients) {
@@ -407,7 +408,7 @@ namespace Goedel.Cryptography.Jose {
                 KID.SplitAccountID(out var Domain, out var Account);
 
                 if (Account == null) {
-                    var DecryptionKey = keyCollection.MatchPrivateSign(KID);
+                    var DecryptionKey = keyCollection.LocatePrivate(KID);
                     if (DecryptionKey != null) {
                         RecipientOut = Recipient;
                         return DecryptionKey;
@@ -467,7 +468,7 @@ namespace Goedel.Cryptography.Jose {
             var ProtectedHeader = Header.FromJSON(Protected.JSONReader(), false);
             var BulkID = ProtectedHeader.Enc.FromJoseID();
 
-            var Ephemeral = Recipient.Header.Epk.GetKeyPair(KeyStorage.Bound);
+            var Ephemeral = Recipient.Header.Epk.GetKeyPair(KeySecurity.Bound);
 
             var Exchange = DecryptionKey.Decrypt(Recipient.EncryptedKey, ephemeral: Ephemeral,
                         algorithmID: BulkID, partial: KeyAgreementResult);

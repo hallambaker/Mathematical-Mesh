@@ -6,6 +6,7 @@ using System.IO;
 using Goedel.Protocol;
 using Goedel.Test.Core;
 using Xunit;
+using System.Collections;
 
 namespace Goedel.Protocol.Test {
 
@@ -77,6 +78,8 @@ namespace Goedel.Protocol.Test {
             TestStructB2();
             }
 
+        [Theory]
+        [ClassData(typeof(JSONReadersTestData))]
         public void TestEncodeDecode(
                     MultiInstance First, 
                     DataEncoding DataEncoding,
@@ -86,8 +89,28 @@ namespace Goedel.Protocol.Test {
             CheckEqual(First, Second);
             }
 
+        public class JSONReadersTestData : IEnumerable<object[]> {
+            public IEnumerator<object[]> GetEnumerator() {
+                yield return new object[] { TestDataBasic, DataEncoding.JSON, JSONReader.JSONReaderFactory };
+                yield return new object[] { TestDataArray, DataEncoding.JSON, JSONReader.JSONReaderFactory };
+                yield return new object[] { TestDataStruct, DataEncoding.JSON, JSONReader.JSONReaderFactory };
+
+                yield return new object[] { TestDataBasic, DataEncoding.JSON_B, JSONBCDReader.JSONReaderFactory };
+                yield return new object[] { TestDataArray, DataEncoding.JSON_B, JSONBCDReader.JSONReaderFactory };
+                yield return new object[] { TestDataStruct, DataEncoding.JSON_B, JSONBCDReader.JSONReaderFactory };
+
+                yield return new object[] { TestDataBasic, DataEncoding.JSON, JSONBCDReader.JSONReaderFactory};
+                yield return new object[] { TestDataArray, DataEncoding.JSON, JSONBCDReader.JSONReaderFactory};
+                yield return new object[] { TestDataStruct, DataEncoding.JSON, JSONBCDReader.JSONReaderFactory };
+                }
+
+            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+            }
+
+
+
         #region // Test Data
-        MultiInstance TestDataBasic = new MultiInstance() {
+        static MultiInstance TestDataBasic = new MultiInstance() {
             FieldBoolean = true,
             FieldInteger = 1,
             FieldDateTime = DateTime.Now,
@@ -95,7 +118,7 @@ namespace Goedel.Protocol.Test {
             FieldBinary = new byte[] { 0, 1, 2, 3, 4 }
             };
 
-        MultiArray TestDataArray = new MultiArray() {
+        static MultiArray TestDataArray = new MultiArray() {
             FieldBoolean = true,
             FieldInteger = 1,
             FieldDateTime = DateTime.Now,

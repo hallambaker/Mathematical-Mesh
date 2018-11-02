@@ -59,7 +59,7 @@ namespace Goedel.Mesh.Protocol.Client {
             var keyShares = secret.Split(shares, quorum);
             var cryptoStack = new CryptoStack(secret, CryptoAlgorithmID.AES256CBC);
 
-            var MasterSignatureKeyPair = KeyCollection.MatchPrivateSign(ProfileMaster.MasterSignatureKey.UDF);
+            var MasterSignatureKeyPair = KeyCollection.LocatePrivate(ProfileMaster.MasterSignatureKey.UDF);
             var MasterSignatureKey = Key.FactoryPrivate(MasterSignatureKeyPair);
             var MasterEscrowKeys = new List<Key>();
 
@@ -72,5 +72,14 @@ namespace Goedel.Mesh.Protocol.Client {
 
             return (message, keyShares);
             }
+
+
+
+        public CatalogCredential GetCatalogCredential(string name = null) =>
+            new CatalogCredential(Machine, name);
+
+        public CatalogDevice GetCatalogDevice(string name = null) => throw new NYI();
+        public CatalogContact GetCatalogCatalogContact(string name = null) => throw new NYI();
+
         }
     }

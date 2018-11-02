@@ -13,10 +13,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Standard\Goedel.Cryptography.Standard.csproj" />
     <ProjectReference Include="..\..\Libraries\Goedel.Cryptography\Goedel.Cryptography.csproj" />
+    <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Core\Goedel.Mesh.Core.csproj" />
     <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Protocol.Client\Goedel.Mesh.Protocol.Client.csproj" />
-    <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Windows\Goedel.Mesh.Windows.csproj" />
     <ProjectReference Include="..\..\Mesh\Goedel.Mesh\Goedel.Mesh.csproj" />
     <ProjectReference Include="..\Goedel.Mesh.Test\Goedel.Mesh.Test.csproj" />
   </ItemGroup>

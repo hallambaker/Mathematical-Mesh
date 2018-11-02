@@ -61,6 +61,10 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         public JSONReader JSONReader => Data.JSONReader();
 
+        ///<summary>The JSONObject.</summary>
+        public JSONObject JsonObject => jsonObject ?? JSONObject.FromJSON(JSONReader, true).CacheValue(out jsonObject);
+        JSONObject jsonObject;
+
         /// <summary>
         /// The previous object instance value for this object instance.
         /// </summary>
@@ -74,16 +78,18 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// Constructor, creates an entry for the specified container header, data and previous relationship.
         /// </summary>
-        /// <param name="ContainerHeader">Parsed container header from frame</param>
-        /// <param name="Data">The binary data</param>
-        /// <param name="Previous">Link to previous value of this object</param>
-        public ContainerStoreEntry (ContainerHeader ContainerHeader, byte[] Data, 
-                    ContainerStoreEntry Previous) {
-            this.ContainerHeader = ContainerHeader;
-            Deleted = ContainerHeader.Event == ContainerPersistenceStore.EventDelete;
-            this.Data = Data;
-            this.Previous = Previous;
-            First = Previous ?? this;
+        /// <param name="containerHeader">Parsed container header from frame</param>
+        /// <param name="previous">Link to previous value of this object</param>
+        /// <param name="data">The binary data</param>
+        /// <param name="item">The JSONObject serialized by <paramref name="data"/>.</param>
+        public ContainerStoreEntry(ContainerHeader containerHeader, ContainerStoreEntry previous,
+                    byte[] data=null, JSONObject item=null) {
+            jsonObject = item;
+            this.ContainerHeader = containerHeader;
+            Deleted = containerHeader.Event == ContainerPersistenceStore.EventDelete;
+            this.Data = data ;
+            this.Previous = previous;
+            First = previous ?? this;
             }
 
         }

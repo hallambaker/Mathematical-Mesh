@@ -499,7 +499,6 @@ namespace Goedel.Cryptography.Algorithms {
         /// <summary>
         /// Generate a new private key
         /// </summary>
-        /// <param name="Exportable">If true, the private key is exportable</param>
         public CurveEdwards25519Private() :
                 this(Platform.GetRandomBytes(32)) => Secret = Platform.GetRandomBytes(32);
 

@@ -22,9 +22,12 @@ namespace Goedel.Utilities {
 
 
         /// <summary>
-        /// Initialize a package.
+        /// Thread safe initialization. The delegate is called exactly once.
         /// </summary>
         /// <param name="initializationDelegate">Initialization delegate to be called exactly once.</param>
+        /// <param name="flag">Initialization flag. If true, the class has already been initialized and
+        /// will not be initialized a second time. Otherwise the <paramref name="initializationDelegate"/>
+        /// is called.</param>
         /// <param name="TestMode">If true, initialize package using test mode configuration (if defined).</param>
         public static void Initialize(ref bool flag, InitializationDelegate initializationDelegate, bool TestMode = false) {
 

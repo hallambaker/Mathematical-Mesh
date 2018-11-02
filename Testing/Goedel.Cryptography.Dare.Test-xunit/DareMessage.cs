@@ -13,7 +13,7 @@ using Xunit;
 namespace Goedel.Cryptography.Dare.Test {
 
     public partial class TestDare {
-        public static TestDare Test => new TestDare();
+        public static TestDare Test() => new TestDare();
         public TestDare() => TestEnvironment.Initialize(true);
 
         static CryptoParameters CryptoParametersNull = new CryptoParametersTest();
@@ -76,13 +76,14 @@ namespace Goedel.Cryptography.Dare.Test {
 
         [Fact]
         //[MT.ExpectedException(typeof(NoAvailableDecryptionKey))]
-        public void MessageEncryptedAtomicFail() {
-            var CryptoParameters = new CryptoParametersTest();
-            CryptoParameters.AddEncrypt("Alice@example.com", false);
+        public void MessageEncryptedAtomicFail() =>
+            Xunit.Assert.Throws<NoAvailableDecryptionKey>(() => {
+                var CryptoParameters = new CryptoParametersTest();
+                CryptoParameters.AddEncrypt("Alice@example.com", false);
 
-            var Test1 = Platform.GetRandomBytes(1000);
-            TestMessageAtomic(Test1, CryptoParameters);
-            }
+                var Test1 = Platform.GetRandomBytes(1000);
+                TestMessageAtomic(Test1, CryptoParameters);
+            });
 
         [Fact]
         public void MessageEncryptedFixed() {

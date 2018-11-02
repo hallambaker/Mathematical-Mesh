@@ -5,18 +5,18 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Goedel.IO {
-    
+
     /// <summary>
     /// Tools for managing directories
     /// </summary>
-    public class DirectoryTools {
+    public static partial class Extension {
 
 
         /// <summary>
         /// Delete a directory ignoring errors.
         /// </summary>
         /// <param name="Path">The directory to delete.</param>
-        public static void DirectoryDelete (string Path) {
+        public static void DirectoryDelete (this string Path) {
             if (!Directory.Exists(Path)) {
                 return;
                 }

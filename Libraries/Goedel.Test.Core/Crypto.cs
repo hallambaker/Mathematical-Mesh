@@ -46,13 +46,11 @@ namespace Goedel.Test.Core {
         public void AddSign(string AccountId, bool Register) {
             SignerKeys = SignerKeys ?? new List<KeyPair>();
 
-            var Keypair = KeyPairBaseRSA.Create() as KeyPairBaseRSA;
-            var Public = Keypair.PKIXPublicKeyRSA;
-            var PublicKeyKeypair = KeyPairBaseRSA.KeyPairPublicFactory(Public);
+            var Keypair = KeyPair.KeyPairFactoryRSA(keyType: KeySecurity.Ephemeral);
+            var PublicKeyKeypair = Keypair.KeyPairPublic();
             SignerKeys.Add(Keypair);
 
             Console.WriteLine($"Keypair is {Keypair.UDF}");
-            Console.WriteLine($"  Public {Keypair.PKIXPublicKeyRSA}");
             Console.WriteLine($"  Public {PublicKeyKeypair.UDF}");
 
             if (Register) {

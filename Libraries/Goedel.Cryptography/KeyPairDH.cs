@@ -120,8 +120,6 @@ namespace Goedel.Cryptography {
         /// <summary>The supported key uses (e.g. signing, encryption)</summary>
         public override KeyUses KeyUses { get; } = KeyUses.Encrypt;
 
-        public virtual KeyStorage KeyType { get; } = KeyStorage.Public;
-
         ///<summary>If true, the key only has access to public key values.</summary>
         public override bool PublicOnly => PrivateKey == null;
 
@@ -173,23 +171,25 @@ namespace Goedel.Cryptography {
         /// Create a new DH keypair.
         /// </summary>
         /// <param name="KeySize">The key size</param>
-        public KeyPairDH(int KeySize = 2048, KeyStorage keyType = KeyStorage.Public) :
-                    this(new DiffeHellmanPrivate(KeySize), keyType) {
+        /// <param name="keySecurity">The key security model</param>
+
+        public KeyPairDH(int KeySize = 2048, KeySecurity keySecurity = KeySecurity.Public) :
+                    this(new DiffeHellmanPrivate(KeySize), keySecurity) {
             }
 
         /// <summary>
         /// Create a new DH keypair.
         /// </summary>
         /// <param name="publicKey">The public key to create a provider for</param>
+        /// <param name="keySecurity">The key security model</param>
 
-
-        public KeyPairDH(DiffeHellmanPublic publicKey, KeyStorage keyType = KeyStorage.Public) {
+        public KeyPairDH(DiffeHellmanPublic publicKey, KeySecurity keySecurity = KeySecurity.Public) {
             PrivateKey = publicKey as DiffeHellmanPrivate;
-            KeyType = keyType;
+            KeySecurity = keySecurity;
 
             if (PrivateKey != null) {
                 PublicKey = PrivateKey.DiffeHellmanPublic;
-                if (keyType.IsExportable()) {
+                if (keySecurity.IsExportable()) {
                     PKIXPrivateKeyDH = new PKIXPrivateKeyDH() {
                         Domain = DHDomain,
                         Private = PrivateKey.Private.ToByteArray(),
@@ -206,14 +206,16 @@ namespace Goedel.Cryptography {
 
         #endregion
 
+        ///<summary>Persist the private key to the specified collection.</summary>
+        /// <param name="keyCollection">The key collection that key are to be persisted to </param>
         public override void Persist(KeyCollection keyCollection) {
-            Assert.True(KeyType == KeyStorage.Exportable | KeyType == KeyStorage.Persistable);
+            Assert.True(PersistPending);
             var pkix = new PKIXPrivateKeyDH() {
                 Domain = DHDomain,
                 Private = PrivateKey.Private.ToByteArray(),
                 Public = PrivateKey.Public.ToByteArray(),
                 };
-            keyCollection.Persist(pkix, KeyType.IsExportable());
+            keyCollection.Persist(pkix, KeySecurity.IsExportable());
             }
 
 
@@ -221,15 +223,16 @@ namespace Goedel.Cryptography {
         /// Generate a key pair for the specified algorithm and key size.
         /// </summary>
         /// <param name="keySize">The Key size, must be 255 or 448</param>
-
+        /// <param name="keyUses">The permitted uses (signing, exchange) for the key.</param>
+        /// <param name="keySecurity">The key security model</param>
         /// <param name="algorithmID">The cryptographic algorithm identifier</param>
         /// <returns>The generated key pair</returns>
         public static KeyPair Generate(
                     int keySize = 0,
-                    KeyStorage keyType = KeyStorage.Bound,
+                    KeySecurity keySecurity = KeySecurity.Bound,
                     KeyUses keyUses = KeyUses.Any,
                     CryptoAlgorithmID algorithmID = CryptoAlgorithmID.NULL) =>
-            new KeyPairDH(keySize, keyType);
+            new KeyPairDH(keySize, keySecurity);
 
         /// <summary>
         /// Delegate to create a key pair base
@@ -246,10 +249,11 @@ namespace Goedel.Cryptography {
         /// Delegate to create a key pair base
         /// </summary>
         /// <param name="pkixParameters">The key parameters</param>
+        /// <param name="keySecurity">The key security model</param>
         /// <returns>The created key pair</returns>
         public static new KeyPair KeyPairPrivateFactory(PKIXPrivateKeyDH pkixParameters,
-                    KeyStorage keyType = KeyStorage.Public) =>
-            new KeyPairDH(new DiffeHellmanPrivate(pkixParameters), keyType);
+                    KeySecurity keySecurity = KeySecurity.Public) =>
+            new KeyPairDH(new DiffeHellmanPrivate(pkixParameters), keySecurity);
 
 
         /// <summary>

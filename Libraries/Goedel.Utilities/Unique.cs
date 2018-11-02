@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.Threading;
 
 namespace Goedel.Utilities {
+
+    /// <summary>
+    /// Class that provides a number guaranteed to be unique for a particular run.
+    /// </summary>
     public static class Unique {
         static int Counter = 0;
 

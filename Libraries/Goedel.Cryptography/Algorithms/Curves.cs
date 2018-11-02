@@ -13,20 +13,6 @@ namespace Goedel.Cryptography.Algorithms {
     /// Base Class for Elliptic Curve implementations
     /// </summary>
     public abstract class Curve {
-
-
-
-
-        ///// <summary>The domain parameters</summary>
-        //public abstract DomainParameters Domain { get; }
-
-        ///// <summary>
-        ///// Multiply this point by a scalar
-        ///// </summary>
-        ///// <param name="S">Scalar factor</param>
-        ///// <returns>The result of the multiplication</returns>
-        //public abstract Curve Multiply(BigInteger S);
-
         }
 
 
@@ -121,9 +107,10 @@ namespace Goedel.Cryptography.Algorithms {
     /// </summary>
     public class CurveMontgomery25519 : CurveMontgomery {
 
-        ///// <summary>The curve parameters (p, A, A24)</summary>
-        //public override DomainParameters Domain { get; } = DomainParameters.Curve25519;
-
+        /// <summary>
+        /// Encode the code point.
+        /// </summary>
+        /// <returns>The encoded format of the point</returns>
         public byte[] Encode() => throw new NYI();
 
         /// <summary>
@@ -139,10 +126,10 @@ namespace Goedel.Cryptography.Algorithms {
     /// </summary>
     public class CurveMontgomery448 : CurveMontgomery {
 
-        ///// <summary>The curve parameters (p, A, A24)</summary>
-        //public override DomainParameters Domain { get; } = DomainParameters.Curve448;
-
-
+        /// <summary>
+        /// Encode the code point.
+        /// </summary>
+        /// <returns>The encoded format of the point</returns>
         public byte[] Encode() => throw new NYI();
 
         /// <summary>

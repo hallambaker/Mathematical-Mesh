@@ -241,10 +241,10 @@ namespace Goedel.Mesh {
 
         private KeyPair GetKeyPair () {
             if (PrivateParameters != null) {
-                return PrivateParameters.GetKeyPair(KeyStorage.Bound);
+                return PrivateParameters.GetKeyPair(KeySecurity.Bound);
                 }
             if (PublicParameters != null) {
-                return PublicParameters.GetKeyPair(KeyStorage.Bound);
+                return PublicParameters.GetKeyPair(KeySecurity.Bound);
                 }
             Assert.Fail(NYI.Throw,"Need to construct from the private parameters.");
 

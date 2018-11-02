@@ -218,6 +218,7 @@ namespace Goedel.Cryptography {
         public static GetPlatformInformationDelegate GetPlatformInformation;
 
 
+
         }
 
 

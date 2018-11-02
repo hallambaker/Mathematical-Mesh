@@ -66,11 +66,14 @@ namespace Goedel.Cryptography {
     /// <summary>
     /// Delegate to create a key pair base
     /// </summary>
-    /// <param name="pkixParameters"></param>
-    /// <returns></returns>
+    /// <param name="keyType">The key security model</param>
+    /// <param name="pkixParameters">The key parameters</param>
+    /// <param name="keyCollection">The key collection that keys are to be persisted to (dependent on 
+    /// the value of <paramref name="keyType"/></param>
+    /// <returns>the created key pair</returns>
     public delegate KeyPair FactoryRSAPrivateKeyDelegate(
             PKIXPrivateKeyRSA pkixParameters,
-            KeyStorage keyStorage, KeyCollection keyCollection);
+            KeySecurity keyType, KeyCollection keyCollection);
 
     /// <summary>
     /// RSA Key Pair
@@ -115,7 +118,7 @@ namespace Goedel.Cryptography {
         /// <param name="pkixKey">The private key parameters.</param>
         /// <returns>The created key pair.</returns>
         public static KeyPair Create(PKIXPrivateKeyRSA pkixKey = null) =>
-            KeyPairPrivateFactory(pkixKey, KeyStorage.Exportable, null);
+            KeyPairPrivateFactory(pkixKey, KeySecurity.Exportable, null);
 
         }
 
@@ -123,16 +126,13 @@ namespace Goedel.Cryptography {
     /// Delegate to create a new keypair.
     /// </summary>
     /// <param name="algorithmID">The type of keypair to create.</param>
-    /// <param name="keySecurity">The key security model</param>
-    /// <param name="KeySize">The key size (ignored if the algorithm supports only one key size)</param>
-    /// <param name="Sign">If true, the key may be used for singature operations</param>
-    /// <param name="Exchange">If true, the key may be used for exchange operations</param>
-    /// <param name="keyCollection">The key collection that keys are to be persisted to (dependent on 
-    /// the value of <paramref name="keySecurity"/></param>
+    /// <param name="keyType">The key security model</param>
+    /// <param name="keySize">The key size (ignored if the algorithm supports only one key size)</param>
+    /// <param name="keyUses">The permitted uses (signing, exchange) for the key.</param>
     /// <returns>The created key pair</returns>
     public delegate KeyPair FactoryKeyPairDelegate(
                     int keySize = 0,
-                    KeyStorage keyType = KeyStorage.Bound,
+                    KeySecurity keyType = KeySecurity.Bound,
                     KeyUses keyUses = KeyUses.Any,
                     CryptoAlgorithmID algorithmID = CryptoAlgorithmID.NULL);
 
@@ -149,13 +149,12 @@ namespace Goedel.Cryptography {
     /// <summary>
     /// Delegate to create a key pair base
     /// </summary>
-    /// <param name="keySecurity">The key security rextrictions.</param>
-    /// <param name="keyCollection">The key collection to add the key to.</param>
+    /// <param name="keyType">The key security model</param>
     /// <param name="pkixParameters">The PKIX parameter structure from which to create
     /// the key pair</param>
     /// <returns>The created key pair</returns>
     public delegate KeyPair FactoryDHPrivateKeyDelegate(PKIXPrivateKeyDH pkixParameters,
-        KeyStorage keyType = KeyStorage.Public);
+        KeySecurity keyType = KeySecurity.Public);
 
 
     /// <summary>
@@ -170,13 +169,12 @@ namespace Goedel.Cryptography {
     /// <summary>
     /// Delegate to create a key pair base
     /// </summary>
-    /// <param name="keySecurity">The key security rextrictions.</param>
-    /// <param name="keyCollection">The key collection to add the key to.</param>
+    /// <param name="keyType">The key security model</param>
     /// <param name="pkixParameters">The PKIX parameter structure from which to create
     /// the key pair</param>
     /// <returns>The created key pair</returns>
     public delegate KeyPair FactoryECDHPrivateKeyDelegate(PKIXPrivateKeyECDH pkixParameters,
-        KeyStorage keyType = KeyStorage.Public);
+        KeySecurity keyType = KeySecurity.Public);
 
 
     }

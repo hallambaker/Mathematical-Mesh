@@ -47,10 +47,6 @@
     </None>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Standard\" />
-  </ItemGroup>
-
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Exec Command="VSPostBuild" />
   </Target>

@@ -313,23 +313,53 @@ namespace Goedel.Cryptography {
 
     ///<summary>Enumeration specifying whether the key is public or private and if private,
     ///the storage model.</summary>
-    public enum KeyStorage {
+    [Flags]
+    public enum KeySecurity {
+
+        ///<summary>Null Flags.</summary>
+        Null = 0,
+
+        ///<summary>Flag indicating that the private key has been persisted to the local machine</summary>
+        Persisted = 0b0001,
+
+        ///<summary>Flag indicating that the private key may be persisted to the local machine.</summary>
+        Persistable = 0b0010,
+
+        ///<summary>Flag indicating that the private key may be exported.</summary>
+        Exportable = 0b0100,
+
+        ///<summary>Private key that cannot be exported or persisted.</summary>
+        Ephemeral = Null,
+
+        ///<summary>Private key that is stored on the local machine and cannot be exported.</summary>
+        Bound = Persisted,
+
+        ///<summary>Flag indicating that the private key has been store and may be exported.</summary>
+        ExportableStored = Persisted | Exportable,
+
         ///<summary>Key is public only.</summary>
-        Public,
-        ///<summary>Exportable private key. Permitted operations: Location, Erasure,
-        ///Export, Persistence.</summary>
-        Exportable,
-        ///<summary>Persistable private key, supports persistence operations but does
-        ///not support export. Permitted operations: Location, Erasure,
-        /// Persistence. </summary>
-        Persistable,
-        ///<summary>Private key that was previously persisted and is bound
-        ///to the hose. Permitted operations: Location, Erasure. Prohibited
-        ///operations: Persistence, Export.</summary>
-        Bound,
-        ///<summary>Private key that is not to be stored for later 
-        ///Prohibited operations: Location, Erasure, Persistence, Export.</summary>
-        Ephemeral
+        Public = 0b1000,
+
+
+        /// <summary>
+        /// Key is a Mesh master key and will be stored in a key container marked 
+        /// as archivable and user protected. Master keys SHOULD be deleted after 
+        /// being escrowed and recovery verified.
+        /// </summary>
+        Master = ExportableStored,
+
+        /// <summary>
+        /// Key is a Mesh administration key and will be  stored in a key container marked as non 
+        /// exportable and user protected.
+        /// </summary>
+        Admin = Bound,
+
+        /// <summary>
+        /// Key is Mesh a device key and will be  stored in a key container bound to 
+        /// the current machine that cannot be exported or archived.
+        /// </summary>
+        Device = Bound
+
         }
 
 
@@ -342,49 +372,49 @@ namespace Goedel.Cryptography {
         Encrypt = 0b0010,
 
         ///<summary>Sign or Encrypt</summary>
-        Any = KeyUses.Sign | KeyUses.Encrypt
+        Any = Sign | Encrypt
 
         }
 
 
-    /// <summary>
-    /// Defines levels of key protection to be applied.
-    /// </summary>
-    public enum KeySecurity {
+    ///// <summary>
+    ///// Defines levels of key protection to be applied.
+    ///// </summary>
+    //public enum KeySecurity {
 
 
-        /// <summary>
-        /// Key is a master key and will be stored in a key container marked 
-        /// as archivable and user protected. Master keys SHOULD be deleted after 
-        /// being escrowed and recovery verified.
-        /// </summary>
-        Master,
+    //    /// <summary>
+    //    /// Key is a master key and will be stored in a key container marked 
+    //    /// as archivable and user protected. Master keys SHOULD be deleted after 
+    //    /// being escrowed and recovery verified.
+    //    /// </summary>
+    //    Master,
 
-        /// <summary>
-        /// Key is an administration key and will be  stored in a key container marked as non 
-        /// exportable and user protected.
-        /// </summary>
-        Admin,
+    //    /// <summary>
+    //    /// Key is an administration key and will be  stored in a key container marked as non 
+    //    /// exportable and user protected.
+    //    /// </summary>
+    //    Admin,
 
-        /// <summary>
-        /// Key is a device key and will be  stored in a key container bound to 
-        /// the current machine that cannot be exported or archived.
-        /// </summary>
-        Device,
+    //    /// <summary>
+    //    /// Key is a device key and will be  stored in a key container bound to 
+    //    /// the current machine that cannot be exported or archived.
+    //    /// </summary>
+    //    Device,
 
-        /// <summary>
-        /// Key is temporary and cannot be exported or stored.
-        /// </summary>
-        Ephemeral,
+    //    /// <summary>
+    //    /// Key is temporary and cannot be exported or stored.
+    //    /// </summary>
+    //    Ephemeral,
 
-        /// <summary>
-        /// Key is temporary but may be exported.
-        /// </summary>
-        Exportable,
+    //    /// <summary>
+    //    /// Key is temporary but may be exported.
+    //    /// </summary>
+    //    Exportable,
 
-        ///<summary>The private key is not available.</summary>
-        PublicOnly
-        }
+    //    ///<summary>The private key is not available.</summary>
+    //    PublicOnly
+    //    }
 
 
 

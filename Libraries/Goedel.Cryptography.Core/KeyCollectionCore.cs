@@ -81,7 +81,7 @@ namespace Goedel.Cryptography.Core {
             }
 
 
-        public override KeyPair Locate(string udf) {
+        public override KeyPair LocatePrivate(string udf) {
 
             var fileName = Path.Combine(DirectoryKeys, udf);
 
@@ -89,10 +89,10 @@ namespace Goedel.Cryptography.Core {
 
                 fileName.OpenReadToEnd(out var data);
                 var key = Key.FromJSON(data.JSONReader(), true);
-                return key.GetKeyPair (key.Exportable ? KeyStorage.Exportable : KeyStorage.Bound, this);
+                return key.GetKeyPair (key.Exportable ? KeySecurity.Exportable : KeySecurity.Bound, this);
                 }
             catch {
-                return base.Locate(udf);
+                return base.LocatePrivate(udf);
                 }
             }
 

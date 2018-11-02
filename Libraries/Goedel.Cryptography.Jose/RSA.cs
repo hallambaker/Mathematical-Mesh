@@ -47,9 +47,11 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
         /// Extract a KeyPair object from the JOSE data structure.
         /// </summary>
-        /// <param name="Exportable">If true the private key may be exported.</param>
+        /// <param name="keySecurity">The key security model</param>
+        /// <param name="keyCollection">The key collection that keys are to be persisted to (dependent on 
+        /// the value of <paramref name="keySecurity"/></param>
         /// <returns>The extracted key pair</returns>
-        public override KeyPair GetKeyPair(KeyStorage keyStorage, KeyCollection keyCollection) {
+        public override KeyPair GetKeyPair(KeySecurity keySecurity, KeyCollection keyCollection) {
 
             var PKIXParams = PKIXPublicKeyRSA;
             var KeyPair = KeyPairBaseRSA.KeyPairPublicFactory(PKIXParams);
@@ -120,12 +122,14 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
         /// Extract a KeyPair object from the JOSE data structure.
         /// </summary>
-        /// <param name="Exportable">If true the private key may be exported.</param>
+        /// <param name="keySecurity">The key security model</param>
+        /// <param name="keyCollection">The key collection that keys are to be persisted to (dependent on 
+        /// the value of <paramref name="keySecurity"/></param>
         /// <returns>The extracted key pair</returns>
-        public override KeyPair GetKeyPair (KeyStorage keyStorage, KeyCollection keyCollection) {
+        public override KeyPair GetKeyPair (KeySecurity keySecurity, KeyCollection keyCollection) {
 
             var PKIXParams = PKIXPublicKeyRSA;
-            var KeyPair = KeyPairBaseRSA.KeyPairPrivateFactory(PKIXPrivateKeyRSA, keyStorage, keyCollection);
+            var KeyPair = KeyPairBaseRSA.KeyPairPrivateFactory(PKIXPrivateKeyRSA, keySecurity, keyCollection);
 
             return KeyPair;
             }

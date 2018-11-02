@@ -5,28 +5,37 @@ using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
 using Goedel.Mesh.Protocol.Client;
 using Goedel.Mesh.Test;
+using Goedel.Test.Core;
 
 namespace Goedel.Mesh.xunit {
-    public sealed class IgnoreXunitAnalyzersRule1013Attribute : System.Attribute { }
 
-    [IgnoreXunitAnalyzersRule1013]
     public class CustomTestTypeAttribute : System.Attribute { }
 
     public partial class TestProfilesXunit {
 
-        static string Service = "example.com";
-        static string AccountAlice = $"alice@{Service}";
+        public static TestProfilesXunit Test() => new TestProfilesXunit();
+        public TestProfilesXunit() {
+            TestEnvironment.Initialize();
+            Mesh.Initialize();
+            }
 
-#pragma warning disable xUnit1013 // Public method should be marked as test
-        [CustomTestType]
-        public static void TestDirect() => TestProfiles.Test.GenerateMaster();
 
-#pragma warning restore xUnit1013 // Public method should be marked as test
+        //static string Service = "example.com";
+        //static string AccountAlice = $"alice@{Service}";
 
-        public TestProfilesXunit() => Mesh.Initialize();
 
         [Fact]
-        public void GenerateMaster() => TestProfiles.Test.GenerateMaster();
+        public void EscrowRecover() => TestProfiles.Test.EscrowRecover();
+
+        [Fact]
+        public void CatalogCredentials() => TestProfiles.Test.CatalogCredentials();
+
+        [Fact]
+        public void CatalogDevices() => TestProfiles.Test.CatalogDevices();
+
+        [Fact]
+        public void CatalogContacts() => TestProfiles.Test.CatalogContacts();
+
 
         [Fact (Skip="Get basic working first")]
         public void GenerateDevice() => TestProfiles.Test.GenerateDevice();

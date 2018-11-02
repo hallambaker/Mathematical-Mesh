@@ -36,7 +36,7 @@ namespace Goedel.Cryptography.Windows {
         /// <summary>
         /// Return the underlying .NET cryptographic provider.
         /// </summary>
-        public AsymmetricAlgorithm AsymmetricAlgorithm => _Provider;
+        public override AsymmetricAlgorithm AsymmetricAlgorithm => _Provider;
 
 
         private RSA _Provider;
@@ -97,7 +97,7 @@ namespace Goedel.Cryptography.Windows {
         /// </summary>
         /// <param name="UDF">Fingerprint of key.</param>
         /// <returns>RSAKeyPair</returns>
-        public static new KeyPairRSA FindLocal(string UDF) //=> throw new NYI();
+        public static  KeyPairRSA FindLocal(string UDF) //=> throw new NYI();
             
             {
             var Provider = PlatformLocateRSAProvider(UDF);
@@ -132,55 +132,6 @@ namespace Goedel.Cryptography.Windows {
         /// <summary>The supported key uses (e.g. signing, encryption)</summary>
         public override KeyUses KeyUses => KeyUses.Any;
 
-        ///// <summary>
-        ///// Generate an ephemeral RSA key with the specified key size.
-        ///// </summary>
-        ///// <param name="KeySecurity">The key security mode</param>
-        ///// <param name="KeySize">Size of key in multiples of 64 bits.</param>
-        ///// <param name="Exchange">If true, the key can be used for exchange operations.</param>
-        ///// <param name="Signature">If true, the key can be used for signature operations</param>
-        //public KeyPairRSAWindows(KeySecurity KeySecurity = KeySecurity.Exportable, int KeySize = 2048,
-        //        bool Signature = true, bool Exchange = true) : base(null){
-
-        //    //this.Signature = Signature;
-        //    //this.Exchange = Exchange;
-        //    var CSPParameters = new CspParameters();
-
-        //    switch (KeySecurity) {
-        //        case KeySecurity.Master: {
-        //            //CSPParameters.Flags = CspProviderFlags.UseArchivableKey;
-        //            PersistKey(CspProviderFlags.NoFlags, KeySize);
-        //            return;
-        //            }
-        //        case KeySecurity.Admin: {
-        //            //CSPParameters.Flags = CspProviderFlags.UseNonExportableKey;
-        //            //Persist = true;
-        //            //break;
-        //            PersistKey(CspProviderFlags.UseNonExportableKey, KeySize);
-        //            return;
-        //            }
-        //        case KeySecurity.Device: {
-        //            //CSPParameters.Flags = CspProviderFlags.UseNonExportableKey;
-        //            //Persist = true;
-        //            //break;
-        //            PersistKey(CspProviderFlags.UseNonExportableKey, KeySize);
-        //            return;
-        //            }
-        //        case KeySecurity.Ephemeral: {
-        //            CSPParameters.Flags = CspProviderFlags.CreateEphemeralKey | CspProviderFlags.UseNonExportableKey;
-        //            _Provider = new RSACryptoServiceProvider(KeySize, CSPParameters);
-        //            PublicParameters = _Provider.ExportParameters(false);
-        //            return;
-        //            }
-        //        case KeySecurity.Exportable: {
-        //            _Provider = new RSACng(KeySize);
-        //            PublicParameters = _Provider.ExportParameters(false);
-        //            //var PrivateParameters = _Provider.ExportParameters(true);
-
-        //            return;
-        //            }
-        //        }
-        //    }
 
 
         void PersistKey(CspProviderFlags CspProviderFlags, int KeySize) {
@@ -199,29 +150,9 @@ namespace Goedel.Cryptography.Windows {
             NewProvider.ImportParameters(PrivateParameters);
             _Provider = NewProvider;
 
-            IsPersisted = true;
+            KeySecurity = (KeySecurity & KeySecurity.Exportable) | KeySecurity.Persisted;
             }
 
-
-
-        ///// <summary>
-        ///// Create a new KeyPair with the specified container fingerprint.
-        ///// </summary>
-        ///// <param name="UDF">Fingerprint of key.</param>
-        //public KeyPairRSA(string UDF) {
-        //    _Provider = PlatformLocateRSAProvider(UDF);
-        //    PublicParameters = _Provider.ExportParameters(false);
-        //    }
-
-
-        ///// <summary>
-        ///// Generate a KeyPair from a .NET Provider.
-        ///// </summary>
-        ///// <param name="RSACryptoServiceProvider">The platform cryptographic provider.</param>
-        //public KeyPairRSA(RSACryptoServiceProvider RSACryptoServiceProvider) {
-        //    _Provider = RSACryptoServiceProvider;
-        //    PublicParameters = _Provider.ExportParameters(false);
-        //    }
 
 
         /// <summary>
@@ -236,29 +167,6 @@ namespace Goedel.Cryptography.Windows {
             }
 
 
-        ///// <summary>
-        ///// Generate a KeyPair from a .NET set of parameters.
-        ///// </summary>
-        ///// <param name="PKIXParameters">The RSA parameters as a PKIX structure</param>
-        //public KeyPairRSA(PKIXPublicKeyRSA PKIXParameters) {
-        //    PublicParameters = PKIXParameters.RSAParameters();
-
-        //    _Provider = new RSACryptoServiceProvider();
-        //    _Provider.ImportParameters(PublicParameters);
-        //    }
-
-
-        ///// <summary>
-        ///// Generate a KeyPair from a .NET set of parameters.
-        ///// </summary>
-        ///// <param name="PKIXParameters">The RSA parameters as a PKIX structure</param>
-        //public KeyPairRSA(PKIXPrivateKeyRSA PKIXParameters) {
-        //    PublicParameters = PKIXParameters.RSAParameters();
-
-        //    _Provider = new RSACryptoServiceProvider();
-        //    _Provider.ImportParameters(PublicParameters);
-        //    }
-
         /// <summary>
         /// Returns a new KeyPair instance which only has the public values.
         /// </summary>
@@ -270,13 +178,6 @@ namespace Goedel.Cryptography.Windows {
             }
 
 
-        //public static KeyPair KeyPairFactory(
-        //        KeySecurity KeySecurity = KeySecurity.Exportable,
-        //        KeyCollection KeyCollection = null, int KeySize = 0,
-        //        bool Signature = true, bool Exchange = true,
-        //        CryptoAlgorithmID CryptoAlgorithmID = CryptoAlgorithmID.NULL) =>
-        //            new KeyPairRSA(KeySecurity, KeySize, Signature, Exchange);
-
         /// <summary>
         /// Delegate to create a key pair base
         /// </summary>
@@ -287,24 +188,6 @@ namespace Goedel.Cryptography.Windows {
             var RSAParameters = PKIXParameters.RSAParameters();
             return new KeyPairRSA(RSAParameters);
             }
-
-        ///// <summary>
-        ///// Delegate to create a key pair base
-        ///// </summary>
-        ///// <param name="PKIXParameters">The parameters to construct from</param>
-        ///// <returns>The created key pair</returns>
-        //public static new KeyPair KeyPairPrivateFactory(
-        //        PKIXPrivateKeyRSA PKIXParameters,
-        //        KeySecurity keySecurity,
-        //        KeyCollection keyCollection) {
-
-        //    if (PKIXParameters == null) {
-        //        return new KeyPairRSA(KeySecurity.Exportable);
-        //        }
-
-        //    var RSAParameters = PKIXParameters.RSAParameters();
-        //    return new KeyPairRSA(RSAParameters);
-        //    }
 
 
         /// <summary>

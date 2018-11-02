@@ -10,25 +10,15 @@
     <ProjectReference Include="..\..\Libraries\Core\Goedel.Discovery\Goedel.Discovery.csproj" />
     <ProjectReference Include="..\..\Libraries\Core\Goedel.IO\Goedel.IO.csproj" />
     <ProjectReference Include="..\..\Libraries\Core\Goedel.Utilities\Goedel.Utilities.csproj" />
-    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Dare\Goedel.Cryptography.Dare.csproj" />
     <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Jose\Goedel.Cryptography.Jose.csproj" />
-    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.WindowsFramework\Goedel.Cryptography.WindowsFramework.csproj" />
     <ProjectReference Include="..\..\Libraries\Goedel.Cryptography\Goedel.Cryptography.csproj" />
     <ProjectReference Include="..\..\Libraries\Goedel.Protocol\Goedel.Protocol.csproj" />
     <ProjectReference Include="..\..\Libraries\Goedel.Test\Goedel.Test.csproj" />
     <ProjectReference Include="..\..\Mesh\Goedel.Mesh\Goedel.Mesh.csproj" />
-    <ProjectReference Include="..\Goedel.ASN.Test\Goedel.ASN.Test.csproj" />
-    <ProjectReference Include="..\Goedel.Cryptography.Algorithms.Test\Goedel.Cryptography.Algorithms.Test.csproj" />
-    <ProjectReference Include="..\Goedel.Cryptography.DH.Test\Goedel.Cryptography.DH.Test.csproj" />
-    <ProjectReference Include="..\Goedel.Cryptography.Jose.Test\Goedel.Cryptography.Jose.Test.csproj" />
-    <ProjectReference Include="..\Goedel.Cryptography.KeyFile.Test\Goedel.Cryptography.KeyFile.Test.csproj" />
+    <ProjectReference Include="..\Goedel.Cryptography.Dare.Test-xunit\Goedel.Cryptography.Dare.Test-xunit.csproj" />
+    <ProjectReference Include="..\Goedel.Cryptography.Jose.Test-xunit\Goedel.Cryptography.Jose.Test-xunit.csproj" />
     <ProjectReference Include="..\Goedel.Cryptography.Test-xunit\Goedel.Cryptography.Test-xunit.csproj" />
-    <ProjectReference Include="..\Goedel.Cryptography.Test\Goedel.Cryptography.Test.csproj" />
-    <ProjectReference Include="..\Goedel.Cryptography.Windows.Test\Goedel.Cryptography.Windows.Test.csproj" />
-    <ProjectReference Include="..\Goedel.Discovery.Test\Goedel.Discovery.Test.csproj" />
-    <ProjectReference Include="..\Goedel.Mesh.Test-Windows\Goedel.Mesh.Test-Windows.csproj" />
-    <ProjectReference Include="..\Goedel.Mesh.Test\Goedel.Mesh.Test.csproj" />
-    <ProjectReference Include="..\Goedel.Protocol.Test\Goedel.Protocol.Test.csproj" />
+    <ProjectReference Include="..\Goedel.Mesh.xunit\Goedel.Mesh.Test-xunit.csproj" />
     <ProjectReference Include="..\Test.Constants\Test.Common.csproj" />
   </ItemGroup>
 

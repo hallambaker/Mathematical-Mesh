@@ -46,7 +46,7 @@ namespace Goedel.Cryptography.Jose {
         /// <param name="keyCollection">The key collection to add the key to.</param>
         /// <returns>The extracted key pair</returns>
         public override KeyPair GetKeyPair(
-                KeyStorage keyStorage, 
+                KeySecurity keySecurity, 
                 KeyCollection keyCollection = null) {
 
             var keyUses = Use.GetUses();
@@ -54,13 +54,13 @@ namespace Goedel.Cryptography.Jose {
 
             switch (Curve) {
                 case "Ed25519":
-                    return KeyPairEd25519.Generate (KeyStorage.Public, keyUses);
+                    return KeyPairEd25519.Generate (KeySecurity.Public, keyUses);
                 case "Ed448":
-                    return KeyPairEd448.Generate(KeyStorage.Public, keyUses);
+                    return KeyPairEd448.Generate(KeySecurity.Public, keyUses);
                 case "X25519":
-                    return KeyPairX25519.Generate(KeyStorage.Public, keyUses);
+                    return KeyPairX25519.Generate(KeySecurity.Public, keyUses);
                 case "X448":
-                    return KeyPairX448.Generate(KeyStorage.Public, keyUses);
+                    return KeyPairX448.Generate(KeySecurity.Public, keyUses);
                 }
 
             throw new NotSupportedException();
@@ -128,17 +128,17 @@ namespace Goedel.Cryptography.Jose {
         /// <param name="keySecurity">The key security rextrictions.</param>
         /// <param name="keyCollection">The key collection to add the key to.</param>
         /// <returns>The extracted key pair</returns>
-        public override KeyPair GetKeyPair(KeyStorage keyStorage, KeyCollection keyCollection) {
+        public override KeyPair GetKeyPair(KeySecurity keySecurity, KeyCollection keyCollection) {
             var keyUses = Use.GetUses();
             switch (Curve) {
                 case "Ed25519":
-                    return KeyPairEd25519.Generate(keyStorage, keyUses);
+                    return KeyPairEd25519.Generate(keySecurity, keyUses);
                 case "Ed448":
-                    return KeyPairEd448.Generate(keyStorage, keyUses);
+                    return KeyPairEd448.Generate(keySecurity, keyUses);
                 case "X25519":
-                    return KeyPairX25519.Generate(keyStorage, keyUses);
+                    return KeyPairX25519.Generate(keySecurity, keyUses);
                 case "X448":
-                    return KeyPairX448.Generate(keyStorage, keyUses);
+                    return KeyPairX448.Generate(keySecurity, keyUses);
                 }
             throw new NotSupportedException();
             }

@@ -15,7 +15,7 @@ namespace Goedel.Cryptography.Dare {
     /// <summary>
     /// Persistence store based on a container interface.
     /// </summary>
-    public class ContainerPersistenceStore : IPersistenceStoreWrite, IDisposable {
+    public class ContainerPersistenceStore : Disposable, IPersistenceStoreWrite,  IEnumerable<ContainerStoreEntry> {
 
         #region --- Disposable objects
         // Objects that MUST be disposed correctly when leaving a using section.
@@ -25,7 +25,7 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// The disposal routine. This is wrapped to provide the IDisposable interface. 
         /// </summary>
-        protected virtual void Disposing () {
+        protected override void Disposing () {
             JBCDStream?.Dispose();
             Container?.Dispose();
             }
@@ -63,95 +63,24 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         Dictionary<string, ContainerStoreIndex> IndexDictionary = 
                                 new Dictionary<string, ContainerStoreIndex>();
+        
+        #region --- IEnumerable Implementation 
+        ///<summary>Return an enumerator over a set of catalog items</summary>
+        public IEnumerator<ContainerStoreEntry> GetEnumerator() => new EnumeratorContainerStoreEntry(ObjectIndex);
 
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator1();
+        private IEnumerator GetEnumerator1() => this.GetEnumerator();
 
-
-
-
-        #region --- IDisposable Implementation 
-        /// <summary>
-        /// Dispose method, frees all resources.
-        /// </summary>
-        public void Dispose () {
-            Dispose(true);
-            GC.SuppressFinalize(this);
+        private class EnumeratorContainerStoreEntry : IEnumerator<ContainerStoreEntry> {
+            Dictionary<string, ContainerStoreEntry>.Enumerator BaseEnumerator;
+            public ContainerStoreEntry Current => BaseEnumerator.Current.Value;
+            object IEnumerator.Current => BaseEnumerator.Current.Value;
+            public void Dispose() => BaseEnumerator.Dispose();
+            public bool MoveNext() => BaseEnumerator.MoveNext();
+            public void Reset() => throw new NotImplementedException();
+            public EnumeratorContainerStoreEntry(Dictionary<string, ContainerStoreEntry> baseEnumerator) =>
+                BaseEnumerator = baseEnumerator.GetEnumerator();
             }
-
-        bool disposed = false;
-        /// <summary>
-        /// Dispose method, frees resources when disposing, 
-        /// </summary>
-        /// <param name="disposing"></param>
-        protected virtual void Dispose (bool disposing) {
-            if (disposed) {
-                return;
-                }
-
-            if (disposing) {
-                Disposing();
-                }
-
-            disposed = true;
-            }
-
-        /// <summary>
-        /// Destructor.
-        /// </summary>
-        ~ContainerPersistenceStore () {
-            Dispose(false);
-            }
-        #endregion
-
-        #region --- IEnumerable Implementation - disabled
-
-        //IEnumerator IEnumerable.GetEnumerator () {
-        //    return (IEnumerator)GetEnumerator();
-        //    }
-
-        ///// <summary></summary>
-        ///// <returns></returns>
-        //public ContainerStoreEntryEnum GetEnumerator () {
-        //    return new ContainerStoreEntryEnum(ObjectIndex);
-        //    }
-
-        ///// <summary></summary>
-        //public class ContainerStoreEntryEnum : IEnumerator {
-        //    Dictionary<string, ContainerStoreEntry>.Enumerator Enumerator;
-
-        //    // Enumerators are positioned before the first element
-        //    // until the first MoveNext() call.
-        //    int position = -1;
-
-        //    /// <summary></summary>
-        //    public ContainerStoreEntryEnum (Dictionary<string, ContainerStoreEntry> ObjectIndex) {
-        //        Enumerator = ObjectIndex.GetEnumerator();
-        //        }
-
-        //    /// <summary></summary>
-        //    public bool MoveNext () {
-        //        return Enumerator.MoveNext();
-        //        }
-
-        //    /// <summary></summary>
-        //    public void Reset () {
-        //        Enumerator.
-        //        }
-
-        //    object IEnumerator.Current => Current;
-
-        //    /// <summary></summary>
-        //    public ContainerStoreEntry Current {
-        //        get {
-        //            try {
-        //                return Enumerator.Current as ContainerStoreEntry;
-        //                }
-        //            catch (IndexOutOfRangeException) {
-        //                throw new InvalidOperationException();
-        //                }
-        //            }
-        //        }
-
-
 
         #endregion
 
@@ -170,26 +99,26 @@ namespace Goedel.Cryptography.Dare {
         /// if none exists.</param>
         /// <param name="Type">Type of data to store (the schema name).</param>
         /// <param name="Comment">Comment to be written to the log.</param>
-        /// <param name="ContainerType">The Container type.</param>
+        /// <param name="containerType">The Container type.</param>
         /// <param name="DataEncoding">The data encoding.</param>
-        /// <param name="FileStatus">The file status in which to open the container.</param>
+        /// <param name="fileStatus">The file status in which to open the container.</param>
         /// <param name="KeyCollection">The key collection to use to resolve private keys.</param>
         public ContainerPersistenceStore (string FileName, string Type = null,
                     string Comment = null, bool ReadOnly = false,
-                    FileStatus FileStatus = FileStatus.OpenOrCreate,
-                    ContainerType ContainerType = ContainerType.Chain,
+                    FileStatus fileStatus = FileStatus.OpenOrCreate,
+                    ContainerType containerType = ContainerType.Chain,
                     DataEncoding DataEncoding = DataEncoding.JSON,
                     CryptoParameters CryptoParameters = null,
                     KeyCollection KeyCollection=null) : base() {
             ReadOnly = ReadOnly & (Type != null);
 
             // Attempt to open file.
-            JBCDStream = new JBCDStreamDebug(FileName, FileStatus: FileStatus);
+            JBCDStream = new JBCDStreamDebug(FileName, FileStatus: fileStatus);
 
             // Create new container if empty or read the old one.
             if (JBCDStream.Length == 0) {
                 Container = Container.NewContainer(JBCDStream, CryptoParameters, 
-                    ContainerType, ContentType: Type);
+                    containerType, ContentType: Type);
                 }
             else {
                 KeyCollection = KeyCollection ?? CryptoParameters?.KeyCollection;
@@ -226,7 +155,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="Data">The data to commit.</param>
         public virtual void CommitTransaction (ContainerHeader ContainerHeader, byte[] Data) {
             var Exists = ObjectIndex.TryGetValue(ContainerHeader.UniqueID, out var Previous);
-            var ContainerStoreEntry = new ContainerStoreEntry(ContainerHeader, Data, Previous) ;
+            var ContainerStoreEntry = new ContainerStoreEntry(ContainerHeader, Previous, Data);
 
             switch (ContainerHeader.Event) {
                 case EventNew: {
@@ -316,21 +245,21 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// Write a persistence entry
         /// </summary>
-        /// <param name="ContainerHeader">The container header to write</param>
-        /// <param name="Object">The object to write.</param>
-        /// <param name="Previous">The previous entry.</param>
+        /// <param name="containerHeader">The container header to write</param>
+        /// <param name="item">The object to write.</param>
+        /// <param name="previous">The previous entry.</param>
         /// <returns></returns>
         public virtual ContainerStoreEntry WriteFrame (
-                ContainerHeader ContainerHeader,
-                JSONObject Object,
-                ContainerStoreEntry Previous) {
+                ContainerHeader containerHeader,
+                JSONObject item,
+                ContainerStoreEntry previous) {
 
-            var Header = ContainerHeader.GetBytes(Encoding, false);
-            var Data = Object?.GetBytes(Encoding, true);
+            var Header = containerHeader.GetBytes(Encoding, false);
+            var Data = item?.GetBytes(Encoding, true);
 
             Container.AppendFrame(Header, Data);
 
-            var Result = new ContainerStoreEntry(ContainerHeader, Data, Previous);
+            var Result = new ContainerStoreEntry(containerHeader, previous, Data, item);
             return Result;
             }
 
@@ -338,18 +267,18 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// Create a new persistence entry.
         /// </summary>
-        /// <param name="ContainerHeader">The constructed container header.</param>
-        /// <param name="Object">Object to create</param>
-        public virtual void New (out ContainerHeader ContainerHeader, JSONObject Object) {
+        /// <param name="containerHeader">The constructed container header.</param>
+        /// <param name="object">Object to create</param>
+        public virtual void New (out ContainerHeader containerHeader, JSONObject @object) {
             // Precondition UniqueID does not exist
-            var Exists = ObjectIndex.TryGetValue(Object._PrimaryKey, out var Previous);
+            var Exists = ObjectIndex.TryGetValue(@object._PrimaryKey, out var Previous);
             Assert.False(Exists, ObjectIdentifierNotUnique.Throw);
 
             // Create new container
-            ContainerHeader = new ContainerHeader() {
+            containerHeader = new ContainerHeader() {
                 Event = EventNew,
-                UniqueID = Object._PrimaryKey,
-                KeyValues = Object._KeyValues.ToKeyValues()
+                UniqueID = @object._PrimaryKey,
+                KeyValues = @object._KeyValues.ToKeyValues()
                 };
             }
 

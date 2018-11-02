@@ -143,10 +143,21 @@
 
 	Section 2 "Catalog Entries"
 
-	Structure CatalogEntryDeviceProfile
+	Structure CatalogEntry
+	Structure CatalogEntryCredential
+		Inherits CatalogEntry
+		String Protocol
+		String Service
+		String Username
+		String Password
+		// Protocol, Service, Username, Password
+
+	Structure CatalogEntryDevice
+		Inherits CatalogEntry
 		// The device profile
 
 	Structure CatalogEntryContact
+		Inherits CatalogEntry
 		// Contact information
 		// Permissions
 
@@ -155,8 +166,7 @@
 		// Recryption group user has accepted membership of
 		// Describe document stores, chat groups, etc accessible
 
-	Structure CatalogEntryCredential
-		// Protocol, Service, Username, Password
+
 
 	Structure CatalogEntryTask
 		// Calendar entry

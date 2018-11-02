@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 
@@ -12,7 +13,7 @@ namespace Goedel.Utilities {
         /// <summary>
         /// Dispose method, frees all resources.
         /// </summary>
-        public void Dispose () {
+        public void Dispose() {
             Dispose(true);
             GC.SuppressFinalize(this);
             }
@@ -22,7 +23,7 @@ namespace Goedel.Utilities {
         /// Dispose method, frees resources when disposing, 
         /// </summary>
         /// <param name="disposing"></param>
-        protected virtual void Dispose (bool disposing) {
+        protected virtual void Dispose(bool disposing) {
             if (disposed) {
                 return;
                 }
@@ -37,14 +38,17 @@ namespace Goedel.Utilities {
         /// <summary>
         /// Destructor.
         /// </summary>
-        ~Disposable () {
+        ~Disposable() {
             Dispose(false);
             }
 
         /// <summary>
         /// The class specific disposal routine.
         /// </summary>
-        protected virtual void Disposing () {
+        protected virtual void Disposing() {
             }
         }
+
+
+
     }

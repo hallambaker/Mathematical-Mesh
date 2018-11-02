@@ -10,6 +10,9 @@ namespace Goedel.Mesh {
 
     public partial class ProfileDevice {
 
+        public override string _PrimaryKey => DeviceSignatureKey.UDF;
+
+
         /// <summary>
         /// The signed device profile
         /// </summary>

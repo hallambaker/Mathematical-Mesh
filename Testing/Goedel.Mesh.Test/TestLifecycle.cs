@@ -90,7 +90,7 @@ namespace Goedel.Mesh.Test {
         /// <param name="CryptoAlgorithmID"></param>
         public static void Test_LifecycleExportable(this CryptoAlgorithmID CryptoAlgorithmID, KeyCollection keyCollection, int KeySize = 2048) {
             bool Exportable = true;
-            var Encrypter = KeyPair.Factory(CryptoAlgorithmID, KeySecurity.Exportable, keyCollection, keySize: KeySize);
+            var Encrypter = KeyPair.Factory(CryptoAlgorithmID, KeySecurity.ExportableStored, keyCollection, keySize: KeySize);
             Encrypter.Test_EncryptDecrypt();
             TestExport(Encrypter, Exportable);
             CheckPersisted(Encrypter.UDF, keyCollection, true, Exportable);
@@ -119,7 +119,7 @@ namespace Goedel.Mesh.Test {
         /// <param name="UDF"></param>
         static void CheckPersisted(string UDF, KeyCollection keyCollection, bool persisted, bool exportable) {
 
-            var key = keyCollection.Locate(UDF);
+            var key = keyCollection.LocatePrivate(UDF);
             if (!persisted) {
                 Assert.Null(key);
                 return;

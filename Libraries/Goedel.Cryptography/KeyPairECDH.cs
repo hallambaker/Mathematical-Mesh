@@ -98,16 +98,13 @@ namespace Goedel.Cryptography {
         /// Generate a key pair for the specified algorithm and key size.
         /// </summary>
         /// <param name="keySize">The Key size, must be 255 or 448</param>
-        /// <param name="keySecurity">The key security model</param>
-        /// <param name="signature">If true the key MAY be used for signing</param>
-        /// <param name="exchange">If true the key MAY be used for exchange</param>
+        /// <param name="keyType">The key security model</param>
         /// <param name="cryptoAlgorithmID">The cryptographic algorithm identifier</param>
-        /// <param name="keyCollection">The key collection that keys are to be persisted to (dependent on 
-        /// the value of <paramref name="keySecurity"/></param>
+        /// <param name="keyUses">The permitted uses (signing, exchange) for the key.</param>
         /// <returns>The generated key pair</returns>
         public static KeyPair KeyPairFactory(
                     int keySize = 0,
-                    KeyStorage keyType = KeyStorage.Bound,
+                    KeySecurity keyType = KeySecurity.Bound,
                     KeyUses keyUses = KeyUses.Any,
                     CryptoAlgorithmID cryptoAlgorithmID = CryptoAlgorithmID.NULL) {
 
@@ -142,15 +139,13 @@ namespace Goedel.Cryptography {
 
         /// <summary>
         /// Create a KeyPairECDH instance for the algorithm <paramref name="CryptoAlgorithmID"/> 
-        /// from the key data <paramref name="key"/>. If <paramref name="isPrivate"/> is true, 
-        /// a private key is created, otherwise the data is interpreted as a public key.
+        /// from the key data <paramref name="key"/>. 
         /// </summary>
         /// <param name="key">The key data in RFC8032 format.</param>
-        /// <param name="isPrivate">If true, the data represents a secret key value,
-        /// otherwise a public key is represented.</param>
+        /// <param name="keyType">The key security model</param>
         /// <param name="CryptoAlgorithmID">The cryptographic algorithm represented by the key.</param>
         /// <returns>The created key pair.</returns>
-        public static KeyPairECDH KeyPairFactory(byte[] key, KeyStorage keyType = KeyStorage.Public,
+        public static KeyPairECDH KeyPairFactory(byte[] key, KeySecurity keyType = KeySecurity.Public,
             CryptoAlgorithmID CryptoAlgorithmID = CryptoAlgorithmID.NULL) {
             switch (CryptoAlgorithmID) {
                 case CryptoAlgorithmID.Ed448:

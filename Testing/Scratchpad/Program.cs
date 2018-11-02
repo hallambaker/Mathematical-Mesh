@@ -8,17 +8,13 @@ using Goedel.Cryptography.Jose;
 using Goedel.Cryptography.KeyFile;
 using Goedel.Test;
 using Goedel.Utilities;
-using Goedel.Protocol.Test;
 using Goedel.Cryptography.Algorithms;
-using Goedel.Cryptography.Test;
-using Goedel.Cryptography.Jose.Test;
-using Goedel.Cryptography.KeyFile.Test;
-using Goedel.Cryptography.DH.Test;
-using Goedel.Cryptography.Windows.Test;
-using Goedel.DNS.Test;
-using Goedel.Mesh.Test_Windows;
+using Goedel.Mesh.xunit;
+using Goedel.Cryptography.Dare.Test;
+
 using Goedel.Cryptography.Test_xunit;
 using Goedel.Test.Core;
+using Goedel.Cryptography.Jose.Test_xunit;
 
 namespace Scratchpad {
 
@@ -27,8 +23,9 @@ namespace Scratchpad {
     partial class Program {
         static void Main(string[] args) {
             Console.WriteLine("Hello World");
-
-            //TestDare.TestDirect();
+            //TestProfilesXunit.Test().CatalogCredentials();
+            //TestLifecycle.Test().Test_LifecycleMaster(CryptoAlgorithmID.Ed25519);
+            TestDare.Test().TestPersistenceStore();
             //TestEnvironment.Initialize(true);
 
             //TestCryptographyJose.InitializeClass();
@@ -48,8 +45,8 @@ namespace Scratchpad {
 
             //TestLifecycle.Test().Test_LifecycleDevice(CryptoAlgorithmID.RSASign);
             //TestLifecycle.Test().Test_LifecycleEphemeral(CryptoAlgorithmID.Ed25519);
-            TestLifecycle.Test().Test_LifecycleExportable(CryptoAlgorithmID.RSASign);
-            TestLifecycle.Test().Test_LifecycleMaster(CryptoAlgorithmID.RSASign);
+            //TestLifecycle.Test().Test_LifecycleExportable(CryptoAlgorithmID.RSASign);
+            //TestLifecycle.Test().Test_LifecycleMaster(CryptoAlgorithmID.RSASign);
 
 
 
@@ -69,32 +66,32 @@ namespace Scratchpad {
 
 
 
-        static KeyPair CreateKeyPair(bool Register=true) {
-            var Result = new KeyPairDH();
-            if (Register) {
-                KeyCollection.Default.Add(Result);
-                }
-            return Result;
-            }
+        //static KeyPair CreateKeyPair(bool Register=true) {
+        //    var Result = new KeyPairDH();
+        //    if (Register) {
+        //        KeyCollection.Default.Add(Result);
+        //        }
+        //    return Result;
+        //    }
 
 
-        static void TestEncryptDecrypt () {
-            //string FileName = "TopSecret.jcx";
-            string TestData = "<h1>Tippety Top Secret</h1>";
-            var Recipients = new List<string> { "Alice@example.com" };
-            var CryptoParameters = new Goedel.Test.CryptoParametersTest(
-                        Recipients: Recipients);
+        //static void TestEncryptDecrypt () {
+        //    //string FileName = "TopSecret.jcx";
+        //    string TestData = "<h1>Tippety Top Secret</h1>";
+        //    var Recipients = new List<string> { "Alice@example.com" };
+        //    var CryptoParameters = new Goedel.Test.CryptoParametersTest(
+        //                Recipients: Recipients);
 
 
-            // Create container
-            var CipherText = FileContainerWriter.Data(
-                        TestData.ToBytes(), null, CryptoParameters: CryptoParameters);
+        //    // Create container
+        //    var CipherText = FileContainerWriter.Data(
+        //                TestData.ToBytes(), null, CryptoParameters: CryptoParameters);
 
 
-            FileContainerReader.Data(CipherText, out var ReadData, out var ContentMetaOut);
+        //    FileContainerReader.Data(CipherText, out var ReadData, out var ContentMetaOut);
 
-            var Result = ReadData.ToUTF8();
-            }
+        //    var Result = ReadData.ToUTF8();
+        //    }
 
 
 

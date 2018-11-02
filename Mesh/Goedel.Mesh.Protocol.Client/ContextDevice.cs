@@ -35,7 +35,7 @@ namespace Goedel.Mesh.Protocol.Client {
                 CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default,
                 CryptoAlgorithmID algorithmAuthenticate = CryptoAlgorithmID.Default) {
 
-            machine = machine ?? MeshMachine.Default;
+            machine = machine ?? MeshMachine.GetMachine();
             var KeyCollection = machine.KeyCollection;
 
             algorithmSign = algorithmSign.DefaultMeta(CryptoAlgorithmID.Ed448);
@@ -43,7 +43,6 @@ namespace Goedel.Mesh.Protocol.Client {
             algorithmAuthenticate = algorithmAuthenticate.DefaultMeta(CryptoAlgorithmID.Ed448);
 
             // Create the key set. 
-            // Hack: hard coded to RSA for ease of debugging
             var keySign = KeyPair.Factory(algorithmSign, KeySecurity.Device, KeyCollection, keyUses:KeyUses.Sign);
             var keyEncrypt = KeyPair.Factory(algorithmEncrypt, KeySecurity.Device, KeyCollection, keyUses: KeyUses.Encrypt);
             var keyAuthenticate = KeyPair.Factory(algorithmAuthenticate, KeySecurity.Device, keyUses: KeyUses.Encrypt);
@@ -90,7 +89,7 @@ namespace Goedel.Mesh.Protocol.Client {
 
             var escrowedKeySet = EscrowedKeySet.FromJSON(Decrypted.JSONReader(), true);
 
-            var masterSignatureKey = escrowedKeySet.MasterSignatureKey.GetKeyPair(KeyStorage.Exportable);
+            var masterSignatureKey = escrowedKeySet.MasterSignatureKey.GetKeyPair(KeySecurity.Exportable);
             var profileMaster = ProfileMaster.Generate(ProfileDevice, masterSignatureKey,
                 null);
 

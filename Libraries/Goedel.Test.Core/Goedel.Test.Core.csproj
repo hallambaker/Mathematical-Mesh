@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Core\Goedel.Mesh.Core.csproj" />
     <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Protocol\Goedel.Mesh.Protocol.csproj" />
     <ProjectReference Include="..\..\Mesh\Goedel.Mesh\Goedel.Mesh.csproj" />
     <ProjectReference Include="..\Goedel.Cryptography.Core\Goedel.Cryptography.Core.csproj" />

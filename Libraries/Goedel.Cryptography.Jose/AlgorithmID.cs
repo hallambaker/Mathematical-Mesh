@@ -177,7 +177,11 @@ namespace Goedel.Cryptography.Jose {
             return Found ? Result : null;
             }
 
-
+        /// <summary>
+        /// Convert a JOSE Key uses string to a KeyUses enumeration.
+        /// </summary>
+        /// <param name="tag"></param>
+        /// <returns></returns>
         public static KeyUses GetUses(this string tag) {
             switch (tag) {
                 case "enc":

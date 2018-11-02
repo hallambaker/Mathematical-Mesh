@@ -199,7 +199,7 @@ namespace Goedel.Cryptography.Dare {
         /// Read the next frame in the file.
         /// </summary>
         /// <returns>True if a next frame exists, otherwise false</returns>
-        protected override bool Next () {
+        protected virtual bool Next () {
             PositionStream();
 
             var RecordStart = PositionRead;

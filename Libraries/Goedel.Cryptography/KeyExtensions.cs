@@ -31,55 +31,22 @@ namespace Goedel.Cryptography {
             return Cryptography.UDF.ToString(Bytes);
             }
 
-
-        ///// <summary>
-        ///// Wrap key in a PrivateKeyInfo structure (unencrypted).
-        ///// </summary>
-        ///// <param name="Key">Key to wrap.</param>
-        ///// <returns>The PrivateKeyInfo structure.</returns>
-        //public static PrivateKeyInfo PrivateKeyInfo(this IPKIXPrivateKey Key) => new PrivateKeyInfo() {
-        //    Version = 0,
-        //    PrivateKeyAlgorithm = new AlgorithmIdentifier(Key.OID),
-        //    PrivateKey = Key.DER(),
-        //    Attributes = null
-        //    };
-
-
         /// <summary>
         /// Returns true if the key is exportable, otherwise false.
         /// </summary>
-        /// <param name="KeySecurity">The key security specifier.</param>
-        /// <returns>True if the value is KeySecurity.Master or Exportable</returns>
-        public static bool IsExportable(this KeySecurity KeySecurity) => (KeySecurity == KeySecurity.Master |
-            KeySecurity == KeySecurity.Exportable);
+        /// <param name="keyStorage">The key security specifier.</param>
+        /// <returns>true if the key is exportable, otherwise false</returns>
+        public static bool IsExportable(this KeySecurity keyStorage) =>
+            (keyStorage & KeySecurity.Exportable) == KeySecurity.Exportable;
 
         /// <summary>
         /// Returns true if the key is persisted, otherwise false.
         /// </summary>
-        /// <param name="KeySecurity">The key security specifier.</param>
-        /// <returns>True if the value is KeySecurity.Master, Admin or Device</returns>
-        public static bool IsPersisted(this KeySecurity KeySecurity) => (KeySecurity == KeySecurity.Master | KeySecurity == KeySecurity.Admin |
-                    KeySecurity == KeySecurity.Device);
+        /// <param name="keyStorage">The key security specifier.</param>
+        /// <returns>true if the key is persisted, otherwise false</returns>
+        public static bool IsPersisted(this KeySecurity keyStorage) =>
+            (keyStorage & KeySecurity.Persisted) == KeySecurity.Persisted;
 
 
-        public static KeyStorage Storage(this KeySecurity keySecurity) {
-            switch (keySecurity) {
-                case KeySecurity.Master: return KeyStorage.Exportable;
-                case KeySecurity.Admin: return KeyStorage.Persistable;
-                case KeySecurity.Device: return KeyStorage.Persistable;
-                case KeySecurity.Ephemeral: return KeyStorage.Ephemeral;
-                case KeySecurity.Exportable: return KeyStorage.Exportable;
-                }
-            return KeyStorage.Public;
-
-            }
-
-
-        public static bool IsExportable(this KeyStorage keyStorage) {
-            switch (keyStorage) {
-                case KeyStorage.Exportable: return true;
-                }
-            return false;
-            }
         }
     }

@@ -9,6 +9,9 @@ using Goedel.Protocol;
 namespace Goedel.Mesh {
     public partial class ProfileMaster {
 
+
+        public override string _PrimaryKey => MasterSignatureKey.UDF;
+
         /// <summary>
         /// The signed device profile
         /// </summary>

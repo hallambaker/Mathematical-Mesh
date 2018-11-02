@@ -129,13 +129,13 @@ namespace Goedel.Cryptography.Dare {
     /// <summary>
     /// Base class for container file implementations
     /// </summary>
-    public abstract class Container : IDisposable, IEnumerable<ContainerDataReader> {
+    public abstract class Container : Disposable, IEnumerable<ContainerDataReader> {
 
 
 
 
         /// <summary>The underlying file stream</summary>
-        public JBCDStream JBCDStream { get; protected set; }
+        public JBCDStream JBCDStream { get; set; }
 
         /// <summary>The byte offset from the start of the file for Record 1</summary>
         public virtual long StartOfData { get; protected set; }
@@ -219,36 +219,41 @@ namespace Goedel.Cryptography.Dare {
         #region // IDisposable
 
         /// <summary>
-        /// Dispose method, frees all resources.
+        /// The class specific disposal routine.
         /// </summary>
-        public void Dispose() {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-            }
+        protected override void Disposing() => DisposeJBCDStream?.Dispose();
 
-        bool disposed = false;
-        /// <summary>
-        /// Dispose method, frees resources when disposing, 
-        /// </summary>
-        /// <param name="disposing"></param>
-        protected virtual void Dispose(bool disposing) {
-            if (disposed) {
-                return;
-                }
+        ///// <summary>
+        ///// Dispose method, frees all resources.
+        ///// </summary>
+        //public void Dispose() {
+        //    Dispose(true);
+        //    GC.SuppressFinalize(this);
+        //    }
 
-            if (disposing) {
-                DisposeJBCDStream?.Dispose();
-                }
+        //bool disposed = false;
+        ///// <summary>
+        ///// Dispose method, frees resources when disposing, 
+        ///// </summary>
+        ///// <param name="disposing"></param>
+        //protected virtual void Dispose(bool disposing) {
+        //    if (disposed) {
+        //        return;
+        //        }
 
-            disposed = true;
-            }
+        //    if (disposing) {
+        //        DisposeJBCDStream?.Dispose();
+        //        }
 
-        /// <summary>
-        /// Destructor.
-        /// </summary>
-        ~Container() {
-            Dispose(false);
-            }
+        //    disposed = true;
+        //    }
+
+        ///// <summary>
+        ///// Destructor.
+        ///// </summary>
+        //~Container() {
+        //    Dispose(false);
+        //    }
         #endregion
 
 
@@ -920,11 +925,11 @@ namespace Goedel.Cryptography.Dare {
         ///// <returns>The number of bytes read.</returns>
         //public abstract int ReadData(byte[] Buffer, int Offset, int Count);
 
-        /// <summary>
-        /// Read the next frame in the file.
-        /// </summary>
-        /// <returns>True if a next frame exists, otherwise false</returns>
-        protected abstract bool Next ();
+        ///// <summary>
+        ///// Read the next frame in the file.
+        ///// </summary>
+        ///// <returns>True if a next frame exists, otherwise false</returns>
+        //protected abstract bool Next ();
 
 
         /// <summary>
@@ -945,19 +950,6 @@ namespace Goedel.Cryptography.Dare {
         /// <returns>True if a previous frame exists, otherwise false</returns>
         public abstract bool Previous ();
 
-
-        ///// <summary>
-        ///// Read the last frame in the file.
-        ///// </summary>
-        ///// <returns>True if a last frame exists, otherwise false</returns>
-        //public virtual bool Last () {
-        //    if (JBCDStream.Length <= StartOfData) {
-        //        return false;
-        //        }
-
-        //    JBCDStream.End();
-        //    return Previous();
-        //    }
 
         /// <summary>
         /// Move to the frame with index Position in the file. 
@@ -998,6 +990,7 @@ namespace Goedel.Cryptography.Dare {
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator1();
 
         #endregion
+
 
         }
     }

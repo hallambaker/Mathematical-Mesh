@@ -32,7 +32,7 @@ namespace Goedel.Cryptography.Jose {
     public partial class Key {
 
         /// <summary>Convert to Goedel.Cryptography.KeyPair</summary>
-        public virtual KeyPair KeyPair => GetKeyPair (KeyStorage.Bound);
+        public virtual KeyPair KeyPair => GetKeyPair (KeySecurity.Bound);
 
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace Goedel.Cryptography.Jose {
         /// <param name="keyCollection">The key collection to add the key to.</param>
         /// <returns>The extracted key pair</returns>
         public virtual KeyPair GetKeyPair(
-                    KeyStorage keyStorage, 
+                    KeySecurity keySecurity, 
                     KeyCollection keyCollection = null) => 
             throw new InternalError("GetKeyPair method not implemented in child class");
 

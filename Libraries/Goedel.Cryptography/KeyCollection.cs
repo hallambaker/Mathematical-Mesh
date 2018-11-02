@@ -8,7 +8,10 @@ using Goedel.Cryptography.PKIX;
 namespace Goedel.Cryptography {
 
 
-
+    /// <summary>
+    /// Return a new KeyCollection
+    /// </summary>
+    /// <returns></returns>
     public delegate KeyCollection KeyCollectionDelegate();
 
     /// <summary>
@@ -23,9 +26,9 @@ namespace Goedel.Cryptography {
         /// </summary>
         public static KeyCollection Default;
 
-        static KeyCollection _Default = null;
+        //static KeyCollection _Default = null;
 
-        ///<summary></summary>
+        ///<summary>Delegate returning a new KeyCollection</summary>
         public static KeyCollectionDelegate NewKeyCollection;
 
 
@@ -90,7 +93,13 @@ namespace Goedel.Cryptography {
             }
 
 
-        public virtual KeyPair Locate(string UDF) {
+
+        /// <summary>
+        /// Locate a private key
+        /// </summary>
+        /// <param name="UDF">fingerprint of key to locate.</param>
+        /// <returns>A KeyPair instance bound to the private key.</returns>
+        public virtual KeyPair LocatePrivate(string UDF) {
 
 
             var keyPair = KeyPairRSA.Locate(UDF);
@@ -101,20 +110,26 @@ namespace Goedel.Cryptography {
             return null;
             }
 
+        /// <summary>
+        /// Persist a private key if permitted by the KeySecurity model of the key.
+        /// </summary>
+        /// <param name="keyPair">The key to persist.</param>
         public virtual void Persist(KeyPair keyPair) {
 
             DictionaryKeyPairPrivateByUDF.AddSafe(keyPair.UDF, keyPair);
 
-            if (keyPair.IsPersisted | keyPair.KeySecurity == KeySecurity.Ephemeral) {
-                return;
+            if (keyPair.PersistPending) {
+                keyPair.Persist(this);
                 }
-
-            keyPair.Persist(this);
-
-
 
             }
 
+        /// <summary>
+        /// Persist the key pair specified by <paramref name="privateKey"/> and mark as exportable
+        /// or non-exportable according to the value of <paramref name="Exportable"/>.
+        /// </summary>
+        /// <param name="privateKey">The private key parameters.</param>
+        /// <param name="Exportable">If true, the key is exportable.</param>
         public abstract void Persist(IPKIXPrivateKey privateKey, bool Exportable);
 
 
@@ -124,7 +139,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="keyID">The identifier to resolve.</param>
         /// <returns>The identifier.</returns>
-        public virtual KeyPair MatchPublicEncrypt(string keyID) {
+        public virtual KeyPair GetByAccountEncrypt(string keyID) {
             var Found = DictionaryKeyPairByAccountEncrypt.TryGetValue(keyID, out var Result);
             return Result;
             }
@@ -135,7 +150,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="keyID">The identifier to resolve.</param>
         /// <returns>The identifier.</returns>
-        public virtual KeyPair MatchPrivateSign(string keyID) {
+        public virtual KeyPair GetByAccountSign(string keyID) {
             var Found = DictionaryKeyPairByAccountSign.TryGetValue(keyID, out var Result);
             return Result;
             }

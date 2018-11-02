@@ -40,7 +40,7 @@ namespace Goedel.Cryptography.Windows {
         /// <param name="KeySecurity">The storage security level</param>
         public static void WriteToKeyStore(IPKIXPrivateKey Data, KeySecurity KeySecurity) {
 
-            if (!KeySecurity.IsPersisted()) {
+            if (KeySecurity.IsPersisted()) {
                 return;
                 }
             var UDF = Data.UDF();
@@ -88,7 +88,7 @@ namespace Goedel.Cryptography.Windows {
 
             var Exportable = Description.StartsWith(ExportTrue);
 
-            return JoseKey.GetKeyPair(KeyStorage.Bound); 
+            return JoseKey.GetKeyPair(KeySecurity.Bound); 
             }
 
         /// <summary>

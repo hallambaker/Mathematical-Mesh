@@ -81,13 +81,13 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="EscrowedKeySet">Escrowed key set to create from.</param>
         public MasterProfile(EscrowedKeySet EscrowedKeySet) {
-            var MasterSignatureKeyPair =  EscrowedKeySet.MasterSignatureKey.GetKeyPair(KeyStorage.Bound);
+            var MasterSignatureKeyPair =  EscrowedKeySet.MasterSignatureKey.GetKeyPair(KeySecurity.Bound);
             MasterSignatureKey = new PublicKey(MasterSignatureKeyPair);
             MasterSignatureKey.SelfSignCertificate(Application.PersonalMaster);
 
             MasterEscrowKeys = new List<PublicKey>();
             foreach (var EscrowKeyEntry in EscrowedKeySet.MasterEscrowKeys) {
-                var EscrowKeyPair = EscrowKeyEntry.GetKeyPair(KeyStorage.Bound);
+                var EscrowKeyPair = EscrowKeyEntry.GetKeyPair(KeySecurity.Bound);
                 var EscrowKey = new PublicKey(EscrowKeyPair);
                 EscrowKey.SignCertificate(Application.DataEncryption, MasterSignatureKey);
                 MasterEscrowKeys.Add(EscrowKey);

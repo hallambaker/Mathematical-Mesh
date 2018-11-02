@@ -1,14 +1,18 @@
 ﻿using System;
 using Goedel.Cryptography;
 using Goedel.Cryptography.Windows;
+using Goedel.Utilities;
+
 namespace Goedel.Mesh {
     public class Mesh {
 
         public static void Initialize() {
 
 
-            MeshMachine.Default = new MeshMachineWindows();
+            //MeshMachine.Default = new MeshMachineWindows();
             Cryptography.Cryptography.Initialize(true);
+
+            throw new NYI();
             }
 
 
@@ -29,6 +33,8 @@ namespace Goedel.Mesh {
             }
         public void Register(ProfileApplication Device) {
             }
+
+        public void OpenCatalog(Catalog catalog, string Name) { }
         }
 
     }

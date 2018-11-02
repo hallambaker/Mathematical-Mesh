@@ -123,7 +123,7 @@ namespace ExampleGenerator {
 
             DareMessageAlicePrivate = new DiffeHellmanPrivate();
             var DareMessageAlicePrivateKeyPair = new KeyPairDH(
-                DareMessageAlicePrivate, KeyStorage.Exportable) {
+                DareMessageAlicePrivate, KeySecurity.Exportable) {
                 Locator = AccountAlice
                 };
 
@@ -133,7 +133,7 @@ namespace ExampleGenerator {
 
 
             // Signature Key Set.
-            SignatureAliceKeyPair = KeyPairRSA.Generate(2048, KeyStorage.Exportable);
+            SignatureAliceKeyPair = KeyPairRSA.Generate(2048, KeySecurity.Exportable);
             SignatureAliceKeyPair.Locator = AccountAlice;
             SignatureAliceKey = Key.GetPrivate(SignatureAliceKeyPair);
             SignatureAlicePrivate = (PrivateKeyRSA)Key.GetPrivate(SignatureAliceKeyPair);
@@ -396,10 +396,10 @@ namespace ExampleGenerator {
             //            CryptoAlgorithmID.XEd25519);
 
 
-            var AdvancedCogenDeviceSignPublic =
-                (PublicKeyECDH)null; //AdvancedCogenDeviceProfile.DeviceSignatureKey.PublicParameters;
-            var AdvancedCogenDeviceSignPrivate =
-                (PrivateKeyECDH)null; //AdvancedCogenDeviceProfile.DeviceSignatureKey.PrivateParameters;
+            //var AdvancedCogenDeviceSignPublic =
+            //    (PublicKeyECDH)null; //AdvancedCogenDeviceProfile.DeviceSignatureKey.PublicParameters;
+            //var AdvancedCogenDeviceSignPrivate =
+            //    (PrivateKeyECDH)null; //AdvancedCogenDeviceProfile.DeviceSignatureKey.PrivateParameters;
 
             //AdvancedCogenPrivateKeySeed = CryptoCatalog.GetBits(128);
             //var CogenPrivateKeyValue = new PrivateKeyECDH(AdvancedCogenPrivateKeySeed, true);

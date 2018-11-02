@@ -5,9 +5,13 @@ using Goedel.Cryptography;
 
 namespace Goedel.Mesh {
 
+    public delegate IMeshMachine GetMachineDelegate();
 
     public static class MeshMachine {
-        public static IMeshMachine Default;
+        public static GetMachineDelegate GetMachine;
+
+
+        public static string DirectoryProfiles;
 
         }
 
@@ -16,6 +20,7 @@ namespace Goedel.Mesh {
         KeyCollection KeyCollection { get; }
 
 
+        void OpenCatalog(Catalog catalog, string Name);
 
 
         void Register(ProfileDevice Device);

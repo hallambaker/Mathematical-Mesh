@@ -46,7 +46,7 @@ namespace Goedel.Cryptography {
         #endregion
 
 
-        KeyStorage KeyType = KeyStorage.Public;
+        KeySecurity KeyType = KeySecurity.Public;
         byte[] EncodedPrivateKey = null;
 
 
@@ -61,25 +61,22 @@ namespace Goedel.Cryptography {
         /// in signature operations.</param>
         public KeyPairX25519(
                     byte[] key,
-                    KeyStorage keyType = KeyStorage.Public,
+                    KeySecurity keyType = KeySecurity.Public,
                     KeyUses keyUses = KeyUses.Any,
                     CryptoAlgorithmID cryptoAlgorithmID = CryptoAlgorithmID.Default) {
 
             CryptoAlgorithmID = cryptoAlgorithmID.DefaultMeta(CryptoAlgorithmID.Ed25519);
             KeyType = keyType;
             KeyUses = keyUses;
-            if (keyType == KeyStorage.Public) {
+            if (keyType == KeySecurity.Public) {
                 PublicKey = new CurveX25519Public(key);
                 }
             else {
                 EncodedPrivateKey = key;
                 var privateKey = new CurveX25519Private(key);
                 PublicKey = privateKey.Public;
-                if (keyType == KeyStorage.Exportable) {
-                    var PKIXPrivateKeyECDH = new PKIXPrivateKeyX25519() {
-                        Data = key
-                        };
-                    this.PKIXPrivateKeyECDH = PKIXPrivateKeyECDH; // Enable export.
+                if (keyType.IsExportable()) {
+                    PKIXPrivateKeyECDH = new PKIXPrivateKeyX25519(key, PKIXPublicKeyECDH);
                     }
                 }
             PKIXPublicKeyECDH = new PKIXPublicKeyX25519(PublicKey.Encoding);
@@ -100,7 +97,7 @@ namespace Goedel.Cryptography {
                     CryptoAlgorithmID cryptoAlgorithmID = CryptoAlgorithmID.Default) {
             CryptoAlgorithmID = cryptoAlgorithmID.DefaultMeta(CryptoAlgorithmID.X25519);
             PrivateKey = privateKey;
-            KeyType = KeyStorage.Bound;
+            KeyType = KeySecurity.Bound;
             KeyUses = keyUses;
             }
 
@@ -112,7 +109,7 @@ namespace Goedel.Cryptography {
         /// <param name="cryptoAlgorithmID">Cryptoraphic algorithm</param>
         /// <returns>The created key pair.</returns>
         public static KeyPairX25519 Generate(
-                    KeyStorage keyType = KeyStorage.Public,
+                    KeySecurity keyType = KeySecurity.Public,
                     KeyUses keyUses = KeyUses.Any,
                     CryptoAlgorithmID cryptoAlgorithmID = CryptoAlgorithmID.Default) =>
             new KeyPairX25519(Platform.GetRandomBits(256), keyType, keyUses, cryptoAlgorithmID);
@@ -162,7 +159,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="keyCollection"></param>
         public override void Persist(KeyCollection keyCollection) {
-            Assert.True(KeyType == KeyStorage.Exportable | KeyType == KeyStorage.Persistable);
+            Assert.True(PersistPending);
             var pkix = PKIXPrivateKeyECDH ?? new PKIXPrivateKeyEd25519() { Data = EncodedPrivateKey };
             keyCollection.Persist(pkix, KeyType.IsExportable());
             }
@@ -286,7 +283,7 @@ namespace Goedel.Cryptography {
         public override byte[] PublicData => PublicKey.Encoding;
         #endregion
 
-        KeyStorage KeyType = KeyStorage.Public;
+        KeySecurity KeyType = KeySecurity.Public;
         byte[] EncodedPrivateKey = null;
 
         /// <summary>
@@ -300,21 +297,21 @@ namespace Goedel.Cryptography {
         /// in signature operations.</param>
         public KeyPairX448(
                     byte[] key,
-                    KeyStorage keyType = KeyStorage.Public,
+                    KeySecurity keyType = KeySecurity.Public,
                     KeyUses keyUses = KeyUses.Any,
                     CryptoAlgorithmID cryptoAlgorithmID = CryptoAlgorithmID.Default) {
 
             CryptoAlgorithmID = cryptoAlgorithmID.DefaultMeta(CryptoAlgorithmID.Ed448);
             KeyType = keyType;
             KeyUses = keyUses;
-            if (keyType == KeyStorage.Public) {
+            if (keyType == KeySecurity.Public) {
                 PublicKey = new CurveX448Public(key);
                 }
             else {
                 EncodedPrivateKey = key;
                 var privateKey = new CurveX448Private(key);
                 PublicKey = privateKey.Public;
-                if (keyType == KeyStorage.Exportable) {
+                if (keyType == KeySecurity.Exportable) {
                     var PKIXPrivateKeyECDH = new PKIXPrivateKeyX448() {
                         Data = key
                         };
@@ -339,7 +336,7 @@ namespace Goedel.Cryptography {
                     CryptoAlgorithmID cryptoAlgorithmID = CryptoAlgorithmID.Default) {
             CryptoAlgorithmID = cryptoAlgorithmID.DefaultMeta(CryptoAlgorithmID.Ed448);
             PrivateKey = privateKey;
-            KeyType = KeyStorage.Bound;
+            KeyType = KeySecurity.Bound;
             KeyUses = keyUses;
             }
 
@@ -351,7 +348,7 @@ namespace Goedel.Cryptography {
         /// <param name="cryptoAlgorithmID">Cryptoraphic algorithm</param>
         /// <returns>The created key pair.</returns>
         public static KeyPairX448 Generate(
-                    KeyStorage keyType = KeyStorage.Public,
+                    KeySecurity keyType = KeySecurity.Public,
                     KeyUses keyUses = KeyUses.Any,
                     CryptoAlgorithmID cryptoAlgorithmID = CryptoAlgorithmID.Default) =>
             new KeyPairX448(Platform.GetRandomBits(448), keyType, keyUses, cryptoAlgorithmID);
@@ -399,7 +396,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="keyCollection"></param>
         public override void Persist(KeyCollection keyCollection) {
-            Assert.True(KeyType == KeyStorage.Exportable | KeyType == KeyStorage.Persistable);
+            Assert.True(PersistPending);
             var pkix = PKIXPrivateKeyECDH ?? new PKIXPrivateKeyX448() { Data = EncodedPrivateKey };
             keyCollection.Persist(pkix, KeyType.IsExportable());
             }

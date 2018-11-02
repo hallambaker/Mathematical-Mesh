@@ -14,33 +14,27 @@ namespace Goedel.Test.Core {
     /// Test machine. The cryptographic keys and persistence stores are only 
     /// stored as in-memory structures and never written to disk.
     /// </summary>
-    public class MeshMachineTest : IMeshMachine {
+    public class MeshMachineTest : MeshMachineCore {
+
 
         Dictionary<string, KeyPair> DictionaryKeyPairByUDF = new Dictionary<string, KeyPair>();
 
-        public KeyCollection KeyCollection {
-            get {
-                keyCollection = keyCollection ?? new KeyCollectionTest(this);
-                return keyCollection;
-                }
-            }
-
-        KeyCollection keyCollection;
 
         public MachineEnvironment MachineEnvironment;
+
+
+        public override KeyCollection GetKeyCollection() => new KeyCollectionTest(this);
+
         /// <summary>
         /// Construct a unique test machine with the specified class name.
         /// Separate persistence stores will be created.
         /// </summary>
         /// <param name="Name"></param>
-        public MeshMachineTest(MachineEnvironment machineEnvironment = null, string name="Test") => 
-                    MachineEnvironment = machineEnvironment ?? new MachineEnvironment(name);
+        public MeshMachineTest(MachineEnvironment machineEnvironment) :
+            base(machineEnvironment.Path) => MachineEnvironment = machineEnvironment;
 
-        public void Register(ProfileDevice Device) {
-            }
-        public void Register(ProfileMaster Device) {
-            }
-        public void Register(ProfileApplication Device) {
+
+        public MeshMachineTest(string name="Default") : this (new MachineEnvironment(name)) {
             }
 
 
@@ -55,25 +49,25 @@ namespace Goedel.Test.Core {
             return Result;
             }
 
+
+        public override void OpenCatalog(Catalog catalog, string Name) {
+
+
+
+
+            }
+
+
         }
 
 
     public class KeyCollectionTest : KeyCollectionCore {
         MeshMachineTest MeshMachine;
 
-        static string _DirectoryKeys;
-        static string _DirectoryMesh;
-
-        public override string DirectoryKeys => _DirectoryKeys;
-        public override string DirectoryMesh => _DirectoryMesh;
+        public override string DirectoryKeys => MeshMachine.DirectoryKeys;
 
 
-
-        public KeyCollectionTest(MeshMachineTest meshMachine) {
-            MeshMachine = meshMachine;
-            _DirectoryKeys = Path.Combine(MeshMachine.MachineEnvironment.Path, "Keys");
-            _DirectoryMesh = Path.Combine(MeshMachine.MachineEnvironment.Path, "Profiles");
-            }
+        public KeyCollectionTest(MeshMachineTest meshMachine) => MeshMachine = meshMachine;
 
 
         /// <summary>
@@ -81,24 +75,12 @@ namespace Goedel.Test.Core {
         /// </summary>
         /// <param name="keyPair">The key pair to add.</param>
         public override void Add(KeyPair keyPair) {
-            if (keyPair.KeySecurity.IsPersisted()) {
+            if (keyPair.PersistPending) {
                 MeshMachine.Persist(keyPair);
                 base.Add(keyPair);
                 }
             }
 
-
-        /// <summary>
-        /// Resolve a private key by identifier. This may be a UDF fingerprint of the key,
-        /// an account identifier or strong account identifier.
-        /// </summary>
-        /// <param name="ID">The identifier to resolve.</param>
-        /// <returns>The identifier.</returns>
-        public override KeyPair MatchPrivateSign(string ID) {
-            var Result = MeshMachine.GetPrivate(ID);
-            Result = Result ?? base.MatchPrivateSign(ID);
-            return Result;
-            }
 
        }
 

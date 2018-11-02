@@ -53,7 +53,7 @@ namespace Goedel.Test.Core {
     /// <summary>
     /// 
     /// </summary>
-    public static class TestVector {
+    public static class MakeConstant {
 
         public static byte[] FillConstant (int length, int value) {
             var result = new byte[length];
