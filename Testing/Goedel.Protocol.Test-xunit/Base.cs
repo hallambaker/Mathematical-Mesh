@@ -8,7 +8,7 @@ using Goedel.Test.Core;
 using Xunit;
 using System.Collections;
 
-namespace Goedel.Protocol.Test {
+namespace Goedel.XUnit {
 
     public partial class GoedelProtocol {
 

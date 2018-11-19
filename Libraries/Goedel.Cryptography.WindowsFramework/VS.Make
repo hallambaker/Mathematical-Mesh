@@ -22,7 +22,6 @@ LinkFiles = \
     Goedel.IO.dll\
     Goedel.Utilities.dll\
     Goedel.Cryptography.Jose.dll\
-    Goedel.Cryptography.Standard.dll\
     Goedel.Cryptography.dll\
     Goedel.Protocol.dll
 

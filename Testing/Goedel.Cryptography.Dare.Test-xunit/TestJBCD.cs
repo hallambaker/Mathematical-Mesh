@@ -7,7 +7,7 @@ using Goedel.Utilities;
 using Goedel.IO;
 using Goedel.Test.Core;
 
-namespace Goedel.Cryptography.Dare.Test {
+namespace Goedel.XUnit {
 
     public class TestJBCD {
 

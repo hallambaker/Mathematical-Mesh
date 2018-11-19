@@ -18,7 +18,8 @@ namespace Goedel.Mesh {
     public interface IMeshMachine {
 
         KeyCollection KeyCollection { get; }
-
+        string DirectoryMesh { get; }
+        string DirectoryService { get; }
 
         void OpenCatalog(Catalog catalog, string Name);
 
@@ -26,6 +27,9 @@ namespace Goedel.Mesh {
         void Register(ProfileDevice Device);
         void Register(ProfileMaster Device);
         void Register(ProfileApplication Device);
+        MeshService GetMeshClient(string account);
+
+
 
 
         }

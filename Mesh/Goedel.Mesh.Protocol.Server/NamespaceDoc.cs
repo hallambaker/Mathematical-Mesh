@@ -2,7 +2,7 @@
 [assembly: System.Reflection.AssemblyKeyName("SigningKeyDeveloper")]
 #endif
 
-namespace Goedel.Mesh.Portal.Server {
+namespace Goedel.Mesh.Protocol.Server {
 
     /// <summary>
     /// Mesh Portal Server implementation

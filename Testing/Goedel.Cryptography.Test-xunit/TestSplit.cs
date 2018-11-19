@@ -7,7 +7,7 @@ using Goedel.Test;
 using Goedel.Utilities;
 using System.Collections;
 
-namespace Goedel.Cryptography.Test_xunit {
+namespace Goedel.XUnit {
     public class TestSplit {
 
         public TestSplit() => CryptographyCommon.Initialize();

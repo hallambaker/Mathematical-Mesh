@@ -1,5 +1,5 @@
 ﻿
-Namespace Goedel.Mesh.Portal.Client
+Namespace Goedel.Mesh.Protocol.Client
 
 	Exception Internal
         Console "An internal error occurred"

@@ -56,6 +56,8 @@ namespace Goedel.Protocol {
     /// <returns></returns>
     public delegate JSONObject JSONFactoryDelegate ();
 
+
+
     /// <summary>
     /// Base class for JSON Objects.
     /// </summary>
@@ -98,6 +100,11 @@ namespace Goedel.Protocol {
         public static JSONObject _Factory() => throw new CannotCreateAbstract();
 
         /// <summary>
+        /// Factory method used as default for ToString methods.
+        /// </summary>
+        public static JSONWriterFactoryDelegate JSONWriterFactory = JSONWriter.JSONWriterFactory;
+
+        /// <summary>
         /// Base constructor.
         /// </summary>
 		public JSONObject () {
@@ -116,7 +123,7 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <returns>Data as string.</returns>
 		public override string ToString () {
-            JSONWriter _JSONWriter = new JSONDebugWriter();
+            var _JSONWriter = JSONWriterFactory();
             Serialize(_JSONWriter, false);
             return _JSONWriter.GetUTF8;
             }
@@ -126,7 +133,7 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <returns>Data as string.</returns>
 		public virtual string GetUTF8 () {
-            JSONWriter _JSONWriter = new JSONWriter();
+            var _JSONWriter = new JSONWriter();
             Serialize(_JSONWriter, true);
             return _JSONWriter.GetUTF8;
             }
@@ -137,7 +144,7 @@ namespace Goedel.Protocol {
         /// <param name="tag">If true, serialization is tagged with the object type.</param>
         /// <returns>Data as byte sequence.</returns>
         public virtual byte[] GetBytes (bool tag = true) {
-            JSONWriter _JSONWriter = new JSONWriter();
+            var _JSONWriter = new JSONWriter();
             Serialize(_JSONWriter, tag);
             return _JSONWriter.GetBytes;
             }

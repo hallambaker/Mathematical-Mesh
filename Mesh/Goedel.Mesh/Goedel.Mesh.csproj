@@ -11,6 +11,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Exceptions.cs">
+      <DependentUpon>Exceptions.exceptional</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
     <Compile Update="SchemaMesh.cs">
       <DependentUpon>SchemaMesh.protocol</DependentUpon>
       <DesignTime>True</DesignTime>
@@ -19,10 +24,25 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Exceptions.exceptional">
+      <LastGenOutput>Exceptions.cs</LastGenOutput>
+      <Generator>exceptional</Generator>
+    </None>
+    <None Update="ProtocolSchema.Protocol">
+      <Generator>Protogen</Generator>
+    </None>
     <None Update="SchemaMesh.protocol">
       <LastGenOutput>SchemaMesh.cs</LastGenOutput>
       <Generator>Protogen</Generator>
     </None>
   </ItemGroup>
+
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="VSPrebuild" />
+  </Target>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="VSPostBuild" />
+  </Target>
 
 </Project>

@@ -22,6 +22,9 @@ namespace Goedel.Mesh {
         }
 
     public class MeshMachineWindows : IMeshMachine {
+
+        public string DirectoryMesh => throw new NYI();
+        public string DirectoryService => throw new NYI();
         public KeyCollection KeyCollection { get; }
 
         public KeyCollection GetKeyCollection() => new KeyCollectionWindows();
@@ -35,6 +38,8 @@ namespace Goedel.Mesh {
             }
 
         public void OpenCatalog(Catalog catalog, string Name) { }
+
+        public MeshService GetMeshClient(string account) => throw new NotImplementedException();
         }
 
     }

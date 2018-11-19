@@ -91,6 +91,12 @@ namespace Goedel.Protocol {
         /// </summary>
 
 		public virtual string						Service  {get; set;}
+        /// <summary>
+        ///Optional unique transaction request used to detect replay attacks and 
+        ///duplicates.
+        /// </summary>
+
+		public virtual byte[]						ID  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -138,6 +144,11 @@ namespace Goedel.Protocol {
 				_Writer.WriteToken ("Service", 1);
 					_Writer.WriteString (Service);
 				}
+			if (ID != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("ID", 1);
+					_Writer.WriteBinary (ID);
+				}
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
 				}
@@ -172,6 +183,10 @@ namespace Goedel.Protocol {
 					Service = JSONReader.ReadString ();
 					break;
 					}
+				case "ID" : {
+					ID = JSONReader.ReadBinary ();
+					break;
+					}
 				default : {
 					break;
 					}
@@ -195,7 +210,7 @@ namespace Goedel.Protocol {
 		bool								__Status = false;
 		private int						_Status;
         /// <summary>
-        ///Status return code. The SMTP/HTTP scheme of 2xx = Success,
+        ///Major status return code. The SMTP/HTTP scheme of 2xx = Success,
         ///3xx = incomplete, 4xx = failure is followed.
         /// </summary>
 
@@ -203,12 +218,27 @@ namespace Goedel.Protocol {
 			get => _Status;
 			set {_Status = value; __Status = true; }
 			}
+		bool								__StatusExtended = false;
+		private int						_StatusExtended;
+        /// <summary>
+        ///Application level status report giving additional information.
+        /// </summary>
+
+		public virtual int						StatusExtended {
+			get => _StatusExtended;
+			set {_StatusExtended = value; __StatusExtended = true; }
+			}
         /// <summary>
         ///Text description of the status return code for debugging 
         ///and log file use.
         /// </summary>
 
 		public virtual string						StatusDescription  {get; set;}
+        /// <summary>
+        ///The request to which the response corresponds.
+        /// </summary>
+
+		public virtual byte[]						ID  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -256,10 +286,20 @@ namespace Goedel.Protocol {
 				_Writer.WriteToken ("Status", 1);
 					_Writer.WriteInteger32 (Status);
 				}
+			if (__StatusExtended){
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("StatusExtended", 1);
+					_Writer.WriteInteger32 (StatusExtended);
+				}
 			if (StatusDescription != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("StatusDescription", 1);
 					_Writer.WriteString (StatusDescription);
+				}
+			if (ID != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("ID", 1);
+					_Writer.WriteBinary (ID);
 				}
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
@@ -295,8 +335,16 @@ namespace Goedel.Protocol {
 					Status = JSONReader.ReadInteger32 ();
 					break;
 					}
+				case "StatusExtended" : {
+					StatusExtended = JSONReader.ReadInteger32 ();
+					break;
+					}
 				case "StatusDescription" : {
 					StatusDescription = JSONReader.ReadString ();
+					break;
+					}
+				case "ID" : {
+					ID = JSONReader.ReadBinary ();
 					break;
 					}
 				default : {

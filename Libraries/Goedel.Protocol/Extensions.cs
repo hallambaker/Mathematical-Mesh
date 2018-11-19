@@ -23,7 +23,24 @@ namespace Goedel.Protocol {
         }
 
 
+
+
     public static partial class Extensions {
+
+
+        /// <summary>
+        /// Report if a protocol status cude indicates success.
+        /// </summary>
+        /// <param name="Code">The code to be reported on.</param>
+        /// <returns>True if the code is in the range 100-299 inclusive, otherwise false.</returns>
+        public static bool IsSuccess(this int Code) => (Code >= 100) & (Code < 300);
+
+        /// <summary>
+        /// Report if a protocol status cude indicates failure.
+        /// </summary>
+        /// <param name="Code">The code to be reported on.</param>
+        /// <returns>True if the code is in the range 300-499 inclusive, otherwise false.</returns>
+        public static bool IsError(this int Code) => (Code >= 400) & (Code < 500);
 
         /// <summary>Convert object to bytes in specified encoding.</summary>
         /// <param name="Object">The object to convert.</param>

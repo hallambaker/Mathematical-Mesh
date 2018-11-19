@@ -31,14 +31,14 @@ using Goedel.Protocol;
 
 
 
-namespace Goedel.Protocol.Test {
+namespace Goedel.XUnit {
 
 
-	/// <summary>
-	///
-	/// Classes to be used to test serialization an deserialization.
-	/// </summary>
-	public abstract partial class TestSchema : global::Goedel.Protocol.JSONObject {
+    /// <summary>
+    ///
+    /// Classes to be used to test serialization an deserialization.
+    /// </summary>
+    public abstract partial class TestSchema : global::Goedel.Protocol.JSONObject {
 
 		/// <summary>
         /// Tag identifying this class

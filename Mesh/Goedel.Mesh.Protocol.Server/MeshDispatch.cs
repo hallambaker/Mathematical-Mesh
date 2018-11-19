@@ -28,8 +28,9 @@ using System.Text;
 using Goedel.Protocol;
 using Goedel.Mesh;
 using Goedel.Mesh.Protocol;
+using Goedel.Cryptography.Dare;
 
-namespace Goedel.Mesh.Portal.Server {
+namespace Goedel.Mesh.Protocol.Server {
 
     /// <summary>
     /// The host class. Receives a stream from the HTTP server caller and 
@@ -39,11 +40,10 @@ namespace Goedel.Mesh.Portal.Server {
         /// <summary>
         /// Initialize a Mesh Service Provider.
         /// </summary>
-        /// <param name="Domain">The domain of the service provider.</param>
-        /// <param name="MeshStore">The mesh persistence store filename.</param>
-        /// <param name="PortalStore">The portal persistence store fielname.</param>
-        public PublicMeshServiceProvider(string Domain, string MeshStore, string PortalStore) =>
-            Mesh = new MeshPersist();
+        /// <param name="domain">The domain of the service provider.</param>
+        /// <param name="serviceDirectory">The mesh persistence store filename.</param>
+        public PublicMeshServiceProvider(string domain, string serviceDirectory) =>
+            Mesh = new MeshPersist(serviceDirectory);
 
         /// <summary>
         /// The mesh persistence provider.
@@ -83,13 +83,13 @@ namespace Goedel.Mesh.Portal.Server {
         /// </summary>		
         /// <param name="Request">The request object to send to the host.</param>
 		/// <returns>The response object from the service</returns>
-        public override HelloResponse Hello(
+        public override MeshHelloResponse Hello(
                 HelloRequest Request) {
 
-            var HelloResponse = new HelloResponse() {
+            var HelloResponse = new MeshHelloResponse() {
                 Version = new Goedel.Protocol.Version() {
                     Major = 0,
-                    Minor = 7,
+                    Minor = 8,
                     Encodings = new List<Goedel.Protocol.Encoding>()
                     }
                 };
@@ -102,8 +102,96 @@ namespace Goedel.Mesh.Portal.Server {
             return HelloResponse;
             }
 
+        /// <summary>
+		/// Base method for implementing the transaction  CreateAccount.
+        /// </summary>
+        /// <param name="request">The request object to send to the host.</param>
+		/// <returns>The response object from the service</returns>
+        public override CreateResponse CreateAccount(
+                CreateRequest request) {
 
 
- 
+            var accountEntry = new AccountEntry(request);
+
+            try {
+                Mesh.AccountAdd(accountEntry);
+                return new CreateResponse();
+                }
+            catch (System.Exception exception) {
+                return new CreateResponse(exception);
+
+                }
+
+
+            }
+
+        /// <summary>
+        /// Base method for implementing the transaction  Download.
+        /// </summary>
+        /// <param name="Request">The request object to send to the host.</param>
+        /// <returns>The response object from the service</returns>
+        public override StatusResponse Status(
+                StatusRequest Request) {
+
+            try {
+                var result = Mesh.AccountStatus(Request.Account);
+                return new StatusResponse() { ContainerStatus  = result };
+                }
+            catch (System.Exception exception) {
+                return new StatusResponse(exception);
+
+                }
+
+            }
+
+
+        /// <summary>
+        /// Base method for implementing the transaction  DeleteAccount.
+        /// </summary>
+        /// <param name="Request">The request object to send to the host.</param>
+        /// <returns>The response object from the service</returns>
+        public override DeleteResponse DeleteAccount(
+                DeleteRequest Request) {
+
+            try {
+                Mesh.AccountDelete(Request.Account);
+                return new DeleteResponse();
+                }
+            catch (System.Exception exception) {
+                return new DeleteResponse(exception);
+
+                }
+
+
+            }
+
+
+        /// <summary>
+		/// Base method for implementing the transaction  Download.
+        /// </summary>
+        /// <param name="Request">The request object to send to the host.</param>
+		/// <returns>The response object from the service</returns>
+        public override DownloadResponse Download(
+                DownloadRequest Request) => null;
+
+        /// <summary>
+		/// Base method for implementing the transaction  Upload.
+        /// </summary>
+        /// <param name="Request">The request object to send to the host.</param>
+		/// <returns>The response object from the service</returns>
+        public override UploadResponse Upload(
+                UploadRequest Request) => null;
+
+        /// <summary>
+		/// Base method for implementing the transaction  Post.
+        /// </summary>
+        /// <param name="Request">The request object to send to the host.</param>
+		/// <returns>The response object from the service</returns>
+        public override PostResponse Post(
+                PostRequest Request) => null;
+
+
+
+
         }
     }

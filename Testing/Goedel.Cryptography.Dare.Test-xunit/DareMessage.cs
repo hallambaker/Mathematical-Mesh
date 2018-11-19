@@ -10,7 +10,7 @@ using Goedel.Cryptography.Dare;
 using Goedel.Cryptography.Jose;
 using Xunit;
 
-namespace Goedel.Cryptography.Dare.Test {
+namespace Goedel.XUnit {
 
     public partial class TestDare {
         public static TestDare Test() => new TestDare();

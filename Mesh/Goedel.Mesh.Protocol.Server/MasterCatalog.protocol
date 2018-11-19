@@ -1,0 +1,21 @@
+﻿Protocol Goedel.Mesh.Protocol.Server CatalogItem CatalogItem
+	Description 
+		|An entry in the Mesh linked logchain.
+
+    Using Goedel.Cryptography.Jose
+    Using Goedel.Cryptography.Dare
+
+	Section 1 "Shared Classes"
+		Description
+			|The following classes are used as common elements in
+			|Mesh profile specifications.a
+
+	Structure AccountEntry
+		Description
+			|Represents a Mesh Account.
+		String Directory
+			Description
+				|Subdirectory containing the catalogs and spools for the account.
+		Struct ProfileMesh Profile
+			Description
+				|The Mesh profile to be registered.

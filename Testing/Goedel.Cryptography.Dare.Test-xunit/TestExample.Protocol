@@ -1,4 +1,4 @@
-﻿Protocol Test.Goedel.Mesh TestSchema TestSchema
+﻿Protocol Goedel.XUnit TestSchema TestSchema
 
 	Description
 		|Classes that represent data written to the portal log.

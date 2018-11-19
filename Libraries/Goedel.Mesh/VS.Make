@@ -25,7 +25,6 @@ LinkFiles = \
     Goedel.Cryptography.Dare.dll\
     Goedel.Cryptography.Jose.dll\
     Goedel.Cryptography.KeyFile.dll\
-    Goedel.Cryptography.Standard.dll\
     Goedel.Cryptography.dll\
     Goedel.Persistence.dll\
     Goedel.Protocol.dll

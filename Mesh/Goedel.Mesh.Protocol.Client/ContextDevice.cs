@@ -13,21 +13,34 @@ namespace Goedel.Mesh.Protocol.Client {
     /// Class that represents a device's view of the current state of a
     /// Mesh profile
     /// </summary>
-    public class ContextDevice {
+    public partial class ContextDevice {
 
-        public virtual IMeshMachine Machine { get;  }
+        public virtual IMeshMachine Machine { get; }
 
-        public virtual ProfileDevice ProfileDevice { get;}
+        public virtual ProfileDevice ProfileDevice { get; }
         public DareMessage ProfileDeviceSigned => ProfileDevice.ProfileDeviceSigned;
 
         public ContextDevice(IMeshMachine machine = null, string AccountID = null, string ProfileID = null) {
             }
         public KeyCollection KeyCollection => Machine.KeyCollection;
 
-        ContextDevice(IMeshMachine machine, ProfileDevice profileDevice) {
+        ContextDevice(IMeshMachine machine, ProfileDevice profileDevice,
+                    KeyPair keySign, KeyPair keyEncrypt, KeyPair keyAuthenticate) {
             Machine = machine;
             ProfileDevice = profileDevice;
+            this.keySign = keySign;
+            this.keyEncrypt = keyEncrypt;
+            this.keyAuthenticate = keyAuthenticate;
             }
+
+        KeyPair KeySign => keySign ?? KeyCollection.LocatePrivate(ProfileDevice.DeviceSignatureKey.UDF).CacheValue(out keySign);
+        KeyPair keySign;
+
+        KeyPair KeyEncrypt => keyEncrypt ?? KeyCollection.LocatePrivate(ProfileDevice.DeviceEncryptiontionKey.UDF).CacheValue(out keyEncrypt);
+        KeyPair keyEncrypt;
+
+        KeyPair KeyAuthenticate => keyAuthenticate ?? KeyCollection.LocatePrivate(ProfileDevice.DeviceAuthenticationKey.UDF).CacheValue(out keyAuthenticate);
+        KeyPair keyAuthenticate;
 
         public static ContextDevice Generate(
                 IMeshMachine machine = null,
@@ -43,7 +56,7 @@ namespace Goedel.Mesh.Protocol.Client {
             algorithmAuthenticate = algorithmAuthenticate.DefaultMeta(CryptoAlgorithmID.Ed448);
 
             // Create the key set. 
-            var keySign = KeyPair.Factory(algorithmSign, KeySecurity.Device, KeyCollection, keyUses:KeyUses.Sign);
+            var keySign = KeyPair.Factory(algorithmSign, KeySecurity.Device, KeyCollection, keyUses: KeyUses.Sign);
             var keyEncrypt = KeyPair.Factory(algorithmEncrypt, KeySecurity.Device, KeyCollection, keyUses: KeyUses.Encrypt);
             var keyAuthenticate = KeyPair.Factory(algorithmAuthenticate, KeySecurity.Device, keyUses: KeyUses.Encrypt);
 
@@ -53,7 +66,7 @@ namespace Goedel.Mesh.Protocol.Client {
             // Register the profile locally
             machine.Register(Profile);
 
-            return new ContextDevice(machine, Profile);
+            return new ContextDevice(machine, Profile, keySign, keyEncrypt, keyAuthenticate);
 
             }
 
@@ -97,12 +110,84 @@ namespace Goedel.Mesh.Protocol.Client {
             }
 
 
-        public string Connect(string account) => throw new NYI();
 
         public bool Complete(string account) => throw new NYI();
 
+        public CatalogCredential CatalogCredential =>
+            catalogCredential ?? GetCatalogCredential().CacheValue(out catalogCredential);
+        CatalogCredential catalogCredential;
+
+        public CatalogDevice CatalogDevice =>
+            catalogDevice ?? GetCatalogDevice().CacheValue(out catalogDevice);
+        CatalogDevice catalogDevice;
+
+        public CatalogContact CatalogContact =>
+            catalogContact ?? GetCatalogContact().CacheValue(out catalogContact);
+        CatalogContact catalogContact;
+
+        public CatalogApplication CatalogApplication =>
+            catalogApplication ?? GetCatalogApplication().CacheValue(out catalogApplication);
+        CatalogApplication catalogApplication;
+
+
+
+        public CatalogCredential GetCatalogCredential(string name = null) =>
+            new CatalogCredential(Machine.DirectoryMesh, name);
+
+        public CatalogDevice GetCatalogDevice(string name = null) =>
+            new CatalogDevice(Machine.DirectoryMesh, name);
+
+        public CatalogContact GetCatalogContact(string name = null) =>
+            new CatalogContact(Machine.DirectoryMesh, name);
+
+        public CatalogApplication GetCatalogApplication(string name = null) =>
+            new CatalogApplication(Machine.DirectoryMesh, name);
+
+
+        public SpoolInbound SpoolInbound =>
+            spoolInbound ?? GetSpoolInbound().CacheValue(out spoolInbound);
+        SpoolInbound spoolInbound;
+
+        public SpoolOutbound SpoolOutbound =>
+            spoolOutbound ?? GetSpoolOutbound().CacheValue(out spoolOutbound);
+        SpoolOutbound spoolOutbound;
+
+
+
+        public SpoolInbound GetSpoolInbound(string name = null) =>
+            new SpoolInbound(Machine.DirectoryMesh, name);
+
+        public SpoolOutbound GetSpoolOutbound(string name = null) =>
+            new SpoolOutbound(Machine.DirectoryMesh, name);
+
+        public SpoolOutbound GetSpoolPending(string name = null) =>
+            new SpoolOutbound(Machine.DirectoryMesh, name);
+
+
+        public DareMessage ConnectionRequest(string Profile) {
+            var request = ProfileDevice.ConnectionRequest(Profile);
+
+            // get device signing key here
+
+            return DareMessage.Encode(request.GetBytes(tag: true),
+                    SigningKey: keySign, ContentType: "application/mmm");
+            }
+
+        public DareMessage SignContact(string recipient, Contact contact) {
+            var signedContact = DareMessage.Encode(contact.GetBytes(tag: true),
+                    SigningKey: KeySign, ContentType: "application/mmm");
+
+            var request = new MessageContactRequest() {
+                Contact = signedContact,
+                Recipient = recipient
+                };
+
+            // get device signing key here
+
+            return DareMessage.Encode(request.GetBytes(tag: true),
+                    SigningKey: keySign, ContentType: "application/mmm");
+            }
+
         }
-
-
 
     }

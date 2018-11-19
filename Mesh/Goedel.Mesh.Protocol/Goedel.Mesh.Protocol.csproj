@@ -19,4 +19,10 @@
     <ProjectReference Include="..\Goedel.Mesh\Goedel.Mesh.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="ProtocolSchema.Protocol">
+      <Generator>Protogen</Generator>
+    </None>
+  </ItemGroup>
+
 </Project>

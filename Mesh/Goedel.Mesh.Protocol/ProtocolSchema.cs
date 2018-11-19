@@ -34,7 +34,7 @@ using Goedel.Mesh;
 using Goedel.Cryptography.Dare;
 
 
-namespace Goedel.Mesh.Protocol {
+namespace Goedel.Mesh {
 
 
 	/// <summary>
@@ -1735,7 +1735,7 @@ namespace Goedel.Mesh.Protocol {
 						// an untagged structure.
 						var _Item = new  DareMessage ();
 						_Item.Deserialize (JSONReader);
-						// var _Item = new DAREMessage (JSONReader);
+						// var _Item = new DareMessage (JSONReader);
 						Message.Add (_Item);
 						_Going = JSONReader.NextArray ();
 						}

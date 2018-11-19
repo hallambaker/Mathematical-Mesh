@@ -23,7 +23,11 @@ LinkFiles = \
     Goedel.Cryptography.dll\
     Goedel.Mesh.dll
 
-ToolTargets = 
+ToolTargets = \
+	ProtocolSchema.cs
+ProtocolSchema.cs : ProtocolSchema.Protocol 
+	protogen ProtocolSchema.Protocol  /cs  ProtocolSchema.cs
+
 
 
 prebuildRecurse : 

@@ -21,10 +21,17 @@ LinkFiles = \
     Goedel.Utilities.dll\
     Goedel.Cryptography.Dare.dll\
     Goedel.Cryptography.dll\
-    Goedel.Mesh.Protocol.dll\
     Goedel.Mesh.dll
 
-ToolTargets = 
+ToolTargets = \
+	Exceptions.cs\
+	MasterCatalog.cs
+Exceptions.cs : Exceptions.exceptional 
+	exceptional Exceptions.exceptional  /cs  Exceptions.cs
+
+MasterCatalog.cs : MasterCatalog.protocol 
+	protogen MasterCatalog.protocol  /cs  MasterCatalog.cs
+
 
 
 prebuildRecurse : 

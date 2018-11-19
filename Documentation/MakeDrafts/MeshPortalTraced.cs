@@ -27,7 +27,7 @@ using System.Collections.Generic;
 using Goedel.Protocol;
 using Goedel.Protocol.Debug;
 
-namespace Goedel.Mesh.Portal.Server {
+namespace Goedel.Mesh.Protocol.Server {
     /// <summary>
     /// Direct connection to service provider via API calls. 
     /// </summary>

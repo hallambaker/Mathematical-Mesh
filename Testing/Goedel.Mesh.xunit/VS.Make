@@ -17,7 +17,12 @@
 
 MSBuildThisFileDirectory = 
 
-LinkFiles = 
+LinkFiles = \
+    Goedel.Cryptography.dll\
+    Goedel.Mesh.Core.dll\
+    Goedel.Mesh.Protocol.Client.dll\
+    Goedel.Mesh.dll\
+    Goedel.Mesh.Test.dll
 
 ToolTargets = 
 
@@ -34,5 +39,5 @@ postbuild : postbuildRecurse
 
 
 postbuildwindows : 
-	powershell publishtarget Goedel.Mesh.xunit.dll
+	powershell publishtarget Goedel.Mesh.Test-xunit.dll
 

@@ -136,14 +136,79 @@
 		Inherits Profile
 		Description 
 			|Contains the public description of a Mesh application.
-		Description
-			|This profile is public and MUST be signed by an Online Signature Key.
 
+
+	Structure ProfileMesh
+		Inherits ProfileApplication
+		Description 
+			|Contains the public description of a Mesh Service account
+		String Account
+			Description
+				|Account identifier requested.
+		String Language
+			Multiple
+			Description
+				|List of ISO language codes in order of preference. For creating
+				|explanatory text.
+		Struct DareMessage Profile
+			Description
+				|Master profile of the account being registered.
+
+	Section 2 "Common Structures"
+
+	Structure Permission
+		String Name
+		String Role
+		Struct DareMessage Capabilities
+			Description
+				|Keys or key contributions enabling the operation to be performed
+
+	Structure Contact
+		String FullName
+		String Title
+		String First
+		String Middle
+		String Last
+		String Suffix
+		String Labels
+			Multiple
+		Struct Address Addresses
+			Multiple
+		Struct Location Locations
+			Multiple
+		Struct Role Roles
+			Multiple
+
+	Structure Role
+		String CompanyName
+		Struct Address Addresses
+			Multiple
+		Struct Location Locations
+			Multiple
+
+	Structure Address
+		String URI
+		String Labels
+			Multiple
+
+	Structure Location
+		String Appartment
+		String Street
+		String District
+		String Locality
+		String County
+		String Postcode
+		String Country
+
+	Structure Reference
+		String ID
+		String Relationship
 
 
 	Section 2 "Catalog Entries"
 
 	Structure CatalogEntry
+
 	Structure CatalogEntryCredential
 		Inherits CatalogEntry
 		String Protocol
@@ -154,12 +219,30 @@
 
 	Structure CatalogEntryDevice
 		Inherits CatalogEntry
-		// The device profile
+		Struct DareMessage DeviceProfile
+			Description
+				|The device profile
+		Struct Permission Permissions
+			Multiple
+			Description
+				|List of the permissions that the device has been granted.
 
 	Structure CatalogEntryContact
 		Inherits CatalogEntry
-		// Contact information
-		// Permissions
+		String Key
+			Description
+				|Unique key. 
+		Struct Permission Permissions
+			Multiple
+			Description
+				|List of the permissions that the contact has been granted.
+		Struct DareMessage Contact
+			Description
+				|The (signed) contact data.
+
+
+
+
 
 	Structure CatalogEntryContactRecryption
 		Inherits CatalogEntryContact
@@ -175,6 +258,10 @@
 
 	Structure CatalogEntryApplication
 		// The application profile
+		Inherits CatalogEntry
+		String Key
+
+
 	Structure CatalogEntryApplicationEntry
 		// Application data specific to a particular device
 		// Only need to sync if it is for the current device or the current device is an admin device.
@@ -190,10 +277,32 @@
 
 	Section 2 "Messages"
 
+	Structure MeshMessage
+		String MessageID
+		Struct Reference References
+	
 	Structure MessageConnectionRequest
-	Structure MessageContactRequest
-	Structure MessageConfirmationRequest
-	Structure MessageTaskRequest
+		Inherits MeshMessage
+		String ConnectTo
+		Struct DareMessage DeviceProfile
+			Description
+				|The device profile
 
+	Structure MessageContactRequest
+		Inherits MeshMessage
+		String Recipient
+		Struct DareMessage Contact
+			Description
+				|The contact data.
+
+
+	Structure MessageConfirmationRequest
+		Inherits MeshMessage
+
+	Structure MessageConfirmationResponse
+		Inherits MeshMessage
+
+	Structure MessageTaskRequest
+		Inherits MeshMessage
 
 

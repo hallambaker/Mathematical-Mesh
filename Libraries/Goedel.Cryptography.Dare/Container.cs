@@ -223,37 +223,6 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         protected override void Disposing() => DisposeJBCDStream?.Dispose();
 
-        ///// <summary>
-        ///// Dispose method, frees all resources.
-        ///// </summary>
-        //public void Dispose() {
-        //    Dispose(true);
-        //    GC.SuppressFinalize(this);
-        //    }
-
-        //bool disposed = false;
-        ///// <summary>
-        ///// Dispose method, frees resources when disposing, 
-        ///// </summary>
-        ///// <param name="disposing"></param>
-        //protected virtual void Dispose(bool disposing) {
-        //    if (disposed) {
-        //        return;
-        //        }
-
-        //    if (disposing) {
-        //        DisposeJBCDStream?.Dispose();
-        //        }
-
-        //    disposed = true;
-        //    }
-
-        ///// <summary>
-        ///// Destructor.
-        ///// </summary>
-        //~Container() {
-        //    Dispose(false);
-        //    }
         #endregion
 
 

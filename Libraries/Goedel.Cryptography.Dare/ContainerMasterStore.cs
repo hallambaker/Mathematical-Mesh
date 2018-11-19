@@ -216,9 +216,10 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <threadsafety static="true" instance="true"/>
         /// <param name="Object">Object to create</param>
-        public void New (JSONObject Object) {
+        public IPersistenceEntry New (JSONObject Object) {
             GetWrite();
             PersistenceStore.New(Object);
+            return null;
             }
 
         /// <summary>
@@ -227,9 +228,10 @@ namespace Goedel.Cryptography.Dare {
         /// <threadsafety static="true" instance="true"/>
         /// <param name="Object">The new object value</param>
         /// <param name="Create">If true, create a new value if one does not already exist</param>
-        public void Update (JSONObject Object, bool Create = true) {
+        public IPersistenceEntry Update (JSONObject Object, bool Create = true) {
             GetWrite();
             PersistenceStore.Update(Object, Create);
+            return null;
             }
         }
 

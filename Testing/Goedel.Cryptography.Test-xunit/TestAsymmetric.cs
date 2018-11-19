@@ -7,7 +7,7 @@ using Goedel.Cryptography;
 using Goedel.Utilities;
 using Goedel.Test.Core;
 
-namespace Goedel.Cryptography.Test_xunit {
+namespace Goedel.XUnit {
     public class TestAsymmetric {
 
         public TestAsymmetric() => TestEnvironment.Initialize();

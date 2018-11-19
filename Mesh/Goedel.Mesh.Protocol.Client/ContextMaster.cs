@@ -23,6 +23,9 @@ namespace Goedel.Mesh.Protocol.Client {
         public override ProfileDevice ProfileDevice => ContextDevice.ProfileDevice;
         public virtual ProfileMaster ProfileMaster { get; }
 
+
+        public string UDF => ProfileMaster.UDF;
+
         /// <summary>
         /// Generate 
         /// </summary>
@@ -75,11 +78,6 @@ namespace Goedel.Mesh.Protocol.Client {
 
 
 
-        public CatalogCredential GetCatalogCredential(string name = null) =>
-            new CatalogCredential(Machine, name);
-
-        public CatalogDevice GetCatalogDevice(string name = null) => throw new NYI();
-        public CatalogContact GetCatalogCatalogContact(string name = null) => throw new NYI();
 
         }
     }

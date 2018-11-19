@@ -6,17 +6,23 @@ using Goedel.Cryptography.Dare;
 using Goedel.Mesh.Protocol.Client;
 using Goedel.Mesh.Test;
 using Goedel.Test.Core;
+using Goedel.Utilities;
 
-namespace Goedel.Mesh.xunit {
+namespace Goedel.XUnit {
 
     public class CustomTestTypeAttribute : System.Attribute { }
 
+    /// <summary>
+    /// Perform unit tests on profiles using the .NET Core framework. 
+    /// </summary>
+    /// <remarks>These tests are stubs to the tests in the shared library so that the
+    /// same tests can be run using the .NET Framework testing.</remarks>
     public partial class TestProfilesXunit {
 
         public static TestProfilesXunit Test() => new TestProfilesXunit();
         public TestProfilesXunit() {
             TestEnvironment.Initialize();
-            Mesh.Initialize();
+            Goedel.Mesh.Mesh.Initialize();
             }
 
 
@@ -37,8 +43,24 @@ namespace Goedel.Mesh.xunit {
         public void CatalogContacts() => TestProfiles.Test.CatalogContacts();
 
 
-        [Fact (Skip="Get basic working first")]
-        public void GenerateDevice() => TestProfiles.Test.GenerateDevice();
+
+        [Fact]
+        public void ConnectRequestDirect() => TestProfiles.Test.ConnectRequestDirect();
+
+        [Fact]
+        public void ContactRequestDirect() => TestProfiles.Test.ContactRequestDirect();
+
+
+
+
+        [Fact(Skip = "Decode a device profile")]
+        public void DecodeProfileDevice() => throw new NYI();
+
+        [Fact(Skip = "Check a valid device profile signature")]
+        public void DecodeProfileSignatureFail() => throw new NYI();
+
+        [Fact(Skip = "Check an invalid device profile signature")]
+        public void DecodeProfileSignatureValid() => throw new NYI();
 
         }
     }

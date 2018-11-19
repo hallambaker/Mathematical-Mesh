@@ -8,7 +8,7 @@ using Goedel.ASN;
 using Goedel.Cryptography.PKIX;
 using Goedel.Cryptography;
 
-namespace Goedel.ASN.Test {
+namespace Goedel.XUnit {
 
     public class Buffer {
         public static Buffer Test => new Buffer();

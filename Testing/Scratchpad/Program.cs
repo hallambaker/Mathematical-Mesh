@@ -9,12 +9,10 @@ using Goedel.Cryptography.KeyFile;
 using Goedel.Test;
 using Goedel.Utilities;
 using Goedel.Cryptography.Algorithms;
-using Goedel.Mesh.xunit;
-using Goedel.Cryptography.Dare.Test;
+using Goedel.XUnit;
 
-using Goedel.Cryptography.Test_xunit;
 using Goedel.Test.Core;
-using Goedel.Cryptography.Jose.Test_xunit;
+
 
 namespace Scratchpad {
 
@@ -23,9 +21,9 @@ namespace Scratchpad {
     partial class Program {
         static void Main(string[] args) {
             Console.WriteLine("Hello World");
-            //TestProfilesXunit.Test().CatalogCredentials();
+            TestService.Test().ProtocolAccountLifecycle();
             //TestLifecycle.Test().Test_LifecycleMaster(CryptoAlgorithmID.Ed25519);
-            TestDare.Test().TestPersistenceStore();
+            //TestDare.Test().TestPersistenceStore();
             //TestEnvironment.Initialize(true);
 
             //TestCryptographyJose.InitializeClass();
@@ -62,41 +60,6 @@ namespace Scratchpad {
             //CatalogTests.TestDirect();
             //TestCryptographyJose.TestDirect();
             }
-
-
-
-
-        //static KeyPair CreateKeyPair(bool Register=true) {
-        //    var Result = new KeyPairDH();
-        //    if (Register) {
-        //        KeyCollection.Default.Add(Result);
-        //        }
-        //    return Result;
-        //    }
-
-
-        //static void TestEncryptDecrypt () {
-        //    //string FileName = "TopSecret.jcx";
-        //    string TestData = "<h1>Tippety Top Secret</h1>";
-        //    var Recipients = new List<string> { "Alice@example.com" };
-        //    var CryptoParameters = new Goedel.Test.CryptoParametersTest(
-        //                Recipients: Recipients);
-
-
-        //    // Create container
-        //    var CipherText = FileContainerWriter.Data(
-        //                TestData.ToBytes(), null, CryptoParameters: CryptoParameters);
-
-
-        //    FileContainerReader.Data(CipherText, out var ReadData, out var ContentMetaOut);
-
-        //    var Result = ReadData.ToUTF8();
-        //    }
-
-
-
-
-
 
 
         }

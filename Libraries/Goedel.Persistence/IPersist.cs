@@ -57,7 +57,7 @@ namespace Goedel.Persistence {
         /// Add new JSON object to the store with the specified identifier, unique ID and keys.
         /// </summary>
         /// <param name="Object">Object to add.</param>
-        void New (JSONObject Object);
+        IPersistenceEntry New (JSONObject Object);
 
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace Goedel.Persistence {
         /// </summary>
         /// <param name="Object">Object to add.</param>
         /// <param name="Create">If true, create a new value if one does not already exist</param>
-        void Update (JSONObject Object, bool Create = true);
+        IPersistenceEntry Update (JSONObject Object, bool Create = true);
 
         /// <summary>
         /// Delete a persistence entry

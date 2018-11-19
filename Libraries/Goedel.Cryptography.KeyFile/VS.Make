@@ -21,7 +21,6 @@ LinkFiles = \
     Goedel.FSR.dll\
     Goedel.IO.dll\
     Goedel.Utilities.dll\
-    Goedel.Cryptography.Standard.dll\
     Goedel.Cryptography.dll
 
 ToolTargets = \

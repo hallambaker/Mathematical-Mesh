@@ -21,6 +21,9 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         public override string _Tag { get; } = "DareMessage";
 
+        
+        
+        
         /// <summary>
         /// Create an empty DARE Message (for use by deserializers)
         /// </summary>
@@ -185,6 +188,11 @@ namespace Goedel.Cryptography.Dare {
         /// <returns></returns>
         public byte[] DataSequence(int i) => Header.DataSequence(i);
 
+        /// <summary>
+        /// Create a JSONReader for the decrypted body content according to the specified encoding.
+        /// </summary>
+        /// <returns></returns>
+        public JSONReader GetBodyReader() => Body.JSONReader();
 
         /// <summary>
         /// Serialize this object to the specified output stream.

@@ -13,6 +13,10 @@
 		String Service
 			Description
 				|Name of the Service to which the request is directed.
+		Binary ID
+			Description
+				|Optional unique transaction request used to detect replay attacks and 
+				|duplicates.
 
 	Section 2 "Response Messages"
 		Description
@@ -30,12 +34,19 @@
 			|to any request.
 		Integer Status
 			Description
-				|Status return code. The SMTP/HTTP scheme of 2xx = Success,
+				|Major status return code. The SMTP/HTTP scheme of 2xx = Success,
 				|3xx = incomplete, 4xx = failure is followed.
+		Integer StatusExtended
+			Description
+				|Application level status report giving additional information.
 		String StatusDescription
 			Description
 				|Text description of the status return code for debugging 
 				|and log file use.
+		Binary ID
+			Description
+				|The request to which the response corresponds.
+
 
 	Section 3 "Successful Response Codes"
 		Description

@@ -22,6 +22,11 @@ namespace Goedel.Cryptography.Dare {
         JBCDStream JBCDStream;
         Container Container;
 
+
+        /// <summary>The value of the last frame index</summary>
+        public long FrameCount => Container.FrameCount;
+
+
         /// <summary>
         /// The disposal routine. This is wrapped to provide the IDisposable interface. 
         /// </summary>
@@ -286,12 +291,14 @@ namespace Goedel.Cryptography.Dare {
         /// Create a new persistence entry.
         /// </summary>
         /// <param name="Object">Object to create</param>
-        public virtual void New (JSONObject Object) {
+        public virtual IPersistenceEntry New (JSONObject Object) {
             New(out var ContainterHeader, Object);
 
             var ContainerStoreEntry = WriteFrame(ContainterHeader, Object, null);
             MemoryCommitNew(ContainerStoreEntry);
 
+
+            return ContainerStoreEntry;
             }
 
         /// <summary>
@@ -329,12 +336,14 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="Object">The new object value</param>
         /// <param name="Create">If true, create a new value if one does not already exist</param>
-        public virtual void Update (JSONObject Object, bool Create = true) {
+        public virtual IPersistenceEntry Update (JSONObject Object, bool Create = true) {
 
             Update(out var ContainerHeader, out var Previous, Object);
 
             var ContainerStoreEntry = WriteFrame(ContainerHeader, Object, Previous);
             MemoryCommitUpdate(ContainerStoreEntry);
+
+            return ContainerStoreEntry;
             }
 
 

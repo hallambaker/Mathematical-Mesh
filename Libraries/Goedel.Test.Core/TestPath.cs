@@ -60,6 +60,8 @@ namespace Goedel.Test.Core {
         public string Path => System.IO.Path.Combine(TestEnvironment.Path, Name);
         public string WorkingDirectory => System.IO.Path.Combine(Path, "WorkingDirectory");
 
+        public string ServiceDirectory => System.IO.Path.Combine(Path, "ServiceDirectory");
+
         public MachineEnvironment(string name = "Test") : this(new TestEnvironment(), name) { }
 
 

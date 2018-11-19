@@ -5,7 +5,9 @@ using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
 using Goedel.Utilities;
 using Goedel.Mesh;
+using Goedel.Mesh.Protocol;
 using Goedel.Protocol;
+
 
 namespace Goedel.Mesh.Protocol.Client {
 
@@ -29,6 +31,59 @@ namespace Goedel.Mesh.Protocol.Client {
         public void Register(string account) => throw new NYI();
 
         public void ConnectionResponse (string fingerprint, ConnectionState state) => throw new NYI();
+
+
+        public MeshResult CreateAccount(
+            string accountName,
+            List<string> language = null) {
+
+
+            var profileMesh = new ProfileMesh() {
+                Account = accountName,
+                Language = language
+                };
+
+
+
+
+            var createRequest = new CreateRequest() {
+                Profile = profileMesh
+                };
+            meshService = Machine.GetMeshClient(accountName);
+
+            var result = meshService.CreateAccount(createRequest);
+
+                // if successful write out to host file
+
+            AccountName = accountName;
+
+
+
+            return new MeshResult() { MeshResponse = result };
+            }
+
+
+        public MeshResult Status() {
+            var statusRequest = new StatusRequest() {
+                Account = AccountName
+                };
+
+            var result = meshService.Status(statusRequest);
+            return new MeshResult() { MeshResponse = result };
+            }
+
+        public MeshResult DeleteAccount() {
+
+            var deleteRequest = new DeleteRequest() { Account = AccountName };
+            var result = meshService.DeleteAccount(deleteRequest);
+            return new MeshResult() { MeshResponse = result };
+            }
+
+
+
+
+        public DareMessage SignContact (Contact contact) => throw new NYI();
+
 
 
         /// <summary>

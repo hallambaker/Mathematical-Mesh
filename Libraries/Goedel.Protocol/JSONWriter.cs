@@ -27,7 +27,12 @@ using System.Text;
 using Goedel.Utilities;
 
 namespace Goedel.Protocol {
-  
+
+    /// <summary>
+    /// Factory delegate returning a JSONWriter
+    /// </summary>
+    /// <returns></returns>
+    public delegate JSONWriter JSONWriterFactoryDelegate();
 
     /// <summary>
     /// Base class for writers that format a JSON data object. This is usually
@@ -74,6 +79,11 @@ namespace Goedel.Protocol {
         /// <param name="Output">The output stream.</param>
         public JSONWriter(Stream Output) => this.Output = Output;
 
+
+        /// <summary>
+        /// Create a new JSON Writer.
+        /// </summary>
+        public static JSONWriter JSONWriterFactory() => new JSONWriter();
 
         /// <summary>
         /// Write Tag to the stream

@@ -1,4 +1,4 @@
-﻿Protocol Goedel.Mesh.Protocol MeshProtocol MeshProtocol
+﻿Protocol Goedel.Mesh MeshProtocol MeshProtocol
 	Using Goedel.Mesh
 	Using Goedel.Cryptography.Dare
 
@@ -229,7 +229,7 @@
 		String Container
 			Description
 				|The container to which the entries are to be uploaded.
-		Struct DAREMessage Message
+		Struct DareMessage Message
 			Multiple
 			Description
 				|The entries to be uploaded. These MAY be either complete messages or redacted messages.
@@ -311,7 +311,7 @@
 			Description
 				|List of ISO language codes in order of preference. For creating
 				|explanatory text.
-		Struct DAREMessage Profile
+		Struct DareMessage Profile
 			Description
 				|User profile of account to be created. The profile MUST specify the 
 				|account being created as an account.

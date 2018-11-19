@@ -28,14 +28,14 @@ using System.Text;
 using Goedel.Protocol;
 
 
-namespace Goedel.Cryptography.Dare.Test {
+namespace Goedel.XUnit {
 
 
-	/// <summary>
-	///
-	/// Classes that represent data written to the portal log.
-	/// </summary>
-	public abstract partial class TestSchema : global::Goedel.Protocol.JSONObject {
+    /// <summary>
+    ///
+    /// Classes that represent data written to the portal log.
+    /// </summary>
+    public abstract partial class TestSchema : global::Goedel.Protocol.JSONObject {
 
 		/// <summary>
         /// Tag identifying this class

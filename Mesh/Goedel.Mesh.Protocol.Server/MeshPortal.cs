@@ -26,7 +26,10 @@ using Goedel.Protocol;
 using Goedel.Mesh;
 using Goedel.Mesh.Protocol;
 
-namespace Goedel.Mesh.Portal.Server {
+namespace Goedel.Mesh.Protocol.Server {
+
+
+
 
     /// <summary>
     /// Abstract interface to a local service provider.
@@ -35,12 +38,8 @@ namespace Goedel.Mesh.Portal.Server {
         /// <summary>
         /// File name for local access to the mesh store.
         /// </summary>
-        protected string MeshStore = "mesh.jlog";
+        protected string ServiceDirectory = "mesh.jlog";
 
-        /// <summary>
-        /// File name for local access to the portal store.
-        /// </summary>
-        protected string PortalStore = "portal.jlog";
 
         /// <summary>
         /// The service name (default to mesh.prismproof.org)
@@ -51,6 +50,9 @@ namespace Goedel.Mesh.Portal.Server {
         /// The local PublicMeshServiceHost.
         /// </summary>
         public PublicMeshServiceProvider MeshServiceHost;
+
+
+
         }
 
 
@@ -59,38 +61,23 @@ namespace Goedel.Mesh.Portal.Server {
     /// </summary>
     public class MeshPortalDirect: MeshLocalPortal {
 
-        /// <summary>
-        /// Create new portal using the default stores.
-        /// </summary>
-        public MeshPortalDirect() => Init(ServiceName, MeshStore, PortalStore);
 
         /// <summary>
         /// Create a new portal using the specified stores.
         /// </summary>
-        /// <param name="ServiceName">DNS service name</param>
-        /// <param name="MeshStore">File name for the Mesh Store.</param>
-        /// <param name="PortalStore">File name for the Portal Store.</param>
-        public MeshPortalDirect(string ServiceName, string MeshStore, string PortalStore) => Init(ServiceName, MeshStore, PortalStore);
-
-        /// <summary>
-        /// Create a new portal using the specified stores.
-        /// </summary>
-        /// <param name="MeshStore">File name for the Mesh Store.</param>
-        /// <param name="PortalStore">File name for the Portal Store.</param>
-        public MeshPortalDirect(string MeshStore, string PortalStore) => Init(ServiceName, MeshStore, PortalStore);
-
-        /// <summary>
-        /// Initialize the portal
-        /// </summary>
-        /// <param name="ServiceName">DNS service name</param>
-        /// <param name="MeshStore">File name for the Mesh Store.</param>
-        /// <param name="PortalStore">File name for the Portal Store.</param>
-        protected void Init (string ServiceName, string MeshStore, string PortalStore) {
-            this.ServiceName = ServiceName;
-            this.MeshStore = MeshStore;
-            this.PortalStore = PortalStore;
-            MeshServiceHost = new PublicMeshServiceProvider(ServiceName, MeshStore, PortalStore);
+        /// <param name="serviceName">DNS service name</param>
+        /// <param name="serviceDirectory">File name for the Mesh Store.</param>
+        /// <param name="portalStore">File name for the Portal Store.</param>
+        public MeshPortalDirect(string serviceName = null, string serviceDirectory=null) {
+            ServiceName = serviceName ?? ServiceName;
+            ServiceDirectory = serviceDirectory ?? ServiceDirectory;
+            MeshServiceHost = new PublicMeshServiceProvider(serviceName, serviceDirectory);
             }
+
+
+
+        //public static MeshPortal GetPortal(string serviceName, string directory = null) =>
+        //    new MeshPortalDirect(serviceName);
 
         /// <summary>
         /// Return a MeshService object for the named portal service.
@@ -120,7 +107,7 @@ namespace Goedel.Mesh.Portal.Server {
         /// <summary>
         /// Create new portal using the default stores.
         /// </summary>
-        public MeshPortalLocal() => MeshServiceHost = new PublicMeshServiceProvider(ServiceName, MeshStore, PortalStore);
+        public MeshPortalLocal() => MeshServiceHost = new PublicMeshServiceProvider(ServiceName, ServiceDirectory);
 
         /// <summary>
         /// Return a MeshService object for the named portal service.

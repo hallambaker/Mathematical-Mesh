@@ -21,23 +21,17 @@ LinkFiles = \
     Goedel.Discovery.dll\
     Goedel.IO.dll\
     Goedel.Utilities.dll\
-    Goedel.Cryptography.Dare.dll\
     Goedel.Cryptography.Jose.dll\
-    Goedel.Cryptography.WindowsFramework.dll\
     Goedel.Cryptography.dll\
     Goedel.Protocol.dll\
     Goedel.Test.dll\
-    Goedel.ASN.Test.dll\
-    Goedel.Catalog.Test.dll\
-    Goedel.Cryptography.Algorithms.Test.dll\
-    Goedel.Cryptography.Dare.Test.dll\
-    Goedel.Cryptography.DH.Test.dll\
-    Goedel.Cryptography.Jose.Test.dll\
-    Goedel.Cryptography.KeyFile.Test.dll\
-    Goedel.Cryptography.Test.dll\
-    Goedel.Cryptography.Windows.Test.dll\
-    Goedel.Discovery.Test.dll\
-    Goedel.Protocol.Test.dll\
+    Goedel.Mesh.dll\
+    Goedel.Cryptography.Dare.Test-xunit.dll\
+    Goedel.Cryptography.Jose.Test-xunit.dll\
+    Goedel.Cryptography.Test-xunit.dll\
+    Goedel.Mesh.Protocol.Test-xunit.dll\
+    Goedel.Mesh.Test-xunit.dll\
+    Goedel.Protocol.Test-xunit.dll\
     Test.Common.dll
 
 ToolTargets = 

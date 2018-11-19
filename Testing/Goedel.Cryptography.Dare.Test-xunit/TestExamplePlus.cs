@@ -6,7 +6,7 @@ using Goedel.Protocol;
 using Goedel.Cryptography.Dare;
 using Goedel.IO;
 
-namespace Goedel.Cryptography.Dare.Test {
+namespace Goedel.XUnit {
 
     /// <summary>
     /// 

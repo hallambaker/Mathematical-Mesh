@@ -6,6 +6,10 @@ using Goedel.Cryptography;
 using Goedel.Cryptography.Core;
 using Goedel.Cryptography.PKIX;
 using Goedel.Utilities;
+using Goedel.Mesh.Protocol.Client;
+using Goedel.Mesh.Protocol;
+using Goedel.Mesh.Protocol.Server;
+
 
 namespace Goedel.Test.Core {
 
@@ -15,6 +19,39 @@ namespace Goedel.Test.Core {
     /// stored as in-memory structures and never written to disk.
     /// </summary>
     public class MeshMachineTest : MeshMachineCore {
+        public string ServiceName = "example.com";
+
+        MeshPortalDirect MeshPortalDirect => meshPortalDirect ?? 
+            new MeshPortalDirect(ServiceName, MachineEnvironment.ServiceDirectory).
+                CacheValue(out meshPortalDirect);
+
+        MeshPortalDirect meshPortalDirect;
+
+        public override MeshService GetMeshClient(string account) => MeshPortalDirect.GetService(account);
+
+
+
+        public readonly static Contact ContactAlice = new Contact() {
+            FullName = "Alice Aardvark",
+            First = "Alice",
+            Last = "Aardvark",
+            Addresses = new List<Address>() {
+                    new Address () {
+                        URI = "mailto:alice@example.com"
+                        }
+                    }
+            };
+
+        public readonly static Contact ContactBob = new Contact() {
+            FullName = "Bob Baker",
+            First = "Bob",
+            Last = "Baker",
+            Addresses = new List<Address>() {
+                    new Address () {
+                        URI = "mailto:bob@example.com"
+                        }
+                    }
+            };
 
 
         Dictionary<string, KeyPair> DictionaryKeyPairByUDF = new Dictionary<string, KeyPair>();
@@ -55,6 +92,28 @@ namespace Goedel.Test.Core {
 
 
 
+            }
+
+
+
+        public static void GetContext(
+                string nameAccount,
+                string nameMachine,
+                out MeshMachineTest machine,
+                out ContextDevice contextDevice) {
+
+            machine = new MeshMachineTest(name: nameMachine);
+            contextDevice = ContextDevice.Generate(machine);
+            }
+
+        public static void GetContext(
+                string nameAccount,
+                string nameMachine,
+                out MeshMachineTest machine,
+                out ContextDevice contextDevice,
+                out ContextMaster contextMaster) {
+            GetContext(nameAccount, nameMachine, out machine, out contextDevice);
+            contextMaster = contextDevice.GenerateMaster();
             }
 
 

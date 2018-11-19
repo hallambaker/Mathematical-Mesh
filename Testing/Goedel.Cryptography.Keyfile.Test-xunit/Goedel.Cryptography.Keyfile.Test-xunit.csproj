@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <RootNamespace>Goedel.Cryptography.Keyfile.Test_xunit</RootNamespace>
+
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.8.0" />
+    <PackageReference Include="xunit" Version="2.3.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Libraries\Core\Goedel.Utilities\Goedel.Utilities.csproj" />
+    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.KeyFile\Goedel.Cryptography.KeyFile.csproj" />
+    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography\Goedel.Cryptography.csproj" />
+    <ProjectReference Include="..\..\Libraries\Goedel.Test.Core\Goedel.Test.Core.csproj" />
+  </ItemGroup>
+
+</Project>

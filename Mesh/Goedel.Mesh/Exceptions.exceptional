@@ -1,0 +1,12 @@
+﻿
+Namespace Goedel.Mesh
+
+	Exception Internal
+        Console "An internal error occurred"
+		Description
+			|An internal assertion check failed.
+
+		Exception InvalidProfile
+			Console "The profile is invalid"
+			Description
+				|The profile presented was invalid.

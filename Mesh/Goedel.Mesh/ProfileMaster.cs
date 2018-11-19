@@ -9,6 +9,7 @@ using Goedel.Protocol;
 namespace Goedel.Mesh {
     public partial class ProfileMaster {
 
+        public string UDF => MasterSignatureKey.UDF;
 
         public override string _PrimaryKey => MasterSignatureKey.UDF;
 

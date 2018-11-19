@@ -5,7 +5,7 @@ using Goedel.Cryptography;
 using Goedel.Utilities;
 using System.Collections;
 
-namespace Goedel.Cryptography.Test_xunit {
+namespace Goedel.XUnit {
     public partial class TestDigests {
         static string Message1 = "abc";
         static string Message2 = "";

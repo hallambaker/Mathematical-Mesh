@@ -14,7 +14,7 @@ namespace Goedel.Mesh.Test {
 
         static string Service = "example.com";
         static string NextAccountAlice(string Test) => $"alice{Test}@{Service}";
-
+        static string NextAccountBob(string Test) => $"bob{Test}@{Service}";
 
         public static TestProfiles Test => new TestProfiles();
         public TestProfiles() => TestEnvironment.Initialize();
@@ -98,13 +98,88 @@ namespace Goedel.Mesh.Test {
             }
 
         /// <summary>
-        /// Test device addition/removal at the device level.
+        /// Test direct addition/removal of devices without going through the services or inbound spool
         /// </summary>
         public void CatalogDevices() {
+            var MachineAliceAdmin = new MeshMachineTest(name: "Alice");
+            var MachineAliceLaptop = new MeshMachineTest(name: "Alice Laptop");
+            var MachineAlicePhone = new MeshMachineTest(name: "Alice Phone");
+            var DeviceAdmin = ContextDevice.Generate(MachineAliceAdmin);
+            var MasterAdmin = DeviceAdmin.GenerateMaster();
+
+            var catalog = MasterAdmin.GetCatalogDevice();
+
+
+            var Entry1 = new CatalogEntryDevice() { DeviceProfile = DeviceAdmin.ProfileDeviceSigned } ;
+            var Device2 = ContextDevice.Generate(MachineAliceLaptop);
+            var Entry2 = new CatalogEntryDevice() { DeviceProfile = Device2.ProfileDeviceSigned };
+            var Device3 = ContextDevice.Generate(MachineAlicePhone);
+            var Entry3 = new CatalogEntryDevice() { DeviceProfile = Device3.ProfileDeviceSigned };
+
+            catalog.Add(Entry1);
+            CheckCatalog(catalog, new List<CatalogEntry> { Entry1 });
+            catalog.Add(Entry2);
+            CheckCatalog(catalog, new List<CatalogEntry> { Entry1, Entry2 });
+
+            catalog.Add(Entry3);
+            CheckCatalog(catalog, new List<CatalogEntry> { Entry1, Entry2, Entry3 });
             }
 
+
+        /// <summary>
+        /// Test addition/deletion of contacts
+        /// </summary>
         public void CatalogContacts() {
+            var MachineAliceAdmin = new MeshMachineTest(name: "Alice");
+            var DeviceAdmin = ContextDevice.Generate(MachineAliceAdmin);
+            var MasterAdmin = DeviceAdmin.GenerateMaster();
+
+
+            var catalog = MasterAdmin.CatalogContact;
+
+            var Contact1 = new Contact() {
+                FullName = "Alice Example",
+                First = "Alice",
+                Last = "Example"
+                };
+            var Entry1 = new CatalogEntryContact(Contact1);
+
+            var Contact2 = new Contact() {
+                FullName = "Bob Example",
+                First = "Bob",
+                Last = "Example"
+                };
+            var Entry2 = new CatalogEntryContact(Contact2);
+
+            var Contact3 = new Contact() {
+                FullName = "Carol Example",
+                First = "Carol",
+                Last = "Example"
+                };
+            var Entry3 = new CatalogEntryContact(Contact3);
+
+            var Contact4 = new Contact() {
+                FullName = "Mallet Example",
+                First = "Mallet",
+                Last = "Example"
+                };
+            var Entry4 = new CatalogEntryContact(Contact4);
+
+            catalog.Add(Entry1);
+            CheckCatalog(catalog, new List<CatalogEntry> { Entry1 });
+
+            catalog.Add(Entry2);
+            CheckCatalog(catalog, new List<CatalogEntry> { Entry1, Entry2 });
+
+            catalog.Add(Entry3);
+            CheckCatalog(catalog, new List<CatalogEntry> { Entry1, Entry2, Entry3 });
+
+            catalog.Add(Entry4);
+            CheckCatalog(catalog, new List<CatalogEntry> { Entry1, Entry2, Entry3, Entry4 });
             }
+
+
+
 
         void CheckCatalog(Catalog catalog, List<CatalogEntry> entries) {
 
@@ -131,26 +206,46 @@ namespace Goedel.Mesh.Test {
                 }
             }
 
-        public  void GenerateDevice() {
+
+
+        public void ConnectRequestDirect() {
             var TestName = Unique.Next();
             var AccountAlice = NextAccountAlice(TestName);
 
-            var MachineAliceAdmin = new MeshMachineTest(name: "Alice Admin");
-            var MachineAliceSecond = new MeshMachineTest(name: "Alice 2");
 
-            var DeviceAdmin = ContextDevice.Generate(MachineAliceAdmin);
-            var MasterAdmin = DeviceAdmin.GenerateMaster();
-            MasterAdmin.Register(AccountAlice);
+            MeshMachineTest.GetContext(AccountAlice, "Alice Admin", out var machineAliceAdmin, out var deviceAdmin, out var masterAdmin);
+            MeshMachineTest.GetContext(AccountAlice, "Alice 2", out var MachineAliceSecond, out var Device2);
 
-            var DeviceSecond = ContextDevice.Generate(MachineAliceSecond);
-            var Fingerprint = DeviceSecond.Connect(AccountAlice);
+            // Create connection request for device 2
+            var request = Device2.ConnectionRequest(masterAdmin.UDF);
 
-            var Connected = DeviceSecond.Complete(AccountAlice);
-            Assert.False(Connected);
-            MasterAdmin.ConnectionResponse(Fingerprint, ConnectionState.Connected);
+            // Add to inbound spool of device 1.
 
-            Connected = DeviceSecond.Complete(AccountAlice);
-            Assert.True(Connected);
+
+            // Process spool of device one.
+
+
+
+
+            throw new NYI();
+            }
+
+        public void ContactRequestDirect() {
+            var TestName = Unique.Next();
+            var AccountAlice = NextAccountAlice(TestName);
+            var AccountBob = NextAccountBob(TestName);
+
+            MeshMachineTest.GetContext(AccountAlice, "Alice Admin", out var machineAliceAdmin, out var deviceAdmin, out var masterAdmin);
+            MeshMachineTest.GetContext(AccountBob, "Bob Admin", out var machineAdminBob, out var deviceAdminBob, out var masterAdminBob);
+
+
+            var SignedContact = masterAdminBob.SignContact(MeshMachineTest.ContactBob);
+
+            // add to the catalog here
+
+
+            // check contact is in the catalog.
+
             }
 
         }

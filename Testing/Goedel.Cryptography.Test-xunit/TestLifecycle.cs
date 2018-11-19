@@ -11,7 +11,7 @@ using Goedel.Cryptography.Algorithms;
 using Goedel.Mesh.Test;
 using Xunit;
 
-namespace Goedel.Cryptography.Test_xunit {
+namespace Goedel.XUnit {
     public class TestLifecycle {
         KeyCollection KeyCollection;
 

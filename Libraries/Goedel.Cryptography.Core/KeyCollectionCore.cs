@@ -3,7 +3,6 @@ using System.IO;
 using Goedel.IO;
 using Goedel.Cryptography.PKIX;
 using Goedel.Cryptography.Jose;
-using Goedel.Cryptography.Dare;
 using Goedel.Protocol;
 
 

@@ -1,0 +1,374 @@
+﻿Protocol Goedel.Mesh MeshProtocol MeshProtocol
+	Using Goedel.Mesh
+	Using Goedel.Cryptography.Dare
+
+	Description
+		|Communication between the user and the portal.
+
+	Section 1 "Mesh Portal Service  Reference"
+
+    Service MeshService "_mmm._tcp" "mmm" MeshRequest MeshResponse
+		Description
+			|Every Mesh Portal Service transaction consists of exactly one
+			|request followed by exactly one response.
+			|Mesh Service transactions MAY cause modification
+			|of the data stored in the Mesh Portal or the Mesh itself
+			|but do not cause changes to the connection state. The protocol
+			|itself is thus idempotent. There is no set sequence
+			|in which operations are required to be performed. It is not
+			|necessary to perform a Hello transaction prior to
+			|a ValidateAccount, Publish or any other transaction.
+
+	Section 2 "Request Messages"
+		Description
+			|A Mesh Portal Service request consists of a payload object
+			|that inherits from the MeshRequest class. When using the 
+			|HTTP binding, the request MUST specify the portal DNS
+			|address in the HTTP Host field. 
+
+	Message MeshRequest
+		Description
+			|Base class for all request messages.
+		External Goedel.Protocol.Request
+
+
+	Message MeshRequestUser
+		Description
+			|Base class for all request messages made by a user.
+		Inherits MeshRequest
+		String Account
+			Description
+				|The fully qualified account name (including DNS address) to which the
+				|request is directed.
+
+
+	Section 2 "Response Messages"
+		Description
+			|A Mesh Portal Service response consists of a payload object that
+			|inherits from the MeshResponse class. When using the
+			|HTTP binding, the response SHOULD
+			|report the Status response code in the HTTP response 
+			|message. However the response code returned in the
+			|payload object MUST always be considered authoritative.
+
+	Message MeshResponse
+		External Goedel.Protocol.Response		
+		Description
+			|Base class for all response messages. Contains only the
+			|status code and status description fields.
+
+
+
+	Section 2 "Imported Objects"
+		Description
+			|The Mesh Service protocol makes use of JSON objects
+			|defined in the JOSE Signatgure and Encryption specifications
+			|and in the DARE Data At Rest Encryption extensions to JOSE.
+
+	Section 2 "Common Structures"
+		Description
+			|The following common structures are used in the protocol
+			|messages:
+
+
+
+	Structure KeyValue
+		Description
+			|Describes a Key/Value structure used to make queries
+			|for records matching one or more selection criteria.
+		String Key
+			Description
+				|The data retrieval key.
+
+		String Value
+			Description
+				|The data value to match.
+
+
+	Structure ConstraintsSelect
+		Description
+			|Specifies constraints to be applied to a search result. These 
+			|allow a client to limit the number of records returned, the quantity
+			|of data returned, the earliest and latest data returned, etc.
+		Integer IndexMin
+			Description
+				|Only return objects with an index value that is equal to or
+				|higher than the value specified.
+		Integer IndexMax
+			Description
+				|Only return objects with an index value that is equal to or
+				|lower than the value specified.
+		DateTime NotBefore
+			Description
+				|Only data published on or after the specified time instant 
+				|is requested.
+		DateTime Before
+			Description
+				|Only data published before the specified time instant is
+				|requested. This excludes data published at the specified time instant.
+
+		String PageKey
+			Description
+				|Specifies a page key returned in a previous search operation
+				|in which the number of responses exceeded the specified bounds.
+			Description
+				|When a page key is specified, all the other search parameters
+				|except for MaxEntries and MaxBytes are ignored and the service
+				|returns the next set of data responding to the earlier query.
+
+	Structure ConstraintsData	
+		Description
+			|Specifies constraints on the data to be sent.
+		Integer MaxEntries
+			Description
+				|Maximum number of entries to send.
+		Integer BytesOffset
+			Description
+				|Specifies an offset to be applied to the payload data before it is sent. 
+				|This allows large payloads to be transferred incrementally.
+		Integer BytesMax
+			Description
+				|Maximum number of payload bytes to send.
+
+		Boolean Header
+			Description
+				|Return the entry header
+		Boolean Payload
+			Description
+				|Return the entry payload
+		Boolean Trailer
+			Description
+				|Return the entry trailer
+
+	Structure PolicyAccount
+		Description
+			|Describes the account creation policy including constraints on 
+			|account names, whether there is an open account creation policy, etc.
+		Integer Minimum
+			Description
+				|Specifies the minimum length of an account name.
+		Integer Maximum
+			Description
+				|Specifies the maximum length of an account name.
+		String InvalidCharacters
+			Description
+				|A list of characters that the service 
+				|does not accept in account names. The list of characters 
+				|MAY not be exhaustive but SHOULD include any illegal characters
+				|in the proposed account name.
+
+	Structure ContainerStatus
+		String Container
+		Integer Index
+		Binary Digest
+
+
+
+	//Hello
+    Transaction Public Hello HelloRequest MeshHelloResponse
+		Description
+			|Report service and version information. 
+		Description
+			|The Hello transaction provides a means of determining which protocol
+			|versions, message encodings and transport protocols are supported by
+			|the service.
+		Description
+			|The PostConstraints field MAY be used to advise senders of a maximum
+			|size of payload that MAY be sent in an initial Post request.
+
+	Message MeshHelloResponse
+		External Goedel.Protocol.HelloResponse	
+		Struct ConstraintsData ConstraintsUpdate
+			Description
+				|Specifies the default data constraints for updates.
+		Struct ConstraintsData ConstraintsPost
+			Description
+				|Specifies the default data constraints for message senders.
+		Struct PolicyAccount PolicyAccount
+			Description
+				|Specifies the account creation policy
+
+
+	Transaction User Status StatusRequest StatusResponse
+	Message StatusRequest
+		Inherits MeshRequestUser
+		String Catalogs
+			Multiple
+		String Spools
+			Multiple
+
+
+	Message StatusResponse
+		Inherits MeshResponse
+		Struct ContainerStatus ContainerStatus
+			Multiple
+
+
+
+	//
+	Transaction User Download DownloadRequest DownloadResponse
+		Description
+			|Request objects from the specified container with the specified search
+			|criteria.
+
+	Message DownloadRequest
+		Inherits MeshRequestUser
+		Description
+			|Request objects from the specified container.
+		Description
+			|A client MAY request only objects matching specified search criteria
+			|be returned and MAY request that only specific fields or parts of the 
+			|payload be returned.
+		String Container
+			Multiple
+		Struct ConstraintsSelect Select
+			Description
+				|Specifies constraints to be applied to a search result. These 
+				|allow a client to limit the number of records returned, the quantity
+				|of data returned, the earliest and latest data returned, etc.
+		Struct ConstraintsData ConstraintsPost
+			Description
+				|Specifies the data constraints to be applied to the responses.
+
+	Message DownloadResponse
+		Inherits MeshResponse
+		Description
+			|Return the set of objects requested.
+		Description
+			|Services SHOULD NOT return a response that is disproportionately large
+			|relative to the speed of the network connection without a clear indication
+			|from the client that it is relevant. A service MAY limit the number of 
+			|objects returned. A service MAY limit the scope of each response. 
+
+	Transaction User Upload UploadRequest UploadResponse
+		Description
+			|Request objects from the specified container with the specified search
+			|criteria.
+
+	Message UploadRequest
+		Inherits MeshRequestUser
+		Description
+			|Upload entries to a container. This request is only valid if it is issued
+			|by the owner of the account
+		String Container
+			Description
+				|The container to which the entries are to be uploaded.
+		Struct DareMessage Message
+			Multiple
+			Description
+				|The entries to be uploaded. These MAY be either complete messages or redacted messages.
+				|In either case, the messages MUST conform to the ConstraintsUpdate specified by the 
+				|service 
+
+	Message UploadResponse
+		Inherits MeshResponse
+		Description
+			|Response to an upload request. 
+		Struct EntryResponse Entries
+			Description
+				|The responses to the entries.
+		Struct ConstraintsData ConstraintsData
+			Description
+				|If the upload request contains redacted entries, specifies constraints 
+				|that apply to the redacted entries as a group. Thus the total payloads
+				|of all the messages must not exceed the specified value.
+
+
+	Structure EntryResponse
+		Integer IndexRequest
+			Description
+				|The index value of the entry in the request.
+		Integer IndexContainer
+			Description
+				|The index value assigned to the entry in the container.
+		String Result
+			Description
+				|Specifies the result of attempting to add the entry to a catalog
+				|or spool. Valid values for a message are 'Accept', 'Reject'. Valid 
+				|values for an entry are 'Accept', 'Reject' and 'Conflict'.
+		Struct ConstraintsData ConstraintsData
+			Description
+				|If the entry was redacted, specifies constraints 
+				|that apply to the redacted entries as a group. Thus the total payloads
+				|of all the messages must not exceed the specified value.	
+
+
+
+
+	Transaction Public Post PostRequest PostResponse
+		Description
+			|Request to post to a spool from an external party. The request and response
+			|messages are extensions of the corresponding messages for the Upload transaction.
+			|It is expected that additional fields will be added as the need arises.
+
+
+	Message PostRequest
+		Inherits MeshRequest
+		Description
+			|
+		String Accounts
+			Multiple
+			Description
+				|The account(s) to which the request is directed.
+		Struct DareMessage Message
+			Multiple
+			Description
+				|The entries to be uploaded. These MAY be either complete messages or redacted messages.
+				|In either case, the messages MUST conform to the ConstraintsUpdate specified by the 
+				|service 
+
+	Message PostResponse
+		Inherits UploadResponse
+		Description
+			|
+
+
+
+	//Create account
+	Transaction Admin CreateAccount CreateRequest CreateResponse
+		Description
+			|Request creation of a new service account.
+		Description
+			|Attempt 
+
+	Message CreateRequest
+		Description
+			|Request creation of a new portal account. The request specifies
+			|the requested account identifier and the Mesh profile to be associated 
+			|with the account.
+		Inherits MeshRequest
+		Struct ProfileMesh Profile
+			Description
+				|The Mesh profile to be registered.
+
+	Message CreateResponse
+		Inherits MeshResponse
+		Description
+			|Reports the success or failure of a Create transaction.
+		String Reason
+			Description
+				|Text explaining the status of the creation request.
+		String URL
+			Description
+				|A URL to which the user is directed to complete the account creation 
+				|request.
+
+	//Create account
+	Transaction Admin DeleteAccount DeleteRequest DeleteResponse
+		Description
+			|Request deletion of a new service account.
+		Description
+			|Attempt 
+
+	Message DeleteRequest
+		Description
+			|Request creation of a new portal account. The request specifies
+			|the requested account identifier and the Mesh profile to be associated 
+			|with the account.
+		Inherits MeshRequestUser
+
+
+	Message DeleteResponse
+		Inherits MeshResponse
+		Description
+			|Reports the success or failure of a Delete transaction.

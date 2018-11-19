@@ -3,8 +3,9 @@ using Goedel.Cryptography;
 using System.IO;
 using Xunit;
 using Goedel.Test.Core;
+using Goedel.Utilities;
 
-namespace Goedel.Utilities.Test {
+namespace Goedel.XUnit {
 
     public class Utilities {
         public static Utilities Test => new Utilities();
@@ -167,7 +168,7 @@ namespace Goedel.Utilities.Test {
                     FromStringDelegate StringToByte, byte[] Data, ConversionFormat ConversionFormat, int Chunk=-1) {
             var StringValue = StreamToString(ByteToString, Data, ConversionFormat, Chunk);
             var Result = StringToByte(StringValue);
-            Assert.True(Result.IsEqualTo(Data));
+            Result.AssertEqual(Data);
             }
 
         void ToStringConvertTest (TestVectorBaseConvert Vector) {
@@ -198,7 +199,7 @@ namespace Goedel.Utilities.Test {
 
         void FromStringConvertTest (FromStringDelegate ConverterDelegate, byte[] Data, string Test) {
             var Result = ConverterDelegate(Test);
-            Assert.True(Result.IsEqualTo(Data));
+            Result.AssertEqual(Data);
             }
 
 
@@ -239,12 +240,12 @@ namespace Goedel.Utilities.Test {
 
 
         void CheckTrim(string Value, string Result, string Reason = null) => 
-            Assert.True(Value == Result.Trim(), Compare.Throw, Reason: Reason);
+            Value.AssertEqual( Result.Trim(), Compare.Throw, Reason: Reason);
 
 
 
-        void CheckExact(string Value, string Result, string Reason=null) => 
-            Assert.True(Value == Result, Compare.Throw, Reason: Reason);
+        void CheckExact(string Value, string Result, string Reason=null) =>
+            Value.AssertEqual(Result, Compare.Throw, Reason: Reason);
 
         }
     }
