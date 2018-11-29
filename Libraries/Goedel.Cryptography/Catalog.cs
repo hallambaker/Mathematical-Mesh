@@ -313,10 +313,10 @@ namespace Goedel.Cryptography {
                     CryptoAlgorithmID Algorithm = CryptoAlgorithmID.Default
                     ) {
 
-            var Encoder = MakeEncoder(Algorithm: Algorithm);
-            Encoder.InputStream.Write(Data, 0, Data.Length);
-            Encoder.Complete();
-            return Encoder;
+            var encoder = MakeEncoder(Algorithm: Algorithm);
+            encoder.InputStream.Write(Data, 0, Data.Length);
+            encoder.Complete();
+            return encoder;
             }
 
         /// <summary>

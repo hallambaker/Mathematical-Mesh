@@ -16,12 +16,20 @@ namespace Goedel.Mesh.Protocol.Client {
     public partial class ContextDevice {
 
         public virtual IMeshMachine Machine { get; }
+        public ProfileAccount ProfileAccount;
+
+
+        public ConnectionState ConnectionState;
+        public string Witness;
+
+
+        protected MeshService MeshService;
+        protected string AccountName;
 
         public virtual ProfileDevice ProfileDevice { get; }
         public DareMessage ProfileDeviceSigned => ProfileDevice.ProfileDeviceSigned;
 
-        public ContextDevice(IMeshMachine machine = null, string AccountID = null, string ProfileID = null) {
-            }
+
         public KeyCollection KeyCollection => Machine.KeyCollection;
 
         ContextDevice(IMeshMachine machine, ProfileDevice profileDevice,
@@ -32,6 +40,20 @@ namespace Goedel.Mesh.Protocol.Client {
             this.keyEncrypt = keyEncrypt;
             this.keyAuthenticate = keyAuthenticate;
             }
+
+
+        public ContextDevice(
+                    IMeshMachine machine, 
+                    string accountName=null,
+                    string deviceUDF=null) {
+            Machine = machine;
+            ProfileAccount = Machine.GetConnection(accountName, deviceUDF);
+
+
+            throw new NYI();
+            }
+
+
 
         KeyPair KeySign => keySign ?? KeyCollection.LocatePrivate(ProfileDevice.DeviceSignatureKey.UDF).CacheValue(out keySign);
         KeyPair keySign;
@@ -164,14 +186,14 @@ namespace Goedel.Mesh.Protocol.Client {
             new SpoolOutbound(Machine.DirectoryMesh, name);
 
 
-        public DareMessage ConnectionRequest(string Profile) {
-            var request = ProfileDevice.ConnectionRequest(Profile);
+        //public DareMessage ConnectionRequest(string Profile) {
+        //    var request = ProfileDevice.ConnectionRequest(Profile);
 
-            // get device signing key here
+        //    // get device signing key here
 
-            return DareMessage.Encode(request.GetBytes(tag: true),
-                    SigningKey: keySign, ContentType: "application/mmm");
-            }
+        //    return DareMessage.Encode(request.GetBytes(tag: true),
+        //            SigningKey: keySign, ContentType: "application/mmm");
+        //    }
 
         public DareMessage SignContact(string recipient, Contact contact) {
             var signedContact = DareMessage.Encode(contact.GetBytes(tag: true),
@@ -184,9 +206,17 @@ namespace Goedel.Mesh.Protocol.Client {
 
             // get device signing key here
 
-            return DareMessage.Encode(request.GetBytes(tag: true),
-                    SigningKey: keySign, ContentType: "application/mmm");
+            return Sign(request);
             }
+
+        protected DareMessage Sign (JSONObject data) =>
+                    DareMessage.Encode(data.GetBytes(tag: true),
+                        SigningKey: keySign, ContentType: "application/mmm");
+
+
+
+
+
 
         }
 

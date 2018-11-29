@@ -7,6 +7,7 @@ using Goedel.Utilities;
 using Goedel.IO;
 using Goedel.Mesh;
 using Goedel.Mesh.Protocol;
+using Goedel.Protocol;
 
 namespace Goedel.Mesh {
 
@@ -28,35 +29,15 @@ namespace Goedel.Mesh {
 
 
         public const string FileTypeHost = "application/mmm-host";
-        //public const string FileTypeDevices = "application/mmm-devices";
-        //public const string FileTypeContacts = "application/mmm-contacts";
-        //public const string FileTypeCredentials = "application/mmm-credentials";
+
 
         public string FileNameHost => Path.Combine(DirectoryMesh, "host.dare");
-        //public string FileNameDevices => Path.Combine(DirectoryMesh, "devices.dare");
-        //public string FileNameContacts => Path.Combine(DirectoryMesh, "contacts.dare");
-        //public string FileNameCredentials => Path.Combine(DirectoryMesh, "credentials.dare");
 
+        public ContainerPersistenceStore ContainerHost { get; }
 
-        public ContainerPersistenceStore ContainerHost => containerHost ?? 
-            OpenContainer(FileNameHost, FileTypeHost).CacheValue(out containerHost);
-        ContainerPersistenceStore containerHost;
-
-        //public ContainerPersistenceStore ContainerDevices => containerDevices ?? 
-        //    OpenContainer(FileNameDevices, FileTypeDevices).CacheValue(out containerDevices);
-        //ContainerPersistenceStore containerDevices;
-
-        //public ContainerPersistenceStore ContainerContacts => containerContacts ?? 
-        //    OpenContainer(FileNameContacts, FileTypeContacts).CacheValue(out containerContacts);
-        //ContainerPersistenceStore containerContacts;
-
-        //public ContainerPersistenceStore ContainerCredentials => containerCredentials ?? 
-        //    OpenContainer(FileNameCredentials, FileTypeCredentials).CacheValue(out containerCredentials);
-        //ContainerPersistenceStore containerCredentials;
 
         public MeshMachineCore() : this (MeshMachine.DirectoryProfiles) {
             }
-
 
         protected MeshMachineCore(string directory) {
             DirectoryMaster = directory;
@@ -68,16 +49,43 @@ namespace Goedel.Mesh {
             KeyCollection = GetKeyCollection();
 
             // Now read the container to get the directories.
+            ContainerHost = new ContainerPersistenceStore(FileNameHost, FileTypeHost,
+                fileStatus: FileStatus.OpenOrCreate,
+                containerType: ContainerType.MerkleTree,
+                readContainer:false);
+
+            foreach (var ContainerDataReader in ContainerHost.Container) {
+                if (ContainerDataReader.HasPayload) {
+                    var Data = ContainerDataReader.ToArray();
+                    CommitTransaction(ContainerDataReader.Header, Data);
+                    // here check the trailer.
+                    }
+                }
 
             }
 
-        ContainerPersistenceStore OpenContainer(string fileName, string type) =>
-            new ContainerPersistenceStore(fileName, type, 
-                fileStatus:FileStatus.OpenOrCreate,
-                containerType:ContainerType.MerkleTree
-                );
 
-            //{
+        void CommitTransaction(ContainerHeader ContainerHeader, byte[] Data) {
+
+            var profile = Profile.FromJSON(Data.JSONReader());
+
+            switch (profile) {
+                case ProfileMesh profileMesh:  {
+                    Assert.Fail();
+                    break;
+                    }
+                case ProfileMeshConnect profileMeshConnect: {
+                    Assert.Fail();
+                    break;
+                    }
+                case ProfileApplication profileApplication: {
+                    Assert.Fail();
+                    break;
+                    }
+
+                }
+
+            }
 
 
 
@@ -87,17 +95,34 @@ namespace Goedel.Mesh {
 
         public virtual KeyCollection KeyCollection { get; }
 
-        public virtual KeyCollection GetKeyCollection() => new KeyCollectionCore();
+        public virtual KeyCollection GetKeyCollection() => 
+            new KeyCollectionCore();
 
-        public virtual void Register(ProfileDevice profile) => ContainerHost.New(profile);
 
-        public virtual void Register(ProfileMaster profile) => ContainerHost.New(profile);
+        public virtual void Register (Profile profile) => 
+                ContainerHost.Update(profile);
 
-        public virtual void Register(ProfileApplication profile) => ContainerHost.New(profile);
+        public virtual void Delete(Profile profile) =>
+                ContainerHost.Delete(profile._PrimaryKey);
 
 
         public virtual void OpenCatalog(Catalog catalog, string Name) { }
 
+
+        public virtual ProfileAccount GetConnection(
+                    string accountName = null,
+                    string deviceUDF = null) {
+            if (accountName != null) {
+
+                }
+            if (deviceUDF != null) {
+
+                }
+
+
+            throw new NYI();
+
+            }
 
 
         public virtual MeshService GetMeshClient(string account) => MeshService.GetService(account);

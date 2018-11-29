@@ -35,6 +35,10 @@ namespace Goedel.Protocol {
         /// <returns>True if the code is in the range 100-299 inclusive, otherwise false.</returns>
         public static bool IsSuccess(this int Code) => (Code >= 100) & (Code < 300);
 
+
+        public static void AssertSuccess(this int Code) => IsSuccess(Code).AssertTrue(ExpectedSuccess.Throw);
+
+        public static void AssertError(this int Code) => IsError(Code).AssertTrue(ExpectedError.Throw);
         /// <summary>
         /// Report if a protocol status cude indicates failure.
         /// </summary>

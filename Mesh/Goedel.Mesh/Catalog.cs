@@ -5,6 +5,7 @@ using System.IO;
 using Goedel.Utilities;
 using System.Threading;
 using Goedel.Cryptography.Dare;
+using Goedel.Cryptography;
 using Goedel.IO;
 using Goedel.Protocol;
 
@@ -20,7 +21,8 @@ namespace Goedel.Mesh {
 
     public class Catalog : Store, IEnumerable<CatalogEntry> {
 
-
+        CryptoParameters CryptoParameters;
+        KeyCollection KeyCollection;
 
 
         //public Dictionary<string, CatalogEntry> EntriesByUniqueId = new Dictionary<string, CatalogEntry>();
@@ -29,7 +31,9 @@ namespace Goedel.Mesh {
         //public Catalog(IMeshMachine machine, string containerName) : this(machine.DirectoryMesh, containerName) { }
 
 
-        public Catalog(string directory, string containerName) {
+        public Catalog(string directory, string containerName, 
+            CryptoParameters cryptoParameters = null,
+                    KeyCollection keyCollection = null) {
 
             containerName = containerName ?? ContainerDefault;
             var fileName = Path.Combine (directory, Path.ChangeExtension(containerName, ".cat"));
@@ -37,12 +41,36 @@ namespace Goedel.Mesh {
 
             Container = new ContainerPersistenceStore(fileName, "application/mmm-catalog",
                 fileStatus: FileStatus.OpenOrCreate,
-                containerType: ContainerType.MerkleTree
+                containerType: ContainerType.MerkleTree,
+                cryptoParameters: cryptoParameters,
+                keyCollection: keyCollection
                 );
-
-
+            KeyCollection = keyCollection;
+            CryptoParameters = cryptoParameters;
 
             }
+
+
+
+        public DareMessage ContainerEntry(CatalogEntry catalogEntry, string eventID) {
+
+            var body = catalogEntry.GetBytes(Tagged: true);
+
+            var header = new DareHeader() {
+                Event = eventID,
+                UniqueID = catalogEntry._PrimaryKey,
+                KeyValues = catalogEntry._KeyValues.ToKeyValues()
+                };
+
+            // here au
+
+            return new DareMessage() {
+                Header = header,
+                Body = body
+                };
+
+            }
+
 
 
 
@@ -55,6 +83,12 @@ namespace Goedel.Mesh {
                     };
                 }
             }
+
+
+
+        // Test: Check what happens when an attempt is made to perform conflicting updates to a store.
+        public virtual void Apply(DareMessage dareMessage) => Container.Apply(dareMessage);
+
 
 
         public virtual void Add(CatalogEntry catalogEntry) => Container.New(catalogEntry);

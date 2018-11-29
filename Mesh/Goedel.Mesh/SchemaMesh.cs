@@ -66,6 +66,7 @@ namespace Goedel.Mesh {
 			{"ProfileMaster", ProfileMaster._Factory},
 			{"ProfileDevice", ProfileDevice._Factory},
 			{"ProfileApplication", ProfileApplication._Factory},
+			{"ProfileMeshConnect", ProfileMeshConnect._Factory},
 			{"ProfileMesh", ProfileMesh._Factory},
 			{"Permission", Permission._Factory},
 			{"Contact", Contact._Factory},
@@ -1177,6 +1178,151 @@ namespace Goedel.Mesh {
 		}
 
 	/// <summary>
+	/// </summary>
+	public partial class ProfileMeshConnect : ProfileApplication {
+        /// <summary>
+        ///Account identifier requested.
+        /// </summary>
+
+		public virtual string						Account  {get; set;}
+        /// <summary>
+        ///Random nonce used to mask the fingerprint of the profile UDF.
+        /// </summary>
+
+		public virtual byte[]						ProfileNonce  {get; set;}
+        /// <summary>
+        ///Witness value calculated over the ProfileNonce and profile UDF
+        /// </summary>
+
+		public virtual byte[]						ProfileWitness  {get; set;}
+        /// <summary>
+        ///UDF value used to calculate the witness value.
+        /// </summary>
+
+		public virtual string						DeviceUDF  {get; set;}
+		
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "ProfileMeshConnect";
+
+		/// <summary>
+        /// Factory method
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JSONObject _Factory () => new ProfileMeshConnect();
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="Writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
+			SerializeX (Writer, wrap, ref first);
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_Writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			if (_wrap) {
+				_Writer.WriteObjectStart ();
+				}
+			((ProfileApplication)this).SerializeX(_Writer, false, ref _first);
+			if (Account != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Account", 1);
+					_Writer.WriteString (Account);
+				}
+			if (ProfileNonce != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("ProfileNonce", 1);
+					_Writer.WriteBinary (ProfileNonce);
+				}
+			if (ProfileWitness != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("ProfileWitness", 1);
+					_Writer.WriteBinary (ProfileWitness);
+				}
+			if (DeviceUDF != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("DeviceUDF", 1);
+					_Writer.WriteString (DeviceUDF);
+				}
+			if (_wrap) {
+				_Writer.WriteObjectEnd ();
+				}
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <returns>The created object.</returns>		
+        public static new ProfileMeshConnect FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
+			if (Tagged) {
+				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				return Out as ProfileMeshConnect;
+				}
+		    var Result = new ProfileMeshConnect ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			}
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
+		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+			
+			switch (Tag) {
+				case "Account" : {
+					Account = JSONReader.ReadString ();
+					break;
+					}
+				case "ProfileNonce" : {
+					ProfileNonce = JSONReader.ReadBinary ();
+					break;
+					}
+				case "ProfileWitness" : {
+					ProfileWitness = JSONReader.ReadBinary ();
+					break;
+					}
+				case "DeviceUDF" : {
+					DeviceUDF = JSONReader.ReadString ();
+					break;
+					}
+				default : {
+					base.DeserializeToken(JSONReader, Tag);
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
+	/// <summary>
 	///
 	/// Contains the public description of a Mesh Service account
 	/// </summary>
@@ -1196,7 +1342,7 @@ namespace Goedel.Mesh {
         ///Master profile of the account being registered.
         /// </summary>
 
-		public virtual DareMessage						Profile  {get; set;}
+		public virtual DareMessage						MasterProfile  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -1257,10 +1403,10 @@ namespace Goedel.Mesh {
 				_Writer.WriteArrayEnd ();
 				}
 
-			if (Profile != null) {
+			if (MasterProfile != null) {
 				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("Profile", 1);
-					Profile.Serialize (_Writer, false);
+				_Writer.WriteToken ("MasterProfile", 1);
+					MasterProfile.Serialize (_Writer, false);
 				}
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
@@ -1309,10 +1455,10 @@ namespace Goedel.Mesh {
 						}
 					break;
 					}
-				case "Profile" : {
+				case "MasterProfile" : {
 					// An untagged structure
-					Profile = new DareMessage ();
-					Profile.Deserialize (JSONReader);
+					MasterProfile = new DareMessage ();
+					MasterProfile.Deserialize (JSONReader);
  
 					break;
 					}
@@ -3591,6 +3737,10 @@ namespace Goedel.Mesh {
         /// <summary>
         /// </summary>
 
+		public virtual string						Recipient  {get; set;}
+        /// <summary>
+        /// </summary>
+
 		public virtual Reference						References  {get; set;}
 		
 		/// <summary>
@@ -3639,6 +3789,11 @@ namespace Goedel.Mesh {
 				_Writer.WriteToken ("MessageID", 1);
 					_Writer.WriteString (MessageID);
 				}
+			if (Recipient != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Recipient", 1);
+					_Writer.WriteString (Recipient);
+				}
 			if (References != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("References", 1);
@@ -3680,6 +3835,10 @@ namespace Goedel.Mesh {
 					MessageID = JSONReader.ReadString ();
 					break;
 					}
+				case "Recipient" : {
+					Recipient = JSONReader.ReadString ();
+					break;
+					}
 				case "References" : {
 					// An untagged structure
 					References = new Reference ();
@@ -3700,10 +3859,6 @@ namespace Goedel.Mesh {
 	/// <summary>
 	/// </summary>
 	public partial class MessageConnectionRequest : MeshMessage {
-        /// <summary>
-        /// </summary>
-
-		public virtual string						ConnectTo  {get; set;}
         /// <summary>
         ///The device profile
         /// </summary>
@@ -3752,11 +3907,6 @@ namespace Goedel.Mesh {
 				_Writer.WriteObjectStart ();
 				}
 			((MeshMessage)this).SerializeX(_Writer, false, ref _first);
-			if (ConnectTo != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("ConnectTo", 1);
-					_Writer.WriteString (ConnectTo);
-				}
 			if (DeviceProfile != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("DeviceProfile", 1);
@@ -3794,10 +3944,6 @@ namespace Goedel.Mesh {
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
-				case "ConnectTo" : {
-					ConnectTo = JSONReader.ReadString ();
-					break;
-					}
 				case "DeviceProfile" : {
 					// An untagged structure
 					DeviceProfile = new DareMessage ();
@@ -3819,10 +3965,6 @@ namespace Goedel.Mesh {
 	/// <summary>
 	/// </summary>
 	public partial class MessageContactRequest : MeshMessage {
-        /// <summary>
-        /// </summary>
-
-		public virtual string						Recipient  {get; set;}
         /// <summary>
         ///The contact data.
         /// </summary>
@@ -3871,11 +4013,6 @@ namespace Goedel.Mesh {
 				_Writer.WriteObjectStart ();
 				}
 			((MeshMessage)this).SerializeX(_Writer, false, ref _first);
-			if (Recipient != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("Recipient", 1);
-					_Writer.WriteString (Recipient);
-				}
 			if (Contact != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("Contact", 1);
@@ -3913,10 +4050,6 @@ namespace Goedel.Mesh {
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
-				case "Recipient" : {
-					Recipient = JSONReader.ReadString ();
-					break;
-					}
 				case "Contact" : {
 					// An untagged structure
 					Contact = new DareMessage ();
@@ -3938,6 +4071,10 @@ namespace Goedel.Mesh {
 	/// <summary>
 	/// </summary>
 	public partial class MessageConfirmationRequest : MeshMessage {
+        /// <summary>
+        /// </summary>
+
+		public virtual string						Text  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -3981,6 +4118,11 @@ namespace Goedel.Mesh {
 				_Writer.WriteObjectStart ();
 				}
 			((MeshMessage)this).SerializeX(_Writer, false, ref _first);
+			if (Text != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Text", 1);
+					_Writer.WriteString (Text);
+				}
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
 				}
@@ -4013,6 +4155,10 @@ namespace Goedel.Mesh {
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
+				case "Text" : {
+					Text = JSONReader.ReadString ();
+					break;
+					}
 				default : {
 					base.DeserializeToken(JSONReader, Tag);
 					break;
@@ -4027,6 +4173,15 @@ namespace Goedel.Mesh {
 	/// <summary>
 	/// </summary>
 	public partial class MessageConfirmationResponse : MeshMessage {
+		bool								__Accept = false;
+		private bool						_Accept;
+        /// <summary>
+        /// </summary>
+
+		public virtual bool						Accept {
+			get => _Accept;
+			set {_Accept = value; __Accept = true; }
+			}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -4070,6 +4225,11 @@ namespace Goedel.Mesh {
 				_Writer.WriteObjectStart ();
 				}
 			((MeshMessage)this).SerializeX(_Writer, false, ref _first);
+			if (__Accept){
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Accept", 1);
+					_Writer.WriteBoolean (Accept);
+				}
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
 				}
@@ -4102,6 +4262,10 @@ namespace Goedel.Mesh {
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
+				case "Accept" : {
+					Accept = JSONReader.ReadBoolean ();
+					break;
+					}
 				default : {
 					base.DeserializeToken(JSONReader, Tag);
 					break;

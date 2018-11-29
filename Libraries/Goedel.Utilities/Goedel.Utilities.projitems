@@ -28,7 +28,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)RFC3339.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)RFC822.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Streams.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)TraceX.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Unique.cs" />
   </ItemGroup>
   <ItemGroup>

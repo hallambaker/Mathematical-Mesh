@@ -130,7 +130,7 @@ namespace Goedel.Command {
             }
 
         static void SetValue (Type Data, string Value) {
-            Data.Parameter(Value); // Hack: consolidate
+            Data.Parameter(Value); 
             Data.ByDefault = false; // Has been set explicitly
             }
 

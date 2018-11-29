@@ -28,94 +28,7 @@ using Goedel.Cryptography.Jose;
 
 namespace Goedel.Mesh {
 
-    /// <summary>
-    /// Mesh Key types
-    /// </summary>
-    public enum KeyType {
-        /// <summary>
-        /// Personal Master Key
-        /// </summary>
-        PMSK,
 
-        /// <summary>
-        /// Personal Master Escrow Key
-        /// </summary>
-        PMEK,
-
-        /// <summary>
-        /// Personal Master Online Signing Key
-        /// </summary>
-        POSK,
-
-        /// <summary>
-        /// Device Signing Key 
-        /// </summary>
-        DSK,
-
-        /// <summary>
-        /// Device authentication key 
-        /// </summary>
-        DAK,
-
-        /// <summary>
-        /// Device Encryption Key
-        /// </summary>
-        DEK,
-
-        /// <summary>
-        /// Application Signing Key
-        /// </summary>
-        ASK,
-
-        /// <summary>
-        /// Application Authentication Key
-        /// </summary>
-        AAK,
-
-        /// <summary>
-        /// Application Encryption Key
-        /// </summary>
-        AEK,
-
-        /// <summary>
-        /// Unspecified.
-        /// </summary>
-        Unknown
-        }
-
-    /// <summary>
-    /// Extension methods
-    /// </summary>
-    public static partial class Extension {
-
-        /// <summary>
-        /// Return the algorithm class of a key type
-        /// </summary>
-        /// <param name="KeyType">The Mesh key type</param>
-        /// <returns>The cryptographic algorithm type to use.</returns>
-        public static CryptoAlgorithmClass AlgorithmClass(this KeyType KeyType) {
-
-            switch (KeyType) {
-                case KeyType.PMSK:
-                case KeyType.POSK:
-                case KeyType.DSK:
-                case KeyType.ASK: {
-                    return CryptoAlgorithmClass.Signature;
-                    }
-                case KeyType.PMEK:
-                case KeyType.DEK:
-                case KeyType.AEK: {
-                    return CryptoAlgorithmClass.Exchange;
-                    }
-                case KeyType.DAK:
-                case KeyType.AAK: {
-                    return CryptoAlgorithmClass.Exchange;
-                    }
-                }
-            return CryptoAlgorithmClass.NULL;
-            }
-
-        }
 
 
     public partial class PublicKey {
@@ -145,17 +58,10 @@ namespace Goedel.Mesh {
                 }
             }
 
-
-
-        /// <summary>
-        /// The type of key
-        /// </summary>
-        public KeyType KeyType { get; set; } = KeyType.Unknown;
-
         private Certificate _Certificate;
 
 
-        // TODO: Fix this mess PKIX cert key handling
+        // Hack: Fix this mess PKIX cert key handling
 
         /// <summary>
         /// The PKIX Certificate for the key (if it exists). This is the 

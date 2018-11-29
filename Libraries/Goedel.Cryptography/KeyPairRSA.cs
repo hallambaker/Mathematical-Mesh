@@ -269,7 +269,6 @@ namespace Goedel.Cryptography {
         public override void Encrypt(byte[] Key, out byte[] Exchange, out KeyPair Ephemeral, byte[] Salt = null) {
             Ephemeral = null;
             Exchange = Provider.Encrypt(Key, RSAEncryptionPadding.Pkcs1); 
-                    // HACK: Should get the padding mode from the algorithm.
             }
 
         /// <summary>

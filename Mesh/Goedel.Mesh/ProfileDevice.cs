@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Goedel.Cryptography;
+using Goedel.Cryptography.PKIX;
 using Goedel.Cryptography.Dare;
 using Goedel.Utilities;
 using Goedel.Protocol;
@@ -11,6 +12,9 @@ namespace Goedel.Mesh {
     public partial class ProfileDevice {
 
         public override string _PrimaryKey => DeviceSignatureKey.UDF;
+
+
+        public byte[] UDFBytes => DeviceSignatureKey.KeyPair.PKIXPublicKey.UDFBytes(512);
 
 
         /// <summary>
@@ -54,10 +58,10 @@ namespace Goedel.Mesh {
             FromJSON(message.GetBodyReader(), true);
 
 
-        public MessageConnectionRequest ConnectionRequest(string Profile) => new MessageConnectionRequest() {
-                DeviceProfile = ProfileDeviceSigned,
-                ConnectTo = Profile
-                };
+        //public MessageConnectionRequest ConnectionRequest(string Profile) => new MessageConnectionRequest() {
+        //        DeviceProfile = ProfileDeviceSigned,
+        //        ConnectTo = Profile
+        //        };
 
 
         }

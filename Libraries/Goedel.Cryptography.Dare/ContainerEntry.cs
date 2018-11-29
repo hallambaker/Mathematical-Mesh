@@ -327,11 +327,6 @@ namespace Goedel.Cryptography.Dare {
 			set {_IsMeta = value; __IsMeta = true; }
 			}
         /// <summary>
-        ///Unique object identifier
-        /// </summary>
-
-		public virtual string						UniqueID  {get; set;}
-        /// <summary>
         ///Content meta data.
         /// </summary>
 
@@ -374,21 +369,6 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
 
 		public virtual ContainerIndex						ContainerIndex  {get; set;}
-        /// <summary>
-        ///Unique object identifier
-        /// </summary>
-
-		public virtual string						Event  {get; set;}
-        /// <summary>
-        ///List of labels that are applied to the payload of the frame.
-        /// </summary>
-
-		public virtual List<string>				Labels  {get; set;}
-        /// <summary>
-        ///List of key/value pairs describing the payload of the frame.
-        /// </summary>
-
-		public virtual List<KeyValue>				KeyValues  {get; set;}
 		bool								__First = false;
 		private int						_First;
         /// <summary>
@@ -467,11 +447,6 @@ namespace Goedel.Cryptography.Dare {
 				_Writer.WriteToken ("IsMeta", 1);
 					_Writer.WriteBoolean (IsMeta);
 				}
-			if (UniqueID != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("UniqueID", 1);
-					_Writer.WriteString (UniqueID);
-				}
 			if (ContentMeta != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("ContentMeta", 1);
@@ -497,40 +472,6 @@ namespace Goedel.Cryptography.Dare {
 				_Writer.WriteToken ("ContainerIndex", 1);
 					ContainerIndex.Serialize (_Writer, false);
 				}
-			if (Event != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("Event", 1);
-					_Writer.WriteString (Event);
-				}
-			if (Labels != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("Labels", 1);
-				_Writer.WriteArrayStart ();
-				bool _firstarray = true;
-				foreach (var _index in Labels) {
-					_Writer.WriteArraySeparator (ref _firstarray);
-					_Writer.WriteString (_index);
-					}
-				_Writer.WriteArrayEnd ();
-				}
-
-			if (KeyValues != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("KeyValues", 1);
-				_Writer.WriteArrayStart ();
-				bool _firstarray = true;
-				foreach (var _index in KeyValues) {
-					_Writer.WriteArraySeparator (ref _firstarray);
-					// This is an untagged structure. Cannot inherit.
-                    //_Writer.WriteObjectStart();
-                    //_Writer.WriteToken(_index._Tag, 1);
-					bool firstinner = true;
-					_index.Serialize (_Writer, true, ref firstinner);
-                    //_Writer.WriteObjectEnd();
-					}
-				_Writer.WriteArrayEnd ();
-				}
-
 			if (__First){
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("First", 1);
@@ -585,10 +526,6 @@ namespace Goedel.Cryptography.Dare {
 					IsMeta = JSONReader.ReadBoolean ();
 					break;
 					}
-				case "UniqueID" : {
-					UniqueID = JSONReader.ReadString ();
-					break;
-					}
 				case "ContentMeta" : {
 					// An untagged structure
 					ContentMeta = new ContentMeta ();
@@ -613,35 +550,6 @@ namespace Goedel.Cryptography.Dare {
 					ContainerIndex = new ContainerIndex ();
 					ContainerIndex.Deserialize (JSONReader);
  
-					break;
-					}
-				case "Event" : {
-					Event = JSONReader.ReadString ();
-					break;
-					}
-				case "Labels" : {
-					// Have a sequence of values
-					bool _Going = JSONReader.StartArray ();
-					Labels = new List <string> ();
-					while (_Going) {
-						string _Item = JSONReader.ReadString ();
-						Labels.Add (_Item);
-						_Going = JSONReader.NextArray ();
-						}
-					break;
-					}
-				case "KeyValues" : {
-					// Have a sequence of values
-					bool _Going = JSONReader.StartArray ();
-					KeyValues = new List <KeyValue> ();
-					while (_Going) {
-						// an untagged structure.
-						var _Item = new  KeyValue ();
-						_Item.Deserialize (JSONReader);
-						// var _Item = new KeyValue (JSONReader);
-						KeyValues.Add (_Item);
-						_Going = JSONReader.NextArray ();
-						}
 					break;
 					}
 				case "First" : {

@@ -92,7 +92,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// <param name="B">Second parameter</param>
         public void Cswap (bool Swap, ref BigInteger A, ref BigInteger B) {
 
-            if (Swap) {  // HACK: This should be in constant time
+            if (Swap) {  // Limit: This should be in constant time
                 var Dummy = A;
                 A = B;
                 B = Dummy;

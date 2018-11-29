@@ -138,21 +138,44 @@
 			|Contains the public description of a Mesh application.
 
 
-	Structure ProfileMesh
+
+	Structure ProfileMeshConnect
 		Inherits ProfileApplication
-		Description 
-			|Contains the public description of a Mesh Service account
 		String Account
 			Description
 				|Account identifier requested.
-		String Language
-			Multiple
+		Binary ProfileNonce
 			Description
-				|List of ISO language codes in order of preference. For creating
-				|explanatory text.
-		Struct DareMessage Profile
+				|Random nonce used to mask the fingerprint of the profile UDF.
+		Binary ProfileWitness
+			Description
+				|Witness value calculated over the ProfileNonce and profile UDF
+		String DeviceUDF
+			Description
+				|UDF value used to calculate the witness value.
+
+
+	Structure ProfileMesh
+		Inherits ProfileApplication
+		Description 
+			|C
+		Boolean Default
+			Description
+				|If true, specifies that this is marked as the default account.
+				|If there is more than one active profile in a container, the
+				|last profile found is the active one.
+		String Account
+			Description
+				|Account identifier requested.
+		Struct DareMessage MasterProfile
 			Description
 				|Master profile of the account being registered.
+		Struct DareMessage DeviceProfile
+			Description
+				|Device profile under which this account is registered.
+		Struct ProfileMeshConnect
+			Description
+				|The posted connection status.
 
 	Section 2 "Common Structures"
 
@@ -279,18 +302,19 @@
 
 	Structure MeshMessage
 		String MessageID
+		String Recipient
 		Struct Reference References
 	
 	Structure MessageConnectionRequest
 		Inherits MeshMessage
-		String ConnectTo
+
 		Struct DareMessage DeviceProfile
 			Description
 				|The device profile
 
 	Structure MessageContactRequest
 		Inherits MeshMessage
-		String Recipient
+
 		Struct DareMessage Contact
 			Description
 				|The contact data.
@@ -298,9 +322,12 @@
 
 	Structure MessageConfirmationRequest
 		Inherits MeshMessage
+		String Text
+
 
 	Structure MessageConfirmationResponse
 		Inherits MeshMessage
+		Boolean Accept
 
 	Structure MessageTaskRequest
 		Inherits MeshMessage

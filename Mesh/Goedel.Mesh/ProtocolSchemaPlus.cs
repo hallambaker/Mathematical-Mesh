@@ -25,10 +25,29 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Default constructor
         /// </summary>
-        public MeshResponse() {
-            StatusCode = 201;
-            StatusDescriptionCode = "Operation completed successfully";
+
+        public MeshResponse(Exception exception=null) {
+            if (exception == null) {
+                StatusCode = 201;
+                StatusDescriptionCode = "Operation completed successfully";
+                return;
+                }
+
+            // Goal: extend Exceptional preprocessor to enable these to be handled internally
+
+            StatusCode = 400;
+            StatusDescriptionCode = "Error occurred";
+            switch (exception) {
+                case ObjectIdentifierNotUnique e: {
+                    StatusDescriptionCode = "Account already registered.";
+                    StatusExtended = 1;
+                    return;
+                    }
+
+                }
+
             }
+
 
         /// <summary>
         /// Performs a deep recursive copy of the structure.
@@ -72,56 +91,24 @@ namespace Goedel.Mesh {
 
 
     public partial class CreateResponse {
-
-        public CreateResponse() :base () {
-            }
-        public CreateResponse(Exception exception) {
-            switch (exception) {
-                case ObjectIdentifierNotUnique e: {
-                    StatusCode = 400;
-                    StatusDescriptionCode = "Account already registered.";
-
-                    return;
-                    }
-
-                }
-
+        public CreateResponse(Exception exception = null) : base(exception) {
             }
         }
 
 
     public partial class DeleteResponse {
-
-        public DeleteResponse() : base() {
-            }
-        public DeleteResponse(Exception exception) {
-            StatusCode = 400;
-            switch (exception) {
-                case ObjectIdentifierNotUnique e: {
-                    StatusDescriptionCode = "Account already registered.";
-                    return;
-                    }
-
-                }
-
+        public DeleteResponse(Exception exception = null) : base(exception) {
             }
         }
 
 
     public partial class StatusResponse {
-
-        public StatusResponse() : base() {
+        public StatusResponse(Exception exception = null) : base(exception) {
             }
-        public StatusResponse(Exception exception) {
-            StatusCode = 400;
-            switch (exception) {
-                case ObjectIdentifierNotUnique e: {
-                    StatusDescriptionCode = "Account already registered.";
-                    return;
-                    }
+        }
 
-                }
-
+    public partial class UploadResponse {
+        public UploadResponse(Exception exception = null) : base(exception) {
             }
         }
 

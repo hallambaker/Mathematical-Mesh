@@ -442,6 +442,11 @@ namespace Goedel.Cryptography.Dare {
 
 		public virtual byte[]						Malt  {get; set;}
         /// <summary>
+        ///Contains signed headers.
+        /// </summary>
+
+		public virtual byte[]						Signed  {get; set;}
+        /// <summary>
         ///If present in a header or trailer, specifies an encrypted data block 
         ///containing additional header fields whose values override those specified 
         ///in the message and context headers.
@@ -475,6 +480,26 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
 
 		public virtual List<DareRecipient>				Recipients  {get; set;}
+        /// <summary>
+        ///Unique object identifier
+        /// </summary>
+
+		public virtual string						UniqueID  {get; set;}
+        /// <summary>
+        ///Operation on the header
+        /// </summary>
+
+		public virtual string						Event  {get; set;}
+        /// <summary>
+        ///List of labels that are applied to the payload of the frame.
+        /// </summary>
+
+		public virtual List<string>				Labels  {get; set;}
+        /// <summary>
+        ///List of key/value pairs describing the payload of the frame.
+        /// </summary>
+
+		public virtual List<KeyValue>				KeyValues  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -538,6 +563,11 @@ namespace Goedel.Cryptography.Dare {
 				_Writer.WriteToken ("Malt", 1);
 					_Writer.WriteBinary (Malt);
 				}
+			if (Signed != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Signed", 1);
+					_Writer.WriteBinary (Signed);
+				}
 			if (Cloaked != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("cloaked", 1);
@@ -583,6 +613,45 @@ namespace Goedel.Cryptography.Dare {
 				_Writer.WriteArrayStart ();
 				bool _firstarray = true;
 				foreach (var _index in Recipients) {
+					_Writer.WriteArraySeparator (ref _firstarray);
+					// This is an untagged structure. Cannot inherit.
+                    //_Writer.WriteObjectStart();
+                    //_Writer.WriteToken(_index._Tag, 1);
+					bool firstinner = true;
+					_index.Serialize (_Writer, true, ref firstinner);
+                    //_Writer.WriteObjectEnd();
+					}
+				_Writer.WriteArrayEnd ();
+				}
+
+			if (UniqueID != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("UniqueID", 1);
+					_Writer.WriteString (UniqueID);
+				}
+			if (Event != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Event", 1);
+					_Writer.WriteString (Event);
+				}
+			if (Labels != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Labels", 1);
+				_Writer.WriteArrayStart ();
+				bool _firstarray = true;
+				foreach (var _index in Labels) {
+					_Writer.WriteArraySeparator (ref _firstarray);
+					_Writer.WriteString (_index);
+					}
+				_Writer.WriteArrayEnd ();
+				}
+
+			if (KeyValues != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("KeyValues", 1);
+				_Writer.WriteArrayStart ();
+				bool _firstarray = true;
+				foreach (var _index in KeyValues) {
 					_Writer.WriteArraySeparator (ref _firstarray);
 					// This is an untagged structure. Cannot inherit.
                     //_Writer.WriteObjectStart();
@@ -642,6 +711,10 @@ namespace Goedel.Cryptography.Dare {
 					Malt = JSONReader.ReadBinary ();
 					break;
 					}
+				case "Signed" : {
+					Signed = JSONReader.ReadBinary ();
+					break;
+					}
 				case "cloaked" : {
 					Cloaked = JSONReader.ReadBinary ();
 					break;
@@ -685,6 +758,39 @@ namespace Goedel.Cryptography.Dare {
 						_Item.Deserialize (JSONReader);
 						// var _Item = new DareRecipient (JSONReader);
 						Recipients.Add (_Item);
+						_Going = JSONReader.NextArray ();
+						}
+					break;
+					}
+				case "UniqueID" : {
+					UniqueID = JSONReader.ReadString ();
+					break;
+					}
+				case "Event" : {
+					Event = JSONReader.ReadString ();
+					break;
+					}
+				case "Labels" : {
+					// Have a sequence of values
+					bool _Going = JSONReader.StartArray ();
+					Labels = new List <string> ();
+					while (_Going) {
+						string _Item = JSONReader.ReadString ();
+						Labels.Add (_Item);
+						_Going = JSONReader.NextArray ();
+						}
+					break;
+					}
+				case "KeyValues" : {
+					// Have a sequence of values
+					bool _Going = JSONReader.StartArray ();
+					KeyValues = new List <KeyValue> ();
+					while (_Going) {
+						// an untagged structure.
+						var _Item = new  KeyValue ();
+						_Item.Deserialize (JSONReader);
+						// var _Item = new KeyValue (JSONReader);
+						KeyValues.Add (_Item);
 						_Going = JSONReader.NextArray ();
 						}
 					break;

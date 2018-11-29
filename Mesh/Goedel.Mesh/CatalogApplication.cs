@@ -54,8 +54,10 @@ namespace Goedel.Mesh {
         public CatalogEntryContact LocateBySite(string Key) => Locate(Key) as CatalogEntryContact;
 
 
-        public CatalogApplication(string directory, string ContainerName=null) :
-            base(directory, ContainerName) {
+        public CatalogApplication(string directory, string ContainerName=null,
+            CryptoParameters cryptoParameters = null,
+                    KeyCollection keyCollection = null) :
+            base(directory, ContainerName, cryptoParameters, keyCollection) {
             }
 
         }

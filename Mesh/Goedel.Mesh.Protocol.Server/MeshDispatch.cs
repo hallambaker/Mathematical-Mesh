@@ -180,8 +180,19 @@ namespace Goedel.Mesh.Protocol.Server {
         /// <param name="Request">The request object to send to the host.</param>
 		/// <returns>The response object from the service</returns>
         public override UploadResponse Upload(
-                UploadRequest Request) => null;
+                UploadRequest Request) {
 
+            try {
+                Mesh.AccountUpdate(Request.Account, Request.Container, Request.Message);
+                return new UploadResponse();
+                }
+            catch (System.Exception exception) {
+                return new UploadResponse(exception);
+
+                }
+
+
+            }
         /// <summary>
 		/// Base method for implementing the transaction  Post.
         /// </summary>

@@ -27,6 +27,12 @@ using Goedel.Utilities;
 
 namespace Goedel.Protocol {
 
+    abstract public partial class Response  {
+
+        public bool Success() => Status.IsSuccess();
+        public bool Error() => Status.IsError();
+        }
+
     /// <summary>
     /// Message types
     /// </summary>
@@ -75,52 +81,13 @@ namespace Goedel.Protocol {
         public string Base64Mac  => BaseConvert.ToStringBase64url(MAC);
 
 
-        ///// <summary></summary>
-        //public byte[] GetMAC(Goedel.Cryptography.Ticket.Cryptography.Authentication Authentication,
-        //    Goedel.Cryptography.Ticket.Cryptography.Key Key) {
-        //    if (Authentication != Goedel.Cryptography.Ticket.Cryptography.Authentication.Unknown) {
-        //        return Goedel.Cryptography.Ticket.Cryptography.GetMAC(Payload, Authentication, Key);
-        //        }
-        //    else {
-        //        return null;
-        //        }
-        //    }
 
-        ///// <summary></summary>
-        //public void MakeMAC(Goedel.Cryptography.Ticket.Cryptography.Authentication Authentication,
-        //    Goedel.Cryptography.Ticket.Cryptography.Key Key) {
-        //    MAC = GetMAC(Authentication, Key);
-        //    }
-
-        ///// <summary></summary>
-        //public bool VerifyMAC(Goedel.Cryptography.Ticket.Cryptography.Authentication Authentication,
-        //    Goedel.Cryptography.Ticket.Cryptography.Key Key) {
-        //    byte[] Test = GetMAC(Authentication, Key);
-
-        //    return Goedel.Cryptography.Ticket.Cryptography.ArraysEqual(Test, MAC);
-        //    }
 
         /// <summary>Construct from a payload string.</summary>
         /// <param name="PayloadIn">The payload to construct from</param>
         public BoundMessage(string PayloadIn) => Payload = PayloadIn;
 
 
-        ///// <summary></summary>
-        //public BoundMessage(string PayloadIn, byte[] TicketIn,
-        //             Goedel.Cryptography.Ticket.Cryptography.Authentication Authentication,
-        //             Goedel.Cryptography.Ticket.Cryptography.Key Key) {
-        //    BindMessage(PayloadIn, TicketIn, Authentication, Key);
-        //    }
-
-        //private void BindMessage(string PayloadIn, byte[] TicketIn,
-        //            Goedel.Cryptography.Ticket.Cryptography.Authentication Authentication,
-        //            Goedel.Cryptography.Ticket.Cryptography.Key Key) {
-        //    Payload = PayloadIn;
-        //    Ticket = TicketIn;
-        //    MakeMAC(Authentication, Key);
-        //    }
-
-        // NYI: Authentication ticket bindings
 
         }
 

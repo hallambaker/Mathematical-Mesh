@@ -10,7 +10,25 @@ using Goedel.Mesh;
 
 namespace Goedel.XUnit {
     public class TestService {
+        // Goal: Authenticate service requests and responses
+        // Goal: Lightweight key exchange mechanism for service
+        // Goal: Service handoff to a different IP address
+        // Goal: Enable use of JSON-B encodings throughout
 
+        // Task: Verify.
+        // Task: Sign
+        // Task: Encrypt
+
+        // Verify: Validate device profile signature
+        // Verify: Validate mesh profile signature
+        // Verify: Validate contact signature
+
+        // Sign: Container updates
+
+        // Encrypt: Encrypt credential entry
+        // Encrypt: Encrypt contact request
+        // Encrypt: Encrypt connection request
+        // Encrypt: Encrypt confirmation request
 
 
         public static TestService Test() => new TestService();
@@ -30,8 +48,9 @@ namespace Goedel.XUnit {
 
         [Fact]
         public void ProtocolHelloContext() {
-            MeshMachineTest.GetContext(AccountAlice, "Alice Admin", out var machineAliceAdmin, out var deviceAdmin, out var masterAdmin);
-            var response = masterAdmin.Connect(ServiceName);
+            MeshMachineTest.GetContext(AccountAlice, "Alice Admin", 
+                    out var machineAliceAdmin, out var deviceAdmin, out var masterAdmin);
+            var response = masterAdmin.Hello(ServiceName);
 
 
             }
@@ -44,18 +63,20 @@ namespace Goedel.XUnit {
 
 
             // create account
-            var statusCreate = masterAdmin.CreateAccount(AccountAlice);
-
+            var statusCreate = masterAdmin.CreateAccount(AccountAlice); // Test: success result.
+            statusCreate.AssertSuccess();
 
             // get account status
             var statusEmpty = masterAdmin.Status();
-
+            statusEmpty.AssertSuccess();
 
             // delete account
             var statusDelete = masterAdmin.DeleteAccount();
+            statusEmpty.AssertSuccess();
 
             // get account status
-            var statusFail = masterAdmin.Status();
+            var statusFail = masterAdmin.Status(); // Test: Test that we get a fail response.
+            statusFail.AssertError();
 
             throw new NYI(); // fail the test till we have the right hooks in place to check status returns.
             }
@@ -71,13 +92,14 @@ namespace Goedel.XUnit {
             var statusCreate = masterAdmin.CreateAccount(AccountAlice);
 
 
-            // post to catalog
-            var SignedContact = masterAdmin.SignContact(MeshMachineTest.ContactAlice);
 
-            var catalogEntryContact = new CatalogEntryContact(MeshMachineTest.ContactAlice);
-            masterAdmin.Add(catalogEntryContact);
+            masterAdmin.SetContactSelf(MeshMachineTest.ContactAlice);
 
             // Check updated elements are correct.
+
+            // get account status
+            var statusAdded = masterAdmin.Status();
+            statusAdded.AssertSuccess(); // Check: make sure one item has been added etc.
 
             }
 
@@ -98,7 +120,7 @@ namespace Goedel.XUnit {
             MeshMachineTest.GetContext(AccountAlice, "Alice 2", out var MachineAliceSecond, out var Device2);
 
             // Post connection request
-            var helloResponse = deviceAdmin.Connect(AccountAlice);
+            var connectResponse = deviceAdmin.RequestConnect(AccountAlice);
 
 
             // Pull device profile update - fail
@@ -126,7 +148,7 @@ namespace Goedel.XUnit {
             var statusCreateBob = masterAdminBob.CreateAccount(AccountBob);
 
             // Create Bob contact.
-            var SignedContact = masterAdminBob.SignContact(MeshMachineTest.ContactBob);
+            var SignedContact = masterAdminBob.SetContactSelf(MeshMachineTest.ContactBob);
 
 
             // Bob make contact request Alice.

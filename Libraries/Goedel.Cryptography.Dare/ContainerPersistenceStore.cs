@@ -20,7 +20,7 @@ namespace Goedel.Cryptography.Dare {
         #region --- Disposable objects
         // Objects that MUST be disposed correctly when leaving a using section.
         JBCDStream JBCDStream;
-        Container Container;
+        public Container Container;
 
 
         /// <summary>The value of the last frame index</summary>
@@ -95,7 +95,7 @@ namespace Goedel.Cryptography.Dare {
         /// Open or create a persistence store in specified mode with 
         /// the specified file name, content type and optional comment.
         /// </summary>
-        /// <param name="CryptoParameters">Specifies the cryptographic enhancements to
+        /// <param name="cryptoParameters">Specifies the cryptographic enhancements to
         /// be applied to this message.</param>
         /// <param name="FileName">Log file.</param>
         /// <param name="ReadOnly">If true, persistence store must exist
@@ -105,16 +105,17 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="Type">Type of data to store (the schema name).</param>
         /// <param name="Comment">Comment to be written to the log.</param>
         /// <param name="containerType">The Container type.</param>
-        /// <param name="DataEncoding">The data encoding.</param>
+        /// <param name="dataEncoding">The data encoding.</param>
         /// <param name="fileStatus">The file status in which to open the container.</param>
-        /// <param name="KeyCollection">The key collection to use to resolve private keys.</param>
+        /// <param name="keyCollection">The key collection to use to resolve private keys.</param>
         public ContainerPersistenceStore (string FileName, string Type = null,
                     string Comment = null, bool ReadOnly = false,
                     FileStatus fileStatus = FileStatus.OpenOrCreate,
                     ContainerType containerType = ContainerType.Chain,
-                    DataEncoding DataEncoding = DataEncoding.JSON,
-                    CryptoParameters CryptoParameters = null,
-                    KeyCollection KeyCollection=null) : base() {
+                    DataEncoding dataEncoding = DataEncoding.JSON,
+                    CryptoParameters cryptoParameters = null,
+                    KeyCollection keyCollection=null,
+                    bool readContainer = true) : base() {
             ReadOnly = ReadOnly & (Type != null);
 
             // Attempt to open file.
@@ -122,13 +123,15 @@ namespace Goedel.Cryptography.Dare {
 
             // Create new container if empty or read the old one.
             if (JBCDStream.Length == 0) {
-                Container = Container.NewContainer(JBCDStream, CryptoParameters, 
+                Container = Container.NewContainer(JBCDStream, cryptoParameters, 
                     containerType, ContentType: Type);
                 }
             else {
-                KeyCollection = KeyCollection ?? CryptoParameters?.KeyCollection;
-                Container = Container.OpenExisting(JBCDStream, KeyCollection);
-                ReadContainer(JBCDStream);
+                keyCollection = keyCollection ?? cryptoParameters?.KeyCollection;
+                Container = Container.OpenExisting(JBCDStream, keyCollection);
+                if (readContainer) {
+                    ReadContainer(JBCDStream);
+                    }
                 }
             }
 
@@ -146,10 +149,6 @@ namespace Goedel.Cryptography.Dare {
                     }
                 }
 
-            //for (var Found = Container.First(); Found; Found = Container.Next()) {
-            //    var Data = Container.ReadFrameData();
-            //    CommitTransaction(Container.ContainerHeader, Data);
-            //    }
 
             }
 
@@ -179,6 +178,10 @@ namespace Goedel.Cryptography.Dare {
 
 
             }
+
+        public virtual void Apply(DareMessage dareMessage) {
+            }
+
 
         /// <summary>
         /// Commit a New transaction to memory
@@ -219,7 +222,7 @@ namespace Goedel.Cryptography.Dare {
             }
 
 
-        // ToDo: Right now the key value pairs are only indexed when the object is initially
+        // Hack: Right now the key value pairs are only indexed when the object is initially
         // interned. These are immutable subsequently.
         void KeyValueIndexAdd (ContainerStoreEntry ContainerStoreEntry) {
             if (ContainerStoreEntry.ContainerHeader.KeyValues == null) {
@@ -233,7 +236,7 @@ namespace Goedel.Cryptography.Dare {
             }
 
 
-        // ToDo: Right now the key value pairs are only indexed when the object is initially
+        // Hack: Right now the key value pairs are only indexed when the object is initially
         // interned. These are immutable subsequently.
         void KeyValueIndexDelete (ContainerStoreEntry ContainerStoreEntry) {
             var First = ContainerStoreEntry.First as ContainerStoreEntry;
@@ -269,6 +272,9 @@ namespace Goedel.Cryptography.Dare {
             }
 
 
+
+
+
         /// <summary>
         /// Create a new persistence entry.
         /// </summary>
@@ -300,6 +306,9 @@ namespace Goedel.Cryptography.Dare {
 
             return ContainerStoreEntry;
             }
+
+
+
 
         /// <summary>
         /// Create a container header to update an existing persistence entry

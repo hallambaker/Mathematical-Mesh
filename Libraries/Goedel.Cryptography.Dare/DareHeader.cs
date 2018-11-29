@@ -278,8 +278,6 @@ namespace Goedel.Cryptography.Dare {
     /// Extensions classes.
     /// </summary>
     public static class Extensions {
-        // ToDo: Make Recipients into an interface...
-
         /// <summary>
         /// Attempt to decrypt a decryption blob from a list of recipient entries.
         /// </summary>
@@ -287,7 +285,9 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="Recipients">The recipient entry.</param>
         /// <param name="AlgorithmID">The symmetric encryption cipher (used to decrypt the wrapped key).</param>
         /// <returns></returns>
-        public static byte[] Decrypt(this KeyCollection KeyCollection, List<DareRecipient> Recipients, CryptoAlgorithmID AlgorithmID) {
+        public static byte[] Decrypt(this KeyCollection KeyCollection, 
+                    List<DareRecipient> Recipients, 
+                    CryptoAlgorithmID AlgorithmID) {
             foreach (var Recipient in Recipients) {
 
                 var DecryptionKey = KeyCollection.TryMatchRecipient(Recipient.KeyIdentifier);

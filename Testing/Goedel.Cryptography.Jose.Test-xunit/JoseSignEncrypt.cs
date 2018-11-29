@@ -23,7 +23,7 @@ namespace Goedel.XUnit {
         [Fact]
         public void Test_Jose_Encrypt() {
 
-            // ToDo - make use of KeyCollection.
+            // Limit - make use of KeyCollection.
 
             var JWE = new JoseWebEncryption(TestString, EncrypterKeyPair);
             var JWEText = JWE.ToString();

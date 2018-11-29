@@ -5,6 +5,7 @@ using System.Text;
 using Goedel.Utilities;
 using System.Threading;
 using Goedel.Cryptography.Dare;
+using Goedel.Cryptography;
 
 namespace Goedel.Mesh {
 
@@ -65,8 +66,10 @@ namespace Goedel.Mesh {
             //Locate(Key) as CatalogEntryCredential;
 
 
-        public CatalogCredential(string directory, string ContainerName=null) :
-            base(directory, ContainerName) {
+        public CatalogCredential(string directory, string ContainerName=null,
+            CryptoParameters cryptoParameters = null,
+                    KeyCollection keyCollection = null) :
+            base(directory, ContainerName, cryptoParameters, keyCollection) {
             }
 
         }

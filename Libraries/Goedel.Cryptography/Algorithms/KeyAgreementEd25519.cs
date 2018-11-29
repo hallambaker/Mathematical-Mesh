@@ -136,7 +136,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// Replace the current point value with the current value added to itself
         /// (used to implement multiply)
         /// </summary>
-        public override void Double() => Accumulate(this);  // Hack, doing this the inefficient way for testing.
+        public override void Double() => Accumulate(this);  // Limit, doing this the inefficient way for testing.
 
 
         //var A = (X * X).Mod(Domain.p);

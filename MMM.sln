@@ -244,6 +244,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Goedel.Cryptography.Persist
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Goedel.Mesh.Protocol.Test-xunit", "Testing\Goedel.Mesh.Protocol.Test-xunit\Goedel.Mesh.Protocol.Test-xunit.csproj", "{E831F24C-571D-4779-B02A-2BD23E1DCD7A}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{479601E3-3DC5-40DA-BA5E-403D5346E50D}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Libraries\ContainerMan\ContainerMan.projitems*{00e45e8d-5215-45ed-a003-bb3280181d35}*SharedItemsImports = 13

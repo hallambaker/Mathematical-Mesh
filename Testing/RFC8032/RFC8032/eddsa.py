@@ -247,10 +247,7 @@ class EdwardsPoint:
             x=x//2
             print (Q.z.VALUE())
         return Q
-    #Check that two points are equal.
     def __eq__(self,y):
-        #Need to check x1/z1 == x2/z2 and similarly for y, so cross
-        #multiply to eliminate divisions.
         xn1=self.x*y.z
         xn2=y.x*self.z
         yn1=self.y*y.z

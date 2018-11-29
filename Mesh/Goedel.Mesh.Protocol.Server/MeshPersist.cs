@@ -96,38 +96,105 @@ namespace Goedel.Mesh.Protocol.Server {
         /// be appropriately authenticated.
         /// </summary>
         public List<ContainerStatus> AccountStatus(string account) {
+            AccountEntry accountEntry = null;
 
-            var entry = GetAccount(account);
-            var accountEntry = entry.JsonObject as AccountEntry;
+            try {
+                accountEntry = GetAccountLocked(account);
+                var result = new List<ContainerStatus>();
 
-            var result = new List<ContainerStatus>();
+                result.Add(Catalog.Status(accountEntry.Directory, CatalogCredential.Label));
+                result.Add(Catalog.Status(accountEntry.Directory, CatalogDevice.Label));
+                result.Add(Catalog.Status(accountEntry.Directory, CatalogContact.Label));
+                result.Add(Catalog.Status(accountEntry.Directory, CatalogApplication.Label));
+                result.Add(Spool.Status(accountEntry.Directory, SpoolAccount.Label));
+                return result;
+                }
 
-            result.Add(Catalog.Status(accountEntry.Directory, CatalogCredential.Label));
-            result.Add(Catalog.Status(accountEntry.Directory, CatalogDevice.Label));
-            result.Add(Catalog.Status(accountEntry.Directory, CatalogContact.Label));
-            result.Add(Catalog.Status(accountEntry.Directory, CatalogApplication.Label));
-            result.Add(Spool.Status(accountEntry.Directory, SpoolAccount.Label));
-            return result;
+            finally {
+                if (accountEntry != null) {
+                    System.Threading.Monitor.Exit(accountEntry);
+                    }
+                
+                }
+
             }
 
         /// <summary>
         /// Update an account record. There must be an existing record and the request must
         /// be appropriately authenticated.
         /// </summary>
-        public void AccountUpdate() {
+        public void AccountUpdate(string account, string container, List<DareMessage> Messages) {
+            AccountEntry accountEntry = null;
+
+
+            try {
+                accountEntry = GetAccountLocked(account);
+                Assert.NotNull(accountEntry);
+                using (var catalog = new Catalog(accountEntry.Directory, container)) {
+                    foreach (var message in Messages) {
+                        catalog.Apply(message);
+                        }
+
+
+                    }
+
+                }
+
+            finally {
+                if (accountEntry != null) {
+                    System.Threading.Monitor.Exit(accountEntry);
+                    }
+                }
+
+
             }
+
+
+
+
+        AccountEntry GetAccountLocked(string account) {
+            AccountEntry result = null;
+            bool locked = false;
+
+            try {
+                lock (Container) {
+                    var containerEntry = Container.Get(account) as ContainerStoreEntry;
+                    result = containerEntry?.JsonObject as AccountEntry;
+                    Assert.NotNull(result);
+
+                    System.Threading.Monitor.Enter(result, ref locked);
+                    return result;
+                    }
+                }
+            catch {
+                if (locked) {
+                    System.Threading.Monitor.Exit(result);
+                    }
+                return null;
+                }
+
+            }
+
+
 
         /// <summary>
         /// Update an account record. There must be an existing record and the request must
         /// be appropriately authenticated.
         /// </summary>
-        public bool AccountDelete(string account) => Container.Delete(account);
+        public bool AccountDelete(string account) {
+            AccountEntry accountEntry = null;
+
+            try {
+                accountEntry = GetAccountLocked(account);
+                throw new NYI();
+                }
+
+            finally {
+                System.Threading.Monitor.Exit(accountEntry);
+                }
 
 
-        //https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/lock-statement
-        //System.Threading.Monitor.Enter(__lockObj, ref __lockWasTaken);
-        ContainerStoreEntry GetAccount(string account) =>
-            Container.Get(account) as ContainerStoreEntry;
+            }
 
 
 

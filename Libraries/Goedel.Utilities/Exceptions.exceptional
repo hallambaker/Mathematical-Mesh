@@ -20,7 +20,7 @@ Namespace Goedel.Utilities
 			String
 	
 	Exception Not64Bit
-		Console "Item too large"
+		Console	 "Item too large"
 		Description
 			|A call was made to a routine that has not yet been made
 			|64 bit clean with a value that exceeds the Int32 limits.
@@ -30,5 +30,8 @@ Namespace Goedel.Utilities
 		Object ExceptionData "The environment variable {0} must be defined"
 			String
 
-
+	Exception ExpectedSuccess
+		Console "Service request failed when it should have succeded"
+	Exception ExpectedError
+		Console "Service request succeeded when it should have returned an error"
 	

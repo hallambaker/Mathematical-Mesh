@@ -249,16 +249,10 @@ namespace Goedel.Cryptography {
         /// Calculate a UDF fingerprint from a PKIX KeyInfo blob with specified precision.
         /// </summary>
         /// <param name="Data">Data to be fingerprinted.</param>
-        /// <returns>The binary UDF fingerprint.</returns>
-        public static byte[] FromKeyInfo(byte[] Data) => From(UDFConstants.PKIXKey, Data, DefaultBits);
-
-        /// <summary>
-        /// Calculate a UDF fingerprint from a PKIX KeyInfo blob with specified precision.
-        /// </summary>
-        /// <param name="Data">Data to be fingerprinted.</param>
         /// <param name="Bits">Precision, must be a multiple of 25 bits.</param>
         /// <returns>The binary UDF fingerprint.</returns>
-        public static byte[] FromKeyInfo(byte[] Data, int Bits = 0) => From(UDFConstants.PKIXKey, Data, Bits);
+        public static byte[] FromKeyInfo(byte[] Data, int Bits = 0) => 
+            From(UDFConstants.PKIXKey, Data, Bits);
 
         /// <summary>
         /// Calculate a UDF fingerprint from a pair of fingerprints with specified precision.
@@ -313,7 +307,8 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="Data">Input data.</param>
         /// <returns>The UDF value as a string.</returns>
-        public static string ToString(byte[] Data) => Data.ToStringBase32(Format: ConversionFormat.Dash5);
+        public static string ToString(byte[] Data) => 
+            Data.ToStringBase32(Format: ConversionFormat.Dash5);
 
 
         /// <summary>
@@ -393,6 +388,20 @@ namespace Goedel.Cryptography {
             }
 
 
+        public static byte[] MakeWitness(byte[] fingerprint, byte[] nonce) {
+            var provider = Platform.SHA2_512.CryptoProviderDigest();
+
+            var encoder = provider.MakeEncoder();
+
+            encoder.InputStream.Write(fingerprint, 0, fingerprint.Length);
+            encoder.InputStream.Write(nonce, 0, nonce.Length);
+            encoder.Complete();
+
+            return encoder.Integrity;
+            }
+        public static string MakeWitnessString(byte[] fingerprint, byte[] nonce)=>
+            MakeWitness(fingerprint, nonce).ToStringBase32(Format: ConversionFormat.Dash5,
+                OutputMax:125);
 
         }
 

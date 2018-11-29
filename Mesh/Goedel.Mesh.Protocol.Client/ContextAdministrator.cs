@@ -11,11 +11,7 @@ using Goedel.Protocol;
 
 namespace Goedel.Mesh.Protocol.Client {
 
-    public enum ConnectionState {
-        Pending,
-        Connected,
-        Rejected
-        }
+
 
     /// <summary>
     /// Class that represents an administrator device's view of the current state of a
@@ -49,9 +45,9 @@ namespace Goedel.Mesh.Protocol.Client {
             var createRequest = new CreateRequest() {
                 Profile = profileMesh
                 };
-            meshService = Machine.GetMeshClient(accountName);
+            MeshService = Machine.GetMeshClient(accountName);
 
-            var result = meshService.CreateAccount(createRequest);
+            var result = MeshService.CreateAccount(createRequest);
 
                 // if successful write out to host file
 
@@ -63,28 +59,30 @@ namespace Goedel.Mesh.Protocol.Client {
             }
 
 
-        public MeshResult Status() {
-            var statusRequest = new StatusRequest() {
-                Account = AccountName
-                };
 
-            var result = meshService.Status(statusRequest);
-            return new MeshResult() { MeshResponse = result };
-            }
 
         public MeshResult DeleteAccount() {
 
             var deleteRequest = new DeleteRequest() { Account = AccountName };
-            var result = meshService.DeleteAccount(deleteRequest);
+            var result = MeshService.DeleteAccount(deleteRequest);
             return new MeshResult() { MeshResponse = result };
             }
 
 
 
 
-        public DareMessage SignContact (Contact contact) => throw new NYI();
+        public DareMessage SetContactSelf(Contact contact, string label=null) {
+            var signedContact = Sign(contact);
+            var catalogEntryContact = new CatalogEntryContact(signedContact) {
+                Key = AccountName
+                };
+            Add(catalogEntryContact);
+            return signedContact;
+            }
 
 
+        public MeshResult Add(CatalogEntryContact catalogEntryContact) => 
+            Add(CatalogCredential, catalogEntryContact);
 
         /// <summary>
         /// Sign a device or application profile for entry in a catalog

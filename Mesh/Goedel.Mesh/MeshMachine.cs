@@ -17,20 +17,22 @@ namespace Goedel.Mesh {
 
     public interface IMeshMachine {
 
-        KeyCollection KeyCollection { get; }
+
         string DirectoryMesh { get; }
+
         string DirectoryService { get; }
+
+        KeyCollection KeyCollection { get; }
 
         void OpenCatalog(Catalog catalog, string Name);
 
+        void Register(Profile profile);
 
-        void Register(ProfileDevice Device);
-        void Register(ProfileMaster Device);
-        void Register(ProfileApplication Device);
         MeshService GetMeshClient(string account);
 
-
-
+        ProfileAccount GetConnection(
+                    string accountName = null,
+                    string deviceUDF = null);
 
         }
 

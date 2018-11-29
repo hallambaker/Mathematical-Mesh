@@ -317,7 +317,7 @@ namespace Goedel.Cryptography.Dare {
         public override int Read(byte[] buffer, int offset, int count) {
             var length = JBCDFrameReader.Read(buffer, offset, count);
 
-            Console.WriteLine($"Read {buffer} bytes");
+            //Console.WriteLine($"Read {buffer} bytes");
             return length;
             }
 
@@ -444,19 +444,17 @@ namespace Goedel.Cryptography.Dare {
             StreamMac?.Write(buffer, offset, count);
 
             if (PayloadLength > 0 | PackagingFormat == PackagingFormat.Direct) {
-                // ToDo: It would be more efficient to introduce a buffer of 4096 bytes or so to avoid short writes.
-
                 PayloadLength = PayloadLength - count;
                 Output.Write(buffer, offset, count);
 
-                Console.Write($"  Have {count} bytes to stream");
+                //Console.Write($"  Have {count} bytes to stream");
                 }
             else {
                 JSONBWriter.WriteTag(Output, Final ?JSONBCD.DataTerm: JSONBCD.DataChunk,
                     count);
                 Output.Write(buffer, offset, count);
 
-                Console.Write($"  Have {count} chunk (final:{Final}) to stream");
+                //Console.Write($"  Have {count} chunk (final:{Final}) to stream");
                 }
             }
 
@@ -484,7 +482,7 @@ namespace Goedel.Cryptography.Dare {
             Final = true;
             if (CryptoStream == null) {
                 Writer.Write(Empty, 0, 0);
-                Console.Write($"  Written end marker");
+                //Console.Write($"  Written end marker");
                 }
             else {
                 CryptoStream.FlushFinalBlock();

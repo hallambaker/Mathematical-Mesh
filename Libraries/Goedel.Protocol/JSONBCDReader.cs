@@ -71,8 +71,6 @@ namespace Goedel.Protocol {
             do {
                 b = ByteInput.ReadByte();
 
-                // Hack - eliminate whitespace!!!
-
                 if (b < 0x80) {
                     return base.Lexer();
                     }

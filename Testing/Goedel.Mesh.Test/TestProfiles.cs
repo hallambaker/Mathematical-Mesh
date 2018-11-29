@@ -216,8 +216,8 @@ namespace Goedel.Mesh.Test {
             MeshMachineTest.GetContext(AccountAlice, "Alice Admin", out var machineAliceAdmin, out var deviceAdmin, out var masterAdmin);
             MeshMachineTest.GetContext(AccountAlice, "Alice 2", out var MachineAliceSecond, out var Device2);
 
-            // Create connection request for device 2
-            var request = Device2.ConnectionRequest(masterAdmin.UDF);
+            //// Create connection request for device 2
+            //var request = Device2.ConnectionRequest(masterAdmin.UDF);
 
             // Add to inbound spool of device 1.
 
@@ -238,8 +238,8 @@ namespace Goedel.Mesh.Test {
             MeshMachineTest.GetContext(AccountAlice, "Alice Admin", out var machineAliceAdmin, out var deviceAdmin, out var masterAdmin);
             MeshMachineTest.GetContext(AccountBob, "Bob Admin", out var machineAdminBob, out var deviceAdminBob, out var masterAdminBob);
 
-
-            var SignedContact = masterAdminBob.SignContact(MeshMachineTest.ContactBob);
+            masterAdmin.SetContactSelf(MeshMachineTest.ContactAlice);
+            masterAdminBob.SetContactSelf(MeshMachineTest.ContactBob);
 
             // add to the catalog here
 

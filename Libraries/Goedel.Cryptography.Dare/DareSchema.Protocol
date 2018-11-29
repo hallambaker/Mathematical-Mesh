@@ -97,6 +97,9 @@
 				|This field SHOULD NOT be present if the Salt field is present. It is used to
 				|allow the salt value to be erased (thus rendering the payload content irrecoverable)
 				|without affecting the ability to calculate the payload digest value.
+		Binary Signed
+			Description
+				|Contains signed headers.
 		Binary Cloaked
 			Tag "cloaked"
 			Description
@@ -132,6 +135,27 @@
 			Tag "recipients"
 			Description
 				|A list of recipient key exchange information blocks.
+
+		// Information describing the object instance value
+		// Content Metadata
+		String UniqueID
+			Description 
+				|Unique object identifier
+
+		String Event
+			Description 
+				|Operation on the header
+
+		String Labels
+			Multiple
+			Description
+				|List of labels that are applied to the payload of the frame.
+		
+		Struct KeyValue KeyValues
+			Multiple
+			Description
+				|List of key/value pairs describing the payload of the frame.
+
 
 	Section 2 "Cryptographic Data"
 		Description

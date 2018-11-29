@@ -21,7 +21,6 @@
     <ProjectReference Include="..\Core\Goedel.IO\Goedel.IO.csproj" />
     <ProjectReference Include="..\Core\Goedel.Utilities\Goedel.Utilities.csproj" />
     <ProjectReference Include="..\Goedel.Cryptography.Jose\Goedel.Cryptography.Jose.csproj" />
-    <ProjectReference Include="..\Goedel.Persistence\Goedel.Persistence.csproj" />
     <ProjectReference Include="..\Goedel.Protocol\Goedel.Protocol.csproj" />
   </ItemGroup>
 

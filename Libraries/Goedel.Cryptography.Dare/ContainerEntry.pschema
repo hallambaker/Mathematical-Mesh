@@ -58,10 +58,7 @@
 				|accept containers that contain meta frames at any position in the file.
 				|Applications MUST NOT interpret a meta frame as a data frame with an enpty payload.
 
-		// Content Metadata
-		String UniqueID
-			Description 
-				|Unique object identifier
+
 
 		Struct ContentMeta ContentMeta
 			Description
@@ -89,20 +86,7 @@
 
 
 
-		// Information describing the object instance value
-		String Event
-			Description 
-				|Unique object identifier
 
-		String Labels
-			Multiple
-			Description
-				|List of labels that are applied to the payload of the frame.
-		
-		Struct KeyValue KeyValues
-			Multiple
-			Description
-				|List of key/value pairs describing the payload of the frame.
 
 		Integer First
 			Description

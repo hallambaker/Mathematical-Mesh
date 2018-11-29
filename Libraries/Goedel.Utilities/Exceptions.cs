@@ -307,4 +307,104 @@ namespace Goedel.Utilities {
         }
 
 
+    /// <summary>
+    /// </summary>
+    public class ExpectedSuccess : global::System.Exception {
+
+		/// <summary>
+        /// Construct instance for exception "Service request failed when it should have succeded"
+        /// </summary>		
+		public ExpectedSuccess () : base ("Service request failed when it should have succeded") {
+			}
+        
+		/// <summary>
+        /// Construct instance for exception "Service request failed when it should have succeded"
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		public ExpectedSuccess (string Description) : base (Description) {
+			}
+
+		/// <summary>
+        /// Construct instance for exception 		/// containing an inner exception.
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		/// <param name="Inner">Inner Exception</param>	
+		public ExpectedSuccess (string Description, System.Exception Inner) : 
+				base (Description, Inner) {
+			}
+
+		/// <summary>
+        /// User data associated with the exception.
+        /// </summary>	
+		public object UserData;
+
+
+
+		
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+
+        static System.Exception _Throw(object Reason) {
+			if (Reason as string != null) {
+				return new ExpectedSuccess(Reason as string);
+				}
+			else {
+				return new ExpectedSuccess();
+				}
+            }
+        }
+
+
+    /// <summary>
+    /// </summary>
+    public class ExpectedError : global::System.Exception {
+
+		/// <summary>
+        /// Construct instance for exception "Service request succeeded when it should have returned an error"
+        /// </summary>		
+		public ExpectedError () : base ("Service request succeeded when it should have returned an error") {
+			}
+        
+		/// <summary>
+        /// Construct instance for exception "Service request succeeded when it should have returned an error"
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		public ExpectedError (string Description) : base (Description) {
+			}
+
+		/// <summary>
+        /// Construct instance for exception 		/// containing an inner exception.
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		/// <param name="Inner">Inner Exception</param>	
+		public ExpectedError (string Description, System.Exception Inner) : 
+				base (Description, Inner) {
+			}
+
+		/// <summary>
+        /// User data associated with the exception.
+        /// </summary>	
+		public object UserData;
+
+
+
+		
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+
+        static System.Exception _Throw(object Reason) {
+			if (Reason as string != null) {
+				return new ExpectedError(Reason as string);
+				}
+			else {
+				return new ExpectedError();
+				}
+            }
+        }
+
+
 	}

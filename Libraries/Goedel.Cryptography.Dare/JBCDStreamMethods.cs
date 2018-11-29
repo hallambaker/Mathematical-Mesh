@@ -186,7 +186,7 @@ namespace Goedel.Cryptography.Dare {
             else {
                 WriteTag(UFrame, Length);
                 }
-            Write(FrameData, (int)Offset, (int)Length); // Hack: Does not yet support 64 bit lengths as it should
+            Write(FrameData, (int)Offset, (int)Length); 
             if (Bidirectional) {
                 WriteTagReverse(BFrame, Length);
                 return TotalLength2(Length);

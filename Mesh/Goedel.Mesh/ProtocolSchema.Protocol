@@ -323,6 +323,21 @@
 			|
 
 
+	Transaction Public Connect ConnectRequest ConnectResponse
+		Description
+			|Request information necessary to begin making a connection request.
+	
+	Message ConnectRequest
+
+		Struct DareMessage SignedMessage
+			Description
+				|The device profile
+
+	Message ConnectResponse
+		Inherits MeshResponse
+		Struct ProfileMeshConnect ProfileConnect
+			Description
+				|The preconnection data
 
 	//Create account
 	Transaction Admin CreateAccount CreateRequest CreateResponse
@@ -372,3 +387,6 @@
 		Inherits MeshResponse
 		Description
 			|Reports the success or failure of a Delete transaction.
+
+
+
