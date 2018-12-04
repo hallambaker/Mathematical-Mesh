@@ -387,7 +387,13 @@ namespace Goedel.Cryptography {
             Address = Builder.ToString();
             }
 
-
+        /// <summary>
+        /// Calculate a binary witness value for the specified fingerprint
+        /// and nonce value.
+        /// </summary>
+        /// <param name="fingerprint">The fingerprint value.</param>
+        /// <param name="nonce">The nonce value</param>
+        /// <returns>The corresponding witness value.</returns>
         public static byte[] MakeWitness(byte[] fingerprint, byte[] nonce) {
             var provider = Platform.SHA2_512.CryptoProviderDigest();
 
@@ -399,6 +405,14 @@ namespace Goedel.Cryptography {
 
             return encoder.Integrity;
             }
+
+        /// <summary>
+        /// Calculate a witness fingerprint for the specified fingerprint
+        /// and nonce value.
+        /// </summary>
+        /// <param name="fingerprint">The fingerprint value.</param>
+        /// <param name="nonce">The nonce value</param>
+        /// <returns>The corresponding witness value.</returns>
         public static string MakeWitnessString(byte[] fingerprint, byte[] nonce)=>
             MakeWitness(fingerprint, nonce).ToStringBase32(Format: ConversionFormat.Dash5,
                 OutputMax:125);

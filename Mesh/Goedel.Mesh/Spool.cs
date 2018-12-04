@@ -5,6 +5,7 @@ using Goedel.IO;
 using System.IO;
 using Goedel.Utilities;
 using Goedel.Cryptography.Dare;
+using Goedel.Cryptography;
 
 namespace Goedel.Mesh {
     public class Spool : Store {
@@ -15,15 +16,10 @@ namespace Goedel.Mesh {
 
         protected override void Disposing() => Container?.Dispose();
 
-        protected Spool(string directory, string containerName) {
-
-            containerName = containerName ?? ContainerDefault;
-
-            var fileName = Path.Combine(directory, Path.ChangeExtension(containerName, ".spl"));
-            Container = new ContainerPersistenceStore(fileName, "application/mmm-spool",
-                fileStatus: FileStatus.OpenOrCreate,
-                containerType: ContainerType.MerkleTree
-                );
+        protected Spool(string directory, string containerName,
+            CryptoParameters cryptoParameters = null,
+                    KeyCollection keyCollection = null) :
+                base(directory, containerName, cryptoParameters, keyCollection) {
             }
 
         public static ContainerStatus Status(string directory, string containerName) {
@@ -44,8 +40,19 @@ namespace Goedel.Mesh {
         public static string Label = "SpoolOutbound";
 
         public override string ContainerDefault => Label;
-        public SpoolOutbound(string directory, string containerName = null) : base(directory, containerName) {
+        public SpoolOutbound(string directory, string ContainerName = null,
+            CryptoParameters cryptoParameters = null,
+                    KeyCollection keyCollection = null) :
+            base(directory, ContainerName, cryptoParameters, keyCollection) {
             }
+
+        public new static Store Factory(
+                    string Directory,
+                    string name,
+                    CryptoParameters cryptoParameters,
+                    KeyCollection keyCollection) =>
+            new SpoolOutbound(Directory, name??Label, cryptoParameters, keyCollection);
+
         }
 
     public class SpoolInbound : Spool {
@@ -53,8 +60,18 @@ namespace Goedel.Mesh {
 
         public override string ContainerDefault => Label;
 
-        public SpoolInbound(string directory, string containerName = null) : base (directory, containerName) {
+        public SpoolInbound(string directory, string ContainerName = null,
+            CryptoParameters cryptoParameters = null,
+                    KeyCollection keyCollection = null) :
+            base(directory, ContainerName, cryptoParameters, keyCollection) {
             }
+
+        public new static Store Factory(
+                    string Directory,
+                    string name,
+                    CryptoParameters cryptoParameters,
+                    KeyCollection keyCollection) =>
+            new SpoolInbound(Directory, name ?? Label, cryptoParameters, keyCollection);
         }
 
 
@@ -65,8 +82,18 @@ namespace Goedel.Mesh {
 
         public override string ContainerDefault => Label;
 
-        public SpoolArchive(string directory, string containerName = null) : base(directory, containerName) {
+        public SpoolArchive(string directory, string ContainerName = null,
+            CryptoParameters cryptoParameters = null,
+                    KeyCollection keyCollection = null) :
+            base(directory, ContainerName, cryptoParameters, keyCollection) {
             }
+
+        public new static Store Factory(
+                    string Directory,
+                    string name,
+                    CryptoParameters cryptoParameters,
+                    KeyCollection keyCollection) =>
+            new SpoolArchive(Directory, name ?? Label, cryptoParameters, keyCollection);
         }
 
     public class SpoolAccount : Spool {
@@ -74,8 +101,18 @@ namespace Goedel.Mesh {
 
         public override string ContainerDefault => Label;
 
-        public SpoolAccount(string directory, string containerName=null) : base(directory, containerName) {
+        public SpoolAccount(string directory, string ContainerName = null,
+            CryptoParameters cryptoParameters = null,
+                    KeyCollection keyCollection = null) :
+            base(directory, ContainerName, cryptoParameters, keyCollection) {
             }
+
+        public new static Store Factory(
+                    string Directory,
+                    string name,
+                    CryptoParameters cryptoParameters,
+                    KeyCollection keyCollection) =>
+            new SpoolAccount(Directory, name ?? Label, cryptoParameters, keyCollection);
         }
 
 

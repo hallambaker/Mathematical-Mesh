@@ -24,19 +24,6 @@ namespace Goedel.Mesh {
             BaseEnumerator = container.GetEnumerator();
         }
 
-
-    //public class EnumeratorCatalogEntryDevice : IEnumerator<CatalogEntryDevice> {
-    //    Dictionary<string, CatalogEntry>.Enumerator BaseEnumerator;
-
-    //    public CatalogEntryDevice Current => BaseEnumerator.Current.Value as CatalogEntryDevice;
-    //    object IEnumerator.Current => BaseEnumerator.Current.Value;
-    //    public void Dispose() => BaseEnumerator.Dispose();
-    //    public bool MoveNext() => BaseEnumerator.MoveNext();
-    //    public void Reset() => throw new NotImplementedException();
-
-    //    public EnumeratorCatalogEntryDevice(Dictionary<string, CatalogEntry> entries) => BaseEnumerator = entries.GetEnumerator();
-    //    }
-
     public class AsCatalogEntryDevice : IEnumerable<CatalogEntryDevice> {
         CatalogDevice Catalog;
 
@@ -68,6 +55,9 @@ namespace Goedel.Mesh {
                     KeyCollection keyCollection = null) :
             base(directory, ContainerName, cryptoParameters, keyCollection) {
             }
+
+        public static Store Factory(string directory, string containerName = null) =>
+            new CatalogDevice(directory, containerName);
 
         }
 

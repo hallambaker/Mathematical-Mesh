@@ -15,22 +15,63 @@ namespace Goedel.Mesh.Protocol.Client {
     /// </summary>
     public partial class ContextDevice {
 
+        ///<summary>The Machine context</summary>
         public virtual IMeshMachine Machine { get; }
-        public ProfileAccount ProfileAccount;
 
+        ///<summary>The active profile. A client may have multiple profiles open at once on the
+        ///same device but each one must be accessed through a different context.</summary>
+        public ProfileMesh ProfileMesh;
 
-        public ConnectionState ConnectionState;
-        public string Witness;
-
-
+        ///<summary>The active client connection to the service.</summary>
         protected MeshService MeshService;
+
+        ///<summary>The account name</summary>
         protected string AccountName;
 
+        ///<summary>The device profile</summary>
         public virtual ProfileDevice ProfileDevice { get; }
-        public DareMessage ProfileDeviceSigned => ProfileDevice.ProfileDeviceSigned;
 
+        DareMessage ProfileDeviceSigned => ProfileDevice.ProfileDeviceSigned;
 
+        ///<summary>The active KeyCollection (from Machine)</summary>
         public KeyCollection KeyCollection => Machine.KeyCollection;
+
+        #region // Convenience properties for accessing default stores and spools.
+        public CatalogCredential CatalogCredential =>
+            (catalogCredential ?? GetStore(CatalogCredential.Factory, CatalogCredential.Label).CacheValue(out catalogCredential)) as CatalogCredential;
+        Store catalogCredential;
+
+        public CatalogDevice CatalogDevice =>
+            (catalogDevice ?? GetStore(CatalogDevice.Factory, CatalogDevice.Label).CacheValue(out catalogDevice)) as CatalogDevice;
+        Store catalogDevice;
+
+        public CatalogContact CatalogContact =>
+            (catalogContact ?? GetStore(CatalogContact.Factory, CatalogContact.Label).CacheValue(out catalogContact)) as CatalogContact;
+        Store catalogContact;
+
+        public CatalogApplication CatalogApplication =>
+            (catalogApplication ?? GetStore(CatalogApplication.Factory, CatalogApplication.Label).CacheValue(out catalogApplication)) as CatalogApplication;
+        Store catalogApplication;
+
+
+        public SpoolInbound SpoolInbound =>
+            (spoolInbound ?? GetStore(SpoolInbound.Factory, SpoolInbound.Label).CacheValue(out spoolInbound)) as SpoolInbound;
+        Store spoolInbound;
+
+        public SpoolOutbound Outbound =>
+            (spoolOutbound ?? GetStore(SpoolOutbound.Factory, SpoolOutbound.Label).CacheValue(out spoolOutbound)) as SpoolOutbound;
+        Store spoolOutbound;
+        #endregion
+        #region // Convenience properties for accessing private keys.
+        KeyPair KeySign => keySign ?? KeyCollection.LocatePrivate(ProfileDevice.DeviceSignatureKey.UDF).CacheValue(out keySign);
+        KeyPair keySign;
+
+        KeyPair KeyEncrypt => keyEncrypt ?? KeyCollection.LocatePrivate(ProfileDevice.DeviceEncryptiontionKey.UDF).CacheValue(out keyEncrypt);
+        KeyPair keyEncrypt;
+
+        KeyPair KeyAuthenticate => keyAuthenticate ?? KeyCollection.LocatePrivate(ProfileDevice.DeviceAuthenticationKey.UDF).CacheValue(out keyAuthenticate);
+        KeyPair keyAuthenticate;
+        #endregion
 
         ContextDevice(IMeshMachine machine, ProfileDevice profileDevice,
                     KeyPair keySign, KeyPair keyEncrypt, KeyPair keyAuthenticate) {
@@ -41,29 +82,28 @@ namespace Goedel.Mesh.Protocol.Client {
             this.keyAuthenticate = keyAuthenticate;
             }
 
-
+        /// <summary>
+        /// Construct a context connecting to an existing profile.
+        /// </summary>
+        /// <param name="machine">The Machine context in which the account data is stored.</param>
+        /// <param name="accountName">Select profile by account name.</param>
+        /// <param name="deviceUDF">Select profile by device profile.</param>
         public ContextDevice(
                     IMeshMachine machine, 
                     string accountName=null,
                     string deviceUDF=null) {
             Machine = machine;
-            ProfileAccount = Machine.GetConnection(accountName, deviceUDF);
-
-
-            throw new NYI();
+            ProfileMesh = Machine.GetConnection(accountName, deviceUDF);
             }
 
-
-
-        KeyPair KeySign => keySign ?? KeyCollection.LocatePrivate(ProfileDevice.DeviceSignatureKey.UDF).CacheValue(out keySign);
-        KeyPair keySign;
-
-        KeyPair KeyEncrypt => keyEncrypt ?? KeyCollection.LocatePrivate(ProfileDevice.DeviceEncryptiontionKey.UDF).CacheValue(out keyEncrypt);
-        KeyPair keyEncrypt;
-
-        KeyPair KeyAuthenticate => keyAuthenticate ?? KeyCollection.LocatePrivate(ProfileDevice.DeviceAuthenticationKey.UDF).CacheValue(out keyAuthenticate);
-        KeyPair keyAuthenticate;
-
+        /// <summary>
+        /// Generate a new device profile and register to the specified account.
+        /// </summary>
+        /// <param name="machine">The Machine context to which the account data is to be stored.</param>
+        /// <param name="algorithmSign">The signature algorithm.</param>
+        /// <param name="algorithmEncrypt">The encryption algorithm.</param>
+        /// <param name="algorithmAuthenticate">The authenticaton algorithm.</param>
+        /// <returns>The newly created context.</returns>
         public static ContextDevice Generate(
                 IMeshMachine machine = null,
                 CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
@@ -92,6 +132,12 @@ namespace Goedel.Mesh.Protocol.Client {
 
             }
 
+        /// <summary>
+        /// Generate a new Master profile.
+        /// </summary>
+        /// <param name="algorithmSign"></param>
+        /// <param name="algorithmEncrypt"></param>
+        /// <returns></returns>
         public ContextMaster GenerateMaster(
             CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
             CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default) {
@@ -133,67 +179,29 @@ namespace Goedel.Mesh.Protocol.Client {
 
 
 
-        public bool Complete(string account) => throw new NYI();
-
-        public CatalogCredential CatalogCredential =>
-            catalogCredential ?? GetCatalogCredential().CacheValue(out catalogCredential);
-        CatalogCredential catalogCredential;
-
-        public CatalogDevice CatalogDevice =>
-            catalogDevice ?? GetCatalogDevice().CacheValue(out catalogDevice);
-        CatalogDevice catalogDevice;
-
-        public CatalogContact CatalogContact =>
-            catalogContact ?? GetCatalogContact().CacheValue(out catalogContact);
-        CatalogContact catalogContact;
-
-        public CatalogApplication CatalogApplication =>
-            catalogApplication ?? GetCatalogApplication().CacheValue(out catalogApplication);
-        CatalogApplication catalogApplication;
 
 
-
-        public CatalogCredential GetCatalogCredential(string name = null) =>
-            new CatalogCredential(Machine.DirectoryMesh, name);
-
-        public CatalogDevice GetCatalogDevice(string name = null) =>
-            new CatalogDevice(Machine.DirectoryMesh, name);
-
-        public CatalogContact GetCatalogContact(string name = null) =>
-            new CatalogContact(Machine.DirectoryMesh, name);
-
-        public CatalogApplication GetCatalogApplication(string name = null) =>
-            new CatalogApplication(Machine.DirectoryMesh, name);
+        public Dictionary<string, Store> DictionaryStores = new Dictionary<string, Store>();
 
 
-        public SpoolInbound SpoolInbound =>
-            spoolInbound ?? GetSpoolInbound().CacheValue(out spoolInbound);
-        SpoolInbound spoolInbound;
+        /// <summary>
+        /// Return catalog or container by name, using the cached value if it exists or opening it otherwise.
+        /// </summary>
+        /// <param name="storeFactoryDelegate">The store creation delegate</param>
+        /// <param name="name">The catalog or spool name.</param>
+        /// <returns>The opened store.</returns>
+        public Store GetStore(
+                StoreFactoryDelegate storeFactoryDelegate, string name) {
 
-        public SpoolOutbound SpoolOutbound =>
-            spoolOutbound ?? GetSpoolOutbound().CacheValue(out spoolOutbound);
-        SpoolOutbound spoolOutbound;
+            if (DictionaryStores.TryGetValue(name, out var store)) {
+                return store;
+                }
+            store = storeFactoryDelegate(Machine.DirectoryMesh, name, null, KeyCollection);
+            DictionaryStores.Add(name, store);
 
+            return store;
+            }
 
-
-        public SpoolInbound GetSpoolInbound(string name = null) =>
-            new SpoolInbound(Machine.DirectoryMesh, name);
-
-        public SpoolOutbound GetSpoolOutbound(string name = null) =>
-            new SpoolOutbound(Machine.DirectoryMesh, name);
-
-        public SpoolOutbound GetSpoolPending(string name = null) =>
-            new SpoolOutbound(Machine.DirectoryMesh, name);
-
-
-        //public DareMessage ConnectionRequest(string Profile) {
-        //    var request = ProfileDevice.ConnectionRequest(Profile);
-
-        //    // get device signing key here
-
-        //    return DareMessage.Encode(request.GetBytes(tag: true),
-        //            SigningKey: keySign, ContentType: "application/mmm");
-        //    }
 
         public DareMessage SignContact(string recipient, Contact contact) {
             var signedContact = DareMessage.Encode(contact.GetBytes(tag: true),
@@ -204,18 +212,12 @@ namespace Goedel.Mesh.Protocol.Client {
                 Recipient = recipient
                 };
 
-            // get device signing key here
-
             return Sign(request);
             }
 
         protected DareMessage Sign (JSONObject data) =>
                     DareMessage.Encode(data.GetBytes(tag: true),
                         SigningKey: keySign, ContentType: "application/mmm");
-
-
-
-
 
 
         }

@@ -19,8 +19,8 @@ namespace Goedel.Mesh.Protocol.Client {
     public class ContextMaster : ContextAdministrator {
         public ContextDevice ContextDevice { get; }
 
-        public override IMeshMachine Machine => ContextDevice.Machine;
-        public override ProfileDevice ProfileDevice => ContextDevice.ProfileDevice;
+        //public override IMeshMachine Machine => ContextDevice?.Machine;
+        public override ProfileDevice ProfileDevice => ContextDevice?.ProfileDevice;
         public virtual ProfileMaster ProfileMaster { get; }
 
 
@@ -35,7 +35,7 @@ namespace Goedel.Mesh.Protocol.Client {
         public ContextMaster(
                 ContextDevice contextDevice,
                 ProfileMaster profileMaster
-                ) {
+                ) : base (contextDevice.Machine) {
             ContextDevice = contextDevice;
             ProfileMaster = profileMaster;
             }

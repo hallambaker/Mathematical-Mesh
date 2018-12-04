@@ -192,6 +192,7 @@
 	Transaction User Status StatusRequest StatusResponse
 	Message StatusRequest
 		Inherits MeshRequestUser
+		String DeviceUDF
 		String Catalogs
 			Multiple
 		String Spools
@@ -202,7 +203,8 @@
 		Inherits MeshResponse
 		Struct ContainerStatus ContainerStatus
 			Multiple
-
+		Struct DareMessage Profiles
+			Multiple
 
 
 	//
@@ -328,14 +330,14 @@
 			|Request information necessary to begin making a connection request.
 	
 	Message ConnectRequest
-
+		Inherits MeshRequest
 		Struct DareMessage SignedMessage
 			Description
-				|The device profile
+				|The mesh profile
 
 	Message ConnectResponse
 		Inherits MeshResponse
-		Struct ProfileMeshConnect ProfileConnect
+		Struct ProfileMesh ProfileMesh
 			Description
 				|The preconnection data
 

@@ -28,8 +28,16 @@ using Goedel.Utilities;
 namespace Goedel.Protocol {
 
     abstract public partial class Response  {
-
+        /// <summary>
+        /// Returns true if the response indicates the transaction completed successfully
+        /// </summary>
+        /// <returns>true if the response indicates the transaction completed successfully</returns>
         public bool Success() => Status.IsSuccess();
+
+        /// <summary>
+        /// Returns true if the response indicates the transaction failed.
+        /// </summary>
+        /// <returns>true if the response indicates the transaction failed</returns>
         public bool Error() => Status.IsError();
         }
 

@@ -66,7 +66,6 @@ namespace Goedel.Mesh {
 			{"ProfileMaster", ProfileMaster._Factory},
 			{"ProfileDevice", ProfileDevice._Factory},
 			{"ProfileApplication", ProfileApplication._Factory},
-			{"ProfileMeshConnect", ProfileMeshConnect._Factory},
 			{"ProfileMesh", ProfileMesh._Factory},
 			{"Permission", Permission._Factory},
 			{"Contact", Contact._Factory},
@@ -1178,13 +1177,32 @@ namespace Goedel.Mesh {
 		}
 
 	/// <summary>
+	///
+	/// C
 	/// </summary>
-	public partial class ProfileMeshConnect : ProfileApplication {
+	public partial class ProfileMesh : ProfileApplication {
         /// <summary>
         ///Account identifier requested.
         /// </summary>
 
 		public virtual string						Account  {get; set;}
+		bool								__Default = false;
+		private bool						_Default;
+        /// <summary>
+        ///If true, specifies that this is marked as the default account.
+        ///If there is more than one active profile in a container, the
+        ///last profile found is the active one.
+        /// </summary>
+
+		public virtual bool						Default {
+			get => _Default;
+			set {_Default = value; __Default = true; }
+			}
+        /// <summary>
+        ///Master profile of the account being registered.
+        /// </summary>
+
+		public virtual DareMessage						MasterProfile  {get; set;}
         /// <summary>
         ///Random nonce used to mask the fingerprint of the profile UDF.
         /// </summary>
@@ -1196,153 +1214,10 @@ namespace Goedel.Mesh {
 
 		public virtual byte[]						ProfileWitness  {get; set;}
         /// <summary>
-        ///UDF value used to calculate the witness value.
+        ///Device profile under which this account is registered.
         /// </summary>
 
-		public virtual string						DeviceUDF  {get; set;}
-		
-		/// <summary>
-        /// Tag identifying this class
-        /// </summary>
-		public override string _Tag => __Tag;
-
-		/// <summary>
-        /// Tag identifying this class
-        /// </summary>
-		public new const string __Tag = "ProfileMeshConnect";
-
-		/// <summary>
-        /// Factory method
-        /// </summary>
-        /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new ProfileMeshConnect();
-
-
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// </summary>
-        /// <param name="Writer">Output stream</param>
-        /// <param name="wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
-			SerializeX (Writer, wrap, ref first);
-
-
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// Unlike the Serlialize() method, this method is not inherited from the
-        /// parent class allowing a specific version of the method to be called.
-        /// </summary>
-        /// <param name="_Writer">Output stream</param>
-        /// <param name="_wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="_first">If true, item is the first entry in a list.</param>
-		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
-			if (_wrap) {
-				_Writer.WriteObjectStart ();
-				}
-			((ProfileApplication)this).SerializeX(_Writer, false, ref _first);
-			if (Account != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("Account", 1);
-					_Writer.WriteString (Account);
-				}
-			if (ProfileNonce != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("ProfileNonce", 1);
-					_Writer.WriteBinary (ProfileNonce);
-				}
-			if (ProfileWitness != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("ProfileWitness", 1);
-					_Writer.WriteBinary (ProfileWitness);
-				}
-			if (DeviceUDF != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("DeviceUDF", 1);
-					_Writer.WriteString (DeviceUDF);
-				}
-			if (_wrap) {
-				_Writer.WriteObjectEnd ();
-				}
-			}
-
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="JSONReader">The input stream</param>
-		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
-        /// <returns>The created object.</returns>		
-        public static new ProfileMeshConnect FromJSON (JSONReader JSONReader, bool Tagged=true) {
-			if (JSONReader == null) {
-				return null;
-				}
-			if (Tagged) {
-				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
-				return Out as ProfileMeshConnect;
-				}
-		    var Result = new ProfileMeshConnect ();
-			Result.Deserialize (JSONReader);
-			return Result;
-			}
-
-        /// <summary>
-        /// Having read a tag, process the corresponding value data.
-        /// </summary>
-        /// <param name="JSONReader">The input stream</param>
-        /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
-			
-			switch (Tag) {
-				case "Account" : {
-					Account = JSONReader.ReadString ();
-					break;
-					}
-				case "ProfileNonce" : {
-					ProfileNonce = JSONReader.ReadBinary ();
-					break;
-					}
-				case "ProfileWitness" : {
-					ProfileWitness = JSONReader.ReadBinary ();
-					break;
-					}
-				case "DeviceUDF" : {
-					DeviceUDF = JSONReader.ReadString ();
-					break;
-					}
-				default : {
-					base.DeserializeToken(JSONReader, Tag);
-					break;
-					}
-				}
-			// check up that all the required elements are present
-			}
-
-
-		}
-
-	/// <summary>
-	///
-	/// Contains the public description of a Mesh Service account
-	/// </summary>
-	public partial class ProfileMesh : ProfileApplication {
-        /// <summary>
-        ///Account identifier requested.
-        /// </summary>
-
-		public virtual string						Account  {get; set;}
-        /// <summary>
-        ///List of ISO language codes in order of preference. For creating
-        ///explanatory text.
-        /// </summary>
-
-		public virtual List<string>				Language  {get; set;}
-        /// <summary>
-        ///Master profile of the account being registered.
-        /// </summary>
-
-		public virtual DareMessage						MasterProfile  {get; set;}
+		public virtual DareMessage						DeviceProfile  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -1391,22 +1266,30 @@ namespace Goedel.Mesh {
 				_Writer.WriteToken ("Account", 1);
 					_Writer.WriteString (Account);
 				}
-			if (Language != null) {
+			if (__Default){
 				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("Language", 1);
-				_Writer.WriteArrayStart ();
-				bool _firstarray = true;
-				foreach (var _index in Language) {
-					_Writer.WriteArraySeparator (ref _firstarray);
-					_Writer.WriteString (_index);
-					}
-				_Writer.WriteArrayEnd ();
+				_Writer.WriteToken ("Default", 1);
+					_Writer.WriteBoolean (Default);
 				}
-
 			if (MasterProfile != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("MasterProfile", 1);
 					MasterProfile.Serialize (_Writer, false);
+				}
+			if (ProfileNonce != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("ProfileNonce", 1);
+					_Writer.WriteBinary (ProfileNonce);
+				}
+			if (ProfileWitness != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("ProfileWitness", 1);
+					_Writer.WriteBinary (ProfileWitness);
+				}
+			if (DeviceProfile != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("DeviceProfile", 1);
+					DeviceProfile.Serialize (_Writer, false);
 				}
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
@@ -1444,21 +1327,29 @@ namespace Goedel.Mesh {
 					Account = JSONReader.ReadString ();
 					break;
 					}
-				case "Language" : {
-					// Have a sequence of values
-					bool _Going = JSONReader.StartArray ();
-					Language = new List <string> ();
-					while (_Going) {
-						string _Item = JSONReader.ReadString ();
-						Language.Add (_Item);
-						_Going = JSONReader.NextArray ();
-						}
+				case "Default" : {
+					Default = JSONReader.ReadBoolean ();
 					break;
 					}
 				case "MasterProfile" : {
 					// An untagged structure
 					MasterProfile = new DareMessage ();
 					MasterProfile.Deserialize (JSONReader);
+ 
+					break;
+					}
+				case "ProfileNonce" : {
+					ProfileNonce = JSONReader.ReadBinary ();
+					break;
+					}
+				case "ProfileWitness" : {
+					ProfileWitness = JSONReader.ReadBinary ();
+					break;
+					}
+				case "DeviceProfile" : {
+					// An untagged structure
+					DeviceProfile = new DareMessage ();
+					DeviceProfile.Deserialize (JSONReader);
  
 					break;
 					}

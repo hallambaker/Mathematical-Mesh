@@ -20,6 +20,8 @@ namespace Goedel.Cryptography.Dare {
         #region --- Disposable objects
         // Objects that MUST be disposed correctly when leaving a using section.
         JBCDStream JBCDStream;
+
+        ///<summary>The underlying container.</summary>
         public Container Container;
 
 
@@ -97,34 +99,35 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="cryptoParameters">Specifies the cryptographic enhancements to
         /// be applied to this message.</param>
-        /// <param name="FileName">Log file.</param>
-        /// <param name="ReadOnly">If true, persistence store must exist
+        /// <param name="fileName">Log file.</param>
+        /// <param name="readOnly">If true, persistence store must exist
         /// and will be opened in read-only mode. If false, persistence store
         /// is opened in read/write mode and a new store will be created
         /// if none exists.</param>
-        /// <param name="Type">Type of data to store (the schema name).</param>
-        /// <param name="Comment">Comment to be written to the log.</param>
+        /// <param name="type">Type of data to store (the schema name).</param>
+        /// <param name="comment">Comment to be written to the log.</param>
         /// <param name="containerType">The Container type.</param>
         /// <param name="dataEncoding">The data encoding.</param>
         /// <param name="fileStatus">The file status in which to open the container.</param>
         /// <param name="keyCollection">The key collection to use to resolve private keys.</param>
-        public ContainerPersistenceStore (string FileName, string Type = null,
-                    string Comment = null, bool ReadOnly = false,
+        /// <param name="readContainer">If true read the container to initialize the persistence store.</param>
+        public ContainerPersistenceStore (string fileName, string type = null,
+                    string comment = null, bool readOnly = false,
                     FileStatus fileStatus = FileStatus.OpenOrCreate,
                     ContainerType containerType = ContainerType.Chain,
                     DataEncoding dataEncoding = DataEncoding.JSON,
                     CryptoParameters cryptoParameters = null,
                     KeyCollection keyCollection=null,
                     bool readContainer = true) : base() {
-            ReadOnly = ReadOnly & (Type != null);
+            readOnly = readOnly & (type != null);
 
             // Attempt to open file.
-            JBCDStream = new JBCDStreamDebug(FileName, FileStatus: fileStatus);
+            JBCDStream = new JBCDStreamDebug(fileName, FileStatus: fileStatus);
 
             // Create new container if empty or read the old one.
             if (JBCDStream.Length == 0) {
                 Container = Container.NewContainer(JBCDStream, cryptoParameters, 
-                    containerType, ContentType: Type);
+                    containerType, ContentType: type);
                 }
             else {
                 keyCollection = keyCollection ?? cryptoParameters?.KeyCollection;
@@ -155,13 +158,13 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// Commit a transaction to memory.
         /// </summary>
-        /// <param name="ContainerHeader">The container header</param>
-        /// <param name="Data">The data to commit.</param>
-        public virtual void CommitTransaction (ContainerHeader ContainerHeader, byte[] Data) {
-            var Exists = ObjectIndex.TryGetValue(ContainerHeader.UniqueID, out var Previous);
-            var ContainerStoreEntry = new ContainerStoreEntry(ContainerHeader, Previous, Data);
+        /// <param name="containerHeader">The container header</param>
+        /// <param name="data">The data to commit.</param>
+        public virtual void CommitTransaction (ContainerHeader containerHeader, byte[] data) {
+            var Exists = ObjectIndex.TryGetValue(containerHeader.UniqueID, out var Previous);
+            var ContainerStoreEntry = new ContainerStoreEntry(containerHeader, Previous, data);
 
-            switch (ContainerHeader.Event) {
+            switch (containerHeader.Event) {
                 case EventNew: {
                         MemoryCommitNew(ContainerStoreEntry);
                         break;
@@ -179,6 +182,10 @@ namespace Goedel.Cryptography.Dare {
 
             }
 
+        /// <summary>
+        /// Apply the specified message to the container.
+        /// </summary>
+        /// <param name="dareMessage"></param>
         public virtual void Apply(DareMessage dareMessage) {
             }
 
@@ -186,67 +193,67 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// Commit a New transaction to memory
         /// </summary>
-        /// <param name="ContainerStoreEntry">The container store entry representing the transaction</param>
-        protected void MemoryCommitNew (ContainerStoreEntry ContainerStoreEntry) {
+        /// <param name="containerStoreEntry">The container store entry representing the transaction</param>
+        protected virtual void MemoryCommitNew (ContainerStoreEntry containerStoreEntry) {
             // Check to make sure the object does not already exist
-            Assert.False(ObjectIndex.ContainsKey(ContainerStoreEntry.UniqueID), NYI.Throw);
-            ObjectIndex.Add(ContainerStoreEntry.UniqueID, ContainerStoreEntry);
+            Assert.False(ObjectIndex.ContainsKey(containerStoreEntry.UniqueID), NYI.Throw);
+            ObjectIndex.Add(containerStoreEntry.UniqueID, containerStoreEntry);
 
-            KeyValueIndexAdd(ContainerStoreEntry);
+            KeyValueIndexAdd(containerStoreEntry);
             }
 
         /// <summary>
         /// Commit an Update transaction to memory
         /// </summary>
-        /// <param name="ContainerStoreEntry">The container store entry representing the transaction</param>
-        protected void MemoryCommitUpdate (ContainerStoreEntry ContainerStoreEntry) {
+        /// <param name="containerStoreEntry">The container store entry representing the transaction</param>
+        protected virtual void MemoryCommitUpdate (ContainerStoreEntry containerStoreEntry) {
             // Check to make sure the object does not already exist
-            if (ObjectIndex.ContainsKey(ContainerStoreEntry.UniqueID)) {
-                ObjectIndex.Remove(ContainerStoreEntry.UniqueID);
+            if (ObjectIndex.ContainsKey(containerStoreEntry.UniqueID)) {
+                ObjectIndex.Remove(containerStoreEntry.UniqueID);
                 }
-            ObjectIndex.Add(ContainerStoreEntry.UniqueID, ContainerStoreEntry);
-            KeyValueIndexAdd(ContainerStoreEntry);
+            ObjectIndex.Add(containerStoreEntry.UniqueID, containerStoreEntry);
+            KeyValueIndexAdd(containerStoreEntry);
             }
 
         /// <summary>
         /// Commit a Delete transaction to memory
         /// </summary>
-        /// <param name="ContainerStoreEntry">The container store entry representing the transaction</param>
-        protected void MemoryCommitDelete (ContainerStoreEntry ContainerStoreEntry) {
+        /// <param name="containerStoreEntry">The container store entry representing the transaction</param>
+        protected virtual void MemoryCommitDelete (ContainerStoreEntry containerStoreEntry) {
             // Check to make sure the object does not already exist
-            Assert.True(ObjectIndex.ContainsKey(ContainerStoreEntry.UniqueID), NYI.Throw);
-            ObjectIndex.Remove(ContainerStoreEntry.UniqueID);
-            DeletedObjects.Add(ContainerStoreEntry.UniqueID, ContainerStoreEntry);
+            Assert.True(ObjectIndex.ContainsKey(containerStoreEntry.UniqueID), NYI.Throw);
+            ObjectIndex.Remove(containerStoreEntry.UniqueID);
+            DeletedObjects.Add(containerStoreEntry.UniqueID, containerStoreEntry);
 
-            KeyValueIndexDelete(ContainerStoreEntry);
+            KeyValueIndexDelete(containerStoreEntry);
             }
 
 
         // Hack: Right now the key value pairs are only indexed when the object is initially
         // interned. These are immutable subsequently.
-        void KeyValueIndexAdd (ContainerStoreEntry ContainerStoreEntry) {
-            if (ContainerStoreEntry.ContainerHeader.KeyValues == null) {
+        void KeyValueIndexAdd (ContainerStoreEntry containerStoreEntry) {
+            if (containerStoreEntry.ContainerHeader.KeyValues == null) {
                 return;
                 }
 
-            foreach (var KeyValue in ContainerStoreEntry.ContainerHeader.KeyValues) {
+            foreach (var KeyValue in containerStoreEntry.ContainerHeader.KeyValues) {
                 var Index = GetContainerStoreIndex(KeyValue.Key, true);
-                Index.Add(ContainerStoreEntry, KeyValue.Value);
+                Index.Add(containerStoreEntry, KeyValue.Value);
                 }
             }
 
 
         // Hack: Right now the key value pairs are only indexed when the object is initially
         // interned. These are immutable subsequently.
-        void KeyValueIndexDelete (ContainerStoreEntry ContainerStoreEntry) {
-            var First = ContainerStoreEntry.First as ContainerStoreEntry;
+        void KeyValueIndexDelete (ContainerStoreEntry containerStoreEntry) {
+            var First = containerStoreEntry.First as ContainerStoreEntry;
             if (First.ContainerHeader.KeyValues == null) {
                 return;
                 }
 
             foreach (var KeyValue in First.ContainerHeader.KeyValues) {
                 var Index = GetContainerStoreIndex(KeyValue.Key, true);
-                Index.Delete(ContainerStoreEntry, KeyValue.Value);
+                Index.Delete(containerStoreEntry, KeyValue.Value);
                 }
             }
 
@@ -279,28 +286,30 @@ namespace Goedel.Cryptography.Dare {
         /// Create a new persistence entry.
         /// </summary>
         /// <param name="containerHeader">The constructed container header.</param>
-        /// <param name="object">Object to create</param>
-        public virtual void New (out ContainerHeader containerHeader, JSONObject @object) {
+        /// <param name="jsonObject">Object to create</param>
+        public virtual void New (
+                out ContainerHeader containerHeader, 
+                JSONObject jsonObject) {
             // Precondition UniqueID does not exist
-            var Exists = ObjectIndex.TryGetValue(@object._PrimaryKey, out var Previous);
+            var Exists = ObjectIndex.TryGetValue(jsonObject._PrimaryKey, out var Previous);
             Assert.False(Exists, ObjectIdentifierNotUnique.Throw);
 
             // Create new container
             containerHeader = new ContainerHeader() {
                 Event = EventNew,
-                UniqueID = @object._PrimaryKey,
-                KeyValues = @object._KeyValues.ToKeyValues()
+                UniqueID = jsonObject._PrimaryKey,
+                KeyValues = jsonObject._KeyValues.ToKeyValues()
                 };
             }
 
         /// <summary>
         /// Create a new persistence entry.
         /// </summary>
-        /// <param name="Object">Object to create</param>
-        public virtual IPersistenceEntry New (JSONObject Object) {
-            New(out var ContainterHeader, Object);
+        /// <param name="jsonObject">Object to create</param>
+        public virtual IPersistenceEntry New (JSONObject jsonObject) {
+            New(out var ContainterHeader, jsonObject);
 
-            var ContainerStoreEntry = WriteFrame(ContainterHeader, Object, null);
+            var ContainerStoreEntry = WriteFrame(ContainterHeader, jsonObject, null);
             MemoryCommitNew(ContainerStoreEntry);
 
 
@@ -313,29 +322,29 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// Create a container header to update an existing persistence entry
         /// </summary>
-        /// <param name="ContainerHeader">The constructed container header.</param>
-        /// <param name="Previous">The previous container store entry for this object</param>
-        /// <param name="Object">The new object value</param>
-        /// <param name="Create">If true, create a new value if one does not already exist</param>
-        public virtual void Update (out ContainerHeader ContainerHeader, 
-                    out ContainerStoreEntry Previous, 
-                    JSONObject Object, 
-                    bool Create = true) {
+        /// <param name="containerHeader">The constructed container header.</param>
+        /// <param name="previous">The previous container store entry for this object</param>
+        /// <param name="jsonObject">The new object value</param>
+        /// <param name="create">If true, create a new value if one does not already exist</param>
+        public virtual void Update (out ContainerHeader containerHeader, 
+                    out ContainerStoreEntry previous, 
+                    JSONObject jsonObject, 
+                    bool create = true) {
             // Precondition UniqueID does not exist
-            var Exists = ObjectIndex.TryGetValue(Object._PrimaryKey, out Previous);
-            Assert.True(Exists | Create, NYI.Throw);
+            var Exists = ObjectIndex.TryGetValue(jsonObject._PrimaryKey, out previous);
+            Assert.True(Exists | create, NYI.Throw);
 
             // Create new container
-            ContainerHeader = new ContainerHeader() {
+            containerHeader = new ContainerHeader() {
                 Event = Exists ? EventUpdate : EventNew,
-                UniqueID = Object._PrimaryKey,
-                KeyValues = Object._KeyValues.ToKeyValues(),
+                UniqueID = jsonObject._PrimaryKey,
+                KeyValues = jsonObject._KeyValues.ToKeyValues(),
                 };
 
             if (Exists) {
-                var First = Previous?.First as ContainerStoreEntry;
-                ContainerHeader.First = (int)First?.FrameCount;
-                ContainerHeader.Previous = (int)Previous?.FrameCount;
+                var First = previous?.First as ContainerStoreEntry;
+                containerHeader.First = (int)First?.FrameCount;
+                containerHeader.Previous = (int)previous?.FrameCount;
                 }
 
             }
@@ -343,13 +352,13 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// Update an existing persistence entry
         /// </summary>
-        /// <param name="Object">The new object value</param>
-        /// <param name="Create">If true, create a new value if one does not already exist</param>
-        public virtual IPersistenceEntry Update (JSONObject Object, bool Create = true) {
+        /// <param name="jsonObject">The new object value</param>
+        /// <param name="create">If true, create a new value if one does not already exist</param>
+        public virtual IPersistenceEntry Update (JSONObject jsonObject, bool create = true) {
 
-            Update(out var ContainerHeader, out var Previous, Object);
+            Update(out var ContainerHeader, out var Previous, jsonObject);
 
-            var ContainerStoreEntry = WriteFrame(ContainerHeader, Object, Previous);
+            var ContainerStoreEntry = WriteFrame(ContainerHeader, jsonObject, Previous);
             MemoryCommitUpdate(ContainerStoreEntry);
 
             return ContainerStoreEntry;
@@ -359,23 +368,24 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// Delete a persistence entry
         /// </summary>
-        /// <param name="ContainerHeader">The constructed container header.</param>
-        /// <param name="Previous">The previous container store entry for this object</param>
-        /// <param name="UniqueID">The UniqueID of the object to delete</param>
+        /// <param name="containerHeader">The constructed container header.</param>
+        /// <param name="previous">The previous container store entry for this object</param>
+        /// <param name="uniqueID">The UniqueID of the object to delete</param>
         /// <returns>True if the object was updated, otherwise false.</returns>
-        public virtual bool Delete (out ContainerHeader ContainerHeader, out ContainerStoreEntry Previous, string UniqueID) {
-            var Exists = ObjectIndex.TryGetValue(UniqueID, out Previous);
+        public virtual bool Delete (out ContainerHeader containerHeader, 
+            out ContainerStoreEntry previous, string uniqueID) {
+            var Exists = ObjectIndex.TryGetValue(uniqueID, out previous);
             if (!Exists) {
-                ContainerHeader = null;
+                containerHeader = null;
                 return false;
                 }
 
-            var First = Previous?.First as ContainerStoreEntry;
+            var First = previous?.First as ContainerStoreEntry;
             // Create new container
-            ContainerHeader = new ContainerHeader() {
+            containerHeader = new ContainerHeader() {
                 Event = EventDelete,
-                UniqueID = UniqueID,
-                Previous = (int)Previous?.FrameCount,
+                UniqueID = uniqueID,
+                Previous = (int)previous?.FrameCount,
                 First = (int)First?.FrameCount
                 };
             return true;
@@ -386,11 +396,11 @@ namespace Goedel.Cryptography.Dare {
         /// Delete a persistence entry
         /// </summary>
         /// <threadsafety static="true" instance="true"/>
-        /// <param name="UniqueID">The UniqueID of the object to delete</param>
+        /// <param name="uniqueID">The UniqueID of the object to delete</param>
         /// <returns>True if the object was updated, otherwise false.</returns>
-        public virtual bool Delete (string UniqueID) {
+        public virtual bool Delete (string uniqueID) {
 
-            if (!Delete(out var ContainerHeader, out var Previous, UniqueID)) {
+            if (!Delete(out var ContainerHeader, out var Previous, uniqueID)) {
                 return false;
                 }
 
@@ -403,15 +413,15 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// Return an index for the specified key, creating it if necessary.
         /// </summary>
-        /// <param name="Key">The key for which the index is requested.</param>
-        /// <param name="Create">If true, will create an index if none is found.</param>
+        /// <param name="key">The key for which the index is requested.</param>
+        /// <param name="create">If true, will create an index if none is found.</param>
         /// <returns>The index.</returns>
-        public virtual ContainerStoreIndex GetContainerStoreIndex (string Key, bool Create = true) {
-            var Found = IndexDictionary.TryGetValue(Key, out var Index);
+        public virtual ContainerStoreIndex GetContainerStoreIndex (string key, bool create = true) {
+            var found = IndexDictionary.TryGetValue(key, out var Index);
 
-            if (!Found & Create) {
+            if (!found & create) {
                 Index = new ContainerStoreIndex();
-                IndexDictionary.Add(Key, Index);
+                IndexDictionary.Add(key, Index);
                 }
 
             return (Index);
@@ -422,42 +432,42 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// Return an index for the specified key, creating it if necessary.
         /// </summary>
-        /// <param name="Key">The key for which the index is requested.</param>
-        /// <param name="Create">If true, will create an index if none is found.</param>
+        /// <param name="key">The key for which the index is requested.</param>
+        /// <param name="create">If true, will create an index if none is found.</param>
         /// <returns>The index.</returns>
-        public virtual IPersistenceIndex GetIndex (string Key, bool Create=true) =>  
-            GetContainerStoreIndex(Key, Create);
+        public virtual IPersistenceIndex GetIndex (string key, bool create=true) =>  
+            GetContainerStoreIndex(key, create);
  
 
         /// <summary>
         /// Get object instance by unique identifier
         /// </summary>
-        /// <param name="UniqueID">The unique identifier of the object instance to locate.</param>
+        /// <param name="uniqueID">The unique identifier of the object instance to locate.</param>
         /// <returns>True if found, otherwise false.</returns>
-        public IPersistenceEntry Get (string UniqueID) {
-            var Found = ObjectIndex.TryGetValue(UniqueID, out var Result);
-            return Result;
+        public IPersistenceEntry Get (string uniqueID) {
+            var found = ObjectIndex.TryGetValue(uniqueID, out var result);
+            return result;
             }
 
         /// <summary>
         /// Determines if a object instance with the specified unique identifier is registered.
         /// </summary>
-        /// <param name="UniqueID">The unique identifier of the object instance to locate.</param>
+        /// <param name="uniqueID">The unique identifier of the object instance to locate.</param>
         /// <returns>True if found, otherwise false.</returns>
-        public bool Contains(string UniqueID) => ObjectIndex.TryGetValue(UniqueID, out var Result);
+        public bool Contains(string uniqueID) => ObjectIndex.TryGetValue(uniqueID, out var result);
 
         /// <summary>
         /// The last object instance that matches the specified key/value condition.
         /// </summary>
-        /// <param name="Key">The key</param>
-        /// <param name="Value">The value to match</param>
+        /// <param name="key">The key</param>
+        /// <param name="value">The value to match</param>
         /// <returns>The object instance if found, otherwise false.</returns>
-        public IPersistenceIndexEntry Last (string Key, string Value) {
-            var Found = IndexDictionary.TryGetValue(Key, out var Index);
-            if (!Found) {
+        public IPersistenceIndexEntry Last (string key, string value) {
+            var found = IndexDictionary.TryGetValue(key, out var Index);
+            if (!found) {
                 return null;
                 }
-            return Index.Last(Value);
+            return Index.Last(value);
             }
         }
     }

@@ -8,6 +8,7 @@ using Goedel.IO;
 using Goedel.Mesh;
 using Goedel.Mesh.Protocol;
 using Goedel.Protocol;
+using Goedel.Mesh.Protocol.Client;
 
 namespace Goedel.Mesh {
 
@@ -33,7 +34,7 @@ namespace Goedel.Mesh {
 
         public string FileNameHost => Path.Combine(DirectoryMesh, "host.dare");
 
-        public ContainerPersistenceStore ContainerHost { get; }
+        public ContainerHost ContainerHost { get; }
 
 
         public MeshMachineCore() : this (MeshMachine.DirectoryProfiles) {
@@ -49,45 +50,11 @@ namespace Goedel.Mesh {
             KeyCollection = GetKeyCollection();
 
             // Now read the container to get the directories.
-            ContainerHost = new ContainerPersistenceStore(FileNameHost, FileTypeHost,
+            ContainerHost = new ContainerHost(FileNameHost, FileTypeHost,
                 fileStatus: FileStatus.OpenOrCreate,
-                containerType: ContainerType.MerkleTree,
-                readContainer:false);
-
-            foreach (var ContainerDataReader in ContainerHost.Container) {
-                if (ContainerDataReader.HasPayload) {
-                    var Data = ContainerDataReader.ToArray();
-                    CommitTransaction(ContainerDataReader.Header, Data);
-                    // here check the trailer.
-                    }
-                }
+                containerType: ContainerType.MerkleTree);
 
             }
-
-
-        void CommitTransaction(ContainerHeader ContainerHeader, byte[] Data) {
-
-            var profile = Profile.FromJSON(Data.JSONReader());
-
-            switch (profile) {
-                case ProfileMesh profileMesh:  {
-                    Assert.Fail();
-                    break;
-                    }
-                case ProfileMeshConnect profileMeshConnect: {
-                    Assert.Fail();
-                    break;
-                    }
-                case ProfileApplication profileApplication: {
-                    Assert.Fail();
-                    break;
-                    }
-
-                }
-
-            }
-
-
 
 
         #region // Implementation
@@ -109,20 +76,9 @@ namespace Goedel.Mesh {
         public virtual void OpenCatalog(Catalog catalog, string Name) { }
 
 
-        public virtual ProfileAccount GetConnection(
+        public virtual ProfileMesh GetConnection(
                     string accountName = null,
-                    string deviceUDF = null) {
-            if (accountName != null) {
-
-                }
-            if (deviceUDF != null) {
-
-                }
-
-
-            throw new NYI();
-
-            }
+                    string deviceUDF = null) => ContainerHost.GetConnection(accountName, deviceUDF);
 
 
         public virtual MeshService GetMeshClient(string account) => MeshService.GetService(account);

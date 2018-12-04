@@ -326,6 +326,17 @@ namespace Goedel.Cryptography.Dare {
 			get => _IsMeta;
 			set {_IsMeta = value; __IsMeta = true; }
 			}
+		bool								__Default = false;
+		private bool						_Default;
+        /// <summary>
+        ///If set true in a persistent container, specifies that this record contains
+        ///the default object for the container.
+        /// </summary>
+
+		public virtual bool						Default {
+			get => _Default;
+			set {_Default = value; __Default = true; }
+			}
         /// <summary>
         ///Content meta data.
         /// </summary>
@@ -447,6 +458,11 @@ namespace Goedel.Cryptography.Dare {
 				_Writer.WriteToken ("IsMeta", 1);
 					_Writer.WriteBoolean (IsMeta);
 				}
+			if (__Default){
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Default", 1);
+					_Writer.WriteBoolean (Default);
+				}
 			if (ContentMeta != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("ContentMeta", 1);
@@ -524,6 +540,10 @@ namespace Goedel.Cryptography.Dare {
 					}
 				case "IsMeta" : {
 					IsMeta = JSONReader.ReadBoolean ();
+					break;
+					}
+				case "Default" : {
+					Default = JSONReader.ReadBoolean ();
 					break;
 					}
 				case "ContentMeta" : {

@@ -12,17 +12,10 @@ using Goedel.Protocol;
 
 namespace Goedel.Mesh {
 
-    public abstract class Store : Disposable {
-        public virtual string ContainerDefault => throw new NYI();
-        public ContainerPersistenceStore Container = null;
-        protected override void Disposing() => Container?.Dispose();
-        }
-
 
     public class Catalog : Store, IEnumerable<CatalogEntry> {
 
-        CryptoParameters CryptoParameters;
-        KeyCollection KeyCollection;
+
 
 
         //public Dictionary<string, CatalogEntry> EntriesByUniqueId = new Dictionary<string, CatalogEntry>();
@@ -33,20 +26,9 @@ namespace Goedel.Mesh {
 
         public Catalog(string directory, string containerName, 
             CryptoParameters cryptoParameters = null,
-                    KeyCollection keyCollection = null) {
+                    KeyCollection keyCollection = null) :
+                base(directory, containerName, cryptoParameters, keyCollection) {
 
-            containerName = containerName ?? ContainerDefault;
-            var fileName = Path.Combine (directory, Path.ChangeExtension(containerName, ".cat"));
-               
-
-            Container = new ContainerPersistenceStore(fileName, "application/mmm-catalog",
-                fileStatus: FileStatus.OpenOrCreate,
-                containerType: ContainerType.MerkleTree,
-                cryptoParameters: cryptoParameters,
-                keyCollection: keyCollection
-                );
-            KeyCollection = keyCollection;
-            CryptoParameters = cryptoParameters;
 
             }
 

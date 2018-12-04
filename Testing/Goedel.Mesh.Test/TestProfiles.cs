@@ -39,7 +39,7 @@ namespace Goedel.Mesh.Test {
             var MasterAdmin = DeviceAdmin.GenerateMaster();
 
 
-            var catalog = MasterAdmin.GetCatalogCredential();
+            var catalog = MasterAdmin.CatalogCredential;
 
             var Entry1 = new CatalogEntryCredential() {
                 Service = "example.com",
@@ -107,14 +107,14 @@ namespace Goedel.Mesh.Test {
             var DeviceAdmin = ContextDevice.Generate(MachineAliceAdmin);
             var MasterAdmin = DeviceAdmin.GenerateMaster();
 
-            var catalog = MasterAdmin.GetCatalogDevice();
+            var catalog = MasterAdmin.CatalogDevice;
 
 
-            var Entry1 = new CatalogEntryDevice() { DeviceProfile = DeviceAdmin.ProfileDeviceSigned } ;
+            var Entry1 = new CatalogEntryDevice() { DeviceProfile = DeviceAdmin.ProfileDevice.ProfileDeviceSigned } ;
             var Device2 = ContextDevice.Generate(MachineAliceLaptop);
-            var Entry2 = new CatalogEntryDevice() { DeviceProfile = Device2.ProfileDeviceSigned };
+            var Entry2 = new CatalogEntryDevice() { DeviceProfile = Device2.ProfileDevice.ProfileDeviceSigned };
             var Device3 = ContextDevice.Generate(MachineAlicePhone);
-            var Entry3 = new CatalogEntryDevice() { DeviceProfile = Device3.ProfileDeviceSigned };
+            var Entry3 = new CatalogEntryDevice() { DeviceProfile = Device3.ProfileDevice.ProfileDeviceSigned };
 
             catalog.Add(Entry1);
             CheckCatalog(catalog, new List<CatalogEntry> { Entry1 });

@@ -34,8 +34,7 @@ namespace Goedel.Mesh {
         public void OpenCatalog(Catalog catalog, string Name) { }
 
         public MeshService GetMeshClient(string account) => throw new NotImplementedException();
-        public void Register(ProfileMeshConnect profile) => throw new NotImplementedException();
-        public ProfileAccount GetConnection(string accountName = null, string deviceUDF = null) => throw new NotImplementedException();
+        public ProfileMesh GetConnection(string accountName = null, string deviceUDF = null) => throw new NotImplementedException();
         public void Register(Profile profile) => throw new NotImplementedException();
         }
 

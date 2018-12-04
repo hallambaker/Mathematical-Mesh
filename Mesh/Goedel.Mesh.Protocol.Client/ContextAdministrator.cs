@@ -30,13 +30,11 @@ namespace Goedel.Mesh.Protocol.Client {
 
 
         public MeshResult CreateAccount(
-            string accountName,
-            List<string> language = null) {
+            string accountName) {
 
 
             var profileMesh = new ProfileMesh() {
-                Account = accountName,
-                Language = language
+                Account = accountName
                 };
 
 

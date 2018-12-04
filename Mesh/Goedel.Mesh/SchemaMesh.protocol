@@ -139,43 +139,32 @@
 
 
 
-	Structure ProfileMeshConnect
+
+	Structure ProfileMesh
 		Inherits ProfileApplication
+		Description 
+			|C
 		String Account
 			Description
 				|Account identifier requested.
+		Boolean Default
+			Description
+				|If true, specifies that this is marked as the default account.
+				|If there is more than one active profile in a container, the
+				|last profile found is the active one.
+		Struct DareMessage MasterProfile
+			Description
+				|Master profile of the account being registered.
 		Binary ProfileNonce
 			Description
 				|Random nonce used to mask the fingerprint of the profile UDF.
 		Binary ProfileWitness
 			Description
 				|Witness value calculated over the ProfileNonce and profile UDF
-		String DeviceUDF
-			Description
-				|UDF value used to calculate the witness value.
-
-
-	Structure ProfileMesh
-		Inherits ProfileApplication
-		Description 
-			|C
-		Boolean Default
-			Description
-				|If true, specifies that this is marked as the default account.
-				|If there is more than one active profile in a container, the
-				|last profile found is the active one.
-		String Account
-			Description
-				|Account identifier requested.
-		Struct DareMessage MasterProfile
-			Description
-				|Master profile of the account being registered.
 		Struct DareMessage DeviceProfile
 			Description
 				|Device profile under which this account is registered.
-		Struct ProfileMeshConnect
-			Description
-				|The posted connection status.
+
 
 	Section 2 "Common Structures"
 

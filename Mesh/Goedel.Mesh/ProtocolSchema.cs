@@ -1635,6 +1635,10 @@ namespace Goedel.Mesh {
         /// <summary>
         /// </summary>
 
+		public virtual string						DeviceUDF  {get; set;}
+        /// <summary>
+        /// </summary>
+
 		public virtual List<string>				Catalogs  {get; set;}
         /// <summary>
         /// </summary>
@@ -1683,6 +1687,11 @@ namespace Goedel.Mesh {
 				_Writer.WriteObjectStart ();
 				}
 			((MeshRequestUser)this).SerializeX(_Writer, false, ref _first);
+			if (DeviceUDF != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("DeviceUDF", 1);
+					_Writer.WriteString (DeviceUDF);
+				}
 			if (Catalogs != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("Catalogs", 1);
@@ -1739,6 +1748,10 @@ namespace Goedel.Mesh {
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
+				case "DeviceUDF" : {
+					DeviceUDF = JSONReader.ReadString ();
+					break;
+					}
 				case "Catalogs" : {
 					// Have a sequence of values
 					bool _Going = JSONReader.StartArray ();
@@ -1779,6 +1792,10 @@ namespace Goedel.Mesh {
         /// </summary>
 
 		public virtual List<ContainerStatus>				ContainerStatus  {get; set;}
+        /// <summary>
+        /// </summary>
+
+		public virtual List<DareMessage>				Profiles  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -1839,6 +1856,23 @@ namespace Goedel.Mesh {
 				_Writer.WriteArrayEnd ();
 				}
 
+			if (Profiles != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Profiles", 1);
+				_Writer.WriteArrayStart ();
+				bool _firstarray = true;
+				foreach (var _index in Profiles) {
+					_Writer.WriteArraySeparator (ref _firstarray);
+					// This is an untagged structure. Cannot inherit.
+                    //_Writer.WriteObjectStart();
+                    //_Writer.WriteToken(_index._Tag, 1);
+					bool firstinner = true;
+					_index.Serialize (_Writer, true, ref firstinner);
+                    //_Writer.WriteObjectEnd();
+					}
+				_Writer.WriteArrayEnd ();
+				}
+
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
 				}
@@ -1881,6 +1915,20 @@ namespace Goedel.Mesh {
 						_Item.Deserialize (JSONReader);
 						// var _Item = new ContainerStatus (JSONReader);
 						ContainerStatus.Add (_Item);
+						_Going = JSONReader.NextArray ();
+						}
+					break;
+					}
+				case "Profiles" : {
+					// Have a sequence of values
+					bool _Going = JSONReader.StartArray ();
+					Profiles = new List <DareMessage> ();
+					while (_Going) {
+						// an untagged structure.
+						var _Item = new  DareMessage ();
+						_Item.Deserialize (JSONReader);
+						// var _Item = new DareMessage (JSONReader);
+						Profiles.Add (_Item);
 						_Going = JSONReader.NextArray ();
 						}
 					break;
@@ -2829,9 +2877,9 @@ namespace Goedel.Mesh {
 
 	/// <summary>
 	/// </summary>
-	public partial class ConnectRequest : MeshProtocol {
+	public partial class ConnectRequest : MeshRequest {
         /// <summary>
-        ///The device profile
+        ///The mesh profile
         /// </summary>
 
 		public virtual DareMessage						SignedMessage  {get; set;}
@@ -2877,6 +2925,7 @@ namespace Goedel.Mesh {
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
+			((MeshRequest)this).SerializeX(_Writer, false, ref _first);
 			if (SignedMessage != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("SignedMessage", 1);
@@ -2922,6 +2971,7 @@ namespace Goedel.Mesh {
 					break;
 					}
 				default : {
+					base.DeserializeToken(JSONReader, Tag);
 					break;
 					}
 				}
@@ -2938,7 +2988,7 @@ namespace Goedel.Mesh {
         ///The preconnection data
         /// </summary>
 
-		public virtual ProfileMeshConnect						ProfileConnect  {get; set;}
+		public virtual ProfileMesh						ProfileMesh  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -2982,10 +3032,10 @@ namespace Goedel.Mesh {
 				_Writer.WriteObjectStart ();
 				}
 			((MeshResponse)this).SerializeX(_Writer, false, ref _first);
-			if (ProfileConnect != null) {
+			if (ProfileMesh != null) {
 				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("ProfileConnect", 1);
-					ProfileConnect.Serialize (_Writer, false);
+				_Writer.WriteToken ("ProfileMesh", 1);
+					ProfileMesh.Serialize (_Writer, false);
 				}
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
@@ -3019,10 +3069,10 @@ namespace Goedel.Mesh {
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
-				case "ProfileConnect" : {
+				case "ProfileMesh" : {
 					// An untagged structure
-					ProfileConnect = new ProfileMeshConnect ();
-					ProfileConnect.Deserialize (JSONReader);
+					ProfileMesh = new ProfileMesh ();
+					ProfileMesh.Deserialize (JSONReader);
  
 					break;
 					}

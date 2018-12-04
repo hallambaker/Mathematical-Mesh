@@ -11,8 +11,10 @@ namespace Goedel.Mesh {
 
     public partial class ProfileDevice {
 
-        public override string _PrimaryKey => DeviceSignatureKey.UDF;
+        public override string _PrimaryKey => UDF;
 
+
+        public string UDF => DeviceSignatureKey.UDF;
 
         public byte[] UDFBytes => DeviceSignatureKey.KeyPair.PKIXPublicKey.UDFBytes(512);
 

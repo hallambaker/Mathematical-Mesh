@@ -25,6 +25,12 @@ namespace Goedel.Mesh.Protocol.Client {
      * Currently, only the device initiated connection request is implemented. The account to 
      * which the device is to be connected is entered into the device which initiates a connection
      * to the service managing the account and requests 
+     * 
+     * We also need a mode in which the device has a resolvable URL/UDF that maps 
+     * to a description of how to connect to the device. i.e. a JSON file specifying
+     * the manufacturer keys for connecting to it, a device serial number and the hailing
+     * mechanisms it supports. For example, a WiFi SSID that it will listen out for,
+     * DHCP based discovery, etc.
      */
 
     // The client functions associated with the device.
@@ -49,22 +55,22 @@ namespace Goedel.Mesh.Protocol.Client {
             }
 
         /// <summary>
-        /// Request connection to a Mesh service account from a device.
+        /// Request connection to a Mesh service account from a device. 
         /// </summary>
-        /// <param name="account"></param>
-        /// <returns></returns>
+        /// <param name="account">The account the user is requesting a connection to.</param>
+        /// <returns>Transaction status information</returns>
         public MeshResultConnect RequestConnect(string account) {
             AccountName = account;
 
             // get the account profile
             MeshService = Machine.GetMeshClient(account);
 
-            var messageConnectionRequest = new MessageConnectionRequest() {
-                Recipient = account,
+            var meshConnectData = new ProfileMesh() {
+                Account = account,
                 DeviceProfile = ProfileDeviceSigned
                 };
 
-            var signedMessage = Sign(messageConnectionRequest);
+            var signedMessage = Sign(meshConnectData);
 
 
             // generate the connection request 
@@ -78,8 +84,10 @@ namespace Goedel.Mesh.Protocol.Client {
 
             if (connectResponse.Success()) {
                 var deviceUDF = ProfileDevice.UDFBytes;
-                deviceWitness = UDF.MakeWitnessString(deviceUDF, connectResponse.ProfileConnect.ProfileWitness);
-                Machine.Register(connectResponse.ProfileConnect);
+                deviceWitness = UDF.MakeWitnessString(deviceUDF,
+                    connectResponse.ProfileMesh.ProfileWitness);
+
+                Machine.Register(connectResponse.ProfileMesh);
                 }
 
             // if successful save the connection response for later use.
@@ -97,8 +105,8 @@ namespace Goedel.Mesh.Protocol.Client {
         /// <summary>
         /// Request the status of an account 
         /// </summary>
-        /// <param name="account"></param>
-        /// <returns></returns>
+        /// <param name="account">The account for which status is requested.</param>
+        /// <returns>The status of the request.</returns>
         public MeshResult Status(string account = null) {
 
 
@@ -114,6 +122,12 @@ namespace Goedel.Mesh.Protocol.Client {
             }
 
 
+        /// <summary>
+        /// Post a contact request message
+        /// </summary>
+        /// <param name="recipient">The intended recipient.</param>
+        /// <param name="signedContact">The sender's contact information.</param>
+        /// <returns>Transaction status information</returns>
         public MeshResult ContactRequest(string recipient, DareMessage signedContact) {
 
             var messageContactRequest = new MessageContactRequest() {
@@ -124,6 +138,12 @@ namespace Goedel.Mesh.Protocol.Client {
             return Post(recipient, messageContactRequest);
             }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="recipient">The intended recipient.</param>
+        /// <param name="text"></param>
+        /// <returns>Transaction status information</returns>
         public MeshResult ConfirmationRequest(string recipient, string text) {
 
             var messageConfirmationRequest = new MessageConfirmationRequest() {
@@ -134,6 +154,12 @@ namespace Goedel.Mesh.Protocol.Client {
             return Post(recipient, messageConfirmationRequest);
             }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="recipient">The intended recipient.</param>
+        /// <param name="accept"></param>
+        /// <returns>Transaction status information</returns>
         public MeshResult ConfirmationResponse(string recipient, bool accept) {
 
             var messageConfirmationResponse = new MessageConfirmationResponse() {
@@ -145,8 +171,13 @@ namespace Goedel.Mesh.Protocol.Client {
             }
 
 
-
-        MeshResult Post(string recipient, MeshMessage meshMessage) {
+        /// <summary>
+        /// Post a message to a mesh service
+        /// </summary>
+        /// <param name="recipient">The intended recipient.</param>
+        /// <param name="meshMessage"></param>
+        /// <returns>Transaction status information</returns>
+        public MeshResult Post(string recipient, MeshMessage meshMessage) {
 
             var DareMessage = Sign(meshMessage); // need to add in the recipient here
 
@@ -159,8 +190,42 @@ namespace Goedel.Mesh.Protocol.Client {
             return new MeshResult() { MeshResponse = response };
             }
 
-        public MeshResult Sync() => throw new NYI();
+        /// <summary>
+        /// Synchroniza a local catalog store with the one held remotely.
+        /// </summary>
+        /// <returns>Transaction status information</returns>
+        public MeshResult Sync(string account = null) {
+            account = account ?? AccountName;
+            AccountName = account;
 
+            var meshResult = Status(account);
+
+            if (meshResult.Error) {
+                return meshResult;
+                }
+
+            var statusResponse = meshResult.MeshResponse as StatusResponse;
+            foreach (var container in statusResponse.ContainerStatus) {
+                Sync(container);
+                }
+
+            return meshResult;
+
+            }
+
+        void Sync(ContainerStatus containerStatus) {
+            var store = GetStore(Store.Factory, containerStatus.Container);
+            store.Sync(containerStatus);
+            }
+
+
+        /// <summary>
+        /// Add an entry to a catalog at the service and remotely.
+        /// </summary>
+        /// <param name="catalog">The catalog that the entries are to be added to.</param>
+        /// <param name="catalogEntry">The entry to be added.</param>
+        /// <returns>Transaction status information</returns>
+        /// <returns>Transaction status information</returns>
         public MeshResult Add(Catalog catalog, CatalogEntry catalogEntry) {
 
 
@@ -183,7 +248,13 @@ namespace Goedel.Mesh.Protocol.Client {
             return new MeshResult() { MeshResponse = response };
             }
 
-        public MeshResult Add(Catalog catalog, List<CatalogEntry> catalogEntry) {
+        /// <summary>
+        /// Add a list of entries to a catalog at the service and remotely.
+        /// </summary>
+        /// <param name="catalog">The catalog that the entries are to be added to.</param>
+        /// <param name="catalogEntries">The list of entries to be added.</param>
+        /// <returns>Transaction status information</returns>
+        public MeshResult Add(Catalog catalog, List<CatalogEntry> catalogEntries) {
             throw new NYI();
             }
 

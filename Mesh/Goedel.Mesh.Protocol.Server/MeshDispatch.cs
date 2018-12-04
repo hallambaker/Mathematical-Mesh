@@ -27,7 +27,6 @@ using System.Collections.Generic;
 using System.Text;
 using Goedel.Protocol;
 using Goedel.Mesh;
-using Goedel.Mesh.Protocol;
 using Goedel.Cryptography.Dare;
 
 namespace Goedel.Mesh.Protocol.Server {
@@ -77,9 +76,19 @@ namespace Goedel.Mesh.Protocol.Server {
             //this.JPCSession = Session;
             }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Account"></param>
+        void AuthenticateToAccount(string Account) {
+            // Goal: Put the authentication code in place here to reject requests without authentication.
+            }
+
 
         /// <summary>
-        /// Respond with the 'hello' version and encoding info.
+        /// Respond with the 'hello' version and encoding info. This request does not 
+        /// require authentication or authorization since it is the method a client
+        /// calls to determine what the requirements for these are.
         /// </summary>		
         /// <param name="Request">The request object to send to the host.</param>
 		/// <returns>The response object from the service</returns>
@@ -103,13 +112,12 @@ namespace Goedel.Mesh.Protocol.Server {
             }
 
         /// <summary>
-		/// Base method for implementing the transaction  CreateAccount.
+		/// Base method for implementing the transaction CreateAccount.
         /// </summary>
         /// <param name="request">The request object to send to the host.</param>
 		/// <returns>The response object from the service</returns>
         public override CreateResponse CreateAccount(
                 CreateRequest request) {
-
 
             var accountEntry = new AccountEntry(request);
 
@@ -119,14 +127,11 @@ namespace Goedel.Mesh.Protocol.Server {
                 }
             catch (System.Exception exception) {
                 return new CreateResponse(exception);
-
                 }
-
-
             }
 
         /// <summary>
-        /// Base method for implementing the transaction  Download.
+        /// Base method for implementing the transaction Download.
         /// </summary>
         /// <param name="Request">The request object to send to the host.</param>
         /// <returns>The response object from the service</returns>
@@ -134,7 +139,7 @@ namespace Goedel.Mesh.Protocol.Server {
                 StatusRequest Request) {
 
             try {
-                var result = Mesh.AccountStatus(Request.Account);
+                var result = Mesh.AccountStatus(Request.VerifiedAccount);
                 return new StatusResponse() { ContainerStatus  = result };
                 }
             catch (System.Exception exception) {
@@ -154,7 +159,7 @@ namespace Goedel.Mesh.Protocol.Server {
                 DeleteRequest Request) {
 
             try {
-                Mesh.AccountDelete(Request.Account);
+                Mesh.AccountDelete(Request.VerifiedAccount);
                 return new DeleteResponse();
                 }
             catch (System.Exception exception) {
@@ -183,7 +188,7 @@ namespace Goedel.Mesh.Protocol.Server {
                 UploadRequest Request) {
 
             try {
-                Mesh.AccountUpdate(Request.Account, Request.Container, Request.Message);
+                Mesh.AccountUpdate(Request.VerifiedAccount, Request.Container, Request.Message);
                 return new UploadResponse();
                 }
             catch (System.Exception exception) {
@@ -201,7 +206,25 @@ namespace Goedel.Mesh.Protocol.Server {
         public override PostResponse Post(
                 PostRequest Request) => null;
 
+        /// <summary>
+		/// Base method for implementing the transaction  Connect.
+        /// </summary>
+        /// <param name="Request">The request object to send to the host.</param>
+		/// <returns>The response object from the service</returns>
+        public override ConnectResponse Connect(
+                ConnectRequest Request) {
 
+            try {
+                Mesh.Connect(Request.SignedMessage);
+                return new ConnectResponse();
+                }
+            catch (System.Exception exception) {
+                return new ConnectResponse(exception);
+
+                }
+
+
+            }
 
 
         }

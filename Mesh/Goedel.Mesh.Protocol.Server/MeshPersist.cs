@@ -30,6 +30,7 @@ using Goedel.Mesh;
 using Goedel.Protocol;
 using Goedel.Mesh.Protocol;
 using Goedel.Cryptography.Dare;
+using Goedel.Cryptography;
 using Goedel.IO;
 
 namespace Goedel.Mesh.Protocol.Server {
@@ -91,22 +92,58 @@ namespace Goedel.Mesh.Protocol.Server {
 
             }
 
+
+        public ProfileMesh Connect(DareMessage message) {
+            //string account, ProfileMesh profileMesh) {
+
+            JSONReader.Trace = true;
+            var profileMesh = ProfileMesh.Decode(message);
+
+            AccountEntry accountEntry = null;
+            try {
+                accountEntry = GetAccountLocked(profileMesh.Account);
+
+                // 
+                var result = new ProfileMesh() {
+                    Account = profileMesh.Account,
+                    DeviceProfile = profileMesh.DeviceProfile,
+                    ProfileNonce = CryptoCatalog.GetBits(128)
+                    };
+
+
+                //result.ProfileWitness = UDF.MakeWitness (profileMesh.DeviceProfile.U
+                return result;
+
+                }
+            finally {
+                if (accountEntry != null) {
+                    System.Threading.Monitor.Exit(accountEntry);
+                    }
+
+                }
+
+            }
+
+
+
+
+
         /// <summary>
         /// Update an account record. There must be an existing record and the request must
         /// be appropriately authenticated.
         /// </summary>
-        public List<ContainerStatus> AccountStatus(string account) {
-            AccountEntry accountEntry = null;
+        public List<ContainerStatus> AccountStatus(VerifiedAccount account) {
+            AccountHandleVerified accountEntry = null;
 
             try {
                 accountEntry = GetAccountLocked(account);
-                var result = new List<ContainerStatus>();
-
-                result.Add(Catalog.Status(accountEntry.Directory, CatalogCredential.Label));
-                result.Add(Catalog.Status(accountEntry.Directory, CatalogDevice.Label));
-                result.Add(Catalog.Status(accountEntry.Directory, CatalogContact.Label));
-                result.Add(Catalog.Status(accountEntry.Directory, CatalogApplication.Label));
-                result.Add(Spool.Status(accountEntry.Directory, SpoolAccount.Label));
+                var result = new List<ContainerStatus> {
+                    Catalog.Status(accountEntry.Directory, CatalogCredential.Label),
+                    Catalog.Status(accountEntry.Directory, CatalogDevice.Label),
+                    Catalog.Status(accountEntry.Directory, CatalogContact.Label),
+                    Catalog.Status(accountEntry.Directory, CatalogApplication.Label),
+                    Spool.Status(accountEntry.Directory, SpoolAccount.Label)
+                    };
                 return result;
                 }
 
@@ -114,7 +151,7 @@ namespace Goedel.Mesh.Protocol.Server {
                 if (accountEntry != null) {
                     System.Threading.Monitor.Exit(accountEntry);
                     }
-                
+
                 }
 
             }
@@ -123,8 +160,8 @@ namespace Goedel.Mesh.Protocol.Server {
         /// Update an account record. There must be an existing record and the request must
         /// be appropriately authenticated.
         /// </summary>
-        public void AccountUpdate(string account, string container, List<DareMessage> Messages) {
-            AccountEntry accountEntry = null;
+        public void AccountUpdate(VerifiedAccount account, string container, List<DareMessage> Messages) {
+            AccountHandleVerified accountEntry = null;
 
 
             try {
@@ -149,6 +186,38 @@ namespace Goedel.Mesh.Protocol.Server {
 
             }
 
+
+
+
+
+
+
+        /// <summary>
+        /// Update an account record. There must be an existing record and the request must
+        /// be appropriately authenticated.
+        /// </summary>
+        public bool AccountDelete(VerifiedAccount account) {
+            AccountHandleVerified accountEntry = null;
+
+            try {
+                accountEntry = GetAccountLocked(account);
+                throw new NYI();
+                }
+
+            finally {
+                System.Threading.Monitor.Exit(accountEntry);
+                }
+
+
+            }
+
+        /// <summary>
+        /// Get access to an account record for an authenticated request.
+        /// </summary>
+        /// <param name="verifiedAccount"></param>
+        /// <returns></returns>
+        AccountHandleVerified GetAccountLocked(VerifiedAccount verifiedAccount) => 
+            new AccountHandleVerified (GetAccountLocked(verifiedAccount.Account));
 
 
 
@@ -177,28 +246,6 @@ namespace Goedel.Mesh.Protocol.Server {
 
 
 
-        /// <summary>
-        /// Update an account record. There must be an existing record and the request must
-        /// be appropriately authenticated.
-        /// </summary>
-        public bool AccountDelete(string account) {
-            AccountEntry accountEntry = null;
-
-            try {
-                accountEntry = GetAccountLocked(account);
-                throw new NYI();
-                }
-
-            finally {
-                System.Threading.Monitor.Exit(accountEntry);
-                }
-
-
-            }
-
-
-
-
         }
 
 
@@ -223,7 +270,51 @@ namespace Goedel.Mesh.Protocol.Server {
 
         public bool Verify() => true; // NYI: Verification of signed profile.
 
+
+
         }
 
+    public class AccountHandle {
+        public AccountEntry AccountEntry { get; }
+
+        public AccountHandle(AccountEntry accountEntry) {
+            AccountEntry = accountEntry;
+            }
+
+        }
+
+    /// <summary>
+    /// Unverified account accessor, only has access to spools
+    /// </summary>
+    public class AccountHandleUnverified : AccountHandle {
+
+
+        public AccountHandleUnverified(AccountEntry accountEntry) : base(accountEntry) {
+
+            }
+
+        void PostToMessages(DareMessage dareMessage) {
+            throw new NYI();
+            }
+
+
+        }
+
+    /// <summary>
+    /// Verified account accessor, has access to spools and to catalogues
+    /// </summary>
+    public class AccountHandleVerified : AccountHandle {
+
+        public string Directory => AccountEntry.Directory;
+
+
+        public AccountHandleVerified(AccountEntry accountEntry) : base(accountEntry) {
+
+            }
+        void PostToCatalog(DareMessage dareMessage) {
+            throw new NYI();
+            }
+
+        }
 
     }

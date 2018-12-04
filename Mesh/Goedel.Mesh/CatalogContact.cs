@@ -51,12 +51,13 @@ namespace Goedel.Mesh {
         public CatalogEntryContact LocateBySite(string Key) => Locate(Key) as CatalogEntryContact;
 
 
-        public CatalogContact(string directory, string ContainerName=null,
+        public CatalogContact(string directory, string ContainerName = null,
             CryptoParameters cryptoParameters = null,
                     KeyCollection keyCollection = null) :
-            base(directory, ContainerName) {
+            base(directory, ContainerName, cryptoParameters, keyCollection) {
             }
-
+        public static Store Factory(string directory, string containerName = null) =>
+        new CatalogContact(directory, containerName);
         }
 
     // NYI should all be DareMessages to allow them to be signed.

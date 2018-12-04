@@ -235,6 +235,27 @@ namespace Goedel.Cryptography.Dare {
 
 
         /// <summary>
+        /// Deserialize the input string to populate this object
+        /// </summary>
+        /// <param name="JSONReader">Input data</param>
+        public override void Deserialize(JSONReader JSONReader) {
+
+            bool Going = JSONReader.StartArray();
+            while (Going) {
+                string Token = JSONReader.ReadToken();
+                if (Token == null) {
+                    Going = false;
+                    }
+                else {
+                    DeserializeToken(JSONReader, Token);
+                    }
+                Going = JSONReader.NextArray();
+                }
+            // JSONReader.EndObject (); Implicit 
+            }
+
+
+        /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>

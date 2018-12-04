@@ -34,6 +34,12 @@ namespace Goedel.Protocol {
     /// The base class for transaction requests
     /// </summary>
     public abstract partial class Request   {
+
+        /// <summary>
+        /// The authentication context that is set by the authentication layer.
+        /// </summary>
+        public AuthenticationContext AuthenticationContext;
+
         }
 
     /// <summary>
@@ -58,4 +64,32 @@ namespace Goedel.Protocol {
             }
 
         }
+
+    /// <summary>
+    /// Result of authenticating the request in the pre-dispatcher.
+    /// </summary>
+    public class AuthenticationContext {
+
+        /// <summary>
+        /// Callback to authenticate the account.
+        /// </summary>
+        /// <param name="account">The account name to be authenticated.</param>
+        /// <returns>True if the account name is verified, otherwise false.</returns>
+        public virtual VerifiedAccount VerifyAccount(string account) => 
+            new VerifiedAccount() { Account = account };
+
+        }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public class VerifiedAccount {
+
+        /// <summary>
+        /// The account identifier.
+        /// </summary>
+        public string Account;
+
+        }
+
     }

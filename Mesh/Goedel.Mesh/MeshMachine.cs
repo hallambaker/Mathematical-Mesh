@@ -30,7 +30,7 @@ namespace Goedel.Mesh {
 
         MeshService GetMeshClient(string account);
 
-        ProfileAccount GetConnection(
+        ProfileMesh GetConnection(
                     string accountName = null,
                     string deviceUDF = null);
 

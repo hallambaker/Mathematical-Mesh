@@ -58,7 +58,10 @@
 				|accept containers that contain meta frames at any position in the file.
 				|Applications MUST NOT interpret a meta frame as a data frame with an enpty payload.
 
-
+		Boolean Default
+			Description
+				|If set true in a persistent container, specifies that this record contains
+				|the default object for the container.
 
 		Struct ContentMeta ContentMeta
 			Description
