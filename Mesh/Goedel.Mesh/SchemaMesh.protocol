@@ -143,15 +143,14 @@
 	Structure ProfileMesh
 		Inherits ProfileApplication
 		Description 
-			|C
+			|Contains the binding of a device to a MasterProfile. Each device has a separate
+			|profile which MUST be signed by an OnlineSignatureKey
 		String Account
 			Description
-				|Account identifier requested.
-		Boolean Default
+				|Account address.
+		Struct DareMessage DeviceProfile
 			Description
-				|If true, specifies that this is marked as the default account.
-				|If there is more than one active profile in a container, the
-				|last profile found is the active one.
+				|Device profile of the device making the request.
 		Struct DareMessage MasterProfile
 			Description
 				|Master profile of the account being registered.
@@ -161,9 +160,7 @@
 		Binary ProfileWitness
 			Description
 				|Witness value calculated over the ProfileNonce and profile UDF
-		Struct DareMessage DeviceProfile
-			Description
-				|Device profile under which this account is registered.
+
 
 
 	Section 2 "Common Structures"
@@ -297,7 +294,7 @@
 	Structure MessageConnectionRequest
 		Inherits MeshMessage
 
-		Struct DareMessage DeviceProfile
+		Struct ProfileMesh ProfileMesh
 			Description
 				|The device profile
 

@@ -9,7 +9,8 @@ namespace Goedel.Protocol.Exchange {
     /// <summary>
     /// The service address specified is invalid.	
     /// </summary>
-    public class InvalidAddress : global::System.Exception {
+    [Serializable]
+	public class InvalidAddress : global::System.Exception {
 
 		/// <summary>
         /// Construct instance for exception "Invalid service address"

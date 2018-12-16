@@ -10,7 +10,8 @@ namespace Goedel.Cryptography.Dare {
     /// An attempt was made to access a container type that is not supported by the
     /// class.
     /// </summary>
-    public class InvalidContainerTypeException : global::System.Exception {
+    [Serializable]
+	public class InvalidContainerTypeException : global::System.Exception {
 
 		/// <summary>
         /// Construct instance for exception "This class does not support the specified container type."
@@ -62,7 +63,8 @@ namespace Goedel.Cryptography.Dare {
     /// An attempt was made to create a frame that is larger than the maximum frame size allowed by
     /// the application
     /// </summary>
-    public class FrameTooLargeException : global::System.Exception {
+    [Serializable]
+	public class FrameTooLargeException : global::System.Exception {
 
 		/// <summary>
         /// Construct instance for exception "The frame was too large for this implementation to handle"
@@ -114,7 +116,8 @@ namespace Goedel.Cryptography.Dare {
     /// An attempt was made to create a new container file in a mode that did not
     /// allow creation of a new file.
     /// </summary>
-    public class InvalidFileModeException : global::System.Exception {
+    [Serializable]
+	public class InvalidFileModeException : global::System.Exception {
 
 		/// <summary>
         /// Construct instance for exception "The file mode is invalid for creating a new file"
@@ -165,7 +168,8 @@ namespace Goedel.Cryptography.Dare {
     /// <summary>
     /// The file format was found to be invalid or otherwise corrupt.
     /// </summary>
-    public class InvalidFileFormatException : global::System.Exception {
+    [Serializable]
+	public class InvalidFileFormatException : global::System.Exception {
 
 		/// <summary>
         /// Construct instance for exception "An error was encountered in reading the container file"
@@ -216,7 +220,8 @@ namespace Goedel.Cryptography.Dare {
     /// <summary>
     /// An attempt was made to create an object with an existing object identifier
     /// </summary>
-    public class ObjectIdentifierNotUnique : global::System.Exception {
+    [Serializable]
+	public class ObjectIdentifierNotUnique : global::System.Exception {
 
 		/// <summary>
         /// Construct instance for exception "An attempt was made to create an object with an existing object identifier"
@@ -267,7 +272,8 @@ namespace Goedel.Cryptography.Dare {
     /// <summary>
     /// Access was refused
     /// </summary>
-    public class AccessRefused : global::System.Exception {
+    [Serializable]
+	public class AccessRefused : global::System.Exception {
 
 		/// <summary>
         /// Construct instance for exception "Access was refused"
@@ -318,7 +324,8 @@ namespace Goedel.Cryptography.Dare {
     /// <summary>
     /// A data record could not be read because it was incomplete.
     /// </summary>
-    public class DataRecordTruncated : global::System.Exception {
+    [Serializable]
+	public class DataRecordTruncated : global::System.Exception {
 
 		/// <summary>
         /// Construct instance for exception "A data record could not be read because it was incomplete."

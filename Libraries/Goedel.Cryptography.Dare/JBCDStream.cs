@@ -14,7 +14,7 @@ namespace Goedel.Cryptography.Dare {
     /// expected this will be replaced in the future by a version that performs direct 
     /// memory mapping of the files.
     /// </summary>
-    public partial class JBCDStream : IDisposable {
+    public partial class JBCDStream : Disposable {
 
         /// <summary>
         /// The underlying stream for stream write operations
@@ -87,42 +87,14 @@ namespace Goedel.Cryptography.Dare {
             StreamWrite?.Seek(0, SeekOrigin.End);
             }
 
-
         /// <summary>
         /// Dispose method, frees all resources.
         /// </summary>
-        public void Dispose () {
-            Dispose(true);
-            GC.SuppressFinalize(this);
+        protected override void Disposing() {
+            DisposeStreamWrite?.Dispose();
+            DisposeStreamRead?.Dispose();
             }
 
-        bool disposed = false;
-        /// <summary>
-        /// Dispose method, frees resources when disposing, 
-        /// </summary>
-        /// <param name="disposing"></param>
-        protected virtual void Dispose (bool disposing) {
-            if (disposed) {
-                return;
-                }
-
-            if (disposing) {
-                //DisposeStreamWrite?.Close();
-                //DisposeStreamRead?.Close();
-
-                DisposeStreamWrite?.Dispose();
-                DisposeStreamRead?.Dispose();
-                }
-
-            disposed = true;
-            }
-
-        /// <summary>
-        /// Destructor.
-        /// </summary>
-        ~JBCDStream () {
-            Dispose(false);
-            }
 
         /// <summary>
         /// Sets the read position within the current stream.

@@ -9,7 +9,8 @@ namespace Goedel.Cryptography.Jose {
     /// <summary>
     /// An internal error occurred. This error cannot be recovered from.
     /// </summary>
-    public class InternalError : global::System.Exception {
+    [Serializable]
+	public class InternalError : global::System.Exception {
 
 		/// <summary>
         /// Construct instance for exception "An internal error occurred"

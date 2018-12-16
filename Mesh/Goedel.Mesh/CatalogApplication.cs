@@ -19,7 +19,7 @@ namespace Goedel.Mesh {
         public AsCatalogEntryApplication(CatalogContact catalog) => Catalog = catalog;
 
         public IEnumerator<CatalogEntryApplication> GetEnumerator() =>
-                    new EnumeratorCatalogEntryApplication(Catalog.Container);
+                    new EnumeratorCatalogEntryApplication(Catalog.ContainerPersistence);
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator1();
         private IEnumerator GetEnumerator1() => this.GetEnumerator();

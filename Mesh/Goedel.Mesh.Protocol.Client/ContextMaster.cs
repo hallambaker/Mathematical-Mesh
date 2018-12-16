@@ -21,7 +21,7 @@ namespace Goedel.Mesh.Protocol.Client {
 
         //public override IMeshMachine Machine => ContextDevice?.Machine;
         public override ProfileDevice ProfileDevice => ContextDevice?.ProfileDevice;
-        public virtual ProfileMaster ProfileMaster { get; }
+
 
 
         public string UDF => ProfileMaster.UDF;

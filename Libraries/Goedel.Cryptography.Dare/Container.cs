@@ -90,11 +90,11 @@ namespace Goedel.Cryptography.Dare {
         ContainerFramerReader _Current = null;
         //bool Forward;
         /// <summary>
-        /// Create an enumerator for <paramref name="Container"/>.
+        /// Create an enumerator for <paramref name="container"/>.
         /// </summary>
-        /// <param name="Container">The container to enumerate.</param>
-        public ContainerEnumerator(Container Container) {
-            this.Container = Container;
+        /// <param name="container">The container to enumerate.</param>
+        public ContainerEnumerator(Container container) {
+            this.Container = container;
             //this.Forward = Forward;
             Reset();
             }
@@ -214,7 +214,7 @@ namespace Goedel.Cryptography.Dare {
         /// The underlying stream reader/writer for the container. This will be disposed of when
         /// the container is released.
         /// </summary>
-        JBCDStream DisposeJBCDStream = null;
+        public JBCDStream DisposeJBCDStream;
 
         #region // IDisposable
 
@@ -232,37 +232,66 @@ namespace Goedel.Cryptography.Dare {
         /// Open or create container according to the setting of FileStatus. The underlying 
         /// filestreams will be disposed of automatically when the container is disposed.
         /// </summary>
-        /// <param name="Filename">The file name.</param>
-        /// <param name="FileStatus">The file access mode.</param>
-        /// <param name="KeyCollection">The key collection to be used to resolve requests
+        /// <param name="fileName">The file name.</param>
+        /// <param name="fileStatus">The file access mode.</param>
+        /// <param name="keyCollection">The key collection to be used to resolve requests
         /// for decryption keys. If unspecified, the default KeyCollection is used.</param>
-        /// <param name="CryptoParameters">Cryptographic parameters specifying defaults
+        /// <param name="cryptoParameters">Cryptographic parameters specifying defaults
         /// for encoding and authentication of data.</param>
         /// <returns>The new container.</returns>
         public static Container Open(
-                        string Filename,
-                        FileStatus FileStatus = FileStatus.Read,
-                        KeyCollection KeyCollection = null,
-                        CryptoParameters CryptoParameters = null) {
-            var JBCDStream = new JBCDStream(Filename, FileStatus);
-            return Open(JBCDStream, KeyCollection);
+                        string fileName,
+                        FileStatus fileStatus = FileStatus.Read,
+                        KeyCollection keyCollection = null,
+                        CryptoParameters cryptoParameters = null,
+                        ContainerType containerType = ContainerType.Unknown,
+                        string contentType = null) {
+
+            var JBCDStream = new JBCDStream(fileName, FileStatus: fileStatus);
+
+            try {
+
+                Console.WriteLine($"Open Stream {fileName}");
+                // Attempt to open file.
+                Container Container;
+
+                // Create new container if empty or read the old one.
+                if (JBCDStream.Length == 0) {
+                    Container= NewContainer(JBCDStream, cryptoParameters,
+                        containerType, contentType: contentType);
+                    }
+                else {
+                    keyCollection = keyCollection ?? cryptoParameters?.KeyCollection;
+                    Container= OpenExisting(JBCDStream, keyCollection);
+
+                    }
+                Container.DisposeJBCDStream = JBCDStream;
+                return Container;
+                }
+            catch {
+                JBCDStream?.Dispose();
+                return null;
+                }
+
+
+
             }
 
         /// <summary>
         /// Open or create container according to the setting of FileStatus. The underlying 
         /// filestreams will be disposed of automatically when the container is disposed.
         /// </summary>
-        /// <param name="JBCDStream">The stream to use to access the container.</param>
-        /// <param name="KeyCollection">The key collection to be used to resolve requests
+        /// <param name="jbcdStream">The stream to use to access the container.</param>
+        /// <param name="keyCollection">The key collection to be used to resolve requests
         /// for decryption keys. If unspecified, the default KeyCollection is used.</param>
         /// <returns>The new container.</returns>
         public static Container Open(
-                        JBCDStream JBCDStream,
-                        KeyCollection KeyCollection = null) {
+                        JBCDStream jbcdStream,
+                        KeyCollection keyCollection = null) {
 
 
-            var Container = OpenExisting(JBCDStream, KeyCollection);
-            Container.DisposeJBCDStream = JBCDStream;
+            var Container = OpenExisting(jbcdStream, keyCollection);
+            Container.DisposeJBCDStream = jbcdStream;
 
             return Container;
             }
@@ -275,41 +304,41 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// Open an existing container according to the information contained in the next frame to be read.
         /// </summary>
-        /// <param name="JBCDStream">The frame reader. Since this is passed to the
+        /// <param name="jbcdStream">The frame reader. Since this is passed to the
         /// method to create the class it is not disposed with the container using it.</param>
-        /// <param name="KeyCollection">The key collection to be used to resolve requests
+        /// <param name="keyCollection">The key collection to be used to resolve requests
         /// for decryption keys. If unspecified, the default KeyCollection is used.</param>
         /// <returns></returns>
         public static Container OpenExisting(
-                        JBCDStream JBCDStream,
-                        KeyCollection KeyCollection = null) {
-            var Found = JBCDStream.ReadFrame(out var Header, out var FrameData, out var FrameTrailer);
+                        JBCDStream jbcdStream,
+                        KeyCollection keyCollection = null) {
+            var Found = jbcdStream.ReadFrame(out var Header, out var FrameData, out var FrameTrailer);
             var ContainerHeaderFirst = Cryptography.Dare.ContainerHeaderFirst.FromJSON(Header.JSONReader(), false);
 
-            var Position1 = JBCDStream.PositionRead; // is always positioned after the first record on entry.
+            var Position1 = jbcdStream.PositionRead; // is always positioned after the first record on entry.
             //CryptoProviderDigest DigestProvider = CryptoCatalog.Default.GetDigest(CryptoAlgorithmID.Default);
 
 
 
             long FrameCount = 1;
             ContainerHeader FinalContainerHeader;
-            if (Position1 < JBCDStream.Length) {
-                FinalContainerHeader = JBCDStream.ReadLastFrameHeader();
+            if (Position1 < jbcdStream.Length) {
+                FinalContainerHeader = jbcdStream.ReadLastFrameHeader();
                 FrameCount = FinalContainerHeader.Index + 1;
                 }
             else {
                 FinalContainerHeader = ContainerHeaderFirst;
                 }
 
-            var CryptoStack = ContainerHeaderFirst.GetCryptoStack(KeyCollection);
+            var CryptoStack = ContainerHeaderFirst.GetCryptoStack(keyCollection);
 
-            var PositionFinalFrameStart = JBCDStream.StartLastFrameRead;
+            var PositionFinalFrameStart = jbcdStream.StartLastFrameRead;
 
             Container Container;
             switch (ContainerHeaderFirst.ContainerType) {
                 case ContainerList.Label: {
                     Container = new ContainerList() {
-                        JBCDStream = JBCDStream,
+                        JBCDStream = jbcdStream,
                         ContainerHeaderFirst = ContainerHeaderFirst,
                         StartOfData = Position1,
                         FrameCount = FrameCount,
@@ -320,7 +349,7 @@ namespace Goedel.Cryptography.Dare {
                 case ContainerDigest.Label: {
                     CryptoStack.Digest = true;
                     Container = new ContainerList() {
-                        JBCDStream = JBCDStream,
+                        JBCDStream = jbcdStream,
                         //DigestProvider = DigestProvider,
                         ContainerHeaderFirst = ContainerHeaderFirst,
                         StartOfData = Position1,
@@ -332,7 +361,7 @@ namespace Goedel.Cryptography.Dare {
                 case ContainerChain.Label: {
                     CryptoStack.Digest = true;
                     Container = new ContainerChain() {
-                        JBCDStream = JBCDStream,
+                        JBCDStream = jbcdStream,
                         //DigestProvider = DigestProvider,
                         ContainerHeaderFirst = ContainerHeaderFirst,
                         StartOfData = Position1,
@@ -343,7 +372,7 @@ namespace Goedel.Cryptography.Dare {
                     }
                 case ContainerTree.Label: {
                     Container = new ContainerTree() {
-                        JBCDStream = JBCDStream,
+                        JBCDStream = jbcdStream,
                         //DigestProvider = DigestProvider,
                         ContainerHeaderFirst = ContainerHeaderFirst,
                         StartOfData = Position1,
@@ -355,7 +384,7 @@ namespace Goedel.Cryptography.Dare {
                 case ContainerMerkleTree.Label: {
                     CryptoStack.Digest = true;
                     Container = new ContainerMerkleTree() {
-                        JBCDStream = JBCDStream,
+                        JBCDStream = jbcdStream,
                         //DigestProvider = DigestProvider,
                         ContainerHeaderFirst = ContainerHeaderFirst,
                         StartOfData = Position1,
@@ -372,8 +401,8 @@ namespace Goedel.Cryptography.Dare {
             // initialize the Frame index dictionary
             Container.PositionFinalFrameStart = PositionFinalFrameStart;
             Container.FillDictionary(FinalContainerHeader, Position1, PositionFinalFrameStart);
-            Container.KeyCollection = KeyCollection;
-            JBCDStream.PositionRead = Position1;
+            Container.KeyCollection = keyCollection;
+            jbcdStream.PositionRead = Position1;
 
             return Container;
             }
@@ -382,37 +411,37 @@ namespace Goedel.Cryptography.Dare {
         /// Create a new container file of the specified type and write the initial
         /// data record
         /// </summary>
-        /// <param name="Filename">The file to open</param>
-        /// <param name="FileStatus">The file status.</param>
-        /// <param name="CryptoParameters">Specifies the cryptographic enhancements to
+        /// <param name="filename">The file to open</param>
+        /// <param name="fileStatus">The file status.</param>
+        /// <param name="cryptoParameters">Specifies the cryptographic enhancements to
         /// be applied to this message.</param>
-        /// <param name="Payload">Optional data payload. </param>
-        /// <param name="ContentType">Content type of the optional data payload</param>
-        /// <param name="ContainerType">The container type.</param>
-        /// <param name="DataEncoding">The data encoding.</param>
-        /// <param name="Cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
-        /// <param name="DataSequences">Data sequences to be converted to an EDS and presented 
+        /// <param name="payload">Optional data payload. </param>
+        /// <param name="contentType">Content type of the optional data payload</param>
+        /// <param name="containerType">The container type.</param>
+        /// <param name="dataEncoding">The data encoding.</param>
+        /// <param name="cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
+        /// <param name="dataSequences">Data sequences to be converted to an EDS and presented 
         ///     as an EDSS header entry.</param>
         /// <exception cref="InvalidFileModeException">The file mode specified was not valid.</exception>
         public static Container NewContainer(
-                        string Filename,
-                        FileStatus FileStatus,
-                        CryptoParameters CryptoParameters = null,
-                        ContainerType ContainerType = ContainerType.Chain,
-                        byte[] Payload = null,
-                        string ContentType = null,
-                        DataEncoding DataEncoding = DataEncoding.JSON,
-                        byte[] Cloaked = null,
-                        List<byte[]> DataSequences = null
+                        string filename,
+                        FileStatus fileStatus,
+                        CryptoParameters cryptoParameters = null,
+                        ContainerType containerType = ContainerType.Chain,
+                        byte[] payload = null,
+                        string contentType = null,
+                        DataEncoding dataEncoding = DataEncoding.JSON,
+                        byte[] cloaked = null,
+                        List<byte[]> dataSequences = null
                         ) {
 
-            Assert.True(FileStatus == FileStatus.New | FileStatus == FileStatus.Overwrite,
+            Assert.True(fileStatus == FileStatus.New | fileStatus == FileStatus.Overwrite,
                 InvalidFileModeException.Throw);
 
-            var JBCDStream = new JBCDStream(Filename, FileStatus);
+            var JBCDStream = new JBCDStream(filename, fileStatus);
             var Container = NewContainer(
-                JBCDStream, CryptoParameters, ContainerType, Payload, ContentType, DataEncoding,
-                Cloaked, DataSequences);
+                JBCDStream, cryptoParameters, containerType, payload, contentType, dataEncoding,
+                cloaked, dataSequences);
             Container.DisposeJBCDStream = JBCDStream;
 
             return Container;
@@ -424,57 +453,57 @@ namespace Goedel.Cryptography.Dare {
         /// Create a new container file of the specified type and write the initial
         /// data record
         /// </summary>
-        /// <param name="JBCDStream">The underlying file stream. This MUST be opened
+        /// <param name="jbcdStream">The underlying file stream. This MUST be opened
         /// in a read access mode and should have exclusive write access. All existing
         /// content in the file will be overwritten.</param>
-        /// <param name="CryptoParameters">Specifies the cryptographic enhancements to
+        /// <param name="cryptoParameters">Specifies the cryptographic enhancements to
         /// be applied to this message.</param>
-        /// <param name="Payload">Optional data payload. </param>
-        /// <param name="DataEncoding">The data encoding.</param>
-        /// <param name="ContentType">Content type of the optional data payload</param>
-        /// <param name="ContainerType">The container type. This determines whether
+        /// <param name="payload">Optional data payload. </param>
+        /// <param name="dataEncoding">The data encoding.</param>
+        /// <param name="contentType">Content type of the optional data payload</param>
+        /// <param name="containerType">The container type. This determines whether
         /// a tree index is to be created or not and if so, whether </param>
 
-        /// <param name="Cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
-        /// <param name="DataSequences">Data sequences to be converted to an EDS and presented 
+        /// <param name="cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
+        /// <param name="dataSequences">Data sequences to be converted to an EDS and presented 
         ///     as an EDSS header entry.</param>
         public static Container NewContainer(
-                        JBCDStream JBCDStream,
-                        CryptoParameters CryptoParameters,
-                        ContainerType ContainerType = ContainerType.Chain,
-                        byte[] Payload = null,
-                        string ContentType = null,
-                        DataEncoding DataEncoding = DataEncoding.JSON,
-                        byte[] Cloaked = null,
-                        List<byte[]> DataSequences = null
+                        JBCDStream jbcdStream,
+                        CryptoParameters cryptoParameters,
+                        ContainerType containerType = ContainerType.Chain,
+                        byte[] payload = null,
+                        string contentType = null,
+                        DataEncoding dataEncoding = DataEncoding.JSON,
+                        byte[] cloaked = null,
+                        List<byte[]> dataSequences = null
                         ) {
 
-            CryptoParameters = CryptoParameters ?? new CryptoParameters();
-            var Container = MakeNewContainer(JBCDStream,
-                    CryptoParameters: CryptoParameters, ContainerType: ContainerType);
+            cryptoParameters = cryptoParameters ?? new CryptoParameters();
+            var Container = MakeNewContainer(jbcdStream,
+                    cryptoParameters: cryptoParameters, containerType: containerType);
 
-            Container.CryptoParametersContainer = CryptoParameters;
-            Container.DataEncoding = DataEncoding;
+            Container.CryptoParametersContainer = cryptoParameters;
+            Container.DataEncoding = dataEncoding;
             var ContainerHeaderFirst = Container.ContainerHeaderFirst;
 
-            ContainerHeaderFirst.DataEncoding = DataEncoding.ToString();
+            ContainerHeaderFirst.DataEncoding = dataEncoding.ToString();
             ContainerHeaderFirst.ContentMeta = new ContentMeta() {
-                ContentType = ContentType
+                ContentType = contentType
                 };
 
-            ContainerHeaderFirst.ApplyCryptoStack(Container.CryptoStackContainer, Cloaked, DataSequences);
+            ContainerHeaderFirst.ApplyCryptoStack(Container.CryptoStackContainer, cloaked, dataSequences);
 
-            Payload = ContainerHeaderFirst.EnhanceBody(Payload, out var Trailer);
+            payload = ContainerHeaderFirst.EnhanceBody(payload, out var Trailer);
             Container.MakeTrailer(ref Trailer);
 
             // May have issues here because we are not calling thje old append frame.
-            var HeaderBytes = ContainerHeaderFirst.GetBytes(DataEncoding, false);
-            var TrailerBytes = Trailer?.GetBytes(DataEncoding, false);
+            var HeaderBytes = ContainerHeaderFirst.GetBytes(dataEncoding, false);
+            var TrailerBytes = Trailer?.GetBytes(dataEncoding, false);
 
-            Container.AppendFrame(HeaderBytes, Payload, TrailerBytes);
+            Container.AppendFrame(HeaderBytes, payload, TrailerBytes);
             Container.FrameCount = 1;
 
-            Container.KeyCollection = CryptoParameters.KeyCollection;
+            Container.KeyCollection = cryptoParameters.KeyCollection;
 
             return Container;
             }
@@ -483,41 +512,41 @@ namespace Goedel.Cryptography.Dare {
         /// Create a new container file of the specified type and write the initial
         /// data record
         /// </summary>
-        /// <param name="JBCDStream">The underlying JBCDStream stream. This MUST be opened
+        /// <param name="jbcdStream">The underlying JBCDStream stream. This MUST be opened
         /// in a read access mode and should have exclusive read access. All existing
         /// content in the file will be overwritten.</param>
-        /// <param name="ContainerType">The container type. This determines whether
+        /// <param name="containerType">The container type. This determines whether
         /// a tree index is to be created or not and if so, whether </param>
-        /// <param name="CryptoParameters">Cryptographic parameters specifying algorithms and keys
+        /// <param name="cryptoParameters">Cryptographic parameters specifying algorithms and keys
         /// for encoding and authentication of data.</param>
-        /// <param name="DigestAlgorithm">The digest algorithm to be used to calculate the PayloadDigest</param>
+        /// <param name="digestAlgorithm">The digest algorithm to be used to calculate the PayloadDigest</param>
         /// <returns>The newly constructed container.</returns>
         public static Container MakeNewContainer(
-                        JBCDStream JBCDStream,
-                        CryptoParameters CryptoParameters,
-                        ContainerType ContainerType = ContainerType.Chain,
-                        CryptoAlgorithmID DigestAlgorithm = CryptoAlgorithmID.Default) {
-            Container Result;
+                        JBCDStream jbcdStream,
+                        CryptoParameters cryptoParameters,
+                        ContainerType containerType = ContainerType.Chain,
+                        CryptoAlgorithmID digestAlgorithm = CryptoAlgorithmID.Default) {
+            Container result;
 
-            switch (ContainerType) {
+            switch (containerType) {
                 case ContainerType.List: {
-                    Result = ContainerList.MakeNewContainer(JBCDStream);
+                    result = ContainerList.MakeNewContainer(jbcdStream);
                     break;
                     }
                 case ContainerType.Digest: {
-                    Result = ContainerDigest.MakeNewContainer(JBCDStream);
+                    result = ContainerDigest.MakeNewContainer(jbcdStream);
                     break;
                     }
                 case ContainerType.Chain: {
-                    Result = ContainerChain.MakeNewContainer(JBCDStream);
+                    result = ContainerChain.MakeNewContainer(jbcdStream);
                     break;
                     }
                 case ContainerType.Tree: {
-                    Result = ContainerTree.MakeNewContainer(JBCDStream);
+                    result = ContainerTree.MakeNewContainer(jbcdStream);
                     break;
                     }
                 case ContainerType.MerkleTree: {
-                    Result = ContainerMerkleTree.MakeNewContainer(JBCDStream);
+                    result = ContainerMerkleTree.MakeNewContainer(jbcdStream);
                     break;
                     }
                 default: {
@@ -525,9 +554,9 @@ namespace Goedel.Cryptography.Dare {
                     }
                 }
 
-            Result.CryptoStackContainer = Result.GetCryptoStack(CryptoParameters);
+            result.CryptoStackContainer = result.GetCryptoStack(cryptoParameters);
 
-            return Result;
+            return result;
 
             }
 
@@ -541,92 +570,91 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// Register a frame in the container access dictionaries.
         /// </summary>
-        /// <param name="Header">Frame header</param>
-        /// <param name="Position">Position of the frame</param>
-        protected virtual void RegisterFrame(ContainerHeader Header, long Position) {
-            var Index = Header.Index;
-            FrameIndexToPositionDictionary.AddSafe(Index, Position);
+        /// <param name="header">Frame header</param>
+        /// <param name="position">Position of the frame</param>
+        protected virtual void RegisterFrame(ContainerHeader header, long position) {
+            var index = header.Index;
+            FrameIndexToPositionDictionary.AddSafe(index, position);
             }
 
         /// <summary>
         /// Get the frame position.
         /// </summary>
-        /// <param name="Frame">The frame index</param>
+        /// <param name="frame">The frame index</param>
         /// <returns>The frame position.</returns>
-        public virtual long GetFramePosition(long Frame) {
-            var Found = FrameIndexToPositionDictionary.TryGetValue(Frame, out var Position);
-            return Position;
+        public virtual long GetFramePosition(long frame) {
+            var found = FrameIndexToPositionDictionary.TryGetValue(frame, out var position);
+            return position;
             }
 
         /// <summary>
         /// The number of bytes to be reserved for the trailer.
         /// </summary>
         /// <returns>The number of bytes to reserve</returns>
-        public virtual DareTrailer FillDummyTrailer(CryptoStack CryptoStack) => null;
+        public virtual DareTrailer FillDummyTrailer(CryptoStack cryptoStack) => null;
 
         /// <summary>
         /// The dummy trailer to add to the end of the frame.
         /// </summary>
         /// <returns></returns>
-        public virtual void MakeTrailer(ref DareTrailer Trailer) {
+        public virtual void MakeTrailer(ref DareTrailer trailer) {
             }
 
 
         /// <summary>
         /// Append a new data frame payload to the end of the file.
         /// </summary>
-        /// <param name="Payload">The frame payload data value.</param>
-        /// <param name="Header">The frame header value.</param>
-        /// <param name="Trailer">The frame trailer value.</param>
+        /// <param name="payload">The frame payload data value.</param>
+        /// <param name="header">The frame header value.</param>
+        /// <param name="trailer">The frame trailer value.</param>
         /// <returns>The number of bytes written.</returns>
-        public long AppendFrame(byte[] Header, byte[] Payload = null, byte[] Trailer=null) {
+        public long AppendFrame(byte[] header, byte[] payload = null, byte[] trailer=null) {
             // Write the frame ensuring the results get written out.
-            var Length = JBCDStream.WriteWrappedFrame(Header, Payload, Trailer);
+            var Length = JBCDStream.WriteWrappedFrame(header, payload, trailer);
             JBCDStream.Flush();
             return Length;
             }
 
-        ///// <summary>
-        ///// Obtain a reader stream for the current frame data.
-        ///// </summary>
-        ///// <returns>The reader stream created.</returns>
-        //public abstract ContainerDataReader GetFrameDataReader();
 
         /// <summary>
         /// Obtain a reader stream for the current frame data.
         /// </summary>
-        /// <param name="Index">The container index to be read.</param>
-        /// <param name="Position">The byte offset within the file from which to read.</param>
+        /// <param name="index">The container index to be read.</param>
+        /// <param name="position">The byte offset within the file from which to read.</param>
         /// <returns>The reader stream created.</returns>
         public abstract ContainerFramerReader GetFrameDataReader(
-                long Index = -1, long Position = -1);
+                long index = -1, long position = -1);
 
         #region // Convenience methods to read/write to containers.
 
 
+
+
+
+
         /// <summary>
         /// Append a new data frame payload to the end of the file.
         /// </summary>
-        /// <param name="Data">Ciphertext data to append.</param>
-        /// <param name="ContainerHeader">Container header data.</param>
-        /// <param name="CryptoParameters">Specifies the cryptographic enhancements to
+        /// <param name="data">Ciphertext data to append.</param>
+        /// <param name="containerHeader">Container header data.</param>
+        /// <param name="cryptoParameters">Specifies the cryptographic enhancements to
         /// be applied to this message.</param>
-        /// <param name="ContentType">The payload content type.</param>
-        /// <param name="Cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
-        /// <param name="DataSequences">Data sequences to be converted to an EDS and presented </param>
+        /// <param name="contentType">The payload content type.</param>
+        /// <param name="cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
+        /// <param name="dataSequences">Data sequences to be converted to an EDS and presented </param>
         /// <returns>The number of bytes written.</returns>
-        public void Append(byte[] Data,
-            CryptoParameters CryptoParameters = null,
-            ContainerHeader ContainerHeader = null,
+        public void Append(byte[] data,
+            CryptoParameters cryptoParameters = null,
+            ContainerHeader containerHeader = null,
 
-                        string ContentType = null,
-                        byte[] Cloaked = null,
-                        List<byte[]> DataSequences = null) {
+                        string contentType = null,
+                        byte[] cloaked = null,
+                        List<byte[]> dataSequences = null) {
 
-            using (var InputStream = new MemoryStream(Data)) {
+            using (var InputStream = new MemoryStream(data)) {
                 var ContentLength = InputStream.Length;
-                AppendFromStream(InputStream, ContentLength, ContainerHeader, CryptoParameters,
-                        ContentType, Cloaked, DataSequences);
+                AppendFromStream(InputStream, ContentLength, containerHeader, cryptoParameters,
+                        contentType, cloaked, dataSequences);
                 }
             }
 
@@ -634,86 +662,122 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// Append a new data frame payload to the end of the file.
         /// </summary>
-        /// <param name="Data">Data to append.</param>
-        /// <param name="CryptoParameters">Specifies the cryptographic enhancements to
+        /// <param name="data">Data to append.</param>
+        /// <param name="cryptoParameters">Specifies the cryptographic enhancements to
         /// be applied to this message.</param>
-        /// <param name="ContentType">The payload content type.</param>
-        /// <param name="Cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
-        /// <param name="DataSequences">Data sequences to be converted to an EDS and presented 
+        /// <param name="contentType">The payload content type.</param>
+        /// <param name="cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
+        /// <param name="dataSequences">Data sequences to be converted to an EDS and presented 
         ///     as an EDSS header entry.</param>
         /// <returns>The number of bytes written.</returns>
         public virtual void Append(
-                        JSONObject Data,
-                        CryptoParameters CryptoParameters = null,
-                        string ContentType = null,
-                        byte[] Cloaked = null,
-                        List<byte[]> DataSequences = null) =>
-            Append(Data.GetJson(), CryptoParameters, null, ContentType, Cloaked, DataSequences);
+                        JSONObject data,
+                        CryptoParameters cryptoParameters = null,
+                        string contentType = null,
+                        byte[] cloaked = null,
+                        List<byte[]> dataSequences = null) =>
+            Append(data.GetJson(), cryptoParameters, null, contentType, cloaked, dataSequences);
 
         /// <summary>
         /// Read data from the specified file and append to the container.
         /// </summary>
-        /// <param name="FileName">The file to append</param>
-        /// <param name="ContainerHeader">Container header data.</param>
-        /// <param name="CryptoParameters">Specifies the cryptographic enhancements to
+        /// <param name="fileName">The file to append</param>
+        /// <param name="containerHeader">Container header data.</param>
+        /// <param name="cryptoParameters">Specifies the cryptographic enhancements to
         /// be applied to this message.</param>
-        /// <param name="ContentType">The payload content type.</param>
-        /// <param name="Cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
-        /// <param name="DataSequences">Data sequences to be converted to an EDS and presented 
+        /// <param name="contentType">The payload content type.</param>
+        /// <param name="cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
+        /// <param name="dataSequences">Data sequences to be converted to an EDS and presented 
         ///     as an EDSS header entry.</param>
         /// <returns>The number of bytes written.</returns>
-        public void AppendFile(string FileName,
-                ContainerHeader ContainerHeader = null,
-                CryptoParameters CryptoParameters = null,
-                string ContentType = null,
-                byte[] Cloaked = null,
-                List<byte[]> DataSequences = null) {
+        public void AppendFile(string fileName,
+                ContainerHeader containerHeader = null,
+                CryptoParameters cryptoParameters = null,
+                string contentType = null,
+                byte[] cloaked = null,
+                List<byte[]> dataSequences = null) {
 
-            using (var FileStream = FileName.OpenFileRead()) {
+            using (var FileStream = fileName.OpenFileRead()) {
                 var ContentLength = FileStream.Length;
-                AppendFromStream(FileStream, ContentLength, ContainerHeader, CryptoParameters,
-                        ContentType, Cloaked, DataSequences);
+                AppendFromStream(FileStream, ContentLength, containerHeader, cryptoParameters,
+                        contentType, cloaked, dataSequences);
                 }
             }
 
         /// <summary>
         /// Read data from the specified file and append to the container.
         /// </summary>
-        /// <param name="Input">The stream to be read.</param>
-        /// <param name="ContentLength"> The number of bytes to read from <paramref name="Input"/>.</param>
-        /// <param name="ContainerHeader">Container header data.</param>
-        /// <param name="CryptoParameters">Specifies the cryptographic enhancements to
+        /// <param name="input">The stream to be read.</param>
+        /// <param name="contentLength"> The number of bytes to read from <paramref name="input"/>.</param>
+        /// <param name="containerHeader">Container header data.</param>
+        /// <param name="cryptoParameters">Specifies the cryptographic enhancements to
         /// be applied to this message.</param>
-        /// <param name="ContentType">The payload content type.</param>
-        /// <param name="Cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
-        /// <param name="DataSequences">Data sequences to be converted to an EDS and presented 
+        /// <param name="contentType">The payload content type.</param>
+        /// <param name="cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
+        /// <param name="dataSequences">Data sequences to be converted to an EDS and presented 
         ///     as an EDSS header entry.</param>
         /// <returns>The number of bytes written.</returns>
         /// <remarks>At present, the file stream MUST support the seek operation
         /// which is an issue that has to be removed.</remarks>
-        public void AppendFromStream(Stream Input,
-                long ContentLength,
-                ContainerHeader ContainerHeader = null,
-                CryptoParameters CryptoParameters = null,
-                string ContentType = null,
-                byte[] Cloaked = null,
-                List<byte[]> DataSequences = null) {
-            AppendBegin(ContentLength, out var CryptoStack, CryptoParameters, ContainerHeader,
-                    ContentType, Cloaked, DataSequences);
+        public void AppendFromStream(Stream input,
+                long contentLength,
+                ContainerHeader containerHeader = null,
+                CryptoParameters cryptoParameters = null,
+                string contentType = null,
+                byte[] cloaked = null,
+                List<byte[]> dataSequences = null) {
+            AppendBegin(contentLength, out var CryptoStack, cryptoParameters, containerHeader,
+                    contentType, cloaked, dataSequences);
             
-            Input.ProcessRead(AppendProcess);
+            input.ProcessRead(AppendProcess);
             AppendEnd();
             }
 
+        /// <summary>
+        /// Write a Dare Message to the container directly without validating any entries in the
+        /// header or trailer. This is used for direct access to the container in persistence
+        /// stores such as catalogs and spools.
+        /// </summary>
+        /// <param name="dareMessage"></param>
+        public void AppendDirect(DareMessage dareMessage) {
+            AppendContainerHeader = new ContainerHeader(dareMessage.Header) {
+                Index = (int)FrameCount++
+                };
+
+            CompleteHeader(); // Perform container type specific processing.
+
+            var headerBytes = AppendContainerHeader.GetBytes(false);
+            var trailerBytes = dareMessage.Trailer?.GetBytes(false);
+            JBCDStream.WriteWrappedFrame(headerBytes, dareMessage.Body,
+                trailerBytes);
+
+
+            }
+
+
+        public DareMessage ReadDirect() {
+            var found = JBCDStream.ReadFrame(out var headerData, out var FrameData, out var trailerData);
+            if (!found) {
+                return null;
+                }
+            var message =  new DareMessage() { Body = FrameData};
+            if (headerData != null) {
+                message.Header = ContainerHeader.FromJSON(headerData.JSONReader(), false);
+                }
+            if (trailerData != null) {
+                message.Trailer = ContainerHeader.FromJSON(trailerData.JSONReader(), false);
+                }
+            return message;
+            }
 
         /// <summary>
         /// Write the remaining unread frame data to the specified output file.
         /// </summary>
-        /// <param name="FileName">The file to write.</param>
-        public void WriteFrameToFile2(string FileName) {
+        /// <param name="fileName">The file to write.</param>
+        public void WriteFrameToFile2(string fileName) {
 
             using (var ContainerDataReader = GetFrameDataReader()) {
-                using (var OutputStream = FileName.OpenFileWrite()) {
+                using (var OutputStream = fileName.OpenFileWrite()) {
                     ContainerDataReader.CopyTo(OutputStream);
                     }
                 }
@@ -748,38 +812,38 @@ namespace Goedel.Cryptography.Dare {
         /// <remarks>This call is not thread safe. It is the responsibility of the caller
         /// to ensure that only one process writes to the container at once and that no other
         /// process has access.</remarks>
-        /// <param name="CryptoStack">The generated set of cryptographic parameters</param>
-        /// <param name="ContentLength">The plaintext payload data length. the final payload
+        /// <param name="cryptoStack">The generated set of cryptographic parameters</param>
+        /// <param name="contentLength">The plaintext payload data length. the final payload
         /// length may be longer as a result of padding.</param>
-        /// <param name="ContainerHeader">Pre-populated container header.</param>
-        /// <param name="CryptoParametersFrame">Specifies the cryptographic enhancements to
+        /// <param name="containerHeader">Pre-populated container header.</param>
+        /// <param name="cryptoParametersFrame">Specifies the cryptographic enhancements to
         /// be applied to this message.</param>
-        /// <param name="ContentType">The payload content type.</param>
-        /// <param name="Cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
-        /// <param name="DataSequences">Data sequences to be converted to an EDS and presented 
+        /// <param name="contentType">The payload content type.</param>
+        /// <param name="cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
+        /// <param name="dataSequences">Data sequences to be converted to an EDS and presented 
         ///     as an EDSS header entry.</param>
         public void AppendBegin(
-                        long ContentLength,
-                        out CryptoStack CryptoStack,
-                        CryptoParameters CryptoParametersFrame = null,
-                        ContainerHeader ContainerHeader = null,
-                        string ContentType = null,
-                        byte[] Cloaked = null,
-                        List<byte[]> DataSequences = null) {
+                        long contentLength,
+                        out CryptoStack cryptoStack,
+                        CryptoParameters cryptoParametersFrame = null,
+                        ContainerHeader containerHeader = null,
+                        string contentType = null,
+                        byte[] cloaked = null,
+                        List<byte[]> dataSequences = null) {
 
-            this.ContentLength = ContentLength;
+            this.ContentLength = contentLength;
 
-            CryptoStack = CryptoParametersFrame == null ? new CryptoStack(this.CryptoStackContainer) :
-                            GetCryptoStack(CryptoParametersFrame);
+            cryptoStack = cryptoParametersFrame == null ? new CryptoStack(this.CryptoStackContainer) :
+                            GetCryptoStack(cryptoParametersFrame);
 
-            AppendContainerHeader = ContainerHeader ?? new ContainerHeader();
+            AppendContainerHeader = containerHeader ?? new ContainerHeader();
             AppendContainerHeader.Index = (int)FrameCount++;
-            AppendContainerHeader.ApplyCryptoStack(CryptoStack, Cloaked, DataSequences);
+            AppendContainerHeader.ApplyCryptoStack(cryptoStack, cloaked, dataSequences);
 
             CompleteHeader(); // Perform container type specific processing.
 
-            var PayloadLength = AppendContainerHeader.OutputLength(ContentLength);
-            var DummyTrailer = FillDummyTrailer(CryptoStack);
+            var PayloadLength = AppendContainerHeader.OutputLength(contentLength);
+            var DummyTrailer = FillDummyTrailer(cryptoStack);
             var LengthTrailer = DummyTrailer == null ? -1 : DummyTrailer.GetBytes(false).Length;
 
             Console.WriteLine($"And the dummy trailer is {DummyTrailer}");
@@ -791,15 +855,18 @@ namespace Goedel.Cryptography.Dare {
             }
 
 
+ 
+
+
 
         /// <summary>
         /// Create a set of master keys and other cryptographic parameters from the
         /// specified profile.
         /// </summary>
-        /// <param name="CryptoParameters">The cryptographic algorithms to use</param>
+        /// <param name="cryptoParameters">The cryptographic algorithms to use</param>
         /// <returns>The master parameters.</returns>
-        protected virtual CryptoStack GetCryptoStack(CryptoParameters CryptoParameters) =>
-            CryptoParameters.GetCryptoStack();
+        protected virtual CryptoStack GetCryptoStack(CryptoParameters cryptoParameters) =>
+            cryptoParameters.GetCryptoStack();
 
         /// <summary>
         /// Append the header to the frame. This is called after the payload data
@@ -814,19 +881,19 @@ namespace Goedel.Cryptography.Dare {
         /// of times but the total count of the number of items must match
         /// the Content Length specified in the original call.
         /// </summary>
-        /// <param name="Data">The data to procees</param>
-        /// <param name="Offset">Index of first byte to process.</param>
-        /// <param name="Count">Number of bytes to process.</param>
-        public virtual void AppendProcess(byte[] Data, int Offset, int Count) => 
-            BodyWrite.Write(Data, Offset, Count);
+        /// <param name="data">The data to procees</param>
+        /// <param name="offset">Index of first byte to process.</param>
+        /// <param name="count">Number of bytes to process.</param>
+        public virtual void AppendProcess(byte[] data, int offset, int count) => 
+            BodyWrite.Write(data, offset, count);
 
         /// <summary>
         /// Complete appending a record.
         /// </summary>
         public virtual void AppendEnd() {
-            AppendContainerHeader.CloseBodyWriter(out var Trailer);
-            MakeTrailer(ref Trailer);
-            var TrailerData = Trailer?.GetBytes(false);
+            AppendContainerHeader.CloseBodyWriter(out var trailer);
+            MakeTrailer(ref trailer);
+            var TrailerData = trailer?.GetBytes(false);
             Console.WriteLine($"Trailer ({TrailerData?.Length}) \n {TrailerData?.ToUTF8()}");
 
             JBCDStream.WriteWrappedFrameEnd(TrailerData);
@@ -837,37 +904,31 @@ namespace Goedel.Cryptography.Dare {
         #region // Abstract and Virtual methods
 
 
-        ///// <summary>
-        ///// Read the frame data and return as an array.
-        ///// </summary>
-        ///// <returns>The data that was read</returns>
-        //public abstract byte[] ReadFrameData();
-
         /// <summary>
         /// Initialize the dictionaries used to manage the tree by registering the set
         /// of values leading up to the apex value.
         /// </summary>
-        /// <param name="Header">Final frame header</param>
-        /// <param name="FirstPosition">Position of frame 1</param>
-        /// <param name="PositionLast">Position of the last frame</param>
+        /// <param name="header">Final frame header</param>
+        /// <param name="firstPosition">Position of frame 1</param>
+        /// <param name="positionLast">Position of the last frame</param>
         protected abstract void FillDictionary(
-                    ContainerHeader Header, long FirstPosition, long PositionLast);
+                    ContainerHeader header, long firstPosition, long positionLast);
 
 
         /// <summary>
         /// Perform sanity checking on a list of container headers.
         /// </summary>
-        /// <param name="Headers">List of headers to check</param>
-        public abstract void CheckContainer(List<ContainerHeader> Headers);
+        /// <param name="headers">List of headers to check</param>
+        public abstract void CheckContainer(List<ContainerHeader> headers);
 
         /// <summary>
         /// Read the data in the current file 
         /// </summary>
-        /// <param name="Direction">Direction in which to perform check.
+        /// <param name="direction">Direction in which to perform check.
         /// <list type="bullet"><item>1 = forward</item><item>-1 = forward</item>
         /// <item>0 = forward then backward.</item></list></param>
         /// <returns>True if the validation succeded, otherwise false.</returns>
-        public virtual bool Validate(int Direction) => throw new NYI();
+        public virtual bool Validate(int direction) => throw new NYI();
 
         /// <summary>
         /// Move read pointer to Frame 1.
@@ -884,22 +945,6 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <returns></returns>
         public abstract long ReadDataBegin();
-
-        ///// <summary>
-        ///// Read the data container payload incrementally.
-        ///// </summary>
-        ///// <param name="Buffer">The buffer to store the data</param>
-        ///// <param name="Offset">index to begin writing.</param>
-        ///// <param name="Count">Maximum number of bytes to read.</param>
-        ///// <returns>The number of bytes read.</returns>
-        //public abstract int ReadData(byte[] Buffer, int Offset, int Count);
-
-        ///// <summary>
-        ///// Read the next frame in the file.
-        ///// </summary>
-        ///// <returns>True if a next frame exists, otherwise false</returns>
-        //protected abstract bool Next ();
-
 
         /// <summary>
         /// Read the next frame in the file.
@@ -927,9 +972,9 @@ namespace Goedel.Cryptography.Dare {
         /// the difference between the current position and the new 
         /// position.</para>
         /// </summary>
-        /// <param name="FrameIndex">Frame index to move to.</param>
+        /// <param name="frameIndex">Frame index to move to.</param>
         /// <returns>True if the position exists.</returns>
-        public abstract bool MoveToIndex (long FrameIndex);
+        public abstract bool MoveToIndex (long frameIndex);
 
         /// <summary>
         /// Verify container contents by reading every frame starting with the first and checking

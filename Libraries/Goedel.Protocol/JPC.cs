@@ -50,7 +50,7 @@ namespace Goedel.Protocol {
         /// <param name="Session">The service session that is to handle the request.</param>
         /// <param name="JSONReader">The input stream to be read</param>
         /// <returns>The response to the request.</returns>
-        public abstract Goedel.Protocol.JSONObject Dispatch(JPCSession Session,
+        public abstract Goedel.Protocol.JSONObject Dispatch(JpcSession Session,
             JSONReader JSONReader);
 
 
@@ -106,7 +106,7 @@ namespace Goedel.Protocol {
     /// <summary>
     /// The session class describes the caller of a method.
     /// </summary>
-    public abstract class JPCSession {
+    public abstract class JpcSession {
 
         /// <summary>
         /// Account name.
@@ -142,7 +142,7 @@ namespace Goedel.Protocol {
     /// Direct connection between client and service host. Useful for debugging
     /// and for direct access to a service on the same machine.
     /// </summary>
-    public partial class DirectSession : JPCSession{
+    public partial class DirectSession : JpcSession{
 
         /// <summary>
         /// Create a direct session for the specified account.
@@ -168,7 +168,7 @@ namespace Goedel.Protocol {
     /// Direct connection between client and service host. Useful for debugging
     /// and for direct access to a service on the same machine.
     /// </summary>
-    public abstract partial class JPCRemoteSession : JPCSession {
+    public abstract partial class JPCRemoteSession : JpcSession {
 
 
 

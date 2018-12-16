@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Goedel.Cryptography;
+using Goedel.Protocol;
 
 namespace Goedel.Mesh {
 

@@ -33,8 +33,8 @@ namespace Goedel.Mesh.Protocol.Client {
 
 
         public void Process(MessageConnectionRequest request) {
-            var device = request.DeviceProfile;
-            var entry = new CatalogEntryDevice() { DeviceProfile = device };
+            var device = request.ProfileMesh;
+            var entry = new CatalogEntryDevice() { DeviceProfile = ProfileMesh.DeviceProfile };
             CatalogDevice.Add(entry);
             }
 

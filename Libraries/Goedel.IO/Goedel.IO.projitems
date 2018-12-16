@@ -12,6 +12,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Debug.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Directory.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extension.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Initialize.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)StreamReaderWriter.cs" />
   </ItemGroup>
 </Project>

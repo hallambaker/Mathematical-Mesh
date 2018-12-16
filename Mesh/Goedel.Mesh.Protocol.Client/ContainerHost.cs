@@ -51,7 +51,7 @@ namespace Goedel.Mesh.Protocol.Client {
                     CryptoParameters cryptoParameters = null,
                     KeyCollection keyCollection = null,
                     bool readContainer = true) : base(
-                        fileName, type, comment, readOnly,
+                        fileName, type, comment, 
                         fileStatus, containerType, dataEncoding, cryptoParameters,
                         keyCollection, readContainer) {
             }

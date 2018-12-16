@@ -46,23 +46,34 @@ namespace Goedel.Mesh {
                     new PublicKey(keyPublicEncrypt.KeyPairPublic()) };
                 }
 
-            var ProfileMaster = new ProfileMaster() {
+            var profileMaster = new ProfileMaster() {
                 MasterSignatureKey = new PublicKey(keyPublicSign.KeyPairPublic()),
                 MasterEscrowKeys = masterEscrowKeys
                 };
-            ProfileMaster.Add(profileDevice);
+            profileMaster.Add(profileDevice);
 
-            var bytes = profileDevice.GetBytes(tag: true);
+            var bytes = profileMaster.GetBytes(tag: true);
 
-            ProfileMaster.ProfileMasterSigned = DareMessage.Encode(bytes,
+            profileMaster.ProfileMasterSigned = DareMessage.Encode(bytes,
                     SigningKey: keyPublicSign, ContentType: "application/mmm");
-            return ProfileMaster;
+            return profileMaster;
             }
 
 
         public void Add(ProfileDevice profileDevice) {
             OnlineSignatureKeys = OnlineSignatureKeys ?? new List<PublicKey>();
             OnlineSignatureKeys.Add(profileDevice.DeviceSignatureKey);
+            }
+
+        public bool IsAdministrator(string UDF) {
+            Assert.NotNull(OnlineSignatureKeys, InvalidProfile.Throw);
+
+            foreach (var admin in OnlineSignatureKeys) {
+                if (admin.UDF == UDF) {
+                    return true;
+                    }
+                }
+            return false;
             }
 
         }

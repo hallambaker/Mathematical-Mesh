@@ -15,11 +15,11 @@ namespace Goedel.Cryptography.Dare {
     /// <summary>
     /// Persistence store based on a container interface.
     /// </summary>
-    public class ContainerPersistenceStore : Disposable, IPersistenceStoreWrite,  IEnumerable<ContainerStoreEntry> {
+    public class ContainerPersistenceStore : Disposable, IPersistenceStoreWrite, IEnumerable<ContainerStoreEntry> {
 
         #region --- Disposable objects
-        // Objects that MUST be disposed correctly when leaving a using section.
-        JBCDStream JBCDStream;
+        //// Objects that MUST be disposed correctly when leaving a using section.
+        //JBCDStream JBCDStream;
 
         ///<summary>The underlying container.</summary>
         public Container Container;
@@ -28,13 +28,13 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>The value of the last frame index</summary>
         public long FrameCount => Container.FrameCount;
 
-
+        string Filename;
         /// <summary>
         /// The disposal routine. This is wrapped to provide the IDisposable interface. 
         /// </summary>
-        protected override void Disposing () {
-            JBCDStream?.Dispose();
+        protected override void Disposing() {
             Container?.Dispose();
+            Console.WriteLine($"Close Stream {Filename}");
             }
         #endregion
 
@@ -44,7 +44,7 @@ namespace Goedel.Cryptography.Dare {
 
         /// <summary>Tag for Update event</summary>
         public const string EventUpdate = "Update";
-        
+
         /// <summary>Tag for Delete event</summary>
         public const string EventDelete = "Delete";
 
@@ -68,9 +68,9 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// Dictionary mapping keywords to index for that keyword.
         /// </summary>
-        Dictionary<string, ContainerStoreIndex> IndexDictionary = 
+        Dictionary<string, ContainerStoreIndex> IndexDictionary =
                                 new Dictionary<string, ContainerStoreIndex>();
-        
+
         #region --- IEnumerable Implementation 
         ///<summary>Return an enumerator over a set of catalog items</summary>
         public IEnumerator<ContainerStoreEntry> GetEnumerator() => new EnumeratorContainerStoreEntry(ObjectIndex);
@@ -100,43 +100,51 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="cryptoParameters">Specifies the cryptographic enhancements to
         /// be applied to this message.</param>
         /// <param name="fileName">Log file.</param>
-        /// <param name="readOnly">If true, persistence store must exist
         /// and will be opened in read-only mode. If false, persistence store
         /// is opened in read/write mode and a new store will be created
         /// if none exists.</param>
-        /// <param name="type">Type of data to store (the schema name).</param>
+        /// <param name="contentType">Type of data to store (the schema name).</param>
         /// <param name="comment">Comment to be written to the log.</param>
         /// <param name="containerType">The Container type.</param>
         /// <param name="dataEncoding">The data encoding.</param>
         /// <param name="fileStatus">The file status in which to open the container.</param>
         /// <param name="keyCollection">The key collection to use to resolve private keys.</param>
         /// <param name="readContainer">If true read the container to initialize the persistence store.</param>
-        public ContainerPersistenceStore (string fileName, string type = null,
-                    string comment = null, bool readOnly = false,
+        public ContainerPersistenceStore(string fileName, string contentType = null,
+                    string comment = null,
                     FileStatus fileStatus = FileStatus.OpenOrCreate,
                     ContainerType containerType = ContainerType.Chain,
                     DataEncoding dataEncoding = DataEncoding.JSON,
                     CryptoParameters cryptoParameters = null,
-                    KeyCollection keyCollection=null,
-                    bool readContainer = true) : base() {
-            readOnly = readOnly & (type != null);
+                    KeyCollection keyCollection = null,
+                    bool readContainer = true) : this(
+                        Container.Open(
+                fileName,
+                fileStatus,
+                keyCollection ?? cryptoParameters?.KeyCollection,
+                cryptoParameters,
+                containerType,
+                contentType
+                ), readContainer) { }
 
-            // Attempt to open file.
-            JBCDStream = new JBCDStreamDebug(fileName, FileStatus: fileStatus);
 
-            // Create new container if empty or read the old one.
-            if (JBCDStream.Length == 0) {
-                Container = Container.NewContainer(JBCDStream, cryptoParameters, 
-                    containerType, ContentType: type);
-                }
-            else {
-                keyCollection = keyCollection ?? cryptoParameters?.KeyCollection;
-                Container = Container.OpenExisting(JBCDStream, keyCollection);
-                if (readContainer) {
-                    ReadContainer(JBCDStream);
+        /// <summary>
+        /// Create a persisetence store round an already opened container.
+        /// </summary>
+        /// <param name="container"></param>
+        /// <param name="readContainer"></param>
+        public ContainerPersistenceStore(Container container, bool readContainer = true) {
+            Container = container;
+            try {
+                if (readContainer & container.JBCDStream.Length > 0) {
+                    ReadContainer(container.JBCDStream);
                     }
                 }
-            }
+            catch {
+                Disposing();
+                }
+            } 
+
 
         /// <summary>
         /// Read a container from the first frame to the last.

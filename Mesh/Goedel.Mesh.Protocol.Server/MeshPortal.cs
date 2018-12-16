@@ -34,7 +34,7 @@ namespace Goedel.Mesh.Protocol.Server {
     /// <summary>
     /// Abstract interface to a local service provider.
     /// </summary>
-    public abstract class MeshLocalPortal : MeshPortal{
+    public abstract class MeshLocalPortal : meshPortal{
         /// <summary>
         /// File name for local access to the mesh store.
         /// </summary>

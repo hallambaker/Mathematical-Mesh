@@ -30,7 +30,7 @@ namespace Goedel.Mesh {
         public AsCatalogEntryCredential(CatalogCredential catalog) => Catalog = catalog;
 
         public IEnumerator<CatalogEntryCredential> GetEnumerator() =>
-                    new EnumeratorCatalogEntryCredential(Catalog.Container);
+                    new EnumeratorCatalogEntryCredential(Catalog.ContainerPersistence);
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator1();
         private IEnumerator GetEnumerator1() => this.GetEnumerator();

@@ -81,7 +81,8 @@ namespace Goedel.Mesh {
                     string deviceUDF = null) => ContainerHost.GetConnection(accountName, deviceUDF);
 
 
-        public virtual MeshService GetMeshClient(string account) => MeshService.GetService(account);
+        public virtual MeshService GetMeshClient(string account) => 
+            MeshService.GetService(account);
         #endregion
 
         }

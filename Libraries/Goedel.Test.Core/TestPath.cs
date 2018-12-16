@@ -4,6 +4,8 @@ using System.IO;
 using System.Threading;
 using Goedel.Utilities;
 using Goedel.IO;
+using Goedel.Mesh.Protocol.Server;
+using Goedel.Mesh;
 
 namespace Goedel.Test.Core {
     public class TestEnvironment : Initialization {
@@ -53,23 +55,32 @@ namespace Goedel.Test.Core {
         }
 
 
-    public class MachineEnvironment {
+    public class TestMachineEnvironment {
+
+        public string ServiceName = "example.com";
+        public MeshPortalDirect MeshPortalDirect => meshPortalDirect ??
+            new MeshPortalDirect(ServiceName, ServiceDirectory).
+                CacheValue(out meshPortalDirect);
+
+        public MeshPortalDirect meshPortalDirect;
+
+
         TestEnvironment TestEnvironment;
         public string Name;
 
         public string Path => System.IO.Path.Combine(TestEnvironment.Path, Name);
-        public string WorkingDirectory => System.IO.Path.Combine(Path, "WorkingDirectory");
+        //public string WorkingDirectory => System.IO.Path.Combine(Path, "WorkingDirectory");
 
         public string ServiceDirectory => System.IO.Path.Combine(Path, "ServiceDirectory");
 
-        public MachineEnvironment(string name = "Test") : this(new TestEnvironment(), name) { }
+        public TestMachineEnvironment(string name = "Test") : this(new TestEnvironment(), name) { }
 
 
-        public MachineEnvironment(TestEnvironment testEnvironment, string name="Test") {
+        public TestMachineEnvironment(TestEnvironment testEnvironment, string name="Test") {
             TestEnvironment = testEnvironment;
             Name = name;
-            Directory.CreateDirectory(WorkingDirectory);
-            Directory.SetCurrentDirectory(WorkingDirectory);
+            Directory.CreateDirectory(ServiceDirectory);
+
             }
 
         }

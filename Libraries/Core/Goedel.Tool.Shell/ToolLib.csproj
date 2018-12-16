@@ -63,7 +63,8 @@
   <Import Project="..\..\Goedel.Discovery\Goedel.Discovery.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>cd ..\..\  &amp;&amp; VSPreBuild</PreBuildEvent>
+    <PreBuildEvent>cd ..\..\
+VSPreBuild</PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PostBuildEvent>VSPostBuild</PostBuildEvent>

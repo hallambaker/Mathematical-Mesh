@@ -15,8 +15,14 @@ namespace Goedel.Mesh {
 
     public class Catalog : Store, IEnumerable<CatalogEntry> {
 
+        public ContainerPersistenceStore ContainerPersistence = null;
 
+        protected override void Disposing() {
+            ContainerPersistence?.Dispose();
+            base.Disposing();
+            }
 
+        string ContainerName;
 
         //public Dictionary<string, CatalogEntry> EntriesByUniqueId = new Dictionary<string, CatalogEntry>();
         private readonly object CatalogLock = new object();
@@ -24,13 +30,11 @@ namespace Goedel.Mesh {
         //public Catalog(IMeshMachine machine, string containerName) : this(machine.DirectoryMesh, containerName) { }
 
 
-        public Catalog(string directory, string containerName, 
+        public Catalog(string directory, string containerName,
             CryptoParameters cryptoParameters = null,
-                    KeyCollection keyCollection = null) :
-                base(directory, containerName, cryptoParameters, keyCollection) {
-
-
-            }
+                    KeyCollection keyCollection = null, bool readContainer = true) :
+                base(directory, containerName, cryptoParameters, keyCollection) => 
+            ContainerPersistence = new ContainerPersistenceStore(Container, readContainer);
 
 
 
@@ -60,7 +64,7 @@ namespace Goedel.Mesh {
             using (var container = new Catalog(directory, containerName)) {
 
                 return new ContainerStatus() {
-                    Index = (int) container.Container.FrameCount,
+                    Index = (int) container.ContainerPersistence.FrameCount,
                     Container = containerName
                     };
                 }
@@ -69,23 +73,23 @@ namespace Goedel.Mesh {
 
 
         // Test: Check what happens when an attempt is made to perform conflicting updates to a store.
-        public virtual void Apply(DareMessage dareMessage) => Container.Apply(dareMessage);
+        public virtual void Apply(DareMessage dareMessage) => ContainerPersistence.Apply(dareMessage);
 
 
 
-        public virtual void Add(CatalogEntry catalogEntry) => Container.New(catalogEntry);
+        public virtual void Add(CatalogEntry catalogEntry) => ContainerPersistence.New(catalogEntry);
 
 
-        public virtual void Update(CatalogEntry catalogEntry) => Container.Update(catalogEntry, true);
+        public virtual void Update(CatalogEntry catalogEntry) => ContainerPersistence.Update(catalogEntry, true);
 
 
-        public virtual void Delete(CatalogEntry catalogEntry) => Container.Delete(catalogEntry._PrimaryKey);
+        public virtual void Delete(CatalogEntry catalogEntry) => ContainerPersistence.Delete(catalogEntry._PrimaryKey);
 
 
-        public CatalogEntry Locate(string key) => (Container.Get(key) as ContainerStoreEntry).JsonObject as CatalogEntry;
+        public CatalogEntry Locate(string key) => (ContainerPersistence.Get(key) as ContainerStoreEntry).JsonObject as CatalogEntry;
 
 
-        public IEnumerator<CatalogEntry> GetEnumerator() => new EnumeratorCatalogEntry (Container);
+        public IEnumerator<CatalogEntry> GetEnumerator() => new EnumeratorCatalogEntry (ContainerPersistence);
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator1();
         private IEnumerator GetEnumerator1() => this.GetEnumerator();

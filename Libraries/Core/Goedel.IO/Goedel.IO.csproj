@@ -19,6 +19,7 @@
 
   <Import Project="..\..\Goedel.IO\Goedel.IO.projitems" Label="Shared" />
 
+
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
     <Exec Command="VSPreBuild" />
   </Target>
@@ -26,9 +27,5 @@
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Exec Command="VSPostBuild" />
   </Target>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Goedel.Utilities\Goedel.Utilities.csproj" />
-  </ItemGroup>
 
 </Project>

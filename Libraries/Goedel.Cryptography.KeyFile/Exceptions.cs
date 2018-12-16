@@ -10,7 +10,8 @@ namespace Goedel.Cryptography.KeyFile {
     /// <summary>
     /// Exception occurred parsing or encoding a key file.
     /// </summary>
-    public class KeyFileException : global::System.Exception {
+    [Serializable]
+	public class KeyFileException : global::System.Exception {
 
 		/// <summary>
         /// Construct instance for exception "Key could not be ready"
@@ -63,7 +64,8 @@ namespace Goedel.Cryptography.KeyFile {
     /// provider. This may be because the key algorithm is 
     /// not supported or the key parameters were found to be invalid.
     /// </summary>
-    public class NoProviderSpecified : KeyFileException {
+    [Serializable]
+	public class NoProviderSpecified : KeyFileException {
 
 		/// <summary>
         /// Construct instance for exception "No provider specified"
@@ -111,7 +113,8 @@ namespace Goedel.Cryptography.KeyFile {
     /// An attempt was made to perform a private key operation
     /// and the private key parameters could not be found.
     /// </summary>
-    public class PrivateKeyNotAvailable : KeyFileException {
+    [Serializable]
+	public class PrivateKeyNotAvailable : KeyFileException {
 
 		/// <summary>
         /// Construct instance for exception "The specified private key could not be found"
@@ -159,7 +162,8 @@ namespace Goedel.Cryptography.KeyFile {
     /// An attempt to read a file failed because data was
     /// missing or corrupted.
     /// </summary>
-    public class UnexpectedEnd : KeyFileException {
+    [Serializable]
+	public class UnexpectedEnd : KeyFileException {
 
 		/// <summary>
         /// Construct instance for exception "File read error, file was incomplete"
@@ -206,7 +210,8 @@ namespace Goedel.Cryptography.KeyFile {
     /// <summary>
     /// An unidentifier parse error occurred.
     /// </summary>
-    public class ParseError : KeyFileException {
+    [Serializable]
+	public class ParseError : KeyFileException {
 
 		/// <summary>
         /// Construct instance for exception "An error occurred"

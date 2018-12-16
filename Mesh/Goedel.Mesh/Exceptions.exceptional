@@ -10,3 +10,13 @@ Namespace Goedel.Mesh
 			Console "The profile is invalid"
 			Description
 				|The profile presented was invalid.
+
+		Exception NotAuthorized
+			Console "The requestor is not authorized for the specified operation"
+			Description
+				|The requestor is not authorized for the specified operation
+
+		Exception NotAuthenticated
+			Console "The request is not authenticated for the specified operation"
+			Description
+				|The request is not authenticated  for the specified operation

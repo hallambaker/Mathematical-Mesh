@@ -30,7 +30,7 @@ namespace Goedel.Mesh {
 
 
 
-    public delegate MeshPortal GetPortalDelegate(string serviceName, string directory=null);
+    public delegate meshPortal GetPortalDelegate(string serviceName, string directory=null);
 
 
 
@@ -47,7 +47,7 @@ namespace Goedel.Mesh {
     /// to be tested (MeshPortalLocal). In this configuration, calls to different
     /// MeshPortal instances result in dispatch to different Mesh services.</para>
     /// </summary>
-    public abstract class MeshPortal {
+    public abstract class meshPortal {
 
 
         public static GetPortalDelegate GetPortal;
@@ -56,20 +56,20 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Return a MeshService object for the named portal service.
         /// </summary>
-        /// <param name="Address">Portal account address or domain name</param>
+        /// <param name="address">Portal account address or domain name</param>
         /// <returns>Mesh service object for API access to the service.</returns>
-        public virtual MeshService GetService(string Address) {
-            Address.SplitAccountIDService(out var Service, out var Account);
+        public virtual MeshService GetService(string address) {
+            address.SplitAccountIDService(out var Service, out var Account);
             return GetService(Service, Account);
             }
 
         /// <summary>
         /// Return a MeshService object for the named portal service.
         /// </summary>
-        /// <param name="Service">Address of the portal service.</param>
-        /// <param name="Account">Account name.</param>
+        /// <param name="service">Address of the portal service.</param>
+        /// <param name="account">Account name.</param>
         /// <returns>Mesh service object for API access to the service.</returns>
-        public abstract MeshService GetService(string Service, string Account);
+        public abstract MeshService GetService(string service, string account);
 
 
         /// <summary>
@@ -90,24 +90,24 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="Address">Portal account address or domain name</param>
         /// <returns>Mesh service object for API access to the service.</returns>
-        public static MeshService GetService(string Address) {
-            Address.SplitAccountIDService(out var Service, out var Account);
-            return GetService(Service, Account);
+        public static MeshService GetService(string address) {
+            address.SplitAccountIDService(out var service, out var account);
+            return GetService(service, account);
             }
 
         /// <summary>
         /// Return a MeshService object for the named portal service.
         /// </summary>
-        /// <param name="Account">The account to get.</param>
-        /// <param name="Domain">The DNS name of the service to get the service from.</param> 
+        /// <param name="account">The account to get.</param>
+        /// <param name="domain">The DNS name of the service to get the service from.</param> 
         /// <returns>The service instance</returns>
-        public static MeshService GetService(string Domain, string Account) {
+        public static MeshService GetService(string domain, string account) {
             //var URI = JPCProvider.WellKnownToURI(Service, MeshService.WellKnown, 
             //            MeshService.Discovery, false, true);
 
             //var Session = new WebRemoteSession(URI, Service, Account);
 
-            var Session = new WebRemoteSession(Domain, MeshService.WellKnown, Account);
+            var Session = new WebRemoteSession(domain, MeshService.WellKnown, account);
             var MeshServiceClient = new MeshServiceClient(Session);
             return MeshServiceClient;
             }

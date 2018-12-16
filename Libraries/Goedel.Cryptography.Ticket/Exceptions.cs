@@ -8,7 +8,8 @@ namespace Goedel.Cryptography.Ticket {
 
     /// <summary>
     /// </summary>
-    public class TicketException : global::System.Exception {
+    [Serializable]
+	public class TicketException : global::System.Exception {
 
 		/// <summary>
         /// Construct instance for exception "A cryptographic ticket exception occurred"
@@ -59,7 +60,8 @@ namespace Goedel.Cryptography.Ticket {
     /// <summary>
     /// The ticket was in an unrecognized format or has been corrupted.
     /// </summary>
-    public class BadTicket : TicketException {
+    [Serializable]
+	public class BadTicket : TicketException {
 
 		/// <summary>
         /// Construct instance for exception "The ticket could not be read"

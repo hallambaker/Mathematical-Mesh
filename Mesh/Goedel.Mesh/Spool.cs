@@ -10,16 +10,11 @@ using Goedel.Cryptography;
 namespace Goedel.Mesh {
     public class Spool : Store {
 
-
-
-
-
-        protected override void Disposing() => Container?.Dispose();
-
-        protected Spool(string directory, string containerName,
+        public Spool(string directory, string containerName,
             CryptoParameters cryptoParameters = null,
                     KeyCollection keyCollection = null) :
                 base(directory, containerName, cryptoParameters, keyCollection) {
+
             }
 
         public static ContainerStatus Status(string directory, string containerName) {
@@ -31,6 +26,10 @@ namespace Goedel.Mesh {
                     };
                 }
             }
+
+        public void Add(DareMessage dareMessage) => Container.AppendDirect(dareMessage);
+
+
         }
 
     /// <summary>

@@ -37,18 +37,22 @@ namespace Goedel.XUnit {
 
         [Fact]
         public void ProtocolHello() {
+            var machineEnvironment = new TestMachineEnvironment("ProtocolHello");
+
             var meshPortalDirect = CreateService(ServiceName);
-            var meshClient = meshPortalDirect.GetService(ServiceName);
+            var meshClient = machineEnvironment.MeshPortalDirect.GetService(ServiceName);
 
 
             var request = new HelloRequest();
-            var response = meshClient.Hello(request);
+            var response = meshClient.Hello(request, null);
 
             }
 
         [Fact]
         public void ProtocolHelloContext() {
-            MeshMachineTest.GetContext(AccountAlice, "Alice Admin", 
+            var machineEnvironment = new TestMachineEnvironment("ProtocolHelloContext");
+
+            MeshMachineTest.GetContext(machineEnvironment, AccountAlice, "Alice Admin", 
                     out var machineAliceAdmin, out var deviceAdmin, out var masterAdmin);
             var response = masterAdmin.Hello(ServiceName);
 
@@ -58,7 +62,9 @@ namespace Goedel.XUnit {
 
         [Fact]
         public void ProtocolAccountLifecycle() {
-            MeshMachineTest.GetContext(AccountAlice, "Alice Admin", 
+            var machineEnvironment = new TestMachineEnvironment("ProtocolAccountLifecycle");
+
+            MeshMachineTest.GetContext(machineEnvironment, AccountAlice, "Alice Admin", 
                 out var machineAliceAdmin, out var deviceAdmin, out var masterAdmin);
 
 
@@ -84,7 +90,9 @@ namespace Goedel.XUnit {
 
         [Fact]
         public void ProtocolCatalog() {
-            MeshMachineTest.GetContext(AccountAlice, "Alice Admin", 
+            var machineEnvironment = new TestMachineEnvironment("ProtocolCatalog");
+
+            MeshMachineTest.GetContext(machineEnvironment, AccountAlice, "Alice Admin", 
                 out var machineAliceAdmin, out var deviceAdmin, out var masterAdmin);
 
 
@@ -107,9 +115,9 @@ namespace Goedel.XUnit {
 
         [Fact]
         public void MeshConnect() {
-            
+            var machineEnvironment = new TestMachineEnvironment("MeshConnect");
 
-            MeshMachineTest.GetContext(AccountAlice, "Alice Admin", 
+            MeshMachineTest.GetContext(machineEnvironment, AccountAlice, "Alice Admin", 
                 out var machineAliceAdmin, out var deviceAdmin, out var masterAdmin);
 
 
@@ -117,31 +125,38 @@ namespace Goedel.XUnit {
             var meshClientAdmin = masterAdmin.CreateAccount(AccountAlice);
 
             // Create device profile
-            MeshMachineTest.GetContext(AccountAlice, "Alice 2", out var MachineAliceSecond, out var Device2);
-
+            MeshMachineTest.GetContext(machineEnvironment, AccountAlice, "Alice 2", out var MachineAliceSecond, out var deviceSecond);
+            var ww = masterAdmin.Sync();
             // Post connection request
-            var connectResponse = deviceAdmin.RequestConnect(AccountAlice);
+            var connectResponse = deviceSecond.RequestConnect(AccountAlice);
 
+            JSONReader.Trace = true;
+            // Pull device profile update - fails because device is not yet connected.
 
-            // Pull device profile update - fail
-            var deviceStatusFail = masterAdmin.Sync();
+            // Error: this is not working yet because the requests are not properly authorized.
+
+            var deviceStatusFail = deviceSecond.Sync();
+            deviceStatusFail.AssertError();
 
             // Accept connection request
             ProcessPending(masterAdmin);
 
 
-            // Pull device profile update - success
-            var deviceStatusSuccess = masterAdmin.Sync();
+            // Pull device profile update - success, we get the personal and device profile.
+            var deviceStatusSuccess = deviceSecond.Sync();
+            deviceStatusSuccess.AssertSuccess();
             }
 
         [Fact]
         public void MeshContact() {
+            var machineEnvironment = new TestMachineEnvironment("MeshContact");
+
             var AccountAlice = "alice@example.com";
             var AccountBob = "bob@example.com";
 
-            MeshMachineTest.GetContext(AccountAlice, "Alice Admin", 
+            MeshMachineTest.GetContext(machineEnvironment, AccountAlice, "Alice Admin", 
                 out var machineAliceAdmin, out var deviceAdmin, out var masterAdmin);
-            MeshMachineTest.GetContext(AccountBob, "Bob Admin", 
+            MeshMachineTest.GetContext(machineEnvironment, AccountBob, "Bob Admin", 
                 out var machineAdminBob, out var deviceAdminBob, out var masterAdminBob);
 
             var statusCreateAlice = masterAdmin.CreateAccount(AccountAlice);
@@ -176,6 +191,12 @@ namespace Goedel.XUnit {
 
 
         bool ProcessPending(ContextDevice device) {
+
+
+            var sync = device.Sync();
+            sync.AssertSuccess();
+
+            throw new NYI();
             //foreach (var inbound in device.SpoolInbound) {
             //    // if inbound = connection request
 

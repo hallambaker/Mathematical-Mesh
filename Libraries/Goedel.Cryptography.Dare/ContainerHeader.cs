@@ -15,8 +15,18 @@ namespace Goedel.Cryptography.Dare {
         /// header.</summary>
         public byte[] Payload;
 
+        public ContainerHeader() {
+            }
 
-        
+        public ContainerHeader(DareHeader dareHeader) {
+            Signed = dareHeader.Signed;
+            Cloaked = dareHeader.Cloaked;
+            ContentType = dareHeader.ContentType;
+            EDSS = dareHeader.EDSS;
+            Signers = dareHeader.Signers;
+            Recipients = dareHeader.Recipients;
+            UniqueID = dareHeader.UniqueID;
+            }
 
 
         /// <summary>

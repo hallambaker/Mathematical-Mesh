@@ -9,7 +9,8 @@ namespace Goedel.Cryptography {
     /// <summary>
     /// Base class for cryptographic exceptions.
     /// </summary>
-    public class CryptographicException : global::System.Exception {
+    [Serializable]
+	public class CryptographicException : global::System.Exception {
 
 		/// <summary>
         /// Construct instance for exception "A cryptographic exception occurred.."
@@ -60,7 +61,8 @@ namespace Goedel.Cryptography {
     /// <summary>
     /// The operation requires cryptographic catalog initialization"
     /// </summary>
-    public class CatalogNotInitialized : CryptographicException {
+    [Serializable]
+	public class CatalogNotInitialized : CryptographicException {
 
 		/// <summary>
         /// Construct instance for exception "The operation requires cryptographic catalog initialization"
@@ -107,7 +109,8 @@ namespace Goedel.Cryptography {
     /// <summary>
     /// The operation requires platform initialization
     /// </summary>
-    public class PlatformNotInitialized : CryptographicException {
+    [Serializable]
+	public class PlatformNotInitialized : CryptographicException {
 
 		/// <summary>
         /// Construct instance for exception "The operation requires platform initialization"
@@ -154,7 +157,8 @@ namespace Goedel.Cryptography {
     /// <summary>
     /// No decryption key is available
     /// </summary>
-    public class NoAvailableDecryptionKey : CryptographicException {
+    [Serializable]
+	public class NoAvailableDecryptionKey : CryptographicException {
 
 		/// <summary>
         /// Construct instance for exception "No decryption key is available"
@@ -202,7 +206,8 @@ namespace Goedel.Cryptography {
     /// Placeholder exception to be thrown as a placeholder to mark
     /// code needing improvement.
     /// </summary>
-    public class ImplementationLimit : CryptographicException {
+    [Serializable]
+	public class ImplementationLimit : CryptographicException {
 
 		/// <summary>
         /// Construct instance for exception "Some implementation limit hit"
@@ -249,7 +254,8 @@ namespace Goedel.Cryptography {
     /// <summary>
     /// Some or all of the quorum parameters are incorrect.
     /// </summary>
-    public class InvalidQuorum : CryptographicException {
+    [Serializable]
+	public class InvalidQuorum : CryptographicException {
 
 		/// <summary>
         /// Construct instance for exception "Quorum parameters invalid"
@@ -297,7 +303,8 @@ namespace Goedel.Cryptography {
     /// The recovery attempt failed because there weren't enough shares
     /// to recover the key.
     /// </summary>
-    public class InsufficientShares : InvalidQuorum {
+    [Serializable]
+	public class InsufficientShares : InvalidQuorum {
 
 		/// <summary>
         /// Construct instance for exception "Not enough shares to recover key"
@@ -345,7 +352,8 @@ namespace Goedel.Cryptography {
     /// The number of shares required to create a quorum must be 
     /// equal to or smaller than the number of shares
     /// </summary>
-    public class QuorumExceedsShares : InvalidQuorum {
+    [Serializable]
+	public class QuorumExceedsShares : InvalidQuorum {
 
 		/// <summary>
         /// Construct instance for exception "Quorum can\'t exceed shares"
@@ -392,7 +400,8 @@ namespace Goedel.Cryptography {
     /// <summary>
     /// The quorum must require at least 2 shares.
     /// </summary>
-    public class QuorumInsufficient : InvalidQuorum {
+    [Serializable]
+	public class QuorumInsufficient : InvalidQuorum {
 
 		/// <summary>
         /// Construct instance for exception "Quorum must be at least 2"
@@ -439,7 +448,8 @@ namespace Goedel.Cryptography {
     /// <summary>
     /// There must be at least two key shares.
     /// </summary>
-    public class SharesInsufficient : InvalidQuorum {
+    [Serializable]
+	public class SharesInsufficient : InvalidQuorum {
 
 		/// <summary>
         /// Construct instance for exception "Shares must be at least 2"
@@ -487,7 +497,8 @@ namespace Goedel.Cryptography {
     /// This implementation does not support the number of shares
     /// that were requested.
     /// </summary>
-    public class QuorumExceeded : InvalidQuorum {
+    [Serializable]
+	public class QuorumExceeded : InvalidQuorum {
 
 		/// <summary>
         /// Construct instance for exception "Too many shares specified"
@@ -535,7 +546,8 @@ namespace Goedel.Cryptography {
     /// The number of shares required to create a quorum exceeds the maximum
     /// permitted polynomial degree.
     /// </summary>
-    public class QuorumDegreeExceeded : InvalidQuorum {
+    [Serializable]
+	public class QuorumDegreeExceeded : InvalidQuorum {
 
 		/// <summary>
         /// Construct instance for exception "Degree too high"
@@ -582,7 +594,8 @@ namespace Goedel.Cryptography {
     /// <summary>
     /// The shares presented are not from the same set of shares.
     /// </summary>
-    public class MismatchedShares : InvalidQuorum {
+    [Serializable]
+	public class MismatchedShares : InvalidQuorum {
 
 		/// <summary>
         /// Construct instance for exception "Keys must have same threshold"
@@ -629,7 +642,8 @@ namespace Goedel.Cryptography {
     /// <summary>
     /// A recryption attempt failed because there were no result values to combine.
     /// </summary>
-    public class InsufficientResults : CryptographicException {
+    [Serializable]
+	public class InsufficientResults : CryptographicException {
 
 		/// <summary>
         /// Construct instance for exception "There must be at least one result"
@@ -677,7 +691,8 @@ namespace Goedel.Cryptography {
     /// Thje data presented did not match the expected fingerprint
     /// value.			
     /// </summary>
-    public class FingerprintMatchFailed : CryptographicException {
+    [Serializable]
+	public class FingerprintMatchFailed : CryptographicException {
 
 		/// <summary>
         /// Construct instance for exception "Data did not match expected fingerprint value"
@@ -725,7 +740,8 @@ namespace Goedel.Cryptography {
     /// A request was made for a cipher mode that the registered provider 
     /// does not support.
     /// </summary>
-    public class CipherModeNotSupported : CryptographicException {
+    [Serializable]
+	public class CipherModeNotSupported : CryptographicException {
 
 		/// <summary>
         /// Construct instance for exception "The requested cipher mode is not supported by the provider"
@@ -773,7 +789,8 @@ namespace Goedel.Cryptography {
     /// A request was made for a cipher mode that the registered provider 
     /// does not support.			
     /// </summary>
-    public class CryptographicOperationNotSupported : CryptographicException {
+    [Serializable]
+	public class CryptographicOperationNotSupported : CryptographicException {
 
 		/// <summary>
         /// Construct instance for exception "The requested cryptographic operation is not supported by the provider"
@@ -820,7 +837,8 @@ namespace Goedel.Cryptography {
     /// <summary>
     /// The encryption key type does not match the recryption key type
     /// </summary>
-    public class KeyTypeMismatch : CryptographicException {
+    [Serializable]
+	public class KeyTypeMismatch : CryptographicException {
 
 		/// <summary>
         /// Construct instance for exception "The encryption key type does not match the recryption key type"
@@ -869,7 +887,8 @@ namespace Goedel.Cryptography {
     /// provider. This may be because the key algorithm is 
     /// not supported or the key parameters were found to be invalid.
     /// </summary>
-    public class NoProviderSpecified : CryptographicException {
+    [Serializable]
+	public class NoProviderSpecified : CryptographicException {
 
 		/// <summary>
         /// Construct instance for exception "No provider specified"
@@ -916,7 +935,8 @@ namespace Goedel.Cryptography {
     /// <summary>
     /// The implementation does not support the requested key size
     /// </summary>
-    public class KeySizeNotSupported : CryptographicException {
+    [Serializable]
+	public class KeySizeNotSupported : CryptographicException {
 
 		/// <summary>
         /// Construct instance for exception "The requested key size is not supported"
@@ -964,7 +984,8 @@ namespace Goedel.Cryptography {
     /// Initialization of the cryptographic support library failed.
     /// This is a fatal error that cannot be recovered from.
     /// </summary>
-    public class InitializationFailed : CryptographicException {
+    [Serializable]
+	public class InitializationFailed : CryptographicException {
 
 		/// <summary>
         /// Construct instance for exception "Initialization of the cryptographic support library failed."
@@ -1011,7 +1032,8 @@ namespace Goedel.Cryptography {
     /// <summary>
     /// The keypair presented was not of the expected type.
     /// </summary>
-    public class InvalidKeyPairType : CryptographicException {
+    [Serializable]
+	public class InvalidKeyPairType : CryptographicException {
 
 		/// <summary>
         /// Construct instance for exception "The keypair presented was not of the expected type"
@@ -1058,7 +1080,8 @@ namespace Goedel.Cryptography {
     /// <summary>
     /// An attempt was made to create more recryption shares than the implementation supports.
     /// </summary>
-    public class RecryptionShareLimitExceeded : CryptographicException {
+    [Serializable]
+	public class RecryptionShareLimitExceeded : CryptographicException {
 
 		/// <summary>
         /// Construct instance for exception "The number of recryption shares requested exceeds the implementation limit"
@@ -1105,7 +1128,8 @@ namespace Goedel.Cryptography {
     /// <summary>
     /// The cryptographic provider does not support the requested operation
     /// </summary>
-    public class InvalidOperation : CryptographicException {
+    [Serializable]
+	public class InvalidOperation : CryptographicException {
 
 		/// <summary>
         /// Construct instance for exception "The cryptographic provider does not support the requested operation"
@@ -1152,7 +1176,8 @@ namespace Goedel.Cryptography {
     /// <summary>
     /// The operation requested requires a private key that could not be found
     /// </summary>
-    public class PrivateKeyNotFound : CryptographicException {
+    [Serializable]
+	public class PrivateKeyNotFound : CryptographicException {
 
 		/// <summary>
         /// Construct instance for exception "The operation requested requires a private key that could not be found"
@@ -1199,7 +1224,8 @@ namespace Goedel.Cryptography {
     /// <summary>
     /// The key unwrap operation returned an invalid value.
     /// </summary>
-    public class UnwrapFailed : CryptographicException {
+    [Serializable]
+	public class UnwrapFailed : CryptographicException {
 
 		/// <summary>
         /// Construct instance for exception "The key unwrap operation returned an invalid value."
@@ -1246,7 +1272,8 @@ namespace Goedel.Cryptography {
     /// <summary>
     /// The named parameters specified in an operation are not known
     /// </summary>
-    public class UnknownNamedParameters : CryptographicException {
+    [Serializable]
+	public class UnknownNamedParameters : CryptographicException {
 
 		/// <summary>
         /// Construct instance for exception "The named parameters specified in an operation are not known"
@@ -1293,7 +1320,8 @@ namespace Goedel.Cryptography {
     /// <summary>
     /// The cryptographic provider does not permit export of the private key parameters
     /// </summary>
-    public class NotExportable : CryptographicException {
+    [Serializable]
+	public class NotExportable : CryptographicException {
 
 		/// <summary>
         /// Construct instance for exception "The cryptographic provider does not permit export of the private key parameters"

@@ -63,10 +63,10 @@ namespace Goedel.XUnit {
         /// <param name="ContainerType">The Container type.</param>
         /// <param name="FileStatus">The file status in which to open the container.</param>
         public TestItemContainerPersistenceStore(string FileName, string Type = null,
-                    string Comment = null, bool ReadOnly = false,
+                    string Comment = null, 
                     FileStatus FileStatus = FileStatus.OpenOrCreate,
                     ContainerType ContainerType = ContainerType.Chain) : base(
-                        FileName, Type, Comment, ReadOnly, FileStatus, ContainerType) => IndexKeyUserProfileUDF = GetIndex(TestItem.KeyUserProfileUDF);
+                        FileName, Type, Comment, FileStatus, ContainerType) => IndexKeyUserProfileUDF = GetIndex(TestItem.KeyUserProfileUDF);
 
         TestItem Get(IPersistenceEntry DataItem) => TestItem.FromJSON(DataItem.JSONReader, true);
 

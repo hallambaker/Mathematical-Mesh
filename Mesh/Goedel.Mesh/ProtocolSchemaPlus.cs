@@ -112,6 +112,11 @@ namespace Goedel.Mesh {
             }
         }
 
+    public partial class DownloadResponse {
+        public DownloadResponse(Exception exception = null) : base(exception) {
+            }
+        }
+
     public partial class ConnectResponse {
         public ConnectResponse(Exception exception = null) : base(exception) {
             }

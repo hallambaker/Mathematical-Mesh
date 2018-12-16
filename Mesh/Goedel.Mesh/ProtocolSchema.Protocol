@@ -40,7 +40,9 @@
 			Description
 				|The fully qualified account name (including DNS address) to which the
 				|request is directed.
-
+		Struct DareMessage DeviceProfile
+			Description
+				|Device profile of the device making the request.
 
 	Section 2 "Response Messages"
 		Description
@@ -90,6 +92,9 @@
 			|Specifies constraints to be applied to a search result. These 
 			|allow a client to limit the number of records returned, the quantity
 			|of data returned, the earliest and latest data returned, etc.
+		String Container		
+			Description
+				|The container to be searched.
 		Integer IndexMin
 			Description
 				|Only return objects with an index value that is equal to or
@@ -162,7 +167,16 @@
 		Integer Index
 		Binary Digest
 
-
+	Structure ContainerUpdate
+		String Container
+			Description
+				|The container to which the entries are to be uploaded.
+		Struct DareMessage Message
+			Multiple
+			Description
+				|The entries to be uploaded. These MAY be either complete messages or redacted messages.
+				|In either case, the messages MUST conform to the ConstraintsUpdate specified by the 
+				|service 
 
 	//Hello
     Transaction Public Hello HelloRequest MeshHelloResponse
@@ -216,14 +230,13 @@
 	Message DownloadRequest
 		Inherits MeshRequestUser
 		Description
-			|Request objects from the specified container.
+			|Request objects from the specified container(s).
 		Description
 			|A client MAY request only objects matching specified search criteria
 			|be returned and MAY request that only specific fields or parts of the 
 			|payload be returned.
-		String Container
-			Multiple
 		Struct ConstraintsSelect Select
+			Multiple
 			Description
 				|Specifies constraints to be applied to a search result. These 
 				|allow a client to limit the number of records returned, the quantity
@@ -241,6 +254,10 @@
 			|relative to the speed of the network connection without a clear indication
 			|from the client that it is relevant. A service MAY limit the number of 
 			|objects returned. A service MAY limit the scope of each response. 
+		Struct ContainerUpdate Updates
+			Multiple
+			Description
+				|The updated data
 
 	Transaction User Upload UploadRequest UploadResponse
 		Description
@@ -252,15 +269,10 @@
 		Description
 			|Upload entries to a container. This request is only valid if it is issued
 			|by the owner of the account
-		String Container
-			Description
-				|The container to which the entries are to be uploaded.
-		Struct DareMessage Message
+		Struct ContainerUpdate Updates			
 			Multiple
 			Description
-				|The entries to be uploaded. These MAY be either complete messages or redacted messages.
-				|In either case, the messages MUST conform to the ConstraintsUpdate specified by the 
-				|service 
+				|The data to be updated
 
 	Message UploadResponse
 		Inherits MeshResponse
@@ -334,6 +346,7 @@
 		Struct DareMessage SignedMessage
 			Description
 				|The mesh profile
+
 
 	Message ConnectResponse
 		Inherits MeshResponse

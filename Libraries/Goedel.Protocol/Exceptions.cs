@@ -9,7 +9,8 @@ namespace Goedel.Protocol {
     /// <summary>
     /// A dechunking exception occurred.
     /// </summary>
-    public class Dechunking : global::System.Exception {
+    [Serializable]
+	public class Dechunking : global::System.Exception {
 
 		/// <summary>
         /// Construct instance for exception "Key could not be read."
@@ -60,7 +61,8 @@ namespace Goedel.Protocol {
     /// <summary>
     /// The requested operation is not known to this server.
     /// </summary>
-    public class UnknownOperation : Dechunking {
+    [Serializable]
+	public class UnknownOperation : Dechunking {
 
 		/// <summary>
         /// Construct instance for exception "The requested operation is not known to this server."
@@ -107,7 +109,8 @@ namespace Goedel.Protocol {
     /// <summary>
     /// Message exceeds permitted size limit
     /// </summary>
-    public class MessageTooBig : Dechunking {
+    [Serializable]
+	public class MessageTooBig : Dechunking {
 
 		/// <summary>
         /// Construct instance for exception "Message is too big"
@@ -154,7 +157,8 @@ namespace Goedel.Protocol {
     /// <summary>
     /// Could not reach the specified host
     /// </summary>
-    public class ConnectionFail : global::System.Exception {
+    [Serializable]
+	public class ConnectionFail : global::System.Exception {
 
 		/// <summary>
         /// Construct instance for exception "Connection to host failed."
@@ -228,7 +232,8 @@ namespace Goedel.Protocol {
     /// <summary>
     /// A serialized data stream contains a type tag describing an abstract type that cannot be constructed.
     /// </summary>
-    public class CannotCreateAbstract : global::System.Exception {
+    [Serializable]
+	public class CannotCreateAbstract : global::System.Exception {
 
 		/// <summary>
         /// Construct instance for exception "Deserialzer encountered tag describing abstract type"
@@ -279,7 +284,8 @@ namespace Goedel.Protocol {
     /// <summary>
     /// An unknown tag was encountered.
     /// </summary>
-    public class UnknownTag : global::System.Exception {
+    [Serializable]
+	public class UnknownTag : global::System.Exception {
 
 		/// <summary>
         /// Construct instance for exception "Deserialzer encountered unknown tag"
@@ -330,7 +336,8 @@ namespace Goedel.Protocol {
     /// <summary>
     /// The input is not valid in the specified encoding.
     /// </summary>
-    public class InvalidInput : global::System.Exception {
+    [Serializable]
+	public class InvalidInput : global::System.Exception {
 
 		/// <summary>
         /// Construct instance for exception "Deserialzer encountered invalid input"
@@ -381,7 +388,8 @@ namespace Goedel.Protocol {
     /// <summary>
     /// Data length did not match data presented.
     /// </summary>
-    public class BadPartLength : global::System.Exception {
+    [Serializable]
+	public class BadPartLength : global::System.Exception {
 
 		/// <summary>
         /// Construct instance for exception "Data length did not match data presented."
@@ -432,7 +440,8 @@ namespace Goedel.Protocol {
     /// <summary>
     /// Stream reader error, position not correctly marked.
     /// </summary>
-    public class StreamMarkerError : global::System.Exception {
+    [Serializable]
+	public class StreamMarkerError : global::System.Exception {
 
 		/// <summary>
         /// Construct instance for exception "Stream reader error, position not correctly marked."

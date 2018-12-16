@@ -118,8 +118,8 @@ namespace ExampleGenerator {
 
         void GenerateKeys() {
             // Encryption Key Set.
-
-            var Machine1 = new MeshMachineTest(name: "Machine1");
+            var machineEnvironment = new TestMachineEnvironment("TestLifecycle");
+            var Machine1 = new MeshMachineTest(machineEnvironment, name: "Machine1");
 
             DareMessageAlicePrivate = new DiffeHellmanPrivate();
             var DareMessageAlicePrivateKeyPair = new KeyPairDH(
@@ -233,8 +233,8 @@ namespace ExampleGenerator {
 
             // Encrypt a sequence of items with a key exchange per item.
             var EncryptedContainer = MakeContainer("Test1EncSep", CryptoParametersPlaintext, ContainerType.List);
-            EncryptedContainer.Append(TestData300, CryptoParameters: CryptoParametersEncrypt);
-            EncryptedContainer.Append(TestData300, CryptoParameters: CryptoParametersEncrypt);
+            EncryptedContainer.Append(TestData300, cryptoParameters: CryptoParametersEncrypt);
+            EncryptedContainer.Append(TestData300, cryptoParameters: CryptoParametersEncrypt);
             ContainerHeadersEncryptIndependentSession = ReadContainer(EncryptedContainer);
             ContainerFramingEncryptedIndependent = ConsoleWriter.ToString();
             }

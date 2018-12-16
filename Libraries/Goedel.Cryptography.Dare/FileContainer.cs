@@ -203,7 +203,7 @@ namespace Goedel.Cryptography.Dare {
             Container.Append(
                     Data,
                     CryptoParameters,
-                    ContainerHeader: ContainerHeader);
+                    containerHeader: ContainerHeader);
 
             }
 
@@ -327,7 +327,7 @@ namespace Goedel.Cryptography.Dare {
 
             using (var Reader = new FileContainerReader(FileName, KeyCollection)) {
                 using (var ContainerDataReader = Reader.Container.GetFrameDataReader(
-                            Position:Reader.Container.PositionFinalFrameStart)) {
+                            position:Reader.Container.PositionFinalFrameStart)) {
                     Data = ContainerDataReader.ToArray();
                     ContentMeta = ContainerDataReader?.Header.ContentMeta;
                     }

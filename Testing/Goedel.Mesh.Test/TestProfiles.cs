@@ -20,8 +20,10 @@ namespace Goedel.Mesh.Test {
         public TestProfiles() => TestEnvironment.Initialize();
 
         public  void EscrowRecover() {
-            var MachineAliceAdmin = new MeshMachineTest(name:"Alice Admin");
-            var MachineAliceRecover = new MeshMachineTest(name: "Alice Admin Recovered");
+            var machineEnvironment = new TestMachineEnvironment("EscrowRecover");
+
+            var MachineAliceAdmin = new MeshMachineTest(machineEnvironment, name: "Alice Admin");
+            var MachineAliceRecover = new MeshMachineTest(machineEnvironment, name: "Alice Admin Recovered");
 
             var DeviceAdmin = ContextDevice.Generate(MachineAliceAdmin);
             var MasterAdmin = DeviceAdmin.GenerateMaster();
@@ -34,7 +36,9 @@ namespace Goedel.Mesh.Test {
             }
 
         public void CatalogCredentials() {
-            var MachineAliceAdmin = new MeshMachineTest(name: "Alice");
+            var machineEnvironment = new TestMachineEnvironment("ProtocolHello");
+
+            var MachineAliceAdmin = new MeshMachineTest(machineEnvironment, name: "Alice");
             var DeviceAdmin = ContextDevice.Generate(MachineAliceAdmin);
             var MasterAdmin = DeviceAdmin.GenerateMaster();
 
@@ -101,9 +105,11 @@ namespace Goedel.Mesh.Test {
         /// Test direct addition/removal of devices without going through the services or inbound spool
         /// </summary>
         public void CatalogDevices() {
-            var MachineAliceAdmin = new MeshMachineTest(name: "Alice");
-            var MachineAliceLaptop = new MeshMachineTest(name: "Alice Laptop");
-            var MachineAlicePhone = new MeshMachineTest(name: "Alice Phone");
+            var machineEnvironment = new TestMachineEnvironment("ProtocolHello");
+
+            var MachineAliceAdmin = new MeshMachineTest(machineEnvironment, name: "Alice");
+            var MachineAliceLaptop = new MeshMachineTest(machineEnvironment, name: "Alice Laptop");
+            var MachineAlicePhone = new MeshMachineTest(machineEnvironment, name: "Alice Phone");
             var DeviceAdmin = ContextDevice.Generate(MachineAliceAdmin);
             var MasterAdmin = DeviceAdmin.GenerateMaster();
 
@@ -130,7 +136,9 @@ namespace Goedel.Mesh.Test {
         /// Test addition/deletion of contacts
         /// </summary>
         public void CatalogContacts() {
-            var MachineAliceAdmin = new MeshMachineTest(name: "Alice");
+            var machineEnvironment = new TestMachineEnvironment("ProtocolHello");
+
+            var MachineAliceAdmin = new MeshMachineTest(machineEnvironment, name: "Alice");
             var DeviceAdmin = ContextDevice.Generate(MachineAliceAdmin);
             var MasterAdmin = DeviceAdmin.GenerateMaster();
 
@@ -209,12 +217,14 @@ namespace Goedel.Mesh.Test {
 
 
         public void ConnectRequestDirect() {
+            var machineEnvironment = new TestMachineEnvironment("ProtocolHello");
+
             var TestName = Unique.Next();
             var AccountAlice = NextAccountAlice(TestName);
 
 
-            MeshMachineTest.GetContext(AccountAlice, "Alice Admin", out var machineAliceAdmin, out var deviceAdmin, out var masterAdmin);
-            MeshMachineTest.GetContext(AccountAlice, "Alice 2", out var MachineAliceSecond, out var Device2);
+            MeshMachineTest.GetContext(machineEnvironment, AccountAlice, "Alice Admin", out var machineAliceAdmin, out var deviceAdmin, out var masterAdmin);
+            MeshMachineTest.GetContext(machineEnvironment, AccountAlice, "Alice 2", out var MachineAliceSecond, out var Device2);
 
             //// Create connection request for device 2
             //var request = Device2.ConnectionRequest(masterAdmin.UDF);
@@ -231,12 +241,15 @@ namespace Goedel.Mesh.Test {
             }
 
         public void ContactRequestDirect() {
+            var machineEnvironment = new TestMachineEnvironment("ProtocolHello");
+
+
             var TestName = Unique.Next();
             var AccountAlice = NextAccountAlice(TestName);
             var AccountBob = NextAccountBob(TestName);
 
-            MeshMachineTest.GetContext(AccountAlice, "Alice Admin", out var machineAliceAdmin, out var deviceAdmin, out var masterAdmin);
-            MeshMachineTest.GetContext(AccountBob, "Bob Admin", out var machineAdminBob, out var deviceAdminBob, out var masterAdminBob);
+            MeshMachineTest.GetContext(machineEnvironment, AccountAlice, "Alice Admin", out var machineAliceAdmin, out var deviceAdmin, out var masterAdmin);
+            MeshMachineTest.GetContext(machineEnvironment, AccountBob, "Bob Admin", out var machineAdminBob, out var deviceAdminBob, out var masterAdminBob);
 
             masterAdmin.SetContactSelf(MeshMachineTest.ContactAlice);
             masterAdminBob.SetContactSelf(MeshMachineTest.ContactBob);

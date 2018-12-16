@@ -25,6 +25,10 @@ namespace Goedel.Mesh.Protocol.Client {
         ///<summary>The active client connection to the service.</summary>
         protected MeshService MeshService;
 
+        protected MeshClientSession MeshClientSession => meshClientSession ??
+            new MeshClientSession(this).CacheValue(out meshClientSession);
+        MeshClientSession meshClientSession;
+
         ///<summary>The account name</summary>
         protected string AccountName;
 

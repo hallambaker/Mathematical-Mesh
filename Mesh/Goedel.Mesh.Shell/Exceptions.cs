@@ -9,7 +9,8 @@ namespace Goedel.Mesh.Shell {
     /// <summary>
     /// Generic error in Mesh Shell library
     /// </summary>
-    public class MeshShellException : global::System.Exception {
+    [Serializable]
+	public class MeshShellException : global::System.Exception {
 
 		/// <summary>
         /// Construct instance for exception "Unknown error occured."
@@ -60,7 +61,8 @@ namespace Goedel.Mesh.Shell {
     /// <summary>
     /// Account not valid
     /// </summary>
-    public class AccountNotFound : MeshShellException {
+    [Serializable]
+	public class AccountNotFound : MeshShellException {
 
 		/// <summary>
         /// Construct instance for exception "Profile not found"
@@ -107,7 +109,8 @@ namespace Goedel.Mesh.Shell {
     /// <summary>
     /// Account not valid
     /// </summary>
-    public class ProfileNotFound : MeshShellException {
+    [Serializable]
+	public class ProfileNotFound : MeshShellException {
 
 		/// <summary>
         /// Construct instance for exception "No profile defined."
@@ -154,7 +157,8 @@ namespace Goedel.Mesh.Shell {
     /// <summary>
     /// The directory could not be found
     /// </summary>
-    public class DirectoryNotFound : MeshShellException {
+    [Serializable]
+	public class DirectoryNotFound : MeshShellException {
 
 		/// <summary>
         /// Construct instance for exception "The directory could not be found"
@@ -201,7 +205,8 @@ namespace Goedel.Mesh.Shell {
     /// <summary>
     /// The directory could not be found
     /// </summary>
-    public class FileNotFound : MeshShellException {
+    [Serializable]
+	public class FileNotFound : MeshShellException {
 
 		/// <summary>
         /// Construct instance for exception "The file could not be found"

@@ -9,7 +9,8 @@ namespace Goedel.Mesh {
     /// <summary>
     /// An internal assertion check failed.
     /// </summary>
-    public class Internal : global::System.Exception {
+    [Serializable]
+	public class Internal : global::System.Exception {
 
 		/// <summary>
         /// Construct instance for exception "An internal error occurred"
@@ -60,7 +61,8 @@ namespace Goedel.Mesh {
     /// <summary>
     /// The profile presented was invalid.
     /// </summary>
-    public class InvalidProfile : Internal {
+    [Serializable]
+	public class InvalidProfile : Internal {
 
 		/// <summary>
         /// Construct instance for exception "The profile is invalid"
@@ -99,6 +101,102 @@ namespace Goedel.Mesh {
 				}
 			else {
 				return new InvalidProfile();
+				}
+            }
+        }
+
+
+    /// <summary>
+    /// The requestor is not authorized for the specified operation
+    /// </summary>
+    [Serializable]
+	public class NotAuthorized : Internal {
+
+		/// <summary>
+        /// Construct instance for exception "The requestor is not authorized for the specified operation"
+        /// </summary>		
+		public NotAuthorized () : base ("The requestor is not authorized for the specified operation") {
+			}
+        
+		/// <summary>
+        /// Construct instance for exception "The requestor is not authorized for the specified operation"
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		public NotAuthorized (string Description) : base (Description) {
+			}
+
+		/// <summary>
+        /// Construct instance for exception 		/// containing an inner exception.
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		/// <param name="Inner">Inner Exception</param>	
+		public NotAuthorized (string Description, System.Exception Inner) : 
+				base (Description, Inner) {
+			}
+
+
+
+
+		
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+
+        static System.Exception _Throw(object Reason) {
+			if (Reason as string != null) {
+				return new NotAuthorized(Reason as string);
+				}
+			else {
+				return new NotAuthorized();
+				}
+            }
+        }
+
+
+    /// <summary>
+    /// The request is not authenticated  for the specified operation
+    /// </summary>
+    [Serializable]
+	public class NotAuthenticated : Internal {
+
+		/// <summary>
+        /// Construct instance for exception "The request is not authenticated for the specified operation"
+        /// </summary>		
+		public NotAuthenticated () : base ("The request is not authenticated for the specified operation") {
+			}
+        
+		/// <summary>
+        /// Construct instance for exception "The request is not authenticated for the specified operation"
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		public NotAuthenticated (string Description) : base (Description) {
+			}
+
+		/// <summary>
+        /// Construct instance for exception 		/// containing an inner exception.
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		/// <param name="Inner">Inner Exception</param>	
+		public NotAuthenticated (string Description, System.Exception Inner) : 
+				base (Description, Inner) {
+			}
+
+
+
+
+		
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+
+        static System.Exception _Throw(object Reason) {
+			if (Reason as string != null) {
+				return new NotAuthenticated(Reason as string);
+				}
+			else {
+				return new NotAuthenticated();
 				}
             }
         }

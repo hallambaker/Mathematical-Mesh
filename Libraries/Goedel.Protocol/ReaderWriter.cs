@@ -85,7 +85,9 @@ namespace Goedel.Protocol {
         /// <summary>Read next item in array</summary>
         /// <returns>If true, is an item to read, otherwise have reached end.</returns>
         abstract public bool NextArray();
-        
+
+        /// <summary>Get end of object</summary>
+        abstract public void EndArray();
         }
 
     /// <summary>

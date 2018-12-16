@@ -30,7 +30,7 @@ namespace Goedel.Mesh {
         public AsCatalogEntryDevice(CatalogDevice catalog) => Catalog = catalog;
 
         public IEnumerator<CatalogEntryDevice> GetEnumerator() =>
-                    new EnumeratorCatalogEntryDevice(Catalog.Container);
+                    new EnumeratorCatalogEntryDevice(Catalog.ContainerPersistence);
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator1();
         private IEnumerator GetEnumerator1() => this.GetEnumerator();

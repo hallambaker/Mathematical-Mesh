@@ -1178,26 +1178,20 @@ namespace Goedel.Mesh {
 
 	/// <summary>
 	///
-	/// C
+	/// Contains the binding of a device to a MasterProfile. Each device has a separate
+	/// profile which MUST be signed by an OnlineSignatureKey
 	/// </summary>
 	public partial class ProfileMesh : ProfileApplication {
         /// <summary>
-        ///Account identifier requested.
+        ///Account address.
         /// </summary>
 
 		public virtual string						Account  {get; set;}
-		bool								__Default = false;
-		private bool						_Default;
         /// <summary>
-        ///If true, specifies that this is marked as the default account.
-        ///If there is more than one active profile in a container, the
-        ///last profile found is the active one.
+        ///Device profile of the device making the request.
         /// </summary>
 
-		public virtual bool						Default {
-			get => _Default;
-			set {_Default = value; __Default = true; }
-			}
+		public virtual DareMessage						DeviceProfile  {get; set;}
         /// <summary>
         ///Master profile of the account being registered.
         /// </summary>
@@ -1213,11 +1207,6 @@ namespace Goedel.Mesh {
         /// </summary>
 
 		public virtual byte[]						ProfileWitness  {get; set;}
-        /// <summary>
-        ///Device profile under which this account is registered.
-        /// </summary>
-
-		public virtual DareMessage						DeviceProfile  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -1266,10 +1255,10 @@ namespace Goedel.Mesh {
 				_Writer.WriteToken ("Account", 1);
 					_Writer.WriteString (Account);
 				}
-			if (__Default){
+			if (DeviceProfile != null) {
 				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("Default", 1);
-					_Writer.WriteBoolean (Default);
+				_Writer.WriteToken ("DeviceProfile", 1);
+					DeviceProfile.Serialize (_Writer, false);
 				}
 			if (MasterProfile != null) {
 				_Writer.WriteObjectSeparator (ref _first);
@@ -1285,11 +1274,6 @@ namespace Goedel.Mesh {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("ProfileWitness", 1);
 					_Writer.WriteBinary (ProfileWitness);
-				}
-			if (DeviceProfile != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("DeviceProfile", 1);
-					DeviceProfile.Serialize (_Writer, false);
 				}
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
@@ -1327,8 +1311,11 @@ namespace Goedel.Mesh {
 					Account = JSONReader.ReadString ();
 					break;
 					}
-				case "Default" : {
-					Default = JSONReader.ReadBoolean ();
+				case "DeviceProfile" : {
+					// An untagged structure
+					DeviceProfile = new DareMessage ();
+					DeviceProfile.Deserialize (JSONReader);
+ 
 					break;
 					}
 				case "MasterProfile" : {
@@ -1344,13 +1331,6 @@ namespace Goedel.Mesh {
 					}
 				case "ProfileWitness" : {
 					ProfileWitness = JSONReader.ReadBinary ();
-					break;
-					}
-				case "DeviceProfile" : {
-					// An untagged structure
-					DeviceProfile = new DareMessage ();
-					DeviceProfile.Deserialize (JSONReader);
- 
 					break;
 					}
 				default : {
@@ -3754,7 +3734,7 @@ namespace Goedel.Mesh {
         ///The device profile
         /// </summary>
 
-		public virtual DareMessage						DeviceProfile  {get; set;}
+		public virtual ProfileMesh						ProfileMesh  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -3798,10 +3778,10 @@ namespace Goedel.Mesh {
 				_Writer.WriteObjectStart ();
 				}
 			((MeshMessage)this).SerializeX(_Writer, false, ref _first);
-			if (DeviceProfile != null) {
+			if (ProfileMesh != null) {
 				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("DeviceProfile", 1);
-					DeviceProfile.Serialize (_Writer, false);
+				_Writer.WriteToken ("ProfileMesh", 1);
+					ProfileMesh.Serialize (_Writer, false);
 				}
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
@@ -3835,10 +3815,10 @@ namespace Goedel.Mesh {
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
-				case "DeviceProfile" : {
+				case "ProfileMesh" : {
 					// An untagged structure
-					DeviceProfile = new DareMessage ();
-					DeviceProfile.Deserialize (JSONReader);
+					ProfileMesh = new ProfileMesh ();
+					ProfileMesh.Deserialize (JSONReader);
  
 					break;
 					}

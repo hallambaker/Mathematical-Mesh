@@ -2,6 +2,7 @@
 using Goedel.Cryptography;
 using Goedel.Cryptography.Windows;
 using Goedel.Utilities;
+using Goedel.Protocol;
 
 namespace Goedel.Mesh {
     public class Mesh {
@@ -33,7 +34,7 @@ namespace Goedel.Mesh {
 
         public void OpenCatalog(Catalog catalog, string Name) { }
 
-        public MeshService GetMeshClient(string account) => throw new NotImplementedException();
+        public MeshService GetMeshClient(string address) => throw new NotImplementedException();
         public ProfileMesh GetConnection(string accountName = null, string deviceUDF = null) => throw new NotImplementedException();
         public void Register(Profile profile) => throw new NotImplementedException();
         }

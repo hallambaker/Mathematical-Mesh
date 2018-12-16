@@ -239,19 +239,24 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="JSONReader">Input data</param>
         public override void Deserialize(JSONReader JSONReader) {
+            // NB: This was not filled in during testing. This implementation has not been regression 
+            // tested and may cause other things to fail.
 
-            bool Going = JSONReader.StartArray();
-            while (Going) {
-                string Token = JSONReader.ReadToken();
-                if (Token == null) {
-                    Going = false;
-                    }
-                else {
-                    DeserializeToken(JSONReader, Token);
-                    }
-                Going = JSONReader.NextArray();
+            if (!JSONReader.StartArray()) {
+                return;
                 }
-            // JSONReader.EndObject (); Implicit 
+            Header = new DareHeader();
+            Header.Deserialize(JSONReader);
+            if (!JSONReader.NextArray()) {
+                return;
+                }
+            Body = JSONReader.ReadBinary();
+            if (!JSONReader.NextArray()) {
+                return;
+                }
+            Trailer = new DareTrailer();
+            Trailer.Deserialize(JSONReader);
+            JSONReader.EndArray();
             }
 
 

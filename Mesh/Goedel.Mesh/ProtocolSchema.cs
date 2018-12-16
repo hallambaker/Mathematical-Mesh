@@ -67,6 +67,7 @@ namespace Goedel.Mesh {
 			{"ConstraintsData", ConstraintsData._Factory},
 			{"PolicyAccount", PolicyAccount._Factory},
 			{"ContainerStatus", ContainerStatus._Factory},
+			{"ContainerUpdate", ContainerUpdate._Factory},
 			{"MeshHelloResponse", MeshHelloResponse._Factory},
 			{"StatusRequest", StatusRequest._Factory},
 			{"StatusResponse", StatusResponse._Factory},
@@ -125,74 +126,82 @@ namespace Goedel.Mesh {
 		public override string GetDiscovery => Discovery;
 
         /// <summary>
-        /// The active JPCSession.
+        /// The active JpcSession.
         /// </summary>		
-		public virtual JPCSession JPCSession {get; set;}
+		public virtual JpcSession JpcSession {get; set;}
 
 
         /// <summary>
 		/// Base method for implementing the transaction  Hello.
         /// </summary>
         /// <param name="Request">The request object to send to the host.</param>
+		/// <param name="JpcSession">The authentication binding.</param>
 		/// <returns>The response object from the service</returns>
         public virtual MeshHelloResponse Hello (
-                HelloRequest Request) => null;
+                HelloRequest request, JpcSession session) => throw new NotImplementedException();
 
         /// <summary>
 		/// Base method for implementing the transaction  Status.
         /// </summary>
         /// <param name="Request">The request object to send to the host.</param>
+		/// <param name="JpcSession">The authentication binding.</param>
 		/// <returns>The response object from the service</returns>
         public virtual StatusResponse Status (
-                StatusRequest Request) => null;
+                StatusRequest request, JpcSession session) => throw new NotImplementedException();
 
         /// <summary>
 		/// Base method for implementing the transaction  Download.
         /// </summary>
         /// <param name="Request">The request object to send to the host.</param>
+		/// <param name="JpcSession">The authentication binding.</param>
 		/// <returns>The response object from the service</returns>
         public virtual DownloadResponse Download (
-                DownloadRequest Request) => null;
+                DownloadRequest request, JpcSession session) => throw new NotImplementedException();
 
         /// <summary>
 		/// Base method for implementing the transaction  Upload.
         /// </summary>
         /// <param name="Request">The request object to send to the host.</param>
+		/// <param name="JpcSession">The authentication binding.</param>
 		/// <returns>The response object from the service</returns>
         public virtual UploadResponse Upload (
-                UploadRequest Request) => null;
+                UploadRequest request, JpcSession session) => throw new NotImplementedException();
 
         /// <summary>
 		/// Base method for implementing the transaction  Post.
         /// </summary>
         /// <param name="Request">The request object to send to the host.</param>
+		/// <param name="JpcSession">The authentication binding.</param>
 		/// <returns>The response object from the service</returns>
         public virtual PostResponse Post (
-                PostRequest Request) => null;
+                PostRequest request, JpcSession session) => throw new NotImplementedException();
 
         /// <summary>
 		/// Base method for implementing the transaction  Connect.
         /// </summary>
         /// <param name="Request">The request object to send to the host.</param>
+		/// <param name="JpcSession">The authentication binding.</param>
 		/// <returns>The response object from the service</returns>
         public virtual ConnectResponse Connect (
-                ConnectRequest Request) => null;
+                ConnectRequest request, JpcSession session) => throw new NotImplementedException();
 
         /// <summary>
 		/// Base method for implementing the transaction  CreateAccount.
         /// </summary>
         /// <param name="Request">The request object to send to the host.</param>
+		/// <param name="JpcSession">The authentication binding.</param>
 		/// <returns>The response object from the service</returns>
         public virtual CreateResponse CreateAccount (
-                CreateRequest Request) => null;
+                CreateRequest request, JpcSession session) => throw new NotImplementedException();
 
         /// <summary>
 		/// Base method for implementing the transaction  DeleteAccount.
         /// </summary>
         /// <param name="Request">The request object to send to the host.</param>
+		/// <param name="JpcSession">The authentication binding.</param>
 		/// <returns>The response object from the service</returns>
         public virtual DeleteResponse DeleteAccount (
-                DeleteRequest Request) => null;
+                DeleteRequest request, JpcSession session) => throw new NotImplementedException();
 
         }
 
@@ -203,9 +212,9 @@ namespace Goedel.Mesh {
  		
 		JPCRemoteSession JPCRemoteSession;
         /// <summary>
-        /// The active JPCSession.
+        /// The active JpcSession.
         /// </summary>		
-		public override JPCSession JPCSession {
+		public override JpcSession JpcSession {
 			get => JPCRemoteSession;
 			set => JPCRemoteSession = value as JPCRemoteSession; 
 			}
@@ -223,120 +232,128 @@ namespace Goedel.Mesh {
         /// <summary>
 		/// Implement the transaction
         /// </summary>		
-        /// <param name="Request">The request object</param>
+        /// <param name="request">The request object.</param>
+		/// <param name="JpcSession">The authentication binding.</param>
 		/// <returns>The response object</returns>
         public override MeshHelloResponse Hello (
-                HelloRequest Request) {
+                HelloRequest request, JpcSession session) {
 
-            var ResponseData = JPCRemoteSession.Post("Hello", Request);
-            var Response = MeshHelloResponse.FromJSON(ResponseData.JSONReader(), true);
+            var responseData = JPCRemoteSession.Post("Hello", request);
+            var response = MeshHelloResponse.FromJSON(responseData.JSONReader(), true);
 
-            return Response;
+            return response;
             }
 
         /// <summary>
 		/// Implement the transaction
         /// </summary>		
-        /// <param name="Request">The request object</param>
+        /// <param name="request">The request object.</param>
+		/// <param name="JpcSession">The authentication binding.</param>
 		/// <returns>The response object</returns>
         public override StatusResponse Status (
-                StatusRequest Request) {
+                StatusRequest request, JpcSession session) {
 
-            var ResponseData = JPCRemoteSession.Post("Status", Request);
-            var Response = StatusResponse.FromJSON(ResponseData.JSONReader(), true);
+            var responseData = JPCRemoteSession.Post("Status", request);
+            var response = StatusResponse.FromJSON(responseData.JSONReader(), true);
 
-            return Response;
+            return response;
             }
 
         /// <summary>
 		/// Implement the transaction
         /// </summary>		
-        /// <param name="Request">The request object</param>
+        /// <param name="request">The request object.</param>
+		/// <param name="JpcSession">The authentication binding.</param>
 		/// <returns>The response object</returns>
         public override DownloadResponse Download (
-                DownloadRequest Request) {
+                DownloadRequest request, JpcSession session) {
 
-            var ResponseData = JPCRemoteSession.Post("Download", Request);
-            var Response = DownloadResponse.FromJSON(ResponseData.JSONReader(), true);
+            var responseData = JPCRemoteSession.Post("Download", request);
+            var response = DownloadResponse.FromJSON(responseData.JSONReader(), true);
 
-            return Response;
+            return response;
             }
 
         /// <summary>
 		/// Implement the transaction
         /// </summary>		
-        /// <param name="Request">The request object</param>
+        /// <param name="request">The request object.</param>
+		/// <param name="JpcSession">The authentication binding.</param>
 		/// <returns>The response object</returns>
         public override UploadResponse Upload (
-                UploadRequest Request) {
+                UploadRequest request, JpcSession session) {
 
-            var ResponseData = JPCRemoteSession.Post("Upload", Request);
-            var Response = UploadResponse.FromJSON(ResponseData.JSONReader(), true);
+            var responseData = JPCRemoteSession.Post("Upload", request);
+            var response = UploadResponse.FromJSON(responseData.JSONReader(), true);
 
-            return Response;
+            return response;
             }
 
         /// <summary>
 		/// Implement the transaction
         /// </summary>		
-        /// <param name="Request">The request object</param>
+        /// <param name="request">The request object.</param>
+		/// <param name="JpcSession">The authentication binding.</param>
 		/// <returns>The response object</returns>
         public override PostResponse Post (
-                PostRequest Request) {
+                PostRequest request, JpcSession session) {
 
-            var ResponseData = JPCRemoteSession.Post("Post", Request);
-            var Response = PostResponse.FromJSON(ResponseData.JSONReader(), true);
+            var responseData = JPCRemoteSession.Post("Post", request);
+            var response = PostResponse.FromJSON(responseData.JSONReader(), true);
 
-            return Response;
+            return response;
             }
 
         /// <summary>
 		/// Implement the transaction
         /// </summary>		
-        /// <param name="Request">The request object</param>
+        /// <param name="request">The request object.</param>
+		/// <param name="JpcSession">The authentication binding.</param>
 		/// <returns>The response object</returns>
         public override ConnectResponse Connect (
-                ConnectRequest Request) {
+                ConnectRequest request, JpcSession session) {
 
-            var ResponseData = JPCRemoteSession.Post("Connect", Request);
-            var Response = ConnectResponse.FromJSON(ResponseData.JSONReader(), true);
+            var responseData = JPCRemoteSession.Post("Connect", request);
+            var response = ConnectResponse.FromJSON(responseData.JSONReader(), true);
 
-            return Response;
+            return response;
             }
 
         /// <summary>
 		/// Implement the transaction
         /// </summary>		
-        /// <param name="Request">The request object</param>
+        /// <param name="request">The request object.</param>
+		/// <param name="JpcSession">The authentication binding.</param>
 		/// <returns>The response object</returns>
         public override CreateResponse CreateAccount (
-                CreateRequest Request) {
+                CreateRequest request, JpcSession session) {
 
-            var ResponseData = JPCRemoteSession.Post("CreateAccount", Request);
-            var Response = CreateResponse.FromJSON(ResponseData.JSONReader(), true);
+            var responseData = JPCRemoteSession.Post("CreateAccount", request);
+            var response = CreateResponse.FromJSON(responseData.JSONReader(), true);
 
-            return Response;
+            return response;
             }
 
         /// <summary>
 		/// Implement the transaction
         /// </summary>		
-        /// <param name="Request">The request object</param>
+        /// <param name="request">The request object.</param>
+		/// <param name="JpcSession">The authentication binding.</param>
 		/// <returns>The response object</returns>
         public override DeleteResponse DeleteAccount (
-                DeleteRequest Request) {
+                DeleteRequest request, JpcSession session) {
 
-            var ResponseData = JPCRemoteSession.Post("DeleteAccount", Request);
-            var Response = DeleteResponse.FromJSON(ResponseData.JSONReader(), true);
+            var responseData = JPCRemoteSession.Post("DeleteAccount", request);
+            var response = DeleteResponse.FromJSON(responseData.JSONReader(), true);
 
-            return Response;
+            return response;
             }
 
 		}
 
 
     /// <summary>
-	/// Client class for MeshService.
+	/// Service class for MeshService.
     /// </summary>		
     public partial class MeshServiceProvider : Goedel.Protocol.JPCProvider {
 
@@ -352,7 +369,7 @@ namespace Goedel.Mesh {
         /// <param name="Session">The client context.</param>
         /// <param name="JSONReader">Reader for data object.</param>
         /// <returns>The response object returned by the corresponding dispatch.</returns>
-		public override Goedel.Protocol.JSONObject Dispatch(JPCSession  Session,  
+		public override Goedel.Protocol.JSONObject Dispatch(JpcSession  Session,  
 								Goedel.Protocol.JSONReader JSONReader) {
 
 			JSONReader.StartObject ();
@@ -363,49 +380,49 @@ namespace Goedel.Mesh {
 				case "Hello" : {
 					var Request = new HelloRequest();
 					Request.Deserialize (JSONReader);
-					Response = Service.Hello (Request);
+					Response = Service.Hello (Request, Session);
 					break;
 					}
 				case "Status" : {
 					var Request = new StatusRequest();
 					Request.Deserialize (JSONReader);
-					Response = Service.Status (Request);
+					Response = Service.Status (Request, Session);
 					break;
 					}
 				case "Download" : {
 					var Request = new DownloadRequest();
 					Request.Deserialize (JSONReader);
-					Response = Service.Download (Request);
+					Response = Service.Download (Request, Session);
 					break;
 					}
 				case "Upload" : {
 					var Request = new UploadRequest();
 					Request.Deserialize (JSONReader);
-					Response = Service.Upload (Request);
+					Response = Service.Upload (Request, Session);
 					break;
 					}
 				case "Post" : {
 					var Request = new PostRequest();
 					Request.Deserialize (JSONReader);
-					Response = Service.Post (Request);
+					Response = Service.Post (Request, Session);
 					break;
 					}
 				case "Connect" : {
 					var Request = new ConnectRequest();
 					Request.Deserialize (JSONReader);
-					Response = Service.Connect (Request);
+					Response = Service.Connect (Request, Session);
 					break;
 					}
 				case "CreateAccount" : {
 					var Request = new CreateRequest();
 					Request.Deserialize (JSONReader);
-					Response = Service.CreateAccount (Request);
+					Response = Service.CreateAccount (Request, Session);
 					break;
 					}
 				case "DeleteAccount" : {
 					var Request = new DeleteRequest();
 					Request.Deserialize (JSONReader);
-					Response = Service.DeleteAccount (Request);
+					Response = Service.DeleteAccount (Request, Session);
 					break;
 					}
 				default : {
@@ -525,6 +542,11 @@ namespace Goedel.Mesh {
         /// </summary>
 
 		public virtual string						Account  {get; set;}
+        /// <summary>
+        ///Device profile of the device making the request.
+        /// </summary>
+
+		public virtual DareMessage						DeviceProfile  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -573,6 +595,11 @@ namespace Goedel.Mesh {
 				_Writer.WriteToken ("Account", 1);
 					_Writer.WriteString (Account);
 				}
+			if (DeviceProfile != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("DeviceProfile", 1);
+					DeviceProfile.Serialize (_Writer, false);
+				}
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
 				}
@@ -607,6 +634,13 @@ namespace Goedel.Mesh {
 			switch (Tag) {
 				case "Account" : {
 					Account = JSONReader.ReadString ();
+					break;
+					}
+				case "DeviceProfile" : {
+					// An untagged structure
+					DeviceProfile = new DareMessage ();
+					DeviceProfile.Deserialize (JSONReader);
+ 
 					break;
 					}
 				default : {
@@ -837,6 +871,11 @@ namespace Goedel.Mesh {
 	/// of data returned, the earliest and latest data returned, etc.
 	/// </summary>
 	public partial class ConstraintsSelect : MeshProtocol {
+        /// <summary>
+        ///The container to be searched.
+        /// </summary>
+
+		public virtual string						Container  {get; set;}
 		bool								__IndexMin = false;
 		private int						_IndexMin;
         /// <summary>
@@ -922,6 +961,11 @@ namespace Goedel.Mesh {
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
+			if (Container != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Container", 1);
+					_Writer.WriteString (Container);
+				}
 			if (__IndexMin){
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("IndexMin", 1);
@@ -979,6 +1023,10 @@ namespace Goedel.Mesh {
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
+				case "Container" : {
+					Container = JSONReader.ReadString ();
+					break;
+					}
 				case "IndexMin" : {
 					IndexMin = JSONReader.ReadInteger32 ();
 					break;
@@ -1491,6 +1539,145 @@ namespace Goedel.Mesh {
 
 	/// <summary>
 	/// </summary>
+	public partial class ContainerUpdate : MeshProtocol {
+        /// <summary>
+        ///The container to which the entries are to be uploaded.
+        /// </summary>
+
+		public virtual string						Container  {get; set;}
+        /// <summary>
+        ///The entries to be uploaded. These MAY be either complete messages or redacted messages.
+        ///In either case, the messages MUST conform to the ConstraintsUpdate specified by the 
+        ///service 
+        /// </summary>
+
+		public virtual List<DareMessage>				Message  {get; set;}
+		
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "ContainerUpdate";
+
+		/// <summary>
+        /// Factory method
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JSONObject _Factory () => new ContainerUpdate();
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="Writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
+			SerializeX (Writer, wrap, ref first);
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_Writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			if (_wrap) {
+				_Writer.WriteObjectStart ();
+				}
+			if (Container != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Container", 1);
+					_Writer.WriteString (Container);
+				}
+			if (Message != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Message", 1);
+				_Writer.WriteArrayStart ();
+				bool _firstarray = true;
+				foreach (var _index in Message) {
+					_Writer.WriteArraySeparator (ref _firstarray);
+					// This is an untagged structure. Cannot inherit.
+                    //_Writer.WriteObjectStart();
+                    //_Writer.WriteToken(_index._Tag, 1);
+					bool firstinner = true;
+					_index.Serialize (_Writer, true, ref firstinner);
+                    //_Writer.WriteObjectEnd();
+					}
+				_Writer.WriteArrayEnd ();
+				}
+
+			if (_wrap) {
+				_Writer.WriteObjectEnd ();
+				}
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <returns>The created object.</returns>		
+        public static new ContainerUpdate FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
+			if (Tagged) {
+				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				return Out as ContainerUpdate;
+				}
+		    var Result = new ContainerUpdate ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			}
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
+		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+			
+			switch (Tag) {
+				case "Container" : {
+					Container = JSONReader.ReadString ();
+					break;
+					}
+				case "Message" : {
+					// Have a sequence of values
+					bool _Going = JSONReader.StartArray ();
+					Message = new List <DareMessage> ();
+					while (_Going) {
+						// an untagged structure.
+						var _Item = new  DareMessage ();
+						_Item.Deserialize (JSONReader);
+						// var _Item = new DareMessage (JSONReader);
+						Message.Add (_Item);
+						_Going = JSONReader.NextArray ();
+						}
+					break;
+					}
+				default : {
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
+	/// <summary>
+	/// </summary>
 	public partial class MeshHelloResponse : Goedel.Protocol.HelloResponse {
         /// <summary>
         ///Specifies the default data constraints for updates.
@@ -1946,23 +2133,19 @@ namespace Goedel.Mesh {
 
 	/// <summary>
 	///
-	/// Request objects from the specified container.
+	/// Request objects from the specified container(s).
 	/// A client MAY request only objects matching specified search criteria
 	/// be returned and MAY request that only specific fields or parts of the 
 	/// payload be returned.
 	/// </summary>
 	public partial class DownloadRequest : MeshRequestUser {
         /// <summary>
-        /// </summary>
-
-		public virtual List<string>				Container  {get; set;}
-        /// <summary>
         ///Specifies constraints to be applied to a search result. These 
         ///allow a client to limit the number of records returned, the quantity
         ///of data returned, the earliest and latest data returned, etc.
         /// </summary>
 
-		public virtual ConstraintsSelect						Select  {get; set;}
+		public virtual List<ConstraintsSelect>				Select  {get; set;}
         /// <summary>
         ///Specifies the data constraints to be applied to the responses.
         /// </summary>
@@ -2011,23 +2194,23 @@ namespace Goedel.Mesh {
 				_Writer.WriteObjectStart ();
 				}
 			((MeshRequestUser)this).SerializeX(_Writer, false, ref _first);
-			if (Container != null) {
+			if (Select != null) {
 				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("Container", 1);
+				_Writer.WriteToken ("Select", 1);
 				_Writer.WriteArrayStart ();
 				bool _firstarray = true;
-				foreach (var _index in Container) {
+				foreach (var _index in Select) {
 					_Writer.WriteArraySeparator (ref _firstarray);
-					_Writer.WriteString (_index);
+					// This is an untagged structure. Cannot inherit.
+                    //_Writer.WriteObjectStart();
+                    //_Writer.WriteToken(_index._Tag, 1);
+					bool firstinner = true;
+					_index.Serialize (_Writer, true, ref firstinner);
+                    //_Writer.WriteObjectEnd();
 					}
 				_Writer.WriteArrayEnd ();
 				}
 
-			if (Select != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("Select", 1);
-					Select.Serialize (_Writer, false);
-				}
 			if (ConstraintsPost != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("ConstraintsPost", 1);
@@ -2065,22 +2248,18 @@ namespace Goedel.Mesh {
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
-				case "Container" : {
+				case "Select" : {
 					// Have a sequence of values
 					bool _Going = JSONReader.StartArray ();
-					Container = new List <string> ();
+					Select = new List <ConstraintsSelect> ();
 					while (_Going) {
-						string _Item = JSONReader.ReadString ();
-						Container.Add (_Item);
+						// an untagged structure.
+						var _Item = new  ConstraintsSelect ();
+						_Item.Deserialize (JSONReader);
+						// var _Item = new ConstraintsSelect (JSONReader);
+						Select.Add (_Item);
 						_Going = JSONReader.NextArray ();
 						}
-					break;
-					}
-				case "Select" : {
-					// An untagged structure
-					Select = new ConstraintsSelect ();
-					Select.Deserialize (JSONReader);
- 
 					break;
 					}
 				case "ConstraintsPost" : {
@@ -2110,6 +2289,11 @@ namespace Goedel.Mesh {
 	/// objects returned. A service MAY limit the scope of each response. 
 	/// </summary>
 	public partial class DownloadResponse : MeshResponse {
+        /// <summary>
+        ///The updated data
+        /// </summary>
+
+		public virtual List<ContainerUpdate>				Updates  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -2153,6 +2337,23 @@ namespace Goedel.Mesh {
 				_Writer.WriteObjectStart ();
 				}
 			((MeshResponse)this).SerializeX(_Writer, false, ref _first);
+			if (Updates != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Updates", 1);
+				_Writer.WriteArrayStart ();
+				bool _firstarray = true;
+				foreach (var _index in Updates) {
+					_Writer.WriteArraySeparator (ref _firstarray);
+					// This is an untagged structure. Cannot inherit.
+                    //_Writer.WriteObjectStart();
+                    //_Writer.WriteToken(_index._Tag, 1);
+					bool firstinner = true;
+					_index.Serialize (_Writer, true, ref firstinner);
+                    //_Writer.WriteObjectEnd();
+					}
+				_Writer.WriteArrayEnd ();
+				}
+
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
 				}
@@ -2185,6 +2386,20 @@ namespace Goedel.Mesh {
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
+				case "Updates" : {
+					// Have a sequence of values
+					bool _Going = JSONReader.StartArray ();
+					Updates = new List <ContainerUpdate> ();
+					while (_Going) {
+						// an untagged structure.
+						var _Item = new  ContainerUpdate ();
+						_Item.Deserialize (JSONReader);
+						// var _Item = new ContainerUpdate (JSONReader);
+						Updates.Add (_Item);
+						_Going = JSONReader.NextArray ();
+						}
+					break;
+					}
 				default : {
 					base.DeserializeToken(JSONReader, Tag);
 					break;
@@ -2203,17 +2418,10 @@ namespace Goedel.Mesh {
 	/// </summary>
 	public partial class UploadRequest : MeshRequestUser {
         /// <summary>
-        ///The container to which the entries are to be uploaded.
+        ///The data to be updated
         /// </summary>
 
-		public virtual string						Container  {get; set;}
-        /// <summary>
-        ///The entries to be uploaded. These MAY be either complete messages or redacted messages.
-        ///In either case, the messages MUST conform to the ConstraintsUpdate specified by the 
-        ///service 
-        /// </summary>
-
-		public virtual List<DareMessage>				Message  {get; set;}
+		public virtual List<ContainerUpdate>				Updates  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -2257,17 +2465,12 @@ namespace Goedel.Mesh {
 				_Writer.WriteObjectStart ();
 				}
 			((MeshRequestUser)this).SerializeX(_Writer, false, ref _first);
-			if (Container != null) {
+			if (Updates != null) {
 				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("Container", 1);
-					_Writer.WriteString (Container);
-				}
-			if (Message != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("Message", 1);
+				_Writer.WriteToken ("Updates", 1);
 				_Writer.WriteArrayStart ();
 				bool _firstarray = true;
-				foreach (var _index in Message) {
+				foreach (var _index in Updates) {
 					_Writer.WriteArraySeparator (ref _firstarray);
 					// This is an untagged structure. Cannot inherit.
                     //_Writer.WriteObjectStart();
@@ -2311,20 +2514,16 @@ namespace Goedel.Mesh {
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
-				case "Container" : {
-					Container = JSONReader.ReadString ();
-					break;
-					}
-				case "Message" : {
+				case "Updates" : {
 					// Have a sequence of values
 					bool _Going = JSONReader.StartArray ();
-					Message = new List <DareMessage> ();
+					Updates = new List <ContainerUpdate> ();
 					while (_Going) {
 						// an untagged structure.
-						var _Item = new  DareMessage ();
+						var _Item = new  ContainerUpdate ();
 						_Item.Deserialize (JSONReader);
-						// var _Item = new DareMessage (JSONReader);
-						Message.Add (_Item);
+						// var _Item = new ContainerUpdate (JSONReader);
+						Updates.Add (_Item);
 						_Going = JSONReader.NextArray ();
 						}
 					break;

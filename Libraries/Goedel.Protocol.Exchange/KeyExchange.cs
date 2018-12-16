@@ -103,18 +103,19 @@ namespace Goedel.Protocol.Exchange {
 		public override string GetDiscovery => Discovery;
 
         /// <summary>
-        /// The active JPCSession.
+        /// The active JpcSession.
         /// </summary>		
-		public virtual JPCSession JPCSession {get; set;}
+		public virtual JpcSession JpcSession {get; set;}
 
 
         /// <summary>
 		/// Base method for implementing the transaction  Exchange.
         /// </summary>
         /// <param name="Request">The request object to send to the host.</param>
+		/// <param name="JpcSession">The authentication binding.</param>
 		/// <returns>The response object from the service</returns>
         public virtual ExchangeResponse Exchange (
-                ExchangeRequest Request) => null;
+                ExchangeRequest request, JpcSession session) => throw new NotImplementedException();
 
         }
 
@@ -125,9 +126,9 @@ namespace Goedel.Protocol.Exchange {
  		
 		JPCRemoteSession JPCRemoteSession;
         /// <summary>
-        /// The active JPCSession.
+        /// The active JpcSession.
         /// </summary>		
-		public override JPCSession JPCSession {
+		public override JpcSession JpcSession {
 			get => JPCRemoteSession;
 			set => JPCRemoteSession = value as JPCRemoteSession; 
 			}
@@ -145,22 +146,23 @@ namespace Goedel.Protocol.Exchange {
         /// <summary>
 		/// Implement the transaction
         /// </summary>		
-        /// <param name="Request">The request object</param>
+        /// <param name="request">The request object.</param>
+		/// <param name="JpcSession">The authentication binding.</param>
 		/// <returns>The response object</returns>
         public override ExchangeResponse Exchange (
-                ExchangeRequest Request) {
+                ExchangeRequest request, JpcSession session) {
 
-            var ResponseData = JPCRemoteSession.Post("Exchange", Request);
-            var Response = ExchangeResponse.FromJSON(ResponseData.JSONReader(), true);
+            var responseData = JPCRemoteSession.Post("Exchange", request);
+            var response = ExchangeResponse.FromJSON(responseData.JSONReader(), true);
 
-            return Response;
+            return response;
             }
 
 		}
 
 
     /// <summary>
-	/// Client class for KeyExchangeService.
+	/// Service class for KeyExchangeService.
     /// </summary>		
     public partial class KeyExchangeServiceProvider : Goedel.Protocol.JPCProvider {
 
@@ -176,7 +178,7 @@ namespace Goedel.Protocol.Exchange {
         /// <param name="Session">The client context.</param>
         /// <param name="JSONReader">Reader for data object.</param>
         /// <returns>The response object returned by the corresponding dispatch.</returns>
-		public override Goedel.Protocol.JSONObject Dispatch(JPCSession  Session,  
+		public override Goedel.Protocol.JSONObject Dispatch(JpcSession  Session,  
 								Goedel.Protocol.JSONReader JSONReader) {
 
 			JSONReader.StartObject ();
@@ -187,7 +189,7 @@ namespace Goedel.Protocol.Exchange {
 				case "Exchange" : {
 					var Request = new ExchangeRequest();
 					Request.Deserialize (JSONReader);
-					Response = Service.Exchange (Request);
+					Response = Service.Exchange (Request, Session);
 					break;
 					}
 				default : {

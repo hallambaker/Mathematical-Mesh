@@ -26,11 +26,19 @@ namespace Goedel.Mesh {
 
     public class Store : Disposable {
         public virtual string ContainerDefault => throw new NYI();
-        public ContainerPersistenceStore Container = null;
-        protected override void Disposing() => Container?.Dispose();
+        public virtual Container Container { get; }
+        //protected override void Disposing() => Container?.Dispose();
 
-        CryptoParameters CryptoParameters;
-        KeyCollection KeyCollection;
+        protected CryptoParameters CryptoParameters;
+        protected KeyCollection KeyCollection;
+        string ContainerName;
+
+        protected override void Disposing() {
+
+            Container?.Dispose();
+            Console.WriteLine($"Close Store {ContainerName}");
+            }
+
 
         public Store(string directory, string containerName = null,
             CryptoParameters cryptoParameters = null,
@@ -38,33 +46,39 @@ namespace Goedel.Mesh {
 
             containerName = containerName ?? ContainerDefault;
             var fileName = Path.Combine(directory, Path.ChangeExtension(containerName, ".cat"));
+            Console.WriteLine($"Open Store {ContainerName} / {directory}");
+            ContainerName = containerName;
 
-
-            Container = new ContainerPersistenceStore(fileName, "application/mmm-catalog",
-                fileStatus: FileStatus.OpenOrCreate,
-                containerType: ContainerType.MerkleTree,
-                cryptoParameters: cryptoParameters,
-                keyCollection: keyCollection
+            Container = Container.Open(
+                fileName,
+                FileStatus.OpenOrCreate,
+                keyCollection ?? cryptoParameters?.KeyCollection,
+                cryptoParameters,
+                ContainerType.MerkleTree,
+                "application/mmm-catalog"
                 );
+
             KeyCollection = keyCollection;
             CryptoParameters = cryptoParameters;
+
+
+
+
             }
 
         public static Store Factory(
-                    string Directory, 
+                    string Directory,
                     string name,
                     CryptoParameters cryptoParameters,
                     KeyCollection keyCollection) =>
             new Store(Directory, name, cryptoParameters, keyCollection);
 
 
-        public void Sync(ContainerStatus containerStatus) {
-            Assert.NYI();
-            Assert.NYI();
-            }
+
 
 
         }
+
 
 
     }

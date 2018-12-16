@@ -89,10 +89,15 @@ namespace Goedel.Mesh.Protocol.Server {
 
 		public virtual string						Directory  {get; set;}
         /// <summary>
-        ///The Mesh profile to be registered.
+        ///The Mesh profile that was registered
         /// </summary>
 
 		public virtual ProfileMesh						Profile  {get; set;}
+        /// <summary>
+        ///The profile status. Valid values are "Pending", "Connected", "Blocked"
+        /// </summary>
+
+		public virtual string						Status  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -145,6 +150,11 @@ namespace Goedel.Mesh.Protocol.Server {
 				_Writer.WriteToken ("Profile", 1);
 					Profile.Serialize (_Writer, false);
 				}
+			if (Status != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Status", 1);
+					_Writer.WriteString (Status);
+				}
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
 				}
@@ -186,6 +196,10 @@ namespace Goedel.Mesh.Protocol.Server {
 					Profile = new ProfileMesh ();
 					Profile.Deserialize (JSONReader);
  
+					break;
+					}
+				case "Status" : {
+					Status = JSONReader.ReadString ();
 					break;
 					}
 				default : {

@@ -63,7 +63,7 @@ namespace Goedel.Mesh.Protocol.Server {
         /// <summary>
         /// Add a new account. The account name must be unique.
         /// </summary>
-        public void AccountAdd(AccountEntry accountEntry) {
+        public void AccountAdd(JpcSession jpcSession, AccountEntry accountEntry) {
             ContainerStoreEntry containerEntry;
 
             var directory = Path.Combine(DirectoryRoot, accountEntry.Directory);
@@ -85,7 +85,7 @@ namespace Goedel.Mesh.Protocol.Server {
                 new CatalogDevice(directory).Dispose();
                 new CatalogContact(directory).Dispose();
                 new CatalogApplication(directory).Dispose();
-                new SpoolAccount(directory).Dispose();
+                new SpoolInbound(directory).Dispose();
                 }
 
 
@@ -93,34 +93,29 @@ namespace Goedel.Mesh.Protocol.Server {
             }
 
 
-        public ProfileMesh Connect(DareMessage message) {
+        public ProfileMesh Connect(JpcSession jpcSession, DareMessage proposedProfile) {
             //string account, ProfileMesh profileMesh) {
 
-            JSONReader.Trace = true;
-            var profileMesh = ProfileMesh.Decode(message);
+            //JSONReader.Trace = true;
+            var profileMesh = ProfileMesh.Decode(proposedProfile);
 
-            AccountEntry accountEntry = null;
-            try {
-                accountEntry = GetAccountLocked(profileMesh.Account);
-
-                // 
+            using (var accountHandle = GetAccountUnverified(profileMesh.Account)) {
                 var result = new ProfileMesh() {
                     Account = profileMesh.Account,
                     DeviceProfile = profileMesh.DeviceProfile,
                     ProfileNonce = CryptoCatalog.GetBits(128)
                     };
 
+                var messageConnectionRequest = new MessageConnectionRequest() {
+                    ProfileMesh = result
+                    };
 
-                //result.ProfileWitness = UDF.MakeWitness (profileMesh.DeviceProfile.U
+                var message = DareMessage.Encode(messageConnectionRequest.GetBytes());
+
+                accountHandle.Post(message);
                 return result;
-
                 }
-            finally {
-                if (accountEntry != null) {
-                    System.Threading.Monitor.Exit(accountEntry);
-                    }
 
-                }
 
             }
 
@@ -132,55 +127,86 @@ namespace Goedel.Mesh.Protocol.Server {
         /// Update an account record. There must be an existing record and the request must
         /// be appropriately authenticated.
         /// </summary>
-        public List<ContainerStatus> AccountStatus(VerifiedAccount account) {
+        public List<ContainerStatus> AccountStatus(JpcSession jpcSession, VerifiedAccount account) {
             AccountHandleVerified accountEntry = null;
 
-            try {
-                accountEntry = GetAccountLocked(account);
+            using (accountEntry = GetAccountVerified(account, jpcSession)) {
                 var result = new List<ContainerStatus> {
                     Catalog.Status(accountEntry.Directory, CatalogCredential.Label),
                     Catalog.Status(accountEntry.Directory, CatalogDevice.Label),
                     Catalog.Status(accountEntry.Directory, CatalogContact.Label),
                     Catalog.Status(accountEntry.Directory, CatalogApplication.Label),
-                    Spool.Status(accountEntry.Directory, SpoolAccount.Label)
+                    Spool.Status(accountEntry.Directory, SpoolInbound.Label)
                     };
+
                 return result;
                 }
 
-            finally {
-                if (accountEntry != null) {
-                    System.Threading.Monitor.Exit(accountEntry);
-                    }
-
-                }
-
             }
+
 
         /// <summary>
         /// Update an account record. There must be an existing record and the request must
         /// be appropriately authenticated.
         /// </summary>
-        public void AccountUpdate(VerifiedAccount account, string container, List<DareMessage> Messages) {
+        public List<ContainerUpdate> AccountDownload(JpcSession jpcSession, VerifiedAccount account, List<ConstraintsSelect> selections) {
             AccountHandleVerified accountEntry = null;
 
 
             try {
-                accountEntry = GetAccountLocked(account);
-                Assert.NotNull(accountEntry);
-                using (var catalog = new Catalog(accountEntry.Directory, container)) {
-                    foreach (var message in Messages) {
-                        catalog.Apply(message);
+                accountEntry = GetAccountVerified(account, jpcSession);
+                var updates = new List<ContainerUpdate>();
+                foreach (var selection in selections) {
+                    using (var store = new Store(accountEntry.Directory, selection.Container)) {
+                        var update = new ContainerUpdate() {
+                            Container = selection.Container,
+                            Message = new List<DareMessage>()
+                            };
+                        store.Container.MoveToIndex(selection.IndexMin);
+                        while (!store.Container.EOF) {
+
+                            var message = store.Container.ReadDirect();
+                            if (message != null) {
+                                update.Message.Add(message);
+                                }
+                            }
+
+                        updates.Add(update);
                         }
-
-
                     }
+                return updates;
+                }
+
+            finally {
+                accountEntry?.Dispose();
+                }
+            }
+
+
+
+        /// <summary>
+        /// Update an account record. There must be an existing record and the request must
+        /// be appropriately authenticated.
+        /// </summary>
+        public void AccountUpdate(JpcSession jpcSession, VerifiedAccount account, List<ContainerUpdate> Updates) {
+            AccountHandleVerified accountEntry = null;
+
+
+            try {
+                accountEntry = GetAccountVerified(account, jpcSession);
+                //Assert.NotNull(accountEntry);
+                //using (var catalog = new Catalog(accountEntry.Directory, container)) {
+                //    foreach (var message in Messages) {
+                //        catalog.Apply(message);
+                //        }
+
+
+                //    }
 
                 }
 
             finally {
-                if (accountEntry != null) {
-                    System.Threading.Monitor.Exit(accountEntry);
-                    }
+                accountEntry?.Dispose();
                 }
 
 
@@ -196,11 +222,11 @@ namespace Goedel.Mesh.Protocol.Server {
         /// Update an account record. There must be an existing record and the request must
         /// be appropriately authenticated.
         /// </summary>
-        public bool AccountDelete(VerifiedAccount account) {
+        public bool AccountDelete(JpcSession jpcSession, VerifiedAccount account) {
             AccountHandleVerified accountEntry = null;
 
             try {
-                accountEntry = GetAccountLocked(account);
+                accountEntry = GetAccountVerified(account, jpcSession);
                 throw new NYI();
                 }
 
@@ -216,9 +242,46 @@ namespace Goedel.Mesh.Protocol.Server {
         /// </summary>
         /// <param name="verifiedAccount"></param>
         /// <returns></returns>
-        AccountHandleVerified GetAccountLocked(VerifiedAccount verifiedAccount) => 
-            new AccountHandleVerified (GetAccountLocked(verifiedAccount.Account));
+        AccountHandleVerified GetAccountVerified(VerifiedAccount verifiedAccount, JpcSession jpcSession) {
+            var accountEntry = GetAccountLocked(verifiedAccount.Account);
+            Assert.NotNull(accountEntry);
 
+            if (accountEntry.Profile.ProfileDevice?.DeviceAuthenticationKey?.UDF == jpcSession.UDF) {
+                return new AccountHandleVerified(accountEntry);
+                }
+
+
+
+            // check to see if this is an admin device
+            var masterProfile = accountEntry.Profile.MasterProfile.GetProfileMaster();
+            if (masterProfile.IsAdministrator(jpcSession.UDF)) {
+                return new AccountHandleVerified(accountEntry);
+                }
+
+            using (var catalogDevice = new CatalogDevice(accountEntry.Directory)) {
+
+
+
+
+                }
+            // here look at the list of devices
+
+            // is the requester on it?
+
+
+            throw new NotAuthenticated();
+
+
+            }
+
+
+        /// <summary>
+        /// Get access to an account record for an authenticated request.
+        /// </summary>
+        /// <param name="verifiedAccount"></param>
+        /// <returns></returns>
+        AccountHandleUnverified GetAccountUnverified(string account) =>
+            new AccountHandleUnverified(GetAccountLocked(account));
 
 
         AccountEntry GetAccountLocked(string account) {
@@ -274,8 +337,14 @@ namespace Goedel.Mesh.Protocol.Server {
 
         }
 
-    public class AccountHandle {
+    public class AccountHandle : Disposable {
         public AccountEntry AccountEntry { get; }
+
+
+        protected override void Disposing() {
+            base.Disposing();
+            System.Threading.Monitor.Exit(AccountEntry);
+            }
 
         public AccountHandle(AccountEntry accountEntry) {
             AccountEntry = accountEntry;
@@ -293,8 +362,15 @@ namespace Goedel.Mesh.Protocol.Server {
 
             }
 
-        void PostToMessages(DareMessage dareMessage) {
-            throw new NYI();
+        public void Post(DareMessage dareMessage) {
+
+            // here we should perform an authorization operation against the store.
+
+            using (var container = new Spool(AccountEntry.Directory, SpoolInbound.Label)) {
+
+                container.Add(dareMessage);
+                }
+
             }
 
 

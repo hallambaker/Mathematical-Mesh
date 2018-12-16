@@ -9,7 +9,8 @@ namespace Goedel.Test {
     /// <summary>
     /// An comparison check on the produced result failed
     /// </summary>
-    public class Compare : global::System.Exception {
+    [Serializable]
+	public class Compare : global::System.Exception {
 
 		/// <summary>
         /// Construct instance for exception "An comparison check on the produced result failed"

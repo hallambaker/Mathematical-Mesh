@@ -518,11 +518,12 @@ namespace Goedel.Protocol {
         /// Attempt to read an object end from input.
         /// </summary>
         public override void EndObject() {
-            GetToken ();
+            GetToken();
             if (TokenType != Token.EndObject) {
-                throw new Exception ("Expected }");
+                throw new Exception("Expected }");
                 }
             }
+
 
         /// <summary>
         /// Attempt to read an object from input.
@@ -701,6 +702,17 @@ namespace Goedel.Protocol {
                 }
             else {
                 throw new Exception("Expected , or ]");
+                }
+            }
+
+
+        /// <summary>
+        /// Attempt to read an object end from input.
+        /// </summary>
+        public override void EndArray() {
+            GetToken();
+            if (TokenType != Token.EndArray) {
+                throw new Exception("Expected ]");
                 }
             }
 

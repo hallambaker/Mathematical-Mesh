@@ -19,6 +19,7 @@ namespace Goedel.Mesh.Protocol.Client {
     /// </summary>
     public class ContextAdministrator : ContextDevice {
 
+        public virtual ProfileMaster ProfileMaster { get; protected set;  }
 
         public ContextAdministrator(IMeshMachine machine = null, string accountID = null, string profileID = null)   :
             base (machine,accountID, profileID){
@@ -34,7 +35,9 @@ namespace Goedel.Mesh.Protocol.Client {
 
 
             var profileMesh = new ProfileMesh() {
-                Account = accountName
+                Account = accountName,
+                MasterProfile = ProfileMaster.ProfileMasterSigned,
+                DeviceProfile =ProfileDevice.ProfileDeviceSigned
                 };
 
 
@@ -43,9 +46,14 @@ namespace Goedel.Mesh.Protocol.Client {
             var createRequest = new CreateRequest() {
                 Profile = profileMesh
                 };
+
+            // We create a new meshClientSession because this won't have the 
+            var meshClientSession = new MeshClientSession(this);
+
+            
             MeshService = Machine.GetMeshClient(accountName);
 
-            var result = MeshService.CreateAccount(createRequest);
+            var result = MeshService.CreateAccount(createRequest, meshClientSession);
 
                 // if successful write out to host file
 
@@ -62,7 +70,7 @@ namespace Goedel.Mesh.Protocol.Client {
         public MeshResult DeleteAccount() {
 
             var deleteRequest = new DeleteRequest() { Account = AccountName };
-            var result = MeshService.DeleteAccount(deleteRequest);
+            var result = MeshService.DeleteAccount(deleteRequest, MeshClientSession);
             return new MeshResult() { MeshResponse = result };
             }
 

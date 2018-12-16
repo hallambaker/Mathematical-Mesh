@@ -18,4 +18,7 @@
 				|Subdirectory containing the catalogs and spools for the account.
 		Struct ProfileMesh Profile
 			Description
-				|The Mesh profile to be registered.
+				|The Mesh profile that was registered
+		String Status
+			Description
+				|The profile status. Valid values are "Pending", "Connected", "Blocked"

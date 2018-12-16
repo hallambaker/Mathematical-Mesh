@@ -271,11 +271,11 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="DataEncoding">The data encoding.</param>
         /// <param name="FileStatus">The file status in which to open the container.</param>
         public ContainerPersistenceStoreThreadSafe (string FileName, string Type = null,
-                    string Comment = null, bool ReadOnly = false,
+                    string Comment = null,
                     FileStatus FileStatus = FileStatus.OpenOrCreate,
                     ContainerType ContainerType = ContainerType.Chain,
                     DataEncoding DataEncoding = DataEncoding.JSON) : base(
-                        FileName, Type, Comment, ReadOnly, FileStatus, ContainerType, DataEncoding) {
+                        FileName, Type, Comment, FileStatus, ContainerType, DataEncoding) {
             }
 
         /// <summary>

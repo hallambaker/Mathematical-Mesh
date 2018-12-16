@@ -3,7 +3,7 @@ using System.IO;
 
 using Goedel.Cryptography;
 using Goedel.Cryptography.KeyFile;
-using Goedel.Utilities;
+using Goedel.IO;
 using Goedel.Test.Core;
 
 

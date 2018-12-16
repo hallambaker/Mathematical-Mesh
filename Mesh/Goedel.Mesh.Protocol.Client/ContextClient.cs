@@ -49,7 +49,7 @@ namespace Goedel.Mesh.Protocol.Client {
             account = account ?? AccountName;
             MeshService = Machine.GetMeshClient(account);
             var request = new HelloRequest();
-            var response = MeshService.Hello(request);
+            var response = MeshService.Hello(request, MeshClientSession);
 
             return new MeshResult() { MeshResponse = response };
             }
@@ -63,6 +63,7 @@ namespace Goedel.Mesh.Protocol.Client {
             AccountName = account;
 
             // get the account profile
+            var meshClientSession = new MeshClientSession(this);
             MeshService = Machine.GetMeshClient(account);
 
             var meshConnectData = new ProfileMesh() {
@@ -77,15 +78,15 @@ namespace Goedel.Mesh.Protocol.Client {
             var connectRequest = new ConnectRequest() {
                 SignedMessage = signedMessage
                 };
-
-            var connectResponse = MeshService.Connect(connectRequest);
+            //JSONReader.Trace = true;
+            var connectResponse = MeshService.Connect(connectRequest, MeshClientSession);
 
             string deviceWitness = null;
 
             if (connectResponse.Success()) {
                 var deviceUDF = ProfileDevice.UDFBytes;
                 deviceWitness = UDF.MakeWitnessString(deviceUDF,
-                    connectResponse.ProfileMesh.ProfileWitness);
+                    connectResponse.ProfileMesh.ProfileNonce);
 
                 Machine.Register(connectResponse.ProfileMesh);
                 }
@@ -117,7 +118,7 @@ namespace Goedel.Mesh.Protocol.Client {
                 Account = AccountName
                 };
 
-            var result = MeshService.Status(statusRequest);
+            var result = MeshService.Status(statusRequest, MeshClientSession);
             return new MeshResult() { MeshResponse = result };
             }
 
@@ -185,7 +186,7 @@ namespace Goedel.Mesh.Protocol.Client {
                 Message = new List<DareMessage> { DareMessage }
                 };
 
-            var response = MeshService.Post(postRequest);
+            var response = MeshService.Post(postRequest, MeshClientSession);
 
             return new MeshResult() { MeshResponse = response };
             }
@@ -205,9 +206,40 @@ namespace Goedel.Mesh.Protocol.Client {
                 }
 
             var statusResponse = meshResult.MeshResponse as StatusResponse;
-            foreach (var container in statusResponse.ContainerStatus) {
-                Sync(container);
+
+            List<ConstraintsSelect> select = null;
+
+
+
+            foreach (var containerStatus in statusResponse.ContainerStatus) {
+                var store = GetStore(Store.Factory, containerStatus.Container);
+                if (store.Container.FrameCount < containerStatus.Index) {
+                    select = select ?? new List<ConstraintsSelect>();
+                    var constraintsSelect = new ConstraintsSelect() {
+                        Container = containerStatus.Container,
+                        IndexMin = (int) store.Container.FrameCount
+                        };
+                    select.Add(constraintsSelect);
+                    }
                 }
+
+            if (select == null) {
+                return meshResult;
+                }
+
+            var downloadRequest = new DownloadRequest() {
+                Select = select,
+                Account = account
+                };
+
+            var downloadResponse = MeshService.Download(downloadRequest, MeshClientSession);
+
+
+            foreach (var Update in downloadResponse.Updates) {
+                var store = GetStore(Store.Factory, Update.Container);
+
+                }
+
 
             return meshResult;
 
@@ -215,7 +247,15 @@ namespace Goedel.Mesh.Protocol.Client {
 
         void Sync(ContainerStatus containerStatus) {
             var store = GetStore(Store.Factory, containerStatus.Container);
-            store.Sync(containerStatus);
+            if (store.Container.FrameCount == containerStatus.Index) {
+                return;
+                }
+            Assert.True(containerStatus.Index > store.Container.FrameCount, NYI.Throw);
+
+
+            throw new NYI();
+            // try to pull the updates here.
+
             }
 
 
@@ -232,14 +272,18 @@ namespace Goedel.Mesh.Protocol.Client {
             var message = catalog.ContainerEntry(catalogEntry, ContainerPersistenceStore.EventNew);
             var messages = new List<DareMessage>() { message };
 
-            var uploadRequest = new UploadRequest() {
-                Account = AccountName,
+            var containerUpdate = new ContainerUpdate() {
                 Message = messages,
                 Container = catalog.ContainerDefault
                 };
+
+            var uploadRequest = new UploadRequest() {
+                Account = AccountName,
+                Updates = new List<ContainerUpdate> { containerUpdate }
+                };
             // Get the account client
 
-            var response = MeshService.Upload(uploadRequest);
+            var response = MeshService.Upload(uploadRequest, MeshClientSession);
 
             Assert.False(response.Error()); // check that we could do the upload.
 
