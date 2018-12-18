@@ -213,11 +213,11 @@ namespace Goedel.Mesh.Protocol.Client {
 
             foreach (var containerStatus in statusResponse.ContainerStatus) {
                 var store = GetStore(Store.Factory, containerStatus.Container);
-                if (store.Container.FrameCount < containerStatus.Index) {
+                if (store.FrameCount < containerStatus.Index) {
                     select = select ?? new List<ConstraintsSelect>();
                     var constraintsSelect = new ConstraintsSelect() {
                         Container = containerStatus.Container,
-                        IndexMin = (int) store.Container.FrameCount
+                        IndexMin = (int) store.FrameCount
                         };
                     select.Add(constraintsSelect);
                     }
@@ -237,7 +237,10 @@ namespace Goedel.Mesh.Protocol.Client {
 
             foreach (var Update in downloadResponse.Updates) {
                 var store = GetStore(Store.Factory, Update.Container);
-
+                foreach (var message in Update.Message) {
+                    // Hack: Should have checks here to make sure this is what we asked for and robust, etc.
+                    store.AppendDirect(message);
+                    }
                 }
 
 
@@ -247,10 +250,10 @@ namespace Goedel.Mesh.Protocol.Client {
 
         void Sync(ContainerStatus containerStatus) {
             var store = GetStore(Store.Factory, containerStatus.Container);
-            if (store.Container.FrameCount == containerStatus.Index) {
+            if (store.FrameCount == containerStatus.Index) {
                 return;
                 }
-            Assert.True(containerStatus.Index > store.Container.FrameCount, NYI.Throw);
+            Assert.True(containerStatus.Index > store.FrameCount, NYI.Throw);
 
 
             throw new NYI();

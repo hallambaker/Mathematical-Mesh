@@ -41,7 +41,7 @@ namespace Goedel.Mesh {
 
 
     public class CatalogDevice : Catalog {
-        public static string Label = "CatalogDevice";
+        public const string Label = "CatalogDevice";
 
 
         public override string ContainerDefault => Label;

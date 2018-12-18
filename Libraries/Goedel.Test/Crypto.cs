@@ -33,9 +33,9 @@ namespace Goedel.Test {
             var PublicKeyKeypair = Keypair.KeyPairPublic();
             EncryptionKeys.Add(PublicKeyKeypair);
 
-            Console.WriteLine($"Keypair is {Keypair.UDF}");
-            Console.WriteLine($"  Public {Keypair.PKIXPublicKeyDH}");
-            Console.WriteLine($"  Public {PublicKeyKeypair.UDF}");
+            //Console.WriteLine($"Keypair is {Keypair.UDF}");
+            //Console.WriteLine($"  Public {Keypair.PKIXPublicKeyDH}");
+            //Console.WriteLine($"  Public {PublicKeyKeypair.UDF}");
 
             if (Register) {
                 KeyCollection.Add(Keypair);
@@ -51,8 +51,8 @@ namespace Goedel.Test {
             var PublicKeyKeypair = Keypair.KeyPairPublic();
             SignerKeys.Add(Keypair);
 
-            Console.WriteLine($"Keypair is {Keypair.UDF}");
-            Console.WriteLine($"  Public {PublicKeyKeypair.UDF}");
+            //Console.WriteLine($"Keypair is {Keypair.UDF}");
+            //Console.WriteLine($"  Public {PublicKeyKeypair.UDF}");
 
             if (Register) {
                 KeyCollection.Add(Keypair);
@@ -80,9 +80,9 @@ namespace Goedel.Test {
             var PublicKeyKeypair = KeyPairDH.KeyPairPublicFactory(Public);
             EncryptionKeys.Add(PublicKeyKeypair);
 
-            Console.WriteLine($"Keypair is {Keypair.UDF}");
-            Console.WriteLine($"  Public {Keypair.PKIXPublicKeyDH}");
-            Console.WriteLine($"  Public {PublicKeyKeypair.UDF}");
+            //Console.WriteLine($"Keypair is {Keypair.UDF}");
+            //Console.WriteLine($"  Public {Keypair.PKIXPublicKeyDH}");
+            //Console.WriteLine($"  Public {PublicKeyKeypair.UDF}");
 
             if (Register) {
                 KeyCollection.Default.Add(Keypair);

@@ -76,6 +76,53 @@ namespace Goedel.Cryptography.Dare {
         public DareTrailer Trailer;
         }
 
+
+    public class ContainerEnumeratorRaw : IEnumerator<DareMessage> {
+
+        Container Container;
+        int StartIndex;
+
+        /// <summary>
+        /// Gets the element in the collection at the current position of the enumerator.
+        /// </summary>
+        public DareMessage Current => _Current;
+        DareMessage _Current = null;
+
+
+        /// <summary>
+        /// Create an enumerator for <paramref name="container"/>.
+        /// </summary>
+        /// <param name="container">The container to enumerate.</param>
+        public ContainerEnumeratorRaw(Container container, int startIndex = 0) {
+            this.Container = container;
+            StartIndex = startIndex;
+            Reset();
+            }
+
+        /// <summary>
+        /// When called on an instance of this class, returns the instance. Thus allowing
+        /// selectors to be used in sub classes.
+        /// </summary>
+        /// <returns>This instance</returns>
+        public ContainerEnumeratorRaw GetEnumerator() => this;
+
+        object IEnumerator.Current => throw new NotImplementedException();
+
+        public void Dispose() { }
+        public bool MoveNext() {
+            _Current = Container.ReadDirect();
+            return _Current != null;
+            }
+
+        /// <summary>
+        /// Sets the enumerator to its initial position, which is before the first element in the collection.
+        /// </summary>
+        public void Reset() {
+            Container.MoveToIndex(StartIndex);
+            //MoveNext();
+            }
+        }
+
     /// <summary>
     /// Enumerator for frames in a container beginning with frame 1.
     /// </summary>
@@ -88,16 +135,25 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         public ContainerDataReader Current => _Current;
         ContainerFramerReader _Current = null;
-        //bool Forward;
+
+
+
         /// <summary>
         /// Create an enumerator for <paramref name="container"/>.
         /// </summary>
         /// <param name="container">The container to enumerate.</param>
         public ContainerEnumerator(Container container) {
             this.Container = container;
-            //this.Forward = Forward;
             Reset();
             }
+
+        /// <summary>
+        /// When called on an instance of this class, returns the instance. Thus allowing
+        /// selectors to be used in sub classes.
+        /// </summary>
+        /// <returns>This instance</returns>
+        public ContainerEnumerator GetEnumerator() => this;
+
 
         object IEnumerator.Current => throw new NotImplementedException();
         private object Current1 => Current;
@@ -121,7 +177,7 @@ namespace Goedel.Cryptography.Dare {
         /// Sets the enumerator to its initial position, which is before the first element in the collection.
         /// </summary>
         public void Reset() {
-            Container.Start(); 
+            Container.Start();
             _Current = Container.GetFrameDataReader();
             }
         }
@@ -251,7 +307,7 @@ namespace Goedel.Cryptography.Dare {
 
             try {
 
-                Console.WriteLine($"Open Stream {fileName}");
+                //Console.WriteLine($"Open Stream {fileName}");
                 // Attempt to open file.
                 Container Container;
 
@@ -560,6 +616,13 @@ namespace Goedel.Cryptography.Dare {
 
             }
 
+        /// <summary>
+        /// Return an enumerator with the specified selectors.
+        /// </summary>
+        /// <param name="minIndex">The minimum index.</param>
+        /// <returns>The enumerator.</returns>
+        public ContainerEnumeratorRaw Select(int minIndex) => new ContainerEnumeratorRaw(this, minIndex);
+
 
         /// <summary>
         /// Dictionary of frame index to frame position.
@@ -846,12 +909,12 @@ namespace Goedel.Cryptography.Dare {
             var DummyTrailer = FillDummyTrailer(cryptoStack);
             var LengthTrailer = DummyTrailer == null ? -1 : DummyTrailer.GetBytes(false).Length;
 
-            Console.WriteLine($"And the dummy trailer is {DummyTrailer}");
+            //Console.WriteLine($"And the dummy trailer is {DummyTrailer}");
 
             var DataPayload = AppendContainerHeader.GetBytes(false);
             JBCDStream.WriteWrappedFrameBegin(DataPayload, PayloadLength, LengthTrailer);
             BodyWrite = AppendContainerHeader.BodyWriter(JBCDStream.StreamWrite);
-            Console.WriteLine($"Append frame at {JBCDStream.PositionWrite}\n{AppendContainerHeader}");
+            //Console.WriteLine($"Append frame at {JBCDStream.PositionWrite}\n{AppendContainerHeader}");
             }
 
 
@@ -894,7 +957,7 @@ namespace Goedel.Cryptography.Dare {
             AppendContainerHeader.CloseBodyWriter(out var trailer);
             MakeTrailer(ref trailer);
             var TrailerData = trailer?.GetBytes(false);
-            Console.WriteLine($"Trailer ({TrailerData?.Length}) \n {TrailerData?.ToUTF8()}");
+            //Console.WriteLine($"Trailer ({TrailerData?.Length}) \n {TrailerData?.ToUTF8()}");
 
             JBCDStream.WriteWrappedFrameEnd(TrailerData);
             }

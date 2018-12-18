@@ -34,7 +34,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         protected override void Disposing() {
             Container?.Dispose();
-            Console.WriteLine($"Close Stream {Filename}");
+            //Console.WriteLine($"Close Stream {Filename}");
             }
         #endregion
 

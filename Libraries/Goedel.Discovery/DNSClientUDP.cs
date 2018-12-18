@@ -140,7 +140,7 @@ namespace Goedel.Discovery {
                             //    when.ToString(lifeTimeFormat, System.Globalization.CultureInfo.CurrentCulture)
                             //);
                             }
-                        Console.WriteLine();
+                        //Console.WriteLine();
                         }
                     }
                 }

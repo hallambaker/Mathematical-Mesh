@@ -289,7 +289,7 @@ namespace Goedel.Protocol {
             LengthRemainingRead -= Length;
             var Read = ByteInput.ReadBinary(Data, Offset, Length);
 
-            Console.WriteLine("Read ${Read} bytes");
+            //Console.WriteLine("Read ${Read} bytes");
 
             return Read;
             }

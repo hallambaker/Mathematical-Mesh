@@ -18,7 +18,7 @@ namespace Goedel.Tool.Version {
         public Program(){
             var Directories = Directory.GetDirectories(PathDistribution);
             foreach (var Directory in Directories) {
-                Console.WriteLine($"Directory {Directory}");
+                //Console.WriteLine($"Directory {Directory}");
                 ParseManifest(Directory);
                 }
 

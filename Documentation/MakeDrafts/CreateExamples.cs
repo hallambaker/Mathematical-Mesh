@@ -533,7 +533,7 @@ namespace ExampleGenerator {
                     Header = Container.ContainerHeaderFirst
                     }
                 };
-            Console.WriteLine($"First Frame {Container.ContainerHeader}");
+            //Console.WriteLine($"First Frame {Container.ContainerHeader}");
             foreach (var ContainerDataReader in Container) {
                 var Trailer = (ContainerDataReader as ContainerFramerReader).GetTrailer();
 
@@ -541,7 +541,7 @@ namespace ExampleGenerator {
                     Header = ContainerDataReader.Header,
                     Trailer = Trailer
                     });
-                Console.WriteLine($"Read Frame {ContainerDataReader.Header}");
+                //Console.WriteLine($"Read Frame {ContainerDataReader.Header}");
                 }
             return ContainerHeaders;
             }

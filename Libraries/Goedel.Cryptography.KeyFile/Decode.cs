@@ -105,7 +105,7 @@ namespace Goedel.Cryptography.KeyFile {
             if (Token == KeyFileLex.Token.Data) {
                 var TaggedData = Lexer.GetTaggedData();
                 if (!TaggedData.Strict) {
-                    Console.WriteLine("Some yukky data here");
+                    //Console.WriteLine("Some yukky data here");
                     }
 
                 if (TaggedData.Tag == "RSAPRIVATEKEY") {

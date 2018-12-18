@@ -77,7 +77,7 @@ namespace Goedel.XUnit {
 
 
         public void Test() {
-            Console.WriteLine($"Test Private {SecretKey}");
+            //Console.WriteLine($"Test Private {SecretKey}");
 
             // Check the public key value is correct
             var KeyPrivate = KeyPairECDH.KeyPairFactory(SecretKeyData, KeySecurity.Ephemeral, CryptoAlgorithmID: Algorithm);

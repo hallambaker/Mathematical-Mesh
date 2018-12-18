@@ -414,7 +414,7 @@ namespace Goedel.Cryptography.Dare {
             string Selector = null) {
 
             foreach (var ContainerDataReader in Container) {
-                Console.WriteLine($"Found entry");
+                //Console.WriteLine($"Found entry");
 
                 if (ContainerDataReader.HasPayload) {
 

@@ -194,7 +194,7 @@ namespace Goedel.XUnit {
 
             var MessageBytes = Message.GetJson(false);
 
-            Console.WriteLine(MessageBytes.ToUTF8());
+            //Console.WriteLine(MessageBytes.ToUTF8());
             CheckDecodeDirect(CryptoParameters, MessageBytes, Plaintext, DataSequences, ContentType);
 
             var MessageBytesB = Message.GetJsonB(false);

@@ -120,6 +120,10 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="Index">The frame index to move to</param>
         /// <returns>If success, the frame index.</returns>
         public override bool MoveToIndex (long Index) {
+            if (Index == FrameCount) {
+                JBCDStream.PositionRead = JBCDStream.Length;
+                return false;
+                }
 
             if (FrameIndexToPositionDictionary.TryGetValue(Index, out var Position)) {
                 JBCDStream.PositionRead = Position;

@@ -85,7 +85,7 @@ namespace Goedel.Mesh.Protocol.Server {
                 new CatalogDevice(directory).Dispose();
                 new CatalogContact(directory).Dispose();
                 new CatalogApplication(directory).Dispose();
-                new SpoolInbound(directory).Dispose();
+                new Spool(directory, Spool.SpoolInbound).Dispose();
                 }
 
 
@@ -136,7 +136,7 @@ namespace Goedel.Mesh.Protocol.Server {
                     Catalog.Status(accountEntry.Directory, CatalogDevice.Label),
                     Catalog.Status(accountEntry.Directory, CatalogContact.Label),
                     Catalog.Status(accountEntry.Directory, CatalogApplication.Label),
-                    Spool.Status(accountEntry.Directory, SpoolInbound.Label)
+                    Spool.Status(accountEntry.Directory, Spool.SpoolInbound)
                     };
 
                 return result;
@@ -162,13 +162,10 @@ namespace Goedel.Mesh.Protocol.Server {
                             Container = selection.Container,
                             Message = new List<DareMessage>()
                             };
-                        store.Container.MoveToIndex(selection.IndexMin);
-                        while (!store.Container.EOF) {
 
-                            var message = store.Container.ReadDirect();
-                            if (message != null) {
-                                update.Message.Add(message);
-                                }
+
+                        foreach (var message in store.Select(selection.IndexMin)) {
+                            update.Message.Add(message);
                             }
 
                         updates.Add(update);
@@ -366,7 +363,7 @@ namespace Goedel.Mesh.Protocol.Server {
 
             // here we should perform an authorization operation against the store.
 
-            using (var container = new Spool(AccountEntry.Directory, SpoolInbound.Label)) {
+            using (var container = new Spool(AccountEntry.Directory, Spool.SpoolInbound)) {
 
                 container.Add(dareMessage);
                 }

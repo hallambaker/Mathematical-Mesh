@@ -231,6 +231,8 @@ namespace Goedel.Cryptography.Dare {
 
             WriteTagReverse(BFrame, FrameLength);
 
+            StreamWrite.Flush();
+
             return TotalLength2(FrameLength);
             }
 

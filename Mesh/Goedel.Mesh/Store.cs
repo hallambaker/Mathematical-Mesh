@@ -26,17 +26,20 @@ namespace Goedel.Mesh {
 
     public class Store : Disposable {
         public virtual string ContainerDefault => throw new NYI();
-        public virtual Container Container { get; }
+        protected virtual Container Container { get; }
         //protected override void Disposing() => Container?.Dispose();
 
         protected CryptoParameters CryptoParameters;
         protected KeyCollection KeyCollection;
         string ContainerName;
 
+
+        public long FrameCount => Container.FrameCount;
+
         protected override void Disposing() {
 
             Container?.Dispose();
-            Console.WriteLine($"Close Store {ContainerName}");
+            //Console.WriteLine($"Close Store {ContainerName}");
             }
 
 
@@ -46,7 +49,7 @@ namespace Goedel.Mesh {
 
             containerName = containerName ?? ContainerDefault;
             var fileName = Path.Combine(directory, Path.ChangeExtension(containerName, ".cat"));
-            Console.WriteLine($"Open Store {ContainerName} / {directory}");
+            //Console.WriteLine($"Open Store {ContainerName} / {directory}");
             ContainerName = containerName;
 
             Container = Container.Open(
@@ -74,8 +77,12 @@ namespace Goedel.Mesh {
             new Store(Directory, name, cryptoParameters, keyCollection);
 
 
+        public void AppendDirect(DareMessage message) {
+            Container.AppendDirect(message);
+            }
 
 
+        public ContainerEnumeratorRaw Select(int minIndex) => Container.Select(minIndex);
 
         }
 

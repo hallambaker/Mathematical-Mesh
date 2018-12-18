@@ -139,7 +139,7 @@ namespace Goedel.Registry {
         /// <returns>The resulting formatted string.</returns>
         public static string TBS (this string Value, bool Bold=true) {
             var Message = String.Format("TBS: {0}", Value);
-            Console.WriteLine(Message);
+            //Console.WriteLine(Message);
             return Bold ? "<b>" + Message + "</b>" : Message;
             }
 

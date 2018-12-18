@@ -42,7 +42,7 @@ namespace Goedel.Mesh {
 
     public class CatalogCredential : Catalog {
 
-        public static string Label = "CatalogCredential";
+        public const string Label = "CatalogCredential";
 
         public override string ContainerDefault => Label;
         public AsCatalogEntryCredential AsCatalogEntryCredential => new AsCatalogEntryCredential(this);

@@ -171,7 +171,7 @@ namespace Goedel.XUnit {
 
 
             // Bob make confirmation request Alice - fail.
-            var confirmFail = masterAdminBob.ConfirmationRequest(AccountAlice, "Approve this");
+            var confirmFail = masterAdminBob.ConfirmationRequest(AccountAlice, "Reject This");
 
 
             // Alice accept connection request - grant confirmation privilege.
@@ -179,7 +179,7 @@ namespace Goedel.XUnit {
 
 
             // Bob make confirmation request Alice - accepted.
-            var confirmSuccess = masterAdminBob.ConfirmationRequest(AccountAlice, "Do you approve?");
+            var confirmSuccess = masterAdminBob.ConfirmationRequest(AccountAlice, "Approve This");
 
             // Alice accept confirmation request.
             ProcessPending(masterAdmin);
@@ -196,16 +196,27 @@ namespace Goedel.XUnit {
             var sync = device.Sync();
             sync.AssertSuccess();
 
-            throw new NYI();
-            //foreach (var inbound in device.SpoolInbound) {
-            //    // if inbound = connection request
+            foreach (var message in device.SpoolInbound.Select(1)) {
+                var meshMessage = MeshMessage.FromJSON(message.GetBodyReader());
 
-
-            //    // if inbound = contact request
-
-
-            //    // if inbound = confirmation request
-            //    }
+                switch (meshMessage) {
+                    case MessageConnectionRequest messageConnectionRequest: {
+                        break;
+                        }
+                    case MessageContactRequest messageContactRequest: {
+                        break;
+                        }
+                    case MessageConfirmationRequest messageConfirmationRequest: {
+                        break;
+                        }
+                    case MessageConfirmationResponse messageConfirmationResponse: {
+                        break;
+                        }
+                    case MessageTaskRequest messageTaskRequest: {
+                        break;
+                        }
+                    }
+                }
 
             return true;
             }

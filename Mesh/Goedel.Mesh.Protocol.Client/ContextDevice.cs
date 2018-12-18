@@ -58,12 +58,12 @@ namespace Goedel.Mesh.Protocol.Client {
         Store catalogApplication;
 
 
-        public SpoolInbound SpoolInbound =>
-            (spoolInbound ?? GetStore(SpoolInbound.Factory, SpoolInbound.Label).CacheValue(out spoolInbound)) as SpoolInbound;
+        public Spool SpoolInbound =>
+            (spoolInbound ?? GetStore(Spool.Factory, Spool.SpoolInbound).CacheValue(out spoolInbound)) as Spool;
         Store spoolInbound;
 
-        public SpoolOutbound Outbound =>
-            (spoolOutbound ?? GetStore(SpoolOutbound.Factory, SpoolOutbound.Label).CacheValue(out spoolOutbound)) as SpoolOutbound;
+        public Spool Outbound =>
+            (spoolOutbound ?? GetStore(Spool.Factory, Spool.SpoolOutbound).CacheValue(out spoolOutbound)) as Spool;
         Store spoolOutbound;
         #endregion
         #region // Convenience properties for accessing private keys.
@@ -200,10 +200,26 @@ namespace Goedel.Mesh.Protocol.Client {
             if (DictionaryStores.TryGetValue(name, out var store)) {
                 return store;
                 }
-            store = storeFactoryDelegate(Machine.DirectoryMesh, name, null, KeyCollection);
+            store = MakeStore(name) ;
             DictionaryStores.Add(name, store);
 
             return store;
+            }
+
+        Store MakeStore(string name) {
+
+            switch (name) {
+                case Spool.SpoolInbound: return new Spool (Machine.DirectoryMesh, name, null, KeyCollection);
+                case Spool.SpoolOutbound: return new Spool(Machine.DirectoryMesh, name, null, KeyCollection);
+                case Spool.SpoolArchive: return new Spool(Machine.DirectoryMesh, name, null, KeyCollection);
+
+                case CatalogCredential.Label: return new CatalogCredential(Machine.DirectoryMesh, name, null, KeyCollection);
+                case CatalogDevice.Label: return new CatalogDevice(Machine.DirectoryMesh, name, null, KeyCollection);
+                case CatalogContact.Label: return new CatalogContact(Machine.DirectoryMesh, name, null, KeyCollection);
+                case CatalogApplication.Label: return new CatalogApplication(Machine.DirectoryMesh, name, null, KeyCollection);
+                }
+
+            throw new NYI();
             }
 
 

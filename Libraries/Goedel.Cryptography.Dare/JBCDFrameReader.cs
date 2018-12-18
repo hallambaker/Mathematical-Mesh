@@ -38,7 +38,7 @@ namespace Goedel.Cryptography.Dare {
 
             this.JBCDStream = JBCDStream;
 
-            Console.WriteLine($"Begin Framer.");
+            //Console.WriteLine($"Begin Framer.");
             Length = JBCDStream.FramerOpen(Position);
 
             var HeaderBytes = JBCDStream.FramerGetData();
@@ -84,7 +84,7 @@ namespace Goedel.Cryptography.Dare {
         /// has been reached.</returns>
         public override int Read(byte[] buffer, int offset, int count) {
             var Bytes = Reader==null ? 0 : Reader.Read(buffer, offset, count);
-            Console.WriteLine($"Read {Bytes} Bytes");
+            //Console.WriteLine($"Read {Bytes} Bytes");
             return Bytes;
             }
 
@@ -122,7 +122,7 @@ namespace Goedel.Cryptography.Dare {
             JBCDFrameReader = new JBCDRecordDataReader(JBCDStream, ref FrameRemaining);
             CryptoStackStreamReader = Header.GetDecoder(JBCDFrameReader, out Reader,
                             KeyCollection: KeyCollection);
-            Console.WriteLine($"Begin Reading {FrameRemaining} / Index {Header.Index}");
+            //Console.WriteLine($"Begin Reading {FrameRemaining} / Index {Header.Index}");
             }
 
         /// <summary>
@@ -153,7 +153,7 @@ namespace Goedel.Cryptography.Dare {
         /// has been reached.</returns>
         public override int Read(byte[] buffer, int offset, int count) {
             var Bytes = Reader.Read(buffer, offset, count);
-            Console.WriteLine($"Read {Bytes} Bytes");
+            //Console.WriteLine($"Read {Bytes} Bytes");
             return Bytes;
             }
 
