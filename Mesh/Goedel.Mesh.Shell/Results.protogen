@@ -34,6 +34,14 @@
 		Inherits		Result
 		String			Data
 
-//	Structure ResultCredential
-//		Inherits		Result
-//		Struct EntryCredential Entry
+	Structure ResultRandom
+		Inherits		Result
+		String			Data
+
+	Structure ResultCommitment
+		Inherits		Result
+		String			Data
+
+	Structure ResultDigest
+		Inherits		Result
+		String			Data

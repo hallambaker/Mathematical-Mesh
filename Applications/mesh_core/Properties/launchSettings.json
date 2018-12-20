@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "mesh_core": {
+      "commandName": "Project",
+      "commandLineArgs": "file digest",
+      "workingDirectory": "C:\\Users\\hallam\\Work\\mmm\\Testing\\WorkingDirectory"
+    }
+  }
+}

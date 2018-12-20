@@ -2,6 +2,10 @@
 
 namespace Goedel.Mesh.Shell {
 
+    public partial class ShellResult {
+        public virtual string Verbose() => ToString();
+        }
+
     public partial class Result {
         public virtual StringBuilder StringBuilder() {
             var Builder = new StringBuilder();
@@ -22,7 +26,7 @@ namespace Goedel.Mesh.Shell {
             return Builder.ToString();
             }
 
-        public string Verbose() => "";
+
 
         }
 
@@ -54,4 +58,9 @@ namespace Goedel.Mesh.Shell {
             }
         }
 
+    public partial class ResultRandom {
+        public override string ToString() {
+            return Data;
+            }
+        }
     }

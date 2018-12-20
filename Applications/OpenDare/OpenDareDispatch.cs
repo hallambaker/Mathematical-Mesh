@@ -2,18 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 using Goedel.Utilities;
-using Goedel.Mesh;
-using Goedel.Async;
-using Goedel.Catalog;
-using Goedel.Mesh.Portal.Client;
-using Goedel.Recrypt;
-using Goedel.Recrypt.Client;
-using Goedel.Mesh.Platform.Windows;
-using Goedel.Cryptography.Dare;
-using Goedel.Cryptography.Jose;
-using Goedel.Mesh.Shell;
 
-namespace Goedel.Dare.Shell {
+using Goedel.Cryptography.Dare;
+
+namespace Goedel.Mesh.Shell {
     public partial class DareShell : _DareShell {
 
 
@@ -24,10 +16,10 @@ namespace Goedel.Dare.Shell {
             }
 
         public DareShell() {
-            MeshAsync.Initialize();                 // To parse async messaging
-            MeshCatalog.Initialize();                 // To parse async messaging
-            MeshRecrypt.Initialize();               // To parse recryption profiles
-            Goedel.Mesh.Mesh.Initialize(true);
+            //MeshAsync.Initialize();                 // To parse async messaging
+            //MeshCatalog.Initialize();                 // To parse async messaging
+            //MeshRecrypt.Initialize();               // To parse recryption profiles
+            //Goedel.Mesh.Mesh.Initialize(true);
             }
 
         ShellDispatch SetShell(Goedel.Command.Dispatch Options) {
@@ -211,7 +203,6 @@ namespace Goedel.Dare.Shell {
                 );
             }
         #endregion
-
         #region // Password
         public override void PasswordAdd(PasswordAdd Options) {
             var ShellDispatch = SetShell(Options);
@@ -467,8 +458,6 @@ namespace Goedel.Dare.Shell {
                 );
             }
         #endregion
-        
-        
         #region // Message
         public override void MessageConnect(MessageConnect Options) {
             var ShellDispatch = SetShell(Options);
@@ -517,9 +506,7 @@ namespace Goedel.Dare.Shell {
                 Options.RequestID.Value
                 );
             }
-        #endregion
-        
-        
+        #endregion      
         #region // File
         public override void FileEncrypt(FileEncrypt Options) {
             var ShellDispatch = SetShell(Options);

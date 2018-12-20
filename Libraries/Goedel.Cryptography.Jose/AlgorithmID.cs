@@ -13,9 +13,31 @@ namespace Goedel.Cryptography.Jose {
     public static class AlgorithmID {
 
         /// <summary>
+        /// Lookup  identifier by Jose name or commonly used alias
+        /// </summary>
+        public static readonly Dictionary<string, CryptoAlgorithmID> UpperToID =
+            new Dictionary<string, CryptoAlgorithmID>() {
+                {"AES",     CryptoAlgorithmID.AES256 },
+                {"AES256",  CryptoAlgorithmID.AES256 },
+                {"AES128",  CryptoAlgorithmID.AES128 },
+                {"SHA2",    CryptoAlgorithmID.SHA_2_512 },
+                {"SHA256",  CryptoAlgorithmID.SHA_2_256 },
+                {"SHA128",  CryptoAlgorithmID.SHA_2_512T128 },
+                {"SHA512",  CryptoAlgorithmID.SHA_2_512 },
+                {"SHA3",    CryptoAlgorithmID.SHA_3_512 },
+                {"SHA3256", CryptoAlgorithmID.SHA_3_256 },
+                {"X448",    CryptoAlgorithmID.X448 },
+                {"X25519",  CryptoAlgorithmID.X25519 },
+                {"ED448",   CryptoAlgorithmID.Ed448 },
+                {"ED25519", CryptoAlgorithmID.Ed25519 },
+                //{"", CryptoAlgorithmID }
+                };
+
+
+        /// <summary>
         /// Lookup identifier by Jose name.
         /// </summary>
-        public static readonly Dictionary<string, CryptoAlgorithmID> StringtoID =
+        public static readonly Dictionary<string, CryptoAlgorithmID> StringToID =
             new Dictionary<string, CryptoAlgorithmID> {
                 //SHA-256	alg (Private)
                 { "S256", CryptoAlgorithmID.SHA_2_256},
@@ -44,7 +66,7 @@ namespace Goedel.Cryptography.Jose {
 
 
     
-                //dir Direct use of a shared symmetric key alg Recommended[IESG][RFC7518, Section 4.5]
+                //dir Direct use of a shared symmetric key alg Recommended[IESG] [RFC7518, Section 4.5]
                 { "dir", CryptoAlgorithmID.Direct},                            
                 
                 //A128KW  AES Key Wrap using 128-bit key  alg Recommended[IESG]  [RFC7518, Section 4.4]
@@ -131,25 +153,12 @@ namespace Goedel.Cryptography.Jose {
         public static readonly Dictionary<CryptoAlgorithmID, string> IdToString =
             new Dictionary<CryptoAlgorithmID, string>();
 
-
-        //public static readonly Dictionary<string, CryptoAlgorithmClass> StringtoClass =
-        //    new Dictionary<string, CryptoAlgorithmClass> {
-        //        };
-
-        //public static readonly Dictionary<CryptoAlgorithmClass, string> ClassToString =
-        //    new Dictionary<CryptoAlgorithmClass, string> {
-        //        };
-
         // This is called as a one time initializer
         static AlgorithmID() {
-
-            foreach (var Entry in StringtoID) {
-                //Debug.WriteLine(Entry.Value);
+            foreach (var Entry in StringToID) {
                 IdToString.Add(Entry.Value, Entry.Key);
+                UpperToID.Add(Entry.Key.ToUpper(),Entry.Value);
                 }
-            //foreach (var Entry in StringtoClass) {
-            //    ClassToString.Add(Entry.Value, Entry.Key);
-            //    }
             }
 
         /// <summary>
@@ -162,8 +171,22 @@ namespace Goedel.Cryptography.Jose {
                 return CryptoAlgorithmID.NULL;
                 }
 
-            var Found = StringtoID.TryGetValue(JoseID, out CryptoAlgorithmID Result);
-            return Found ? Result : CryptoAlgorithmID.NULL;
+            var Found = StringToID.TryGetValue(JoseID, out CryptoAlgorithmID result);
+            return Found ? result : CryptoAlgorithmID.NULL;
+            }
+
+        /// <summary>
+        /// Convert a JOSE name to an identifier.
+        /// </summary>
+        /// <param name="uncasedID">Jose Name</param>
+        /// <returns>Identifier</returns>
+        public static CryptoAlgorithmID FromUncasedID(this string uncasedID) {
+            if (uncasedID == null) {
+                return CryptoAlgorithmID.NULL;
+                }
+
+            var Found = UpperToID.TryGetValue(uncasedID, out CryptoAlgorithmID result);
+            return Found ? result : CryptoAlgorithmID.NULL;
             }
 
 

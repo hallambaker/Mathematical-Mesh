@@ -108,17 +108,6 @@ namespace Goedel.Command {
                                 Parameter = j + 1;
                                 Search = false;
                                 }
-
-
-
-                            //switch (Describe.Entries[j]) {
-                            //    case DescribeEntryParameter Entry: {
-                            //        SetValue(Options._Data[Entry.Index], CommandLex.Value);
-                            //        Parameter = j+1;
-                            //        Search = false;
-                            //        break;
-                            //        }
-                            //    }
                             }
                         break;
                         }
@@ -415,7 +404,8 @@ namespace Goedel.Command {
     /// Describe a shell.
     /// </summary>
     public abstract class DispatchShell : Dispatch{
-
+        public virtual void _PreProcess(Dispatch dispatch) { }
+        public virtual void _Preprocess(Dispatch dispatch) { }
         }
 
 
