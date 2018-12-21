@@ -1,10 +1,21 @@
 ﻿using System;
+using System.Threading;
 using System.Collections.Generic;
 using System.IO;
 using Goedel.Utilities;
 using Goedel.IO;
 namespace Goedel.Test {
     public static class Files {
+
+        static int FileCount= 0;
+        public static string ToFileUnique(this object data, string prefix = "TestData-", string suffix = ".txt") {
+            var fileCount = Interlocked.Increment(ref FileCount);
+            var filename = prefix + fileCount.ToString() + suffix;
+
+            filename.WriteFileNew(data.ToString());
+            return filename;
+            }
+
 
         public static void CheckFilesEqual(this string File1, string File2) {
 

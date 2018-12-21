@@ -180,12 +180,13 @@ namespace Goedel.Cryptography.Jose {
         /// </summary>
         /// <param name="uncasedID">Jose Name</param>
         /// <returns>Identifier</returns>
-        public static CryptoAlgorithmID FromUncasedID(this string uncasedID) {
+        public static CryptoAlgorithmID ToCryptoAlgorithmID(this string uncasedID, 
+                    CryptoAlgorithmID defaultID = CryptoAlgorithmID.NULL) {
             if (uncasedID == null) {
-                return CryptoAlgorithmID.NULL;
+                return defaultID;
                 }
 
-            var Found = UpperToID.TryGetValue(uncasedID, out CryptoAlgorithmID result);
+            var Found = UpperToID.TryGetValue(uncasedID.ToUpper(), out CryptoAlgorithmID result);
             return Found ? result : CryptoAlgorithmID.NULL;
             }
 

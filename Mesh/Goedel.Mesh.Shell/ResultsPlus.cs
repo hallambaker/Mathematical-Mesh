@@ -58,9 +58,9 @@ namespace Goedel.Mesh.Shell {
             }
         }
 
-    public partial class ResultRandom {
+    public partial class ResultDigest {
         public override string ToString() {
-            return Data;
+            return Digest;
             }
         }
     }

@@ -24,10 +24,12 @@ namespace ExampleGenerator {
 				 var DataString = "UDF Data Value";
 				 var DataBytes = DataString.ToUTF8();
 				 var DataBytesString = DataBytes.ToStringBase16FormatHex();
-				 var HashData = Goedel.Cryptography.Platform.SHA2_512.Process(DataBytes).ToStringBase16FormatHex();
-				 var HashData3 = Goedel.Cryptography.Platform.SHA3_512.Process(DataBytes).ToStringBase16FormatHex();
-				 var UDFDataBuffer = UDF.UDFBuffer(ContentType, DataBytes);
-				 var UDFDataBuffer3 = UDF.UDFBuffer3(ContentType, DataBytes);
+				 var Sha2Data = Goedel.Cryptography.Platform.SHA2_512.Process(DataBytes);
+				 var Sha3Data = Goedel.Cryptography.Platform.SHA3_512.Process(DataBytes);
+				 var HashData = Sha2Data.ToStringBase16FormatHex();
+				 var HashData3 = Sha3Data.ToStringBase16FormatHex();
+				 var UDFDataBuffer = UDF.UDFBuffer(Sha2Data, ContentType);
+				 var UDFDataBuffer3 = UDF.UDFBuffer(Sha3Data, ContentType);
 				 var UDFDataBufferString = UDFDataBuffer.ToStringBase16FormatHex();
 				 var UDFDataBufferString3 = UDFDataBuffer3.ToStringBase16FormatHex();
 				 var UDFData = Goedel.Cryptography.Platform.SHA2_512.Process(UDFDataBuffer).ToStringBase16FormatHex();
@@ -57,13 +59,13 @@ namespace ExampleGenerator {
 				_Output.Write ("<dl>\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("<dt>Text Presentation (100 bit)\n{0}", _Indent);
-				_Output.Write ("<dd>{1}\n{0}", _Indent, UDF.ToString (ContentType, DataBytes, 100));
+				_Output.Write ("<dd>{1}\n{0}", _Indent, UDF.DataToFormat (DataBytes, ContentType, 100));
 				_Output.Write ("<dt>Text Presentation (125 bit)\n{0}", _Indent);
-				_Output.Write ("<dd>{1}\n{0}", _Indent, UDF.ToString (ContentType, DataBytes, 125));
+				_Output.Write ("<dd>{1}\n{0}", _Indent, UDF.DataToFormat (DataBytes, ContentType, 125));
 				_Output.Write ("<dt>Text Presentation (150 bit)\n{0}", _Indent);
-				_Output.Write ("<dd>{1}\n{0}", _Indent, UDF.ToString (ContentType, DataBytes, 150));
+				_Output.Write ("<dd>{1}\n{0}", _Indent, UDF.DataToFormat (DataBytes, ContentType, 150));
 				_Output.Write ("<dt>Text Presentation (250 bit)\n{0}", _Indent);
-				_Output.Write ("<dd>{1}\n{0}", _Indent, UDF.ToString (ContentType, DataBytes, 250));
+				_Output.Write ("<dd>{1}\n{0}", _Indent, UDF.DataToFormat (DataBytes, ContentType, 250));
 				_Output.Write ("</dl>\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("###Using SHA-3-512 Digest\n{0}", _Indent);
@@ -82,13 +84,13 @@ namespace ExampleGenerator {
 				_Output.Write ("<dl>\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("<dt>Text Presentation (100 bit)\n{0}", _Indent);
-				_Output.Write ("<dd>{1}\n{0}", _Indent, UDF.ToString3 (ContentType, DataBytes, 100));
+				_Output.Write ("<dd>{1}\n{0}", _Indent, UDF.DataToFormat (DataBytes, ContentType, 100, CryptoAlgorithmID.SHA_3_512));
 				_Output.Write ("<dt>Text Presentation (125 bit)\n{0}", _Indent);
-				_Output.Write ("<dd>{1}\n{0}", _Indent, UDF.ToString3 (ContentType, DataBytes, 125));
+				_Output.Write ("<dd>{1}\n{0}", _Indent, UDF.DataToFormat (DataBytes, ContentType, 125, CryptoAlgorithmID.SHA_3_512));
 				_Output.Write ("<dt>Text Presentation (150 bit)\n{0}", _Indent);
-				_Output.Write ("<dd>{1}\n{0}", _Indent, UDF.ToString3 (ContentType, DataBytes, 150));
+				_Output.Write ("<dd>{1}\n{0}", _Indent, UDF.DataToFormat (DataBytes, ContentType, 150, CryptoAlgorithmID.SHA_3_512));
 				_Output.Write ("<dt>Text Presentation (250 bit)\n{0}", _Indent);
-				_Output.Write ("<dd>{1}\n{0}", _Indent, UDF.ToString3 (ContentType, DataBytes, 250));
+				_Output.Write ("<dd>{1}\n{0}", _Indent, UDF.DataToFormat (DataBytes, ContentType, 250, CryptoAlgorithmID.SHA_3_512));
 				_Output.Write ("</dl>\n{0}", _Indent);
 				}
 			}
@@ -106,7 +108,7 @@ namespace ExampleGenerator {
 				 var DataBytes = DataString.ToUTF8();
 				 var DataBytesString = DataBytes.ToStringBase16FormatHex();
 				 var HashData = Goedel.Cryptography.Platform.SHA2_512.Process(DataBytes).ToStringBase16FormatHex();
-				 var UDFDataBuffer = UDF.UDFBuffer(ContentType, DataBytes);
+				 var UDFDataBuffer = UDF.UDFBuffer(DataBytes, ContentType);
 				 var UDFDataBufferString = UDFDataBuffer.ToStringBase16FormatHex();
 				 var UDFData = Goedel.Cryptography.Platform.SHA2_512.Process(UDFDataBuffer).ToStringBase16FormatHex();
 				_Output.Write ("\n{0}", _Indent);

@@ -1,8 +1,9 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using Goedel.Cryptography.Algorithms;
-
+using Goedel.IO;
 namespace Goedel.Cryptography {
 
     /// <summary>
@@ -14,20 +15,20 @@ namespace Goedel.Cryptography {
         private static Aes Aes = Aes.Create();
 
         /// <summary>
-        /// Return the key size and block size for the algorithm specified by <paramref name="CryptoAlgorithmID"/>.
+        /// Return the key size and block size for the algorithm specified by <paramref name="cryptoAlgorithmID"/>.
         /// </summary>
-        /// <param name="CryptoAlgorithmID">The algorithm to report the sizes of.</param>
+        /// <param name="cryptoAlgorithmID">The algorithm to report the sizes of.</param>
         /// <returns>Tuple consisting (int KeySize, int BlockSize).</returns>
         public static (int KeySize, int BlockSize) GetKeySize(
-                    this CryptoAlgorithmID CryptoAlgorithmID
+                    this CryptoAlgorithmID cryptoAlgorithmID
                     ) {
 
-            switch (CryptoAlgorithmID) {
+            switch (cryptoAlgorithmID) {
                 case CryptoAlgorithmID.AES128:
-                case CryptoAlgorithmID.AES128GCM: 
-                case CryptoAlgorithmID.AES128CTS: 
-                case CryptoAlgorithmID.AES128HMAC: 
-                case CryptoAlgorithmID.AES128CBCNone: 
+                case CryptoAlgorithmID.AES128GCM:
+                case CryptoAlgorithmID.AES128CTS:
+                case CryptoAlgorithmID.AES128HMAC:
+                case CryptoAlgorithmID.AES128CBCNone:
                 case CryptoAlgorithmID.AES128ECB: return (128, 128);
 
                 case CryptoAlgorithmID.AES256CBC:
@@ -48,51 +49,18 @@ namespace Goedel.Cryptography {
             }
 
         /// <summary>
-        /// Return an encryption transform the algorithm specified by <paramref name="CryptoAlgorithmID"/>.
+        /// Return an encryption transform the algorithm specified by <paramref name="cryptoAlgorithmID"/>.
         /// </summary>
-        /// <param name="CryptoAlgorithmID">The algorithm.</param>
-        /// <param name="Key">The key to use.</param>
-        /// <param name="IV">The initialization vector (if required).</param>
+        /// <param name="cryptoAlgorithmID">The algorithm.</param>
+        /// <param name="key">The key to use.</param>
+        /// <param name="iv">The initialization vector (if required).</param>
         /// <returns>The encryption transform.</returns>
         public static ICryptoTransform CreateEncryptor(
-                        this CryptoAlgorithmID CryptoAlgorithmID,
-                        byte[] Key,
-                        byte[] IV=null) {
+                        this CryptoAlgorithmID cryptoAlgorithmID,
+                        byte[] key,
+                        byte[] iv = null) {
 
-            switch (CryptoAlgorithmID) {
-                case CryptoAlgorithmID.AES128:
-                case CryptoAlgorithmID.AES128GCM:
-                case CryptoAlgorithmID.AES128CTS:
-                case CryptoAlgorithmID.AES128CBCNone:
-                case CryptoAlgorithmID.AES128ECB:
-       
-                case CryptoAlgorithmID.AES256CBC:
-                case CryptoAlgorithmID.AES256GCM:
-                case CryptoAlgorithmID.AES256CTS:
-                case CryptoAlgorithmID.AES256CBCNone:
-                case CryptoAlgorithmID.AES256ECB: 
-
-                case CryptoAlgorithmID.AES128HMAC:
-                case CryptoAlgorithmID.AES256HMAC: {
-                    return Aes.CreateEncryptor(Key, IV);
-                    }
-                }
-            return null;
-            }
-
-        /// <summary>
-        /// Return a decryption transform the algorithm specified by <paramref name="CryptoAlgorithmID"/>.
-        /// </summary>
-        /// <param name="CryptoAlgorithmID">The algorithm.</param>
-        /// <param name="Key">The key to use.</param>
-        /// <param name="IV">The initialization vector (if required).</param>
-        /// <returns>The decryption transform.</returns>
-        public static ICryptoTransform CreateDecryptor(
-                        this CryptoAlgorithmID CryptoAlgorithmID,
-                        byte[] Key,
-                        byte[] IV) {
-
-            switch (CryptoAlgorithmID) {
+            switch (cryptoAlgorithmID) {
                 case CryptoAlgorithmID.AES128:
                 case CryptoAlgorithmID.AES128GCM:
                 case CryptoAlgorithmID.AES128CTS:
@@ -107,7 +75,40 @@ namespace Goedel.Cryptography {
 
                 case CryptoAlgorithmID.AES128HMAC:
                 case CryptoAlgorithmID.AES256HMAC: {
-                    return Aes.CreateDecryptor(Key, IV);
+                    return Aes.CreateEncryptor(key, iv);
+                    }
+                }
+            return null;
+            }
+
+        /// <summary>
+        /// Return a decryption transform the algorithm specified by <paramref name="cryptoAlgorithmID"/>.
+        /// </summary>
+        /// <param name="cryptoAlgorithmID">The algorithm.</param>
+        /// <param name="key">The key to use.</param>
+        /// <param name="iV">The initialization vector (if required).</param>
+        /// <returns>The decryption transform.</returns>
+        public static ICryptoTransform CreateDecryptor(
+                        this CryptoAlgorithmID cryptoAlgorithmID,
+                        byte[] key,
+                        byte[] iV) {
+
+            switch (cryptoAlgorithmID) {
+                case CryptoAlgorithmID.AES128:
+                case CryptoAlgorithmID.AES128GCM:
+                case CryptoAlgorithmID.AES128CTS:
+                case CryptoAlgorithmID.AES128CBCNone:
+                case CryptoAlgorithmID.AES128ECB:
+
+                case CryptoAlgorithmID.AES256CBC:
+                case CryptoAlgorithmID.AES256GCM:
+                case CryptoAlgorithmID.AES256CTS:
+                case CryptoAlgorithmID.AES256CBCNone:
+                case CryptoAlgorithmID.AES256ECB:
+
+                case CryptoAlgorithmID.AES128HMAC:
+                case CryptoAlgorithmID.AES256HMAC: {
+                    return Aes.CreateDecryptor(key, iV);
                     }
                 }
             return null;
@@ -115,38 +116,38 @@ namespace Goedel.Cryptography {
 
         /// <summary>
         /// Return a Message Authentication Code provider for the algorithm 
-        /// specified by <paramref name="CryptoAlgorithmID"/>.
+        /// specified by <paramref name="cryptoAlgorithmID"/>.
         /// </summary>
-        /// <param name="CryptoAlgorithmID">The algorithm.</param>
-        /// <param name="Key">The key to use.</param>
+        /// <param name="cryptoAlgorithmID">The algorithm.</param>
+        /// <param name="key">The key to use.</param>
         /// <returns>The Message Authentication Code provider.</returns>
         public static HashAlgorithm CreateMac(
-                        this CryptoAlgorithmID CryptoAlgorithmID,
-                        byte[] Key) {
+                        this CryptoAlgorithmID cryptoAlgorithmID,
+                        byte[] key) {
 
-            switch (CryptoAlgorithmID) {
-                case CryptoAlgorithmID.HMAC_SHA_2_256: return new HMACSHA256(Key);
-                case CryptoAlgorithmID.HMAC_SHA_2_512: return new HMACSHA512(Key);
-                case CryptoAlgorithmID.HMAC_SHA_2_512T128: return new HMACSHA512(Key);
+            switch (cryptoAlgorithmID) {
+                case CryptoAlgorithmID.HMAC_SHA_2_256: return new HMACSHA256(key);
+                case CryptoAlgorithmID.HMAC_SHA_2_512: return new HMACSHA512(key);
+                case CryptoAlgorithmID.HMAC_SHA_2_512T128: return new HMACSHA512(key);
 
-                case CryptoAlgorithmID.AES128HMAC:  return new HMACSHA256(Key);
-                case CryptoAlgorithmID.AES256HMAC:  return new HMACSHA512(Key);
-                   
+                case CryptoAlgorithmID.AES128HMAC: return new HMACSHA256(key);
+                case CryptoAlgorithmID.AES256HMAC: return new HMACSHA512(key);
+
                 }
             return null;
             }
 
         /// <summary>
         /// Return a digest provider for the algorithm 
-        /// specified by <paramref name="CryptoAlgorithmID"/>.
+        /// specified by <paramref name="cryptoAlgorithmID"/>.
         /// </summary>
-        /// <param name="CryptoAlgorithmID">The algorithm.</param>
+        /// <param name="cryptoAlgorithmID">The algorithm.</param>
         /// <returns>The digest provider.</returns>
         public static HashAlgorithm CreateDigest(
-                        this CryptoAlgorithmID CryptoAlgorithmID
+                        this CryptoAlgorithmID cryptoAlgorithmID
                         ) {
 
-            switch (CryptoAlgorithmID) {
+            switch (cryptoAlgorithmID) {
                 case CryptoAlgorithmID.SHA_2_256: return SHA256.Create();
                 case CryptoAlgorithmID.SHA_2_512: return SHA512.Create();
                 case CryptoAlgorithmID.SHA_2_512T128: return SHA512.Create();
@@ -161,21 +162,35 @@ namespace Goedel.Cryptography {
 
         /// <summary>
         /// Return a shake provider for the algorithm 
-        /// specified by <paramref name="CryptoAlgorithmID"/>.
+        /// specified by <paramref name="cryptoAlgorithmID"/>.
         /// </summary>
-        /// <param name="CryptoAlgorithmID">The algorithm.</param>
+        /// <param name="cryptoAlgorithmID">The algorithm.</param>
         /// <param name="hashBitLength">The number of output bits to generate.</param>
         /// <returns>The digest provider.</returns>
         public static HashAlgorithm CreateShake(
-                        CryptoAlgorithmID CryptoAlgorithmID,
+                        CryptoAlgorithmID cryptoAlgorithmID,
                         int hashBitLength
                         ) {
 
-            switch (CryptoAlgorithmID) {
+            switch (cryptoAlgorithmID) {
                 case CryptoAlgorithmID.SHAKE_128: return new SHAKE128(hashBitLength);
                 case CryptoAlgorithmID.SHAKE_256: return new SHAKE256(hashBitLength);
                 }
             return null;
+            }
+
+
+
+        public static byte[] GetDigest(this string fileName, 
+                CryptoAlgorithmID cryptoAlgorithmID=CryptoAlgorithmID.SHA_2_512) {
+            var hashProvider = cryptoAlgorithmID.CreateDigest();
+            using (var inputStream = fileName.OpenFileRead()) {
+                using (var cryptoStream = new CryptoStream(Stream.Null, hashProvider, CryptoStreamMode.Write)) {
+                    inputStream.CopyTo(cryptoStream);
+                    }
+                }
+            return hashProvider.Hash;
+
             }
 
         }

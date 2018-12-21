@@ -2,7 +2,6 @@
 using System.IO;
 using System.Collections.Generic;
 using System.Security.Cryptography;
-using System.Text;
 using Goedel.Utilities;
 using Goedel.Cryptography;
 using Goedel.IO;
@@ -22,33 +21,51 @@ namespace Goedel.Mesh.Shell {
             }
 
         public override ShellResult FileRandom(FileRandom Options) {
-            return new ResultRandom() {
-                Success = true,
-                Data = Goedel.Cryptography.UDF.Random()
-                };
-            }
-
-        public override ShellResult FileDigest(FileDigest Options) {
-
-            var hashAlgorithm = Options.AlgDigest.Value.FromUncasedID();
-            var hashProvider = hashAlgorithm.CreateDigest();
-            var inputFile = Options.Input.Value;
-
-            using (var inputStream = inputFile.OpenFileRead()) {
-                using (var cryptoStream = new CryptoStream(Stream.Null, hashProvider, CryptoStreamMode.Write)) {
-                    inputStream.CopyTo(cryptoStream);
-                    }
-                }
-            var result = hashAlgorithm.Hash;
             return new ResultDigest() {
                 Success = true,
-                Data = result.ToStringBase16()
+                Digest = Cryptography.UDF.Random()
+                };
+            }
+
+        public override ShellResult FileUDF(FileUDF Options) {
+            var inputFile = Options.Input.Value;
+            var contentType = Options.ContentType.Value ?? MimeMapping.GetMimeMapping(inputFile) ?? "";
+            var hashAlgorithm = Options.AlgDigest.Value.ToCryptoAlgorithmID(CryptoAlgorithmID.SHA_2_512);
+
+            var contentDigest = inputFile.GetDigest(hashAlgorithm);
+            var digest = Cryptography.UDF.DigestToFormat(contentDigest, contentType, cryptoAlgorithmID: hashAlgorithm) ;
+
+            return new ResultDigest() {
+                Success = true,
+                Digest = digest
+                };
+            }
+
+
+        public override ShellResult FileDigest(FileDigest Options) {
+            var inputFile = Options.Input.Value;
+            return new ResultDigest() {
+                Success = true,
+                Digest = inputFile.GetDigest(Options.AlgDigest.Value).ToStringBase16()
                 };
             }
 
 
 
-        public override ShellResult FileCommitment(FileCommitment Options) => throw new NYI();
+        public override ShellResult FileCommitment(FileCommitment Options) {
+            var inputFile = Options.Input.Value;
+            var hashAlgorithm = Options.AlgDigest.Value.ToCryptoAlgorithmID(CryptoAlgorithmID.SHA_2_512);
+            var key = Options.DigestKey.Value ?? Cryptography.UDF.Random();
+
+            var contentDigest = inputFile.GetDigest(hashAlgorithm);
+            var digest = Cryptography.UDF.DigestToFormat(contentDigest, key, cryptoAlgorithmID: hashAlgorithm);
+
+            return new ResultDigest() {
+                Success = true,
+                Digest = digest,
+                Key = key
+                };
+            }
 
 
         }

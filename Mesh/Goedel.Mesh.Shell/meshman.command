@@ -576,10 +576,20 @@
 			Include Reporting
 			Include DigestOptions
 
+		Command FileUDF "udf"
+			Brief "Calculate the Uniform Data Fingerprint of the input data"
+			Include Reporting
+			Option ContentType "cty" String
+				Brief "Content Trype"
+			Option AlgDigest "alg" String
+				Brief "The digest algorithm"
+			Parameter Input "in" ExistingFile
+				Brief "File to take digest of"
+
 		Command FileDigest "digest"
 			Brief "Calculate the digest value of the input data"
 			Include Reporting
-			Option AlgDigest "adigest" String
+			Option AlgDigest "alg" String
 				Brief "The digest algorithm"
 			Parameter Input "in" ExistingFile
 				Brief "File to take digest of"
@@ -587,7 +597,7 @@
 		Command FileCommitment "commit"
 			Brief "Calculate a commitment value for the input data"
 			Include Reporting
-			Option AlgDigest "adigest" String
+			Option AlgDigest "alg" String
 				Brief "The digest algorithm"
 			Option DigestKey "key" String
 			Parameter Input "in" ExistingFile

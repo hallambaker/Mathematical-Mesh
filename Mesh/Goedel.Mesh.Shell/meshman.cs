@@ -200,6 +200,7 @@ namespace Goedel.Mesh.Shell {
 				{"encrypt", _FileEncrypt._DescribeCommand },
 				{"decrypt", _FileDecrypt._DescribeCommand },
 				{"random", _FileRandom._DescribeCommand },
+				{"udf", _FileUDF._DescribeCommand },
 				{"digest", _FileDigest._DescribeCommand },
 				{"commit", _FileCommitment._DescribeCommand }
 				} // End Entries
@@ -892,6 +893,16 @@ namespace Goedel.Mesh.Shell {
 			ProcessOptions (Args, Index, Options);
 			Dispatch._PreProcess (Options);
 			var result = Dispatch.FileRandom (Options);
+			Dispatch._PostProcess (result);
+			}
+
+		public static void Handle_FileUDF (
+					DispatchShell  DispatchIn, string[] Args, int Index) {
+			Shell Dispatch =	DispatchIn as Shell;
+			FileUDF		Options = new FileUDF ();
+			ProcessOptions (Args, Index, Options);
+			Dispatch._PreProcess (Options);
+			var result = Dispatch.FileUDF (Options);
 			Dispatch._PostProcess (result);
 			}
 
@@ -9412,6 +9423,129 @@ namespace Goedel.Mesh.Shell {
     public partial class FileRandom : _FileRandom {
         } // class FileRandom
 
+    public class _FileUDF : Goedel.Command.Dispatch ,
+							IReporting {
+
+		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new Flag (),
+			new Flag (),
+			new Flag (),
+			new String (),
+			new String (),
+			new ExistingFile ()			} ;
+
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
+			get => _Data[0] as Flag;
+			set => _Data[0]  = value;
+			}
+
+		public virtual string _Verbose {
+			set => _Data[0].Parameter (value);
+			}
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
+			get => _Data[1] as Flag;
+			set => _Data[1]  = value;
+			}
+
+		public virtual string _Report {
+			set => _Data[1].Parameter (value);
+			}
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[2] as Flag;
+			set => _Data[2]  = value;
+			}
+
+		public virtual string _Json {
+			set => _Data[2].Parameter (value);
+			}
+		/// <summary>Field accessor for option [cty]</summary>
+		public virtual String ContentType {
+			get => _Data[3] as String;
+			set => _Data[3]  = value;
+			}
+
+		public virtual string _ContentType {
+			set => _Data[3].Parameter (value);
+			}
+		/// <summary>Field accessor for option [alg]</summary>
+		public virtual String AlgDigest {
+			get => _Data[4] as String;
+			set => _Data[4]  = value;
+			}
+
+		public virtual string _AlgDigest {
+			set => _Data[4].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual ExistingFile Input {
+			get => _Data[5] as ExistingFile;
+			set => _Data[5]  = value;
+			}
+
+		public virtual string _Input {
+			set => _Data[5].Parameter (value);
+			}
+		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
+			Identifier = "udf",
+			Brief =  "Calculate the Uniform Data Fingerprint of the input data",
+			HandleDelegate =  CommandLineInterpreter.Handle_FileUDF,
+			Lazy =  false,
+			Entries = new List<DescribeEntry> () {
+				new DescribeEntryOption () {
+					Identifier = "Verbose", 
+					Default = "true", // null if null
+					Brief = "Verbose reports (default)",
+					Index = 0,
+					Key = "verbose"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Report", 
+					Default = "true", // null if null
+					Brief = "Report output (default)",
+					Index = 1,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Json", 
+					Default = "false", // null if null
+					Brief = "Report output in JSON format",
+					Index = 2,
+					Key = "json"
+					},
+				new DescribeEntryOption () {
+					Identifier = "ContentType", 
+					Default = null, // null if null
+					Brief = "Content Trype",
+					Index = 3,
+					Key = "cty"
+					},
+				new DescribeEntryOption () {
+					Identifier = "AlgDigest", 
+					Default = null, // null if null
+					Brief = "The digest algorithm",
+					Index = 4,
+					Key = "alg"
+					},
+				new DescribeEntryParameter () {
+					Identifier = "Input", 
+					Default = null, // null if null
+					Brief = "File to take digest of",
+					Index = 5,
+					Key = ""
+					}
+				}
+			};
+
+		}
+
+    public partial class FileUDF : _FileUDF {
+        } // class FileUDF
+
     public class _FileDigest : Goedel.Command.Dispatch ,
 							IReporting {
 
@@ -9449,7 +9583,7 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _Json {
 			set => _Data[2].Parameter (value);
 			}
-		/// <summary>Field accessor for option [adigest]</summary>
+		/// <summary>Field accessor for option [alg]</summary>
 		public virtual String AlgDigest {
 			get => _Data[3] as String;
 			set => _Data[3]  = value;
@@ -9501,7 +9635,7 @@ namespace Goedel.Mesh.Shell {
 					Default = null, // null if null
 					Brief = "The digest algorithm",
 					Index = 3,
-					Key = "adigest"
+					Key = "alg"
 					},
 				new DescribeEntryParameter () {
 					Identifier = "Input", 
@@ -9556,7 +9690,7 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _Json {
 			set => _Data[2].Parameter (value);
 			}
-		/// <summary>Field accessor for option [adigest]</summary>
+		/// <summary>Field accessor for option [alg]</summary>
 		public virtual String AlgDigest {
 			get => _Data[3] as String;
 			set => _Data[3]  = value;
@@ -9617,7 +9751,7 @@ namespace Goedel.Mesh.Shell {
 					Default = null, // null if null
 					Brief = "The digest algorithm",
 					Index = 3,
-					Key = "adigest"
+					Key = "alg"
 					},
 				new DescribeEntryOption () {
 					Identifier = "DigestKey", 
@@ -11368,6 +11502,11 @@ namespace Goedel.Mesh.Shell {
 			}
 
 		public virtual ShellResult FileRandom ( FileRandom Options) {
+			CommandLineInterpreter.DescribeValues (Options);
+			return null;
+			}
+
+		public virtual ShellResult FileUDF ( FileUDF Options) {
 			CommandLineInterpreter.DescribeValues (Options);
 			return null;
 			}

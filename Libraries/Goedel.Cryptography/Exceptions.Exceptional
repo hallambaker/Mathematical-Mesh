@@ -141,6 +141,11 @@ Namespace Goedel.Cryptography
 			Description
 				|The cryptographic provider does not support the requested operation
 
+		Exception InvalidAlgorithm
+			Console "The specified algorithm is not valid for the operation attempted"
+			Description
+				|The specified algorithm is not valid for the operation attempted
+
 		Exception PrivateKeyNotFound
 			Console "The operation requested requires a private key that could not be found"
 			Description

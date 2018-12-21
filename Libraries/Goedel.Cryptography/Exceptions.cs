@@ -1174,6 +1174,54 @@ namespace Goedel.Cryptography {
 
 
     /// <summary>
+    /// The specified algorithm is not valid for the operation attempted
+    /// </summary>
+    [Serializable]
+	public class InvalidAlgorithm : CryptographicException {
+
+		/// <summary>
+        /// Construct instance for exception "The specified algorithm is not valid for the operation attempted"
+        /// </summary>		
+		public InvalidAlgorithm () : base ("The specified algorithm is not valid for the operation attempted") {
+			}
+        
+		/// <summary>
+        /// Construct instance for exception "The specified algorithm is not valid for the operation attempted"
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		public InvalidAlgorithm (string Description) : base (Description) {
+			}
+
+		/// <summary>
+        /// Construct instance for exception 		/// containing an inner exception.
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		/// <param name="Inner">Inner Exception</param>	
+		public InvalidAlgorithm (string Description, System.Exception Inner) : 
+				base (Description, Inner) {
+			}
+
+
+
+
+		
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+
+        static System.Exception _Throw(object Reason) {
+			if (Reason as string != null) {
+				return new InvalidAlgorithm(Reason as string);
+				}
+			else {
+				return new InvalidAlgorithm();
+				}
+            }
+        }
+
+
+    /// <summary>
     /// The operation requested requires a private key that could not be found
     /// </summary>
     [Serializable]

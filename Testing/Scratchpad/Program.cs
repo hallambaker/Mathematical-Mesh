@@ -32,8 +32,8 @@ namespace Scratchpad {
     partial class Program {
         static void Main(string[] args) {
             Console.WriteLine("Hello World");
-            TestService.Test().MeshConnect();
-
+            //TestService.Test().MeshConnect();
+            TestKeyless.Test().TestCommitment();
             }
 
 

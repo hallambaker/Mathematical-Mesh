@@ -8,6 +8,11 @@
 		Boolean			Success
 		String			Reason
 
+	Structure ResultDigest
+		Inherits		Result
+		String			Digest
+		String			Key
+
 	Structure ResultDeviceCreate
 		Inherits		Result
 		String			DeviceUDF
@@ -31,17 +36,5 @@
 		String			PIN
 
 	Structure ResultDump
-		Inherits		Result
-		String			Data
-
-	Structure ResultRandom
-		Inherits		Result
-		String			Data
-
-	Structure ResultCommitment
-		Inherits		Result
-		String			Data
-
-	Structure ResultDigest
 		Inherits		Result
 		String			Data

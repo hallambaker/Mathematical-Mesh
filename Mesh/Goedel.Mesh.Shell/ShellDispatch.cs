@@ -11,6 +11,7 @@ using Goedel.Protocol;
 namespace Goedel.Mesh.Shell {
     public partial class Shell : _Shell {
 
+        CommandLineInterpreter CommandLineInterpreter;
 
         public static void Main(string[] Args) {
             var CLI = new CommandLineInterpreter();
@@ -70,7 +71,7 @@ namespace Goedel.Mesh.Shell {
 
             }
 
-        public void _PostProcess(ShellResult shellResult) {
+        public virtual void _PostProcess(ShellResult shellResult) {
             if (Json) {
                 // Only report the results in JSON format and without
                 // additional text.
@@ -84,10 +85,10 @@ namespace Goedel.Mesh.Shell {
                 }
             }
 
-        public List<string> Signers(IEncodeOptions Options) =>
-            (Options.Signer.Value == null) ? null : new List<string> { Options.Signer.Value };
-        public List<string> Recipients(IEncodeOptions Options) =>
-            (Options.Recipient.Value == null) ? null : new List<string> { Options.Recipient.Value };
+        //public List<string> Signers(IEncodeOptions Options) =>
+        //    (Options.Signer.Value == null) ? null : new List<string> { Options.Signer.Value };
+        //public List<string> Recipients(IEncodeOptions Options) =>
+        //    (Options.Recipient.Value == null) ? null : new List<string> { Options.Recipient.Value };
 
 
         public KeyCollection KeyCollection(IAccountOptions Options) => 
@@ -113,12 +114,12 @@ namespace Goedel.Mesh.Shell {
                 if (Options.Encrypt.Value != null) {
                     throw new NYI(); // Hack: need to resolve this against the contacts catalog
                     }
-                cryptoParameters.EncryptID = Options.AlgEncrypt.Value.FromUncasedID();
+                cryptoParameters.EncryptID = Options.AlgEncrypt.Value.ToCryptoAlgorithmID();
                 }
 
 
             if (Options.Sign != null) {
-                cryptoParameters.DigestID = Options.AlgDigest.Value.FromUncasedID();
+                cryptoParameters.DigestID = Options.AlgDigest.Value.ToCryptoAlgorithmID();
                 throw new NYI(); // Hack: need to resolve this against the contacts catalog
                 }
 
