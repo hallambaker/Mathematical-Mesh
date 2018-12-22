@@ -180,8 +180,7 @@ namespace Goedel.Cryptography {
             }
 
 
-
-        public static byte[] GetDigest(this string fileName, 
+        public static byte[] GetDigestOfFile(this string fileName, 
                 CryptoAlgorithmID cryptoAlgorithmID=CryptoAlgorithmID.SHA_2_512) {
             var hashProvider = cryptoAlgorithmID.CreateDigest();
             using (var inputStream = fileName.OpenFileRead()) {

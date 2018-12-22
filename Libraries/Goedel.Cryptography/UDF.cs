@@ -84,49 +84,53 @@ namespace Goedel.Cryptography {
         public static int DefaultBits { get; set; } = 125;
 
 
-        public static byte[] DataToBuffer(
-                byte[] data, 
-                string contentType, 
-                int bits = 0, 
-                CryptoAlgorithmID cryptoAlgorithmID = CryptoAlgorithmID.SHA_2_512) {
+        public static byte[] DataToUDF(
+                byte[] data,
+            string contentType,
+            int bits = 0,
+            CryptoAlgorithmID cryptoAlgorithmID = CryptoAlgorithmID.SHA_2_512,
+            string key = null) {
             switch (cryptoAlgorithmID) {
                 case CryptoAlgorithmID.SHA_2_512: {
-                    return DigestToBuffer(Platform.SHA2_512.Process(data), 
-                        contentType, bits, cryptoAlgorithmID);
+                    return DigestToUDF(Platform.SHA2_512.Process(data),
+                        contentType, bits, cryptoAlgorithmID, key);
                     }
                 case CryptoAlgorithmID.SHA_3_512: {
-                    return DigestToBuffer(Platform.SHA3_512.Process(data), 
-                        contentType, bits, cryptoAlgorithmID);
+                    return DigestToUDF(Platform.SHA3_512.Process(data),
+                        contentType, bits, cryptoAlgorithmID, key);
                     }
                 }
             throw new InvalidAlgorithm();
             }
 
-        public static byte[] DigestToBuffer(
+        public static byte[] DigestToUDF(
                 byte[] digest,
-                string contentType,
-                int bits = 0,
-                CryptoAlgorithmID cryptoAlgorithmID = CryptoAlgorithmID.SHA_2_512) {
-            var buffer = UDFBuffer(digest, contentType);
+            string contentType,
+            int bits = 0,
+            CryptoAlgorithmID cryptoAlgorithmID = CryptoAlgorithmID.SHA_2_512,
+            string key = null) {
+            var buffer = UDFBuffer(digest, contentType, key);
+
+            return BufferDigestToUDF(buffer, bits, cryptoAlgorithmID);
+            }
+
+        public static byte[] BufferDigestToUDF(
+                byte[] buffer,
+            int bits = 0,
+            CryptoAlgorithmID cryptoAlgorithmID = CryptoAlgorithmID.SHA_2_512) {
             byte[] UDFData;
 
-            // Create the empty output buffer
-            var TotalBits = bits == 0 ? DefaultBits : bits;
-            var FullBytes = TotalBits / 8;
-            var ExtraBits = TotalBits % 8;
-            var TotalBytes = ExtraBits == 0 ? FullBytes : FullBytes + 1;
-            byte[] Output = new byte[TotalBytes];
-
+            int versionID;
             // process the data and set the first byte
             switch (cryptoAlgorithmID) {
                 case CryptoAlgorithmID.SHA_2_512: {
                     UDFData = Platform.SHA2_512.Process(buffer);
-                    Output[0] = (byte)UDFPrefix.KeyIdentifierAlgSHA_2_512;
+                    versionID = (byte)UDFPrefix.KeyIdentifierAlgSHA_2_512;
                     break;
                     }
                 case CryptoAlgorithmID.SHA_3_512: {
                     UDFData = Platform.SHA3_512.Process(buffer);
-                    Output[0] = (byte)UDFPrefix.KeyIdentifierAlgSHA_3_512;
+                    versionID = (byte)UDFPrefix.KeyIdentifierAlgSHA_3_512;
                     break;
                     }
                 default: {
@@ -134,16 +138,38 @@ namespace Goedel.Cryptography {
                     }
                 }
 
-            for (var j = 0; j < FullBytes - 1; j++) {
-                Output[j + 1] = UDFData[j];
+            var compress = CountZeros(UDFData);
+
+            // Create the empty output buffer
+            var TotalBits = bits == 0 ? DefaultBits : bits;
+            var FullBytes = 1+TotalBits / 8;
+            //var ExtraBits = TotalBits % 8;
+            //var TotalBytes = ExtraBits == 0 ? FullBytes : FullBytes + 1;
+
+            byte[] Output = new byte[FullBytes+1];
+            Output[0] = (byte) ((compress > 0) ? versionID + compress - MinCompress : versionID);
+            for (var j = 0; j < FullBytes; j++) {
+                Output[j + 1] = UDFData[j+ compress];
                 }
 
-            if (ExtraBits > 0) {
-                Output[TotalBytes - 1] = (byte)(UDFData[FullBytes - 1] << (8 - ExtraBits) & 0xff);
-                }
+            //if (ExtraBits > 0) {
+            //    Output[TotalBytes - 1] = (byte)(UDFData[FullBytes - 1] << (8 - ExtraBits) & 0xff);
+            //    }
 
             return Output;
             }
+
+        const int MinCompress = 2;
+        const int MaxCompress = 7;
+        static int CountZeros (byte[]data) {
+            for (var i = 0; i < MaxCompress; i++) {
+                if (data[i] != 0) {
+                    return i> MinCompress ? i : 0;
+                    }
+                }
+            return MaxCompress;
+            }
+
 
         /// <summary>
         /// Convert a digest value and content type to a UDF buffer.
@@ -152,16 +178,22 @@ namespace Goedel.Cryptography {
         /// <param name="contentType">MIME media type. See 
         /// http://www.iana.org/assignments/media-types/media-types.xhtml for list.</param>
         /// <returns>SHA2-512 (UTF8(ContentType) + ":" + SHA2512(Data))</returns>
-        public static byte[] UDFBuffer(byte[] digest, string contentType) {
-            //var HashData = Platform.SHA2_512.Process(Data);
-            var Tag = Encoding.UTF8.GetBytes(contentType);
-            var Input = new byte[digest.Length + Tag.Length + 1];
+        public static byte[] UDFBuffer(byte[] digest, string contentType, string key = null) {
+            var contentTypeTag = contentType.ToUTF8();
+            var keyTag = key?.ToUTF8();
 
-            Input.AppendChecked(0, Tag);
-            Input[Tag.Length] = (byte)':';
-            Input.AppendChecked(Tag.Length + 1, digest);
+            var length = digest.Length + contentTypeTag.Length + 1 +
+                (key == null ? 0 : keyTag.Length + 1);
+            var Input = new byte[length];
+
+            var index = Input.AppendChecked(0, contentTypeTag);
+            Input[index] = (byte)':';
+            index = Input.AppendChecked(index+1, digest);
+            if (key != null) {
+                Input[index] = (byte)':';
+                Input.AppendChecked(index+1, keyTag);
+                }
             return Input;
-
             }
 
         /// <summary>
@@ -185,10 +217,11 @@ namespace Goedel.Cryptography {
         /// <returns>The binary UDF fingerprint.</returns>
         public static string DataToFormat(
                 byte[] data,
-                string contentType,
-                int bits = 0,
-                CryptoAlgorithmID cryptoAlgorithmID = CryptoAlgorithmID.SHA_2_512) {
-            var buffer = DataToBuffer(data, contentType, bits, cryptoAlgorithmID);
+            string contentType,
+            int bits = 0,
+            CryptoAlgorithmID cryptoAlgorithmID = CryptoAlgorithmID.SHA_2_512,
+            string key = null) {
+            var buffer = DataToUDF(data, contentType, bits, cryptoAlgorithmID, key);
             return Format(buffer, bits);
             }
 
@@ -201,10 +234,11 @@ namespace Goedel.Cryptography {
         /// <returns>The binary UDF fingerprint.</returns>
         public static string DigestToFormat(
                 byte[] data,
-                string contentType,
-                int bits = 0,
-                CryptoAlgorithmID cryptoAlgorithmID = CryptoAlgorithmID.SHA_2_512) {
-            var buffer = DigestToBuffer(data, contentType, bits, cryptoAlgorithmID);
+            string contentType,
+            int bits = 0,
+            CryptoAlgorithmID cryptoAlgorithmID = CryptoAlgorithmID.SHA_2_512,
+            string key = null) {
+            var buffer = DigestToUDF(data, contentType, bits, cryptoAlgorithmID, key);
             return Format(buffer, bits);
             }
 
@@ -250,7 +284,7 @@ namespace Goedel.Cryptography {
         /// <param name="Bits">Precision, must be a multiple of 25 bits.</param>
         /// <returns>The binary UDF fingerprint.</returns>
         public static byte[] FromEscrowed(byte[] Data, int Bits = 0) =>
-            DataToBuffer(Data, uDFConstants.EscrowedKey, Bits);
+            DataToUDF(Data, uDFConstants.EscrowedKey, Bits);
 
 
         /// <summary>
@@ -260,7 +294,7 @@ namespace Goedel.Cryptography {
         /// <param name="Bits">Precision, must be a multiple of 25 bits.</param>
         /// <returns>The binary UDF fingerprint.</returns>
         public static byte[] FromKeyInfo(byte[] Data, int Bits = 0) => 
-            DataToBuffer(Data, uDFConstants.PKIXKey, Bits);
+            DataToUDF(Data, uDFConstants.PKIXKey, Bits);
 
         /// <summary>
         /// Convert a binary UDF to a string.

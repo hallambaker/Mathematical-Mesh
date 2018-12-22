@@ -318,11 +318,10 @@ namespace ExampleGenerator {
             TContainer.Append(TestData300, CryptoParametersSign);
             ContainerHeadersSigned = ReadContainer(TContainer);
 
-            ExampleGenerator.MeshExamplesContainer(this);
 
-            ExampleGenerator.MeshExamplesUDF(this);
+
+            ExampleGenerator.MeshExamplesContainer(this);
             ExampleGenerator.MeshExamplesUDFCompressed(this);
-            //ExampleGenerator.MakeExamplesKeyExchange(this);
             }
 
         //KeyExchangeClient KeyExchangeClient;
@@ -471,15 +470,15 @@ namespace ExampleGenerator {
 
         //void AddMessage (PersonalProfile PersonalProfile) => throw new NYI();
 
-        void GoReference() {
-            StartService();
+        //void GoReference() {
+        //    StartService();
 
 
-            ExampleGenerator.ExamplesCatalog(this);
-            ExampleGenerator.ExamplesPortal(this);
-            ExampleGenerator.ExamplesProfile(this);
-            ExampleGenerator.ExamplesMessaging(this);
-            }
+        //    ExampleGenerator.ExamplesCatalog(this);
+        //    ExampleGenerator.ExamplesPortal(this);
+        //    ExampleGenerator.ExamplesProfile(this);
+        //    ExampleGenerator.ExamplesMessaging(this);
+        //    }
 
 
 

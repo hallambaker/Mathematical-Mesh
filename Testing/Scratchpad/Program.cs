@@ -33,7 +33,8 @@ namespace Scratchpad {
         static void Main(string[] args) {
             Console.WriteLine("Hello World");
             //TestService.Test().MeshConnect();
-            TestKeyless.Test().TestCommitment();
+            //TestKeyless.Test().FindCompression();
+            TestKeyless.Test().TestUDF();
             }
 
 

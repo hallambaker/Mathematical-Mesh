@@ -9661,6 +9661,7 @@ namespace Goedel.Mesh.Shell {
 			new Flag (),
 			new String (),
 			new String (),
+			new String (),
 			new ExistingFile ()			} ;
 
 		/// <summary>Field accessor for option [verbose]</summary>
@@ -9690,32 +9691,41 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _Json {
 			set => _Data[2].Parameter (value);
 			}
-		/// <summary>Field accessor for option [alg]</summary>
-		public virtual String AlgDigest {
+		/// <summary>Field accessor for option [cty]</summary>
+		public virtual String ContentType {
 			get => _Data[3] as String;
 			set => _Data[3]  = value;
 			}
 
-		public virtual string _AlgDigest {
+		public virtual string _ContentType {
 			set => _Data[3].Parameter (value);
 			}
-		/// <summary>Field accessor for option [key]</summary>
-		public virtual String DigestKey {
+		/// <summary>Field accessor for option [alg]</summary>
+		public virtual String AlgDigest {
 			get => _Data[4] as String;
 			set => _Data[4]  = value;
 			}
 
-		public virtual string _DigestKey {
+		public virtual string _AlgDigest {
 			set => _Data[4].Parameter (value);
 			}
-		/// <summary>Field accessor for parameter []</summary>
-		public virtual ExistingFile Input {
-			get => _Data[5] as ExistingFile;
+		/// <summary>Field accessor for option [key]</summary>
+		public virtual String DigestKey {
+			get => _Data[5] as String;
 			set => _Data[5]  = value;
 			}
 
-		public virtual string _Input {
+		public virtual string _DigestKey {
 			set => _Data[5].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual ExistingFile Input {
+			get => _Data[6] as ExistingFile;
+			set => _Data[6]  = value;
+			}
+
+		public virtual string _Input {
+			set => _Data[6].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -9747,24 +9757,31 @@ namespace Goedel.Mesh.Shell {
 					Key = "json"
 					},
 				new DescribeEntryOption () {
+					Identifier = "ContentType", 
+					Default = null, // null if null
+					Brief = "Content Trype",
+					Index = 3,
+					Key = "cty"
+					},
+				new DescribeEntryOption () {
 					Identifier = "AlgDigest", 
 					Default = null, // null if null
 					Brief = "The digest algorithm",
-					Index = 3,
+					Index = 4,
 					Key = "alg"
 					},
 				new DescribeEntryOption () {
 					Identifier = "DigestKey", 
 					Default = null, // null if null
 					Brief = "<Unspecified>",
-					Index = 4,
+					Index = 5,
 					Key = "key"
 					},
 				new DescribeEntryParameter () {
 					Identifier = "Input", 
 					Default = null, // null if null
 					Brief = "File to create commitment of",
-					Index = 5,
+					Index = 6,
 					Key = ""
 					}
 				}

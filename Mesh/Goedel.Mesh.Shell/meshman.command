@@ -597,6 +597,8 @@
 		Command FileCommitment "commit"
 			Brief "Calculate a commitment value for the input data"
 			Include Reporting
+			Option ContentType "cty" String
+				Brief "Content Trype"
 			Option AlgDigest "alg" String
 				Brief "The digest algorithm"
 			Option DigestKey "key" String

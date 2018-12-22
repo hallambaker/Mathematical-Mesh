@@ -11,6 +11,7 @@ using Goedel.Registry;
 namespace ExampleGenerator {
 	public partial class ExampleGenerator : global::Goedel.Registry.Script {
 
+		 static ExampleGenerator Instance(StreamWriter output)  => new ExampleGenerator () { _Output = output};
 		
 
 		//
@@ -19,79 +20,41 @@ namespace ExampleGenerator {
 		public static void MeshExamplesUDF (CreateExamples Example) { /* File  */
 			using (var _Output = new StreamWriter ("Examples\\ExamplesUDF.md")) {
 				var _Indent = ""; 
-				 var ContentType = "text/plain";
-				 var ContentTypeString = ContentType.ToUTF8().ToStringBase16FormatHex();
+				 var instance = Instance (_Output);
 				 var DataString = "UDF Data Value";
-				 var DataBytes = DataString.ToUTF8();
-				 var DataBytesString = DataBytes.ToStringBase16FormatHex();
-				 var Sha2Data = Goedel.Cryptography.Platform.SHA2_512.Process(DataBytes);
-				 var Sha3Data = Goedel.Cryptography.Platform.SHA3_512.Process(DataBytes);
-				 var HashData = Sha2Data.ToStringBase16FormatHex();
-				 var HashData3 = Sha3Data.ToStringBase16FormatHex();
-				 var UDFDataBuffer = UDF.UDFBuffer(Sha2Data, ContentType);
-				 var UDFDataBuffer3 = UDF.UDFBuffer(Sha3Data, ContentType);
-				 var UDFDataBufferString = UDFDataBuffer.ToStringBase16FormatHex();
-				 var UDFDataBufferString3 = UDFDataBuffer3.ToStringBase16FormatHex();
-				 var UDFData = Goedel.Cryptography.Platform.SHA2_512.Process(UDFDataBuffer).ToStringBase16FormatHex();
-				 var UDFData3 = Goedel.Cryptography.Platform.SHA3_512.Process(UDFDataBuffer).ToStringBase16FormatHex();
+				 var Data = DataString.ToUTF8();
+				 var ContentType = "text/plain";
+				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("In the following examples, &<Content-ID> is the UTF8 encoding of the string \n{0}", _Indent);
 				_Output.Write ("\"{1}\" and &<Data> is the UTF8 encoding of the string \"{2}\"\n{0}", _Indent, ContentType, DataString);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("~~~~\n{0}", _Indent);
-				_Output.Write ("Data = {1}\n{0}", _Indent, DataBytesString);
+				_Output.Write ("Data = {1}\n{0}", _Indent,  DataString.ToUTF8().ToStringBase16FormatHex());
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("ContentType = {1}\n{0}", _Indent, ContentTypeString);
+				_Output.Write ("ContentType = {1}\n{0}", _Indent, ContentType.ToUTF8().ToStringBase16FormatHex());
 				_Output.Write ("~~~~\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("###Using SHA-2-512 Digest\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("~~~~\n{0}", _Indent);
-				_Output.Write ("H(&<Data> ) = \n{0}", _Indent);
-				_Output.Write ("{1}\n{0}", _Indent, HashData);
+				 instance.MakeUTFExtendedExample (DataString, CryptoAlgorithmID.SHA_2_512, null);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("H (&<Content-ID> + ‘:’ + H(&<Data>))= \n{0}", _Indent);
-				_Output.Write ("{1}\n{0}", _Indent, UDFDataBufferString);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("H ( &<Content-ID> + ‘:’ + H(&<Data>))= \n{0}", _Indent);
-				_Output.Write ("{1}\n{0}", _Indent, UDFData);
-				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("This fingerprint MAY be specified with higher or lower precision as appropriate.\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("<dl>\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("<dt>Text Presentation (100 bit)\n{0}", _Indent);
-				_Output.Write ("<dd>{1}\n{0}", _Indent, UDF.DataToFormat (DataBytes, ContentType, 100));
-				_Output.Write ("<dt>Text Presentation (125 bit)\n{0}", _Indent);
-				_Output.Write ("<dd>{1}\n{0}", _Indent, UDF.DataToFormat (DataBytes, ContentType, 125));
-				_Output.Write ("<dt>Text Presentation (150 bit)\n{0}", _Indent);
-				_Output.Write ("<dd>{1}\n{0}", _Indent, UDF.DataToFormat (DataBytes, ContentType, 150));
-				_Output.Write ("<dt>Text Presentation (250 bit)\n{0}", _Indent);
-				_Output.Write ("<dd>{1}\n{0}", _Indent, UDF.DataToFormat (DataBytes, ContentType, 250));
+				_Output.Write ("<dt>100 bit precision\n{0}", _Indent);
+				_Output.Write ("<dd>{1}\n{0}", _Indent, UDF.DataToFormat(Data, ContentType, 100));
+				_Output.Write ("<dt>150 bit precision\n{0}", _Indent);
+				_Output.Write ("<dd>{1}\n{0}", _Indent, UDF.DataToFormat(Data, ContentType, 150));
+				_Output.Write ("<dt>200 bit precision\n{0}", _Indent);
+				_Output.Write ("<dd>{1}\n{0}", _Indent, UDF.DataToFormat(Data, ContentType, 200));
+				_Output.Write ("<dt>250 bit precision\n{0}", _Indent);
+				_Output.Write ("<dd>{1}\n{0}", _Indent, UDF.DataToFormat(Data, ContentType, 250));
 				_Output.Write ("</dl>\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("###Using SHA-3-512 Digest\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("~~~~\n{0}", _Indent);
-				_Output.Write ("H(&<Data> ) = \n{0}", _Indent);
-				_Output.Write ("{1}\n{0}", _Indent, HashData3);
+				 instance.MakeUTFExtendedExample (DataString, CryptoAlgorithmID.SHA_3_512, null);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("H (&<Content-ID> + ‘:’ + H(&<Data>))= \n{0}", _Indent);
-				_Output.Write ("{1}\n{0}", _Indent, UDFDataBufferString3);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("H ( &<Content-ID> + ‘:’ + H(&<Data>))= \n{0}", _Indent);
-				_Output.Write ("{1}\n{0}", _Indent, UDFData3);
-				_Output.Write ("~~~~\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("<dl>\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("<dt>Text Presentation (100 bit)\n{0}", _Indent);
-				_Output.Write ("<dd>{1}\n{0}", _Indent, UDF.DataToFormat (DataBytes, ContentType, 100, CryptoAlgorithmID.SHA_3_512));
-				_Output.Write ("<dt>Text Presentation (125 bit)\n{0}", _Indent);
-				_Output.Write ("<dd>{1}\n{0}", _Indent, UDF.DataToFormat (DataBytes, ContentType, 125, CryptoAlgorithmID.SHA_3_512));
-				_Output.Write ("<dt>Text Presentation (150 bit)\n{0}", _Indent);
-				_Output.Write ("<dd>{1}\n{0}", _Indent, UDF.DataToFormat (DataBytes, ContentType, 150, CryptoAlgorithmID.SHA_3_512));
-				_Output.Write ("<dt>Text Presentation (250 bit)\n{0}", _Indent);
-				_Output.Write ("<dd>{1}\n{0}", _Indent, UDF.DataToFormat (DataBytes, ContentType, 250, CryptoAlgorithmID.SHA_3_512));
-				_Output.Write ("</dl>\n{0}", _Indent);
 				}
 			}
 		
@@ -102,6 +65,7 @@ namespace ExampleGenerator {
 		public static void MeshExamplesUDFCompressed (CreateExamples Example) { /* File  */
 			using (var _Output = new StreamWriter ("Examples\\ExamplesUDFCompressed.md")) {
 				var _Indent = ""; 
+				 var instance = Instance (_Output);
 				 var ContentType = "text/plain";
 				 var ContentTypeString = ContentType.ToUTF8().ToStringBase16FormatHex();
 				 var DataString = "290668103";
@@ -112,26 +76,104 @@ namespace ExampleGenerator {
 				 var UDFDataBufferString = UDFDataBuffer.ToStringBase16FormatHex();
 				 var UDFData = Goedel.Cryptography.Platform.SHA2_512.Process(UDFDataBuffer).ToStringBase16FormatHex();
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("###Example\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("The string \"290668103\" has a SHA-2-512 UDF fingerprint with 29 leading zero bits. The inputs\n{0}", _Indent);
+				_Output.Write ("The string \"{1}\" has a SHA-2-512 UDF fingerprint with 29 leading zero bits. The inputs\n{0}", _Indent, DataString);
 				_Output.Write ("to the fingerprint are:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("~~~~\n{0}", _Indent);
 				_Output.Write ("Data = {1}\n{0}", _Indent, DataBytesString);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("ContentType = {1}\n{0}", _Indent, ContentTypeString);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("H ( &<Content-ID> + ‘:’ + H(&<Data>))= \n{0}", _Indent);
+				_Output.Write ("{1}\n{0}", _Indent, UDFData);
 				_Output.Write ("~~~~\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("The 100 bit UDF fingerprint is:\n{0}", _Indent);
+				_Output.Write ("Since the first three bytes of the final hash value are zeros, these are dropped and\n{0}", _Indent);
+				_Output.Write ("the version identifier increased by 1:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("<dt>Text Presentation (100 bit)\n{0}", _Indent);
-				_Output.Write ("<dd>MF3VV-FOFE2-CLRW (Maybe)\n{0}", _Indent);
-				_Output.Write ("</dl>\n{0}", _Indent);
+				 instance.MakeUTFExtendedExample (DataString, CryptoAlgorithmID.SHA_2_512, null);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("<B>NB: The above is not generated from code and might well be incorrect.\n{0}", _Indent);
+				_Output.Write ("Note that the use of compression does not reduce the number of characters presented. \n{0}", _Indent);
+				_Output.Write ("Compression increases the work factor that is achieved for a given fingerprint length\n{0}", _Indent);
+				_Output.Write ("but does not in itself cause the presentation to be changed.\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The 125 bit UDF of the string \"44870804\" using SHA-3-512 is\n{0}", _Indent);
+				_Output.Write ("{1}.\n{0}", _Indent, UDF.DataToFormat("44870804".ToUTF8(), ContentType, 125, CryptoAlgorithmID.SHA_3_512, null));
 				_Output.Write ("\n{0}", _Indent);
 				}
+			}
+		
+
+		//
+		// MeshExamplesUDFCommitment
+		//
+		public static void MeshExamplesUDFCommitment (CreateExamples Example) { /* File  */
+			using (var _Output = new StreamWriter ("Examples\\ExamplesUDFCommitment.md")) {
+				var _Indent = ""; 
+				 var instance = Instance (_Output);
+				 var key = "RBQ26-MEZGP-4SVCU-RYOWO-QTURA";
+				 var DataString = "Konrad is the traitor";
+				 var Data = DataString.ToUTF8();
+				 var ContentType = "text/plain";
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("In the following example, &<Content-ID> is the UTF8 encoding of the string \n{0}", _Indent);
+				_Output.Write ("\"{1}\" and &<Data> is the UTF8 encoding of the string \"{2}\".\n{0}", _Indent, ContentType, DataString);
+				_Output.Write ("The randomly chosen key is {1}.\n{0}", _Indent, key);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("Data = {1}\n{0}", _Indent,  DataString.ToUTF8().ToStringBase16FormatHex());
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("ContentType = {1}\n{0}", _Indent, ContentType.ToUTF8().ToStringBase16FormatHex());
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("Key =  {1}\n{0}", _Indent,  key.ToUTF8().ToStringBase16FormatHex());
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("Processing is performed in the same manner as an unkeyed fingerprint:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				 instance.MakeUTFExtendedExample (DataString, CryptoAlgorithmID.SHA_2_512, key);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The SHA-3-512 commitment with the same inputs is:\n{0}", _Indent);
+				_Output.Write ("{1}\n{0}", _Indent, UDF.DataToFormat(Data, ContentType, 125, CryptoAlgorithmID.SHA_3_512, key));
+				_Output.Write ("\n{0}", _Indent);
+				}
+			}
+		
+
+		//
+		// MakeUTFExtendedExample
+		//
+		public void MakeUTFExtendedExample (string DataString, CryptoAlgorithmID cryptoAlgorithmID, string key) {
+			 var DataBytes = DataString.ToUTF8();
+			 var ContentType = "text/plain";
+			 var HashData = DataBytes.GetDigest(cryptoAlgorithmID);
+			 var UDFDataBuffer = UDF.UDFBuffer(HashData, ContentType, key);
+			 var UDFData = UDFDataBuffer.GetDigest(cryptoAlgorithmID);
+			 var Trimmed=UDF.BufferDigestToUDF(UDFDataBuffer,125,cryptoAlgorithmID);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("H(&<Data>) = \n{0}", _Indent);
+			_Output.Write ("{1}\n{0}", _Indent, HashData.ToStringBase16FormatHex());
+			_Output.Write ("\n{0}", _Indent);
+			if (  (key == null) ) {
+				_Output.Write ("&<Content-ID> + ‘:’ + H(&<Data>) = \n{0}", _Indent);
+				} else {
+				_Output.Write ("&<Content-ID> + ‘:’ + H(&<Data>) + ‘:’ + &<key> = \n{0}", _Indent);
+				}
+			_Output.Write ("{1}\n{0}", _Indent, UDFDataBuffer.ToStringBase16FormatHex());
+			_Output.Write ("\n{0}", _Indent);
+			if (  (key == null) ) {
+				_Output.Write ("H(&<Content-ID> + ‘:’ + H(&<Data>)) = \n{0}", _Indent);
+				} else {
+				_Output.Write ("H(&<Content-ID> + ‘:’ + H(&<Data>) + ‘:’ + &<key>) = \n{0}", _Indent);
+				}
+			_Output.Write ("{1}\n{0}", _Indent, UDFData.ToStringBase16FormatHex());
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("Prefixed, compressed, trimmed =\n{0}", _Indent);
+			_Output.Write ("{1} ...\n{0}", _Indent, Trimmed.ToStringBase16FormatHex());
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("The 125 bit fingerprint value is {1}\n{0}", _Indent, UDF.Format (Trimmed, 125));
+			_Output.Write ("\n{0}", _Indent);
 			}
 		
 

@@ -70,18 +70,6 @@ namespace Goedel.Cryptography {
             Exponent = RSAPublicKey.PublicExponent,
             };
 
-        ///// <summary>
-        ///// Create Keypair from System.Security.Cryotography.AsymmetricAlgorithm provider
-        ///// </summary>
-        ///// <param name="AsymmetricAlgorithm">The algorithm crypto provider</param>
-        ///// <returns>Crypto provider wrapping the specified key.</returns>
-        //public static KeyPair KeyPair(this AsymmetricAlgorithm AsymmetricAlgorithm) {
-        //    if (AsymmetricAlgorithm is RSACryptoServiceProvider AsRSA) {
-        //        return new KeyPairRSA(AsRSA);
-        //        }
-
-        //    return null;
-        //    }
 
         /// <summary>
         /// Convert binary data to portable certificate.

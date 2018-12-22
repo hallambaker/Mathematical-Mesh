@@ -40,7 +40,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="ID"></param>
         /// <returns>The digest algorithm</returns>
-        static CryptoAlgorithmID ExtractMAC (this CryptoAlgorithmID ID) {
+        static CryptoAlgorithmID ExtractMAC(this CryptoAlgorithmID ID) {
 
             switch (ID.Bulk()) {
                 case CryptoAlgorithmID.AES128HMAC: return CryptoAlgorithmID.HMAC_SHA_2_256;
@@ -109,9 +109,9 @@ namespace Goedel.Cryptography {
                     this CryptoAlgorithmID ID,
                     CryptoAlgorithmID Default = CryptoAlgorithmID.Default) {
             var DefaultedID = ID.Meta();
-            DefaultedID = DefaultedID == CryptoAlgorithmID.Default ? 
+            DefaultedID = DefaultedID == CryptoAlgorithmID.Default ?
                 Default.Meta() : DefaultedID;
-            return DefaultedID ;
+            return DefaultedID;
             }
 
         /// <summary>
@@ -123,8 +123,8 @@ namespace Goedel.Cryptography {
         public static CryptoAlgorithmID DefaultBulk(
                     this CryptoAlgorithmID ID,
                     CryptoAlgorithmID Default = CryptoAlgorithmID.Default) {
-            var DefaultedID = ID.Bulk ();
-            DefaultedID = DefaultedID == CryptoAlgorithmID.Default ? 
+            var DefaultedID = ID.Bulk();
+            DefaultedID = DefaultedID == CryptoAlgorithmID.Default ?
                     Default.Bulk() : DefaultedID;
             return DefaultedID;
             }
@@ -179,7 +179,7 @@ namespace Goedel.Cryptography {
         /// <returns>The bulk component.</returns>
         public static CryptoAlgorithmID Mode(this CryptoAlgorithmID ID) {
             var Encryption = ID.Encryption();
-            return (Encryption > 0 )? Encryption & ((CryptoAlgorithmID) 0x7) : Encryption;
+            return (Encryption > 0) ? Encryption & ((CryptoAlgorithmID)0x7) : Encryption;
             }
 
 
@@ -216,9 +216,16 @@ namespace Goedel.Cryptography {
                 Meta : CryptoAlgorithmID.Default;
             }
 
+        public static byte[] GetDigest(this byte[] data,
+                CryptoAlgorithmID cryptoAlgorithmID = CryptoAlgorithmID.SHA_2_512) {
+            var hashProvider = cryptoAlgorithmID.CreateDigest();
+            return hashProvider.ComputeHash(data);
+            }
+
+        public static byte[] GetDigest(this string data,
+                CryptoAlgorithmID cryptoAlgorithmID = CryptoAlgorithmID.SHA_2_512) =>
+            GetDigest(data.ToUTF8(), cryptoAlgorithmID);
 
         }
-
-
  
     }

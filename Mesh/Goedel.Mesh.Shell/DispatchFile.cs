@@ -32,8 +32,8 @@ namespace Goedel.Mesh.Shell {
             var contentType = Options.ContentType.Value ?? MimeMapping.GetMimeMapping(inputFile) ?? "";
             var hashAlgorithm = Options.AlgDigest.Value.ToCryptoAlgorithmID(CryptoAlgorithmID.SHA_2_512);
 
-            var contentDigest = inputFile.GetDigest(hashAlgorithm);
-            var digest = Cryptography.UDF.DigestToFormat(contentDigest, contentType, cryptoAlgorithmID: hashAlgorithm) ;
+            var contentDigest = inputFile.GetDigestOfFile(hashAlgorithm);
+            var digest = Cryptography.UDF.DigestToFormat(contentDigest, contentType, cryptoAlgorithmID: hashAlgorithm);
 
             return new ResultDigest() {
                 Success = true,
@@ -54,11 +54,13 @@ namespace Goedel.Mesh.Shell {
 
         public override ShellResult FileCommitment(FileCommitment Options) {
             var inputFile = Options.Input.Value;
+            var contentType = Options.ContentType.Value ?? MimeMapping.GetMimeMapping(inputFile) ?? "";
             var hashAlgorithm = Options.AlgDigest.Value.ToCryptoAlgorithmID(CryptoAlgorithmID.SHA_2_512);
             var key = Options.DigestKey.Value ?? Cryptography.UDF.Random();
 
-            var contentDigest = inputFile.GetDigest(hashAlgorithm);
-            var digest = Cryptography.UDF.DigestToFormat(contentDigest, key, cryptoAlgorithmID: hashAlgorithm);
+            var contentDigest = inputFile.GetDigestOfFile(hashAlgorithm);
+            var digest = Cryptography.UDF.DigestToFormat(
+                contentDigest, contentType, cryptoAlgorithmID: hashAlgorithm, key: key);
 
             return new ResultDigest() {
                 Success = true,

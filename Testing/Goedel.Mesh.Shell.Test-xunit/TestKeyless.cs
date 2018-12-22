@@ -52,7 +52,10 @@ namespace Goedel.XUnit {
                 //new TestVectorDigest ("Konrad is compromised", "", "", key:"RAA6B-6R32H-5YAQE-IQJHC-KBA4Q"),
                 //new TestVectorDigest ("This is the secret", "", "", key:"RD42E-SYQGS-IGHAK-UP22P-GZUBY"),
                 //new TestVectorDigest ("Test", "", "", key:"RBQ26-MEZGP-4SVCU-RYOWO-QTURA"),
-                new TestVectorDigest ("", "MCQU6-SCKSY-GE33R-UFSIT-ESMB6", "SA3MB-ULUCW-L5VFR-H3D4R-MMLNM", key:"RD5SS-PN2L6-RFTKU-RCLTH-CMP6R") };
+                new TestVectorDigest ("Konrad is the traitor", "MBJVR-JMWNP-3O3J2-Q7YAN-MUHSE",
+                    "SCO5G-VSNMJ-IG6BY-TK74J-OSBQS", key:"RBQ26-MEZGP-4SVCU-RYOWO-QTURA"),
+                new TestVectorDigest ("", "MB276-M34P3-HOVIU-KEMYH-QBFCN",
+                    "SCAY3-ESGAP-57Z7E-LJHHJ-2FWXI", key:"RD5SS-PN2L6-RFTKU-RCLTH-CMP6R") };
         [Fact]
         public void TestCommitment() {
             foreach (var test in CommitmentTests) {
@@ -97,10 +100,9 @@ namespace Goedel.XUnit {
 
         #endregion
         #region // Random
-        [Theory]
-        [InlineData()]
-
-        public void TestRandom(int repeat = 10) {
+        [Fact]
+        public void TestRandom() {
+            var repeat = 10;
             var results = new HashSet<string>();
             var testCLI = new TestCLI();
 
@@ -118,8 +120,15 @@ namespace Goedel.XUnit {
         #region // UDF
 
         List<TestVectorDigest> UDFTests = new List<TestVectorDigest>() {
-            new TestVectorDigest ("UDF Data Value", "MDDK7-N6A72-7AJZN-OSTRX-XKS72", "SCFIN-CQGDR-KG47R-7OVPT-TCHZ5", null),
-            new TestVectorDigest ("", "MBIDU-QYL4U-GZZDA-YKFFM-QLANU", "SDBDM-J6CIV-DSPDT-GHEFE-6F3PC", null)
+            new TestVectorDigest ("UDF Data Value", "MDDK7-N6A72-7AJZN-OSTRX-XKS7D", 
+                "SCFIN-CQGDR-KG47R-7OVPT-TCHZ7", null),
+            new TestVectorDigest ("290668103", "ME522-SXCSN-BFY3H-JBAAD-2SUES", 
+                "SB7J7-6FGZK-T3PK5-FUTRU-MMURU", null),
+            new TestVectorDigest ("44870804", "MA5W3-F6RGM-BGEWU-TO3GY-XYNKR",
+                "SETHM-SHUAF-R7L7V-HRIEW-MQ5KT", null),
+            new TestVectorDigest ("", "MBIDU-QYL4U-GZZDA-YKFFM-QLAN6",
+                "SDBDM-J6CIV-DSPDT-GHEFE-6F3PU", null)
+
             };
 
         [Fact]
@@ -134,6 +143,25 @@ namespace Goedel.XUnit {
                 if (test.SHA3 != null) {
                     var result = TestUDFInt(test.Data, test.ContentType, "sha3");
                     result.AssertEqual(test.SHA3);
+                    }
+                }
+
+            }
+
+
+        public int FindCompression() {
+
+            for (var i=0; true; i++) {
+                if (i % 1000 == 0) {
+                    Console.WriteLine(i);
+                    }
+                var content = i.ToString().ToUTF8();
+                var buffer = UDF.DataToUDF(
+                    content, "text/plain", cryptoAlgorithmID: CryptoAlgorithmID.SHA_3_512);
+                if (buffer[0] > 144) {
+                    Console.WriteLine(UDF.Format(buffer));
+
+                    return i;
                     }
                 }
 

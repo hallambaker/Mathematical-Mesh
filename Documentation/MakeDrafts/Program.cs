@@ -5,7 +5,7 @@ using Goedel.Mesh;
 //using Goedel.Mesh.Local;
 //using Goedel.Mesh.Client;
 //using Goedel.Mesh.Server;
-using Goedel.Protocol;
+using Goedel.Cryptography;
 using Goedel.Protocol.Debug;
 
 namespace ExampleGenerator {
@@ -14,11 +14,11 @@ namespace ExampleGenerator {
 
         string LogPortal = "Portal.jlog";
         string LogMesh = "Mesh.jlog";
-        public bool All = true;
+        public bool All = false;
 
         static void Main(string[] args) {
             Goedel.IO.Debug.Initialize();
-            //Mesh.Initialize(true);
+            Goedel.Cryptography.Cryptography.Initialize(); // initialize the cryptographic support libraries.
 
             var Program = new CreateExamples();
             Program.Go();
@@ -30,23 +30,19 @@ namespace ExampleGenerator {
             //// Delete data from previous runs
             //MakeClean();
 
-            GenerateKeys();
-
-
-            GoDareContainer();
-
-
-            GoDareMessage();
-            //JSONReader.Trace = true;
-
-            GoContainer();
-
-            GoReference();
-            GoAdvanced();
-
-            //GoKeyExchange();
-
-            GoMesh();
+            ExampleGenerator.MeshExamplesUDF(this);
+            ExampleGenerator.MeshExamplesUDFCompressed(this);
+            ExampleGenerator.MeshExamplesUDFCommitment(this);
+            //GoContainer();
+            //GenerateKeys();
+            //GoDareContainer();
+            //GoDareMessage();
+            ////JSONReader.Trace = true;
+            //GoContainer();
+            //GoReference();
+            //GoAdvanced();
+            ////GoKeyExchange();
+            //GoMesh();
 
             // Make the documentation
             MakeDocs();
