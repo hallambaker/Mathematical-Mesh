@@ -162,7 +162,7 @@ namespace Goedel.Cryptography.Jose {
             }
 
         /// <summary>
-        /// Convert a JOSE name to an identifier.
+        /// Convert a case sensitive JOSE name to an identifier.
         /// </summary>
         /// <param name="JoseID">Jose Name</param>
         /// <returns>Identifier</returns>
@@ -176,9 +176,11 @@ namespace Goedel.Cryptography.Jose {
             }
 
         /// <summary>
-        /// Convert a JOSE name to an identifier.
+        /// Convert a case insensitive algorithm name to an identifier.
         /// </summary>
         /// <param name="uncasedID">Jose Name</param>
+        /// <param name="defaultID">Optional deafult algorithm to be returned if 
+        /// <paramref name="uncasedID"/> is null.</param>
         /// <returns>Identifier</returns>
         public static CryptoAlgorithmID ToCryptoAlgorithmID(this string uncasedID, 
                     CryptoAlgorithmID defaultID = CryptoAlgorithmID.NULL) {
@@ -187,7 +189,7 @@ namespace Goedel.Cryptography.Jose {
                 }
 
             var Found = UpperToID.TryGetValue(uncasedID.ToUpper(), out CryptoAlgorithmID result);
-            return Found ? result : CryptoAlgorithmID.NULL;
+            return Found ? result : CryptoAlgorithmID.Unknown;
             }
 
 

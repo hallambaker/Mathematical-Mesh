@@ -261,10 +261,6 @@ namespace Goedel.Cryptography.Dare {
         /// the specified file name, content type and optional comment.
         /// </summary>
         /// <param name="FileName">Log file.</param>
-        /// <param name="ReadOnly">If true, persistence store must exist
-        /// and will be opened in read-only mode. If false, persistence store
-        /// is opened in read/write mode and a new store will be created
-        /// if none exists.</param>
         /// <param name="Type">Type of data to store (the schema name).</param>
         /// <param name="Comment">Comment to be written to the log.</param>
         /// <param name="ContainerType">The Container type.</param>

@@ -22,8 +22,6 @@ namespace Goedel.Mesh {
             base.Disposing();
             }
 
-        string ContainerName;
-
         //public Dictionary<string, CatalogEntry> EntriesByUniqueId = new Dictionary<string, CatalogEntry>();
         private readonly object CatalogLock = new object();
 

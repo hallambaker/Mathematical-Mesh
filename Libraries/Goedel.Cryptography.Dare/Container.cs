@@ -76,7 +76,9 @@ namespace Goedel.Cryptography.Dare {
         public DareTrailer Trailer;
         }
 
-
+    /// <summary>
+    /// Enumerator that returns the raw, unencrypted container data.
+    /// </summary>
     public class ContainerEnumeratorRaw : IEnumerator<DareMessage> {
 
         Container Container;
@@ -85,13 +87,13 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// Gets the element in the collection at the current position of the enumerator.
         /// </summary>
-        public DareMessage Current => _Current;
-        DareMessage _Current = null;
+        public DareMessage Current { get; private set; } = null;
 
 
         /// <summary>
         /// Create an enumerator for <paramref name="container"/>.
         /// </summary>
+        /// <param name="startIndex">The first item to enumerate.</param>
         /// <param name="container">The container to enumerate.</param>
         public ContainerEnumeratorRaw(Container container, int startIndex = 0) {
             this.Container = container;
@@ -108,14 +110,24 @@ namespace Goedel.Cryptography.Dare {
 
         object IEnumerator.Current => throw new NotImplementedException();
 
+        /// <summary>
+        /// Dispose method.
+        /// </summary>
         public void Dispose() { }
+
+        /// <summary>
+        /// Move to the next item in the enumeration.
+        /// </summary>
+        /// <returns>If true, the next item was found. Otherwise, the end of the enumeration 
+        /// was reached.</returns>
         public bool MoveNext() {
-            _Current = Container.ReadDirect();
-            return _Current != null;
+            Current = Container.ReadDirect();
+            return Current != null;
             }
 
         /// <summary>
-        /// Sets the enumerator to its initial position, which is before the first element in the collection.
+        /// Sets the enumerator to its initial position, which is before the first element 
+        /// in the collection.
         /// </summary>
         public void Reset() {
             Container.MoveToIndex(StartIndex);
@@ -294,6 +306,10 @@ namespace Goedel.Cryptography.Dare {
         /// for decryption keys. If unspecified, the default KeyCollection is used.</param>
         /// <param name="cryptoParameters">Cryptographic parameters specifying defaults
         /// for encoding and authentication of data.</param>
+        /// <param name="containerType">The container type to create if the container does
+        /// not already exist.</param>
+        /// <param name="contentType">The content type to declare if a new container is
+        /// created.</param>
         /// <returns>The new container.</returns>
         public static Container Open(
                         string fileName,
@@ -817,7 +833,10 @@ namespace Goedel.Cryptography.Dare {
 
             }
 
-
+        /// <summary>
+        /// Return the current container frame as a DareMessage.
+        /// </summary>
+        /// <returns>The container data.</returns>
         public DareMessage ReadDirect() {
             var found = JBCDStream.ReadFrame(out var headerData, out var FrameData, out var trailerData);
             if (!found) {

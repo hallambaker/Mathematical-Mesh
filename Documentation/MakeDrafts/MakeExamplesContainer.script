@@ -112,5 +112,43 @@ Frame #{Frame.Header.Index}
 
 #end method
 
+#file MeshManToolDare "Examples\\MeshManToolDare.md" CreateExamples Example
+
+The dare command set supports the following operations on files:
+
+<dl>
+<dt>encode
+<dd>Encode data as DARE Message.
+<dt>decode
+<dd>Decode a DARE Message.
+<dt>verify
+<dd>Verify a DARE Message.
+</dl>
+
+#end file
+
+
+#file MeshManToolContainer "Examples\\MeshManToolContainer.md" CreateExamples Example
+
+The container command set supports the following operations on files:
+
+<dl>
+<dt>create
+<dd>Create a new DARE Container.
+<dt>archive
+<dd>Create a new DARE Container and archive the specified files.
+<dt>append
+<dd>Append the specified file as an entry to the specified container.
+<dt>index
+<dd>Compile an index for the specified container and append to the end.
+<dt>extract
+<dd>Extract the specified record from the container
+<dt>copy
+<dd>Copy container contents to create a new container
+<dt>verify
+<dd>Verify signatures and digests on container.
+</dl>
+
+#end file
 
 #end xclass

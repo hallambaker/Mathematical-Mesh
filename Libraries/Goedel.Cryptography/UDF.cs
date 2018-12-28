@@ -49,7 +49,7 @@ namespace Goedel.Cryptography {
     /// <summary>
     /// Constants used in building UDF values.
     /// </summary>
-    public partial class uDFConstants {
+    public partial class UDFConstants {
 
 
 
@@ -83,7 +83,16 @@ namespace Goedel.Cryptography {
         /// </summary>
         public static int DefaultBits { get; set; } = 125;
 
-
+        /// <summary>
+        /// Calculate a UDF fingerprint from an OpenPGP key with specified precision.
+        /// </summary>
+        /// <param name="contentType">MIME media type of data being fingerprinted.</param>
+        /// <param name="data">Data to be fingerprinted.</param>
+        /// <param name="bits">Precision, must be a multiple of 25 bits.</param>
+        /// <param name="cryptoAlgorithmID">The cryptographic digest to use to compute
+        /// the hash value.</param>
+        /// <param name="key">Optional key used to create a keyed fingerprint.</param>
+        /// <returns>The binary UDF fingerprint.</returns>
         public static byte[] DataToUDF(
                 byte[] data,
             string contentType,
@@ -103,6 +112,16 @@ namespace Goedel.Cryptography {
             throw new InvalidAlgorithm();
             }
 
+        /// <summary>
+        /// Calculate a UDF fingerprint from an OpenPGP key with specified precision.
+        /// </summary>
+        /// <param name="contentType">MIME media type of data being fingerprinted.</param>
+        /// <param name="digest">Digest of the data to be fingerprinted.</param>
+        /// <param name="bits">Precision, must be a multiple of 25 bits.</param>
+        /// <param name="cryptoAlgorithmID">The cryptographic digest to use to compute
+        /// the hash value.</param>
+        /// <param name="key">Optional key used to create a keyed fingerprint.</param>
+        /// <returns>The binary UDF fingerprint.</returns>
         public static byte[] DigestToUDF(
                 byte[] digest,
             string contentType,
@@ -113,6 +132,15 @@ namespace Goedel.Cryptography {
 
             return BufferDigestToUDF(buffer, bits, cryptoAlgorithmID);
             }
+
+        /// <summary>
+        /// Calculate a UDF fingerprint from an OpenPGP key with specified precision.
+        /// </summary>
+        /// <param name="buffer">The prepared data buffer.</param>
+        /// <param name="bits">Precision, must be a multiple of 25 bits.</param>
+        /// <param name="cryptoAlgorithmID">The cryptographic digest to use to compute
+        /// the hash value.</param>
+        /// <returns>The binary UDF fingerprint.</returns>
 
         public static byte[] BufferDigestToUDF(
                 byte[] buffer,
@@ -175,6 +203,7 @@ namespace Goedel.Cryptography {
         /// Convert a digest value and content type to a UDF buffer.
         /// </summary>
         /// <param name="digest">Digest value to be formatted</param>
+        /// <param name="key">Optional key used to create a keyed fingerprint.</param>
         /// <param name="contentType">MIME media type. See 
         /// http://www.iana.org/assignments/media-types/media-types.xhtml for list.</param>
         /// <returns>SHA2-512 (UTF8(ContentType) + ":" + SHA2512(Data))</returns>
@@ -211,9 +240,12 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Calculate a UDF fingerprint from an OpenPGP key with specified precision.
         /// </summary>
-        /// <param name="ContentType">MIME media type of data being fingerprinted.</param>
-        /// <param name="Data">Data to be fingerprinted.</param>
-        /// <param name="Bits">Precision, must be a multiple of 25 bits.</param>
+        /// <param name="contentType">MIME media type of data being fingerprinted.</param>
+        /// <param name="data">Data to be fingerprinted.</param>
+        /// <param name="bits">Precision, must be a multiple of 25 bits.</param>
+        /// <param name="cryptoAlgorithmID">The cryptographic digest to use to compute
+        /// the hash value.</param>
+        /// <param name="key">Optional key used to create a keyed fingerprint.</param>
         /// <returns>The binary UDF fingerprint.</returns>
         public static string DataToFormat(
                 byte[] data,
@@ -228,9 +260,12 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Calculate a UDF fingerprint from an OpenPGP key with specified precision.
         /// </summary>
-        /// <param name="ContentType">MIME media type of data being fingerprinted.</param>
-        /// <param name="Data">Data to be fingerprinted.</param>
-        /// <param name="Bits">Precision, must be a multiple of 25 bits.</param>
+        /// <param name="contentType">MIME media type of data being fingerprinted.</param>
+        /// <param name="data">Data to be fingerprinted.</param>
+        /// <param name="bits">Precision, must be a multiple of 25 bits.</param>
+        /// <param name="cryptoAlgorithmID">The cryptographic digest to use to compute
+        /// the hash value.</param>
+        /// <param name="key">Optional key used to create a keyed fingerprint.</param>
         /// <returns>The binary UDF fingerprint.</returns>
         public static string DigestToFormat(
                 byte[] data,
@@ -284,7 +319,7 @@ namespace Goedel.Cryptography {
         /// <param name="Bits">Precision, must be a multiple of 25 bits.</param>
         /// <returns>The binary UDF fingerprint.</returns>
         public static byte[] FromEscrowed(byte[] Data, int Bits = 0) =>
-            DataToUDF(Data, uDFConstants.EscrowedKey, Bits);
+            DataToUDF(Data, UDFConstants.EscrowedKey, Bits);
 
 
         /// <summary>
@@ -294,7 +329,7 @@ namespace Goedel.Cryptography {
         /// <param name="Bits">Precision, must be a multiple of 25 bits.</param>
         /// <returns>The binary UDF fingerprint.</returns>
         public static byte[] FromKeyInfo(byte[] Data, int Bits = 0) => 
-            DataToUDF(Data, uDFConstants.PKIXKey, Bits);
+            DataToUDF(Data, UDFConstants.PKIXKey, Bits);
 
         /// <summary>
         /// Convert a binary UDF to a string.

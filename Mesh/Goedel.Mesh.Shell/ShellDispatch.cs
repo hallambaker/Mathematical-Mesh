@@ -11,7 +11,7 @@ using Goedel.Protocol;
 namespace Goedel.Mesh.Shell {
     public partial class Shell : _Shell {
 
-        CommandLineInterpreter CommandLineInterpreter;
+        //CommandLineInterpreter CommandLineInterpreter;
 
         public static void Main(string[] Args) {
             var CLI = new CommandLineInterpreter();

@@ -36,11 +36,7 @@ namespace Goedel.Mesh {
 
         public long FrameCount => Container.FrameCount;
 
-        protected override void Disposing() {
-
-            Container?.Dispose();
-            //Console.WriteLine($"Close Store {ContainerName}");
-            }
+        protected override void Disposing() => Container?.Dispose();
 
 
         public Store(string directory, string containerName = null,

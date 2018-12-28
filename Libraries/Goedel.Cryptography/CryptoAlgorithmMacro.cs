@@ -216,15 +216,29 @@ namespace Goedel.Cryptography {
                 Meta : CryptoAlgorithmID.Default;
             }
 
+        /// <summary>
+        /// Calculate the digest value of <paramref name="data"/> using the algorithm
+        /// specified by <paramref name="cryptoAlgorithmID"/>.
+        /// </summary>
+        /// <param name="data">The data to digest.</param>
+        /// <param name="cryptoAlgorithmID">The digest algorithm.</param>
+        /// <returns>The digest value.</returns>
         public static byte[] GetDigest(this byte[] data,
                 CryptoAlgorithmID cryptoAlgorithmID = CryptoAlgorithmID.SHA_2_512) {
             var hashProvider = cryptoAlgorithmID.CreateDigest();
             return hashProvider.ComputeHash(data);
             }
 
-        public static byte[] GetDigest(this string data,
+        /// <summary>
+        /// Calculate the digest value of <paramref name="utf8"/> using the algorithm
+        /// specified by <paramref name="cryptoAlgorithmID"/>.
+        /// </summary>
+        /// <param name="utf8">String to be converted to UTF8 to provide the digest input.</param>
+        /// <param name="cryptoAlgorithmID">The digest algorithm.</param>
+        /// <returns>The digest value.</returns>
+        public static byte[] GetDigest(this string utf8,
                 CryptoAlgorithmID cryptoAlgorithmID = CryptoAlgorithmID.SHA_2_512) =>
-            GetDigest(data.ToUTF8(), cryptoAlgorithmID);
+            GetDigest(utf8.ToUTF8(), cryptoAlgorithmID);
 
         }
  

@@ -179,7 +179,13 @@ namespace Goedel.Cryptography {
             return null;
             }
 
-
+        /// <summary>
+        /// Calculate the digest value of the contents of <paramref name="fileName"/> using the algorithm
+        /// specified by <paramref name="cryptoAlgorithmID"/>.
+        /// </summary>
+        /// <param name="fileName">The file containing the data to digest.</param>
+        /// <param name="cryptoAlgorithmID">The digest algorithm.</param>
+        /// <returns>The digest value.</returns>
         public static byte[] GetDigestOfFile(this string fileName, 
                 CryptoAlgorithmID cryptoAlgorithmID=CryptoAlgorithmID.SHA_2_512) {
             var hashProvider = cryptoAlgorithmID.CreateDigest();

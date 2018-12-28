@@ -184,9 +184,13 @@ namespace ExampleGenerator {
 			using (var _Output = new StreamWriter ("Examples\\ExamplesSIN.md")) {
 				var _Indent = ""; 
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("A SIN is an Internet Identifier that contains a fingerprint of a root of trust that may be used to verify the interpretation of the identifier. This section describes the manner in which SINs are used. The following section describes their construction using Uniform Data Fingerprints [I-D.hallambaker-udf]\n{0}", _Indent);
+				_Output.Write ("A SIN is an Internet Identifier that contains a fingerprint of a root of \n{0}", _Indent);
+				_Output.Write ("trust that may be used to verify the interpretation of the identifier. This \n{0}", _Indent);
+				_Output.Write ("section describes the manner in which SINs are used. The following section describes \n{0}", _Indent);
+				_Output.Write ("their construction using Uniform Data Fingerprints [I-D.hallambaker-udf]\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("For example, Example Inc holds the domain name example.com and has deployed a private CA whose root of trust is a PKIX certificate with the UDF fingerprint MB2GK-6DUF5-YGYYL-JNY5E-RWSHZ.\n{0}", _Indent);
+				_Output.Write ("For example, Example Inc holds the domain name example.com and has deployed a private \n{0}", _Indent);
+				_Output.Write ("CA whose root of trust is a PKIX certificate with the UDF fingerprint MB2GK-6DUF5-YGYYL-JNY5E-RWSHZ.\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("Alice is an employee of Example Inc., she uses three email addresses:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
@@ -196,17 +200,26 @@ namespace ExampleGenerator {
 				_Output.Write ("A strong email address that is backwards compatible.\n{0}", _Indent);
 				_Output.Write ("alice@example.com.mm--mb2gk-6duf5-ygyyl-jny5e-rwshz\n{0}", _Indent);
 				_Output.Write ("A strong email address that is backwards incompatible.\n{0}", _Indent);
-				_Output.Write ("All three forms of the address are valid RFC822 addresses and may be used in a legacy email client, stored in an address book application, etc. But the ability of a legacy client to make use of the address differs. Addresses of the first type may always be used. Addresses of the second type may only be used if an appropriate MX record is provisioned. Addresses of the third type will always fail unless the resolver understands that it is a SIN requiring special processing.\n{0}", _Indent);
+				_Output.Write ("All three forms of the address are valid RFC822 addresses and may be used in a legacy \n{0}", _Indent);
+				_Output.Write ("email client, stored in an address book application, etc. But the ability of a legacy \n{0}", _Indent);
+				_Output.Write ("client to make use of the address differs. Addresses of the first type may always be used. \n{0}", _Indent);
+				_Output.Write ("Addresses of the second type may only be used if an appropriate MX record is provisioned. \n{0}", _Indent);
+				_Output.Write ("Addresses of the third type will always fail unless the resolver understands that it is a \n{0}", _Indent);
+				_Output.Write ("SIN requiring special processing.\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("When specified as the destination address in a Mail User Application (MUA), these addresses have the following interpretations:\n{0}", _Indent);
+				_Output.Write ("When specified as the destination address in a Mail User Application (MUA), these addresses \n{0}", _Indent);
+				_Output.Write ("have the following interpretations:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("alice@example.com\n{0}", _Indent);
 				_Output.Write ("Send mail to Alice without requiring security enhancements.\n{0}", _Indent);
 				_Output.Write ("alice@mm--mb2gk-6duf5-ygyyl-jny5e-rwshz.example.com\n{0}", _Indent);
-				_Output.Write ("Send mail to Alice. If the MUA is SIN-Aware, it MUST resolve the security policy specified by the fingerprint and apply security enhancements as mandated by that policy.\n{0}", _Indent);
+				_Output.Write ("Send mail to Alice. If the MUA is SIN-Aware, it MUST resolve the security policy specified \n{0}", _Indent);
+				_Output.Write ("by the fingerprint and apply security enhancements as mandated by that policy.\n{0}", _Indent);
 				_Output.Write ("alice@example.com.mm--mb2gk-6duf5-ygyyl-jny5e-rwshz\n{0}", _Indent);
-				_Output.Write ("Only send mail to Alice if the MUA is SIN-Aware, it MUST resolve the security policy specified by the fingerprint and apply security enhancements as mandated by that policy.\n{0}", _Indent);
-				_Output.Write ("These rules allow Bob to send email to Alice with either ‘best effort’ security or mandatory security as the circumstances demand\n{0}", _Indent);
+				_Output.Write ("Only send mail to Alice if the MUA is SIN-Aware, it MUST resolve the security policy \n{0}", _Indent);
+				_Output.Write ("specified by the fingerprint and apply security enhancements as mandated by that policy.\n{0}", _Indent);
+				_Output.Write ("These rules allow Bob to send email to Alice with either ‘best effort’ security or \n{0}", _Indent);
+				_Output.Write ("mandatory security as the circumstances demand\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				}
 			}
@@ -229,6 +242,71 @@ namespace ExampleGenerator {
 				_Output.Write ("Connect to the IMAP server example.com over a TLS connection with a certificate that is valid in a chain of trust that contains a certificate with the fingerprint mb2gk.\n{0}", _Indent);
 				_Output.Write ("mailto:alice@example.com.mm--mb2gk-6duf5-ygyyl-jny5e-rwshz\n{0}", _Indent);
 				_Output.Write ("Encrypt mail messages using S/MIME using an S/MIME certificate that is valid in a chain of trust that contains a certificate with the fingerprint mb2gk.\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				}
+			}
+		
+
+		//
+		// MeshManToolFile
+		//
+		public static void MeshManToolFile (CreateExamples Example) { /* File  */
+			using (var _Output = new StreamWriter ("Examples\\MeshManToolFile.md")) {
+				var _Indent = ""; 
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The file command set supports the following operations on files:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("<dl>\n{0}", _Indent);
+				_Output.Write ("<dt>random\n{0}", _Indent);
+				_Output.Write ("<dd>Return a randomized string\n{0}", _Indent);
+				_Output.Write ("<dt>digest\n{0}", _Indent);
+				_Output.Write ("<dd>Calculate the digest value of the input data\n{0}", _Indent);
+				_Output.Write ("<dt>commit\n{0}", _Indent);
+				_Output.Write ("<dd>Calculate a commitment value for the input data\n{0}", _Indent);
+				_Output.Write ("<dt>encode\n{0}", _Indent);
+				_Output.Write ("</dl>\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("##Command random\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The random command returns a randomized string in UDF format containing at\n{0}", _Indent);
+				_Output.Write ("least 117 bits of random data.\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The random command may be used to in scripts to generate temporary passwords \n{0}", _Indent);
+				_Output.Write ("that are to be deleted as soon as the script completes.\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("For example, Alice wants to export her GPG key from her Mesh profile to a local\n{0}", _Indent);
+				_Output.Write ("file that can be input to her GPG mail application. She enters the following \n{0}", _Indent);
+				_Output.Write ("commands:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("While this approach successfully configures her mail application, her private key\n{0}", _Indent);
+				_Output.Write ("was written to the hard drive of the machine in the process. Even though she\n{0}", _Indent);
+				_Output.Write ("used the delete command to remove the file containg the private key, this is\n{0}", _Indent);
+				_Output.Write ("unlikely to prevent recovery using forensic tools on the storage media.\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("Encrypting the private key file under a randomly generated password is a\n{0}", _Indent);
+				_Output.Write ("much more robust approach. But only if we make sure that our password does\n{0}", _Indent);
+				_Output.Write ("not get written out to the disk either.\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("<ul>\n{0}", _Indent);
+				_Output.Write ("<li>Disable the shell command history feature.\n{0}", _Indent);
+				_Output.Write ("<li>Generate a random password.\n{0}", _Indent);
+				_Output.Write ("<li>Export the private key encrypted under the random password.\n{0}", _Indent);
+				_Output.Write ("<li>Import the private key to the application.\n{0}", _Indent);
+				_Output.Write ("<li>Delete the private key file.\n{0}", _Indent);
+				_Output.Write ("<li>Restart the machine to erase the password from memory.\n{0}", _Indent);
+				_Output.Write ("</ul>\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("This is achieved using the following shell commands:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("export HISTFILE=/dev/null\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("##Command digest\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("##Command commit\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				}
 			}

@@ -459,49 +459,49 @@
 
 
 	CommandSet Message "message"
-		Brief "Confirmation message options"
-
-		Command MessageConnect "Connect"
+		Brief "Contact and confirmation message options"
+		
+		Command MessageContact "send"
 			Brief "Post a conection request to a user"
 			Parameter Recipient "recipient" String
 				Brief "The recipient to send the conection request to"
 			Include AccountOptions
 			Include Reporting
 
-		Command MessageConfirm "Confirm"
+		Command MessageConfirm "confirm"
 			Brief "Post a confirmation request to a user"
 			Parameter Recipient "recipient" String
 				Brief "The recipient to send the confirmation request to"
 			Include AccountOptions
 			Include Reporting
 
-		Command MessageStatus "Status"
+		Command MessagePending "pending"
+			Brief "List pending requests"
+			Include AccountOptions
+			Include Reporting
+
+		Command MessageStatus "status"
 			Brief "Request status of pending requests"
 			Option RequestID "requestid" String
 				Brief "Specifies the request to provide the status of"
 			Include AccountOptions
 			Include Reporting
 
-		Command MessagePending "Pending"
-			Brief "List pending requests"
-			Include AccountOptions
-			Include Reporting
-
-		Command MessageAccept "Accept"
+		Command MessageAccept "accept"
 			Brief "Accept a pending request"
 			Option RequestID "requestid" String
 				Brief "Specifies the request to accept"
 			Include AccountOptions
 			Include Reporting
 
-		Command MessageReject "Reject"
+		Command MessageReject "reject"
 			Brief "Reject a pending request"
 			Option RequestID "requestid" String
 				Brief "Specifies the request to reject"
 			Include AccountOptions
 			Include Reporting
 
-		Command MessageBlock "Block"
+		Command MessageBlock "block"
 			Brief "Reject a pending request and block requests from that source"
 			Option RequestID "requestid" String
 				Brief "Specifies the request to reject and block"
@@ -544,13 +544,10 @@
 			Parameter MemberID "member" String
 				Brief "User to delete"
 
-
-
-	CommandSet File "File"
+	CommandSet Dare "dare"
 		Brief "DARE Message encryption and decryption commands"
-
-		Command FileEncrypt "encrypt"
-			Brief "Encode file as DARE Message."
+		Command FileEncrypt "encode"
+			Brief "Encode data as DARE Message."
 			Parameter Input "in" ExistingFile
 				Brief "File or directory to encrypt"
 			Include EncodeOptions
@@ -561,8 +558,8 @@
 			Option Subdirectories "sub" Flag
 				Brief "Process subdirectories recursively."
 		
-		Command FileDecrypt "decrypt"
-			Brief "Decrypt a DARE Message."
+		Command FileDecrypt "decode"
+			Brief "Decode a DARE Message."
 			Include AccountOptions
 			Include Reporting
 			Parameter Input "in" ExistingFile
@@ -570,6 +567,15 @@
 			Parameter Output "out" NewFile
 				Brief "Decrypted File"
 
+		Command FileVerify "verify"
+			Brief "Verify a DARE Message."
+			Include AccountOptions
+			Include Reporting
+			Parameter Input "in" ExistingFile
+				Brief "Encrypted File"
+
+	CommandSet Hash "hash"
+		Brief "Hash and digest operations."
 
 		Command FileRandom "random"
 			Brief "Return a randomized string"			
@@ -586,7 +592,7 @@
 			Parameter Input "in" ExistingFile
 				Brief "File to take digest of"
 
-		Command FileDigest "digest"
+		Command FileDigest "file"
 			Brief "Calculate the digest value of the input data"
 			Include Reporting
 			Option AlgDigest "alg" String
@@ -642,6 +648,14 @@
 				Brief "Container to append to"
 			Parameter Output "file" NewFile
 				Brief "File to append"
+
+		Command ContainerIndex "index"
+			Brief "Compile an index for the specified container and append to the end."
+			Include EncodeOptions
+			Include AccountOptions
+			Include Reporting
+			Parameter Input "in" ExistingFile
+				Brief "Container to append to"
 
 		Command ContainerExtract "extract"
 			Brief "Extract the specified record from the container"

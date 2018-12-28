@@ -150,9 +150,13 @@ The 125 bit fingerprint value is #{UDF.Format (Trimmed, 125)}
 
 #file MeshExamplesSIN "Examples\\ExamplesSIN.md" CreateExamples Example
 
-A SIN is an Internet Identifier that contains a fingerprint of a root of trust that may be used to verify the interpretation of the identifier. This section describes the manner in which SINs are used. The following section describes their construction using Uniform Data Fingerprints [I-D.hallambaker-udf]
+A SIN is an Internet Identifier that contains a fingerprint of a root of 
+trust that may be used to verify the interpretation of the identifier. This 
+section describes the manner in which SINs are used. The following section describes 
+their construction using Uniform Data Fingerprints [I-D.hallambaker-udf]
 
-For example, Example Inc holds the domain name example.com and has deployed a private CA whose root of trust is a PKIX certificate with the UDF fingerprint MB2GK-6DUF5-YGYYL-JNY5E-RWSHZ.
+For example, Example Inc holds the domain name example.com and has deployed a private 
+CA whose root of trust is a PKIX certificate with the UDF fingerprint MB2GK-6DUF5-YGYYL-JNY5E-RWSHZ.
 
 Alice is an employee of Example Inc., she uses three email addresses:
 
@@ -162,17 +166,26 @@ alice@mm--mb2gk-6duf5-ygyyl-jny5e-rwshz.example.com
 A strong email address that is backwards compatible.
 alice@example.com.mm--mb2gk-6duf5-ygyyl-jny5e-rwshz
 A strong email address that is backwards incompatible.
-All three forms of the address are valid RFC822 addresses and may be used in a legacy email client, stored in an address book application, etc. But the ability of a legacy client to make use of the address differs. Addresses of the first type may always be used. Addresses of the second type may only be used if an appropriate MX record is provisioned. Addresses of the third type will always fail unless the resolver understands that it is a SIN requiring special processing.
+All three forms of the address are valid RFC822 addresses and may be used in a legacy 
+email client, stored in an address book application, etc. But the ability of a legacy 
+client to make use of the address differs. Addresses of the first type may always be used. 
+Addresses of the second type may only be used if an appropriate MX record is provisioned. 
+Addresses of the third type will always fail unless the resolver understands that it is a 
+SIN requiring special processing.
 
-When specified as the destination address in a Mail User Application (MUA), these addresses have the following interpretations:
+When specified as the destination address in a Mail User Application (MUA), these addresses 
+have the following interpretations:
 
 alice@example.com
 Send mail to Alice without requiring security enhancements.
 alice@mm--mb2gk-6duf5-ygyyl-jny5e-rwshz.example.com
-Send mail to Alice. If the MUA is SIN-Aware, it MUST resolve the security policy specified by the fingerprint and apply security enhancements as mandated by that policy.
+Send mail to Alice. If the MUA is SIN-Aware, it MUST resolve the security policy specified 
+by the fingerprint and apply security enhancements as mandated by that policy.
 alice@example.com.mm--mb2gk-6duf5-ygyyl-jny5e-rwshz
-Only send mail to Alice if the MUA is SIN-Aware, it MUST resolve the security policy specified by the fingerprint and apply security enhancements as mandated by that policy.
-These rules allow Bob to send email to Alice with either ‘best effort’ security or mandatory security as the circumstances demand
+Only send mail to Alice if the MUA is SIN-Aware, it MUST resolve the security policy 
+specified by the fingerprint and apply security enhancements as mandated by that policy.
+These rules allow Bob to send email to Alice with either ‘best effort’ security or 
+mandatory security as the circumstances demand
 
 #end file
 
@@ -192,7 +205,62 @@ Encrypt mail messages using S/MIME using an S/MIME certificate that is valid in 
 #end file
 
 
+#file MeshManToolFile "Examples\\MeshManToolFile.md" CreateExamples Example
+
+The file command set supports the following operations on files:
+
+<dl>
+<dt>random
+<dd>Return a randomized string
+<dt>digest
+<dd>Calculate the digest value of the input data
+<dt>commit
+<dd>Calculate a commitment value for the input data
+<dt>encode
+</dl>
 
 
+####Command random
+
+The random command returns a randomized string in UDF format containing at
+least 117 bits of random data.
+
+The random command may be used to in scripts to generate temporary passwords 
+that are to be deleted as soon as the script completes.
+
+For example, Alice wants to export her GPG key from her Mesh profile to a local
+file that can be input to her GPG mail application. She enters the following 
+commands:
+
+
+While this approach successfully configures her mail application, her private key
+was written to the hard drive of the machine in the process. Even though she
+used the delete command to remove the file containg the private key, this is
+unlikely to prevent recovery using forensic tools on the storage media.
+
+Encrypting the private key file under a randomly generated password is a
+much more robust approach. But only if we make sure that our password does
+not get written out to the disk either.
+
+<ul>
+<li>Disable the shell command history feature.
+<li>Generate a random password.
+<li>Export the private key encrypted under the random password.
+<li>Import the private key to the application.
+<li>Delete the private key file.
+<li>Restart the machine to erase the password from memory.
+</ul>
+
+This is achieved using the following shell commands:
+
+
+export HISTFILE=/dev/null
+
+####Command digest
+
+
+####Command commit
+
+#end file
 
 #end xclass

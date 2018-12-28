@@ -129,5 +129,57 @@ namespace ExampleGenerator {
 			_Output.Write ("~~~~\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			}
+		
+
+		//
+		// MeshManToolDare
+		//
+		public static void MeshManToolDare (CreateExamples Example) { /* File  */
+			using (var _Output = new StreamWriter ("Examples\\MeshManToolDare.md")) {
+				var _Indent = ""; 
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The dare command set supports the following operations on files:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("<dl>\n{0}", _Indent);
+				_Output.Write ("<dt>encode\n{0}", _Indent);
+				_Output.Write ("<dd>Encode data as DARE Message.\n{0}", _Indent);
+				_Output.Write ("<dt>decode\n{0}", _Indent);
+				_Output.Write ("<dd>Decode a DARE Message.\n{0}", _Indent);
+				_Output.Write ("<dt>verify\n{0}", _Indent);
+				_Output.Write ("<dd>Verify a DARE Message.\n{0}", _Indent);
+				_Output.Write ("</dl>\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				}
+			}
+		
+
+		//
+		// MeshManToolContainer
+		//
+		public static void MeshManToolContainer (CreateExamples Example) { /* File  */
+			using (var _Output = new StreamWriter ("Examples\\MeshManToolContainer.md")) {
+				var _Indent = ""; 
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The container command set supports the following operations on files:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("<dl>\n{0}", _Indent);
+				_Output.Write ("<dt>create\n{0}", _Indent);
+				_Output.Write ("<dd>Create a new DARE Container.\n{0}", _Indent);
+				_Output.Write ("<dt>archive\n{0}", _Indent);
+				_Output.Write ("<dd>Create a new DARE Container and archive the specified files.\n{0}", _Indent);
+				_Output.Write ("<dt>append\n{0}", _Indent);
+				_Output.Write ("<dd>Append the specified file as an entry to the specified container.\n{0}", _Indent);
+				_Output.Write ("<dt>index\n{0}", _Indent);
+				_Output.Write ("<dd>Compile an index for the specified container and append to the end.\n{0}", _Indent);
+				_Output.Write ("<dt>extract\n{0}", _Indent);
+				_Output.Write ("<dd>Extract the specified record from the container\n{0}", _Indent);
+				_Output.Write ("<dt>copy\n{0}", _Indent);
+				_Output.Write ("<dd>Copy container contents to create a new container\n{0}", _Indent);
+				_Output.Write ("<dt>verify\n{0}", _Indent);
+				_Output.Write ("<dd>Verify signatures and digests on container.\n{0}", _Indent);
+				_Output.Write ("</dl>\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				}
+			}
 		}
 	}

@@ -28,7 +28,6 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>The value of the last frame index</summary>
         public long FrameCount => Container.FrameCount;
 
-        string Filename;
         /// <summary>
         /// The disposal routine. This is wrapped to provide the IDisposable interface. 
         /// </summary>
@@ -100,9 +99,6 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="cryptoParameters">Specifies the cryptographic enhancements to
         /// be applied to this message.</param>
         /// <param name="fileName">Log file.</param>
-        /// and will be opened in read-only mode. If false, persistence store
-        /// is opened in read/write mode and a new store will be created
-        /// if none exists.</param>
         /// <param name="contentType">Type of data to store (the schema name).</param>
         /// <param name="comment">Comment to be written to the log.</param>
         /// <param name="containerType">The Container type.</param>

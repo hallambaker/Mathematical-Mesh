@@ -174,10 +174,10 @@ namespace Goedel.Mesh.Shell {
 		static DescribeCommandSet DescribeCommandSet_Message = new DescribeCommandSet () {
             Identifier = "message",
 			Entries = new  SortedDictionary<string, DescribeCommand> () {
-				{"connect", _MessageConnect._DescribeCommand },
+				{"send", _MessageContact._DescribeCommand },
 				{"confirm", _MessageConfirm._DescribeCommand },
-				{"status", _MessageStatus._DescribeCommand },
 				{"pending", _MessagePending._DescribeCommand },
+				{"status", _MessageStatus._DescribeCommand },
 				{"accept", _MessageAccept._DescribeCommand },
 				{"reject", _MessageReject._DescribeCommand },
 				{"block", _MessageBlock._DescribeCommand }
@@ -194,14 +194,21 @@ namespace Goedel.Mesh.Shell {
 				} // End Entries
 			};
 
-		static DescribeCommandSet DescribeCommandSet_File = new DescribeCommandSet () {
-            Identifier = "file",
+		static DescribeCommandSet DescribeCommandSet_Dare = new DescribeCommandSet () {
+            Identifier = "dare",
 			Entries = new  SortedDictionary<string, DescribeCommand> () {
-				{"encrypt", _FileEncrypt._DescribeCommand },
-				{"decrypt", _FileDecrypt._DescribeCommand },
+				{"encode", _FileEncrypt._DescribeCommand },
+				{"decode", _FileDecrypt._DescribeCommand },
+				{"verify", _FileVerify._DescribeCommand }
+				} // End Entries
+			};
+
+		static DescribeCommandSet DescribeCommandSet_Hash = new DescribeCommandSet () {
+            Identifier = "hash",
+			Entries = new  SortedDictionary<string, DescribeCommand> () {
 				{"random", _FileRandom._DescribeCommand },
 				{"udf", _FileUDF._DescribeCommand },
-				{"digest", _FileDigest._DescribeCommand },
+				{"file", _FileDigest._DescribeCommand },
 				{"commit", _FileCommitment._DescribeCommand }
 				} // End Entries
 			};
@@ -212,6 +219,7 @@ namespace Goedel.Mesh.Shell {
 				{"create", _ContainerCreate._DescribeCommand },
 				{"archive", _ContainerArchive._DescribeCommand },
 				{"append", _ContainerAppend._DescribeCommand },
+				{"index", _ContainerIndex._DescribeCommand },
 				{"extract", _ContainerExtract._DescribeCommand },
 				{"copy", _ContainerCopy._DescribeCommand },
 				{"verify", _ContainerVerify._DescribeCommand }
@@ -244,7 +252,8 @@ namespace Goedel.Mesh.Shell {
 				{"network", DescribeCommandSet_Network},
 				{"message", DescribeCommandSet_Message},
 				{"group", DescribeCommandSet_Group},
-				{"file", DescribeCommandSet_File},
+				{"dare", DescribeCommandSet_Dare},
+				{"hash", DescribeCommandSet_Hash},
 				{"container", DescribeCommandSet_Container},
 				{"help", DescribeHelp }
 				}; // End Entries
@@ -756,13 +765,13 @@ namespace Goedel.Mesh.Shell {
 			Dispatch._PostProcess (result);
 			}
 
-		public static void Handle_MessageConnect (
+		public static void Handle_MessageContact (
 					DispatchShell  DispatchIn, string[] Args, int Index) {
 			Shell Dispatch =	DispatchIn as Shell;
-			MessageConnect		Options = new MessageConnect ();
+			MessageContact		Options = new MessageContact ();
 			ProcessOptions (Args, Index, Options);
 			Dispatch._PreProcess (Options);
-			var result = Dispatch.MessageConnect (Options);
+			var result = Dispatch.MessageContact (Options);
 			Dispatch._PostProcess (result);
 			}
 
@@ -776,16 +785,6 @@ namespace Goedel.Mesh.Shell {
 			Dispatch._PostProcess (result);
 			}
 
-		public static void Handle_MessageStatus (
-					DispatchShell  DispatchIn, string[] Args, int Index) {
-			Shell Dispatch =	DispatchIn as Shell;
-			MessageStatus		Options = new MessageStatus ();
-			ProcessOptions (Args, Index, Options);
-			Dispatch._PreProcess (Options);
-			var result = Dispatch.MessageStatus (Options);
-			Dispatch._PostProcess (result);
-			}
-
 		public static void Handle_MessagePending (
 					DispatchShell  DispatchIn, string[] Args, int Index) {
 			Shell Dispatch =	DispatchIn as Shell;
@@ -793,6 +792,16 @@ namespace Goedel.Mesh.Shell {
 			ProcessOptions (Args, Index, Options);
 			Dispatch._PreProcess (Options);
 			var result = Dispatch.MessagePending (Options);
+			Dispatch._PostProcess (result);
+			}
+
+		public static void Handle_MessageStatus (
+					DispatchShell  DispatchIn, string[] Args, int Index) {
+			Shell Dispatch =	DispatchIn as Shell;
+			MessageStatus		Options = new MessageStatus ();
+			ProcessOptions (Args, Index, Options);
+			Dispatch._PreProcess (Options);
+			var result = Dispatch.MessageStatus (Options);
 			Dispatch._PostProcess (result);
 			}
 
@@ -886,6 +895,16 @@ namespace Goedel.Mesh.Shell {
 			Dispatch._PostProcess (result);
 			}
 
+		public static void Handle_FileVerify (
+					DispatchShell  DispatchIn, string[] Args, int Index) {
+			Shell Dispatch =	DispatchIn as Shell;
+			FileVerify		Options = new FileVerify ();
+			ProcessOptions (Args, Index, Options);
+			Dispatch._PreProcess (Options);
+			var result = Dispatch.FileVerify (Options);
+			Dispatch._PostProcess (result);
+			}
+
 		public static void Handle_FileRandom (
 					DispatchShell  DispatchIn, string[] Args, int Index) {
 			Shell Dispatch =	DispatchIn as Shell;
@@ -953,6 +972,16 @@ namespace Goedel.Mesh.Shell {
 			ProcessOptions (Args, Index, Options);
 			Dispatch._PreProcess (Options);
 			var result = Dispatch.ContainerAppend (Options);
+			Dispatch._PostProcess (result);
+			}
+
+		public static void Handle_ContainerIndex (
+					DispatchShell  DispatchIn, string[] Args, int Index) {
+			Shell Dispatch =	DispatchIn as Shell;
+			ContainerIndex		Options = new ContainerIndex ();
+			ProcessOptions (Args, Index, Options);
+			Dispatch._PreProcess (Options);
+			var result = Dispatch.ContainerIndex (Options);
 			Dispatch._PostProcess (result);
 			}
 
@@ -7498,7 +7527,7 @@ namespace Goedel.Mesh.Shell {
     public partial class NetworkDump : _NetworkDump {
         } // class NetworkDump
 
-    public class _MessageConnect : Goedel.Command.Dispatch ,
+    public class _MessageContact : Goedel.Command.Dispatch ,
 							IAccountOptions,
 							IReporting {
 
@@ -7567,9 +7596,9 @@ namespace Goedel.Mesh.Shell {
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
-			Identifier = "connect",
+			Identifier = "send",
 			Brief =  "Post a conection request to a user",
-			HandleDelegate =  CommandLineInterpreter.Handle_MessageConnect,
+			HandleDelegate =  CommandLineInterpreter.Handle_MessageContact,
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
 				new DescribeEntryParameter () {
@@ -7619,8 +7648,8 @@ namespace Goedel.Mesh.Shell {
 
 		}
 
-    public partial class MessageConnect : _MessageConnect {
-        } // class MessageConnect
+    public partial class MessageContact : _MessageContact {
+        } // class MessageContact
 
     public class _MessageConfirm : Goedel.Command.Dispatch ,
 							IAccountOptions,
@@ -7746,6 +7775,113 @@ namespace Goedel.Mesh.Shell {
     public partial class MessageConfirm : _MessageConfirm {
         } // class MessageConfirm
 
+    public class _MessagePending : Goedel.Command.Dispatch ,
+							IAccountOptions,
+							IReporting {
+
+		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new String (),
+			new String (),
+			new Flag (),
+			new Flag (),
+			new Flag ()			} ;
+
+		/// <summary>Field accessor for option [portal]</summary>
+		public virtual String AccountID {
+			get => _Data[0] as String;
+			set => _Data[0]  = value;
+			}
+
+		public virtual string _AccountID {
+			set => _Data[0].Parameter (value);
+			}
+		/// <summary>Field accessor for option [udf]</summary>
+		public virtual String UDF {
+			get => _Data[1] as String;
+			set => _Data[1]  = value;
+			}
+
+		public virtual string _UDF {
+			set => _Data[1].Parameter (value);
+			}
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
+			get => _Data[2] as Flag;
+			set => _Data[2]  = value;
+			}
+
+		public virtual string _Verbose {
+			set => _Data[2].Parameter (value);
+			}
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
+			get => _Data[3] as Flag;
+			set => _Data[3]  = value;
+			}
+
+		public virtual string _Report {
+			set => _Data[3].Parameter (value);
+			}
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[4] as Flag;
+			set => _Data[4]  = value;
+			}
+
+		public virtual string _Json {
+			set => _Data[4].Parameter (value);
+			}
+		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
+			Identifier = "pending",
+			Brief =  "List pending requests",
+			HandleDelegate =  CommandLineInterpreter.Handle_MessagePending,
+			Lazy =  false,
+			Entries = new List<DescribeEntry> () {
+				new DescribeEntryOption () {
+					Identifier = "AccountID", 
+					Default = null, // null if null
+					Brief = "Account identifier (e.g. alice@example.com)",
+					Index = 0,
+					Key = "portal"
+					},
+				new DescribeEntryOption () {
+					Identifier = "UDF", 
+					Default = null, // null if null
+					Brief = "Profile fingerprint",
+					Index = 1,
+					Key = "udf"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Verbose", 
+					Default = "true", // null if null
+					Brief = "Verbose reports (default)",
+					Index = 2,
+					Key = "verbose"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Report", 
+					Default = "true", // null if null
+					Brief = "Report output (default)",
+					Index = 3,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Json", 
+					Default = "false", // null if null
+					Brief = "Report output in JSON format",
+					Index = 4,
+					Key = "json"
+					}
+				}
+			};
+
+		}
+
+    public partial class MessagePending : _MessagePending {
+        } // class MessagePending
+
     public class _MessageStatus : Goedel.Command.Dispatch ,
 							IAccountOptions,
 							IReporting {
@@ -7869,113 +8005,6 @@ namespace Goedel.Mesh.Shell {
 
     public partial class MessageStatus : _MessageStatus {
         } // class MessageStatus
-
-    public class _MessagePending : Goedel.Command.Dispatch ,
-							IAccountOptions,
-							IReporting {
-
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
-			new String (),
-			new String (),
-			new Flag (),
-			new Flag (),
-			new Flag ()			} ;
-
-		/// <summary>Field accessor for option [portal]</summary>
-		public virtual String AccountID {
-			get => _Data[0] as String;
-			set => _Data[0]  = value;
-			}
-
-		public virtual string _AccountID {
-			set => _Data[0].Parameter (value);
-			}
-		/// <summary>Field accessor for option [udf]</summary>
-		public virtual String UDF {
-			get => _Data[1] as String;
-			set => _Data[1]  = value;
-			}
-
-		public virtual string _UDF {
-			set => _Data[1].Parameter (value);
-			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[2] as Flag;
-			set => _Data[2]  = value;
-			}
-
-		public virtual string _Verbose {
-			set => _Data[2].Parameter (value);
-			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
-			get => _Data[3] as Flag;
-			set => _Data[3]  = value;
-			}
-
-		public virtual string _Report {
-			set => _Data[3].Parameter (value);
-			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
-			get => _Data[4] as Flag;
-			set => _Data[4]  = value;
-			}
-
-		public virtual string _Json {
-			set => _Data[4].Parameter (value);
-			}
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
-
-		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
-			Identifier = "pending",
-			Brief =  "List pending requests",
-			HandleDelegate =  CommandLineInterpreter.Handle_MessagePending,
-			Lazy =  false,
-			Entries = new List<DescribeEntry> () {
-				new DescribeEntryOption () {
-					Identifier = "AccountID", 
-					Default = null, // null if null
-					Brief = "Account identifier (e.g. alice@example.com)",
-					Index = 0,
-					Key = "portal"
-					},
-				new DescribeEntryOption () {
-					Identifier = "UDF", 
-					Default = null, // null if null
-					Brief = "Profile fingerprint",
-					Index = 1,
-					Key = "udf"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Verbose", 
-					Default = "true", // null if null
-					Brief = "Verbose reports (default)",
-					Index = 2,
-					Key = "verbose"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Report", 
-					Default = "true", // null if null
-					Brief = "Report output (default)",
-					Index = 3,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Json", 
-					Default = "false", // null if null
-					Brief = "Report output in JSON format",
-					Index = 4,
-					Key = "json"
-					}
-				}
-			};
-
-		}
-
-    public partial class MessagePending : _MessagePending {
-        } // class MessagePending
 
     public class _MessageAccept : Goedel.Command.Dispatch ,
 							IAccountOptions,
@@ -9064,8 +9093,8 @@ namespace Goedel.Mesh.Shell {
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
-			Identifier = "encrypt",
-			Brief =  "Encode file as DARE Message.",
+			Identifier = "encode",
+			Brief =  "Encode data as DARE Message.",
 			HandleDelegate =  CommandLineInterpreter.Handle_FileEncrypt,
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
@@ -9254,8 +9283,8 @@ namespace Goedel.Mesh.Shell {
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
-			Identifier = "decrypt",
-			Brief =  "Decrypt a DARE Message.",
+			Identifier = "decode",
+			Brief =  "Decode a DARE Message.",
 			HandleDelegate =  CommandLineInterpreter.Handle_FileDecrypt,
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
@@ -9315,6 +9344,130 @@ namespace Goedel.Mesh.Shell {
 
     public partial class FileDecrypt : _FileDecrypt {
         } // class FileDecrypt
+
+    public class _FileVerify : Goedel.Command.Dispatch ,
+							IAccountOptions,
+							IReporting {
+
+		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new String (),
+			new String (),
+			new Flag (),
+			new Flag (),
+			new Flag (),
+			new ExistingFile ()			} ;
+
+		/// <summary>Field accessor for option [portal]</summary>
+		public virtual String AccountID {
+			get => _Data[0] as String;
+			set => _Data[0]  = value;
+			}
+
+		public virtual string _AccountID {
+			set => _Data[0].Parameter (value);
+			}
+		/// <summary>Field accessor for option [udf]</summary>
+		public virtual String UDF {
+			get => _Data[1] as String;
+			set => _Data[1]  = value;
+			}
+
+		public virtual string _UDF {
+			set => _Data[1].Parameter (value);
+			}
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
+			get => _Data[2] as Flag;
+			set => _Data[2]  = value;
+			}
+
+		public virtual string _Verbose {
+			set => _Data[2].Parameter (value);
+			}
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
+			get => _Data[3] as Flag;
+			set => _Data[3]  = value;
+			}
+
+		public virtual string _Report {
+			set => _Data[3].Parameter (value);
+			}
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[4] as Flag;
+			set => _Data[4]  = value;
+			}
+
+		public virtual string _Json {
+			set => _Data[4].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual ExistingFile Input {
+			get => _Data[5] as ExistingFile;
+			set => _Data[5]  = value;
+			}
+
+		public virtual string _Input {
+			set => _Data[5].Parameter (value);
+			}
+		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
+			Identifier = "verify",
+			Brief =  "Verify a DARE Message.",
+			HandleDelegate =  CommandLineInterpreter.Handle_FileVerify,
+			Lazy =  false,
+			Entries = new List<DescribeEntry> () {
+				new DescribeEntryOption () {
+					Identifier = "AccountID", 
+					Default = null, // null if null
+					Brief = "Account identifier (e.g. alice@example.com)",
+					Index = 0,
+					Key = "portal"
+					},
+				new DescribeEntryOption () {
+					Identifier = "UDF", 
+					Default = null, // null if null
+					Brief = "Profile fingerprint",
+					Index = 1,
+					Key = "udf"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Verbose", 
+					Default = "true", // null if null
+					Brief = "Verbose reports (default)",
+					Index = 2,
+					Key = "verbose"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Report", 
+					Default = "true", // null if null
+					Brief = "Report output (default)",
+					Index = 3,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Json", 
+					Default = "false", // null if null
+					Brief = "Report output in JSON format",
+					Index = 4,
+					Key = "json"
+					},
+				new DescribeEntryParameter () {
+					Identifier = "Input", 
+					Default = null, // null if null
+					Brief = "Encrypted File",
+					Index = 5,
+					Key = ""
+					}
+				}
+			};
+
+		}
+
+    public partial class FileVerify : _FileVerify {
+        } // class FileVerify
 
     public class _FileRandom : Goedel.Command.Dispatch ,
 							IReporting,
@@ -9604,7 +9757,7 @@ namespace Goedel.Mesh.Shell {
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
-			Identifier = "digest",
+			Identifier = "file",
 			Brief =  "Calculate the digest value of the input data",
 			HandleDelegate =  CommandLineInterpreter.Handle_FileDigest,
 			Lazy =  false,
@@ -10547,6 +10700,233 @@ namespace Goedel.Mesh.Shell {
     public partial class ContainerAppend : _ContainerAppend {
         } // class ContainerAppend
 
+    public class _ContainerIndex : Goedel.Command.Dispatch ,
+							IEncodeOptions,
+							IAccountOptions,
+							IReporting {
+
+		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new String (),
+			new String (),
+			new String (),
+			new String (),
+			new String (),
+			new String (),
+			new String (),
+			new String (),
+			new Flag (),
+			new Flag (),
+			new Flag (),
+			new ExistingFile ()			} ;
+
+		/// <summary>Field accessor for option [encrypt]</summary>
+		public virtual String Encrypt {
+			get => _Data[0] as String;
+			set => _Data[0]  = value;
+			}
+
+		public virtual string _Encrypt {
+			set => _Data[0].Parameter (value);
+			}
+		/// <summary>Field accessor for option [sign]</summary>
+		public virtual String Sign {
+			get => _Data[1] as String;
+			set => _Data[1]  = value;
+			}
+
+		public virtual string _Sign {
+			set => _Data[1].Parameter (value);
+			}
+		/// <summary>Field accessor for option [adigest]</summary>
+		public virtual String AlgDigest {
+			get => _Data[2] as String;
+			set => _Data[2]  = value;
+			}
+
+		public virtual string _AlgDigest {
+			set => _Data[2].Parameter (value);
+			}
+		/// <summary>Field accessor for option [aencrypt]</summary>
+		public virtual String AlgEncrypt {
+			get => _Data[3] as String;
+			set => _Data[3]  = value;
+			}
+
+		public virtual string _AlgEncrypt {
+			set => _Data[3].Parameter (value);
+			}
+		/// <summary>Field accessor for option [mencrypt]</summary>
+		public virtual String ModeEncrypt {
+			get => _Data[4] as String;
+			set => _Data[4]  = value;
+			}
+
+		public virtual string _ModeEncrypt {
+			set => _Data[4].Parameter (value);
+			}
+		/// <summary>Field accessor for option [msign]</summary>
+		public virtual String ModeSign {
+			get => _Data[5] as String;
+			set => _Data[5]  = value;
+			}
+
+		public virtual string _ModeSign {
+			set => _Data[5].Parameter (value);
+			}
+		/// <summary>Field accessor for option [portal]</summary>
+		public virtual String AccountID {
+			get => _Data[6] as String;
+			set => _Data[6]  = value;
+			}
+
+		public virtual string _AccountID {
+			set => _Data[6].Parameter (value);
+			}
+		/// <summary>Field accessor for option [udf]</summary>
+		public virtual String UDF {
+			get => _Data[7] as String;
+			set => _Data[7]  = value;
+			}
+
+		public virtual string _UDF {
+			set => _Data[7].Parameter (value);
+			}
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
+			get => _Data[8] as Flag;
+			set => _Data[8]  = value;
+			}
+
+		public virtual string _Verbose {
+			set => _Data[8].Parameter (value);
+			}
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
+			get => _Data[9] as Flag;
+			set => _Data[9]  = value;
+			}
+
+		public virtual string _Report {
+			set => _Data[9].Parameter (value);
+			}
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[10] as Flag;
+			set => _Data[10]  = value;
+			}
+
+		public virtual string _Json {
+			set => _Data[10].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual ExistingFile Input {
+			get => _Data[11] as ExistingFile;
+			set => _Data[11]  = value;
+			}
+
+		public virtual string _Input {
+			set => _Data[11].Parameter (value);
+			}
+		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
+			Identifier = "index",
+			Brief =  "Compile an index for the specified container and append to the end.",
+			HandleDelegate =  CommandLineInterpreter.Handle_ContainerIndex,
+			Lazy =  false,
+			Entries = new List<DescribeEntry> () {
+				new DescribeEntryOption () {
+					Identifier = "Encrypt", 
+					Default = null, // null if null
+					Brief = "Encrypt data for specified recipient",
+					Index = 0,
+					Key = "encrypt"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Sign", 
+					Default = null, // null if null
+					Brief = "Sign data with specified key",
+					Index = 1,
+					Key = "sign"
+					},
+				new DescribeEntryOption () {
+					Identifier = "AlgDigest", 
+					Default = null, // null if null
+					Brief = "The digest algorithm",
+					Index = 2,
+					Key = "adigest"
+					},
+				new DescribeEntryOption () {
+					Identifier = "AlgEncrypt", 
+					Default = null, // null if null
+					Brief = "The symmetric encryption algorithm",
+					Index = 3,
+					Key = "aencrypt"
+					},
+				new DescribeEntryOption () {
+					Identifier = "ModeEncrypt", 
+					Default = null, // null if null
+					Brief = "The public key encryption mode",
+					Index = 4,
+					Key = "mencrypt"
+					},
+				new DescribeEntryOption () {
+					Identifier = "ModeSign", 
+					Default = null, // null if null
+					Brief = "The signature mode",
+					Index = 5,
+					Key = "msign"
+					},
+				new DescribeEntryOption () {
+					Identifier = "AccountID", 
+					Default = null, // null if null
+					Brief = "Account identifier (e.g. alice@example.com)",
+					Index = 6,
+					Key = "portal"
+					},
+				new DescribeEntryOption () {
+					Identifier = "UDF", 
+					Default = null, // null if null
+					Brief = "Profile fingerprint",
+					Index = 7,
+					Key = "udf"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Verbose", 
+					Default = "true", // null if null
+					Brief = "Verbose reports (default)",
+					Index = 8,
+					Key = "verbose"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Report", 
+					Default = "true", // null if null
+					Brief = "Report output (default)",
+					Index = 9,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Json", 
+					Default = "false", // null if null
+					Brief = "Report output in JSON format",
+					Index = 10,
+					Key = "json"
+					},
+				new DescribeEntryParameter () {
+					Identifier = "Input", 
+					Default = null, // null if null
+					Brief = "Container to append to",
+					Index = 11,
+					Key = ""
+					}
+				}
+			};
+
+		}
+
+    public partial class ContainerIndex : _ContainerIndex {
+        } // class ContainerIndex
+
     public class _ContainerExtract : Goedel.Command.Dispatch ,
 							IAccountOptions,
 							IReporting {
@@ -11453,7 +11833,7 @@ namespace Goedel.Mesh.Shell {
 			return null;
 			}
 
-		public virtual ShellResult MessageConnect ( MessageConnect Options) {
+		public virtual ShellResult MessageContact ( MessageContact Options) {
 			CommandLineInterpreter.DescribeValues (Options);
 			return null;
 			}
@@ -11463,12 +11843,12 @@ namespace Goedel.Mesh.Shell {
 			return null;
 			}
 
-		public virtual ShellResult MessageStatus ( MessageStatus Options) {
+		public virtual ShellResult MessagePending ( MessagePending Options) {
 			CommandLineInterpreter.DescribeValues (Options);
 			return null;
 			}
 
-		public virtual ShellResult MessagePending ( MessagePending Options) {
+		public virtual ShellResult MessageStatus ( MessageStatus Options) {
 			CommandLineInterpreter.DescribeValues (Options);
 			return null;
 			}
@@ -11518,6 +11898,11 @@ namespace Goedel.Mesh.Shell {
 			return null;
 			}
 
+		public virtual ShellResult FileVerify ( FileVerify Options) {
+			CommandLineInterpreter.DescribeValues (Options);
+			return null;
+			}
+
 		public virtual ShellResult FileRandom ( FileRandom Options) {
 			CommandLineInterpreter.DescribeValues (Options);
 			return null;
@@ -11549,6 +11934,11 @@ namespace Goedel.Mesh.Shell {
 			}
 
 		public virtual ShellResult ContainerAppend ( ContainerAppend Options) {
+			CommandLineInterpreter.DescribeValues (Options);
+			return null;
+			}
+
+		public virtual ShellResult ContainerIndex ( ContainerIndex Options) {
 			CommandLineInterpreter.DescribeValues (Options);
 			return null;
 			}
