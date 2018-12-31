@@ -55,7 +55,7 @@ namespace Goedel.Mesh {
             var bytes = profileMaster.GetBytes(tag: true);
 
             profileMaster.ProfileMasterSigned = DareMessage.Encode(bytes,
-                    SigningKey: keyPublicSign, ContentType: "application/mmm");
+                    signingKey: keyPublicSign, contentType: "application/mmm");
             return profileMaster;
             }
 

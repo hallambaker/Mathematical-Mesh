@@ -1,5 +1,5 @@
 ﻿Protocol Goedel.Mesh.Shell ShellResult ShellResult
-	//Extern CredentialEntry
+	Using Goedel.Mesh
 
 	Description
 		|Classes to be used to test serialization an deserialization.
@@ -11,7 +11,25 @@
 	Structure ResultDigest
 		Inherits		Result
 		String			Digest
+
+	Structure ResultCommitment
+		Inherits		Result
+		String			Digest
 		String			Key
+
+	Structure ResultFile
+		Inherits		Result
+		String			Filename
+		Integer			TotalBytes
+
+	Structure ResultEntry
+		Inherits		Result
+		Struct CatalogEntry CatalogEntry
+
+	Structure ResultDump
+		Inherits		Result
+		Struct CatalogEntry CatalogEntries
+			Multiple
 
 	Structure ResultDeviceCreate
 		Inherits		Result
@@ -34,7 +52,3 @@
 	Structure ResultPIN
 		Inherits		Result
 		String			PIN
-
-	Structure ResultDump
-		Inherits		Result
-		String			Data

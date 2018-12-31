@@ -377,49 +377,6 @@ namespace Goedel.Cryptography {
         }
 
 
-    ///// <summary>
-    ///// Defines levels of key protection to be applied.
-    ///// </summary>
-    //public enum KeySecurity {
-
-
-    //    /// <summary>
-    //    /// Key is a master key and will be stored in a key container marked 
-    //    /// as archivable and user protected. Master keys SHOULD be deleted after 
-    //    /// being escrowed and recovery verified.
-    //    /// </summary>
-    //    Master,
-
-    //    /// <summary>
-    //    /// Key is an administration key and will be  stored in a key container marked as non 
-    //    /// exportable and user protected.
-    //    /// </summary>
-    //    Admin,
-
-    //    /// <summary>
-    //    /// Key is a device key and will be  stored in a key container bound to 
-    //    /// the current machine that cannot be exported or archived.
-    //    /// </summary>
-    //    Device,
-
-    //    /// <summary>
-    //    /// Key is temporary and cannot be exported or stored.
-    //    /// </summary>
-    //    Ephemeral,
-
-    //    /// <summary>
-    //    /// Key is temporary but may be exported.
-    //    /// </summary>
-    //    Exportable,
-
-    //    ///<summary>The private key is not available.</summary>
-    //    PublicOnly
-    //    }
-
-
-
-
-
     /// <summary>
     /// Algorithm classes.
     /// </summary>

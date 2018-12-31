@@ -35,7 +35,19 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult CalendarDump(CalendarDump Options) {
-            throw new NYI();
+            var contextDevice = GetContextDevice(Options);
+            var catalog = contextDevice.CatalogCredential;
+
+            var result = new ResultDump() {
+                Success = true,
+                CatalogEntries = new List<CatalogEntry>()
+                };
+
+            foreach (var entry in catalog) {
+                result.CatalogEntries.Add(entry);
+                }
+
+            return result;
             }
         }
     }

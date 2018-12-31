@@ -10,52 +10,26 @@ using Goedel.Utilities;
 
 namespace Goedel.XUnit {
 
-    public partial class TestShell : Shell {
-        public ShellResult ShellResult;
-
-        /// <summary>
-        /// Override the post processing hook to save the result.
-        /// </summary>
-        /// <param name="shellResult"></param>
-        public override void _PostProcess(ShellResult shellResult) {
-            ShellResult = shellResult;
-            }
-        }
-
-    public partial class TestCLI : CommandLineInterpreter {
-        TestShell Shell;
-
-        public TestCLI(TestShell shell = null) : base() {
-            Shell = shell ?? new TestShell();
-            }
-
-        public ShellResult Dispatch(string command) {
-            var Args = command.Split(' ');
-            Dispatcher(Entries, DefaultCommand, Shell, Args, 0);
-            return Shell.ShellResult;
-            }
-
-        }
 
 
 
-    public class TestKeyless {
+    public partial class ShellTests {
 
-        static TestKeyless() {
+        static ShellTests() {
             TestEnvironment.Initialize();
             Mesh.Mesh.Initialize();
             }
 
-        public static TestKeyless Test() => new TestKeyless();
+        public static ShellTests Test() => new ShellTests();
         #region // Commitment
         List<TestVectorDigest> CommitmentTests = new List<TestVectorDigest>() {
                 //new TestVectorDigest ("Konrad is compromised", "", "", key:"RAA6B-6R32H-5YAQE-IQJHC-KBA4Q"),
                 //new TestVectorDigest ("This is the secret", "", "", key:"RD42E-SYQGS-IGHAK-UP22P-GZUBY"),
                 //new TestVectorDigest ("Test", "", "", key:"RBQ26-MEZGP-4SVCU-RYOWO-QTURA"),
-                new TestVectorDigest ("Konrad is the traitor", "MBJVR-JMWNP-3O3J2-Q7YAN-MUHSE",
-                    "SCO5G-VSNMJ-IG6BY-TK74J-OSBQS", key:"RBQ26-MEZGP-4SVCU-RYOWO-QTURA"),
-                new TestVectorDigest ("", "MB276-M34P3-HOVIU-KEMYH-QBFCN",
-                    "SCAY3-ESGAP-57Z7E-LJHHJ-2FWXI", key:"RD5SS-PN2L6-RFTKU-RCLTH-CMP6R") };
+                new TestVectorDigest ("Konrad is the traitor", "KCDV6-7AY27-MCZZG-L2ZMG-3QD3R",
+                    null, key:"RBQ26-MEZGP-4SVCU-RYOWO-QTURA"),
+                new TestVectorDigest ("", "KB6NU-YIJDZ-UZAAL-4PBK4-4Y7ZV",
+                    null, key:"RD5SS-PN2L6-RFTKU-RCLTH-CMP6R") };
         [Fact]
         public void TestCommitment() {
             foreach (var test in CommitmentTests) {
@@ -76,7 +50,7 @@ namespace Goedel.XUnit {
 
         [Fact]
         public void TestCommitmentRandom() {
-            var algs = new List<string>() { null, "sha2", "sha3"};
+            var algs = new List<string>() { null, "sha2"};
 
             foreach (var test in CommitmentTests) {
                 foreach (var alg in algs) {
@@ -87,12 +61,12 @@ namespace Goedel.XUnit {
                 }
             }
 
-        ResultDigest TestCommitmentInt(string content, string key=null, string alg = null) {
+        ResultCommitment TestCommitmentInt(string content, string key=null, string alg = null) {
             var testCLI = new TestCLI();
             var filename = content.ToFileUnique();
             var keyClause = key == null ? "" : $" /key {key}";
             var algClause = alg == null ? "" : $" /alg {alg}";
-            var result = testCLI.Dispatch($"file commit {filename}{keyClause}{algClause}") as ResultDigest;
+            var result = testCLI.Dispatch($"hash commit {filename}{keyClause}{algClause}") as ResultCommitment;
             result.AssertNotNull();
             return result;
 
@@ -107,7 +81,7 @@ namespace Goedel.XUnit {
             var testCLI = new TestCLI();
 
             for (var i = 0; i < repeat; i++) {
-                var result = testCLI.Dispatch("file random") as ResultDigest; ;
+                var result = testCLI.Dispatch("hash random") as ResultDigest; ;
                 var random = result.Digest;
                 random.Length.AssertEqual(29);
                 results.Contains(random).AssertFalse();
@@ -172,7 +146,7 @@ namespace Goedel.XUnit {
             var filename = content.ToFileUnique();
             var contentClause = contentType == null ? "" : $" /cty {contentType}";
             var algClause = alg == null ? "" : $" /alg {alg}";
-            var result = testCLI.Dispatch($"file udf {filename}{contentClause}{algClause}") as ResultDigest;
+            var result = testCLI.Dispatch($"hash udf {filename}{contentClause}{algClause}") as ResultDigest;
             result.AssertNotNull();
             return result.Digest;
 
@@ -210,7 +184,7 @@ namespace Goedel.XUnit {
             var testCLI = new TestCLI();
             var filename = content.ToFileUnique();
             var algClause = alg == null ? "" : $" /alg {alg}";
-            var result = testCLI.Dispatch($"file digest {filename}{algClause}") as ResultDigest;
+            var result = testCLI.Dispatch($"hash digest {filename}{algClause}") as ResultDigest;
             result.AssertNotNull();
             return result.Digest;
 

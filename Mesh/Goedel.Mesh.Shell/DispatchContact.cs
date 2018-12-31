@@ -17,16 +17,20 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult ContactAdd(ContactAdd Options) {
-            throw new NYI();
-            }
+            var contextDevice = GetContextDevice(Options);
+            var catalog = contextDevice.CatalogContact;
+            var file = Options.File.Value;
 
-        /// <summary>
-        /// Dispatch method
-        /// </summary>
-        /// <param name="Options">The command line options.</param>
-        /// <returns>Mesh result instance</returns>
-        public override ShellResult ContactDelete(ContactDelete Options) {
-            throw new NYI();
+
+            var entry = new CatalogEntryContact() {
+
+                };
+            catalog.Add(entry);
+
+            return new ResultEntry() {
+                Success = true,
+                CatalogEntry = entry
+                };
             }
 
         /// <summary>
@@ -35,15 +39,56 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult ContactdGet(ContactdGet Options) {
-            throw new NYI();
+            var contextDevice = GetContextDevice(Options);
+            var catalog = contextDevice.CatalogContact;
+            var identifier = Options.Identifier.Value;
+
+            var result = catalog.Locate(identifier);
+
+            return new ResultEntry() {
+                Success = true,
+                CatalogEntry = result
+                };
             }
+
+        /// <summary>
+        /// Dispatch method
+        /// </summary>
+        /// <param name="Options">The command line options.</param>
+        /// <returns>Mesh result instance</returns>
+        public override ShellResult ContactDelete(ContactDelete Options) {
+            var contextDevice = GetContextDevice(Options);
+            var catalog = contextDevice.CatalogContact;
+            var identifier = Options.Identifier.Value;
+            var result = catalog.Locate(identifier);
+
+            catalog.Delete(result);
+
+            return new Result() {
+                Success = true
+                };
+            }
+
+
         /// <summary>
         /// Dispatch method
         /// </summary>
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult ContactDump(ContactDump Options) {
-            throw new NYI();
+            var contextDevice = GetContextDevice(Options);
+            var catalog = contextDevice.CatalogCredential;
+
+            var result = new ResultDump() {
+                Success = true,
+                CatalogEntries = new List<CatalogEntry>()
+                };
+
+            foreach (var entry in catalog) {
+                result.CatalogEntries.Add(entry);
+                }
+
+            return result;
             }
         }
     }

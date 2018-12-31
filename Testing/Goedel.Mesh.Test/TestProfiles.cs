@@ -20,7 +20,7 @@ namespace Goedel.Mesh.Test {
         public TestProfiles() => TestEnvironment.Initialize();
 
         public  void EscrowRecover() {
-            var machineEnvironment = new TestMachineEnvironment("EscrowRecover");
+            var machineEnvironment = new TestMachineEnvironment( "EscrowRecover");
 
             var MachineAliceAdmin = new MeshMachineTest(machineEnvironment, name: "Alice Admin");
             var MachineAliceRecover = new MeshMachineTest(machineEnvironment, name: "Alice Admin Recovered");
@@ -36,7 +36,7 @@ namespace Goedel.Mesh.Test {
             }
 
         public void CatalogCredentials() {
-            var machineEnvironment = new TestMachineEnvironment("ProtocolHello");
+            var machineEnvironment = new TestMachineEnvironment( "ProtocolHello");
 
             var MachineAliceAdmin = new MeshMachineTest(machineEnvironment, name: "Alice");
             var DeviceAdmin = ContextDevice.Generate(MachineAliceAdmin);
@@ -105,7 +105,7 @@ namespace Goedel.Mesh.Test {
         /// Test direct addition/removal of devices without going through the services or inbound spool
         /// </summary>
         public void CatalogDevices() {
-            var machineEnvironment = new TestMachineEnvironment("ProtocolHello");
+            var machineEnvironment = new TestMachineEnvironment( "ProtocolHello");
 
             var MachineAliceAdmin = new MeshMachineTest(machineEnvironment, name: "Alice");
             var MachineAliceLaptop = new MeshMachineTest(machineEnvironment, name: "Alice Laptop");
@@ -136,7 +136,7 @@ namespace Goedel.Mesh.Test {
         /// Test addition/deletion of contacts
         /// </summary>
         public void CatalogContacts() {
-            var machineEnvironment = new TestMachineEnvironment("ProtocolHello");
+            var machineEnvironment = new TestMachineEnvironment( "ProtocolHello");
 
             var MachineAliceAdmin = new MeshMachineTest(machineEnvironment, name: "Alice");
             var DeviceAdmin = ContextDevice.Generate(MachineAliceAdmin);
@@ -217,7 +217,7 @@ namespace Goedel.Mesh.Test {
 
 
         public void ConnectRequestDirect() {
-            var machineEnvironment = new TestMachineEnvironment("ProtocolHello");
+            var machineEnvironment = new TestMachineEnvironment( "ProtocolHello");
 
             var TestName = Unique.Next();
             var AccountAlice = NextAccountAlice(TestName);
@@ -241,7 +241,7 @@ namespace Goedel.Mesh.Test {
             }
 
         public void ContactRequestDirect() {
-            var machineEnvironment = new TestMachineEnvironment("ProtocolHello");
+            var machineEnvironment = new TestMachineEnvironment( "ProtocolHello");
 
 
             var TestName = Unique.Next();

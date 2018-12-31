@@ -88,5 +88,16 @@ namespace Goedel.Mesh {
         //public override List<KeyValuePair<string, string>> _KeyValues => base._KeyValues;
 
 
+        public override string ToString() {
+            var stringBuilder = new StringBuilder();
+            if (Protocol != null) {
+                stringBuilder.Append("{Protocol}:");
+                }
+            stringBuilder.Append("{Username}@{Service} = [{Password}]");
+
+            return stringBuilder.ToString();
+
+            }
+
         }
     }

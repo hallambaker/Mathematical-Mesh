@@ -53,6 +53,10 @@ namespace Goedel.Mesh.Protocol.Client {
             (catalogContact ?? GetStore(CatalogContact.Factory, CatalogContact.Label).CacheValue(out catalogContact)) as CatalogContact;
         Store catalogContact;
 
+        public CatalogBookmark CatalogBookmark =>
+            (catalogBookmark ?? GetStore(CatalogBookmark.Factory, CatalogContact.Label).CacheValue(out catalogBookmark)) as CatalogBookmark;
+        Store catalogBookmark;
+
         public CatalogApplication CatalogApplication =>
             (catalogApplication ?? GetStore(CatalogApplication.Factory, CatalogApplication.Label).CacheValue(out catalogApplication)) as CatalogApplication;
         Store catalogApplication;
@@ -225,7 +229,7 @@ namespace Goedel.Mesh.Protocol.Client {
 
         public DareMessage SignContact(string recipient, Contact contact) {
             var signedContact = DareMessage.Encode(contact.GetBytes(tag: true),
-                    SigningKey: KeySign, ContentType: "application/mmm");
+                    signingKey: KeySign, contentType: "application/mmm");
 
             var request = new MessageContactRequest() {
                 Contact = signedContact,
@@ -237,7 +241,7 @@ namespace Goedel.Mesh.Protocol.Client {
 
         protected DareMessage Sign (JSONObject data) =>
                     DareMessage.Encode(data.GetBytes(tag: true),
-                        SigningKey: keySign, ContentType: "application/mmm");
+                        signingKey: keySign, contentType: "application/mmm");
 
 
         }

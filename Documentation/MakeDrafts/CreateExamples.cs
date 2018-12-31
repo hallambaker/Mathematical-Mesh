@@ -42,7 +42,7 @@ namespace ExampleGenerator {
                 MakeData("From", From),MakeData("To", To),MakeData("Subject", Subject)
                 };
             return new DareMessage(CryptoParameters, Body.ToUTF8(),
-                ContentType: "application/example-mail", DataSequences: Data);
+                contentType: "application/example-mail", dataSequences: Data);
             }
 
 
@@ -118,7 +118,7 @@ namespace ExampleGenerator {
 
         void GenerateKeys() {
             // Encryption Key Set.
-            var machineEnvironment = new TestMachineEnvironment("TestLifecycle");
+            var machineEnvironment = new TestMachineEnvironment( "TestLifecycle");
             var Machine1 = new MeshMachineTest(machineEnvironment, name: "Machine1");
 
             DareMessageAlicePrivate = new DiffeHellmanPrivate();
@@ -210,7 +210,7 @@ namespace ExampleGenerator {
             DAREMessageAtomic = new DareMessage(CryptoParametersPlaintext, DareMessageTest1);
 
             // Plaintext atomic EDS
-            MessageAtomicDS = new DareMessage(CryptoParametersPlaintext, DareMessageTest1, DataSequences: DataSequences);
+            MessageAtomicDS = new DareMessage(CryptoParametersPlaintext, DareMessageTest1, dataSequences: DataSequences);
 
             DAREMessageAtomicSign = new DareMessage(CryptoParametersSign, DareMessageTest1);
             DAREMessageAtomicSignEncrypt = new DareMessage(CryptoParametersSignEncrypt, DareMessageTest1);

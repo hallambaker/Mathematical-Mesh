@@ -108,8 +108,8 @@ Processing is performed in the same manner as an unkeyed fingerprint:
 
 #% instance.MakeUTFExtendedExample (DataString, CryptoAlgorithmID.SHA_2_512, key);
 
-The SHA-3-512 commitment with the same inputs is:
-#{UDF.DataToFormat(Data, ContentType, 125, CryptoAlgorithmID.SHA_3_512, key)}
+#!The SHA-3-512 commitment with the same inputs is:
+#!#{UDF.DataToFormat(Data, ContentType, 125, CryptoAlgorithmID.SHA_3_512, key)}
 
 #end file
 
@@ -117,29 +117,36 @@ The SHA-3-512 commitment with the same inputs is:
 #% var DataBytes = DataString.ToUTF8();
 #% var ContentType = "text/plain";
 #% var HashData = DataBytes.GetDigest(cryptoAlgorithmID);
-#% var UDFDataBuffer = UDF.UDFBuffer(HashData, ContentType, key);
-#% var UDFData = UDFDataBuffer.GetDigest(cryptoAlgorithmID);
-#% var Trimmed=UDF.BufferDigestToUDF(UDFDataBuffer,125,cryptoAlgorithmID);
+#% var UDFDataBuffer = UDF.UDFBuffer(HashData, ContentType);
+#% byte[] UDFData ;
 
 ~~~~
-H(&<Data>) = 
+H(&<Data>) = #!
 #{HashData.ToStringBase16FormatHex()}
 
-#if (key == null)
-&<Content-ID> + ‘:’ + H(&<Data>) = 
-#else
-&<Content-ID> + ‘:’ + H(&<Data>) + ‘:’ + &<key> = 
-#end if
+&<Content-ID> + ‘:’ + H(&<Data>) =  #!
 #{UDFDataBuffer.ToStringBase16FormatHex()}
 
 #if (key == null)
-H(&<Content-ID> + ‘:’ + H(&<Data>)) = 
+#% UDFData = UDFDataBuffer.GetDigest(cryptoAlgorithmID);
+H(&<Content-ID> + ‘:’ + H(&<Data>)) =  #!
 #else
-H(&<Content-ID> + ‘:’ + H(&<Data>) + ‘:’ + &<key>) = 
+#% var keyBytes = key.ToUTF8();
+#% var macKey = UDF.ConvertKey(key,512);
+#% UDFData = UDFDataBuffer.GetMAC(macKey, CryptoAlgorithmID.HMAC_SHA_2_512);
+#% var keyDerive = new KeyDeriveHKDF(keyBytes, KeyDerive.KeyedUDFMaster, CryptoAlgorithmID.HMAC_SHA_2_512);
+PRK(Key) =  #!
+#{keyDerive.PRK.ToStringBase16FormatHex()}
+
+HKDF(Key) =  #!
+#{macKey.ToStringBase16FormatHex()}
+
+MAC(&<key>, &<Content-ID> + ‘:’ + H(&<Data>)) =  #!
 #end if
 #{UDFData.ToStringBase16FormatHex()}
+#% var Trimmed=UDF.BufferDigestToUDF(UDFDataBuffer,125,cryptoAlgorithmID, key);
 
-Prefixed, compressed, trimmed =
+Prefixed, compressed, trimmed =  #!
 #{Trimmed.ToStringBase16FormatHex()} ...
 ~~~~
 

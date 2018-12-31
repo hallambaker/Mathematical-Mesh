@@ -32,9 +32,9 @@ namespace Scratchpad {
     partial class Program {
         static void Main(string[] args) {
             Console.WriteLine("Hello World");
-            //TestService.Test().MeshConnect();
+            //TestGoedelCryptography.Test().TestDerive_5869_Separate();
             //TestKeyless.Test().FindCompression();
-            TestKeyless.Test().TestUDF();
+            ShellTests.Test().TestFile("hello world");
             }
 
 

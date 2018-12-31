@@ -44,7 +44,7 @@ namespace Goedel.Mesh.Protocol.Server {
         /// <summary>
         /// The service name (default to mesh.prismproof.org)
         /// </summary>
-        protected string ServiceName = "mesh.prismproof.org";
+        protected string ServiceName = "example.com";
 
         /// <summary>
         /// The local PublicMeshServiceHost.
@@ -71,7 +71,7 @@ namespace Goedel.Mesh.Protocol.Server {
         public MeshPortalDirect(string serviceName = null, string serviceDirectory=null) {
             ServiceName = serviceName ?? ServiceName;
             ServiceDirectory = serviceDirectory ?? ServiceDirectory;
-            MeshServiceHost = new PublicMeshServiceProvider(serviceName, serviceDirectory);
+            MeshServiceHost = new PublicMeshServiceProvider(ServiceName, ServiceDirectory);
             }
 
 

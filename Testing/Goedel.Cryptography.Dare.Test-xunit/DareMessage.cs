@@ -190,7 +190,7 @@ namespace Goedel.XUnit {
 
             CryptoParameters = CryptoParameters ?? CryptoParametersNull;
 
-            var Message = new DareMessage(CryptoParameters, Plaintext, DataSequences: DataSequences);
+            var Message = new DareMessage(CryptoParameters, Plaintext, dataSequences: DataSequences);
 
             var MessageBytes = Message.GetJson(false);
 
@@ -213,7 +213,7 @@ namespace Goedel.XUnit {
 
                 using (var OutputStream = new MemoryStream()) {
                     DareMessage.Encode(CryptoParameters, InputStream, OutputStream,
-                        Plaintext.Length, ContentType, DataSequences: DataSequences);
+                        Plaintext.Length, ContentType, dataSequences: DataSequences);
 
                     var MessageBytes = OutputStream.ToArray();
                     CheckDecodeDirect(CryptoParameters, MessageBytes, Plaintext, DataSequences, ContentType);
@@ -231,7 +231,7 @@ namespace Goedel.XUnit {
 
                 using (var OutputStream = new MemoryStream()) {
                     DareMessage.Encode(CryptoParameters, InputStream, OutputStream,
-                        ContentType:ContentType, DataSequences: DataSequences);
+                        contentType:ContentType, dataSequences: DataSequences);
 
                     var MessageBytes = OutputStream.ToArray();
                     CheckDecodeDirect(CryptoParameters, MessageBytes, Plaintext, DataSequences, ContentType);
@@ -249,7 +249,7 @@ namespace Goedel.XUnit {
             string ContentType = null) {
 
             var Message = DareMessage.FromJSON(Serialization, false, 
-                    Decrypt: CryptoParameters.Encrypt, KeyCollection: CryptoParameters.KeyCollection );
+                    decrypt: CryptoParameters.Encrypt, keyCollection: CryptoParameters.KeyCollection );
             CheckDecodeResult(Message, DataSequences, ContentType);
 
             Utilities.Assert.True(Plaintext.IsEqualTo(Message.Body));

@@ -40,8 +40,20 @@ namespace Goedel.Mesh.Shell {
             }
         }
 
+    public partial class ResultEntry {
+        public override string ToString() => CatalogEntry.ToString();
+        }
+
     public partial class ResultDump {
-        public override string ToString() => Data;
+        public override string ToString() {
+            var builder = StringBuilder();
+            foreach (var entry in CatalogEntries) {
+                builder.Append(entry.ToString());
+                builder.AppendLine();
+                }
+            return builder.ToString();
+            }
+        //public override string ToString() => Data;
         }
 
 
@@ -61,6 +73,15 @@ namespace Goedel.Mesh.Shell {
     public partial class ResultDigest {
         public override string ToString() {
             return Digest;
+            }
+        }
+
+    public partial class ResultCommitment {
+        public override string ToString() {
+            var Builder = new StringBuilder();
+            Builder.Append($"UDF={Digest}\n");
+            Builder.Append($"Key={Key}");
+            return Builder.ToString();
             }
         }
     }

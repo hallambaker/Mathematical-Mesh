@@ -132,8 +132,6 @@ namespace ExampleGenerator {
 				_Output.Write ("\n{0}", _Indent);
 				 instance.MakeUTFExtendedExample (DataString, CryptoAlgorithmID.SHA_2_512, key);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("The SHA-3-512 commitment with the same inputs is:\n{0}", _Indent);
-				_Output.Write ("{1}\n{0}", _Indent, UDF.DataToFormat(Data, ContentType, 125, CryptoAlgorithmID.SHA_3_512, key));
 				_Output.Write ("\n{0}", _Indent);
 				}
 			}
@@ -146,29 +144,36 @@ namespace ExampleGenerator {
 			 var DataBytes = DataString.ToUTF8();
 			 var ContentType = "text/plain";
 			 var HashData = DataBytes.GetDigest(cryptoAlgorithmID);
-			 var UDFDataBuffer = UDF.UDFBuffer(HashData, ContentType, key);
-			 var UDFData = UDFDataBuffer.GetDigest(cryptoAlgorithmID);
-			 var Trimmed=UDF.BufferDigestToUDF(UDFDataBuffer,125,cryptoAlgorithmID);
+			 var UDFDataBuffer = UDF.UDFBuffer(HashData, ContentType);
+			 byte[] UDFData ;
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("~~~~\n{0}", _Indent);
-			_Output.Write ("H(&<Data>) = \n{0}", _Indent);
+			_Output.Write ("H(&<Data>) = ", _Indent);
 			_Output.Write ("{1}\n{0}", _Indent, HashData.ToStringBase16FormatHex());
 			_Output.Write ("\n{0}", _Indent);
-			if (  (key == null) ) {
-				_Output.Write ("&<Content-ID> + ‘:’ + H(&<Data>) = \n{0}", _Indent);
-				} else {
-				_Output.Write ("&<Content-ID> + ‘:’ + H(&<Data>) + ‘:’ + &<key> = \n{0}", _Indent);
-				}
+			_Output.Write ("&<Content-ID> + ‘:’ + H(&<Data>) =  ", _Indent);
 			_Output.Write ("{1}\n{0}", _Indent, UDFDataBuffer.ToStringBase16FormatHex());
 			_Output.Write ("\n{0}", _Indent);
 			if (  (key == null) ) {
-				_Output.Write ("H(&<Content-ID> + ‘:’ + H(&<Data>)) = \n{0}", _Indent);
+				 UDFData = UDFDataBuffer.GetDigest(cryptoAlgorithmID);
+				_Output.Write ("H(&<Content-ID> + ‘:’ + H(&<Data>)) =  ", _Indent);
 				} else {
-				_Output.Write ("H(&<Content-ID> + ‘:’ + H(&<Data>) + ‘:’ + &<key>) = \n{0}", _Indent);
+				 var keyBytes = key.ToUTF8();
+				 var macKey = UDF.ConvertKey(key,512);
+				 UDFData = UDFDataBuffer.GetMAC(macKey, CryptoAlgorithmID.HMAC_SHA_2_512);
+				 var keyDerive = new KeyDeriveHKDF(keyBytes, KeyDerive.KeyedUDFMaster, CryptoAlgorithmID.HMAC_SHA_2_512);
+				_Output.Write ("PRK(Key) =  ", _Indent);
+				_Output.Write ("{1}\n{0}", _Indent, keyDerive.PRK.ToStringBase16FormatHex());
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("HKDF(Key) =  ", _Indent);
+				_Output.Write ("{1}\n{0}", _Indent, macKey.ToStringBase16FormatHex());
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("MAC(&<key>, &<Content-ID> + ‘:’ + H(&<Data>)) =  ", _Indent);
 				}
 			_Output.Write ("{1}\n{0}", _Indent, UDFData.ToStringBase16FormatHex());
+			 var Trimmed=UDF.BufferDigestToUDF(UDFDataBuffer,125,cryptoAlgorithmID, key);
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("Prefixed, compressed, trimmed =\n{0}", _Indent);
+			_Output.Write ("Prefixed, compressed, trimmed =  ", _Indent);
 			_Output.Write ("{1} ...\n{0}", _Indent, Trimmed.ToStringBase16FormatHex());
 			_Output.Write ("~~~~\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);

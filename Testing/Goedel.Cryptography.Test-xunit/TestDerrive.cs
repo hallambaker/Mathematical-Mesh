@@ -64,9 +64,7 @@ namespace Goedel.XUnit {
         [Fact]
         public void TestDerive_5869_Separate() {
             foreach (var TestVector in TestVectors_Derive_5869_SHA256) {
-
-                var SHA256 = CryptoCatalog.Default.GetAuthentication(CryptoAlgorithmID.HMAC_SHA_2_256);
-
+                var SHA256 = CryptoAlgorithmID.HMAC_SHA_2_256;
                 TestVector.Verify(SHA256);
                 }
             }
@@ -79,7 +77,7 @@ namespace Goedel.XUnit {
             Xunit.Assert.Throws<ImplementationLimit>(() => {
                 foreach (var TestVector in TestVectors_Derive_5869_SHA256) {
 
-                    var SHA256 = CryptoCatalog.Default.GetAuthentication(CryptoAlgorithmID.HMAC_SHA_2_256);
+                    var SHA256 = CryptoAlgorithmID.HMAC_SHA_2_256;
                     var KDF = new KeyDeriveHKDF(
                                 TestVectors_Derive_5869_SHA256[0].IKM,
                                 TestVectors_Derive_5869_SHA256[0].Salt, SHA256);
@@ -108,21 +106,19 @@ namespace Goedel.XUnit {
         public byte[] Result_OKM { get; set; }
 
 
-        public void Verify(global::Goedel.Cryptography.CryptoProviderAuthentication Provider) {
-            var KDF = new KeyDeriveHKDF(IKM, Salt, Provider);
-            var OKM = KDF.Derive(Info, L * 8);
+        //public void Verify(global::Goedel.Cryptography.CryptoProviderAuthentication Provider) {
+        //    var KDF = new KeyDeriveHKDF(IKM, Salt, Provider);
+        //    var OKM = KDF.Derive(Info, L * 8);
 
 
-            Debug.WriteLine("PRK = {0}", KDF.PRK.ToStringBase16());
+        //    Debug.WriteLine("PRK = {0}", KDF.PRK.ToStringBase16());
 
-            KDF.PRK.AssertEqual(Result_PRK);
-            OKM.AssertEqual(Result_OKM);
-            }
+        //    KDF.PRK.AssertEqual(Result_PRK);
+        //    OKM.AssertEqual(Result_OKM);
+        //    }
 
         public void Verify(CryptoAlgorithmID ID) {
-            global::Goedel.Cryptography.CryptoProviderAuthentication Provider = CryptoCatalog.Default.GetAuthentication(ID);
-
-            var KDF = new KeyDeriveHKDF(IKM, Salt, Provider);
+            var KDF = new KeyDeriveHKDF(IKM, Salt, ID);
             var OKM = KDF.Derive(Info, L * 8);
 
             Debug.WriteLine("PRK = {0}", KDF.PRK.ToStringBase16());

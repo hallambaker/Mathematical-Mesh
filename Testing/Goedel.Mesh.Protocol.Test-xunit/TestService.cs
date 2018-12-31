@@ -37,9 +37,7 @@ namespace Goedel.XUnit {
 
         [Fact]
         public void ProtocolHello() {
-            var machineEnvironment = new TestMachineEnvironment("ProtocolHello");
-
-            var meshPortalDirect = CreateService(ServiceName);
+            var machineEnvironment = new TestMachineEnvironment( "ProtocolHello");
             var meshClient = machineEnvironment.MeshPortalDirect.GetService(ServiceName);
 
 
@@ -50,7 +48,7 @@ namespace Goedel.XUnit {
 
         [Fact]
         public void ProtocolHelloContext() {
-            var machineEnvironment = new TestMachineEnvironment("ProtocolHelloContext");
+            var machineEnvironment = new TestMachineEnvironment( "ProtocolHelloContext");
 
             MeshMachineTest.GetContext(machineEnvironment, AccountAlice, "Alice Admin", 
                     out var machineAliceAdmin, out var deviceAdmin, out var masterAdmin);
@@ -62,7 +60,7 @@ namespace Goedel.XUnit {
 
         [Fact]
         public void ProtocolAccountLifecycle() {
-            var machineEnvironment = new TestMachineEnvironment("ProtocolAccountLifecycle");
+            var machineEnvironment = new TestMachineEnvironment( "ProtocolAccountLifecycle");
 
             MeshMachineTest.GetContext(machineEnvironment, AccountAlice, "Alice Admin", 
                 out var machineAliceAdmin, out var deviceAdmin, out var masterAdmin);
@@ -90,7 +88,7 @@ namespace Goedel.XUnit {
 
         [Fact]
         public void ProtocolCatalog() {
-            var machineEnvironment = new TestMachineEnvironment("ProtocolCatalog");
+            var machineEnvironment = new TestMachineEnvironment( "ProtocolCatalog");
 
             MeshMachineTest.GetContext(machineEnvironment, AccountAlice, "Alice Admin", 
                 out var machineAliceAdmin, out var deviceAdmin, out var masterAdmin);
@@ -115,7 +113,7 @@ namespace Goedel.XUnit {
 
         [Fact]
         public void MeshConnect() {
-            var machineEnvironment = new TestMachineEnvironment("MeshConnect");
+            var machineEnvironment = new TestMachineEnvironment( "MeshConnect");
 
             MeshMachineTest.GetContext(machineEnvironment, AccountAlice, "Alice Admin", 
                 out var machineAliceAdmin, out var deviceAdmin, out var masterAdmin);
@@ -149,7 +147,7 @@ namespace Goedel.XUnit {
 
         [Fact]
         public void MeshContact() {
-            var machineEnvironment = new TestMachineEnvironment("MeshContact");
+            var machineEnvironment = new TestMachineEnvironment( "MeshContact");
 
             var AccountAlice = "alice@example.com";
             var AccountBob = "bob@example.com";

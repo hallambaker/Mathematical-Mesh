@@ -17,7 +17,15 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult ContainerCreate(ContainerCreate Options) {
-            throw new NYI();
+            var inputFile = Options.Output.Value;
+
+            using (var container = Container.Open(
+                inputFile, containerType: ContainerType.MerkleTree)) {
+                }
+
+            return new ResultFile() {
+                Filename = inputFile
+                };
             }
 
         /// <summary>
@@ -26,7 +34,15 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult ContainerArchive(ContainerArchive Options) {
-            throw new NYI();
+            var inputFile = Options.Output.Value;
+
+            using (var container = Container.Open(
+                inputFile, containerType: ContainerType.MerkleTree)) {
+                }
+
+            return new ResultFile() {
+                Filename = inputFile
+                };
             }
 
         /// <summary>
@@ -35,7 +51,15 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult ContainerAppend(ContainerAppend Options) {
-            throw new NYI();
+            var inputFile = Options.Output.Value;
+
+            using (var container = Container.Open(
+                inputFile, containerType: ContainerType.MerkleTree)) {
+                }
+
+            return new ResultFile() {
+                Filename = inputFile
+                };
             }
 
 

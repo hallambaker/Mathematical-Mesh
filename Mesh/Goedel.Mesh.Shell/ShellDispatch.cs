@@ -7,6 +7,7 @@ using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
 using Goedel.Cryptography.Jose;
 using Goedel.Protocol;
+using Goedel.Mesh.Protocol.Client;
 
 namespace Goedel.Mesh.Shell {
     public partial class Shell : _Shell {
@@ -77,11 +78,11 @@ namespace Goedel.Mesh.Shell {
                 // additional text.
                 Output.Write(shellResult.GetJson(false));
                 }
+            else if (Verbose) {
+                Output.Write(shellResult.Verbose());
+                }
             else {
                 Output.Write(shellResult.ToString());
-                if (Verbose) {
-                    Output.Write(shellResult.Verbose());
-                    }
                 }
             }
 
@@ -90,6 +91,13 @@ namespace Goedel.Mesh.Shell {
         //public List<string> Recipients(IEncodeOptions Options) =>
         //    (Options.Recipient.Value == null) ? null : new List<string> { Options.Recipient.Value };
 
+        public virtual ContextDevice GetContextDevice(IAccountOptions Options) {
+            throw new NYI();
+            }
+
+        public virtual ContextMaster GetContextMaster(IAccountOptions Options) {
+            throw new NYI();
+            }
 
         public KeyCollection KeyCollection(IAccountOptions Options) => 
                     Cryptography.KeyCollection.Default;

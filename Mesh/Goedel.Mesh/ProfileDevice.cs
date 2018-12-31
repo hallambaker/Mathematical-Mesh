@@ -49,7 +49,7 @@ namespace Goedel.Mesh {
             var bytes = ProfileDevice.GetBytes(tag:true);
 
             ProfileDevice.ProfileDeviceSigned = DareMessage.Encode(bytes,
-                    SigningKey: keyPublicSign, ContentType: "application/mmm");
+                    signingKey: keyPublicSign, contentType: "application/mmm");
 
             return ProfileDevice;
 

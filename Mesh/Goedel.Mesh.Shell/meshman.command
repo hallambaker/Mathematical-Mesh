@@ -73,7 +73,8 @@
 			Brief "The public key size"
 
 	OptionSet EncodeOptions
-
+		Option ContentType "cty" String
+			Brief "Content Type"
 		Option Encrypt "encrypt" String
 			Brief "Encrypt data for specified recipient"
 		Option Sign "sign" String
@@ -586,13 +587,13 @@
 			Brief "Calculate the Uniform Data Fingerprint of the input data"
 			Include Reporting
 			Option ContentType "cty" String
-				Brief "Content Trype"
+				Brief "Content Type"
 			Option AlgDigest "alg" String
 				Brief "The digest algorithm"
 			Parameter Input "in" ExistingFile
 				Brief "File to take digest of"
 
-		Command FileDigest "file"
+		Command FileDigest "digest"
 			Brief "Calculate the digest value of the input data"
 			Include Reporting
 			Option AlgDigest "alg" String

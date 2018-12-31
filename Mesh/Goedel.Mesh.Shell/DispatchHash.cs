@@ -70,7 +70,7 @@ namespace Goedel.Mesh.Shell {
             var digest = Cryptography.UDF.DigestToFormat(
                 contentDigest, contentType, cryptoAlgorithmID: hashAlgorithm, key: key);
 
-            return new ResultDigest() {
+            return new ResultCommitment() {
                 Success = true,
                 Digest = digest,
                 Key = key

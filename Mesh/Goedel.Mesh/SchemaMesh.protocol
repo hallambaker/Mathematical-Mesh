@@ -224,7 +224,12 @@
 		String Service
 		String Username
 		String Password
-		// Protocol, Service, Username, Password
+	
+	Structure CatalogEntryBookmark
+		Inherits CatalogEntry
+		String Uri
+		String Title
+		String Path
 
 	Structure CatalogEntryDevice
 		Inherits CatalogEntry

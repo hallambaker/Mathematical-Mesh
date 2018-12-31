@@ -74,7 +74,7 @@ namespace Goedel.Mesh {
 
         public CatalogEntryContact(Contact contact) : this() {
             Contact = DareMessage.Encode(contact.GetBytes(tag: true),
-                    ContentType: "application/mmm");
+                    contentType: "application/mmm");
             }
         }
 

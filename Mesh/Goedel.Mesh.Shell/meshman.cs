@@ -208,7 +208,7 @@ namespace Goedel.Mesh.Shell {
 			Entries = new  SortedDictionary<string, DescribeCommand> () {
 				{"random", _FileRandom._DescribeCommand },
 				{"udf", _FileUDF._DescribeCommand },
-				{"file", _FileDigest._DescribeCommand },
+				{"digest", _FileDigest._DescribeCommand },
 				{"commit", _FileCommitment._DescribeCommand }
 				} // End Entries
 			};
@@ -1070,6 +1070,7 @@ namespace Goedel.Mesh.Shell {
 		}
 
 	public interface IEncodeOptions {
+		String			ContentType{get; set;}
 		String			Encrypt{get; set;}
 		String			Sign{get; set;}
 		String			AlgDigest{get; set;}
@@ -8958,6 +8959,7 @@ namespace Goedel.Mesh.Shell {
 			new String (),
 			new String (),
 			new String (),
+			new String (),
 			new Flag (),
 			new Flag (),
 			new Flag (),
@@ -8973,122 +8975,131 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _Input {
 			set => _Data[0].Parameter (value);
 			}
-		/// <summary>Field accessor for option [encrypt]</summary>
-		public virtual String Encrypt {
+		/// <summary>Field accessor for option [cty]</summary>
+		public virtual String ContentType {
 			get => _Data[1] as String;
 			set => _Data[1]  = value;
 			}
 
-		public virtual string _Encrypt {
+		public virtual string _ContentType {
 			set => _Data[1].Parameter (value);
 			}
-		/// <summary>Field accessor for option [sign]</summary>
-		public virtual String Sign {
+		/// <summary>Field accessor for option [encrypt]</summary>
+		public virtual String Encrypt {
 			get => _Data[2] as String;
 			set => _Data[2]  = value;
 			}
 
-		public virtual string _Sign {
+		public virtual string _Encrypt {
 			set => _Data[2].Parameter (value);
 			}
-		/// <summary>Field accessor for option [adigest]</summary>
-		public virtual String AlgDigest {
+		/// <summary>Field accessor for option [sign]</summary>
+		public virtual String Sign {
 			get => _Data[3] as String;
 			set => _Data[3]  = value;
 			}
 
-		public virtual string _AlgDigest {
+		public virtual string _Sign {
 			set => _Data[3].Parameter (value);
 			}
-		/// <summary>Field accessor for option [aencrypt]</summary>
-		public virtual String AlgEncrypt {
+		/// <summary>Field accessor for option [adigest]</summary>
+		public virtual String AlgDigest {
 			get => _Data[4] as String;
 			set => _Data[4]  = value;
 			}
 
-		public virtual string _AlgEncrypt {
+		public virtual string _AlgDigest {
 			set => _Data[4].Parameter (value);
 			}
-		/// <summary>Field accessor for option [mencrypt]</summary>
-		public virtual String ModeEncrypt {
+		/// <summary>Field accessor for option [aencrypt]</summary>
+		public virtual String AlgEncrypt {
 			get => _Data[5] as String;
 			set => _Data[5]  = value;
 			}
 
-		public virtual string _ModeEncrypt {
+		public virtual string _AlgEncrypt {
 			set => _Data[5].Parameter (value);
 			}
-		/// <summary>Field accessor for option [msign]</summary>
-		public virtual String ModeSign {
+		/// <summary>Field accessor for option [mencrypt]</summary>
+		public virtual String ModeEncrypt {
 			get => _Data[6] as String;
 			set => _Data[6]  = value;
 			}
 
-		public virtual string _ModeSign {
+		public virtual string _ModeEncrypt {
 			set => _Data[6].Parameter (value);
 			}
-		/// <summary>Field accessor for option [portal]</summary>
-		public virtual String AccountID {
+		/// <summary>Field accessor for option [msign]</summary>
+		public virtual String ModeSign {
 			get => _Data[7] as String;
 			set => _Data[7]  = value;
 			}
 
-		public virtual string _AccountID {
+		public virtual string _ModeSign {
 			set => _Data[7].Parameter (value);
 			}
-		/// <summary>Field accessor for option [udf]</summary>
-		public virtual String UDF {
+		/// <summary>Field accessor for option [portal]</summary>
+		public virtual String AccountID {
 			get => _Data[8] as String;
 			set => _Data[8]  = value;
 			}
 
-		public virtual string _UDF {
+		public virtual string _AccountID {
 			set => _Data[8].Parameter (value);
 			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[9] as Flag;
+		/// <summary>Field accessor for option [udf]</summary>
+		public virtual String UDF {
+			get => _Data[9] as String;
 			set => _Data[9]  = value;
 			}
 
-		public virtual string _Verbose {
+		public virtual string _UDF {
 			set => _Data[9].Parameter (value);
 			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
 			get => _Data[10] as Flag;
 			set => _Data[10]  = value;
 			}
 
-		public virtual string _Report {
+		public virtual string _Verbose {
 			set => _Data[10].Parameter (value);
 			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
 			get => _Data[11] as Flag;
 			set => _Data[11]  = value;
 			}
 
-		public virtual string _Json {
+		public virtual string _Report {
 			set => _Data[11].Parameter (value);
 			}
-		/// <summary>Field accessor for option [out]</summary>
-		public virtual NewFile Output {
-			get => _Data[12] as NewFile;
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[12] as Flag;
 			set => _Data[12]  = value;
 			}
 
-		public virtual string _Output {
+		public virtual string _Json {
 			set => _Data[12].Parameter (value);
 			}
-		/// <summary>Field accessor for option [sub]</summary>
-		public virtual Flag Subdirectories {
-			get => _Data[13] as Flag;
+		/// <summary>Field accessor for option [out]</summary>
+		public virtual NewFile Output {
+			get => _Data[13] as NewFile;
 			set => _Data[13]  = value;
 			}
 
-		public virtual string _Subdirectories {
+		public virtual string _Output {
 			set => _Data[13].Parameter (value);
+			}
+		/// <summary>Field accessor for option [sub]</summary>
+		public virtual Flag Subdirectories {
+			get => _Data[14] as Flag;
+			set => _Data[14]  = value;
+			}
+
+		public virtual string _Subdirectories {
+			set => _Data[14].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -9106,94 +9117,101 @@ namespace Goedel.Mesh.Shell {
 					Key = ""
 					},
 				new DescribeEntryOption () {
+					Identifier = "ContentType", 
+					Default = null, // null if null
+					Brief = "Content Type",
+					Index = 1,
+					Key = "cty"
+					},
+				new DescribeEntryOption () {
 					Identifier = "Encrypt", 
 					Default = null, // null if null
 					Brief = "Encrypt data for specified recipient",
-					Index = 1,
+					Index = 2,
 					Key = "encrypt"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Sign", 
 					Default = null, // null if null
 					Brief = "Sign data with specified key",
-					Index = 2,
+					Index = 3,
 					Key = "sign"
 					},
 				new DescribeEntryOption () {
 					Identifier = "AlgDigest", 
 					Default = null, // null if null
 					Brief = "The digest algorithm",
-					Index = 3,
+					Index = 4,
 					Key = "adigest"
 					},
 				new DescribeEntryOption () {
 					Identifier = "AlgEncrypt", 
 					Default = null, // null if null
 					Brief = "The symmetric encryption algorithm",
-					Index = 4,
+					Index = 5,
 					Key = "aencrypt"
 					},
 				new DescribeEntryOption () {
 					Identifier = "ModeEncrypt", 
 					Default = null, // null if null
 					Brief = "The public key encryption mode",
-					Index = 5,
+					Index = 6,
 					Key = "mencrypt"
 					},
 				new DescribeEntryOption () {
 					Identifier = "ModeSign", 
 					Default = null, // null if null
 					Brief = "The signature mode",
-					Index = 6,
+					Index = 7,
 					Key = "msign"
 					},
 				new DescribeEntryOption () {
 					Identifier = "AccountID", 
 					Default = null, // null if null
 					Brief = "Account identifier (e.g. alice@example.com)",
-					Index = 7,
+					Index = 8,
 					Key = "portal"
 					},
 				new DescribeEntryOption () {
 					Identifier = "UDF", 
 					Default = null, // null if null
 					Brief = "Profile fingerprint",
-					Index = 8,
+					Index = 9,
 					Key = "udf"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Verbose", 
 					Default = "true", // null if null
 					Brief = "Verbose reports (default)",
-					Index = 9,
+					Index = 10,
 					Key = "verbose"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Report", 
 					Default = "true", // null if null
 					Brief = "Report output (default)",
-					Index = 10,
+					Index = 11,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Json", 
 					Default = "false", // null if null
 					Brief = "Report output in JSON format",
-					Index = 11,
+					Index = 12,
 					Key = "json"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Output", 
 					Default = null, // null if null
 					Brief = "Filename for encrypted output.",
-					Index = 12,
+					Index = 13,
 					Key = "out"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Subdirectories", 
 					Default = null, // null if null
 					Brief = "Process subdirectories recursively.",
-					Index = 13,
+					Index = 14,
 					Key = "sub"
 					}
 				}
@@ -9673,7 +9691,7 @@ namespace Goedel.Mesh.Shell {
 				new DescribeEntryOption () {
 					Identifier = "ContentType", 
 					Default = null, // null if null
-					Brief = "Content Trype",
+					Brief = "Content Type",
 					Index = 3,
 					Key = "cty"
 					},
@@ -9757,7 +9775,7 @@ namespace Goedel.Mesh.Shell {
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
-			Identifier = "file",
+			Identifier = "digest",
 			Brief =  "Calculate the digest value of the input data",
 			HandleDelegate =  CommandLineInterpreter.Handle_FileDigest,
 			Lazy =  false,
@@ -9965,72 +9983,613 @@ namespace Goedel.Mesh.Shell {
 			new String (),
 			new String (),
 			new String (),
+			new String (),
 			new Flag (),
 			new Flag (),
 			new Flag (),
 			new NewFile ()			} ;
 
-		/// <summary>Field accessor for option [encrypt]</summary>
-		public virtual String Encrypt {
+		/// <summary>Field accessor for option [cty]</summary>
+		public virtual String ContentType {
 			get => _Data[0] as String;
 			set => _Data[0]  = value;
 			}
 
-		public virtual string _Encrypt {
+		public virtual string _ContentType {
 			set => _Data[0].Parameter (value);
 			}
-		/// <summary>Field accessor for option [sign]</summary>
-		public virtual String Sign {
+		/// <summary>Field accessor for option [encrypt]</summary>
+		public virtual String Encrypt {
 			get => _Data[1] as String;
 			set => _Data[1]  = value;
 			}
 
-		public virtual string _Sign {
+		public virtual string _Encrypt {
 			set => _Data[1].Parameter (value);
 			}
-		/// <summary>Field accessor for option [adigest]</summary>
-		public virtual String AlgDigest {
+		/// <summary>Field accessor for option [sign]</summary>
+		public virtual String Sign {
 			get => _Data[2] as String;
 			set => _Data[2]  = value;
 			}
 
-		public virtual string _AlgDigest {
+		public virtual string _Sign {
 			set => _Data[2].Parameter (value);
 			}
-		/// <summary>Field accessor for option [aencrypt]</summary>
-		public virtual String AlgEncrypt {
+		/// <summary>Field accessor for option [adigest]</summary>
+		public virtual String AlgDigest {
 			get => _Data[3] as String;
 			set => _Data[3]  = value;
 			}
 
-		public virtual string _AlgEncrypt {
+		public virtual string _AlgDigest {
 			set => _Data[3].Parameter (value);
 			}
-		/// <summary>Field accessor for option [mencrypt]</summary>
-		public virtual String ModeEncrypt {
+		/// <summary>Field accessor for option [aencrypt]</summary>
+		public virtual String AlgEncrypt {
 			get => _Data[4] as String;
 			set => _Data[4]  = value;
 			}
 
-		public virtual string _ModeEncrypt {
+		public virtual string _AlgEncrypt {
 			set => _Data[4].Parameter (value);
 			}
-		/// <summary>Field accessor for option [msign]</summary>
-		public virtual String ModeSign {
+		/// <summary>Field accessor for option [mencrypt]</summary>
+		public virtual String ModeEncrypt {
 			get => _Data[5] as String;
 			set => _Data[5]  = value;
 			}
 
-		public virtual string _ModeSign {
+		public virtual string _ModeEncrypt {
 			set => _Data[5].Parameter (value);
 			}
-		/// <summary>Field accessor for option [type]</summary>
-		public virtual String Type {
+		/// <summary>Field accessor for option [msign]</summary>
+		public virtual String ModeSign {
 			get => _Data[6] as String;
 			set => _Data[6]  = value;
 			}
 
+		public virtual string _ModeSign {
+			set => _Data[6].Parameter (value);
+			}
+		/// <summary>Field accessor for option [type]</summary>
+		public virtual String Type {
+			get => _Data[7] as String;
+			set => _Data[7]  = value;
+			}
+
 		public virtual string _Type {
+			set => _Data[7].Parameter (value);
+			}
+		/// <summary>Field accessor for option [portal]</summary>
+		public virtual String AccountID {
+			get => _Data[8] as String;
+			set => _Data[8]  = value;
+			}
+
+		public virtual string _AccountID {
+			set => _Data[8].Parameter (value);
+			}
+		/// <summary>Field accessor for option [udf]</summary>
+		public virtual String UDF {
+			get => _Data[9] as String;
+			set => _Data[9]  = value;
+			}
+
+		public virtual string _UDF {
+			set => _Data[9].Parameter (value);
+			}
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
+			get => _Data[10] as Flag;
+			set => _Data[10]  = value;
+			}
+
+		public virtual string _Verbose {
+			set => _Data[10].Parameter (value);
+			}
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
+			get => _Data[11] as Flag;
+			set => _Data[11]  = value;
+			}
+
+		public virtual string _Report {
+			set => _Data[11].Parameter (value);
+			}
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[12] as Flag;
+			set => _Data[12]  = value;
+			}
+
+		public virtual string _Json {
+			set => _Data[12].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual NewFile Output {
+			get => _Data[13] as NewFile;
+			set => _Data[13]  = value;
+			}
+
+		public virtual string _Output {
+			set => _Data[13].Parameter (value);
+			}
+		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
+			Identifier = "create",
+			Brief =  "Create a new DARE Container",
+			HandleDelegate =  CommandLineInterpreter.Handle_ContainerCreate,
+			Lazy =  false,
+			Entries = new List<DescribeEntry> () {
+				new DescribeEntryOption () {
+					Identifier = "ContentType", 
+					Default = null, // null if null
+					Brief = "Content Type",
+					Index = 0,
+					Key = "cty"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Encrypt", 
+					Default = null, // null if null
+					Brief = "Encrypt data for specified recipient",
+					Index = 1,
+					Key = "encrypt"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Sign", 
+					Default = null, // null if null
+					Brief = "Sign data with specified key",
+					Index = 2,
+					Key = "sign"
+					},
+				new DescribeEntryOption () {
+					Identifier = "AlgDigest", 
+					Default = null, // null if null
+					Brief = "The digest algorithm",
+					Index = 3,
+					Key = "adigest"
+					},
+				new DescribeEntryOption () {
+					Identifier = "AlgEncrypt", 
+					Default = null, // null if null
+					Brief = "The symmetric encryption algorithm",
+					Index = 4,
+					Key = "aencrypt"
+					},
+				new DescribeEntryOption () {
+					Identifier = "ModeEncrypt", 
+					Default = null, // null if null
+					Brief = "The public key encryption mode",
+					Index = 5,
+					Key = "mencrypt"
+					},
+				new DescribeEntryOption () {
+					Identifier = "ModeSign", 
+					Default = null, // null if null
+					Brief = "The signature mode",
+					Index = 6,
+					Key = "msign"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Type", 
+					Default = null, // null if null
+					Brief = "The container type, plain/tree/digest/chain/tree",
+					Index = 7,
+					Key = "type"
+					},
+				new DescribeEntryOption () {
+					Identifier = "AccountID", 
+					Default = null, // null if null
+					Brief = "Account identifier (e.g. alice@example.com)",
+					Index = 8,
+					Key = "portal"
+					},
+				new DescribeEntryOption () {
+					Identifier = "UDF", 
+					Default = null, // null if null
+					Brief = "Profile fingerprint",
+					Index = 9,
+					Key = "udf"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Verbose", 
+					Default = "true", // null if null
+					Brief = "Verbose reports (default)",
+					Index = 10,
+					Key = "verbose"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Report", 
+					Default = "true", // null if null
+					Brief = "Report output (default)",
+					Index = 11,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Json", 
+					Default = "false", // null if null
+					Brief = "Report output in JSON format",
+					Index = 12,
+					Key = "json"
+					},
+				new DescribeEntryParameter () {
+					Identifier = "Output", 
+					Default = null, // null if null
+					Brief = "New container",
+					Index = 13,
+					Key = ""
+					}
+				}
+			};
+
+		}
+
+    public partial class ContainerCreate : _ContainerCreate {
+        } // class ContainerCreate
+
+    public class _ContainerArchive : Goedel.Command.Dispatch ,
+							IEncodeOptions,
+							IAccountOptions,
+							IReporting,
+							IContainerOptions {
+
+		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new String (),
+			new String (),
+			new String (),
+			new String (),
+			new String (),
+			new String (),
+			new String (),
+			new String (),
+			new String (),
+			new Flag (),
+			new Flag (),
+			new Flag (),
+			new String (),
+			new ExistingFile (),
+			new NewFile ()			} ;
+
+		/// <summary>Field accessor for option [cty]</summary>
+		public virtual String ContentType {
+			get => _Data[0] as String;
+			set => _Data[0]  = value;
+			}
+
+		public virtual string _ContentType {
+			set => _Data[0].Parameter (value);
+			}
+		/// <summary>Field accessor for option [encrypt]</summary>
+		public virtual String Encrypt {
+			get => _Data[1] as String;
+			set => _Data[1]  = value;
+			}
+
+		public virtual string _Encrypt {
+			set => _Data[1].Parameter (value);
+			}
+		/// <summary>Field accessor for option [sign]</summary>
+		public virtual String Sign {
+			get => _Data[2] as String;
+			set => _Data[2]  = value;
+			}
+
+		public virtual string _Sign {
+			set => _Data[2].Parameter (value);
+			}
+		/// <summary>Field accessor for option [adigest]</summary>
+		public virtual String AlgDigest {
+			get => _Data[3] as String;
+			set => _Data[3]  = value;
+			}
+
+		public virtual string _AlgDigest {
+			set => _Data[3].Parameter (value);
+			}
+		/// <summary>Field accessor for option [aencrypt]</summary>
+		public virtual String AlgEncrypt {
+			get => _Data[4] as String;
+			set => _Data[4]  = value;
+			}
+
+		public virtual string _AlgEncrypt {
+			set => _Data[4].Parameter (value);
+			}
+		/// <summary>Field accessor for option [mencrypt]</summary>
+		public virtual String ModeEncrypt {
+			get => _Data[5] as String;
+			set => _Data[5]  = value;
+			}
+
+		public virtual string _ModeEncrypt {
+			set => _Data[5].Parameter (value);
+			}
+		/// <summary>Field accessor for option [msign]</summary>
+		public virtual String ModeSign {
+			get => _Data[6] as String;
+			set => _Data[6]  = value;
+			}
+
+		public virtual string _ModeSign {
+			set => _Data[6].Parameter (value);
+			}
+		/// <summary>Field accessor for option [portal]</summary>
+		public virtual String AccountID {
+			get => _Data[7] as String;
+			set => _Data[7]  = value;
+			}
+
+		public virtual string _AccountID {
+			set => _Data[7].Parameter (value);
+			}
+		/// <summary>Field accessor for option [udf]</summary>
+		public virtual String UDF {
+			get => _Data[8] as String;
+			set => _Data[8]  = value;
+			}
+
+		public virtual string _UDF {
+			set => _Data[8].Parameter (value);
+			}
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
+			get => _Data[9] as Flag;
+			set => _Data[9]  = value;
+			}
+
+		public virtual string _Verbose {
+			set => _Data[9].Parameter (value);
+			}
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
+			get => _Data[10] as Flag;
+			set => _Data[10]  = value;
+			}
+
+		public virtual string _Report {
+			set => _Data[10].Parameter (value);
+			}
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[11] as Flag;
+			set => _Data[11]  = value;
+			}
+
+		public virtual string _Json {
+			set => _Data[11].Parameter (value);
+			}
+		/// <summary>Field accessor for option [type]</summary>
+		public virtual String Type {
+			get => _Data[12] as String;
+			set => _Data[12]  = value;
+			}
+
+		public virtual string _Type {
+			set => _Data[12].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual ExistingFile Input {
+			get => _Data[13] as ExistingFile;
+			set => _Data[13]  = value;
+			}
+
+		public virtual string _Input {
+			set => _Data[13].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual NewFile Output {
+			get => _Data[14] as NewFile;
+			set => _Data[14]  = value;
+			}
+
+		public virtual string _Output {
+			set => _Data[14].Parameter (value);
+			}
+		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
+			Identifier = "archive",
+			Brief =  "Create a new DARE Container and archive the specified files",
+			HandleDelegate =  CommandLineInterpreter.Handle_ContainerArchive,
+			Lazy =  false,
+			Entries = new List<DescribeEntry> () {
+				new DescribeEntryOption () {
+					Identifier = "ContentType", 
+					Default = null, // null if null
+					Brief = "Content Type",
+					Index = 0,
+					Key = "cty"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Encrypt", 
+					Default = null, // null if null
+					Brief = "Encrypt data for specified recipient",
+					Index = 1,
+					Key = "encrypt"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Sign", 
+					Default = null, // null if null
+					Brief = "Sign data with specified key",
+					Index = 2,
+					Key = "sign"
+					},
+				new DescribeEntryOption () {
+					Identifier = "AlgDigest", 
+					Default = null, // null if null
+					Brief = "The digest algorithm",
+					Index = 3,
+					Key = "adigest"
+					},
+				new DescribeEntryOption () {
+					Identifier = "AlgEncrypt", 
+					Default = null, // null if null
+					Brief = "The symmetric encryption algorithm",
+					Index = 4,
+					Key = "aencrypt"
+					},
+				new DescribeEntryOption () {
+					Identifier = "ModeEncrypt", 
+					Default = null, // null if null
+					Brief = "The public key encryption mode",
+					Index = 5,
+					Key = "mencrypt"
+					},
+				new DescribeEntryOption () {
+					Identifier = "ModeSign", 
+					Default = null, // null if null
+					Brief = "The signature mode",
+					Index = 6,
+					Key = "msign"
+					},
+				new DescribeEntryOption () {
+					Identifier = "AccountID", 
+					Default = null, // null if null
+					Brief = "Account identifier (e.g. alice@example.com)",
+					Index = 7,
+					Key = "portal"
+					},
+				new DescribeEntryOption () {
+					Identifier = "UDF", 
+					Default = null, // null if null
+					Brief = "Profile fingerprint",
+					Index = 8,
+					Key = "udf"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Verbose", 
+					Default = "true", // null if null
+					Brief = "Verbose reports (default)",
+					Index = 9,
+					Key = "verbose"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Report", 
+					Default = "true", // null if null
+					Brief = "Report output (default)",
+					Index = 10,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Json", 
+					Default = "false", // null if null
+					Brief = "Report output in JSON format",
+					Index = 11,
+					Key = "json"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Type", 
+					Default = null, // null if null
+					Brief = "The container type, plain/tree/digest/chain/tree",
+					Index = 12,
+					Key = "type"
+					},
+				new DescribeEntryParameter () {
+					Identifier = "Input", 
+					Default = null, // null if null
+					Brief = "Directory containing files to create archive from",
+					Index = 13,
+					Key = ""
+					},
+				new DescribeEntryParameter () {
+					Identifier = "Output", 
+					Default = null, // null if null
+					Brief = "New container",
+					Index = 14,
+					Key = ""
+					}
+				}
+			};
+
+		}
+
+    public partial class ContainerArchive : _ContainerArchive {
+        } // class ContainerArchive
+
+    public class _ContainerAppend : Goedel.Command.Dispatch ,
+							IEncodeOptions,
+							IAccountOptions,
+							IReporting {
+
+		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new String (),
+			new String (),
+			new String (),
+			new String (),
+			new String (),
+			new String (),
+			new String (),
+			new String (),
+			new String (),
+			new Flag (),
+			new Flag (),
+			new Flag (),
+			new ExistingFile (),
+			new NewFile ()			} ;
+
+		/// <summary>Field accessor for option [cty]</summary>
+		public virtual String ContentType {
+			get => _Data[0] as String;
+			set => _Data[0]  = value;
+			}
+
+		public virtual string _ContentType {
+			set => _Data[0].Parameter (value);
+			}
+		/// <summary>Field accessor for option [encrypt]</summary>
+		public virtual String Encrypt {
+			get => _Data[1] as String;
+			set => _Data[1]  = value;
+			}
+
+		public virtual string _Encrypt {
+			set => _Data[1].Parameter (value);
+			}
+		/// <summary>Field accessor for option [sign]</summary>
+		public virtual String Sign {
+			get => _Data[2] as String;
+			set => _Data[2]  = value;
+			}
+
+		public virtual string _Sign {
+			set => _Data[2].Parameter (value);
+			}
+		/// <summary>Field accessor for option [adigest]</summary>
+		public virtual String AlgDigest {
+			get => _Data[3] as String;
+			set => _Data[3]  = value;
+			}
+
+		public virtual string _AlgDigest {
+			set => _Data[3].Parameter (value);
+			}
+		/// <summary>Field accessor for option [aencrypt]</summary>
+		public virtual String AlgEncrypt {
+			get => _Data[4] as String;
+			set => _Data[4]  = value;
+			}
+
+		public virtual string _AlgEncrypt {
+			set => _Data[4].Parameter (value);
+			}
+		/// <summary>Field accessor for option [mencrypt]</summary>
+		public virtual String ModeEncrypt {
+			get => _Data[5] as String;
+			set => _Data[5]  = value;
+			}
+
+		public virtual string _ModeEncrypt {
+			set => _Data[5].Parameter (value);
+			}
+		/// <summary>Field accessor for option [msign]</summary>
+		public virtual String ModeSign {
+			get => _Data[6] as String;
+			set => _Data[6]  = value;
+			}
+
+		public virtual string _ModeSign {
 			set => _Data[6].Parameter (value);
 			}
 		/// <summary>Field accessor for option [portal]</summary>
@@ -10079,252 +10638,6 @@ namespace Goedel.Mesh.Shell {
 			set => _Data[11].Parameter (value);
 			}
 		/// <summary>Field accessor for parameter []</summary>
-		public virtual NewFile Output {
-			get => _Data[12] as NewFile;
-			set => _Data[12]  = value;
-			}
-
-		public virtual string _Output {
-			set => _Data[12].Parameter (value);
-			}
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
-
-		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
-			Identifier = "create",
-			Brief =  "Create a new DARE Container",
-			HandleDelegate =  CommandLineInterpreter.Handle_ContainerCreate,
-			Lazy =  false,
-			Entries = new List<DescribeEntry> () {
-				new DescribeEntryOption () {
-					Identifier = "Encrypt", 
-					Default = null, // null if null
-					Brief = "Encrypt data for specified recipient",
-					Index = 0,
-					Key = "encrypt"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Sign", 
-					Default = null, // null if null
-					Brief = "Sign data with specified key",
-					Index = 1,
-					Key = "sign"
-					},
-				new DescribeEntryOption () {
-					Identifier = "AlgDigest", 
-					Default = null, // null if null
-					Brief = "The digest algorithm",
-					Index = 2,
-					Key = "adigest"
-					},
-				new DescribeEntryOption () {
-					Identifier = "AlgEncrypt", 
-					Default = null, // null if null
-					Brief = "The symmetric encryption algorithm",
-					Index = 3,
-					Key = "aencrypt"
-					},
-				new DescribeEntryOption () {
-					Identifier = "ModeEncrypt", 
-					Default = null, // null if null
-					Brief = "The public key encryption mode",
-					Index = 4,
-					Key = "mencrypt"
-					},
-				new DescribeEntryOption () {
-					Identifier = "ModeSign", 
-					Default = null, // null if null
-					Brief = "The signature mode",
-					Index = 5,
-					Key = "msign"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Type", 
-					Default = null, // null if null
-					Brief = "The container type, plain/tree/digest/chain/tree",
-					Index = 6,
-					Key = "type"
-					},
-				new DescribeEntryOption () {
-					Identifier = "AccountID", 
-					Default = null, // null if null
-					Brief = "Account identifier (e.g. alice@example.com)",
-					Index = 7,
-					Key = "portal"
-					},
-				new DescribeEntryOption () {
-					Identifier = "UDF", 
-					Default = null, // null if null
-					Brief = "Profile fingerprint",
-					Index = 8,
-					Key = "udf"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Verbose", 
-					Default = "true", // null if null
-					Brief = "Verbose reports (default)",
-					Index = 9,
-					Key = "verbose"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Report", 
-					Default = "true", // null if null
-					Brief = "Report output (default)",
-					Index = 10,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Json", 
-					Default = "false", // null if null
-					Brief = "Report output in JSON format",
-					Index = 11,
-					Key = "json"
-					},
-				new DescribeEntryParameter () {
-					Identifier = "Output", 
-					Default = null, // null if null
-					Brief = "New container",
-					Index = 12,
-					Key = ""
-					}
-				}
-			};
-
-		}
-
-    public partial class ContainerCreate : _ContainerCreate {
-        } // class ContainerCreate
-
-    public class _ContainerArchive : Goedel.Command.Dispatch ,
-							IEncodeOptions,
-							IAccountOptions,
-							IReporting,
-							IContainerOptions {
-
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
-			new String (),
-			new String (),
-			new String (),
-			new String (),
-			new String (),
-			new String (),
-			new String (),
-			new String (),
-			new Flag (),
-			new Flag (),
-			new Flag (),
-			new String (),
-			new ExistingFile (),
-			new NewFile ()			} ;
-
-		/// <summary>Field accessor for option [encrypt]</summary>
-		public virtual String Encrypt {
-			get => _Data[0] as String;
-			set => _Data[0]  = value;
-			}
-
-		public virtual string _Encrypt {
-			set => _Data[0].Parameter (value);
-			}
-		/// <summary>Field accessor for option [sign]</summary>
-		public virtual String Sign {
-			get => _Data[1] as String;
-			set => _Data[1]  = value;
-			}
-
-		public virtual string _Sign {
-			set => _Data[1].Parameter (value);
-			}
-		/// <summary>Field accessor for option [adigest]</summary>
-		public virtual String AlgDigest {
-			get => _Data[2] as String;
-			set => _Data[2]  = value;
-			}
-
-		public virtual string _AlgDigest {
-			set => _Data[2].Parameter (value);
-			}
-		/// <summary>Field accessor for option [aencrypt]</summary>
-		public virtual String AlgEncrypt {
-			get => _Data[3] as String;
-			set => _Data[3]  = value;
-			}
-
-		public virtual string _AlgEncrypt {
-			set => _Data[3].Parameter (value);
-			}
-		/// <summary>Field accessor for option [mencrypt]</summary>
-		public virtual String ModeEncrypt {
-			get => _Data[4] as String;
-			set => _Data[4]  = value;
-			}
-
-		public virtual string _ModeEncrypt {
-			set => _Data[4].Parameter (value);
-			}
-		/// <summary>Field accessor for option [msign]</summary>
-		public virtual String ModeSign {
-			get => _Data[5] as String;
-			set => _Data[5]  = value;
-			}
-
-		public virtual string _ModeSign {
-			set => _Data[5].Parameter (value);
-			}
-		/// <summary>Field accessor for option [portal]</summary>
-		public virtual String AccountID {
-			get => _Data[6] as String;
-			set => _Data[6]  = value;
-			}
-
-		public virtual string _AccountID {
-			set => _Data[6].Parameter (value);
-			}
-		/// <summary>Field accessor for option [udf]</summary>
-		public virtual String UDF {
-			get => _Data[7] as String;
-			set => _Data[7]  = value;
-			}
-
-		public virtual string _UDF {
-			set => _Data[7].Parameter (value);
-			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[8] as Flag;
-			set => _Data[8]  = value;
-			}
-
-		public virtual string _Verbose {
-			set => _Data[8].Parameter (value);
-			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
-			get => _Data[9] as Flag;
-			set => _Data[9]  = value;
-			}
-
-		public virtual string _Report {
-			set => _Data[9].Parameter (value);
-			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
-			get => _Data[10] as Flag;
-			set => _Data[10]  = value;
-			}
-
-		public virtual string _Json {
-			set => _Data[10].Parameter (value);
-			}
-		/// <summary>Field accessor for option [type]</summary>
-		public virtual String Type {
-			get => _Data[11] as String;
-			set => _Data[11]  = value;
-			}
-
-		public virtual string _Type {
-			set => _Data[11].Parameter (value);
-			}
-		/// <summary>Field accessor for parameter []</summary>
 		public virtual ExistingFile Input {
 			get => _Data[12] as ExistingFile;
 			set => _Data[12]  = value;
@@ -10345,351 +10658,107 @@ namespace Goedel.Mesh.Shell {
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
-			Identifier = "archive",
-			Brief =  "Create a new DARE Container and archive the specified files",
-			HandleDelegate =  CommandLineInterpreter.Handle_ContainerArchive,
-			Lazy =  false,
-			Entries = new List<DescribeEntry> () {
-				new DescribeEntryOption () {
-					Identifier = "Encrypt", 
-					Default = null, // null if null
-					Brief = "Encrypt data for specified recipient",
-					Index = 0,
-					Key = "encrypt"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Sign", 
-					Default = null, // null if null
-					Brief = "Sign data with specified key",
-					Index = 1,
-					Key = "sign"
-					},
-				new DescribeEntryOption () {
-					Identifier = "AlgDigest", 
-					Default = null, // null if null
-					Brief = "The digest algorithm",
-					Index = 2,
-					Key = "adigest"
-					},
-				new DescribeEntryOption () {
-					Identifier = "AlgEncrypt", 
-					Default = null, // null if null
-					Brief = "The symmetric encryption algorithm",
-					Index = 3,
-					Key = "aencrypt"
-					},
-				new DescribeEntryOption () {
-					Identifier = "ModeEncrypt", 
-					Default = null, // null if null
-					Brief = "The public key encryption mode",
-					Index = 4,
-					Key = "mencrypt"
-					},
-				new DescribeEntryOption () {
-					Identifier = "ModeSign", 
-					Default = null, // null if null
-					Brief = "The signature mode",
-					Index = 5,
-					Key = "msign"
-					},
-				new DescribeEntryOption () {
-					Identifier = "AccountID", 
-					Default = null, // null if null
-					Brief = "Account identifier (e.g. alice@example.com)",
-					Index = 6,
-					Key = "portal"
-					},
-				new DescribeEntryOption () {
-					Identifier = "UDF", 
-					Default = null, // null if null
-					Brief = "Profile fingerprint",
-					Index = 7,
-					Key = "udf"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Verbose", 
-					Default = "true", // null if null
-					Brief = "Verbose reports (default)",
-					Index = 8,
-					Key = "verbose"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Report", 
-					Default = "true", // null if null
-					Brief = "Report output (default)",
-					Index = 9,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Json", 
-					Default = "false", // null if null
-					Brief = "Report output in JSON format",
-					Index = 10,
-					Key = "json"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Type", 
-					Default = null, // null if null
-					Brief = "The container type, plain/tree/digest/chain/tree",
-					Index = 11,
-					Key = "type"
-					},
-				new DescribeEntryParameter () {
-					Identifier = "Input", 
-					Default = null, // null if null
-					Brief = "Directory containing files to create archive from",
-					Index = 12,
-					Key = ""
-					},
-				new DescribeEntryParameter () {
-					Identifier = "Output", 
-					Default = null, // null if null
-					Brief = "New container",
-					Index = 13,
-					Key = ""
-					}
-				}
-			};
-
-		}
-
-    public partial class ContainerArchive : _ContainerArchive {
-        } // class ContainerArchive
-
-    public class _ContainerAppend : Goedel.Command.Dispatch ,
-							IEncodeOptions,
-							IAccountOptions,
-							IReporting {
-
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
-			new String (),
-			new String (),
-			new String (),
-			new String (),
-			new String (),
-			new String (),
-			new String (),
-			new String (),
-			new Flag (),
-			new Flag (),
-			new Flag (),
-			new ExistingFile (),
-			new NewFile ()			} ;
-
-		/// <summary>Field accessor for option [encrypt]</summary>
-		public virtual String Encrypt {
-			get => _Data[0] as String;
-			set => _Data[0]  = value;
-			}
-
-		public virtual string _Encrypt {
-			set => _Data[0].Parameter (value);
-			}
-		/// <summary>Field accessor for option [sign]</summary>
-		public virtual String Sign {
-			get => _Data[1] as String;
-			set => _Data[1]  = value;
-			}
-
-		public virtual string _Sign {
-			set => _Data[1].Parameter (value);
-			}
-		/// <summary>Field accessor for option [adigest]</summary>
-		public virtual String AlgDigest {
-			get => _Data[2] as String;
-			set => _Data[2]  = value;
-			}
-
-		public virtual string _AlgDigest {
-			set => _Data[2].Parameter (value);
-			}
-		/// <summary>Field accessor for option [aencrypt]</summary>
-		public virtual String AlgEncrypt {
-			get => _Data[3] as String;
-			set => _Data[3]  = value;
-			}
-
-		public virtual string _AlgEncrypt {
-			set => _Data[3].Parameter (value);
-			}
-		/// <summary>Field accessor for option [mencrypt]</summary>
-		public virtual String ModeEncrypt {
-			get => _Data[4] as String;
-			set => _Data[4]  = value;
-			}
-
-		public virtual string _ModeEncrypt {
-			set => _Data[4].Parameter (value);
-			}
-		/// <summary>Field accessor for option [msign]</summary>
-		public virtual String ModeSign {
-			get => _Data[5] as String;
-			set => _Data[5]  = value;
-			}
-
-		public virtual string _ModeSign {
-			set => _Data[5].Parameter (value);
-			}
-		/// <summary>Field accessor for option [portal]</summary>
-		public virtual String AccountID {
-			get => _Data[6] as String;
-			set => _Data[6]  = value;
-			}
-
-		public virtual string _AccountID {
-			set => _Data[6].Parameter (value);
-			}
-		/// <summary>Field accessor for option [udf]</summary>
-		public virtual String UDF {
-			get => _Data[7] as String;
-			set => _Data[7]  = value;
-			}
-
-		public virtual string _UDF {
-			set => _Data[7].Parameter (value);
-			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[8] as Flag;
-			set => _Data[8]  = value;
-			}
-
-		public virtual string _Verbose {
-			set => _Data[8].Parameter (value);
-			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
-			get => _Data[9] as Flag;
-			set => _Data[9]  = value;
-			}
-
-		public virtual string _Report {
-			set => _Data[9].Parameter (value);
-			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
-			get => _Data[10] as Flag;
-			set => _Data[10]  = value;
-			}
-
-		public virtual string _Json {
-			set => _Data[10].Parameter (value);
-			}
-		/// <summary>Field accessor for parameter []</summary>
-		public virtual ExistingFile Input {
-			get => _Data[11] as ExistingFile;
-			set => _Data[11]  = value;
-			}
-
-		public virtual string _Input {
-			set => _Data[11].Parameter (value);
-			}
-		/// <summary>Field accessor for parameter []</summary>
-		public virtual NewFile Output {
-			get => _Data[12] as NewFile;
-			set => _Data[12]  = value;
-			}
-
-		public virtual string _Output {
-			set => _Data[12].Parameter (value);
-			}
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
-
-		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
 			Identifier = "append",
 			Brief =  "Append the specified file as an entry to the specified container",
 			HandleDelegate =  CommandLineInterpreter.Handle_ContainerAppend,
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
 				new DescribeEntryOption () {
+					Identifier = "ContentType", 
+					Default = null, // null if null
+					Brief = "Content Type",
+					Index = 0,
+					Key = "cty"
+					},
+				new DescribeEntryOption () {
 					Identifier = "Encrypt", 
 					Default = null, // null if null
 					Brief = "Encrypt data for specified recipient",
-					Index = 0,
+					Index = 1,
 					Key = "encrypt"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Sign", 
 					Default = null, // null if null
 					Brief = "Sign data with specified key",
-					Index = 1,
+					Index = 2,
 					Key = "sign"
 					},
 				new DescribeEntryOption () {
 					Identifier = "AlgDigest", 
 					Default = null, // null if null
 					Brief = "The digest algorithm",
-					Index = 2,
+					Index = 3,
 					Key = "adigest"
 					},
 				new DescribeEntryOption () {
 					Identifier = "AlgEncrypt", 
 					Default = null, // null if null
 					Brief = "The symmetric encryption algorithm",
-					Index = 3,
+					Index = 4,
 					Key = "aencrypt"
 					},
 				new DescribeEntryOption () {
 					Identifier = "ModeEncrypt", 
 					Default = null, // null if null
 					Brief = "The public key encryption mode",
-					Index = 4,
+					Index = 5,
 					Key = "mencrypt"
 					},
 				new DescribeEntryOption () {
 					Identifier = "ModeSign", 
 					Default = null, // null if null
 					Brief = "The signature mode",
-					Index = 5,
+					Index = 6,
 					Key = "msign"
 					},
 				new DescribeEntryOption () {
 					Identifier = "AccountID", 
 					Default = null, // null if null
 					Brief = "Account identifier (e.g. alice@example.com)",
-					Index = 6,
+					Index = 7,
 					Key = "portal"
 					},
 				new DescribeEntryOption () {
 					Identifier = "UDF", 
 					Default = null, // null if null
 					Brief = "Profile fingerprint",
-					Index = 7,
+					Index = 8,
 					Key = "udf"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Verbose", 
 					Default = "true", // null if null
 					Brief = "Verbose reports (default)",
-					Index = 8,
+					Index = 9,
 					Key = "verbose"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Report", 
 					Default = "true", // null if null
 					Brief = "Report output (default)",
-					Index = 9,
+					Index = 10,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Json", 
 					Default = "false", // null if null
 					Brief = "Report output in JSON format",
-					Index = 10,
+					Index = 11,
 					Key = "json"
 					},
 				new DescribeEntryParameter () {
 					Identifier = "Input", 
 					Default = null, // null if null
 					Brief = "Container to append to",
-					Index = 11,
+					Index = 12,
 					Key = ""
 					},
 				new DescribeEntryParameter () {
 					Identifier = "Output", 
 					Default = null, // null if null
 					Brief = "File to append",
-					Index = 12,
+					Index = 13,
 					Key = ""
 					}
 				}
@@ -10714,118 +10783,128 @@ namespace Goedel.Mesh.Shell {
 			new String (),
 			new String (),
 			new String (),
+			new String (),
 			new Flag (),
 			new Flag (),
 			new Flag (),
 			new ExistingFile ()			} ;
 
-		/// <summary>Field accessor for option [encrypt]</summary>
-		public virtual String Encrypt {
+		/// <summary>Field accessor for option [cty]</summary>
+		public virtual String ContentType {
 			get => _Data[0] as String;
 			set => _Data[0]  = value;
 			}
 
-		public virtual string _Encrypt {
+		public virtual string _ContentType {
 			set => _Data[0].Parameter (value);
 			}
-		/// <summary>Field accessor for option [sign]</summary>
-		public virtual String Sign {
+		/// <summary>Field accessor for option [encrypt]</summary>
+		public virtual String Encrypt {
 			get => _Data[1] as String;
 			set => _Data[1]  = value;
 			}
 
-		public virtual string _Sign {
+		public virtual string _Encrypt {
 			set => _Data[1].Parameter (value);
 			}
-		/// <summary>Field accessor for option [adigest]</summary>
-		public virtual String AlgDigest {
+		/// <summary>Field accessor for option [sign]</summary>
+		public virtual String Sign {
 			get => _Data[2] as String;
 			set => _Data[2]  = value;
 			}
 
-		public virtual string _AlgDigest {
+		public virtual string _Sign {
 			set => _Data[2].Parameter (value);
 			}
-		/// <summary>Field accessor for option [aencrypt]</summary>
-		public virtual String AlgEncrypt {
+		/// <summary>Field accessor for option [adigest]</summary>
+		public virtual String AlgDigest {
 			get => _Data[3] as String;
 			set => _Data[3]  = value;
 			}
 
-		public virtual string _AlgEncrypt {
+		public virtual string _AlgDigest {
 			set => _Data[3].Parameter (value);
 			}
-		/// <summary>Field accessor for option [mencrypt]</summary>
-		public virtual String ModeEncrypt {
+		/// <summary>Field accessor for option [aencrypt]</summary>
+		public virtual String AlgEncrypt {
 			get => _Data[4] as String;
 			set => _Data[4]  = value;
 			}
 
-		public virtual string _ModeEncrypt {
+		public virtual string _AlgEncrypt {
 			set => _Data[4].Parameter (value);
 			}
-		/// <summary>Field accessor for option [msign]</summary>
-		public virtual String ModeSign {
+		/// <summary>Field accessor for option [mencrypt]</summary>
+		public virtual String ModeEncrypt {
 			get => _Data[5] as String;
 			set => _Data[5]  = value;
 			}
 
-		public virtual string _ModeSign {
+		public virtual string _ModeEncrypt {
 			set => _Data[5].Parameter (value);
 			}
-		/// <summary>Field accessor for option [portal]</summary>
-		public virtual String AccountID {
+		/// <summary>Field accessor for option [msign]</summary>
+		public virtual String ModeSign {
 			get => _Data[6] as String;
 			set => _Data[6]  = value;
 			}
 
-		public virtual string _AccountID {
+		public virtual string _ModeSign {
 			set => _Data[6].Parameter (value);
 			}
-		/// <summary>Field accessor for option [udf]</summary>
-		public virtual String UDF {
+		/// <summary>Field accessor for option [portal]</summary>
+		public virtual String AccountID {
 			get => _Data[7] as String;
 			set => _Data[7]  = value;
 			}
 
-		public virtual string _UDF {
+		public virtual string _AccountID {
 			set => _Data[7].Parameter (value);
 			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[8] as Flag;
+		/// <summary>Field accessor for option [udf]</summary>
+		public virtual String UDF {
+			get => _Data[8] as String;
 			set => _Data[8]  = value;
 			}
 
-		public virtual string _Verbose {
+		public virtual string _UDF {
 			set => _Data[8].Parameter (value);
 			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
 			get => _Data[9] as Flag;
 			set => _Data[9]  = value;
 			}
 
-		public virtual string _Report {
+		public virtual string _Verbose {
 			set => _Data[9].Parameter (value);
 			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
 			get => _Data[10] as Flag;
 			set => _Data[10]  = value;
 			}
 
-		public virtual string _Json {
+		public virtual string _Report {
 			set => _Data[10].Parameter (value);
 			}
-		/// <summary>Field accessor for parameter []</summary>
-		public virtual ExistingFile Input {
-			get => _Data[11] as ExistingFile;
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[11] as Flag;
 			set => _Data[11]  = value;
 			}
 
-		public virtual string _Input {
+		public virtual string _Json {
 			set => _Data[11].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual ExistingFile Input {
+			get => _Data[12] as ExistingFile;
+			set => _Data[12]  = value;
+			}
+
+		public virtual string _Input {
+			set => _Data[12].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -10836,87 +10915,94 @@ namespace Goedel.Mesh.Shell {
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
 				new DescribeEntryOption () {
+					Identifier = "ContentType", 
+					Default = null, // null if null
+					Brief = "Content Type",
+					Index = 0,
+					Key = "cty"
+					},
+				new DescribeEntryOption () {
 					Identifier = "Encrypt", 
 					Default = null, // null if null
 					Brief = "Encrypt data for specified recipient",
-					Index = 0,
+					Index = 1,
 					Key = "encrypt"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Sign", 
 					Default = null, // null if null
 					Brief = "Sign data with specified key",
-					Index = 1,
+					Index = 2,
 					Key = "sign"
 					},
 				new DescribeEntryOption () {
 					Identifier = "AlgDigest", 
 					Default = null, // null if null
 					Brief = "The digest algorithm",
-					Index = 2,
+					Index = 3,
 					Key = "adigest"
 					},
 				new DescribeEntryOption () {
 					Identifier = "AlgEncrypt", 
 					Default = null, // null if null
 					Brief = "The symmetric encryption algorithm",
-					Index = 3,
+					Index = 4,
 					Key = "aencrypt"
 					},
 				new DescribeEntryOption () {
 					Identifier = "ModeEncrypt", 
 					Default = null, // null if null
 					Brief = "The public key encryption mode",
-					Index = 4,
+					Index = 5,
 					Key = "mencrypt"
 					},
 				new DescribeEntryOption () {
 					Identifier = "ModeSign", 
 					Default = null, // null if null
 					Brief = "The signature mode",
-					Index = 5,
+					Index = 6,
 					Key = "msign"
 					},
 				new DescribeEntryOption () {
 					Identifier = "AccountID", 
 					Default = null, // null if null
 					Brief = "Account identifier (e.g. alice@example.com)",
-					Index = 6,
+					Index = 7,
 					Key = "portal"
 					},
 				new DescribeEntryOption () {
 					Identifier = "UDF", 
 					Default = null, // null if null
 					Brief = "Profile fingerprint",
-					Index = 7,
+					Index = 8,
 					Key = "udf"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Verbose", 
 					Default = "true", // null if null
 					Brief = "Verbose reports (default)",
-					Index = 8,
+					Index = 9,
 					Key = "verbose"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Report", 
 					Default = "true", // null if null
 					Brief = "Report output (default)",
-					Index = 9,
+					Index = 10,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Json", 
 					Default = "false", // null if null
 					Brief = "Report output in JSON format",
-					Index = 10,
+					Index = 11,
 					Key = "json"
 					},
 				new DescribeEntryParameter () {
 					Identifier = "Input", 
 					Default = null, // null if null
 					Brief = "Container to append to",
-					Index = 11,
+					Index = 12,
 					Key = ""
 					}
 				}
@@ -11120,6 +11206,7 @@ namespace Goedel.Mesh.Shell {
 			new String (),
 			new String (),
 			new String (),
+			new String (),
 			new Flag (),
 			new Flag (),
 			new Flag (),
@@ -11145,140 +11232,149 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _Output {
 			set => _Data[1].Parameter (value);
 			}
-		/// <summary>Field accessor for option [encrypt]</summary>
-		public virtual String Encrypt {
+		/// <summary>Field accessor for option [cty]</summary>
+		public virtual String ContentType {
 			get => _Data[2] as String;
 			set => _Data[2]  = value;
 			}
 
-		public virtual string _Encrypt {
+		public virtual string _ContentType {
 			set => _Data[2].Parameter (value);
 			}
-		/// <summary>Field accessor for option [sign]</summary>
-		public virtual String Sign {
+		/// <summary>Field accessor for option [encrypt]</summary>
+		public virtual String Encrypt {
 			get => _Data[3] as String;
 			set => _Data[3]  = value;
 			}
 
-		public virtual string _Sign {
+		public virtual string _Encrypt {
 			set => _Data[3].Parameter (value);
 			}
-		/// <summary>Field accessor for option [adigest]</summary>
-		public virtual String AlgDigest {
+		/// <summary>Field accessor for option [sign]</summary>
+		public virtual String Sign {
 			get => _Data[4] as String;
 			set => _Data[4]  = value;
 			}
 
-		public virtual string _AlgDigest {
+		public virtual string _Sign {
 			set => _Data[4].Parameter (value);
 			}
-		/// <summary>Field accessor for option [aencrypt]</summary>
-		public virtual String AlgEncrypt {
+		/// <summary>Field accessor for option [adigest]</summary>
+		public virtual String AlgDigest {
 			get => _Data[5] as String;
 			set => _Data[5]  = value;
 			}
 
-		public virtual string _AlgEncrypt {
+		public virtual string _AlgDigest {
 			set => _Data[5].Parameter (value);
 			}
-		/// <summary>Field accessor for option [mencrypt]</summary>
-		public virtual String ModeEncrypt {
+		/// <summary>Field accessor for option [aencrypt]</summary>
+		public virtual String AlgEncrypt {
 			get => _Data[6] as String;
 			set => _Data[6]  = value;
 			}
 
-		public virtual string _ModeEncrypt {
+		public virtual string _AlgEncrypt {
 			set => _Data[6].Parameter (value);
 			}
-		/// <summary>Field accessor for option [msign]</summary>
-		public virtual String ModeSign {
+		/// <summary>Field accessor for option [mencrypt]</summary>
+		public virtual String ModeEncrypt {
 			get => _Data[7] as String;
 			set => _Data[7]  = value;
 			}
 
-		public virtual string _ModeSign {
+		public virtual string _ModeEncrypt {
 			set => _Data[7].Parameter (value);
 			}
-		/// <summary>Field accessor for option [type]</summary>
-		public virtual String Type {
+		/// <summary>Field accessor for option [msign]</summary>
+		public virtual String ModeSign {
 			get => _Data[8] as String;
 			set => _Data[8]  = value;
 			}
 
-		public virtual string _Type {
+		public virtual string _ModeSign {
 			set => _Data[8].Parameter (value);
 			}
-		/// <summary>Field accessor for option [portal]</summary>
-		public virtual String AccountID {
+		/// <summary>Field accessor for option [type]</summary>
+		public virtual String Type {
 			get => _Data[9] as String;
 			set => _Data[9]  = value;
 			}
 
-		public virtual string _AccountID {
+		public virtual string _Type {
 			set => _Data[9].Parameter (value);
 			}
-		/// <summary>Field accessor for option [udf]</summary>
-		public virtual String UDF {
+		/// <summary>Field accessor for option [portal]</summary>
+		public virtual String AccountID {
 			get => _Data[10] as String;
 			set => _Data[10]  = value;
 			}
 
-		public virtual string _UDF {
+		public virtual string _AccountID {
 			set => _Data[10].Parameter (value);
 			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[11] as Flag;
+		/// <summary>Field accessor for option [udf]</summary>
+		public virtual String UDF {
+			get => _Data[11] as String;
 			set => _Data[11]  = value;
 			}
 
-		public virtual string _Verbose {
+		public virtual string _UDF {
 			set => _Data[11].Parameter (value);
 			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
 			get => _Data[12] as Flag;
 			set => _Data[12]  = value;
 			}
 
-		public virtual string _Report {
+		public virtual string _Verbose {
 			set => _Data[12].Parameter (value);
 			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
 			get => _Data[13] as Flag;
 			set => _Data[13]  = value;
 			}
 
-		public virtual string _Json {
+		public virtual string _Report {
 			set => _Data[13].Parameter (value);
 			}
-		/// <summary>Field accessor for option [decrypt]</summary>
-		public virtual Flag Decrypt {
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
 			get => _Data[14] as Flag;
 			set => _Data[14]  = value;
 			}
 
-		public virtual string _Decrypt {
+		public virtual string _Json {
 			set => _Data[14].Parameter (value);
 			}
-		/// <summary>Field accessor for option [index]</summary>
-		public virtual Flag Index {
+		/// <summary>Field accessor for option [decrypt]</summary>
+		public virtual Flag Decrypt {
 			get => _Data[15] as Flag;
 			set => _Data[15]  = value;
 			}
 
-		public virtual string _Index {
+		public virtual string _Decrypt {
 			set => _Data[15].Parameter (value);
 			}
-		/// <summary>Field accessor for option [purge]</summary>
-		public virtual Flag Purge {
+		/// <summary>Field accessor for option [index]</summary>
+		public virtual Flag Index {
 			get => _Data[16] as Flag;
 			set => _Data[16]  = value;
 			}
 
-		public virtual string _Purge {
+		public virtual string _Index {
 			set => _Data[16].Parameter (value);
+			}
+		/// <summary>Field accessor for option [purge]</summary>
+		public virtual Flag Purge {
+			get => _Data[17] as Flag;
+			set => _Data[17]  = value;
+			}
+
+		public virtual string _Purge {
+			set => _Data[17].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -11303,108 +11399,115 @@ namespace Goedel.Mesh.Shell {
 					Key = ""
 					},
 				new DescribeEntryOption () {
+					Identifier = "ContentType", 
+					Default = null, // null if null
+					Brief = "Content Type",
+					Index = 2,
+					Key = "cty"
+					},
+				new DescribeEntryOption () {
 					Identifier = "Encrypt", 
 					Default = null, // null if null
 					Brief = "Encrypt data for specified recipient",
-					Index = 2,
+					Index = 3,
 					Key = "encrypt"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Sign", 
 					Default = null, // null if null
 					Brief = "Sign data with specified key",
-					Index = 3,
+					Index = 4,
 					Key = "sign"
 					},
 				new DescribeEntryOption () {
 					Identifier = "AlgDigest", 
 					Default = null, // null if null
 					Brief = "The digest algorithm",
-					Index = 4,
+					Index = 5,
 					Key = "adigest"
 					},
 				new DescribeEntryOption () {
 					Identifier = "AlgEncrypt", 
 					Default = null, // null if null
 					Brief = "The symmetric encryption algorithm",
-					Index = 5,
+					Index = 6,
 					Key = "aencrypt"
 					},
 				new DescribeEntryOption () {
 					Identifier = "ModeEncrypt", 
 					Default = null, // null if null
 					Brief = "The public key encryption mode",
-					Index = 6,
+					Index = 7,
 					Key = "mencrypt"
 					},
 				new DescribeEntryOption () {
 					Identifier = "ModeSign", 
 					Default = null, // null if null
 					Brief = "The signature mode",
-					Index = 7,
+					Index = 8,
 					Key = "msign"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Type", 
 					Default = null, // null if null
 					Brief = "The container type, plain/tree/digest/chain/tree",
-					Index = 8,
+					Index = 9,
 					Key = "type"
 					},
 				new DescribeEntryOption () {
 					Identifier = "AccountID", 
 					Default = null, // null if null
 					Brief = "Account identifier (e.g. alice@example.com)",
-					Index = 9,
+					Index = 10,
 					Key = "portal"
 					},
 				new DescribeEntryOption () {
 					Identifier = "UDF", 
 					Default = null, // null if null
 					Brief = "Profile fingerprint",
-					Index = 10,
+					Index = 11,
 					Key = "udf"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Verbose", 
 					Default = "true", // null if null
 					Brief = "Verbose reports (default)",
-					Index = 11,
+					Index = 12,
 					Key = "verbose"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Report", 
 					Default = "true", // null if null
 					Brief = "Report output (default)",
-					Index = 12,
+					Index = 13,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Json", 
 					Default = "false", // null if null
 					Brief = "Report output in JSON format",
-					Index = 13,
+					Index = 14,
 					Key = "json"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Decrypt", 
 					Default = "false", // null if null
 					Brief = "Decrypt contents",
-					Index = 14,
+					Index = 15,
 					Key = "decrypt"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Index", 
 					Default = "true", // null if null
 					Brief = "Append an index record to the end",
-					Index = 15,
+					Index = 16,
 					Key = "index"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Purge", 
 					Default = "true", // null if null
 					Brief = "Purge unused data etc.",
-					Index = 16,
+					Index = 17,
 					Key = "purge"
 					}
 				}

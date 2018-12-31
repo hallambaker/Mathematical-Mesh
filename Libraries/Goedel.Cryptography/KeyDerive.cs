@@ -14,16 +14,25 @@ namespace Goedel.Cryptography {
 
         /// <summary>Salt used to derive keys to authenticate messages send by the client, i.e. the initiator
         /// to the server.</summary>
-        public readonly byte[] SaltClientToServerAuthenticate = "ClientToServerAuthenticate".ToBytes();
+        public static readonly byte[] KeyedUDFMaster = "KeyedUDFMaster".ToBytes();
+        /// <summary>Salt used to derive keys to authenticate messages send by the client, i.e. the initiator
+        /// to the server.</summary>
+        public static readonly byte[] KeyedUDFExpand = "KeyedUDFExpand".ToBytes();
+
+
+
+        /// <summary>Salt used to derive keys to authenticate messages send by the client, i.e. the initiator
+        /// to the server.</summary>
+        public static readonly byte[] SaltClientToServerAuthenticate = "ClientToServerAuthenticate".ToBytes();
         /// <summary>Salt used to derive keys to authenticate messages send by the server, i.e. the responder
         /// to the client.</summary>
-        public readonly byte[] SaltServerToClientAuthenticate = "ServerToClientAuthenticate".ToBytes();
+        public static readonly byte[] SaltServerToClientAuthenticate = "ServerToClientAuthenticate".ToBytes();
         /// <summary>Salt used to derive keys to encrypt messages send by the client, i.e. the initiator
         /// to the server.</summary>
-        public readonly byte[] SaltClientToServerEncrypt = "ClientToServerEncrypt".ToBytes();
+        public static readonly byte[] SaltClientToServerEncrypt = "ClientToServerEncrypt".ToBytes();
         /// <summary>Salt used to derive keys to encrypt messages send by the server, i.e. the responder
         /// to the client.</summary>
-        public readonly byte[] SaltServerToClientEncrypt = "ServerToClientEncrypt".ToBytes();
+        public static readonly byte[] SaltServerToClientEncrypt = "ServerToClientEncrypt".ToBytes();
 
 
 
@@ -64,7 +73,8 @@ namespace Goedel.Cryptography {
     /// </summary>
     public class KeyDeriveHKDF : KeyDerive {
 
-        CryptoProviderAuthentication Provider;
+        //CryptoProviderAuthentication Provider;
+        CryptoAlgorithmID Algorithm;
 
         /// <summary>The Pseudorandom key constructed from the IKM and salt</summary>
         public byte[] PRK;
@@ -75,38 +85,39 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Construct a KDF instance for the specified keying material
         /// </summary>
-        /// <param name="IKM">The input Keying material</param>
-        /// <param name="Salt">A salt to vary the key derivation by application</param>
-        /// <param name="Algorithm">The MAC algorithm to use</param>
-        public KeyDeriveHKDF(byte[] IKM, string Salt = null,
-                CryptoAlgorithmID Algorithm = CryptoAlgorithmID.Default) :
-                        this (IKM, Salt?.ToBytes(), Algorithm) {
+        /// <param name="ikm">The input Keying material</param>
+        /// <param name="salt">A salt to vary the key derivation by application</param>
+        /// <param name="algorithm">The MAC algorithm to use</param>
+        public KeyDeriveHKDF(byte[] ikm, string salt = null,
+                CryptoAlgorithmID algorithm = CryptoAlgorithmID.Default) :
+                        this (ikm, salt?.ToBytes(), algorithm) {
             }
 
 
         /// <summary>
         /// Construct a KDF instance for the specified keying material
         /// </summary>
-        /// <param name="IKM">The input Keying material</param>
-        /// <param name="Salt">A salt to vary the key derivation by application</param>
-        /// <param name="Algorithm">The MAC algorithm to use</param>
-        public KeyDeriveHKDF (byte[] IKM, byte[] Salt=null, 
-                CryptoAlgorithmID Algorithm =CryptoAlgorithmID.Default) : this (
-                    IKM, Salt, CryptoCatalog.Default.GetAuthentication(Algorithm)) {
+        /// <param name="ikm">The input Keying material</param>
+        /// <param name="salt">A salt to vary the key derivation by application</param>
+        /// <param name="algorithm">The MAC algorithm to use</param>
+        public KeyDeriveHKDF (byte[] ikm, byte[] salt=null, 
+                CryptoAlgorithmID algorithm =CryptoAlgorithmID.Default)  {
+            Algorithm = algorithm;
+            PRK = Extract(Algorithm, ikm, salt);
             }
 
-        /// <summary>
-        /// Construct a KDF instance for the specified keying material
-        /// </summary>
-        /// <param name="IKM">The input Keying material</param>
-        /// <param name="Salt">A salt to vary the key derivation by application</param>
-        /// <param name="Provider">Provider for the MAC algorithm to use</param>
-        public KeyDeriveHKDF(byte[] IKM, byte[] Salt,
-                CryptoProviderAuthentication Provider) {
+        ///// <summary>
+        ///// Construct a KDF instance for the specified keying material
+        ///// </summary>
+        ///// <param name="ikm">The input Keying material</param>
+        ///// <param name="salt">A salt to vary the key derivation by application</param>
+        ///// <param name="provider">Provider for the MAC algorithm to use</param>
+        //public KeyDeriveHKDF(byte[] ikm, byte[] salt,
+        //        CryptoProviderAuthentication provider) {
 
-            this.Provider = Provider;
-            PRK = Extract(Provider, IKM, Salt);
-            }
+        //    this.Provider = provider;
+        //    PRK = Extract(provider, ikm, salt);
+        //    }
 
         /// <summary>
         /// Key Derivation function
@@ -117,7 +128,7 @@ namespace Goedel.Cryptography {
         public override byte[] Derive(byte[] Info, int Length = 0) {
             Length = Length == 0 ? DefaultLength : Length;
 
-            return Expand(Provider, PRK, Length, Info);
+            return Expand(Algorithm, PRK, Length, Info);
             }
 
         static readonly byte[] NullKey = new byte[0];
@@ -125,54 +136,57 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// The extraction function
         /// </summary>
-        /// <param name="Provider">The authentication provider.</param>
+        /// <param name="algorithm">The MAC algorithm to use</param>
         /// <param name="IKM">The initial keying material</param>
         /// <param name="Salt">Salt to be used to vary the derived key across domains.</param>
         /// <returns>The extracted value.</returns>
-        public static byte[] Extract(CryptoProviderAuthentication Provider,
+        public static byte[] Extract(CryptoAlgorithmID algorithm,
                     byte[] IKM, byte[] Salt = null) {
-            var Key = Salt ?? new byte[Provider.Size/8];
+            var (size, _) = algorithm.GetKeySize();
 
-            return Provider.ProcessData(IKM,  Key);
+            var Key = Salt ?? new byte[size/8];
+            return IKM.GetMAC(Key, cryptoAlgorithmID: algorithm);
             }
 
         /// <summary>
         /// The expansion function
         /// </summary>
-        /// <param name="Provider">The authentication provider.</param>
-        /// <param name="PRK">The pseudo-random key.</param>
-        /// <param name="Length">Length of output key in bits</param>
-        /// <param name="Info">Information data</param>
+        /// <param name="algorithm">The MAC algorithm to use</param>
+        /// <param name="prk">The pseudo-random key.</param>
+        /// <param name="length">Length of output key in bits</param>
+        /// <param name="info">Information data</param>
         /// <returns>The expanded value.</returns>
-        public static byte[] Expand(CryptoProviderAuthentication Provider,
-            byte[] PRK, int Length, byte[] Info = null) {
+        public static byte[] Expand(CryptoAlgorithmID algorithm,
+            byte[] prk, int length, byte[] info = null) {
 
-            Info = Info ?? NullKey;
+            var (size, _) = algorithm.GetKeySize();
+            info = info ?? NullKey;
 
-            var Result = new byte[Length / 8];
+            var result = new byte[length / 8];
 
-            Assert.True(Length < (255 * (Provider.Size / 8)), ImplementationLimit.Throw);
+            Assert.True(length < (255 * (size / 8)), ImplementationLimit.Throw);
 
-            byte Index = 1;
+            byte index = 1;
 
             // Calculate T1 and add to Result
-            var Data = new byte[Info.Length+1];
-            Data.AppendChecked(0, Info);
-            Data[Data.Length-1] = Index++;
-            var T = Provider.ProcessData(Data, PRK);
-            var Offset = Result.AppendChecked(0, T);
+            var data = new byte[info.Length+1];
+            data.AppendChecked(0, info);
+            data[data.Length-1] = index++;
+            var t = data.GetMAC(prk, cryptoAlgorithmID: algorithm);
 
-            Data = new byte[T.Length + Info.Length + 1];
-            Data.AppendChecked(T.Length, Info);
+            var offset = result.AppendChecked(0, t);
 
-            while (Offset < Result.Length) {
-                Data.AppendChecked(0, T);
-                Data[Data.Length - 1] = Index++;
-                T = Provider.ProcessData(Data, PRK);
-                Offset = Result.AppendChecked(Offset, T);
+            data = new byte[t.Length + info.Length + 1];
+            data.AppendChecked(t.Length, info);
+
+            while (offset < result.Length) {
+                data.AppendChecked(0, t);
+                data[data.Length - 1] = index++;
+                t = data.GetMAC(prk, cryptoAlgorithmID: algorithm);
+                offset = result.AppendChecked(offset, t);
                 }
 
-            return Result;
+            return result;
             }
         }
     }
