@@ -34,7 +34,7 @@ namespace Scratchpad {
             Console.WriteLine("Hello World");
             //TestGoedelCryptography.Test().TestDerive_5869_Separate();
             //TestKeyless.Test().FindCompression();
-            ShellTests.Test().TestFile("hello world");
+            ShellTests.Test().TestProfileLifecycle();
             }
 
 

@@ -47,25 +47,6 @@ namespace Goedel.Mesh {
         public override string ContainerDefault => Label;
         public AsCatalogEntryBookmark AsCatalogEntryBookmark => new AsCatalogEntryBookmark(this);
 
-        ///// <summary>
-        ///// Locate credential matching the specified service name, ignoring the protocol value.
-        ///// </summary>
-        ///// <param name="key">The service to be matched.</param>
-        ///// <returns>If a match is found, returns the matching entry, otherwise null.</returns>
-        //public CatalogEntryBookmark LocateByService(string key) {
-        //    foreach (var Credential in AsCatalogEntryCredential) {
-        //        if (Credential.Service == key) {
-        //            return Credential;
-        //            }
-        //        }
-        //    return null;
-        //    }
-            
-            
-            
-            //Locate(Key) as CatalogEntryCredential;
-
-
         public CatalogBookmark(string directory, string ContainerName=null,
             CryptoParameters cryptoParameters = null,
                     KeyCollection keyCollection = null) :
@@ -82,21 +63,9 @@ namespace Goedel.Mesh {
         ///<summary>The primary key is protocol:site </summary>
         public override string _PrimaryKey => Uri;
 
-        //public override List<string> _Keys => base._Keys;
-        //List<string> keys = new List<string> { "Service" };
-
-        //public override List<KeyValuePair<string, string>> _KeyValues => base._KeyValues;
-
-
         public override string ToString() {
             throw new NYI();
-            //var stringBuilder = new StringBuilder();
-            //if (Protocol != null) {
-            //    stringBuilder.Append("{Protocol}:");
-            //    }
-            //stringBuilder.Append("{Username}@{Service} = [{Password}]");
 
-            //return stringBuilder.ToString();
 
             }
 

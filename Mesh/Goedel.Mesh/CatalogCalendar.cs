@@ -11,26 +11,26 @@ namespace Goedel.Mesh {
 
     #region // Enumerators and associated classes
 
-    public class EnumeratorCatalogEntryContact : IEnumerator<CatalogEntryContact> {
+    public class EnumeratorCatalogEntryTask : IEnumerator<CatalogEntryTask> {
         IEnumerator<ContainerStoreEntry> BaseEnumerator;
 
-        public CatalogEntryContact Current => BaseEnumerator.Current.JsonObject as CatalogEntryContact;
+        public CatalogEntryTask Current => BaseEnumerator.Current.JsonObject as CatalogEntryTask;
         object IEnumerator.Current => Current;
         public void Dispose() => BaseEnumerator.Dispose();
         public bool MoveNext() => BaseEnumerator.MoveNext();
         public void Reset() => throw new NotImplementedException();
 
-        public EnumeratorCatalogEntryContact(ContainerPersistenceStore container) =>
+        public EnumeratorCatalogEntryTask(ContainerPersistenceStore container) =>
             BaseEnumerator = container.GetEnumerator();
         }
 
-    public class AsCatalogEntryContact : IEnumerable<CatalogEntryContact> {
-        CatalogContact Catalog;
+    public class AsCatalogEntryTask : IEnumerable<CatalogEntryTask> {
+        CatalogCalendar Catalog;
 
-        public AsCatalogEntryContact(CatalogContact catalog) => Catalog = catalog;
+        public AsCatalogEntryTask(CatalogCalendar catalog) => Catalog = catalog;
 
-        public IEnumerator<CatalogEntryContact> GetEnumerator() =>
-                    new EnumeratorCatalogEntryContact(Catalog.ContainerPersistence);
+        public IEnumerator<CatalogEntryTask> GetEnumerator() =>
+                    new EnumeratorCatalogEntryTask(Catalog.ContainerPersistence);
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator1();
         private IEnumerator GetEnumerator1() => this.GetEnumerator();
@@ -40,37 +40,37 @@ namespace Goedel.Mesh {
 
 
 
-    public class CatalogContact : Catalog {
-        public const string Label = "CatalogContact";
+    public class CatalogCalendar : Catalog {
+        public const string Label = "CatalogCalendar";
 
         public override string ContainerDefault => Label;
 
-        public AsCatalogEntryContact AsCatalogEntryContact => new AsCatalogEntryContact(this);
+        public AsCatalogEntryTask AsCatalogEntryContact => new AsCatalogEntryTask(this);
 
 
-        public CatalogEntryContact LocateBySite(string Key) => Locate(Key) as CatalogEntryContact;
+        public CatalogEntryTask LocateBySite(string Key) => Locate(Key) as CatalogEntryTask;
 
 
-        public CatalogContact(string directory, string ContainerName = null,
+        public CatalogCalendar(string directory, string ContainerName = null,
             CryptoParameters cryptoParameters = null,
                     KeyCollection keyCollection = null) :
             base(directory, ContainerName, cryptoParameters, keyCollection) {
             }
         public static Store Factory(string directory, string containerName = null) =>
-        new CatalogContact(directory, containerName);
+        new CatalogCalendar(directory, containerName);
         }
 
     // NYI should all be DareMessages to allow them to be signed.
-    public partial class CatalogEntryContact {
+    public partial class CatalogEntryTask {
 
 
         public override string _PrimaryKey => Key;
 
-        public CatalogEntryContact() => Key = UDF.Random();
+        public CatalogEntryTask() => Key = UDF.Random();
 
-        public CatalogEntryContact(DareMessage contact) : this() => Contact = contact;
+        public CatalogEntryTask(DareMessage task) : this() => Task = task;
 
-        public CatalogEntryContact(Contact contact) : this() => Contact = DareMessage.Encode(contact.GetBytes(tag: true),
+        public CatalogEntryTask(Task task) : this() => Task = DareMessage.Encode(task.GetBytes(tag: true),
                     contentType: "application/mmm");
         }
 

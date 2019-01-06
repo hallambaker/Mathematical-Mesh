@@ -343,9 +343,7 @@ namespace Goedel.Mesh.Protocol.Server {
             System.Threading.Monitor.Exit(AccountEntry);
             }
 
-        public AccountHandle(AccountEntry accountEntry) {
-            AccountEntry = accountEntry;
-            }
+        public AccountHandle(AccountEntry accountEntry) => AccountEntry = accountEntry;
 
         }
 
@@ -384,9 +382,7 @@ namespace Goedel.Mesh.Protocol.Server {
         public AccountHandleVerified(AccountEntry accountEntry) : base(accountEntry) {
 
             }
-        void PostToCatalog(DareMessage dareMessage) {
-            throw new NYI();
-            }
+        void PostToCatalog(DareMessage dareMessage) => throw new NYI();
 
         }
 

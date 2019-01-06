@@ -44,6 +44,7 @@ namespace Goedel.Mesh.Shell {
             var identifier = Options.Identifier.Value;
 
             var result = catalog.Locate(identifier);
+            catalog.Delete(result);
 
             return new ResultEntry() {
                 Success = true,

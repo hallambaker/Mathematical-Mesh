@@ -69,7 +69,15 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult ContainerIndex(ContainerIndex Options) {
-            throw new NYI();
+            var inputFile = Options.Input.Value;
+
+            using (var container = Container.Open(
+                inputFile, containerType: ContainerType.MerkleTree)) {
+                }
+
+            return new ResultFile() {
+                Filename = inputFile
+                };
             }
 
 
@@ -79,7 +87,16 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult ContainerExtract(ContainerExtract Options) {
-            throw new NYI();
+            var inputFile = Options.Input.Value;
+            var outputFile = Options.Output.Value;
+
+            using (var container = Container.Open(
+                inputFile, containerType: ContainerType.MerkleTree)) {
+                }
+
+            return new ResultFile() {
+                Filename = inputFile
+                };
             }
 
 
@@ -89,7 +106,16 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult ContainerCopy(ContainerCopy Options) {
-            throw new NYI();
+            var inputFile = Options.Input.Value;
+            var outputFile = Options.Output.Value;
+
+            using (var container = Container.Open(
+                inputFile, containerType: ContainerType.MerkleTree)) {
+                }
+
+            return new ResultFile() {
+                Filename = inputFile
+                };
             }
 
 
@@ -99,7 +125,15 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult ContainerVerify(ContainerVerify Options) {
-            throw new NYI();
+            var inputFile = Options.Input.Value;
+
+            using (var container = Container.Open(
+                inputFile, containerType: ContainerType.MerkleTree)) {
+                }
+
+            return new ResultFile() {
+                Filename = inputFile
+                };
             }
 
 

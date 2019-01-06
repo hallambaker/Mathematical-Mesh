@@ -17,6 +17,7 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult GroupAdd(GroupAdd Options) {
+            var context = GetContextDevice(Options);
             throw new NYI();
             }
 
@@ -26,6 +27,7 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult GroupCreate(GroupCreate Options) {
+            var context = GetContextDevice(Options);
             throw new NYI();
             }
 
@@ -35,6 +37,7 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult GroupUser(GroupUser Options) {
+            var context = GetContextDevice(Options);
             throw new NYI();
             }
 
@@ -44,6 +47,7 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult GroupDelete(GroupDelete Options) {
+            var context = GetContextDevice(Options);
             throw new NYI();
             }
         }

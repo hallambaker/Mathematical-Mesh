@@ -99,10 +99,9 @@
 	CommandSet Profile "profile"
 		Brief "Manage personal and device profiles and accounts."
 
-		// For debugging
-		Command ProfileReset "reset"
-			Brief "Delete all test profiles"
-			Include Reporting
+		Command ProfileHello "hello"		
+			Brief "Connect the service(s) a profile is connected to and report status."
+			Include AccountOptions
 
 		Command DeviceCreate "device"
 			Brief "Create new device profile"
@@ -113,7 +112,7 @@
 			Option Default "default" Flag
 				Brief "Make the new device profile the default"
 
-		Command PersonalCreate "personal"
+		Command MasterCreate "master"
 			Brief "Create new personal profile"
 			Parameter NewAccountID "new" String
 				Brief "New account"
@@ -209,11 +208,6 @@
 			Option Length "length" Integer
 				Brief "Length of PIN to generate (default is 8 characters)"
 				Default "8"
-			Include AccountOptions
-			Include Reporting
-
-		Command ProfileComplete "complete"
-			Brief "Complete a pending connection request"
 			Include AccountOptions
 			Include Reporting
 

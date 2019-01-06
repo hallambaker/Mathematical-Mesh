@@ -129,10 +129,7 @@ namespace Goedel.Cryptography.Dare {
         /// Sets the enumerator to its initial position, which is before the first element 
         /// in the collection.
         /// </summary>
-        public void Reset() {
-            Container.MoveToIndex(StartIndex);
-            //MoveNext();
-            }
+        public void Reset() => Container.MoveToIndex(StartIndex);
         }
 
     /// <summary>

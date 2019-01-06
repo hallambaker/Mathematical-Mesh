@@ -57,9 +57,9 @@ namespace Goedel.Mesh.Shell {
 		static DescribeCommandSet DescribeCommandSet_Profile = new DescribeCommandSet () {
             Identifier = "profile",
 			Entries = new  SortedDictionary<string, DescribeCommand> () {
-				{"reset", _ProfileReset._DescribeCommand },
+				{"hello", _ProfileHello._DescribeCommand },
 				{"device", _DeviceCreate._DescribeCommand },
-				{"personal", _PersonalCreate._DescribeCommand },
+				{"master", _MasterCreate._DescribeCommand },
 				{"register", _ProfileRegister._DescribeCommand },
 				{"sync", _ProfileSync._DescribeCommand },
 				{"escrow", _ProfileEscrow._DescribeCommand },
@@ -72,8 +72,7 @@ namespace Goedel.Mesh.Shell {
 				{"connect", _ProfileConnect._DescribeCommand },
 				{"accept", _ProfileAccept._DescribeCommand },
 				{"reject", _ProfileReject._DescribeCommand },
-				{"pin", _ProfileGetPIN._DescribeCommand },
-				{"complete", _ProfileComplete._DescribeCommand }
+				{"pin", _ProfileGetPIN._DescribeCommand }
 				} // End Entries
 			};
 
@@ -285,13 +284,13 @@ namespace Goedel.Mesh.Shell {
 
 
 
-		public static void Handle_ProfileReset (
+		public static void Handle_ProfileHello (
 					DispatchShell  DispatchIn, string[] Args, int Index) {
 			Shell Dispatch =	DispatchIn as Shell;
-			ProfileReset		Options = new ProfileReset ();
+			ProfileHello		Options = new ProfileHello ();
 			ProcessOptions (Args, Index, Options);
 			Dispatch._PreProcess (Options);
-			var result = Dispatch.ProfileReset (Options);
+			var result = Dispatch.ProfileHello (Options);
 			Dispatch._PostProcess (result);
 			}
 
@@ -305,13 +304,13 @@ namespace Goedel.Mesh.Shell {
 			Dispatch._PostProcess (result);
 			}
 
-		public static void Handle_PersonalCreate (
+		public static void Handle_MasterCreate (
 					DispatchShell  DispatchIn, string[] Args, int Index) {
 			Shell Dispatch =	DispatchIn as Shell;
-			PersonalCreate		Options = new PersonalCreate ();
+			MasterCreate		Options = new MasterCreate ();
 			ProcessOptions (Args, Index, Options);
 			Dispatch._PreProcess (Options);
-			var result = Dispatch.PersonalCreate (Options);
+			var result = Dispatch.MasterCreate (Options);
 			Dispatch._PostProcess (result);
 			}
 
@@ -442,16 +441,6 @@ namespace Goedel.Mesh.Shell {
 			ProcessOptions (Args, Index, Options);
 			Dispatch._PreProcess (Options);
 			var result = Dispatch.ProfileGetPIN (Options);
-			Dispatch._PostProcess (result);
-			}
-
-		public static void Handle_ProfileComplete (
-					DispatchShell  DispatchIn, string[] Args, int Index) {
-			Shell Dispatch =	DispatchIn as Shell;
-			ProfileComplete		Options = new ProfileComplete ();
-			ProcessOptions (Args, Index, Options);
-			Dispatch._PreProcess (Options);
-			var result = Dispatch.ProfileComplete (Options);
 			Dispatch._PostProcess (result);
 			}
 
@@ -1085,77 +1074,60 @@ namespace Goedel.Mesh.Shell {
 		}
 
 
-    public class _ProfileReset : Goedel.Command.Dispatch ,
-							IReporting {
+    public class _ProfileHello : Goedel.Command.Dispatch ,
+							IAccountOptions {
 
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
-			new Flag (),
-			new Flag (),
-			new Flag ()			} ;
+			new String (),
+			new String ()			} ;
 
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[0] as Flag;
+		/// <summary>Field accessor for option [portal]</summary>
+		public virtual String AccountID {
+			get => _Data[0] as String;
 			set => _Data[0]  = value;
 			}
 
-		public virtual string _Verbose {
+		public virtual string _AccountID {
 			set => _Data[0].Parameter (value);
 			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
-			get => _Data[1] as Flag;
+		/// <summary>Field accessor for option [udf]</summary>
+		public virtual String UDF {
+			get => _Data[1] as String;
 			set => _Data[1]  = value;
 			}
 
-		public virtual string _Report {
+		public virtual string _UDF {
 			set => _Data[1].Parameter (value);
-			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
-			get => _Data[2] as Flag;
-			set => _Data[2]  = value;
-			}
-
-		public virtual string _Json {
-			set => _Data[2].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
-			Identifier = "reset",
-			Brief =  "Delete all test profiles",
-			HandleDelegate =  CommandLineInterpreter.Handle_ProfileReset,
+			Identifier = "hello",
+			Brief =  "Connect the service(s) a profile is connected to and report status.",
+			HandleDelegate =  CommandLineInterpreter.Handle_ProfileHello,
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
 				new DescribeEntryOption () {
-					Identifier = "Verbose", 
-					Default = "true", // null if null
-					Brief = "Verbose reports (default)",
+					Identifier = "AccountID", 
+					Default = null, // null if null
+					Brief = "Account identifier (e.g. alice@example.com)",
 					Index = 0,
-					Key = "verbose"
+					Key = "portal"
 					},
 				new DescribeEntryOption () {
-					Identifier = "Report", 
-					Default = "true", // null if null
-					Brief = "Report output (default)",
+					Identifier = "UDF", 
+					Default = null, // null if null
+					Brief = "Profile fingerprint",
 					Index = 1,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Json", 
-					Default = "false", // null if null
-					Brief = "Report output in JSON format",
-					Index = 2,
-					Key = "json"
+					Key = "udf"
 					}
 				}
 			};
 
 		}
 
-    public partial class ProfileReset : _ProfileReset {
-        } // class ProfileReset
+    public partial class ProfileHello : _ProfileHello {
+        } // class ProfileHello
 
     public class _DeviceCreate : Goedel.Command.Dispatch  {
 
@@ -1228,7 +1200,7 @@ namespace Goedel.Mesh.Shell {
     public partial class DeviceCreate : _DeviceCreate {
         } // class DeviceCreate
 
-    public class _PersonalCreate : Goedel.Command.Dispatch ,
+    public class _MasterCreate : Goedel.Command.Dispatch ,
 							IReporting,
 							IDeviceProfileInfo {
 
@@ -1317,9 +1289,9 @@ namespace Goedel.Mesh.Shell {
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
-			Identifier = "personal",
+			Identifier = "master",
 			Brief =  "Create new personal profile",
-			HandleDelegate =  CommandLineInterpreter.Handle_PersonalCreate,
+			HandleDelegate =  CommandLineInterpreter.Handle_MasterCreate,
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
 				new DescribeEntryParameter () {
@@ -1383,8 +1355,8 @@ namespace Goedel.Mesh.Shell {
 
 		}
 
-    public partial class PersonalCreate : _PersonalCreate {
-        } // class PersonalCreate
+    public partial class MasterCreate : _MasterCreate {
+        } // class MasterCreate
 
     public class _ProfileRegister : Goedel.Command.Dispatch ,
 							IReporting,
@@ -3098,113 +3070,6 @@ namespace Goedel.Mesh.Shell {
 
     public partial class ProfileGetPIN : _ProfileGetPIN {
         } // class ProfileGetPIN
-
-    public class _ProfileComplete : Goedel.Command.Dispatch ,
-							IAccountOptions,
-							IReporting {
-
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
-			new String (),
-			new String (),
-			new Flag (),
-			new Flag (),
-			new Flag ()			} ;
-
-		/// <summary>Field accessor for option [portal]</summary>
-		public virtual String AccountID {
-			get => _Data[0] as String;
-			set => _Data[0]  = value;
-			}
-
-		public virtual string _AccountID {
-			set => _Data[0].Parameter (value);
-			}
-		/// <summary>Field accessor for option [udf]</summary>
-		public virtual String UDF {
-			get => _Data[1] as String;
-			set => _Data[1]  = value;
-			}
-
-		public virtual string _UDF {
-			set => _Data[1].Parameter (value);
-			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[2] as Flag;
-			set => _Data[2]  = value;
-			}
-
-		public virtual string _Verbose {
-			set => _Data[2].Parameter (value);
-			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
-			get => _Data[3] as Flag;
-			set => _Data[3]  = value;
-			}
-
-		public virtual string _Report {
-			set => _Data[3].Parameter (value);
-			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
-			get => _Data[4] as Flag;
-			set => _Data[4]  = value;
-			}
-
-		public virtual string _Json {
-			set => _Data[4].Parameter (value);
-			}
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
-
-		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
-			Identifier = "complete",
-			Brief =  "Complete a pending connection request",
-			HandleDelegate =  CommandLineInterpreter.Handle_ProfileComplete,
-			Lazy =  false,
-			Entries = new List<DescribeEntry> () {
-				new DescribeEntryOption () {
-					Identifier = "AccountID", 
-					Default = null, // null if null
-					Brief = "Account identifier (e.g. alice@example.com)",
-					Index = 0,
-					Key = "portal"
-					},
-				new DescribeEntryOption () {
-					Identifier = "UDF", 
-					Default = null, // null if null
-					Brief = "Profile fingerprint",
-					Index = 1,
-					Key = "udf"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Verbose", 
-					Default = "true", // null if null
-					Brief = "Verbose reports (default)",
-					Index = 2,
-					Key = "verbose"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Report", 
-					Default = "true", // null if null
-					Brief = "Report output (default)",
-					Index = 3,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Json", 
-					Default = "false", // null if null
-					Brief = "Report output in JSON format",
-					Index = 4,
-					Key = "json"
-					}
-				}
-			};
-
-		}
-
-    public partial class ProfileComplete : _ProfileComplete {
-        } // class ProfileComplete
 
     public class _MailAdd : Goedel.Command.Dispatch ,
 							IAccountOptions,
@@ -11696,7 +11561,7 @@ namespace Goedel.Mesh.Shell {
 	// to eliminate the redundant code
     public class _Shell : global::Goedel.Command.DispatchShell {
 
-		public virtual ShellResult ProfileReset ( ProfileReset Options) {
+		public virtual ShellResult ProfileHello ( ProfileHello Options) {
 			CommandLineInterpreter.DescribeValues (Options);
 			return null;
 			}
@@ -11706,7 +11571,7 @@ namespace Goedel.Mesh.Shell {
 			return null;
 			}
 
-		public virtual ShellResult PersonalCreate ( PersonalCreate Options) {
+		public virtual ShellResult MasterCreate ( MasterCreate Options) {
 			CommandLineInterpreter.DescribeValues (Options);
 			return null;
 			}
@@ -11772,11 +11637,6 @@ namespace Goedel.Mesh.Shell {
 			}
 
 		public virtual ShellResult ProfileGetPIN ( ProfileGetPIN Options) {
-			CommandLineInterpreter.DescribeValues (Options);
-			return null;
-			}
-
-		public virtual ShellResult ProfileComplete ( ProfileComplete Options) {
 			CommandLineInterpreter.DescribeValues (Options);
 			return null;
 			}

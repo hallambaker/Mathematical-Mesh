@@ -14,6 +14,9 @@ namespace Goedel.Mesh.Shell {
 
         //CommandLineInterpreter CommandLineInterpreter;
 
+
+        public virtual IMeshMachine MeshMachine { get; }
+
         public static void Main(string[] Args) {
             var CLI = new CommandLineInterpreter();
             var Dispatch = new Shell();
@@ -36,9 +39,7 @@ namespace Goedel.Mesh.Shell {
 
         TextWriter Output;
 
-        public Shell(TextWriter output = null) {
-            Output = output ?? Console.Out;
-            }
+        public Shell(TextWriter output = null) => Output = output ?? Console.Out;
 
         public override void _PreProcess(Command.Dispatch options) {
             if (options is IReporting Reporting) {
@@ -91,7 +92,21 @@ namespace Goedel.Mesh.Shell {
         //public List<string> Recipients(IEncodeOptions Options) =>
         //    (Options.Recipient.Value == null) ? null : new List<string> { Options.Recipient.Value };
 
+
+        public virtual JpcSession GetJpcSession(IAccountOptions Options) {
+            throw new NYI();
+            }
+
+
+        public virtual MeshService GetMeshClient(IAccountOptions Options) {
+            throw new NYI();
+            }
+
         public virtual ContextDevice GetContextDevice(IAccountOptions Options) {
+            throw new NYI();
+            }
+
+        public virtual ContextDevice GetContextDevice(IDeviceProfileInfo Options) {
             throw new NYI();
             }
 

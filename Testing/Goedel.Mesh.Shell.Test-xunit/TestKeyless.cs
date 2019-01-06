@@ -62,7 +62,7 @@ namespace Goedel.XUnit {
             }
 
         ResultCommitment TestCommitmentInt(string content, string key=null, string alg = null) {
-            var testCLI = new TestCLI();
+            var testCLI = GetTestCLI();
             var filename = content.ToFileUnique();
             var keyClause = key == null ? "" : $" /key {key}";
             var algClause = alg == null ? "" : $" /alg {alg}";
@@ -78,7 +78,7 @@ namespace Goedel.XUnit {
         public void TestRandom() {
             var repeat = 10;
             var results = new HashSet<string>();
-            var testCLI = new TestCLI();
+            var testCLI = GetTestCLI();
 
             for (var i = 0; i < repeat; i++) {
                 var result = testCLI.Dispatch("hash random") as ResultDigest; ;
@@ -142,7 +142,7 @@ namespace Goedel.XUnit {
             }
 
         string TestUDFInt(string content, string contentType, string alg = null) {
-            var testCLI = new TestCLI();
+            var testCLI = GetTestCLI();
             var filename = content.ToFileUnique();
             var contentClause = contentType == null ? "" : $" /cty {contentType}";
             var algClause = alg == null ? "" : $" /alg {alg}";
@@ -181,7 +181,7 @@ namespace Goedel.XUnit {
             }
 
         string TestDigestInt(string content, string alg = null) {
-            var testCLI = new TestCLI();
+            var testCLI = GetTestCLI();
             var filename = content.ToFileUnique();
             var algClause = alg == null ? "" : $" /alg {alg}";
             var result = testCLI.Dispatch($"hash digest {filename}{algClause}") as ResultDigest;

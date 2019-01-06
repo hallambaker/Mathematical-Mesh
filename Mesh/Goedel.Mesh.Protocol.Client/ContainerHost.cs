@@ -60,13 +60,8 @@ namespace Goedel.Mesh.Protocol.Client {
         /// Commit a New transaction to memory
         /// </summary>
         /// <param name="containerStoreEntry">The container store entry representing the transaction</param>
-        protected override void MemoryCommitNew(ContainerStoreEntry containerStoreEntry) {
-            // Check to make sure the object does not already exist
-            //Assert.False(ObjectIndex.ContainsKey(containerStoreEntry.UniqueID), NYI.Throw);
-            //ObjectIndex.Add(containerStoreEntry.UniqueID, containerStoreEntry);
-
-            throw new NYI();
-            }
+        protected override void MemoryCommitNew(ContainerStoreEntry containerStoreEntry) =>
+            MemoryCommitUpdate(containerStoreEntry);
 
         /// <summary>
         /// Commit an Update transaction to memory

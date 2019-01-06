@@ -31,15 +31,30 @@
 		Struct CatalogEntry CatalogEntries
 			Multiple
 
+	Structure ResultHello
+		Inherits		Result
+		Struct MeshHelloResponse Response
+
 	Structure ResultDeviceCreate
 		Inherits		Result
 		String			DeviceUDF
 		Boolean			Default
 
-	Structure ResultPersonalCreate
-		Inherits		Result
+	Structure ResultMasterCreate
+		Inherits		ResultDeviceCreate
 		String			PersonalUDF
-		Boolean			Default
+
+	Structure ResultSync
+		Inherits		Result
+		Integer			Fetched
+
+
+	Structure ResultEscrow
+		Inherits		Result
+
+
+	Structure ResultRecover
+		Inherits		Result
 
 	Structure ResultConnect
 		Inherits		Result

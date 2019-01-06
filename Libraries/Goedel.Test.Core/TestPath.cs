@@ -70,7 +70,8 @@ namespace Goedel.Test.Core {
         public string ServiceDirectory => System.IO.Path.Combine(Path, "ServiceDirectory");
 
         public TestMachineEnvironment(string name = "Test",
-            MeshPortalDirect meshPortalDirect = null) : this(new TestEnvironment(), meshPortalDirect, name) { }
+            MeshPortalDirect meshPortalDirect = null) : 
+            this(new TestEnvironment(), meshPortalDirect, name) { }
 
 
         public TestMachineEnvironment(TestEnvironment testEnvironment,

@@ -8,10 +8,10 @@ namespace Goedel.Mesh.Protocol.Client {
     public class MeshClientSession : JpcSession {
         PublicKey AuthenticationKey;
 
-        public MeshClientSession(ContextDevice contextDevice) {
-            AuthenticationKey = contextDevice.ProfileDevice.DeviceAuthenticationKey;
-            UDF = contextDevice.ProfileDevice.DeviceAuthenticationKey.UDF;
-            Account = contextDevice.ProfileMesh?.Account;
+        public MeshClientSession(ContextDevice contextDevice=null) {
+            AuthenticationKey = contextDevice?.ProfileDevice.DeviceAuthenticationKey;
+            UDF = contextDevice?.ProfileDevice.DeviceAuthenticationKey.UDF;
+            Account = contextDevice?.ProfileMesh?.Account;
             }
 
         public override bool Authenticate(string UDF) => UDF == AuthenticationKey.UDF;

@@ -266,9 +266,33 @@
 
 
 	Structure CatalogEntryTask
+		Inherits CatalogEntry
+		Struct DareMessage Task
 		// Calendar entry
 		// Geolocation entry
+		String Key
+			Description
+				|Unique key.
 
+	Structure Task
+		String Key
+			Description
+				|Unique key.
+		DateTime Start
+		DateTime Finish
+		String StartTravel
+		String FinishTravel
+		String TimeZone
+		String Title
+		String Description
+		String Location
+		String Trigger
+			Multiple
+		String Conference
+			Multiple
+		String Repeat
+		Boolean Busy
+		
 
 	Structure CatalogEntryApplication
 		// The application profile

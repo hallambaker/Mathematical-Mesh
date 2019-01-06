@@ -80,6 +80,7 @@ namespace Goedel.Mesh {
 			{"CatalogEntryContact", CatalogEntryContact._Factory},
 			{"CatalogEntryContactRecryption", CatalogEntryContactRecryption._Factory},
 			{"CatalogEntryTask", CatalogEntryTask._Factory},
+			{"Task", Task._Factory},
 			{"CatalogEntryApplication", CatalogEntryApplication._Factory},
 			{"CatalogEntryApplicationEntry", CatalogEntryApplicationEntry._Factory},
 			{"CatalogEntryApplicationRecryption", CatalogEntryApplicationRecryption._Factory},
@@ -3105,7 +3106,16 @@ namespace Goedel.Mesh {
 
 	/// <summary>
 	/// </summary>
-	public partial class CatalogEntryTask : MeshItem {
+	public partial class CatalogEntryTask : CatalogEntry {
+        /// <summary>
+        /// </summary>
+
+		public virtual DareMessage						Task  {get; set;}
+        /// <summary>
+        ///Unique key.
+        /// </summary>
+
+		public virtual string						Key  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -3148,6 +3158,17 @@ namespace Goedel.Mesh {
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
+			((CatalogEntry)this).SerializeX(_Writer, false, ref _first);
+			if (Task != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Task", 1);
+					Task.Serialize (_Writer, false);
+				}
+			if (Key != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Key", 1);
+					_Writer.WriteString (Key);
+				}
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
 				}
@@ -3180,6 +3201,308 @@ namespace Goedel.Mesh {
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
+				case "Task" : {
+					// An untagged structure
+					Task = new DareMessage ();
+					Task.Deserialize (JSONReader);
+ 
+					break;
+					}
+				case "Key" : {
+					Key = JSONReader.ReadString ();
+					break;
+					}
+				default : {
+					base.DeserializeToken(JSONReader, Tag);
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
+	/// <summary>
+	/// </summary>
+	public partial class Task : MeshItem {
+        /// <summary>
+        ///Unique key.
+        /// </summary>
+
+		public virtual string						Key  {get; set;}
+        /// <summary>
+        /// </summary>
+
+		public virtual DateTime?						Start  {get; set;}
+        /// <summary>
+        /// </summary>
+
+		public virtual DateTime?						Finish  {get; set;}
+        /// <summary>
+        /// </summary>
+
+		public virtual string						StartTravel  {get; set;}
+        /// <summary>
+        /// </summary>
+
+		public virtual string						FinishTravel  {get; set;}
+        /// <summary>
+        /// </summary>
+
+		public virtual string						TimeZone  {get; set;}
+        /// <summary>
+        /// </summary>
+
+		public virtual string						Title  {get; set;}
+        /// <summary>
+        /// </summary>
+
+		public virtual string						Description  {get; set;}
+        /// <summary>
+        /// </summary>
+
+		public virtual string						Location  {get; set;}
+        /// <summary>
+        /// </summary>
+
+		public virtual List<string>				Trigger  {get; set;}
+        /// <summary>
+        /// </summary>
+
+		public virtual List<string>				Conference  {get; set;}
+        /// <summary>
+        /// </summary>
+
+		public virtual string						Repeat  {get; set;}
+		bool								__Busy = false;
+		private bool						_Busy;
+        /// <summary>
+        /// </summary>
+
+		public virtual bool						Busy {
+			get => _Busy;
+			set {_Busy = value; __Busy = true; }
+			}
+		
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "Task";
+
+		/// <summary>
+        /// Factory method
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JSONObject _Factory () => new Task();
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="Writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
+			SerializeX (Writer, wrap, ref first);
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_Writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			if (_wrap) {
+				_Writer.WriteObjectStart ();
+				}
+			if (Key != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Key", 1);
+					_Writer.WriteString (Key);
+				}
+			if (Start != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Start", 1);
+					_Writer.WriteDateTime (Start);
+				}
+			if (Finish != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Finish", 1);
+					_Writer.WriteDateTime (Finish);
+				}
+			if (StartTravel != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("StartTravel", 1);
+					_Writer.WriteString (StartTravel);
+				}
+			if (FinishTravel != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("FinishTravel", 1);
+					_Writer.WriteString (FinishTravel);
+				}
+			if (TimeZone != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("TimeZone", 1);
+					_Writer.WriteString (TimeZone);
+				}
+			if (Title != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Title", 1);
+					_Writer.WriteString (Title);
+				}
+			if (Description != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Description", 1);
+					_Writer.WriteString (Description);
+				}
+			if (Location != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Location", 1);
+					_Writer.WriteString (Location);
+				}
+			if (Trigger != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Trigger", 1);
+				_Writer.WriteArrayStart ();
+				bool _firstarray = true;
+				foreach (var _index in Trigger) {
+					_Writer.WriteArraySeparator (ref _firstarray);
+					_Writer.WriteString (_index);
+					}
+				_Writer.WriteArrayEnd ();
+				}
+
+			if (Conference != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Conference", 1);
+				_Writer.WriteArrayStart ();
+				bool _firstarray = true;
+				foreach (var _index in Conference) {
+					_Writer.WriteArraySeparator (ref _firstarray);
+					_Writer.WriteString (_index);
+					}
+				_Writer.WriteArrayEnd ();
+				}
+
+			if (Repeat != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Repeat", 1);
+					_Writer.WriteString (Repeat);
+				}
+			if (__Busy){
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Busy", 1);
+					_Writer.WriteBoolean (Busy);
+				}
+			if (_wrap) {
+				_Writer.WriteObjectEnd ();
+				}
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <returns>The created object.</returns>		
+        public static new Task FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
+			if (Tagged) {
+				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				return Out as Task;
+				}
+		    var Result = new Task ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			}
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
+		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+			
+			switch (Tag) {
+				case "Key" : {
+					Key = JSONReader.ReadString ();
+					break;
+					}
+				case "Start" : {
+					Start = JSONReader.ReadDateTime ();
+					break;
+					}
+				case "Finish" : {
+					Finish = JSONReader.ReadDateTime ();
+					break;
+					}
+				case "StartTravel" : {
+					StartTravel = JSONReader.ReadString ();
+					break;
+					}
+				case "FinishTravel" : {
+					FinishTravel = JSONReader.ReadString ();
+					break;
+					}
+				case "TimeZone" : {
+					TimeZone = JSONReader.ReadString ();
+					break;
+					}
+				case "Title" : {
+					Title = JSONReader.ReadString ();
+					break;
+					}
+				case "Description" : {
+					Description = JSONReader.ReadString ();
+					break;
+					}
+				case "Location" : {
+					Location = JSONReader.ReadString ();
+					break;
+					}
+				case "Trigger" : {
+					// Have a sequence of values
+					bool _Going = JSONReader.StartArray ();
+					Trigger = new List <string> ();
+					while (_Going) {
+						string _Item = JSONReader.ReadString ();
+						Trigger.Add (_Item);
+						_Going = JSONReader.NextArray ();
+						}
+					break;
+					}
+				case "Conference" : {
+					// Have a sequence of values
+					bool _Going = JSONReader.StartArray ();
+					Conference = new List <string> ();
+					while (_Going) {
+						string _Item = JSONReader.ReadString ();
+						Conference.Add (_Item);
+						_Going = JSONReader.NextArray ();
+						}
+					break;
+					}
+				case "Repeat" : {
+					Repeat = JSONReader.ReadString ();
+					break;
+					}
+				case "Busy" : {
+					Busy = JSONReader.ReadBoolean ();
+					break;
+					}
 				default : {
 					break;
 					}

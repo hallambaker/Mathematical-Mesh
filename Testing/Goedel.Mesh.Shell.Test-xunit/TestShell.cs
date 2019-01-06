@@ -10,41 +10,67 @@ using Goedel.Utilities;
 using Goedel.Mesh.Protocol.Client;
 using Goedel.Mesh.Protocol.Server;
 using Goedel.Mesh;
+using Goedel.Protocol;
 
 namespace Goedel.XUnit {
+    public partial class ShellTests {
+        string ServiceName = "example.com";
 
+        /// <summary>
+        /// If the test requires a Mesh service, a separate service is instantiated
+        /// and shared across all shells.
+        /// </summary>
+        public MeshPortalDirect MeshPortalDirect => meshPortalDirect ??
+            new MeshPortalDirect(ServiceName).CacheValue(out meshPortalDirect);
+        MeshPortalDirect meshPortalDirect;
+
+        public ShellTests(string serviceName = null) => ServiceName = serviceName ?? ServiceName;
+
+
+        public TestCLI GetTestCLI(string MachineName = null) {
+            var testShell = new TestShell(this, MachineName);
+            return new TestCLI(testShell);
+            }
+
+        }
     public partial class TestShell : Shell {
         static string ServiceName = "example.com";
-        public MeshPortalDirect MeshPortalDirect ;
+        public MeshPortalDirect MeshPortalDirect => ShellTests.MeshPortalDirect;
+        public string MachineName = "Test";
+        ShellTests ShellTests;
 
+        public override IMeshMachine MeshMachine => MeshMachineTest;
+
+        public MeshMachineTest MeshMachineTest => meshMachineTest ??
+            new MeshMachineTest(MachineEnvironment, MachineName).CacheValue(out meshMachineTest);
+        MeshMachineTest meshMachineTest;
 
         TestMachineEnvironment MachineEnvironment => machineEnvironment ??
-            new TestMachineEnvironment(meshPortalDirect: MeshPortalDirect).CacheValue(out machineEnvironment);
+            new TestMachineEnvironment(MachineName, MeshPortalDirect).CacheValue(out machineEnvironment);
         TestMachineEnvironment machineEnvironment;
 
         MeshService MeshClient => meshClient ??
             MeshPortalDirect.GetService(ServiceName).CacheValue(out meshClient);
         MeshService meshClient;
 
-        MeshService MeshClientB => meshClientB ??
-            MeshPortalDirect.GetService(ServiceName).CacheValue(out meshClientB);
-        MeshService meshClientB;
-
         /// <summary>
         /// Create a new test shell
         /// </summary>
         /// <param name="meshPortalDirect"></param>
-        public TestShell(MeshPortalDirect meshPortalDirect=null) {
-            MeshPortalDirect = meshPortalDirect ?? new MeshPortalDirect (ServiceName);
+        public TestShell(ShellTests shellTests, string machineName = null) {
+            MachineName = machineName ?? MachineName;
+            ShellTests = shellTests;
             }
 
-        public override ContextDevice GetContextDevice(IAccountOptions Options) {
-            throw new NYI();
-            }
+        public override MeshService GetMeshClient(IAccountOptions Options) => MeshClient;
 
-        public override ContextMaster GetContextMaster(IAccountOptions Options) {
-            throw new NYI();
-            }
+
+
+        public override JpcSession GetJpcSession(IAccountOptions Options) => new MeshClientSession();
+
+        public override ContextDevice GetContextDevice(IAccountOptions Options) => throw new NYI();
+
+        public override ContextMaster GetContextMaster(IAccountOptions Options) => throw new NYI();
 
 
         public ShellResult ShellResult;
@@ -62,9 +88,7 @@ namespace Goedel.XUnit {
     public partial class TestCLI : CommandLineInterpreter {
         TestShell Shell;
 
-        public TestCLI(TestShell shell = null) : base() {
-            Shell = shell ?? new TestShell();
-            }
+        public TestCLI(TestShell shell) : base() => Shell = shell;
 
         public ShellResult Dispatch(string command) {
             var Args = command.Split(' ');

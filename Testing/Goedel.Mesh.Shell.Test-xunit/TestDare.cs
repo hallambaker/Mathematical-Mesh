@@ -12,9 +12,29 @@ using Goedel.Utilities;
 namespace Goedel.XUnit {
     public partial class ShellTests {
 
+        [Fact]
+        public void TestHello() {
+
+            var testCLI = GetTestCLI();
+
+            var result = testCLI.Dispatch("profile hello");
+
+            }
+
+        [Fact]
+        public void TestProfileLifecycle() {
+
+            var testCLI = GetTestCLI();
+
+                var result = testCLI.Dispatch("profile device");
+
+            }
+
 
         public bool TestFile(string content, string contentType=null) {
-            var testCLI = new TestCLI();
+
+
+            var testCLI = GetTestCLI();
             var filename = content.ToFileUnique();
             var contentClause = contentType == null ? "" : $" /cty {contentType}";
 

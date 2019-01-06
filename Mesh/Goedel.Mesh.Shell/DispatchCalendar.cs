@@ -17,7 +17,20 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult CalendarAdd(CalendarAdd Options) {
-            throw new NYI();
+            var contextDevice = GetContextDevice(Options);
+            var catalog = contextDevice.CatalogCalendar;
+            var file = Options.File.Value;
+
+
+            var entry = new CatalogEntryTask() {
+
+                };
+            catalog.Add(entry);
+
+            return new ResultEntry() {
+                Success = true,
+                CatalogEntry = entry
+                };
             }
 
         /// <summary>
@@ -26,7 +39,17 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult CalendarDelete(CalendarDelete Options) {
-            throw new NYI();
+            var contextDevice = GetContextDevice(Options);
+            var catalog = contextDevice.CatalogCalendar;
+            var identifier = Options.Identifier.Value;
+
+            var result = catalog.Locate(identifier);
+            catalog.Delete(result);
+
+            return new ResultEntry() {
+                Success = true,
+                CatalogEntry = result
+                };
             }
 
         /// <summary>

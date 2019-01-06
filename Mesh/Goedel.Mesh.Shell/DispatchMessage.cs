@@ -17,6 +17,7 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult MessageContact(MessageContact Options) {
+            var context = GetContextDevice(Options);
             throw new NYI();
             }
         /// <summary>
@@ -25,6 +26,7 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult MessageConfirm(MessageConfirm Options) {
+            var context = GetContextDevice(Options);
             throw new NYI();
             }
 
@@ -34,6 +36,7 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult MessagePending(MessagePending Options) {
+            var context = GetContextDevice(Options);
             throw new NYI();
             }
 
@@ -43,6 +46,7 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult MessageStatus(MessageStatus Options) {
+            var context = GetContextDevice(Options);
             throw new NYI();
             }
 
@@ -53,6 +57,7 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult MessageAccept(MessageAccept Options) {
+            var context = GetContextDevice(Options);
             throw new NYI();
             }
 
@@ -62,6 +67,7 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult MessageReject(MessageReject Options) {
+            var context = GetContextDevice(Options);
             throw new NYI();
             }
 
@@ -71,6 +77,7 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult MessageBlock(MessageBlock Options) {
+            var context = GetContextDevice(Options);
             throw new NYI();
             }
 

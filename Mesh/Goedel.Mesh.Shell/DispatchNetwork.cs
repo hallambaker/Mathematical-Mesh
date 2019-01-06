@@ -17,6 +17,7 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult NetworkAdd(NetworkAdd Options) {
+            var context = GetContextDevice(Options);
             throw new NYI();
             }
 
@@ -26,6 +27,7 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult NetworkDelete(NetworkDelete Options) {
+            var context = GetContextDevice(Options);
             throw new NYI();
             }
 

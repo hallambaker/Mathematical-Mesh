@@ -301,9 +301,7 @@ namespace Goedel.Mesh.Protocol.Client {
         /// <param name="catalog">The catalog that the entries are to be added to.</param>
         /// <param name="catalogEntries">The list of entries to be added.</param>
         /// <returns>Transaction status information</returns>
-        public MeshResult Add(Catalog catalog, List<CatalogEntry> catalogEntries) {
-            throw new NYI();
-            }
+        public MeshResult Add(Catalog catalog, List<CatalogEntry> catalogEntries) => throw new NYI();
 
         }
     }

@@ -31,10 +31,7 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// The disposal routine. This is wrapped to provide the IDisposable interface. 
         /// </summary>
-        protected override void Disposing() {
-            Container?.Dispose();
-            //Console.WriteLine($"Close Stream {Filename}");
-            }
+        protected override void Disposing() => Container?.Dispose();
         #endregion
 
 

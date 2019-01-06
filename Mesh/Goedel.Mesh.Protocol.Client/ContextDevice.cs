@@ -29,6 +29,12 @@ namespace Goedel.Mesh.Protocol.Client {
             new MeshClientSession(this).CacheValue(out meshClientSession);
         MeshClientSession meshClientSession;
 
+        ///<summary>If true, the associated device profile is the default</summary>
+        public bool DefaultDevice;
+
+        ///<summary>If true, the associated personal profile is the default</summary>
+        public bool DefaultPersonal;
+
         ///<summary>The account name</summary>
         protected string AccountName;
 
@@ -52,6 +58,10 @@ namespace Goedel.Mesh.Protocol.Client {
         public CatalogContact CatalogContact =>
             (catalogContact ?? GetStore(CatalogContact.Factory, CatalogContact.Label).CacheValue(out catalogContact)) as CatalogContact;
         Store catalogContact;
+
+        public CatalogCalendar CatalogCalendar =>
+            (catalogCalendar ?? GetStore(CatalogCalendar.Factory, CatalogCalendar.Label).CacheValue(out catalogCalendar)) as CatalogCalendar;
+        Store catalogCalendar;
 
         public CatalogBookmark CatalogBookmark =>
             (catalogBookmark ?? GetStore(CatalogBookmark.Factory, CatalogContact.Label).CacheValue(out catalogBookmark)) as CatalogBookmark;
@@ -97,9 +107,9 @@ namespace Goedel.Mesh.Protocol.Client {
         /// <param name="accountName">Select profile by account name.</param>
         /// <param name="deviceUDF">Select profile by device profile.</param>
         public ContextDevice(
-                    IMeshMachine machine, 
-                    string accountName=null,
-                    string deviceUDF=null) {
+                    IMeshMachine machine,
+                    string accountName = null,
+                    string deviceUDF = null) {
             Machine = machine;
             ProfileMesh = Machine.GetConnection(accountName, deviceUDF);
             }
@@ -168,9 +178,19 @@ namespace Goedel.Mesh.Protocol.Client {
 
             }
 
-        public ProfileMaster Recover(DareMessage escrow, KeyShare[] shares) {
-
+        public ProfileMaster Recover(DareMessage escrow, IEnumerable<string> shares) {
             var secret = new Secret(shares);
+            return Recover(escrow, secret);
+            }
+
+        public ProfileMaster Recover(DareMessage escrow, KeyShare[] shares) {
+            var secret = new Secret(shares);
+            return Recover(escrow, secret);
+            }
+
+        public ProfileMaster Recover(DareMessage escrow, Secret secret) {
+
+
             var cryptoStack = new CryptoStack(secret, CryptoAlgorithmID.AES256CBC) {
                 Salt = escrow.Header.Salt
                 };

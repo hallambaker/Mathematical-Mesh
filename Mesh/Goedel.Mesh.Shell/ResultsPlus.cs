@@ -71,9 +71,7 @@ namespace Goedel.Mesh.Shell {
         }
 
     public partial class ResultDigest {
-        public override string ToString() {
-            return Digest;
-            }
+        public override string ToString() => Digest;
         }
 
     public partial class ResultCommitment {

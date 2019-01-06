@@ -56,29 +56,29 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Create a new random secret with the specified number of bits.
         /// </summary>
-        /// <param name="Bits">Nyumber of bits in the secret</param>
-        public Secret(int Bits) => Key = CryptoCatalog.GetBits(Bits);
+        /// <param name="bits">Nyumber of bits in the secret</param>
+        public Secret(int bits) => Key = CryptoCatalog.GetBits(bits);
 
         /// <summary>
         /// Create a secret from the specified key value.
         /// </summary>
-        /// <param name="Key">The key value.</param>
-        public Secret(byte[] Key) => this.Key = Key;
+        /// <param name="key">The key value.</param>
+        public Secret(byte[] key) => this.Key = key;
 
         /// <summary>
         /// Recreate a secret from the specified shares.
         /// </summary>
-        /// <param name="Shares">The shares to be recombined.</param>
-        public Secret(KeyShare[] Shares) => Key = Combine(Shares);
+        /// <param name="shares">The shares to be recombined.</param>
+        public Secret(KeyShare[] shares) => Key = Combine(shares);
 
         /// <summary>
         /// Recreate a secret from shares specified as Base32 encoded strings.
         /// </summary>
-        /// <param name="Shares">The shares to be recombined.</param>
-        public Secret (IEnumerable<string> Shares) {
-            var KeyShares = new KeyShare[Shares.Count()];
+        /// <param name="shares">The shares to be recombined.</param>
+        public Secret (IEnumerable<string> shares) {
+            var KeyShares = new KeyShare[shares.Count()];
             int i = 0;
-            foreach (var Share in Shares) {
+            foreach (var Share in shares) {
                 var Bytes = BaseConvert.FromBase32(Share);
                 KeyShares[i++] = new KeyShare(Bytes);
                 }
@@ -126,78 +126,78 @@ namespace Goedel.Cryptography {
         // Right now, this is not completely general as we require there
         // to be at least two shares and the quorum to be at least two.
 
-        private BigInteger MakePositive(byte[] Data) {
-            var Data1 = new byte[Data.Length + 1];
-            Array.Copy(Data, Data1, Data.Length);
+        private BigInteger MakePositive(byte[] data) {
+            var Data1 = new byte[data.Length + 1];
+            Array.Copy(data, Data1, data.Length);
             return new BigInteger(Data1);
             }
 
         /// <summary>
         /// Create a set of N key shares with a quorum of K.
         /// </summary>
-        /// <param name="N">Number of key shares to create (max is 32).</param>
-        /// <param name="K">Quorum of key shares required to reconstruct the secret.</param>
+        /// <param name="n">Number of key shares to create (max is 32).</param>
+        /// <param name="k">Quorum of key shares required to reconstruct the secret.</param>
         /// <returns>The key shares created.</returns>
-        public KeyShare[] Split(int N, int K) => Split(N, K, out var _);
+        public KeyShare[] Split(int n, int k) => Split(n, k, out var _);
 
         /// <summary>
         /// Create a set of N key shares with a quorum of K.
         /// </summary>
-        /// <param name="N">Number of key shares to create (max is 32).</param>
-        /// <param name="K">Quorum of key shares required to reconstruct the secret.</param>
-        /// <param name="Polynomial">The polynomial co-efficients generated.</param>
+        /// <param name="n">Number of key shares to create (max is 32).</param>
+        /// <param name="k">Quorum of key shares required to reconstruct the secret.</param>
+        /// <param name="polynomial">The polynomial co-efficients generated.</param>
         /// <returns>The key shares created.</returns>
-        public KeyShare[] Split(int N, int K, out BigInteger[] Polynomial) {
-            Assert.False(K > N, QuorumExceedsShares.Throw);
-            Assert.False(K < 1, QuorumInsufficient.Throw); 
-            Assert.False(N < 1, SharesInsufficient.Throw); 
-            Assert.False(N > 15, QuorumExceeded.Throw);
+        public KeyShare[] Split(int n, int k, out BigInteger[] polynomial) {
+            Assert.False(k > n, QuorumExceedsShares.Throw);
+            Assert.False(k < 1, QuorumInsufficient.Throw); 
+            Assert.False(n < 1, SharesInsufficient.Throw); 
+            Assert.False(n > 15, QuorumExceeded.Throw);
 
             //if (N == K) {
             //    return Split(N); //Special case
             //    }
 
-            Assert.False(K > 15, QuorumDegreeExceeded.Throw);
+            Assert.False(k > 15, QuorumDegreeExceeded.Throw);
 
-            Polynomial = new BigInteger[K];
-            Polynomial[0] = MakePositive(Key);
-            Console.WriteLine("Key = {0} ", Polynomial[0]);
+            polynomial = new BigInteger[k];
+            polynomial[0] = MakePositive(Key);
+            Console.WriteLine("Key = {0} ", polynomial[0]);
 
 
-            for (int i = 1; i < K; i++) {
-                var Random = CryptoCatalog.GetBytes(KeyBytes);
-                Polynomial[i] = MakePositive(Random);
+            for (int i = 1; i < k; i++) {
+                var random = CryptoCatalog.GetBytes(KeyBytes);
+                polynomial[i] = MakePositive(random);
                 }
 
             Assert.False(KeyBits != 128, ImplementationLimit.Throw);
 
 
             // 2^129-25 is a pseudo Mersene prime
-            var Modulus = BigInteger.Pow(2, 129) - 25;
+            var modulus = BigInteger.Pow(2, 129) - 25;
             //Console.WriteLine("Modulus = {0} ", Modulus);
 
-            var KeyShares = new KeyShare[N];
-            for (int i = 0; i < N; i++) {
-                var D = PolyMod(i + 1, Polynomial, Modulus);
-                KeyShares[i] = new KeyShare((K * 16) + i, D);
+            var keyShares = new KeyShare[n];
+            for (int i = 0; i < n; i++) {
+                var d = PolyMod(i + 1, polynomial, modulus);
+                keyShares[i] = new KeyShare((k * 16) + i, d);
 
-                Console.WriteLine("Share {0} = {1}", i, D);
+                Console.WriteLine("Share {0} = {1}", i, d);
                 }
 
-            return KeyShares;
+            return keyShares;
             }
 
         // Note here that since BigInteger is a structure, not a class, we don't
         // need to worry about boxing or call by value issues
-        BigInteger PolyMod(int x, BigInteger[] PolyNomial, BigInteger Modulus) {
-            int Power = 1;  // expect the optimizer to catch
-            BigInteger Result = PolyNomial[0];
-            for (int i = 1; i < PolyNomial.Length; i++) {
-                Power = Power * x;
-                Result = (Modulus + Result + PolyNomial[i] * Power) % Modulus;
+        BigInteger PolyMod(int x, BigInteger[] polyNomial, BigInteger modulus) {
+            int power = 1;  // expect the optimizer to catch
+            var result = polyNomial[0];
+            for (int i = 1; i < polyNomial.Length; i++) {
+                power = power * x;
+                result = (modulus + result + polyNomial[i] * power) % modulus;
                 }
 
-            return Result;
+            return result;
             }
 
 
@@ -210,22 +210,22 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Create a set of N key shares with a quorum of N.
         /// </summary>
-        /// <param name="N">Number of key shares to create.</param>
+        /// <param name="n">Number of key shares to create.</param>
         /// <returns>The key shares created.</returns> 
-        public KeyShare[] Split(int N) {
-            var KeyShares = new KeyShare[N];
-            var Threshold = (16 * N) + 15;
+        public KeyShare[] Split(int n) {
+            var keyShares = new KeyShare[n];
+            var threshold = (16 * n) + 15;
 
-            var XOR = new byte[KeyBytes];
-            Array.Copy(Key, XOR, KeyBytes);
-            for (int i = 0; i < N - 1; i++) {
+            var xOR = new byte[KeyBytes];
+            Array.Copy(Key, xOR, KeyBytes);
+            for (int i = 0; i < n - 1; i++) {
                 var Bytes = CryptoCatalog.GetBytes(KeyBytes);
-                KeyShares[i] = new KeyShare(Threshold, Bytes);
-                ArrayXOR(XOR, Bytes);
+                keyShares[i] = new KeyShare(threshold, Bytes);
+                ArrayXOR(xOR, Bytes);
                 }
-            KeyShares[N - 1] = new KeyShare(Threshold, XOR);
+            keyShares[n - 1] = new KeyShare(threshold, xOR);
 
-            return KeyShares;
+            return keyShares;
             }
 
         static void ArrayXOR(byte[] Base, byte[] Mix) {
@@ -241,19 +241,12 @@ namespace Goedel.Cryptography {
             }
 
         static byte[] Combine( KeyShare[] Shares) {
-            //var KeyBytes = 16; //Shares[0].Key.Length;
-            var Threshold = Shares[0].Threshold;
+
+            var threshold = Shares[0].Threshold;
             foreach (var Share in Shares) {
-                Assert.False(Share.Threshold != Threshold, MismatchedShares.Throw);
+                Assert.False(Share.Threshold != threshold, MismatchedShares.Throw);
                 }
             return CombineNK(Shares);
-            //if (Shares[0].Index == 16) {
-            //    return CombineN(Shares);
-            //    }
-            //else {
-                
-            //    }
-
             }
 
         static byte[] CombineN(KeyShare[] Shares) {
@@ -279,58 +272,58 @@ namespace Goedel.Cryptography {
             }
 
 
-        static byte[] CombineNK(KeyShare[] Shares) {
+        static byte[] CombineNK(KeyShare[] shares) {
             
-            var Threshold = Shares[0].Threshold;
+            var threshold = shares[0].Threshold;
 
-            Assert.False (Shares.Length < Threshold, InsufficientShares.Throw);
+            Assert.False (shares.Length < threshold, InsufficientShares.Throw);
 
-            var Modulus = BigInteger.Pow(2, 129) - 25;
-            BigInteger Accum = 0;
+            var modulus = BigInteger.Pow(2, 129) - 25;
+            BigInteger accum = 0;
 
             //Console.WriteLine("Modulus = {0} ", Modulus);
 
 
-            for (var Formula = 0; Formula < Threshold; Formula++) {
+            for (var formula = 0; formula < threshold; formula++) {
 
-                var Value = Shares[Formula].Value;
-                Console.WriteLine("Value = {0} ", Value);
+                var value = shares[formula].Value;
+                Console.WriteLine("Value = {0} ", value);
 
-                BigInteger Numerator = 1, Denominator = 1;
-                for (var Count = 0; Count < Threshold; Count++) {
-                    if (Formula == Count) {
+                BigInteger numerator = 1, denominator = 1;
+                for (var count = 0; count < threshold; count++) {
+                    if (formula == count) {
                         continue;  // If not the same value
                         }
 
-                    var Start = Shares[Formula].Index;
-                    var Next = Shares[Count].Index;
+                    var start = shares[formula].Index;
+                    var next = shares[count].Index;
 
-                    Numerator = (Numerator * -Next) % Modulus;
-                    Denominator = (Denominator * (Start - Next)) % Modulus;
+                    numerator = (numerator * -next) % modulus;
+                    denominator = (denominator * (start - next)) % modulus;
                     }
 
-                var InvDenominator = ModInverse(Denominator, Modulus);
+                var InvDenominator = ModInverse(denominator, modulus);
 
                 //Console.WriteLine("   Numerator = {0}", Numerator);
                 //Console.WriteLine("   Denominator = {0}", Denominator);
                 //Console.WriteLine("   InvDenominator = {0}", InvDenominator);
 
-                Accum = (Accum + (Value * Numerator * InvDenominator)).Mod(Modulus);
-                if (Accum < 0) {
-                    Console.WriteLine("Accum = {0}\n", Accum);
+                accum = (accum + (value * numerator * InvDenominator)).Mod(modulus);
+                if (accum < 0) {
+                    Console.WriteLine("Accum = {0}\n", accum);
                     }
                 }
 
             //Console.WriteLine("Accum = {0} ", Accum);
-            return GetBytes (Accum);
+            return GetBytes (accum);
             }
 
-        private static byte[] GetBytes(BigInteger In) {
-            var Bytes = new byte[16];
-            var Source = In.ToByteArray();
-            int Length = Source.Length < 16 ? Source.Length : 16;
-            Array.Copy(Source, Bytes, Length);
-            return Bytes;
+        private static byte[] GetBytes(BigInteger input) {
+            var bytes = new byte[16];
+            var source = input.ToByteArray();
+            int length = source.Length < 16 ? source.Length : 16;
+            Array.Copy(source, bytes, length);
+            return bytes;
 
             }
 
@@ -371,38 +364,46 @@ namespace Goedel.Cryptography {
         public BigInteger Value => new BigInteger(Data);
 
         /// <summary>
+        /// Construct a key share with the specified secret value.
+        /// </summary>
+        /// <param name="text">The secret value in text form.</param>
+        public KeyShare(string text) : this(BaseConvert.FromBase32(text)) {
+            }
+
+
+        /// <summary>
         /// Construct a key share with the specified number of random bits.
         /// </summary>
-        /// <param name="Bits">Size of key share to create (in bits).</param>
-        public KeyShare(int Bits)
-            : base(Bits) {
+        /// <param name="bits">Size of key share to create (in bits).</param>
+        public KeyShare(int bits)
+            : base(bits) {
             }
 
         /// <summary>
         /// Construct a key share with the specified secret value.
         /// </summary>
-        /// <param name="Key">The secret value.</param>
-        public KeyShare(byte[] Key) : base (Key) {
+        /// <param name="key">The secret value.</param>
+        public KeyShare(byte[] key) : base (key) {
             }
 
         /// <summary>
         /// Construct a key share with the specified secret value and index.
         /// </summary>
-        /// <param name="Index">The key share index and threshold.</param>
-        /// <param name="Value">The key share value/</param>
-        public KeyShare(int Index, BigInteger Value) : 
-                this(Index, Value.ToByteArray()) {
+        /// <param name="index">The key share index and threshold.</param>
+        /// <param name="value">The key share value/</param>
+        public KeyShare(int index, BigInteger value) : 
+                this(index, value.ToByteArray()) {
             }
 
         /// <summary>
         /// Construct a key share with the specified secret value and index.
         /// </summary>
-        /// <param name="Index">The key share index and threshold.</param>
-        /// <param name="Bytes">The key share value/</param>
-        public KeyShare(int Index, byte[] Bytes) {
-            Key = new byte[1 + Bytes.Length];
-            Key[0] = (byte) Index;
-            Array.Copy(Bytes, 0, Key, 1, Bytes.Length);
+        /// <param name="index">The key share index and threshold.</param>
+        /// <param name="bytes">The key share value/</param>
+        public KeyShare(int index, byte[] bytes) {
+            Key = new byte[1 + bytes.Length];
+            Key[0] = (byte) index;
+            Array.Copy(bytes, 0, Key, 1, bytes.Length);
             }
 
         }
