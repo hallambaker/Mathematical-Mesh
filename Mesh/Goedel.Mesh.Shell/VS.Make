@@ -29,8 +29,8 @@ LinkFiles = \
 ToolTargets = \
 	Exceptions.cs\
 	meshman.cs\
-	Results.cs\
-	SchemaResults.cs
+	Results.cs
+
 Exceptions.cs : Exceptions.Exceptional 
 	exceptional Exceptions.Exceptional  /cs  Exceptions.cs
 
@@ -39,10 +39,6 @@ meshman.cs : meshman.command
 
 Results.cs : Results.protogen 
 	protogen Results.protogen  /cs  Results.cs
-
-SchemaResults.cs : SchemaResults.protocol 
-	protogen SchemaResults.protocol  /cs  SchemaResults.cs
-
 
 
 prebuildRecurse : 

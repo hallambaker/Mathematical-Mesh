@@ -17,7 +17,7 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult ContainerCreate(ContainerCreate Options) {
-            var inputFile = Options.Output.Value;
+            var inputFile = Options.Container.Value;
 
             using (var container = Container.Open(
                 inputFile, containerType: ContainerType.MerkleTree)) {
@@ -34,7 +34,7 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult ContainerArchive(ContainerArchive Options) {
-            var inputFile = Options.Output.Value;
+            var inputFile = Options.Container.Value;
 
             using (var container = Container.Open(
                 inputFile, containerType: ContainerType.MerkleTree)) {
@@ -51,7 +51,7 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult ContainerAppend(ContainerAppend Options) {
-            var inputFile = Options.Output.Value;
+            var inputFile = Options.Container.Value;
 
             using (var container = Container.Open(
                 inputFile, containerType: ContainerType.MerkleTree)) {
@@ -69,7 +69,7 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult ContainerIndex(ContainerIndex Options) {
-            var inputFile = Options.Input.Value;
+            var inputFile = Options.Container.Value;
 
             using (var container = Container.Open(
                 inputFile, containerType: ContainerType.MerkleTree)) {
@@ -87,7 +87,7 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult ContainerExtract(ContainerExtract Options) {
-            var inputFile = Options.Input.Value;
+            var inputFile = Options.Container.Value;
             var outputFile = Options.Output.Value;
 
             using (var container = Container.Open(
@@ -125,7 +125,7 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult ContainerVerify(ContainerVerify Options) {
-            var inputFile = Options.Input.Value;
+            var inputFile = Options.Container.Value;
 
             using (var container = Container.Open(
                 inputFile, containerType: ContainerType.MerkleTree)) {

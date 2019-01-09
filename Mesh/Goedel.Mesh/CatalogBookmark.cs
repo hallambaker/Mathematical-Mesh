@@ -63,11 +63,11 @@ namespace Goedel.Mesh {
         ///<summary>The primary key is protocol:site </summary>
         public override string _PrimaryKey => Uri;
 
-        public override string ToString() {
-            throw new NYI();
+        //public override string ToString() {
+        //    throw new NYI();
 
 
-            }
+        //    }
 
         }
     }

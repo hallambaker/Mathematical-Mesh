@@ -30,11 +30,6 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Update="SchemaResults.cs">
-      <DependentUpon>SchemaResults.protocol</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -49,10 +44,6 @@
     <None Update="Results.protogen">
       <LastGenOutput>Results.cs</LastGenOutput>
       <Generator>ProtoGen</Generator>
-    </None>
-    <None Update="SchemaResults.protocol">
-      <LastGenOutput>SchemaResults.cs</LastGenOutput>
-      <Generator>Protogen</Generator>
     </None>
   </ItemGroup>
 

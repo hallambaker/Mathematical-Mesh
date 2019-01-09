@@ -69,6 +69,7 @@ namespace Goedel.Mesh.Shell {
 			{"ResultMasterCreate", ResultMasterCreate._Factory},
 			{"ResultSync", ResultSync._Factory},
 			{"ResultEscrow", ResultEscrow._Factory},
+			{"ResultPending", ResultPending._Factory},
 			{"ResultRecover", ResultRecover._Factory},
 			{"ResultConnect", ResultConnect._Factory},
 			{"ResultComplete", ResultComplete._Factory},
@@ -1212,6 +1213,10 @@ namespace Goedel.Mesh.Shell {
 	/// <summary>
 	/// </summary>
 	public partial class ResultEscrow : Result {
+        /// <summary>
+        /// </summary>
+
+		public virtual List<string>				Shares  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -1255,6 +1260,18 @@ namespace Goedel.Mesh.Shell {
 				_Writer.WriteObjectStart ();
 				}
 			((Result)this).SerializeX(_Writer, false, ref _first);
+			if (Shares != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Shares", 1);
+				_Writer.WriteArrayStart ();
+				bool _firstarray = true;
+				foreach (var _index in Shares) {
+					_Writer.WriteArraySeparator (ref _firstarray);
+					_Writer.WriteString (_index);
+					}
+				_Writer.WriteArrayEnd ();
+				}
+
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
 				}
@@ -1287,6 +1304,122 @@ namespace Goedel.Mesh.Shell {
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
+				case "Shares" : {
+					// Have a sequence of values
+					bool _Going = JSONReader.StartArray ();
+					Shares = new List <string> ();
+					while (_Going) {
+						string _Item = JSONReader.ReadString ();
+						Shares.Add (_Item);
+						_Going = JSONReader.NextArray ();
+						}
+					break;
+					}
+				default : {
+					base.DeserializeToken(JSONReader, Tag);
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
+	/// <summary>
+	/// </summary>
+	public partial class ResultPending : Result {
+        /// <summary>
+        /// </summary>
+
+		public virtual MeshMessage						Messages  {get; set;}
+		
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "ResultPending";
+
+		/// <summary>
+        /// Factory method
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JSONObject _Factory () => new ResultPending();
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="Writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
+			SerializeX (Writer, wrap, ref first);
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_Writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			if (_wrap) {
+				_Writer.WriteObjectStart ();
+				}
+			((Result)this).SerializeX(_Writer, false, ref _first);
+			if (Messages != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Messages", 1);
+					Messages.Serialize (_Writer, false);
+				}
+			if (_wrap) {
+				_Writer.WriteObjectEnd ();
+				}
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <returns>The created object.</returns>		
+        public static new ResultPending FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
+			if (Tagged) {
+				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				return Out as ResultPending;
+				}
+		    var Result = new ResultPending ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			}
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
+		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+			
+			switch (Tag) {
+				case "Messages" : {
+					// An untagged structure
+					Messages = new MeshMessage ();
+					Messages.Deserialize (JSONReader);
+ 
+					break;
+					}
 				default : {
 					base.DeserializeToken(JSONReader, Tag);
 					break;

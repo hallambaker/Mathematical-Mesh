@@ -8,10 +8,14 @@ namespace Goedel.Test {
     public static class Files {
 
         static int FileCount= 0;
-        public static string ToFileUnique(this object data, string prefix = "TestData-", string suffix = ".txt") {
-            var fileCount = Interlocked.Increment(ref FileCount);
-            var filename = prefix + fileCount.ToString() + suffix;
 
+        public static string GetFilenameUnique(string prefix = "TestData-", string suffix = ".txt") {
+            var fileCount = Interlocked.Increment(ref FileCount);
+            return prefix + fileCount.ToString() + suffix;
+            }
+
+        public static string ToFileUnique(this object data, string prefix = "TestData-", string suffix = ".txt") {
+            var filename = GetFilenameUnique(prefix, suffix);
             filename.WriteFileNew(data.ToString());
             return filename;
             }

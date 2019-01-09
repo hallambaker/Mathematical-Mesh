@@ -127,7 +127,7 @@ namespace Goedel.Mesh.Shell {
             Identifier = "password",
 			Entries = new  SortedDictionary<string, DescribeCommand> () {
 				{"add", _PasswordAdd._DescribeCommand },
-				{"user", _PasswordGet._DescribeCommand },
+				{"get", _PasswordGet._DescribeCommand },
 				{"delete", _PasswordDelete._DescribeCommand },
 				{"dump", _PasswordDump._DescribeCommand }
 				} // End Entries
@@ -173,7 +173,7 @@ namespace Goedel.Mesh.Shell {
 		static DescribeCommandSet DescribeCommandSet_Message = new DescribeCommandSet () {
             Identifier = "message",
 			Entries = new  SortedDictionary<string, DescribeCommand> () {
-				{"send", _MessageContact._DescribeCommand },
+				{"contact", _MessageContact._DescribeCommand },
 				{"confirm", _MessageConfirm._DescribeCommand },
 				{"pending", _MessagePending._DescribeCommand },
 				{"status", _MessageStatus._DescribeCommand },
@@ -218,6 +218,7 @@ namespace Goedel.Mesh.Shell {
 				{"create", _ContainerCreate._DescribeCommand },
 				{"archive", _ContainerArchive._DescribeCommand },
 				{"append", _ContainerAppend._DescribeCommand },
+				{"delete", _ContainerDelete._DescribeCommand },
 				{"index", _ContainerIndex._DescribeCommand },
 				{"extract", _ContainerExtract._DescribeCommand },
 				{"copy", _ContainerCopy._DescribeCommand },
@@ -964,6 +965,16 @@ namespace Goedel.Mesh.Shell {
 			Dispatch._PostProcess (result);
 			}
 
+		public static void Handle_ContainerDelete (
+					DispatchShell  DispatchIn, string[] Args, int Index) {
+			Shell Dispatch =	DispatchIn as Shell;
+			ContainerDelete		Options = new ContainerDelete ();
+			ProcessOptions (Args, Index, Options);
+			Dispatch._PreProcess (Options);
+			var result = Dispatch.ContainerDelete (Options);
+			Dispatch._PostProcess (result);
+			}
+
 		public static void Handle_ContainerIndex (
 					DispatchShell  DispatchIn, string[] Args, int Index) {
 			Shell Dispatch =	DispatchIn as Shell;
@@ -1103,7 +1114,7 @@ namespace Goedel.Mesh.Shell {
 
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
 			Identifier = "hello",
-			Brief =  "Connect the service(s) a profile is connected to and report status.",
+			Brief =  "Connect to the service(s) a profile is connected to and report status.",
 			HandleDelegate =  CommandLineInterpreter.Handle_ProfileHello,
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
@@ -5495,7 +5506,7 @@ namespace Goedel.Mesh.Shell {
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
-			Identifier = "user",
+			Identifier = "get",
 			Brief =  "Lookup password entry",
 			HandleDelegate =  CommandLineInterpreter.Handle_PasswordGet,
 			Lazy =  false,
@@ -5803,6 +5814,7 @@ namespace Goedel.Mesh.Shell {
 							IReporting {
 
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new String (),
 			new ExistingFile (),
 			new String (),
 			new String (),
@@ -5811,58 +5823,67 @@ namespace Goedel.Mesh.Shell {
 			new Flag ()			} ;
 
 		/// <summary>Field accessor for parameter []</summary>
-		public virtual ExistingFile File {
-			get => _Data[0] as ExistingFile;
+		public virtual String Identifier {
+			get => _Data[0] as String;
 			set => _Data[0]  = value;
 			}
 
-		public virtual string _File {
+		public virtual string _Identifier {
 			set => _Data[0].Parameter (value);
 			}
-		/// <summary>Field accessor for option [portal]</summary>
-		public virtual String AccountID {
-			get => _Data[1] as String;
+		/// <summary>Field accessor for option [file]</summary>
+		public virtual ExistingFile File {
+			get => _Data[1] as ExistingFile;
 			set => _Data[1]  = value;
 			}
 
-		public virtual string _AccountID {
+		public virtual string _File {
 			set => _Data[1].Parameter (value);
 			}
-		/// <summary>Field accessor for option [udf]</summary>
-		public virtual String UDF {
+		/// <summary>Field accessor for option [portal]</summary>
+		public virtual String AccountID {
 			get => _Data[2] as String;
 			set => _Data[2]  = value;
 			}
 
-		public virtual string _UDF {
+		public virtual string _AccountID {
 			set => _Data[2].Parameter (value);
 			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[3] as Flag;
+		/// <summary>Field accessor for option [udf]</summary>
+		public virtual String UDF {
+			get => _Data[3] as String;
 			set => _Data[3]  = value;
 			}
 
-		public virtual string _Verbose {
+		public virtual string _UDF {
 			set => _Data[3].Parameter (value);
 			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
 			get => _Data[4] as Flag;
 			set => _Data[4]  = value;
 			}
 
-		public virtual string _Report {
+		public virtual string _Verbose {
 			set => _Data[4].Parameter (value);
 			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
 			get => _Data[5] as Flag;
 			set => _Data[5]  = value;
 			}
 
-		public virtual string _Json {
+		public virtual string _Report {
 			set => _Data[5].Parameter (value);
+			}
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[6] as Flag;
+			set => _Data[6]  = value;
+			}
+
+		public virtual string _Json {
+			set => _Data[6].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -5873,45 +5894,52 @@ namespace Goedel.Mesh.Shell {
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
 				new DescribeEntryParameter () {
+					Identifier = "Identifier", 
+					Default = null, // null if null
+					Brief = "Contact entry identifier in SIN form",
+					Index = 0,
+					Key = ""
+					},
+				new DescribeEntryOption () {
 					Identifier = "File", 
 					Default = null, // null if null
 					Brief = "<Unspecified>",
-					Index = 0,
-					Key = ""
+					Index = 1,
+					Key = "file"
 					},
 				new DescribeEntryOption () {
 					Identifier = "AccountID", 
 					Default = null, // null if null
 					Brief = "Account identifier (e.g. alice@example.com)",
-					Index = 1,
+					Index = 2,
 					Key = "portal"
 					},
 				new DescribeEntryOption () {
 					Identifier = "UDF", 
 					Default = null, // null if null
 					Brief = "Profile fingerprint",
-					Index = 2,
+					Index = 3,
 					Key = "udf"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Verbose", 
 					Default = "true", // null if null
 					Brief = "Verbose reports (default)",
-					Index = 3,
+					Index = 4,
 					Key = "verbose"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Report", 
 					Default = "true", // null if null
 					Brief = "Report output (default)",
-					Index = 4,
+					Index = 5,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Json", 
 					Default = "false", // null if null
 					Brief = "Report output in JSON format",
-					Index = 5,
+					Index = 6,
 					Key = "json"
 					}
 				}
@@ -6292,30 +6320,30 @@ namespace Goedel.Mesh.Shell {
 			new Flag ()			} ;
 
 		/// <summary>Field accessor for parameter []</summary>
-		public virtual String Uri {
+		public virtual String Path {
 			get => _Data[0] as String;
 			set => _Data[0]  = value;
 			}
 
-		public virtual string _Uri {
+		public virtual string _Path {
 			set => _Data[0].Parameter (value);
 			}
 		/// <summary>Field accessor for parameter []</summary>
-		public virtual String Title {
+		public virtual String Uri {
 			get => _Data[1] as String;
 			set => _Data[1]  = value;
 			}
 
-		public virtual string _Title {
+		public virtual string _Uri {
 			set => _Data[1].Parameter (value);
 			}
-		/// <summary>Field accessor for option [path]</summary>
-		public virtual String Path {
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual String Title {
 			get => _Data[2] as String;
 			set => _Data[2]  = value;
 			}
 
-		public virtual string _Path {
+		public virtual string _Title {
 			set => _Data[2].Parameter (value);
 			}
 		/// <summary>Field accessor for option [portal]</summary>
@@ -6372,25 +6400,25 @@ namespace Goedel.Mesh.Shell {
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
 				new DescribeEntryParameter () {
-					Identifier = "Uri", 
+					Identifier = "Path", 
 					Default = null, // null if null
 					Brief = "<Unspecified>",
 					Index = 0,
 					Key = ""
 					},
 				new DescribeEntryParameter () {
-					Identifier = "Title", 
+					Identifier = "Uri", 
 					Default = null, // null if null
 					Brief = "<Unspecified>",
 					Index = 1,
 					Key = ""
 					},
-				new DescribeEntryOption () {
-					Identifier = "Path", 
+				new DescribeEntryParameter () {
+					Identifier = "Title", 
 					Default = null, // null if null
 					Brief = "<Unspecified>",
 					Index = 2,
-					Key = "path"
+					Key = ""
 					},
 				new DescribeEntryOption () {
 					Identifier = "AccountID", 
@@ -7462,7 +7490,7 @@ namespace Goedel.Mesh.Shell {
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
-			Identifier = "send",
+			Identifier = "contact",
 			Brief =  "Post a conection request to a user",
 			HandleDelegate =  CommandLineInterpreter.Handle_MessageContact,
 			Lazy =  false,
@@ -7525,6 +7553,7 @@ namespace Goedel.Mesh.Shell {
 			new String (),
 			new String (),
 			new String (),
+			new String (),
 			new Flag (),
 			new Flag (),
 			new Flag ()			} ;
@@ -7538,50 +7567,59 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _Recipient {
 			set => _Data[0].Parameter (value);
 			}
-		/// <summary>Field accessor for option [portal]</summary>
-		public virtual String AccountID {
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual String Text {
 			get => _Data[1] as String;
 			set => _Data[1]  = value;
 			}
 
-		public virtual string _AccountID {
+		public virtual string _Text {
 			set => _Data[1].Parameter (value);
 			}
-		/// <summary>Field accessor for option [udf]</summary>
-		public virtual String UDF {
+		/// <summary>Field accessor for option [portal]</summary>
+		public virtual String AccountID {
 			get => _Data[2] as String;
 			set => _Data[2]  = value;
 			}
 
-		public virtual string _UDF {
+		public virtual string _AccountID {
 			set => _Data[2].Parameter (value);
 			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[3] as Flag;
+		/// <summary>Field accessor for option [udf]</summary>
+		public virtual String UDF {
+			get => _Data[3] as String;
 			set => _Data[3]  = value;
 			}
 
-		public virtual string _Verbose {
+		public virtual string _UDF {
 			set => _Data[3].Parameter (value);
 			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
 			get => _Data[4] as Flag;
 			set => _Data[4]  = value;
 			}
 
-		public virtual string _Report {
+		public virtual string _Verbose {
 			set => _Data[4].Parameter (value);
 			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
 			get => _Data[5] as Flag;
 			set => _Data[5]  = value;
 			}
 
-		public virtual string _Json {
+		public virtual string _Report {
 			set => _Data[5].Parameter (value);
+			}
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[6] as Flag;
+			set => _Data[6]  = value;
+			}
+
+		public virtual string _Json {
+			set => _Data[6].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -7598,39 +7636,46 @@ namespace Goedel.Mesh.Shell {
 					Index = 0,
 					Key = ""
 					},
+				new DescribeEntryParameter () {
+					Identifier = "Text", 
+					Default = null, // null if null
+					Brief = "The recipient to send the confirmation request to",
+					Index = 1,
+					Key = ""
+					},
 				new DescribeEntryOption () {
 					Identifier = "AccountID", 
 					Default = null, // null if null
 					Brief = "Account identifier (e.g. alice@example.com)",
-					Index = 1,
+					Index = 2,
 					Key = "portal"
 					},
 				new DescribeEntryOption () {
 					Identifier = "UDF", 
 					Default = null, // null if null
 					Brief = "Profile fingerprint",
-					Index = 2,
+					Index = 3,
 					Key = "udf"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Verbose", 
 					Default = "true", // null if null
 					Brief = "Verbose reports (default)",
-					Index = 3,
+					Index = 4,
 					Key = "verbose"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Report", 
 					Default = "true", // null if null
 					Brief = "Report output (default)",
-					Index = 4,
+					Index = 5,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Json", 
 					Default = "false", // null if null
 					Brief = "Report output in JSON format",
-					Index = 5,
+					Index = 6,
 					Key = "json"
 					}
 				}
@@ -9972,12 +10017,12 @@ namespace Goedel.Mesh.Shell {
 			set => _Data[12].Parameter (value);
 			}
 		/// <summary>Field accessor for parameter []</summary>
-		public virtual NewFile Output {
+		public virtual NewFile Container {
 			get => _Data[13] as NewFile;
 			set => _Data[13]  = value;
 			}
 
-		public virtual string _Output {
+		public virtual string _Container {
 			set => _Data[13].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
@@ -10080,7 +10125,7 @@ namespace Goedel.Mesh.Shell {
 					Key = "json"
 					},
 				new DescribeEntryParameter () {
-					Identifier = "Output", 
+					Identifier = "Container", 
 					Default = null, // null if null
 					Brief = "New container",
 					Index = 13,
@@ -10243,13 +10288,13 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _Input {
 			set => _Data[13].Parameter (value);
 			}
-		/// <summary>Field accessor for parameter []</summary>
-		public virtual NewFile Output {
+		/// <summary>Field accessor for option [out]</summary>
+		public virtual NewFile Container {
 			get => _Data[14] as NewFile;
 			set => _Data[14]  = value;
 			}
 
-		public virtual string _Output {
+		public virtual string _Container {
 			set => _Data[14].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
@@ -10358,12 +10403,12 @@ namespace Goedel.Mesh.Shell {
 					Index = 13,
 					Key = ""
 					},
-				new DescribeEntryParameter () {
-					Identifier = "Output", 
+				new DescribeEntryOption () {
+					Identifier = "Container", 
 					Default = null, // null if null
 					Brief = "New container",
 					Index = 14,
-					Key = ""
+					Key = "out"
 					}
 				}
 			};
@@ -10392,7 +10437,8 @@ namespace Goedel.Mesh.Shell {
 			new Flag (),
 			new Flag (),
 			new ExistingFile (),
-			new NewFile ()			} ;
+			new NewFile (),
+			new String ()			} ;
 
 		/// <summary>Field accessor for option [cty]</summary>
 		public virtual String ContentType {
@@ -10503,22 +10549,31 @@ namespace Goedel.Mesh.Shell {
 			set => _Data[11].Parameter (value);
 			}
 		/// <summary>Field accessor for parameter []</summary>
-		public virtual ExistingFile Input {
+		public virtual ExistingFile Container {
 			get => _Data[12] as ExistingFile;
 			set => _Data[12]  = value;
 			}
 
-		public virtual string _Input {
+		public virtual string _Container {
 			set => _Data[12].Parameter (value);
 			}
 		/// <summary>Field accessor for parameter []</summary>
-		public virtual NewFile Output {
+		public virtual NewFile File {
 			get => _Data[13] as NewFile;
 			set => _Data[13]  = value;
 			}
 
-		public virtual string _Output {
+		public virtual string _File {
 			set => _Data[13].Parameter (value);
+			}
+		/// <summary>Field accessor for option [key]</summary>
+		public virtual String Key {
+			get => _Data[14] as String;
+			set => _Data[14]  = value;
+			}
+
+		public virtual string _Key {
+			set => _Data[14].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -10613,18 +10668,25 @@ namespace Goedel.Mesh.Shell {
 					Key = "json"
 					},
 				new DescribeEntryParameter () {
-					Identifier = "Input", 
+					Identifier = "Container", 
 					Default = null, // null if null
 					Brief = "Container to append to",
 					Index = 12,
 					Key = ""
 					},
 				new DescribeEntryParameter () {
-					Identifier = "Output", 
+					Identifier = "File", 
 					Default = null, // null if null
 					Brief = "File to append",
 					Index = 13,
 					Key = ""
+					},
+				new DescribeEntryOption () {
+					Identifier = "Key", 
+					Default = null, // null if null
+					Brief = "<Unspecified>",
+					Index = 14,
+					Key = "key"
 					}
 				}
 			};
@@ -10633,6 +10695,60 @@ namespace Goedel.Mesh.Shell {
 
     public partial class ContainerAppend : _ContainerAppend {
         } // class ContainerAppend
+
+    public class _ContainerDelete : Goedel.Command.Dispatch  {
+
+		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new ExistingFile (),
+			new String ()			} ;
+
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual ExistingFile Container {
+			get => _Data[0] as ExistingFile;
+			set => _Data[0]  = value;
+			}
+
+		public virtual string _Container {
+			set => _Data[0].Parameter (value);
+			}
+		/// <summary>Field accessor for option [key]</summary>
+		public virtual String Key {
+			get => _Data[1] as String;
+			set => _Data[1]  = value;
+			}
+
+		public virtual string _Key {
+			set => _Data[1].Parameter (value);
+			}
+		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
+			Identifier = "delete",
+			Brief =  "<Unspecified>",
+			HandleDelegate =  CommandLineInterpreter.Handle_ContainerDelete,
+			Lazy =  false,
+			Entries = new List<DescribeEntry> () {
+				new DescribeEntryParameter () {
+					Identifier = "Container", 
+					Default = null, // null if null
+					Brief = "Container to append to",
+					Index = 0,
+					Key = ""
+					},
+				new DescribeEntryOption () {
+					Identifier = "Key", 
+					Default = null, // null if null
+					Brief = "<Unspecified>",
+					Index = 1,
+					Key = "key"
+					}
+				}
+			};
+
+		}
+
+    public partial class ContainerDelete : _ContainerDelete {
+        } // class ContainerDelete
 
     public class _ContainerIndex : Goedel.Command.Dispatch ,
 							IEncodeOptions,
@@ -10763,12 +10879,12 @@ namespace Goedel.Mesh.Shell {
 			set => _Data[11].Parameter (value);
 			}
 		/// <summary>Field accessor for parameter []</summary>
-		public virtual ExistingFile Input {
+		public virtual ExistingFile Container {
 			get => _Data[12] as ExistingFile;
 			set => _Data[12]  = value;
 			}
 
-		public virtual string _Input {
+		public virtual string _Container {
 			set => _Data[12].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
@@ -10864,7 +10980,7 @@ namespace Goedel.Mesh.Shell {
 					Key = "json"
 					},
 				new DescribeEntryParameter () {
-					Identifier = "Input", 
+					Identifier = "Container", 
 					Default = null, // null if null
 					Brief = "Container to append to",
 					Index = 12,
@@ -10889,17 +11005,18 @@ namespace Goedel.Mesh.Shell {
 			new String (),
 			new String (),
 			new String (),
+			new String (),
 			new Flag (),
 			new Flag (),
 			new Flag ()			} ;
 
 		/// <summary>Field accessor for parameter []</summary>
-		public virtual ExistingFile Input {
+		public virtual ExistingFile Container {
 			get => _Data[0] as ExistingFile;
 			set => _Data[0]  = value;
 			}
 
-		public virtual string _Input {
+		public virtual string _Container {
 			set => _Data[0].Parameter (value);
 			}
 		/// <summary>Field accessor for parameter []</summary>
@@ -10929,50 +11046,59 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _Filename {
 			set => _Data[3].Parameter (value);
 			}
-		/// <summary>Field accessor for option [portal]</summary>
-		public virtual String AccountID {
+		/// <summary>Field accessor for option [key]</summary>
+		public virtual String Key {
 			get => _Data[4] as String;
 			set => _Data[4]  = value;
 			}
 
-		public virtual string _AccountID {
+		public virtual string _Key {
 			set => _Data[4].Parameter (value);
 			}
-		/// <summary>Field accessor for option [udf]</summary>
-		public virtual String UDF {
+		/// <summary>Field accessor for option [portal]</summary>
+		public virtual String AccountID {
 			get => _Data[5] as String;
 			set => _Data[5]  = value;
 			}
 
-		public virtual string _UDF {
+		public virtual string _AccountID {
 			set => _Data[5].Parameter (value);
 			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[6] as Flag;
+		/// <summary>Field accessor for option [udf]</summary>
+		public virtual String UDF {
+			get => _Data[6] as String;
 			set => _Data[6]  = value;
 			}
 
-		public virtual string _Verbose {
+		public virtual string _UDF {
 			set => _Data[6].Parameter (value);
 			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
 			get => _Data[7] as Flag;
 			set => _Data[7]  = value;
 			}
 
-		public virtual string _Report {
+		public virtual string _Verbose {
 			set => _Data[7].Parameter (value);
 			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
 			get => _Data[8] as Flag;
 			set => _Data[8]  = value;
 			}
 
-		public virtual string _Json {
+		public virtual string _Report {
 			set => _Data[8].Parameter (value);
+			}
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[9] as Flag;
+			set => _Data[9]  = value;
+			}
+
+		public virtual string _Json {
+			set => _Data[9].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -10983,7 +11109,7 @@ namespace Goedel.Mesh.Shell {
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
 				new DescribeEntryParameter () {
-					Identifier = "Input", 
+					Identifier = "Container", 
 					Default = null, // null if null
 					Brief = "Container to read",
 					Index = 0,
@@ -11011,38 +11137,45 @@ namespace Goedel.Mesh.Shell {
 					Key = "file"
 					},
 				new DescribeEntryOption () {
+					Identifier = "Key", 
+					Default = null, // null if null
+					Brief = "<Unspecified>",
+					Index = 4,
+					Key = "key"
+					},
+				new DescribeEntryOption () {
 					Identifier = "AccountID", 
 					Default = null, // null if null
 					Brief = "Account identifier (e.g. alice@example.com)",
-					Index = 4,
+					Index = 5,
 					Key = "portal"
 					},
 				new DescribeEntryOption () {
 					Identifier = "UDF", 
 					Default = null, // null if null
 					Brief = "Profile fingerprint",
-					Index = 5,
+					Index = 6,
 					Key = "udf"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Verbose", 
 					Default = "true", // null if null
 					Brief = "Verbose reports (default)",
-					Index = 6,
+					Index = 7,
 					Key = "verbose"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Report", 
 					Default = "true", // null if null
 					Brief = "Report output (default)",
-					Index = 7,
+					Index = 8,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Json", 
 					Default = "false", // null if null
 					Brief = "Report output in JSON format",
-					Index = 8,
+					Index = 9,
 					Key = "json"
 					}
 				}
@@ -11441,12 +11574,12 @@ namespace Goedel.Mesh.Shell {
 			set => _Data[4].Parameter (value);
 			}
 		/// <summary>Field accessor for parameter []</summary>
-		public virtual ExistingFile Input {
+		public virtual ExistingFile Container {
 			get => _Data[5] as ExistingFile;
 			set => _Data[5]  = value;
 			}
 
-		public virtual string _Input {
+		public virtual string _Container {
 			set => _Data[5].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
@@ -11493,7 +11626,7 @@ namespace Goedel.Mesh.Shell {
 					Key = "json"
 					},
 				new DescribeEntryParameter () {
-					Identifier = "Input", 
+					Identifier = "Container", 
 					Default = null, // null if null
 					Brief = "Container to read",
 					Index = 5,
@@ -11897,6 +12030,11 @@ namespace Goedel.Mesh.Shell {
 			}
 
 		public virtual ShellResult ContainerAppend ( ContainerAppend Options) {
+			CommandLineInterpreter.DescribeValues (Options);
+			return null;
+			}
+
+		public virtual ShellResult ContainerDelete ( ContainerDelete Options) {
 			CommandLineInterpreter.DescribeValues (Options);
 			return null;
 			}

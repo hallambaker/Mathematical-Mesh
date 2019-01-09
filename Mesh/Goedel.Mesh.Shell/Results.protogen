@@ -51,7 +51,13 @@
 
 	Structure ResultEscrow
 		Inherits		Result
+		String			Shares
+			Multiple
 
+
+	Structure ResultPending
+		Inherits		Result
+		Struct MeshMessage Messages
 
 	Structure ResultRecover
 		Inherits		Result

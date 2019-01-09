@@ -173,6 +173,8 @@
 				|Keys or key contributions enabling the operation to be performed
 
 	Structure Contact
+		String Identifier
+		String Account
 		String FullName
 		String Title
 		String First
@@ -218,19 +220,6 @@
 
 	Structure CatalogEntry
 
-	Structure CatalogEntryCredential
-		Inherits CatalogEntry
-		String Protocol
-		String Service
-		String Username
-		String Password
-	
-	Structure CatalogEntryBookmark
-		Inherits CatalogEntry
-		String Uri
-		String Title
-		String Path
-
 	Structure CatalogEntryDevice
 		Inherits CatalogEntry
 		Struct DareMessage DeviceProfile
@@ -240,6 +229,16 @@
 			Multiple
 			Description
 				|List of the permissions that the device has been granted.
+
+
+	Structure CatalogEntryCredential
+		Inherits CatalogEntry
+		String Protocol
+		String Service
+		String Username
+		String Password
+	
+
 
 	Structure CatalogEntryContact
 		Inherits CatalogEntry
@@ -254,15 +253,17 @@
 			Description
 				|The (signed) contact data.
 
-
-
-
-
 	Structure CatalogEntryContactRecryption
 		Inherits CatalogEntryContact
 		// Recryption group user has accepted membership of
 		// Describe document stores, chat groups, etc accessible
 
+
+	Structure CatalogEntryBookmark
+		Inherits CatalogEntry
+		String Uri
+		String Title
+		String Path
 
 
 	Structure CatalogEntryTask

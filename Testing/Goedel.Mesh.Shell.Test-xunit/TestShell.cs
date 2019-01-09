@@ -15,6 +15,8 @@ using Goedel.Protocol;
 namespace Goedel.XUnit {
     public partial class ShellTests {
         string ServiceName = "example.com";
+        TestCLI DefaultDevice => defaultDevice ?? GetTestCLI().CacheValue(out defaultDevice);
+        TestCLI defaultDevice;
 
         /// <summary>
         /// If the test requires a Mesh service, a separate service is instantiated
@@ -32,6 +34,31 @@ namespace Goedel.XUnit {
             return new TestCLI(testShell);
             }
 
+        public Result Dispatch(string command, bool fail = false) =>
+            DefaultDevice.Dispatch(command, fail);
+        public bool CheckPasswordResult(string site, string username, string password) =>
+            DefaultDevice.CheckPasswordResult(site, username, password);
+        public bool CheckContactResult(string key) =>
+            DefaultDevice.CheckContactResult(key);
+        public bool CheckBookmarkResult(string uri, string title, string path) =>
+            DefaultDevice.CheckBookmarkResult(uri, title, path);
+
+        public bool CheckTaskResult(string key, string title) =>
+            DefaultDevice.CheckTaskResult(key, title);
+        public bool CheckNetworkResult(string key, string password) =>
+            DefaultDevice.CheckNetworkResult(key, password);
+
+        public bool FailPasswordResult(string site) =>
+            DefaultDevice.FailPasswordResult(site);
+        public bool FailContactResult(string key) =>
+            DefaultDevice.FailContactResult(key);
+        public bool FailBookmarkResult(string key) =>
+            DefaultDevice.FailBookmarkResult(key);
+
+        public bool FailTaskResult(string key) =>
+            DefaultDevice.FailTaskResult(key);
+        public bool FailNetworkResult(string key) =>
+            DefaultDevice.FailNetworkResult(key);
         }
     public partial class TestShell : Shell {
         static string ServiceName = "example.com";
@@ -88,12 +115,93 @@ namespace Goedel.XUnit {
     public partial class TestCLI : CommandLineInterpreter {
         TestShell Shell;
 
+        public List<Result> Results = new List<Result>();
+        public Result Last => Results[Results.Count - 1];
+
+
         public TestCLI(TestShell shell) : base() => Shell = shell;
 
-        public ShellResult Dispatch(string command) {
+        public Result Dispatch(string command, bool fail = false) {
             var Args = command.Split(' ');
             Dispatcher(Entries, DefaultCommand, Shell, Args, 0);
-            return Shell.ShellResult;
+            var result = Shell.ShellResult as Result;
+
+            (result.Success != fail).AssertTrue();
+            return result;
+            }
+
+
+        public bool AssertAccount(int count = -1, string account = null, bool exists = true) {
+            throw new NYI();
+            }
+
+        public bool FailPasswordResult(string site) {
+            var result = Dispatch($"password get {site}", fail: true) as ResultEntry;
+            return true;
+            }
+
+        public bool CheckPasswordResult(string site, string username, string password) {
+            var result = Dispatch($"password get {site}") as ResultEntry;
+            var entry = result.CatalogEntry as CatalogEntryCredential;
+
+            (site == entry.Service).AssertTrue();
+            (username == entry.Username).AssertTrue();
+            (password == entry.Password).AssertTrue();
+            return true;
+            }
+
+        public bool FailContactResult(string site) {
+            var result = Dispatch($"contact get {site}", fail: true) as ResultEntry;
+            return true;
+            }
+
+        public bool CheckContactResult(string key) {
+            var result = Dispatch($"contact get {key}") as ResultEntry;
+            var entry = result.CatalogEntry as CatalogEntryContact;
+
+            (key == entry.Key).AssertTrue();
+            return true;
+            }
+
+        public bool FailBookmarkResult(string path) {
+            var result = Dispatch($"bookmark get {path}", fail: true) as ResultEntry;
+            return true;
+            }
+
+        public bool CheckBookmarkResult(string path, string uri, string title) {
+            var result = Dispatch($"bookmark get {path}") as ResultEntry;
+            var entry = result.CatalogEntry as CatalogEntryBookmark;
+
+            (uri == entry.Uri).AssertTrue();
+            (title == entry.Title).AssertTrue();
+            (path == entry.Path).AssertTrue();
+            return true;
+            }
+
+        public bool FailTaskResult(string site) {
+            var result = Dispatch($"calendar get {site}", fail: true) as ResultEntry;
+            return true;
+            }
+
+        public bool CheckTaskResult(string key, string title) {
+            var result = Dispatch($"calendar get {key}") as ResultEntry;
+            var entry = result.CatalogEntry as CatalogEntryTask;
+
+            (key == entry.Key).AssertTrue();
+            return true;
+            }
+
+        public bool FailNetworkResult(string site) {
+            var result = Dispatch($"network get {site}", fail:true) as ResultEntry;
+            return true;
+            }
+
+        public bool CheckNetworkResult(string key, string password) {
+            var result = Dispatch($"network get {key}") as ResultEntry;
+            var entry = result.CatalogEntry as CatalogEntryTask;
+
+            (key == entry.Key).AssertTrue();
+            return true;
             }
 
         }

@@ -7,6 +7,8 @@ namespace Goedel.Mesh.Shell {
         }
 
     public partial class Result {
+
+
         public virtual StringBuilder StringBuilder() {
             var Builder = new StringBuilder();
 
@@ -26,7 +28,7 @@ namespace Goedel.Mesh.Shell {
             return Builder.ToString();
             }
 
-
+        
 
         }
 

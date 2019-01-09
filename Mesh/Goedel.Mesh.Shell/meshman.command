@@ -100,7 +100,7 @@
 		Brief "Manage personal and device profiles and accounts."
 
 		Command ProfileHello "hello"		
-			Brief "Connect the service(s) a profile is connected to and report status."
+			Brief "Connect to the service(s) a profile is connected to and report status."
 			Include AccountOptions
 
 		Command DeviceCreate "device"
@@ -220,6 +220,7 @@
 			Brief "Add a mail application profile to a personal profile"
 			Parameter Address "address" String
 				Brief "Mail account to create profile from"
+
 			Include AccountOptions
 			Include Reporting
 			Include MailOptions
@@ -274,27 +275,8 @@
 	CommandSet SSH "ssh"
 		Brief "Manage SSH profiles connected to a personal profile"
 
-		CommandSet SSHAdd "add"
-			Command SSHAddHost "host"
-				Brief "Add one or more hosts to the known_hosts file"
-				Include AccountOptions
-				Include Reporting
-				Include SSHOptions
-				Parameter File "file" ExistingFile
-			
-			Command SSHAddClient "client"
-				Brief "Add one or more keys to the authorized_keys file"
-				Include AccountOptions
-				Include Reporting
-				Include SSHOptions
-				Parameter File "file" ExistingFile
 
-		Command SSHHost "host"
-			Brief "Add the SSH server key(s) of the current machine to the personal profile"
-			Include AccountOptions
-			Include Reporting
-			Include SSHOptions
-
+		// Management of client key pairs
 		Command SSHCreate "create"
 			Brief "Generate a new SSH public keypair for the current machine and add to the personal profile"
 			Include AccountOptions
@@ -303,18 +285,6 @@
 			Include KeyCreateOptions
 			Option ID "id" String
 				Brief "Key identifier"
-
-		Command SSHKnown "known"
-			Brief "List the known SSH sites (aka known hosts)"
-			Include AccountOptions
-			Include Reporting
-			Include SSHOptions
-
-		Command SSHAuth "auth"
-			Brief "List the authorized device keys (aka authorized_keys)"
-			Include AccountOptions
-			Include Reporting	
-			Include SSHOptions
 
 		Command SSHPrivate "private"
 			Brief "Extract the private key for this device"
@@ -328,6 +298,44 @@
 			Include Reporting
 			Include PublicKeyOptions
 
+		// Add public keys to profile
+		CommandSet SSHAdd "add"
+			Command SSHAddHost "host"
+				Brief "Add one or more hosts to the known_hosts file"
+				Include AccountOptions
+				Include Reporting
+				Include SSHOptions
+
+			Command SSHAddHost "known"
+				Brief "Add one or more hosts to the known_hosts file"
+				Include AccountOptions
+				Include Reporting
+				Include SSHOptions
+				Parameter File "file" ExistingFile
+			
+			Command SSHAddClient "auth"
+				Brief "Add one or more keys to the authorized_keys file"
+				Include AccountOptions
+				Include Reporting
+				Include SSHOptions
+				Parameter File "file" ExistingFile
+
+
+		CommandSet SSHAdd "show"
+			Command SSHKnown "known"
+				Brief "List the known SSH sites (aka known hosts)"
+				Include AccountOptions
+				Include Reporting
+				Include SSHOptions
+
+			Command SSHAuth "auth"
+				Brief "List the authorized device keys (aka authorized_keys)"
+				Include AccountOptions
+				Include Reporting	
+				Include SSHOptions
+
+
+
 	CommandSet Password "password"
 		Brief "Manage password catalogs connected to an account"
 
@@ -339,7 +347,7 @@
 			Include AccountOptions
 			Include Reporting
 
-		Command PasswordGet "user"
+		Command PasswordGet "get"
 			Brief "Lookup password entry"
 			Parameter Site "site" String
 			Include AccountOptions
@@ -363,7 +371,9 @@
 
 		Command ContactAdd "add"
 			Brief "Add contact entry from file"
-			Parameter File "file" ExistingFile
+			Parameter Identifier "id" String
+				Brief "Contact entry identifier in SIN form"
+			Option File "file" ExistingFile
 			Include AccountOptions
 			Include Reporting
 
@@ -390,9 +400,10 @@
 
 		Command BookmarkAdd "add"
 			Brief "Add bookmark"
+			Parameter Path "path" String
 			Parameter Uri "uri" String
 			Parameter Title "title" String
-			Option Path "path" String
+
 			Include AccountOptions
 			Include Reporting
 
@@ -456,7 +467,7 @@
 	CommandSet Message "message"
 		Brief "Contact and confirmation message options"
 		
-		Command MessageContact "send"
+		Command MessageContact "contact"
 			Brief "Post a conection request to a user"
 			Parameter Recipient "recipient" String
 				Brief "The recipient to send the conection request to"
@@ -466,6 +477,8 @@
 		Command MessageConfirm "confirm"
 			Brief "Post a confirmation request to a user"
 			Parameter Recipient "recipient" String
+				Brief "The recipient to send the confirmation request to"
+			Parameter Text "text" String
 				Brief "The recipient to send the confirmation request to"
 			Include AccountOptions
 			Include Reporting
@@ -506,13 +519,6 @@
 	CommandSet Group "group"
 		Brief "Group management commands"
 
-		Command GroupAdd "add"
-			Brief "Add recryption group to keyring"
-			Include AccountOptions
-			Include Reporting
-			Parameter GroupID "group" String
-				Brief "Recryption group name in user@example.com format"
-
 		Command GroupCreate "create"
 			Brief "Create recryption group"
 			Include AccountOptions
@@ -521,7 +527,7 @@
 			Parameter GroupID "group" String
 				Brief "Recryption group name in user@example.com format"
 
-		Command GroupUser "user"
+		Command GroupAdd "add"
 			Brief "Add user to recryption group"
 			Include AccountOptions
 			Include Reporting
@@ -620,7 +626,7 @@
 			Include ContainerOptions
 			Include AccountOptions
 			Include Reporting
-			Parameter Output "out" NewFile
+			Parameter Container "out" NewFile
 				Brief "New container"			
 
 		Command ContainerArchive "archive"
@@ -631,7 +637,7 @@
 			Include ContainerOptions
 			Parameter Input "in" ExistingFile
 				Brief "Directory containing files to create archive from"
-			Parameter Output "out" NewFile
+			Option Container "out" NewFile
 				Brief "New container"	
 
 		Command ContainerAppend "append"
@@ -639,22 +645,28 @@
 			Include EncodeOptions
 			Include AccountOptions
 			Include Reporting
-			Parameter Input "in" ExistingFile
+			Parameter Container "in" ExistingFile
 				Brief "Container to append to"
-			Parameter Output "file" NewFile
+			Parameter File "file" NewFile
 				Brief "File to append"
+			Option Key "key" String
+
+		Command ContainerDelete "delete"
+			Parameter Container "in" ExistingFile
+				Brief "Container to append to"
+			Option Key "key" String
 
 		Command ContainerIndex "index"
 			Brief "Compile an index for the specified container and append to the end."
 			Include EncodeOptions
 			Include AccountOptions
 			Include Reporting
-			Parameter Input "in" ExistingFile
+			Parameter Container "in" ExistingFile
 				Brief "Container to append to"
 
 		Command ContainerExtract "extract"
 			Brief "Extract the specified record from the container"
-			Parameter Input "in" ExistingFile
+			Parameter Container "in" ExistingFile
 				Brief "Container to read"
 
 			Parameter Output "out" NewFile
@@ -664,6 +676,7 @@
 				Default "-1"
 			Option Filename "file" String
 				Brief "Name of file to extract"
+			Option Key "key" String
 			Include AccountOptions
 			Include Reporting
 
@@ -691,5 +704,5 @@
 			Brief "Verify signatures and digests on container."
 			Include AccountOptions
 			Include Reporting
-			Parameter Input "in" ExistingFile
+			Parameter Container "in" ExistingFile
 				Brief "Container to read"

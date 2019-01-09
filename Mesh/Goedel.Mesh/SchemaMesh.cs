@@ -74,11 +74,11 @@ namespace Goedel.Mesh {
 			{"Location", Location._Factory},
 			{"Reference", Reference._Factory},
 			{"CatalogEntry", CatalogEntry._Factory},
-			{"CatalogEntryCredential", CatalogEntryCredential._Factory},
-			{"CatalogEntryBookmark", CatalogEntryBookmark._Factory},
 			{"CatalogEntryDevice", CatalogEntryDevice._Factory},
+			{"CatalogEntryCredential", CatalogEntryCredential._Factory},
 			{"CatalogEntryContact", CatalogEntryContact._Factory},
 			{"CatalogEntryContactRecryption", CatalogEntryContactRecryption._Factory},
+			{"CatalogEntryBookmark", CatalogEntryBookmark._Factory},
 			{"CatalogEntryTask", CatalogEntryTask._Factory},
 			{"Task", Task._Factory},
 			{"CatalogEntryApplication", CatalogEntryApplication._Factory},
@@ -1482,6 +1482,14 @@ namespace Goedel.Mesh {
         /// <summary>
         /// </summary>
 
+		public virtual string						Identifier  {get; set;}
+        /// <summary>
+        /// </summary>
+
+		public virtual string						Account  {get; set;}
+        /// <summary>
+        /// </summary>
+
 		public virtual string						FullName  {get; set;}
         /// <summary>
         /// </summary>
@@ -1560,6 +1568,16 @@ namespace Goedel.Mesh {
 		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
+				}
+			if (Identifier != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Identifier", 1);
+					_Writer.WriteString (Identifier);
+				}
+			if (Account != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Account", 1);
+					_Writer.WriteString (Account);
 				}
 			if (FullName != null) {
 				_Writer.WriteObjectSeparator (ref _first);
@@ -1686,6 +1704,14 @@ namespace Goedel.Mesh {
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
+				case "Identifier" : {
+					Identifier = JSONReader.ReadString ();
+					break;
+					}
+				case "Account" : {
+					Account = JSONReader.ReadString ();
+					break;
+					}
 				case "FullName" : {
 					FullName = JSONReader.ReadString ();
 					break;
@@ -2450,275 +2476,6 @@ namespace Goedel.Mesh {
 
 	/// <summary>
 	/// </summary>
-	public partial class CatalogEntryCredential : CatalogEntry {
-        /// <summary>
-        /// </summary>
-
-		public virtual string						Protocol  {get; set;}
-        /// <summary>
-        /// </summary>
-
-		public virtual string						Service  {get; set;}
-        /// <summary>
-        /// </summary>
-
-		public virtual string						Username  {get; set;}
-        /// <summary>
-        /// </summary>
-
-		public virtual string						Password  {get; set;}
-		
-		/// <summary>
-        /// Tag identifying this class
-        /// </summary>
-		public override string _Tag => __Tag;
-
-		/// <summary>
-        /// Tag identifying this class
-        /// </summary>
-		public new const string __Tag = "CatalogEntryCredential";
-
-		/// <summary>
-        /// Factory method
-        /// </summary>
-        /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new CatalogEntryCredential();
-
-
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// </summary>
-        /// <param name="Writer">Output stream</param>
-        /// <param name="wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
-			SerializeX (Writer, wrap, ref first);
-
-
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// Unlike the Serlialize() method, this method is not inherited from the
-        /// parent class allowing a specific version of the method to be called.
-        /// </summary>
-        /// <param name="_Writer">Output stream</param>
-        /// <param name="_wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="_first">If true, item is the first entry in a list.</param>
-		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
-			if (_wrap) {
-				_Writer.WriteObjectStart ();
-				}
-			((CatalogEntry)this).SerializeX(_Writer, false, ref _first);
-			if (Protocol != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("Protocol", 1);
-					_Writer.WriteString (Protocol);
-				}
-			if (Service != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("Service", 1);
-					_Writer.WriteString (Service);
-				}
-			if (Username != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("Username", 1);
-					_Writer.WriteString (Username);
-				}
-			if (Password != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("Password", 1);
-					_Writer.WriteString (Password);
-				}
-			if (_wrap) {
-				_Writer.WriteObjectEnd ();
-				}
-			}
-
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="JSONReader">The input stream</param>
-		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
-        /// <returns>The created object.</returns>		
-        public static new CatalogEntryCredential FromJSON (JSONReader JSONReader, bool Tagged=true) {
-			if (JSONReader == null) {
-				return null;
-				}
-			if (Tagged) {
-				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
-				return Out as CatalogEntryCredential;
-				}
-		    var Result = new CatalogEntryCredential ();
-			Result.Deserialize (JSONReader);
-			return Result;
-			}
-
-        /// <summary>
-        /// Having read a tag, process the corresponding value data.
-        /// </summary>
-        /// <param name="JSONReader">The input stream</param>
-        /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
-			
-			switch (Tag) {
-				case "Protocol" : {
-					Protocol = JSONReader.ReadString ();
-					break;
-					}
-				case "Service" : {
-					Service = JSONReader.ReadString ();
-					break;
-					}
-				case "Username" : {
-					Username = JSONReader.ReadString ();
-					break;
-					}
-				case "Password" : {
-					Password = JSONReader.ReadString ();
-					break;
-					}
-				default : {
-					base.DeserializeToken(JSONReader, Tag);
-					break;
-					}
-				}
-			// check up that all the required elements are present
-			}
-
-
-		}
-
-	/// <summary>
-	/// </summary>
-	public partial class CatalogEntryBookmark : CatalogEntry {
-        /// <summary>
-        /// </summary>
-
-		public virtual string						Uri  {get; set;}
-        /// <summary>
-        /// </summary>
-
-		public virtual string						Title  {get; set;}
-        /// <summary>
-        /// </summary>
-
-		public virtual string						Path  {get; set;}
-		
-		/// <summary>
-        /// Tag identifying this class
-        /// </summary>
-		public override string _Tag => __Tag;
-
-		/// <summary>
-        /// Tag identifying this class
-        /// </summary>
-		public new const string __Tag = "CatalogEntryBookmark";
-
-		/// <summary>
-        /// Factory method
-        /// </summary>
-        /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new CatalogEntryBookmark();
-
-
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// </summary>
-        /// <param name="Writer">Output stream</param>
-        /// <param name="wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
-			SerializeX (Writer, wrap, ref first);
-
-
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// Unlike the Serlialize() method, this method is not inherited from the
-        /// parent class allowing a specific version of the method to be called.
-        /// </summary>
-        /// <param name="_Writer">Output stream</param>
-        /// <param name="_wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="_first">If true, item is the first entry in a list.</param>
-		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
-			if (_wrap) {
-				_Writer.WriteObjectStart ();
-				}
-			((CatalogEntry)this).SerializeX(_Writer, false, ref _first);
-			if (Uri != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("Uri", 1);
-					_Writer.WriteString (Uri);
-				}
-			if (Title != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("Title", 1);
-					_Writer.WriteString (Title);
-				}
-			if (Path != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("Path", 1);
-					_Writer.WriteString (Path);
-				}
-			if (_wrap) {
-				_Writer.WriteObjectEnd ();
-				}
-			}
-
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="JSONReader">The input stream</param>
-		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
-        /// <returns>The created object.</returns>		
-        public static new CatalogEntryBookmark FromJSON (JSONReader JSONReader, bool Tagged=true) {
-			if (JSONReader == null) {
-				return null;
-				}
-			if (Tagged) {
-				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
-				return Out as CatalogEntryBookmark;
-				}
-		    var Result = new CatalogEntryBookmark ();
-			Result.Deserialize (JSONReader);
-			return Result;
-			}
-
-        /// <summary>
-        /// Having read a tag, process the corresponding value data.
-        /// </summary>
-        /// <param name="JSONReader">The input stream</param>
-        /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
-			
-			switch (Tag) {
-				case "Uri" : {
-					Uri = JSONReader.ReadString ();
-					break;
-					}
-				case "Title" : {
-					Title = JSONReader.ReadString ();
-					break;
-					}
-				case "Path" : {
-					Path = JSONReader.ReadString ();
-					break;
-					}
-				default : {
-					base.DeserializeToken(JSONReader, Tag);
-					break;
-					}
-				}
-			// check up that all the required elements are present
-			}
-
-
-		}
-
-	/// <summary>
-	/// </summary>
 	public partial class CatalogEntryDevice : CatalogEntry {
         /// <summary>
         ///The device profile
@@ -2846,6 +2603,147 @@ namespace Goedel.Mesh {
 						Permissions.Add (_Item);
 						_Going = JSONReader.NextArray ();
 						}
+					break;
+					}
+				default : {
+					base.DeserializeToken(JSONReader, Tag);
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
+	/// <summary>
+	/// </summary>
+	public partial class CatalogEntryCredential : CatalogEntry {
+        /// <summary>
+        /// </summary>
+
+		public virtual string						Protocol  {get; set;}
+        /// <summary>
+        /// </summary>
+
+		public virtual string						Service  {get; set;}
+        /// <summary>
+        /// </summary>
+
+		public virtual string						Username  {get; set;}
+        /// <summary>
+        /// </summary>
+
+		public virtual string						Password  {get; set;}
+		
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "CatalogEntryCredential";
+
+		/// <summary>
+        /// Factory method
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JSONObject _Factory () => new CatalogEntryCredential();
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="Writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
+			SerializeX (Writer, wrap, ref first);
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_Writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			if (_wrap) {
+				_Writer.WriteObjectStart ();
+				}
+			((CatalogEntry)this).SerializeX(_Writer, false, ref _first);
+			if (Protocol != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Protocol", 1);
+					_Writer.WriteString (Protocol);
+				}
+			if (Service != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Service", 1);
+					_Writer.WriteString (Service);
+				}
+			if (Username != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Username", 1);
+					_Writer.WriteString (Username);
+				}
+			if (Password != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Password", 1);
+					_Writer.WriteString (Password);
+				}
+			if (_wrap) {
+				_Writer.WriteObjectEnd ();
+				}
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <returns>The created object.</returns>		
+        public static new CatalogEntryCredential FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
+			if (Tagged) {
+				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				return Out as CatalogEntryCredential;
+				}
+		    var Result = new CatalogEntryCredential ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			}
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
+		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+			
+			switch (Tag) {
+				case "Protocol" : {
+					Protocol = JSONReader.ReadString ();
+					break;
+					}
+				case "Service" : {
+					Service = JSONReader.ReadString ();
+					break;
+					}
+				case "Username" : {
+					Username = JSONReader.ReadString ();
+					break;
+					}
+				case "Password" : {
+					Password = JSONReader.ReadString ();
 					break;
 					}
 				default : {
@@ -3093,6 +2991,134 @@ namespace Goedel.Mesh {
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
+				default : {
+					base.DeserializeToken(JSONReader, Tag);
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
+	/// <summary>
+	/// </summary>
+	public partial class CatalogEntryBookmark : CatalogEntry {
+        /// <summary>
+        /// </summary>
+
+		public virtual string						Uri  {get; set;}
+        /// <summary>
+        /// </summary>
+
+		public virtual string						Title  {get; set;}
+        /// <summary>
+        /// </summary>
+
+		public virtual string						Path  {get; set;}
+		
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "CatalogEntryBookmark";
+
+		/// <summary>
+        /// Factory method
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JSONObject _Factory () => new CatalogEntryBookmark();
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="Writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
+			SerializeX (Writer, wrap, ref first);
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_Writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			if (_wrap) {
+				_Writer.WriteObjectStart ();
+				}
+			((CatalogEntry)this).SerializeX(_Writer, false, ref _first);
+			if (Uri != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Uri", 1);
+					_Writer.WriteString (Uri);
+				}
+			if (Title != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Title", 1);
+					_Writer.WriteString (Title);
+				}
+			if (Path != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Path", 1);
+					_Writer.WriteString (Path);
+				}
+			if (_wrap) {
+				_Writer.WriteObjectEnd ();
+				}
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <returns>The created object.</returns>		
+        public static new CatalogEntryBookmark FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
+			if (Tagged) {
+				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				return Out as CatalogEntryBookmark;
+				}
+		    var Result = new CatalogEntryBookmark ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			}
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
+		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+			
+			switch (Tag) {
+				case "Uri" : {
+					Uri = JSONReader.ReadString ();
+					break;
+					}
+				case "Title" : {
+					Title = JSONReader.ReadString ();
+					break;
+					}
+				case "Path" : {
+					Path = JSONReader.ReadString ();
+					break;
+					}
 				default : {
 					base.DeserializeToken(JSONReader, Tag);
 					break;

@@ -23,13 +23,11 @@ namespace Goedel.XUnit {
         public static ShellTests Test() => new ShellTests();
         #region // Commitment
         List<TestVectorDigest> CommitmentTests = new List<TestVectorDigest>() {
-                //new TestVectorDigest ("Konrad is compromised", "", "", key:"RAA6B-6R32H-5YAQE-IQJHC-KBA4Q"),
-                //new TestVectorDigest ("This is the secret", "", "", key:"RD42E-SYQGS-IGHAK-UP22P-GZUBY"),
-                //new TestVectorDigest ("Test", "", "", key:"RBQ26-MEZGP-4SVCU-RYOWO-QTURA"),
                 new TestVectorDigest ("Konrad is the traitor", "KCDV6-7AY27-MCZZG-L2ZMG-3QD3R",
                     null, key:"RBQ26-MEZGP-4SVCU-RYOWO-QTURA"),
                 new TestVectorDigest ("", "KB6NU-YIJDZ-UZAAL-4PBK4-4Y7ZV",
                     null, key:"RD5SS-PN2L6-RFTKU-RCLTH-CMP6R") };
+
         [Fact]
         public void TestCommitment() {
             foreach (var test in CommitmentTests) {
@@ -211,9 +209,6 @@ namespace Goedel.XUnit {
                 Key = key;
                 }
             }
-
-
-
 
         }
 
