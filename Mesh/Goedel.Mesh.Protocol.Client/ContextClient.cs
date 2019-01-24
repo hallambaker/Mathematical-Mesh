@@ -149,6 +149,7 @@ namespace Goedel.Mesh.Protocol.Client {
 
             var messageConfirmationRequest = new MessageConfirmationRequest() {
                 Recipient = recipient,
+                Sender = AccountName,
                 Text = text
                 };
 
@@ -161,10 +162,15 @@ namespace Goedel.Mesh.Protocol.Client {
         /// <param name="recipient">The intended recipient.</param>
         /// <param name="accept"></param>
         /// <returns>Transaction status information</returns>
-        public MeshResult ConfirmationResponse(string recipient, bool accept) {
+        public MeshResult ConfirmationResponse(
+            MessageConfirmationRequest messageConfirmationRequest, 
+            bool accept) {
+
+            var recipient = messageConfirmationRequest.Sender;
 
             var messageConfirmationResponse = new MessageConfirmationResponse() {
                 Recipient = recipient,
+                ResponseID = messageConfirmationRequest.MessageID,
                 Accept = accept
                 };
 
@@ -183,7 +189,8 @@ namespace Goedel.Mesh.Protocol.Client {
             var DareMessage = Sign(meshMessage); // need to add in the recipient here
 
             var postRequest = new PostRequest() {
-                Message = new List<DareMessage> { DareMessage }
+                Message = new List<DareMessage> { DareMessage },
+                Accounts = new List<string> { recipient }
                 };
 
             var response = MeshService.Post(postRequest, MeshClientSession);

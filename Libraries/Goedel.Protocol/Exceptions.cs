@@ -489,4 +489,55 @@ namespace Goedel.Protocol {
         }
 
 
+    /// <summary>
+    /// </summary>
+    [Serializable]
+	public class DictionaryInitialization : global::System.Exception {
+
+		/// <summary>
+        /// Construct instance for exception "An attempt was made to deserialize an object without initializing the dictionary"
+        /// </summary>		
+		public DictionaryInitialization () : base ("An attempt was made to deserialize an object without initializing the dictionary") {
+			}
+        
+		/// <summary>
+        /// Construct instance for exception "An attempt was made to deserialize an object without initializing the dictionary"
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		public DictionaryInitialization (string Description) : base (Description) {
+			}
+
+		/// <summary>
+        /// Construct instance for exception 		/// containing an inner exception.
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		/// <param name="Inner">Inner Exception</param>	
+		public DictionaryInitialization (string Description, System.Exception Inner) : 
+				base (Description, Inner) {
+			}
+
+		/// <summary>
+        /// User data associated with the exception.
+        /// </summary>	
+		public object UserData;
+
+
+
+		
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+
+        static System.Exception _Throw(object Reason) {
+			if (Reason as string != null) {
+				return new DictionaryInitialization(Reason as string);
+				}
+			else {
+				return new DictionaryInitialization();
+				}
+            }
+        }
+
+
 	}

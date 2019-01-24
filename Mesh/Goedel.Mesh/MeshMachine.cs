@@ -4,6 +4,7 @@ using System.Text;
 using Goedel.Cryptography;
 using Goedel.Protocol;
 
+
 namespace Goedel.Mesh {
 
     public delegate IMeshMachine GetMachineDelegate();
@@ -25,11 +26,12 @@ namespace Goedel.Mesh {
 
         KeyCollection KeyCollection { get; }
 
-        void OpenCatalog(Catalog catalog, string Name);
+        void OpenCatalog(Catalog catalog, string name);
 
         void Register(Profile profile);
 
         MeshService GetMeshClient(string account);
+
 
         ProfileMesh GetConnection(
                     string accountName = null,

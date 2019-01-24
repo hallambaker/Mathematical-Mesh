@@ -24,7 +24,7 @@ using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
-using Goedel.Protocol;
+using Goedel.Utilities;
 
 namespace Goedel.Protocol {
 
@@ -104,6 +104,14 @@ namespace Goedel.Protocol {
         /// </summary>
         public static JSONWriterFactoryDelegate JSONWriterFactory = JSONWriter.JSONWriterFactory;
 
+
+        public static Dictionary<string, JSONFactoryDelegate> TagDictionary = tagDictionary ??
+            new Dictionary<string, JSONFactoryDelegate>().CacheValue(out tagDictionary);
+        static Dictionary<string, JSONFactoryDelegate> tagDictionary;
+
+        public static void AddDictionary(Dictionary<string, JSONFactoryDelegate> dictionary) =>
+            JSONObject.Append(TagDictionary, dictionary);
+
         /// <summary>
         /// Base constructor.
         /// </summary>
@@ -152,30 +160,30 @@ namespace Goedel.Protocol {
         /// <summary>
         /// Serialize to the specified Writer.
         /// </summary>
-        /// <param name="Writer">Writer to serialize the data to</param>
+        /// <param name="writer">Writer to serialize the data to</param>
         /// <param name="tag">If true, serialization is tagged with the object type.</param>
-        public virtual void Serialize (Writer Writer, bool tag = false) {
+        public virtual void Serialize (Writer writer, bool tag = false) {
             bool first = true;
             if (tag) {
-                Writer.WriteObjectStart();
-                Writer.WriteToken(_Tag, 0);
+                writer.WriteObjectStart();
+                writer.WriteToken(_Tag, 0);
                 }
 
-            Serialize(Writer, true, ref first);
+            Serialize(writer, true, ref first);
 
             if (tag) {
-                Writer.WriteObjectEnd();
+                writer.WriteObjectEnd();
                 }
             }
 
         /// <summary>
         /// Serialize to the specified Writer.
         /// </summary>
-        /// <param name="Writer">Writer to serialize the data to</param>
+        /// <param name="writer">Writer to serialize the data to</param>
         /// <param name="first">This is the first field in the object being serialized. This 
         /// value is set to false on exit.</param>
         /// <param name="wrap">Wrap the objects for formatting.</param>
-		public abstract void Serialize (Writer Writer, bool wrap, ref bool first);
+		public abstract void Serialize (Writer writer, bool wrap, ref bool first);
 
         /// <summary>
         /// Serialize to the specified Writer. This is a dummy routine
@@ -192,24 +200,29 @@ namespace Goedel.Protocol {
         /// <summary>
         /// Factory method to construct object from byte data.
         /// </summary>
-        /// <param name="_Data">Source</param>
+        /// <param name="data">Source</param>
         /// <returns>Constructed object</returns>
-        public static JSONObject From(byte[] _Data) => null;
+        public static JSONObject From(byte[] data) =>
+                FromJSON(data.JSONReader(), true);
 
         /// <summary>
         /// Factory method to construct object from string data.
         /// </summary>
-        /// <param name="Input">Source</param>
+        /// <param name="input">Source</param>
         /// <returns>Constructed object</returns>
-        public static JSONObject From(string Input) => null;
+        public static JSONObject From(string input) =>
+                FromJSON(input.JSONReader(), true);
 
         /// <summary>
-        /// Deserialize a tagged stream
+        /// Deserialize a tagged stream. This method should never be called.
         /// </summary>
-        /// <param name="Input">The input stream</param>
-        /// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <param name="input">The input stream</param>
+        /// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static JSONObject FromJSON(JSONReader Input, bool Tagged) => null;
+        public static JSONObject FromJSON(JSONReader input, bool tagged) {
+            tagged.AssertTrue(Internal.Throw);
+            return input.ReadTaggedObject(TagDictionary);
+            }
 
         /// <summary>
         /// Deserialize the input string to populate this object

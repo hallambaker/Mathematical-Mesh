@@ -118,10 +118,11 @@ namespace Goedel.Cryptography.Dare {
                     CryptoParameters CryptoParameters,
                     Stream OutputStream,
                     string ContentType = null,
+                    string fileName = null,
                     long ContentLength = -1,
                     byte[] Cloaked = null,
                     List<byte[]> DataSequences = null) : this(CryptoParameters,
-                        new JSONWriter(OutputStream), ContentType, ContentLength, Cloaked, DataSequences) {
+                        new JSONWriter(OutputStream), ContentType, fileName, ContentLength, Cloaked, DataSequences) {
             }
         #endregion
 
@@ -142,13 +143,16 @@ namespace Goedel.Cryptography.Dare {
                     CryptoParameters CryptoParameters,
                     JSONWriter OutputStream,
                     string ContentType = null,
+                    string fileName = null,
                     long ContentLength = -1,
                     byte[] Cloaked = null,
                     List<byte[]> DataSequences = null) {
             this.OutputStream = OutputStream;
 
             var CryptoStack = CryptoParameters.GetCryptoStack();
-            var Header = new DareHeader(CryptoStack, ContentType, Cloaked, DataSequences);
+            var Header = new DareHeader(CryptoStack, ContentType, Cloaked, DataSequences) {
+                Filename = fileName
+                };
 
             OutputStream.WriteArrayStart();
             Header.Serialize(OutputStream, false);

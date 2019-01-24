@@ -443,6 +443,15 @@ namespace Goedel.Mesh.Shell {
 			get => _TotalBytes;
 			set {_TotalBytes = value; __TotalBytes = true; }
 			}
+		bool								__Verified = false;
+		private bool						_Verified;
+        /// <summary>
+        /// </summary>
+
+		public virtual bool						Verified {
+			get => _Verified;
+			set {_Verified = value; __Verified = true; }
+			}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -496,6 +505,11 @@ namespace Goedel.Mesh.Shell {
 				_Writer.WriteToken ("TotalBytes", 1);
 					_Writer.WriteInteger32 (TotalBytes);
 				}
+			if (__Verified){
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Verified", 1);
+					_Writer.WriteBoolean (Verified);
+				}
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
 				}
@@ -534,6 +548,10 @@ namespace Goedel.Mesh.Shell {
 					}
 				case "TotalBytes" : {
 					TotalBytes = JSONReader.ReadInteger32 ();
+					break;
+					}
+				case "Verified" : {
+					Verified = JSONReader.ReadBoolean ();
 					break;
 					}
 				default : {

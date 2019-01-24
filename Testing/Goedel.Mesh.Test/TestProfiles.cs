@@ -216,50 +216,5 @@ namespace Goedel.Mesh.Test {
 
 
 
-        public void ConnectRequestDirect() {
-            var machineEnvironment = new TestMachineEnvironment( "ProtocolHello");
-
-            var TestName = Unique.Next();
-            var AccountAlice = NextAccountAlice(TestName);
-
-
-            MeshMachineTest.GetContext(machineEnvironment, AccountAlice, "Alice Admin", out var machineAliceAdmin, out var deviceAdmin, out var masterAdmin);
-            MeshMachineTest.GetContext(machineEnvironment, AccountAlice, "Alice 2", out var MachineAliceSecond, out var Device2);
-
-            //// Create connection request for device 2
-            //var request = Device2.ConnectionRequest(masterAdmin.UDF);
-
-            // Add to inbound spool of device 1.
-
-
-            // Process spool of device one.
-
-
-
-
-            throw new NYI();
-            }
-
-        public void ContactRequestDirect() {
-            var machineEnvironment = new TestMachineEnvironment( "ProtocolHello");
-
-
-            var TestName = Unique.Next();
-            var AccountAlice = NextAccountAlice(TestName);
-            var AccountBob = NextAccountBob(TestName);
-
-            MeshMachineTest.GetContext(machineEnvironment, AccountAlice, "Alice Admin", out var machineAliceAdmin, out var deviceAdmin, out var masterAdmin);
-            MeshMachineTest.GetContext(machineEnvironment, AccountBob, "Bob Admin", out var machineAdminBob, out var deviceAdminBob, out var masterAdminBob);
-
-            masterAdmin.SetContactSelf(MeshMachineTest.ContactAlice);
-            masterAdminBob.SetContactSelf(MeshMachineTest.ContactBob);
-
-            // add to the catalog here
-
-
-            // check contact is in the catalog.
-
-            }
-
         }
     }

@@ -315,7 +315,7 @@ namespace Goedel.Protocol {
 
 
         /// <summary>The last token type read</summary>
-        protected Token  TokenType = Token.Invalid;
+        public Token  TokenType = Token.Invalid;
 
         /// <summary>If true, have reached the end of the current record.</summary>
         public bool EOF => CharacterInput.EOF;
@@ -723,6 +723,9 @@ namespace Goedel.Protocol {
         /// <returns>The deserialized object.</returns>
         public JSONObject ReadTaggedObject (
                     Dictionary<string, JSONFactoryDelegate> TagDictionary) {
+
+            Assert.NotNull(TagDictionary, DictionaryInitialization.Throw);
+
             JSONObject Out = null;
             StartObject();
             if (EOF) {

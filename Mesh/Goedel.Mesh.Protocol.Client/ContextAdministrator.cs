@@ -19,25 +19,24 @@ namespace Goedel.Mesh.Protocol.Client {
     /// </summary>
     public class ContextAdministrator : ContextDevice {
 
-        public virtual ProfileMaster ProfileMaster { get; protected set;  }
+        public virtual ProfileMaster ProfileMaster { get; protected set; }
 
-        public ContextAdministrator(IMeshMachine machine = null, string accountID = null, string profileID = null)   :
-            base (machine,accountID, profileID){
+        public ContextAdministrator(IMeshMachine machine = null, string accountID = null, string profileID = null) :
+            base(machine, accountID, profileID) {
             }
 
         public void Register(string account) => throw new NYI();
 
-        public void ConnectionResponse (string fingerprint, ConnectionState state) => throw new NYI();
+        public void ConnectionResponse(string fingerprint, ConnectionState state) => throw new NYI();
 
 
         public MeshResult CreateAccount(
             string accountName) {
 
-
             var profileMesh = new ProfileMesh() {
                 Account = accountName,
                 MasterProfile = ProfileMaster.ProfileMasterSigned,
-                DeviceProfile =ProfileDevice.ProfileDeviceSigned
+                DeviceProfile = ProfileDevice.ProfileDeviceSigned
                 };
 
 
@@ -50,12 +49,12 @@ namespace Goedel.Mesh.Protocol.Client {
             // We create a new meshClientSession because this won't have the 
             var meshClientSession = new MeshClientSession(this);
 
-            
+
             MeshService = Machine.GetMeshClient(accountName);
 
             var result = MeshService.CreateAccount(createRequest, meshClientSession);
 
-                // if successful write out to host file
+            // if successful write out to host file
 
             AccountName = accountName;
 
@@ -77,7 +76,7 @@ namespace Goedel.Mesh.Protocol.Client {
 
 
 
-        public DareMessage SetContactSelf(Contact contact, string label=null) {
+        public DareMessage SetContactSelf(Contact contact, string label = null) {
             var signedContact = Sign(contact);
             var catalogEntryContact = new CatalogEntryContact(signedContact) {
                 Key = AccountName
@@ -87,7 +86,7 @@ namespace Goedel.Mesh.Protocol.Client {
             }
 
 
-        public MeshResult Add(CatalogEntryContact catalogEntryContact) => 
+        public MeshResult Add(CatalogEntryContact catalogEntryContact) =>
             Add(CatalogCredential, catalogEntryContact);
 
         /// <summary>
@@ -95,7 +94,12 @@ namespace Goedel.Mesh.Protocol.Client {
         /// </summary>
         /// <param name="Profile"></param>
         /// <returns></returns>
-        public DareMessage Add(ProfileDevice profile) => throw new NYI();
+        public void Add(ProfileMesh profile) {
+            var entry = new CatalogEntryDevice() {
+                DeviceProfile = profile.DeviceProfile
+                };
+            Add(CatalogDevice, entry);
+            }
 
         /// <summary>
         /// Sign a device or application profile for entry in a catalog
@@ -104,5 +108,13 @@ namespace Goedel.Mesh.Protocol.Client {
         /// <returns></returns>
         public DareMessage Add(ProfileApplication profile) => throw new NYI();
 
+        public override void ProcessConnectionRequest(
+                    MessageConnectionRequest messageConnectionRequest,
+                    bool accept) {
+            if (accept) {
+                Add(messageConnectionRequest.ProfileMesh);
+                }
+            MarkRead(messageConnectionRequest);
+            }
         }
     }

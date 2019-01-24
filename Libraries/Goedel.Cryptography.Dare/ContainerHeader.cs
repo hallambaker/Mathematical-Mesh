@@ -33,6 +33,7 @@ namespace Goedel.Cryptography.Dare {
             Signers = dareHeader.Signers;
             Recipients = dareHeader.Recipients;
             UniqueID = dareHeader.UniqueID;
+            Event = dareHeader.Event;
             }
 
 

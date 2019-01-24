@@ -36,6 +36,14 @@ namespace Goedel.XUnit {
 
         public Result Dispatch(string command, bool fail = false) =>
             DefaultDevice.Dispatch(command, fail);
+
+
+        public string GetFileUDF(string filename) {
+            var result = Dispatch($"hash udf {filename}");
+            return (result as ResultDigest).Digest;
+            }
+
+
         public bool CheckPasswordResult(string site, string username, string password) =>
             DefaultDevice.CheckPasswordResult(site, username, password);
         public bool CheckContactResult(string key) =>

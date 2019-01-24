@@ -213,7 +213,7 @@ namespace Goedel.Cryptography {
 
             // Create the empty output buffer
             var TotalBits = bits == 0 ? DefaultBits : bits;
-            var FullBytes = 1+TotalBits / 8;
+            var FullBytes = (TotalBits+7) / 8;
 
             byte[] Output = new byte[FullBytes+1];
             Output[0] = (byte) ((compress > 0) ? versionID + compress - MinCompress : versionID);

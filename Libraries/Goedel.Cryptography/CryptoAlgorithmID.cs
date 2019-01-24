@@ -56,6 +56,8 @@ namespace Goedel.Cryptography {
         /// <summary>Mask for Bulk Algorithms</summary>
         BulkMask = 0xFFFF,
 
+        /// <summary>Mask for Algorithm Type</summary>
+        BulkTagMask =0xFF00,
 
         /// <summary>Flag multiplier</summary>
         Digest = Bulk * 0x100,
@@ -85,6 +87,9 @@ namespace Goedel.Cryptography {
 
         /// <summary>Mask for key management operations</summary>
         MetaMask = 0x7fff0000,
+
+        /// <summary>Mask for Algorithm Type</summary>
+        MetaTagMask = 0x7f000000,
 
         /// <summary>Index for signature operations</summary>
         Signature = Meta * 0x100,
@@ -364,7 +369,7 @@ namespace Goedel.Cryptography {
 
 
     ///<summary>Enumeration specifying permitted key uses</summary>
-    ///[Flags]
+    [Flags]
     public enum KeyUses {
         ///<summary>Signature Use</summary>
         Sign = 0b0001,
@@ -380,25 +385,26 @@ namespace Goedel.Cryptography {
     /// <summary>
     /// Algorithm classes.
     /// </summary>
+    [Flags]/// 
     public enum CryptoAlgorithmClass {
 
         /// <summary>Unspecified.</summary>
         NULL,
 
         /// <summary>Digest algorithm.</summary>
-        Digest,
+        Digest = 1,
 
         /// <summary>Message Authentication Code</summary>
-        MAC,
+        MAC = 2,
 
         /// <summary>Symmetric Encryption.</summary>
-        Encryption,
+        Encryption = 4,
 
         /// <summary>Digital Signature</summary>
-        Signature,
+        Signature = 8,
 
         /// <summary>Asymmetric Encryption.</summary>
-        Exchange
+        Exchange = 16
         }
 
  

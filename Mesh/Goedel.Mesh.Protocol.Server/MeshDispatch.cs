@@ -215,7 +215,19 @@ namespace Goedel.Mesh.Protocol.Server {
         /// <param name="Request">The request object to send to the host.</param>
 		/// <returns>The response object from the service</returns>
         public override PostResponse Post(
-                PostRequest Request, JpcSession jpcSession) => null;
+                PostRequest Request, JpcSession jpcSession) {
+            try {
+                Assert.True(Request.Accounts.Count == 1 & Request.Message.Count == 1,
+                    NYI.Throw);
+                Mesh.MessagePost(jpcSession, Request.Accounts[0], Request.Message[0]);
+                return new PostResponse();
+                }
+            catch (System.Exception exception) {
+                return new PostResponse(exception);
+
+                }
+
+            }
 
         /// <summary>
 		/// Base method for implementing the transaction  Connect.

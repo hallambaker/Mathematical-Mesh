@@ -3,13 +3,14 @@ using Goedel.Utilities;
 
 
 
-namespace Goedel.Mesh.Portal.Client {
+namespace Goedel.Mesh.Protocol.Client {
 
 
     /// <summary>
     /// An internal assertion check failed.
     /// </summary>
-    public class Internal : global::System.Exception {
+    [Serializable]
+	public class Internal : global::System.Exception {
 
 		/// <summary>
         /// Construct instance for exception "An internal error occurred"
@@ -58,9 +59,62 @@ namespace Goedel.Mesh.Portal.Client {
 
 
     /// <summary>
+    /// The action requested can only be performed by an administrator account
+    /// </summary>
+    [Serializable]
+	public class NotAdministrator : global::System.Exception {
+
+		/// <summary>
+        /// Construct instance for exception "An error occurred"
+        /// </summary>		
+		public NotAdministrator () : base ("An error occurred") {
+			}
+        
+		/// <summary>
+        /// Construct instance for exception "An error occurred"
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		public NotAdministrator (string Description) : base (Description) {
+			}
+
+		/// <summary>
+        /// Construct instance for exception 		/// containing an inner exception.
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		/// <param name="Inner">Inner Exception</param>	
+		public NotAdministrator (string Description, System.Exception Inner) : 
+				base (Description, Inner) {
+			}
+
+		/// <summary>
+        /// User data associated with the exception.
+        /// </summary>	
+		public object UserData;
+
+
+
+		
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+
+        static System.Exception _Throw(object Reason) {
+			if (Reason as string != null) {
+				return new NotAdministrator(Reason as string);
+				}
+			else {
+				return new NotAdministrator();
+				}
+            }
+        }
+
+
+    /// <summary>
     /// Error occurred in Gateway
     /// </summary>
-    public class Gateway : global::System.Exception {
+    [Serializable]
+	public class Gateway : global::System.Exception {
 
 		/// <summary>
         /// Construct instance for exception "Error occurred in Gateway"
@@ -111,7 +165,8 @@ namespace Goedel.Mesh.Portal.Client {
     /// <summary>
     /// No Portal account specified
     /// </summary>
-    public class NoPortalAccount : Gateway {
+    [Serializable]
+	public class NoPortalAccount : Gateway {
 
 		/// <summary>
         /// Construct instance for exception "No Portal account specified"
@@ -158,7 +213,8 @@ namespace Goedel.Mesh.Portal.Client {
     /// <summary>
     /// Could not connect to portal
     /// </summary>
-    public class PortalConnectFail : Gateway {
+    [Serializable]
+	public class PortalConnectFail : Gateway {
 
 		/// <summary>
         /// Construct instance for exception "Could not connect to portal"
@@ -205,7 +261,8 @@ namespace Goedel.Mesh.Portal.Client {
     /// <summary>
     /// Portal refused profile publication request
     /// </summary>
-    public class PublicationRequestRefused : Gateway {
+    [Serializable]
+	public class PublicationRequestRefused : Gateway {
 
 		/// <summary>
         /// Construct instance for exception "Portal refused profile publication request"

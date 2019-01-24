@@ -36,16 +36,6 @@ namespace Goedel.Mesh.Shell {
         /// </summary>
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult GroupUser(GroupUser Options) {
-            var context = GetContextDevice(Options);
-            throw new NYI();
-            }
-
-        /// <summary>
-        /// Dispatch method
-        /// </summary>
-        /// <param name="Options">The command line options.</param>
-        /// <returns>Mesh result instance</returns>
         public override ShellResult GroupDelete(GroupDelete Options) {
             var context = GetContextDevice(Options);
             throw new NYI();

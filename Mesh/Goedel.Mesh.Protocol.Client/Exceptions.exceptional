@@ -6,6 +6,10 @@ Namespace Goedel.Mesh.Protocol.Client
 		Description
 			|An internal assertion check failed.
 
+	Exception NotAdministrator
+		Description
+			|The action requested can only be performed by an administrator account
+
 	Exception Gateway
         Console "Error occurred in Gateway"
 		Description

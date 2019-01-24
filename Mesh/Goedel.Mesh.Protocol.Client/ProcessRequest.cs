@@ -12,37 +12,37 @@ namespace Goedel.Mesh.Protocol.Client {
     public partial class ContextDevice {
 
 
-        public void Process(DareMessage dareMessage) {
-            // check signature(s)
+        //public void Process(DareMessage dareMessage) {
+        //    // check signature(s)
 
-            // unpack
-            var meshMessage = MeshMessage.FromJSON(dareMessage.GetBodyReader());
+        //    // unpack
+        //    var meshMessage = MeshMessage.FromJSON(dareMessage.GetBodyReader());
 
-            // dispatch
+        //    // dispatch
 
-            switch (meshMessage) {
-                case MessageConnectionRequest request:
-                    Process(request);
-                    break;
-                case MessageContactRequest request:
-                    Process(request);
-                    break;
-                }
-            }
+        //    switch (meshMessage) {
+        //        case MessageConnectionRequest request:
+        //            Process(request);
+        //            break;
+        //        case MessageContactRequest request:
+        //            Process(request);
+        //            break;
+        //        }
+        //    }
 
 
 
-        public void Process(MessageConnectionRequest request) {
-            var device = request.ProfileMesh;
-            var entry = new CatalogEntryDevice() { DeviceProfile = ProfileMesh.DeviceProfile };
-            CatalogDevice.Add(entry);
-            }
+        //public void Process(MessageConnectionRequest request) {
+        //    var device = request.ProfileMesh;
+        //    var entry = new CatalogEntryDevice() { DeviceProfile = ProfileMesh.DeviceProfile };
+        //    CatalogDevice.Add(entry);
+        //    }
 
-        public void Process(MessageContactRequest request) {
-            //var contact = request.Contact;
-            //var entry = new CatalogEntryContact(contact);
-            //CatalogDevice.Add(entry);
-            }
+        //public void Process(MessageContactRequest request) {
+        //    //var contact = request.Contact;
+        //    //var entry = new CatalogEntryContact(contact);
+        //    //CatalogDevice.Add(entry);
+        //    }
 
 
 

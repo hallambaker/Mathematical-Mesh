@@ -58,6 +58,14 @@ namespace Goedel.Mesh {
             }
         public static Store Factory(string directory, string containerName = null) =>
         new CatalogContact(directory, containerName);
+
+
+        public void Add(DareMessage contact) {
+            var entry = new CatalogEntryContact(contact);
+            Add(entry);
+
+            }
+
         }
 
     // NYI should all be DareMessages to allow them to be signed.

@@ -824,8 +824,11 @@ namespace Goedel.Cryptography.Dare {
 
             var headerBytes = AppendContainerHeader.GetBytes(false);
             var trailerBytes = dareMessage.Trailer?.GetBytes(false);
-            JBCDStream.WriteWrappedFrame(headerBytes, dareMessage.Body,
-                trailerBytes);
+
+            AppendFrame(headerBytes, dareMessage.Body, trailerBytes);
+
+            //JBCDStream.WriteWrappedFrame(headerBytes, dareMessage.Body,
+            //    trailerBytes);
 
 
             }

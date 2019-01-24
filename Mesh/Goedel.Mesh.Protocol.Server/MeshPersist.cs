@@ -45,6 +45,12 @@ namespace Goedel.Mesh.Protocol.Server {
 
         public string DirectoryRoot;
 
+
+        static MeshPersist() {
+            ContainerPersistenceStore.AddDictionary(CatalogItem._TagDictionary);
+            ContainerPersistenceStore.AddDictionary(MeshItem._TagDictionary);
+            }
+
         /// <summary>
         /// Open or create the accounts persistence container.
         /// </summary>
@@ -132,11 +138,12 @@ namespace Goedel.Mesh.Protocol.Server {
 
             using (accountEntry = GetAccountVerified(account, jpcSession)) {
                 var result = new List<ContainerStatus> {
-                    Catalog.Status(accountEntry.Directory, CatalogCredential.Label),
-                    Catalog.Status(accountEntry.Directory, CatalogDevice.Label),
-                    Catalog.Status(accountEntry.Directory, CatalogContact.Label),
-                    Catalog.Status(accountEntry.Directory, CatalogApplication.Label),
-                    Spool.Status(accountEntry.Directory, Spool.SpoolInbound)
+                    accountEntry.GetStatusSpool (Spool.SpoolInbound),
+                    accountEntry.GetStatusCatalog (CatalogCredential.Label),
+                    accountEntry.GetStatusCatalog (CatalogDevice.Label),
+                    accountEntry.GetStatusCatalog (CatalogContact.Label),
+                    accountEntry.GetStatusCatalog (CatalogApplication.Label),
+                    accountEntry.GetStatusCatalog (CatalogCredential.Label)
                     };
 
                 return result;
@@ -157,7 +164,7 @@ namespace Goedel.Mesh.Protocol.Server {
                 accountEntry = GetAccountVerified(account, jpcSession);
                 var updates = new List<ContainerUpdate>();
                 foreach (var selection in selections) {
-                    using (var store = new Store(accountEntry.Directory, selection.Container)) {
+                    using (var store = accountEntry.GetStore(selection.Container)) {
                         var update = new ContainerUpdate() {
                             Container = selection.Container,
                             Message = new List<DareMessage>()
@@ -186,53 +193,43 @@ namespace Goedel.Mesh.Protocol.Server {
         /// be appropriately authenticated.
         /// </summary>
         public void AccountUpdate(JpcSession jpcSession, VerifiedAccount account, List<ContainerUpdate> Updates) {
-            AccountHandleVerified accountEntry = null;
+            //AccountHandleVerified accountEntry = null;
 
 
-            try {
-                accountEntry = GetAccountVerified(account, jpcSession);
-                //Assert.NotNull(accountEntry);
-                //using (var catalog = new Catalog(accountEntry.Directory, container)) {
-                //    foreach (var message in Messages) {
-                //        catalog.Apply(message);
-                //        }
-
-
-                //    }
-
+            using (var accountEntry = GetAccountVerified(account, jpcSession)) {
+                Assert.NotNull(accountEntry);
+                foreach (var update in Updates) {
+                    using (var catalog = accountEntry.GetCatalog(update.Container)) {
+                        foreach (var message in update.Message) {
+                            catalog.Apply(message);
+                            }
+                        }
+                    }
                 }
-
-            finally {
-                accountEntry?.Dispose();
-                }
-
-
             }
-
-
-
-
-
-
 
         /// <summary>
         /// Update an account record. There must be an existing record and the request must
         /// be appropriately authenticated.
         /// </summary>
         public bool AccountDelete(JpcSession jpcSession, VerifiedAccount account) {
-            AccountHandleVerified accountEntry = null;
-
-            try {
-                accountEntry = GetAccountVerified(account, jpcSession);
-                throw new NYI();
-                }
-
-            finally {
-                System.Threading.Monitor.Exit(accountEntry);
+            lock (Container) {
+                return Container.Delete(account.Account);
                 }
 
 
             }
+
+
+        public void MessagePost(JpcSession jpcSession, string account, DareMessage dareMessage) {
+
+            using (var accountUnverified = GetAccountUnverified(account)) {
+                Assert.NotNull(accountUnverified);
+                accountUnverified.Post(dareMessage);
+                }
+
+            }
+
 
         /// <summary>
         /// Get access to an account record for an authenticated request.
@@ -257,7 +254,13 @@ namespace Goedel.Mesh.Protocol.Server {
 
             using (var catalogDevice = new CatalogDevice(accountEntry.Directory)) {
 
+                foreach (var entry in catalogDevice.AsCatalogEntryDevice) {
 
+                    if (entry.ProfileDevice.DeviceAuthenticationKey.UDF == jpcSession.UDF) {
+                        return new AccountHandleVerified(accountEntry);
+                        }
+
+                    }
 
 
                 }
@@ -270,6 +273,9 @@ namespace Goedel.Mesh.Protocol.Server {
 
 
             }
+
+
+
 
 
         /// <summary>
@@ -334,56 +340,6 @@ namespace Goedel.Mesh.Protocol.Server {
 
         }
 
-    public class AccountHandle : Disposable {
-        public AccountEntry AccountEntry { get; }
 
-
-        protected override void Disposing() {
-            base.Disposing();
-            System.Threading.Monitor.Exit(AccountEntry);
-            }
-
-        public AccountHandle(AccountEntry accountEntry) => AccountEntry = accountEntry;
-
-        }
-
-    /// <summary>
-    /// Unverified account accessor, only has access to spools
-    /// </summary>
-    public class AccountHandleUnverified : AccountHandle {
-
-
-        public AccountHandleUnverified(AccountEntry accountEntry) : base(accountEntry) {
-
-            }
-
-        public void Post(DareMessage dareMessage) {
-
-            // here we should perform an authorization operation against the store.
-
-            using (var container = new Spool(AccountEntry.Directory, Spool.SpoolInbound)) {
-
-                container.Add(dareMessage);
-                }
-
-            }
-
-
-        }
-
-    /// <summary>
-    /// Verified account accessor, has access to spools and to catalogues
-    /// </summary>
-    public class AccountHandleVerified : AccountHandle {
-
-        public string Directory => AccountEntry.Directory;
-
-
-        public AccountHandleVerified(AccountEntry accountEntry) : base(accountEntry) {
-
-            }
-        void PostToCatalog(DareMessage dareMessage) => throw new NYI();
-
-        }
 
     }

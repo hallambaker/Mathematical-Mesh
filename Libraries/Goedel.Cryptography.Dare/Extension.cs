@@ -10,6 +10,34 @@ namespace Goedel.Cryptography.Dare {
     public static partial class Extension {
 
         /// <summary>
+        /// Return the algorithm class of an algorithm identifier.
+        /// </summary>
+        /// <param name="cryptoAlgorithmID">The algorithm identifier to categorize.</param>
+        /// <returns>The class of algorithm specified by <paramref name="cryptoAlgorithmID"/></returns>
+        public static CryptoAlgorithmClass Class(
+                    this CryptoAlgorithmID cryptoAlgorithmID) {
+            var btm = cryptoAlgorithmID & CryptoAlgorithmID.BulkTagMask;
+            switch (cryptoAlgorithmID & CryptoAlgorithmID.BulkTagMask ) {
+                case CryptoAlgorithmID.Digest: return CryptoAlgorithmClass.Digest;
+
+                case CryptoAlgorithmID.Encryption: return CryptoAlgorithmClass.Encryption;
+
+                case CryptoAlgorithmID.MAC: return CryptoAlgorithmClass.MAC;
+                }
+
+            switch (cryptoAlgorithmID & CryptoAlgorithmID.MetaTagMask) {
+                case CryptoAlgorithmID.Signature: return CryptoAlgorithmClass.Signature;
+
+                case CryptoAlgorithmID.Exchange: return CryptoAlgorithmClass.Exchange;
+
+                }
+
+            return CryptoAlgorithmClass.NULL;
+
+            }
+
+
+        /// <summary>
         /// Convert list of index terms to key value pairs.
         /// </summary>
         /// <param name="Input">List of index terms to convert</param>

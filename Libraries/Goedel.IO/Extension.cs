@@ -29,7 +29,7 @@ namespace Goedel.IO {
     /// is a combinatorial explosion of file access modes and sharing
     /// permissions, only a few of these combinations make sense.
     /// </summary>
-    public  static partial class Extension {
+    public static partial class Extension {
 
         /// <summary>
         /// Delegate method for processing a block of data. The data block is limited in 
@@ -60,7 +60,7 @@ namespace Goedel.IO {
                     int bufferSize = 4096) {
 
             var buffer = new byte[bufferSize];
-            var length = input.Read(buffer, 0 , bufferSize);
+            var length = input.Read(buffer, 0, bufferSize);
             while (length > 0) {
                 process(buffer, 0, length);
                 length = input.Read(buffer, 0, bufferSize);
@@ -103,7 +103,7 @@ namespace Goedel.IO {
         /// </summary>
         /// <param name="fileStatus">Status to translate</param>
         /// <returns>The result</returns>
-        public static FileMode FileMode (this FileStatus fileStatus) {
+        public static FileMode FileMode(this FileStatus fileStatus) {
             switch (fileStatus) {
                 case FileStatus.Append: {
                     return System.IO.FileMode.Append;
@@ -127,7 +127,7 @@ namespace Goedel.IO {
         /// <param name="fileName">The file name</param>
         /// <param name="fileStatus">The file status</param>
         /// <returns>The result</returns>
-        public static FileStream FileStream (this string fileName, FileStatus fileStatus) {
+        public static FileStream FileStream(this string fileName, FileStatus fileStatus) {
 
             var fileMode = fileStatus.FileMode();
             var fileAccess = fileStatus.FileAccess();
@@ -180,7 +180,7 @@ namespace Goedel.IO {
         /// </summary>
         /// <param name="filename">The file to read.</param>
         /// <returns>The text reader.</returns>
-        public static TextReader OpenTextReader (this string filename) {
+        public static TextReader OpenTextReader(this string filename) {
             var FileStream = filename.OpenFileRead();
             return new StreamReader(FileStream);
             }
@@ -192,7 +192,7 @@ namespace Goedel.IO {
         /// </summary>
         /// <param name="filename">The file to read.</param>
         /// <returns>The text reader.</returns>
-        public static string OpenReadToEnd (this string filename) {
+        public static string OpenReadToEnd(this string filename) {
             var fileStream = filename.OpenFileRead();
             return new StreamReader(fileStream).ReadToEnd();
             }
@@ -205,7 +205,7 @@ namespace Goedel.IO {
         /// <param name="filename">The file to read.</param>
         /// <param name="data">The data that was read</param>
         /// <returns>The text reader.</returns>
-        public static void OpenReadToEnd (this string filename, out byte[] data) {
+        public static void OpenReadToEnd(this string filename, out byte[] data) {
             var fileStream = filename.OpenFileRead();
             data = new byte[fileStream.Length];
             fileStream.Read(data, 0, (int)fileStream.Length); // NYI support, test 64 bit file lengths
@@ -217,7 +217,7 @@ namespace Goedel.IO {
         /// </summary>
         /// <param name="filename">The new file name.</param>
         /// <returns>File stream to write to the file.</returns>
-        public static FileStream OpenFileNew(this string filename) => 
+        public static FileStream OpenFileNew(this string filename) =>
             new FileStream(filename, System.IO.FileMode.Create, System.IO.FileAccess.Write);
 
         /// <summary>
@@ -225,9 +225,17 @@ namespace Goedel.IO {
         /// </summary>
         /// <param name="filename">The file to write to.</param>
         /// <returns>File stream to write to the file.</returns>
-        public static FileStream OpenFileWrite(this string filename) => 
+        public static FileStream OpenFileWrite(this string filename) =>
             new FileStream(filename, System.IO.FileMode.OpenOrCreate, System.IO.FileAccess.Write);
 
+        /// <summary>
+        /// Open an existing file for exclusive write access, or create new file.
+        /// </summary>
+        /// <param name="filename">The file to write to.</param>
+        /// <returns>File stream to write to the file.</returns>
+        public static FileStream OpenFileReadWrite(this string filename) =>
+            new FileStream(filename, System.IO.FileMode.OpenOrCreate,
+                System.IO.FileAccess.ReadWrite);
 
         /// <summary>
         /// Open an existing file for exclusive write access, or create new file.

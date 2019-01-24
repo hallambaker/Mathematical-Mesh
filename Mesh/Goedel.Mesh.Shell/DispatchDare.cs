@@ -20,9 +20,13 @@ namespace Goedel.Mesh.Shell {
             var inputFile = Options.Input.Value;
             var outputFile = Path.ChangeExtension(inputFile, ".dare");
             var contentType = Options.ContentType.Value ?? MimeMapping.GetMimeMapping(inputFile) ?? "";
-            var cryptoParameters = new CryptoParameters();
 
-            var Length = DareMessage.Encode(cryptoParameters, inputFile, outputFile, contentType);
+
+            var keyCollection = KeyCollection(Options);
+            var cryptoParameters = GetCryptoParameters(keyCollection, Options);
+
+            var Length = DareMessage.Encode(cryptoParameters, inputFile, outputFile, 
+                fileName: inputFile, contentType: contentType);
 
             return new ResultFile() {
                 Filename = outputFile,
@@ -41,6 +45,7 @@ namespace Goedel.Mesh.Shell {
             var Length = DareMessage.Decode(inputFile);
 
             return new ResultFile() {
+                TotalBytes = (int)Length
                 };
             }
 
@@ -51,10 +56,11 @@ namespace Goedel.Mesh.Shell {
         /// <returns>Mesh result instance</returns>
         public override ShellResult FileVerify(FileVerify Options) {
             var inputFile = Options.Input.Value;
-            DareMessage.Verify(inputFile);
+            var result = DareMessage.Verify(inputFile);
 
             return new ResultFile() {
-                Filename = inputFile
+                Filename = inputFile,
+                Verified = result
                 };
             }
         }

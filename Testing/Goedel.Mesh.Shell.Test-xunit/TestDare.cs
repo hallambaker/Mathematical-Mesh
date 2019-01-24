@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.IO;
 using System.Collections.Generic;
 using Xunit;
 using Goedel.Mesh.Shell;
@@ -7,7 +7,7 @@ using Goedel.Mesh.Test;
 using Goedel.Test.Core;
 using Goedel.Test;
 using Goedel.Utilities;
-
+using Goedel.Mesh.Test;
 
 namespace Goedel.XUnit {
     public partial class ShellTests {
@@ -19,7 +19,7 @@ namespace Goedel.XUnit {
         [Fact]
         public void TestFileEncrypt() {
             var account = "alice@example.com";
-            Dispatch($"profile master /new {account}");
+            Dispatch($"profile master {account} /new");
 
             TestFile("Hello world", encrypt: account);
             }
@@ -27,26 +27,44 @@ namespace Goedel.XUnit {
         [Fact]
         public void TestFileSign() {
             var account = "alice@example.com";
+            Dispatch($"profile master {account}");
+
             TestFile("Hello world", sign: account);
             }
 
         [Fact]
         public void TestFileSignEncrypt() {
             var account = "alice@example.com";
+            Dispatch($"profile master {account}");
+
             TestFile("Hello world", encrypt: account, sign: account);
             }
 
         public bool TestFile(string content, string contentType=null, 
-            string encrypt=null, string sign = null) {
+            string encrypt=null, string sign = null, bool corrupt = false) {
 
             var filename = content.ToFileUnique();
             var contentClause = contentType == null ? "" : $" /cty {contentType}";
             var encryptClause = encrypt == null ? "" : $" /encrypt {encrypt}";
-            var signClause = sign == null ? "" : $" /cty {sign}";
+            var signClause = sign == null ? "" : $" /sign {sign}";
+
+            var file1UDF = GetFileUDF(filename);
 
             var result1 = Dispatch($"dare encode {filename}{contentClause}{encryptClause}{signClause}") as ResultFile;
+
+
+            File.Delete(filename);
+
             Dispatch($"dare decode {result1.Filename}");
-            Dispatch($"dare verify {result1.Filename}");
+            var file2UDF = GetFileUDF(filename);
+            file1UDF.AssertEqual(file2UDF);
+
+            if (corrupt) {
+                result1.Filename.CorruptDareMessage();
+                }
+
+            var resultVerify = Dispatch($"dare verify {result1.Filename}") as ResultFile;
+            corrupt.AssertEqual(!resultVerify.Verified);
 
             return true;
             }

@@ -84,7 +84,9 @@ namespace Goedel.Cryptography.Dare {
                 Assert.True(Index == Header.Index);
                 TreePosition = Header.TreePosition;
                 }
-            RegisterFrame(Header, Position);
+            if (Header.Index != 1) {
+                RegisterFrame(Header, Position);
+                }
             }
 
         bool IsApex (long Index) {

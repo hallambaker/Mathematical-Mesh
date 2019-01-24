@@ -65,7 +65,7 @@ namespace Goedel.Test.Core {
         /// Separate persistence stores will be created.
         /// </summary>
         /// <param name="Name"></param>
-        public MeshMachineTest(TestMachineEnvironment machineEnvironment, string name = null) :
+        public MeshMachineTest(TestMachineEnvironment machineEnvironment, string name = "Test") :
             base(Path.Combine(machineEnvironment.Path,name)) => MachineEnvironment = machineEnvironment;
 
 

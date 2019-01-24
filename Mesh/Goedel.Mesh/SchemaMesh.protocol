@@ -70,20 +70,6 @@
 			Description
 				|The escrowed master escrow keys.
 
-	Structure DeviceKeySet
-		Description 
-			|The set of private keys associated with a device.
-		Struct Key DeviceSignatureKey
-			Description
-				|Private portion of the DeviceSignatureKey
-		Struct Key DeviceAuthenticationKey
-			Description
-				|Private portion of the DeviceAuthenticationKey
-		Struct Key DeviceEncryptiontionKey
-			Description
-				|Private portion of the DeviceEncryptiontionKey
-
-
 
 	Section 2 "Profile Classes"
 
@@ -318,6 +304,7 @@
 
 	Structure MeshMessage
 		String MessageID
+		String Sender
 		String Recipient
 		Struct Reference References
 	
@@ -343,6 +330,7 @@
 
 	Structure MessageConfirmationResponse
 		Inherits MeshMessage
+		String ResponseID
 		Boolean Accept
 
 	Structure MessageTaskRequest

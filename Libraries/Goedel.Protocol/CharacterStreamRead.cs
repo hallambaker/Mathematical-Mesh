@@ -260,7 +260,7 @@ namespace Goedel.Protocol {
             while (!Stream.EOF) {
                 var c = Stream.ReadChar();
 
-                Console.Write ( $".{c}");
+                //Console.Write ( $".{c}");
 
 
                 if (c < 127) {

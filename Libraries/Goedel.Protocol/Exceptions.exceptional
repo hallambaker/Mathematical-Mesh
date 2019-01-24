@@ -50,3 +50,6 @@ Namespace Goedel.Protocol
 		Console "Stream reader error, position not correctly marked."
 		Description
 			|Stream reader error, position not correctly marked.
+
+	Exception DictionaryInitialization
+		Console "An attempt was made to deserialize an object without initializing the dictionary"

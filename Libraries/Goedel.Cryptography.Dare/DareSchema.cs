@@ -486,6 +486,11 @@ namespace Goedel.Cryptography.Dare {
 
 		public virtual string						UniqueID  {get; set;}
         /// <summary>
+        ///The original filename under which the data was stored.
+        /// </summary>
+
+		public virtual string						Filename  {get; set;}
+        /// <summary>
         ///Operation on the header
         /// </summary>
 
@@ -629,6 +634,11 @@ namespace Goedel.Cryptography.Dare {
 				_Writer.WriteToken ("UniqueID", 1);
 					_Writer.WriteString (UniqueID);
 				}
+			if (Filename != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Filename", 1);
+					_Writer.WriteString (Filename);
+				}
 			if (Event != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("Event", 1);
@@ -764,6 +774,10 @@ namespace Goedel.Cryptography.Dare {
 					}
 				case "UniqueID" : {
 					UniqueID = JSONReader.ReadString ();
+					break;
+					}
+				case "Filename" : {
+					Filename = JSONReader.ReadString ();
 					break;
 					}
 				case "Event" : {

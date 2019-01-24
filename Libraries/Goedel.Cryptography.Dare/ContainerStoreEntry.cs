@@ -55,6 +55,8 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         public byte[] Data { get; }
 
+
+
         /// <summary>
         /// A deserialization reader for the data according to the encoding specified by 
         /// the container header.
@@ -62,7 +64,8 @@ namespace Goedel.Cryptography.Dare {
         public JSONReader JSONReader => Data.JSONReader();
 
         ///<summary>The JSONObject.</summary>
-        public JSONObject JsonObject => jsonObject ?? JSONObject.FromJSON(JSONReader, true).CacheValue(out jsonObject);
+        public JSONObject JsonObject => jsonObject ?? 
+            JSONReader.ReadTaggedObject(ContainerPersistenceStore.TagDictionary).CacheValue(out jsonObject);
         JSONObject jsonObject;
 
         /// <summary>

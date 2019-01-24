@@ -126,7 +126,8 @@ namespace Goedel.Mesh.Protocol.Client {
                 IMeshMachine machine = null,
                 CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
                 CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default,
-                CryptoAlgorithmID algorithmAuthenticate = CryptoAlgorithmID.Default) {
+                CryptoAlgorithmID algorithmAuthenticate = CryptoAlgorithmID.Default,
+                string description = null) {
 
             machine = machine ?? MeshMachine.GetMachine();
             var KeyCollection = machine.KeyCollection;
@@ -142,6 +143,7 @@ namespace Goedel.Mesh.Protocol.Client {
 
             // Generate the profile
             var Profile = Mesh.ProfileDevice.Generate(keySign, keyEncrypt, keyAuthenticate);
+            Profile.Description = description;
 
             // Register the profile locally
             machine.Register(Profile);
@@ -177,6 +179,15 @@ namespace Goedel.Mesh.Protocol.Client {
 
 
             }
+
+
+        public static ContextDevice GetContextDevice(
+                    IMeshMachine machine,
+                    string deviceUDF,
+                    string deviceID) {
+            throw new NYI();
+            }
+
 
         public ProfileMaster Recover(DareMessage escrow, IEnumerable<string> shares) {
             var secret = new Secret(shares);
@@ -263,7 +274,43 @@ namespace Goedel.Mesh.Protocol.Client {
                     DareMessage.Encode(data.GetBytes(tag: true),
                         signingKey: keySign, contentType: "application/mmm");
 
+        public virtual void ProcessConnectionRequest(
+                    MessageConnectionRequest messageConnectionRequest,
+                    bool accept) {
 
+            throw new NotAdministrator();
+            }
+
+        public void ProcessContactRequest(
+                    MessageContactRequest messageContactRequest,
+                    bool Accept) {
+            if (!Accept) {
+                // here decide if we are going to send a rejection notice
+
+                // if sending notification, do so.
+                throw new NYI();
+                }
+
+            var contact = messageContactRequest.Contact;
+
+            CatalogContact.Add(contact);
+            }
+
+        public void ProcessConfirmationRequest(
+                    MessageConfirmationRequest messageConfirmationRequest,
+                    bool accept) {
+            var result = ConfirmationResponse(
+                messageConfirmationRequest, accept);
+
+            // here mark the message as having had a response.
+            MarkRead(messageConfirmationRequest);
+            }
+
+
+
+        public void MarkRead(MeshMessage meshMessage) {
+            // do nothing for now.
+            }
         }
 
     }

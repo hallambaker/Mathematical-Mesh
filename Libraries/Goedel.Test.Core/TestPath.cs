@@ -58,8 +58,9 @@ namespace Goedel.Test.Core {
     public class TestMachineEnvironment {
 
         public string ServiceName = "example.com";
-        public MeshPortalDirect MeshPortalDirect;
-
+        public MeshPortalDirect MeshPortalDirect => meshPortalDirect ??
+            new MeshPortalDirect(ServiceName, ServiceDirectory).CacheValue(out meshPortalDirect);
+        MeshPortalDirect meshPortalDirect = null;
 
         TestEnvironment TestEnvironment;
         public string Name;
@@ -76,7 +77,7 @@ namespace Goedel.Test.Core {
 
         public TestMachineEnvironment(TestEnvironment testEnvironment,
             MeshPortalDirect meshPortalDirect=null, string name = "Test") {
-            MeshPortalDirect = meshPortalDirect ?? new MeshPortalDirect(ServiceName);
+            this.meshPortalDirect = meshPortalDirect;
             TestEnvironment = testEnvironment;
             Name = name;
             Directory.CreateDirectory(ServiceDirectory);

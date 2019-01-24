@@ -2,7 +2,6 @@
 using System.IO;
 using Goedel.Protocol;
 using Goedel.Utilities;
-using Goedel.Mesh.Portal.Client;
 
 
 namespace Goedel.Mesh.Shell {

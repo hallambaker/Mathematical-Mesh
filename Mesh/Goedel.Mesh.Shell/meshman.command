@@ -28,6 +28,7 @@
 	OptionSet DeviceProfileInfo
 		Option DeviceNew "new" Flag
 			Brief "Force creation of new device profile"
+			Default "false"
 		Option DeviceUDF "dudf" String
 			Brief "Device profile fingerprint"
 		Option DeviceID "did" String
@@ -65,12 +66,10 @@
 		Option File "file" NewFile
 			Brief "Output file"
 
+	OptionSet CryptoOptions
+		Option Algorithms "alg" String
+			Brief "List of algorithm specifiers"
 
-	OptionSet KeyCreateOptions
-		Option AlgKey "alg" String
-			Brief "The public key algorithm"
-		Option LengthKey "size" String
-			Brief "The public key size"
 
 	OptionSet EncodeOptions
 		Option ContentType "cty" String
@@ -80,19 +79,9 @@
 		Option Sign "sign" String
 			Brief "Sign data with specified key"
 		
-		Option AlgDigest "adigest" String
-			Brief "The digest algorithm"
-		Option AlgEncrypt "aencrypt" String
-			Brief "The symmetric encryption algorithm"
-		
-		Option ModeEncrypt "mencrypt" String
-			Brief "The public key encryption mode"
-		Option ModeSign "msign" String
-			Brief "The signature mode"
+
 
 	OptionSet DigestOptions
-		Option AlgDigest "adigest" String
-			Brief "The digest algorithm"
 		Option DigestKey "key" String
 			Brief "Encrypt data for specified recipient"
 
@@ -105,6 +94,7 @@
 
 		Command DeviceCreate "device"
 			Brief "Create new device profile"
+			Include CryptoOptions
 			Parameter DeviceID "id" String
 				Brief "Device identifier"
 			Parameter DeviceDescription "dd" String
@@ -118,6 +108,7 @@
 				Brief "New account"
 			Include Reporting
 			Include DeviceProfileInfo
+			Include CryptoOptions
 
 		Command ProfileRegister "register"
 			Brief "Register existing profile at a new portal"
@@ -133,6 +124,7 @@
 
 		Command ProfileEscrow "escrow"
 			Brief "Create a set of key escrow shares"
+			Include CryptoOptions
 			Include AccountOptions
 			Include Reporting
 			Option Quorum "quorum" Integer
@@ -224,7 +216,7 @@
 			Include AccountOptions
 			Include Reporting
 			Include MailOptions
-			Include KeyCreateOptions
+			Include CryptoOptions
 
 		Command MailUpdate "update"
 			Brief "Update an existing mail application profile"
@@ -282,7 +274,7 @@
 			Include AccountOptions
 			Include Reporting
 			Include SSHOptions
-			Include KeyCreateOptions
+			Include CryptoOptions
 			Option ID "id" String
 				Brief "Key identifier"
 
@@ -306,7 +298,7 @@
 				Include Reporting
 				Include SSHOptions
 
-			Command SSHAddHost "known"
+			Command SSHMergeKnown "known"
 				Brief "Add one or more hosts to the known_hosts file"
 				Include AccountOptions
 				Include Reporting
@@ -321,7 +313,7 @@
 				Parameter File "file" ExistingFile
 
 
-		CommandSet SSHAdd "show"
+		CommandSet SSHShow "show"
 			Command SSHKnown "known"
 				Brief "List the known SSH sites (aka known hosts)"
 				Include AccountOptions
@@ -523,7 +515,7 @@
 			Brief "Create recryption group"
 			Include AccountOptions
 			Include Reporting
-			Include KeyCreateOptions
+			Include CryptoOptions
 			Parameter GroupID "group" String
 				Brief "Recryption group name in user@example.com format"
 
@@ -552,6 +544,7 @@
 			Parameter Input "in" ExistingFile
 				Brief "File or directory to encrypt"
 			Include EncodeOptions
+			Include CryptoOptions
 			Include AccountOptions
 			Include Reporting
 			Option Output "out" NewFile
@@ -588,16 +581,14 @@
 			Include Reporting
 			Option ContentType "cty" String
 				Brief "Content Type"
-			Option AlgDigest "alg" String
-				Brief "The digest algorithm"
+			Include CryptoOptions
 			Parameter Input "in" ExistingFile
 				Brief "File to take digest of"
 
 		Command FileDigest "digest"
 			Brief "Calculate the digest value of the input data"
 			Include Reporting
-			Option AlgDigest "alg" String
-				Brief "The digest algorithm"
+			Include CryptoOptions
 			Parameter Input "in" ExistingFile
 				Brief "File to take digest of"
 
@@ -606,8 +597,7 @@
 			Include Reporting
 			Option ContentType "cty" String
 				Brief "Content Trype"
-			Option AlgDigest "alg" String
-				Brief "The digest algorithm"
+			Include CryptoOptions
 			Option DigestKey "key" String
 			Parameter Input "in" ExistingFile
 				Brief "File to create commitment of"
@@ -623,6 +613,7 @@
 		Command ContainerCreate "create"
 			Brief "Create a new DARE Container"
 			Include EncodeOptions
+			Include CryptoOptions
 			Include ContainerOptions
 			Include AccountOptions
 			Include Reporting
@@ -632,6 +623,7 @@
 		Command ContainerArchive "archive"
 			Brief "Create a new DARE Container and archive the specified files"
 			Include EncodeOptions
+			Include CryptoOptions
 			Include AccountOptions
 			Include Reporting
 			Include ContainerOptions
@@ -643,6 +635,7 @@
 		Command ContainerAppend "append"
 			Brief "Append the specified file as an entry to the specified container"
 			Include EncodeOptions
+			Include CryptoOptions
 			Include AccountOptions
 			Include Reporting
 			Parameter Container "in" ExistingFile
@@ -659,6 +652,7 @@
 		Command ContainerIndex "index"
 			Brief "Compile an index for the specified container and append to the end."
 			Include EncodeOptions
+			Include CryptoOptions
 			Include AccountOptions
 			Include Reporting
 			Parameter Container "in" ExistingFile
@@ -687,6 +681,7 @@
 			Parameter Output "out" NewFile
 				Brief "Copy"
 			Include EncodeOptions
+			Include CryptoOptions
 			Include ContainerOptions
 			Include AccountOptions
 			Include Reporting

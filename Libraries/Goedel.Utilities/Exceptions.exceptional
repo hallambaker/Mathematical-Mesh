@@ -34,4 +34,4 @@ Namespace Goedel.Utilities
 		Console "Service request failed when it should have succeded"
 	Exception ExpectedError
 		Console "Service request succeeded when it should have returned an error"
-	
+

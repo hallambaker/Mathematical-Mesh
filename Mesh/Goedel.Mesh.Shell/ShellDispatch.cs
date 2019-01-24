@@ -32,14 +32,22 @@ namespace Goedel.Mesh.Shell {
         public string AccountID { get; set; }
         public string UDF { get; set; }
 
-        public bool DeviceNew { get; set; }
-        public string DeviceUDF { get; set; }
-        public string DeviceID { get; set; }
-        public string DeviceDescription { get; set; }
+        //public bool DeviceNew { get; set; }
+        //public string DeviceUDF { get; set; }
+        //public string DeviceID { get; set; }
+        //public string DeviceDescription { get; set; }
 
         TextWriter Output;
 
         public Shell(TextWriter output = null) => Output = output ?? Console.Out;
+
+        public CryptoAlgorithmID AlgorithmSign          = CryptoAlgorithmID.Ed448;
+        public CryptoAlgorithmID AlgorithmAuthenticate  = CryptoAlgorithmID.Ed448;
+        public CryptoAlgorithmID AlgorithmExchange      = CryptoAlgorithmID.Ed448;
+
+        public CryptoAlgorithmID AlgorithmDigest        = CryptoAlgorithmID.Default;
+        public CryptoAlgorithmID AlgorithmMAC           = CryptoAlgorithmID.Default;
+        public CryptoAlgorithmID AlgorithmEncrypt       = CryptoAlgorithmID.Default;
 
         public override void _PreProcess(Command.Dispatch options) {
             if (options is IReporting Reporting) {
@@ -54,12 +62,17 @@ namespace Goedel.Mesh.Shell {
                 // Set the account here using MeshMachine
                 }
 
-            if (options is IDeviceProfileInfo DeviceProfileInfo) {
-                DeviceNew = DeviceProfileInfo.DeviceNew.Value;
-                DeviceUDF = DeviceProfileInfo.DeviceUDF.Value;
-                DeviceID = DeviceProfileInfo.DeviceID.Value;
-                DeviceDescription = DeviceProfileInfo.DeviceDescription.Value;
-                // Set the Device profile here
+            if (options is ICryptoOptions CryptoOptions) {
+                if (CryptoOptions.Algorithms.Value != null) {
+                    var algorithms = CryptoOptions.Algorithms.Value.Split(',');
+
+                    foreach (var algorithm in algorithms) {
+                        SetAlgorithm(algorithm);
+                        }
+
+
+                    }
+
                 }
 
             if (options is IMailOptions MailOptions) {
@@ -72,6 +85,38 @@ namespace Goedel.Mesh.Shell {
                 }
 
             }
+
+        void SetAlgorithm(string algorithm) {
+            var algID = algorithm.ToCryptoAlgorithmID();
+            var algClass = algID.Class();
+
+            switch (algClass) {
+                case CryptoAlgorithmClass.Digest: {
+                    AlgorithmDigest = algID;
+                    return;
+                    }
+                case CryptoAlgorithmClass.Encryption: {
+                    AlgorithmEncrypt = algID;
+                    return;
+                    }
+                case CryptoAlgorithmClass.MAC: {
+                    AlgorithmMAC = algID;
+                    return;
+                    }
+                case CryptoAlgorithmClass.Signature: {
+                    AlgorithmSign = algID;
+                    return;
+                    }
+                case CryptoAlgorithmClass.Exchange: {
+                    AlgorithmExchange = algID;
+                    AlgorithmAuthenticate = algID;
+                    return;
+                    }
+
+                }
+
+            }
+
 
         public virtual void _PostProcess(ShellResult shellResult) {
             if (Json) {
@@ -93,29 +138,44 @@ namespace Goedel.Mesh.Shell {
         //    (Options.Recipient.Value == null) ? null : new List<string> { Options.Recipient.Value };
 
 
-        public virtual JpcSession GetJpcSession(IAccountOptions Options) {
+        public virtual JpcSession GetJpcSession(IAccountOptions options) {
             throw new NYI();
             }
 
 
-        public virtual MeshService GetMeshClient(IAccountOptions Options) {
+        public virtual MeshService GetMeshClient(IAccountOptions options) {
             throw new NYI();
             }
 
-        public virtual ContextDevice GetContextDevice(IAccountOptions Options) {
+        public virtual ContextDevice GetContextDevice(IAccountOptions options) {
             throw new NYI();
             }
 
-        public virtual ContextDevice GetContextDevice(IDeviceProfileInfo Options) {
+        public virtual ContextDevice GetContextDevice(IDeviceProfileInfo options) {
+            if (!options.DeviceNew.Value) {
+                var deviceUDF = options.DeviceUDF.Value;
+                var deviceID = options.DeviceID.Value;
+
+                var result = ContextDevice.GetContextDevice(MeshMachine, deviceUDF, deviceID);
+                if(result != null) {
+                    return result;
+                    }
+                }
+            var deviceDescription = options.DeviceDescription.Value;
+            return ContextDevice.Generate(MeshMachine, description: deviceDescription);
+
+            }
+
+        public virtual ContextMaster GetContextMaster(IAccountOptions options) {
             throw new NYI();
             }
 
-        public virtual ContextMaster GetContextMaster(IAccountOptions Options) {
+        public KeyCollection KeyCollection(IAccountOptions options) =>
+            throw new NYI();
+
+        public CryptoParameters GetCryptoParameters(KeyCollection keyCollection, IEncodeOptions options) {
             throw new NYI();
             }
-
-        public KeyCollection KeyCollection(IAccountOptions Options) => 
-                    Cryptography.KeyCollection.Default;
 
 
         /// <summary>
@@ -137,12 +197,12 @@ namespace Goedel.Mesh.Shell {
                 if (Options.Encrypt.Value != null) {
                     throw new NYI(); // Hack: need to resolve this against the contacts catalog
                     }
-                cryptoParameters.EncryptID = Options.AlgEncrypt.Value.ToCryptoAlgorithmID();
+                cryptoParameters.EncryptID = AlgorithmEncrypt.DefaultBulk(CryptoAlgorithmID.AES256);
                 }
 
 
             if (Options.Sign != null) {
-                cryptoParameters.DigestID = Options.AlgDigest.Value.ToCryptoAlgorithmID();
+                cryptoParameters.DigestID = AlgorithmDigest.DefaultBulk(CryptoAlgorithmID.SHA_2_512); ;
                 throw new NYI(); // Hack: need to resolve this against the contacts catalog
                 }
 

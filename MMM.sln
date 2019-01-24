@@ -27,6 +27,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Release", "Release", "{7D0B
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Testing", "Testing", "{E9EAA6CF-ACFD-4F68-A4B9-18DBB8A98B48}"
 	ProjectSection(SolutionItems) = preProject
+		Release\Documents\Bib.xml = Release\Documents\Bib.xml
 		Services\meshportal_windows\startserver.bat = Services\meshportal_windows\startserver.bat
 	EndProjectSection
 EndProject
@@ -250,7 +251,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Old", "Old", "{5EC947D2-D40
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "mesh_core", "Applications\mesh_core\mesh_core.csproj", "{FF1DDFF4-731E-4822-8D51-F559379B873E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Mesh.Shell.Test-xunit", "Testing\Goedel.Mesh.Shell.Test-xunit\Goedel.Mesh.Shell.Test-xunit.csproj", "{F345341F-C902-47D8-8014-7D76FB652726}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Goedel.Mesh.Shell.Test-xunit", "Testing\Goedel.Mesh.Shell.Test-xunit\Goedel.Mesh.Shell.Test-xunit.csproj", "{F345341F-C902-47D8-8014-7D76FB652726}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution

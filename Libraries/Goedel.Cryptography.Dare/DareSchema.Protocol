@@ -142,6 +142,10 @@
 			Description 
 				|Unique object identifier
 
+		String Filename
+			Description 
+				|The original filename under which the data was stored.
+
 		String Event
 			Description 
 				|Operation on the header

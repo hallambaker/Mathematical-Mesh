@@ -390,7 +390,7 @@ namespace Goedel.Cryptography.Dare {
             //this.JSONWriter = JSONWriter;
 
 
-            Console.Write($"Payload length is {PayloadLength}");
+            //Console.Write($"Payload length is {PayloadLength}");
 
             this.PackagingFormat = PackagingFormat;
 

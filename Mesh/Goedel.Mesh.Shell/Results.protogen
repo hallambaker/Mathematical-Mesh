@@ -21,6 +21,7 @@
 		Inherits		Result
 		String			Filename
 		Integer			TotalBytes
+		Boolean			Verified
 
 	Structure ResultEntry
 		Inherits		Result

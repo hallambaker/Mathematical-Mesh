@@ -8,6 +8,7 @@ namespace Goedel.Mesh.Shell {
 
     public partial class Result {
 
+        public Result() => Success = true;
 
         public virtual StringBuilder StringBuilder() {
             var Builder = new StringBuilder();
@@ -17,7 +18,7 @@ namespace Goedel.Mesh.Shell {
                 Builder.Append(" - ");
                 Builder.Append(Reason);
                 }
-            Builder.Append("/n");
+            Builder.Append("\n");
             return Builder;
 
             }
@@ -37,7 +38,7 @@ namespace Goedel.Mesh.Shell {
 
         public override string ToString() {
             var Builder = StringBuilder();
-            Builder.Append($"Device Profile UDF={DeviceUDF}/n");
+            Builder.Append($"Device Profile UDF={DeviceUDF}\n");
             return Builder.ToString();
             }
         }

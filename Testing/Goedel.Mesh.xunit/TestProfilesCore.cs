@@ -44,15 +44,6 @@ namespace Goedel.XUnit {
 
 
 
-        [Fact]
-        public void ConnectRequestDirect() => TestProfiles.Test.ConnectRequestDirect();
-
-        [Fact]
-        public void ContactRequestDirect() => TestProfiles.Test.ContactRequestDirect();
-
-
-
-
         [Fact(Skip = "Decode a device profile")]
         public void DecodeProfileDevice() => throw new NYI();
 

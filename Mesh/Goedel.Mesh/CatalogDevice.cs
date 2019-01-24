@@ -50,10 +50,10 @@ namespace Goedel.Mesh {
         public CatalogEntryCredential LocateBySite(string Key) => Locate(Key) as CatalogEntryCredential;
 
 
-        public CatalogDevice(string directory, string ContainerName=null,
+        public CatalogDevice(string directory, string containerName=null,
             CryptoParameters cryptoParameters = null,
                     KeyCollection keyCollection = null) :
-            base(directory, ContainerName, cryptoParameters, keyCollection) {
+            base(directory, containerName?? Label, cryptoParameters, keyCollection) {
             }
 
         public static Store Factory(string directory, string containerName = null) =>

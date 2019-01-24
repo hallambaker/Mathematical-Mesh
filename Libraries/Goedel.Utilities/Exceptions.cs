@@ -9,7 +9,8 @@ namespace Goedel.Utilities {
     /// <summary>
     /// This feature has not been implemented
     /// </summary>
-    public class NYI : global::System.Exception {
+    [Serializable]
+	public class NYI : global::System.Exception {
 
 		/// <summary>
         /// Construct instance for exception "The feature has not been implemented"
@@ -60,7 +61,8 @@ namespace Goedel.Utilities {
     /// <summary>
     /// An internal assertion check failed.
     /// </summary>
-    public class Internal : global::System.Exception {
+    [Serializable]
+	public class Internal : global::System.Exception {
 
 		/// <summary>
         /// Construct instance for exception "An internal error occurred"
@@ -111,7 +113,8 @@ namespace Goedel.Utilities {
     /// <summary>
     /// The file could not be read.
     /// </summary>
-    public class FileReadError : global::System.Exception {
+    [Serializable]
+	public class FileReadError : global::System.Exception {
 
 		/// <summary>
         /// Construct instance for exception "The file could not be read"
@@ -186,7 +189,8 @@ namespace Goedel.Utilities {
     /// A call was made to a routine that has not yet been made
     /// 64 bit clean with a value that exceeds the Int32 limits.
     /// </summary>
-    public class Not64Bit : global::System.Exception {
+    [Serializable]
+	public class Not64Bit : global::System.Exception {
 
 		/// <summary>
         /// Construct instance for exception "Item too large"
@@ -236,7 +240,8 @@ namespace Goedel.Utilities {
 
     /// <summary>
     /// </summary>
-    public class EnvironmentVariableRequired : global::System.Exception {
+    [Serializable]
+	public class EnvironmentVariableRequired : global::System.Exception {
 
 		/// <summary>
         /// Construct instance for exception "A required environment variable is undefined."
@@ -309,7 +314,8 @@ namespace Goedel.Utilities {
 
     /// <summary>
     /// </summary>
-    public class ExpectedSuccess : global::System.Exception {
+    [Serializable]
+	public class ExpectedSuccess : global::System.Exception {
 
 		/// <summary>
         /// Construct instance for exception "Service request failed when it should have succeded"
@@ -359,7 +365,8 @@ namespace Goedel.Utilities {
 
     /// <summary>
     /// </summary>
-    public class ExpectedError : global::System.Exception {
+    [Serializable]
+	public class ExpectedError : global::System.Exception {
 
 		/// <summary>
         /// Construct instance for exception "Service request succeeded when it should have returned an error"

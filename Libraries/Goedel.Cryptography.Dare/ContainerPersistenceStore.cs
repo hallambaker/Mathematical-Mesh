@@ -45,10 +45,16 @@ namespace Goedel.Cryptography.Dare {
         public const string EventDelete = "Delete";
 
 
+        public static Dictionary<string, JSONFactoryDelegate> TagDictionary = tagDictionary ??
+            new Dictionary<string, JSONFactoryDelegate>().CacheValue(out tagDictionary);
+        static Dictionary<string, JSONFactoryDelegate> tagDictionary;
+
+        public static void AddDictionary(Dictionary<string, JSONFactoryDelegate> dictionary) =>
+            JSONObject.Append(TagDictionary, dictionary);
 
         /// <summary>
         /// The default data encoding of payload items.
-        /// </summary>
+        /// 
         public DataEncoding Encoding = DataEncoding.JSON;
 
         /// <summary>
@@ -178,6 +184,9 @@ namespace Goedel.Cryptography.Dare {
                         MemoryCommitDelete(ContainerStoreEntry);
                         break;
                         }
+                default: {
+                    throw new NYI();
+                    }
                 }
 
 
@@ -188,6 +197,8 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="dareMessage"></param>
         public virtual void Apply(DareMessage dareMessage) {
+            Container.AppendDirect(dareMessage);
+
             }
 
 
