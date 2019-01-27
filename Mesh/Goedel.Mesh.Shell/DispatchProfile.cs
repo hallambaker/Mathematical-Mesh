@@ -54,12 +54,12 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult MasterCreate(MasterCreate Options) {
+            var account = Options.NewAccountID.Value;
+
+
             var context = GetContextDevice(Options);
-
-
-            // Generate a new device context if none found
-            context = context ?? ContextDevice.Generate(MeshMachine);
             var master = context.GenerateMaster();
+            var result = master.CreateAccount(account);
 
             return new ResultMasterCreate() {
                 Success = true,

@@ -18,8 +18,9 @@ namespace Goedel.Mesh {
     /// <remarks>This implementation does not currently support concurrent access to the Mesh profile files
     /// from separate processes. This support should be added my introducing a system wide lock that is
     /// obtained before attempting a write operation and while opening a container.</remarks>
-    public class MeshMachineCore: IMeshMachine {
+    public class MeshMachineCore: IMeshMachine, IMeshMachineClient {
 
+        public CatalogHost CatalogHost { get; }
 
 
         public virtual string DirectoryMaster { get; }
@@ -34,7 +35,7 @@ namespace Goedel.Mesh {
 
         public string FileNameHost => Path.Combine(DirectoryMesh, "host.dare");
 
-        public ContainerHost ContainerHost { get; }
+        //public ContainerHost ContainerHost { get; }
 
 
         public MeshMachineCore() : this (MeshMachine.DirectoryProfiles) {
@@ -50,10 +51,11 @@ namespace Goedel.Mesh {
             KeyCollection = GetKeyCollection();
 
             // Now read the container to get the directories.
-            ContainerHost = new ContainerHost(FileNameHost, FileTypeHost,
+            var containerHost = new ContainerHost(FileNameHost, FileTypeHost,
                 fileStatus: FileStatus.OpenOrCreate,
                 containerType: ContainerType.MerkleTree);
 
+            CatalogHost = new CatalogHost(containerHost, this);
             }
 
 
@@ -65,20 +67,18 @@ namespace Goedel.Mesh {
         public virtual KeyCollection GetKeyCollection() => 
             new KeyCollectionCore();
 
-
-        public virtual void Register (Profile profile) => 
-                ContainerHost.Update(profile);
-
-        public virtual void Delete(Profile profile) =>
-                ContainerHost.Delete(profile._PrimaryKey);
-
-
         public virtual void OpenCatalog(Catalog catalog, string Name) { }
 
 
+        public virtual void Register (Profile profile) =>
+                CatalogHost.Register(profile);
+
+        public virtual void Delete(Profile profile) =>
+                CatalogHost.Delete(profile);
+
         public virtual ProfileMesh GetConnection(
                     string accountName = null,
-                    string deviceUDF = null) => ContainerHost.GetConnection(accountName, deviceUDF);
+                    string deviceUDF = null) => CatalogHost.GetConnection(accountName, deviceUDF);
 
 
         public virtual MeshService GetMeshClient(string account) => 

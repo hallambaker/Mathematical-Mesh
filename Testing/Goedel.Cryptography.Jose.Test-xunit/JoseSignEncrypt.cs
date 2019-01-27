@@ -20,6 +20,27 @@ namespace Goedel.XUnit {
         static string TestString = "This is a test";
         static string TestStringBad = "This is a Test"; // Flip one bit
 
+
+        [Theory]
+        [InlineData(CryptoAlgorithmID.Ed448)]
+        [InlineData(CryptoAlgorithmID.Ed25519)]
+        [InlineData(CryptoAlgorithmID.X448)]
+        [InlineData(CryptoAlgorithmID.X25519)]
+        [InlineData(CryptoAlgorithmID.DH)]
+        [InlineData(CryptoAlgorithmID.RSAExch)]
+        [InlineData(CryptoAlgorithmID.RSASign)]
+        public void RoundTripKey(CryptoAlgorithmID cryptoAlgorithmID) {
+            var key = KeyPair.Factory(CryptoAlgorithmID.Ed448, keySecurity: KeySecurity.Ephemeral);
+            var jsonPublic = Key.GetPublic(key);
+            var key2 = jsonPublic.KeyPair;
+            key.UDF.AssertEqual(key2.UDF);
+
+            var jsonPrivate = Key.GetPrivate(key);
+            var key3 = jsonPrivate.KeyPair;
+            key.UDF.AssertEqual(key3.UDF);
+            }
+
+
         [Fact]
         public void Test_Jose_Encrypt() {
 

@@ -131,5 +131,12 @@ namespace Goedel.Mesh.Protocol.Client {
 
             }
 
+        public Profile GetProfileByAccount(string account) {
+            var found = DictionaryByAccount.TryGetValue(account, out var entry);
+            return entry.JsonObject as Profile;
+
+            }
+
+
         }
     }

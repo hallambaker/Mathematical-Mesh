@@ -54,13 +54,15 @@ namespace Goedel.Cryptography.Jose {
         /// <param name="keyPair">The key pair.</param>
         /// <returns>Public portion.</returns>
         public static Key GetPublic(KeyPair keyPair) {
-            if (keyPair as KeyPairBaseRSA != null) {
-                return new PublicKeyRSA (keyPair as KeyPairBaseRSA);
+            switch (keyPair) {
+                case KeyPairBaseRSA keyPairBaseRSA:
+                    return new PublicKeyRSA(keyPairBaseRSA);
+                case KeyPairBaseDH keyPairBaseDH:
+                    return new PublicKeyDH(keyPairBaseDH);
+                case KeyPairECDH keyPairECDH:
+                    return new PublicKeyECDH(keyPairECDH);
                 }
-            if (keyPair as KeyPairBaseDH != null) {
-                return new PublicKeyDH(keyPair as KeyPairBaseDH);
-                }
-            return null;
+            throw new NYI();
             }
 
         /// <summary>
@@ -69,13 +71,15 @@ namespace Goedel.Cryptography.Jose {
         /// <param name="keyPair">The key pair.</param>
         /// <returns>The private data.</returns>
         public static Key GetPrivate(KeyPair keyPair) {
-            if (keyPair as KeyPairBaseRSA != null) {
-                return new PrivateKeyRSA (keyPair as KeyPairBaseRSA);
+            switch (keyPair) {
+                case KeyPairBaseRSA keyPairBaseRSA:
+                    return new PrivateKeyRSA(keyPairBaseRSA);
+                case KeyPairBaseDH keyPairBaseDH:
+                    return new PrivateKeyDH(keyPairBaseDH);
+                case KeyPairECDH keyPairECDH:
+                    return new PrivateKeyECDH(keyPairECDH);
                 }
-            if (keyPair as KeyPairBaseDH != null) {
-                return new PrivateKeyDH(keyPair as KeyPairBaseDH);
-                }
-            return null;
+            throw new NYI();
             }
 
         /// <summary>

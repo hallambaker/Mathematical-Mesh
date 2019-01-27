@@ -68,6 +68,7 @@ namespace Goedel.XUnit {
         public bool FailNetworkResult(string key) =>
             DefaultDevice.FailNetworkResult(key);
         }
+
     public partial class TestShell : Shell {
         static string ServiceName = "example.com";
         public MeshPortalDirect MeshPortalDirect => ShellTests.MeshPortalDirect;
@@ -97,11 +98,15 @@ namespace Goedel.XUnit {
             ShellTests = shellTests;
             }
 
+
+
         public override MeshService GetMeshClient(IAccountOptions Options) => MeshClient;
 
-
-
         public override JpcSession GetJpcSession(IAccountOptions Options) => new MeshClientSession();
+
+
+
+
 
         public override ContextDevice GetContextDevice(IAccountOptions Options) => throw new NYI();
 

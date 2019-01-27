@@ -13,11 +13,12 @@ namespace Goedel.Cryptography.Jose {
         public PublicKeyECDH() { }
 
 
-        ///// <summary>
-        ///// Construct a key
-        ///// </summary>
-        ///// <param name="KeyPair"></param>
-        //public PublicKeyECDH(KeyPairBaseECDH KeyPair) => throw new NYI();
+        /// <summary>
+        /// Construct a key
+        /// </summary>
+        /// <param name="KeyPair"></param>
+        public PublicKeyECDH(KeyPairBaseECDH KeyPair) : this(KeyPair.PKIXPublicKeyECDH) {
+            }
 
 
 
@@ -54,13 +55,13 @@ namespace Goedel.Cryptography.Jose {
 
             switch (Curve) {
                 case "Ed25519":
-                    return KeyPairEd25519.Generate (KeySecurity.Public, keyUses);
+                    return new KeyPairEd25519(Public, KeySecurity.Public, keyUses, CryptoAlgorithmID.Ed448);
                 case "Ed448":
-                    return KeyPairEd448.Generate(KeySecurity.Public, keyUses);
+                    return new KeyPairEd448(Public, KeySecurity.Public, keyUses, CryptoAlgorithmID.Ed448);
                 case "X25519":
-                    return KeyPairX25519.Generate(KeySecurity.Public, keyUses);
+                    return new KeyPairX25519(Public, KeySecurity.Public, keyUses, CryptoAlgorithmID.Ed448);
                 case "X448":
-                    return KeyPairX448.Generate(KeySecurity.Public, keyUses);
+                    return new KeyPairX448(Public, KeySecurity.Public, keyUses, CryptoAlgorithmID.Ed448);
                 }
 
             throw new NotSupportedException();
@@ -91,6 +92,7 @@ namespace Goedel.Cryptography.Jose {
         /// <param name="KeyPair">An RSA key Pair.</param>
         public PrivateKeyECDH(KeyPairBaseECDH KeyPair) : this(KeyPair.PKIXPrivateKeyECDH) {
             }
+
         /// <summary>
         /// Construct from a PKIX PKIXPrivateKeyDH structure.
         /// </summary>
@@ -132,13 +134,14 @@ namespace Goedel.Cryptography.Jose {
             var keyUses = Use.GetUses();
             switch (Curve) {
                 case "Ed25519":
-                    return KeyPairEd25519.Generate(keySecurity, keyUses);
+                    return new KeyPairEd25519(Private, keySecurity, keyUses, CryptoAlgorithmID.Ed448);
                 case "Ed448":
-                    return KeyPairEd448.Generate(keySecurity, keyUses);
+                    return new KeyPairEd448(Private, keySecurity, keyUses, CryptoAlgorithmID.Ed448);
                 case "X25519":
-                    return KeyPairX25519.Generate(keySecurity, keyUses);
+                    return new KeyPairX25519(Private, keySecurity, keyUses, CryptoAlgorithmID.Ed448);
                 case "X448":
-                    return KeyPairX448.Generate(keySecurity, keyUses);
+                    return new KeyPairX448(Private, keySecurity, keyUses, CryptoAlgorithmID.Ed448);
+
                 }
             throw new NotSupportedException();
             }

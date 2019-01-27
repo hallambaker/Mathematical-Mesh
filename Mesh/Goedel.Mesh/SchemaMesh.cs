@@ -816,7 +816,7 @@ namespace Goedel.Mesh {
         ///DeviceUseEntry
         /// </summary>
 
-		public virtual PublicKey						DeviceEncryptiontionKey  {get; set;}
+		public virtual PublicKey						DeviceEncryptionKey  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -875,10 +875,10 @@ namespace Goedel.Mesh {
 				_Writer.WriteToken ("DeviceAuthenticationKey", 1);
 					DeviceAuthenticationKey.Serialize (_Writer, false);
 				}
-			if (DeviceEncryptiontionKey != null) {
+			if (DeviceEncryptionKey != null) {
 				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("DeviceEncryptiontionKey", 1);
-					DeviceEncryptiontionKey.Serialize (_Writer, false);
+				_Writer.WriteToken ("DeviceEncryptionKey", 1);
+					DeviceEncryptionKey.Serialize (_Writer, false);
 				}
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
@@ -930,10 +930,10 @@ namespace Goedel.Mesh {
  
 					break;
 					}
-				case "DeviceEncryptiontionKey" : {
+				case "DeviceEncryptionKey" : {
 					// An untagged structure
-					DeviceEncryptiontionKey = new PublicKey ();
-					DeviceEncryptiontionKey.Deserialize (JSONReader);
+					DeviceEncryptionKey = new PublicKey ();
+					DeviceEncryptionKey.Deserialize (JSONReader);
  
 					break;
 					}
@@ -1059,6 +1059,11 @@ namespace Goedel.Mesh {
 
 		public virtual DareMessage						MasterProfile  {get; set;}
         /// <summary>
+        ///Key used to encrypt data under this profile
+        /// </summary>
+
+		public virtual PublicKey						AccountEncryptionKey  {get; set;}
+        /// <summary>
         ///Random nonce used to mask the fingerprint of the profile UDF.
         /// </summary>
 
@@ -1126,6 +1131,11 @@ namespace Goedel.Mesh {
 				_Writer.WriteToken ("MasterProfile", 1);
 					MasterProfile.Serialize (_Writer, false);
 				}
+			if (AccountEncryptionKey != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("AccountEncryptionKey", 1);
+					AccountEncryptionKey.Serialize (_Writer, false);
+				}
 			if (ProfileNonce != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("ProfileNonce", 1);
@@ -1183,6 +1193,13 @@ namespace Goedel.Mesh {
 					// An untagged structure
 					MasterProfile = new DareMessage ();
 					MasterProfile.Deserialize (JSONReader);
+ 
+					break;
+					}
+				case "AccountEncryptionKey" : {
+					// An untagged structure
+					AccountEncryptionKey = new PublicKey ();
+					AccountEncryptionKey.Deserialize (JSONReader);
  
 					break;
 					}

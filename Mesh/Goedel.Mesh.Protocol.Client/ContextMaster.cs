@@ -35,7 +35,7 @@ namespace Goedel.Mesh.Protocol.Client {
         public ContextMaster(
                 ContextDevice contextDevice,
                 ProfileMaster profileMaster
-                ) : base (contextDevice.Machine) {
+                ) : base (contextDevice.MeshMachine) {
             ContextDevice = contextDevice;
             ProfileMaster = profileMaster;
             }

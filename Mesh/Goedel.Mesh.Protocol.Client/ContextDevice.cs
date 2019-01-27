@@ -16,7 +16,7 @@ namespace Goedel.Mesh.Protocol.Client {
     public partial class ContextDevice {
 
         ///<summary>The Machine context</summary>
-        public virtual IMeshMachine Machine { get; }
+        public virtual IMeshMachine MeshMachine { get; }
 
         ///<summary>The active profile. A client may have multiple profiles open at once on the
         ///same device but each one must be accessed through a different context.</summary>
@@ -44,7 +44,7 @@ namespace Goedel.Mesh.Protocol.Client {
         DareMessage ProfileDeviceSigned => ProfileDevice.ProfileDeviceSigned;
 
         ///<summary>The active KeyCollection (from Machine)</summary>
-        public KeyCollection KeyCollection => Machine.KeyCollection;
+        public KeyCollection KeyCollection => MeshMachine.KeyCollection;
 
         #region // Convenience properties for accessing default stores and spools.
         public CatalogCredential CatalogCredential =>
@@ -84,7 +84,7 @@ namespace Goedel.Mesh.Protocol.Client {
         KeyPair KeySign => keySign ?? KeyCollection.LocatePrivate(ProfileDevice.DeviceSignatureKey.UDF).CacheValue(out keySign);
         KeyPair keySign;
 
-        KeyPair KeyEncrypt => keyEncrypt ?? KeyCollection.LocatePrivate(ProfileDevice.DeviceEncryptiontionKey.UDF).CacheValue(out keyEncrypt);
+        KeyPair KeyEncrypt => keyEncrypt ?? KeyCollection.LocatePrivate(ProfileDevice.DeviceEncryptionKey.UDF).CacheValue(out keyEncrypt);
         KeyPair keyEncrypt;
 
         KeyPair KeyAuthenticate => keyAuthenticate ?? KeyCollection.LocatePrivate(ProfileDevice.DeviceAuthenticationKey.UDF).CacheValue(out keyAuthenticate);
@@ -93,7 +93,7 @@ namespace Goedel.Mesh.Protocol.Client {
 
         ContextDevice(IMeshMachine machine, ProfileDevice profileDevice,
                     KeyPair keySign, KeyPair keyEncrypt, KeyPair keyAuthenticate) {
-            Machine = machine;
+            MeshMachine = machine;
             ProfileDevice = profileDevice;
             this.keySign = keySign;
             this.keyEncrypt = keyEncrypt;
@@ -110,8 +110,8 @@ namespace Goedel.Mesh.Protocol.Client {
                     IMeshMachine machine,
                     string accountName = null,
                     string deviceUDF = null) {
-            Machine = machine;
-            ProfileMesh = Machine.GetConnection(accountName, deviceUDF);
+            MeshMachine = machine;
+            ProfileMesh = MeshMachine.GetConnection(accountName, deviceUDF);
             }
 
         /// <summary>
@@ -129,7 +129,7 @@ namespace Goedel.Mesh.Protocol.Client {
                 CryptoAlgorithmID algorithmAuthenticate = CryptoAlgorithmID.Default,
                 string description = null) {
 
-            machine = machine ?? MeshMachine.GetMachine();
+            machine = machine ?? Mesh.MeshMachine.GetMachine();
             var KeyCollection = machine.KeyCollection;
 
             algorithmSign = algorithmSign.DefaultMeta(CryptoAlgorithmID.Ed448);
@@ -173,7 +173,7 @@ namespace Goedel.Mesh.Protocol.Client {
 
 
             // Register the profile locally
-            Machine.Register(Profile);
+            MeshMachine.Register(Profile);
             return new ContextMaster(this, Profile);
 
 
@@ -244,14 +244,14 @@ namespace Goedel.Mesh.Protocol.Client {
         Store MakeStore(string name) {
 
             switch (name) {
-                case Spool.SpoolInbound: return new Spool (Machine.DirectoryMesh, name, null, KeyCollection);
-                case Spool.SpoolOutbound: return new Spool(Machine.DirectoryMesh, name, null, KeyCollection);
-                case Spool.SpoolArchive: return new Spool(Machine.DirectoryMesh, name, null, KeyCollection);
+                case Spool.SpoolInbound: return new Spool (MeshMachine.DirectoryMesh, name, null, KeyCollection);
+                case Spool.SpoolOutbound: return new Spool(MeshMachine.DirectoryMesh, name, null, KeyCollection);
+                case Spool.SpoolArchive: return new Spool(MeshMachine.DirectoryMesh, name, null, KeyCollection);
 
-                case CatalogCredential.Label: return new CatalogCredential(Machine.DirectoryMesh, name, null, KeyCollection);
-                case CatalogDevice.Label: return new CatalogDevice(Machine.DirectoryMesh, name, null, KeyCollection);
-                case CatalogContact.Label: return new CatalogContact(Machine.DirectoryMesh, name, null, KeyCollection);
-                case CatalogApplication.Label: return new CatalogApplication(Machine.DirectoryMesh, name, null, KeyCollection);
+                case CatalogCredential.Label: return new CatalogCredential(MeshMachine.DirectoryMesh, name, null, KeyCollection);
+                case CatalogDevice.Label: return new CatalogDevice(MeshMachine.DirectoryMesh, name, null, KeyCollection);
+                case CatalogContact.Label: return new CatalogContact(MeshMachine.DirectoryMesh, name, null, KeyCollection);
+                case CatalogApplication.Label: return new CatalogApplication(MeshMachine.DirectoryMesh, name, null, KeyCollection);
                 }
 
             throw new NYI();

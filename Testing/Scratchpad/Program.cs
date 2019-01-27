@@ -7,9 +7,9 @@ namespace Scratchpad {
     partial class Program {
         static void Main(string[] args) {
             Console.WriteLine("Hello World");
-            //TestGoedelCryptography.Test().TestDerive_5869_Separate();
+            //TestCryptographyJose.Test().RoundTripKey(CryptoAlgorithmID.Ed448);
             //TestKeyless.Test().FindCompression();
-            ShellTests.Test().TestFilePlain();
+            ShellTests.Test().TestFileEncrypt();
 
             //TestService.Test().MeshConnect();
             }

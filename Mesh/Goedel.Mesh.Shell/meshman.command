@@ -78,8 +78,9 @@
 			Brief "Encrypt data for specified recipient"
 		Option Sign "sign" String
 			Brief "Sign data with specified key"
-		
-
+		Option Hash "hash" Flag
+			Brief "Compute hash of content"		
+			Default "true"
 
 	OptionSet DigestOptions
 		Option DigestKey "key" String

@@ -43,7 +43,7 @@ namespace Goedel.Mesh {
             var ProfileDevice = new ProfileDevice() {
                 DeviceSignatureKey = new PublicKey (keyPublicSign.KeyPairPublic()),
                 DeviceAuthenticationKey = new PublicKey(keyPublicAuthenticate.KeyPairPublic()),
-                DeviceEncryptiontionKey = new PublicKey(keyPublicEncrypt.KeyPairPublic())
+                DeviceEncryptionKey = new PublicKey(keyPublicEncrypt.KeyPairPublic())
                 };
 
             var bytes = ProfileDevice.GetBytes(tag:true);

@@ -31,12 +31,17 @@ namespace Goedel.Mesh.Protocol.Client {
 
 
         public MeshResult CreateAccount(
-            string accountName) {
+            string accountName,
+                CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default) {
+
+            algorithmEncrypt = algorithmEncrypt.DefaultMeta(CryptoAlgorithmID.Ed448);
+            var keyEncrypt = KeyPair.Factory(algorithmEncrypt, KeySecurity.Device, KeyCollection, keyUses: KeyUses.Encrypt);
 
             var profileMesh = new ProfileMesh() {
                 Account = accountName,
                 MasterProfile = ProfileMaster.ProfileMasterSigned,
-                DeviceProfile = ProfileDevice.ProfileDeviceSigned
+                DeviceProfile = ProfileDevice.ProfileDeviceSigned,
+                AccountEncryptionKey = new PublicKey(keyEncrypt.KeyPairPublic())
                 };
 
 
@@ -50,14 +55,14 @@ namespace Goedel.Mesh.Protocol.Client {
             var meshClientSession = new MeshClientSession(this);
 
 
-            MeshService = Machine.GetMeshClient(accountName);
+            MeshService = MeshMachine.GetMeshClient(accountName);
 
             var result = MeshService.CreateAccount(createRequest, meshClientSession);
 
             // if successful write out to host file
 
             AccountName = accountName;
-
+            MeshMachine.Register(profileMesh);
 
 
             return new MeshResult() { MeshResponse = result };

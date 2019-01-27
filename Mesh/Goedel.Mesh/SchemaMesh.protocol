@@ -112,7 +112,7 @@
 		Struct PublicKey DeviceAuthenticationKey
 			Description
 				|Key used to authenticate requests made by the device.
-		Struct PublicKey DeviceEncryptiontionKey
+		Struct PublicKey DeviceEncryptionKey
 			Description
 				|Key used to pass encrypted data to the device such as a
 				|DeviceUseEntry
@@ -140,6 +140,9 @@
 		Struct DareMessage MasterProfile
 			Description
 				|Master profile of the account being registered.
+		Struct PublicKey AccountEncryptionKey
+			Description
+				|Key used to encrypt data under this profile
 		Binary ProfileNonce
 			Description
 				|Random nonce used to mask the fingerprint of the profile UDF.

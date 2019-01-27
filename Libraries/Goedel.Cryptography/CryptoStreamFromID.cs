@@ -34,6 +34,7 @@ namespace Goedel.Cryptography {
                 case CryptoAlgorithmID.AES128ECB: return (128, 128);
 
                 case CryptoAlgorithmID.Default:
+                case CryptoAlgorithmID.AES256:
                 case CryptoAlgorithmID.AES256CBC:
                 case CryptoAlgorithmID.AES256GCM:
                 case CryptoAlgorithmID.AES256CTS:
@@ -70,7 +71,7 @@ namespace Goedel.Cryptography {
                 case CryptoAlgorithmID.AES128CTS:
                 case CryptoAlgorithmID.AES128CBCNone:
                 case CryptoAlgorithmID.AES128ECB:
-
+                case CryptoAlgorithmID.AES256:
                 case CryptoAlgorithmID.AES256CBC:
                 case CryptoAlgorithmID.AES256GCM:
                 case CryptoAlgorithmID.AES256CTS:

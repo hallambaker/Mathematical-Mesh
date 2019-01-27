@@ -383,7 +383,7 @@
 				|A URL to which the user is directed to complete the account creation 
 				|request.
 
-	//Create account
+	//Delete account
 	Transaction Admin DeleteAccount DeleteRequest DeleteResponse
 		Description
 			|Request deletion of a new service account.

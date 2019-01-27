@@ -16,19 +16,19 @@ namespace Goedel.Cryptography.PKIX {
         /// </summary>
         public abstract string CurveJose { get; }
 
-        /// <summary>
-        /// The RFC8032 Public Key byte data
-        /// </summary>
-        public byte[] PublicKeyData;
+        ///// <summary>
+        ///// The RFC8032 Public Key byte data
+        ///// </summary>
+        ////public byte[] PublicKeyData;
 
         /// <summary>
         /// Construct a PKIX SubjectPublicKeyInfo block
         /// </summary>
-        /// <param name="OIDValue">The OID value</param>
+        /// <param name="oidValue">The OID value</param>
         /// <returns>The PKIX structure</returns>
-        public SubjectPublicKeyInfo SubjectPublicKeyInfo(int[] OIDValue = null) {
-            OIDValue = OIDValue ?? OID;
-            return new SubjectPublicKeyInfo(OIDValue, DER());
+        public SubjectPublicKeyInfo SubjectPublicKeyInfo(int[] oidValue = null) {
+            oidValue = oidValue ?? OID;
+            return new SubjectPublicKeyInfo(oidValue, DER());
             }
 
         /// <summary>
@@ -40,8 +40,8 @@ namespace Goedel.Cryptography.PKIX {
         /// <summary>
         /// Create PKIX representation from the encoded values.
         /// </summary>
-        /// <param name="Data"></param>
-        public PKIXPublicKeyECDH(byte[] Data) => this.Data = Data.Duplicate();
+        /// <param name="data"></param>
+        public PKIXPublicKeyECDH(byte[] data) => Data = data.Duplicate();
 
 
         /// <summary>
@@ -49,8 +49,8 @@ namespace Goedel.Cryptography.PKIX {
         ///
         /// NB Assinine ASN.1 DER encoding rules requires members be added in reverse order.
         /// </summary>
-        /// <param name="Buffer">Output buffer</param>
-        public override void Encode(Goedel.ASN.Buffer Buffer) => Buffer.Encode__Octets(PublicKeyData, 0, -1);
+        /// <param name="buffer">Output buffer</param>
+        public override void Encode(Goedel.ASN.Buffer buffer) => buffer.Encode__Octets(Data, 0, -1);
 
         /// <summary>
         /// Return the corresponding public parameters
@@ -78,22 +78,22 @@ namespace Goedel.Cryptography.PKIX {
         /// <summary>
         /// Create PKIX representation from the encoded values.
         /// </summary>
-        /// <param name="Data">The private key data as an octet string</param>
-        /// <param name="Public">The public key representation.</param>
-        public PKIXPrivateKeyECDH(byte[] Data, PKIXPublicKeyECDH Public) {
-            this.Data = Data.Duplicate();
-            PKIXPublicKeyECDH = Public;
+        /// <param name="data">The private key data as an octet string</param>
+        /// <param name="public">The public key representation.</param>
+        public PKIXPrivateKeyECDH(byte[] data, PKIXPublicKeyECDH @public) {
+            this.Data = data.Duplicate();
+            PKIXPublicKeyECDH = @public;
             }
 
 
         /// <summary>
         /// Construct a PKIX SubjectPublicKeyInfo block
         /// </summary>
-        /// <param name="OIDValue">The OID value</param>
+        /// <param name="oidValue">The OID value</param>
         /// <returns>The PKIX structure</returns>
-        public SubjectPublicKeyInfo SubjectPublicKeyInfo(int[] OIDValue = null) {
-            OIDValue = OIDValue ?? OID;
-            return new SubjectPublicKeyInfo(OIDValue, DER());
+        public SubjectPublicKeyInfo SubjectPublicKeyInfo(int[] oidValue = null) {
+            oidValue = oidValue ?? OID;
+            return new SubjectPublicKeyInfo(oidValue, DER());
             }
 
 
@@ -136,7 +136,7 @@ namespace Goedel.Cryptography.PKIX {
         /// <summary>
         /// Default constructor, create empty structure.
         /// </summary>
-        public PKIXPublicKeyEd25519(byte[] Data) => PublicKeyData = Data;
+        public PKIXPublicKeyEd25519(byte[] data) => Data = data;
 
         }
 
@@ -165,9 +165,9 @@ namespace Goedel.Cryptography.PKIX {
         /// <summary>
         /// Default constructor, create empty structure.
         /// </summary>
-        /// <param name="Data">The private key data as an octet string</param>
-        /// <param name="Public">The public key representation.</param>
-        public PKIXPrivateKeyEd25519(byte[] Data, PKIXPublicKeyECDH Public) : base(Data, Public) {
+        /// <param name="data">The private key data as an octet string</param>
+        /// <param name="publicKey">The public key representation.</param>
+        public PKIXPrivateKeyEd25519(byte[] data, PKIXPublicKeyECDH publicKey) : base(data, publicKey) {
             }
 
         }
@@ -196,7 +196,7 @@ namespace Goedel.Cryptography.PKIX {
         /// <summary>
         /// Default constructor, create empty structure.
         /// </summary>
-        public PKIXPublicKeyEd448(byte[] Data) => PublicKeyData = Data;
+        public PKIXPublicKeyEd448(byte[] data) => Data = data;
 
         }
 
@@ -224,7 +224,7 @@ namespace Goedel.Cryptography.PKIX {
         /// <summary>
         /// Default constructor, create empty structure.
         /// </summary>
-        public PKIXPrivateKeyEd448(byte[] Data, PKIXPublicKeyECDH Public) : base(Data, Public) {
+        public PKIXPrivateKeyEd448(byte[] data, PKIXPublicKeyECDH publicKey) : base(data, publicKey) {
             }
 
         }
@@ -254,7 +254,7 @@ namespace Goedel.Cryptography.PKIX {
         /// <summary>
         /// Default constructor, create empty structure.
         /// </summary>
-        public PKIXPublicKeyX25519(byte[] Data) => PublicKeyData = Data;
+        public PKIXPublicKeyX25519(byte[] data) => Data = data;
 
         }
 
@@ -285,7 +285,7 @@ namespace Goedel.Cryptography.PKIX {
         /// <summary>
         /// Default constructor, create empty structure.
         /// </summary>
-        public PKIXPrivateKeyX25519(byte[] Data, PKIXPublicKeyECDH Public) : base(Data, Public) {
+        public PKIXPrivateKeyX25519(byte[] data, PKIXPublicKeyECDH publicKey) : base(data, publicKey) {
             }
 
         }
@@ -316,7 +316,7 @@ namespace Goedel.Cryptography.PKIX {
         /// <summary>
         /// Default constructor, create empty structure.
         /// </summary>
-        public PKIXPublicKeyX448(byte[] Data) => PublicKeyData = Data;
+        public PKIXPublicKeyX448(byte[] data) => Data = data;
 
         }
 
@@ -346,7 +346,7 @@ namespace Goedel.Cryptography.PKIX {
         /// <summary>
         /// Default constructor, create empty structure.
         /// </summary>
-        public PKIXPrivateKeyX448(byte[] Data, PKIXPublicKeyECDH Public) : base(Data, Public) {
+        public PKIXPrivateKeyX448(byte[] data, PKIXPublicKeyECDH publicKey) : base(data, publicKey) {
             }
 
         }

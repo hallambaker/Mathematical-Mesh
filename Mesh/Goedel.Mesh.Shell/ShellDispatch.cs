@@ -17,6 +17,11 @@ namespace Goedel.Mesh.Shell {
 
         public virtual IMeshMachine MeshMachine { get; }
 
+
+        public virtual CatalogHost CatalogHost => catalogHost ??
+            CatalogHost.GetCatalogHost(MeshMachine).CacheValue(out catalogHost);
+        CatalogHost catalogHost;
+
         public static void Main(string[] Args) {
             var CLI = new CommandLineInterpreter();
             var Dispatch = new Shell();
@@ -138,19 +143,19 @@ namespace Goedel.Mesh.Shell {
         //    (Options.Recipient.Value == null) ? null : new List<string> { Options.Recipient.Value };
 
 
-        public virtual JpcSession GetJpcSession(IAccountOptions options) {
-            throw new NYI();
-            }
+        // This pair of methods is specified her so as to allow them to be overridden in
+        // a test shell
+
+        public virtual JpcSession GetJpcSession(IAccountOptions options) => throw new NYI();
 
 
-        public virtual MeshService GetMeshClient(IAccountOptions options) {
-            throw new NYI();
-            }
+        public virtual MeshService GetMeshClient(IAccountOptions options) => throw new NYI();
 
-        public virtual ContextDevice GetContextDevice(IAccountOptions options) {
-            throw new NYI();
-            }
-
+        /// <summary>
+        /// Get or create a device profile without an associated account.
+        /// </summary>
+        /// <param name="options">The shell options.</param>
+        /// <returns>The device context</returns>
         public virtual ContextDevice GetContextDevice(IDeviceProfileInfo options) {
             if (!options.DeviceNew.Value) {
                 var deviceUDF = options.DeviceUDF.Value;
@@ -166,16 +171,32 @@ namespace Goedel.Mesh.Shell {
 
             }
 
+        ContextDevice ContextDevice;
+        ContextAdministrator ContextAdministrator => ContextDevice as ContextAdministrator;
+        ContextMaster ContextMaster => ContextDevice as ContextMaster;
+
+
+        public virtual ContextDevice GetContextDevice(IAccountOptions options) {
+
+            ContextDevice = CatalogHost.GetContextDevice();
+            return ContextDevice;
+
+            }
+
+        public virtual ContextAdministrator GetContextAdministrator(IAccountOptions options) {
+            var context = CatalogHost.GetContextAdministrator();
+            ContextDevice = context;
+            return context;
+            }
+
         public virtual ContextMaster GetContextMaster(IAccountOptions options) {
-            throw new NYI();
+            var context = CatalogHost.GetContextMaster();
+            ContextDevice = context;
+            return context;
             }
 
         public KeyCollection KeyCollection(IAccountOptions options) =>
-            throw new NYI();
-
-        public CryptoParameters GetCryptoParameters(KeyCollection keyCollection, IEncodeOptions options) {
-            throw new NYI();
-            }
+            CatalogHost.GetKeyCollection();
 
 
         /// <summary>
@@ -190,20 +211,29 @@ namespace Goedel.Mesh.Shell {
         /// </summary>
         /// <param name="Options"></param>
         /// <returns></returns>
-        public CryptoParameters CryptoParameters(IEncodeOptions Options) {
+        public CryptoParameters GetCryptoParameters(KeyCollection keyCollection, IEncodeOptions Options) {
             var cryptoParameters = new CryptoParameters();
 
             if (Options.Encrypt != null) {
                 if (Options.Encrypt.Value != null) {
-                    throw new NYI(); // Hack: need to resolve this against the contacts catalog
+                    cryptoParameters.EncryptionKeys = new List<KeyPair> 
+                        { keyCollection.GetByAccountEncrypt(Options.Encrypt.Value)};
                     }
-                cryptoParameters.EncryptID = AlgorithmEncrypt.DefaultBulk(CryptoAlgorithmID.AES256);
+                cryptoParameters.EncryptID = AlgorithmEncrypt.DefaultBulk(CryptoAlgorithmID.AES256CBC);
                 }
 
 
             if (Options.Sign != null) {
-                cryptoParameters.DigestID = AlgorithmDigest.DefaultBulk(CryptoAlgorithmID.SHA_2_512); ;
-                throw new NYI(); // Hack: need to resolve this against the contacts catalog
+                if (Options.Sign.Value != null) {
+                    cryptoParameters.DigestID = AlgorithmDigest.DefaultBulk(CryptoAlgorithmID.SHA_2_512);
+                    cryptoParameters.SignerKeys = new List<KeyPair>
+                        { keyCollection.GetByAccountSign(Options.Sign.Value)};
+                    throw new NYI(); // Hack: need to resolve this against the contacts catalog
+                    }
+                }
+
+            else if (Options.Hash.Value) {
+                cryptoParameters.DigestID = AlgorithmDigest.DefaultBulk(CryptoAlgorithmID.SHA_2_512);
                 }
 
             return cryptoParameters;

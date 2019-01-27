@@ -49,8 +49,7 @@ namespace Goedel.Cryptography.Jose {
         /// <returns>The extracted key pair</returns>
         public override KeyPair GetKeyPair(KeySecurity keySecurity, KeyCollection keyCollection) {
 
-            var PKIXParams = PKIXParameters;
-            var KeyPair = KeyPairBaseDH.KeyPairPublicFactory(PKIXParams);
+            var KeyPair = KeyPairBaseDH.KeyPairPublicFactory(PKIXParameters);
 
             return KeyPair;
             }

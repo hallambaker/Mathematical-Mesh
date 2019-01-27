@@ -190,7 +190,7 @@ namespace Goedel.Cryptography {
             if (keySecurity != KeySecurity.Ephemeral) {
                 keyCollection = keyCollection ?? KeyCollection.Default;
 
-                keyCollection.Persist(keyPair);
+                keyCollection.Add(keyPair);
                 }
             return keyPair;
 

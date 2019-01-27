@@ -42,7 +42,10 @@ namespace Goedel.Mesh.Shell {
         /// <returns>Mesh result instance</returns>
         public override ShellResult FileDecrypt(FileDecrypt Options) {
             var inputFile = Options.Input.Value;
-            var Length = DareMessage.Decode(inputFile);
+            var keyCollection = KeyCollection(Options);
+
+
+            var Length = DareMessage.Decode(inputFile, keyCollection: keyCollection);
 
             return new ResultFile() {
                 TotalBytes = (int)Length

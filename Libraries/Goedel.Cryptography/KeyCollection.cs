@@ -39,7 +39,7 @@ namespace Goedel.Cryptography {
         Dictionary<string, KeyPair> DictionaryKeyPairByAccountSign = new Dictionary<string, KeyPair>();
 
 
-        Dictionary<string, KeyPair> DictionaryKeyPairPrivateByUDF = new Dictionary<string, KeyPair>();
+        //Dictionary<string, KeyPair> DictionaryKeyPairPrivateByUDF = new Dictionary<string, KeyPair>();
 
 
 
@@ -75,7 +75,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="keyID">The key identifier to match</param>
         /// <returns>True if a match is found, otherwise false.</returns>
-        public KeyPair TryMatchRecipient(string keyID) {
+        public virtual KeyPair TryMatchRecipient(string keyID) {
 
 
             // Search our this.SessionPersonal = SessionPersonal;
@@ -116,7 +116,7 @@ namespace Goedel.Cryptography {
         /// <param name="keyPair">The key to persist.</param>
         public virtual void Persist(KeyPair keyPair) {
 
-            DictionaryKeyPairPrivateByUDF.AddSafe(keyPair.UDF, keyPair);
+            //DictionaryKeyPairPrivateByUDF.AddSafe(keyPair.UDF, keyPair);
 
             if (keyPair.PersistPending) {
                 keyPair.Persist(this);

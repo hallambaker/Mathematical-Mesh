@@ -47,7 +47,7 @@ namespace Goedel.Mesh.Protocol.Client {
         public MeshResult Hello(string account = null) {
 
             account = account ?? AccountName;
-            MeshService = Machine.GetMeshClient(account);
+            MeshService = MeshMachine.GetMeshClient(account);
             var request = new HelloRequest();
             var response = MeshService.Hello(request, MeshClientSession);
 
@@ -64,7 +64,7 @@ namespace Goedel.Mesh.Protocol.Client {
 
             // get the account profile
             var meshClientSession = new MeshClientSession(this);
-            MeshService = Machine.GetMeshClient(account);
+            MeshService = MeshMachine.GetMeshClient(account);
 
             var meshConnectData = new ProfileMesh() {
                 Account = account,
@@ -88,7 +88,7 @@ namespace Goedel.Mesh.Protocol.Client {
                 deviceWitness = UDF.MakeWitnessString(deviceUDF,
                     connectResponse.ProfileMesh.ProfileNonce);
 
-                Machine.Register(connectResponse.ProfileMesh);
+                MeshMachine.Register(connectResponse.ProfileMesh);
                 }
 
             // if successful save the connection response for later use.
