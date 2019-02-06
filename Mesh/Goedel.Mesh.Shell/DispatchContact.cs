@@ -18,14 +18,14 @@ namespace Goedel.Mesh.Shell {
         /// <returns>Mesh result instance</returns>
         public override ShellResult ContactAdd(ContactAdd Options) {
             var contextDevice = GetContextDevice(Options);
-            var catalog = contextDevice.CatalogContact;
-            var file = Options.File.Value;
-
+            var identifier = Options.Identifier.Value;
 
             var entry = new CatalogEntryContact() {
-
+                Key= identifier
                 };
-            catalog.Add(entry);
+            using (var catalog = contextDevice.GetCatalogContact()) {
+                catalog.Add(entry);
+                }
 
             return new ResultEntry() {
                 Success = true,
@@ -40,16 +40,16 @@ namespace Goedel.Mesh.Shell {
         /// <returns>Mesh result instance</returns>
         public override ShellResult ContactdGet(ContactdGet Options) {
             var contextDevice = GetContextDevice(Options);
-            var catalog = contextDevice.CatalogContact;
             var identifier = Options.Identifier.Value;
 
-            var result = catalog.Locate(identifier);
-            catalog.Delete(result);
+            using (var catalog = contextDevice.GetCatalogContact()) {
+                var result = catalog.Locate(identifier);
 
-            return new ResultEntry() {
-                Success = true,
-                CatalogEntry = result
-                };
+                return new ResultEntry() {
+                    Success = result != null,
+                    CatalogEntry = result
+                    };
+                }
             }
 
         /// <summary>
@@ -59,11 +59,13 @@ namespace Goedel.Mesh.Shell {
         /// <returns>Mesh result instance</returns>
         public override ShellResult ContactDelete(ContactDelete Options) {
             var contextDevice = GetContextDevice(Options);
-            var catalog = contextDevice.CatalogContact;
             var identifier = Options.Identifier.Value;
-            var result = catalog.Locate(identifier);
 
-            catalog.Delete(result);
+            using (var catalog = contextDevice.GetCatalogContact()) {
+                var result = catalog.Locate(identifier);
+
+                catalog.Delete(result);
+                }
 
             return new Result() {
                 Success = true
@@ -78,17 +80,16 @@ namespace Goedel.Mesh.Shell {
         /// <returns>Mesh result instance</returns>
         public override ShellResult ContactDump(ContactDump Options) {
             var contextDevice = GetContextDevice(Options);
-            var catalog = contextDevice.CatalogCredential;
 
             var result = new ResultDump() {
                 Success = true,
                 CatalogEntries = new List<CatalogEntry>()
                 };
-
-            foreach (var entry in catalog) {
-                result.CatalogEntries.Add(entry);
+            using (var catalog = contextDevice.GetCatalogContact()) {
+                foreach (var entry in catalog) {
+                    result.CatalogEntries.Add(entry);
+                    }
                 }
-
             return result;
             }
         }

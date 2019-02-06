@@ -10,6 +10,7 @@ namespace Goedel.Mesh {
     public partial class ProfileMaster {
 
         public string UDF => MasterSignatureKey.UDF;
+        public byte[] UDFBytes => MasterSignatureKey.KeyPair.PKIXPublicKey.UDFBytes(512);
 
         public override string _PrimaryKey => MasterSignatureKey.UDF;
 
@@ -76,6 +77,9 @@ namespace Goedel.Mesh {
             return false;
             }
 
+
+        public static ProfileMaster Decode(DareMessage message) =>
+            FromJSON(message.GetBodyReader(), true);
         }
 
     }

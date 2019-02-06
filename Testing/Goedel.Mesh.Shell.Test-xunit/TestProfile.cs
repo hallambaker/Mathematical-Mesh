@@ -49,26 +49,25 @@ namespace Goedel.XUnit {
         public void TestProfileConnect() {
             var accountA = "alice@example.com";
 
-            var device1 = GetTestCLI();
-            var device2 = GetTestCLI();
-            var device3 = GetTestCLI();
+            var device1 = GetTestCLI("Device1");
+            var device2 = GetTestCLI("Device2");
+            var device3 = GetTestCLI("Device3");
 
-            device1.Dispatch($"profile master /new {accountA}");
-            var result1 = device1.Dispatch($"profile pin");
+            device1.Dispatch($"profile master {accountA} /new ");
 
-            device2.Dispatch($"profile connect {accountA} ");
+            device2.Dispatch($"profile connect {accountA} /new");
             device2.Dispatch($"profile sync", fail:true);
 
             var result2 = device1.Dispatch($"profile pending");
             device1.Dispatch($"profile accept");
             device2.Dispatch($"profile sync");
 
-            device3.Dispatch($"profile connect {accountA} ");
+            device3.Dispatch($"profile connect {accountA}  /new");
             device3.Dispatch($"profile sync", fail: true);
 
             var result3 = device1.Dispatch($"profile pending");
             device1.Dispatch($"profile reject");
-            device2.Dispatch($"profile sync", fail: true);
+            device3.Dispatch($"profile sync", fail: true);
             }
 
 
@@ -76,15 +75,18 @@ namespace Goedel.XUnit {
         public void TestProfileConnectPin() {
             var accountA = "alice@example.com";
 
-            var device1 = GetTestCLI();
-            var device2 = GetTestCLI();
-            var device3 = GetTestCLI();
+            var device1 = GetTestCLI("Device1");
+            var device2 = GetTestCLI("Device2");
+            var device3 = GetTestCLI("Device3");
 
-            device1.Dispatch($"profile master /new {accountA}");
+            device1.Dispatch($"profile master {accountA} /new ");
             var result1 = device1.Dispatch($"profile pin");
-            var pin = "";
-            device2.Dispatch($"profile connect {accountA} /pin {pin}");
-            device3.Dispatch($"profile connect {accountA} /pin {pin}");
+            var pin1 = "";
+            device2.Dispatch($"profile connect {accountA} /pin {pin1}");
+
+            var result2 = device1.Dispatch($"profile pin");
+            var pin2 = "";
+            device3.Dispatch($"profile connect {accountA} /pin {pin2}");
             }
         }
     }

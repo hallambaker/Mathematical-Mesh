@@ -134,15 +134,30 @@
 		String Account
 			Description
 				|Account address.
-		Struct DareMessage DeviceProfile
-			Description
-				|Device profile of the device making the request.
 		Struct DareMessage MasterProfile
 			Description
 				|Master profile of the account being registered.
 		Struct PublicKey AccountEncryptionKey
 			Description
 				|Key used to encrypt data under this profile
+
+
+	Structure ProfileMeshDevicePublic
+		Inherits ProfileApplication
+		Struct DareMessage DeviceProfile
+			Description
+				|Device profile of the device making the request.
+		Struct Permission Permissions
+			Multiple
+			Description
+				|List of the permissions that the device has been granted.
+
+	Structure ProfileMeshDevicePrivate
+		Inherits ProfileApplication
+		Struct Permission Permissions
+			Multiple
+			Description
+				|List of the permissions that the device has been granted.
 		Binary ProfileNonce
 			Description
 				|Random nonce used to mask the fingerprint of the profile UDF.
@@ -151,6 +166,16 @@
 				|Witness value calculated over the ProfileNonce and profile UDF
 
 
+	Structure DeviceRecryptionKey
+		String UDF
+			Description
+				|The fingerprint of the encryption key
+		Struct PublicKey RecryptionKey
+			Description
+				|The recryption key
+		Struct DareMessage DeviceRecryptionKeyEncrypted
+			Description
+				|The decryption key encrypted under the user's device key.		
 
 	Section 2 "Common Structures"
 
@@ -201,9 +226,15 @@
 		String Country
 
 	Structure Reference
-		String ID
+		String MessageID
+			Description
+				|The received message to which this is a response
+		String ResponseID
+			Description
+				|Message that was generated in response to the original (optional).
 		String Relationship
-
+			Description
+				|The relationship type. This can be Read, Unread, Accept, Reject.
 
 	Section 2 "Catalog Entries"
 
@@ -211,13 +242,24 @@
 
 	Structure CatalogEntryDevice
 		Inherits CatalogEntry
-		Struct DareMessage DeviceProfile
+		Description
+			|Public device entry, indexed under the device ID
+		String UDF;
+			Description
+				|UDF of the signature key
+		String AuthUDF;
+			Description
+				|UDF of the authentication ID
+		Struct DareMessage ProfileMeshDevicePublicSigned
 			Description
 				|The device profile
-		Struct Permission Permissions
+		Struct DareMessage ProfileMeshDevicePrivateEncrypted
+			Description
+				|The device profile
+		Struct DeviceRecryptionKey DeviceRecryptionKeys
 			Multiple
 			Description
-				|List of the permissions that the device has been granted.
+				|Decryption key entries.	
 
 
 	Structure CatalogEntryCredential
@@ -227,7 +269,12 @@
 		String Username
 		String Password
 	
-
+	Structure CatalogEntryNetwork
+		Inherits CatalogEntry
+		String Protocol
+		String Service
+		String Username
+		String Password
 
 	Structure CatalogEntryContact
 		Inherits CatalogEntry
@@ -310,13 +357,20 @@
 		String Sender
 		String Recipient
 		Struct Reference References
+			Multiple
+
+	Structure MeshMessageComplete
+		Inherits MeshMessage
 	
 	Structure MessageConnectionRequest
 		Inherits MeshMessage
-
-		Struct ProfileMesh ProfileMesh
+		String Account
+		Struct DareMessage DeviceProfile
 			Description
-				|The device profile
+				|Device profile of the device making the request.
+		Binary ClientNonce
+		Binary ServerNonce
+		String Witness
 
 	Structure MessageContactRequest
 		Inherits MeshMessage

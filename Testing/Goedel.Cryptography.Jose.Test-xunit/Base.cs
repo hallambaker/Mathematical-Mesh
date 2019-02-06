@@ -29,7 +29,7 @@ namespace Goedel.XUnit {
 
         static void Initializer (bool test=true) {
 
-            TestEnvironment.Initialize();
+            TestEnvironmentCommon.Initialize();
 
             SignerKeyPair = (KeyPairBaseRSA)KeyFileDecode.DecodePEM(
                     Directories.TestKey_OpenSSH_Private, KeySecurity.Exportable, null);

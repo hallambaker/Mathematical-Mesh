@@ -25,7 +25,7 @@ namespace Goedel.XUnit {
             var device1 = GetTestCLI();
             var device2= GetTestCLI();
 
-            device1.Dispatch($"profile master /new {accountA}");
+            device1.Dispatch($"profile master {accountA} /new ");
             var result1 = device1.Dispatch($"profile pin");
             var pin = "";
             device2.Dispatch($"profile connect {accountA} /pin {pin}");

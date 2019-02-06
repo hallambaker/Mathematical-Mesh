@@ -214,12 +214,14 @@ namespace Goedel.Mesh.Shell {
         public CryptoParameters GetCryptoParameters(KeyCollection keyCollection, IEncodeOptions Options) {
             var cryptoParameters = new CryptoParameters();
 
+            // Goal: do an encrypt self default option
             if (Options.Encrypt != null) {
                 if (Options.Encrypt.Value != null) {
+                    cryptoParameters.EncryptID = AlgorithmEncrypt.DefaultBulk(CryptoAlgorithmID.AES256CBC);
                     cryptoParameters.EncryptionKeys = new List<KeyPair> 
                         { keyCollection.GetByAccountEncrypt(Options.Encrypt.Value)};
                     }
-                cryptoParameters.EncryptID = AlgorithmEncrypt.DefaultBulk(CryptoAlgorithmID.AES256CBC);
+
                 }
 
 
@@ -228,7 +230,6 @@ namespace Goedel.Mesh.Shell {
                     cryptoParameters.DigestID = AlgorithmDigest.DefaultBulk(CryptoAlgorithmID.SHA_2_512);
                     cryptoParameters.SignerKeys = new List<KeyPair>
                         { keyCollection.GetByAccountSign(Options.Sign.Value)};
-                    throw new NYI(); // Hack: need to resolve this against the contacts catalog
                     }
                 }
 

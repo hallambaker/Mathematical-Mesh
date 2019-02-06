@@ -21,7 +21,7 @@ namespace Goedel.XUnit {
 
         public static TestProfilesXunit Test() => new TestProfilesXunit();
         public TestProfilesXunit() {
-            TestEnvironment.Initialize();
+            TestEnvironmentCommon.Initialize();
             Goedel.Mesh.Mesh.Initialize();
             }
 

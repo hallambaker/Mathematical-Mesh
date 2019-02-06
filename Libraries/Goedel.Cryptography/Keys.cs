@@ -45,6 +45,12 @@ namespace Goedel.Cryptography {
         /// </summary>
         public virtual string UDF => null;
 
+
+        /// <summary>
+        /// UDF fingerprint of the key
+        /// </summary>
+        public abstract byte[] UDFBytes { get; }
+
         /// <summary>
         /// The key name.
         /// </summary>

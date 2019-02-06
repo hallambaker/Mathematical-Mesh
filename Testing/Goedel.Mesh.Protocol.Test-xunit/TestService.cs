@@ -1,6 +1,6 @@
-using System;
+using System.Collections.Generic;
 using Xunit;
-using Goedel.Mesh.Protocol;
+using Goedel.Cryptography.Dare;
 using Goedel.Mesh.Protocol.Server;
 using Goedel.Mesh.Protocol.Client;
 using Goedel.Utilities;
@@ -17,7 +17,6 @@ namespace Goedel.XUnit {
 
         // Task: Verify.
         // Task: Sign
-        // Task: Encrypt
 
         // Verify: Validate device profile signature
         // Verify: Validate mesh profile signature
@@ -37,7 +36,8 @@ namespace Goedel.XUnit {
 
         [Fact]
         public void ProtocolHello() {
-            var machineEnvironment = new TestMachineEnvironment( "ProtocolHello");
+            var machineEnvironment = new TestEnvironmentMachine( "ProtocolHello");
+
             var meshClient = machineEnvironment.MeshPortalDirect.GetService(ServiceName);
 
 
@@ -48,9 +48,8 @@ namespace Goedel.XUnit {
 
         [Fact]
         public void ProtocolHelloContext() {
-            var machineEnvironment = new TestMachineEnvironment( "ProtocolHelloContext");
-
-            MeshMachineTest.GetContext(machineEnvironment, AccountAlice, "Alice Admin", 
+            var testEnvironmentCommon = new TestEnvironmentCommon();
+            MeshMachineTest.GetContext(testEnvironmentCommon, AccountAlice, "Alice Admin", 
                     out var machineAliceAdmin, out var deviceAdmin, out var masterAdmin);
             var response = masterAdmin.Hello(ServiceName);
 
@@ -60,9 +59,8 @@ namespace Goedel.XUnit {
 
         [Fact]
         public void ProtocolAccountLifecycle() {
-            var machineEnvironment = new TestMachineEnvironment( "ProtocolAccountLifecycle");
-
-            MeshMachineTest.GetContext(machineEnvironment, AccountAlice, "Alice Admin", 
+            var testEnvironmentCommon = new TestEnvironmentCommon();
+            MeshMachineTest.GetContext(testEnvironmentCommon, AccountAlice, "Alice Admin", 
                 out var machineAliceAdmin, out var deviceAdmin, out var masterAdmin);
 
 
@@ -86,9 +84,8 @@ namespace Goedel.XUnit {
 
         [Fact]
         public void ProtocolCatalog() {
-            var machineEnvironment = new TestMachineEnvironment( "ProtocolCatalog");
-
-            MeshMachineTest.GetContext(machineEnvironment, AccountAlice, "Alice Admin", 
+            var testEnvironmentCommon = new TestEnvironmentCommon();
+            MeshMachineTest.GetContext(testEnvironmentCommon, AccountAlice, "Alice Admin", 
                 out var machineAliceAdmin, out var deviceAdmin, out var masterAdmin);
 
 
@@ -111,9 +108,8 @@ namespace Goedel.XUnit {
 
         [Fact]
         public void MeshConnect() {
-            var machineEnvironment = new TestMachineEnvironment( "MeshConnect");
-
-            MeshMachineTest.GetContext(machineEnvironment, AccountAlice, "Alice Admin", 
+            var testEnvironmentCommon = new TestEnvironmentCommon();
+            MeshMachineTest.GetContext(testEnvironmentCommon, AccountAlice, "Alice Admin", 
                 out var machineAliceAdmin, out var deviceAdmin, out var masterAdmin);
 
 
@@ -121,7 +117,7 @@ namespace Goedel.XUnit {
             var meshClientAdmin = masterAdmin.CreateAccount(AccountAlice);
 
             // Create device profile
-            MeshMachineTest.GetContext(machineEnvironment, AccountAlice, "Alice 2", out var MachineAliceSecond, out var deviceSecond);
+            MeshMachineTest.GetContext(testEnvironmentCommon, AccountAlice, "Alice 2", out var MachineAliceSecond, out var deviceSecond);
             var ww = masterAdmin.Sync();
             // Post connection request
             var connectResponse = deviceSecond.RequestConnect(AccountAlice);
@@ -134,9 +130,9 @@ namespace Goedel.XUnit {
             var deviceStatusFail = deviceSecond.Sync();
             deviceStatusFail.AssertError();
 
-            // Accept connection request
-            ProcessPending(masterAdmin);
-
+            // Check the completion message
+            var count = ProcessPending(masterAdmin);
+            (count == 0).AssertTrue();
 
             // Pull device profile update - success, we get the personal and device profile.
             var deviceStatusSuccess = deviceSecond.Sync();
@@ -145,14 +141,14 @@ namespace Goedel.XUnit {
 
         [Fact]
         public void MeshContact() {
-            var machineEnvironment = new TestMachineEnvironment( "MeshContact");
+            var testEnvironmentCommon = new TestEnvironmentCommon();
 
             var AccountAlice = "alice@example.com";
             var AccountBob = "bob@example.com";
 
-            MeshMachineTest.GetContext(machineEnvironment, AccountAlice, "Alice Admin", 
+            MeshMachineTest.GetContext(testEnvironmentCommon, AccountAlice, "Alice Admin", 
                 out var machineAliceAdmin, out var deviceAdmin, out var masterAdmin);
-            MeshMachineTest.GetContext(machineEnvironment, AccountBob, "Bob Admin", 
+            MeshMachineTest.GetContext(testEnvironmentCommon, AccountBob, "Bob Admin", 
                 out var machineAdminBob, out var deviceAdminBob, out var masterAdminBob);
 
             var statusCreateAlice = masterAdmin.CreateAccount(AccountAlice);
@@ -186,51 +182,70 @@ namespace Goedel.XUnit {
             }
 
 
-        bool ProcessPending(ContextDevice device) {
+        int ProcessPending(ContextDevice device) {
+            var completed = new Dictionary<string, MeshMessage>();
 
-
+            var processed = 0;
             var sync = device.Sync();
             sync.AssertSuccess();
 
-            foreach (var message in device.SpoolInbound.Select(1)) {
+            foreach (var message in device.SpoolInbound.Select(1, true)) {
                 var meshMessage = MeshMessage.FromJSON(message.GetBodyReader());
 
-                switch (meshMessage) {
-                    case MessageConnectionRequest messageConnectionRequest: {
-                        var accept = true;
-
-                        device.ProcessConnectionRequest(messageConnectionRequest, accept);
-
-                        break;
+                if (!completed.ContainsKey(meshMessage.MessageID)) {
+                    if (meshMessage as MeshMessageComplete != null) {
+                        processed++;
                         }
-                    case MessageContactRequest messageContactRequest: {
-                        var accept = true;
 
-                        device.ProcessContactRequest(messageContactRequest, accept);
+                    switch (meshMessage) {
+                        case MeshMessageComplete meshMessageComplete:  {
+                            foreach (var reference in meshMessageComplete.References) {
+                                completed.Add(reference.MessageID, meshMessageComplete);
+                                // Hack: This should make actual use of the relationship
+                                //   (Accept, Reject, Read)
 
-                        break;
-                        }
-                    case MessageConfirmationRequest messageConfirmationRequest: {
-                        var accept = messageConfirmationRequest.Text[0] == 'A';
+                                }
 
-                        device.ProcessConfirmationRequest(messageConfirmationRequest, accept);
+                            break;
+                            }
 
-                        break;
-                        }
-                    case MessageConfirmationResponse messageConfirmationResponse: {
-                        break;
-                        }
-                    case MessageTaskRequest messageTaskRequest: {
-                        break;
+
+                        case MessageConnectionRequest messageConnectionRequest: {
+                            var accept = true;
+
+                            device.ProcessConnectionRequest(messageConnectionRequest, accept);
+
+                            break;
+                            }
+                        case MessageContactRequest messageContactRequest: {
+                            var accept = true;
+
+                            device.ProcessContactRequest(messageContactRequest, accept);
+
+                            break;
+                            }
+                        case MessageConfirmationRequest messageConfirmationRequest: {
+                            var accept = messageConfirmationRequest.Text[0] == 'A';
+
+                            device.ProcessConfirmationRequest(messageConfirmationRequest, accept);
+
+                            break;
+                            }
+                        case MessageConfirmationResponse messageConfirmationResponse: {
+                            break;
+                            }
+                        case MessageTaskRequest messageTaskRequest: {
+                            break;
+                            }
                         }
                     }
                 }
 
-            return true;
+            return processed;
             }
 
-        public MeshPortalDirect CreateService(string service) =>
-            new MeshPortalDirect(service);
+        //public MeshPortalDirect CreateService(string service) =>
+        //    new MeshPortalDirect(service);
 
         }
     }

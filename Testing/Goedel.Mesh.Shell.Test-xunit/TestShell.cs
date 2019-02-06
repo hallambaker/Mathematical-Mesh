@@ -18,15 +18,23 @@ namespace Goedel.XUnit {
         TestCLI DefaultDevice => defaultDevice ?? GetTestCLI().CacheValue(out defaultDevice);
         TestCLI defaultDevice;
 
-        /// <summary>
-        /// If the test requires a Mesh service, a separate service is instantiated
-        /// and shared across all shells.
-        /// </summary>
-        public MeshPortalDirect MeshPortalDirect => meshPortalDirect ??
-            new MeshPortalDirect(ServiceName).CacheValue(out meshPortalDirect);
-        MeshPortalDirect meshPortalDirect;
+        ///<summary>The test environment, base for all </summary>
+        public TestEnvironmentCommon TestEnvironment => testEnvironment ??
+            new TestEnvironmentCommon().CacheValue(out testEnvironment);
+        TestEnvironmentCommon testEnvironment;
 
-        public ShellTests(string serviceName = null) => ServiceName = serviceName ?? ServiceName;
+        //public string ServiceDirectory => System.IO.Path.Combine(TestEnvironment.Path, "ServiceDirectory");
+
+        ///// <summary>
+        ///// If the test requires a Mesh service, a separate service is instantiated
+        ///// and shared across all shells.
+        ///// </summary>
+        //public MeshPortalDirect MeshPortalDirect => meshPortalDirect ??
+        //    new MeshPortalDirect(ServiceName, ServiceDirectory).CacheValue(out meshPortalDirect);
+        //MeshPortalDirect meshPortalDirect;
+
+        public ShellTests(string serviceName = null) => 
+                    ServiceName = serviceName ?? ServiceName;
 
 
         public TestCLI GetTestCLI(string MachineName = null) {
@@ -37,6 +45,9 @@ namespace Goedel.XUnit {
         public Result Dispatch(string command, bool fail = false) =>
             DefaultDevice.Dispatch(command, fail);
 
+
+        public Result CreateAccount (string account) =>
+            Dispatch($"profile master {account} /new");
 
         public string GetFileUDF(string filename) {
             var result = Dispatch($"hash udf {filename}");
@@ -71,9 +82,11 @@ namespace Goedel.XUnit {
 
     public partial class TestShell : Shell {
         static string ServiceName = "example.com";
-        public MeshPortalDirect MeshPortalDirect => ShellTests.MeshPortalDirect;
+        public MeshPortalDirect MeshPortalDirect => TestEnvironmentCommon.MeshPortalDirect;
         public string MachineName = "Test";
         ShellTests ShellTests;
+
+        public TestEnvironmentCommon TestEnvironmentCommon => ShellTests.TestEnvironment;
 
         public override IMeshMachine MeshMachine => MeshMachineTest;
 
@@ -81,9 +94,9 @@ namespace Goedel.XUnit {
             new MeshMachineTest(MachineEnvironment, MachineName).CacheValue(out meshMachineTest);
         MeshMachineTest meshMachineTest;
 
-        TestMachineEnvironment MachineEnvironment => machineEnvironment ??
-            new TestMachineEnvironment(MachineName, MeshPortalDirect).CacheValue(out machineEnvironment);
-        TestMachineEnvironment machineEnvironment;
+        TestEnvironmentMachine MachineEnvironment => machineEnvironment ??
+            new TestEnvironmentMachine(TestEnvironmentCommon, MachineName).CacheValue(out machineEnvironment);
+        TestEnvironmentMachine machineEnvironment;
 
         MeshService MeshClient => meshClient ??
             MeshPortalDirect.GetService(ServiceName).CacheValue(out meshClient);
@@ -108,9 +121,9 @@ namespace Goedel.XUnit {
 
 
 
-        public override ContextDevice GetContextDevice(IAccountOptions Options) => throw new NYI();
+        //public override ContextDevice GetContextDevice(IAccountOptions Options) => throw new NYI();
 
-        public override ContextMaster GetContextMaster(IAccountOptions Options) => throw new NYI();
+        //public override ContextMaster GetContextMaster(IAccountOptions Options) => throw new NYI();
 
 
         public ShellResult ShellResult;

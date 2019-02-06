@@ -217,8 +217,9 @@
 		Inherits MeshResponse
 		Struct ContainerStatus ContainerStatus
 			Multiple
-		Struct DareMessage Profiles
-			Multiple
+		Struct DareMessage CatalogEntryDevice
+			Description
+				|The catalog device entry
 
 
 	//
@@ -273,6 +274,11 @@
 			Multiple
 			Description
 				|The data to be updated
+		Struct DareMessage Self
+			Multiple
+			Description
+				|Entries to be added to the inbound spool on the account, e.g. completion
+				|messages.
 
 	Message UploadResponse
 		Inherits MeshResponse
@@ -330,6 +336,11 @@
 				|The entries to be uploaded. These MAY be either complete messages or redacted messages.
 				|In either case, the messages MUST conform to the ConstraintsUpdate specified by the 
 				|service 
+		Struct DareMessage Self
+			Description
+				|Messages to be appended to the inbound spool of the user's inbound spool. this is
+				|typically used to post notifications to the user to mark messages as having been
+				|read or responded to.
 
 	Message PostResponse
 		Inherits UploadResponse
@@ -343,16 +354,24 @@
 	
 	Message ConnectRequest
 		Inherits MeshRequest
-		Struct DareMessage SignedMessage
+		String Account
+		Struct DareMessage DeviceProfile
 			Description
-				|The mesh profile
+				|Device profile of the device making the request.
+		Binary ClientNonce
 
 
 	Message ConnectResponse
 		Inherits MeshResponse
-		Struct ProfileMesh ProfileMesh
+		Struct DareMessage ProfileMesh
 			Description
-				|The preconnection data
+				|The account profile
+		Binary ServerNonce
+			Description
+				|Server Nonce value used to calculate Witness
+		String Witness
+			Description
+				|Witness value
 
 	//Create account
 	Transaction Admin CreateAccount CreateRequest CreateResponse
@@ -367,9 +386,14 @@
 			|the requested account identifier and the Mesh profile to be associated 
 			|with the account.
 		Inherits MeshRequest
-		Struct ProfileMesh Profile
+		Struct DareMessage MeshProfile
 			Description
 				|The Mesh profile to be registered.
+		Struct DareMessage CatalogEntryDevices
+			Multiple
+			Description
+				|The device profile(s) to be registered in the corresponding device
+				|catalog.
 
 	Message CreateResponse
 		Inherits MeshResponse

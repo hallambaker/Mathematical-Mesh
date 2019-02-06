@@ -76,7 +76,9 @@ namespace Goedel.Mesh {
         public void AppendDirect(DareMessage message) => Container.AppendDirect(message);
 
 
-        public ContainerEnumeratorRaw Select(int minIndex) => Container.Select(minIndex);
+        public ContainerEnumeratorRaw Select(int minIndex, bool reverse=false) => 
+            Container.Select(minIndex, reverse);
+
 
         }
 

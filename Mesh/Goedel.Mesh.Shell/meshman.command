@@ -400,11 +400,19 @@
 			Include AccountOptions
 			Include Reporting
 
+
+
 		Command BookmarkDelete "delete"
 			Brief "Delete bookmark entry"
 			Parameter Uri "uri" String
 				Brief "Contact entry identifier"
 			Option Path "path" String
+			Include AccountOptions
+			Include Reporting
+
+		Command BookmarkGet "get"
+			Brief "Lookup bookmark entry"
+			Parameter Identifier "site" String
 			Include AccountOptions
 			Include Reporting
 
@@ -419,7 +427,14 @@
 
 		Command CalendarAdd "add"
 			Brief "Add calendar entry from file"
-			Parameter File "file" ExistingFile
+			Parameter Identifier "id" String
+			Parameter Title "title" String
+			Include AccountOptions
+			Include Reporting
+
+		Command CalendarGet "get"
+			Brief "Lookup calendar entry"
+			Parameter Identifier "id" String
 			Include AccountOptions
 			Include Reporting
 
@@ -440,7 +455,14 @@
 
 		Command NetworkAdd "add"
 			Brief "Add calendar entry from file"
-			Parameter File "file" ExistingFile
+			Parameter Identifier "id" String
+			Include AccountOptions
+			Include Reporting
+
+
+		Command NetworkGet "get"
+			Brief "Lookup calendar entry"
+			Parameter Identifier "id" String
 			Include AccountOptions
 			Include Reporting
 

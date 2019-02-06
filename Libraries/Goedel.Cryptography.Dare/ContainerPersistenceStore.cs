@@ -17,6 +17,15 @@ namespace Goedel.Cryptography.Dare {
     /// </summary>
     public class ContainerPersistenceStore : Disposable, IPersistenceStoreWrite, IEnumerable<ContainerStoreEntry> {
 
+        // Test: Addition of signed frames to persistence stores (is failing)
+
+        // Test: enumeration mechanisms, forward and reverse.
+
+        // Goal: Implement indexing of containers, archives, etc.
+
+        // Goal: Make use of Indexes.
+
+
         #region --- Disposable objects
         //// Objects that MUST be disposed correctly when leaving a using section.
         //JBCDStream JBCDStream;
@@ -156,6 +165,9 @@ namespace Goedel.Cryptography.Dare {
                     var Data = ContainerDataReader.ToArray();
                     CommitTransaction(ContainerDataReader.Header, Data);
                     // here check the trailer.
+                    }
+                else {
+                    CommitTransaction(ContainerDataReader.Header, null);
                     }
                 }
 

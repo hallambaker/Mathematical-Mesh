@@ -26,8 +26,6 @@ namespace Goedel.Persistence {
     //     The "acc" Type has Tags "alice@example.com", "bob@example.com"
     //     The "alice@example.com" Tag has a set of values
 
-    // ToDo: Audit the locking strategy properly
-
 
     /// <summary>
     /// A collection of data items. 

@@ -9,11 +9,14 @@ namespace Goedel.Mesh {
     public partial class ProfileMesh {
 
         public override string _PrimaryKey => Account;
+        public string UDF => ProfileMaster.UDF;
+        public byte[] UDFBytes => ProfileMaster.UDFBytes;
 
-        public ProfileDevice ProfileDevice => profileDevice ??
-            ProfileDevice.Decode(DeviceProfile).CacheValue(out profileDevice);
 
-        ProfileDevice profileDevice = null;
+        public ProfileMaster ProfileMaster => profileMaster ??
+            ProfileMaster.Decode(MasterProfile).CacheValue(out profileMaster);
+        ProfileMaster profileMaster = null;
+
 
 
         public static ProfileMesh Decode(DareMessage message) =>

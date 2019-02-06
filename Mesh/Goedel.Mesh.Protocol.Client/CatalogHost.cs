@@ -56,7 +56,8 @@ namespace Goedel.Mesh.Protocol.Client {
                 string accountUDF = null,
                 string deviceID = null,
                 string deviceUDF = null) {
-            throw new NYI();
+            var profile = ContainerHost.DefaultProfileMesh;
+            return new ContextDevice(MeshMachine, profile, ContainerHost.DefaultProfileDevice);
             }
 
         public ContextAdministrator GetContextAdministrator(

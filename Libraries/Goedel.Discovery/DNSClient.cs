@@ -126,11 +126,11 @@ namespace Goedel.Discovery {
 
         CancellationTokenSource CancellationTokenSource = new CancellationTokenSource();
 
-        Task TaskRetry; // Task that expires when it is time to retry requests
-        Task TaskTimeout ; // Task that expires when it is time to give up
+        Task TaskRetry; // A task that expires when it is time to retry requests
+        Task TaskTimeout ; // A task that expires when it is time to give up
 
         /// <summary>
-        /// Task listening on the DNS port
+        /// A task listening on the DNS port
         /// </summary>
         protected Task<byte[]> TaskListen = null; // listen to the DNS port
 

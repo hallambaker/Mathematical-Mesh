@@ -1,11 +1,11 @@
 ﻿using System;
-using System.IO;
-using System.Collections.Generic;
-using Goedel.Utilities;
-using Goedel.Protocol;
-using Goedel.IO;
-using Goedel.Cryptography.Jose;
 using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+
+using Goedel.IO;
+using Goedel.Protocol;
+using Goedel.Utilities;
 
 namespace Goedel.Cryptography.Dare {
 
@@ -74,121 +74,6 @@ namespace Goedel.Cryptography.Dare {
 
         /// <summary>The current frame trailer as a parsed object.</summary>
         public DareTrailer Trailer;
-        }
-
-    /// <summary>
-    /// Enumerator that returns the raw, unencrypted container data.
-    /// </summary>
-    public class ContainerEnumeratorRaw : IEnumerator<DareMessage> {
-
-        Container Container;
-        int StartIndex;
-
-        /// <summary>
-        /// Gets the element in the collection at the current position of the enumerator.
-        /// </summary>
-        public DareMessage Current { get; private set; } = null;
-
-
-        /// <summary>
-        /// Create an enumerator for <paramref name="container"/>.
-        /// </summary>
-        /// <param name="startIndex">The first item to enumerate.</param>
-        /// <param name="container">The container to enumerate.</param>
-        public ContainerEnumeratorRaw(Container container, int startIndex = 0) {
-            this.Container = container;
-            StartIndex = startIndex;
-            Reset();
-            }
-
-        /// <summary>
-        /// When called on an instance of this class, returns the instance. Thus allowing
-        /// selectors to be used in sub classes.
-        /// </summary>
-        /// <returns>This instance</returns>
-        public ContainerEnumeratorRaw GetEnumerator() => this;
-
-        object IEnumerator.Current => throw new NotImplementedException();
-
-        /// <summary>
-        /// Dispose method.
-        /// </summary>
-        public void Dispose() { }
-
-        /// <summary>
-        /// Move to the next item in the enumeration.
-        /// </summary>
-        /// <returns>If true, the next item was found. Otherwise, the end of the enumeration 
-        /// was reached.</returns>
-        public bool MoveNext() {
-            Current = Container.ReadDirect();
-            return Current != null;
-            }
-
-        /// <summary>
-        /// Sets the enumerator to its initial position, which is before the first element 
-        /// in the collection.
-        /// </summary>
-        public void Reset() => Container.MoveToIndex(StartIndex);
-        }
-
-    /// <summary>
-    /// Enumerator for frames in a container beginning with frame 1.
-    /// </summary>
-    public class ContainerEnumerator : IEnumerator<ContainerDataReader> {
-
-        Container Container;
-
-        /// <summary>
-        /// Gets the element in the collection at the current position of the enumerator.
-        /// </summary>
-        public ContainerDataReader Current => _Current;
-        ContainerFramerReader _Current = null;
-
-
-
-        /// <summary>
-        /// Create an enumerator for <paramref name="container"/>.
-        /// </summary>
-        /// <param name="container">The container to enumerate.</param>
-        public ContainerEnumerator(Container container) {
-            this.Container = container;
-            Reset();
-            }
-
-        /// <summary>
-        /// When called on an instance of this class, returns the instance. Thus allowing
-        /// selectors to be used in sub classes.
-        /// </summary>
-        /// <returns>This instance</returns>
-        public ContainerEnumerator GetEnumerator() => this;
-
-
-        object IEnumerator.Current => throw new NotImplementedException();
-        private object Current1 => Current;
-
-        /// <summary>
-        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
-        /// </summary>
-        public void Dispose() => _Current?.Close();
-
-        /// <summary>
-        /// Advances the enumerator to the next element of the collection.
-        /// </summary>
-        /// <returns><code>true</code> if the enumerator was successfully advanced to the next element; 
-        /// <code>false</code> if the enumerator has passed the end of the collection.</returns>
-        public bool MoveNext() {
-            var Result = Container.NextFrame();
-            _Current = Result ? Container.GetFrameDataReader() : null;
-            return Result;
-            }
-        /// <summary>
-        /// Sets the enumerator to its initial position, which is before the first element in the collection.
-        /// </summary>
-        public void Reset() {
-            Container.Start();
-            _Current = Container.GetFrameDataReader();
-            }
         }
 
     /// <summary>
@@ -326,12 +211,12 @@ namespace Goedel.Cryptography.Dare {
 
                 // Create new container if empty or read the old one.
                 if (JBCDStream.Length == 0) {
-                    Container= NewContainer(JBCDStream, cryptoParameters,
+                    Container = NewContainer(JBCDStream, cryptoParameters,
                         containerType, contentType: contentType);
                     }
                 else {
                     keyCollection = keyCollection ?? cryptoParameters?.KeyCollection;
-                    Container= OpenExisting(JBCDStream, keyCollection);
+                    Container = OpenExisting(JBCDStream, keyCollection);
 
                     }
                 Container.DisposeJBCDStream = JBCDStream;
@@ -634,7 +519,8 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="minIndex">The minimum index.</param>
         /// <returns>The enumerator.</returns>
-        public ContainerEnumeratorRaw Select(int minIndex) => new ContainerEnumeratorRaw(this, minIndex);
+        public ContainerEnumeratorRaw Select(int minIndex, bool reverse = false) =>
+            new ContainerEnumeratorRaw(this, minIndex, reverse);
 
 
         /// <summary>
@@ -684,7 +570,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="header">The frame header value.</param>
         /// <param name="trailer">The frame trailer value.</param>
         /// <returns>The number of bytes written.</returns>
-        public long AppendFrame(byte[] header, byte[] payload = null, byte[] trailer=null) {
+        public long AppendFrame(byte[] header, byte[] payload = null, byte[] trailer = null) {
             // Write the frame ensuring the results get written out.
             var Length = JBCDStream.WriteWrappedFrame(header, payload, trailer);
             JBCDStream.Flush();
@@ -804,7 +690,7 @@ namespace Goedel.Cryptography.Dare {
                 List<byte[]> dataSequences = null) {
             AppendBegin(contentLength, out var CryptoStack, cryptoParameters, containerHeader,
                     contentType, cloaked, dataSequences);
-            
+
             input.ProcessRead(AppendProcess);
             AppendEnd();
             }
@@ -826,11 +712,33 @@ namespace Goedel.Cryptography.Dare {
             var trailerBytes = dareMessage.Trailer?.GetBytes(false);
 
             AppendFrame(headerBytes, dareMessage.Body, trailerBytes);
+            Console.WriteLine($"Position Written {JBCDStream.PositionWrite}");
 
             //JBCDStream.WriteWrappedFrame(headerBytes, dareMessage.Body,
             //    trailerBytes);
 
 
+            }
+
+        /// <summary>
+        /// Move to the start of the previous frame and save the reader position.
+        /// Then read the frame and return the reader position to the start of
+        /// the frame.
+        /// </summary>
+        /// <returns></returns>
+        public DareMessage ReadDirectReverse() {
+            Console.WriteLine($"Position Read {JBCDStream.PositionRead}");
+
+            var position = JBCDStream.MoveFrameReverse();
+            if (position <= 0) {
+                return null; // Exclude the first frame from reverse enumeration.
+                }
+
+            Console.WriteLine($"Position ReadII {position}");
+
+            var message = ReadDirect();
+            JBCDStream.PositionRead = position;
+            return message;
             }
 
         /// <summary>
@@ -847,7 +755,9 @@ namespace Goedel.Cryptography.Dare {
                 message.Header = ContainerHeader.FromJSON(headerData.JSONReader(), false);
                 }
             if (trailerData != null) {
-                message.Trailer = ContainerHeader.FromJSON(trailerData.JSONReader(), false);
+                JSONReader.Trace = true;
+                Console.WriteLine(trailerData.ToUTF8());
+                message.Trailer = DareTrailer.FromJSON(trailerData.JSONReader(), false);
                 }
             return message;
             }
@@ -1057,6 +967,15 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="frameIndex">Frame index to move to.</param>
         /// <returns>True if the position exists.</returns>
         public abstract bool MoveToIndex (long frameIndex);
+
+        /// <summary>
+        /// Move to begin reading the last frame in the container.
+        /// </summary>
+        /// <returns></returns>
+        public bool MoveToLast() {
+            JBCDStream.End();
+            return JBCDStream.PositionRead > 0;
+            }
 
         /// <summary>
         /// Verify container contents by reading every frame starting with the first and checking

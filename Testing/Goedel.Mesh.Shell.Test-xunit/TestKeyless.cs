@@ -16,7 +16,7 @@ namespace Goedel.XUnit {
     public partial class ShellTests {
 
         static ShellTests() {
-            TestEnvironment.Initialize();
+            TestEnvironmentCommon.Initialize();
             Mesh.Mesh.Initialize();
             }
 

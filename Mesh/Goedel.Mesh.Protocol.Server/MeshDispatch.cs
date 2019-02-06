@@ -120,9 +120,8 @@ namespace Goedel.Mesh.Protocol.Server {
                 CreateRequest request, JpcSession jpcSession) {
 
             var accountEntry = new AccountEntry(request);
-
             try {
-                Mesh.AccountAdd(jpcSession, accountEntry);
+                Mesh.AccountAdd(jpcSession, accountEntry, request.CatalogEntryDevices);
                 return new CreateResponse();
                 }
             catch (System.Exception exception) {
@@ -199,7 +198,7 @@ namespace Goedel.Mesh.Protocol.Server {
 
             try {
 
-                Mesh.AccountUpdate(jpcSession, Request.VerifiedAccount, Request.Updates);
+                Mesh.AccountUpdate(jpcSession, Request.VerifiedAccount, Request.Updates, Request.Self);
                 return new UploadResponse();
                 }
             catch (System.Exception exception) {
@@ -238,10 +237,13 @@ namespace Goedel.Mesh.Protocol.Server {
                 ConnectRequest Request, JpcSession jpcSession) {
 
             try {
-                var profileMesh = Mesh.Connect(jpcSession, Request.SignedMessage);
-                return new ConnectResponse() {
-                    ProfileMesh = profileMesh
-                    };
+                var connectResponse = Mesh.Connect(jpcSession,
+                    Request.Account,
+                    Request.DeviceProfile, 
+                    Request.ClientNonce);
+
+
+                return connectResponse;
                 }
             catch (System.Exception exception) {
                 return new ConnectResponse(exception);

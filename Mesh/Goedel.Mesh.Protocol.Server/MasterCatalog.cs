@@ -92,7 +92,7 @@ namespace Goedel.Mesh.Protocol.Server {
         ///The Mesh profile that was registered
         /// </summary>
 
-		public virtual ProfileMesh						Profile  {get; set;}
+		public virtual DareMessage						Profile  {get; set;}
         /// <summary>
         ///The profile status. Valid values are "Pending", "Connected", "Blocked"
         /// </summary>
@@ -193,7 +193,7 @@ namespace Goedel.Mesh.Protocol.Server {
 					}
 				case "Profile" : {
 					// An untagged structure
-					Profile = new ProfileMesh ();
+					Profile = new DareMessage ();
 					Profile.Deserialize (JSONReader);
  
 					break;

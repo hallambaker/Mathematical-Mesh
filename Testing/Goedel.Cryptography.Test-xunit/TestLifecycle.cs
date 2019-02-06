@@ -19,7 +19,7 @@ namespace Goedel.XUnit {
 
         public static TestLifecycle Test() => new TestLifecycle();
         public TestLifecycle() {
-            var machineEnvironment = new TestMachineEnvironment( "TestLifecycle");
+            var machineEnvironment = new TestEnvironmentMachine( "TestLifecycle");
             MeshMachine = new MeshMachineTest(machineEnvironment);
             KeyCollection = new KeyCollectionTest(MeshMachine);
             }

@@ -24,19 +24,18 @@ namespace Goedel.XUnit {
             var username3 = "alice3"; var password3 = "password3";
             var username4 = "alice4"; var password4 = "password4";
 
-
-            Dispatch($"profile master /new {account}");
+            CreateAccount(account);
 
             // Check that looking for a non existent entry fails
             // This makes sure that we don't end up picking up stale results from prior tests etc.
             FailPasswordResult(site1);
 
             // Add a single entry and check that it is correctly registered.
-            Dispatch($"password add /site {site1} /username {username1} /password {password1}");
+            Dispatch($"password add  {site1} {username1} {password1}");
             CheckPasswordResult(site1, username1, password1);
 
             // Add a second entry, check that the first and second are correctly registered,
-            Dispatch($"password add /site {site2} /username {username2} /password {password2}");
+            Dispatch($"password add  {site2} {username2}  {password2}");
             CheckPasswordResult(site1, username1, password1);
             CheckPasswordResult(site2, username2, password2);
 
@@ -46,12 +45,12 @@ namespace Goedel.XUnit {
             FailPasswordResult(site2);
 
             // Update the first entry, check that it is correctly updated.
-            Dispatch($"password add /site {site1} /username {username3} /password {password3}");
+            Dispatch($"password add {site1} {username3}  {password3}");
             CheckPasswordResult(site1, username3, password3);
             FailPasswordResult(site2);
 
             // Re-add the second entry, check that it is correctly registered.
-            Dispatch($"password add /site {site2} /username {username4} /password {password4}");
+            Dispatch($"password add {site2} {username4} {password4}");
             CheckPasswordResult(site1, username3, password3);
             CheckPasswordResult(site2, username4, password4);
             }
@@ -69,7 +68,7 @@ namespace Goedel.XUnit {
             var contact2 = $"carol@@example.com.mm--{contact2UDF}";
             var contact3 = $"bob2@@example.com.mm--{contact3UDF}";
 
-            Dispatch($"profile master /new {account}");
+            CreateAccount(account);
 
             // Check that looking for a non existent entry fails
             // This makes sure that we don't end up picking up stale results from prior tests etc.
@@ -93,7 +92,7 @@ namespace Goedel.XUnit {
             Dispatch($"contact add {contact3}");
             CheckContactResult(contact3);
 
-            FailContactResult(contact1);
+            FailContactResult(contact2);
             // Re-add the second entry, check that it is correctly registered.
             Dispatch($"contact add {contact2}");
             CheckContactResult(contact2);
@@ -109,7 +108,7 @@ namespace Goedel.XUnit {
             string uri2 = "http://www.site2.com", title2 = "site2", path2 = "Sites.2";
             string uri3 = "http://www.site3.com", title3 = "site3", path3 = "Sites.3";
 
-            Dispatch($"profile master /new {account}");
+            CreateAccount(account);
 
             // Check that looking for a non existent entry fails
             // This makes sure that we don't end up picking up stale results from prior tests etc.
@@ -143,11 +142,11 @@ namespace Goedel.XUnit {
         public void TestProfileCalendar() {
             var account = "alice@example.com";
 
-            string task1 = "task1", title1 = "title1";
+            string task1 = "task1", title1 = "title1", title1a = "title1a";
             string task2 = "task2", title2 = "title2";
             string task3 = "task3", title3 = "title3";
 
-            Dispatch($"profile master /new {account}");
+            CreateAccount(account);
 
             // Check that looking for a non existent entry fails
             // This makes sure that we don't end up picking up stale results from prior tests etc.
@@ -168,25 +167,25 @@ namespace Goedel.XUnit {
 
             FailTaskResult(task2);
             // Update the first entry, check that it is correctly updated.
-            Dispatch($"calendar add {task1} {title3}");
-            CheckTaskResult(task3, title3);
+            Dispatch($"calendar add {task1} {title1a}");
+            CheckTaskResult(task1, title1a);
 
             // Re-add the second entry, check that it is correctly registered.
-            Dispatch($"calendar add {task2} {title2}");
-            CheckTaskResult(task2, title2);
-            CheckTaskResult(task3, title3);
+            Dispatch($"calendar add {task2} {title3}");
+            CheckTaskResult(task2, title3);
+            CheckTaskResult(task1, title1a);
             }
 
 
         [Fact]
         public void TestProfileNetwork() {
             var account = "alice@example.com";
-            string ssid1 = "ssid1", password1 = "password1";
+            string ssid1 = "ssid1", password1 = "password1", password1a = "password1a";
             string ssid2 = "ssid2", password2 = "password2";
             string ssid3 = "ssid3", password3 = "password3";
 
 
-            Dispatch($"profile master /new {account}");
+            CreateAccount(account);
 
             // Check that looking for a non existent entry fails
             // This makes sure that we don't end up picking up stale results from prior tests etc.
@@ -207,13 +206,13 @@ namespace Goedel.XUnit {
 
             FailNetworkResult(ssid2);
             // Update the first entry, check that it is correctly updated.
-            Dispatch($"network add {ssid1} {password3}");
-            CheckNetworkResult(ssid3, password3);
+            Dispatch($"network add {ssid1} {password1a}");
+            CheckNetworkResult(ssid1, password1a);
 
             // Re-add the second entry, check that it is correctly registered.
             Dispatch($"network add {ssid2} {password2}");
             CheckNetworkResult(ssid2, password2);
-            CheckNetworkResult(ssid3, password3);
+            CheckNetworkResult(ssid1, password1a);
 
             }
         }

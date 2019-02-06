@@ -12,7 +12,7 @@ namespace Goedel.XUnit {
 
     public class Buffer {
         public static Buffer Test => new Buffer();
-        public Buffer() => TestEnvironment.Initialize(true);
+        public Buffer() => TestEnvironmentCommon.Initialize(true);
         // Feature: ASN1. Decode
 
         [Fact]

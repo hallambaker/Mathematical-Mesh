@@ -13,7 +13,7 @@ namespace Goedel.XUnit {
     public partial class GoedelProtocol {
 
         public static GoedelProtocol Test => new GoedelProtocol();
-        public GoedelProtocol() => TestEnvironment.Initialize(true);
+        public GoedelProtocol() => TestEnvironmentCommon.Initialize(true);
 
 
 

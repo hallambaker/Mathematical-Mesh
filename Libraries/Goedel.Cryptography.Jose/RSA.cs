@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Goedel.Cryptography;
 using Goedel.Cryptography.PKIX;
+using Goedel.Utilities;
 
 namespace Goedel.Cryptography.Jose {
 
@@ -77,6 +78,9 @@ namespace Goedel.Cryptography.Jose {
         public PrivateKeyRSA(KeyPairBaseRSA KeyPair) {
             Kid = KeyPair.UDF;
             var RSAPrivateKey = KeyPair.PKIXPrivateKeyRSA;
+            Assert.AssertNotNull(RSAPrivateKey, NotExportable.Throw);
+
+
             N = RSAPrivateKey.Modulus;
             E = RSAPrivateKey.PublicExponent;
             D = RSAPrivateKey.PrivateExponent;

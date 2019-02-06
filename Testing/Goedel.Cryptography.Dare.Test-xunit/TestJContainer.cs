@@ -16,7 +16,7 @@ namespace Goedel.XUnit {
         static List<string> Signers = new List<string> { "Alice@example.com" };
         static List<string> Recipients = new List<string> { "Alice@example.com" };
 
-        public TestContainers() => TestEnvironment.Initialize(true);
+        public TestContainers() => TestEnvironmentCommon.Initialize(true);
         public static TestContainers Test => new TestContainers();
 
         [Fact]

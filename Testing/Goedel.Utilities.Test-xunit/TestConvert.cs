@@ -9,7 +9,7 @@ namespace Goedel.XUnit {
 
     public class Utilities {
         public static Utilities Test => new Utilities();
-        public Utilities() => TestEnvironment.Initialize(true);
+        public Utilities() => TestEnvironmentCommon.Initialize(true);
 
 
 

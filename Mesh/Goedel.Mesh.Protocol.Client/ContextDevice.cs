@@ -13,7 +13,16 @@ namespace Goedel.Mesh.Protocol.Client {
     /// Class that represents a device's view of the current state of a
     /// Mesh profile
     /// </summary>
-    public partial class ContextDevice {
+    public partial class ContextDevice : Disposable {
+
+        public Dictionary<string, Store> DictionaryStores = new Dictionary<string, Store>();
+        protected override void Disposing() {
+
+            foreach (var entry in DictionaryStores) {
+                entry.Value.Dispose();
+                }
+            }
+
 
         ///<summary>The Machine context</summary>
         public virtual IMeshMachine MeshMachine { get; }
@@ -36,7 +45,7 @@ namespace Goedel.Mesh.Protocol.Client {
         public bool DefaultPersonal;
 
         ///<summary>The account name</summary>
-        protected string AccountName;
+        protected string AccountName => ProfileMesh.Account;
 
         ///<summary>The device profile</summary>
         public virtual ProfileDevice ProfileDevice { get; }
@@ -47,37 +56,53 @@ namespace Goedel.Mesh.Protocol.Client {
         public KeyCollection KeyCollection => MeshMachine.KeyCollection;
 
         #region // Convenience properties for accessing default stores and spools.
-        public CatalogCredential CatalogCredential =>
-            (catalogCredential ?? GetStore(CatalogCredential.Factory, CatalogCredential.Label).CacheValue(out catalogCredential)) as CatalogCredential;
-        Store catalogCredential;
+        //public CatalogCredential CatalogCredential =>
+        //    (catalogCredential ?? GetStore(CatalogCredential.Factory, CatalogCredential.Label).CacheValue(out catalogCredential)) as CatalogCredential;
+        //Store catalogCredential;
 
         public CatalogDevice CatalogDevice =>
-            (catalogDevice ?? GetStore(CatalogDevice.Factory, CatalogDevice.Label).CacheValue(out catalogDevice)) as CatalogDevice;
-        Store catalogDevice;
+            (catalogDevice ?? GetStore(CatalogDevice.Label).CacheValue(out catalogDevice)) as CatalogDevice;
+        Store catalogDevice = null;
 
         public CatalogContact CatalogContact =>
-            (catalogContact ?? GetStore(CatalogContact.Factory, CatalogContact.Label).CacheValue(out catalogContact)) as CatalogContact;
+            (catalogContact ?? GetStore(CatalogContact.Label).CacheValue(out catalogContact)) as CatalogContact;
         Store catalogContact;
 
-        public CatalogCalendar CatalogCalendar =>
-            (catalogCalendar ?? GetStore(CatalogCalendar.Factory, CatalogCalendar.Label).CacheValue(out catalogCalendar)) as CatalogCalendar;
-        Store catalogCalendar;
-
-        public CatalogBookmark CatalogBookmark =>
-            (catalogBookmark ?? GetStore(CatalogBookmark.Factory, CatalogContact.Label).CacheValue(out catalogBookmark)) as CatalogBookmark;
-        Store catalogBookmark;
-
         public CatalogApplication CatalogApplication =>
-            (catalogApplication ?? GetStore(CatalogApplication.Factory, CatalogApplication.Label).CacheValue(out catalogApplication)) as CatalogApplication;
+            (catalogApplication ?? GetStore(CatalogApplication.Label).CacheValue(out catalogApplication)) as CatalogApplication;
         Store catalogApplication;
 
 
+
+        public CatalogBookmark GetCatalogBookmark() =>
+            GetStore(CatalogBookmark.Label) as CatalogBookmark;
+
+        public CatalogCredential GetCatalogCredential() =>
+            GetStore(CatalogCredential.Label) as CatalogCredential;
+
+        public CatalogContact GetCatalogContact() =>
+            GetStore(CatalogContact.Label) as CatalogContact;
+
+        public CatalogCalendar GetCatalogCalendar() =>
+            GetStore(CatalogCalendar.Label) as CatalogCalendar;
+
+        public CatalogDevice GetCatalogDevice() =>
+            GetStore(CatalogDevice.Label) as CatalogDevice;
+
+        public CatalogApplication GetCatalogApplication() =>
+            GetStore(CatalogApplication.Label) as CatalogApplication;
+
+        public CatalogNetwork GetCatalogNetwork() =>
+            GetStore(CatalogNetwork.Label) as CatalogNetwork;
+
+
+
         public Spool SpoolInbound =>
-            (spoolInbound ?? GetStore(Spool.Factory, Spool.SpoolInbound).CacheValue(out spoolInbound)) as Spool;
+            (spoolInbound ?? GetStore(Spool.SpoolInbound).CacheValue(out spoolInbound)) as Spool;
         Store spoolInbound;
 
         public Spool Outbound =>
-            (spoolOutbound ?? GetStore(Spool.Factory, Spool.SpoolOutbound).CacheValue(out spoolOutbound)) as Spool;
+            (spoolOutbound ?? GetStore(Spool.SpoolOutbound).CacheValue(out spoolOutbound)) as Spool;
         Store spoolOutbound;
         #endregion
         #region // Convenience properties for accessing private keys.
@@ -91,8 +116,8 @@ namespace Goedel.Mesh.Protocol.Client {
         KeyPair keyAuthenticate;
         #endregion
 
-        ContextDevice(IMeshMachine machine, ProfileDevice profileDevice,
-                    KeyPair keySign, KeyPair keyEncrypt, KeyPair keyAuthenticate) {
+        public ContextDevice(IMeshMachine machine, ProfileDevice profileDevice,
+                    KeyPair keySign = null, KeyPair keyEncrypt = null, KeyPair keyAuthenticate = null) {
             MeshMachine = machine;
             ProfileDevice = profileDevice;
             this.keySign = keySign;
@@ -114,6 +139,11 @@ namespace Goedel.Mesh.Protocol.Client {
             ProfileMesh = MeshMachine.GetConnection(accountName, deviceUDF);
             }
 
+        public ContextDevice(
+                    IMeshMachine machine,
+                    ProfileMesh profileMesh,
+                    ProfileDevice profileDevice) : this(machine, profileDevice) => ProfileMesh = profileMesh;
+
         /// <summary>
         /// Generate a new device profile and register to the specified account.
         /// </summary>
@@ -123,11 +153,11 @@ namespace Goedel.Mesh.Protocol.Client {
         /// <param name="algorithmAuthenticate">The authenticaton algorithm.</param>
         /// <returns>The newly created context.</returns>
         public static ContextDevice Generate(
-                IMeshMachine machine = null,
-                CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
-                CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default,
-                CryptoAlgorithmID algorithmAuthenticate = CryptoAlgorithmID.Default,
-                string description = null) {
+                    IMeshMachine machine = null,
+                    CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
+                    CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default,
+                    CryptoAlgorithmID algorithmAuthenticate = CryptoAlgorithmID.Default,
+                    string description = null) {
 
             machine = machine ?? Mesh.MeshMachine.GetMachine();
             var KeyCollection = machine.KeyCollection;
@@ -217,11 +247,38 @@ namespace Goedel.Mesh.Protocol.Client {
             }
 
 
+        public void Add(MeshMessageComplete completion, string catalogID = null, CatalogEntry entry = null) {
 
+            completion.MessageID = completion.MessageID ?? UDF.Random(200);
 
+            var message = DareMessage.Encode(completion.GetBytes());
 
-        public Dictionary<string, Store> DictionaryStores = new Dictionary<string, Store>();
+            var uploadRequest = new UploadRequest() {
+                Account = AccountName,
+                Self = new List<DareMessage> { message }
+                };
 
+            DareMessage catalogEntry = null;
+            Catalog catalog = null;
+
+            if (catalogID != null) {
+                catalog = GetStore(catalogID) as Catalog;
+                catalogEntry = catalog.ContainerEntry(entry, ContainerPersistenceStore.EventNew);
+                var update = new ContainerUpdate() {
+                    Container = catalogID,
+                    Message = new List<DareMessage> { catalogEntry }
+                    };
+                uploadRequest.Updates = new List<ContainerUpdate> { update };
+                }
+
+            var result = MeshService.Upload(uploadRequest, MeshClientSession);
+
+            if (result.Success()) {
+                if (catalog != null) {
+                    catalog.AppendDirect(catalogEntry);
+                    }
+                }
+            }
 
         /// <summary>
         /// Return catalog or container by name, using the cached value if it exists or opening it otherwise.
@@ -229,13 +286,12 @@ namespace Goedel.Mesh.Protocol.Client {
         /// <param name="storeFactoryDelegate">The store creation delegate</param>
         /// <param name="name">The catalog or spool name.</param>
         /// <returns>The opened store.</returns>
-        public Store GetStore(
-                StoreFactoryDelegate storeFactoryDelegate, string name) {
+        public Store GetStore(string name) {
 
             if (DictionaryStores.TryGetValue(name, out var store)) {
                 return store;
                 }
-            store = MakeStore(name) ;
+            store = MakeStore(name);
             DictionaryStores.Add(name, store);
 
             return store;
@@ -244,14 +300,20 @@ namespace Goedel.Mesh.Protocol.Client {
         Store MakeStore(string name) {
 
             switch (name) {
-                case Spool.SpoolInbound: return new Spool (MeshMachine.DirectoryMesh, name, null, KeyCollection);
+                case Spool.SpoolInbound: return new Spool(MeshMachine.DirectoryMesh, name, null, KeyCollection);
                 case Spool.SpoolOutbound: return new Spool(MeshMachine.DirectoryMesh, name, null, KeyCollection);
                 case Spool.SpoolArchive: return new Spool(MeshMachine.DirectoryMesh, name, null, KeyCollection);
 
                 case CatalogCredential.Label: return new CatalogCredential(MeshMachine.DirectoryMesh, name, null, KeyCollection);
                 case CatalogDevice.Label: return new CatalogDevice(MeshMachine.DirectoryMesh, name, null, KeyCollection);
                 case CatalogContact.Label: return new CatalogContact(MeshMachine.DirectoryMesh, name, null, KeyCollection);
+                case CatalogCalendar.Label: return new CatalogCalendar(MeshMachine.DirectoryMesh, name, null, KeyCollection);
+                case CatalogBookmark.Label: return new CatalogBookmark(MeshMachine.DirectoryMesh, name, null, KeyCollection);
+                case CatalogNetwork.Label: return new CatalogNetwork(MeshMachine.DirectoryMesh, name, null, KeyCollection);
+
+
                 case CatalogApplication.Label: return new CatalogApplication(MeshMachine.DirectoryMesh, name, null, KeyCollection);
+
                 }
 
             throw new NYI();
@@ -270,9 +332,9 @@ namespace Goedel.Mesh.Protocol.Client {
             return Sign(request);
             }
 
-        protected DareMessage Sign (JSONObject data) =>
+        protected DareMessage Sign(JSONObject data) =>
                     DareMessage.Encode(data.GetBytes(tag: true),
-                        signingKey: keySign, contentType: "application/mmm");
+                        signingKey: KeySign, contentType: "application/mmm");
 
         public virtual void ProcessConnectionRequest(
                     MessageConnectionRequest messageConnectionRequest,
@@ -301,16 +363,11 @@ namespace Goedel.Mesh.Protocol.Client {
                     bool accept) {
             var result = ConfirmationResponse(
                 messageConfirmationRequest, accept);
-
-            // here mark the message as having had a response.
-            MarkRead(messageConfirmationRequest);
             }
 
 
 
-        public void MarkRead(MeshMessage meshMessage) {
-            // do nothing for now.
-            }
+
         }
 
     }

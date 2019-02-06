@@ -7,7 +7,6 @@ using Goedel.Mesh.Test;
 using Goedel.Test.Core;
 using Goedel.Test;
 using Goedel.Utilities;
-using Goedel.Mesh.Test;
 
 namespace Goedel.XUnit {
     public partial class ShellTests {
@@ -19,7 +18,7 @@ namespace Goedel.XUnit {
         [Fact]
         public void TestFileEncrypt() {
             var account = "alice@example.com";
-            Dispatch($"profile master {account} /new");
+            CreateAccount(account);
 
             TestFile("Hello world", encrypt: account);
             }
@@ -27,7 +26,7 @@ namespace Goedel.XUnit {
         [Fact]
         public void TestFileSign() {
             var account = "alice@example.com";
-            Dispatch($"profile master {account}");
+            CreateAccount(account);
 
             TestFile("Hello world", sign: account);
             }
@@ -35,7 +34,7 @@ namespace Goedel.XUnit {
         [Fact]
         public void TestFileSignEncrypt() {
             var account = "alice@example.com";
-            Dispatch($"profile master {account}");
+            CreateAccount(account);
 
             TestFile("Hello world", encrypt: account, sign: account);
             }
@@ -82,6 +81,7 @@ namespace Goedel.XUnit {
         public void TestContainerCatalogEncrypt() {
             var filename = Files.GetFilenameUnique();
             var account = "alice@example.com";
+            CreateAccount(account);
 
             Dispatch($"dare container create {filename} /encrypt {account}");
             TestContainerCatalog(filename);

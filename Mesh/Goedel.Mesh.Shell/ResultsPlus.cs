@@ -10,6 +10,12 @@ namespace Goedel.Mesh.Shell {
 
         public Result() => Success = true;
 
+        public Result(string reason) {
+            Success = true;
+            Reason = reason;
+            }
+
+
         public virtual StringBuilder StringBuilder() {
             var Builder = new StringBuilder();
 
@@ -44,7 +50,7 @@ namespace Goedel.Mesh.Shell {
         }
 
     public partial class ResultEntry {
-        public override string ToString() => CatalogEntry.ToString();
+        public override string ToString() => CatalogEntry?.ToString();
         }
 
     public partial class ResultDump {

@@ -11,7 +11,7 @@ using Xunit;
 namespace Goedel.XUnit {
 
     public partial class KeyFileTest {
-        public KeyFileTest() => TestEnvironment.Initialize(true);
+        public KeyFileTest() => TestEnvironmentCommon.Initialize(true);
         public static KeyFileTest Test() => new KeyFileTest();
 
 

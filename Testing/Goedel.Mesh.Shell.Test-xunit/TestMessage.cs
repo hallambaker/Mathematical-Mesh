@@ -18,11 +18,11 @@ namespace Goedel.XUnit {
             var accountA = "alice@example.com";
             var accountB = "bob@example.com";
 
-            var deviceA = GetTestCLI();
-            var deviceB = GetTestCLI();
+            var deviceA = GetTestCLI("MachineAlice");
+            var deviceB = GetTestCLI("MachineBob");
 
-            deviceA.Dispatch($"profile master /new {accountA}");
-            deviceB.Dispatch($"profile master /new {accountB}");
+            deviceA.Dispatch($"profile master {accountA} /new ");
+            deviceB.Dispatch($"profile master {accountB} /new ");
 
             var result1 = deviceA.Dispatch("message pending") as ResultPending;
 
@@ -44,11 +44,12 @@ namespace Goedel.XUnit {
             var accountA = "alice@example.com";
             var accountB = "bob@example.com";
 
-            var deviceA = GetTestCLI();
-            var deviceB = GetTestCLI();
 
-            deviceA.Dispatch($"profile master /new {accountA}");
-            deviceB.Dispatch($"profile master /new {accountB}");
+            var deviceA = GetTestCLI("MachineAlice");
+            var deviceB = GetTestCLI("MachineBob");
+
+            deviceA.Dispatch($"profile master {accountA} /new ");
+            deviceB.Dispatch($"profile master {accountB} /new ");
 
             var result1 = deviceA.Dispatch("message pending") as ResultPending;
 

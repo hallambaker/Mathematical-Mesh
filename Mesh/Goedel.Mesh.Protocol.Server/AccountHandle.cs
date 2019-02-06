@@ -41,6 +41,11 @@ namespace Goedel.Mesh.Protocol.Server {
     /// </summary>
     public class AccountHandle : Disposable {
 
+        public DareMessage MeshProfile => AccountEntry.Profile;
+        public ProfileMesh ProfileMesh => AccountEntry.ProfileMesh;
+        ProfileMesh profileMesh;
+
+
         /// <summary>
         /// The account description. This is only accessible through the account handle.
         /// </summary>
@@ -93,7 +98,7 @@ namespace Goedel.Mesh.Protocol.Server {
     /// <summary>
     /// Verified account accessor, has access to spools and to catalogues
     /// </summary>
-    public class AccountHandleVerified : AccountHandle {
+    public class AccountHandleVerified : AccountHandleUnverified {
 
         //public string Directory => AccountEntry.Directory;
 

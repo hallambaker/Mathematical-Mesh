@@ -63,6 +63,13 @@ namespace Goedel.Mesh.Protocol.Client {
         protected override void MemoryCommitNew(ContainerStoreEntry containerStoreEntry) =>
             MemoryCommitUpdate(containerStoreEntry);
 
+
+        public ProfileMesh DefaultProfileMesh = null;
+        public ProfileDevice DefaultProfileDevice = null;
+        public ProfileMaster DefaultProfileMaster = null;
+
+
+
         /// <summary>
         /// Commit an Update transaction to memory
         /// </summary>
@@ -76,15 +83,17 @@ namespace Goedel.Mesh.Protocol.Client {
 
             switch (containerStoreEntry.JsonObject) {
                 case ProfileMesh profileMesh: {
+                    DefaultProfileMesh = DefaultProfileMesh ?? profileMesh; // Hack: should establish a stack.
                     DictionaryByAccount.ReplaceSafe(profileMesh.Account, containerStoreEntry);
-                    DictionaryByUDF.ReplaceSafe(profileMesh.ProfileDevice.UDF, containerStoreEntry);
                     return;
                     }
                 case ProfileDevice profileDevice: {
+                    DefaultProfileDevice = DefaultProfileDevice ?? profileDevice;
                     DictionaryByUDF.ReplaceSafe(profileDevice.UDF, containerStoreEntry);
                     return;
                     }
                 case ProfileMaster profileMaster: {
+                    DefaultProfileMaster = DefaultProfileMaster ?? profileMaster;
                     DictionaryByUDF.ReplaceSafe(profileMaster.UDF, containerStoreEntry);
                     return;
                     }

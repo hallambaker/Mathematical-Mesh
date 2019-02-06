@@ -155,6 +155,7 @@ namespace Goedel.Mesh.Shell {
 			Entries = new  SortedDictionary<string, DescribeCommand> () {
 				{"add", _BookmarkAdd._DescribeCommand },
 				{"delete", _BookmarkDelete._DescribeCommand },
+				{"get", _BookmarkGet._DescribeCommand },
 				{"dump", _BookmarkDump._DescribeCommand }
 				} // End Entries
 			};
@@ -163,6 +164,7 @@ namespace Goedel.Mesh.Shell {
             Identifier = "calendar",
 			Entries = new  SortedDictionary<string, DescribeCommand> () {
 				{"add", _CalendarAdd._DescribeCommand },
+				{"get", _CalendarGet._DescribeCommand },
 				{"delete", _CalendarDelete._DescribeCommand },
 				{"dump", _CalendarDump._DescribeCommand }
 				} // End Entries
@@ -172,6 +174,7 @@ namespace Goedel.Mesh.Shell {
             Identifier = "network",
 			Entries = new  SortedDictionary<string, DescribeCommand> () {
 				{"add", _NetworkAdd._DescribeCommand },
+				{"get", _NetworkGet._DescribeCommand },
 				{"delete", _NetworkDelete._DescribeCommand },
 				{"dump", _NetworkDump._DescribeCommand }
 				} // End Entries
@@ -691,6 +694,16 @@ namespace Goedel.Mesh.Shell {
 			Dispatch._PostProcess (result);
 			}
 
+		public static void Handle_BookmarkGet (
+					DispatchShell  DispatchIn, string[] Args, int Index) {
+			Shell Dispatch =	DispatchIn as Shell;
+			BookmarkGet		Options = new BookmarkGet ();
+			ProcessOptions (Args, Index, Options);
+			Dispatch._PreProcess (Options);
+			var result = Dispatch.BookmarkGet (Options);
+			Dispatch._PostProcess (result);
+			}
+
 		public static void Handle_BookmarkDump (
 					DispatchShell  DispatchIn, string[] Args, int Index) {
 			Shell Dispatch =	DispatchIn as Shell;
@@ -708,6 +721,16 @@ namespace Goedel.Mesh.Shell {
 			ProcessOptions (Args, Index, Options);
 			Dispatch._PreProcess (Options);
 			var result = Dispatch.CalendarAdd (Options);
+			Dispatch._PostProcess (result);
+			}
+
+		public static void Handle_CalendarGet (
+					DispatchShell  DispatchIn, string[] Args, int Index) {
+			Shell Dispatch =	DispatchIn as Shell;
+			CalendarGet		Options = new CalendarGet ();
+			ProcessOptions (Args, Index, Options);
+			Dispatch._PreProcess (Options);
+			var result = Dispatch.CalendarGet (Options);
 			Dispatch._PostProcess (result);
 			}
 
@@ -738,6 +761,16 @@ namespace Goedel.Mesh.Shell {
 			ProcessOptions (Args, Index, Options);
 			Dispatch._PreProcess (Options);
 			var result = Dispatch.NetworkAdd (Options);
+			Dispatch._PostProcess (result);
+			}
+
+		public static void Handle_NetworkGet (
+					DispatchShell  DispatchIn, string[] Args, int Index) {
+			Shell Dispatch =	DispatchIn as Shell;
+			NetworkGet		Options = new NetworkGet ();
+			ProcessOptions (Args, Index, Options);
+			Dispatch._PreProcess (Options);
+			var result = Dispatch.NetworkGet (Options);
 			Dispatch._PostProcess (result);
 			}
 
@@ -6615,6 +6648,130 @@ namespace Goedel.Mesh.Shell {
     public partial class BookmarkDelete : _BookmarkDelete {
         } // class BookmarkDelete
 
+    public class _BookmarkGet : Goedel.Command.Dispatch ,
+							IAccountOptions,
+							IReporting {
+
+		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new String (),
+			new String (),
+			new String (),
+			new Flag (),
+			new Flag (),
+			new Flag ()			} ;
+
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual String Identifier {
+			get => _Data[0] as String;
+			set => _Data[0]  = value;
+			}
+
+		public virtual string _Identifier {
+			set => _Data[0].Parameter (value);
+			}
+		/// <summary>Field accessor for option [portal]</summary>
+		public virtual String AccountID {
+			get => _Data[1] as String;
+			set => _Data[1]  = value;
+			}
+
+		public virtual string _AccountID {
+			set => _Data[1].Parameter (value);
+			}
+		/// <summary>Field accessor for option [udf]</summary>
+		public virtual String UDF {
+			get => _Data[2] as String;
+			set => _Data[2]  = value;
+			}
+
+		public virtual string _UDF {
+			set => _Data[2].Parameter (value);
+			}
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
+			get => _Data[3] as Flag;
+			set => _Data[3]  = value;
+			}
+
+		public virtual string _Verbose {
+			set => _Data[3].Parameter (value);
+			}
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
+			get => _Data[4] as Flag;
+			set => _Data[4]  = value;
+			}
+
+		public virtual string _Report {
+			set => _Data[4].Parameter (value);
+			}
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[5] as Flag;
+			set => _Data[5]  = value;
+			}
+
+		public virtual string _Json {
+			set => _Data[5].Parameter (value);
+			}
+		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
+			Identifier = "get",
+			Brief =  "Lookup bookmark entry",
+			HandleDelegate =  CommandLineInterpreter.Handle_BookmarkGet,
+			Lazy =  false,
+			Entries = new List<DescribeEntry> () {
+				new DescribeEntryParameter () {
+					Identifier = "Identifier", 
+					Default = null, // null if null
+					Brief = "<Unspecified>",
+					Index = 0,
+					Key = ""
+					},
+				new DescribeEntryOption () {
+					Identifier = "AccountID", 
+					Default = null, // null if null
+					Brief = "Account identifier (e.g. alice@example.com)",
+					Index = 1,
+					Key = "portal"
+					},
+				new DescribeEntryOption () {
+					Identifier = "UDF", 
+					Default = null, // null if null
+					Brief = "Profile fingerprint",
+					Index = 2,
+					Key = "udf"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Verbose", 
+					Default = "true", // null if null
+					Brief = "Verbose reports (default)",
+					Index = 3,
+					Key = "verbose"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Report", 
+					Default = "true", // null if null
+					Brief = "Report output (default)",
+					Index = 4,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Json", 
+					Default = "false", // null if null
+					Brief = "Report output in JSON format",
+					Index = 5,
+					Key = "json"
+					}
+				}
+			};
+
+		}
+
+    public partial class BookmarkGet : _BookmarkGet {
+        } // class BookmarkGet
+
     public class _BookmarkDump : Goedel.Command.Dispatch ,
 							IAccountOptions,
 							IReporting {
@@ -6727,7 +6884,8 @@ namespace Goedel.Mesh.Shell {
 							IReporting {
 
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
-			new ExistingFile (),
+			new String (),
+			new String (),
 			new String (),
 			new String (),
 			new Flag (),
@@ -6735,12 +6893,152 @@ namespace Goedel.Mesh.Shell {
 			new Flag ()			} ;
 
 		/// <summary>Field accessor for parameter []</summary>
-		public virtual ExistingFile File {
-			get => _Data[0] as ExistingFile;
+		public virtual String Identifier {
+			get => _Data[0] as String;
 			set => _Data[0]  = value;
 			}
 
-		public virtual string _File {
+		public virtual string _Identifier {
+			set => _Data[0].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual String Title {
+			get => _Data[1] as String;
+			set => _Data[1]  = value;
+			}
+
+		public virtual string _Title {
+			set => _Data[1].Parameter (value);
+			}
+		/// <summary>Field accessor for option [portal]</summary>
+		public virtual String AccountID {
+			get => _Data[2] as String;
+			set => _Data[2]  = value;
+			}
+
+		public virtual string _AccountID {
+			set => _Data[2].Parameter (value);
+			}
+		/// <summary>Field accessor for option [udf]</summary>
+		public virtual String UDF {
+			get => _Data[3] as String;
+			set => _Data[3]  = value;
+			}
+
+		public virtual string _UDF {
+			set => _Data[3].Parameter (value);
+			}
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
+			get => _Data[4] as Flag;
+			set => _Data[4]  = value;
+			}
+
+		public virtual string _Verbose {
+			set => _Data[4].Parameter (value);
+			}
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
+			get => _Data[5] as Flag;
+			set => _Data[5]  = value;
+			}
+
+		public virtual string _Report {
+			set => _Data[5].Parameter (value);
+			}
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[6] as Flag;
+			set => _Data[6]  = value;
+			}
+
+		public virtual string _Json {
+			set => _Data[6].Parameter (value);
+			}
+		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
+			Identifier = "add",
+			Brief =  "Add calendar entry from file",
+			HandleDelegate =  CommandLineInterpreter.Handle_CalendarAdd,
+			Lazy =  false,
+			Entries = new List<DescribeEntry> () {
+				new DescribeEntryParameter () {
+					Identifier = "Identifier", 
+					Default = null, // null if null
+					Brief = "<Unspecified>",
+					Index = 0,
+					Key = ""
+					},
+				new DescribeEntryParameter () {
+					Identifier = "Title", 
+					Default = null, // null if null
+					Brief = "<Unspecified>",
+					Index = 1,
+					Key = ""
+					},
+				new DescribeEntryOption () {
+					Identifier = "AccountID", 
+					Default = null, // null if null
+					Brief = "Account identifier (e.g. alice@example.com)",
+					Index = 2,
+					Key = "portal"
+					},
+				new DescribeEntryOption () {
+					Identifier = "UDF", 
+					Default = null, // null if null
+					Brief = "Profile fingerprint",
+					Index = 3,
+					Key = "udf"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Verbose", 
+					Default = "true", // null if null
+					Brief = "Verbose reports (default)",
+					Index = 4,
+					Key = "verbose"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Report", 
+					Default = "true", // null if null
+					Brief = "Report output (default)",
+					Index = 5,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Json", 
+					Default = "false", // null if null
+					Brief = "Report output in JSON format",
+					Index = 6,
+					Key = "json"
+					}
+				}
+			};
+
+		}
+
+    public partial class CalendarAdd : _CalendarAdd {
+        } // class CalendarAdd
+
+    public class _CalendarGet : Goedel.Command.Dispatch ,
+							IAccountOptions,
+							IReporting {
+
+		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new String (),
+			new String (),
+			new String (),
+			new Flag (),
+			new Flag (),
+			new Flag ()			} ;
+
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual String Identifier {
+			get => _Data[0] as String;
+			set => _Data[0]  = value;
+			}
+
+		public virtual string _Identifier {
 			set => _Data[0].Parameter (value);
 			}
 		/// <summary>Field accessor for option [portal]</summary>
@@ -6791,13 +7089,13 @@ namespace Goedel.Mesh.Shell {
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
-			Identifier = "add",
-			Brief =  "Add calendar entry from file",
-			HandleDelegate =  CommandLineInterpreter.Handle_CalendarAdd,
+			Identifier = "get",
+			Brief =  "Lookup calendar entry",
+			HandleDelegate =  CommandLineInterpreter.Handle_CalendarGet,
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
 				new DescribeEntryParameter () {
-					Identifier = "File", 
+					Identifier = "Identifier", 
 					Default = null, // null if null
 					Brief = "<Unspecified>",
 					Index = 0,
@@ -6843,8 +7141,8 @@ namespace Goedel.Mesh.Shell {
 
 		}
 
-    public partial class CalendarAdd : _CalendarAdd {
-        } // class CalendarAdd
+    public partial class CalendarGet : _CalendarGet {
+        } // class CalendarGet
 
     public class _CalendarDelete : Goedel.Command.Dispatch ,
 							IAccountOptions,
@@ -7082,7 +7380,7 @@ namespace Goedel.Mesh.Shell {
 							IReporting {
 
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
-			new ExistingFile (),
+			new String (),
 			new String (),
 			new String (),
 			new Flag (),
@@ -7090,12 +7388,12 @@ namespace Goedel.Mesh.Shell {
 			new Flag ()			} ;
 
 		/// <summary>Field accessor for parameter []</summary>
-		public virtual ExistingFile File {
-			get => _Data[0] as ExistingFile;
+		public virtual String Identifier {
+			get => _Data[0] as String;
 			set => _Data[0]  = value;
 			}
 
-		public virtual string _File {
+		public virtual string _Identifier {
 			set => _Data[0].Parameter (value);
 			}
 		/// <summary>Field accessor for option [portal]</summary>
@@ -7152,7 +7450,7 @@ namespace Goedel.Mesh.Shell {
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
 				new DescribeEntryParameter () {
-					Identifier = "File", 
+					Identifier = "Identifier", 
 					Default = null, // null if null
 					Brief = "<Unspecified>",
 					Index = 0,
@@ -7200,6 +7498,130 @@ namespace Goedel.Mesh.Shell {
 
     public partial class NetworkAdd : _NetworkAdd {
         } // class NetworkAdd
+
+    public class _NetworkGet : Goedel.Command.Dispatch ,
+							IAccountOptions,
+							IReporting {
+
+		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new String (),
+			new String (),
+			new String (),
+			new Flag (),
+			new Flag (),
+			new Flag ()			} ;
+
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual String Identifier {
+			get => _Data[0] as String;
+			set => _Data[0]  = value;
+			}
+
+		public virtual string _Identifier {
+			set => _Data[0].Parameter (value);
+			}
+		/// <summary>Field accessor for option [portal]</summary>
+		public virtual String AccountID {
+			get => _Data[1] as String;
+			set => _Data[1]  = value;
+			}
+
+		public virtual string _AccountID {
+			set => _Data[1].Parameter (value);
+			}
+		/// <summary>Field accessor for option [udf]</summary>
+		public virtual String UDF {
+			get => _Data[2] as String;
+			set => _Data[2]  = value;
+			}
+
+		public virtual string _UDF {
+			set => _Data[2].Parameter (value);
+			}
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
+			get => _Data[3] as Flag;
+			set => _Data[3]  = value;
+			}
+
+		public virtual string _Verbose {
+			set => _Data[3].Parameter (value);
+			}
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
+			get => _Data[4] as Flag;
+			set => _Data[4]  = value;
+			}
+
+		public virtual string _Report {
+			set => _Data[4].Parameter (value);
+			}
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[5] as Flag;
+			set => _Data[5]  = value;
+			}
+
+		public virtual string _Json {
+			set => _Data[5].Parameter (value);
+			}
+		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
+			Identifier = "get",
+			Brief =  "Lookup calendar entry",
+			HandleDelegate =  CommandLineInterpreter.Handle_NetworkGet,
+			Lazy =  false,
+			Entries = new List<DescribeEntry> () {
+				new DescribeEntryParameter () {
+					Identifier = "Identifier", 
+					Default = null, // null if null
+					Brief = "<Unspecified>",
+					Index = 0,
+					Key = ""
+					},
+				new DescribeEntryOption () {
+					Identifier = "AccountID", 
+					Default = null, // null if null
+					Brief = "Account identifier (e.g. alice@example.com)",
+					Index = 1,
+					Key = "portal"
+					},
+				new DescribeEntryOption () {
+					Identifier = "UDF", 
+					Default = null, // null if null
+					Brief = "Profile fingerprint",
+					Index = 2,
+					Key = "udf"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Verbose", 
+					Default = "true", // null if null
+					Brief = "Verbose reports (default)",
+					Index = 3,
+					Key = "verbose"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Report", 
+					Default = "true", // null if null
+					Brief = "Report output (default)",
+					Index = 4,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Json", 
+					Default = "false", // null if null
+					Brief = "Report output in JSON format",
+					Index = 5,
+					Key = "json"
+					}
+				}
+			};
+
+		}
+
+    public partial class NetworkGet : _NetworkGet {
+        } // class NetworkGet
 
     public class _NetworkDelete : Goedel.Command.Dispatch ,
 							IAccountOptions,
@@ -11552,12 +11974,22 @@ namespace Goedel.Mesh.Shell {
 			return null;
 			}
 
+		public virtual ShellResult BookmarkGet ( BookmarkGet Options) {
+			CommandLineInterpreter.DescribeValues (Options);
+			return null;
+			}
+
 		public virtual ShellResult BookmarkDump ( BookmarkDump Options) {
 			CommandLineInterpreter.DescribeValues (Options);
 			return null;
 			}
 
 		public virtual ShellResult CalendarAdd ( CalendarAdd Options) {
+			CommandLineInterpreter.DescribeValues (Options);
+			return null;
+			}
+
+		public virtual ShellResult CalendarGet ( CalendarGet Options) {
 			CommandLineInterpreter.DescribeValues (Options);
 			return null;
 			}
@@ -11573,6 +12005,11 @@ namespace Goedel.Mesh.Shell {
 			}
 
 		public virtual ShellResult NetworkAdd ( NetworkAdd Options) {
+			CommandLineInterpreter.DescribeValues (Options);
+			return null;
+			}
+
+		public virtual ShellResult NetworkGet ( NetworkGet Options) {
 			CommandLineInterpreter.DescribeValues (Options);
 			return null;
 			}

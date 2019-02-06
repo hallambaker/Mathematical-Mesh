@@ -82,7 +82,7 @@ namespace Goedel.Mesh.Shell {
             var result = context.Sync();
 
             return new ResultSync() {
-                Success = true
+                Success = result.Success
                 };
             }
 
@@ -151,31 +151,97 @@ namespace Goedel.Mesh.Shell {
                 };
             }
 
-        public override ShellResult ProfileAccept(ProfileAccept Options) => base.ProfileAccept(Options);
 
-        public override ShellResult ProfileReject(ProfileReject Options) => base.ProfileReject(Options);
+        public override ShellResult ProfilePending(ProfilePending Options) {
+            var context = GetContextDevice(Options);
 
-        public override ShellResult ProfilePending(ProfilePending Options) => base.ProfilePending(Options);
+            // sync
+            context.Sync();
 
-        public override ShellResult ProfileGetPIN(ProfileGetPIN Options) => base.ProfileGetPIN(Options);
+            // get the inbound spool
 
-        public override ShellResult ProfileList(ProfileList Options) => base.ProfileList(Options);
+            // dump the contents into a result
 
-        public override ShellResult ProfileDump(ProfileDump Options) => base.ProfileDump(Options);
+            throw new NYI();
+            }
+
+
+
+        public override ShellResult ProfileAccept(ProfileAccept Options) =>
+            ProcessRequest(Options, Options.CompletionCode.Value, true);
+
+        public override ShellResult ProfileReject(ProfileReject Options) =>
+            ProcessRequest(Options, Options.CompletionCode.Value, false);
+
+
+        ShellResult ProcessRequest(IAccountOptions Options, string messageID, bool accept) {
+            var context = GetContextDevice(Options);
+            context.Sync();
+
+            var messageConnectionRequest = GetConnectionRequest(context, messageID);
+            messageConnectionRequest.AssertNotNull();
+
+            context.ProcessConnectionRequest(messageConnectionRequest, accept);
+
+            return new ResultConnectProcess() {
+                Success = true,
+                Accepted = accept,
+                Witness = messageConnectionRequest.Witness
+                };
+            }
+
+        MessageConnectionRequest GetConnectionRequest(
+                ContextDevice contextDevice,
+                string MessageID) {
+            throw new NYI();
+            }
+
+
+        public override ShellResult ProfileGetPIN(ProfileGetPIN Options) {
+            var context = GetContextDevice(Options);
+
+            // create a random PIN
+
+            // add pin to the device catalog
+
+            // syncing the device catalog will now cause an admin device to automatically
+            // reate a profile.
+
+
+            throw new NYI();
+            }
+
+        public override ShellResult ProfileList(ProfileList Options) {
+            // pull the Catalog Host
+
+            // list out all the data 
+
+            throw new NYI();
+            }
+
+        public override ShellResult ProfileDump(ProfileDump Options) {
+            var context = GetContextDevice(Options);
+            // pull the Catalog Host
+
+            // list out all the data for the default profile and connection state
+
+            throw new NYI();
+            }
 
         #region // Import and export of profiles - punt on this for now
 
         /// <summary>
-        /// Dispatch method
+        /// Register a profile to a new service. This is not currently supported.
         /// </summary>
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult ProfileRegister(ProfileRegister Options) {
-            var context = GetContextMaster(Options);
+            throw new NYI();
+            //var context = GetContextMaster(Options);
 
-            return new ResultConnect() {
-                Success = true
-                };
+            //return new ResultConnect() {
+            //    Success = true
+            //    };
             }
 
         /// <summary>
@@ -183,16 +249,26 @@ namespace Goedel.Mesh.Shell {
         /// </summary>
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult ProfileExport(ProfileExport Options) => throw new NYI();
+        public override ShellResult ProfileExport(ProfileExport Options) {
+            // pull the Catalog Host
 
+            // dump the default profile to a file
+
+            throw new NYI();
+            }
 
         /// <summary>
         /// Dispatch method
         /// </summary>
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult ProfileImport(ProfileImport Options) => throw new NYI();
+        public override ShellResult ProfileImport(ProfileImport Options) {
+            // pull the Catalog Host
 
+            // add the profile to the catalog
+
+            throw new NYI();
+            }
         #endregion
         }
     }

@@ -795,6 +795,25 @@ namespace Goedel.Cryptography.Dare {
             return Result;
             }
 
+        /// <summary>
+        /// Move a frame in the reverse direction.
+        /// </summary>
+        /// <returns></returns>
+        public long MoveFrameReverse() {
+            var Success = ReadTagReverse(out var Code, out var Length);
+            if (!Success) {
+                return -1;
+                }
+            // Sanity check
+            var ThePosition = PositionRead;
+            Assert.True(ThePosition >= Length, InvalidFileFormatException.Throw);
+
+            // Make sure we return to the same position.
+            long Start = ThePosition - Length - TagSpace(Code) - 1;
+
+            PositionRead = Start;
+            return PositionRead;
+            }
 
 
         /// <summary>

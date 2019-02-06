@@ -40,15 +40,16 @@ namespace Goedel.Mesh.Protocol.Client {
             var profileMesh = new ProfileMesh() {
                 Account = accountName,
                 MasterProfile = ProfileMaster.ProfileMasterSigned,
-                DeviceProfile = ProfileDevice.ProfileDeviceSigned,
                 AccountEncryptionKey = new PublicKey(keyEncrypt.KeyPairPublic())
                 };
+            ProfileMesh = profileMesh;
 
-
-
+            var catalogEntryDevice = MakeCatalogEntryDevice(ProfileDevice);
+            var catalogEntryDeviceSigned = CatalogDevice.ContainerEntry(catalogEntryDevice, ContainerPersistenceStore.EventNew);
 
             var createRequest = new CreateRequest() {
-                Profile = profileMesh
+                MeshProfile = Sign(profileMesh),
+                CatalogEntryDevices = new List<DareMessage> { catalogEntryDeviceSigned }
                 };
 
             // We create a new meshClientSession because this won't have the 
@@ -60,13 +61,14 @@ namespace Goedel.Mesh.Protocol.Client {
             var result = MeshService.CreateAccount(createRequest, meshClientSession);
 
             // if successful write out to host file
-
-            AccountName = accountName;
             MeshMachine.Register(profileMesh);
-
+            CatalogDevice.Apply(catalogEntryDeviceSigned);
 
             return new MeshResult() { MeshResponse = result };
             }
+
+
+
 
 
 
@@ -92,19 +94,8 @@ namespace Goedel.Mesh.Protocol.Client {
 
 
         public MeshResult Add(CatalogEntryContact catalogEntryContact) =>
-            Add(CatalogCredential, catalogEntryContact);
+            Add(CatalogContact, catalogEntryContact);
 
-        /// <summary>
-        /// Sign a device or application profile for entry in a catalog
-        /// </summary>
-        /// <param name="Profile"></param>
-        /// <returns></returns>
-        public void Add(ProfileMesh profile) {
-            var entry = new CatalogEntryDevice() {
-                DeviceProfile = profile.DeviceProfile
-                };
-            Add(CatalogDevice, entry);
-            }
 
         /// <summary>
         /// Sign a device or application profile for entry in a catalog
@@ -117,9 +108,23 @@ namespace Goedel.Mesh.Protocol.Client {
                     MessageConnectionRequest messageConnectionRequest,
                     bool accept) {
             if (accept) {
-                Add(messageConnectionRequest.ProfileMesh);
+
+                var profile = ProfileDevice.Decode(messageConnectionRequest.DeviceProfile);
+                var catalogEntryDevice = MakeCatalogEntryDevice(profile);
+
+                // create the completion message
+                var completion = new MeshMessageComplete(messageConnectionRequest.MessageID,
+                    MeshMessageComplete.Accept);
+
+
+                Add(completion, CatalogDevice.Label, catalogEntryDevice);
                 }
-            MarkRead(messageConnectionRequest);
+            else {
+                // mark the connection request as having been rejected
+                var completion = new MeshMessageComplete(messageConnectionRequest.MessageID,
+                    MeshMessageComplete.Reject);
+                Add(completion);
+                }
             }
         }
     }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Goedel.Cryptography;
 using Goedel.Cryptography.PKIX;
+using Goedel.Utilities;
 
 namespace Goedel.Cryptography.Jose {
 
@@ -75,12 +76,14 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
         /// Construct from a PKIX PKIXPrivateKeyDH structure.
         /// </summary>
-        /// <param name="PKIXKey">DH Public Key.</param>
-        public PrivateKeyDH(PKIXPrivateKeyDH PKIXKey) {
-            Kid = PKIXKey.UDF();
-            Domain = PKIXKey.Domain.UDFData;
-            Public = PKIXKey.Public;
-            Private = PKIXKey.Private;
+        /// <param name="pkixKey">DH Public Key.</param>
+        public PrivateKeyDH(PKIXPrivateKeyDH pkixKey) {
+            Assert.AssertNotNull(pkixKey, NotExportable.Throw);
+
+            Kid = pkixKey.UDF();
+            Domain = pkixKey.Domain.UDFData;
+            Public = pkixKey.Public;
+            Private = pkixKey.Private;
             }
 
         /// <summary>

@@ -88,6 +88,15 @@ namespace Goedel.Cryptography {
     /// Class implementing the Uniform Data Fingerprint spec.
     /// </summary>
     public static class UDF {
+
+        // Test: Matching UDF values against strings.
+
+        // Goal: Eliminate all UDF string values in profiles and use binary blobs for comparison
+
+
+
+
+
         /// <summary>
         /// Default number of UDF bits (usually 150).
         /// </summary>
@@ -264,6 +273,46 @@ namespace Goedel.Cryptography {
             //    }
             return Input;
             }
+
+
+        static bool IsBase32(char c) {
+            var x = (int)c;
+            if (x > 127) {
+                return false;
+                }
+            return BaseConvert.BASE32Value[x] < 255;
+            }
+
+
+        /// <summary>
+        /// Determine if the string <paramref name="value"/> matches the 
+        /// pattern <paramref name="test"/> with at least <paramref name="minBits"/>
+        /// significant bits.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="test"></param>
+        /// <param name="minBits">The minimum work factor for the comparison</param>
+        /// <returns>true if the string <paramref name="value"/> matches the 
+        /// pattern <paramref name="test"/> with at least <paramref name="minBits"/>
+        /// significant bits. Otherwise false.</returns>
+        public static bool Matches(string value, byte[] test, int minBits = 100) {
+            var match = test.ToStringBase32();
+
+            var j = 0;
+            for (var i=0; i< value.Length; i++) {
+                var v = (int)value[i];
+                v = v > 96 ? v - 32 : v;
+
+                if (v != 45){
+                    var m = (int)match[j++];
+                    if (v != m) {
+                        return false;
+                        }
+                    }
+                }
+            return j*5 >= minBits;
+            }
+
 
         /// <summary>
         /// Calculate a UDF fingerprint from an OpenPGP key with specified precision.
@@ -454,6 +503,23 @@ namespace Goedel.Cryptography {
             address = Builder.ToString();
             }
 
+        public static byte[] MakeWitness(
+            byte[] fingerprint1, byte[] nonce1,
+            byte[] fingerprint2, byte[] nonce2) {
+
+            var s1 = MakeWitness(fingerprint1, nonce1);
+            var s2 = MakeWitness(fingerprint2, nonce2);
+
+            return MakeWitness(s1, s2);
+            }
+
+        public static string MakeWitnessString(
+            byte[] fingerprint1, byte[] nonce1,
+            byte[] fingerprint2, byte[] nonce2,
+            int bits= 125) =>
+            Format (MakeWitness(fingerprint1, nonce1, fingerprint2, nonce2), bits);
+
+
         /// <summary>
         /// Calculate a binary witness value for the specified fingerprint
         /// and nonce value.
@@ -480,9 +546,8 @@ namespace Goedel.Cryptography {
         /// <param name="fingerprint">The fingerprint value.</param>
         /// <param name="nonce">The nonce value</param>
         /// <returns>The corresponding witness value.</returns>
-        public static string MakeWitnessString(byte[] fingerprint, byte[] nonce)=>
-            MakeWitness(fingerprint, nonce).ToStringBase32(Format: ConversionFormat.Dash5,
-                OutputMax:125);
+        public static string MakeWitnessString(byte[] fingerprint, byte[] nonce, int bits= 125) =>
+            Format (MakeWitness(fingerprint, nonce), bits);
         #endregion
         }
 

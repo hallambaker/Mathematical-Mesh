@@ -442,8 +442,7 @@ def self_check_curves():
     curve_self_check(Edwards25519Point.stdbase())
     curve_self_check(Edwards448Point.stdbase())
 
-#PureEdDSA scheme.
-#Limitation: only b mod 8 = 0 is handled.
+#PureEdDSA scheme. (only b mod 8 = 0 is handled.)
 class PureEdDSA:
     #Create a new object.
     def __init__(self,properties):

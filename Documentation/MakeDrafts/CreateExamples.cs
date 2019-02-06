@@ -118,7 +118,7 @@ namespace ExampleGenerator {
 
         void GenerateKeys() {
             // Encryption Key Set.
-            var machineEnvironment = new TestMachineEnvironment( "TestLifecycle");
+            var machineEnvironment = new TestEnvironmentMachine( "TestLifecycle");
             var Machine1 = new MeshMachineTest(machineEnvironment, name: "Machine1");
 
             DareMessageAlicePrivate = new DiffeHellmanPrivate();

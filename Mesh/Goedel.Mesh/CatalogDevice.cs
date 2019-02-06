@@ -20,8 +20,10 @@ namespace Goedel.Mesh {
         public bool MoveNext() => BaseEnumerator.MoveNext();
         public void Reset() => throw new NotImplementedException();
 
-        public EnumeratorCatalogEntryDevice(ContainerPersistenceStore container) =>
+        public EnumeratorCatalogEntryDevice(ContainerPersistenceStore container) {
             BaseEnumerator = container.GetEnumerator();
+
+            }
         }
 
     public class AsCatalogEntryDevice : IEnumerable<CatalogEntryDevice> {
@@ -63,9 +65,24 @@ namespace Goedel.Mesh {
 
     public partial class CatalogEntryDevice{
 
-        public ProfileDevice ProfileDevice => profileDevice ?? ProfileDevice.Decode(DeviceProfile);
-        ProfileDevice profileDevice = null;
+        public ProfileMeshDevicePublic ProfileMeshDevicePublic => profileMeshDevicePublic ??
+            ProfileMeshDevicePublic.Decode(ProfileMeshDevicePublicSigned);
+        ProfileMeshDevicePublic profileMeshDevicePublic = null;
 
-        public override string _PrimaryKey => ProfileDevice._PrimaryKey;
+        public ProfileMeshDevicePrivate ProfileMeshDevicePrivate => profileMeshDevicePrivate ??
+            ProfileMeshDevicePrivate.Decode(ProfileMeshDevicePrivateEncrypted);
+        ProfileMeshDevicePrivate profileMeshDevicePrivate = null;
+
+
+        public override string _PrimaryKey => UDF;
+
+
+
+
+
+
         }
+
+
+
     }

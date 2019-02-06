@@ -16,7 +16,7 @@
 		String Directory
 			Description
 				|Subdirectory containing the catalogs and spools for the account.
-		Struct ProfileMesh Profile
+		Struct DareMessage Profile
 			Description
 				|The Mesh profile that was registered
 		String Status

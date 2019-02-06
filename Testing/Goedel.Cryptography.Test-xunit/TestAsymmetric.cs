@@ -10,7 +10,7 @@ using Goedel.Test.Core;
 namespace Goedel.XUnit {
     public class TestAsymmetric {
 
-        public TestAsymmetric() => TestEnvironment.Initialize();
+        public TestAsymmetric() => TestEnvironmentCommon.Initialize();
         public static TestAsymmetric Test() => new TestAsymmetric();
 
 

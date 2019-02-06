@@ -20,18 +20,14 @@
 //  
 //  
 
-using System;
-using System.IO;
-using System.Diagnostics;
 using System.Collections.Generic;
-using Goedel.Persistence;
-using Goedel.Utilities;
-using Goedel.Mesh;
-using Goedel.Protocol;
-using Goedel.Mesh.Protocol;
-using Goedel.Cryptography.Dare;
+using System.IO;
+
 using Goedel.Cryptography;
+using Goedel.Cryptography.Dare;
 using Goedel.IO;
+using Goedel.Protocol;
+using Goedel.Utilities;
 
 namespace Goedel.Mesh.Protocol.Server {
 
@@ -41,8 +37,10 @@ namespace Goedel.Mesh.Protocol.Server {
     /// </summary>
     public class MeshPersist {
 
+        ///<summary>The underlying persistence store for the account catalog.</summary>
         public ContainerPersistenceStore Container;
 
+        ///<summary>The root directory in which the files are stored.</summary>
         public string DirectoryRoot;
 
 
@@ -69,7 +67,9 @@ namespace Goedel.Mesh.Protocol.Server {
         /// <summary>
         /// Add a new account. The account name must be unique.
         /// </summary>
-        public void AccountAdd(JpcSession jpcSession, AccountEntry accountEntry) {
+        public void AccountAdd(JpcSession jpcSession, 
+                        AccountEntry accountEntry,
+                        List<DareMessage> CatalogEntryDevices) {
             ContainerStoreEntry containerEntry;
 
             var directory = Path.Combine(DirectoryRoot, accountEntry.Directory);
@@ -81,58 +81,73 @@ namespace Goedel.Mesh.Protocol.Server {
                 containerEntry = Container.New(accountEntry) as ContainerStoreEntry;
                 }
 
-            // 
             lock (containerEntry) {
                 Directory.CreateDirectory(directory);
 
                 // Create the pro-forma containers.
-
                 new CatalogCredential(directory).Dispose();
-                new CatalogDevice(directory).Dispose();
                 new CatalogContact(directory).Dispose();
                 new CatalogApplication(directory).Dispose();
                 new Spool(directory, Spool.SpoolInbound).Dispose();
+
+                // Create and populate the device catalog
+                using (var catalog = new CatalogDevice(directory)) {
+                    foreach (var entry in CatalogEntryDevices) {
+                        catalog.AppendDirect(entry);
+                        }
+                    }
                 }
-
-
-
             }
 
+        /// <summary>
+        /// Process a connection request.
+        /// </summary>
+        /// <param name="jpcSession">The session connection data.</param>
+        /// <param name="account">The account that the device requests connection to.</param>
+        /// <param name="deviceProfile">Profile of the device requesting connection.</param>
+        /// <param name="clientNonce">Client nonce to mask the device profile fingerprint.</param>
+        /// <returns>The connection response.</returns>
+        public ConnectResponse Connect(JpcSession jpcSession,
+                        string account,
+                        DareMessage deviceProfile,
+                        byte [] clientNonce) {
 
-        public ProfileMesh Connect(JpcSession jpcSession, DareMessage proposedProfile) {
-            //string account, ProfileMesh profileMesh) {
+            var profileDevice = ProfileDevice.Decode(deviceProfile);
 
-            //JSONReader.Trace = true;
-            var profileMesh = ProfileMesh.Decode(proposedProfile);
+            var messageConnectionRequest = new MessageConnectionRequest() {
+                MessageID = UDF.Random(200),
+                Account = account,
+                DeviceProfile = deviceProfile,
+                ClientNonce = clientNonce,
+                ServerNonce = CryptoCatalog.GetBits(128)
+                };
 
-            using (var accountHandle = GetAccountUnverified(profileMesh.Account)) {
-                var result = new ProfileMesh() {
-                    Account = profileMesh.Account,
-                    DeviceProfile = profileMesh.DeviceProfile,
-                    ProfileNonce = CryptoCatalog.GetBits(128)
-                    };
+            var connectResponse = new ConnectResponse() {
+                ServerNonce = messageConnectionRequest.ServerNonce,
+                };
 
-                var messageConnectionRequest = new MessageConnectionRequest() {
-                    ProfileMesh = result
-                    };
+            using (var accountHandle = GetAccountUnverified(messageConnectionRequest.Account)) {
+
+                var witness = UDF.MakeWitnessString(
+                        accountHandle.ProfileMesh.UDFBytes, messageConnectionRequest.ServerNonce,
+                        profileDevice.UDFBytes, clientNonce);
+                messageConnectionRequest.Witness = witness;
+                connectResponse.Witness = witness;
+                connectResponse.ProfileMesh = accountHandle.MeshProfile;
 
                 var message = DareMessage.Encode(messageConnectionRequest.GetBytes());
 
                 accountHandle.Post(message);
-                return result;
+                return connectResponse;
                 }
-
-
             }
-
-
-
-
 
         /// <summary>
         /// Update an account record. There must be an existing record and the request must
         /// be appropriately authenticated.
         /// </summary>
+        /// <param name="jpcSession">The session connection data.</param>
+        /// <param name="account">The account for which the status is requested..</param>
         public List<ContainerStatus> AccountStatus(JpcSession jpcSession, VerifiedAccount account) {
             AccountHandleVerified accountEntry = null;
 
@@ -156,9 +171,14 @@ namespace Goedel.Mesh.Protocol.Server {
         /// Update an account record. There must be an existing record and the request must
         /// be appropriately authenticated.
         /// </summary>
-        public List<ContainerUpdate> AccountDownload(JpcSession jpcSession, VerifiedAccount account, List<ConstraintsSelect> selections) {
+        /// <param name="jpcSession">The session connection data.</param>
+        /// <param name="account">The account for which the status is requested..</param>
+        /// <param name="selections">The selection criteria.</param>
+        public List<ContainerUpdate> AccountDownload(
+                    JpcSession jpcSession, 
+                    VerifiedAccount account, 
+                    List<ConstraintsSelect> selections) {
             AccountHandleVerified accountEntry = null;
-
 
             try {
                 accountEntry = GetAccountVerified(account, jpcSession);
@@ -192,16 +212,31 @@ namespace Goedel.Mesh.Protocol.Server {
         /// Update an account record. There must be an existing record and the request must
         /// be appropriately authenticated.
         /// </summary>
-        public void AccountUpdate(JpcSession jpcSession, VerifiedAccount account, List<ContainerUpdate> Updates) {
+        /// <param name="jpcSession">The session connection data.</param>
+        /// <param name="account">The account for which the status is requested.</param>
+        /// <param name="updates">Entries to be added to catalogs.</param>
+        /// <param name="selfs">Entries to be added to the user's inbound store.</param>
+        public void AccountUpdate(
+                    JpcSession jpcSession, 
+                    VerifiedAccount account, 
+                    List<ContainerUpdate> updates,
+                    List<DareMessage> selfs) {
             //AccountHandleVerified accountEntry = null;
-
 
             using (var accountEntry = GetAccountVerified(account, jpcSession)) {
                 Assert.NotNull(accountEntry);
-                foreach (var update in Updates) {
-                    using (var catalog = accountEntry.GetCatalog(update.Container)) {
-                        foreach (var message in update.Message) {
-                            catalog.Apply(message);
+                if (selfs != null) {
+                    foreach (var self in selfs) {
+                        accountEntry.Post(self);
+                        }
+                    }
+
+                if (updates != null) {
+                    foreach (var update in updates) {
+                        using (var catalog = accountEntry.GetCatalog(update.Container)) {
+                            foreach (var message in update.Message) {
+                                catalog.Apply(message);
+                                }
                             }
                         }
                     }
@@ -212,71 +247,51 @@ namespace Goedel.Mesh.Protocol.Server {
         /// Update an account record. There must be an existing record and the request must
         /// be appropriately authenticated.
         /// </summary>
+        /// <param name="jpcSession">The session connection data.</param>
+        /// <param name="account">The account to be deleted.</param> 
         public bool AccountDelete(JpcSession jpcSession, VerifiedAccount account) {
             lock (Container) {
                 return Container.Delete(account.Account);
                 }
-
-
             }
 
-
+        /// <summary>
+        /// Process an inbound message to an account.
+        /// </summary>
+        /// <param name="jpcSession">The session connection data.</param>
+        /// <param name="account">The account to which the message is directed.</param>
+        /// <param name="dareMessage">The message</param>
         public void MessagePost(JpcSession jpcSession, string account, DareMessage dareMessage) {
 
             using (var accountUnverified = GetAccountUnverified(account)) {
                 Assert.NotNull(accountUnverified);
                 accountUnverified.Post(dareMessage);
                 }
-
             }
 
 
         /// <summary>
         /// Get access to an account record for an authenticated request.
         /// </summary>
-        /// <param name="verifiedAccount"></param>
+        /// <param name="jpcSession">The session connection data.</param>      
+        /// <param name="verifiedAccount">The account for which the data is requested.</param>
         /// <returns></returns>
         AccountHandleVerified GetAccountVerified(VerifiedAccount verifiedAccount, JpcSession jpcSession) {
             var accountEntry = GetAccountLocked(verifiedAccount.Account);
             Assert.NotNull(accountEntry);
 
-            if (accountEntry.Profile.ProfileDevice?.DeviceAuthenticationKey?.UDF == jpcSession.UDF) {
-                return new AccountHandleVerified(accountEntry);
-                }
-
-
-
-            // check to see if this is an admin device
-            var masterProfile = accountEntry.Profile.MasterProfile.GetProfileMaster();
-            if (masterProfile.IsAdministrator(jpcSession.UDF)) {
-                return new AccountHandleVerified(accountEntry);
-                }
-
             using (var catalogDevice = new CatalogDevice(accountEntry.Directory)) {
-
                 foreach (var entry in catalogDevice.AsCatalogEntryDevice) {
-
-                    if (entry.ProfileDevice.DeviceAuthenticationKey.UDF == jpcSession.UDF) {
+                    if (entry.AuthUDF == jpcSession.UDF) {
                         return new AccountHandleVerified(accountEntry);
                         }
-
                     }
-
-
                 }
-            // here look at the list of devices
-
-            // is the requester on it?
-
+            // Goal: Allow an administrator device to regain control of the account
+            // by creating Device entry public for itself.
 
             throw new NotAuthenticated();
-
-
             }
-
-
-
-
 
         /// <summary>
         /// Get access to an account record for an authenticated request.
@@ -287,6 +302,12 @@ namespace Goedel.Mesh.Protocol.Server {
             new AccountHandleUnverified(GetAccountLocked(account));
 
 
+        /// <summary>
+        /// Get the account record and lock it. The entry must be disposed properly 
+        /// to prevent access to the account being blocked from other threads.
+        /// </summary>
+        /// <param name="account">The account to get.</param>
+        /// <returns>The locked account entry if found, otherwise null.</returns>
         AccountEntry GetAccountLocked(string account) {
             AccountEntry result = null;
             bool locked = false;
@@ -307,11 +328,7 @@ namespace Goedel.Mesh.Protocol.Server {
                     }
                 return null;
                 }
-
             }
-
-
-
         }
 
 
@@ -319,24 +336,21 @@ namespace Goedel.Mesh.Protocol.Server {
     public partial class AccountEntry {
 
         public override string _PrimaryKey => Account;
-        public  string Account => Profile.Account;
+        public  string Account => ProfileMesh.Account;
+
+        public ProfileMesh ProfileMesh => profileMesh ?? ProfileMesh.Decode(Profile).CacheValue(out profileMesh);
+        ProfileMesh profileMesh;
 
         public AccountEntry() {
             }
 
         public AccountEntry(CreateRequest request) {
-            Profile = request.Profile;
+            Profile = request.MeshProfile;
             Verify();
             Directory = Account;
             }
 
-
-        //public string ConvertAccount() => Account.Replace('@', ':');
-
-
         public bool Verify() => true; // NYI: Verification of signed profile.
-
-
 
         }
 

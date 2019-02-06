@@ -6,7 +6,7 @@ using Goedel.Cryptography.Dare;
 using Goedel.Mesh.Protocol.Client;
 using Goedel.Utilities;
 using Goedel.Test.Core;
-
+using Goedel.Protocol;
 
 namespace Goedel.Mesh.Test {
 
@@ -17,10 +17,10 @@ namespace Goedel.Mesh.Test {
         static string NextAccountBob(string Test) => $"bob{Test}@{Service}";
 
         public static TestProfiles Test => new TestProfiles();
-        public TestProfiles() => TestEnvironment.Initialize();
+        public TestProfiles() => TestEnvironmentCommon.Initialize();
 
         public  void EscrowRecover() {
-            var machineEnvironment = new TestMachineEnvironment( "EscrowRecover");
+            var machineEnvironment = new TestEnvironmentMachine( "EscrowRecover");
 
             var MachineAliceAdmin = new MeshMachineTest(machineEnvironment, name: "Alice Admin");
             var MachineAliceRecover = new MeshMachineTest(machineEnvironment, name: "Alice Admin Recovered");
@@ -36,76 +36,77 @@ namespace Goedel.Mesh.Test {
             }
 
         public void CatalogCredentials() {
-            var machineEnvironment = new TestMachineEnvironment( "ProtocolHello");
+            var machineEnvironment = new TestEnvironmentMachine("ProtocolHello");
 
             var MachineAliceAdmin = new MeshMachineTest(machineEnvironment, name: "Alice");
             var DeviceAdmin = ContextDevice.Generate(MachineAliceAdmin);
             var MasterAdmin = DeviceAdmin.GenerateMaster();
 
 
-            var catalog = MasterAdmin.CatalogCredential;
+            using (var catalog = MasterAdmin.GetCatalogCredential()) {
 
-            var Entry1 = new CatalogEntryCredential() {
-                Service = "example.com",
-                Username = "alice",
-                Password = "password"
-                };
-            var Entry2 = new CatalogEntryCredential() {
-                Service = "example.net",
-                Username = "alice",
-                Password = "samepassword"
-                };
-            var Entry3 = new CatalogEntryCredential() {
-                Service = "www.cnn.com",
-                Username = "alice1977",
-                Password = "EasyToGuess"
-                };
-            var Entry4 = new CatalogEntryCredential() {
-                Service = "www.bank.test",
-                Username = "alice1977",
-                Password = "EasyToGuess"
-                };
-            var Entry5 = new CatalogEntryCredential() {
-                Service = "example.net",
-                Username = "alice",
-                Password = "samepassword2"
-                };
-
-
-            CheckCatalog(catalog, new List<CatalogEntry> { });
-
-            catalog.Add(Entry1);
-            CheckCatalog(catalog, new List<CatalogEntry> { Entry1 });
-
-            catalog.Add(Entry2);
-            CheckCatalog(catalog, new List<CatalogEntry> { Entry1 , Entry2 });
-
-            catalog.Add(Entry3);
-            CheckCatalog(catalog, new List<CatalogEntry> { Entry1, Entry2, Entry3 });
-
-            catalog.Add(Entry4);
-            CheckCatalog(catalog, new List<CatalogEntry> { Entry1, Entry2, Entry3, Entry4 });
-
-            catalog.Update(Entry5);
-            CheckCatalog(catalog, new List<CatalogEntry> { Entry1, Entry3, Entry4, Entry5 });
-
-            catalog.Delete(Entry4);
-            CheckCatalog(catalog, new List<CatalogEntry> { Entry1, Entry3, Entry5 });
-
-            CheckCatalogEntry(Entry1, catalog.LocateByService(Entry1.Service));
-            CheckCatalogEntry(Entry3, catalog.LocateByService(Entry3.Service));
-            CheckCatalogEntry(null, catalog.LocateByService(Entry4.Service));
-            CheckCatalogEntry(Entry5, catalog.LocateByService(Entry5.Service));
+                var Entry1 = new CatalogEntryCredential() {
+                    Service = "example.com",
+                    Username = "alice",
+                    Password = "password"
+                    };
+                var Entry2 = new CatalogEntryCredential() {
+                    Service = "example.net",
+                    Username = "alice",
+                    Password = "samepassword"
+                    };
+                var Entry3 = new CatalogEntryCredential() {
+                    Service = "www.cnn.com",
+                    Username = "alice1977",
+                    Password = "EasyToGuess"
+                    };
+                var Entry4 = new CatalogEntryCredential() {
+                    Service = "www.bank.test",
+                    Username = "alice1977",
+                    Password = "EasyToGuess"
+                    };
+                var Entry5 = new CatalogEntryCredential() {
+                    Service = "example.net",
+                    Username = "alice",
+                    Password = "samepassword2"
+                    };
 
 
-            CheckCatalogEntry(Entry1, catalog.Locate(Entry1._PrimaryKey));
+                CheckCatalog(catalog, new List<CatalogEntry> { });
+
+                catalog.Add(Entry1);
+                CheckCatalog(catalog, new List<CatalogEntry> { Entry1 });
+
+                catalog.Add(Entry2);
+                CheckCatalog(catalog, new List<CatalogEntry> { Entry1, Entry2 });
+
+                catalog.Add(Entry3);
+                CheckCatalog(catalog, new List<CatalogEntry> { Entry1, Entry2, Entry3 });
+
+                catalog.Add(Entry4);
+                CheckCatalog(catalog, new List<CatalogEntry> { Entry1, Entry2, Entry3, Entry4 });
+
+                catalog.Update(Entry5);
+                CheckCatalog(catalog, new List<CatalogEntry> { Entry1, Entry3, Entry4, Entry5 });
+
+                catalog.Delete(Entry4);
+                CheckCatalog(catalog, new List<CatalogEntry> { Entry1, Entry3, Entry5 });
+
+                CheckCatalogEntry(Entry1, catalog.LocateByService(Entry1.Service));
+                CheckCatalogEntry(Entry3, catalog.LocateByService(Entry3.Service));
+                CheckCatalogEntry(null, catalog.LocateByService(Entry4.Service));
+                CheckCatalogEntry(Entry5, catalog.LocateByService(Entry5.Service));
+
+
+                CheckCatalogEntry(Entry1, catalog.Locate(Entry1._PrimaryKey));
+                }
             }
 
         /// <summary>
         /// Test direct addition/removal of devices without going through the services or inbound spool
         /// </summary>
         public void CatalogDevices() {
-            var machineEnvironment = new TestMachineEnvironment( "ProtocolHello");
+            var machineEnvironment = new TestEnvironmentMachine( "ProtocolHello");
 
             var MachineAliceAdmin = new MeshMachineTest(machineEnvironment, name: "Alice");
             var MachineAliceLaptop = new MeshMachineTest(machineEnvironment, name: "Alice Laptop");
@@ -115,12 +116,13 @@ namespace Goedel.Mesh.Test {
 
             var catalog = MasterAdmin.CatalogDevice;
 
+            var keySign = MachineAliceAdmin.KeyCollection.LocatePrivate(DeviceAdmin.ProfileDevice.DeviceSignatureKey.UDF);
+            var Entry1 = MakeCatalogEntryDevice(DeviceAdmin.ProfileDevice, keySign);
 
-            var Entry1 = new CatalogEntryDevice() { DeviceProfile = DeviceAdmin.ProfileDevice.ProfileDeviceSigned } ;
             var Device2 = ContextDevice.Generate(MachineAliceLaptop);
-            var Entry2 = new CatalogEntryDevice() { DeviceProfile = Device2.ProfileDevice.ProfileDeviceSigned };
+            var Entry2 = MakeCatalogEntryDevice(Device2.ProfileDevice, keySign);
             var Device3 = ContextDevice.Generate(MachineAlicePhone);
-            var Entry3 = new CatalogEntryDevice() { DeviceProfile = Device3.ProfileDevice.ProfileDeviceSigned };
+            var Entry3 = MakeCatalogEntryDevice(Device3.ProfileDevice, keySign);
 
             catalog.Add(Entry1);
             CheckCatalog(catalog, new List<CatalogEntry> { Entry1 });
@@ -131,12 +133,35 @@ namespace Goedel.Mesh.Test {
             CheckCatalog(catalog, new List<CatalogEntry> { Entry1, Entry2, Entry3 });
             }
 
+        protected DareMessage Sign(JSONObject data, KeyPair keySign) =>
+                    DareMessage.Encode(data.GetBytes(tag: true),
+                        signingKey: keySign, contentType: "application/mmm");
+
+        public CatalogEntryDevice MakeCatalogEntryDevice(ProfileDevice profileDevice, KeyPair keySign) {
+
+            var profileMeshDevicePublic = new ProfileMeshDevicePublic() {
+                DeviceProfile = profileDevice.ProfileDeviceSigned
+                };
+
+            var ProfileMeshDevicePrivate = new ProfileMeshDevicePrivate() {
+                };
+
+            var catalogEntryDevice = new CatalogEntryDevice() {
+                UDF = profileDevice.UDF,
+                ProfileMeshDevicePublicSigned = Sign(profileMeshDevicePublic, keySign),
+                ProfileMeshDevicePrivateEncrypted = Sign(ProfileMeshDevicePrivate, keySign)
+                };
+
+
+            return catalogEntryDevice;
+            }
+
 
         /// <summary>
         /// Test addition/deletion of contacts
         /// </summary>
         public void CatalogContacts() {
-            var machineEnvironment = new TestMachineEnvironment( "ProtocolHello");
+            var machineEnvironment = new TestEnvironmentMachine( "ProtocolHello");
 
             var MachineAliceAdmin = new MeshMachineTest(machineEnvironment, name: "Alice");
             var DeviceAdmin = ContextDevice.Generate(MachineAliceAdmin);

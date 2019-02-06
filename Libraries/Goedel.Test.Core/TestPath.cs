@@ -8,8 +8,13 @@ using Goedel.Mesh.Protocol.Server;
 using Goedel.Mesh;
 
 namespace Goedel.Test.Core {
-    public class TestEnvironment : Initialization {
 
+    /// <summary>
+    /// Test environment for one test with one service with one or more devices.
+    /// </summary>
+    public class TestEnvironmentCommon : Initialization {
+
+        public string ServiceName = "example.com";
         static string TestPath = "TestPath";
         static string TestRoot;
 
@@ -17,9 +22,16 @@ namespace Goedel.Test.Core {
         public static string WorkingDirectory => System.IO.Path.Combine(TestRoot, "WorkingDirectory");
 
         public string Path => System.IO.Path.Combine(TestRoot, Test);
+        public string ServiceDirectory => System.IO.Path.Combine(Path, "ServiceDirectory");
         public string Test;
 
         static bool Flag = false;
+
+        public MeshPortalDirect MeshPortalDirect => meshPortalDirect ??
+            new MeshPortalDirect(ServiceName, ServiceDirectory).CacheValue(out meshPortalDirect);
+        MeshPortalDirect meshPortalDirect=null;
+
+
 
         /// <summary>
         /// Perform initialization of the Goedel.Cryptography portable class
@@ -42,11 +54,12 @@ namespace Goedel.Test.Core {
             }
 
 
-        public TestEnvironment() {
+        public TestEnvironmentCommon() {
             Initialize(true);
             Test =  Unique.Next();
             Path.DirectoryDelete();
             Directory.CreateDirectory(Path);
+            Directory.CreateDirectory(ServiceDirectory);
             }
 
 
@@ -54,34 +67,37 @@ namespace Goedel.Test.Core {
 
         }
 
+    /// <summary>
+    /// Test environment for a single device within a test.
+    /// </summary>
+    public class TestEnvironmentMachine {
 
-    public class TestMachineEnvironment {
 
-        public string ServiceName = "example.com";
-        public MeshPortalDirect MeshPortalDirect => meshPortalDirect ??
-            new MeshPortalDirect(ServiceName, ServiceDirectory).CacheValue(out meshPortalDirect);
-        MeshPortalDirect meshPortalDirect = null;
+        public MeshPortalDirect MeshPortalDirect => TestEnvironmentCommon.MeshPortalDirect;
 
-        TestEnvironment TestEnvironment;
+        TestEnvironmentCommon TestEnvironmentCommon;
         public string Name;
 
-        public string Path => System.IO.Path.Combine(TestEnvironment.Path, Name);
+        public string Path => System.IO.Path.Combine(TestEnvironmentCommon.Path, Name);
         //public string WorkingDirectory => System.IO.Path.Combine(Path, "WorkingDirectory");
 
-        public string ServiceDirectory => System.IO.Path.Combine(Path, "ServiceDirectory");
-
-        public TestMachineEnvironment(string name = "Test",
-            MeshPortalDirect meshPortalDirect = null) : 
-            this(new TestEnvironment(), meshPortalDirect, name) { }
 
 
-        public TestMachineEnvironment(TestEnvironment testEnvironment,
-            MeshPortalDirect meshPortalDirect=null, string name = "Test") {
-            this.meshPortalDirect = meshPortalDirect;
-            TestEnvironment = testEnvironment;
+        public TestEnvironmentMachine(string name = "Test") {
+            TestEnvironmentCommon = new TestEnvironmentCommon();
+            var ServiceDirectory = System.IO.Path.Combine(TestEnvironmentCommon.Path, "ServiceDirectory");
+
+
+
             Name = name;
-            Directory.CreateDirectory(ServiceDirectory);
+            }
 
+
+        public TestEnvironmentMachine(
+                    TestEnvironmentCommon testEnvironment,
+                    string name = "Test") {
+            TestEnvironmentCommon = testEnvironment;
+            Name = name;
             }
 
         }

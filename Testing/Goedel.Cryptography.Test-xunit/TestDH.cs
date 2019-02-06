@@ -44,7 +44,7 @@ namespace Goedel.XUnit {
 
 
         public TestCryptography() {
-            var machineEnvironment = new TestMachineEnvironment( "TestCryptography");
+            var machineEnvironment = new TestEnvironmentMachine( "TestCryptography");
 
             MeshMachine = new MeshMachineTest(machineEnvironment);
             KeyCollection = new KeyCollectionTest(MeshMachine);

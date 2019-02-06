@@ -41,7 +41,7 @@ namespace Goedel.Mesh {
 
 
     public class CatalogBookmark : Catalog {
-
+        protected override void Dispose(bool disposing) => base.Dispose(disposing);
         public const string Label = "CatalogBookmark";
 
         public override string ContainerDefault => Label;
@@ -61,7 +61,7 @@ namespace Goedel.Mesh {
 
     public partial class CatalogEntryBookmark {
         ///<summary>The primary key is protocol:site </summary>
-        public override string _PrimaryKey => Uri;
+        public override string _PrimaryKey => Path;
 
         //public override string ToString() {
         //    throw new NYI();

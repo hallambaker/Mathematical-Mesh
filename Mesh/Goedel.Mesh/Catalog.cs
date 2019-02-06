@@ -84,7 +84,8 @@ namespace Goedel.Mesh {
         public virtual void Delete(CatalogEntry catalogEntry) => ContainerPersistence.Delete(catalogEntry._PrimaryKey);
 
 
-        public CatalogEntry Locate(string key) => (ContainerPersistence.Get(key) as ContainerStoreEntry).JsonObject as CatalogEntry;
+        public CatalogEntry Locate(string key) => 
+            (ContainerPersistence.Get(key) as ContainerStoreEntry)?.JsonObject as CatalogEntry;
 
 
         public IEnumerator<CatalogEntry> GetEnumerator() => new EnumeratorCatalogEntry (ContainerPersistence);

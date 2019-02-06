@@ -59,12 +59,18 @@ namespace Goedel.Mesh {
         public static ProfileDevice Decode(DareMessage message)=>
             FromJSON(message.GetBodyReader(), true);
 
-
-        //public MessageConnectionRequest ConnectionRequest(string Profile) => new MessageConnectionRequest() {
-        //        DeviceProfile = ProfileDeviceSigned,
-        //        ConnectTo = Profile
-        //        };
-
-
         }
+
+
+    public partial class ProfileMeshDevicePrivate {
+        public static ProfileMeshDevicePrivate Decode(DareMessage message) =>
+                FromJSON(message.GetBodyReader(), true);
+        }
+
+    public partial class ProfileMeshDevicePublic {
+        public static ProfileMeshDevicePublic Decode(DareMessage message) =>
+                FromJSON(message.GetBodyReader(), true);
+        }
+
+
     }

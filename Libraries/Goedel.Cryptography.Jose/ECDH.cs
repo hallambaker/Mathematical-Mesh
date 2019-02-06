@@ -98,6 +98,8 @@ namespace Goedel.Cryptography.Jose {
         /// </summary>
         /// <param name="pkixKey">DH Public Key.</param>
         public PrivateKeyECDH(PKIXPrivateKeyECDH pkixKey) {
+            Assert.AssertNotNull(pkixKey, NotExportable.Throw);
+
             Private = pkixKey.Data;
             PKIXParametersPrivate = pkixKey;
             Curve = pkixKey.CurveJose;

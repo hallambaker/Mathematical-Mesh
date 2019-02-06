@@ -18,14 +18,16 @@ namespace Goedel.Mesh.Shell {
         /// <returns>Mesh result instance</returns>
         public override ShellResult CalendarAdd(CalendarAdd Options) {
             var contextDevice = GetContextDevice(Options);
-            var catalog = contextDevice.CatalogCalendar;
-            var file = Options.File.Value;
+            var identifier = Options.Identifier.Value;
+            var title = Options.Title.Value;
 
 
             var entry = new CatalogEntryTask() {
-
+                Key = identifier
                 };
-            catalog.Add(entry);
+            using (var catalog = contextDevice.GetCatalogCalendar()) {
+                catalog.Update(entry);
+                }
 
             return new ResultEntry() {
                 Success = true,
@@ -40,16 +42,36 @@ namespace Goedel.Mesh.Shell {
         /// <returns>Mesh result instance</returns>
         public override ShellResult CalendarDelete(CalendarDelete Options) {
             var contextDevice = GetContextDevice(Options);
-            var catalog = contextDevice.CatalogCalendar;
             var identifier = Options.Identifier.Value;
 
-            var result = catalog.Locate(identifier);
-            catalog.Delete(result);
+            using (var catalog = contextDevice.GetCatalogCalendar()) {
+                var result = catalog.Locate(identifier);
+                catalog.Delete(result);
 
-            return new ResultEntry() {
-                Success = true,
-                CatalogEntry = result
-                };
+                return new ResultEntry() {
+                    Success = true,
+                    CatalogEntry = result
+                    };
+                }
+            }
+
+        /// <summary>
+        /// Dispatch method
+        /// </summary>
+        /// <param name="Options">The command line options.</param>
+        /// <returns>Mesh result instance</returns>
+        public override ShellResult CalendarGet(CalendarGet Options) {
+            var contextDevice = GetContextDevice(Options);
+            using (var catalog = contextDevice.GetCatalogCalendar()) {
+                var identifier = Options.Identifier.Value;
+
+                var result = catalog.Locate(identifier);
+
+                return new ResultEntry() {
+                    Success = result != null,
+                    CatalogEntry = result
+                    };
+                }
             }
 
         /// <summary>
@@ -59,15 +81,15 @@ namespace Goedel.Mesh.Shell {
         /// <returns>Mesh result instance</returns>
         public override ShellResult CalendarDump(CalendarDump Options) {
             var contextDevice = GetContextDevice(Options);
-            var catalog = contextDevice.CatalogCredential;
 
             var result = new ResultDump() {
                 Success = true,
                 CatalogEntries = new List<CatalogEntry>()
                 };
-
-            foreach (var entry in catalog) {
-                result.CatalogEntries.Add(entry);
+            using (var catalog = contextDevice.GetCatalogCalendar()) {
+                foreach (var entry in catalog) {
+                    result.CatalogEntries.Add(entry);
+                    }
                 }
 
             return result;

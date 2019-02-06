@@ -24,13 +24,33 @@ namespace Goedel.XUnit {
         [Theory]
         [InlineData(CryptoAlgorithmID.Ed448)]
         [InlineData(CryptoAlgorithmID.Ed25519)]
-        [InlineData(CryptoAlgorithmID.X448)]
-        [InlineData(CryptoAlgorithmID.X25519)]
+        //[InlineData(CryptoAlgorithmID.X448)]
+        //[InlineData(CryptoAlgorithmID.X25519)]
         [InlineData(CryptoAlgorithmID.DH)]
         [InlineData(CryptoAlgorithmID.RSAExch)]
         [InlineData(CryptoAlgorithmID.RSASign)]
-        public void RoundTripKey(CryptoAlgorithmID cryptoAlgorithmID) {
-            var key = KeyPair.Factory(CryptoAlgorithmID.Ed448, keySecurity: KeySecurity.Ephemeral);
+        public void RoundTripKeyEphemeral(CryptoAlgorithmID cryptoAlgorithmID) {
+            var key = KeyPair.Factory(cryptoAlgorithmID, keySecurity: KeySecurity.Ephemeral);
+            var jsonPublic = Key.GetPublic(key);
+            var key2 = jsonPublic.KeyPair;
+            key.UDF.AssertEqual(key2.UDF);
+
+            Xunit.Assert.Throws<NotExportable>(() => Key.GetPrivate(key));
+
+            //var key3 = jsonPrivate.KeyPair;
+            //key.UDF.AssertEqual(key3.UDF);
+            }
+
+        [Theory]
+        [InlineData(CryptoAlgorithmID.Ed448)]
+        [InlineData(CryptoAlgorithmID.Ed25519)]
+        //[InlineData(CryptoAlgorithmID.X448)]
+        //[InlineData(CryptoAlgorithmID.X25519)]
+        [InlineData(CryptoAlgorithmID.DH)]
+        [InlineData(CryptoAlgorithmID.RSAExch)]
+        [InlineData(CryptoAlgorithmID.RSASign)]
+        public void RoundTripKeyExportable(CryptoAlgorithmID cryptoAlgorithmID) {
+            var key = KeyPair.Factory(cryptoAlgorithmID, keySecurity: KeySecurity.Exportable);
             var jsonPublic = Key.GetPublic(key);
             var key2 = jsonPublic.KeyPair;
             key.UDF.AssertEqual(key2.UDF);
@@ -39,7 +59,6 @@ namespace Goedel.XUnit {
             var key3 = jsonPrivate.KeyPair;
             key.UDF.AssertEqual(key3.UDF);
             }
-
 
         [Fact]
         public void Test_Jose_Encrypt() {

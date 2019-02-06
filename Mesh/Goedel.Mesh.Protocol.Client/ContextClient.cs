@@ -60,38 +60,40 @@ namespace Goedel.Mesh.Protocol.Client {
         /// <param name="account">The account the user is requesting a connection to.</param>
         /// <returns>Transaction status information</returns>
         public MeshResultConnect RequestConnect(string account) {
-            AccountName = account;
-
             // get the account profile
             var meshClientSession = new MeshClientSession(this);
             MeshService = MeshMachine.GetMeshClient(account);
 
-            var meshConnectData = new ProfileMesh() {
-                Account = account,
-                DeviceProfile = ProfileDeviceSigned
-                };
-
-            var signedMessage = Sign(meshConnectData);
-
+            var clientNonce = CryptoCatalog.GetBits(128);
 
             // generate the connection request 
             var connectRequest = new ConnectRequest() {
-                SignedMessage = signedMessage
+                Account = account,
+                ClientNonce = clientNonce,
+                DeviceProfile = ProfileDevice.ProfileDeviceSigned
                 };
-            //JSONReader.Trace = true;
+
+
+
             var connectResponse = MeshService.Connect(connectRequest, MeshClientSession);
 
             string deviceWitness = null;
+            connectResponse.Success().AssertTrue();
 
-            if (connectResponse.Success()) {
-                var deviceUDF = ProfileDevice.UDFBytes;
-                deviceWitness = UDF.MakeWitnessString(deviceUDF,
-                    connectResponse.ProfileMesh.ProfileNonce);
+            var deviceUDF = ProfileDevice.UDFBytes;
+            deviceWitness = connectResponse.Witness;
 
-                MeshMachine.Register(connectResponse.ProfileMesh);
-                }
+            ProfileMesh = ProfileMesh.Decode(connectResponse.ProfileMesh);
+
+            var witness = UDF.MakeWitness(
+                    ProfileMesh.UDFBytes, connectResponse.ServerNonce,
+                    ProfileDevice.UDFBytes, clientNonce);
+
+            UDF.Matches(deviceWitness, witness).AssertTrue();
+
 
             // if successful save the connection response for later use.
+            MeshMachine.Register(ProfileMesh);
 
 
             // No, instread create a variable for the device state.
@@ -103,17 +105,35 @@ namespace Goedel.Mesh.Protocol.Client {
 
             }
 
+
+        public CatalogEntryDevice MakeCatalogEntryDevice(ProfileDevice profileDevice) {
+
+            var profileMeshDevicePublic = new ProfileMeshDevicePublic() {
+                DeviceProfile = profileDevice.ProfileDeviceSigned
+                };
+
+            var ProfileMeshDevicePrivate = new ProfileMeshDevicePrivate() {
+                };
+
+            var catalogEntryDevice = new CatalogEntryDevice() {
+                UDF = profileDevice.UDF,
+                AuthUDF = profileDevice.DeviceAuthenticationKey.UDF,
+                ProfileMeshDevicePublicSigned = Sign(profileMeshDevicePublic),
+                ProfileMeshDevicePrivateEncrypted = Sign(ProfileMeshDevicePrivate)
+                };
+
+
+            return catalogEntryDevice;
+            }
+
+
         /// <summary>
         /// Request the status of an account 
         /// </summary>
         /// <param name="account">The account for which status is requested.</param>
         /// <returns>The status of the request.</returns>
-        public MeshResult Status(string account = null) {
-
-
-            account = account ?? AccountName;
-            AccountName = account;
-
+        public MeshResult Status() {
+            MeshService = MeshService ?? MeshMachine.GetMeshClient(AccountName);
             var statusRequest = new StatusRequest() {
                 Account = AccountName
                 };
@@ -132,9 +152,12 @@ namespace Goedel.Mesh.Protocol.Client {
         public MeshResult ContactRequest(string recipient, DareMessage signedContact) {
 
             var messageContactRequest = new MessageContactRequest() {
+
                 Recipient = recipient,
                 Contact = signedContact
                 };
+
+
 
             return Post(recipient, messageContactRequest);
             }
@@ -168,11 +191,16 @@ namespace Goedel.Mesh.Protocol.Client {
 
             var recipient = messageConfirmationRequest.Sender;
 
+            var messageID = UDF.Random(200);
+
             var messageConfirmationResponse = new MessageConfirmationResponse() {
+                MessageID = messageID,
                 Recipient = recipient,
                 ResponseID = messageConfirmationRequest.MessageID,
                 Accept = accept
                 };
+
+            var completion = new MeshMessageComplete(messageID, MeshMessageComplete.Accept);
 
             return Post(recipient, messageConfirmationResponse);
             }
@@ -184,14 +212,20 @@ namespace Goedel.Mesh.Protocol.Client {
         /// <param name="recipient">The intended recipient.</param>
         /// <param name="meshMessage"></param>
         /// <returns>Transaction status information</returns>
-        public MeshResult Post(string recipient, MeshMessage meshMessage) {
+        public MeshResult Post(string recipient, MeshMessage meshMessage,
+                    MeshMessageComplete meshMessageSelf=null) {
+            meshMessage.MessageID = meshMessage.MessageID ?? UDF.Random(200);
 
             var DareMessage = Sign(meshMessage); // need to add in the recipient here
-
+            
             var postRequest = new PostRequest() {
                 Message = new List<DareMessage> { DareMessage },
                 Accounts = new List<string> { recipient }
                 };
+
+            if (meshMessageSelf != null) {
+                postRequest.Self = Sign(meshMessageSelf);
+                }
 
             var response = MeshService.Post(postRequest, MeshClientSession);
 
@@ -202,11 +236,9 @@ namespace Goedel.Mesh.Protocol.Client {
         /// Synchroniza a local catalog store with the one held remotely.
         /// </summary>
         /// <returns>Transaction status information</returns>
-        public MeshResult Sync(string account = null) {
-            account = account ?? AccountName;
-            AccountName = account;
+        public MeshResult Sync() {
 
-            var meshResult = Status(account);
+            var meshResult = Status();
 
             if (meshResult.Error) {
                 return meshResult;
@@ -219,15 +251,16 @@ namespace Goedel.Mesh.Protocol.Client {
 
 
             foreach (var containerStatus in statusResponse.ContainerStatus) {
-                var store = GetStore(Store.Factory, containerStatus.Container);
+                var store = GetStore(containerStatus.Container) ;
                 if (store.FrameCount < containerStatus.Index) {
                     select = select ?? new List<ConstraintsSelect>();
                     var constraintsSelect = new ConstraintsSelect() {
                         Container = containerStatus.Container,
-                        IndexMin = (int) store.FrameCount
+                        IndexMin = (int)store.FrameCount
                         };
                     select.Add(constraintsSelect);
                     }
+
                 }
 
             if (select == null) {
@@ -236,14 +269,14 @@ namespace Goedel.Mesh.Protocol.Client {
 
             var downloadRequest = new DownloadRequest() {
                 Select = select,
-                Account = account
+                Account = AccountName
                 };
 
             var downloadResponse = MeshService.Download(downloadRequest, MeshClientSession);
 
 
             foreach (var Update in downloadResponse.Updates) {
-                var store = GetStore(Store.Factory, Update.Container);
+                var store = GetStore(Update.Container);
                 foreach (var message in Update.Message) {
                     // Hack: Should have checks here to make sure this is what we asked for and robust, etc.
                     store.AppendDirect(message);
@@ -256,7 +289,7 @@ namespace Goedel.Mesh.Protocol.Client {
             }
 
         void Sync(ContainerStatus containerStatus) {
-            var store = GetStore(Store.Factory, containerStatus.Container);
+            var store = GetStore(containerStatus.Container);
             if (store.FrameCount == containerStatus.Index) {
                 return;
                 }

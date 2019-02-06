@@ -7,10 +7,14 @@ namespace Scratchpad {
     partial class Program {
         static void Main(string[] args) {
             Console.WriteLine("Hello World");
-            //TestCryptographyJose.Test().RoundTripKey(CryptoAlgorithmID.Ed448);
-            //TestKeyless.Test().FindCompression();
-            ShellTests.Test().TestFileEncrypt();
+            ShellTests.Test().TestProfileConnect();
 
+            //TestCryptographyJose.Test().RoundTripKeyEphemeral(CryptoAlgorithmID.RSAExch);
+            //TestKeyless.Test().FindCompression();
+            //TestService.Test().MeshContact();
+
+            //ShellTests.Test().TestMessageContact();
+            //TestLifecycle.Test().Test_LifecycleMaster(CryptoAlgorithmID.DH);
             //TestService.Test().MeshConnect();
             }
 

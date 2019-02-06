@@ -247,11 +247,19 @@ namespace Goedel.Cryptography {
         public abstract IPKIXPublicKey PKIXPublicKey { get; }
 
 
-        string _UDF = null;
+        ///<summary>The raw UDF fingerprint.</summary>
+        public override byte[] UDFBytes => udfBytes ?? PKIXPublicKey.UDFBytes().CacheValue(out udfBytes);
+        byte[] udfBytes = null;
+
+
+        string udf = null;
         /// <summary>
         /// Returns the UDF fingerprint of the current key as a string.
         /// </summary>
-        public override string UDF => _UDF ?? PKIXPublicKey.UDF().CacheValue(out _UDF);
+        public override string UDF => udf ?? Cryptography.UDF.ToString(UDFBytes).CacheValue(out udf);
+
+
+
 
         /// <summary>
         /// Returns a new KeyPair instance which only has the public values.

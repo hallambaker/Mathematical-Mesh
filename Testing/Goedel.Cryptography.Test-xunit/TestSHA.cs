@@ -13,7 +13,7 @@ namespace Goedel.XUnit {
 
         public static TestGoedelCryptography Test() => new TestGoedelCryptography();
 
-        public TestGoedelCryptography() => TestEnvironment.Initialize();
+        public TestGoedelCryptography() => TestEnvironmentCommon.Initialize();
 
         byte[] SHA_Plaintext =
                         ("6bc1bee22e409f96e93d7e117393172a"

@@ -55,10 +55,15 @@
 		String			Shares
 			Multiple
 
+	Structure ResultConnectProcess
+		Inherits		Result
+		Boolean			Accepted
+		String			Witness
 
 	Structure ResultPending
 		Inherits		Result
 		Struct MeshMessage Messages
+			Multiple
 
 	Structure ResultRecover
 		Inherits		Result

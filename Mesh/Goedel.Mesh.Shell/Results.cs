@@ -69,6 +69,7 @@ namespace Goedel.Mesh.Shell {
 			{"ResultMasterCreate", ResultMasterCreate._Factory},
 			{"ResultSync", ResultSync._Factory},
 			{"ResultEscrow", ResultEscrow._Factory},
+			{"ResultConnectProcess", ResultConnectProcess._Factory},
 			{"ResultPending", ResultPending._Factory},
 			{"ResultRecover", ResultRecover._Factory},
 			{"ResultConnect", ResultConnect._Factory},
@@ -1346,11 +1347,131 @@ namespace Goedel.Mesh.Shell {
 
 	/// <summary>
 	/// </summary>
+	public partial class ResultConnectProcess : Result {
+		bool								__Accepted = false;
+		private bool						_Accepted;
+        /// <summary>
+        /// </summary>
+
+		public virtual bool						Accepted {
+			get => _Accepted;
+			set {_Accepted = value; __Accepted = true; }
+			}
+        /// <summary>
+        /// </summary>
+
+		public virtual string						Witness  {get; set;}
+		
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "ResultConnectProcess";
+
+		/// <summary>
+        /// Factory method
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JSONObject _Factory () => new ResultConnectProcess();
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="Writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
+			SerializeX (Writer, wrap, ref first);
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_Writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			if (_wrap) {
+				_Writer.WriteObjectStart ();
+				}
+			((Result)this).SerializeX(_Writer, false, ref _first);
+			if (__Accepted){
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Accepted", 1);
+					_Writer.WriteBoolean (Accepted);
+				}
+			if (Witness != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Witness", 1);
+					_Writer.WriteString (Witness);
+				}
+			if (_wrap) {
+				_Writer.WriteObjectEnd ();
+				}
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <returns>The created object.</returns>		
+        public static new ResultConnectProcess FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
+			if (Tagged) {
+				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				return Out as ResultConnectProcess;
+				}
+		    var Result = new ResultConnectProcess ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			}
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
+		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+			
+			switch (Tag) {
+				case "Accepted" : {
+					Accepted = JSONReader.ReadBoolean ();
+					break;
+					}
+				case "Witness" : {
+					Witness = JSONReader.ReadString ();
+					break;
+					}
+				default : {
+					base.DeserializeToken(JSONReader, Tag);
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
+	/// <summary>
+	/// </summary>
 	public partial class ResultPending : Result {
         /// <summary>
         /// </summary>
 
-		public virtual MeshMessage						Messages  {get; set;}
+		public virtual List<MeshMessage>				Messages  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -1397,8 +1518,20 @@ namespace Goedel.Mesh.Shell {
 			if (Messages != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("Messages", 1);
-					Messages.Serialize (_Writer, false);
+				_Writer.WriteArrayStart ();
+				bool _firstarray = true;
+				foreach (var _index in Messages) {
+					_Writer.WriteArraySeparator (ref _firstarray);
+					// This is an untagged structure. Cannot inherit.
+                    //_Writer.WriteObjectStart();
+                    //_Writer.WriteToken(_index._Tag, 1);
+					bool firstinner = true;
+					_index.Serialize (_Writer, true, ref firstinner);
+                    //_Writer.WriteObjectEnd();
+					}
+				_Writer.WriteArrayEnd ();
 				}
+
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
 				}
@@ -1432,10 +1565,17 @@ namespace Goedel.Mesh.Shell {
 			
 			switch (Tag) {
 				case "Messages" : {
-					// An untagged structure
-					Messages = new MeshMessage ();
-					Messages.Deserialize (JSONReader);
- 
+					// Have a sequence of values
+					bool _Going = JSONReader.StartArray ();
+					Messages = new List <MeshMessage> ();
+					while (_Going) {
+						// an untagged structure.
+						var _Item = new  MeshMessage ();
+						_Item.Deserialize (JSONReader);
+						// var _Item = new MeshMessage (JSONReader);
+						Messages.Add (_Item);
+						_Going = JSONReader.NextArray ();
+						}
 					break;
 					}
 				default : {
