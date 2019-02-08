@@ -17,8 +17,9 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult MailAdd(MailAdd Options) {
-            var context = GetContextDevice(Options);
-            throw new NYI();
+            using (var contextDevice = GetContextDevice(Options)) {
+                throw new NYI();
+                }
             }
 
         /// <summary>
@@ -27,8 +28,9 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult MailUpdate(MailUpdate Options) {
-            var context = GetContextDevice(Options);
-            throw new NYI();
+            using (var contextDevice = GetContextDevice(Options)) {
+                throw new NYI();
+                }
             }
 
         /// <summary>
@@ -37,8 +39,9 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult SMIMEPrivate(SMIMEPrivate Options) {
-            var context = GetContextDevice(Options);
-            throw new NYI();
+            using (var contextDevice = GetContextDevice(Options)) {
+                throw new NYI();
+                }
             }
         /// <summary>
         /// Dispatch method
@@ -46,8 +49,9 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult SMIMEPublic(SMIMEPublic Options) {
-            var context = GetContextDevice(Options);
-            throw new NYI();
+            using (var contextDevice = GetContextDevice(Options)) {
+                throw new NYI();
+                }
             }
 
         /// <summary>
@@ -56,8 +60,9 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult PGPPrivate(PGPPrivate Options) {
-            var context = GetContextDevice(Options);
-            throw new NYI();
+            using (var contextDevice = GetContextDevice(Options)) {
+                throw new NYI();
+                }
             }
 
         /// <summary>
@@ -66,8 +71,9 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult PGPPublic(PGPPublic Options) {
-            var context = GetContextDevice(Options);
-            throw new NYI();
+            using (var contextDevice = GetContextDevice(Options)) {
+                throw new NYI();
+                }
             }
         }
     }

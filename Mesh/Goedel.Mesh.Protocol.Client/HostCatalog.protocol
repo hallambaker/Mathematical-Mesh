@@ -1,0 +1,28 @@
+﻿Protocol Goedel.Mesh.Protocol.Client CatalogItem CatalogItem
+	Description 
+		|An entry in the Mesh linked logchain.
+
+    Using Goedel.Cryptography.Jose
+    Using Goedel.Cryptography.Dare
+
+	Section 1 "Shared Classes"
+		Description
+			|The following classes are used as common elements in
+			|Mesh profile specifications.a
+
+	Structure ProfileEntry
+		Description
+			|Represents a Mesh Account.
+		String PrimaryKey
+			Description
+				|The primary key for the contained object
+		String Directory
+			Description
+				|Subdirectory containing the catalogs and spools for the account.
+		Struct DareMessage Profile
+			Description
+				|The Mesh profile that was registered
+		String Status
+			Description
+				|The profile status. Valid values are "Pending", "Connected", "Blocked"
+		Boolean Default

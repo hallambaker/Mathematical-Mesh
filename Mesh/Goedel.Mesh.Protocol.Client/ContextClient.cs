@@ -93,7 +93,7 @@ namespace Goedel.Mesh.Protocol.Client {
 
 
             // if successful save the connection response for later use.
-            MeshMachine.Register(ProfileMesh);
+            MeshMachine.Register(connectResponse.ProfileMesh);
 
 
             // No, instread create a variable for the device state.
@@ -116,6 +116,7 @@ namespace Goedel.Mesh.Protocol.Client {
                 };
 
             var catalogEntryDevice = new CatalogEntryDevice() {
+                Account = AccountName,
                 UDF = profileDevice.UDF,
                 AuthUDF = profileDevice.DeviceAuthenticationKey.UDF,
                 ProfileMeshDevicePublicSigned = Sign(profileMeshDevicePublic),
@@ -139,6 +140,12 @@ namespace Goedel.Mesh.Protocol.Client {
                 };
 
             var result = MeshService.Status(statusRequest, MeshClientSession);
+
+            if (result.CatalogEntryDevice != null) {
+                // Register the CatalogEntryDevice if updated.
+                MeshMachine.Register(result.CatalogEntryDevice);
+                }
+
             return new MeshResult() { MeshResponse = result };
             }
 

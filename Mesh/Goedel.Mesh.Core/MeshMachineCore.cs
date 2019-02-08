@@ -70,8 +70,8 @@ namespace Goedel.Mesh {
         public virtual void OpenCatalog(Catalog catalog, string Name) { }
 
 
-        public virtual void Register (Profile profile) =>
-                CatalogHost.Register(profile);
+        public virtual void Register (DareMessage entry) =>
+                CatalogHost.Register(entry);
 
         public virtual void Delete(Profile profile) =>
                 CatalogHost.Delete(profile);

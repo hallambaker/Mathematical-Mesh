@@ -93,7 +93,7 @@ namespace Goedel.Test.Core {
 
             }
 
-
+        
 
         public static void GetContext(
                 TestEnvironmentCommon testEnvironmentCommon,
@@ -107,26 +107,24 @@ namespace Goedel.Test.Core {
             contextDevice = ContextDevice.Generate(machine);
             }
 
-        public static void GetContext(
+        public static void GetContextMaster(
                 TestEnvironmentCommon testEnvironmentCommon,
                 string nameAccount,
                 string nameMachine,
                 out MeshMachineTest machine,
-                out ContextDevice contextDevice,
-                out ContextMaster contextMaster) {
+                out ContextDevice contextDevice) {
             GetContext(testEnvironmentCommon, nameAccount, nameMachine, out machine, out contextDevice);
-            contextMaster = contextDevice.GenerateMaster();
+            contextDevice.GenerateMaster();
             }
 
-        public static void GetContext(
+        public static void GetContextMaster(
                 string nameAccount,
                 string nameMachine,
                 out MeshMachineTest machine,
-                out ContextDevice contextDevice,
-                out ContextMaster contextMaster) {
+                out ContextDevice contextDevice) {
             var testEnvironmentCommon = new TestEnvironmentCommon();
             GetContext(testEnvironmentCommon, nameAccount, nameMachine, out machine, out contextDevice);
-            contextMaster = contextDevice.GenerateMaster();
+            contextDevice.GenerateMaster();
             }
 
         }

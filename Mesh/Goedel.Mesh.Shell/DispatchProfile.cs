@@ -57,16 +57,17 @@ namespace Goedel.Mesh.Shell {
             var account = Options.NewAccountID.Value;
 
 
-            var context = GetContextDevice(Options);
-            var master = context.GenerateMaster();
-            var result = master.CreateAccount(account);
+            using (var context = GetContextDeviceUncached(Options)) {
+                context.GenerateMaster();
+                var result = context.CreateAccount(account);
 
-            return new ResultMasterCreate() {
-                Success = true,
-                DeviceUDF = context.ProfileDevice.UDF,
-                PersonalUDF = master.ProfileMaster.UDF,
-                Default = master.DefaultDevice
-                };
+                return new ResultMasterCreate() {
+                    Success = true,
+                    DeviceUDF = context.ProfileDevice.UDF,
+                    PersonalUDF = context.ProfileMaster.UDF,
+                    Default = context.DefaultDevice
+                    };
+                }
             }
 
 
@@ -78,12 +79,13 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult ProfileSync(ProfileSync Options) {
-            var context = GetContextDevice(Options);
-            var result = context.Sync();
+            using (var contextDevice = GetContextDevice(Options)) {
+                var result = contextDevice.Sync();
 
-            return new ResultSync() {
-                Success = result.Success
-                };
+                return new ResultSync() {
+                    Success = result.Success
+                    };
+                }
             }
 
         /// <summary>
@@ -92,11 +94,12 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult ProfileEscrow(ProfileEscrow Options) {
-            var context = GetContextMaster(Options);
-            (var escrow, var shares) = context.Escrow(3, 2);
-            return new ResultEscrow() {
-                Success = true
-                };
+            using (var contextDevice = GetContextDevice(Options)) {
+                (var escrow, var shares) = contextDevice.Escrow(3, 2);
+                return new ResultEscrow() {
+                    Success = true
+                    };
+                }
             }
 
         void AddIfPresent(List<string> Keys, String Parameter) {
@@ -112,25 +115,26 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult ProfileRecover(ProfileRecover Options) {
-            var context = GetContextDevice(Options);
+            using (var contextDevice = GetContextDevice(Options)) {
 
-            var recoverShares = new List<string>();
-            AddIfPresent(recoverShares, Options.Share1);
-            AddIfPresent(recoverShares, Options.Share2);
-            AddIfPresent(recoverShares, Options.Share3);
-            AddIfPresent(recoverShares, Options.Share4);
+                var recoverShares = new List<string>();
+                AddIfPresent(recoverShares, Options.Share1);
+                AddIfPresent(recoverShares, Options.Share2);
+                AddIfPresent(recoverShares, Options.Share3);
+                AddIfPresent(recoverShares, Options.Share4);
 
-            AddIfPresent(recoverShares, Options.Share5);
-            AddIfPresent(recoverShares, Options.Share6);
-            AddIfPresent(recoverShares, Options.Share7);
-            AddIfPresent(recoverShares, Options.Share8);
+                AddIfPresent(recoverShares, Options.Share5);
+                AddIfPresent(recoverShares, Options.Share6);
+                AddIfPresent(recoverShares, Options.Share7);
+                AddIfPresent(recoverShares, Options.Share8);
 
-            var Escrow = new DareMessage(); // Hack, should read the escrow data from the service or file.
+                var Escrow = new DareMessage(); // Hack, should read the escrow data from the service or file.
 
-            var DeviceAdminRecovered = context.Recover(Escrow, recoverShares);
-            return new ResultRecover() {
-                Success = false
-                };
+                var DeviceAdminRecovered = contextDevice.Recover(Escrow, recoverShares);
+                return new ResultRecover() {
+                    Success = false
+                    };
+                }
             }
 
 
@@ -140,32 +144,56 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult ProfileConnect(ProfileConnect Options) {
-            var context = GetContextDevice(Options);
-            var portal = Options.Portal.Value;
-            var pin = Options.PIN.Value;
+            using (var contextDevice = GetContextDeviceUncached(Options)) {
+                var portal = Options.Portal.Value;
+                var pin = Options.PIN.Value;
 
-            var result = context.RequestConnect(portal);
+                var result = contextDevice.RequestConnect(portal);
 
-            return new ResultConnect() {
-                Success = true
-                };
+                return new ResultConnect() {
+                    Success = true
+                    };
+                }
             }
 
 
         public override ShellResult ProfilePending(ProfilePending Options) {
-            var context = GetContextDevice(Options);
+            using (var contextDevice = GetContextDevice(Options)) {
 
-            // sync
-            context.Sync();
+                // sync
+                contextDevice.Sync();
 
-            // get the inbound spool
+                var messages = new List<MeshMessage>();
+                var result = new ResultPending() {
+                    Success = true,
+                    Messages = messages
+                    };
 
-            // dump the contents into a result
+                // get the inbound spool
+                var completed = new Dictionary<string, MeshMessage>();
 
-            throw new NYI();
+                foreach (var message in contextDevice.SpoolInbound.Select(1, true)) {
+                    var meshMessage = MeshMessage.FromJSON(message.GetBodyReader());
+                    if (!completed.ContainsKey(meshMessage.MessageID)) {
+                        switch (meshMessage) {
+                            case MeshMessageComplete meshMessageComplete: {
+                                foreach (var reference in meshMessageComplete.References) {
+                                    completed.Add(reference.MessageID, meshMessageComplete);
+                                    }
+                                break;
+                                }
+                            default: {
+                                messages.Add(meshMessage);
+                                break;
+                                }
+                            }
+                        }
+                    }
+                return result;
+                }
             }
 
-
+        
 
         public override ShellResult ProfileAccept(ProfileAccept Options) =>
             ProcessRequest(Options, Options.CompletionCode.Value, true);
@@ -175,40 +203,69 @@ namespace Goedel.Mesh.Shell {
 
 
         ShellResult ProcessRequest(IAccountOptions Options, string messageID, bool accept) {
-            var context = GetContextDevice(Options);
-            context.Sync();
+            using (var contextDevice = GetContextDevice(Options)) {
+                contextDevice.Sync();
 
-            var messageConnectionRequest = GetConnectionRequest(context, messageID);
-            messageConnectionRequest.AssertNotNull();
+                var messageConnectionRequest = GetConnectionRequest(contextDevice, messageID);
+                messageConnectionRequest.AssertNotNull();
 
-            context.ProcessConnectionRequest(messageConnectionRequest, accept);
+                contextDevice.ProcessConnectionRequest(messageConnectionRequest, accept);
 
-            return new ResultConnectProcess() {
-                Success = true,
-                Accepted = accept,
-                Witness = messageConnectionRequest.Witness
-                };
+                return new ResultConnectProcess() {
+                    Success = true,
+                    Accepted = accept,
+                    Witness = messageConnectionRequest.Witness
+                    };
+                }
             }
 
         MessageConnectionRequest GetConnectionRequest(
                 ContextDevice contextDevice,
-                string MessageID) {
+                string messageID) {
+            contextDevice.Sync();
+            var completed = new Dictionary<string, MeshMessage>();
+
+            foreach (var message in contextDevice.SpoolInbound.Select(1, true)) {
+                var meshMessage = MeshMessage.FromJSON(message.GetBodyReader());
+                if (!completed.ContainsKey(meshMessage.MessageID)) {
+                    switch (meshMessage) {
+                        case MeshMessageComplete meshMessageComplete: {
+                            foreach (var reference in meshMessageComplete.References) {
+                                completed.Add(reference.MessageID, meshMessageComplete);
+                                }
+                            break;
+                            }
+                        case MessageConnectionRequest messageConnectionRequest: {
+                            if (messageConnectionRequest.Witness == messageID |
+                                    messageConnectionRequest.MessageID == messageID) {
+                                return messageConnectionRequest;
+
+                                }
+
+                            break;
+                            }
+
+                        }
+                    }
+                }
+
             throw new NYI();
             }
 
 
         public override ShellResult ProfileGetPIN(ProfileGetPIN Options) {
-            var context = GetContextDevice(Options);
+            using (var contextDevice = GetContextDevice(Options)) {
 
-            // create a random PIN
+                // create a random PIN
 
-            // add pin to the device catalog
+                // add pin to the device catalog
 
-            // syncing the device catalog will now cause an admin device to automatically
-            // reate a profile.
+                // syncing the device catalog will now cause an admin device to automatically
+                // reate a profile.
 
 
-            throw new NYI();
+                throw new NYI();
+                }
             }
 
         public override ShellResult ProfileList(ProfileList Options) {
@@ -220,12 +277,13 @@ namespace Goedel.Mesh.Shell {
             }
 
         public override ShellResult ProfileDump(ProfileDump Options) {
-            var context = GetContextDevice(Options);
-            // pull the Catalog Host
+            using (var contextDevice = GetContextDevice(Options)) {
+                // pull the Catalog Host
 
-            // list out all the data for the default profile and connection state
+                // list out all the data for the default profile and connection state
 
-            throw new NYI();
+                throw new NYI();
+                }
             }
 
         #region // Import and export of profiles - punt on this for now

@@ -244,6 +244,9 @@
 		Inherits CatalogEntry
 		Description
 			|Public device entry, indexed under the device ID
+		String Account
+			Description
+				|The Account to which this entry binds this device.
 		String UDF;
 			Description
 				|UDF of the signature key

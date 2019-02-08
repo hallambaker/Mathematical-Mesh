@@ -156,7 +156,7 @@ namespace Goedel.Mesh.Shell {
         /// </summary>
         /// <param name="options">The shell options.</param>
         /// <returns>The device context</returns>
-        public virtual ContextDevice GetContextDevice(IDeviceProfileInfo options) {
+        public virtual ContextDevice GetContextDeviceUncached(IDeviceProfileInfo options) {
             if (!options.DeviceNew.Value) {
                 var deviceUDF = options.DeviceUDF.Value;
                 var deviceID = options.DeviceID.Value;
@@ -172,28 +172,13 @@ namespace Goedel.Mesh.Shell {
             }
 
         ContextDevice ContextDevice;
-        ContextAdministrator ContextAdministrator => ContextDevice as ContextAdministrator;
-        ContextMaster ContextMaster => ContextDevice as ContextMaster;
+        //ContextAdministrator ContextAdministrator => ContextDevice as ContextAdministrator;
+        //ContextMaster ContextMaster => ContextDevice as ContextMaster;
 
 
-        public virtual ContextDevice GetContextDevice(IAccountOptions options) {
+        public virtual ContextDevice GetContextDevice(IAccountOptions options) => 
+            CatalogHost.GetContextDevice();
 
-            ContextDevice = CatalogHost.GetContextDevice();
-            return ContextDevice;
-
-            }
-
-        public virtual ContextAdministrator GetContextAdministrator(IAccountOptions options) {
-            var context = CatalogHost.GetContextAdministrator();
-            ContextDevice = context;
-            return context;
-            }
-
-        public virtual ContextMaster GetContextMaster(IAccountOptions options) {
-            var context = CatalogHost.GetContextMaster();
-            ContextDevice = context;
-            return context;
-            }
 
         public KeyCollection KeyCollection(IAccountOptions options) =>
             CatalogHost.GetKeyCollection();

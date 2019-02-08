@@ -3,6 +3,7 @@ using Goedel.Cryptography;
 using Goedel.Cryptography.Windows;
 using Goedel.Utilities;
 using Goedel.Protocol;
+using Goedel.Cryptography.Dare;
 
 namespace Goedel.Mesh {
     public class Mesh {
@@ -36,7 +37,7 @@ namespace Goedel.Mesh {
 
         public MeshService GetMeshClient(string address) => throw new NotImplementedException();
         public ProfileMesh GetConnection(string accountName = null, string deviceUDF = null) => throw new NotImplementedException();
-        public void Register(Profile profile) => throw new NotImplementedException();
+        public void Register(DareMessage entry) => throw new NotImplementedException();
         }
 
     }

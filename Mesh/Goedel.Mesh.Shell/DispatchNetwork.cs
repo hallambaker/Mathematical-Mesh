@@ -18,21 +18,22 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult NetworkAdd(NetworkAdd Options) {
-            var contextDevice = GetContextDevice(Options);
-            var identifier = Options.Identifier.Value;
+            using (var contextDevice = GetContextDevice(Options)) {
+                var identifier = Options.Identifier.Value;
 
 
-            var entry = new CatalogEntryTask() {
-                Key = identifier
-                };
-            using (var catalog = contextDevice.GetCatalogNetwork()) {
-                catalog.Update(entry);
+                var entry = new CatalogEntryTask() {
+                    Key = identifier
+                    };
+                using (var catalog = contextDevice.GetCatalogNetwork()) {
+                    catalog.Update(entry);
+                    }
+
+                return new ResultEntry() {
+                    Success = true,
+                    CatalogEntry = entry
+                    };
                 }
-
-            return new ResultEntry() {
-                Success = true,
-                CatalogEntry = entry
-                };
             }
 
         /// <summary>
@@ -41,17 +42,18 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult NetworkDelete(NetworkDelete Options) {
-            var contextDevice = GetContextDevice(Options);
-            var identifier = Options.Identifier.Value;
+            using (var contextDevice = GetContextDevice(Options)) {
+                var identifier = Options.Identifier.Value;
 
-            using (var catalog = contextDevice.GetCatalogNetwork()) {
-                var result = catalog.Locate(identifier);
-                catalog.Delete(result);
+                using (var catalog = contextDevice.GetCatalogNetwork()) {
+                    var result = catalog.Locate(identifier);
+                    catalog.Delete(result);
 
-                return new ResultEntry() {
-                    Success = true,
-                    CatalogEntry = result
-                    };
+                    return new ResultEntry() {
+                        Success = true,
+                        CatalogEntry = result
+                        };
+                    }
                 }
             }
 
@@ -61,16 +63,17 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult NetworkGet(NetworkGet Options) {
-            var contextDevice = GetContextDevice(Options);
-            using (var catalog = contextDevice.GetCatalogNetwork()) {
-                var identifier = Options.Identifier.Value;
+            using (var contextDevice = GetContextDevice(Options)) {
+                using (var catalog = contextDevice.GetCatalogNetwork()) {
+                    var identifier = Options.Identifier.Value;
 
-                var result = catalog.Locate(identifier);
+                    var result = catalog.Locate(identifier);
 
-                return new ResultEntry() {
-                    Success = result != null,
-                    CatalogEntry = result
-                    };
+                    return new ResultEntry() {
+                        Success = result != null,
+                        CatalogEntry = result
+                        };
+                    }
                 }
             }
 
@@ -80,19 +83,20 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult NetworkDump(NetworkDump Options) {
-            var contextDevice = GetContextDevice(Options);
+            using (var contextDevice = GetContextDevice(Options)) {
 
-            var result = new ResultDump() {
-                Success = true,
-                CatalogEntries = new List<CatalogEntry>()
-                };
-            using (var catalog = contextDevice.GetCatalogNetwork()) {
-                foreach (var entry in catalog) {
-                    result.CatalogEntries.Add(entry);
+                var result = new ResultDump() {
+                    Success = true,
+                    CatalogEntries = new List<CatalogEntry>()
+                    };
+                using (var catalog = contextDevice.GetCatalogNetwork()) {
+                    foreach (var entry in catalog) {
+                        result.CatalogEntries.Add(entry);
+                        }
                     }
-                }
 
-            return result;
+                return result;
+                }
             }
 
 

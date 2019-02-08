@@ -17,26 +17,27 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult BookmarkAdd(BookmarkAdd Options) {
-            var contextDevice = GetContextDevice(Options);
+            using (var contextDevice = GetContextDevice(Options)) {
 
-            var uri = Options.Uri.Value;
-            var title = Options.Title.Value;
-            var path = Options.Path.Value;
+                var uri = Options.Uri.Value;
+                var title = Options.Title.Value;
+                var path = Options.Path.Value;
 
-            var entry = new CatalogEntryBookmark() {
-                Uri = uri,
-                Title = title,
-                Path = path
-                };
+                var entry = new CatalogEntryBookmark() {
+                    Uri = uri,
+                    Title = title,
+                    Path = path
+                    };
 
-            using (var catalog = contextDevice.GetCatalogBookmark()) {
-                catalog.Add(entry);
+                using (var catalog = contextDevice.GetCatalogBookmark()) {
+                    catalog.Add(entry);
+                    }
+
+                return new ResultEntry() {
+                    Success = true,
+                    CatalogEntry = entry
+                    };
                 }
-
-            return new ResultEntry() {
-                Success = true,
-                CatalogEntry = entry
-                };
             }
 
         /// <summary>
@@ -45,18 +46,19 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult BookmarkDelete(BookmarkDelete Options) {
-            var contextDevice = GetContextDevice(Options);
-            var uri = Options.Uri.Value;
+            using (var contextDevice = GetContextDevice(Options)) {
+                var uri = Options.Uri.Value;
 
 
-            using (var catalog = contextDevice.GetCatalogBookmark()) {
-                var result = catalog.Locate(uri);
+                using (var catalog = contextDevice.GetCatalogBookmark()) {
+                    var result = catalog.Locate(uri);
 
-                catalog.Delete(result);
+                    catalog.Delete(result);
 
-                return new Result() {
-                    Success = true
-                    };
+                    return new Result() {
+                        Success = true
+                        };
+                    }
                 }
             }
 
@@ -67,16 +69,17 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult BookmarkGet(BookmarkGet Options) {
-            var contextDevice = GetContextDevice(Options);
-            using (var catalog = contextDevice.GetCatalogBookmark()) {
-                var identifier = Options.Identifier.Value;
+            using (var contextDevice = GetContextDevice(Options)) {
+                using (var catalog = contextDevice.GetCatalogBookmark()) {
+                    var identifier = Options.Identifier.Value;
 
-                var result = catalog.Locate(identifier);
+                    var result = catalog.Locate(identifier);
 
-                return new ResultEntry() {
-                    Success = result != null,
-                    CatalogEntry = result
-                    };
+                    return new ResultEntry() {
+                        Success = result != null,
+                        CatalogEntry = result
+                        };
+                    }
                 }
             }
 
@@ -86,18 +89,19 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult BookmarkDump(BookmarkDump Options) {
-            var contextDevice = GetContextDevice(Options);
+            using (var contextDevice = GetContextDevice(Options)) {
 
-            var result = new ResultDump() {
-                Success = true,
-                CatalogEntries = new List<CatalogEntry>()
-                };
-            using (var catalog = contextDevice.GetCatalogBookmark()) {
-                foreach (var entry in catalog) {
-                    result.CatalogEntries.Add(entry);
+                var result = new ResultDump() {
+                    Success = true,
+                    CatalogEntries = new List<CatalogEntry>()
+                    };
+                using (var catalog = contextDevice.GetCatalogBookmark()) {
+                    foreach (var entry in catalog) {
+                        result.CatalogEntries.Add(entry);
+                        }
                     }
+                return result;
                 }
-            return result;
             }
         }
     }

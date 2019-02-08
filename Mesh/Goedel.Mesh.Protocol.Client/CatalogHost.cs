@@ -15,9 +15,21 @@ namespace Goedel.Mesh.Protocol.Client {
         }
 
 
+    public partial class ProfileEntry {
+
+        public override string _PrimaryKey => PrimaryKey; 
+
+        }
+
+
     public class CatalogHost {
         IMeshMachine MeshMachine;
         ContainerHost ContainerHost;
+
+        static CatalogHost() {
+            JSONObject.AddDictionary(CatalogItem._TagDictionary);
+            JSONObject.AddDictionary(MeshItem._TagDictionary);
+            }
 
         /// <summary>
         /// Get the host catalog from the specified mesh machine.
@@ -40,8 +52,19 @@ namespace Goedel.Mesh.Protocol.Client {
             }
 
 
-        public virtual void Register(Profile profile) =>
-                ContainerHost.Update(profile);
+        public virtual void Register(DareMessage profileSigned) {
+            var profile = JSONObject.FromJSON(profileSigned.Body.JSONReader(), true);
+
+            var entry = new ProfileEntry() {
+                Profile = profileSigned,
+                PrimaryKey = profile._PrimaryKey
+                };
+
+            
+
+            ContainerHost.Update(entry);
+
+            }
 
         public virtual void Delete(Profile profile) =>
                 ContainerHost.Delete(profile._PrimaryKey);
@@ -49,6 +72,8 @@ namespace Goedel.Mesh.Protocol.Client {
         public virtual ProfileMesh GetConnection(
                     string accountName = null,
                     string deviceUDF = null) => ContainerHost.GetConnection(accountName, deviceUDF);
+
+
 
 
         public ContextDevice GetContextDevice(
@@ -60,22 +85,6 @@ namespace Goedel.Mesh.Protocol.Client {
             return new ContextDevice(MeshMachine, profile, ContainerHost.DefaultProfileDevice);
             }
 
-        public ContextAdministrator GetContextAdministrator(
-                string accountID = null,
-                string accountUDF = null,
-                string deviceID = null,
-                string deviceUDF = null) {
-            throw new NYI();
-            }
-
-        public ContextMaster GetContextMaster(
-                string accountID = null,
-                string accountUDF = null,
-                string deviceID = null,
-                string deviceUDF = null) {
-            throw new NYI();
-            }
-
 
         public KeyCollection GetKeyCollection() => 
             new KeyCollectionClient(this, MeshMachine.KeyCollection);
@@ -84,8 +93,12 @@ namespace Goedel.Mesh.Protocol.Client {
 
 
 
-        public Profile GetProfileByAccount(string account) => 
-                    ContainerHost.GetProfileByAccount(account);
+        public ProfileMesh GetProfileMeshByAccount(string account) => 
+                    ContainerHost.GetProfileMeshByAccount(account);
+
+
+        public ProfileDevice GetProfileDeviceByAccount(string account) =>
+                    ContainerHost.GetProfileDeviceByAccount(account);
 
         }
     }

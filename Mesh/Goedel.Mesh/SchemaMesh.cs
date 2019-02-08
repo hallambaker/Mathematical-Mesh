@@ -2762,6 +2762,11 @@ namespace Goedel.Mesh {
 	/// </summary>
 	public partial class CatalogEntryDevice : CatalogEntry {
         /// <summary>
+        ///The Account to which this entry binds this device.
+        /// </summary>
+
+		public virtual string						Account  {get; set;}
+        /// <summary>
         ///UDF of the signature key
         /// </summary>
 
@@ -2829,6 +2834,11 @@ namespace Goedel.Mesh {
 				_Writer.WriteObjectStart ();
 				}
 			((CatalogEntry)this).SerializeX(_Writer, false, ref _first);
+			if (Account != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Account", 1);
+					_Writer.WriteString (Account);
+				}
 			if (UDF != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("UDF", 1);
@@ -2898,6 +2908,10 @@ namespace Goedel.Mesh {
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
+				case "Account" : {
+					Account = JSONReader.ReadString ();
+					break;
+					}
 				case "UDF" : {
 					UDF = JSONReader.ReadString ();
 					break;

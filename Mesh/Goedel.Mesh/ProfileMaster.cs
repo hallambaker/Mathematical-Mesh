@@ -14,6 +14,12 @@ namespace Goedel.Mesh {
 
         public override string _PrimaryKey => MasterSignatureKey.UDF;
 
+
+        /// <summary>
+        /// The signed device profile
+        /// </summary>
+        public override DareMessage ProfileSigned => ProfileMasterSigned;
+
         /// <summary>
         /// The signed device profile
         /// </summary>

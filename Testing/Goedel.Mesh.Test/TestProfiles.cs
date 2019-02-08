@@ -22,50 +22,50 @@ namespace Goedel.Mesh.Test {
         public  void EscrowRecover() {
             var machineEnvironment = new TestEnvironmentMachine( "EscrowRecover");
 
-            var MachineAliceAdmin = new MeshMachineTest(machineEnvironment, name: "Alice Admin");
-            var MachineAliceRecover = new MeshMachineTest(machineEnvironment, name: "Alice Admin Recovered");
+            var machineAliceAdmin = new MeshMachineTest(machineEnvironment, name: "Alice Admin");
+            var machineAliceRecover = new MeshMachineTest(machineEnvironment, name: "Alice Admin Recovered");
 
-            var DeviceAdmin = ContextDevice.Generate(MachineAliceAdmin);
-            var MasterAdmin = DeviceAdmin.GenerateMaster();
+            var deviceAdmin = ContextDevice.Generate(machineAliceAdmin);
+            deviceAdmin.GenerateMaster();
 
-            var (Escrow, Shares) = MasterAdmin.Escrow(3, 2);
-            var RecoverShares = new KeyShare[] { Shares[0], Shares[2] };
+            var (escrow, shares) = deviceAdmin.Escrow(3, 2);
+            var recoverShares = new KeyShare[] { shares[0], shares[2] };
 
-            var DeviceAdminRecovered = DeviceAdmin.Recover(Escrow, RecoverShares);
+            var deviceAdminRecovered = deviceAdmin.Recover(escrow, recoverShares);
 
             }
 
         public void CatalogCredentials() {
             var machineEnvironment = new TestEnvironmentMachine("ProtocolHello");
 
-            var MachineAliceAdmin = new MeshMachineTest(machineEnvironment, name: "Alice");
-            var DeviceAdmin = ContextDevice.Generate(MachineAliceAdmin);
-            var MasterAdmin = DeviceAdmin.GenerateMaster();
+            var machineAliceAdmin = new MeshMachineTest(machineEnvironment, name: "Alice");
+            var deviceAdmin = ContextDevice.Generate(machineAliceAdmin);
+            deviceAdmin.GenerateMaster();
 
 
-            using (var catalog = MasterAdmin.GetCatalogCredential()) {
+            using (var catalog = deviceAdmin.GetCatalogCredential()) {
 
-                var Entry1 = new CatalogEntryCredential() {
+                var entry1 = new CatalogEntryCredential() {
                     Service = "example.com",
                     Username = "alice",
                     Password = "password"
                     };
-                var Entry2 = new CatalogEntryCredential() {
+                var entry2 = new CatalogEntryCredential() {
                     Service = "example.net",
                     Username = "alice",
                     Password = "samepassword"
                     };
-                var Entry3 = new CatalogEntryCredential() {
+                var entry3 = new CatalogEntryCredential() {
                     Service = "www.cnn.com",
                     Username = "alice1977",
                     Password = "EasyToGuess"
                     };
-                var Entry4 = new CatalogEntryCredential() {
+                var entry4 = new CatalogEntryCredential() {
                     Service = "www.bank.test",
                     Username = "alice1977",
                     Password = "EasyToGuess"
                     };
-                var Entry5 = new CatalogEntryCredential() {
+                var entry5 = new CatalogEntryCredential() {
                     Service = "example.net",
                     Username = "alice",
                     Password = "samepassword2"
@@ -74,31 +74,31 @@ namespace Goedel.Mesh.Test {
 
                 CheckCatalog(catalog, new List<CatalogEntry> { });
 
-                catalog.Add(Entry1);
-                CheckCatalog(catalog, new List<CatalogEntry> { Entry1 });
+                catalog.Add(entry1);
+                CheckCatalog(catalog, new List<CatalogEntry> { entry1 });
 
-                catalog.Add(Entry2);
-                CheckCatalog(catalog, new List<CatalogEntry> { Entry1, Entry2 });
+                catalog.Add(entry2);
+                CheckCatalog(catalog, new List<CatalogEntry> { entry1, entry2 });
 
-                catalog.Add(Entry3);
-                CheckCatalog(catalog, new List<CatalogEntry> { Entry1, Entry2, Entry3 });
+                catalog.Add(entry3);
+                CheckCatalog(catalog, new List<CatalogEntry> { entry1, entry2, entry3 });
 
-                catalog.Add(Entry4);
-                CheckCatalog(catalog, new List<CatalogEntry> { Entry1, Entry2, Entry3, Entry4 });
+                catalog.Add(entry4);
+                CheckCatalog(catalog, new List<CatalogEntry> { entry1, entry2, entry3, entry4 });
 
-                catalog.Update(Entry5);
-                CheckCatalog(catalog, new List<CatalogEntry> { Entry1, Entry3, Entry4, Entry5 });
+                catalog.Update(entry5);
+                CheckCatalog(catalog, new List<CatalogEntry> { entry1, entry3, entry4, entry5 });
 
-                catalog.Delete(Entry4);
-                CheckCatalog(catalog, new List<CatalogEntry> { Entry1, Entry3, Entry5 });
+                catalog.Delete(entry4);
+                CheckCatalog(catalog, new List<CatalogEntry> { entry1, entry3, entry5 });
 
-                CheckCatalogEntry(Entry1, catalog.LocateByService(Entry1.Service));
-                CheckCatalogEntry(Entry3, catalog.LocateByService(Entry3.Service));
-                CheckCatalogEntry(null, catalog.LocateByService(Entry4.Service));
-                CheckCatalogEntry(Entry5, catalog.LocateByService(Entry5.Service));
+                CheckCatalogEntry(entry1, catalog.LocateByService(entry1.Service));
+                CheckCatalogEntry(entry3, catalog.LocateByService(entry3.Service));
+                CheckCatalogEntry(null, catalog.LocateByService(entry4.Service));
+                CheckCatalogEntry(entry5, catalog.LocateByService(entry5.Service));
 
 
-                CheckCatalogEntry(Entry1, catalog.Locate(Entry1._PrimaryKey));
+                CheckCatalogEntry(entry1, catalog.Locate(entry1._PrimaryKey));
                 }
             }
 
@@ -108,20 +108,20 @@ namespace Goedel.Mesh.Test {
         public void CatalogDevices() {
             var machineEnvironment = new TestEnvironmentMachine( "ProtocolHello");
 
-            var MachineAliceAdmin = new MeshMachineTest(machineEnvironment, name: "Alice");
-            var MachineAliceLaptop = new MeshMachineTest(machineEnvironment, name: "Alice Laptop");
-            var MachineAlicePhone = new MeshMachineTest(machineEnvironment, name: "Alice Phone");
-            var DeviceAdmin = ContextDevice.Generate(MachineAliceAdmin);
-            var MasterAdmin = DeviceAdmin.GenerateMaster();
+            var machineAliceAdmin = new MeshMachineTest(machineEnvironment, name: "Alice");
+            var machineAliceLaptop = new MeshMachineTest(machineEnvironment, name: "Alice Laptop");
+            var machineAlicePhone = new MeshMachineTest(machineEnvironment, name: "Alice Phone");
+            var deviceAdmin = ContextDevice.Generate(machineAliceAdmin);
+            deviceAdmin.GenerateMaster();
 
-            var catalog = MasterAdmin.CatalogDevice;
+            var catalog = deviceAdmin.GetCatalogDevice();
 
-            var keySign = MachineAliceAdmin.KeyCollection.LocatePrivate(DeviceAdmin.ProfileDevice.DeviceSignatureKey.UDF);
-            var Entry1 = MakeCatalogEntryDevice(DeviceAdmin.ProfileDevice, keySign);
+            var keySign = machineAliceAdmin.KeyCollection.LocatePrivate(deviceAdmin.ProfileDevice.DeviceSignatureKey.UDF);
+            var Entry1 = MakeCatalogEntryDevice(deviceAdmin.ProfileDevice, keySign);
 
-            var Device2 = ContextDevice.Generate(MachineAliceLaptop);
+            var Device2 = ContextDevice.Generate(machineAliceLaptop);
             var Entry2 = MakeCatalogEntryDevice(Device2.ProfileDevice, keySign);
-            var Device3 = ContextDevice.Generate(MachineAlicePhone);
+            var Device3 = ContextDevice.Generate(machineAlicePhone);
             var Entry3 = MakeCatalogEntryDevice(Device3.ProfileDevice, keySign);
 
             catalog.Add(Entry1);
@@ -164,11 +164,11 @@ namespace Goedel.Mesh.Test {
             var machineEnvironment = new TestEnvironmentMachine( "ProtocolHello");
 
             var MachineAliceAdmin = new MeshMachineTest(machineEnvironment, name: "Alice");
-            var DeviceAdmin = ContextDevice.Generate(MachineAliceAdmin);
-            var MasterAdmin = DeviceAdmin.GenerateMaster();
+            var deviceAdmin = ContextDevice.Generate(MachineAliceAdmin);
+            deviceAdmin.GenerateMaster();
 
 
-            var catalog = MasterAdmin.CatalogContact;
+            var catalog = deviceAdmin.GetCatalogContact();
 
             var Contact1 = new Contact() {
                 FullName = "Alice Example",

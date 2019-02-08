@@ -8,6 +8,13 @@ using Goedel.Utilities;
 using Goedel.Protocol;
 namespace Goedel.Mesh {
 
+    public partial class Profile {
+
+        /// <summary>
+        /// The signed device profile
+        /// </summary>
+        public virtual DareMessage ProfileSigned { get;  }
+        }
 
     public partial class ProfileDevice {
 
@@ -18,6 +25,10 @@ namespace Goedel.Mesh {
 
         public byte[] UDFBytes => DeviceSignatureKey.KeyPair.PKIXPublicKey.UDFBytes(512);
 
+        /// <summary>
+        /// The signed device profile
+        /// </summary>
+        public override DareMessage ProfileSigned => ProfileDeviceSigned;
 
         /// <summary>
         /// The signed device profile

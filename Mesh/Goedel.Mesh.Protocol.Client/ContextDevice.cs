@@ -6,6 +6,7 @@ using Goedel.Cryptography.Dare;
 using Goedel.Utilities;
 using Goedel.Mesh;
 using Goedel.Protocol;
+using Goedel.Cryptography.Jose;
 
 namespace Goedel.Mesh.Protocol.Client {
 
@@ -19,6 +20,7 @@ namespace Goedel.Mesh.Protocol.Client {
         protected override void Disposing() {
 
             foreach (var entry in DictionaryStores) {
+                Console.Write($"Close store{entry.Key}");
                 entry.Value.Dispose();
                 }
             }
@@ -30,6 +32,10 @@ namespace Goedel.Mesh.Protocol.Client {
         ///<summary>The active profile. A client may have multiple profiles open at once on the
         ///same device but each one must be accessed through a different context.</summary>
         public ProfileMesh ProfileMesh;
+
+        ///<summary>The master profile</summary>
+        public virtual ProfileMaster ProfileMaster { get; protected set; }
+
 
         ///<summary>The active client connection to the service.</summary>
         protected MeshService MeshService;
@@ -60,15 +66,15 @@ namespace Goedel.Mesh.Protocol.Client {
         //    (catalogCredential ?? GetStore(CatalogCredential.Factory, CatalogCredential.Label).CacheValue(out catalogCredential)) as CatalogCredential;
         //Store catalogCredential;
 
-        public CatalogDevice CatalogDevice =>
+        public CatalogDevice GetCatalogDevice() =>
             (catalogDevice ?? GetStore(CatalogDevice.Label).CacheValue(out catalogDevice)) as CatalogDevice;
         Store catalogDevice = null;
 
-        public CatalogContact CatalogContact =>
+        public CatalogContact GetCatalogContact() =>
             (catalogContact ?? GetStore(CatalogContact.Label).CacheValue(out catalogContact)) as CatalogContact;
         Store catalogContact;
 
-        public CatalogApplication CatalogApplication =>
+        public CatalogApplication GetCatalogApplication() =>
             (catalogApplication ?? GetStore(CatalogApplication.Label).CacheValue(out catalogApplication)) as CatalogApplication;
         Store catalogApplication;
 
@@ -80,17 +86,10 @@ namespace Goedel.Mesh.Protocol.Client {
         public CatalogCredential GetCatalogCredential() =>
             GetStore(CatalogCredential.Label) as CatalogCredential;
 
-        public CatalogContact GetCatalogContact() =>
-            GetStore(CatalogContact.Label) as CatalogContact;
 
         public CatalogCalendar GetCatalogCalendar() =>
             GetStore(CatalogCalendar.Label) as CatalogCalendar;
 
-        public CatalogDevice GetCatalogDevice() =>
-            GetStore(CatalogDevice.Label) as CatalogDevice;
-
-        public CatalogApplication GetCatalogApplication() =>
-            GetStore(CatalogApplication.Label) as CatalogApplication;
 
         public CatalogNetwork GetCatalogNetwork() =>
             GetStore(CatalogNetwork.Label) as CatalogNetwork;
@@ -116,6 +115,8 @@ namespace Goedel.Mesh.Protocol.Client {
         KeyPair keyAuthenticate;
         #endregion
 
+
+        #region // Constructors
         public ContextDevice(IMeshMachine machine, ProfileDevice profileDevice,
                     KeyPair keySign = null, KeyPair keyEncrypt = null, KeyPair keyAuthenticate = null) {
             MeshMachine = machine;
@@ -143,6 +144,10 @@ namespace Goedel.Mesh.Protocol.Client {
                     IMeshMachine machine,
                     ProfileMesh profileMesh,
                     ProfileDevice profileDevice) : this(machine, profileDevice) => ProfileMesh = profileMesh;
+        #endregion
+
+        #region // Device profile operations
+        //public ContextDevice ContextDeviceHack => this;
 
         /// <summary>
         /// Generate a new device profile and register to the specified account.
@@ -176,7 +181,7 @@ namespace Goedel.Mesh.Protocol.Client {
             Profile.Description = description;
 
             // Register the profile locally
-            machine.Register(Profile);
+            machine.Register(Profile.ProfileDeviceSigned);
 
             return new ContextDevice(machine, Profile, keySign, keyEncrypt, keyAuthenticate);
 
@@ -188,7 +193,7 @@ namespace Goedel.Mesh.Protocol.Client {
         /// <param name="algorithmSign"></param>
         /// <param name="algorithmEncrypt"></param>
         /// <returns></returns>
-        public ContextMaster GenerateMaster(
+        public void GenerateMaster(
             CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
             CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default) {
 
@@ -200,16 +205,12 @@ namespace Goedel.Mesh.Protocol.Client {
 
 
             var Profile = Mesh.ProfileMaster.Generate(ProfileDevice, keySign, keyEncrypt);
-
-
+ 
             // Register the profile locally
-            MeshMachine.Register(Profile);
-            return new ContextMaster(this, Profile);
-
-
-
+            MeshMachine.Register(Profile.ProfileMasterSigned);
+            ProfileMaster = Profile;
             }
-
+        #endregion
 
         public static ContextDevice GetContextDevice(
                     IMeshMachine machine,
@@ -280,6 +281,13 @@ namespace Goedel.Mesh.Protocol.Client {
                 }
             }
 
+
+        #region // store and catalog management
+
+
+        static int devicecount = 0;
+        int Devicecount = devicecount++;
+
         /// <summary>
         /// Return catalog or container by name, using the cached value if it exists or opening it otherwise.
         /// </summary>
@@ -291,6 +299,8 @@ namespace Goedel.Mesh.Protocol.Client {
             if (DictionaryStores.TryGetValue(name, out var store)) {
                 return store;
                 }
+            Console.WriteLine($"Open store {name} on {MeshMachine.DirectoryMesh} {Devicecount}");
+
             store = MakeStore(name);
             DictionaryStores.Add(name, store);
 
@@ -318,7 +328,7 @@ namespace Goedel.Mesh.Protocol.Client {
 
             throw new NYI();
             }
-
+        #endregion
 
         public DareMessage SignContact(string recipient, Contact contact) {
             var signedContact = DareMessage.Encode(contact.GetBytes(tag: true),
@@ -336,13 +346,9 @@ namespace Goedel.Mesh.Protocol.Client {
                     DareMessage.Encode(data.GetBytes(tag: true),
                         signingKey: KeySign, contentType: "application/mmm");
 
-        public virtual void ProcessConnectionRequest(
-                    MessageConnectionRequest messageConnectionRequest,
-                    bool accept) {
 
-            throw new NotAdministrator();
-            }
 
+        #region // process requests
         public void ProcessContactRequest(
                     MessageContactRequest messageContactRequest,
                     bool Accept) {
@@ -355,7 +361,7 @@ namespace Goedel.Mesh.Protocol.Client {
 
             var contact = messageContactRequest.Contact;
 
-            CatalogContact.Add(contact);
+            GetCatalogContact().Add(contact);
             }
 
         public void ProcessConfirmationRequest(
@@ -364,9 +370,145 @@ namespace Goedel.Mesh.Protocol.Client {
             var result = ConfirmationResponse(
                 messageConfirmationRequest, accept);
             }
+        #endregion
+
+
+        #region // Master profile operations
+        /// <summary>
+        /// Sign a device or application profile for entry in a catalog
+        /// </summary>
+        /// <param name="Profile"></param>
+        /// <returns></returns>
+        public DareMessage MakeAdministrator(ProfileDevice Profile) => throw new NYI();
 
 
 
+
+        public (DareMessage, KeyShare[]) Escrow(int shares, int quorum, int bits = 128) {
+
+            var secret = new Secret(bits);
+            var keyShares = secret.Split(shares, quorum);
+            var cryptoStack = new CryptoStack(secret, CryptoAlgorithmID.AES256CBC);
+
+            var MasterSignatureKeyPair = KeyCollection.LocatePrivate(ProfileMaster.MasterSignatureKey.UDF);
+            var MasterSignatureKey = Key.FactoryPrivate(MasterSignatureKeyPair);
+            var MasterEscrowKeys = new List<Key>();
+
+            var EscrowedKeySet = new EscrowedKeySet() {
+                MasterSignatureKey = MasterSignatureKey,
+                MasterEscrowKeys = MasterEscrowKeys
+                };
+
+            var message = new DareMessage(cryptoStack, EscrowedKeySet.GetJson(true));
+
+            return (message, keyShares);
+            }
+        #endregion
+
+        #region // Administrator operations
+        public MeshResult CreateAccount(
+    string accountName,
+        CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default) {
+
+            algorithmEncrypt = algorithmEncrypt.DefaultMeta(CryptoAlgorithmID.Ed448);
+            var keyEncrypt = KeyPair.Factory(algorithmEncrypt, KeySecurity.Device, KeyCollection, keyUses: KeyUses.Encrypt);
+
+            var profileMesh = new ProfileMesh() {
+                Account = accountName,
+                MasterProfile = ProfileMaster.ProfileMasterSigned,
+                AccountEncryptionKey = new PublicKey(keyEncrypt.KeyPairPublic())
+                };
+
+            ProfileMesh = profileMesh;
+            var profileMeshSigned = Sign(profileMesh);
+
+            var catalogEntryDevice = MakeCatalogEntryDevice(ProfileDevice);
+            var catalogEntryDeviceSigned = GetCatalogDevice().ContainerEntry(catalogEntryDevice, ContainerPersistenceStore.EventNew);
+
+            var createRequest = new CreateRequest() {
+                MeshProfile = profileMeshSigned,
+                CatalogEntryDevices = new List<DareMessage> { catalogEntryDeviceSigned }
+                };
+
+            // We create a new meshClientSession because this won't have the 
+            var meshClientSession = new MeshClientSession(this);
+
+
+            MeshService = MeshMachine.GetMeshClient(accountName);
+
+            var result = MeshService.CreateAccount(createRequest, meshClientSession);
+
+            // if successful write out to host file
+            MeshMachine.Register(profileMeshSigned);
+            MeshMachine.Register(catalogEntryDeviceSigned);
+
+            GetCatalogDevice().Apply(catalogEntryDeviceSigned);
+
+            return new MeshResult() { MeshResponse = result };
+            }
+
+
+
+
+
+
+
+        public MeshResult DeleteAccount() {
+
+            var deleteRequest = new DeleteRequest() { Account = AccountName };
+            var result = MeshService.DeleteAccount(deleteRequest, MeshClientSession);
+            return new MeshResult() { MeshResponse = result };
+            }
+
+
+
+
+        public DareMessage SetContactSelf(Contact contact, string label = null) {
+            var signedContact = Sign(contact);
+            var catalogEntryContact = new CatalogEntryContact(signedContact) {
+                Key = AccountName
+                };
+            Add(catalogEntryContact);
+            return signedContact;
+            }
+
+
+        public MeshResult Add(CatalogEntryContact catalogEntryContact) =>
+            Add(GetCatalogContact(), catalogEntryContact);
+
+
+        /// <summary>
+        /// Sign a device or application profile for entry in a catalog
+        /// </summary>
+        /// <param name="Profile"></param>
+        /// <returns></returns>
+        public DareMessage Add(ProfileApplication profile) => throw new NYI();
+
+        public void ProcessConnectionRequest(
+                    MessageConnectionRequest messageConnectionRequest,
+                    bool accept) {
+            //throw new NotAdministrator();
+            if (accept) {
+
+                var profile = ProfileDevice.Decode(messageConnectionRequest.DeviceProfile);
+                var catalogEntryDevice = MakeCatalogEntryDevice(profile);
+
+                // create the completion message
+                var completion = new MeshMessageComplete(messageConnectionRequest.MessageID,
+                    MeshMessageComplete.Accept);
+
+
+                Add(completion, CatalogDevice.Label, catalogEntryDevice);
+                }
+            else {
+                // mark the connection request as having been rejected
+                var completion = new MeshMessageComplete(messageConnectionRequest.MessageID,
+                    MeshMessageComplete.Reject);
+                Add(completion);
+                }
+            }
+
+        #endregion
 
         }
 

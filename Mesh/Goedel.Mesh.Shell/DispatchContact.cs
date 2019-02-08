@@ -17,37 +17,19 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult ContactAdd(ContactAdd Options) {
-            var contextDevice = GetContextDevice(Options);
-            var identifier = Options.Identifier.Value;
+            using (var contextDevice = GetContextDevice(Options)) {
+                var identifier = Options.Identifier.Value;
 
-            var entry = new CatalogEntryContact() {
-                Key= identifier
-                };
-            using (var catalog = contextDevice.GetCatalogContact()) {
-                catalog.Add(entry);
-                }
-
-            return new ResultEntry() {
-                Success = true,
-                CatalogEntry = entry
-                };
-            }
-
-        /// <summary>
-        /// Dispatch method
-        /// </summary>
-        /// <param name="Options">The command line options.</param>
-        /// <returns>Mesh result instance</returns>
-        public override ShellResult ContactdGet(ContactdGet Options) {
-            var contextDevice = GetContextDevice(Options);
-            var identifier = Options.Identifier.Value;
-
-            using (var catalog = contextDevice.GetCatalogContact()) {
-                var result = catalog.Locate(identifier);
+                var entry = new CatalogEntryContact() {
+                    Key = identifier
+                    };
+                using (var catalog = contextDevice.GetCatalogContact()) {
+                    catalog.Add(entry);
+                    }
 
                 return new ResultEntry() {
-                    Success = result != null,
-                    CatalogEntry = result
+                    Success = true,
+                    CatalogEntry = entry
                     };
                 }
             }
@@ -57,19 +39,40 @@ namespace Goedel.Mesh.Shell {
         /// </summary>
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult ContactDelete(ContactDelete Options) {
-            var contextDevice = GetContextDevice(Options);
-            var identifier = Options.Identifier.Value;
+        public override ShellResult ContactdGet(ContactdGet Options) {
+            using (var contextDevice = GetContextDevice(Options)) {
+                var identifier = Options.Identifier.Value;
 
-            using (var catalog = contextDevice.GetCatalogContact()) {
-                var result = catalog.Locate(identifier);
+                using (var catalog = contextDevice.GetCatalogContact()) {
+                    var result = catalog.Locate(identifier);
 
-                catalog.Delete(result);
+                    return new ResultEntry() {
+                        Success = result != null,
+                        CatalogEntry = result
+                        };
+                    }
                 }
+            }
 
-            return new Result() {
-                Success = true
-                };
+        /// <summary>
+        /// Dispatch method
+        /// </summary>
+        /// <param name="Options">The command line options.</param>
+        /// <returns>Mesh result instance</returns>
+        public override ShellResult ContactDelete(ContactDelete Options) {
+            using (var contextDevice = GetContextDevice(Options)) {
+                var identifier = Options.Identifier.Value;
+
+                using (var catalog = contextDevice.GetCatalogContact()) {
+                    var result = catalog.Locate(identifier);
+
+                    catalog.Delete(result);
+                    }
+
+                return new Result() {
+                    Success = true
+                    };
+                }
             }
 
 
@@ -79,18 +82,19 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult ContactDump(ContactDump Options) {
-            var contextDevice = GetContextDevice(Options);
+            using (var contextDevice = GetContextDevice(Options)) {
 
-            var result = new ResultDump() {
-                Success = true,
-                CatalogEntries = new List<CatalogEntry>()
-                };
-            using (var catalog = contextDevice.GetCatalogContact()) {
-                foreach (var entry in catalog) {
-                    result.CatalogEntries.Add(entry);
+                var result = new ResultDump() {
+                    Success = true,
+                    CatalogEntries = new List<CatalogEntry>()
+                    };
+                using (var catalog = contextDevice.GetCatalogContact()) {
+                    foreach (var entry in catalog) {
+                        result.CatalogEntries.Add(entry);
+                        }
                     }
+                return result;
                 }
-            return result;
             }
         }
     }

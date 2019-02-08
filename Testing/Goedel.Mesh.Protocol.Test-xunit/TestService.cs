@@ -49,9 +49,9 @@ namespace Goedel.XUnit {
         [Fact]
         public void ProtocolHelloContext() {
             var testEnvironmentCommon = new TestEnvironmentCommon();
-            MeshMachineTest.GetContext(testEnvironmentCommon, AccountAlice, "Alice Admin", 
-                    out var machineAliceAdmin, out var deviceAdmin, out var masterAdmin);
-            var response = masterAdmin.Hello(ServiceName);
+            MeshMachineTest.GetContextMaster(testEnvironmentCommon, AccountAlice, "Alice Admin", 
+                    out var machineAliceAdmin, out var deviceAdmin);
+            var response = deviceAdmin.Hello(ServiceName);
 
 
             }
@@ -60,24 +60,24 @@ namespace Goedel.XUnit {
         [Fact]
         public void ProtocolAccountLifecycle() {
             var testEnvironmentCommon = new TestEnvironmentCommon();
-            MeshMachineTest.GetContext(testEnvironmentCommon, AccountAlice, "Alice Admin", 
-                out var machineAliceAdmin, out var deviceAdmin, out var masterAdmin);
+            MeshMachineTest.GetContextMaster(testEnvironmentCommon, AccountAlice, "Alice Admin", 
+                out var machineAliceAdmin, out var deviceAdmin);
 
 
             // create account
-            var statusCreate = masterAdmin.CreateAccount(AccountAlice); // Test: success result.
+            var statusCreate = deviceAdmin.CreateAccount(AccountAlice); // Test: success result.
             statusCreate.AssertSuccess();
 
             // get account status
-            var statusEmpty = masterAdmin.Status();
+            var statusEmpty = deviceAdmin.Status();
             statusEmpty.AssertSuccess();
 
             // delete account
-            var statusDelete = masterAdmin.DeleteAccount();
+            var statusDelete = deviceAdmin.DeleteAccount();
             statusEmpty.AssertSuccess();
 
             // get account status
-            var statusFail = masterAdmin.Status(); // Test: Test that we get a fail response.
+            var statusFail = deviceAdmin.Status(); // Test: Test that we get a fail response.
             statusFail.AssertError();
             }
 
@@ -85,21 +85,21 @@ namespace Goedel.XUnit {
         [Fact]
         public void ProtocolCatalog() {
             var testEnvironmentCommon = new TestEnvironmentCommon();
-            MeshMachineTest.GetContext(testEnvironmentCommon, AccountAlice, "Alice Admin", 
-                out var machineAliceAdmin, out var deviceAdmin, out var masterAdmin);
+            MeshMachineTest.GetContextMaster(testEnvironmentCommon, AccountAlice, "Alice Admin", 
+                out var machineAliceAdmin, out var deviceAdmin);
 
 
             // create account
-            var statusCreate = masterAdmin.CreateAccount(AccountAlice);
+            var statusCreate = deviceAdmin.CreateAccount(AccountAlice);
 
 
 
-            masterAdmin.SetContactSelf(MeshMachineTest.ContactAlice);
+            deviceAdmin.SetContactSelf(MeshMachineTest.ContactAlice);
 
             // Check updated elements are correct.
 
             // get account status
-            var statusAdded = masterAdmin.Status();
+            var statusAdded = deviceAdmin.Status();
             statusAdded.AssertSuccess(); // Check: make sure one item has been added etc.
 
             }
@@ -109,16 +109,16 @@ namespace Goedel.XUnit {
         [Fact]
         public void MeshConnect() {
             var testEnvironmentCommon = new TestEnvironmentCommon();
-            MeshMachineTest.GetContext(testEnvironmentCommon, AccountAlice, "Alice Admin", 
-                out var machineAliceAdmin, out var deviceAdmin, out var masterAdmin);
+            MeshMachineTest.GetContextMaster(testEnvironmentCommon, AccountAlice, "Alice Admin", 
+                out var machineAliceAdmin, out var deviceAdmin);
 
 
             // create account
-            var meshClientAdmin = masterAdmin.CreateAccount(AccountAlice);
+            var meshClientAdmin = deviceAdmin.CreateAccount(AccountAlice);
 
             // Create device profile
             MeshMachineTest.GetContext(testEnvironmentCommon, AccountAlice, "Alice 2", out var MachineAliceSecond, out var deviceSecond);
-            var ww = masterAdmin.Sync();
+            var ww = deviceAdmin.Sync();
             // Post connection request
             var connectResponse = deviceSecond.RequestConnect(AccountAlice);
 
@@ -131,7 +131,7 @@ namespace Goedel.XUnit {
             deviceStatusFail.AssertError();
 
             // Check the completion message
-            var count = ProcessPending(masterAdmin);
+            var count = ProcessPending(deviceAdmin);
             (count == 0).AssertTrue();
 
             // Pull device profile update - success, we get the personal and device profile.
@@ -146,10 +146,10 @@ namespace Goedel.XUnit {
             var AccountAlice = "alice@example.com";
             var AccountBob = "bob@example.com";
 
-            MeshMachineTest.GetContext(testEnvironmentCommon, AccountAlice, "Alice Admin", 
-                out var machineAliceAdmin, out var deviceAdmin, out var masterAdmin);
-            MeshMachineTest.GetContext(testEnvironmentCommon, AccountBob, "Bob Admin", 
-                out var machineAdminBob, out var deviceAdminBob, out var masterAdminBob);
+            MeshMachineTest.GetContextMaster(testEnvironmentCommon, AccountAlice, "Alice Admin", 
+                out var machineAliceAdmin, out var masterAdmin);
+            MeshMachineTest.GetContextMaster(testEnvironmentCommon, AccountBob, "Bob Admin", 
+                out var machineAdminBob, out var masterAdminBob);
 
             var statusCreateAlice = masterAdmin.CreateAccount(AccountAlice);
             var statusCreateBob = masterAdminBob.CreateAccount(AccountBob);

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Xunit;
 using Goedel.Mesh.Shell;
 using Goedel.Cryptography;
-using Goedel.Mesh.Test;
+using Goedel.Mesh;
 using Goedel.Test.Core;
 using Goedel.Test;
 using Goedel.Utilities;
@@ -59,14 +59,20 @@ namespace Goedel.XUnit {
             device2.Dispatch($"profile sync", fail:true);
 
             var result2 = device1.Dispatch($"profile pending");
-            device1.Dispatch($"profile accept");
+            var message = (result2 as ResultPending).Messages[0] as MessageConnectionRequest;
+            var witness = message.Witness;
+
+            device1.Dispatch($"profile accept {witness}");
             device2.Dispatch($"profile sync");
 
             device3.Dispatch($"profile connect {accountA}  /new");
             device3.Dispatch($"profile sync", fail: true);
 
             var result3 = device1.Dispatch($"profile pending");
-            device1.Dispatch($"profile reject");
+
+            message = (result3 as ResultPending).Messages[0] as MessageConnectionRequest;
+            witness = message.Witness;
+            device1.Dispatch($"profile reject {witness}");
             device3.Dispatch($"profile sync", fail: true);
             }
 

@@ -12,18 +12,23 @@ using Goedel.Cryptography.Dare;
 
 namespace Goedel.Mesh.Protocol.Client {
 
-
+    public class AccountDescription {
+        public string Account;
+        public ProfileMesh ProfileMesh;
+        public Dictionary<string, CatalogEntryDevice> Devices = new Dictionary<string, CatalogEntryDevice>();
+        public ProfileDevice DefaultProfileDevice;
+        }
 
     public class ContainerHost : ContainerPersistenceStore {
         /// <summary>
         /// Index of items by Account name
         /// </summary>
-        Dictionary<string, ContainerStoreEntry> DictionaryByAccount = new Dictionary<string, ContainerStoreEntry>();
+        Dictionary<string, AccountDescription> DictionaryByAccount = new Dictionary<string, AccountDescription>();
 
         /// <summary>
         /// Index of items by Device UDF
         /// </summary>
-        Dictionary<string, ContainerStoreEntry> DictionaryByUDF = new Dictionary<string, ContainerStoreEntry>();
+        Dictionary<string, Profile> DictionaryByUDF = new Dictionary<string, Profile>();
 
         /// <summary>
         /// Open or create a persistence store in specified mode with 
@@ -68,6 +73,48 @@ namespace Goedel.Mesh.Protocol.Client {
         public ProfileDevice DefaultProfileDevice = null;
         public ProfileMaster DefaultProfileMaster = null;
 
+        void Commit(ProfileMaster profileMaster, bool makeDefault) {
+            DefaultProfileMaster = makeDefault ? profileMaster : DefaultProfileMaster ?? profileMaster;
+            DictionaryByUDF.ReplaceSafe(profileMaster.UDF, profileMaster);
+            }
+
+        void Commit(ProfileDevice profileDevice, bool makeDefault) {
+            DefaultProfileDevice = makeDefault ? profileDevice : DefaultProfileDevice ?? profileDevice;
+            DictionaryByUDF.ReplaceSafe(profileDevice.UDF, profileDevice);
+            }
+
+        void Commit(ProfileMesh profileMesh, bool makeDefault) {
+            DefaultProfileMesh = makeDefault ? profileMesh : DefaultProfileMesh ?? profileMesh;
+            DictionaryByUDF.ReplaceSafe(profileMesh.UDF, profileMesh);
+
+            var account = profileMesh.Account;
+            if (DictionaryByAccount.TryGetValue(account, out var accountDescription)) {
+                accountDescription.ProfileMesh = profileMesh;
+                }
+            else {
+                accountDescription = new AccountDescription() {
+                    Account = account,
+                    ProfileMesh = profileMesh
+                    };
+                DictionaryByAccount.Add(account, accountDescription);
+                }
+            }
+
+        void Commit(CatalogEntryDevice catalogEntryDevice, bool makeDefault) {
+            var account = catalogEntryDevice.Account;
+            if (DictionaryByAccount.TryGetValue(account, out var accountDescription)) {
+                accountDescription.Devices.AddSafe(catalogEntryDevice.UDF, catalogEntryDevice);
+                }
+            else {
+                accountDescription = new AccountDescription() {
+                    Account = account,
+                    };
+                accountDescription.Devices.Add(catalogEntryDevice.UDF, catalogEntryDevice);
+                DictionaryByAccount.Add(account, accountDescription);
+                }
+
+            }
+
 
 
         /// <summary>
@@ -81,22 +128,27 @@ namespace Goedel.Mesh.Protocol.Client {
             //    }
             //ObjectIndex.Add(containerStoreEntry.UniqueID, containerStoreEntry);
 
-            switch (containerStoreEntry.JsonObject) {
+            var profileEntry = containerStoreEntry.JsonObject as ProfileEntry;
+            var profile = JSONObject.FromJSON(profileEntry.Profile.Body.JSONReader(), true);
+            
+            switch (profile) {
                 case ProfileMesh profileMesh: {
-                    DefaultProfileMesh = DefaultProfileMesh ?? profileMesh; // Hack: should establish a stack.
-                    DictionaryByAccount.ReplaceSafe(profileMesh.Account, containerStoreEntry);
+                    Commit(profileMesh, profileEntry.Default);
                     return;
                     }
                 case ProfileDevice profileDevice: {
-                    DefaultProfileDevice = DefaultProfileDevice ?? profileDevice;
-                    DictionaryByUDF.ReplaceSafe(profileDevice.UDF, containerStoreEntry);
+                    Commit(profileDevice, profileEntry.Default);
                     return;
                     }
                 case ProfileMaster profileMaster: {
-                    DefaultProfileMaster = DefaultProfileMaster ?? profileMaster;
-                    DictionaryByUDF.ReplaceSafe(profileMaster.UDF, containerStoreEntry);
+                    Commit(profileMaster, profileEntry.Default);
                     return;
                     }
+                case CatalogEntryDevice catalogEntryDevice: {
+                    Commit(catalogEntryDevice, profileEntry.Default);
+                    return;
+                    }
+
                 default: {
                     throw new NYI();
                     }
@@ -128,24 +180,35 @@ namespace Goedel.Mesh.Protocol.Client {
                     string accountName = null,
                     string deviceUDF = null) {
             if (accountName != null) {
-                DictionaryByAccount.TryGetValue(accountName, out var containerStoreEntry);
-                return containerStoreEntry?.JsonObject as ProfileMesh;
+                DictionaryByAccount.TryGetValue(accountName, out var accountDescription);
+                return accountDescription.ProfileMesh;
                 }
             if (deviceUDF != null) {
-                DictionaryByUDF.TryGetValue(deviceUDF, out var containerStoreEntry);
-                return containerStoreEntry?.JsonObject as ProfileMesh;
+                DictionaryByUDF.TryGetValue(deviceUDF, out var profile);
+                return profile as ProfileMesh;
                 }
 
             return null;
 
             }
 
-        public Profile GetProfileByAccount(string account) {
-            var found = DictionaryByAccount.TryGetValue(account, out var entry);
-            return entry.JsonObject as Profile;
+        public ProfileMesh GetProfileMeshByAccount(string account) {
+            var found = DictionaryByAccount.TryGetValue(account, out var accountDescription);
+            return accountDescription.ProfileMesh;
 
             }
 
+        public ProfileDevice GetProfileDeviceByAccount(string account) {
+            var found = DictionaryByAccount.TryGetValue(account, out var accountDescription);
 
+
+            foreach (var device in accountDescription.Devices) {
+                found = DictionaryByUDF.TryGetValue(device.Value.UDF, out var profile);
+                if (profile is ProfileDevice ProfileDevice) {
+                    return ProfileDevice;
+                    }
+                }
+            return null;
+            }
         }
     }

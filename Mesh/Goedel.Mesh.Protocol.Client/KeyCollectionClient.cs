@@ -43,7 +43,7 @@ namespace Goedel.Mesh.Protocol.Client {
         /// <returns>The identifier.</returns>
         public override KeyPair GetByAccountEncrypt(string keyID) {
             // Check to see if we have an account by that name
-            var profile = CatalogHost.GetProfileByAccount(keyID) as ProfileMesh;
+            var profile = CatalogHost.GetProfileMeshByAccount(keyID) as ProfileMesh;
             if (profile != null) {
                 return profile.AccountEncryptionKey.KeyPair;
                 }
@@ -67,8 +67,11 @@ namespace Goedel.Mesh.Protocol.Client {
         public override KeyPair GetByAccountSign(string keyID) {
             // Check to see if we have an account by that name
 
-            throw new NYI();
-            
+            var profile = CatalogHost.GetProfileDeviceByAccount(keyID);
+            if (profile != null) {
+                return profile.DeviceSignatureKey.KeyPair;
+                }
+
             //var profile = CatalogHost.GetProfileByAccount(keyID) as CatalogEntryDevice;
             //if (profile != null) {
             //    return profile.ProfileDevice.DeviceSignatureKey.KeyPair;
@@ -81,7 +84,7 @@ namespace Goedel.Mesh.Protocol.Client {
 
 
             // last gasp - check on the platform
-            //return KeyCollectionBase.GetByAccountSign(keyID);
+            return KeyCollectionBase.GetByAccountSign(keyID);
             }
 
         }

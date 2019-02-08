@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Goedel.Cryptography;
+using Goedel.Cryptography.Dare;
 using Goedel.Protocol;
 
 
@@ -22,13 +23,12 @@ namespace Goedel.Mesh {
 
         string DirectoryMesh { get; }
 
-        string DirectoryService { get; }
 
         KeyCollection KeyCollection { get; }
 
         void OpenCatalog(Catalog catalog, string name);
 
-        void Register(Profile profile);
+        void Register(DareMessage entry);
 
         MeshService GetMeshClient(string account);
 

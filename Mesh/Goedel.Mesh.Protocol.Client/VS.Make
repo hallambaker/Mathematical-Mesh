@@ -24,10 +24,12 @@ LinkFiles = \
     Goedel.Mesh.dll
 
 ToolTargets = \
-	Exceptions.cs
+	Exceptions.cs HostCatalog.cs
 Exceptions.cs : Exceptions.exceptional 
 	exceptional Exceptions.exceptional  /cs  Exceptions.cs
 
+HostCatalog.cs : HostCatalog.protocol 
+	protogen HostCatalog.protocol  /cs  HostCatalog.cs
 
 
 prebuildRecurse : 
