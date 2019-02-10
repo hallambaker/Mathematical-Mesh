@@ -94,10 +94,22 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult ProfileEscrow(ProfileEscrow Options) {
+            
             using (var contextDevice = GetContextDevice(Options)) {
+                var file = Options.File.Value ?? contextDevice.ProfileMaster.UDF+".escrow";
+
+
                 (var escrow, var shares) = contextDevice.Escrow(3, 2);
+                escrow.ToFile(file);
+                var textShares = new List<string>();
+                foreach (var share in shares) {
+                    textShares.Add(share.Text);
+                    }
+
                 return new ResultEscrow() {
-                    Success = true
+                    Success = true,
+                    Shares = textShares,
+                    Filename = file
                     };
                 }
             }
@@ -115,7 +127,10 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult ProfileRecover(ProfileRecover Options) {
+            var file = Options.File.Value;
             using (var contextDevice = GetContextDevice(Options)) {
+                // Read the escrow data from file
+
 
                 var recoverShares = new List<string>();
                 AddIfPresent(recoverShares, Options.Share1);
@@ -127,10 +142,43 @@ namespace Goedel.Mesh.Shell {
                 AddIfPresent(recoverShares, Options.Share6);
                 AddIfPresent(recoverShares, Options.Share7);
                 AddIfPresent(recoverShares, Options.Share8);
+                var secret = new Secret(recoverShares);
 
-                var Escrow = new DareMessage(); // Hack, should read the escrow data from the service or file.
+                DareMessage Escrow=null;
+                if (file != null) {
+                    using (var inputStream = file.OpenFileRead()) {
+                        using (var reader = new JSONBCDReader(inputStream)) {
+                            Escrow = DareMessage.FromJSON(reader, false);
 
-                var DeviceAdminRecovered = contextDevice.Recover(Escrow, recoverShares);
+                            }
+                        }
+
+                    }
+
+                if (Options.Verify.Value) {
+                    var escrowedKeySet = contextDevice.RecoverKeySet(Escrow, secret);
+
+                    var EncryptUDF = new List<string>();
+                    if (escrowedKeySet.MasterEscrowKeys != null) {
+                        foreach (var key in escrowedKeySet.MasterEscrowKeys) {
+                            EncryptUDF.Add(key.KeyPair.UDF);
+                            }
+                        }
+
+                    string SignUDF = null;
+                    if (escrowedKeySet.MasterSignatureKey != null) {
+                        SignUDF = escrowedKeySet.MasterSignatureKey.KeyPair.UDF;
+                        }
+
+                    return new ResultRecover() {
+                        SignUDF = SignUDF,
+                        EncryptUDF = EncryptUDF
+                        };
+                    }
+
+
+
+                var DeviceAdminRecovered = contextDevice.Recover(Escrow, secret);
                 return new ResultRecover() {
                     Success = false
                     };
@@ -148,7 +196,7 @@ namespace Goedel.Mesh.Shell {
                 var portal = Options.Portal.Value;
                 var pin = Options.PIN.Value;
 
-                var result = contextDevice.RequestConnect(portal);
+                var result = contextDevice.RequestConnect(portal, pin);
 
                 return new ResultConnect() {
                     Success = true
@@ -255,25 +303,28 @@ namespace Goedel.Mesh.Shell {
 
         public override ShellResult ProfileGetPIN(ProfileGetPIN Options) {
             using (var contextDevice = GetContextDevice(Options)) {
-
-                // create a random PIN
-
-                // add pin to the device catalog
-
-                // syncing the device catalog will now cause an admin device to automatically
-                // reate a profile.
-
-
-                throw new NYI();
+                return new ResultPIN() {
+                    MessageConnectionPIN = contextDevice.GetPIN()
+                    };
                 }
             }
 
         public override ShellResult ProfileList(ProfileList Options) {
-            // pull the Catalog Host
+            var profiles = CatalogHost.GetProfiles();
+            var accounts = CatalogHost.GetAccountDescriptions();
 
-            // list out all the data 
+            var catalogEntryDevices = new List<CatalogEntryDevice>() ;
 
-            throw new NYI();
+            foreach (var account in accounts) {
+                foreach (var device in account.Devices) {
+                    catalogEntryDevices.Add(device.Value);
+                    }
+                }
+            return new ResultList() {
+                CatalogEntryDevices = catalogEntryDevices,
+                Profiles = profiles
+                };
+
             }
 
         public override ShellResult ProfileDump(ProfileDump Options) {

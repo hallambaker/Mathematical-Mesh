@@ -53,17 +53,21 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>Tag for Delete event</summary>
         public const string EventDelete = "Delete";
 
-
+        ///<summary>The tag dictionary for decoding entries.</summary>
         public static Dictionary<string, JSONFactoryDelegate> TagDictionary = tagDictionary ??
             new Dictionary<string, JSONFactoryDelegate>().CacheValue(out tagDictionary);
         static Dictionary<string, JSONFactoryDelegate> tagDictionary;
 
+        /// <summary>
+        /// Add a dictionary to the persistence store decoder.
+        /// </summary>
+        /// <param name="dictionary">The dictionary to add</param>
         public static void AddDictionary(Dictionary<string, JSONFactoryDelegate> dictionary) =>
             JSONObject.Append(TagDictionary, dictionary);
 
         /// <summary>
         /// The default data encoding of payload items.
-        /// 
+        /// </summary>
         public DataEncoding Encoding = DataEncoding.JSON;
 
         /// <summary>

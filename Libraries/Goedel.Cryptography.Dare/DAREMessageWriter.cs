@@ -111,6 +111,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="ContentLength">The content length. This value is ignored if the Plaintext
         /// parameter is not null. If the value is less than 0, chunked encoding
         /// will be used for the payload data. </param>
+        /// <param name="fileName">The file name to be specified in the message header.</param>
         /// <param name="Cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
         /// <param name="DataSequences">Data sequences to be converted to an EDS and presented 
         ///     as an EDSS header entry.</param>
@@ -136,6 +137,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="ContentLength">The content length. This value is ignored if the Plaintext
         /// parameter is not null. If the value is less than 0, chunked encoding
         /// will be used for the payload data. </param>
+        /// <param name="fileName">The file name to be specified in the message header.</param>
         /// <param name="Cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
         /// <param name="DataSequences">Data sequences to be converted to an EDS and presented 
         ///     as an EDSS header entry.</param>

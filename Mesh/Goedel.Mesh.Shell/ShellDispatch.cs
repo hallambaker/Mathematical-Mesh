@@ -171,11 +171,6 @@ namespace Goedel.Mesh.Shell {
 
             }
 
-        ContextDevice ContextDevice;
-        //ContextAdministrator ContextAdministrator => ContextDevice as ContextAdministrator;
-        //ContextMaster ContextMaster => ContextDevice as ContextMaster;
-
-
         public virtual ContextDevice GetContextDevice(IAccountOptions options) => 
             CatalogHost.GetContextDevice();
 

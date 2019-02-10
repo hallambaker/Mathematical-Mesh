@@ -226,7 +226,27 @@ namespace Goedel.Utilities {
                         Test1.Equals(Test2), Throw, Reason, String, Int);
 
 
+        /// <summary>
+        /// Utility routine used to flag missing code to implement missing
+        /// cryptographic authentication check
+        /// </summary>
+        /// <param name="description"></param>
+        public static void TaskValidate(this string description) { }
 
+
+        /// <summary>
+        /// Utility routine used to flag missing code to implement missing test for
+        /// functionality not yet implemented.
+        /// </summary>
+        /// <param name="description"></param>
+        public static void TaskTest(this string description) { }
+
+        /// <summary>
+        /// Utility routine used to flag missing code to implement missing test for
+        /// functionality not yet implemented.
+        /// </summary>
+        /// <param name="description"></param>
+        public static void TaskFunctionality(this string description) { }
         }
 
     }

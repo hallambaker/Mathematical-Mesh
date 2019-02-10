@@ -359,7 +359,9 @@
 			Description
 				|Device profile of the device making the request.
 		Binary ClientNonce
-
+		String PinID
+			Description
+				|Pin identifier used to identify a PIN authenticated request. 
 
 	Message ConnectResponse
 		Inherits MeshResponse

@@ -100,5 +100,7 @@ namespace Goedel.Mesh.Protocol.Client {
         public ProfileDevice GetProfileDeviceByAccount(string account) =>
                     ContainerHost.GetProfileDeviceByAccount(account);
 
+        public List<Profile> GetProfiles() => ContainerHost.GetProfiles();
+        public List<AccountDescription> GetAccountDescriptions () => ContainerHost.GetAccountDescription();
         }
     }

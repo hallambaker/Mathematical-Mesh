@@ -503,6 +503,14 @@ namespace Goedel.Cryptography {
             address = Builder.ToString();
             }
 
+        /// <summary>
+        /// Make a witness value from two input fingerprints and nonces.
+        /// </summary>
+        /// <param name="fingerprint1">The first fingerprint value</param>
+        /// <param name="nonce1">The first nonce value</param>
+        /// <param name="fingerprint2">The second fingerprint value</param>
+        /// <param name="nonce2">The second nonce value</param>
+        /// <returns>The fingerprint value</returns>
         public static byte[] MakeWitness(
             byte[] fingerprint1, byte[] nonce1,
             byte[] fingerprint2, byte[] nonce2) {
@@ -513,6 +521,15 @@ namespace Goedel.Cryptography {
             return MakeWitness(s1, s2);
             }
 
+        /// <summary>
+        /// Make a witness value from two input fingerprints and nonces.
+        /// </summary>
+        /// <param name="fingerprint1">The first fingerprint value</param>
+        /// <param name="nonce1">The first nonce value</param>
+        /// <param name="fingerprint2">The second fingerprint value</param>
+        /// <param name="nonce2">The second nonce value</param>
+        /// <param name="bits">The output precision in bits.</param>
+        /// <returns>The fingerprint value</returns>
         public static string MakeWitnessString(
             byte[] fingerprint1, byte[] nonce1,
             byte[] fingerprint2, byte[] nonce2,
@@ -540,11 +557,19 @@ namespace Goedel.Cryptography {
             }
 
         /// <summary>
+        /// Convert a PIN to a Pin Identifier
+        /// </summary>
+        /// <param name="PIN">The PIN value</param>
+        /// <returns>The corresponding PIN identifier</returns>
+        public static string PIN2PinID(string PIN) => PIN;
+
+        /// <summary>
         /// Calculate a witness fingerprint for the specified fingerprint
         /// and nonce value.
         /// </summary>
         /// <param name="fingerprint">The fingerprint value.</param>
         /// <param name="nonce">The nonce value</param>
+        /// <param name="bits">The number of bits precision to provide in the output.</param>
         /// <returns>The corresponding witness value.</returns>
         public static string MakeWitnessString(byte[] fingerprint, byte[] nonce, int bits= 125) =>
             Format (MakeWitness(fingerprint, nonce), bits);

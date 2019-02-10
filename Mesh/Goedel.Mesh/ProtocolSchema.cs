@@ -3128,6 +3128,11 @@ namespace Goedel.Mesh {
         /// </summary>
 
 		public virtual byte[]						ClientNonce  {get; set;}
+        /// <summary>
+        ///Pin identifier used to identify a PIN authenticated request. 
+        /// </summary>
+
+		public virtual string						PinID  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -3186,6 +3191,11 @@ namespace Goedel.Mesh {
 				_Writer.WriteToken ("ClientNonce", 1);
 					_Writer.WriteBinary (ClientNonce);
 				}
+			if (PinID != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("PinID", 1);
+					_Writer.WriteString (PinID);
+				}
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
 				}
@@ -3231,6 +3241,10 @@ namespace Goedel.Mesh {
 					}
 				case "ClientNonce" : {
 					ClientNonce = JSONReader.ReadBinary ();
+					break;
+					}
+				case "PinID" : {
+					PinID = JSONReader.ReadString ();
 					break;
 					}
 				default : {

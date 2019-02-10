@@ -14,18 +14,17 @@ namespace Goedel.XUnit {
 
 
 
-        [Fact]
+        [Fact (Skip ="Application phase")]
         public void TestProfileSSHPrivate() {
             var accountA = "alice@example.com";
 
-            var device1 = GetTestCLI();
-            var device2 = GetTestCLI();
-            var device3 = GetTestCLI();
+            var device1 = GetTestCLI("Device1");
+            var device2 = GetTestCLI("Device2");
+            var device3 = GetTestCLI("Device3");
 
-            device1.Dispatch($"profile master {accountA}  /new");
-            var result1 = device1.Dispatch($"profile pin");
-            var pin = "";
-            device2.Dispatch($"profile connect {accountA} /pin {pin}");
+            device1.Dispatch($"profile master {accountA} /new ");
+
+            device1.Connect(device2, accountA);
 
             device1.Dispatch($"profile ssh create");
             device1.Dispatch($"profile ssh private");
@@ -36,8 +35,7 @@ namespace Goedel.XUnit {
             device2.Dispatch($"profile ssh public");
             device2.Dispatch($"profile ssh show auth");
 
-            pin = "";
-            device3.Dispatch($"profile connect {accountA} /pin {pin}");
+            device1.Connect(device3, accountA);
 
             device3.Dispatch($"profile ssh private");
             device3.Dispatch($"profile ssh public");
@@ -48,27 +46,25 @@ namespace Goedel.XUnit {
             device3.Dispatch($"profile ssh show auth");
             }
 
-        [Fact]
+        [Fact(Skip = "Application phase")]
         public void TestProfileSSHPublic() {
             var accountA = "alice@example.com";
             var knownHosts = "known_hosts";
 
-            var device1 = GetTestCLI();
-            var device2 = GetTestCLI();
-            var device3 = GetTestCLI();
+            var device1 = GetTestCLI("Device1");
+            var device2 = GetTestCLI("Device2");
+            var device3 = GetTestCLI("Device3");
 
-            device1.Dispatch($"profile master {accountA}  /new");
-            var result1 = device1.Dispatch($"profile pin");
-            var pin = "";
-            device2.Dispatch($"profile connect {accountA} /pin {pin}");
+            device1.Dispatch($"profile master {accountA} /new ");
+
+            device1.Connect(device2, accountA);
 
             device1.Dispatch($"profile ssh add known {knownHosts}");
 
             device1.Dispatch($"profile ssh show known");
             device2.Dispatch($"profile ssh show known");
 
-            pin = "";
-            device3.Dispatch($"profile connect {accountA} /pin {pin}");
+            device1.Connect(device3, accountA);
 
             device1.Dispatch($"profile ssh show known");
             device2.Dispatch($"profile ssh show known");

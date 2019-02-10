@@ -8,20 +8,19 @@ namespace Scratchpad {
         static void Main(string[] args) {
             Console.WriteLine("Hello World");
 
-            ShellTests.Test().TestProfileConnectPin();
-            ShellTests.Test().TestProfileLifecycle();
+            //ShellTests.Test().TestProfileConnectPin();
+            //ShellTests.Test().TestProfileEscrow();
 
-            ShellTests.Test().TestProfileMail();
-            ShellTests.Test().TestProfileSSHPrivate();
-            ShellTests.Test().TestProfileSSHPublic();
-
-
-            ShellTests.Test().TestContainerArchive();
-            ShellTests.Test().TestContainerCatalogBase();
-            ShellTests.Test().TestContainerCatalogEncrypt();
+            //ShellTests.Test().TestContainerArchive();
+            //ShellTests.Test().TestContainerCatalogBase();
+            //ShellTests.Test().TestContainerCatalogEncrypt();
             ShellTests.Test().TestContainerSpool();
 
-            ShellTests.Test().TestMessageGroup();
+            /* Skipping for now */
+            //ShellTests.Test().TestProfileMail();
+            //ShellTests.Test().TestProfileSSHPrivate();
+            //ShellTests.Test().TestProfileSSHPublic();
+            //ShellTests.Test().TestMessageGroup();
             }
 
 

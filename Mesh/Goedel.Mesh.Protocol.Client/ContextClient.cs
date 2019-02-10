@@ -59,18 +59,20 @@ namespace Goedel.Mesh.Protocol.Client {
         /// </summary>
         /// <param name="account">The account the user is requesting a connection to.</param>
         /// <returns>Transaction status information</returns>
-        public MeshResultConnect RequestConnect(string account) {
+        public MeshResultConnect RequestConnect(string account, string PIN=null) {
             // get the account profile
             var meshClientSession = new MeshClientSession(this);
             MeshService = MeshMachine.GetMeshClient(account);
 
             var clientNonce = CryptoCatalog.GetBits(128);
+            var PinID = UDF.PIN2PinID(PIN);
 
             // generate the connection request 
             var connectRequest = new ConnectRequest() {
                 Account = account,
                 ClientNonce = clientNonce,
-                DeviceProfile = ProfileDevice.ProfileDeviceSigned
+                DeviceProfile = ProfileDevice.ProfileDeviceSigned,
+                PinID = PinID
                 };
 
 
@@ -289,24 +291,52 @@ namespace Goedel.Mesh.Protocol.Client {
                     store.AppendDirect(message);
                     }
                 }
-
+            if (IsAdministrator) {
+                ProcessConnectionRequests();
+                }
 
             return meshResult;
 
             }
 
-        void Sync(ContainerStatus containerStatus) {
-            var store = GetStore(containerStatus.Container);
-            if (store.FrameCount == containerStatus.Index) {
-                return;
+
+        void ProcessConnectionRequests() {
+
+            var completed = new Dictionary<string, MeshMessage>();
+            var pending = new Dictionary<string, MessageConnectionRequest>();
+
+            foreach (var message in SpoolInbound.Select(1, true)) {
+                var meshMessage = MeshMessage.FromJSON(message.GetBodyReader());
+                if (!completed.ContainsKey(meshMessage.MessageID)) {
+                    switch (meshMessage) {
+                        case MeshMessageComplete meshMessageComplete: {
+                            foreach (var reference in meshMessageComplete.References) {
+                                completed.Add(reference.MessageID, meshMessageComplete);
+                                }
+                            break;
+                            }
+                        case MessageConnectionRequest messageConnectionRequest: {
+                            if (messageConnectionRequest.PinID != null) {
+                                pending.AddSafe(messageConnectionRequest.PinID, messageConnectionRequest);
+                                }
+
+                            break;
+                            }
+                        case MessageConnectionPIN messageConnectionPIN: {
+                            var PinID = UDF.PIN2PinID(messageConnectionPIN.PIN);
+                            if (pending.TryGetValue(PinID, out var messageConnectionRequest)) {
+                                ProcessConnectionRequest(messageConnectionRequest, messageConnectionPIN);
+                                }
+
+                            break;
+                            }
+                        }
+                    }
                 }
-            Assert.True(containerStatus.Index > store.FrameCount, NYI.Throw);
-
-
-            throw new NYI();
-            // try to pull the updates here.
-
             }
+
+
+
 
 
         /// <summary>

@@ -161,7 +161,7 @@ namespace Goedel.Cryptography.Dare {
         /// Obtain a reader stream for the current frame data.
         /// </summary>
         /// <returns>The reader stream created.</returns>
-        public override ContainerFramerReader GetFrameDataReader(
+        public override ContainerFrameReader GetFrameDataReader(
                 long Index = -1, long Position = -1) {
 
             if (Position < 0 & Index >= 0) {
@@ -169,7 +169,7 @@ namespace Goedel.Cryptography.Dare {
                 Position = PositionRead;
                 }
 
-            return new ContainerFramerReader(JBCDStream, KeyCollection, Position);
+            return new ContainerFrameReader(JBCDStream, KeyCollection, Position);
             }
 
         /// <summary>

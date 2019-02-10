@@ -128,6 +128,7 @@
 			Include CryptoOptions
 			Include AccountOptions
 			Include Reporting
+			Parameter File "file" NewFile
 			Option Quorum "quorum" Integer
 			Option Shares "shares" Integer
 
@@ -144,6 +145,7 @@
 			Parameter Share7 "s7" String
 			Parameter Share8 "s8" String
 			Option File "file" ExistingFile
+			Option Verify "verify" Flag
 
 		Command ProfileExport "export"
 			Brief "Export the specified profile data to the specified file"
@@ -670,6 +672,8 @@
 		Command ContainerDelete "delete"
 			Parameter Container "in" ExistingFile
 				Brief "Container to append to"
+			Parameter File "file" NewFile
+				Brief "File to append"
 			Option Key "key" String
 
 		Command ContainerIndex "index"

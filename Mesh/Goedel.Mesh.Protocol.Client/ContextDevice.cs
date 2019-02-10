@@ -31,10 +31,34 @@ namespace Goedel.Mesh.Protocol.Client {
 
         ///<summary>The active profile. A client may have multiple profiles open at once on the
         ///same device but each one must be accessed through a different context.</summary>
-        public ProfileMesh ProfileMesh;
+        public ProfileMesh ProfileMesh {
+            get => profileMesh;
+            protected set {
+                profileMesh = value;
+                ProfileMaster = profileMesh.ProfileMaster;
+                }
+            }
+        ProfileMesh profileMesh;
+
+        public bool IsAdministrator => AdministratorKey != null;
+
+
+        KeyPair AdministratorKey = null;
+
 
         ///<summary>The master profile</summary>
-        public virtual ProfileMaster ProfileMaster { get; protected set; }
+        public virtual ProfileMaster ProfileMaster {
+            get => profileMaster;
+            protected set {
+                profileMaster = value;
+                AdministratorKey = null;
+                foreach (var admin in profileMaster.OnlineSignatureKeys) {
+                    AdministratorKey = KeyCollection.LocatePrivate(admin.KeyPair.UDF);
+                    }
+
+                }
+            }
+        ProfileMaster profileMaster;
 
 
         ///<summary>The active client connection to the service.</summary>
@@ -51,7 +75,7 @@ namespace Goedel.Mesh.Protocol.Client {
         public bool DefaultPersonal;
 
         ///<summary>The account name</summary>
-        protected string AccountName => ProfileMesh.Account;
+        public string AccountName => ProfileMesh.Account;
 
         ///<summary>The device profile</summary>
         public virtual ProfileDevice ProfileDevice { get; }
@@ -143,7 +167,7 @@ namespace Goedel.Mesh.Protocol.Client {
         public ContextDevice(
                     IMeshMachine machine,
                     ProfileMesh profileMesh,
-                    ProfileDevice profileDevice) : this(machine, profileDevice) => ProfileMesh = profileMesh;
+                    ProfileDevice profileDevice) : this(machine, profileDevice) => this.ProfileMesh = profileMesh;
         #endregion
 
         #region // Device profile operations
@@ -205,7 +229,7 @@ namespace Goedel.Mesh.Protocol.Client {
 
 
             var Profile = Mesh.ProfileMaster.Generate(ProfileDevice, keySign, keyEncrypt);
- 
+
             // Register the profile locally
             MeshMachine.Register(Profile.ProfileMasterSigned);
             ProfileMaster = Profile;
@@ -231,14 +255,7 @@ namespace Goedel.Mesh.Protocol.Client {
             }
 
         public ProfileMaster Recover(DareMessage escrow, Secret secret) {
-
-
-            var cryptoStack = new CryptoStack(secret, CryptoAlgorithmID.AES256CBC) {
-                Salt = escrow.Header.Salt
-                };
-            var Decrypted = cryptoStack.DecodeBody(escrow.Body);
-
-            var escrowedKeySet = EscrowedKeySet.FromJSON(Decrypted.JSONReader(), true);
+            var escrowedKeySet = RecoverKeySet(escrow, secret);
 
             var masterSignatureKey = escrowedKeySet.MasterSignatureKey.GetKeyPair(KeySecurity.Exportable);
             var profileMaster = ProfileMaster.Generate(ProfileDevice, masterSignatureKey,
@@ -248,11 +265,24 @@ namespace Goedel.Mesh.Protocol.Client {
             }
 
 
-        public void Add(MeshMessageComplete completion, string catalogID = null, CatalogEntry entry = null) {
+        public EscrowedKeySet RecoverKeySet(DareMessage escrow, Secret secret) {
 
-            completion.MessageID = completion.MessageID ?? UDF.Random(200);
 
-            var message = DareMessage.Encode(completion.GetBytes());
+            var cryptoStack = new CryptoStack(secret, CryptoAlgorithmID.AES256CBC) {
+                Salt = escrow.Header.Salt
+                };
+            var Decrypted = cryptoStack.DecodeBody(escrow.Body);
+
+            return EscrowedKeySet.FromJSON(Decrypted.JSONReader(), true);
+
+            }
+
+        public void Add(MeshMessage selfMessage, string catalogID = null, CatalogEntry entry = null) {
+            MeshService = MeshService ?? MeshMachine.GetMeshClient(AccountName);
+
+            selfMessage.MessageID = selfMessage.MessageID ?? UDF.Random(200);
+
+            var message = DareMessage.Encode(selfMessage.GetBytes());
 
             var uploadRequest = new UploadRequest() {
                 Account = AccountName,
@@ -285,8 +315,8 @@ namespace Goedel.Mesh.Protocol.Client {
         #region // store and catalog management
 
 
-        static int devicecount = 0;
-        int Devicecount = devicecount++;
+        static int Devicecount = 0;
+        int devicecount = Devicecount++;
 
         /// <summary>
         /// Return catalog or container by name, using the cached value if it exists or opening it otherwise.
@@ -299,7 +329,7 @@ namespace Goedel.Mesh.Protocol.Client {
             if (DictionaryStores.TryGetValue(name, out var store)) {
                 return store;
                 }
-            Console.WriteLine($"Open store {name} on {MeshMachine.DirectoryMesh} {Devicecount}");
+            Console.WriteLine($"Open store {name} on {MeshMachine.DirectoryMesh} {devicecount}");
 
             store = MakeStore(name);
             DictionaryStores.Add(name, store);
@@ -406,9 +436,26 @@ namespace Goedel.Mesh.Protocol.Client {
         #endregion
 
         #region // Administrator operations
-        public MeshResult CreateAccount(
-    string accountName,
-        CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default) {
+
+        public MessageConnectionPIN GetPIN() {
+
+            IsAdministrator.AssertTrue(NotAdministrator.Throw);
+
+            var message = new MessageConnectionPIN() {
+                Account = AccountName,
+                Expires = DateTime.Now.AddHours(4),
+                PIN = Cryptography.UDF.Random(125)
+                };
+            Add(message);
+            return message;
+            }
+
+
+
+        public MeshResult CreateAccount(string accountName,
+                    CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default) {
+
+            IsAdministrator.AssertTrue(NotAdministrator.Throw);
 
             algorithmEncrypt = algorithmEncrypt.DefaultMeta(CryptoAlgorithmID.Ed448);
             var keyEncrypt = KeyPair.Factory(algorithmEncrypt, KeySecurity.Device, KeyCollection, keyUses: KeyUses.Encrypt);
@@ -419,7 +466,7 @@ namespace Goedel.Mesh.Protocol.Client {
                 AccountEncryptionKey = new PublicKey(keyEncrypt.KeyPairPublic())
                 };
 
-            ProfileMesh = profileMesh;
+            this.ProfileMesh = profileMesh;
             var profileMeshSigned = Sign(profileMesh);
 
             var catalogEntryDevice = MakeCatalogEntryDevice(ProfileDevice);
@@ -454,6 +501,7 @@ namespace Goedel.Mesh.Protocol.Client {
 
 
         public MeshResult DeleteAccount() {
+            IsAdministrator.AssertTrue(NotAdministrator.Throw);
 
             var deleteRequest = new DeleteRequest() { Account = AccountName };
             var result = MeshService.DeleteAccount(deleteRequest, MeshClientSession);
@@ -464,6 +512,8 @@ namespace Goedel.Mesh.Protocol.Client {
 
 
         public DareMessage SetContactSelf(Contact contact, string label = null) {
+            IsAdministrator.AssertTrue(NotAdministrator.Throw);
+
             var signedContact = Sign(contact);
             var catalogEntryContact = new CatalogEntryContact(signedContact) {
                 Key = AccountName
@@ -485,9 +535,22 @@ namespace Goedel.Mesh.Protocol.Client {
         public DareMessage Add(ProfileApplication profile) => throw new NYI();
 
         public void ProcessConnectionRequest(
+            MessageConnectionRequest messageConnectionRequest,
+            MessageConnectionPIN messageConnectionPIN) {
+            
+            IsAdministrator.AssertTrue(NotAdministrator.Throw);
+
+            "Check witness value".TaskValidate(); // Hack: Should check the witness value here.
+            "Compute nonce with PIN".TaskValidate(); // Hack: Use the nonce value to check the witness value
+
+            ProcessConnectionRequest(messageConnectionRequest, true);
+            }
+
+
+        public void ProcessConnectionRequest(
                     MessageConnectionRequest messageConnectionRequest,
                     bool accept) {
-            //throw new NotAdministrator();
+            IsAdministrator.AssertTrue(NotAdministrator.Throw);
             if (accept) {
 
                 var profile = ProfileDevice.Decode(messageConnectionRequest.DeviceProfile);

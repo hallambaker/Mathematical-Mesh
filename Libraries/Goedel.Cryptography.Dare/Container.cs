@@ -518,6 +518,7 @@ namespace Goedel.Cryptography.Dare {
         /// Return an enumerator with the specified selectors.
         /// </summary>
         /// <param name="minIndex">The minimum index.</param>
+        /// <param name="reverse">If true, read the container from the end.</param>
         /// <returns>The enumerator.</returns>
         public ContainerEnumeratorRaw Select(int minIndex, bool reverse = false) =>
             new ContainerEnumeratorRaw(this, minIndex, reverse);
@@ -584,7 +585,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="index">The container index to be read.</param>
         /// <param name="position">The byte offset within the file from which to read.</param>
         /// <returns>The reader stream created.</returns>
-        public abstract ContainerFramerReader GetFrameDataReader(
+        public abstract ContainerFrameReader GetFrameDataReader(
                 long index = -1, long position = -1);
 
         #region // Convenience methods to read/write to containers.
@@ -992,13 +993,6 @@ namespace Goedel.Cryptography.Dare {
         public virtual IEnumerator<ContainerDataReader> GetEnumerator() => 
             new ContainerEnumerator(this);
 
-        ///// <summary>
-        ///// Returns an enumerator over the container contents starting with the
-        ///// last frame.
-        ///// </summary>
-        ///// <returns>The enumerator</returns>
-        //public virtual IEnumerator<ContainerDataReader> GetEnumeratorReverse() =>
-        //        new ContainerEnumerator(this, false);
 
         // Must also implement IEnumerable.GetEnumerator, but implement as a private method.
         private IEnumerator GetEnumerator1() => this.GetEnumerator();

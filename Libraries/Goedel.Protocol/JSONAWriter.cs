@@ -48,7 +48,7 @@ namespace Goedel.Protocol {
         /// an output stream defined, text will be written to the stream.
         /// </summary>
         /// <param name="Output">Output buffer</param>
-        public JSONAWriter(MemoryStream Output) => this.Output = Output;
+        public JSONAWriter(Stream Output) => this.Output = Output;
 
         /// <summary>
         /// Write Tag to the stream

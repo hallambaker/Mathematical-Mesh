@@ -64,6 +64,7 @@ namespace Goedel.Mesh.Shell {
 			{"ResultFile", ResultFile._Factory},
 			{"ResultEntry", ResultEntry._Factory},
 			{"ResultDump", ResultDump._Factory},
+			{"ResultList", ResultList._Factory},
 			{"ResultHello", ResultHello._Factory},
 			{"ResultDeviceCreate", ResultDeviceCreate._Factory},
 			{"ResultMasterCreate", ResultMasterCreate._Factory},
@@ -797,6 +798,161 @@ namespace Goedel.Mesh.Shell {
 
 	/// <summary>
 	/// </summary>
+	public partial class ResultList : Result {
+        /// <summary>
+        /// </summary>
+
+		public virtual List<CatalogEntryDevice>				CatalogEntryDevices  {get; set;}
+        /// <summary>
+        /// </summary>
+
+		public virtual List<Profile>				Profiles  {get; set;}
+		
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "ResultList";
+
+		/// <summary>
+        /// Factory method
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JSONObject _Factory () => new ResultList();
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="Writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
+			SerializeX (Writer, wrap, ref first);
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_Writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			if (_wrap) {
+				_Writer.WriteObjectStart ();
+				}
+			((Result)this).SerializeX(_Writer, false, ref _first);
+			if (CatalogEntryDevices != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("CatalogEntryDevices", 1);
+				_Writer.WriteArrayStart ();
+				bool _firstarray = true;
+				foreach (var _index in CatalogEntryDevices) {
+					_Writer.WriteArraySeparator (ref _firstarray);
+					// This is an untagged structure. Cannot inherit.
+                    //_Writer.WriteObjectStart();
+                    //_Writer.WriteToken(_index._Tag, 1);
+					bool firstinner = true;
+					_index.Serialize (_Writer, true, ref firstinner);
+                    //_Writer.WriteObjectEnd();
+					}
+				_Writer.WriteArrayEnd ();
+				}
+
+			if (Profiles != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Profiles", 1);
+				_Writer.WriteArrayStart ();
+				bool _firstarray = true;
+				foreach (var _index in Profiles) {
+					_Writer.WriteArraySeparator (ref _firstarray);
+                    _Writer.WriteObjectStart();
+                    _Writer.WriteToken(_index._Tag, 1);
+					bool firstinner = true;
+					_index.Serialize (_Writer, true, ref firstinner);
+                    _Writer.WriteObjectEnd();
+					}
+				_Writer.WriteArrayEnd ();
+				}
+
+			if (_wrap) {
+				_Writer.WriteObjectEnd ();
+				}
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <returns>The created object.</returns>		
+        public static new ResultList FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
+			if (Tagged) {
+				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				return Out as ResultList;
+				}
+		    var Result = new ResultList ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			}
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
+		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+			
+			switch (Tag) {
+				case "CatalogEntryDevices" : {
+					// Have a sequence of values
+					bool _Going = JSONReader.StartArray ();
+					CatalogEntryDevices = new List <CatalogEntryDevice> ();
+					while (_Going) {
+						// an untagged structure.
+						var _Item = new  CatalogEntryDevice ();
+						_Item.Deserialize (JSONReader);
+						// var _Item = new CatalogEntryDevice (JSONReader);
+						CatalogEntryDevices.Add (_Item);
+						_Going = JSONReader.NextArray ();
+						}
+					break;
+					}
+				case "Profiles" : {
+					// Have a sequence of values
+					bool _Going = JSONReader.StartArray ();
+					Profiles = new List <Profile> ();
+					while (_Going) {
+						var _Item = Profile.FromJSON (JSONReader, true); // a tagged structure
+						Profiles.Add (_Item);
+						_Going = JSONReader.NextArray ();
+						}
+					break;
+					}
+				default : {
+					base.DeserializeToken(JSONReader, Tag);
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
+	/// <summary>
+	/// </summary>
 	public partial class ResultHello : Result {
         /// <summary>
         /// </summary>
@@ -1235,6 +1391,14 @@ namespace Goedel.Mesh.Shell {
         /// <summary>
         /// </summary>
 
+		public virtual string						Filename  {get; set;}
+        /// <summary>
+        /// </summary>
+
+		public virtual string						Service  {get; set;}
+        /// <summary>
+        /// </summary>
+
 		public virtual List<string>				Shares  {get; set;}
 		
 		/// <summary>
@@ -1279,6 +1443,16 @@ namespace Goedel.Mesh.Shell {
 				_Writer.WriteObjectStart ();
 				}
 			((Result)this).SerializeX(_Writer, false, ref _first);
+			if (Filename != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Filename", 1);
+					_Writer.WriteString (Filename);
+				}
+			if (Service != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Service", 1);
+					_Writer.WriteString (Service);
+				}
 			if (Shares != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("Shares", 1);
@@ -1323,6 +1497,14 @@ namespace Goedel.Mesh.Shell {
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
+				case "Filename" : {
+					Filename = JSONReader.ReadString ();
+					break;
+					}
+				case "Service" : {
+					Service = JSONReader.ReadString ();
+					break;
+					}
 				case "Shares" : {
 					// Have a sequence of values
 					bool _Going = JSONReader.StartArray ();
@@ -1592,6 +1774,14 @@ namespace Goedel.Mesh.Shell {
 	/// <summary>
 	/// </summary>
 	public partial class ResultRecover : Result {
+        /// <summary>
+        /// </summary>
+
+		public virtual string						SignUDF  {get; set;}
+        /// <summary>
+        /// </summary>
+
+		public virtual List<string>				EncryptUDF  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -1635,6 +1825,23 @@ namespace Goedel.Mesh.Shell {
 				_Writer.WriteObjectStart ();
 				}
 			((Result)this).SerializeX(_Writer, false, ref _first);
+			if (SignUDF != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("SignUDF", 1);
+					_Writer.WriteString (SignUDF);
+				}
+			if (EncryptUDF != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("EncryptUDF", 1);
+				_Writer.WriteArrayStart ();
+				bool _firstarray = true;
+				foreach (var _index in EncryptUDF) {
+					_Writer.WriteArraySeparator (ref _firstarray);
+					_Writer.WriteString (_index);
+					}
+				_Writer.WriteArrayEnd ();
+				}
+
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
 				}
@@ -1667,6 +1874,21 @@ namespace Goedel.Mesh.Shell {
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
+				case "SignUDF" : {
+					SignUDF = JSONReader.ReadString ();
+					break;
+					}
+				case "EncryptUDF" : {
+					// Have a sequence of values
+					bool _Going = JSONReader.StartArray ();
+					EncryptUDF = new List <string> ();
+					while (_Going) {
+						string _Item = JSONReader.ReadString ();
+						EncryptUDF.Add (_Item);
+						_Going = JSONReader.NextArray ();
+						}
+					break;
+					}
 				default : {
 					base.DeserializeToken(JSONReader, Tag);
 					break;
@@ -1888,7 +2110,7 @@ namespace Goedel.Mesh.Shell {
         /// <summary>
         /// </summary>
 
-		public virtual string						PIN  {get; set;}
+		public virtual MessageConnectionPIN						MessageConnectionPIN  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -1932,10 +2154,10 @@ namespace Goedel.Mesh.Shell {
 				_Writer.WriteObjectStart ();
 				}
 			((Result)this).SerializeX(_Writer, false, ref _first);
-			if (PIN != null) {
+			if (MessageConnectionPIN != null) {
 				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("PIN", 1);
-					_Writer.WriteString (PIN);
+				_Writer.WriteToken ("MessageConnectionPIN", 1);
+					MessageConnectionPIN.Serialize (_Writer, false);
 				}
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
@@ -1969,8 +2191,11 @@ namespace Goedel.Mesh.Shell {
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
-				case "PIN" : {
-					PIN = JSONReader.ReadString ();
+				case "MessageConnectionPIN" : {
+					// An untagged structure
+					MessageConnectionPIN = new MessageConnectionPIN ();
+					MessageConnectionPIN.Deserialize (JSONReader);
+ 
 					break;
 					}
 				default : {

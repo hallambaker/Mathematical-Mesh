@@ -22,26 +22,31 @@ namespace Goedel.XUnit {
             }
 
         [Fact]
-        public void TestProfileLifecycle() {
+        public void TestProfileEscrow() {
             var account = "alice@example.com";
 
             Dispatch("profile list");
             // check we have no profiles.
 
-            Dispatch("profile master");
-            Dispatch($"profile register {account}");
-            DefaultDevice.AssertAccount(1, account);
+            Dispatch($"profile master {account} /new ");
+            //DefaultDevice.AssertAccount(1, account);
 
-            Dispatch("profile escrow /quorum 2 /shares 3");
-            Dispatch("profile delete");
-            DefaultDevice.AssertAccount(0, account, false);
-
-            var resultEscrow = DefaultDevice.Last as ResultEscrow;
+            var result = Dispatch("profile escrow test1.escrow /quorum 2 /shares 3") ;
+            //Dispatch("profile delete");
+            //DefaultDevice.AssertAccount(0, account, false);
+            var resultEscrow = result as ResultEscrow;
             var share1 = resultEscrow.Shares[0];
             var share2 = resultEscrow.Shares[1];
-            Dispatch($"profile recover {share1} {share2} /portal {account}");
+            Dispatch($"profile recover  {share1} {share2} /file test1.escrow /verify");
 
-            DefaultDevice.AssertAccount(1, account);
+            //DefaultDevice.AssertAccount(1, account);
+
+            // Goal: implement comprehensive key escrow.
+            "Check ability to delete account".TaskTest();
+            "Check ability to recover deleted account from the service".TaskTest();
+            "Implement ability to store escrow records to service".TaskFunctionality();
+            "Implement encryption key escrow".TaskFunctionality();
+            "Implement encryption key recovery".TaskFunctionality();
             }
 
 
@@ -86,13 +91,9 @@ namespace Goedel.XUnit {
             var device3 = GetTestCLI("Device3");
 
             device1.Dispatch($"profile master {accountA} /new ");
-            var result1 = device1.Dispatch($"profile pin");
-            var pin1 = "";
-            device2.Dispatch($"profile connect {accountA} /pin {pin1}");
 
-            var result2 = device1.Dispatch($"profile pin");
-            var pin2 = "";
-            device3.Dispatch($"profile connect {accountA} /pin {pin2}");
+            device1.Connect(device2, accountA);
+            device1.Connect(device3, accountA);
             }
         }
     }

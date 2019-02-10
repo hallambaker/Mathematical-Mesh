@@ -17,14 +17,15 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult ContainerCreate(ContainerCreate Options) {
-            var inputFile = Options.Container.Value;
+            var outputFile = Options.Container.Value;
 
-            using (var container = Container.Open(
-                inputFile, containerType: ContainerType.MerkleTree)) {
+            var CryptoParameters = new CryptoParameters();
+            using (var Writer = new FileContainerWriter(
+                    outputFile, CryptoParameters, true, FileStatus: FileStatus.Overwrite)) {
                 }
 
             return new ResultFile() {
-                Filename = inputFile
+                Filename = outputFile
                 };
             }
 
@@ -34,14 +35,27 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult ContainerArchive(ContainerArchive Options) {
-            var inputFile = Options.Container.Value;
+            var inputFile = Options.Input.Value;
+            var outputFile = Options.Container.Value;
 
-            using (var container = Container.Open(
-                inputFile, containerType: ContainerType.MerkleTree)) {
+            var CryptoParameters = new CryptoParameters();
+
+            using (var Writer = new FileContainerWriter(
+                    outputFile, CryptoParameters, true, FileStatus: FileStatus.Overwrite)) {
+
+                // Hack: This functionality should be pushed into FileContainerWriter and made recursive, etc.
+
+                var directoryInfo = new DirectoryInfo(inputFile);
+                if (directoryInfo.Exists) {
+                    foreach (var fileInfo in directoryInfo.EnumerateFiles()) {
+                        Writer.Add(fileInfo, Path: fileInfo.Name);
+                        }
+                    }
+                Writer.AddIndex(); // Hack: is not currently indexed.
                 }
 
             return new ResultFile() {
-                Filename = inputFile
+                Filename = outputFile
                 };
             }
 
@@ -51,10 +65,13 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult ContainerAppend(ContainerAppend Options) {
-            var inputFile = Options.Container.Value;
+            var inputFile = Options.File.Value;
+            var outputFile = Options.Container.Value;
 
-            using (var container = Container.Open(
-                inputFile, containerType: ContainerType.MerkleTree)) {
+            var CryptoParameters = new CryptoParameters();
+            using (var Writer = new FileContainerWriter(
+                    outputFile, CryptoParameters, true, FileStatus: FileStatus.Overwrite)) {
+                Writer.Add(inputFile, Path: inputFile);
                 }
 
             return new ResultFile() {
@@ -62,6 +79,26 @@ namespace Goedel.Mesh.Shell {
                 };
             }
 
+
+        /// <summary>
+        /// Dispatch method
+        /// </summary>
+        /// <param name="Options">The command line options.</param>
+        /// <returns>Mesh result instance</returns>
+        public override ShellResult ContainerDelete(ContainerDelete Options) {
+            var inputFile = Options.File.Value;
+            var outputFile = Options.Container.Value;
+
+            var CryptoParameters = new CryptoParameters();
+            using (var Writer = new FileContainerWriter(
+                    outputFile, CryptoParameters, true, FileStatus: FileStatus.Overwrite)) {
+                Writer.Delete(inputFile);
+                }
+
+            return new ResultFile() {
+                Filename = inputFile
+                };
+            }
 
         /// <summary>
         /// Dispatch method
@@ -90,8 +127,17 @@ namespace Goedel.Mesh.Shell {
             var inputFile = Options.Container.Value;
             var outputFile = Options.Output.Value;
 
-            using (var container = Container.Open(
-                inputFile, containerType: ContainerType.MerkleTree)) {
+            Directory.CreateDirectory(outputFile);
+
+            using (var reader = new FileContainerReader (inputFile)) {
+                foreach (var entry in reader) {
+                    var path = Path.Combine(outputFile, entry.Header.Filename);
+
+                    entry.CopyToFile(path);
+
+
+                    }
+
                 }
 
             return new ResultFile() {

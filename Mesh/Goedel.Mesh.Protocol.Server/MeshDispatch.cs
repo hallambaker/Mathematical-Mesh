@@ -240,7 +240,8 @@ namespace Goedel.Mesh.Protocol.Server {
                 var connectResponse = Mesh.Connect(jpcSession,
                     Request.Account,
                     Request.DeviceProfile, 
-                    Request.ClientNonce);
+                    Request.ClientNonce,
+                    Request.PinID);
 
 
                 return connectResponse;

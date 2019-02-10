@@ -374,6 +374,15 @@
 		Binary ClientNonce
 		Binary ServerNonce
 		String Witness
+		String PinID
+			Description
+				|Pin identifier used to identify a PIN authenticated request. 
+
+	Structure MessageConnectionPIN
+		Inherits MeshMessage
+		String Account
+		DateTime Expires
+		String PIN
 
 	Structure MessageContactRequest
 		Inherits MeshMessage

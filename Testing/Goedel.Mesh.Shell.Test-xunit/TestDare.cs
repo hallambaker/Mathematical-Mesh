@@ -1,12 +1,12 @@
 ﻿using System.IO;
-using System.Collections.Generic;
-using Xunit;
+
+using Goedel.IO;
 using Goedel.Mesh.Shell;
-using Goedel.Cryptography;
 using Goedel.Mesh.Test;
-using Goedel.Test.Core;
 using Goedel.Test;
 using Goedel.Utilities;
+
+using Xunit;
 
 namespace Goedel.XUnit {
     public partial class ShellTests {
@@ -72,7 +72,7 @@ namespace Goedel.XUnit {
         public void TestContainerCatalogBase() {
             var filename = Files.GetFilenameUnique();
 
-            Dispatch($"dare container create {filename}");
+            Dispatch($"container create {filename}");
             TestContainerCatalog(filename);
 
             }
@@ -83,7 +83,7 @@ namespace Goedel.XUnit {
             var account = "alice@example.com";
             CreateAccount(account);
 
-            Dispatch($"dare container create {filename} /encrypt {account}");
+            Dispatch($"container create {filename} /encrypt {account}");
             TestContainerCatalog(filename);
             }
 
@@ -99,46 +99,27 @@ namespace Goedel.XUnit {
             // create catalog
 
 
-            Dispatch($"dare container append {filename} {filename1} /key {key1}");
-            Dispatch($"dare container append {filename} {filename2} /key {key2}");
-            Dispatch($"dare container delete {filename} /key {key1}");
-            Dispatch($"dare container append {filename} {filename3} /key {key1}");
-            Dispatch($"dare container append {filename} {filename4} /key {key2}");
+            Dispatch($"container append {filename} {filename1} /key {key1}");
+            Dispatch($"container append {filename} {filename2} /key {key2}");
+            Dispatch($"container delete {filename} /key {key1}");
+            Dispatch($"container append {filename} {filename3} /key {key1}");
+            Dispatch($"container append {filename} {filename4} /key {key2}");
 
             // TBS: write code to check the output
-            throw new NYI();
-            }
-
-        [Fact]
-        public void TestContainerSpool() {
-
-            var filename = Files.GetFilenameUnique();
-            var filename1 = "Test data 1".ToFileUnique();
-            var filename2 = "Test data 2".ToFileUnique();
-            var filename3 = "Test data 3".ToFileUnique();
-            var filename4 = "Test data 4".ToFileUnique();
-            // create catalog
-            Dispatch($"dare container create {filename}");
-
-            Dispatch($"dare container append {filename} {filename1}");
-            Dispatch($"dare container append {filename} {filename2}");
-            Dispatch($"dare container append {filename} {filename3}");
-            Dispatch($"dare container append {filename} {filename4}");
-            
-            // TBS: write code to check the output
-            throw new NYI();
+            return true;
             }
 
         [Fact]
         public void TestContainerArchive() {
             var inputDir = @"..\CommonData";
             var output = @"CommonData.darch";
+            var outputDir = @"CommonData";
 
-            Dispatch($"dare container archive {inputDir} /out {output}");
-            Dispatch($"dare container archive {output}");
 
-            // TBS: write code to check the output
-            throw new NYI();
+            outputDir.DirectoryDelete();
+            Dispatch($"container archive {inputDir} /out {output}");
+            Dispatch($"container extract {output} {outputDir}");
+
             }
 
         }

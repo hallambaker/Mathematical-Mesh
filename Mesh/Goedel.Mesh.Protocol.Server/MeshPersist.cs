@@ -110,7 +110,8 @@ namespace Goedel.Mesh.Protocol.Server {
         public ConnectResponse Connect(JpcSession jpcSession,
                         string account,
                         DareMessage deviceProfile,
-                        byte [] clientNonce) {
+                        byte [] clientNonce,
+                        string PinID) {
 
             var profileDevice = ProfileDevice.Decode(deviceProfile);
 
@@ -119,7 +120,8 @@ namespace Goedel.Mesh.Protocol.Server {
                 Account = account,
                 DeviceProfile = deviceProfile,
                 ClientNonce = clientNonce,
-                ServerNonce = CryptoCatalog.GetBits(128)
+                ServerNonce = CryptoCatalog.GetBits(128),
+                PinID = PinID
                 };
 
             var connectResponse = new ConnectResponse() {

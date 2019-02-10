@@ -25,6 +25,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using Goedel.Utilities;
+using Goedel.IO;
 
 namespace Goedel.Protocol {
 
@@ -104,11 +105,15 @@ namespace Goedel.Protocol {
         /// </summary>
         public static JSONWriterFactoryDelegate JSONWriterFactory = JSONWriter.JSONWriterFactory;
 
-
+        ///<summary>The tag dictionary for decoding entries.</summary>
         public static Dictionary<string, JSONFactoryDelegate> TagDictionary = tagDictionary ??
             new Dictionary<string, JSONFactoryDelegate>().CacheValue(out tagDictionary);
         static Dictionary<string, JSONFactoryDelegate> tagDictionary;
 
+        /// <summary>
+        /// Add a dictionary to the persistence store decoder.
+        /// </summary>
+        /// <param name="dictionary">The dictionary to add</param>
         public static void AddDictionary(Dictionary<string, JSONFactoryDelegate> dictionary) =>
             JSONObject.Append(TagDictionary, dictionary);
 
@@ -263,6 +268,23 @@ namespace Goedel.Protocol {
         public virtual void DeserializeToken (JSONReader JSONReader, string Tag) {
             }
 
+
+        /// <summary>
+        /// Write the object out to a file.
+        /// </summary>
+        /// <param name="fileName">Name of the file to create.</param>
+        /// <param name="dataEncoding">The encoding to use</param>
+        /// <param name="tagged">If true, tag the output with the object type</param>
+        public void ToFile(string fileName, DataEncoding dataEncoding= DataEncoding.JSON, bool tagged=false) {
+            using (var outputStream = fileName.OpenFileNew()) {
+                using (var writer = dataEncoding.GetWriter(outputStream)) {
+                    Serialize(writer, tagged);
+                    }
+                }
+            }
+
+
+
         /// <summary>
         /// Merge two or more token dictionaries to produce a combined dictionary.
         /// </summary>
@@ -299,6 +321,9 @@ namespace Goedel.Protocol {
                 Base.Add(Entry.Key, Entry.Value);
                 }
             }
+
+
+
 
         }
     }

@@ -1672,6 +1672,7 @@ namespace Goedel.Mesh.Shell {
 			new Flag (),
 			new Flag (),
 			new Flag (),
+			new NewFile (),
 			new Integer (),
 			new Integer ()			} ;
 
@@ -1729,23 +1730,32 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _Json {
 			set => _Data[5].Parameter (value);
 			}
-		/// <summary>Field accessor for option [quorum]</summary>
-		public virtual Integer Quorum {
-			get => _Data[6] as Integer;
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual NewFile File {
+			get => _Data[6] as NewFile;
 			set => _Data[6]  = value;
 			}
 
-		public virtual string _Quorum {
+		public virtual string _File {
 			set => _Data[6].Parameter (value);
 			}
-		/// <summary>Field accessor for option [shares]</summary>
-		public virtual Integer Shares {
+		/// <summary>Field accessor for option [quorum]</summary>
+		public virtual Integer Quorum {
 			get => _Data[7] as Integer;
 			set => _Data[7]  = value;
 			}
 
-		public virtual string _Shares {
+		public virtual string _Quorum {
 			set => _Data[7].Parameter (value);
+			}
+		/// <summary>Field accessor for option [shares]</summary>
+		public virtual Integer Shares {
+			get => _Data[8] as Integer;
+			set => _Data[8]  = value;
+			}
+
+		public virtual string _Shares {
+			set => _Data[8].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -1797,18 +1807,25 @@ namespace Goedel.Mesh.Shell {
 					Index = 5,
 					Key = "json"
 					},
+				new DescribeEntryParameter () {
+					Identifier = "File", 
+					Default = null, // null if null
+					Brief = "<Unspecified>",
+					Index = 6,
+					Key = ""
+					},
 				new DescribeEntryOption () {
 					Identifier = "Quorum", 
 					Default = null, // null if null
 					Brief = "<Unspecified>",
-					Index = 6,
+					Index = 7,
 					Key = "quorum"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Shares", 
 					Default = null, // null if null
 					Brief = "<Unspecified>",
-					Index = 7,
+					Index = 8,
 					Key = "shares"
 					}
 				}
@@ -1837,7 +1854,8 @@ namespace Goedel.Mesh.Shell {
 			new String (),
 			new String (),
 			new String (),
-			new ExistingFile ()			} ;
+			new ExistingFile (),
+			new Flag ()			} ;
 
 		/// <summary>Field accessor for option [portal]</summary>
 		public virtual String AccountID {
@@ -1965,6 +1983,15 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _File {
 			set => _Data[13].Parameter (value);
 			}
+		/// <summary>Field accessor for option [verify]</summary>
+		public virtual Flag Verify {
+			get => _Data[14] as Flag;
+			set => _Data[14]  = value;
+			}
+
+		public virtual string _Verify {
+			set => _Data[14].Parameter (value);
+			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
@@ -2070,6 +2097,13 @@ namespace Goedel.Mesh.Shell {
 					Brief = "<Unspecified>",
 					Index = 13,
 					Key = "file"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Verify", 
+					Default = null, // null if null
+					Brief = "<Unspecified>",
+					Index = 14,
+					Key = "verify"
 					}
 				}
 			};
@@ -10846,6 +10880,7 @@ namespace Goedel.Mesh.Shell {
 
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
 			new ExistingFile (),
+			new NewFile (),
 			new String ()			} ;
 
 		/// <summary>Field accessor for parameter []</summary>
@@ -10857,14 +10892,23 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _Container {
 			set => _Data[0].Parameter (value);
 			}
-		/// <summary>Field accessor for option [key]</summary>
-		public virtual String Key {
-			get => _Data[1] as String;
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual NewFile File {
+			get => _Data[1] as NewFile;
 			set => _Data[1]  = value;
 			}
 
-		public virtual string _Key {
+		public virtual string _File {
 			set => _Data[1].Parameter (value);
+			}
+		/// <summary>Field accessor for option [key]</summary>
+		public virtual String Key {
+			get => _Data[2] as String;
+			set => _Data[2]  = value;
+			}
+
+		public virtual string _Key {
+			set => _Data[2].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -10881,11 +10925,18 @@ namespace Goedel.Mesh.Shell {
 					Index = 0,
 					Key = ""
 					},
+				new DescribeEntryParameter () {
+					Identifier = "File", 
+					Default = null, // null if null
+					Brief = "File to append",
+					Index = 1,
+					Key = ""
+					},
 				new DescribeEntryOption () {
 					Identifier = "Key", 
 					Default = null, // null if null
 					Brief = "<Unspecified>",
-					Index = 1,
+					Index = 2,
 					Key = "key"
 					}
 				}

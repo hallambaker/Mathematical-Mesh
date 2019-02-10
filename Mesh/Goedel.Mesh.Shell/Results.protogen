@@ -32,6 +32,13 @@
 		Struct CatalogEntry CatalogEntries
 			Multiple
 
+	Structure ResultList
+		Inherits		Result
+		Struct CatalogEntryDevice CatalogEntryDevices
+			Multiple
+		TStruct Profile Profiles
+			Multiple
+
 	Structure ResultHello
 		Inherits		Result
 		Struct MeshHelloResponse Response
@@ -52,6 +59,8 @@
 
 	Structure ResultEscrow
 		Inherits		Result
+		String			Filename
+		String			Service
 		String			Shares
 			Multiple
 
@@ -67,6 +76,10 @@
 
 	Structure ResultRecover
 		Inherits		Result
+		String			SignUDF
+		String			EncryptUDF
+			Multiple
+
 
 	Structure ResultConnect
 		Inherits		Result
@@ -78,4 +91,4 @@
 
 	Structure ResultPIN
 		Inherits		Result
-		String			PIN
+		Struct MessageConnectionPIN			MessageConnectionPIN

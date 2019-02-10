@@ -20,10 +20,7 @@ namespace Goedel.Mesh {
         public bool MoveNext() => BaseEnumerator.MoveNext();
         public void Reset() => throw new NotImplementedException();
 
-        public EnumeratorCatalogEntryDevice(ContainerPersistenceStore container) {
-            BaseEnumerator = container.GetEnumerator();
-
-            }
+        public EnumeratorCatalogEntryDevice(ContainerPersistenceStore container) => BaseEnumerator = container.GetEnumerator();
         }
 
     public class AsCatalogEntryDevice : IEnumerable<CatalogEntryDevice> {

@@ -84,8 +84,11 @@ namespace Goedel.Mesh {
             }
 
 
-        public static ProfileMaster Decode(DareMessage message) =>
-            FromJSON(message.GetBodyReader(), true);
+        public static ProfileMaster Decode(DareMessage message) {
+            var result = FromJSON(message.GetBodyReader(), true);
+            result.ProfileMasterSigned = message;
+            return result;
+            }
         }
 
     }

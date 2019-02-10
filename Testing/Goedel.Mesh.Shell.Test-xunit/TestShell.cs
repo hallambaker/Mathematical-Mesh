@@ -230,6 +230,17 @@ namespace Goedel.XUnit {
             return true;
             }
 
+
+        public void Connect(TestCLI newDevice, string account) {
+            var result = Dispatch($"profile pin") as ResultPIN;
+            var pin = result.MessageConnectionPIN.PIN;
+            newDevice.Dispatch($"profile connect {account} /new /pin {pin}");
+            Dispatch($"profile sync");
+            newDevice.Dispatch($"profile sync");
+
+            }
+
+
         }
 
 

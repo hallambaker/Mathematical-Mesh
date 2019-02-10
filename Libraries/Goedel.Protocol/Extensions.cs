@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.IO;
 using System.Collections.Generic;
 using Goedel.Utilities;
 
@@ -43,32 +43,54 @@ namespace Goedel.Protocol {
         public static bool IsError(this int Code) => (Code >= 400) & (Code < 500);
 
         /// <summary>Convert object to bytes in specified encoding.</summary>
-        /// <param name="Object">The object to convert.</param>
-        /// <param name="Encoding">The encoding to convert to (defaults to JSON).</param>
-        /// <param name="Tagged">It true, tag the output value with the object type.</param>
+        /// <param name="jsonObject">The object to convert.</param>
+        /// <param name="dataEncoding">The encoding to convert to (defaults to JSON).</param>
+        /// <param name="tagged">It true, tag the output value with the object type.</param>
         /// <returns>The encoded data.</returns>
-        public static byte[] GetBytes (this JSONObject Object, 
-                    DataEncoding Encoding = DataEncoding.JSON, 
-                    bool Tagged = true) {
+        public static byte[] GetBytes (this JSONObject jsonObject, 
+                    DataEncoding dataEncoding = DataEncoding.JSON, 
+                    bool tagged = true) {
 
-            switch (Encoding) {
+            switch (dataEncoding) {
                 case DataEncoding.JSON: {
-                    return GetJson(Object, Tagged);
+                    return GetJson(jsonObject, tagged);
                     }
                 case DataEncoding.JSON_A: {
-                    return GetJsonA(Object, Tagged);
+                    return GetJsonA(jsonObject, tagged);
                     }
                 case DataEncoding.JSON_B: {
-                    return GetJsonB(Object, Tagged);
+                    return GetJsonB(jsonObject, tagged);
                     }
                 case DataEncoding.JSON_C: {
-                    return GetJsonC(Object, Tagged);
+                    return GetJsonC(jsonObject, tagged);
                     }
                 case DataEncoding.JSON_D: {
-                    return GetJsonD(Object, Tagged);
+                    return GetJsonD(jsonObject, tagged);
                     }
                 }
 
+            throw new NYI();
+            }
+
+
+        public static JSONWriter GetWriter(this DataEncoding dataEncoding, Stream stream) {
+            switch (dataEncoding) {
+                case DataEncoding.JSON: {
+                    return new JSONWriter(stream);
+                    }
+                case DataEncoding.JSON_A: {
+                    return new JSONAWriter(stream);
+                    }
+                case DataEncoding.JSON_B: {
+                    return new JSONBWriter(stream);
+                    }
+                case DataEncoding.JSON_C: {
+                    return new JSONCWriter(stream);
+                    }
+                case DataEncoding.JSON_D: {
+                    return new JSONCWriter(stream);
+                    }
+                }
             throw new NYI();
             }
 

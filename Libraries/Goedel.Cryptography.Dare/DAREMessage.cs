@@ -362,6 +362,7 @@ namespace Goedel.Cryptography.Dare {
         ///     as an EDSS header entry.</param>
         /// <param name="chunk">The maximum chunk size. If unspecified, the default
         /// system chunk size (2048) is used.</param>
+        /// <param name="fileName">The file name to be specified in the message header.</param>
         /// <returns>The number of bytes in the input file.</returns>
         public static long Encode(
                 CryptoParameters cryptoParameters,
@@ -399,6 +400,7 @@ namespace Goedel.Cryptography.Dare {
         ///     as an EDSS header entry.</param>
         /// <param name="chunk">The maximum chunk size. If unspecified, the default
         /// system chunk size (2048) is used.</param>
+        /// <param name="fileName">The file name to be specified in the message header.</param>
         /// <param name="contentLength">The content length. This value is ignored if the Plaintext
         /// parameter is not null. If the value is less than 0, chunked encoding
         /// will be used for the payload data. </param>         

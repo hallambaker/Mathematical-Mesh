@@ -6,6 +6,7 @@ using Goedel.IO;
 using Goedel.Protocol;
 using Goedel.Cryptography;
 using Goedel.Cryptography.Jose;
+using System.Collections;
 
 namespace Goedel.Cryptography.Dare {
 
@@ -224,15 +225,24 @@ namespace Goedel.Cryptography.Dare {
             var ContainerHeader = Path == null ? null : new ContainerHeader() {
                 ContentMeta = new ContentMeta {
                     Paths = new List<string> { Path }
-                    }
+                    },
+                Filename = Path
                 };
 
             Container.AppendFile(File, ContainerHeader);
             }
 
         /// <summary>
-        /// Read a container data entry from one container and add it to this one.
+        /// Add a file entry
         /// </summary>
+        /// <param name="Path">The path name attribute to give the file in the container</param>
+        public void Delete(string Path) {
+            }
+
+
+        /// <summary>
+        /// Read a container data entry from one container and add it to this one.
+        /// </summary>Add 
         /// <param name="ContainerDataReader">Frame reader from which the
         /// container data is to be read.</param>
         /// <param name="CryptoParameters">The new crypto parameters to be used to 
@@ -257,7 +267,7 @@ namespace Goedel.Cryptography.Dare {
     /// <summary>
     /// 
     /// </summary>
-    public class FileContainerReader : FileContainer {
+    public class FileContainerReader : FileContainer, IEnumerable<ContainerDataReader> {
 
         Container Container = null;
 
@@ -271,6 +281,13 @@ namespace Goedel.Cryptography.Dare {
         /// changed when entries spanning multiple frames are supported.
         /// </summary>
         public long Count => Container.FrameCount;
+
+        /// <summary>
+        /// Enumerate over the archive contents.
+        /// </summary>
+        /// <returns>The enumerator</returns>
+        public IEnumerator<ContainerDataReader> GetEnumerator() => Container.GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator() => throw new NotImplementedException();
 
 
         /// <summary>
@@ -378,10 +395,7 @@ namespace Goedel.Cryptography.Dare {
             Data = ContainerDataReader.ToArray();
             ContentMeta = ContainerDataReader?.Header.ContentMeta;
 
-            //SetPosition(Index, Path);
 
-            //Data = Container.ReadFrameData();
-            //ContentMeta = Container.ContainerHeader.ContentMeta;
             }
 
 

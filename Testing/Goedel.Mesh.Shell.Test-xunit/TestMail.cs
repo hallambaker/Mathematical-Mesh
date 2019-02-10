@@ -14,7 +14,7 @@ namespace Goedel.XUnit {
 
 
 
-        [Fact]
+        [Fact(Skip = "Application phase")]
         public void TestProfileMail() {
             var accountA = "alice@example.com";
             var mailaddress = "alice@example.net";
@@ -22,13 +22,11 @@ namespace Goedel.XUnit {
             var mailinbound2 = "imap://alice@imap.example.net";
             var mailoutbound = "submit://alice@submit.example.net";
 
-            var device1 = GetTestCLI();
-            var device2= GetTestCLI();
+            var device1 = GetTestCLI("Device1");
+            var device2 = GetTestCLI("Device2");
 
-            device1.Dispatch($"profile master {accountA} /new ");
-            var result1 = device1.Dispatch($"profile pin");
-            var pin = "";
-            device2.Dispatch($"profile connect {accountA} /pin {pin}");
+            device1.Connect(device2, accountA);
+
 
             device1.Dispatch($"profile mail add {mailaddress} /inbound {mailinbound1} /outbound {mailoutbound}");
             device1.Dispatch($"profile mail smime private");

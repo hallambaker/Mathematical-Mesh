@@ -10,7 +10,7 @@ namespace Goedel.Cryptography.Dare {
     /// <summary>
     /// 
     /// </summary>
-    public partial class ContainerFramerReader : ContainerDataReader {
+    public partial class ContainerFrameReader : ContainerDataReader {
 
         StreamReaderBounded StreamReader=null;
         JBCDStream JBCDStream;
@@ -32,7 +32,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="KeyCollection"></param>
         /// <param name="Position">The byte position in the file from 
         /// which to begin reading.</param>
-        public ContainerFramerReader(JBCDStream JBCDStream,
+        public ContainerFrameReader(JBCDStream JBCDStream,
                         KeyCollection KeyCollection,
                         long Position = -1) {
 
@@ -87,6 +87,9 @@ namespace Goedel.Cryptography.Dare {
             //Console.WriteLine($"Read {Bytes} Bytes");
             return Bytes;
             }
+
+
+
 
         }
 

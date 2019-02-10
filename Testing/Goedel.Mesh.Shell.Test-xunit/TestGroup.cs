@@ -16,7 +16,7 @@ namespace Goedel.XUnit {
         ///recryption group. A document is encrypted under the group by Alice and the ability
         ///of Bob to decrypt is tested before and after he is added to the group and again
         ///after he is removed.</summary>
-        [Fact]
+        [Fact(Skip = "Application phase")]
         public void TestMessageGroup() {
             var accountA = "alice@example.com";
             var accountB = "bob@example.com";

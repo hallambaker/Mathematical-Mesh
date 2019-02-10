@@ -83,6 +83,38 @@ namespace Goedel.Mesh.Shell {
         public override string ToString() => Digest;
         }
 
+
+    public partial class ResultEscrow {
+        public override string ToString() {
+            var Builder = new StringBuilder();
+
+            foreach (var share in Shares) {
+                Builder.AppendLine($"Share: {share}");
+                }
+            if (Filename != null) {
+                Builder.AppendLine($"Written to {Filename}");
+                }
+
+            return Builder.ToString();
+            }
+        }
+
+    public partial class ResultRecover {
+        public override string ToString() {
+            var Builder = new StringBuilder();
+
+            if (SignUDF != null) {
+                Builder.AppendLine($"Signature Key: {SignUDF}");
+                }
+            foreach (var key in EncryptUDF) {
+                Builder.AppendLine($"Encryption Key: {key}");
+                }
+
+
+            return Builder.ToString();
+            }
+        }
+
     public partial class ResultCommitment {
         public override string ToString() {
             var Builder = new StringBuilder();

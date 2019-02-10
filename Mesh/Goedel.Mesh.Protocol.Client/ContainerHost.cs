@@ -30,6 +30,9 @@ namespace Goedel.Mesh.Protocol.Client {
         /// </summary>
         Dictionary<string, Profile> DictionaryByUDF = new Dictionary<string, Profile>();
 
+
+
+
         /// <summary>
         /// Open or create a persistence store in specified mode with 
         /// the specified file name, content type and optional comment.
@@ -190,6 +193,22 @@ namespace Goedel.Mesh.Protocol.Client {
 
             return null;
 
+            }
+
+        public List<Profile> GetProfiles() {
+            var result = new List<Profile>();
+            foreach (var entry in DictionaryByUDF) {
+                result.Add(entry.Value);
+                }
+            return result;
+            }
+
+        public List<AccountDescription> GetAccountDescription() {
+            var result = new List<AccountDescription>();
+            foreach (var entry in DictionaryByAccount) {
+                result.Add(entry.Value);
+                }
+            return result;
             }
 
         public ProfileMesh GetProfileMeshByAccount(string account) {

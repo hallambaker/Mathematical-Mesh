@@ -96,7 +96,7 @@ namespace Goedel.Cryptography.Dare {
         /// Gets the element in the collection at the current position of the enumerator.
         /// </summary>
         public ContainerDataReader Current => _Current;
-        ContainerFramerReader _Current = null;
+        ContainerFrameReader _Current = null;
 
 
 

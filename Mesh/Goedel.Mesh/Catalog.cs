@@ -38,7 +38,7 @@ namespace Goedel.Mesh {
 
         public DareMessage ContainerEntry(CatalogEntry catalogEntry, string eventID) {
 
-            var body = catalogEntry.GetBytes(Tagged: true);
+            var body = catalogEntry.GetBytes(tagged: true);
 
             var header = new DareHeader() {
                 Event = eventID,

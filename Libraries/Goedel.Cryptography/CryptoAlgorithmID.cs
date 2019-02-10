@@ -385,7 +385,7 @@ namespace Goedel.Cryptography {
     /// <summary>
     /// Algorithm classes.
     /// </summary>
-    [Flags]/// 
+    [Flags]
     public enum CryptoAlgorithmClass {
 
         /// <summary>Unspecified.</summary>

@@ -534,7 +534,7 @@ namespace ExampleGenerator {
                 };
             //Console.WriteLine($"First Frame {Container.ContainerHeader}");
             foreach (var ContainerDataReader in Container) {
-                var Trailer = (ContainerDataReader as ContainerFramerReader).GetTrailer();
+                var Trailer = (ContainerDataReader as ContainerFrameReader).GetTrailer();
 
                 ContainerHeaders.Add(new ContainerFrame {
                     Header = ContainerDataReader.Header,

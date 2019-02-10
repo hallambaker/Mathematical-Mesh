@@ -144,7 +144,7 @@ namespace Goedel.XUnit {
 
             string task1 = "task1", title1 = "title1", title1a = "title1a";
             string task2 = "task2", title2 = "title2";
-            string task3 = "task3", title3 = "title3";
+            string title3 = "title3";
 
             CreateAccount(account);
 
@@ -182,8 +182,6 @@ namespace Goedel.XUnit {
             var account = "alice@example.com";
             string ssid1 = "ssid1", password1 = "password1", password1a = "password1a";
             string ssid2 = "ssid2", password2 = "password2";
-            string ssid3 = "ssid3", password3 = "password3";
-
 
             CreateAccount(account);
 
