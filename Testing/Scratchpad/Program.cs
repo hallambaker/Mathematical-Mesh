@@ -14,7 +14,7 @@ namespace Scratchpad {
             //ShellTests.Test().TestContainerArchive();
             //ShellTests.Test().TestContainerCatalogBase();
             //ShellTests.Test().TestContainerCatalogEncrypt();
-            ShellTests.Test().TestContainerSpool();
+            //ShellTests.Test().TestContainerSpool();
 
             /* Skipping for now */
             //ShellTests.Test().TestProfileMail();

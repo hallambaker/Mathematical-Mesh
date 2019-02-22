@@ -280,7 +280,7 @@ namespace Goedel.Mesh.Protocol.Client {
         public void Add(MeshMessage selfMessage, string catalogID = null, CatalogEntry entry = null) {
             MeshService = MeshService ?? MeshMachine.GetMeshClient(AccountName);
 
-            selfMessage.MessageID = selfMessage.MessageID ?? UDF.Random(200);
+            selfMessage.MessageID = selfMessage.MessageID ?? UDF.Nonce(200);
 
             var message = DareMessage.Encode(selfMessage.GetBytes());
 
@@ -444,7 +444,7 @@ namespace Goedel.Mesh.Protocol.Client {
             var message = new MessageConnectionPIN() {
                 Account = AccountName,
                 Expires = DateTime.Now.AddHours(4),
-                PIN = Cryptography.UDF.Random(125)
+                PIN = Cryptography.UDF.Nonce(125)
                 };
             Add(message);
             return message;

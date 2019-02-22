@@ -116,7 +116,7 @@ namespace Goedel.Mesh.Protocol.Server {
             var profileDevice = ProfileDevice.Decode(deviceProfile);
 
             var messageConnectionRequest = new MessageConnectionRequest() {
-                MessageID = UDF.Random(200),
+                MessageID = UDF.Nonce(200),
                 Account = account,
                 DeviceProfile = deviceProfile,
                 ClientNonce = clientNonce,

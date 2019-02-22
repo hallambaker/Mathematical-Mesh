@@ -66,7 +66,7 @@ namespace Goedel.Mesh {
 
         public override string _PrimaryKey => Key;
 
-        public CatalogEntryTask() => Key = UDF.Random();
+        public CatalogEntryTask() => Key = UDF.Nonce();
 
         public CatalogEntryTask(DareMessage task) : this() => Task = task;
 

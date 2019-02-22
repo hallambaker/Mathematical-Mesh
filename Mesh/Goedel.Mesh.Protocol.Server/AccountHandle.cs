@@ -43,7 +43,6 @@ namespace Goedel.Mesh.Protocol.Server {
 
         public DareMessage MeshProfile => AccountEntry.Profile;
         public ProfileMesh ProfileMesh => AccountEntry.ProfileMesh;
-        ProfileMesh profileMesh;
 
 
         /// <summary>

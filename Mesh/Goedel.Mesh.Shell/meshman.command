@@ -593,13 +593,49 @@
 			Parameter Input "in" ExistingFile
 				Brief "Encrypted File"
 
-	CommandSet Hash "hash"
-		Brief "Hash and digest operations."
 
-		Command FileRandom "random"
+	CommandSet Key "key"
+		Brief "Key operations."
+
+		Command KeyNonce "nonce"
 			Brief "Return a randomized string"			
 			Include Reporting
 			Include DigestOptions
+
+		Command KeySecret "secret"
+			Brief "Return a randomized string"			
+			Include Reporting
+			Include DigestOptions
+
+		Command KeyEarl "earl"
+			Brief "Return a randomized string"			
+			Include Reporting
+			Include DigestOptions
+
+		Command KeyShare "share"
+			Brief "Return a randomized string"			
+			Include Reporting
+			Include DigestOptions
+			Option Quorum "quorum" Integer
+				Default "2"
+			Option Shares "shares" Integer
+				Default "3"
+
+		Command KeyRecover "recover"
+			Brief "Return a randomized string"			
+			Include Reporting
+			Include DigestOptions
+			Parameter Share1 "s1" String
+			Parameter Share2 "s2" String
+			Parameter Share3 "s3" String
+			Parameter Share4 "s4" String
+			Parameter Share5 "s5" String
+			Parameter Share6 "s6" String
+			Parameter Share7 "s7" String
+			Parameter Share8 "s8" String
+
+	CommandSet Hash "hash"
+
 
 		Command FileUDF "udf"
 			Brief "Calculate the Uniform Data Fingerprint of the input data"

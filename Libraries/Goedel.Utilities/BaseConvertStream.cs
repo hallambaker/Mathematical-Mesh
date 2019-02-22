@@ -196,9 +196,9 @@ namespace Goedel.Utilities  {
                             FormatChar = FormatCharHex;
                             break;
                             }
-                    case ConversionFormat.Dash6: {
+                    case ConversionFormat.Dash4: {
                             FormatChar = FormatCharDash;
-                            Dash = 6;
+                            Dash = 4;
                             break;
                             }
                     case ConversionFormat.Dash5: {

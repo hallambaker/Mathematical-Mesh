@@ -75,7 +75,7 @@ namespace Goedel.Cryptography {
         /// Recreate a secret from shares specified as Base32 encoded strings.
         /// </summary>
         /// <param name="shares">The shares to be recombined.</param>
-        public Secret (IEnumerable<string> shares) {
+        public Secret(IEnumerable<string> shares) {
             var KeyShares = new KeyShare[shares.Count()];
             int i = 0;
             foreach (var Share in shares) {
@@ -149,8 +149,8 @@ namespace Goedel.Cryptography {
         /// <returns>The key shares created.</returns>
         public KeyShare[] Split(int n, int k, out BigInteger[] polynomial) {
             Assert.False(k > n, QuorumExceedsShares.Throw);
-            Assert.False(k < 1, QuorumInsufficient.Throw); 
-            Assert.False(n < 1, SharesInsufficient.Throw); 
+            Assert.False(k < 1, QuorumInsufficient.Throw);
+            Assert.False(n < 1, SharesInsufficient.Throw);
             Assert.False(n > 15, QuorumExceeded.Throw);
 
             //if (N == K) {
@@ -240,7 +240,7 @@ namespace Goedel.Cryptography {
                 }
             }
 
-        static byte[] Combine( KeyShare[] Shares) {
+        static byte[] Combine(KeyShare[] Shares) {
 
             var threshold = Shares[0].Threshold;
             foreach (var Share in Shares) {
@@ -260,29 +260,15 @@ namespace Goedel.Cryptography {
             return Result;
             }
 
-        // Not the fastest way to do modular inverse but the easiest with the
-        // available tools in .net
-        static BigInteger ModInverse(BigInteger k, BigInteger m) {
-            var m2 = m - 2;
-            if (k < 0) {
-                k = k + m;
-                }
 
-            return BigInteger.ModPow(k, m2, m);
-            }
 
 
         static byte[] CombineNK(KeyShare[] shares) {
-            
             var threshold = shares[0].Threshold;
-
-            Assert.False (shares.Length < threshold, InsufficientShares.Throw);
+            Assert.False(shares.Length < threshold, InsufficientShares.Throw);
 
             var modulus = BigInteger.Pow(2, 129) - 25;
             BigInteger accum = 0;
-
-            //Console.WriteLine("Modulus = {0} ", Modulus);
-
 
             for (var formula = 0; formula < threshold; formula++) {
 
@@ -304,19 +290,25 @@ namespace Goedel.Cryptography {
 
                 var InvDenominator = ModInverse(denominator, modulus);
 
-                //Console.WriteLine("   Numerator = {0}", Numerator);
-                //Console.WriteLine("   Denominator = {0}", Denominator);
-                //Console.WriteLine("   InvDenominator = {0}", InvDenominator);
-
                 accum = (accum + (value * numerator * InvDenominator)).Mod(modulus);
-                if (accum < 0) {
-                    Console.WriteLine("Accum = {0}\n", accum);
-                    }
                 }
 
-            //Console.WriteLine("Accum = {0} ", Accum);
-            return GetBytes (accum);
+            return GetBytes(accum);
             }
+
+
+        // Not the fastest way to do modular inverse but the easiest with the
+        // available tools in .net
+        static BigInteger ModInverse(BigInteger k, BigInteger m) {
+            var m2 = m - 2;
+            if (k < 0) {
+                k = k + m;
+                }
+
+            return BigInteger.ModPow(k, m2, m);
+            }
+
+
 
         private static byte[] GetBytes(BigInteger input) {
             var bytes = new byte[16];

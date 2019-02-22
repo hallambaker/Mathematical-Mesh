@@ -211,10 +211,20 @@ namespace Goedel.Mesh.Shell {
 				} // End Entries
 			};
 
+		static DescribeCommandSet DescribeCommandSet_Key = new DescribeCommandSet () {
+            Identifier = "key",
+			Entries = new  SortedDictionary<string, DescribeCommand> () {
+				{"nonce", _KeyNonce._DescribeCommand },
+				{"secret", _KeySecret._DescribeCommand },
+				{"earl", _KeyEarl._DescribeCommand },
+				{"share", _KeyShare._DescribeCommand },
+				{"recover", _KeyRecover._DescribeCommand }
+				} // End Entries
+			};
+
 		static DescribeCommandSet DescribeCommandSet_Hash = new DescribeCommandSet () {
             Identifier = "hash",
 			Entries = new  SortedDictionary<string, DescribeCommand> () {
-				{"random", _FileRandom._DescribeCommand },
 				{"udf", _FileUDF._DescribeCommand },
 				{"digest", _FileDigest._DescribeCommand },
 				{"commit", _FileCommitment._DescribeCommand }
@@ -262,6 +272,7 @@ namespace Goedel.Mesh.Shell {
 				{"message", DescribeCommandSet_Message},
 				{"group", DescribeCommandSet_Group},
 				{"dare", DescribeCommandSet_Dare},
+				{"key", DescribeCommandSet_Key},
 				{"hash", DescribeCommandSet_Hash},
 				{"container", DescribeCommandSet_Container},
 				{"help", DescribeHelp }
@@ -924,13 +935,53 @@ namespace Goedel.Mesh.Shell {
 			Dispatch._PostProcess (result);
 			}
 
-		public static void Handle_FileRandom (
+		public static void Handle_KeyNonce (
 					DispatchShell  DispatchIn, string[] Args, int Index) {
 			Shell Dispatch =	DispatchIn as Shell;
-			FileRandom		Options = new FileRandom ();
+			KeyNonce		Options = new KeyNonce ();
 			ProcessOptions (Args, Index, Options);
 			Dispatch._PreProcess (Options);
-			var result = Dispatch.FileRandom (Options);
+			var result = Dispatch.KeyNonce (Options);
+			Dispatch._PostProcess (result);
+			}
+
+		public static void Handle_KeySecret (
+					DispatchShell  DispatchIn, string[] Args, int Index) {
+			Shell Dispatch =	DispatchIn as Shell;
+			KeySecret		Options = new KeySecret ();
+			ProcessOptions (Args, Index, Options);
+			Dispatch._PreProcess (Options);
+			var result = Dispatch.KeySecret (Options);
+			Dispatch._PostProcess (result);
+			}
+
+		public static void Handle_KeyEarl (
+					DispatchShell  DispatchIn, string[] Args, int Index) {
+			Shell Dispatch =	DispatchIn as Shell;
+			KeyEarl		Options = new KeyEarl ();
+			ProcessOptions (Args, Index, Options);
+			Dispatch._PreProcess (Options);
+			var result = Dispatch.KeyEarl (Options);
+			Dispatch._PostProcess (result);
+			}
+
+		public static void Handle_KeyShare (
+					DispatchShell  DispatchIn, string[] Args, int Index) {
+			Shell Dispatch =	DispatchIn as Shell;
+			KeyShare		Options = new KeyShare ();
+			ProcessOptions (Args, Index, Options);
+			Dispatch._PreProcess (Options);
+			var result = Dispatch.KeyShare (Options);
+			Dispatch._PostProcess (result);
+			}
+
+		public static void Handle_KeyRecover (
+					DispatchShell  DispatchIn, string[] Args, int Index) {
+			Shell Dispatch =	DispatchIn as Shell;
+			KeyRecover		Options = new KeyRecover ();
+			ProcessOptions (Args, Index, Options);
+			Dispatch._PreProcess (Options);
+			var result = Dispatch.KeyRecover (Options);
 			Dispatch._PostProcess (result);
 			}
 
@@ -9690,7 +9741,7 @@ namespace Goedel.Mesh.Shell {
     public partial class FileVerify : _FileVerify {
         } // class FileVerify
 
-    public class _FileRandom : Goedel.Command.Dispatch ,
+    public class _KeyNonce : Goedel.Command.Dispatch ,
 							IReporting,
 							IDigestOptions {
 
@@ -9739,9 +9790,9 @@ namespace Goedel.Mesh.Shell {
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
-			Identifier = "random",
+			Identifier = "nonce",
 			Brief =  "Return a randomized string",
-			HandleDelegate =  CommandLineInterpreter.Handle_FileRandom,
+			HandleDelegate =  CommandLineInterpreter.Handle_KeyNonce,
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
 				new DescribeEntryOption () {
@@ -9777,8 +9828,538 @@ namespace Goedel.Mesh.Shell {
 
 		}
 
-    public partial class FileRandom : _FileRandom {
-        } // class FileRandom
+    public partial class KeyNonce : _KeyNonce {
+        } // class KeyNonce
+
+    public class _KeySecret : Goedel.Command.Dispatch ,
+							IReporting,
+							IDigestOptions {
+
+		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new Flag (),
+			new Flag (),
+			new Flag (),
+			new String ()			} ;
+
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
+			get => _Data[0] as Flag;
+			set => _Data[0]  = value;
+			}
+
+		public virtual string _Verbose {
+			set => _Data[0].Parameter (value);
+			}
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
+			get => _Data[1] as Flag;
+			set => _Data[1]  = value;
+			}
+
+		public virtual string _Report {
+			set => _Data[1].Parameter (value);
+			}
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[2] as Flag;
+			set => _Data[2]  = value;
+			}
+
+		public virtual string _Json {
+			set => _Data[2].Parameter (value);
+			}
+		/// <summary>Field accessor for option [key]</summary>
+		public virtual String DigestKey {
+			get => _Data[3] as String;
+			set => _Data[3]  = value;
+			}
+
+		public virtual string _DigestKey {
+			set => _Data[3].Parameter (value);
+			}
+		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
+			Identifier = "secret",
+			Brief =  "Return a randomized string",
+			HandleDelegate =  CommandLineInterpreter.Handle_KeySecret,
+			Lazy =  false,
+			Entries = new List<DescribeEntry> () {
+				new DescribeEntryOption () {
+					Identifier = "Verbose", 
+					Default = "true", // null if null
+					Brief = "Verbose reports (default)",
+					Index = 0,
+					Key = "verbose"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Report", 
+					Default = "true", // null if null
+					Brief = "Report output (default)",
+					Index = 1,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Json", 
+					Default = "false", // null if null
+					Brief = "Report output in JSON format",
+					Index = 2,
+					Key = "json"
+					},
+				new DescribeEntryOption () {
+					Identifier = "DigestKey", 
+					Default = null, // null if null
+					Brief = "Encrypt data for specified recipient",
+					Index = 3,
+					Key = "key"
+					}
+				}
+			};
+
+		}
+
+    public partial class KeySecret : _KeySecret {
+        } // class KeySecret
+
+    public class _KeyEarl : Goedel.Command.Dispatch ,
+							IReporting,
+							IDigestOptions {
+
+		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new Flag (),
+			new Flag (),
+			new Flag (),
+			new String ()			} ;
+
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
+			get => _Data[0] as Flag;
+			set => _Data[0]  = value;
+			}
+
+		public virtual string _Verbose {
+			set => _Data[0].Parameter (value);
+			}
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
+			get => _Data[1] as Flag;
+			set => _Data[1]  = value;
+			}
+
+		public virtual string _Report {
+			set => _Data[1].Parameter (value);
+			}
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[2] as Flag;
+			set => _Data[2]  = value;
+			}
+
+		public virtual string _Json {
+			set => _Data[2].Parameter (value);
+			}
+		/// <summary>Field accessor for option [key]</summary>
+		public virtual String DigestKey {
+			get => _Data[3] as String;
+			set => _Data[3]  = value;
+			}
+
+		public virtual string _DigestKey {
+			set => _Data[3].Parameter (value);
+			}
+		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
+			Identifier = "earl",
+			Brief =  "Return a randomized string",
+			HandleDelegate =  CommandLineInterpreter.Handle_KeyEarl,
+			Lazy =  false,
+			Entries = new List<DescribeEntry> () {
+				new DescribeEntryOption () {
+					Identifier = "Verbose", 
+					Default = "true", // null if null
+					Brief = "Verbose reports (default)",
+					Index = 0,
+					Key = "verbose"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Report", 
+					Default = "true", // null if null
+					Brief = "Report output (default)",
+					Index = 1,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Json", 
+					Default = "false", // null if null
+					Brief = "Report output in JSON format",
+					Index = 2,
+					Key = "json"
+					},
+				new DescribeEntryOption () {
+					Identifier = "DigestKey", 
+					Default = null, // null if null
+					Brief = "Encrypt data for specified recipient",
+					Index = 3,
+					Key = "key"
+					}
+				}
+			};
+
+		}
+
+    public partial class KeyEarl : _KeyEarl {
+        } // class KeyEarl
+
+    public class _KeyShare : Goedel.Command.Dispatch ,
+							IReporting,
+							IDigestOptions {
+
+		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new Flag (),
+			new Flag (),
+			new Flag (),
+			new String (),
+			new Integer (),
+			new Integer ()			} ;
+
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
+			get => _Data[0] as Flag;
+			set => _Data[0]  = value;
+			}
+
+		public virtual string _Verbose {
+			set => _Data[0].Parameter (value);
+			}
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
+			get => _Data[1] as Flag;
+			set => _Data[1]  = value;
+			}
+
+		public virtual string _Report {
+			set => _Data[1].Parameter (value);
+			}
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[2] as Flag;
+			set => _Data[2]  = value;
+			}
+
+		public virtual string _Json {
+			set => _Data[2].Parameter (value);
+			}
+		/// <summary>Field accessor for option [key]</summary>
+		public virtual String DigestKey {
+			get => _Data[3] as String;
+			set => _Data[3]  = value;
+			}
+
+		public virtual string _DigestKey {
+			set => _Data[3].Parameter (value);
+			}
+		/// <summary>Field accessor for option [quorum]</summary>
+		public virtual Integer Quorum {
+			get => _Data[4] as Integer;
+			set => _Data[4]  = value;
+			}
+
+		public virtual string _Quorum {
+			set => _Data[4].Parameter (value);
+			}
+		/// <summary>Field accessor for option [shares]</summary>
+		public virtual Integer Shares {
+			get => _Data[5] as Integer;
+			set => _Data[5]  = value;
+			}
+
+		public virtual string _Shares {
+			set => _Data[5].Parameter (value);
+			}
+		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
+			Identifier = "share",
+			Brief =  "Return a randomized string",
+			HandleDelegate =  CommandLineInterpreter.Handle_KeyShare,
+			Lazy =  false,
+			Entries = new List<DescribeEntry> () {
+				new DescribeEntryOption () {
+					Identifier = "Verbose", 
+					Default = "true", // null if null
+					Brief = "Verbose reports (default)",
+					Index = 0,
+					Key = "verbose"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Report", 
+					Default = "true", // null if null
+					Brief = "Report output (default)",
+					Index = 1,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Json", 
+					Default = "false", // null if null
+					Brief = "Report output in JSON format",
+					Index = 2,
+					Key = "json"
+					},
+				new DescribeEntryOption () {
+					Identifier = "DigestKey", 
+					Default = null, // null if null
+					Brief = "Encrypt data for specified recipient",
+					Index = 3,
+					Key = "key"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Quorum", 
+					Default = "2", // null if null
+					Brief = "<Unspecified>",
+					Index = 4,
+					Key = "quorum"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Shares", 
+					Default = "3", // null if null
+					Brief = "<Unspecified>",
+					Index = 5,
+					Key = "shares"
+					}
+				}
+			};
+
+		}
+
+    public partial class KeyShare : _KeyShare {
+        } // class KeyShare
+
+    public class _KeyRecover : Goedel.Command.Dispatch ,
+							IReporting,
+							IDigestOptions {
+
+		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new Flag (),
+			new Flag (),
+			new Flag (),
+			new String (),
+			new String (),
+			new String (),
+			new String (),
+			new String (),
+			new String (),
+			new String (),
+			new String (),
+			new String ()			} ;
+
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
+			get => _Data[0] as Flag;
+			set => _Data[0]  = value;
+			}
+
+		public virtual string _Verbose {
+			set => _Data[0].Parameter (value);
+			}
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
+			get => _Data[1] as Flag;
+			set => _Data[1]  = value;
+			}
+
+		public virtual string _Report {
+			set => _Data[1].Parameter (value);
+			}
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[2] as Flag;
+			set => _Data[2]  = value;
+			}
+
+		public virtual string _Json {
+			set => _Data[2].Parameter (value);
+			}
+		/// <summary>Field accessor for option [key]</summary>
+		public virtual String DigestKey {
+			get => _Data[3] as String;
+			set => _Data[3]  = value;
+			}
+
+		public virtual string _DigestKey {
+			set => _Data[3].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual String Share1 {
+			get => _Data[4] as String;
+			set => _Data[4]  = value;
+			}
+
+		public virtual string _Share1 {
+			set => _Data[4].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual String Share2 {
+			get => _Data[5] as String;
+			set => _Data[5]  = value;
+			}
+
+		public virtual string _Share2 {
+			set => _Data[5].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual String Share3 {
+			get => _Data[6] as String;
+			set => _Data[6]  = value;
+			}
+
+		public virtual string _Share3 {
+			set => _Data[6].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual String Share4 {
+			get => _Data[7] as String;
+			set => _Data[7]  = value;
+			}
+
+		public virtual string _Share4 {
+			set => _Data[7].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual String Share5 {
+			get => _Data[8] as String;
+			set => _Data[8]  = value;
+			}
+
+		public virtual string _Share5 {
+			set => _Data[8].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual String Share6 {
+			get => _Data[9] as String;
+			set => _Data[9]  = value;
+			}
+
+		public virtual string _Share6 {
+			set => _Data[9].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual String Share7 {
+			get => _Data[10] as String;
+			set => _Data[10]  = value;
+			}
+
+		public virtual string _Share7 {
+			set => _Data[10].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual String Share8 {
+			get => _Data[11] as String;
+			set => _Data[11]  = value;
+			}
+
+		public virtual string _Share8 {
+			set => _Data[11].Parameter (value);
+			}
+		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
+			Identifier = "recover",
+			Brief =  "Return a randomized string",
+			HandleDelegate =  CommandLineInterpreter.Handle_KeyRecover,
+			Lazy =  false,
+			Entries = new List<DescribeEntry> () {
+				new DescribeEntryOption () {
+					Identifier = "Verbose", 
+					Default = "true", // null if null
+					Brief = "Verbose reports (default)",
+					Index = 0,
+					Key = "verbose"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Report", 
+					Default = "true", // null if null
+					Brief = "Report output (default)",
+					Index = 1,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Json", 
+					Default = "false", // null if null
+					Brief = "Report output in JSON format",
+					Index = 2,
+					Key = "json"
+					},
+				new DescribeEntryOption () {
+					Identifier = "DigestKey", 
+					Default = null, // null if null
+					Brief = "Encrypt data for specified recipient",
+					Index = 3,
+					Key = "key"
+					},
+				new DescribeEntryParameter () {
+					Identifier = "Share1", 
+					Default = null, // null if null
+					Brief = "<Unspecified>",
+					Index = 4,
+					Key = ""
+					},
+				new DescribeEntryParameter () {
+					Identifier = "Share2", 
+					Default = null, // null if null
+					Brief = "<Unspecified>",
+					Index = 5,
+					Key = ""
+					},
+				new DescribeEntryParameter () {
+					Identifier = "Share3", 
+					Default = null, // null if null
+					Brief = "<Unspecified>",
+					Index = 6,
+					Key = ""
+					},
+				new DescribeEntryParameter () {
+					Identifier = "Share4", 
+					Default = null, // null if null
+					Brief = "<Unspecified>",
+					Index = 7,
+					Key = ""
+					},
+				new DescribeEntryParameter () {
+					Identifier = "Share5", 
+					Default = null, // null if null
+					Brief = "<Unspecified>",
+					Index = 8,
+					Key = ""
+					},
+				new DescribeEntryParameter () {
+					Identifier = "Share6", 
+					Default = null, // null if null
+					Brief = "<Unspecified>",
+					Index = 9,
+					Key = ""
+					},
+				new DescribeEntryParameter () {
+					Identifier = "Share7", 
+					Default = null, // null if null
+					Brief = "<Unspecified>",
+					Index = 10,
+					Key = ""
+					},
+				new DescribeEntryParameter () {
+					Identifier = "Share8", 
+					Default = null, // null if null
+					Brief = "<Unspecified>",
+					Index = 11,
+					Key = ""
+					}
+				}
+			};
+
+		}
+
+    public partial class KeyRecover : _KeyRecover {
+        } // class KeyRecover
 
     public class _FileUDF : Goedel.Command.Dispatch ,
 							IReporting,
@@ -12140,7 +12721,27 @@ namespace Goedel.Mesh.Shell {
 			return null;
 			}
 
-		public virtual ShellResult FileRandom ( FileRandom Options) {
+		public virtual ShellResult KeyNonce ( KeyNonce Options) {
+			CommandLineInterpreter.DescribeValues (Options);
+			return null;
+			}
+
+		public virtual ShellResult KeySecret ( KeySecret Options) {
+			CommandLineInterpreter.DescribeValues (Options);
+			return null;
+			}
+
+		public virtual ShellResult KeyEarl ( KeyEarl Options) {
+			CommandLineInterpreter.DescribeValues (Options);
+			return null;
+			}
+
+		public virtual ShellResult KeyShare ( KeyShare Options) {
+			CommandLineInterpreter.DescribeValues (Options);
+			return null;
+			}
+
+		public virtual ShellResult KeyRecover ( KeyRecover Options) {
 			CommandLineInterpreter.DescribeValues (Options);
 			return null;
 			}

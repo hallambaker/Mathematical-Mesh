@@ -154,7 +154,7 @@ namespace Goedel.XUnit {
             TestRandomRoundTrip(BaseConvert.ToStreamBase16, BaseConvert.FromBase16, Bytes, ConversionFormat.Hex);
             TestRandomRoundTrip(BaseConvert.ToStreamBase32, BaseConvert.FromBase32, Bytes, ConversionFormat.None);
             TestRandomRoundTrip(BaseConvert.ToStreamBase32, BaseConvert.FromBase32, Bytes, ConversionFormat.Dash5);
-            TestRandomRoundTrip(BaseConvert.ToStreamBase32, BaseConvert.FromBase32, Bytes, ConversionFormat.Dash6);
+            TestRandomRoundTrip(BaseConvert.ToStreamBase32, BaseConvert.FromBase32, Bytes, ConversionFormat.Dash4);
             TestRandomRoundTrip(BaseConvert.ToStreamBase64, BaseConvert.FromBase64, Bytes, ConversionFormat.None);
             TestRandomRoundTrip(BaseConvert.ToStreamBase64, BaseConvert.FromBase64, Bytes, ConversionFormat.Terminal);
             TestRandomRoundTrip(BaseConvert.ToStreamBase64, BaseConvert.FromBase64, Bytes, ConversionFormat.Draft);

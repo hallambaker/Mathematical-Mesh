@@ -60,9 +60,9 @@ namespace Goedel.XUnit {
         public void TestProfileContact() {
             var account = "alice@example.com";
 
-            var contact1UDF = UDF.Random(125);
-            var contact2UDF = UDF.Random(125);
-            var contact3UDF = UDF.Random(125);
+            var contact1UDF = UDF.Nonce(125);
+            var contact2UDF = UDF.Nonce(125);
+            var contact3UDF = UDF.Nonce(125);
 
             var contact1 = $"bob@@example.com.mm--{contact1UDF}";
             var contact2 = $"carol@@example.com.mm--{contact2UDF}";

@@ -200,7 +200,7 @@ namespace Goedel.Mesh.Protocol.Client {
 
             var recipient = messageConfirmationRequest.Sender;
 
-            var messageID = UDF.Random(200);
+            var messageID = UDF.Nonce(200);
 
             var messageConfirmationResponse = new MessageConfirmationResponse() {
                 MessageID = messageID,
@@ -223,7 +223,7 @@ namespace Goedel.Mesh.Protocol.Client {
         /// <returns>Transaction status information</returns>
         public MeshResult Post(string recipient, MeshMessage meshMessage,
                     MeshMessageComplete meshMessageSelf=null) {
-            meshMessage.MessageID = meshMessage.MessageID ?? UDF.Random(200);
+            meshMessage.MessageID = meshMessage.MessageID ?? UDF.Nonce(200);
 
             var DareMessage = Sign(meshMessage); // need to add in the recipient here
             

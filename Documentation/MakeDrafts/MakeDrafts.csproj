@@ -32,6 +32,7 @@
     <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Protocol.Client\Goedel.Mesh.Protocol.Client.csproj" />
     <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Protocol.Server\Goedel.Mesh.Protocol.Server.csproj" />
     <ProjectReference Include="..\..\Mesh\Goedel.Mesh\Goedel.Mesh.csproj" />
+    <ProjectReference Include="..\..\Testing\Goedel.Mesh.Test\Goedel.Mesh.Test.csproj" />
   </ItemGroup>
 
   <ItemGroup>

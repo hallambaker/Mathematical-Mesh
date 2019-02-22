@@ -12,17 +12,6 @@ namespace Goedel.Mesh.Shell {
     public partial class Shell {
 
         /// <summary>
-        /// Dispatch method to return a randomized string suitable for use as
-        /// a password.
-        /// </summary>
-        /// <param name="Options">The command line options.</param>
-        /// <returns>Mesh result instance</returns>
-        public override ShellResult FileRandom(FileRandom Options) => new ResultDigest() {
-            Success = true,
-            Digest = Cryptography.UDF.Random()
-            };
-
-        /// <summary>
         /// Dispatch method
         /// </summary>
         /// <param name="Options">The command line options.</param>
@@ -65,7 +54,7 @@ namespace Goedel.Mesh.Shell {
             var inputFile = Options.Input.Value;
             var contentType = Options.ContentType.Value ?? MimeMapping.GetMimeMapping(inputFile) ?? "";
             var hashAlgorithm = AlgorithmDigest.DefaultBulk(CryptoAlgorithmID.SHA_2_512);
-            var key = Options.DigestKey.Value ?? Cryptography.UDF.Random();
+            var key = Options.DigestKey.Value ?? Cryptography.UDF.Nonce();
 
             var contentDigest = inputFile.GetDigestOfFile(hashAlgorithm);
             var digest = Cryptography.UDF.DigestToFormat(

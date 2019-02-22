@@ -72,7 +72,12 @@ namespace Goedel.Protocol {
             throw new NYI();
             }
 
-
+        /// <summary>
+        /// Return the most capable writer available for the specified encoding.
+        /// </summary>
+        /// <param name="dataEncoding">The encoding to use.</param>
+        /// <param name="stream">The stream to be encoded.</param>
+        /// <returns></returns>
         public static JSONWriter GetWriter(this DataEncoding dataEncoding, Stream stream) {
             switch (dataEncoding) {
                 case DataEncoding.JSON: {

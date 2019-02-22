@@ -15,6 +15,229 @@ namespace ExampleGenerator {
 		
 
 		//
+		// UDFVariousUDF
+		//
+		public static void UDFVariousUDF (CreateExamples Example) { /* File  */
+			using (var _Output = new StreamWriter ("Examples\\UDFVariousUDF.md")) {
+				var _Indent = ""; 
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("{1}\n{0}", _Indent, Example.ResultUDFNonce.Key);
+				_Output.Write ("{1}\n{0}", _Indent, Example.ResultUDFSecret.Key);
+				_Output.Write ("{1}\n{0}", _Indent, Example.ResultUDFSecret.Shares[0]);
+				_Output.Write ("{1}\n{0}", _Indent, Example.ResultDigestSHA2.Digest);
+				_Output.Write ("{1}\n{0}", _Indent, Example.ResultDigestSHA3.Digest);
+				_Output.Write ("{1}\n{0}", _Indent, Example.ResultCommitSHA2.Digest);
+				_Output.Write ("~~~~\n{0}", _Indent);
+				}
+			}
+		
+
+		//
+		// UDFNonce
+		//
+		public static void UDFNonce (CreateExamples Example) { /* File  */
+			using (var _Output = new StreamWriter ("Examples\\UDFNonce.md")) {
+				var _Indent = ""; 
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("{1}\n{0}", _Indent, Example.ResultUDFNonce.Key);
+				_Output.Write ("~~~~\n{0}", _Indent);
+				}
+			}
+		
+
+		//
+		// UDFEncrypt
+		//
+		public static void UDFEncrypt (CreateExamples Example) { /* File  */
+			using (var _Output = new StreamWriter ("Examples\\UDFEncrypt.md")) {
+				var _Indent = ""; 
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("{1}\n{0}", _Indent, Example.ResultUDFSecret.Key);
+				_Output.Write ("~~~~\n{0}", _Indent);
+				}
+			}
+		
+
+		//
+		// UDFShare
+		//
+		public static void UDFShare (CreateExamples Example) { /* File  */
+			using (var _Output = new StreamWriter ("Examples\\UDFShare.md")) {
+				var _Indent = ""; 
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("{1}\n{0}", _Indent, Example.ResultUDFSecret.Shares[0]);
+				_Output.Write ("{1}\n{0}", _Indent, Example.ResultUDFSecret.Shares[1]);
+				_Output.Write ("{1}\n{0}", _Indent, Example.ResultUDFSecret.Shares[2]);
+				_Output.Write ("~~~~\n{0}", _Indent);
+				}
+			}
+		
+
+		//
+		// UDFDigest
+		//
+		public static void UDFDigest (CreateExamples Example) { /* File  */
+			using (var _Output = new StreamWriter ("Examples\\UDFDigest.md")) {
+				var _Indent = ""; 
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("SHA-2-512: {1}\n{0}", _Indent, Example.ResultDigestSHA2.Digest);
+				_Output.Write ("SHA-3-512: {1}\n{0}", _Indent, Example.ResultDigestSHA3.Digest);
+				_Output.Write ("~~~~\n{0}", _Indent);
+				}
+			}
+		
+
+		//
+		// UDFAuthenticator
+		//
+		public static void UDFAuthenticator (CreateExamples Example) { /* File  */
+			using (var _Output = new StreamWriter ("Examples\\UDFAuthenticator.md")) {
+				var _Indent = ""; 
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("SHA-2-512: {1}\n{0}", _Indent, Example.ResultCommitSHA2.Digest);
+				_Output.Write ("~~~~\n{0}", _Indent);
+				}
+			}
+		
+
+		//
+		// UDFDigestURI
+		//
+		public static void UDFDigestURI (CreateExamples Example) { /* File  */
+			using (var _Output = new StreamWriter ("Examples\\UDFDigestURI.md")) {
+				var _Indent = ""; 
+				_Output.Write ("udf:{1}\n{0}", _Indent, Example.ResultDigestSHA2.Digest);
+				}
+			}
+		
+
+		//
+		// UDFDigestLocator
+		//
+		public static void UDFDigestLocator (CreateExamples Example) { /* File  */
+			using (var _Output = new StreamWriter ("Examples\\UDFDigestLocator.md")) {
+				var _Indent = ""; 
+				_Output.Write ("udf://{1}\n{0}", _Indent, Example.ResultDigestSHA2.Digest);
+				_Output.Write ("various different types of udf\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				}
+			}
+		
+
+		//
+		// UDFDigestEARLRAW
+		//
+		public static void UDFDigestEARLRAW (CreateExamples Example) { /* File  */
+			using (var _Output = new StreamWriter ("Examples\\UDFDigestEARL-raw.md")) {
+				var _Indent = ""; 
+				_Output.Write ("udf://example.com/{1}", _Indent, Example.ResultUDFEARL.Key);
+				}
+			}
+		
+
+		//
+		// UDFDigestEARL
+		//
+		public static void UDFDigestEARL (CreateExamples Example) { /* File  */
+			using (var _Output = new StreamWriter ("Examples\\UDFDigestEARL.md")) {
+				var _Indent = ""; 
+				_Output.Write ("udf://example.com/{1}\n{0}", _Indent, Example.ResultUDFEARL.Key);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The UDF locator is resolved by appending it to the Web Service Endpoint\n{0}", _Indent);
+				_Output.Write ("for the domain example.com according to the DNS Web Service discovery\n{0}", _Indent);
+				_Output.Write ("mechanism discussed in section XX\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("https://example.com/.well-known/mmm-udf/{1}\n{0}", _Indent, Example.ResultUDFEARL.Identifier);
+				}
+			}
+		
+
+		//
+		// UDFsin
+		//
+		public static void UDFsin (CreateExamples Example) { /* File  */
+			using (var _Output = new StreamWriter ("Examples\\UDFsin.md")) {
+				var _Indent = ""; 
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("For example, Example Inc holds the domain name example.com and has deployed a private CA whose root of trust is a PKIX certificate with the UDF fingerprint MB2GK-6DUF5-YGYYL-JNY5E-RWSHZ.\n{0}", _Indent);
+				_Output.Write ("Alice is an employee of Example Inc., she uses three email addresses:\n{0}", _Indent);
+				_Output.Write ("alice@example.com\n{0}", _Indent);
+				_Output.Write ("A regular email address (not a SIN).\n{0}", _Indent);
+				_Output.Write ("alice@mm--mb2gk-6duf5-ygyyl-jny5e-rwshz.example.com\n{0}", _Indent);
+				_Output.Write ("A strong email address that is backwards compatible.\n{0}", _Indent);
+				_Output.Write ("alice@example.com.mm--mb2gk-6duf5-ygyyl-jny5e-rwshz\n{0}", _Indent);
+				_Output.Write ("A strong email address that is backwards incompatible.\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				}
+			}
+		
+
+		//
+		// UDFSplit
+		//
+		public static void UDFSplit (CreateExamples Example) { /* File  */
+			using (var _Output = new StreamWriter ("Examples\\UDFSplit.md")) {
+				var _Indent = ""; 
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				}
+			}
+		
+
+		//
+		// UDFDigestLong
+		//
+		public static void UDFDigestLong (CreateExamples Example) { /* File  */
+			using (var _Output = new StreamWriter ("Examples\\UDFDigestLong.md")) {
+				var _Indent = ""; 
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("regular digest\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("compressed digest\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				}
+			}
+		
+
+		//
+		// UDFAuthenticatorLong
+		//
+		public static void UDFAuthenticatorLong (CreateExamples Example) { /* File  */
+			using (var _Output = new StreamWriter ("Examples\\UDFAuthenticatorLong.md")) {
+				var _Indent = ""; 
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				}
+			}
+		
+
+		//
+		// UDFDigestResolution
+		//
+		public static void UDFDigestResolution (CreateExamples Example) { /* File  */
+			using (var _Output = new StreamWriter ("Examples\\UDFDigestResolution.md")) {
+				var _Indent = ""; 
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				}
+			}
+		
+
+		//
+		// UDFEncryptedResolution
+		//
+		public static void UDFEncryptedResolution (CreateExamples Example) { /* File  */
+			using (var _Output = new StreamWriter ("Examples\\UDFEncryptedResolution.md")) {
+				var _Indent = ""; 
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				}
+			}
+		
+
+		//
 		// MeshExamplesUDF
 		//
 		public static void MeshExamplesUDF (CreateExamples Example) { /* File  */

@@ -7,6 +7,120 @@
 #xclass ExampleGenerator ExampleGenerator
 #% static ExampleGenerator Instance(StreamWriter output)  => new ExampleGenerator () { _Output = output};
 
+#file UDFVariousUDF "Examples\\UDFVariousUDF.md" CreateExamples Example
+~~~~
+#{Example.ResultUDFNonce.Key}
+#{Example.ResultUDFSecret.Key}
+#{Example.ResultUDFSecret.Shares[0]}
+#{Example.ResultDigestSHA2.Digest}
+#{Example.ResultDigestSHA3.Digest}
+#{Example.ResultCommitSHA2.Digest}
+~~~~
+#end file
+
+
+#file UDFNonce "Examples\\UDFNonce.md" CreateExamples Example
+~~~~
+#{Example.ResultUDFNonce.Key}
+~~~~
+#end file
+
+#file UDFEncrypt "Examples\\UDFEncrypt.md" CreateExamples Example
+~~~~
+#{Example.ResultUDFSecret.Key}
+~~~~
+#end file
+
+#file UDFShare "Examples\\UDFShare.md" CreateExamples Example
+~~~~
+#{Example.ResultUDFSecret.Shares[0]}
+#{Example.ResultUDFSecret.Shares[1]}
+#{Example.ResultUDFSecret.Shares[2]}
+~~~~
+#end file
+
+#file UDFDigest "Examples\\UDFDigest.md" CreateExamples Example
+~~~~
+SHA-2-512: #{Example.ResultDigestSHA2.Digest}
+SHA-3-512: #{Example.ResultDigestSHA3.Digest}
+~~~~
+#end file
+
+#file UDFAuthenticator "Examples\\UDFAuthenticator.md" CreateExamples Example
+~~~~
+SHA-2-512: #{Example.ResultCommitSHA2.Digest}
+~~~~
+#end file
+
+#file UDFDigestURI "Examples\\UDFDigestURI.md" CreateExamples Example
+udf:#{Example.ResultDigestSHA2.Digest}
+#end file
+
+#file UDFDigestLocator "Examples\\UDFDigestLocator.md" CreateExamples Example
+udf://#{Example.ResultDigestSHA2.Digest}
+various different types of udf
+
+#end file
+#file UDFDigestEARLRAW "Examples\\UDFDigestEARL-raw.md" CreateExamples Example
+udf://example.com/#{Example.ResultUDFEARL.Key}#!
+#end file
+
+#file UDFDigestEARL "Examples\\UDFDigestEARL.md" CreateExamples Example
+udf://example.com/#{Example.ResultUDFEARL.Key}
+
+The UDF locator is resolved by appending it to the Web Service Endpoint
+for the domain example.com according to the DNS Web Service discovery
+mechanism discussed in section XX
+
+https://example.com/.well-known/mmm-udf/#{Example.ResultUDFEARL.Identifier}
+#end file
+
+#file UDFsin "Examples\\UDFsin.md" CreateExamples Example
+
+For example, Example Inc holds the domain name example.com and has deployed a private CA whose root of trust is a PKIX certificate with the UDF fingerprint MB2GK-6DUF5-YGYYL-JNY5E-RWSHZ.
+Alice is an employee of Example Inc., she uses three email addresses:
+alice@example.com
+A regular email address (not a SIN).
+alice@mm--mb2gk-6duf5-ygyyl-jny5e-rwshz.example.com
+A strong email address that is backwards compatible.
+alice@example.com.mm--mb2gk-6duf5-ygyyl-jny5e-rwshz
+A strong email address that is backwards incompatible.
+
+
+#end file
+
+#file UDFSplit "Examples\\UDFSplit.md" CreateExamples Example
+
+
+#end file
+
+#file UDFDigestLong "Examples\\UDFDigestLong.md" CreateExamples Example
+
+regular digest
+
+compressed digest
+
+
+#end file
+
+
+#file UDFAuthenticatorLong "Examples\\UDFAuthenticatorLong.md" CreateExamples Example
+
+
+#end file
+
+
+#file UDFDigestResolution "Examples\\UDFDigestResolution.md" CreateExamples Example
+
+
+#end file
+
+
+#file UDFEncryptedResolution "Examples\\UDFEncryptedResolution.md" CreateExamples Example
+
+
+#end file
+
 
 
 #file MeshExamplesUDF "Examples\\ExamplesUDF.md" CreateExamples Example

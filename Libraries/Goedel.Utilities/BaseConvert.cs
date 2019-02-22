@@ -35,7 +35,7 @@ namespace Goedel.Utilities  {
         /// <summary>Perform hexadecimal spacing</summary>
         Hex = 4,
         /// <summary>Insert a dash every 4 output characters</summary>
-        Dash6 = 6,
+        Dash4 = 6,
         /// <summary>Insert a dash every 5 output characters</summary>
         Dash5 = 8,
         /// <summary>Add trailing base64 equals characters if required.</summary>
@@ -512,7 +512,8 @@ namespace Goedel.Utilities  {
         /// </summary>
         /// <param name="Data">The data to convert</param>
         /// <returns>The resulting string.</returns>
-        public static string ToStringUDF32(this byte[] Data) => Data.ToStringBase32(Format: ConversionFormat.Dash5);
+        public static string ToStringUDF32(this byte[] Data) => 
+                Data.ToStringBase32(Format: ConversionFormat.Dash5);
 
         /// <summary>
         /// Convert data to Base32HS string. This is probably not necessary as 
@@ -522,7 +523,7 @@ namespace Goedel.Utilities  {
         /// <param name="Length">The maximum number of characters in the output string</param>
         /// <returns>The resulting string.</returns>
         public static string ToStringBase32hs (this byte[] data, int Length) =>
-            ToStringBase32(data, Format: ConversionFormat.Dash6, Length: Length);
+            ToStringBase32(data, Format: ConversionFormat.Dash4, Length: Length);
 
 
         /// <summary>

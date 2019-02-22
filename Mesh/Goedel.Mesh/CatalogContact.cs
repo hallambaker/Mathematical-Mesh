@@ -74,7 +74,7 @@ namespace Goedel.Mesh {
 
         public override string _PrimaryKey => Key;
 
-        public CatalogEntryContact() => Key = UDF.Random();
+        public CatalogEntryContact() => Key = UDF.Nonce();
 
         public CatalogEntryContact(DareMessage contact) : this() => Contact = contact;
 

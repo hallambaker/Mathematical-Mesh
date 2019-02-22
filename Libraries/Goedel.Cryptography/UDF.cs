@@ -27,41 +27,35 @@ using Goedel.Utilities;
 namespace Goedel.Cryptography {
 
     /// <summary>
-    /// UDF Prefix values
+    /// UDF type identifier codes
     /// </summary>
-    public enum UDFPrefix {
-        /// <summary>
-        /// Key identifier for Keyed UDF using SHA-2-512
-        /// </summary>
-        KeyIdentifierAlgHMAC_SHA_2_512 = 80,
+    public enum UDFTypeIdentifier {
+        ///<summary>Authenticator using HMAC-SHA-2-512</summary>
+        AuthenticatorHMAC_SHA_2_512 = 0,
 
-        /// <summary>
-        /// Key identifier for Keyed UDF using SHA-2-512
-        /// </summary>
-        KeyIdentifierAlgHMAC_SHA_3_512 = 81,
+        ///<summary>Authenticator using HMAC-SHA-3-512</summary>
+        AuthenticatorHMAC_SHA_3_512 = 1,
 
-        /// <summary>
-        /// Key identifier for UDF using SHA-2-512
-        /// </summary>
-        KeyIdentifierAlgSHA_2_512 = 96,
+        ///<summary>Encryption/Authentication key</summary>
+        Encryption = 32,
 
-        /// <summary>
-        /// Key identifier for UDF using SHA-3-512
-        /// </summary>
-        KeyIdentifierAlgSHA_3_512 = 144,
+        ///<summary>Content Digest using SHA-2-512</summary>
+        DigestAlgSHA_2_512 = 96,
 
-        /// <summary>
-        /// Key identifier for UDF from random digits
-        /// </summary>
-        KeyIdentifierAlgRandom = 136
+        ///<summary>Content Digest using SHA-3-512</summary>
+        DigestSHA_3_512 = 80,
+
+        ///<summary>Type code for random nonce</summary>
+        Nonce = 104,
+
+        ///<summary>Type code for Shamir secret</summary>
+        ShamirSecret = 104
         }
 
     /// <summary>
     /// Constants used in building UDF values.
     /// </summary>
     public partial class UDFConstants {
-
-
 
         /// <summary>
         /// Content type identifier for PKIX KeyInfo data type
@@ -71,7 +65,7 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Content type identifier for OpenPGP Key
         /// </summary>
-        public const string OpenPGPKey = "application/openpgp-key";
+        public const string OpenPGPKey = "application/openpgp-keys";
 
         /// <summary>
         /// Content type for mesh escrowed key
@@ -81,7 +75,13 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// UDF Fingerprint list
         /// </summary>
-        public const string UDF = "application/udf";
+        public const string UDFEncryption = "application/udf-encryption";
+
+        /// <summary>
+        /// UDF Fingerprint list
+        /// </summary>
+        public const string UDFSecret = "application/udf-secret";
+
         }
 
     /// <summary>
@@ -93,14 +93,10 @@ namespace Goedel.Cryptography {
 
         // Goal: Eliminate all UDF string values in profiles and use binary blobs for comparison
 
-
-
-
-
         /// <summary>
         /// Default number of UDF bits (usually 150).
         /// </summary>
-        public static int DefaultBits { get; set; } = 125;
+        public static int DefaultBits { get; set; } = 140;
 
         /// <summary>
         /// Calculate a UDF fingerprint from an OpenPGP key with specified precision.
@@ -190,11 +186,11 @@ namespace Goedel.Cryptography {
                 UDFData = buffer.GetDigest(cryptoAlgorithmID);
                 switch (cryptoAlgorithmID) {
                     case CryptoAlgorithmID.SHA_2_512: {
-                        versionID = (byte)UDFPrefix.KeyIdentifierAlgSHA_2_512;
+                        versionID = (byte)UDFTypeIdentifier.DigestAlgSHA_2_512;
                         break;
                         }
                     case CryptoAlgorithmID.SHA_3_512: {
-                        versionID = (byte)UDFPrefix.KeyIdentifierAlgSHA_3_512;
+                        versionID = (byte)UDFTypeIdentifier.DigestSHA_3_512;
                         break;
                         }
                     default: {
@@ -207,7 +203,7 @@ namespace Goedel.Cryptography {
                     case CryptoAlgorithmID.SHA_2_512: {
                         var macKey = ConvertKey(key, 512);
                         UDFData = buffer.GetMAC(macKey, CryptoAlgorithmID.HMAC_SHA_2_512);
-                        versionID = (byte)UDFPrefix.KeyIdentifierAlgHMAC_SHA_2_512;
+                        versionID = (byte)UDFTypeIdentifier.AuthenticatorHMAC_SHA_2_512;
                         break;
                         }
                     default: {
@@ -323,7 +319,7 @@ namespace Goedel.Cryptography {
         public static string Format(byte[] buffer, int bits = 0) {
             bits = bits == 0 ? DefaultBits : bits;
             var Length = 5 * (bits / 25);
-            return buffer.ToStringBase32(Format: ConversionFormat.Dash5, OutputMax: Length);
+            return buffer.ToStringBase32(Format: ConversionFormat.Dash4, OutputMax: Length);
             }
 
         /// <summary>
@@ -426,24 +422,43 @@ namespace Goedel.Cryptography {
         /// <param name="Data">Input data.</param>
         /// <returns>The UDF value as a string.</returns>
         public static string ToString(byte[] Data) => 
-            Data.ToStringBase32(Format: ConversionFormat.Dash5);
+            Data.ToStringBase32(Format: ConversionFormat.Dash4);
 
         /// <summary>
         /// Return a random sequence as a UDF 
         /// </summary>
         /// <returns>A randomly generated UDF string.</returns>
-        public static string Random() => Random(DefaultBits);
+        public static string Nonce() => Nonce(DefaultBits);
 
         /// <summary>
         /// Return a random sequence as a UDF 
         /// </summary>
         /// <param name="bits">Number of bits in the string</param>
         /// <returns>A randomly generated UDF string.</returns>
-        public static string Random (int bits) {
+        public static string Nonce (int bits) {
             var Data = CryptoCatalog.GetBits(bits);
-            Data[0] = (byte)UDFPrefix.KeyIdentifierAlgRandom;
+            Data[0] = (byte)UDFTypeIdentifier.Nonce;
             return Format(Data, bits);
             }
+
+
+        /// <summary>
+        /// Return a random sequence as a UDF 
+        /// </summary>
+        /// <returns>A randomly generated UDF string.</returns>
+        public static string SymmetricKey() => SymmetricKey(DefaultBits);
+
+        /// <summary>
+        /// Return a random sequence as a UDF 
+        /// </summary>
+        /// <param name="bits">Number of bits in the string</param>
+        /// <returns>A randomly generated UDF string.</returns>
+        public static string SymmetricKey(int bits) {
+            var Data = CryptoCatalog.GetBits(bits);
+            Data[0] = (byte)UDFTypeIdentifier.Encryption;
+            return Format(Data, bits);
+            }
+
 
         #region // Convenience functions
         /// <summary>

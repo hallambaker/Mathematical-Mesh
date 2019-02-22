@@ -68,7 +68,7 @@ namespace Goedel.Mesh {
 
         public override string _PrimaryKey => Key;
 
-        public CatalogEntryApplication() => Key = UDF.Random();
+        public CatalogEntryApplication() => Key = UDF.Nonce();
 
 
         }
