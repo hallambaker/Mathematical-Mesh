@@ -316,7 +316,7 @@ namespace Goedel.Cryptography.Jose {
         public Recipient AddRecipient (byte[] Secret, string Info = null,
                 CryptoAlgorithmID ProviderAlgorithm = CryptoAlgorithmID.Default) {
 
-            var Identifier = UDF.ToString(UDF.FromEscrowed(Secret, 150));
+            var Identifier = UDF.SymmetricKeyUDF(Secret);
             Info = Info ?? Identifier;
 
             var KeyDerive = new KeyDeriveHKDF(Secret, Info);
@@ -495,7 +495,7 @@ namespace Goedel.Cryptography.Jose {
             var BulkID = Header.Enc.FromJoseID();
             var Provider = CryptoCatalog.Default.GetEncryption(BulkID);
 
-            var Identifier = UDF.ToString(UDF.FromEscrowed(Secret, 150));
+            var Identifier = UDF.SymmetricKeyUDF(Secret);
             var Recipient = MatchRecipient(Identifier);
 
             Info = Info ?? Identifier;

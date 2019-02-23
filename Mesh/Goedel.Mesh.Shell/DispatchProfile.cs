@@ -103,7 +103,7 @@ namespace Goedel.Mesh.Shell {
                 escrow.ToFile(file);
                 var textShares = new List<string>();
                 foreach (var share in shares) {
-                    textShares.Add(share.Text);
+                    textShares.Add(share.UDFKey);
                     }
 
                 return new ResultEscrow() {

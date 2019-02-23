@@ -24,7 +24,7 @@ namespace Goedel.XUnit {
             Status = "Open",
             Created = Now,
             Modified = Now,
-            UserProfileUDF = AccountIDAlice.ToBytes().ToStringUDF32()
+            UserProfileUDF = UDF.PresentationBase32(AccountIDAlice.ToBytes())
             };
 
         readonly static TestItem AccountBob = new TestItem() {
@@ -32,7 +32,7 @@ namespace Goedel.XUnit {
             Status = "Open",
             Created = Now,
             Modified = Now,
-            UserProfileUDF = AccountIDBob.ToBytes().ToStringUDF32()
+            UserProfileUDF = UDF.PresentationBase32(AccountIDBob.ToBytes())
             };
 
         [Fact]

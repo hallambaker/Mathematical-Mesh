@@ -22,7 +22,7 @@ namespace Goedel.Mesh.Shell {
             var hashAlgorithm = AlgorithmDigest.DefaultBulk(CryptoAlgorithmID.SHA_2_512);
 
             var contentDigest = inputFile.GetDigestOfFile(hashAlgorithm);
-            var digest = Cryptography.UDF.DigestToFormat(contentDigest, contentType, cryptoAlgorithmID: hashAlgorithm);
+            var digest = Cryptography.UDF.ContentDigestOfDigestString(contentDigest, contentType, cryptoAlgorithmID: hashAlgorithm);
 
             return new ResultDigest() {
                 Success = true,
@@ -57,7 +57,7 @@ namespace Goedel.Mesh.Shell {
             var key = Options.DigestKey.Value ?? Cryptography.UDF.Nonce();
 
             var contentDigest = inputFile.GetDigestOfFile(hashAlgorithm);
-            var digest = Cryptography.UDF.DigestToFormat(
+            var digest = Cryptography.UDF.ContentDigestOfDigestString(
                 contentDigest, contentType, cryptoAlgorithmID: hashAlgorithm, key: key);
 
             return new ResultCommitment() {

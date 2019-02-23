@@ -30,7 +30,7 @@ namespace Goedel.Cryptography {
         /// <returns>The fingerprint presentation</returns>
         public static string UDF(this IPKIXPublicKey key) {
             var Bytes = key.UDFBytes();
-            return Cryptography.UDF.ToString(Bytes);
+            return Cryptography.UDF.PresentationBase32(Cryptography.UDF.FromKeyInfo(Bytes));
             }
 
         /// <summary>

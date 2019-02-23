@@ -30,7 +30,7 @@ namespace Goedel.Mesh.Shell {
         /// <returns>Mesh result instance</returns>
         public override ShellResult KeySecret(KeySecret Options) => new ResultKey() {
             Success = true,
-            Key = Cryptography.UDF.SymmetricKey()
+            Key = Cryptography.UDF.SymmetricKey(128)
             };
 
         /// <summary>
@@ -44,7 +44,7 @@ namespace Goedel.Mesh.Shell {
             var bitsid = Math.Min(bits*2, 440);
 
             var key = Cryptography.UDF.SymmetricKey(bits);
-            var identifier = Cryptography.UDF.DataToFormat(key.ToUTF8(), 
+            var identifier = Cryptography.UDF.ContentDigestOfDataString(key.ToUTF8(), 
                     UDFConstants.UDFEncryption, bits= bitsid);
 
 
@@ -76,18 +76,13 @@ namespace Goedel.Mesh.Shell {
             // the secrets should be in udf form as well.
             var textShares = new List<string>();
             foreach (var share in keyShares) {
-                textShares.Add(share.Text);
+                textShares.Add(share.UDFKey);
                 }
-
-            var key = Cryptography.UDF.SymmetricKey(bits);
-            var identifier = Cryptography.UDF.DataToFormat(key.ToUTF8(),
-                    UDFConstants.UDFEncryption, bits= bitsid);
-
 
             return new ResultKey() {
                 Success = true,
-                Key = key,
-                Identifier= identifier,
+                Key = secret.UDFKey,
+                Identifier= secret.UDFIdentifier,
                 Shares = textShares
                 };
             }

@@ -4,6 +4,8 @@ using Goedel.Mesh.Shell;
 using Goedel.Test.Core;
 using Goedel.Protocol.Debug;
 using Goedel.Test;
+using Goedel.Cryptography;
+using System.Numerics;
 
 // ToDo: Fix the text generator to handle sub/superscripts correctly
 // ToDo: Alternative presentation of diagrams in text form
@@ -76,7 +78,9 @@ namespace ExampleGenerator {
         public ResultCommitment ResultCommitSHA2;
         public ResultCommitment ResultCommitSHA3;
 
-
+        public Secret UDFSplitSecret;
+        public Goedel.Cryptography.KeyShare[] UDFSplitShares;
+        public BigInteger[] UDFSplitPolynomial;
 
         public string TestStringValue = "UDF Content Data";
 
@@ -95,8 +99,10 @@ namespace ExampleGenerator {
             var filename = TestStringValue.ToFileUnique();
             ResultDigestSHA2 = testCLI.Dispatch($"hash udf {filename} /alg sha2") as ResultDigest;
             ResultDigestSHA3 = testCLI.Dispatch($"hash udf {filename} /alg sha3") as ResultDigest;
-
             ResultCommitSHA2 = testCLI.Dispatch($"hash commit {filename} /alg sha2 /key {ResultUDFNonce.Key}") as ResultCommitment;
+
+            UDFSplitSecret = new Secret(128);
+            UDFSplitShares = UDFSplitSecret.Split(5, 3, out UDFSplitPolynomial);
 
 
             Directory.SetCurrentDirectory(OutputPath);

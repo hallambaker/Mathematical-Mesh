@@ -217,11 +217,13 @@ namespace Goedel.Utilities  {
                 }
 
 
+            bool NeedOutput => (OutputMax < 0) | (OutputCount < OutputMax);
+
             public void Write (byte[] Data, int First = 0, int Length = -1) {
                 Length = Length < 0 ? Data.Length - First : Length;
                 int Last = First + Length;
 
-                for (int i = First; i < Last; i++) {
+                for (int i = First; (i < Last) & NeedOutput ; i++) {
                     //if (Draft & ((i % 48) == 0)) {
                     //    WriteChar('\n');
                     //    }
@@ -229,7 +231,7 @@ namespace Goedel.Utilities  {
                     a = (a << 8) | Data[i];
                     Offset += 8;
 
-                    while (Offset >= Bits) {
+                    while ((Offset >= Bits) & NeedOutput) {
                         Offset -= Bits;
 
                         int n = a >> Offset;
@@ -240,7 +242,7 @@ namespace Goedel.Utilities  {
                 }
 
             public void Final () {
-                if (Offset > 0) {
+                if ((Offset > 0) & NeedOutput) {
                     FormatChar(Table[a << (Bits - Offset)]);
                     // No trailing = characters in Base64URL encoding.
                     if (Terminal) {

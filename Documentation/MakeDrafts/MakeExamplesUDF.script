@@ -33,9 +33,10 @@
 
 #file UDFShare "Examples\\UDFShare.md" CreateExamples Example
 ~~~~
-#{Example.ResultUDFSecret.Shares[0]}
-#{Example.ResultUDFSecret.Shares[1]}
-#{Example.ResultUDFSecret.Shares[2]}
+Key:     #{Example.ResultUDFSecret.Key}
+Share 0: #{Example.ResultUDFSecret.Shares[0]}
+Share 1: #{Example.ResultUDFSecret.Shares[1]}
+Share 2: #{Example.ResultUDFSecret.Shares[2]}
 ~~~~
 #end file
 
@@ -58,9 +59,8 @@ udf:#{Example.ResultDigestSHA2.Digest}
 
 #file UDFDigestLocator "Examples\\UDFDigestLocator.md" CreateExamples Example
 udf://#{Example.ResultDigestSHA2.Digest}
-various different types of udf
-
 #end file
+
 #file UDFDigestEARLRAW "Examples\\UDFDigestEARL-raw.md" CreateExamples Example
 udf://example.com/#{Example.ResultUDFEARL.Key}#!
 #end file
@@ -91,39 +91,68 @@ A strong email address that is backwards incompatible.
 
 #file UDFSplit "Examples\\UDFSplit.md" CreateExamples Example
 
+Alice decides to encrypt an important document and split the encryption key so that
+there are five key shares, three of which will be required to recover the key.
 
+~~~~
+Alice's master secret is#{Example.UDFSplitSecret.Key.ToStringBase16FormatHex()}
+~~~~
+
+This has the UDF representation:
+
+#{Example.UDFSplitSecret.UDFKey}
+
+The master secret is converted to an integer applying network byte order conventions.
+Since the master secret is 128 bits, it is guaranteed to be smaller than the modulus.
+The resulting value becomes the polynomial value a0.
+
+Since a threshold of three shares is required, we will need a second order polynomial.
+The co-efficients of the polynomial a1, a2 are random numbers smaller than the 
+modulus:
+
+~~~~
+a0 = #{Example.UDFSplitPolynomial[0]}
+a1 = #{Example.UDFSplitPolynomial[1]}
+a2 = #{Example.UDFSplitPolynomial[2]}
+~~~~
+
+The master secret is the value f(0) = a0. The key shares are the values f(1), f(2)...f(5):
+
+~~~~
+f(1) = #{Example.UDFSplitShares[0].Value}
+f(2) = #{Example.UDFSplitShares[1].Value}
+f(3) = #{Example.UDFSplitShares[2].Value}
+f(4) = #{Example.UDFSplitShares[3].Value}
+f(5) = #{Example.UDFSplitShares[4].Value}
+~~~~
+
+The first byte of each share specifies the recovery information (quorum, x value), the
+remaining bytes specify the share value in network byte order:
+
+~~~~
+f(1) = #{Example.UDFSplitShares[0].Key.ToStringBase16FormatHex()}
+f(2) = #{Example.UDFSplitShares[1].Key.ToStringBase16FormatHex()}
+f(3) = #{Example.UDFSplitShares[2].Key.ToStringBase16FormatHex()}
+f(4) = #{Example.UDFSplitShares[3].Key.ToStringBase16FormatHex()}
+f(5) = #{Example.UDFSplitShares[4].Key.ToStringBase16FormatHex()}
+~~~~
+
+The UDF presentation of the key shares is thus:
+
+~~~~
+f(1) = #{Example.UDFSplitShares[0].UDFKey}
+f(2) = #{Example.UDFSplitShares[1].UDFKey}
+f(3) = #{Example.UDFSplitShares[2].UDFKey}
+f(4) = #{Example.UDFSplitShares[3].UDFKey}
+f(5) = #{Example.UDFSplitShares[4].UDFKey}
+~~~~
+
+To recover the value f(0) from any three shares, we need to fit a polynomial curve to 
+the three points and use it to calculate the value at x=0 using the Lagrange polynomial
+basis.
 #end file
 
 #file UDFDigestLong "Examples\\UDFDigestLong.md" CreateExamples Example
-
-regular digest
-
-compressed digest
-
-
-#end file
-
-
-#file UDFAuthenticatorLong "Examples\\UDFAuthenticatorLong.md" CreateExamples Example
-
-
-#end file
-
-
-#file UDFDigestResolution "Examples\\UDFDigestResolution.md" CreateExamples Example
-
-
-#end file
-
-
-#file UDFEncryptedResolution "Examples\\UDFEncryptedResolution.md" CreateExamples Example
-
-
-#end file
-
-
-
-#file MeshExamplesUDF "Examples\\ExamplesUDF.md" CreateExamples Example
 #% var instance = Instance (_Output);
 #% var DataString = "UDF Data Value";
 #% var Data = DataString.ToUTF8();
@@ -146,13 +175,13 @@ This fingerprint MAY be specified with higher or lower precision as appropriate.
 
 <dl>
 <dt>100 bit precision
-<dd>#{UDF.DataToFormat(Data, ContentType, 100)}
-<dt>150 bit precision
-<dd>#{UDF.DataToFormat(Data, ContentType, 150)}
+<dd>#{UDF.ContentDigestOfDataString(Data, ContentType, 100)}
+<dt>120 bit precision
+<dd>#{UDF.ContentDigestOfDataString(Data, ContentType, 120)}
 <dt>200 bit precision
-<dd>#{UDF.DataToFormat(Data, ContentType, 200)}
-<dt>250 bit precision
-<dd>#{UDF.DataToFormat(Data, ContentType, 250)}
+<dd>#{UDF.ContentDigestOfDataString(Data, ContentType, 200)}
+<dt>260 bit precision
+<dd>#{UDF.ContentDigestOfDataString(Data, ContentType, 260)}
 </dl>
 
 ######Using SHA-3-512 Digest
@@ -160,6 +189,87 @@ This fingerprint MAY be specified with higher or lower precision as appropriate.
 #% instance.MakeUTFExtendedExample (DataString, CryptoAlgorithmID.SHA_3_512, null);
 
 #end file
+
+#method3 MakeUTFExtendedExample string DataString CryptoAlgorithmID cryptoAlgorithmID string key
+#% var DataBytes = DataString.ToUTF8();
+#% var ContentType = "text/plain";
+#% var HashData = DataBytes.GetDigest(cryptoAlgorithmID);
+#% var UDFDataBuffer = UDF.UDFBuffer(HashData, ContentType);
+#% byte[] UDFData ;
+
+~~~~
+H(&<Data>) = #!
+#{HashData.ToStringBase16FormatHex()}
+
+&<Content-ID> + ‘:’ + H(&<Data>) =  #!
+#{UDFDataBuffer.ToStringBase16FormatHex()}
+
+#if (key == null)
+#% UDFData = UDFDataBuffer.GetDigest(cryptoAlgorithmID);
+H(&<Content-ID> + ‘:’ + H(&<Data>)) =  #!
+#else
+#% var keyBytes = key.ToUTF8();
+#% var macKey = UDF.KeyStringToKey(key,512);
+#% UDFData = UDFDataBuffer.GetMAC(macKey, CryptoAlgorithmID.HMAC_SHA_2_512);
+#% var keyDerive = new KeyDeriveHKDF(keyBytes, KeyDerive.KeyedUDFMaster, CryptoAlgorithmID.HMAC_SHA_2_512);
+PRK(Key) =  #!
+#{keyDerive.PRK.ToStringBase16FormatHex()}
+
+HKDF(Key) =  #!
+#{macKey.ToStringBase16FormatHex()}
+
+MAC(&<key>, &<Content-ID> + ‘:’ + H(&<Data>)) =  #!
+#end if
+#% var binaryUDF = UDF.DigestToUDFBinary (HashData, ContentType, 140, cryptoAlgorithmID, key);
+#{UDFData.ToStringBase16FormatHex()}
+
+The prefixed Binary Data Sequence is thus#{binaryUDF.ToStringBase16FormatHex()}
+~~~~
+
+The 125 bit fingerprint value is #{UDF.PresentationBase32 (binaryUDF, 140)}
+
+#end method3
+
+#file UDFAuthenticatorLong "Examples\\UDFAuthenticatorLong.md" CreateExamples Example
+#% var instance = Instance (_Output);
+#% var key = "NBQ26-MEZGP-4SVCU-RYOWO-QTURA";
+#% var DataString = "Konrad is the traitor";
+#% var Data = DataString.ToUTF8();
+#% var ContentType = "text/plain";
+
+In the following example, &<Content-ID> is the UTF8 encoding of the string 
+"#{ContentType}" and &<Data> is the UTF8 encoding of the string "#{DataString}".
+The randomly chosen key is #{key}.
+
+~~~~
+Data = #{ DataString.ToUTF8().ToStringBase16FormatHex()}
+
+ContentType = #{ContentType.ToUTF8().ToStringBase16FormatHex()}
+
+Key =  #{ key.ToUTF8().ToStringBase16FormatHex()}
+~~~~
+
+Processing is performed in the same manner as an unkeyed fingerprint except that
+compression is never used:
+
+#% instance.MakeUTFExtendedExample (DataString, CryptoAlgorithmID.SHA_2_512, key);
+#!The SHA-3-512 commitment with the same inputs is:
+#!#{UDF.DataToFormat(Data, ContentType, 125, CryptoAlgorithmID.SHA_3_512, key)}
+#end file
+
+
+#file UDFDigestResolution "Examples\\UDFDigestResolution.md" CreateExamples Example
+
+
+#end file
+
+
+#file UDFEncryptedResolution "Examples\\UDFEncryptedResolution.md" CreateExamples Example
+
+
+#end file
+
+
 
 #file MeshExamplesUDFCompressed "Examples\\ExamplesUDFCompressed.md" CreateExamples Example
 #% var instance = Instance (_Output);
@@ -195,9 +305,13 @@ Compression increases the work factor that is achieved for a given fingerprint l
 but does not in itself cause the presentation to be changed.
 
 The 125 bit UDF of the string "44870804" using SHA-3-512 is
-#{UDF.DataToFormat("44870804".ToUTF8(), ContentType, 125, CryptoAlgorithmID.SHA_3_512, null)}.
+#!{UDF.DataToFormat("44870804".ToUTF8(), ContentType, 125, CryptoAlgorithmID.SHA_3_512, null)}.
 
 #end file
+
+
+
+
 
 #file MeshExamplesUDFCommitment "Examples\\ExamplesUDFCommitment.md" CreateExamples Example
 #% var instance = Instance (_Output);
@@ -227,46 +341,7 @@ Processing is performed in the same manner as an unkeyed fingerprint:
 
 #end file
 
-#method3 MakeUTFExtendedExample string DataString CryptoAlgorithmID cryptoAlgorithmID string key
-#% var DataBytes = DataString.ToUTF8();
-#% var ContentType = "text/plain";
-#% var HashData = DataBytes.GetDigest(cryptoAlgorithmID);
-#% var UDFDataBuffer = UDF.UDFBuffer(HashData, ContentType);
-#% byte[] UDFData ;
 
-~~~~
-H(&<Data>) = #!
-#{HashData.ToStringBase16FormatHex()}
-
-&<Content-ID> + ‘:’ + H(&<Data>) =  #!
-#{UDFDataBuffer.ToStringBase16FormatHex()}
-
-#if (key == null)
-#% UDFData = UDFDataBuffer.GetDigest(cryptoAlgorithmID);
-H(&<Content-ID> + ‘:’ + H(&<Data>)) =  #!
-#else
-#% var keyBytes = key.ToUTF8();
-#% var macKey = UDF.ConvertKey(key,512);
-#% UDFData = UDFDataBuffer.GetMAC(macKey, CryptoAlgorithmID.HMAC_SHA_2_512);
-#% var keyDerive = new KeyDeriveHKDF(keyBytes, KeyDerive.KeyedUDFMaster, CryptoAlgorithmID.HMAC_SHA_2_512);
-PRK(Key) =  #!
-#{keyDerive.PRK.ToStringBase16FormatHex()}
-
-HKDF(Key) =  #!
-#{macKey.ToStringBase16FormatHex()}
-
-MAC(&<key>, &<Content-ID> + ‘:’ + H(&<Data>)) =  #!
-#end if
-#{UDFData.ToStringBase16FormatHex()}
-#% var Trimmed=UDF.BufferDigestToUDF(UDFDataBuffer,125,cryptoAlgorithmID, key);
-
-Prefixed, compressed, trimmed =  #!
-#{Trimmed.ToStringBase16FormatHex()} ...
-~~~~
-
-The 125 bit fingerprint value is #{UDF.Format (Trimmed, 125)}
-
-#end method3
 
 
 #file MeshExamplesSIN "Examples\\ExamplesSIN.md" CreateExamples Example

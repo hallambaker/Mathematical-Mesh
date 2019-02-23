@@ -65,9 +65,10 @@ namespace ExampleGenerator {
 			using (var _Output = new StreamWriter ("Examples\\UDFShare.md")) {
 				var _Indent = ""; 
 				_Output.Write ("~~~~\n{0}", _Indent);
-				_Output.Write ("{1}\n{0}", _Indent, Example.ResultUDFSecret.Shares[0]);
-				_Output.Write ("{1}\n{0}", _Indent, Example.ResultUDFSecret.Shares[1]);
-				_Output.Write ("{1}\n{0}", _Indent, Example.ResultUDFSecret.Shares[2]);
+				_Output.Write ("Key:     {1}\n{0}", _Indent, Example.ResultUDFSecret.Key);
+				_Output.Write ("Share 0: {1}\n{0}", _Indent, Example.ResultUDFSecret.Shares[0]);
+				_Output.Write ("Share 1: {1}\n{0}", _Indent, Example.ResultUDFSecret.Shares[1]);
+				_Output.Write ("Share 2: {1}\n{0}", _Indent, Example.ResultUDFSecret.Shares[2]);
 				_Output.Write ("~~~~\n{0}", _Indent);
 				}
 			}
@@ -118,8 +119,6 @@ namespace ExampleGenerator {
 			using (var _Output = new StreamWriter ("Examples\\UDFDigestLocator.md")) {
 				var _Indent = ""; 
 				_Output.Write ("udf://{1}\n{0}", _Indent, Example.ResultDigestSHA2.Digest);
-				_Output.Write ("various different types of udf\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
 				}
 			}
 		
@@ -180,7 +179,65 @@ namespace ExampleGenerator {
 			using (var _Output = new StreamWriter ("Examples\\UDFSplit.md")) {
 				var _Indent = ""; 
 				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("Alice decides to encrypt an important document and split the encryption key so that\n{0}", _Indent);
+				_Output.Write ("there are five key shares, three of which will be required to recover the key.\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("Alice's master secret is{1}\n{0}", _Indent, Example.UDFSplitSecret.Key.ToStringBase16FormatHex());
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("This has the UDF representation:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("{1}\n{0}", _Indent, Example.UDFSplitSecret.UDFKey);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The master secret is converted to an integer applying network byte order conventions.\n{0}", _Indent);
+				_Output.Write ("Since the master secret is 128 bits, it is guaranteed to be smaller than the modulus.\n{0}", _Indent);
+				_Output.Write ("The resulting value becomes the polynomial value a0.\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("Since a threshold of three shares is required, we will need a second order polynomial.\n{0}", _Indent);
+				_Output.Write ("The co-efficients of the polynomial a1, a2 are random numbers smaller than the \n{0}", _Indent);
+				_Output.Write ("modulus:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("a0 = {1}\n{0}", _Indent, Example.UDFSplitPolynomial[0]);
+				_Output.Write ("a1 = {1}\n{0}", _Indent, Example.UDFSplitPolynomial[1]);
+				_Output.Write ("a2 = {1}\n{0}", _Indent, Example.UDFSplitPolynomial[2]);
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The master secret is the value f(0) = a0. The key shares are the values f(1), f(2)...f(5):\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("f(1) = {1}\n{0}", _Indent, Example.UDFSplitShares[0].Value);
+				_Output.Write ("f(2) = {1}\n{0}", _Indent, Example.UDFSplitShares[1].Value);
+				_Output.Write ("f(3) = {1}\n{0}", _Indent, Example.UDFSplitShares[2].Value);
+				_Output.Write ("f(4) = {1}\n{0}", _Indent, Example.UDFSplitShares[3].Value);
+				_Output.Write ("f(5) = {1}\n{0}", _Indent, Example.UDFSplitShares[4].Value);
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The first byte of each share specifies the recovery information (quorum, x value), the\n{0}", _Indent);
+				_Output.Write ("remaining bytes specify the share value in network byte order:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("f(1) = {1}\n{0}", _Indent, Example.UDFSplitShares[0].Key.ToStringBase16FormatHex());
+				_Output.Write ("f(2) = {1}\n{0}", _Indent, Example.UDFSplitShares[1].Key.ToStringBase16FormatHex());
+				_Output.Write ("f(3) = {1}\n{0}", _Indent, Example.UDFSplitShares[2].Key.ToStringBase16FormatHex());
+				_Output.Write ("f(4) = {1}\n{0}", _Indent, Example.UDFSplitShares[3].Key.ToStringBase16FormatHex());
+				_Output.Write ("f(5) = {1}\n{0}", _Indent, Example.UDFSplitShares[4].Key.ToStringBase16FormatHex());
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The UDF presentation of the key shares is thus:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("f(1) = {1}\n{0}", _Indent, Example.UDFSplitShares[0].UDFKey);
+				_Output.Write ("f(2) = {1}\n{0}", _Indent, Example.UDFSplitShares[1].UDFKey);
+				_Output.Write ("f(3) = {1}\n{0}", _Indent, Example.UDFSplitShares[2].UDFKey);
+				_Output.Write ("f(4) = {1}\n{0}", _Indent, Example.UDFSplitShares[3].UDFKey);
+				_Output.Write ("f(5) = {1}\n{0}", _Indent, Example.UDFSplitShares[4].UDFKey);
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("To recover the value f(0) from any three shares, we need to fit a polynomial curve to \n{0}", _Indent);
+				_Output.Write ("the three points and use it to calculate the value at x=0 using the Lagrange polynomial\n{0}", _Indent);
+				_Output.Write ("basis.\n{0}", _Indent);
 				}
 			}
 		
@@ -190,58 +247,6 @@ namespace ExampleGenerator {
 		//
 		public static void UDFDigestLong (CreateExamples Example) { /* File  */
 			using (var _Output = new StreamWriter ("Examples\\UDFDigestLong.md")) {
-				var _Indent = ""; 
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("regular digest\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("compressed digest\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				}
-			}
-		
-
-		//
-		// UDFAuthenticatorLong
-		//
-		public static void UDFAuthenticatorLong (CreateExamples Example) { /* File  */
-			using (var _Output = new StreamWriter ("Examples\\UDFAuthenticatorLong.md")) {
-				var _Indent = ""; 
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				}
-			}
-		
-
-		//
-		// UDFDigestResolution
-		//
-		public static void UDFDigestResolution (CreateExamples Example) { /* File  */
-			using (var _Output = new StreamWriter ("Examples\\UDFDigestResolution.md")) {
-				var _Indent = ""; 
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				}
-			}
-		
-
-		//
-		// UDFEncryptedResolution
-		//
-		public static void UDFEncryptedResolution (CreateExamples Example) { /* File  */
-			using (var _Output = new StreamWriter ("Examples\\UDFEncryptedResolution.md")) {
-				var _Indent = ""; 
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				}
-			}
-		
-
-		//
-		// MeshExamplesUDF
-		//
-		public static void MeshExamplesUDF (CreateExamples Example) { /* File  */
-			using (var _Output = new StreamWriter ("Examples\\ExamplesUDF.md")) {
 				var _Indent = ""; 
 				 var instance = Instance (_Output);
 				 var DataString = "UDF Data Value";
@@ -265,18 +270,118 @@ namespace ExampleGenerator {
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("<dl>\n{0}", _Indent);
 				_Output.Write ("<dt>100 bit precision\n{0}", _Indent);
-				_Output.Write ("<dd>{1}\n{0}", _Indent, UDF.DataToFormat(Data, ContentType, 100));
-				_Output.Write ("<dt>150 bit precision\n{0}", _Indent);
-				_Output.Write ("<dd>{1}\n{0}", _Indent, UDF.DataToFormat(Data, ContentType, 150));
+				_Output.Write ("<dd>{1}\n{0}", _Indent, UDF.ContentDigestOfDataString(Data, ContentType, 100));
+				_Output.Write ("<dt>120 bit precision\n{0}", _Indent);
+				_Output.Write ("<dd>{1}\n{0}", _Indent, UDF.ContentDigestOfDataString(Data, ContentType, 120));
 				_Output.Write ("<dt>200 bit precision\n{0}", _Indent);
-				_Output.Write ("<dd>{1}\n{0}", _Indent, UDF.DataToFormat(Data, ContentType, 200));
-				_Output.Write ("<dt>250 bit precision\n{0}", _Indent);
-				_Output.Write ("<dd>{1}\n{0}", _Indent, UDF.DataToFormat(Data, ContentType, 250));
+				_Output.Write ("<dd>{1}\n{0}", _Indent, UDF.ContentDigestOfDataString(Data, ContentType, 200));
+				_Output.Write ("<dt>260 bit precision\n{0}", _Indent);
+				_Output.Write ("<dd>{1}\n{0}", _Indent, UDF.ContentDigestOfDataString(Data, ContentType, 260));
 				_Output.Write ("</dl>\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("###Using SHA-3-512 Digest\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				 instance.MakeUTFExtendedExample (DataString, CryptoAlgorithmID.SHA_3_512, null);
+				_Output.Write ("\n{0}", _Indent);
+				}
+			}
+		
+
+		//
+		// MakeUTFExtendedExample
+		//
+		public void MakeUTFExtendedExample (string DataString, CryptoAlgorithmID cryptoAlgorithmID, string key) {
+			 var DataBytes = DataString.ToUTF8();
+			 var ContentType = "text/plain";
+			 var HashData = DataBytes.GetDigest(cryptoAlgorithmID);
+			 var UDFDataBuffer = UDF.UDFBuffer(HashData, ContentType);
+			 byte[] UDFData ;
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("H(&<Data>) = ", _Indent);
+			_Output.Write ("{1}\n{0}", _Indent, HashData.ToStringBase16FormatHex());
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("&<Content-ID> + ‘:’ + H(&<Data>) =  ", _Indent);
+			_Output.Write ("{1}\n{0}", _Indent, UDFDataBuffer.ToStringBase16FormatHex());
+			_Output.Write ("\n{0}", _Indent);
+			if (  (key == null) ) {
+				 UDFData = UDFDataBuffer.GetDigest(cryptoAlgorithmID);
+				_Output.Write ("H(&<Content-ID> + ‘:’ + H(&<Data>)) =  ", _Indent);
+				} else {
+				 var keyBytes = key.ToUTF8();
+				 var macKey = UDF.KeyStringToKey(key,512);
+				 UDFData = UDFDataBuffer.GetMAC(macKey, CryptoAlgorithmID.HMAC_SHA_2_512);
+				 var keyDerive = new KeyDeriveHKDF(keyBytes, KeyDerive.KeyedUDFMaster, CryptoAlgorithmID.HMAC_SHA_2_512);
+				_Output.Write ("PRK(Key) =  ", _Indent);
+				_Output.Write ("{1}\n{0}", _Indent, keyDerive.PRK.ToStringBase16FormatHex());
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("HKDF(Key) =  ", _Indent);
+				_Output.Write ("{1}\n{0}", _Indent, macKey.ToStringBase16FormatHex());
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("MAC(&<key>, &<Content-ID> + ‘:’ + H(&<Data>)) =  ", _Indent);
+				}
+			 var binaryUDF = UDF.DigestToUDFBinary (HashData, ContentType, 140, cryptoAlgorithmID, key);
+			_Output.Write ("{1}\n{0}", _Indent, UDFData.ToStringBase16FormatHex());
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("The prefixed Binary Data Sequence is thus{1}\n{0}", _Indent, binaryUDF.ToStringBase16FormatHex());
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("The 125 bit fingerprint value is {1}\n{0}", _Indent, UDF.PresentationBase32 (binaryUDF, 140));
+			_Output.Write ("\n{0}", _Indent);
+			}
+		
+
+		//
+		// UDFAuthenticatorLong
+		//
+		public static void UDFAuthenticatorLong (CreateExamples Example) { /* File  */
+			using (var _Output = new StreamWriter ("Examples\\UDFAuthenticatorLong.md")) {
+				var _Indent = ""; 
+				 var instance = Instance (_Output);
+				 var key = "NBQ26-MEZGP-4SVCU-RYOWO-QTURA";
+				 var DataString = "Konrad is the traitor";
+				 var Data = DataString.ToUTF8();
+				 var ContentType = "text/plain";
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("In the following example, &<Content-ID> is the UTF8 encoding of the string \n{0}", _Indent);
+				_Output.Write ("\"{1}\" and &<Data> is the UTF8 encoding of the string \"{2}\".\n{0}", _Indent, ContentType, DataString);
+				_Output.Write ("The randomly chosen key is {1}.\n{0}", _Indent, key);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("Data = {1}\n{0}", _Indent,  DataString.ToUTF8().ToStringBase16FormatHex());
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("ContentType = {1}\n{0}", _Indent, ContentType.ToUTF8().ToStringBase16FormatHex());
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("Key =  {1}\n{0}", _Indent,  key.ToUTF8().ToStringBase16FormatHex());
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("Processing is performed in the same manner as an unkeyed fingerprint except that\n{0}", _Indent);
+				_Output.Write ("compression is never used:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				 instance.MakeUTFExtendedExample (DataString, CryptoAlgorithmID.SHA_2_512, key);
+				}
+			}
+		
+
+		//
+		// UDFDigestResolution
+		//
+		public static void UDFDigestResolution (CreateExamples Example) { /* File  */
+			using (var _Output = new StreamWriter ("Examples\\UDFDigestResolution.md")) {
+				var _Indent = ""; 
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				}
+			}
+		
+
+		//
+		// UDFEncryptedResolution
+		//
+		public static void UDFEncryptedResolution (CreateExamples Example) { /* File  */
+			using (var _Output = new StreamWriter ("Examples\\UDFEncryptedResolution.md")) {
+				var _Indent = ""; 
+				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				}
 			}
@@ -321,7 +426,6 @@ namespace ExampleGenerator {
 				_Output.Write ("but does not in itself cause the presentation to be changed.\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The 125 bit UDF of the string \"44870804\" using SHA-3-512 is\n{0}", _Indent);
-				_Output.Write ("{1}.\n{0}", _Indent, UDF.DataToFormat("44870804".ToUTF8(), ContentType, 125, CryptoAlgorithmID.SHA_3_512, null));
 				_Output.Write ("\n{0}", _Indent);
 				}
 			}
@@ -357,51 +461,6 @@ namespace ExampleGenerator {
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				}
-			}
-		
-
-		//
-		// MakeUTFExtendedExample
-		//
-		public void MakeUTFExtendedExample (string DataString, CryptoAlgorithmID cryptoAlgorithmID, string key) {
-			 var DataBytes = DataString.ToUTF8();
-			 var ContentType = "text/plain";
-			 var HashData = DataBytes.GetDigest(cryptoAlgorithmID);
-			 var UDFDataBuffer = UDF.UDFBuffer(HashData, ContentType);
-			 byte[] UDFData ;
-			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("~~~~\n{0}", _Indent);
-			_Output.Write ("H(&<Data>) = ", _Indent);
-			_Output.Write ("{1}\n{0}", _Indent, HashData.ToStringBase16FormatHex());
-			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("&<Content-ID> + ‘:’ + H(&<Data>) =  ", _Indent);
-			_Output.Write ("{1}\n{0}", _Indent, UDFDataBuffer.ToStringBase16FormatHex());
-			_Output.Write ("\n{0}", _Indent);
-			if (  (key == null) ) {
-				 UDFData = UDFDataBuffer.GetDigest(cryptoAlgorithmID);
-				_Output.Write ("H(&<Content-ID> + ‘:’ + H(&<Data>)) =  ", _Indent);
-				} else {
-				 var keyBytes = key.ToUTF8();
-				 var macKey = UDF.ConvertKey(key,512);
-				 UDFData = UDFDataBuffer.GetMAC(macKey, CryptoAlgorithmID.HMAC_SHA_2_512);
-				 var keyDerive = new KeyDeriveHKDF(keyBytes, KeyDerive.KeyedUDFMaster, CryptoAlgorithmID.HMAC_SHA_2_512);
-				_Output.Write ("PRK(Key) =  ", _Indent);
-				_Output.Write ("{1}\n{0}", _Indent, keyDerive.PRK.ToStringBase16FormatHex());
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("HKDF(Key) =  ", _Indent);
-				_Output.Write ("{1}\n{0}", _Indent, macKey.ToStringBase16FormatHex());
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("MAC(&<key>, &<Content-ID> + ‘:’ + H(&<Data>)) =  ", _Indent);
-				}
-			_Output.Write ("{1}\n{0}", _Indent, UDFData.ToStringBase16FormatHex());
-			 var Trimmed=UDF.BufferDigestToUDF(UDFDataBuffer,125,cryptoAlgorithmID, key);
-			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("Prefixed, compressed, trimmed =  ", _Indent);
-			_Output.Write ("{1} ...\n{0}", _Indent, Trimmed.ToStringBase16FormatHex());
-			_Output.Write ("~~~~\n{0}", _Indent);
-			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("The 125 bit fingerprint value is {1}\n{0}", _Indent, UDF.Format (Trimmed, 125));
-			_Output.Write ("\n{0}", _Indent);
 			}
 		
 

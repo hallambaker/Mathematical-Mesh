@@ -51,7 +51,10 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// The Key Value as a Base32 encoded string.
         /// </summary>
-        public string Text => BaseConvert.ToStringUDF32(Key);
+        public virtual string UDFKey => Cryptography.UDF.SymmetricKey(Key);
+
+
+        public string UDFIdentifier => Cryptography.UDF.ContentDigestOfUDF(UDFKey, bits:KeyBits*2);
 
         /// <summary>
         /// Create a new random secret with the specified number of bits.
@@ -98,7 +101,7 @@ namespace Goedel.Cryptography {
         /// Hash code of the current class.
         /// </summary>
         /// <returns>Hash code of object instance.</returns>
-        public override int GetHashCode() => Text.GetHashCode();
+        public override int GetHashCode() => UDFKey.GetHashCode();
 
         /// <summary>Test for equality
         /// </summary>
@@ -328,6 +331,12 @@ namespace Goedel.Cryptography {
     /// A member of a key share collection.
     /// </summary>
     public class KeyShare : Secret {
+
+        /// <summary>
+        /// The Key Value as a Base32 encoded string.
+        /// </summary>
+        public override string UDFKey => Cryptography.UDF.KeyShare(Key);
+
         /// <summary>
         /// Quorum required to recombine the key shares to recover the secret.
         /// </summary>

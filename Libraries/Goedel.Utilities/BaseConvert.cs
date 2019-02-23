@@ -506,14 +506,14 @@ namespace Goedel.Utilities  {
         //    return ToStringUDF32(data, Characters);
         //    }
 
-        /// <summary>
-        /// Convert data to Base32/UDF string. This is a Base32 character string with 
-        /// separators between each block of five characters.
-        /// </summary>
-        /// <param name="Data">The data to convert</param>
-        /// <returns>The resulting string.</returns>
-        public static string ToStringUDF32(this byte[] Data) => 
-                Data.ToStringBase32(Format: ConversionFormat.Dash5);
+        ///// <summary>
+        ///// Convert data to Base32/UDF string. This is a Base32 character string with 
+        ///// separators between each block of five characters.
+        ///// </summary>
+        ///// <param name="Data">The data to convert</param>
+        ///// <returns>The resulting string.</returns>
+        //public static string ToStringUDF32(this byte[] Data) => 
+        //        Data.ToStringBase32(Format: ConversionFormat.Dash5);
 
         /// <summary>
         /// Convert data to Base32HS string. This is probably not necessary as 

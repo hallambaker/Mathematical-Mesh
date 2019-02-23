@@ -385,7 +385,7 @@ namespace ExampleGenerator {
             for (var i = 0; i < AdvancedRecoveryCount; i++) {
                 AdvancedRecoveryShareValues[i] = AdvancedRecoveryShares[i].Value;
                 AdvancedRecoverySharesHex[i] = AdvancedRecoveryShares[i].Key;
-                AdvancedRecoveryBase32[i] = AdvancedRecoveryShares[i].Text;
+                AdvancedRecoveryBase32[i] = AdvancedRecoveryShares[i].UDFKey;
                 }
 
             // AdvancedCogen
@@ -451,7 +451,7 @@ namespace ExampleGenerator {
                     AdvancedRecoveryCount, out AdvancedRecoveryPolynomial);
             AdvancedQuantumShares = new string[AdvancedRecoveryCount];
             for (var i = 0; i < AdvancedRecoveryCount; i++) {
-                AdvancedQuantumShares[i] = AdvancedQuantumKeyShares[i].Text;
+                AdvancedQuantumShares[i] = AdvancedQuantumKeyShares[i].UDFKey;
                 }
 
 
