@@ -40,7 +40,7 @@ namespace Goedel.Cryptography.Algorithms {
             var Private = new CurveX25519Private();
 
             return new CurveX25519Result() {
-                EphemeralPublicValue = Private.Public,
+                EphemeralPublicValue = Private.PublicKey,
                 Agreement = Private.Agreement(this)
                 };
             }
@@ -52,7 +52,7 @@ namespace Goedel.Cryptography.Algorithms {
     public class CurveX25519Private : IKeyAdvancedPrivate {
 
         /// <summary>The public key, i.e. a point on the curve</summary>
-        public CurveX25519Public Public;
+        public CurveX25519Public PublicKey;
 
         /// <summary>Encoded form of the public key.</summary>
         public byte[] Encoding => throw new NotImplementedException();

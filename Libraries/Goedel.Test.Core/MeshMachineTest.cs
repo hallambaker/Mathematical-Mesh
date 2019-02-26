@@ -139,17 +139,17 @@ namespace Goedel.Test.Core {
         public KeyCollectionTest(MeshMachineTest meshMachine) => MeshMachine = meshMachine;
 
 
-        /// <summary>
-        /// Add a keypair and bind it to the persistence store.
-        /// </summary>
-        /// <param name="keyPair">The key pair to add.</param>
-        public override void Add(KeyPair keyPair) {
-            if (keyPair.PersistPending) {
-                MeshMachine.Persist(keyPair);
-                keyPair.Persist(this);
-                base.Add(keyPair);
-                }
-            }
+        ///// <summary>
+        ///// Add a keypair and bind it to the persistence store.
+        ///// </summary>
+        ///// <param name="keyPair">The key pair to add.</param>
+        //public override void Add(KeyPair keyPair) {
+        //    if (keyPair.PersistPending) {
+        //        MeshMachine.Persist(keyPair);
+        //        keyPair.Persist(this);
+        //        base.Add(keyPair);
+        //        }
+        //    }
 
 
        }

@@ -38,17 +38,18 @@ namespace ExampleGenerator {
             TestEnvironment = new TestEnvironmentCommon();
 
             //// Delete data from previous runs
-            //MakeClean();
+            MakeClean();
             UDFExamples();
+            GenerateKeys();
+            GoDareMessage();
 
 
             //ExampleGenerator.MeshExamplesUDF(this);
             //ExampleGenerator.MeshExamplesUDFCompressed(this);
             //ExampleGenerator.MeshExamplesUDFCommitment(this);
             //GoContainer();
-            //GenerateKeys();
             //GoDareContainer();
-            //GoDareMessage();
+
             ////JSONReader.Trace = true;
             //GoContainer();
             //GoReference();
@@ -118,8 +119,12 @@ namespace ExampleGenerator {
             ExampleGenerator.UDFDigestURI(this);
             ExampleGenerator.UDFDigestLocator(this);
             ExampleGenerator.UDFDigestEARLRAW(this);
+            ExampleGenerator.UDFDigestEARLLocator(this);
             ExampleGenerator.UDFDigestEARL(this);
             ExampleGenerator.UDFsin(this);
+            ExampleGenerator.UDFURIEBNF(this);
+            ExampleGenerator.UDFTableReservedId(this);
+            ExampleGenerator.UDFShamirRecovery(this);
 
             ExampleGenerator.UDFSplit(this);
             ExampleGenerator.UDFDigestLong(this);
@@ -136,7 +141,7 @@ namespace ExampleGenerator {
 
         public void MakeDocs () {
             var Process = All ? System.Diagnostics.Process.Start("CMD.exe", "/C MakeDocs") :
-                System.Diagnostics.Process.Start("CMD.exe", "/C MakeOneDoc");
+                System.Diagnostics.Process.Start("CMD.exe", "/C MakeDocs");
             Process.WaitForExit();
             }
 

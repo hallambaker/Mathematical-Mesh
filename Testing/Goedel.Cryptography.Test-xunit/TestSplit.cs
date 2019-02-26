@@ -5,11 +5,11 @@ using Xunit;
 using Goedel.Cryptography;
 using Goedel.Test;
 using Goedel.Utilities;
-using System.Collections;
+using System.Numerics;
 
 namespace Goedel.XUnit {
     public class TestSplit {
-
+        public static TestSplit Test() => new TestSplit();
         public TestSplit() => CryptographyCommon.Initialize();
 
 
@@ -43,6 +43,49 @@ namespace Goedel.XUnit {
             Xunit.Assert.True(secret.Key.IsEqualTo(resecret.Key));
             }
 
+
+        /// <summary>
+        /// Check that all the prime values are in fact prime
+        /// </summary>
+        [Fact]
+        public void TestSplitPrimes() {
+            for (int i = 32; i < 512; i+=32) {
+                
+                var exponent = BigInteger.Pow(2, i);
+                var prime = Secret.GetPrime(i, out _, out _);
+                prime.IsProbablePrime(256).AssertTrue();
+                (prime > exponent).AssertTrue();
+
+                //Console.WriteLine($"Check {i} {prime}");
+                }
+
+            }
+
+        /// <summary>
+        /// Check that all the prime values are in fact prime
+        /// </summary>
+        [Fact]
+        public void TestBigIntconversion() {
+            var bigtest1 = (new byte[] { 1, 0, 0, 0 }).BigIntegerBigEndian();
+            (bigtest1 == new BigInteger(0x01000000)).AssertTrue();
+
+            bigtest1 = (new byte[] { 0, 0, 0, 1 }).BigIntegerBigEndian();
+            (bigtest1 == new BigInteger(0x00000001)).AssertTrue();
+
+            }
+
+
+        /// <summary>
+        /// Check that all the prime values are in fact prime
+        /// </summary>
+        [Fact]
+        public void TestSplit1() {
+            var secret = new Secret(32);
+            var shares = secret.Split(3, 2);
+
+
+
+            }
 
 
         }

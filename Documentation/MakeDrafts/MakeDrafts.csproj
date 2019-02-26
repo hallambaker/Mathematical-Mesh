@@ -83,6 +83,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile> 
+    <Compile Update="MakeExamplesMessage.cs">
+      <DependentUpon>MakeExamplesMessage.script</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile> 	
   </ItemGroup>
 
   <ItemGroup>
@@ -112,8 +117,8 @@
       <LastGenOutput>MakeExamplesUDF.cs</LastGenOutput>
       <Generator>gscript</Generator>
     </None>
-    <None Update="Old\MakeExamplesMessage.script">
-      <Generator></Generator>
+    <None Update="MakeExamplesMessage.script">
+      <Generator>gscript</Generator>
     </None>
     <None Update="MakeExamplesContainer.script">
       <LastGenOutput>MakeExamplesContainer.cs</LastGenOutput>
@@ -127,6 +132,10 @@
       <LastGenOutput>MakeExamplesMessaging.cs</LastGenOutput>
       <Generator>gscript</Generator>
     </None>
+    <None Update="MakeExamplesMessage.script">
+      <LastGenOutput>MakeExamplesMessage.cs</LastGenOutput>
+      <Generator>gscript</Generator>
+    </None>	
   </ItemGroup>
 
 

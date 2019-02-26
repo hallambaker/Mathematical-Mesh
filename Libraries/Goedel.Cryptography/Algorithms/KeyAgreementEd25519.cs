@@ -382,7 +382,7 @@ namespace Goedel.Cryptography.Algorithms {
             var Private = new CurveEdwards25519Private();
 
             return new CurveEdwards25519Result() {
-                EphemeralPublicValue = Private.Public,
+                EphemeralPublicValue = Private.PublicKey,
                 Agreement = Private.Agreement(this)
                 };
             }
@@ -490,7 +490,7 @@ namespace Goedel.Cryptography.Algorithms {
         byte[] HashPrefix { get; }
 
         /// <summary>The corresponding public key</summary>
-        public CurveEdwards25519Public Public { get; }
+        public CurveEdwards25519Public PublicKey { get; }
 
         /// <summary>If true, this is a recryption key.</summary>
         public bool IsRecryption { get; set; } = false;
@@ -517,7 +517,7 @@ namespace Goedel.Cryptography.Algorithms {
             Private = ExtractPrivate(PreSecret);
 
             var PublicPoint = CurveEdwards25519.GetPublic(Private);
-            Public = new CurveEdwards25519Public(PublicPoint);
+            PublicKey = new CurveEdwards25519Public(PublicPoint);
             }
 
         /// <summary>
@@ -529,7 +529,7 @@ namespace Goedel.Cryptography.Algorithms {
             this.Secret = Private.ToByteArray();
 
             var PublicPoint = CurveEdwards25519.GetPublic(Private);
-            Public = new CurveEdwards25519Public(PublicPoint);
+            PublicKey = new CurveEdwards25519Public(PublicPoint);
             }
 
         /// <summary>
@@ -554,7 +554,7 @@ namespace Goedel.Cryptography.Algorithms {
 
             // Calculate the public point
             var PublicPoint = CurveEdwards25519.GetPublic(Private);
-            Public = new CurveEdwards25519Public(PublicPoint);
+            PublicKey = new CurveEdwards25519Public(PublicPoint);
 
             // Calculate the witness value
             Witness = CurveEdwards25519.GetPublic(SecretLocal);
@@ -642,7 +642,7 @@ namespace Goedel.Cryptography.Algorithms {
             var R = CurveEdwards25519.Base.Multiply(r);
             var Rs = R.Encode();
 
-            var k = CurveEdwards25519.HashModQ(Context, Rs, Public.Encoding, Message);
+            var k = CurveEdwards25519.HashModQ(Context, Rs, PublicKey.Encoding, Message);
             var S = (r + k * Private) % CurveEdwards25519.Q;
 
             var Bs = S.ToByteArrayLittleEndian();

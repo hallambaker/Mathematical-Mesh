@@ -7,7 +7,7 @@
 	Description 
 		|Classes that describe the DARE Container Format.
 
-	Section 1 "Reference"
+	Section 1 "DARE Container Schema"
 		Description
 			|TBS stuff
 
@@ -27,11 +27,6 @@
 			Description
 				|Specifies the data encoding for the header section of for the following frames.
 				|This value is ONLY valid in Frame 0 which MUST have a header encoded in JSON.
-
-
-
-
-
 
 	Structure ContainerHeader
 		Inherits DareHeader

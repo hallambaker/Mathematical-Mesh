@@ -46,7 +46,9 @@ ToolTargets = \
 	MakeExamplesUDF.cs\
 	MakeExamplesContainer.cs\
 	MakeExamplesDeveloper.cs\
-	MakeExamplesMessaging.cs
+	MakeExamplesMessaging.cs\
+	MakeExamplesMessage.cs
+
 MakeExamplesAdvanced.cs : MakeExamplesAdvanced.script 
 	gscript MakeExamplesAdvanced.script  MakeExamplesAdvanced.cs
 
@@ -68,10 +70,11 @@ MakeExamplesContainer.cs : MakeExamplesContainer.script
 MakeExamplesDeveloper.cs : MakeExamplesDeveloper.script 
 	gscript MakeExamplesDeveloper.script  MakeExamplesDeveloper.cs
 
+MakeExamplesMessage.cs : MakeExamplesMessage.script 
+	gscript MakeExamplesMessage.script  MakeExamplesMessage.cs
+
 MakeExamplesMessaging.cs : MakeExamplesMessaging.script 
 	gscript MakeExamplesMessaging.script  MakeExamplesMessaging.cs
-
-
 
 prebuildRecurse : 
 

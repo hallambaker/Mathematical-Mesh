@@ -37,7 +37,6 @@ namespace Goedel.Cryptography.Dare {
 
             var JoseKey = Key.GetPublic(Ephemeral);
 
-
             KeyIdentifier = PublicKey.UDF;
             Epk = JoseKey;
             WrappedMasterKey = Exchange;

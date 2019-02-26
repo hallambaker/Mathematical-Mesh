@@ -127,6 +127,16 @@ namespace Goedel.Cryptography {
             return Result;
             }
 
+        /// <summary>
+        /// Return a positive random BigInteger that is strictly less than 2^bits.
+        /// </summary>
+        /// <param name="Bits">The number of bits in the output</param>
+        /// <returns>The random value.</returns>
+        public static BigInteger Random(int Bits) {
+            var bytes = CryptoCatalog.GetBytes(Bits / 8);
+            return BigIntegerLittleEndian(bytes);
+            }
+
 
         /// <summary>
         /// Convert an array of bytes in little endian format to a Big Integer
@@ -229,7 +239,7 @@ namespace Goedel.Cryptography {
 
 
         /// <summary>
-        /// Return a Square root of a number modulo the prime. 
+        /// Return a Square root of a number modulo a prime. 
         /// </summary>
         /// <param name="x2">The value</param>
         /// <param name="p">The modulus</param>
@@ -302,18 +312,91 @@ namespace Goedel.Cryptography {
         /// bytes in length.
         /// </summary>
         /// <param name="bigInteger">The integer to be converted.</param>
-        /// <param name="length">The minimum length of the result.</param>
+        /// <param name="length">The exact length of the result.</param>
         /// <returns>The byte array.</returns>
         public static byte[] ToByteArrayLittleEndian(this BigInteger bigInteger, int length) {
 
             var Result = bigInteger.ToByteArray();
-            if (Result.Length >= length) {
+            if (Result.Length == length) {
                 return Result;
                 }
 
             var Copy = new byte[length];
-            Array.Copy(Result, Copy, Result.Length);
+            length = Math.Min(length, Result.Length);
+            Array.Copy(Result, Copy, length);
             return Copy;
+
+            }
+
+        /// <summary>
+        /// Convert <paramref name="bigInteger"/> to a byte array in big endian format,
+        /// padding the resulting array so that it is at least <paramref name="length"/>
+        /// bytes in length.
+        /// </summary>
+        /// <param name="bigInteger">The integer to be converted.</param>
+        /// <param name="length">The exact length of the result.</param>
+        /// <returns>The byte array.</returns>
+        public static byte[] ToByteArrayBigEndian(this BigInteger bigInteger, int length) {
+            var buffer = ToByteArrayLittleEndian(bigInteger, length);
+            Array.Reverse(buffer);
+            return buffer;
+            }
+
+        /// <summary>
+        /// Miller-Rabin probabalistic primality test.
+        /// https://rosettacode.org/wiki/Miller%E2%80%93Rabin_primality_test#C.23
+        /// </summary>
+        /// <param name="source">The integer to test</param>
+        /// <param name="certainty">The degree of certainty.</param>
+        /// <returns>If the value <paramref name="source"/> is found to not be prime,
+        /// returns false. Otherwise, returns true.</returns>
+        public static bool IsProbablePrime(this BigInteger source, int certainty=128) {
+            if (source == 2 || source == 3) {
+                return true;
+                }
+            if (source < 2 || source.IsEven) {
+                return false;
+                }
+
+            BigInteger d = source - 1;
+            int s = 0;
+
+            while (d % 2 == 0) {
+                d /= 2;
+                s += 1;
+                }
+
+            byte[] bytes = new byte[source.ToByteArray().LongLength];
+            BigInteger a;
+
+            for (int i = 0; i < certainty; i++) {
+                do {
+                    Platform.FillRandom(bytes, 0, bytes.Length);
+                    a = new BigInteger(bytes);
+                    } while (a < 2 || a >= source - 2);
+
+                var x = BigInteger.ModPow(a, d, source);
+                if (x == 1 || x == source - 1) {
+                    continue;
+                    }
+
+                for (int r = 1; r < s; r++) {
+                    x = BigInteger.ModPow(x, 2, source);
+                    if (x == 1) {
+                        return false;
+                        }
+
+                    if (x == source - 1) {
+                        break;
+                        }
+                    }
+
+                if (x != source - 1) {
+                    return false;
+                    }
+                }
+
+            return true;
 
             }
 

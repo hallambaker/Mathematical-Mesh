@@ -68,14 +68,14 @@ namespace ExampleGenerator {
         public readonly byte[] DareMessageTest2 = "Subject: Message metadata should be encrypted".ToUTF8();
         public readonly byte[] DareMessageTest3 = "2018-02-01".ToUTF8();
 
-        public DiffeHellmanPrivate DareMessageAlicePrivate;
-        public DiffeHellmanPublic DareMessageAlicePublic;
-        public KeyPairDH DareMessageAliceKeypair;
+        //public CurveEdwards25519Private DareMessageAlicePrivate;
+        //public CurveEdwards25519Public DareMessageAlicePublic;
+        public KeyPairEd25519 DareMessageAliceKeypair;
         public Key DareMessageAliceKey;
 
-        public PrivateKeyRSA SignatureAlicePrivate;
-        public PublicKeyRSA SignatureAlicePublic;
-        public KeyPairBaseRSA SignatureAliceKeyPair;
+        public CurveEdwards25519Public SignatureAlicePrivate;
+        public CurveEdwards25519Private SignatureAlicePublic;
+        public KeyPairEd25519 SignatureAliceKeyPair;
         public Key SignatureAliceKey;
 
 
@@ -103,7 +103,7 @@ namespace ExampleGenerator {
         public CryptoParameters CryptoParametersSign;
         public CryptoParameters CryptoParametersSignEncrypt;
 
-        //public CryptoStackDebug CryptoStackEncrypt;
+        public CryptoStackDebug CryptoStackEncrypt;
 
         KeyCollection KeyCollection;
 
@@ -121,23 +121,47 @@ namespace ExampleGenerator {
             var machineEnvironment = new TestEnvironmentMachine( "TestLifecycle");
             var Machine1 = new MeshMachineTest(machineEnvironment, name: "Machine1");
 
-            DareMessageAlicePrivate = new DiffeHellmanPrivate();
-            var DareMessageAlicePrivateKeyPair = new KeyPairDH(
-                DareMessageAlicePrivate, KeySecurity.Exportable) {
-                Locator = AccountAlice
-                };
+            
+            var DareMessageAlicePrivateKeyPair = KeyPairEd25519.Generate(
+                KeySecurity.Exportable, KeyUses.Encrypt);
+            DareMessageAlicePrivateKeyPair.Locator = AccountAlice;
+            //DareMessageAlicePrivate = new CurveEdwards25519Private();
 
             DareMessageAliceKey = Key.GetPrivate(DareMessageAlicePrivateKeyPair);
-            DareMessageAlicePublic = DareMessageAlicePrivate.DiffeHellmanPublic;
-            DareMessageAliceKeypair = new KeyPairDH(DareMessageAlicePublic);
+
+
+            //DareMessageAlicePublic = DareMessageAlicePrivate.PublicKey;
+            //DareMessageAliceKeypair = new KeyPairEd25519(DareMessageAlicePublic);
 
 
             // Signature Key Set.
-            SignatureAliceKeyPair = KeyPairRSA.Generate(2048, KeySecurity.Exportable);
+            SignatureAliceKeyPair = KeyPairEd25519.Generate(
+                KeySecurity.Exportable, KeyUses.Sign);
+
             SignatureAliceKeyPair.Locator = AccountAlice;
             SignatureAliceKey = Key.GetPrivate(SignatureAliceKeyPair);
-            SignatureAlicePrivate = (PrivateKeyRSA)Key.GetPrivate(SignatureAliceKeyPair);
-            SignatureAlicePublic = (PublicKeyRSA)Key.GetPublic(SignatureAliceKeyPair);
+
+
+            //SignatureAlicePrivate = (PrivateKeyECDH)Key.GetPrivate(SignatureAliceKeyPair);
+            //SignatureAlicePublic = (PublicKeyECDH)Key.GetPublic(SignatureAliceKeyPair);
+
+            //DareMessageAlicePrivate = new DiffeHellmanPrivate();
+            //var DareMessageAlicePrivateKeyPair = new KeyPairDH(
+            //    DareMessageAlicePrivate, KeySecurity.Exportable) {
+            //    Locator = AccountAlice
+            //    };
+
+            //DareMessageAliceKey = Key.GetPrivate(DareMessageAlicePrivateKeyPair);
+            //DareMessageAlicePublic = DareMessageAlicePrivate.DiffeHellmanPublic;
+            //DareMessageAliceKeypair = new KeyPairDH(DareMessageAlicePublic);
+
+
+            //// Signature Key Set.
+            //SignatureAliceKeyPair = KeyPairRSA.Generate(2048, KeySecurity.Exportable);
+            //SignatureAliceKeyPair.Locator = AccountAlice;
+            //SignatureAliceKey = Key.GetPrivate(SignatureAliceKeyPair);
+            //SignatureAlicePrivate = (PrivateKeyRSA)Key.GetPrivate(SignatureAliceKeyPair);
+            //SignatureAlicePublic = (PublicKeyRSA)Key.GetPublic(SignatureAliceKeyPair);
 
             KeyCollection = new KeyCollectionTest(Machine1);
             KeyCollection.Add(DareMessageAlicePrivateKeyPair);
@@ -162,6 +186,9 @@ namespace ExampleGenerator {
                         Recipients: Accounts,
                         Signers: Accounts);
 
+            CryptoStackEncrypt = new CryptoStackDebug(CryptoParametersEncrypt);
+
+
             // Data Sequences
             DataSequences = new List<byte[]> { DareMessageTest2, DareMessageTest3 };
 
@@ -174,9 +201,11 @@ namespace ExampleGenerator {
             var EDS1 = MailMessageAsDAREPlaintext.Header.EDSS[0];
             EDSText = ReadEDS(EDS1);
 
-            //ExampleGenerator.MeshExamplesMessageMail(this);
-            //ExampleGenerator.MeshExamplesMessageEDS(this);
-            //ExampleGenerator.MeshExamplesMessageEncrypted(this);
+
+            ExampleGenerator.MeshExamplesMessageMail(this);
+            ExampleGenerator.MeshExamplesMessageEDS(this);
+            ExampleGenerator.MeshExamplesMessageEncrypted(this);
+
             }
 
 
@@ -216,10 +245,12 @@ namespace ExampleGenerator {
             DAREMessageAtomicSignEncrypt = new DareMessage(CryptoParametersSignEncrypt, DareMessageTest1);
 
 
-            //CryptoStackEncrypt = new CryptoStackDebug(CryptoParametersEncrypt);
-            //MessageEnc = CryptoStackEncrypt.Message(DareMessageTest1);
+            CryptoStackEncrypt = new CryptoStackDebug(CryptoParametersEncrypt);
+            MessageEnc = new DareMessage(CryptoStackEncrypt, DareMessageTest1);
 
-            //ExampleGenerator.MeshExamplesMessage(this);
+            //CryptoStackEncrypt.Message(DareMessageTest1);
+
+            ExampleGenerator.MeshExamplesMessage(this);
             }
 
         void GoDareContainer() {
@@ -321,7 +352,7 @@ namespace ExampleGenerator {
 
 
             ExampleGenerator.MeshExamplesContainer(this);
-            ExampleGenerator.MeshExamplesUDFCompressed(this);
+            //ExampleGenerator.MeshExamplesUDFCompressed(this);
             }
 
         //KeyExchangeClient KeyExchangeClient;

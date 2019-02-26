@@ -15,7 +15,8 @@ namespace Goedel.Cryptography {
     /// </summary>
     public class KeyPairX25519 : KeyPairECDH {
 
-        CurveX25519Public PublicKey;
+        ///<summary>The public key value.</summary>
+        public CurveX25519Public PublicKey;
         CurveX25519Private PrivateKey;
 
 
@@ -74,7 +75,7 @@ namespace Goedel.Cryptography {
             else {
                 EncodedPrivateKey = key;
                 var privateKey = new CurveX25519Private(key);
-                PublicKey = privateKey.Public;
+                PublicKey = privateKey.PublicKey;
                 if (keyType.IsExportable()) {
                     PKIXPrivateKeyECDH = new PKIXPrivateKeyX25519(key, PKIXPublicKeyECDH);
                     }

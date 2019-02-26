@@ -106,6 +106,14 @@ namespace Goedel.Utilities {
 
             foreach (char c in In) {
                 switch (c) {
+                    case '…': Result.Append("..."); break;
+                    case '‘': Result.Append("'"); break;
+                    case '’': Result.Append("'"); break;
+                    case '“': Result.Append("\""); break;
+                    case '”': Result.Append("\""); break;
+                    case '®': Result.Append("(R)"); break;
+                    case '©': Result.Append("(C)"); break;
+
                     case '<': Result.Append ("&lt;"); break;
                     case '>': Result.Append("&gt;"); break;
                     case '&': Result.Append("&amp;"); break;

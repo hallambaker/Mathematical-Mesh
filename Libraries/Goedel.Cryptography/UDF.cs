@@ -199,7 +199,7 @@ namespace Goedel.Cryptography {
             Assert.True(buffer.Length == 64);
 
             // Check for less than 20 leading zeros
-            if (buffer[63] != 0 | buffer[62] != 0 | ((buffer[61]&0b00001111)==0)) {
+            if (buffer[63] != 0 | buffer[62] != 0 | ((buffer[61]&0b00001111)!=0)) {
                 return 0;
                 }
 
@@ -403,7 +403,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="contentType">MIME media type of data being fingerprinted.</param>
         /// <param name="data">Data to be fingerprinted.</param>
-        /// <param name="bits">Precision, must be a multiple of 25 bits.</param>
+        /// <param name="bits">Precision, must be a multiple of 20 bits.</param>
         /// <param name="cryptoAlgorithmID">The cryptographic digest to use to compute
         /// the hash value.</param>
         /// <param name="key">Optional key used to create a keyed fingerprint.</param>
@@ -424,7 +424,9 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="data"></param>
         /// <param name="cryptoAlgorithmID"></param>
-        /// <returns></returns>
+        /// <param name="bits">Precision, must be a multiple of 20 bits.</param>
+        /// <returns>The Base32 presentation of the UDF value truncated to 
+        /// <paramref name="bits"/> precision.</returns>
         public static string ContentDigestOfUDF(
                     string data,
                     int bits = 0,
@@ -518,12 +520,26 @@ namespace Goedel.Cryptography {
         /// <param name="Data">Data to be fingerprinted.</param>
         /// <param name="Bits">Precision, must be a multiple of 25 bits.</param>
         /// <returns>The binary UDF fingerprint.</returns>
-        public static byte[] FromKeyInfo(byte[] Data, int Bits = 0) => 
+        public static byte[] FromKeyInfo(
+                    byte[] Data, 
+                    int Bits = 0) => 
             DataToUDFBinary(Data, UDFConstants.PKIXKey, Bits);
 
 
 
-
+        /// <summary>
+        /// Parse a UDF to obtain the type identifier and Binary Data Sequence.
+        /// </summary>
+        /// <param name="udf">UDF to parse.</param>
+        /// <param name="code">The type identifier code.</param>
+        /// <returns>The Binary Data Sequence.</returns>
+        public static byte[] Parse(string udf, out byte code) {
+            var buffer = BaseConvert.FromBase32(udf);
+            code = buffer[0];
+            var result = new byte[buffer.Length - 1];
+            Buffer.BlockCopy(buffer, 1, result, 0, buffer.Length - 1);
+            return result;
+            }
 
 
 

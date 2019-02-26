@@ -73,7 +73,7 @@ namespace Goedel.Cryptography {
             else {
                 EncodedPrivateKey = key;
                 PrivateKey = new CurveEdwards25519Private(key);
-                PublicKey = PrivateKey.Public;
+                PublicKey = PrivateKey.PublicKey;
                 PKIXPublicKeyECDH = new PKIXPublicKeyEd25519(PublicKey.Encoding);
                 if (keyType.IsExportable()) {
                     PKIXPrivateKeyECDH = new PKIXPrivateKeyEd25519(key, PKIXPublicKeyECDH);

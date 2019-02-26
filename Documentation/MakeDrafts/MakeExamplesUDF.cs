@@ -39,7 +39,8 @@ namespace ExampleGenerator {
 			using (var _Output = new StreamWriter ("Examples\\UDFNonce.md")) {
 				var _Indent = ""; 
 				_Output.Write ("~~~~\n{0}", _Indent);
-				_Output.Write ("{1}\n{0}", _Indent, Example.ResultUDFNonce.Key);
+				_Output.Write ("Nonce UDF:\n{0}", _Indent);
+				_Output.Write ("  {1}\n{0}", _Indent, Example.ResultUDFNonce.Key);
 				_Output.Write ("~~~~\n{0}", _Indent);
 				}
 			}
@@ -51,8 +52,12 @@ namespace ExampleGenerator {
 		public static void UDFEncrypt (CreateExamples Example) { /* File  */
 			using (var _Output = new StreamWriter ("Examples\\UDFEncrypt.md")) {
 				var _Indent = ""; 
+				 var data = UDF.Parse (Example.ResultUDFSecret.Key, out var code);
 				_Output.Write ("~~~~\n{0}", _Indent);
-				_Output.Write ("{1}\n{0}", _Indent, Example.ResultUDFSecret.Key);
+				_Output.Write ("KeyValue:{1}\n{0}", _Indent, data.ToStringBase16FormatHex());
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("Encryption/Authenticator UDF:\n{0}", _Indent);
+				_Output.Write ("  {1}\n{0}", _Indent, Example.ResultUDFSecret.Key);
 				_Output.Write ("~~~~\n{0}", _Indent);
 				}
 			}
@@ -107,7 +112,9 @@ namespace ExampleGenerator {
 		public static void UDFDigestURI (CreateExamples Example) { /* File  */
 			using (var _Output = new StreamWriter ("Examples\\UDFDigestURI.md")) {
 				var _Indent = ""; 
+				_Output.Write ("~~~~\n{0}", _Indent);
 				_Output.Write ("udf:{1}\n{0}", _Indent, Example.ResultDigestSHA2.Digest);
+				_Output.Write ("~~~~\n{0}", _Indent);
 				}
 			}
 		
@@ -118,7 +125,9 @@ namespace ExampleGenerator {
 		public static void UDFDigestLocator (CreateExamples Example) { /* File  */
 			using (var _Output = new StreamWriter ("Examples\\UDFDigestLocator.md")) {
 				var _Indent = ""; 
+				_Output.Write ("~~~~\n{0}", _Indent);
 				_Output.Write ("udf://{1}\n{0}", _Indent, Example.ResultDigestSHA2.Digest);
+				_Output.Write ("~~~~\n{0}", _Indent);
 				}
 			}
 		
@@ -140,13 +149,48 @@ namespace ExampleGenerator {
 		public static void UDFDigestEARL (CreateExamples Example) { /* File  */
 			using (var _Output = new StreamWriter ("Examples\\UDFDigestEARL.md")) {
 				var _Indent = ""; 
-				_Output.Write ("udf://example.com/{1}\n{0}", _Indent, Example.ResultUDFEARL.Key);
+				_Output.Write ("To generate the paper invoice, Example.com first creates a new encryption key:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("The UDF locator is resolved by appending it to the Web Service Endpoint\n{0}", _Indent);
-				_Output.Write ("for the domain example.com according to the DNS Web Service discovery\n{0}", _Indent);
-				_Output.Write ("mechanism discussed in section XX\n{0}", _Indent);
+				_Output.Write ("{1}\n{0}", _Indent, Example.ResultUDFEARL.Key);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("One or more electronic forms of the invoice are encrypted under the key \n{0}", _Indent);
+				_Output.Write ("{1} and placed on the Example.com Web site so that \n{0}", _Indent, Example.ResultUDFEARL.Key);
+				_Output.Write ("the appropriate version is returned if Alice scans the QR code.\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The key is then converted to form an EARL for the example.com UDF resolution service:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("udf://example.com/{1}\n{0}", _Indent, Example.ResultUDFEARL.Key);
+				}
+			}
+		
+
+		//
+		// UDFDigestEARLLocator
+		//
+		public static void UDFDigestEARLLocator (CreateExamples Example) { /* File  */
+			using (var _Output = new StreamWriter ("Examples\\UDFDigestEARLLocator.md")) {
+				var _Indent = ""; 
+				_Output.Write ("The UDF EARL locator shown above is resolved by first determining the Web Service\n{0}", _Indent);
+				_Output.Write ("Endpoint for the mmm-udf service for the domain example.com.\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("Discover (\"example.com\", \"mmm-udf\") = \n{0}", _Indent);
+				_Output.Write ("https://example.com/.well-known/mmm-udf/\n{0}", _Indent);
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("Next the fingerprint of the source UDF is obtained.\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("UDF ({1}) =\n{0}", _Indent, Example.ResultUDFEARL.Key);
+				_Output.Write ("{1}\n{0}", _Indent, Example.ResultUDFEARL.Identifier);
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("Combining the Web Service Endpoint and the fingerprint of the source UDF provides\n{0}", _Indent);
+				_Output.Write ("the URI from which the content is obtained using the normal HTTP GET method:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("https://example.com/.well-known/mmm-udf/{1}\n{0}", _Indent, Example.ResultUDFEARL.Identifier);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
 				}
 			}
 		
@@ -158,14 +202,20 @@ namespace ExampleGenerator {
 			using (var _Output = new StreamWriter ("Examples\\UDFsin.md")) {
 				var _Indent = ""; 
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("For example, Example Inc holds the domain name example.com and has deployed a private CA whose root of trust is a PKIX certificate with the UDF fingerprint MB2GK-6DUF5-YGYYL-JNY5E-RWSHZ.\n{0}", _Indent);
+				_Output.Write ("For example, Example Inc holds the domain name example.com and has deployed a \n{0}", _Indent);
+				_Output.Write ("private CA whose root of trust is a PKIX certificate with the UDF fingerprint \n{0}", _Indent);
+				_Output.Write ("MB2GK-6DUF5-YGYYL-JNY5E-RWSHZ.\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("Alice is an employee of Example Inc., she uses three email addresses:\n{0}", _Indent);
-				_Output.Write ("alice@example.com\n{0}", _Indent);
-				_Output.Write ("A regular email address (not a SIN).\n{0}", _Indent);
-				_Output.Write ("alice@mm--mb2gk-6duf5-ygyyl-jny5e-rwshz.example.com\n{0}", _Indent);
-				_Output.Write ("A strong email address that is backwards compatible.\n{0}", _Indent);
-				_Output.Write ("alice@example.com.mm--mb2gk-6duf5-ygyyl-jny5e-rwshz\n{0}", _Indent);
-				_Output.Write ("A strong email address that is backwards incompatible.\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("<dl>\n{0}", _Indent);
+				_Output.Write ("<dt>alice@example.com\n{0}", _Indent);
+				_Output.Write ("<dd>A regular email address (not a SIN).\n{0}", _Indent);
+				_Output.Write ("<dt>alice@mm--mb2gk-6duf5-ygyyl-jny5e-rwshz.example.com\n{0}", _Indent);
+				_Output.Write ("<dd>A strong email address that is backwards compatible.\n{0}", _Indent);
+				_Output.Write ("<dt>alice@example.com.mm--mb2gk-6duf5-ygyyl-jny5e-rwshz\n{0}", _Indent);
+				_Output.Write ("<dd>A strong email address that is backwards incompatible.\n{0}", _Indent);
+				_Output.Write ("</dl>\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				}
@@ -283,6 +333,35 @@ namespace ExampleGenerator {
 				_Output.Write ("\n{0}", _Indent);
 				 instance.MakeUTFExtendedExample (DataString, CryptoAlgorithmID.SHA_3_512, null);
 				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("###Using SHA-2-512 Digest with Compression \n{0}", _Indent);
+				 var DataStringc2 = $"UDF Compressed Document {4187123}";
+				 var Datac2 = DataStringc2.ToUTF8();
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The content data \"{1}\" produces a UDF Content Digest SHA-2-512 binary value \n{0}", _Indent, DataStringc2);
+				_Output.Write ("with 20 trailing zeros and is therefore presented using compressed presentation:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("Data = \"{1}\"\n{0}", _Indent, Datac2.ToStringBase16FormatHex());
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The UTF8 Content Digest is given as:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				 instance.MakeUTFExtendedExample (DataStringc2, CryptoAlgorithmID.SHA_2_512, null);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("###Using SHA-3-512 Digest with Compression \n{0}", _Indent);
+				 var DataStringc3 = $"UDF Compressed Document {774665}";
+				 var Datac3 = DataStringc3.ToUTF8();
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The content data \"{1}\" produces a UDF Content Digest SHA-3-512 binary value \n{0}", _Indent, DataStringc3);
+				_Output.Write ("with 20 trailing zeros and is therefore presented using compressed presentation:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("Data = {1}\n{0}", _Indent, Datac3.ToStringBase16FormatHex());
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The UTF8 SHA-3-512 Content Digest is\n{0}", _Indent);
+				_Output.Write ("{1}\n{0}", _Indent, UDF.ContentDigestOfDataString(Datac3, ContentType, 140, CryptoAlgorithmID.SHA_3_512));
+				_Output.Write ("\n{0}", _Indent);
 				}
 			}
 		
@@ -338,7 +417,7 @@ namespace ExampleGenerator {
 			using (var _Output = new StreamWriter ("Examples\\UDFAuthenticatorLong.md")) {
 				var _Indent = ""; 
 				 var instance = Instance (_Output);
-				 var key = "NBQ26-MEZGP-4SVCU-RYOWO-QTURA";
+				 var key = "NDD7-6CMX-H2FW-ISAL-K4VB-DQ3E-PEDM";
 				 var DataString = "Konrad is the traitor";
 				 var Data = DataString.ToUTF8();
 				 var ContentType = "text/plain";
@@ -364,13 +443,149 @@ namespace ExampleGenerator {
 		
 
 		//
-		// UDFDigestResolution
+		// UDFTableReservedId
 		//
-		public static void UDFDigestResolution (CreateExamples Example) { /* File  */
-			using (var _Output = new StreamWriter ("Examples\\UDFDigestResolution.md")) {
+		public static void UDFTableReservedId (CreateExamples Example) { /* File  */
+			using (var _Output = new StreamWriter ("Examples\\UDFTableReservedId.md")) {
 				var _Indent = ""; 
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("Code  Description                      Reference\n{0}", _Indent);
+				_Output.Write ("---  -------------------               ---------\n{0}", _Indent);
+				_Output.Write ("00   HMAC and SHA-2-512                [This document]\n{0}", _Indent);
+				_Output.Write ("32   HKDF-AES-512                      [This document]\n{0}", _Indent);
+				_Output.Write ("80   SHA-3-512                         [This document] \n{0}", _Indent);
+				_Output.Write ("81   SHA-3-512 with 20 trailing zeros  [This document]\n{0}", _Indent);
+				_Output.Write ("82   SHA-3-512 with 30 trailing zeros  [This document]\n{0}", _Indent);
+				_Output.Write ("82   SHA-3-512 with 40 trailing zeros  [This document]\n{0}", _Indent);
+				_Output.Write ("83   SHA-3-512 with 50 trailing zeros  [This document]\n{0}", _Indent);
+				_Output.Write ("96   SHA-2-512                         [This document]\n{0}", _Indent);
+				_Output.Write ("97   SHA-2-512 with 20 trailing zeros  [This document]\n{0}", _Indent);
+				_Output.Write ("98   SHA-2-512 with 30 trailing zeros  [This document]\n{0}", _Indent);
+				_Output.Write ("99   SHA-2-512 with 40 trailing zeros  [This document]\n{0}", _Indent);
+				_Output.Write ("100  SHA-2-512 with 50 trailing zeros  [This document]\n{0}", _Indent);
+				_Output.Write ("104  Random nonce                      [This document]\n{0}", _Indent);
+				_Output.Write ("144  Shamir Secret Share               [This document]\n{0}", _Indent);
+				_Output.Write ("~~~~\n{0}", _Indent);
+				}
+			}
+		
+
+		//
+		// UDFURIEBNF
+		//
+		public static void UDFURIEBNF (CreateExamples Example) { /* File  */
+			using (var _Output = new StreamWriter ("Examples\\UDFURIEBNF.md")) {
+				var _Indent = ""; 
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("URI           = \"UDF:\" udf [ \"?\" query ] [ \"\" fragment ]\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("udf           = name-form / locator-form\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("name-form     = udf-value\n{0}", _Indent);
+				_Output.Write ("locator-form  = \"//\" authority \"/\" udf-value\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("authority     = host \n{0}", _Indent);
+				_Output.Write ("host          = reg-name\n{0}", _Indent);
+				_Output.Write ("~~~~\n{0}", _Indent);
+				}
+			}
+		
+
+		//
+		// UDFShamirRecovery
+		//
+		public static void UDFShamirRecovery (CreateExamples Example) { /* File  */
+			using (var _Output = new StreamWriter ("Examples\\UDFShamirRecovery.md")) {
+				var _Indent = ""; 
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("using System;\n{0}", _Indent);
+				_Output.Write ("using System.Collections.Generic;\n{0}", _Indent);
+				_Output.Write ("using System.Numerics;\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("namespace Examples {{\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("    class Examples {{\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("        /// <summary>\n{0}", _Indent);
+				_Output.Write ("        /// Combine a set of <paramref name=\"n\"/> points (x, f(x))\n{0}", _Indent);
+				_Output.Write ("        /// on a polynomial of degree <paramref name=\"n\"/> in a \n{0}", _Indent);
+				_Output.Write ("        /// discrete field modulo prime <paramref name=\"p\"/> to \n{0}", _Indent);
+				_Output.Write ("        /// recover the value f(0) using Lagrange basis polynomials.\n{0}", _Indent);
+				_Output.Write ("        /// </summary>\n{0}", _Indent);
+				_Output.Write ("        /// <param name=\"fx\">The values f(x).</param>\n{0}", _Indent);
+				_Output.Write ("        /// <param name=\"x\">The values for x.</param>\n{0}", _Indent);
+				_Output.Write ("        /// <param name=\"p\">The modulus.</param>\n{0}", _Indent);
+				_Output.Write ("        /// <param name=\"n\">The polynomial degree.</param>\n{0}", _Indent);
+				_Output.Write ("        /// <returns>The value f(0).</returns>\n{0}", _Indent);
+				_Output.Write ("        static BigInteger CombineNK(\n{0}", _Indent);
+				_Output.Write ("                    BigInteger[] fx,\n{0}", _Indent);
+				_Output.Write ("                    int[] x,\n{0}", _Indent);
+				_Output.Write ("                    BigInteger p,\n{0}", _Indent);
+				_Output.Write ("                    int n) {{\n{0}", _Indent);
+				_Output.Write ("            if (fx.Length < n) {{\n{0}", _Indent);
+				_Output.Write ("                throw new Exception(\"Insufficient shares\");\n{0}", _Indent);
+				_Output.Write ("                }}\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("            BigInteger accumulator = 0;\n{0}", _Indent);
+				_Output.Write ("            for (var formula = 0; formula < n; formula++) {{\n{0}", _Indent);
+				_Output.Write ("                var value = fx[formula];\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("                BigInteger numerator = 1, denominator = 1;\n{0}", _Indent);
+				_Output.Write ("                for (var count = 0; count < n; count++) {{\n{0}", _Indent);
+				_Output.Write ("                    if (formula == count) {{\n{0}", _Indent);
+				_Output.Write ("                        continue;  // If not the same value\n{0}", _Indent);
+				_Output.Write ("                        }}\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("                    var start = x[formula];\n{0}", _Indent);
+				_Output.Write ("                    var next = x[count];\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("                    numerator = (numerator * -next) % p;\n{0}", _Indent);
+				_Output.Write ("                    denominator = (denominator * (start - next)) % p;\n{0}", _Indent);
+				_Output.Write ("                    }}\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("                var InvDenominator = ModInverse(denominator, p);\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("                accumulator = Modulus((accumulator + \n{0}", _Indent);
+				_Output.Write ("                    (fx[formula] * numerator * InvDenominator)), p);\n{0}", _Indent);
+				_Output.Write ("                }}\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("            return accumulator;\n{0}", _Indent);
+				_Output.Write ("            }}\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("        /// <summary>\n{0}", _Indent);
+				_Output.Write ("        /// Compute the modular multiplicative inverse of the value \n{0}", _Indent);
+				_Output.Write ("        /// <paramref name=\"k\"/> modulo <paramref name=\"p\"/>\n{0}", _Indent);
+				_Output.Write ("        /// </summary>\n{0}", _Indent);
+				_Output.Write ("        /// <param name=\"k\">The value to find the inverse of</param>\n{0}", _Indent);
+				_Output.Write ("        /// <param name=\"p\">The modulus.</param>\n{0}", _Indent);
+				_Output.Write ("        /// <returns></returns>\n{0}", _Indent);
+				_Output.Write ("        static BigInteger ModInverse(\n{0}", _Indent);
+				_Output.Write ("                    BigInteger k, \n{0}", _Indent);
+				_Output.Write ("                    BigInteger p) {{\n{0}", _Indent);
+				_Output.Write ("            var m2 = p - 2;\n{0}", _Indent);
+				_Output.Write ("            if (k < 0) {{\n{0}", _Indent);
+				_Output.Write ("                k = k + p;\n{0}", _Indent);
+				_Output.Write ("                }}\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("            return BigInteger.ModPow(k, m2, p);\n{0}", _Indent);
+				_Output.Write ("            }}\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("        /// <summary>\n{0}", _Indent);
+				_Output.Write ("        /// Calculate the modulus of a number with correct handling \n{0}", _Indent);
+				_Output.Write ("        /// for negative numbers.\n{0}", _Indent);
+				_Output.Write ("        /// </summary>\n{0}", _Indent);
+				_Output.Write ("        /// <param name=\"x\">Value</param>\n{0}", _Indent);
+				_Output.Write ("        /// <param name=\"p\">The modulus.</param>\n{0}", _Indent);
+				_Output.Write ("        /// <returns>x mod p</returns>\n{0}", _Indent);
+				_Output.Write ("        public static BigInteger Modulus(\n{0}", _Indent);
+				_Output.Write ("                    BigInteger x, \n{0}", _Indent);
+				_Output.Write ("                    BigInteger p) {{\n{0}", _Indent);
+				_Output.Write ("            var Result = x % p;\n{0}", _Indent);
+				_Output.Write ("            return Result.Sign >= 0 ? Result : Result + p;\n{0}", _Indent);
+				_Output.Write ("            }}\n{0}", _Indent);
+				_Output.Write ("        }}\n{0}", _Indent);
+				_Output.Write ("    }}\n{0}", _Indent);
+				_Output.Write ("~~~~\n{0}", _Indent);
 				}
 			}
 		
@@ -388,78 +603,11 @@ namespace ExampleGenerator {
 		
 
 		//
-		// MeshExamplesUDFCompressed
+		// UDFDigestResolution
 		//
-		public static void MeshExamplesUDFCompressed (CreateExamples Example) { /* File  */
-			using (var _Output = new StreamWriter ("Examples\\ExamplesUDFCompressed.md")) {
+		public static void UDFDigestResolution (CreateExamples Example) { /* File  */
+			using (var _Output = new StreamWriter ("Examples\\UDFDigestResolution.md")) {
 				var _Indent = ""; 
-				 var instance = Instance (_Output);
-				 var ContentType = "text/plain";
-				 var ContentTypeString = ContentType.ToUTF8().ToStringBase16FormatHex();
-				 var DataString = "290668103";
-				 var DataBytes = DataString.ToUTF8();
-				 var DataBytesString = DataBytes.ToStringBase16FormatHex();
-				 var HashData = Goedel.Cryptography.Platform.SHA2_512.Process(DataBytes).ToStringBase16FormatHex();
-				 var UDFDataBuffer = UDF.UDFBuffer(DataBytes, ContentType);
-				 var UDFDataBufferString = UDFDataBuffer.ToStringBase16FormatHex();
-				 var UDFData = Goedel.Cryptography.Platform.SHA2_512.Process(UDFDataBuffer).ToStringBase16FormatHex();
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("The string \"{1}\" has a SHA-2-512 UDF fingerprint with 29 leading zero bits. The inputs\n{0}", _Indent, DataString);
-				_Output.Write ("to the fingerprint are:\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("~~~~\n{0}", _Indent);
-				_Output.Write ("Data = {1}\n{0}", _Indent, DataBytesString);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("ContentType = {1}\n{0}", _Indent, ContentTypeString);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("H ( &<Content-ID> + ‘:’ + H(&<Data>))= \n{0}", _Indent);
-				_Output.Write ("{1}\n{0}", _Indent, UDFData);
-				_Output.Write ("~~~~\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("Since the first three bytes of the final hash value are zeros, these are dropped and\n{0}", _Indent);
-				_Output.Write ("the version identifier increased by 1:\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				 instance.MakeUTFExtendedExample (DataString, CryptoAlgorithmID.SHA_2_512, null);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("Note that the use of compression does not reduce the number of characters presented. \n{0}", _Indent);
-				_Output.Write ("Compression increases the work factor that is achieved for a given fingerprint length\n{0}", _Indent);
-				_Output.Write ("but does not in itself cause the presentation to be changed.\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("The 125 bit UDF of the string \"44870804\" using SHA-3-512 is\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				}
-			}
-		
-
-		//
-		// MeshExamplesUDFCommitment
-		//
-		public static void MeshExamplesUDFCommitment (CreateExamples Example) { /* File  */
-			using (var _Output = new StreamWriter ("Examples\\ExamplesUDFCommitment.md")) {
-				var _Indent = ""; 
-				 var instance = Instance (_Output);
-				 var key = "RBQ26-MEZGP-4SVCU-RYOWO-QTURA";
-				 var DataString = "Konrad is the traitor";
-				 var Data = DataString.ToUTF8();
-				 var ContentType = "text/plain";
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("In the following example, &<Content-ID> is the UTF8 encoding of the string \n{0}", _Indent);
-				_Output.Write ("\"{1}\" and &<Data> is the UTF8 encoding of the string \"{2}\".\n{0}", _Indent, ContentType, DataString);
-				_Output.Write ("The randomly chosen key is {1}.\n{0}", _Indent, key);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("~~~~\n{0}", _Indent);
-				_Output.Write ("Data = {1}\n{0}", _Indent,  DataString.ToUTF8().ToStringBase16FormatHex());
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("ContentType = {1}\n{0}", _Indent, ContentType.ToUTF8().ToStringBase16FormatHex());
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("Key =  {1}\n{0}", _Indent,  key.ToUTF8().ToStringBase16FormatHex());
-				_Output.Write ("~~~~\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("Processing is performed in the same manner as an unkeyed fingerprint:\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				 instance.MakeUTFExtendedExample (DataString, CryptoAlgorithmID.SHA_2_512, key);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
 				}
 			}
 		
@@ -481,12 +629,20 @@ namespace ExampleGenerator {
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("Alice is an employee of Example Inc., she uses three email addresses:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("alice@example.com\n{0}", _Indent);
-				_Output.Write ("A regular email address (not a SIN).\n{0}", _Indent);
-				_Output.Write ("alice@mm--mb2gk-6duf5-ygyyl-jny5e-rwshz.example.com\n{0}", _Indent);
-				_Output.Write ("A strong email address that is backwards compatible.\n{0}", _Indent);
-				_Output.Write ("alice@example.com.mm--mb2gk-6duf5-ygyyl-jny5e-rwshz\n{0}", _Indent);
-				_Output.Write ("A strong email address that is backwards incompatible.\n{0}", _Indent);
+				_Output.Write ("<dl>\n{0}", _Indent);
+				_Output.Write ("<dt>alice@example.com\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("<dd>A regular email address (not a SIN).\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("<dt>alice@mm--mb2gk-6duf5-ygyyl-jny5e-rwshz.example.com\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("<dd>A strong email address that is backwards compatible.\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("<dt>alice@example.com.mm--mb2gk-6duf5-ygyyl-jny5e-rwshz\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("<dd>A strong email address that is backwards incompatible.\n{0}", _Indent);
+				_Output.Write ("</dl>\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("All three forms of the address are valid RFC822 addresses and may be used in a legacy \n{0}", _Indent);
 				_Output.Write ("email client, stored in an address book application, etc. But the ability of a legacy \n{0}", _Indent);
 				_Output.Write ("client to make use of the address differs. Addresses of the first type may always be used. \n{0}", _Indent);

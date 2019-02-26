@@ -13,7 +13,7 @@ namespace Goedel.XUnit {
         public void TestDHEd25519Misc() {
 
             var KeyA = new CurveEdwards25519Private();
-            var KeyAPublic = KeyA.Public;
+            var KeyAPublic = KeyA.PublicKey;
             var KeyAPrivate = KeyA.Private;
             var Curve1 = KeyAPublic.Public.Multiply(CurveEdwards25519.Q);
             (Curve1.Y0 == 1).AssertTrue();
@@ -40,7 +40,7 @@ namespace Goedel.XUnit {
             (Pub2.Y0 == Pub3.Y0).AssertTrue();
 
             var KeyB = new CurveEdwards25519Private();
-            var KeyBPublic = KeyB.Public;
+            var KeyBPublic = KeyB.PublicKey;
             var KeyBPrivate = KeyB.Private;
 
             Pub2 = KeyBPublic.Public.Multiply(KeyAPrivate);
@@ -55,8 +55,8 @@ namespace Goedel.XUnit {
             (KeyACurve.Y == KeyAPublic.Public.Y).AssertTrue();
             (Pub2.Y0 == Pub3.Y0).AssertTrue();
 
-            var AgreeAB = KeyA.Agreement(KeyB.Public);
-            var AgreeBA = KeyB.Agreement(KeyA.Public);
+            var AgreeAB = KeyA.Agreement(KeyB.PublicKey);
+            var AgreeBA = KeyB.Agreement(KeyA.PublicKey);
 
             (AgreeAB.Y0 == AgreeBA.Y0).AssertTrue();
 
@@ -77,7 +77,7 @@ namespace Goedel.XUnit {
 
 
             var Private = new CurveEdwards25519Private(SecretKey);
-            var Public = Private.Public;
+            var Public = Private.PublicKey;
 
             var PublicBytes = Public.Encoding.ToStringBase16();
 
@@ -143,8 +143,8 @@ namespace Goedel.XUnit {
             var KeyA = new CurveEdwards25519Private();
             var KeyB = new CurveEdwards25519Private();
 
-            var AgreeAB = KeyA.Agreement(KeyB.Public);
-            var AgreeBA = KeyB.Agreement(KeyA.Public);
+            var AgreeAB = KeyA.Agreement(KeyB.PublicKey);
+            var AgreeBA = KeyB.Agreement(KeyA.PublicKey);
 
             (AgreeAB.Y0 == AgreeBA.Y0).AssertTrue();
             }
@@ -154,7 +154,7 @@ namespace Goedel.XUnit {
         public void TestDHEd25519AgreeToPublic() {
 
             var KeyA = new CurveEdwards25519Private();
-            var KeyAPublic = KeyA.Public;
+            var KeyAPublic = KeyA.PublicKey;
 
             var Result = KeyAPublic.Agreement();
 
@@ -168,7 +168,7 @@ namespace Goedel.XUnit {
         public void TestDHEd25519AgreeRecryption() {
 
             var KeyA = new CurveEdwards25519Private();
-            var KeyAPublic = KeyA.Public;
+            var KeyAPublic = KeyA.PublicKey;
 
 
             var RecryptKeys = KeyA.MakeRecryptionKeySet(2);
