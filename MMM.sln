@@ -246,6 +246,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Goedel.Mesh.Protocol.Test-xunit", "Testing\Goedel.Mesh.Protocol.Test-xunit\Goedel.Mesh.Protocol.Test-xunit.csproj", "{E831F24C-571D-4779-B02A-2BD23E1DCD7A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{479601E3-3DC5-40DA-BA5E-403D5346E50D}"
+	ProjectSection(SolutionItems) = preProject
+		readme.md = readme.md
+		ToDo.md = ToDo.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Old", "Old", "{5EC947D2-D40F-437D-B78C-F2C6C2776342}"
 EndProject

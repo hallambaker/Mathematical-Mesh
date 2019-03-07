@@ -61,11 +61,6 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Update="Main.cs">
-      <DependentUpon>Main.command</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
     <Compile Update="Mesh\UserGuideConnecting.cs">
       <DependentUpon>UserGuideConnecting.script</DependentUpon>
       <DesignTime>True</DesignTime>
@@ -121,17 +116,17 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Update="ToDo.cs">
+    <Compile Update="Guide\ToDo.cs">
       <DependentUpon>ToDo.script</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-      <Compile Update="UserGuide.cs">
+      <Compile Update="Guide\UserGuide.cs">
       <DependentUpon>UserGuide.script</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Update="ExampleSession.cs">
+    <Compile Update="Guide\ExampleSession.cs">
       <DependentUpon>ExampleSession.script</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -167,10 +162,6 @@
     <None Update="Exceptions.exceptional">
       <LastGenOutput>Exceptions.cs</LastGenOutput>
       <Generator>exceptional</Generator>
-    </None>
-    <None Update="Main.command">
-      <LastGenOutput>Main.cs</LastGenOutput>
-      <Generator>CommandCS</Generator>
     </None>
     <None Update="Mesh\UserGuideConnecting.script">
       <LastGenOutput>UserGuideConnecting.cs</LastGenOutput>
@@ -216,15 +207,15 @@
       <LastGenOutput>UserGuideWindows.cs</LastGenOutput>
       <Generator>gscript</Generator>
     </None>
-    <None Update="ToDo.script">
+    <None Update="Guide\ToDo.script">
       <LastGenOutput>ToDo.cs</LastGenOutput>
       <Generator>gscript</Generator>
     </None>
-    <None Update="ExampleSession.script">
+    <None Update="Guide\ExampleSession.script">
       <LastGenOutput>ExampleSession.cs</LastGenOutput>
       <Generator>gscript</Generator>
     </None>
-    <None Update="UserGuide.script">
+    <None Update="Guide\UserGuide.script">
       <LastGenOutput>UserGuide.cs</LastGenOutput>
       <Generator>gscript</Generator>
     </None>

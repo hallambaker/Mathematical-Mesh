@@ -1,0 +1,51 @@
+﻿#using System.Text
+#using Goedel.Mesh
+#using Goedel.Protocol
+#xclass ExampleGenerator ExampleGenerator
+
+
+#file UserGuide "UserGuide/index.md" CreateExamples Index
+<title>User Guide
+<titlebanner><h1>Mathemetical Mesh User Guide
+
+<h4>Make computers easier to use by making computers secure
+</titlebanner>
+<leftmain>
+
+The Mesh <li><a="Mesh/quickstart.html">Quickstart guide</a> provides a brief introduction
+to getting started with the Mesh.
+
+The comprehensive user guide is divided into two parts, the Mesh User Guide describing
+operations on the Mesh itself and the Applications User Guide describing the use of
+Mesh enabled applications.
+
+<h1>Mesh User Guide
+
+The Mesh User Guide describes the use of the Mesh itself, how to:
+
+<ul>
+<li><a="Mesh/create.html">Create Mesh Profiles.</a>
+<li><a="Mesh/connecting.html">Connect Additional devices.</a>
+<li><a="Mesh/disaster.html">Plan for disaster recovery.</a>
+<li><a="Mesh/server.html">Set up a private Mesh service.</a>
+</ul>
+
+<h1>Applications User Guide
+
+The Applications User Guide describes the configuration and use of Mesh 
+enabled applications.
+
+<ul>
+<li><a="Apps/confirm.html">Mesh/Confirm</a>
+<li><a="Apps/mail.html">Mesh/Mail</a>
+<li><a="Apps/catalog.html">Mesh/Catalog</a>
+<li><a="Apps/recrypt.html">Mesh/Recrypt</a>
+<li><a="Apps/ssh.html">Mesh/SSH</a>
+</ul>
+
+#end file
+
+
+
+#end xclass
+
