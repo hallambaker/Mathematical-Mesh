@@ -116,17 +116,17 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Update="Guide\ToDo.cs">
+    <Compile Update="Web\ToDo.cs">
       <DependentUpon>ToDo.script</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-      <Compile Update="Guide\UserGuide.cs">
+      <Compile Update="Web\UserGuide.cs">
       <DependentUpon>UserGuide.script</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Update="Guide\ExampleSession.cs">
+    <Compile Update="Web\ExampleSession.cs">
       <DependentUpon>ExampleSession.script</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -207,15 +207,15 @@
       <LastGenOutput>UserGuideWindows.cs</LastGenOutput>
       <Generator>gscript</Generator>
     </None>
-    <None Update="Guide\ToDo.script">
+    <None Update="Web\ToDo.script">
       <LastGenOutput>ToDo.cs</LastGenOutput>
       <Generator>gscript</Generator>
     </None>
-    <None Update="Guide\ExampleSession.script">
+    <None Update="Web\ExampleSession.script">
       <LastGenOutput>ExampleSession.cs</LastGenOutput>
       <Generator>gscript</Generator>
     </None>
-    <None Update="Guide\UserGuide.script">
+    <None Update="Web\UserGuide.script">
       <LastGenOutput>UserGuide.cs</LastGenOutput>
       <Generator>gscript</Generator>
     </None>

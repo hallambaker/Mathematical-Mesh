@@ -30,7 +30,6 @@ ToolTargets = \
 	Exceptions.cs\
 	meshman.cs\
 	Results.cs
-
 Exceptions.cs : Exceptions.Exceptional 
 	exceptional Exceptions.Exceptional  /cs  Exceptions.cs
 
@@ -39,6 +38,7 @@ meshman.cs : meshman.command
 
 Results.cs : Results.protogen 
 	protogen Results.protogen  /cs  Results.cs
+
 
 
 prebuildRecurse : 

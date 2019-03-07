@@ -36,7 +36,8 @@ LinkFiles = \
     Goedel.Test.dll\
     Goedel.Mesh.Protocol.Client.dll\
     Goedel.Mesh.Protocol.Server.dll\
-    Goedel.Mesh.dll
+    Goedel.Mesh.dll\
+    Goedel.Mesh.Test.dll
 
 ToolTargets = \
 	MakeExamplesAdvanced.cs\
@@ -44,11 +45,11 @@ ToolTargets = \
 	MakeExamplesPortal.cs\
 	Old\MakeExamplesCatalog.cs\
 	MakeExamplesUDF.cs\
+	MakeExamplesMessage.cs\
 	MakeExamplesContainer.cs\
 	MakeExamplesDeveloper.cs\
 	MakeExamplesMessaging.cs\
 	MakeExamplesMessage.cs
-
 MakeExamplesAdvanced.cs : MakeExamplesAdvanced.script 
 	gscript MakeExamplesAdvanced.script  MakeExamplesAdvanced.cs
 
@@ -64,17 +65,22 @@ Old\MakeExamplesCatalog.cs : Old\MakeExamplesCatalog.script
 MakeExamplesUDF.cs : MakeExamplesUDF.script 
 	gscript MakeExamplesUDF.script  MakeExamplesUDF.cs
 
+MakeExamplesMessage.cs : MakeExamplesMessage.script 
+	gscript MakeExamplesMessage.script  MakeExamplesMessage.cs
+
 MakeExamplesContainer.cs : MakeExamplesContainer.script 
 	gscript MakeExamplesContainer.script  MakeExamplesContainer.cs
 
 MakeExamplesDeveloper.cs : MakeExamplesDeveloper.script 
 	gscript MakeExamplesDeveloper.script  MakeExamplesDeveloper.cs
 
+MakeExamplesMessaging.cs : MakeExamplesMessaging.script 
+	gscript MakeExamplesMessaging.script  MakeExamplesMessaging.cs
+
 MakeExamplesMessage.cs : MakeExamplesMessage.script 
 	gscript MakeExamplesMessage.script  MakeExamplesMessage.cs
 
-MakeExamplesMessaging.cs : MakeExamplesMessaging.script 
-	gscript MakeExamplesMessaging.script  MakeExamplesMessaging.cs
+
 
 prebuildRecurse : 
 

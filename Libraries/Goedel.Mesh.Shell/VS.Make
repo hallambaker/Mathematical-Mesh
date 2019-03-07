@@ -44,5 +44,5 @@ postbuild : postbuildRecurse
 
 
 postbuildwindows : 
-	powershell publishtarget Goedel.Mesh.ShellOld.dll
+	powershell publishtarget Goedel.Mesh.Shell-Old.dll
 

@@ -9,7 +9,8 @@ namespace Goedel.Mesh {
     /// <summary>
     /// Generic error in Mesh reference library
     /// </summary>
-    public class MeshException : global::System.Exception {
+    [Serializable]
+	public class MeshException : global::System.Exception {
 
 		/// <summary>
         /// Construct instance for exception "Error occurred in Mesh library"
@@ -60,7 +61,8 @@ namespace Goedel.Mesh {
     /// <summary>
     /// Profile not valid
     /// </summary>
-    public class ProfileInvalid : MeshException {
+    [Serializable]
+	public class ProfileInvalid : MeshException {
 
 		/// <summary>
         /// Construct instance for exception "Profile not valid"
@@ -107,7 +109,8 @@ namespace Goedel.Mesh {
     /// <summary>
     /// Invalid response from server
     /// </summary>
-    public class InvalidResponse : MeshException {
+    [Serializable]
+	public class InvalidResponse : MeshException {
 
 		/// <summary>
         /// Construct instance for exception "Invalid response from server"
@@ -154,7 +157,8 @@ namespace Goedel.Mesh {
     /// <summary>
     /// Profile not found
     /// </summary>
-    public class ProfileNotFound : MeshException {
+    [Serializable]
+	public class ProfileNotFound : MeshException {
 
 		/// <summary>
         /// Construct instance for exception "Profile not found"
@@ -201,7 +205,8 @@ namespace Goedel.Mesh {
     /// <summary>
     /// Profile is not valid
     /// </summary>
-    public class NotValidProfile : MeshException {
+    [Serializable]
+	public class NotValidProfile : MeshException {
 
 		/// <summary>
         /// Construct instance for exception "Profile is not valid"
@@ -248,7 +253,8 @@ namespace Goedel.Mesh {
     /// <summary>
     /// Public key could not be found
     /// </summary>
-    public class PublicKeyNotFound : MeshException {
+    [Serializable]
+	public class PublicKeyNotFound : MeshException {
 
 		/// <summary>
         /// Construct instance for exception "Public key could not be found"
@@ -295,7 +301,8 @@ namespace Goedel.Mesh {
     /// <summary>
     /// Private key could not be found
     /// </summary>
-    public class PrivateKeyNotFound : MeshException {
+    [Serializable]
+	public class PrivateKeyNotFound : MeshException {
 
 		/// <summary>
         /// Construct instance for exception "Private key could not be found"
@@ -342,7 +349,8 @@ namespace Goedel.Mesh {
     /// <summary>
     /// Key does not match fingerprint
     /// </summary>
-    public class KeyFingerprintMismatch : MeshException {
+    [Serializable]
+	public class KeyFingerprintMismatch : MeshException {
 
 		/// <summary>
         /// Construct instance for exception "Key does not match fingerprint"
@@ -389,7 +397,8 @@ namespace Goedel.Mesh {
     /// <summary>
     /// Profile signature is invalid
     /// </summary>
-    public class InvalidProfileSignature : MeshException {
+    [Serializable]
+	public class InvalidProfileSignature : MeshException {
 
 		/// <summary>
         /// Construct instance for exception "Profile signature is invalid"
@@ -436,7 +445,8 @@ namespace Goedel.Mesh {
     /// <summary>
     /// Administration operation attempted on non administration device
     /// </summary>
-    public class NotAdministrationDevice : MeshException {
+    [Serializable]
+	public class NotAdministrationDevice : MeshException {
 
 		/// <summary>
         /// Construct instance for exception "Administration operation attempted on non administration device"
@@ -483,7 +493,8 @@ namespace Goedel.Mesh {
     /// <summary>
     /// Profile chain is not valid
     /// </summary>
-    public class InvalidProfileChain : MeshException {
+    [Serializable]
+	public class InvalidProfileChain : MeshException {
 
 		/// <summary>
         /// Construct instance for exception "Profile chain is not valid"
@@ -530,7 +541,8 @@ namespace Goedel.Mesh {
     /// <summary>
     /// No master profile
     /// </summary>
-    public class NoMasterProfile : MeshException {
+    [Serializable]
+	public class NoMasterProfile : MeshException {
 
 		/// <summary>
         /// Construct instance for exception "No master profile"
@@ -577,7 +589,8 @@ namespace Goedel.Mesh {
     /// <summary>
     /// No device profile
     /// </summary>
-    public class NoDeviceProfile : MeshException {
+    [Serializable]
+	public class NoDeviceProfile : MeshException {
 
 		/// <summary>
         /// Construct instance for exception "No device profile"
@@ -624,7 +637,8 @@ namespace Goedel.Mesh {
     /// <summary>
     /// Not a valid portal address
     /// </summary>
-    public class InvalidPortalAddress : MeshException {
+    [Serializable]
+	public class InvalidPortalAddress : MeshException {
 
 		/// <summary>
         /// Construct instance for exception "Not a valid portal address"
@@ -671,7 +685,8 @@ namespace Goedel.Mesh {
     /// <summary>
     /// Could not connect to portal
     /// </summary>
-    public class PortalConnectFail : MeshException {
+    [Serializable]
+	public class PortalConnectFail : MeshException {
 
 		/// <summary>
         /// Construct instance for exception "Could not connect to portal"
@@ -718,7 +733,8 @@ namespace Goedel.Mesh {
     /// <summary>
     /// A registry entry was of unexpcected type
     /// </summary>
-    public class UnexpectedRegistryType : MeshException {
+    [Serializable]
+	public class UnexpectedRegistryType : MeshException {
 
 		/// <summary>
         /// Construct instance for exception "A registry entry was of unexpcected type"

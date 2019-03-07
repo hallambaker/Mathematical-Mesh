@@ -21,7 +21,6 @@ LinkFiles = \
     Goedel.IO.dll\
     Goedel.Utilities.dll\
     Goedel.Cryptography.Jose.dll\
-    Goedel.Persistence.dll\
     Goedel.Protocol.dll
 
 ToolTargets = \

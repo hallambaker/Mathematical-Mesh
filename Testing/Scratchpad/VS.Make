@@ -30,8 +30,10 @@ LinkFiles = \
     Goedel.Cryptography.Jose.Test-xunit.dll\
     Goedel.Cryptography.Test-xunit.dll\
     Goedel.Mesh.Protocol.Test-xunit.dll\
+    Goedel.Mesh.Shell.Test-xunit.dll\
     Goedel.Mesh.Test-xunit.dll\
     Goedel.Protocol.Test-xunit.dll\
+    Goedel.Utilities.Test-xunit.dll\
     Test.Common.dll
 
 ToolTargets = 

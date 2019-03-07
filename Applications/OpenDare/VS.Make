@@ -24,7 +24,7 @@ LinkFiles = \
     Goedel.Utilities.dll\
     Goedel.Cryptography.Dare.dll\
     Goedel.Cryptography.dll\
-    Goedel.Mesh.ShellOld.dll\
+    Goedel.Mesh.Shell-Old.dll\
     Goedel.Persistence.dll\
     Goedel.Protocol.dll
 
@@ -47,5 +47,5 @@ postbuild : postbuildRecurse
 
 
 postbuildwindows : 
-	powershell publishtarget OpenDare.exe $(LinkFiles) 
+	powershell publishtarget OpenDare-Old.exe $(LinkFiles) 
 

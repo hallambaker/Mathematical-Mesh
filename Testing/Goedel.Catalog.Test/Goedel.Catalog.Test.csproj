@@ -38,9 +38,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.VisualStudio.TestPlatform.TestFramework, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\MSTest.TestFramework.1.2.1\lib\net45\Microsoft.VisualStudio.TestPlatform.TestFramework.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\packages\MSTest.TestFramework.1.2.1\lib\net45\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll</HintPath>
     </Reference>
@@ -77,10 +74,6 @@
       <Project>{2ba97c8a-2fa2-4d02-a977-566848ed2d55}</Project>
       <Name>Goedel.Cryptography.Jose</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Standard\Goedel.Cryptography.Standard.csproj">
-      <Project>{dd13e278-f9e6-49f0-81b9-7a5bd5817818}</Project>
-      <Name>Goedel.Cryptography.Standard</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.WindowsFramework\Goedel.Cryptography.WindowsFramework.csproj">
       <Project>{701f5551-e749-4985-acc8-5a3c02d10d14}</Project>
       <Name>Goedel.Cryptography.WindowsFramework</Name>
@@ -88,10 +81,6 @@
     <ProjectReference Include="..\..\Libraries\Goedel.Cryptography\Goedel.Cryptography.csproj">
       <Project>{b8319c05-ea98-405d-94eb-acb9de6da975}</Project>
       <Name>Goedel.Cryptography</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\Goedel.Mesh.Shell\Goedel.Mesh.ShellOld.csproj">
-      <Project>{754c1f26-047a-46fa-bb41-eff976f542ef}</Project>
-      <Name>Goedel.Mesh.ShellOld</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Libraries\Goedel.Protocol\Goedel.Protocol.csproj">
       <Project>{5b919409-8341-4d0a-bcdf-43a6841b6d7b}</Project>

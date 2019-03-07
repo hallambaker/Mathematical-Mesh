@@ -19,6 +19,7 @@ MSBuildThisFileDirectory =
 
 LinkFiles = \
     Goedel.ASN.dll\
+    Goedel.IO.dll\
     Goedel.Utilities.dll
 
 ToolTargets = \

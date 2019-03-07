@@ -18,39 +18,22 @@
 MSBuildThisFileDirectory = 
 
 LinkFiles = \
-    Goedel.ASN.dll\
     Goedel.Command.dll\
     Goedel.Discovery.dll\
-    Goedel.FSR.dll\
     Goedel.IO.dll\
     Goedel.Registry.dll\
     Goedel.Utilities.dll\
-    Goedel.Cryptography.Dare.dll\
-    Goedel.Cryptography.Jose.dll\
-    Goedel.Cryptography.KeyFile.dll\
-    Goedel.Cryptography.Standard.dll\
-    Goedel.Cryptography.Ticket.dll\
-    Goedel.Cryptography.WindowsFramework.dll\
     Goedel.Cryptography.dll\
-    Goedel.Mesh.Platform.Windows.dll\
-    Goedel.MeshOld.dll\
-    Goedel.Persistence.dll\
     Goedel.Protocol.Debug.dll\
-    Goedel.Protocol.Exchange.Server.dll\
-    Goedel.Protocol.Exchange.dll\
     Goedel.Protocol.dll\
-    Goedel.Account.Client.dll\
-    Goedel.Account.Server.dll\
-    Goedel.Account.dll\
-    Goedel.Confirm.Client.dll\
-    Goedel.Confirm.Server.dll\
-    Goedel.Confirm.dll\
-    Goedel.Mesh.Portal.Client.dll\
-    Goedel.Mesh.Portal.Server.dll\
-    Goedel.Mesh.Portal.dll\
-    Goedel.Recrypt.Client.dll\
-    Goedel.Recrypt.Server.dll\
-    Goedel.Recrypt.dll
+    Goedel.Test.Core.dll\
+    Goedel.Test.dll\
+    Goedel.Mesh.Core.dll\
+    Goedel.Mesh.Protocol.Client.dll\
+    Goedel.Mesh.Protocol.Server.dll\
+    Goedel.Mesh.Shell.dll\
+    Goedel.Mesh.dll\
+    Goedel.Mesh.Test.dll
 
 ToolTargets = \
 	Apps\UserGuideApps.cs\
@@ -60,7 +43,6 @@ ToolTargets = \
 	Apps\UserGuideRecrypt.cs\
 	Apps\UserGuideSSH.cs\
 	Exceptions.cs\
-	Main.cs\
 	Mesh\UserGuideConnecting.cs\
 	Mesh\UserGuideCreate.cs\
 	Mesh\UserGuideDisaster.cs\
@@ -72,9 +54,9 @@ ToolTargets = \
 	Platform\UserGuideOSX.cs\
 	Platform\UserGuidePlatform.cs\
 	Platform\UserGuideWindows.cs\
-	ToDo.cs\
-	ExampleSession.cs\
-	UserGuide.cs
+	Web\ToDo.cs\
+	Web\ExampleSession.cs\
+	Web\UserGuide.cs
 Apps\UserGuideApps.cs : Apps\UserGuideApps.script 
 	gscript Apps\UserGuideApps.script  Apps\UserGuideApps.cs
 
@@ -95,9 +77,6 @@ Apps\UserGuideSSH.cs : Apps\UserGuideSSH.script
 
 Exceptions.cs : Exceptions.exceptional 
 	exceptional Exceptions.exceptional  /cs  Exceptions.cs
-
-Main.cs : Main.command 
-	commandparse Main.command  /cs  Main.cs
 
 Mesh\UserGuideConnecting.cs : Mesh\UserGuideConnecting.script 
 	gscript Mesh\UserGuideConnecting.script  Mesh\UserGuideConnecting.cs
@@ -132,25 +111,21 @@ Platform\UserGuidePlatform.cs : Platform\UserGuidePlatform.script
 Platform\UserGuideWindows.cs : Platform\UserGuideWindows.script 
 	gscript Platform\UserGuideWindows.script  Platform\UserGuideWindows.cs
 
-ToDo.cs : ToDo.script 
-	gscript ToDo.script  ToDo.cs
+Web\ToDo.cs : Web\ToDo.script 
+	gscript Web\ToDo.script  Web\ToDo.cs
 
-ExampleSession.cs : ExampleSession.script 
-	gscript ExampleSession.script  ExampleSession.cs
+Web\ExampleSession.cs : Web\ExampleSession.script 
+	gscript Web\ExampleSession.script  Web\ExampleSession.cs
 
-UserGuide.cs : UserGuide.script 
-	gscript UserGuide.script  UserGuide.cs
+Web\UserGuide.cs : Web\UserGuide.script 
+	gscript Web\UserGuide.script  Web\UserGuide.cs
 
 
 
 prebuildRecurse : 
-	cd ..\..\Libraries\MeshApps && nmake /c /f VS.make prebuild 
-	cd ..\..\Libraries\MeshMan && nmake /c /f VS.make prebuild 
 
 
 postbuildRecurse :
-	cd ..\..\Libraries\MeshApps && nmake /c /f VS.make postbuild 
-	cd ..\..\Libraries\MeshMan && nmake /c /f VS.make postbuild 
 
 # Non shared project, nothing to do
 prebuild : prebuildRecurse $(ToolTargets)
