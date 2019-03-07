@@ -40,9 +40,9 @@ a form that is compatible with most scripting environments.
 Detailed [documentation](tree/master//Web) of meshman is given in the 
 User Guide and Reference Manual:
 
-[User Guide](tree/master/Web/Guide)
+[User Guide](../tree/master/Web/Guide)
 
-[Reference Manual](tree/master//Web/Reference)
+[Reference Manual](../tree/master//Web/Reference)
 
 ## Libraries
 
