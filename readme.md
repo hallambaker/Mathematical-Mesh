@@ -37,12 +37,12 @@ implementations may be tested.
 meshman is a shell tool that exposes most Mesh functionality in
 a form that is compatible with most scripting environments.
 
-Detailed [documentation](tree/master//Web) of meshman is given in the 
+Detailed [documentation](https://github.com/hallambaker/Mathematical-Mesh/tree/master/Web) of meshman is given in the 
 User Guide and Reference Manual:
 
-[User Guide](../tree/master/Web/Guide)
+[User Guide](https://github.com/hallambaker/Mathematical-Mesh/tree/master/Web/Guide)
 
-[Reference Manual](../tree/master//Web/Reference)
+[Reference Manual](https://github.com/hallambaker/Mathematical-Mesh/tree/master/Web)
 
 ## Libraries
 
