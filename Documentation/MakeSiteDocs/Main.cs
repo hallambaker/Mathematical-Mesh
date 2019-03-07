@@ -110,6 +110,7 @@ namespace ExampleGenerator {
 			MakeSiteDocs Dispatch =	DispatchIn as MakeSiteDocs;
 			DefaultCommand		Options = new DefaultCommand ();
 			ProcessOptions (Args, Index, Options);
+			Dispatch._PreProcess (Options);
 			Dispatch.DefaultCommand (Options);
 			}
 

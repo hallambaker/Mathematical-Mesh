@@ -13,6 +13,66 @@ namespace Goedel.XUnit {
         public TestSplit() => CryptographyCommon.Initialize();
 
 
+
+        [Theory]
+        [InlineData(32)]
+        [InlineData(32, "00000000")]
+        [InlineData(32, "00000001")]
+        [InlineData(32, "10000000")]
+        [InlineData(32, "FFFFFFFF")]
+        [InlineData(64)]
+        [InlineData(128)]
+        [InlineData(256)]
+        [InlineData(512)]
+        public void TestKey(int bits, string hexData = null) {
+            var data = hexData == null ? CryptoCatalog.GetBits(bits) : hexData.FromBase16();
+            var secret = new Secret(data);
+            var udf = secret.UDFKey;
+
+            var secret2 = new Secret(secret.Key);
+            secret2.UDFKey.AssertEqual(udf);
+
+            var key = UDF.SymmetricKey(udf);
+            key.AssertEqual(secret.Key);
+
+            var secret3 = new Secret(udf);
+            secret3.Key.AssertEqual(secret.Key);
+            secret3.UDFKey.AssertEqual(udf);
+            }
+
+        [Theory]
+        [InlineData(32)]
+        [InlineData(32, "00000000")]
+        [InlineData(32, "00000001")]
+        [InlineData(32, "10000000")]
+        [InlineData(32, "FFFFFFFF")]
+        [InlineData(64)]
+        [InlineData(128)]
+        [InlineData(256)]
+        [InlineData(512)]
+        public void TestKeyShare(int bits, string hexData=null) {
+            var data = hexData == null ? CryptoCatalog.GetBits(bits) : hexData.FromBase16();
+            var index = 1;
+
+            var keyShare = new KeyShare(index, data);
+            data.AssertEqual(keyShare.Data);
+            (keyShare.Value >= 0).AssertTrue();
+
+            var udf = keyShare.UDFKey;
+            var keyShare2 = new KeyShare(udf);
+
+            keyShare2.Key.AssertEqual(keyShare.Key);
+            keyShare2.UDFKey.AssertEqual(udf);
+            keyShare2.Value.AssertEqual(keyShare.Value);
+
+            var keyShare3 = new KeyShare(index, keyShare.Value, data.Length);
+            keyShare3.Key.AssertEqual(keyShare.Key);
+            keyShare3.UDFKey.AssertEqual(udf);
+            keyShare3.Value.AssertEqual(keyShare.Value);
+            }
+
+
+
         [Theory]
         [InlineData (1,1)]
         [InlineData(2, 1)]
@@ -71,19 +131,6 @@ namespace Goedel.XUnit {
 
             bigtest1 = (new byte[] { 0, 0, 0, 1 }).BigIntegerBigEndian();
             (bigtest1 == new BigInteger(0x00000001)).AssertTrue();
-
-            }
-
-
-        /// <summary>
-        /// Check that all the prime values are in fact prime
-        /// </summary>
-        [Fact]
-        public void TestSplit1() {
-            var secret = new Secret(32);
-            var shares = secret.Split(3, 2);
-
-
 
             }
 

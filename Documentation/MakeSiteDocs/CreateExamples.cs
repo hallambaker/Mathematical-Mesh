@@ -3,28 +3,14 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using Goedel.Mesh;
+using Goedel.Mesh.Shell;
 using Goedel.Utilities;
-using Goedel.Protocol.Debug;
-using Goedel.Mesh.Portal;
-using Goedel.Mesh.Portal.Client;
-using Goedel.Mesh.Portal.Server;
 
-using Goedel.Account.Server;
-using Goedel.Confirm.Server;
-using Goedel.Recrypt.Server;
-using Goedel.Mesh.MeshMan;
-using Goedel.Mesh.Platform;
-using Goedel.Combined.Shell.Client;
 using Goedel.Cryptography.Jose;
 using Goedel.Cryptography.Dare;
 using Goedel.Protocol;
-using Goedel.Protocol.Exchange;
-using Goedel.Protocol.Exchange.Server;
 using Goedel.IO;
 using Goedel.Command;
-using Goedel.Confirm;
-using Goedel.Recrypt;
 
 namespace ExampleGenerator {
 
@@ -114,7 +100,7 @@ namespace ExampleGenerator {
 
         }
 
-    public class MeshAppsShell : CombinedShell {
+    public class MeshAppsShell : Shell {
         public string OutputClass;
         StringBuilder Buffer = new StringBuilder();
 
@@ -126,8 +112,8 @@ namespace ExampleGenerator {
                 }
             }
 
-        public MeshAppsShell(MeshMachine RegistrationMachine = null)  {
-            }
+        //public MeshAppsShell(MeshMachine RegistrationMachine = null)  {
+        //    }
         }
 
     public partial class CreateExamples {
@@ -136,35 +122,35 @@ namespace ExampleGenerator {
         public Dictionary<string, DocumentationEntry> Examples = new Dictionary<string, DocumentationEntry>();
 
 
-        public MeshManShell ShellAlice1 = new MeshManShell() {
-            MeshMachine = new MeshMachineCached(),
-            DefaultDescription = Device1Description,
-            OutputClass = "terminal"
-            };
+        //public MeshManShell ShellAlice1 = new MeshManShell() {
+        //    MeshMachine = new MeshMachineCached(),
+        //    DefaultDescription = Device1Description,
+        //    OutputClass = "terminal"
+        //    };
 
-        public MeshManShell ShellAlice2 = new MeshManShell() {
-            MeshMachine = new MeshMachineCached(),
-            DefaultDescription = Device2Description,
-            OutputClass = "terminal2"
-            };
+        //public MeshManShell ShellAlice2 = new MeshManShell() {
+        //    MeshMachine = new MeshMachineCached(),
+        //    DefaultDescription = Device2Description,
+        //    OutputClass = "terminal2"
+        //    };
 
-        public MeshManShell ShellAlice3 = new MeshManShell() {
-            MeshMachine = new MeshMachineCached(),
-            DefaultDescription = Device2Description,
-            OutputClass = "terminal2"
-            };
+        //public MeshManShell ShellAlice3 = new MeshManShell() {
+        //    MeshMachine = new MeshMachineCached(),
+        //    DefaultDescription = Device2Description,
+        //    OutputClass = "terminal2"
+        //    };
 
-        public MeshAppsShell ShellAlice = new MeshAppsShell(new MeshMachineCached()) {
-            OutputClass = "terminala"
-            };
+        //public MeshAppsShell ShellAlice = new MeshAppsShell(new MeshMachineCached()) {
+        //    OutputClass = "terminala"
+        //    };
 
-        public MeshAppsShell ShellBob = new MeshAppsShell(new MeshMachineCached()) {
-            OutputClass = "terminalb"
-            };
+        //public MeshAppsShell ShellBob = new MeshAppsShell(new MeshMachineCached()) {
+        //    OutputClass = "terminalb"
+        //    };
 
-        public MeshAppsShell ShellMallet = new MeshAppsShell(new MeshMachineCached()) {
-            OutputClass = "terminalm"
-            };
+        //public MeshAppsShell ShellMallet = new MeshAppsShell(new MeshMachineCached()) {
+        //    OutputClass = "terminalm"
+        //    };
 
 
 
@@ -173,7 +159,7 @@ namespace ExampleGenerator {
                 return MakeExample(Terminal, Tag, Command);
                 }
 
-            var CommandLine = Shell.Dispatch(Command);
+            var CommandLine = ""; // Shell.Dispatch(Command);
             var Result = Shell.Result;
 
             return MakeExample(Terminal, Tag, CommandLine, Result);
@@ -184,15 +170,15 @@ namespace ExampleGenerator {
 
         DocumentationEntry DocumentationEntry1;
         public DocumentationEntry Device1 (string Command, string Tag = null, bool NYI = false) {
-            DocumentationEntry1 = DeviceMesh(ShellAlice1, "terminal", Command, Tag, NYI);
+            //DocumentationEntry1 = DeviceMesh(ShellAlice1, "terminal", Command, Tag, NYI);
             return DocumentationEntry1;
             }
 
-        DocumentationEntry DocumentationEntry2;
-        public void Device2(string Command, string Tag = null, string Result = null, bool NYI = false) => DocumentationEntry2 = DeviceMesh(ShellAlice2, "terminal2", Command, Tag, NYI);
+        //DocumentationEntry DocumentationEntry2;
+        //public void Device2(string Command, string Tag = null, string Result = null, bool NYI = false) => DocumentationEntry2 = DeviceMesh(ShellAlice2, "terminal2", Command, Tag, NYI);
 
-        DocumentationEntry DocumentationEntry3;
-        public void Device3(string Command, string Tag = null, string Result = null, bool NYI = false) => DocumentationEntry3 = DeviceMesh(ShellAlice3, "terminal3", Command, Tag, NYI);
+        //DocumentationEntry DocumentationEntry3;
+        //public void Device3(string Command, string Tag = null, string Result = null, bool NYI = false) => DocumentationEntry3 = DeviceMesh(ShellAlice3, "terminal3", Command, Tag, NYI);
 
 
 
@@ -201,21 +187,21 @@ namespace ExampleGenerator {
                 return MakeExample(Terminal, Tag, Command);
                 }
 
-            var CommandLine = Shell.Dispatch(Command);
+            //var CommandLine = Shell.Dispatch(Command);
             var Result = Shell.Result;
 
             return MakeExample(Terminal, Tag, Command, Result);
             }
 
 
-        DocumentationEntry DocumentationEntryA;
-        public void DeviceAlice(string Command, string Tag = null, bool NYI = false) => DocumentationEntryA = DeviceApp(ShellAlice, "terminala", Command, Tag, NYI);
+        //DocumentationEntry DocumentationEntryA;
+        //public void DeviceAlice(string Command, string Tag = null, bool NYI = false) => DocumentationEntryA = DeviceApp(ShellAlice, "terminala", Command, Tag, NYI);
 
-        DocumentationEntry DocumentationEntryB;
-        public void DeviceBob(string Command, string Tag = null, string Result = null, bool NYI = false) => DocumentationEntryB = DeviceApp(ShellBob, "terminalb", Command, Tag, NYI);
+        //DocumentationEntry DocumentationEntryB;
+        //public void DeviceBob(string Command, string Tag = null, string Result = null, bool NYI = false) => DocumentationEntryB = DeviceApp(ShellBob, "terminalb", Command, Tag, NYI);
 
-        DocumentationEntry DocumentationEntryC;
-        public void DeviceMallet(string Command, string Tag = null, string Result = null, bool NYI = false) => DocumentationEntryC = DeviceApp(ShellMallet, "terminalm", Command, Tag, NYI);
+        //DocumentationEntry DocumentationEntryC;
+        //public void DeviceMallet(string Command, string Tag = null, string Result = null, bool NYI = false) => DocumentationEntryC = DeviceApp(ShellMallet, "terminalm", Command, Tag, NYI);
 
         public DocumentationEntry MakeExample (string Device, string Tag, 
                         string Command, string Result = null, bool NYI = false) {
@@ -265,12 +251,12 @@ namespace ExampleGenerator {
             }
 
         public CreateExamples () {
-            StartServices();
-            Goedel.Mesh.MeshMan.CommandLineInterpreter.DefaultCommand = null;
-            Goedel.Combined.Shell.Client.CommandLineInterpreter.DefaultCommand = null;
+            //StartServices();
+            //Goedel.Mesh.MeshMan.CommandLineInterpreter.DefaultCommand = null;
+            //Goedel.Combined.Shell.Client.CommandLineInterpreter.DefaultCommand = null;
 
-            CreateExamplesApps();
-            CreateExamplesMesh();
+            //CreateExamplesApps();
+            //CreateExamplesMesh();
 
             }
 
@@ -385,10 +371,10 @@ namespace ExampleGenerator {
 
         public static string ConfirmTransactionID = "NYI";
 
-        MeshPortalDirect MeshPortal;
-        public AccountPortalDirect AccountPortal;
-        public ConfirmPortalDirect ConfirmPortal;
-        public RecryptPortalDirect RecryptPortal;
+        //MeshPortalDirect MeshPortal;
+        //public AccountPortalDirect AccountPortal;
+        //public ConfirmPortalDirect ConfirmPortal;
+        //public RecryptPortalDirect RecryptPortal;
 
         public static string RecryptTestFileGroup = "recrypt@example.com";
         public static string RecryptTestFileInitial = "file1.txt";
@@ -431,14 +417,14 @@ namespace ExampleGenerator {
             File.Delete(LogMesh);
             File.Delete(LogPortal);
 
-            MeshPortal = new MeshPortalDirect(PortalServiceDNS, LogMesh, LogPortal);
-            Goedel.Mesh.Portal.MeshPortal.Default = MeshPortal;
-            AccountPortal = new AccountPortalDirect(AccountServiceDNS);
-            Goedel.Account.AccountPortal.Default = AccountPortal;
-            ConfirmPortal = new ConfirmPortalDirect(AccountServiceDNS);
-            Goedel.Confirm.ConfirmPortal.Default = ConfirmPortal;
-            RecryptPortal = new RecryptPortalDirect(AccountServiceDNS);
-            Goedel.Recrypt.RecryptPortal.Default = RecryptPortal;
+            //MeshPortal = new MeshPortalDirect(PortalServiceDNS, LogMesh, LogPortal);
+            //Goedel.Mesh.Portal.MeshPortal.Default = MeshPortal;
+            //AccountPortal = new AccountPortalDirect(AccountServiceDNS);
+            //Goedel.Account.AccountPortal.Default = AccountPortal;
+            //ConfirmPortal = new ConfirmPortalDirect(AccountServiceDNS);
+            //Goedel.Confirm.ConfirmPortal.Default = ConfirmPortal;
+            //RecryptPortal = new RecryptPortalDirect(AccountServiceDNS);
+            //Goedel.Recrypt.RecryptPortal.Default = RecryptPortal;
             }
 
         }

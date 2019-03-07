@@ -18,9 +18,9 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult KeyNonce(KeyNonce Options) => new ResultKey() {
-            Success = true,
-            Key = Cryptography.UDF.Nonce()
-            };
+                Success = true,
+                Key = Cryptography.UDF.Nonce(Options.Bits.ValueDefaulted(128))
+                };
 
         /// <summary>
         /// Dispatch method to return a randomized string suitable for use as
@@ -30,8 +30,9 @@ namespace Goedel.Mesh.Shell {
         /// <returns>Mesh result instance</returns>
         public override ShellResult KeySecret(KeySecret Options) => new ResultKey() {
             Success = true,
-            Key = Cryptography.UDF.SymmetricKey(128)
+            Key = Cryptography.UDF.SymmetricKey(Options.Bits.ValueDefaulted(128))
             };
+
 
         /// <summary>
         /// Dispatch method to return a randomized string suitable for use as

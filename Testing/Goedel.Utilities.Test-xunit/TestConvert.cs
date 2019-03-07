@@ -8,7 +8,7 @@ using Goedel.Utilities;
 namespace Goedel.XUnit {
 
     public class Utilities {
-        public static Utilities Test => new Utilities();
+        public static Utilities Test() => new Utilities();
         public Utilities() => TestEnvironmentCommon.Initialize(true);
 
 
@@ -83,7 +83,7 @@ namespace Goedel.XUnit {
                 "  75 40 7E 72  23 7C EC 46  E2 A6 15 DD  36 1B 88 A1\n" +
                 "  C6 F2 64 AD  65 1D EE 7F  63 CF 13 61  91 8A B0 10\n" +
                 "  AF";
-        string TestFormat1Dash6 = "JQDSDH-ULLS6J-7WM4RI-GLDTWA-KCY3XE-LZ";
+        string TestFormat1Dash6 = "JQDS-DHUL-LS6J-7WM4-RIGL-DTWA-KCY3-XELZ";
         string TestFormat1Dash5 = "JQDSD-HULLS-6J7WM-4RIGL-DTWAK";
 
         [Fact]
@@ -95,8 +95,8 @@ namespace Goedel.XUnit {
 
             var ResultHex = Bytes.ToStringBase16FormatHex();
             CheckExact(ResultHex, TestFormat1Hex, "Hex formatting failed");
-            var ResultDash6 = Bytes.ToStringBase32hs(20);
-            CheckExact(ResultDash6, TestFormat1Dash6, "Dash 6 formatting failed");
+            var ResultDash4 = Bytes.ToStringBase32hs(20);
+            CheckExact(ResultDash4, TestFormat1Dash6, "Dash 4 formatting failed");
             var ResultDash5 = Bytes.ToStringBase32(Format: ConversionFormat.Dash5, OutputMax: 25);
             CheckExact(ResultDash5, TestFormat1Dash5, "Dash 5 formatting failed");
 

@@ -158,7 +158,7 @@ namespace Goedel.Cryptography {
         public override void Persist(KeyCollection keyCollection) {
             Assert.True(PersistPending);
             var pkix = PKIXPrivateKeyECDH ?? new PKIXPrivateKeyEd448(EncodedPrivateKey, PKIXPublicKeyECDH) { };
-            keyCollection.Persist(pkix, KeySecurity.IsExportable());
+            keyCollection.Persist(UDF, pkix, KeySecurity.IsExportable());
             }
 
         #region // Operations

@@ -23,13 +23,29 @@ namespace Goedel.XUnit {
         public static ShellTests Test() => new ShellTests();
         #region // Commitment
         List<TestVectorDigest> CommitmentTests = new List<TestVectorDigest>() {
-                new TestVectorDigest ("Konrad is the traitor", "KCDV6-7AY27-MCZZG-L2ZMG-3QD3R",
-                    null, key:"RBQ26-MEZGP-4SVCU-RYOWO-QTURA"),
-                new TestVectorDigest ("", "KB6NU-YIJDZ-UZAAL-4PBK4-4Y7ZV",
-                    null, key:"RD5SS-PN2L6-RFTKU-RCLTH-CMP6R") };
+                new TestVectorDigest ("Konrad is the traitor", "ADFI-EPKG-VKPP-NHHM-5DCA-QBRW-AVRJ",
+                    null, key:"NC56-CJPL-HRLU-MGTU-PUEW-S5WU-PYGP"),
+                new TestVectorDigest ("", "AASY-DPYV-3WLT-OIQZ-ZBZF-OMSB-PEMH",
+                    null, key:"NDZ4-GVE3-KQHX-NJCL-GGDM-KKZB-PELP") };
 
         [Fact]
         public void TestCommitment() {
+
+            //foreach (var test in CommitmentTests) {
+            //    var testCLI = GetTestCLI();
+            //    var filename = test.Data.ToFileUnique();
+            //    var keyClause = $" /key {test.Key}";
+
+            //    if (test.SHA2 != null) {
+            //        var result = testCLI.Dispatch($"hash commit {filename}{keyClause} /alg sha2") as ResultCommitment;
+            //        Console.WriteLine($"SHA2 {result}");
+            //        }
+            //    if (test.SHA3 != null) {
+            //        var result = testCLI.Dispatch($"hash commit {filename}{keyClause} /alg sha3") as ResultCommitment;
+            //        Console.WriteLine($"SHA3 {result}");
+            //        }
+            //    }
+
             foreach (var test in CommitmentTests) {
                 if (test.SHA2 != null) {
                     var result = TestCommitmentInt(test.Data, test.Key);
@@ -72,19 +88,59 @@ namespace Goedel.XUnit {
 
         #endregion
         #region // Random
-        [Fact]
-        public void TestRandom() {
+        [Theory]
+        [InlineData()]
+        [InlineData(128)]
+        [InlineData(192)]
+        [InlineData(256)]
+        [InlineData(512)]
+        public void TestRandom(int bits=0) {
+
+            var bitsClause = bits == 0 ? "" : $" /bits {bits}";
+            bits = bits == 0 ? 128 : bits;
+            var length = (bits + 12) / 5;
+            length = length + ((length-1) / 4);
+
             var repeat = 10;
             var results = new HashSet<string>();
             var testCLI = GetTestCLI();
 
             for (var i = 0; i < repeat; i++) {
-                var result = testCLI.Dispatch("hash random") as ResultDigest; ;
-                var random = result.Digest;
-                random.Length.AssertEqual(29);
+                var result = testCLI.Dispatch($"key nonce{bitsClause}") as ResultKey; ;
+                var random = result.Key;
+                var randomData = UDF.Nonce(random);
+                randomData.Length.AssertEqual(bits/8);
+
+                random.Length.AssertEqual(length);
                 results.Contains(random).AssertFalse();
                 results.Add(random);
-                Console.WriteLine(result);
+                }
+            }
+
+        [Theory]
+        [InlineData()]
+        [InlineData(128)]
+        [InlineData(192)]
+        [InlineData(256)]
+        [InlineData(512)]
+        public void TestKey(int bits = 0) {
+            var bitsClause = bits == 0 ? "" : $" /bits {bits}";
+            bits = bits == 0 ? 128 : bits;
+            var length = (bits + 12) / 5;
+            length = length + ((length - 1) / 4);
+
+            var repeat = 10;
+            var results = new HashSet<string>();
+            var testCLI = GetTestCLI();
+
+            for (var i = 0; i < repeat; i++) {
+                var result = testCLI.Dispatch($"key secret{bitsClause}") as ResultKey; ;
+                var random = result.Key;
+                var randomData = UDF.SymmetricKey(random);
+                randomData.Length.AssertEqual(bits / 8);
+                random.Length.AssertEqual(length);
+                results.Contains(random).AssertFalse();
+                results.Add(random);
                 }
             }
 
@@ -92,19 +148,31 @@ namespace Goedel.XUnit {
         #region // UDF
 
         List<TestVectorDigest> UDFTests = new List<TestVectorDigest>() {
-            new TestVectorDigest ("UDF Data Value", "MDDK7-N6A72-7AJZN-OSTRX-XKS7D", 
-                "SCFIN-CQGDR-KG47R-7OVPT-TCHZ7", null),
-            new TestVectorDigest ("290668103", "ME522-SXCSN-BFY3H-JBAAD-2SUES", 
-                "SB7J7-6FGZK-T3PK5-FUTRU-MMURU", null),
-            new TestVectorDigest ("44870804", "MA5W3-F6RGM-BGEWU-TO3GY-XYNKR",
-                "SETHM-SHUAF-R7L7V-HRIEW-MQ5KT", null),
-            new TestVectorDigest ("", "MBIDU-QYL4U-GZZDA-YKFFM-QLAN6",
-                "SDBDM-J6CIV-DSPDT-GHEFE-6F3PU", null)
+            new TestVectorDigest ("UDF Data Value", "MDDK-7N6A-727A-JZNO-STRX-XKS7-DJAF",
+                "KCFI-NCQG-DRKG-47R7-OVPT-TCHZ-7UXY", null),
+            new TestVectorDigest ("290668103", "MAAA-AAB3-VVFO-FE2C-LRWO-SCAA-HVFI",
+                "KB7J-76FG-ZKT3-PK5F-UTRU-MMUR-USIC", null),
+            new TestVectorDigest ("44870804", "MA5W-3F6R-GMBG-EWUT-O3GY-XYNK-R7RK",
+                "KAAA-AABG-OZEP-IALD-6X7K-PCQJ-MZB2", null),
+            new TestVectorDigest ("", "MBID-UQYL-4UGZ-ZDAY-KFFM-QLAN-6RLN",
+                "KDBD-MJ6C-IVDS-PDTG-HEFE-6F3P-UIBX", null)
 
             };
 
         [Fact]
         public void TestUDF() {
+            //foreach (var test in UDFTests) {
+            //    if (test.SHA2 != null) {
+            //        var result = TestUDFInt(test.Data, test.ContentType);
+            //        var result2 = TestUDFInt(test.Data, test.ContentType, "sha2");
+            //        Console.WriteLine($"SHA2 {result}");
+            //        }
+            //    if (test.SHA3 != null) {
+            //        var result = TestUDFInt(test.Data, test.ContentType, "sha3");
+            //        Console.WriteLine($"SHA3 {result}");
+            //        }
+            //    }
+
             foreach (var test in UDFTests) {
                 if (test.SHA2 != null) {
                     var result = TestUDFInt(test.Data, test.ContentType);

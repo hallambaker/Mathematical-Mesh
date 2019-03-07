@@ -1144,6 +1144,10 @@ namespace Goedel.Mesh.Shell {
 		NewFile			File{get; set;}
 		}
 
+	public interface ILengthOptions {
+		Integer			Bits{get; set;}
+		}
+
 	public interface ICryptoOptions {
 		String			Algorithms{get; set;}
 		}
@@ -9743,13 +9747,13 @@ namespace Goedel.Mesh.Shell {
 
     public class _KeyNonce : Goedel.Command.Dispatch ,
 							IReporting,
-							IDigestOptions {
+							ILengthOptions {
 
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
 			new Flag (),
 			new Flag (),
 			new Flag (),
-			new String ()			} ;
+			new Integer ()			} ;
 
 		/// <summary>Field accessor for option [verbose]</summary>
 		public virtual Flag Verbose {
@@ -9778,13 +9782,13 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _Json {
 			set => _Data[2].Parameter (value);
 			}
-		/// <summary>Field accessor for option [key]</summary>
-		public virtual String DigestKey {
-			get => _Data[3] as String;
+		/// <summary>Field accessor for option [bits]</summary>
+		public virtual Integer Bits {
+			get => _Data[3] as Integer;
 			set => _Data[3]  = value;
 			}
 
-		public virtual string _DigestKey {
+		public virtual string _Bits {
 			set => _Data[3].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
@@ -9817,11 +9821,11 @@ namespace Goedel.Mesh.Shell {
 					Key = "json"
 					},
 				new DescribeEntryOption () {
-					Identifier = "DigestKey", 
+					Identifier = "Bits", 
 					Default = null, // null if null
-					Brief = "Encrypt data for specified recipient",
+					Brief = "Secret size in bits",
 					Index = 3,
-					Key = "key"
+					Key = "bits"
 					}
 				}
 			};
@@ -9833,13 +9837,13 @@ namespace Goedel.Mesh.Shell {
 
     public class _KeySecret : Goedel.Command.Dispatch ,
 							IReporting,
-							IDigestOptions {
+							ILengthOptions {
 
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
 			new Flag (),
 			new Flag (),
 			new Flag (),
-			new String ()			} ;
+			new Integer ()			} ;
 
 		/// <summary>Field accessor for option [verbose]</summary>
 		public virtual Flag Verbose {
@@ -9868,13 +9872,13 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _Json {
 			set => _Data[2].Parameter (value);
 			}
-		/// <summary>Field accessor for option [key]</summary>
-		public virtual String DigestKey {
-			get => _Data[3] as String;
+		/// <summary>Field accessor for option [bits]</summary>
+		public virtual Integer Bits {
+			get => _Data[3] as Integer;
 			set => _Data[3]  = value;
 			}
 
-		public virtual string _DigestKey {
+		public virtual string _Bits {
 			set => _Data[3].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
@@ -9907,11 +9911,11 @@ namespace Goedel.Mesh.Shell {
 					Key = "json"
 					},
 				new DescribeEntryOption () {
-					Identifier = "DigestKey", 
+					Identifier = "Bits", 
 					Default = null, // null if null
-					Brief = "Encrypt data for specified recipient",
+					Brief = "Secret size in bits",
 					Index = 3,
-					Key = "key"
+					Key = "bits"
 					}
 				}
 			};
@@ -9923,13 +9927,15 @@ namespace Goedel.Mesh.Shell {
 
     public class _KeyEarl : Goedel.Command.Dispatch ,
 							IReporting,
-							IDigestOptions {
+							IDigestOptions,
+							ILengthOptions {
 
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
 			new Flag (),
 			new Flag (),
 			new Flag (),
-			new String ()			} ;
+			new String (),
+			new Integer ()			} ;
 
 		/// <summary>Field accessor for option [verbose]</summary>
 		public virtual Flag Verbose {
@@ -9966,6 +9972,15 @@ namespace Goedel.Mesh.Shell {
 
 		public virtual string _DigestKey {
 			set => _Data[3].Parameter (value);
+			}
+		/// <summary>Field accessor for option [bits]</summary>
+		public virtual Integer Bits {
+			get => _Data[4] as Integer;
+			set => _Data[4]  = value;
+			}
+
+		public virtual string _Bits {
+			set => _Data[4].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -10002,6 +10017,13 @@ namespace Goedel.Mesh.Shell {
 					Brief = "Encrypt data for specified recipient",
 					Index = 3,
 					Key = "key"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Bits", 
+					Default = null, // null if null
+					Brief = "Secret size in bits",
+					Index = 4,
+					Key = "bits"
 					}
 				}
 			};
@@ -10013,13 +10035,15 @@ namespace Goedel.Mesh.Shell {
 
     public class _KeyShare : Goedel.Command.Dispatch ,
 							IReporting,
-							IDigestOptions {
+							IDigestOptions,
+							ILengthOptions {
 
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
 			new Flag (),
 			new Flag (),
 			new Flag (),
 			new String (),
+			new Integer (),
 			new Integer (),
 			new Integer ()			} ;
 
@@ -10059,23 +10083,32 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _DigestKey {
 			set => _Data[3].Parameter (value);
 			}
-		/// <summary>Field accessor for option [quorum]</summary>
-		public virtual Integer Quorum {
+		/// <summary>Field accessor for option [bits]</summary>
+		public virtual Integer Bits {
 			get => _Data[4] as Integer;
 			set => _Data[4]  = value;
 			}
 
-		public virtual string _Quorum {
+		public virtual string _Bits {
 			set => _Data[4].Parameter (value);
 			}
-		/// <summary>Field accessor for option [shares]</summary>
-		public virtual Integer Shares {
+		/// <summary>Field accessor for option [quorum]</summary>
+		public virtual Integer Quorum {
 			get => _Data[5] as Integer;
 			set => _Data[5]  = value;
 			}
 
-		public virtual string _Shares {
+		public virtual string _Quorum {
 			set => _Data[5].Parameter (value);
+			}
+		/// <summary>Field accessor for option [shares]</summary>
+		public virtual Integer Shares {
+			get => _Data[6] as Integer;
+			set => _Data[6]  = value;
+			}
+
+		public virtual string _Shares {
+			set => _Data[6].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -10114,17 +10147,24 @@ namespace Goedel.Mesh.Shell {
 					Key = "key"
 					},
 				new DescribeEntryOption () {
+					Identifier = "Bits", 
+					Default = null, // null if null
+					Brief = "Secret size in bits",
+					Index = 4,
+					Key = "bits"
+					},
+				new DescribeEntryOption () {
 					Identifier = "Quorum", 
 					Default = "2", // null if null
 					Brief = "<Unspecified>",
-					Index = 4,
+					Index = 5,
 					Key = "quorum"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Shares", 
 					Default = "3", // null if null
 					Brief = "<Unspecified>",
-					Index = 5,
+					Index = 6,
 					Key = "shares"
 					}
 				}

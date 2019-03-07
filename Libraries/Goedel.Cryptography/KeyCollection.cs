@@ -128,9 +128,10 @@ namespace Goedel.Cryptography {
         /// Persist the key pair specified by <paramref name="privateKey"/> and mark as exportable
         /// or non-exportable according to the value of <paramref name="Exportable"/>.
         /// </summary>
+        /// <param name="udf">The UDF of the key</param>
         /// <param name="privateKey">The private key parameters.</param>
         /// <param name="Exportable">If true, the key is exportable.</param>
-        public abstract void Persist(IPKIXPrivateKey privateKey, bool Exportable);
+        public abstract void Persist(string udf, IPKIXPrivateKey privateKey, bool Exportable);
 
 
         /// <summary>

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -7,39 +7,22 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Libraries\Core\Goedel.ASN\Goedel.ASN.csproj" />
     <ProjectReference Include="..\..\Libraries\Core\Goedel.Command\Goedel.Command.csproj" />
     <ProjectReference Include="..\..\Libraries\Core\Goedel.Discovery\Goedel.Discovery.csproj" />
-    <ProjectReference Include="..\..\Libraries\Core\Goedel.FSR\Goedel.FSR.csproj" />
     <ProjectReference Include="..\..\Libraries\Core\Goedel.IO\Goedel.IO.csproj" />
     <ProjectReference Include="..\..\Libraries\Core\Goedel.Registry\Goedel.Registry.csproj" />
     <ProjectReference Include="..\..\Libraries\Core\Goedel.Utilities\Goedel.Utilities.csproj" />
-    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Dare\Goedel.Cryptography.Dare.csproj" />
-    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Jose\Goedel.Cryptography.Jose.csproj" />
-    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.KeyFile\Goedel.Cryptography.KeyFile.csproj" />
-    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Standard\Goedel.Cryptography.Standard.csproj" />
-    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Ticket\Goedel.Cryptography.Ticket.csproj" />
-    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.WindowsFramework\Goedel.Cryptography.WindowsFramework.csproj" />
     <ProjectReference Include="..\..\Libraries\Goedel.Cryptography\Goedel.Cryptography.csproj" />
-    <ProjectReference Include="..\..\Libraries\Goedel.Mesh.Platform.Windows\Goedel.Mesh.Platform.Windows.csproj" />
-    <ProjectReference Include="..\..\Libraries\Goedel.Mesh\Goedel.MeshOld.csproj" />
-    <ProjectReference Include="..\..\Libraries\Goedel.Persistence\Goedel.Persistence.csproj" />
     <ProjectReference Include="..\..\Libraries\Goedel.Protocol.Debug\Goedel.Protocol.Debug.csproj" />
-    <ProjectReference Include="..\..\Libraries\Goedel.Protocol.Exchange.Server\Goedel.Protocol.Exchange.Server.csproj" />
-    <ProjectReference Include="..\..\Libraries\Goedel.Protocol.Exchange\Goedel.Protocol.Exchange.csproj" />
     <ProjectReference Include="..\..\Libraries\Goedel.Protocol\Goedel.Protocol.csproj" />
-    <ProjectReference Include="..\..\Protocols\Account\Goedel.Account.Client\Goedel.Account.Client.csproj" />
-    <ProjectReference Include="..\..\Protocols\Account\Goedel.Account.Server\Goedel.Account.Server.csproj" />
-    <ProjectReference Include="..\..\Protocols\Account\Goedel.Account\Goedel.Account.csproj" />
-    <ProjectReference Include="..\..\Protocols\Confirm\Goedel.Confirm.Client\Goedel.Confirm.Client.csproj" />
-    <ProjectReference Include="..\..\Protocols\Confirm\Goedel.Confirm.Server\Goedel.Confirm.Server.csproj" />
-    <ProjectReference Include="..\..\Protocols\Confirm\Goedel.Confirm\Goedel.Confirm.csproj" />
-    <ProjectReference Include="..\..\Protocols\Mesh\Goedel.Mesh.Portal.Client\Goedel.Mesh.Portal.Client.csproj" />
-    <ProjectReference Include="..\..\Protocols\Mesh\Goedel.Mesh.Portal.Server\Goedel.Mesh.Portal.Server.csproj" />
-    <ProjectReference Include="..\..\Protocols\Mesh\Goedel.Mesh.Portal\Goedel.Mesh.Portal.csproj" />
-    <ProjectReference Include="..\..\Protocols\Recrypt\Goedel.Recrypt.Client\Goedel.Recrypt.Client.csproj" />
-    <ProjectReference Include="..\..\Protocols\Recrypt\Goedel.Recrypt.Server\Goedel.Recrypt.Server.csproj" />
-    <ProjectReference Include="..\..\Protocols\Recrypt\Goedel.Recrypt\Goedel.Recrypt.csproj" />
+    <ProjectReference Include="..\..\Libraries\Goedel.Test.Core\Goedel.Test.Core.csproj" />
+    <ProjectReference Include="..\..\Libraries\Goedel.Test\Goedel.Test.csproj" />
+    <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Core\Goedel.Mesh.Core.csproj" />
+    <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Protocol.Client\Goedel.Mesh.Protocol.Client.csproj" />
+    <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Protocol.Server\Goedel.Mesh.Protocol.Server.csproj" />
+    <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Shell\Goedel.Mesh.Shell.csproj" />
+    <ProjectReference Include="..\..\Mesh\Goedel.Mesh\Goedel.Mesh.csproj" />
+    <ProjectReference Include="..\..\Testing\Goedel.Mesh.Test\Goedel.Mesh.Test.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -246,10 +229,6 @@
       <Generator>gscript</Generator>
     </None>
   </ItemGroup>
-
-  <Import Project="..\..\Libraries\MeshApps\MeshApps.projitems" Label="Shared" />
-
-  <Import Project="..\..\Libraries\MeshMan\MeshMan.projitems" Label="Shared" />
 
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
     <Exec Command="VSPreBuild" />

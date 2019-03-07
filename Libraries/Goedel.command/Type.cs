@@ -243,6 +243,22 @@ namespace Goedel.Command {
     /// </summary>
     public abstract class _Integer : Type {
 
+
+        /// <summary>
+        /// Return the 
+        /// </summary>
+        /// <param name="defaultValue"></param>
+        /// <returns></returns>
+        public int ValueDefaulted(int defaultValue) {
+            if (Text == "" | Text == null) {
+                return defaultValue;
+                }
+            if (int.TryParse(Text, out var Result)) {
+                return Result;
+                }
+            throw new InvalidOption();
+            }
+
         /// <summary>
         /// Return the value as an integer
         /// </summary>

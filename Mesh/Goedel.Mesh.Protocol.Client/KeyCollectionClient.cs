@@ -26,8 +26,8 @@ namespace Goedel.Mesh.Protocol.Client {
         /// </summary>
         /// <param name="privateKey"></param>
         /// <param name="Exportable"></param>
-        public override void Persist(IPKIXPrivateKey privateKey, bool Exportable) =>
-            KeyCollectionBase.Persist(privateKey, Exportable);
+        public override void Persist(string udf, IPKIXPrivateKey privateKey, bool Exportable) =>
+            KeyCollectionBase.Persist(udf, privateKey, Exportable);
 
 
         public override KeyPair TryMatchRecipient(string keyID) => 

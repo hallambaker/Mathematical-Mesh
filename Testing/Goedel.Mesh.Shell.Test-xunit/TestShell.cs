@@ -38,7 +38,7 @@ namespace Goedel.XUnit {
 
 
         public TestCLI GetTestCLI(string MachineName = null) {
-            var testShell = new TestShell(testEnvironment, MachineName);
+            var testShell = new TestShell(TestEnvironment, MachineName);
             return new TestCLI(testShell);
             }
 

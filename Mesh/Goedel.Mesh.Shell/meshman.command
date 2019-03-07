@@ -66,6 +66,10 @@
 		Option File "file" NewFile
 			Brief "Output file"
 
+	OptionSet LengthOptions
+		Option Bits "bits" Integer
+			Brief "Secret size in bits"
+
 	OptionSet CryptoOptions
 		Option Algorithms "alg" String
 			Brief "List of algorithm specifiers"
@@ -600,22 +604,24 @@
 		Command KeyNonce "nonce"
 			Brief "Return a randomized string"			
 			Include Reporting
-			Include DigestOptions
+			Include LengthOptions
 
 		Command KeySecret "secret"
 			Brief "Return a randomized string"			
 			Include Reporting
-			Include DigestOptions
+			Include LengthOptions
 
 		Command KeyEarl "earl"
 			Brief "Return a randomized string"			
 			Include Reporting
 			Include DigestOptions
+			Include LengthOptions
 
 		Command KeyShare "share"
 			Brief "Return a randomized string"			
 			Include Reporting
 			Include DigestOptions
+			Include LengthOptions
 			Option Quorum "quorum" Integer
 				Default "2"
 			Option Shares "shares" Integer
@@ -635,8 +641,6 @@
 			Parameter Share8 "s8" String
 
 	CommandSet Hash "hash"
-
-
 		Command FileUDF "udf"
 			Brief "Calculate the Uniform Data Fingerprint of the input data"
 			Include Reporting

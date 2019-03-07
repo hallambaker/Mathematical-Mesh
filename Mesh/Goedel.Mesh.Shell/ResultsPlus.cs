@@ -99,6 +99,11 @@ namespace Goedel.Mesh.Shell {
             }
         }
 
+    public partial class ResultKey{
+        public override string ToString() => Key;
+        }
+
+
     public partial class ResultRecover {
         public override string ToString() {
             var Builder = new StringBuilder();

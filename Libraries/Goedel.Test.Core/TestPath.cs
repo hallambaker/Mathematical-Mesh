@@ -20,8 +20,9 @@ namespace Goedel.Test.Core {
 
         public static string CommonData => System.IO.Path.Combine(TestRoot, "CommonData");
         public static string WorkingDirectory => System.IO.Path.Combine(TestRoot, "WorkingDirectory");
+        public static string Variable => System.IO.Path.Combine(TestRoot, "Variable");
 
-        public string Path => System.IO.Path.Combine(TestRoot, Test);
+        public string Path => System.IO.Path.Combine(Variable, Test);
         public string ServiceDirectory => System.IO.Path.Combine(Path, "ServiceDirectory");
         public string Test;
 

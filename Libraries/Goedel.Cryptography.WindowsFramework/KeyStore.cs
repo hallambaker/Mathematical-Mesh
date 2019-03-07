@@ -11,7 +11,7 @@ namespace Goedel.Cryptography.Windows {
 
 
     public class KeyCollectionWindows : KeyCollection {
-        public override void Persist(IPKIXPrivateKey privateKey, bool exportable) => throw new NotImplementedException();
+        public override void Persist(string udf, IPKIXPrivateKey privateKey, bool exportable) => throw new NotImplementedException();
         }
 
 

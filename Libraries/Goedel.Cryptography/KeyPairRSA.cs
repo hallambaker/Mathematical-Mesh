@@ -184,7 +184,7 @@ namespace Goedel.Cryptography {
             Assert.True(PersistPending);
             var privateParameters = Provider.ExportParameters(true);
             var pkix = privateParameters.RSAPrivateKey();
-            keyCollection.Persist(pkix, KeySecurity.IsExportable());
+            keyCollection.Persist(UDF, pkix, KeySecurity.IsExportable());
             }
 
         /// <summary>

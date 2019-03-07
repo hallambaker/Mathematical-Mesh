@@ -62,9 +62,7 @@ namespace Goedel.Cryptography.Core {
             }
 
 
-        public override void Persist(IPKIXPrivateKey privateKey, bool exportable) {
-
-            var udf = privateKey.UDF();
+        public override void Persist(string udf, IPKIXPrivateKey privateKey, bool exportable) {
             var fileName = Path.Combine(DirectoryKeys, udf);
 
             // keys are persisted as plaintext for now.

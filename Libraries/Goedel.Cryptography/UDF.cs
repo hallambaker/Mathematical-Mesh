@@ -460,26 +460,25 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Return a random sequence as a UDF 
         /// </summary>
-        /// <param name="bits">Number of bits in the string</param>
+        /// <param name="bits">Number of random bits in the string</param>
         /// <returns>A randomly generated UDF string.</returns>
         public static string Nonce(int bits = 0) {
-            bits = bits <= 0 ? DefaultBits : bits;
+            bits = bits <= 0 ? DefaultBits-8 : bits;
 
             var Data = CryptoCatalog.GetBits(bits);
-            Data[0] = (byte)UDFTypeIdentifier.Nonce;
-            return PresentationBase32(Data, bits);
+            return TypeBDSToString(UDFTypeIdentifier.Nonce, Data, bits + 8);
             }
 
 
         /// <summary>
         /// Return a random sequence as a UDF 
         /// </summary>
-        /// <param name="bits">Number of bits in the string</param>
+        /// <param name="bits">Number of random bits in the string</param>
         /// <returns>A randomly generated UDF string.</returns>
         public static string SymmetricKey(int bits = 0) {
-            bits = bits <= 0 ? DefaultBits : bits;
+            bits = bits <= 0 ? DefaultBits-8 : bits;
 
-            var Data = CryptoCatalog.GetBits(bits+8);
+            var Data = CryptoCatalog.GetBits(bits);
             return TypeBDSToString(UDFTypeIdentifier.Encryption, Data, bits + 8);
             }
 
@@ -541,8 +540,38 @@ namespace Goedel.Cryptography {
             return result;
             }
 
+        /// <summary>
+        /// Parse a UDF and return the encryption key value if and only if it
+        /// is of the correct type code, otherwise null.
+        /// </summary>
+        /// <param name="udf">The string tro parse.</param>
+        /// <returns>The key value.</returns>
+        public static byte[] Nonce(string udf) {
+            var result = Parse(udf, out var code);
+            return code == (byte)UDFTypeIdentifier.Nonce ? result : null;
+            }
 
+        /// <summary>
+        /// Parse a UDF and return the encryption key value if and only if it
+        /// is of the correct type code, otherwise null.
+        /// </summary>
+        /// <param name="udf">The string tro parse.</param>
+        /// <returns>The key value.</returns>
+        public static byte[] SymmetricKey(string udf) {
+            var result = Parse(udf, out var code);
+            return code == (byte)UDFTypeIdentifier.Encryption ? result: null;
+            }
 
+        /// <summary>
+        /// Parse a UDF and return the encryption key value if and only if it
+        /// is of the correct type code, otherwise null.
+        /// </summary>
+        /// <param name="udf">The string tro parse.</param>
+        /// <returns>The key value.</returns>
+        public static byte[] ShamirSecret(string udf) {
+            var result = Parse(udf, out var code);
+            return code == (byte)UDFTypeIdentifier.ShamirSecret ? result : null;
+            }
 
         #region // Convenience functions
         /// <summary>

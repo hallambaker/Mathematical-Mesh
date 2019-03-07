@@ -9,12 +9,12 @@ namespace Scratchpad {
             Console.WriteLine("Hello World");
 
             Cryptography.Initialize();
-
-            TestSplit.Test().TestShares(2,2);
+            //TestSplit.Test().TestKeyShare(32, "FFFFFFFF");
+            //TestSplit.Test().TestShares(1, 1);
 
             //Find();
-
-            //ShellTests.Test().TestProfileConnectPin();
+            ShellTests.Test().TestKey();
+            //ShellTests.Test().TestCommitment();
             //ShellTests.Test().TestProfileEscrow();
 
             //ShellTests.Test().TestContainerArchive();
@@ -25,8 +25,8 @@ namespace Scratchpad {
             /* Skipping for now */
             //ShellTests.Test().TestProfileMail();
             //ShellTests.Test().TestProfileSSHPrivate();
-            //ShellTests.Test().TestProfileSSHPublic();
-            //ShellTests.Test().TestMessageGroup();
+            //Utilities.Test().BaseConversionFormatting();
+            //TestLifecycle.Test().Test_LifecycleDevice(CryptoAlgorithmID.DH);
             }
 
 

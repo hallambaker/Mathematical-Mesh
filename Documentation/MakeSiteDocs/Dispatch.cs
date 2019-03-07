@@ -4,18 +4,15 @@ using Goedel.Utilities;
 using Goedel.Command;
 using ExampleGenerator;
 using Goedel.Mesh;
-using Goedel.Recrypt;
-using Goedel.Confirm;
+
 
 namespace ExampleGenerator {
     public partial class MakeSiteDocs {
 
         public override void DefaultCommand (DefaultCommand Options) {
             Goedel.IO.Debug.Initialize();
-            Mesh.Initialize(true);
+            //Mesh.Initialize(true);
 
-            MeshRecrypt.Initialize();
-            MeshConfirm.Initialize();
 
 
             var CreateExamples = new CreateExamples();
