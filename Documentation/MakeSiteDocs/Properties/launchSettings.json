@@ -2,7 +2,7 @@
   "profiles": {
     "MakeSiteDocs": {
       "commandName": "Project",
-      "workingDirectory": "C:\\Users\\hallam\\Work\\mmm\\Release\\Documents\\Web"
+      "workingDirectory": "C:\\Users\\hallam\\Work\\mmm\\Web"
     }
   }
 }
