@@ -1,6 +1,6 @@
 ﻿Class Goedel.Mesh.Shell Shell
 	Library
-	Return		"ShellResult"
+	Return		ShellResult
 
 	Type NewFile			"file"
 	Type ExistingFile		"file"
@@ -9,6 +9,17 @@
 	Brief		"brief"
 
 	OptionSet Reporting
+		Enumerate EnumReporting "report"
+			Brief "Reporting level"
+			Case eJson "json"
+				Brief "Report output in JSON format"
+			Case eVerbose "verbose"
+				Brief "Verbose reports"
+			Case eReport "report"
+				Brief "Report output (default)"
+			Case eSilent "silent"
+				Brief "Suppress output"
+
 		Option Verbose "verbose" Flag
 			Default "true"
 			Brief "Verbose reports (default)"
@@ -602,12 +613,13 @@
 		Brief "Key operations."
 
 		Command KeyNonce "nonce"
-			Brief "Return a randomized string"			
+			Brief "Return a randomized nonce value formatted as a UDF Nonce Type"			
 			Include Reporting
 			Include LengthOptions
+			Return ResultKey
 
 		Command KeySecret "secret"
-			Brief "Return a randomized string"			
+			Brief "Return a a randomized secret value formatted as a UDF Encryption Key Type."			
 			Include Reporting
 			Include LengthOptions
 

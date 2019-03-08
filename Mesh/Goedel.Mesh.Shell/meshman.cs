@@ -9795,7 +9795,7 @@ namespace Goedel.Mesh.Shell {
 
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
 			Identifier = "nonce",
-			Brief =  "Return a randomized string",
+			Brief =  "Return a randomized nonce value formatted as a UDF Nonce Type",
 			HandleDelegate =  CommandLineInterpreter.Handle_KeyNonce,
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
@@ -9885,7 +9885,7 @@ namespace Goedel.Mesh.Shell {
 
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
 			Identifier = "secret",
-			Brief =  "Return a randomized string",
+			Brief =  "Return a a randomized secret value formatted as a UDF Encryption Key Type.",
 			HandleDelegate =  CommandLineInterpreter.Handle_KeySecret,
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
@@ -12409,6 +12409,15 @@ namespace Goedel.Mesh.Shell {
             return Result;
             }
         } // ExistingFile
+
+
+    public partial class  EnumReporting : _EnumReporting {
+        public static EnumReporting Factory (string Value) {
+            var Result = new EnumReporting();
+            Result.Default(Value);
+            return Result;
+            }
+        } // EnumReporting
 
 
     public partial class  Flag : _Flag {

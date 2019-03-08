@@ -215,6 +215,10 @@
       <LastGenOutput>ExampleSession.cs</LastGenOutput>
       <Generator>gscript</Generator>
     </None>
+    <None Update="Web\CommandsetKey.script">
+      <LastGenOutput>UserGuide.cs</LastGenOutput>
+      <Generator>gscript</Generator>
+    </None>
     <None Update="Web\UserGuide.script">
       <LastGenOutput>UserGuide.cs</LastGenOutput>
       <Generator>gscript</Generator>
