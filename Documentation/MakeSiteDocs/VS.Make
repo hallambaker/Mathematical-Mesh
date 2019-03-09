@@ -56,6 +56,7 @@ ToolTargets = \
 	Platform\UserGuideWindows.cs\
 	Web\ToDo.cs\
 	Web\ExampleSession.cs\
+	Web\CommandsetKey.cs\
 	Web\UserGuide.cs
 Apps\UserGuideApps.cs : Apps\UserGuideApps.script 
 	gscript Apps\UserGuideApps.script  Apps\UserGuideApps.cs
@@ -116,6 +117,9 @@ Web\ToDo.cs : Web\ToDo.script
 
 Web\ExampleSession.cs : Web\ExampleSession.script 
 	gscript Web\ExampleSession.script  Web\ExampleSession.cs
+
+Web\CommandsetKey.cs : Web\CommandsetKey.script 
+	gscript Web\CommandsetKey.script  Web\CommandsetKey.cs
 
 Web\UserGuide.cs : Web\UserGuide.script 
 	gscript Web\UserGuide.script  Web\UserGuide.cs

@@ -120,6 +120,15 @@ namespace Goedel.Registry {
         /// <param name="Value">The condition value.</param>
         /// <param name="Text">The string to return if Value is true.</param>
         /// <returns>The string Text if Value is true, otherwise a null string.</returns>
+        public static string If(this string Text) => If(Text!=null, Text, "");
+
+        /// <summary>
+        /// Return the string value if a condition is met, otherwise return an
+        /// empty string.
+        /// </summary>
+        /// <param name="Value">The condition value.</param>
+        /// <param name="Text">The string to return if Value is true.</param>
+        /// <returns>The string Text if Value is true, otherwise a null string.</returns>
         public static string If(this bool Value, string Text) => If(Value, Text, "");
 
         /// <summary>

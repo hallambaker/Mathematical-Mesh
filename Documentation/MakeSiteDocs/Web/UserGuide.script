@@ -8,6 +8,7 @@
 #% Web (Index);
 #% UserGuide (Index);
 #% Reference (Index);
+#% WebKey (Index);
 #end method
 
 #file Web "readme.md" CreateWeb Index

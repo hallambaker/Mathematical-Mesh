@@ -17,6 +17,7 @@ namespace MakeSiteDocs {
 			 Web (Index);
 			 UserGuide (Index);
 			 Reference (Index);
+			 WebKey (Index);
 			}
 		
 
@@ -29,7 +30,7 @@ namespace MakeSiteDocs {
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("# meshman Documentation\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("meshman is a command line tool that provides access to the security tools\n{0}", _Indent);
+				_Output.Write ("'meshman' is a command line tool that provides access to the security tools\n{0}", _Indent);
 				_Output.Write ("provided by the Mathematical Mesh. Providing these capabilities in a command\n{0}", _Indent);
 				_Output.Write ("line tool makes it easy to access Mesh capabilities from scripting languages,\n{0}", _Indent);
 				_Output.Write ("thus enabling scripts to be written to manage existing applications using\n{0}", _Indent);
@@ -54,6 +55,10 @@ namespace MakeSiteDocs {
 				var _Indent = ""; 
 				_Output.Write ("# meshman User Guide\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("[*Key*](key.md)\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("Commands for creating keys, nonces and EARLs and secret sharing and recovery.\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
 				}
 			}
 		
@@ -65,6 +70,44 @@ namespace MakeSiteDocs {
 			using (var _Output = new StreamWriter ("Reference/readme.md")) {
 				var _Indent = ""; 
 				_Output.Write ("# meshman Reference Manual\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("*about* \n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("*help*\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("[*Key*](key.md)\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("Commands for creating keys, nonces and EARLs and secret sharing and recovery.\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("# Command format\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The command processor supports use of either UNIX or Windows syntax regardless\n{0}", _Indent);
+				_Output.Write ("of the platform on which it is run. This allows scripts written on Unix to be\n{0}", _Indent);
+				_Output.Write ("used on Windows and vice versa while allowing users to use the syntax they are \n{0}", _Indent);
+				_Output.Write ("accustomed to use on a particular machine.\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("# Common options\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("All commands support the use of the 'verbose', 'report' and 'json' options.\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("*'/json' '/nojson'* \n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The '/json' flag takes precedence over the /verbose and /report options which\n{0}", _Indent);
+				_Output.Write ("are ignored if '/json' is specified.\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("Specifying the /json flag causes the command output to be presented in JSON\n{0}", _Indent);
+				_Output.Write ("format.\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("*'/verbose' '/noverbose'* \n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The '/verbose' flag takes precedence over the /report option which is ignored if\n{0}", _Indent);
+				_Output.Write ("'/verbose' is specified.\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("*'/report' '/noreport'* \n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The /report flag is set by default. If /noreport is specified, the command is\n{0}", _Indent);
+				_Output.Write ("executed without any output being made to the console.\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				}
 			}

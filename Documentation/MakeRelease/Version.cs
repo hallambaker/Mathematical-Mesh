@@ -478,7 +478,7 @@ namespace Goedel.Tool.Version {
                                 }
                             break;
                             }
-                        if (Token == TokenType.END) {
+                        if (Token == TokenType.END) { 
                             State = StateCode._End;
                             break;
                             }

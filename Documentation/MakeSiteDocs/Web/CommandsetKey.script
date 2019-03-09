@@ -1,24 +1,22 @@
 ﻿#using System.Text
 #using Goedel.Mesh
+#using Goedel.Mesh.Shell
 #using Goedel.Protocol
 #xclass MakeSiteDocs MakeSiteDocs
 
 
-#method WebDocs CreateWeb Index
-#% Web (Index);
-#% UserGuide (Index);
-#% Reference (Index);
-#end method
 
-#file Web "Guide/key.md" CreateWeb Index
+#file WebKey "Guide/key.md" CreateWeb Index
 
 ## Using the Key Command Set
 
-
+````
+#% DescribeCommandSet_Key.Describe('/', _Output);
+````
 
 #end file
 
-#file Reference "Reference/key.md" CreateWeb Index
+#file KeyReference "Reference/key.md" CreateWeb Index
 ## Key Command Set
 
 #### key nonce

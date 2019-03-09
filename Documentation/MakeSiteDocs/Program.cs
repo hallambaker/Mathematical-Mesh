@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using Goedel.Mesh.Shell;
 
 namespace MakeSiteDocs {
     public class CreateWeb {
@@ -15,7 +15,7 @@ namespace MakeSiteDocs {
             var makeSiteDocs = new MakeSiteDocs();
             makeSiteDocs.WebDocs(this);
 
-
+            _ProfileHello._DescribeCommand.Describe('/');
             }
 
 

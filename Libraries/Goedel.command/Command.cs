@@ -1,5 +1,6 @@
 ﻿using Goedel.Utilities;
 using System;
+using System.IO;
 using System.Collections.Generic;
 
 namespace Goedel.Command {
@@ -28,20 +29,24 @@ namespace Goedel.Command {
         /// <param name="DefaultCommand">The description of the default command.</param>
         /// <param name="Description">The command description</param>
         /// <param name="Entries">The command entries</param>
+        /// <param name="Output">The output stream (defaults to Console)</param>
         public static void Brief (
                     string Description, 
                     DescribeCommandEntry DefaultCommand,
-                    SortedDictionary<string, DescribeCommand> Entries) {
-            Console.WriteLine(Description); 
-            Console.WriteLine("");
+                    SortedDictionary<string, DescribeCommand> Entries,
+                    TextWriter Output = null) {
+            Output = Output ?? Console.Out;
+
+            Output.WriteLine(Description);
+            Output.WriteLine("");
 
             if (DefaultCommand != null) {
-                DefaultCommand.Describe(FlagIndicator);
+                DefaultCommand.Describe(FlagIndicator, Output);
 
                 }
             foreach (var Entry in Entries) {
                 if (!Entry.Value.IsDefault) {  // BUG: Is not doing the right thing here.
-                    Entry.Value.Describe(FlagIndicator);
+                    Entry.Value.Describe(FlagIndicator, Output);
                     }
                 }
             }
@@ -136,19 +141,9 @@ namespace Goedel.Command {
         /// Describe the values in an command.
         /// </summary>
         /// <param name="Dispatch">The command to describe.</param>
-        public static void DescribeValues (Dispatch Dispatch) {
+        public static void DescribeValues(Dispatch Dispatch) {
             // NYI: This may not be required.
             }
-
-        ///// <summary>
-        ///// The main dispatch point
-        ///// </summary>
-        ///// <param name="Entries">Dictionary describing the shell commands and dispatchers.</param>
-        ///// <param name="Dispatch">The command description.</param>
-        ///// <param name="Args">The set of arguments.</param>
-        ///// <param name="Index">The first unparsed argument.</param>
-        //public void nuDispatcher (SortedDictionary<string, DescribeCommand> Entries, DispatchShell Dispatch, string[] Args, int Index) {
-        //    }
 
 
         /// <summary>
@@ -209,17 +204,6 @@ namespace Goedel.Command {
                 Dispatcher(DescribeCommandSet.Entries, DefaultCommand, Dispatch, Args, Index + 1);
                 }
 
-            //switch (DescribeCommand) {
-
-            //    case DescribeCommandEntry DescribeCommandEntry: {
-            //        DescribeCommandEntry.HandleDelegate(Dispatch, Args, Index + 1);
-            //        break;
-            //        }
-            //    case DescribeCommandSet DescribeCommandSet: {
-            //        Dispatcher(DescribeCommandSet.Entries, DefaultCommand, Dispatch, Args, Index + 1);
-            //        break;
-            //        }
-            //    }
 
             }
         }
@@ -253,7 +237,10 @@ namespace Goedel.Command {
         /// Describe the command set.
         /// </summary>
         /// <param name="FlagIndicator">The flag indicator to use when printing the description.</param>
-        public abstract void Describe (char FlagIndicator);
+        /// <param name="Output">The output stream (defaults to Console)</param>
+        public abstract void Describe (
+                    char FlagIndicator,
+                    TextWriter Output = null);
         }
 
     /// <summary>
@@ -302,38 +289,43 @@ namespace Goedel.Command {
         /// Describe the command to the console.
         /// </summary>
         /// <param name="FlagIndicator">The flag indicator to use in display.</param>
-        public override void Describe (char FlagIndicator) {
-            Console.WriteLine("{0}{1}", FlagIndicator, Identifier);
+        /// <param name="Output">The output stream (defaults to Console)</param>
+        public override void Describe (
+                    char FlagIndicator,
+                    TextWriter Output = null) {
+            Output = Output ?? Console.Out;
+
+            Output.WriteLine("{0}{1}", FlagIndicator, Identifier);
             foreach (var Entry in Entries) {
 
-                if (Entry is DescribeCommandEntry) {
-                    var SubCommand = Entry as DescribeCommandEntry;
-                    Console.WriteLine("    {0}{1}  {2}", FlagIndicator, Entry.Key, SubCommand.Brief);
-                    }
-                else if (Entry is DescribeEntryParameter) {
-                    var Parameter = Entry as DescribeEntryParameter;
-                    Console.WriteLine("    {0}   {1}", Entry.Key, Parameter.Brief);
-                    }
-                else if (Entry is DescribeEntryOption) {
-                    var Option = Entry as DescribeEntryOption;
-                    Console.WriteLine("    {0}{1}   {2}", FlagIndicator, Entry.Key, Option.Brief);
-                    }
-                
+                //if (Entry is DescribeCommandEntry) {
+                //    var SubCommand = Entry as DescribeCommandEntry;
+                //    Output.WriteLine("    {0}{1}  {2}", FlagIndicator, Entry.Key, SubCommand.Brief);
+                //    }
+                //else if (Entry is DescribeEntryParameter) {
+                //    var Parameter = Entry as DescribeEntryParameter;
+                //    Output.WriteLine("    {0}   {1}", Entry.Key, Parameter.Brief);
+                //    }
+                //else if (Entry is DescribeEntryOption) {
+                //    var Option = Entry as DescribeEntryOption;
+                //    Output.WriteLine("    {0}{1}   {2}", FlagIndicator, Entry.Key, Option.Brief);
+                //    }
 
-                    //switch (Entry) {
-                    //case DescribeCommandEntry SubCommand: {
-                    //    Console.WriteLine("    {0}{1}  {2}", FlagIndicator, Entry.Key, SubCommand.Brief);
-                    //    break;
-                    //    }
-                    //case DescribeEntryParameter Parameter: {
-                    //    Console.WriteLine("    {0}   {1}", Entry.Key, Parameter.Brief);
-                    //    break;
-                    //    }
-                    //case DescribeEntryOption Option: {
-                    //    Console.WriteLine("    {0}{1}   {2}", FlagIndicator, Entry.Key, Option.Brief);
-                    //    break;
-                    //    }
-                    //}
+
+                switch (Entry) {
+                    case DescribeCommandEntry SubCommand: {
+                        Output.WriteLine("    {0}{1}  {2}", FlagIndicator, Entry.Key, SubCommand.Brief);
+                        break;
+                        }
+                    case DescribeEntryParameter Parameter: {
+                        Output.WriteLine("    {0}   {1}", Entry.Key, Parameter.Brief);
+                        break;
+                        }
+                    case DescribeEntryOption Option: {
+                        Output.WriteLine("    {0}{1}   {2}", FlagIndicator, Entry.Key, Option.Brief);
+                        break;
+                        }
+                    }
                 }
             }
 
@@ -352,31 +344,34 @@ namespace Goedel.Command {
         /// Describe the command set to the console.
         /// </summary>
         /// <param name="FlagIndicator">The flag indicator to use in display.</param>
-        public override void Describe (char FlagIndicator) {
-            Console.WriteLine("{0}", Identifier);
+        /// <param name="Output">The output stream (defaults to Console)</param>
+        public override void Describe(
+                    char FlagIndicator,
+                    TextWriter Output = null) {
+            Output = Output ?? Console.Out;
+
+            Output.WriteLine("{0}", Identifier);
             foreach (var Entry in Entries) {
+                //if (Entry.Value is DescribeCommandEntry) {
+                //    var SubCommand = Entry.Value as DescribeCommandEntry;
+                //    Output.WriteLine("    {0}{1}   {2}", FlagIndicator, Entry.Key, SubCommand.Brief);
+                //    }
+                //else if (Entry.Value is DescribeCommandSet) {
+                //    var Parameter = Entry.Value as DescribeCommandSet;
+                //    Output.WriteLine("    {0}{1}", Entry.Key, Parameter.Brief);
+                //    }
 
-                if (Entry.Value is DescribeCommandEntry) {
-                    var SubCommand = Entry.Value as DescribeCommandEntry;
-                    Console.WriteLine("    {0}{1}   {2}", FlagIndicator, Entry.Key, SubCommand.Brief);
+                switch (Entry.Value) {
+                    case DescribeCommandEntry describeCommandEntry: {
+                        Output.WriteLine("    {0}{1}   {2}", FlagIndicator, Entry.Key, describeCommandEntry.Brief);
+                        break;
+                        }
+                    case DescribeCommandSet describeCommandSet: {
+                        Output.WriteLine("    {0}{1}", Entry.Key, describeCommandSet.Brief);
+                        break;
+                        }
                     }
-                else if (Entry.Value is DescribeCommandSet) {
-                    var Parameter = Entry.Value as DescribeCommandSet;
-                    Console.WriteLine("    {0}{1}", Entry.Key, Parameter.Brief);
-                    }
-                
 
-                    //switch (Entry.Value) {
-                    //case DescribeCommandEntry SubCommand: {
-                    //    Console.WriteLine("    {0}{1}   {2}", FlagIndicator, Entry.Key, SubCommand.Brief);
-                    //    break;
-                    //    }
-                    //case DescribeCommandSet Parameter: {
-                    //    Console.WriteLine("    {0}{1}", Entry.Key, Parameter.Brief);
-                    //    break;
-                    //    }
-
-                    //}
                 }
             }
         }
@@ -398,6 +393,21 @@ namespace Goedel.Command {
     /// Describe a parameter value.
     /// </summary>
     public class DescribeEntryParameter : DescribeEntryValue {
+        }
+
+    /// <summary>
+    /// Describe a parameter value.
+    /// </summary>
+    public class DescribeEntryEnumerate : DescribeEntryValue {
+        /// <summary>The command entries.</summary>
+        public List<DescribeCase> Entries { get; set; }
+        }
+
+    /// <summary>
+    /// Describe an entry value.
+    /// </summary>
+    public class DescribeCase : DescribeEntry {
+        public int Value;
         }
 
     /// <summary>

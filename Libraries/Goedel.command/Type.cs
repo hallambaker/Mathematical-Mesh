@@ -33,21 +33,24 @@ namespace Goedel.Command {
         /// Set the default value for the type.
         /// </summary>
         /// <param name="TextIn">The default value as it would be given on the command line.</param>
-        public virtual void Default(string TextIn) => Parameter(TextIn);
+        public virtual void Default(string TextIn) {
+            Parameter(TextIn);
+            ByDefault = true;
+            }
 
 
         /// <summary>
         /// Completion routine. This is called at the end of parameter processing to finalize default values.
         /// </summary>
         /// <param name="Data">The final data.</param>
-        public virtual void Complete (Type[] Data) {
+        public virtual void Complete(Type[] Data) {
             }
 
         /// <summary>
         /// Set the flag value.
         /// </summary>
         /// <param name="Negated">If true, flag is negated.</param>
-        public virtual void SetFlag (bool Negated) {
+        public virtual void SetFlag(bool Negated) {
             }
 
         }
@@ -64,16 +67,15 @@ namespace Goedel.Command {
             }
 
         /// <summary>
-        /// Default constructor
-        /// </summary>
-        public _Flag () {
-            }
-
-        /// <summary>
         /// Construct flag with specified value
         /// </summary>
         /// <param name="Value">The flag value to set</param>
-        public _Flag(string Value) => Default(Value);
+        public _Flag(string Value=null) {
+            if (Value != null) {
+                Default(Value);
+                }
+            }
+
 
         /// <summary>
         /// The flag value.
@@ -85,7 +87,7 @@ namespace Goedel.Command {
         /// </summary>
         /// <param name="Text">The values true and 1 set a true value, 0 and false set a false value.
         /// Otherwise an exception is thrown.</param>
-        public override void Parameter (string Text) {
+        public override void Parameter(string Text) {
             //Text = (Text == null) ? "true" : Text;
             switch (Text.ToLower()) {
                 case "true":
@@ -102,7 +104,7 @@ namespace Goedel.Command {
                     break;
                     }
                 default:
-                throw new System.Exception("Flag value not recognized" + Text);
+                    throw new System.Exception("Flag value not recognized" + Text);
                 }
             }
 
@@ -110,8 +112,8 @@ namespace Goedel.Command {
         /// Set the negated flag
         /// </summary>
         /// <param name="Negated">If true, command is negated.</param>
-        public override void SetFlag (bool Negated) {
-            Parameter (Negated ? "false" : "true");
+        public override void SetFlag(bool Negated) {
+            Parameter(Negated ? "false" : "true");
             ByDefault = false;
             }
 
@@ -130,17 +132,17 @@ namespace Goedel.Command {
     /// Command line flag for file.
     /// </summary>
     public abstract class _File : Goedel.Command.Type {
-        /// <summary>
-        /// Default constructor
-        /// </summary>
-        public _File () {
-            }
+
 
         /// <summary>
         /// Constructor with specified default value.
         /// </summary>
         /// <param name="Value">The default value text for this entry</param>
-        public _File(string Value) => Default(Value);
+        public _File(string Value = null) {
+            if (Value != null) {
+                Default(Value);
+                }
+            }
 
         /// <summary>
         /// The default extension.
@@ -172,14 +174,14 @@ namespace Goedel.Command {
         /// <param name="Source">The source file.</param>
         /// <param name="Extension">The extension.</param>
         /// <returns>File name.</returns>
-        public string DefaultFile (string Source, string Extension = null) {
+        public string DefaultFile(string Source, string Extension = null) {
             Extension = Extension ?? this.Extension;
 
             Text = FileTools.DefaultFile(Extension, Source);
             return Text;
             }
 
-        
+
 
 
         }
@@ -187,8 +189,19 @@ namespace Goedel.Command {
     /// <summary>
     /// Command line flag for file.
     /// </summary>
-    public abstract class _NewFile : _File  {
+    public abstract class _NewFile : _File {
         bool Flagged = false;
+
+        /// <summary>
+        /// Construct flag with specified value
+        /// </summary>
+        /// <param name="Value">The flag value to set</param>
+        public _NewFile(string Value = null) {
+            if (Value != null) {
+                Default(Value);
+                }
+            }
+
 
         /// <summary>
         /// Set the negated flag
@@ -208,7 +221,7 @@ namespace Goedel.Command {
         /// Completion routine. This is called at the end of parameter processing to finalize default values.
         /// </summary>
         /// <param name="Data">The completed data</param>
-        public override void Complete (Type[] Data) {
+        public override void Complete(Type[] Data) {
             if (!ByDefault | !Flagged) {
                 return; // not flagged or explicitly set
                 }
@@ -221,7 +234,7 @@ namespace Goedel.Command {
             }
 
 
-        _ExistingFile Get (Type[] Data) {
+        _ExistingFile Get(Type[] Data) {
             foreach (var Entry in Data) {
                 if (Entry as _ExistingFile != null) {
                     return Entry as _ExistingFile;
@@ -236,6 +249,16 @@ namespace Goedel.Command {
     /// </summary>
     public abstract class _ExistingFile : _File {
 
+        /// <summary>
+        /// Construct flag with specified value
+        /// </summary>
+        /// <param name="Value">The flag value to set</param>
+        public _ExistingFile(string Value = null) {
+            if (Value != null) {
+                Default(Value);
+                }
+            }
+
         }
 
     /// <summary>
@@ -243,6 +266,16 @@ namespace Goedel.Command {
     /// </summary>
     public abstract class _Integer : Type {
 
+
+        /// <summary>
+        /// Construct flag with specified value
+        /// </summary>
+        /// <param name="Value">The flag value to set</param>
+        public _Integer(string Value = null) {
+            if (Value != null) {
+                Default(Value);
+                }
+            }
 
         /// <summary>
         /// Return the 
@@ -283,6 +316,33 @@ namespace Goedel.Command {
         /// The value.
         /// </summary>
         public string Value => Text;
+
+        /// <summary>
+        /// Construct flag with specified value
+        /// </summary>
+        /// <param name="Value">The flag value to set</param>
+        public _String(string Value = null) {
+            if (Value != null) {
+                Default(Value);
+                }
+            }
+
+        }
+
+
+    //     public abstract class _Enumeration<T> : Type  where T: System.Enum {
+
+    /// <summary>
+    /// Command line flag for file.
+    /// </summary>
+    public abstract class _Enumeration<T> : Type {
+        DescribeEntryEnumerate Description;
+        public T Value;
+
+
+        public _Enumeration(DescribeEntryEnumerate description, string Value = null) {
+            Description = description;
+            }
 
         }
 

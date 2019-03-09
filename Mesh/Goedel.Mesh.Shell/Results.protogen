@@ -4,6 +4,14 @@
 	Description
 		|Classes to be used to test serialization an deserialization.
 
+	Structure ResultKey
+		Inherits		Result
+		String			Key
+		String			Identifier
+		String			Shares
+			Multiple
+
+
 	Structure Result
 		Boolean			Success
 		String			Reason
@@ -17,12 +25,7 @@
 		String			Digest
 		String			Key
 
-	Structure ResultKey
-		Inherits		Result
-		String			Key
-		String			Identifier
-		String			Shares
-			Multiple
+
 
 	Structure ResultFile
 		Inherits		Result

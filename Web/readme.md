@@ -1,7 +1,7 @@
 
 # meshman Documentation
 
-meshman is a command line tool that provides access to the security tools
+'meshman' is a command line tool that provides access to the security tools
 provided by the Mathematical Mesh. Providing these capabilities in a command
 line tool makes it easy to access Mesh capabilities from scripting languages,
 thus enabling scripts to be written to manage existing applications using

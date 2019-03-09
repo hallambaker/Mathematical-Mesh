@@ -5,8 +5,7 @@
 	Type NewFile			"file"
 	Type ExistingFile		"file"
 
-	About		"about"
-	Brief		"brief"
+	Brief		"Mathematical Mesh command tool"
 
 	OptionSet Reporting
 		Enumerate EnumReporting "report"
