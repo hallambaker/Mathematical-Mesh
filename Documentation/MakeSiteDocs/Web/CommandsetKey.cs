@@ -21,7 +21,7 @@ namespace MakeSiteDocs {
 				_Output.Write ("# Using the Key Command Set\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("````\n{0}", _Indent);
-				 DescribeCommandSet_Key.Describe('/', _Output);
+				 CommandLineInterpreter.DescribeCommandSet_Key.Describe('/', _Output);
 				_Output.Write ("````\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				}

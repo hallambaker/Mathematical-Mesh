@@ -414,8 +414,8 @@ namespace ExampleGenerator {
         /// </summary>
         void StartServices () {
             // Create test Mesh
-            File.Delete(LogMesh);
-            File.Delete(LogPortal);
+            System.IO.File.Delete(LogMesh);
+            System.IO.File.Delete(LogPortal);
 
             //MeshPortal = new MeshPortalDirect(PortalServiceDNS, LogMesh, LogPortal);
             //Goedel.Mesh.Portal.MeshPortal.Default = MeshPortal;

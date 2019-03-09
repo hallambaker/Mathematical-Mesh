@@ -11,7 +11,7 @@
 ## Using the Key Command Set
 
 ````
-#% DescribeCommandSet_Key.Describe('/', _Output);
+#% CommandLineInterpreter.DescribeCommandSet_Key.Describe('/', _Output);
 ````
 
 #end file

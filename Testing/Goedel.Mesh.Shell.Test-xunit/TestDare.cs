@@ -52,7 +52,7 @@ namespace Goedel.XUnit {
             var result1 = Dispatch($"dare encode {filename}{contentClause}{encryptClause}{signClause}") as ResultFile;
 
 
-            File.Delete(filename);
+            System.IO.File.Delete(filename);
 
             Dispatch($"dare decode {result1.Filename}");
             var file2UDF = GetFileUDF(filename);

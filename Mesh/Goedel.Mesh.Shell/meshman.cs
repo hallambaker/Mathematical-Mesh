@@ -70,7 +70,7 @@ namespace Goedel.Mesh.Shell {
 
 
 
-		static DescribeCommandSet DescribeCommandSet_Profile = new DescribeCommandSet () {
+		public static DescribeCommandSet DescribeCommandSet_Profile = new DescribeCommandSet () {
             Identifier = "profile",
 			Entries = new  SortedDictionary<string, DescribeCommand> () {
 				{"hello", _ProfileHello._DescribeCommand },
@@ -92,7 +92,7 @@ namespace Goedel.Mesh.Shell {
 				} // End Entries
 			};
 
-		static DescribeCommandSet DescribeCommandSet_Mail = new DescribeCommandSet () {
+		public static DescribeCommandSet DescribeCommandSet_Mail = new DescribeCommandSet () {
             Identifier = "mail",
 			Entries = new  SortedDictionary<string, DescribeCommand> () {
 				{"add", _MailAdd._DescribeCommand },
@@ -102,7 +102,7 @@ namespace Goedel.Mesh.Shell {
 				} // End Entries
 			};
 
-		static DescribeCommandSet DescribeCommandSet_SMIME = new DescribeCommandSet () {
+		public static DescribeCommandSet DescribeCommandSet_SMIME = new DescribeCommandSet () {
             Identifier = "smime",
 			Entries = new  SortedDictionary<string, DescribeCommand> () {
 				{"private", _SMIMEPrivate._DescribeCommand },
@@ -110,7 +110,7 @@ namespace Goedel.Mesh.Shell {
 				} // End Entries
 			};
 
-		static DescribeCommandSet DescribeCommandSet_PGP = new DescribeCommandSet () {
+		public static DescribeCommandSet DescribeCommandSet_PGP = new DescribeCommandSet () {
             Identifier = "openpgp",
 			Entries = new  SortedDictionary<string, DescribeCommand> () {
 				{"private", _PGPPrivate._DescribeCommand },
@@ -118,7 +118,7 @@ namespace Goedel.Mesh.Shell {
 				} // End Entries
 			};
 
-		static DescribeCommandSet DescribeCommandSet_SSH = new DescribeCommandSet () {
+		public static DescribeCommandSet DescribeCommandSet_SSH = new DescribeCommandSet () {
             Identifier = "ssh",
 			Entries = new  SortedDictionary<string, DescribeCommand> () {
 				{"create", _SSHCreate._DescribeCommand },
@@ -129,7 +129,7 @@ namespace Goedel.Mesh.Shell {
 				} // End Entries
 			};
 
-		static DescribeCommandSet DescribeCommandSet_SSHAdd = new DescribeCommandSet () {
+		public static DescribeCommandSet DescribeCommandSet_SSHAdd = new DescribeCommandSet () {
             Identifier = "add",
 			Entries = new  SortedDictionary<string, DescribeCommand> () {
 				{"host", _SSHAddHost._DescribeCommand },
@@ -138,7 +138,7 @@ namespace Goedel.Mesh.Shell {
 				} // End Entries
 			};
 
-		static DescribeCommandSet DescribeCommandSet_SSHShow = new DescribeCommandSet () {
+		public static DescribeCommandSet DescribeCommandSet_SSHShow = new DescribeCommandSet () {
             Identifier = "show",
 			Entries = new  SortedDictionary<string, DescribeCommand> () {
 				{"known", _SSHKnown._DescribeCommand },
@@ -146,7 +146,7 @@ namespace Goedel.Mesh.Shell {
 				} // End Entries
 			};
 
-		static DescribeCommandSet DescribeCommandSet_Password = new DescribeCommandSet () {
+		public static DescribeCommandSet DescribeCommandSet_Password = new DescribeCommandSet () {
             Identifier = "password",
 			Entries = new  SortedDictionary<string, DescribeCommand> () {
 				{"add", _PasswordAdd._DescribeCommand },
@@ -156,7 +156,7 @@ namespace Goedel.Mesh.Shell {
 				} // End Entries
 			};
 
-		static DescribeCommandSet DescribeCommandSet_Contact = new DescribeCommandSet () {
+		public static DescribeCommandSet DescribeCommandSet_Contact = new DescribeCommandSet () {
             Identifier = "contact",
 			Entries = new  SortedDictionary<string, DescribeCommand> () {
 				{"add", _ContactAdd._DescribeCommand },
@@ -166,7 +166,7 @@ namespace Goedel.Mesh.Shell {
 				} // End Entries
 			};
 
-		static DescribeCommandSet DescribeCommandSet_Bookmark = new DescribeCommandSet () {
+		public static DescribeCommandSet DescribeCommandSet_Bookmark = new DescribeCommandSet () {
             Identifier = "bookmark",
 			Entries = new  SortedDictionary<string, DescribeCommand> () {
 				{"add", _BookmarkAdd._DescribeCommand },
@@ -176,7 +176,7 @@ namespace Goedel.Mesh.Shell {
 				} // End Entries
 			};
 
-		static DescribeCommandSet DescribeCommandSet_Calendar = new DescribeCommandSet () {
+		public static DescribeCommandSet DescribeCommandSet_Calendar = new DescribeCommandSet () {
             Identifier = "calendar",
 			Entries = new  SortedDictionary<string, DescribeCommand> () {
 				{"add", _CalendarAdd._DescribeCommand },
@@ -186,7 +186,7 @@ namespace Goedel.Mesh.Shell {
 				} // End Entries
 			};
 
-		static DescribeCommandSet DescribeCommandSet_Network = new DescribeCommandSet () {
+		public static DescribeCommandSet DescribeCommandSet_Network = new DescribeCommandSet () {
             Identifier = "network",
 			Entries = new  SortedDictionary<string, DescribeCommand> () {
 				{"add", _NetworkAdd._DescribeCommand },
@@ -196,7 +196,7 @@ namespace Goedel.Mesh.Shell {
 				} // End Entries
 			};
 
-		static DescribeCommandSet DescribeCommandSet_Message = new DescribeCommandSet () {
+		public static DescribeCommandSet DescribeCommandSet_Message = new DescribeCommandSet () {
             Identifier = "message",
 			Entries = new  SortedDictionary<string, DescribeCommand> () {
 				{"contact", _MessageContact._DescribeCommand },
@@ -209,7 +209,7 @@ namespace Goedel.Mesh.Shell {
 				} // End Entries
 			};
 
-		static DescribeCommandSet DescribeCommandSet_Group = new DescribeCommandSet () {
+		public static DescribeCommandSet DescribeCommandSet_Group = new DescribeCommandSet () {
             Identifier = "group",
 			Entries = new  SortedDictionary<string, DescribeCommand> () {
 				{"create", _GroupCreate._DescribeCommand },
@@ -218,7 +218,7 @@ namespace Goedel.Mesh.Shell {
 				} // End Entries
 			};
 
-		static DescribeCommandSet DescribeCommandSet_Dare = new DescribeCommandSet () {
+		public static DescribeCommandSet DescribeCommandSet_Dare = new DescribeCommandSet () {
             Identifier = "dare",
 			Entries = new  SortedDictionary<string, DescribeCommand> () {
 				{"encode", _FileEncrypt._DescribeCommand },
@@ -227,7 +227,7 @@ namespace Goedel.Mesh.Shell {
 				} // End Entries
 			};
 
-		static DescribeCommandSet DescribeCommandSet_Key = new DescribeCommandSet () {
+		public static DescribeCommandSet DescribeCommandSet_Key = new DescribeCommandSet () {
             Identifier = "key",
 			Entries = new  SortedDictionary<string, DescribeCommand> () {
 				{"nonce", _KeyNonce._DescribeCommand },
@@ -238,7 +238,7 @@ namespace Goedel.Mesh.Shell {
 				} // End Entries
 			};
 
-		static DescribeCommandSet DescribeCommandSet_Hash = new DescribeCommandSet () {
+		public static DescribeCommandSet DescribeCommandSet_Hash = new DescribeCommandSet () {
             Identifier = "hash",
 			Entries = new  SortedDictionary<string, DescribeCommand> () {
 				{"udf", _FileUDF._DescribeCommand },
@@ -247,7 +247,7 @@ namespace Goedel.Mesh.Shell {
 				} // End Entries
 			};
 
-		static DescribeCommandSet DescribeCommandSet_Container = new DescribeCommandSet () {
+		public static DescribeCommandSet DescribeCommandSet_Container = new DescribeCommandSet () {
             Identifier = "container",
 			Entries = new  SortedDictionary<string, DescribeCommand> () {
 				{"create", _ContainerCreate._DescribeCommand },
@@ -14015,60 +14015,35 @@ namespace Goedel.Mesh.Shell {
         } // class ContainerVerify
 
 
-    public partial class  NewFile : _NewFile {
-        //public static NewFile Factory (string Value) {
-        //    var Result = new NewFile();
-        //    Result.Default(Value);
-        //    return Result;
-        //    }
-        } // NewFile
-
-
-    public partial class  ExistingFile : _ExistingFile {
-        //public static ExistingFile Factory (string Value) {
-        //    var Result = new ExistingFile();
-        //    Result.Default(Value);
-        //    return Result;
-        //    }
-        } // ExistingFile
-
-
-    public partial class  Flag : _Flag {
-        //public static Flag Factory (string Value) {
-        //    var Result = new Flag();
-        //    Result.Default(Value);
-        //    return Result;
-        //    }
+    public partial class  Flag : Goedel.Command._Flag {
+        public Flag(string value=null) : base (value) {}
         } // Flag
 
+    public partial class  File : Goedel.Command._File {
+	    public File(string value=null) : base (value) {}
+        } // File
 
-    public partial class  String : _String {
-        //public static String Factory (string Value) {
-        //    var Result = new String();
-        //    Result.Default(Value);
-        //    return Result;
-        //    }
+    public partial class  NewFile : Goedel.Command._NewFile {
+		public NewFile(string value=null) : base (value) {}
+        } // NewFile
+
+    public partial class  ExistingFile : Goedel.Command._ExistingFile {
+		public ExistingFile(string value=null) : base (value) {}
+        } // ExistingFile
+
+    public partial class  Integer : Goedel.Command._Integer {
+		public Integer(string value=null) : base (value) {}
+        } // Integer
+
+    public partial class  String : Goedel.Command._String {
+		public String(string value=null) : base (value) {}
         } // String
 
 
-    public partial class  Integer : _Integer {
-        //public static Integer Factory (string Value) {
-        //    var Result = new Integer();
-        //    Result.Default(Value);
-        //    return Result;
-        //    }
-        } // Integer
-
 
     public partial class  Enumeration<T> : _Enumeration<T> {
-        public Enumeration(DescribeEntryEnumerate description) : base(description){
+        public Enumeration(DescribeEntryEnumerate description, string value=null) : base(description, value){
             }
-
-        //public static Enumeration<T> Factory (string Value) {
-        //    var Result = new Enumeration<T>();
-        //    Result.Default(Value);
-        //    return Result;
-        //    }
         } // _Enumeration<T>
 
 	// The stub class just contains routines that echo their arguments and
