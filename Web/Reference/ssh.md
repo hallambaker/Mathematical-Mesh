@@ -1,29 +1,16 @@
 
 
-# profile
+# ssh
 
 ````
-profile    
-    accept   Accept a pending connection
-    connect   Connect to an existing profile registered at a portal
-    device   Create new device profile
-    dump   Describe the specified profile
-    escrow   Create a set of key escrow shares
-    export   Export the specified profile data to the specified file
-    hello   Connect to the service(s) a profile is connected to and report status.
-    import   Import the specified profile data to the specified file
-    list   List all profiles on the local machine
-    master   Create new personal profile
-    pending   Get list of pending connection requests
-    pin   Accept a pending connection
-    recover   Recover escrowed profile
-    register   Register existing profile at a new portal
-    reject   Reject a pending connection
-    sync   Synchronize local copies of Mesh profiles with the server
+ssh    
+    create   Generate a new SSH public keypair for the current machine and add to the personal profile
+    private   Extract the private key for this device
+    public   Extract the public key for this device
 ````
 
 
-# profile create
+# ssh create
 
 ````
 create   Generate a new SSH public keypair for the current machine and add to the personal profile
@@ -36,7 +23,7 @@ create   Generate a new SSH public keypair for the current machine and add to th
     /alg   List of algorithm specifiers
     /id   Key identifier
 ````
-# profile private
+# ssh private
 
 ````
 private   Extract the private key for this device
@@ -49,7 +36,7 @@ private   Extract the private key for this device
     /password   Password to encrypt private key
     /file   Output file
 ````
-# profile public
+# ssh public
 
 ````
 public   Extract the public key for this device
@@ -61,7 +48,7 @@ public   Extract the public key for this device
     /format   File format
     /file   Output file
 ````
-# profile host
+# ssh host
 
 ````
 host   Add one or more hosts to the known_hosts file
@@ -72,7 +59,7 @@ host   Add one or more hosts to the known_hosts file
     /json   Report output in JSON format
     /application   The application format
 ````
-# profile known
+# ssh known
 
 ````
 known   Add one or more hosts to the known_hosts file
@@ -84,7 +71,7 @@ known   Add one or more hosts to the known_hosts file
     /json   Report output in JSON format
     /application   The application format
 ````
-# profile auth
+# ssh auth
 
 ````
 auth   Add one or more keys to the authorized_keys file
@@ -96,7 +83,7 @@ auth   Add one or more keys to the authorized_keys file
     /json   Report output in JSON format
     /application   The application format
 ````
-# profile known
+# ssh known
 
 ````
 known   List the known SSH sites (aka known hosts)
@@ -107,7 +94,7 @@ known   List the known SSH sites (aka known hosts)
     /json   Report output in JSON format
     /application   The application format
 ````
-# profile auth
+# ssh auth
 
 ````
 auth   List the authorized device keys (aka authorized_keys)

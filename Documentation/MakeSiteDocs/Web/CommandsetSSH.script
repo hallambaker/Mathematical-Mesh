@@ -15,7 +15,7 @@ The  command set contains commands that
 #end file
 
 #file SSHReference "Reference/ssh.md" CreateWeb Index
-#% var CommandSet = CommandLineInterpreter.DescribeCommandSet_Profile;
+#% var CommandSet = CommandLineInterpreter.DescribeCommandSet_SSH;
 
 
 #% Describe(_Output, CommandSet);

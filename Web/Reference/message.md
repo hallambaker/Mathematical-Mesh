@@ -1,29 +1,20 @@
 
 
-# profile
+# message
 
 ````
-profile    
-    accept   Accept a pending connection
-    connect   Connect to an existing profile registered at a portal
-    device   Create new device profile
-    dump   Describe the specified profile
-    escrow   Create a set of key escrow shares
-    export   Export the specified profile data to the specified file
-    hello   Connect to the service(s) a profile is connected to and report status.
-    import   Import the specified profile data to the specified file
-    list   List all profiles on the local machine
-    master   Create new personal profile
-    pending   Get list of pending connection requests
-    pin   Accept a pending connection
-    recover   Recover escrowed profile
-    register   Register existing profile at a new portal
-    reject   Reject a pending connection
-    sync   Synchronize local copies of Mesh profiles with the server
+message    
+    accept   Accept a pending request
+    block   Reject a pending request and block requests from that source
+    confirm   Post a confirmation request to a user
+    contact   Post a conection request to a user
+    pending   List pending requests
+    reject   Reject a pending request
+    status   Request status of pending requests
 ````
 
 
-# profile contact
+# message contact
 
 ````
 contact   Post a conection request to a user
@@ -34,7 +25,7 @@ contact   Post a conection request to a user
     /report   Report output (default)
     /json   Report output in JSON format
 ````
-# profile confirm
+# message confirm
 
 ````
 confirm   Post a confirmation request to a user
@@ -46,7 +37,7 @@ confirm   Post a confirmation request to a user
     /report   Report output (default)
     /json   Report output in JSON format
 ````
-# profile pending
+# message pending
 
 ````
 pending   List pending requests
@@ -56,7 +47,7 @@ pending   List pending requests
     /report   Report output (default)
     /json   Report output in JSON format
 ````
-# profile status
+# message status
 
 ````
 status   Request status of pending requests
@@ -67,7 +58,7 @@ status   Request status of pending requests
     /report   Report output (default)
     /json   Report output in JSON format
 ````
-# profile accept
+# message accept
 
 ````
 accept   Accept a pending request
@@ -78,7 +69,7 @@ accept   Accept a pending request
     /report   Report output (default)
     /json   Report output in JSON format
 ````
-# profile reject
+# message reject
 
 ````
 reject   Reject a pending request
@@ -89,7 +80,7 @@ reject   Reject a pending request
     /report   Report output (default)
     /json   Report output in JSON format
 ````
-# profile block
+# message block
 
 ````
 block   Reject a pending request and block requests from that source

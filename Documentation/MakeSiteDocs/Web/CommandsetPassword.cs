@@ -32,7 +32,7 @@ namespace MakeSiteDocs {
 		public static void PasswordReference (CreateWeb Index) { /* File  */
 			using (var _Output = new StreamWriter ("Reference/password.md")) {
 				var _Indent = ""; 
-				 var CommandSet = CommandLineInterpreter.DescribeCommandSet_Profile;
+				 var CommandSet = CommandLineInterpreter.DescribeCommandSet_Password;
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				 Describe(_Output, CommandSet);

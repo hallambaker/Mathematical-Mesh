@@ -19,7 +19,7 @@ Keys and nonces may be generated with any desired precision
 #end file
 
 #file KeyReference "Reference/key.md" CreateWeb Index
-#% var CommandSet = CommandLineInterpreter.DescribeCommandSet_Profile;
+#% var CommandSet = CommandLineInterpreter.DescribeCommandSet_Key;
 
 #% Describe(_Output, CommandSet);
 

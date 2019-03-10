@@ -1,29 +1,16 @@
 
 
-# profile
+# group
 
 ````
-profile    
-    accept   Accept a pending connection
-    connect   Connect to an existing profile registered at a portal
-    device   Create new device profile
-    dump   Describe the specified profile
-    escrow   Create a set of key escrow shares
-    export   Export the specified profile data to the specified file
-    hello   Connect to the service(s) a profile is connected to and report status.
-    import   Import the specified profile data to the specified file
-    list   List all profiles on the local machine
-    master   Create new personal profile
-    pending   Get list of pending connection requests
-    pin   Accept a pending connection
-    recover   Recover escrowed profile
-    register   Register existing profile at a new portal
-    reject   Reject a pending connection
-    sync   Synchronize local copies of Mesh profiles with the server
+group    
+    add   Add user to recryption group
+    create   Create recryption group
+    delete   Remove user from recryption group
 ````
 
 
-# profile create
+# group create
 
 ````
 create   Create recryption group
@@ -35,7 +22,7 @@ create   Create recryption group
     /json   Report output in JSON format
     /alg   List of algorithm specifiers
 ````
-# profile add
+# group add
 
 ````
 add   Add user to recryption group
@@ -47,7 +34,7 @@ add   Add user to recryption group
     /report   Report output (default)
     /json   Report output in JSON format
 ````
-# profile delete
+# group delete
 
 ````
 delete   Remove user from recryption group

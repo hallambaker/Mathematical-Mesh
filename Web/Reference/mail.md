@@ -1,29 +1,15 @@
 
 
-# profile
+# mail
 
 ````
-profile    
-    accept   Accept a pending connection
-    connect   Connect to an existing profile registered at a portal
-    device   Create new device profile
-    dump   Describe the specified profile
-    escrow   Create a set of key escrow shares
-    export   Export the specified profile data to the specified file
-    hello   Connect to the service(s) a profile is connected to and report status.
-    import   Import the specified profile data to the specified file
-    list   List all profiles on the local machine
-    master   Create new personal profile
-    pending   Get list of pending connection requests
-    pin   Accept a pending connection
-    recover   Recover escrowed profile
-    register   Register existing profile at a new portal
-    reject   Reject a pending connection
-    sync   Synchronize local copies of Mesh profiles with the server
+mail    
+    add   Add a mail application profile to a personal profile
+    update   Update an existing mail application profile
 ````
 
 
-# profile add
+# mail add
 
 ````
 add   Add a mail application profile to a personal profile
@@ -41,7 +27,7 @@ add   Add a mail application profile to a personal profile
     /outbound   outbound service configuration
     /alg   List of algorithm specifiers
 ````
-# profile update
+# mail update
 
 ````
 update   Update an existing mail application profile
@@ -52,7 +38,7 @@ update   Update an existing mail application profile
     /report   Report output (default)
     /json   Report output in JSON format
 ````
-# profile private
+# mail private
 
 ````
 private   Extract the private key for the specified account
@@ -66,7 +52,7 @@ private   Extract the private key for the specified account
     /password   Password to encrypt private key
     /file   Output file
 ````
-# profile public
+# mail public
 
 ````
 public   Extract the public key/certificate for the specified account
@@ -79,7 +65,7 @@ public   Extract the public key/certificate for the specified account
     /format   File format
     /file   Output file
 ````
-# profile private
+# mail private
 
 ````
 private   Extract the private key for the specified account
@@ -93,7 +79,7 @@ private   Extract the private key for the specified account
     /password   Password to encrypt private key
     /file   Output file
 ````
-# profile public
+# mail public
 
 ````
 public   Extract the public key/certificate for the specified account

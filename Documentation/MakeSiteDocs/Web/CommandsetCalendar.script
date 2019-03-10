@@ -15,7 +15,7 @@ The  command set contains commands that
 #end file
 
 #file CalendarReference "Reference/calendar.md" CreateWeb Index
-#% var CommandSet = CommandLineInterpreter.DescribeCommandSet_Profile;
+#% var CommandSet = CommandLineInterpreter.DescribeCommandSet_Calendar;
 
 
 #% Describe(_Output, CommandSet);

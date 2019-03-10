@@ -1,29 +1,21 @@
 
 
-# profile
+# container
 
 ````
-profile    
-    accept   Accept a pending connection
-    connect   Connect to an existing profile registered at a portal
-    device   Create new device profile
-    dump   Describe the specified profile
-    escrow   Create a set of key escrow shares
-    export   Export the specified profile data to the specified file
-    hello   Connect to the service(s) a profile is connected to and report status.
-    import   Import the specified profile data to the specified file
-    list   List all profiles on the local machine
-    master   Create new personal profile
-    pending   Get list of pending connection requests
-    pin   Accept a pending connection
-    recover   Recover escrowed profile
-    register   Register existing profile at a new portal
-    reject   Reject a pending connection
-    sync   Synchronize local copies of Mesh profiles with the server
+container    
+    append   Append the specified file as an entry to the specified container
+    archive   Create a new DARE Container and archive the specified files
+    copy   Copy container contents to create a new container
+    create   Create a new DARE Container
+    delete   <Unspecified>
+    extract   Extract the specified record from the container
+    index   Compile an index for the specified container and append to the end.
+    verify   Verify signatures and digests on container.
 ````
 
 
-# profile create
+# container create
 
 ````
 create   Create a new DARE Container
@@ -40,7 +32,7 @@ create   Create a new DARE Container
     /report   Report output (default)
     /json   Report output in JSON format
 ````
-# profile archive
+# container archive
 
 ````
 archive   Create a new DARE Container and archive the specified files
@@ -58,7 +50,7 @@ archive   Create a new DARE Container and archive the specified files
     /type   The container type, plain/tree/digest/chain/tree
     /out   New container
 ````
-# profile append
+# container append
 
 ````
 append   Append the specified file as an entry to the specified container
@@ -76,7 +68,7 @@ append   Append the specified file as an entry to the specified container
     /json   Report output in JSON format
     /key   <Unspecified>
 ````
-# profile delete
+# container delete
 
 ````
 delete   <Unspecified>
@@ -84,7 +76,7 @@ delete   <Unspecified>
        File to append
     /key   <Unspecified>
 ````
-# profile index
+# container index
 
 ````
 index   Compile an index for the specified container and append to the end.
@@ -100,7 +92,7 @@ index   Compile an index for the specified container and append to the end.
     /report   Report output (default)
     /json   Report output in JSON format
 ````
-# profile extract
+# container extract
 
 ````
 extract   Extract the specified record from the container
@@ -115,7 +107,7 @@ extract   Extract the specified record from the container
     /report   Report output (default)
     /json   Report output in JSON format
 ````
-# profile copy
+# container copy
 
 ````
 copy   Copy container contents to create a new container
@@ -136,7 +128,7 @@ copy   Copy container contents to create a new container
     /index   Append an index record to the end
     /purge   Purge unused data etc.
 ````
-# profile verify
+# container verify
 
 ````
 verify   Verify signatures and digests on container.

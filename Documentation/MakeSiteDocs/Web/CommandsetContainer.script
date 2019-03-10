@@ -15,7 +15,7 @@ The  command set contains commands that
 #end file
 
 #file ContainerReference "Reference/container.md" CreateWeb Index
-#% var CommandSet = CommandLineInterpreter.DescribeCommandSet_Profile;
+#% var CommandSet = CommandLineInterpreter.DescribeCommandSet_Container;
 
 
 #% Describe(_Output, CommandSet);

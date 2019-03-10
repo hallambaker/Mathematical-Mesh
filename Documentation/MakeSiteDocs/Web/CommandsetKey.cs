@@ -36,7 +36,7 @@ namespace MakeSiteDocs {
 		public static void KeyReference (CreateWeb Index) { /* File  */
 			using (var _Output = new StreamWriter ("Reference/key.md")) {
 				var _Indent = ""; 
-				 var CommandSet = CommandLineInterpreter.DescribeCommandSet_Profile;
+				 var CommandSet = CommandLineInterpreter.DescribeCommandSet_Key;
 				_Output.Write ("\n{0}", _Indent);
 				 Describe(_Output, CommandSet);
 				_Output.Write ("\n{0}", _Indent);

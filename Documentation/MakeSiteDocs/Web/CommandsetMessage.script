@@ -15,7 +15,7 @@ The  command set contains commands that
 #end file
 
 #file MessageReference "Reference/message.md" CreateWeb Index
-#% var CommandSet = CommandLineInterpreter.DescribeCommandSet_Profile;
+#% var CommandSet = CommandLineInterpreter.DescribeCommandSet_Message;
 
 
 #% Describe(_Output, CommandSet);

@@ -15,7 +15,7 @@ The  command set contains commands that
 #end file
 
 #file GroupReference "Reference/group.md" CreateWeb Index
-#% var CommandSet = CommandLineInterpreter.DescribeCommandSet_Profile;
+#% var CommandSet = CommandLineInterpreter.DescribeCommandSet_Group;
 
 
 #% Describe(_Output, CommandSet);

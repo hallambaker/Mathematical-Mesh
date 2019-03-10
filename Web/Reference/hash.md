@@ -1,29 +1,16 @@
 
 
-# profile
+# hash
 
 ````
-profile    
-    accept   Accept a pending connection
-    connect   Connect to an existing profile registered at a portal
-    device   Create new device profile
-    dump   Describe the specified profile
-    escrow   Create a set of key escrow shares
-    export   Export the specified profile data to the specified file
-    hello   Connect to the service(s) a profile is connected to and report status.
-    import   Import the specified profile data to the specified file
-    list   List all profiles on the local machine
-    master   Create new personal profile
-    pending   Get list of pending connection requests
-    pin   Accept a pending connection
-    recover   Recover escrowed profile
-    register   Register existing profile at a new portal
-    reject   Reject a pending connection
-    sync   Synchronize local copies of Mesh profiles with the server
+hash    
+    commit   Calculate a commitment value for the input data
+    digest   Calculate the digest value of the input data
+    udf   Calculate the Uniform Data Fingerprint of the input data
 ````
 
 
-# profile udf
+# hash udf
 
 ````
 udf   Calculate the Uniform Data Fingerprint of the input data
@@ -34,7 +21,7 @@ udf   Calculate the Uniform Data Fingerprint of the input data
     /cty   Content Type
     /alg   List of algorithm specifiers
 ````
-# profile digest
+# hash digest
 
 ````
 digest   Calculate the digest value of the input data
@@ -44,7 +31,7 @@ digest   Calculate the digest value of the input data
     /json   Report output in JSON format
     /alg   List of algorithm specifiers
 ````
-# profile commit
+# hash commit
 
 ````
 commit   Calculate a commitment value for the input data

@@ -32,7 +32,7 @@ namespace MakeSiteDocs {
 		public static void ContactReference (CreateWeb Index) { /* File  */
 			using (var _Output = new StreamWriter ("Reference/contact.md")) {
 				var _Indent = ""; 
-				 var CommandSet = CommandLineInterpreter.DescribeCommandSet_Profile;
+				 var CommandSet = CommandLineInterpreter.DescribeCommandSet_Contact;
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				 Describe(_Output, CommandSet);

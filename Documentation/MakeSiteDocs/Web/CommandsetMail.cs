@@ -32,7 +32,7 @@ namespace MakeSiteDocs {
 		public static void MailReference (CreateWeb Index) { /* File  */
 			using (var _Output = new StreamWriter ("Reference/mail.md")) {
 				var _Indent = ""; 
-				 var CommandSet = CommandLineInterpreter.DescribeCommandSet_Profile;
+				 var CommandSet = CommandLineInterpreter.DescribeCommandSet_Mail;
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				 Describe(_Output, CommandSet);

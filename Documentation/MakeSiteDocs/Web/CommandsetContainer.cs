@@ -32,7 +32,7 @@ namespace MakeSiteDocs {
 		public static void ContainerReference (CreateWeb Index) { /* File  */
 			using (var _Output = new StreamWriter ("Reference/container.md")) {
 				var _Indent = ""; 
-				 var CommandSet = CommandLineInterpreter.DescribeCommandSet_Profile;
+				 var CommandSet = CommandLineInterpreter.DescribeCommandSet_Container;
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				 Describe(_Output, CommandSet);

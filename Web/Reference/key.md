@@ -1,30 +1,19 @@
 
-# profile
+# key
 
 ````
-profile    
-    accept   Accept a pending connection
-    connect   Connect to an existing profile registered at a portal
-    device   Create new device profile
-    dump   Describe the specified profile
-    escrow   Create a set of key escrow shares
-    export   Export the specified profile data to the specified file
-    hello   Connect to the service(s) a profile is connected to and report status.
-    import   Import the specified profile data to the specified file
-    list   List all profiles on the local machine
-    master   Create new personal profile
-    pending   Get list of pending connection requests
-    pin   Accept a pending connection
-    recover   Recover escrowed profile
-    register   Register existing profile at a new portal
-    reject   Reject a pending connection
-    sync   Synchronize local copies of Mesh profiles with the server
+key    
+    earl   Return a randomized secret value and locator as UDFs
+    nonce   Return a randomized nonce value formatted as a UDF Nonce Type
+    recover   Recover a secret value from the shares provided
+    secret   Return a randomized secret value formatted as a UDF Encryption Key Type.
+    share   Split a secret value according to the specified shares and quorum
 ````
 
 
 
 
-# profile nonce
+# key nonce
 
 ````
 nonce   Return a randomized nonce value formatted as a UDF Nonce Type
@@ -43,7 +32,7 @@ protocol.
 
 
 
-# profile secret
+# key secret
 
 ````
 secret   Return a randomized secret value formatted as a UDF Encryption Key Type.
@@ -57,7 +46,7 @@ The `secret` command returns a randomized secret value formatted as a UDF Encryp
 key type.
 
 
-# profile earl
+# key earl
 
 ````
 earl   Return a randomized secret value and locator as UDFs
@@ -71,7 +60,7 @@ earl   Return a randomized secret value and locator as UDFs
 The `earl` command returns a randomized secret value and a fingerprint of the secret 
 value, formatted as a UDF Encryption key type and Content Digest Type
 
-# profile share
+# key share
 
 ````
 share   Split a secret value according to the specified shares and quorum
@@ -87,7 +76,7 @@ share   Split a secret value according to the specified shares and quorum
 The `share` command returns a randomized secret value and a set of shares for the secret
 formatted as a UDF Encryption key type and Share types
 
-# profile recover
+# key recover
 
 ````
 recover   Recover a secret value from the shares provided
