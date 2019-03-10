@@ -46,7 +46,7 @@ namespace MakeSiteDocs {
         public ExampleResult KeyEarl;
 
         public ExampleResult KeyShare;
-        public ExampleResult KeyRecovery;
+        public ExampleResult KeyRecover;
         public ExampleResult KeyShare2;
         public ExampleResult KeyShare3;
 

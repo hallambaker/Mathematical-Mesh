@@ -31,7 +31,22 @@ Nonce values should be used when it is important that a value be unpredictable b
 does not need to be kept secret. For example, the challenge in a challenge/response
 protocol.
 
-% ConsoleReference (_Output, KeyNonce)
+
+
+````
+>key nonce
+NBBL-AYRC-MFVH-XPGG-MWYF-CKRF-VTUQ
+````
+
+Specifying the /json option returns a result of type ResultKey:
+
+````
+>key nonce /json
+{
+  "ResultKey": {
+    "Success": true,
+    "Key": "NBBL-AYRC-MFVH-XPGG-MWYF-CKRF-VTUQ"}}
+````
 
 
 # key secret
@@ -47,7 +62,22 @@ secret   Return a randomized secret value formatted as a UDF Encryption Key Type
 The `key secret` command returns a randomized secret value formatted as a UDF Encryption 
 key type.
 
-% ConsoleReference (_Output, KeySecret)
+
+
+````
+>key secret
+EBS7-A2XV-32CU-4WTA-LZBY-DY42-K3SA
+````
+
+Specifying the /json option returns a result of type ResultKey:
+
+````
+>key secret /json
+{
+  "ResultKey": {
+    "Success": true,
+    "Key": "EBS7-A2XV-32CU-4WTA-LZBY-DY42-K3SA"}}
+````
 
 
 # key earl
@@ -64,7 +94,23 @@ earl   Return a randomized secret value and locator as UDFs
 The `key earl` command returns a randomized secret value and a fingerprint of the secret 
 value, formatted as a UDF Encryption key type and Content Digest Type
 
-% ConsoleReference (_Output, KeyEarl)
+
+
+````
+>key earl
+EAQB-56NM-2GKA-ONXH-FU6Y-G23W-SJ3W-M6
+````
+
+Specifying the /json option returns a result of type ResultKey:
+
+````
+>key earl /json
+{
+  "ResultKey": {
+    "Success": true,
+    "Key": "EAQB-56NM-2GKA-ONXH-FU6Y-G23W-SJ3W-M6",
+    "Identifier": "MDYI-XTRB-NVZA-AKIQ-5KEG-4TFH-QJUR-OQVC-UNUT-4QWI-IUF5-VXJO-7EF2-APWM"}}
+````
 
 # key share
 
@@ -83,7 +129,26 @@ share   Split a secret value according to the specified shares and quorum
 The `key share` command returns a randomized secret value and a set of shares for the secret
 formatted as a UDF Encryption key type and Share types
 
-% ConsoleReference (_Output, KeyShare)
+
+
+````
+>key share
+ECHB-MJGP-NEOL-T65F-PN2N-UA6Q-BTTA
+````
+
+Specifying the /json option returns a result of type ResultKey:
+
+````
+>key share /json
+{
+  "ResultKey": {
+    "Success": true,
+    "Key": "ECHB-MJGP-NEOL-T65F-PN2N-UA6Q-BTTA",
+    "Identifier": "MB6E-XRXU-FKVX-WTGQ-P77S-UCXC-6M7E-4RHT-K2OF-LEJX-NEWZ-6FTJ-BFQA",
+    "Shares": ["SAQA-GR2E-4KS3-LBUH-KIOI-34XM-3GGZ-C",
+      "SAQX-Q6DE-6XRE-4UYS-7262-OC6V-4MHG-6",
+      "SARO-3KMF-BEPO-OH46-VNPM-AJF6-5SHU-2"]}}
+````
 
 
 # key recover
@@ -107,6 +172,6 @@ recover   Recover a secret value from the shares provided
 The `key recover` command combines the specified set of share to recover the original secret 
 value as a UDF Encryption key type.
 
-% ConsoleReference (_Output, KeyRecover)
+**Missing Example***
 
 

@@ -165,7 +165,10 @@ namespace MakeSiteDocs {
 			 }
 			 public static void ConsoleExample (StreamWriter _Output, ExampleResult exampleResult) {
 			 var _Indent = "";
-			_Output.Write ("\n{0}", _Indent);
+			if (  (exampleResult == null)  ) {
+				_Output.Write ("**Missing Example***\n{0}", _Indent);
+				 Console.WriteLine ($"Missing example!"); return;
+				}
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("````\n{0}", _Indent);
 			_Output.Write (">{1}\n{0}", _Indent, exampleResult.Command);
@@ -174,6 +177,10 @@ namespace MakeSiteDocs {
 			 }
 			 public static void ConsoleReference (StreamWriter _Output, ExampleResult exampleResult) {
 			 var _Indent = "";
+			if (  (exampleResult == null)  ) {
+				_Output.Write ("**Missing Example***\n{0}", _Indent);
+				 Console.WriteLine ($"Missing example!"); return;
+				}
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("````\n{0}", _Indent);

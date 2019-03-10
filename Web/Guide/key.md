@@ -14,17 +14,36 @@ presentation aids application debugging and audit.
 
 The `key nonce` command is used to generate a new random nonce value:
 
-% ConsoleExample (_Output, KeyNonce)
+
+````
+>key nonce
+NBBL-AYRC-MFVH-XPGG-MWYF-CKRF-VTUQ
+````
 
 By default, a 128 bit nonce is generated but nonces of any length may be
 generated using the `/bits` option
 
-% ConsoleExample (_Output, KeyNonce256)
+
+````
+>key nonce /bits=256
+NCZ6-PL65-EEBN-PB64-HLZI-6NWB-TSVQ-EKPP-7KIT-CKSQ-RXAS-LDSM-LRFS-A
+````
 
 Secrets are generated using the `key secret` in the same way:
 
-% ConsoleExample (_Output, KeySecret)
-% ConsoleExample (_Output, KeySecret256)
+
+````
+>key secret
+EBS7-A2XV-32CU-4WTA-LZBY-DY42-K3SA
+````
+
+Again, any output length can be requested up to the platform limit:
+
+
+````
+>key secret /bits=256
+EDDK-CKHW-PCSY-MGFD-7PCU-U7W6-3244-TUSJ-4XVK-4PLG-HU2N-N6XI-7FDW-6
+````
 
 ## Generating EARL values
 
@@ -37,11 +56,15 @@ on the Web Service under a label that is the Content Digest of the secret.
 EARLs may be generated using either the `key earl` command to generate
 a new secret/digest pair which are then used to process the content data:
 
-% ConsoleExample (_Output, KeyEarl)
+
+````
+>key earl
+EAQB-56NM-2GKA-ONXH-FU6Y-G23W-SJ3W-M6
+````
 
 Alternatively, the 'file earl' command may be used to perform both operations:
 
-% ConsoleExample (_Output, FileEarl)
+**Missing Example***
 
 ## Sharing and recovering secrets
 
@@ -52,12 +75,16 @@ The `key share` command creates a secret and splits it into the specified
 number of shares with the specified quorum for recovery. By default, a 128
 bit secret is created and three shares are created with a quorum of two:
 
-% ConsoleExample (_Output, KeyShare)
+
+````
+>key share
+ECHB-MJGP-NEOL-T65F-PN2N-UA6Q-BTTA
+````
 
 The original secret may be recovered from a sufficient number of shares to
 meet the quorum:
 
-% ConsoleExample (_Output, KeyRecovery)
+**Missing Example***
 
 As with secret generation, larger or smaller secrets may be created but due
 to a limitation in the implementation of the key sharing algorithm, the secret 
@@ -67,12 +94,20 @@ the nearest multiple of 32 bits.
 For example, we can create a 192 bit secret and share it five ways with a quorum
 of three:
 
-% ConsoleExample (_Output, KeyShare2)
+
+````
+>key share /quorum=3 /shares=5
+EB3S-ROT3-A3HV-GWGC-M472-HP5X-PMNA
+````
 
 It is also possible to share a specified secret. This allows a secret to be 
 shared multiple times creating independent key sets. If we re-share the secret
 created earlier to create three shares with a quorum of two, the shares will
 be different:
 
-% ConsoleExample (_Output, KeyShare3)
+
+````
+>key share ECHB-MJGP-NEOL-T65F-PN2N-UA6Q-BTTA
+ECHB-MJGP-NEOL-T65F-PN2N-UA6Q-BTTA
+````
 

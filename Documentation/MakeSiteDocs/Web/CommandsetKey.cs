@@ -14,7 +14,7 @@ namespace MakeSiteDocs {
 		//
 		// WebKey
 		//
-		public static void WebKey (CreateWeb Index) { /* File  */
+		public static void WebKey (CreateWeb Examples) { /* File  */
 			using (var _Output = new StreamWriter ("Guide/key.md")) {
 				var _Indent = ""; 
 				_Output.Write ("\n{0}", _Indent);
@@ -33,17 +33,20 @@ namespace MakeSiteDocs {
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The `key nonce` command is used to generate a new random nonce value:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("% ConsoleExample (_Output, KeyNonce)\n{0}", _Indent);
+				 ConsoleExample (_Output, Examples.KeyNonce);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("By default, a 128 bit nonce is generated but nonces of any length may be\n{0}", _Indent);
 				_Output.Write ("generated using the `/bits` option\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("% ConsoleExample (_Output, KeyNonce256)\n{0}", _Indent);
+				 ConsoleExample (_Output, Examples.KeyNonce256);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("Secrets are generated using the `key secret` in the same way:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("% ConsoleExample (_Output, KeySecret)\n{0}", _Indent);
-				_Output.Write ("% ConsoleExample (_Output, KeySecret256)\n{0}", _Indent);
+				 ConsoleExample (_Output, Examples.KeySecret);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("Again, any output length can be requested up to the platform limit:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				 ConsoleExample (_Output, Examples.KeySecret256);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("## Generating EARL values\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
@@ -56,11 +59,11 @@ namespace MakeSiteDocs {
 				_Output.Write ("EARLs may be generated using either the `key earl` command to generate\n{0}", _Indent);
 				_Output.Write ("a new secret/digest pair which are then used to process the content data:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("% ConsoleExample (_Output, KeyEarl)\n{0}", _Indent);
+				 ConsoleExample (_Output, Examples.KeyEarl);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("Alternatively, the 'file earl' command may be used to perform both operations:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("% ConsoleExample (_Output, FileEarl)\n{0}", _Indent);
+				 ConsoleExample (_Output, Examples.FileEarl);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("## Sharing and recovering secrets\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
@@ -71,12 +74,12 @@ namespace MakeSiteDocs {
 				_Output.Write ("number of shares with the specified quorum for recovery. By default, a 128\n{0}", _Indent);
 				_Output.Write ("bit secret is created and three shares are created with a quorum of two:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("% ConsoleExample (_Output, KeyShare)\n{0}", _Indent);
+				 ConsoleExample (_Output, Examples.KeyShare);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The original secret may be recovered from a sufficient number of shares to\n{0}", _Indent);
 				_Output.Write ("meet the quorum:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("% ConsoleExample (_Output, KeyRecovery)\n{0}", _Indent);
+				  ConsoleExample (_Output, Examples.KeyRecover);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("As with secret generation, larger or smaller secrets may be created but due\n{0}", _Indent);
 				_Output.Write ("to a limitation in the implementation of the key sharing algorithm, the secret \n{0}", _Indent);
@@ -86,14 +89,14 @@ namespace MakeSiteDocs {
 				_Output.Write ("For example, we can create a 192 bit secret and share it five ways with a quorum\n{0}", _Indent);
 				_Output.Write ("of three:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("% ConsoleExample (_Output, KeyShare2)\n{0}", _Indent);
+				 ConsoleExample (_Output, Examples.KeyShare2);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("It is also possible to share a specified secret. This allows a secret to be \n{0}", _Indent);
 				_Output.Write ("shared multiple times creating independent key sets. If we re-share the secret\n{0}", _Indent);
 				_Output.Write ("created earlier to create three shares with a quorum of two, the shares will\n{0}", _Indent);
 				_Output.Write ("be different:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("% ConsoleExample (_Output, KeyShare3)\n{0}", _Indent);
+				 ConsoleExample (_Output, Examples.KeyShare3);
 				_Output.Write ("\n{0}", _Indent);
 				}
 			}
@@ -102,7 +105,7 @@ namespace MakeSiteDocs {
 		//
 		// KeyReference
 		//
-		public static void KeyReference (CreateWeb Index) { /* File  */
+		public static void KeyReference (CreateWeb Examples) { /* File  */
 			using (var _Output = new StreamWriter ("Reference/key.md")) {
 				var _Indent = ""; 
 				 var CommandSet = CommandLineInterpreter.DescribeCommandSet_Key;
@@ -122,7 +125,7 @@ namespace MakeSiteDocs {
 				_Output.Write ("does not need to be kept secret. For example, the challenge in a challenge/response\n{0}", _Indent);
 				_Output.Write ("protocol.\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("% ConsoleReference (_Output, KeyNonce)\n{0}", _Indent);
+				 ConsoleReference (_Output, Examples.KeyNonce);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				 Describe(_Output, CommandSet, _KeySecret._DescribeCommand);
@@ -130,7 +133,7 @@ namespace MakeSiteDocs {
 				_Output.Write ("The `key secret` command returns a randomized secret value formatted as a UDF Encryption \n{0}", _Indent);
 				_Output.Write ("key type.\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("% ConsoleReference (_Output, KeySecret)\n{0}", _Indent);
+				 ConsoleReference (_Output, Examples.KeySecret);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				 Describe(_Output, CommandSet, _KeyEarl._DescribeCommand);
@@ -138,14 +141,14 @@ namespace MakeSiteDocs {
 				_Output.Write ("The `key earl` command returns a randomized secret value and a fingerprint of the secret \n{0}", _Indent);
 				_Output.Write ("value, formatted as a UDF Encryption key type and Content Digest Type\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("% ConsoleReference (_Output, KeyEarl)\n{0}", _Indent);
+				 ConsoleReference (_Output, Examples.KeyEarl);
 				_Output.Write ("\n{0}", _Indent);
 				 Describe(_Output, CommandSet, _KeyShare._DescribeCommand);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The `key share` command returns a randomized secret value and a set of shares for the secret\n{0}", _Indent);
 				_Output.Write ("formatted as a UDF Encryption key type and Share types\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("% ConsoleReference (_Output, KeyShare)\n{0}", _Indent);
+				 ConsoleReference (_Output, Examples.KeyShare);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				 Describe(_Output, CommandSet, _KeyRecover._DescribeCommand);
@@ -153,7 +156,7 @@ namespace MakeSiteDocs {
 				_Output.Write ("The `key recover` command combines the specified set of share to recover the original secret \n{0}", _Indent);
 				_Output.Write ("value as a UDF Encryption key type.\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("% ConsoleReference (_Output, KeyRecover)\n{0}", _Indent);
+				  ConsoleReference (_Output, Examples.KeyRecover);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				}
