@@ -618,38 +618,48 @@
 			Return ResultKey
 
 		Command KeySecret "secret"
-			Brief "Return a a randomized secret value formatted as a UDF Encryption Key Type."			
+			Brief "Return a randomized secret value formatted as a UDF Encryption Key Type."			
 			Include Reporting
 			Include LengthOptions
 
 		Command KeyEarl "earl"
-			Brief "Return a randomized string"			
+			Brief "Return a randomized secret value and locator as UDFs"			
 			Include Reporting
 			Include DigestOptions
 			Include LengthOptions
 
 		Command KeyShare "share"
-			Brief "Return a randomized string"			
+			Brief "Split a secret value according to the specified shares and quorum"			
 			Include Reporting
 			Include DigestOptions
 			Include LengthOptions
 			Option Quorum "quorum" Integer
 				Default "2"
+				Brief "The number of shares required to recover the secret"	
 			Option Shares "shares" Integer
 				Default "3"
+				Brief "The number of shares to create"	
 
 		Command KeyRecover "recover"
-			Brief "Return a randomized string"			
+			Brief "Recover a secret value from the shares provided"			
 			Include Reporting
 			Include DigestOptions
 			Parameter Share1 "s1" String
+				Brief "Share value #1"
 			Parameter Share2 "s2" String
+				Brief "Share value #2"
 			Parameter Share3 "s3" String
+				Brief "Share value #3"
 			Parameter Share4 "s4" String
+				Brief "Share value #4"
 			Parameter Share5 "s5" String
+				Brief "Share value #5"
 			Parameter Share6 "s6" String
+				Brief "Share value #6"
 			Parameter Share7 "s7" String
+				Brief "Share value #7"
 			Parameter Share8 "s8" String
+				Brief "Share value #8"
 
 	CommandSet Hash "hash"
 		Command FileUDF "udf"

@@ -1,6 +1,8 @@
 ﻿#using System.Text
 #using Goedel.Mesh
+#using Goedel.Mesh.Shell
 #using Goedel.Protocol
+#using Goedel.Command
 #xclass MakeSiteDocs MakeSiteDocs
 
 
@@ -9,6 +11,7 @@
 #% UserGuide (Index);
 #% Reference (Index);
 #% WebKey (Index);
+#% KeyReference (Index);
 #end method
 
 #file Web "readme.md" CreateWeb Index
@@ -82,5 +85,19 @@ executed without any output being made to the console.
 
 #end file
 
+#block
+#% public static void Describe (StreamWriter _Output, DescribeCommandSet CommandSet) {
+#% var _Indent = "";
+````
+#% CommandSet.Describe('/', _Output);
+````
+#% }
+#% public static void Describe (StreamWriter _Output, DescribeCommand Command) {
+#% var _Indent = "";
+````
+#% Command.Describe('/', _Output);
+````
+#% }
+#end block
 #end xclass
 

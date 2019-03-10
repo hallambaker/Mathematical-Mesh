@@ -11223,7 +11223,7 @@ namespace Goedel.Mesh.Shell {
 
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
 			Identifier = "secret",
-			Brief =  "Return a a randomized secret value formatted as a UDF Encryption Key Type.",
+			Brief =  "Return a randomized secret value formatted as a UDF Encryption Key Type.",
 			HandleDelegate =  CommandLineInterpreter.Handle_KeySecret,
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
@@ -11345,7 +11345,7 @@ namespace Goedel.Mesh.Shell {
 
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
 			Identifier = "earl",
-			Brief =  "Return a randomized string",
+			Brief =  "Return a randomized secret value and locator as UDFs",
 			HandleDelegate =  CommandLineInterpreter.Handle_KeyEarl,
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
@@ -11494,7 +11494,7 @@ namespace Goedel.Mesh.Shell {
 
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
 			Identifier = "share",
-			Brief =  "Return a randomized string",
+			Brief =  "Split a secret value according to the specified shares and quorum",
 			HandleDelegate =  CommandLineInterpreter.Handle_KeyShare,
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
@@ -11543,14 +11543,14 @@ namespace Goedel.Mesh.Shell {
 				new DescribeEntryOption () {
 					Identifier = "Quorum", 
 					Default = "2", // null if null
-					Brief = "<Unspecified>",
+					Brief = "The number of shares required to recover the secret",
 					Index = 6,
 					Key = "quorum"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Shares", 
 					Default = "3", // null if null
-					Brief = "<Unspecified>",
+					Brief = "The number of shares to create",
 					Index = 7,
 					Key = "shares"
 					}
@@ -11706,7 +11706,7 @@ namespace Goedel.Mesh.Shell {
 
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
 			Identifier = "recover",
-			Brief =  "Return a randomized string",
+			Brief =  "Recover a secret value from the shares provided",
 			HandleDelegate =  CommandLineInterpreter.Handle_KeyRecover,
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
@@ -11748,56 +11748,56 @@ namespace Goedel.Mesh.Shell {
 				new DescribeEntryParameter () {
 					Identifier = "Share1", 
 					Default = null, // null if null
-					Brief = "<Unspecified>",
+					Brief = "Share value #1",
 					Index = 5,
 					Key = ""
 					},
 				new DescribeEntryParameter () {
 					Identifier = "Share2", 
 					Default = null, // null if null
-					Brief = "<Unspecified>",
+					Brief = "Share value #2",
 					Index = 6,
 					Key = ""
 					},
 				new DescribeEntryParameter () {
 					Identifier = "Share3", 
 					Default = null, // null if null
-					Brief = "<Unspecified>",
+					Brief = "Share value #3",
 					Index = 7,
 					Key = ""
 					},
 				new DescribeEntryParameter () {
 					Identifier = "Share4", 
 					Default = null, // null if null
-					Brief = "<Unspecified>",
+					Brief = "Share value #4",
 					Index = 8,
 					Key = ""
 					},
 				new DescribeEntryParameter () {
 					Identifier = "Share5", 
 					Default = null, // null if null
-					Brief = "<Unspecified>",
+					Brief = "Share value #5",
 					Index = 9,
 					Key = ""
 					},
 				new DescribeEntryParameter () {
 					Identifier = "Share6", 
 					Default = null, // null if null
-					Brief = "<Unspecified>",
+					Brief = "Share value #6",
 					Index = 10,
 					Key = ""
 					},
 				new DescribeEntryParameter () {
 					Identifier = "Share7", 
 					Default = null, // null if null
-					Brief = "<Unspecified>",
+					Brief = "Share value #7",
 					Index = 11,
 					Key = ""
 					},
 				new DescribeEntryParameter () {
 					Identifier = "Share8", 
 					Default = null, // null if null
-					Brief = "<Unspecified>",
+					Brief = "Share value #8",
 					Index = 12,
 					Key = ""
 					}

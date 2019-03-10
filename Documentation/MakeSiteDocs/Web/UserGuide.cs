@@ -1,6 +1,8 @@
 using  System.Text;
 using  Goedel.Mesh;
+using  Goedel.Mesh.Shell;
 using  Goedel.Protocol;
+using  Goedel.Command;
 using System;
 using System.IO;
 using System.Collections.Generic;
@@ -111,5 +113,24 @@ namespace MakeSiteDocs {
 				_Output.Write ("\n{0}", _Indent);
 				}
 			}
+		
+
+		//
+		// 
+		//
+
+			 public static void Describe (StreamWriter _Output, DescribeCommandSet CommandSet) {
+			 var _Indent = "";
+			_Output.Write ("````\n{0}", _Indent);
+			 CommandSet.Describe('/', _Output);
+			_Output.Write ("````\n{0}", _Indent);
+			 }
+			 public static void Describe (StreamWriter _Output, DescribeCommand Command) {
+			 var _Indent = "";
+			_Output.Write ("````\n{0}", _Indent);
+			 Command.Describe('/', _Output);
+			_Output.Write ("````\n{0}", _Indent);
+			 }
+		
 		}
 	}

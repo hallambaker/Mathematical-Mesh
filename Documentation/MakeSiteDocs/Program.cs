@@ -14,8 +14,6 @@ namespace MakeSiteDocs {
 
             var makeSiteDocs = new MakeSiteDocs();
             makeSiteDocs.WebDocs(this);
-
-            _ProfileHello._DescribeCommand.Describe('/');
             }
 
 
