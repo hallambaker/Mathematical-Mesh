@@ -1,0 +1,72 @@
+﻿#using System.Text
+#using Goedel.Mesh
+#using Goedel.Mesh.Shell
+#using Goedel.Protocol
+#xclass MakeSiteDocs MakeSiteDocs
+
+
+
+#file WebProfile "Guide/profile.md" CreateWeb Index
+
+## Using the  Command Set
+
+The  command set contains commands that 
+
+#end file
+
+#file ProfileReference "Reference/profile.md" CreateWeb Index
+#% var CommandSet = CommandLineInterpreter.DescribeCommandSet_Profile;
+
+
+#% Describe(_Output, CommandSet);
+
+
+#% Describe(_Output, CommandSet, ProfileHello._DescribeCommand);
+
+#% Describe(_Output, CommandSet, _DeviceCreate._DescribeCommand);
+
+
+#% Describe(_Output, CommandSet, _MasterCreate._DescribeCommand);
+
+
+#% Describe(_Output, CommandSet, _ProfileRegister._DescribeCommand);
+
+
+#% Describe(_Output, CommandSet, _ProfileSync._DescribeCommand);
+
+
+#% Describe(_Output, CommandSet, _ProfileEscrow._DescribeCommand);
+
+
+#% Describe(_Output, CommandSet, _ProfileRecover._DescribeCommand);
+
+
+#% Describe(_Output, CommandSet, _ProfileExport._DescribeCommand);
+
+
+#% Describe(_Output, CommandSet, _ProfileImport._DescribeCommand);
+
+
+#% Describe(_Output, CommandSet, _ProfileList._DescribeCommand);
+
+
+#% Describe(_Output, CommandSet, _ProfileDump._DescribeCommand);
+
+
+#% Describe(_Output, CommandSet, _ProfilePending._DescribeCommand);
+
+
+#% Describe(_Output, CommandSet, _ProfileConnect._DescribeCommand);
+
+
+#% Describe(_Output, CommandSet, _ProfileAccept._DescribeCommand);
+
+
+#% Describe(_Output, CommandSet, _ProfileReject._DescribeCommand);
+
+#% Describe(_Output, CommandSet, _ProfileGetPIN._DescribeCommand);
+
+#end file
+
+#end xclass
+

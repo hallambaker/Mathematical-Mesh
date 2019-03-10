@@ -1,0 +1,36 @@
+﻿#using System.Text
+#using Goedel.Mesh
+#using Goedel.Mesh.Shell
+#using Goedel.Protocol
+#xclass MakeSiteDocs MakeSiteDocs
+
+
+
+#file WebSSH "Guide/ssh.md" CreateWeb Index
+
+## Using the  Command Set
+
+The  command set contains commands that 
+
+#end file
+
+#file SSHReference "Reference/ssh.md" CreateWeb Index
+#% var CommandSet = CommandLineInterpreter.DescribeCommandSet_Profile;
+
+
+#% Describe(_Output, CommandSet);
+
+
+#% Describe(_Output, CommandSet, _SSHCreate._DescribeCommand);
+#% Describe(_Output, CommandSet, _SSHPrivate._DescribeCommand);
+#% Describe(_Output, CommandSet, _SSHPublic._DescribeCommand);
+#% Describe(_Output, CommandSet, _SSHAddHost._DescribeCommand);
+#% Describe(_Output, CommandSet, _SSHMergeKnown._DescribeCommand);
+#% Describe(_Output, CommandSet, _SSHAddClient._DescribeCommand);
+#% Describe(_Output, CommandSet, _SSHKnown._DescribeCommand);
+#% Describe(_Output, CommandSet, _SSHAuth._DescribeCommand);
+
+#end file
+
+#end xclass
+

@@ -1,0 +1,33 @@
+﻿#using System.Text
+#using Goedel.Mesh
+#using Goedel.Mesh.Shell
+#using Goedel.Protocol
+#xclass MakeSiteDocs MakeSiteDocs
+
+
+
+#file WebNetwork "Guide/network.md" CreateWeb Index
+
+## Using the  Command Set
+
+The  command set contains commands that 
+
+#end file
+
+#file NetworkReference "Reference/network.md" CreateWeb Index
+#% var CommandSet = CommandLineInterpreter.DescribeCommandSet_Profile;
+
+
+#% Describe(_Output, CommandSet);
+
+
+#% Describe(_Output, CommandSet, _NetworkAdd._DescribeCommand);
+#% Describe(_Output, CommandSet, _NetworkGet._DescribeCommand);
+#% Describe(_Output, CommandSet, _NetworkDelete._DescribeCommand);
+#% Describe(_Output, CommandSet, _NetworkDump._DescribeCommand);
+
+
+#end file
+
+#end xclass
+

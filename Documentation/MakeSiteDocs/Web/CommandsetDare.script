@@ -1,0 +1,31 @@
+﻿#using System.Text
+#using Goedel.Mesh
+#using Goedel.Mesh.Shell
+#using Goedel.Protocol
+#xclass MakeSiteDocs MakeSiteDocs
+
+
+
+#file WebDare "Guide/dare.md" CreateWeb Index
+
+## Using the  Command Set
+
+The  command set contains commands that 
+
+#end file
+
+#file DareReference "Reference/dare.md" CreateWeb Index
+#% var CommandSet = CommandLineInterpreter.DescribeCommandSet_Profile;
+
+
+#% Describe(_Output, CommandSet);
+
+
+#% Describe(_Output, CommandSet, _FileEncrypt._DescribeCommand);
+#% Describe(_Output, CommandSet, _FileDecrypt._DescribeCommand);
+#% Describe(_Output, CommandSet, _FileVerify._DescribeCommand);
+
+#end file
+
+#end xclass
+

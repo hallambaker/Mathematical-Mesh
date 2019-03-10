@@ -56,8 +56,22 @@ ToolTargets = \
 	Platform\UserGuideWindows.cs\
 	Web\ToDo.cs\
 	Web\ExampleSession.cs\
+	Web\UserGuide.cs\
+	Web\CommandsetProfile.cs\
+	Web\CommandsetMail.cs\
+	Web\CommandsetSSH.cs\
+	Web\CommandsetPassword.cs\
+	Web\CommandsetContact.cs\
+	Web\CommandsetBookmark.cs\
+	Web\CommandsetCalendar.cs\
+	Web\CommandsetNetwork.cs\
+	Web\CommandsetMessage.cs\
 	Web\CommandsetKey.cs\
-	Web\UserGuide.cs
+	Web\CommandsetKey.cs\
+	Web\CommandsetGroup.cs\
+	Web\CommandsetDare.cs\
+	Web\CommandsetHash.cs\
+	Web\CommandsetContainer.cs
 Apps\UserGuideApps.cs : Apps\UserGuideApps.script 
 	gscript Apps\UserGuideApps.script  Apps\UserGuideApps.cs
 
@@ -118,11 +132,53 @@ Web\ToDo.cs : Web\ToDo.script
 Web\ExampleSession.cs : Web\ExampleSession.script 
 	gscript Web\ExampleSession.script  Web\ExampleSession.cs
 
+Web\UserGuide.cs : Web\UserGuide.script 
+	gscript Web\UserGuide.script  Web\UserGuide.cs
+
+Web\CommandsetProfile.cs : Web\CommandsetProfile.script 
+	gscript Web\CommandsetProfile.script  Web\CommandsetProfile.cs
+
+Web\CommandsetMail.cs : Web\CommandsetMail.script 
+	gscript Web\CommandsetMail.script  Web\CommandsetMail.cs
+
+Web\CommandsetSSH.cs : Web\CommandsetSSH.script 
+	gscript Web\CommandsetSSH.script  Web\CommandsetSSH.cs
+
+Web\CommandsetPassword.cs : Web\CommandsetPassword.script 
+	gscript Web\CommandsetPassword.script  Web\CommandsetPassword.cs
+
+Web\CommandsetContact.cs : Web\CommandsetContact.script 
+	gscript Web\CommandsetContact.script  Web\CommandsetContact.cs
+
+Web\CommandsetBookmark.cs : Web\CommandsetBookmark.script 
+	gscript Web\CommandsetBookmark.script  Web\CommandsetBookmark.cs
+
+Web\CommandsetCalendar.cs : Web\CommandsetCalendar.script 
+	gscript Web\CommandsetCalendar.script  Web\CommandsetCalendar.cs
+
+Web\CommandsetNetwork.cs : Web\CommandsetNetwork.script 
+	gscript Web\CommandsetNetwork.script  Web\CommandsetNetwork.cs
+
+Web\CommandsetMessage.cs : Web\CommandsetMessage.script 
+	gscript Web\CommandsetMessage.script  Web\CommandsetMessage.cs
+
 Web\CommandsetKey.cs : Web\CommandsetKey.script 
 	gscript Web\CommandsetKey.script  Web\CommandsetKey.cs
 
-Web\UserGuide.cs : Web\UserGuide.script 
-	gscript Web\UserGuide.script  Web\UserGuide.cs
+Web\CommandsetKey.cs : Web\CommandsetKey.script 
+	gscript Web\CommandsetKey.script  Web\CommandsetKey.cs
+
+Web\CommandsetGroup.cs : Web\CommandsetGroup.script 
+	gscript Web\CommandsetGroup.script  Web\CommandsetGroup.cs
+
+Web\CommandsetDare.cs : Web\CommandsetDare.script 
+	gscript Web\CommandsetDare.script  Web\CommandsetDare.cs
+
+Web\CommandsetHash.cs : Web\CommandsetHash.script 
+	gscript Web\CommandsetHash.script  Web\CommandsetHash.cs
+
+Web\CommandsetContainer.cs : Web\CommandsetContainer.script 
+	gscript Web\CommandsetContainer.script  Web\CommandsetContainer.cs
 
 
 

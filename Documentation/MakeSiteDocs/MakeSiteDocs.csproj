@@ -126,12 +126,87 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
+
     <Compile Update="Web\ExampleSession.cs">
       <DependentUpon>ExampleSession.script</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-  
+    <Compile Update="Web\CommandsetProfile.cs">
+      <DependentUpon>CommandsetProfile.script</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Web\CommandsetMail.cs">
+      <DependentUpon>CommandsetMail.script</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Web\CommandsetSSH.cs">
+      <DependentUpon>CommandsetSSH.script</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Web\CommandsetPassword.cs">
+      <DependentUpon>CommandsetPassword.script</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Web\CommandsetContact.cs">
+      <DependentUpon>CommandsetContact.script</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Web\CommandsetBookmark.cs">
+      <DependentUpon>CommandsetBookmark.script</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Web\CommandsetCalendar.cs">
+      <DependentUpon>CommandsetCalendar.script</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Web\CommandsetNetwork.cs">
+      <DependentUpon>CommandsetNetwork.script</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Web\CommandsetMessage.cs">
+      <DependentUpon>CommandsetMessage.script</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Web\CommandsetKey.cs">
+      <DependentUpon>CommandsetKey.script</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Web\CommandsetGroup.cs">
+      <DependentUpon>CommandsetGroup.script</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Web\CommandsetDare.cs">
+      <DependentUpon>CommandsetDare.script</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Web\CommandsetKey.cs">
+      <DependentUpon>CommandsetKey.script</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Web\CommandsetHash.cs">
+      <DependentUpon>CommandsetHash.script</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Web\CommandsetContainer.cs">
+      <DependentUpon>CommandsetContainer.script</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -215,12 +290,68 @@
       <LastGenOutput>ExampleSession.cs</LastGenOutput>
       <Generator>gscript</Generator>
     </None>
-    <None Update="Web\CommandsetKey.script">
+    <None Update="Web\UserGuide.script">
       <LastGenOutput>UserGuide.cs</LastGenOutput>
       <Generator>gscript</Generator>
     </None>
-    <None Update="Web\UserGuide.script">
-      <LastGenOutput>UserGuide.cs</LastGenOutput>
+    <None Update="Web\CommandsetProfile.script">
+      <LastGenOutput>CommandsetKey.cs</LastGenOutput>
+      <Generator>gscript</Generator>
+    </None>
+    <None Update="Web\CommandsetMail.script">
+      <LastGenOutput>CommandsetKey.cs</LastGenOutput>
+      <Generator>gscript</Generator>
+    </None>
+    <None Update="Web\CommandsetSSH.script">
+      <LastGenOutput>CommandsetKey.cs</LastGenOutput>
+      <Generator>gscript</Generator>
+    </None>
+    <None Update="Web\CommandsetPassword.script">
+      <LastGenOutput>CommandsetKey.cs</LastGenOutput>
+      <Generator>gscript</Generator>
+    </None>
+    <None Update="Web\CommandsetContact.script">
+      <LastGenOutput>CommandsetKey.cs</LastGenOutput>
+      <Generator>gscript</Generator>
+    </None>
+    <None Update="Web\CommandsetBookmark.script">
+      <LastGenOutput>CommandsetKey.cs</LastGenOutput>
+      <Generator>gscript</Generator>
+    </None>
+    <None Update="Web\CommandsetCalendar.script">
+      <LastGenOutput>CommandsetKey.cs</LastGenOutput>
+      <Generator>gscript</Generator>
+    </None>
+    <None Update="Web\CommandsetNetwork.script">
+      <LastGenOutput>CommandsetKey.cs</LastGenOutput>
+      <Generator>gscript</Generator>
+    </None>
+    <None Update="Web\CommandsetMessage.script">
+      <LastGenOutput>CommandsetKey.cs</LastGenOutput>
+      <Generator>gscript</Generator>
+    </None>
+    <None Update="Web\CommandsetKey.script">
+      <LastGenOutput>CommandsetKey.cs</LastGenOutput>
+      <Generator>gscript</Generator>
+    </None>
+    <None Update="Web\CommandsetKey.script">
+      <LastGenOutput>CommandsetKey.cs</LastGenOutput>
+      <Generator>gscript</Generator>
+    </None>
+    <None Update="Web\CommandsetGroup.script">
+      <LastGenOutput>CommandsetKey.cs</LastGenOutput>
+      <Generator>gscript</Generator>
+    </None>
+    <None Update="Web\CommandsetDare.script">
+      <LastGenOutput>CommandsetKey.cs</LastGenOutput>
+      <Generator>gscript</Generator>
+    </None>
+    <None Update="Web\CommandsetHash.script">
+      <LastGenOutput>CommandsetKey.cs</LastGenOutput>
+      <Generator>gscript</Generator>
+    </None>
+    <None Update="Web\CommandsetContainer.script">
+      <LastGenOutput>CommandsetKey.cs</LastGenOutput>
       <Generator>gscript</Generator>
     </None>
   </ItemGroup>

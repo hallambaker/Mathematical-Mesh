@@ -33,14 +33,14 @@ namespace MakeSiteDocs {
 		public static void KeyReference (CreateWeb Index) { /* File  */
 			using (var _Output = new StreamWriter ("Reference/key.md")) {
 				var _Indent = ""; 
-				_Output.Write ("# Key\n{0}", _Indent);
+				 var CommandSet = CommandLineInterpreter.DescribeCommandSet_Profile;
 				_Output.Write ("\n{0}", _Indent);
-				 Describe(_Output, CommandLineInterpreter.DescribeCommandSet_Key);
+				 Describe(_Output, CommandSet);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("## key nonce\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				 Describe(_Output, _KeyNonce._DescribeCommand);
+				_Output.Write ("\n{0}", _Indent);
+				 Describe(_Output, CommandSet, _KeyNonce._DescribeCommand);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The nonce command creates a randomized nonce value formatted as a UDF Nonce Type.\n{0}", _Indent);
@@ -49,24 +49,22 @@ namespace MakeSiteDocs {
 				_Output.Write ("does not need to be kept secret. For example, the challenge in a challenge/response\n{0}", _Indent);
 				_Output.Write ("protocol.\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("## key secret\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				 Describe(_Output, _KeySecret._DescribeCommand);
+				_Output.Write ("\n{0}", _Indent);
+				 Describe(_Output, CommandSet, _KeySecret._DescribeCommand);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The secret command creates a randomized secret value formatted as a UDF Encryption \n{0}", _Indent);
 				_Output.Write ("Key Type.\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("## key earl\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				 Describe(_Output, _KeyEarl._DescribeCommand);
+				 Describe(_Output, CommandSet, _KeyEarl._DescribeCommand);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("## key share\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				 Describe(_Output, _KeyShare._DescribeCommand);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("## key recover\n{0}", _Indent);
+				 Describe(_Output, CommandSet, _KeyShare._DescribeCommand);
 				_Output.Write ("\n{0}", _Indent);
-				 Describe(_Output, _KeyRecover._DescribeCommand);
+				_Output.Write ("\n{0}", _Indent);
+				 Describe(_Output, CommandSet, _KeyRecover._DescribeCommand);
 				_Output.Write ("\n{0}", _Indent);
 				}
 			}

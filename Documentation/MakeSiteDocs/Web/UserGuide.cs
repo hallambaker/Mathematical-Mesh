@@ -21,6 +21,32 @@ namespace MakeSiteDocs {
 			 Reference (Index);
 			 WebKey (Index);
 			 KeyReference (Index);
+			 WebProfile (Index);
+			 ProfileReference (Index);
+			 WebSSH (Index);
+			 SSHReference (Index);
+			 WebBookmark (Index);
+			 BookmarkReference (Index);
+			 WebPassword (Index);
+			 PasswordReference (Index);
+			 WebNetwork (Index);
+			 NetworkReference (Index);
+			 WebMessage (Index);
+			 MessageReference (Index);
+			 WebMail (Index);
+			 MailReference (Index);
+			 WebHash (Index);
+			 HashReference (Index);
+			 WebGroup (Index);
+			 GroupReference (Index);
+			 WebDare (Index);
+			 DareReference (Index);
+			 WebContainer (Index);
+			 ContainerReference (Index);
+			 WebContact (Index);
+			 ContactReference (Index);
+			 WebCalendar (Index);
+			 CalendarReference (Index);
 			}
 		
 
@@ -126,7 +152,7 @@ namespace MakeSiteDocs {
 			 CommandSet.Describe('/', _Output);
 			_Output.Write ("````\n{0}", _Indent);
 			 }
-			 public static void Describe (StreamWriter _Output, DescribeCommand Command) {
+			 public static void Describe (StreamWriter _Output, DescribeCommandSet CommandSet, DescribeCommand Command) {
 			 var _Indent = "";
 			_Output.Write ("````\n{0}", _Indent);
 			 Command.Describe('/', _Output);

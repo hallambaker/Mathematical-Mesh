@@ -16,14 +16,14 @@ nonces.
 #end file
 
 #file KeyReference "Reference/key.md" CreateWeb Index
-## Key
+#% var CommandSet = CommandLineInterpreter.DescribeCommandSet_Profile;
 
-#% Describe(_Output, CommandLineInterpreter.DescribeCommandSet_Key);
+#% Describe(_Output, CommandSet);
 
 
-#### key nonce
 
-#% Describe(_Output, _KeyNonce._DescribeCommand);
+
+#% Describe(_Output, CommandSet, _KeyNonce._DescribeCommand);
 
 
 The nonce command creates a randomized nonce value formatted as a UDF Nonce Type.
@@ -32,24 +32,22 @@ Nonce values should be used when it is important that a value be unpredictable b
 does not need to be kept secret. For example, the challenge in a challenge/response
 protocol.
 
-#### key secret
 
-#% Describe(_Output, _KeySecret._DescribeCommand);
+
+#% Describe(_Output, CommandSet, _KeySecret._DescribeCommand);
 
 The secret command creates a randomized secret value formatted as a UDF Encryption 
 Key Type.
 
-#### key earl
 
-#% Describe(_Output, _KeyEarl._DescribeCommand);
+#% Describe(_Output, CommandSet, _KeyEarl._DescribeCommand);
 
-#### key share
 
-#% Describe(_Output, _KeyShare._DescribeCommand);
 
-#### key recover
+#% Describe(_Output, CommandSet, _KeyShare._DescribeCommand);
 
-#% Describe(_Output, _KeyRecover._DescribeCommand);
+
+#% Describe(_Output, CommandSet, _KeyRecover._DescribeCommand);
 
 #end file
 

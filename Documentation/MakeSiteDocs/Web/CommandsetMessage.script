@@ -1,0 +1,36 @@
+﻿#using System.Text
+#using Goedel.Mesh
+#using Goedel.Mesh.Shell
+#using Goedel.Protocol
+#xclass MakeSiteDocs MakeSiteDocs
+
+
+
+#file WebMessage "Guide/message.md" CreateWeb Index
+
+## Using the  Command Set
+
+The  command set contains commands that 
+
+#end file
+
+#file MessageReference "Reference/message.md" CreateWeb Index
+#% var CommandSet = CommandLineInterpreter.DescribeCommandSet_Profile;
+
+
+#% Describe(_Output, CommandSet);
+
+
+#% Describe(_Output, CommandSet, _MessageContact._DescribeCommand);
+#% Describe(_Output, CommandSet, _MessageConfirm._DescribeCommand);
+#% Describe(_Output, CommandSet, _MessagePending._DescribeCommand);
+#% Describe(_Output, CommandSet, _MessageStatus._DescribeCommand);
+#% Describe(_Output, CommandSet, _MessageAccept._DescribeCommand);
+#% Describe(_Output, CommandSet, _MessageReject._DescribeCommand);
+#% Describe(_Output, CommandSet, _MessageBlock._DescribeCommand);
+
+
+#end file
+
+#end xclass
+
