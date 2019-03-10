@@ -240,7 +240,8 @@ namespace Goedel.Command {
         /// <param name="Output">The output stream (defaults to Console)</param>
         public abstract void Describe (
                     char FlagIndicator,
-                    TextWriter Output = null);
+                    TextWriter Output = null,
+                    bool PrefixCommands=true);
         }
 
     /// <summary>
@@ -290,37 +291,33 @@ namespace Goedel.Command {
         /// </summary>
         /// <param name="FlagIndicator">The flag indicator to use in display.</param>
         /// <param name="Output">The output stream (defaults to Console)</param>
+        /// <param name="PrefixCommands">If true, add prefix to command descriptions</param>
         public override void Describe (
                     char FlagIndicator,
-                    TextWriter Output = null) {
+                    TextWriter Output = null,
+                    bool PrefixCommands = true) {
             Output = Output ?? Console.Out;
+            var prefixCommand = PrefixCommands ? FlagIndicator.ToString() : "";
 
-            Output.WriteLine("{0}{1}", FlagIndicator, Identifier);
+            Output.WriteLine("{0}{1}   {2}", prefixCommand, Identifier, Brief);
             foreach (var Entry in Entries) {
-
-                //if (Entry is DescribeCommandEntry) {
-                //    var SubCommand = Entry as DescribeCommandEntry;
-                //    Output.WriteLine("    {0}{1}  {2}", FlagIndicator, Entry.Key, SubCommand.Brief);
-                //    }
-                //else if (Entry is DescribeEntryParameter) {
-                //    var Parameter = Entry as DescribeEntryParameter;
-                //    Output.WriteLine("    {0}   {1}", Entry.Key, Parameter.Brief);
-                //    }
-                //else if (Entry is DescribeEntryOption) {
-                //    var Option = Entry as DescribeEntryOption;
-                //    Output.WriteLine("    {0}{1}   {2}", FlagIndicator, Entry.Key, Option.Brief);
-                //    }
-
-
                 switch (Entry) {
                     case DescribeCommandEntry SubCommand: {
-                        Output.WriteLine("    {0}{1}  {2}", FlagIndicator, Entry.Key, SubCommand.Brief);
+                        Output.WriteLine("    {0}{1}  {2}", prefixCommand, Entry.Key, SubCommand.Brief);
                         break;
                         }
+                    }
+                }
+            foreach (var Entry in Entries) {
+                switch (Entry) {
                     case DescribeEntryParameter Parameter: {
                         Output.WriteLine("    {0}   {1}", Entry.Key, Parameter.Brief);
                         break;
                         }
+                    }
+                }
+            foreach (var Entry in Entries) {
+                switch (Entry) {
                     case DescribeEntryOption Option: {
                         Output.WriteLine("    {0}{1}   {2}", FlagIndicator, Entry.Key, Option.Brief);
                         break;
@@ -345,29 +342,28 @@ namespace Goedel.Command {
         /// </summary>
         /// <param name="FlagIndicator">The flag indicator to use in display.</param>
         /// <param name="Output">The output stream (defaults to Console)</param>
+        /// <param name="PrefixCommands">If true, add prefix to command descriptions</param>
         public override void Describe(
                     char FlagIndicator,
-                    TextWriter Output = null) {
+                    TextWriter Output = null,
+                    bool PrefixCommands = true) {
             Output = Output ?? Console.Out;
+            var prefixCommand = PrefixCommands ? FlagIndicator.ToString() : "";
 
-            Output.WriteLine("{0}", Identifier);
+            Output.WriteLine("{0}    {1}", Identifier, Brief);
             foreach (var Entry in Entries) {
-                //if (Entry.Value is DescribeCommandEntry) {
-                //    var SubCommand = Entry.Value as DescribeCommandEntry;
-                //    Output.WriteLine("    {0}{1}   {2}", FlagIndicator, Entry.Key, SubCommand.Brief);
-                //    }
-                //else if (Entry.Value is DescribeCommandSet) {
-                //    var Parameter = Entry.Value as DescribeCommandSet;
-                //    Output.WriteLine("    {0}{1}", Entry.Key, Parameter.Brief);
-                //    }
-
                 switch (Entry.Value) {
-                    case DescribeCommandEntry describeCommandEntry: {
-                        Output.WriteLine("    {0}{1}   {2}", FlagIndicator, Entry.Key, describeCommandEntry.Brief);
-                        break;
-                        }
                     case DescribeCommandSet describeCommandSet: {
                         Output.WriteLine("    {0}{1}", Entry.Key, describeCommandSet.Brief);
+                        break;
+                        }
+                    }
+
+                }
+            foreach (var Entry in Entries) {
+                switch (Entry.Value) {
+                    case DescribeCommandEntry describeCommandEntry: {
+                        Output.WriteLine("    {0}{1}   {2}", prefixCommand, Entry.Key, describeCommandEntry.Brief);
                         break;
                         }
                     }

@@ -114,14 +114,18 @@ executed without any output being made to the console.
 #block
 #% public static void Describe (StreamWriter _Output, DescribeCommandSet CommandSet) {
 #% var _Indent = "";
+## #{CommandSet.Identifier}
+
 ````
-#% CommandSet.Describe('/', _Output);
+#% CommandSet.Describe('/', _Output, false);
 ````
 #% }
 #% public static void Describe (StreamWriter _Output, DescribeCommandSet CommandSet, DescribeCommand Command) {
 #% var _Indent = "";
+## #{CommandSet.Identifier} #{Command.Identifier}
+
 ````
-#% Command.Describe('/', _Output);
+#% Command.Describe('/', _Output, false);
 ````
 #% }
 #end block

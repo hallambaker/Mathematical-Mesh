@@ -32,7 +32,7 @@ namespace MakeSiteDocs {
 		public static void BookmarkReference (CreateWeb Index) { /* File  */
 			using (var _Output = new StreamWriter ("Reference/bookmark.md")) {
 				var _Indent = ""; 
-				 var CommandSet = CommandLineInterpreter.DescribeCommandSet_Profile;
+				 var CommandSet = CommandLineInterpreter.DescribeCommandSet_Bookmark;
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				 Describe(_Output, CommandSet);

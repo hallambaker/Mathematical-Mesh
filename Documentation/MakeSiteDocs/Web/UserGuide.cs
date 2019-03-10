@@ -148,14 +148,18 @@ namespace MakeSiteDocs {
 
 			 public static void Describe (StreamWriter _Output, DescribeCommandSet CommandSet) {
 			 var _Indent = "";
+			_Output.Write ("# {1}\n{0}", _Indent, CommandSet.Identifier);
+			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("````\n{0}", _Indent);
-			 CommandSet.Describe('/', _Output);
+			 CommandSet.Describe('/', _Output, false);
 			_Output.Write ("````\n{0}", _Indent);
 			 }
 			 public static void Describe (StreamWriter _Output, DescribeCommandSet CommandSet, DescribeCommand Command) {
 			 var _Indent = "";
+			_Output.Write ("# {1} {2}\n{0}", _Indent, CommandSet.Identifier, Command.Identifier);
+			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("````\n{0}", _Indent);
-			 Command.Describe('/', _Output);
+			 Command.Describe('/', _Output, false);
 			_Output.Write ("````\n{0}", _Indent);
 			 }
 		
