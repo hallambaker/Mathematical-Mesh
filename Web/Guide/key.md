@@ -14,17 +14,17 @@ presentation aids application debugging and audit.
 
 The `key nonce` command is used to generate a new random nonce value:
 
-% ConsoleExample (KeyNonce)
+% ConsoleExample (_Output, KeyNonce)
 
 By default, a 128 bit nonce is generated but nonces of any length may be
 generated using the `/bits` option
 
-% ConsoleExample (KeyNonce256)
+% ConsoleExample (_Output, KeyNonce256)
 
 Secrets are generated using the `key secret` in the same way:
 
-% ConsoleExample (KeySecret)
-% ConsoleExample (KeySecret256)
+% ConsoleExample (_Output, KeySecret)
+% ConsoleExample (_Output, KeySecret256)
 
 ## Generating EARL values
 
@@ -37,11 +37,11 @@ on the Web Service under a label that is the Content Digest of the secret.
 EARLs may be generated using either the `key earl` command to generate
 a new secret/digest pair which are then used to process the content data:
 
-% ConsoleExample (KeyEarl)
+% ConsoleExample (_Output, KeyEarl)
 
 Alternatively, the 'file earl' command may be used to perform both operations:
 
-% ConsoleExample (FileEarl)
+% ConsoleExample (_Output, FileEarl)
 
 ## Sharing and recovering secrets
 
@@ -52,12 +52,12 @@ The `key share` command creates a secret and splits it into the specified
 number of shares with the specified quorum for recovery. By default, a 128
 bit secret is created and three shares are created with a quorum of two:
 
-% ConsoleExample (KeyShare)
+% ConsoleExample (_Output, KeyShare)
 
 The original secret may be recovered from a sufficient number of shares to
 meet the quorum:
 
-% ConsoleExample (KeyRecovery)
+% ConsoleExample (_Output, KeyRecovery)
 
 As with secret generation, larger or smaller secrets may be created but due
 to a limitation in the implementation of the key sharing algorithm, the secret 
@@ -67,12 +67,12 @@ the nearest multiple of 32 bits.
 For example, we can create a 192 bit secret and share it five ways with a quorum
 of three:
 
-% ConsoleExample (KeyShare2)
+% ConsoleExample (_Output, KeyShare2)
 
 It is also possible to share a specified secret. This allows a secret to be 
 shared multiple times creating independent key sets. If we re-share the secret
 created earlier to create three shares with a quorum of two, the shares will
 be different:
 
-% ConsoleExample (KeyShare3)
+% ConsoleExample (_Output, KeyShare3)
 

@@ -1,6 +1,7 @@
 ﻿#using System.Text
 #using Goedel.Mesh
 #using Goedel.Mesh.Shell
+#using Goedel.Mesh.Test
 #using Goedel.Protocol
 #using Goedel.Command
 #xclass MakeSiteDocs MakeSiteDocs
@@ -126,6 +127,31 @@ executed without any output being made to the console.
 
 ````
 #% Command.Describe('/', _Output, false);
+````
+#% }
+#% public static void ConsoleExample (StreamWriter _Output, ExampleResult exampleResult) {
+#% var _Indent = "";
+
+
+````
+>#{exampleResult.Command}
+#{exampleResult.ResultText}
+````
+#% }
+#% public static void ConsoleReference (StreamWriter _Output, ExampleResult exampleResult) {
+#% var _Indent = "";
+
+
+````
+>#{exampleResult.Command}
+#{exampleResult.ResultText}
+````
+
+Specifying the /json option returns a result of type #{exampleResult.ResultType}:
+
+````
+>#{exampleResult.Command} /json
+#{exampleResult.ResultJSON}
 ````
 #% }
 #end block

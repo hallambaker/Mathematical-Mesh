@@ -70,6 +70,21 @@ namespace Goedel.Mesh.Test {
             }
         }
 
+    public partial class ExampleResult {
+        public Result Result;
+        public string ResultType => Result._Tag;
+        public string Command;
+        public string ResultText => Result.ToString();
+        public string ResultJSON => Result.GetJson(true).ToUTF8();
+
+
+        public ExampleResult(string command, Result result) {
+            Result = result;
+            Command = command;
+            }
+
+        }
+
     public partial class TestCLI : CommandLineInterpreter {
         TestShell Shell;
 
@@ -78,6 +93,17 @@ namespace Goedel.Mesh.Test {
 
 
         public TestCLI(TestShell shell) : base() => Shell = shell;
+
+
+        public ExampleResult Example(string command, bool fail = false) {
+            var Args = command.Split(' ');
+            Dispatcher(Entries, DefaultCommand, Shell, Args, 0);
+            var result = Shell.ShellResult as Result;
+
+            (result.Success != fail).AssertTrue();
+            return new ExampleResult(command, result);
+            }
+
 
         public Result Dispatch(string command, bool fail = false) {
             var Args = command.Split(' ');

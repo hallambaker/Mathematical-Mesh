@@ -25,13 +25,13 @@ nonce   Return a randomized nonce value formatted as a UDF Nonce Type
 ````
 
 
-The `nonce` command returns a randomized nonce value formatted as a UDF nonce type.
+The `key nonce` command returns a randomized nonce value formatted as a UDF nonce type.
 
 Nonce values should be used when it is important that a value be unpredictable but 
 does not need to be kept secret. For example, the challenge in a challenge/response
 protocol.
 
-% ConsoleReference (KeyNonce)
+% ConsoleReference (_Output, KeyNonce)
 
 
 # key secret
@@ -44,10 +44,10 @@ secret   Return a randomized secret value formatted as a UDF Encryption Key Type
     /bits   Secret size in bits
 ````
 
-The `secret` command returns a randomized secret value formatted as a UDF Encryption 
+The `key secret` command returns a randomized secret value formatted as a UDF Encryption 
 key type.
 
-% ConsoleReference (KeySecret)
+% ConsoleReference (_Output, KeySecret)
 
 
 # key earl
@@ -61,10 +61,10 @@ earl   Return a randomized secret value and locator as UDFs
     /bits   Secret size in bits
 ````
 
-The `earl` command returns a randomized secret value and a fingerprint of the secret 
+The `key earl` command returns a randomized secret value and a fingerprint of the secret 
 value, formatted as a UDF Encryption key type and Content Digest Type
 
-% ConsoleReference (KeyEarl)
+% ConsoleReference (_Output, KeyEarl)
 
 # key share
 
@@ -80,10 +80,10 @@ share   Split a secret value according to the specified shares and quorum
     /shares   The number of shares to create
 ````
 
-The `share` command returns a randomized secret value and a set of shares for the secret
+The `key share` command returns a randomized secret value and a set of shares for the secret
 formatted as a UDF Encryption key type and Share types
 
-% ConsoleReference (KeyShare)
+% ConsoleReference (_Output, KeyShare)
 
 
 # key recover
@@ -104,9 +104,9 @@ recover   Recover a secret value from the shares provided
     /key   Encrypt data for specified recipient
 ````
 
-The `recover` command combines the specified set of share to recover the original secret 
+The `key recover` command combines the specified set of share to recover the original secret 
 value as a UDF Encryption key type.
 
-% ConsoleReference (KeyRecover)
+% ConsoleReference (_Output, KeyRecover)
 
 

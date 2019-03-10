@@ -1,6 +1,7 @@
 using  System.Text;
 using  Goedel.Mesh;
 using  Goedel.Mesh.Shell;
+using  Goedel.Mesh.Test;
 using  Goedel.Protocol;
 using  Goedel.Command;
 using System;
@@ -160,6 +161,31 @@ namespace MakeSiteDocs {
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("````\n{0}", _Indent);
 			 Command.Describe('/', _Output, false);
+			_Output.Write ("````\n{0}", _Indent);
+			 }
+			 public static void ConsoleExample (StreamWriter _Output, ExampleResult exampleResult) {
+			 var _Indent = "";
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("````\n{0}", _Indent);
+			_Output.Write (">{1}\n{0}", _Indent, exampleResult.Command);
+			_Output.Write ("{1}\n{0}", _Indent, exampleResult.ResultText);
+			_Output.Write ("````\n{0}", _Indent);
+			 }
+			 public static void ConsoleReference (StreamWriter _Output, ExampleResult exampleResult) {
+			 var _Indent = "";
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("````\n{0}", _Indent);
+			_Output.Write (">{1}\n{0}", _Indent, exampleResult.Command);
+			_Output.Write ("{1}\n{0}", _Indent, exampleResult.ResultText);
+			_Output.Write ("````\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("Specifying the /json option returns a result of type {1}:\n{0}", _Indent, exampleResult.ResultType);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("````\n{0}", _Indent);
+			_Output.Write (">{1} /json\n{0}", _Indent, exampleResult.Command);
+			_Output.Write ("{1}\n{0}", _Indent, exampleResult.ResultJSON);
 			_Output.Write ("````\n{0}", _Indent);
 			 }
 		

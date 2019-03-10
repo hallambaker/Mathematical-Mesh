@@ -65,13 +65,10 @@ namespace Goedel.Mesh.Shell {
         public override ShellResult KeyShare(KeyShare Options) {
             var quorum = Options.Quorum.Value;
             var shares = Options.Shares.Value;
+            var bits = Options.Bits.ValueDefaulted(128);
+            var secretUDF = Options.Secret.Value;
 
-            var bits = 140;
-            var bitsid = Math.Min(bits * 2, 440);
-
-            var secret = new Secret(128);
-
-            // should be Secret.id and secret.string
+            var secret = secretUDF == null ? new Secret(bits) : new Secret(secretUDF);
 
             var keyShares = secret.Split(shares, quorum);
             // the secrets should be in udf form as well.
@@ -88,6 +85,9 @@ namespace Goedel.Mesh.Shell {
                 };
             }
 
-
+        public override ShellResult KeyRecover(KeyRecover Options) {
+            CommandLineInterpreter.DescribeValues(Options);
+            return null;
+            }
         }
     }
