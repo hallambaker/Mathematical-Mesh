@@ -10,7 +10,8 @@ key
     share   Split a secret value according to the specified shares and quorum
 ````
 
-
+The Key command set contains commands that operate on cryptographic keys and
+nonces.
 
 
 # key nonce
@@ -30,6 +31,7 @@ Nonce values should be used when it is important that a value be unpredictable b
 does not need to be kept secret. For example, the challenge in a challenge/response
 protocol.
 
+% ConsoleReference (KeyNonce)
 
 
 # key secret
@@ -44,6 +46,8 @@ secret   Return a randomized secret value formatted as a UDF Encryption Key Type
 
 The `secret` command returns a randomized secret value formatted as a UDF Encryption 
 key type.
+
+% ConsoleReference (KeySecret)
 
 
 # key earl
@@ -60,10 +64,13 @@ earl   Return a randomized secret value and locator as UDFs
 The `earl` command returns a randomized secret value and a fingerprint of the secret 
 value, formatted as a UDF Encryption key type and Content Digest Type
 
+% ConsoleReference (KeyEarl)
+
 # key share
 
 ````
 share   Split a secret value according to the specified shares and quorum
+       The parameter to share
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -75,6 +82,9 @@ share   Split a secret value according to the specified shares and quorum
 
 The `share` command returns a randomized secret value and a set of shares for the secret
 formatted as a UDF Encryption key type and Share types
+
+% ConsoleReference (KeyShare)
+
 
 # key recover
 
@@ -96,4 +106,7 @@ recover   Recover a secret value from the shares provided
 
 The `recover` command combines the specified set of share to recover the original secret 
 value as a UDF Encryption key type.
+
+% ConsoleReference (KeyRecover)
+
 

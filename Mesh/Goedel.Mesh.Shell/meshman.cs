@@ -11411,6 +11411,7 @@ namespace Goedel.Mesh.Shell {
 			new Flag (),
 			new String (),
 			new Integer (),
+			new String (),
 			new Integer (),
 			new Integer ()			} ;
 
@@ -11472,23 +11473,32 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _Bits {
 			set => _Data[5].Parameter (value);
 			}
-		/// <summary>Field accessor for option [quorum]</summary>
-		public virtual Integer Quorum {
-			get => _Data[6] as Integer;
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual String Secret {
+			get => _Data[6] as String;
 			set => _Data[6]  = value;
 			}
 
-		public virtual string _Quorum {
+		public virtual string _Secret {
 			set => _Data[6].Parameter (value);
 			}
-		/// <summary>Field accessor for option [shares]</summary>
-		public virtual Integer Shares {
+		/// <summary>Field accessor for option [quorum]</summary>
+		public virtual Integer Quorum {
 			get => _Data[7] as Integer;
 			set => _Data[7]  = value;
 			}
 
-		public virtual string _Shares {
+		public virtual string _Quorum {
 			set => _Data[7].Parameter (value);
+			}
+		/// <summary>Field accessor for option [shares]</summary>
+		public virtual Integer Shares {
+			get => _Data[8] as Integer;
+			set => _Data[8]  = value;
+			}
+
+		public virtual string _Shares {
+			set => _Data[8].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -11540,18 +11550,25 @@ namespace Goedel.Mesh.Shell {
 					Index = 5,
 					Key = "bits"
 					},
+				new DescribeEntryParameter () {
+					Identifier = "Secret", 
+					Default = null, // null if null
+					Brief = "The parameter to share",
+					Index = 6,
+					Key = ""
+					},
 				new DescribeEntryOption () {
 					Identifier = "Quorum", 
 					Default = "2", // null if null
 					Brief = "The number of shares required to recover the secret",
-					Index = 6,
+					Index = 7,
 					Key = "quorum"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Shares", 
 					Default = "3", // null if null
 					Brief = "The number of shares to create",
-					Index = 7,
+					Index = 8,
 					Key = "shares"
 					}
 				}

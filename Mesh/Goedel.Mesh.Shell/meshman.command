@@ -633,6 +633,8 @@
 			Include Reporting
 			Include DigestOptions
 			Include LengthOptions
+			Parameter Secret "secret" String
+				Brief "The parameter to share"
 			Option Quorum "quorum" Integer
 				Default "2"
 				Brief "The number of shares required to recover the secret"	
