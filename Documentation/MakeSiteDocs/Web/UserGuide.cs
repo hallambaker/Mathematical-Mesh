@@ -20,6 +20,7 @@ namespace MakeSiteDocs {
 			 UserGuide (Index);
 			 Reference (Index);
 			 WebKey (Index);
+			 KeyReference (Index);
 			}
 		
 
