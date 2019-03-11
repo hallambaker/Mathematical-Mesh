@@ -41,7 +41,7 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult KeyEarl(KeyEarl Options) {
-            var bits = 140;
+            var bits = Options.Bits.ValueDefaulted(140);
             var bitsid = Math.Min(bits*2, 440);
 
             var key = Cryptography.UDF.SymmetricKey(bits);

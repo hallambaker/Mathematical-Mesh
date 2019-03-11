@@ -83,29 +83,34 @@ namespace MakeSiteDocs {
 
         public List<ExampleResult> HashUDF2;
         public List<ExampleResult> HashUDF3;
-        public List<ExampleResult> HashUDF200;
-        public List<ExampleResult> HashUDFExpect;
+        public List<ExampleResult> HashUDF200; // Wrong precision, implement /bits
+        public List<ExampleResult> HashUDFExpect; // implement /expect
         public List<ExampleResult> HashDigest;
         public List<ExampleResult> HashDigests;
-        public List<ExampleResult> MAC1;
-        public List<ExampleResult> MAC2;
-        public List<ExampleResult> MAC3;
+        public List<ExampleResult> MAC1;  // return the key
+        public List<ExampleResult> MAC2;  // implement key option
+        public List<ExampleResult> MAC3;  // implement expect option
 
         public void DoHashCommands() {
             HashUDF2        = testCLI.Example($"hash udf {TestFile1}");
-            var expect = (HashUDF2[0].Result as ResultDigest).Digest;
+            var expect2 = (HashUDF2[0].Result as ResultDigest).Digest;
             HashUDF3        = testCLI.Example($"hash udf {TestFile1} /alg=sha3 /cty=application/binary");
+            var expect3 = (HashUDF3[0].Result as ResultDigest).Digest;
             HashUDF200      = testCLI.Example($"hash udf {TestFile1} /bits=200");
-            HashUDFExpect   = testCLI.Example($"hash udf {TestFile1} /expect={expect}");
+            HashUDFExpect   = testCLI.Example($"hash udf {TestFile1} /expect={expect2}",
+                                              $"hash udf {TestFile1} /expect={expect3}");
             HashDigest      = testCLI.Example($"hash digest {TestFile1}");
             HashDigests     = testCLI.Example($"hash digest {TestFile1} /alg=sha256",
+                                              // $"hash digest {TestFile1} /alg=sha128",
+                                              $"hash digest {TestFile1} /alg=sha3256",
                                               $"hash digest {TestFile1} /alg=sha3");
             MAC1            = testCLI.Example($"hash mac {TestFile1}");
             var key = (MAC1[0].Result as ResultDigest).Key;
             var digest = (MAC1[0].Result as ResultDigest).Digest;
 
             MAC2            = testCLI.Example($"hash mac {TestFile1} /key={key}");
-            MAC3            = testCLI.Example($"hash mac {TestFile1} /key={key} /expect={digest}");
+            MAC3            = testCLI.Example($"hash mac {TestFile1} /key={key} /expect={digest}",
+                $"hash mac {TestFile1} /key={key} /expect={expect2}");
             }
 
         public List<ExampleResult> DareEarl;

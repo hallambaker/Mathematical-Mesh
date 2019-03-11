@@ -22,7 +22,7 @@ namespace Goedel.Cryptography.Jose {
                 {"AES128",  CryptoAlgorithmID.AES128 },
                 {"SHA2",    CryptoAlgorithmID.SHA_2_512 },
                 {"SHA256",  CryptoAlgorithmID.SHA_2_256 },
-                {"SHA128",  CryptoAlgorithmID.SHA_2_512T128 },
+                //{"SHA128",  CryptoAlgorithmID.SHA_2_512T128 },
                 {"SHA512",  CryptoAlgorithmID.SHA_2_512 },
                 {"SHA3",    CryptoAlgorithmID.SHA_3_512 },
                 {"SHA3256", CryptoAlgorithmID.SHA_3_256 },

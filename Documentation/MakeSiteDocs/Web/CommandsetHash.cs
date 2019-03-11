@@ -33,7 +33,7 @@ namespace MakeSiteDocs {
 				_Output.Write ("\n{0}", _Indent);
 				 ConsoleExample (Examples.HashUDF2);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("In this case, the file `{1}` contains the text `{2}`.\n{0}", _Indent, Examples.TestFile1, Examples.TestText1);
+				_Output.Write ("In this case, the file `{1}` contains the text `\"{2}\"`.\n{0}", _Indent, Examples.TestFile1, Examples.TestText1);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("By default, a SHA-2-512 digest is created and the IANA Media Type parameter is\n{0}", _Indent);
 				_Output.Write ("determined from the file extension of the file being processed. These defaults\n{0}", _Indent);

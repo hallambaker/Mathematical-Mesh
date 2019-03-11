@@ -20,7 +20,7 @@
 		Inherits		Result
 		String			Digest
 		String			Key
-
+		Boolean			Verified		
 
 	Structure ResultFile
 		Inherits		Result

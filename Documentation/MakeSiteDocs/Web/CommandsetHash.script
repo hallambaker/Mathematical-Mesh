@@ -18,7 +18,7 @@ The #{ToCommand("hash udf")}  command calculates the UDF value of a file:
 
 #% ConsoleExample (Examples.HashUDF2);
 
-In this case, the file `#{Examples.TestFile1}` contains the text `#{Examples.TestText1}`.
+In this case, the file `#{Examples.TestFile1}` contains the text `"#{Examples.TestText1}"`.
 
 By default, a SHA-2-512 digest is created and the IANA Media Type parameter is
 determined from the file extension of the file being processed. These defaults

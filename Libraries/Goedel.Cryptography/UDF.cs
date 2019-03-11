@@ -829,21 +829,22 @@ namespace Goedel.Cryptography {
     /// <summary>Static class containing static extension methods providing convenience functions.</summary>
     public static partial class Extension {
         /// <summary>
-        /// Compare a fingerprint to see that it matches the specified pattern according
+        /// Compare the fingerprint <paramref name="UDF"/> to see that it matches the 
+        /// pattern <paramref name="pattern"/> according
         /// to UDF matching rules. Currently, the method only converts strings to lower 
         /// case, it does not canonicalize.
         /// </summary>
-        /// <param name="Pattern">The pattern the candidate is being tested for a match against.</param>
+        /// <param name="pattern">The pattern the candidate is being tested for a match against.</param>
         /// <param name="UDF">The candidate being tested</param>
         /// <returns>True if the patterns match, otherwise false.</returns>
-        public static bool CompareUDF (this string Pattern, string UDF) {
-            if (UDF.Length < Pattern.Length) {
+        public static bool CompareUDF (this string pattern, string UDF) {
+            if (UDF.Length < pattern.Length) {
                 return false;
                 }
-            if (UDF.Length == Pattern.Length) {
-                return Pattern.ToLower() == UDF.ToLower();
+            if (UDF.Length == pattern.Length) {
+                return pattern.ToLower() == UDF.ToLower();
                 }
-            return Pattern.ToLower().StartsWith(UDF.ToLower());
+            return pattern.ToLower().StartsWith(UDF.ToLower());
             }
 
         /// <summary>

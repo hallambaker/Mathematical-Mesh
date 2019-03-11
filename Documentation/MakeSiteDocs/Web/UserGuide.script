@@ -168,7 +168,7 @@ executed without any output being made to the console.
 ````
 #foreach (var exampleResult in exampleResults)
 >#{exampleResult.Command}
-#{exampleResult.ResultText}
+#{exampleResult.ResultText}#!
 #end foreach
 ````
 #end method
@@ -196,7 +196,7 @@ executed without any output being made to the console.
 
 ````
 >#{exampleResult.Command}
-#{exampleResult.ResultText}
+#{exampleResult.ResultText}#!
 ````
 
 Specifying the /json option returns a result of type #{exampleResult.ResultType}:

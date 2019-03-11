@@ -68,15 +68,7 @@ namespace Goedel.Mesh.Shell {
                 }
 
             if (options is ICryptoOptions CryptoOptions) {
-                if (CryptoOptions.Algorithms.Value != null) {
-                    var algorithms = CryptoOptions.Algorithms.Value.Split(',');
-
-                    foreach (var algorithm in algorithms) {
-                        SetAlgorithm(algorithm);
-                        }
-
-
-                    }
+                SetAlgorithms(CryptoOptions);
 
                 }
 
@@ -89,6 +81,24 @@ namespace Goedel.Mesh.Shell {
             if (options is IPrivateKeyOptions PrivateKeyOptions) {
                 }
 
+            }
+
+
+        void SetAlgorithms(ICryptoOptions CryptoOptions) {
+            AlgorithmSign = CryptoAlgorithmID.Ed448;
+            AlgorithmAuthenticate = CryptoAlgorithmID.Ed448;
+            AlgorithmExchange = CryptoAlgorithmID.Ed448;
+
+            AlgorithmDigest = CryptoAlgorithmID.Default;
+            AlgorithmMAC = CryptoAlgorithmID.Default;
+            AlgorithmEncrypt = CryptoAlgorithmID.Default;
+
+            if (CryptoOptions.Algorithms.Value != null) {
+                var algorithms = CryptoOptions.Algorithms.Value.Split(',');
+                foreach (var algorithm in algorithms) {
+                    SetAlgorithm(algorithm);
+                    }
+                }
             }
 
         void SetAlgorithm(string algorithm) {

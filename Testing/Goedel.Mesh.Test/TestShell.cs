@@ -112,8 +112,17 @@ namespace Goedel.Mesh.Test {
             //result.Add(new ExampleResult(command, Shell.ShellResult as Result));
 
             foreach (var cmd in commands) {
-                Dispatcher(Entries, DefaultCommand, Shell, cmd.Split(' '), 0);
-                result.Add(new ExampleResult(cmd, Shell.ShellResult as Result));
+                try {
+                    Dispatcher(Entries, DefaultCommand, Shell, cmd.Split(' '), 0);
+                    result.Add(new ExampleResult(cmd, Shell.ShellResult as Result));
+                    }
+                catch (Exception exception) {
+                    var cmdresult = new Result() {
+                        Success = false,
+                        Reason = exception.Message
+                        };
+                    result.Add(new ExampleResult(cmd, cmdresult));
+                    }
                 }
 
             return result;

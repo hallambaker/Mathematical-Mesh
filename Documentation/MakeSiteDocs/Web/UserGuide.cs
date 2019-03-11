@@ -227,7 +227,7 @@ namespace MakeSiteDocs {
 			_Output.Write ("````\n{0}", _Indent);
 			foreach  (var exampleResult in exampleResults) {
 				_Output.Write (">{1}\n{0}", _Indent, exampleResult.Command);
-				_Output.Write ("{1}\n{0}", _Indent, exampleResult.ResultText);
+				_Output.Write ("{1}", _Indent, exampleResult.ResultText);
 				}
 			_Output.Write ("````\n{0}", _Indent);
 			}

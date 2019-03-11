@@ -5,6 +5,13 @@
 		Description
 			|Generic error in Mesh Shell library
 
+
+		Exception DidNotMatchExpectedValue
+			Console "The calculated fingerprint did not match the expected value."
+			Description
+				|The calculated fingerprint did not match the expected value.
+
+
 		Exception AccountNotFound
 			Console "Profile not found"
 			Description

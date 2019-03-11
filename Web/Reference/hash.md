@@ -33,7 +33,8 @@ with the `/bits`, `/cty` and `/alg` options.
 
 ````
 >hash udf TestFile1.txt
-MDLI-GX2C-3OQB-BVWI-REXY-EB56-JG4R````
+MDLI-GX2C-3OQB-BVWI-REXY-EB56-JG4R
+````
 
 Specifying the /json option returns a result of type ResultDigest:
 
@@ -64,7 +65,8 @@ file according to the digest algorithm specifiedwith the `/alg` option.
 
 ````
 >hash digest TestFile1.txt
-A028D4F74B602BA45EB0A93C9A4677240DCF281A1A9322F183BD32F0BED82EC72DE9C3957B2F4C9A1CCF7ED14F85D73498DF38017E703D47EBB9F0B3BF116F69````
+A028D4F74B602BA45EB0A93C9A4677240DCF281A1A9322F183BD32F0BED82EC72DE9C3957B2F4C9A1CCF7ED14F85D73498DF38017E703D47EBB9F0B3BF116F69
+````
 
 Specifying the /json option returns a result of type ResultDigest:
 
@@ -106,7 +108,9 @@ true returned if and only if it matches the value specified.
 
 ````
 >hash mac TestFile1.txt
-AC7I-EOQ7-RLKO-VPZZ-D4DN-5IK5-ZVQT````
+AB3O-FD34-GEXX-PM7G-3NHV-EIDL-OMSB
+NBCM-ZTDI-EWMQ-DSRN-M73B-SKCG-HW6W
+````
 
 Specifying the /json option returns a result of type ResultDigest:
 
@@ -115,7 +119,7 @@ Specifying the /json option returns a result of type ResultDigest:
 {
   "ResultDigest": {
     "Success": true,
-    "Digest": "AC7I-EOQ7-RLKO-VPZZ-D4DN-5IK5-ZVQT",
-    "Key": "NAOO-HSMF-WG5D-3WGD-47DM-LGS6-4WWP"}}
+    "Digest": "AB3O-FD34-GEXX-PM7G-3NHV-EIDL-OMSB",
+    "Key": "NBCM-ZTDI-EWMQ-DSRN-M73B-SKCG-HW6W"}}
 ````
 

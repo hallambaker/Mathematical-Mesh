@@ -59,6 +59,54 @@ namespace Goedel.Mesh.Shell {
 
 
     /// <summary>
+    /// The calculated fingerprint did not match the expected value.
+    /// </summary>
+    [Serializable]
+	public class DidNotMatchExpectedValue : MeshShellException {
+
+		/// <summary>
+        /// Construct instance for exception "The calculated fingerprint did not match the expected value."
+        /// </summary>		
+		public DidNotMatchExpectedValue () : base ("The calculated fingerprint did not match the expected value.") {
+			}
+        
+		/// <summary>
+        /// Construct instance for exception "The calculated fingerprint did not match the expected value."
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		public DidNotMatchExpectedValue (string Description) : base (Description) {
+			}
+
+		/// <summary>
+        /// Construct instance for exception 		/// containing an inner exception.
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		/// <param name="Inner">Inner Exception</param>	
+		public DidNotMatchExpectedValue (string Description, System.Exception Inner) : 
+				base (Description, Inner) {
+			}
+
+
+
+
+		
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+
+        static System.Exception _Throw(object Reason) {
+			if (Reason as string != null) {
+				return new DidNotMatchExpectedValue(Reason as string);
+				}
+			else {
+				return new DidNotMatchExpectedValue();
+				}
+            }
+        }
+
+
+    /// <summary>
     /// Account not valid
     /// </summary>
     [Serializable]

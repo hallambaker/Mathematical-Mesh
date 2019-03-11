@@ -365,6 +365,15 @@ namespace Goedel.Mesh.Shell {
         /// </summary>
 
 		public virtual string						Key  {get; set;}
+		bool								__Verified = false;
+		private bool						_Verified;
+        /// <summary>
+        /// </summary>
+
+		public virtual bool						Verified {
+			get => _Verified;
+			set {_Verified = value; __Verified = true; }
+			}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -418,6 +427,11 @@ namespace Goedel.Mesh.Shell {
 				_Writer.WriteToken ("Key", 1);
 					_Writer.WriteString (Key);
 				}
+			if (__Verified){
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Verified", 1);
+					_Writer.WriteBoolean (Verified);
+				}
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
 				}
@@ -456,6 +470,10 @@ namespace Goedel.Mesh.Shell {
 					}
 				case "Key" : {
 					Key = JSONReader.ReadString ();
+					break;
+					}
+				case "Verified" : {
+					Verified = JSONReader.ReadBoolean ();
 					break;
 					}
 				default : {

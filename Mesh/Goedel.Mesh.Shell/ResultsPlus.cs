@@ -40,6 +40,48 @@ namespace Goedel.Mesh.Shell {
         }
 
 
+    public partial class ResultKey {
+        public override string ToString() {
+            var Builder = new StringBuilder();
+
+            if (Key != null) {
+                Builder.AppendLine(Key);
+                }
+            if (Identifier != null) {
+                Builder.AppendLine(Identifier);
+                }
+            if (Shares != null) {
+                foreach (var share in Shares) {
+                    Builder.AppendLine(share);
+                    }
+                }
+            return Builder.ToString();
+            }
+        }
+
+    public partial class ResultDigest {
+        public override string ToString() {
+            var Builder = new StringBuilder();
+
+            if (Verified) {
+                Builder.AppendLine($"{Success}");
+                }
+            else {
+                if (Digest != null) {
+                    Builder.AppendLine(Digest);
+                    }
+                if (Key != null) {
+                    Builder.AppendLine(Key);
+                    }
+                }
+
+
+            return Builder.ToString();
+            }
+        }
+
+
+
     public partial class ResultDeviceCreate {
 
         public override string ToString() {
@@ -79,9 +121,7 @@ namespace Goedel.Mesh.Shell {
             }
         }
 
-    public partial class ResultDigest {
-        public override string ToString() => Digest;
-        }
+
 
 
     public partial class ResultEscrow {
@@ -99,24 +139,7 @@ namespace Goedel.Mesh.Shell {
             }
         }
 
-    public partial class ResultKey{
-        public override string ToString() {
-            var Builder = new StringBuilder();
 
-            if (Key != null) {
-                Builder.AppendLine(Key);
-                }
-            if (Identifier != null) {
-                Builder.AppendLine(Identifier);
-                }
-            if (Shares != null) {
-                foreach (var share in Shares) {
-                    Builder.AppendLine(share);
-                    }
-                }
-            return Builder.ToString();
-            }
-        }
 
 
     public partial class ResultRecover {
