@@ -6,6 +6,10 @@
 	Type ExistingFile		"file"
 
 	Brief		"Mathematical Mesh command tool"
+	Help "help"
+		Brief		"Command guide."
+	About "about"
+		Brief		"Report version and compilation date."
 
 	OptionSet Reporting
 		Enumerate EnumReporting "report"
@@ -576,37 +580,6 @@
 			Parameter MemberID "member" String
 				Brief "User to delete"
 
-	CommandSet Dare "dare"
-		Brief "DARE Message encryption and decryption commands"
-		Command FileEncrypt "encode"
-			Brief "Encode data as DARE Message."
-			Parameter Input "in" ExistingFile
-				Brief "File or directory to encrypt"
-			Include EncodeOptions
-			Include CryptoOptions
-			Include AccountOptions
-			Include Reporting
-			Option Output "out" NewFile
-				Brief "Filename for encrypted output."
-			Option Subdirectories "sub" Flag
-				Brief "Process subdirectories recursively."
-		
-		Command FileDecrypt "decode"
-			Brief "Decode a DARE Message."
-			Include AccountOptions
-			Include Reporting
-			Parameter Input "in" ExistingFile
-				Brief "Encrypted File"
-			Parameter Output "out" NewFile
-				Brief "Decrypted File"
-
-		Command FileVerify "verify"
-			Brief "Verify a DARE Message."
-			Include AccountOptions
-			Include Reporting
-			Parameter Input "in" ExistingFile
-				Brief "Encrypted File"
-
 
 	CommandSet Key "key"
 		Brief "Key operations."
@@ -666,9 +639,12 @@
 		Command FileUDF "udf"
 			Brief "Calculate the Uniform Data Fingerprint of the input data"
 			Include Reporting
+			Include CryptoOptions
+			Include LengthOptions
 			Option ContentType "cty" String
 				Brief "Content Type"
-			Include CryptoOptions
+			Option Expect "expect" String
+				Brief "Expected value"			
 			Parameter Input "in" ExistingFile
 				Brief "File to take digest of"
 
@@ -679,16 +655,52 @@
 			Parameter Input "in" ExistingFile
 				Brief "File to take digest of"
 
-		Command FileCommitment "commit"
+		Command FileCommitment "mac"
 			Brief "Calculate a commitment value for the input data"
 			Include Reporting
-			Option ContentType "cty" String
-				Brief "Content Trype"
 			Include CryptoOptions
+			Include LengthOptions
+			Option ContentType "cty" String
+				Brief "Content Type"
+
 			Option DigestKey "key" String
+				Brief "Specifies the value of the key"	
+			Option Expect "expect" String
+				Brief "Expected value"		
 			Parameter Input "in" ExistingFile
 				Brief "File to create commitment of"
 
+
+	CommandSet Dare "dare"
+		Brief "DARE Message encryption and decryption commands"
+		Command FileEncrypt "encode"
+			Brief "Encode data as DARE Message."
+			Parameter Input "in" ExistingFile
+				Brief "File or directory to encrypt"
+			Include EncodeOptions
+			Include CryptoOptions
+			Include AccountOptions
+			Include Reporting
+			Option Output "out" NewFile
+				Brief "Filename for encrypted output."
+			Option Subdirectories "sub" Flag
+				Brief "Process subdirectories recursively."
+		
+		Command FileDecrypt "decode"
+			Brief "Decode a DARE Message."
+			Include AccountOptions
+			Include Reporting
+			Parameter Input "in" ExistingFile
+				Brief "Encrypted File"
+			Parameter Output "out" NewFile
+				Brief "Decrypted File"
+
+		Command FileVerify "verify"
+			Brief "Verify a DARE Message."
+			Include AccountOptions
+			Include Reporting
+			Parameter Input "in" ExistingFile
+				Brief "Encrypted File"
 
 	OptionSet ContainerOptions
 		Option Type "type" String

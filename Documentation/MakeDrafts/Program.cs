@@ -76,8 +76,8 @@ namespace ExampleGenerator {
         public ResultDigest ResultDigestSHA2;
         public ResultDigest ResultDigestSHA3;
 
-        public ResultCommitment ResultCommitSHA2;
-        public ResultCommitment ResultCommitSHA3;
+        public ResultDigest ResultCommitSHA2;
+        public ResultDigest ResultCommitSHA3;
 
         public Secret UDFSplitSecret;
         public Goedel.Cryptography.KeyShare[] UDFSplitShares;
@@ -100,7 +100,7 @@ namespace ExampleGenerator {
             var filename = TestStringValue.ToFileUnique();
             ResultDigestSHA2 = testCLI.Dispatch($"hash udf {filename} /alg sha2") as ResultDigest;
             ResultDigestSHA3 = testCLI.Dispatch($"hash udf {filename} /alg sha3") as ResultDigest;
-            ResultCommitSHA2 = testCLI.Dispatch($"hash commit {filename} /alg sha2 /key {ResultUDFNonce.Key}") as ResultCommitment;
+            ResultCommitSHA2 = testCLI.Dispatch($"hash commit {filename} /alg sha2 /key {ResultUDFNonce.Key}") as ResultDigest;
 
             UDFSplitSecret = new Secret(128);
             UDFSplitShares = UDFSplitSecret.Split(5, 3, out UDFSplitPolynomial);

@@ -41,7 +41,7 @@
 #% CalendarReference (Index);
 #end method
 
-#file Web "readme.md" CreateWeb Index
+#xfile MakeSiteDocs Web "readme.md" CreateWeb Index
 
 ## meshman Documentation
 
@@ -58,27 +58,53 @@ The [User Guide](Guide) describes how to use the Mesh to perform specific tasks.
 The [Reference Manual](Reference) provides a detailed description of the use of
 specific commands.
 
-#end file
+#end xfile
 
-#file UserGuide "Guide/readme.md" CreateWeb Index
+#xfile MakeSiteDocs Features "festures.md" CreateWeb Index
+## Feature Requests
+
+The following features are planned but not yet implemented:
+
+<dl>
+<dt>Hash command set</dt>
+<dd>Allow processing of multiple files at once.</dd>
+<dd>Support SHA3 MACs, SHA256, etc digests.</dd>
+</dl>
+
+#end xfile
+
+#xfile MakeSiteDocs UserGuide "Guide/readme.md" CreateWeb Index
 ## meshman User Guide
 
-[*Key*](key.md)
 
-Commands for creating keys, nonces and EARLs and secret sharing and recovery.
+<dl>
+<dt>[`key`](key.md)</dt>
+<dd>Generate secrets and nonces. Split a secret into shares and recover secret from shares</dd>
+<dt>[`hash`](hash.md)</dt>
+<dd>Perform Content Digest and Message Authentication Code operations on the contents of a file</dd>
+<dt>[`dare`](dare.md)</dt>
+<dd>Encode and decode DARE messages</dd>
+<dt>[`container`](container.md)</dt>
+<dd>Encode and decode DARE containers</dd>
+</dl>
 
-#end file
+#end xfile
 
-#file Reference "Reference/readme.md" CreateWeb Index
+
+
+#xfile MakeSiteDocs Reference "Reference/readme.md" CreateWeb Index
 ## meshman Reference Manual
 
-*about* 
-
-*help*
-
-[*Key*](key.md)
-
-Commands for creating keys, nonces and EARLs and secret sharing and recovery.
+<dl>
+<dt>[`key`](key.md)</dt>
+<dd>Generate secrets and nonces. Split a secret into shares and recover secret from shares</dd>
+<dt>[`hash`](hash.md)</dt>
+<dd>Perform Content Digest and Message Authentication Code operations on the contents of a file</dd>
+<dt>[`dare`](dare.md)</dt>
+<dd>Encode and decode DARE messages</dd>
+<dt>[`container`](container.md)</dt>
+<dd>Encode and decode DARE containers</dd>
+</dl>
 
 ## Command format
 
@@ -90,9 +116,10 @@ accustomed to use on a particular machine.
 
 ## Common options
 
-All commands support the use of the 'verbose', 'report' and 'json' options.
+All commands (other than `help` and `about`) support the use of the 'verbose', 
+'report' and 'json' options.
 
-*'/json' '/nojson'* 
+*'/json' 
 
 The '/json' flag takes precedence over the /verbose and /report options which
 are ignored if '/json' is specified.
@@ -100,7 +127,7 @@ are ignored if '/json' is specified.
 Specifying the /json flag causes the command output to be presented in JSON
 format.
 
-*'/verbose' '/noverbose'* 
+*'/verbose' 
 
 The '/verbose' flag takes precedence over the /report option which is ignored if
 '/verbose' is specified.
@@ -110,7 +137,7 @@ The '/verbose' flag takes precedence over the /report option which is ignored if
 The /report flag is set by default. If /noreport is specified, the command is
 executed without any output being made to the console.
 
-#end file
+#end xfile
 
 
 
@@ -143,11 +170,28 @@ executed without any output being made to the console.
 ````
 #end method
 
-#method ConsoleJSON ExampleResult exampleResult
-#if (exampleResult == null) 
+
+#method ConsoleExample List<ExampleResult> exampleResults
+#if (exampleResults == null) 
 **Missing Example***
 #% Console.WriteLine ($"Missing example!"); return;
 #end if
+
+````
+#foreach (var exampleResult in exampleResults)
+>#{exampleResult.Command}
+#{exampleResult.ResultText}#!
+#end foreach
+````
+#end method
+
+
+#method ConsoleJSON List<ExampleResult> exampleResults
+#if (exampleResults == null) 
+**Missing Example***
+#% Console.WriteLine ($"Missing example!"); return;
+#end if
+#% var exampleResult = exampleResults[0];
 
 ````
 >#{exampleResult.Command} /json
@@ -155,12 +199,12 @@ executed without any output being made to the console.
 ````
 #end method
 
-#method ConsoleReference ExampleResult exampleResult
-#if (exampleResult == null) 
+#method ConsoleReference List<ExampleResult> exampleResults
+#if (exampleResults == null) 
 **Missing Example***
 #% Console.WriteLine ($"Missing example!"); return;
 #end if
-
+#% var exampleResult = exampleResults[0];
 
 ````
 >#{exampleResult.Command}

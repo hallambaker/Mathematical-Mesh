@@ -8,9 +8,9 @@
 
 #xfile MakeSiteDocs WebKey "Guide/key.md" CreateWeb Examples
 
-## Using the Key Command Set
+## Using the `key` Command Set
 
-The Key command set contains commands that operate on cryptographic secrets and
+The `key` command set contains commands that operate on cryptographic secrets and
 nonces.
 
 #### Generating Secrets and Nonces

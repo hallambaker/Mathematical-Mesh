@@ -36,6 +36,35 @@ namespace Goedel.Mesh.Shell {
 		static char UnixFlag = '-';
 		static char WindowsFlag = '/';
 
+        /// <summary>
+        /// Default help dispatch
+        /// </summary>
+        /// <param name="Dispatch">The command description.</param>
+        /// <param name="args">The set of arguments.</param>
+        /// <param name="index">The first unparsed argument.</param>
+        public static void Help (DispatchShell Dispatch, string[] args, int index) =>
+            Brief(Description, DefaultCommand, Entries);
+
+        public static DescribeCommandEntry DescribeHelp = new DescribeCommandEntry() {
+            Identifier = "help",
+            HandleDelegate = Help,
+            Entries = new List<DescribeEntry>() { }
+            };
+        /// <summary>
+        /// Describe the application invoked by the command.
+        /// </summary>
+        /// <param name="Dispatch">The command description.</param>
+        /// <param name="args">The set of arguments.</param>
+        /// <param name="index">The first unparsed argument.</param>
+        public static void About (DispatchShell Dispatch, string[] args, int index) =>
+            FileTools.About();
+
+
+        public static DescribeCommandEntry DescribeAbout = new DescribeCommandEntry() {
+            Identifier = "about",
+            HandleDelegate = About,
+            Entries = new List<DescribeEntry>() { }
+            };
 
 		public static DescribeEntryEnumerate DescribeEnumReporting = new DescribeEntryEnumerate () {
             Identifier = "report",
@@ -218,15 +247,6 @@ namespace Goedel.Mesh.Shell {
 				} // End Entries
 			};
 
-		public static DescribeCommandSet DescribeCommandSet_Dare = new DescribeCommandSet () {
-            Identifier = "dare",
-			Entries = new  SortedDictionary<string, DescribeCommand> () {
-				{"encode", _FileEncrypt._DescribeCommand },
-				{"decode", _FileDecrypt._DescribeCommand },
-				{"verify", _FileVerify._DescribeCommand }
-				} // End Entries
-			};
-
 		public static DescribeCommandSet DescribeCommandSet_Key = new DescribeCommandSet () {
             Identifier = "key",
 			Entries = new  SortedDictionary<string, DescribeCommand> () {
@@ -243,7 +263,16 @@ namespace Goedel.Mesh.Shell {
 			Entries = new  SortedDictionary<string, DescribeCommand> () {
 				{"udf", _FileUDF._DescribeCommand },
 				{"digest", _FileDigest._DescribeCommand },
-				{"commit", _FileCommitment._DescribeCommand }
+				{"mac", _FileCommitment._DescribeCommand }
+				} // End Entries
+			};
+
+		public static DescribeCommandSet DescribeCommandSet_Dare = new DescribeCommandSet () {
+            Identifier = "dare",
+			Entries = new  SortedDictionary<string, DescribeCommand> () {
+				{"encode", _FileEncrypt._DescribeCommand },
+				{"decode", _FileDecrypt._DescribeCommand },
+				{"verify", _FileVerify._DescribeCommand }
 				} // End Entries
 			};
 
@@ -286,10 +315,12 @@ namespace Goedel.Mesh.Shell {
 				{"network", DescribeCommandSet_Network},
 				{"message", DescribeCommandSet_Message},
 				{"group", DescribeCommandSet_Group},
-				{"dare", DescribeCommandSet_Dare},
 				{"key", DescribeCommandSet_Key},
 				{"hash", DescribeCommandSet_Hash},
-				{"container", DescribeCommandSet_Container}
+				{"dare", DescribeCommandSet_Dare},
+				{"container", DescribeCommandSet_Container},
+				{"about", DescribeAbout },
+				{"help", DescribeHelp }
 				}; // End Entries
 
 
@@ -919,36 +950,6 @@ namespace Goedel.Mesh.Shell {
 			Dispatch._PostProcess (result);
 			}
 
-		public static void Handle_FileEncrypt (
-					DispatchShell  DispatchIn, string[] Args, int Index) {
-			Shell Dispatch =	DispatchIn as Shell;
-			FileEncrypt		Options = new FileEncrypt ();
-			ProcessOptions (Args, Index, Options);
-			Dispatch._PreProcess (Options);
-			var result = Dispatch.FileEncrypt (Options);
-			Dispatch._PostProcess (result);
-			}
-
-		public static void Handle_FileDecrypt (
-					DispatchShell  DispatchIn, string[] Args, int Index) {
-			Shell Dispatch =	DispatchIn as Shell;
-			FileDecrypt		Options = new FileDecrypt ();
-			ProcessOptions (Args, Index, Options);
-			Dispatch._PreProcess (Options);
-			var result = Dispatch.FileDecrypt (Options);
-			Dispatch._PostProcess (result);
-			}
-
-		public static void Handle_FileVerify (
-					DispatchShell  DispatchIn, string[] Args, int Index) {
-			Shell Dispatch =	DispatchIn as Shell;
-			FileVerify		Options = new FileVerify ();
-			ProcessOptions (Args, Index, Options);
-			Dispatch._PreProcess (Options);
-			var result = Dispatch.FileVerify (Options);
-			Dispatch._PostProcess (result);
-			}
-
 		public static void Handle_KeyNonce (
 					DispatchShell  DispatchIn, string[] Args, int Index) {
 			Shell Dispatch =	DispatchIn as Shell;
@@ -1026,6 +1027,36 @@ namespace Goedel.Mesh.Shell {
 			ProcessOptions (Args, Index, Options);
 			Dispatch._PreProcess (Options);
 			var result = Dispatch.FileCommitment (Options);
+			Dispatch._PostProcess (result);
+			}
+
+		public static void Handle_FileEncrypt (
+					DispatchShell  DispatchIn, string[] Args, int Index) {
+			Shell Dispatch =	DispatchIn as Shell;
+			FileEncrypt		Options = new FileEncrypt ();
+			ProcessOptions (Args, Index, Options);
+			Dispatch._PreProcess (Options);
+			var result = Dispatch.FileEncrypt (Options);
+			Dispatch._PostProcess (result);
+			}
+
+		public static void Handle_FileDecrypt (
+					DispatchShell  DispatchIn, string[] Args, int Index) {
+			Shell Dispatch =	DispatchIn as Shell;
+			FileDecrypt		Options = new FileDecrypt ();
+			ProcessOptions (Args, Index, Options);
+			Dispatch._PreProcess (Options);
+			var result = Dispatch.FileDecrypt (Options);
+			Dispatch._PostProcess (result);
+			}
+
+		public static void Handle_FileVerify (
+					DispatchShell  DispatchIn, string[] Args, int Index) {
+			Shell Dispatch =	DispatchIn as Shell;
+			FileVerify		Options = new FileVerify ();
+			ProcessOptions (Args, Index, Options);
+			Dispatch._PreProcess (Options);
+			var result = Dispatch.FileVerify (Options);
 			Dispatch._PostProcess (result);
 			}
 
@@ -10475,579 +10506,6 @@ namespace Goedel.Mesh.Shell {
     public partial class GroupDelete : _GroupDelete {
         } // class GroupDelete
 
-    public class _FileEncrypt : Goedel.Command.Dispatch ,
-							IEncodeOptions,
-							ICryptoOptions,
-							IAccountOptions,
-							IReporting {
-
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
-			new ExistingFile (),
-			new String (),
-			new String (),
-			new String (),
-			new Flag (),
-			new String (),
-			new String (),
-			new String (),
-			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
-			new Flag (),
-			new Flag (),
-			new Flag (),
-			new NewFile (),
-			new Flag ()			} ;
-
-
-
-
-
-		/// <summary>Field accessor for parameter []</summary>
-		public virtual ExistingFile Input {
-			get => _Data[0] as ExistingFile;
-			set => _Data[0]  = value;
-			}
-
-		public virtual string _Input {
-			set => _Data[0].Parameter (value);
-			}
-		/// <summary>Field accessor for option [cty]</summary>
-		public virtual String ContentType {
-			get => _Data[1] as String;
-			set => _Data[1]  = value;
-			}
-
-		public virtual string _ContentType {
-			set => _Data[1].Parameter (value);
-			}
-		/// <summary>Field accessor for option [encrypt]</summary>
-		public virtual String Encrypt {
-			get => _Data[2] as String;
-			set => _Data[2]  = value;
-			}
-
-		public virtual string _Encrypt {
-			set => _Data[2].Parameter (value);
-			}
-		/// <summary>Field accessor for option [sign]</summary>
-		public virtual String Sign {
-			get => _Data[3] as String;
-			set => _Data[3]  = value;
-			}
-
-		public virtual string _Sign {
-			set => _Data[3].Parameter (value);
-			}
-		/// <summary>Field accessor for option [hash]</summary>
-		public virtual Flag Hash {
-			get => _Data[4] as Flag;
-			set => _Data[4]  = value;
-			}
-
-		public virtual string _Hash {
-			set => _Data[4].Parameter (value);
-			}
-		/// <summary>Field accessor for option [alg]</summary>
-		public virtual String Algorithms {
-			get => _Data[5] as String;
-			set => _Data[5]  = value;
-			}
-
-		public virtual string _Algorithms {
-			set => _Data[5].Parameter (value);
-			}
-		/// <summary>Field accessor for option [portal]</summary>
-		public virtual String AccountID {
-			get => _Data[6] as String;
-			set => _Data[6]  = value;
-			}
-
-		public virtual string _AccountID {
-			set => _Data[6].Parameter (value);
-			}
-		/// <summary>Field accessor for option [udf]</summary>
-		public virtual String UDF {
-			get => _Data[7] as String;
-			set => _Data[7]  = value;
-			}
-
-		public virtual string _UDF {
-			set => _Data[7].Parameter (value);
-			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[8] as Enumeration<EnumReporting>;
-			set => _Data[8]  = value;
-			}
-
-		public virtual string _EnumReporting {
-			set => _Data[8].Parameter (value);
-			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[9] as Flag;
-			set => _Data[9]  = value;
-			}
-
-		public virtual string _Verbose {
-			set => _Data[9].Parameter (value);
-			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
-			get => _Data[10] as Flag;
-			set => _Data[10]  = value;
-			}
-
-		public virtual string _Report {
-			set => _Data[10].Parameter (value);
-			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
-			get => _Data[11] as Flag;
-			set => _Data[11]  = value;
-			}
-
-		public virtual string _Json {
-			set => _Data[11].Parameter (value);
-			}
-		/// <summary>Field accessor for option [out]</summary>
-		public virtual NewFile Output {
-			get => _Data[12] as NewFile;
-			set => _Data[12]  = value;
-			}
-
-		public virtual string _Output {
-			set => _Data[12].Parameter (value);
-			}
-		/// <summary>Field accessor for option [sub]</summary>
-		public virtual Flag Subdirectories {
-			get => _Data[13] as Flag;
-			set => _Data[13]  = value;
-			}
-
-		public virtual string _Subdirectories {
-			set => _Data[13].Parameter (value);
-			}
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
-
-		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
-			Identifier = "encode",
-			Brief =  "Encode data as DARE Message.",
-			HandleDelegate =  CommandLineInterpreter.Handle_FileEncrypt,
-			Lazy =  false,
-			Entries = new List<DescribeEntry> () {
-				new DescribeEntryParameter () {
-					Identifier = "Input", 
-					Default = null, // null if null
-					Brief = "File or directory to encrypt",
-					Index = 0,
-					Key = ""
-					},
-				new DescribeEntryOption () {
-					Identifier = "ContentType", 
-					Default = null, // null if null
-					Brief = "Content Type",
-					Index = 1,
-					Key = "cty"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Encrypt", 
-					Default = null, // null if null
-					Brief = "Encrypt data for specified recipient",
-					Index = 2,
-					Key = "encrypt"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Sign", 
-					Default = null, // null if null
-					Brief = "Sign data with specified key",
-					Index = 3,
-					Key = "sign"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Hash", 
-					Default = "true", // null if null
-					Brief = "Compute hash of content",
-					Index = 4,
-					Key = "hash"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Algorithms", 
-					Default = null, // null if null
-					Brief = "List of algorithm specifiers",
-					Index = 5,
-					Key = "alg"
-					},
-				new DescribeEntryOption () {
-					Identifier = "AccountID", 
-					Default = null, // null if null
-					Brief = "Account identifier (e.g. alice@example.com)",
-					Index = 6,
-					Key = "portal"
-					},
-				new DescribeEntryOption () {
-					Identifier = "UDF", 
-					Default = null, // null if null
-					Brief = "Profile fingerprint",
-					Index = 7,
-					Key = "udf"
-					},
-				new DescribeEntryEnumerate () {
-					Identifier = "EnumReporting", 
-					Default = null, // null if null
-					Brief = "Reporting level",
-					Index = 8,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Verbose", 
-					Default = "true", // null if null
-					Brief = "Verbose reports (default)",
-					Index = 9,
-					Key = "verbose"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Report", 
-					Default = "true", // null if null
-					Brief = "Report output (default)",
-					Index = 10,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Json", 
-					Default = "false", // null if null
-					Brief = "Report output in JSON format",
-					Index = 11,
-					Key = "json"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Output", 
-					Default = null, // null if null
-					Brief = "Filename for encrypted output.",
-					Index = 12,
-					Key = "out"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Subdirectories", 
-					Default = null, // null if null
-					Brief = "Process subdirectories recursively.",
-					Index = 13,
-					Key = "sub"
-					}
-				}
-			};
-
-		}
-
-    public partial class FileEncrypt : _FileEncrypt {
-        } // class FileEncrypt
-
-    public class _FileDecrypt : Goedel.Command.Dispatch ,
-							IAccountOptions,
-							IReporting {
-
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
-			new String (),
-			new String (),
-			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
-			new Flag (),
-			new Flag (),
-			new Flag (),
-			new ExistingFile (),
-			new NewFile ()			} ;
-
-
-
-
-
-		/// <summary>Field accessor for option [portal]</summary>
-		public virtual String AccountID {
-			get => _Data[0] as String;
-			set => _Data[0]  = value;
-			}
-
-		public virtual string _AccountID {
-			set => _Data[0].Parameter (value);
-			}
-		/// <summary>Field accessor for option [udf]</summary>
-		public virtual String UDF {
-			get => _Data[1] as String;
-			set => _Data[1]  = value;
-			}
-
-		public virtual string _UDF {
-			set => _Data[1].Parameter (value);
-			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[2] as Enumeration<EnumReporting>;
-			set => _Data[2]  = value;
-			}
-
-		public virtual string _EnumReporting {
-			set => _Data[2].Parameter (value);
-			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[3] as Flag;
-			set => _Data[3]  = value;
-			}
-
-		public virtual string _Verbose {
-			set => _Data[3].Parameter (value);
-			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
-			get => _Data[4] as Flag;
-			set => _Data[4]  = value;
-			}
-
-		public virtual string _Report {
-			set => _Data[4].Parameter (value);
-			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
-			get => _Data[5] as Flag;
-			set => _Data[5]  = value;
-			}
-
-		public virtual string _Json {
-			set => _Data[5].Parameter (value);
-			}
-		/// <summary>Field accessor for parameter []</summary>
-		public virtual ExistingFile Input {
-			get => _Data[6] as ExistingFile;
-			set => _Data[6]  = value;
-			}
-
-		public virtual string _Input {
-			set => _Data[6].Parameter (value);
-			}
-		/// <summary>Field accessor for parameter []</summary>
-		public virtual NewFile Output {
-			get => _Data[7] as NewFile;
-			set => _Data[7]  = value;
-			}
-
-		public virtual string _Output {
-			set => _Data[7].Parameter (value);
-			}
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
-
-		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
-			Identifier = "decode",
-			Brief =  "Decode a DARE Message.",
-			HandleDelegate =  CommandLineInterpreter.Handle_FileDecrypt,
-			Lazy =  false,
-			Entries = new List<DescribeEntry> () {
-				new DescribeEntryOption () {
-					Identifier = "AccountID", 
-					Default = null, // null if null
-					Brief = "Account identifier (e.g. alice@example.com)",
-					Index = 0,
-					Key = "portal"
-					},
-				new DescribeEntryOption () {
-					Identifier = "UDF", 
-					Default = null, // null if null
-					Brief = "Profile fingerprint",
-					Index = 1,
-					Key = "udf"
-					},
-				new DescribeEntryEnumerate () {
-					Identifier = "EnumReporting", 
-					Default = null, // null if null
-					Brief = "Reporting level",
-					Index = 2,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Verbose", 
-					Default = "true", // null if null
-					Brief = "Verbose reports (default)",
-					Index = 3,
-					Key = "verbose"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Report", 
-					Default = "true", // null if null
-					Brief = "Report output (default)",
-					Index = 4,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Json", 
-					Default = "false", // null if null
-					Brief = "Report output in JSON format",
-					Index = 5,
-					Key = "json"
-					},
-				new DescribeEntryParameter () {
-					Identifier = "Input", 
-					Default = null, // null if null
-					Brief = "Encrypted File",
-					Index = 6,
-					Key = ""
-					},
-				new DescribeEntryParameter () {
-					Identifier = "Output", 
-					Default = null, // null if null
-					Brief = "Decrypted File",
-					Index = 7,
-					Key = ""
-					}
-				}
-			};
-
-		}
-
-    public partial class FileDecrypt : _FileDecrypt {
-        } // class FileDecrypt
-
-    public class _FileVerify : Goedel.Command.Dispatch ,
-							IAccountOptions,
-							IReporting {
-
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
-			new String (),
-			new String (),
-			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
-			new Flag (),
-			new Flag (),
-			new Flag (),
-			new ExistingFile ()			} ;
-
-
-
-
-
-		/// <summary>Field accessor for option [portal]</summary>
-		public virtual String AccountID {
-			get => _Data[0] as String;
-			set => _Data[0]  = value;
-			}
-
-		public virtual string _AccountID {
-			set => _Data[0].Parameter (value);
-			}
-		/// <summary>Field accessor for option [udf]</summary>
-		public virtual String UDF {
-			get => _Data[1] as String;
-			set => _Data[1]  = value;
-			}
-
-		public virtual string _UDF {
-			set => _Data[1].Parameter (value);
-			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[2] as Enumeration<EnumReporting>;
-			set => _Data[2]  = value;
-			}
-
-		public virtual string _EnumReporting {
-			set => _Data[2].Parameter (value);
-			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[3] as Flag;
-			set => _Data[3]  = value;
-			}
-
-		public virtual string _Verbose {
-			set => _Data[3].Parameter (value);
-			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
-			get => _Data[4] as Flag;
-			set => _Data[4]  = value;
-			}
-
-		public virtual string _Report {
-			set => _Data[4].Parameter (value);
-			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
-			get => _Data[5] as Flag;
-			set => _Data[5]  = value;
-			}
-
-		public virtual string _Json {
-			set => _Data[5].Parameter (value);
-			}
-		/// <summary>Field accessor for parameter []</summary>
-		public virtual ExistingFile Input {
-			get => _Data[6] as ExistingFile;
-			set => _Data[6]  = value;
-			}
-
-		public virtual string _Input {
-			set => _Data[6].Parameter (value);
-			}
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
-
-		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
-			Identifier = "verify",
-			Brief =  "Verify a DARE Message.",
-			HandleDelegate =  CommandLineInterpreter.Handle_FileVerify,
-			Lazy =  false,
-			Entries = new List<DescribeEntry> () {
-				new DescribeEntryOption () {
-					Identifier = "AccountID", 
-					Default = null, // null if null
-					Brief = "Account identifier (e.g. alice@example.com)",
-					Index = 0,
-					Key = "portal"
-					},
-				new DescribeEntryOption () {
-					Identifier = "UDF", 
-					Default = null, // null if null
-					Brief = "Profile fingerprint",
-					Index = 1,
-					Key = "udf"
-					},
-				new DescribeEntryEnumerate () {
-					Identifier = "EnumReporting", 
-					Default = null, // null if null
-					Brief = "Reporting level",
-					Index = 2,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Verbose", 
-					Default = "true", // null if null
-					Brief = "Verbose reports (default)",
-					Index = 3,
-					Key = "verbose"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Report", 
-					Default = "true", // null if null
-					Brief = "Report output (default)",
-					Index = 4,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Json", 
-					Default = "false", // null if null
-					Brief = "Report output in JSON format",
-					Index = 5,
-					Key = "json"
-					},
-				new DescribeEntryParameter () {
-					Identifier = "Input", 
-					Default = null, // null if null
-					Brief = "Encrypted File",
-					Index = 6,
-					Key = ""
-					}
-				}
-			};
-
-		}
-
-    public partial class FileVerify : _FileVerify {
-        } // class FileVerify
-
     public class _KeyNonce : Goedel.Command.Dispatch ,
 							IReporting,
 							ILengthOptions {
@@ -11810,13 +11268,16 @@ namespace Goedel.Mesh.Shell {
 
     public class _FileUDF : Goedel.Command.Dispatch ,
 							IReporting,
-							ICryptoOptions {
+							ICryptoOptions,
+							ILengthOptions {
 
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
 			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
 			new Flag (),
 			new Flag (),
 			new Flag (),
+			new String (),
+			new Integer (),
 			new String (),
 			new String (),
 			new ExistingFile ()			} ;
@@ -11861,32 +11322,50 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _Json {
 			set => _Data[3].Parameter (value);
 			}
-		/// <summary>Field accessor for option [cty]</summary>
-		public virtual String ContentType {
+		/// <summary>Field accessor for option [alg]</summary>
+		public virtual String Algorithms {
 			get => _Data[4] as String;
 			set => _Data[4]  = value;
 			}
 
-		public virtual string _ContentType {
+		public virtual string _Algorithms {
 			set => _Data[4].Parameter (value);
 			}
-		/// <summary>Field accessor for option [alg]</summary>
-		public virtual String Algorithms {
-			get => _Data[5] as String;
+		/// <summary>Field accessor for option [bits]</summary>
+		public virtual Integer Bits {
+			get => _Data[5] as Integer;
 			set => _Data[5]  = value;
 			}
 
-		public virtual string _Algorithms {
+		public virtual string _Bits {
 			set => _Data[5].Parameter (value);
 			}
-		/// <summary>Field accessor for parameter []</summary>
-		public virtual ExistingFile Input {
-			get => _Data[6] as ExistingFile;
+		/// <summary>Field accessor for option [cty]</summary>
+		public virtual String ContentType {
+			get => _Data[6] as String;
 			set => _Data[6]  = value;
 			}
 
-		public virtual string _Input {
+		public virtual string _ContentType {
 			set => _Data[6].Parameter (value);
+			}
+		/// <summary>Field accessor for option [expect]</summary>
+		public virtual String Expect {
+			get => _Data[7] as String;
+			set => _Data[7]  = value;
+			}
+
+		public virtual string _Expect {
+			set => _Data[7].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual ExistingFile Input {
+			get => _Data[8] as ExistingFile;
+			set => _Data[8]  = value;
+			}
+
+		public virtual string _Input {
+			set => _Data[8].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -11925,24 +11404,38 @@ namespace Goedel.Mesh.Shell {
 					Key = "json"
 					},
 				new DescribeEntryOption () {
-					Identifier = "ContentType", 
-					Default = null, // null if null
-					Brief = "Content Type",
-					Index = 4,
-					Key = "cty"
-					},
-				new DescribeEntryOption () {
 					Identifier = "Algorithms", 
 					Default = null, // null if null
 					Brief = "List of algorithm specifiers",
-					Index = 5,
+					Index = 4,
 					Key = "alg"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Bits", 
+					Default = null, // null if null
+					Brief = "Secret size in bits",
+					Index = 5,
+					Key = "bits"
+					},
+				new DescribeEntryOption () {
+					Identifier = "ContentType", 
+					Default = null, // null if null
+					Brief = "Content Type",
+					Index = 6,
+					Key = "cty"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Expect", 
+					Default = null, // null if null
+					Brief = "Expected value",
+					Index = 7,
+					Key = "expect"
 					},
 				new DescribeEntryParameter () {
 					Identifier = "Input", 
 					Default = null, // null if null
 					Brief = "File to take digest of",
-					Index = 6,
+					Index = 8,
 					Key = ""
 					}
 				}
@@ -12083,13 +11576,16 @@ namespace Goedel.Mesh.Shell {
 
     public class _FileCommitment : Goedel.Command.Dispatch ,
 							IReporting,
-							ICryptoOptions {
+							ICryptoOptions,
+							ILengthOptions {
 
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
 			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
 			new Flag (),
 			new Flag (),
 			new Flag (),
+			new String (),
+			new Integer (),
 			new String (),
 			new String (),
 			new String (),
@@ -12135,46 +11631,64 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _Json {
 			set => _Data[3].Parameter (value);
 			}
-		/// <summary>Field accessor for option [cty]</summary>
-		public virtual String ContentType {
+		/// <summary>Field accessor for option [alg]</summary>
+		public virtual String Algorithms {
 			get => _Data[4] as String;
 			set => _Data[4]  = value;
 			}
 
-		public virtual string _ContentType {
+		public virtual string _Algorithms {
 			set => _Data[4].Parameter (value);
 			}
-		/// <summary>Field accessor for option [alg]</summary>
-		public virtual String Algorithms {
-			get => _Data[5] as String;
+		/// <summary>Field accessor for option [bits]</summary>
+		public virtual Integer Bits {
+			get => _Data[5] as Integer;
 			set => _Data[5]  = value;
 			}
 
-		public virtual string _Algorithms {
+		public virtual string _Bits {
 			set => _Data[5].Parameter (value);
 			}
-		/// <summary>Field accessor for option [key]</summary>
-		public virtual String DigestKey {
+		/// <summary>Field accessor for option [cty]</summary>
+		public virtual String ContentType {
 			get => _Data[6] as String;
 			set => _Data[6]  = value;
 			}
 
-		public virtual string _DigestKey {
+		public virtual string _ContentType {
 			set => _Data[6].Parameter (value);
 			}
-		/// <summary>Field accessor for parameter []</summary>
-		public virtual ExistingFile Input {
-			get => _Data[7] as ExistingFile;
+		/// <summary>Field accessor for option [key]</summary>
+		public virtual String DigestKey {
+			get => _Data[7] as String;
 			set => _Data[7]  = value;
 			}
 
-		public virtual string _Input {
+		public virtual string _DigestKey {
 			set => _Data[7].Parameter (value);
+			}
+		/// <summary>Field accessor for option [expect]</summary>
+		public virtual String Expect {
+			get => _Data[8] as String;
+			set => _Data[8]  = value;
+			}
+
+		public virtual string _Expect {
+			set => _Data[8].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual ExistingFile Input {
+			get => _Data[9] as ExistingFile;
+			set => _Data[9]  = value;
+			}
+
+		public virtual string _Input {
+			set => _Data[9].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
-			Identifier = "commit",
+			Identifier = "mac",
 			Brief =  "Calculate a commitment value for the input data",
 			HandleDelegate =  CommandLineInterpreter.Handle_FileCommitment,
 			Lazy =  false,
@@ -12208,31 +11722,45 @@ namespace Goedel.Mesh.Shell {
 					Key = "json"
 					},
 				new DescribeEntryOption () {
-					Identifier = "ContentType", 
-					Default = null, // null if null
-					Brief = "Content Trype",
-					Index = 4,
-					Key = "cty"
-					},
-				new DescribeEntryOption () {
 					Identifier = "Algorithms", 
 					Default = null, // null if null
 					Brief = "List of algorithm specifiers",
-					Index = 5,
+					Index = 4,
 					Key = "alg"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Bits", 
+					Default = null, // null if null
+					Brief = "Secret size in bits",
+					Index = 5,
+					Key = "bits"
+					},
+				new DescribeEntryOption () {
+					Identifier = "ContentType", 
+					Default = null, // null if null
+					Brief = "Content Type",
+					Index = 6,
+					Key = "cty"
 					},
 				new DescribeEntryOption () {
 					Identifier = "DigestKey", 
 					Default = null, // null if null
-					Brief = "<Unspecified>",
-					Index = 6,
+					Brief = "Specifies the value of the key",
+					Index = 7,
 					Key = "key"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Expect", 
+					Default = null, // null if null
+					Brief = "Expected value",
+					Index = 8,
+					Key = "expect"
 					},
 				new DescribeEntryParameter () {
 					Identifier = "Input", 
 					Default = null, // null if null
 					Brief = "File to create commitment of",
-					Index = 7,
+					Index = 9,
 					Key = ""
 					}
 				}
@@ -12242,6 +11770,579 @@ namespace Goedel.Mesh.Shell {
 
     public partial class FileCommitment : _FileCommitment {
         } // class FileCommitment
+
+    public class _FileEncrypt : Goedel.Command.Dispatch ,
+							IEncodeOptions,
+							ICryptoOptions,
+							IAccountOptions,
+							IReporting {
+
+		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new ExistingFile (),
+			new String (),
+			new String (),
+			new String (),
+			new Flag (),
+			new String (),
+			new String (),
+			new String (),
+			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
+			new Flag (),
+			new Flag (),
+			new Flag (),
+			new NewFile (),
+			new Flag ()			} ;
+
+
+
+
+
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual ExistingFile Input {
+			get => _Data[0] as ExistingFile;
+			set => _Data[0]  = value;
+			}
+
+		public virtual string _Input {
+			set => _Data[0].Parameter (value);
+			}
+		/// <summary>Field accessor for option [cty]</summary>
+		public virtual String ContentType {
+			get => _Data[1] as String;
+			set => _Data[1]  = value;
+			}
+
+		public virtual string _ContentType {
+			set => _Data[1].Parameter (value);
+			}
+		/// <summary>Field accessor for option [encrypt]</summary>
+		public virtual String Encrypt {
+			get => _Data[2] as String;
+			set => _Data[2]  = value;
+			}
+
+		public virtual string _Encrypt {
+			set => _Data[2].Parameter (value);
+			}
+		/// <summary>Field accessor for option [sign]</summary>
+		public virtual String Sign {
+			get => _Data[3] as String;
+			set => _Data[3]  = value;
+			}
+
+		public virtual string _Sign {
+			set => _Data[3].Parameter (value);
+			}
+		/// <summary>Field accessor for option [hash]</summary>
+		public virtual Flag Hash {
+			get => _Data[4] as Flag;
+			set => _Data[4]  = value;
+			}
+
+		public virtual string _Hash {
+			set => _Data[4].Parameter (value);
+			}
+		/// <summary>Field accessor for option [alg]</summary>
+		public virtual String Algorithms {
+			get => _Data[5] as String;
+			set => _Data[5]  = value;
+			}
+
+		public virtual string _Algorithms {
+			set => _Data[5].Parameter (value);
+			}
+		/// <summary>Field accessor for option [portal]</summary>
+		public virtual String AccountID {
+			get => _Data[6] as String;
+			set => _Data[6]  = value;
+			}
+
+		public virtual string _AccountID {
+			set => _Data[6].Parameter (value);
+			}
+		/// <summary>Field accessor for option [udf]</summary>
+		public virtual String UDF {
+			get => _Data[7] as String;
+			set => _Data[7]  = value;
+			}
+
+		public virtual string _UDF {
+			set => _Data[7].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[8] as Enumeration<EnumReporting>;
+			set => _Data[8]  = value;
+			}
+
+		public virtual string _EnumReporting {
+			set => _Data[8].Parameter (value);
+			}
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
+			get => _Data[9] as Flag;
+			set => _Data[9]  = value;
+			}
+
+		public virtual string _Verbose {
+			set => _Data[9].Parameter (value);
+			}
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
+			get => _Data[10] as Flag;
+			set => _Data[10]  = value;
+			}
+
+		public virtual string _Report {
+			set => _Data[10].Parameter (value);
+			}
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[11] as Flag;
+			set => _Data[11]  = value;
+			}
+
+		public virtual string _Json {
+			set => _Data[11].Parameter (value);
+			}
+		/// <summary>Field accessor for option [out]</summary>
+		public virtual NewFile Output {
+			get => _Data[12] as NewFile;
+			set => _Data[12]  = value;
+			}
+
+		public virtual string _Output {
+			set => _Data[12].Parameter (value);
+			}
+		/// <summary>Field accessor for option [sub]</summary>
+		public virtual Flag Subdirectories {
+			get => _Data[13] as Flag;
+			set => _Data[13]  = value;
+			}
+
+		public virtual string _Subdirectories {
+			set => _Data[13].Parameter (value);
+			}
+		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
+			Identifier = "encode",
+			Brief =  "Encode data as DARE Message.",
+			HandleDelegate =  CommandLineInterpreter.Handle_FileEncrypt,
+			Lazy =  false,
+			Entries = new List<DescribeEntry> () {
+				new DescribeEntryParameter () {
+					Identifier = "Input", 
+					Default = null, // null if null
+					Brief = "File or directory to encrypt",
+					Index = 0,
+					Key = ""
+					},
+				new DescribeEntryOption () {
+					Identifier = "ContentType", 
+					Default = null, // null if null
+					Brief = "Content Type",
+					Index = 1,
+					Key = "cty"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Encrypt", 
+					Default = null, // null if null
+					Brief = "Encrypt data for specified recipient",
+					Index = 2,
+					Key = "encrypt"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Sign", 
+					Default = null, // null if null
+					Brief = "Sign data with specified key",
+					Index = 3,
+					Key = "sign"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Hash", 
+					Default = "true", // null if null
+					Brief = "Compute hash of content",
+					Index = 4,
+					Key = "hash"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Algorithms", 
+					Default = null, // null if null
+					Brief = "List of algorithm specifiers",
+					Index = 5,
+					Key = "alg"
+					},
+				new DescribeEntryOption () {
+					Identifier = "AccountID", 
+					Default = null, // null if null
+					Brief = "Account identifier (e.g. alice@example.com)",
+					Index = 6,
+					Key = "portal"
+					},
+				new DescribeEntryOption () {
+					Identifier = "UDF", 
+					Default = null, // null if null
+					Brief = "Profile fingerprint",
+					Index = 7,
+					Key = "udf"
+					},
+				new DescribeEntryEnumerate () {
+					Identifier = "EnumReporting", 
+					Default = null, // null if null
+					Brief = "Reporting level",
+					Index = 8,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Verbose", 
+					Default = "true", // null if null
+					Brief = "Verbose reports (default)",
+					Index = 9,
+					Key = "verbose"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Report", 
+					Default = "true", // null if null
+					Brief = "Report output (default)",
+					Index = 10,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Json", 
+					Default = "false", // null if null
+					Brief = "Report output in JSON format",
+					Index = 11,
+					Key = "json"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Output", 
+					Default = null, // null if null
+					Brief = "Filename for encrypted output.",
+					Index = 12,
+					Key = "out"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Subdirectories", 
+					Default = null, // null if null
+					Brief = "Process subdirectories recursively.",
+					Index = 13,
+					Key = "sub"
+					}
+				}
+			};
+
+		}
+
+    public partial class FileEncrypt : _FileEncrypt {
+        } // class FileEncrypt
+
+    public class _FileDecrypt : Goedel.Command.Dispatch ,
+							IAccountOptions,
+							IReporting {
+
+		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new String (),
+			new String (),
+			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
+			new Flag (),
+			new Flag (),
+			new Flag (),
+			new ExistingFile (),
+			new NewFile ()			} ;
+
+
+
+
+
+		/// <summary>Field accessor for option [portal]</summary>
+		public virtual String AccountID {
+			get => _Data[0] as String;
+			set => _Data[0]  = value;
+			}
+
+		public virtual string _AccountID {
+			set => _Data[0].Parameter (value);
+			}
+		/// <summary>Field accessor for option [udf]</summary>
+		public virtual String UDF {
+			get => _Data[1] as String;
+			set => _Data[1]  = value;
+			}
+
+		public virtual string _UDF {
+			set => _Data[1].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[2] as Enumeration<EnumReporting>;
+			set => _Data[2]  = value;
+			}
+
+		public virtual string _EnumReporting {
+			set => _Data[2].Parameter (value);
+			}
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
+			get => _Data[3] as Flag;
+			set => _Data[3]  = value;
+			}
+
+		public virtual string _Verbose {
+			set => _Data[3].Parameter (value);
+			}
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
+			get => _Data[4] as Flag;
+			set => _Data[4]  = value;
+			}
+
+		public virtual string _Report {
+			set => _Data[4].Parameter (value);
+			}
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[5] as Flag;
+			set => _Data[5]  = value;
+			}
+
+		public virtual string _Json {
+			set => _Data[5].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual ExistingFile Input {
+			get => _Data[6] as ExistingFile;
+			set => _Data[6]  = value;
+			}
+
+		public virtual string _Input {
+			set => _Data[6].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual NewFile Output {
+			get => _Data[7] as NewFile;
+			set => _Data[7]  = value;
+			}
+
+		public virtual string _Output {
+			set => _Data[7].Parameter (value);
+			}
+		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
+			Identifier = "decode",
+			Brief =  "Decode a DARE Message.",
+			HandleDelegate =  CommandLineInterpreter.Handle_FileDecrypt,
+			Lazy =  false,
+			Entries = new List<DescribeEntry> () {
+				new DescribeEntryOption () {
+					Identifier = "AccountID", 
+					Default = null, // null if null
+					Brief = "Account identifier (e.g. alice@example.com)",
+					Index = 0,
+					Key = "portal"
+					},
+				new DescribeEntryOption () {
+					Identifier = "UDF", 
+					Default = null, // null if null
+					Brief = "Profile fingerprint",
+					Index = 1,
+					Key = "udf"
+					},
+				new DescribeEntryEnumerate () {
+					Identifier = "EnumReporting", 
+					Default = null, // null if null
+					Brief = "Reporting level",
+					Index = 2,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Verbose", 
+					Default = "true", // null if null
+					Brief = "Verbose reports (default)",
+					Index = 3,
+					Key = "verbose"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Report", 
+					Default = "true", // null if null
+					Brief = "Report output (default)",
+					Index = 4,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Json", 
+					Default = "false", // null if null
+					Brief = "Report output in JSON format",
+					Index = 5,
+					Key = "json"
+					},
+				new DescribeEntryParameter () {
+					Identifier = "Input", 
+					Default = null, // null if null
+					Brief = "Encrypted File",
+					Index = 6,
+					Key = ""
+					},
+				new DescribeEntryParameter () {
+					Identifier = "Output", 
+					Default = null, // null if null
+					Brief = "Decrypted File",
+					Index = 7,
+					Key = ""
+					}
+				}
+			};
+
+		}
+
+    public partial class FileDecrypt : _FileDecrypt {
+        } // class FileDecrypt
+
+    public class _FileVerify : Goedel.Command.Dispatch ,
+							IAccountOptions,
+							IReporting {
+
+		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new String (),
+			new String (),
+			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
+			new Flag (),
+			new Flag (),
+			new Flag (),
+			new ExistingFile ()			} ;
+
+
+
+
+
+		/// <summary>Field accessor for option [portal]</summary>
+		public virtual String AccountID {
+			get => _Data[0] as String;
+			set => _Data[0]  = value;
+			}
+
+		public virtual string _AccountID {
+			set => _Data[0].Parameter (value);
+			}
+		/// <summary>Field accessor for option [udf]</summary>
+		public virtual String UDF {
+			get => _Data[1] as String;
+			set => _Data[1]  = value;
+			}
+
+		public virtual string _UDF {
+			set => _Data[1].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[2] as Enumeration<EnumReporting>;
+			set => _Data[2]  = value;
+			}
+
+		public virtual string _EnumReporting {
+			set => _Data[2].Parameter (value);
+			}
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
+			get => _Data[3] as Flag;
+			set => _Data[3]  = value;
+			}
+
+		public virtual string _Verbose {
+			set => _Data[3].Parameter (value);
+			}
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
+			get => _Data[4] as Flag;
+			set => _Data[4]  = value;
+			}
+
+		public virtual string _Report {
+			set => _Data[4].Parameter (value);
+			}
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[5] as Flag;
+			set => _Data[5]  = value;
+			}
+
+		public virtual string _Json {
+			set => _Data[5].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual ExistingFile Input {
+			get => _Data[6] as ExistingFile;
+			set => _Data[6]  = value;
+			}
+
+		public virtual string _Input {
+			set => _Data[6].Parameter (value);
+			}
+		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
+			Identifier = "verify",
+			Brief =  "Verify a DARE Message.",
+			HandleDelegate =  CommandLineInterpreter.Handle_FileVerify,
+			Lazy =  false,
+			Entries = new List<DescribeEntry> () {
+				new DescribeEntryOption () {
+					Identifier = "AccountID", 
+					Default = null, // null if null
+					Brief = "Account identifier (e.g. alice@example.com)",
+					Index = 0,
+					Key = "portal"
+					},
+				new DescribeEntryOption () {
+					Identifier = "UDF", 
+					Default = null, // null if null
+					Brief = "Profile fingerprint",
+					Index = 1,
+					Key = "udf"
+					},
+				new DescribeEntryEnumerate () {
+					Identifier = "EnumReporting", 
+					Default = null, // null if null
+					Brief = "Reporting level",
+					Index = 2,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Verbose", 
+					Default = "true", // null if null
+					Brief = "Verbose reports (default)",
+					Index = 3,
+					Key = "verbose"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Report", 
+					Default = "true", // null if null
+					Brief = "Report output (default)",
+					Index = 4,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Json", 
+					Default = "false", // null if null
+					Brief = "Report output in JSON format",
+					Index = 5,
+					Key = "json"
+					},
+				new DescribeEntryParameter () {
+					Identifier = "Input", 
+					Default = null, // null if null
+					Brief = "Encrypted File",
+					Index = 6,
+					Key = ""
+					}
+				}
+			};
+
+		}
+
+    public partial class FileVerify : _FileVerify {
+        } // class FileVerify
 	public interface IContainerOptions {
 		String			Type{get; set;}
 		}
@@ -14352,21 +14453,6 @@ namespace Goedel.Mesh.Shell {
 			return null;
 			}
 
-		public virtual ShellResult FileEncrypt ( FileEncrypt Options) {
-			CommandLineInterpreter.DescribeValues (Options);
-			return null;
-			}
-
-		public virtual ShellResult FileDecrypt ( FileDecrypt Options) {
-			CommandLineInterpreter.DescribeValues (Options);
-			return null;
-			}
-
-		public virtual ShellResult FileVerify ( FileVerify Options) {
-			CommandLineInterpreter.DescribeValues (Options);
-			return null;
-			}
-
 		public virtual ShellResult KeyNonce ( KeyNonce Options) {
 			CommandLineInterpreter.DescribeValues (Options);
 			return null;
@@ -14403,6 +14489,21 @@ namespace Goedel.Mesh.Shell {
 			}
 
 		public virtual ShellResult FileCommitment ( FileCommitment Options) {
+			CommandLineInterpreter.DescribeValues (Options);
+			return null;
+			}
+
+		public virtual ShellResult FileEncrypt ( FileEncrypt Options) {
+			CommandLineInterpreter.DescribeValues (Options);
+			return null;
+			}
+
+		public virtual ShellResult FileDecrypt ( FileDecrypt Options) {
+			CommandLineInterpreter.DescribeValues (Options);
+			return null;
+			}
+
+		public virtual ShellResult FileVerify ( FileVerify Options) {
 			CommandLineInterpreter.DescribeValues (Options);
 			return null;
 			}

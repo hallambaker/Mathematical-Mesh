@@ -177,11 +177,6 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Update="Web\CommandsetKey.cs">
-      <DependentUpon>CommandsetKey.script</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
     <Compile Update="Web\CommandsetGroup.cs">
       <DependentUpon>CommandsetGroup.script</DependentUpon>
       <DesignTime>True</DesignTime>
@@ -189,11 +184,6 @@
     </Compile>
     <Compile Update="Web\CommandsetDare.cs">
       <DependentUpon>CommandsetDare.script</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Update="Web\CommandsetKey.cs">
-      <DependentUpon>CommandsetKey.script</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>

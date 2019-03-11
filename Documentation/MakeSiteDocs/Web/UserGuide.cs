@@ -54,9 +54,14 @@ namespace MakeSiteDocs {
 		//
 		// Web
 		//
-		public static void Web (CreateWeb Index) { /* File  */
-			using (var _Output = new StreamWriter ("readme.md")) {
-				var _Indent = ""; 
+		public static void Web(CreateWeb Index) { /* XFile  */
+				using (var _Output = new StreamWriter("readme.md")) {
+				var obj = new MakeSiteDocs() { _Output = _Output, _Indent = "", _Filename = "readme.md" };
+				obj._Web(Index);
+				}
+			}
+		public void _Web(CreateWeb Index) {
+
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("# meshman Documentation\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
@@ -73,41 +78,84 @@ namespace MakeSiteDocs {
 				_Output.Write ("The [Reference Manual](Reference) provides a detailed description of the use of\n{0}", _Indent);
 				_Output.Write ("specific commands.\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
+					}
+		
+
+		//
+		// Features
+		//
+		public static void Features(CreateWeb Index) { /* XFile  */
+				using (var _Output = new StreamWriter("festures.md")) {
+				var obj = new MakeSiteDocs() { _Output = _Output, _Indent = "", _Filename = "festures.md" };
+				obj._Features(Index);
 				}
 			}
+		public void _Features(CreateWeb Index) {
+
+				_Output.Write ("# Feature Requests\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The following features are planned but not yet implemented:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("<dl>\n{0}", _Indent);
+				_Output.Write ("<dt>Hash command set</dt>\n{0}", _Indent);
+				_Output.Write ("<dd>Allow processing of multiple files at once.</dd>\n{0}", _Indent);
+				_Output.Write ("<dd>Support SHA3 MACs, SHA256, etc digests.</dd>\n{0}", _Indent);
+				_Output.Write ("</dl>\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+					}
 		
 
 		//
 		// UserGuide
 		//
-		public static void UserGuide (CreateWeb Index) { /* File  */
-			using (var _Output = new StreamWriter ("Guide/readme.md")) {
-				var _Indent = ""; 
-				_Output.Write ("# meshman User Guide\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("[*Key*](key.md)\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("Commands for creating keys, nonces and EARLs and secret sharing and recovery.\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
+		public static void UserGuide(CreateWeb Index) { /* XFile  */
+				using (var _Output = new StreamWriter("Guide/readme.md")) {
+				var obj = new MakeSiteDocs() { _Output = _Output, _Indent = "", _Filename = "Guide/readme.md" };
+				obj._UserGuide(Index);
 				}
 			}
+		public void _UserGuide(CreateWeb Index) {
+
+				_Output.Write ("# meshman User Guide\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("<dl>\n{0}", _Indent);
+				_Output.Write ("<dt>[`key`](key.md)</dt>\n{0}", _Indent);
+				_Output.Write ("<dd>Generate secrets and nonces. Split a secret into shares and recover secret from shares</dd>\n{0}", _Indent);
+				_Output.Write ("<dt>[`hash`](hash.md)</dt>\n{0}", _Indent);
+				_Output.Write ("<dd>Perform Content Digest and Message Authentication Code operations on the contents of a file</dd>\n{0}", _Indent);
+				_Output.Write ("<dt>[`dare`](dare.md)</dt>\n{0}", _Indent);
+				_Output.Write ("<dd>Encode and decode DARE messages</dd>\n{0}", _Indent);
+				_Output.Write ("<dt>[`container`](container.md)</dt>\n{0}", _Indent);
+				_Output.Write ("<dd>Encode and decode DARE containers</dd>\n{0}", _Indent);
+				_Output.Write ("</dl>\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+					}
 		
 
 		//
 		// Reference
 		//
-		public static void Reference (CreateWeb Index) { /* File  */
-			using (var _Output = new StreamWriter ("Reference/readme.md")) {
-				var _Indent = ""; 
+		public static void Reference(CreateWeb Index) { /* XFile  */
+				using (var _Output = new StreamWriter("Reference/readme.md")) {
+				var obj = new MakeSiteDocs() { _Output = _Output, _Indent = "", _Filename = "Reference/readme.md" };
+				obj._Reference(Index);
+				}
+			}
+		public void _Reference(CreateWeb Index) {
+
 				_Output.Write ("# meshman Reference Manual\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("*about* \n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("*help*\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("[*Key*](key.md)\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("Commands for creating keys, nonces and EARLs and secret sharing and recovery.\n{0}", _Indent);
+				_Output.Write ("<dl>\n{0}", _Indent);
+				_Output.Write ("<dt>[`key`](key.md)</dt>\n{0}", _Indent);
+				_Output.Write ("<dd>Generate secrets and nonces. Split a secret into shares and recover secret from shares</dd>\n{0}", _Indent);
+				_Output.Write ("<dt>[`hash`](hash.md)</dt>\n{0}", _Indent);
+				_Output.Write ("<dd>Perform Content Digest and Message Authentication Code operations on the contents of a file</dd>\n{0}", _Indent);
+				_Output.Write ("<dt>[`dare`](dare.md)</dt>\n{0}", _Indent);
+				_Output.Write ("<dd>Encode and decode DARE messages</dd>\n{0}", _Indent);
+				_Output.Write ("<dt>[`container`](container.md)</dt>\n{0}", _Indent);
+				_Output.Write ("<dd>Encode and decode DARE containers</dd>\n{0}", _Indent);
+				_Output.Write ("</dl>\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("# Command format\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
@@ -119,9 +167,10 @@ namespace MakeSiteDocs {
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("# Common options\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("All commands support the use of the 'verbose', 'report' and 'json' options.\n{0}", _Indent);
+				_Output.Write ("All commands (other than `help` and `about`) support the use of the 'verbose', \n{0}", _Indent);
+				_Output.Write ("'report' and 'json' options.\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("*'/json' '/nojson'* \n{0}", _Indent);
+				_Output.Write ("*'/json' \n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The '/json' flag takes precedence over the /verbose and /report options which\n{0}", _Indent);
 				_Output.Write ("are ignored if '/json' is specified.\n{0}", _Indent);
@@ -129,7 +178,7 @@ namespace MakeSiteDocs {
 				_Output.Write ("Specifying the /json flag causes the command output to be presented in JSON\n{0}", _Indent);
 				_Output.Write ("format.\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("*'/verbose' '/noverbose'* \n{0}", _Indent);
+				_Output.Write ("*'/verbose' \n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The '/verbose' flag takes precedence over the /report option which is ignored if\n{0}", _Indent);
 				_Output.Write ("'/verbose' is specified.\n{0}", _Indent);
@@ -139,8 +188,7 @@ namespace MakeSiteDocs {
 				_Output.Write ("The /report flag is set by default. If /noreport is specified, the command is\n{0}", _Indent);
 				_Output.Write ("executed without any output being made to the console.\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				}
-			}
+					}
 		
 
 		//
@@ -184,13 +232,32 @@ namespace MakeSiteDocs {
 		
 
 		//
-		// ConsoleJSON
+		// ConsoleExample
 		//
-		public void ConsoleJSON (ExampleResult exampleResult) {
-			if (  (exampleResult == null)  ) {
+		public void ConsoleExample (List<ExampleResult> exampleResults) {
+			if (  (exampleResults == null)  ) {
 				_Output.Write ("**Missing Example***\n{0}", _Indent);
 				 Console.WriteLine ($"Missing example!"); return;
 				}
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("````\n{0}", _Indent);
+			foreach  (var exampleResult in exampleResults) {
+				_Output.Write (">{1}\n{0}", _Indent, exampleResult.Command);
+				_Output.Write ("{1}", _Indent, exampleResult.ResultText);
+				}
+			_Output.Write ("````\n{0}", _Indent);
+			}
+		
+
+		//
+		// ConsoleJSON
+		//
+		public void ConsoleJSON (List<ExampleResult> exampleResults) {
+			if (  (exampleResults == null)  ) {
+				_Output.Write ("**Missing Example***\n{0}", _Indent);
+				 Console.WriteLine ($"Missing example!"); return;
+				}
+			 var exampleResult = exampleResults[0];
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("````\n{0}", _Indent);
 			_Output.Write (">{1} /json\n{0}", _Indent, exampleResult.Command);
@@ -202,12 +269,12 @@ namespace MakeSiteDocs {
 		//
 		// ConsoleReference
 		//
-		public void ConsoleReference (ExampleResult exampleResult) {
-			if (  (exampleResult == null)  ) {
+		public void ConsoleReference (List<ExampleResult> exampleResults) {
+			if (  (exampleResults == null)  ) {
 				_Output.Write ("**Missing Example***\n{0}", _Indent);
 				 Console.WriteLine ($"Missing example!"); return;
 				}
-			_Output.Write ("\n{0}", _Indent);
+			 var exampleResult = exampleResults[0];
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("````\n{0}", _Indent);
 			_Output.Write (">{1}\n{0}", _Indent, exampleResult.Command);

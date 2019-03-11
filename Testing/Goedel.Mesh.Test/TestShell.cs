@@ -95,13 +95,28 @@ namespace Goedel.Mesh.Test {
         public TestCLI(TestShell shell) : base() => Shell = shell;
 
 
-        public ExampleResult Example(string command, bool fail = false) {
-            var Args = command.Split(' ');
-            Dispatcher(Entries, DefaultCommand, Shell, Args, 0);
-            var result = Shell.ShellResult as Result;
+        //public ExampleResult Example(string command, bool fail = false) {
+        //    var Args = command.Split(' ');
+        //    Dispatcher(Entries, DefaultCommand, Shell, Args, 0);
+        //    var result = Shell.ShellResult as Result;
 
-            (result.Success != fail).AssertTrue();
-            return new ExampleResult(command, result);
+        //    (result.Success != fail).AssertTrue();
+        //    return new ExampleResult(command, result);
+        //    }
+
+        public List<ExampleResult> Example(params string [] commands) {
+            var result = new List<ExampleResult>();
+
+            //var Args = command.Split(' ');
+            //Dispatcher(Entries, DefaultCommand, Shell, Args, 0);
+            //result.Add(new ExampleResult(command, Shell.ShellResult as Result));
+
+            foreach (var cmd in commands) {
+                Dispatcher(Entries, DefaultCommand, Shell, cmd.Split(' '), 0);
+                result.Add(new ExampleResult(cmd, Shell.ShellResult as Result));
+                }
+
+            return result;
             }
 
 

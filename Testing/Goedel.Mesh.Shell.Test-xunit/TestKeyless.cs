@@ -75,12 +75,12 @@ namespace Goedel.XUnit {
                 }
             }
 
-        ResultCommitment TestCommitmentInt(string content, string key=null, string alg = null) {
+        ResultDigest TestCommitmentInt(string content, string key=null, string alg = null) {
             var testCLI = GetTestCLI();
             var filename = content.ToFileUnique();
             var keyClause = key == null ? "" : $" /key {key}";
             var algClause = alg == null ? "" : $" /alg {alg}";
-            var result = testCLI.Dispatch($"hash commit {filename}{keyClause}{algClause}") as ResultCommitment;
+            var result = testCLI.Dispatch($"hash commit {filename}{keyClause}{algClause}") as ResultDigest;
             result.AssertNotNull();
             return result;
 

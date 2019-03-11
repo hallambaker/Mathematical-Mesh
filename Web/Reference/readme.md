@@ -1,12 +1,15 @@
 # meshman Reference Manual
 
-*about* 
-
-*help*
-
-[*Key*](key.md)
-
-Commands for creating keys, nonces and EARLs and secret sharing and recovery.
+<dl>
+<dt>[`key`](key.md)</dt>
+<dd>Generate secrets and nonces. Split a secret into shares and recover secret from shares</dd>
+<dt>[`hash`](hash.md)</dt>
+<dd>Perform Content Digest and Message Authentication Code operations on the contents of a file</dd>
+<dt>[`dare`](dare.md)</dt>
+<dd>Encode and decode DARE messages</dd>
+<dt>[`container`](container.md)</dt>
+<dd>Encode and decode DARE containers</dd>
+</dl>
 
 # Command format
 
@@ -18,9 +21,10 @@ accustomed to use on a particular machine.
 
 # Common options
 
-All commands support the use of the 'verbose', 'report' and 'json' options.
+All commands (other than `help` and `about`) support the use of the 'verbose', 
+'report' and 'json' options.
 
-*'/json' '/nojson'* 
+*'/json' 
 
 The '/json' flag takes precedence over the /verbose and /report options which
 are ignored if '/json' is specified.
@@ -28,7 +32,7 @@ are ignored if '/json' is specified.
 Specifying the /json flag causes the command output to be presented in JSON
 format.
 
-*'/verbose' '/noverbose'* 
+*'/verbose' 
 
 The '/verbose' flag takes precedence over the /report option which is ignored if
 '/verbose' is specified.

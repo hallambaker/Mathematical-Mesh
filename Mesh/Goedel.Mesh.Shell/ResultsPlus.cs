@@ -135,12 +135,12 @@ namespace Goedel.Mesh.Shell {
             }
         }
 
-    public partial class ResultCommitment {
-        public override string ToString() {
-            var Builder = new StringBuilder();
-            Builder.Append($"UDF={Digest}\n");
-            Builder.Append($"Key={Key}");
-            return Builder.ToString();
-            }
-        }
+    //public partial class ResultCommitment {
+    //    public override string ToString() {
+    //        var Builder = new StringBuilder();
+    //        Builder.Append($"UDF={Digest}\n");
+    //        Builder.Append($"Key={Key}");
+    //        return Builder.ToString();
+    //        }
+    //    }
     }

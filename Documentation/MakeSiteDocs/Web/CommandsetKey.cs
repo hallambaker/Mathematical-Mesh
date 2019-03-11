@@ -23,9 +23,9 @@ namespace MakeSiteDocs {
 		public void _WebKey(CreateWeb Examples) {
 
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("# Using the Key Command Set\n{0}", _Indent);
+				_Output.Write ("# Using the `key` Command Set\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("The Key command set contains commands that operate on cryptographic secrets and\n{0}", _Indent);
+				_Output.Write ("The `key` command set contains commands that operate on cryptographic secrets and\n{0}", _Indent);
 				_Output.Write ("nonces.\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("## Generating Secrets and Nonces\n{0}", _Indent);
