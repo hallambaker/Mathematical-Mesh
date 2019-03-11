@@ -85,9 +85,35 @@ namespace Goedel.Mesh.Shell {
                 };
             }
 
+
+        List<string> makeList(params string[] shares) {
+            var result = new List<string>();
+            foreach (var share in shares) {
+                if (share != null) {
+                    result.Add(share);
+                    }
+                }
+
+            return result;
+            }
+
         public override ShellResult KeyRecover(KeyRecover Options) {
-            CommandLineInterpreter.DescribeValues(Options);
-            return null;
+            var s1 = Options.Share1.Value;
+            var s2 = Options.Share2.Value;
+            var s3 = Options.Share3.Value;
+            var s4 = Options.Share4.Value;
+            var s5 = Options.Share5.Value;
+            var s6 = Options.Share6.Value;
+            var s7 = Options.Share7.Value;
+            var s8 = Options.Share8.Value;
+
+            var shares = makeList(s1, s2, s3, s4, s5, s6, s7, s7);
+            var secret = new Secret(shares);
+
+            return new ResultKey() {
+                Success = true,
+                Key = secret.UDFKey,
+                };
             }
         }
     }

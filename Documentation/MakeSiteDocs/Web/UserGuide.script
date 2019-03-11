@@ -138,7 +138,19 @@ executed without any output being made to the console.
 
 ````
 >#{exampleResult.Command}
-#{exampleResult.ResultText}
+#{exampleResult.ResultText}#!
+````
+#% }
+#% public static void ConsoleJSON (StreamWriter _Output, ExampleResult exampleResult) {
+#% var _Indent = "";
+#if (exampleResult == null) 
+**Missing Example***
+#% Console.WriteLine ($"Missing example!"); return;
+#end if
+
+````
+>#{exampleResult.Command}
+#{exampleResult.ResultJSON}
 ````
 #% }
 #% public static void ConsoleReference (StreamWriter _Output, ExampleResult exampleResult) {
@@ -151,7 +163,7 @@ executed without any output being made to the console.
 
 ````
 >#{exampleResult.Command}
-#{exampleResult.ResultText}
+#{exampleResult.ResultText}#!
 ````
 
 Specifying the /json option returns a result of type #{exampleResult.ResultType}:

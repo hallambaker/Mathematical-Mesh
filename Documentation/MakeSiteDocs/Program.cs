@@ -50,6 +50,10 @@ namespace MakeSiteDocs {
         public ExampleResult KeyShare2;
         public ExampleResult KeyShare3;
 
+        // ToDo: Implement the recovery command
+        // ToDo: Return the locator value with an EARL
+        // ToDo: Implement the File EARL
+        // ToDo: 
 
         public void DoKeyCommands () {
             KeyNonce = testCLI.Example("key nonce");
@@ -62,13 +66,13 @@ namespace MakeSiteDocs {
             var share1 = (KeyShare.Result as ResultKey).Shares[0];
             var share2 = (KeyShare.Result as ResultKey).Shares[2];
 
-            //KeyRecovery = testCLI.Example($"key recover {share1} {share2}");
+            KeyRecover = testCLI.Example($"key recover {share1} {share2}");
             KeyShare2 = testCLI.Example($"key share /quorum=3 /shares=5");
             KeyShare3 = testCLI.Example($"key share {secret1}");
 
             }
 
-        public ExampleResult FileEarl;
+        public ExampleResult DareEarl;
 
 
         }

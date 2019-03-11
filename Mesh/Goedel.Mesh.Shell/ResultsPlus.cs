@@ -100,7 +100,22 @@ namespace Goedel.Mesh.Shell {
         }
 
     public partial class ResultKey{
-        public override string ToString() => Key;
+        public override string ToString() {
+            var Builder = new StringBuilder();
+
+            if (Key != null) {
+                Builder.AppendLine(Key);
+                }
+            if (Identifier != null) {
+                Builder.AppendLine(Identifier);
+                }
+            if (Shares != null) {
+                foreach (var share in Shares) {
+                    Builder.AppendLine(share);
+                    }
+                }
+            return Builder.ToString();
+            }
         }
 
 

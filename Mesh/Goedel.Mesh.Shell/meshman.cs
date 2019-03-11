@@ -11580,15 +11580,13 @@ namespace Goedel.Mesh.Shell {
         } // class KeyShare
 
     public class _KeyRecover : Goedel.Command.Dispatch ,
-							IReporting,
-							IDigestOptions {
+							IReporting {
 
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
 			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
 			new Flag (),
 			new Flag (),
 			new Flag (),
-			new String (),
 			new String (),
 			new String (),
 			new String (),
@@ -11638,86 +11636,77 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _Json {
 			set => _Data[3].Parameter (value);
 			}
-		/// <summary>Field accessor for option [key]</summary>
-		public virtual String DigestKey {
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual String Share1 {
 			get => _Data[4] as String;
 			set => _Data[4]  = value;
 			}
 
-		public virtual string _DigestKey {
+		public virtual string _Share1 {
 			set => _Data[4].Parameter (value);
 			}
 		/// <summary>Field accessor for parameter []</summary>
-		public virtual String Share1 {
+		public virtual String Share2 {
 			get => _Data[5] as String;
 			set => _Data[5]  = value;
 			}
 
-		public virtual string _Share1 {
+		public virtual string _Share2 {
 			set => _Data[5].Parameter (value);
 			}
 		/// <summary>Field accessor for parameter []</summary>
-		public virtual String Share2 {
+		public virtual String Share3 {
 			get => _Data[6] as String;
 			set => _Data[6]  = value;
 			}
 
-		public virtual string _Share2 {
+		public virtual string _Share3 {
 			set => _Data[6].Parameter (value);
 			}
 		/// <summary>Field accessor for parameter []</summary>
-		public virtual String Share3 {
+		public virtual String Share4 {
 			get => _Data[7] as String;
 			set => _Data[7]  = value;
 			}
 
-		public virtual string _Share3 {
+		public virtual string _Share4 {
 			set => _Data[7].Parameter (value);
 			}
 		/// <summary>Field accessor for parameter []</summary>
-		public virtual String Share4 {
+		public virtual String Share5 {
 			get => _Data[8] as String;
 			set => _Data[8]  = value;
 			}
 
-		public virtual string _Share4 {
+		public virtual string _Share5 {
 			set => _Data[8].Parameter (value);
 			}
 		/// <summary>Field accessor for parameter []</summary>
-		public virtual String Share5 {
+		public virtual String Share6 {
 			get => _Data[9] as String;
 			set => _Data[9]  = value;
 			}
 
-		public virtual string _Share5 {
+		public virtual string _Share6 {
 			set => _Data[9].Parameter (value);
 			}
 		/// <summary>Field accessor for parameter []</summary>
-		public virtual String Share6 {
+		public virtual String Share7 {
 			get => _Data[10] as String;
 			set => _Data[10]  = value;
 			}
 
-		public virtual string _Share6 {
+		public virtual string _Share7 {
 			set => _Data[10].Parameter (value);
 			}
 		/// <summary>Field accessor for parameter []</summary>
-		public virtual String Share7 {
+		public virtual String Share8 {
 			get => _Data[11] as String;
 			set => _Data[11]  = value;
 			}
 
-		public virtual string _Share7 {
-			set => _Data[11].Parameter (value);
-			}
-		/// <summary>Field accessor for parameter []</summary>
-		public virtual String Share8 {
-			get => _Data[12] as String;
-			set => _Data[12]  = value;
-			}
-
 		public virtual string _Share8 {
-			set => _Data[12].Parameter (value);
+			set => _Data[11].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -11755,67 +11744,60 @@ namespace Goedel.Mesh.Shell {
 					Index = 3,
 					Key = "json"
 					},
-				new DescribeEntryOption () {
-					Identifier = "DigestKey", 
-					Default = null, // null if null
-					Brief = "Encrypt data for specified recipient",
-					Index = 4,
-					Key = "key"
-					},
 				new DescribeEntryParameter () {
 					Identifier = "Share1", 
 					Default = null, // null if null
 					Brief = "Share value #1",
-					Index = 5,
+					Index = 4,
 					Key = ""
 					},
 				new DescribeEntryParameter () {
 					Identifier = "Share2", 
 					Default = null, // null if null
 					Brief = "Share value #2",
-					Index = 6,
+					Index = 5,
 					Key = ""
 					},
 				new DescribeEntryParameter () {
 					Identifier = "Share3", 
 					Default = null, // null if null
 					Brief = "Share value #3",
-					Index = 7,
+					Index = 6,
 					Key = ""
 					},
 				new DescribeEntryParameter () {
 					Identifier = "Share4", 
 					Default = null, // null if null
 					Brief = "Share value #4",
-					Index = 8,
+					Index = 7,
 					Key = ""
 					},
 				new DescribeEntryParameter () {
 					Identifier = "Share5", 
 					Default = null, // null if null
 					Brief = "Share value #5",
-					Index = 9,
+					Index = 8,
 					Key = ""
 					},
 				new DescribeEntryParameter () {
 					Identifier = "Share6", 
 					Default = null, // null if null
 					Brief = "Share value #6",
-					Index = 10,
+					Index = 9,
 					Key = ""
 					},
 				new DescribeEntryParameter () {
 					Identifier = "Share7", 
 					Default = null, // null if null
 					Brief = "Share value #7",
-					Index = 11,
+					Index = 10,
 					Key = ""
 					},
 				new DescribeEntryParameter () {
 					Identifier = "Share8", 
 					Default = null, // null if null
 					Brief = "Share value #8",
-					Index = 12,
+					Index = 11,
 					Key = ""
 					}
 				}

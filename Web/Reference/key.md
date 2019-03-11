@@ -35,7 +35,8 @@ protocol.
 
 ````
 >key nonce
-NBBL-AYRC-MFVH-XPGG-MWYF-CKRF-VTUQ
+NBH7-KOKI-2ROG-5HTJ-5OUG-F7LK-U2NA
+
 ````
 
 Specifying the /json option returns a result of type ResultKey:
@@ -45,7 +46,7 @@ Specifying the /json option returns a result of type ResultKey:
 {
   "ResultKey": {
     "Success": true,
-    "Key": "NBBL-AYRC-MFVH-XPGG-MWYF-CKRF-VTUQ"}}
+    "Key": "NBH7-KOKI-2ROG-5HTJ-5OUG-F7LK-U2NA"}}
 ````
 
 
@@ -66,7 +67,8 @@ key type.
 
 ````
 >key secret
-EBS7-A2XV-32CU-4WTA-LZBY-DY42-K3SA
+EDD5-2ILE-MYZT-GXC3-EG72-JGBJ-O3MQ
+
 ````
 
 Specifying the /json option returns a result of type ResultKey:
@@ -76,7 +78,7 @@ Specifying the /json option returns a result of type ResultKey:
 {
   "ResultKey": {
     "Success": true,
-    "Key": "EBS7-A2XV-32CU-4WTA-LZBY-DY42-K3SA"}}
+    "Key": "EDD5-2ILE-MYZT-GXC3-EG72-JGBJ-O3MQ"}}
 ````
 
 
@@ -98,7 +100,9 @@ value, formatted as a UDF Encryption key type and Content Digest Type
 
 ````
 >key earl
-EAQB-56NM-2GKA-ONXH-FU6Y-G23W-SJ3W-M6
+EDKC-JTJB-LPQH-6452-XJNX-3OLM-TQPW-3I
+MDXW-KXQD-GI6R-QNVG-M2PT-KUEX-PR24-AJBG-IW3E-7LEL-YSQN-DS4W-3JOJ-GZA3
+
 ````
 
 Specifying the /json option returns a result of type ResultKey:
@@ -108,8 +112,8 @@ Specifying the /json option returns a result of type ResultKey:
 {
   "ResultKey": {
     "Success": true,
-    "Key": "EAQB-56NM-2GKA-ONXH-FU6Y-G23W-SJ3W-M6",
-    "Identifier": "MDYI-XTRB-NVZA-AKIQ-5KEG-4TFH-QJUR-OQVC-UNUT-4QWI-IUF5-VXJO-7EF2-APWM"}}
+    "Key": "EDKC-JTJB-LPQH-6452-XJNX-3OLM-TQPW-3I",
+    "Identifier": "MDXW-KXQD-GI6R-QNVG-M2PT-KUEX-PR24-AJBG-IW3E-7LEL-YSQN-DS4W-3JOJ-GZA3"}}
 ````
 
 # key share
@@ -133,7 +137,12 @@ formatted as a UDF Encryption key type and Share types
 
 ````
 >key share
-ECHB-MJGP-NEOL-T65F-PN2N-UA6Q-BTTA
+EBLL-K4LQ-M2UF-XZDL-MCS5-DYIV-SJGQ
+MBAK-P45Y-5TTY-YQCW-SB52-6VIY-LLUJ-FV6A-OJV3-PNTJ-A4SJ-Q4N4-JTVQ
+SAQJ-NALW-VKTC-HEGY-UJ2J-Q2TY-7N63-M
+SAQ5-MTL3-4TSZ-5ROM-3GEI-WAYQ-4FUR-6
+SARB-MGMB-D4SR-T6WB-CCOH-3G5I-Y5KF-K
+
 ````
 
 Specifying the /json option returns a result of type ResultKey:
@@ -143,11 +152,11 @@ Specifying the /json option returns a result of type ResultKey:
 {
   "ResultKey": {
     "Success": true,
-    "Key": "ECHB-MJGP-NEOL-T65F-PN2N-UA6Q-BTTA",
-    "Identifier": "MB6E-XRXU-FKVX-WTGQ-P77S-UCXC-6M7E-4RHT-K2OF-LEJX-NEWZ-6FTJ-BFQA",
-    "Shares": ["SAQA-GR2E-4KS3-LBUH-KIOI-34XM-3GGZ-C",
-      "SAQX-Q6DE-6XRE-4UYS-7262-OC6V-4MHG-6",
-      "SARO-3KMF-BEPO-OH46-VNPM-AJF6-5SHU-2"]}}
+    "Key": "EBLL-K4LQ-M2UF-XZDL-MCS5-DYIV-SJGQ",
+    "Identifier": "MBAK-P45Y-5TTY-YQCW-SB52-6VIY-LLUJ-FV6A-OJV3-PNTJ-A4SJ-Q4N4-JTVQ",
+    "Shares": ["SAQJ-NALW-VKTC-HEGY-UJ2J-Q2TY-7N63-M",
+      "SAQ5-MTL3-4TSZ-5ROM-3GEI-WAYQ-4FUR-6",
+      "SARB-MGMB-D4SR-T6WB-CCOH-3G5I-Y5KF-K"]}}
 ````
 
 
@@ -166,12 +175,27 @@ recover   Recover a secret value from the shares provided
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
-    /key   Encrypt data for specified recipient
 ````
 
 The `key recover` command combines the specified set of share to recover the original secret 
 value as a UDF Encryption key type.
 
-**Missing Example***
+
+
+````
+>key recover SAQJ-NALW-VKTC-HEGY-UJ2J-Q2TY-7N63-M SARB-MGMB-D4SR-T6WB-CCOH-3G5I-Y5KF-K
+EBLL-K4LQ-M2UF-XZDL-MCS5-DYIV-SJGQ
+
+````
+
+Specifying the /json option returns a result of type ResultKey:
+
+````
+>key recover SAQJ-NALW-VKTC-HEGY-UJ2J-Q2TY-7N63-M SARB-MGMB-D4SR-T6WB-CCOH-3G5I-Y5KF-K /json
+{
+  "ResultKey": {
+    "Success": true,
+    "Key": "EBLL-K4LQ-M2UF-XZDL-MCS5-DYIV-SJGQ"}}
+````
 
 

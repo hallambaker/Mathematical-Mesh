@@ -645,7 +645,6 @@
 		Command KeyRecover "recover"
 			Brief "Recover a secret value from the shares provided"			
 			Include Reporting
-			Include DigestOptions
 			Parameter Share1 "s1" String
 				Brief "Share value #1"
 			Parameter Share2 "s2" String

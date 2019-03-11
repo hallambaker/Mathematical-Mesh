@@ -25,8 +25,10 @@ The `key nonce` command is used to generate a new random nonce value:
 
 #% ConsoleExample (_Output, Examples.KeyNonce);
 
+The Base32 presentation of a nonce value will always begin with the letter N.
+
 By default, a 128 bit nonce is generated but nonces of any length may be
-generated using the `/bits` option
+generated using the `/bits` option:
 
 #% ConsoleExample (_Output, Examples.KeyNonce256);
 
@@ -34,6 +36,7 @@ Secrets are generated using the `key secret` in the same way:
 
 #% ConsoleExample (_Output, Examples.KeySecret);
 
+The Base32 presentation of a secret value will always begin with the letter E.
 Again, any output length can be requested up to the platform limit:
 
 #% ConsoleExample (_Output, Examples.KeySecret256);
@@ -46,14 +49,14 @@ a means of locating and decrypting content stored on a remote Web service.
 The EARL itself specifies a domain name and a secret. The content is stored
 on the Web Service under a label that is the Content Digest of the secret.
 
-EARLs may be generated using either the `key earl` command to generate
+EARLs may be generated using either the `dare earl` command to generate
 a new secret/digest pair which are then used to process the content data:
 
 #% ConsoleExample (_Output, Examples.KeyEarl);
 
-Alternatively, the 'file earl' command may be used to perform both operations:
+Alternatively, the 'dare earl' command may be used to perform both operations:
 
-#% ConsoleExample (_Output, Examples.FileEarl);
+#% ConsoleExample (_Output, Examples.DareEarl);
 
 #### Sharing and recovering secrets
 
@@ -65,6 +68,13 @@ number of shares with the specified quorum for recovery. By default, a 128
 bit secret is created and three shares are created with a quorum of two:
 
 #% ConsoleExample (_Output, Examples.KeyShare);
+
+The first UDF output is the secret key, followed by the key identifier 
+two shares. The different outputs are easily distinguished by their first 
+letter. As with every meshman command, the `/json` option may be used to 
+obtain the result as a JSON structure:
+
+#% ConsoleJSON (_Output, Examples.KeyShare);
 
 The original secret may be recovered from a sufficient number of shares to
 meet the quorum:
