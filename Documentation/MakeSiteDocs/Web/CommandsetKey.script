@@ -120,7 +120,6 @@ protocol.
 
 #% ConsoleReference (Examples.KeyNonce);
 
-
 #% Describe(CommandSet, _KeySecret._DescribeCommand);
 
 The `key secret` command returns a randomized secret value formatted as a UDF Encryption 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using Goedel.Mesh.Test;
 using Goedel.Mesh.Shell;
 using Goedel.Test.Core;
@@ -25,19 +26,33 @@ namespace MakeSiteDocs {
 
         TestCLI testCLI;
 
+        public string TestDir1 = "TestDir1";
+
         public string TestFile1 = "TestFile1.txt";
+        public string TestFile2 => Path.Combine(TestDir1, "TestFile2.txt");
+        public string TestFile3 => Path.Combine(TestDir1, "TestFile3.txt");
         public string TestText1 = "This is a test";
+        public string TestText2 = "This is a test 2";
+        public string TestText3 = "This is a test 3";
+
+        public string DareLogEarl = "EarlLog.dlog";
+
+        public string AliceAccount = "alice@example.com";
+        public string BobAccount = "bob@example.com";
 
         public CreateWeb() {
 
-
-
             testCLI = GetTestCLI();
 
+            Directory.CreateDirectory(TestDir1);
             TestFile1.WriteFileNew(TestText1.ToString());
+            TestFile2.WriteFileNew(TestText2.ToString());
+            TestFile3.WriteFileNew(TestText3.ToString());
 
-            DoKeyCommands();
-            DoHashCommands();
+            DoCommandsKey();
+            DoCommandsHash();
+            DoCommandsDare();
+            DoCommandsContainer();
 
             var makeSiteDocs = new MakeSiteDocs();
             makeSiteDocs.WebDocs(this);
@@ -61,23 +76,23 @@ namespace MakeSiteDocs {
         public List<ExampleResult> KeyShare3;
 
 
+        public string Secret1;
 
 
-
-        public void DoKeyCommands () {
+        public void DoCommandsKey () {
             KeyNonce = testCLI.Example("key nonce");
             KeyNonce256 = testCLI.Example("key nonce /bits=256");
             KeySecret = testCLI.Example("key secret");
             KeySecret256 = testCLI.Example("key secret /bits=256");
             KeyEarl = testCLI.Example("key earl");
             KeyShare = testCLI.Example("key share");
-            var secret1 = (KeyShare[0].Result as ResultKey).Key;
+            Secret1 = (KeyShare[0].Result as ResultKey).Key;
             var share1 = (KeyShare[0].Result as ResultKey).Shares[0];
             var share2 = (KeyShare[0].Result as ResultKey).Shares[2];
 
             KeyRecover = testCLI.Example($"key recover {share1} {share2}");
             KeyShare2 = testCLI.Example($"key share /quorum=3 /shares=5");
-            KeyShare3 = testCLI.Example($"key share {secret1}");
+            KeyShare3 = testCLI.Example($"key share {Secret1}");
 
             }
 
@@ -91,10 +106,11 @@ namespace MakeSiteDocs {
         public List<ExampleResult> MAC2;  // implement key option
         public List<ExampleResult> MAC3;  // implement expect option
 
-        public void DoHashCommands() {
+        public void DoCommandsHash() {
             HashUDF2        = testCLI.Example($"hash udf {TestFile1}");
             var expect2 = (HashUDF2[0].Result as ResultDigest).Digest;
-            HashUDF3        = testCLI.Example($"hash udf {TestFile1} /alg=sha3 /cty=application/binary");
+            HashUDF3        = testCLI.Example($"hash udf {TestFile1} /cty=application/binary",
+                                              $"hash udf {TestFile1} /alg=sha3");
             var expect3 = (HashUDF3[0].Result as ResultDigest).Digest;
             HashUDF200      = testCLI.Example($"hash udf {TestFile1} /bits=200");
             HashUDFExpect   = testCLI.Example($"hash udf {TestFile1} /expect={expect2}",
@@ -113,12 +129,48 @@ namespace MakeSiteDocs {
                 $"hash mac {TestFile1} /key={key} /expect={expect2}");
             }
 
-        public List<ExampleResult> DareEarl;
+        public List<ExampleResult> DarePlaintext;
+        public List<ExampleResult> DareSymmetric;
+        public List<ExampleResult> DareSub;
+        public List<ExampleResult> DareMesh;
 
-        public void DoDareCommands() {
+        public List<ExampleResult> DareVerifyDigest;
+        public List<ExampleResult> DareVerifySigned;
+        public List<ExampleResult> DareVerifySymmetric;
+        public List<ExampleResult> DareVerifySymmetricUnknown;
+
+        public List<ExampleResult> DareDecodePlaintext;
+        public List<ExampleResult> DareDecodeSymmetric;
+        public List<ExampleResult> DareDecodePrivate;
+
+        public List<ExampleResult> DareEarl;
+        public List<ExampleResult> DareEARLLog;
+        public List<ExampleResult> DareEARLLogNew;
+        public void DoCommandsDare() {
+
+            DarePlaintext =         testCLI.Example($"dare encode {TestFile1}");
+            DareSymmetric =         testCLI.Example($"dare encode {TestFile1} /out={TestFile1}.symmetric.dare " +
+                        $"/key={Secret1}");
+            DareSub = testCLI.Example($"dare encode {TestDir1} /encrypt={Secret1}");
+            DareMesh =              testCLI.Example($"dare encode {TestFile1} /out={TestFile1}.mesh.dare" +
+                        $"/encrypt={BobAccount} /sign={AliceAccount}");
+
+            DareVerifyDigest =      testCLI.Example($"dare verify {TestFile1}.dare");
+            DareVerifySigned =      testCLI.Example($"dare verify {TestFile1}.mesh.dare");
+            DareVerifySymmetricUnknown =   testCLI.Example($"dare verify {TestFile1}.symmetric.dare");
+            DareVerifySymmetric = testCLI.Example($"dare verify {TestFile1}.symmetric.dare /encrypt={Secret1}");
+
+            DareDecodePlaintext =   testCLI.Example($"dare decode {TestFile1}.dare");
+            DareDecodeSymmetric =   testCLI.Example($"dare decode {TestFile1}.symmetric.dare /encrypt={Secret1}");
+            DareDecodePrivate =     testCLI.Example($"dare decode {TestFile1}.mesh.dare");
+
+            DareEarl =              testCLI.Example($"dare earl {TestFile1}");
+            DareEARLLog =           testCLI.Example($"dare container create {DareLogEarl} /encrypt={AliceAccount}",
+                                                    $"dare earl {TestFile1} /log={DareLogEarl}");
+            DareEARLLogNew =        testCLI.Example($"dare earl {TestFile1} /new={DareLogEarl}");
             }
 
-        public void DoContainerCommands() {
+        public void DoCommandsContainer() {
             }
 
         

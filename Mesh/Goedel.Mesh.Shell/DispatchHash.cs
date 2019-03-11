@@ -16,7 +16,7 @@ namespace Goedel.Mesh.Shell {
         /// </summary>
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult FileUDF(FileUDF Options) {
+        public override ShellResult HashUDF(HashUDF Options) {
             var inputFile = Options.Input.Value;
             var contentType = Options.ContentType.Value ?? MimeMapping.GetMimeMapping(inputFile) ?? "";
             var bits = Options.Bits.ValueDefaulted(140);
@@ -51,7 +51,7 @@ namespace Goedel.Mesh.Shell {
         /// </summary>
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult FileDigest(FileDigest Options) {
+        public override ShellResult HashDigest(HashDigest Options) {
             var inputFile = Options.Input.Value;
             var hashAlgorithm = AlgorithmDigest.DefaultBulk(CryptoAlgorithmID.SHA_2_512);
 
@@ -67,7 +67,7 @@ namespace Goedel.Mesh.Shell {
         /// </summary>
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult FileCommitment(FileCommitment Options) {
+        public override ShellResult HashMac(HashMac Options) {
             var inputFile = Options.Input.Value;
             var bits = Options.Bits.ValueDefaulted(140);
             var contentType = Options.ContentType.Value ?? MimeMapping.GetMimeMapping(inputFile) ?? "";

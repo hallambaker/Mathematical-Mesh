@@ -6,24 +6,187 @@
 
 
 
-#xfile MakeSiteDocs WebDare "Guide/dare.md" CreateWeb Index
+#xfile MakeSiteDocs WebDare "Guide/dare.md" CreateWeb Examples
 
 ## Using the  Command Set
 
-The  command set contains commands that 
+The `dare` command set contains commands that encode, decode and verify 
+DARE messages.
+
+#### Encoding a file as a DARE message.
+
+The #{ToCommand("dare encode")} command is used to encode files as DARE Messages:
+
+#% ConsoleExample (Examples.DarePlaintext);
+
+In this case, the file `#{Examples.TestFile1}` contains the text `"#{Examples.TestText1}"`.
+
+By default, a content digest is calculated over the contents. This may be 
+suppressed using the `/nohash` flag.
+
+The data contents may be encrypted and authenticated under a specified symmetric key:
+
+#% ConsoleExample (Examples.DareSymmetric);
+
+Specifying a directory instead of a file causes all the files in the directory to be 
+encoded:
+
+#% ConsoleExample (Examples.DareSub);
+
+Files may also be signed using the user's Mesh signature key and/or encrypted for one
+or more recipients. In this example, Alice creates a message intended for Bob.
+Alice signs the message with her private signature key and encrypts it under Bob's
+public encryption key.
+
+#% ConsoleExample (Examples.DareMesh);
+
+
+#### Verifying a DARE message.
+
+The #{ToCommand("dare verify")} command is used to verify the signature and 
+digest values on a DARE Message without decoding the message body:
+
+#% ConsoleExample (Examples.DareVerifyDigest);
+
+The command to verify a signed message is identical:
+
+#% ConsoleExample (Examples.DareVerifySigned);
+
+Messages that are encrypted and authenticated under a specified symmetric key 
+may be verified at the plaintext level if the key is known or the ciphertext 
+level otherwise.
+
+#% ConsoleExample (Examples.DareVerifySymmetric);
+
+
+#% ConsoleExample (Examples.DareVerifySymmetricUnknown);
+
+#### Decoding a DARE message to a file.
+
+The #{ToCommand("dare decode")} command is used to decode and verify DARE Messages:
+
+#% ConsoleExample (Examples.DareDecodePlaintext);
+
+To decode a message encrypted under a symmetric key, we must specify the key:
+
+#% ConsoleExample (Examples.DareDecodeSymmetric);
+
+If the message is encrypted under our private encryption key, the tool will locate
+the necessary decryption key(s) automatically:
+
+#% ConsoleExample (Examples.DareDecodePrivate);
+
+
+#### Creating an EARL.
+
+The #{ToCommand("dare earl")} command is used to create an EARL:
+
+#% ConsoleExample (Examples.DareEarl);
+
+A new secret is generated with the specified number of bits, this is then used
+to generate the key identifier and encrypt the input file to a file with the
+name of the key identifier.
+
+The `/log` option causes the filename, encryption key and other details of
+the transaction to be written to a DARE Container Log.
+
+#% ConsoleExample (Examples.DareEARLLog);
+
+The `/new` option causes the file to be encoded if and only if it has not 
+been processed already.
+
+#% ConsoleExample (Examples.DareEARLLogNew);
 
 #end xfile
 
-#xfile MakeSiteDocs DareReference "Reference/dare.md" CreateWeb Index
+#xfile MakeSiteDocs DareReference "Reference/dare.md" CreateWeb Examples
 #% var CommandSet = CommandLineInterpreter.DescribeCommandSet_Dare;
-
-
 #% Describe(CommandSet);
 
+The `dare` command set contains commands that encode, decode and verify 
+DARE messages.
 
-#% Describe( CommandSet, _FileEncrypt._DescribeCommand);
-#% Describe(CommandSet, _FileDecrypt._DescribeCommand);
-#% Describe(CommandSet, _FileVerify._DescribeCommand);
+#% Describe(CommandSet, _DareEncode._DescribeCommand);
+
+The `dare encode` command encrypts a file and writes the output to a DARE Message.
+
+If the input file specified is a file, the tool processes that file. If the
+input file is a directory, the tool processes all the files in the directory. If the
+`/sub` option is specified, subdirectories are processed recursively.
+
+By default, a digest value is calculated over the message body (i.e. the ciphertext
+if it is encrypted). This may be suppressed using the `/nohash` option.
+
+The tool attempts to determine the IANA media type of the file from the file 
+extension. This may be overriden using the /cty `option`.
+
+Encryption and Signature enhancements may be specified with the `/sign` and 
+`/encrypt` options. 
+
+* Key parameters that have the form of a UDF secret (Exxx-xxxx-...) are interpreted
+as symmetric encryption keys and used to encrypt the contents directly.
+
+* Key parameters that have the form of an Internet user account (\<user\>@\<domain\> are 
+resolved according to the currently active key collection.
+
+The active key collection may be overriden using the `/mesh` option.
+
+Algorithms for public key operations are inferred from the keys provided. The 
+`\alg` option may be used to override the inferred or default algorithms.
+
+The `/out` option may be used to specify the output file name. Otherwise the output
+file name is the input file name with the additional extension `.dare`.
+
+
+
+#% ConsoleReference (Examples.DareSymmetric);
+
+
+#% Describe(CommandSet, _DareDecode._DescribeCommand);
+
+The `dare decode` command decodes the specified input file using keys found in the
+currently active key collection.
+
+The active key collection may be overriden using the `/mesh` option.
+
+The `/out` option may be used to specify the output file name. Otherwise the output
+file name is the input file name stripped of the extension `.dare` if present or
+with the extension `.undare` otherwise.
+
+#% ConsoleReference (Examples.DareDecodeSymmetric);
+
+#% Describe(CommandSet, _DareVerify._DescribeCommand);
+
+The `dare decode` command verifies the specified input file using keys found in the
+currently active key collection and reports success or failure.
+
+The active key collection may be overriden using the `/mesh` option.
+
+
+#% ConsoleReference (Examples.DareVerifySymmetric);
+
+#% Describe(CommandSet, _DareEARL._DescribeCommand);
+
+The #{ToCommand("dare earl")} command is used to encode an input file and return
+(or log) the corresponding identifier information in a format that enables use
+as an Encrypted Authenticated Resource Locator.
+
+If the input file specified is a file, the tool processes that file. If the
+input file is a directory, the tool processes all the files in the directory. If the
+`/sub` option is specified, subdirectories are processed recursively.
+
+If the `/log` or `/new` option is specified, the filename, encryption key and other details of
+each completed transaction are written to a DARE Container Log. If `/log` is specified, the 
+file is always processed. If `/new` is specified, files are only
+processed if there is no existing entry in the specified log.
+
+The log file must be initialized before use (eg. using the #{ToCommand("container create")} 
+command). Log entries are written with the cryptographic enhancements specified in
+the container using the active key collection.
+
+The active key collection may be overriden using the `/mesh` option.
+
+#% ConsoleReference (Examples.DareEarl);
 
 #end xfile
 

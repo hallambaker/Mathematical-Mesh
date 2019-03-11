@@ -34,13 +34,7 @@ namespace Goedel.Mesh.Shell {
         public bool Report { get; set; }
         public bool Json { get; set; }
 
-        public string AccountID { get; set; }
-        public string UDF { get; set; }
-
-        //public bool DeviceNew { get; set; }
-        //public string DeviceUDF { get; set; }
-        //public string DeviceID { get; set; }
-        //public string DeviceDescription { get; set; }
+        public string MeshID { get; set; }
 
         TextWriter Output;
 
@@ -62,9 +56,7 @@ namespace Goedel.Mesh.Shell {
                 }
 
             if (options is IAccountOptions AccountOptions) {
-                AccountID = AccountOptions.AccountID.Value;
-                UDF = AccountOptions.UDF.Value;
-                // Set the account here using MeshMachine
+                MeshID = AccountOptions.Mesh.Value;
                 }
 
             if (options is ICryptoOptions CryptoOptions) {

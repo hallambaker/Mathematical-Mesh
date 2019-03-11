@@ -14,8 +14,7 @@ ssh
 
 ````
 create   Generate a new SSH public keypair for the current machine and add to the personal profile
-    /portal   Account identifier (e.g. alice@example.com)
-    /udf   Profile fingerprint
+    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -27,8 +26,7 @@ create   Generate a new SSH public keypair for the current machine and add to th
 
 ````
 private   Extract the private key for this device
-    /portal   Account identifier (e.g. alice@example.com)
-    /udf   Profile fingerprint
+    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -40,8 +38,7 @@ private   Extract the private key for this device
 
 ````
 public   Extract the public key for this device
-    /portal   Account identifier (e.g. alice@example.com)
-    /udf   Profile fingerprint
+    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -52,8 +49,7 @@ public   Extract the public key for this device
 
 ````
 host   Add one or more hosts to the known_hosts file
-    /portal   Account identifier (e.g. alice@example.com)
-    /udf   Profile fingerprint
+    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -64,8 +60,7 @@ host   Add one or more hosts to the known_hosts file
 ````
 known   Add one or more hosts to the known_hosts file
        <Unspecified>
-    /portal   Account identifier (e.g. alice@example.com)
-    /udf   Profile fingerprint
+    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -76,8 +71,7 @@ known   Add one or more hosts to the known_hosts file
 ````
 auth   Add one or more keys to the authorized_keys file
        <Unspecified>
-    /portal   Account identifier (e.g. alice@example.com)
-    /udf   Profile fingerprint
+    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -87,8 +81,7 @@ auth   Add one or more keys to the authorized_keys file
 
 ````
 known   List the known SSH sites (aka known hosts)
-    /portal   Account identifier (e.g. alice@example.com)
-    /udf   Profile fingerprint
+    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -98,8 +91,7 @@ known   List the known SSH sites (aka known hosts)
 
 ````
 auth   List the authorized device keys (aka authorized_keys)
-    /portal   Account identifier (e.g. alice@example.com)
-    /udf   Profile fingerprint
+    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format

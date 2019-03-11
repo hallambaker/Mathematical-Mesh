@@ -21,8 +21,10 @@ may be overriden using the `/cty` and `/alg` options:
 
 
 ````
->hash udf TestFile1.txt /alg=sha3 /cty=application/binary
-KDTG-XEIH-6LJ2-BDO6-6EPH-G65G-6DN5
+>hash udf TestFile1.txt /cty=application/binary
+MDBI-EE4Z-7NSH-SYBU-JHYL-JTGH-QQEZ
+>hash udf TestFile1.txt /alg=sha3
+KCYH-QB5Y-XZ6U-SXN2-WV63-AM4U-ZZIT
 ````
 
 By default, UDF values are given to 140 bit precision. Higher precision may be
@@ -40,12 +42,12 @@ If the expected digest value is specified, this is used to check the calculated 
 ````
 >hash udf TestFile1.txt /expect=MDLI-GX2C-3OQB-BVWI-REXY-EB56-JG4R
 True
->hash udf TestFile1.txt /expect=KDTG-XEIH-6LJ2-BDO6-6EPH-G65G-6DN5
+>hash udf TestFile1.txt /expect=MDBI-EE4Z-7NSH-SYBU-JHYL-JTGH-QQEZ
 ERROR - The calculated fingerprint did not match the expected value.
 ````
 
-The `hash digest`  command calculates SHA-2 and SHA-3 digests and
-returns them in hexadecimal form:
+The `hash digest`  command calculates the SHA-2-512 digest and
+returns it in hexadecimal form:
 
 
 ````
@@ -80,17 +82,17 @@ If no key is specified, a random secret is generated:
 
 ````
 >hash mac TestFile1.txt
-AB3O-FD34-GEXX-PM7G-3NHV-EIDL-OMSB
-NBCM-ZTDI-EWMQ-DSRN-M73B-SKCG-HW6W
+ACVF-TKCU-NQBH-CHYH-OE3Y-EJ6L-67L4
+NAR4-GHWA-STQ5-KZXJ-GOU5-RJMV-Z2ZN
 ````
 
 A key may be specified using the `/key` option:
 
 
 ````
->hash mac TestFile1.txt /key=NBCM-ZTDI-EWMQ-DSRN-M73B-SKCG-HW6W
-AB3O-FD34-GEXX-PM7G-3NHV-EIDL-OMSB
-NBCM-ZTDI-EWMQ-DSRN-M73B-SKCG-HW6W
+>hash mac TestFile1.txt /key=NAR4-GHWA-STQ5-KZXJ-GOU5-RJMV-Z2ZN
+ACVF-TKCU-NQBH-CHYH-OE3Y-EJ6L-67L4
+NAR4-GHWA-STQ5-KZXJ-GOU5-RJMV-Z2ZN
 ````
 
 If the expected digest value is specified, this is used to check the calculated value:
@@ -98,9 +100,9 @@ If the expected digest value is specified, this is used to check the calculated 
 
 
 ````
->hash mac TestFile1.txt /key=NBCM-ZTDI-EWMQ-DSRN-M73B-SKCG-HW6W /expect=AB3O-FD34-GEXX-PM7G-3NHV-EIDL-OMSB
+>hash mac TestFile1.txt /key=NAR4-GHWA-STQ5-KZXJ-GOU5-RJMV-Z2ZN /expect=ACVF-TKCU-NQBH-CHYH-OE3Y-EJ6L-67L4
 True
->hash mac TestFile1.txt /key=NBCM-ZTDI-EWMQ-DSRN-M73B-SKCG-HW6W /expect=MDLI-GX2C-3OQB-BVWI-REXY-EB56-JG4R
+>hash mac TestFile1.txt /key=NAR4-GHWA-STQ5-KZXJ-GOU5-RJMV-Z2ZN /expect=MDLI-GX2C-3OQB-BVWI-REXY-EB56-JG4R
 ERROR - The calculated fingerprint did not match the expected value.
 ````
 

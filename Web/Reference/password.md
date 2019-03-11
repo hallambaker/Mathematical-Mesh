@@ -18,8 +18,7 @@ add   Add password entry
        <Unspecified>
        <Unspecified>
        <Unspecified>
-    /portal   Account identifier (e.g. alice@example.com)
-    /udf   Profile fingerprint
+    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -29,8 +28,7 @@ add   Add password entry
 ````
 get   Lookup password entry
        <Unspecified>
-    /portal   Account identifier (e.g. alice@example.com)
-    /udf   Profile fingerprint
+    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -40,8 +38,7 @@ get   Lookup password entry
 ````
 delete   Delete password entry
        Domain name of Web site
-    /portal   Account identifier (e.g. alice@example.com)
-    /udf   Profile fingerprint
+    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -51,8 +48,7 @@ delete   Delete password entry
 ````
 dump   List password entries
        <Unspecified>
-    /portal   Account identifier (e.g. alice@example.com)
-    /udf   Profile fingerprint
+    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format

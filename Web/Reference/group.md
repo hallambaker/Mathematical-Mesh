@@ -15,8 +15,7 @@ group
 ````
 create   Create recryption group
        Recryption group name in user@example.com format
-    /portal   Account identifier (e.g. alice@example.com)
-    /udf   Profile fingerprint
+    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -28,8 +27,7 @@ create   Create recryption group
 add   Add user to recryption group
        Recryption group name in user@example.com format
        User to add
-    /portal   Account identifier (e.g. alice@example.com)
-    /udf   Profile fingerprint
+    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -40,8 +38,7 @@ add   Add user to recryption group
 delete   Remove user from recryption group
        Recryption group name in user@example.com format
        User to delete
-    /portal   Account identifier (e.g. alice@example.com)
-    /udf   Profile fingerprint
+    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format

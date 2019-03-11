@@ -34,10 +34,8 @@
 			Brief "Report output in JSON format"
 
 	OptionSet AccountOptions
-		Option AccountID "portal" String
-			Brief "Account identifier (e.g. alice@example.com)"
-		Option UDF "udf" String
-			Brief "Profile fingerprint"
+		Option Mesh "mesh" String
+			Brief "Account identifier (e.g. alice@example.com) or profile fingerprint"
 
 	OptionSet DeviceProfileInfo
 		Option DeviceNew "new" Flag
@@ -586,23 +584,27 @@
 
 		Command KeyNonce "nonce"
 			Brief "Return a randomized nonce value formatted as a UDF Nonce Type"			
+			Return ResultKey
 			Include Reporting
 			Include LengthOptions
-			Return ResultKey
+			
 
 		Command KeySecret "secret"
 			Brief "Return a randomized secret value formatted as a UDF Encryption Key Type."			
+			Return ResultKey
 			Include Reporting
 			Include LengthOptions
 
 		Command KeyEarl "earl"
 			Brief "Return a randomized secret value and locator as UDFs"			
+			Return ResultKey
 			Include Reporting
 			Include DigestOptions
 			Include LengthOptions
 
 		Command KeyShare "share"
 			Brief "Split a secret value according to the specified shares and quorum"			
+			Return ResultKey
 			Include Reporting
 			Include DigestOptions
 			Include LengthOptions
@@ -617,6 +619,7 @@
 
 		Command KeyRecover "recover"
 			Brief "Recover a secret value from the shares provided"			
+			Return ResultKey
 			Include Reporting
 			Parameter Share1 "s1" String
 				Brief "Share value #1"
@@ -636,8 +639,9 @@
 				Brief "Share value #8"
 
 	CommandSet Hash "hash"
-		Command FileUDF "udf"
+		Command HashUDF "udf"
 			Brief "Calculate the Uniform Data Fingerprint of the input data"
+			Return ResultDigest
 			Include Reporting
 			Include CryptoOptions
 			Include LengthOptions
@@ -648,15 +652,17 @@
 			Parameter Input "in" ExistingFile
 				Brief "File to take digest of"
 
-		Command FileDigest "digest"
+		Command HashDigest "digest"
 			Brief "Calculate the digest value of the input data"
+			Return ResultDigest
 			Include Reporting
 			Include CryptoOptions
 			Parameter Input "in" ExistingFile
 				Brief "File to take digest of"
 
-		Command FileCommitment "mac"
+		Command HashMac "mac"
 			Brief "Calculate a commitment value for the input data"
+			Return ResultDigest
 			Include Reporting
 			Include CryptoOptions
 			Include LengthOptions
@@ -673,8 +679,9 @@
 
 	CommandSet Dare "dare"
 		Brief "DARE Message encryption and decryption commands"
-		Command FileEncrypt "encode"
+		Command DareEncode "encode"
 			Brief "Encode data as DARE Message."
+			Return ResultFile
 			Parameter Input "in" ExistingFile
 				Brief "File or directory to encrypt"
 			Include EncodeOptions
@@ -685,22 +692,48 @@
 				Brief "Filename for encrypted output."
 			Option Subdirectories "sub" Flag
 				Brief "Process subdirectories recursively."
-		
-		Command FileDecrypt "decode"
+			Option SymmetrictKey "key" String
+				Brief "Specifies the value of the master key"	
+				
+		Command DareDecode "decode"
 			Brief "Decode a DARE Message."
+			Return ResultFile
 			Include AccountOptions
 			Include Reporting
 			Parameter Input "in" ExistingFile
 				Brief "Encrypted File"
 			Parameter Output "out" NewFile
 				Brief "Decrypted File"
+			Option SymmetrictKey "key" String
+				Brief "Specifies the value of the master key"	
 
-		Command FileVerify "verify"
+		Command DareVerify "verify"
 			Brief "Verify a DARE Message."
+			Return ResultFile
 			Include AccountOptions
 			Include Reporting
 			Parameter Input "in" ExistingFile
 				Brief "Encrypted File"
+			Option SymmetrictKey "key" String
+				Brief "Specifies the value of the master key"	
+
+		Command DareEARL "earl"
+			Brief "Create an Encrypted Authenticated Resource Locator (EARL)"
+			Return ResultFile
+			Parameter Input "in" ExistingFile
+				Brief "File or directory to encrypt"
+			Option Output "out" ExistingFile
+				Brief "Directory to write encrypted output."
+			Option Log "log" ExistingFile
+				Brief "Write transaction report to DARE Container Log."
+			Option New "new" ExistingFile
+				Brief "Only convert file if not listed in DARE Container Log."
+			Option Subdirectories "sub" Flag
+				Brief "Process subdirectories recursively."
+			Include CryptoOptions
+			Include AccountOptions
+			Include Reporting
+
 
 	OptionSet ContainerOptions
 		Option Type "type" String

@@ -16,7 +16,7 @@ namespace Goedel.Mesh.Shell {
         /// </summary>
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult FileEncrypt(FileEncrypt Options) {
+        public override ShellResult DareEncode(DareEncode Options) {
             var inputFile = Options.Input.Value;
             var outputFile = Path.ChangeExtension(inputFile, ".dare");
             var contentType = Options.ContentType.Value ?? MimeMapping.GetMimeMapping(inputFile) ?? "";
@@ -40,7 +40,7 @@ namespace Goedel.Mesh.Shell {
         /// </summary>
         /// <param name="Options">The command line options.</param>)
         /// <returns>Mesh result instance</returns>
-        public override ShellResult FileDecrypt(FileDecrypt Options) {
+        public override ShellResult DareDecode(DareDecode Options) {
             var inputFile = Options.Input.Value;
             var keyCollection = KeyCollection(Options);
 
@@ -57,7 +57,7 @@ namespace Goedel.Mesh.Shell {
         /// </summary>
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult FileVerify(FileVerify Options) {
+        public override ShellResult DareVerify(DareVerify Options) {
             var inputFile = Options.Input.Value;
             var result = DareMessage.Verify(inputFile);
 
@@ -66,5 +66,22 @@ namespace Goedel.Mesh.Shell {
                 Verified = result
                 };
             }
+
+        /// <summary>
+        /// Dispatch method
+        /// </summary>
+        /// <param name="Options">The command line options.</param>
+        /// <returns>Mesh result instance</returns>
+        public override ShellResult DareEARL(DareEARL Options) {
+            var inputFile = Options.Input.Value;
+            throw new NYI();
+            //var result = DareMessage.Verify(inputFile);
+
+            //return new ResultFile() {
+            //    Filename = inputFile,
+            //    Verified = result
+            //    };
+            }
+
         }
     }

@@ -35,8 +35,8 @@ If the expected digest value is specified, this is used to check the calculated 
 
 #% ConsoleExample (Examples.HashUDFExpect);
 
-The #{ToCommand("hash digest")}  command calculates SHA-2 and SHA-3 digests and
-returns them in hexadecimal form:
+The #{ToCommand("hash digest")}  command calculates the SHA-2-512 digest and
+returns it in hexadecimal form:
 
 #% ConsoleExample (Examples.HashDigest);
 
@@ -79,7 +79,7 @@ If the expected digest value is specified, this is used to check the calculated 
 The `hash` command set contains commands that perform Content Digest and 
 Message Authentication Code operations on the contents of a file.
 
-#% Describe( CommandSet, _FileUDF._DescribeCommand);
+#% Describe( CommandSet, _HashUDF._DescribeCommand);
 
 The `hash udf` command returns the UDF Content digest of the specified input 
 file according to the precision, IANA media type and digest algorithm specified
@@ -88,7 +88,7 @@ with the `/bits`, `/cty` and `/alg` options.
 #% ConsoleReference (Examples.HashUDF2);
 
 
-#% Describe( CommandSet, _FileDigest._DescribeCommand);
+#% Describe( CommandSet, _HashDigest._DescribeCommand);
 
 The `hash digest` command returns the Content digest of the specified input 
 file according to the digest algorithm specifiedwith the `/alg` option.
@@ -98,7 +98,7 @@ file according to the digest algorithm specifiedwith the `/alg` option.
 
 The `/alg` option allows the digest algorithm to be specified.
 
-#% Describe( CommandSet, _FileCommitment._DescribeCommand);
+#% Describe( CommandSet, _HashMac._DescribeCommand);
 
 The `hash mac` command returns the UDF Message Authentication Code of the specified 
 input file according to the precision, IANA media type and digest algorithm specified

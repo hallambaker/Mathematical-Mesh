@@ -27,8 +27,7 @@ profile
 
 ````
 hello   Connect to the service(s) a profile is connected to and report status.
-    /portal   Account identifier (e.g. alice@example.com)
-    /udf   Profile fingerprint
+    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
 ````
 
 # profile device
@@ -66,8 +65,7 @@ register   Register existing profile at a new portal
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
-    /portal   Account identifier (e.g. alice@example.com)
-    /udf   Profile fingerprint
+    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
 ````
 
 
@@ -75,8 +73,7 @@ register   Register existing profile at a new portal
 
 ````
 sync   Synchronize local copies of Mesh profiles with the server
-    /portal   Account identifier (e.g. alice@example.com)
-    /udf   Profile fingerprint
+    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -89,8 +86,7 @@ sync   Synchronize local copies of Mesh profiles with the server
 escrow   Create a set of key escrow shares
        <Unspecified>
     /alg   List of algorithm specifiers
-    /portal   Account identifier (e.g. alice@example.com)
-    /udf   Profile fingerprint
+    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -111,8 +107,7 @@ recover   Recover escrowed profile
        <Unspecified>
        <Unspecified>
        <Unspecified>
-    /portal   Account identifier (e.g. alice@example.com)
-    /udf   Profile fingerprint
+    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -126,8 +121,7 @@ recover   Recover escrowed profile
 ````
 export   Export the specified profile data to the specified file
        <Unspecified>
-    /portal   Account identifier (e.g. alice@example.com)
-    /udf   Profile fingerprint
+    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -139,8 +133,7 @@ export   Export the specified profile data to the specified file
 ````
 import   Import the specified profile data to the specified file
        <Unspecified>
-    /portal   Account identifier (e.g. alice@example.com)
-    /udf   Profile fingerprint
+    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -161,8 +154,7 @@ list   List all profiles on the local machine
 
 ````
 dump   Describe the specified profile
-    /portal   Account identifier (e.g. alice@example.com)
-    /udf   Profile fingerprint
+    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -173,8 +165,7 @@ dump   Describe the specified profile
 
 ````
 pending   Get list of pending connection requests
-    /portal   Account identifier (e.g. alice@example.com)
-    /udf   Profile fingerprint
+    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -202,8 +193,7 @@ connect   Connect to an existing profile registered at a portal
 ````
 accept   Accept a pending connection
        Fingerprint of connection to accept
-    /portal   Account identifier (e.g. alice@example.com)
-    /udf   Profile fingerprint
+    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -215,8 +205,7 @@ accept   Accept a pending connection
 ````
 reject   Reject a pending connection
        Fingerprint of connection to reject
-    /portal   Account identifier (e.g. alice@example.com)
-    /udf   Profile fingerprint
+    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -227,8 +216,7 @@ reject   Reject a pending connection
 ````
 pin   Accept a pending connection
     /length   Length of PIN to generate (default is 8 characters)
-    /portal   Account identifier (e.g. alice@example.com)
-    /udf   Profile fingerprint
+    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format

@@ -50,8 +50,8 @@ namespace MakeSiteDocs {
 				_Output.Write ("\n{0}", _Indent);
 				 ConsoleExample (Examples.HashUDFExpect);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("The {1}  command calculates SHA-2 and SHA-3 digests and\n{0}", _Indent, ToCommand("hash digest"));
-				_Output.Write ("returns them in hexadecimal form:\n{0}", _Indent);
+				_Output.Write ("The {1}  command calculates the SHA-2-512 digest and\n{0}", _Indent, ToCommand("hash digest"));
+				_Output.Write ("returns it in hexadecimal form:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				 ConsoleExample (Examples.HashDigest);
 				_Output.Write ("\n{0}", _Indent);
@@ -105,7 +105,7 @@ namespace MakeSiteDocs {
 				_Output.Write ("The `hash` command set contains commands that perform Content Digest and \n{0}", _Indent);
 				_Output.Write ("Message Authentication Code operations on the contents of a file.\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				 Describe( CommandSet, _FileUDF._DescribeCommand);
+				 Describe( CommandSet, _HashUDF._DescribeCommand);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The `hash udf` command returns the UDF Content digest of the specified input \n{0}", _Indent);
 				_Output.Write ("file according to the precision, IANA media type and digest algorithm specified\n{0}", _Indent);
@@ -114,7 +114,7 @@ namespace MakeSiteDocs {
 				 ConsoleReference (Examples.HashUDF2);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				 Describe( CommandSet, _FileDigest._DescribeCommand);
+				 Describe( CommandSet, _HashDigest._DescribeCommand);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The `hash digest` command returns the Content digest of the specified input \n{0}", _Indent);
 				_Output.Write ("file according to the digest algorithm specifiedwith the `/alg` option.\n{0}", _Indent);
@@ -124,7 +124,7 @@ namespace MakeSiteDocs {
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The `/alg` option allows the digest algorithm to be specified.\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				 Describe( CommandSet, _FileCommitment._DescribeCommand);
+				 Describe( CommandSet, _HashMac._DescribeCommand);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The `hash mac` command returns the UDF Message Authentication Code of the specified \n{0}", _Indent);
 				_Output.Write ("input file according to the precision, IANA media type and digest algorithm specified\n{0}", _Indent);

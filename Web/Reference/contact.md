@@ -17,8 +17,7 @@ contact
 add   Add contact entry from file
        Contact entry identifier in SIN form
     /file   <Unspecified>
-    /portal   Account identifier (e.g. alice@example.com)
-    /udf   Profile fingerprint
+    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -28,8 +27,7 @@ add   Add contact entry from file
 ````
 delete   Delete contact entry
        Contact entry identifier
-    /portal   Account identifier (e.g. alice@example.com)
-    /udf   Profile fingerprint
+    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -39,8 +37,7 @@ delete   Delete contact entry
 ````
 get   Lookup contact entry
        <Unspecified>
-    /portal   Account identifier (e.g. alice@example.com)
-    /udf   Profile fingerprint
+    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -49,8 +46,7 @@ get   Lookup contact entry
 
 ````
 dump   List contact entries
-    /portal   Account identifier (e.g. alice@example.com)
-    /udf   Profile fingerprint
+    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format

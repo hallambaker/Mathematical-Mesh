@@ -146,7 +146,6 @@ namespace MakeSiteDocs {
 				_Output.Write ("\n{0}", _Indent);
 				 ConsoleReference (Examples.KeyNonce);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
 				 Describe(CommandSet, _KeySecret._DescribeCommand);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The `key secret` command returns a randomized secret value formatted as a UDF Encryption \n{0}", _Indent);

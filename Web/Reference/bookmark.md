@@ -18,8 +18,7 @@ add   Add bookmark
        <Unspecified>
        <Unspecified>
        <Unspecified>
-    /portal   Account identifier (e.g. alice@example.com)
-    /udf   Profile fingerprint
+    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -30,8 +29,7 @@ add   Add bookmark
 delete   Delete bookmark entry
        Contact entry identifier
     /path   <Unspecified>
-    /portal   Account identifier (e.g. alice@example.com)
-    /udf   Profile fingerprint
+    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -41,8 +39,7 @@ delete   Delete bookmark entry
 ````
 get   Lookup bookmark entry
        <Unspecified>
-    /portal   Account identifier (e.g. alice@example.com)
-    /udf   Profile fingerprint
+    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -51,8 +48,7 @@ get   Lookup bookmark entry
 
 ````
 dump   List bookmark entries
-    /portal   Account identifier (e.g. alice@example.com)
-    /udf   Profile fingerprint
+    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
