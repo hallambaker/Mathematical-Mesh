@@ -6,31 +6,31 @@
 
 
 
-#file WebMessage "Guide/message.md" CreateWeb Index
+#xfile MakeSiteDocs WebMessage "Guide/message.md" CreateWeb Index
 
 ## Using the  Command Set
 
 The  command set contains commands that 
 
-#end file
+#end xfile
 
-#file MessageReference "Reference/message.md" CreateWeb Index
+#xfile MakeSiteDocs MessageReference "Reference/message.md" CreateWeb Index
 #% var CommandSet = CommandLineInterpreter.DescribeCommandSet_Message;
 
 
-#% Describe(_Output, CommandSet);
+#% Describe(CommandSet);
 
 
-#% Describe(_Output, CommandSet, _MessageContact._DescribeCommand);
-#% Describe(_Output, CommandSet, _MessageConfirm._DescribeCommand);
-#% Describe(_Output, CommandSet, _MessagePending._DescribeCommand);
-#% Describe(_Output, CommandSet, _MessageStatus._DescribeCommand);
-#% Describe(_Output, CommandSet, _MessageAccept._DescribeCommand);
-#% Describe(_Output, CommandSet, _MessageReject._DescribeCommand);
-#% Describe(_Output, CommandSet, _MessageBlock._DescribeCommand);
+#% Describe(CommandSet, _MessageContact._DescribeCommand);
+#% Describe(CommandSet, _MessageConfirm._DescribeCommand);
+#% Describe(CommandSet, _MessagePending._DescribeCommand);
+#% Describe(CommandSet, _MessageStatus._DescribeCommand);
+#% Describe(CommandSet, _MessageAccept._DescribeCommand);
+#% Describe(CommandSet, _MessageReject._DescribeCommand);
+#% Describe(CommandSet, _MessageBlock._DescribeCommand);
 
 
-#end file
+#end xfile
 
 #end xclass
 

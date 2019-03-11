@@ -6,30 +6,30 @@
 
 
 
-#file WebMail "Guide/mail.md" CreateWeb Index
+#xfile MakeSiteDocs WebMail "Guide/mail.md" CreateWeb Index
 
 ## Using the  Command Set
 
 The  command set contains commands that 
 
-#end file
+#end xfile
 
-#file MailReference "Reference/mail.md" CreateWeb Index
+#xfile MakeSiteDocs MailReference "Reference/mail.md" CreateWeb Index
 #% var CommandSet = CommandLineInterpreter.DescribeCommandSet_Mail;
 
 
-#% Describe(_Output, CommandSet);
+#% Describe(CommandSet);
 
 
-#% Describe(_Output, CommandSet, _MailAdd._DescribeCommand);
-#% Describe(_Output, CommandSet, _MailUpdate._DescribeCommand);
-#% Describe(_Output, CommandSet, _SMIMEPrivate._DescribeCommand);
-#% Describe(_Output, CommandSet, _SMIMEPublic._DescribeCommand);
-#% Describe(_Output, CommandSet, _PGPPrivate._DescribeCommand);
-#% Describe(_Output, CommandSet, _PGPPublic._DescribeCommand);
+#% Describe(CommandSet, _MailAdd._DescribeCommand);
+#% Describe(CommandSet, _MailUpdate._DescribeCommand);
+#% Describe(CommandSet, _SMIMEPrivate._DescribeCommand);
+#% Describe(CommandSet, _SMIMEPublic._DescribeCommand);
+#% Describe( CommandSet, _PGPPrivate._DescribeCommand);
+#% Describe( CommandSet, _PGPPublic._DescribeCommand);
 
 
-#end file
+#end xfile
 
 #end xclass
 

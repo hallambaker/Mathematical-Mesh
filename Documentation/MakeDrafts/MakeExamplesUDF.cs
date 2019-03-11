@@ -605,11 +605,15 @@ namespace ExampleGenerator {
 		//
 		// UDFDigestResolution
 		//
-		public static void UDFDigestResolution (CreateExamples Example) { /* File  */
-			using (var _Output = new StreamWriter ("Examples\\UDFDigestResolution.md")) {
-				var _Indent = ""; 
+		public static void UDFDigestResolution(CreateExamples Example) { /* XFile  */
+				using (var _Output = new StreamWriter("Examples\\UDFDigestResolution.md")) {
+				var obj = new ExampleGenerator() { _Output = _Output, _Indent = "", _Filename = "Examples\\UDFDigestResolution.md" };
+				obj._UDFDigestResolution(Example);
 				}
 			}
+		public void _UDFDigestResolution(CreateExamples Example) {
+
+					}
 		
 
 		//

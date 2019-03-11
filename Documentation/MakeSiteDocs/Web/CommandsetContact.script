@@ -6,27 +6,27 @@
 
 
 
-#file WebContact "Guide/contact.md" CreateWeb Index
+#xfile MakeSiteDocs WebContact "Guide/contact.md" CreateWeb Index
 
 ## Using the  Command Set
 
 The  command set contains commands that 
 
-#end file
+#end xfile
 
-#file ContactReference "Reference/contact.md" CreateWeb Index
+#xfile MakeSiteDocs ContactReference "Reference/contact.md" CreateWeb Index
 #% var CommandSet = CommandLineInterpreter.DescribeCommandSet_Contact;
 
 
-#% Describe(_Output, CommandSet);
+#% Describe(CommandSet);
 
 
-#% Describe(_Output, CommandSet, _ContactAdd._DescribeCommand);
-#% Describe(_Output, CommandSet, _ContactDelete._DescribeCommand);
-#% Describe(_Output, CommandSet, _ContactdGet._DescribeCommand);
-#% Describe(_Output, CommandSet, _ContactDump._DescribeCommand);
+#% Describe(CommandSet, _ContactAdd._DescribeCommand);
+#% Describe(CommandSet, _ContactDelete._DescribeCommand);
+#% Describe(CommandSet, _ContactdGet._DescribeCommand);
+#% Describe(CommandSet, _ContactDump._DescribeCommand);
 
-#end file
+#end xfile
 
 #end xclass
 

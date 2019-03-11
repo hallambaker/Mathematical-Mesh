@@ -6,26 +6,26 @@
 
 
 
-#file WebDare "Guide/dare.md" CreateWeb Index
+#xfile MakeSiteDocs WebDare "Guide/dare.md" CreateWeb Index
 
 ## Using the  Command Set
 
 The  command set contains commands that 
 
-#end file
+#end xfile
 
-#file DareReference "Reference/dare.md" CreateWeb Index
+#xfile MakeSiteDocs DareReference "Reference/dare.md" CreateWeb Index
 #% var CommandSet = CommandLineInterpreter.DescribeCommandSet_Dare;
 
 
-#% Describe(_Output, CommandSet);
+#% Describe(CommandSet);
 
 
-#% Describe(_Output, CommandSet, _FileEncrypt._DescribeCommand);
-#% Describe(_Output, CommandSet, _FileDecrypt._DescribeCommand);
-#% Describe(_Output, CommandSet, _FileVerify._DescribeCommand);
+#% Describe( CommandSet, _FileEncrypt._DescribeCommand);
+#% Describe(CommandSet, _FileDecrypt._DescribeCommand);
+#% Describe(CommandSet, _FileVerify._DescribeCommand);
 
-#end file
+#end xfile
 
 #end xclass
 

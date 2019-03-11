@@ -27,15 +27,15 @@ namespace Goedel.Registry {
         /// Generate a label for the currently specified code generation target.
         /// The default is to generate for C#.
         /// </summary>
-        /// <param name="Base">Base string</param>
+        /// <param name="text">Base string</param>
         /// <returns>Appropriately escaped label for current target language.</returns>
-        public static string Label(this object Base) {
+        public static string Label(this object text) {
             switch (Target) {
                 case "CS": {
-                    return Base.CS();
+                    return text.CS();
                     }
                 }
-            return Base.CS();
+            return text.CS();
             }
 
 
@@ -48,27 +48,27 @@ namespace Goedel.Registry {
         /// number or a leading underscore or are a reserved word are prefixed
         /// by an underscore.
         /// </summary>
-        /// <param name="Base">Input string</param>
+        /// <param name="text">Input string</param>
         /// <returns>Character safe label.</returns>
-        public static string CS(this object Base) => Base.ToString();
+        public static string CS(this object text) => text.ToString();
 
         /// <summary>
         /// Create a quoted, escaped string in the current language
         /// </summary>
-        /// <param name="Base">Unescaped string</param>
+        /// <param name="text">Unescaped string</param>
         /// <returns>Quoted escaped string.</returns>
-        public static string QuotedNull(this string Base) => Base == null ? "null" : Quoted(Base);
+        public static string QuotedNull(this string text) => text == null ? "null" : Quoted(text);
 
 
         /// <summary>
         /// Create a quoted, escaped string in the current language
         /// </summary>
-        /// <param name="Base">Unescaped string</param>
+        /// <param name="text">Unescaped string</param>
         /// <returns>Quoted escaped string.</returns>
-        public static string Quoted (this string Base) {
+        public static string Quoted (this string text) {
             var StringBuilder = new StringBuilder();
             StringBuilder.Append("\"");
-            Escape(StringBuilder, Base);
+            Escape(StringBuilder, text);
             StringBuilder.Append("\"");
 
             return StringBuilder.ToString();
@@ -77,17 +77,17 @@ namespace Goedel.Registry {
         /// <summary>
         /// Create an escaped string in the current language
         /// </summary>
-        /// <param name="Base">Unescaped string</param>
+        /// <param name="base">Unescaped string</param>
         /// <returns>Escaped string.</returns>
-        public static string Quoted(this List<string> Base) {
-            if (Base == null) {
+        public static string Quoted(this List<string> @base) {
+            if (@base == null) {
                 return "\"\"";
                 }
 
             var StringBuilder = new StringBuilder();
             StringBuilder.Append("\"");
             bool Space = false;
-            foreach (var Text in Base) {
+            foreach (var Text in @base) {
                 if (Space) {
                     StringBuilder.Append(" ");
                     }
@@ -99,16 +99,16 @@ namespace Goedel.Registry {
             return StringBuilder.ToString();
             }
 
-        private static void Escape(StringBuilder Builder, string Text) {
-            foreach (var c in Text) {
+        private static void Escape(StringBuilder builder, string text) {
+            foreach (var c in text) {
                 if (c == '\"') {
-                    Builder.Append("\\\"");
+                    builder.Append("\\\"");
                     }
                 else if (c == '\'') {
-                    Builder.Append("\\\'");
+                    builder.Append("\\\'");
                     }
                 else {
-                    Builder.Append(c);
+                    builder.Append(c);
                     }
                 }
             }
@@ -117,39 +117,38 @@ namespace Goedel.Registry {
         /// Return the string value if a condition is met, otherwise return an
         /// empty string.
         /// </summary>
-        /// <param name="Value">The condition value.</param>
-        /// <param name="Text">The string to return if Value is true.</param>
+        /// <param name="text">The string to return if Value is true.</param>
         /// <returns>The string Text if Value is true, otherwise a null string.</returns>
-        public static string If(this string Text) => If(Text!=null, Text, "");
+        public static string If(this string text) => If(text!=null, text, "");
 
         /// <summary>
         /// Return the string value if a condition is met, otherwise return an
         /// empty string.
         /// </summary>
-        /// <param name="Value">The condition value.</param>
-        /// <param name="Text">The string to return if Value is true.</param>
+        /// <param name="value">The condition value.</param>
+        /// <param name="text">The string to return if Value is true.</param>
         /// <returns>The string Text if Value is true, otherwise a null string.</returns>
-        public static string If(this bool Value, string Text) => If(Value, Text, "");
+        public static string If(this bool value, string text) => If(value, text, "");
 
         /// <summary>
         /// Return the first string value if a condition is met, otherwise return the second
         /// </summary>
-        /// <param name="Value">The condition value.</param>
-        /// <param name="TrueText">The string to return if Value is true.</param>
-        /// <param name="FalseText">The string to return if Value is false.</param>
+        /// <param name="value">The condition value.</param>
+        /// <param name="trueText">The string to return if Value is true.</param>
+        /// <param name="falseText">The string to return if Value is false.</param>
         /// <returns>The string Text if Value is true, otherwise a null string.</returns>
-        public static string If(this bool Value, string TrueText, string FalseText) => Value ? TrueText : FalseText;
+        public static string If(this bool value, string trueText, string falseText) => value ? trueText : falseText;
 
         /// <summary>
         /// To Be Specified stub. Writes out the value to the console an returns the string.
         /// </summary>
-        /// <param name="Value">Value to write</param>
-        /// <param name="Bold">If true, wrap value in bold style tags</param>
+        /// <param name="value">Value to write</param>
+        /// <param name="bold">If true, wrap value in bold style tags</param>
         /// <returns>The resulting formatted string.</returns>
-        public static string TBS (this string Value, bool Bold=true) {
-            var Message = String.Format("TBS: {0}", Value);
+        public static string TBS (this string value, bool bold=true) {
+            var Message = String.Format("TBS: {0}", value);
             //Console.WriteLine(Message);
-            return Bold ? "<b>" + Message + "</b>" : Message;
+            return bold ? "<b>" + Message + "</b>" : Message;
             }
 
         }
@@ -179,20 +178,20 @@ namespace Goedel.Registry {
         /// <summary>
         /// Create a separator class.
         /// </summary>
-        /// <param name="First">String to return on the first call to ToString()</param>
-        /// <param name="Next">String to return after the first call to ToString()</param>
-        public Separator(string First, string Next) {
-            this.First = First;
-            this.Next = Next;
+        /// <param name="first">String to return on the first call to ToString()</param>
+        /// <param name="next">String to return after the first call to ToString()</param>
+        public Separator(string first, string next) {
+            this.First = first;
+            this.Next = next;
             }
 
         /// <summary>
         /// Create a separactor class that returns an empty string the first
         /// time ToString is called.
         /// </summary>
-        /// <param name="Next">String to return after the first call to ToString()</param>
+        /// <param name="next">String to return after the first call to ToString()</param>
 
-        public Separator(string Next) : this ("", Next){
+        public Separator(string next) : this ("", next){
             }
 
         /// <summary>

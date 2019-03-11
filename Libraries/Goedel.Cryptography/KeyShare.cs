@@ -160,6 +160,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="bits">The number of bits to return the prime value for.</param>
         /// <param name="exponent">The power of 32</param>
+        /// <param name="index">The number of 32 bit blocks required.</param>
         /// <returns>The prime number.</returns>
         public static BigInteger GetPrime(int bits, out BigInteger exponent, out int index) {
             Assert.True(bits > 0 & bits <= 512, KeySizeNotSupported.Throw);

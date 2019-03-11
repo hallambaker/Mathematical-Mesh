@@ -6,27 +6,27 @@
 
 
 
-#file WebHash "Guide/hash.md" CreateWeb Index
+#xfile MakeSiteDocs WebHash "Guide/hash.md" CreateWeb Index
 
 ## Using the  Command Set
 
 The  command set contains commands that 
 
-#end file
+#end xfile
 
-#file HashReference "Reference/hash.md" CreateWeb Index
+#xfile MakeSiteDocs HashReference "Reference/hash.md" CreateWeb Index
 #% var CommandSet = CommandLineInterpreter.DescribeCommandSet_Hash;
 
 
-#% Describe(_Output, CommandSet);
+#% Describe( CommandSet);
 
 
-#% Describe(_Output, CommandSet, _FileUDF._DescribeCommand);
-#% Describe(_Output, CommandSet, _FileDigest._DescribeCommand);
-#% Describe(_Output, CommandSet, _FileCommitment._DescribeCommand);
+#% Describe( CommandSet, _FileUDF._DescribeCommand);
+#% Describe( CommandSet, _FileDigest._DescribeCommand);
+#% Describe( CommandSet, _FileCommitment._DescribeCommand);
 
 
-#end file
+#end xfile
 
 #end xclass
 

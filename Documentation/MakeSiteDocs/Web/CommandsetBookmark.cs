@@ -14,36 +14,44 @@ namespace MakeSiteDocs {
 		//
 		// WebBookmark
 		//
-		public static void WebBookmark (CreateWeb Index) { /* File  */
-			using (var _Output = new StreamWriter ("Guide/bookmark.md")) {
-				var _Indent = ""; 
+		public static void WebBookmark(CreateWeb Index) { /* XFile  */
+				using (var _Output = new StreamWriter("Guide/bookmark.md")) {
+				var obj = new MakeSiteDocs() { _Output = _Output, _Indent = "", _Filename = "Guide/bookmark.md" };
+				obj._WebBookmark(Index);
+				}
+			}
+		public void _WebBookmark(CreateWeb Index) {
+
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("# Using the  Command Set\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The  command set contains commands that \n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				}
-			}
+					}
 		
 
 		//
 		// BookmarkReference
 		//
-		public static void BookmarkReference (CreateWeb Index) { /* File  */
-			using (var _Output = new StreamWriter ("Reference/bookmark.md")) {
-				var _Indent = ""; 
+		public static void BookmarkReference(CreateWeb Index) { /* XFile  */
+				using (var _Output = new StreamWriter("Reference/bookmark.md")) {
+				var obj = new MakeSiteDocs() { _Output = _Output, _Indent = "", _Filename = "Reference/bookmark.md" };
+				obj._BookmarkReference(Index);
+				}
+			}
+		public void _BookmarkReference(CreateWeb Index) {
+
 				 var CommandSet = CommandLineInterpreter.DescribeCommandSet_Bookmark;
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				 Describe(_Output, CommandSet);
+				 Describe(CommandSet);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				 Describe(_Output, CommandSet, _BookmarkAdd._DescribeCommand);
-				 Describe(_Output, CommandSet, _BookmarkDelete._DescribeCommand);
-				 Describe(_Output, CommandSet, _BookmarkGet._DescribeCommand);
-				 Describe(_Output, CommandSet, _BookmarkDump._DescribeCommand);
+				 Describe(CommandSet, _BookmarkAdd._DescribeCommand);
+				 Describe(CommandSet, _BookmarkDelete._DescribeCommand);
+				 Describe(CommandSet, _BookmarkGet._DescribeCommand);
+				 Describe(CommandSet, _BookmarkDump._DescribeCommand);
 				_Output.Write ("\n{0}", _Indent);
-				}
-			}
+					}
 		}
 	}

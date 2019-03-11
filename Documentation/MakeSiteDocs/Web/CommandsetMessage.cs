@@ -14,40 +14,48 @@ namespace MakeSiteDocs {
 		//
 		// WebMessage
 		//
-		public static void WebMessage (CreateWeb Index) { /* File  */
-			using (var _Output = new StreamWriter ("Guide/message.md")) {
-				var _Indent = ""; 
+		public static void WebMessage(CreateWeb Index) { /* XFile  */
+				using (var _Output = new StreamWriter("Guide/message.md")) {
+				var obj = new MakeSiteDocs() { _Output = _Output, _Indent = "", _Filename = "Guide/message.md" };
+				obj._WebMessage(Index);
+				}
+			}
+		public void _WebMessage(CreateWeb Index) {
+
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("# Using the  Command Set\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The  command set contains commands that \n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				}
-			}
+					}
 		
 
 		//
 		// MessageReference
 		//
-		public static void MessageReference (CreateWeb Index) { /* File  */
-			using (var _Output = new StreamWriter ("Reference/message.md")) {
-				var _Indent = ""; 
+		public static void MessageReference(CreateWeb Index) { /* XFile  */
+				using (var _Output = new StreamWriter("Reference/message.md")) {
+				var obj = new MakeSiteDocs() { _Output = _Output, _Indent = "", _Filename = "Reference/message.md" };
+				obj._MessageReference(Index);
+				}
+			}
+		public void _MessageReference(CreateWeb Index) {
+
 				 var CommandSet = CommandLineInterpreter.DescribeCommandSet_Message;
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				 Describe(_Output, CommandSet);
+				 Describe(CommandSet);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				 Describe(_Output, CommandSet, _MessageContact._DescribeCommand);
-				 Describe(_Output, CommandSet, _MessageConfirm._DescribeCommand);
-				 Describe(_Output, CommandSet, _MessagePending._DescribeCommand);
-				 Describe(_Output, CommandSet, _MessageStatus._DescribeCommand);
-				 Describe(_Output, CommandSet, _MessageAccept._DescribeCommand);
-				 Describe(_Output, CommandSet, _MessageReject._DescribeCommand);
-				 Describe(_Output, CommandSet, _MessageBlock._DescribeCommand);
+				 Describe(CommandSet, _MessageContact._DescribeCommand);
+				 Describe(CommandSet, _MessageConfirm._DescribeCommand);
+				 Describe(CommandSet, _MessagePending._DescribeCommand);
+				 Describe(CommandSet, _MessageStatus._DescribeCommand);
+				 Describe(CommandSet, _MessageAccept._DescribeCommand);
+				 Describe(CommandSet, _MessageReject._DescribeCommand);
+				 Describe(CommandSet, _MessageBlock._DescribeCommand);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				}
-			}
+					}
 		}
 	}

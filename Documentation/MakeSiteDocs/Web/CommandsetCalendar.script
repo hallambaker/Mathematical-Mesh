@@ -6,28 +6,28 @@
 
 
 
-#file WebCalendar "Guide/calendar.md" CreateWeb Index
+#xfile MakeSiteDocs WebCalendar "Guide/calendar.md" CreateWeb Index
 
 ## Using the  Command Set
 
 The  command set contains commands that 
 
-#end file
+#end xfile
 
-#file CalendarReference "Reference/calendar.md" CreateWeb Index
+#xfile MakeSiteDocs CalendarReference "Reference/calendar.md" CreateWeb Index
 #% var CommandSet = CommandLineInterpreter.DescribeCommandSet_Calendar;
 
 
-#% Describe(_Output, CommandSet);
+#% Describe(CommandSet);
 
 
-#% Describe(_Output, CommandSet, _CalendarAdd._DescribeCommand);
-#% Describe(_Output, CommandSet, _CalendarGet._DescribeCommand);
-#% Describe(_Output, CommandSet, _CalendarDelete._DescribeCommand);
-#% Describe(_Output, CommandSet, _CalendarDump._DescribeCommand);
+#% Describe(CommandSet, _CalendarAdd._DescribeCommand);
+#% Describe(CommandSet, _CalendarGet._DescribeCommand);
+#% Describe(CommandSet, _CalendarDelete._DescribeCommand);
+#% Describe(CommandSet, _CalendarDump._DescribeCommand);
 
 
-#end file
+#end xfile
 
 #end xclass
 

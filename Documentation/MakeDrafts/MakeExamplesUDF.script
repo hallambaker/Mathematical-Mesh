@@ -472,8 +472,8 @@ namespace Examples {
 #end file
 
 
-#file UDFDigestResolution "Examples\\UDFDigestResolution.md" CreateExamples Example
-#end file
+#xfile ExampleGenerator UDFDigestResolution "Examples\\UDFDigestResolution.md" CreateExamples Example
+#end xfile
 
 
 

@@ -337,9 +337,11 @@ namespace Goedel.Command {
     /// </summary>
     public abstract class _Enumeration<T> : Type {
         DescribeEntryEnumerate Description;
+
+        ///<summary>The typed value</summary>
         public T Value;
 
-
+        ///<summary>Base constructor</summary>
         public _Enumeration(DescribeEntryEnumerate description, string Value = null) {
             Description = description;
             }

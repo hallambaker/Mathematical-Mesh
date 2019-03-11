@@ -6,28 +6,28 @@
 
 
 
-#file WebNetwork "Guide/network.md" CreateWeb Index
+#xfile MakeSiteDocs WebNetwork "Guide/network.md" CreateWeb Index
 
 ## Using the  Command Set
 
 The  command set contains commands that 
 
-#end file
+#end xfile
 
-#file NetworkReference "Reference/network.md" CreateWeb Index
+#xfile MakeSiteDocs NetworkReference "Reference/network.md" CreateWeb Index
 #% var CommandSet = CommandLineInterpreter.DescribeCommandSet_Network;
 
 
-#% Describe(_Output, CommandSet);
+#% Describe(CommandSet);
 
 
-#% Describe(_Output, CommandSet, _NetworkAdd._DescribeCommand);
-#% Describe(_Output, CommandSet, _NetworkGet._DescribeCommand);
-#% Describe(_Output, CommandSet, _NetworkDelete._DescribeCommand);
-#% Describe(_Output, CommandSet, _NetworkDump._DescribeCommand);
+#% Describe(CommandSet, _NetworkAdd._DescribeCommand);
+#% Describe(CommandSet, _NetworkGet._DescribeCommand);
+#% Describe(CommandSet, _NetworkDelete._DescribeCommand);
+#% Describe(CommandSet, _NetworkDump._DescribeCommand);
 
 
-#end file
+#end xfile
 
 #end xclass
 

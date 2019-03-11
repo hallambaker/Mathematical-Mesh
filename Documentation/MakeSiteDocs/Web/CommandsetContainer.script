@@ -6,31 +6,31 @@
 
 
 
-#file WebContainer "Guide/container.md" CreateWeb Index
+#xfile MakeSiteDocs WebContainer "Guide/container.md" CreateWeb Index
 
 ## Using the  Command Set
 
 The  command set contains commands that 
 
-#end file
+#end xfile
 
-#file ContainerReference "Reference/container.md" CreateWeb Index
+#xfile MakeSiteDocs ContainerReference "Reference/container.md" CreateWeb Index
 #% var CommandSet = CommandLineInterpreter.DescribeCommandSet_Container;
 
 
-#% Describe(_Output, CommandSet);
+#% Describe(CommandSet);
 
 
-#% Describe(_Output, CommandSet, _ContainerCreate._DescribeCommand);
-#% Describe(_Output, CommandSet, _ContainerArchive._DescribeCommand);
-#% Describe(_Output, CommandSet, _ContainerAppend._DescribeCommand);
-#% Describe(_Output, CommandSet, _ContainerDelete._DescribeCommand);
-#% Describe(_Output, CommandSet, _ContainerIndex._DescribeCommand);
-#% Describe(_Output, CommandSet, _ContainerExtract._DescribeCommand);
-#% Describe(_Output, CommandSet, _ContainerCopy._DescribeCommand);
-#% Describe(_Output, CommandSet, _ContainerVerify._DescribeCommand);
+#% Describe(CommandSet, _ContainerCreate._DescribeCommand);
+#% Describe(CommandSet, _ContainerArchive._DescribeCommand);
+#% Describe(CommandSet, _ContainerAppend._DescribeCommand);
+#% Describe(CommandSet, _ContainerDelete._DescribeCommand);
+#% Describe(CommandSet, _ContainerIndex._DescribeCommand);
+#% Describe(CommandSet, _ContainerExtract._DescribeCommand);
+#% Describe(CommandSet, _ContainerCopy._DescribeCommand);
+#% Describe(CommandSet, _ContainerVerify._DescribeCommand);
 
-#end file
+#end xfile
 
 #end xclass
 

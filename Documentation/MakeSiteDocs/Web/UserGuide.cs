@@ -144,27 +144,33 @@ namespace MakeSiteDocs {
 		
 
 		//
-		// 
+		// Describe
 		//
-
-			 public static void Describe (StreamWriter _Output, DescribeCommandSet CommandSet) {
-			 var _Indent = "";
+		public void Describe (DescribeCommandSet CommandSet) {
 			_Output.Write ("# {1}\n{0}", _Indent, CommandSet.Identifier);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("````\n{0}", _Indent);
 			 CommandSet.Describe('/', _Output, false);
 			_Output.Write ("````\n{0}", _Indent);
-			 }
-			 public static void Describe (StreamWriter _Output, DescribeCommandSet CommandSet, DescribeCommand Command) {
-			 var _Indent = "";
+			}
+		
+
+		//
+		// Describe
+		//
+		public void Describe (DescribeCommandSet CommandSet, DescribeCommand Command) {
 			_Output.Write ("# {1} {2}\n{0}", _Indent, CommandSet.Identifier, Command.Identifier);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("````\n{0}", _Indent);
 			 Command.Describe('/', _Output, false);
 			_Output.Write ("````\n{0}", _Indent);
-			 }
-			 public static void ConsoleExample (StreamWriter _Output, ExampleResult exampleResult) {
-			 var _Indent = "";
+			}
+		
+
+		//
+		// ConsoleExample
+		//
+		public void ConsoleExample (ExampleResult exampleResult) {
 			if (  (exampleResult == null)  ) {
 				_Output.Write ("**Missing Example***\n{0}", _Indent);
 				 Console.WriteLine ($"Missing example!"); return;
@@ -172,23 +178,31 @@ namespace MakeSiteDocs {
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("````\n{0}", _Indent);
 			_Output.Write (">{1}\n{0}", _Indent, exampleResult.Command);
-			_Output.Write ("{1}\n{0}", _Indent, exampleResult.ResultText);
+			_Output.Write ("{1}", _Indent, exampleResult.ResultText);
 			_Output.Write ("````\n{0}", _Indent);
-			 }
-			 public static void ConsoleJSON (StreamWriter _Output, ExampleResult exampleResult) {
-			 var _Indent = "";
+			}
+		
+
+		//
+		// ConsoleJSON
+		//
+		public void ConsoleJSON (ExampleResult exampleResult) {
 			if (  (exampleResult == null)  ) {
 				_Output.Write ("**Missing Example***\n{0}", _Indent);
 				 Console.WriteLine ($"Missing example!"); return;
 				}
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("````\n{0}", _Indent);
-			_Output.Write (">{1}\n{0}", _Indent, exampleResult.Command);
+			_Output.Write (">{1} /json\n{0}", _Indent, exampleResult.Command);
 			_Output.Write ("{1}\n{0}", _Indent, exampleResult.ResultJSON);
 			_Output.Write ("````\n{0}", _Indent);
-			 }
-			 public static void ConsoleReference (StreamWriter _Output, ExampleResult exampleResult) {
-			 var _Indent = "";
+			}
+		
+
+		//
+		// ConsoleReference
+		//
+		public void ConsoleReference (ExampleResult exampleResult) {
 			if (  (exampleResult == null)  ) {
 				_Output.Write ("**Missing Example***\n{0}", _Indent);
 				 Console.WriteLine ($"Missing example!"); return;
@@ -197,7 +211,7 @@ namespace MakeSiteDocs {
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("````\n{0}", _Indent);
 			_Output.Write (">{1}\n{0}", _Indent, exampleResult.Command);
-			_Output.Write ("{1}\n{0}", _Indent, exampleResult.ResultText);
+			_Output.Write ("{1}", _Indent, exampleResult.ResultText);
 			_Output.Write ("````\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("Specifying the /json option returns a result of type {1}:\n{0}", _Indent, exampleResult.ResultType);
@@ -206,7 +220,15 @@ namespace MakeSiteDocs {
 			_Output.Write (">{1} /json\n{0}", _Indent, exampleResult.Command);
 			_Output.Write ("{1}\n{0}", _Indent, exampleResult.ResultJSON);
 			_Output.Write ("````\n{0}", _Indent);
-			 }
+			}
+		
+
+		//
+		// 
+		//
+
+			 public string ToCommand (string command) => "`" + command + "`";
+			 public string ToCommand (string group, string command) => "`" + group + " " + command + "`";
 		
 		}
 	}

@@ -6,26 +6,26 @@
 
 
 
-#file WebGroup "Guide/group.md" CreateWeb Index
+#xfile MakeSiteDocs WebGroup "Guide/group.md" CreateWeb Index
 
 ## Using the  Command Set
 
 The  command set contains commands that 
 
-#end file
+#end xfile
 
-#file GroupReference "Reference/group.md" CreateWeb Index
+#xfile MakeSiteDocs GroupReference "Reference/group.md" CreateWeb Index
 #% var CommandSet = CommandLineInterpreter.DescribeCommandSet_Group;
 
 
-#% Describe(_Output, CommandSet);
+#% Describe( CommandSet);
 
 
-#% Describe(_Output, CommandSet, _GroupCreate._DescribeCommand);
-#% Describe(_Output, CommandSet, _GroupAdd._DescribeCommand);
-#% Describe(_Output, CommandSet, _GroupDelete._DescribeCommand);
+#% Describe( CommandSet, _GroupCreate._DescribeCommand);
+#% Describe( CommandSet, _GroupAdd._DescribeCommand);
+#% Describe( CommandSet, _GroupDelete._DescribeCommand);
 
-#end file
+#end xfile
 
 #end xclass
 

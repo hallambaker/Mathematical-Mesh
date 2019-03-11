@@ -112,25 +112,26 @@ executed without any output being made to the console.
 
 #end file
 
-#block
-#% public static void Describe (StreamWriter _Output, DescribeCommandSet CommandSet) {
-#% var _Indent = "";
+
+
+
+#method Describe DescribeCommandSet CommandSet
 ## #{CommandSet.Identifier}
 
 ````
 #% CommandSet.Describe('/', _Output, false);
 ````
-#% }
-#% public static void Describe (StreamWriter _Output, DescribeCommandSet CommandSet, DescribeCommand Command) {
-#% var _Indent = "";
+#end method
+
+#method2 Describe DescribeCommandSet CommandSet DescribeCommand Command
 ## #{CommandSet.Identifier} #{Command.Identifier}
 
 ````
 #% Command.Describe('/', _Output, false);
 ````
-#% }
-#% public static void ConsoleExample (StreamWriter _Output, ExampleResult exampleResult) {
-#% var _Indent = "";
+#end method2
+
+#method ConsoleExample ExampleResult exampleResult
 #if (exampleResult == null) 
 **Missing Example***
 #% Console.WriteLine ($"Missing example!"); return;
@@ -140,21 +141,21 @@ executed without any output being made to the console.
 >#{exampleResult.Command}
 #{exampleResult.ResultText}#!
 ````
-#% }
-#% public static void ConsoleJSON (StreamWriter _Output, ExampleResult exampleResult) {
-#% var _Indent = "";
+#end method
+
+#method ConsoleJSON ExampleResult exampleResult
 #if (exampleResult == null) 
 **Missing Example***
 #% Console.WriteLine ($"Missing example!"); return;
 #end if
 
 ````
->#{exampleResult.Command}
+>#{exampleResult.Command} /json
 #{exampleResult.ResultJSON}
 ````
-#% }
-#% public static void ConsoleReference (StreamWriter _Output, ExampleResult exampleResult) {
-#% var _Indent = "";
+#end method
+
+#method ConsoleReference ExampleResult exampleResult
 #if (exampleResult == null) 
 **Missing Example***
 #% Console.WriteLine ($"Missing example!"); return;
@@ -172,7 +173,13 @@ Specifying the /json option returns a result of type #{exampleResult.ResultType}
 >#{exampleResult.Command} /json
 #{exampleResult.ResultJSON}
 ````
-#% }
+#end method
+
+#block
+#% public string ToCommand (string command) => "`" + command + "`";
+#% public string ToCommand (string group, string command) => "`" + group + " " + command + "`";
 #end block
+
+
 #end xclass
 

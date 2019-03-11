@@ -14,37 +14,45 @@ namespace MakeSiteDocs {
 		//
 		// WebCalendar
 		//
-		public static void WebCalendar (CreateWeb Index) { /* File  */
-			using (var _Output = new StreamWriter ("Guide/calendar.md")) {
-				var _Indent = ""; 
+		public static void WebCalendar(CreateWeb Index) { /* XFile  */
+				using (var _Output = new StreamWriter("Guide/calendar.md")) {
+				var obj = new MakeSiteDocs() { _Output = _Output, _Indent = "", _Filename = "Guide/calendar.md" };
+				obj._WebCalendar(Index);
+				}
+			}
+		public void _WebCalendar(CreateWeb Index) {
+
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("# Using the  Command Set\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The  command set contains commands that \n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				}
-			}
+					}
 		
 
 		//
 		// CalendarReference
 		//
-		public static void CalendarReference (CreateWeb Index) { /* File  */
-			using (var _Output = new StreamWriter ("Reference/calendar.md")) {
-				var _Indent = ""; 
+		public static void CalendarReference(CreateWeb Index) { /* XFile  */
+				using (var _Output = new StreamWriter("Reference/calendar.md")) {
+				var obj = new MakeSiteDocs() { _Output = _Output, _Indent = "", _Filename = "Reference/calendar.md" };
+				obj._CalendarReference(Index);
+				}
+			}
+		public void _CalendarReference(CreateWeb Index) {
+
 				 var CommandSet = CommandLineInterpreter.DescribeCommandSet_Calendar;
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				 Describe(_Output, CommandSet);
+				 Describe(CommandSet);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				 Describe(_Output, CommandSet, _CalendarAdd._DescribeCommand);
-				 Describe(_Output, CommandSet, _CalendarGet._DescribeCommand);
-				 Describe(_Output, CommandSet, _CalendarDelete._DescribeCommand);
-				 Describe(_Output, CommandSet, _CalendarDump._DescribeCommand);
+				 Describe(CommandSet, _CalendarAdd._DescribeCommand);
+				 Describe(CommandSet, _CalendarGet._DescribeCommand);
+				 Describe(CommandSet, _CalendarDelete._DescribeCommand);
+				 Describe(CommandSet, _CalendarDump._DescribeCommand);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				}
-			}
+					}
 		}
 	}

@@ -238,6 +238,7 @@ namespace Goedel.Command {
         /// </summary>
         /// <param name="FlagIndicator">The flag indicator to use when printing the description.</param>
         /// <param name="Output">The output stream (defaults to Console)</param>
+        /// <param name="PrefixCommands">If true, prefix command tags with the flag.</param>
         public abstract void Describe (
                     char FlagIndicator,
                     TextWriter Output = null,
@@ -403,6 +404,7 @@ namespace Goedel.Command {
     /// Describe an entry value.
     /// </summary>
     public class DescribeCase : DescribeEntry {
+        ///<summary>The index value</summary>
         public int Value;
         }
 
