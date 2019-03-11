@@ -218,22 +218,6 @@ namespace MakeSiteDocs {
 		//
 		// ConsoleExample
 		//
-		public void ConsoleExample (ExampleResult exampleResult) {
-			if (  (exampleResult == null)  ) {
-				_Output.Write ("**Missing Example***\n{0}", _Indent);
-				 Console.WriteLine ($"Missing example!"); return;
-				}
-			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("````\n{0}", _Indent);
-			_Output.Write (">{1}\n{0}", _Indent, exampleResult.Command);
-			_Output.Write ("{1}", _Indent, exampleResult.ResultText);
-			_Output.Write ("````\n{0}", _Indent);
-			}
-		
-
-		//
-		// ConsoleExample
-		//
 		public void ConsoleExample (List<ExampleResult> exampleResults) {
 			if (  (exampleResults == null)  ) {
 				_Output.Write ("**Missing Example***\n{0}", _Indent);
@@ -243,7 +227,7 @@ namespace MakeSiteDocs {
 			_Output.Write ("````\n{0}", _Indent);
 			foreach  (var exampleResult in exampleResults) {
 				_Output.Write (">{1}\n{0}", _Indent, exampleResult.Command);
-				_Output.Write ("{1}", _Indent, exampleResult.ResultText);
+				_Output.Write ("{1}\n{0}", _Indent, exampleResult.ResultText);
 				}
 			_Output.Write ("````\n{0}", _Indent);
 			}

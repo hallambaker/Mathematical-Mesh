@@ -158,18 +158,6 @@ executed without any output being made to the console.
 ````
 #end method2
 
-#method ConsoleExample ExampleResult exampleResult
-#if (exampleResult == null) 
-**Missing Example***
-#% Console.WriteLine ($"Missing example!"); return;
-#end if
-
-````
->#{exampleResult.Command}
-#{exampleResult.ResultText}#!
-````
-#end method
-
 
 #method ConsoleExample List<ExampleResult> exampleResults
 #if (exampleResults == null) 
@@ -180,7 +168,7 @@ executed without any output being made to the console.
 ````
 #foreach (var exampleResult in exampleResults)
 >#{exampleResult.Command}
-#{exampleResult.ResultText}#!
+#{exampleResult.ResultText}
 #end foreach
 ````
 #end method
