@@ -196,7 +196,7 @@ executed without any output being made to the console.
 
 ````
 >#{exampleResult.Command}
-#{exampleResult.ResultText}#!
+#{exampleResult.ResultText}
 ````
 
 Specifying the /json option returns a result of type #{exampleResult.ResultType}:
