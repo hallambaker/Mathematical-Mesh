@@ -197,6 +197,16 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
+      <Compile Update="Web\CommandsetKey.cs">
+      <DependentUpon>CommandsetKey.script</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+      <Compile Update="Web\CommandsetConnect.cs">
+      <DependentUpon>CommandsetConnect.script</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>  
   </ItemGroup>
 
   <ItemGroup>
@@ -344,6 +354,10 @@
       <LastGenOutput>CommandsetKey.cs</LastGenOutput>
       <Generator>gscript</Generator>
     </None>
+    <None Update="Web\CommandsetConnect.script">
+      <LastGenOutput>CommandsetConnect.cs</LastGenOutput>
+      <Generator>gscript</Generator>
+    </None>  
   </ItemGroup>
 
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">

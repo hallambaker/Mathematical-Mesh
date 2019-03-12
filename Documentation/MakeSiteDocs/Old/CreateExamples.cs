@@ -168,7 +168,7 @@ namespace ExampleGenerator {
 
 
 
-        DocumentationEntry DocumentationEntry1;
+        public DocumentationEntry DocumentationEntry1=null;
         public DocumentationEntry Device1 (string Command, string Tag = null, bool NYI = false) {
             //DocumentationEntry1 = DeviceMesh(ShellAlice1, "terminal", Command, Tag, NYI);
             return DocumentationEntry1;

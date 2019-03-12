@@ -39,6 +39,7 @@ namespace MakeSiteDocs {
 
         public string AliceAccount = "alice@example.com";
         public string BobAccount = "bob@example.com";
+        public string GroupAccount = "groupies@example.com";
 
         public CreateWeb() {
 
@@ -53,6 +54,8 @@ namespace MakeSiteDocs {
             DoCommandsHash();
             DoCommandsDare();
             DoCommandsContainer();
+            DoCommandsProfile();
+            DoCommandsConnect();
 
             var makeSiteDocs = new MakeSiteDocs();
             makeSiteDocs.WebDocs(this);
@@ -170,11 +173,49 @@ namespace MakeSiteDocs {
             DareEARLLogNew =        testCLI.Example($"dare earl {TestFile1} /new={DareLogEarl}");
             }
 
+        public List<ExampleResult> ContainerCreate;
+        public List<ExampleResult> ContainerCreateEncrypt;
+        public List<ExampleResult> ContainerArchive;
+        public List<ExampleResult> ContainerArchiveEnhance;
+        public List<ExampleResult> ContainerArchiveVerify;
+        public List<ExampleResult> ContainerArchiveExtractAll;
+        public List<ExampleResult> ContainerArchiveExtractFile;
+
+        public List<ExampleResult> ContainerAppend;
+        public List<ExampleResult> ContainerDelete;
+        public List<ExampleResult> ContainerIndex;
+        public List<ExampleResult> ContainerArchiveCopy;
+        public List<ExampleResult> ContainerArchiveCopyDecrypt;
+        public List<ExampleResult> ContainerArchiveCopyPurge;
+
         public void DoCommandsContainer() {
             }
 
-        
+        public List<ExampleResult> ProfileMaster;
+        public List<ExampleResult> ProfileDevice;
+        public List<ExampleResult> ProfileList;
+        public List<ExampleResult> ProfileDump;
+        public List<ExampleResult> ProfileEscrow;
+        public List<ExampleResult> ProfileRecover;
+        public List<ExampleResult> ProfileExport;
+        public List<ExampleResult> ProfileImport;
+        public List<ExampleResult> ProfileHello;
+        public List<ExampleResult> ProfileRegister;
+        public List<ExampleResult> ProfileSync;
+        public void DoCommandsProfile() {
+            }
 
 
+        public List<ExampleResult> ConnectRequest;
+        public List<ExampleResult> ConnectPending;
+        public List<ExampleResult> ConnectAccept;
+        public List<ExampleResult> ConnectPending2;
+        public List<ExampleResult> ConnectReject;
+        public List<ExampleResult> ConnectGetPin;
+        public List<ExampleResult> ConnectPin;
+        public List<ExampleResult> ConnectPending3;
+
+        public void DoCommandsConnect() {
+            }
         }
     }

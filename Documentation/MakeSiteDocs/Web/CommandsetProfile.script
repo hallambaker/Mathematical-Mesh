@@ -6,65 +6,87 @@
 
 
 
-#xfile MakeSiteDocs WebProfile "Guide/profile.md" CreateWeb Index
+#xfile MakeSiteDocs WebProfile "Guide/profile.md" CreateWeb Examples
 
 ## Using the  Command Set
 
 The  command set contains commands that 
 
+
+#### Creating a profile
+
+#%  ConsoleExample (Examples.ProfileMaster);
+
+#%  ConsoleExample (Examples.ProfileDevice);
+
+#### Listing profiles installed on a machine
+
+#%  ConsoleExample (Examples.ProfileList);
+
+#%  ConsoleExample (Examples.ProfileDump);
+
+#### Escrowing Profile Master Keys
+
+#%  ConsoleExample (Examples.ProfileEscrow);
+
+#%  ConsoleExample (Examples.ProfileRecover);
+
+#### Exporting and Importing Profiles
+
+#%  ConsoleExample (Examples.ProfileExport);
+
+#%  ConsoleExample (Examples.ProfileImport);
+
+#### Using a Mesh Service Directly
+
+#%  ConsoleExample (Examples.ProfileHello);
+
+#%  ConsoleExample (Examples.ProfileRegister);
+
+#%  ConsoleExample (Examples.ProfileSync);
+
+
 #end xfile
 
-#xfile MakeSiteDocs ProfileReference "Reference/profile.md" CreateWeb Index
+#xfile MakeSiteDocs ProfileReference "Reference/profile.md" CreateWeb Examples
 #% var CommandSet = CommandLineInterpreter.DescribeCommandSet_Profile;
 
 
 #% Describe(CommandSet);
 
-
-#% Describe(CommandSet, ProfileHello._DescribeCommand);
+#% Describe(CommandSet, _MasterCreate._DescribeCommand);
+#%  ConsoleReference (Examples.ProfileMaster);
 
 #% Describe(CommandSet, _DeviceCreate._DescribeCommand);
+#%  ConsoleReference (Examples.ProfileDevice);
 
-
-#% Describe(CommandSet, _MasterCreate._DescribeCommand);
-
+#% Describe(CommandSet, _ProfileHello._DescribeCommand);
+#%  ConsoleReference (Examples.ProfileHello);
 
 #% Describe(CommandSet, _ProfileRegister._DescribeCommand);
-
+#%  ConsoleReference (Examples.ProfileRegister);
 
 #% Describe(CommandSet, _ProfileSync._DescribeCommand);
-
-
-#% Describe(CommandSet, _ProfileEscrow._DescribeCommand);
-
-
-#% Describe(CommandSet, _ProfileRecover._DescribeCommand);
-
-
-#% Describe(CommandSet, _ProfileExport._DescribeCommand);
-
-
-#% Describe(CommandSet, _ProfileImport._DescribeCommand);
+#%  ConsoleReference (Examples.ProfileSync);
 
 
 #% Describe(CommandSet, _ProfileList._DescribeCommand);
-
+#%  ConsoleReference (Examples.ProfileList);
 
 #% Describe(CommandSet, _ProfileDump._DescribeCommand);
+#%  ConsoleReference (Examples.ProfileDump);
 
+#% Describe(CommandSet, _ProfileEscrow._DescribeCommand);
+#%  ConsoleReference (Examples.ProfileEscrow);
 
-#% Describe(CommandSet, _ProfilePending._DescribeCommand);
+#% Describe(CommandSet, _ProfileRecover._DescribeCommand);
+#%  ConsoleReference (Examples.ProfileRecover);
 
+#% Describe(CommandSet, _ProfileExport._DescribeCommand);
+#%  ConsoleReference (Examples.ProfileExport);
 
-#% Describe(CommandSet, _ProfileConnect._DescribeCommand);
-
-
-#% Describe(CommandSet, _ProfileAccept._DescribeCommand);
-
-
-#% Describe(CommandSet, _ProfileReject._DescribeCommand);
-
-#% Describe(CommandSet, _ProfileGetPIN._DescribeCommand);
+#% Describe(CommandSet, _ProfileImport._DescribeCommand);
+#%  ConsoleReference (Examples.ProfileImport);
 
 #end xfile
 

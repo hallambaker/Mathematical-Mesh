@@ -71,7 +71,8 @@ ToolTargets = \
 	Web\CommandsetGroup.cs\
 	Web\CommandsetDare.cs\
 	Web\CommandsetHash.cs\
-	Web\CommandsetContainer.cs
+	Web\CommandsetContainer.cs\
+	Web\CommandsetConnect.cs
 Apps\UserGuideApps.cs : Apps\UserGuideApps.script 
 	gscript Apps\UserGuideApps.script  Apps\UserGuideApps.cs
 
@@ -179,6 +180,9 @@ Web\CommandsetHash.cs : Web\CommandsetHash.script
 
 Web\CommandsetContainer.cs : Web\CommandsetContainer.script 
 	gscript Web\CommandsetContainer.script  Web\CommandsetContainer.cs
+
+Web\CommandsetConnect.cs : Web\CommandsetConnect.script 
+	gscript Web\CommandsetConnect.script  Web\CommandsetConnect.cs
 
 
 

@@ -47,7 +47,7 @@ namespace MakeSiteDocs {
 				_Output.Write ("\n{0}", _Indent);
 				 ConsoleExample (Examples.KeyNonce256);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("Secrets are generated in the same way using the command `key secret` :\n{0}", _Indent);
+				_Output.Write ("Secrets are generated in the same way using the command `key secret`:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				 ConsoleExample (Examples.KeySecret);
 				_Output.Write ("\n{0}", _Indent);

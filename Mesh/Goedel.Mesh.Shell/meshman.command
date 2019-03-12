@@ -185,13 +185,11 @@
 			Include AccountOptions
 			Include Reporting
 
-		// Connection related
-		Command ProfilePending "pending"
-			Brief "Get list of pending connection requests"
-			Include AccountOptions
-			Include Reporting
+
 			
-		Command ProfileConnect "connect"
+	CommandSet Connect "connect"
+
+		Command ProfileConnect "request"
 			Brief "Connect to an existing profile registered at a portal"
 			Parameter Portal "portal" String
 				Brief "New portal account"
@@ -199,6 +197,11 @@
 				Brief "One time use authenticator"
 			Include Reporting
 			Include DeviceProfileInfo
+
+		Command ProfilePending "pending"
+			Brief "Get list of pending connection requests"
+			Include AccountOptions
+			Include Reporting
 
 		Command ProfileAccept "accept"
 			Brief "Accept a pending connection"

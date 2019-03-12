@@ -22,8 +22,17 @@ namespace MakeSiteDocs {
 			 Reference (Index);
 			 WebKey (Index);
 			 KeyReference (Index);
+			 WebHash (Index);
+			 HashReference (Index);
+			 WebDare (Index);
+			 DareReference (Index);
+			 WebContainer (Index);
+			 ContainerReference (Index);
 			 WebProfile (Index);
 			 ProfileReference (Index);
+			 WebConnect (Index);
+			 ConnectReference (Index);
+			
 			 WebSSH (Index);
 			 SSHReference (Index);
 			 WebBookmark (Index);
@@ -36,14 +45,8 @@ namespace MakeSiteDocs {
 			 MessageReference (Index);
 			 WebMail (Index);
 			 MailReference (Index);
-			 WebHash (Index);
-			 HashReference (Index);
 			 WebGroup (Index);
 			 GroupReference (Index);
-			 WebDare (Index);
-			 DareReference (Index);
-			 WebContainer (Index);
-			 ContainerReference (Index);
 			 WebContact (Index);
 			 ContactReference (Index);
 			 WebCalendar (Index);
@@ -100,6 +103,15 @@ namespace MakeSiteDocs {
 				_Output.Write ("<dt>Hash command set</dt>\n{0}", _Indent);
 				_Output.Write ("<dd>Allow processing of multiple files at once.</dd>\n{0}", _Indent);
 				_Output.Write ("<dd>Support SHA3 MACs, SHA256, etc digests.</dd>\n{0}", _Indent);
+				_Output.Write ("<dt>Dare command set</dt>\n{0}", _Indent);
+				_Output.Write ("<dd>Implement EARL mechanism\n{0}", _Indent);
+				_Output.Write ("<dd>Write out transaction completion to log\n{0}", _Indent);
+				_Output.Write ("<dt>Container command set</dt>\n{0}", _Indent);
+				_Output.Write ("<dd>Summarize container\n{0}", _Indent);
+				_Output.Write ("<dd>Mark container as spool, catalog, log, archive\n{0}", _Indent);
+				_Output.Write ("<dd>Erase message from container by overwritting salt\n{0}", _Indent);
+				_Output.Write ("<dd>Index functionality.\n{0}", _Indent);
+				_Output.Write ("<dd>Log file handling - find log entry, report last n entries, etc.\n{0}", _Indent);
 				_Output.Write ("</dl>\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 					}

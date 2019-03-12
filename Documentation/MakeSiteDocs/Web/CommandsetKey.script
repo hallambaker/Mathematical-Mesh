@@ -32,7 +32,7 @@ generated using the `/bits` option:
 
 #% ConsoleExample (Examples.KeyNonce256);
 
-Secrets are generated in the same way using the command `key secret` :
+Secrets are generated in the same way using the command `key secret`:
 
 #% ConsoleExample (Examples.KeySecret);
 

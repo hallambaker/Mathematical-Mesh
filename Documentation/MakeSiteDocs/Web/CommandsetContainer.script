@@ -6,15 +6,97 @@
 
 
 
-#xfile MakeSiteDocs WebContainer "Guide/container.md" CreateWeb Index
+#xfile MakeSiteDocs WebContainer "Guide/container.md" CreateWeb Examples
 
-## Using the  Command Set
+## Using the `container Command Set
 
-The  command set contains commands that 
+The `container` command set contains commands that operate on DARE Containers.
+
+#### Creating Containers
+
+Containers are created with either the #{ToCommand("container create")} or 
+#{ToCommand("container archive")}. Both commands create a container with the 
+specified cryptographic enhancements. The #{ToCommand("container archive")}
+command additionally adds the specified file(s) to the container to create 
+a container archive.
+
+#% ConsoleExample (Examples.ContainerCreate);
+
+*catalog* *spool* *archive* *log*
+
+
+The cryptographic enhancements specified when a container is created have the 
+same format and function as for DARE Messages but their scope is the container
+as a whole.
+
+For example, Alice creates an encrypted container readable by anyone who is a
+member of the group #{Examples.GroupAccount};
+
+#% ConsoleExample (Examples.ContainerCreateEncrypt);
+
+Since it is rarely desirable to sign every entry in a container, signatures
+are typically added to a container when entries or indexes are added. 
+
+The #{ToCommand("container archive")} creates a new container, adds the
+specified file(s) as entries and appends an index as the final record:
+
+#% ConsoleExample (Examples.ContainerArchive);
+
+The archive may be signed and encrypted:
+
+#% ConsoleExample (Examples.ContainerArchiveEnhance);
+
+#### Reading Containers
+
+The #{ToCommand("container verify")} 
+
+#% ConsoleExample (Examples.ContainerArchiveVerify);
+
+
+The #{ToCommand("container extract")} 
+
+#% ConsoleExample (Examples.ContainerArchiveExtractAll);
+
+#% ConsoleExample (Examples.ContainerArchiveExtractFile);
+
+
+
+
+
+
+#### Writing to Containers
+
+The #{ToCommand("container append")} 
+
+#% ConsoleExample (Examples.ContainerAppend);
+
+
+
+The #{ToCommand("container delete")} 
+
+#% ConsoleExample (Examples.ContainerDelete);
+
+
+The #{ToCommand("container index")} 
+
+#% ConsoleExample (Examples.ContainerIndex);
+
+
+
+#### Copying Containers
+
+The #{ToCommand("container copy")} 
+
+#% ConsoleExample (Examples.ContainerArchiveCopy);
+
+#% ConsoleExample (Examples.ContainerArchiveCopyDecrypt);
+
+#% ConsoleExample (Examples.ContainerArchiveCopyPurge);
+
 
 #end xfile
 
-#xfile MakeSiteDocs ContainerReference "Reference/container.md" CreateWeb Index
+#xfile MakeSiteDocs ContainerReference "Reference/container.md" CreateWeb Examples
 #% var CommandSet = CommandLineInterpreter.DescribeCommandSet_Container;
 
 
@@ -22,13 +104,60 @@ The  command set contains commands that
 
 
 #% Describe(CommandSet, _ContainerCreate._DescribeCommand);
+
+The `container create` command creates a container with the specified cryptographic
+enhancements.
+
+#% ConsoleReference (Examples.ContainerCreate);
+
 #% Describe(CommandSet, _ContainerArchive._DescribeCommand);
-#% Describe(CommandSet, _ContainerAppend._DescribeCommand);
-#% Describe(CommandSet, _ContainerDelete._DescribeCommand);
-#% Describe(CommandSet, _ContainerIndex._DescribeCommand);
-#% Describe(CommandSet, _ContainerExtract._DescribeCommand);
-#% Describe(CommandSet, _ContainerCopy._DescribeCommand);
+
+The `container archive` command creates a container with the specified cryptographic
+enhancements and adds the spefied file(s).
+
+#% ConsoleReference (Examples.ContainerArchive);
+
 #% Describe(CommandSet, _ContainerVerify._DescribeCommand);
+
+The `container verify` command verifies the authentication data of the specified 
+container.
+
+#% ConsoleReference (Examples.ContainerArchiveVerify);
+
+
+#% Describe(CommandSet, _ContainerExtract._DescribeCommand);
+
+The `container extract` command extracts the specified container entries and writes them
+to files.
+
+#% ConsoleReference (Examples.ContainerArchiveExtractAll);
+
+#% Describe(CommandSet, _ContainerAppend._DescribeCommand);
+
+The `container append` command appends the specified file to the container.
+
+#% ConsoleReference (Examples.ContainerAppend);
+
+
+#% Describe(CommandSet, _ContainerDelete._DescribeCommand);
+
+The `container delete` command marks the specified file entry as deleted in the
+container but does not erase the data from the file.
+
+#% ConsoleReference (Examples.ContainerDelete);
+
+#% Describe(CommandSet, _ContainerIndex._DescribeCommand);
+
+The `container index` command appends an index record to the end of the container.
+
+#% ConsoleReference (Examples.ContainerIndex);
+
+#% Describe(CommandSet, _ContainerCopy._DescribeCommand);
+
+The `container copy` command copies a container applying the specified filtering 
+and indexing criteria.
+
+#% ConsoleReference (Examples.ContainerArchiveCopy);
 
 #end xfile
 

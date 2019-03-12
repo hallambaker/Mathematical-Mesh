@@ -1,0 +1,69 @@
+﻿#using System.Text
+#using Goedel.Mesh
+#using Goedel.Mesh.Shell
+#using Goedel.Protocol
+#xclass MakeSiteDocs MakeSiteDocs
+
+
+
+#xfile MakeSiteDocs WebConnect "Guide/profile.md" CreateWeb Examples
+
+## Using the  Command Set
+
+The  command set contains commands that 
+
+#### Requesting a connection
+
+#%  ConsoleExample (Examples.ConnectRequest);
+
+List pending 
+
+#%  ConsoleExample (Examples.ConnectPending);
+#%  ConsoleExample (Examples.ConnectAccept);
+
+Reject connection
+#%  ConsoleExample (Examples.ConnectPending2);
+#%  ConsoleExample (Examples.ConnectReject);
+
+#### Requesting a connection using a PIN
+
+#%  ConsoleExample (Examples.ConnectGetPin);
+
+#%  ConsoleExample (Examples.ConnectPin);
+#%  ConsoleExample (Examples.ConnectPending3);
+
+
+#end xfile
+
+#xfile MakeSiteDocs ConnectReference "Reference/profile.md" CreateWeb Examples
+#% var CommandSet = CommandLineInterpreter.DescribeCommandSet_Connect;
+
+
+#% Describe(CommandSet);
+
+
+
+
+
+
+
+#% Describe(CommandSet, _ProfileConnect._DescribeCommand);
+#%  ConsoleReference (Examples.ConnectRequest);
+
+#% Describe(CommandSet, _ProfilePending._DescribeCommand);
+#%  ConsoleReference (Examples.ConnectPending);
+
+#% Describe(CommandSet, _ProfileAccept._DescribeCommand);
+#%  ConsoleReference (Examples.ConnectAccept);
+
+#% Describe(CommandSet, _ProfileReject._DescribeCommand);
+#%  ConsoleReference (Examples.ConnectReject);
+
+#% Describe(CommandSet, _ProfileGetPIN._DescribeCommand);
+#%  ConsoleReference (Examples.ConnectGetPin);
+
+#end xfile
+
+#end xclass
+
+

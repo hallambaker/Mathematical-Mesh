@@ -13,8 +13,17 @@
 #% Reference (Index);
 #% WebKey (Index);
 #% KeyReference (Index);
+#% WebHash (Index);
+#% HashReference (Index);
+#% WebDare (Index);
+#% DareReference (Index);
+#% WebContainer (Index);
+#% ContainerReference (Index);
 #% WebProfile (Index);
 #% ProfileReference (Index);
+#% WebConnect (Index);
+#% ConnectReference (Index);
+#%
 #% WebSSH (Index);
 #% SSHReference (Index);
 #% WebBookmark (Index);
@@ -27,14 +36,8 @@
 #% MessageReference (Index);
 #% WebMail (Index);
 #% MailReference (Index);
-#% WebHash (Index);
-#% HashReference (Index);
 #% WebGroup (Index);
 #% GroupReference (Index);
-#% WebDare (Index);
-#% DareReference (Index);
-#% WebContainer (Index);
-#% ContainerReference (Index);
 #% WebContact (Index);
 #% ContactReference (Index);
 #% WebCalendar (Index);
@@ -69,6 +72,15 @@ The following features are planned but not yet implemented:
 <dt>Hash command set</dt>
 <dd>Allow processing of multiple files at once.</dd>
 <dd>Support SHA3 MACs, SHA256, etc digests.</dd>
+<dt>Dare command set</dt>
+<dd>Implement EARL mechanism
+<dd>Write out transaction completion to log
+<dt>Container command set</dt>
+<dd>Summarize container
+<dd>Mark container as spool, catalog, log, archive
+<dd>Erase message from container by overwritting salt
+<dd>Index functionality.
+<dd>Log file handling - find log entry, report last n entries, etc.
 </dl>
 
 #end xfile

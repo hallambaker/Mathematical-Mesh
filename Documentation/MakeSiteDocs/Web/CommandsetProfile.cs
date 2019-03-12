@@ -14,18 +14,52 @@ namespace MakeSiteDocs {
 		//
 		// WebProfile
 		//
-		public static void WebProfile(CreateWeb Index) { /* XFile  */
+		public static void WebProfile(CreateWeb Examples) { /* XFile  */
 				using (var _Output = new StreamWriter("Guide/profile.md")) {
 				var obj = new MakeSiteDocs() { _Output = _Output, _Indent = "", _Filename = "Guide/profile.md" };
-				obj._WebProfile(Index);
+				obj._WebProfile(Examples);
 				}
 			}
-		public void _WebProfile(CreateWeb Index) {
+		public void _WebProfile(CreateWeb Examples) {
 
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("# Using the  Command Set\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The  command set contains commands that \n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("## Creating a profile\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				  ConsoleExample (Examples.ProfileMaster);
+				_Output.Write ("\n{0}", _Indent);
+				  ConsoleExample (Examples.ProfileDevice);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("## Listing profiles installed on a machine\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				  ConsoleExample (Examples.ProfileList);
+				_Output.Write ("\n{0}", _Indent);
+				  ConsoleExample (Examples.ProfileDump);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("## Escrowing Profile Master Keys\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				  ConsoleExample (Examples.ProfileEscrow);
+				_Output.Write ("\n{0}", _Indent);
+				  ConsoleExample (Examples.ProfileRecover);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("## Exporting and Importing Profiles\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				  ConsoleExample (Examples.ProfileExport);
+				_Output.Write ("\n{0}", _Indent);
+				  ConsoleExample (Examples.ProfileImport);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("## Using a Mesh Service Directly\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				  ConsoleExample (Examples.ProfileHello);
+				_Output.Write ("\n{0}", _Indent);
+				  ConsoleExample (Examples.ProfileRegister);
+				_Output.Write ("\n{0}", _Indent);
+				  ConsoleExample (Examples.ProfileSync);
+				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 					}
 		
@@ -33,64 +67,52 @@ namespace MakeSiteDocs {
 		//
 		// ProfileReference
 		//
-		public static void ProfileReference(CreateWeb Index) { /* XFile  */
+		public static void ProfileReference(CreateWeb Examples) { /* XFile  */
 				using (var _Output = new StreamWriter("Reference/profile.md")) {
 				var obj = new MakeSiteDocs() { _Output = _Output, _Indent = "", _Filename = "Reference/profile.md" };
-				obj._ProfileReference(Index);
+				obj._ProfileReference(Examples);
 				}
 			}
-		public void _ProfileReference(CreateWeb Index) {
+		public void _ProfileReference(CreateWeb Examples) {
 
 				 var CommandSet = CommandLineInterpreter.DescribeCommandSet_Profile;
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				 Describe(CommandSet);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				 Describe(CommandSet, ProfileHello._DescribeCommand);
+				 Describe(CommandSet, _MasterCreate._DescribeCommand);
+				  ConsoleReference (Examples.ProfileMaster);
 				_Output.Write ("\n{0}", _Indent);
 				 Describe(CommandSet, _DeviceCreate._DescribeCommand);
+				  ConsoleReference (Examples.ProfileDevice);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				 Describe(CommandSet, _MasterCreate._DescribeCommand);
-				_Output.Write ("\n{0}", _Indent);
+				 Describe(CommandSet, _ProfileHello._DescribeCommand);
+				  ConsoleReference (Examples.ProfileHello);
 				_Output.Write ("\n{0}", _Indent);
 				 Describe(CommandSet, _ProfileRegister._DescribeCommand);
-				_Output.Write ("\n{0}", _Indent);
+				  ConsoleReference (Examples.ProfileRegister);
 				_Output.Write ("\n{0}", _Indent);
 				 Describe(CommandSet, _ProfileSync._DescribeCommand);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				 Describe(CommandSet, _ProfileEscrow._DescribeCommand);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				 Describe(CommandSet, _ProfileRecover._DescribeCommand);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				 Describe(CommandSet, _ProfileExport._DescribeCommand);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				 Describe(CommandSet, _ProfileImport._DescribeCommand);
+				  ConsoleReference (Examples.ProfileSync);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				 Describe(CommandSet, _ProfileList._DescribeCommand);
-				_Output.Write ("\n{0}", _Indent);
+				  ConsoleReference (Examples.ProfileList);
 				_Output.Write ("\n{0}", _Indent);
 				 Describe(CommandSet, _ProfileDump._DescribeCommand);
+				  ConsoleReference (Examples.ProfileDump);
 				_Output.Write ("\n{0}", _Indent);
+				 Describe(CommandSet, _ProfileEscrow._DescribeCommand);
+				  ConsoleReference (Examples.ProfileEscrow);
 				_Output.Write ("\n{0}", _Indent);
-				 Describe(CommandSet, _ProfilePending._DescribeCommand);
+				 Describe(CommandSet, _ProfileRecover._DescribeCommand);
+				  ConsoleReference (Examples.ProfileRecover);
 				_Output.Write ("\n{0}", _Indent);
+				 Describe(CommandSet, _ProfileExport._DescribeCommand);
+				  ConsoleReference (Examples.ProfileExport);
 				_Output.Write ("\n{0}", _Indent);
-				 Describe(CommandSet, _ProfileConnect._DescribeCommand);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				 Describe(CommandSet, _ProfileAccept._DescribeCommand);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				 Describe(CommandSet, _ProfileReject._DescribeCommand);
-				_Output.Write ("\n{0}", _Indent);
-				 Describe(CommandSet, _ProfileGetPIN._DescribeCommand);
+				 Describe(CommandSet, _ProfileImport._DescribeCommand);
+				  ConsoleReference (Examples.ProfileImport);
 				_Output.Write ("\n{0}", _Indent);
 					}
 		}
