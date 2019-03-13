@@ -3,7 +3,7 @@
 # bookmark
 
 ````
-bookmark    
+bookmark    Manage bookmark catalogs connected to an account
     add   Add bookmark
     delete   Delete bookmark entry
     dump   List bookmark entries

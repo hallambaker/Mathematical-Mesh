@@ -3,7 +3,7 @@
 # container
 
 ````
-container    
+container    DARE container commands
     append   Append the specified file as an entry to the specified container
     archive   Create a new DARE Container and archive the specified files
     copy   Copy container contents to create a new container

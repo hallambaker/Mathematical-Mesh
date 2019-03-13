@@ -3,7 +3,7 @@
 # calendar
 
 ````
-calendar    
+calendar    Manage calendar catalogs connected to an account
     add   Add calendar entry from file
     delete   Delete calendar entry
     dump   List calendar entries

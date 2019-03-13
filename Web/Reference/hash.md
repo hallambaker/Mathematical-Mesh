@@ -3,7 +3,7 @@
 # hash
 
 ````
-hash    
+hash    <Unspecified>
     digest   Calculate the digest value of the input data
     mac   Calculate a commitment value for the input data
     udf   Calculate the Uniform Data Fingerprint of the input data
@@ -108,8 +108,8 @@ true returned if and only if it matches the value specified.
 
 ````
 >hash mac TestFile1.txt
-ABHF-OSIX-RFRN-ATT3-3HME-EVFH-MLGK
-NCU6-YNCI-T227-7TPB-KZJK-T4FG-IVAJ
+AB7P-JKM4-MIIZ-LURO-EPJJ-VRIX-736I
+NDYP-LOXK-GWCL-5MII-7FDE-7NWP-AZRC
 ````
 
 Specifying the /json option returns a result of type ResultDigest:
@@ -119,7 +119,7 @@ Specifying the /json option returns a result of type ResultDigest:
 {
   "ResultDigest": {
     "Success": true,
-    "Digest": "ABHF-OSIX-RFRN-ATT3-3HME-EVFH-MLGK",
-    "Key": "NCU6-YNCI-T227-7TPB-KZJK-T4FG-IVAJ"}}
+    "Digest": "AB7P-JKM4-MIIZ-LURO-EPJJ-VRIX-736I",
+    "Key": "NDYP-LOXK-GWCL-5MII-7FDE-7NWP-AZRC"}}
 ````
 

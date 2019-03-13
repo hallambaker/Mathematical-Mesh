@@ -3,7 +3,7 @@
 # mail
 
 ````
-mail    
+mail    Manage mail profiles connected to a personal profile
     add   Add a mail application profile to a personal profile
     update   Update an existing mail application profile
 ````

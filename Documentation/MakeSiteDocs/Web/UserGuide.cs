@@ -130,17 +130,15 @@ namespace MakeSiteDocs {
 
 				_Output.Write ("# meshman User Guide\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("<dl>\n{0}", _Indent);
-				_Output.Write ("<dt>[`key`](key.md)</dt>\n{0}", _Indent);
-				_Output.Write ("<dd>Generate secrets and nonces. Split a secret into shares and recover secret from shares</dd>\n{0}", _Indent);
-				_Output.Write ("<dt>[`hash`](hash.md)</dt>\n{0}", _Indent);
-				_Output.Write ("<dd>Perform Content Digest and Message Authentication Code operations on the contents of a file</dd>\n{0}", _Indent);
-				_Output.Write ("<dt>[`dare`](dare.md)</dt>\n{0}", _Indent);
-				_Output.Write ("<dd>Encode and decode DARE messages</dd>\n{0}", _Indent);
-				_Output.Write ("<dt>[`container`](container.md)</dt>\n{0}", _Indent);
-				_Output.Write ("<dd>Encode and decode DARE containers</dd>\n{0}", _Indent);
+				foreach  (var entry in CommandLineInterpreter.Entries) {
+					if (  (entry.Value is DescribeCommandSet) ) {
+						_Output.Write ("<dt><a href=\"{1}.md\">{2}</a>\n{0}", _Indent, entry.Key, entry.Key);
+						_Output.Write ("<dd>{1}\n{0}", _Indent, entry.Value.Brief);
+						}
+					}
 				_Output.Write ("</dl>\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 					}
 		
@@ -159,14 +157,12 @@ namespace MakeSiteDocs {
 				_Output.Write ("# meshman Reference Manual\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("<dl>\n{0}", _Indent);
-				_Output.Write ("<dt>[`key`](key.md)</dt>\n{0}", _Indent);
-				_Output.Write ("<dd>Generate secrets and nonces. Split a secret into shares and recover secret from shares</dd>\n{0}", _Indent);
-				_Output.Write ("<dt>[`hash`](hash.md)</dt>\n{0}", _Indent);
-				_Output.Write ("<dd>Perform Content Digest and Message Authentication Code operations on the contents of a file</dd>\n{0}", _Indent);
-				_Output.Write ("<dt>[`dare`](dare.md)</dt>\n{0}", _Indent);
-				_Output.Write ("<dd>Encode and decode DARE messages</dd>\n{0}", _Indent);
-				_Output.Write ("<dt>[`container`](container.md)</dt>\n{0}", _Indent);
-				_Output.Write ("<dd>Encode and decode DARE containers</dd>\n{0}", _Indent);
+				foreach  (var entry in CommandLineInterpreter.Entries) {
+					if (  (entry.Value is DescribeCommandSet) ) {
+						_Output.Write ("<dt><a href=\"{1}.md\">{2}</a>\n{0}", _Indent, entry.Key, entry.Key);
+						_Output.Write ("<dd>{1}\n{0}", _Indent, entry.Value.Brief);
+						}
+					}
 				_Output.Write ("</dl>\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("# Command format\n{0}", _Indent);

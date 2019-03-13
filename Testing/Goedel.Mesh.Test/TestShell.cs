@@ -214,9 +214,9 @@ namespace Goedel.Mesh.Test {
 
 
         public void Connect(TestCLI newDevice, string account) {
-            var result = Dispatch($"profile pin") as ResultPIN;
+            var result = Dispatch($"connect pin") as ResultPIN;
             var pin = result.MessageConnectionPIN.PIN;
-            newDevice.Dispatch($"profile connect {account} /new /pin {pin}");
+            newDevice.Dispatch($"connect request {account} /new /pin {pin}");
             Dispatch($"profile sync");
             newDevice.Dispatch($"profile sync");
 

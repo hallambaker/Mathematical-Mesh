@@ -3,7 +3,7 @@
 # password
 
 ````
-password    
+password    Manage password catalogs connected to an account
     add   Add password entry
     delete   Delete password entry
     dump   List password entries

@@ -229,7 +229,7 @@ namespace Goedel.Command {
     /// Describe a command set.
     /// </summary>
     public abstract class DescribeCommand : DescribeEntry {
-        
+
         /// <summary>If true, this is the default command.</summary>
         public bool IsDefault = false;
 

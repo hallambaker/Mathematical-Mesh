@@ -3,7 +3,7 @@
 # connect
 
 ````
-connect    
+connect    Device connection commands.
     accept   Accept a pending connection
     pending   Get list of pending connection requests
     pin   Accept a pending connection

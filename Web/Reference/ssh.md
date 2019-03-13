@@ -3,7 +3,7 @@
 # ssh
 
 ````
-ssh    
+ssh    Manage SSH profiles connected to a personal profile
     create   Generate a new SSH public keypair for the current machine and add to the personal profile
     private   Extract the private key for this device
     public   Extract the public key for this device

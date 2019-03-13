@@ -101,6 +101,7 @@ namespace Goedel.Mesh.Shell {
 
 		public static DescribeCommandSet DescribeCommandSet_Profile = new DescribeCommandSet () {
             Identifier = "profile",
+			Brief = "Manage personal and device profiles and accounts.",
 			Entries = new  SortedDictionary<string, DescribeCommand> () {
 				{"hello", _ProfileHello._DescribeCommand },
 				{"device", _DeviceCreate._DescribeCommand },
@@ -118,6 +119,7 @@ namespace Goedel.Mesh.Shell {
 
 		public static DescribeCommandSet DescribeCommandSet_Connect = new DescribeCommandSet () {
             Identifier = "connect",
+			Brief = "Device connection commands.",
 			Entries = new  SortedDictionary<string, DescribeCommand> () {
 				{"request", _ProfileConnect._DescribeCommand },
 				{"pending", _ProfilePending._DescribeCommand },
@@ -129,6 +131,7 @@ namespace Goedel.Mesh.Shell {
 
 		public static DescribeCommandSet DescribeCommandSet_Mail = new DescribeCommandSet () {
             Identifier = "mail",
+			Brief = "Manage mail profiles connected to a personal profile",
 			Entries = new  SortedDictionary<string, DescribeCommand> () {
 				{"add", _MailAdd._DescribeCommand },
 				{"update", _MailUpdate._DescribeCommand },
@@ -139,6 +142,7 @@ namespace Goedel.Mesh.Shell {
 
 		public static DescribeCommandSet DescribeCommandSet_SMIME = new DescribeCommandSet () {
             Identifier = "smime",
+			Brief = "<Unspecified>",
 			Entries = new  SortedDictionary<string, DescribeCommand> () {
 				{"private", _SMIMEPrivate._DescribeCommand },
 				{"public", _SMIMEPublic._DescribeCommand }
@@ -147,6 +151,7 @@ namespace Goedel.Mesh.Shell {
 
 		public static DescribeCommandSet DescribeCommandSet_PGP = new DescribeCommandSet () {
             Identifier = "openpgp",
+			Brief = "<Unspecified>",
 			Entries = new  SortedDictionary<string, DescribeCommand> () {
 				{"private", _PGPPrivate._DescribeCommand },
 				{"public", _PGPPublic._DescribeCommand }
@@ -155,6 +160,7 @@ namespace Goedel.Mesh.Shell {
 
 		public static DescribeCommandSet DescribeCommandSet_SSH = new DescribeCommandSet () {
             Identifier = "ssh",
+			Brief = "Manage SSH profiles connected to a personal profile",
 			Entries = new  SortedDictionary<string, DescribeCommand> () {
 				{"create", _SSHCreate._DescribeCommand },
 				{"private", _SSHPrivate._DescribeCommand },
@@ -166,6 +172,7 @@ namespace Goedel.Mesh.Shell {
 
 		public static DescribeCommandSet DescribeCommandSet_SSHAdd = new DescribeCommandSet () {
             Identifier = "add",
+			Brief = "<Unspecified>",
 			Entries = new  SortedDictionary<string, DescribeCommand> () {
 				{"host", _SSHAddHost._DescribeCommand },
 				{"known", _SSHMergeKnown._DescribeCommand },
@@ -175,6 +182,7 @@ namespace Goedel.Mesh.Shell {
 
 		public static DescribeCommandSet DescribeCommandSet_SSHShow = new DescribeCommandSet () {
             Identifier = "show",
+			Brief = "<Unspecified>",
 			Entries = new  SortedDictionary<string, DescribeCommand> () {
 				{"known", _SSHKnown._DescribeCommand },
 				{"auth", _SSHAuth._DescribeCommand }
@@ -183,6 +191,7 @@ namespace Goedel.Mesh.Shell {
 
 		public static DescribeCommandSet DescribeCommandSet_Password = new DescribeCommandSet () {
             Identifier = "password",
+			Brief = "Manage password catalogs connected to an account",
 			Entries = new  SortedDictionary<string, DescribeCommand> () {
 				{"add", _PasswordAdd._DescribeCommand },
 				{"get", _PasswordGet._DescribeCommand },
@@ -193,6 +202,7 @@ namespace Goedel.Mesh.Shell {
 
 		public static DescribeCommandSet DescribeCommandSet_Contact = new DescribeCommandSet () {
             Identifier = "contact",
+			Brief = "Manage contact catalogs connected to an account",
 			Entries = new  SortedDictionary<string, DescribeCommand> () {
 				{"add", _ContactAdd._DescribeCommand },
 				{"delete", _ContactDelete._DescribeCommand },
@@ -203,6 +213,7 @@ namespace Goedel.Mesh.Shell {
 
 		public static DescribeCommandSet DescribeCommandSet_Bookmark = new DescribeCommandSet () {
             Identifier = "bookmark",
+			Brief = "Manage bookmark catalogs connected to an account",
 			Entries = new  SortedDictionary<string, DescribeCommand> () {
 				{"add", _BookmarkAdd._DescribeCommand },
 				{"delete", _BookmarkDelete._DescribeCommand },
@@ -213,6 +224,7 @@ namespace Goedel.Mesh.Shell {
 
 		public static DescribeCommandSet DescribeCommandSet_Calendar = new DescribeCommandSet () {
             Identifier = "calendar",
+			Brief = "Manage calendar catalogs connected to an account",
 			Entries = new  SortedDictionary<string, DescribeCommand> () {
 				{"add", _CalendarAdd._DescribeCommand },
 				{"get", _CalendarGet._DescribeCommand },
@@ -223,6 +235,7 @@ namespace Goedel.Mesh.Shell {
 
 		public static DescribeCommandSet DescribeCommandSet_Network = new DescribeCommandSet () {
             Identifier = "network",
+			Brief = "Manage network profile settings",
 			Entries = new  SortedDictionary<string, DescribeCommand> () {
 				{"add", _NetworkAdd._DescribeCommand },
 				{"get", _NetworkGet._DescribeCommand },
@@ -233,6 +246,7 @@ namespace Goedel.Mesh.Shell {
 
 		public static DescribeCommandSet DescribeCommandSet_Message = new DescribeCommandSet () {
             Identifier = "message",
+			Brief = "Contact and confirmation message options",
 			Entries = new  SortedDictionary<string, DescribeCommand> () {
 				{"contact", _MessageContact._DescribeCommand },
 				{"confirm", _MessageConfirm._DescribeCommand },
@@ -246,6 +260,7 @@ namespace Goedel.Mesh.Shell {
 
 		public static DescribeCommandSet DescribeCommandSet_Group = new DescribeCommandSet () {
             Identifier = "group",
+			Brief = "Group management commands",
 			Entries = new  SortedDictionary<string, DescribeCommand> () {
 				{"create", _GroupCreate._DescribeCommand },
 				{"add", _GroupAdd._DescribeCommand },
@@ -255,6 +270,7 @@ namespace Goedel.Mesh.Shell {
 
 		public static DescribeCommandSet DescribeCommandSet_Key = new DescribeCommandSet () {
             Identifier = "key",
+			Brief = "Key operations.",
 			Entries = new  SortedDictionary<string, DescribeCommand> () {
 				{"nonce", _KeyNonce._DescribeCommand },
 				{"secret", _KeySecret._DescribeCommand },
@@ -266,6 +282,7 @@ namespace Goedel.Mesh.Shell {
 
 		public static DescribeCommandSet DescribeCommandSet_Hash = new DescribeCommandSet () {
             Identifier = "hash",
+			Brief = "<Unspecified>",
 			Entries = new  SortedDictionary<string, DescribeCommand> () {
 				{"udf", _HashUDF._DescribeCommand },
 				{"digest", _HashDigest._DescribeCommand },
@@ -275,6 +292,7 @@ namespace Goedel.Mesh.Shell {
 
 		public static DescribeCommandSet DescribeCommandSet_Dare = new DescribeCommandSet () {
             Identifier = "dare",
+			Brief = "DARE Message encryption and decryption commands",
 			Entries = new  SortedDictionary<string, DescribeCommand> () {
 				{"encode", _DareEncode._DescribeCommand },
 				{"decode", _DareDecode._DescribeCommand },
@@ -285,6 +303,7 @@ namespace Goedel.Mesh.Shell {
 
 		public static DescribeCommandSet DescribeCommandSet_Container = new DescribeCommandSet () {
             Identifier = "container",
+			Brief = "DARE container commands",
 			Entries = new  SortedDictionary<string, DescribeCommand> () {
 				{"create", _ContainerCreate._DescribeCommand },
 				{"archive", _ContainerArchive._DescribeCommand },

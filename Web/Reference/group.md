@@ -3,7 +3,7 @@
 # group
 
 ````
-group    
+group    Group management commands
     add   Add user to recryption group
     create   Create recryption group
     delete   Remove user from recryption group

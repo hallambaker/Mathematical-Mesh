@@ -12,6 +12,7 @@
 		Brief		"Report version and compilation date."
 
 	OptionSet Reporting
+
 		Enumerate EnumReporting "report"
 			Brief "Reporting level"
 			Case eJson "json"
@@ -103,6 +104,7 @@
 			Brief "Encrypt data for specified recipient"
 
 	CommandSet Profile "profile"
+
 		Brief "Manage personal and device profiles and accounts."
 
 		Command ProfileHello "hello"		
@@ -188,7 +190,7 @@
 
 			
 	CommandSet Connect "connect"
-
+		Brief "Device connection commands."
 		Command ProfileConnect "request"
 			Brief "Connect to an existing profile registered at a portal"
 			Parameter Portal "portal" String

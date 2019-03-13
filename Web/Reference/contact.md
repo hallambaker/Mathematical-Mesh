@@ -3,7 +3,7 @@
 # contact
 
 ````
-contact    
+contact    Manage contact catalogs connected to an account
     add   Add contact entry from file
     delete   Delete contact entry
     dump   List contact entries

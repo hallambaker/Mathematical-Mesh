@@ -3,7 +3,7 @@
 # network
 
 ````
-network    
+network    Manage network profile settings
     add   Add calendar entry from file
     delete   Delete calendar entry
     dump   List network entries

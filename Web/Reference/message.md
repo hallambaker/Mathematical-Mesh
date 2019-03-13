@@ -3,7 +3,7 @@
 # message
 
 ````
-message    
+message    Contact and confirmation message options
     accept   Accept a pending request
     block   Reject a pending request and block requests from that source
     confirm   Post a confirmation request to a user
