@@ -103,6 +103,31 @@
 		Option DigestKey "key" String
 			Brief "Encrypt data for specified recipient"
 
+	OptionSet ContainerOptions
+		Option Type "type" String
+			Brief "The container type, plain/tree/digest/chain/tree"
+		Enumerate EnumAuthentication "auth"
+			Brief "Authentication and indexing"
+			Case ePlain "plain"
+				Brief "No authentication"
+			Case eDigest "digest"
+				Brief "Digest authentication"
+			Case eChain "chain"
+				Brief "Chained digest authentication"
+			Case eTree "tree"
+				Brief "Tree without authentication"
+			Case eMerkel "merkel"
+				Brief "Merkel tree authentication"
+		Enumerate EnumUse "use"
+			Case eLog "log"
+				Brief "Log"
+			Case eArchive "archive"
+				Brief "Archive"
+			Case eSpool "spool"
+				Brief "Message spool"
+			Case eCatalog "catalog"
+				Brief "Object catalog"
+
 	CommandSet Profile "profile"
 
 		Brief "Manage personal and device profiles and accounts."
@@ -121,7 +146,7 @@
 			Option Default "default" Flag
 				Brief "Make the new device profile the default"
 
-		Command MasterCreate "master"
+		Command MasterCreate "create"
 			Brief "Create new personal profile"
 			Parameter NewAccountID "new" String
 				Brief "New account"
@@ -644,6 +669,7 @@
 				Brief "Share value #8"
 
 	CommandSet Hash "hash"
+		Brief "Content Digest and Message Authentication Code operations on files"
 		Command HashUDF "udf"
 			Brief "Calculate the Uniform Data Fingerprint of the input data"
 			Return ResultDigest
@@ -740,9 +766,7 @@
 			Include Reporting
 
 
-	OptionSet ContainerOptions
-		Option Type "type" String
-			Brief "The container type, plain/tree/digest/chain/tree"
+
 
 	CommandSet Container "container"
 		Brief "DARE container commands"
@@ -784,8 +808,8 @@
 		Command ContainerDelete "delete"
 			Parameter Container "in" ExistingFile
 				Brief "Container to append to"
-			Parameter File "file" NewFile
-				Brief "File to append"
+			Option Filename "file" String
+				Brief "Name of file to delete"
 			Option Key "key" String
 
 		Command ContainerIndex "index"

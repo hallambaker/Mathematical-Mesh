@@ -86,7 +86,7 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult ContainerDelete(ContainerDelete Options) {
-            var inputFile = Options.File.Value;
+            var inputFile = Options.Filename.Value;
             var outputFile = Options.Container.Value;
 
             var CryptoParameters = new CryptoParameters();

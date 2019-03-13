@@ -73,12 +73,12 @@ namespace Goedel.XUnit {
             device3.Dispatch($"connect request {accountA}  /new");
             device3.Dispatch($"profile sync", fail: true);
 
-            var result3 = device1.Dispatch($"profile pending");
+            var result3 = device1.Dispatch($"connect pending");
 
             message = (result3 as ResultPending).Messages[0] as MessageConnectionRequest;
             witness = message.Witness;
             device1.Dispatch($"connect reject {witness}");
-            device3.Dispatch($"connect sync", fail: true);
+            device3.Dispatch($"profile sync", fail: true);
             }
 
 

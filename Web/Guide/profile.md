@@ -5,22 +5,54 @@ The  command set contains commands that
 
 ## Requesting a connection
 
-**Missing Example***
+
+````
+>connect request
+ERROR - Object reference not set to an instance of an object.
+````
 
 List pending 
 
-**Missing Example***
-**Missing Example***
+
+````
+>connect pending
+ERROR - Object reference not set to an instance of an object.
+````
+
+````
+>connect accept id
+ERROR - Object reference not set to an instance of an object.
+````
 
 Reject connection
-**Missing Example***
-**Missing Example***
+
+````
+>connect pending
+ERROR - Object reference not set to an instance of an object.
+````
+
+````
+>connect reject id
+ERROR - Object reference not set to an instance of an object.
+````
 
 ## Requesting a connection using a PIN
 
-**Missing Example***
 
-**Missing Example***
-**Missing Example***
+````
+>connect pin
+ERROR - Object reference not set to an instance of an object.
+````
+
+
+````
+>connect request /pin=PIN
+ERROR - Object reference not set to an instance of an object.
+````
+
+````
+>connect pending
+ERROR - Object reference not set to an instance of an object.
+````
 
 

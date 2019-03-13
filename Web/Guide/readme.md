@@ -16,7 +16,7 @@
 <dt><a href="group.md">group</a>
 <dd>Group management commands
 <dt><a href="hash.md">hash</a>
-<dd><Unspecified>
+<dd>Content Digest and Message Authentication Code operations on files
 <dt><a href="key.md">key</a>
 <dd>Key operations.
 <dt><a href="mail.md">mail</a>

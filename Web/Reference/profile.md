@@ -31,7 +31,21 @@ request   Connect to an existing profile registered at a portal
     /did   Device identifier
     /dd   Device description
 ````
-**Missing Example***
+
+````
+>connect request
+ERROR - Object reference not set to an instance of an object.
+````
+
+Specifying the /json option returns a result of type Result:
+
+````
+>connect request /json
+{
+  "Result": {
+    "Success": false,
+    "Reason": "Object reference not set to an instance of an object."}}
+````
 
 # connect pending
 
@@ -42,7 +56,21 @@ pending   Get list of pending connection requests
     /report   Report output (default)
     /json   Report output in JSON format
 ````
-**Missing Example***
+
+````
+>connect pending
+ERROR - Object reference not set to an instance of an object.
+````
+
+Specifying the /json option returns a result of type Result:
+
+````
+>connect pending /json
+{
+  "Result": {
+    "Success": false,
+    "Reason": "Object reference not set to an instance of an object."}}
+````
 
 # connect accept
 
@@ -54,7 +82,21 @@ accept   Accept a pending connection
     /report   Report output (default)
     /json   Report output in JSON format
 ````
-**Missing Example***
+
+````
+>connect accept id
+ERROR - Object reference not set to an instance of an object.
+````
+
+Specifying the /json option returns a result of type Result:
+
+````
+>connect accept id /json
+{
+  "Result": {
+    "Success": false,
+    "Reason": "Object reference not set to an instance of an object."}}
+````
 
 # connect reject
 
@@ -66,7 +108,21 @@ reject   Reject a pending connection
     /report   Report output (default)
     /json   Report output in JSON format
 ````
-**Missing Example***
+
+````
+>connect reject id
+ERROR - Object reference not set to an instance of an object.
+````
+
+Specifying the /json option returns a result of type Result:
+
+````
+>connect reject id /json
+{
+  "Result": {
+    "Success": false,
+    "Reason": "Object reference not set to an instance of an object."}}
+````
 
 # connect pin
 
@@ -78,5 +134,19 @@ pin   Accept a pending connection
     /report   Report output (default)
     /json   Report output in JSON format
 ````
-**Missing Example***
+
+````
+>connect pin
+ERROR - Object reference not set to an instance of an object.
+````
+
+Specifying the /json option returns a result of type Result:
+
+````
+>connect pin /json
+{
+  "Result": {
+    "Success": false,
+    "Reason": "Object reference not set to an instance of an object."}}
+````
 
