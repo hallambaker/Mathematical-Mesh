@@ -69,6 +69,8 @@ specific commands.
 The following features are planned but not yet implemented:
 
 <dl>
+<dt>General
+<dd>toplevel 'pending' command to return all pending messages, contacts and connection
 <dt>Hash command set</dt>
 <dd>Allow processing of multiple files at once.</dd>
 <dd>Support SHA3 MACs, SHA256, etc digests.</dd>
@@ -81,7 +83,28 @@ The following features are planned but not yet implemented:
 <dd>Erase message from container by overwritting salt
 <dd>Index functionality.
 <dd>Log file handling - find log entry, report last n entries, etc.
+<dt>Messaging
+<dd>Support wildcard contacts. 
+<dd>Option to not accept reciprocal contact requests.
+<dd>Blocklists for message requests.
 </dl>
+
+
+Futures:
+
+* Mail messaging
+
+* Instant messaging
+
+* Cloud file sharing/storage
+
+Synchronous
+
+* Chat
+
+* Voice
+
+* Video
 
 #end xfile
 

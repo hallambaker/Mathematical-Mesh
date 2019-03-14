@@ -108,8 +108,8 @@ true returned if and only if it matches the value specified.
 
 ````
 >hash mac TestFile1.txt
-ACU4-JL7O-DC7B-BCTG-UVE6-YVH2-4KME
-NACM-QAN3-H22H-SVOJ-XL6P-NN4D-XJSC
+ACYJ-QZU7-H647-3HY5-UTLT-DZHA-Z6I4
+NBSP-UIBZ-AI6R-53GA-FNMW-SSNE-MFFI
 ````
 
 Specifying the /json option returns a result of type ResultDigest:
@@ -119,7 +119,7 @@ Specifying the /json option returns a result of type ResultDigest:
 {
   "ResultDigest": {
     "Success": true,
-    "Digest": "ACU4-JL7O-DC7B-BCTG-UVE6-YVH2-4KME",
-    "Key": "NACM-QAN3-H22H-SVOJ-XL6P-NN4D-XJSC"}}
+    "Digest": "ACYJ-QZU7-H647-3HY5-UTLT-DZHA-Z6I4",
+    "Key": "NBSP-UIBZ-AI6R-53GA-FNMW-SSNE-MFFI"}}
 ````
 

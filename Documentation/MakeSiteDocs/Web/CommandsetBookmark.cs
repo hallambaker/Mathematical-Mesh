@@ -14,13 +14,13 @@ namespace MakeSiteDocs {
 		//
 		// WebBookmark
 		//
-		public static void WebBookmark(CreateWeb Index) { /* XFile  */
+		public static void WebBookmark(CreateWeb Examples) { /* XFile  */
 				using (var _Output = new StreamWriter("Guide/bookmark.md")) {
 				var obj = new MakeSiteDocs() { _Output = _Output, _Indent = "", _Filename = "Guide/bookmark.md" };
-				obj._WebBookmark(Index);
+				obj._WebBookmark(Examples);
 				}
 			}
-		public void _WebBookmark(CreateWeb Index) {
+		public void _WebBookmark(CreateWeb Examples) {
 
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("# Using the  Command Set\n{0}", _Indent);
@@ -33,13 +33,13 @@ namespace MakeSiteDocs {
 		//
 		// BookmarkReference
 		//
-		public static void BookmarkReference(CreateWeb Index) { /* XFile  */
+		public static void BookmarkReference(CreateWeb Examples) { /* XFile  */
 				using (var _Output = new StreamWriter("Reference/bookmark.md")) {
 				var obj = new MakeSiteDocs() { _Output = _Output, _Indent = "", _Filename = "Reference/bookmark.md" };
-				obj._BookmarkReference(Index);
+				obj._BookmarkReference(Examples);
 				}
 			}
-		public void _BookmarkReference(CreateWeb Index) {
+		public void _BookmarkReference(CreateWeb Examples) {
 
 				 var CommandSet = CommandLineInterpreter.DescribeCommandSet_Bookmark;
 				_Output.Write ("\n{0}", _Indent);

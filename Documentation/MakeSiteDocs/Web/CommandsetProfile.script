@@ -15,33 +15,55 @@ The  command set contains commands that
 
 #### Creating a profile
 
+The #{ToCommand("connect ")} command is used to :
+
 #%  ConsoleExample (Examples.ProfileMaster);
+
+The #{ToCommand("connect ")} command is used to :
 
 #%  ConsoleExample (Examples.ProfileDevice);
 
 #### Listing profiles installed on a machine
 
+The #{ToCommand("connect ")} command is used to :
+
 #%  ConsoleExample (Examples.ProfileList);
+
+The #{ToCommand("connect ")} command is used to :
 
 #%  ConsoleExample (Examples.ProfileDump);
 
 #### Escrowing Profile Master Keys
 
+The #{ToCommand("connect ")} command is used to :
+
 #%  ConsoleExample (Examples.ProfileEscrow);
+
+The #{ToCommand("connect ")} command is used to :
 
 #%  ConsoleExample (Examples.ProfileRecover);
 
 #### Exporting and Importing Profiles
 
+The #{ToCommand("connect ")} command is used to :
+
 #%  ConsoleExample (Examples.ProfileExport);
+
+The #{ToCommand("connect ")} command is used to :
 
 #%  ConsoleExample (Examples.ProfileImport);
 
 #### Using a Mesh Service Directly
 
+The #{ToCommand("connect ")} command is used to :
+
 #%  ConsoleExample (Examples.ProfileHello);
 
+The #{ToCommand("connect ")} command is used to :
+
 #%  ConsoleExample (Examples.ProfileRegister);
+
+The #{ToCommand("connect ")} command is used to :
 
 #%  ConsoleExample (Examples.ProfileSync);
 

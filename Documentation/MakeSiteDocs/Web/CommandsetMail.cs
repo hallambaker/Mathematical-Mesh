@@ -14,13 +14,13 @@ namespace MakeSiteDocs {
 		//
 		// WebMail
 		//
-		public static void WebMail(CreateWeb Index) { /* XFile  */
+		public static void WebMail(CreateWeb Examples) { /* XFile  */
 				using (var _Output = new StreamWriter("Guide/mail.md")) {
 				var obj = new MakeSiteDocs() { _Output = _Output, _Indent = "", _Filename = "Guide/mail.md" };
-				obj._WebMail(Index);
+				obj._WebMail(Examples);
 				}
 			}
-		public void _WebMail(CreateWeb Index) {
+		public void _WebMail(CreateWeb Examples) {
 
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("# Using the  Command Set\n{0}", _Indent);
@@ -33,13 +33,13 @@ namespace MakeSiteDocs {
 		//
 		// MailReference
 		//
-		public static void MailReference(CreateWeb Index) { /* XFile  */
+		public static void MailReference(CreateWeb Examples) { /* XFile  */
 				using (var _Output = new StreamWriter("Reference/mail.md")) {
 				var obj = new MakeSiteDocs() { _Output = _Output, _Indent = "", _Filename = "Reference/mail.md" };
-				obj._MailReference(Index);
+				obj._MailReference(Examples);
 				}
 			}
-		public void _MailReference(CreateWeb Index) {
+		public void _MailReference(CreateWeb Examples) {
 
 				 var CommandSet = CommandLineInterpreter.DescribeCommandSet_Mail;
 				_Output.Write ("\n{0}", _Indent);

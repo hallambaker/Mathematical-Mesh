@@ -14,13 +14,13 @@ namespace MakeSiteDocs {
 		//
 		// WebCalendar
 		//
-		public static void WebCalendar(CreateWeb Index) { /* XFile  */
+		public static void WebCalendar(CreateWeb Examples) { /* XFile  */
 				using (var _Output = new StreamWriter("Guide/calendar.md")) {
 				var obj = new MakeSiteDocs() { _Output = _Output, _Indent = "", _Filename = "Guide/calendar.md" };
-				obj._WebCalendar(Index);
+				obj._WebCalendar(Examples);
 				}
 			}
-		public void _WebCalendar(CreateWeb Index) {
+		public void _WebCalendar(CreateWeb Examples) {
 
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("# Using the  Command Set\n{0}", _Indent);
@@ -33,13 +33,13 @@ namespace MakeSiteDocs {
 		//
 		// CalendarReference
 		//
-		public static void CalendarReference(CreateWeb Index) { /* XFile  */
+		public static void CalendarReference(CreateWeb Examples) { /* XFile  */
 				using (var _Output = new StreamWriter("Reference/calendar.md")) {
 				var obj = new MakeSiteDocs() { _Output = _Output, _Indent = "", _Filename = "Reference/calendar.md" };
-				obj._CalendarReference(Index);
+				obj._CalendarReference(Examples);
 				}
 			}
-		public void _CalendarReference(CreateWeb Index) {
+		public void _CalendarReference(CreateWeb Examples) {
 
 				 var CommandSet = CommandLineInterpreter.DescribeCommandSet_Calendar;
 				_Output.Write ("\n{0}", _Indent);

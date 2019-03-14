@@ -6,7 +6,7 @@
 
 
 
-#xfile MakeSiteDocs WebMail "Guide/mail.md" CreateWeb Index
+#xfile MakeSiteDocs WebMail "Guide/mail.md" CreateWeb Examples
 
 ## Using the  Command Set
 
@@ -14,7 +14,7 @@ The  command set contains commands that
 
 #end xfile
 
-#xfile MakeSiteDocs MailReference "Reference/mail.md" CreateWeb Index
+#xfile MakeSiteDocs MailReference "Reference/mail.md" CreateWeb Examples
 #% var CommandSet = CommandLineInterpreter.DescribeCommandSet_Mail;
 
 

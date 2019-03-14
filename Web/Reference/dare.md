@@ -63,14 +63,14 @@ file name is the input file name with the additional extension `.dare`.
 
 
 ````
->dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=EDGO-JKVB-HNXY-XLTZ-FADO-DAT6-TZPQ
+>dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=ECQP-EWWL-KKRM-ODMY-KH76-FGMF-SUKQ
 ERROR - Object reference not set to an instance of an object.
 ````
 
 Specifying the /json option returns a result of type Result:
 
 ````
->dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=EDGO-JKVB-HNXY-XLTZ-FADO-DAT6-TZPQ /json
+>dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=ECQP-EWWL-KKRM-ODMY-KH76-FGMF-SUKQ /json
 {
   "Result": {
     "Success": false,
@@ -102,14 +102,14 @@ with the extension `.undare` otherwise.
 
 
 ````
->dare decode TestFile1.txt.symmetric.dare /encrypt=EDGO-JKVB-HNXY-XLTZ-FADO-DAT6-TZPQ
+>dare decode TestFile1.txt.symmetric.dare /encrypt=ECQP-EWWL-KKRM-ODMY-KH76-FGMF-SUKQ
 ERROR - The option  is not known.
 ````
 
 Specifying the /json option returns a result of type Result:
 
 ````
->dare decode TestFile1.txt.symmetric.dare /encrypt=EDGO-JKVB-HNXY-XLTZ-FADO-DAT6-TZPQ /json
+>dare decode TestFile1.txt.symmetric.dare /encrypt=ECQP-EWWL-KKRM-ODMY-KH76-FGMF-SUKQ /json
 {
   "Result": {
     "Success": false,
@@ -136,14 +136,14 @@ The active key collection may be overriden using the `/mesh` option.
 
 
 ````
->dare verify TestFile1.txt.symmetric.dare /encrypt=EDGO-JKVB-HNXY-XLTZ-FADO-DAT6-TZPQ
+>dare verify TestFile1.txt.symmetric.dare /encrypt=ECQP-EWWL-KKRM-ODMY-KH76-FGMF-SUKQ
 ERROR - The option  is not known.
 ````
 
 Specifying the /json option returns a result of type Result:
 
 ````
->dare verify TestFile1.txt.symmetric.dare /encrypt=EDGO-JKVB-HNXY-XLTZ-FADO-DAT6-TZPQ /json
+>dare verify TestFile1.txt.symmetric.dare /encrypt=ECQP-EWWL-KKRM-ODMY-KH76-FGMF-SUKQ /json
 {
   "Result": {
     "Success": false,

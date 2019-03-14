@@ -100,6 +100,8 @@ namespace MakeSiteDocs {
 				_Output.Write ("The following features are planned but not yet implemented:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("<dl>\n{0}", _Indent);
+				_Output.Write ("<dt>General\n{0}", _Indent);
+				_Output.Write ("<dd>toplevel 'pending' command to return all pending messages, contacts and connection\n{0}", _Indent);
 				_Output.Write ("<dt>Hash command set</dt>\n{0}", _Indent);
 				_Output.Write ("<dd>Allow processing of multiple files at once.</dd>\n{0}", _Indent);
 				_Output.Write ("<dd>Support SHA3 MACs, SHA256, etc digests.</dd>\n{0}", _Indent);
@@ -112,7 +114,28 @@ namespace MakeSiteDocs {
 				_Output.Write ("<dd>Erase message from container by overwritting salt\n{0}", _Indent);
 				_Output.Write ("<dd>Index functionality.\n{0}", _Indent);
 				_Output.Write ("<dd>Log file handling - find log entry, report last n entries, etc.\n{0}", _Indent);
+				_Output.Write ("<dt>Messaging\n{0}", _Indent);
+				_Output.Write ("<dd>Support wildcard contacts. \n{0}", _Indent);
+				_Output.Write ("<dd>Option to not accept reciprocal contact requests.\n{0}", _Indent);
+				_Output.Write ("<dd>Blocklists for message requests.\n{0}", _Indent);
 				_Output.Write ("</dl>\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("Futures:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("* Mail messaging\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("* Instant messaging\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("* Cloud file sharing/storage\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("Synchronous\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("* Chat\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("* Voice\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("* Video\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 					}
 		

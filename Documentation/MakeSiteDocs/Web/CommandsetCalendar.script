@@ -6,7 +6,7 @@
 
 
 
-#xfile MakeSiteDocs WebCalendar "Guide/calendar.md" CreateWeb Index
+#xfile MakeSiteDocs WebCalendar "Guide/calendar.md" CreateWeb Examples
 
 ## Using the  Command Set
 
@@ -14,7 +14,7 @@ The  command set contains commands that
 
 #end xfile
 
-#xfile MakeSiteDocs CalendarReference "Reference/calendar.md" CreateWeb Index
+#xfile MakeSiteDocs CalendarReference "Reference/calendar.md" CreateWeb Examples
 #% var CommandSet = CommandLineInterpreter.DescribeCommandSet_Calendar;
 
 

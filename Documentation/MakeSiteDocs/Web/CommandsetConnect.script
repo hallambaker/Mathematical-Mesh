@@ -6,46 +6,53 @@
 
 
 
-#xfile MakeSiteDocs WebConnect "Guide/profile.md" CreateWeb Examples
+#xfile MakeSiteDocs WebConnect "Guide/connect.md" CreateWeb Examples
 
-## Using the  Command Set
+## Using the connect Command Set
 
-The  command set contains commands that 
+The `connect` command set contains commands used to connect devices to a 
+profile.
 
 #### Requesting a connection
 
+The #{ToCommand("connect ")} command is used to :
+
 #%  ConsoleExample (Examples.ConnectRequest);
 
-List pending 
+The #{ToCommand("connect ")} command is used to :
 
 #%  ConsoleExample (Examples.ConnectPending);
+
+The #{ToCommand("connect ")} command is used to :
+
 #%  ConsoleExample (Examples.ConnectAccept);
 
-Reject connection
-#%  ConsoleExample (Examples.ConnectPending2);
+The #{ToCommand("connect ")} command is used to :
+
 #%  ConsoleExample (Examples.ConnectReject);
 
 #### Requesting a connection using a PIN
 
+The #{ToCommand("connect ")} command is used to :
+
 #%  ConsoleExample (Examples.ConnectGetPin);
 
+The #{ToCommand("connect ")} command is used to :
+
 #%  ConsoleExample (Examples.ConnectPin);
+
+The #{ToCommand("connect ")} command is used to :
+
 #%  ConsoleExample (Examples.ConnectPending3);
 
 
 #end xfile
 
-#xfile MakeSiteDocs ConnectReference "Reference/profile.md" CreateWeb Examples
+#xfile MakeSiteDocs ConnectReference "Reference/connect.md" CreateWeb Examples
 #% var CommandSet = CommandLineInterpreter.DescribeCommandSet_Connect;
 
 
 #% Describe(CommandSet);
-
-
-
-
-
-
 
 #% Describe(CommandSet, _ProfileConnect._DescribeCommand);
 #%  ConsoleReference (Examples.ConnectRequest);

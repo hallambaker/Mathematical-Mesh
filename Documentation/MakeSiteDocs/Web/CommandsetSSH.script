@@ -6,15 +6,106 @@
 
 
 
-#xfile MakeSiteDocs WebSSH "Guide/ssh.md" CreateWeb Index
+#xfile MakeSiteDocs WebSSH "Guide/ssh.md" CreateWeb Examples
 
 ## Using the  Command Set
 
 The  command set contains commands that 
 
+SSH is one of the most successful applications that provides strong cryptographic
+protections today. It is certainly the first and so far only cryptographic application
+to become so ubiquitous as to replace its insecure predecessor (telnet). 
+
+Despite this success, SSH can be tricky to deploy and not through any fault of the 
+design of the application. Configuring SSH access to a machine that you are accessing
+via SSH is an inherently tricky task: Any error in the configuration may render the 
+machine unavailable.
+
+Another major weakness in the use of SSH is that following best practices for key
+management such as using a different authentication key on each client device is
+tedious at best. Most worrying of all is the fact that much of the advice given on
+'how to configure SSH' is written from the perspective of <i>how to get SSH to work<i>
+rather than <i>how to make an SSH configuration secure<i>.
+
+Most people who use SSH reguilarly have developed a set of scripts to perform routine
+administrative tasks. But while writing a script is a trivial task, debugging and 
+checking for security vulnerabilities is certainly not.
+
+Transferring configuration and administration tasks to the Mesh provides an approach
+that is considerably more robust than a shell script is likely to provide and is 
+far more likely to attract the third party review necessary to build confidence in
+its security.
+
+Since SSH authentication is bidirectional, an SSH profile is used to manage two separate
+sets of public keys.
+
+<dl>
+<dt>Client Authentication keys</dt>
+<dd>Public keypairs used to authenticate a client to a host. These are the keys whose
+private components are stored in user local storage and whose public components 
+appear in generate the <tt>authorized_keys</tt> file.</dd>
+<dt>Host Authentication keys</dt>
+<dd>Public keypairs used to authenticate a host to a client. These are keys whose
+private components are stored in a system wide storage and whose public components
+appear in the <tt>known_hosts</tt> file.</dd>
+</dl>
+
+
+#### Creating an SSH profile
+
+SSH profiles are created using the <tt>meshman</tt> tool. 
+
+#%  ConsoleExample (Examples.SSHCreate);
+
+#### Key Registration
+
+#%  ConsoleExample (Examples.SSHPrivate);
+#%  ConsoleExample (Examples.SSHPublic);
+
+
+#### Client Authentication keys
+
+The `ssh auth` command updates mesh key entries in the `authorized_keys`
+file using information from the specified mesh portal.
+
+For example, if the `authorized_keys` file has an entry for Alice's Mesh profile
+(`alice@example.com.mm--ssss`), the corresponding profile is fetched and the 
+corresponding SSH device public keys added:
+
+#%  ConsoleExample (Examples.SSHClientAuth);
+
+
+#### Host Authentication keys
+
+The <tt>ssh add</tt> command adds host entries from the machine to the user's SSH profile.
+
+#%  ConsoleExample (Examples.SSHAddHost);
+
+#%  ConsoleExample (Examples.SSHShowKnown);
+
+The <tt>ssh known</tt> command adds hosts from the user's ssh profile to their known_hosts
+file on the machine.
+
+#%  ConsoleExample (Examples.SSHAddKnown);
+
+
+
+
+#### Additional Devices
+
+Whenever an SSH profile is created, a separate keypair is created for every device
+connected to the profile. This mitigates the consequences of a device being lost
+or stolen. The device key for the compromised device can be removed from the 
+profile without affecting any other device. Investigation of possibly unauthorized logins
+can be focused on those from the compromised device alone.
+
+#%  ConsoleExample (Examples.AppConnectSSH1);
+
+#%  ConsoleExample (Examples.AppConnectSSH2);
+
 #end xfile
 
-#xfile MakeSiteDocs SSHReference "Reference/ssh.md" CreateWeb Index
+#xfile MakeSiteDocs SSHReference "Reference/ssh.md" CreateWeb Examples
 #% var CommandSet = CommandLineInterpreter.DescribeCommandSet_SSH;
 
 

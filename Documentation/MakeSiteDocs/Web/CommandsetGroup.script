@@ -6,15 +6,66 @@
 
 
 
-#xfile MakeSiteDocs WebGroup "Guide/group.md" CreateWeb Index
+#xfile MakeSiteDocs WebGroup "Guide/group.md" CreateWeb Examples
 
 ## Using the  Command Set
 
 The  command set contains commands that 
 
+#### Creating a Recryption Group
+
+The #{ToCommand("connect ")} command is used to :
+
+#%  ConsoleExample (Examples.GroupCreate);
+
+can encrypt a message
+
+Alice can decrypt because she is the admin
+ #{ToCommand("connect ")} 
+
+#%  ConsoleExample (Examples.GroupDecryptAlice);
+
+Bob cannot:
+
+#%  ConsoleExample (Examples.GroupDecryptBob1);
+
+
+#### Adding users
+
+The #{ToCommand("connect ")} command is used to :
+
+#%  ConsoleExample (Examples.GroupAdd);
+
+
+Bob can:
+
+#%  ConsoleExample (Examples.GroupDecryptBob2);
+
+#### Reporting users
+
+The #{ToCommand("connect ")} command is used to :
+
+#%  ConsoleExample (Examples.GroupList1);
+
+
+#### Deleting users
+
+The #{ToCommand("connect ")} command is used to :
+
+#%  ConsoleExample (Examples.GroupDelete);
+
+Bob can:
+
+#%  ConsoleExample (Examples.GroupDecryptBob3);
+
+#%  ConsoleExample (Examples.GroupList2);
+
+
+
+
 #end xfile
 
-#xfile MakeSiteDocs GroupReference "Reference/group.md" CreateWeb Index
+#xfile MakeSiteDocs GroupReference "Reference/group.md" CreateWeb Examples
 #% var CommandSet = CommandLineInterpreter.DescribeCommandSet_Group;
 
 
@@ -24,6 +75,8 @@ The  command set contains commands that
 #% Describe( CommandSet, _GroupCreate._DescribeCommand);
 #% Describe( CommandSet, _GroupAdd._DescribeCommand);
 #% Describe( CommandSet, _GroupDelete._DescribeCommand);
+#% Describe( CommandSet, _GroupList._DescribeCommand);
+
 
 #end xfile
 

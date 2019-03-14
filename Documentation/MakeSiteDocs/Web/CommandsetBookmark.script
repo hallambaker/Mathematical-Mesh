@@ -6,7 +6,7 @@
 
 
 
-#xfile MakeSiteDocs WebBookmark "Guide/bookmark.md" CreateWeb Index
+#xfile MakeSiteDocs WebBookmark "Guide/bookmark.md" CreateWeb Examples
 
 ## Using the  Command Set
 
@@ -14,7 +14,7 @@ The  command set contains commands that
 
 #end xfile
 
-#xfile MakeSiteDocs BookmarkReference "Reference/bookmark.md" CreateWeb Index
+#xfile MakeSiteDocs BookmarkReference "Reference/bookmark.md" CreateWeb Examples
 #% var CommandSet = CommandLineInterpreter.DescribeCommandSet_Bookmark;
 
 

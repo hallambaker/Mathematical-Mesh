@@ -252,6 +252,93 @@
 			Include AccountOptions
 			Include Reporting
 
+	CommandSet Message "message"
+		Brief "Contact and confirmation message options"
+		
+		Command MessageContact "contact"
+			Brief "Post a conection request to a user"
+			Parameter Recipient "recipient" String
+				Brief "The recipient to send the conection request to"
+			Include AccountOptions
+			Include Reporting
+
+		Command MessageConfirm "confirm"
+			Brief "Post a confirmation request to a user"
+			Parameter Recipient "recipient" String
+				Brief "The recipient to send the confirmation request to"
+			Parameter Text "text" String
+				Brief "The recipient to send the confirmation request to"
+			Include AccountOptions
+			Include Reporting
+
+		Command MessagePending "pending"
+			Brief "List pending requests"
+			Include AccountOptions
+			Include Reporting
+
+		Command MessageStatus "status"
+			Brief "Request status of pending requests"
+			Option RequestID "requestid" String
+				Brief "Specifies the request to provide the status of"
+			Include AccountOptions
+			Include Reporting
+
+		Command MessageAccept "accept"
+			Brief "Accept a pending request"
+			Option RequestID "requestid" String
+				Brief "Specifies the request to accept"
+			Include AccountOptions
+			Include Reporting
+
+		Command MessageReject "reject"
+			Brief "Reject a pending request"
+			Option RequestID "requestid" String
+				Brief "Specifies the request to reject"
+			Include AccountOptions
+			Include Reporting
+
+		Command MessageBlock "block"
+			Brief "Reject a pending request and block requests from that source"
+			Option RequestID "requestid" String
+				Brief "Specifies the request to reject and block"
+			Include AccountOptions
+			Include Reporting
+
+	CommandSet Group "group"
+		Brief "Group management commands"
+
+		Command GroupCreate "create"
+			Brief "Create recryption group"
+			Include AccountOptions
+			Include Reporting
+			Include CryptoOptions
+			Parameter GroupID "group" String
+				Brief "Recryption group name in user@example.com format"
+
+		Command GroupAdd "add"
+			Brief "Add user to recryption group"
+			Include AccountOptions
+			Include Reporting
+			Parameter GroupID "group" String
+				Brief "Recryption group name in user@example.com format"
+			Parameter MemberID "member" String
+				Brief "User to add"
+
+		Command GroupDelete "delete"
+			Brief "Remove user from recryption group"
+			Include AccountOptions
+			Include Reporting
+			Parameter GroupID "group" String
+				Brief "Recryption group name in user@example.com format"			
+			Parameter MemberID "member" String
+				Brief "User to delete"
+
+		Command GroupList "list"
+			Brief "List members of a recryption group"
+			Include AccountOptions
+			Include Reporting
+			Parameter GroupID "group" String
+				Brief "Recryption group name in user@example.com format"
 
 	// Mail
 	CommandSet Mail "mail"
@@ -444,11 +531,8 @@
 			Parameter Path "path" String
 			Parameter Uri "uri" String
 			Parameter Title "title" String
-
 			Include AccountOptions
 			Include Reporting
-
-
 
 		Command BookmarkDelete "delete"
 			Brief "Delete bookmark entry"
@@ -507,7 +591,6 @@
 			Include AccountOptions
 			Include Reporting
 
-
 		Command NetworkGet "get"
 			Brief "Lookup calendar entry"
 			Parameter Identifier "id" String
@@ -527,86 +610,6 @@
 			Include Reporting
 
 
-	CommandSet Message "message"
-		Brief "Contact and confirmation message options"
-		
-		Command MessageContact "contact"
-			Brief "Post a conection request to a user"
-			Parameter Recipient "recipient" String
-				Brief "The recipient to send the conection request to"
-			Include AccountOptions
-			Include Reporting
-
-		Command MessageConfirm "confirm"
-			Brief "Post a confirmation request to a user"
-			Parameter Recipient "recipient" String
-				Brief "The recipient to send the confirmation request to"
-			Parameter Text "text" String
-				Brief "The recipient to send the confirmation request to"
-			Include AccountOptions
-			Include Reporting
-
-		Command MessagePending "pending"
-			Brief "List pending requests"
-			Include AccountOptions
-			Include Reporting
-
-		Command MessageStatus "status"
-			Brief "Request status of pending requests"
-			Option RequestID "requestid" String
-				Brief "Specifies the request to provide the status of"
-			Include AccountOptions
-			Include Reporting
-
-		Command MessageAccept "accept"
-			Brief "Accept a pending request"
-			Option RequestID "requestid" String
-				Brief "Specifies the request to accept"
-			Include AccountOptions
-			Include Reporting
-
-		Command MessageReject "reject"
-			Brief "Reject a pending request"
-			Option RequestID "requestid" String
-				Brief "Specifies the request to reject"
-			Include AccountOptions
-			Include Reporting
-
-		Command MessageBlock "block"
-			Brief "Reject a pending request and block requests from that source"
-			Option RequestID "requestid" String
-				Brief "Specifies the request to reject and block"
-			Include AccountOptions
-			Include Reporting
-
-	CommandSet Group "group"
-		Brief "Group management commands"
-
-		Command GroupCreate "create"
-			Brief "Create recryption group"
-			Include AccountOptions
-			Include Reporting
-			Include CryptoOptions
-			Parameter GroupID "group" String
-				Brief "Recryption group name in user@example.com format"
-
-		Command GroupAdd "add"
-			Brief "Add user to recryption group"
-			Include AccountOptions
-			Include Reporting
-			Parameter GroupID "group" String
-				Brief "Recryption group name in user@example.com format"
-			Parameter MemberID "member" String
-				Brief "User to add"
-
-		Command GroupDelete "delete"
-			Brief "Remove user from recryption group"
-			Include AccountOptions
-			Include Reporting
-			Parameter GroupID "group" String
-				Brief "Recryption group name in user@example.com format"			
-			Parameter MemberID "member" String
-				Brief "User to delete"
 
 
 	CommandSet Key "key"
