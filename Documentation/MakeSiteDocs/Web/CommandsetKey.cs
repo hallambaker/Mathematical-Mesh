@@ -14,13 +14,13 @@ namespace MakeSiteDocs {
 		//
 		// WebKey
 		//
-		public static void WebKey(CreateWeb Examples) { /* XFile  */
+		public static void WebKey(Examples Examples) { /* XFile  */
 				using (var _Output = new StreamWriter("Guide/key.md")) {
 				var obj = new MakeSiteDocs() { _Output = _Output, _Indent = "", _Filename = "Guide/key.md" };
 				obj._WebKey(Examples);
 				}
 			}
-		public void _WebKey(CreateWeb Examples) {
+		public void _WebKey(Examples Examples) {
 
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("# Using the `key` Command Set\n{0}", _Indent);
@@ -119,13 +119,13 @@ namespace MakeSiteDocs {
 		//
 		// KeyReference
 		//
-		public static void KeyReference(CreateWeb Examples) { /* XFile  */
+		public static void KeyReference(Examples Examples) { /* XFile  */
 				using (var _Output = new StreamWriter("Reference/key.md")) {
 				var obj = new MakeSiteDocs() { _Output = _Output, _Indent = "", _Filename = "Reference/key.md" };
 				obj._KeyReference(Examples);
 				}
 			}
-		public void _KeyReference(CreateWeb Examples) {
+		public void _KeyReference(Examples Examples) {
 
 				 var CommandSet = CommandLineInterpreter.DescribeCommandSet_Key;
 				_Output.Write ("\n{0}", _Indent);

@@ -6,15 +6,49 @@
 
 
 
-#xfile MakeSiteDocs WebNetwork "Guide/network.md" CreateWeb Index
+#xfile MakeSiteDocs WebNetwork "Guide/network.md" Examples Examples
 
-## Using the  Command Set
+## Using the `network` Command Set
 
-The  command set contains commands that 
+The `network` command set is used to manage a network configuration catalog which contains
+a entries describing how to access particular networks.
+
+#### Adding networks
+
+The #{ToCommand("password add")} command adds a network entry to a catalog:
+
+#%  ConsoleExample (Examples.NetworkAdd);
+
+
+#### Finding networks
+
+The #{ToCommand("password get")}  command retreives a network entry by label:
+
+#%  ConsoleExample (Examples.NetworkGet);
+
+#### Deleting networks
+
+Network entries may be deleted using the  #{ToCommand("network delete")} command:
+
+#%  ConsoleExample (Examples.NetworkDelete);
+
+#### Listing networks
+
+A complete list of networks is obtained using the  #{ToCommand("network list")} command:
+
+#%  ConsoleExample (Examples.NetworkList);
+
+#### Adding devices
+
+Devices are given authorization to access the networks catalog using the 
+ #{ToCommand("device auth")} command:
+
+ #%  ConsoleExample (Examples.NetworkAuth);
+
 
 #end xfile
 
-#xfile MakeSiteDocs NetworkReference "Reference/network.md" CreateWeb Index
+#xfile MakeSiteDocs NetworkReference "Reference/network.md" Examples Examples
 #% var CommandSet = CommandLineInterpreter.DescribeCommandSet_Network;
 
 
@@ -22,10 +56,16 @@ The  command set contains commands that
 
 
 #% Describe(CommandSet, _NetworkAdd._DescribeCommand);
-#% Describe(CommandSet, _NetworkGet._DescribeCommand);
-#% Describe(CommandSet, _NetworkDelete._DescribeCommand);
-#% Describe(CommandSet, _NetworkDump._DescribeCommand);
+#% ConsoleReference (Examples.NetworkAdd);
 
+#% Describe(CommandSet, _NetworkDelete._DescribeCommand);
+#% ConsoleReference (Examples.NetworkDelete);
+
+#% Describe(CommandSet, _NetworkGet._DescribeCommand);
+#% ConsoleReference (Examples.NetworkGet);
+
+#% Describe(CommandSet, _NetworkDump._DescribeCommand);
+#% ConsoleReference (Examples.NetworkList);
 
 #end xfile
 

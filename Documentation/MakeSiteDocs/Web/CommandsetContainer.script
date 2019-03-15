@@ -6,7 +6,7 @@
 
 
 
-#xfile MakeSiteDocs WebContainer "Guide/container.md" CreateWeb Examples
+#xfile MakeSiteDocs WebContainer "Guide/container.md" Examples Examples
 
 ## Using the `container Command Set
 
@@ -96,7 +96,7 @@ The #{ToCommand("container copy")}
 
 #end xfile
 
-#xfile MakeSiteDocs ContainerReference "Reference/container.md" CreateWeb Examples
+#xfile MakeSiteDocs ContainerReference "Reference/container.md" Examples Examples
 #% var CommandSet = CommandLineInterpreter.DescribeCommandSet_Container;
 
 

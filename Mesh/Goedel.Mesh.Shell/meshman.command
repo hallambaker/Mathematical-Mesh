@@ -49,6 +49,39 @@
 		Option DeviceDescription "dd" String
 			Brief "Device description"
 
+	OptionSet DeviceAuthOptions
+		Option Auth "auth" String
+			Brief "Authorize the specified function"
+		Option AuthAdmin "admin" Flag
+			Brief "Authorize device as administration device"
+			Default "false"
+		Option AuthAll "all" Flag
+			Brief "Authorize device for all application catalogs"
+			Default "false"
+		Option AuthSSH "ssh" Flag
+			Brief "Authorize use of SSH"
+			Default "false"
+		Option AuthPassword "password" Flag
+			Brief "Authorize access to password catalog"
+			Default "false"
+		Option AuthMessage "message" Flag
+			Brief "Authorize access to send and receive messages."
+			Default "false"
+		Option AuthContacts "contacts" Flag
+			Brief "Authorize access to contacts catalog"
+			Default "false"
+		Option AuthCalendar "calendar" Flag
+			Brief "Authorize access to calendar catalog"
+			Default "false"
+		Option AuthNetwork "network" Flag
+			Brief "Authorize access to network catalog"
+			Default "false"
+		Option AuthCaonfirm "confirm" Flag
+			Brief "Authorize response to confirmation requests"
+			Default "false"
+
+
+
 	OptionSet MailOptions
 		Option OpenPGP "openpgp" Flag
 			Default "true"
@@ -136,15 +169,7 @@
 			Brief "Connect to the service(s) a profile is connected to and report status."
 			Include AccountOptions
 
-		Command DeviceCreate "device"
-			Brief "Create new device profile"
-			Include CryptoOptions
-			Parameter DeviceID "id" String
-				Brief "Device identifier"
-			Parameter DeviceDescription "dd" String
-				Brief "Device description"
-			Option Default "default" Flag
-				Brief "Make the new device profile the default"
+
 
 		Command MasterCreate "create"
 			Brief "Create new personal profile"
@@ -214,8 +239,26 @@
 
 
 			
-	CommandSet Connect "connect"
-		Brief "Device connection commands."
+	CommandSet Connect "device"
+		Brief "Device management commands."
+
+
+		Command DeviceCreate "create"
+			Brief "Create new device profile"
+			Include CryptoOptions
+			Parameter DeviceID "id" String
+				Brief "Device identifier"
+			Parameter DeviceDescription "dd" String
+				Brief "Device description"
+			Option Default "default" Flag
+				Brief "Make the new device profile the default"
+
+		Command DeviceAuthorize "auth"
+			Brief "Authorize device to use application"
+			Include DeviceAuthOptions
+			Include AccountOptions
+			Include Reporting
+
 		Command ProfileConnect "request"
 			Brief "Connect to an existing profile registered at a portal"
 			Parameter Portal "portal" String
@@ -224,6 +267,7 @@
 				Brief "One time use authenticator"
 			Include Reporting
 			Include DeviceProfileInfo
+			Include DeviceAuthOptions
 
 		Command ProfilePending "pending"
 			Brief "Get list of pending connection requests"
@@ -251,6 +295,27 @@
 				Default "8"
 			Include AccountOptions
 			Include Reporting
+
+		Command ConnectEarl "earl"
+			Brief "Connect a new device by means of an EARL"
+			Parameter Earl "earl" String
+				Brief "The EARL locator"
+			Include AccountOptions
+
+
+
+		Command DeviceDelete "delete"
+			Brief "Remove device from device catalog"
+			Include AccountOptions
+			Include Reporting
+
+
+		Command DeviceList"list"
+			Brief "List devices in the device catalog"
+			Include AccountOptions
+			Include Reporting
+			Parameter GroupID "group" String
+				Brief "Recryption group name in user@example.com format"
 
 	CommandSet Message "message"
 		Brief "Contact and confirmation message options"
@@ -426,6 +491,13 @@
 			Include Reporting
 			Include PublicKeyOptions
 
+		Command SSHMergeKnown "merge"
+			Brief "Add one or more hosts to the known_hosts file"
+			Include AccountOptions
+			Include Reporting
+			Include SSHOptions
+			Parameter File "file" ExistingFile
+
 		// Add public keys to profile
 		CommandSet SSHAdd "add"
 			Command SSHAddHost "host"
@@ -434,14 +506,9 @@
 				Include Reporting
 				Include SSHOptions
 
-			Command SSHMergeKnown "known"
-				Brief "Add one or more hosts to the known_hosts file"
-				Include AccountOptions
-				Include Reporting
-				Include SSHOptions
-				Parameter File "file" ExistingFile
+
 			
-			Command SSHAddClient "auth"
+			Command SSHAddClient "client"
 				Brief "Add one or more keys to the authorized_keys file"
 				Include AccountOptions
 				Include Reporting
@@ -449,14 +516,14 @@
 				Parameter File "file" ExistingFile
 
 
-		CommandSet SSHShow "show"
+		CommandSet SSHShow "host"
 			Command SSHKnown "known"
 				Brief "List the known SSH sites (aka known hosts)"
 				Include AccountOptions
 				Include Reporting
 				Include SSHOptions
 
-			Command SSHAuth "auth"
+			Command SSHAuth "host"
 				Brief "List the authorized device keys (aka authorized_keys)"
 				Include AccountOptions
 				Include Reporting	
@@ -488,7 +555,7 @@
 			Include AccountOptions
 			Include Reporting
 
-		Command PasswordDump "dump"
+		Command PasswordDump "list"
 			Brief "List password entries"
 			Parameter Site "site" String
 			Include AccountOptions
@@ -512,13 +579,13 @@
 			Include AccountOptions
 			Include Reporting
 
-		Command ContactdGet "get"
+		Command ContactGet "get"
 			Brief "Lookup contact entry"
 			Parameter Identifier "site" String
 			Include AccountOptions
 			Include Reporting
 
-		Command ContactDump "dump"
+		Command ContactDump "list"
 			Brief "List contact entries"
 			Include AccountOptions
 			Include Reporting
@@ -548,7 +615,7 @@
 			Include AccountOptions
 			Include Reporting
 
-		Command BookmarkDump "dump"
+		Command BookmarkDump "list"
 			Brief "List bookmark entries"
 			Include AccountOptions
 			Include Reporting

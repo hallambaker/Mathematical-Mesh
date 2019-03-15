@@ -14,13 +14,13 @@ namespace MakeSiteDocs {
 		//
 		// WebContainer
 		//
-		public static void WebContainer(CreateWeb Examples) { /* XFile  */
+		public static void WebContainer(Examples Examples) { /* XFile  */
 				using (var _Output = new StreamWriter("Guide/container.md")) {
 				var obj = new MakeSiteDocs() { _Output = _Output, _Indent = "", _Filename = "Guide/container.md" };
 				obj._WebContainer(Examples);
 				}
 			}
-		public void _WebContainer(CreateWeb Examples) {
+		public void _WebContainer(Examples Examples) {
 
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("# Using the `container Command Set\n{0}", _Indent);
@@ -115,13 +115,13 @@ namespace MakeSiteDocs {
 		//
 		// ContainerReference
 		//
-		public static void ContainerReference(CreateWeb Examples) { /* XFile  */
+		public static void ContainerReference(Examples Examples) { /* XFile  */
 				using (var _Output = new StreamWriter("Reference/container.md")) {
 				var obj = new MakeSiteDocs() { _Output = _Output, _Indent = "", _Filename = "Reference/container.md" };
 				obj._ContainerReference(Examples);
 				}
 			}
-		public void _ContainerReference(CreateWeb Examples) {
+		public void _ContainerReference(Examples Examples) {
 
 				 var CommandSet = CommandLineInterpreter.DescribeCommandSet_Container;
 				_Output.Write ("\n{0}", _Indent);

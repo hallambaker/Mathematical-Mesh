@@ -6,7 +6,7 @@
 
 
 
-#xfile MakeSiteDocs WebSSH "Guide/ssh.md" CreateWeb Examples
+#xfile MakeSiteDocs WebSSH "Guide/ssh.md" Examples Examples
 
 ## Using the  Command Set
 
@@ -53,43 +53,72 @@ appear in the <tt>known_hosts</tt> file.</dd>
 
 #### Creating an SSH profile
 
-SSH profiles are created using the <tt>meshman</tt> tool. 
+The #{ToCommand("ssh create")} command adds an SSH profile named `ssh` to a Mesh account:
 
 #%  ConsoleExample (Examples.SSHCreate);
 
-#### Key Registration
+Since the command creates a new application catalog, the command must be given to 
+an administration device.
+
+#### Client Configuration
+
+Adding an SSH profile causes a public keypair to be created for use with SSH. To make use 
+of this keypair for device authentication with legacy applications typically requires the
+public and/or private keys to be extracted in a format supported by the application.
+
+The #{ToCommand("ssh private")} command extracts the private key required top configure
+an SSH client:
 
 #%  ConsoleExample (Examples.SSHPrivate);
+
+The #{ToCommand("ssh public")} command extracts the public key required top configure
+an SSH client:
+
 #%  ConsoleExample (Examples.SSHPublic);
 
+If a script is being used to automate this process, the best practice is for the
+script to first generate a random nonce and request that the private key file
+be extracted encrypted under the nonce which can be discarded after the key is
+successfully installed. [Not currently supported.]
 
-#### Client Authentication keys
+#### Configuring authentication entries on hosts and clients
 
-The `ssh auth` command updates mesh key entries in the `authorized_keys`
-file using information from the specified mesh portal.
+The #{ToCommand("ssh merge client")}  command is run on a host to update mesh key entries 
+in the `authorized_keys` file using information from the specified mesh portal.
 
 For example, if the `authorized_keys` file has an entry for Alice's Mesh profile
 (`alice@example.com.mm--ssss`), the corresponding profile is fetched and the 
 corresponding SSH device public keys added:
 
-#%  ConsoleExample (Examples.SSHClientAuth);
+#%  ConsoleExample (Examples.SSHMergeClients);
+
+The #{ToCommand("ssh merge host")}  command reads the `known_hosts` file on a client machine and adds
+the listed hosts to the user's ssh catalog.
+
+#%  ConsoleExample (Examples.SSHMergeHosts);
+
+#### Client Key management
+
+SSH keys belonging to the user that are not part of the Mesh profile may be added using the 
+#{ToCommand("ssh add client")}  command.
 
 
-#### Host Authentication keys
+#%  ConsoleExample (Examples.SSHAddClient);
 
-The <tt>ssh add</tt> command adds host entries from the machine to the user's SSH profile.
+The list of known clients may be returned in various formats using the #{ToCommand("ssh show client")}  command.
+
+#%  ConsoleExample (Examples.SSHShowClient);
+
+#### Host Key Management
+
+The #{ToCommand("ssh add host")}  command adds specific host entries to the user's SSH profile.
 
 #%  ConsoleExample (Examples.SSHAddHost);
 
+The current list of known hosts in the SSH catalog is returned by the #{ToCommand("ssh show known")} 
+command.
+
 #%  ConsoleExample (Examples.SSHShowKnown);
-
-The <tt>ssh known</tt> command adds hosts from the user's ssh profile to their known_hosts
-file on the machine.
-
-#%  ConsoleExample (Examples.SSHAddKnown);
-
-
-
 
 #### Additional Devices
 
@@ -99,13 +128,18 @@ or stolen. The device key for the compromised device can be removed from the
 profile without affecting any other device. Investigation of possibly unauthorized logins
 can be focused on those from the compromised device alone.
 
-#%  ConsoleExample (Examples.AppConnectSSH1);
+The #{ToCommand("device auth /ssh")}  command is used *from an administration device* to 
+enable use of ssh on the machine:
 
-#%  ConsoleExample (Examples.AppConnectSSH2);
+#%  ConsoleExample (Examples.SSHAuthDev);
+
+Once the device has been authorized, the client machine can start using SSH immediately:
+
+#%  ConsoleExample (Examples.SSHAuthProof);
 
 #end xfile
 
-#xfile MakeSiteDocs SSHReference "Reference/ssh.md" CreateWeb Examples
+#xfile MakeSiteDocs SSHReference "Reference/ssh.md" Examples Examples
 #% var CommandSet = CommandLineInterpreter.DescribeCommandSet_SSH;
 
 
@@ -113,13 +147,29 @@ can be focused on those from the compromised device alone.
 
 
 #% Describe(CommandSet, _SSHCreate._DescribeCommand);
+#%  ConsoleReference (Examples.ProfileList);
+
 #% Describe(CommandSet, _SSHPrivate._DescribeCommand);
+#%  ConsoleReference (Examples.ProfileList);
+
 #% Describe(CommandSet, _SSHPublic._DescribeCommand);
+#%  ConsoleReference (Examples.ProfileList);
+
 #% Describe(CommandSet, _SSHAddHost._DescribeCommand);
+#%  ConsoleReference (Examples.ProfileList);
+
 #% Describe(CommandSet, _SSHMergeKnown._DescribeCommand);
+#%  ConsoleReference (Examples.ProfileList);
+
 #% Describe(CommandSet, _SSHAddClient._DescribeCommand);
+#%  ConsoleReference (Examples.ProfileList);
+
 #% Describe(CommandSet, _SSHKnown._DescribeCommand);
+#%  ConsoleReference (Examples.ProfileList);
+
 #% Describe(CommandSet, _SSHAuth._DescribeCommand);
+#%  ConsoleReference (Examples.ProfileList);
+
 
 #end xfile
 

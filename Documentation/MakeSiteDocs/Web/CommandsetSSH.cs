@@ -14,13 +14,13 @@ namespace MakeSiteDocs {
 		//
 		// WebSSH
 		//
-		public static void WebSSH(CreateWeb Examples) { /* XFile  */
+		public static void WebSSH(Examples Examples) { /* XFile  */
 				using (var _Output = new StreamWriter("Guide/ssh.md")) {
 				var obj = new MakeSiteDocs() { _Output = _Output, _Indent = "", _Filename = "Guide/ssh.md" };
 				obj._WebSSH(Examples);
 				}
 			}
-		public void _WebSSH(CreateWeb Examples) {
+		public void _WebSSH(Examples Examples) {
 
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("# Using the  Command Set\n{0}", _Indent);
@@ -68,43 +68,72 @@ namespace MakeSiteDocs {
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("## Creating an SSH profile\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("SSH profiles are created using the <tt>meshman</tt> tool. \n{0}", _Indent);
+				_Output.Write ("The {1} command adds an SSH profile named `ssh` to a Mesh account:\n{0}", _Indent, ToCommand("ssh create"));
 				_Output.Write ("\n{0}", _Indent);
 				  ConsoleExample (Examples.SSHCreate);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("## Key Registration\n{0}", _Indent);
+				_Output.Write ("Since the command creates a new application catalog, the command must be given to \n{0}", _Indent);
+				_Output.Write ("an administration device.\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("## Client Configuration\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("Adding an SSH profile causes a public keypair to be created for use with SSH. To make use \n{0}", _Indent);
+				_Output.Write ("of this keypair for device authentication with legacy applications typically requires the\n{0}", _Indent);
+				_Output.Write ("public and/or private keys to be extracted in a format supported by the application.\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The {1} command extracts the private key required top configure\n{0}", _Indent, ToCommand("ssh private"));
+				_Output.Write ("an SSH client:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				  ConsoleExample (Examples.SSHPrivate);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The {1} command extracts the public key required top configure\n{0}", _Indent, ToCommand("ssh public"));
+				_Output.Write ("an SSH client:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
 				  ConsoleExample (Examples.SSHPublic);
 				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("If a script is being used to automate this process, the best practice is for the\n{0}", _Indent);
+				_Output.Write ("script to first generate a random nonce and request that the private key file\n{0}", _Indent);
+				_Output.Write ("be extracted encrypted under the nonce which can be discarded after the key is\n{0}", _Indent);
+				_Output.Write ("successfully installed. [Not currently supported.]\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("## Client Authentication keys\n{0}", _Indent);
+				_Output.Write ("## Configuring authentication entries on hosts and clients\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("The `ssh auth` command updates mesh key entries in the `authorized_keys`\n{0}", _Indent);
-				_Output.Write ("file using information from the specified mesh portal.\n{0}", _Indent);
+				_Output.Write ("The {1}  command is run on a host to update mesh key entries \n{0}", _Indent, ToCommand("ssh merge client"));
+				_Output.Write ("in the `authorized_keys` file using information from the specified mesh portal.\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("For example, if the `authorized_keys` file has an entry for Alice's Mesh profile\n{0}", _Indent);
 				_Output.Write ("(`alice@example.com.mm--ssss`), the corresponding profile is fetched and the \n{0}", _Indent);
 				_Output.Write ("corresponding SSH device public keys added:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				  ConsoleExample (Examples.SSHClientAuth);
+				  ConsoleExample (Examples.SSHMergeClients);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The {1}  command reads the `known_hosts` file on a client machine and adds\n{0}", _Indent, ToCommand("ssh merge host"));
+				_Output.Write ("the listed hosts to the user's ssh catalog.\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				  ConsoleExample (Examples.SSHMergeHosts);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("## Client Key management\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("SSH keys belonging to the user that are not part of the Mesh profile may be added using the \n{0}", _Indent);
+				_Output.Write ("{1}  command.\n{0}", _Indent, ToCommand("ssh add client"));
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("## Host Authentication keys\n{0}", _Indent);
+				  ConsoleExample (Examples.SSHAddClient);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("The <tt>ssh add</tt> command adds host entries from the machine to the user's SSH profile.\n{0}", _Indent);
+				_Output.Write ("The list of known clients may be returned in various formats using the {1}  command.\n{0}", _Indent, ToCommand("ssh show client"));
+				_Output.Write ("\n{0}", _Indent);
+				  ConsoleExample (Examples.SSHShowClient);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("## Host Key Management\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The {1}  command adds specific host entries to the user's SSH profile.\n{0}", _Indent, ToCommand("ssh add host"));
 				_Output.Write ("\n{0}", _Indent);
 				  ConsoleExample (Examples.SSHAddHost);
 				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The current list of known hosts in the SSH catalog is returned by the {1} \n{0}", _Indent, ToCommand("ssh show known"));
+				_Output.Write ("command.\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
 				  ConsoleExample (Examples.SSHShowKnown);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("The <tt>ssh known</tt> command adds hosts from the user's ssh profile to their known_hosts\n{0}", _Indent);
-				_Output.Write ("file on the machine.\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				  ConsoleExample (Examples.SSHAddKnown);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("## Additional Devices\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
@@ -114,9 +143,14 @@ namespace MakeSiteDocs {
 				_Output.Write ("profile without affecting any other device. Investigation of possibly unauthorized logins\n{0}", _Indent);
 				_Output.Write ("can be focused on those from the compromised device alone.\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				  ConsoleExample (Examples.AppConnectSSH1);
+				_Output.Write ("The {1}  command is used *from an administration device* to \n{0}", _Indent, ToCommand("device auth /ssh"));
+				_Output.Write ("enable use of ssh on the machine:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				  ConsoleExample (Examples.AppConnectSSH2);
+				  ConsoleExample (Examples.SSHAuthDev);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("Once the device has been authorized, the client machine can start using SSH immediately:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				  ConsoleExample (Examples.SSHAuthProof);
 				_Output.Write ("\n{0}", _Indent);
 					}
 		
@@ -124,13 +158,13 @@ namespace MakeSiteDocs {
 		//
 		// SSHReference
 		//
-		public static void SSHReference(CreateWeb Examples) { /* XFile  */
+		public static void SSHReference(Examples Examples) { /* XFile  */
 				using (var _Output = new StreamWriter("Reference/ssh.md")) {
 				var obj = new MakeSiteDocs() { _Output = _Output, _Indent = "", _Filename = "Reference/ssh.md" };
 				obj._SSHReference(Examples);
 				}
 			}
-		public void _SSHReference(CreateWeb Examples) {
+		public void _SSHReference(Examples Examples) {
 
 				 var CommandSet = CommandLineInterpreter.DescribeCommandSet_SSH;
 				_Output.Write ("\n{0}", _Indent);
@@ -139,13 +173,29 @@ namespace MakeSiteDocs {
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				 Describe(CommandSet, _SSHCreate._DescribeCommand);
+				  ConsoleReference (Examples.ProfileList);
+				_Output.Write ("\n{0}", _Indent);
 				 Describe(CommandSet, _SSHPrivate._DescribeCommand);
+				  ConsoleReference (Examples.ProfileList);
+				_Output.Write ("\n{0}", _Indent);
 				 Describe(CommandSet, _SSHPublic._DescribeCommand);
+				  ConsoleReference (Examples.ProfileList);
+				_Output.Write ("\n{0}", _Indent);
 				 Describe(CommandSet, _SSHAddHost._DescribeCommand);
+				  ConsoleReference (Examples.ProfileList);
+				_Output.Write ("\n{0}", _Indent);
 				 Describe(CommandSet, _SSHMergeKnown._DescribeCommand);
+				  ConsoleReference (Examples.ProfileList);
+				_Output.Write ("\n{0}", _Indent);
 				 Describe(CommandSet, _SSHAddClient._DescribeCommand);
+				  ConsoleReference (Examples.ProfileList);
+				_Output.Write ("\n{0}", _Indent);
 				 Describe(CommandSet, _SSHKnown._DescribeCommand);
+				  ConsoleReference (Examples.ProfileList);
+				_Output.Write ("\n{0}", _Indent);
 				 Describe(CommandSet, _SSHAuth._DescribeCommand);
+				  ConsoleReference (Examples.ProfileList);
+				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 					}
 		}

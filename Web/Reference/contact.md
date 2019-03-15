@@ -6,8 +6,8 @@
 contact    Manage contact catalogs connected to an account
     add   Add contact entry from file
     delete   Delete contact entry
-    dump   List contact entries
     get   Lookup contact entry
+    list   List contact entries
 ````
 
 
@@ -22,6 +22,8 @@ add   Add contact entry from file
     /report   Report output (default)
     /json   Report output in JSON format
 ````
+**Missing Example***
+
 # contact delete
 
 ````
@@ -32,6 +34,8 @@ delete   Delete contact entry
     /report   Report output (default)
     /json   Report output in JSON format
 ````
+**Missing Example***
+
 # contact get
 
 ````
@@ -42,13 +46,16 @@ get   Lookup contact entry
     /report   Report output (default)
     /json   Report output in JSON format
 ````
-# contact dump
+**Missing Example***
+
+# contact list
 
 ````
-dump   List contact entries
+list   List contact entries
     /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
 ````
+**Missing Example***
 

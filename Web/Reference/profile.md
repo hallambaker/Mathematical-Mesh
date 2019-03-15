@@ -5,7 +5,6 @@
 ````
 profile    Manage personal and device profiles and accounts.
     create   Create new personal profile
-    device   Create new device profile
     dump   Describe the specified profile
     escrow   Create a set of key escrow shares
     export   Export the specified profile data to the specified file
@@ -47,10 +46,10 @@ Specifying the /json option returns a result of type Result:
     "Reason": "Object reference not set to an instance of an object."}}
 ````
 
-# profile device
+# profile create
 
 ````
-device   Create new device profile
+create   Create new device profile
        Device identifier
        Device description
     /alg   List of algorithm specifiers
@@ -59,7 +58,7 @@ device   Create new device profile
 
 ````
 >profile device /id="IoTDevice"
-ERROR - The option  is not known.
+ERROR - The command  is not known.
 ````
 
 Specifying the /json option returns a result of type Result:
@@ -69,7 +68,7 @@ Specifying the /json option returns a result of type Result:
 {
   "Result": {
     "Success": false,
-    "Reason": "The option  is not known."}}
+    "Reason": "The command  is not known."}}
 ````
 
 # profile hello

@@ -5,14 +5,14 @@
 <dd>Manage bookmark catalogs connected to an account
 <dt><a href="calendar.md">calendar</a>
 <dd>Manage calendar catalogs connected to an account
-<dt><a href="connect.md">connect</a>
-<dd>Device connection commands.
 <dt><a href="contact.md">contact</a>
 <dd>Manage contact catalogs connected to an account
 <dt><a href="container.md">container</a>
 <dd>DARE container commands
 <dt><a href="dare.md">dare</a>
 <dd>DARE Message encryption and decryption commands
+<dt><a href="device.md">device</a>
+<dd>Device management commands.
 <dt><a href="group.md">group</a>
 <dd>Group management commands
 <dt><a href="hash.md">hash</a>

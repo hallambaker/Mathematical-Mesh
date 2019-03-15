@@ -39,7 +39,7 @@ namespace Goedel.Mesh.Shell {
         /// </summary>
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult ContactdGet(ContactdGet Options) {
+        public override ShellResult ContactGet(ContactGet Options) {
             using (var contextDevice = GetContextDevice(Options)) {
                 var identifier = Options.Identifier.Value;
 

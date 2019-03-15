@@ -1,22 +1,40 @@
 
-# Using the  Command Set
+# Using the `password` Command Set
 
-The  command set contains commands that 
+The `password` command set contains commands for managing a catalog of username 
+and password entries protected by end to end encryption.
 
 ## Adding passwords
 
-Having created her application service account, Alice can add a credential. In this
-case it is the username and password for an ftp service:
+The `password add` command adds a username/password entry to the
+credentials catalog associated with a profile:
+
+Alice adds the username and password for an ftp service to her catalog:
 
 
 ````
 >password 
 ERROR - The command  is not known.
 ````
+
+## Synchronizing passwords to an application.
+
+The `password list` command lists all the passwords in the catalog:
+
+
+````
+>password 
+ERROR - The command  is not known.
+````
+
+The output of the list command may be used to configure a user application 
+such as a Web browser that supports password management. But care is obviously
+required as the passwords will only be as secure as the other application.
 
 ## Finding passwords
 
-Having added the password to her profile, Alice can retrieve it when needed.
+The `password get`  command retreives the username and password 
+values for a specified service:
 
 
 ````
@@ -24,19 +42,28 @@ Having added the password to her profile, Alice can retrieve it when needed.
 ERROR - The command  is not known.
 ````
 
-She can also list all the passwords in her catalog:
+### Using Credentials in scripts
 
+Alice can use Mesh to provide an *aide memoire* for credentials for access credentials
+for sites she rarely visits. She can also use it as a tool to allow scripted access to
+remote services requiring username and password authentication without putting those
+credentials in the script itself.
+
+The commands for doing this vary according to the scripting environment.
+
+Windows
 
 ````
->password 
-ERROR - The command  is not known.
+set credential = ""
+for /f "delims=" %%a in ('meshman password get ftp.example.com')^
+  do @set credential=%%a
 ````
 
-Using the password catalog in this fashion provides a reminder. But what Alice really
-wants to be able to do is to automate the process of using the ftp client to upload 
-files without having to enter her password each time or (worse) include the password
-in the script:
+Most Unix shells, including Bash, the following syntax may be used:
 
+````
+set credential=`meshman password get ftp.example.com`
+````
 
 ## Updating passwords
 
@@ -53,7 +80,7 @@ ERROR - The command  is not known.
 
 ## Deleting passwords
 
-Password entries may be deleted using the 
+Password entries may be deleted using the  `password delete` command:
 
 
 ````
@@ -61,15 +88,14 @@ Password entries may be deleted using the
 ERROR - The command  is not known.
 ````
 
-
 ## Adding a Device.
 
-When a device is added, all the passwords are copied
+When a device is added, it gets a copy of the password file:
 
 
 ````
 >password list
-ERROR - The command  is not known.
+ERROR - Object reference not set to an instance of an object.
 ````
 
 

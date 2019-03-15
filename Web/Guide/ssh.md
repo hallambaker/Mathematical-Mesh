@@ -44,7 +44,7 @@ appear in the <tt>known_hosts</tt> file.</dd>
 
 ## Creating an SSH profile
 
-SSH profiles are created using the <tt>meshman</tt> tool. 
+The `ssh create` command adds an SSH profile named `ssh` to a Mesh account:
 
 
 ````
@@ -52,7 +52,17 @@ SSH profiles are created using the <tt>meshman</tt> tool.
 ERROR - The command  is not known.
 ````
 
-## Key Registration
+Since the command creates a new application catalog, the command must be given to 
+an administration device.
+
+## Client Configuration
+
+Adding an SSH profile causes a public keypair to be created for use with SSH. To make use 
+of this keypair for device authentication with legacy applications typically requires the
+public and/or private keys to be extracted in a format supported by the application.
+
+The `ssh private` command extracts the private key required top configure
+an SSH client:
 
 
 ````
@@ -60,16 +70,24 @@ ERROR - The command  is not known.
 ERROR - The command  is not known.
 ````
 
+The `ssh public` command extracts the public key required top configure
+an SSH client:
+
+
 ````
 >ssh 
 ERROR - The command  is not known.
 ````
 
+If a script is being used to automate this process, the best practice is for the
+script to first generate a random nonce and request that the private key file
+be extracted encrypted under the nonce which can be discarded after the key is
+successfully installed. [Not currently supported.]
 
-## Client Authentication keys
+## Configuring authentication entries on hosts and clients
 
-The `ssh auth` command updates mesh key entries in the `authorized_keys`
-file using information from the specified mesh portal.
+The `ssh merge client`  command is run on a host to update mesh key entries 
+in the `authorized_keys` file using information from the specified mesh portal.
 
 For example, if the `authorized_keys` file has an entry for Alice's Mesh profile
 (`alice@example.com.mm--ssss`), the corresponding profile is fetched and the 
@@ -81,10 +99,8 @@ corresponding SSH device public keys added:
 ERROR - The command  is not known.
 ````
 
-
-## Host Authentication keys
-
-The <tt>ssh add</tt> command adds host entries from the machine to the user's SSH profile.
+The `ssh merge host`  command reads the `known_hosts` file on a client machine and adds
+the listed hosts to the user's ssh catalog.
 
 
 ````
@@ -92,14 +108,19 @@ The <tt>ssh add</tt> command adds host entries from the machine to the user's SS
 ERROR - The command  is not known.
 ````
 
+## Client Key management
+
+SSH keys belonging to the user that are not part of the Mesh profile may be added using the 
+`ssh add client`  command.
+
+
 
 ````
 >ssh 
 ERROR - The command  is not known.
 ````
 
-The <tt>ssh known</tt> command adds hosts from the user's ssh profile to their known_hosts
-file on the machine.
+The list of known clients may be returned in various formats using the `ssh show client`  command.
 
 
 ````
@@ -107,8 +128,24 @@ file on the machine.
 ERROR - The command  is not known.
 ````
 
+## Host Key Management
+
+The `ssh add host`  command adds specific host entries to the user's SSH profile.
 
 
+````
+>ssh 
+ERROR - The command  is not known.
+````
+
+The current list of known hosts in the SSH catalog is returned by the `ssh show known` 
+command.
+
+
+````
+>ssh 
+ERROR - The command  is not known.
+````
 
 ## Additional Devices
 
@@ -118,11 +155,20 @@ or stolen. The device key for the compromised device can be removed from the
 profile without affecting any other device. Investigation of possibly unauthorized logins
 can be focused on those from the compromised device alone.
 
+The `device auth /ssh`  command is used *from an administration device* to 
+enable use of ssh on the machine:
+
 
 ````
->ssh list
+>device auth 
+ERROR - Object reference not set to an instance of an object.
+````
+
+Once the device has been authorized, the client machine can start using SSH immediately:
+
+
+````
+>ssh 
 ERROR - The command  is not known.
 ````
-
-**Missing Example***
 

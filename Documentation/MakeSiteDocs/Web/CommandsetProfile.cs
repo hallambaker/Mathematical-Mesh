@@ -14,13 +14,13 @@ namespace MakeSiteDocs {
 		//
 		// WebProfile
 		//
-		public static void WebProfile(CreateWeb Examples) { /* XFile  */
+		public static void WebProfile(Examples Examples) { /* XFile  */
 				using (var _Output = new StreamWriter("Guide/profile.md")) {
 				var obj = new MakeSiteDocs() { _Output = _Output, _Indent = "", _Filename = "Guide/profile.md" };
 				obj._WebProfile(Examples);
 				}
 			}
-		public void _WebProfile(CreateWeb Examples) {
+		public void _WebProfile(Examples Examples) {
 
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("# Using the  Command Set\n{0}", _Indent);
@@ -89,13 +89,13 @@ namespace MakeSiteDocs {
 		//
 		// ProfileReference
 		//
-		public static void ProfileReference(CreateWeb Examples) { /* XFile  */
+		public static void ProfileReference(Examples Examples) { /* XFile  */
 				using (var _Output = new StreamWriter("Reference/profile.md")) {
 				var obj = new MakeSiteDocs() { _Output = _Output, _Indent = "", _Filename = "Reference/profile.md" };
 				obj._ProfileReference(Examples);
 				}
 			}
-		public void _ProfileReference(CreateWeb Examples) {
+		public void _ProfileReference(Examples Examples) {
 
 				 var CommandSet = CommandLineInterpreter.DescribeCommandSet_Profile;
 				_Output.Write ("\n{0}", _Indent);

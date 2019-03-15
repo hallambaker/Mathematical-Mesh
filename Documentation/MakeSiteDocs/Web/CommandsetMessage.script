@@ -6,7 +6,7 @@
 
 
 
-#xfile MakeSiteDocs WebMessage "Guide/message.md" CreateWeb Examples
+#xfile MakeSiteDocs WebMessage "Guide/message.md" Examples Examples
 
 ## Using the Message Command Set
 
@@ -62,6 +62,10 @@ using the #{ToCommand("message reject")} command:
 
 #% ConsoleExample (Examples.ContactReject);
 
+For good measure, she decides to block further requests:
+
+#% ConsoleExample (Examples.ContactBlock);
+
 The Mesh Confirmation protocol allows a message sender to ask the recipient a short
 question. If the user chooses to respond, the sender receives back a non-repudiable 
 answer to the question.
@@ -98,7 +102,7 @@ Alice she accepts Bob's request using the #{ToCommand("message pending")} comman
 
 #%  ConsoleExample (Examples.ConfirmAccept);
 
-Bob receives Alice's approval when he reviews his pending messages:
+Bob receives Alice's approval using the #{ToCommand("message status")} command:
 
 #%  ConsoleExample (Examples.ConfirmGetAccept);
 
@@ -122,7 +126,7 @@ hasn't accepted his credentials or authorized him to send confirmation requests:
 
 #end xfile
 
-#xfile MakeSiteDocs MessageReference "Reference/message.md" CreateWeb Examples
+#xfile MakeSiteDocs MessageReference "Reference/message.md" Examples Examples
 #% var CommandSet = CommandLineInterpreter.DescribeCommandSet_Message;
 
 
@@ -130,13 +134,27 @@ hasn't accepted his credentials or authorized him to send confirmation requests:
 
 
 #% Describe(CommandSet, _MessageContact._DescribeCommand);
-#% Describe(CommandSet, _MessageConfirm._DescribeCommand);
-#% Describe(CommandSet, _MessagePending._DescribeCommand);
-#% Describe(CommandSet, _MessageStatus._DescribeCommand);
-#% Describe(CommandSet, _MessageAccept._DescribeCommand);
-#% Describe(CommandSet, _MessageReject._DescribeCommand);
-#% Describe(CommandSet, _MessageBlock._DescribeCommand);
+#%  ConsoleReference (Examples.ContactRequest);
 
+#% Describe(CommandSet, _MessageConfirm._DescribeCommand);
+#%  ConsoleReference (Examples.ConfirmRequest);
+
+
+#% Describe(CommandSet, _MessagePending._DescribeCommand);
+#%  ConsoleReference (Examples.ContactPending);
+
+
+#% Describe(CommandSet, _MessageStatus._DescribeCommand);
+#%  ConsoleReference (Examples.ConfirmGetAccept);
+
+#% Describe(CommandSet, _MessageAccept._DescribeCommand);
+#%  ConsoleReference (Examples.ContactAccept);
+
+#% Describe(CommandSet, _MessageReject._DescribeCommand);
+#%  ConsoleReference (Examples.ContactReject);
+
+#% Describe(CommandSet, _MessageBlock._DescribeCommand);
+#%  ConsoleReference (Examples.ContactBlock);
 
 #end xfile
 

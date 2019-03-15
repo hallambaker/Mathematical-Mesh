@@ -6,7 +6,7 @@
 
 
 
-#xfile MakeSiteDocs WebDare "Guide/dare.md" CreateWeb Examples
+#xfile MakeSiteDocs WebDare "Guide/dare.md" Examples Examples
 
 ## Using the  Command Set
 
@@ -99,7 +99,7 @@ been processed already.
 
 #end xfile
 
-#xfile MakeSiteDocs DareReference "Reference/dare.md" CreateWeb Examples
+#xfile MakeSiteDocs DareReference "Reference/dare.md" Examples Examples
 #% var CommandSet = CommandLineInterpreter.DescribeCommandSet_Dare;
 #% Describe(CommandSet);
 

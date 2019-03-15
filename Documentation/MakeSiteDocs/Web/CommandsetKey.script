@@ -6,7 +6,7 @@
 
 
 
-#xfile MakeSiteDocs WebKey "Guide/key.md" CreateWeb Examples
+#xfile MakeSiteDocs WebKey "Guide/key.md" Examples Examples
 
 ## Using the `key` Command Set
 
@@ -100,7 +100,7 @@ be different:
 
 #end xfile
 
-#xfile MakeSiteDocs KeyReference "Reference/key.md" CreateWeb Examples
+#xfile MakeSiteDocs KeyReference "Reference/key.md" Examples Examples
 #% var CommandSet = CommandLineInterpreter.DescribeCommandSet_Key;
 
 #% Describe(CommandSet);

@@ -24,6 +24,22 @@ contact   Post a conection request to a user
     /report   Report output (default)
     /json   Report output in JSON format
 ````
+
+````
+>message 
+ERROR - The command  is not known.
+````
+
+Specifying the /json option returns a result of type Result:
+
+````
+>message  /json
+{
+  "Result": {
+    "Success": false,
+    "Reason": "The command  is not known."}}
+````
+
 # message confirm
 
 ````
@@ -35,6 +51,23 @@ confirm   Post a confirmation request to a user
     /report   Report output (default)
     /json   Report output in JSON format
 ````
+
+````
+>message 
+ERROR - The command  is not known.
+````
+
+Specifying the /json option returns a result of type Result:
+
+````
+>message  /json
+{
+  "Result": {
+    "Success": false,
+    "Reason": "The command  is not known."}}
+````
+
+
 # message pending
 
 ````
@@ -44,6 +77,23 @@ pending   List pending requests
     /report   Report output (default)
     /json   Report output in JSON format
 ````
+
+````
+>message 
+ERROR - The command  is not known.
+````
+
+Specifying the /json option returns a result of type Result:
+
+````
+>message  /json
+{
+  "Result": {
+    "Success": false,
+    "Reason": "The command  is not known."}}
+````
+
+
 # message status
 
 ````
@@ -54,6 +104,22 @@ status   Request status of pending requests
     /report   Report output (default)
     /json   Report output in JSON format
 ````
+
+````
+>message 
+ERROR - The command  is not known.
+````
+
+Specifying the /json option returns a result of type Result:
+
+````
+>message  /json
+{
+  "Result": {
+    "Success": false,
+    "Reason": "The command  is not known."}}
+````
+
 # message accept
 
 ````
@@ -64,6 +130,22 @@ accept   Accept a pending request
     /report   Report output (default)
     /json   Report output in JSON format
 ````
+
+````
+>message 
+ERROR - The command  is not known.
+````
+
+Specifying the /json option returns a result of type Result:
+
+````
+>message  /json
+{
+  "Result": {
+    "Success": false,
+    "Reason": "The command  is not known."}}
+````
+
 # message reject
 
 ````
@@ -74,6 +156,22 @@ reject   Reject a pending request
     /report   Report output (default)
     /json   Report output in JSON format
 ````
+
+````
+>message 
+ERROR - The command  is not known.
+````
+
+Specifying the /json option returns a result of type Result:
+
+````
+>message  /json
+{
+  "Result": {
+    "Success": false,
+    "Reason": "The command  is not known."}}
+````
+
 # message block
 
 ````
@@ -85,4 +183,18 @@ block   Reject a pending request and block requests from that source
     /json   Report output in JSON format
 ````
 
+````
+>message 
+ERROR - The command  is not known.
+````
+
+Specifying the /json option returns a result of type Result:
+
+````
+>message  /json
+{
+  "Result": {
+    "Success": false,
+    "Reason": "The command  is not known."}}
+````
 

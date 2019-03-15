@@ -77,6 +77,14 @@ using the `message reject` command:
 ERROR - The command  is not known.
 ````
 
+For good measure, she decides to block further requests:
+
+
+````
+>message 
+ERROR - The command  is not known.
+````
+
 The Mesh Confirmation protocol allows a message sender to ask the recipient a short
 question. If the user chooses to respond, the sender receives back a non-repudiable 
 answer to the question.
@@ -125,7 +133,7 @@ Alice she accepts Bob's request using the `message pending` command:
 ERROR - The command  is not known.
 ````
 
-Bob receives Alice's approval when he reviews his pending messages:
+Bob receives Alice's approval using the `message status` command:
 
 
 ````

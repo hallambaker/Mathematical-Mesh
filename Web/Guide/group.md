@@ -1,11 +1,52 @@
 
 # Using the  Command Set
 
-The  command set contains commands that 
+The group command set is used to manage recryption groups
+
+In traditional public key encryption, the public key is used to encrypt data
+and the private key is used to decrypt. In the proxy re-encryption scheme used 
+in the Mesh, the public key is used to encrypt data in the exact same way as 
+for two key cryptography but the decryption key is split into two parts. One 
+half of which is held by the recipient and the other half of which is sent 
+to a recryption service.
+
+Decrypting encrypted data requires the use of both halves of the key. The recryption
+service cannot decrypt data because it does not have access to the recipient's half
+of the decryption key and the recipient can't decrypt the data unless the recryption
+service performs its half of the work and returns the result to the recipient.
+
+This approach has important benefits:
+
+* Data cannot be decrypted without the decryption key held by the recipient, thus
+encryption end-to-end. 
+
+* Even a total breach of the recryption service does not result in disclosure of
+the data unless at least one recipient decryption key is also compromised.
+
+* Recipients may be added to a recryption group at any time and immediately gain access
+to all data previously encrypted to the group.
+
+* If a recipient is removed from a recryption group, the recyption service can
+deny further access to the data encrypted under that group by refusing recryption 
+requests from that recipient.
+
+* All access to encrypted data must be mediated through the recryption service.
+The recryption service may therefore enforce audit and accounting controls, detect
+and prevent suspicious behavior.
+
+From the user's point of view, management of recryption groups is essentially the 
+same as management of groups in traditional access control. The principal difference
+being that there is no cryptographically enforced means of denying access to a 
+specific group of users as is provided in traditional Access Control List schemes.
+
+To implement access restrictions of the form 'allow access to a file to every member
+of the red team who is not a member of the blue team', it would be necessary to create 
+and maintain a 'red not blue' group. Fortunately, the need for access control 
+restrictions of this form do not appear to be frequently realized in practice.
 
 ## Creating a Recryption Group
 
-The `connect ` command is used to :
+A recryption group is created using the `group create` command:
 
 
 ````
@@ -13,18 +54,21 @@ The `connect ` command is used to :
 ERROR - The command  is not known.
 ````
 
-can encrypt a message
+This command creates the group groupies@example.com and makes Alice the administrator.
 
-Alice can decrypt because she is the admin
- `connect ` 
+At this point, the group has no members. Bob can encrypt a file under the group
+public key but he is unable to read it:
 
 
 ````
->group 
+>dare encodeTestFile1.txt /out=TestFile1-group.dare /encrypt=groupies@example.com
+ERROR - The command  is not known.
+>dare encodegroupies@example.com
 ERROR - The command  is not known.
 ````
 
-Bob cannot:
+Since Alice is the group administrator, she can decrypt the file using her 
+administrator key:
 
 
 ````
@@ -35,7 +79,9 @@ ERROR - The command  is not known.
 
 ## Adding users
 
-The `connect ` command is used to :
+The `group add` command is used to add users to the group:
+
+Alice adds Bob as a member of the group:
 
 
 ````
@@ -43,8 +89,7 @@ The `connect ` command is used to :
 ERROR - The command  is not known.
 ````
 
-
-Bob can:
+Bob can now decrypt the file.
 
 
 ````
@@ -54,7 +99,7 @@ ERROR - The command  is not known.
 
 ## Reporting users
 
-The `connect ` command is used to :
+The `connect ` command returns a list of group members:
 
 
 ````
@@ -62,10 +107,11 @@ The `connect ` command is used to :
 ERROR - The command  is not known.
 ````
 
+The group currently has one administrator and one member.
 
 ## Deleting users
 
-The `connect ` command is used to :
+Users may be removed from a recryption group using the `group delete` command:
 
 
 ````
@@ -73,20 +119,12 @@ The `connect ` command is used to :
 ERROR - The command  is not known.
 ````
 
-Bob can:
+Bob is no longer a member of the group and his decryption request now fails:
 
 
 ````
 >group 
 ERROR - The command  is not known.
 ````
-
-
-````
->group 
-ERROR - The command  is not known.
-````
-
-
 
 

@@ -6,7 +6,7 @@
 
 
 
-#xfile MakeSiteDocs WebHash "Guide/hash.md" CreateWeb Examples
+#xfile MakeSiteDocs WebHash "Guide/hash.md" Examples Examples
 ## Using the `hash` Command Set
 
 The `hash` command set contains commands that perform Content Digest and 
@@ -70,7 +70,7 @@ If the expected digest value is specified, this is used to check the calculated 
 
 #end xfile
 
-#xfile MakeSiteDocs HashReference "Reference/hash.md" CreateWeb Examples
+#xfile MakeSiteDocs HashReference "Reference/hash.md" Examples Examples
 #% var CommandSet = CommandLineInterpreter.DescribeCommandSet_Hash;
 
 

@@ -14,13 +14,13 @@ namespace MakeSiteDocs {
 		//
 		// WebDare
 		//
-		public static void WebDare(CreateWeb Examples) { /* XFile  */
+		public static void WebDare(Examples Examples) { /* XFile  */
 				using (var _Output = new StreamWriter("Guide/dare.md")) {
 				var obj = new MakeSiteDocs() { _Output = _Output, _Indent = "", _Filename = "Guide/dare.md" };
 				obj._WebDare(Examples);
 				}
 			}
-		public void _WebDare(CreateWeb Examples) {
+		public void _WebDare(Examples Examples) {
 
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("# Using the  Command Set\n{0}", _Indent);
@@ -118,13 +118,13 @@ namespace MakeSiteDocs {
 		//
 		// DareReference
 		//
-		public static void DareReference(CreateWeb Examples) { /* XFile  */
+		public static void DareReference(Examples Examples) { /* XFile  */
 				using (var _Output = new StreamWriter("Reference/dare.md")) {
 				var obj = new MakeSiteDocs() { _Output = _Output, _Indent = "", _Filename = "Reference/dare.md" };
 				obj._DareReference(Examples);
 				}
 			}
-		public void _DareReference(CreateWeb Examples) {
+		public void _DareReference(Examples Examples) {
 
 				 var CommandSet = CommandLineInterpreter.DescribeCommandSet_Dare;
 				 Describe(CommandSet);

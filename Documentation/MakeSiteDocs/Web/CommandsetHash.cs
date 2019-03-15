@@ -14,13 +14,13 @@ namespace MakeSiteDocs {
 		//
 		// WebHash
 		//
-		public static void WebHash(CreateWeb Examples) { /* XFile  */
+		public static void WebHash(Examples Examples) { /* XFile  */
 				using (var _Output = new StreamWriter("Guide/hash.md")) {
 				var obj = new MakeSiteDocs() { _Output = _Output, _Indent = "", _Filename = "Guide/hash.md" };
 				obj._WebHash(Examples);
 				}
 			}
-		public void _WebHash(CreateWeb Examples) {
+		public void _WebHash(Examples Examples) {
 
 				_Output.Write ("# Using the `hash` Command Set\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
@@ -89,13 +89,13 @@ namespace MakeSiteDocs {
 		//
 		// HashReference
 		//
-		public static void HashReference(CreateWeb Examples) { /* XFile  */
+		public static void HashReference(Examples Examples) { /* XFile  */
 				using (var _Output = new StreamWriter("Reference/hash.md")) {
 				var obj = new MakeSiteDocs() { _Output = _Output, _Indent = "", _Filename = "Reference/hash.md" };
 				obj._HashReference(Examples);
 				}
 			}
-		public void _HashReference(CreateWeb Examples) {
+		public void _HashReference(Examples Examples) {
 
 				 var CommandSet = CommandLineInterpreter.DescribeCommandSet_Hash;
 				_Output.Write ("\n{0}", _Indent);

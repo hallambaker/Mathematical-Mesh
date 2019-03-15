@@ -6,7 +6,7 @@
 
 
 
-#xfile MakeSiteDocs WebProfile "Guide/profile.md" CreateWeb Examples
+#xfile MakeSiteDocs WebProfile "Guide/profile.md" Examples Examples
 
 ## Using the  Command Set
 
@@ -70,7 +70,7 @@ The #{ToCommand("connect ")} command is used to :
 
 #end xfile
 
-#xfile MakeSiteDocs ProfileReference "Reference/profile.md" CreateWeb Examples
+#xfile MakeSiteDocs ProfileReference "Reference/profile.md" Examples Examples
 #% var CommandSet = CommandLineInterpreter.DescribeCommandSet_Profile;
 
 

@@ -22,16 +22,22 @@ add   Add calendar entry from file
     /report   Report output (default)
     /json   Report output in JSON format
 ````
-# calendar get
 
 ````
-get   Lookup calendar entry
-       <Unspecified>
-    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
-    /verbose   Verbose reports (default)
-    /report   Report output (default)
-    /json   Report output in JSON format
+>calendar 
+ERROR - The command  is not known.
 ````
+
+Specifying the /json option returns a result of type Result:
+
+````
+>calendar  /json
+{
+  "Result": {
+    "Success": false,
+    "Reason": "The command  is not known."}}
+````
+
 # calendar delete
 
 ````
@@ -42,6 +48,48 @@ delete   Delete calendar entry
     /report   Report output (default)
     /json   Report output in JSON format
 ````
+
+````
+>calendar 
+ERROR - The command  is not known.
+````
+
+Specifying the /json option returns a result of type Result:
+
+````
+>calendar  /json
+{
+  "Result": {
+    "Success": false,
+    "Reason": "The command  is not known."}}
+````
+
+# calendar get
+
+````
+get   Lookup calendar entry
+       <Unspecified>
+    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /verbose   Verbose reports (default)
+    /report   Report output (default)
+    /json   Report output in JSON format
+````
+
+````
+>calendar 
+ERROR - The command  is not known.
+````
+
+Specifying the /json option returns a result of type Result:
+
+````
+>calendar  /json
+{
+  "Result": {
+    "Success": false,
+    "Reason": "The command  is not known."}}
+````
+
 # calendar dump
 
 ````
@@ -50,6 +98,21 @@ dump   List calendar entries
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
+````
+
+````
+>calendar 
+ERROR - The command  is not known.
+````
+
+Specifying the /json option returns a result of type Result:
+
+````
+>calendar  /json
+{
+  "Result": {
+    "Success": false,
+    "Reason": "The command  is not known."}}
 ````
 
 

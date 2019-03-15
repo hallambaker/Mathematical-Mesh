@@ -21,16 +21,22 @@ add   Add calendar entry from file
     /report   Report output (default)
     /json   Report output in JSON format
 ````
-# network get
 
 ````
-get   Lookup calendar entry
-       <Unspecified>
-    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
-    /verbose   Verbose reports (default)
-    /report   Report output (default)
-    /json   Report output in JSON format
+>network 
+ERROR - The command  is not known.
 ````
+
+Specifying the /json option returns a result of type Result:
+
+````
+>network  /json
+{
+  "Result": {
+    "Success": false,
+    "Reason": "The command  is not known."}}
+````
+
 # network delete
 
 ````
@@ -41,6 +47,48 @@ delete   Delete calendar entry
     /report   Report output (default)
     /json   Report output in JSON format
 ````
+
+````
+>network 
+ERROR - The command  is not known.
+````
+
+Specifying the /json option returns a result of type Result:
+
+````
+>network  /json
+{
+  "Result": {
+    "Success": false,
+    "Reason": "The command  is not known."}}
+````
+
+# network get
+
+````
+get   Lookup calendar entry
+       <Unspecified>
+    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /verbose   Verbose reports (default)
+    /report   Report output (default)
+    /json   Report output in JSON format
+````
+
+````
+>network 
+ERROR - The command  is not known.
+````
+
+Specifying the /json option returns a result of type Result:
+
+````
+>network  /json
+{
+  "Result": {
+    "Success": false,
+    "Reason": "The command  is not known."}}
+````
+
 # network dump
 
 ````
@@ -51,4 +99,18 @@ dump   List network entries
     /json   Report output in JSON format
 ````
 
+````
+>network 
+ERROR - The command  is not known.
+````
+
+Specifying the /json option returns a result of type Result:
+
+````
+>network  /json
+{
+  "Result": {
+    "Success": false,
+    "Reason": "The command  is not known."}}
+````
 

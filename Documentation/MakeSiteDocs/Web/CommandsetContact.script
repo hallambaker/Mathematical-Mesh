@@ -6,15 +6,59 @@
 
 
 
-#xfile MakeSiteDocs WebContact "Guide/contact.md" CreateWeb Index
+#xfile MakeSiteDocs WebContact "Guide/contact.md" Examples Examples
 
-## Using the  Command Set
+## Using the `contacts` Command Set
 
-The  command set contains commands that 
+The `contacts` command set is used to manage the user's contacts catalogue.
+
+The contacts catalogue plays an important role in Mesh messaging as it is used to 
+determine the security policy for sending outbound messages and is one of the
+sources used to perform access control (i.e. spam filtering) on inbound messages.
+
+#### Adding contacts
+
+The #{ToCommand("contact add")} command adds a contact entry to a catalog:
+
+#%  ConsoleExample (Examples.ContactAdd);
+
+Contacts may also be added by accepting contact request messages:
+
+#% ConsoleExample (Examples.ContactPending);
+#% ConsoleExample (Examples.ContactAccept);
+
+
+#### Finding contacts
+
+The #{ToCommand("contact get")} command retreives a contact by the contact's 
+email address or label:
+
+#%  ConsoleExample (Examples.ContactGet);
+
+#### Listing contacts
+
+A complete list of contacts is obtained using the  #{ToCommand("contact list")} command:
+
+#%  ConsoleExample (Examples.ContactList);
+
+#### Deleting contacts
+
+Contact entries may be deleted using the  #{ToCommand("contact delete")} command:
+
+#%  ConsoleExample (Examples.ContactDelete);
+
+
+
+#### Adding devices
+
+Devices are given authorization to access the contacts catalog using the 
+ #{ToCommand("device auth")} command:
+
+ #%  ConsoleExample (Examples.ContactAuth);
 
 #end xfile
 
-#xfile MakeSiteDocs ContactReference "Reference/contact.md" CreateWeb Index
+#xfile MakeSiteDocs ContactReference "Reference/contact.md" Examples Examples
 #% var CommandSet = CommandLineInterpreter.DescribeCommandSet_Contact;
 
 
@@ -22,9 +66,16 @@ The  command set contains commands that
 
 
 #% Describe(CommandSet, _ContactAdd._DescribeCommand);
+#% ConsoleReference (Examples.ContactAdd);
+
 #% Describe(CommandSet, _ContactDelete._DescribeCommand);
-#% Describe(CommandSet, _ContactdGet._DescribeCommand);
+#% ConsoleReference (Examples.ContactDelete);
+
+#% Describe(CommandSet, _ContactGet._DescribeCommand);
+#% ConsoleReference (Examples.ContactGet);
+
 #% Describe(CommandSet, _ContactDump._DescribeCommand);
+#% ConsoleReference (Examples.ContactList);
 
 #end xfile
 

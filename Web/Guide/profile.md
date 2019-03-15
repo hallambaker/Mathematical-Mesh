@@ -19,7 +19,7 @@ The `connect ` command is used to :
 
 ````
 >profile device /id="IoTDevice"
-ERROR - The option  is not known.
+ERROR - The command  is not known.
 ````
 
 ## Listing profiles installed on a machine

@@ -14,13 +14,13 @@ namespace MakeSiteDocs {
 		//
 		// WebMessage
 		//
-		public static void WebMessage(CreateWeb Examples) { /* XFile  */
+		public static void WebMessage(Examples Examples) { /* XFile  */
 				using (var _Output = new StreamWriter("Guide/message.md")) {
 				var obj = new MakeSiteDocs() { _Output = _Output, _Indent = "", _Filename = "Guide/message.md" };
 				obj._WebMessage(Examples);
 				}
 			}
-		public void _WebMessage(CreateWeb Examples) {
+		public void _WebMessage(Examples Examples) {
 
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("# Using the Message Command Set\n{0}", _Indent);
@@ -77,6 +77,10 @@ namespace MakeSiteDocs {
 				_Output.Write ("\n{0}", _Indent);
 				 ConsoleExample (Examples.ContactReject);
 				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("For good measure, she decides to block further requests:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				 ConsoleExample (Examples.ContactBlock);
+				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The Mesh Confirmation protocol allows a message sender to ask the recipient a short\n{0}", _Indent);
 				_Output.Write ("question. If the user chooses to respond, the sender receives back a non-repudiable \n{0}", _Indent);
 				_Output.Write ("answer to the question.\n{0}", _Indent);
@@ -113,7 +117,7 @@ namespace MakeSiteDocs {
 				_Output.Write ("\n{0}", _Indent);
 				  ConsoleExample (Examples.ConfirmAccept);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("Bob receives Alice's approval when he reviews his pending messages:\n{0}", _Indent);
+				_Output.Write ("Bob receives Alice's approval using the {1} command:\n{0}", _Indent, ToCommand("message status"));
 				_Output.Write ("\n{0}", _Indent);
 				  ConsoleExample (Examples.ConfirmGetAccept);
 				_Output.Write ("\n{0}", _Indent);
@@ -141,13 +145,13 @@ namespace MakeSiteDocs {
 		//
 		// MessageReference
 		//
-		public static void MessageReference(CreateWeb Examples) { /* XFile  */
+		public static void MessageReference(Examples Examples) { /* XFile  */
 				using (var _Output = new StreamWriter("Reference/message.md")) {
 				var obj = new MakeSiteDocs() { _Output = _Output, _Indent = "", _Filename = "Reference/message.md" };
 				obj._MessageReference(Examples);
 				}
 			}
-		public void _MessageReference(CreateWeb Examples) {
+		public void _MessageReference(Examples Examples) {
 
 				 var CommandSet = CommandLineInterpreter.DescribeCommandSet_Message;
 				_Output.Write ("\n{0}", _Indent);
@@ -156,13 +160,27 @@ namespace MakeSiteDocs {
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				 Describe(CommandSet, _MessageContact._DescribeCommand);
-				 Describe(CommandSet, _MessageConfirm._DescribeCommand);
-				 Describe(CommandSet, _MessagePending._DescribeCommand);
-				 Describe(CommandSet, _MessageStatus._DescribeCommand);
-				 Describe(CommandSet, _MessageAccept._DescribeCommand);
-				 Describe(CommandSet, _MessageReject._DescribeCommand);
-				 Describe(CommandSet, _MessageBlock._DescribeCommand);
+				  ConsoleReference (Examples.ContactRequest);
 				_Output.Write ("\n{0}", _Indent);
+				 Describe(CommandSet, _MessageConfirm._DescribeCommand);
+				  ConsoleReference (Examples.ConfirmRequest);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				 Describe(CommandSet, _MessagePending._DescribeCommand);
+				  ConsoleReference (Examples.ContactPending);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				 Describe(CommandSet, _MessageStatus._DescribeCommand);
+				  ConsoleReference (Examples.ConfirmGetAccept);
+				_Output.Write ("\n{0}", _Indent);
+				 Describe(CommandSet, _MessageAccept._DescribeCommand);
+				  ConsoleReference (Examples.ContactAccept);
+				_Output.Write ("\n{0}", _Indent);
+				 Describe(CommandSet, _MessageReject._DescribeCommand);
+				  ConsoleReference (Examples.ContactReject);
+				_Output.Write ("\n{0}", _Indent);
+				 Describe(CommandSet, _MessageBlock._DescribeCommand);
+				  ConsoleReference (Examples.ContactBlock);
 				_Output.Write ("\n{0}", _Indent);
 					}
 		}

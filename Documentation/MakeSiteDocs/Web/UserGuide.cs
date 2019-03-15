@@ -16,7 +16,7 @@ namespace MakeSiteDocs {
 		//
 		// WebDocs
 		//
-		public void WebDocs (CreateWeb Index) {
+		public void WebDocs (Examples Index) {
 			 Web (Index);
 			 UserGuide (Index);
 			 Reference (Index);
@@ -57,13 +57,13 @@ namespace MakeSiteDocs {
 		//
 		// Web
 		//
-		public static void Web(CreateWeb Index) { /* XFile  */
+		public static void Web(Examples Index) { /* XFile  */
 				using (var _Output = new StreamWriter("readme.md")) {
 				var obj = new MakeSiteDocs() { _Output = _Output, _Indent = "", _Filename = "readme.md" };
 				obj._Web(Index);
 				}
 			}
-		public void _Web(CreateWeb Index) {
+		public void _Web(Examples Index) {
 
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("# meshman Documentation\n{0}", _Indent);
@@ -87,13 +87,13 @@ namespace MakeSiteDocs {
 		//
 		// Features
 		//
-		public static void Features(CreateWeb Index) { /* XFile  */
+		public static void Features(Examples Index) { /* XFile  */
 				using (var _Output = new StreamWriter("festures.md")) {
 				var obj = new MakeSiteDocs() { _Output = _Output, _Indent = "", _Filename = "festures.md" };
 				obj._Features(Index);
 				}
 			}
-		public void _Features(CreateWeb Index) {
+		public void _Features(Examples Index) {
 
 				_Output.Write ("# Feature Requests\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
@@ -118,6 +118,9 @@ namespace MakeSiteDocs {
 				_Output.Write ("<dd>Support wildcard contacts. \n{0}", _Indent);
 				_Output.Write ("<dd>Option to not accept reciprocal contact requests.\n{0}", _Indent);
 				_Output.Write ("<dd>Blocklists for message requests.\n{0}", _Indent);
+				_Output.Write ("<dt>SSH\n{0}", _Indent);
+				_Output.Write ("<dd>Support encryption of private key export\n{0}", _Indent);
+				_Output.Write ("<dd>support the connection mechanism\n{0}", _Indent);
 				_Output.Write ("</dl>\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
@@ -143,13 +146,13 @@ namespace MakeSiteDocs {
 		//
 		// UserGuide
 		//
-		public static void UserGuide(CreateWeb Index) { /* XFile  */
+		public static void UserGuide(Examples Index) { /* XFile  */
 				using (var _Output = new StreamWriter("Guide/readme.md")) {
 				var obj = new MakeSiteDocs() { _Output = _Output, _Indent = "", _Filename = "Guide/readme.md" };
 				obj._UserGuide(Index);
 				}
 			}
-		public void _UserGuide(CreateWeb Index) {
+		public void _UserGuide(Examples Index) {
 
 				_Output.Write ("# meshman User Guide\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
@@ -169,13 +172,13 @@ namespace MakeSiteDocs {
 		//
 		// Reference
 		//
-		public static void Reference(CreateWeb Index) { /* XFile  */
+		public static void Reference(Examples Index) { /* XFile  */
 				using (var _Output = new StreamWriter("Reference/readme.md")) {
 				var obj = new MakeSiteDocs() { _Output = _Output, _Indent = "", _Filename = "Reference/readme.md" };
 				obj._Reference(Index);
 				}
 			}
-		public void _Reference(CreateWeb Index) {
+		public void _Reference(Examples Index) {
 
 				_Output.Write ("# meshman Reference Manual\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);

@@ -12,7 +12,6 @@ using Goedel.Cryptography.PKIX;
 namespace Goedel.Test.Core {
 
     public class CryptoStackDebug : CryptoStack {
-        byte[] ThisSalt;
         public byte[] KeyEncrypt;
         public byte[] KeyMac;
         public byte[] IV;

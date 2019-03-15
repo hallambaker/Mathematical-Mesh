@@ -7,7 +7,7 @@
 #xclass MakeSiteDocs MakeSiteDocs
 
 
-#method WebDocs CreateWeb Index
+#method WebDocs Examples Index
 #% Web (Index);
 #% UserGuide (Index);
 #% Reference (Index);
@@ -44,7 +44,7 @@
 #% CalendarReference (Index);
 #end method
 
-#xfile MakeSiteDocs Web "readme.md" CreateWeb Index
+#xfile MakeSiteDocs Web "readme.md" Examples Index
 
 ## meshman Documentation
 
@@ -63,7 +63,7 @@ specific commands.
 
 #end xfile
 
-#xfile MakeSiteDocs Features "festures.md" CreateWeb Index
+#xfile MakeSiteDocs Features "festures.md" Examples Index
 ## Feature Requests
 
 The following features are planned but not yet implemented:
@@ -87,6 +87,9 @@ The following features are planned but not yet implemented:
 <dd>Support wildcard contacts. 
 <dd>Option to not accept reciprocal contact requests.
 <dd>Blocklists for message requests.
+<dt>SSH
+<dd>Support encryption of private key export
+<dd>support the connection mechanism
 </dl>
 
 
@@ -108,7 +111,7 @@ Synchronous
 
 #end xfile
 
-#xfile MakeSiteDocs UserGuide "Guide/readme.md" CreateWeb Index
+#xfile MakeSiteDocs UserGuide "Guide/readme.md" Examples Index
 ## meshman User Guide
 
 <dl>
@@ -125,7 +128,7 @@ Synchronous
 
 
 
-#xfile MakeSiteDocs Reference "Reference/readme.md" CreateWeb Index
+#xfile MakeSiteDocs Reference "Reference/readme.md" Examples Index
 ## meshman Reference Manual
 
 <dl>

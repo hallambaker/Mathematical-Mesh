@@ -1,17 +1,17 @@
 
 
-# bookmark
+# network
 
 ````
-bookmark    Manage bookmark catalogs connected to an account
-    add   Add bookmark
-    delete   Delete bookmark entry
-    dump   List bookmark entries
-    get   Lookup bookmark entry
+network    Manage network profile settings
+    add   Add calendar entry from file
+    delete   Delete calendar entry
+    dump   List network entries
+    get   Lookup calendar entry
 ````
 
 
-# bookmark add
+# network add
 
 ````
 add   Add bookmark
@@ -23,7 +23,23 @@ add   Add bookmark
     /report   Report output (default)
     /json   Report output in JSON format
 ````
-# bookmark delete
+
+````
+>bookmark 
+ERROR - The command  is not known.
+````
+
+Specifying the /json option returns a result of type Result:
+
+````
+>bookmark  /json
+{
+  "Result": {
+    "Success": false,
+    "Reason": "The command  is not known."}}
+````
+
+# network delete
 
 ````
 delete   Delete bookmark entry
@@ -34,7 +50,23 @@ delete   Delete bookmark entry
     /report   Report output (default)
     /json   Report output in JSON format
 ````
-# bookmark get
+
+````
+>bookmark 
+ERROR - The command  is not known.
+````
+
+Specifying the /json option returns a result of type Result:
+
+````
+>bookmark  /json
+{
+  "Result": {
+    "Success": false,
+    "Reason": "The command  is not known."}}
+````
+
+# network get
 
 ````
 get   Lookup bookmark entry
@@ -44,13 +76,44 @@ get   Lookup bookmark entry
     /report   Report output (default)
     /json   Report output in JSON format
 ````
-# bookmark dump
 
 ````
-dump   List bookmark entries
+>bookmark 
+ERROR - The command  is not known.
+````
+
+Specifying the /json option returns a result of type Result:
+
+````
+>bookmark  /json
+{
+  "Result": {
+    "Success": false,
+    "Reason": "The command  is not known."}}
+````
+
+# network list
+
+````
+list   List bookmark entries
     /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
+````
+
+````
+>bookmark 
+ERROR - The command  is not known.
+````
+
+Specifying the /json option returns a result of type Result:
+
+````
+>bookmark  /json
+{
+  "Result": {
+    "Success": false,
+    "Reason": "The command  is not known."}}
 ````
 
