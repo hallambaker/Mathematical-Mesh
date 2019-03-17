@@ -18,19 +18,21 @@ namespace Goedel.Mesh.Shell {
         /// <returns>Mesh result instance</returns>
         public override ShellResult ContactAdd(ContactAdd Options) {
             using (var contextDevice = GetContextDevice(Options)) {
-                var identifier = Options.Identifier.Value;
 
-                var entry = new CatalogEntryContact() {
-                    Key = identifier
-                    };
-                using (var catalog = contextDevice.GetCatalogContact()) {
-                    catalog.Add(entry);
-                    }
+                throw new NYI();
+                //var identifier = Options.Identifier.Value;
 
-                return new ResultEntry() {
-                    Success = true,
-                    CatalogEntry = entry
-                    };
+                //var entry = new CatalogEntryContact() {
+                //    Key = identifier
+                //    };
+                //using (var catalog = contextDevice.GetCatalogContact()) {
+                //    catalog.Add(entry);
+                //    }
+
+                //return new ResultEntry() {
+                //    Success = true,
+                //    CatalogEntry = entry
+                //    };
                 }
             }
 

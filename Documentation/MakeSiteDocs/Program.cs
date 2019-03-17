@@ -27,8 +27,10 @@ namespace MakeSiteDocs {
         TestCLI testCLIAlice1;
         TestCLI testCLIAlice2;
         TestCLI testCLIAlice3;
-        TestCLI testCLIBob;
+        TestCLI testCLIBob1;
         TestCLI testCLIMallet1;
+
+        public Dictionary<string, string> ToDoList = new Dictionary<string, string>();
 
         public string TestDir1 = "TestDir1";
         public string TestDir2 = "TestOut";
@@ -42,6 +44,8 @@ namespace MakeSiteDocs {
         public string TestText3 = "This is a test 3";
         public string TestText4 = "This is a test 4";
         public string TestText5 = "This is a test 5";
+
+        public string EARLService = "example.com";
 
         public string TestFile1Group = "TestFile1-group.dare";
 
@@ -62,15 +66,28 @@ namespace MakeSiteDocs {
 
         public string AliceAccount = "alice@example.com";
         public string AliceAccount2 = "alice@example.net";
+        public string AliceAccount2Outbound = "smtp:submit.example.net:587";
+        public string AliceAccount2Inbound = "imap4:imap.example.net:993";
         public string BobAccount = "bob@example.com";
+        public string CarolAccount = "carol@example.com";
+        public string DougAccount = "doug@example.com";
+        public string MalletAccount = "mallet@example.com";
         public string GroupAccount = "groupies@example.com";
+
+        public string AliceContactFile = "alice-contact.json";
+        public string CarolContactFile = "carol-contact.json"; 
+        public string DougAccountUDF = "UDF://example.com/ERRROR"; // ToDo: calculate Doug UDF
+
+        public string AliceDevice1 = "Alice";
+        public string AliceDevice2 = "Alice";
+        public string AliceDevice3 = "Alice";
 
         public Examples() {
 
             testCLIAlice1 = GetTestCLI("Alice");
             testCLIAlice2 = GetTestCLI("Alice2");
             testCLIAlice3 = GetTestCLI("Alice3");
-            testCLIBob = GetTestCLI("Bob");
+            testCLIBob1 = GetTestCLI("Bob");
             testCLIMallet1 = GetTestCLI("Mallet");
 
             Directory.CreateDirectory(TestDir1);
@@ -269,23 +286,28 @@ namespace MakeSiteDocs {
         public List<ExampleResult> ProfileSync;
 
         public void DoCommandsProfile() {
-            ProfileMaster = testCLIAlice1.Example($"profile create {AliceAccount}");
-            ProfileDevice = testCLIAlice1.Example($"profile device /id=\"IoTDevice\"");
+            ProfileHello = testCLIAlice1.Example($"profile hello {AliceAccount}");
+            ProfileMaster = testCLIAlice1.Example($"profile create  {AliceAccount}");
+            ProfileSync = testCLIAlice1.Example($"profile sync");
+
             ProfileList = testCLIAlice1.Example($"profile list");
-            ProfileDump = testCLIAlice1.Example($"profile dump /mesh={AliceAccount}");
+            ProfileDump = testCLIAlice1.Example($"profile get /mesh={AliceAccount}");
             ProfileEscrow = testCLIAlice1.Example($"profile escrow");
-            var share1 = "s1";
-            var share2 = "s2";
-            ProfileRecover = testCLIAlice1.Example($"profile recover ${share1} ${share2}");
+
+
+            var share1 = (ProfileEscrow[0].Result as ResultEscrow).Shares[0];
+            var share2 = (ProfileEscrow[0].Result as ResultEscrow).Shares[2];
+
+            ProfileRecover = testCLIAlice1.Example($"profile recover ${share1} ${share2} /verify");
             ProfileExport = testCLIAlice1.Example($"profile export {TestExport}");
             ProfileImport = testCLIAlice2.Example($"profile import {TestExport}"); // do on another device
-            ProfileHello = testCLIAlice1.Example($"profile hello");
+
             ProfileRegister = testCLIAlice1.Example($"profile register {AliceAccount2}"); // do on another device
-            ProfileSync = testCLIAlice1.Example($"profile sync");
+
             }
 
 
-        public List<ExampleResult> ConnectRequest;
+        public List<ExampleResult> DeviceRequest;
         public List<ExampleResult> ConnectRequestMallet;
         public List<ExampleResult> ConnectPending;
         public List<ExampleResult> ConnectAccept;
@@ -301,39 +323,42 @@ namespace MakeSiteDocs {
         public List<ExampleResult> ConnectList;
         public List<ExampleResult> ConnectDelete;
 
-        public List<ExampleResult> AppConnectPassword;
-        public List<ExampleResult> AppConnectBookmark;
-        public List<ExampleResult> AppConnectCalendar;
-        public List<ExampleResult> AppConnectNetwork;
-        public List<ExampleResult> AppConnectSSH1;
-        public List<ExampleResult> AppConnectSSH2;
+        public List<ExampleResult> DeviceCreate;
+        public string DeviceCreateUDF;
+
         public void DoCommandsConnect() {
 
-            ConnectRequest = testCLIAlice2.Example($"device request {AliceAccount}");
+            DeviceRequest = testCLIAlice2.Example($"device request {AliceAccount}");
             ConnectPending = testCLIAlice1.Example($"device pending");
-            var id1 = "id";
+            
+
+            var resultPending = (ConnectPending[0].Result as ResultPending);
+            var id1 = resultPending.Messages[0].MessageID;
+            var id2 = resultPending.Messages[1].MessageID;
+
             ConnectAccept = testCLIAlice1.Example($"device accept {id1}");
-            ConnectPending2 = testCLIAlice1.Example($"device pending");
-            ConnectSync = testCLIAlice2.Example($"device sync");
             ConnectRequestMallet = testCLIMallet1.Example($"device request");
-            var id2 = "id";
+            ConnectSync = testCLIAlice2.Example($"profile sync");
+
             ConnectReject = testCLIAlice1.Example($"device reject {id2}");
+
+            ConnectList = testCLIAlice1.Example($"device list");
+            ConnectDelete = testCLIAlice1.Example($"device delete {id1}",
+                $"device list");
+
             ConnectGetPin = testCLIAlice1.Example($"device pin");
             var pin = "PIN";
-            ConnectPin = testCLIAlice1.Example($"device request /pin={pin}");
+            ConnectPin = testCLIAlice2.Example($"device request /pin={pin}");
             ConnectPending3 = testCLIAlice1.Example($"device pending");
 
-            ConnectEarlPrep = testCLIAlice1.Example($"device ");
-            ConnectEarl = testCLIAlice1.Example($"device ");
-            ConnectList = testCLIAlice1.Example($"device ");
-            ConnectDelete = testCLIAlice1.Example($"device ");
+            DeviceCreate = testCLIAlice1.Example($"device create /id=\"IoTDevice\"");
 
-            AppConnectPassword = testCLIAlice2.Example($"password list");
-            AppConnectBookmark = testCLIAlice2.Example($"bookmark list");
-            AppConnectCalendar = testCLIAlice2.Example($"calendar list");
-            AppConnectNetwork = testCLIAlice2.Example($"network list");
-            AppConnectSSH1 = testCLIAlice2.Example($"ssh list");
 
+            ConnectEarlPrep = testCLIAlice1.Example($"device create /ocr");
+            var resultEarl = (ConnectEarlPrep[0].Result as ResultDeviceCreate);
+            DeviceCreateUDF = $"udf://{EARLService}/{resultEarl.Key}";
+
+            ConnectEarl = testCLIAlice1.Example($"device earl{DeviceCreateUDF}");
             }
 
 
@@ -357,26 +382,52 @@ namespace MakeSiteDocs {
 
         public void DoCommandsMessage() {
 
-            ContactRequest =        testCLIAlice1.Example($"message ");
-            ContactPending =        testCLIAlice1.Example($"message ");
-            ContactAccept =         testCLIAlice1.Example($"message ");
-            ContactCatalog =        testCLIAlice1.Example($"message ");
-            ContactGetResponse =    testCLIAlice1.Example($"message ");
-            ContactReject =         testCLIAlice1.Example($"message ");
-            ContactBlock =          testCLIAlice1.Example($"message ");
+            ContactRequest =        testCLIBob1.Example($"message contact {AliceAccount}");
+            ContactPending =        testCLIAlice1.Example($"message pending");
+            var resultPending = (ConnectPending[0].Result as ResultPending);
+            var id1 = resultPending.Messages[0].MessageID;
+            var id2 = resultPending.Messages[1].MessageID;
 
-            ConfirmRequest =        testCLIAlice1.Example($"message ");
-            ConfirmPending =        testCLIAlice1.Example($"message ");
-            ConfirmAccept =         testCLIAlice1.Example($"message ");
-            ConfirmGetAccept =      testCLIAlice1.Example($"message ");
-            ConfirmReject =         testCLIAlice1.Example($"message ");
-            ConfirmGetReject =      testCLIAlice1.Example($"message ");
-            ConfirmMallet =         testCLIAlice1.Example($"message ");
+            ContactAccept =         testCLIAlice1.Example($"message accept {id1}");
+
+            ContactCatalog =        testCLIAlice1.Example($"contact list");
+            ContactGetResponse =    testCLIBob1.Example($"message status {id1}");
+            ContactReject =         testCLIAlice1.Example($"message reject {id2}");
+            ContactBlock =          testCLIAlice1.Example($"message block {MalletAccount}");
+
+            ConfirmRequest =        testCLIBob1.Example($"message confirm {AliceAccount} \"{BobPurchase}\"");
+            ConfirmPending =        testCLIAlice1.Example($"message pending");
+            var confirmPending = (ConfirmPending[0].Result as ResultPending);
+            id1 = confirmPending.Messages[0].MessageID;
+            id2 = confirmPending.Messages[1].MessageID;
+
+            ConfirmAccept =         testCLIAlice1.Example($"message accept {id1}");
+            ConfirmGetAccept =      testCLIBob1.Example($"message status {id1}");
+            ConfirmReject =         testCLIAlice1.Example($"message reject {id2}");
+            ConfirmGetReject =      testCLIBob1.Example($"message status {id2}");
+            ConfirmMallet =         testCLIMallet1.Example($"message confirm {AliceAccount} \"{BobPurchase}\"");
+            }
+
+        public List<ExampleResult> ContactAdd;
+        public List<ExampleResult> ContactAddSelf;
+        public List<ExampleResult> ContactGet;
+        public List<ExampleResult> ContactList;
+        public List<ExampleResult> ContactList2;
+        public List<ExampleResult> ContactDelete;
+        public List<ExampleResult> ContactAuth;
+
+        public void DoCommandsContact() {
+            ContactAdd = testCLIAlice1.Example($"contact add {CarolContactFile}");
+            ContactAddSelf = testCLIAlice1.Example($"contact add {AliceContactFile}");
+            ContactGet = testCLIAlice1.Example($"contact get {CarolAccount}");
+            ContactList = testCLIAlice1.Example($"contact list");
+            ContactDelete = testCLIAlice1.Example($"contact delete {CarolAccount}");
+            ContactAuth = testCLIAlice1.Example($"device auth {AliceDevice2} /contact");
+            ContactList2 = testCLIAlice2.Example($"contact list");
             }
 
         public List<ExampleResult> GroupCreate;
         public List<ExampleResult> GroupDecryptAlice;
-        public List<ExampleResult> GroupDecryptBob1;
         public List<ExampleResult> GroupAdd;
         public List<ExampleResult> GroupDecryptBob2;
         public List<ExampleResult> GroupList1;
@@ -385,20 +436,17 @@ namespace MakeSiteDocs {
         public List<ExampleResult> GroupList2;
 
         public void DoCommandsGroup() {
-            GroupCreate =           testCLIAlice1.Example($"group ");
-            GroupEncrypt = testCLIBob.Example(
+            GroupCreate =           testCLIAlice1.Example($"group create {GroupAccount}");
+            GroupEncrypt = testCLIBob1.Example(
                         $"dare encode{TestFile1} /out={TestFile1Group} /encrypt={GroupAccount}",
-                        $"dare encode{GroupAccount}");
-
-
-            GroupDecryptAlice =     testCLIAlice1.Example($"group ");
-
-            GroupAdd =              testCLIAlice1.Example($"group ");
-            GroupDecryptBob2 =      testCLIAlice1.Example($"group ");
-            GroupList1 =            testCLIAlice1.Example($"group ");
-            GroupDelete =           testCLIAlice1.Example($"group ");
-            GroupDecryptBob3 =      testCLIAlice1.Example($"group ");
-            GroupList2 =            testCLIAlice1.Example($"group ");
+                        $"dare decode  {TestFile1Group}");
+            GroupDecryptAlice =     testCLIAlice1.Example($"dare decode  {TestFile1Group}");
+            GroupAdd =              testCLIAlice1.Example($"group add {GroupAccount} {BobAccount}");
+            GroupDecryptBob2 =      testCLIAlice1.Example($"dare decode  {TestFile1Group}");
+            GroupList1 =            testCLIAlice1.Example($"group list {GroupAccount}");
+            GroupDelete =           testCLIAlice1.Example($"group delete {GroupAccount} {BobAccount}");
+            GroupDecryptBob3 =      testCLIAlice1.Example($"dare decode  {TestFile1Group}");
+            GroupList2 =            testCLIAlice1.Example($"group list {GroupAccount}");
 
             }
         #endregion
@@ -409,15 +457,23 @@ namespace MakeSiteDocs {
         public List<ExampleResult> PasswordList;
         public List<ExampleResult> PasswordUpdate;
         public List<ExampleResult> PasswordDelete;
+        public List<ExampleResult> PasswordAuth;
 
+        public string PasswordAccount1 = "alice1";
+        public string PasswordValue1 = "password";
+        public string PasswordValue1a = "newpassword";
         public string PasswordSite = "ftp.example.com";
-
+        public string PasswordAccount2 = "alice@example.com";
+        public string PasswordValue2 = "newpassword";
+        public string PasswordSite2 = "www.example.com";
         public void DoCommandsPassword() {
-            PasswordAdd = testCLIAlice1.Example($"password ");
-            PasswordGet = testCLIAlice1.Example($"password ");
-            PasswordList = testCLIAlice1.Example($"password ");
-            PasswordUpdate = testCLIAlice1.Example($"password ");
-            PasswordDelete = testCLIAlice1.Example($"password ");
+            PasswordAdd = testCLIAlice1.Example($"password add {PasswordSite} {PasswordAccount1} {PasswordValue1}",
+                $"password add {PasswordSite2} {PasswordAccount2} {PasswordValue2}");
+            PasswordGet = testCLIAlice1.Example($"password get {PasswordSite}");
+            PasswordList = testCLIAlice1.Example($"password list");
+            PasswordUpdate = testCLIAlice1.Example($"password add {PasswordSite} {PasswordAccount1} {PasswordValue1a}");
+            PasswordDelete = testCLIAlice1.Example($"password delete {PasswordSite2}");
+            PasswordAuth = testCLIAlice1.Example($"device auth /password {AliceDevice2}");
             }
 
         public List<ExampleResult> BookmarkAdd;
@@ -425,12 +481,29 @@ namespace MakeSiteDocs {
         public List<ExampleResult> BookmarkList;
         public List<ExampleResult> BookmarkDelete;
         public List<ExampleResult> BookmarkAuth;
+        public List<ExampleResult> BookmarkList2;
+
+        public string BookmarkPath1 = "Folder1/1";
+        public string BookmarkURI1 = "http://example.com/";
+        public string BookmarkTitle1 = "Example Dot Com";
+
+        public string BookmarkPath2 = "Folder1/2";
+        public string BookmarkURI2 = "http://example.net/Bananas";
+        public string BookmarkTitle2 = "Banana Site";
+
+        public string BookmarkPath3 = "Folder1/1a";
+        public string BookmarkURI3 = "http://example.com/Fred";
+        public string BookmarkTitle3 = "The Fred Space";
+
         public void DoCommandsBookmark() {
-            BookmarkAdd = testCLIAlice1.Example($"bookmark ");
-            BookmarkGet = testCLIAlice1.Example($"bookmark ");
-            BookmarkList = testCLIAlice1.Example($"bookmark ");
-            BookmarkDelete = testCLIAlice1.Example($"bookmark ");
-            BookmarkAuth = testCLIAlice1.Example($"device auth ");
+            BookmarkAdd = testCLIAlice1.Example($"bookmark add {BookmarkPath1} {BookmarkURI1} {BookmarkTitle1}",
+                $"bookmark add {BookmarkPath2} {BookmarkURI2} {BookmarkTitle2}",
+                $"bookmark add {BookmarkPath3} {BookmarkURI3} {BookmarkTitle3}");
+            BookmarkGet = testCLIAlice1.Example($"bookmark get {BookmarkPath2}");
+            BookmarkList = testCLIAlice1.Example($"bookmark list");
+            BookmarkDelete = testCLIAlice1.Example($"bookmark delete BookmarkPath2");
+            BookmarkAuth = testCLIAlice1.Example($"device auth /bookmark {AliceDevice2}");
+            BookmarkList2 = testCLIAlice2.Example($"bookmark list");
             }
 
         public List<ExampleResult> CalendarAdd;
@@ -438,13 +511,22 @@ namespace MakeSiteDocs {
         public List<ExampleResult> CalendarList;
         public List<ExampleResult> CalendarDelete;
         public List<ExampleResult> CalendarAuth;
+
+
+        public string CalendarFile1 = "CalendarEntry1.json";
+        public string CalendarFile2 = "CalendarEntry2.json";
+        public string CalendarID1 = "CalID1";
+        public string CalendarID2 = "CalID2";
+
         public void DoCommandsCalendar() {
-            CalendarAdd = testCLIAlice1.Example($"calendar ");
-            CalendarGet = testCLIAlice1.Example($"calendar ");
-            CalendarList = testCLIAlice1.Example($"calendar ");
+            CalendarAdd = testCLIAlice1.Example($"calendar add {CalendarFile1} {CalendarID1}",
+                $"calendar add {CalendarFile2} {CalendarID2}");
+            CalendarGet = testCLIAlice1.Example($"calendar get {CalendarID1}");
+            CalendarList = testCLIAlice1.Example($"calendar list");
             
-            CalendarDelete = testCLIAlice1.Example($"calendar ");
-            CalendarAuth = testCLIAlice1.Example($"device auth ");
+            CalendarDelete = testCLIAlice1.Example($"calendar delete {CalendarID1}",
+                $"calendar list");
+            CalendarAuth = testCLIAlice1.Example($"device auth /calendar {AliceDevice2}");
             }
 
         public List<ExampleResult> NetworkAdd;
@@ -453,13 +535,21 @@ namespace MakeSiteDocs {
         
         public List<ExampleResult> NetworkDelete;
         public List<ExampleResult> NetworkAuth;
+
+        public string NetworkFile1 = "NetworkEntry1.json";
+        public string NetworkFile2 = "NetworkEntry2.json";
+        public string NetworkID1 = "NetID1";
+        public string NetworkID2 = "NetID2";
+
         public void DoCommandsNetwork() {
-            NetworkAdd = testCLIAlice1.Example($"network ");
-            NetworkGet = testCLIAlice1.Example($"network ");
-            NetworkList = testCLIAlice1.Example($"network ");
+            NetworkAdd = testCLIAlice1.Example($"network add {NetworkFile1} {NetworkID1}",
+                $"network add {NetworkFile2} {NetworkID2}");
+            NetworkGet = testCLIAlice1.Example($"network get {NetworkID2}");
+            NetworkList = testCLIAlice1.Example($"network list");
             
-            NetworkDelete = testCLIAlice1.Example($"network ");
-            NetworkAuth = testCLIAlice1.Example($"device auth ");
+            NetworkDelete = testCLIAlice1.Example($"network delete {NetworkID2}",
+                $"network list");
+            NetworkAuth = testCLIAlice1.Example($"device auth /network {AliceDevice2}");
             }
 
         public List<ExampleResult> SSHCreate;
@@ -474,39 +564,66 @@ namespace MakeSiteDocs {
         public List<ExampleResult> SSHAuthDev;
         public List<ExampleResult> SSHAuthProof;
 
-
+        public string SSHFilePublic = "ssh-key.public";
+        public string SSHFilePrivate = "ssh-key.public";
+        public string SSHFileKnownHosts = "ssh-key.public";
+        public string SSHFileAuthKeys = "ssh-key.public";
 
         public void DoCommandsSSH() {
-            SSHCreate = testCLIAlice1.Example($"ssh ");
-            SSHPrivate = testCLIAlice1.Example($"ssh ");
-            SSHPublic = testCLIAlice1.Example($"ssh ");
-            SSHMergeClients = testCLIAlice1.Example($"ssh ");
-            SSHMergeHosts = testCLIAlice1.Example($"ssh ");
-            SSHAddClient = testCLIAlice1.Example($"ssh ");
-            SSHShowClient = testCLIAlice1.Example($"ssh ");
-            SSHAddHost = testCLIAlice1.Example($"ssh ");
-            SSHShowKnown = testCLIAlice1.Example($"ssh ");
+            SSHCreate = testCLIAlice1.Example($"ssh create");
+            SSHPrivate = testCLIAlice1.Example($"ssh private {SSHFilePrivate}");
+            SSHPublic = testCLIAlice1.Example($"ssh public {SSHFilePublic}");
+            SSHMergeClients = testCLIAlice1.Example($"ssh merge client");
+            SSHMergeHosts = testCLIAlice1.Example($"ssh merge host");
+            SSHAddClient = testCLIAlice1.Example($"ssh add client");
+            SSHShowClient = testCLIAlice1.Example($"ssh show client");
+            SSHAddHost = testCLIAlice1.Example($"ssh add host");
+            SSHShowKnown = testCLIAlice1.Example($"ssh show host");
 
-            SSHAuthDev = testCLIAlice1.Example($"device auth ");
-            SSHAuthProof = testCLIAlice1.Example($"ssh ");
+            SSHAuthDev = testCLIAlice1.Example($"device auth /ssh {AliceDevice2}");
+            SSHAuthProof = testCLIAlice1.Example($"ssh show host");
             }
 
 
-        public List<ExampleResult> ContactAdd;
-        public List<ExampleResult> ContactGet;
-        public List<ExampleResult> ContactList;
-        public List<ExampleResult> ContactDelete;
-        public List<ExampleResult> ContactAuth;
 
-        public void DoCommandsContact() {
-            ContactAdd = testCLIAlice1.Example($"contact ");
-            ContactGet = testCLIAlice1.Example($"contact ");
-            ContactList = testCLIAlice1.Example($"contact ");
-            ContactDelete = testCLIAlice1.Example($"contact ");
-            ContactAuth = testCLIAlice1.Example($"device auth ");
-            }
+
+        public List<ExampleResult> MailAdd;
+        public List<ExampleResult> MailAddExplicit;
+        public List<ExampleResult> MailUpdate;
+
+        public List<ExampleResult> MailUpdateOpenPGP;
+        public List<ExampleResult> MailOpenPGPPrivate;
+        public List<ExampleResult> MailOpenPGPPublic;
+
+        public List<ExampleResult> MailUpdateSMIME;
+        public List<ExampleResult> MailSMIMECA;
+        public List<ExampleResult> MailSMIMEPrivate;
+        public List<ExampleResult> MailSMIMEPublic;
+        public List<ExampleResult> MailSMIMEPrivate2;
+
+        public List<ExampleResult> MailAuth;
+        public string SMIMECA = "ca.example.net";
+        public string MailPGPPublicKey = "pgp.public";
+        public string MailPGPPrivateKey = "pgp.private";
+        public string MailSMIMEPublicKey = "smime.public";
+        public string MailSMIMEPrivateKey = "smime.private";
 
         public void DoCommandsMail() {
+            MailAdd = testCLIAlice1.Example($"mail add {AliceAccount}");
+            MailAddExplicit = testCLIAlice1.Example($"mail add {AliceAccount2} /inbound={AliceAccount2Inbound} /outbound={AliceAccount2Outbound}");
+            MailUpdate = testCLIAlice1.Example($"mail update {AliceAccount2}");
+
+            MailUpdateOpenPGP = testCLIAlice1.Example($"mail update  {AliceAccount} /openpgp");
+            MailOpenPGPPrivate = testCLIAlice1.Example($"mail openpgp private {AliceAccount} {MailPGPPrivateKey}");
+            MailOpenPGPPublic = testCLIAlice1.Example($"mail openpgp public {AliceAccount} {MailPGPPublicKey}");
+
+            MailUpdateSMIME = testCLIAlice1.Example($"mail {AliceAccount} /smime");
+            MailSMIMECA = testCLIAlice1.Example($"mail {AliceAccount} /ca={SMIMECA}");
+            MailSMIMEPrivate = testCLIAlice1.Example($"mail smime private {AliceAccount} {MailSMIMEPrivateKey}");
+            MailSMIMEPublic = testCLIAlice1.Example($"mail smime public {AliceAccount} {MailSMIMEPublicKey}");
+
+            MailAuth = testCLIAlice1.Example($"device auth /mail {AliceDevice2}");
+            MailSMIMEPrivate2 = testCLIAlice2.Example($"mail smime private {AliceAccount} {MailSMIMEPrivateKey}");
             }
 
 

@@ -63,14 +63,14 @@ file name is the input file name with the additional extension `.dare`.
 
 
 ````
->dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=EAGA-MZO2-YAAW-EIEH-V3AT-V4BQ-NGGA
+>dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=EC6O-5ES3-QPEA-VT57-BUZC-UTZ3-E22Q
 ERROR - Object reference not set to an instance of an object.
 ````
 
 Specifying the /json option returns a result of type Result:
 
 ````
->dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=EAGA-MZO2-YAAW-EIEH-V3AT-V4BQ-NGGA /json
+>dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=EC6O-5ES3-QPEA-VT57-BUZC-UTZ3-E22Q /json
 {
   "Result": {
     "Success": false,
@@ -102,14 +102,14 @@ with the extension `.undare` otherwise.
 
 
 ````
->dare decode TestFile1.txt.symmetric.dare /encrypt=EAGA-MZO2-YAAW-EIEH-V3AT-V4BQ-NGGA
+>dare decode TestFile1.txt.symmetric.dare /encrypt=EC6O-5ES3-QPEA-VT57-BUZC-UTZ3-E22Q
 ERROR - The option  is not known.
 ````
 
 Specifying the /json option returns a result of type Result:
 
 ````
->dare decode TestFile1.txt.symmetric.dare /encrypt=EAGA-MZO2-YAAW-EIEH-V3AT-V4BQ-NGGA /json
+>dare decode TestFile1.txt.symmetric.dare /encrypt=EC6O-5ES3-QPEA-VT57-BUZC-UTZ3-E22Q /json
 {
   "Result": {
     "Success": false,
@@ -136,14 +136,14 @@ The active key collection may be overriden using the `/mesh` option.
 
 
 ````
->dare verify TestFile1.txt.symmetric.dare /encrypt=EAGA-MZO2-YAAW-EIEH-V3AT-V4BQ-NGGA
+>dare verify TestFile1.txt.symmetric.dare /encrypt=EC6O-5ES3-QPEA-VT57-BUZC-UTZ3-E22Q
 ERROR - The option  is not known.
 ````
 
 Specifying the /json option returns a result of type Result:
 
 ````
->dare verify TestFile1.txt.symmetric.dare /encrypt=EAGA-MZO2-YAAW-EIEH-V3AT-V4BQ-NGGA /json
+>dare verify TestFile1.txt.symmetric.dare /encrypt=EC6O-5ES3-QPEA-VT57-BUZC-UTZ3-E22Q /json
 {
   "Result": {
     "Success": false,

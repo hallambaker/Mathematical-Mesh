@@ -69,27 +69,30 @@ specific commands.
 The following features are planned but not yet implemented:
 
 <dl>
-<dt>General
-<dd>toplevel 'pending' command to return all pending messages, contacts and connection
+<dt>General</dt>
+<dd>toplevel 'pending' command to return all pending messages, contacts and connection</dd>
 <dt>Hash command set</dt>
 <dd>Allow processing of multiple files at once.</dd>
 <dd>Support SHA3 MACs, SHA256, etc digests.</dd>
 <dt>Dare command set</dt>
-<dd>Implement EARL mechanism
-<dd>Write out transaction completion to log
+<dd>Implement EARL mechanism</dd>
+<dd>Write out transaction completion to log</dd>
 <dt>Container command set</dt>
-<dd>Summarize container
-<dd>Mark container as spool, catalog, log, archive
-<dd>Erase message from container by overwritting salt
+<dd>Summarize container</dd>
+<dd>Mark container as spool, catalog, log, archive</dd>
+<dd>Erase message from container by overwritting salt, data</dd>
 <dd>Index functionality.
-<dd>Log file handling - find log entry, report last n entries, etc.
-<dt>Messaging
-<dd>Support wildcard contacts. 
-<dd>Option to not accept reciprocal contact requests.
-<dd>Blocklists for message requests.
-<dt>SSH
-<dd>Support encryption of private key export
-<dd>support the connection mechanism
+<dd>Log file handling - find log entry, report last n entries, etc.</dd>
+<dd>Exctact messages, not just files</dd>
+<dt>Messaging</dt>
+<dd>Support wildcard contacts. </dd>
+<dd>Option to not accept reciprocal contact requests.</dd>
+<dd>Blocklists for message requests.</dd>
+<dt>SSH</dt>
+<dd>Support encryption of private key export</dd>
+<dd>sSupport for the device authorization command</dd>
+<dt>Device Groups</dt>
+<dd>Allow groups of devices to be specified for management purposes</dd>
 </dl>
 
 

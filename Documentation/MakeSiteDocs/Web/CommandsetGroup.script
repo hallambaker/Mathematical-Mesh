@@ -55,11 +55,12 @@ restrictions of this form do not appear to be frequently realized in practice.
 
 #### Creating a Recryption Group
 
-A recryption group is created using the #{ToCommand("group create")} command:
+Recryption groups are created using the #{ToCommand("group create")} command:
 
 #%  ConsoleExample (Examples.GroupCreate);
 
-This command creates the group #{Examples.GroupAccount} and makes Alice the administrator.
+This command creates the group #{Examples.GroupAccount}. Since Alice created the
+account she is the administrator.
 
 At this point, the group has no members. Bob can encrypt a file under the group
 public key but he is unable to read it:

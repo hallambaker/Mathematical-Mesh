@@ -49,8 +49,8 @@ Bob's contact information has been added to Alice's address book:
 
 #% ConsoleExample (Examples.ContactCatalog);
 
-Bob can find out if Alice has requested his contact request using the 
-#{ToCommand("message pending")} command:
+Bob can find out if Alice has accepted his contact request using the 
+#{ToCommand("message status")} command:
 
 #% ConsoleExample (Examples.ContactGetResponse);
 

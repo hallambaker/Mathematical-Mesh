@@ -30,14 +30,14 @@ namespace MakeSiteDocs {
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("## Adding networks\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("The {1} command adds a network entry to a catalog:\n{0}", _Indent, ToCommand("password add"));
+				_Output.Write ("The {1} command adds a network entry to a catalog:\n{0}", _Indent, ToCommand("network add"));
 				_Output.Write ("\n{0}", _Indent);
 				  ConsoleExample (Examples.NetworkAdd);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("## Finding networks\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("The {1}  command retreives a network entry by label:\n{0}", _Indent, ToCommand("password get"));
+				_Output.Write ("The {1}  command retreives a network entry by label:\n{0}", _Indent, ToCommand("network get"));
 				_Output.Write ("\n{0}", _Indent);
 				  ConsoleExample (Examples.NetworkGet);
 				_Output.Write ("\n{0}", _Indent);

@@ -42,54 +42,85 @@ specified file(s) as entries and appends an index as the final record:
 
 #% ConsoleExample (Examples.ContainerArchive);
 
-The archive may be signed and encrypted:
+An archive may be signed and encrypted:
 
 #% ConsoleExample (Examples.ContainerArchiveEnhance);
 
+The signature on a signed archive is calculated over the final apex of the 
+Merkel tree. Thus a single signature verification may be used to validate
+any or all entries in the container.
+
 #### Reading Containers
 
-The #{ToCommand("container verify")} 
+The #{ToCommand("container verify")} command verifies the contents of a container: 
 
 #% ConsoleExample (Examples.ContainerArchiveVerify);
+
+The verification performed depends on the type of authentication applied to the
+container and whether the verifier can provide the necessary authentication or
+decryption keys.
 
 
 The #{ToCommand("container extract")} 
 
+One or more container entries may be extracted to a file using the  
+#{ToCommand("container extract")} command. If the container is an archive, all
+the files are extracted by default:
+
 #% ConsoleExample (Examples.ContainerArchiveExtractAll);
+
+Alternatively, the `/file` option may be used to extract a specific file:
 
 #% ConsoleExample (Examples.ContainerArchiveExtractFile);
 
 
-
-
-
-
 #### Writing to Containers
 
-The #{ToCommand("container append")} 
+The #{ToCommand("container append")} command adds an entry to a container:
 
 #% ConsoleExample (Examples.ContainerAppend);
 
-
+If no security enhancements are specified, the default enhancements specified 
+in the index entry are applied.
 
 The #{ToCommand("container delete")} 
 
+The #{ToCommand("container delete")} command adds an entry to a container
+marking an entry as deleted:
+
 #% ConsoleExample (Examples.ContainerDelete);
 
+Marking an entry for deletion does not cause the entry itself to be modified.
+The entry is merely marked as having been deleted. To erase the entry contents,
+it is necessary to either make a copy of the container using the `/purge`
+option to reclaim the space used by deleted entries or to use the 
+`/erase` or `overwrite` options.
 
-The #{ToCommand("container index")} 
+
+The #{ToCommand("container index")} command adds an index entry to the end of
+container:
 
 #% ConsoleExample (Examples.ContainerIndex);
 
-
+The index entry may be complete, providing an index of the entire file 
+or incremental, only indexing the items added since the last index was created.
+Indexing containers allows the contents to be efficiently retrieved.
 
 #### Copying Containers
 
-The #{ToCommand("container copy")} 
+The #{ToCommand("container copy")} command makes a copy of a container with
+the specified filtering rules. By default, no changes are made except to 
+collect tree index fields dispersed throughout the container with an index 
+at the end:
 
 #% ConsoleExample (Examples.ContainerArchiveCopy);
 
+The copy command may be used to encrypt or decrypt the container contents during 
+the copy:
+
 #% ConsoleExample (Examples.ContainerArchiveCopyDecrypt);
+
+The copy command may also be used to reclaim space used by deleted items:
 
 #% ConsoleExample (Examples.ContainerArchiveCopyPurge);
 

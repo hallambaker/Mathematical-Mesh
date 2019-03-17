@@ -1130,6 +1130,14 @@ namespace Goedel.Mesh.Shell {
 			get => _Default;
 			set {_Default = value; __Default = true; }
 			}
+        /// <summary>
+        /// </summary>
+
+		public virtual string						Digest  {get; set;}
+        /// <summary>
+        /// </summary>
+
+		public virtual string						Key  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -1183,6 +1191,16 @@ namespace Goedel.Mesh.Shell {
 				_Writer.WriteToken ("Default", 1);
 					_Writer.WriteBoolean (Default);
 				}
+			if (Digest != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Digest", 1);
+					_Writer.WriteString (Digest);
+				}
+			if (Key != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Key", 1);
+					_Writer.WriteString (Key);
+				}
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
 				}
@@ -1221,6 +1239,14 @@ namespace Goedel.Mesh.Shell {
 					}
 				case "Default" : {
 					Default = JSONReader.ReadBoolean ();
+					break;
+					}
+				case "Digest" : {
+					Digest = JSONReader.ReadString ();
+					break;
+					}
+				case "Key" : {
+					Key = JSONReader.ReadString ();
 					break;
 					}
 				default : {

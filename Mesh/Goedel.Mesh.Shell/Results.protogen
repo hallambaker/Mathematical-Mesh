@@ -52,6 +52,9 @@
 		Inherits		Result
 		String			DeviceUDF
 		Boolean			Default
+		String			Digest
+		String			Key
+		// TBS the connection request package
 
 	Structure ResultMasterCreate
 		Inherits		ResultDeviceCreate
@@ -97,3 +100,7 @@
 	Structure ResultPIN
 		Inherits		Result
 		Struct MessageConnectionPIN			MessageConnectionPIN
+
+
+
+		

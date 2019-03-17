@@ -15,14 +15,14 @@ a entries describing how to access particular networks.
 
 #### Adding networks
 
-The #{ToCommand("password add")} command adds a network entry to a catalog:
+The #{ToCommand("network add")} command adds a network entry to a catalog:
 
 #%  ConsoleExample (Examples.NetworkAdd);
 
 
 #### Finding networks
 
-The #{ToCommand("password get")}  command retreives a network entry by label:
+The #{ToCommand("network get")}  command retreives a network entry by label:
 
 #%  ConsoleExample (Examples.NetworkGet);
 

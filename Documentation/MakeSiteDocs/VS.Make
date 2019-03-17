@@ -36,26 +36,8 @@ LinkFiles = \
     Goedel.Mesh.Test.dll
 
 ToolTargets = \
-	Apps\UserGuideApps.cs\
-	Apps\UserGuideCatalog.cs\
-	Apps\UserGuideConfirm.cs\
-	Apps\UserGuideMail.cs\
-	Apps\UserGuideRecrypt.cs\
-	Apps\UserGuideSSH.cs\
 	Exceptions.cs\
-	Mesh\UserGuideConnecting.cs\
-	Mesh\UserGuideCreate.cs\
-	Mesh\UserGuideDisaster.cs\
-	Mesh\UserGuideMesh.cs\
-	Mesh\UserGuideQuickStart.cs\
-	Mesh\UserGuideServer.cs\
-	Platform\UserGuideDocker.cs\
-	Platform\UserGuideLinux.cs\
-	Platform\UserGuideOSX.cs\
-	Platform\UserGuidePlatform.cs\
-	Platform\UserGuideWindows.cs\
 	Web\ToDo.cs\
-	Web\ExampleSession.cs\
 	Web\UserGuide.cs\
 	Web\CommandsetProfile.cs\
 	Web\CommandsetMail.cs\
@@ -73,65 +55,11 @@ ToolTargets = \
 	Web\CommandsetHash.cs\
 	Web\CommandsetContainer.cs\
 	Web\CommandsetConnect.cs
-Apps\UserGuideApps.cs : Apps\UserGuideApps.script 
-	gscript Apps\UserGuideApps.script  Apps\UserGuideApps.cs
-
-Apps\UserGuideCatalog.cs : Apps\UserGuideCatalog.script 
-	gscript Apps\UserGuideCatalog.script  Apps\UserGuideCatalog.cs
-
-Apps\UserGuideConfirm.cs : Apps\UserGuideConfirm.script 
-	gscript Apps\UserGuideConfirm.script  Apps\UserGuideConfirm.cs
-
-Apps\UserGuideMail.cs : Apps\UserGuideMail.script 
-	gscript Apps\UserGuideMail.script  Apps\UserGuideMail.cs
-
-Apps\UserGuideRecrypt.cs : Apps\UserGuideRecrypt.script 
-	gscript Apps\UserGuideRecrypt.script  Apps\UserGuideRecrypt.cs
-
-Apps\UserGuideSSH.cs : Apps\UserGuideSSH.script 
-	gscript Apps\UserGuideSSH.script  Apps\UserGuideSSH.cs
-
 Exceptions.cs : Exceptions.exceptional 
 	exceptional Exceptions.exceptional  /cs  Exceptions.cs
 
-Mesh\UserGuideConnecting.cs : Mesh\UserGuideConnecting.script 
-	gscript Mesh\UserGuideConnecting.script  Mesh\UserGuideConnecting.cs
-
-Mesh\UserGuideCreate.cs : Mesh\UserGuideCreate.script 
-	gscript Mesh\UserGuideCreate.script  Mesh\UserGuideCreate.cs
-
-Mesh\UserGuideDisaster.cs : Mesh\UserGuideDisaster.script 
-	gscript Mesh\UserGuideDisaster.script  Mesh\UserGuideDisaster.cs
-
-Mesh\UserGuideMesh.cs : Mesh\UserGuideMesh.script 
-	gscript Mesh\UserGuideMesh.script  Mesh\UserGuideMesh.cs
-
-Mesh\UserGuideQuickStart.cs : Mesh\UserGuideQuickStart.script 
-	gscript Mesh\UserGuideQuickStart.script  Mesh\UserGuideQuickStart.cs
-
-Mesh\UserGuideServer.cs : Mesh\UserGuideServer.script 
-	gscript Mesh\UserGuideServer.script  Mesh\UserGuideServer.cs
-
-Platform\UserGuideDocker.cs : Platform\UserGuideDocker.script 
-	gscript Platform\UserGuideDocker.script  Platform\UserGuideDocker.cs
-
-Platform\UserGuideLinux.cs : Platform\UserGuideLinux.script 
-	gscript Platform\UserGuideLinux.script  Platform\UserGuideLinux.cs
-
-Platform\UserGuideOSX.cs : Platform\UserGuideOSX.script 
-	gscript Platform\UserGuideOSX.script  Platform\UserGuideOSX.cs
-
-Platform\UserGuidePlatform.cs : Platform\UserGuidePlatform.script 
-	gscript Platform\UserGuidePlatform.script  Platform\UserGuidePlatform.cs
-
-Platform\UserGuideWindows.cs : Platform\UserGuideWindows.script 
-	gscript Platform\UserGuideWindows.script  Platform\UserGuideWindows.cs
-
 Web\ToDo.cs : Web\ToDo.script 
 	gscript Web\ToDo.script  Web\ToDo.cs
-
-Web\ExampleSession.cs : Web\ExampleSession.script 
-	gscript Web\ExampleSession.script  Web\ExampleSession.cs
 
 Web\UserGuide.cs : Web\UserGuide.script 
 	gscript Web\UserGuide.script  Web\UserGuide.cs

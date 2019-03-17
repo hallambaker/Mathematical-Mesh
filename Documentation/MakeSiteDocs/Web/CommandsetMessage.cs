@@ -64,8 +64,8 @@ namespace MakeSiteDocs {
 				_Output.Write ("\n{0}", _Indent);
 				 ConsoleExample (Examples.ContactCatalog);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("Bob can find out if Alice has requested his contact request using the \n{0}", _Indent);
-				_Output.Write ("{1} command:\n{0}", _Indent, ToCommand("message pending"));
+				_Output.Write ("Bob can find out if Alice has accepted his contact request using the \n{0}", _Indent);
+				_Output.Write ("{1} command:\n{0}", _Indent, ToCommand("message status"));
 				_Output.Write ("\n{0}", _Indent);
 				 ConsoleExample (Examples.ContactGetResponse);
 				_Output.Write ("\n{0}", _Indent);

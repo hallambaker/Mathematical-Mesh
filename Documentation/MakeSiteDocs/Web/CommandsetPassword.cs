@@ -96,7 +96,7 @@ namespace MakeSiteDocs {
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("When a device is added, it gets a copy of the password file:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				  ConsoleExample (Examples.AppConnectPassword);
+				  ConsoleExample (Examples.PasswordAuth);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);

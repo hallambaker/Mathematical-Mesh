@@ -13,6 +13,9 @@
 The `calendar` command set is used to manage a calendar configuration catalog which contains
 a entries describing how to access particular calendars.
 
+Calendar entries are typically exchanged in iCal format. This is not currently
+implemented and a placeholder format is implemented instead.
+
 #### Adding calendars
 
 The #{ToCommand("password add")} command adds a calendar entry to a catalog:

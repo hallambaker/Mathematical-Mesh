@@ -84,10 +84,8 @@
 
 	OptionSet MailOptions
 		Option OpenPGP "openpgp" Flag
-			Default "true"
 			Brief "Create encryption and signature keys for OpenPGP"
 		Option SMIME"smime" Flag
-			Default "true"
 			Brief "Create encryption and signature keys for S/MIME"
 		Option Configuration "configuration" ExistingFile
 			Brief "Configuration file describing network settings"
@@ -169,8 +167,6 @@
 			Brief "Connect to the service(s) a profile is connected to and report status."
 			Include AccountOptions
 
-
-
 		Command MasterCreate "create"
 			Brief "Create new personal profile"
 			Parameter NewAccountID "new" String
@@ -198,7 +194,9 @@
 			Include Reporting
 			Parameter File "file" NewFile
 			Option Quorum "quorum" Integer
+				Default "2"
 			Option Shares "shares" Integer
+				Default "3"
 
 		Command ProfileRecover "recover"
 			Brief "Recover escrowed profile"
@@ -232,7 +230,7 @@
 			Brief "List all profiles on the local machine"
 			Include Reporting
 
-		Command ProfileDump "dump"
+		Command ProfileDump "get"
 			Brief "Describe the specified profile"
 			Include AccountOptions
 			Include Reporting
@@ -252,6 +250,9 @@
 				Brief "Device description"
 			Option Default "default" Flag
 				Brief "Make the new device profile the default"
+			Option OCR "ocr" String
+				Brief "Make the new device profile the default"
+
 
 		Command DeviceAuthorize "auth"
 			Brief "Authorize device to use application"
@@ -490,13 +491,17 @@
 			Include AccountOptions
 			Include Reporting
 			Include PublicKeyOptions
-
-		Command SSHMergeKnown "merge"
-			Brief "Add one or more hosts to the known_hosts file"
-			Include AccountOptions
-			Include Reporting
-			Include SSHOptions
-			Parameter File "file" ExistingFile
+		
+		CommandSet SSHAdd "merge"
+			Command SSHMergeKnown "host"
+				Brief "Add one or more hosts to the known_hosts file"
+				Include AccountOptions
+				Include Reporting
+				Include SSHOptions
+				Parameter File "file" ExistingFile
+			
+			Command SSHMergeClient "client"
+				Brief "Add one or more hosts to the known_hosts file"
 
 		// Add public keys to profile
 		CommandSet SSHAdd "add"
@@ -516,14 +521,14 @@
 				Parameter File "file" ExistingFile
 
 
-		CommandSet SSHShow "host"
-			Command SSHKnown "known"
+		CommandSet SSHShow "show"
+			Command SSHKnown "host"
 				Brief "List the known SSH sites (aka known hosts)"
 				Include AccountOptions
 				Include Reporting
 				Include SSHOptions
 
-			Command SSHAuth "host"
+			Command SSHAuth "client"
 				Brief "List the authorized device keys (aka authorized_keys)"
 				Include AccountOptions
 				Include Reporting	
@@ -566,9 +571,7 @@
 
 		Command ContactAdd "add"
 			Brief "Add contact entry from file"
-			Parameter Identifier "id" String
-				Brief "Contact entry identifier in SIN form"
-			Option File "file" ExistingFile
+			Parameter File "file" ExistingFile
 			Include AccountOptions
 			Include Reporting
 
@@ -581,9 +584,12 @@
 
 		Command ContactGet "get"
 			Brief "Lookup contact entry"
-			Parameter Identifier "site" String
+			Parameter Identifier "id" String
+				Brief "Contact entry identifier"
 			Include AccountOptions
 			Include Reporting
+			Option Encrypt "encrypt" String
+				Brief "Encrypt the contact under the specified key"
 
 		Command ContactDump "list"
 			Brief "List contact entries"
@@ -626,8 +632,8 @@
 
 		Command CalendarAdd "add"
 			Brief "Add calendar entry from file"
+			Parameter File "in" ExistingFile
 			Parameter Identifier "id" String
-			Parameter Title "title" String
 			Include AccountOptions
 			Include Reporting
 
@@ -654,6 +660,7 @@
 
 		Command NetworkAdd "add"
 			Brief "Add calendar entry from file"
+			Parameter File "in" ExistingFile
 			Parameter Identifier "id" String
 			Include AccountOptions
 			Include Reporting

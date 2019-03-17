@@ -31,17 +31,33 @@ namespace MakeSiteDocs {
 				_Output.Write ("determine the security policy for sending outbound messages and is one of the\n{0}", _Indent);
 				_Output.Write ("sources used to perform access control (i.e. spam filtering) on inbound messages.\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("Although the `meshman` tool is capable of adding, deleting and retrieving\n{0}", _Indent);
+				_Output.Write ("contact entries, it is intended to serve as a component to be used to build user\n{0}", _Indent);
+				_Output.Write ("interfaces rather than a tool designed for daily use.\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("## Adding contacts\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("The {1} command adds a contact entry to a catalog:\n{0}", _Indent, ToCommand("contact add"));
+				_Output.Write ("The {1} command adds a contact entry to a catalog from\n{0}", _Indent, ToCommand("contact add"));
+				_Output.Write ("a file. \n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				  ConsoleExample (Examples.ContactAdd);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("Contacts may also be added by accepting contact request messages:\n{0}", _Indent);
+				_Output.Write ("The file {1} contains Carol's contact information in\n{0}", _Indent, Examples.CarolContactFile);
+				_Output.Write ("JSON format:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				 ConsoleExample (Examples.ContactPending);
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("[Carol's contact information]\n{0}", _Indent);
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The `/self` option is used to mark the contact as being the user's own contact\n{0}", _Indent);
+				_Output.Write ("details:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				  ConsoleExample (Examples.ContactAddSelf);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("Contacts may also be added by accepting contact request messages using the \n{0}", _Indent);
+				_Output.Write ("{1} command:\n{0}", _Indent, ToCommand("message accept"));
+				_Output.Write ("\n{0}", _Indent);
 				 ConsoleExample (Examples.ContactAccept);
-				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("## Finding contacts\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
@@ -70,6 +86,10 @@ namespace MakeSiteDocs {
 				_Output.Write (" {1} command:\n{0}", _Indent, ToCommand("device auth"));
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write (" %  ConsoleExample (Examples.ContactAuth);\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write (" The newly authorized device can now access the contacts catalog:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write (" %  ConsoleExample (Examples.ContactList2);\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 					}
 		

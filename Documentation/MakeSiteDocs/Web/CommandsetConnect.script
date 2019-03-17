@@ -19,7 +19,7 @@ The #{ToCommand("device request")} command is used on the new device
 to request connection to the user's profile. Alice need only specify 
 the mesh service account #{Examples.AliceAccount} to which connection is requested:
 
-#%  ConsoleExample (Examples.ConnectRequest);
+#%  ConsoleExample (Examples.DeviceRequest);
 
 In this case there is no existing device profile and so a new profile is
 created and used to create a registration request which is posted to the user's 
@@ -41,7 +41,7 @@ Alice sees the request that she posted and approves it with the connect
 
 #%  ConsoleExample (Examples.ConnectAccept);
 
-There is a second request that Alice doesn't recognize. Alice rejects this
+There is a second request (from Mallet) that Alice doesn't recognize. Alice rejects this
 request:
 
 #%  ConsoleExample (Examples.ConnectReject);
@@ -89,12 +89,31 @@ administrator device:
 #%  ConsoleExample (Examples.ConnectPending3);
 
 
-#### Requesting a connection using an EARL
+#### Pre Configuring Devices
 
-The interactive connection mechanisms are suitable for devices such as phones and
-laptops but not for IoT devices which lack screens and keyboards. Support for
-such devices may be provided by means of an EARL presented on the device or its
-packaging.
+The #{ToCommand("device delete")} command creates a device profile without attempting
+to connect the device to a Mesh profile:
+
+#%  ConsoleExample (Examples.DeviceCreate);
+
+The most common reason for generating a device profile in this fashion is to allow
+an embedded or 'IoT' device to be preconfigured for Mesh control during manufacture.
+
+
+###### Requesting a connection using an EARL
+
+Encrypted Authenticated Resource Locators provide one means of preconfiguring
+a device to enable simple and straightforward connection to a Mesh profile.
+
+The EARL itself is typically presented by means of a barcode on the device
+or its packaging. To connect the device, the user simply scans the QR code using
+a Mesh enabled application on an administion device and applies power.
+configuration then proceeds automatically.
+
+Alternatively, the EARL may be transfered wirelessly by a near field 
+communications link or by cycling an LED.
+
+
 
 To enable this connection mode, the manufacturer performs the steps of
 
@@ -136,7 +155,7 @@ to allow connection to multiple devices simultaneously.
 #% Describe(CommandSet);
 
 #% Describe(CommandSet, _ProfileConnect._DescribeCommand);
-#%  ConsoleReference (Examples.ConnectRequest);
+#%  ConsoleReference (Examples.DeviceRequest);
 
 #% Describe(CommandSet, _ProfilePending._DescribeCommand);
 #%  ConsoleReference (Examples.ConnectPending);

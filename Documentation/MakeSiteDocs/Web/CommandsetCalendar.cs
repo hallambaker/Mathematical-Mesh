@@ -28,6 +28,9 @@ namespace MakeSiteDocs {
 				_Output.Write ("The `calendar` command set is used to manage a calendar configuration catalog which contains\n{0}", _Indent);
 				_Output.Write ("a entries describing how to access particular calendars.\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("Calendar entries are typically exchanged in iCal format. This is not currently\n{0}", _Indent);
+				_Output.Write ("implemented and a placeholder format is implemented instead.\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("## Adding calendars\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The {1} command adds a calendar entry to a catalog:\n{0}", _Indent, ToCommand("password add"));

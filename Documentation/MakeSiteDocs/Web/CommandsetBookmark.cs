@@ -67,9 +67,11 @@ namespace MakeSiteDocs {
 				_Output.Write ("Devices are given authorization to access the bookmarks catalog using the \n{0}", _Indent);
 				_Output.Write (" {1} command:\n{0}", _Indent, ToCommand("device auth"));
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write (" %  ConsoleExample (Examples.BookmarkAuth);\n{0}", _Indent);
+				  ConsoleExample (Examples.BookmarkAuth);
 				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The new device now has access to the Bookmarks catalog:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
+				  ConsoleExample (Examples.BookmarkList2);
 					}
 		
 

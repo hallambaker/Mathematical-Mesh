@@ -26,96 +26,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Apps\UserGuideApps.cs">
-      <DependentUpon>UserGuideApps.script</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Update="Apps\UserGuideCatalog.cs">
-      <DependentUpon>UserGuideCatalog.script</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Update="Apps\UserGuideConfirm.cs">
-      <DependentUpon>UserGuideConfirm.script</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Update="Apps\UserGuideMail.cs">
-      <DependentUpon>UserGuideMail.script</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Update="Apps\UserGuideRecrypt.cs">
-      <DependentUpon>UserGuideRecrypt.script</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Update="Apps\UserGuideSSH.cs">
-      <DependentUpon>UserGuideSSH.script</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
+
     <Compile Update="Exceptions.cs">
       <DependentUpon>Exceptions.exceptional</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Update="Mesh\UserGuideConnecting.cs">
-      <DependentUpon>UserGuideConnecting.script</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Update="Mesh\UserGuideCreate.cs">
-      <DependentUpon>UserGuideCreate.script</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Update="Mesh\UserGuideDisaster.cs">
-      <DependentUpon>UserGuideDisaster.script</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Update="Mesh\UserGuideMesh.cs">
-      <DependentUpon>UserGuideMesh.script</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Update="Mesh\UserGuideQuickStart.cs">
-      <DependentUpon>UserGuideQuickStart.script</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Update="Mesh\UserGuideServer.cs">
-      <DependentUpon>UserGuideServer.script</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Update="Platform\UserGuideDocker.cs">
-      <DependentUpon>UserGuideDocker.script</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Update="Platform\UserGuideLinux.cs">
-      <DependentUpon>UserGuideLinux.script</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Update="Platform\UserGuideOSX.cs">
-      <DependentUpon>UserGuideOSX.script</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Update="Platform\UserGuidePlatform.cs">
-      <DependentUpon>UserGuidePlatform.script</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Update="Platform\UserGuideWindows.cs">
-      <DependentUpon>UserGuideWindows.script</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
+
     <Compile Update="Web\ToDo.cs">
       <DependentUpon>ToDo.script</DependentUpon>
       <DesignTime>True</DesignTime>
@@ -123,12 +40,6 @@
     </Compile>
       <Compile Update="Web\UserGuide.cs">
       <DependentUpon>UserGuide.script</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-
-    <Compile Update="Web\ExampleSession.cs">
-      <DependentUpon>ExampleSession.script</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
@@ -210,84 +121,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Apps\UserGuideApps.script">
-      <LastGenOutput>UserGuideApps.cs</LastGenOutput>
-      <Generator>gscript</Generator>
-    </None>
-    <None Update="Apps\UserGuideCatalog.script">
-      <LastGenOutput>UserGuideCatalog.cs</LastGenOutput>
-      <Generator>gscript</Generator>
-    </None>
-    <None Update="Apps\UserGuideConfirm.script">
-      <LastGenOutput>UserGuideConfirm.cs</LastGenOutput>
-      <Generator>gscript</Generator>
-    </None>
-    <None Update="Apps\UserGuideMail.script">
-      <LastGenOutput>UserGuideMail.cs</LastGenOutput>
-      <Generator>gscript</Generator>
-    </None>
-    <None Update="Apps\UserGuideRecrypt.script">
-      <LastGenOutput>UserGuideRecrypt.cs</LastGenOutput>
-      <Generator>gscript</Generator>
-    </None>
-    <None Update="Apps\UserGuideSSH.script">
-      <LastGenOutput>UserGuideSSH.cs</LastGenOutput>
-      <Generator>gscript</Generator>
-    </None>
+
     <None Update="Exceptions.exceptional">
       <LastGenOutput>Exceptions.cs</LastGenOutput>
       <Generator>exceptional</Generator>
     </None>
-    <None Update="Mesh\UserGuideConnecting.script">
-      <LastGenOutput>UserGuideConnecting.cs</LastGenOutput>
-      <Generator>gscript</Generator>
-    </None>
-    <None Update="Mesh\UserGuideCreate.script">
-      <LastGenOutput>UserGuideCreate.cs</LastGenOutput>
-      <Generator>gscript</Generator>
-    </None>
-    <None Update="Mesh\UserGuideDisaster.script">
-      <LastGenOutput>UserGuideDisaster.cs</LastGenOutput>
-      <Generator>gscript</Generator>
-    </None>
-    <None Update="Mesh\UserGuideMesh.script">
-      <LastGenOutput>UserGuideMesh.cs</LastGenOutput>
-      <Generator>gscript</Generator>
-    </None>
-    <None Update="Mesh\UserGuideQuickStart.script">
-      <LastGenOutput>UserGuideQuickStart.cs</LastGenOutput>
-      <Generator>gscript</Generator>
-    </None>
-    <None Update="Mesh\UserGuideServer.script">
-      <LastGenOutput>UserGuideServer.cs</LastGenOutput>
-      <Generator>gscript</Generator>
-    </None>
-    <None Update="Platform\UserGuideDocker.script">
-      <LastGenOutput>UserGuideDocker.cs</LastGenOutput>
-      <Generator>gscript</Generator>
-    </None>
-    <None Update="Platform\UserGuideLinux.script">
-      <LastGenOutput>UserGuideLinux.cs</LastGenOutput>
-      <Generator>gscript</Generator>
-    </None>
-    <None Update="Platform\UserGuideOSX.script">
-      <LastGenOutput>UserGuideOSX.cs</LastGenOutput>
-      <Generator>gscript</Generator>
-    </None>
-    <None Update="Platform\UserGuidePlatform.script">
-      <LastGenOutput>UserGuidePlatform.cs</LastGenOutput>
-      <Generator>gscript</Generator>
-    </None>
-    <None Update="Platform\UserGuideWindows.script">
-      <LastGenOutput>UserGuideWindows.cs</LastGenOutput>
-      <Generator>gscript</Generator>
-    </None>
+
     <None Update="Web\ToDo.script">
       <LastGenOutput>ToDo.cs</LastGenOutput>
-      <Generator>gscript</Generator>
-    </None>
-    <None Update="Web\ExampleSession.script">
-      <LastGenOutput>ExampleSession.cs</LastGenOutput>
       <Generator>gscript</Generator>
     </None>
     <None Update="Web\UserGuide.script">

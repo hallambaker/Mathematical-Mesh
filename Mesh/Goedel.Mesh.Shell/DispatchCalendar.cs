@@ -19,7 +19,7 @@ namespace Goedel.Mesh.Shell {
         public override ShellResult CalendarAdd(CalendarAdd Options) {
             using (var contextDevice = GetContextDevice(Options)) {
                 var identifier = Options.Identifier.Value;
-                var title = Options.Title.Value;
+
 
 
                 var entry = new CatalogEntryTask() {

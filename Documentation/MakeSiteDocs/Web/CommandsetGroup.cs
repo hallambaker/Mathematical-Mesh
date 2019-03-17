@@ -70,11 +70,12 @@ namespace MakeSiteDocs {
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("## Creating a Recryption Group\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("A recryption group is created using the {1} command:\n{0}", _Indent, ToCommand("group create"));
+				_Output.Write ("Recryption groups are created using the {1} command:\n{0}", _Indent, ToCommand("group create"));
 				_Output.Write ("\n{0}", _Indent);
 				  ConsoleExample (Examples.GroupCreate);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("This command creates the group {1} and makes Alice the administrator.\n{0}", _Indent, Examples.GroupAccount);
+				_Output.Write ("This command creates the group {1}. Since Alice created the\n{0}", _Indent, Examples.GroupAccount);
+				_Output.Write ("account she is the administrator.\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("At this point, the group has no members. Bob can encrypt a file under the group\n{0}", _Indent);
 				_Output.Write ("public key but he is unable to read it:\n{0}", _Indent);
