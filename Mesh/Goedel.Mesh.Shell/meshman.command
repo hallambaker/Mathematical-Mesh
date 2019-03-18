@@ -76,10 +76,12 @@
 		Option AuthNetwork "network" Flag
 			Brief "Authorize access to network catalog"
 			Default "false"
-		Option AuthCaonfirm "confirm" Flag
+		Option AuthConfirm "confirm" Flag
 			Brief "Authorize response to confirmation requests"
 			Default "false"
-
+		Option AuthBookmark "bookmark" Flag
+			Brief "Authorize response to confirmation requests"
+			Default "false"
 
 
 	OptionSet MailOptions

@@ -25,14 +25,14 @@ add   Add bookmark
 ````
 
 ````
->bookmark add Folder1/1 http://example.com/ Example Dot Com
+>bookmark add Folder1/1 http://example.com/ "Example Dot Com"
 ERROR - Object reference not set to an instance of an object.
 ````
 
 Specifying the /json option returns a result of type Result:
 
 ````
->bookmark add Folder1/1 http://example.com/ Example Dot Com /json
+>bookmark add Folder1/1 http://example.com/ "Example Dot Com" /json
 {
   "Result": {
     "Success": false,

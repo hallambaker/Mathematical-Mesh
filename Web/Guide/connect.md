@@ -148,7 +148,7 @@ These steps may be performed using the meshman tool and a QR code generation too
 ````
 >device create /ocr
 OK
-Device Profile UDF=MCLF-AM7A-LAV4-UN7O-LPEP-QGF7-3SW4
+Device Profile UDF=MBUD-UF65-VGTD-5VSI-VSBG-RFFB-UXPH
 ````
 
 A QR code scanning application can use the meshman tool to resolve the EARL and retrieve

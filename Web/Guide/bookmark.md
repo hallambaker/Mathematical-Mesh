@@ -19,11 +19,11 @@ The `bookmark add` command adds a bookmark entry to a catalog:
 
 
 ````
->bookmark add Folder1/1 http://example.com/ Example Dot Com
+>bookmark add Folder1/1 http://example.com/ "Example Dot Com"
 ERROR - Object reference not set to an instance of an object.
->bookmark add Folder1/2 http://example.net/Bananas Banana Site
+>bookmark add Folder1/2 http://example.net/Bananas "Banana Site"
 ERROR - Object reference not set to an instance of an object.
->bookmark add Folder1/1a http://example.com/Fred The Fred Space
+>bookmark add Folder1/1a http://example.com/Fred "The Fred Space"
 ERROR - Object reference not set to an instance of an object.
 ````
 
