@@ -5,7 +5,6 @@
 ````
 ssh    Manage SSH profiles connected to a personal profile
     create   Generate a new SSH public keypair for the current machine and add to the personal profile
-    merge   Add one or more hosts to the known_hosts file
     private   Extract the private key for this device
     public   Extract the public key for this device
 ````
@@ -124,10 +123,10 @@ Specifying the /json option returns a result of type ResultList:
     "Profiles": []}}
 ````
 
-# ssh merge
+# ssh host
 
 ````
-merge   Add one or more hosts to the known_hosts file
+host   Add one or more hosts to the known_hosts file
        <Unspecified>
     /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
@@ -180,10 +179,10 @@ Specifying the /json option returns a result of type ResultList:
     "Profiles": []}}
 ````
 
-# ssh known
+# ssh host
 
 ````
-known   List the known SSH sites (aka known hosts)
+host   List the known SSH sites (aka known hosts)
     /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
@@ -207,10 +206,10 @@ Specifying the /json option returns a result of type ResultList:
     "Profiles": []}}
 ````
 
-# ssh host
+# ssh client
 
 ````
-host   List the authorized device keys (aka authorized_keys)
+client   List the authorized device keys (aka authorized_keys)
     /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)

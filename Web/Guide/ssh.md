@@ -96,7 +96,7 @@ corresponding SSH device public keys added:
 
 ````
 >ssh merge client
-ERROR - Object reference not set to an instance of an object.
+OK
 ````
 
 The `ssh merge host`  command reads the `known_hosts` file on a client machine and adds
@@ -105,7 +105,7 @@ the listed hosts to the user's ssh catalog.
 
 ````
 >ssh merge host
-ERROR - Object reference not set to an instance of an object.
+OK
 ````
 
 ## Client Key management
@@ -125,7 +125,7 @@ The list of known clients may be returned in various formats using the `ssh show
 
 ````
 >ssh show client
-ERROR - The command  is not known.
+OK
 ````
 
 ## Host Key Management
@@ -144,7 +144,7 @@ command.
 
 ````
 >ssh show host
-ERROR - The command  is not known.
+OK
 ````
 
 ## Additional Devices
@@ -169,6 +169,6 @@ Once the device has been authorized, the client machine can start using SSH imme
 
 ````
 >ssh show host
-ERROR - The command  is not known.
+OK
 ````
 

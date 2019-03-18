@@ -277,9 +277,18 @@ namespace Goedel.Mesh.Shell {
 				{"create", _SSHCreate._DescribeCommand },
 				{"private", _SSHPrivate._DescribeCommand },
 				{"public", _SSHPublic._DescribeCommand },
-				{"merge", _SSHMergeKnown._DescribeCommand },
+				{"merge", DescribeCommandSet_SSHMerge},
 				{"add", DescribeCommandSet_SSHAdd},
-				{"host", DescribeCommandSet_SSHShow}
+				{"show", DescribeCommandSet_SSHShow}
+				} // End Entries
+			};
+
+		public static DescribeCommandSet DescribeCommandSet_SSHMerge = new DescribeCommandSet () {
+            Identifier = "merge",
+			Brief = "<Unspecified>",
+			Entries = new  SortedDictionary<string, DescribeCommand> () {
+				{"host", _SSHMergeKnown._DescribeCommand },
+				{"client", _SSHMergeClient._DescribeCommand }
 				} // End Entries
 			};
 
@@ -293,11 +302,11 @@ namespace Goedel.Mesh.Shell {
 			};
 
 		public static DescribeCommandSet DescribeCommandSet_SSHShow = new DescribeCommandSet () {
-            Identifier = "host",
+            Identifier = "show",
 			Brief = "<Unspecified>",
 			Entries = new  SortedDictionary<string, DescribeCommand> () {
-				{"known", _SSHKnown._DescribeCommand },
-				{"host", _SSHAuth._DescribeCommand }
+				{"host", _SSHKnown._DescribeCommand },
+				{"client", _SSHAuth._DescribeCommand }
 				} // End Entries
 			};
 
@@ -875,6 +884,16 @@ namespace Goedel.Mesh.Shell {
 			Dispatch._PostProcess (result);
 			}
 
+		public static void Handle_SSHMergeClient (
+					DispatchShell  DispatchIn, string[] Args, int Index) {
+			Shell Dispatch =	DispatchIn as Shell;
+			SSHMergeClient		Options = new SSHMergeClient ();
+			ProcessOptions (Args, Index, Options);
+			Dispatch._PreProcess (Options);
+			var result = Dispatch.SSHMergeClient (Options);
+			Dispatch._PostProcess (result);
+			}
+
 		public static void Handle_SSHAddHost (
 					DispatchShell  DispatchIn, string[] Args, int Index) {
 			Shell Dispatch =	DispatchIn as Shell;
@@ -1353,7 +1372,8 @@ namespace Goedel.Mesh.Shell {
 		Flag			AuthContacts{get; set;}
 		Flag			AuthCalendar{get; set;}
 		Flag			AuthNetwork{get; set;}
-		Flag			AuthCaonfirm{get; set;}
+		Flag			AuthConfirm{get; set;}
+		Flag			AuthBookmark{get; set;}
 		}
 
 	public interface IMailOptions {
@@ -2925,6 +2945,7 @@ namespace Goedel.Mesh.Shell {
 			new Flag (),
 			new Flag (),
 			new Flag (),
+			new Flag (),
 			new String (),
 			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
 			new Flag (),
@@ -3017,58 +3038,67 @@ namespace Goedel.Mesh.Shell {
 			set => _Data[8].Parameter (value);
 			}
 		/// <summary>Field accessor for option [confirm]</summary>
-		public virtual Flag AuthCaonfirm {
+		public virtual Flag AuthConfirm {
 			get => _Data[9] as Flag;
 			set => _Data[9]  = value;
 			}
 
-		public virtual string _AuthCaonfirm {
+		public virtual string _AuthConfirm {
 			set => _Data[9].Parameter (value);
 			}
-		/// <summary>Field accessor for option [mesh]</summary>
-		public virtual String Mesh {
-			get => _Data[10] as String;
+		/// <summary>Field accessor for option [bookmark]</summary>
+		public virtual Flag AuthBookmark {
+			get => _Data[10] as Flag;
 			set => _Data[10]  = value;
 			}
 
-		public virtual string _Mesh {
+		public virtual string _AuthBookmark {
 			set => _Data[10].Parameter (value);
 			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[11] as Enumeration<EnumReporting>;
+		/// <summary>Field accessor for option [mesh]</summary>
+		public virtual String Mesh {
+			get => _Data[11] as String;
 			set => _Data[11]  = value;
 			}
 
-		public virtual string _EnumReporting {
+		public virtual string _Mesh {
 			set => _Data[11].Parameter (value);
 			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[12] as Flag;
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[12] as Enumeration<EnumReporting>;
 			set => _Data[12]  = value;
 			}
 
-		public virtual string _Verbose {
+		public virtual string _EnumReporting {
 			set => _Data[12].Parameter (value);
 			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
 			get => _Data[13] as Flag;
 			set => _Data[13]  = value;
 			}
 
-		public virtual string _Report {
+		public virtual string _Verbose {
 			set => _Data[13].Parameter (value);
 			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
 			get => _Data[14] as Flag;
 			set => _Data[14]  = value;
 			}
 
-		public virtual string _Json {
+		public virtual string _Report {
 			set => _Data[14].Parameter (value);
+			}
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[15] as Flag;
+			set => _Data[15]  = value;
+			}
+
+		public virtual string _Json {
+			set => _Data[15].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -3142,45 +3172,52 @@ namespace Goedel.Mesh.Shell {
 					Key = "network"
 					},
 				new DescribeEntryOption () {
-					Identifier = "AuthCaonfirm", 
+					Identifier = "AuthConfirm", 
 					Default = "false", // null if null
 					Brief = "Authorize response to confirmation requests",
 					Index = 9,
 					Key = "confirm"
 					},
 				new DescribeEntryOption () {
+					Identifier = "AuthBookmark", 
+					Default = "false", // null if null
+					Brief = "Authorize response to confirmation requests",
+					Index = 10,
+					Key = "bookmark"
+					},
+				new DescribeEntryOption () {
 					Identifier = "Mesh", 
 					Default = null, // null if null
 					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
-					Index = 10,
+					Index = 11,
 					Key = "mesh"
 					},
 				new DescribeEntryEnumerate () {
 					Identifier = "EnumReporting", 
 					Default = null, // null if null
 					Brief = "Reporting level",
-					Index = 11,
+					Index = 12,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Verbose", 
 					Default = "true", // null if null
 					Brief = "Verbose reports (default)",
-					Index = 12,
+					Index = 13,
 					Key = "verbose"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Report", 
 					Default = "true", // null if null
 					Brief = "Report output (default)",
-					Index = 13,
+					Index = 14,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Json", 
 					Default = "false", // null if null
 					Brief = "Report output in JSON format",
-					Index = 14,
+					Index = 15,
 					Key = "json"
 					}
 				}
@@ -3208,6 +3245,7 @@ namespace Goedel.Mesh.Shell {
 			new String (),
 			new String (),
 			new String (),
+			new Flag (),
 			new Flag (),
 			new Flag (),
 			new Flag (),
@@ -3394,13 +3432,22 @@ namespace Goedel.Mesh.Shell {
 			set => _Data[18].Parameter (value);
 			}
 		/// <summary>Field accessor for option [confirm]</summary>
-		public virtual Flag AuthCaonfirm {
+		public virtual Flag AuthConfirm {
 			get => _Data[19] as Flag;
 			set => _Data[19]  = value;
 			}
 
-		public virtual string _AuthCaonfirm {
+		public virtual string _AuthConfirm {
 			set => _Data[19].Parameter (value);
+			}
+		/// <summary>Field accessor for option [bookmark]</summary>
+		public virtual Flag AuthBookmark {
+			get => _Data[20] as Flag;
+			set => _Data[20]  = value;
+			}
+
+		public virtual string _AuthBookmark {
+			set => _Data[20].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -3544,11 +3591,18 @@ namespace Goedel.Mesh.Shell {
 					Key = "network"
 					},
 				new DescribeEntryOption () {
-					Identifier = "AuthCaonfirm", 
+					Identifier = "AuthConfirm", 
 					Default = "false", // null if null
 					Brief = "Authorize response to confirmation requests",
 					Index = 19,
 					Key = "confirm"
+					},
+				new DescribeEntryOption () {
+					Identifier = "AuthBookmark", 
+					Default = "false", // null if null
+					Brief = "Authorize response to confirmation requests",
+					Index = 20,
+					Key = "bookmark"
 					}
 				}
 			};
@@ -7435,7 +7489,7 @@ namespace Goedel.Mesh.Shell {
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
-			Identifier = "merge",
+			Identifier = "host",
 			Brief =  "Add one or more hosts to the known_hosts file",
 			HandleDelegate =  CommandLineInterpreter.Handle_SSHMergeKnown,
 			Lazy =  false,
@@ -7496,6 +7550,30 @@ namespace Goedel.Mesh.Shell {
 
     public partial class SSHMergeKnown : _SSHMergeKnown {
         } // class SSHMergeKnown
+
+    public class _SSHMergeClient : Goedel.Command.Dispatch  {
+
+		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {			} ;
+
+
+
+
+
+		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
+			Identifier = "client",
+			Brief =  "Add one or more hosts to the known_hosts file",
+			HandleDelegate =  CommandLineInterpreter.Handle_SSHMergeClient,
+			Lazy =  false,
+			Entries = new List<DescribeEntry> () {
+				}
+			};
+
+		}
+
+    public partial class SSHMergeClient : _SSHMergeClient {
+        } // class SSHMergeClient
 
     public class _SSHAddHost : Goedel.Command.Dispatch ,
 							IAccountOptions,
@@ -7846,7 +7924,7 @@ namespace Goedel.Mesh.Shell {
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
-			Identifier = "known",
+			Identifier = "host",
 			Brief =  "List the known SSH sites (aka known hosts)",
 			HandleDelegate =  CommandLineInterpreter.Handle_SSHKnown,
 			Lazy =  false,
@@ -7975,7 +8053,7 @@ namespace Goedel.Mesh.Shell {
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
-			Identifier = "host",
+			Identifier = "client",
 			Brief =  "List the authorized device keys (aka authorized_keys)",
 			HandleDelegate =  CommandLineInterpreter.Handle_SSHAuth,
 			Lazy =  false,
@@ -14699,6 +14777,11 @@ namespace Goedel.Mesh.Shell {
 			}
 
 		public virtual ShellResult SSHMergeKnown ( SSHMergeKnown Options) {
+			CommandLineInterpreter.DescribeValues (Options);
+			return null;
+			}
+
+		public virtual ShellResult SSHMergeClient ( SSHMergeClient Options) {
 			CommandLineInterpreter.DescribeValues (Options);
 			return null;
 			}

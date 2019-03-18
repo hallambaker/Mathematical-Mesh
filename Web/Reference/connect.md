@@ -39,6 +39,7 @@ request   Connect to an existing profile registered at a portal
     /calendar   Authorize access to calendar catalog
     /network   Authorize access to network catalog
     /confirm   Authorize response to confirmation requests
+    /bookmark   Authorize response to confirmation requests
 ````
 
 ````

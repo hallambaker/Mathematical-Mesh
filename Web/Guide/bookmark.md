@@ -66,7 +66,7 @@ Devices are given authorization to access the bookmarks catalog using the
 
 ````
 >device auth /bookmark Alice
-ERROR - The option  is not known.
+ERROR - Flag value not recognizedAlice
 ````
 
 The new device now has access to the Bookmarks catalog:

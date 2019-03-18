@@ -494,7 +494,7 @@
 			Include Reporting
 			Include PublicKeyOptions
 		
-		CommandSet SSHAdd "merge"
+		CommandSet SSHMerge "merge"
 			Command SSHMergeKnown "host"
 				Brief "Add one or more hosts to the known_hosts file"
 				Include AccountOptions
