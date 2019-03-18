@@ -19,8 +19,12 @@ The `bookmark add` command adds a bookmark entry to a catalog:
 
 
 ````
->bookmark 
-ERROR - The command  is not known.
+>bookmark add Folder1/1 http://example.com/ Example Dot Com
+ERROR - Object reference not set to an instance of an object.
+>bookmark add Folder1/2 http://example.net/Bananas Banana Site
+ERROR - Object reference not set to an instance of an object.
+>bookmark add Folder1/1a http://example.com/Fred The Fred Space
+ERROR - Object reference not set to an instance of an object.
 ````
 
 
@@ -30,8 +34,8 @@ The `bookmark get`  command retreives a bookmark  by its index label:
 
 
 ````
->bookmark 
-ERROR - The command  is not known.
+>bookmark get Folder1/2
+ERROR - Object reference not set to an instance of an object.
 ````
 
 ## Deleting bookmarks
@@ -40,8 +44,8 @@ Bookmark entries may be deleted using the  `bookmark delete` command:
 
 
 ````
->bookmark 
-ERROR - The command  is not known.
+>bookmark delete BookmarkPath2
+ERROR - Object reference not set to an instance of an object.
 ````
 
 ## Listing bookmarks
@@ -50,8 +54,8 @@ A complete list of bookmarks is obtained using the  `bookmark list` command:
 
 
 ````
->bookmark 
-ERROR - The command  is not known.
+>bookmark list
+ERROR - Object reference not set to an instance of an object.
 ````
 
 ## Adding devices
@@ -59,6 +63,16 @@ ERROR - The command  is not known.
 Devices are given authorization to access the bookmarks catalog using the 
  `device auth` command:
 
- %  ConsoleExample (Examples.BookmarkAuth);
+
+````
+>device auth /bookmark Alice
+ERROR - The option  is not known.
+````
+
+The new device now has access to the Bookmarks catalog:
 
 
+````
+>bookmark list
+ERROR - Object reference not set to an instance of an object.
+````

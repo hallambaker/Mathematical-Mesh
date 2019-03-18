@@ -6,23 +6,25 @@ a entries describing how to access particular networks.
 
 ## Adding networks
 
-The `password add` command adds a network entry to a catalog:
+The `network add` command adds a network entry to a catalog:
 
 
 ````
->network 
-ERROR - The command  is not known.
+>network add NetworkEntry1.json NetID1
+ERROR - Object reference not set to an instance of an object.
+>network add NetworkEntry2.json NetID2
+ERROR - Object reference not set to an instance of an object.
 ````
 
 
 ## Finding networks
 
-The `password get`  command retreives a network entry by label:
+The `network get`  command retreives a network entry by label:
 
 
 ````
->network 
-ERROR - The command  is not known.
+>network get NetID2
+ERROR - Object reference not set to an instance of an object.
 ````
 
 ## Deleting networks
@@ -31,7 +33,9 @@ Network entries may be deleted using the  `network delete` command:
 
 
 ````
->network 
+>network delete NetID2
+ERROR - Object reference not set to an instance of an object.
+>network list
 ERROR - The command  is not known.
 ````
 
@@ -41,7 +45,7 @@ A complete list of networks is obtained using the  `network list` command:
 
 
 ````
->network 
+>network list
 ERROR - The command  is not known.
 ````
 

@@ -11,7 +11,7 @@ The `dare encode` command is used to encode files as DARE Messages:
 
 ````
 >dare encode TestFile1.txt
-ERROR - Object reference not set to an instance of an object.
+OK
 ````
 
 In this case, the file `TestFile1.txt` contains the text `"This is a test"`.
@@ -23,8 +23,8 @@ The data contents may be encrypted and authenticated under a specified symmetric
 
 
 ````
->dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=EC6O-5ES3-QPEA-VT57-BUZC-UTZ3-E22Q
-ERROR - Object reference not set to an instance of an object.
+>dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=EAX3-RLNE-64HT-D63O-USNA-HLBX-GDGA
+OK
 ````
 
 Specifying a directory instead of a file causes all the files in the directory to be 
@@ -32,7 +32,7 @@ encoded:
 
 
 ````
->dare encode TestDir1 /encrypt=EC6O-5ES3-QPEA-VT57-BUZC-UTZ3-E22Q
+>dare encode TestDir1 /encrypt=EAX3-RLNE-64HT-D63O-USNA-HLBX-GDGA
 ERROR - Object reference not set to an instance of an object.
 ````
 
@@ -56,7 +56,7 @@ digest values on a DARE Message without decoding the message body:
 
 ````
 >dare verify TestFile1.txt.dare
-ERROR - Could not find file 'C:\Users\hallam\Work\mmm\Web\TestFile1.txt.dare'.
+ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\TestFile1.txt.dare'.
 ````
 
 The command to verify a signed message is identical:
@@ -64,7 +64,7 @@ The command to verify a signed message is identical:
 
 ````
 >dare verify TestFile1.txt.mesh.dare
-ERROR - Could not find file 'C:\Users\hallam\Work\mmm\Web\TestFile1.txt.mesh.dare'.
+ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\TestFile1.txt.mesh.dare'.
 ````
 
 Messages that are encrypted and authenticated under a specified symmetric key 
@@ -73,7 +73,7 @@ level otherwise.
 
 
 ````
->dare verify TestFile1.txt.symmetric.dare /encrypt=EC6O-5ES3-QPEA-VT57-BUZC-UTZ3-E22Q
+>dare verify TestFile1.txt.symmetric.dare /encrypt=EAX3-RLNE-64HT-D63O-USNA-HLBX-GDGA
 ERROR - The option  is not known.
 ````
 
@@ -81,7 +81,7 @@ ERROR - The option  is not known.
 
 ````
 >dare verify TestFile1.txt.symmetric.dare
-ERROR - Could not find file 'C:\Users\hallam\Work\mmm\Web\TestFile1.txt.symmetric.dare'.
+ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\TestFile1.txt.symmetric.dare'.
 ````
 
 ## Decoding a DARE message to a file.
@@ -91,14 +91,14 @@ The `dare decode` command is used to decode and verify DARE Messages:
 
 ````
 >dare decode TestFile1.txt.dare
-ERROR - Object reference not set to an instance of an object.
+ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\TestFile1.txt.dare'.
 ````
 
 To decode a message encrypted under a symmetric key, we must specify the key:
 
 
 ````
->dare decode TestFile1.txt.symmetric.dare /encrypt=EC6O-5ES3-QPEA-VT57-BUZC-UTZ3-E22Q
+>dare decode TestFile1.txt.symmetric.dare /encrypt=EAX3-RLNE-64HT-D63O-USNA-HLBX-GDGA
 ERROR - The option  is not known.
 ````
 
@@ -108,7 +108,7 @@ the necessary decryption key(s) automatically:
 
 ````
 >dare decode TestFile1.txt.mesh.dare
-ERROR - Object reference not set to an instance of an object.
+ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\TestFile1.txt.mesh.dare'.
 ````
 
 

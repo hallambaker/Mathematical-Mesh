@@ -82,7 +82,11 @@ namespace MakeSiteDocs {
         public string AliceDevice2 = "Alice";
         public string AliceDevice3 = "Alice";
 
+        string OutputPath;
+
         public Examples() {
+            OutputPath = Directory.GetCurrentDirectory();
+            TestEnvironment = new TestEnvironmentCommon();
 
             testCLIAlice1 = GetTestCLI("Alice");
             testCLIAlice2 = GetTestCLI("Alice2");
@@ -117,7 +121,7 @@ namespace MakeSiteDocs {
             DoCommandsConnect();
 
 
-
+            Directory.SetCurrentDirectory(OutputPath);
             var makeSiteDocs = new MakeSiteDocs();
             makeSiteDocs.WebDocs(this);
             }
@@ -295,10 +299,10 @@ namespace MakeSiteDocs {
             ProfileEscrow = testCLIAlice1.Example($"profile escrow");
 
 
-            var share1 = (ProfileEscrow[0].Result as ResultEscrow).Shares[0];
-            var share2 = (ProfileEscrow[0].Result as ResultEscrow).Shares[2];
+            //var share1 = (ProfileEscrow[0].Result as ResultEscrow).Shares[0];
+            //var share2 = (ProfileEscrow[0].Result as ResultEscrow).Shares[2];
 
-            ProfileRecover = testCLIAlice1.Example($"profile recover ${share1} ${share2} /verify");
+            //ProfileRecover = testCLIAlice1.Example($"profile recover ${share1} ${share2} /verify");
             ProfileExport = testCLIAlice1.Example($"profile export {TestExport}");
             ProfileImport = testCLIAlice2.Example($"profile import {TestExport}"); // do on another device
 
@@ -332,19 +336,19 @@ namespace MakeSiteDocs {
             ConnectPending = testCLIAlice1.Example($"device pending");
             
 
-            var resultPending = (ConnectPending[0].Result as ResultPending);
-            var id1 = resultPending.Messages[0].MessageID;
-            var id2 = resultPending.Messages[1].MessageID;
+            //var resultPending = (ConnectPending[0].Result as ResultPending);
+            //var id1 = resultPending.Messages[0].MessageID;
+            //var id2 = resultPending.Messages[1].MessageID;
 
-            ConnectAccept = testCLIAlice1.Example($"device accept {id1}");
-            ConnectRequestMallet = testCLIMallet1.Example($"device request");
-            ConnectSync = testCLIAlice2.Example($"profile sync");
+            //ConnectAccept = testCLIAlice1.Example($"device accept {id1}");
+            //ConnectRequestMallet = testCLIMallet1.Example($"device request");
+            //ConnectSync = testCLIAlice2.Example($"profile sync");
 
-            ConnectReject = testCLIAlice1.Example($"device reject {id2}");
+            //ConnectReject = testCLIAlice1.Example($"device reject {id2}");
 
-            ConnectList = testCLIAlice1.Example($"device list");
-            ConnectDelete = testCLIAlice1.Example($"device delete {id1}",
-                $"device list");
+            //ConnectList = testCLIAlice1.Example($"device list");
+            //ConnectDelete = testCLIAlice1.Example($"device delete {id1}",
+            //    $"device list");
 
             ConnectGetPin = testCLIAlice1.Example($"device pin");
             var pin = "PIN";
@@ -384,28 +388,28 @@ namespace MakeSiteDocs {
 
             ContactRequest =        testCLIBob1.Example($"message contact {AliceAccount}");
             ContactPending =        testCLIAlice1.Example($"message pending");
-            var resultPending = (ConnectPending[0].Result as ResultPending);
-            var id1 = resultPending.Messages[0].MessageID;
-            var id2 = resultPending.Messages[1].MessageID;
+            //var resultPending = (ConnectPending[0].Result as ResultPending);
+            //var id1 = resultPending.Messages[0].MessageID;
+            //var id2 = resultPending.Messages[1].MessageID;
 
-            ContactAccept =         testCLIAlice1.Example($"message accept {id1}");
+            //ContactAccept =         testCLIAlice1.Example($"message accept {id1}");
 
-            ContactCatalog =        testCLIAlice1.Example($"contact list");
-            ContactGetResponse =    testCLIBob1.Example($"message status {id1}");
-            ContactReject =         testCLIAlice1.Example($"message reject {id2}");
-            ContactBlock =          testCLIAlice1.Example($"message block {MalletAccount}");
+            //ContactCatalog =        testCLIAlice1.Example($"contact list");
+            //ContactGetResponse =    testCLIBob1.Example($"message status {id1}");
+            //ContactReject =         testCLIAlice1.Example($"message reject {id2}");
+            //ContactBlock =          testCLIAlice1.Example($"message block {MalletAccount}");
 
-            ConfirmRequest =        testCLIBob1.Example($"message confirm {AliceAccount} \"{BobPurchase}\"");
-            ConfirmPending =        testCLIAlice1.Example($"message pending");
-            var confirmPending = (ConfirmPending[0].Result as ResultPending);
-            id1 = confirmPending.Messages[0].MessageID;
-            id2 = confirmPending.Messages[1].MessageID;
+            //ConfirmRequest =        testCLIBob1.Example($"message confirm {AliceAccount} \"{BobPurchase}\"");
+            //ConfirmPending =        testCLIAlice1.Example($"message pending");
+            //var confirmPending = (ConfirmPending[0].Result as ResultPending);
+            //id1 = confirmPending.Messages[0].MessageID;
+            //id2 = confirmPending.Messages[1].MessageID;
 
-            ConfirmAccept =         testCLIAlice1.Example($"message accept {id1}");
-            ConfirmGetAccept =      testCLIBob1.Example($"message status {id1}");
-            ConfirmReject =         testCLIAlice1.Example($"message reject {id2}");
-            ConfirmGetReject =      testCLIBob1.Example($"message status {id2}");
-            ConfirmMallet =         testCLIMallet1.Example($"message confirm {AliceAccount} \"{BobPurchase}\"");
+            //ConfirmAccept =         testCLIAlice1.Example($"message accept {id1}");
+            //ConfirmGetAccept =      testCLIBob1.Example($"message status {id1}");
+            //ConfirmReject =         testCLIAlice1.Example($"message reject {id2}");
+            //ConfirmGetReject =      testCLIBob1.Example($"message status {id2}");
+            //ConfirmMallet =         testCLIMallet1.Example($"message confirm {AliceAccount} \"{BobPurchase}\"");
             }
 
         public List<ExampleResult> ContactAdd;

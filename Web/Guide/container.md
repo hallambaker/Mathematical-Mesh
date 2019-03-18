@@ -104,7 +104,7 @@ The `container append` command adds an entry to a container:
 
 ````
 >container append Container.dcon TestFile1.txtcontainer append Container.dcon TestFile2.txtcontainer append Container.dcon TestFile3.txt
-ERROR - Could not find file 'C:\Users\hallam\Work\mmm\Web\TestFile1.txtcontainer'.
+ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\TestFile1.txtcontainer'.
 ````
 
 If no security enhancements are specified, the default enhancements specified 
@@ -151,7 +151,7 @@ at the end:
 
 ````
 >container copy Container2.dcon
-ERROR - Could not find file 'C:\Users\hallam\Work\mmm\Web\Container2.dcon'.
+ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\Container2.dcon'.
 ````
 
 The copy command may be used to encrypt or decrypt the container contents during 
@@ -168,7 +168,7 @@ The copy command may also be used to reclaim space used by deleted items:
 
 ````
 >container copy Container2.dcon /purge
-ERROR - Could not find file 'C:\Users\hallam\Work\mmm\Web\Container2.dcon'.
+ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\Container2.dcon'.
 ````
 
 

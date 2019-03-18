@@ -15,8 +15,7 @@ contact    Manage contact catalogs connected to an account
 
 ````
 add   Add contact entry from file
-       Contact entry identifier in SIN form
-    /file   <Unspecified>
+       <Unspecified>
     /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
@@ -40,11 +39,12 @@ delete   Delete contact entry
 
 ````
 get   Lookup contact entry
-       <Unspecified>
+       Contact entry identifier
     /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
+    /encrypt   Encrypt the contact under the specified key
 ````
 **Missing Example***
 

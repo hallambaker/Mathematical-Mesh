@@ -4,14 +4,19 @@
 The `calendar` command set is used to manage a calendar configuration catalog which contains
 a entries describing how to access particular calendars.
 
+Calendar entries are typically exchanged in iCal format. This is not currently
+implemented and a placeholder format is implemented instead.
+
 ## Adding calendars
 
 The `password add` command adds a calendar entry to a catalog:
 
 
 ````
->calendar 
-ERROR - The command  is not known.
+>calendar add CalendarEntry1.json CalID1
+ERROR - Object reference not set to an instance of an object.
+>calendar add CalendarEntry2.json CalID2
+ERROR - Object reference not set to an instance of an object.
 ````
 
 
@@ -21,8 +26,8 @@ The `password get`  command retreives a calendar entry by label:
 
 
 ````
->calendar 
-ERROR - The command  is not known.
+>calendar get CalID1
+ERROR - Object reference not set to an instance of an object.
 ````
 
 ## Deleting calendars
@@ -31,7 +36,9 @@ Calendar entries may be deleted using the  `calendar delete` command:
 
 
 ````
->calendar 
+>calendar delete CalID1
+ERROR - Object reference not set to an instance of an object.
+>calendar list
 ERROR - The command  is not known.
 ````
 
@@ -41,7 +48,7 @@ A complete list of calendars is obtained using the  `calendar list` command:
 
 
 ````
->calendar 
+>calendar list
 ERROR - The command  is not known.
 ````
 

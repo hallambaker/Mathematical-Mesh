@@ -28,42 +28,30 @@ using the `message contact` command:
 
 
 ````
->message 
-ERROR - The command  is not known.
+>message contact alice@example.com
+ERROR - Object reference not set to an instance of an object.
 ````
 
 Alice reviews her pending messages using the `message pending` command:
 
 
 ````
->message 
-ERROR - The command  is not known.
+>message pending
+ERROR - Object reference not set to an instance of an object.
 ````
 
 Alice sees the request from Bob and accepts it with the `message accept` command:
 
-
-````
->message 
-ERROR - The command  is not known.
-````
+**Missing Example***
 
 Bob's contact information has been added to Alice's address book:
 
+**Missing Example***
 
-````
->message 
-ERROR - The command  is not known.
-````
+Bob can find out if Alice has accepted his contact request using the 
+`message status` command:
 
-Bob can find out if Alice has requested his contact request using the 
-`message pending` command:
-
-
-````
->message 
-ERROR - The command  is not known.
-````
+**Missing Example***
 
 Alice has accepted Bob's request and added him to her contacts list. She has also sent
 Bob a contact request which for the sake of convenience, is accepted automatically.
@@ -71,19 +59,11 @@ Bob a contact request which for the sake of convenience, is accepted automatical
 Alice isn't required to accept contact requests. She rejects the request from Mallet 
 using the `message reject` command:
 
-
-````
->message 
-ERROR - The command  is not known.
-````
+**Missing Example***
 
 For good measure, she decides to block further requests:
 
-
-````
->message 
-ERROR - The command  is not known.
-````
+**Missing Example***
 
 The Mesh Confirmation protocol allows a message sender to ask the recipient a short
 question. If the user chooses to respond, the sender receives back a non-repudiable 
@@ -111,63 +91,35 @@ is a significant sum, Bob needs an authorization for the purchase. He sends Alic
 a confirmation request `Purchase equipment for $6,000?` using the  
 `message confirm` command:
 
-
-````
->message 
-ERROR - The command  is not known.
-````
+**Missing Example***
 
 Alice reviews her pending messages using the using the `message pending` command:
 
-
-````
->message 
-ERROR - The command  is not known.
-````
+**Missing Example***
 
 Alice she accepts Bob's request using the `message pending` command:
 
-
-````
->message 
-ERROR - The command  is not known.
-````
+**Missing Example***
 
 Bob receives Alice's approval using the `message status` command:
 
-
-````
->message 
-ERROR - The command  is not known.
-````
+**Missing Example***
 
 In a full workflow system, Bob might include the response from Alice in a message to
 the accounts department asking them to place the order.
 
 Alice can also reject requests using the `message reject` command:
 
-
-````
->message 
-ERROR - The command  is not known.
-````
+**Missing Example***
 
 Bob receives a reply telling him the request was rejected:
 
-
-````
->message 
-ERROR - The command  is not known.
-````
+**Missing Example***
 
 As with all Mesh messages, confirmation requests are subject to access control.
 When Mallet attempts to make a request of Alice, it is rejected because Alice
 hasn't accepted his credentials or authorized him to send confirmation requests:
 
-
-````
->message 
-ERROR - The command  is not known.
-````
+**Missing Example***
 
 

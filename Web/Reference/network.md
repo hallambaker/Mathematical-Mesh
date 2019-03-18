@@ -16,6 +16,7 @@ network    Manage network profile settings
 ````
 add   Add calendar entry from file
        <Unspecified>
+       <Unspecified>
     /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
@@ -23,18 +24,18 @@ add   Add calendar entry from file
 ````
 
 ````
->network 
-ERROR - The command  is not known.
+>network add NetworkEntry1.json NetID1
+ERROR - Object reference not set to an instance of an object.
 ````
 
 Specifying the /json option returns a result of type Result:
 
 ````
->network  /json
+>network add NetworkEntry1.json NetID1 /json
 {
   "Result": {
     "Success": false,
-    "Reason": "The command  is not known."}}
+    "Reason": "Object reference not set to an instance of an object."}}
 ````
 
 # network delete
@@ -49,18 +50,18 @@ delete   Delete calendar entry
 ````
 
 ````
->network 
-ERROR - The command  is not known.
+>network delete NetID2
+ERROR - Object reference not set to an instance of an object.
 ````
 
 Specifying the /json option returns a result of type Result:
 
 ````
->network  /json
+>network delete NetID2 /json
 {
   "Result": {
     "Success": false,
-    "Reason": "The command  is not known."}}
+    "Reason": "Object reference not set to an instance of an object."}}
 ````
 
 # network get
@@ -75,18 +76,18 @@ get   Lookup calendar entry
 ````
 
 ````
->network 
-ERROR - The command  is not known.
+>network get NetID2
+ERROR - Object reference not set to an instance of an object.
 ````
 
 Specifying the /json option returns a result of type Result:
 
 ````
->network  /json
+>network get NetID2 /json
 {
   "Result": {
     "Success": false,
-    "Reason": "The command  is not known."}}
+    "Reason": "Object reference not set to an instance of an object."}}
 ````
 
 # network dump
@@ -100,14 +101,14 @@ dump   List network entries
 ````
 
 ````
->network 
+>network list
 ERROR - The command  is not known.
 ````
 
 Specifying the /json option returns a result of type Result:
 
 ````
->network  /json
+>network list /json
 {
   "Result": {
     "Success": false,

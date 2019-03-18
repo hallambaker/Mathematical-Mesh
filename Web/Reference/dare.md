@@ -63,18 +63,19 @@ file name is the input file name with the additional extension `.dare`.
 
 
 ````
->dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=EC6O-5ES3-QPEA-VT57-BUZC-UTZ3-E22Q
-ERROR - Object reference not set to an instance of an object.
+>dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=EAX3-RLNE-64HT-D63O-USNA-HLBX-GDGA
+OK
 ````
 
-Specifying the /json option returns a result of type Result:
+Specifying the /json option returns a result of type ResultFile:
 
 ````
->dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=EC6O-5ES3-QPEA-VT57-BUZC-UTZ3-E22Q /json
+>dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=EAX3-RLNE-64HT-D63O-USNA-HLBX-GDGA /json
 {
-  "Result": {
-    "Success": false,
-    "Reason": "Object reference not set to an instance of an object."}}
+  "ResultFile": {
+    "Success": true,
+    "Filename": "TestFile1.dare",
+    "TotalBytes": 14}}
 ````
 
 
@@ -102,14 +103,14 @@ with the extension `.undare` otherwise.
 
 
 ````
->dare decode TestFile1.txt.symmetric.dare /encrypt=EC6O-5ES3-QPEA-VT57-BUZC-UTZ3-E22Q
+>dare decode TestFile1.txt.symmetric.dare /encrypt=EAX3-RLNE-64HT-D63O-USNA-HLBX-GDGA
 ERROR - The option  is not known.
 ````
 
 Specifying the /json option returns a result of type Result:
 
 ````
->dare decode TestFile1.txt.symmetric.dare /encrypt=EC6O-5ES3-QPEA-VT57-BUZC-UTZ3-E22Q /json
+>dare decode TestFile1.txt.symmetric.dare /encrypt=EAX3-RLNE-64HT-D63O-USNA-HLBX-GDGA /json
 {
   "Result": {
     "Success": false,
@@ -136,14 +137,14 @@ The active key collection may be overriden using the `/mesh` option.
 
 
 ````
->dare verify TestFile1.txt.symmetric.dare /encrypt=EC6O-5ES3-QPEA-VT57-BUZC-UTZ3-E22Q
+>dare verify TestFile1.txt.symmetric.dare /encrypt=EAX3-RLNE-64HT-D63O-USNA-HLBX-GDGA
 ERROR - The option  is not known.
 ````
 
 Specifying the /json option returns a result of type Result:
 
 ````
->dare verify TestFile1.txt.symmetric.dare /encrypt=EC6O-5ES3-QPEA-VT57-BUZC-UTZ3-E22Q /json
+>dare verify TestFile1.txt.symmetric.dare /encrypt=EAX3-RLNE-64HT-D63O-USNA-HLBX-GDGA /json
 {
   "Result": {
     "Success": false,

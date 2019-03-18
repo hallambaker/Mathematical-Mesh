@@ -177,7 +177,7 @@ The `container append` command appends the specified file to the container.
 
 ````
 >container append Container.dcon TestFile1.txtcontainer append Container.dcon TestFile2.txtcontainer append Container.dcon TestFile3.txt
-ERROR - Could not find file 'C:\Users\hallam\Work\mmm\Web\TestFile1.txtcontainer'.
+ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\TestFile1.txtcontainer'.
 ````
 
 Specifying the /json option returns a result of type Result:
@@ -187,7 +187,7 @@ Specifying the /json option returns a result of type Result:
 {
   "Result": {
     "Success": false,
-    "Reason": "Could not find file 'C:\\Users\\hallam\\Work\\mmm\\Web\\TestFile1.txtcontainer'."}}
+    "Reason": "Could not find file 'C:\\Users\\hallam\\Test\\WorkingDirectory\\TestFile1.txtcontainer'."}}
 ````
 
 
@@ -279,7 +279,7 @@ and indexing criteria.
 
 ````
 >container copy Container2.dcon
-ERROR - Could not find file 'C:\Users\hallam\Work\mmm\Web\Container2.dcon'.
+ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\Container2.dcon'.
 ````
 
 Specifying the /json option returns a result of type Result:
@@ -289,6 +289,6 @@ Specifying the /json option returns a result of type Result:
 {
   "Result": {
     "Success": false,
-    "Reason": "Could not find file 'C:\\Users\\hallam\\Work\\mmm\\Web\\Container2.dcon'."}}
+    "Reason": "Could not find file 'C:\\Users\\hallam\\Test\\WorkingDirectory\\Container2.dcon'."}}
 ````
 

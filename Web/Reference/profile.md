@@ -5,9 +5,9 @@
 ````
 profile    Manage personal and device profiles and accounts.
     create   Create new personal profile
-    dump   Describe the specified profile
     escrow   Create a set of key escrow shares
     export   Export the specified profile data to the specified file
+    get   Describe the specified profile
     hello   Connect to the service(s) a profile is connected to and report status.
     import   Import the specified profile data to the specified file
     list   List all profiles on the local machine
@@ -32,18 +32,18 @@ create   Create new personal profile
 ````
 
 ````
->profile create alice@example.com
-ERROR - Object reference not set to an instance of an object.
+>profile create  alice@example.com
+ERROR - The feature has not been implemented
 ````
 
 Specifying the /json option returns a result of type Result:
 
 ````
->profile create alice@example.com /json
+>profile create  alice@example.com /json
 {
   "Result": {
     "Success": false,
-    "Reason": "Object reference not set to an instance of an object."}}
+    "Reason": "The feature has not been implemented"}}
 ````
 
 # profile create
@@ -54,22 +54,9 @@ create   Create new device profile
        Device description
     /alg   List of algorithm specifiers
     /default   Make the new device profile the default
+    /ocr   Make the new device profile the default
 ````
-
-````
->profile device /id="IoTDevice"
-ERROR - The command  is not known.
-````
-
-Specifying the /json option returns a result of type Result:
-
-````
->profile device /id="IoTDevice" /json
-{
-  "Result": {
-    "Success": false,
-    "Reason": "The command  is not known."}}
-````
+**Missing Example***
 
 # profile hello
 
@@ -79,18 +66,23 @@ hello   Connect to the service(s) a profile is connected to and report status.
 ````
 
 ````
->profile hello
-ERROR - Object reference not set to an instance of an object.
+>profile hello alice@example.com
+OK
 ````
 
-Specifying the /json option returns a result of type Result:
+Specifying the /json option returns a result of type ResultHello:
 
 ````
->profile hello /json
+>profile hello alice@example.com /json
 {
-  "Result": {
-    "Success": false,
-    "Reason": "Object reference not set to an instance of an object."}}
+  "ResultHello": {
+    "Success": true,
+    "Response": {
+      "Version": {
+        "Major": 0,
+        "Minor": 8,
+        "Encodings": [{
+            "ID": ["application/json"]}]}}}}
 ````
 
 # profile register
@@ -156,23 +148,24 @@ list   List all profiles on the local machine
 
 ````
 >profile list
-ERROR - Object reference not set to an instance of an object.
+OK
 ````
 
-Specifying the /json option returns a result of type Result:
+Specifying the /json option returns a result of type ResultList:
 
 ````
 >profile list /json
 {
-  "Result": {
-    "Success": false,
-    "Reason": "Object reference not set to an instance of an object."}}
+  "ResultList": {
+    "Success": true,
+    "CatalogEntryDevices": [],
+    "Profiles": []}}
 ````
 
-# profile dump
+# profile get
 
 ````
-dump   Describe the specified profile
+get   Describe the specified profile
     /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
@@ -180,14 +173,14 @@ dump   Describe the specified profile
 ````
 
 ````
->profile dump /mesh=alice@example.com
+>profile get /mesh=alice@example.com
 ERROR - Object reference not set to an instance of an object.
 ````
 
 Specifying the /json option returns a result of type Result:
 
 ````
->profile dump /mesh=alice@example.com /json
+>profile get /mesh=alice@example.com /json
 {
   "Result": {
     "Success": false,
@@ -242,21 +235,7 @@ recover   Recover escrowed profile
     /file   <Unspecified>
     /verify   <Unspecified>
 ````
-
-````
->profile recover $s1 $s2
-ERROR - Object reference not set to an instance of an object.
-````
-
-Specifying the /json option returns a result of type Result:
-
-````
->profile recover $s1 $s2 /json
-{
-  "Result": {
-    "Success": false,
-    "Reason": "Object reference not set to an instance of an object."}}
-````
+**Missing Example***
 
 # profile export
 

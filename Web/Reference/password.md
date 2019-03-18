@@ -25,18 +25,18 @@ add   Add password entry
 ````
 
 ````
->password 
-ERROR - The command  is not known.
+>password add ftp.example.com alice1 password
+ERROR - Object reference not set to an instance of an object.
 ````
 
 Specifying the /json option returns a result of type Result:
 
 ````
->password  /json
+>password add ftp.example.com alice1 password /json
 {
   "Result": {
     "Success": false,
-    "Reason": "The command  is not known."}}
+    "Reason": "Object reference not set to an instance of an object."}}
 ````
 
 # password get
@@ -51,18 +51,18 @@ get   Lookup password entry
 ````
 
 ````
->password 
-ERROR - The command  is not known.
+>password delete www.example.com
+ERROR - Object reference not set to an instance of an object.
 ````
 
 Specifying the /json option returns a result of type Result:
 
 ````
->password  /json
+>password delete www.example.com /json
 {
   "Result": {
     "Success": false,
-    "Reason": "The command  is not known."}}
+    "Reason": "Object reference not set to an instance of an object."}}
 ````
 
 # password delete
@@ -78,17 +78,18 @@ delete   Delete password entry
 
 ````
 >profile list
-ERROR - Object reference not set to an instance of an object.
+OK
 ````
 
-Specifying the /json option returns a result of type Result:
+Specifying the /json option returns a result of type ResultList:
 
 ````
 >profile list /json
 {
-  "Result": {
-    "Success": false,
-    "Reason": "Object reference not set to an instance of an object."}}
+  "ResultList": {
+    "Success": true,
+    "CatalogEntryDevices": [],
+    "Profiles": []}}
 ````
 
 # password list
@@ -103,18 +104,18 @@ list   List password entries
 ````
 
 ````
->password 
-ERROR - The command  is not known.
+>password list
+ERROR - Object reference not set to an instance of an object.
 ````
 
 Specifying the /json option returns a result of type Result:
 
 ````
->password  /json
+>password list /json
 {
   "Result": {
     "Success": false,
-    "Reason": "The command  is not known."}}
+    "Reason": "Object reference not set to an instance of an object."}}
 ````
 
 

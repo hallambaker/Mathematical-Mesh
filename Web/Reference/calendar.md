@@ -24,18 +24,18 @@ add   Add calendar entry from file
 ````
 
 ````
->calendar 
-ERROR - The command  is not known.
+>calendar add CalendarEntry1.json CalID1
+ERROR - Object reference not set to an instance of an object.
 ````
 
 Specifying the /json option returns a result of type Result:
 
 ````
->calendar  /json
+>calendar add CalendarEntry1.json CalID1 /json
 {
   "Result": {
     "Success": false,
-    "Reason": "The command  is not known."}}
+    "Reason": "Object reference not set to an instance of an object."}}
 ````
 
 # calendar delete
@@ -50,18 +50,18 @@ delete   Delete calendar entry
 ````
 
 ````
->calendar 
-ERROR - The command  is not known.
+>calendar delete CalID1
+ERROR - Object reference not set to an instance of an object.
 ````
 
 Specifying the /json option returns a result of type Result:
 
 ````
->calendar  /json
+>calendar delete CalID1 /json
 {
   "Result": {
     "Success": false,
-    "Reason": "The command  is not known."}}
+    "Reason": "Object reference not set to an instance of an object."}}
 ````
 
 # calendar get
@@ -76,18 +76,18 @@ get   Lookup calendar entry
 ````
 
 ````
->calendar 
-ERROR - The command  is not known.
+>calendar get CalID1
+ERROR - Object reference not set to an instance of an object.
 ````
 
 Specifying the /json option returns a result of type Result:
 
 ````
->calendar  /json
+>calendar get CalID1 /json
 {
   "Result": {
     "Success": false,
-    "Reason": "The command  is not known."}}
+    "Reason": "Object reference not set to an instance of an object."}}
 ````
 
 # calendar dump
@@ -101,14 +101,14 @@ dump   List calendar entries
 ````
 
 ````
->calendar 
+>calendar list
 ERROR - The command  is not known.
 ````
 
 Specifying the /json option returns a result of type Result:
 
 ````
->calendar  /json
+>calendar list /json
 {
   "Result": {
     "Success": false,

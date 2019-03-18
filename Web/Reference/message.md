@@ -26,18 +26,18 @@ contact   Post a conection request to a user
 ````
 
 ````
->message 
-ERROR - The command  is not known.
+>message contact alice@example.com
+ERROR - Object reference not set to an instance of an object.
 ````
 
 Specifying the /json option returns a result of type Result:
 
 ````
->message  /json
+>message contact alice@example.com /json
 {
   "Result": {
     "Success": false,
-    "Reason": "The command  is not known."}}
+    "Reason": "Object reference not set to an instance of an object."}}
 ````
 
 # message confirm
@@ -51,21 +51,7 @@ confirm   Post a confirmation request to a user
     /report   Report output (default)
     /json   Report output in JSON format
 ````
-
-````
->message 
-ERROR - The command  is not known.
-````
-
-Specifying the /json option returns a result of type Result:
-
-````
->message  /json
-{
-  "Result": {
-    "Success": false,
-    "Reason": "The command  is not known."}}
-````
+**Missing Example***
 
 
 # message pending
@@ -79,18 +65,18 @@ pending   List pending requests
 ````
 
 ````
->message 
-ERROR - The command  is not known.
+>message pending
+ERROR - Object reference not set to an instance of an object.
 ````
 
 Specifying the /json option returns a result of type Result:
 
 ````
->message  /json
+>message pending /json
 {
   "Result": {
     "Success": false,
-    "Reason": "The command  is not known."}}
+    "Reason": "Object reference not set to an instance of an object."}}
 ````
 
 
@@ -104,21 +90,7 @@ status   Request status of pending requests
     /report   Report output (default)
     /json   Report output in JSON format
 ````
-
-````
->message 
-ERROR - The command  is not known.
-````
-
-Specifying the /json option returns a result of type Result:
-
-````
->message  /json
-{
-  "Result": {
-    "Success": false,
-    "Reason": "The command  is not known."}}
-````
+**Missing Example***
 
 # message accept
 
@@ -130,21 +102,7 @@ accept   Accept a pending request
     /report   Report output (default)
     /json   Report output in JSON format
 ````
-
-````
->message 
-ERROR - The command  is not known.
-````
-
-Specifying the /json option returns a result of type Result:
-
-````
->message  /json
-{
-  "Result": {
-    "Success": false,
-    "Reason": "The command  is not known."}}
-````
+**Missing Example***
 
 # message reject
 
@@ -156,21 +114,7 @@ reject   Reject a pending request
     /report   Report output (default)
     /json   Report output in JSON format
 ````
-
-````
->message 
-ERROR - The command  is not known.
-````
-
-Specifying the /json option returns a result of type Result:
-
-````
->message  /json
-{
-  "Result": {
-    "Success": false,
-    "Reason": "The command  is not known."}}
-````
+**Missing Example***
 
 # message block
 
@@ -182,19 +126,5 @@ block   Reject a pending request and block requests from that source
     /report   Report output (default)
     /json   Report output in JSON format
 ````
-
-````
->message 
-ERROR - The command  is not known.
-````
-
-Specifying the /json option returns a result of type Result:
-
-````
->message  /json
-{
-  "Result": {
-    "Success": false,
-    "Reason": "The command  is not known."}}
-````
+**Missing Example***
 

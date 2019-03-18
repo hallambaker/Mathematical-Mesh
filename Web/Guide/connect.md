@@ -13,7 +13,7 @@ the mesh service account alice@example.com to which connection is requested:
 
 ````
 >device request alice@example.com
-ERROR - Object reference not set to an instance of an object.
+ERROR - The feature has not been implemented
 ````
 
 In this case there is no existing device profile and so a new profile is
@@ -38,49 +38,29 @@ ERROR - Object reference not set to an instance of an object.
 Alice sees the request that she posted and approves it with the connect
 `device accept` command:
 
+**Missing Example***
 
-````
->device accept id
-ERROR - Object reference not set to an instance of an object.
-````
-
-There is a second request that Alice doesn't recognize. Alice rejects this
+There is a second request (from Mallet) that Alice doesn't recognize. Alice rejects this
 request:
 
-
-````
->device reject id
-ERROR - Object reference not set to an instance of an object.
-````
+**Missing Example***
 
 The connection process is completed by synchronizing the new device. At this point,
 all the applications that were available to the first device are available to the
 second:
 
-
-````
->device sync
-ERROR - The command  is not known.
-````
+**Missing Example***
 
 ##Managing connected devices
 
 The `device list` command gives a list of devices in the device 
 catalog:
 
-
-````
->device 
-ERROR - The command  is not known.
-````
+**Missing Example***
 
 The `device delete` command removes a device from the catalog:
 
-
-````
->device 
-ERROR - The command  is not known.
-````
+**Missing Example***
 
 
 ## Requesting a connection using a PIN
@@ -106,7 +86,7 @@ The pin code can now be used to authenticate the connection request:
 
 ````
 >device request /pin=PIN
-ERROR - Object reference not set to an instance of an object.
+ERROR - The feature has not been implemented
 ````
 
 Since the PIN code that was issued was set to be self-authorizing, the device
@@ -120,12 +100,35 @@ ERROR - Object reference not set to an instance of an object.
 ````
 
 
-## Requesting a connection using an EARL
+## Pre Configuring Devices
 
-The interactive connection mechanisms are suitable for devices such as phones and
-laptops but not for IoT devices which lack screens and keyboards. Support for
-such devices may be provided by means of an EARL presented on the device or its
-packaging.
+The `device delete` command creates a device profile without attempting
+to connect the device to a Mesh profile:
+
+
+````
+>device create /id="IoTDevice"
+ERROR - The option  is not known.
+````
+
+The most common reason for generating a device profile in this fashion is to allow
+an embedded or 'IoT' device to be preconfigured for Mesh control during manufacture.
+
+
+### Requesting a connection using an EARL
+
+Encrypted Authenticated Resource Locators provide one means of preconfiguring
+a device to enable simple and straightforward connection to a Mesh profile.
+
+The EARL itself is typically presented by means of a barcode on the device
+or its packaging. To connect the device, the user simply scans the QR code using
+a Mesh enabled application on an administion device and applies power.
+configuration then proceeds automatically.
+
+Alternatively, the EARL may be transfered wirelessly by a near field 
+communications link or by cycling an LED.
+
+
 
 To enable this connection mode, the manufacturer performs the steps of
 
@@ -143,8 +146,9 @@ These steps may be performed using the meshman tool and a QR code generation too
 
 
 ````
->device 
-ERROR - The command  is not known.
+>device create /ocr
+OK
+Device Profile UDF=MCLF-AM7A-LAV4-UN7O-LPEP-QGF7-3SW4
 ````
 
 A QR code scanning application can use the meshman tool to resolve the EARL and retrieve
@@ -152,7 +156,7 @@ the data using the `device earl` command:
 
 
 ````
->device 
+>device earludf://example.com/
 ERROR - The command  is not known.
 ````
 

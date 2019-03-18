@@ -26,17 +26,18 @@ create   Generate a new SSH public keypair for the current machine and add to th
 
 ````
 >profile list
-ERROR - Object reference not set to an instance of an object.
+OK
 ````
 
-Specifying the /json option returns a result of type Result:
+Specifying the /json option returns a result of type ResultList:
 
 ````
 >profile list /json
 {
-  "Result": {
-    "Success": false,
-    "Reason": "Object reference not set to an instance of an object."}}
+  "ResultList": {
+    "Success": true,
+    "CatalogEntryDevices": [],
+    "Profiles": []}}
 ````
 
 # ssh private
@@ -54,17 +55,18 @@ private   Extract the private key for this device
 
 ````
 >profile list
-ERROR - Object reference not set to an instance of an object.
+OK
 ````
 
-Specifying the /json option returns a result of type Result:
+Specifying the /json option returns a result of type ResultList:
 
 ````
 >profile list /json
 {
-  "Result": {
-    "Success": false,
-    "Reason": "Object reference not set to an instance of an object."}}
+  "ResultList": {
+    "Success": true,
+    "CatalogEntryDevices": [],
+    "Profiles": []}}
 ````
 
 # ssh public
@@ -81,17 +83,18 @@ public   Extract the public key for this device
 
 ````
 >profile list
-ERROR - Object reference not set to an instance of an object.
+OK
 ````
 
-Specifying the /json option returns a result of type Result:
+Specifying the /json option returns a result of type ResultList:
 
 ````
 >profile list /json
 {
-  "Result": {
-    "Success": false,
-    "Reason": "Object reference not set to an instance of an object."}}
+  "ResultList": {
+    "Success": true,
+    "CatalogEntryDevices": [],
+    "Profiles": []}}
 ````
 
 # ssh host
@@ -107,17 +110,18 @@ host   Add one or more hosts to the known_hosts file
 
 ````
 >profile list
-ERROR - Object reference not set to an instance of an object.
+OK
 ````
 
-Specifying the /json option returns a result of type Result:
+Specifying the /json option returns a result of type ResultList:
 
 ````
 >profile list /json
 {
-  "Result": {
-    "Success": false,
-    "Reason": "Object reference not set to an instance of an object."}}
+  "ResultList": {
+    "Success": true,
+    "CatalogEntryDevices": [],
+    "Profiles": []}}
 ````
 
 # ssh merge
@@ -134,17 +138,18 @@ merge   Add one or more hosts to the known_hosts file
 
 ````
 >profile list
-ERROR - Object reference not set to an instance of an object.
+OK
 ````
 
-Specifying the /json option returns a result of type Result:
+Specifying the /json option returns a result of type ResultList:
 
 ````
 >profile list /json
 {
-  "Result": {
-    "Success": false,
-    "Reason": "Object reference not set to an instance of an object."}}
+  "ResultList": {
+    "Success": true,
+    "CatalogEntryDevices": [],
+    "Profiles": []}}
 ````
 
 # ssh client
@@ -161,17 +166,18 @@ client   Add one or more keys to the authorized_keys file
 
 ````
 >profile list
-ERROR - Object reference not set to an instance of an object.
+OK
 ````
 
-Specifying the /json option returns a result of type Result:
+Specifying the /json option returns a result of type ResultList:
 
 ````
 >profile list /json
 {
-  "Result": {
-    "Success": false,
-    "Reason": "Object reference not set to an instance of an object."}}
+  "ResultList": {
+    "Success": true,
+    "CatalogEntryDevices": [],
+    "Profiles": []}}
 ````
 
 # ssh known
@@ -187,17 +193,18 @@ known   List the known SSH sites (aka known hosts)
 
 ````
 >profile list
-ERROR - Object reference not set to an instance of an object.
+OK
 ````
 
-Specifying the /json option returns a result of type Result:
+Specifying the /json option returns a result of type ResultList:
 
 ````
 >profile list /json
 {
-  "Result": {
-    "Success": false,
-    "Reason": "Object reference not set to an instance of an object."}}
+  "ResultList": {
+    "Success": true,
+    "CatalogEntryDevices": [],
+    "Profiles": []}}
 ````
 
 # ssh host
@@ -213,17 +220,18 @@ host   List the authorized device keys (aka authorized_keys)
 
 ````
 >profile list
-ERROR - Object reference not set to an instance of an object.
+OK
 ````
 
-Specifying the /json option returns a result of type Result:
+Specifying the /json option returns a result of type ResultList:
 
 ````
 >profile list /json
 {
-  "Result": {
-    "Success": false,
-    "Reason": "Object reference not set to an instance of an object."}}
+  "ResultList": {
+    "Success": true,
+    "CatalogEntryDevices": [],
+    "Profiles": []}}
 ````
 
 

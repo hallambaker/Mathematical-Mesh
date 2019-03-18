@@ -25,18 +25,18 @@ add   Add bookmark
 ````
 
 ````
->bookmark 
-ERROR - The command  is not known.
+>bookmark add Folder1/1 http://example.com/ Example Dot Com
+ERROR - Object reference not set to an instance of an object.
 ````
 
 Specifying the /json option returns a result of type Result:
 
 ````
->bookmark  /json
+>bookmark add Folder1/1 http://example.com/ Example Dot Com /json
 {
   "Result": {
     "Success": false,
-    "Reason": "The command  is not known."}}
+    "Reason": "Object reference not set to an instance of an object."}}
 ````
 
 # network delete
@@ -52,18 +52,18 @@ delete   Delete bookmark entry
 ````
 
 ````
->bookmark 
-ERROR - The command  is not known.
+>bookmark delete BookmarkPath2
+ERROR - Object reference not set to an instance of an object.
 ````
 
 Specifying the /json option returns a result of type Result:
 
 ````
->bookmark  /json
+>bookmark delete BookmarkPath2 /json
 {
   "Result": {
     "Success": false,
-    "Reason": "The command  is not known."}}
+    "Reason": "Object reference not set to an instance of an object."}}
 ````
 
 # network get
@@ -78,18 +78,18 @@ get   Lookup bookmark entry
 ````
 
 ````
->bookmark 
-ERROR - The command  is not known.
+>bookmark get Folder1/2
+ERROR - Object reference not set to an instance of an object.
 ````
 
 Specifying the /json option returns a result of type Result:
 
 ````
->bookmark  /json
+>bookmark get Folder1/2 /json
 {
   "Result": {
     "Success": false,
-    "Reason": "The command  is not known."}}
+    "Reason": "Object reference not set to an instance of an object."}}
 ````
 
 # network list
@@ -103,17 +103,17 @@ list   List bookmark entries
 ````
 
 ````
->bookmark 
-ERROR - The command  is not known.
+>bookmark list
+ERROR - Object reference not set to an instance of an object.
 ````
 
 Specifying the /json option returns a result of type Result:
 
 ````
->bookmark  /json
+>bookmark list /json
 {
   "Result": {
     "Success": false,
-    "Reason": "The command  is not known."}}
+    "Reason": "Object reference not set to an instance of an object."}}
 ````
 

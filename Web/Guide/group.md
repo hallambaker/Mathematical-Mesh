@@ -46,15 +46,16 @@ restrictions of this form do not appear to be frequently realized in practice.
 
 ## Creating a Recryption Group
 
-A recryption group is created using the `group create` command:
+Recryption groups are created using the `group create` command:
 
 
 ````
->group 
-ERROR - The command  is not known.
+>group create groupies@example.com
+ERROR - Object reference not set to an instance of an object.
 ````
 
-This command creates the group groupies@example.com and makes Alice the administrator.
+This command creates the group groupies@example.com. Since Alice created the
+account she is the administrator.
 
 At this point, the group has no members. Bob can encrypt a file under the group
 public key but he is unable to read it:
@@ -63,8 +64,8 @@ public key but he is unable to read it:
 ````
 >dare encodeTestFile1.txt /out=TestFile1-group.dare /encrypt=groupies@example.com
 ERROR - The command  is not known.
->dare encodegroupies@example.com
-ERROR - The command  is not known.
+>dare decode  TestFile1-group.dare
+ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\TestFile1-group.dare'.
 ````
 
 Since Alice is the group administrator, she can decrypt the file using her 
@@ -72,8 +73,8 @@ administrator key:
 
 
 ````
->group 
-ERROR - The command  is not known.
+>dare decode  TestFile1-group.dare
+ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\TestFile1-group.dare'.
 ````
 
 
@@ -85,16 +86,16 @@ Alice adds Bob as a member of the group:
 
 
 ````
->group 
-ERROR - The command  is not known.
+>group add groupies@example.com bob@example.com
+ERROR - Object reference not set to an instance of an object.
 ````
 
 Bob can now decrypt the file.
 
 
 ````
->group 
-ERROR - The command  is not known.
+>dare decode  TestFile1-group.dare
+ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\TestFile1-group.dare'.
 ````
 
 ## Reporting users
@@ -103,8 +104,8 @@ The `connect ` command returns a list of group members:
 
 
 ````
->group 
-ERROR - The command  is not known.
+>group list groupies@example.com
+ERROR - Object reference not set to an instance of an object.
 ````
 
 The group currently has one administrator and one member.
@@ -115,16 +116,16 @@ Users may be removed from a recryption group using the `group delete` command:
 
 
 ````
->group 
-ERROR - The command  is not known.
+>group delete groupies@example.com bob@example.com
+ERROR - Object reference not set to an instance of an object.
 ````
 
 Bob is no longer a member of the group and his decryption request now fails:
 
 
 ````
->group 
-ERROR - The command  is not known.
+>dare decode  TestFile1-group.dare
+ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\TestFile1-group.dare'.
 ````
 
 

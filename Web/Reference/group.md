@@ -24,18 +24,18 @@ create   Create recryption group
 ````
 
 ````
->group 
-ERROR - The command  is not known.
+>group create groupies@example.com
+ERROR - Object reference not set to an instance of an object.
 ````
 
 Specifying the /json option returns a result of type Result:
 
 ````
->group  /json
+>group create groupies@example.com /json
 {
   "Result": {
     "Success": false,
-    "Reason": "The command  is not known."}}
+    "Reason": "Object reference not set to an instance of an object."}}
 ````
 
 # group add
@@ -51,18 +51,18 @@ add   Add user to recryption group
 ````
 
 ````
->group 
-ERROR - The command  is not known.
+>group add groupies@example.com bob@example.com
+ERROR - Object reference not set to an instance of an object.
 ````
 
 Specifying the /json option returns a result of type Result:
 
 ````
->group  /json
+>group add groupies@example.com bob@example.com /json
 {
   "Result": {
     "Success": false,
-    "Reason": "The command  is not known."}}
+    "Reason": "Object reference not set to an instance of an object."}}
 ````
 
 # group delete
@@ -78,18 +78,18 @@ delete   Remove user from recryption group
 ````
 
 ````
->group 
-ERROR - The command  is not known.
+>group delete groupies@example.com bob@example.com
+ERROR - Object reference not set to an instance of an object.
 ````
 
 Specifying the /json option returns a result of type Result:
 
 ````
->group  /json
+>group delete groupies@example.com bob@example.com /json
 {
   "Result": {
     "Success": false,
-    "Reason": "The command  is not known."}}
+    "Reason": "Object reference not set to an instance of an object."}}
 ````
 
 # group list
@@ -104,17 +104,17 @@ list   List members of a recryption group
 ````
 
 ````
->group 
-ERROR - The command  is not known.
+>group list groupies@example.com
+ERROR - Object reference not set to an instance of an object.
 ````
 
 Specifying the /json option returns a result of type Result:
 
 ````
->group  /json
+>group list groupies@example.com /json
 {
   "Result": {
     "Success": false,
-    "Reason": "The command  is not known."}}
+    "Reason": "Object reference not set to an instance of an object."}}
 ````
 

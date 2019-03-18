@@ -48,8 +48,8 @@ The `ssh create` command adds an SSH profile named `ssh` to a Mesh account:
 
 
 ````
->ssh 
-ERROR - The command  is not known.
+>ssh create
+ERROR - Object reference not set to an instance of an object.
 ````
 
 Since the command creates a new application catalog, the command must be given to 
@@ -66,8 +66,8 @@ an SSH client:
 
 
 ````
->ssh 
-ERROR - The command  is not known.
+>ssh private ssh-key.public
+ERROR - Object reference not set to an instance of an object.
 ````
 
 The `ssh public` command extracts the public key required top configure
@@ -75,8 +75,8 @@ an SSH client:
 
 
 ````
->ssh 
-ERROR - The command  is not known.
+>ssh public ssh-key.public
+ERROR - Object reference not set to an instance of an object.
 ````
 
 If a script is being used to automate this process, the best practice is for the
@@ -95,8 +95,8 @@ corresponding SSH device public keys added:
 
 
 ````
->ssh 
-ERROR - The command  is not known.
+>ssh merge client
+ERROR - Object reference not set to an instance of an object.
 ````
 
 The `ssh merge host`  command reads the `known_hosts` file on a client machine and adds
@@ -104,8 +104,8 @@ the listed hosts to the user's ssh catalog.
 
 
 ````
->ssh 
-ERROR - The command  is not known.
+>ssh merge host
+ERROR - Object reference not set to an instance of an object.
 ````
 
 ## Client Key management
@@ -116,15 +116,15 @@ SSH keys belonging to the user that are not part of the Mesh profile may be adde
 
 
 ````
->ssh 
-ERROR - The command  is not known.
+>ssh add client
+OK
 ````
 
 The list of known clients may be returned in various formats using the `ssh show client`  command.
 
 
 ````
->ssh 
+>ssh show client
 ERROR - The command  is not known.
 ````
 
@@ -134,8 +134,8 @@ The `ssh add host`  command adds specific host entries to the user's SSH profile
 
 
 ````
->ssh 
-ERROR - The command  is not known.
+>ssh add host
+OK
 ````
 
 The current list of known hosts in the SSH catalog is returned by the `ssh show known` 
@@ -143,7 +143,7 @@ command.
 
 
 ````
->ssh 
+>ssh show host
 ERROR - The command  is not known.
 ````
 
@@ -160,15 +160,15 @@ enable use of ssh on the machine:
 
 
 ````
->device auth 
-ERROR - Object reference not set to an instance of an object.
+>device auth /ssh Alice
+ERROR - Flag value not recognizedAlice
 ````
 
 Once the device has been authorized, the client machine can start using SSH immediately:
 
 
 ````
->ssh 
+>ssh show host
 ERROR - The command  is not known.
 ````
 

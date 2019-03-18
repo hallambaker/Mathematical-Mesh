@@ -43,7 +43,7 @@ request   Connect to an existing profile registered at a portal
 
 ````
 >device request alice@example.com
-ERROR - Object reference not set to an instance of an object.
+ERROR - The feature has not been implemented
 ````
 
 Specifying the /json option returns a result of type Result:
@@ -53,7 +53,7 @@ Specifying the /json option returns a result of type Result:
 {
   "Result": {
     "Success": false,
-    "Reason": "Object reference not set to an instance of an object."}}
+    "Reason": "The feature has not been implemented"}}
 ````
 
 # device pending
@@ -91,21 +91,7 @@ accept   Accept a pending connection
     /report   Report output (default)
     /json   Report output in JSON format
 ````
-
-````
->device accept id
-ERROR - Object reference not set to an instance of an object.
-````
-
-Specifying the /json option returns a result of type Result:
-
-````
->device accept id /json
-{
-  "Result": {
-    "Success": false,
-    "Reason": "Object reference not set to an instance of an object."}}
-````
+**Missing Example***
 
 # device reject
 
@@ -117,21 +103,7 @@ reject   Reject a pending connection
     /report   Report output (default)
     /json   Report output in JSON format
 ````
-
-````
->device reject id
-ERROR - Object reference not set to an instance of an object.
-````
-
-Specifying the /json option returns a result of type Result:
-
-````
->device reject id /json
-{
-  "Result": {
-    "Success": false,
-    "Reason": "Object reference not set to an instance of an object."}}
-````
+**Missing Example***
 
 # device pin
 
@@ -194,14 +166,14 @@ earl   Connect a new device by means of an EARL
 ````
 
 ````
->device 
+>device earludf://example.com/
 ERROR - The command  is not known.
 ````
 
 Specifying the /json option returns a result of type Result:
 
 ````
->device  /json
+>device earludf://example.com/ /json
 {
   "Result": {
     "Success": false,
@@ -218,21 +190,7 @@ list   List devices in the device catalog
     /report   Report output (default)
     /json   Report output in JSON format
 ````
-
-````
->device 
-ERROR - The command  is not known.
-````
-
-Specifying the /json option returns a result of type Result:
-
-````
->device  /json
-{
-  "Result": {
-    "Success": false,
-    "Reason": "The command  is not known."}}
-````
+**Missing Example***
 
 # device delete
 
@@ -243,19 +201,5 @@ delete   Remove device from device catalog
     /report   Report output (default)
     /json   Report output in JSON format
 ````
-
-````
->device 
-ERROR - The command  is not known.
-````
-
-Specifying the /json option returns a result of type Result:
-
-````
->device  /json
-{
-  "Result": {
-    "Success": false,
-    "Reason": "The command  is not known."}}
-````
+**Missing Example***
 
