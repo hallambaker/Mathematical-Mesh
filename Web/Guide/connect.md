@@ -148,7 +148,7 @@ These steps may be performed using the meshman tool and a QR code generation too
 ````
 >device create /ocr
 OK
-Device Profile UDF=MBFM-LDDA-EQMY-A4S2-FC52-4WFZ-2C6S
+Device Profile UDF=MDQY-WRJT-SPPY-KYPJ-QNVZ-2HUZ-TRY3
 ````
 
 A QR code scanning application can use the meshman tool to resolve the EARL and retrieve
@@ -156,8 +156,8 @@ the data using the `device earl` command:
 
 
 ````
->device earludf://example.com/
-ERROR - The command  is not known.
+>device earl udf://example.com/
+ERROR - Object reference not set to an instance of an object.
 ````
 
 The tool resolves the EARL to obtain the encrypted open connection request,

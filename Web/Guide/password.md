@@ -96,8 +96,8 @@ When a device is added, it gets a copy of the password file:
 
 
 ````
->device auth /password Alice
-ERROR - Flag value not recognizedAlice
+>device auth Alice /password
+ERROR - Object reference not set to an instance of an object.
 ````
 
 

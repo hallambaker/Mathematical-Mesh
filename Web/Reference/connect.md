@@ -167,18 +167,18 @@ earl   Connect a new device by means of an EARL
 ````
 
 ````
->device earludf://example.com/
-ERROR - The command  is not known.
+>device earl udf://example.com/
+ERROR - Object reference not set to an instance of an object.
 ````
 
 Specifying the /json option returns a result of type Result:
 
 ````
->device earludf://example.com/ /json
+>device earl udf://example.com/ /json
 {
   "Result": {
     "Success": false,
-    "Reason": "The command  is not known."}}
+    "Reason": "Object reference not set to an instance of an object."}}
 ````
 
 # device list

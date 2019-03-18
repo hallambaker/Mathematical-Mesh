@@ -65,8 +65,8 @@ Devices are given authorization to access the bookmarks catalog using the
 
 
 ````
->device auth /bookmark Alice
-ERROR - Flag value not recognizedAlice
+>device auth Alice /bookmark
+ERROR - Object reference not set to an instance of an object.
 ````
 
 The new device now has access to the Bookmarks catalog:

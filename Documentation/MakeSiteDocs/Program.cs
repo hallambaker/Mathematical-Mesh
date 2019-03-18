@@ -362,7 +362,7 @@ namespace MakeSiteDocs {
             var resultEarl = (ConnectEarlPrep[0].Result as ResultDeviceCreate);
             DeviceCreateUDF = $"udf://{EARLService}/{resultEarl.Key}";
 
-            ConnectEarl = testCLIAlice1.Example($"device earl{DeviceCreateUDF}");
+            ConnectEarl = testCLIAlice1.Example($"device earl {DeviceCreateUDF}");
             }
 
 
@@ -477,7 +477,7 @@ namespace MakeSiteDocs {
             PasswordList = testCLIAlice1.Example($"password list");
             PasswordUpdate = testCLIAlice1.Example($"password add {PasswordSite} {PasswordAccount1} {PasswordValue1a}");
             PasswordDelete = testCLIAlice1.Example($"password delete {PasswordSite2}");
-            PasswordAuth = testCLIAlice1.Example($"device auth /password {AliceDevice2}");
+            PasswordAuth = testCLIAlice1.Example($"device auth {AliceDevice2} /password");
             }
 
         public List<ExampleResult> BookmarkAdd;
@@ -506,7 +506,7 @@ namespace MakeSiteDocs {
             BookmarkGet = testCLIAlice1.Example($"bookmark get {BookmarkPath2}");
             BookmarkList = testCLIAlice1.Example($"bookmark list");
             BookmarkDelete = testCLIAlice1.Example($"bookmark delete BookmarkPath2");
-            BookmarkAuth = testCLIAlice1.Example($"device auth /bookmark {AliceDevice2}");
+            BookmarkAuth = testCLIAlice1.Example($"device auth {AliceDevice2} /bookmark");
             BookmarkList2 = testCLIAlice2.Example($"bookmark list");
             }
 
@@ -530,7 +530,7 @@ namespace MakeSiteDocs {
             
             CalendarDelete = testCLIAlice1.Example($"calendar delete {CalendarID1}",
                 $"calendar list");
-            CalendarAuth = testCLIAlice1.Example($"device auth /calendar {AliceDevice2}");
+            CalendarAuth = testCLIAlice1.Example($"device auth {AliceDevice2} /calendar ");
             }
 
         public List<ExampleResult> NetworkAdd;
@@ -553,7 +553,7 @@ namespace MakeSiteDocs {
             
             NetworkDelete = testCLIAlice1.Example($"network delete {NetworkID2}",
                 $"network list");
-            NetworkAuth = testCLIAlice1.Example($"device auth /network {AliceDevice2}");
+            NetworkAuth = testCLIAlice1.Example($"device auth {AliceDevice2} /network");
             }
 
         public List<ExampleResult> SSHCreate;
@@ -584,7 +584,7 @@ namespace MakeSiteDocs {
             SSHAddHost = testCLIAlice1.Example($"ssh add host");
             SSHShowKnown = testCLIAlice1.Example($"ssh show host");
 
-            SSHAuthDev = testCLIAlice1.Example($"device auth /ssh {AliceDevice2}");
+            SSHAuthDev = testCLIAlice1.Example($"device auth {AliceDevice2} /ssh");
             SSHAuthProof = testCLIAlice1.Example($"ssh show host");
             }
 
@@ -626,7 +626,7 @@ namespace MakeSiteDocs {
             MailSMIMEPrivate = testCLIAlice1.Example($"mail smime private {AliceAccount} {MailSMIMEPrivateKey}");
             MailSMIMEPublic = testCLIAlice1.Example($"mail smime public {AliceAccount} {MailSMIMEPublicKey}");
 
-            MailAuth = testCLIAlice1.Example($"device auth /mail {AliceDevice2}");
+            MailAuth = testCLIAlice1.Example($"device auth {AliceDevice2} /mail ");
             MailSMIMEPrivate2 = testCLIAlice2.Example($"mail smime private {AliceAccount} {MailSMIMEPrivateKey}");
             }
 

@@ -63,14 +63,14 @@ file name is the input file name with the additional extension `.dare`.
 
 
 ````
->dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=ECCQ-OJV7-JSNI-G7JH-J3EF-R33F-LWWA
+>dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=EC6P-HEAP-TJT5-HTFT-D22E-VTB3-CDSQ
 OK
 ````
 
 Specifying the /json option returns a result of type ResultFile:
 
 ````
->dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=ECCQ-OJV7-JSNI-G7JH-J3EF-R33F-LWWA /json
+>dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=EC6P-HEAP-TJT5-HTFT-D22E-VTB3-CDSQ /json
 {
   "ResultFile": {
     "Success": true,
@@ -103,14 +103,14 @@ with the extension `.undare` otherwise.
 
 
 ````
->dare decode TestFile1.txt.symmetric.dare /encrypt=ECCQ-OJV7-JSNI-G7JH-J3EF-R33F-LWWA
+>dare decode TestFile1.txt.symmetric.dare /encrypt=EC6P-HEAP-TJT5-HTFT-D22E-VTB3-CDSQ
 ERROR - The option  is not known.
 ````
 
 Specifying the /json option returns a result of type Result:
 
 ````
->dare decode TestFile1.txt.symmetric.dare /encrypt=ECCQ-OJV7-JSNI-G7JH-J3EF-R33F-LWWA /json
+>dare decode TestFile1.txt.symmetric.dare /encrypt=EC6P-HEAP-TJT5-HTFT-D22E-VTB3-CDSQ /json
 {
   "Result": {
     "Success": false,
@@ -137,14 +137,14 @@ The active key collection may be overriden using the `/mesh` option.
 
 
 ````
->dare verify TestFile1.txt.symmetric.dare /encrypt=ECCQ-OJV7-JSNI-G7JH-J3EF-R33F-LWWA
+>dare verify TestFile1.txt.symmetric.dare /encrypt=EC6P-HEAP-TJT5-HTFT-D22E-VTB3-CDSQ
 ERROR - The option  is not known.
 ````
 
 Specifying the /json option returns a result of type Result:
 
 ````
->dare verify TestFile1.txt.symmetric.dare /encrypt=ECCQ-OJV7-JSNI-G7JH-J3EF-R33F-LWWA /json
+>dare verify TestFile1.txt.symmetric.dare /encrypt=EC6P-HEAP-TJT5-HTFT-D22E-VTB3-CDSQ /json
 {
   "Result": {
     "Success": false,

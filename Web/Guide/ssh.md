@@ -160,8 +160,8 @@ enable use of ssh on the machine:
 
 
 ````
->device auth /ssh Alice
-ERROR - Flag value not recognizedAlice
+>device auth Alice /ssh
+ERROR - Object reference not set to an instance of an object.
 ````
 
 Once the device has been authorized, the client machine can start using SSH immediately:
