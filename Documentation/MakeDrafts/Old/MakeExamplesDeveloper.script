@@ -1,0 +1,7 @@
+﻿#using System.Text
+#using Goedel.Mesh
+#using Goedel.Protocol
+#xclass ExampleGenerator ExampleGenerator
+
+
+#end xclass

@@ -13,6 +13,8 @@ namespace Goedel.XUnit {
     public partial class ShellTests {
 
 
+
+
         [Fact]
         public void TestMessageContact() {
             var accountA = "alice@example.com";
@@ -21,14 +23,14 @@ namespace Goedel.XUnit {
             var deviceA = GetTestCLI("MachineAlice");
             var deviceB = GetTestCLI("MachineBob");
 
-            deviceA.Dispatch($"profile master {accountA} /new ");
-            deviceB.Dispatch($"profile master {accountB} /new ");
+            deviceA.Dispatch($"profile create {accountA}");
+            deviceB.Dispatch($"profile create {accountB}");
 
             var result1 = deviceA.Dispatch("message pending") as ResultPending;
 
-            deviceB.Dispatch("message contact {accountA}");
+            deviceB.Dispatch($"message contact {accountA}");
 
-            deviceB.Dispatch("message status {accountA}");
+            deviceB.Dispatch($"message status {accountA}");
 
             var result2 = deviceA.Dispatch("message pending") as ResultPending;
 
@@ -48,8 +50,8 @@ namespace Goedel.XUnit {
             var deviceA = GetTestCLI("MachineAlice");
             var deviceB = GetTestCLI("MachineBob");
 
-            deviceA.Dispatch($"profile master {accountA} /new ");
-            deviceB.Dispatch($"profile master {accountB} /new ");
+            deviceA.Dispatch($"profile create {accountA}");
+            deviceB.Dispatch($"profile create {accountB}");
 
             var result1 = deviceA.Dispatch("message pending") as ResultPending;
 

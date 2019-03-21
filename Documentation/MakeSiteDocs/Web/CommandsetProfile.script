@@ -118,39 +118,93 @@ machine:
 
 #% Describe(CommandSet);
 
-#% Describe(CommandSet, _MasterCreate._DescribeCommand);
+#% Describe(CommandSet, _ProfileCreate._DescribeCommand);
+
+The `profile create` command creates a new Mesh master profile and 
+(optionally) registers it with a Mesh service.
+
+By default, the default device profile of the current account is registered as an
+administrator device of the newly created profile. If no default device exists, a 
+new device profile is created. The `/new` option may be used to force a new device
+profile to be created.
+
+The `/did` and `/dd` options specify an identifier and description for the device if
+a new profile is created. Otherwise, platform defaults are used.
+
+Cryptographic algorithms to be used for the signature and encryption algorithms 
+may be specified using the `/alg` option.
+
 #%  ConsoleReference (Examples.ProfileMaster);
 
-#% Describe(CommandSet, _DeviceCreate._DescribeCommand);
-#%  ConsoleReference (Examples.ProfileDevice);
+
+#% Describe(CommandSet, _ProfileEscrow._DescribeCommand);
+
+The `profile escrow` command 
+
+#%  ConsoleReference (Examples.ProfileEscrow);
+
+#% Describe(CommandSet, _ProfileExport._DescribeCommand);
+
+The `profile export` command 
+
+#%  ConsoleReference (Examples.ProfileExport);
+
+#% Describe(CommandSet, _ProfileGet._DescribeCommand);
+
+The `profile get` command 
+
+#%  ConsoleReference (Examples.ProfileDump);
+
 
 #% Describe(CommandSet, _ProfileHello._DescribeCommand);
+
+The `profile hello` command attempts to contact a Mesh service and reports the
+service configuration if successful.
+
 #%  ConsoleReference (Examples.ProfileHello);
 
+#% Describe(CommandSet, _ProfileImport._DescribeCommand);
+
+The `profile import` command 
+
+#%  ConsoleReference (Examples.ProfileImport);
+
+#% Describe(CommandSet, _ProfileList._DescribeCommand);
+
+The `profile list` command 
+
+#%  ConsoleReference (Examples.ProfileList);
+
+
+#% Describe(CommandSet, _ProfileRecover._DescribeCommand);
+
+The `profile recover` command 
+
+#%  ConsoleReference (Examples.ProfileRecover);
+
 #% Describe(CommandSet, _ProfileRegister._DescribeCommand);
+
+The `profile register` command 
+
 #%  ConsoleReference (Examples.ProfileRegister);
 
 #% Describe(CommandSet, _ProfileSync._DescribeCommand);
+
+The `profile sync` command 
+
 #%  ConsoleReference (Examples.ProfileSync);
 
 
-#% Describe(CommandSet, _ProfileList._DescribeCommand);
-#%  ConsoleReference (Examples.ProfileList);
 
-#% Describe(CommandSet, _ProfileDump._DescribeCommand);
-#%  ConsoleReference (Examples.ProfileDump);
 
-#% Describe(CommandSet, _ProfileEscrow._DescribeCommand);
-#%  ConsoleReference (Examples.ProfileEscrow);
 
-#% Describe(CommandSet, _ProfileRecover._DescribeCommand);
-#%  ConsoleReference (Examples.ProfileRecover);
 
-#% Describe(CommandSet, _ProfileExport._DescribeCommand);
-#%  ConsoleReference (Examples.ProfileExport);
 
-#% Describe(CommandSet, _ProfileImport._DescribeCommand);
-#%  ConsoleReference (Examples.ProfileImport);
+
+
+
+
+
 
 #end xfile
 

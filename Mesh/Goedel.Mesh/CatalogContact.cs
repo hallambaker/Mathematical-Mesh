@@ -43,12 +43,16 @@ namespace Goedel.Mesh {
     public class CatalogContact : Catalog {
         public const string Label = "CatalogContact";
 
+        public CatalogEntryContact Self;
+
+
+
         public override string ContainerDefault => Label;
 
         public AsCatalogEntryContact AsCatalogEntryContact => new AsCatalogEntryContact(this);
 
 
-        public CatalogEntryContact LocateBySite(string Key) => Locate(Key) as CatalogEntryContact;
+        public CatalogEntryContact LocateByID(string Key) => Locate(Key) as CatalogEntryContact;
 
 
         public CatalogContact(string directory, string ContainerName = null,
@@ -56,14 +60,10 @@ namespace Goedel.Mesh {
                     KeyCollection keyCollection = null) :
             base(directory, ContainerName, cryptoParameters, keyCollection) {
             }
-        public static Store Factory(string directory, string containerName = null) =>
-        new CatalogContact(directory, containerName);
-
 
         public void Add(DareMessage contact) {
             var entry = new CatalogEntryContact(contact);
             Add(entry);
-
             }
 
         }

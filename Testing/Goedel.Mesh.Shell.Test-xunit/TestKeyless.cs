@@ -80,7 +80,7 @@ namespace Goedel.XUnit {
             var filename = content.ToFileUnique();
             var keyClause = key == null ? "" : $" /key {key}";
             var algClause = alg == null ? "" : $" /alg {alg}";
-            var result = testCLI.Dispatch($"hash commit {filename}{keyClause}{algClause}") as ResultDigest;
+            var result = testCLI.Dispatch($"hash mac {filename}{keyClause}{algClause}") as ResultDigest;
             result.AssertNotNull();
             return result;
 
@@ -89,12 +89,12 @@ namespace Goedel.XUnit {
         #endregion
         #region // Random
         [Theory]
-        [InlineData()]
+        [InlineData(0)]
         [InlineData(128)]
         [InlineData(192)]
         [InlineData(256)]
         [InlineData(512)]
-        public void TestRandom(int bits=0) {
+        public void TestRandom(int bits) {
 
             var bitsClause = bits == 0 ? "" : $" /bits {bits}";
             bits = bits == 0 ? 128 : bits;
@@ -118,12 +118,12 @@ namespace Goedel.XUnit {
             }
 
         [Theory]
-        [InlineData()]
+        [InlineData(0)]
         [InlineData(128)]
         [InlineData(192)]
         [InlineData(256)]
         [InlineData(512)]
-        public void TestKey(int bits = 0) {
+        public void TestKey(int bits) {
             var bitsClause = bits == 0 ? "" : $" /bits {bits}";
             bits = bits == 0 ? 128 : bits;
             var length = (bits + 12) / 5;

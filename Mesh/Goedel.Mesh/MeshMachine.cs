@@ -20,7 +20,6 @@ namespace Goedel.Mesh {
 
     public interface IMeshMachine {
 
-
         string DirectoryMesh { get; }
 
 

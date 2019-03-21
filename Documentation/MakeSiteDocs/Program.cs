@@ -24,9 +24,7 @@ namespace MakeSiteDocs {
             var createWeb = new Examples();
             }
 
-        TestCLI testCLIAlice1;
-        TestCLI testCLIAlice2;
-        TestCLI testCLIAlice3;
+        TestCLI testCLIAlice1, testCLIAlice2, testCLIAlice3, testCLIAlice4, testCLIAlice5;
         TestCLI testCLIBob1;
         TestCLI testCLIMallet1;
 
@@ -73,14 +71,17 @@ namespace MakeSiteDocs {
         public string DougAccount = "doug@example.com";
         public string MalletAccount = "mallet@example.com";
         public string GroupAccount = "groupies@example.com";
+        public string PollAccount = "devices@example.com";
 
         public string AliceContactFile = "alice-contact.json";
         public string CarolContactFile = "carol-contact.json"; 
         public string DougAccountUDF = "UDF://example.com/ERRROR"; // ToDo: calculate Doug UDF
 
         public string AliceDevice1 = "Alice";
-        public string AliceDevice2 = "Alice";
-        public string AliceDevice3 = "Alice";
+        public string AliceDevice2 = "Alice2";
+        public string AliceDevice3 = "Alice3";
+        public string AliceDevice4 = "Alice4";
+        public string AliceDevice5 = "Alice5";
 
         string OutputPath;
 
@@ -88,9 +89,11 @@ namespace MakeSiteDocs {
             OutputPath = Directory.GetCurrentDirectory();
             TestEnvironment = new TestEnvironmentCommon();
 
-            testCLIAlice1 = GetTestCLI("Alice");
-            testCLIAlice2 = GetTestCLI("Alice2");
-            testCLIAlice3 = GetTestCLI("Alice3");
+            testCLIAlice1 = GetTestCLI(AliceDevice1);
+            testCLIAlice2 = GetTestCLI(AliceDevice2);
+            testCLIAlice3 = GetTestCLI(AliceDevice3);
+            testCLIAlice4 = GetTestCLI(AliceDevice4);
+            testCLIAlice5 = GetTestCLI(AliceDevice5);
             testCLIBob1 = GetTestCLI("Bob");
             testCLIMallet1 = GetTestCLI("Mallet");
 
@@ -118,7 +121,7 @@ namespace MakeSiteDocs {
             DoCommandsSSH();
 
             // Connect is last because we have to do the connection examples
-            DoCommandsConnect();
+            DoCommandsDevice();
 
 
             Directory.SetCurrentDirectory(OutputPath);
@@ -299,10 +302,10 @@ namespace MakeSiteDocs {
             ProfileEscrow = testCLIAlice1.Example($"profile escrow");
 
 
-            //var share1 = (ProfileEscrow[0].Result as ResultEscrow).Shares[0];
-            //var share2 = (ProfileEscrow[0].Result as ResultEscrow).Shares[2];
+            var share1 = (ProfileEscrow[0].Result as ResultEscrow).Shares[0];
+            var share2 = (ProfileEscrow[0].Result as ResultEscrow).Shares[2];
 
-            //ProfileRecover = testCLIAlice1.Example($"profile recover ${share1} ${share2} /verify");
+            ProfileRecover = testCLIAlice1.Example($"profile recover ${share1} ${share2} /verify");
             ProfileExport = testCLIAlice1.Example($"profile export {TestExport}");
             ProfileImport = testCLIAlice2.Example($"profile import {TestExport}"); // do on another device
 
@@ -323,46 +326,61 @@ namespace MakeSiteDocs {
         public List<ExampleResult> ConnectPending3;
 
         public List<ExampleResult> ConnectEarlPrep;
-        public List<ExampleResult> ConnectEarl;
+        
         public List<ExampleResult> ConnectList;
         public List<ExampleResult> ConnectDelete;
 
+        public List<ExampleResult> DeviceEarl1;
+        public List<ExampleResult> DeviceEarl2;
+        public List<ExampleResult> DeviceEarl3;
+        public List<ExampleResult> DeviceEarl4;
+
         public List<ExampleResult> DeviceCreate;
         public string DeviceCreateUDF;
+        public string DeviceCreateHTTP;
 
-        public void DoCommandsConnect() {
+        public void DoCommandsDevice() {
 
             DeviceRequest = testCLIAlice2.Example($"device request {AliceAccount}");
             ConnectPending = testCLIAlice1.Example($"device pending");
-            
 
-            //var resultPending = (ConnectPending[0].Result as ResultPending);
-            //var id1 = resultPending.Messages[0].MessageID;
-            //var id2 = resultPending.Messages[1].MessageID;
 
-            //ConnectAccept = testCLIAlice1.Example($"device accept {id1}");
-            //ConnectRequestMallet = testCLIMallet1.Example($"device request");
-            //ConnectSync = testCLIAlice2.Example($"profile sync");
+            var resultPending = (ConnectPending[0].Result as ResultPending);
+            var id1 = "tbs";// resultPending.Messages[0].MessageID;
+            var id2 = "tbs";// resultPending.Messages[1].MessageID;
 
-            //ConnectReject = testCLIAlice1.Example($"device reject {id2}");
+            ConnectAccept = testCLIAlice1.Example($"device accept {id1}");
+            ConnectRequestMallet = testCLIMallet1.Example($"device request {AliceAccount}");
+            ConnectSync = testCLIAlice2.Example($"profile sync");
 
-            //ConnectList = testCLIAlice1.Example($"device list");
-            //ConnectDelete = testCLIAlice1.Example($"device delete {id1}",
-            //    $"device list");
+            ConnectReject = testCLIAlice1.Example($"device reject {id2}");
 
+            ConnectList = testCLIAlice1.Example($"device list");
+            ConnectDelete = testCLIAlice1.Example($"device delete {id1}",
+                $"device list");
+
+            // Connect Device 3 using a PIN
             ConnectGetPin = testCLIAlice1.Example($"device pin");
-            var pin = "PIN";
-            ConnectPin = testCLIAlice2.Example($"device request /pin={pin}");
+            var resultPin = (ConnectPending[0].Result as ResultPIN);
+            var pin = "tbs";// resultPin.MessageConnectionPIN.PIN;
+            ConnectPin = testCLIAlice3.Example($"device request {AliceAccount} /pin={pin}");
             ConnectPending3 = testCLIAlice1.Example($"device pending");
+            var ConnectSyncPIN = testCLIAlice3.Example($"profile sync");
 
-            DeviceCreate = testCLIAlice1.Example($"device create /id=\"IoTDevice\"");
+            // Connect Device 4 using an EARL
+            DeviceCreate = testCLIAlice4.Example($"device create /id=\"IoTDevice\"");
+
+            ConnectEarlPrep = testCLIAlice4.Example("key earl");
+            var resultEarl = (ConnectEarlPrep[0].Result as ResultKey);
 
 
-            ConnectEarlPrep = testCLIAlice1.Example($"device create /ocr");
-            var resultEarl = (ConnectEarlPrep[0].Result as ResultDeviceCreate);
             DeviceCreateUDF = $"udf://{EARLService}/{resultEarl.Key}";
 
-            ConnectEarl = testCLIAlice1.Example($"device earl {DeviceCreateUDF}");
+            DeviceEarl1 = testCLIAlice4.Example($"device pre {PollAccount} /key={DeviceCreateUDF}");
+            DeviceEarl2 = testCLIAlice4.Example($"profile sync");
+            DeviceEarl3 = testCLIAlice1.Example($"device earl {DeviceCreateUDF}");
+            DeviceEarl4 = testCLIAlice4.Example($"profile sync");
+
             }
 
 
@@ -388,28 +406,28 @@ namespace MakeSiteDocs {
 
             ContactRequest =        testCLIBob1.Example($"message contact {AliceAccount}");
             ContactPending =        testCLIAlice1.Example($"message pending");
-            //var resultPending = (ConnectPending[0].Result as ResultPending);
-            //var id1 = resultPending.Messages[0].MessageID;
-            //var id2 = resultPending.Messages[1].MessageID;
+            var resultPending = (ContactPending[0].Result as ResultPending);
+            var id1 = "tbs";// resultPending.Messages[0].MessageID;
+            var id2 = "tbs";// resultPending.Messages[1].MessageID;
 
-            //ContactAccept =         testCLIAlice1.Example($"message accept {id1}");
+            ContactAccept = testCLIAlice1.Example($"message accept {id1}");
 
-            //ContactCatalog =        testCLIAlice1.Example($"contact list");
-            //ContactGetResponse =    testCLIBob1.Example($"message status {id1}");
-            //ContactReject =         testCLIAlice1.Example($"message reject {id2}");
-            //ContactBlock =          testCLIAlice1.Example($"message block {MalletAccount}");
+            ContactCatalog = testCLIAlice1.Example($"contact list");
+            ContactGetResponse = testCLIBob1.Example($"message status {id1}");
+            ContactReject = testCLIAlice1.Example($"message reject {id2}");
+            ContactBlock = testCLIAlice1.Example($"message block {MalletAccount}");
 
-            //ConfirmRequest =        testCLIBob1.Example($"message confirm {AliceAccount} \"{BobPurchase}\"");
-            //ConfirmPending =        testCLIAlice1.Example($"message pending");
-            //var confirmPending = (ConfirmPending[0].Result as ResultPending);
-            //id1 = confirmPending.Messages[0].MessageID;
-            //id2 = confirmPending.Messages[1].MessageID;
+            ConfirmRequest = testCLIBob1.Example($"message confirm {AliceAccount} \"{BobPurchase}\"");
+            ConfirmPending = testCLIAlice1.Example($"message pending");
+            var confirmPending = (ConfirmPending[0].Result as ResultPending);
+            id1 = "tbs";//confirmPending.Messages[0].MessageID;
+            id2 = "tbs";//confirmPending.Messages[1].MessageID;
 
-            //ConfirmAccept =         testCLIAlice1.Example($"message accept {id1}");
-            //ConfirmGetAccept =      testCLIBob1.Example($"message status {id1}");
-            //ConfirmReject =         testCLIAlice1.Example($"message reject {id2}");
-            //ConfirmGetReject =      testCLIBob1.Example($"message status {id2}");
-            //ConfirmMallet =         testCLIMallet1.Example($"message confirm {AliceAccount} \"{BobPurchase}\"");
+            ConfirmAccept = testCLIAlice1.Example($"message accept {id1}");
+            ConfirmGetAccept = testCLIBob1.Example($"message status {id1}");
+            ConfirmReject = testCLIAlice1.Example($"message reject {id2}");
+            ConfirmGetReject = testCLIBob1.Example($"message status {id2}");
+            ConfirmMallet = testCLIMallet1.Example($"message confirm {AliceAccount} \"{BobPurchase}\"");
             }
 
         public List<ExampleResult> ContactAdd;

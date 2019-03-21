@@ -51,7 +51,20 @@ confirm   Post a confirmation request to a user
     /report   Report output (default)
     /json   Report output in JSON format
 ````
-**Missing Example***
+
+````
+>message confirm alice@example.com "Purchase equipment for $6,000?"
+OK
+````
+
+Specifying the /json option returns a result of type Result:
+
+````
+>message confirm alice@example.com "Purchase equipment for $6,000?" /json
+{
+  "Result": {
+    "Success": true}}
+````
 
 
 # message pending
@@ -66,17 +79,17 @@ pending   List pending requests
 
 ````
 >message pending
-ERROR - Object reference not set to an instance of an object.
+OK
 ````
 
-Specifying the /json option returns a result of type Result:
+Specifying the /json option returns a result of type ResultPending:
 
 ````
 >message pending /json
 {
-  "Result": {
-    "Success": false,
-    "Reason": "Object reference not set to an instance of an object."}}
+  "ResultPending": {
+    "Success": true,
+    "Messages": []}}
 ````
 
 
@@ -90,7 +103,20 @@ status   Request status of pending requests
     /report   Report output (default)
     /json   Report output in JSON format
 ````
-**Missing Example***
+
+````
+>message status tbs
+OK
+````
+
+Specifying the /json option returns a result of type Result:
+
+````
+>message status tbs /json
+{
+  "Result": {
+    "Success": true}}
+````
 
 # message accept
 
@@ -102,7 +128,20 @@ accept   Accept a pending request
     /report   Report output (default)
     /json   Report output in JSON format
 ````
-**Missing Example***
+
+````
+>message accept tbs
+OK
+````
+
+Specifying the /json option returns a result of type Result:
+
+````
+>message accept tbs /json
+{
+  "Result": {
+    "Success": true}}
+````
 
 # message reject
 
@@ -114,7 +153,20 @@ reject   Reject a pending request
     /report   Report output (default)
     /json   Report output in JSON format
 ````
-**Missing Example***
+
+````
+>message reject tbs
+OK
+````
+
+Specifying the /json option returns a result of type Result:
+
+````
+>message reject tbs /json
+{
+  "Result": {
+    "Success": true}}
+````
 
 # message block
 
@@ -126,5 +178,18 @@ block   Reject a pending request and block requests from that source
     /report   Report output (default)
     /json   Report output in JSON format
 ````
-**Missing Example***
+
+````
+>message block mallet@example.com
+OK
+````
+
+Specifying the /json option returns a result of type Result:
+
+````
+>message block mallet@example.com /json
+{
+  "Result": {
+    "Success": true}}
+````
 

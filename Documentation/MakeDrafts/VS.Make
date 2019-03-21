@@ -40,45 +40,53 @@ LinkFiles = \
     Goedel.Mesh.Test.dll
 
 ToolTargets = \
-	MakeExamplesAdvanced.cs\
-	MakeExamplesProfile.cs\
-	MakeExamplesPortal.cs\
+	Old\MakeExamplesAdvanced.cs\
+	Old\MakeExamplesProfile.cs\
+	Old\MakeExamplesPortal.cs\
 	Old\MakeExamplesCatalog.cs\
-	MakeExamplesUDF.cs\
-	MakeExamplesMessage.cs\
-	MakeExamplesContainer.cs\
-	MakeExamplesDeveloper.cs\
-	MakeExamplesMessaging.cs\
-	MakeExamplesMessage.cs
-MakeExamplesAdvanced.cs : MakeExamplesAdvanced.script 
-	gscript MakeExamplesAdvanced.script  MakeExamplesAdvanced.cs
+	MakeExamples-2-UDF.cs\
+	Old\MakeExamplesMessage.cs\
+	MakeExamples-3-Dare.cs\
+	MakeExamples-4-schema.cs\
+	MakeExamples-5-protocol.cs\
+	Old\MakeExamplesDeveloper.cs\
+	Old\MakeExamplesMessaging.cs\
+	Old\MakeExamplesMessage.cs
+Old\MakeExamplesAdvanced.cs : Old\MakeExamplesAdvanced.script 
+	gscript Old\MakeExamplesAdvanced.script  Old\MakeExamplesAdvanced.cs
 
-MakeExamplesProfile.cs : MakeExamplesProfile.script 
-	gscript MakeExamplesProfile.script  MakeExamplesProfile.cs
+Old\MakeExamplesProfile.cs : Old\MakeExamplesProfile.script 
+	gscript Old\MakeExamplesProfile.script  Old\MakeExamplesProfile.cs
 
-MakeExamplesPortal.cs : MakeExamplesPortal.script 
-	gscript MakeExamplesPortal.script  MakeExamplesPortal.cs
+Old\MakeExamplesPortal.cs : Old\MakeExamplesPortal.script 
+	gscript Old\MakeExamplesPortal.script  Old\MakeExamplesPortal.cs
 
 Old\MakeExamplesCatalog.cs : Old\MakeExamplesCatalog.script 
 	gscript Old\MakeExamplesCatalog.script  Old\MakeExamplesCatalog.cs
 
-MakeExamplesUDF.cs : MakeExamplesUDF.script 
-	gscript MakeExamplesUDF.script  MakeExamplesUDF.cs
+MakeExamples-2-UDF.cs : MakeExamples-2-UDF.script 
+	gscript MakeExamples-2-UDF.script  MakeExamples-2-UDF.cs
 
-MakeExamplesMessage.cs : MakeExamplesMessage.script 
-	gscript MakeExamplesMessage.script  MakeExamplesMessage.cs
+Old\MakeExamplesMessage.cs : Old\MakeExamplesMessage.script 
+	gscript Old\MakeExamplesMessage.script  Old\MakeExamplesMessage.cs
 
-MakeExamplesContainer.cs : MakeExamplesContainer.script 
-	gscript MakeExamplesContainer.script  MakeExamplesContainer.cs
+MakeExamples-3-Dare.cs : MakeExamples-3-Dare.script 
+	gscript MakeExamples-3-Dare.script  MakeExamples-3-Dare.cs
 
-MakeExamplesDeveloper.cs : MakeExamplesDeveloper.script 
-	gscript MakeExamplesDeveloper.script  MakeExamplesDeveloper.cs
+MakeExamples-4-schema.cs : MakeExamples-4-schema.script 
+	gscript MakeExamples-4-schema.script  MakeExamples-4-schema.cs
 
-MakeExamplesMessaging.cs : MakeExamplesMessaging.script 
-	gscript MakeExamplesMessaging.script  MakeExamplesMessaging.cs
+MakeExamples-5-protocol.cs : MakeExamples-5-protocol.script 
+	gscript MakeExamples-5-protocol.script  MakeExamples-5-protocol.cs
 
-MakeExamplesMessage.cs : MakeExamplesMessage.script 
-	gscript MakeExamplesMessage.script  MakeExamplesMessage.cs
+Old\MakeExamplesDeveloper.cs : Old\MakeExamplesDeveloper.script 
+	gscript Old\MakeExamplesDeveloper.script  Old\MakeExamplesDeveloper.cs
+
+Old\MakeExamplesMessaging.cs : Old\MakeExamplesMessaging.script 
+	gscript Old\MakeExamplesMessaging.script  Old\MakeExamplesMessaging.cs
+
+Old\MakeExamplesMessage.cs : Old\MakeExamplesMessage.script 
+	gscript Old\MakeExamplesMessage.script  Old\MakeExamplesMessage.cs
 
 
 

@@ -9,24 +9,28 @@ namespace Scratchpad {
             Console.WriteLine("Hello World");
 
             Cryptography.Initialize();
-            //TestSplit.Test().TestKeyShare(32, "FFFFFFFF");
-            //TestSplit.Test().TestShares(1, 1);
 
-            //Find();
-            ShellTests.Test().TestKey();
-            //ShellTests.Test().TestCommitment();
-            //ShellTests.Test().TestProfileEscrow();
+            ShellTests.Test().TestProfileConnectPin();
+            //ShellTests.Test().TestProfileConnectAuth();
+            //ShellTests.Test().TestProfileConnectAuthAll();
+            //ShellTests.Test().TestProfileConnectEARL();
 
-            //ShellTests.Test().TestContainerArchive();
-            //ShellTests.Test().TestContainerCatalogBase();
-            //ShellTests.Test().TestContainerCatalogEncrypt();
-            //ShellTests.Test().TestContainerSpool();
+            // Catalog 
+            //ShellTests.Test().TestProfileContact();
+            //ShellTests.Test().TestProfileCalendar();
+            //ShellTests.Test().TestProfileNetwork();
+            //ShellTests.Test().TestProfileCalendar();
+            //ShellTests.Test().TestMessageGroup();
 
-            /* Skipping for now */
+            //// Application Catalog
             //ShellTests.Test().TestProfileMail();
             //ShellTests.Test().TestProfileSSHPrivate();
-            //Utilities.Test().BaseConversionFormatting();
-            //TestLifecycle.Test().Test_LifecycleDevice(CryptoAlgorithmID.DH);
+            //ShellTests.Test().TestProfileSSHPublic();
+
+            //// Two messaging apps right now
+            //ShellTests.Test().TestMessageContact();
+            //ShellTests.Test().TestMessageConfirmation();
+
             }
 
 

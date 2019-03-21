@@ -43,19 +43,8 @@ namespace ExampleGenerator {
             GenerateKeys();
             GoDareMessage();
 
-
-            //ExampleGenerator.MeshExamplesUDF(this);
-            //ExampleGenerator.MeshExamplesUDFCompressed(this);
-            //ExampleGenerator.MeshExamplesUDFCommitment(this);
-            //GoContainer();
-            //GoDareContainer();
-
-            ////JSONReader.Trace = true;
-            //GoContainer();
-            //GoReference();
-            //GoAdvanced();
-            ////GoKeyExchange();
-            //GoMesh();
+            MakeSchemaExamples(this);
+            MakeProtocolExamples(this);
 
             // Make the documentation
             MakeDocs();
@@ -100,7 +89,7 @@ namespace ExampleGenerator {
             var filename = TestStringValue.ToFileUnique();
             ResultDigestSHA2 = testCLI.Dispatch($"hash udf {filename} /alg sha2") as ResultDigest;
             ResultDigestSHA3 = testCLI.Dispatch($"hash udf {filename} /alg sha3") as ResultDigest;
-            ResultCommitSHA2 = testCLI.Dispatch($"hash commit {filename} /alg sha2 /key {ResultUDFNonce.Key}") as ResultDigest;
+            ResultCommitSHA2 = testCLI.Dispatch($"hash mac {filename} /alg sha2 /key {ResultUDFNonce.Key}") as ResultDigest;
 
             UDFSplitSecret = new Secret(128);
             UDFSplitShares = UDFSplitSecret.Split(5, 3, out UDFSplitPolynomial);

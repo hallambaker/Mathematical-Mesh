@@ -26,17 +26,22 @@ add   Add bookmark
 
 ````
 >bookmark add Folder1/1 http://example.com/ "Example Dot Com"
-ERROR - Object reference not set to an instance of an object.
-````
+{
+  "Uri": "http://example.com/",
+  "Title": "\"Example",
+  "Path": "Folder1/1"}````
 
-Specifying the /json option returns a result of type Result:
+Specifying the /json option returns a result of type ResultEntry:
 
 ````
 >bookmark add Folder1/1 http://example.com/ "Example Dot Com" /json
 {
-  "Result": {
-    "Success": false,
-    "Reason": "Object reference not set to an instance of an object."}}
+  "ResultEntry": {
+    "Success": true,
+    "CatalogEntry": {
+      "Uri": "http://example.com/",
+      "Title": "\"Example",
+      "Path": "Folder1/1"}}}
 ````
 
 # network delete
@@ -79,17 +84,22 @@ get   Lookup bookmark entry
 
 ````
 >bookmark get Folder1/2
-ERROR - Object reference not set to an instance of an object.
-````
+{
+  "Uri": "http://example.net/Bananas",
+  "Title": "\"Banana",
+  "Path": "Folder1/2"}````
 
-Specifying the /json option returns a result of type Result:
+Specifying the /json option returns a result of type ResultEntry:
 
 ````
 >bookmark get Folder1/2 /json
 {
-  "Result": {
-    "Success": false,
-    "Reason": "Object reference not set to an instance of an object."}}
+  "ResultEntry": {
+    "Success": true,
+    "CatalogEntry": {
+      "Uri": "http://example.net/Bananas",
+      "Title": "\"Banana",
+      "Path": "Folder1/2"}}}
 ````
 
 # network list
@@ -104,16 +114,39 @@ list   List bookmark entries
 
 ````
 >bookmark list
-ERROR - Object reference not set to an instance of an object.
+OK
+{
+  "Uri": "http://example.com/",
+  "Title": "\"Example",
+  "Path": "Folder1/1"}
+{
+  "Uri": "http://example.net/Bananas",
+  "Title": "\"Banana",
+  "Path": "Folder1/2"}
+{
+  "Uri": "http://example.com/Fred",
+  "Title": "\"The",
+  "Path": "Folder1/1a"}
 ````
 
-Specifying the /json option returns a result of type Result:
+Specifying the /json option returns a result of type ResultDump:
 
 ````
 >bookmark list /json
 {
-  "Result": {
-    "Success": false,
-    "Reason": "Object reference not set to an instance of an object."}}
+  "ResultDump": {
+    "Success": true,
+    "CatalogEntries": [{
+        "Uri": "http://example.com/",
+        "Title": "\"Example",
+        "Path": "Folder1/1"},
+      {
+        "Uri": "http://example.net/Bananas",
+        "Title": "\"Banana",
+        "Path": "Folder1/2"},
+      {
+        "Uri": "http://example.com/Fred",
+        "Title": "\"The",
+        "Path": "Folder1/1a"}]}}
 ````
 

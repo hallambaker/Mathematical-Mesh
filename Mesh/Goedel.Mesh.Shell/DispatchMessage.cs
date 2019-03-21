@@ -19,6 +19,11 @@ namespace Goedel.Mesh.Shell {
         public override ShellResult MessageContact(MessageContact Options) {
             var identifier = Options.Recipient.Value;
             using (var context = GetContextDevice(Options)) {
+                var contactCatalog = context.GetCatalogContact();
+                var contact = contactCatalog.LocateByID(context.AccountName);
+
+                var post = context.ContactRequest(identifier, contact.Contact);
+
                 var result = new Result() {
 
                     };

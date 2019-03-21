@@ -1,0 +1,201 @@
+﻿#using System.Text
+#using Goedel.Mesh
+#using Goedel.Mesh.Protocol
+#using Goedel.Mesh.Protocol.Server
+#using Goedel.Protocol
+#xclass ExampleGenerator ExampleGenerator
+
+#file ExamplesMessaging "Examples\\ExamplesMessaging.md" CreateExamples Example
+
+##Mesh Messaging
+
+Mesh messaging services are very similar to Mesh catalog services but 
+with one important difference: Requests to append or update message 
+entries come from a third party that may prove untrustworthy. It is 
+therefore necessary to apply access control to inbound message requests.
+
+The persistence store for a messaging service is called a spool. As with 
+the catalog store of a catalog service, the DARE Container format is designed
+to support the requirements of managing a messaging service spool but 
+Mesh Services MAY use any persistence technology that meets their needs.
+
+Some Mesh messaging services are standalone while others are closely 
+related to a catalog service.
+
+<li>Accepting a contact request message SHOULD result in an entry being 
+added to the user's contact catalog.
+
+<li>Accepting a recryption membership notification SHOULD result in
+an entry being added to the recipient's credential catalog.
+
+<li>Accepting a device connection request MUST result in an entry being
+added to the user's devices catalog.
+
+The PostUpdate method allows a Mesh client to reply to an inbound request 
+and post an entry to the accompanying catalog at the same time.
+
+Mesh messaging services adopt a four corner communication mode in which 
+the sender of a message forwards the request to their own Mesh Service 
+which in turn contacts the recipient's Mesh service to organize delivery.
+As with any other four Mesh Service MAY act for both the sender and receiver 
+
+The only circumstance in which the sender and recipient communicate 
+directly is in a two phase synchronous protocol in which a four corner first
+phase is used to negotiate parameters for a direct connection in the second
+phase.
+
+
+####Message Origination
+
+Messages are posted to the senders outbound Mesh Service using the Post method.
+
+Alice meets Bob and they 'bump' phones performing a QR code exchange. To begin this exchange,
+Alice's device generates a random one-time use passcode. Note that since this passcode
+is only used to authenticate the exchange to mitigate abuse, a work
+factor of 2^64 is more than sufficient.
+
+~~~~
+lYFAVLNJLkC
+~~~~
+
+The QR code is:
+
+[QR code image]
+
+The decoded URI is:
+
+~~~~
+mmm:alice@example.com.mmm-wekjhwkjehrkjwher:c:lYFAVLNJLkC
+~~~~
+
+Bob's phone reads the QR code and creates a contact request message containing 
+Bob's information. The contact request asks to be able to send various types of
+message.
+
+~~~~
+{BobContactPostRequest}
+~~~~
+
+Messages are subject to access control by both the inbound and outbound services.
+
+Bob's Mesh Service checks to see if the rate of contact requests he has made in the 
+past is excessive. Finding that it is not, the contact request is accepted and placed in 
+the outbound messages queue.
+
+Bob's service responds with a unique identifier that MAY be used to check on the status
+of the message:
+
+~~~~
+{BobContactPostRequest}
+~~~~
+
+A short while later, Bob's phone asks for a status update on the request.
+
+~~~~
+{BobContactStatusRequest}
+~~~~
+
+Alice has not responded yet (she is talking to Bob in person).
+
+~~~~
+{BobContactStatusRequest}
+~~~~
+
+If Bob decides not to connect after all, he can cancel the request.
+
+####Message Transit
+
+Passing of messages between Mesh Services is called transit.
+
+To begin a message transfer, the outbound service makes a PostRequest to the 
+inbound service which contains the message headers and the maximum size of the
+payload.
+
+~~~~
+{OutboundPostRequest}
+~~~~
+
+The inbound service performs access control on the PostRequest according to site 
+policy which MAY include use any resources the inbound service chooses to use,
+including:
+
+* Valid one time use authorization code issued by the recipient to the sender
+
+* Credentials provided by the inbound service.
+
+* The sender's entry in the recipient's contact catalog.
+
+* The type of access requested.
+
+The access control policy is set by the Mesh Service and the user. When setting an
+access control policy, both should consider the likelihood that the recipient would 
+wish to accept the message and the risk of harm resulting.
+
+Different users will naturally require different access policies. A celebrity receiving
+hundreds of contacts a day is likely to require closer access control criteria than
+a person receiving one request a week. A request to send email messages presents 
+a lower degree of risk than a request to send invoices or program code.
+
+In this case, the request has been pre-approved by means of a one time use authentication
+code provided by Alice's device. The inbound service has no means of verifying
+the authentication code at this stage but accepts the request knowing that it
+will be rejected by Alice's client if it proves to be bogus.
+
+~~~~
+{OutboundPostResponse}
+~~~~
+
+Since the contact request message is short, the inbound service authorizes the 
+outbound service to send the message body immediately. If the message was longer,
+the inbound service might tell the outbound to defer delivery of the message body
+which might be completed by means of an incremental transfer (e.g. in chunks of
+4MB at a time).
+
+This mechanism allows the same messaging protocol to be used to transfer messages
+of a few bytes to multiple terabytes. A Mesh Service is not required to support 
+such messages however and particularly in the case of very large messages, may
+delgate collection of the message payload to the destination device.
+
+####Receiving Messages
+
+Pending messages are received by synchronizing the message spool of the device
+with the message spool of the messaging service. This process is identical to 
+synchonizing a catalog.
+
+
+~~~~
+{SyncRequest}
+~~~~
+
+There is only one message in the contact request spool to be synchronized:
+
+~~~~
+{SyncResponse}
+~~~~
+
+A device MAY improve the user experience by requesting the service provide just the 
+headers of the queued messages or to filter messages of a particular type or which
+have particular characteristics.
+
+######Responding to Messages
+
+As previously noted, the response to a message request frequently entails an update
+to the user's corresponding catalog. Otherwise, posting a response is the same as a 
+request.
+
+Alice's phone verifies the authentication code on Bob's request and automatically 
+approves it for the level of access Alice specified when they bumped phones. A new 
+contact entry is created together with a contact request message to be returned to Bob
+notifying him that his request was approved by Alice and providing him with her details 
+for his contact catalog.
+
+~~~~
+{ContactAddResponse}
+~~~~
+
+#end file
+
+
+
+#end xclass
+

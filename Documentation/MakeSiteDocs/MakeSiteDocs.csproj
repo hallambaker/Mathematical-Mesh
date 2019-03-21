@@ -113,8 +113,8 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-      <Compile Update="Web\CommandsetConnect.cs">
-      <DependentUpon>CommandsetConnect.script</DependentUpon>
+      <Compile Update="Web\CommandsetDevice.cs">
+      <DependentUpon>CommandsetDevice.script</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>  
@@ -195,8 +195,8 @@
       <LastGenOutput>CommandsetKey.cs</LastGenOutput>
       <Generator>gscript</Generator>
     </None>
-    <None Update="Web\CommandsetConnect.script">
-      <LastGenOutput>CommandsetConnect.cs</LastGenOutput>
+    <None Update="Web\CommandsetDevice.script">
+      <LastGenOutput>CommandsetDevice.cs</LastGenOutput>
       <Generator>gscript</Generator>
     </None>  
   </ItemGroup>

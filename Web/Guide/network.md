@@ -11,10 +11,10 @@ The `network add` command adds a network entry to a catalog:
 
 ````
 >network add NetworkEntry1.json NetID1
-ERROR - Object reference not set to an instance of an object.
->network add NetworkEntry2.json NetID2
-ERROR - Object reference not set to an instance of an object.
-````
+{
+  "Key": "NetID1"}>network add NetworkEntry2.json NetID2
+{
+  "Key": "NetID2"}````
 
 
 ## Finding networks
@@ -24,8 +24,8 @@ The `network get`  command retreives a network entry by label:
 
 ````
 >network get NetID2
-ERROR - Object reference not set to an instance of an object.
-````
+{
+  "Key": "NetID2"}````
 
 ## Deleting networks
 
@@ -34,8 +34,8 @@ Network entries may be deleted using the  `network delete` command:
 
 ````
 >network delete NetID2
-ERROR - Object reference not set to an instance of an object.
->network list
+{
+  "Key": "NetID2"}>network list
 ERROR - The command  is not known.
 ````
 

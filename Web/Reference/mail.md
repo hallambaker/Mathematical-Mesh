@@ -5,6 +5,7 @@
 ````
 mail    Manage mail profiles connected to a personal profile
     add   Add a mail application profile to a personal profile
+    list   List mail account information
     update   Update an existing mail application profile
 ````
 

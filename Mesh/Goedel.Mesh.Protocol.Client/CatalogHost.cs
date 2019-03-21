@@ -26,6 +26,10 @@ namespace Goedel.Mesh.Protocol.Client {
         IMeshMachine MeshMachine;
         ContainerHost ContainerHost;
 
+        public ProfileMesh DefaultProfileMesh => ContainerHost?.DefaultProfileMesh;
+        public ProfileDevice DefaultProfileDevice => ContainerHost?.DefaultProfileDevice;
+        public ProfileMaster DefaultProfileMaster => ContainerHost?.DefaultProfileMaster;
+
         static CatalogHost() {
             JSONObject.AddDictionary(CatalogItem._TagDictionary);
             JSONObject.AddDictionary(MeshItem._TagDictionary);
@@ -81,8 +85,23 @@ namespace Goedel.Mesh.Protocol.Client {
                 string accountUDF = null,
                 string deviceID = null,
                 string deviceUDF = null) {
-            var profile = ContainerHost.DefaultProfileMesh;
-            return new ContextDevice(MeshMachine, profile, ContainerHost.DefaultProfileDevice);
+
+            if (accountID != null) {
+                throw new NYI();
+                }
+            else  if (accountUDF != null) {
+                throw new NYI();
+                }
+            else if (deviceID != null) {
+                throw new NYI();
+                }
+            else if (deviceUDF != null) {
+                throw new NYI();
+                }
+            else if (ContainerHost.DefaultProfileDevice != null) {
+                return new ContextDevice(MeshMachine, ContainerHost.DefaultProfileMesh, ContainerHost.DefaultProfileDevice);
+                }
+            return null;
             }
 
 

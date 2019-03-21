@@ -28,10 +28,10 @@ namespace Goedel.XUnit {
             Dispatch("profile list");
             // check we have no profiles.
 
-            Dispatch($"profile master {account} /new ");
+            Dispatch($"profile create {account}");
             //DefaultDevice.AssertAccount(1, account);
 
-            var result = Dispatch("profile escrow test1.escrow /quorum 2 /shares 3") ;
+            var result = Dispatch("profile escrow test1.escrow /quorum 2 /shares 3");
             //Dispatch("profile delete");
             //DefaultDevice.AssertAccount(0, account, false);
             var resultEscrow = result as ResultEscrow;
@@ -58,26 +58,26 @@ namespace Goedel.XUnit {
             var device2 = GetTestCLI("Device2");
             var device3 = GetTestCLI("Device3");
 
-            device1.Dispatch($"profile master {accountA} /new ");
+            device1.Dispatch($"profile create {accountA}");
 
-            device2.Dispatch($"connect request {accountA} /new");
-            device2.Dispatch($"profile sync", fail:true);
+            device2.Dispatch($"device request {accountA}");
+            device2.Dispatch($"profile sync", fail: true);
 
-            var result2 = device1.Dispatch($"connect pending");
+            var result2 = device1.Dispatch($"device pending");
             var message = (result2 as ResultPending).Messages[0] as MessageConnectionRequest;
             var witness = message.Witness;
 
-            device1.Dispatch($"connect accept {witness}");
+            device1.Dispatch($"device accept {witness}");
             device2.Dispatch($"profile sync");
 
-            device3.Dispatch($"connect request {accountA}  /new");
+            device3.Dispatch($"device request {accountA}  /new");
             device3.Dispatch($"profile sync", fail: true);
 
-            var result3 = device1.Dispatch($"connect pending");
+            var result3 = device1.Dispatch($"device pending");
 
             message = (result3 as ResultPending).Messages[0] as MessageConnectionRequest;
             witness = message.Witness;
-            device1.Dispatch($"connect reject {witness}");
+            device1.Dispatch($"device reject {witness}");
             device3.Dispatch($"profile sync", fail: true);
             }
 
@@ -90,10 +90,112 @@ namespace Goedel.XUnit {
             var device2 = GetTestCLI("Device2");
             var device3 = GetTestCLI("Device3");
 
-            device1.Dispatch($"profile master {accountA} /new ");
+            device1.Dispatch($"profile create {accountA} ");
 
             device1.Connect(device2, accountA);
             device1.Connect(device3, accountA);
             }
+
+        [Fact]
+        public void TestProfileConnectEARL() {
+            var accountA = "alice@example.com";
+            var EARLService = "example.com";
+            var PollAccount = "devices@example.com";
+
+            var device1 = GetTestCLI("Device1");
+            var device2 = GetTestCLI("Device2");
+
+            device1.Dispatch($"profile create {accountA} ");
+            device2.Dispatch($"device create /id=\"IoTDevice\"");
+
+            var result1 = device1.Dispatch("key earl");
+            var resultEarl = (result1 as ResultKey);
+
+
+            var DeviceCreateUDF = $"udf://{EARLService}/{resultEarl.Key}";
+
+            device1.Dispatch($"device request {accountA} ");
+
+            device2.Dispatch($"device request {PollAccount} /earl={DeviceCreateUDF}");
+            device2.Dispatch($"profile sync", fail: true);
+            device1.Dispatch($"device earl {DeviceCreateUDF}");
+            device2.Dispatch($"profile sync");
+            }
+
+
+
+        [Fact]
+        public void TestProfileConnectAuth() {
+            var accountA = "alice@example.com";
+            var deviceName1 = "Device1";
+            var deviceName2 = "Device2";
+
+
+            var device1 = GetTestCLI(deviceName1);
+            var device2 = GetTestCLI(deviceName2);
+            device1.Dispatch($"profile create {accountA} ");
+
+            device1.Connect(device2, accountA);
+            device1.Dispatch($"device auth deviceName2 /bookmark");
+            device2.Dispatch($"bookmark list");
+
+            device1.Dispatch($"device auth deviceName2 /calendar");
+            device2.Dispatch($"calendar list");
+
+            device1.Dispatch($"device auth deviceName2 /contact");
+            device2.Dispatch($"contact list");
+
+            device1.Dispatch($"device auth deviceName2 /confirm");
+            device2.Dispatch($"confirm pending");
+
+            device1.Dispatch($"device auth deviceName2 /mail");
+            device2.Dispatch($"mail list");
+
+            device1.Dispatch($"device auth deviceName2 /network");
+            device2.Dispatch($"network list");
+
+            device1.Dispatch($"device auth deviceName2 /password");
+            device2.Dispatch($"password list");
+
+            device1.Dispatch($"device auth deviceName2 /ssh");
+            device2.Dispatch($"ssh show host");
+            }
+
+        [Fact]
+        public void TestProfileConnectAuthAll() {
+            var accountA = "alice@example.com";
+            var deviceName1 = "Device1";
+            var deviceName2 = "Device2";
+
+            var device1 = GetTestCLI(deviceName1);
+            var device2 = GetTestCLI(deviceName2);
+            device1.Dispatch($"profile create {accountA} ");
+
+            device1.Connect(device2, accountA);
+            device1.Dispatch($"device auth deviceName2 /all");
+            device2.Dispatch($"bookmark list");
+            device2.Dispatch($"calendar list");
+            device2.Dispatch($"contact list");
+            device2.Dispatch($"confirm pending");
+            device2.Dispatch($"mail list");
+            device2.Dispatch($"network list");
+            device2.Dispatch($"password list");
+            device2.Dispatch($"ssh show host");
+            }
+
+        [Fact]
+        public void TestProfileConnectAuthAdmin() {
+            var accountA = "alice@example.com";
+            var deviceName1 = "Device1";
+            var deviceName2 = "Device2";
+
+            var device1 = GetTestCLI(deviceName1);
+            var device2 = GetTestCLI(deviceName2);
+            device1.Dispatch($"profile create {accountA} ");
+
+            device1.Connect(device2, accountA);
+            device1.Dispatch($"device auth deviceName2 /admin");
+            }
+
         }
     }

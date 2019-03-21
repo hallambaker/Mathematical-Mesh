@@ -14,7 +14,7 @@ namespace Goedel.XUnit {
 
 
 
-        [Fact(Skip = "Application phase")]
+        [Fact]
         public void TestProfileMail() {
             var accountA = "alice@example.com";
             var mailaddress = "alice@example.net";

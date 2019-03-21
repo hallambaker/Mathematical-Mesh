@@ -38,7 +38,8 @@ The `profile create` command performs all four of these functions.
 
 ````
 >profile create  alice@example.com
-ERROR - The feature has not been implemented
+OK
+Device Profile UDF=MCTQ-RQNW-J342-WW6I-6N6T-WBPN-QJ34
 ````
 
 
@@ -50,7 +51,7 @@ spools associated with a Mesh profile:
 
 ````
 >profile sync
-ERROR - Object reference not set to an instance of an object.
+OK
 ````
 
 Synchronization is also performed automatically before every command requiring 
@@ -73,7 +74,7 @@ a profile:
 
 ````
 >profile get /mesh=alice@example.com
-ERROR - Object reference not set to an instance of an object.
+ERROR - The feature has not been implemented
 ````
 
 ## Escrowing Profile Master Keys
@@ -90,7 +91,10 @@ of the user's master profile and returns a set of recovery shares.
 
 ````
 >profile escrow
-ERROR - Object reference not set to an instance of an object.
+Share: SAQO-5TNL-RNYW-MBRW-NDKV-2FCA-7F2G-G
+Share: SAQU-Z2LY-V3D7-RXCY-KBR4-RGNS-VCVB-Q
+Share: SARK-WBKF-2IPI-XMT2-G7ZD-IHZE-K7QA-A
+Written to MBL5-INB4-EBEO-RIIT-BTDU-HDVK-AFPM.escrow
 ````
 
 By default, three recovery shares are created such that two shares are required to
@@ -99,7 +103,11 @@ recover the master keys.
 Recovery of the master keys is performed by the `profile recover`
 command.
 
-**Missing Example***
+
+````
+>profile recover $SAQO-5TNL-RNYW-MBRW-NDKV-2FCA-7F2G-G $SARK-WBKF-2IPI-XMT2-G7ZD-IHZE-K7QA-A /verify
+ERROR - Object reference not set to an instance of an object.
+````
 
 The `/verify` flag causes the tool to check that the keys can be correctly recovered
 without actually installing on the machine.

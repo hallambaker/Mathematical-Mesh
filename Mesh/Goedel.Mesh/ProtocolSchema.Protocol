@@ -5,8 +5,6 @@
 	Description
 		|Communication between the user and the portal.
 
-	Section 1 "Mesh Portal Service  Reference"
-
     Service MeshService "_mmm._tcp" "mmm" MeshRequest MeshResponse
 		Description
 			|Every Mesh Portal Service transaction consists of exactly one
@@ -396,6 +394,11 @@
 			Description
 				|The device profile(s) to be registered in the corresponding device
 				|catalog.
+		Struct CatalogEntryContact CatalogEntryContacts
+			Multiple
+			Description
+				|The contact(s) to be registered in the corresponding contact catalog.
+				|This should usually be populated with a contact for the user themselves.
 
 	Message CreateResponse
 		Inherits MeshResponse

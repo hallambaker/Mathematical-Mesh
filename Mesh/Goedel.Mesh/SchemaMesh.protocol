@@ -5,7 +5,7 @@
     Using Goedel.Cryptography.Jose
     Using Goedel.Cryptography.Dare
 
-	Section 1 "Shared Classes"
+	Section 2 "Shared Classes"
 		Description
 			|The following classes are used as common elements in
 			|Mesh profile specifications.a
@@ -34,7 +34,7 @@
 			Description
 				|The private key parameters as defined in the JOSE specification.
 		
-	Section 1 "Mesh Profile Objects"
+	Section 2 "Mesh Profile Objects"
 		Description 
 			|Base class for all Mesh Profile objects.
 
@@ -57,7 +57,7 @@
 				|A Uniform Notary Token providing evidence that a signature
 				|was performed after the notary token was created.
 
-	Section 2 "Keyset Classes"
+	Section 3 "Keyset Classes"
 
 	Structure EscrowedKeySet
 		Description
@@ -71,7 +71,7 @@
 				|The escrowed master escrow keys.
 
 
-	Section 2 "Profile Classes"
+	Section 3 "Profile Classes"
 
 	Structure ProfileMaster
 		Inherits Profile

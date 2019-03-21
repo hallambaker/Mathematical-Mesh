@@ -55,9 +55,6 @@ namespace Goedel.Mesh {
             base(directory, containerName?? Label, cryptoParameters, keyCollection) {
             }
 
-        public static Store Factory(string directory, string containerName = null) =>
-            new CatalogDevice(directory, containerName);
-
         }
 
     public partial class CatalogEntryDevice{
@@ -72,12 +69,6 @@ namespace Goedel.Mesh {
 
 
         public override string _PrimaryKey => UDF;
-
-
-
-
-
-
         }
 
 

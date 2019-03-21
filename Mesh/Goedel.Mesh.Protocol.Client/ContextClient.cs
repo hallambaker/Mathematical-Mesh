@@ -159,7 +159,7 @@ namespace Goedel.Mesh.Protocol.Client {
         /// <param name="signedContact">The sender's contact information.</param>
         /// <returns>Transaction status information</returns>
         public MeshResult ContactRequest(string recipient, DareMessage signedContact) {
-
+            MeshService = MeshService ?? MeshMachine.GetMeshClient(AccountName);
             var messageContactRequest = new MessageContactRequest() {
 
                 Recipient = recipient,
@@ -363,9 +363,11 @@ namespace Goedel.Mesh.Protocol.Client {
                 };
             // Get the account client
 
-            var response = MeshService.Upload(uploadRequest, MeshClientSession);
-
-            Assert.False(response.Error()); // check that we could do the upload.
+            UploadResponse response=null;
+            if (MeshService != null) {
+                response = MeshService.Upload(uploadRequest, MeshClientSession);
+                Assert.False(response.Error()); // check that we could do the upload.
+                }
 
             catalog.Apply(message);
 

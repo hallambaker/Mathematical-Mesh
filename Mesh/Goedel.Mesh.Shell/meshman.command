@@ -58,30 +58,35 @@
 		Option AuthAll "all" Flag
 			Brief "Authorize device for all application catalogs"
 			Default "false"
-		Option AuthSSH "ssh" Flag
-			Brief "Authorize use of SSH"
-			Default "false"
-		Option AuthPassword "password" Flag
-			Brief "Authorize access to password catalog"
-			Default "false"
-		Option AuthMessage "message" Flag
-			Brief "Authorize access to send and receive messages."
-			Default "false"
-		Option AuthContacts "contacts" Flag
-			Brief "Authorize access to contacts catalog"
+		Option AuthBookmark "bookmark" Flag
+			Brief "Authorize response to confirmation requests"
 			Default "false"
 		Option AuthCalendar "calendar" Flag
 			Brief "Authorize access to calendar catalog"
 			Default "false"
-		Option AuthNetwork "network" Flag
-			Brief "Authorize access to network catalog"
+		Option AuthContacts "contact" Flag
+			Brief "Authorize access to contacts catalog"
 			Default "false"
 		Option AuthConfirm "confirm" Flag
 			Brief "Authorize response to confirmation requests"
 			Default "false"
-		Option AuthBookmark "bookmark" Flag
-			Brief "Authorize response to confirmation requests"
+		Option AuthMail "mail" Flag
+			Brief "Authorize access to configure SMTP mail services."
 			Default "false"
+		Option AuthNetwork "network" Flag
+			Brief "Authorize access to the network catalog"
+			Default "false"
+		Option AuthPassword "password" Flag
+			Brief "Authorize access to the password catalog"
+			Default "false"
+		Option AuthSSH "ssh" Flag
+			Brief "Authorize use of SSH"
+			Default "false"
+
+
+
+
+
 
 
 	OptionSet MailOptions
@@ -169,7 +174,7 @@
 			Brief "Connect to the service(s) a profile is connected to and report status."
 			Include AccountOptions
 
-		Command MasterCreate "create"
+		Command ProfileCreate "create"
 			Brief "Create new personal profile"
 			Parameter NewAccountID "new" String
 				Brief "New account"
@@ -215,6 +220,18 @@
 			Option File "file" ExistingFile
 			Option Verify "verify" Flag
 
+
+		// Describe configuration
+		Command ProfileList "list"
+			Brief "List all profiles on the local machine"
+			Include Reporting
+
+		Command ProfileGet "get"
+			Brief "Describe the specified profile"
+			Include AccountOptions
+			Include Reporting
+
+		// Export and import of profiles
 		Command ProfileExport "export"
 			Brief "Export the specified profile data to the specified file"
 			Parameter File "file" NewFile
@@ -226,22 +243,9 @@
 			Parameter File "file" NewFile
 			Include AccountOptions
 			Include Reporting
-
-		// Describe configuration
-		Command ProfileList "list"
-			Brief "List all profiles on the local machine"
-			Include Reporting
-
-		Command ProfileDump "get"
-			Brief "Describe the specified profile"
-			Include AccountOptions
-			Include Reporting
-
-
 			
 	CommandSet Connect "device"
 		Brief "Device management commands."
-
 
 		Command DeviceCreate "create"
 			Brief "Create new device profile"
@@ -252,19 +256,18 @@
 				Brief "Device description"
 			Option Default "default" Flag
 				Brief "Make the new device profile the default"
-			Option OCR "ocr" String
-				Brief "Make the new device profile the default"
-
 
 		Command DeviceAuthorize "auth"
 			Brief "Authorize device to use application"
+			Parameter DeviceID "id" String
+				Brief "Device identifier"
 			Include DeviceAuthOptions
 			Include AccountOptions
 			Include Reporting
 
-		Command ProfileConnect "request"
+		Command DeviceRequestConnect "request"
 			Brief "Connect to an existing profile registered at a portal"
-			Parameter Portal "portal" String
+			Parameter Portal "account" String
 				Brief "New portal account"
 			Option PIN "pin" String
 				Brief "One time use authenticator"
@@ -272,46 +275,72 @@
 			Include DeviceProfileInfo
 			Include DeviceAuthOptions
 
-		Command ProfilePending "pending"
+		Command DevicePreConnect "pre"
+			Brief "Create a preconnection request"
+			Parameter Portal "account" String
+				Brief "New portal account"
+			Option Key "key" String
+				Brief "Encryption key for use in generating an EARL connector."
+			Option Export "export" String
+				Brief "Export the device configuration information to the specified file"
+			Include Reporting
+			Include EncodeOptions
+			Include DeviceProfileInfo
+			Include DeviceAuthOptions
+
+		Command DevicePending "pending"
 			Brief "Get list of pending connection requests"
 			Include AccountOptions
 			Include Reporting
 
-		Command ProfileAccept "accept"
+		Command DeviceAccept "accept"
 			Brief "Accept a pending connection"
 			Parameter CompletionCode "code" String
 				Brief "Fingerprint of connection to accept"
+			Parameter DeviceID "id" String
+				Brief "Device identifier"
+			Include DeviceAuthOptions
 			Include AccountOptions
 			Include Reporting
 
-		Command ProfileReject "reject"
+		Command DeviceReject "reject"
 			Brief "Reject a pending connection"
 			Parameter CompletionCode "code" String
 				Brief "Fingerprint of connection to reject"
 			Include AccountOptions
 			Include Reporting
 
-		Command ProfileGetPIN "pin"
+		Command DeviceGetPIN "pin"
 			Brief "Accept a pending connection"
 			Option Length "length" Integer
 				Brief "Length of PIN to generate (default is 8 characters)"
 				Default "8"
+			Option Expire "expire" String
+				Default "1d"
 			Include AccountOptions
 			Include Reporting
 
-		Command ConnectEarl "earl"
-			Brief "Connect a new device by means of an EARL"
+		Command DeviceInit "init"
+			Brief "Create an initialization "
 			Parameter Earl "earl" String
 				Brief "The EARL locator"
 			Include AccountOptions
 
-
+		Command DeviceEarl "earl"
+			Brief "Connect a new device by means of an EARL"
+			Parameter Earl "earl" String
+				Brief "The EARL locator"
+			Parameter DeviceID "id" String
+				Brief "Device identifier"
+			Include DeviceAuthOptions
+			Include AccountOptions
 
 		Command DeviceDelete "delete"
 			Brief "Remove device from device catalog"
+			Parameter DeviceID "id" String
+				Brief "Device identifier"
 			Include AccountOptions
 			Include Reporting
-
 
 		Command DeviceList"list"
 			Brief "List devices in the device catalog"
@@ -462,6 +491,13 @@
 				Include PublicKeyOptions
 				Parameter Address "address" String
 					Brief "Mail account identifier"
+
+		Command MailList "list"
+			Brief "List mail account information"
+			Include AccountOptions
+			Include Reporting
+			Parameter Address "address" String
+				Brief "Mail account identifier"
 
 	OptionSet SSHOptions
 		Option Application "application" String

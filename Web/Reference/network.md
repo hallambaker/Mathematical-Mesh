@@ -25,17 +25,18 @@ add   Add calendar entry from file
 
 ````
 >network add NetworkEntry1.json NetID1
-ERROR - Object reference not set to an instance of an object.
-````
+{
+  "Key": "NetID1"}````
 
-Specifying the /json option returns a result of type Result:
+Specifying the /json option returns a result of type ResultEntry:
 
 ````
 >network add NetworkEntry1.json NetID1 /json
 {
-  "Result": {
-    "Success": false,
-    "Reason": "Object reference not set to an instance of an object."}}
+  "ResultEntry": {
+    "Success": true,
+    "CatalogEntry": {
+      "Key": "NetID1"}}}
 ````
 
 # network delete
@@ -51,17 +52,18 @@ delete   Delete calendar entry
 
 ````
 >network delete NetID2
-ERROR - Object reference not set to an instance of an object.
-````
+{
+  "Key": "NetID2"}````
 
-Specifying the /json option returns a result of type Result:
+Specifying the /json option returns a result of type ResultEntry:
 
 ````
 >network delete NetID2 /json
 {
-  "Result": {
-    "Success": false,
-    "Reason": "Object reference not set to an instance of an object."}}
+  "ResultEntry": {
+    "Success": true,
+    "CatalogEntry": {
+      "Key": "NetID2"}}}
 ````
 
 # network get
@@ -77,17 +79,18 @@ get   Lookup calendar entry
 
 ````
 >network get NetID2
-ERROR - Object reference not set to an instance of an object.
-````
+{
+  "Key": "NetID2"}````
 
-Specifying the /json option returns a result of type Result:
+Specifying the /json option returns a result of type ResultEntry:
 
 ````
 >network get NetID2 /json
 {
-  "Result": {
-    "Success": false,
-    "Reason": "Object reference not set to an instance of an object."}}
+  "ResultEntry": {
+    "Success": true,
+    "CatalogEntry": {
+      "Key": "NetID2"}}}
 ````
 
 # network dump

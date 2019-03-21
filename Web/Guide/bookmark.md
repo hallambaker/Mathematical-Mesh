@@ -20,12 +20,18 @@ The `bookmark add` command adds a bookmark entry to a catalog:
 
 ````
 >bookmark add Folder1/1 http://example.com/ "Example Dot Com"
-ERROR - Object reference not set to an instance of an object.
->bookmark add Folder1/2 http://example.net/Bananas "Banana Site"
-ERROR - Object reference not set to an instance of an object.
->bookmark add Folder1/1a http://example.com/Fred "The Fred Space"
-ERROR - Object reference not set to an instance of an object.
-````
+{
+  "Uri": "http://example.com/",
+  "Title": "\"Example",
+  "Path": "Folder1/1"}>bookmark add Folder1/2 http://example.net/Bananas "Banana Site"
+{
+  "Uri": "http://example.net/Bananas",
+  "Title": "\"Banana",
+  "Path": "Folder1/2"}>bookmark add Folder1/1a http://example.com/Fred "The Fred Space"
+{
+  "Uri": "http://example.com/Fred",
+  "Title": "\"The",
+  "Path": "Folder1/1a"}````
 
 
 ## Finding bookmarks
@@ -35,8 +41,10 @@ The `bookmark get`  command retreives a bookmark  by its index label:
 
 ````
 >bookmark get Folder1/2
-ERROR - Object reference not set to an instance of an object.
-````
+{
+  "Uri": "http://example.net/Bananas",
+  "Title": "\"Banana",
+  "Path": "Folder1/2"}````
 
 ## Deleting bookmarks
 
@@ -55,7 +63,19 @@ A complete list of bookmarks is obtained using the  `bookmark list` command:
 
 ````
 >bookmark list
-ERROR - Object reference not set to an instance of an object.
+OK
+{
+  "Uri": "http://example.com/",
+  "Title": "\"Example",
+  "Path": "Folder1/1"}
+{
+  "Uri": "http://example.net/Bananas",
+  "Title": "\"Banana",
+  "Path": "Folder1/2"}
+{
+  "Uri": "http://example.com/Fred",
+  "Title": "\"The",
+  "Path": "Folder1/1a"}
 ````
 
 ## Adding devices
@@ -65,8 +85,8 @@ Devices are given authorization to access the bookmarks catalog using the
 
 
 ````
->device auth Alice /bookmark
-ERROR - Object reference not set to an instance of an object.
+>device auth Alice2 /bookmark
+ERROR - The feature has not been implemented
 ````
 
 The new device now has access to the Bookmarks catalog:

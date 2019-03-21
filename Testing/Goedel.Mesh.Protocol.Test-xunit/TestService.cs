@@ -155,11 +155,11 @@ namespace Goedel.XUnit {
             var statusCreateBob = masterAdminBob.CreateAccount(AccountBob);
 
             // Create Bob contact.
-            var SignedContact = masterAdminBob.SetContactSelf(MeshMachineTest.ContactBob);
+            var contactEntry = masterAdminBob.SetContactSelf(MeshMachineTest.ContactBob);
 
 
             // Bob make contact request Alice.
-            masterAdminBob.ContactRequest(AccountAlice, SignedContact);
+            masterAdminBob.ContactRequest(AccountAlice, contactEntry.Contact);
 
 
             // Bob make confirmation request Alice - fail.

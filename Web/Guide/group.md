@@ -51,7 +51,7 @@ Recryption groups are created using the `group create` command:
 
 ````
 >group create groupies@example.com
-ERROR - Object reference not set to an instance of an object.
+ERROR - The feature has not been implemented
 ````
 
 This command creates the group groupies@example.com. Since Alice created the
@@ -87,7 +87,7 @@ Alice adds Bob as a member of the group:
 
 ````
 >group add groupies@example.com bob@example.com
-ERROR - Object reference not set to an instance of an object.
+ERROR - The feature has not been implemented
 ````
 
 Bob can now decrypt the file.
@@ -117,7 +117,7 @@ Users may be removed from a recryption group using the `group delete` command:
 
 ````
 >group delete groupies@example.com bob@example.com
-ERROR - Object reference not set to an instance of an object.
+ERROR - The feature has not been implemented
 ````
 
 Bob is no longer a member of the group and his decryption request now fails:

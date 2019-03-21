@@ -3410,6 +3410,12 @@ namespace Goedel.Mesh {
         /// </summary>
 
 		public virtual List<DareMessage>				CatalogEntryDevices  {get; set;}
+        /// <summary>
+        ///The contact(s) to be registered in the corresponding contact catalog.
+        ///This should usually be populated with a contact for the user themselves.
+        /// </summary>
+
+		public virtual List<CatalogEntryContact>				CatalogEntryContacts  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -3475,6 +3481,23 @@ namespace Goedel.Mesh {
 				_Writer.WriteArrayEnd ();
 				}
 
+			if (CatalogEntryContacts != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("CatalogEntryContacts", 1);
+				_Writer.WriteArrayStart ();
+				bool _firstarray = true;
+				foreach (var _index in CatalogEntryContacts) {
+					_Writer.WriteArraySeparator (ref _firstarray);
+					// This is an untagged structure. Cannot inherit.
+                    //_Writer.WriteObjectStart();
+                    //_Writer.WriteToken(_index._Tag, 1);
+					bool firstinner = true;
+					_index.Serialize (_Writer, true, ref firstinner);
+                    //_Writer.WriteObjectEnd();
+					}
+				_Writer.WriteArrayEnd ();
+				}
+
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
 				}
@@ -3524,6 +3547,20 @@ namespace Goedel.Mesh {
 						_Item.Deserialize (JSONReader);
 						// var _Item = new DareMessage (JSONReader);
 						CatalogEntryDevices.Add (_Item);
+						_Going = JSONReader.NextArray ();
+						}
+					break;
+					}
+				case "CatalogEntryContacts" : {
+					// Have a sequence of values
+					bool _Going = JSONReader.StartArray ();
+					CatalogEntryContacts = new List <CatalogEntryContact> ();
+					while (_Going) {
+						// an untagged structure.
+						var _Item = new  CatalogEntryContact ();
+						_Item.Deserialize (JSONReader);
+						// var _Item = new CatalogEntryContact (JSONReader);
+						CatalogEntryContacts.Add (_Item);
 						_Going = JSONReader.NextArray ();
 						}
 					break;

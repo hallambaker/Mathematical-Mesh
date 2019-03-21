@@ -53,9 +53,6 @@ namespace Goedel.Mesh {
             base(directory, ContainerName, cryptoParameters, keyCollection) {
             }
 
-        public static Store Factory(string directory, string containerName = null) =>
-                new CatalogBookmark(directory, containerName);
-
         }
 
 

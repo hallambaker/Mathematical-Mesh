@@ -25,7 +25,7 @@ create   Create recryption group
 
 ````
 >group create groupies@example.com
-ERROR - Object reference not set to an instance of an object.
+ERROR - The feature has not been implemented
 ````
 
 Specifying the /json option returns a result of type Result:
@@ -35,7 +35,7 @@ Specifying the /json option returns a result of type Result:
 {
   "Result": {
     "Success": false,
-    "Reason": "Object reference not set to an instance of an object."}}
+    "Reason": "The feature has not been implemented"}}
 ````
 
 # group add
@@ -52,7 +52,7 @@ add   Add user to recryption group
 
 ````
 >group add groupies@example.com bob@example.com
-ERROR - Object reference not set to an instance of an object.
+ERROR - The feature has not been implemented
 ````
 
 Specifying the /json option returns a result of type Result:
@@ -62,7 +62,7 @@ Specifying the /json option returns a result of type Result:
 {
   "Result": {
     "Success": false,
-    "Reason": "Object reference not set to an instance of an object."}}
+    "Reason": "The feature has not been implemented"}}
 ````
 
 # group delete
@@ -79,7 +79,7 @@ delete   Remove user from recryption group
 
 ````
 >group delete groupies@example.com bob@example.com
-ERROR - Object reference not set to an instance of an object.
+ERROR - The feature has not been implemented
 ````
 
 Specifying the /json option returns a result of type Result:
@@ -89,7 +89,7 @@ Specifying the /json option returns a result of type Result:
 {
   "Result": {
     "Success": false,
-    "Reason": "Object reference not set to an instance of an object."}}
+    "Reason": "The feature has not been implemented"}}
 ````
 
 # group list

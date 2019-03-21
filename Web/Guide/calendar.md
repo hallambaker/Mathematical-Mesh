@@ -14,10 +14,10 @@ The `password add` command adds a calendar entry to a catalog:
 
 ````
 >calendar add CalendarEntry1.json CalID1
-ERROR - Object reference not set to an instance of an object.
->calendar add CalendarEntry2.json CalID2
-ERROR - Object reference not set to an instance of an object.
-````
+{
+  "Key": "CalID1"}>calendar add CalendarEntry2.json CalID2
+{
+  "Key": "CalID2"}````
 
 
 ## Finding calendars
@@ -27,8 +27,8 @@ The `password get`  command retreives a calendar entry by label:
 
 ````
 >calendar get CalID1
-ERROR - Object reference not set to an instance of an object.
-````
+{
+  "Key": "CalID1"}````
 
 ## Deleting calendars
 
@@ -37,8 +37,8 @@ Calendar entries may be deleted using the  `calendar delete` command:
 
 ````
 >calendar delete CalID1
-ERROR - Object reference not set to an instance of an object.
->calendar list
+{
+  "Key": "CalID1"}>calendar list
 ERROR - The command  is not known.
 ````
 

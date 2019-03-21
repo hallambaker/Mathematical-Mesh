@@ -28,6 +28,12 @@
 		Integer			TotalBytes
 		Boolean			Verified
 
+
+	Structure ResultTransactionRequest
+		Inherits		Result
+		String			Identifier
+
+
 	Structure ResultEntry
 		Inherits		Result
 		Struct CatalogEntry CatalogEntry

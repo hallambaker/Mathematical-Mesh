@@ -14,7 +14,7 @@ namespace Goedel.XUnit {
 
 
 
-        [Fact (Skip ="Application phase")]
+        [Fact]
         public void TestProfileSSHPrivate() {
             var accountA = "alice@example.com";
 
@@ -46,7 +46,7 @@ namespace Goedel.XUnit {
             device3.Dispatch($"profile ssh show auth");
             }
 
-        [Fact(Skip = "Application phase")]
+        [Fact]
         public void TestProfileSSHPublic() {
             var accountA = "alice@example.com";
             var knownHosts = "known_hosts";

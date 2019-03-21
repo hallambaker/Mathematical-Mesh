@@ -54,7 +54,7 @@ ToolTargets = \
 	Web\CommandsetDare.cs\
 	Web\CommandsetHash.cs\
 	Web\CommandsetContainer.cs\
-	Web\CommandsetConnect.cs
+	Web\CommandsetDevice.cs
 Exceptions.cs : Exceptions.exceptional 
 	exceptional Exceptions.exceptional  /cs  Exceptions.cs
 
@@ -109,8 +109,8 @@ Web\CommandsetHash.cs : Web\CommandsetHash.script
 Web\CommandsetContainer.cs : Web\CommandsetContainer.script 
 	gscript Web\CommandsetContainer.script  Web\CommandsetContainer.cs
 
-Web\CommandsetConnect.cs : Web\CommandsetConnect.script 
-	gscript Web\CommandsetConnect.script  Web\CommandsetConnect.cs
+Web\CommandsetDevice.cs : Web\CommandsetDevice.script 
+	gscript Web\CommandsetDevice.script  Web\CommandsetDevice.cs
 
 
 

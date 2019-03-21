@@ -49,7 +49,7 @@ The `ssh create` command adds an SSH profile named `ssh` to a Mesh account:
 
 ````
 >ssh create
-ERROR - Object reference not set to an instance of an object.
+ERROR - The feature has not been implemented
 ````
 
 Since the command creates a new application catalog, the command must be given to 
@@ -67,7 +67,7 @@ an SSH client:
 
 ````
 >ssh private ssh-key.public
-ERROR - Object reference not set to an instance of an object.
+ERROR - The feature has not been implemented
 ````
 
 The `ssh public` command extracts the public key required top configure
@@ -76,7 +76,7 @@ an SSH client:
 
 ````
 >ssh public ssh-key.public
-ERROR - Object reference not set to an instance of an object.
+ERROR - The feature has not been implemented
 ````
 
 If a script is being used to automate this process, the best practice is for the
@@ -160,8 +160,8 @@ enable use of ssh on the machine:
 
 
 ````
->device auth Alice /ssh
-ERROR - Object reference not set to an instance of an object.
+>device auth Alice2 /ssh
+ERROR - The feature has not been implemented
 ````
 
 Once the device has been authorized, the client machine can start using SSH immediately:

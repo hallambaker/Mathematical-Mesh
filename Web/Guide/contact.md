@@ -33,7 +33,11 @@ details:
 Contacts may also be added by accepting contact request messages using the 
 `message accept` command:
 
-**Missing Example***
+
+````
+>message accept tbs
+OK
+````
 
 ## Finding contacts
 

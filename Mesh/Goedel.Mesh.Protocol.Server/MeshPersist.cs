@@ -263,11 +263,16 @@ namespace Goedel.Mesh.Protocol.Server {
         /// <param name="jpcSession">The session connection data.</param>
         /// <param name="account">The account to which the message is directed.</param>
         /// <param name="dareMessage">The message</param>
-        public void MessagePost(JpcSession jpcSession, string account, DareMessage dareMessage) {
+        public string MessagePost(JpcSession jpcSession, string account, DareMessage dareMessage) {
 
             using (var accountUnverified = GetAccountUnverified(account)) {
+
+                // calculate the identifier her
+                var identifier = "fred";
+                dareMessage.Header.UniqueID = identifier;
                 Assert.NotNull(accountUnverified);
                 accountUnverified.Post(dareMessage);
+                return identifier;
                 }
             }
 

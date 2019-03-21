@@ -207,6 +207,9 @@ namespace Goedel.Mesh.Protocol.Client {
             // Register the profile locally
             machine.Register(Profile.ProfileDeviceSigned);
 
+
+            // Create the self contact record and add to the catalog
+
             return new ContextDevice(machine, Profile, keySign, keyEncrypt, keyAuthenticate);
 
             }
@@ -240,7 +243,9 @@ namespace Goedel.Mesh.Protocol.Client {
                     IMeshMachine machine,
                     string deviceUDF,
                     string deviceID) {
-            throw new NYI();
+            var machineClient = machine as IMeshMachineClient;
+            return machineClient.CatalogHost.GetContextDevice(deviceID: deviceID, deviceUDF: deviceUDF);
+
             }
 
 
@@ -472,9 +477,13 @@ namespace Goedel.Mesh.Protocol.Client {
             var catalogEntryDevice = MakeCatalogEntryDevice(ProfileDevice);
             var catalogEntryDeviceSigned = GetCatalogDevice().ContainerEntry(catalogEntryDevice, ContainerPersistenceStore.EventNew);
 
+
+            var contactEntry = SetContactSelf();
+
             var createRequest = new CreateRequest() {
                 MeshProfile = profileMeshSigned,
-                CatalogEntryDevices = new List<DareMessage> { catalogEntryDeviceSigned }
+                CatalogEntryDevices = new List<DareMessage> { catalogEntryDeviceSigned },
+                CatalogEntryContacts = new List<CatalogEntryContact> { contactEntry }
                 };
 
             // We create a new meshClientSession because this won't have the 
@@ -508,18 +517,26 @@ namespace Goedel.Mesh.Protocol.Client {
             return new MeshResult() { MeshResponse = result };
             }
 
+        public CatalogEntryContact SetContactSelf() {
+            var contact = new Contact() {
+                Identifier = ProfileMesh.UDF,
+                Account = AccountName,
+                };
+            return SetContactSelf(contact);
+            }
 
-
-
-        public DareMessage SetContactSelf(Contact contact, string label = null) {
+        public CatalogEntryContact SetContactSelf(Contact contact, string label = null) {
             IsAdministrator.AssertTrue(NotAdministrator.Throw);
 
             var signedContact = Sign(contact);
             var catalogEntryContact = new CatalogEntryContact(signedContact) {
-                Key = AccountName
+                Key = AccountName,
+                Permissions = new List<Permission> {
+                    new Permission () {Name ="self" }
+                    }
                 };
             Add(catalogEntryContact);
-            return signedContact;
+            return catalogEntryContact;
             }
 
 

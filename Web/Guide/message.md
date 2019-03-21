@@ -37,21 +37,45 @@ Alice reviews her pending messages using the `message pending` command:
 
 ````
 >message pending
-ERROR - Object reference not set to an instance of an object.
+OK
 ````
 
 Alice sees the request from Bob and accepts it with the `message accept` command:
 
-**Missing Example***
+
+````
+>message accept tbs
+OK
+````
 
 Bob's contact information has been added to Alice's address book:
 
-**Missing Example***
+
+````
+>contact list
+OK
+{
+  "Key": "alice@example.com",
+  "Permissions": [{
+      "Name": "self"}],
+  "Contact": [{
+      "dig": "S512",
+      "cty": "application/mmm"},
+    "ewogICJDb250YWN0IjogewogICAgIklkZW50aWZpZXIiOiAiTUJMNS1JTkI0LUVCRU8tUklJVC1CVERVLUhEVkstQUZQTSIsCiAgICAiQWNjb3VudCI6ICJhbGljZUBleGFtcGxlLmNvbSJ9fQ",
+    {
+      "signatures": [{
+          "signature": "-GLBOKCS3S2ebZCFNKjax6ujJJWM4f3ngddAT4b9zmYiSi04u15Eo1ENl2n4n6Ftu4-Kb_fJVdaAvwlRVuhqPkTI2-TDcu0gV7YOituglg1rnd1lgnTqM6zHeHnyaIs9HBZPDJpEU_y_1sjsZG7Wbw8A"}],
+      "PayloadDigest": "IdufhpbH4BKXKaoP344x3B9buGXCdGF6Y4cI0rXu9LFGlF2i3p-h2svJCGzG8Y9OGWCCDckVemOrct37PNxZZg"}]}
+````
 
 Bob can find out if Alice has accepted his contact request using the 
 `message status` command:
 
-**Missing Example***
+
+````
+>message status tbs
+OK
+````
 
 Alice has accepted Bob's request and added him to her contacts list. She has also sent
 Bob a contact request which for the sake of convenience, is accepted automatically.
@@ -59,11 +83,19 @@ Bob a contact request which for the sake of convenience, is accepted automatical
 Alice isn't required to accept contact requests. She rejects the request from Mallet 
 using the `message reject` command:
 
-**Missing Example***
+
+````
+>message reject tbs
+OK
+````
 
 For good measure, she decides to block further requests:
 
-**Missing Example***
+
+````
+>message block mallet@example.com
+OK
+````
 
 The Mesh Confirmation protocol allows a message sender to ask the recipient a short
 question. If the user chooses to respond, the sender receives back a non-repudiable 
@@ -91,35 +123,63 @@ is a significant sum, Bob needs an authorization for the purchase. He sends Alic
 a confirmation request `Purchase equipment for $6,000?` using the  
 `message confirm` command:
 
-**Missing Example***
+
+````
+>message confirm alice@example.com "Purchase equipment for $6,000?"
+OK
+````
 
 Alice reviews her pending messages using the using the `message pending` command:
 
-**Missing Example***
+
+````
+>message pending
+OK
+````
 
 Alice she accepts Bob's request using the `message pending` command:
 
-**Missing Example***
+
+````
+>message accept tbs
+OK
+````
 
 Bob receives Alice's approval using the `message status` command:
 
-**Missing Example***
+
+````
+>message status tbs
+OK
+````
 
 In a full workflow system, Bob might include the response from Alice in a message to
 the accounts department asking them to place the order.
 
 Alice can also reject requests using the `message reject` command:
 
-**Missing Example***
+
+````
+>message reject tbs
+OK
+````
 
 Bob receives a reply telling him the request was rejected:
 
-**Missing Example***
+
+````
+>message status tbs
+OK
+````
 
 As with all Mesh messages, confirmation requests are subject to access control.
 When Mallet attempts to make a request of Alice, it is rejected because Alice
 hasn't accepted his credentials or authorized him to send confirmation requests:
 
-**Missing Example***
+
+````
+>message confirm alice@example.com "Purchase equipment for $6,000?"
+OK
+````
 
 

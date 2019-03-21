@@ -25,17 +25,18 @@ add   Add calendar entry from file
 
 ````
 >calendar add CalendarEntry1.json CalID1
-ERROR - Object reference not set to an instance of an object.
-````
+{
+  "Key": "CalID1"}````
 
-Specifying the /json option returns a result of type Result:
+Specifying the /json option returns a result of type ResultEntry:
 
 ````
 >calendar add CalendarEntry1.json CalID1 /json
 {
-  "Result": {
-    "Success": false,
-    "Reason": "Object reference not set to an instance of an object."}}
+  "ResultEntry": {
+    "Success": true,
+    "CatalogEntry": {
+      "Key": "CalID1"}}}
 ````
 
 # calendar delete
@@ -51,17 +52,18 @@ delete   Delete calendar entry
 
 ````
 >calendar delete CalID1
-ERROR - Object reference not set to an instance of an object.
-````
+{
+  "Key": "CalID1"}````
 
-Specifying the /json option returns a result of type Result:
+Specifying the /json option returns a result of type ResultEntry:
 
 ````
 >calendar delete CalID1 /json
 {
-  "Result": {
-    "Success": false,
-    "Reason": "Object reference not set to an instance of an object."}}
+  "ResultEntry": {
+    "Success": true,
+    "CatalogEntry": {
+      "Key": "CalID1"}}}
 ````
 
 # calendar get
@@ -77,17 +79,18 @@ get   Lookup calendar entry
 
 ````
 >calendar get CalID1
-ERROR - Object reference not set to an instance of an object.
-````
+{
+  "Key": "CalID1"}````
 
-Specifying the /json option returns a result of type Result:
+Specifying the /json option returns a result of type ResultEntry:
 
 ````
 >calendar get CalID1 /json
 {
-  "Result": {
-    "Success": false,
-    "Reason": "Object reference not set to an instance of an object."}}
+  "ResultEntry": {
+    "Success": true,
+    "CatalogEntry": {
+      "Key": "CalID1"}}}
 ````
 
 # calendar dump

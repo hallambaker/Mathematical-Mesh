@@ -14,10 +14,8 @@ Alice adds the username and password for an ftp service to her catalog:
 
 ````
 >password add ftp.example.com alice1 password
-ERROR - Object reference not set to an instance of an object.
->password add www.example.com alice@example.com newpassword
-ERROR - Object reference not set to an instance of an object.
-````
+{Username}@{Service} = [{Password}]>password add www.example.com alice@example.com newpassword
+{Username}@{Service} = [{Password}]````
 
 ## Synchronizing passwords to an application.
 
@@ -26,7 +24,9 @@ The `password list` command lists all the passwords in the catalog:
 
 ````
 >password list
-ERROR - Object reference not set to an instance of an object.
+OK
+{Username}@{Service} = [{Password}]
+{Username}@{Service} = [{Password}]
 ````
 
 The output of the list command may be used to configure a user application 
@@ -41,8 +41,7 @@ values for a specified service:
 
 ````
 >password get ftp.example.com
-ERROR - Object reference not set to an instance of an object.
-````
+{Username}@{Service} = [{Password}]````
 
 ### Using Credentials in scripts
 
@@ -76,8 +75,7 @@ password that is randomly generated:
 
 ````
 >password add ftp.example.com alice1 newpassword
-ERROR - Object reference not set to an instance of an object.
-````
+{Username}@{Service} = [{Password}]````
 
 
 ## Deleting passwords
@@ -87,7 +85,7 @@ Password entries may be deleted using the  `password delete` command:
 
 ````
 >password delete www.example.com
-ERROR - Object reference not set to an instance of an object.
+OK
 ````
 
 ## Adding a Device.
@@ -96,8 +94,8 @@ When a device is added, it gets a copy of the password file:
 
 
 ````
->device auth Alice /password
-ERROR - Object reference not set to an instance of an object.
+>device auth Alice2 /password
+ERROR - The feature has not been implemented
 ````
 
 
