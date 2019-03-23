@@ -6,21 +6,21 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 using Goedel.Registry;
-namespace MakeSiteDocs {
-	public partial class MakeSiteDocs : global::Goedel.Registry.Script {
+namespace ExampleGenerator {
+	public partial class CreateExamples : global::Goedel.Registry.Script {
 
 		
 
 		//
 		// WebNetwork
 		//
-		public static void WebNetwork(Examples Examples) { /* XFile  */
+		public static void WebNetwork(CreateExamples Examples) { /* XFile  */
 				using (var _Output = new StreamWriter("Guide/network.md")) {
-				var obj = new MakeSiteDocs() { _Output = _Output, _Indent = "", _Filename = "Guide/network.md" };
+				var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Guide/network.md" };
 				obj._WebNetwork(Examples);
 				}
 			}
-		public void _WebNetwork(Examples Examples) {
+		public void _WebNetwork(CreateExamples Examples) {
 
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("# Using the `network` Command Set\n{0}", _Indent);
@@ -67,13 +67,13 @@ namespace MakeSiteDocs {
 		//
 		// NetworkReference
 		//
-		public static void NetworkReference(Examples Examples) { /* XFile  */
+		public static void NetworkReference(CreateExamples Examples) { /* XFile  */
 				using (var _Output = new StreamWriter("Reference/network.md")) {
-				var obj = new MakeSiteDocs() { _Output = _Output, _Indent = "", _Filename = "Reference/network.md" };
+				var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Reference/network.md" };
 				obj._NetworkReference(Examples);
 				}
 			}
-		public void _NetworkReference(Examples Examples) {
+		public void _NetworkReference(CreateExamples Examples) {
 
 				 var CommandSet = CommandLineInterpreter.DescribeCommandSet_Network;
 				_Output.Write ("\n{0}", _Indent);

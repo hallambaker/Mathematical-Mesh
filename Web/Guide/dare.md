@@ -23,7 +23,7 @@ The data contents may be encrypted and authenticated under a specified symmetric
 
 
 ````
->dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=ECTE-TGFZ-HABU-YGKD-LZOQ-PXXY-3ZEQ
+>dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=ECLT-XRMP-6O6O-IGQY-OQTF-4L5A-5V5Q
 OK
 ````
 
@@ -32,7 +32,7 @@ encoded:
 
 
 ````
->dare encode TestDir1 /encrypt=ECTE-TGFZ-HABU-YGKD-LZOQ-PXXY-3ZEQ
+>dare encode TestDir1 /encrypt=ECLT-XRMP-6O6O-IGQY-OQTF-4L5A-5V5Q
 ERROR - Object reference not set to an instance of an object.
 ````
 
@@ -73,7 +73,7 @@ level otherwise.
 
 
 ````
->dare verify TestFile1.txt.symmetric.dare /encrypt=ECTE-TGFZ-HABU-YGKD-LZOQ-PXXY-3ZEQ
+>dare verify TestFile1.txt.symmetric.dare /encrypt=ECLT-XRMP-6O6O-IGQY-OQTF-4L5A-5V5Q
 ERROR - The option  is not known.
 ````
 
@@ -98,7 +98,7 @@ To decode a message encrypted under a symmetric key, we must specify the key:
 
 
 ````
->dare decode TestFile1.txt.symmetric.dare /encrypt=ECTE-TGFZ-HABU-YGKD-LZOQ-PXXY-3ZEQ
+>dare decode TestFile1.txt.symmetric.dare /encrypt=ECLT-XRMP-6O6O-IGQY-OQTF-4L5A-5V5Q
 ERROR - The option  is not known.
 ````
 

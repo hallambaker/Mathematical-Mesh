@@ -17,7 +17,7 @@ The `key nonce` command is used to generate a new random nonce value:
 
 ````
 >key nonce
-NBZN-6OAF-5ASD-DGAE-6JFA-JK3Q-5CUA
+NCPE-S63N-WBCY-KPZ4-2XH4-O3FZ-B6VQ
 ````
 
 The Base32 presentation of a nonce value will always begin with the letter N.
@@ -28,7 +28,7 @@ generated using the `/bits` option:
 
 ````
 >key nonce /bits=256
-NDMO-J2KS-XXTG-WBEM-GCRH-OICF-66WF-DV7W-WUQ2-OEC7-62S6-ZPKI-EO3K-6
+NCCO-O6IF-U2H3-V27R-AI5U-4KSE-UYS6-XX5X-7AN5-BPVF-MZZB-BA3C-TZCE-E
 ````
 
 Secrets are generated in the same way using the command `key secret`:
@@ -36,7 +36,7 @@ Secrets are generated in the same way using the command `key secret`:
 
 ````
 >key secret
-ECBJ-PLU4-G6QV-ZPFE-3GWW-QB6P-ZQWQ
+EB2G-YKSM-G36Z-HIQZ-VCYL-5QOZ-V4KA
 ````
 
 The Base32 presentation of a secret value will always begin with the letter E.
@@ -45,7 +45,7 @@ Again, any output length can be requested up to the platform limit:
 
 ````
 >key secret /bits=256
-EAJI-MLHL-KLHV-3K6O-TDTS-OEDH-GE7A-2HCQ-QSAL-A6WX-RVRL-2DYF-ABX3-6
+ECZM-WSQA-U4I7-UKO6-WTHU-JVBE-3UVV-KQ5H-YK3X-LTFH-HHP6-CKLF-SKSG-M
 ````
 
 ## Generating EARL values
@@ -62,8 +62,8 @@ a new secret/digest pair which are then used to process the content data:
 
 ````
 >key earl
-EAIF-F3UP-7U6T-VYSA-JEZ4-IXA2-UUGA-5W
-MCJO-A7Z4-OO3X-P6XB-AJT2-VAUH-7TXC-ABJ7-ZVF2-DUNL-GUFL-BCVX-WGTE-2GSW
+EBDE-Q3IW-5YW4-K6LV-DUWJ-YZUY-KFZG-OV
+MC2T-H75H-WRK4-XMAG-DSRO-X7QQ-SXKY-WXN2-KVM7-2RFJ-SV3S-Q5DH-Y5O7-7COT
 ````
 
 Alternatively, the `dare earl` command may be used to perform both operations:
@@ -86,11 +86,11 @@ bit secret is created and three shares are created with a quorum of two:
 
 ````
 >key share
-ECTE-TGFZ-HABU-YGKD-LZOQ-PXXY-3ZEQ
-MAV5-OE43-PQRW-RCVS-O3ZB-CQHA-NHAY-OBHV-S4KZ-UAIW-ZWNI-HOMQ-5VWQ
-SAQG-3PFO-KME2-BF44-P5WV-2AXW-PWJ4-6
-SAQT-KL6D-5TNT-3YY7-XN6F-Z7QO-AJEV-K
-SARP-ZIWZ-Q2WN-WLVC-66FV-Z6JF-Q37Q-4
+ECLT-XRMP-6O6O-IGQY-OQTF-4L5A-5V5Q
+MA73-R3AD-MDMW-32FB-MM2W-QGFT-S252-XNB3-7GTL-4ZCD-JMYA-WIFB-5SHA
+SAQC-ODBR-CQFZ-D47W-7SPZ-IQUD-S43N-U
+SAQ3-NXE4-TARW-OA6T-4DFQ-EJWX-RWAG-Y
+SARE-NLII-DQ5T-YE5Q-YT3H-ACZL-QPE4-W
 ````
 
 The first UDF output is the secret key, followed by the key identifier 
@@ -104,11 +104,11 @@ obtain the result as a JSON structure:
 {
   "ResultKey": {
     "Success": true,
-    "Key": "ECTE-TGFZ-HABU-YGKD-LZOQ-PXXY-3ZEQ",
-    "Identifier": "MAV5-OE43-PQRW-RCVS-O3ZB-CQHA-NHAY-OBHV-S4KZ-UAIW-ZWNI-HOMQ-5VWQ",
-    "Shares": ["SAQG-3PFO-KME2-BF44-P5WV-2AXW-PWJ4-6",
-      "SAQT-KL6D-5TNT-3YY7-XN6F-Z7QO-AJEV-K",
-      "SARP-ZIWZ-Q2WN-WLVC-66FV-Z6JF-Q37Q-4"]}}
+    "Key": "ECLT-XRMP-6O6O-IGQY-OQTF-4L5A-5V5Q",
+    "Identifier": "MA73-R3AD-MDMW-32FB-MM2W-QGFT-S252-XNB3-7GTL-4ZCD-JMYA-WIFB-5SHA",
+    "Shares": ["SAQC-ODBR-CQFZ-D47W-7SPZ-IQUD-S43N-U",
+      "SAQ3-NXE4-TARW-OA6T-4DFQ-EJWX-RWAG-Y",
+      "SARE-NLII-DQ5T-YE5Q-YT3H-ACZL-QPE4-W"]}}
 ````
 
 The original secret may be recovered from a sufficient number of shares to
@@ -116,8 +116,8 @@ meet the quorum using the `key recover`:
 
 
 ````
->key recover SAQG-3PFO-KME2-BF44-P5WV-2AXW-PWJ4-6 SARP-ZIWZ-Q2WN-WLVC-66FV-Z6JF-Q37Q-4
-ECTE-TGFZ-HABU-YGKD-LZOQ-PXXY-3ZEQ
+>key recover SAQC-ODBR-CQFZ-D47W-7SPZ-IQUD-S43N-U SARE-NLII-DQ5T-YE5Q-YT3H-ACZL-QPE4-W
+ECLT-XRMP-6O6O-IGQY-OQTF-4L5A-5V5Q
 ````
 
 As with secret generation, larger or smaller secrets may be created but due
@@ -131,13 +131,13 @@ of three:
 
 ````
 >key share /quorum=3 /shares=5
-EALO-CNZJ-5TOW-ZXB6-QDKO-LQMQ-ZTOA
-MD5W-EGYK-Z2XV-OEFM-T2DG-GTFQ-XFVZ-ZMPF-DG3Q-T6OQ-6SOX-BK5Z-QY3Q
-SAYM-V55P-VFMK-G4EA-OZBZ-64IA-4PUK-M
-SAYW-2DLN-AZTJ-AMZI-UL7S-DMOH-CXI6-Y
-SAZP-2ITP-IELK-HNGU-YSZV-XKAU-E2ER-I
-SAZX-WNVW-LFUN-35ME-3NQE-2U7I-CYG3-Q
-SA2O-OSSC-J5OT-55JY-44C7-NNKC-4RQD-4
+EAGB-Y7CT-UNZZ-NDF2-6SWC-RHUX-AUPQ
+MC6D-YFBK-NLFJ-VFHW-ZKDB-CQOB-4NOB-6VCA-4JIS-X6O7-BL7S-LIKK-2CCQ
+SAYB-3DVZ-HHNH-FBNZ-EB47-UCRB-HWXM-O
+SAY7-RJ73-OR23-TLHH-EMOJ-2TN5-J7IM-E
+SAZJ-22CD-AN2U-SDAW-YLOJ-L43S-ZVVK-U
+SAZQ-XT4P-43MS-BI2H-7646-H62B-WZ6L-E
+SA2E-HXPC-D2QU-A4T2-3G2I-OZJK-BMDQ-2
 ````
 
 It is also possible to share a specified secret. This allows a secret to be 
@@ -147,11 +147,11 @@ be different:
 
 
 ````
->key share ECTE-TGFZ-HABU-YGKD-LZOQ-PXXY-3ZEQ
-ECTE-TGFZ-HABU-YGKD-LZOQ-PXXY-3ZEQ
-MAV5-OE43-PQRW-RCVS-O3ZB-CQHA-NHAY-OBHV-S4KZ-UAIW-ZWNI-HOMQ-5VWQ
-SAQM-HIPC-MLQD-G7Z5-C2ZQ-VQDH-XM7O-G
-SAQ6-B6RM-BSEG-HMTA-5ID3-Q6HQ-PWPX-2
-SARP-4UTV-WYYJ-HZME-XVOG-MMLZ-IAAB-O
+>key share ECLT-XRMP-6O6O-IGQY-OQTF-4L5A-5V5Q
+ECLT-XRMP-6O6O-IGQY-OQTF-4L5A-5V5Q
+MA73-R3AD-MDMW-32FB-MM2W-QGFT-S252-XNB3-7GTL-4ZCD-JMYA-WIFB-5SHA
+SAQO-JXWO-Q4KJ-4G6J-ZIKA-DWKO-2RJ7-K
+SAQT-FAOX-PY2X-6U3Z-POZ5-2VDO-A65D-Y
+SARI-AJHA-OVLG-BCZJ-FVJ3-RT4N-HMQL-M
 ````
 

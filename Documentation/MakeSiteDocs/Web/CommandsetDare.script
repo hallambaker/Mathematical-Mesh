@@ -2,11 +2,11 @@
 #using Goedel.Mesh
 #using Goedel.Mesh.Shell
 #using Goedel.Protocol
-#xclass MakeSiteDocs MakeSiteDocs
+#xclass ExampleGenerator CreateExamples
 
 
 
-#xfile MakeSiteDocs WebDare "Guide/dare.md" Examples Examples
+#xfile CreateExamples WebDare "Guide/dare.md" CreateExamples Examples
 
 ## Using the  Command Set
 
@@ -99,7 +99,7 @@ been processed already.
 
 #end xfile
 
-#xfile MakeSiteDocs DareReference "Reference/dare.md" Examples Examples
+#xfile CreateExamples DareReference "Reference/dare.md" CreateExamples Examples
 #% var CommandSet = CommandLineInterpreter.DescribeCommandSet_Dare;
 #% Describe(CommandSet);
 

@@ -6,21 +6,21 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 using Goedel.Registry;
-namespace MakeSiteDocs {
-	public partial class MakeSiteDocs : global::Goedel.Registry.Script {
+namespace ExampleGenerator {
+	public partial class CreateExamples : global::Goedel.Registry.Script {
 
 		
 
 		//
 		// WebSSH
 		//
-		public static void WebSSH(Examples Examples) { /* XFile  */
+		public static void WebSSH(CreateExamples Examples) { /* XFile  */
 				using (var _Output = new StreamWriter("Guide/ssh.md")) {
-				var obj = new MakeSiteDocs() { _Output = _Output, _Indent = "", _Filename = "Guide/ssh.md" };
+				var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Guide/ssh.md" };
 				obj._WebSSH(Examples);
 				}
 			}
-		public void _WebSSH(Examples Examples) {
+		public void _WebSSH(CreateExamples Examples) {
 
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("# Using the  Command Set\n{0}", _Indent);
@@ -158,13 +158,13 @@ namespace MakeSiteDocs {
 		//
 		// SSHReference
 		//
-		public static void SSHReference(Examples Examples) { /* XFile  */
+		public static void SSHReference(CreateExamples Examples) { /* XFile  */
 				using (var _Output = new StreamWriter("Reference/ssh.md")) {
-				var obj = new MakeSiteDocs() { _Output = _Output, _Indent = "", _Filename = "Reference/ssh.md" };
+				var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Reference/ssh.md" };
 				obj._SSHReference(Examples);
 				}
 			}
-		public void _SSHReference(Examples Examples) {
+		public void _SSHReference(CreateExamples Examples) {
 
 				 var CommandSet = CommandLineInterpreter.DescribeCommandSet_SSH;
 				_Output.Write ("\n{0}", _Indent);

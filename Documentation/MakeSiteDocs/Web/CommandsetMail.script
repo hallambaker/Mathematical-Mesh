@@ -2,11 +2,11 @@
 #using Goedel.Mesh
 #using Goedel.Mesh.Shell
 #using Goedel.Protocol
-#xclass MakeSiteDocs MakeSiteDocs
+#xclass ExampleGenerator CreateExamples
 
 
 
-#xfile MakeSiteDocs WebMail "Guide/mail.md" Examples Examples
+#xfile CreateExamples WebMail "Guide/mail.md" CreateExamples Examples
 
 ## Using the `mail` Command Set
 
@@ -89,7 +89,7 @@ The public key may be exported likewise:
 
 #end xfile
 
-#xfile MakeSiteDocs MailReference "Reference/mail.md" Examples Examples
+#xfile CreateExamples MailReference "Reference/mail.md" CreateExamples Examples
 #% var CommandSet = CommandLineInterpreter.DescribeCommandSet_Mail;
 
 

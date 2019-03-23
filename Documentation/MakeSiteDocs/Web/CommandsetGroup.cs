@@ -6,21 +6,21 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 using Goedel.Registry;
-namespace MakeSiteDocs {
-	public partial class MakeSiteDocs : global::Goedel.Registry.Script {
+namespace ExampleGenerator {
+	public partial class CreateExamples : global::Goedel.Registry.Script {
 
 		
 
 		//
 		// WebGroup
 		//
-		public static void WebGroup(Examples Examples) { /* XFile  */
+		public static void WebGroup(CreateExamples Examples) { /* XFile  */
 				using (var _Output = new StreamWriter("Guide/group.md")) {
-				var obj = new MakeSiteDocs() { _Output = _Output, _Indent = "", _Filename = "Guide/group.md" };
+				var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Guide/group.md" };
 				obj._WebGroup(Examples);
 				}
 			}
-		public void _WebGroup(Examples Examples) {
+		public void _WebGroup(CreateExamples Examples) {
 
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("# Using the  Command Set\n{0}", _Indent);
@@ -125,13 +125,13 @@ namespace MakeSiteDocs {
 		//
 		// GroupReference
 		//
-		public static void GroupReference(Examples Examples) { /* XFile  */
+		public static void GroupReference(CreateExamples Examples) { /* XFile  */
 				using (var _Output = new StreamWriter("Reference/group.md")) {
-				var obj = new MakeSiteDocs() { _Output = _Output, _Indent = "", _Filename = "Reference/group.md" };
+				var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Reference/group.md" };
 				obj._GroupReference(Examples);
 				}
 			}
-		public void _GroupReference(Examples Examples) {
+		public void _GroupReference(CreateExamples Examples) {
 
 				 var CommandSet = CommandLineInterpreter.DescribeCommandSet_Group;
 				_Output.Write ("\n{0}", _Indent);

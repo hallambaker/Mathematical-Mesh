@@ -6,21 +6,21 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 using Goedel.Registry;
-namespace MakeSiteDocs {
-	public partial class MakeSiteDocs : global::Goedel.Registry.Script {
+namespace ExampleGenerator {
+	public partial class CreateExamples : global::Goedel.Registry.Script {
 
 		
 
 		//
 		// WebContact
 		//
-		public static void WebContact(Examples Examples) { /* XFile  */
+		public static void WebContact(CreateExamples Examples) { /* XFile  */
 				using (var _Output = new StreamWriter("Guide/contact.md")) {
-				var obj = new MakeSiteDocs() { _Output = _Output, _Indent = "", _Filename = "Guide/contact.md" };
+				var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Guide/contact.md" };
 				obj._WebContact(Examples);
 				}
 			}
-		public void _WebContact(Examples Examples) {
+		public void _WebContact(CreateExamples Examples) {
 
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("# Using the `contacts` Command Set\n{0}", _Indent);
@@ -97,13 +97,13 @@ namespace MakeSiteDocs {
 		//
 		// ContactReference
 		//
-		public static void ContactReference(Examples Examples) { /* XFile  */
+		public static void ContactReference(CreateExamples Examples) { /* XFile  */
 				using (var _Output = new StreamWriter("Reference/contact.md")) {
-				var obj = new MakeSiteDocs() { _Output = _Output, _Indent = "", _Filename = "Reference/contact.md" };
+				var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Reference/contact.md" };
 				obj._ContactReference(Examples);
 				}
 			}
-		public void _ContactReference(Examples Examples) {
+		public void _ContactReference(CreateExamples Examples) {
 
 				 var CommandSet = CommandLineInterpreter.DescribeCommandSet_Contact;
 				_Output.Write ("\n{0}", _Indent);

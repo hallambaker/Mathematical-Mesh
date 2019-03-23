@@ -2,11 +2,11 @@
 #using Goedel.Mesh
 #using Goedel.Mesh.Shell
 #using Goedel.Protocol
-#xclass MakeSiteDocs MakeSiteDocs
+#xclass ExampleGenerator CreateExamples
 
 
 
-#xfile MakeSiteDocs WebSSH "Guide/ssh.md" Examples Examples
+#xfile CreateExamples WebSSH "Guide/ssh.md" CreateExamples Examples
 
 ## Using the  Command Set
 
@@ -139,7 +139,7 @@ Once the device has been authorized, the client machine can start using SSH imme
 
 #end xfile
 
-#xfile MakeSiteDocs SSHReference "Reference/ssh.md" Examples Examples
+#xfile CreateExamples SSHReference "Reference/ssh.md" CreateExamples Examples
 #% var CommandSet = CommandLineInterpreter.DescribeCommandSet_SSH;
 
 

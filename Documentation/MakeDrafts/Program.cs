@@ -43,6 +43,10 @@ namespace ExampleGenerator {
             GenerateKeys();
             GoDareMessage();
 
+            MakeArchitectureExamples(this);
+            MakeUDFExamples(this);
+            MakeDareExamples(this);
+            MakeCryptographyExamples(this);
             MakeSchemaExamples(this);
             MakeProtocolExamples(this);
 
@@ -98,28 +102,34 @@ namespace ExampleGenerator {
             Directory.SetCurrentDirectory(OutputPath);
 
 
-            ExampleGenerator.UDFVariousUDF(this);
-            ExampleGenerator.UDFNonce(this);
-            ExampleGenerator.UDFEncrypt(this);
-            ExampleGenerator.UDFShare(this);
-            ExampleGenerator.UDFDigest(this);
+            //ExampleGenerator.UDFVariousUDF(this);
+            //ExampleGenerator.UDFNonce(this);
+            //ExampleGenerator.UDFEncrypt(this);
+            //ExampleGenerator.UDFShare(this);
+            //ExampleGenerator.UDFDigest(this);
 
-            ExampleGenerator.UDFAuthenticator(this);
-            ExampleGenerator.UDFDigestURI(this);
-            ExampleGenerator.UDFDigestLocator(this);
-            ExampleGenerator.UDFDigestEARLRAW(this);
-            ExampleGenerator.UDFDigestEARLLocator(this);
-            ExampleGenerator.UDFDigestEARL(this);
-            ExampleGenerator.UDFsin(this);
-            ExampleGenerator.UDFURIEBNF(this);
-            ExampleGenerator.UDFTableReservedId(this);
-            ExampleGenerator.UDFShamirRecovery(this);
+            //ExampleGenerator.UDFAuthenticator(this);
+            //ExampleGenerator.UDFDigestURI(this);
+            //ExampleGenerator.UDFDigestLocator(this);
+            //ExampleGenerator.UDFDigestEARLRAW(this);
+            //ExampleGenerator.UDFDigestEARLLocator(this);
+            //ExampleGenerator.UDFDigestEARL(this);
+            //ExampleGenerator.UDFsin(this);
+            //ExampleGenerator.UDFURIEBNF(this);
+            //ExampleGenerator.UDFTableReservedId(this);
+            //ExampleGenerator.UDFShamirRecovery(this);
 
-            ExampleGenerator.UDFSplit(this);
-            ExampleGenerator.UDFDigestLong(this);
-            ExampleGenerator.UDFAuthenticatorLong(this);
-            ExampleGenerator.UDFDigestResolution(this);
-            ExampleGenerator.UDFEncryptedResolution(this);
+            //ExampleGenerator.UDFSplit(this);
+            //ExampleGenerator.UDFDigestLong(this);
+            //ExampleGenerator.UDFAuthenticatorLong(this);
+            //ExampleGenerator.UDFDigestResolution(this);
+            //ExampleGenerator.UDFEncryptedResolution(this);
+
+            }
+
+
+
+        public void MakeProfileExamples() {
 
             }
 

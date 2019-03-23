@@ -8,15 +8,15 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 using Goedel.Registry;
-namespace MakeSiteDocs {
-	public partial class MakeSiteDocs : global::Goedel.Registry.Script {
+namespace ExampleGenerator {
+	public partial class CreateExamples : global::Goedel.Registry.Script {
 
 		
 
 		//
 		// WebDocs
 		//
-		public void WebDocs (Examples Index) {
+		public void WebDocs (CreateExamples Index) {
 			 Web (Index);
 			 UserGuide (Index);
 			 Reference (Index);
@@ -57,13 +57,13 @@ namespace MakeSiteDocs {
 		//
 		// Web
 		//
-		public static void Web(Examples Index) { /* XFile  */
+		public static void Web(CreateExamples Index) { /* XFile  */
 				using (var _Output = new StreamWriter("readme.md")) {
-				var obj = new MakeSiteDocs() { _Output = _Output, _Indent = "", _Filename = "readme.md" };
+				var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "readme.md" };
 				obj._Web(Index);
 				}
 			}
-		public void _Web(Examples Index) {
+		public void _Web(CreateExamples Index) {
 
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("# meshman Documentation\n{0}", _Indent);
@@ -87,13 +87,13 @@ namespace MakeSiteDocs {
 		//
 		// Features
 		//
-		public static void Features(Examples Index) { /* XFile  */
+		public static void Features(CreateExamples Index) { /* XFile  */
 				using (var _Output = new StreamWriter("festures.md")) {
-				var obj = new MakeSiteDocs() { _Output = _Output, _Indent = "", _Filename = "festures.md" };
+				var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "festures.md" };
 				obj._Features(Index);
 				}
 			}
-		public void _Features(Examples Index) {
+		public void _Features(CreateExamples Index) {
 
 				_Output.Write ("# Feature Requests\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
@@ -149,13 +149,13 @@ namespace MakeSiteDocs {
 		//
 		// UserGuide
 		//
-		public static void UserGuide(Examples Index) { /* XFile  */
+		public static void UserGuide(CreateExamples Index) { /* XFile  */
 				using (var _Output = new StreamWriter("Guide/readme.md")) {
-				var obj = new MakeSiteDocs() { _Output = _Output, _Indent = "", _Filename = "Guide/readme.md" };
+				var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Guide/readme.md" };
 				obj._UserGuide(Index);
 				}
 			}
-		public void _UserGuide(Examples Index) {
+		public void _UserGuide(CreateExamples Index) {
 
 				_Output.Write ("# meshman User Guide\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
@@ -175,13 +175,13 @@ namespace MakeSiteDocs {
 		//
 		// Reference
 		//
-		public static void Reference(Examples Index) { /* XFile  */
+		public static void Reference(CreateExamples Index) { /* XFile  */
 				using (var _Output = new StreamWriter("Reference/readme.md")) {
-				var obj = new MakeSiteDocs() { _Output = _Output, _Indent = "", _Filename = "Reference/readme.md" };
+				var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Reference/readme.md" };
 				obj._Reference(Index);
 				}
 			}
-		public void _Reference(Examples Index) {
+		public void _Reference(CreateExamples Index) {
 
 				_Output.Write ("# meshman Reference Manual\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);

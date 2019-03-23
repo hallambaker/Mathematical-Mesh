@@ -39,7 +39,7 @@ The `profile create` command performs all four of these functions.
 ````
 >profile create  alice@example.com
 OK
-Device Profile UDF=MCTQ-RQNW-J342-WW6I-6N6T-WBPN-QJ34
+Device Profile UDF=MDEH-FIHJ-BZCK-3UUB-EO2B-GUPM-64NV
 ````
 
 
@@ -91,10 +91,10 @@ of the user's master profile and returns a set of recovery shares.
 
 ````
 >profile escrow
-Share: SAQO-5TNL-RNYW-MBRW-NDKV-2FCA-7F2G-G
-Share: SAQU-Z2LY-V3D7-RXCY-KBR4-RGNS-VCVB-Q
-Share: SARK-WBKF-2IPI-XMT2-G7ZD-IHZE-K7QA-A
-Written to MBL5-INB4-EBEO-RIIT-BTDU-HDVK-AFPM.escrow
+Share: SAQD-DNVA-EA7F-2WHR-MKCA-R2IG-MB66-W
+Share: SAQR-4DRO-OWRX-5HXU-EGSZ-7ZON-3MFT-2
+Share: SARA-UZN4-ZMEJ-7ZHW-4DDT-NYUV-KWMI-6
+Written to MDHO-WHH7-4RZC-DU6S-5FLA-6CIW-EJK6.escrow
 ````
 
 By default, three recovery shares are created such that two shares are required to
@@ -105,7 +105,7 @@ command.
 
 
 ````
->profile recover $SAQO-5TNL-RNYW-MBRW-NDKV-2FCA-7F2G-G $SARK-WBKF-2IPI-XMT2-G7ZD-IHZE-K7QA-A /verify
+>profile recover $SAQD-DNVA-EA7F-2WHR-MKCA-R2IG-MB66-W $SARA-UZN4-ZMEJ-7ZHW-4DDT-NYUV-KWMI-6 /verify
 ERROR - Object reference not set to an instance of an object.
 ````
 

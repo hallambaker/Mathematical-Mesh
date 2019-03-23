@@ -202,9 +202,9 @@ namespace ExampleGenerator {
             EDSText = ReadEDS(EDS1);
 
 
-            ExampleGenerator.MeshExamplesMessageMail(this);
-            ExampleGenerator.MeshExamplesMessageEDS(this);
-            ExampleGenerator.MeshExamplesMessageEncrypted(this);
+            //ExampleGenerator.MeshExamplesMessageMail(this);
+            //ExampleGenerator.MeshExamplesMessageEDS(this);
+            //ExampleGenerator.MeshExamplesMessageEncrypted(this);
 
             }
 
@@ -250,7 +250,7 @@ namespace ExampleGenerator {
 
             //CryptoStackEncrypt.Message(DareMessageTest1);
 
-            ExampleGenerator.MeshExamplesMessage(this);
+            //ExampleGenerator.MeshExamplesMessage(this);
             }
 
         void GoDareContainer() {
@@ -351,7 +351,7 @@ namespace ExampleGenerator {
 
 
 
-            ExampleGenerator.MeshExamplesContainer(this);
+            //ExampleGenerator.MeshExamplesContainer(this);
             //ExampleGenerator.MeshExamplesUDFCompressed(this);
             }
 
@@ -490,10 +490,10 @@ namespace ExampleGenerator {
             AdvancedQuantumPublic = XMSS.Public;
             AdvancedQuantumPublicUDF = XMSS.UDF;
 
-            ExampleGenerator.ExamplesAdvancedSplitting(this);
-            ExampleGenerator.ExamplesAdvancedCoGeneration(this);
-            ExampleGenerator.ExamplesAdvancedRecryption(this);
-            ExampleGenerator.ExamplesAdvancedQuantum(this);
+            //ExampleGenerator.ExamplesAdvancedSplitting(this);
+            //ExampleGenerator.ExamplesAdvancedCoGeneration(this);
+            //ExampleGenerator.ExamplesAdvancedRecryption(this);
+            //ExampleGenerator.ExamplesAdvancedQuantum(this);
             }
 
         //// make a profile and bind to the specified address

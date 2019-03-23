@@ -4,10 +4,10 @@
 #using Goedel.Mesh.Test
 #using Goedel.Protocol
 #using Goedel.Command
-#xclass MakeSiteDocs MakeSiteDocs
+#xclass ExampleGenerator CreateExamples
 
 
-#method WebDocs Examples Index
+#method WebDocs CreateExamples Index
 #% Web (Index);
 #% UserGuide (Index);
 #% Reference (Index);
@@ -44,7 +44,7 @@
 #% CalendarReference (Index);
 #end method
 
-#xfile MakeSiteDocs Web "readme.md" Examples Index
+#xfile CreateExamples Web "readme.md" CreateExamples Index
 
 ## meshman Documentation
 
@@ -63,7 +63,7 @@ specific commands.
 
 #end xfile
 
-#xfile MakeSiteDocs Features "festures.md" Examples Index
+#xfile CreateExamples Features "festures.md" CreateExamples Index
 ## Feature Requests
 
 The following features are planned but not yet implemented:
@@ -114,7 +114,7 @@ Synchronous
 
 #end xfile
 
-#xfile MakeSiteDocs UserGuide "Guide/readme.md" Examples Index
+#xfile CreateExamples UserGuide "Guide/readme.md" CreateExamples Index
 ## meshman User Guide
 
 <dl>
@@ -131,7 +131,7 @@ Synchronous
 
 
 
-#xfile MakeSiteDocs Reference "Reference/readme.md" Examples Index
+#xfile CreateExamples Reference "Reference/readme.md" CreateExamples Index
 ## meshman Reference Manual
 
 <dl>

@@ -6,21 +6,21 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 using Goedel.Registry;
-namespace MakeSiteDocs {
-	public partial class MakeSiteDocs : global::Goedel.Registry.Script {
+namespace ExampleGenerator {
+	public partial class CreateExamples : global::Goedel.Registry.Script {
 
 		
 
 		//
 		// WebKey
 		//
-		public static void WebKey(Examples Examples) { /* XFile  */
+		public static void WebKey(CreateExamples Examples) { /* XFile  */
 				using (var _Output = new StreamWriter("Guide/key.md")) {
-				var obj = new MakeSiteDocs() { _Output = _Output, _Indent = "", _Filename = "Guide/key.md" };
+				var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Guide/key.md" };
 				obj._WebKey(Examples);
 				}
 			}
-		public void _WebKey(Examples Examples) {
+		public void _WebKey(CreateExamples Examples) {
 
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("# Using the `key` Command Set\n{0}", _Indent);
@@ -119,13 +119,13 @@ namespace MakeSiteDocs {
 		//
 		// KeyReference
 		//
-		public static void KeyReference(Examples Examples) { /* XFile  */
+		public static void KeyReference(CreateExamples Examples) { /* XFile  */
 				using (var _Output = new StreamWriter("Reference/key.md")) {
-				var obj = new MakeSiteDocs() { _Output = _Output, _Indent = "", _Filename = "Reference/key.md" };
+				var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Reference/key.md" };
 				obj._KeyReference(Examples);
 				}
 			}
-		public void _KeyReference(Examples Examples) {
+		public void _KeyReference(CreateExamples Examples) {
 
 				 var CommandSet = CommandLineInterpreter.DescribeCommandSet_Key;
 				_Output.Write ("\n{0}", _Indent);

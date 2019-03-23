@@ -2,11 +2,11 @@
 #using Goedel.Mesh
 #using Goedel.Mesh.Shell
 #using Goedel.Protocol
-#xclass MakeSiteDocs MakeSiteDocs
+#xclass ExampleGenerator CreateExamples
 
 
 
-#xfile MakeSiteDocs WebMessage "Guide/message.md" Examples Examples
+#xfile CreateExamples WebMessage "Guide/message.md" CreateExamples Examples
 
 ## Using the Message Command Set
 
@@ -126,7 +126,7 @@ hasn't accepted his credentials or authorized him to send confirmation requests:
 
 #end xfile
 
-#xfile MakeSiteDocs MessageReference "Reference/message.md" Examples Examples
+#xfile CreateExamples MessageReference "Reference/message.md" CreateExamples Examples
 #% var CommandSet = CommandLineInterpreter.DescribeCommandSet_Message;
 
 

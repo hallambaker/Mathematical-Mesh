@@ -2,11 +2,11 @@
 #using Goedel.Mesh
 #using Goedel.Mesh.Shell
 #using Goedel.Protocol
-#xclass MakeSiteDocs MakeSiteDocs
+#xclass ExampleGenerator CreateExamples
 
 
 
-#xfile MakeSiteDocs WebConnect "Guide/device.md" Examples Examples
+#xfile CreateExamples WebConnect "Guide/device.md" CreateExamples Examples
 
 ## Using the device Command Set
 
@@ -168,7 +168,7 @@ reset.
 
 #end xfile
 
-#xfile MakeSiteDocs ConnectReference "Reference/device.md" Examples Examples
+#xfile CreateExamples ConnectReference "Reference/device.md" CreateExamples Examples
 #% var CommandSet = CommandLineInterpreter.DescribeCommandSet_Connect;
 
 

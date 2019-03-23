@@ -6,21 +6,21 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 using Goedel.Registry;
-namespace MakeSiteDocs {
-	public partial class MakeSiteDocs : global::Goedel.Registry.Script {
+namespace ExampleGenerator {
+	public partial class CreateExamples : global::Goedel.Registry.Script {
 
 		
 
 		//
 		// WebMail
 		//
-		public static void WebMail(Examples Examples) { /* XFile  */
+		public static void WebMail(CreateExamples Examples) { /* XFile  */
 				using (var _Output = new StreamWriter("Guide/mail.md")) {
-				var obj = new MakeSiteDocs() { _Output = _Output, _Indent = "", _Filename = "Guide/mail.md" };
+				var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Guide/mail.md" };
 				obj._WebMail(Examples);
 				}
 			}
-		public void _WebMail(Examples Examples) {
+		public void _WebMail(CreateExamples Examples) {
 
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("# Using the `mail` Command Set\n{0}", _Indent);
@@ -108,13 +108,13 @@ namespace MakeSiteDocs {
 		//
 		// MailReference
 		//
-		public static void MailReference(Examples Examples) { /* XFile  */
+		public static void MailReference(CreateExamples Examples) { /* XFile  */
 				using (var _Output = new StreamWriter("Reference/mail.md")) {
-				var obj = new MakeSiteDocs() { _Output = _Output, _Indent = "", _Filename = "Reference/mail.md" };
+				var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Reference/mail.md" };
 				obj._MailReference(Examples);
 				}
 			}
-		public void _MailReference(Examples Examples) {
+		public void _MailReference(CreateExamples Examples) {
 
 				 var CommandSet = CommandLineInterpreter.DescribeCommandSet_Mail;
 				_Output.Write ("\n{0}", _Indent);

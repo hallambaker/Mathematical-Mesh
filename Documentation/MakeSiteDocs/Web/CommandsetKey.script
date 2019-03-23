@@ -2,11 +2,11 @@
 #using Goedel.Mesh
 #using Goedel.Mesh.Shell
 #using Goedel.Protocol
-#xclass MakeSiteDocs MakeSiteDocs
+#xclass ExampleGenerator CreateExamples
 
 
 
-#xfile MakeSiteDocs WebKey "Guide/key.md" Examples Examples
+#xfile CreateExamples WebKey "Guide/key.md" CreateExamples Examples
 
 ## Using the `key` Command Set
 
@@ -100,7 +100,7 @@ be different:
 
 #end xfile
 
-#xfile MakeSiteDocs KeyReference "Reference/key.md" Examples Examples
+#xfile CreateExamples KeyReference "Reference/key.md" CreateExamples Examples
 #% var CommandSet = CommandLineInterpreter.DescribeCommandSet_Key;
 
 #% Describe(CommandSet);

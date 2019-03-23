@@ -172,7 +172,7 @@ this type of device connection.
 
 
 ````
->device pre devices@example.com /key=udf://example.com/EAAX-4L7C-FUGC-ZGOO-BFPD-Z46G-CHXN-AR
+>device pre devices@example.com /key=udf://example.com/EBHM-TE4R-WAPG-LV2B-VK2P-I6NB-VTPA-HS
 ERROR - Object reference not set to an instance of an object.
 ````
 
@@ -200,7 +200,7 @@ and retrieve the data using the `device earl` command:
 
 
 ````
->device earl udf://example.com/EAAX-4L7C-FUGC-ZGOO-BFPD-Z46G-CHXN-AR
+>device earl udf://example.com/EBHM-TE4R-WAPG-LV2B-VK2P-I6NB-VTPA-HS
 ERROR - The feature has not been implemented
 ````
 

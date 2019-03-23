@@ -1,0 +1,141 @@
+﻿#using System.Text
+#using Goedel.Mesh
+#using Goedel.Protocol
+#using Goedel.Utilities
+#using Goedel.Cryptography
+#using Goedel.Cryptography.Dare
+#xclass ExampleGenerator CreateExamples
+
+#method MakeProtocolExamples CreateExamples Example
+#% ProtocolHello(Example);
+#% ProtocolHelloDevice(Example);
+#% ProtocolHelloProfile(Example);
+#% ProtocolHelloTicket(Example);
+#% ProtocolAccountCreate(Example);
+#% ProtocolAccountDelete(Example);
+#% ProtocolStatus(Example);
+#% ProtocolDownload(Example);
+#% ProtocolUpload(Example);
+#% ProtocolConnect(Example);
+#% ProtocolConnectPIN(Example);
+#% ProtocolConnectEARL(Example);
+#% ProtocolContact(Example);
+#% ProtocolConfirm(Example);
+#end method
+
+
+#xfile CreateExamples ProtocolHello "Examples\\ProtocolHello.md" CreateExamples Example
+
+````
+Example ProtocolHello
+````
+
+#end xfile
+
+
+#xfile CreateExamples ProtocolHelloDevice "Examples\\ProtocolHelloDevice.md" CreateExamples Example
+
+````
+Example ProtocolHelloDevice
+````
+#end xfile
+
+
+#xfile CreateExamples ProtocolHelloProfile "Examples\\ProtocolHelloProfile.md" CreateExamples Example
+
+````
+Example ProtocolHelloProfile
+````
+#end xfile
+
+
+#xfile CreateExamples ProtocolHelloTicket "Examples\\ProtocolHelloTicket.md" CreateExamples Example
+
+````
+Example ProtocolHelloTicket
+````
+#end xfile
+
+
+#xfile CreateExamples ProtocolAccountCreate "Examples\\ProtocolAccountCreate.md" CreateExamples Example
+
+````
+Example ProtocolAccountCreate
+````
+#end xfile
+
+
+#xfile CreateExamples ProtocolAccountDelete "Examples\\ProtocolAccountDelete.md" CreateExamples Example
+
+````
+Example ProtocolAccountDelete
+````
+#end xfile
+
+
+#xfile CreateExamples ProtocolStatus "Examples\\ProtocolStatus.md" CreateExamples Example
+
+````
+Example ProtocolStatus
+````
+#end xfile
+
+
+#xfile CreateExamples ProtocolDownload "Examples\\ProtocolDownload.md" CreateExamples Example
+
+````
+Example ProtocolDownload
+````
+#end xfile
+
+
+#xfile CreateExamples ProtocolUpload "Examples\\ProtocolUpload.md" CreateExamples Example
+
+````
+Example ProtocolProtocolUploadHello
+````
+#end xfile
+
+
+#xfile CreateExamples ProtocolConnect "Examples\\ProtocolConnect.md" CreateExamples Example
+
+````
+Example ProtocolConnect
+````
+#end xfile
+
+
+#xfile CreateExamples ProtocolConnectPIN "Examples\\ProtocolConnectPIN.md" CreateExamples Example
+
+````
+Example ProtocolConnectPIN
+````
+#end xfile
+
+
+#xfile CreateExamples ProtocolConnectEARL "Examples\\ProtocolConnectEARL.md" CreateExamples Example
+
+````
+Example ProtocolConnectEARL
+````
+#end xfile
+
+
+#xfile CreateExamples ProtocolContact "Examples\\ProtocolContact.md" CreateExamples Example
+
+````
+Example ProtocolContact
+````
+#end xfile
+
+
+#xfile CreateExamples ProtocolConfirm "Examples\\ProtocolConfirm.md" CreateExamples Example
+
+````
+Example ProtocolConfirm
+````
+#end xfile
+
+
+
+#end xclass

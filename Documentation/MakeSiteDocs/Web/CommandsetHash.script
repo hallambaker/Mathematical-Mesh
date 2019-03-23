@@ -2,11 +2,11 @@
 #using Goedel.Mesh
 #using Goedel.Mesh.Shell
 #using Goedel.Protocol
-#xclass MakeSiteDocs MakeSiteDocs
+#xclass ExampleGenerator CreateExamples
 
 
 
-#xfile MakeSiteDocs WebHash "Guide/hash.md" Examples Examples
+#xfile CreateExamples WebHash "Guide/hash.md" CreateExamples Examples
 ## Using the `hash` Command Set
 
 The `hash` command set contains commands that perform Content Digest and 
@@ -70,7 +70,7 @@ If the expected digest value is specified, this is used to check the calculated 
 
 #end xfile
 
-#xfile MakeSiteDocs HashReference "Reference/hash.md" Examples Examples
+#xfile CreateExamples HashReference "Reference/hash.md" CreateExamples Examples
 #% var CommandSet = CommandLineInterpreter.DescribeCommandSet_Hash;
 
 

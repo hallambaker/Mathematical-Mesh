@@ -6,21 +6,21 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 using Goedel.Registry;
-namespace MakeSiteDocs {
-	public partial class MakeSiteDocs : global::Goedel.Registry.Script {
+namespace ExampleGenerator {
+	public partial class CreateExamples : global::Goedel.Registry.Script {
 
 		
 
 		//
 		// WebContainer
 		//
-		public static void WebContainer(Examples Examples) { /* XFile  */
+		public static void WebContainer(CreateExamples Examples) { /* XFile  */
 				using (var _Output = new StreamWriter("Guide/container.md")) {
-				var obj = new MakeSiteDocs() { _Output = _Output, _Indent = "", _Filename = "Guide/container.md" };
+				var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Guide/container.md" };
 				obj._WebContainer(Examples);
 				}
 			}
-		public void _WebContainer(Examples Examples) {
+		public void _WebContainer(CreateExamples Examples) {
 
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("# Using the `container Command Set\n{0}", _Indent);
@@ -146,13 +146,13 @@ namespace MakeSiteDocs {
 		//
 		// ContainerReference
 		//
-		public static void ContainerReference(Examples Examples) { /* XFile  */
+		public static void ContainerReference(CreateExamples Examples) { /* XFile  */
 				using (var _Output = new StreamWriter("Reference/container.md")) {
-				var obj = new MakeSiteDocs() { _Output = _Output, _Indent = "", _Filename = "Reference/container.md" };
+				var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Reference/container.md" };
 				obj._ContainerReference(Examples);
 				}
 			}
-		public void _ContainerReference(Examples Examples) {
+		public void _ContainerReference(CreateExamples Examples) {
 
 				 var CommandSet = CommandLineInterpreter.DescribeCommandSet_Container;
 				_Output.Write ("\n{0}", _Indent);

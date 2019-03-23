@@ -6,21 +6,21 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 using Goedel.Registry;
-namespace MakeSiteDocs {
-	public partial class MakeSiteDocs : global::Goedel.Registry.Script {
+namespace ExampleGenerator {
+	public partial class CreateExamples : global::Goedel.Registry.Script {
 
 		
 
 		//
 		// WebMessage
 		//
-		public static void WebMessage(Examples Examples) { /* XFile  */
+		public static void WebMessage(CreateExamples Examples) { /* XFile  */
 				using (var _Output = new StreamWriter("Guide/message.md")) {
-				var obj = new MakeSiteDocs() { _Output = _Output, _Indent = "", _Filename = "Guide/message.md" };
+				var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Guide/message.md" };
 				obj._WebMessage(Examples);
 				}
 			}
-		public void _WebMessage(Examples Examples) {
+		public void _WebMessage(CreateExamples Examples) {
 
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("# Using the Message Command Set\n{0}", _Indent);
@@ -145,13 +145,13 @@ namespace MakeSiteDocs {
 		//
 		// MessageReference
 		//
-		public static void MessageReference(Examples Examples) { /* XFile  */
+		public static void MessageReference(CreateExamples Examples) { /* XFile  */
 				using (var _Output = new StreamWriter("Reference/message.md")) {
-				var obj = new MakeSiteDocs() { _Output = _Output, _Indent = "", _Filename = "Reference/message.md" };
+				var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Reference/message.md" };
 				obj._MessageReference(Examples);
 				}
 			}
-		public void _MessageReference(Examples Examples) {
+		public void _MessageReference(CreateExamples Examples) {
 
 				 var CommandSet = CommandLineInterpreter.DescribeCommandSet_Message;
 				_Output.Write ("\n{0}", _Indent);

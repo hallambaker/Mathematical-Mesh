@@ -1,10 +1,10 @@
 ﻿#using System.Text
 #using Goedel.Mesh
 #using Goedel.Protocol
-#xclass MakeSiteDocs MakeSiteDocs
+#xclass ExampleGenerator CreateExamples
 
 
-#file ToDo "todo.md" Examples Examples
+#file ToDo "todo.md" CreateExamples Examples
 <title>User Guide
 <titlebanner><h1>To Do List
 

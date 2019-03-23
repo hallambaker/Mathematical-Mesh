@@ -6,21 +6,21 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 using Goedel.Registry;
-namespace MakeSiteDocs {
-	public partial class MakeSiteDocs : global::Goedel.Registry.Script {
+namespace ExampleGenerator {
+	public partial class CreateExamples : global::Goedel.Registry.Script {
 
 		
 
 		//
 		// WebCalendar
 		//
-		public static void WebCalendar(Examples Examples) { /* XFile  */
+		public static void WebCalendar(CreateExamples Examples) { /* XFile  */
 				using (var _Output = new StreamWriter("Guide/calendar.md")) {
-				var obj = new MakeSiteDocs() { _Output = _Output, _Indent = "", _Filename = "Guide/calendar.md" };
+				var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Guide/calendar.md" };
 				obj._WebCalendar(Examples);
 				}
 			}
-		public void _WebCalendar(Examples Examples) {
+		public void _WebCalendar(CreateExamples Examples) {
 
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("# Using the `calendar` Command Set\n{0}", _Indent);
@@ -70,13 +70,13 @@ namespace MakeSiteDocs {
 		//
 		// CalendarReference
 		//
-		public static void CalendarReference(Examples Examples) { /* XFile  */
+		public static void CalendarReference(CreateExamples Examples) { /* XFile  */
 				using (var _Output = new StreamWriter("Reference/calendar.md")) {
-				var obj = new MakeSiteDocs() { _Output = _Output, _Indent = "", _Filename = "Reference/calendar.md" };
+				var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Reference/calendar.md" };
 				obj._CalendarReference(Examples);
 				}
 			}
-		public void _CalendarReference(Examples Examples) {
+		public void _CalendarReference(CreateExamples Examples) {
 
 				 var CommandSet = CommandLineInterpreter.DescribeCommandSet_Calendar;
 				_Output.Write ("\n{0}", _Indent);

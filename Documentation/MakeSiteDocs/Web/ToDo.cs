@@ -5,15 +5,15 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 using Goedel.Registry;
-namespace MakeSiteDocs {
-	public partial class MakeSiteDocs : global::Goedel.Registry.Script {
+namespace ExampleGenerator {
+	public partial class CreateExamples : global::Goedel.Registry.Script {
 
 		
 
 		//
 		// ToDo
 		//
-		public static void ToDo (Examples Examples) { /* File  */
+		public static void ToDo (CreateExamples Examples) { /* File  */
 			using (var _Output = new StreamWriter ("todo.md")) {
 				var _Indent = ""; 
 				_Output.Write ("<title>User Guide\n{0}", _Indent);

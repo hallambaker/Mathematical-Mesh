@@ -10,18 +10,17 @@ using Goedel.Cryptography;
 using System.Numerics;
 using System.Collections.Generic;
 
-namespace MakeSiteDocs {
-
-    // ToDo: Implement the File EARL
+namespace ExampleGenerator {
 
 
-    public partial class Examples {
+    public partial class CreateExamples {
 
         static void Main(string[] args) {
             Console.WriteLine("Make Document Set");
             Goedel.IO.Debug.Initialize();
             Goedel.Cryptography.Cryptography.Initialize(); // initialize the cryptographic support libraries.
-            var createWeb = new Examples();
+            var createWeb = new CreateExamples();
+            createWeb.Examples();
             }
 
         TestCLI testCLIAlice1, testCLIAlice2, testCLIAlice3, testCLIAlice4, testCLIAlice5;
@@ -85,9 +84,10 @@ namespace MakeSiteDocs {
 
         string OutputPath;
 
-        public Examples() {
+        public void Examples() {
             OutputPath = Directory.GetCurrentDirectory();
             TestEnvironment = new TestEnvironmentCommon();
+            var t= Directory.GetCurrentDirectory();
 
             testCLIAlice1 = GetTestCLI(AliceDevice1);
             testCLIAlice2 = GetTestCLI(AliceDevice2);
@@ -103,6 +103,15 @@ namespace MakeSiteDocs {
             TestFile3.WriteFileNew(TestText3.ToString());
             TestFile4.WriteFileNew(TestText4.ToString());
             TestFile5.WriteFileNew(TestText5.ToString());
+            var t2 = Directory.GetCurrentDirectory();
+
+            UDFExamples();
+            GoContainer();
+            GenerateKeys();
+            GoDareMessage();
+            GoDareContainer();
+            GoAdvanced();
+
 
             DoCommandsKey();
             DoCommandsHash();
@@ -124,9 +133,26 @@ namespace MakeSiteDocs {
             DoCommandsDevice();
 
 
+
             Directory.SetCurrentDirectory(OutputPath);
-            var makeSiteDocs = new MakeSiteDocs();
-            makeSiteDocs.WebDocs(this);
+            var CreateExamples = new CreateExamples();
+            CreateExamples.WebDocs(this);
+
+
+
+
+            Directory.SetCurrentDirectory("../Release/Documents");
+
+            MakeArchitectureExamples(this);
+            MakeUDFExamples(this);
+
+            MakeDareExamples(this);
+            MakeSchemaExamples(this);
+            MakeProtocolExamples(this);
+            MakeCryptographyExamples(this);
+
+            MakeDocs();
+
             }
 
         public TestEnvironmentCommon TestEnvironment;
@@ -301,7 +327,6 @@ namespace MakeSiteDocs {
             ProfileDump = testCLIAlice1.Example($"profile get /mesh={AliceAccount}");
             ProfileEscrow = testCLIAlice1.Example($"profile escrow");
 
-
             var share1 = (ProfileEscrow[0].Result as ResultEscrow).Shares[0];
             var share2 = (ProfileEscrow[0].Result as ResultEscrow).Shares[2];
 
@@ -310,7 +335,6 @@ namespace MakeSiteDocs {
             ProfileImport = testCLIAlice2.Example($"profile import {TestExport}"); // do on another device
 
             ProfileRegister = testCLIAlice1.Example($"profile register {AliceAccount2}"); // do on another device
-
             }
 
 

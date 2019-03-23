@@ -21,11 +21,13 @@
 #% SchemaMessageConnection(Example);
 #% SchemaMessageContact(Example);
 #% SchemaMessageConfirmation(Example);
+#% SchemaMessageCompletion(Example);
 #end method
 
 #xfile CreateExamples SchemaMaster "Examples\\SchemaMaster.md" CreateExamples Example
 ````
 Example SchemaMaster
+#!{JSONDebugWriter.Write (Profile)}
 ````
 #end xfile
 
@@ -107,6 +109,10 @@ Example SchemaMessageConfirmation
 ````
 #end xfile
 
-
+#xfile CreateExamples SchemaMessageCompletion "Examples\\SchemaMessageCompletion.md" CreateExamples Example
+````
+Example SchemaMessageCompletion
+````
+#end xfile
 
 #end xclass

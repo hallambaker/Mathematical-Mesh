@@ -9,9 +9,34 @@ using System.IO;
 using System.Collections.Generic;
 using Goedel.Registry;
 namespace ExampleGenerator {
-	public partial class ExampleGenerator : global::Goedel.Registry.Script {
+	public partial class CreateExamples : global::Goedel.Registry.Script {
 
-		 static ExampleGenerator Instance(StreamWriter output)  => new ExampleGenerator () { _Output = output};
+		
+
+		//
+		// MakeUDFExamples
+		//
+		public void MakeUDFExamples (CreateExamples Example) {
+			 UDFVariousUDF(Example);
+			 UDFNonce(Example);
+			 UDFEncrypt(Example);
+			 UDFShare(Example);
+			 UDFDigest(Example);
+			 UDFDigestURI(Example);
+			 UDFDigestLocator(Example);
+			 UDFDigestEARLRAW(Example);
+			 UDFDigestEARLLocator(Example);
+			 UDFDigestEARL(Example);
+			 UDFsin(Example);
+			 UDFURIEBNF(Example);
+			 UDFTableReservedId(Example);
+			 UDFShamirRecovery(Example);
+			 UDFSplit(Example);
+			 UDFDigestLong(Example);
+			 UDFAuthenticatorLong(Example);
+			 UDFDigestResolution(Example);
+			 UDFEncryptedResolution(Example);
+			}
 		
 
 		//
@@ -607,7 +632,7 @@ namespace ExampleGenerator {
 		//
 		public static void UDFDigestResolution(CreateExamples Example) { /* XFile  */
 				using (var _Output = new StreamWriter("Examples\\UDFDigestResolution.md")) {
-				var obj = new ExampleGenerator() { _Output = _Output, _Indent = "", _Filename = "Examples\\UDFDigestResolution.md" };
+				var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Examples\\UDFDigestResolution.md" };
 				obj._UDFDigestResolution(Example);
 				}
 			}

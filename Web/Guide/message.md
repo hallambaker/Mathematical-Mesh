@@ -61,11 +61,16 @@ OK
   "Contact": [{
       "dig": "S512",
       "cty": "application/mmm"},
-    "ewogICJDb250YWN0IjogewogICAgIklkZW50aWZpZXIiOiAiTUJMNS1JTkI0LUVCRU8tUklJVC1CVERVLUhEVkstQUZQTSIsCiAgICAiQWNjb3VudCI6ICJhbGljZUBleGFtcGxlLmNvbSJ9fQ",
+    "ewogICJDb250YWN0IjogewogICAgIklkZW50aWZpZXIiOiAiTURITy1
+  XSEg3LTRSWkMtRFU2Uy01RkxBLTZDSVctRUpLNiIsCiAgICAiQWNjb3VudCI6I
+  CJhbGljZUBleGFtcGxlLmNvbSJ9fQ",
     {
       "signatures": [{
-          "signature": "-GLBOKCS3S2ebZCFNKjax6ujJJWM4f3ngddAT4b9zmYiSi04u15Eo1ENl2n4n6Ftu4-Kb_fJVdaAvwlRVuhqPkTI2-TDcu0gV7YOituglg1rnd1lgnTqM6zHeHnyaIs9HBZPDJpEU_y_1sjsZG7Wbw8A"}],
-      "PayloadDigest": "IdufhpbH4BKXKaoP344x3B9buGXCdGF6Y4cI0rXu9LFGlF2i3p-h2svJCGzG8Y9OGWCCDckVemOrct37PNxZZg"}]}
+          "signature": "oZMTB-uFvu9hYlfY1uXqtQdyYuJF_iKZ4es8vT4Rf1dcumgjs
+  R_83F3VARp3WrpUkW7ncOvq0_uAC7DoImAE8-g-ltq-W8nDtblZo9H85J791fv
+  Xfp-9V-t3H0J6ZeYX0Wi4RtxqciDO3XdSd8VvpC8A"}],
+      "PayloadDigest": "iNEJ1C9mztxFDGW7l6HtRAc-MeEDSdl4D4J_l1UvMbMHd
+  5bw5I5GDJE-POVk-83Ycac78xPbU8goDI18BGeYcA"}]}
 ````
 
 Bob can find out if Alice has accepted his contact request using the 

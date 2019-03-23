@@ -40,35 +40,20 @@ LinkFiles = \
     Goedel.Mesh.Test.dll
 
 ToolTargets = \
-	Old\MakeExamplesAdvanced.cs\
-	Old\MakeExamplesProfile.cs\
-	Old\MakeExamplesPortal.cs\
-	Old\MakeExamplesCatalog.cs\
+	MakeExamples-1-architecture.cs\
+	MakeExamples-8-Cryptography.cs\
 	MakeExamples-2-UDF.cs\
-	Old\MakeExamplesMessage.cs\
 	MakeExamples-3-Dare.cs\
 	MakeExamples-4-schema.cs\
-	MakeExamples-5-protocol.cs\
-	Old\MakeExamplesDeveloper.cs\
-	Old\MakeExamplesMessaging.cs\
-	Old\MakeExamplesMessage.cs
-Old\MakeExamplesAdvanced.cs : Old\MakeExamplesAdvanced.script 
-	gscript Old\MakeExamplesAdvanced.script  Old\MakeExamplesAdvanced.cs
+	MakeExamples-5-protocol.cs
+MakeExamples-1-architecture.cs : MakeExamples-1-architecture.script 
+	gscript MakeExamples-1-architecture.script  MakeExamples-1-architecture.cs
 
-Old\MakeExamplesProfile.cs : Old\MakeExamplesProfile.script 
-	gscript Old\MakeExamplesProfile.script  Old\MakeExamplesProfile.cs
-
-Old\MakeExamplesPortal.cs : Old\MakeExamplesPortal.script 
-	gscript Old\MakeExamplesPortal.script  Old\MakeExamplesPortal.cs
-
-Old\MakeExamplesCatalog.cs : Old\MakeExamplesCatalog.script 
-	gscript Old\MakeExamplesCatalog.script  Old\MakeExamplesCatalog.cs
+MakeExamples-8-Cryptography.cs : MakeExamples-8-Cryptography.script 
+	gscript MakeExamples-8-Cryptography.script  MakeExamples-8-Cryptography.cs
 
 MakeExamples-2-UDF.cs : MakeExamples-2-UDF.script 
 	gscript MakeExamples-2-UDF.script  MakeExamples-2-UDF.cs
-
-Old\MakeExamplesMessage.cs : Old\MakeExamplesMessage.script 
-	gscript Old\MakeExamplesMessage.script  Old\MakeExamplesMessage.cs
 
 MakeExamples-3-Dare.cs : MakeExamples-3-Dare.script 
 	gscript MakeExamples-3-Dare.script  MakeExamples-3-Dare.cs
@@ -78,15 +63,6 @@ MakeExamples-4-schema.cs : MakeExamples-4-schema.script
 
 MakeExamples-5-protocol.cs : MakeExamples-5-protocol.script 
 	gscript MakeExamples-5-protocol.script  MakeExamples-5-protocol.cs
-
-Old\MakeExamplesDeveloper.cs : Old\MakeExamplesDeveloper.script 
-	gscript Old\MakeExamplesDeveloper.script  Old\MakeExamplesDeveloper.cs
-
-Old\MakeExamplesMessaging.cs : Old\MakeExamplesMessaging.script 
-	gscript Old\MakeExamplesMessaging.script  Old\MakeExamplesMessaging.cs
-
-Old\MakeExamplesMessage.cs : Old\MakeExamplesMessage.script 
-	gscript Old\MakeExamplesMessage.script  Old\MakeExamplesMessage.cs
 
 
 

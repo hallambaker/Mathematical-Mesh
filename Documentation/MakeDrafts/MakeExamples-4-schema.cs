@@ -31,6 +31,7 @@ namespace ExampleGenerator {
 			 SchemaMessageConnection(Example);
 			 SchemaMessageContact(Example);
 			 SchemaMessageConfirmation(Example);
+			 SchemaMessageCompletion(Example);
 			}
 		
 
@@ -268,6 +269,23 @@ namespace ExampleGenerator {
 
 				_Output.Write ("````\n{0}", _Indent);
 				_Output.Write ("Example SchemaMessageConfirmation\n{0}", _Indent);
+				_Output.Write ("````\n{0}", _Indent);
+					}
+		
+
+		//
+		// SchemaMessageCompletion
+		//
+		public static void SchemaMessageCompletion(CreateExamples Example) { /* XFile  */
+				using (var _Output = new StreamWriter("Examples\\SchemaMessageCompletion.md")) {
+				var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Examples\\SchemaMessageCompletion.md" };
+				obj._SchemaMessageCompletion(Example);
+				}
+			}
+		public void _SchemaMessageCompletion(CreateExamples Example) {
+
+				_Output.Write ("````\n{0}", _Indent);
+				_Output.Write ("Example SchemaMessageCompletion\n{0}", _Indent);
 				_Output.Write ("````\n{0}", _Indent);
 					}
 		}

@@ -2,11 +2,11 @@
 #using Goedel.Mesh
 #using Goedel.Mesh.Shell
 #using Goedel.Protocol
-#xclass MakeSiteDocs MakeSiteDocs
+#xclass ExampleGenerator CreateExamples
 
 
 
-#xfile MakeSiteDocs WebProfile "Guide/profile.md" Examples Examples
+#xfile CreateExamples WebProfile "Guide/profile.md" CreateExamples Examples
 
 ## Using the `profile` Command Set
 
@@ -112,7 +112,7 @@ machine:
 
 #end xfile
 
-#xfile MakeSiteDocs ProfileReference "Reference/profile.md" Examples Examples
+#xfile CreateExamples ProfileReference "Reference/profile.md" CreateExamples Examples
 #% var CommandSet = CommandLineInterpreter.DescribeCommandSet_Profile;
 
 

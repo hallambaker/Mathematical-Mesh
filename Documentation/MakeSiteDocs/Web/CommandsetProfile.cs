@@ -6,21 +6,21 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 using Goedel.Registry;
-namespace MakeSiteDocs {
-	public partial class MakeSiteDocs : global::Goedel.Registry.Script {
+namespace ExampleGenerator {
+	public partial class CreateExamples : global::Goedel.Registry.Script {
 
 		
 
 		//
 		// WebProfile
 		//
-		public static void WebProfile(Examples Examples) { /* XFile  */
+		public static void WebProfile(CreateExamples Examples) { /* XFile  */
 				using (var _Output = new StreamWriter("Guide/profile.md")) {
-				var obj = new MakeSiteDocs() { _Output = _Output, _Indent = "", _Filename = "Guide/profile.md" };
+				var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Guide/profile.md" };
 				obj._WebProfile(Examples);
 				}
 			}
-		public void _WebProfile(Examples Examples) {
+		public void _WebProfile(CreateExamples Examples) {
 
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("# Using the `profile` Command Set\n{0}", _Indent);
@@ -131,13 +131,13 @@ namespace MakeSiteDocs {
 		//
 		// ProfileReference
 		//
-		public static void ProfileReference(Examples Examples) { /* XFile  */
+		public static void ProfileReference(CreateExamples Examples) { /* XFile  */
 				using (var _Output = new StreamWriter("Reference/profile.md")) {
-				var obj = new MakeSiteDocs() { _Output = _Output, _Indent = "", _Filename = "Reference/profile.md" };
+				var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Reference/profile.md" };
 				obj._ProfileReference(Examples);
 				}
 			}
-		public void _ProfileReference(Examples Examples) {
+		public void _ProfileReference(CreateExamples Examples) {
 
 				 var CommandSet = CommandLineInterpreter.DescribeCommandSet_Profile;
 				_Output.Write ("\n{0}", _Indent);

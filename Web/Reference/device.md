@@ -272,14 +272,14 @@ being that all authorizations are denied.
 
 
 ````
->device earl udf://example.com/EAAX-4L7C-FUGC-ZGOO-BFPD-Z46G-CHXN-AR
+>device earl udf://example.com/EBHM-TE4R-WAPG-LV2B-VK2P-I6NB-VTPA-HS
 ERROR - The feature has not been implemented
 ````
 
 Specifying the /json option returns a result of type Result:
 
 ````
->device earl udf://example.com/EAAX-4L7C-FUGC-ZGOO-BFPD-Z46G-CHXN-AR /json
+>device earl udf://example.com/EBHM-TE4R-WAPG-LV2B-VK2P-I6NB-VTPA-HS /json
 {
   "Result": {
     "Success": false,
@@ -342,19 +342,39 @@ Specifying the /json option returns a result of type ResultPending:
   "ResultPending": {
     "Success": true,
     "Messages": [{
-        "MessageID": "NCDV-E3FL-FI6G-FWQ6-GOPK-SQFN-KGOO-GFTS-4KE7-ZQ3V-P4",
+        "MessageID": "NCVV-E22L-NMSV-SHRP-G2CT-25ST-SBUA-URZQ-I3ZQ-43PQ-OM",
         "Account": "alice@example.com",
         "DeviceProfile": [{
             "dig": "S512",
             "cty": "application/mmm"},
-          "ewogICJQcm9maWxlRGV2aWNlIjogewogICAgIkRldmljZVNpZ25hdHVyZUtleSI6IHsKICAgICAgIlVERiI6ICJNRFBMLVM2TzItV0RZUS1ERUJWLTZUSE0tWVJTWS1YUEpHIiwKICAgICAgIlB1YmxpY1BhcmFtZXRlcnMiOiB7CiAgICAgICAgIlB1YmxpY0tleUVDREgiOiB7CiAgICAgICAgICAiY3J2IjogIkVkNDQ4IiwKICAgICAgICAgICJQdWJsaWMiOiAiR1otcVBXZnFZSnljSjVBRU52dEdMLXBtcklnRGQzRzQwWmNJN0hGZFZ1OFFOZnhZTEQ0T2phM2xiYjBUSnZjODMzVl9hbkR6cE04QSJ9fX0sCiAgICAiRGV2aWNlQXV0aGVudGljYXRpb25LZXkiOiB7CiAgICAgICJVREYiOiAiTUNHTS1XRVVYLUE0TEItRDJXTy01N1FCLURLNE4tM1BPSyIsCiAgICAgICJQdWJsaWNQYXJhbWV0ZXJzIjogewogICAgICAgICJQdWJsaWNLZXlFQ0RIIjogewogICAgICAgICAgImNydiI6ICJFZDQ0OCIsCiAgICAgICAgICAiUHVibGljIjogImdDbmNaVzJXVzNVY0lIMXF3WkdpMkRmTmlmby1TeUZtTHQ1RU1jX1lKQnFEWncxeWNGQWM1NmVPT0lycE51QU9HYXFtTXBNbVlFaUEifX19LAogICAgIkRldmljZUVuY3J5cHRpb25LZXkiOiB7CiAgICAgICJVREYiOiAiTURYUC1VUTROLUNFTUgtUElaRy1ETVdBLVQ2SVItWUVTNiIsCiAgICAgICJQdWJsaWNQYXJhbWV0ZXJzIjogewogICAgICAgICJQdWJsaWNLZXlFQ0RIIjogewogICAgICAgICAgImNydiI6ICJFZDQ0OCIsCiAgICAgICAgICAiUHVibGljIjogIm11aW1XZXpXNWJ1VVhQMzh5SXY1cFF2LW9MYkFEQ0JzX0MzdW55a00yWS1IcXYybEJLR3FyWl9GMW9xck5VbUE0ZHBpclhtYlY0UUEifX19fX0",
+          "ewogICJQcm9maWxlRGV2aWNlIjogewogICAgIkRldmljZVNpZ25hdHV
+  yZUtleSI6IHsKICAgICAgIlVERiI6ICJNQ05VLU9BREQtQVM1VC1CNzdILVlHW
+  kEtSExRVy1FQ0g3IiwKICAgICAgIlB1YmxpY1BhcmFtZXRlcnMiOiB7CiAgICA
+  gICAgIlB1YmxpY0tleUVDREgiOiB7CiAgICAgICAgICAiY3J2IjogIkVkNDQ4I
+  iwKICAgICAgICAgICJQdWJsaWMiOiAiTUpKdnUwdU5SYUdpVGNOT1V6QTlJdVh
+  STWFFYkdoYm9KVVRPd2drTV93dnRLNE5PUTNVSAogIG9tdmlqWVZYRVdVSG4wU
+  DhUSEtURE5LQSJ9fX0sCiAgICAiRGV2aWNlQXV0aGVudGljYXRpb25LZXkiOiB
+  7CiAgICAgICJVREYiOiAiTUE2NS1WWk1DLTZNVEwtTUVOMi0zUjVFLUJBMzYtU
+  lpNNCIsCiAgICAgICJQdWJsaWNQYXJhbWV0ZXJzIjogewogICAgICAgICJQdWJ
+  saWNLZXlFQ0RIIjogewogICAgICAgICAgImNydiI6ICJFZDQ0OCIsCiAgICAgI
+  CAgICAiUHVibGljIjogIlF3UkNEOFhfNXBEZUhFcjY3c3dlLXhtNU81ZUtEczZ
+  LdExySS1Canp2ZktJT3hEeXpWdFIKICB4MmZJWV9SX2tNLTNMU045dkhjVjY5U
+  0EifX19LAogICAgIkRldmljZUVuY3J5cHRpb25LZXkiOiB7CiAgICAgICJVREY
+  iOiAiTUNJSC1TTUU2LUFUU1YtUjVZSy03TzNELU1RSkUtU1ZXWiIsCiAgICAgI
+  CJQdWJsaWNQYXJhbWV0ZXJzIjogewogICAgICAgICJQdWJsaWNLZXlFQ0RIIjo
+  gewogICAgICAgICAgImNydiI6ICJFZDQ0OCIsCiAgICAgICAgICAiUHVibGljI
+  jogImd3MENCZkJsN2NaZ2Y3bTJzOWVaOXdzM3FJdVk2S0lCVkR0S00zWTFsc3B
+  uTGFtbnpfNXcKICBUODRqNWNHZWo0QlFMOG11eWh1a1piYUEifX19fX0",
           {
             "signatures": [{
-                "signature": "14pjqdxkzA-8JQD19pSFtbSvw8r9LrIhaY_EAX9k_9XUTyHcPzYTwupNuvb77Aur08vrIjB_qeoAcFn4NlsgCityJtyWfX1CiDtvWwNLJHjHLaSWsBqscpWKKm0ARkXkxEd28-7R93J_Frqgdcf1BikA"}],
-            "PayloadDigest": "ehLcYwCf8PWldDzwClUMFV_6VcjhbCPAj_LONuLDLgVkLF3WS1cidcG3cztu2hhroSz0xM2izkmaTYrs-y7IJw"}],
-        "ClientNonce": "474SQBVCThbQJdZqFLys0g",
-        "ServerNonce": "nbln9k9q99EQoxpw6_P2CQ",
-        "Witness": "FJ7Z-KNLZ-C37J-FADL-R5GF-I7WK-ITCR"}]}}
+                "signature": "7gCGZUQwim468LkBWDx4j60o4c35n8U1MKn_ypVun9oD6XnVH
+  1YZ6ki8PUhzcp7I_LRE_q5mUu4AI26yB0eVwb_qMC8b15DtOTTeHiqXca8wQEp
+  BHy5UMH4ogJlHxl687fgNq7qeHoWV-w26bqU3pDkA"}],
+            "PayloadDigest": "N3W_kvwLOeV5wqZ1g7CCZ0SSlKaChW1liq_Fc3TeGaRFX
+  Zgl_7UxnhNMgzdyCKO98LV3V0UcWSrwmhRWosnkXA"}],
+        "ClientNonce": "yyuls4qPSgWB9WIVr0Rrmg",
+        "ServerNonce": "hiI-PcWC9PzoVyCft9Mq1g",
+        "Witness": "EAX7-R7MV-JDAR-TOQ3-5XLL-LUUR-I4T7"}]}}
 ````
 
 # device reject
@@ -426,10 +446,10 @@ Specifying the /json option returns a result of type ResultPIN:
   "ResultPIN": {
     "Success": true,
     "MessageConnectionPIN": {
-      "MessageID": "NBI3-PUW4-BT4M-7LUW-34QR-DFBD-7LJ6-QOCH-LLFV-TXRC-QU",
+      "MessageID": "NB5J-7ETG-RJXB-A3BG-RFH5-3ARS-NM7K-DISP-WMAI-L2OM-DA",
       "Account": "alice@example.com",
-      "Expires": "2019-03-21T03:11:47Z",
-      "PIN": "NAVH-4RJ5-6YQH-E4LO-VQ7F-VLWJ-O6R"}}}
+      "Expires": "2019-03-22T22:09:36Z",
+      "PIN": "NB2C-M7GU-EKNJ-XKQA-N6HY-ONGV-ENI"}}}
 ````
 
 # device pre
@@ -478,14 +498,14 @@ offline initialization of device profiles in batch mode during manufacture.
 
 
 ````
->device pre devices@example.com /key=udf://example.com/EAAX-4L7C-FUGC-ZGOO-BFPD-Z46G-CHXN-AR
+>device pre devices@example.com /key=udf://example.com/EBHM-TE4R-WAPG-LV2B-VK2P-I6NB-VTPA-HS
 ERROR - Object reference not set to an instance of an object.
 ````
 
 Specifying the /json option returns a result of type Result:
 
 ````
->device pre devices@example.com /key=udf://example.com/EAAX-4L7C-FUGC-ZGOO-BFPD-Z46G-CHXN-AR /json
+>device pre devices@example.com /key=udf://example.com/EBHM-TE4R-WAPG-LV2B-VK2P-I6NB-VTPA-HS /json
 {
   "Result": {
     "Success": false,

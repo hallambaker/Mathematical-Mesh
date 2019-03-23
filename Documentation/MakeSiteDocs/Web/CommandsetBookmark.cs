@@ -6,21 +6,21 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 using Goedel.Registry;
-namespace MakeSiteDocs {
-	public partial class MakeSiteDocs : global::Goedel.Registry.Script {
+namespace ExampleGenerator {
+	public partial class CreateExamples : global::Goedel.Registry.Script {
 
 		
 
 		//
 		// WebBookmark
 		//
-		public static void WebBookmark(Examples Examples) { /* XFile  */
+		public static void WebBookmark(CreateExamples Examples) { /* XFile  */
 				using (var _Output = new StreamWriter("Guide/bookmark.md")) {
-				var obj = new MakeSiteDocs() { _Output = _Output, _Indent = "", _Filename = "Guide/bookmark.md" };
+				var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Guide/bookmark.md" };
 				obj._WebBookmark(Examples);
 				}
 			}
-		public void _WebBookmark(Examples Examples) {
+		public void _WebBookmark(CreateExamples Examples) {
 
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("# Using the `bookmark` Command Set\n{0}", _Indent);
@@ -78,13 +78,13 @@ namespace MakeSiteDocs {
 		//
 		// BookmarkReference
 		//
-		public static void BookmarkReference(Examples Examples) { /* XFile  */
+		public static void BookmarkReference(CreateExamples Examples) { /* XFile  */
 				using (var _Output = new StreamWriter("Reference/bookmark.md")) {
-				var obj = new MakeSiteDocs() { _Output = _Output, _Indent = "", _Filename = "Reference/bookmark.md" };
+				var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Reference/bookmark.md" };
 				obj._BookmarkReference(Examples);
 				}
 			}
-		public void _BookmarkReference(Examples Examples) {
+		public void _BookmarkReference(CreateExamples Examples) {
 
 				 var CommandSet = CommandLineInterpreter.DescribeCommandSet_Network;
 				_Output.Write ("\n{0}", _Indent);

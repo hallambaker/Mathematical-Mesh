@@ -6,21 +6,21 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 using Goedel.Registry;
-namespace MakeSiteDocs {
-	public partial class MakeSiteDocs : global::Goedel.Registry.Script {
+namespace ExampleGenerator {
+	public partial class CreateExamples : global::Goedel.Registry.Script {
 
 		
 
 		//
 		// WebHash
 		//
-		public static void WebHash(Examples Examples) { /* XFile  */
+		public static void WebHash(CreateExamples Examples) { /* XFile  */
 				using (var _Output = new StreamWriter("Guide/hash.md")) {
-				var obj = new MakeSiteDocs() { _Output = _Output, _Indent = "", _Filename = "Guide/hash.md" };
+				var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Guide/hash.md" };
 				obj._WebHash(Examples);
 				}
 			}
-		public void _WebHash(Examples Examples) {
+		public void _WebHash(CreateExamples Examples) {
 
 				_Output.Write ("# Using the `hash` Command Set\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
@@ -89,13 +89,13 @@ namespace MakeSiteDocs {
 		//
 		// HashReference
 		//
-		public static void HashReference(Examples Examples) { /* XFile  */
+		public static void HashReference(CreateExamples Examples) { /* XFile  */
 				using (var _Output = new StreamWriter("Reference/hash.md")) {
-				var obj = new MakeSiteDocs() { _Output = _Output, _Indent = "", _Filename = "Reference/hash.md" };
+				var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Reference/hash.md" };
 				obj._HashReference(Examples);
 				}
 			}
-		public void _HashReference(Examples Examples) {
+		public void _HashReference(CreateExamples Examples) {
 
 				 var CommandSet = CommandLineInterpreter.DescribeCommandSet_Hash;
 				_Output.Write ("\n{0}", _Indent);

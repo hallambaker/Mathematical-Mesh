@@ -2,11 +2,11 @@
 #using Goedel.Mesh
 #using Goedel.Mesh.Shell
 #using Goedel.Protocol
-#xclass MakeSiteDocs MakeSiteDocs
+#xclass ExampleGenerator CreateExamples
 
 
 
-#xfile MakeSiteDocs WebContainer "Guide/container.md" Examples Examples
+#xfile CreateExamples WebContainer "Guide/container.md" CreateExamples Examples
 
 ## Using the `container Command Set
 
@@ -127,7 +127,7 @@ The copy command may also be used to reclaim space used by deleted items:
 
 #end xfile
 
-#xfile MakeSiteDocs ContainerReference "Reference/container.md" Examples Examples
+#xfile CreateExamples ContainerReference "Reference/container.md" CreateExamples Examples
 #% var CommandSet = CommandLineInterpreter.DescribeCommandSet_Container;
 
 

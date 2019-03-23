@@ -2,11 +2,11 @@
 #using Goedel.Mesh
 #using Goedel.Mesh.Shell
 #using Goedel.Protocol
-#xclass MakeSiteDocs MakeSiteDocs
+#xclass ExampleGenerator CreateExamples
 
 
 
-#xfile MakeSiteDocs WebGroup "Guide/group.md" Examples Examples
+#xfile CreateExamples WebGroup "Guide/group.md" CreateExamples Examples
 
 ## Using the  Command Set
 
@@ -106,7 +106,7 @@ Bob is no longer a member of the group and his decryption request now fails:
 
 #end xfile
 
-#xfile MakeSiteDocs GroupReference "Reference/group.md" Examples Examples
+#xfile CreateExamples GroupReference "Reference/group.md" CreateExamples Examples
 #% var CommandSet = CommandLineInterpreter.DescribeCommandSet_Group;
 
 

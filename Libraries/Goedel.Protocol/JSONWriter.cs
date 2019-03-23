@@ -41,7 +41,10 @@ namespace Goedel.Protocol {
     /// JSONWriter subclasses.
     /// </summary>
     public class JSONWriter : Writer {
-        
+
+        /// <summary>The conversion format to be used for Base64 Binary encoding.</summary>
+        public static ConversionFormat ConversionFormat = ConversionFormat.Draft;
+
         /// <summary>The current indent level</summary>
         protected int Indent = 0;
 
@@ -85,6 +88,9 @@ namespace Goedel.Protocol {
         /// </summary>
         public static JSONWriter JSONWriterFactory() => new JSONWriter();
 
+
+        private int OutputCol = 0;
+
         /// <summary>
         /// Write Tag to the stream
         /// </summary>
@@ -95,6 +101,8 @@ namespace Goedel.Protocol {
             Output.Write("\"");
             Output.Write(Tag);
             Output.Write("\": ");
+
+            OutputCol = IndentIn + 4 + Tag.Length;
             }
 
         /// <summary>Write 32 bit integer.</summary>
@@ -159,6 +167,8 @@ namespace Goedel.Protocol {
             Output.Write("\"");
             }
 
+
+
         /// <summary>Write binary data as Base64Url encoded string.</summary>
         /// <param name="buffer">Value to write</param>
         /// <param name="offset">The zero-based byte offset in <paramref name="buffer"/>
@@ -167,7 +177,8 @@ namespace Goedel.Protocol {
         public override void WriteBinary(byte[] buffer, int offset = 0, int count = -1) {
             var Length = count < 0 ? buffer.Length : count;
             Output.Write("\"");
-            Output.Write(BaseConvert.ToStringBase64url(buffer, offset, Length));
+            Output.Write(BaseConvert.ToStringBase64url(buffer, offset, Length, ConversionFormat,
+                OutputCol: OutputCol, OutputMax:63));
             Output.Write("\"");
             }
 

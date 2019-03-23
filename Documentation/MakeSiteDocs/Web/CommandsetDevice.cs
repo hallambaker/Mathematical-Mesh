@@ -6,21 +6,21 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 using Goedel.Registry;
-namespace MakeSiteDocs {
-	public partial class MakeSiteDocs : global::Goedel.Registry.Script {
+namespace ExampleGenerator {
+	public partial class CreateExamples : global::Goedel.Registry.Script {
 
 		
 
 		//
 		// WebConnect
 		//
-		public static void WebConnect(Examples Examples) { /* XFile  */
+		public static void WebConnect(CreateExamples Examples) { /* XFile  */
 				using (var _Output = new StreamWriter("Guide/device.md")) {
-				var obj = new MakeSiteDocs() { _Output = _Output, _Indent = "", _Filename = "Guide/device.md" };
+				var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Guide/device.md" };
 				obj._WebConnect(Examples);
 				}
 			}
-		public void _WebConnect(Examples Examples) {
+		public void _WebConnect(CreateExamples Examples) {
 
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("# Using the device Command Set\n{0}", _Indent);
@@ -187,13 +187,13 @@ namespace MakeSiteDocs {
 		//
 		// ConnectReference
 		//
-		public static void ConnectReference(Examples Examples) { /* XFile  */
+		public static void ConnectReference(CreateExamples Examples) { /* XFile  */
 				using (var _Output = new StreamWriter("Reference/device.md")) {
-				var obj = new MakeSiteDocs() { _Output = _Output, _Indent = "", _Filename = "Reference/device.md" };
+				var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Reference/device.md" };
 				obj._ConnectReference(Examples);
 				}
 			}
-		public void _ConnectReference(Examples Examples) {
+		public void _ConnectReference(CreateExamples Examples) {
 
 				 var CommandSet = CommandLineInterpreter.DescribeCommandSet_Connect;
 				_Output.Write ("\n{0}", _Indent);

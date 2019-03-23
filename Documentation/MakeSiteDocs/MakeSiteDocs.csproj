@@ -33,6 +33,42 @@
       <AutoGen>True</AutoGen>
     </Compile>
 
+    <Compile Update="IDs\MakeExamples-1-architecture.cs">
+      <DependentUpon>MakeExamples-1-architecture.script</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+
+    <Compile Update="IDs\MakeExamples-2-UDF.cs">
+      <DependentUpon>MakeExamples-2-UDF.script</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+
+    <Compile Update="IDs\MakeExamples-3-Dare.cs">
+      <DependentUpon>MakeExamples-3-Dare.script</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+
+    <Compile Update="IDs\MakeExamples-4-schema.cs">
+      <DependentUpon>MakeExamples-4-schema.script</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+
+    <Compile Update="IDs\MakeExamples-5-protocol.cs">
+      <DependentUpon>MakeExamples-5-protocol.script</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+
+    <Compile Update="IDs\MakeExamples-8-Cryptography.cs">
+      <DependentUpon>MakeExamples-8-Cryptography.script</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+
     <Compile Update="Web\ToDo.cs">
       <DependentUpon>ToDo.script</DependentUpon>
       <DesignTime>True</DesignTime>
@@ -125,6 +161,36 @@
     <None Update="Exceptions.exceptional">
       <LastGenOutput>Exceptions.cs</LastGenOutput>
       <Generator>exceptional</Generator>
+    </None>
+
+    <None Update="IDs\MakeExamples-1-architecture.script">
+      <LastGenOutput>MakeExamples-4-schema.cs</LastGenOutput>
+      <Generator>gscript</Generator>
+    </None>
+
+    <None Update="IDs\MakeExamples-2-UDF.script">
+      <LastGenOutput>MakeExamples-2-UDF.cs</LastGenOutput>
+      <Generator>gscript</Generator>
+    </None>
+
+    <None Update="IDs\MakeExamples-3-Dare.script">
+      <LastGenOutput>MakeExamples-3-Dare.cs</LastGenOutput>
+      <Generator>gscript</Generator>
+    </None>
+
+    <None Update="IDs\MakeExamples-4-Schema.script">
+      <LastGenOutput>MakeExamples-4-schema.cs</LastGenOutput>
+      <Generator>gscript</Generator>
+    </None>
+
+    <None Update="IDs\MakeExamples-5-Protocol.script">
+      <LastGenOutput>MakeExamples-5-protocol.cs</LastGenOutput>
+      <Generator>gscript</Generator>
+    </None>
+
+    <None Update="IDs\MakeExamples-8-Cryptography.script">
+      <LastGenOutput>MakeExamples-8-Cryptography.cs</LastGenOutput>
+      <Generator>gscript</Generator>
     </None>
 
     <None Update="Web\ToDo.script">

@@ -37,6 +37,12 @@ LinkFiles = \
 
 ToolTargets = \
 	Exceptions.cs\
+	IDs\MakeExamples-1-architecture.cs\
+	IDs\MakeExamples-2-UDF.cs\
+	IDs\MakeExamples-3-Dare.cs\
+	IDs\MakeExamples-4-Schema.cs\
+	IDs\MakeExamples-5-Protocol.cs\
+	IDs\MakeExamples-8-Cryptography.cs\
 	Web\ToDo.cs\
 	Web\UserGuide.cs\
 	Web\CommandsetProfile.cs\
@@ -57,6 +63,24 @@ ToolTargets = \
 	Web\CommandsetDevice.cs
 Exceptions.cs : Exceptions.exceptional 
 	exceptional Exceptions.exceptional  /cs  Exceptions.cs
+
+IDs\MakeExamples-1-architecture.cs : IDs\MakeExamples-1-architecture.script 
+	gscript IDs\MakeExamples-1-architecture.script  IDs\MakeExamples-1-architecture.cs
+
+IDs\MakeExamples-2-UDF.cs : IDs\MakeExamples-2-UDF.script 
+	gscript IDs\MakeExamples-2-UDF.script  IDs\MakeExamples-2-UDF.cs
+
+IDs\MakeExamples-3-Dare.cs : IDs\MakeExamples-3-Dare.script 
+	gscript IDs\MakeExamples-3-Dare.script  IDs\MakeExamples-3-Dare.cs
+
+IDs\MakeExamples-4-Schema.cs : IDs\MakeExamples-4-Schema.script 
+	gscript IDs\MakeExamples-4-Schema.script  IDs\MakeExamples-4-Schema.cs
+
+IDs\MakeExamples-5-Protocol.cs : IDs\MakeExamples-5-Protocol.script 
+	gscript IDs\MakeExamples-5-Protocol.script  IDs\MakeExamples-5-Protocol.cs
+
+IDs\MakeExamples-8-Cryptography.cs : IDs\MakeExamples-8-Cryptography.script 
+	gscript IDs\MakeExamples-8-Cryptography.script  IDs\MakeExamples-8-Cryptography.cs
 
 Web\ToDo.cs : Web\ToDo.script 
 	gscript Web\ToDo.script  Web\ToDo.cs

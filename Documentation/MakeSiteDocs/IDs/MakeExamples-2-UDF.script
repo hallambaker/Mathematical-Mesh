@@ -1,0 +1,626 @@
+﻿#using System.Text
+#using Goedel.Mesh
+#using Goedel.Protocol
+#using Goedel.Utilities
+#using Goedel.Cryptography
+#using Goedel.Cryptography.Dare
+#xclass ExampleGenerator CreateExamples
+
+#method MakeUDFExamples CreateExamples Example
+#% UDFVariousUDF(Example);
+#% UDFNonce(Example);
+#% UDFEncrypt(Example);
+#% UDFShare(Example);
+#% UDFDigest(Example);
+#% UDFDigestURI(Example);
+#% UDFDigestLocator(Example);
+#% UDFDigestEARLRAW(Example);
+#% UDFDigestEARLLocator(Example);
+#% UDFDigestEARL(Example);
+#% UDFsin(Example);
+#% UDFURIEBNF(Example);
+#% UDFTableReservedId(Example);
+#% UDFShamirRecovery(Example);
+#% UDFSplit(Example);
+#% UDFDigestLong(Example);
+#% UDFAuthenticatorLong(Example);
+#% UDFDigestResolution(Example);
+#% UDFEncryptedResolution(Example);
+#end method
+
+
+
+#file UDFVariousUDF "Examples\\UDFVariousUDF.md" CreateExamples Example
+~~~~
+#{Example.ResultUDFNonce.Key}
+#{Example.ResultUDFSecret.Key}
+#{Example.ResultUDFSecret.Shares[0]}
+#{Example.ResultDigestSHA2.Digest}
+#{Example.ResultDigestSHA3.Digest}
+#{Example.ResultCommitSHA2.Digest}
+~~~~
+#end file
+
+
+#file UDFNonce "Examples\\UDFNonce.md" CreateExamples Example
+~~~~
+Nonce UDF:
+  #{Example.ResultUDFNonce.Key}
+~~~~
+#end file
+
+#file UDFEncrypt "Examples\\UDFEncrypt.md" CreateExamples Example
+#% var data = UDF.Parse (Example.ResultUDFSecret.Key, out var code);
+~~~~
+KeyValue:#{data.ToStringBase16FormatHex()}
+
+Encryption/Authenticator UDF:
+  #{Example.ResultUDFSecret.Key}
+~~~~
+#end file
+
+#file UDFShare "Examples\\UDFShare.md" CreateExamples Example
+~~~~
+Key:     #{Example.ResultUDFSecret.Key}
+Share 0: #{Example.ResultUDFSecret.Shares[0]}
+Share 1: #{Example.ResultUDFSecret.Shares[1]}
+Share 2: #{Example.ResultUDFSecret.Shares[2]}
+~~~~
+#end file
+
+#file UDFDigest "Examples\\UDFDigest.md" CreateExamples Example
+~~~~
+SHA-2-512: #{Example.ResultDigestSHA2.Digest}
+SHA-3-512: #{Example.ResultDigestSHA3.Digest}
+~~~~
+#end file
+
+#file UDFAuthenticator "Examples\\UDFAuthenticator.md" CreateExamples Example
+~~~~
+SHA-2-512: #{Example.ResultCommitSHA2.Digest}
+~~~~
+#end file
+
+#file UDFDigestURI "Examples\\UDFDigestURI.md" CreateExamples Example
+~~~~
+udf:#{Example.ResultDigestSHA2.Digest}
+~~~~
+#end file
+
+#file UDFDigestLocator "Examples\\UDFDigestLocator.md" CreateExamples Example
+~~~~
+udf://#{Example.ResultDigestSHA2.Digest}
+~~~~
+#end file
+
+#file UDFDigestEARLRAW "Examples\\UDFDigestEARL-raw.md" CreateExamples Example
+udf://example.com/#{Example.ResultUDFEARL.Key}#!
+#end file
+
+
+#file UDFDigestEARL "Examples\\UDFDigestEARL.md" CreateExamples Example
+To generate the paper invoice, Example.com first creates a new encryption key:
+
+#{Example.ResultUDFEARL.Key}
+
+One or more electronic forms of the invoice are encrypted under the key 
+#{Example.ResultUDFEARL.Key} and placed on the Example.com Web site so that 
+the appropriate version is returned if Alice scans the QR code.
+
+The key is then converted to form an EARL for the example.com UDF resolution service:
+
+udf://example.com/#{Example.ResultUDFEARL.Key}
+#end file
+
+#file UDFDigestEARLLocator "Examples\\UDFDigestEARLLocator.md" CreateExamples Example
+The UDF EARL locator shown above is resolved by first determining the Web Service
+Endpoint for the mmm-udf service for the domain example.com.
+
+~~~~
+Discover ("example.com", "mmm-udf") = 
+https://example.com/.well-known/mmm-udf/
+~~~~
+
+Next the fingerprint of the source UDF is obtained.
+
+~~~~
+UDF (#{Example.ResultUDFEARL.Key}) =
+#{Example.ResultUDFEARL.Identifier}
+~~~~
+
+Combining the Web Service Endpoint and the fingerprint of the source UDF provides
+the URI from which the content is obtained using the normal HTTP GET method:
+
+https://example.com/.well-known/mmm-udf/#{Example.ResultUDFEARL.Identifier}
+
+
+#end file
+
+#file UDFsin "Examples\\UDFsin.md" CreateExamples Example
+
+For example, Example Inc holds the domain name example.com and has deployed a 
+private CA whose root of trust is a PKIX certificate with the UDF fingerprint 
+MB2GK-6DUF5-YGYYL-JNY5E-RWSHZ.
+
+Alice is an employee of Example Inc., she uses three email addresses:
+
+<dl>
+<dt>alice@example.com
+<dd>A regular email address (not a SIN).
+<dt>alice@mm--mb2gk-6duf5-ygyyl-jny5e-rwshz.example.com
+<dd>A strong email address that is backwards compatible.
+<dt>alice@example.com.mm--mb2gk-6duf5-ygyyl-jny5e-rwshz
+<dd>A strong email address that is backwards incompatible.
+</dl>
+
+
+#end file
+
+#file UDFSplit "Examples\\UDFSplit.md" CreateExamples Example
+
+Alice decides to encrypt an important document and split the encryption key so that
+there are five key shares, three of which will be required to recover the key.
+
+~~~~
+Alice's master secret is#{Example.UDFSplitSecret.Key.ToStringBase16FormatHex()}
+~~~~
+
+This has the UDF representation:
+
+#{Example.UDFSplitSecret.UDFKey}
+
+The master secret is converted to an integer applying network byte order conventions.
+Since the master secret is 128 bits, it is guaranteed to be smaller than the modulus.
+The resulting value becomes the polynomial value a0.
+
+Since a threshold of three shares is required, we will need a second order polynomial.
+The co-efficients of the polynomial a1, a2 are random numbers smaller than the 
+modulus:
+
+~~~~
+a0 = #{Example.UDFSplitPolynomial[0]}
+a1 = #{Example.UDFSplitPolynomial[1]}
+a2 = #{Example.UDFSplitPolynomial[2]}
+~~~~
+
+The master secret is the value f(0) = a0. The key shares are the values f(1), f(2)...f(5):
+
+~~~~
+f(1) = #{Example.UDFSplitShares[0].Value}
+f(2) = #{Example.UDFSplitShares[1].Value}
+f(3) = #{Example.UDFSplitShares[2].Value}
+f(4) = #{Example.UDFSplitShares[3].Value}
+f(5) = #{Example.UDFSplitShares[4].Value}
+~~~~
+
+The first byte of each share specifies the recovery information (quorum, x value), the
+remaining bytes specify the share value in network byte order:
+
+~~~~
+f(1) = #{Example.UDFSplitShares[0].Key.ToStringBase16FormatHex()}
+f(2) = #{Example.UDFSplitShares[1].Key.ToStringBase16FormatHex()}
+f(3) = #{Example.UDFSplitShares[2].Key.ToStringBase16FormatHex()}
+f(4) = #{Example.UDFSplitShares[3].Key.ToStringBase16FormatHex()}
+f(5) = #{Example.UDFSplitShares[4].Key.ToStringBase16FormatHex()}
+~~~~
+
+The UDF presentation of the key shares is thus:
+
+~~~~
+f(1) = #{Example.UDFSplitShares[0].UDFKey}
+f(2) = #{Example.UDFSplitShares[1].UDFKey}
+f(3) = #{Example.UDFSplitShares[2].UDFKey}
+f(4) = #{Example.UDFSplitShares[3].UDFKey}
+f(5) = #{Example.UDFSplitShares[4].UDFKey}
+~~~~
+
+To recover the value f(0) from any three shares, we need to fit a polynomial curve to 
+the three points and use it to calculate the value at x=0 using the Lagrange polynomial
+basis.
+#end file
+
+#file UDFDigestLong "Examples\\UDFDigestLong.md" CreateExamples Example
+#% var instance = Instance (_Output);
+#% var DataString = "UDF Data Value";
+#% var Data = DataString.ToUTF8();
+#% var ContentType = "text/plain";
+
+In the following examples, &<Content-ID> is the UTF8 encoding of the string 
+"#{ContentType}" and &<Data> is the UTF8 encoding of the string "#{DataString}"
+
+~~~~
+Data = #{ DataString.ToUTF8().ToStringBase16FormatHex()}
+
+ContentType = #{ContentType.ToUTF8().ToStringBase16FormatHex()}
+~~~~
+
+######Using SHA-2-512 Digest
+
+#% instance.MakeUTFExtendedExample (DataString, CryptoAlgorithmID.SHA_2_512, null);
+
+This fingerprint MAY be specified with higher or lower precision as appropriate.
+
+<dl>
+<dt>100 bit precision
+<dd>#{UDF.ContentDigestOfDataString(Data, ContentType, 100)}
+<dt>120 bit precision
+<dd>#{UDF.ContentDigestOfDataString(Data, ContentType, 120)}
+<dt>200 bit precision
+<dd>#{UDF.ContentDigestOfDataString(Data, ContentType, 200)}
+<dt>260 bit precision
+<dd>#{UDF.ContentDigestOfDataString(Data, ContentType, 260)}
+</dl>
+
+######Using SHA-3-512 Digest
+
+#% instance.MakeUTFExtendedExample (DataString, CryptoAlgorithmID.SHA_3_512, null);
+
+######Using SHA-2-512 Digest with Compression 
+#% var DataStringc2 = $"UDF Compressed Document {4187123}";
+#% var Datac2 = DataStringc2.ToUTF8();
+
+The content data "#{DataStringc2}" produces a UDF Content Digest SHA-2-512 binary value 
+with 20 trailing zeros and is therefore presented using compressed presentation:
+
+~~~~
+Data = "#{Datac2.ToStringBase16FormatHex()}"
+~~~~
+
+The UTF8 Content Digest is given as:
+
+#% instance.MakeUTFExtendedExample (DataStringc2, CryptoAlgorithmID.SHA_2_512, null);
+
+######Using SHA-3-512 Digest with Compression 
+#% var DataStringc3 = $"UDF Compressed Document {774665}";
+#% var Datac3 = DataStringc3.ToUTF8();
+
+The content data "#{DataStringc3}" produces a UDF Content Digest SHA-3-512 binary value 
+with 20 trailing zeros and is therefore presented using compressed presentation:
+
+~~~~
+Data = #{Datac3.ToStringBase16FormatHex()}
+~~~~
+
+The UTF8 SHA-3-512 Content Digest is
+#{UDF.ContentDigestOfDataString(Datac3, ContentType, 140, CryptoAlgorithmID.SHA_3_512)}
+
+#end file
+
+#method3 MakeUTFExtendedExample string DataString CryptoAlgorithmID cryptoAlgorithmID string key
+#% var DataBytes = DataString.ToUTF8();
+#% var ContentType = "text/plain";
+#% var HashData = DataBytes.GetDigest(cryptoAlgorithmID);
+#% var UDFDataBuffer = UDF.UDFBuffer(HashData, ContentType);
+#% byte[] UDFData ;
+
+~~~~
+H(&<Data>) = #!
+#{HashData.ToStringBase16FormatHex()}
+
+&<Content-ID> + ‘:’ + H(&<Data>) =  #!
+#{UDFDataBuffer.ToStringBase16FormatHex()}
+
+#if (key == null)
+#% UDFData = UDFDataBuffer.GetDigest(cryptoAlgorithmID);
+H(&<Content-ID> + ‘:’ + H(&<Data>)) =  #!
+#else
+#% var keyBytes = key.ToUTF8();
+#% var macKey = UDF.KeyStringToKey(key,512);
+#% UDFData = UDFDataBuffer.GetMAC(macKey, CryptoAlgorithmID.HMAC_SHA_2_512);
+#% var keyDerive = new KeyDeriveHKDF(keyBytes, KeyDerive.KeyedUDFMaster, CryptoAlgorithmID.HMAC_SHA_2_512);
+PRK(Key) =  #!
+#{keyDerive.PRK.ToStringBase16FormatHex()}
+
+HKDF(Key) =  #!
+#{macKey.ToStringBase16FormatHex()}
+
+MAC(&<key>, &<Content-ID> + ‘:’ + H(&<Data>)) =  #!
+#end if
+#% var binaryUDF = UDF.DigestToUDFBinary (HashData, ContentType, 140, cryptoAlgorithmID, key);
+#{UDFData.ToStringBase16FormatHex()}
+
+The prefixed Binary Data Sequence is thus#{binaryUDF.ToStringBase16FormatHex()}
+~~~~
+
+The 125 bit fingerprint value is #{UDF.PresentationBase32 (binaryUDF, 140)}
+
+#end method3
+
+#file UDFAuthenticatorLong "Examples\\UDFAuthenticatorLong.md" CreateExamples Example
+#% var instance = Instance (_Output);
+#% var key = "NDD7-6CMX-H2FW-ISAL-K4VB-DQ3E-PEDM";
+#% var DataString = "Konrad is the traitor";
+#% var Data = DataString.ToUTF8();
+#% var ContentType = "text/plain";
+
+In the following example, &<Content-ID> is the UTF8 encoding of the string 
+"#{ContentType}" and &<Data> is the UTF8 encoding of the string "#{DataString}".
+The randomly chosen key is #{key}.
+
+~~~~
+Data = #{ DataString.ToUTF8().ToStringBase16FormatHex()}
+
+ContentType = #{ContentType.ToUTF8().ToStringBase16FormatHex()}
+
+Key =  #{ key.ToUTF8().ToStringBase16FormatHex()}
+~~~~
+
+Processing is performed in the same manner as an unkeyed fingerprint except that
+compression is never used:
+
+#% instance.MakeUTFExtendedExample (DataString, CryptoAlgorithmID.SHA_2_512, key);
+#!The SHA-3-512 commitment with the same inputs is:
+#!#{UDF.DataToFormat(Data, ContentType, 125, CryptoAlgorithmID.SHA_3_512, key)}
+#end file
+
+
+
+
+
+
+
+
+
+#file UDFTableReservedId "Examples\\UDFTableReservedId.md" CreateExamples Example
+~~~~
+Code  Description                      Reference
+---  -------------------               ---------
+00   HMAC and SHA-2-512                [This document]
+32   HKDF-AES-512                      [This document]
+80   SHA-3-512                         [This document] 
+81   SHA-3-512 with 20 trailing zeros  [This document]
+82   SHA-3-512 with 30 trailing zeros  [This document]
+82   SHA-3-512 with 40 trailing zeros  [This document]
+83   SHA-3-512 with 50 trailing zeros  [This document]
+96   SHA-2-512                         [This document]
+97   SHA-2-512 with 20 trailing zeros  [This document]
+98   SHA-2-512 with 30 trailing zeros  [This document]
+99   SHA-2-512 with 40 trailing zeros  [This document]
+100  SHA-2-512 with 50 trailing zeros  [This document]
+104  Random nonce                      [This document]
+144  Shamir Secret Share               [This document]
+~~~~
+#end file
+
+#file UDFURIEBNF "Examples\\UDFURIEBNF.md" CreateExamples Example
+~~~~
+URI           = "UDF:" udf [ "?" query ] [ "#" fragment ]
+
+udf           = name-form / locator-form
+
+name-form     = udf-value
+locator-form  = "//" authority "/" udf-value
+
+authority     = host 
+host          = reg-name
+~~~~
+#end file
+
+#file UDFShamirRecovery "Examples\\UDFShamirRecovery.md" CreateExamples Example
+~~~~
+using System;
+using System.Collections.Generic;
+using System.Numerics;
+
+namespace Examples {
+
+    class Examples {
+
+        /// <summary>
+        /// Combine a set of <paramref name="n"/> points (x, f(x))
+        /// on a polynomial of degree <paramref name="n"/> in a 
+        /// discrete field modulo prime <paramref name="p"/> to 
+        /// recover the value f(0) using Lagrange basis polynomials.
+        /// </summary>
+        /// <param name="fx">The values f(x).</param>
+        /// <param name="x">The values for x.</param>
+        /// <param name="p">The modulus.</param>
+        /// <param name="n">The polynomial degree.</param>
+        /// <returns>The value f(0).</returns>
+        static BigInteger CombineNK(
+                    BigInteger[] fx,
+                    int[] x,
+                    BigInteger p,
+                    int n) {
+            if (fx.Length < n) {
+                throw new Exception("Insufficient shares");
+                }
+
+            BigInteger accumulator = 0;
+            for (var formula = 0; formula < n; formula++) {
+                var value = fx[formula];
+
+                BigInteger numerator = 1, denominator = 1;
+                for (var count = 0; count < n; count++) {
+                    if (formula == count) {
+                        continue;  // If not the same value
+                        }
+
+                    var start = x[formula];
+                    var next = x[count];
+
+                    numerator = (numerator * -next) % p;
+                    denominator = (denominator * (start - next)) % p;
+                    }
+
+                var InvDenominator = ModInverse(denominator, p);
+
+                accumulator = Modulus((accumulator + 
+                    (fx[formula] * numerator * InvDenominator)), p);
+                }
+
+            return accumulator;
+            }
+
+        /// <summary>
+        /// Compute the modular multiplicative inverse of the value 
+        /// <paramref name="k"/> modulo <paramref name="p"/>
+        /// </summary>
+        /// <param name="k">The value to find the inverse of</param>
+        /// <param name="p">The modulus.</param>
+        /// <returns></returns>
+        static BigInteger ModInverse(
+                    BigInteger k, 
+                    BigInteger p) {
+            var m2 = p - 2;
+            if (k < 0) {
+                k = k + p;
+                }
+
+            return BigInteger.ModPow(k, m2, p);
+            }
+
+        /// <summary>
+        /// Calculate the modulus of a number with correct handling 
+        /// for negative numbers.
+        /// </summary>
+        /// <param name="x">Value</param>
+        /// <param name="p">The modulus.</param>
+        /// <returns>x mod p</returns>
+        public static BigInteger Modulus(
+                    BigInteger x, 
+                    BigInteger p) {
+            var Result = x % p;
+            return Result.Sign >= 0 ? Result : Result + p;
+            }
+        }
+    }
+~~~~
+#end file
+
+
+#file UDFEncryptedResolution "Examples\\UDFEncryptedResolution.md" CreateExamples Example
+
+
+#end file
+
+
+#xfile CreateExamples UDFDigestResolution "Examples\\UDFDigestResolution.md" CreateExamples Example
+#end xfile
+
+
+
+#file MeshExamplesSIN "Examples\\ExamplesSIN.md" CreateExamples Example
+
+A SIN is an Internet Identifier that contains a fingerprint of a root of 
+trust that may be used to verify the interpretation of the identifier. This 
+section describes the manner in which SINs are used. The following section describes 
+their construction using Uniform Data Fingerprints [I-D.hallambaker-udf]
+
+For example, Example Inc holds the domain name example.com and has deployed a private 
+CA whose root of trust is a PKIX certificate with the UDF fingerprint MB2GK-6DUF5-YGYYL-JNY5E-RWSHZ.
+
+Alice is an employee of Example Inc., she uses three email addresses:
+
+<dl>
+<dt>alice@example.com
+
+<dd>A regular email address (not a SIN).
+
+<dt>alice@mm--mb2gk-6duf5-ygyyl-jny5e-rwshz.example.com
+
+<dd>A strong email address that is backwards compatible.
+
+<dt>alice@example.com.mm--mb2gk-6duf5-ygyyl-jny5e-rwshz
+
+<dd>A strong email address that is backwards incompatible.
+</dl>
+
+All three forms of the address are valid RFC822 addresses and may be used in a legacy 
+email client, stored in an address book application, etc. But the ability of a legacy 
+client to make use of the address differs. Addresses of the first type may always be used. 
+Addresses of the second type may only be used if an appropriate MX record is provisioned. 
+Addresses of the third type will always fail unless the resolver understands that it is a 
+SIN requiring special processing.
+
+When specified as the destination address in a Mail User Application (MUA), these addresses 
+have the following interpretations:
+
+alice@example.com
+Send mail to Alice without requiring security enhancements.
+alice@mm--mb2gk-6duf5-ygyyl-jny5e-rwshz.example.com
+Send mail to Alice. If the MUA is SIN-Aware, it MUST resolve the security policy specified 
+by the fingerprint and apply security enhancements as mandated by that policy.
+alice@example.com.mm--mb2gk-6duf5-ygyyl-jny5e-rwshz
+Only send mail to Alice if the MUA is SIN-Aware, it MUST resolve the security policy 
+specified by the fingerprint and apply security enhancements as mandated by that policy.
+These rules allow Bob to send email to Alice with either ‘best effort’ security or 
+mandatory security as the circumstances demand
+
+#end file
+
+#file MeshExamplesSIN2 "Examples\\ExamplesSIN2.md" CreateExamples Example
+
+A security policy may be implicit or explicit depending on the root of trust referenced and the context in which it is used.
+
+Since many Internet applications are already designed to make use of a PKIX based trust infrastructure, the fingerprint of a PKIX root of trust provides sufficient information to deduce an appropriate security policy in many instances. For example:
+
+https://mb2gk-6duf5-ygyyl-jny5e-rwshz.example.com/
+Connect to example.com using a TLS connection with a certificate that is valid in a chain of trust that contains a certificate with the fingerprint mb2gk.
+IMAP Server: mb2gk-6duf5-ygyyl-jny5e-rwshz.example.com
+Connect to the IMAP server example.com over a TLS connection with a certificate that is valid in a chain of trust that contains a certificate with the fingerprint mb2gk.
+mailto:alice@example.com.mm--mb2gk-6duf5-ygyyl-jny5e-rwshz
+Encrypt mail messages using S/MIME using an S/MIME certificate that is valid in a chain of trust that contains a certificate with the fingerprint mb2gk.
+
+#end file
+
+
+#file MeshManToolFile "Examples\\MeshManToolFile.md" CreateExamples Example
+
+The file command set supports the following operations on files:
+
+<dl>
+<dt>random
+<dd>Return a randomized string
+<dt>digest
+<dd>Calculate the digest value of the input data
+<dt>commit
+<dd>Calculate a commitment value for the input data
+<dt>encode
+</dl>
+
+
+####Command random
+
+The random command returns a randomized string in UDF format containing at
+least 117 bits of random data.
+
+The random command may be used to in scripts to generate temporary passwords 
+that are to be deleted as soon as the script completes.
+
+For example, Alice wants to export her GPG key from her Mesh profile to a local
+file that can be input to her GPG mail application. She enters the following 
+commands:
+
+
+While this approach successfully configures her mail application, her private key
+was written to the hard drive of the machine in the process. Even though she
+used the delete command to remove the file containg the private key, this is
+unlikely to prevent recovery using forensic tools on the storage media.
+
+Encrypting the private key file under a randomly generated password is a
+much more robust approach. But only if we make sure that our password does
+not get written out to the disk either.
+
+<ul>
+<li>Disable the shell command history feature.
+<li>Generate a random password.
+<li>Export the private key encrypted under the random password.
+<li>Import the private key to the application.
+<li>Delete the private key file.
+<li>Restart the machine to erase the password from memory.
+</ul>
+
+This is achieved using the following shell commands:
+
+
+export HISTFILE=/dev/null
+
+####Command digest
+
+
+####Command commit
+
+#end file
+
+#end xclass

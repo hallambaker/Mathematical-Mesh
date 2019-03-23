@@ -6,21 +6,21 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 using Goedel.Registry;
-namespace MakeSiteDocs {
-	public partial class MakeSiteDocs : global::Goedel.Registry.Script {
+namespace ExampleGenerator {
+	public partial class CreateExamples : global::Goedel.Registry.Script {
 
 		
 
 		//
 		// WebPassword
 		//
-		public static void WebPassword(Examples Examples) { /* XFile  */
+		public static void WebPassword(CreateExamples Examples) { /* XFile  */
 				using (var _Output = new StreamWriter("Guide/password.md")) {
-				var obj = new MakeSiteDocs() { _Output = _Output, _Indent = "", _Filename = "Guide/password.md" };
+				var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Guide/password.md" };
 				obj._WebPassword(Examples);
 				}
 			}
-		public void _WebPassword(Examples Examples) {
+		public void _WebPassword(CreateExamples Examples) {
 
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("# Using the `password` Command Set\n{0}", _Indent);
@@ -108,13 +108,13 @@ namespace MakeSiteDocs {
 		//
 		// PasswordReference
 		//
-		public static void PasswordReference(Examples Examples) { /* XFile  */
+		public static void PasswordReference(CreateExamples Examples) { /* XFile  */
 				using (var _Output = new StreamWriter("Reference/password.md")) {
-				var obj = new MakeSiteDocs() { _Output = _Output, _Indent = "", _Filename = "Reference/password.md" };
+				var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Reference/password.md" };
 				obj._PasswordReference(Examples);
 				}
 			}
-		public void _PasswordReference(Examples Examples) {
+		public void _PasswordReference(CreateExamples Examples) {
 
 				 var CommandSet = CommandLineInterpreter.DescribeCommandSet_Password;
 				_Output.Write ("\n{0}", _Indent);

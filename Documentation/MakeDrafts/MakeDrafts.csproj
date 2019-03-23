@@ -36,29 +36,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Old\MakeExamplesAdvanced.cs">
-      <DependentUpon>MakeExamplesAdvanced.script</DependentUpon>
+    <Compile Update="MakeExamples-1-architecture.cs">
+      <DependentUpon>MakeExamples-1-architecture.script</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Update="Old\MakeExamplesProfile.cs">
-      <DependentUpon>MakeExamplesPortal.script</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Update="Old\MakeExamplesPortal.cs">
-      <DependentUpon>MakeExamplesPortal.script</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Update="Old\MakeExamplesCatalog.cs">
-      <DependentUpon>MakeExamplesCatalog.script</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-
-    <Compile Update="Old\MakeExamplesProfile.cs">
-      <DependentUpon>MakeExamplesProfile.script</DependentUpon>
+    <Compile Update="MakeExamples-8-Cryptography.cs">
+      <DependentUpon>MakeExamples-8-Cryptography.script</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
@@ -92,52 +76,32 @@
       <DependentUpon>MakeExamples-3-Dare.script</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-    </Compile>    
-    <Compile Update="Old\MakeExamplesDeveloper.cs">
-      <DependentUpon>MakeExamplesDeveloper.script</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Update="Old\MakeExamplesMessaging.cs">
-      <DependentUpon>MakeExamplesMessaging.script</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile> 
-    <Compile Update="Old\MakeExamplesMessage.cs">
-      <DependentUpon>MakeExamplesMessage.script</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
     </Compile> 	
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="MakeExamples-1-architecture.script">
+      <LastGenOutput>MakeExamples-4-schema.cs</LastGenOutput>
+      <Generator>gscript</Generator>
+    </None>
     <None Update="Old\MakeExamplesApplications.script">
       <Generator></Generator>
     </None>
-    <None Update="Old\MakeExamplesAdvanced.script">
-      <LastGenOutput>MakeExamplesAdvanced.cs</LastGenOutput>
+    <None Update="MakeExamples-8-Cryptography.script">
+      <LastGenOutput>MakeExamples-8-Cryptography.cs</LastGenOutput>
       <Generator>gscript</Generator>
     </None>
     <None Update="Old\MakeExamplesProfile.script">
-      <LastGenOutput>MakeExamplesProfile.cs</LastGenOutput>
-      <Generator>gscript</Generator>
-    </None>
-    <None Update="Old\MakeExamplesPortal.script">
-      <LastGenOutput>MakeExamplesPortal.cs</LastGenOutput>
-      <Generator>gscript</Generator>
+      <Generator></Generator>
     </None>
     <None Update="Old\MakeExamplesCatalog.script">
-      <LastGenOutput>MakeExamplesCatalog.cs</LastGenOutput>
-      <Generator>gscript</Generator>
+      <Generator></Generator>
     </None>
     <None Update="Old\MakeExamplesReferenceOLD.script">
       <Generator></Generator>
     </None>
     <None Update="MakeExamples-2-UDF.script">
       <LastGenOutput>MakeExamples-2-UDF.cs</LastGenOutput>
-      <Generator>gscript</Generator>
-    </None>
-    <None Update="Old\MakeExamplesMessage.script">
       <Generator>gscript</Generator>
     </None>
     <None Update="MakeExamples-3-Dare.script">
@@ -150,18 +114,6 @@
     </None>
     <None Update="MakeExamples-5-protocol.script">
       <LastGenOutput>MakeExamples-5-protocol.cs</LastGenOutput>
-      <Generator>gscript</Generator>
-    </None>
-    <None Update="Old\MakeExamplesDeveloper.script">
-      <LastGenOutput>MakeExamplesDeveloper.cs</LastGenOutput>
-      <Generator>gscript</Generator>
-    </None>
-    <None Update="Old\MakeExamplesMessaging.script">
-      <LastGenOutput>MakeExamplesMessaging.cs</LastGenOutput>
-      <Generator>gscript</Generator>
-    </None>
-    <None Update="Old\MakeExamplesMessage.script">
-      <LastGenOutput>MakeExamplesMessage.cs</LastGenOutput>
       <Generator>gscript</Generator>
     </None>	
   </ItemGroup>

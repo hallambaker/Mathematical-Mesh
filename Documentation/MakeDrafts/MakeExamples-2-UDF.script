@@ -4,8 +4,31 @@
 #using Goedel.Utilities
 #using Goedel.Cryptography
 #using Goedel.Cryptography.Dare
-#xclass ExampleGenerator ExampleGenerator
-#% static ExampleGenerator Instance(StreamWriter output)  => new ExampleGenerator () { _Output = output};
+#xclass ExampleGenerator CreateExamples
+
+#method MakeUDFExamples CreateExamples Example
+#% UDFVariousUDF(Example);
+#% UDFNonce(Example);
+#% UDFEncrypt(Example);
+#% UDFShare(Example);
+#% UDFDigest(Example);
+#% UDFDigestURI(Example);
+#% UDFDigestLocator(Example);
+#% UDFDigestEARLRAW(Example);
+#% UDFDigestEARLLocator(Example);
+#% UDFDigestEARL(Example);
+#% UDFsin(Example);
+#% UDFURIEBNF(Example);
+#% UDFTableReservedId(Example);
+#% UDFShamirRecovery(Example);
+#% UDFSplit(Example);
+#% UDFDigestLong(Example);
+#% UDFAuthenticatorLong(Example);
+#% UDFDigestResolution(Example);
+#% UDFEncryptedResolution(Example);
+#end method
+
+
 
 #file UDFVariousUDF "Examples\\UDFVariousUDF.md" CreateExamples Example
 ~~~~
@@ -472,7 +495,7 @@ namespace Examples {
 #end file
 
 
-#xfile ExampleGenerator UDFDigestResolution "Examples\\UDFDigestResolution.md" CreateExamples Example
+#xfile CreateExamples UDFDigestResolution "Examples\\UDFDigestResolution.md" CreateExamples Example
 #end xfile
 
 
