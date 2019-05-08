@@ -18,9 +18,13 @@ namespace Goedel.Mesh {
     /// <remarks>This implementation does not currently support concurrent access to the Mesh profile files
     /// from separate processes. This support should be added my introducing a system wide lock that is
     /// obtained before attempting a write operation and while opening a container.</remarks>
-    public class MeshMachineCore: IMeshMachine, IMeshMachineClient {
+    public class MeshMachineCore: Disposable, IMeshMachine, IMeshMachineClient {
 
         public CatalogHost CatalogHost { get; }
+
+        public AdminEntry GetAdmin(string local = null) => CatalogHost.GetAdmin(local);
+        public AccountEntry GetAccount(string local = null) => CatalogHost.GetAccount(local);
+        public PendingEntry GetPending(string local = null) => CatalogHost.GetPending(local);
 
 
         public virtual string DirectoryMaster { get; }
@@ -28,7 +32,9 @@ namespace Goedel.Mesh {
         public virtual string DirectoryKeys { get; }
         public virtual string DirectoryService { get; }
 
-
+        protected override void Disposing() {
+            CatalogHost.Dispose();
+            }
 
         public const string FileTypeHost = "application/mmm-host";
 
@@ -51,8 +57,8 @@ namespace Goedel.Mesh {
             KeyCollection = GetKeyCollection();
 
             // Now read the container to get the directories.
-            var containerHost = new ContainerHost(FileNameHost, FileTypeHost,
-                fileStatus: FileStatus.OpenOrCreate,
+            var containerHost = new ContainerProfile(FileNameHost, FileTypeHost,
+                fileStatus: FileStatus.ConcurrentLocked,
                 containerType: ContainerType.MerkleTree);
 
             CatalogHost = new CatalogHost(containerHost, this);
@@ -62,27 +68,42 @@ namespace Goedel.Mesh {
         #region // Implementation
         public static  IMeshMachine GetMachine() => new MeshMachineCore();
 
-        public virtual KeyCollection KeyCollection { get; }
+        public virtual keyCollection KeyCollection { get; }
 
-        public virtual KeyCollection GetKeyCollection() => 
+        public virtual keyCollection GetKeyCollection() => 
             new KeyCollectionCore();
 
         public virtual void OpenCatalog(Catalog catalog, string Name) { }
 
+        public virtual void Register(CatalogItem catalogItem) =>
+                CatalogHost.Register(catalogItem);
 
+        public virtual void Delete(CatalogItem catalogItem) =>
+                CatalogHost.Delete(catalogItem);
+
+
+
+
+
+
+
+        // *********** Old
         public virtual void Register (DareMessage entry) =>
                 CatalogHost.Register(entry);
 
-        public virtual void Delete(Profile profile) =>
-                CatalogHost.Delete(profile);
-
-        public virtual ProfileMesh GetConnection(
+        public virtual AssertionAccount GetConnection(
                     string accountName = null,
                     string deviceUDF = null) => CatalogHost.GetConnection(accountName, deviceUDF);
+
+        //  ******
 
 
         public virtual MeshService GetMeshClient(string account) => 
             MeshService.GetService(account);
+
+
+
+
         #endregion
 
         }

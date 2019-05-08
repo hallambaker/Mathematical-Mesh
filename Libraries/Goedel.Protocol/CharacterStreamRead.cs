@@ -65,7 +65,7 @@ namespace Goedel.Protocol {
                 return -1;
                 }
             else if (Buffer < 0x10ffff) {       // Code is on the suplementary plane
-                Buffer = Buffer - 0x10000;
+                Buffer -= 0x10000;
                 Stream.UTF16Shift = 0xDC00 + (Buffer & 0x3fff);
                 return 0xD800 + (Buffer >> 10);
 

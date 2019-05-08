@@ -64,7 +64,7 @@ namespace Examples {
                     BigInteger p) {
             var m2 = p - 2;
             if (k < 0) {
-                k = k + p;
+                k += p;
                 }
 
             return BigInteger.ModPow(k, m2, p);

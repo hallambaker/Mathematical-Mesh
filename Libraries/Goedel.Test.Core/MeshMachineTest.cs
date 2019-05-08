@@ -22,10 +22,15 @@ namespace Goedel.Test.Core {
     public class MeshMachineTest : MeshMachineCore {
 
 
+        TestEnvironmentCommon TestEnvironmentCommon;
+
+        public string Name;
+        public string Path => System.IO.Path.Combine(TestEnvironmentCommon.Path, Name);
 
 
-        public override MeshService GetMeshClient(string address) => 
-            MachineEnvironment.MeshPortalDirect.GetService(address);
+
+        public override MeshService GetMeshClient(string address) =>
+            TestEnvironmentCommon.MeshPortalDirect.GetService(address);
 
 
 
@@ -55,23 +60,18 @@ namespace Goedel.Test.Core {
         Dictionary<string, KeyPair> DictionaryKeyPairByUDF = new Dictionary<string, KeyPair>();
 
 
-        public TestEnvironmentMachine MachineEnvironment;
+
+        public override keyCollection GetKeyCollection() => new KeyCollectionTest(this);
 
 
-        public override KeyCollection GetKeyCollection() => new KeyCollectionTest(this);
-
-        /// <summary>
-        /// Construct a unique test machine with the specified class name.
-        /// Separate persistence stores will be created.
-        /// </summary>
-        /// <param name="Name"></param>
-        public MeshMachineTest(TestEnvironmentMachine machineEnvironment, string name = "Test") :
-            base(Path.Combine(machineEnvironment.Path,name)) => 
-                MachineEnvironment = machineEnvironment;
+        public MeshMachineTest(TestEnvironmentCommon testEnvironmentPerTest, string name = "Test") :
+            base(testEnvironmentPerTest.MachinePath(name)) =>
+                TestEnvironmentCommon = testEnvironmentPerTest;
 
 
-        //public MeshMachineTest(string name="Default") : this (new MachineEnvironment(name)) {
-        //    }
+        public MeshMachineTest(MeshMachineTest existing) :
+            base (existing.DirectoryMaster) =>
+            TestEnvironmentCommon = existing.TestEnvironmentCommon;
 
 
         public void Persist(KeyPair keyPair) {
@@ -93,37 +93,48 @@ namespace Goedel.Test.Core {
 
             }
 
-        
-
         public static void GetContext(
-                TestEnvironmentCommon testEnvironmentCommon,
-                string nameAccount,
-                string nameMachine,
-                out MeshMachineTest machine,
-                out ContextDevice contextDevice) {
+                    TestEnvironmentCommon testEnvironmentService,
+                    string nameAccount,
+                    string nameMachine,
+                    out MeshMachineTest machine,
+                    out ContextDevice contextDevice) {
 
-            var machineEnvironment = new TestEnvironmentMachine(testEnvironmentCommon, "nameMachine");
-            machine = new MeshMachineTest(machineEnvironment, nameMachine);
+            machine = new MeshMachineTest(testEnvironmentService, nameMachine);
             contextDevice = ContextDevice.Generate(machine);
             }
 
-        public static void GetContextMaster(
+
+        public static void GetContext(
                 TestEnvironmentCommon testEnvironmentCommon,
-                string nameAccount,
                 string nameMachine,
-                out MeshMachineTest machine,
-                out ContextDevice contextDevice) {
-            GetContext(testEnvironmentCommon, nameAccount, nameMachine, out machine, out contextDevice);
-            contextDevice.GenerateMaster();
+                out MeshMachineTest machine) {
+
+            machine = new MeshMachineTest(testEnvironmentCommon, nameMachine);
             }
+
 
         public static void GetContextMaster(
                 string nameAccount,
                 string nameMachine,
                 out MeshMachineTest machine,
                 out ContextDevice contextDevice) {
-            var testEnvironmentCommon = new TestEnvironmentCommon();
-            GetContext(testEnvironmentCommon, nameAccount, nameMachine, out machine, out contextDevice);
+            var testEnvironmentService = new TestEnvironmentCommon();
+
+            GetContext(testEnvironmentService, nameAccount, nameMachine, out machine, out contextDevice);
+            contextDevice.GenerateMaster();
+            }
+
+
+        public static void GetContextMaster(
+                TestEnvironmentCommon testEnvironmentService,
+                string nameAccount,
+                string nameMachine,
+                out MeshMachineTest machine,
+                out ContextDevice contextDevice) {
+
+
+            GetContext(testEnvironmentService, nameAccount, nameMachine, out machine, out contextDevice);
             contextDevice.GenerateMaster();
             }
 
@@ -138,18 +149,6 @@ namespace Goedel.Test.Core {
 
         public KeyCollectionTest(MeshMachineTest meshMachine) => MeshMachine = meshMachine;
 
-
-        ///// <summary>
-        ///// Add a keypair and bind it to the persistence store.
-        ///// </summary>
-        ///// <param name="keyPair">The key pair to add.</param>
-        //public override void Add(KeyPair keyPair) {
-        //    if (keyPair.PersistPending) {
-        //        MeshMachine.Persist(keyPair);
-        //        keyPair.Persist(this);
-        //        base.Add(keyPair);
-        //        }
-        //    }
 
 
        }

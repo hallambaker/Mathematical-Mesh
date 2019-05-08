@@ -16,7 +16,7 @@ namespace Goedel.Cryptography.Dare {
     public partial class CryptoParameters {
 
         /// <summary>The key collection to use to resolve names to keys</summary>
-        public KeyCollection KeyCollection;
+        public keyCollection KeyCollection;
         /// <summary>The set of keys to encrypt to.</summary>
         public List<KeyPair> EncryptionKeys;
         /// <summary>The set of keys to use to sign</summary>
@@ -69,7 +69,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="DigestID">The digest algorithm to be applied to the message
         /// encoding.</param>
         public CryptoParameters(
-                        KeyCollection KeyCollection,
+                        keyCollection KeyCollection,
                         List<string> Recipients = null,
                         List<string> Signers = null,
                         CryptoAlgorithmID EncryptID = CryptoAlgorithmID.NULL,

@@ -13,7 +13,6 @@ a description of the service parameters.
 
 ````
 >profile hello alice@example.com
-OK
 ````
 
 If a Mesh account is specified, the tool attempts to connect to a Mesh service
@@ -33,13 +32,30 @@ This includes the steps of:
 
 * Register the Mesh profile with a Mesh service.
 
-The `profile create` command performs all four of these functions.
+The `profile create` command creates a profile:
 
 
 ````
->profile create  alice@example.com
-OK
-Device Profile UDF=MDEH-FIHJ-BZCK-3UUB-EO2B-GUPM-64NV
+>profile create
+Device Profile UDF=MANG-XLXR-5S7L-HE4B-2DPE-A456-SVOZ
+Personal Profile UDF=MCY7-VGVV-K2ZZ-KQWB-566D-F4PD-WKR3
+````
+
+The `profile register` commands registers a profile:
+
+
+````
+>profile register  alice@example.com
+ERROR - Object reference not set to an instance of an object.
+````
+
+Or we can perform both at once by specifying the service to register the profile when we create the
+profile:
+
+
+````
+>profile create  bob@example.com
+ERROR - Object reference not set to an instance of an object.
 ````
 
 
@@ -51,7 +67,6 @@ spools associated with a Mesh profile:
 
 ````
 >profile sync
-OK
 ````
 
 Synchronization is also performed automatically before every command requiring 
@@ -65,7 +80,6 @@ machine:
 
 ````
 >profile list
-OK
 ````
 
 The `profile dump` command provides a more detailed description of 
@@ -91,10 +105,10 @@ of the user's master profile and returns a set of recovery shares.
 
 ````
 >profile escrow
-Share: SAQD-DNVA-EA7F-2WHR-MKCA-R2IG-MB66-W
-Share: SAQR-4DRO-OWRX-5HXU-EGSZ-7ZON-3MFT-2
-Share: SARA-UZN4-ZMEJ-7ZHW-4DDT-NYUV-KWMI-6
-Written to MDHO-WHH7-4RZC-DU6S-5FLA-6CIW-EJK6.escrow
+Share: SAQB-IZK6-D7WF-2E7R-Z7AG-BXM6-LM37-U
+Share: SAQ3-YWLV-GJHV-FGLB-R7GP-YT6G-FE4P-4
+Share: SARG-ITMM-ISZE-QHWR-J7MZ-PQPN-6444-6
+Written to MCY7-VGVV-K2ZZ-KQWB-566D-F4PD-WKR3.escrow
 ````
 
 By default, three recovery shares are created such that two shares are required to
@@ -105,7 +119,7 @@ command.
 
 
 ````
->profile recover $SAQD-DNVA-EA7F-2WHR-MKCA-R2IG-MB66-W $SARA-UZN4-ZMEJ-7ZHW-4DDT-NYUV-KWMI-6 /verify
+>profile recover $SAQB-IZK6-D7WF-2E7R-Z7AG-BXM6-LM37-U $SARG-ITMM-ISZE-QHWR-J7MZ-PQPN-6444-6 /verify
 ERROR - Object reference not set to an instance of an object.
 ````
 
@@ -120,7 +134,7 @@ Mesh Service:
 
 ````
 >profile register alice@example.net
-ERROR - The feature has not been implemented
+ERROR - Object reference not set to an instance of an object.
 ````
 
 Although the Mesh protocols are designed to allow a Mesh profile to be registered with

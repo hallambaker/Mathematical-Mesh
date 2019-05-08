@@ -173,11 +173,15 @@ namespace Goedel.Mesh.Shell {
 
             }
 
+        //public virtual ContextMaster GetContextMaster(IMasterProfileInfo options) {
+        //    }
+
+
         public virtual ContextDevice GetContextDevice(IAccountOptions options) => 
             CatalogHost.GetContextDevice();
 
 
-        public KeyCollection KeyCollection(IAccountOptions options) =>
+        public keyCollection KeyCollection(IAccountOptions options) =>
             CatalogHost.GetKeyCollection();
 
 
@@ -193,7 +197,7 @@ namespace Goedel.Mesh.Shell {
         /// </summary>
         /// <param name="Options"></param>
         /// <returns></returns>
-        public CryptoParameters GetCryptoParameters(KeyCollection keyCollection, IEncodeOptions Options) {
+        public CryptoParameters GetCryptoParameters(keyCollection keyCollection, IEncodeOptions Options) {
             var cryptoParameters = new CryptoParameters();
 
             // Goal: do an encrypt self default option

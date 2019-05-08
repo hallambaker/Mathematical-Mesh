@@ -150,55 +150,55 @@ namespace Goedel.Cryptography.PKIX {
 
 
 
-    /// <summary>
-    /// PKIX Key Uses
-    /// </summary>
-    public enum KeyUses {
-        /// <summary>
-        /// Sign
-        /// </summary>
-        DigitalSignature = 0x0001,       // EmailSignature | DataSignature | CodeSigning
+    ///// <summary>
+    ///// PKIX Key Uses
+    ///// </summary>
+    //public enum KeyUses {
+    //    /// <summary>
+    //    /// Sign
+    //    /// </summary>
+    //    DigitalSignature = 0x0001,       // EmailSignature | DataSignature | CodeSigning
         
-        /// <summary>
-        /// If clear, signatures may be repudiated
-        /// </summary>
-        NonRepudiation = 0x0002,       // Confirmation
+    //    /// <summary>
+    //    /// If clear, signatures may be repudiated
+    //    /// </summary>
+    //    NonRepudiation = 0x0002,       // Confirmation
 
-        /// <summary>
-        /// Encryption
-        /// </summary>
-        KeyEncipherment = 0x0004,       // EmailEncryption | DataEncryption
+    //    /// <summary>
+    //    /// Encryption
+    //    /// </summary>
+    //    KeyEncipherment = 0x0004,       // EmailEncryption | DataEncryption
 
-        /// <summary>
-        /// Don't use.
-        /// </summary>
-        DataEncipherment = 0x0008,       // Don't Use
+    //    /// <summary>
+    //    /// Don't use.
+    //    /// </summary>
+    //    DataEncipherment = 0x0008,       // Don't Use
 
-        /// <summary>
-        /// Key agreement (used for client, server authentication).
-        /// </summary>
-        KeyAgreement = 0x0010,       // ServerAuth | ClientAuth
+    //    /// <summary>
+    //    /// Key agreement (used for client, server authentication).
+    //    /// </summary>
+    //    KeyAgreement = 0x0010,       // ServerAuth | ClientAuth
 
-        /// <summary>
-        /// Sign certificates
-        /// </summary>
-        KeyCertSign = 0x0020,       // CA | Root
+    //    /// <summary>
+    //    /// Sign certificates
+    //    /// </summary>
+    //    KeyCertSign = 0x0020,       // CA | Root
 
-        /// <summary>
-        /// Sign CRLs
-        /// </summary>
-        CRLSign = 0x0040,       // CRL
+    //    /// <summary>
+    //    /// Sign CRLs
+    //    /// </summary>
+    //    CRLSign = 0x0040,       // CRL
 
-        /// <summary>
-        /// Don't use
-        /// </summary>
-        EncipherOnly = 0x0080,       // Don't use
+    //    /// <summary>
+    //    /// Don't use
+    //    /// </summary>
+    //    EncipherOnly = 0x0080,       // Don't use
 
-        /// <summary>
-        /// Don't Use.
-        /// </summary>
-        DecipherOnly = 0x0100        // Don't use
-        }
+    //    /// <summary>
+    //    /// Don't Use.
+    //    /// </summary>
+    //    DecipherOnly = 0x0100        // Don't use
+    //    }
 
 
     }

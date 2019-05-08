@@ -49,6 +49,11 @@
 		Option DeviceDescription "dd" String
 			Brief "Device description"
 
+
+	OptionSet MasterProfileInfo
+		Option MasterUDF "mudf" String
+			Brief "Master profile fingerprint"
+
 	OptionSet DeviceAuthOptions
 		Option Auth "auth" String
 			Brief "Authorize the specified function"
@@ -188,6 +193,8 @@
 				Brief "New account"
 			Include Reporting
 			Include AccountOptions
+			Include MasterProfileInfo
+			Include DeviceProfileInfo
 
 		Command ProfileSync "sync"
 			Brief "Synchronize local copies of Mesh profiles with the server"

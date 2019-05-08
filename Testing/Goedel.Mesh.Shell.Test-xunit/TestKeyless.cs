@@ -99,7 +99,7 @@ namespace Goedel.XUnit {
             var bitsClause = bits == 0 ? "" : $" /bits {bits}";
             bits = bits == 0 ? 128 : bits;
             var length = (bits + 12) / 5;
-            length = length + ((length-1) / 4);
+            length += ((length-1) / 4);
 
             var repeat = 10;
             var results = new HashSet<string>();
@@ -127,7 +127,7 @@ namespace Goedel.XUnit {
             var bitsClause = bits == 0 ? "" : $" /bits {bits}";
             bits = bits == 0 ? 128 : bits;
             var length = (bits + 12) / 5;
-            length = length + ((length - 1) / 4);
+            length += ((length - 1) / 4);
 
             var repeat = 10;
             var results = new HashSet<string>();

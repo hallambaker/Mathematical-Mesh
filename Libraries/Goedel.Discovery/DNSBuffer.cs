@@ -328,7 +328,7 @@ namespace Goedel.Discovery {
         public void WriteData (byte[] data) {
             CheckSpaceWrite (data.Length);
             Array.Copy (data, 0, Buffer.Buffer, Pointer, data.Length);
-            Pointer = Pointer + data.Length;
+            Pointer += data.Length;
             //Buffer.Pointer = Pointer;
             }
 
@@ -501,7 +501,7 @@ namespace Goedel.Discovery {
 
             data = new DNSBufferIndex(Buffer, Pointer, length);
 
-            Pointer = Pointer + length;
+            Pointer += length;
             }
 
         /// <summary>Read binary data value (remainder of the buffer)</summary>
@@ -517,7 +517,7 @@ namespace Goedel.Discovery {
             CheckSpaceRead (Length);
             byte[] data = new byte [Length];
             Array.Copy (Buffer.Buffer, Pointer, data, 0, Length);
-            Pointer = Pointer + Length;
+            Pointer += Length;
 
             return data;
             }
@@ -538,7 +538,7 @@ namespace Goedel.Discovery {
             CheckSpaceRead (length);
 
             string result = ASCIIEncoding.GetString (Buffer.Buffer, Pointer, length);
-            Pointer = Pointer + length;
+            Pointer += length;
 
             return result;
             }

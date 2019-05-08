@@ -10,12 +10,12 @@ using Goedel.Cryptography.Jose;
 using Goedel.Cryptography.PKIX;
 
 namespace Goedel.Mesh.Protocol.Client {
-    public class KeyCollectionClient : KeyCollection {
+    public class KeyCollectionClient : keyCollection {
 
-        KeyCollection KeyCollectionBase;
+        keyCollection KeyCollectionBase;
         CatalogHost CatalogHost;
 
-        public KeyCollectionClient(CatalogHost catalogHost, KeyCollection keyCollection) {
+        public KeyCollectionClient(CatalogHost catalogHost, keyCollection keyCollection) {
             KeyCollectionBase = keyCollection;
             CatalogHost = catalogHost;
             }
@@ -42,11 +42,10 @@ namespace Goedel.Mesh.Protocol.Client {
         /// <param name="keyID">The identifier to resolve.</param>
         /// <returns>The identifier.</returns>
         public override KeyPair GetByAccountEncrypt(string keyID) {
-            // Check to see if we have an account by that name
-            var profile = CatalogHost.GetProfileMeshByAccount(keyID) as ProfileMesh;
-            if (profile != null) {
-                return profile.AccountEncryptionKey.KeyPair;
-                }
+            //// Check to see if we have an account by that name
+            //if (CatalogHost.GetProfileMeshByAccount(keyID) is AssertionAccount profile) {
+            //    return profile.AccountEncryptionKey.KeyPair;
+            //    }
 
             // Check the Contacts file 
 
@@ -67,10 +66,10 @@ namespace Goedel.Mesh.Protocol.Client {
         public override KeyPair GetByAccountSign(string keyID) {
             // Check to see if we have an account by that name
 
-            var profile = CatalogHost.GetProfileDeviceByAccount(keyID);
-            if (profile != null) {
-                return profile.DeviceSignatureKey.KeyPair;
-                }
+            //var profile = CatalogHost.GetProfileDeviceByAccount(keyID);
+            //if (profile != null) {
+            //    return profile.SignatureKey.KeyPair;
+            //    }
 
             //var profile = CatalogHost.GetProfileByAccount(keyID) as CatalogEntryDevice;
             //if (profile != null) {

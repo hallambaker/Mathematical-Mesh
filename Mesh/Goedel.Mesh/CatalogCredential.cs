@@ -68,7 +68,7 @@ namespace Goedel.Mesh {
 
         public CatalogCredential(string directory, string ContainerName=null,
             CryptoParameters cryptoParameters = null,
-                    KeyCollection keyCollection = null) :
+                    keyCollection keyCollection = null) :
             base(directory, ContainerName, cryptoParameters, keyCollection) {
             }
 
@@ -91,9 +91,9 @@ namespace Goedel.Mesh {
         public override string ToString() {
             var stringBuilder = new StringBuilder();
             if (Protocol != null) {
-                stringBuilder.Append("{Protocol}:");
+                stringBuilder.Append($"{Protocol}:");
                 }
-            stringBuilder.Append("{Username}@{Service} = [{Password}]");
+            stringBuilder.AppendLine($"{Username}@{Service} = [{Password}]");
 
             return stringBuilder.ToString();
 

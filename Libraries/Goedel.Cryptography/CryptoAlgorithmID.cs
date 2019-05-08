@@ -252,6 +252,10 @@ namespace Goedel.Cryptography {
         /// <summary>Elliptic Curve DSA with curve Ed448</summary>
         Ed448ph = Ed448 + 1,
 
+        ///<summary>Default signature algorithm for the Mesh</summary>
+        MeshDefaultSign = Ed448,
+        ///<summary>Default encryption algorithm for the Mesh (will change to X488)</summary>
+        MeshDefaultEncrypt = Ed448,
 
         /// <summary>RSA Signature using PKCS#1.5 padding and SHA-2 256 digest</summary>
         RSASign_SHA_2_256 = RSASign | SHA_2_256,
@@ -368,18 +372,67 @@ namespace Goedel.Cryptography {
         }
 
 
-    ///<summary>Enumeration specifying permitted key uses</summary>
+    /// <summary>
+    /// Combined Key Uses. This is a conjunction of the JOSE and PKIX key uses.
+    /// </summary>
     [Flags]
     public enum KeyUses {
-        ///<summary>Signature Use</summary>
-        Sign = 0b0001,
-        ///<summary>Encryption Use</summary>
-        Encrypt = 0b0010,
+        ///<summary>PKIX Sign</summary>
+        DigitalSignature = 0x0001,       // EmailSignature | DataSignature | CodeSigning
 
-        ///<summary>Sign or Encrypt</summary>
+        ///<summary>Jose Sign (alias for the PKIX bitmask)</summary>
+        Sign = DigitalSignature,
+
+        ///<summary>If clear, signatures may be repudiated</summary>
+        NonRepudiation = 0x0002,       // Confirmation
+
+        ///<summary>PKIX Encryption</summary>
+        KeyEncipherment = 0x0004,       // EmailEncryption | DataEncryption
+
+        ///<summary>Jose Encryption (alias for the PKIX bitmask)</summary>
+        Encrypt = KeyAgreement,
+
+        ///<summary>PKIX Flag, should not be used.</summary>
+        DataEncipherment = 0x0008,       // Don't Use
+
+        ///<summary>PKIX Key agreement (used for client, server authentication).</summary>
+        KeyAgreement = 0x0010,       // ServerAuth | ClientAuth
+
+        ///<summary>PKIX Sign certificates</summary>
+        KeyCertSign = 0x0020,       // CA | Root
+
+        /// <summary>
+        /// Sign CRLs
+        /// </summary>
+        CRLSign = 0x0040,       // CRL
+
+        /// <summary>
+        /// Don't use
+        /// </summary>
+        EncipherOnly = 0x0080,       // Don't use
+
+        /// <summary>
+        /// Don't Use.
+        /// </summary>
+        DecipherOnly = 0x0100,        // Don't use
+
+        ///<summary>Jose Sign or Encryption (alias for the PKIX bitmask)</summary>
         Any = Sign | Encrypt
-
         }
+
+
+    /////<summary>Enumeration specifying permitted key uses</summary>
+    //[Flags]
+    //public enum KeyUses {
+    //    ///<summary>Signature Use</summary>
+    //    Sign = 0b0001,
+    //    ///<summary>Encryption Use</summary>
+    //    Encrypt = 0b0010,
+
+    //    ///<summary>Sign or Encrypt</summary>
+    //    Any = Sign | Encrypt
+
+    //    }
 
 
     /// <summary>

@@ -8,7 +8,7 @@ using Goedel.Protocol;
 namespace Goedel.Mesh {
 
 
-    public partial class ProfileApplication {
+    public partial class Assertion {
 
         }
 

@@ -3,19 +3,19 @@
 	Using Goedel.Cryptography.Dare
 
 	Description
-		|Communication between the user and the portal.
+		|Protocol interactions supported by the Mesh Service.
 
     Service MeshService "_mmm._tcp" "mmm" MeshRequest MeshResponse
 		Description
 			|Every Mesh Portal Service transaction consists of exactly one
 			|request followed by exactly one response.
 			|Mesh Service transactions MAY cause modification
-			|of the data stored in the Mesh Portal or the Mesh itself
+			|of the data stored in the Mesh Service or the Mesh itself
 			|but do not cause changes to the connection state. The protocol
 			|itself is thus idempotent. There is no set sequence
 			|in which operations are required to be performed. It is not
 			|necessary to perform a Hello transaction prior to
-			|a ValidateAccount, Publish or any other transaction.
+			|any other transaction.
 
 	Section 2 "Request Messages"
 		Description
@@ -57,8 +57,6 @@
 			|Base class for all response messages. Contains only the
 			|status code and status description fields.
 
-
-
 	Section 2 "Imported Objects"
 		Description
 			|The Mesh Service protocol makes use of JSON objects
@@ -69,7 +67,6 @@
 		Description
 			|The following common structures are used in the protocol
 			|messages:
-
 
 
 	Structure KeyValue
@@ -83,7 +80,6 @@
 		String Value
 			Description
 				|The data value to match.
-
 
 	Structure ConstraintsSelect
 		Description
@@ -132,7 +128,6 @@
 		Integer BytesMax
 			Description
 				|Maximum number of payload bytes to send.
-
 		Boolean Header
 			Description
 				|Return the entry header
@@ -199,7 +194,7 @@
 		Struct PolicyAccount PolicyAccount
 			Description
 				|Specifies the account creation policy
-
+		Struct ProfileService ProfileService
 
 	Transaction User Status StatusRequest StatusResponse
 	Message StatusRequest

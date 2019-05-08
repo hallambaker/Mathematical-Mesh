@@ -189,17 +189,17 @@ namespace Goedel.Cryptography.PKIX {
 
             if ((Use & Application.ServerAuth) > 0) {
                 Uses.Add(Constants.OID__id_kp_serverAuth);
-                KeyUses = KeyUses | KeyUses.KeyAgreement;
+                KeyUses |= KeyUses.KeyAgreement;
                 }
 
             if ((Use & Application.ClientAuth) > 0) {
                 Uses.Add(Constants.OID__id_kp_clientAuth);
-                KeyUses = KeyUses | KeyUses.KeyAgreement;
+                KeyUses |= KeyUses.KeyAgreement;
                 }
 
             if ((Use & Application.CodeSigning) > 0) {
                 Uses.Add(Constants.OID__id_kp_codeSigning);
-                KeyUses = KeyUses | KeyUses.DigitalSignature;
+                KeyUses |= KeyUses.DigitalSignature;
                 }
 
             bool EmailProtection = false;
@@ -207,40 +207,40 @@ namespace Goedel.Cryptography.PKIX {
                 Uses.Add(Constants.OID__id_kp_emailProtection);
                 //Uses.Add(Constants.OID__netscape_smime); // required by some S/MIME clients
                 EmailProtection = true;
-                KeyUses = KeyUses | KeyUses.KeyEncipherment;
+                KeyUses |= KeyUses.KeyEncipherment;
                 }
 
             if ((Use & Application.EmailSignature) > 0) {
                 if (!EmailProtection) {
                     Uses.Add(Constants.OID__id_kp_emailProtection);
                     }
-                KeyUses = KeyUses | KeyUses.DigitalSignature;
+                KeyUses |= KeyUses.DigitalSignature;
                 }
 
             if ((Use & Application.DataEncryption) > 0) {
-                KeyUses = KeyUses | KeyUses.KeyEncipherment;
+                KeyUses |= KeyUses.KeyEncipherment;
                 }
 
             if ((Use & Application.DataSignature) > 0) {
-                KeyUses = KeyUses | KeyUses.DigitalSignature;
+                KeyUses |= KeyUses.DigitalSignature;
                 }
 
             if ((Use & Application.TimeStamping) > 0) {
                 Uses.Add(Constants.OID__id_kp_timeStamping);
-                KeyUses = KeyUses | KeyUses.DigitalSignature;
+                KeyUses |= KeyUses.DigitalSignature;
                 }
 
             if ((Use & Application.OCSP) > 0) {
                 Uses.Add(Constants.OID__id_kp_OCSPSigning);
-                KeyUses = KeyUses | KeyUses.DigitalSignature;
+                KeyUses |= KeyUses.DigitalSignature;
                 }
 
             if ((Use & Application.CRL) > 0) {
-                KeyUses = KeyUses | KeyUses.CRLSign;
+                KeyUses |= KeyUses.CRLSign;
                 }
 
             if (((Use & Application.PersonalMaster) > 0) | ((Use & Application.DeviceMaster) > 0)) {
-                KeyUses = KeyUses | KeyUses.DigitalSignature;
+                KeyUses |= KeyUses.DigitalSignature;
                 }
 
             if ((Use & Application.Confirmation) > 0) {
@@ -249,12 +249,12 @@ namespace Goedel.Cryptography.PKIX {
 
             if (((Use & Application.CA) > 0) | ((Use & Application.PersonalMaster) > 0) | ((Use & Application.DeviceMaster) > 0)) {
                 CA = true;
-                KeyUses = KeyUses | KeyUses.KeyCertSign;
+                KeyUses |= KeyUses.KeyCertSign;
                 }
 
             if ((Use & Application.Root) > 0) {
                 CA = true;
-                KeyUses = KeyUses | KeyUses.KeyCertSign;
+                KeyUses |= KeyUses.KeyCertSign;
                 }
 
             SetBasicConstraints(CA, PathLen);

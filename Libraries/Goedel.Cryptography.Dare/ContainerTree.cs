@@ -261,8 +261,8 @@ namespace Goedel.Cryptography.Dare {
                 if ((x2 & 1) == 1) {
                     return x2 == 1 ? (d / 2) - 1 : Frame - d;
                     }
-                d = d * 2;
-                x2 = x2 / 2;
+                d *= 2;
+                x2 /= 2;
                 }
             return 0;
             }

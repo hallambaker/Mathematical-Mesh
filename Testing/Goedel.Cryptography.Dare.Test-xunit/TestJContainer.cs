@@ -197,7 +197,7 @@ namespace Goedel.XUnit {
             ReOpen = ReOpen == 0 ? Records : ReOpen;
             MaxSize = MaxSize == 0 ? Records + 1 : MaxSize;
 
-            FileName = FileName + $"-{Records}";
+            FileName += $"-{Records}";
 
             int Record;
 

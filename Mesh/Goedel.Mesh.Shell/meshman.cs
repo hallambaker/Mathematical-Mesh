@@ -1395,6 +1395,10 @@ namespace Goedel.Mesh.Shell {
 		String			DeviceDescription{get; set;}
 		}
 
+	public interface IMasterProfileInfo {
+		String			MasterUDF{get; set;}
+		}
+
 	public interface IDeviceAuthOptions {
 		String			Auth{get; set;}
 		Flag			AuthAdmin{get; set;}
@@ -1694,7 +1698,9 @@ namespace Goedel.Mesh.Shell {
 
     public class _ProfileRegister : Goedel.Command.Dispatch ,
 							IReporting,
-							IAccountOptions {
+							IAccountOptions,
+							IMasterProfileInfo,
+							IDeviceProfileInfo {
 
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
 			new String (),
@@ -1702,6 +1708,11 @@ namespace Goedel.Mesh.Shell {
 			new Flag (),
 			new Flag (),
 			new Flag (),
+			new String (),
+			new String (),
+			new Flag (),
+			new String (),
+			new String (),
 			new String ()			} ;
 
 
@@ -1762,6 +1773,51 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _Mesh {
 			set => _Data[5].Parameter (value);
 			}
+		/// <summary>Field accessor for option [mudf]</summary>
+		public virtual String MasterUDF {
+			get => _Data[6] as String;
+			set => _Data[6]  = value;
+			}
+
+		public virtual string _MasterUDF {
+			set => _Data[6].Parameter (value);
+			}
+		/// <summary>Field accessor for option [new]</summary>
+		public virtual Flag DeviceNew {
+			get => _Data[7] as Flag;
+			set => _Data[7]  = value;
+			}
+
+		public virtual string _DeviceNew {
+			set => _Data[7].Parameter (value);
+			}
+		/// <summary>Field accessor for option [dudf]</summary>
+		public virtual String DeviceUDF {
+			get => _Data[8] as String;
+			set => _Data[8]  = value;
+			}
+
+		public virtual string _DeviceUDF {
+			set => _Data[8].Parameter (value);
+			}
+		/// <summary>Field accessor for option [did]</summary>
+		public virtual String DeviceID {
+			get => _Data[9] as String;
+			set => _Data[9]  = value;
+			}
+
+		public virtual string _DeviceID {
+			set => _Data[9].Parameter (value);
+			}
+		/// <summary>Field accessor for option [dd]</summary>
+		public virtual String DeviceDescription {
+			get => _Data[10] as String;
+			set => _Data[10]  = value;
+			}
+
+		public virtual string _DeviceDescription {
+			set => _Data[10].Parameter (value);
+			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
@@ -1811,6 +1867,41 @@ namespace Goedel.Mesh.Shell {
 					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
 					Index = 5,
 					Key = "mesh"
+					},
+				new DescribeEntryOption () {
+					Identifier = "MasterUDF", 
+					Default = null, // null if null
+					Brief = "Master profile fingerprint",
+					Index = 6,
+					Key = "mudf"
+					},
+				new DescribeEntryOption () {
+					Identifier = "DeviceNew", 
+					Default = "false", // null if null
+					Brief = "Force creation of new device profile",
+					Index = 7,
+					Key = "new"
+					},
+				new DescribeEntryOption () {
+					Identifier = "DeviceUDF", 
+					Default = null, // null if null
+					Brief = "Device profile fingerprint",
+					Index = 8,
+					Key = "dudf"
+					},
+				new DescribeEntryOption () {
+					Identifier = "DeviceID", 
+					Default = null, // null if null
+					Brief = "Device identifier",
+					Index = 9,
+					Key = "did"
+					},
+				new DescribeEntryOption () {
+					Identifier = "DeviceDescription", 
+					Default = null, // null if null
+					Brief = "Device description",
+					Index = 10,
+					Key = "dd"
 					}
 				}
 			};

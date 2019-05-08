@@ -166,6 +166,9 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         public JBCDStream DisposeJBCDStream;
 
+
+
+
         #region // IDisposable
 
         /// <summary>
@@ -174,6 +177,9 @@ namespace Goedel.Cryptography.Dare {
         protected override void Disposing() => DisposeJBCDStream?.Dispose();
 
         #endregion
+
+
+
 
 
         readonly static byte[] NullArray = new byte[] { };
@@ -196,12 +202,15 @@ namespace Goedel.Cryptography.Dare {
         public static Container Open(
                         string fileName,
                         FileStatus fileStatus = FileStatus.Read,
-                        KeyCollection keyCollection = null,
+                        keyCollection keyCollection = null,
                         CryptoParameters cryptoParameters = null,
                         ContainerType containerType = ContainerType.Unknown,
                         string contentType = null) {
 
-            var JBCDStream = new JBCDStream(fileName, FileStatus: fileStatus);
+            var JBCDStream = new JBCDStream(fileName, fileStatus: fileStatus);
+
+
+
 
             try {
 
@@ -241,7 +250,7 @@ namespace Goedel.Cryptography.Dare {
         /// <returns>The new container.</returns>
         public static Container Open(
                         JBCDStream jbcdStream,
-                        KeyCollection keyCollection = null) {
+                        keyCollection keyCollection = null) {
 
 
             var Container = OpenExisting(jbcdStream, keyCollection);
@@ -253,7 +262,7 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// The default key collection to use for decryption
         /// </summary>
-        protected KeyCollection KeyCollection;
+        protected keyCollection KeyCollection;
 
         /// <summary>
         /// Open an existing container according to the information contained in the next frame to be read.
@@ -265,7 +274,7 @@ namespace Goedel.Cryptography.Dare {
         /// <returns></returns>
         public static Container OpenExisting(
                         JBCDStream jbcdStream,
-                        KeyCollection keyCollection = null) {
+                        keyCollection keyCollection = null) {
             var Found = jbcdStream.ReadFrame(out var Header, out var FrameData, out var FrameTrailer);
             var ContainerHeaderFirst = Cryptography.Dare.ContainerHeaderFirst.FromJSON(Header.JSONReader(), false);
 
@@ -574,7 +583,7 @@ namespace Goedel.Cryptography.Dare {
         public long AppendFrame(byte[] header, byte[] payload = null, byte[] trailer = null) {
             // Write the frame ensuring the results get written out.
             var Length = JBCDStream.WriteWrappedFrame(header, payload, trailer);
-            JBCDStream.Flush();
+
             return Length;
             }
 
@@ -756,7 +765,7 @@ namespace Goedel.Cryptography.Dare {
                 message.Header = ContainerHeader.FromJSON(headerData.JSONReader(), false);
                 }
             if (trailerData != null) {
-                JSONReader.Trace = true;
+                //JSONReader.Trace = true;
                 Console.WriteLine(trailerData.ToUTF8());
                 message.Trailer = DareTrailer.FromJSON(trailerData.JSONReader(), false);
                 }

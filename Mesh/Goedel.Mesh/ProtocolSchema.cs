@@ -39,7 +39,7 @@ namespace Goedel.Mesh {
 
 	/// <summary>
 	///
-	/// Communication between the user and the portal.
+	/// Protocol interactions supported by the Mesh Service.
 	/// </summary>
 	public abstract partial class MeshProtocol : global::Goedel.Protocol.JSONObject {
 
@@ -1694,6 +1694,10 @@ namespace Goedel.Mesh {
         /// </summary>
 
 		public virtual PolicyAccount						PolicyAccount  {get; set;}
+        /// <summary>
+        /// </summary>
+
+		public virtual ProfileService						ProfileService  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -1752,6 +1756,11 @@ namespace Goedel.Mesh {
 				_Writer.WriteToken ("PolicyAccount", 1);
 					PolicyAccount.Serialize (_Writer, false);
 				}
+			if (ProfileService != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("ProfileService", 1);
+					ProfileService.Serialize (_Writer, false);
+				}
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
 				}
@@ -1802,6 +1811,13 @@ namespace Goedel.Mesh {
 					// An untagged structure
 					PolicyAccount = new PolicyAccount ();
 					PolicyAccount.Deserialize (JSONReader);
+ 
+					break;
+					}
+				case "ProfileService" : {
+					// An untagged structure
+					ProfileService = new ProfileService ();
+					ProfileService.Deserialize (JSONReader);
  
 					break;
 					}

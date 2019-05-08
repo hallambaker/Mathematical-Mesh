@@ -34,15 +34,16 @@
 			Description
 				|The private key parameters as defined in the JOSE specification.
 		
-	Section 2 "Mesh Profile Objects"
+	Section 3 "Mesh Assertion Objects"
 		Description 
-			|Base class for all Mesh Profile objects.
+			|Base class for all Mesh Assertion objects.
 
 
-	Structure Profile
+
+	Structure Assertion
 		Abstract
 		Description 
-			|Parent class from which all profile types are derived
+			|Parent class from which all assertion classes are derived
 		String Names
 			Multiple
 			Description
@@ -56,8 +57,38 @@
 			Description
 				|A Uniform Notary Token providing evidence that a signature
 				|was performed after the notary token was created.
+		TStruct Condition Conditions
+			Description
+				|Conditional clause(s) that MAY be verified to evaluate the validity of the
+				|assertion. At present no condition classes are specified.
 
-	Section 3 "Keyset Classes"
+	Structure Condition
+		Abstract
+		Description 
+			|Parent class from which all condition classes are derived.
+
+	Structure Profile
+		Abstract
+		Inherits Assertion
+		Description 
+			|Parent class from which all profile classes are derived
+		Struct PublicKey SignatureKey
+			Description
+				|The signature key associated with the profile.
+
+	Section 3 "Classes describing keys"
+
+
+	Structure KeyOverlay
+		String UDF
+			Description
+				|Fingerprint of the resulting composite key (to allow verification)
+		String BaseUDF
+			Description
+				|Fingerprint specifying the base key
+		TStruct Key EncryptionKey
+			Description
+				|The overlay key contribution.
 
 	Structure EscrowedKeySet
 		Description
@@ -77,14 +108,6 @@
 		Inherits Profile
 		Description 
 			|Describes the long term parameters associated with a personal profile.
-		Description
-			|This profile MUST be signed by 
-		Struct PublicKey MasterSignatureKey
-			Description
-				|The root of trust for the Personal PKI, the public key of the PMSK 
-				|is presented as a self-signed X.509v3 certificate with Certificate 
-				|Signing use enabled. The PMSK is used to sign certificates for the 
-				|PMEK, POSK and PKEK keys.
 		Struct PublicKey MasterEscrowKeys
 			Multiple
 			Description
@@ -100,37 +123,30 @@
 		Inherits Profile
 		Description 
 			|Describes a mesh device.
-		Description
-			|This profile MUST be signed by the DeviceSignatureKey
 		String Description
 			Description
 				|Description of the device
-		Struct PublicKey DeviceSignatureKey
-			Description
-				|Key used to sign certificates for the DAK and DEK. The fingerprint of
-				|the DSK is the UniqueID of the Device Profile
-		Struct PublicKey DeviceAuthenticationKey
+		Struct PublicKey AuthenticationKey
 			Description
 				|Key used to authenticate requests made by the device.
-		Struct PublicKey DeviceEncryptionKey
+		Struct PublicKey EncryptionKey
 			Description
 				|Key used to pass encrypted data to the device such as a
 				|DeviceUseEntry
 
-	Structure ProfileApplication
-		Abstract
+	Structure ProfileService
 		Inherits Profile
 		Description 
-			|Contains the public description of a Mesh application.
+			|Profile of a Mesh Service
+		Struct PublicKey AuthenticationKey
+			Description
+				|Key used to authenticate service connections.
 
 
-
-
-	Structure ProfileMesh
-		Inherits ProfileApplication
+	Structure AssertionAccount
+		Inherits Assertion
 		Description 
-			|Contains the binding of a device to a MasterProfile. Each device has a separate
-			|profile which MUST be signed by an OnlineSignatureKey
+			|Account assertion. This is signed by the service hosting the account.
 		String Account
 			Description
 				|Account address.
@@ -141,30 +157,54 @@
 			Description
 				|Key used to encrypt data under this profile
 
-
-	Structure ProfileMeshDevicePublic
-		Inherits ProfileApplication
-		Struct DareMessage DeviceProfile
-			Description
-				|Device profile of the device making the request.
+	Structure AssertionDeviceConnection
+		Inherits Assertion
 		Struct Permission Permissions
 			Multiple
 			Description
 				|List of the permissions that the device has been granted.
+		Struct PublicKey SignatureKey
+			Description
+				|The signature key for use of the device under the profile
+		Struct PublicKey EncryptionKey
+			Description
+				|The encryption key for use of the device under the profile
+		Struct PublicKey AuthenticationKey
+			Description
+				|The authentication key for use of the device under the profile
 
-	Structure ProfileMeshDevicePrivate
-		Inherits ProfileApplication
-		Struct Permission Permissions
+
+	Structure AssertionDevicePrivate // To do list accounts as permissions 
+		Inherits Assertion
+		Struct Activation Activations
 			Multiple
 			Description
-				|List of the permissions that the device has been granted.
-		Binary ProfileNonce
+				|List of application and account activation data. Keys, etc.
+		Struct KeyOverlay SignatureKey
 			Description
-				|Random nonce used to mask the fingerprint of the profile UDF.
-		Binary ProfileWitness
+				|The key overlay used to generate the account signature key from the
+				|device signature key 
+		Struct KeyOverlayEncryptionKey
 			Description
-				|Witness value calculated over the ProfileNonce and profile UDF
+				|The key overlay used to generate the account encryption key from the
+				|device encryption key 
+		Struct KeyOverlay AuthenticationKey
+			Description
+			Description
+				|The key overlay used to generate the account authentication key from the
+				|device authentication key 
+	
 
+
+	Structure ProfileApplication
+		Abstract
+		Inherits Profile
+		Description 
+			|Contains the public description of a Mesh application.
+
+	Structure Activation
+		Description 
+			|Contains the private activation information for a Mesh application.
 
 	Structure DeviceRecryptionKey
 		String UDF
@@ -244,26 +284,29 @@
 		Inherits CatalogEntry
 		Description
 			|Public device entry, indexed under the device ID
-		String Account
+		String Accounts
+			Multiple
 			Description
-				|The Account to which this entry binds this device.
-		String UDF;
+				|The accounts to which this device is bound.
+		String UDF
 			Description
 				|UDF of the signature key
-		String AuthUDF;
+		String DeviceUDF
+			Description
+				|UDF of the underlying device profile
+		String AuthUDF
 			Description
 				|UDF of the authentication ID
-		Struct DareMessage ProfileMeshDevicePublicSigned
+		Struct DareMessage SignedDeviceConnection
 			Description
 				|The device profile
-		Struct DareMessage ProfileMeshDevicePrivateEncrypted
+		Struct DareMessage EncryptedDevicePrivate
 			Description
 				|The device profile
 		Struct DeviceRecryptionKey DeviceRecryptionKeys
 			Multiple
 			Description
 				|Decryption key entries.	
-
 
 	Structure CatalogEntryCredential
 		Inherits CatalogEntry

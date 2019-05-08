@@ -79,7 +79,7 @@ namespace Goedel.Cryptography {
     /// <returns>the created key pair</returns>
     public delegate KeyPair FactoryRSAPrivateKeyDelegate(
             PKIXPrivateKeyRSA pkixParameters,
-            KeySecurity keyType, KeyCollection keyCollection);
+            KeySecurity keyType, keyCollection keyCollection);
 
     /// <summary>
     /// RSA Key Pair

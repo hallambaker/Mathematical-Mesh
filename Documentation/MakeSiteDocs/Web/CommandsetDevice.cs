@@ -34,7 +34,7 @@ namespace ExampleGenerator {
 				_Output.Write ("to request connection to the user's profile. Alice need only specify \n{0}", _Indent);
 				_Output.Write ("the mesh service account {1} to which connection is requested:\n{0}", _Indent, Examples.AliceAccount);
 				_Output.Write ("\n{0}", _Indent);
-				  ConsoleExample (Examples.DeviceRequest);
+				  ConsoleExample (Examples.ConnectRequest);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("In this case there is no existing device profile and so a new profile is\n{0}", _Indent);
 				_Output.Write ("created and used to create a registration request which is posted to the user's \n{0}", _Indent);
@@ -367,7 +367,7 @@ namespace ExampleGenerator {
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				  ConsoleReference (Examples.DeviceRequest);
+				  ConsoleReference (Examples.ConnectRequest);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 					}

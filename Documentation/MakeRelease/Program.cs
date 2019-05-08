@@ -7,7 +7,7 @@ using Goedel.IO;
 namespace Goedel.Tool.Version {
     class Program {
         static string PathDistribution = "prismproof\\Downloads";
-        static string PathSummary = "Sources\\" + PathDistribution;
+        //static string PathSummary = "Sources\\" + PathDistribution;
 
         public Distribution Distribution = new Distribution();
 

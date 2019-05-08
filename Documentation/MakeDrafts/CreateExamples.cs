@@ -118,8 +118,8 @@ namespace ExampleGenerator {
 
         void GenerateKeys() {
             // Encryption Key Set.
-            var machineEnvironment = new TestEnvironmentMachine( "TestLifecycle");
-            var Machine1 = new MeshMachineTest(machineEnvironment, name: "Machine1");
+            var machineEnvironment = new TestEnvironmentPerTest( "TestLifecycle");
+            var Machine1 = new MeshMachineTest(TestEnvironment, name: "Machine1");
 
             
             var DareMessageAlicePrivateKeyPair = KeyPairEd25519.Generate(
@@ -287,10 +287,6 @@ namespace ExampleGenerator {
             return CryptoStack.EncodeEDS(Plaintext, null);
             }
 
-        static readonly byte[] MasterKeyInfo = "master".ToUTF8();
-
-
-
 
         public string ContainerFramingSimple = "";
         StringWriter ConsoleWriter;
@@ -385,7 +381,7 @@ namespace ExampleGenerator {
         public ProfileMaster AdvancedRecryptionGroup;
         public string AdvancedRecryptionMessagePlaintext;
         public DareMessage AdvancedRecryptionMessageEncrypted;
-        public ProfileApplication AdvancedRecryptionBobProfile;
+        public Assertion AdvancedRecryptionBobProfile;
         public Key AdvancedRecryptionBobDecryptionKey;
         public Key AdvancedRecryptionBobRecryptionKey;
         public Key AdvancedRecryptionBobRecryptionEntry;

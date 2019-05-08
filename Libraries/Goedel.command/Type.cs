@@ -342,10 +342,8 @@ namespace Goedel.Command {
         public T Value;
 
         ///<summary>Base constructor</summary>
-        public _Enumeration(DescribeEntryEnumerate description, string Value = null) {
-            Description = description;
-            }
+        public _Enumeration(DescribeEntryEnumerate description, string Value = null) => Description = description;
 
-        }
+    }
 
     }

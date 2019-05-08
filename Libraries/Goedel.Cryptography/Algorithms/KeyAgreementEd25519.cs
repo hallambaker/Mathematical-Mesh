@@ -282,7 +282,7 @@ namespace Goedel.Cryptography.Algorithms {
             var Digest = Sha512.Hash;
             var Result = Digest.BigIntegerLittleEndian();
 
-            Result = Result % Q;
+            Result %= Q;
 
             return Result;
             }

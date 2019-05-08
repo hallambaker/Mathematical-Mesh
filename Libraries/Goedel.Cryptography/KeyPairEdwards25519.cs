@@ -100,6 +100,21 @@ namespace Goedel.Cryptography {
             KeyType = KeySecurity.Bound;
             KeyUses = keyUses;
             }
+        
+        /// <summary>
+        /// Construct class from a public key value
+        /// </summary>
+        /// <param name="Public">The public key value</param>
+        /// <param name="cryptoAlgorithmID">Specifies the default algorithm variation for use
+        /// in signature operations.</param>
+        public KeyPairEd25519(IKeyAdvancedPublic Public,
+                    CryptoAlgorithmID cryptoAlgorithmID = CryptoAlgorithmID.Default) {
+
+            CryptoAlgorithmID = cryptoAlgorithmID.DefaultMeta(CryptoAlgorithmID.Ed25519);
+            PublicKey = Public as CurveEdwards25519Public;
+            PKIXPublicKeyECDH = new PKIXPublicKeyEd25519(PublicKey.Encoding);
+
+            }
 
         /// <summary>
         /// Generate a new private key.
@@ -114,20 +129,16 @@ namespace Goedel.Cryptography {
                     CryptoAlgorithmID cryptoAlgorithmID = CryptoAlgorithmID.Default) =>
             new KeyPairEd25519(Platform.GetRandomBits(256), keyType, keyUses, cryptoAlgorithmID);
 
-
         /// <summary>
-        /// Construct class from a public key value
+        /// Generate a key co-generation contribution and return the new composite public
+        /// key and the private key contribution.
         /// </summary>
-        /// <param name="Public">The public key value</param>
-        /// <param name="cryptoAlgorithmID">Specifies the default algorithm variation for use
-        /// in signature operations.</param>
-        public KeyPairEd25519(IKeyAdvancedPublic Public,
-                    CryptoAlgorithmID cryptoAlgorithmID = CryptoAlgorithmID.Default) {
-
-            CryptoAlgorithmID = cryptoAlgorithmID.DefaultMeta(CryptoAlgorithmID.Ed25519);
-            PublicKey = Public as CurveEdwards25519Public;
-            PKIXPublicKeyECDH = new PKIXPublicKeyEd25519(PublicKey.Encoding);
-            
+        /// <param name="privateKey">The private key contribution.</param>
+        /// <returns>The composite public key.</returns>
+        public override KeyPairAdvanced Cogenerate(out KeyPairAdvanced privateKey) {
+            privateKey = Generate(KeySecurity.Exportable, KeyUses, CryptoAlgorithmID);
+            var combinedKey = PublicKey.Combine(privateKey.IKeyAdvancedPublic as CurveEdwards25519Public);
+            return new KeyPairEd25519(combinedKey, CryptoAlgorithmID);
             }
 
         /// <summary>
@@ -158,7 +169,7 @@ namespace Goedel.Cryptography {
         /// Persist the key to a key collection. Note that it is only possible to store a 
         /// </summary>
         /// <param name="keyCollection"></param>
-        public override void Persist(KeyCollection keyCollection) {
+        public override void Persist(keyCollection keyCollection) {
             Assert.True(PersistPending);
             var pkix = PKIXPrivateKeyECDH ?? new PKIXPrivateKeyEd25519(EncodedPrivateKey, PKIXPublicKeyECDH) { };
             keyCollection.Persist(UDF, pkix, KeyType.IsExportable());

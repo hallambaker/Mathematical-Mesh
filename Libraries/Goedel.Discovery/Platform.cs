@@ -58,7 +58,7 @@ namespace Goedel.Discovery {
             int Result = Bytes[0] + 256 * Bytes[1];
 
             if (Result < 4096) {
-                Result = Result + 256 * (Bytes[2] | 0x10);
+                Result += 256 * (Bytes[2] | 0x10);
                 }
 
             return Result;

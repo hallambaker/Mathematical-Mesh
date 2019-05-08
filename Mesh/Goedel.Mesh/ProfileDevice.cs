@@ -8,12 +8,57 @@ using Goedel.Utilities;
 using Goedel.Protocol;
 namespace Goedel.Mesh {
 
-    public partial class Profile {
+    public partial class MeshItem {
 
         /// <summary>
-        /// The signed device profile
+        /// The DareMessage encapsulation of this object instance.
         /// </summary>
-        public virtual DareMessage ProfileSigned { get;  }
+        public virtual DareMessage DareMessage { get; protected set; }
+
+
+        public static object Initialize => null;
+
+        static MeshItem() => ContainerPersistenceStore.AddDictionary(_TagDictionary);
+
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <returns>The created object.</returns>		
+        public static new MeshItem FromJSON(JSONReader JSONReader, bool Tagged = true) {
+            if (JSONReader == null) {
+                return null;
+                }
+            if (Tagged) {
+                var Out = JSONReader.ReadTaggedObject(_TagDictionary);
+                return Out as MeshItem;
+                }
+            throw new CannotCreateAbstract();
+            }
+
+        public static MeshItem Decode(DareMessage message) {
+            var result = FromJSON(message.GetBodyReader(), true);
+            result.DareMessage = message;
+            return result;
+            }
+
+
+        }
+
+    public partial class Assertion {
+        public virtual DareMessage Encode (KeyPair keyPair) {
+            DareMessage = DareMessage.Encode(GetBytes(tag: true),
+                    signingKey: keyPair, contentType: "application/mmm");
+            return DareMessage;
+            }
+
+        public static new Assertion Decode(DareMessage message) {
+            var result = FromJSON(message.GetBodyReader(), true);
+            result.DareMessage = message;
+            return result;
+            }
         }
 
     public partial class ProfileDevice {
@@ -21,19 +66,10 @@ namespace Goedel.Mesh {
         public override string _PrimaryKey => UDF;
 
 
-        public string UDF => DeviceSignatureKey.UDF;
+        public string UDF => SignatureKey.UDF;
 
-        public byte[] UDFBytes => DeviceSignatureKey.KeyPair.PKIXPublicKey.UDFBytes(512);
+        public byte[] UDFBytes => SignatureKey.KeyPair.PKIXPublicKey.UDFBytes(512);
 
-        /// <summary>
-        /// The signed device profile
-        /// </summary>
-        public override DareMessage ProfileSigned => ProfileDeviceSigned;
-
-        /// <summary>
-        /// The signed device profile
-        /// </summary>
-        public DareMessage ProfileDeviceSigned { get; private set; }
 
         /// <summary>
         /// Constructor for use by deserializers.
@@ -52,34 +88,69 @@ namespace Goedel.Mesh {
                         KeyPair keyPublicAuthenticate) {
 
             var ProfileDevice = new ProfileDevice() {
-                DeviceSignatureKey = new PublicKey (keyPublicSign.KeyPairPublic()),
-                DeviceAuthenticationKey = new PublicKey(keyPublicAuthenticate.KeyPairPublic()),
-                DeviceEncryptionKey = new PublicKey(keyPublicEncrypt.KeyPairPublic())
+                SignatureKey = new PublicKey (keyPublicSign.KeyPairPublic()),
+                AuthenticationKey = new PublicKey(keyPublicAuthenticate.KeyPairPublic()),
+                EncryptionKey = new PublicKey(keyPublicEncrypt.KeyPairPublic())
                 };
 
             var bytes = ProfileDevice.GetBytes(tag:true);
 
-            ProfileDevice.ProfileDeviceSigned = DareMessage.Encode(bytes,
+            ProfileDevice.DareMessage = DareMessage.Encode(bytes,
                     signingKey: keyPublicSign, contentType: "application/mmm");
 
             return ProfileDevice;
 
             }
 
+        public static ProfileDevice Generate(
+                    keyCollection KeyCollection,
+                    CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
+                    CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default,
+                    CryptoAlgorithmID algorithmAuthenticate = CryptoAlgorithmID.Default,
+                    string description = null) {
 
-        public static ProfileDevice Decode(DareMessage message)=>
-            FromJSON(message.GetBodyReader(), true);
+            algorithmSign = algorithmSign.DefaultAlgorithmSign();
+            algorithmEncrypt = algorithmEncrypt.DefaultAlgorithmEncrypt();
+            algorithmAuthenticate = algorithmAuthenticate.DefaultAlgorithmAuthenticate();
+
+            var keySign = KeyPair.Factory(algorithmSign, KeySecurity.Device, KeyCollection, keyUses: KeyUses.Sign);
+            var keyEncrypt = KeyPair.Factory(algorithmEncrypt, KeySecurity.Device, KeyCollection, keyUses: KeyUses.Encrypt);
+            var keyAuthenticate = KeyPair.Factory(algorithmAuthenticate, KeySecurity.Device, keyUses: KeyUses.Encrypt);
+
+            var profile = Mesh.ProfileDevice.Generate(keySign, keyEncrypt, keyAuthenticate);
+            profile.Description = description;
+
+            return profile;
+            }
+
+        public static new ProfileDevice Decode(DareMessage message) {
+            var result = FromJSON(message.GetBodyReader(), true);
+            result.DareMessage = message;
+            return result;
+            }
 
         }
 
 
-    public partial class ProfileMeshDevicePrivate {
-        public static ProfileMeshDevicePrivate Decode(DareMessage message) =>
+    public partial class AssertionDevicePrivate {
+        public ProfileDevice ProfileDevice;
+
+        public override DareMessage Encode(KeyPair keyPair) {
+            this.DareMessage = DareMessage.Encode(GetBytes(tag: true),
+                    signingKey: keyPair, 
+                    encryptionKey:ProfileDevice.EncryptionKey.KeyPair, 
+                    contentType: "application/mmm");
+            return DareMessage;
+            }
+
+        public static new AssertionDevicePrivate Decode(DareMessage message) =>
                 FromJSON(message.GetBodyReader(), true);
         }
 
-    public partial class ProfileMeshDevicePublic {
-        public static ProfileMeshDevicePublic Decode(DareMessage message) =>
+    public partial class AssertionDeviceConnection {
+        public ProfileMaster ProfileMaster;
+
+        public static new AssertionDeviceConnection Decode(DareMessage message) =>
                 FromJSON(message.GetBodyReader(), true);
         }
 

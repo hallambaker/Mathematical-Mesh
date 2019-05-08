@@ -96,7 +96,6 @@ corresponding SSH device public keys added:
 
 ````
 >ssh merge client
-OK
 ````
 
 The `ssh merge host`  command reads the `known_hosts` file on a client machine and adds
@@ -105,7 +104,6 @@ the listed hosts to the user's ssh catalog.
 
 ````
 >ssh merge host
-OK
 ````
 
 ## Client Key management
@@ -117,7 +115,6 @@ SSH keys belonging to the user that are not part of the Mesh profile may be adde
 
 ````
 >ssh add client
-OK
 ````
 
 The list of known clients may be returned in various formats using the `ssh show client`  command.
@@ -125,7 +122,6 @@ The list of known clients may be returned in various formats using the `ssh show
 
 ````
 >ssh show client
-OK
 ````
 
 ## Host Key Management
@@ -135,7 +131,6 @@ The `ssh add host`  command adds specific host entries to the user's SSH profile
 
 ````
 >ssh add host
-OK
 ````
 
 The current list of known hosts in the SSH catalog is returned by the `ssh show known` 
@@ -144,7 +139,6 @@ command.
 
 ````
 >ssh show host
-OK
 ````
 
 ## Additional Devices
@@ -169,6 +163,5 @@ Once the device has been authorized, the client machine can start using SSH imme
 
 ````
 >ssh show host
-OK
 ````
 

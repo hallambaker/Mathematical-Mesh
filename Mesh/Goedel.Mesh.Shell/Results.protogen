@@ -38,6 +38,13 @@
 		Inherits		Result
 		Struct CatalogEntry CatalogEntry
 
+	Structure ResultMail
+		Inherits		ResultEntry
+	Structure ResultSSH
+		Inherits		ResultEntry
+
+
+
 	Structure ResultDump
 		Inherits		Result
 		Struct CatalogEntry CatalogEntries
@@ -47,24 +54,29 @@
 		Inherits		Result
 		Struct CatalogEntryDevice CatalogEntryDevices
 			Multiple
-		TStruct Profile Profiles
+		TStruct Assertion Profiles
 			Multiple
 
 	Structure ResultHello
 		Inherits		Result
 		Struct MeshHelloResponse Response
+		Struct ProfileService	ProfileService
 
 	Structure ResultDeviceCreate
-		Inherits		Result
-		String			DeviceUDF
-		Boolean			Default
-		String			Digest
-		String			Key
-		// TBS the connection request package
+		Inherits						Result
+		String							DeviceUDF
+		Boolean							Default
+		Struct ProfileDevice			ProfileDevice
 
 	Structure ResultMasterCreate
-		Inherits		ResultDeviceCreate
-		String			PersonalUDF
+		Inherits							ResultDeviceCreate
+		String								PersonalUDF
+		String								Account
+		Struct ProfileMaster				ProfileMaster
+		Struct AssertionDeviceConnection	DeviceConnection
+		Struct AssertionAccount				AssertionAccount
+		Struct AssertionDevicePrivate		AssertionDevicePrivate
+
 
 	Structure ResultSync
 		Inherits		Result

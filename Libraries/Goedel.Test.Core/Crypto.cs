@@ -22,9 +22,7 @@ namespace Goedel.Test.Core {
         /// </summary>
         public CryptoStackDebug(
                         CryptoParameters cryptoParameters
-                        ) : base(cryptoParameters) {
-            CalculateParameters(Salt, out KeyEncrypt, out KeyMac, out IV);
-            }
+                        ) : base(cryptoParameters) => CalculateParameters(Salt, out KeyEncrypt, out KeyMac, out IV);
 
         /// <summary>
         /// Add a recipient.
@@ -132,12 +130,12 @@ namespace Goedel.Test.Core {
 
     public class TestKeys {
 
-        KeyCollection KeyCollection;
+        keyCollection KeyCollection;
 
         public List<KeyPair> EncryptionKeys;
         public List<KeyPair> SignerKeys;
 
-        public TestKeys(KeyCollection KeyCollection = null) => this.KeyCollection = KeyCollection ?? KeyCollection.Default;
+        public TestKeys(keyCollection KeyCollection = null) => this.KeyCollection = KeyCollection ?? keyCollection.Default;
 
         public void AddEncrypt(bool Register = true) {
             EncryptionKeys = EncryptionKeys ?? new List<KeyPair>();
@@ -152,7 +150,7 @@ namespace Goedel.Test.Core {
             //Console.WriteLine($"  Public {PublicKeyKeypair.UDF}");
 
             if (Register) {
-                KeyCollection.Default.Add(Keypair);
+                keyCollection.Default.Add(Keypair);
                 }
             }
 

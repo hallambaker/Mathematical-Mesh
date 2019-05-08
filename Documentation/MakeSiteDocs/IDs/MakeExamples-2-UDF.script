@@ -26,6 +26,7 @@
 #% UDFAuthenticatorLong(Example);
 #% UDFDigestResolution(Example);
 #% UDFEncryptedResolution(Example);
+#% UDFAuthenticator(Example);
 #end method
 
 

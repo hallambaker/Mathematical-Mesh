@@ -26,6 +26,7 @@ namespace Goedel.Mesh.Shell {
             return new ResultDeviceCreate() {
                 Success = true,
                 DeviceUDF = context.ProfileDevice.UDF,
+                ProfileDevice = context.ProfileDevice,
                 Default = context.DefaultDevice
                 };
 

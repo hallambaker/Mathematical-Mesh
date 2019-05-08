@@ -28,7 +28,7 @@ namespace Goedel.Mesh.Shell {
 
             return new ResultHello() {
                 Success = true,
-                Response = response
+                Response = response,
                 };
             }
 
@@ -43,14 +43,20 @@ namespace Goedel.Mesh.Shell {
 
             using (var context = GetContextDeviceUncached(Options)) {
                 context.GenerateMaster();
-                var result = context.CreateAccount(account);
+                if (account != null) {
+                    var result = context.CreateAccount(account);
+                    }
 
                 return new ResultMasterCreate() {
                     Success = true,
                     DeviceUDF = context.ProfileDevice.UDF,
                     PersonalUDF = context.ProfileMaster.UDF,
-                    Default = context.DefaultDevice
+                    ProfileDevice = context.ProfileDevice,
+                    ProfileMaster = context.ProfileMaster,
+                    Default = context.DefaultDevice,
+                    Account = account
                     };
+
                 }
             }
 
@@ -60,13 +66,22 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult ProfileRegister(ProfileRegister Options) {
-            throw new NYI();
-            //var context = GetContextMaster(Options);
+            var account = Options.NewAccountID.Value;
 
-            //return new ResultConnect() {
-            //    Success = true
-            //    };
+            using (var context = GetContextDeviceUncached(Options)) {
+
+                var result = context.CreateAccount(account);
+
+                return new ResultMasterCreate() {
+                    Success = true,
+                    DeviceUDF = context.ProfileDevice.UDF,
+                    PersonalUDF = context.ProfileMaster.UDF,
+                    Default = context.DefaultDevice,
+                    Account = account
+                    };
+                }
             }
+
 
 
         /// <summary>
@@ -183,19 +198,12 @@ namespace Goedel.Mesh.Shell {
 
 
         public override ShellResult ProfileList(ProfileList Options) {
-            var profiles = CatalogHost.GetProfiles();
-            var accounts = CatalogHost.GetAccountDescriptions();
+            //var profiles = CatalogHost.GetProfiles();
+            //var accounts = CatalogHost.GetAccountDescriptions();
 
-            var catalogEntryDevices = new List<CatalogEntryDevice>() ;
-
-            foreach (var account in accounts) {
-                foreach (var device in account.Devices) {
-                    catalogEntryDevices.Add(device.Value);
-                    }
-                }
+            var catalogEntryDevices = CatalogHost.GetCatalogEntryDevices();
             return new ResultList() {
-                CatalogEntryDevices = catalogEntryDevices,
-                Profiles = profiles
+                CatalogEntryDevices = catalogEntryDevices
                 };
 
             }

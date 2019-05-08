@@ -38,9 +38,18 @@ This includes the steps of:
 
 * Register the Mesh profile with a Mesh service.
 
-The #{ToCommand("profile create")} command performs all four of these functions.
+The #{ToCommand("profile create")} command creates a profile:
 
-#%  ConsoleExample (Examples.ProfileMaster);
+#%  ConsoleExample (Examples.ProfileAliceCreate);
+
+The #{ToCommand("profile register")} commands registers a profile:
+
+#%  ConsoleExample (Examples.ProfileAliceRegister);
+
+Or we can perform both at once by specifying the service to register the profile when we create the
+profile:
+
+#%  ConsoleExample (Examples.ProfileCreateBob);
 
 
 #### Synchronizing a profile
@@ -134,7 +143,7 @@ a new profile is created. Otherwise, platform defaults are used.
 Cryptographic algorithms to be used for the signature and encryption algorithms 
 may be specified using the `/alg` option.
 
-#%  ConsoleReference (Examples.ProfileMaster);
+#%  ConsoleReference (Examples.ProfileAliceCreate);
 
 
 #% Describe(CommandSet, _ProfileEscrow._DescribeCommand);

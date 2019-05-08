@@ -25,6 +25,8 @@ namespace Goedel.Cryptography.Dare {
 
         // Goal: Make use of Indexes.
 
+        // Goal: implement locking mechanism
+
 
         #region --- Disposable objects
         //// Objects that MUST be disposed correctly when leaving a using section.
@@ -34,8 +36,11 @@ namespace Goedel.Cryptography.Dare {
         public Container Container;
 
 
+
         /// <summary>The value of the last frame index</summary>
         public long FrameCount => Container.FrameCount;
+
+
 
         /// <summary>
         /// The disposal routine. This is wrapped to provide the IDisposable interface. 
@@ -128,7 +133,7 @@ namespace Goedel.Cryptography.Dare {
                     ContainerType containerType = ContainerType.Chain,
                     DataEncoding dataEncoding = DataEncoding.JSON,
                     CryptoParameters cryptoParameters = null,
-                    KeyCollection keyCollection = null,
+                    keyCollection keyCollection = null,
                     bool readContainer = true) : this(
                         Container.Open(
                 fileName,
@@ -177,6 +182,8 @@ namespace Goedel.Cryptography.Dare {
 
 
             }
+
+
 
         /// <summary>
         /// Commit a transaction to memory.
@@ -304,6 +311,7 @@ namespace Goedel.Cryptography.Dare {
 
             var Result = new ContainerStoreEntry(containerHeader, previous, Data, item);
             return Result;
+
             }
 
 

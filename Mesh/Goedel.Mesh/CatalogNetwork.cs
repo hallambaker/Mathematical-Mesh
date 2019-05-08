@@ -68,7 +68,7 @@ namespace Goedel.Mesh {
 
         public CatalogNetwork(string directory, string ContainerName=null,
             CryptoParameters cryptoParameters = null,
-                    KeyCollection keyCollection = null) :
+                    keyCollection keyCollection = null) :
             base(directory, ContainerName, cryptoParameters, keyCollection) {
             }
 

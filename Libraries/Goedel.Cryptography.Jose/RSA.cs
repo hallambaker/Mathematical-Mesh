@@ -52,7 +52,7 @@ namespace Goedel.Cryptography.Jose {
         /// <param name="keyCollection">The key collection that keys are to be persisted to (dependent on 
         /// the value of <paramref name="keySecurity"/></param>
         /// <returns>The extracted key pair</returns>
-        public override KeyPair GetKeyPair(KeySecurity keySecurity, KeyCollection keyCollection) {
+        public override KeyPair GetKeyPair(KeySecurity keySecurity, keyCollection keyCollection) {
 
             var PKIXParams = PKIXPublicKeyRSA;
             var KeyPair = KeyPairBaseRSA.KeyPairPublicFactory(PKIXParams);
@@ -130,7 +130,7 @@ namespace Goedel.Cryptography.Jose {
         /// <param name="keyCollection">The key collection that keys are to be persisted to (dependent on 
         /// the value of <paramref name="keySecurity"/></param>
         /// <returns>The extracted key pair</returns>
-        public override KeyPair GetKeyPair (KeySecurity keySecurity, KeyCollection keyCollection) {
+        public override KeyPair GetKeyPair (KeySecurity keySecurity, keyCollection keyCollection) {
 
             var PKIXParams = PKIXPublicKeyRSA;
             var KeyPair = KeyPairBaseRSA.KeyPairPrivateFactory(PKIXPrivateKeyRSA, keySecurity, keyCollection);

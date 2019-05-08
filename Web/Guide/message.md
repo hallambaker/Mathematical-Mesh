@@ -29,7 +29,6 @@ using the `message contact` command:
 
 ````
 >message contact alice@example.com
-ERROR - Object reference not set to an instance of an object.
 ````
 
 Alice reviews her pending messages using the `message pending` command:
@@ -37,7 +36,6 @@ Alice reviews her pending messages using the `message pending` command:
 
 ````
 >message pending
-OK
 ````
 
 Alice sees the request from Bob and accepts it with the `message accept` command:
@@ -45,7 +43,6 @@ Alice sees the request from Bob and accepts it with the `message accept` command
 
 ````
 >message accept tbs
-OK
 ````
 
 Bob's contact information has been added to Alice's address book:
@@ -53,7 +50,6 @@ Bob's contact information has been added to Alice's address book:
 
 ````
 >contact list
-OK
 {
   "Key": "alice@example.com",
   "Permissions": [{
@@ -61,16 +57,33 @@ OK
   "Contact": [{
       "dig": "S512",
       "cty": "application/mmm"},
-    "ewogICJDb250YWN0IjogewogICAgIklkZW50aWZpZXIiOiAiTURITy1
-  XSEg3LTRSWkMtRFU2Uy01RkxBLTZDSVctRUpLNiIsCiAgICAiQWNjb3VudCI6I
+    "ewogICJDb250YWN0IjogewogICAgIklkZW50aWZpZXIiOiAiTUNZNy1
+  WR1ZWLUsyWlotS1FXQi01NjZELUY0UEQtV0tSMyIsCiAgICAiQWNjb3VudCI6I
   CJhbGljZUBleGFtcGxlLmNvbSJ9fQ",
     {
       "signatures": [{
-          "signature": "oZMTB-uFvu9hYlfY1uXqtQdyYuJF_iKZ4es8vT4Rf1dcumgjs
-  R_83F3VARp3WrpUkW7ncOvq0_uAC7DoImAE8-g-ltq-W8nDtblZo9H85J791fv
-  Xfp-9V-t3H0J6ZeYX0Wi4RtxqciDO3XdSd8VvpC8A"}],
-      "PayloadDigest": "iNEJ1C9mztxFDGW7l6HtRAc-MeEDSdl4D4J_l1UvMbMHd
-  5bw5I5GDJE-POVk-83Ycac78xPbU8goDI18BGeYcA"}]}
+          "signature": "uKfOtAgEHkRdBI6aj29hBx1y-agzZQ721eVg0bOn0ZA8zTXoC
+  KY3Yh7t_V5Sd6so8UG2jFp42lMAf0vrjpknAemi66vnAePm_HT5GB-Dt0-63N3
+  cvvxKFh1tRLhcNrTh7jQ8-LWgIIqM9tK6hZSh8SIA"}],
+      "PayloadDigest": "pn2o3KqaBDdHcWDpRw5Lj-IEdj9kGFL7m2F2VVfWKt_tN
+  8ZbTdPuQjC_1lpLg33w_lLlG0eLJnCrjCQ8p6FYLA"}]}
+{
+  "Key": "alice@example.net",
+  "Permissions": [{
+      "Name": "self"}],
+  "Contact": [{
+      "dig": "S512",
+      "cty": "application/mmm"},
+    "ewogICJDb250YWN0IjogewogICAgIklkZW50aWZpZXIiOiAiTUNZNy1
+  WR1ZWLUsyWlotS1FXQi01NjZELUY0UEQtV0tSMyIsCiAgICAiQWNjb3VudCI6I
+  CJhbGljZUBleGFtcGxlLm5ldCJ9fQ",
+    {
+      "signatures": [{
+          "signature": "Mc6DcXDIYblxSbsowSEHl_0x3M9F6UhU0YIBt49crkolAT8_H
+  v9JxnlTQK6bfUWC6VUiH_ye_fSApW7uDGefpkyUeY1vkyRN1BlZQXaPDBbz2EJ
+  jeqlMl7jArGyXozB4sdVvkJyQmr038ijIzvQtVSsA"}],
+      "PayloadDigest": "yHfXaJnUbLAk-8qPwP0-bs8y9yL_mRXTMp-RNLWFoiFdV
+  rn4yOfX-z_9fUtxL_NEAZA-sQnF4qpIWGSBhPFYtw"}]}
 ````
 
 Bob can find out if Alice has accepted his contact request using the 
@@ -79,7 +92,6 @@ Bob can find out if Alice has accepted his contact request using the
 
 ````
 >message status tbs
-OK
 ````
 
 Alice has accepted Bob's request and added him to her contacts list. She has also sent
@@ -91,7 +103,6 @@ using the `message reject` command:
 
 ````
 >message reject tbs
-OK
 ````
 
 For good measure, she decides to block further requests:
@@ -99,7 +110,6 @@ For good measure, she decides to block further requests:
 
 ````
 >message block mallet@example.com
-OK
 ````
 
 The Mesh Confirmation protocol allows a message sender to ask the recipient a short
@@ -131,7 +141,6 @@ a confirmation request `Purchase equipment for $6,000?` using the
 
 ````
 >message confirm alice@example.com "Purchase equipment for $6,000?"
-OK
 ````
 
 Alice reviews her pending messages using the using the `message pending` command:
@@ -139,7 +148,6 @@ Alice reviews her pending messages using the using the `message pending` command
 
 ````
 >message pending
-OK
 ````
 
 Alice she accepts Bob's request using the `message pending` command:
@@ -147,7 +155,6 @@ Alice she accepts Bob's request using the `message pending` command:
 
 ````
 >message accept tbs
-OK
 ````
 
 Bob receives Alice's approval using the `message status` command:
@@ -155,7 +162,6 @@ Bob receives Alice's approval using the `message status` command:
 
 ````
 >message status tbs
-OK
 ````
 
 In a full workflow system, Bob might include the response from Alice in a message to
@@ -166,7 +172,6 @@ Alice can also reject requests using the `message reject` command:
 
 ````
 >message reject tbs
-OK
 ````
 
 Bob receives a reply telling him the request was rejected:
@@ -174,7 +179,6 @@ Bob receives a reply telling him the request was rejected:
 
 ````
 >message status tbs
-OK
 ````
 
 As with all Mesh messages, confirmation requests are subject to access control.
@@ -184,7 +188,6 @@ hasn't accepted his credentials or authorized him to send confirmation requests:
 
 ````
 >message confirm alice@example.com "Purchase equipment for $6,000?"
-OK
 ````
 
 

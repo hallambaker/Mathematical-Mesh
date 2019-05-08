@@ -48,7 +48,7 @@ namespace Goedel.Cryptography.Jose {
         /// <param name="keySecurity">The key security model</param>
         /// <param name="keyCollection">The key collection to add the key to.</param>
         /// <returns>The extracted key pair</returns>
-        public override KeyPair GetKeyPair(KeySecurity keySecurity, KeyCollection keyCollection) {
+        public override KeyPair GetKeyPair(KeySecurity keySecurity, keyCollection keyCollection) {
 
             var KeyPair = KeyPairBaseDH.KeyPairPublicFactory(PKIXParameters);
 
@@ -102,7 +102,7 @@ namespace Goedel.Cryptography.Jose {
         /// <param name="keySecurity">The key security rextrictions.</param>
         /// <param name="keyCollection">The key collection to add the key to.</param>
         /// <returns>The extracted key pair</returns>
-        public override KeyPair GetKeyPair(KeySecurity keySecurity, KeyCollection keyCollection) {
+        public override KeyPair GetKeyPair(KeySecurity keySecurity, keyCollection keyCollection) {
             var KeyPair = KeyPairBaseDH.KeyPairPrivateFactory(DHPrivateKey, keySecurity);
             return KeyPair;
             }

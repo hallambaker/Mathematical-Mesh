@@ -4,8 +4,9 @@ using Goedel.Mesh.Test;
 using Goedel.Mesh.Shell;
 using Goedel.Test.Core;
 using Goedel.IO;
-using Goedel.Protocol.Debug;
-using Goedel.Test;
+using Goedel.Protocol;
+using Goedel.Utilities;
+using System.Linq;
 using Goedel.Cryptography;
 using System.Numerics;
 using System.Collections.Generic;
@@ -23,7 +24,7 @@ namespace ExampleGenerator {
             createWeb.Examples();
             }
 
-        TestCLI testCLIAlice1, testCLIAlice2, testCLIAlice3, testCLIAlice4, testCLIAlice5;
+        TestCLI testCLIAlice1, testCLIAlice2, testCLIAlice3, testCLIAlice4;
         TestCLI testCLIBob1;
         TestCLI testCLIMallet1;
 
@@ -93,7 +94,6 @@ namespace ExampleGenerator {
             testCLIAlice2 = GetTestCLI(AliceDevice2);
             testCLIAlice3 = GetTestCLI(AliceDevice3);
             testCLIAlice4 = GetTestCLI(AliceDevice4);
-            testCLIAlice5 = GetTestCLI(AliceDevice5);
             testCLIBob1 = GetTestCLI("Bob");
             testCLIMallet1 = GetTestCLI("Mallet");
 
@@ -104,6 +104,8 @@ namespace ExampleGenerator {
             TestFile4.WriteFileNew(TestText4.ToString());
             TestFile5.WriteFileNew(TestText5.ToString());
             var t2 = Directory.GetCurrentDirectory();
+
+            GitHub = true;
 
             UDFExamples();
             GoContainer();
@@ -123,10 +125,12 @@ namespace ExampleGenerator {
             DoCommandsMessage();
             DoCommandsGroup();
 
+            DoCommandsContact();
             DoCommandsBookmark();
             DoCommandsCalendar();
             DoCommandsNetwork();
             DoCommandsPassword();
+            DoCommandsMail();
             DoCommandsSSH();
 
             // Connect is last because we have to do the connection examples
@@ -142,6 +146,8 @@ namespace ExampleGenerator {
 
 
             Directory.SetCurrentDirectory("../Release/Documents");
+
+            GitHub = false;
 
             MakeArchitectureExamples(this);
             MakeUDFExamples(this);
@@ -304,7 +310,10 @@ namespace ExampleGenerator {
             }
         #endregion
         #region // Mesh commands
-        public List<ExampleResult> ProfileMaster;
+        public List<ExampleResult> ProfileAliceCreate;
+        public List<ExampleResult> ProfileAliceRegister;
+        public List<ExampleResult> ProfileAliceDelete;
+
         public List<ExampleResult> ProfileDevice;
         public List<ExampleResult> ProfileList;
         public List<ExampleResult> ProfileDump;
@@ -314,13 +323,35 @@ namespace ExampleGenerator {
         public List<ExampleResult> ProfileExport;
         public List<ExampleResult> ProfileImport;
         public List<ExampleResult> ProfileHello;
+        public List<ExampleResult> ProfileHelloDevice;
+        public List<ExampleResult> ProfileHelloProfile;
+        public List<ExampleResult> ProfileHelloTicket;
         public List<ExampleResult> ProfileRegister;
 
         public List<ExampleResult> ProfileSync;
 
+        public List<ExampleResult> ProfileCreateBob;
+
+        public JSONObject Profile;
+
+        public ResultMasterCreate AliceProfiles;
+        public ResultHello ResultHello;
+
+
+        public string AliceProfileUDF => (ProfileAliceRegister[0].Result as ResultMasterCreate)?.PersonalUDF ?? 
+            "uuuu-uuuu-uuuu".Task("Fix the register command");
+
+
         public void DoCommandsProfile() {
             ProfileHello = testCLIAlice1.Example($"profile hello {AliceAccount}");
-            ProfileMaster = testCLIAlice1.Example($"profile create  {AliceAccount}");
+            ResultHello = ProfileHello[0].Result as ResultHello;
+
+            ProfileAliceCreate = testCLIAlice1.Example($"profile create");
+            ProfileAliceRegister = testCLIAlice1.Example($"profile register  {AliceAccount}");
+
+            AliceProfiles = ProfileAliceCreate[0].Result as ResultMasterCreate;
+
+
             ProfileSync = testCLIAlice1.Example($"profile sync");
 
             ProfileList = testCLIAlice1.Example($"profile list");
@@ -330,15 +361,21 @@ namespace ExampleGenerator {
             var share1 = (ProfileEscrow[0].Result as ResultEscrow).Shares[0];
             var share2 = (ProfileEscrow[0].Result as ResultEscrow).Shares[2];
 
+            ProfileAliceDelete = testCLIAlice1.Example($"profile delete  {AliceAccount}");
+
             ProfileRecover = testCLIAlice1.Example($"profile recover ${share1} ${share2} /verify");
             ProfileExport = testCLIAlice1.Example($"profile export {TestExport}");
             ProfileImport = testCLIAlice2.Example($"profile import {TestExport}"); // do on another device
 
             ProfileRegister = testCLIAlice1.Example($"profile register {AliceAccount2}"); // do on another device
+
+
+            ProfileCreateBob = testCLIBob1.Example($"profile create  {BobAccount}");
+
             }
 
 
-        public List<ExampleResult> DeviceRequest;
+        public List<ExampleResult> ConnectRequest;
         public List<ExampleResult> ConnectRequestMallet;
         public List<ExampleResult> ConnectPending;
         public List<ExampleResult> ConnectAccept;
@@ -347,6 +384,7 @@ namespace ExampleGenerator {
         public List<ExampleResult> ConnectReject;
         public List<ExampleResult> ConnectGetPin;
         public List<ExampleResult> ConnectPin;
+        public List<ExampleResult> ConnectSyncPIN;
         public List<ExampleResult> ConnectPending3;
 
         public List<ExampleResult> ConnectEarlPrep;
@@ -363,9 +401,15 @@ namespace ExampleGenerator {
         public string DeviceCreateUDF;
         public string DeviceCreateHTTP;
 
+
+
+        public List<ExampleResult> ConnectDeviceDirect => Concat(PasswordAdd, PasswordGet);
+
         public void DoCommandsDevice() {
 
-            DeviceRequest = testCLIAlice2.Example($"device request {AliceAccount}");
+            // ToDo: need to add a flow for an administration QR code push and implement the QR code document.
+
+            ConnectRequest = testCLIAlice2.Example($"device request {AliceAccount}");
             ConnectPending = testCLIAlice1.Example($"device pending");
 
 
@@ -389,14 +433,11 @@ namespace ExampleGenerator {
             var pin = "tbs";// resultPin.MessageConnectionPIN.PIN;
             ConnectPin = testCLIAlice3.Example($"device request {AliceAccount} /pin={pin}");
             ConnectPending3 = testCLIAlice1.Example($"device pending");
-            var ConnectSyncPIN = testCLIAlice3.Example($"profile sync");
+            ConnectSyncPIN = testCLIAlice3.Example($"profile sync");
 
-            // Connect Device 4 using an EARL
-            DeviceCreate = testCLIAlice4.Example($"device create /id=\"IoTDevice\"");
 
             ConnectEarlPrep = testCLIAlice4.Example("key earl");
             var resultEarl = (ConnectEarlPrep[0].Result as ResultKey);
-
 
             DeviceCreateUDF = $"udf://{EARLService}/{resultEarl.Key}";
 
@@ -404,6 +445,9 @@ namespace ExampleGenerator {
             DeviceEarl2 = testCLIAlice4.Example($"profile sync");
             DeviceEarl3 = testCLIAlice1.Example($"device earl {DeviceCreateUDF}");
             DeviceEarl4 = testCLIAlice4.Example($"profile sync");
+
+
+
 
             }
 
@@ -425,6 +469,8 @@ namespace ExampleGenerator {
         public List<ExampleResult> ConfirmReject;
         public List<ExampleResult> ConfirmGetReject;
         public List<ExampleResult> ConfirmMallet;
+
+
 
         public void DoCommandsMessage() {
 
@@ -512,6 +558,22 @@ namespace ExampleGenerator {
         public string PasswordAccount2 = "alice@example.com";
         public string PasswordValue2 = "newpassword";
         public string PasswordSite2 = "www.example.com";
+
+
+        List<T> Concat<T>(params List<T>[] lists) {
+            var result = new List<T>();
+
+            foreach (var list in lists) {
+                foreach (var entry in list) {
+                    result.Add(entry);
+                    }
+                }
+
+            return result;
+            }
+
+        public List<ExampleResult> PasswordSequence => Concat(PasswordAdd,PasswordGet);
+
         public void DoCommandsPassword() {
             PasswordAdd = testCLIAlice1.Example($"password add {PasswordSite} {PasswordAccount1} {PasswordValue1}",
                 $"password add {PasswordSite2} {PasswordAccount2} {PasswordValue2}");

@@ -142,6 +142,10 @@ namespace Goedel.Cryptography.PKIX {
             }
         BigInteger? _BigIntegerG;
 
+        /// <summary>
+        /// Returns the size of the modulus.
+        /// </summary>
+        public int KeySize => (Modulus.Length-1) * 8;
 
         DHDomain(string Text) : this (Text.HexToBigInteger(), new BigInteger(2)) {
             }

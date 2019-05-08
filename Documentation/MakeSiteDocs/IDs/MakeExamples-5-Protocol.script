@@ -7,6 +7,8 @@
 #xclass ExampleGenerator CreateExamples
 
 #method MakeProtocolExamples CreateExamples Example
+#% ProtocolHelloRequest(Example);
+#% ProtocolHelloResponse(Example);
 #% ProtocolHello(Example);
 #% ProtocolHelloDevice(Example);
 #% ProtocolHelloProfile(Example);
@@ -24,117 +26,113 @@
 #end method
 
 
-#xfile CreateExamples ProtocolHello "Examples\\ProtocolHello.md" CreateExamples Example
+#zfile CreateExamples ProtocolHelloRequest "Examples\\ProtocolHelloRequest.md" Example
+#%  DescribeRequestBinding (Example.ProfileHello);
+#end zfile
 
-````
-Example ProtocolHello
-````
-
-#end xfile
-
-
-#xfile CreateExamples ProtocolHelloDevice "Examples\\ProtocolHelloDevice.md" CreateExamples Example
-
-````
-Example ProtocolHelloDevice
-````
-#end xfile
+#zfile CreateExamples ProtocolHelloResponse "Examples\\ProtocolHelloResponse.md" Example
+#%  DescribeResponseBinding (Example.ProfileHello);
+#end zfile
 
 
-#xfile CreateExamples ProtocolHelloProfile "Examples\\ProtocolHelloProfile.md" CreateExamples Example
-
-````
-Example ProtocolHelloProfile
-````
-#end xfile
 
 
-#xfile CreateExamples ProtocolHelloTicket "Examples\\ProtocolHelloTicket.md" CreateExamples Example
+#zfile CreateExamples ProtocolHello "Examples\\ProtocolHello.md" Example
+#%  DescribeRequest (Example.ProfileHello);
+#%  DescribeResponse (Example.ProfileHello);
 
-````
-Example ProtocolHelloTicket
-````
-#end xfile
-
-
-#xfile CreateExamples ProtocolAccountCreate "Examples\\ProtocolAccountCreate.md" CreateExamples Example
-
-````
-Example ProtocolAccountCreate
-````
-#end xfile
+#end zfile
 
 
-#xfile CreateExamples ProtocolAccountDelete "Examples\\ProtocolAccountDelete.md" CreateExamples Example
-
-````
-Example ProtocolAccountDelete
-````
-#end xfile
+#zfile CreateExamples ProtocolHelloDevice "Examples\\ProtocolHelloDevice.md" Example
+#%  DescribeRequestBinding (Example.ProfileHelloDevice);
+#%  DescribeResponseBinding (Example.ProfileHelloDevice);
+#end zfile
 
 
-#xfile CreateExamples ProtocolStatus "Examples\\ProtocolStatus.md" CreateExamples Example
-
-````
-Example ProtocolStatus
-````
-#end xfile
 
 
-#xfile CreateExamples ProtocolDownload "Examples\\ProtocolDownload.md" CreateExamples Example
-
-````
-Example ProtocolDownload
-````
-#end xfile
 
 
-#xfile CreateExamples ProtocolUpload "Examples\\ProtocolUpload.md" CreateExamples Example
-
-````
-Example ProtocolProtocolUploadHello
-````
-#end xfile
 
 
-#xfile CreateExamples ProtocolConnect "Examples\\ProtocolConnect.md" CreateExamples Example
+#zfile CreateExamples ProtocolHelloProfile "Examples\\ProtocolHelloProfile.md" Example
+#%  DescribeRequestBinding (Example.ProfileHelloProfile);
+#%  DescribeResponseBinding (Example.ProfileHelloProfile);
+#end zfile
 
-````
-Example ProtocolConnect
-````
-#end xfile
-
-
-#xfile CreateExamples ProtocolConnectPIN "Examples\\ProtocolConnectPIN.md" CreateExamples Example
-
-````
-Example ProtocolConnectPIN
-````
-#end xfile
+#zfile CreateExamples ProtocolHelloTicket "Examples\\ProtocolHelloTicket.md" Example
+#%  DescribeRequestBinding (Example.ProfileHelloTicket);
+#%  DescribeResponseBinding (Example.ProfileHelloTicket);
+#end zfile
 
 
-#xfile CreateExamples ProtocolConnectEARL "Examples\\ProtocolConnectEARL.md" CreateExamples Example
-
-````
-Example ProtocolConnectEARL
-````
-#end xfile
+#zfile CreateExamples ProtocolAccountCreate "Examples\\ProtocolAccountCreate.md" Example
+#%  DescribeRequest (Example.ProfileAliceCreate);
+#%  DescribeResponse (Example.ProfileAliceCreate);
+#end zfile
 
 
-#xfile CreateExamples ProtocolContact "Examples\\ProtocolContact.md" CreateExamples Example
-
-````
-Example ProtocolContact
-````
-#end xfile
+#zfile CreateExamples ProtocolAccountDelete "Examples\\ProtocolAccountDelete.md" Example
+#%  DescribeRequest (Example.ProfileAliceDelete);
+#%  DescribeResponse (Example.ProfileAliceDelete);
+#end zfile
 
 
-#xfile CreateExamples ProtocolConfirm "Examples\\ProtocolConfirm.md" CreateExamples Example
+#zfile CreateExamples ProtocolStatus "Examples\\ProtocolStatus.md" Example
+#%  DescribeRequest (Example.ProfileSync);// Message 0,0
+#%  DescribeResponse (Example.ProfileSync);
+#end zfile
 
-````
-Example ProtocolConfirm
-````
-#end xfile
+
+#zfile CreateExamples ProtocolDownload "Examples\\ProtocolDownload.md" Example
+#%  DescribeRequest (Example.ProfileSync);// Message 0,1
+#%  DescribeResponse (Example.ProfileSync);
+#end zfile
+
+
+#zfile CreateExamples ProtocolUpload "Examples\\ProtocolUpload.md" Example
+#%  DescribeRequest (Example.ProfileSync);  // Message 0,2
+#%  DescribeResponse (Example.ProfileSync);
+#end zfile
+
+
+#zfile CreateExamples ProtocolConnect "Examples\\ProtocolConnect.md" Example
+#%  DescribeRequest (Example.ConnectRequest);
+#%  DescribeResponse (Example.ConnectRequest);
+#%  DescribeRequest (Example.ConnectPending);
+#%  DescribeResponse (Example.ConnectPending);
+#end zfile
+
+
+#zfile CreateExamples ProtocolConnectPIN "Examples\\ProtocolConnectPIN.md" Example
+#%  DescribeRequest (Example.ConnectGetPin);
+#%  DescribeResponse (Example.ConnectGetPin);
+#%  DescribeRequest (Example.ConnectPin);
+#%  DescribeResponse (Example.ConnectPin);
+#end zfile
+
+
+#zfile CreateExamples ProtocolConnectEARL "Examples\\ProtocolConnectEARL.md" Example
+#%  DescribeRequest (Example.DeviceEarl1);
+#%  DescribeRequest (Example.DeviceEarl3);
+#end zfile
+
+
+#zfile CreateExamples ProtocolContact "Examples\\ProtocolContact.md" Example
+#%  DescribeRequest (Example.ContactRequest);
+#%  DescribeResponse (Example.ContactRequest);
+#%  DescribeRequest (Example.ContactAccept);
+#%  DescribeResponse (Example.ContactAccept);
+#end zfile
+
+
+#zfile CreateExamples ProtocolConfirm "Examples\\ProtocolConfirm.md" Example
+#%  DescribeRequest (Example.ConfirmRequest);
+#%  DescribeResponse (Example.ConfirmRequest);
+#%  DescribeRequest (Example.ConfirmAccept);
+#%  DescribeResponse (Example.ConfirmAccept);
+#end zfile
 
 
 

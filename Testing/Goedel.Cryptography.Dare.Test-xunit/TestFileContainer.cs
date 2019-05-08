@@ -40,7 +40,7 @@ namespace Goedel.XUnit {
                 var Filename = $"TestFilePlaintext_{Length}";
                 Bytes = CreateBytes(Length);
                 ReadWriteContainer(Filename, Bytes, null);
-                Length = Length * 2;
+                Length *= 2;
                 }
             }
 
@@ -79,7 +79,7 @@ namespace Goedel.XUnit {
                 var Filename = $"TestFileEncrypted_{Length}";
                 Bytes = CreateBytes(Length);
                 ReadWriteContainer(Filename, Bytes, CryptoParameters);
-                Length = Length * 2;
+                Length *= 2;
                 }
             }
 
@@ -142,7 +142,7 @@ namespace Goedel.XUnit {
 
         KeyPair CreateKeyPair () {
             var Result = new KeyPairDH();
-            KeyCollection.Default.Add(Result);
+            keyCollection.Default.Add(Result);
 
             return Result;
             }

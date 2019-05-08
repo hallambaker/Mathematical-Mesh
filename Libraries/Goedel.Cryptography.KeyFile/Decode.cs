@@ -66,7 +66,7 @@ namespace Goedel.Cryptography.KeyFile {
         /// <param name="keyCollection">The key collection that keys are to be persisted to (dependent on 
         /// the value of <paramref name="keySecurity"/></param>
         public static KeyPair DecodePEM(string FileName,
-            KeySecurity keySecurity, KeyCollection keyCollection) {
+            KeySecurity keySecurity, keyCollection keyCollection) {
             using (var TextReader = FileName.OpenFileReadShared()) {
                 LexReader LexReader = new LexReader(TextReader);
                 return DecodePEM(LexReader, keySecurity, keyCollection);
@@ -82,7 +82,7 @@ namespace Goedel.Cryptography.KeyFile {
         /// <param name="keyCollection">The key collection that keys are to be persisted to (dependent on 
         /// the value of <paramref name="keySecurity"/></param>
         public static KeyPair DecodePEMText(string Text,
-            KeySecurity keySecurity, KeyCollection keyCollection) {
+            KeySecurity keySecurity, keyCollection keyCollection) {
             var Reader = new System.IO.StringReader(Text);
             LexReader LexReader = new LexReader(Reader);
             return DecodePEM(LexReader, keySecurity, keyCollection);
@@ -98,7 +98,7 @@ namespace Goedel.Cryptography.KeyFile {
         /// <param name="keyCollection">The key collection that keys are to be persisted to (dependent on 
         /// the value of <paramref name="keySecurity"/></param>
         public static KeyPair DecodePEM(LexReader LexReader,
-                    KeySecurity keySecurity, KeyCollection keyCollection) {
+                    KeySecurity keySecurity, keyCollection keyCollection) {
             var Lexer = new KeyFileLex(LexReader);
             var Token = Lexer.GetToken();
 

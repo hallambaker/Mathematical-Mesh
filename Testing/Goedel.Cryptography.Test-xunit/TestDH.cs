@@ -11,20 +11,21 @@ namespace Goedel.XUnit {
 
     public partial class TestCryptography {
 
-        static KeyPairDH AliceKeyPair;
-        static KeyPairDH BobKeyPair;
-        static KeyPairDH GroupKeyPair;
 
-        static DiffeHellmanPrivate AlicePrivate;
-        static DiffeHellmanPrivate BobPrivate;
-        static DiffeHellmanPrivate GroupPrivate;
+        public static KeyPairDH AliceKeyPair;
+        public static KeyPairDH BobKeyPair;
+        public static KeyPairDH GroupKeyPair;
 
-        static DiffeHellmanPublic AlicePublic;
-        static DiffeHellmanPublic BobPublic;
-        static DiffeHellmanPublic GroupKeyPublic;
+        public static DiffeHellmanPrivate AlicePrivate;
+        public static DiffeHellmanPrivate BobPrivate;
+        public static DiffeHellmanPrivate GroupPrivate;
+
+        public static DiffeHellmanPublic AlicePublic;
+        public static DiffeHellmanPublic BobPublic;
+        public static DiffeHellmanPublic GroupKeyPublic;
 
         public MeshMachineTest MeshMachine;
-        KeyCollection KeyCollection;
+        public keyCollection KeyCollection;
 
         static TestCryptography() {
             Cryptography.Cryptography.Initialize();
@@ -40,13 +41,14 @@ namespace Goedel.XUnit {
             AlicePublic = AlicePrivate.DiffeHellmanPublic;
             BobPublic = BobPrivate.DiffeHellmanPublic;
             GroupKeyPublic = GroupPrivate.DiffeHellmanPublic;
-            }
+        }
 
 
         public TestCryptography() {
-            var machineEnvironment = new TestEnvironmentMachine( "TestCryptography");
+            //var machineEnvironment = new TestEnviron_USELESS_DELETE( "TestCryptography");
+            var testEnvironmentCommon = new TestEnvironmentCommon();
 
-            MeshMachine = new MeshMachineTest(machineEnvironment);
+            MeshMachine = new MeshMachineTest(testEnvironmentCommon);
             KeyCollection = new KeyCollectionTest(MeshMachine);
             }
 

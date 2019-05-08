@@ -38,7 +38,6 @@ enhancements.
 
 ````
 >container create Container.dcon
-OK
 ````
 
 Specifying the /json option returns a result of type ResultFile:
@@ -106,7 +105,6 @@ container.
 
 ````
 >container verify ContainerArchiveEncrypt.dcon
-OK
 ````
 
 Specifying the /json option returns a result of type ResultFile:
@@ -141,7 +139,6 @@ to files.
 
 ````
 >container extract Container.dcon TestOut
-OK
 ````
 
 Specifying the /json option returns a result of type ResultFile:
@@ -206,7 +203,6 @@ container but does not erase the data from the file.
 
 ````
 >container delete Container.dcon  TestFile2.txt
-OK
 ````
 
 Specifying the /json option returns a result of type ResultFile:
@@ -239,7 +235,6 @@ The `container index` command appends an index record to the end of the containe
 
 ````
 >container index Container.dcon
-OK
 ````
 
 Specifying the /json option returns a result of type ResultFile:

@@ -14,8 +14,10 @@ Alice adds the username and password for an ftp service to her catalog:
 
 ````
 >password add ftp.example.com alice1 password
-{Username}@{Service} = [{Password}]>password add www.example.com alice@example.com newpassword
-{Username}@{Service} = [{Password}]````
+alice1@ftp.example.com = [password]
+>password add www.example.com alice@example.com newpassword
+alice@example.com@www.example.com = [newpassword]
+````
 
 ## Synchronizing passwords to an application.
 
@@ -24,9 +26,10 @@ The `password list` command lists all the passwords in the catalog:
 
 ````
 >password list
-OK
-{Username}@{Service} = [{Password}]
-{Username}@{Service} = [{Password}]
+alice1@ftp.example.com = [password]
+
+alice@example.com@www.example.com = [newpassword]
+
 ````
 
 The output of the list command may be used to configure a user application 
@@ -41,7 +44,8 @@ values for a specified service:
 
 ````
 >password get ftp.example.com
-{Username}@{Service} = [{Password}]````
+alice1@ftp.example.com = [password]
+````
 
 ### Using Credentials in scripts
 
@@ -75,7 +79,8 @@ password that is randomly generated:
 
 ````
 >password add ftp.example.com alice1 newpassword
-{Username}@{Service} = [{Password}]````
+alice1@ftp.example.com = [newpassword]
+````
 
 
 ## Deleting passwords
@@ -85,7 +90,6 @@ Password entries may be deleted using the  `password delete` command:
 
 ````
 >password delete www.example.com
-OK
 ````
 
 ## Adding a Device.

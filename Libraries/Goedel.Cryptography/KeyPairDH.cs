@@ -208,7 +208,7 @@ namespace Goedel.Cryptography {
 
         ///<summary>Persist the private key to the specified collection.</summary>
         /// <param name="keyCollection">The key collection that key are to be persisted to </param>
-        public override void Persist(KeyCollection keyCollection) {
+        public override void Persist(keyCollection keyCollection) {
             Assert.True(PersistPending);
             var pkix = new PKIXPrivateKeyDH() {
                 Domain = DHDomain,
@@ -227,12 +227,27 @@ namespace Goedel.Cryptography {
         /// <param name="keySecurity">The key security model</param>
         /// <param name="algorithmID">The cryptographic algorithm identifier</param>
         /// <returns>The generated key pair</returns>
-        public static KeyPair Generate(
+        public static KeyPairDH Generate(
                     int keySize = 0,
                     KeySecurity keySecurity = KeySecurity.Bound,
                     KeyUses keyUses = KeyUses.Any,
                     CryptoAlgorithmID algorithmID = CryptoAlgorithmID.NULL) =>
             new KeyPairDH(keySize, keySecurity);
+
+
+        /// <summary>
+        /// Generate a key co-generation contribution and return the new composite public
+        /// key and the private key contribution.
+        /// </summary>
+        /// <param name="privateKey">The private key contribution.</param>
+        /// <returns>The composite public key.</returns>
+        public override KeyPairAdvanced Cogenerate(out KeyPairAdvanced privateKey) {
+            var KeySize = DHDomain.KeySize;
+
+            privateKey = Generate(KeySize, KeySecurity.Exportable, KeyUses, CryptoAlgorithmID);
+            var combinedKey = PublicKey.Combine(privateKey.IKeyAdvancedPublic as DiffeHellmanPublic);
+            return new KeyPairDH(combinedKey);
+            }
 
         /// <summary>
         /// Delegate to create a key pair base

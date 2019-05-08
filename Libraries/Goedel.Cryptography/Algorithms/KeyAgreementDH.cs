@@ -147,7 +147,7 @@ namespace Goedel.Cryptography.Algorithms {
 
             var Accumulator = Carry[0];
             for (var i = 1; i < Carry.Length; i++) {
-                Accumulator = Accumulator * Carry[i];
+                Accumulator *= Carry[i];
                 }
             return Accumulator % Modulus;
             }

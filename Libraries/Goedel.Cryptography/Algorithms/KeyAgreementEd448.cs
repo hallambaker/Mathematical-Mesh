@@ -268,7 +268,7 @@ namespace Goedel.Cryptography.Algorithms {
             var Input = Buffer.ToArray();
             var Digest = SHAKE256.Process(Input, 114 * 8);
             var Result = Digest.BigIntegerLittleEndian();
-            Result = Result % Q;
+            Result %= Q;
 
             return Result;
             }

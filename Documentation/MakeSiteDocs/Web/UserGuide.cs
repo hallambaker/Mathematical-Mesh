@@ -229,14 +229,24 @@ namespace ExampleGenerator {
 		
 
 		//
+		// DescribeMessage
+		//
+		public void DescribeMessage (ExampleResult Result) {
+			_Output.Write ("{1}\n{0}", _Indent, Preformat);
+			_Output.Write ("[NYI]\n{0}", _Indent);
+			_Output.Write ("{1}\n{0}", _Indent, Preformat);
+			}
+		
+
+		//
 		// Describe
 		//
 		public void Describe (DescribeCommandSet CommandSet) {
 			_Output.Write ("# {1}\n{0}", _Indent, CommandSet.Identifier);
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("````\n{0}", _Indent);
+			_Output.Write ("{1}\n{0}", _Indent, Preformat);
 			 CommandSet.Describe('/', _Output, false);
-			_Output.Write ("````\n{0}", _Indent);
+			_Output.Write ("{1}\n{0}", _Indent, Preformat);
 			}
 		
 
@@ -246,9 +256,47 @@ namespace ExampleGenerator {
 		public void Describe (DescribeCommandSet CommandSet, DescribeCommand Command) {
 			_Output.Write ("# {1} {2}\n{0}", _Indent, CommandSet.Identifier, Command.Identifier);
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("````\n{0}", _Indent);
+			_Output.Write ("{1}\n{0}", _Indent, Preformat);
 			 Command.Describe('/', _Output, false);
-			_Output.Write ("````\n{0}", _Indent);
+			_Output.Write ("{1}\n{0}", _Indent, Preformat);
+			}
+		
+
+		//
+		// Format
+		//
+		public void Format (JSONObject data) {
+			_Output.Write ("{1}\n{0}", _Indent, Preformat);
+			_Output.Write ("{1}\n{0}", _Indent, JSONDebugWriter.Write (data));
+			_Output.Write ("{1}\n{0}", _Indent, Preformat);
+			}
+		
+
+		//
+		// DescribeRequestBinding
+		//
+		public void DescribeRequestBinding (List<ExampleResult> exampleResults) {
+			}
+		
+
+		//
+		// DescribeResponseBinding
+		//
+		public void DescribeResponseBinding (List<ExampleResult> exampleResults) {
+			}
+		
+
+		//
+		// DescribeRequest
+		//
+		public void DescribeRequest (List<ExampleResult> exampleResults) {
+			}
+		
+
+		//
+		// DescribeResponse
+		//
+		public void DescribeResponse (List<ExampleResult> exampleResults) {
 			}
 		
 
@@ -261,12 +309,12 @@ namespace ExampleGenerator {
 				 Console.WriteLine ($"Missing example!"); return;
 				}
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("````\n{0}", _Indent);
+			_Output.Write ("{1}\n{0}", _Indent, Preformat);
 			foreach  (var exampleResult in exampleResults) {
 				_Output.Write (">{1}\n{0}", _Indent, exampleResult.Command);
 				_Output.Write ("{1}", _Indent, exampleResult.ResultText);
 				}
-			_Output.Write ("````\n{0}", _Indent);
+			_Output.Write ("{1}\n{0}", _Indent, Preformat);
 			}
 		
 
@@ -280,10 +328,10 @@ namespace ExampleGenerator {
 				}
 			 var exampleResult = exampleResults[0];
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("````\n{0}", _Indent);
+			_Output.Write ("{1}\n{0}", _Indent, Preformat);
 			_Output.Write (">{1} /json\n{0}", _Indent, exampleResult.Command);
 			_Output.Write ("{1}\n{0}", _Indent, exampleResult.ResultJSON);
-			_Output.Write ("````\n{0}", _Indent);
+			_Output.Write ("{1}\n{0}", _Indent, Preformat);
 			}
 		
 
@@ -297,10 +345,10 @@ namespace ExampleGenerator {
 				}
 			 var exampleResult = exampleResults[0];
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("````\n{0}", _Indent);
+			_Output.Write ("{1}\n{0}", _Indent, Preformat);
 			_Output.Write (">{1}\n{0}", _Indent, exampleResult.Command);
 			_Output.Write ("{1}", _Indent, exampleResult.ResultText);
-			_Output.Write ("````\n{0}", _Indent);
+			_Output.Write ("{1}\n{0}", _Indent, Preformat);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("Specifying the /json option returns a result of type {1}:\n{0}", _Indent, exampleResult.ResultType);
 			_Output.Write ("\n{0}", _Indent);

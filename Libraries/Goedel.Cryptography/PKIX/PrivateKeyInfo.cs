@@ -160,7 +160,7 @@ namespace Goedel.Cryptography.PKIX {
 
             var Subtract = BigP + BigQ;
 
-            Subtract = Subtract - new BigInteger(1);
+            Subtract -= new BigInteger(1);
 
             var TestCoefficient = TestModulus - Subtract;
             Debug.WriteLine("Test Coefficient\n {0}", TestCoefficient.ToString());

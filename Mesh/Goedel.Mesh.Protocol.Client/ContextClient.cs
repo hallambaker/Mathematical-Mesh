@@ -71,7 +71,7 @@ namespace Goedel.Mesh.Protocol.Client {
             var connectRequest = new ConnectRequest() {
                 Account = account,
                 ClientNonce = clientNonce,
-                DeviceProfile = ProfileDevice.ProfileDeviceSigned,
+                DeviceProfile = ProfileDevice.DareMessage,
                 PinID = PinID
                 };
 
@@ -85,10 +85,10 @@ namespace Goedel.Mesh.Protocol.Client {
             var deviceUDF = ProfileDevice.UDFBytes;
             deviceWitness = connectResponse.Witness;
 
-            ProfileMesh = ProfileMesh.Decode(connectResponse.ProfileMesh);
+            AssertionAccount = AssertionAccount.Decode(connectResponse.ProfileMesh);
 
             var witness = UDF.MakeWitness(
-                    ProfileMesh.UDFBytes, connectResponse.ServerNonce,
+                    AssertionAccount.UDFBytes, connectResponse.ServerNonce,
                     ProfileDevice.UDFBytes, clientNonce);
 
             UDF.Matches(deviceWitness, witness).AssertTrue();
@@ -110,19 +110,19 @@ namespace Goedel.Mesh.Protocol.Client {
 
         public CatalogEntryDevice MakeCatalogEntryDevice(ProfileDevice profileDevice) {
 
-            var profileMeshDevicePublic = new ProfileMeshDevicePublic() {
-                DeviceProfile = profileDevice.ProfileDeviceSigned
+            var profileMeshDevicePublic = new AssertionDeviceConnection() {
+                //DeviceProfile = profileDevice.DareMessage
                 };
 
-            var ProfileMeshDevicePrivate = new ProfileMeshDevicePrivate() {
+            var ProfileMeshDevicePrivate = new AssertionDevicePrivate() {
                 };
 
             var catalogEntryDevice = new CatalogEntryDevice() {
-                Account = AccountName,
+                Accounts = new List<string> { AccountName },
                 UDF = profileDevice.UDF,
-                AuthUDF = profileDevice.DeviceAuthenticationKey.UDF,
-                ProfileMeshDevicePublicSigned = Sign(profileMeshDevicePublic),
-                ProfileMeshDevicePrivateEncrypted = Sign(ProfileMeshDevicePrivate)
+                AuthUDF = profileDevice.AuthenticationKey.UDF,
+                SignedDeviceConnection = Sign(profileMeshDevicePublic),
+                EncryptedDevicePrivate = Sign(ProfileMeshDevicePrivate)
                 };
 
 

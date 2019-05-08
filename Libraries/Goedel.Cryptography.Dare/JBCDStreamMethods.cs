@@ -1,6 +1,6 @@
 ﻿using System;
 using System.IO;
-using Goedel.IO;
+using System.Threading;
 using Goedel.Utilities;
 using Goedel.Protocol;
 using Goedel.Cryptography.Jose;
@@ -204,36 +204,60 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="FrameHeader">The header data to write.</param>
         /// <param name="FrameData1">First data record, contains data content.</param>
         /// <param name="FrameData2">Second data record, contains protected metadata.</param>
+        /// <param name="flush">If true, flush the frame data value to the file.</param>
         /// <returns>The total size of the frame.</returns>
         public long WriteWrappedFrame (
                     byte[] FrameHeader, 
                     byte[] FrameData1 = null,
-                    byte[] FrameData2 = null) {
+                    byte[] FrameData2 = null,
+                    bool flush = true) {
 
-            var FrameLength = (FrameHeader == null ? 0 : TotalLength(FrameHeader.Length)) +
-                                (FrameData1 == null ? 0 : TotalLength(FrameData1.Length)) +
-                                (FrameData2 == null ? 0 : TotalLength(FrameData2.Length));
+            bool lockTaken = false;
 
-            WriteTag(BFrame, FrameLength);
+            try {
 
-            var Check = PositionWrite;
-            if (FrameHeader != null) {
-                WriteFrame(FrameHeader);
+                if (LockGlobal != null) {
+                    Monitor.Enter(LockGlobal, ref lockTaken);
+                    LockGlobal.Enter();
+                    }
+
+                var FrameLength = (FrameHeader == null ? 0 : TotalLength(FrameHeader.Length)) +
+                                    (FrameData1 == null ? 0 : TotalLength(FrameData1.Length)) +
+                                    (FrameData2 == null ? 0 : TotalLength(FrameData2.Length));
+
+                WriteTag(BFrame, FrameLength);
+
+                var Check = PositionWrite;
+                if (FrameHeader != null) {
+                    WriteFrame(FrameHeader);
+                    }
+                if (FrameData1 != null) {
+                    WriteFrame(FrameData1);
+                    }
+                if (FrameData2 != null) {
+                    WriteFrame(FrameData2);
+                    }
+
+                Assert.True(PositionWrite == Check + FrameLength, Internal.Throw);
+
+                WriteTagReverse(BFrame, FrameLength);
+
+                if (flush) {
+                    StreamWrite.Flush();
+                    }
+
+                return TotalLength2(FrameLength);
                 }
-            if (FrameData1 != null) {
-                WriteFrame(FrameData1);
+
+            catch (Exception exception) {
+                LockGlobal?.Exit();
+                if (lockTaken) {
+                    Monitor.Exit(LockGlobal);
+                    }
+
+                throw exception;
                 }
-            if (FrameData2 != null) {
-                WriteFrame(FrameData2);
-                }
 
-            Assert.True(PositionWrite == Check + FrameLength, Internal.Throw);
-
-            WriteTagReverse(BFrame, FrameLength);
-
-            StreamWrite.Flush();
-
-            return TotalLength2(FrameLength);
             }
 
 
@@ -339,7 +363,7 @@ namespace Goedel.Cryptography.Dare {
             for (var i = 0; i < LengthCount; i++) {
                 var Value = (long)ReadByte();
                 Assert.False(Value < 0, InvalidFileFormatException.Throw);
-                Length = Length + (Value >> 8 * i);
+                Length += (Value >> 8 * i);
                 }
             var CheckTag = ReadByte();
             Assert.True(CheckTag == Code, InvalidFileFormatException.Throw);
@@ -420,7 +444,7 @@ namespace Goedel.Cryptography.Dare {
                 return false;
                 }
 
-            MaxLength = MaxLength - CodeSpace(Code);
+            MaxLength -= CodeSpace(Code);
             Assert.True(Length <= MaxLength, InvalidFileFormatException.Throw);
             if (Length > 0) {
                 Data = new byte[Length];
@@ -536,10 +560,10 @@ namespace Goedel.Cryptography.Dare {
             if (!Success) {
                 return -1;
                 }
-            MaxLength = MaxLength - CodeSpace(Code);
+            MaxLength -= CodeSpace(Code);
             Assert.True(Length <= MaxLength, InvalidFileFormatException.Throw);
             RecordDataRemaining = Length;
-            MaxLength = MaxLength - Length;
+            MaxLength -= Length;
 
             return Length;
             }

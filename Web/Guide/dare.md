@@ -11,7 +11,6 @@ The `dare encode` command is used to encode files as DARE Messages:
 
 ````
 >dare encode TestFile1.txt
-OK
 ````
 
 In this case, the file `TestFile1.txt` contains the text `"This is a test"`.
@@ -23,8 +22,7 @@ The data contents may be encrypted and authenticated under a specified symmetric
 
 
 ````
->dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=ECLT-XRMP-6O6O-IGQY-OQTF-4L5A-5V5Q
-OK
+>dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=ECDV-X42A-QCZL-FKCH-6ODT-P3JX-U4QA
 ````
 
 Specifying a directory instead of a file causes all the files in the directory to be 
@@ -32,7 +30,7 @@ encoded:
 
 
 ````
->dare encode TestDir1 /encrypt=ECLT-XRMP-6O6O-IGQY-OQTF-4L5A-5V5Q
+>dare encode TestDir1 /encrypt=ECDV-X42A-QCZL-FKCH-6ODT-P3JX-U4QA
 ERROR - Object reference not set to an instance of an object.
 ````
 
@@ -73,7 +71,7 @@ level otherwise.
 
 
 ````
->dare verify TestFile1.txt.symmetric.dare /encrypt=ECLT-XRMP-6O6O-IGQY-OQTF-4L5A-5V5Q
+>dare verify TestFile1.txt.symmetric.dare /encrypt=ECDV-X42A-QCZL-FKCH-6ODT-P3JX-U4QA
 ERROR - The option  is not known.
 ````
 
@@ -98,7 +96,7 @@ To decode a message encrypted under a symmetric key, we must specify the key:
 
 
 ````
->dare decode TestFile1.txt.symmetric.dare /encrypt=ECLT-XRMP-6O6O-IGQY-OQTF-4L5A-5V5Q
+>dare decode TestFile1.txt.symmetric.dare /encrypt=ECDV-X42A-QCZL-FKCH-6ODT-P3JX-U4QA
 ERROR - The option  is not known.
 ````
 

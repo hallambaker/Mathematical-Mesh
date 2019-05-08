@@ -6,7 +6,7 @@ using Goedel.Cryptography.Dare;
 using Goedel.Cryptography;
 
 namespace Goedel.Mesh {
-    public partial class ProfileMesh {
+    public partial class AssertionAccount {
 
         public override string _PrimaryKey => Account;
         public string UDF => ProfileMaster.UDF;
@@ -16,7 +16,7 @@ namespace Goedel.Mesh {
         /// <summary>
         /// The signed device profile
         /// </summary>
-        public override DareMessage ProfileSigned => ProfileMeshSigned;
+        public override DareMessage DareMessage => ProfileMeshSigned;
 
         /// <summary>
         /// The signed device profile
@@ -29,7 +29,7 @@ namespace Goedel.Mesh {
 
 
 
-        public static ProfileMesh Decode(DareMessage message) {
+        public static AssertionAccount Decode(DareMessage message) {
             var result = FromJSON(message.GetBodyReader(), true);
             result.ProfileMeshSigned = message;
             return result;

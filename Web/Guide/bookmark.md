@@ -63,7 +63,6 @@ A complete list of bookmarks is obtained using the  `bookmark list` command:
 
 ````
 >bookmark list
-OK
 {
   "Uri": "http://example.com/",
   "Title": "\"Example",

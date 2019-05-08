@@ -4,12 +4,19 @@
 #using Goedel.Utilities
 #using Goedel.Cryptography
 #using Goedel.Cryptography.Dare
+#using Goedel.Mesh.Shell
 #xclass ExampleGenerator CreateExamples
 
 #method MakeSchemaExamples CreateExamples Example
 #% SchemaMaster(Example);
 #% SchemaDevice(Example);
-#% SchemaMesh(Example);
+#% SchemaCatalog(Example);
+#% SchemaSpool(Example);
+#% SchemaContact(Example);
+#% SchemaAccount(Example);
+#% SchemaDevicePrivate(Example);
+#% SchemaDeviceConnection(Example);
+#% SchemaService(Example);
 #% SchemaEntryDevice(Example);
 #% SchemaEntryContact(Example);
 #% SchemaEntryCredential(Example);
@@ -24,95 +31,96 @@
 #% SchemaMessageCompletion(Example);
 #end method
 
-#xfile CreateExamples SchemaMaster "Examples\\SchemaMaster.md" CreateExamples Example
-````
-Example SchemaMaster
-#!{JSONDebugWriter.Write (Profile)}
-````
-#end xfile
+#zfile CreateExamples SchemaMaster "Examples\\SchemaMaster.md" Example
+#% Format(AliceProfiles.ProfileMaster);
+#end zfile
 
-#xfile CreateExamples SchemaDevice "Examples\\SchemaDevice.md" CreateExamples Example
-````
-Example SchemaDevice
-````
-#end xfile
+#zfile CreateExamples SchemaDevice "Examples\\SchemaDevice.md" Example
+#% Format(AliceProfiles.ProfileDevice);
+#end zfile
 
-#xfile CreateExamples SchemaMesh "Examples\\SchemaMesh.md" CreateExamples Example
-````
-Example SchemaMesh
-````
-#end xfile
+#zfile CreateExamples SchemaService "Examples\\SchemaService.md" Example
+#% Format(ResultHello.ProfileService);
+#end zfile
 
-#xfile CreateExamples SchemaEntryDevice "Examples\\SchemaEntryDevice.md" CreateExamples Example
-````
-Example SchemaEntryDevice
-````
-#end xfile
+#zfile CreateExamples SchemaAccount "Examples\\SchemaAccount.md" Example
+#% Format(AliceProfiles.AssertionAccount);
+#end zfile
 
-#xfile CreateExamples SchemaEntryContact "Examples\\SchemaEntryContact.md" CreateExamples Example
-````
-Example SchemaEntryContact
-````
-#end xfile
+#zfile CreateExamples SchemaDevicePrivate "Examples\\SchemaDevicePrivate.md" Example
+#% Format(AliceProfiles.AssertionAccount);
+#end zfile
 
-#xfile CreateExamples SchemaEntryCredential "Examples\\SchemaEntryCredential.md" CreateExamples Example
-````
-Example SchemaEntryCredential
-````
-#end xfile
+#zfile CreateExamples SchemaDeviceConnection "Examples\\SchemaDeviceConnection.md" Example
+#% Format(AliceProfiles.AssertionAccount);
+#end zfile
 
-#xfile CreateExamples SchemaEntryNetwork "Examples\\SchemaEntryNetwork.md" CreateExamples Example
-````
-Example SchemaEntryNetwork
-````
-#end xfile
 
-#xfile CreateExamples SchemaEntryBookmark "Examples\\SchemaEntryBookmark.md" CreateExamples Example
-````
-Example SchemaEntryBookmark
-````
-#end xfile
 
-#xfile CreateExamples SchemaEntryTask "Examples\\SchemaEntryTask.md" CreateExamples Example
-````
-Example SchemaEntryTask
-````
-#end xfile
+#zfile CreateExamples SchemaCatalog "Examples\\SchemaCatalog.md" Example
+#{"SchemaCatalog".Task("SchemaCatalog")}
+#end zfile
 
-#xfile CreateExamples SchemaEntrySSH "Examples\\SchemaEntrySSH.md" CreateExamples Example
-````
-Example SchemaEntrySSH
-````
-#end xfile
+#zfile CreateExamples SchemaSpool "Examples\\SchemaSpool.md" Example
+#{"SchemaCatalog".Task("SchemaCatalog")}
+#end zfile
 
-#xfile CreateExamples SchemaEntryMail "Examples\\SchemaEntryMail.md" CreateExamples Example
-````
-Example SchemaEntryMail
-````
-#end xfile
 
-#xfile CreateExamples SchemaMessageConnection "Examples\\SchemaMessageConnection.md" CreateExamples Example
-````
-Example SchemaMessageConnection
-````
-#end xfile
+#zfile CreateExamples SchemaContact "Examples\\SchemaContact.md" Example
+#{"SchemaEntryMail".Task("SchemaEntryMail")}
+#end zfile
 
-#xfile CreateExamples SchemaMessageContact "Examples\\SchemaMessageContact.md" CreateExamples Example
-````
-Example SchemaMessageContact
-````
-#end xfile
+#zfile CreateExamples SchemaEntryDevice "Examples\\SchemaEntryDevice.md" Example
+#{"SchemaEntryDevice".Task("SchemaEntryDevice")}
+#end zfile
 
-#xfile CreateExamples SchemaMessageConfirmation "Examples\\SchemaMessageConfirmation.md" CreateExamples Example
-````
-Example SchemaMessageConfirmation
-````
-#end xfile
+#zfile CreateExamples SchemaEntryContact "Examples\\SchemaEntryContact.md" Example
+#% Format(ContactGet[0].ResultEntry.CatalogEntry);
+#end zfile
 
-#xfile CreateExamples SchemaMessageCompletion "Examples\\SchemaMessageCompletion.md" CreateExamples Example
-````
-Example SchemaMessageCompletion
-````
-#end xfile
+#zfile CreateExamples SchemaEntryCredential "Examples\\SchemaEntryCredential.md" Example
+#% Format(PasswordGet[0].ResultEntry.CatalogEntry);
+#end zfile
+
+#zfile CreateExamples SchemaEntryNetwork "Examples\\SchemaEntryNetwork.md" Example
+#% Format(NetworkGet[0].ResultEntry.CatalogEntry);
+#end zfile
+
+#zfile CreateExamples SchemaEntryBookmark "Examples\\SchemaEntryBookmark.md" Example
+#% Format(BookmarkGet[0].ResultEntry.CatalogEntry);
+#end zfile
+
+#zfile CreateExamples SchemaEntryTask "Examples\\SchemaEntryTask.md" Example
+#% Format(CalendarGet[0].ResultEntry.CatalogEntry);
+#end zfile
+
+
+
+
+#zfile CreateExamples SchemaEntrySSH "Examples\\SchemaEntrySSH.md" Example
+#% Format(SSHCreate[0].ResultSSH?.CatalogEntry);
+#end zfile
+
+#zfile CreateExamples SchemaEntryMail "Examples\\SchemaEntryMail.md" Example
+#% Format(MailAdd[0].ResultMail?.CatalogEntry);
+#end zfile
+
+
+
+#zfile CreateExamples SchemaMessageConnection "Examples\\SchemaMessageConnection.md" Example
+#% DescribeMessage (ConnectPending[0]);
+#end zfile
+
+#zfile CreateExamples SchemaMessageContact "Examples\\SchemaMessageContact.md" Example
+#% DescribeMessage (ContactPending[0]);
+#end zfile
+
+#zfile CreateExamples SchemaMessageConfirmation "Examples\\SchemaMessageConfirmation.md" Example
+#% DescribeMessage (ConfirmPending[0]);
+#end zfile
+
+#zfile CreateExamples SchemaMessageCompletion "Examples\\SchemaMessageCompletion.md" Example
+#% DescribeMessage (ConfirmGetReject[0]);
+#end zfile
 
 #end xclass

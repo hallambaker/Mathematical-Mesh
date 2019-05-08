@@ -247,6 +247,18 @@ namespace Goedel.Utilities {
         /// </summary>
         /// <param name="description"></param>
         public static void TaskFunctionality(this string description) { }
+
+
+        /// <summary>
+        /// Utility routine used to flag missing code to implement missing test for
+        /// functionality not yet implemented.
+        /// </summary>
+        /// <param name="description"></param>
+        public static string Task(this string result, string description) {
+            Console.WriteLine($"***Task***{description}");
+            return result;
+            }
+
         }
 
     }

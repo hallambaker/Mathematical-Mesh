@@ -114,7 +114,6 @@ list   List bookmark entries
 
 ````
 >bookmark list
-OK
 {
   "Uri": "http://example.com/",
   "Title": "\"Example",

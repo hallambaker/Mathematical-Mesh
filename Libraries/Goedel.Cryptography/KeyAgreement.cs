@@ -139,7 +139,13 @@ namespace Goedel.Cryptography {
             return KeyPair(PrivateKey);
             }
 
-
+        /// <summary>
+        /// Generate a key co-generation contribution and return the new composite public
+        /// key and the private key contribution.
+        /// </summary>
+        /// <param name="privateKey">The private key contribution.</param>
+        /// <returns>The composite public key.</returns>
+        public abstract KeyPairAdvanced Cogenerate(out KeyPairAdvanced privateKey);
         }
 
 

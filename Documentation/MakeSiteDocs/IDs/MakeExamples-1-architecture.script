@@ -7,112 +7,210 @@
 #xclass ExampleGenerator CreateExamples
 #% public static CreateExamples Instance (StreamWriter output) => new CreateExamples () {_Output = output};
 #method MakeArchitectureExamples CreateExamples Example
+#% ArchVariousUDF(Example);
 #% ArchitectureCreate(Example);
 #% ArchitectureCredential(Example);
 #% ArchitectureConnectDirect(Example);
 #% ArchitectureConnectPIN(Example);
 #% ArchitectureConnectQR(Example);
 #% ArchitectureContactRequest(Example);
-#% ArchitectureContactQR(Example);
 #% ArchitectureConnectEARL(Example);
 #% ArchitectureRecrypt(Example);
 #% ArchitectureEscrow(Example);
 #% ArchitectureRecovery(Example);
-#% ArchitectureUDFTypes(Example);
-#% ArchitectureSHA23(Example);
-#% ArchitectureEARL(Example);
+#% ArchitectureConnectEARL(Example);
+#% ArchSIN(Example);
+#% ArchitectureRegister(Example);
+#% ArchitectureContactDefinition(Example);
 #end method
 
-#xfile CreateExamples ArchitectureCreate "Examples\\ArchitectureCreate.md" CreateExamples Example
-````
-Example ArchitectureCreate
-````
-#end xfile
+#zfile CreateExamples ArchVariousUDF "Examples\\ArchVariousUDF.md" Example
+#{Preformat}
+#{Example.ResultUDFNonce.Key}
+#{Example.ResultUDFSecret.Key}
+#{Example.ResultUDFSecret.Shares[0]}
+#{Example.ResultDigestSHA2.Digest}
+#{Example.ResultDigestSHA3.Digest}
+#{Example.ResultCommitSHA2.Digest}
+#{Preformat}
+#end zfile
 
-#xfile CreateExamples ArchitectureCredential "Examples\\ArchitectureCredential.md" CreateExamples Example
-````
-Example ArchitectureCredential
-````
-#end xfile
+#zfile CreateExamples ArchitectureConnectEARL "Examples\\ArchitectureConnectEARL.md" Example
+#{Preformat}
+#{Example.DeviceCreateUDF}
+#{Preformat}
+#end zfile
 
-
-#xfile CreateExamples ArchitectureConnectDirect "Examples\\ArchitectureConnectDirect.md" CreateExamples Example
-````
-Example ArchitectureConnectDirect
-````
-#end xfile
-
-
-#xfile CreateExamples ArchitectureConnectPIN "Examples\\ArchitectureConnectPIN.md" CreateExamples Example
-````
-Example ArchitectureConnectPIN
-````
-#end xfile
-
-#xfile CreateExamples ArchitectureConnectQR "Examples\\ArchitectureConnectQR.md" CreateExamples Example
-````
-Example ArchitectureConnectQR
-````
-#end xfile
-
-#xfile CreateExamples ArchitectureContactRequest "Examples\\ArchitectureContactRequest.md" CreateExamples Example
-````
-Example ArchitectureContactRequest
-````
-#end xfile
+#zfile CreateExamples ArchSIN "Examples\\ArchSIN.md" Example
+#% var aliceSIN = "mm--" + Example.AliceProfileUDF.ToLower();
+<dl>
+<dt>alice@example.com
+<dd>Alice's regular email address (not a SIN). 
+<dt>alice@#{aliceSIN}.example.com
+<dd>A strong email address for Alice that can be used by a regular email client.
+<dt>alice@#example.com.#{aliceSIN}
+<dd>A strong email address for Alice that can only used by an email client that can process SINs.
+</dl>
+#end zfile
 
 
 
 
-#xfile CreateExamples ArchitectureContactQR "Examples\\ArchitectureContactQR.md" CreateExamples Example
-````
-Example ArchitectureContactQR
-````
-#end xfile
+#zfile CreateExamples ArchitectureCreate "Examples\\ArchitectureCreate.md" Example
+#%  ConsoleExample (Example.ProfileAliceCreate);
+#end zfile
 
-#xfile CreateExamples ArchitectureConnectEARL "Examples\\ArchitectureConnectEARL.md" CreateExamples Example
-````
-Example ArchitectureConnectEARL
-````
-#end xfile
-
-#xfile CreateExamples ArchitectureRecrypt "Examples\\ArchitectureRecrypt.md" CreateExamples Example
-````
-Example ArchitectureRecrypt
-````
-#end xfile
+#zfile CreateExamples ArchitectureRegister "Examples\\ArchitectureRegister.md" Example
+#%  ConsoleExample (Example.ProfileAliceRegister);
+#end zfile
 
 
-#xfile CreateExamples ArchitectureEscrow "Examples\\ArchitectureEscrow.md" CreateExamples Example
-````
-Example ArchitectureEscrow
-````
-#end xfile
+#zfile CreateExamples ArchitectureCredential "Examples\\ArchitectureCredential.md" Example
+#%  ConsoleExample (Example.PasswordSequence);
+#end zfile
 
-#xfile CreateExamples ArchitectureRecovery "Examples\\ArchitectureRecovery.md" CreateExamples Example
-````
-Example ArchitectureRecovery
-````
-#end xfile
+#zfile CreateExamples ArchitectureConnectDirect "Examples\\ArchitectureConnectDirect.md" Example
+The connection request is initiated on the device being connected:
 
-#xfile CreateExamples ArchitectureUDFTypes "Examples\\ArchitectureUDFTypes.md" CreateExamples Example
-````
-Example ArchitectureUDFTypes
-````
-#end xfile
+#%  ConsoleExample (Example.ConnectRequest);
 
-#xfile CreateExamples ArchitectureSHA23 "Examples\\ArchitectureSHA23.md" CreateExamples Example
-````
-Example ArchitectureSHA23
-````
-#end xfile
+Using her administration device, Alice gets a list of pending requests. Seeing that
+there is a pending request matching the witness value presented by the device, Alice
+accepts it:
 
-#xfile CreateExamples ArchitectureEARL "Examples\\ArchitectureEARL.md" CreateExamples Example
-````
-Example ArchitectureEARL
-````
-#end xfile
+#%  ConsoleExample (Concat (Example.ConnectPending, Example.ConnectAccept) );
 
+Synchronizing the new device causes the connection request to be completed:
+
+#%  ConsoleExample (Example.ConnectSync);
+#end zfile
+
+
+#zfile CreateExamples ArchitectureConnectPIN "Examples\\ArchitectureConnectPIN.md" Example
+The PIN connection mechanism begins with the issue of the PIN:
+
+#%  ConsoleExample (Example.ConnectGetPin);
+
+The PIN code is transmitted out of band to the device being connected:
+
+#%  ConsoleExample (Example.ConnectPin);
+
+Since the request was pre-authorized, it is not necessary for Alice to explicitly
+accept the connection request but the administration device is needed to create
+the connection assertion:
+
+#%  ConsoleExample (Example.ConnectPending3);
+
+Synchronizing the new device completes the process as before:
+
+Note that this connection mechanism could be addapted to allow a device with a 
+camera affordance to connect by scanning a QR code on the administration device.
+#%  ConsoleExample (Example.ConnectSyncPIN);
+
+#end zfile
+
+#zfile CreateExamples ArchitectureConnectQR "Examples\\ArchitectureConnectQR.md" Example
+To use the device QR code connection mechanism, we require a Web service that will host
+the connection document #{EARLService} and a MeshService account that the device will attempt to 
+complete the connection by requesting synchronization #{PollAccount}.
+
+To begin the process we generate a new random key and combine it with the service
+to create an EARL:
+
+~~~~
+#{DeviceCreateUDF}
+~~~~
+
+Next a device profile is created and preregistered on with the Mesh Service that will
+provide the hailing service. Since we are only preparing one device it is convenient to
+do this on the device itself. In a manufacturing scenario, these steps would typically 
+be performed offline in bulk.
+
+#%  ConsoleExample (Example.DeviceEarl1);
+
+Once initialized the device attempts to poll the service for a connection each time it
+is powered on, when a connection button affordance on the device is pressed or at
+other times as agreed with the Mesh Service Provider:
+
+#%  ConsoleExample (Example.DeviceEarl2);
+
+To connect the device to her profile, Alice scans the device with her administration 
+device to obtain the UDF. The administration device retrieves the connection description, 
+decrypts it and then uses the information in the description to create the necessary
+Device Connection Assertion and connect to the device hailing Mesh Service Account to 
+complete the process:
+
+#%  ConsoleExample (Example.DeviceEarl3);
+
+When the device next attempts to connect to the hailing service, it receives the Device 
+Connection Assertion:
+
+#%  ConsoleExample (Example.DeviceEarl4);
+
+#end zfile
+
+
+#zfile CreateExamples ArchitectureContactDefinition "Examples\\ArchitectureContactDefinition.md" Example
+Alice creates a contact entry for herself:
+
+#%  ConsoleExample (Example.ContactAddSelf);
+
+#end zfile
+
+
+#zfile CreateExamples ArchitectureContactRequest "Examples\\ArchitectureContactRequest.md" Example
+Bob requests Alice add him to her contacts catalog:
+
+#%  ConsoleExample (Example.ContactRequest);
+
+When Alice next checks her messages, she sees the pending contact request from Bob and accepts
+it. Bob's contact details are added to her catalog and Bob receives a response containing
+Alice's credentials:
+
+#%  ConsoleExample (Concat (Example.ContactPending, Example.ContactAccept));
+
+#end zfile
+
+
+#zfile CreateExamples ArchitectureRecrypt "Examples\\ArchitectureRecrypt.md" Example
+Alice creates the recryption group #{GroupAccount} to share confidential information with
+her closest friends:
+
+#%  ConsoleExample (Example.GroupCreate);
+
+Bob encrypts a test file but he can't decrypt it because he isn't in the group:
+
+#%  ConsoleExample (Example.GroupEncrypt);
+
+Since she is the group administrator, Alice can decrypt the
+test file using the group decryption key:
+
+#%  ConsoleExample (Example.GroupDecryptAlice);
+
+Adding Bob to the group gives him immediate access to any file encrypted under
+the group key without making any change to the encrypted files:
+
+#%  ConsoleExample (Example.GroupDecryptBob2);
+
+Removing Bob from the group immediately withdraws his access.
+
+#%  ConsoleExample (Example.GroupDelete);
+
+Bob cannot decrypt any more files (but he may have kept copies of files he decrypted 
+earlier).
+
+#%  ConsoleExample (Example.GroupDecryptBob3);
+
+#end zfile
+
+
+#zfile CreateExamples ArchitectureEscrow "Examples\\ArchitectureEscrow.md" Example
+#%  ConsoleExample (Example.ProfileEscrow);
+#end zfile
+
+#zfile CreateExamples ArchitectureRecovery "Examples\\ArchitectureRecovery.md" Example
+#%  ConsoleExample (Example.ProfileRecover);
+#end zfile
 
 
 #end xclass

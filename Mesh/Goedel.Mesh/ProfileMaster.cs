@@ -9,21 +9,12 @@ using Goedel.Protocol;
 namespace Goedel.Mesh {
     public partial class ProfileMaster {
 
-        public string UDF => MasterSignatureKey.UDF;
-        public byte[] UDFBytes => MasterSignatureKey.KeyPair.PKIXPublicKey.UDFBytes(512);
+        public string UDF => SignatureKey.UDF;
+        public byte[] UDFBytes => SignatureKey.KeyPair.PKIXPublicKey.UDFBytes(512);
 
-        public override string _PrimaryKey => MasterSignatureKey.UDF;
+        public override string _PrimaryKey => SignatureKey.UDF;
 
 
-        /// <summary>
-        /// The signed device profile
-        /// </summary>
-        public override DareMessage ProfileSigned => ProfileMasterSigned;
-
-        /// <summary>
-        /// The signed device profile
-        /// </summary>
-        public DareMessage ProfileMasterSigned { get; private set; }
 
         /// <summary>
         /// Constructor for use by deserializers.
@@ -54,23 +45,32 @@ namespace Goedel.Mesh {
                 }
 
             var profileMaster = new ProfileMaster() {
-                MasterSignatureKey = new PublicKey(keyPublicSign.KeyPairPublic()),
+                SignatureKey = new PublicKey(keyPublicSign.KeyPairPublic()),
                 MasterEscrowKeys = masterEscrowKeys
                 };
-            profileMaster.Add(profileDevice);
 
             var bytes = profileMaster.GetBytes(tag: true);
 
-            profileMaster.ProfileMasterSigned = DareMessage.Encode(bytes,
+            profileMaster.DareMessage = DareMessage.Encode(bytes,
                     signingKey: keyPublicSign, contentType: "application/mmm");
             return profileMaster;
             }
 
 
-        public void Add(ProfileDevice profileDevice) {
-            OnlineSignatureKeys = OnlineSignatureKeys ?? new List<PublicKey>();
-            OnlineSignatureKeys.Add(profileDevice.DeviceSignatureKey);
+        public CatalogEntryDevice Add(ProfileDevice profileDevice, bool Administrator) {
+
+            var catalogEntryDevice = new CatalogEntryDevice(this, profileDevice);
+
+            if (Administrator) {
+                catalogEntryDevice.ActivateAdmin(null);
+                OnlineSignatureKeys = OnlineSignatureKeys ?? new List<PublicKey>();
+                OnlineSignatureKeys.Add(profileDevice.SignatureKey);
+                }
+
+            return catalogEntryDevice;
             }
+
+
 
         public bool IsAdministrator(string UDF) {
             Assert.NotNull(OnlineSignatureKeys, InvalidProfile.Throw);
@@ -86,7 +86,7 @@ namespace Goedel.Mesh {
 
         public static ProfileMaster Decode(DareMessage message) {
             var result = FromJSON(message.GetBodyReader(), true);
-            result.ProfileMasterSigned = message;
+            result.DareMessage = message;
             return result;
             }
         }

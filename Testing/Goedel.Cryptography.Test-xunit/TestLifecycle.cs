@@ -13,14 +13,15 @@ using Xunit;
 
 namespace Goedel.XUnit {
     public class TestLifecycle {
-        KeyCollection KeyCollection;
+        keyCollection KeyCollection;
 
         public MeshMachineTest MeshMachine;
 
         public static TestLifecycle Test() => new TestLifecycle();
         public TestLifecycle() {
-            var machineEnvironment = new TestEnvironmentMachine( "TestLifecycle");
-            MeshMachine = new MeshMachineTest(machineEnvironment);
+            var testEnvironmentCommon = new TestEnvironmentCommon();
+
+            MeshMachine = new MeshMachineTest(testEnvironmentCommon);
             KeyCollection = new KeyCollectionTest(MeshMachine);
             }
 

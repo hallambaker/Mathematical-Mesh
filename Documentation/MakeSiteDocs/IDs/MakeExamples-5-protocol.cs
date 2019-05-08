@@ -17,6 +17,8 @@ namespace ExampleGenerator {
 		// MakeProtocolExamples
 		//
 		public void MakeProtocolExamples (CreateExamples Example) {
+			 ProtocolHelloRequest(Example);
+			 ProtocolHelloResponse(Example);
 			 ProtocolHello(Example);
 			 ProtocolHelloDevice(Example);
 			 ProtocolHelloProfile(Example);
@@ -35,20 +37,45 @@ namespace ExampleGenerator {
 		
 
 		//
+		// ProtocolHelloRequest
+		//
+		public static void ProtocolHelloRequest(CreateExamples Example) { /* XFile  */
+				using (Example._Output = new StreamWriter("Examples\\ProtocolHelloRequest.md")) {
+				Example._ProtocolHelloRequest(Example);
+				}
+			}
+		public void _ProtocolHelloRequest(CreateExamples Example) {
+
+				  DescribeRequestBinding (Example.ProfileHello);
+					}
+		
+
+		//
+		// ProtocolHelloResponse
+		//
+		public static void ProtocolHelloResponse(CreateExamples Example) { /* XFile  */
+				using (Example._Output = new StreamWriter("Examples\\ProtocolHelloResponse.md")) {
+				Example._ProtocolHelloResponse(Example);
+				}
+			}
+		public void _ProtocolHelloResponse(CreateExamples Example) {
+
+				  DescribeResponseBinding (Example.ProfileHello);
+					}
+		
+
+		//
 		// ProtocolHello
 		//
 		public static void ProtocolHello(CreateExamples Example) { /* XFile  */
-				using (var _Output = new StreamWriter("Examples\\ProtocolHello.md")) {
-				var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Examples\\ProtocolHello.md" };
-				obj._ProtocolHello(Example);
+				using (Example._Output = new StreamWriter("Examples\\ProtocolHello.md")) {
+				Example._ProtocolHello(Example);
 				}
 			}
 		public void _ProtocolHello(CreateExamples Example) {
 
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("````\n{0}", _Indent);
-				_Output.Write ("Example ProtocolHello\n{0}", _Indent);
-				_Output.Write ("````\n{0}", _Indent);
+				  DescribeRequest (Example.ProfileHello);
+				  DescribeResponse (Example.ProfileHello);
 				_Output.Write ("\n{0}", _Indent);
 					}
 		
@@ -57,17 +84,14 @@ namespace ExampleGenerator {
 		// ProtocolHelloDevice
 		//
 		public static void ProtocolHelloDevice(CreateExamples Example) { /* XFile  */
-				using (var _Output = new StreamWriter("Examples\\ProtocolHelloDevice.md")) {
-				var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Examples\\ProtocolHelloDevice.md" };
-				obj._ProtocolHelloDevice(Example);
+				using (Example._Output = new StreamWriter("Examples\\ProtocolHelloDevice.md")) {
+				Example._ProtocolHelloDevice(Example);
 				}
 			}
 		public void _ProtocolHelloDevice(CreateExamples Example) {
 
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("````\n{0}", _Indent);
-				_Output.Write ("Example ProtocolHelloDevice\n{0}", _Indent);
-				_Output.Write ("````\n{0}", _Indent);
+				  DescribeRequestBinding (Example.ProfileHelloDevice);
+				  DescribeResponseBinding (Example.ProfileHelloDevice);
 					}
 		
 
@@ -75,17 +99,14 @@ namespace ExampleGenerator {
 		// ProtocolHelloProfile
 		//
 		public static void ProtocolHelloProfile(CreateExamples Example) { /* XFile  */
-				using (var _Output = new StreamWriter("Examples\\ProtocolHelloProfile.md")) {
-				var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Examples\\ProtocolHelloProfile.md" };
-				obj._ProtocolHelloProfile(Example);
+				using (Example._Output = new StreamWriter("Examples\\ProtocolHelloProfile.md")) {
+				Example._ProtocolHelloProfile(Example);
 				}
 			}
 		public void _ProtocolHelloProfile(CreateExamples Example) {
 
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("````\n{0}", _Indent);
-				_Output.Write ("Example ProtocolHelloProfile\n{0}", _Indent);
-				_Output.Write ("````\n{0}", _Indent);
+				  DescribeRequestBinding (Example.ProfileHelloProfile);
+				  DescribeResponseBinding (Example.ProfileHelloProfile);
 					}
 		
 
@@ -93,17 +114,14 @@ namespace ExampleGenerator {
 		// ProtocolHelloTicket
 		//
 		public static void ProtocolHelloTicket(CreateExamples Example) { /* XFile  */
-				using (var _Output = new StreamWriter("Examples\\ProtocolHelloTicket.md")) {
-				var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Examples\\ProtocolHelloTicket.md" };
-				obj._ProtocolHelloTicket(Example);
+				using (Example._Output = new StreamWriter("Examples\\ProtocolHelloTicket.md")) {
+				Example._ProtocolHelloTicket(Example);
 				}
 			}
 		public void _ProtocolHelloTicket(CreateExamples Example) {
 
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("````\n{0}", _Indent);
-				_Output.Write ("Example ProtocolHelloTicket\n{0}", _Indent);
-				_Output.Write ("````\n{0}", _Indent);
+				  DescribeRequestBinding (Example.ProfileHelloTicket);
+				  DescribeResponseBinding (Example.ProfileHelloTicket);
 					}
 		
 
@@ -111,17 +129,14 @@ namespace ExampleGenerator {
 		// ProtocolAccountCreate
 		//
 		public static void ProtocolAccountCreate(CreateExamples Example) { /* XFile  */
-				using (var _Output = new StreamWriter("Examples\\ProtocolAccountCreate.md")) {
-				var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Examples\\ProtocolAccountCreate.md" };
-				obj._ProtocolAccountCreate(Example);
+				using (Example._Output = new StreamWriter("Examples\\ProtocolAccountCreate.md")) {
+				Example._ProtocolAccountCreate(Example);
 				}
 			}
 		public void _ProtocolAccountCreate(CreateExamples Example) {
 
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("````\n{0}", _Indent);
-				_Output.Write ("Example ProtocolAccountCreate\n{0}", _Indent);
-				_Output.Write ("````\n{0}", _Indent);
+				  DescribeRequest (Example.ProfileAliceCreate);
+				  DescribeResponse (Example.ProfileAliceCreate);
 					}
 		
 
@@ -129,17 +144,14 @@ namespace ExampleGenerator {
 		// ProtocolAccountDelete
 		//
 		public static void ProtocolAccountDelete(CreateExamples Example) { /* XFile  */
-				using (var _Output = new StreamWriter("Examples\\ProtocolAccountDelete.md")) {
-				var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Examples\\ProtocolAccountDelete.md" };
-				obj._ProtocolAccountDelete(Example);
+				using (Example._Output = new StreamWriter("Examples\\ProtocolAccountDelete.md")) {
+				Example._ProtocolAccountDelete(Example);
 				}
 			}
 		public void _ProtocolAccountDelete(CreateExamples Example) {
 
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("````\n{0}", _Indent);
-				_Output.Write ("Example ProtocolAccountDelete\n{0}", _Indent);
-				_Output.Write ("````\n{0}", _Indent);
+				  DescribeRequest (Example.ProfileAliceDelete);
+				  DescribeResponse (Example.ProfileAliceDelete);
 					}
 		
 
@@ -147,17 +159,14 @@ namespace ExampleGenerator {
 		// ProtocolStatus
 		//
 		public static void ProtocolStatus(CreateExamples Example) { /* XFile  */
-				using (var _Output = new StreamWriter("Examples\\ProtocolStatus.md")) {
-				var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Examples\\ProtocolStatus.md" };
-				obj._ProtocolStatus(Example);
+				using (Example._Output = new StreamWriter("Examples\\ProtocolStatus.md")) {
+				Example._ProtocolStatus(Example);
 				}
 			}
 		public void _ProtocolStatus(CreateExamples Example) {
 
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("````\n{0}", _Indent);
-				_Output.Write ("Example ProtocolStatus\n{0}", _Indent);
-				_Output.Write ("````\n{0}", _Indent);
+				  DescribeRequest (Example.ProfileSync);// Message 0,0
+				  DescribeResponse (Example.ProfileSync);
 					}
 		
 
@@ -165,17 +174,14 @@ namespace ExampleGenerator {
 		// ProtocolDownload
 		//
 		public static void ProtocolDownload(CreateExamples Example) { /* XFile  */
-				using (var _Output = new StreamWriter("Examples\\ProtocolDownload.md")) {
-				var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Examples\\ProtocolDownload.md" };
-				obj._ProtocolDownload(Example);
+				using (Example._Output = new StreamWriter("Examples\\ProtocolDownload.md")) {
+				Example._ProtocolDownload(Example);
 				}
 			}
 		public void _ProtocolDownload(CreateExamples Example) {
 
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("````\n{0}", _Indent);
-				_Output.Write ("Example ProtocolDownload\n{0}", _Indent);
-				_Output.Write ("````\n{0}", _Indent);
+				  DescribeRequest (Example.ProfileSync);// Message 0,1
+				  DescribeResponse (Example.ProfileSync);
 					}
 		
 
@@ -183,17 +189,14 @@ namespace ExampleGenerator {
 		// ProtocolUpload
 		//
 		public static void ProtocolUpload(CreateExamples Example) { /* XFile  */
-				using (var _Output = new StreamWriter("Examples\\ProtocolUpload.md")) {
-				var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Examples\\ProtocolUpload.md" };
-				obj._ProtocolUpload(Example);
+				using (Example._Output = new StreamWriter("Examples\\ProtocolUpload.md")) {
+				Example._ProtocolUpload(Example);
 				}
 			}
 		public void _ProtocolUpload(CreateExamples Example) {
 
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("````\n{0}", _Indent);
-				_Output.Write ("Example ProtocolProtocolUploadHello\n{0}", _Indent);
-				_Output.Write ("````\n{0}", _Indent);
+				  DescribeRequest (Example.ProfileSync);  // Message 0,2
+				  DescribeResponse (Example.ProfileSync);
 					}
 		
 
@@ -201,17 +204,16 @@ namespace ExampleGenerator {
 		// ProtocolConnect
 		//
 		public static void ProtocolConnect(CreateExamples Example) { /* XFile  */
-				using (var _Output = new StreamWriter("Examples\\ProtocolConnect.md")) {
-				var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Examples\\ProtocolConnect.md" };
-				obj._ProtocolConnect(Example);
+				using (Example._Output = new StreamWriter("Examples\\ProtocolConnect.md")) {
+				Example._ProtocolConnect(Example);
 				}
 			}
 		public void _ProtocolConnect(CreateExamples Example) {
 
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("````\n{0}", _Indent);
-				_Output.Write ("Example ProtocolConnect\n{0}", _Indent);
-				_Output.Write ("````\n{0}", _Indent);
+				  DescribeRequest (Example.ConnectRequest);
+				  DescribeResponse (Example.ConnectRequest);
+				  DescribeRequest (Example.ConnectPending);
+				  DescribeResponse (Example.ConnectPending);
 					}
 		
 
@@ -219,17 +221,16 @@ namespace ExampleGenerator {
 		// ProtocolConnectPIN
 		//
 		public static void ProtocolConnectPIN(CreateExamples Example) { /* XFile  */
-				using (var _Output = new StreamWriter("Examples\\ProtocolConnectPIN.md")) {
-				var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Examples\\ProtocolConnectPIN.md" };
-				obj._ProtocolConnectPIN(Example);
+				using (Example._Output = new StreamWriter("Examples\\ProtocolConnectPIN.md")) {
+				Example._ProtocolConnectPIN(Example);
 				}
 			}
 		public void _ProtocolConnectPIN(CreateExamples Example) {
 
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("````\n{0}", _Indent);
-				_Output.Write ("Example ProtocolConnectPIN\n{0}", _Indent);
-				_Output.Write ("````\n{0}", _Indent);
+				  DescribeRequest (Example.ConnectGetPin);
+				  DescribeResponse (Example.ConnectGetPin);
+				  DescribeRequest (Example.ConnectPin);
+				  DescribeResponse (Example.ConnectPin);
 					}
 		
 
@@ -237,17 +238,14 @@ namespace ExampleGenerator {
 		// ProtocolConnectEARL
 		//
 		public static void ProtocolConnectEARL(CreateExamples Example) { /* XFile  */
-				using (var _Output = new StreamWriter("Examples\\ProtocolConnectEARL.md")) {
-				var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Examples\\ProtocolConnectEARL.md" };
-				obj._ProtocolConnectEARL(Example);
+				using (Example._Output = new StreamWriter("Examples\\ProtocolConnectEARL.md")) {
+				Example._ProtocolConnectEARL(Example);
 				}
 			}
 		public void _ProtocolConnectEARL(CreateExamples Example) {
 
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("````\n{0}", _Indent);
-				_Output.Write ("Example ProtocolConnectEARL\n{0}", _Indent);
-				_Output.Write ("````\n{0}", _Indent);
+				  DescribeRequest (Example.DeviceEarl1);
+				  DescribeRequest (Example.DeviceEarl3);
 					}
 		
 
@@ -255,17 +253,16 @@ namespace ExampleGenerator {
 		// ProtocolContact
 		//
 		public static void ProtocolContact(CreateExamples Example) { /* XFile  */
-				using (var _Output = new StreamWriter("Examples\\ProtocolContact.md")) {
-				var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Examples\\ProtocolContact.md" };
-				obj._ProtocolContact(Example);
+				using (Example._Output = new StreamWriter("Examples\\ProtocolContact.md")) {
+				Example._ProtocolContact(Example);
 				}
 			}
 		public void _ProtocolContact(CreateExamples Example) {
 
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("````\n{0}", _Indent);
-				_Output.Write ("Example ProtocolContact\n{0}", _Indent);
-				_Output.Write ("````\n{0}", _Indent);
+				  DescribeRequest (Example.ContactRequest);
+				  DescribeResponse (Example.ContactRequest);
+				  DescribeRequest (Example.ContactAccept);
+				  DescribeResponse (Example.ContactAccept);
 					}
 		
 
@@ -273,17 +270,16 @@ namespace ExampleGenerator {
 		// ProtocolConfirm
 		//
 		public static void ProtocolConfirm(CreateExamples Example) { /* XFile  */
-				using (var _Output = new StreamWriter("Examples\\ProtocolConfirm.md")) {
-				var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Examples\\ProtocolConfirm.md" };
-				obj._ProtocolConfirm(Example);
+				using (Example._Output = new StreamWriter("Examples\\ProtocolConfirm.md")) {
+				Example._ProtocolConfirm(Example);
 				}
 			}
 		public void _ProtocolConfirm(CreateExamples Example) {
 
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("````\n{0}", _Indent);
-				_Output.Write ("Example ProtocolConfirm\n{0}", _Indent);
-				_Output.Write ("````\n{0}", _Indent);
+				  DescribeRequest (Example.ConfirmRequest);
+				  DescribeResponse (Example.ConfirmRequest);
+				  DescribeRequest (Example.ConfirmAccept);
+				  DescribeResponse (Example.ConfirmAccept);
 					}
 		}
 	}

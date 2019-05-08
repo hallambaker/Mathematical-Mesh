@@ -78,7 +78,7 @@ namespace Goedel.Cryptography {
                     PKIXPrivateKeyECDH = new PKIXPrivateKeyEd448(key, PKIXPublicKeyECDH);
                     }
                 }
-            
+
             }
 
 
@@ -100,18 +100,6 @@ namespace Goedel.Cryptography {
             KeyUses = keyUses;
             }
 
-        /// <summary>
-        /// Generate a new private key.
-        /// </summary>
-        /// <param name="keyType">The key storage class.</param>
-        /// <param name="keyUses">The permitted key uses</param>
-        /// <param name="cryptoAlgorithmID">Cryptoraphic algorithm</param>
-        /// <returns>The created key pair.</returns>
-        public static KeyPairEd448 Generate(
-                    KeySecurity keyType = KeySecurity.Public,
-                    KeyUses keyUses = KeyUses.Any,
-                    CryptoAlgorithmID cryptoAlgorithmID = CryptoAlgorithmID.Default) =>
-            new KeyPairEd448(Platform.GetRandomBits(448), keyType, keyUses, cryptoAlgorithmID);
 
 
         /// <summary>
@@ -128,6 +116,30 @@ namespace Goedel.Cryptography {
             PKIXPublicKeyECDH = new PKIXPublicKeyEd448(PublicKey.Encoding);
             }
 
+        /// <summary>
+        /// Generate a new private key.
+        /// </summary>
+        /// <param name="keyType">The key storage class.</param>
+        /// <param name="keyUses">The permitted key uses</param>
+        /// <param name="cryptoAlgorithmID">Cryptoraphic algorithm</param>
+        /// <returns>The created key pair.</returns>
+        public static KeyPairEd448 Generate(
+                    KeySecurity keyType = KeySecurity.Public,
+                    KeyUses keyUses = KeyUses.Any,
+                    CryptoAlgorithmID cryptoAlgorithmID = CryptoAlgorithmID.Default) =>
+            new KeyPairEd448(Platform.GetRandomBits(448), keyType, keyUses, cryptoAlgorithmID);
+
+        /// <summary>
+        /// Generate a key co-generation contribution and return the new composite public
+        /// key and the private key contribution.
+        /// </summary>
+        /// <param name="privateKey">The private key contribution.</param>
+        /// <returns>The composite public key.</returns>
+        public override KeyPairAdvanced Cogenerate(out KeyPairAdvanced privateKey) {
+            privateKey = Generate(KeySecurity.Exportable, KeyUses, CryptoAlgorithmID);
+            var combinedKey = PublicKey.Combine (privateKey.IKeyAdvancedPublic as CurveEdwards448Public);
+            return new KeyPairEd448(combinedKey, CryptoAlgorithmID);
+            }
 
         /// <summary>
         /// Factory method to produce a key pair from key parameters.
@@ -155,7 +167,7 @@ namespace Goedel.Cryptography {
         /// Persist the key to a key collection. Note that it is only possible to store a 
         /// </summary>
         /// <param name="keyCollection"></param>
-        public override void Persist(KeyCollection keyCollection) {
+        public override void Persist(keyCollection keyCollection) {
             Assert.True(PersistPending);
             var pkix = PKIXPrivateKeyECDH ?? new PKIXPrivateKeyEd448(EncodedPrivateKey, PKIXPublicKeyECDH) { };
             keyCollection.Persist(UDF, pkix, KeySecurity.IsExportable());

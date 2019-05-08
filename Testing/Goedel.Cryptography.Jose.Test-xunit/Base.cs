@@ -15,9 +15,9 @@ namespace Goedel.XUnit {
         static KeyPairBaseRSA EncrypterKeyPair;
         static KeyPairBaseRSA SignerKeyPair;
 
-        static KeyPairDH AliceKeyPair;
-        static KeyPairDH BobKeyPair;
-        static KeyPairDH GroupKeyPair;
+        //static KeyPairDH AliceKeyPair;
+        //static KeyPairDH BobKeyPair;
+        //static KeyPairDH GroupKeyPair;
 
         static KeyPairDH TestKeyPairDH;
         static KeyPairBaseRSA TestKeyPairRSA;
@@ -39,9 +39,9 @@ namespace Goedel.XUnit {
                 Directories.TestKey_OpenSSH_Private, KeySecurity.Exportable, null);
             //Encrypter = EncrypterKeyPair.ExchangeProvider();
             
-            AliceKeyPair = new KeyPairDH(keySecurity: KeySecurity.Exportable);
-            BobKeyPair = new KeyPairDH(keySecurity: KeySecurity.Exportable);
-            GroupKeyPair = new KeyPairDH(keySecurity: KeySecurity.Exportable);
+            //AliceKeyPair = new KeyPairDH(keySecurity: KeySecurity.Exportable);
+            //BobKeyPair = new KeyPairDH(keySecurity: KeySecurity.Exportable);
+            //GroupKeyPair = new KeyPairDH(keySecurity: KeySecurity.Exportable);
 
             TestKeyPairDH = new KeyPairDH(keySecurity:KeySecurity.Exportable);
             TestKeyPairRSA = SignerKeyPair;

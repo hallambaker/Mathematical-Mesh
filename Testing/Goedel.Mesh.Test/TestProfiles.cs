@@ -20,10 +20,10 @@ namespace Goedel.Mesh.Test {
         public TestProfiles() => TestEnvironmentCommon.Initialize();
 
         public  void EscrowRecover() {
-            var machineEnvironment = new TestEnvironmentMachine( "EscrowRecover");
+            var testEnvironmentCommon = new TestEnvironmentCommon();
 
-            var machineAliceAdmin = new MeshMachineTest(machineEnvironment, name: "Alice Admin");
-            var machineAliceRecover = new MeshMachineTest(machineEnvironment, name: "Alice Admin Recovered");
+            var machineAliceAdmin = new MeshMachineTest(testEnvironmentCommon, name: "Alice Admin");
+            var machineAliceRecover = new MeshMachineTest(testEnvironmentCommon, name: "Alice Admin Recovered");
 
             var deviceAdmin = ContextDevice.Generate(machineAliceAdmin);
             deviceAdmin.GenerateMaster();
@@ -36,9 +36,9 @@ namespace Goedel.Mesh.Test {
             }
 
         public void CatalogCredentials() {
-            var machineEnvironment = new TestEnvironmentMachine("ProtocolHello");
+            var testEnvironmentCommon = new TestEnvironmentCommon();
 
-            var machineAliceAdmin = new MeshMachineTest(machineEnvironment, name: "Alice");
+            var machineAliceAdmin = new MeshMachineTest(testEnvironmentCommon, name: "Alice");
             var deviceAdmin = ContextDevice.Generate(machineAliceAdmin);
             deviceAdmin.GenerateMaster();
 
@@ -106,17 +106,17 @@ namespace Goedel.Mesh.Test {
         /// Test direct addition/removal of devices without going through the services or inbound spool
         /// </summary>
         public void CatalogDevices() {
-            var machineEnvironment = new TestEnvironmentMachine( "ProtocolHello");
+            var testEnvironmentCommon = new TestEnvironmentCommon();
 
-            var machineAliceAdmin = new MeshMachineTest(machineEnvironment, name: "Alice");
-            var machineAliceLaptop = new MeshMachineTest(machineEnvironment, name: "Alice Laptop");
-            var machineAlicePhone = new MeshMachineTest(machineEnvironment, name: "Alice Phone");
+            var machineAliceAdmin = new MeshMachineTest(testEnvironmentCommon, name: "Alice");
+            var machineAliceLaptop = new MeshMachineTest(testEnvironmentCommon, name: "Alice Laptop");
+            var machineAlicePhone = new MeshMachineTest(testEnvironmentCommon, name: "Alice Phone");
             var deviceAdmin = ContextDevice.Generate(machineAliceAdmin);
             deviceAdmin.GenerateMaster();
 
             var catalog = deviceAdmin.GetCatalogDevice();
 
-            var keySign = machineAliceAdmin.KeyCollection.LocatePrivate(deviceAdmin.ProfileDevice.DeviceSignatureKey.UDF);
+            var keySign = machineAliceAdmin.KeyCollection.LocatePrivate(deviceAdmin.ProfileDevice.SignatureKey.UDF);
             var Entry1 = MakeCatalogEntryDevice(deviceAdmin.ProfileDevice, keySign);
 
             var Device2 = ContextDevice.Generate(machineAliceLaptop);
@@ -139,17 +139,17 @@ namespace Goedel.Mesh.Test {
 
         public CatalogEntryDevice MakeCatalogEntryDevice(ProfileDevice profileDevice, KeyPair keySign) {
 
-            var profileMeshDevicePublic = new ProfileMeshDevicePublic() {
-                DeviceProfile = profileDevice.ProfileDeviceSigned
+            var profileMeshDevicePublic = new AssertionDeviceConnection() {
+                //DeviceProfile = profileDevice.DareMessage
                 };
 
-            var ProfileMeshDevicePrivate = new ProfileMeshDevicePrivate() {
+            var ProfileMeshDevicePrivate = new AssertionDevicePrivate() {
                 };
 
             var catalogEntryDevice = new CatalogEntryDevice() {
                 UDF = profileDevice.UDF,
-                ProfileMeshDevicePublicSigned = Sign(profileMeshDevicePublic, keySign),
-                ProfileMeshDevicePrivateEncrypted = Sign(ProfileMeshDevicePrivate, keySign)
+                SignedDeviceConnection = Sign(profileMeshDevicePublic, keySign),
+                EncryptedDevicePrivate = Sign(ProfileMeshDevicePrivate, keySign)
                 };
 
 
@@ -161,9 +161,9 @@ namespace Goedel.Mesh.Test {
         /// Test addition/deletion of contacts
         /// </summary>
         public void CatalogContacts() {
-            var machineEnvironment = new TestEnvironmentMachine( "ProtocolHello");
+            var testEnvironmentCommon = new TestEnvironmentCommon();
 
-            var MachineAliceAdmin = new MeshMachineTest(machineEnvironment, name: "Alice");
+            var MachineAliceAdmin = new MeshMachineTest(testEnvironmentCommon, name: "Alice");
             var deviceAdmin = ContextDevice.Generate(MachineAliceAdmin);
             deviceAdmin.GenerateMaster();
 

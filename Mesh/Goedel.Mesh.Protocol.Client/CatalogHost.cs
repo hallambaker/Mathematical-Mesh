@@ -10,41 +10,79 @@ using Goedel.Protocol;
 namespace Goedel.Mesh.Protocol.Client {
 
     public interface IMeshMachineClient {
+        ///<summary>Direct access to the Catalog, should remove this</summary>
         CatalogHost CatalogHost { get;  }
 
+        /// <summary>
+        /// Return an administration profile with local name <paramref name="local"/>.
+        /// </summary>
+        /// <param name="local">The profile to return.</param>
+        /// <returns>The entry for the specified profile.</returns>
+        AdminEntry GetAdmin(string local = null);
+
+        /// <summary>
+        /// Return an account profile with local name <paramref name="local"/>.
+        /// </summary>
+        /// <param name="local">The profile to return.</param>
+        /// <returns>The entry for the specified profile.</returns>
+        AccountEntry GetAccount(string local = null);
+
+        /// <summary>
+        /// Return an pending connection request with local name <paramref name="local"/>.
+        /// </summary>
+        /// <param name="local">The profile to return.</param>
+        /// <returns>The entry for the specified profile.</returns>
+        PendingEntry GetPending(string local = null);
         }
 
 
-    public partial class ProfileEntry {
-
-        public override string _PrimaryKey => PrimaryKey; 
-
-        }
 
 
-    public class CatalogHost {
+
+    public class CatalogHost : Disposable {
         IMeshMachine MeshMachine;
-        ContainerHost ContainerHost;
+        ContainerProfile ContainerProfile;
 
-        public ProfileMesh DefaultProfileMesh => ContainerHost?.DefaultProfileMesh;
-        public ProfileDevice DefaultProfileDevice => ContainerHost?.DefaultProfileDevice;
-        public ProfileMaster DefaultProfileMaster => ContainerHost?.DefaultProfileMaster;
+
+        public List<CatalogEntryDevice> GetCatalogEntryDevices() =>
+            new List<CatalogEntryDevice> { ContainerProfile.DefaultCatalogEntryDevice };
+
+        public virtual void Register(CatalogItem profileEntry) =>
+            ContainerProfile.Update(profileEntry);
+        public virtual void Delete(CatalogItem profile) =>
+                ContainerProfile.Delete(profile._PrimaryKey);
+
+
+
+        
 
         static CatalogHost() {
             JSONObject.AddDictionary(CatalogItem._TagDictionary);
             JSONObject.AddDictionary(MeshItem._TagDictionary);
             }
 
+        protected override void Disposing() {
+            ContainerProfile.Dispose();
+            }
+
+
         /// <summary>
         /// Get the host catalog from the specified mesh machine.
         /// </summary>
         /// <param name="meshMachine"></param>
-        public CatalogHost(ContainerHost containerHost, IMeshMachine meshMachine) {
+        public CatalogHost(ContainerProfile containerHost, IMeshMachine meshMachine) {
             MeshMachine = meshMachine;
-            ContainerHost = containerHost;
+            ContainerProfile = containerHost;
             }
 
+        public AdminEntry GetAdmin(string local = null) => ContainerProfile.GetAdmin(local);
+        public AccountEntry GetAccount(string local = null) => ContainerProfile.GetAccount(local);
+        public PendingEntry GetPending(string local = null) => ContainerProfile.GetPending(local);
 
+
+
+
+        #region // ***************  old stuff
         /// <summary>
         /// Get the host catalog from the specified mesh machine.
         /// </summary>
@@ -56,28 +94,33 @@ namespace Goedel.Mesh.Protocol.Client {
             }
 
 
+
+        // *********** Old
+
         public virtual void Register(DareMessage profileSigned) {
             var profile = JSONObject.FromJSON(profileSigned.Body.JSONReader(), true);
 
             var entry = new ProfileEntry() {
-                Profile = profileSigned,
-                PrimaryKey = profile._PrimaryKey
+                //Profile = profileSigned,
+                //PrimaryKey = profile._PrimaryKey
                 };
 
             
 
-            ContainerHost.Update(entry);
+            ContainerProfile.Update(entry);
 
             }
 
         public virtual void Delete(Profile profile) =>
-                ContainerHost.Delete(profile._PrimaryKey);
+                ContainerProfile.Delete(profile._PrimaryKey);
 
-        public virtual ProfileMesh GetConnection(
+        public virtual AssertionAccount GetConnection(
                     string accountName = null,
-                    string deviceUDF = null) => ContainerHost.GetConnection(accountName, deviceUDF);
+                    string deviceUDF = null) => throw new NYI();
 
+        //ContainerHost.GetConnection(accountName, deviceUDF);
 
+        //  ******
 
 
         public ContextDevice GetContextDevice(
@@ -89,7 +132,7 @@ namespace Goedel.Mesh.Protocol.Client {
             if (accountID != null) {
                 throw new NYI();
                 }
-            else  if (accountUDF != null) {
+            else if (accountUDF != null) {
                 throw new NYI();
                 }
             else if (deviceID != null) {
@@ -98,28 +141,27 @@ namespace Goedel.Mesh.Protocol.Client {
             else if (deviceUDF != null) {
                 throw new NYI();
                 }
-            else if (ContainerHost.DefaultProfileDevice != null) {
-                return new ContextDevice(MeshMachine, ContainerHost.DefaultProfileMesh, ContainerHost.DefaultProfileDevice);
+
+            else if (ContainerProfile.DefaultProfileDevice != null) {
+                return new ContextDevice(MeshMachine, 
+                        ContainerProfile.DefaultProfileMaster, 
+                        ContainerProfile.DefaultProfileMesh, 
+                        ContainerProfile.DefaultProfileDevice);
                 }
             return null;
             }
 
 
-        public KeyCollection GetKeyCollection() => 
+        public keyCollection GetKeyCollection() => 
             new KeyCollectionClient(this, MeshMachine.KeyCollection);
 
-        public virtual JpcSession GetJpcSession() => throw new NYI();
+
+        #endregion
 
 
 
-        public ProfileMesh GetProfileMeshByAccount(string account) => 
-                    ContainerHost.GetProfileMeshByAccount(account);
 
 
-        public ProfileDevice GetProfileDeviceByAccount(string account) =>
-                    ContainerHost.GetProfileDeviceByAccount(account);
 
-        public List<Profile> GetProfiles() => ContainerHost.GetProfiles();
-        public List<AccountDescription> GetAccountDescriptions () => ContainerHost.GetAccountDescription();
         }
     }

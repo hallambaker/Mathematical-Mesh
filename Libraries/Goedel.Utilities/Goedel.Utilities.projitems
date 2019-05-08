@@ -23,6 +23,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Initialize.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IsTrue.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Linewrap.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Lock.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)NumberSplit.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PathCombine.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)RFC3339.cs" />
@@ -36,7 +37,13 @@
       <Generator>exceptional</Generator>
     </None>
     <None Include="$(MSBuildThisFileDirectory)Index.md" />
+    <None Include="$(MSBuildThisFileDirectory)Locking.md" />
     <None Include="$(MSBuildThisFileDirectory)Makefile" />
     <None Include="$(MSBuildThisFileDirectory)VS.Make" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="C:\Users\hallam\Work\mmm\Libraries\Goedel.Utilities\Locking.xaml.cs">
+      <DependentUpon>Locking.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
 </Project>

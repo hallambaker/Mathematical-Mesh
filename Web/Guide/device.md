@@ -13,7 +13,6 @@ the mesh service account alice@example.com to which connection is requested:
 
 ````
 >device request alice@example.com
-OK
 ````
 
 In this case there is no existing device profile and so a new profile is
@@ -32,7 +31,6 @@ messages.
 
 ````
 >device pending
-OK
 ````
 
 Alice sees the request that she posted and approves it with the connect
@@ -100,7 +98,6 @@ a new PIN code:
 
 ````
 >device pin
-OK
 ````
 
 The pin code can now be used to authenticate the connection request:
@@ -108,7 +105,6 @@ The pin code can now be used to authenticate the connection request:
 
 ````
 >device request alice@example.com /pin=tbs
-OK
 ````
 
 Since the PIN code that was issued was set to be self-authorizing, the device
@@ -118,7 +114,6 @@ administrator device:
 
 ````
 >device pending
-OK
 ````
 
 
@@ -127,11 +122,7 @@ OK
 The `device delete` command creates a device profile without attempting
 to connect the device to a Mesh profile:
 
-
-````
->device create /id="IoTDevice"
-ERROR - The option  is not known.
-````
+**Missing Example***
 
 The most common reason for generating a device profile in this fashion is to allow
 an embedded or 'IoT' device to be preconfigured for Mesh control during manufacture.
@@ -172,7 +163,7 @@ this type of device connection.
 
 
 ````
->device pre devices@example.com /key=udf://example.com/EBHM-TE4R-WAPG-LV2B-VK2P-I6NB-VTPA-HS
+>device pre devices@example.com /key=udf://example.com/EB4V-7FPA-OQ5G-IEMZ-XXKE-IYYE-KVCH-D3
 ERROR - Object reference not set to an instance of an object.
 ````
 
@@ -200,7 +191,7 @@ and retrieve the data using the `device earl` command:
 
 
 ````
->device earl udf://example.com/EBHM-TE4R-WAPG-LV2B-VK2P-I6NB-VTPA-HS
+>device earl udf://example.com/EB4V-7FPA-OQ5G-IEMZ-XXKE-IYYE-KVCH-D3
 ERROR - The feature has not been implemented
 ````
 

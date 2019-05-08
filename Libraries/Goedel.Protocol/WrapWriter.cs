@@ -177,7 +177,7 @@ namespace Goedel.Protocol {
             else { // Line has no break point
                 Output.WriteLine (BreakBuffer);
                 BreakBuffer = "";
-                Minimum = Minimum + WrappedLeading;
+                Minimum += WrappedLeading;
                 }
             Line++;
             SpaceBuffer = "";
@@ -224,7 +224,7 @@ namespace Goedel.Protocol {
                     return;
                     }
                 else {
-                    BreakBuffer = BreakBuffer + c;
+                    BreakBuffer += c;
                     state = 1;
                     return;
                     }
@@ -234,7 +234,7 @@ namespace Goedel.Protocol {
             if (c == ' ') {
                 switch (state) {
                     case 0:
-                        Leading = Leading + c;
+                        Leading += c;
                         break;
                     case 1:
                         Buffer = Buffer + SpaceBuffer + BreakBuffer;
@@ -243,7 +243,7 @@ namespace Goedel.Protocol {
                         state = 2;
                         break;
                     case 2:
-                        SpaceBuffer = SpaceBuffer + " ";
+                        SpaceBuffer += " ";
                         break;
                     case 3:
                         // Ignore surplus spaces afer break
@@ -257,7 +257,7 @@ namespace Goedel.Protocol {
                         state = 1;
                         break;
                     case 1:
-                        BreakBuffer = BreakBuffer + c;
+                        BreakBuffer += c;
                         break;
                     case 2:
                         BreakBuffer = c.ToString ();

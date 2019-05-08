@@ -55,22 +55,28 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         public long Length => StreamWrite != null ? StreamWrite.Length : StreamRead.Length;
 
+        ///<summary>The reader writer lock for the underlying file.</summary>
+        public LockGlobal LockGlobal = null;
 
         /// <summary>
         /// Constructor from a file
         /// </summary>
-        /// <param name="FileName">The file to open.</param>
-        /// <param name="FileStatus">The file access mode.</param>
-        /// <param name="WriteOnly">If true, the file is only opened in write mode.</param>
-        public JBCDStream (string FileName, FileStatus FileStatus = FileStatus.Read, bool WriteOnly = false) {
+        /// <param name="fileName">The file to open.</param>
+        /// <param name="fileStatus">The file access mode.</param>
+        /// <param name="writeOnly">If true, the file is only opened in write mode.</param>
+        public JBCDStream (string fileName, FileStatus fileStatus = FileStatus.Read, bool writeOnly = false) {
 
-            if (FileStatus != FileStatus.Read) {
-                StreamWrite = FileName.FileStream(FileStatus);
+            if (fileStatus == FileStatus.ConcurrentLocked) {
+                LockGlobal = new LockGlobal(UDF.LockName(fileName));
+                }
+
+            if (fileStatus != FileStatus.Read) {
+                StreamWrite = fileName.FileStream(fileStatus);
                 DisposeStreamWrite = StreamWrite;
                 StreamWrite.Seek(0, SeekOrigin.End);
                 }
-            if (!WriteOnly) {
-                StreamRead = FileName.FileStream(FileStatus.Read);
+            if (!writeOnly) {
+                StreamRead = fileName.FileStream(FileStatus.Read);
                 DisposeStreamRead = StreamRead;
                 }
             }
@@ -93,6 +99,7 @@ namespace Goedel.Cryptography.Dare {
         protected override void Disposing() {
             DisposeStreamWrite?.Dispose();
             DisposeStreamRead?.Dispose();
+            LockGlobal?.Dispose();
             }
 
 
@@ -117,7 +124,23 @@ namespace Goedel.Cryptography.Dare {
         /// Move the read position to the end of the stream.
         /// </summary>
         /// <returns>The new position within the current stream.</returns>
-        public virtual long End() => StreamRead.Seek(0, SeekOrigin.End);
+        public virtual long End() {
+            if (LockGlobal == null) {
+                return StreamRead.Seek(0, SeekOrigin.End);
+                }
+            try {
+                LockGlobal.Enter();
+                var result = StreamRead.Seek(0, SeekOrigin.End);
+                LockGlobal.Exit();
+                return result;
+                }
+            catch (Exception exception) {
+                LockGlobal.Exit();
+                throw exception;
+                }
+
+            }
+
 
         /* Write functions */
 

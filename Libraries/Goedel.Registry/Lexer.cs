@@ -369,38 +369,38 @@ namespace Goedel.Registry {
                             else {
                                 switch (ActionTable[NextState]) {
                                     case ActionType.Add: {
-                                            TokenText = TokenText + c;
+                                            TokenText += c;
                                             break;
                                             }
                                     case ActionType.Escape: {
                                             if (State == 8) {
-                                                TokenText = TokenText + c;
+                                                TokenText += c;
                                                 }
                                             else if (State == 10) {
                                                 switch (c) {
                                                     case 'n':
-                                                        TokenText = TokenText + '\n';
+                                                        TokenText += '\n';
                                                         break;
                                                     case 'r':
-                                                        TokenText = TokenText + '\r';
+                                                        TokenText += '\r';
                                                         break;
                                                     case 'v':
-                                                        TokenText = TokenText + '\v';
+                                                        TokenText += '\v';
                                                         break;
                                                     case 't':
-                                                        TokenText = TokenText + '\t';
+                                                        TokenText += '\t';
                                                         break;
                                                     case '\"':
-                                                        TokenText = TokenText + '\"';
+                                                        TokenText += '\"';
                                                         break;
                                                     case '\'':
-                                                        TokenText = TokenText + '\'';
+                                                        TokenText += '\'';
                                                         break;
                                                     case '\\':
-                                                        TokenText = TokenText + '\\';
+                                                        TokenText += '\\';
                                                         break;
                                                     case '0':
-                                                        TokenText = TokenText + '\0';
+                                                        TokenText += '\0';
                                                         break;
                                                     default:
                                                         throw new Exception("Unknown Character Escape Sequence");

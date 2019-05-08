@@ -55,6 +55,10 @@ namespace ExampleGenerator {
 
     public partial class CreateExamples {
 
+        public bool GitHub = true;
+        public string Preformat => GitHub ? "````" : "~~~~" ;
+
+
         public byte[] MessagePlaintext = "This is a sample Plaintext".ToBytes();
 
         public string MessageTestPlaintext = "TBS";
@@ -105,7 +109,7 @@ namespace ExampleGenerator {
 
         public CryptoStackDebug CryptoStackEncrypt;
 
-        KeyCollection KeyCollection;
+        keyCollection KeyCollection;
 
         List<byte[]> DataSequences;
 
@@ -116,23 +120,18 @@ namespace ExampleGenerator {
 
         public string EDSText;
 
+
         void GenerateKeys() {
             // Encryption Key Set.
-            var machineEnvironment = new TestEnvironmentMachine( "TestLifecycle");
-            var Machine1 = new MeshMachineTest(machineEnvironment, name: "Machine1");
+            var testEnvironmentCommon = new TestEnvironmentCommon();
+            var Machine1 = new MeshMachineTest(testEnvironmentCommon, name: "Machine1");
 
             
             var DareMessageAlicePrivateKeyPair = KeyPairEd25519.Generate(
                 KeySecurity.Exportable, KeyUses.Encrypt);
             DareMessageAlicePrivateKeyPair.Locator = AccountAlice;
-            //DareMessageAlicePrivate = new CurveEdwards25519Private();
 
             DareMessageAliceKey = Key.GetPrivate(DareMessageAlicePrivateKeyPair);
-
-
-            //DareMessageAlicePublic = DareMessageAlicePrivate.PublicKey;
-            //DareMessageAliceKeypair = new KeyPairEd25519(DareMessageAlicePublic);
-
 
             // Signature Key Set.
             SignatureAliceKeyPair = KeyPairEd25519.Generate(
@@ -141,27 +140,6 @@ namespace ExampleGenerator {
             SignatureAliceKeyPair.Locator = AccountAlice;
             SignatureAliceKey = Key.GetPrivate(SignatureAliceKeyPair);
 
-
-            //SignatureAlicePrivate = (PrivateKeyECDH)Key.GetPrivate(SignatureAliceKeyPair);
-            //SignatureAlicePublic = (PublicKeyECDH)Key.GetPublic(SignatureAliceKeyPair);
-
-            //DareMessageAlicePrivate = new DiffeHellmanPrivate();
-            //var DareMessageAlicePrivateKeyPair = new KeyPairDH(
-            //    DareMessageAlicePrivate, KeySecurity.Exportable) {
-            //    Locator = AccountAlice
-            //    };
-
-            //DareMessageAliceKey = Key.GetPrivate(DareMessageAlicePrivateKeyPair);
-            //DareMessageAlicePublic = DareMessageAlicePrivate.DiffeHellmanPublic;
-            //DareMessageAliceKeypair = new KeyPairDH(DareMessageAlicePublic);
-
-
-            //// Signature Key Set.
-            //SignatureAliceKeyPair = KeyPairRSA.Generate(2048, KeySecurity.Exportable);
-            //SignatureAliceKeyPair.Locator = AccountAlice;
-            //SignatureAliceKey = Key.GetPrivate(SignatureAliceKeyPair);
-            //SignatureAlicePrivate = (PrivateKeyRSA)Key.GetPrivate(SignatureAliceKeyPair);
-            //SignatureAlicePublic = (PublicKeyRSA)Key.GetPublic(SignatureAliceKeyPair);
 
             KeyCollection = new KeyCollectionTest(Machine1);
             KeyCollection.Add(DareMessageAlicePrivateKeyPair);
@@ -200,11 +178,6 @@ namespace ExampleGenerator {
 
             var EDS1 = MailMessageAsDAREPlaintext.Header.EDSS[0];
             EDSText = ReadEDS(EDS1);
-
-
-            //ExampleGenerator.MeshExamplesMessageMail(this);
-            //ExampleGenerator.MeshExamplesMessageEDS(this);
-            //ExampleGenerator.MeshExamplesMessageEncrypted(this);
 
             }
 
@@ -286,10 +259,6 @@ namespace ExampleGenerator {
                 };
             return CryptoStack.EncodeEDS(Plaintext, null);
             }
-
-        static readonly byte[] MasterKeyInfo = "master".ToUTF8();
-
-
 
 
         public string ContainerFramingSimple = "";
@@ -385,7 +354,7 @@ namespace ExampleGenerator {
         public ProfileMaster AdvancedRecryptionGroup;
         public string AdvancedRecryptionMessagePlaintext;
         public DareMessage AdvancedRecryptionMessageEncrypted;
-        public ProfileApplication AdvancedRecryptionBobProfile;
+        public Assertion AdvancedRecryptionBobProfile;
         public Key AdvancedRecryptionBobDecryptionKey;
         public Key AdvancedRecryptionBobRecryptionKey;
         public Key AdvancedRecryptionBobRecryptionEntry;

@@ -176,24 +176,50 @@ executed without any output being made to the console.
 
 #end xfile
 
-
-
+#method DescribeMessage ExampleResult Result
+#{Preformat}
+[NYI]
+#{Preformat}
+#end method
 
 #method Describe DescribeCommandSet CommandSet
 ## #{CommandSet.Identifier}
 
-````
+#{Preformat}
 #% CommandSet.Describe('/', _Output, false);
-````
+#{Preformat}
 #end method
 
 #method2 Describe DescribeCommandSet CommandSet DescribeCommand Command
 ## #{CommandSet.Identifier} #{Command.Identifier}
 
-````
+#{Preformat}
 #% Command.Describe('/', _Output, false);
-````
+#{Preformat}
 #end method2
+
+
+#method Format JSONObject data
+#{Preformat}
+#{JSONDebugWriter.Write (data)}
+#{Preformat}
+#end method
+
+
+#method DescribeRequestBinding List<ExampleResult> exampleResults
+#end method
+
+
+#method DescribeResponseBinding List<ExampleResult> exampleResults
+#end method
+
+
+#method DescribeRequest List<ExampleResult> exampleResults
+#end method
+
+
+#method DescribeResponse List<ExampleResult> exampleResults
+#end method
 
 
 #method ConsoleExample List<ExampleResult> exampleResults
@@ -202,12 +228,12 @@ executed without any output being made to the console.
 #% Console.WriteLine ($"Missing example!"); return;
 #end if
 
-````
+#{Preformat}
 #foreach (var exampleResult in exampleResults)
 >#{exampleResult.Command}
 #{exampleResult.ResultText}#!
 #end foreach
-````
+#{Preformat}
 #end method
 
 
@@ -218,10 +244,10 @@ executed without any output being made to the console.
 #end if
 #% var exampleResult = exampleResults[0];
 
-````
+#{Preformat}
 >#{exampleResult.Command} /json
 #{exampleResult.ResultJSON}
-````
+#{Preformat}
 #end method
 
 #method ConsoleReference List<ExampleResult> exampleResults
@@ -231,10 +257,10 @@ executed without any output being made to the console.
 #end if
 #% var exampleResult = exampleResults[0];
 
-````
+#{Preformat}
 >#{exampleResult.Command}
 #{exampleResult.ResultText}#!
-````
+#{Preformat}
 
 Specifying the /json option returns a result of type #{exampleResult.ResultType}:
 

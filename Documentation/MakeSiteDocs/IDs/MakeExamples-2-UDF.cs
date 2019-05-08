@@ -36,6 +36,7 @@ namespace ExampleGenerator {
 			 UDFAuthenticatorLong(Example);
 			 UDFDigestResolution(Example);
 			 UDFEncryptedResolution(Example);
+			 UDFAuthenticator(Example);
 			}
 		
 

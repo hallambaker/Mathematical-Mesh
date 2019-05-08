@@ -23,12 +23,8 @@ namespace Goedel.Mesh.Test {
         public override IMeshMachine MeshMachine => MeshMachineTest;
 
         public MeshMachineTest MeshMachineTest => meshMachineTest ??
-            new MeshMachineTest(MachineEnvironment, MachineName).CacheValue(out meshMachineTest);
+            new MeshMachineTest(TestEnvironmentCommon, MachineName).CacheValue(out meshMachineTest);
         MeshMachineTest meshMachineTest;
-
-        TestEnvironmentMachine MachineEnvironment => machineEnvironment ??
-            new TestEnvironmentMachine(TestEnvironmentCommon, MachineName).CacheValue(out machineEnvironment);
-        TestEnvironmentMachine machineEnvironment;
 
         MeshService MeshClient => meshClient ??
             MeshPortalDirect.GetService(ServiceName).CacheValue(out meshClient);
@@ -78,10 +74,35 @@ namespace Goedel.Mesh.Test {
         public string ResultJSON => Result.GetJson(true).ToUTF8();
 
 
+        public ResultEntry ResultEntry => Result as ResultEntry;
+
+        public ResultMail ResultMail => Result as ResultMail;
+
+        public ResultSSH ResultSSH => Result as ResultSSH;
+
+
+        public ResultDump ResultDump => Result as ResultDump;
+        public ResultList ResultList => Result as ResultList;
+        public ResultHello ResultHello => Result as ResultHello;
+        public ResultDeviceCreate ResultDeviceCreate => Result as ResultDeviceCreate;
+        public ResultMasterCreate ResultMasterCreate => Result as ResultMasterCreate;
+        public ResultSync ResultSync => Result as ResultSync;
+        public ResultEscrow ResultEscrow => Result as ResultEscrow;
+        public ResultConnectProcess ResultConnectProcess => Result as ResultConnectProcess;
+        public ResultPending ResultPending => Result as ResultPending;
+        public ResultRecover ResultRecover => Result as ResultRecover;
+        public ResultConnect ResultConnect => Result as ResultConnect;
+        public ResultComplete ResultComplete => Result as ResultComplete;
+        public ResultPIN ResultPIN => Result as ResultPIN;
+
         public ExampleResult(string command, Result result) {
             Result = result;
             Command = command;
             }
+
+
+
+
 
         }
 

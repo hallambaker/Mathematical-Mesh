@@ -63,43 +63,8 @@ namespace Goedel.Test.Core {
             Directory.CreateDirectory(ServiceDirectory);
             }
 
+        public string MachinePath(string machineName) => System.IO.Path.Combine(Path, machineName);
 
-
-
-        }
-
-    /// <summary>
-    /// Test environment for a single device within a test.
-    /// </summary>
-    public class TestEnvironmentMachine {
-
-
-        public MeshPortalDirect MeshPortalDirect => TestEnvironmentCommon.MeshPortalDirect;
-
-        TestEnvironmentCommon TestEnvironmentCommon;
-        public string Name;
-
-        public string Path => System.IO.Path.Combine(TestEnvironmentCommon.Path, Name);
-        //public string WorkingDirectory => System.IO.Path.Combine(Path, "WorkingDirectory");
-
-
-
-        public TestEnvironmentMachine(string name = "Test") {
-            TestEnvironmentCommon = new TestEnvironmentCommon();
-            var ServiceDirectory = System.IO.Path.Combine(TestEnvironmentCommon.Path, "ServiceDirectory");
-
-
-
-            Name = name;
-            }
-
-
-        public TestEnvironmentMachine(
-                    TestEnvironmentCommon testEnvironment,
-                    string name = "Test") {
-            TestEnvironmentCommon = testEnvironment;
-            Name = name;
-            }
 
         }
 

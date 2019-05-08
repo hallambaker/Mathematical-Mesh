@@ -34,33 +34,37 @@ namespace Goedel.XUnit {
         static string AccountAlice = "alice@example.com";
         static string ServiceName = "example.com";
 
+
+        public string DeviceAliceAdmin = "Alice Admin";
+        public string DeviceAlice2 = "Alice Device 2";
+        public string DeviceAlice3 = "Alice Device 3";
+
         [Fact]
         public void ProtocolHello() {
-            var machineEnvironment = new TestEnvironmentMachine( "ProtocolHello");
 
-            var meshClient = machineEnvironment.MeshPortalDirect.GetService(ServiceName);
+            var testEnvironmentCommon = new TestEnvironmentCommon();
+            var meshClient = testEnvironmentCommon.MeshPortalDirect.GetService(ServiceName);
 
 
             var request = new HelloRequest();
             var response = meshClient.Hello(request, null);
-
+            response.Success().AssertTrue();
             }
 
         [Fact]
         public void ProtocolHelloContext() {
-            var testEnvironmentCommon = new TestEnvironmentCommon();
-            MeshMachineTest.GetContextMaster(testEnvironmentCommon, AccountAlice, "Alice Admin", 
+
+            MeshMachineTest.GetContextMaster(AccountAlice, "Alice Admin",
                     out var machineAliceAdmin, out var deviceAdmin);
             var response = deviceAdmin.Hello(ServiceName);
-
+            response.Success.AssertTrue();
 
             }
 
 
         [Fact]
         public void ProtocolAccountLifecycle() {
-            var testEnvironmentCommon = new TestEnvironmentCommon();
-            MeshMachineTest.GetContextMaster(testEnvironmentCommon, AccountAlice, "Alice Admin", 
+            MeshMachineTest.GetContextMaster(AccountAlice, "Alice Admin",
                 out var machineAliceAdmin, out var deviceAdmin);
 
 
@@ -84,8 +88,7 @@ namespace Goedel.XUnit {
 
         [Fact]
         public void ProtocolCatalog() {
-            var testEnvironmentCommon = new TestEnvironmentCommon();
-            MeshMachineTest.GetContextMaster(testEnvironmentCommon, AccountAlice, "Alice Admin", 
+            MeshMachineTest.GetContextMaster(AccountAlice, "Alice Admin",
                 out var machineAliceAdmin, out var deviceAdmin);
 
 
@@ -104,11 +107,83 @@ namespace Goedel.XUnit {
 
             }
 
+        [Fact]
+        public void MeshConnectBase() {
+            var testEnvironmentCommon = new TestEnvironmentCommon();
+
+            var machineAdmin = new MeshMachineTest(testEnvironmentCommon, DeviceAliceAdmin);
+            var contextAdmin = new ContextDevice(machineAdmin, accountName:null, deviceUDF:null); 
+                        // Multiple accounts/devices not supported at the moment. 
+
+
+
+
+            //MeshMachineTest.GetContext(testEnvironmentCommon, AccountAlice, DeviceAliceAdmin, 
+            //    out var machineAdmin, out var contextAdmin);
+
+            contextAdmin.GenerateMaster();
+
+            // Check that we can retrieve the contect from the machine
+
+            var machineAdmin2 = new MeshMachineTest(testEnvironmentCommon, DeviceAliceAdmin);
+            var contextAdmin2 = new ContextDevice(machineAdmin);
+
+
+            (machineAdmin2.DirectoryMaster == machineAdmin.DirectoryMaster).AssertTrue(
+                String:"Directories should match");
+            (contextAdmin.ProfileDevice.UDF == contextAdmin2.ProfileDevice.UDF).AssertTrue(
+                String: "Profile UDFs should match");
+
+            // Create account at the service
+
+
+            // Add password entry to the credential store
+
+
+            // Check that we can recover the account registration info in new context
+
+
+
+            // Connect a second device
+
+            /*
+                MeshMachineTest.GetContext(testEnvironmentCommon, AccountAlice, "Alice 2", 
+                    out var MachineAliceSecond, out var deviceSecond);
+
+                var connectResponse = deviceSecond.RequestConnect(AccountAlice);
+                connectResponse.AssertSuccess();
+            */
+
+            // Try to Sync device - fail
+
+
+            // Accept the connection 
+
+
+            // Check that we can recover the connection request info in new context on device
+
+
+            // Try to Sync device - success 
+
+
+            // Check that we can now read the credentials.
+
+
+            // Check that we can recover the connection info in new context on device
+
+
+            // Begin connect a third device
+            // Reject request
+            // Check that we cannot read the credentials.
+
+            }
+
 
 
         [Fact]
         public void MeshConnect() {
             var testEnvironmentCommon = new TestEnvironmentCommon();
+
             MeshMachineTest.GetContextMaster(testEnvironmentCommon, AccountAlice, "Alice Admin", 
                 out var machineAliceAdmin, out var deviceAdmin);
 
@@ -141,14 +216,14 @@ namespace Goedel.XUnit {
 
         [Fact]
         public void MeshContact() {
-            var testEnvironmentCommon = new TestEnvironmentCommon();
+            var testEnvironmentService = new TestEnvironmentCommon();
 
             var AccountAlice = "alice@example.com";
             var AccountBob = "bob@example.com";
 
-            MeshMachineTest.GetContextMaster(testEnvironmentCommon, AccountAlice, "Alice Admin", 
+            MeshMachineTest.GetContextMaster(testEnvironmentService, AccountAlice, "Alice Admin", 
                 out var machineAliceAdmin, out var masterAdmin);
-            MeshMachineTest.GetContextMaster(testEnvironmentCommon, AccountBob, "Bob Admin", 
+            MeshMachineTest.GetContextMaster(testEnvironmentService, AccountBob, "Bob Admin", 
                 out var machineAdminBob, out var masterAdminBob);
 
             var statusCreateAlice = masterAdmin.CreateAccount(AccountAlice);

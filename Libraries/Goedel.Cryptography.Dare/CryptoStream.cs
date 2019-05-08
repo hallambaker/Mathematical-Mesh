@@ -444,7 +444,7 @@ namespace Goedel.Cryptography.Dare {
             StreamMac?.Write(buffer, offset, count);
 
             if (PayloadLength > 0 | PackagingFormat == PackagingFormat.Direct) {
-                PayloadLength = PayloadLength - count;
+                PayloadLength -= count;
                 Output.Write(buffer, offset, count);
 
                 //Console.Write($"  Have {count} bytes to stream");

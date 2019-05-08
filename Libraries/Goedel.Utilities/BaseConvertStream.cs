@@ -236,7 +236,7 @@ namespace Goedel.Utilities  {
 
                         int n = a >> Offset;
                         FormatChar(Table[n]);
-                        a = a & (0xff >> (8 - Offset));
+                        a &= (0xff >> (8 - Offset));
                         }
                     }
                 }

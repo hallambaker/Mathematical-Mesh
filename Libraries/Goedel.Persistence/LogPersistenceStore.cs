@@ -55,7 +55,7 @@ namespace Goedel.Persistence {
         /// <param name="Comment">Comment to be written to the log.</param>
         public LogPersistenceStore (string FileName, string Type = null,
                     string Comment = null, bool ReadOnly = false) {
-            ReadOnly = ReadOnly & (Type != null);
+            ReadOnly &= (Type != null);
             if (ReadOnly) {
                 //Trace.WriteLine("Open store ReadOnly");
                 FileStream = new FileStream(FileName, FileMode.Open,

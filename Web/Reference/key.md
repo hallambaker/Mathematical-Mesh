@@ -34,7 +34,7 @@ protocol.
 
 ````
 >key nonce
-NCPE-S63N-WBCY-KPZ4-2XH4-O3FZ-B6VQ
+NB53-JR66-6S3H-BUAQ-VILK-BZEJ-5NZQ
 ````
 
 Specifying the /json option returns a result of type ResultKey:
@@ -44,7 +44,7 @@ Specifying the /json option returns a result of type ResultKey:
 {
   "ResultKey": {
     "Success": true,
-    "Key": "NCPE-S63N-WBCY-KPZ4-2XH4-O3FZ-B6VQ"}}
+    "Key": "NB53-JR66-6S3H-BUAQ-VILK-BZEJ-5NZQ"}}
 ````
 
 # key secret
@@ -63,7 +63,7 @@ key type.
 
 ````
 >key secret
-EB2G-YKSM-G36Z-HIQZ-VCYL-5QOZ-V4KA
+EANA-5VUF-D5DS-WE7H-SDJZ-RVYK-A7VQ
 ````
 
 Specifying the /json option returns a result of type ResultKey:
@@ -73,7 +73,7 @@ Specifying the /json option returns a result of type ResultKey:
 {
   "ResultKey": {
     "Success": true,
-    "Key": "EB2G-YKSM-G36Z-HIQZ-VCYL-5QOZ-V4KA"}}
+    "Key": "EANA-5VUF-D5DS-WE7H-SDJZ-RVYK-A7VQ"}}
 ````
 
 
@@ -94,8 +94,8 @@ value, formatted as a UDF Encryption key type and Content Digest Type
 
 ````
 >key earl
-EBDE-Q3IW-5YW4-K6LV-DUWJ-YZUY-KFZG-OV
-MC2T-H75H-WRK4-XMAG-DSRO-X7QQ-SXKY-WXN2-KVM7-2RFJ-SV3S-Q5DH-Y5O7-7COT
+ECLU-XHSG-53QK-ULTJ-TR2G-7GRU-4PKF-WU
+MAXU-G4VT-U553-3EWV-53EI-RAR6-EVB2-U5E2-XVDV-3FVW-O6UB-IFNG-YASE-74YZ
 ````
 
 Specifying the /json option returns a result of type ResultKey:
@@ -105,8 +105,8 @@ Specifying the /json option returns a result of type ResultKey:
 {
   "ResultKey": {
     "Success": true,
-    "Key": "EBDE-Q3IW-5YW4-K6LV-DUWJ-YZUY-KFZG-OV",
-    "Identifier": "MC2T-H75H-WRK4-XMAG-DSRO-X7QQ-SXKY-WXN2-KVM7-2RFJ-SV3S-Q5DH-Y5O7-7COT"}}
+    "Key": "ECLU-XHSG-53QK-ULTJ-TR2G-7GRU-4PKF-WU",
+    "Identifier": "MAXU-G4VT-U553-3EWV-53EI-RAR6-EVB2-U5E2-XVDV-3FVW-O6UB-IFNG-YASE-74YZ"}}
 ````
 
 # key share
@@ -129,11 +129,11 @@ formatted as a UDF Encryption key type and Share types
 
 ````
 >key share
-ECLT-XRMP-6O6O-IGQY-OQTF-4L5A-5V5Q
-MA73-R3AD-MDMW-32FB-MM2W-QGFT-S252-XNB3-7GTL-4ZCD-JMYA-WIFB-5SHA
-SAQC-ODBR-CQFZ-D47W-7SPZ-IQUD-S43N-U
-SAQ3-NXE4-TARW-OA6T-4DFQ-EJWX-RWAG-Y
-SARE-NLII-DQ5T-YE5Q-YT3H-ACZL-QPE4-W
+ECDV-X42A-QCZL-FKCH-6ODT-P3JX-U4QA
+MCGO-YNKF-WODB-LEQN-YK6L-UHIO-45K4-VIAI-2HJL-TQE6-F6VZ-Q5C7-Q65Q
+SAQN-22T7-IK4J-OL22-HNOA-KM4Q-36DF-Y
+SAQT-G6IL-ITYH-XLAM-F3CI-GLZU-Q5SW-K
+SARI-TB4X-I4UG-AKF6-EIWQ-CKWY-F5CK-C
 ````
 
 Specifying the /json option returns a result of type ResultKey:
@@ -143,11 +143,11 @@ Specifying the /json option returns a result of type ResultKey:
 {
   "ResultKey": {
     "Success": true,
-    "Key": "ECLT-XRMP-6O6O-IGQY-OQTF-4L5A-5V5Q",
-    "Identifier": "MA73-R3AD-MDMW-32FB-MM2W-QGFT-S252-XNB3-7GTL-4ZCD-JMYA-WIFB-5SHA",
-    "Shares": ["SAQC-ODBR-CQFZ-D47W-7SPZ-IQUD-S43N-U",
-      "SAQ3-NXE4-TARW-OA6T-4DFQ-EJWX-RWAG-Y",
-      "SARE-NLII-DQ5T-YE5Q-YT3H-ACZL-QPE4-W"]}}
+    "Key": "ECDV-X42A-QCZL-FKCH-6ODT-P3JX-U4QA",
+    "Identifier": "MCGO-YNKF-WODB-LEQN-YK6L-UHIO-45K4-VIAI-2HJL-TQE6-F6VZ-Q5C7-Q65Q",
+    "Shares": ["SAQN-22T7-IK4J-OL22-HNOA-KM4Q-36DF-Y",
+      "SAQT-G6IL-ITYH-XLAM-F3CI-GLZU-Q5SW-K",
+      "SARI-TB4X-I4UG-AKF6-EIWQ-CKWY-F5CK-C"]}}
 ````
 
 
@@ -173,18 +173,18 @@ value as a UDF Encryption key type.
 
 
 ````
->key recover SAQC-ODBR-CQFZ-D47W-7SPZ-IQUD-S43N-U SARE-NLII-DQ5T-YE5Q-YT3H-ACZL-QPE4-W
-ECLT-XRMP-6O6O-IGQY-OQTF-4L5A-5V5Q
+>key recover SAQN-22T7-IK4J-OL22-HNOA-KM4Q-36DF-Y SARI-TB4X-I4UG-AKF6-EIWQ-CKWY-F5CK-C
+ECDV-X42A-QCZL-FKCH-6ODT-P3JX-U4QA
 ````
 
 Specifying the /json option returns a result of type ResultKey:
 
 ````
->key recover SAQC-ODBR-CQFZ-D47W-7SPZ-IQUD-S43N-U SARE-NLII-DQ5T-YE5Q-YT3H-ACZL-QPE4-W /json
+>key recover SAQN-22T7-IK4J-OL22-HNOA-KM4Q-36DF-Y SARI-TB4X-I4UG-AKF6-EIWQ-CKWY-F5CK-C /json
 {
   "ResultKey": {
     "Success": true,
-    "Key": "ECLT-XRMP-6O6O-IGQY-OQTF-4L5A-5V5Q"}}
+    "Key": "ECDV-X42A-QCZL-FKCH-6ODT-P3JX-U4QA"}}
 ````
 
 

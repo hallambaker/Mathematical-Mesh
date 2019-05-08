@@ -148,6 +148,10 @@ namespace Goedel.Utilities {
             return Result.ToString();
             }
 
-
+        public static void AppendNotNull(this StringBuilder builder, string value, string text) {
+            if (value != null) {
+                builder.AppendLine(text);
+                }
+            }
         }
     }

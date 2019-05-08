@@ -113,7 +113,21 @@ The following authorizations may be granted or denied:
 * `password`: Authorize access to password catalog
 * `ssh`: Authorize use of SSH
 
-**Missing Example***
+
+````
+>device auth Alice2 /contact
+ERROR - The feature has not been implemented
+````
+
+Specifying the /json option returns a result of type Result:
+
+````
+>device auth Alice2 /contact /json
+{
+  "Result": {
+    "Success": false,
+    "Reason": "The feature has not been implemented"}}
+````
 
 # device accept
 
@@ -189,21 +203,7 @@ assigned to the device.
 The profile is made the default profile for the device if either there is
 no previous default device profile or the`/default` option is specified.
 
-
-````
->device create /id="IoTDevice"
-ERROR - The option  is not known.
-````
-
-Specifying the /json option returns a result of type Result:
-
-````
->device create /id="IoTDevice" /json
-{
-  "Result": {
-    "Success": false,
-    "Reason": "The option  is not known."}}
-````
+**Missing Example***
 
 # device delete
 
@@ -272,14 +272,14 @@ being that all authorizations are denied.
 
 
 ````
->device earl udf://example.com/EBHM-TE4R-WAPG-LV2B-VK2P-I6NB-VTPA-HS
+>device earl udf://example.com/EB4V-7FPA-OQ5G-IEMZ-XXKE-IYYE-KVCH-D3
 ERROR - The feature has not been implemented
 ````
 
 Specifying the /json option returns a result of type Result:
 
 ````
->device earl udf://example.com/EBHM-TE4R-WAPG-LV2B-VK2P-I6NB-VTPA-HS /json
+>device earl udf://example.com/EB4V-7FPA-OQ5G-IEMZ-XXKE-IYYE-KVCH-D3 /json
 {
   "Result": {
     "Success": false,
@@ -331,7 +331,6 @@ the inbound message spool.
 
 ````
 >device pending
-OK
 ````
 
 Specifying the /json option returns a result of type ResultPending:
@@ -342,39 +341,55 @@ Specifying the /json option returns a result of type ResultPending:
   "ResultPending": {
     "Success": true,
     "Messages": [{
-        "MessageID": "NCVV-E22L-NMSV-SHRP-G2CT-25ST-SBUA-URZQ-I3ZQ-43PQ-OM",
+        "MessageID": "NDTT-QY2Q-62HE-2ZWJ-L5C2-UDNE-64VS-U6OJ-M3YW-F4JK-3I",
         "Account": "alice@example.com",
         "DeviceProfile": [{
             "dig": "S512",
             "cty": "application/mmm"},
-          "ewogICJQcm9maWxlRGV2aWNlIjogewogICAgIkRldmljZVNpZ25hdHV
-  yZUtleSI6IHsKICAgICAgIlVERiI6ICJNQ05VLU9BREQtQVM1VC1CNzdILVlHW
-  kEtSExRVy1FQ0g3IiwKICAgICAgIlB1YmxpY1BhcmFtZXRlcnMiOiB7CiAgICA
-  gICAgIlB1YmxpY0tleUVDREgiOiB7CiAgICAgICAgICAiY3J2IjogIkVkNDQ4I
-  iwKICAgICAgICAgICJQdWJsaWMiOiAiTUpKdnUwdU5SYUdpVGNOT1V6QTlJdVh
-  STWFFYkdoYm9KVVRPd2drTV93dnRLNE5PUTNVSAogIG9tdmlqWVZYRVdVSG4wU
-  DhUSEtURE5LQSJ9fX0sCiAgICAiRGV2aWNlQXV0aGVudGljYXRpb25LZXkiOiB
-  7CiAgICAgICJVREYiOiAiTUE2NS1WWk1DLTZNVEwtTUVOMi0zUjVFLUJBMzYtU
-  lpNNCIsCiAgICAgICJQdWJsaWNQYXJhbWV0ZXJzIjogewogICAgICAgICJQdWJ
-  saWNLZXlFQ0RIIjogewogICAgICAgICAgImNydiI6ICJFZDQ0OCIsCiAgICAgI
-  CAgICAiUHVibGljIjogIlF3UkNEOFhfNXBEZUhFcjY3c3dlLXhtNU81ZUtEczZ
-  LdExySS1Canp2ZktJT3hEeXpWdFIKICB4MmZJWV9SX2tNLTNMU045dkhjVjY5U
-  0EifX19LAogICAgIkRldmljZUVuY3J5cHRpb25LZXkiOiB7CiAgICAgICJVREY
-  iOiAiTUNJSC1TTUU2LUFUU1YtUjVZSy03TzNELU1RSkUtU1ZXWiIsCiAgICAgI
-  CJQdWJsaWNQYXJhbWV0ZXJzIjogewogICAgICAgICJQdWJsaWNLZXlFQ0RIIjo
-  gewogICAgICAgICAgImNydiI6ICJFZDQ0OCIsCiAgICAgICAgICAiUHVibGljI
-  jogImd3MENCZkJsN2NaZ2Y3bTJzOWVaOXdzM3FJdVk2S0lCVkR0S00zWTFsc3B
-  uTGFtbnpfNXcKICBUODRqNWNHZWo0QlFMOG11eWh1a1piYUEifX19fX0",
+          "ewogICJQcm9maWxlRGV2aWNlIjogewogICAgIlNpZ25hdHVyZUtleSI
+  6IHsKICAgICAgIlVERiI6ICJNREFYLTZURjUtUzRFNC1JQUJMLVZFWjItTlNDN
+  S1WQUNaIiwKICAgICAgIlB1YmxpY1BhcmFtZXRlcnMiOiB7CiAgICAgICAgIlB
+  1YmxpY0tleUVDREgiOiB7CiAgICAgICAgICAiY3J2IjogIkVkNDQ4IiwKICAgI
+  CAgICAgICJQdWJsaWMiOiAiR0dMd1BWOE9FTWYxWXdwcTJvbGdDeU93eVk3UDh
+  ZSFk5MGtoM1ZPUkFQZ0Q0cTlUQ01FSwogIEhsVjN5Zk12akZwUUszQmo0V0YtM
+  l9ZQSJ9fX0sCiAgICAiRGV2aWNlQXV0aGVudGljYXRpb25LZXkiOiB7CiAgICA
+  gICJVREYiOiAiTUQ0Ti1URDZELU80RkwtQVZTWC00UkEzLU5CTFYtT1JZRSIsC
+  iAgICAgICJQdWJsaWNQYXJhbWV0ZXJzIjogewogICAgICAgICJQdWJsaWNLZXl
+  FQ0RIIjogewogICAgICAgICAgImNydiI6ICJFZDQ0OCIsCiAgICAgICAgICAiU
+  HVibGljIjogImJkMnJnR0wzUHVtczNiNUxWemZ1d1ZJZGtuZm5MWmZ1cDhBRWJ
+  4TDBmMEVka1AxY1NJNWYKICBjNU13czE2d0lYUWZVNnBfTXZFQmFGS0EifX19L
+  AogICAgIkRldmljZUVuY3J5cHRpb25LZXkiOiB7CiAgICAgICJVREYiOiAiTUN
+  ENy1LNUpELVFSWlMtNktOWi1JU1kzLTVENVgtUzJUTyIsCiAgICAgICJQdWJsa
+  WNQYXJhbWV0ZXJzIjogewogICAgICAgICJQdWJsaWNLZXlFQ0RIIjogewogICA
+  gICAgICAgImNydiI6ICJFZDQ0OCIsCiAgICAgICAgICAiUHVibGljIjogIkJXR
+  DJZVUZ6YzZTeGNBZVNnMGVBbDk1Sk1JVW1GWk03NGUzb0Y2LWd3ZkkwTDRyZGc
+  xWTIKICBCOThUVHBQNHF6enp4bElYaXVRemxtNEEifX19fX0",
           {
             "signatures": [{
-                "signature": "7gCGZUQwim468LkBWDx4j60o4c35n8U1MKn_ypVun9oD6XnVH
-  1YZ6ki8PUhzcp7I_LRE_q5mUu4AI26yB0eVwb_qMC8b15DtOTTeHiqXca8wQEp
-  BHy5UMH4ogJlHxl687fgNq7qeHoWV-w26bqU3pDkA"}],
-            "PayloadDigest": "N3W_kvwLOeV5wqZ1g7CCZ0SSlKaChW1liq_Fc3TeGaRFX
-  Zgl_7UxnhNMgzdyCKO98LV3V0UcWSrwmhRWosnkXA"}],
-        "ClientNonce": "yyuls4qPSgWB9WIVr0Rrmg",
-        "ServerNonce": "hiI-PcWC9PzoVyCft9Mq1g",
-        "Witness": "EAX7-R7MV-JDAR-TOQ3-5XLL-LUUR-I4T7"}]}}
+                "signature": "9eeTL-Q7npEA51YPbcaiZz5k9ZxhEfF8M7IHjlTdesqHJDRY7
+  xCGSVt6h8jgG0CGtABslCW9p2UAcFJKDVtH20k1XdmBNKPKCc3vGhurvCyIdTd
+  Ft5nNjOiJvqsPPx9SUgg4C0UV0vdkB_p_oIJgHiYA"}],
+            "PayloadDigest": "V4MkF08a9l60bJb03ohYtS2DBANtYOhmSSVT-MUQSCetP
+  B4uZNe2une9mzLXCAOeypG14SWDk6gZkb50BenRUQ"}],
+        "ClientNonce": "3FWj3SlEMndfSzG7N03CTw",
+        "ServerNonce": "Uk1MMaHYOqij8BxAKTG0VA",
+        "Witness": "VH74-S44N-BJZH-ABPG-QXAL-PQON-JJFL"},
+      {
+        "MessageID": "NDK2-WE2P-SZNK-ZPEI-HZCO-S4D4-IED7-UCI7-FW2E-BGQZ-N4",
+        "Recipient": "alice@example.com",
+        "Contact": [{
+            "dig": "S512",
+            "cty": "application/mmm"},
+          "ewogICJDb250YWN0IjogewogICAgIklkZW50aWZpZXIiOiAiTUFWVC1
+  TQUk2LTVOS1ktR0NCWS00SUhMLVBIR0ctTVhZUiIsCiAgICAiQWNjb3VudCI6I
+  CJib2JAZXhhbXBsZS5jb20ifX0",
+          {
+            "signatures": [{
+                "signature": "jNGcydDBxL0h8vSDIhlwzD8X_E5Z1isUL22imlIHdVyE6GTbr
+  i3Qfcsp8EqgY9jDe6ig1ly-bwYAs9a7BOROW_HrekQYbWBIjK-C-sbhae7TapQ
+  VVxjOkFugViGpc7B7Q1PsofDb2l7-LiVkwFRr-TgA"}],
+            "PayloadDigest": "pKYz04TShS0xhrCz7TpyLqP3QraZzUoq9o_aQEdxMGujF
+  vT8Boc7UNBvwF9m1aHY_uhSuOJ65oTZu-awjFnW8A"}]}]}}
 ````
 
 # device reject
@@ -435,7 +450,6 @@ followed by the letter m, h or d for minutes, hours and days respectively.
 
 ````
 >device pin
-OK
 ````
 
 Specifying the /json option returns a result of type ResultPIN:
@@ -446,10 +460,10 @@ Specifying the /json option returns a result of type ResultPIN:
   "ResultPIN": {
     "Success": true,
     "MessageConnectionPIN": {
-      "MessageID": "NB5J-7ETG-RJXB-A3BG-RFH5-3ARS-NM7K-DISP-WMAI-L2OM-DA",
+      "MessageID": "NCXB-4ELG-LIOO-NG3S-YCNY-O2B4-AKPX-PFLD-IUMW-CJCV-JU",
       "Account": "alice@example.com",
-      "Expires": "2019-03-22T22:09:36Z",
-      "PIN": "NB2C-M7GU-EKNJ-XKQA-N6HY-ONGV-ENI"}}}
+      "Expires": "2019-04-15T22:08:04Z",
+      "PIN": "NDJ2-IF3R-GAZY-GN3O-2W2C-HYR7-YAT"}}}
 ````
 
 # device pre
@@ -498,14 +512,14 @@ offline initialization of device profiles in batch mode during manufacture.
 
 
 ````
->device pre devices@example.com /key=udf://example.com/EBHM-TE4R-WAPG-LV2B-VK2P-I6NB-VTPA-HS
+>device pre devices@example.com /key=udf://example.com/EB4V-7FPA-OQ5G-IEMZ-XXKE-IYYE-KVCH-D3
 ERROR - Object reference not set to an instance of an object.
 ````
 
 Specifying the /json option returns a result of type Result:
 
 ````
->device pre devices@example.com /key=udf://example.com/EBHM-TE4R-WAPG-LV2B-VK2P-I6NB-VTPA-HS /json
+>device pre devices@example.com /key=udf://example.com/EB4V-7FPA-OQ5G-IEMZ-XXKE-IYYE-KVCH-D3 /json
 {
   "Result": {
     "Success": false,
@@ -551,7 +565,6 @@ the `/pin` option.
 
 ````
 >device request alice@example.com
-OK
 ````
 
 Specifying the /json option returns a result of type ResultConnect:

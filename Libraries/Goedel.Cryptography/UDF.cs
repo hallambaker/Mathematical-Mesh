@@ -82,6 +82,11 @@ namespace Goedel.Cryptography {
         /// </summary>
         public const string UDFSecret = "application/udf-secret";
 
+        /// <summary>
+        /// UDF Fingerprint list
+        /// </summary>
+        public const string UDFLock = "application/udf-lock";
+
         }
 
     /// <summary>
@@ -332,6 +337,11 @@ namespace Goedel.Cryptography {
             var keyDerive = new KeyDeriveHKDF(textKey.ToUTF8(), KeyDerive.KeyedUDFMaster, algorithm);
             return keyDerive.Derive(KeyDerive.KeyedUDFExpand, length);
             }
+
+
+
+
+
         #endregion
 
 
@@ -442,6 +452,24 @@ namespace Goedel.Cryptography {
             return PresentationBase32(buffer, bits);
             }
 
+
+
+        /// <summary>
+        /// Calculate the UDF lock identifier for a local file.
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="cryptoAlgorithmID"></param>
+        /// <param name="bits">Precision, must be a multiple of 20 bits.</param>
+        /// <returns>The Base32 presentation of the UDF value truncated to 
+        /// <paramref name="bits"/> precision.</returns>
+        public static string LockName(
+                    string data,
+                    int bits = 0,
+                    CryptoAlgorithmID cryptoAlgorithmID = CryptoAlgorithmID.SHA_2_512) {
+            bits = bits == 0 ? DefaultBits * 2 : bits;
+            var buffer = DigestToUDFBinary(data.ToUTF8(), UDFConstants.UDFLock, bits, cryptoAlgorithmID, null);
+            return PresentationBase32(buffer, bits);
+            }
         /// <summary>
         /// Calculate a UDF fingerprint from an OpenPGP key with specified precision.
         /// </summary>

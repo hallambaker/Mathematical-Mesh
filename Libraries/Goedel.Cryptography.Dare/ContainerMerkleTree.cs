@@ -122,8 +122,8 @@ namespace Goedel.Cryptography.Dare {
                 else {
                     ContentDigest = DigestFrame(Frame - d, ContentDigest);
                     }
-                d = d * 2;
-                x2 = x2 / 2;
+                d *= 2;
+                x2 /= 2;
                 }
             return CryptoStackContainer.CombineDigest(null, ContentDigest);
             }

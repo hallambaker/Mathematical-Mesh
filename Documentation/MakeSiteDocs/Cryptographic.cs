@@ -64,7 +64,7 @@ namespace ExampleGenerator {
 
         public void MakeDocs() {
             var Process = All ? System.Diagnostics.Process.Start("CMD.exe", "/C MakeDocs") :
-                System.Diagnostics.Process.Start("CMD.exe", "/C MakeDocs");
+                System.Diagnostics.Process.Start("CMD.exe", "/C MakeOneDoc");
             Process.WaitForExit();
             }
         }

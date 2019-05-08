@@ -12,19 +12,19 @@ namespace Goedel.Cryptography {
     /// Return a new KeyCollection
     /// </summary>
     /// <returns></returns>
-    public delegate KeyCollection KeyCollectionDelegate();
+    public delegate keyCollection KeyCollectionDelegate();
 
     /// <summary>
     /// Track a collection of keys from various sources allowing recall when required for recryption use.
     /// </summary>
-    public abstract class KeyCollection {
+    public abstract class keyCollection {
 
         Object ExclusiveAccess = new Object();
 
         /// <summary>
         /// The default collection.
         /// </summary>
-        public static KeyCollection Default;
+        public static keyCollection Default;
 
         //static KeyCollection _Default = null;
 

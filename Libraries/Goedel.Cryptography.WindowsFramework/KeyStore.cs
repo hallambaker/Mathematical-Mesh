@@ -10,7 +10,7 @@ using Goedel.Protocol;
 namespace Goedel.Cryptography.Windows {
 
 
-    public class KeyCollectionWindows : KeyCollection {
+    public class KeyCollectionWindows : keyCollection {
         public override void Persist(string udf, IPKIXPrivateKey privateKey, bool exportable) => throw new NotImplementedException();
         }
 

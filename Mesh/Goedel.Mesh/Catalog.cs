@@ -30,7 +30,7 @@ namespace Goedel.Mesh {
 
         public Catalog(string directory, string containerName,
             CryptoParameters cryptoParameters = null,
-                    KeyCollection keyCollection = null, bool readContainer = true) :
+                    keyCollection keyCollection = null, bool readContainer = true) :
                 base(directory, containerName, cryptoParameters, keyCollection) => 
             ContainerPersistence = new ContainerPersistenceStore(Container, readContainer);
 

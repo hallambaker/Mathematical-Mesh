@@ -23,7 +23,11 @@ namespace Goedel.Mesh {
         string DirectoryMesh { get; }
 
 
-        KeyCollection KeyCollection { get; }
+        keyCollection KeyCollection { get; }
+
+
+
+
 
         void OpenCatalog(Catalog catalog, string name);
 
@@ -32,9 +36,10 @@ namespace Goedel.Mesh {
         MeshService GetMeshClient(string account);
 
 
-        ProfileMesh GetConnection(
+        AssertionAccount GetConnection(
                     string accountName = null,
                     string deviceUDF = null);
+
 
 
         }

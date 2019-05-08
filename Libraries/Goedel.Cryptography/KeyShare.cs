@@ -242,7 +242,7 @@ namespace Goedel.Cryptography {
             int power = 1;  // expect the optimizer to catch
             var result = polyNomial[0];
             for (int i = 1; i < polyNomial.Length; i++) {
-                power = power * x;
+                power *= x;
                 result = (modulus + result + polyNomial[i] * power) % modulus;
                 }
 
@@ -303,7 +303,7 @@ namespace Goedel.Cryptography {
         static BigInteger ModInverse(BigInteger k, BigInteger m) {
             var m2 = m - 2;
             if (k < 0) {
-                k = k + m;
+                k += m;
                 }
 
             return BigInteger.ModPow(k, m2, m);

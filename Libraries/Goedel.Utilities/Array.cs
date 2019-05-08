@@ -84,7 +84,7 @@ namespace Goedel.Utilities {
             if (Length <= 0) {
                 return Duplicate(Source);
                 }
-            Length = Length / 8; // Convert to bytes
+            Length /= 8; // Convert to bytes
             var Result = new byte[Length];
             Array.Copy(Source, Result, Length);
 

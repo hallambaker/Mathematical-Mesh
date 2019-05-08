@@ -56,7 +56,7 @@ namespace Goedel.Mesh {
 
         public CatalogApplication(string directory, string ContainerName=null,
             CryptoParameters cryptoParameters = null,
-                    KeyCollection keyCollection = null) :
+                    keyCollection keyCollection = null) :
             base(directory, ContainerName, cryptoParameters, keyCollection) {
             }
         public static Store Factory(string directory, string containerName = null) =>

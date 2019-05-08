@@ -285,7 +285,7 @@ namespace Goedel.Cryptography {
             //var Result = new byte[8];
             for (var i = 0; i < 8; i++) {
                 Data[i] = (byte) (Data[i] ^ (Mask >> 56));
-                Mask = Mask << 8;
+                Mask <<= 8;
                 }
             }
 

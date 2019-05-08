@@ -60,14 +60,19 @@ namespace Goedel.Mesh {
 				new Dictionary<string, JSONFactoryDelegate> () {
 
 			{"PublicKey", PublicKey._Factory},
+			{"Assertion", Assertion._Factory},
+			{"Condition", Condition._Factory},
 			{"Profile", Profile._Factory},
+			{"KeyOverlay", KeyOverlay._Factory},
 			{"EscrowedKeySet", EscrowedKeySet._Factory},
 			{"ProfileMaster", ProfileMaster._Factory},
 			{"ProfileDevice", ProfileDevice._Factory},
+			{"ProfileService", ProfileService._Factory},
+			{"AssertionAccount", AssertionAccount._Factory},
+			{"AssertionDeviceConnection", AssertionDeviceConnection._Factory},
+			{"AssertionDevicePrivate", AssertionDevicePrivate._Factory},
 			{"ProfileApplication", ProfileApplication._Factory},
-			{"ProfileMesh", ProfileMesh._Factory},
-			{"ProfileMeshDevicePublic", ProfileMeshDevicePublic._Factory},
-			{"ProfileMeshDevicePrivate", ProfileMeshDevicePrivate._Factory},
+			{"Activation", Activation._Factory},
 			{"DeviceRecryptionKey", DeviceRecryptionKey._Factory},
 			{"Permission", Permission._Factory},
 			{"Contact", Contact._Factory},
@@ -322,9 +327,9 @@ namespace Goedel.Mesh {
 
 	/// <summary>
 	///
-	/// Parent class from which all profile types are derived
+	/// Parent class from which all assertion classes are derived
 	/// </summary>
-	abstract public partial class Profile : MeshItem {
+	abstract public partial class Assertion : MeshItem {
         /// <summary>
         ///Fingerprints of index terms for profile retrieval. The use of the fingerprint
         ///of the name rather than the name itself is a precaution against enumeration
@@ -343,6 +348,12 @@ namespace Goedel.Mesh {
         /// </summary>
 
 		public virtual string						NotaryToken  {get; set;}
+        /// <summary>
+        ///Conditional clause(s) that MAY be verified to evaluate the validity of the
+        ///assertion. At present no condition classes are specified.
+        /// </summary>
+
+		public virtual Condition						Conditions  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -352,7 +363,7 @@ namespace Goedel.Mesh {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public new const string __Tag = "Profile";
+		public new const string __Tag = "Assertion";
 
 		/// <summary>
         /// Factory method. Throws exception as this is an abstract class.
@@ -407,6 +418,227 @@ namespace Goedel.Mesh {
 				_Writer.WriteToken ("NotaryToken", 1);
 					_Writer.WriteString (NotaryToken);
 				}
+			if (Conditions != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Conditions", 1);
+					// expand this to a tagged structure
+					//Conditions.Serialize (_Writer, false);
+					{
+						_Writer.WriteObjectStart();
+						_Writer.WriteToken(Conditions._Tag, 1);
+						bool firstinner = true;
+						Conditions.Serialize (_Writer, true, ref firstinner);
+						_Writer.WriteObjectEnd();
+						}
+				}
+			if (_wrap) {
+				_Writer.WriteObjectEnd ();
+				}
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <returns>The created object.</returns>		
+        public static new Assertion FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
+			if (Tagged) {
+				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				return Out as Assertion;
+				}
+			throw new CannotCreateAbstract();
+			}
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
+		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+			
+			switch (Tag) {
+				case "Names" : {
+					// Have a sequence of values
+					bool _Going = JSONReader.StartArray ();
+					Names = new List <string> ();
+					while (_Going) {
+						string _Item = JSONReader.ReadString ();
+						Names.Add (_Item);
+						_Going = JSONReader.NextArray ();
+						}
+					break;
+					}
+				case "Updated" : {
+					Updated = JSONReader.ReadDateTime ();
+					break;
+					}
+				case "NotaryToken" : {
+					NotaryToken = JSONReader.ReadString ();
+					break;
+					}
+				case "Conditions" : {
+					Conditions = Condition.FromJSON (JSONReader, true) ;  // A tagged structure
+					break;
+					}
+				default : {
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
+	/// <summary>
+	///
+	/// Parent class from which all condition classes are derived.
+	/// </summary>
+	abstract public partial class Condition : MeshItem {
+		
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "Condition";
+
+		/// <summary>
+        /// Factory method. Throws exception as this is an abstract class.
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JSONObject _Factory () => throw new CannotCreateAbstract();
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="Writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
+			SerializeX (Writer, wrap, ref first);
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_Writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			if (_wrap) {
+				_Writer.WriteObjectStart ();
+				}
+			if (_wrap) {
+				_Writer.WriteObjectEnd ();
+				}
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <returns>The created object.</returns>		
+        public static new Condition FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
+			if (Tagged) {
+				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				return Out as Condition;
+				}
+			throw new CannotCreateAbstract();
+			}
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
+		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+			
+			switch (Tag) {
+				default : {
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
+	/// <summary>
+	///
+	/// Parent class from which all profile classes are derived
+	/// </summary>
+	abstract public partial class Profile : Assertion {
+        /// <summary>
+        ///The signature key associated with the profile.
+        /// </summary>
+
+		public virtual PublicKey						SignatureKey  {get; set;}
+		
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "Profile";
+
+		/// <summary>
+        /// Factory method. Throws exception as this is an abstract class.
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JSONObject _Factory () => throw new CannotCreateAbstract();
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="Writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
+			SerializeX (Writer, wrap, ref first);
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_Writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			if (_wrap) {
+				_Writer.WriteObjectStart ();
+				}
+			((Assertion)this).SerializeX(_Writer, false, ref _first);
+			if (SignatureKey != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("SignatureKey", 1);
+					SignatureKey.Serialize (_Writer, false);
+				}
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
 				}
@@ -437,23 +669,135 @@ namespace Goedel.Mesh {
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
-				case "Names" : {
-					// Have a sequence of values
-					bool _Going = JSONReader.StartArray ();
-					Names = new List <string> ();
-					while (_Going) {
-						string _Item = JSONReader.ReadString ();
-						Names.Add (_Item);
-						_Going = JSONReader.NextArray ();
+				case "SignatureKey" : {
+					// An untagged structure
+					SignatureKey = new PublicKey ();
+					SignatureKey.Deserialize (JSONReader);
+ 
+					break;
+					}
+				default : {
+					base.DeserializeToken(JSONReader, Tag);
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
+	/// <summary>
+	/// </summary>
+	public partial class KeyOverlay : MeshItem {
+        /// <summary>
+        ///Fingerprint specifying the base key
+        /// </summary>
+
+		public virtual string						BaseUDF  {get; set;}
+        /// <summary>
+        ///The overlay key contribution.
+        /// </summary>
+
+		public virtual Key						EncryptionKey  {get; set;}
+		
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "KeyOverlay";
+
+		/// <summary>
+        /// Factory method
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JSONObject _Factory () => new KeyOverlay();
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="Writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
+			SerializeX (Writer, wrap, ref first);
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_Writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			if (_wrap) {
+				_Writer.WriteObjectStart ();
+				}
+			if (BaseUDF != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("BaseUDF", 1);
+					_Writer.WriteString (BaseUDF);
+				}
+			if (EncryptionKey != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("EncryptionKey", 1);
+					// expand this to a tagged structure
+					//EncryptionKey.Serialize (_Writer, false);
+					{
+						_Writer.WriteObjectStart();
+						_Writer.WriteToken(EncryptionKey._Tag, 1);
+						bool firstinner = true;
+						EncryptionKey.Serialize (_Writer, true, ref firstinner);
+						_Writer.WriteObjectEnd();
 						}
+				}
+			if (_wrap) {
+				_Writer.WriteObjectEnd ();
+				}
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <returns>The created object.</returns>		
+        public static new KeyOverlay FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
+			if (Tagged) {
+				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				return Out as KeyOverlay;
+				}
+		    var Result = new KeyOverlay ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			}
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
+		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+			
+			switch (Tag) {
+				case "BaseUDF" : {
+					BaseUDF = JSONReader.ReadString ();
 					break;
 					}
-				case "Updated" : {
-					Updated = JSONReader.ReadDateTime ();
-					break;
-					}
-				case "NotaryToken" : {
-					NotaryToken = JSONReader.ReadString ();
+				case "EncryptionKey" : {
+					EncryptionKey = Key.FromJSON (JSONReader, true) ;  // A tagged structure
 					break;
 					}
 				default : {
@@ -612,17 +956,8 @@ namespace Goedel.Mesh {
 	/// <summary>
 	///
 	/// Describes the long term parameters associated with a personal profile.
-	/// This profile MUST be signed by 
 	/// </summary>
 	public partial class ProfileMaster : Profile {
-        /// <summary>
-        ///The root of trust for the Personal PKI, the public key of the PMSK 
-        ///is presented as a self-signed X.509v3 certificate with Certificate 
-        ///Signing use enabled. The PMSK is used to sign certificates for the 
-        ///PMEK, POSK and PKEK keys.
-        /// </summary>
-
-		public virtual PublicKey						MasterSignatureKey  {get; set;}
         /// <summary>
         ///A Personal Profile MAY contain one or more PMEK keys to enable escrow 
         ///of private keys used for stored data. 
@@ -678,11 +1013,6 @@ namespace Goedel.Mesh {
 				_Writer.WriteObjectStart ();
 				}
 			((Profile)this).SerializeX(_Writer, false, ref _first);
-			if (MasterSignatureKey != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("MasterSignatureKey", 1);
-					MasterSignatureKey.Serialize (_Writer, false);
-				}
 			if (MasterEscrowKeys != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("MasterEscrowKeys", 1);
@@ -749,13 +1079,6 @@ namespace Goedel.Mesh {
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
-				case "MasterSignatureKey" : {
-					// An untagged structure
-					MasterSignatureKey = new PublicKey ();
-					MasterSignatureKey.Deserialize (JSONReader);
- 
-					break;
-					}
 				case "MasterEscrowKeys" : {
 					// Have a sequence of values
 					bool _Going = JSONReader.StartArray ();
@@ -798,7 +1121,6 @@ namespace Goedel.Mesh {
 	/// <summary>
 	///
 	/// Describes a mesh device.
-	/// This profile MUST be signed by the DeviceSignatureKey
 	/// </summary>
 	public partial class ProfileDevice : Profile {
         /// <summary>
@@ -807,22 +1129,16 @@ namespace Goedel.Mesh {
 
 		public virtual string						Description  {get; set;}
         /// <summary>
-        ///Key used to sign certificates for the DAK and DEK. The fingerprint of
-        ///the DSK is the UniqueID of the Device Profile
-        /// </summary>
-
-		public virtual PublicKey						DeviceSignatureKey  {get; set;}
-        /// <summary>
         ///Key used to authenticate requests made by the device.
         /// </summary>
 
-		public virtual PublicKey						DeviceAuthenticationKey  {get; set;}
+		public virtual PublicKey						AuthenticationKey  {get; set;}
         /// <summary>
         ///Key used to pass encrypted data to the device such as a
         ///DeviceUseEntry
         /// </summary>
 
-		public virtual PublicKey						DeviceEncryptionKey  {get; set;}
+		public virtual PublicKey						EncryptionKey  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -871,20 +1187,15 @@ namespace Goedel.Mesh {
 				_Writer.WriteToken ("Description", 1);
 					_Writer.WriteString (Description);
 				}
-			if (DeviceSignatureKey != null) {
+			if (AuthenticationKey != null) {
 				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("DeviceSignatureKey", 1);
-					DeviceSignatureKey.Serialize (_Writer, false);
+				_Writer.WriteToken ("AuthenticationKey", 1);
+					AuthenticationKey.Serialize (_Writer, false);
 				}
-			if (DeviceAuthenticationKey != null) {
+			if (EncryptionKey != null) {
 				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("DeviceAuthenticationKey", 1);
-					DeviceAuthenticationKey.Serialize (_Writer, false);
-				}
-			if (DeviceEncryptionKey != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("DeviceEncryptionKey", 1);
-					DeviceEncryptionKey.Serialize (_Writer, false);
+				_Writer.WriteToken ("EncryptionKey", 1);
+					EncryptionKey.Serialize (_Writer, false);
 				}
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
@@ -922,25 +1233,680 @@ namespace Goedel.Mesh {
 					Description = JSONReader.ReadString ();
 					break;
 					}
-				case "DeviceSignatureKey" : {
+				case "AuthenticationKey" : {
 					// An untagged structure
-					DeviceSignatureKey = new PublicKey ();
-					DeviceSignatureKey.Deserialize (JSONReader);
+					AuthenticationKey = new PublicKey ();
+					AuthenticationKey.Deserialize (JSONReader);
  
 					break;
 					}
-				case "DeviceAuthenticationKey" : {
+				case "EncryptionKey" : {
 					// An untagged structure
-					DeviceAuthenticationKey = new PublicKey ();
-					DeviceAuthenticationKey.Deserialize (JSONReader);
+					EncryptionKey = new PublicKey ();
+					EncryptionKey.Deserialize (JSONReader);
  
 					break;
 					}
-				case "DeviceEncryptionKey" : {
+				default : {
+					base.DeserializeToken(JSONReader, Tag);
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
+	/// <summary>
+	///
+	/// Profile of a Mesh Service
+	/// </summary>
+	public partial class ProfileService : Profile {
+        /// <summary>
+        ///Key used to authenticate service connections.
+        /// </summary>
+
+		public virtual PublicKey						AuthenticationKey  {get; set;}
+		
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "ProfileService";
+
+		/// <summary>
+        /// Factory method
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JSONObject _Factory () => new ProfileService();
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="Writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
+			SerializeX (Writer, wrap, ref first);
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_Writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			if (_wrap) {
+				_Writer.WriteObjectStart ();
+				}
+			((Profile)this).SerializeX(_Writer, false, ref _first);
+			if (AuthenticationKey != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("AuthenticationKey", 1);
+					AuthenticationKey.Serialize (_Writer, false);
+				}
+			if (_wrap) {
+				_Writer.WriteObjectEnd ();
+				}
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <returns>The created object.</returns>		
+        public static new ProfileService FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
+			if (Tagged) {
+				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				return Out as ProfileService;
+				}
+		    var Result = new ProfileService ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			}
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
+		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+			
+			switch (Tag) {
+				case "AuthenticationKey" : {
 					// An untagged structure
-					DeviceEncryptionKey = new PublicKey ();
-					DeviceEncryptionKey.Deserialize (JSONReader);
+					AuthenticationKey = new PublicKey ();
+					AuthenticationKey.Deserialize (JSONReader);
  
+					break;
+					}
+				default : {
+					base.DeserializeToken(JSONReader, Tag);
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
+	/// <summary>
+	///
+	/// 
+	/// </summary>
+	public partial class AssertionAccount : Assertion {
+        /// <summary>
+        ///Account address.
+        /// </summary>
+
+		public virtual string						Account  {get; set;}
+        /// <summary>
+        ///Master profile of the account being registered.
+        /// </summary>
+
+		public virtual DareMessage						MasterProfile  {get; set;}
+        /// <summary>
+        ///Key used to encrypt data under this profile
+        /// </summary>
+
+		public virtual PublicKey						AccountEncryptionKey  {get; set;}
+		
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "AssertionAccount";
+
+		/// <summary>
+        /// Factory method
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JSONObject _Factory () => new AssertionAccount();
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="Writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
+			SerializeX (Writer, wrap, ref first);
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_Writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			if (_wrap) {
+				_Writer.WriteObjectStart ();
+				}
+			((Assertion)this).SerializeX(_Writer, false, ref _first);
+			if (Account != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Account", 1);
+					_Writer.WriteString (Account);
+				}
+			if (MasterProfile != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("MasterProfile", 1);
+					MasterProfile.Serialize (_Writer, false);
+				}
+			if (AccountEncryptionKey != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("AccountEncryptionKey", 1);
+					AccountEncryptionKey.Serialize (_Writer, false);
+				}
+			if (_wrap) {
+				_Writer.WriteObjectEnd ();
+				}
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <returns>The created object.</returns>		
+        public static new AssertionAccount FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
+			if (Tagged) {
+				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				return Out as AssertionAccount;
+				}
+		    var Result = new AssertionAccount ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			}
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
+		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+			
+			switch (Tag) {
+				case "Account" : {
+					Account = JSONReader.ReadString ();
+					break;
+					}
+				case "MasterProfile" : {
+					// An untagged structure
+					MasterProfile = new DareMessage ();
+					MasterProfile.Deserialize (JSONReader);
+ 
+					break;
+					}
+				case "AccountEncryptionKey" : {
+					// An untagged structure
+					AccountEncryptionKey = new PublicKey ();
+					AccountEncryptionKey.Deserialize (JSONReader);
+ 
+					break;
+					}
+				default : {
+					base.DeserializeToken(JSONReader, Tag);
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
+	/// <summary>
+	/// </summary>
+	public partial class AssertionDeviceConnection : Assertion {
+        /// <summary>
+        ///List of the permissions that the device has been granted.
+        /// </summary>
+
+		public virtual List<Permission>				Permissions  {get; set;}
+        /// <summary>
+        ///The signature key for use of the device under the profile
+        /// </summary>
+
+		public virtual PublicKey						SignatureKey  {get; set;}
+        /// <summary>
+        ///The encryption key for use of the device under the profile
+        /// </summary>
+
+		public virtual PublicKey						EncryptionKey  {get; set;}
+        /// <summary>
+        ///The authentication key for use of the device under the profile
+        /// </summary>
+
+		public virtual PublicKey						AuthenticationKey  {get; set;}
+		
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "AssertionDeviceConnection";
+
+		/// <summary>
+        /// Factory method
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JSONObject _Factory () => new AssertionDeviceConnection();
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="Writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
+			SerializeX (Writer, wrap, ref first);
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_Writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			if (_wrap) {
+				_Writer.WriteObjectStart ();
+				}
+			((Assertion)this).SerializeX(_Writer, false, ref _first);
+			if (Permissions != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Permissions", 1);
+				_Writer.WriteArrayStart ();
+				bool _firstarray = true;
+				foreach (var _index in Permissions) {
+					_Writer.WriteArraySeparator (ref _firstarray);
+					// This is an untagged structure. Cannot inherit.
+                    //_Writer.WriteObjectStart();
+                    //_Writer.WriteToken(_index._Tag, 1);
+					bool firstinner = true;
+					_index.Serialize (_Writer, true, ref firstinner);
+                    //_Writer.WriteObjectEnd();
+					}
+				_Writer.WriteArrayEnd ();
+				}
+
+			if (SignatureKey != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("SignatureKey", 1);
+					SignatureKey.Serialize (_Writer, false);
+				}
+			if (EncryptionKey != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("EncryptionKey", 1);
+					EncryptionKey.Serialize (_Writer, false);
+				}
+			if (AuthenticationKey != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("AuthenticationKey", 1);
+					AuthenticationKey.Serialize (_Writer, false);
+				}
+			if (_wrap) {
+				_Writer.WriteObjectEnd ();
+				}
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <returns>The created object.</returns>		
+        public static new AssertionDeviceConnection FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
+			if (Tagged) {
+				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				return Out as AssertionDeviceConnection;
+				}
+		    var Result = new AssertionDeviceConnection ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			}
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
+		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+			
+			switch (Tag) {
+				case "Permissions" : {
+					// Have a sequence of values
+					bool _Going = JSONReader.StartArray ();
+					Permissions = new List <Permission> ();
+					while (_Going) {
+						// an untagged structure.
+						var _Item = new  Permission ();
+						_Item.Deserialize (JSONReader);
+						// var _Item = new Permission (JSONReader);
+						Permissions.Add (_Item);
+						_Going = JSONReader.NextArray ();
+						}
+					break;
+					}
+				case "SignatureKey" : {
+					// An untagged structure
+					SignatureKey = new PublicKey ();
+					SignatureKey.Deserialize (JSONReader);
+ 
+					break;
+					}
+				case "EncryptionKey" : {
+					// An untagged structure
+					EncryptionKey = new PublicKey ();
+					EncryptionKey.Deserialize (JSONReader);
+ 
+					break;
+					}
+				case "AuthenticationKey" : {
+					// An untagged structure
+					AuthenticationKey = new PublicKey ();
+					AuthenticationKey.Deserialize (JSONReader);
+ 
+					break;
+					}
+				default : {
+					base.DeserializeToken(JSONReader, Tag);
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
+	/// <summary>
+	/// </summary>
+	public partial class AssertionDevicePrivate : Assertion {
+        /// <summary>
+        ///List of application and account activation data. Keys, etc.
+        /// </summary>
+
+		public virtual List<Activation>				Activations  {get; set;}
+        /// <summary>
+        ///Fingerprint of the device key used for co-generation of SignatureKey
+        /// </summary>
+
+		public virtual string						DeviceSignatureUDF  {get; set;}
+        /// <summary>
+        ///Fingerprint of the device key used for co-generation of EncryptionKey
+        /// </summary>
+
+		public virtual string						DeviceEncryptionUDF  {get; set;}
+        /// <summary>
+        ///Fingerprint of the device key used for co-generation of AuthenticationKey
+        /// </summary>
+
+		public virtual string						DeviceAuthenticationeUDF  {get; set;}
+        /// <summary>
+        ///The private contribution to the signature key to be combined with the 
+        ///device signature key to creat the key pair for use of the device under 
+        ///the profile
+        /// </summary>
+
+		public virtual Key						SignatureKey  {get; set;}
+        /// <summary>
+        ///The private contribution to the encryption key to be combined with the 
+        ///device signature key to creat the key pair for use of the device under 
+        ///the profile
+        /// </summary>
+
+		public virtual Key						EncryptionKey  {get; set;}
+        /// <summary>
+        ///The private contribution to the authentication key to be combined with the 
+        ///device signature key to creat the key pair for use of the device under 
+        ///the profile
+        /// </summary>
+
+		public virtual Key						AuthenticationKey  {get; set;}
+		
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "AssertionDevicePrivate";
+
+		/// <summary>
+        /// Factory method
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JSONObject _Factory () => new AssertionDevicePrivate();
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="Writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
+			SerializeX (Writer, wrap, ref first);
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_Writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			if (_wrap) {
+				_Writer.WriteObjectStart ();
+				}
+			((Assertion)this).SerializeX(_Writer, false, ref _first);
+			if (Activations != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Activations", 1);
+				_Writer.WriteArrayStart ();
+				bool _firstarray = true;
+				foreach (var _index in Activations) {
+					_Writer.WriteArraySeparator (ref _firstarray);
+					// This is an untagged structure. Cannot inherit.
+                    //_Writer.WriteObjectStart();
+                    //_Writer.WriteToken(_index._Tag, 1);
+					bool firstinner = true;
+					_index.Serialize (_Writer, true, ref firstinner);
+                    //_Writer.WriteObjectEnd();
+					}
+				_Writer.WriteArrayEnd ();
+				}
+
+			if (DeviceSignatureUDF != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("DeviceSignatureUDF", 1);
+					_Writer.WriteString (DeviceSignatureUDF);
+				}
+			if (DeviceEncryptionUDF != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("DeviceEncryptionUDF", 1);
+					_Writer.WriteString (DeviceEncryptionUDF);
+				}
+			if (DeviceAuthenticationeUDF != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("DeviceAuthenticationeUDF", 1);
+					_Writer.WriteString (DeviceAuthenticationeUDF);
+				}
+			if (SignatureKey != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("SignatureKey", 1);
+					// expand this to a tagged structure
+					//SignatureKey.Serialize (_Writer, false);
+					{
+						_Writer.WriteObjectStart();
+						_Writer.WriteToken(SignatureKey._Tag, 1);
+						bool firstinner = true;
+						SignatureKey.Serialize (_Writer, true, ref firstinner);
+						_Writer.WriteObjectEnd();
+						}
+				}
+			if (EncryptionKey != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("EncryptionKey", 1);
+					// expand this to a tagged structure
+					//EncryptionKey.Serialize (_Writer, false);
+					{
+						_Writer.WriteObjectStart();
+						_Writer.WriteToken(EncryptionKey._Tag, 1);
+						bool firstinner = true;
+						EncryptionKey.Serialize (_Writer, true, ref firstinner);
+						_Writer.WriteObjectEnd();
+						}
+				}
+			if (AuthenticationKey != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("AuthenticationKey", 1);
+					// expand this to a tagged structure
+					//AuthenticationKey.Serialize (_Writer, false);
+					{
+						_Writer.WriteObjectStart();
+						_Writer.WriteToken(AuthenticationKey._Tag, 1);
+						bool firstinner = true;
+						AuthenticationKey.Serialize (_Writer, true, ref firstinner);
+						_Writer.WriteObjectEnd();
+						}
+				}
+			if (_wrap) {
+				_Writer.WriteObjectEnd ();
+				}
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <returns>The created object.</returns>		
+        public static new AssertionDevicePrivate FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
+			if (Tagged) {
+				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				return Out as AssertionDevicePrivate;
+				}
+		    var Result = new AssertionDevicePrivate ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			}
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
+		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+			
+			switch (Tag) {
+				case "Activations" : {
+					// Have a sequence of values
+					bool _Going = JSONReader.StartArray ();
+					Activations = new List <Activation> ();
+					while (_Going) {
+						// an untagged structure.
+						var _Item = new  Activation ();
+						_Item.Deserialize (JSONReader);
+						// var _Item = new Activation (JSONReader);
+						Activations.Add (_Item);
+						_Going = JSONReader.NextArray ();
+						}
+					break;
+					}
+				case "DeviceSignatureUDF" : {
+					DeviceSignatureUDF = JSONReader.ReadString ();
+					break;
+					}
+				case "DeviceEncryptionUDF" : {
+					DeviceEncryptionUDF = JSONReader.ReadString ();
+					break;
+					}
+				case "DeviceAuthenticationeUDF" : {
+					DeviceAuthenticationeUDF = JSONReader.ReadString ();
+					break;
+					}
+				case "SignatureKey" : {
+					SignatureKey = Key.FromJSON (JSONReader, true) ;  // A tagged structure
+					break;
+					}
+				case "EncryptionKey" : {
+					EncryptionKey = Key.FromJSON (JSONReader, true) ;  // A tagged structure
+					break;
+					}
+				case "AuthenticationKey" : {
+					AuthenticationKey = Key.FromJSON (JSONReader, true) ;  // A tagged structure
 					break;
 					}
 				default : {
@@ -1045,25 +2011,9 @@ namespace Goedel.Mesh {
 
 	/// <summary>
 	///
-	/// Contains the binding of a device to a MasterProfile. Each device has a separate
-	/// profile which MUST be signed by an OnlineSignatureKey
+	/// Contains the private activation information for a Mesh application.
 	/// </summary>
-	public partial class ProfileMesh : ProfileApplication {
-        /// <summary>
-        ///Account address.
-        /// </summary>
-
-		public virtual string						Account  {get; set;}
-        /// <summary>
-        ///Master profile of the account being registered.
-        /// </summary>
-
-		public virtual DareMessage						MasterProfile  {get; set;}
-        /// <summary>
-        ///Key used to encrypt data under this profile
-        /// </summary>
-
-		public virtual PublicKey						AccountEncryptionKey  {get; set;}
+	public partial class Activation : MeshItem {
 		
 		/// <summary>
         /// Tag identifying this class
@@ -1073,13 +2023,13 @@ namespace Goedel.Mesh {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public new const string __Tag = "ProfileMesh";
+		public new const string __Tag = "Activation";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new ProfileMesh();
+		public static new JSONObject _Factory () => new Activation();
 
 
         /// <summary>
@@ -1106,22 +2056,6 @@ namespace Goedel.Mesh {
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
-			((ProfileApplication)this).SerializeX(_Writer, false, ref _first);
-			if (Account != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("Account", 1);
-					_Writer.WriteString (Account);
-				}
-			if (MasterProfile != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("MasterProfile", 1);
-					MasterProfile.Serialize (_Writer, false);
-				}
-			if (AccountEncryptionKey != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("AccountEncryptionKey", 1);
-					AccountEncryptionKey.Serialize (_Writer, false);
-				}
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
 				}
@@ -1133,15 +2067,15 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new ProfileMesh FromJSON (JSONReader JSONReader, bool Tagged=true) {
+        public static new Activation FromJSON (JSONReader JSONReader, bool Tagged=true) {
 			if (JSONReader == null) {
 				return null;
 				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
-				return Out as ProfileMesh;
+				return Out as Activation;
 				}
-		    var Result = new ProfileMesh ();
+		    var Result = new Activation ();
 			Result.Deserialize (JSONReader);
 			return Result;
 			}
@@ -1154,321 +2088,7 @@ namespace Goedel.Mesh {
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
-				case "Account" : {
-					Account = JSONReader.ReadString ();
-					break;
-					}
-				case "MasterProfile" : {
-					// An untagged structure
-					MasterProfile = new DareMessage ();
-					MasterProfile.Deserialize (JSONReader);
- 
-					break;
-					}
-				case "AccountEncryptionKey" : {
-					// An untagged structure
-					AccountEncryptionKey = new PublicKey ();
-					AccountEncryptionKey.Deserialize (JSONReader);
- 
-					break;
-					}
 				default : {
-					base.DeserializeToken(JSONReader, Tag);
-					break;
-					}
-				}
-			// check up that all the required elements are present
-			}
-
-
-		}
-
-	/// <summary>
-	/// </summary>
-	public partial class ProfileMeshDevicePublic : ProfileApplication {
-        /// <summary>
-        ///Device profile of the device making the request.
-        /// </summary>
-
-		public virtual DareMessage						DeviceProfile  {get; set;}
-        /// <summary>
-        ///List of the permissions that the device has been granted.
-        /// </summary>
-
-		public virtual List<Permission>				Permissions  {get; set;}
-		
-		/// <summary>
-        /// Tag identifying this class
-        /// </summary>
-		public override string _Tag => __Tag;
-
-		/// <summary>
-        /// Tag identifying this class
-        /// </summary>
-		public new const string __Tag = "ProfileMeshDevicePublic";
-
-		/// <summary>
-        /// Factory method
-        /// </summary>
-        /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new ProfileMeshDevicePublic();
-
-
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// </summary>
-        /// <param name="Writer">Output stream</param>
-        /// <param name="wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
-			SerializeX (Writer, wrap, ref first);
-
-
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// Unlike the Serlialize() method, this method is not inherited from the
-        /// parent class allowing a specific version of the method to be called.
-        /// </summary>
-        /// <param name="_Writer">Output stream</param>
-        /// <param name="_wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="_first">If true, item is the first entry in a list.</param>
-		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
-			if (_wrap) {
-				_Writer.WriteObjectStart ();
-				}
-			((ProfileApplication)this).SerializeX(_Writer, false, ref _first);
-			if (DeviceProfile != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("DeviceProfile", 1);
-					DeviceProfile.Serialize (_Writer, false);
-				}
-			if (Permissions != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("Permissions", 1);
-				_Writer.WriteArrayStart ();
-				bool _firstarray = true;
-				foreach (var _index in Permissions) {
-					_Writer.WriteArraySeparator (ref _firstarray);
-					// This is an untagged structure. Cannot inherit.
-                    //_Writer.WriteObjectStart();
-                    //_Writer.WriteToken(_index._Tag, 1);
-					bool firstinner = true;
-					_index.Serialize (_Writer, true, ref firstinner);
-                    //_Writer.WriteObjectEnd();
-					}
-				_Writer.WriteArrayEnd ();
-				}
-
-			if (_wrap) {
-				_Writer.WriteObjectEnd ();
-				}
-			}
-
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="JSONReader">The input stream</param>
-		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
-        /// <returns>The created object.</returns>		
-        public static new ProfileMeshDevicePublic FromJSON (JSONReader JSONReader, bool Tagged=true) {
-			if (JSONReader == null) {
-				return null;
-				}
-			if (Tagged) {
-				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
-				return Out as ProfileMeshDevicePublic;
-				}
-		    var Result = new ProfileMeshDevicePublic ();
-			Result.Deserialize (JSONReader);
-			return Result;
-			}
-
-        /// <summary>
-        /// Having read a tag, process the corresponding value data.
-        /// </summary>
-        /// <param name="JSONReader">The input stream</param>
-        /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
-			
-			switch (Tag) {
-				case "DeviceProfile" : {
-					// An untagged structure
-					DeviceProfile = new DareMessage ();
-					DeviceProfile.Deserialize (JSONReader);
- 
-					break;
-					}
-				case "Permissions" : {
-					// Have a sequence of values
-					bool _Going = JSONReader.StartArray ();
-					Permissions = new List <Permission> ();
-					while (_Going) {
-						// an untagged structure.
-						var _Item = new  Permission ();
-						_Item.Deserialize (JSONReader);
-						// var _Item = new Permission (JSONReader);
-						Permissions.Add (_Item);
-						_Going = JSONReader.NextArray ();
-						}
-					break;
-					}
-				default : {
-					base.DeserializeToken(JSONReader, Tag);
-					break;
-					}
-				}
-			// check up that all the required elements are present
-			}
-
-
-		}
-
-	/// <summary>
-	/// </summary>
-	public partial class ProfileMeshDevicePrivate : ProfileApplication {
-        /// <summary>
-        ///List of the permissions that the device has been granted.
-        /// </summary>
-
-		public virtual List<Permission>				Permissions  {get; set;}
-        /// <summary>
-        ///Random nonce used to mask the fingerprint of the profile UDF.
-        /// </summary>
-
-		public virtual byte[]						ProfileNonce  {get; set;}
-        /// <summary>
-        ///Witness value calculated over the ProfileNonce and profile UDF
-        /// </summary>
-
-		public virtual byte[]						ProfileWitness  {get; set;}
-		
-		/// <summary>
-        /// Tag identifying this class
-        /// </summary>
-		public override string _Tag => __Tag;
-
-		/// <summary>
-        /// Tag identifying this class
-        /// </summary>
-		public new const string __Tag = "ProfileMeshDevicePrivate";
-
-		/// <summary>
-        /// Factory method
-        /// </summary>
-        /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new ProfileMeshDevicePrivate();
-
-
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// </summary>
-        /// <param name="Writer">Output stream</param>
-        /// <param name="wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
-			SerializeX (Writer, wrap, ref first);
-
-
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// Unlike the Serlialize() method, this method is not inherited from the
-        /// parent class allowing a specific version of the method to be called.
-        /// </summary>
-        /// <param name="_Writer">Output stream</param>
-        /// <param name="_wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="_first">If true, item is the first entry in a list.</param>
-		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
-			if (_wrap) {
-				_Writer.WriteObjectStart ();
-				}
-			((ProfileApplication)this).SerializeX(_Writer, false, ref _first);
-			if (Permissions != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("Permissions", 1);
-				_Writer.WriteArrayStart ();
-				bool _firstarray = true;
-				foreach (var _index in Permissions) {
-					_Writer.WriteArraySeparator (ref _firstarray);
-					// This is an untagged structure. Cannot inherit.
-                    //_Writer.WriteObjectStart();
-                    //_Writer.WriteToken(_index._Tag, 1);
-					bool firstinner = true;
-					_index.Serialize (_Writer, true, ref firstinner);
-                    //_Writer.WriteObjectEnd();
-					}
-				_Writer.WriteArrayEnd ();
-				}
-
-			if (ProfileNonce != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("ProfileNonce", 1);
-					_Writer.WriteBinary (ProfileNonce);
-				}
-			if (ProfileWitness != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("ProfileWitness", 1);
-					_Writer.WriteBinary (ProfileWitness);
-				}
-			if (_wrap) {
-				_Writer.WriteObjectEnd ();
-				}
-			}
-
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="JSONReader">The input stream</param>
-		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
-        /// <returns>The created object.</returns>		
-        public static new ProfileMeshDevicePrivate FromJSON (JSONReader JSONReader, bool Tagged=true) {
-			if (JSONReader == null) {
-				return null;
-				}
-			if (Tagged) {
-				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
-				return Out as ProfileMeshDevicePrivate;
-				}
-		    var Result = new ProfileMeshDevicePrivate ();
-			Result.Deserialize (JSONReader);
-			return Result;
-			}
-
-        /// <summary>
-        /// Having read a tag, process the corresponding value data.
-        /// </summary>
-        /// <param name="JSONReader">The input stream</param>
-        /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
-			
-			switch (Tag) {
-				case "Permissions" : {
-					// Have a sequence of values
-					bool _Going = JSONReader.StartArray ();
-					Permissions = new List <Permission> ();
-					while (_Going) {
-						// an untagged structure.
-						var _Item = new  Permission ();
-						_Item.Deserialize (JSONReader);
-						// var _Item = new Permission (JSONReader);
-						Permissions.Add (_Item);
-						_Going = JSONReader.NextArray ();
-						}
-					break;
-					}
-				case "ProfileNonce" : {
-					ProfileNonce = JSONReader.ReadBinary ();
-					break;
-					}
-				case "ProfileWitness" : {
-					ProfileWitness = JSONReader.ReadBinary ();
-					break;
-					}
-				default : {
-					base.DeserializeToken(JSONReader, Tag);
 					break;
 					}
 				}
@@ -2763,15 +3383,20 @@ namespace Goedel.Mesh {
 	/// </summary>
 	public partial class CatalogEntryDevice : CatalogEntry {
         /// <summary>
-        ///The Account to which this entry binds this device.
+        ///The accounts to which this device is bound.
         /// </summary>
 
-		public virtual string						Account  {get; set;}
+		public virtual List<string>				Accounts  {get; set;}
         /// <summary>
         ///UDF of the signature key
         /// </summary>
 
 		public virtual string						UDF  {get; set;}
+        /// <summary>
+        ///UDF of the underlying device profile
+        /// </summary>
+
+		public virtual string						DeviceUDF  {get; set;}
         /// <summary>
         ///UDF of the authentication ID
         /// </summary>
@@ -2781,12 +3406,12 @@ namespace Goedel.Mesh {
         ///The device profile
         /// </summary>
 
-		public virtual DareMessage						ProfileMeshDevicePublicSigned  {get; set;}
+		public virtual DareMessage						SignedDeviceConnection  {get; set;}
         /// <summary>
         ///The device profile
         /// </summary>
 
-		public virtual DareMessage						ProfileMeshDevicePrivateEncrypted  {get; set;}
+		public virtual DareMessage						EncryptedDevicePrivate  {get; set;}
         /// <summary>
         ///Decryption key entries.	
         /// </summary>
@@ -2835,30 +3460,42 @@ namespace Goedel.Mesh {
 				_Writer.WriteObjectStart ();
 				}
 			((CatalogEntry)this).SerializeX(_Writer, false, ref _first);
-			if (Account != null) {
+			if (Accounts != null) {
 				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("Account", 1);
-					_Writer.WriteString (Account);
+				_Writer.WriteToken ("Accounts", 1);
+				_Writer.WriteArrayStart ();
+				bool _firstarray = true;
+				foreach (var _index in Accounts) {
+					_Writer.WriteArraySeparator (ref _firstarray);
+					_Writer.WriteString (_index);
+					}
+				_Writer.WriteArrayEnd ();
 				}
+
 			if (UDF != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("UDF", 1);
 					_Writer.WriteString (UDF);
+				}
+			if (DeviceUDF != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("DeviceUDF", 1);
+					_Writer.WriteString (DeviceUDF);
 				}
 			if (AuthUDF != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("AuthUDF", 1);
 					_Writer.WriteString (AuthUDF);
 				}
-			if (ProfileMeshDevicePublicSigned != null) {
+			if (SignedDeviceConnection != null) {
 				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("ProfileMeshDevicePublicSigned", 1);
-					ProfileMeshDevicePublicSigned.Serialize (_Writer, false);
+				_Writer.WriteToken ("SignedDeviceConnection", 1);
+					SignedDeviceConnection.Serialize (_Writer, false);
 				}
-			if (ProfileMeshDevicePrivateEncrypted != null) {
+			if (EncryptedDevicePrivate != null) {
 				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("ProfileMeshDevicePrivateEncrypted", 1);
-					ProfileMeshDevicePrivateEncrypted.Serialize (_Writer, false);
+				_Writer.WriteToken ("EncryptedDevicePrivate", 1);
+					EncryptedDevicePrivate.Serialize (_Writer, false);
 				}
 			if (DeviceRecryptionKeys != null) {
 				_Writer.WriteObjectSeparator (ref _first);
@@ -2909,29 +3546,40 @@ namespace Goedel.Mesh {
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
-				case "Account" : {
-					Account = JSONReader.ReadString ();
+				case "Accounts" : {
+					// Have a sequence of values
+					bool _Going = JSONReader.StartArray ();
+					Accounts = new List <string> ();
+					while (_Going) {
+						string _Item = JSONReader.ReadString ();
+						Accounts.Add (_Item);
+						_Going = JSONReader.NextArray ();
+						}
 					break;
 					}
 				case "UDF" : {
 					UDF = JSONReader.ReadString ();
 					break;
 					}
+				case "DeviceUDF" : {
+					DeviceUDF = JSONReader.ReadString ();
+					break;
+					}
 				case "AuthUDF" : {
 					AuthUDF = JSONReader.ReadString ();
 					break;
 					}
-				case "ProfileMeshDevicePublicSigned" : {
+				case "SignedDeviceConnection" : {
 					// An untagged structure
-					ProfileMeshDevicePublicSigned = new DareMessage ();
-					ProfileMeshDevicePublicSigned.Deserialize (JSONReader);
+					SignedDeviceConnection = new DareMessage ();
+					SignedDeviceConnection.Deserialize (JSONReader);
  
 					break;
 					}
-				case "ProfileMeshDevicePrivateEncrypted" : {
+				case "EncryptedDevicePrivate" : {
 					// An untagged structure
-					ProfileMeshDevicePrivateEncrypted = new DareMessage ();
-					ProfileMeshDevicePrivateEncrypted.Deserialize (JSONReader);
+					EncryptedDevicePrivate = new DareMessage ();
+					EncryptedDevicePrivate.Deserialize (JSONReader);
  
 					break;
 					}

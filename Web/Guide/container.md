@@ -14,7 +14,6 @@ a container archive.
 
 ````
 >container create Container.dcon
-OK
 ````
 
 *catalog* *spool* *archive* *log*
@@ -30,7 +29,6 @@ member of the group groupies@example.com;
 
 ````
 >container create ContainerEncrypt.dcon /encrypt=groupies@example.com
-OK
 ````
 
 Since it is rarely desirable to sign every entry in a container, signatures
@@ -51,7 +49,6 @@ An archive may be signed and encrypted:
 
 ````
 >container create ContainerArchiveEncrypt.dcon TestDir1
-OK
 >/encrypt=groupies@example.com /sign=alice@example.com
 ERROR - The command  is not known.
 ````
@@ -67,7 +64,6 @@ The `container verify` command verifies the contents of a container:
 
 ````
 >container verify ContainerArchiveEncrypt.dcon
-OK
 ````
 
 The verification performed depends on the type of authentication applied to the
@@ -84,7 +80,6 @@ the files are extracted by default:
 
 ````
 >container extract Container.dcon TestOut
-OK
 ````
 
 Alternatively, the `/file` option may be used to extract a specific file:
@@ -118,7 +113,6 @@ marking an entry as deleted:
 
 ````
 >container delete Container.dcon  TestFile2.txt
-OK
 ````
 
 Marking an entry for deletion does not cause the entry itself to be modified.
@@ -134,7 +128,6 @@ container:
 
 ````
 >container index Container.dcon
-OK
 ````
 
 The index entry may be complete, providing an index of the entire file 
@@ -160,7 +153,6 @@ the copy:
 
 ````
 >container copy ContainerArchiveEncrypt.dcon /decrypt
-OK
 ````
 
 The copy command may also be used to reclaim space used by deleted items:

@@ -16,6 +16,10 @@ namespace Goedel.Mesh.Protocol.Client {
     /// </summary>
     public partial class ContextDevice : Disposable {
 
+
+
+
+
         public Dictionary<string, Store> DictionaryStores = new Dictionary<string, Store>();
         protected override void Disposing() {
 
@@ -31,14 +35,16 @@ namespace Goedel.Mesh.Protocol.Client {
 
         ///<summary>The active profile. A client may have multiple profiles open at once on the
         ///same device but each one must be accessed through a different context.</summary>
-        public ProfileMesh ProfileMesh {
-            get => profileMesh;
+        public AssertionAccount AssertionAccount {
+            get => assertionAccount;
             protected set {
-                profileMesh = value;
-                ProfileMaster = profileMesh.ProfileMaster;
+                assertionAccount = value;
+                if (assertionAccount != null) {
+                    ProfileMaster = assertionAccount.ProfileMaster;
+                    }
                 }
             }
-        ProfileMesh profileMesh;
+        AssertionAccount assertionAccount;
 
         public bool IsAdministrator => AdministratorKey != null;
 
@@ -52,13 +58,18 @@ namespace Goedel.Mesh.Protocol.Client {
             protected set {
                 profileMaster = value;
                 AdministratorKey = null;
-                foreach (var admin in profileMaster.OnlineSignatureKeys) {
-                    AdministratorKey = KeyCollection.LocatePrivate(admin.KeyPair.UDF);
+                if (profileMaster?.OnlineSignatureKeys != null ) {
+                    foreach (var admin in profileMaster.OnlineSignatureKeys) {
+                        AdministratorKey = KeyCollection.LocatePrivate(admin.KeyPair.UDF);
+                        }
                     }
 
                 }
             }
         ProfileMaster profileMaster;
+
+
+
 
 
         ///<summary>The active client connection to the service.</summary>
@@ -75,15 +86,18 @@ namespace Goedel.Mesh.Protocol.Client {
         public bool DefaultPersonal;
 
         ///<summary>The account name</summary>
-        public string AccountName => ProfileMesh.Account;
+        public string AccountName => AssertionAccount.Account;
 
         ///<summary>The device profile</summary>
-        public virtual ProfileDevice ProfileDevice { get; }
+        public virtual ProfileDevice ProfileDevice { get; private set; }
 
-        DareMessage ProfileDeviceSigned => ProfileDevice.ProfileDeviceSigned;
+        DareMessage ProfileDeviceSigned => ProfileDevice.DareMessage;
 
         ///<summary>The active KeyCollection (from Machine)</summary>
-        public KeyCollection KeyCollection => MeshMachine.KeyCollection;
+        public keyCollection KeyCollection => MeshMachine.KeyCollection;
+
+        public CatalogEntryDevice CatalogEntryDevice;
+
 
         #region // Convenience properties for accessing default stores and spools.
         //public CatalogCredential CatalogCredential =>
@@ -129,14 +143,20 @@ namespace Goedel.Mesh.Protocol.Client {
         Store spoolOutbound;
         #endregion
         #region // Convenience properties for accessing private keys.
-        KeyPair KeySign => keySign ?? KeyCollection.LocatePrivate(ProfileDevice.DeviceSignatureKey.UDF).CacheValue(out keySign);
-        KeyPair keySign;
+        KeyPair DeviceSign => deviceSign ?? KeyCollection.LocatePrivate(ProfileDevice.SignatureKey.UDF).CacheValue(out deviceSign);
+        KeyPair deviceSign;
 
-        KeyPair KeyEncrypt => keyEncrypt ?? KeyCollection.LocatePrivate(ProfileDevice.DeviceEncryptionKey.UDF).CacheValue(out keyEncrypt);
-        KeyPair keyEncrypt;
+        KeyPair DeviceEncrypt => deviceEncrypt ?? KeyCollection.LocatePrivate(ProfileDevice.EncryptionKey.UDF).CacheValue(out deviceEncrypt);
+        KeyPair deviceEncrypt;
 
-        KeyPair KeyAuthenticate => keyAuthenticate ?? KeyCollection.LocatePrivate(ProfileDevice.DeviceAuthenticationKey.UDF).CacheValue(out keyAuthenticate);
-        KeyPair keyAuthenticate;
+        KeyPair DeviceAuthenticate => deviceAuthenticate ?? KeyCollection.LocatePrivate(ProfileDevice.AuthenticationKey.UDF).CacheValue(out deviceAuthenticate);
+        KeyPair deviceAuthenticate;
+
+
+        KeyPair KeySign;
+        KeyPair KeyEncrypt;
+        KeyPair KeyAuthenticate;
+
         #endregion
 
 
@@ -145,9 +165,9 @@ namespace Goedel.Mesh.Protocol.Client {
                     KeyPair keySign = null, KeyPair keyEncrypt = null, KeyPair keyAuthenticate = null) {
             MeshMachine = machine;
             ProfileDevice = profileDevice;
-            this.keySign = keySign;
-            this.keyEncrypt = keyEncrypt;
-            this.keyAuthenticate = keyAuthenticate;
+            this.deviceSign = keySign;
+            this.deviceEncrypt = keyEncrypt;
+            this.deviceAuthenticate = keyAuthenticate;
             }
 
         /// <summary>
@@ -161,13 +181,17 @@ namespace Goedel.Mesh.Protocol.Client {
                     string accountName = null,
                     string deviceUDF = null) {
             MeshMachine = machine;
-            ProfileMesh = MeshMachine.GetConnection(accountName, deviceUDF);
+            AssertionAccount = MeshMachine.GetConnection(accountName, deviceUDF);
             }
 
         public ContextDevice(
                     IMeshMachine machine,
-                    ProfileMesh profileMesh,
-                    ProfileDevice profileDevice) : this(machine, profileDevice) => this.ProfileMesh = profileMesh;
+                    ProfileMaster profileMaster,
+                    AssertionAccount profileMesh,
+                    ProfileDevice profileDevice) : this(machine, profileDevice) {
+            ProfileMaster = profileMaster;
+            AssertionAccount = profileMesh;
+            }
         #endregion
 
         #region // Device profile operations
@@ -189,30 +213,22 @@ namespace Goedel.Mesh.Protocol.Client {
                     string description = null) {
 
             machine = machine ?? Mesh.MeshMachine.GetMachine();
-            var KeyCollection = machine.KeyCollection;
+            var keyCollection = machine.KeyCollection;
 
-            algorithmSign = algorithmSign.DefaultMeta(CryptoAlgorithmID.Ed448);
-            algorithmEncrypt = algorithmEncrypt.DefaultMeta(CryptoAlgorithmID.Ed448);
-            algorithmAuthenticate = algorithmAuthenticate.DefaultMeta(CryptoAlgorithmID.Ed448);
-
-            // Create the key set. 
-            var keySign = KeyPair.Factory(algorithmSign, KeySecurity.Device, KeyCollection, keyUses: KeyUses.Sign);
-            var keyEncrypt = KeyPair.Factory(algorithmEncrypt, KeySecurity.Device, KeyCollection, keyUses: KeyUses.Encrypt);
-            var keyAuthenticate = KeyPair.Factory(algorithmAuthenticate, KeySecurity.Device, keyUses: KeyUses.Encrypt);
-
-            // Generate the profile
-            var Profile = Mesh.ProfileDevice.Generate(keySign, keyEncrypt, keyAuthenticate);
-            Profile.Description = description;
+            var profile = ProfileDevice.Generate(keyCollection, algorithmSign, algorithmEncrypt, algorithmAuthenticate, description);
 
             // Register the profile locally
-            machine.Register(Profile.ProfileDeviceSigned);
+            machine.Register(profile.DareMessage);
 
 
             // Create the self contact record and add to the catalog
 
-            return new ContextDevice(machine, Profile, keySign, keyEncrypt, keyAuthenticate);
+            return new ContextDevice(machine, profile);
 
             }
+
+
+
 
         /// <summary>
         /// Generate a new Master profile.
@@ -221,23 +237,40 @@ namespace Goedel.Mesh.Protocol.Client {
         /// <param name="algorithmEncrypt"></param>
         /// <returns></returns>
         public void GenerateMaster(
-            CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
-            CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default) {
+                CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
+                CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default,
+                CryptoAlgorithmID algorithmAuthenticate = CryptoAlgorithmID.Default,
+                string description = null) {
 
-            algorithmSign = algorithmSign.DefaultMeta(CryptoAlgorithmID.Ed448);
-            algorithmEncrypt = algorithmEncrypt.DefaultMeta(CryptoAlgorithmID.Ed448);
+
+
+            if (ProfileDevice == null) {
+                ProfileDevice = ProfileDevice.Generate(KeyCollection, algorithmSign, algorithmEncrypt, algorithmAuthenticate, description);
+                }
+
+            algorithmSign = algorithmSign.DefaultAlgorithmSign();
+            algorithmEncrypt = algorithmEncrypt.DefaultAlgorithmEncrypt();
 
             var keySign = KeyPair.Factory(algorithmSign, KeySecurity.Master, KeyCollection, keyUses: KeyUses.Sign);
             var keyEncrypt = KeyPair.Factory(algorithmEncrypt, KeySecurity.Master, KeyCollection, keyUses: KeyUses.Encrypt);
 
+            var profile = Mesh.ProfileMaster.Generate(ProfileDevice, keySign, keyEncrypt);
 
-            var Profile = Mesh.ProfileMaster.Generate(ProfileDevice, keySign, keyEncrypt);
+            CatalogEntryDevice = profile.Add(ProfileDevice, true);
 
             // Register the profile locally
-            MeshMachine.Register(Profile.ProfileMasterSigned);
-            ProfileMaster = Profile;
+            MeshMachine.Register(ProfileDevice.DareMessage);
+            MeshMachine.Register(profile.DareMessage);
+            MeshMachine.Register(Encode(CatalogEntryDevice));
+
+            ProfileMaster = profile;
             }
         #endregion
+
+
+
+        public DareMessage Encode(CatalogEntryDevice catalogEntryDevice) =>
+            catalogEntryDevice.Encode(KeySign);
 
         public static ContextDevice GetContextDevice(
                     IMeshMachine machine,
@@ -367,7 +400,7 @@ namespace Goedel.Mesh.Protocol.Client {
 
         public DareMessage SignContact(string recipient, Contact contact) {
             var signedContact = DareMessage.Encode(contact.GetBytes(tag: true),
-                    signingKey: KeySign, contentType: "application/mmm");
+                    signingKey: DeviceSign, contentType: "application/mmm");
 
             var request = new MessageContactRequest() {
                 Contact = signedContact,
@@ -379,7 +412,7 @@ namespace Goedel.Mesh.Protocol.Client {
 
         protected DareMessage Sign(JSONObject data) =>
                     DareMessage.Encode(data.GetBytes(tag: true),
-                        signingKey: KeySign, contentType: "application/mmm");
+                        signingKey: DeviceSign, contentType: "application/mmm");
 
 
 
@@ -425,7 +458,7 @@ namespace Goedel.Mesh.Protocol.Client {
             var keyShares = secret.Split(shares, quorum);
             var cryptoStack = new CryptoStack(secret, CryptoAlgorithmID.AES256CBC);
 
-            var MasterSignatureKeyPair = KeyCollection.LocatePrivate(ProfileMaster.MasterSignatureKey.UDF);
+            var MasterSignatureKeyPair = KeyCollection.LocatePrivate(ProfileMaster.SignatureKey.UDF);
             var MasterSignatureKey = Key.FactoryPrivate(MasterSignatureKeyPair);
             var MasterEscrowKeys = new List<Key>();
 
@@ -465,13 +498,13 @@ namespace Goedel.Mesh.Protocol.Client {
             algorithmEncrypt = algorithmEncrypt.DefaultMeta(CryptoAlgorithmID.Ed448);
             var keyEncrypt = KeyPair.Factory(algorithmEncrypt, KeySecurity.Device, KeyCollection, keyUses: KeyUses.Encrypt);
 
-            var profileMesh = new ProfileMesh() {
+            var profileMesh = new AssertionAccount() {
                 Account = accountName,
-                MasterProfile = ProfileMaster.ProfileMasterSigned,
+                MasterProfile = ProfileMaster.DareMessage,
                 AccountEncryptionKey = new PublicKey(keyEncrypt.KeyPairPublic())
                 };
 
-            this.ProfileMesh = profileMesh;
+            this.AssertionAccount = profileMesh;
             var profileMeshSigned = Sign(profileMesh);
 
             var catalogEntryDevice = MakeCatalogEntryDevice(ProfileDevice);
@@ -519,7 +552,7 @@ namespace Goedel.Mesh.Protocol.Client {
 
         public CatalogEntryContact SetContactSelf() {
             var contact = new Contact() {
-                Identifier = ProfileMesh.UDF,
+                Identifier = AssertionAccount.UDF,
                 Account = AccountName,
                 };
             return SetContactSelf(contact);
@@ -549,7 +582,7 @@ namespace Goedel.Mesh.Protocol.Client {
         /// </summary>
         /// <param name="Profile"></param>
         /// <returns></returns>
-        public DareMessage Add(ProfileApplication profile) => throw new NYI();
+        public DareMessage Add(Assertion profile) => throw new NYI();
 
         public void ProcessConnectionRequest(
             MessageConnectionRequest messageConnectionRequest,

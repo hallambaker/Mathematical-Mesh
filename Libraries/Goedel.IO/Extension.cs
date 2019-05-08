@@ -21,7 +21,9 @@ namespace Goedel.IO {
         /// <summary>Open existing file, abort if file does not exist</summary>
         Existing,
         /// <summary>Open existing file or create new if it does not exist</summary>
-        OpenOrCreate
+        OpenOrCreate,
+        /// <summary>Open existing file or create new if it does not exist with shared write permission</summary>
+        ConcurrentLocked
         }
 
     /// <summary>
@@ -97,30 +99,6 @@ namespace Goedel.IO {
                 }
             }
 
-
-        /// <summary>
-        /// Return the file mode corresponding to the specified status.
-        /// </summary>
-        /// <param name="fileStatus">Status to translate</param>
-        /// <returns>The result</returns>
-        public static FileMode FileMode(this FileStatus fileStatus) {
-            switch (fileStatus) {
-                case FileStatus.Append: {
-                    return System.IO.FileMode.Append;
-                    }
-                case FileStatus.New: {
-                    return System.IO.FileMode.CreateNew;
-                    }
-                case FileStatus.Overwrite: {
-                    return System.IO.FileMode.Create;
-                    }
-                case FileStatus.OpenOrCreate: {
-                    return System.IO.FileMode.OpenOrCreate;
-                    }
-                }
-            return System.IO.FileMode.Open;
-            }
-
         /// <summary>
         /// Open a file stream with the specified file name and status
         /// </summary>
@@ -138,19 +116,62 @@ namespace Goedel.IO {
             }
 
         /// <summary>
+        /// Return the file mode corresponding to the specified status.
+        /// </summary>
+        /// <param name="fileStatus">Status to translate</param>
+        /// <returns>The result</returns>
+        public static FileMode FileMode(this FileStatus fileStatus) {
+            switch (fileStatus) {
+                case FileStatus.Append: {
+                    return System.IO.FileMode.Append;
+                    }
+                case FileStatus.New: {
+                    return System.IO.FileMode.CreateNew;
+                    }
+                case FileStatus.Overwrite: {
+                    return System.IO.FileMode.Create;
+                    }
+                case FileStatus.OpenOrCreate:
+                case FileStatus.ConcurrentLocked: {
+                    return System.IO.FileMode.OpenOrCreate;
+                    }
+
+                }
+            return System.IO.FileMode.Open;
+            }
+
+        /// <summary>
         /// Return the file access mode corresponding to the specified status.
         /// </summary>
         /// <param name="fileStatus">Status to translate</param>
         /// <returns>The result</returns>
-        public static FileAccess FileAccess(this FileStatus fileStatus) => (fileStatus == FileStatus.Read) ? System.IO.FileAccess.Read :
-                (fileStatus == FileStatus.Append) ? System.IO.FileAccess.Write : System.IO.FileAccess.ReadWrite;
+        public static FileAccess FileAccess(this FileStatus fileStatus) {
+            switch (fileStatus) {
+                case FileStatus.Read: {
+                    return System.IO.FileAccess.Read;
+                    }
+                case FileStatus.Append: {
+                    return System.IO.FileAccess.Write;
+                    }
+                }
+            return System.IO.FileAccess.ReadWrite;
+            }
+
 
         /// <summary>
         /// Return the file sharing mode corresponding to the specified status.
         /// </summary>
         /// <param name="fileStatus">Status to translate</param>
         /// <returns>The result</returns>
-        public static FileShare FileShare(this FileStatus fileStatus) => (fileStatus == FileStatus.Read) ? System.IO.FileShare.ReadWrite : System.IO.FileShare.Read;
+        public static FileShare FileShare(this FileStatus fileStatus) {
+            switch (fileStatus) {
+                case FileStatus.Read:
+                case FileStatus.ConcurrentLocked: {
+                    return System.IO.FileShare.ReadWrite;
+                    }
+                }
+            return System.IO.FileShare.Read;
+            }
 
         /// <summary>
         /// Open a file for read access allowing other processes to read the file..
