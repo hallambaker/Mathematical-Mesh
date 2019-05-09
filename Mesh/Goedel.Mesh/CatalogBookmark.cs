@@ -49,7 +49,7 @@ namespace Goedel.Mesh {
 
         public CatalogBookmark(string directory, string ContainerName=null,
             CryptoParameters cryptoParameters = null,
-                    keyCollection keyCollection = null) :
+                    KeyCollection keyCollection = null) :
             base(directory, ContainerName, cryptoParameters, keyCollection) {
             }
 

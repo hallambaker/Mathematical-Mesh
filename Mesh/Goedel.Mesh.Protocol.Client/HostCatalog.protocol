@@ -1,4 +1,4 @@
-﻿Protocol Goedel.Mesh.Protocol.Client CatalogItem CatalogItem
+﻿Protocol Goedel.Mesh.Client CatalogItem CatalogItem
 	Description 
 		|An entry in the Mesh linked logchain.
 
@@ -16,15 +16,15 @@
 		String ID
 			Description
 				|Unique object instance identifier.
-		String Local
-			Description
-				|Local short name for the profile
 		Struct DareMessage EncodedProfileDevice
 			Description
 				|The device profile the specific device uses to service this entry.
 		Boolean Default
 			Description
 				|If true, this is the default for the profile type (master, account)
+		String Local
+			Description
+				|Local short name for the profile
 
 	Structure AdminEntry
 		Inherits ProfileEntry

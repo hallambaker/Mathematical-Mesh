@@ -7,7 +7,7 @@ using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
 using Goedel.Cryptography.Jose;
 using Goedel.Protocol;
-using Goedel.Mesh.Protocol.Client;
+using Goedel.Mesh.Client;
 
 namespace Goedel.Mesh.Shell {
     public partial class Shell : _Shell {
@@ -181,7 +181,7 @@ namespace Goedel.Mesh.Shell {
             CatalogHost.GetContextDevice();
 
 
-        public keyCollection KeyCollection(IAccountOptions options) =>
+        public KeyCollection KeyCollection(IAccountOptions options) =>
             CatalogHost.GetKeyCollection();
 
 
@@ -197,7 +197,7 @@ namespace Goedel.Mesh.Shell {
         /// </summary>
         /// <param name="Options"></param>
         /// <returns></returns>
-        public CryptoParameters GetCryptoParameters(keyCollection keyCollection, IEncodeOptions Options) {
+        public CryptoParameters GetCryptoParameters(KeyCollection keyCollection, IEncodeOptions Options) {
             var cryptoParameters = new CryptoParameters();
 
             // Goal: do an encrypt self default option

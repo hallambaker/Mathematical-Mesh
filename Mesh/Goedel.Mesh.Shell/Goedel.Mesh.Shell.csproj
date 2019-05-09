@@ -10,7 +10,7 @@
     <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Dare\Goedel.Cryptography.Dare.csproj" />
     <ProjectReference Include="..\..\Libraries\Goedel.Cryptography\Goedel.Cryptography.csproj" />
     <ProjectReference Include="..\..\Libraries\Goedel.Protocol\Goedel.Protocol.csproj" />
-    <ProjectReference Include="..\Goedel.Mesh.Protocol.Client\Goedel.Mesh.Protocol.Client.csproj" />
+    <ProjectReference Include="..\Goedel.Mesh.Protocol.Client\Goedel.Mesh.Client.csproj" />
     <ProjectReference Include="..\Goedel.Mesh\Goedel.Mesh.csproj" />
   </ItemGroup>
 

@@ -9,7 +9,7 @@ using Goedel.IO;
 using Goedel.Protocol;
 using Goedel.Utilities;
 
-namespace Goedel.Mesh.Protocol.Server {
+namespace Goedel.Mesh.Server {
 
 
     /// <summary>

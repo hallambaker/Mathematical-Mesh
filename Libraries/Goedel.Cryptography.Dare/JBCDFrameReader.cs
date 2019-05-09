@@ -33,7 +33,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="Position">The byte position in the file from 
         /// which to begin reading.</param>
         public ContainerFrameReader(JBCDStream JBCDStream,
-                        keyCollection KeyCollection,
+                        KeyCollection KeyCollection,
                         long Position = -1) {
 
             this.JBCDStream = JBCDStream;
@@ -120,7 +120,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="Header"></param>
         /// <param name="KeyCollection"></param>
         public ContainerDataReader(JBCDStream JBCDStream, ref long FrameRemaining,
-                        ContainerHeader Header, keyCollection KeyCollection) {
+                        ContainerHeader Header, KeyCollection KeyCollection) {
             this.Header = Header;
             JBCDFrameReader = new JBCDRecordDataReader(JBCDStream, ref FrameRemaining);
             CryptoStackStreamReader = Header.GetDecoder(JBCDFrameReader, out Reader,

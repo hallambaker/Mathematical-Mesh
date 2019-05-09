@@ -4,13 +4,13 @@ using System.Text;
 using Goedel.Mesh;
 using Goedel.Protocol;
 
-namespace Goedel.Mesh.Protocol.Client {
+namespace Goedel.Mesh.Client {
     public class MeshClientSession : JpcSession {
         PublicKey AuthenticationKey;
 
         public MeshClientSession(ContextDevice contextDevice=null) {
-            AuthenticationKey = contextDevice?.ProfileDevice.AuthenticationKey;
-            UDF = contextDevice?.ProfileDevice.AuthenticationKey.UDF;
+            AuthenticationKey = contextDevice?.ProfileDevice.KeyAuthentication;
+            UDF = contextDevice?.ProfileDevice.KeyAuthentication.UDF;
             Account = contextDevice?.AssertionAccount?.Account;
             }
 

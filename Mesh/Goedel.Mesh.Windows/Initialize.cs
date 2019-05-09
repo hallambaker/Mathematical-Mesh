@@ -27,9 +27,9 @@ namespace Goedel.Mesh {
 
         public string DirectoryMesh => throw new NYI();
         public string DirectoryService => throw new NYI();
-        public keyCollection KeyCollection { get; }
+        public KeyCollection KeyCollection { get; }
 
-        public keyCollection GetKeyCollection() => new KeyCollectionWindows();
+        public KeyCollection GetKeyCollection() => new KeyCollectionWindows();
 
 
 
@@ -38,6 +38,7 @@ namespace Goedel.Mesh {
         public MeshService GetMeshClient(string address) => throw new NotImplementedException();
         public AssertionAccount GetConnection(string accountName = null, string deviceUDF = null) => throw new NotImplementedException();
         public void Register(DareMessage entry) => throw new NotImplementedException();
+        public KeyPair CreateKeyPair(CryptoAlgorithmID algorithmID, KeySecurity keySecurity, int keySize = 0, KeyUses keyUses = KeyUses.Any) => throw new NotImplementedException();
         }
 
     }

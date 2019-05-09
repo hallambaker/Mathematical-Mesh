@@ -57,13 +57,22 @@ namespace Goedel.Mesh {
 
         public CatalogContact(string directory, string ContainerName = null,
             CryptoParameters cryptoParameters = null,
-                    keyCollection keyCollection = null) :
+                    KeyCollection keyCollection = null) :
             base(directory, ContainerName, cryptoParameters, keyCollection) {
             }
 
         public void Add(DareMessage contact) {
             var entry = new CatalogEntryContact(contact);
             Add(entry);
+            }
+
+        public void Add(Contact contact) {
+            throw new NYI();
+            }
+
+
+        public void SetContactSelf(Contact contact) {
+            throw new NYI();
             }
 
         }

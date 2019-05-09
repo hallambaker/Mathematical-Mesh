@@ -29,7 +29,7 @@ using Goedel.Protocol;
 using Goedel.Utilities;
 using Goedel.Cryptography.Dare;
 
-namespace Goedel.Mesh.Protocol.Server {
+namespace Goedel.Mesh.Server {
 
     /// <summary>
     /// The host class. Receives a stream from the HTTP server caller and 

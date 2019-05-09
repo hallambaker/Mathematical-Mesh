@@ -590,7 +590,7 @@ namespace Goedel.Mesh {
         ///The signature key associated with the profile.
         /// </summary>
 
-		public virtual PublicKey						SignatureKey  {get; set;}
+		public virtual PublicKey						KeySignature  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -634,10 +634,10 @@ namespace Goedel.Mesh {
 				_Writer.WriteObjectStart ();
 				}
 			((Assertion)this).SerializeX(_Writer, false, ref _first);
-			if (SignatureKey != null) {
+			if (KeySignature != null) {
 				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("SignatureKey", 1);
-					SignatureKey.Serialize (_Writer, false);
+				_Writer.WriteToken ("KeySignature", 1);
+					KeySignature.Serialize (_Writer, false);
 				}
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
@@ -669,10 +669,10 @@ namespace Goedel.Mesh {
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
-				case "SignatureKey" : {
+				case "KeySignature" : {
 					// An untagged structure
-					SignatureKey = new PublicKey ();
-					SignatureKey.Deserialize (JSONReader);
+					KeySignature = new PublicKey ();
+					KeySignature.Deserialize (JSONReader);
  
 					break;
 					}
@@ -691,6 +691,11 @@ namespace Goedel.Mesh {
 	/// </summary>
 	public partial class KeyOverlay : MeshItem {
         /// <summary>
+        ///Fingerprint of the resulting composite key (to allow verification)
+        /// </summary>
+
+		public virtual string						UDF  {get; set;}
+        /// <summary>
         ///Fingerprint specifying the base key
         /// </summary>
 
@@ -699,7 +704,7 @@ namespace Goedel.Mesh {
         ///The overlay key contribution.
         /// </summary>
 
-		public virtual Key						EncryptionKey  {get; set;}
+		public virtual Key						Overlay  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -742,21 +747,26 @@ namespace Goedel.Mesh {
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
+			if (UDF != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("UDF", 1);
+					_Writer.WriteString (UDF);
+				}
 			if (BaseUDF != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("BaseUDF", 1);
 					_Writer.WriteString (BaseUDF);
 				}
-			if (EncryptionKey != null) {
+			if (Overlay != null) {
 				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("EncryptionKey", 1);
+				_Writer.WriteToken ("Overlay", 1);
 					// expand this to a tagged structure
-					//EncryptionKey.Serialize (_Writer, false);
+					//Overlay.Serialize (_Writer, false);
 					{
 						_Writer.WriteObjectStart();
-						_Writer.WriteToken(EncryptionKey._Tag, 1);
+						_Writer.WriteToken(Overlay._Tag, 1);
 						bool firstinner = true;
-						EncryptionKey.Serialize (_Writer, true, ref firstinner);
+						Overlay.Serialize (_Writer, true, ref firstinner);
 						_Writer.WriteObjectEnd();
 						}
 				}
@@ -792,12 +802,16 @@ namespace Goedel.Mesh {
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
+				case "UDF" : {
+					UDF = JSONReader.ReadString ();
+					break;
+					}
 				case "BaseUDF" : {
 					BaseUDF = JSONReader.ReadString ();
 					break;
 					}
-				case "EncryptionKey" : {
-					EncryptionKey = Key.FromJSON (JSONReader, true) ;  // A tagged structure
+				case "Overlay" : {
+					Overlay = Key.FromJSON (JSONReader, true) ;  // A tagged structure
 					break;
 					}
 				default : {
@@ -1129,16 +1143,16 @@ namespace Goedel.Mesh {
 
 		public virtual string						Description  {get; set;}
         /// <summary>
-        ///Key used to authenticate requests made by the device.
-        /// </summary>
-
-		public virtual PublicKey						AuthenticationKey  {get; set;}
-        /// <summary>
         ///Key used to pass encrypted data to the device such as a
         ///DeviceUseEntry
         /// </summary>
 
-		public virtual PublicKey						EncryptionKey  {get; set;}
+		public virtual PublicKey						KeyEncryption  {get; set;}
+        /// <summary>
+        ///Key used to authenticate requests made by the device.
+        /// </summary>
+
+		public virtual PublicKey						KeyAuthentication  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -1187,15 +1201,15 @@ namespace Goedel.Mesh {
 				_Writer.WriteToken ("Description", 1);
 					_Writer.WriteString (Description);
 				}
-			if (AuthenticationKey != null) {
+			if (KeyEncryption != null) {
 				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("AuthenticationKey", 1);
-					AuthenticationKey.Serialize (_Writer, false);
+				_Writer.WriteToken ("KeyEncryption", 1);
+					KeyEncryption.Serialize (_Writer, false);
 				}
-			if (EncryptionKey != null) {
+			if (KeyAuthentication != null) {
 				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("EncryptionKey", 1);
-					EncryptionKey.Serialize (_Writer, false);
+				_Writer.WriteToken ("KeyAuthentication", 1);
+					KeyAuthentication.Serialize (_Writer, false);
 				}
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
@@ -1233,17 +1247,17 @@ namespace Goedel.Mesh {
 					Description = JSONReader.ReadString ();
 					break;
 					}
-				case "AuthenticationKey" : {
+				case "KeyEncryption" : {
 					// An untagged structure
-					AuthenticationKey = new PublicKey ();
-					AuthenticationKey.Deserialize (JSONReader);
+					KeyEncryption = new PublicKey ();
+					KeyEncryption.Deserialize (JSONReader);
  
 					break;
 					}
-				case "EncryptionKey" : {
+				case "KeyAuthentication" : {
 					// An untagged structure
-					EncryptionKey = new PublicKey ();
-					EncryptionKey.Deserialize (JSONReader);
+					KeyAuthentication = new PublicKey ();
+					KeyAuthentication.Deserialize (JSONReader);
  
 					break;
 					}
@@ -1368,7 +1382,7 @@ namespace Goedel.Mesh {
 
 	/// <summary>
 	///
-	/// 
+	/// Account assertion. This is signed by the service hosting the account.
 	/// </summary>
 	public partial class AssertionAccount : Assertion {
         /// <summary>
@@ -1517,17 +1531,17 @@ namespace Goedel.Mesh {
         ///The signature key for use of the device under the profile
         /// </summary>
 
-		public virtual PublicKey						SignatureKey  {get; set;}
+		public virtual PublicKey						KeySignature  {get; set;}
         /// <summary>
         ///The encryption key for use of the device under the profile
         /// </summary>
 
-		public virtual PublicKey						EncryptionKey  {get; set;}
+		public virtual PublicKey						KeyEncryption  {get; set;}
         /// <summary>
         ///The authentication key for use of the device under the profile
         /// </summary>
 
-		public virtual PublicKey						AuthenticationKey  {get; set;}
+		public virtual PublicKey						KeyAuthentication  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -1588,20 +1602,20 @@ namespace Goedel.Mesh {
 				_Writer.WriteArrayEnd ();
 				}
 
-			if (SignatureKey != null) {
+			if (KeySignature != null) {
 				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("SignatureKey", 1);
-					SignatureKey.Serialize (_Writer, false);
+				_Writer.WriteToken ("KeySignature", 1);
+					KeySignature.Serialize (_Writer, false);
 				}
-			if (EncryptionKey != null) {
+			if (KeyEncryption != null) {
 				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("EncryptionKey", 1);
-					EncryptionKey.Serialize (_Writer, false);
+				_Writer.WriteToken ("KeyEncryption", 1);
+					KeyEncryption.Serialize (_Writer, false);
 				}
-			if (AuthenticationKey != null) {
+			if (KeyAuthentication != null) {
 				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("AuthenticationKey", 1);
-					AuthenticationKey.Serialize (_Writer, false);
+				_Writer.WriteToken ("KeyAuthentication", 1);
+					KeyAuthentication.Serialize (_Writer, false);
 				}
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
@@ -1649,24 +1663,24 @@ namespace Goedel.Mesh {
 						}
 					break;
 					}
-				case "SignatureKey" : {
+				case "KeySignature" : {
 					// An untagged structure
-					SignatureKey = new PublicKey ();
-					SignatureKey.Deserialize (JSONReader);
+					KeySignature = new PublicKey ();
+					KeySignature.Deserialize (JSONReader);
  
 					break;
 					}
-				case "EncryptionKey" : {
+				case "KeyEncryption" : {
 					// An untagged structure
-					EncryptionKey = new PublicKey ();
-					EncryptionKey.Deserialize (JSONReader);
+					KeyEncryption = new PublicKey ();
+					KeyEncryption.Deserialize (JSONReader);
  
 					break;
 					}
-				case "AuthenticationKey" : {
+				case "KeyAuthentication" : {
 					// An untagged structure
-					AuthenticationKey = new PublicKey ();
-					AuthenticationKey.Deserialize (JSONReader);
+					KeyAuthentication = new PublicKey ();
+					KeyAuthentication.Deserialize (JSONReader);
  
 					break;
 					}
@@ -1690,41 +1704,23 @@ namespace Goedel.Mesh {
 
 		public virtual List<Activation>				Activations  {get; set;}
         /// <summary>
-        ///Fingerprint of the device key used for co-generation of SignatureKey
+        ///The key overlay used to generate the account signature key from the
+        ///device signature key 
         /// </summary>
 
-		public virtual string						DeviceSignatureUDF  {get; set;}
+		public virtual KeyOverlay						KeySignature  {get; set;}
         /// <summary>
-        ///Fingerprint of the device key used for co-generation of EncryptionKey
+        ///The key overlay used to generate the account encryption key from the
+        ///device encryption key 
         /// </summary>
 
-		public virtual string						DeviceEncryptionUDF  {get; set;}
+		public virtual KeyOverlay						KeyEncryption  {get; set;}
         /// <summary>
-        ///Fingerprint of the device key used for co-generation of AuthenticationKey
+        ///The key overlay used to generate the account authentication key from the
+        ///device authentication key 
         /// </summary>
 
-		public virtual string						DeviceAuthenticationeUDF  {get; set;}
-        /// <summary>
-        ///The private contribution to the signature key to be combined with the 
-        ///device signature key to creat the key pair for use of the device under 
-        ///the profile
-        /// </summary>
-
-		public virtual Key						SignatureKey  {get; set;}
-        /// <summary>
-        ///The private contribution to the encryption key to be combined with the 
-        ///device signature key to creat the key pair for use of the device under 
-        ///the profile
-        /// </summary>
-
-		public virtual Key						EncryptionKey  {get; set;}
-        /// <summary>
-        ///The private contribution to the authentication key to be combined with the 
-        ///device signature key to creat the key pair for use of the device under 
-        ///the profile
-        /// </summary>
-
-		public virtual Key						AuthenticationKey  {get; set;}
+		public virtual KeyOverlay						KeyAuthentication  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -1785,59 +1781,20 @@ namespace Goedel.Mesh {
 				_Writer.WriteArrayEnd ();
 				}
 
-			if (DeviceSignatureUDF != null) {
+			if (KeySignature != null) {
 				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("DeviceSignatureUDF", 1);
-					_Writer.WriteString (DeviceSignatureUDF);
+				_Writer.WriteToken ("KeySignature", 1);
+					KeySignature.Serialize (_Writer, false);
 				}
-			if (DeviceEncryptionUDF != null) {
+			if (KeyEncryption != null) {
 				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("DeviceEncryptionUDF", 1);
-					_Writer.WriteString (DeviceEncryptionUDF);
+				_Writer.WriteToken ("KeyEncryption", 1);
+					KeyEncryption.Serialize (_Writer, false);
 				}
-			if (DeviceAuthenticationeUDF != null) {
+			if (KeyAuthentication != null) {
 				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("DeviceAuthenticationeUDF", 1);
-					_Writer.WriteString (DeviceAuthenticationeUDF);
-				}
-			if (SignatureKey != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("SignatureKey", 1);
-					// expand this to a tagged structure
-					//SignatureKey.Serialize (_Writer, false);
-					{
-						_Writer.WriteObjectStart();
-						_Writer.WriteToken(SignatureKey._Tag, 1);
-						bool firstinner = true;
-						SignatureKey.Serialize (_Writer, true, ref firstinner);
-						_Writer.WriteObjectEnd();
-						}
-				}
-			if (EncryptionKey != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("EncryptionKey", 1);
-					// expand this to a tagged structure
-					//EncryptionKey.Serialize (_Writer, false);
-					{
-						_Writer.WriteObjectStart();
-						_Writer.WriteToken(EncryptionKey._Tag, 1);
-						bool firstinner = true;
-						EncryptionKey.Serialize (_Writer, true, ref firstinner);
-						_Writer.WriteObjectEnd();
-						}
-				}
-			if (AuthenticationKey != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("AuthenticationKey", 1);
-					// expand this to a tagged structure
-					//AuthenticationKey.Serialize (_Writer, false);
-					{
-						_Writer.WriteObjectStart();
-						_Writer.WriteToken(AuthenticationKey._Tag, 1);
-						bool firstinner = true;
-						AuthenticationKey.Serialize (_Writer, true, ref firstinner);
-						_Writer.WriteObjectEnd();
-						}
+				_Writer.WriteToken ("KeyAuthentication", 1);
+					KeyAuthentication.Serialize (_Writer, false);
 				}
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
@@ -1885,28 +1842,25 @@ namespace Goedel.Mesh {
 						}
 					break;
 					}
-				case "DeviceSignatureUDF" : {
-					DeviceSignatureUDF = JSONReader.ReadString ();
+				case "KeySignature" : {
+					// An untagged structure
+					KeySignature = new KeyOverlay ();
+					KeySignature.Deserialize (JSONReader);
+ 
 					break;
 					}
-				case "DeviceEncryptionUDF" : {
-					DeviceEncryptionUDF = JSONReader.ReadString ();
+				case "KeyEncryption" : {
+					// An untagged structure
+					KeyEncryption = new KeyOverlay ();
+					KeyEncryption.Deserialize (JSONReader);
+ 
 					break;
 					}
-				case "DeviceAuthenticationeUDF" : {
-					DeviceAuthenticationeUDF = JSONReader.ReadString ();
-					break;
-					}
-				case "SignatureKey" : {
-					SignatureKey = Key.FromJSON (JSONReader, true) ;  // A tagged structure
-					break;
-					}
-				case "EncryptionKey" : {
-					EncryptionKey = Key.FromJSON (JSONReader, true) ;  // A tagged structure
-					break;
-					}
-				case "AuthenticationKey" : {
-					AuthenticationKey = Key.FromJSON (JSONReader, true) ;  // A tagged structure
+				case "KeyAuthentication" : {
+					// An untagged structure
+					KeyAuthentication = new KeyOverlay ();
+					KeyAuthentication.Deserialize (JSONReader);
+ 
 					break;
 					}
 				default : {

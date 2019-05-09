@@ -15,7 +15,7 @@ namespace Goedel.Mesh {
 
         public Spool(string directory, string containerName,
             CryptoParameters cryptoParameters = null,
-                    keyCollection keyCollection = null) :
+                    KeyCollection keyCollection = null) :
                 base(directory, containerName, cryptoParameters, keyCollection) {
 
             }

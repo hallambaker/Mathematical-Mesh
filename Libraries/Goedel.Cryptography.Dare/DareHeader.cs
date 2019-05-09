@@ -207,7 +207,7 @@ namespace Goedel.Cryptography.Dare {
         public CryptoStackStream GetDecoder(
                         Stream JBCDFrameReader,
                         out Stream Reader,
-                       keyCollection KeyCollection = null) {
+                       KeyCollection KeyCollection = null) {
 
             var EncryptID = EncryptionAlgorithm.FromJoseID();
 
@@ -225,7 +225,7 @@ namespace Goedel.Cryptography.Dare {
         /// header.
         /// </summary>
         /// <returns>The created CryptoStack</returns>
-        public CryptoStack GetCryptoStack(keyCollection KeyCollection) {
+        public CryptoStack GetCryptoStack(KeyCollection KeyCollection) {
             var EncryptID = EncryptionAlgorithm.FromJoseID();
 
             var CryptoStack = new CryptoStack(EncryptID, CryptoAlgorithmID.NULL,
@@ -246,7 +246,7 @@ namespace Goedel.Cryptography.Dare {
         public CryptoStackStream GetDecoder(
                         JSONBCDReader JSONBCDReader,
                         out Stream Reader,
-                       keyCollection KeyCollection = null) {
+                       KeyCollection KeyCollection = null) {
 
             var EncryptID = EncryptionAlgorithm.FromJoseID();
             CryptoStack = GetCryptoStack(KeyCollection);
@@ -260,7 +260,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="KeyCollection">The key collection to use or the default collection
         /// if null.</param>
-        public void DecryptMaster(keyCollection KeyCollection) {
+        public void DecryptMaster(KeyCollection KeyCollection) {
             EncryptId = EncryptionAlgorithm.FromJoseID();
             MasterSecret = KeyCollection.Decrypt(Recipients, EncryptId);
             }
@@ -285,7 +285,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="Recipients">The recipient entry.</param>
         /// <param name="AlgorithmID">The symmetric encryption cipher (used to decrypt the wrapped key).</param>
         /// <returns></returns>
-        public static byte[] Decrypt(this keyCollection KeyCollection, 
+        public static byte[] Decrypt(this KeyCollection KeyCollection, 
                     List<DareRecipient> Recipients, 
                     CryptoAlgorithmID AlgorithmID) {
             foreach (var Recipient in Recipients) {

@@ -1,4 +1,4 @@
-﻿Protocol Goedel.Mesh.Protocol.Server CatalogItem CatalogItem
+﻿Protocol Goedel.Mesh.Server CatalogItem CatalogItem
 	Description 
 		|An entry in the Mesh linked logchain.
 

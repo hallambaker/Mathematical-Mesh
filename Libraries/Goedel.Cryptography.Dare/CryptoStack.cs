@@ -195,13 +195,13 @@ namespace Goedel.Cryptography.Dare {
                 CryptoAlgorithmID Digest = CryptoAlgorithmID.NULL,
                 List<DareRecipient> Recipients = null,
                 List<DareSignature> Signatures = null,
-                keyCollection KeyCollection = null
+                KeyCollection KeyCollection = null
                 ) {
             this.EncryptID = EncryptID;
             this.DigestID = Digest;
             (KeySize, BlockSize) = EncryptID.GetKeySize();
 
-            KeyCollection = KeyCollection ?? keyCollection.Default;
+            KeyCollection = KeyCollection ?? KeyCollection.Default;
 
             if (Recipients != null) {
                 MasterSecret = KeyCollection.Decrypt(Recipients, EncryptID);

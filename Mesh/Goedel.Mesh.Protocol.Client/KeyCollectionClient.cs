@@ -9,13 +9,13 @@ using Goedel.Cryptography.Dare;
 using Goedel.Cryptography.Jose;
 using Goedel.Cryptography.PKIX;
 
-namespace Goedel.Mesh.Protocol.Client {
-    public class KeyCollectionClient : keyCollection {
+namespace Goedel.Mesh.Client {
+    public class KeyCollectionClient : KeyCollection {
 
-        keyCollection KeyCollectionBase;
+        KeyCollection KeyCollectionBase;
         CatalogHost CatalogHost;
 
-        public KeyCollectionClient(CatalogHost catalogHost, keyCollection keyCollection) {
+        public KeyCollectionClient(CatalogHost catalogHost, KeyCollection keyCollection) {
             KeyCollectionBase = keyCollection;
             CatalogHost = catalogHost;
             }

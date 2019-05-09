@@ -6,8 +6,8 @@ using Goedel.Mesh.Test;
 using Goedel.Test.Core;
 using Goedel.Test;
 using Goedel.Utilities;
-using Goedel.Mesh.Protocol.Client;
-using Goedel.Mesh.Protocol.Server;
+using Goedel.Mesh.Client;
+using Goedel.Mesh.Server;
 using Goedel.Protocol;
 
 namespace Goedel.Mesh.Test {

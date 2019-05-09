@@ -34,7 +34,7 @@ using Goedel.Cryptography.Jose;
 using Goedel.Cryptography.Dare;
 
 
-namespace Goedel.Mesh.Protocol.Client {
+namespace Goedel.Mesh.Client {
 
 
 	/// <summary>
@@ -92,11 +92,6 @@ namespace Goedel.Mesh.Protocol.Client {
 
 		public virtual string						ID  {get; set;}
         /// <summary>
-        ///Local short name for the profile
-        /// </summary>
-
-		public virtual string						Local  {get; set;}
-        /// <summary>
         ///The device profile the specific device uses to service this entry.
         /// </summary>
 
@@ -111,6 +106,11 @@ namespace Goedel.Mesh.Protocol.Client {
 			get => _Default;
 			set {_Default = value; __Default = true; }
 			}
+        /// <summary>
+        ///Local short name for the profile
+        /// </summary>
+
+		public virtual string						Local  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -158,11 +158,6 @@ namespace Goedel.Mesh.Protocol.Client {
 				_Writer.WriteToken ("ID", 1);
 					_Writer.WriteString (ID);
 				}
-			if (Local != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("Local", 1);
-					_Writer.WriteString (Local);
-				}
 			if (EncodedProfileDevice != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("EncodedProfileDevice", 1);
@@ -172,6 +167,11 @@ namespace Goedel.Mesh.Protocol.Client {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("Default", 1);
 					_Writer.WriteBoolean (Default);
+				}
+			if (Local != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Local", 1);
+					_Writer.WriteString (Local);
 				}
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
@@ -209,10 +209,6 @@ namespace Goedel.Mesh.Protocol.Client {
 					ID = JSONReader.ReadString ();
 					break;
 					}
-				case "Local" : {
-					Local = JSONReader.ReadString ();
-					break;
-					}
 				case "EncodedProfileDevice" : {
 					// An untagged structure
 					EncodedProfileDevice = new DareMessage ();
@@ -222,6 +218,10 @@ namespace Goedel.Mesh.Protocol.Client {
 					}
 				case "Default" : {
 					Default = JSONReader.ReadBoolean ();
+					break;
+					}
+				case "Local" : {
+					Local = JSONReader.ReadString ();
 					break;
 					}
 				default : {

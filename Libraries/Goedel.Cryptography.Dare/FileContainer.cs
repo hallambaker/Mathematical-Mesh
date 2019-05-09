@@ -300,7 +300,7 @@ namespace Goedel.Cryptography.Dare {
         /// <returns>File Container instance</returns>
         public FileContainerReader(
                 string FileName,
-                keyCollection KeyCollection = null,
+                KeyCollection KeyCollection = null,
                 FileStatus FileStatus = FileStatus.Read) {
 
             var JBCDStream = new JBCDStream(FileName, FileStatus);
@@ -321,7 +321,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="KeyCollection">Key collection to be used to resolve private key references.</param>
         public FileContainerReader(
                 byte[] Data,
-                keyCollection KeyCollection = null) {
+                KeyCollection KeyCollection = null) {
 
             var Stream = new MemoryStream(Data, 0, Data.Length, false);
             var JBCDStream = new JBCDStream(Stream, null);
@@ -338,7 +338,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="KeyCollection">Key collection to be used to resolve private key references.</param>
         public static void File(
                 string FileName,
-                keyCollection KeyCollection,
+                KeyCollection KeyCollection,
                 out byte[] Data,
                 out ContentMeta ContentMeta) {
 
@@ -476,7 +476,7 @@ namespace Goedel.Cryptography.Dare {
         public byte[] Decrypt(List<Recipient> Recipients, CryptoAlgorithmID AlgorithmID) {
             foreach (var Recipient in Recipients) {
 
-                var DecryptionKey = keyCollection.Default.TryMatchRecipient(Recipient.Header.Kid);
+                var DecryptionKey = KeyCollection.Default.TryMatchRecipient(Recipient.Header.Kid);
 
                 // Recipient has the following fields of interest
                 // Recipient.EncryptedKey -- The RFC3394 wrapped symmetric key

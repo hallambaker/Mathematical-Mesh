@@ -66,9 +66,9 @@ namespace Goedel.Mesh {
         public override string _PrimaryKey => UDF;
 
 
-        public string UDF => SignatureKey.UDF;
+        public string UDF => KeySignature.UDF;
 
-        public byte[] UDFBytes => SignatureKey.KeyPair.PKIXPublicKey.UDFBytes(512);
+        public byte[] UDFBytes => KeySignature.KeyPair.PKIXPublicKey.UDFBytes(512);
 
 
         /// <summary>
@@ -88,9 +88,9 @@ namespace Goedel.Mesh {
                         KeyPair keyPublicAuthenticate) {
 
             var ProfileDevice = new ProfileDevice() {
-                SignatureKey = new PublicKey (keyPublicSign.KeyPairPublic()),
-                AuthenticationKey = new PublicKey(keyPublicAuthenticate.KeyPairPublic()),
-                EncryptionKey = new PublicKey(keyPublicEncrypt.KeyPairPublic())
+                KeySignature = new PublicKey (keyPublicSign.KeyPairPublic()),
+                KeyEncryption = new PublicKey(keyPublicEncrypt.KeyPairPublic()),
+                KeyAuthentication = new PublicKey(keyPublicAuthenticate.KeyPairPublic())
                 };
 
             var bytes = ProfileDevice.GetBytes(tag:true);
@@ -102,12 +102,27 @@ namespace Goedel.Mesh {
 
             }
 
+
         public static ProfileDevice Generate(
-                    keyCollection KeyCollection,
+                    IMeshMachine meshMachine,
                     CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
                     CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default,
-                    CryptoAlgorithmID algorithmAuthenticate = CryptoAlgorithmID.Default,
-                    string description = null) {
+                    CryptoAlgorithmID algorithmAuthenticate = CryptoAlgorithmID.Default) {
+            algorithmSign = algorithmSign.DefaultAlgorithmSign();
+            algorithmEncrypt = algorithmEncrypt.DefaultAlgorithmEncrypt();
+            algorithmAuthenticate = algorithmAuthenticate.DefaultAlgorithmAuthenticate();
+            var keySign = meshMachine.CreateKeyPair(algorithmSign, KeySecurity.Device, keyUses: KeyUses.Sign);
+            var keyEncrypt = meshMachine.CreateKeyPair(algorithmEncrypt, KeySecurity.Device, keyUses: KeyUses.Encrypt);
+            var keyAuthenticate = meshMachine.CreateKeyPair(algorithmAuthenticate, KeySecurity.Device, keyUses: KeyUses.Encrypt);
+            return Generate(keySign, keyEncrypt, keyAuthenticate);
+
+            }
+
+        public static ProfileDevice Generate(
+                    KeyCollection KeyCollection,
+                    CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
+                    CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default,
+                    CryptoAlgorithmID algorithmAuthenticate = CryptoAlgorithmID.Default) {
 
             algorithmSign = algorithmSign.DefaultAlgorithmSign();
             algorithmEncrypt = algorithmEncrypt.DefaultAlgorithmEncrypt();
@@ -118,7 +133,6 @@ namespace Goedel.Mesh {
             var keyAuthenticate = KeyPair.Factory(algorithmAuthenticate, KeySecurity.Device, keyUses: KeyUses.Encrypt);
 
             var profile = Mesh.ProfileDevice.Generate(keySign, keyEncrypt, keyAuthenticate);
-            profile.Description = description;
 
             return profile;
             }
@@ -138,7 +152,7 @@ namespace Goedel.Mesh {
         public override DareMessage Encode(KeyPair keyPair) {
             this.DareMessage = DareMessage.Encode(GetBytes(tag: true),
                     signingKey: keyPair, 
-                    encryptionKey:ProfileDevice.EncryptionKey.KeyPair, 
+                    encryptionKey:ProfileDevice.KeyEncryption.KeyPair, 
                     contentType: "application/mmm");
             return DareMessage;
             }

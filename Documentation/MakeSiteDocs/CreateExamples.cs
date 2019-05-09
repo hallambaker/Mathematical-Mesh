@@ -109,7 +109,7 @@ namespace ExampleGenerator {
 
         public CryptoStackDebug CryptoStackEncrypt;
 
-        keyCollection KeyCollection;
+        KeyCollection KeyCollection;
 
         List<byte[]> DataSequences;
 

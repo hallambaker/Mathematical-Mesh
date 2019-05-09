@@ -6,7 +6,7 @@ using Goedel.Protocol;
 using Goedel.Utilities;
 using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
-namespace Goedel.Mesh.Protocol.Client {
+namespace Goedel.Mesh.Client {
 
     /// <summary>
     /// 
@@ -120,7 +120,7 @@ namespace Goedel.Mesh.Protocol.Client {
             var catalogEntryDevice = new CatalogEntryDevice() {
                 Accounts = new List<string> { AccountName },
                 UDF = profileDevice.UDF,
-                AuthUDF = profileDevice.AuthenticationKey.UDF,
+                AuthUDF = profileDevice.KeyAuthentication.UDF,
                 SignedDeviceConnection = Sign(profileMeshDevicePublic),
                 EncryptedDevicePrivate = Sign(ProfileMeshDevicePrivate)
                 };

@@ -7,7 +7,7 @@ using Goedel.Cryptography.Dare;
 using Goedel.Cryptography.Jose;
 using Goedel.Mesh;
 
-namespace Goedel.Mesh.Protocol.Client {
+namespace Goedel.Mesh.Client {
     public class ContextAdmin {
 
         AdminEntry AdminEntry;
@@ -20,7 +20,11 @@ namespace Goedel.Mesh.Protocol.Client {
 
         public string Local => AdminEntry.Local;
 
-        IMeshMachineClient MeshMachineClient { get; }
+        public IMeshMachineClient MeshMachine { get; }
+
+
+        KeyPair KeyMasterSignature;
+        KeyPair KeyAdministratorSignature;
 
         /// <summary>
         /// Construct a ContextAdmin from the AdminEntry stored on the specified meshMachine
@@ -43,12 +47,71 @@ namespace Goedel.Mesh.Protocol.Client {
                 ) {
             Assert.AssertNotNull(AdminEntry, NYI.Throw);
 
-            MeshMachineClient = meshMachine;
+            MeshMachine = meshMachine;
             AdminEntry = adminEntry;
             ProfileMaster = ProfileMaster.Decode(adminEntry.EncodedProfileMaster);
             ProfileDevice = ProfileDevice.Decode(adminEntry.EncodedProfileDevice);
-            // Here recover / reconstruct the signature key
+            
+            // Join the composite keys to recover the signature key so we can perform admin functions
+            KeyAdministratorSignature = adminEntry.SignatureKey.GetPrivate(MeshMachine);
             }
+
+
+        public static ContextAdmin Generate(
+                IMeshMachineClient meshMachine,
+                ProfileDevice profileDevice = null,
+                CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
+                CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default,
+                CryptoAlgorithmID algorithmAuthenticate = CryptoAlgorithmID.Default) {
+
+            // Create the master profile
+            var profileMaster = ProfileMaster.Generate(meshMachine);
+            profileDevice = profileDevice ?? ProfileDevice.Generate(meshMachine);
+
+            var adminEntry = new AdminEntry() {
+                };
+
+            var contextAdmin = new ContextAdmin(meshMachine, adminEntry);
+            contextAdmin.AddAdministrator(profileDevice);
+            contextAdmin.Sign();
+
+            return contextAdmin;
+            }
+
+
+
+        /// <summary>
+        /// Add an administrator entry for the device <paramref name="profileDevice"/>
+        /// </summary>
+        /// <param name="profileDevice">Profile of the device to add.</param>
+        /// <returns>The new administrator profile,</returns>
+        public AdminEntry AddAdministrator (
+                    ProfileDevice profileDevice
+                    ) {
+
+            var keyOverlaySignature = new KeyOverlay(MeshMachine, profileDevice.KeySignature);
+
+            ProfileMaster.OnlineSignatureKeys = ProfileMaster.OnlineSignatureKeys ??
+                        new List<PublicKey>();
+
+            ProfileMaster.OnlineSignatureKeys.Add(new PublicKey(keyOverlaySignature.KeyPair));
+
+            return new AdminEntry() {
+                ID = keyOverlaySignature.KeyPair.UDF,
+                EncodedProfileDevice = profileDevice.DareMessage,
+                EncodedProfileMaster = ProfileMaster.DareMessage,
+                SignatureKey = keyOverlaySignature
+                };
+
+            }
+        public DareMessage Sign() {
+            KeyMasterSignature = KeyMasterSignature ??
+                    MeshMachine.KeyCollection.LocatePrivate(ProfileMaster.UDF);
+            return ProfileMaster.Sign(KeyMasterSignature);
+            }
+
+
+
 
         /// <summary>
         /// Add the account <paramref name="accountEntry"/> to the master profile
@@ -62,9 +125,11 @@ namespace Goedel.Mesh.Protocol.Client {
         /// Sign the specified device connection
         /// </summary>
         /// <param name="assertionDeviceConnection"></param>
-        public void Sign(AssertionDeviceConnection assertionDeviceConnection) {
+        public void Sign(MeshItem meshItem) => 
+            DareMessage.Encode(meshItem.GetBytes(true), signingKey: KeyAdministratorSignature);
 
-            }
+
+
 
         }
     }

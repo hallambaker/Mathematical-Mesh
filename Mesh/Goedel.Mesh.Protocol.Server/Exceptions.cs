@@ -3,7 +3,7 @@ using Goedel.Utilities;
 
 
 
-namespace Goedel.Mesh.Protocol.Server {
+namespace Goedel.Mesh.Server {
 
 
 	}

@@ -3,7 +3,7 @@ using System.IO;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using Goedel.Utilities;
-using Goedel.Mesh.Protocol.Client;
+using Goedel.Mesh.Client;
 using Goedel.IO;
 using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;

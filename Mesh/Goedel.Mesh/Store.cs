@@ -22,7 +22,7 @@ namespace Goedel.Mesh {
                     string Directory,
                     string name,
                     CryptoParameters cryptoParameters,
-                    keyCollection keyCollection);
+                    KeyCollection keyCollection);
 
     public class Store : Disposable {
         public virtual string ContainerDefault => throw new NYI();
@@ -30,7 +30,7 @@ namespace Goedel.Mesh {
         //protected override void Disposing() => Container?.Dispose();
 
         protected CryptoParameters CryptoParameters;
-        protected keyCollection KeyCollection;
+        protected KeyCollection KeyCollection;
         string ContainerName;
 
 
@@ -41,7 +41,7 @@ namespace Goedel.Mesh {
 
         public Store(string directory, string containerName = null,
             CryptoParameters cryptoParameters = null,
-                    keyCollection keyCollection = null) {
+                    KeyCollection keyCollection = null) {
 
             containerName = containerName ?? ContainerDefault;
             var fileName = Path.Combine(directory, Path.ChangeExtension(containerName, ".cat"));
@@ -69,7 +69,7 @@ namespace Goedel.Mesh {
                     string Directory,
                     string name,
                     CryptoParameters cryptoParameters,
-                    keyCollection keyCollection) =>
+                    KeyCollection keyCollection) =>
             new Store(Directory, name, cryptoParameters, keyCollection);
 
 

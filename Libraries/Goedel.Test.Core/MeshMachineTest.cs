@@ -6,9 +6,8 @@ using Goedel.Cryptography;
 using Goedel.Cryptography.Core;
 using Goedel.Cryptography.PKIX;
 using Goedel.Utilities;
-using Goedel.Mesh.Protocol.Client;
-using Goedel.Mesh.Protocol;
-using Goedel.Mesh.Protocol.Server;
+using Goedel.Mesh.Client;
+using Goedel.Mesh.Server;
 using Goedel.Protocol;
 
 
@@ -57,11 +56,34 @@ namespace Goedel.Test.Core {
             };
 
 
+
+
+        public static MeshMachineTest GenerateMasterAccount(
+            TestEnvironmentCommon testEnvironmentCommon,
+            string machineName,
+            string localName,
+            out ContextAdmin contextAdmin, out ContextAccount contextAccount,
+            string accountId =null) {
+
+            var result = new MeshMachineTest(testEnvironmentCommon, machineName);
+            contextAdmin = ContextAdmin.Generate(result);
+            contextAccount = ContextAccount.Generate(contextAdmin, localName);
+
+            if (accountId != null) {
+                contextAccount.AddService(accountId);
+                }
+
+            return result;
+            }
+
+
+
+
         Dictionary<string, KeyPair> DictionaryKeyPairByUDF = new Dictionary<string, KeyPair>();
 
 
 
-        public override keyCollection GetKeyCollection() => new KeyCollectionTest(this);
+        public override KeyCollection GetKeyCollection() => new KeyCollectionTest(this);
 
 
         public MeshMachineTest(TestEnvironmentCommon testEnvironmentPerTest, string name = "Test") :

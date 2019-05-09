@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2027
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.202
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries PHB", "Libraries PHB", "{3ACD6B64-8887-4B9C-AABC-7A170E8F9EF1}"
 EndProject
@@ -181,9 +181,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Mesh", "Mesh", "{5EC1032D-6
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Goedel.Mesh", "Mesh\Goedel.Mesh\Goedel.Mesh.csproj", "{6B2D9659-E2A6-4E0F-A6E4-2AF27BDAEA89}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Goedel.Mesh.Protocol.Client", "Mesh\Goedel.Mesh.Protocol.Client\Goedel.Mesh.Protocol.Client.csproj", "{1A14C73E-960C-4E21-AEB7-184B6D5A0AB3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Goedel.Mesh.Client", "Mesh\Goedel.Mesh.Protocol.Client\Goedel.Mesh.Client.csproj", "{1A14C73E-960C-4E21-AEB7-184B6D5A0AB3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Goedel.Mesh.Protocol.Server", "Mesh\Goedel.Mesh.Protocol.Server\Goedel.Mesh.Protocol.Server.csproj", "{602358C6-28B7-446D-86D3-02B3FD1B3D6C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Goedel.Mesh.Server", "Mesh\Goedel.Mesh.Protocol.Server\Goedel.Mesh.Server.csproj", "{602358C6-28B7-446D-86D3-02B3FD1B3D6C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Goedel.Mesh.Shell", "Mesh\Goedel.Mesh.Shell\Goedel.Mesh.Shell.csproj", "{0E631986-5213-4FB5-B4CA-09488EA5C4B5}"
 EndProject

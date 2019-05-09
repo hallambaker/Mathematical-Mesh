@@ -72,7 +72,7 @@
 		Inherits Assertion
 		Description 
 			|Parent class from which all profile classes are derived
-		Struct PublicKey SignatureKey
+		Struct PublicKey KeySignature
 			Description
 				|The signature key associated with the profile.
 
@@ -86,7 +86,7 @@
 		String BaseUDF
 			Description
 				|Fingerprint specifying the base key
-		TStruct Key EncryptionKey
+		TStruct Key Overlay
 			Description
 				|The overlay key contribution.
 
@@ -126,13 +126,14 @@
 		String Description
 			Description
 				|Description of the device
-		Struct PublicKey AuthenticationKey
-			Description
-				|Key used to authenticate requests made by the device.
-		Struct PublicKey EncryptionKey
+		Struct PublicKey KeyEncryption
 			Description
 				|Key used to pass encrypted data to the device such as a
 				|DeviceUseEntry
+		Struct PublicKey KeyAuthentication
+			Description
+				|Key used to authenticate requests made by the device.
+
 
 	Structure ProfileService
 		Inherits Profile
@@ -163,13 +164,13 @@
 			Multiple
 			Description
 				|List of the permissions that the device has been granted.
-		Struct PublicKey SignatureKey
+		Struct PublicKey KeySignature
 			Description
 				|The signature key for use of the device under the profile
-		Struct PublicKey EncryptionKey
+		Struct PublicKey KeyEncryption
 			Description
 				|The encryption key for use of the device under the profile
-		Struct PublicKey AuthenticationKey
+		Struct PublicKey KeyAuthentication
 			Description
 				|The authentication key for use of the device under the profile
 
@@ -180,15 +181,15 @@
 			Multiple
 			Description
 				|List of application and account activation data. Keys, etc.
-		Struct KeyOverlay SignatureKey
+		Struct KeyOverlay KeySignature
 			Description
 				|The key overlay used to generate the account signature key from the
 				|device signature key 
-		Struct KeyOverlayEncryptionKey
+		Struct KeyOverlay KeyEncryption
 			Description
 				|The key overlay used to generate the account encryption key from the
 				|device encryption key 
-		Struct KeyOverlay AuthenticationKey
+		Struct KeyOverlay KeyAuthentication
 			Description
 			Description
 				|The key overlay used to generate the account authentication key from the

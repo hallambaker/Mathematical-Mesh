@@ -28,11 +28,10 @@ using Goedel.Persistence;
 using Goedel.Utilities;
 using Goedel.Mesh;
 using Goedel.Protocol;
-using Goedel.Mesh.Protocol;
 using Goedel.Cryptography.Dare;
 using Goedel.Cryptography;
 using Goedel.IO;
-namespace Goedel.Mesh.Protocol.Server {
+namespace Goedel.Mesh.Server {
 
     /// <summary>
     /// Provides a means of accessing an account mediated by the permissions specified

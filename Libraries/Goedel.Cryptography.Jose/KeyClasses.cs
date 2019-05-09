@@ -44,7 +44,7 @@ namespace Goedel.Cryptography.Jose {
         /// <returns>The extracted key pair</returns>
         public virtual KeyPair GetKeyPair(
                     KeySecurity keySecurity, 
-                    keyCollection keyCollection = null) => 
+                    KeyCollection keyCollection = null) => 
             throw new InternalError("GetKeyPair method not implemented in child class");
 
 

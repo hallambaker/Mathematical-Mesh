@@ -34,7 +34,7 @@ using Goedel.Cryptography.Jose;
 using Goedel.Cryptography.Dare;
 
 
-namespace Goedel.Mesh.Protocol.Server {
+namespace Goedel.Mesh.Server {
 
 
 	/// <summary>

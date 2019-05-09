@@ -202,7 +202,7 @@ namespace Goedel.Cryptography.Dare {
         public static Container Open(
                         string fileName,
                         FileStatus fileStatus = FileStatus.Read,
-                        keyCollection keyCollection = null,
+                        KeyCollection keyCollection = null,
                         CryptoParameters cryptoParameters = null,
                         ContainerType containerType = ContainerType.Unknown,
                         string contentType = null) {
@@ -250,7 +250,7 @@ namespace Goedel.Cryptography.Dare {
         /// <returns>The new container.</returns>
         public static Container Open(
                         JBCDStream jbcdStream,
-                        keyCollection keyCollection = null) {
+                        KeyCollection keyCollection = null) {
 
 
             var Container = OpenExisting(jbcdStream, keyCollection);
@@ -262,7 +262,7 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// The default key collection to use for decryption
         /// </summary>
-        protected keyCollection KeyCollection;
+        protected KeyCollection KeyCollection;
 
         /// <summary>
         /// Open an existing container according to the information contained in the next frame to be read.
@@ -274,7 +274,7 @@ namespace Goedel.Cryptography.Dare {
         /// <returns></returns>
         public static Container OpenExisting(
                         JBCDStream jbcdStream,
-                        keyCollection keyCollection = null) {
+                        KeyCollection keyCollection = null) {
             var Found = jbcdStream.ReadFrame(out var Header, out var FrameData, out var FrameTrailer);
             var ContainerHeaderFirst = Cryptography.Dare.ContainerHeaderFirst.FromJSON(Header.JSONReader(), false);
 

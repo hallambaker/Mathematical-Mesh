@@ -65,12 +65,12 @@ namespace Goedel.Test {
 
     public class TestKeys {
 
-        keyCollection KeyCollection;
+        KeyCollection KeyCollection;
 
         public List<KeyPair> EncryptionKeys;
         public List<KeyPair> SignerKeys;
 
-        public TestKeys(keyCollection KeyCollection = null) => this.KeyCollection = KeyCollection ?? keyCollection.Default;
+        public TestKeys(KeyCollection KeyCollection = null) => this.KeyCollection = KeyCollection ?? KeyCollection.Default;
 
         public void AddEncrypt(bool Register = true) {
             EncryptionKeys = EncryptionKeys ?? new List<KeyPair>();
@@ -85,7 +85,7 @@ namespace Goedel.Test {
             //Console.WriteLine($"  Public {PublicKeyKeypair.UDF}");
 
             if (Register) {
-                keyCollection.Default.Add(Keypair);
+                KeyCollection.Default.Add(Keypair);
                 }
             }
 

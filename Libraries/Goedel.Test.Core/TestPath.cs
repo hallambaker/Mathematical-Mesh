@@ -4,7 +4,7 @@ using System.IO;
 using System.Threading;
 using Goedel.Utilities;
 using Goedel.IO;
-using Goedel.Mesh.Protocol.Server;
+using Goedel.Mesh.Server;
 using Goedel.Mesh;
 
 namespace Goedel.Test.Core {

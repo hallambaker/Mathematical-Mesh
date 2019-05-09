@@ -9,10 +9,10 @@ using Goedel.Protocol;
 namespace Goedel.Mesh {
     public partial class ProfileMaster {
 
-        public string UDF => SignatureKey.UDF;
-        public byte[] UDFBytes => SignatureKey.KeyPair.PKIXPublicKey.UDFBytes(512);
+        public string UDF => KeySignature.UDF;
+        public byte[] UDFBytes => KeySignature.KeyPair.PKIXPublicKey.UDFBytes(512);
 
-        public override string _PrimaryKey => SignatureKey.UDF;
+        public override string _PrimaryKey => KeySignature.UDF;
 
 
 
@@ -45,7 +45,7 @@ namespace Goedel.Mesh {
                 }
 
             var profileMaster = new ProfileMaster() {
-                SignatureKey = new PublicKey(keyPublicSign.KeyPairPublic()),
+                KeySignature = new PublicKey(keyPublicSign.KeyPairPublic()),
                 MasterEscrowKeys = masterEscrowKeys
                 };
 
@@ -56,19 +56,41 @@ namespace Goedel.Mesh {
             return profileMaster;
             }
 
+        public static ProfileMaster Generate(
+                    IMeshMachine meshMachine,
+                    CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
+                    CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default) {
 
-        public CatalogEntryDevice Add(ProfileDevice profileDevice, bool Administrator) {
+            algorithmSign = algorithmSign.DefaultAlgorithmSign();
+            algorithmEncrypt = algorithmEncrypt.DefaultAlgorithmEncrypt();
+            var keySign = meshMachine.CreateKeyPair(algorithmSign, KeySecurity.Device, keyUses: KeyUses.Sign);
+            var keyEncrypt = meshMachine.CreateKeyPair(algorithmEncrypt, KeySecurity.Device, keyUses: KeyUses.Encrypt);
+            return new ProfileMaster() {
+                KeySignature = new PublicKey(keySign.KeyPairPublic()),
+                MasterEscrowKeys = new List<PublicKey> { new PublicKey(keyEncrypt.KeyPairPublic()) }
+                    };
+            }
 
-            var catalogEntryDevice = new CatalogEntryDevice(this, profileDevice);
+
+        public DareMessage Sign(KeyPair SignatureKey) {
+            DareMessage = DareMessage.Encode(GetBytes(true), signingKey: SignatureKey);
+            return DareMessage;
+            }
+
+
+        public CatalogEntryDevice Add(IMeshMachine meshMachine, ProfileDevice profileDevice, bool Administrator) {
+
+            var catalogEntryDevice = new CatalogEntryDevice(meshMachine, this, profileDevice);
 
             if (Administrator) {
                 catalogEntryDevice.ActivateAdmin(null);
                 OnlineSignatureKeys = OnlineSignatureKeys ?? new List<PublicKey>();
-                OnlineSignatureKeys.Add(profileDevice.SignatureKey);
+                OnlineSignatureKeys.Add(profileDevice.KeySignature);
                 }
 
             return catalogEntryDevice;
             }
+
 
 
 
@@ -89,6 +111,10 @@ namespace Goedel.Mesh {
             result.DareMessage = message;
             return result;
             }
+
+
+
+
         }
 
     }

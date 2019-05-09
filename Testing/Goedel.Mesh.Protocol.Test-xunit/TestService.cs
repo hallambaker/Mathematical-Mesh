@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using Xunit;
 using Goedel.Cryptography.Dare;
-using Goedel.Mesh.Protocol.Server;
-using Goedel.Mesh.Protocol.Client;
+using Goedel.Mesh.Server;
+using Goedel.Mesh.Client;
 using Goedel.Utilities;
 using Goedel.Protocol;
 using Goedel.Test.Core;
@@ -33,11 +33,15 @@ namespace Goedel.XUnit {
         public static TestService Test() => new TestService();
         static string AccountAlice = "alice@example.com";
         static string ServiceName = "example.com";
-
+        static string AccountBob = "bob@example.com";
 
         public string DeviceAliceAdmin = "Alice Admin";
         public string DeviceAlice2 = "Alice Device 2";
         public string DeviceAlice3 = "Alice Device 3";
+
+
+        public Contact ContactAlice => MeshMachineTest.ContactAlice;
+        public Contact ContactBob => MeshMachineTest.ContactBob;
 
         [Fact]
         public void ProtocolHello() {
@@ -106,6 +110,60 @@ namespace Goedel.XUnit {
             statusAdded.AssertSuccess(); // Check: make sure one item has been added etc.
 
             }
+        [Fact]
+        public void MeshNewContext() {
+            var testEnvironmentCommon = new TestEnvironmentCommon();
+            var machineAdmin = new MeshMachineTest(testEnvironmentCommon, DeviceAliceAdmin);
+
+            var contextAdmin = machineAdmin.GenerateAdmin();
+            var contextAccount = machineAdmin.GenerateAccount(contextAdmin, "main");
+
+            // Perform some offline operations on the account catalogs
+            var contactCatalog = contextAccount.GetCatalogContact();
+            contactCatalog.SetContactSelf(ContactAlice);
+            contactCatalog.Add(ContactBob);
+
+            // Check we can read the data back again
+            var machineAdmin_2 = new MeshMachineTest(testEnvironmentCommon, DeviceAliceAdmin);
+            var contextAccount_2 = machineAdmin_2.GetContextAccount();
+            //var contextAdmin_2 = contextAccount_2.GetContextAdmin();
+            //(contextAdmin.ProfileDevice.UDF == contextAdmin_2.ProfileDevice.UDF).AssertTrue();
+            //(contextAdmin.ProfileMaster.UDF == contextAdmin_2.ProfileMaster.UDF).AssertTrue();
+
+
+            var machineAdmin_3 = new MeshMachineTest(testEnvironmentCommon, DeviceAliceAdmin);
+            var contextAccount_3 = machineAdmin_2.GetContextAccount();
+
+
+            // Add a service
+            contextAccount.AddService(AccountAlice);
+
+            // Connect a second device using the PIN connection mechanism
+            var machineAlice2 = new MeshMachineTest(testEnvironmentCommon, DeviceAlice2);
+            var PIN = contextAccount.GetPIN();
+            var contextAccount2 = machineAlice2.Connect(AccountAlice, PIN);
+            contextAccount.Sync();
+
+
+            // Do some catalog updates and check the results
+
+
+            // Connect a third device by approving a request
+
+
+            // Do some catalog updates and check the results
+
+
+            // Check message handling - introduce Bob
+            var machineAdminBob = MeshMachineTest.GenerateMasterAccount(
+                testEnvironmentCommon, DeviceAliceAdmin, "main", 
+                out var contextAdminBob, out var contextAccountBob, 
+                AccountBob);
+
+
+
+            }
+
 
         [Fact]
         public void MeshConnectBase() {
@@ -230,7 +288,7 @@ namespace Goedel.XUnit {
             var statusCreateBob = masterAdminBob.CreateAccount(AccountBob);
 
             // Create Bob contact.
-            var contactEntry = masterAdminBob.SetContactSelf(MeshMachineTest.ContactBob);
+            var contactEntry = masterAdminBob.SetContactSelf(ContactBob);
 
 
             // Bob make contact request Alice.

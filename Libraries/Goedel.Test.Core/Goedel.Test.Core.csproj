@@ -6,8 +6,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Core\Goedel.Mesh.Core.csproj" />
-    <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Protocol.Client\Goedel.Mesh.Protocol.Client.csproj" />
-    <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Protocol.Server\Goedel.Mesh.Protocol.Server.csproj" />
+    <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Protocol.Client\Goedel.Mesh.Client.csproj" />
+    <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Protocol.Server\Goedel.Mesh.Server.csproj" />
     <ProjectReference Include="..\..\Mesh\Goedel.Mesh\Goedel.Mesh.csproj" />
     <ProjectReference Include="..\Goedel.Cryptography.Core\Goedel.Cryptography.Core.csproj" />
     <ProjectReference Include="..\Goedel.Cryptography.Dare\Goedel.Cryptography.Dare.csproj" />

@@ -10,8 +10,8 @@ namespace Scratchpad {
 
             Cryptography.Initialize();
 
-
-            TestService.Test().MeshConnectBase();
+            TestService.Test().MeshNewContext();
+            //TestService.Test().MeshConnectBase();
 
             //ShellTests.Test().TestProfileConnectAuth();
             //ShellTests.Test().TestProfileConnectAuthAll();

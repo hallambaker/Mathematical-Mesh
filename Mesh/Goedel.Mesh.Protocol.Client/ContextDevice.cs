@@ -8,7 +8,7 @@ using Goedel.Mesh;
 using Goedel.Protocol;
 using Goedel.Cryptography.Jose;
 
-namespace Goedel.Mesh.Protocol.Client {
+namespace Goedel.Mesh.Client {
 
     /// <summary>
     /// Class that represents a device's view of the current state of a
@@ -94,7 +94,7 @@ namespace Goedel.Mesh.Protocol.Client {
         DareMessage ProfileDeviceSigned => ProfileDevice.DareMessage;
 
         ///<summary>The active KeyCollection (from Machine)</summary>
-        public keyCollection KeyCollection => MeshMachine.KeyCollection;
+        public KeyCollection KeyCollection => MeshMachine.KeyCollection;
 
         public CatalogEntryDevice CatalogEntryDevice;
 
@@ -143,13 +143,13 @@ namespace Goedel.Mesh.Protocol.Client {
         Store spoolOutbound;
         #endregion
         #region // Convenience properties for accessing private keys.
-        KeyPair DeviceSign => deviceSign ?? KeyCollection.LocatePrivate(ProfileDevice.SignatureKey.UDF).CacheValue(out deviceSign);
+        KeyPair DeviceSign => deviceSign ?? KeyCollection.LocatePrivate(ProfileDevice.KeySignature.UDF).CacheValue(out deviceSign);
         KeyPair deviceSign;
 
-        KeyPair DeviceEncrypt => deviceEncrypt ?? KeyCollection.LocatePrivate(ProfileDevice.EncryptionKey.UDF).CacheValue(out deviceEncrypt);
+        KeyPair DeviceEncrypt => deviceEncrypt ?? KeyCollection.LocatePrivate(ProfileDevice.KeyEncryption.UDF).CacheValue(out deviceEncrypt);
         KeyPair deviceEncrypt;
 
-        KeyPair DeviceAuthenticate => deviceAuthenticate ?? KeyCollection.LocatePrivate(ProfileDevice.AuthenticationKey.UDF).CacheValue(out deviceAuthenticate);
+        KeyPair DeviceAuthenticate => deviceAuthenticate ?? KeyCollection.LocatePrivate(ProfileDevice.KeyAuthentication.UDF).CacheValue(out deviceAuthenticate);
         KeyPair deviceAuthenticate;
 
 
@@ -215,7 +215,7 @@ namespace Goedel.Mesh.Protocol.Client {
             machine = machine ?? Mesh.MeshMachine.GetMachine();
             var keyCollection = machine.KeyCollection;
 
-            var profile = ProfileDevice.Generate(keyCollection, algorithmSign, algorithmEncrypt, algorithmAuthenticate, description);
+            var profile = ProfileDevice.Generate(keyCollection, algorithmSign, algorithmEncrypt, algorithmAuthenticate);
 
             // Register the profile locally
             machine.Register(profile.DareMessage);
@@ -245,7 +245,7 @@ namespace Goedel.Mesh.Protocol.Client {
 
 
             if (ProfileDevice == null) {
-                ProfileDevice = ProfileDevice.Generate(KeyCollection, algorithmSign, algorithmEncrypt, algorithmAuthenticate, description);
+                ProfileDevice = ProfileDevice.Generate(KeyCollection, algorithmSign, algorithmEncrypt, algorithmAuthenticate);
                 }
 
             algorithmSign = algorithmSign.DefaultAlgorithmSign();
@@ -256,7 +256,7 @@ namespace Goedel.Mesh.Protocol.Client {
 
             var profile = Mesh.ProfileMaster.Generate(ProfileDevice, keySign, keyEncrypt);
 
-            CatalogEntryDevice = profile.Add(ProfileDevice, true);
+            CatalogEntryDevice = profile.Add(MeshMachine, ProfileDevice, true);
 
             // Register the profile locally
             MeshMachine.Register(ProfileDevice.DareMessage);
@@ -458,7 +458,7 @@ namespace Goedel.Mesh.Protocol.Client {
             var keyShares = secret.Split(shares, quorum);
             var cryptoStack = new CryptoStack(secret, CryptoAlgorithmID.AES256CBC);
 
-            var MasterSignatureKeyPair = KeyCollection.LocatePrivate(ProfileMaster.SignatureKey.UDF);
+            var MasterSignatureKeyPair = KeyCollection.LocatePrivate(ProfileMaster.KeySignature.UDF);
             var MasterSignatureKey = Key.FactoryPrivate(MasterSignatureKeyPair);
             var MasterEscrowKeys = new List<Key>();
 

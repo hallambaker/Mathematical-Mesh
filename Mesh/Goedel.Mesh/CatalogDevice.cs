@@ -60,7 +60,7 @@ namespace Goedel.Mesh {
         /// <param name="keyCollection">The key collection to be used to resolve keys when reading entries.</param>
         public CatalogDevice(string directory, string containerName=null,
             CryptoParameters cryptoParameters = null,
-                    keyCollection keyCollection = null) :
+                    KeyCollection keyCollection = null) :
             base(directory, containerName?? Label, cryptoParameters, keyCollection) {
             }
 
@@ -105,32 +105,33 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="profileMaster">The master profile the device is to be connected to.</param>
         /// <param name="profileDevice">The device profile to be connected.</param>
-        public CatalogEntryDevice(ProfileMaster profileMaster, ProfileDevice profileDevice) {
-            var deviceSignature = profileDevice.SignatureKey.KeyPair as KeyPairAdvanced;
-            var deviceEncryption = profileDevice.EncryptionKey.KeyPair as KeyPairAdvanced;
-            var deviceAuthentication = profileDevice.AuthenticationKey.KeyPair as KeyPairAdvanced;
-            
-            var coSignature = deviceSignature.Cogenerate(out var partSignature);
-            var coEncryption = deviceEncryption.Cogenerate(out var partEncryption);
-            var coAuthentication = deviceAuthentication.Cogenerate(out var partAuthentication);
-            
+        public CatalogEntryDevice(IMeshMachine meshMachine, ProfileMaster profileMaster, ProfileDevice profileDevice) {
+            var deviceSignature = profileDevice.KeySignature.KeyPair as KeyPairAdvanced;
+            var deviceEncryption = profileDevice.KeyEncryption.KeyPair as KeyPairAdvanced;
+            var deviceAuthentication = profileDevice.KeyAuthentication.KeyPair as KeyPairAdvanced;
+
+
+            var overlaySignature = new KeyOverlay(meshMachine, deviceSignature);
+            var overlayEncryption = new KeyOverlay(meshMachine, deviceEncryption);
+            var overlayAuthentication = new KeyOverlay(meshMachine, deviceAuthentication);
+           
 
             assertionDevicePrivate = new AssertionDevicePrivate() {
                 ProfileDevice = profileDevice,
-                SignatureKey = Key.GetPrivate (partSignature),
-                EncryptionKey = Key.GetPrivate(partEncryption),
-                AuthenticationKey = Key.GetPrivate(partAuthentication)
+                KeySignature = overlaySignature,
+                KeyEncryption = overlayEncryption,
+                KeyAuthentication = overlayAuthentication
                 };
 
             assertionDeviceConnection = new AssertionDeviceConnection() {
                 ProfileMaster = profileMaster,
-                SignatureKey = new PublicKey (coSignature),
-                EncryptionKey = new PublicKey (coEncryption),
-                AuthenticationKey = new PublicKey (coAuthentication)
+                KeySignature = new PublicKey (overlaySignature.KeyPair),
+                KeyEncryption = new PublicKey (overlayEncryption.KeyPair),
+                KeyAuthentication = new PublicKey (overlayAuthentication.KeyPair)
                 };
 
-            UDF = coSignature.UDF;
-            AuthUDF = coAuthentication.UDF;
+            UDF = overlaySignature.KeyPair.UDF;
+            AuthUDF = overlayAuthentication.KeyPair.UDF;
             DeviceUDF = profileDevice.UDF;
             }
 

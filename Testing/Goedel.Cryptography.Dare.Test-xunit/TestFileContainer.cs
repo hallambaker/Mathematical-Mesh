@@ -142,7 +142,7 @@ namespace Goedel.XUnit {
 
         KeyPair CreateKeyPair () {
             var Result = new KeyPairDH();
-            keyCollection.Default.Add(Result);
+            KeyCollection.Default.Add(Result);
 
             return Result;
             }

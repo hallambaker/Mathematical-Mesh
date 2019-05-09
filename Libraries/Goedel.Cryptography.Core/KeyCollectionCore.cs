@@ -13,7 +13,7 @@ namespace Goedel.Cryptography.Core {
 
 
 
-    public class KeyCollectionCore : keyCollection {
+    public class KeyCollectionCore : KeyCollection {
         const string WindowsMeshKeys = @"Mesh\Keys";
         const string WindowsMeshProfiles = @"Mesh\Profiles";
         const string LinuxMeshKeys = @".Mesh/Keys";

@@ -6,9 +6,8 @@ using Goedel.Cryptography.Core;
 using Goedel.Utilities;
 using Goedel.IO;
 using Goedel.Mesh;
-using Goedel.Mesh.Protocol;
 using Goedel.Protocol;
-using Goedel.Mesh.Protocol.Client;
+using Goedel.Mesh.Client;
 
 namespace Goedel.Mesh {
 
@@ -20,26 +19,38 @@ namespace Goedel.Mesh {
     /// obtained before attempting a write operation and while opening a container.</remarks>
     public class MeshMachineCore: Disposable, IMeshMachine, IMeshMachineClient {
 
-        public CatalogHost CatalogHost { get; }
+
+        public const string FileTypeHost = "application/mmm-host";
+
+
+        public string FileNameHost => Path.Combine(DirectoryMesh, "host.dare");
+
+        #region // Disposing
+        protected override void Disposing() {
+            CatalogHost.Dispose();
+            }
+        #endregion
+
 
         public AdminEntry GetAdmin(string local = null) => CatalogHost.GetAdmin(local);
         public AccountEntry GetAccount(string local = null) => CatalogHost.GetAccount(local);
         public PendingEntry GetPending(string local = null) => CatalogHost.GetPending(local);
+
+        public ContextAccount GetContextAccount(string local = null) =>
+            new ContextAccount(this, GetAccount(local));
+
+
+
+
+        public CatalogHost CatalogHost { get; }
+
+
 
 
         public virtual string DirectoryMaster { get; }
         public virtual string DirectoryMesh { get; }
         public virtual string DirectoryKeys { get; }
         public virtual string DirectoryService { get; }
-
-        protected override void Disposing() {
-            CatalogHost.Dispose();
-            }
-
-        public const string FileTypeHost = "application/mmm-host";
-
-
-        public string FileNameHost => Path.Combine(DirectoryMesh, "host.dare");
 
         //public ContainerHost ContainerHost { get; }
 
@@ -64,13 +75,56 @@ namespace Goedel.Mesh {
             CatalogHost = new CatalogHost(containerHost, this);
             }
 
+        #region // Convenience accessors
+        public ContextAdmin GenerateAdmin() => ContextAdmin.Generate(this);
+
+        public ContextAccount GenerateAccount(ContextAdmin contextAdmin,
+                string localName,
+                ProfileDevice profileDevice = null,
+                CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
+                CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default,
+                CryptoAlgorithmID algorithmAuthenticate = CryptoAlgorithmID.Default) =>
+            ContextAccount.Generate(contextAdmin, localName, this, profileDevice,
+                algorithmSign, algorithmEncrypt, algorithmAuthenticate);
+
+        public ContextAccount Connect(
+                string  ServiceId,
+                string PIN = null
+            ) {
+            throw new NYI();
+            }
+
+        #endregion
+
 
         #region // Implementation
+
+        /// <summary>
+        /// Generate a keypair of a type specified by <paramref name="algorithmID"/> and bind to the 
+        /// KeyCollection of the machine instance.
+        /// </summary>
+        /// <param name="algorithmID">The type of keypair to create.</param>
+        /// <param name="keySize">The key size (ignored if the algorithm supports only one key size)</param>
+        /// <param name="keySecurity">The key security model</param>
+        /// <param name="keyCollection">The key collection that keys are to be persisted to (dependent on 
+        /// the value of <paramref name="keySecurity"/></param>
+        /// <param name="keyUses">The permitted uses (signing, exchange) for the key.</param>
+        /// <returns>The created key pair</returns>
+        public KeyPair CreateKeyPair(
+                    CryptoAlgorithmID algorithmID,
+                    KeySecurity keySecurity,
+                    int keySize = 0,
+                    KeyUses keyUses = KeyUses.Any) => KeyPair.Factory(algorithmID, keySecurity,
+                        KeyCollection, keySize, keyUses);
+
+
+
+
         public static  IMeshMachine GetMachine() => new MeshMachineCore();
 
-        public virtual keyCollection KeyCollection { get; }
+        public virtual KeyCollection KeyCollection { get; }
 
-        public virtual keyCollection GetKeyCollection() => 
+        public virtual KeyCollection GetKeyCollection() => 
             new KeyCollectionCore();
 
         public virtual void OpenCatalog(Catalog catalog, string Name) { }
@@ -80,6 +134,9 @@ namespace Goedel.Mesh {
 
         public virtual void Delete(CatalogItem catalogItem) =>
                 CatalogHost.Delete(catalogItem);
+
+
+
 
 
 

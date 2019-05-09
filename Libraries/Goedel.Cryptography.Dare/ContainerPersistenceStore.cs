@@ -133,7 +133,7 @@ namespace Goedel.Cryptography.Dare {
                     ContainerType containerType = ContainerType.Chain,
                     DataEncoding dataEncoding = DataEncoding.JSON,
                     CryptoParameters cryptoParameters = null,
-                    keyCollection keyCollection = null,
+                    KeyCollection keyCollection = null,
                     bool readContainer = true) : this(
                         Container.Open(
                 fileName,

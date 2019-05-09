@@ -53,7 +53,7 @@ namespace Goedel.Mesh {
 
         public CatalogCalendar(string directory, string ContainerName = null,
             CryptoParameters cryptoParameters = null,
-                    keyCollection keyCollection = null) :
+                    KeyCollection keyCollection = null) :
             base(directory, ContainerName, cryptoParameters, keyCollection) {
             }
         public static Store Factory(string directory, string containerName = null) =>

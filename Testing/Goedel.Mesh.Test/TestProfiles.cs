@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Goedel.Mesh;
 using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
-using Goedel.Mesh.Protocol.Client;
+using Goedel.Mesh.Client;
 using Goedel.Utilities;
 using Goedel.Test.Core;
 using Goedel.Protocol;
@@ -116,7 +116,7 @@ namespace Goedel.Mesh.Test {
 
             var catalog = deviceAdmin.GetCatalogDevice();
 
-            var keySign = machineAliceAdmin.KeyCollection.LocatePrivate(deviceAdmin.ProfileDevice.SignatureKey.UDF);
+            var keySign = machineAliceAdmin.KeyCollection.LocatePrivate(deviceAdmin.ProfileDevice.KeySignature.UDF);
             var Entry1 = MakeCatalogEntryDevice(deviceAdmin.ProfileDevice, keySign);
 
             var Device2 = ContextDevice.Generate(machineAliceLaptop);

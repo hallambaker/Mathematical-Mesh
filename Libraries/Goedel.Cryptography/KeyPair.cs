@@ -154,7 +154,7 @@ namespace Goedel.Cryptography {
         public static KeyPair Factory(
                     CryptoAlgorithmID algorithmID,
                     KeySecurity keySecurity,
-                    keyCollection keyCollection=null,
+                    KeyCollection keyCollection=null,
                     int keySize = 0,
                     KeyUses keyUses = KeyUses.Any) {
 
@@ -188,7 +188,7 @@ namespace Goedel.Cryptography {
             keyPair.KeySecurity = keySecurity;
 
             if (keySecurity != KeySecurity.Ephemeral) {
-                keyCollection = keyCollection ?? keyCollection.Default;
+                keyCollection = keyCollection ?? KeyCollection.Default;
 
                 keyCollection.Persist(keyPair);
                 keyCollection.Add(keyPair);
@@ -277,7 +277,7 @@ namespace Goedel.Cryptography {
         /// Persist key to the key collection <paramref name="keyCollection"/>.
         /// </summary>
         /// <param name="keyCollection"></param>
-        public abstract void Persist(keyCollection keyCollection);
+        public abstract void Persist(KeyCollection keyCollection);
 
 
 
