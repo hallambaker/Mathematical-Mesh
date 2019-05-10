@@ -88,9 +88,11 @@ namespace Goedel.Mesh {
                 algorithmSign, algorithmEncrypt, algorithmAuthenticate);
 
         public ContextAccount Connect(
-                string  ServiceId,
-                string PIN = null
-            ) {
+                string serviceId,
+            string localName = null
+,
+
+            string PIN = null) {
             throw new NYI();
             }
 

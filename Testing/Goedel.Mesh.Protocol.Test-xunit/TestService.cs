@@ -38,11 +38,27 @@ namespace Goedel.XUnit {
         public string DeviceAliceAdmin = "Alice Admin";
         public string DeviceAlice2 = "Alice Device 2";
         public string DeviceAlice3 = "Alice Device 3";
-
+        public string DeviceBobAdmin = "Bob Admin";
 
         public Contact ContactAlice => MeshMachineTest.ContactAlice;
         public Contact ContactBob => MeshMachineTest.ContactBob;
 
+
+        CatalogEntryCredential Password1 = new CatalogEntryCredential() {
+            Username = "fred",
+            Password = "password",
+            Service = "example.com"
+            };
+        CatalogEntryCredential Password2 = new CatalogEntryCredential() {
+            Username = "fred",
+            Password = "password",
+            Service = "example.net"
+            };
+        CatalogEntryCredential Password3 = new CatalogEntryCredential() {
+            Username = "fred",
+            Password = "password",
+            Service = "fred.example.com"
+            };
         [Fact]
         public void ProtocolHello() {
 
@@ -56,329 +72,498 @@ namespace Goedel.XUnit {
             }
 
         [Fact]
-        public void ProtocolHelloContext() {
-
-            MeshMachineTest.GetContextMaster(AccountAlice, "Alice Admin",
-                    out var machineAliceAdmin, out var deviceAdmin);
-            var response = deviceAdmin.Hello(ServiceName);
-            response.Success.AssertTrue();
-
-            }
-
-
-        [Fact]
-        public void ProtocolAccountLifecycle() {
-            MeshMachineTest.GetContextMaster(AccountAlice, "Alice Admin",
-                out var machineAliceAdmin, out var deviceAdmin);
-
-
-            // create account
-            var statusCreate = deviceAdmin.CreateAccount(AccountAlice); // Test: success result.
-            statusCreate.AssertSuccess();
-
-            // get account status
-            var statusEmpty = deviceAdmin.Status();
-            statusEmpty.AssertSuccess();
-
-            // delete account
-            var statusDelete = deviceAdmin.DeleteAccount();
-            statusEmpty.AssertSuccess();
-
-            // get account status
-            var statusFail = deviceAdmin.Status(); // Test: Test that we get a fail response.
-            statusFail.AssertError();
-            }
-
-
-        [Fact]
-        public void ProtocolCatalog() {
-            MeshMachineTest.GetContextMaster(AccountAlice, "Alice Admin",
-                out var machineAliceAdmin, out var deviceAdmin);
-
-
-            // create account
-            var statusCreate = deviceAdmin.CreateAccount(AccountAlice);
-
-
-
-            deviceAdmin.SetContactSelf(MeshMachineTest.ContactAlice);
-
-            // Check updated elements are correct.
-
-            // get account status
-            var statusAdded = deviceAdmin.Status();
-            statusAdded.AssertSuccess(); // Check: make sure one item has been added etc.
-
-            }
-        [Fact]
         public void MeshNewContext() {
             var testEnvironmentCommon = new TestEnvironmentCommon();
             var machineAdmin = new MeshMachineTest(testEnvironmentCommon, DeviceAliceAdmin);
 
             var contextAdmin = machineAdmin.GenerateAdmin();
-            var contextAccount = machineAdmin.GenerateAccount(contextAdmin, "main");
+            var contextAccountAlice = machineAdmin.GenerateAccount(contextAdmin, "main");
 
             // Perform some offline operations on the account catalogs
-            var contactCatalog = contextAccount.GetCatalogContact();
+            var contactCatalog = contextAccountAlice.GetCatalogContact();
             contactCatalog.SetContactSelf(ContactAlice);
-            contactCatalog.Add(ContactBob);
 
             // Check we can read the data back again
-            var machineAdmin_2 = new MeshMachineTest(testEnvironmentCommon, DeviceAliceAdmin);
-            var contextAccount_2 = machineAdmin_2.GetContextAccount();
-            //var contextAdmin_2 = contextAccount_2.GetContextAdmin();
-            //(contextAdmin.ProfileDevice.UDF == contextAdmin_2.ProfileDevice.UDF).AssertTrue();
-            //(contextAdmin.ProfileMaster.UDF == contextAdmin_2.ProfileMaster.UDF).AssertTrue();
+            var contextAccount_2 = machineAdmin.ReadContextAccount();
+            Verify(contextAccountAlice, contextAccount_2);
 
+
+            // Some test here to make sure it worked.
 
             var machineAdmin_3 = new MeshMachineTest(testEnvironmentCommon, DeviceAliceAdmin);
-            var contextAccount_3 = machineAdmin_2.GetContextAccount();
-
+            var contextAccount_3 = machineAdmin_3.GetContextAccount();
 
             // Add a service
-            contextAccount.AddService(AccountAlice);
+            contextAccountAlice.AddService(AccountAlice);
 
             // Connect a second device using the PIN connection mechanism
             var machineAlice2 = new MeshMachineTest(testEnvironmentCommon, DeviceAlice2);
-            var PIN = contextAccount.GetPIN();
-            var contextAccount2 = machineAlice2.Connect(AccountAlice, PIN);
-            contextAccount.Sync();
-
+            var PIN = contextAccountAlice.GetPIN();
+            var contextAccount2 = machineAlice2.Connect(AccountAlice, PIN: PIN);
+            contextAccount2.Sync();
 
             // Do some catalog updates and check the results
-
+            var catalogCredential = contextAccountAlice.GetCatalogCredential();
+            catalogCredential.Add(Password1);
 
             // Connect a third device by approving a request
+            var machineAlice3 = new MeshMachineTest(testEnvironmentCommon, DeviceAlice3);
+            var contextAccount3 = machineAlice3.Connect(AccountAlice);
+
+            var connectRequest = contextAccountAlice.GetPendingMessageConnectionRequest();
+            contextAccountAlice.Process(connectRequest);
+
+            contextAccount3.Sync();
 
 
             // Do some catalog updates and check the results
-
+            catalogCredential.Add(Password2);
 
             // Check message handling - introduce Bob
             var machineAdminBob = MeshMachineTest.GenerateMasterAccount(
-                testEnvironmentCommon, DeviceAliceAdmin, "main", 
-                out var contextAdminBob, out var contextAccountBob, 
+                testEnvironmentCommon, DeviceBobAdmin, "main",
+                out var contextAccountBob,
                 AccountBob);
 
+            var contactCatalogBob = contextAccountBob.GetCatalogContact();
+            contactCatalogBob.SetContactSelf(ContactBob);
+
+            // **** Contact testing
+            contextAccountBob.ContactRequest(AccountAlice);
+            var contactRequest = contextAccountAlice.GetPendingMessageConnectionRequest();
+            contextAccountAlice.Process(contactRequest);
+
+            // Get the response back
+            var contactResponseBob = contextAccountBob.GetPendingMessageConnectionRequest();
+            contextAccountAlice.Process(contactResponseBob);
 
 
+            // **** Confirmation testing
+
+            // Ask Alice to add our credential
+            contextAccountBob.ConfirmationRequest(AccountAlice, "Dinner tonight");
+            var confirmRequest = contextAccountAlice.GetPendingMessageConfirmationRequest();
+            contextAccountAlice.Process(confirmRequest);
+
+            // Get the response back
+            var confirmResponseBob = contextAccountBob.GetPendingMessageConfirmationResponse();
+            contextAccountAlice.Process(confirmResponseBob);
             }
 
-
+        /// <summary>
+        /// Connect a second device using the PIN connection mechanism
+        /// </summary>
         [Fact]
-        public void MeshConnectBase() {
+        public void MeshDeviceConnectPIN() {
             var testEnvironmentCommon = new TestEnvironmentCommon();
+            MeshMachineTest.GenerateMasterAccount(testEnvironmentCommon, DeviceAliceAdmin, "main",
+                out var contextAccountAlice, AccountAlice);
 
-            var machineAdmin = new MeshMachineTest(testEnvironmentCommon, DeviceAliceAdmin);
-            var contextAdmin = new ContextDevice(machineAdmin, accountName:null, deviceUDF:null); 
-                        // Multiple accounts/devices not supported at the moment. 
+            // Admin Device
+            var PIN = contextAccountAlice.GetPIN();
 
-
-
-
-            //MeshMachineTest.GetContext(testEnvironmentCommon, AccountAlice, DeviceAliceAdmin, 
-            //    out var machineAdmin, out var contextAdmin);
-
-            contextAdmin.GenerateMaster();
-
-            // Check that we can retrieve the contect from the machine
-
-            var machineAdmin2 = new MeshMachineTest(testEnvironmentCommon, DeviceAliceAdmin);
-            var contextAdmin2 = new ContextDevice(machineAdmin);
-
-
-            (machineAdmin2.DirectoryMaster == machineAdmin.DirectoryMaster).AssertTrue(
-                String:"Directories should match");
-            (contextAdmin.ProfileDevice.UDF == contextAdmin2.ProfileDevice.UDF).AssertTrue(
-                String: "Profile UDFs should match");
-
-            // Create account at the service
-
-
-            // Add password entry to the credential store
-
-
-            // Check that we can recover the account registration info in new context
-
-
-
-            // Connect a second device
-
-            /*
-                MeshMachineTest.GetContext(testEnvironmentCommon, AccountAlice, "Alice 2", 
-                    out var MachineAliceSecond, out var deviceSecond);
-
-                var connectResponse = deviceSecond.RequestConnect(AccountAlice);
-                connectResponse.AssertSuccess();
-            */
-
-            // Try to Sync device - fail
-
-
-            // Accept the connection 
-
-
-            // Check that we can recover the connection request info in new context on device
-
-
-            // Try to Sync device - success 
-
-
-            // Check that we can now read the credentials.
-
-
-            // Check that we can recover the connection info in new context on device
-
-
-            // Begin connect a third device
-            // Reject request
-            // Check that we cannot read the credentials.
-
+            // New Device
+            var contextAccount2 = MeshMachineTest.Connect(testEnvironmentCommon, DeviceAlice2,
+                AccountAlice, PIN: PIN);
+            contextAccount2.Sync();
             }
 
-
-
+        /// <summary>
+        /// Connect a device by approving a request
+        /// </summary>
         [Fact]
-        public void MeshConnect() {
+        public void MeshDeviceConnectApprove() {
             var testEnvironmentCommon = new TestEnvironmentCommon();
+            MeshMachineTest.GenerateMasterAccount(testEnvironmentCommon, DeviceAliceAdmin, "main",
+                out var contextAccountAlice, AccountAlice);
 
-            MeshMachineTest.GetContextMaster(testEnvironmentCommon, AccountAlice, "Alice Admin", 
-                out var machineAliceAdmin, out var deviceAdmin);
+            // New Device
+            var contextAccount3 = MeshMachineTest.Connect(testEnvironmentCommon, DeviceAlice3,
+                    AccountAlice);
 
+            // Admin Device
+            var connectRequest = contextAccountAlice.GetPendingMessageConnectionRequest();
+            contextAccountAlice.Process(connectRequest);
 
-            // create account
-            var meshClientAdmin = deviceAdmin.CreateAccount(AccountAlice);
-
-            // Create device profile
-            MeshMachineTest.GetContext(testEnvironmentCommon, AccountAlice, "Alice 2", out var MachineAliceSecond, out var deviceSecond);
-            var ww = deviceAdmin.Sync();
-            // Post connection request
-            var connectResponse = deviceSecond.RequestConnect(AccountAlice);
-
-
-            // Pull device profile update - fails because device is not yet connected.
-
-            // Error: this is not working yet because the requests are not properly authorized.
-
-            var deviceStatusFail = deviceSecond.Sync();
-            deviceStatusFail.AssertError();
-
-            // Check the completion message
-            var count = ProcessPending(deviceAdmin);
-            (count == 0).AssertTrue();
-
-            // Pull device profile update - success, we get the personal and device profile.
-            var deviceStatusSuccess = deviceSecond.Sync();
-            deviceStatusSuccess.AssertSuccess();
+            // New Device
+            contextAccount3.Sync();
             }
 
         [Fact]
-        public void MeshContact() {
-            var testEnvironmentService = new TestEnvironmentCommon();
+        public void MeshCatalogStandalone() {
+            var testEnvironmentCommon = new TestEnvironmentCommon();
+            MeshMachineTest.GenerateMasterAccount(testEnvironmentCommon, DeviceAliceAdmin, "main",
+                out var contextAccountAlice);
 
-            var AccountAlice = "alice@example.com";
-            var AccountBob = "bob@example.com";
+            var contactCatalog = contextAccountAlice.GetCatalogContact();
+            contactCatalog.SetContactSelf(ContactAlice);
+            }
 
-            MeshMachineTest.GetContextMaster(testEnvironmentService, AccountAlice, "Alice Admin", 
-                out var machineAliceAdmin, out var masterAdmin);
-            MeshMachineTest.GetContextMaster(testEnvironmentService, AccountBob, "Bob Admin", 
-                out var machineAdminBob, out var masterAdminBob);
+        [Fact]
+        public void MeshCatalogAccount() {
+            var testEnvironmentCommon = new TestEnvironmentCommon();
+            MeshMachineTest.GenerateMasterAccount(testEnvironmentCommon, DeviceAliceAdmin, "main",
+                out var contextAccountAlice, AccountAlice);
 
-            var statusCreateAlice = masterAdmin.CreateAccount(AccountAlice);
-            var statusCreateBob = masterAdminBob.CreateAccount(AccountBob);
-
-            // Create Bob contact.
-            var contactEntry = masterAdminBob.SetContactSelf(ContactBob);
-
-
-            // Bob make contact request Alice.
-            masterAdminBob.ContactRequest(AccountAlice, contactEntry.Contact);
-
-
-            // Bob make confirmation request Alice - fail.
-            var confirmFail = masterAdminBob.ConfirmationRequest(AccountAlice, "Reject This");
-
-
-            // Alice accept connection request - grant confirmation privilege.
-            ProcessPending(masterAdmin);
-
-
-            // Bob make confirmation request Alice - accepted.
-            var confirmSuccess = masterAdminBob.ConfirmationRequest(AccountAlice, "Approve This");
-
-            // Alice accept confirmation request.
-            ProcessPending(masterAdmin);
-
-            // Bob gets confirmation response.
-
-            //confirmSuccess.CheckResponse();
+            var contactCatalog = contextAccountAlice.GetCatalogContact();
+            contactCatalog.SetContactSelf(ContactAlice);
             }
 
 
-        int ProcessPending(ContextDevice device) {
-            var completed = new Dictionary<string, MeshMessage>();
 
-            var processed = 0;
-            var sync = device.Sync();
-            sync.AssertSuccess();
-
-            foreach (var message in device.SpoolInbound.Select(1, true)) {
-                var meshMessage = MeshMessage.FromJSON(message.GetBodyReader());
-
-                if (!completed.ContainsKey(meshMessage.MessageID)) {
-                    if (meshMessage as MeshMessageComplete != null) {
-                        processed++;
-                        }
-
-                    switch (meshMessage) {
-                        case MeshMessageComplete meshMessageComplete:  {
-                            foreach (var reference in meshMessageComplete.References) {
-                                completed.Add(reference.MessageID, meshMessageComplete);
-                                // Hack: This should make actual use of the relationship
-                                //   (Accept, Reject, Read)
-
-                                }
-
-                            break;
-                            }
+        [Fact]
+        public void MeshCatalogMultipleDevice() {
+            // Test service, devices for Alice, Bob
+            var testEnvironmentCommon = new TestEnvironmentCommon();
+            MeshMachineTest.GenerateMasterAccount(testEnvironmentCommon, DeviceAliceAdmin, "main",
+                out var contextAccountAlice, AccountAlice);
 
 
-                        case MessageConnectionRequest messageConnectionRequest: {
-                            var accept = true;
-
-                            device.ProcessConnectionRequest(messageConnectionRequest, accept);
-
-                            break;
-                            }
-                        case MessageContactRequest messageContactRequest: {
-                            var accept = true;
-
-                            device.ProcessContactRequest(messageContactRequest, accept);
-
-                            break;
-                            }
-                        case MessageConfirmationRequest messageConfirmationRequest: {
-                            var accept = messageConfirmationRequest.Text[0] == 'A';
-
-                            device.ProcessConfirmationRequest(messageConfirmationRequest, accept);
-
-                            break;
-                            }
-                        case MessageConfirmationResponse messageConfirmationResponse: {
-                            break;
-                            }
-                        case MessageTaskRequest messageTaskRequest: {
-                            break;
-                            }
-                        }
-                    }
-                }
-
-            return processed;
             }
 
-        //public MeshPortalDirect CreateService(string service) =>
-        //    new MeshPortalDirect(service);
+        [Fact]
+        public void MeshMessageContact() {
+            // Test service, devices for Alice, Bob
+            var testEnvironmentCommon = new TestEnvironmentCommon();
+            MeshMachineTest.GenerateMasterAccount(testEnvironmentCommon, DeviceAliceAdmin, "main", 
+                out var contextAccountAlice, AccountAlice);
+            MeshMachineTest.GenerateMasterAccount(testEnvironmentCommon, DeviceBobAdmin, "main",
+                out var contextAccountBob, AccountBob);
+
+            // Bob ---> Alice
+            contextAccountBob.ContactRequest(AccountAlice);
+
+            // Alice ---> Bob
+            var fromBob = contextAccountAlice.GetPendingMessageConnectionRequest();
+            contextAccountAlice.Process(fromBob);
+
+            // Bob
+            var fromAlice = contextAccountBob.GetPendingMessageConnectionRequest();
+            contextAccountAlice.Process(fromAlice);
+            }
+
+        [Fact]
+        public void MeshMessageConfirm() {
+            // Test service, devices for Alice, Bob
+            var testEnvironmentCommon = new TestEnvironmentCommon();
+            MeshMachineTest.GenerateMasterAccount(testEnvironmentCommon, DeviceAliceAdmin, "main",
+                out var contextAccountAlice, AccountAlice);
+            MeshMachineTest.GenerateMasterAccount(testEnvironmentCommon, DeviceBobAdmin, "main",
+                out var contextAccountBob, AccountBob);
+
+            // Bob ---> Alice
+            contextAccountBob.ContactRequest(AccountAlice);
+
+            // Alice ---> Bob
+            var fromBob = contextAccountAlice.GetPendingMessageConfirmationRequest();
+            contextAccountAlice.Process(fromBob);
+
+            // Bob
+            var fromAlice = contextAccountBob.GetPendingMessageConfirmationResponse();
+            contextAccountAlice.Process(fromAlice);
+            }
+
+
+        bool Verify(ContextAccount first, ContextAccount second) {
+            (first.ProfileDevice.UDF == second.ProfileDevice.UDF).AssertTrue();
+            Verify (first.AssertionDeviceConnection, second.AssertionDeviceConnection).AssertTrue();
+            return true;
+            }
+
+
+        bool Verify(AssertionDeviceConnection first, AssertionDeviceConnection second) {
+            (first.KeySignature.UDF == second.KeySignature.UDF).AssertTrue();
+            (first.KeyEncryption.UDF == second.KeyEncryption.UDF).AssertTrue();
+            (first.KeyAuthentication.UDF == second.KeyAuthentication.UDF).AssertTrue();
+            return true;
+            }
+
+
+        #region // Old tests
+
+
+        //[Fact]
+        //public void ProtocolHelloContext() {
+
+        //    MeshMachineTest.GetContextMaster(AccountAlice, "Alice Admin",
+        //            out var machineAliceAdmin, out var deviceAdmin);
+        //    var response = deviceAdmin.Hello(ServiceName);
+        //    response.Success.AssertTrue();
+
+        //    }
+
+
+        //[Fact]
+        //public void ProtocolAccountLifecycle() {
+        //    MeshMachineTest.GetContextMaster(AccountAlice, "Alice Admin",
+        //        out var machineAliceAdmin, out var deviceAdmin);
+
+
+        //    // create account
+        //    var statusCreate = deviceAdmin.CreateAccount(AccountAlice); // Test: success result.
+        //    statusCreate.AssertSuccess();
+
+        //    // get account status
+        //    var statusEmpty = deviceAdmin.Status();
+        //    statusEmpty.AssertSuccess();
+
+        //    // delete account
+        //    var statusDelete = deviceAdmin.DeleteAccount();
+        //    statusEmpty.AssertSuccess();
+
+        //    // get account status
+        //    var statusFail = deviceAdmin.Status(); // Test: Test that we get a fail response.
+        //    statusFail.AssertError();
+        //    }
+
+
+        //[Fact]
+        //public void ProtocolCatalog() {
+        //    MeshMachineTest.GetContextMaster(AccountAlice, "Alice Admin",
+        //        out var machineAliceAdmin, out var deviceAdmin);
+
+
+        //    // create account
+        //    var statusCreate = deviceAdmin.CreateAccount(AccountAlice);
+
+
+
+        //    deviceAdmin.SetContactSelf(MeshMachineTest.ContactAlice);
+
+        //    // Check updated elements are correct.
+
+        //    // get account status
+        //    var statusAdded = deviceAdmin.Status();
+        //    statusAdded.AssertSuccess(); // Check: make sure one item has been added etc.
+
+        //    }
+
+        //[Fact]
+        //public void MeshConnectBase() {
+        //    var testEnvironmentCommon = new TestEnvironmentCommon();
+
+        //    var machineAdmin = new MeshMachineTest(testEnvironmentCommon, DeviceAliceAdmin);
+        //    var contextAdmin = new ContextDevice(machineAdmin, accountName: null, deviceUDF: null);
+        //    // Multiple accounts/devices not supported at the moment. 
+
+
+
+
+        //    //MeshMachineTest.GetContext(testEnvironmentCommon, AccountAlice, DeviceAliceAdmin, 
+        //    //    out var machineAdmin, out var contextAdmin);
+
+        //    contextAdmin.GenerateMaster();
+
+        //    // Check that we can retrieve the contect from the machine
+
+        //    var machineAdmin2 = new MeshMachineTest(testEnvironmentCommon, DeviceAliceAdmin);
+        //    var contextAdmin2 = new ContextDevice(machineAdmin);
+
+
+        //    (machineAdmin2.DirectoryMaster == machineAdmin.DirectoryMaster).AssertTrue(
+        //        String: "Directories should match");
+        //    (contextAdmin.ProfileDevice.UDF == contextAdmin2.ProfileDevice.UDF).AssertTrue(
+        //        String: "Profile UDFs should match");
+
+        //    // Create account at the service
+
+
+        //    // Add password entry to the credential store
+
+
+        //    // Check that we can recover the account registration info in new context
+
+
+
+        //    // Connect a second device
+
+        //    /*
+        //        MeshMachineTest.GetContext(testEnvironmentCommon, AccountAlice, "Alice 2", 
+        //            out var MachineAliceSecond, out var deviceSecond);
+
+        //        var connectResponse = deviceSecond.RequestConnect(AccountAlice);
+        //        connectResponse.AssertSuccess();
+        //    */
+
+        //    // Try to Sync device - fail
+
+
+        //    // Accept the connection 
+
+
+        //    // Check that we can recover the connection request info in new context on device
+
+
+        //    // Try to Sync device - success 
+
+
+        //    // Check that we can now read the credentials.
+
+
+        //    // Check that we can recover the connection info in new context on device
+
+
+        //    // Begin connect a third device
+        //    // Reject request
+        //    // Check that we cannot read the credentials.
+
+        //    }
+
+
+
+        //[Fact]
+        //public void MeshConnect() {
+        //    var testEnvironmentCommon = new TestEnvironmentCommon();
+
+        //    MeshMachineTest.GetContextMaster(testEnvironmentCommon, AccountAlice, "Alice Admin",
+        //        out var machineAliceAdmin, out var deviceAdmin);
+
+
+        //    // create account
+        //    var meshClientAdmin = deviceAdmin.CreateAccount(AccountAlice);
+
+        //    // Create device profile
+        //    MeshMachineTest.GetContext(testEnvironmentCommon, AccountAlice, "Alice 2", out var MachineAliceSecond, out var deviceSecond);
+        //    var ww = deviceAdmin.Sync();
+        //    // Post connection request
+        //    var connectResponse = deviceSecond.RequestConnect(AccountAlice);
+
+
+        //    // Pull device profile update - fails because device is not yet connected.
+
+        //    // Error: this is not working yet because the requests are not properly authorized.
+
+        //    var deviceStatusFail = deviceSecond.Sync();
+        //    deviceStatusFail.AssertError();
+
+        //    // Check the completion message
+        //    var count = ProcessPending(deviceAdmin);
+        //    (count == 0).AssertTrue();
+
+        //    // Pull device profile update - success, we get the personal and device profile.
+        //    var deviceStatusSuccess = deviceSecond.Sync();
+        //    deviceStatusSuccess.AssertSuccess();
+        //    }
+
+        //[Fact]
+        //public void MeshContact() {
+        //    var testEnvironmentService = new TestEnvironmentCommon();
+
+        //    var AccountAlice = "alice@example.com";
+        //    var AccountBob = "bob@example.com";
+
+        //    MeshMachineTest.GetContextMaster(testEnvironmentService, AccountAlice, "Alice Admin",
+        //        out var machineAliceAdmin, out var masterAdmin);
+        //    MeshMachineTest.GetContextMaster(testEnvironmentService, AccountBob, "Bob Admin",
+        //        out var machineAdminBob, out var masterAdminBob);
+
+        //    var statusCreateAlice = masterAdmin.CreateAccount(AccountAlice);
+        //    var statusCreateBob = masterAdminBob.CreateAccount(AccountBob);
+
+        //    // Create Bob contact.
+        //    var contactEntry = masterAdminBob.SetContactSelf(ContactBob);
+
+
+        //    // Bob make contact request Alice.
+        //    masterAdminBob.ContactRequest(AccountAlice, contactEntry.Contact);
+
+
+        //    // Bob make confirmation request Alice - fail.
+        //    var confirmFail = masterAdminBob.ConfirmationRequest(AccountAlice, "Reject This");
+
+
+        //    // Alice accept connection request - grant confirmation privilege.
+        //    ProcessPending(masterAdmin);
+
+
+        //    // Bob make confirmation request Alice - accepted.
+        //    var confirmSuccess = masterAdminBob.ConfirmationRequest(AccountAlice, "Approve This");
+
+        //    // Alice accept confirmation request.
+        //    ProcessPending(masterAdmin);
+
+        //    // Bob gets confirmation response.
+
+        //    //confirmSuccess.CheckResponse();
+        //    }
+
+
+
+
+
+
+
+
+        //int ProcessPending(ContextDevice device) {
+
+        //    var sync = device.Sync();
+        //    sync.AssertSuccess();
+
+        //    return ProcessPending(device, device.SpoolInbound);
+        //    }
+
+        //int ProcessPending(ContextDevice device, Spool SpoolInbound) {
+        //    var completed = new Dictionary<string, MeshMessage>();
+        //    var processed = 0;
+        //    foreach (var message in SpoolInbound.Select(1, true)) {
+        //        var meshMessage = MeshMessage.FromJSON(message.GetBodyReader());
+
+        //        if (!completed.ContainsKey(meshMessage.MessageID)) {
+        //            if (meshMessage as MeshMessageComplete != null) {
+        //                processed++;
+        //                }
+
+        //            switch (meshMessage) {
+        //                case MeshMessageComplete meshMessageComplete:  {
+        //                    foreach (var reference in meshMessageComplete.References) {
+        //                        completed.Add(reference.MessageID, meshMessageComplete);
+        //                        // Hack: This should make actual use of the relationship
+        //                        //   (Accept, Reject, Read)
+
+        //                        }
+
+        //                    break;
+        //                    }
+
+
+        //                case MessageConnectionRequest messageConnectionRequest: {
+        //                    var accept = true;
+
+        //                    device.ProcessConnectionRequest(messageConnectionRequest, accept);
+
+        //                    break;
+        //                    }
+        //                case MessageContactRequest messageContactRequest: {
+        //                    var accept = true;
+
+        //                    device.ProcessContactRequest(messageContactRequest, accept);
+
+        //                    break;
+        //                    }
+        //                case MessageConfirmationRequest messageConfirmationRequest: {
+        //                    var accept = messageConfirmationRequest.Text[0] == 'A';
+
+        //                    device.ProcessConfirmationRequest(messageConfirmationRequest, accept);
+
+        //                    break;
+        //                    }
+        //                case MessageConfirmationResponse messageConfirmationResponse: {
+        //                    break;
+        //                    }
+        //                case MessageTaskRequest messageTaskRequest: {
+        //                    break;
+        //                    }
+        //                }
+        //            }
+        //        }
+
+        //    return processed;
+        //    }
+
+        ////public MeshPortalDirect CreateService(string service) =>
+        ////    new MeshPortalDirect(service);
+
+        #endregion
 
         }
     }

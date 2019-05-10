@@ -17,55 +17,18 @@ namespace Goedel.Mesh.Client {
             new ContextAdmin(MeshMachine, MeshMachine.GetAdmin());
 
 
-        #region // Convenience accessors for catalogs and stores
-        public CatalogDevice GetCatalogDevice() =>
-                (catalogDevice ?? GetStore(CatalogDevice.Label).CacheValue(out catalogDevice)) as CatalogDevice;
-        Store catalogDevice = null;
-
-        public CatalogContact GetCatalogContact() =>
-                (catalogContact ?? GetStore(CatalogContact.Label).CacheValue(out catalogContact)) as CatalogContact;
-        Store catalogContact;
-
-        public CatalogCredential GetCatalogCredential() =>
-                (catalogCredential ?? GetStore(CatalogCredential.Label).CacheValue(out catalogCredential)) as CatalogCredential;
-        Store catalogCredential = null;
-
-        public CatalogBookmark GetCatalogBookmark() =>
-                (catalogBookmark ?? GetStore(CatalogBookmark.Label).CacheValue(out catalogBookmark)) as CatalogBookmark;
-        Store catalogBookmark = null;
-
-        public CatalogCalendar GetCatalogCalendar() =>
-                (catalogCalendar ?? GetStore(CatalogCalendar.Label).CacheValue(out catalogCalendar)) as CatalogCalendar;
-        Store catalogCalendar = null;
-
-        public CatalogNetwork GetCatalogNetwork() =>
-                (catalogNetwork ?? GetStore(CatalogNetwork.Label).CacheValue(out catalogNetwork)) as CatalogNetwork;
-        Store catalogNetwork = null;
-
-        public CatalogApplication GetCatalogApplication() =>
-                (catalogApplication ?? GetStore(CatalogApplication.Label).CacheValue(out catalogApplication)) as CatalogApplication;
-        Store catalogApplication;
-
-        public Spool SpoolInbound =>
-                (spoolInbound ?? GetStore(Spool.SpoolInbound).CacheValue(out spoolInbound)) as Spool;
-        Store spoolInbound;
-
-        public Spool Outbound =>
-            (spoolOutbound ?? GetStore(Spool.SpoolOutbound).CacheValue(out spoolOutbound)) as Spool;
-        Store spoolOutbound;
-        #endregion
-
-
         IMeshMachineClient MeshMachine { get; }
-
+        KeyCollection KeyCollection => MeshMachine.KeyCollection;
         AccountEntry AccountEntry;
         AssertionAccount AssertionAccount;
-
+        CryptoParameters ContainerCryptoParameters;
 
         CatalogEntryDevice CatalogEntryDevice => AccountEntry.CatalogEntryDevice;
-        AssertionDeviceConnection AssertionDeviceConnection;
+        public AssertionDeviceConnection AssertionDeviceConnection;
         AssertionDevicePrivate AssertionDevicePrivate;
 
+
+        public string AccountId;
 
         public string Local => AccountEntry.Local;
 
@@ -94,6 +57,7 @@ namespace Goedel.Mesh.Client {
             AccountEntry = accountEntry;
             ProfileDevice = ProfileDevice.Decode(accountEntry.EncodedProfileDevice);
             AssertionAccount = AssertionAccount.Decode(accountEntry.EncodedAssertionAccount);
+            ContainerCryptoParameters = new CryptoParameters(Recipient: AssertionAccount.AccountEncryptionKey.KeyPair);
 
             // Recover the account keys from their composites.
             KeySignature = AssertionDevicePrivate.KeySignature.GetPrivate(MeshMachine);
@@ -138,19 +102,142 @@ namespace Goedel.Mesh.Client {
             }
 
 
+        public void Process(MeshMessage meshMessage, bool accept=true, bool respond=true){
+            }
+
+
+        public void ContactRequest(string serviceID) {
+            }
+
+        public void ConfirmationRequest(string serviceID, string messageText) {
+            }
+
+
+        #region // Convenience accessors for catalogs and stores
+
+        ///<summary>Dictionary used to cache stores to avoid need to re-open them repeatedly.</summary>
+        Dictionary<string, Store> DictionaryStores = new Dictionary<string, Store>();
+
+        ///<summary>Returns the device catalog for the account</summary>
+        public CatalogDevice GetCatalogDevice() => GetStore(CatalogDevice.Label) as CatalogDevice;
+
+        ///<summary>Returns the contacts catalog for the account</summary>
+        public CatalogContact GetCatalogContact() => GetStore(CatalogContact.Label) as CatalogContact;
+
+        ///<summary>Returns the c redential catalog for the account</summary>
+        public CatalogCredential GetCatalogCredential() => GetStore(CatalogCredential.Label) as CatalogCredential;
+
+        ///<summary>Returns the bookmark catalog for the account</summary>
+        public CatalogBookmark GetCatalogBookmark() => GetStore(CatalogBookmark.Label) as CatalogBookmark;
+
+        ///<summary>Returns the calendar catalog for the account</summary>
+        public CatalogCalendar GetCatalogCalendar() => GetStore(CatalogCalendar.Label) as CatalogCalendar;
+
+        ///<summary>Returns the network catalog for the account</summary>
+        public CatalogNetwork GetCatalogNetwork() => GetStore(CatalogNetwork.Label) as CatalogNetwork;
+
+        ///<summary>Returns the application catalog for the account</summary>
+        public CatalogApplication GetCatalogApplication() => GetStore(CatalogApplication.Label) as CatalogApplication;
+
+        ///<summary>Returns the inbound spool for the account</summary>
+        public Spool GetSpoolInbound() => spoolInbound ?? (GetStore(Spool.SpoolInbound) as Spool).CacheValue(out spoolInbound);
+        Spool spoolInbound;
+
+
+        ///<summary>Returns the outbound spool catalog for the account</summary>
+        public Spool GetSpoolOutbound() => GetStore(Spool.SpoolOutbound) as Spool;
+
+        /// <summary>
+        /// Return the latest unprocessed MessageConnectionRequest that was received.
+        /// </summary>
+        /// <returns>The latest unprocessed MessageConnectionRequest</returns>
+        public MeshMessage GetPendingMessageConnectionRequest() =>
+            GetPendingMessage(MessageConnectionRequest.__Tag);
+
+        /// <summary>
+        /// Return the latest unprocessed MessageContactRequest that was received.
+        /// </summary>
+        /// <returns>The latest unprocessed MessageContactRequest</returns>
+        public MeshMessage GetPendingMessageContactRequest() =>
+            GetPendingMessage(MessageContactRequest.__Tag);
+
+        /// <summary>
+        /// Return the latest unprocessed MessageConfirmationRequest that was received.
+        /// </summary>
+        /// <returns>The latest unprocessed MessageConfirmationRequest</returns>
+        public MeshMessage GetPendingMessageConfirmationRequest() =>
+            GetPendingMessage(MessageConfirmationRequest.__Tag);
+
+        /// <summary>
+        /// Return the latest unprocessed MessageConfirmationResponse that was received.
+        /// </summary>
+        /// <returns>The latest unprocessed MessageConfirmationResponse</returns>
+        public MeshMessage GetPendingMessageConfirmationResponse() =>
+            GetPendingMessage(MessageConfirmationResponse.__Tag);
+
+        /// <summary>
+        /// Search the inbound spool and 
+        /// </summary>
+        /// <param name="spoolInbound"></param>
+        /// <param name="tag"></param>
+        /// <returns></returns>
+        public MeshMessage GetPendingMessage(string tag) {
+            var completed = new Dictionary<string, MeshMessage>();
+
+            foreach (var message in spoolInbound.Select(1, true)) {
+                var meshMessage = MeshMessage.FromJSON(message.GetBodyReader());
+                if (!completed.ContainsKey(meshMessage.MessageID)) {
+                    if (meshMessage._Tag == tag) {
+                        return meshMessage;
+                        }
+                    switch (meshMessage) {
+                        case MeshMessageComplete meshMessageComplete: {
+                            foreach (var reference in meshMessageComplete.References) {
+                                completed.Add(reference.MessageID, meshMessageComplete);
+                                // Hack: This should make actual use of the relationship
+                                //   (Accept, Reject, Read)
+                                }
+                            break;
+                            }
+                        }
+                    }
+                }
+            return null;
+            }
+
+        #endregion
+
 
         public Store GetStore(string name) {
-            throw new NYI();
 
-            //if (DictionaryStores.TryGetValue(name, out var store)) {
-            //    return store;
-            //    }
+            if (DictionaryStores.TryGetValue(name, out var store)) {
+                return store;
+                }
             //Console.WriteLine($"Open store {name} on {MeshMachine.DirectoryMesh} {devicecount}");
 
-            //store = MakeStore(name);
-            //DictionaryStores.Add(name, store);
+            store = MakeStore(name);
+            DictionaryStores.Add(name, store);
 
-            //return store;
+            return store;
             }
+
+        Store MakeStore(string name) {
+            switch (name) {
+                case Spool.SpoolInbound: return new Spool(MeshMachine.DirectoryMesh, name, ContainerCryptoParameters, KeyCollection);
+                case Spool.SpoolOutbound: return new Spool(MeshMachine.DirectoryMesh, name, ContainerCryptoParameters, KeyCollection);
+                case Spool.SpoolArchive: return new Spool(MeshMachine.DirectoryMesh, name, ContainerCryptoParameters, KeyCollection);
+
+                case CatalogCredential.Label: return new CatalogCredential(MeshMachine.DirectoryMesh, name, ContainerCryptoParameters, KeyCollection);
+                case CatalogDevice.Label: return new CatalogDevice(MeshMachine.DirectoryMesh, name, ContainerCryptoParameters, KeyCollection);
+                case CatalogContact.Label: return new CatalogContact(MeshMachine.DirectoryMesh, name, ContainerCryptoParameters, KeyCollection);
+                case CatalogCalendar.Label: return new CatalogCalendar(MeshMachine.DirectoryMesh, name, ContainerCryptoParameters, KeyCollection);
+                case CatalogBookmark.Label: return new CatalogBookmark(MeshMachine.DirectoryMesh, name, ContainerCryptoParameters, KeyCollection);
+                case CatalogNetwork.Label: return new CatalogNetwork(MeshMachine.DirectoryMesh, name, ContainerCryptoParameters, KeyCollection);
+                case CatalogApplication.Label: return new CatalogApplication(MeshMachine.DirectoryMesh, name, ContainerCryptoParameters, KeyCollection);
+                }
+
+            throw new NYI();
+            }
+
         }
     }

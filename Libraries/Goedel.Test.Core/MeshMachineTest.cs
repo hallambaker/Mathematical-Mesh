@@ -56,17 +56,32 @@ namespace Goedel.Test.Core {
             };
 
 
+        // Convenience routines 
+        public ContextAccount ReadContextAccount (string localName=null) {
+            var machine = new MeshMachineTest(TestEnvironmentCommon, DirectoryMaster);
+            return machine.GetContextAccount(localName);
+            }
+
+        public static MeshMachineTest GetAccount(
+                    TestEnvironmentCommon testEnvironmentCommon,
+                    string machineName,
+                    out ContextAccount contextAccount) {
+            var result = new MeshMachineTest(testEnvironmentCommon, machineName);
+            contextAccount = result.GetContextAccount();
+
+            return result;
+            }
 
 
         public static MeshMachineTest GenerateMasterAccount(
-            TestEnvironmentCommon testEnvironmentCommon,
-            string machineName,
-            string localName,
-            out ContextAdmin contextAdmin, out ContextAccount contextAccount,
-            string accountId =null) {
+                    TestEnvironmentCommon testEnvironmentCommon,
+                    string machineName,
+                    string localName,
+                    out ContextAccount contextAccount,
+                    string accountId =null) {
 
             var result = new MeshMachineTest(testEnvironmentCommon, machineName);
-            contextAdmin = ContextAdmin.Generate(result);
+            var contextAdmin = ContextAdmin.Generate(result);
             contextAccount = ContextAccount.Generate(contextAdmin, localName);
 
             if (accountId != null) {
@@ -76,6 +91,28 @@ namespace Goedel.Test.Core {
             return result;
             }
 
+        public static ContextAccount Connect(
+            TestEnvironmentCommon testEnvironmentCommon,
+            string machineName,
+            string accountId,
+            string localName =null,
+            string PIN=null) {
+
+            var machine = new MeshMachineTest(testEnvironmentCommon, machineName);
+            return machine.Connect(accountId, PIN: PIN);
+            }
+
+        public static ContextAccount Connect(
+            TestEnvironmentCommon testEnvironmentCommon,
+            string machineName,
+            ContextAccount contextAccountAdmin,
+            string localName = null) {
+
+            var PIN = contextAccountAdmin.GetPIN();
+
+            var machine = new MeshMachineTest(testEnvironmentCommon, machineName);
+            return machine.Connect(contextAccountAdmin.AccountId, PIN: PIN);
+            }
 
 
 
