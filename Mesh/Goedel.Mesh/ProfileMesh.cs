@@ -8,8 +8,8 @@ using Goedel.Cryptography;
 namespace Goedel.Mesh {
     public partial class AssertionAccount {
 
-        public override string _PrimaryKey => Account;
-        public string UDF => ProfileMaster.UDF;
+        public override string _PrimaryKey => UDF;
+        public string UDF => AccountEncryptionKey.UDF;
         public byte[] UDFBytes => ProfileMaster.UDFBytes;
 
 
@@ -27,6 +27,9 @@ namespace Goedel.Mesh {
             ProfileMaster.Decode(MasterProfile).CacheValue(out profileMaster);
         ProfileMaster profileMaster = null;
 
+
+        public void Sign(KeyPair signingKeyPair)=> ProfileMeshSigned=
+            DareMessage.Encode(GetBytes(true), signingKey: signingKeyPair);
 
 
         public static AssertionAccount Decode(DareMessage message) {

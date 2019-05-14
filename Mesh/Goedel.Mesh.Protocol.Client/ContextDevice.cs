@@ -86,7 +86,7 @@ namespace Goedel.Mesh.Client {
         public bool DefaultPersonal;
 
         ///<summary>The account name</summary>
-        public string AccountName => AssertionAccount.Account;
+        public string AccountName => AssertionAccount.Account[0];
 
         ///<summary>The device profile</summary>
         public virtual ProfileDevice ProfileDevice { get; private set; }
@@ -499,7 +499,7 @@ namespace Goedel.Mesh.Client {
             var keyEncrypt = KeyPair.Factory(algorithmEncrypt, KeySecurity.Device, KeyCollection, keyUses: KeyUses.Encrypt);
 
             var profileMesh = new AssertionAccount() {
-                Account = accountName,
+                Account = new List<string> { accountName },
                 MasterProfile = ProfileMaster.DareMessage,
                 AccountEncryptionKey = new PublicKey(keyEncrypt.KeyPairPublic())
                 };

@@ -81,8 +81,8 @@ namespace Goedel.Test.Core {
                     string accountId =null) {
 
             var result = new MeshMachineTest(testEnvironmentCommon, machineName);
-            var contextAdmin = ContextAdmin.Generate(result);
-            contextAccount = ContextAccount.Generate(contextAdmin, localName);
+            var contextAdmin = ContextAdmin.CreateMesh(result);
+            contextAccount = ContextAccount.CreateAccount(contextAdmin, localName);
 
             if (accountId != null) {
                 contextAccount.AddService(accountId);

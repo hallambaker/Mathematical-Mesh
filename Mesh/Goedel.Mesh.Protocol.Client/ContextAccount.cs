@@ -36,7 +36,7 @@ namespace Goedel.Mesh.Client {
         KeyPair KeySignature;
         KeyPair KeyEncryption;
         KeyPair KeyAuthentication;
-
+        ContextAdmin ContextAdmin;
 
         public ContextAccount(IMeshMachineClient meshMachine, string local = null):
                 this (meshMachine, meshMachine.GetAccount(local)) {
@@ -67,7 +67,18 @@ namespace Goedel.Mesh.Client {
             }
 
 
-        public static ContextAccount Generate(
+        ContextAccount(ContextAdmin contextAdmin, AssertionAccount assertionAccount) {
+            MeshMachine = contextAdmin.MeshMachine;
+            ContextAdmin = contextAdmin;
+            AssertionAccount = assertionAccount;
+            }
+
+
+
+
+
+
+        public static ContextAccount CreateAccount(
                 ContextAdmin contextAdmin,
                 string localName ,
                 IMeshMachineClient meshMachine=null,
@@ -76,14 +87,41 @@ namespace Goedel.Mesh.Client {
                 CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
                 CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default,
                 CryptoAlgorithmID algorithmAuthenticate = CryptoAlgorithmID.Default) {
+
             meshMachine = meshMachine ?? contextAdmin.MeshMachine;
-            var accountEntry = new AccountEntry();
-            contextAdmin.Add(accountEntry);
-            return new ContextAccount(meshMachine, accountEntry);
+            profileDevice = profileDevice ?? contextAdmin.ProfileDevice ??
+                ProfileDevice.Generate(meshMachine, algorithmSign, algorithmEncrypt, algorithmAuthenticate);
+
+
+            // Create the AssertionAccount here
+            var assertionAccount = contextAdmin.CreateAccount(localName);
+
+            // Generate a ContextAccount for the AssertionAccount
+            var contextAccount = new ContextAccount(contextAdmin, assertionAccount);
+
+            // Add profileDevice to the Account
+            contextAccount.Add(profileDevice);
+
+
+            return contextAccount;
             }
 
 
+        public AccountEntry Add(ProfileDevice profileDevice) {
+            var catalogEntryDevice = new CatalogEntryDevice(MeshMachine, profileDevice);
 
+            var accountEntry = new AccountEntry() {
+                ID = catalogEntryDevice.UDF,
+                EncodedProfileDevice = profileDevice.DareMessage,
+                Directory = MeshMachine.DirectoryMesh,
+                CatalogEntryDevice = catalogEntryDevice,
+                EncodedAssertionAccount = AssertionAccount.DareMessage
+                };
+
+            ContextAdmin.Add(accountEntry);
+
+            return accountEntry;
+            }
 
 
         public void AddService(

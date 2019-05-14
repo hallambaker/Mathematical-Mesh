@@ -91,11 +91,13 @@ namespace Goedel.Cryptography {
         /// <param name="cryptoAlgorithmID">Specifies the default algorithm variation for use
         /// in signature operations.</param>
         public KeyPairEd448(
-                    CurveEdwards448Private privateKey = null,
+                    CurveEdwards448Private privateKey,
                     KeyUses keyUses = KeyUses.Any,
                     CryptoAlgorithmID cryptoAlgorithmID = CryptoAlgorithmID.Default) {
             CryptoAlgorithmID = cryptoAlgorithmID.DefaultMeta(CryptoAlgorithmID.Ed448);
             PrivateKey = privateKey;
+            PublicKey = privateKey.Public;
+            PKIXPublicKeyECDH = new PKIXPublicKeyEd448(PublicKey.Encoding);
             KeySecurity = KeySecurity.Bound;
             KeyUses = keyUses;
             }

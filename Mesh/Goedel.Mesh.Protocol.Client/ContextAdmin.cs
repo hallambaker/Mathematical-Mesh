@@ -43,13 +43,14 @@ namespace Goedel.Mesh.Client {
         /// <param name="adminEntry"></param>
         public ContextAdmin (
                 IMeshMachineClient meshMachine,
-                AdminEntry adminEntry
+                AdminEntry adminEntry,
+                ProfileMaster profileMaster=null
                 ) {
-            Assert.AssertNotNull(AdminEntry, NYI.Throw);
+            Assert.AssertNotNull(adminEntry, NYI.Throw);
 
             MeshMachine = meshMachine;
             AdminEntry = adminEntry;
-            ProfileMaster = ProfileMaster.Decode(adminEntry.EncodedProfileMaster);
+            ProfileMaster = profileMaster ?? ProfileMaster.Decode(adminEntry.EncodedProfileMaster);
             ProfileDevice = ProfileDevice.Decode(adminEntry.EncodedProfileDevice);
             
             // Join the composite keys to recover the signature key so we can perform admin functions
@@ -57,23 +58,32 @@ namespace Goedel.Mesh.Client {
             }
 
 
-        public static ContextAdmin Generate(
+        public static ContextAdmin CreateMesh(
                 IMeshMachineClient meshMachine,
                 ProfileDevice profileDevice = null,
                 CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
                 CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default,
                 CryptoAlgorithmID algorithmAuthenticate = CryptoAlgorithmID.Default) {
 
-            // Create the master profile
+            // Create the master profile.
             var profileMaster = ProfileMaster.Generate(meshMachine);
             profileDevice = profileDevice ?? ProfileDevice.Generate(meshMachine);
 
+            var keyOverlaySignature = new KeyOverlay(meshMachine, profileDevice.KeySignature);
+
+            // Create a dummy AdminEntry that does not include the encoded ProfileMaster because
+            // we will invalidate the signature when we add the device as an administration device.
             var adminEntry = new AdminEntry() {
+                ID = profileMaster.UDF,
+                EncodedProfileDevice = profileDevice.DareMessage,
+                EncodedProfileMaster = null,
+                SignatureKey = keyOverlaySignature
                 };
 
-            var contextAdmin = new ContextAdmin(meshMachine, adminEntry);
+
+            // Add profileDevice as an administration device.
+            var contextAdmin = new ContextAdmin(meshMachine, adminEntry, profileMaster);
             contextAdmin.AddAdministrator(profileDevice);
-            contextAdmin.Sign();
 
             return contextAdmin;
             }
@@ -95,6 +105,7 @@ namespace Goedel.Mesh.Client {
                         new List<PublicKey>();
 
             ProfileMaster.OnlineSignatureKeys.Add(new PublicKey(keyOverlaySignature.KeyPair));
+            Sign();
 
             return new AdminEntry() {
                 ID = keyOverlaySignature.KeyPair.UDF,
@@ -104,6 +115,16 @@ namespace Goedel.Mesh.Client {
                 };
 
             }
+
+
+        //CatalogEntryDevice AddDevice(ProfileDevice profileDevice) {
+
+
+        //    }
+
+
+
+
         public DareMessage Sign() {
             KeyMasterSignature = KeyMasterSignature ??
                     MeshMachine.KeyCollection.LocatePrivate(ProfileMaster.UDF);
@@ -111,21 +132,52 @@ namespace Goedel.Mesh.Client {
             }
 
 
+        /// <summary>
+        /// Add a new account to the user's Mesh
+        /// </summary>
+        /// <param name="localName">The local name of the account.</param>
+        /// <returns>The signed account assertion.</returns>
+        public AssertionAccount CreateAccount(
+                string localName,
+                CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default) {
+
+            algorithmEncrypt = algorithmEncrypt.DefaultAlgorithmEncrypt();
+            var keyEncrypt = MeshMachine.CreateKeyPair(algorithmEncrypt, KeySecurity.Device, keyUses: KeyUses.Encrypt);
+
+            var assertionAccount  = new AssertionAccount() {
+                MasterProfile = ProfileMaster.DareMessage,
+                AccountEncryptionKey = new PublicKey(keyEncrypt.KeyPairPublic())
+                };
+
+            Sign(assertionAccount);
+
+            return assertionAccount;
+            }
+
 
 
         /// <summary>
         /// Add the account <paramref name="accountEntry"/> to the master profile
         /// </summary>
         /// <param name="accountEntry">Description of the account to add</param>
-        public void Add(AccountEntry accountEntry) {
+        public CatalogEntryDevice Add(AccountEntry accountEntry) {
 
+            // Here we add the account to the profile.
+
+
+
+            throw new NYI();
             }
+
+
+        public void Sign(AssertionAccount assertionAccount) => assertionAccount.Sign(KeyAdministratorSignature);
+
 
         /// <summary>
         /// Sign the specified device connection
         /// </summary>
         /// <param name="assertionDeviceConnection"></param>
-        public void Sign(MeshItem meshItem) => 
+        public DareMessage Sign(MeshItem meshItem) => 
             DareMessage.Encode(meshItem.GetBytes(true), signingKey: KeyAdministratorSignature);
 
 

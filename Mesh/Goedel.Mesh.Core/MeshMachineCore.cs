@@ -76,7 +76,7 @@ namespace Goedel.Mesh {
             }
 
         #region // Convenience accessors
-        public ContextAdmin GenerateAdmin() => ContextAdmin.Generate(this);
+        public ContextAdmin GenerateAdmin() => ContextAdmin.CreateMesh(this);
 
         public ContextAccount GenerateAccount(ContextAdmin contextAdmin,
                 string localName,
@@ -84,7 +84,7 @@ namespace Goedel.Mesh {
                 CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
                 CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default,
                 CryptoAlgorithmID algorithmAuthenticate = CryptoAlgorithmID.Default) =>
-            ContextAccount.Generate(contextAdmin, localName, this, profileDevice,
+            ContextAccount.CreateAccount(contextAdmin, localName, this, profileDevice,
                 algorithmSign, algorithmEncrypt, algorithmAuthenticate);
 
         public ContextAccount Connect(

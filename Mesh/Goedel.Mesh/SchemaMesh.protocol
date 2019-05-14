@@ -149,14 +149,16 @@
 		Description 
 			|Account assertion. This is signed by the service hosting the account.
 		String Account
+			Multiple
 			Description
-				|Account address.
+				|Service address(es).
 		Struct DareMessage MasterProfile
 			Description
 				|Master profile of the account being registered.
 		Struct PublicKey AccountEncryptionKey
 			Description
 				|Key used to encrypt data under this profile
+
 
 	Structure AssertionDeviceConnection
 		Inherits Assertion
@@ -177,6 +179,11 @@
 
 	Structure AssertionDevicePrivate // To do list accounts as permissions 
 		Inherits Assertion
+		
+		Struct DareMessage AssertionDeviceConnection
+			Description
+				|The signed AssertionDeviceConnection.
+
 		Struct Activation Activations
 			Multiple
 			Description
@@ -300,7 +307,7 @@
 				|UDF of the authentication ID
 		Struct DareMessage SignedDeviceConnection
 			Description
-				|The device profile
+				|The public assertion demonstrating connection of the Device to the Mesh
 		Struct DareMessage EncryptedDevicePrivate
 			Description
 				|The device profile

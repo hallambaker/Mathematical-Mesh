@@ -79,6 +79,8 @@ namespace Goedel.XUnit {
             var contextAdmin = machineAdmin.GenerateAdmin();
             var contextAccountAlice = machineAdmin.GenerateAccount(contextAdmin, "main");
 
+
+
             // Perform some offline operations on the account catalogs
             var contactCatalog = contextAccountAlice.GetCatalogContact();
             contactCatalog.SetContactSelf(ContactAlice);

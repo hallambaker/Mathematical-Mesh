@@ -714,7 +714,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// <param name="Contribution">The key contribution.</param>
         /// <returns>The composite key</returns>
         public IKeyAdvancedPrivate Combine(IKeyAdvancedPrivate Contribution) =>
-            Combine(Contribution as DiffeHellmanPrivate);
+            Combine(Contribution as CurveEdwards448Private);
         #endregion
 
         }

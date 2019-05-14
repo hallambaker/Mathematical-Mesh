@@ -11,7 +11,7 @@ namespace Goedel.Mesh.Client {
         public MeshClientSession(ContextDevice contextDevice=null) {
             AuthenticationKey = contextDevice?.ProfileDevice.KeyAuthentication;
             UDF = contextDevice?.ProfileDevice.KeyAuthentication.UDF;
-            Account = contextDevice?.AssertionAccount?.Account;
+            Account = contextDevice?.AssertionAccount?.Account[0];
             }
 
         public override bool Authenticate(string UDF) => UDF == AuthenticationKey.UDF;

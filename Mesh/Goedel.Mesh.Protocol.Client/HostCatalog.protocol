@@ -26,16 +26,32 @@
 			Description
 				|Local short name for the profile
 
+
+	Structure DeviceEntry
+		Inherits ProfileEntry
+		Description
+			|Describes an ordinary device connected to a Mesh
+		Struct DareMessage EncodedProfileMaster
+			Description
+				|The master profile that provides the root of trust for this Mesh
+		Struct DareMessage SignedDeviceConnection
+			Description
+				|The device entry containing the full account binding information.
+		Struct DareMessage EncryptedDevicePrivate
+			Description
+				|The device specific private data 
+
+
 	Structure AdminEntry
 		Inherits ProfileEntry
 		Description
-			|Information enabling administration of a Master profile.
-		Struct DareMessage EncodedProfileMaster
-			Description
-				|The master profile being administered
+			|Information enabling administration of a Master profile. It adds an overlay key
+			|for the administration key.
+
 		Struct KeyOverlay SignatureKey
 			Description
 				|Overlay for the signature key.
+
 
 	Structure AccountEntry
 		Inherits ProfileEntry

@@ -101,11 +101,12 @@ namespace Goedel.Mesh {
 
         /// <summary>
         /// Constructor creating a new CatalogEntryDevice with a new AssertionDeviceConnection and
-        /// complimentary AssertionDevicePrivate.
+        /// complimentary AssertionDevicePrivate ready to be completed when the device is added to
+        /// a user's Mesh.
         /// </summary>
         /// <param name="profileMaster">The master profile the device is to be connected to.</param>
         /// <param name="profileDevice">The device profile to be connected.</param>
-        public CatalogEntryDevice(IMeshMachine meshMachine, ProfileMaster profileMaster, ProfileDevice profileDevice) {
+        public CatalogEntryDevice(IMeshMachine meshMachine, ProfileDevice profileDevice) {
             var deviceSignature = profileDevice.KeySignature.KeyPair as KeyPairAdvanced;
             var deviceEncryption = profileDevice.KeyEncryption.KeyPair as KeyPairAdvanced;
             var deviceAuthentication = profileDevice.KeyAuthentication.KeyPair as KeyPairAdvanced;
@@ -124,7 +125,6 @@ namespace Goedel.Mesh {
                 };
 
             assertionDeviceConnection = new AssertionDeviceConnection() {
-                ProfileMaster = profileMaster,
                 KeySignature = new PublicKey (overlaySignature.KeyPair),
                 KeyEncryption = new PublicKey (overlayEncryption.KeyPair),
                 KeyAuthentication = new PublicKey (overlayAuthentication.KeyPair)

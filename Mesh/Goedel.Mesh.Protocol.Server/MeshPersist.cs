@@ -323,7 +323,7 @@ namespace Goedel.Mesh.Server {
     public partial class AccountEntry {
 
         public override string _PrimaryKey => Account;
-        public  string Account => ProfileMesh.Account;
+        public  string Account => ProfileMesh.Account[0];
 
         public AssertionAccount ProfileMesh => profileMesh ?? AssertionAccount.Decode(Profile).CacheValue(out profileMesh);
         AssertionAccount profileMesh;

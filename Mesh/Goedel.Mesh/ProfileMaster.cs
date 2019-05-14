@@ -23,12 +23,6 @@ namespace Goedel.Mesh {
             }
 
         /// <summary>
-        /// Constructor for use by deserializers.
-        /// </summary>
-        public ProfileMaster(DareMessage dareMessage) {
-            }
-
-        /// <summary>
         /// Create a new master profile.
         /// </summary>
         /// <param name="algorithmSign"></param>
@@ -77,10 +71,19 @@ namespace Goedel.Mesh {
             return DareMessage;
             }
 
+        public static new ProfileMaster Decode(DareMessage message) {
+            var result = FromJSON(message.GetBodyReader(), true);
+            result.DareMessage = message;
+            return result;
+            }
 
+
+
+
+        // ***************   Old stuff to be deleted.
         public CatalogEntryDevice Add(IMeshMachine meshMachine, ProfileDevice profileDevice, bool Administrator) {
 
-            var catalogEntryDevice = new CatalogEntryDevice(meshMachine, this, profileDevice);
+            var catalogEntryDevice = new CatalogEntryDevice(meshMachine, profileDevice);
 
             if (Administrator) {
                 catalogEntryDevice.ActivateAdmin(null);
@@ -90,9 +93,6 @@ namespace Goedel.Mesh {
 
             return catalogEntryDevice;
             }
-
-
-
 
         public bool IsAdministrator(string UDF) {
             Assert.NotNull(OnlineSignatureKeys, InvalidProfile.Throw);
@@ -106,11 +106,7 @@ namespace Goedel.Mesh {
             }
 
 
-        public static ProfileMaster Decode(DareMessage message) {
-            var result = FromJSON(message.GetBodyReader(), true);
-            result.DareMessage = message;
-            return result;
-            }
+
 
 
 

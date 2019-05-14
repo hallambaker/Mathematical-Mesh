@@ -1386,10 +1386,10 @@ namespace Goedel.Mesh {
 	/// </summary>
 	public partial class AssertionAccount : Assertion {
         /// <summary>
-        ///Account address.
+        ///Service address(es).
         /// </summary>
 
-		public virtual string						Account  {get; set;}
+		public virtual List<string>				Account  {get; set;}
         /// <summary>
         ///Master profile of the account being registered.
         /// </summary>
@@ -1446,8 +1446,15 @@ namespace Goedel.Mesh {
 			if (Account != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("Account", 1);
-					_Writer.WriteString (Account);
+				_Writer.WriteArrayStart ();
+				bool _firstarray = true;
+				foreach (var _index in Account) {
+					_Writer.WriteArraySeparator (ref _firstarray);
+					_Writer.WriteString (_index);
+					}
+				_Writer.WriteArrayEnd ();
 				}
+
 			if (MasterProfile != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("MasterProfile", 1);
@@ -1491,7 +1498,14 @@ namespace Goedel.Mesh {
 			
 			switch (Tag) {
 				case "Account" : {
-					Account = JSONReader.ReadString ();
+					// Have a sequence of values
+					bool _Going = JSONReader.StartArray ();
+					Account = new List <string> ();
+					while (_Going) {
+						string _Item = JSONReader.ReadString ();
+						Account.Add (_Item);
+						_Going = JSONReader.NextArray ();
+						}
 					break;
 					}
 				case "MasterProfile" : {
