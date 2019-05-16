@@ -20,9 +20,9 @@ namespace Goedel.Mesh.Shell {
             var identifier = Options.Recipient.Value;
             using (var context = GetContextDevice(Options)) {
                 var contactCatalog = context.GetCatalogContact();
-                var contact = contactCatalog.LocateByID(context.AccountName);
+                //var contact = contactCatalog.LocateByID(context.AccountName);
 
-                var post = context.ContactRequest(identifier, contact.Contact);
+                //var post = context.ContactRequest(identifier, contact.Contact);
 
                 var result = new Result() {
 
@@ -53,20 +53,23 @@ namespace Goedel.Mesh.Shell {
         /// <returns>Mesh result instance</returns>
         public override ShellResult MessagePending(MessagePending Options) {
             using (var context = GetContextDevice(Options)) {
-                var r1 = context.Sync();
-                if (r1.Error) {
-                    return new Result("Request failed");
-                    }
+
+                throw new NYI();
+
+                //var r1 = context.Sync();
+                //if (r1.Error) {
+                //    return new Result("Request failed");
+                //    }
 
 
-                var result = new ResultPending() {
-                    Messages = new List<MeshMessage>()
-                    };
+                //var result = new ResultPending() {
+                //    Messages = new List<MeshMessage>()
+                //    };
 
-                foreach (var message in context.SpoolInbound.Select(1)) {
-                    }
+                //foreach (var message in context.SpoolInbound.Select(1)) {
+                //    }
 
-                return result;
+                //return result;
                 }
             }
 

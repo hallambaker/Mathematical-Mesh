@@ -88,7 +88,7 @@ namespace Goedel.Mesh {
         /// <summary>
         /// The primary key used to catalog the entry. This is the UDF of the authentication key.
         /// </summary>
-        public override string _PrimaryKey => AuthUDF;
+        public override string _PrimaryKey => UDF;
 
 
 
@@ -131,8 +131,8 @@ namespace Goedel.Mesh {
                 };
 
             UDF = overlaySignature.KeyPair.UDF;
-            AuthUDF = overlayAuthentication.KeyPair.UDF;
-            DeviceUDF = profileDevice.UDF;
+            //AuthUDF = overlayAuthentication.KeyPair.UDF;
+            //DeviceUDF = profileDevice.UDF;
             }
 
         /// <summary>

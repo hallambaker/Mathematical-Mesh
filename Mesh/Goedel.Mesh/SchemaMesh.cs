@@ -1713,6 +1713,11 @@ namespace Goedel.Mesh {
 	/// </summary>
 	public partial class AssertionDevicePrivate : Assertion {
         /// <summary>
+        ///The signed AssertionDeviceConnection.
+        /// </summary>
+
+		public virtual DareMessage						AssertionDeviceConnection  {get; set;}
+        /// <summary>
         ///List of application and account activation data. Keys, etc.
         /// </summary>
 
@@ -1778,6 +1783,11 @@ namespace Goedel.Mesh {
 				_Writer.WriteObjectStart ();
 				}
 			((Assertion)this).SerializeX(_Writer, false, ref _first);
+			if (AssertionDeviceConnection != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("AssertionDeviceConnection", 1);
+					AssertionDeviceConnection.Serialize (_Writer, false);
+				}
 			if (Activations != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("Activations", 1);
@@ -1842,6 +1852,13 @@ namespace Goedel.Mesh {
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
+				case "AssertionDeviceConnection" : {
+					// An untagged structure
+					AssertionDeviceConnection = new DareMessage ();
+					AssertionDeviceConnection.Deserialize (JSONReader);
+ 
+					break;
+					}
 				case "Activations" : {
 					// Have a sequence of values
 					bool _Going = JSONReader.StartArray ();
@@ -3354,24 +3371,14 @@ namespace Goedel.Mesh {
         ///The accounts to which this device is bound.
         /// </summary>
 
-		public virtual List<string>				Accounts  {get; set;}
+		public virtual List<string>				AccountIDs  {get; set;}
         /// <summary>
-        ///UDF of the signature key
+        ///UDF of the signature key of the device in the Mesh
         /// </summary>
 
 		public virtual string						UDF  {get; set;}
         /// <summary>
-        ///UDF of the underlying device profile
-        /// </summary>
-
-		public virtual string						DeviceUDF  {get; set;}
-        /// <summary>
-        ///UDF of the authentication ID
-        /// </summary>
-
-		public virtual string						AuthUDF  {get; set;}
-        /// <summary>
-        ///The device profile
+        ///The public assertion demonstrating connection of the Device to the Mesh
         /// </summary>
 
 		public virtual DareMessage						SignedDeviceConnection  {get; set;}
@@ -3380,11 +3387,6 @@ namespace Goedel.Mesh {
         /// </summary>
 
 		public virtual DareMessage						EncryptedDevicePrivate  {get; set;}
-        /// <summary>
-        ///Decryption key entries.	
-        /// </summary>
-
-		public virtual List<DeviceRecryptionKey>				DeviceRecryptionKeys  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -3428,12 +3430,12 @@ namespace Goedel.Mesh {
 				_Writer.WriteObjectStart ();
 				}
 			((CatalogEntry)this).SerializeX(_Writer, false, ref _first);
-			if (Accounts != null) {
+			if (AccountIDs != null) {
 				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("Accounts", 1);
+				_Writer.WriteToken ("AccountIDs", 1);
 				_Writer.WriteArrayStart ();
 				bool _firstarray = true;
-				foreach (var _index in Accounts) {
+				foreach (var _index in AccountIDs) {
 					_Writer.WriteArraySeparator (ref _firstarray);
 					_Writer.WriteString (_index);
 					}
@@ -3445,16 +3447,6 @@ namespace Goedel.Mesh {
 				_Writer.WriteToken ("UDF", 1);
 					_Writer.WriteString (UDF);
 				}
-			if (DeviceUDF != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("DeviceUDF", 1);
-					_Writer.WriteString (DeviceUDF);
-				}
-			if (AuthUDF != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("AuthUDF", 1);
-					_Writer.WriteString (AuthUDF);
-				}
 			if (SignedDeviceConnection != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("SignedDeviceConnection", 1);
@@ -3465,23 +3457,6 @@ namespace Goedel.Mesh {
 				_Writer.WriteToken ("EncryptedDevicePrivate", 1);
 					EncryptedDevicePrivate.Serialize (_Writer, false);
 				}
-			if (DeviceRecryptionKeys != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("DeviceRecryptionKeys", 1);
-				_Writer.WriteArrayStart ();
-				bool _firstarray = true;
-				foreach (var _index in DeviceRecryptionKeys) {
-					_Writer.WriteArraySeparator (ref _firstarray);
-					// This is an untagged structure. Cannot inherit.
-                    //_Writer.WriteObjectStart();
-                    //_Writer.WriteToken(_index._Tag, 1);
-					bool firstinner = true;
-					_index.Serialize (_Writer, true, ref firstinner);
-                    //_Writer.WriteObjectEnd();
-					}
-				_Writer.WriteArrayEnd ();
-				}
-
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
 				}
@@ -3514,27 +3489,19 @@ namespace Goedel.Mesh {
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
-				case "Accounts" : {
+				case "AccountIDs" : {
 					// Have a sequence of values
 					bool _Going = JSONReader.StartArray ();
-					Accounts = new List <string> ();
+					AccountIDs = new List <string> ();
 					while (_Going) {
 						string _Item = JSONReader.ReadString ();
-						Accounts.Add (_Item);
+						AccountIDs.Add (_Item);
 						_Going = JSONReader.NextArray ();
 						}
 					break;
 					}
 				case "UDF" : {
 					UDF = JSONReader.ReadString ();
-					break;
-					}
-				case "DeviceUDF" : {
-					DeviceUDF = JSONReader.ReadString ();
-					break;
-					}
-				case "AuthUDF" : {
-					AuthUDF = JSONReader.ReadString ();
 					break;
 					}
 				case "SignedDeviceConnection" : {
@@ -3549,20 +3516,6 @@ namespace Goedel.Mesh {
 					EncryptedDevicePrivate = new DareMessage ();
 					EncryptedDevicePrivate.Deserialize (JSONReader);
  
-					break;
-					}
-				case "DeviceRecryptionKeys" : {
-					// Have a sequence of values
-					bool _Going = JSONReader.StartArray ();
-					DeviceRecryptionKeys = new List <DeviceRecryptionKey> ();
-					while (_Going) {
-						// an untagged structure.
-						var _Item = new  DeviceRecryptionKey ();
-						_Item.Deserialize (JSONReader);
-						// var _Item = new DeviceRecryptionKey (JSONReader);
-						DeviceRecryptionKeys.Add (_Item);
-						_Going = JSONReader.NextArray ();
-						}
 					break;
 					}
 				default : {

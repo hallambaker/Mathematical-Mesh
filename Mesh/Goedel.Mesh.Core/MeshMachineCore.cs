@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
@@ -17,7 +18,7 @@ namespace Goedel.Mesh {
     /// <remarks>This implementation does not currently support concurrent access to the Mesh profile files
     /// from separate processes. This support should be added my introducing a system wide lock that is
     /// obtained before attempting a write operation and while opening a container.</remarks>
-    public class MeshMachineCore: Disposable, IMeshMachine, IMeshMachineClient {
+    public class MeshMachineCore : Disposable, IMeshMachine, IMeshMachineClient {
 
 
         public const string FileTypeHost = "application/mmm-host";
@@ -36,8 +37,30 @@ namespace Goedel.Mesh {
         public AccountEntry GetAccount(string local = null) => CatalogHost.GetAccount(local);
         public PendingEntry GetPending(string local = null) => CatalogHost.GetPending(local);
 
-        public ContextAccount GetContextAccount(string local = null) =>
-            new ContextAccount(this, GetAccount(local));
+
+        /// <summary>
+        /// Create a new Mesh master profile without account or service
+        /// </summary>
+        /// <returns>Context for administering the Mesh</returns>
+        public ContextMeshAdmin GetContextMesh(string localName = null) => throw new NYI();
+
+        /// <summary>
+        /// Create a new Mesh master profile and account without binding to a service
+        /// </summary>
+        /// <returns>Context for administering the Mesh account</returns>
+        public ContextAccount GetContextAccount(
+                string localName=null) => new ContextAccount(this, GetAccount(localName));
+
+        /// <summary>
+        /// Create a new Mesh master profile and account and bind to a service
+        /// </summary>
+        /// <returns>Context for administering the Mesh account via the service</returns>
+        public ContextAccountService GetContextService(
+                string localName = null,
+                string accountName = null) => throw new NYI();
+
+
+
 
 
 
@@ -55,7 +78,7 @@ namespace Goedel.Mesh {
         //public ContainerHost ContainerHost { get; }
 
 
-        public MeshMachineCore() : this (MeshMachine.DirectoryProfiles) {
+        public MeshMachineCore() : this(MeshMachine.DirectoryProfiles) {
             }
 
         protected MeshMachineCore(string directory) {
@@ -76,9 +99,66 @@ namespace Goedel.Mesh {
             }
 
         #region // Convenience accessors
-        public ContextAdmin GenerateAdmin() => ContextAdmin.CreateMesh(this);
 
-        public ContextAccount GenerateAccount(ContextAdmin contextAdmin,
+        /// <summary>
+        /// Create a new Mesh master profile without account or service
+        /// </summary>
+        /// <returns>Context for administering the Mesh</returns>
+        public ContextMeshAdmin CreateMesh(
+                    string localName,
+                    DareMessage escrow = null,
+                    IEnumerable<string> shares = null) => ContextMeshAdmin.CreateMesh(this);
+
+        /// <summary>
+        /// Create a new Mesh master profile without account or service
+        /// </summary>
+        /// <returns>Context for administering the Mesh</returns>
+        public ContextMesh CreateDevice(
+                string localName
+                ) {
+            throw new NYI();
+
+            }
+
+
+        /// <summary>
+        /// Create a new Mesh master profile and account without binding to a service
+        /// </summary>
+        /// <returns>Context for administering the Mesh account</returns>
+        public ContextAccount CreateAccount(
+                string localName) {
+            var contextMeshAdmin = CreateMesh(localName);
+            return contextMeshAdmin.CreateAccount(localName);
+            }
+
+        /// <summary>
+        /// Create a new Mesh master profile and account and bind to a service
+        /// </summary>
+        /// <returns>Context for administering the Mesh account via the service</returns>
+        public ContextAccountService CreateService(
+                string localName,
+                string accountName=null) {
+            var contextMeshAdmin = CreateMesh(localName);
+            var contextAccount = contextMeshAdmin.CreateAccount(localName);
+            return contextAccount.AddService(accountName ?? localName);
+            }
+
+
+        /// <summary>
+        /// Create a new Mesh master profile and account and bind to a service
+        /// </summary>
+        /// <returns>Context for administering the Mesh account via the service</returns>
+        public ContextAccountService ConnectService(
+                string localName,
+                string accountName = null,
+                string PIN = null) {
+            var contextMesh = CreateDevice(localName);
+            return contextMesh.ConnectService(accountName, PIN);
+            }
+
+
+
+        public ContextAccount GenerateAccount(ContextMeshAdmin contextAdmin,
                 string localName,
                 ProfileDevice profileDevice = null,
                 CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
@@ -146,20 +226,19 @@ namespace Goedel.Mesh {
 
 
 
-        // *********** Old
-        public virtual void Register (DareMessage entry) =>
-                CatalogHost.Register(entry);
+        //// *********** Old
+        //public virtual void Register (DareMessage entry) =>
+        //        CatalogHost.Register(entry);
 
-        public virtual AssertionAccount GetConnection(
-                    string accountName = null,
-                    string deviceUDF = null) => CatalogHost.GetConnection(accountName, deviceUDF);
+        //public virtual AssertionAccount GetConnection(
+        //            string accountName = null,
+        //            string deviceUDF = null) => CatalogHost.GetConnection(accountName, deviceUDF);
 
-        //  ******
+        ////  ******
 
 
         public virtual MeshService GetMeshClient(string account) => 
             MeshService.GetService(account);
-
 
 
 

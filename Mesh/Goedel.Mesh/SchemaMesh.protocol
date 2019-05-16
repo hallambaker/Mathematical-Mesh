@@ -292,29 +292,20 @@
 		Inherits CatalogEntry
 		Description
 			|Public device entry, indexed under the device ID
-		String Accounts
+		String AccountIDs
 			Multiple
 			Description
 				|The accounts to which this device is bound.
 		String UDF
 			Description
-				|UDF of the signature key
-		String DeviceUDF
-			Description
-				|UDF of the underlying device profile
-		String AuthUDF
-			Description
-				|UDF of the authentication ID
+				|UDF of the signature key of the device in the Mesh
 		Struct DareMessage SignedDeviceConnection
 			Description
 				|The public assertion demonstrating connection of the Device to the Mesh
 		Struct DareMessage EncryptedDevicePrivate
 			Description
 				|The device profile
-		Struct DeviceRecryptionKey DeviceRecryptionKeys
-			Multiple
-			Description
-				|Decryption key entries.	
+
 
 	Structure CatalogEntryCredential
 		Inherits CatalogEntry

@@ -9,12 +9,13 @@ using Goedel.Mesh;
 namespace Goedel.Mesh.Client {
     public partial class ProfileEntry {
 
+        }
 
+
+    public partial class DeviceEntry {
         public ProfileDevice ProfileDevice => profileDevice ??
                 ProfileDevice.Decode(EncodedProfileDevice).CacheValue(out profileDevice);
         ProfileDevice profileDevice;
-
-
         }
 
     public partial class AdminEntry {

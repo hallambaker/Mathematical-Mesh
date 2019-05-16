@@ -8,7 +8,22 @@ using Goedel.Cryptography.Jose;
 using Goedel.Mesh;
 
 namespace Goedel.Mesh.Client {
-    public class ContextAdmin {
+
+    public class ContextMesh : Disposable {
+        ///<summary>The context as an administration context.</summary>
+        ContextMeshAdmin ContextMeshAdmin => this as ContextMeshAdmin;
+
+
+        public ContextAccountService ConnectService(
+                string accountName = null,
+                string PIN = null) {
+
+            throw new NYI();
+            }
+        }
+
+
+    public class ContextMeshAdmin : ContextMesh {
 
         AdminEntry AdminEntry;
 
@@ -31,7 +46,7 @@ namespace Goedel.Mesh.Client {
         /// </summary>
         /// <param name="meshMachine"></param>
         /// <param name="local"></param>
-        public ContextAdmin(IMeshMachineClient meshMachine, string local = null) :
+        public ContextMeshAdmin(IMeshMachineClient meshMachine, string local = null) :
                 this (meshMachine, meshMachine.GetAdmin(local)) {
             
             }
@@ -41,7 +56,7 @@ namespace Goedel.Mesh.Client {
         /// 
         /// </summary>
         /// <param name="adminEntry"></param>
-        public ContextAdmin (
+        public ContextMeshAdmin (
                 IMeshMachineClient meshMachine,
                 AdminEntry adminEntry,
                 ProfileMaster profileMaster=null
@@ -50,15 +65,15 @@ namespace Goedel.Mesh.Client {
 
             MeshMachine = meshMachine;
             AdminEntry = adminEntry;
-            ProfileMaster = profileMaster ?? ProfileMaster.Decode(adminEntry.EncodedProfileMaster);
-            ProfileDevice = ProfileDevice.Decode(adminEntry.EncodedProfileDevice);
+            //ProfileMaster = profileMaster ?? ProfileMaster.Decode(adminEntry.EncodedProfileMaster);
+            //ProfileDevice = ProfileDevice.Decode(adminEntry.EncodedProfileDevice);
             
             // Join the composite keys to recover the signature key so we can perform admin functions
             KeyAdministratorSignature = adminEntry.SignatureKey.GetPrivate(MeshMachine);
             }
 
 
-        public static ContextAdmin CreateMesh(
+        public static ContextMeshAdmin CreateMesh(
                 IMeshMachineClient meshMachine,
                 ProfileDevice profileDevice = null,
                 CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
@@ -75,19 +90,41 @@ namespace Goedel.Mesh.Client {
             // we will invalidate the signature when we add the device as an administration device.
             var adminEntry = new AdminEntry() {
                 ID = profileMaster.UDF,
-                EncodedProfileDevice = profileDevice.DareMessage,
-                EncodedProfileMaster = null,
+                //EncodedProfileDevice = profileDevice.DareMessage,
+                //EncodedProfileMaster = null,
                 SignatureKey = keyOverlaySignature
                 };
 
 
             // Add profileDevice as an administration device.
-            var contextAdmin = new ContextAdmin(meshMachine, adminEntry, profileMaster);
+            var contextAdmin = new ContextMeshAdmin(meshMachine, adminEntry, profileMaster);
             contextAdmin.AddAdministrator(profileDevice);
 
             return contextAdmin;
             }
 
+
+        public (DareMessage, KeyShare[]) Escrow(int shares, int quorum, int bits = 128) {
+
+            var secret = new Secret(bits);
+            var keyShares = secret.Split(shares, quorum);
+            var cryptoStack = new CryptoStack(secret, CryptoAlgorithmID.AES256CBC);
+
+            throw new NYI();
+
+            //var MasterSignatureKeyPair = KeyCollection.LocatePrivate(ProfileMaster.KeySignature.UDF);
+            //var MasterSignatureKey = Key.FactoryPrivate(MasterSignatureKeyPair);
+            //var MasterEscrowKeys = new List<Key>();
+
+            //var EscrowedKeySet = new EscrowedKeySet() {
+            //    MasterSignatureKey = MasterSignatureKey,
+            //    MasterEscrowKeys = MasterEscrowKeys
+            //    };
+
+            //var message = new DareMessage(cryptoStack, EscrowedKeySet.GetJson(true));
+
+            //return (message, keyShares);
+            }
 
 
         /// <summary>
@@ -109,8 +146,8 @@ namespace Goedel.Mesh.Client {
 
             return new AdminEntry() {
                 ID = keyOverlaySignature.KeyPair.UDF,
-                EncodedProfileDevice = profileDevice.DareMessage,
-                EncodedProfileMaster = ProfileMaster.DareMessage,
+                //EncodedProfileDevice = profileDevice.DareMessage,
+                //EncodedProfileMaster = ProfileMaster.DareMessage,
                 SignatureKey = keyOverlaySignature
                 };
 
@@ -137,7 +174,7 @@ namespace Goedel.Mesh.Client {
         /// </summary>
         /// <param name="localName">The local name of the account.</param>
         /// <returns>The signed account assertion.</returns>
-        public AssertionAccount CreateAccount(
+        public AssertionAccount GenerateAccount(
                 string localName,
                 CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default) {
 
@@ -154,8 +191,11 @@ namespace Goedel.Mesh.Client {
             return assertionAccount;
             }
 
+        public ContextAccount CreateAccount(string localName,
+            CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default) {
 
-
+            throw new NYI();
+            }
         /// <summary>
         /// Add the account <paramref name="accountEntry"/> to the master profile
         /// </summary>

@@ -40,24 +40,24 @@ namespace Goedel.Mesh.Shell {
         public override ShellResult ProfileCreate(ProfileCreate Options) {
             var account = Options.NewAccountID.Value;
 
+            throw new NYI();
+            //using (var context = GetContextDeviceUncached(Options)) {
+            //    context.GenerateMaster();
+            //    if (account != null) {
+            //        var result = context.CreateAccount(account);
+            //        }
 
-            using (var context = GetContextDeviceUncached(Options)) {
-                context.GenerateMaster();
-                if (account != null) {
-                    var result = context.CreateAccount(account);
-                    }
+            //    return new ResultMasterCreate() {
+            //        Success = true,
+            //        DeviceUDF = context.ProfileDevice.UDF,
+            //        PersonalUDF = context.ProfileMaster.UDF,
+            //        ProfileDevice = context.ProfileDevice,
+            //        ProfileMaster = context.ProfileMaster,
+            //        Default = context.DefaultDevice,
+            //        Account = account
+            //        };
 
-                return new ResultMasterCreate() {
-                    Success = true,
-                    DeviceUDF = context.ProfileDevice.UDF,
-                    PersonalUDF = context.ProfileMaster.UDF,
-                    ProfileDevice = context.ProfileDevice,
-                    ProfileMaster = context.ProfileMaster,
-                    Default = context.DefaultDevice,
-                    Account = account
-                    };
-
-                }
+            //    }
             }
 
         /// <summary>
@@ -67,19 +67,19 @@ namespace Goedel.Mesh.Shell {
         /// <returns>Mesh result instance</returns>
         public override ShellResult ProfileRegister(ProfileRegister Options) {
             var account = Options.NewAccountID.Value;
+            throw new NYI();
+            //using (var context = GetContextDeviceUncached(Options)) {
 
-            using (var context = GetContextDeviceUncached(Options)) {
+            //    var result = context.CreateAccount(account);
 
-                var result = context.CreateAccount(account);
-
-                return new ResultMasterCreate() {
-                    Success = true,
-                    DeviceUDF = context.ProfileDevice.UDF,
-                    PersonalUDF = context.ProfileMaster.UDF,
-                    Default = context.DefaultDevice,
-                    Account = account
-                    };
-                }
+            //    return new ResultMasterCreate() {
+            //        Success = true,
+            //        DeviceUDF = context.ProfileDevice.UDF,
+            //        PersonalUDF = context.ProfileMaster.UDF,
+            //        Default = context.DefaultDevice,
+            //        Account = account
+            //        };
+            //    }
             }
 
 
@@ -90,13 +90,14 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult ProfileSync(ProfileSync Options) {
-            using (var contextDevice = GetContextDevice(Options)) {
-                var result = contextDevice.Sync();
+            throw new NYI();
+            //using (var contextDevice = GetContextDevice(Options)) {
+            //    var result = contextDevice.Sync();
 
-                return new ResultSync() {
-                    Success = result.Success
-                    };
-                }
+            //    return new ResultSync() {
+            //        Success = result.Success
+            //        };
+            //    }
             }
 
         /// <summary>
@@ -105,24 +106,24 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult ProfileEscrow(ProfileEscrow Options) {
-            
-            using (var contextDevice = GetContextDevice(Options)) {
-                var file = Options.File.Value ?? contextDevice.ProfileMaster.UDF+".escrow";
+            throw new NYI();
+            //using (var contextDevice = GetContextDevice(Options)) {
+            //    var file = Options.File.Value ?? contextDevice.ProfileMaster.UDF+".escrow";
 
 
-                (var escrow, var shares) = contextDevice.Escrow(3, 2);
-                escrow.ToFile(file);
-                var textShares = new List<string>();
-                foreach (var share in shares) {
-                    textShares.Add(share.UDFKey);
-                    }
+            //    (var escrow, var shares) = contextDevice.Escrow(3, 2);
+            //    escrow.ToFile(file);
+            //    var textShares = new List<string>();
+            //    foreach (var share in shares) {
+            //        textShares.Add(share.UDFKey);
+            //        }
 
-                return new ResultEscrow() {
-                    Success = true,
-                    Shares = textShares,
-                    Filename = file
-                    };
-                }
+            //    return new ResultEscrow() {
+            //        Success = true,
+            //        Shares = textShares,
+            //        Filename = file
+            //        };
+            //    }
             }
 
         void AddIfPresent(List<string> Keys, String Parameter) {
@@ -165,34 +166,34 @@ namespace Goedel.Mesh.Shell {
                         }
 
                     }
+                throw new NYI();
+                //if (Options.Verify.Value) {
+                //    var escrowedKeySet = contextDevice.RecoverKeySet(Escrow, secret);
 
-                if (Options.Verify.Value) {
-                    var escrowedKeySet = contextDevice.RecoverKeySet(Escrow, secret);
+                //    var EncryptUDF = new List<string>();
+                //    if (escrowedKeySet.MasterEscrowKeys != null) {
+                //        foreach (var key in escrowedKeySet.MasterEscrowKeys) {
+                //            EncryptUDF.Add(key.KeyPair.UDF);
+                //            }
+                //        }
 
-                    var EncryptUDF = new List<string>();
-                    if (escrowedKeySet.MasterEscrowKeys != null) {
-                        foreach (var key in escrowedKeySet.MasterEscrowKeys) {
-                            EncryptUDF.Add(key.KeyPair.UDF);
-                            }
-                        }
+                //    string SignUDF = null;
+                //    if (escrowedKeySet.MasterSignatureKey != null) {
+                //        SignUDF = escrowedKeySet.MasterSignatureKey.KeyPair.UDF;
+                //        }
 
-                    string SignUDF = null;
-                    if (escrowedKeySet.MasterSignatureKey != null) {
-                        SignUDF = escrowedKeySet.MasterSignatureKey.KeyPair.UDF;
-                        }
-
-                    return new ResultRecover() {
-                        SignUDF = SignUDF,
-                        EncryptUDF = EncryptUDF
-                        };
-                    }
+                //    return new ResultRecover() {
+                //        SignUDF = SignUDF,
+                //        EncryptUDF = EncryptUDF
+                //        };
+                //    }
 
 
 
-                var DeviceAdminRecovered = contextDevice.Recover(Escrow, secret);
-                return new ResultRecover() {
-                    Success = false
-                    };
+                //var DeviceAdminRecovered = contextDevice.Recover(Escrow, secret);
+                //return new ResultRecover() {
+                //    Success = false
+                //    };
                 }
             }
 
@@ -200,11 +201,11 @@ namespace Goedel.Mesh.Shell {
         public override ShellResult ProfileList(ProfileList Options) {
             //var profiles = CatalogHost.GetProfiles();
             //var accounts = CatalogHost.GetAccountDescriptions();
-
-            var catalogEntryDevices = CatalogHost.GetCatalogEntryDevices();
-            return new ResultList() {
-                CatalogEntryDevices = catalogEntryDevices
-                };
+            throw new NYI();
+            //var catalogEntryDevices = CatalogHost.GetCatalogEntryDevices();
+            //return new ResultList() {
+            //    CatalogEntryDevices = catalogEntryDevices
+            //    };
 
             }
 

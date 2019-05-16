@@ -60,6 +60,7 @@ namespace Goedel.Mesh.Client {
 				new Dictionary<string, JSONFactoryDelegate> () {
 
 			{"ProfileEntry", ProfileEntry._Factory},
+			{"DeviceEntry", DeviceEntry._Factory},
 			{"AdminEntry", AdminEntry._Factory},
 			{"AccountEntry", AccountEntry._Factory},
 			{"PendingEntry", PendingEntry._Factory}			};
@@ -92,10 +93,10 @@ namespace Goedel.Mesh.Client {
 
 		public virtual string						ID  {get; set;}
         /// <summary>
-        ///The device profile the specific device uses to service this entry.
+        ///Local short name for the profile
         /// </summary>
 
-		public virtual DareMessage						EncodedProfileDevice  {get; set;}
+		public virtual string						Local  {get; set;}
 		bool								__Default = false;
 		private bool						_Default;
         /// <summary>
@@ -106,11 +107,6 @@ namespace Goedel.Mesh.Client {
 			get => _Default;
 			set {_Default = value; __Default = true; }
 			}
-        /// <summary>
-        ///Local short name for the profile
-        /// </summary>
-
-		public virtual string						Local  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -158,20 +154,15 @@ namespace Goedel.Mesh.Client {
 				_Writer.WriteToken ("ID", 1);
 					_Writer.WriteString (ID);
 				}
-			if (EncodedProfileDevice != null) {
+			if (Local != null) {
 				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("EncodedProfileDevice", 1);
-					EncodedProfileDevice.Serialize (_Writer, false);
+				_Writer.WriteToken ("Local", 1);
+					_Writer.WriteString (Local);
 				}
 			if (__Default){
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("Default", 1);
 					_Writer.WriteBoolean (Default);
-				}
-			if (Local != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("Local", 1);
-					_Writer.WriteString (Local);
 				}
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
@@ -209,19 +200,12 @@ namespace Goedel.Mesh.Client {
 					ID = JSONReader.ReadString ();
 					break;
 					}
-				case "EncodedProfileDevice" : {
-					// An untagged structure
-					EncodedProfileDevice = new DareMessage ();
-					EncodedProfileDevice.Deserialize (JSONReader);
- 
+				case "Local" : {
+					Local = JSONReader.ReadString ();
 					break;
 					}
 				case "Default" : {
 					Default = JSONReader.ReadBoolean ();
-					break;
-					}
-				case "Local" : {
-					Local = JSONReader.ReadString ();
 					break;
 					}
 				default : {
@@ -236,14 +220,152 @@ namespace Goedel.Mesh.Client {
 
 	/// <summary>
 	///
-	/// Information enabling administration of a Master profile.
+	/// Describes an ordinary device connected to a Mesh
 	/// </summary>
-	public partial class AdminEntry : ProfileEntry {
+	public partial class DeviceEntry : ProfileEntry {
         /// <summary>
-        ///The master profile being administered
+        ///The device profile
+        /// </summary>
+
+		public virtual DareMessage						EncodedProfileDevice  {get; set;}
+        /// <summary>
+        ///The master profile that provides the root of trust for this Mesh
         /// </summary>
 
 		public virtual DareMessage						EncodedProfileMaster  {get; set;}
+        /// <summary>
+        ///The device entry containing the full account binding information.
+        /// </summary>
+
+		public virtual CatalogEntryDevice						CatalogEntryDevice  {get; set;}
+		
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "DeviceEntry";
+
+		/// <summary>
+        /// Factory method
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JSONObject _Factory () => new DeviceEntry();
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="Writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
+			SerializeX (Writer, wrap, ref first);
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_Writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			if (_wrap) {
+				_Writer.WriteObjectStart ();
+				}
+			((ProfileEntry)this).SerializeX(_Writer, false, ref _first);
+			if (EncodedProfileDevice != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("EncodedProfileDevice", 1);
+					EncodedProfileDevice.Serialize (_Writer, false);
+				}
+			if (EncodedProfileMaster != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("EncodedProfileMaster", 1);
+					EncodedProfileMaster.Serialize (_Writer, false);
+				}
+			if (CatalogEntryDevice != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("CatalogEntryDevice", 1);
+					CatalogEntryDevice.Serialize (_Writer, false);
+				}
+			if (_wrap) {
+				_Writer.WriteObjectEnd ();
+				}
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <returns>The created object.</returns>		
+        public static new DeviceEntry FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
+			if (Tagged) {
+				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				return Out as DeviceEntry;
+				}
+		    var Result = new DeviceEntry ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			}
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
+		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+			
+			switch (Tag) {
+				case "EncodedProfileDevice" : {
+					// An untagged structure
+					EncodedProfileDevice = new DareMessage ();
+					EncodedProfileDevice.Deserialize (JSONReader);
+ 
+					break;
+					}
+				case "EncodedProfileMaster" : {
+					// An untagged structure
+					EncodedProfileMaster = new DareMessage ();
+					EncodedProfileMaster.Deserialize (JSONReader);
+ 
+					break;
+					}
+				case "CatalogEntryDevice" : {
+					// An untagged structure
+					CatalogEntryDevice = new CatalogEntryDevice ();
+					CatalogEntryDevice.Deserialize (JSONReader);
+ 
+					break;
+					}
+				default : {
+					base.DeserializeToken(JSONReader, Tag);
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
+	/// <summary>
+	///
+	/// Information enabling administration of a Master profile. It adds an overlay key
+	/// for the administration key.
+	/// </summary>
+	public partial class AdminEntry : DeviceEntry {
         /// <summary>
         ///Overlay for the signature key.
         /// </summary>
@@ -291,12 +413,7 @@ namespace Goedel.Mesh.Client {
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
-			((ProfileEntry)this).SerializeX(_Writer, false, ref _first);
-			if (EncodedProfileMaster != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("EncodedProfileMaster", 1);
-					EncodedProfileMaster.Serialize (_Writer, false);
-				}
+			((DeviceEntry)this).SerializeX(_Writer, false, ref _first);
 			if (SignatureKey != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("SignatureKey", 1);
@@ -334,13 +451,6 @@ namespace Goedel.Mesh.Client {
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
-				case "EncodedProfileMaster" : {
-					// An untagged structure
-					EncodedProfileMaster = new DareMessage ();
-					EncodedProfileMaster.Deserialize (JSONReader);
- 
-					break;
-					}
 				case "SignatureKey" : {
 					// An untagged structure
 					SignatureKey = new KeyOverlay ();
@@ -366,6 +476,11 @@ namespace Goedel.Mesh.Client {
 	/// </summary>
 	public partial class AccountEntry : ProfileEntry {
         /// <summary>
+        ///The service identifiers to which this account is bound in order of priority.
+        /// </summary>
+
+		public virtual List<string>				ServiceIDs  {get; set;}
+        /// <summary>
         ///Subdirectory containing the catalogs and spools for the account.
         /// </summary>
 
@@ -375,11 +490,6 @@ namespace Goedel.Mesh.Client {
         /// </summary>
 
 		public virtual DareMessage						EncodedAssertionAccount  {get; set;}
-        /// <summary>
-        ///The device entry containing the full account binding information.
-        /// </summary>
-
-		public virtual CatalogEntryDevice						CatalogEntryDevice  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -423,6 +533,18 @@ namespace Goedel.Mesh.Client {
 				_Writer.WriteObjectStart ();
 				}
 			((ProfileEntry)this).SerializeX(_Writer, false, ref _first);
+			if (ServiceIDs != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("ServiceIDs", 1);
+				_Writer.WriteArrayStart ();
+				bool _firstarray = true;
+				foreach (var _index in ServiceIDs) {
+					_Writer.WriteArraySeparator (ref _firstarray);
+					_Writer.WriteString (_index);
+					}
+				_Writer.WriteArrayEnd ();
+				}
+
 			if (Directory != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("Directory", 1);
@@ -432,11 +554,6 @@ namespace Goedel.Mesh.Client {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("EncodedAssertionAccount", 1);
 					EncodedAssertionAccount.Serialize (_Writer, false);
-				}
-			if (CatalogEntryDevice != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("CatalogEntryDevice", 1);
-					CatalogEntryDevice.Serialize (_Writer, false);
 				}
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
@@ -470,6 +587,17 @@ namespace Goedel.Mesh.Client {
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
+				case "ServiceIDs" : {
+					// Have a sequence of values
+					bool _Going = JSONReader.StartArray ();
+					ServiceIDs = new List <string> ();
+					while (_Going) {
+						string _Item = JSONReader.ReadString ();
+						ServiceIDs.Add (_Item);
+						_Going = JSONReader.NextArray ();
+						}
+					break;
+					}
 				case "Directory" : {
 					Directory = JSONReader.ReadString ();
 					break;
@@ -478,13 +606,6 @@ namespace Goedel.Mesh.Client {
 					// An untagged structure
 					EncodedAssertionAccount = new DareMessage ();
 					EncodedAssertionAccount.Deserialize (JSONReader);
- 
-					break;
-					}
-				case "CatalogEntryDevice" : {
-					// An untagged structure
-					CatalogEntryDevice = new CatalogEntryDevice ();
-					CatalogEntryDevice.Deserialize (JSONReader);
  
 					break;
 					}

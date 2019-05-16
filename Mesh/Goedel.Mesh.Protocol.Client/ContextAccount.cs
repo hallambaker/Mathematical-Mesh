@@ -8,13 +8,13 @@ using Goedel.Cryptography.Jose;
 using Goedel.Mesh;
 
 namespace Goedel.Mesh.Client {
-    public class ContextAccount {
+    public class ContextAccount : Disposable {
 
         ///<summary>The device profile to which the signature key is bound</summary>
         public ProfileDevice ProfileDevice { get; }
 
-        public ContextAdmin GetContextAdmin() =>
-            new ContextAdmin(MeshMachine, MeshMachine.GetAdmin());
+        ///<summary>This context as a service context</summary>
+        ContextAccountService ContextAccountService => this as ContextAccountService;
 
 
         IMeshMachineClient MeshMachine { get; }
@@ -23,7 +23,7 @@ namespace Goedel.Mesh.Client {
         AssertionAccount AssertionAccount;
         CryptoParameters ContainerCryptoParameters;
 
-        CatalogEntryDevice CatalogEntryDevice => AccountEntry.CatalogEntryDevice;
+        //CatalogEntryDevice CatalogEntryDevice => AccountEntry.CatalogEntryDevice;
         public AssertionDeviceConnection AssertionDeviceConnection;
         AssertionDevicePrivate AssertionDevicePrivate;
 
@@ -36,10 +36,10 @@ namespace Goedel.Mesh.Client {
         KeyPair KeySignature;
         KeyPair KeyEncryption;
         KeyPair KeyAuthentication;
-        ContextAdmin ContextAdmin;
+        ContextMeshAdmin ContextAdmin;
 
-        public ContextAccount(IMeshMachineClient meshMachine, string local = null):
-                this (meshMachine, meshMachine.GetAccount(local)) {
+        public ContextAccount(IMeshMachineClient meshMachine, string local = null) :
+                this(meshMachine, meshMachine.GetAccount(local)) {
             }
 
 
@@ -55,7 +55,7 @@ namespace Goedel.Mesh.Client {
 
             MeshMachine = meshMachine;
             AccountEntry = accountEntry;
-            ProfileDevice = ProfileDevice.Decode(accountEntry.EncodedProfileDevice);
+            //ProfileDevice = ProfileDevice.Decode(accountEntry.EncodedProfileDevice);
             AssertionAccount = AssertionAccount.Decode(accountEntry.EncodedAssertionAccount);
             ContainerCryptoParameters = new CryptoParameters(Recipient: AssertionAccount.AccountEncryptionKey.KeyPair);
 
@@ -67,22 +67,23 @@ namespace Goedel.Mesh.Client {
             }
 
 
-        ContextAccount(ContextAdmin contextAdmin, AssertionAccount assertionAccount) {
+        ContextAccount(ContextMeshAdmin contextAdmin, AssertionAccount assertionAccount) {
             MeshMachine = contextAdmin.MeshMachine;
             ContextAdmin = contextAdmin;
             AssertionAccount = assertionAccount;
             }
 
 
-
+        protected ContextAccount(ContextAccount contextAccount) {
+            }
 
 
 
         public static ContextAccount CreateAccount(
-                ContextAdmin contextAdmin,
-                string localName ,
-                IMeshMachineClient meshMachine=null,
-                
+                ContextMeshAdmin contextAdmin,
+                string localName,
+                IMeshMachineClient meshMachine = null,
+
                 ProfileDevice profileDevice = null,
                 CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
                 CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default,
@@ -94,10 +95,7 @@ namespace Goedel.Mesh.Client {
 
 
             // Create the AssertionAccount here
-            var assertionAccount = contextAdmin.CreateAccount(localName);
-
-            // Generate a ContextAccount for the AssertionAccount
-            var contextAccount = new ContextAccount(contextAdmin, assertionAccount);
+            var contextAccount = contextAdmin.CreateAccount(localName);
 
             // Add profileDevice to the Account
             contextAccount.Add(profileDevice);
@@ -112,9 +110,10 @@ namespace Goedel.Mesh.Client {
 
             var accountEntry = new AccountEntry() {
                 ID = catalogEntryDevice.UDF,
-                EncodedProfileDevice = profileDevice.DareMessage,
+
                 Directory = MeshMachine.DirectoryMesh,
-                CatalogEntryDevice = catalogEntryDevice,
+                //EncodedProfileDevice = profileDevice.DareMessage,
+                //CatalogEntryDevice = catalogEntryDevice,
                 EncodedAssertionAccount = AssertionAccount.DareMessage
                 };
 
@@ -124,9 +123,8 @@ namespace Goedel.Mesh.Client {
             }
 
 
-        public void AddService(
-                string ServiceID,
-                string PIN = null) {
+        public ContextAccountService AddService(
+                string ServiceID) {
             throw new NYI();
             }
 
@@ -135,12 +133,12 @@ namespace Goedel.Mesh.Client {
             throw new NYI();
             }
 
-        public void  Sync() {
+        public void Sync() {
             throw new NYI();
             }
 
 
-        public void Process(MeshMessage meshMessage, bool accept=true, bool respond=true){
+        public void Process(MeshMessage meshMessage, bool accept = true, bool respond = true) {
             }
 
 
@@ -275,6 +273,13 @@ namespace Goedel.Mesh.Client {
                 }
 
             throw new NYI();
+            }
+
+        }
+
+
+    public class ContextAccountService : ContextAccount {
+        ContextAccountService(ContextAccount contextAccount) : base (contextAccount) {
             }
 
         }

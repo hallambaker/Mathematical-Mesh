@@ -25,13 +25,12 @@ namespace Goedel.Mesh.Test {
             var machineAliceAdmin = new MeshMachineTest(testEnvironmentCommon, name: "Alice Admin");
             var machineAliceRecover = new MeshMachineTest(testEnvironmentCommon, name: "Alice Admin Recovered");
 
-            var deviceAdmin = ContextDevice.Generate(machineAliceAdmin);
-            deviceAdmin.GenerateMaster();
+            var deviceAdmin = machineAliceAdmin.CreateMesh("main");
 
             var (escrow, shares) = deviceAdmin.Escrow(3, 2);
-            var recoverShares = new KeyShare[] { shares[0], shares[2] };
+            var recoverShares = new List<string> { shares[0].UDFKey, shares[2].UDFKey };
 
-            var deviceAdminRecovered = deviceAdmin.Recover(escrow, recoverShares);
+            var deviceAdminRecovered = machineAliceRecover.CreateMesh("main", escrow, recoverShares);
 
             }
 
@@ -39,9 +38,8 @@ namespace Goedel.Mesh.Test {
             var testEnvironmentCommon = new TestEnvironmentCommon();
 
             var machineAliceAdmin = new MeshMachineTest(testEnvironmentCommon, name: "Alice");
-            var deviceAdmin = ContextDevice.Generate(machineAliceAdmin);
-            deviceAdmin.GenerateMaster();
 
+            var deviceAdmin = machineAliceAdmin.CreateAccount("main");
 
             using (var catalog = deviceAdmin.GetCatalogCredential()) {
 
@@ -111,26 +109,33 @@ namespace Goedel.Mesh.Test {
             var machineAliceAdmin = new MeshMachineTest(testEnvironmentCommon, name: "Alice");
             var machineAliceLaptop = new MeshMachineTest(testEnvironmentCommon, name: "Alice Laptop");
             var machineAlicePhone = new MeshMachineTest(testEnvironmentCommon, name: "Alice Phone");
-            var deviceAdmin = ContextDevice.Generate(machineAliceAdmin);
-            deviceAdmin.GenerateMaster();
+
+            var deviceAdmin = machineAliceAdmin.CreateAccount("main");
 
             var catalog = deviceAdmin.GetCatalogDevice();
 
             var keySign = machineAliceAdmin.KeyCollection.LocatePrivate(deviceAdmin.ProfileDevice.KeySignature.UDF);
             var Entry1 = MakeCatalogEntryDevice(deviceAdmin.ProfileDevice, keySign);
 
-            var Device2 = ContextDevice.Generate(machineAliceLaptop);
-            var Entry2 = MakeCatalogEntryDevice(Device2.ProfileDevice, keySign);
-            var Device3 = ContextDevice.Generate(machineAlicePhone);
-            var Entry3 = MakeCatalogEntryDevice(Device3.ProfileDevice, keySign);
 
-            catalog.Add(Entry1);
-            CheckCatalog(catalog, new List<CatalogEntry> { Entry1 });
-            catalog.Add(Entry2);
-            CheckCatalog(catalog, new List<CatalogEntry> { Entry1, Entry2 });
+            // Punt on these for now. Need to know what the export format is for direct connection.
+            throw new NYI();
 
-            catalog.Add(Entry3);
-            CheckCatalog(catalog, new List<CatalogEntry> { Entry1, Entry2, Entry3 });
+
+
+
+            //var Device2 = ContextDevice.Generate(machineAliceLaptop);
+            //var Entry2 = MakeCatalogEntryDevice(Device2.ProfileDevice, keySign);
+            //var Device3 = ContextDevice.Generate(machineAlicePhone);
+            //var Entry3 = MakeCatalogEntryDevice(Device3.ProfileDevice, keySign);
+
+            //catalog.Add(Entry1);
+            //CheckCatalog(catalog, new List<CatalogEntry> { Entry1 });
+            //catalog.Add(Entry2);
+            //CheckCatalog(catalog, new List<CatalogEntry> { Entry1, Entry2 });
+
+            //catalog.Add(Entry3);
+            //CheckCatalog(catalog, new List<CatalogEntry> { Entry1, Entry2, Entry3 });
             }
 
         protected DareMessage Sign(JSONObject data, KeyPair keySign) =>
@@ -163,9 +168,8 @@ namespace Goedel.Mesh.Test {
         public void CatalogContacts() {
             var testEnvironmentCommon = new TestEnvironmentCommon();
 
-            var MachineAliceAdmin = new MeshMachineTest(testEnvironmentCommon, name: "Alice");
-            var deviceAdmin = ContextDevice.Generate(MachineAliceAdmin);
-            deviceAdmin.GenerateMaster();
+            var machineAliceAdmin = new MeshMachineTest(testEnvironmentCommon, name: "Alice");
+            var deviceAdmin = machineAliceAdmin.CreateAccount("main");
 
 
             var catalog = deviceAdmin.GetCatalogContact();

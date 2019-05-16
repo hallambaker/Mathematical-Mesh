@@ -76,9 +76,9 @@ namespace Goedel.XUnit {
             var testEnvironmentCommon = new TestEnvironmentCommon();
             var machineAdmin = new MeshMachineTest(testEnvironmentCommon, DeviceAliceAdmin);
 
-            var contextAdmin = machineAdmin.GenerateAdmin();
-            var contextAccountAlice = machineAdmin.GenerateAccount(contextAdmin, "main");
-
+            var contextMeshAdmin = machineAdmin.CreateMesh("main");
+            var contextAccountAlice = contextMeshAdmin.CreateAccount("main");
+            var contextAccountService = contextAccountAlice.AddService("alice@example.com");
 
 
             // Perform some offline operations on the account catalogs

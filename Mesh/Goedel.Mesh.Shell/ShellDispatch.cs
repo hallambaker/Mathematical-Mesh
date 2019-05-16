@@ -158,18 +158,20 @@ namespace Goedel.Mesh.Shell {
         /// </summary>
         /// <param name="options">The shell options.</param>
         /// <returns>The device context</returns>
-        public virtual ContextDevice GetContextDeviceUncached(IDeviceProfileInfo options) {
-            if (!options.DeviceNew.Value) {
-                var deviceUDF = options.DeviceUDF.Value;
-                var deviceID = options.DeviceID.Value;
+        public virtual ContextAccount GetContextDeviceUncached(IDeviceProfileInfo options) {
+            throw new NYI();
 
-                var result = ContextDevice.GetContextDevice(MeshMachine, deviceUDF, deviceID);
-                if(result != null) {
-                    return result;
-                    }
-                }
-            var deviceDescription = options.DeviceDescription.Value;
-            return ContextDevice.Generate(MeshMachine, description: deviceDescription);
+            //if (!options.DeviceNew.Value) {
+            //    var deviceUDF = options.DeviceUDF.Value;
+            //    var deviceID = options.DeviceID.Value;
+
+            //    var result = ContextDevice.GetContextDevice(MeshMachine, deviceUDF, deviceID);
+            //    if(result != null) {
+            //        return result;
+            //        }
+            //    }
+            //var deviceDescription = options.DeviceDescription.Value;
+            //return ContextDevice.Generate(MeshMachine, description: deviceDescription);
 
             }
 
@@ -177,12 +179,12 @@ namespace Goedel.Mesh.Shell {
         //    }
 
 
-        public virtual ContextDevice GetContextDevice(IAccountOptions options) => 
-            CatalogHost.GetContextDevice();
+        public virtual ContextAccount GetContextDevice(IAccountOptions options) => throw new NYI();
+            //CatalogHost.GetContextDevice();
 
 
-        public KeyCollection KeyCollection(IAccountOptions options) =>
-            CatalogHost.GetKeyCollection();
+        public KeyCollection KeyCollection(IAccountOptions options) => throw new NYI();
+            //CatalogHost.GetKeyCollection();
 
 
         /// <summary>

@@ -62,15 +62,15 @@ namespace Goedel.Test.Core {
             return machine.GetContextAccount(localName);
             }
 
-        public static MeshMachineTest GetAccount(
-                    TestEnvironmentCommon testEnvironmentCommon,
-                    string machineName,
-                    out ContextAccount contextAccount) {
-            var result = new MeshMachineTest(testEnvironmentCommon, machineName);
-            contextAccount = result.GetContextAccount();
+        //public static MeshMachineTest GetAccount(
+        //            TestEnvironmentCommon testEnvironmentCommon,
+        //            string machineName,
+        //            out ContextAccount contextAccount) {
+        //    var result = new MeshMachineTest(testEnvironmentCommon, machineName);
+        //    contextAccount = result.GetContextAccount();
 
-            return result;
-            }
+        //    return result;
+        //    }
 
 
         public static MeshMachineTest GenerateMasterAccount(
@@ -81,7 +81,7 @@ namespace Goedel.Test.Core {
                     string accountId =null) {
 
             var result = new MeshMachineTest(testEnvironmentCommon, machineName);
-            var contextAdmin = ContextAdmin.CreateMesh(result);
+            var contextAdmin = ContextMeshAdmin.CreateMesh(result);
             contextAccount = ContextAccount.CreateAccount(contextAdmin, localName);
 
             if (accountId != null) {
@@ -152,50 +152,50 @@ namespace Goedel.Test.Core {
 
             }
 
-        public static void GetContext(
-                    TestEnvironmentCommon testEnvironmentService,
-                    string nameAccount,
-                    string nameMachine,
-                    out MeshMachineTest machine,
-                    out ContextDevice contextDevice) {
+        //public static void GetContext(
+        //            TestEnvironmentCommon testEnvironmentService,
+        //            string nameAccount,
+        //            string nameMachine,
+        //            out MeshMachineTest machine,
+        //            out ContextDevice contextDevice) {
 
-            machine = new MeshMachineTest(testEnvironmentService, nameMachine);
-            contextDevice = ContextDevice.Generate(machine);
-            }
-
-
-        public static void GetContext(
-                TestEnvironmentCommon testEnvironmentCommon,
-                string nameMachine,
-                out MeshMachineTest machine) {
-
-            machine = new MeshMachineTest(testEnvironmentCommon, nameMachine);
-            }
+        //    machine = new MeshMachineTest(testEnvironmentService, nameMachine);
+        //    contextDevice = ContextDevice.Generate(machine);
+        //    }
 
 
-        public static void GetContextMaster(
-                string nameAccount,
-                string nameMachine,
-                out MeshMachineTest machine,
-                out ContextDevice contextDevice) {
-            var testEnvironmentService = new TestEnvironmentCommon();
+        //public static void GetContext(
+        //        TestEnvironmentCommon testEnvironmentCommon,
+        //        string nameMachine,
+        //        out MeshMachineTest machine) {
 
-            GetContext(testEnvironmentService, nameAccount, nameMachine, out machine, out contextDevice);
-            contextDevice.GenerateMaster();
-            }
+        //    machine = new MeshMachineTest(testEnvironmentCommon, nameMachine);
+        //    }
 
 
-        public static void GetContextMaster(
-                TestEnvironmentCommon testEnvironmentService,
-                string nameAccount,
-                string nameMachine,
-                out MeshMachineTest machine,
-                out ContextDevice contextDevice) {
+        //public static void GetContextMaster(
+        //        string nameAccount,
+        //        string nameMachine,
+        //        out MeshMachineTest machine,
+        //        out ContextDevice contextDevice) {
+        //    var testEnvironmentService = new TestEnvironmentCommon();
+
+        //    GetContext(testEnvironmentService, nameAccount, nameMachine, out machine, out contextDevice);
+        //    contextDevice.GenerateMaster();
+        //    }
 
 
-            GetContext(testEnvironmentService, nameAccount, nameMachine, out machine, out contextDevice);
-            contextDevice.GenerateMaster();
-            }
+        //public static void GetContextMaster(
+        //        TestEnvironmentCommon testEnvironmentService,
+        //        string nameAccount,
+        //        string nameMachine,
+        //        out MeshMachineTest machine,
+        //        out ContextDevice contextDevice) {
+
+
+        //    GetContext(testEnvironmentService, nameAccount, nameMachine, out machine, out contextDevice);
+        //    contextDevice.GenerateMaster();
+        //    }
 
         }
 

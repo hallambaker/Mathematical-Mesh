@@ -45,14 +45,14 @@ namespace Goedel.Mesh {
 
         void OpenCatalog(Catalog catalog, string name);
 
-        void Register(DareMessage entry);
+        //void Register(DareMessage entry);
 
         MeshService GetMeshClient(string account);
 
 
-        AssertionAccount GetConnection(
-                    string accountName = null,
-                    string deviceUDF = null);
+        //AssertionAccount GetConnection(
+        //            string accountName = null,
+        //            string deviceUDF = null);
 
 
 

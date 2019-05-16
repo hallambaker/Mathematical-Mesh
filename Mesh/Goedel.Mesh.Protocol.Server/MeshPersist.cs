@@ -269,9 +269,9 @@ namespace Goedel.Mesh.Server {
 
             using (var catalogDevice = new CatalogDevice(accountEntry.Directory)) {
                 foreach (var entry in catalogDevice.AsCatalogEntryDevice) {
-                    if (entry.AuthUDF == jpcSession.UDF) {
-                        return new AccountHandleVerified(accountEntry);
-                        }
+                    //if (entry.AuthUDF == jpcSession.UDF) {
+                    //    return new AccountHandleVerified(accountEntry);
+                    //    }
                     }
                 }
             // Goal: Allow an administrator device to regain control of the account
