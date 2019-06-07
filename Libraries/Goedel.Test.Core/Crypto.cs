@@ -81,11 +81,11 @@ namespace Goedel.Test.Core {
 
 
         public CryptoParametersTest(
-                    List<string> Recipients = null,
-                    List<string> Signers = null,
-                    CryptoAlgorithmID EncryptID = CryptoAlgorithmID.NULL,
-                    CryptoAlgorithmID DigestID = CryptoAlgorithmID.NULL) :
-            base(new KeyCollectionCore(), Recipients, Signers, EncryptID, DigestID) {
+                    List<string> recipients = null,
+                    List<string> signers = null,
+                    CryptoAlgorithmID encryptID = CryptoAlgorithmID.NULL,
+                    CryptoAlgorithmID digestID = CryptoAlgorithmID.NULL) :
+            base(new KeyCollectionCore(), recipients, signers, encryptID:encryptID, digestID: digestID) {
             }
 
         protected override void AddEncrypt(string AccountId) => AddEncrypt(AccountId, true);

@@ -30,7 +30,7 @@ namespace Goedel.Mesh.Test {
             var (escrow, shares) = deviceAdmin.Escrow(3, 2);
             var recoverShares = new List<string> { shares[0].UDFKey, shares[2].UDFKey };
 
-            var deviceAdminRecovered = machineAliceRecover.CreateMesh("main", escrow, recoverShares);
+            var deviceAdminRecovered = machineAliceRecover.RecoverMesh("main", escrow: escrow, shares: recoverShares);
 
             }
 
@@ -112,7 +112,7 @@ namespace Goedel.Mesh.Test {
 
             var deviceAdmin = machineAliceAdmin.CreateAccount("main");
 
-            var catalog = deviceAdmin.GetCatalogDevice();
+            var catalog = deviceAdmin.ContextMesh.ContextMeshAdmin.GetCatalogDevice();
 
             var keySign = machineAliceAdmin.KeyCollection.LocatePrivate(deviceAdmin.ProfileDevice.KeySignature.UDF);
             var Entry1 = MakeCatalogEntryDevice(deviceAdmin.ProfileDevice, keySign);

@@ -107,6 +107,9 @@ namespace Goedel.Protocol.Exchange {
         /// </summary>		
 		public virtual JpcSession JpcSession {get; set;}
 
+		///<summary>Base interface (used to create client wrapper stubs)</summary>
+		protected virtual KeyExchangeService JPCInterface {get; set;}
+
 
         /// <summary>
 		/// Base method for implementing the transaction  Exchange.
@@ -115,7 +118,8 @@ namespace Goedel.Protocol.Exchange {
 		/// <param name="JpcSession">The authentication binding.</param>
 		/// <returns>The response object from the service</returns>
         public virtual ExchangeResponse Exchange (
-                ExchangeRequest request, JpcSession session) => throw new NotImplementedException();
+                ExchangeRequest request, JpcSession session=null) => 
+						JPCInterface.Exchange (request, session ?? JpcSession);
 
         }
 
@@ -150,7 +154,7 @@ namespace Goedel.Protocol.Exchange {
 		/// <param name="JpcSession">The authentication binding.</param>
 		/// <returns>The response object</returns>
         public override ExchangeResponse Exchange (
-                ExchangeRequest request, JpcSession session) {
+                ExchangeRequest request, JpcSession session=null) {
 
             var responseData = JPCRemoteSession.Post("Exchange", request);
             var response = ExchangeResponse.FromJSON(responseData.JSONReader(), true);

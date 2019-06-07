@@ -130,6 +130,9 @@ namespace Goedel.Mesh {
         /// </summary>		
 		public virtual JpcSession JpcSession {get; set;}
 
+		///<summary>Base interface (used to create client wrapper stubs)</summary>
+		protected virtual MeshService JPCInterface {get; set;}
+
 
         /// <summary>
 		/// Base method for implementing the transaction  Hello.
@@ -138,7 +141,8 @@ namespace Goedel.Mesh {
 		/// <param name="JpcSession">The authentication binding.</param>
 		/// <returns>The response object from the service</returns>
         public virtual MeshHelloResponse Hello (
-                HelloRequest request, JpcSession session) => throw new NotImplementedException();
+                HelloRequest request, JpcSession session=null) => 
+						JPCInterface.Hello (request, session ?? JpcSession);
 
         /// <summary>
 		/// Base method for implementing the transaction  Status.
@@ -147,7 +151,8 @@ namespace Goedel.Mesh {
 		/// <param name="JpcSession">The authentication binding.</param>
 		/// <returns>The response object from the service</returns>
         public virtual StatusResponse Status (
-                StatusRequest request, JpcSession session) => throw new NotImplementedException();
+                StatusRequest request, JpcSession session=null) => 
+						JPCInterface.Status (request, session ?? JpcSession);
 
         /// <summary>
 		/// Base method for implementing the transaction  Download.
@@ -156,7 +161,8 @@ namespace Goedel.Mesh {
 		/// <param name="JpcSession">The authentication binding.</param>
 		/// <returns>The response object from the service</returns>
         public virtual DownloadResponse Download (
-                DownloadRequest request, JpcSession session) => throw new NotImplementedException();
+                DownloadRequest request, JpcSession session=null) => 
+						JPCInterface.Download (request, session ?? JpcSession);
 
         /// <summary>
 		/// Base method for implementing the transaction  Upload.
@@ -165,7 +171,8 @@ namespace Goedel.Mesh {
 		/// <param name="JpcSession">The authentication binding.</param>
 		/// <returns>The response object from the service</returns>
         public virtual UploadResponse Upload (
-                UploadRequest request, JpcSession session) => throw new NotImplementedException();
+                UploadRequest request, JpcSession session=null) => 
+						JPCInterface.Upload (request, session ?? JpcSession);
 
         /// <summary>
 		/// Base method for implementing the transaction  Post.
@@ -174,7 +181,8 @@ namespace Goedel.Mesh {
 		/// <param name="JpcSession">The authentication binding.</param>
 		/// <returns>The response object from the service</returns>
         public virtual PostResponse Post (
-                PostRequest request, JpcSession session) => throw new NotImplementedException();
+                PostRequest request, JpcSession session=null) => 
+						JPCInterface.Post (request, session ?? JpcSession);
 
         /// <summary>
 		/// Base method for implementing the transaction  Connect.
@@ -183,7 +191,8 @@ namespace Goedel.Mesh {
 		/// <param name="JpcSession">The authentication binding.</param>
 		/// <returns>The response object from the service</returns>
         public virtual ConnectResponse Connect (
-                ConnectRequest request, JpcSession session) => throw new NotImplementedException();
+                ConnectRequest request, JpcSession session=null) => 
+						JPCInterface.Connect (request, session ?? JpcSession);
 
         /// <summary>
 		/// Base method for implementing the transaction  CreateAccount.
@@ -192,7 +201,8 @@ namespace Goedel.Mesh {
 		/// <param name="JpcSession">The authentication binding.</param>
 		/// <returns>The response object from the service</returns>
         public virtual CreateResponse CreateAccount (
-                CreateRequest request, JpcSession session) => throw new NotImplementedException();
+                CreateRequest request, JpcSession session=null) => 
+						JPCInterface.CreateAccount (request, session ?? JpcSession);
 
         /// <summary>
 		/// Base method for implementing the transaction  DeleteAccount.
@@ -201,7 +211,8 @@ namespace Goedel.Mesh {
 		/// <param name="JpcSession">The authentication binding.</param>
 		/// <returns>The response object from the service</returns>
         public virtual DeleteResponse DeleteAccount (
-                DeleteRequest request, JpcSession session) => throw new NotImplementedException();
+                DeleteRequest request, JpcSession session=null) => 
+						JPCInterface.DeleteAccount (request, session ?? JpcSession);
 
         }
 
@@ -236,7 +247,7 @@ namespace Goedel.Mesh {
 		/// <param name="JpcSession">The authentication binding.</param>
 		/// <returns>The response object</returns>
         public override MeshHelloResponse Hello (
-                HelloRequest request, JpcSession session) {
+                HelloRequest request, JpcSession session=null) {
 
             var responseData = JPCRemoteSession.Post("Hello", request);
             var response = MeshHelloResponse.FromJSON(responseData.JSONReader(), true);
@@ -251,7 +262,7 @@ namespace Goedel.Mesh {
 		/// <param name="JpcSession">The authentication binding.</param>
 		/// <returns>The response object</returns>
         public override StatusResponse Status (
-                StatusRequest request, JpcSession session) {
+                StatusRequest request, JpcSession session=null) {
 
             var responseData = JPCRemoteSession.Post("Status", request);
             var response = StatusResponse.FromJSON(responseData.JSONReader(), true);
@@ -266,7 +277,7 @@ namespace Goedel.Mesh {
 		/// <param name="JpcSession">The authentication binding.</param>
 		/// <returns>The response object</returns>
         public override DownloadResponse Download (
-                DownloadRequest request, JpcSession session) {
+                DownloadRequest request, JpcSession session=null) {
 
             var responseData = JPCRemoteSession.Post("Download", request);
             var response = DownloadResponse.FromJSON(responseData.JSONReader(), true);
@@ -281,7 +292,7 @@ namespace Goedel.Mesh {
 		/// <param name="JpcSession">The authentication binding.</param>
 		/// <returns>The response object</returns>
         public override UploadResponse Upload (
-                UploadRequest request, JpcSession session) {
+                UploadRequest request, JpcSession session=null) {
 
             var responseData = JPCRemoteSession.Post("Upload", request);
             var response = UploadResponse.FromJSON(responseData.JSONReader(), true);
@@ -296,7 +307,7 @@ namespace Goedel.Mesh {
 		/// <param name="JpcSession">The authentication binding.</param>
 		/// <returns>The response object</returns>
         public override PostResponse Post (
-                PostRequest request, JpcSession session) {
+                PostRequest request, JpcSession session=null) {
 
             var responseData = JPCRemoteSession.Post("Post", request);
             var response = PostResponse.FromJSON(responseData.JSONReader(), true);
@@ -311,7 +322,7 @@ namespace Goedel.Mesh {
 		/// <param name="JpcSession">The authentication binding.</param>
 		/// <returns>The response object</returns>
         public override ConnectResponse Connect (
-                ConnectRequest request, JpcSession session) {
+                ConnectRequest request, JpcSession session=null) {
 
             var responseData = JPCRemoteSession.Post("Connect", request);
             var response = ConnectResponse.FromJSON(responseData.JSONReader(), true);
@@ -326,7 +337,7 @@ namespace Goedel.Mesh {
 		/// <param name="JpcSession">The authentication binding.</param>
 		/// <returns>The response object</returns>
         public override CreateResponse CreateAccount (
-                CreateRequest request, JpcSession session) {
+                CreateRequest request, JpcSession session=null) {
 
             var responseData = JPCRemoteSession.Post("CreateAccount", request);
             var response = CreateResponse.FromJSON(responseData.JSONReader(), true);
@@ -341,7 +352,7 @@ namespace Goedel.Mesh {
 		/// <param name="JpcSession">The authentication binding.</param>
 		/// <returns>The response object</returns>
         public override DeleteResponse DeleteAccount (
-                DeleteRequest request, JpcSession session) {
+                DeleteRequest request, JpcSession session=null) {
 
             var responseData = JPCRemoteSession.Post("DeleteAccount", request);
             var response = DeleteResponse.FromJSON(responseData.JSONReader(), true);
@@ -3410,28 +3421,25 @@ namespace Goedel.Mesh {
 
 	/// <summary>
 	///
-	/// Request creation of a new portal account. The request specifies
-	/// the requested account identifier and the Mesh profile to be associated 
-	/// with the account.
+	/// Request binding of an account to a service address.
 	/// </summary>
 	public partial class CreateRequest : MeshRequest {
         /// <summary>
-        ///The Mesh profile to be registered.
+        ///The service account to bind to.
         /// </summary>
 
-		public virtual DareMessage						MeshProfile  {get; set;}
+		public virtual string						ServiceID  {get; set;}
         /// <summary>
-        ///The device profile(s) to be registered in the corresponding device
-        ///catalog.
+        ///The persistent profile that will be used to validate changes to the
+        ///account assertion.
         /// </summary>
 
-		public virtual List<DareMessage>				CatalogEntryDevices  {get; set;}
+		public virtual DareMessage						SignedProfileMesh  {get; set;}
         /// <summary>
-        ///The contact(s) to be registered in the corresponding contact catalog.
-        ///This should usually be populated with a contact for the user themselves.
+        ///The signed assertion describing the account.
         /// </summary>
 
-		public virtual List<CatalogEntryContact>				CatalogEntryContacts  {get; set;}
+		public virtual DareMessage						SignedAssertionAccount  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -3475,45 +3483,21 @@ namespace Goedel.Mesh {
 				_Writer.WriteObjectStart ();
 				}
 			((MeshRequest)this).SerializeX(_Writer, false, ref _first);
-			if (MeshProfile != null) {
+			if (ServiceID != null) {
 				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("MeshProfile", 1);
-					MeshProfile.Serialize (_Writer, false);
+				_Writer.WriteToken ("ServiceID", 1);
+					_Writer.WriteString (ServiceID);
 				}
-			if (CatalogEntryDevices != null) {
+			if (SignedProfileMesh != null) {
 				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("CatalogEntryDevices", 1);
-				_Writer.WriteArrayStart ();
-				bool _firstarray = true;
-				foreach (var _index in CatalogEntryDevices) {
-					_Writer.WriteArraySeparator (ref _firstarray);
-					// This is an untagged structure. Cannot inherit.
-                    //_Writer.WriteObjectStart();
-                    //_Writer.WriteToken(_index._Tag, 1);
-					bool firstinner = true;
-					_index.Serialize (_Writer, true, ref firstinner);
-                    //_Writer.WriteObjectEnd();
-					}
-				_Writer.WriteArrayEnd ();
+				_Writer.WriteToken ("SignedProfileMesh", 1);
+					SignedProfileMesh.Serialize (_Writer, false);
 				}
-
-			if (CatalogEntryContacts != null) {
+			if (SignedAssertionAccount != null) {
 				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("CatalogEntryContacts", 1);
-				_Writer.WriteArrayStart ();
-				bool _firstarray = true;
-				foreach (var _index in CatalogEntryContacts) {
-					_Writer.WriteArraySeparator (ref _firstarray);
-					// This is an untagged structure. Cannot inherit.
-                    //_Writer.WriteObjectStart();
-                    //_Writer.WriteToken(_index._Tag, 1);
-					bool firstinner = true;
-					_index.Serialize (_Writer, true, ref firstinner);
-                    //_Writer.WriteObjectEnd();
-					}
-				_Writer.WriteArrayEnd ();
+				_Writer.WriteToken ("SignedAssertionAccount", 1);
+					SignedAssertionAccount.Serialize (_Writer, false);
 				}
-
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
 				}
@@ -3546,39 +3530,22 @@ namespace Goedel.Mesh {
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
-				case "MeshProfile" : {
+				case "ServiceID" : {
+					ServiceID = JSONReader.ReadString ();
+					break;
+					}
+				case "SignedProfileMesh" : {
 					// An untagged structure
-					MeshProfile = new DareMessage ();
-					MeshProfile.Deserialize (JSONReader);
+					SignedProfileMesh = new DareMessage ();
+					SignedProfileMesh.Deserialize (JSONReader);
  
 					break;
 					}
-				case "CatalogEntryDevices" : {
-					// Have a sequence of values
-					bool _Going = JSONReader.StartArray ();
-					CatalogEntryDevices = new List <DareMessage> ();
-					while (_Going) {
-						// an untagged structure.
-						var _Item = new  DareMessage ();
-						_Item.Deserialize (JSONReader);
-						// var _Item = new DareMessage (JSONReader);
-						CatalogEntryDevices.Add (_Item);
-						_Going = JSONReader.NextArray ();
-						}
-					break;
-					}
-				case "CatalogEntryContacts" : {
-					// Have a sequence of values
-					bool _Going = JSONReader.StartArray ();
-					CatalogEntryContacts = new List <CatalogEntryContact> ();
-					while (_Going) {
-						// an untagged structure.
-						var _Item = new  CatalogEntryContact ();
-						_Item.Deserialize (JSONReader);
-						// var _Item = new CatalogEntryContact (JSONReader);
-						CatalogEntryContacts.Add (_Item);
-						_Going = JSONReader.NextArray ();
-						}
+				case "SignedAssertionAccount" : {
+					// An untagged structure
+					SignedAssertionAccount = new DareMessage ();
+					SignedAssertionAccount.Deserialize (JSONReader);
+ 
 					break;
 					}
 				default : {

@@ -10,6 +10,11 @@ namespace Goedel.Mesh {
 
     public partial class MeshProtocol {
 
+        ///<summary>Initialization property. Access this property to force initialization 
+        ///of the static method.</summary>
+        public static object Initialize => null;
+
+        static MeshProtocol() => ContainerPersistenceStore.AddDictionary(_TagDictionary);
         }
 
 

@@ -16,9 +16,16 @@
 		String Directory
 			Description
 				|Subdirectory containing the catalogs and spools for the account.
-		Struct DareMessage Profile
+		String ServiceID
 			Description
-				|The Mesh profile that was registered
+				|The service account to bind to.
+		Struct DareMessage SignedProfileMesh
+			Description
+				|The persistent profile that will be used to validate changes to the
+				|account assertion.
+		Struct DareMessage SignedAssertionAccount
+			Description
+				|The signed assertion describing the account.
 		String Status
 			Description
 				|The profile status. Valid values are "Pending", "Connected", "Blocked"

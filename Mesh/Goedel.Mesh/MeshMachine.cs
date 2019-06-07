@@ -47,7 +47,7 @@ namespace Goedel.Mesh {
 
         //void Register(DareMessage entry);
 
-        MeshService GetMeshClient(string account);
+
 
 
         //AssertionAccount GetConnection(

@@ -85,6 +85,9 @@ namespace Goedel.Mesh {
 	/// The new base class for the client and service side APIs.
     /// </summary>		
     public abstract partial class MeshService {
+
+
+
         /// <summary>
         /// Return a MeshService object for the named portal service.
         /// </summary>

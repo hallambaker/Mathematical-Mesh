@@ -89,10 +89,21 @@ namespace Goedel.Mesh.Server {
 
 		public virtual string						Directory  {get; set;}
         /// <summary>
-        ///The Mesh profile that was registered
+        ///The service account to bind to.
         /// </summary>
 
-		public virtual DareMessage						Profile  {get; set;}
+		public virtual string						ServiceID  {get; set;}
+        /// <summary>
+        ///The persistent profile that will be used to validate changes to the
+        ///account assertion.
+        /// </summary>
+
+		public virtual DareMessage						SignedProfileMesh  {get; set;}
+        /// <summary>
+        ///The signed assertion describing the account.
+        /// </summary>
+
+		public virtual DareMessage						SignedAssertionAccount  {get; set;}
         /// <summary>
         ///The profile status. Valid values are "Pending", "Connected", "Blocked"
         /// </summary>
@@ -145,10 +156,20 @@ namespace Goedel.Mesh.Server {
 				_Writer.WriteToken ("Directory", 1);
 					_Writer.WriteString (Directory);
 				}
-			if (Profile != null) {
+			if (ServiceID != null) {
 				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("Profile", 1);
-					Profile.Serialize (_Writer, false);
+				_Writer.WriteToken ("ServiceID", 1);
+					_Writer.WriteString (ServiceID);
+				}
+			if (SignedProfileMesh != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("SignedProfileMesh", 1);
+					SignedProfileMesh.Serialize (_Writer, false);
+				}
+			if (SignedAssertionAccount != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("SignedAssertionAccount", 1);
+					SignedAssertionAccount.Serialize (_Writer, false);
 				}
 			if (Status != null) {
 				_Writer.WriteObjectSeparator (ref _first);
@@ -191,10 +212,21 @@ namespace Goedel.Mesh.Server {
 					Directory = JSONReader.ReadString ();
 					break;
 					}
-				case "Profile" : {
+				case "ServiceID" : {
+					ServiceID = JSONReader.ReadString ();
+					break;
+					}
+				case "SignedProfileMesh" : {
 					// An untagged structure
-					Profile = new DareMessage ();
-					Profile.Deserialize (JSONReader);
+					SignedProfileMesh = new DareMessage ();
+					SignedProfileMesh.Deserialize (JSONReader);
+ 
+					break;
+					}
+				case "SignedAssertionAccount" : {
+					// An untagged structure
+					SignedAssertionAccount = new DareMessage ();
+					SignedAssertionAccount.Deserialize (JSONReader);
  
 					break;
 					}

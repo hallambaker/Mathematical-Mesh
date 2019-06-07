@@ -8,6 +8,39 @@ using Goedel.Utilities;
 using Goedel.Protocol;
 
 namespace Goedel.Mesh {
+
+    public partial class KeyComposite {
+
+        public string UDF => KeyPair.UDF;
+        public KeyPairAdvanced KeyPair => keyPair ?? (Public.KeyPair as KeyPairAdvanced).CacheValue (out keyPair);
+        KeyPairAdvanced keyPair = null;
+
+        public KeyComposite() {
+
+            }
+
+        public KeyComposite(PublicKey baseKey, string service) :
+                    this(baseKey.KeyPair as KeyPairAdvanced, service) {
+            }
+
+        public KeyComposite(KeyPairAdvanced baseKey, string service=null) {
+            Public = Cryptography.Jose.Key.GetPublic(baseKey);
+            if (service == null) {
+                Part = Cryptography.Jose.Key.GetPrivate(baseKey);
+
+                }
+            else {
+                throw new NYI(); // ToDo: implement service for split keys
+                }
+            }
+
+        public KeyPairAdvanced GetPrivate(IMeshMachine meshMachine) =>
+                meshMachine.KeyCollection.LocatePrivate(UDF) as KeyPairAdvanced;
+
+
+        }
+
+
     public partial class KeyOverlay {
 
         public KeyPairAdvanced KeyPair;

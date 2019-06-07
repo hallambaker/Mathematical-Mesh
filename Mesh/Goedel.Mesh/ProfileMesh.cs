@@ -6,35 +6,37 @@ using Goedel.Cryptography.Dare;
 using Goedel.Cryptography;
 
 namespace Goedel.Mesh {
+
+    public partial class ActivationAccount {
+        public AssertionAccountConnection AssertionAccountConnection => assertionAccountConnection ??
+            AssertionAccountConnection.Decode(
+                    SignedAssertionAccountConnection).CacheValue(out assertionAccountConnection);
+        AssertionAccountConnection assertionAccountConnection;
+
+        }
+    public partial class AssertionAccountConnection {
+        public static new AssertionAccountConnection Decode(DareMessage message) {
+            var result = FromJSON(message.GetBodyReader(), true);
+            result.DareMessage = message;
+            return result;
+            }
+        }
+
     public partial class AssertionAccount {
 
         public override string _PrimaryKey => UDF;
         public string UDF => AccountEncryptionKey.UDF;
-        public byte[] UDFBytes => ProfileMaster.UDFBytes;
+        //public byte[] UDFBytes => ProfileMaster.UDFBytes;
 
 
-        /// <summary>
-        /// The signed device profile
-        /// </summary>
-        public override DareMessage DareMessage => ProfileMeshSigned;
-
-        /// <summary>
-        /// The signed device profile
-        /// </summary>
-        public DareMessage ProfileMeshSigned { get; private set; }
-
-        public ProfileMaster ProfileMaster => profileMaster ??
-            ProfileMaster.Decode(MasterProfile).CacheValue(out profileMaster);
-        ProfileMaster profileMaster = null;
+        //public ProfileMaster ProfileMaster => profileMaster ??
+        //    ProfileMaster.Decode(MasterProfile).CacheValue(out profileMaster);
+        //ProfileMaster profileMaster = null;
 
 
-        public void Sign(KeyPair signingKeyPair)=> ProfileMeshSigned=
-            DareMessage.Encode(GetBytes(true), signingKey: signingKeyPair);
-
-
-        public static AssertionAccount Decode(DareMessage message) {
+        public static new AssertionAccount Decode(DareMessage message) {
             var result = FromJSON(message.GetBodyReader(), true);
-            result.ProfileMeshSigned = message;
+            result.DareMessage = message;
             return result;
             }
 

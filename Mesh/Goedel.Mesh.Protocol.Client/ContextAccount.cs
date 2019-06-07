@@ -6,161 +6,131 @@ using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
 using Goedel.Cryptography.Jose;
 using Goedel.Mesh;
+using System.IO;
 
 namespace Goedel.Mesh.Client {
+
+
+
     public class ContextAccount : Disposable {
 
         ///<summary>The device profile to which the signature key is bound</summary>
         public ProfileDevice ProfileDevice { get; }
 
-        ///<summary>This context as a service context</summary>
-        ContextAccountService ContextAccountService => this as ContextAccountService;
+        ///<summary>The enclosing machine context.</summary>
+        public ContextMesh ContextMesh;
 
+        ContextMeshAdmin ContextMeshAdmin => ContextMesh as ContextMeshAdmin;
 
-        IMeshMachineClient MeshMachine { get; }
+        ///<summary>The account activation</summary>
+        public ActivationAccount ActivationAccount;
+
+        public AssertionAccount AssertionAccount;
+
+        ///<summary>The Machine context.</summary>
+        IMeshMachineClient MeshMachine => ContextMesh.MeshMachine;
         KeyCollection KeyCollection => MeshMachine.KeyCollection;
-        AccountEntry AccountEntry;
-        AssertionAccount AssertionAccount;
+
+        ///<summary>The cryptographic parameters for reading/writing to account containers</summary>
         CryptoParameters ContainerCryptoParameters;
-
-        //CatalogEntryDevice CatalogEntryDevice => AccountEntry.CatalogEntryDevice;
-        public AssertionDeviceConnection AssertionDeviceConnection;
-        AssertionDevicePrivate AssertionDevicePrivate;
-
-
-        public string AccountId;
-
-        public string Local => AccountEntry.Local;
-
 
         KeyPair KeySignature;
         KeyPair KeyEncryption;
         KeyPair KeyAuthentication;
-        ContextMeshAdmin ContextAdmin;
 
-        public ContextAccount(IMeshMachineClient meshMachine, string local = null) :
-                this(meshMachine, meshMachine.GetAccount(local)) {
+        public string DirectoryAccount => directoryAccount ?? 
+            Path.Combine(MeshMachine.DirectoryMesh, AssertionAccount.UDF).CacheValue(out directoryAccount);
+        string directoryAccount;
+
+        Dictionary<string, Store> DictionaryStores { get; }
+
+        public ContextAccount(
+                    ContextMesh contextMesh,
+                    ActivationAccount  activationAccount,
+                    AssertionAccount assertionAccount
+                    ) {
+            ContextMesh = contextMesh;
+            ActivationAccount = activationAccount;
+            AssertionAccount = assertionAccount;
+            KeySignature = activationAccount.KeySignature.GetPrivate(MeshMachine);
+            KeyEncryption = activationAccount.KeyEncryption.GetPrivate(MeshMachine);
+            KeyAuthentication = activationAccount.KeyAuthentication.GetPrivate(MeshMachine);
+
+            ContainerCryptoParameters = new CryptoParameters(keyCollection: KeyCollection, recipient: KeyEncryption);
+            DictionaryStores = new Dictionary<string, Store>();
             }
 
 
         /// <summary>
-        /// 
+        /// Constructor used to create a duplicate Context Account bound to a different service.
         /// </summary>
-        /// <param name="adminEntry"></param>
-        public ContextAccount(
-                IMeshMachineClient meshMachine,
-                AccountEntry accountEntry
-                ) {
-            Assert.AssertNotNull(accountEntry, NYI.Throw);
-
-            MeshMachine = meshMachine;
-            AccountEntry = accountEntry;
-            //ProfileDevice = ProfileDevice.Decode(accountEntry.EncodedProfileDevice);
-            AssertionAccount = AssertionAccount.Decode(accountEntry.EncodedAssertionAccount);
-            ContainerCryptoParameters = new CryptoParameters(Recipient: AssertionAccount.AccountEncryptionKey.KeyPair);
-
-            // Recover the account keys from their composites.
-            KeySignature = AssertionDevicePrivate.KeySignature.GetPrivate(MeshMachine);
-            KeyEncryption = AssertionDevicePrivate.KeyEncryption.GetPrivate(MeshMachine);
-            KeyAuthentication = AssertionDevicePrivate.KeyAuthentication.GetPrivate(MeshMachine);
-
-            }
-
-
-        ContextAccount(ContextMeshAdmin contextAdmin, AssertionAccount assertionAccount) {
-            MeshMachine = contextAdmin.MeshMachine;
-            ContextAdmin = contextAdmin;
-            AssertionAccount = assertionAccount;
-            }
-
-
+        /// <param name="contextAccount">The existing context.</param>
         protected ContextAccount(ContextAccount contextAccount) {
+            ContextMesh = contextAccount.ContextMesh;
+            ActivationAccount = contextAccount.ActivationAccount;
+            AssertionAccount = contextAccount.AssertionAccount;
+            KeySignature = contextAccount.KeySignature;
+            KeyEncryption = contextAccount.KeyEncryption;
+            KeyAuthentication = contextAccount.KeyAuthentication;
+            ContainerCryptoParameters = contextAccount.ContainerCryptoParameters;
+
+            DictionaryStores = contextAccount.DictionaryStores;
             }
 
 
 
-        public static ContextAccount CreateAccount(
-                ContextMeshAdmin contextAdmin,
-                string localName,
-                IMeshMachineClient meshMachine = null,
-
-                ProfileDevice profileDevice = null,
-                CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
-                CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default,
-                CryptoAlgorithmID algorithmAuthenticate = CryptoAlgorithmID.Default) {
-
-            meshMachine = meshMachine ?? contextAdmin.MeshMachine;
-            profileDevice = profileDevice ?? contextAdmin.ProfileDevice ??
-                ProfileDevice.Generate(meshMachine, algorithmSign, algorithmEncrypt, algorithmAuthenticate);
 
 
-            // Create the AssertionAccount here
-            var contextAccount = contextAdmin.CreateAccount(localName);
-
-            // Add profileDevice to the Account
-            contextAccount.Add(profileDevice);
-
-
-            return contextAccount;
-            }
-
-
-        public AccountEntry Add(ProfileDevice profileDevice) {
-            var catalogEntryDevice = new CatalogEntryDevice(MeshMachine, profileDevice);
-
-            var accountEntry = new AccountEntry() {
-                ID = catalogEntryDevice.UDF,
-
-                Directory = MeshMachine.DirectoryMesh,
-                //EncodedProfileDevice = profileDevice.DareMessage,
-                //CatalogEntryDevice = catalogEntryDevice,
-                EncodedAssertionAccount = AssertionAccount.DareMessage
-                };
-
-            ContextAdmin.Add(accountEntry);
-
-            return accountEntry;
-            }
 
 
         public ContextAccountService AddService(
-                string ServiceID) {
-            throw new NYI();
+                string serviceID) {
+            // Add to assertion
+            AssertionAccount.ServiceIDs = AssertionAccount.ServiceIDs ?? new List<string>();
+            AssertionAccount.ServiceIDs.Add(serviceID);
+            ContextMeshAdmin.Sign(AssertionAccount);
+
+            var createRequest = new CreateRequest() {
+                ServiceID = serviceID,
+                SignedAssertionAccount = AssertionAccount.DareMessage,
+                SignedProfileMesh = ContextMesh.ProfileMesh.DareMessage
+                };
+
+            // attempt to register with service in question
+
+            var meshClient = MeshMachine.GetMeshClient(serviceID, KeyAuthentication,
+                ActivationAccount.AssertionAccountConnection, ContextMesh.ProfileMesh);
+            meshClient.CreateAccount(createRequest, meshClient.JpcSession);
+
+
+            // Update the account assertion. This lives in CatalogApplication.
+            AssertionAccount.ServiceIDs = AssertionAccount.ServiceIDs ?? new List<string>();
+            AssertionAccount.ServiceIDs.Add(serviceID);
+            GetCatalogApplication().Add(AssertionAccount);
+
+            return new ContextAccountService (this, meshClient);
             }
 
 
-        public string GetPIN() {
-            throw new NYI();
-            }
-
-        public void Sync() {
-            throw new NYI();
-            }
-
-
-        public void Process(MeshMessage meshMessage, bool accept = true, bool respond = true) {
-            }
-
-
-        public void ContactRequest(string serviceID) {
-            }
-
-        public void ConfirmationRequest(string serviceID, string messageText) {
+        public void SetContactSelf(Contact contact) {
+            ContextMeshAdmin.Sign(contact);
+            GetCatalogContact().Add(contact, true);
             }
 
 
         #region // Convenience accessors for catalogs and stores
 
         ///<summary>Dictionary used to cache stores to avoid need to re-open them repeatedly.</summary>
-        Dictionary<string, Store> DictionaryStores = new Dictionary<string, Store>();
 
-        ///<summary>Returns the device catalog for the account</summary>
-        public CatalogDevice GetCatalogDevice() => GetStore(CatalogDevice.Label) as CatalogDevice;
+
+        ///<summary>Returns the application catalog for the account</summary>
+        public CatalogApplication GetCatalogApplication() => GetStore(CatalogApplication.Label) as CatalogApplication;
+
 
         ///<summary>Returns the contacts catalog for the account</summary>
         public CatalogContact GetCatalogContact() => GetStore(CatalogContact.Label) as CatalogContact;
 
-        ///<summary>Returns the c redential catalog for the account</summary>
+        ///<summary>Returns the credential catalog for the account</summary>
         public CatalogCredential GetCatalogCredential() => GetStore(CatalogCredential.Label) as CatalogCredential;
 
         ///<summary>Returns the bookmark catalog for the account</summary>
@@ -172,8 +142,7 @@ namespace Goedel.Mesh.Client {
         ///<summary>Returns the network catalog for the account</summary>
         public CatalogNetwork GetCatalogNetwork() => GetStore(CatalogNetwork.Label) as CatalogNetwork;
 
-        ///<summary>Returns the application catalog for the account</summary>
-        public CatalogApplication GetCatalogApplication() => GetStore(CatalogApplication.Label) as CatalogApplication;
+
 
         ///<summary>Returns the inbound spool for the account</summary>
         public Spool GetSpoolInbound() => spoolInbound ?? (GetStore(Spool.SpoolInbound) as Spool).CacheValue(out spoolInbound);
@@ -259,17 +228,16 @@ namespace Goedel.Mesh.Client {
 
         Store MakeStore(string name) {
             switch (name) {
-                case Spool.SpoolInbound: return new Spool(MeshMachine.DirectoryMesh, name, ContainerCryptoParameters, KeyCollection);
-                case Spool.SpoolOutbound: return new Spool(MeshMachine.DirectoryMesh, name, ContainerCryptoParameters, KeyCollection);
-                case Spool.SpoolArchive: return new Spool(MeshMachine.DirectoryMesh, name, ContainerCryptoParameters, KeyCollection);
+                case Spool.SpoolInbound: return new Spool(DirectoryAccount, name, ContainerCryptoParameters, KeyCollection);
+                case Spool.SpoolOutbound: return new Spool(DirectoryAccount, name, ContainerCryptoParameters, KeyCollection);
+                case Spool.SpoolArchive: return new Spool(DirectoryAccount, name, ContainerCryptoParameters, KeyCollection);
 
-                case CatalogCredential.Label: return new CatalogCredential(MeshMachine.DirectoryMesh, name, ContainerCryptoParameters, KeyCollection);
-                case CatalogDevice.Label: return new CatalogDevice(MeshMachine.DirectoryMesh, name, ContainerCryptoParameters, KeyCollection);
-                case CatalogContact.Label: return new CatalogContact(MeshMachine.DirectoryMesh, name, ContainerCryptoParameters, KeyCollection);
-                case CatalogCalendar.Label: return new CatalogCalendar(MeshMachine.DirectoryMesh, name, ContainerCryptoParameters, KeyCollection);
-                case CatalogBookmark.Label: return new CatalogBookmark(MeshMachine.DirectoryMesh, name, ContainerCryptoParameters, KeyCollection);
-                case CatalogNetwork.Label: return new CatalogNetwork(MeshMachine.DirectoryMesh, name, ContainerCryptoParameters, KeyCollection);
-                case CatalogApplication.Label: return new CatalogApplication(MeshMachine.DirectoryMesh, name, ContainerCryptoParameters, KeyCollection);
+                case CatalogCredential.Label: return new CatalogCredential(DirectoryAccount, name, ContainerCryptoParameters, KeyCollection);
+                case CatalogContact.Label: return new CatalogContact(DirectoryAccount, name, ContainerCryptoParameters, KeyCollection);
+                case CatalogCalendar.Label: return new CatalogCalendar(DirectoryAccount, name, ContainerCryptoParameters, KeyCollection);
+                case CatalogBookmark.Label: return new CatalogBookmark(DirectoryAccount, name, ContainerCryptoParameters, KeyCollection);
+                case CatalogNetwork.Label: return new CatalogNetwork(DirectoryAccount, name, ContainerCryptoParameters, KeyCollection);
+                case CatalogApplication.Label: return new CatalogApplication(DirectoryAccount, name, ContainerCryptoParameters, KeyCollection);
                 }
 
             throw new NYI();
@@ -279,8 +247,35 @@ namespace Goedel.Mesh.Client {
 
 
     public class ContextAccountService : ContextAccount {
-        ContextAccountService(ContextAccount contextAccount) : base (contextAccount) {
+        MeshService MeshService;
+
+
+        public ContextAccountService(ContextAccount contextAccount, MeshService  meshService) : 
+                    base (contextAccount) {
+            MeshService = meshService;
             }
 
+
+        public string GetPIN() {
+            throw new NYI();
+            }
+
+        public void Sync() {
+            throw new NYI();
+            }
+
+
+        public void Process(MeshMessage meshMessage, bool accept = true, bool respond = true) {
+            throw new NYI();
+            }
+
+
+        public void ContactRequest(string serviceID) {
+            throw new NYI();
+            }
+
+        public void ConfirmationRequest(string serviceID, string messageText) {
+            throw new NYI();
+            }
         }
     }

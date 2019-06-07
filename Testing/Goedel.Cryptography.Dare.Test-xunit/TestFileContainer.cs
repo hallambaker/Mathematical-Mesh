@@ -55,7 +55,7 @@ namespace Goedel.XUnit {
         public void TestFileContainerEncrypted1 () {
             var Recipients = new List<string> { "Alice@example.com" };
             var CryptoParameters = new CryptoParametersTest(
-                        Recipients: Recipients);
+                        recipients: Recipients);
 
             var Bytes = CreateBytes(100);
             ReadWriteContainer("TestFileEncrypted_100", Bytes, CryptoParameters);
@@ -69,7 +69,7 @@ namespace Goedel.XUnit {
         public void TestFileContainerEncrypted16 () {
             var Recipients = new List<string> { "Alice@example.com" };
             var CryptoParameters = new CryptoParametersTest(
-                        Recipients: Recipients);
+                        recipients: Recipients);
 
             byte[] Bytes = new byte[0];
             ReadWriteContainer("TestFileEncrypted_0", Bytes, CryptoParameters);
@@ -108,7 +108,7 @@ namespace Goedel.XUnit {
         public void TestArchiveEncrypted10Bulk () {
             var Recipients = new List<string> { "Alice@example.com" };
             var CryptoParameters = new CryptoParametersTest(
-                        Recipients: Recipients);
+                        recipients: Recipients);
             ReadWriteArchive("TestArchive_", 10, CryptoParameters, false);
             }
 
@@ -119,7 +119,7 @@ namespace Goedel.XUnit {
         public void TestArchiveEncrypted10Individual () {
             var Recipients = new List<string> { "Alice@example.com" };
             var CryptoParameters = new CryptoParametersTest(
-                        Recipients: Recipients);
+                        recipients: Recipients);
             ReadWriteArchive("TestArchive_", 10, CryptoParameters, true);
             }
 
@@ -130,7 +130,7 @@ namespace Goedel.XUnit {
         public void TestArchiveMulti () {
             var Recipients = new List<string> { "Alice@example.com" };
             var CryptoParameters = new CryptoParametersTest(
-                        Recipients: Recipients);
+                        recipients: Recipients);
             var Entries = new int[] { 5, 15, 30, 100 };
 
             foreach (var Entry in Entries) {

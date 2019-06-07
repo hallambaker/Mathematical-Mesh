@@ -61,72 +61,80 @@ namespace Goedel.Cryptography.Dare {
         /// Create a CryptoParameters instance to encode data for the specified recipients and
         /// signers using the specified KeyCollection to resolve the identifiers.
         /// </summary>
-        /// <param name="KeyCollection">The Key collection to be used to resolve names.</param>
-        /// <param name="Recipients">The public keys to be used to encrypt.</param>
-        /// <param name="Signers">The private keys to be used in signing.</param>
-        /// <param name="EncryptID">The cryptographic enhancement to be applied to the
+        /// <param name="keyCollection">The Key collection to be used to resolve names.</param>
+        /// <param name="recipients">The public keys to be used to encrypt.</param>
+        /// <param name="signers">The private keys to be used in signing.</param>
+        /// <param name="recipient">The public keys to be used to encrypt.</param>
+        /// <param name="signer">The private keys to be used in signing.</param>
+        /// <param name="encryptID">The cryptographic enhancement to be applied to the
         /// content.</param>
-        /// <param name="DigestID">The digest algorithm to be applied to the message
+        /// <param name="digestID">The digest algorithm to be applied to the message
         /// encoding.</param>
         public CryptoParameters(
-                        KeyCollection KeyCollection,
-                        List<string> Recipients = null,
-                        List<string> Signers = null,
-                        CryptoAlgorithmID EncryptID = CryptoAlgorithmID.NULL,
-                        CryptoAlgorithmID DigestID = CryptoAlgorithmID.NULL) {
-            this.DigestID = DigestID;
-            this.EncryptID = EncryptID;
+                        KeyCollection keyCollection = null,
+                        List<string> recipients = null,
+                        List<string> signers = null,
+                        KeyPair recipient = null,
+                        KeyPair signer = null,
+                        CryptoAlgorithmID encryptID = CryptoAlgorithmID.NULL,
+                        CryptoAlgorithmID digestID = CryptoAlgorithmID.NULL) {
+            this.DigestID = digestID;
+            this.EncryptID = encryptID;
 
-            this.KeyCollection = KeyCollection;
+            this.KeyCollection = keyCollection;
 
-            if (Recipients != null) {
+            if (recipients != null) {
                 SetEncrypt();
 
                 EncryptionKeys = new List<KeyPair>();
-                foreach (var Entry in Recipients) {
+                foreach (var Entry in recipients) {
                     AddEncrypt(Entry);
                     }
                 }
-
-            if (Signers != null) {
+            else if (recipient != null) {
+                SetEncrypt();
+                EncryptionKeys = new List<KeyPair>() { recipient };
+                }
+            if (signers != null) {
                 SetDigest();
 
                 SignerKeys = new List<KeyPair>();
-                foreach (var Entry in Signers) {
+                foreach (var Entry in signers) {
                     AddSign(Entry);
                     }
                 }
-            }
-
-
-        /// <summary>
-        /// Create a CryptoParameters instance to encode data for the specified recipients and
-        /// signers using the specified KeyCollection to resolve the identifiers.
-        /// </summary>
-        /// <param name="Recipient">The public keys to be used to encrypt.</param>
-        /// <param name="Signer">The private keys to be used in signing.</param>
-        /// <param name="EncryptID">The cryptographic enhancement to be applied to the
-        /// content.</param>
-        /// <param name="DigestID">The digest algorithm to be applied to the message
-        /// encoding.</param>
-        public CryptoParameters(
-                KeyPair Recipient = null,
-                KeyPair Signer = null,
-                CryptoAlgorithmID EncryptID = CryptoAlgorithmID.NULL,
-                CryptoAlgorithmID DigestID = CryptoAlgorithmID.NULL) {
-
-            this.DigestID = DigestID;
-            this.EncryptID = EncryptID;
-
-            if (Recipient != null) {
-                SetEncrypt();
-                EncryptionKeys = new List<KeyPair>() { Recipient };
-                }
-            if (Signer != null) {
+            else if (signer != null) {
                 SetDigest();
-                SignerKeys = new List<KeyPair>() { Signer };
+                SignerKeys = new List<KeyPair>() { signer };
                 }
             }
+
+
+        ///// <summary>
+        ///// Create a CryptoParameters instance to encode data for the specified recipients and
+        ///// signers using the specified KeyCollection to resolve the identifiers.
+        ///// </summary>
+        ///// <param name="keyCollection">The Key collection to be used to resolve names.</param>
+        ///// <param name="recipient">The public keys to be used to encrypt.</param>
+        ///// <param name="signer">The private keys to be used in signing.</param>
+        ///// <param name="encryptID">The cryptographic enhancement to be applied to the
+        ///// content.</param>
+        ///// <param name="digestID">The digest algorithm to be applied to the message
+        ///// encoding.</param>
+        //public CryptoParameters(
+        //    KeyCollection keyCollection=null,
+
+        //    CryptoAlgorithmID encryptID = CryptoAlgorithmID.NULL,
+        //    CryptoAlgorithmID digestID = CryptoAlgorithmID.NULL) {
+
+        //    KeyCollection = keyCollection;
+
+        //    this.DigestID = digestID;
+        //    this.EncryptID = encryptID;
+
+
+
+        //    }
 
 
 

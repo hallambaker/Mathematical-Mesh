@@ -78,15 +78,15 @@ namespace Goedel.XUnit {
 
             var contextMeshAdmin = machineAdmin.CreateMesh("main");
             var contextAccountAlice = contextMeshAdmin.CreateAccount("main");
-            var contextAccountService = contextAccountAlice.AddService("alice@example.com");
+            var contextAccountServiceAlice = contextAccountAlice.AddService("alice@example.com");
 
 
             // Perform some offline operations on the account catalogs
             var contactCatalog = contextAccountAlice.GetCatalogContact();
-            contactCatalog.SetContactSelf(ContactAlice);
+            contextAccountServiceAlice.SetContactSelf(ContactAlice);
 
             // Check we can read the data back again
-            var contextAccount_2 = machineAdmin.ReadContextAccount();
+            var contextAccount_2 = machineAdmin.GetContextAccount();
             Verify(contextAccountAlice, contextAccount_2);
 
 
@@ -100,7 +100,7 @@ namespace Goedel.XUnit {
 
             // Connect a second device using the PIN connection mechanism
             var machineAlice2 = new MeshMachineTest(testEnvironmentCommon, DeviceAlice2);
-            var PIN = contextAccountAlice.GetPIN();
+            var PIN = contextAccountServiceAlice.GetPIN();
             var contextAccount2 = machineAlice2.Connect(AccountAlice, PIN: PIN);
             contextAccount2.Sync();
 
@@ -113,7 +113,7 @@ namespace Goedel.XUnit {
             var contextAccount3 = machineAlice3.Connect(AccountAlice);
 
             var connectRequest = contextAccountAlice.GetPendingMessageConnectionRequest();
-            contextAccountAlice.Process(connectRequest);
+            contextAccountServiceAlice.Process(connectRequest);
 
             contextAccount3.Sync();
 
@@ -127,17 +127,17 @@ namespace Goedel.XUnit {
                 out var contextAccountBob,
                 AccountBob);
 
-            var contactCatalogBob = contextAccountBob.GetCatalogContact();
-            contactCatalogBob.SetContactSelf(ContactBob);
+            //var contactCatalogBob = contextAccountBob.GetCatalogContact();
+            contextAccountBob.SetContactSelf(ContactBob);
 
             // **** Contact testing
             contextAccountBob.ContactRequest(AccountAlice);
             var contactRequest = contextAccountAlice.GetPendingMessageConnectionRequest();
-            contextAccountAlice.Process(contactRequest);
+            contextAccountServiceAlice.Process(contactRequest);
 
             // Get the response back
             var contactResponseBob = contextAccountBob.GetPendingMessageConnectionRequest();
-            contextAccountAlice.Process(contactResponseBob);
+            contextAccountServiceAlice.Process(contactResponseBob);
 
 
             // **** Confirmation testing
@@ -145,11 +145,11 @@ namespace Goedel.XUnit {
             // Ask Alice to add our credential
             contextAccountBob.ConfirmationRequest(AccountAlice, "Dinner tonight");
             var confirmRequest = contextAccountAlice.GetPendingMessageConfirmationRequest();
-            contextAccountAlice.Process(confirmRequest);
+            contextAccountServiceAlice.Process(confirmRequest);
 
             // Get the response back
             var confirmResponseBob = contextAccountBob.GetPendingMessageConfirmationResponse();
-            contextAccountAlice.Process(confirmResponseBob);
+            contextAccountServiceAlice.Process(confirmResponseBob);
             }
 
         /// <summary>
@@ -197,8 +197,8 @@ namespace Goedel.XUnit {
             MeshMachineTest.GenerateMasterAccount(testEnvironmentCommon, DeviceAliceAdmin, "main",
                 out var contextAccountAlice);
 
-            var contactCatalog = contextAccountAlice.GetCatalogContact();
-            contactCatalog.SetContactSelf(ContactAlice);
+            //var contactCatalog = contextAccountAlice.GetCatalogContact();
+            contextAccountAlice.SetContactSelf(ContactAlice);
             }
 
         [Fact]
@@ -207,8 +207,8 @@ namespace Goedel.XUnit {
             MeshMachineTest.GenerateMasterAccount(testEnvironmentCommon, DeviceAliceAdmin, "main",
                 out var contextAccountAlice, AccountAlice);
 
-            var contactCatalog = contextAccountAlice.GetCatalogContact();
-            contactCatalog.SetContactSelf(ContactAlice);
+            //var contactCatalog = contextAccountAlice.GetCatalogContact();
+            contextAccountAlice.SetContactSelf(ContactAlice);
             }
 
 
@@ -268,8 +268,10 @@ namespace Goedel.XUnit {
 
         bool Verify(ContextAccount first, ContextAccount second) {
             (first.ProfileDevice.UDF == second.ProfileDevice.UDF).AssertTrue();
-            Verify (first.AssertionDeviceConnection, second.AssertionDeviceConnection).AssertTrue();
-            return true;
+
+            throw new NYI();
+            //Verify (first.AssertionDeviceConnection, second.AssertionDeviceConnection).AssertTrue();
+            //return true;
             }
 
 

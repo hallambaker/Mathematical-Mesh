@@ -22,32 +22,12 @@ namespace Goedel.Mesh {
         public ProfileMaster() {
             }
 
-        /// <summary>
-        /// Create a new master profile.
-        /// </summary>
-        /// <param name="algorithmSign"></param>
-        /// <param name="algorithmEncrypt"></param>
-        public static ProfileMaster Generate(
-                        ProfileDevice profileDevice,
-                        KeyPair keyPublicSign,
-                        KeyPair keyPublicEncrypt) {
 
-            List<PublicKey> masterEscrowKeys=null;
-            if (keyPublicEncrypt != null) {
-                masterEscrowKeys = new List<PublicKey> {
-                    new PublicKey(keyPublicEncrypt.KeyPairPublic()) };
-                }
-
-            var profileMaster = new ProfileMaster() {
-                KeySignature = new PublicKey(keyPublicSign.KeyPairPublic()),
-                MasterEscrowKeys = masterEscrowKeys
-                };
-
-            var bytes = profileMaster.GetBytes(tag: true);
-
-            profileMaster.DareMessage = DareMessage.Encode(bytes,
-                    signingKey: keyPublicSign, contentType: "application/mmm");
-            return profileMaster;
+        public ProfileMaster(
+                    KeyPair keySign, KeyPair keyEscrow, KeyPair keyEncrypt) {
+            KeySignature = new PublicKey(keySign.KeyPairPublic());
+            KeyEncryption = new PublicKey(keyEncrypt.KeyPairPublic());
+            //MasterEscrowKeys = new List<PublicKey> { new PublicKey(keyEscrow.KeyPairPublic()) };
             }
 
         public static ProfileMaster Generate(
@@ -58,58 +38,19 @@ namespace Goedel.Mesh {
             algorithmSign = algorithmSign.DefaultAlgorithmSign();
             algorithmEncrypt = algorithmEncrypt.DefaultAlgorithmEncrypt();
             var keySign = meshMachine.CreateKeyPair(algorithmSign, KeySecurity.Device, keyUses: KeyUses.Sign);
+            var keyEscrow = meshMachine.CreateKeyPair(algorithmEncrypt, KeySecurity.Device, keyUses: KeyUses.Encrypt);
             var keyEncrypt = meshMachine.CreateKeyPair(algorithmEncrypt, KeySecurity.Device, keyUses: KeyUses.Encrypt);
-            return new ProfileMaster() {
-                KeySignature = new PublicKey(keySign.KeyPairPublic()),
-                MasterEscrowKeys = new List<PublicKey> { new PublicKey(keyEncrypt.KeyPairPublic()) }
-                    };
+            return new ProfileMaster(keySign, keyEscrow, keyEncrypt);
             }
 
 
-        public DareMessage Sign(KeyPair SignatureKey) {
-            DareMessage = DareMessage.Encode(GetBytes(true), signingKey: SignatureKey);
-            return DareMessage;
-            }
+
 
         public static new ProfileMaster Decode(DareMessage message) {
             var result = FromJSON(message.GetBodyReader(), true);
             result.DareMessage = message;
             return result;
             }
-
-
-
-
-        // ***************   Old stuff to be deleted.
-        public CatalogEntryDevice Add(IMeshMachine meshMachine, ProfileDevice profileDevice, bool Administrator) {
-
-            var catalogEntryDevice = new CatalogEntryDevice(meshMachine, profileDevice);
-
-            if (Administrator) {
-                catalogEntryDevice.ActivateAdmin(null);
-                OnlineSignatureKeys = OnlineSignatureKeys ?? new List<PublicKey>();
-                OnlineSignatureKeys.Add(profileDevice.KeySignature);
-                }
-
-            return catalogEntryDevice;
-            }
-
-        public bool IsAdministrator(string UDF) {
-            Assert.NotNull(OnlineSignatureKeys, InvalidProfile.Throw);
-
-            foreach (var admin in OnlineSignatureKeys) {
-                if (admin.UDF == UDF) {
-                    return true;
-                    }
-                }
-            return false;
-            }
-
-
-
-
-
-
 
         }
 

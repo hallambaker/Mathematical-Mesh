@@ -51,6 +51,15 @@ namespace Goedel.Mesh {
         //public AsCatalogEntryContact AsCatalogEntryContact => new AsCatalogEntryContact(this);
 
 
+        public void Add(AssertionAccount assertionAccount) {
+            var catalogEntryApplicationAccount = new CatalogEntryApplicationAccount() {
+                SignedAccountAssertion = assertionAccount.DareMessage
+                };
+            Add(catalogEntryApplicationAccount);
+
+            }
+
+
         public CatalogEntryContact LocateBySite(string Key) => Locate(Key) as CatalogEntryContact;
 
 

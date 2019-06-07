@@ -149,20 +149,20 @@ namespace ExampleGenerator {
 
             var Accounts = new List<string> { AccountAlice };
             CryptoParametersPlaintext = new CryptoParameters(
-                        KeyCollection: KeyCollection);
+                        keyCollection: KeyCollection);
 
             CryptoParametersEncrypt = new CryptoParameters(
-                        KeyCollection: KeyCollection,
-                        Recipients: Accounts);
+                        keyCollection: KeyCollection,
+                        recipients: Accounts);
 
             CryptoParametersSign = new CryptoParameters(
-                        KeyCollection: KeyCollection,
-                        Signers: Accounts);
+                        keyCollection: KeyCollection,
+                        signers: Accounts);
 
             CryptoParametersSignEncrypt = new CryptoParameters(
-                        KeyCollection: KeyCollection,
-                        Recipients: Accounts,
-                        Signers: Accounts);
+                        keyCollection: KeyCollection,
+                        recipients: Accounts,
+                        signers: Accounts);
 
             CryptoStackEncrypt = new CryptoStackDebug(CryptoParametersEncrypt);
 

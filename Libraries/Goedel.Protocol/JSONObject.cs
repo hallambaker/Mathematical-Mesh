@@ -318,7 +318,7 @@ namespace Goedel.Protocol {
         public static void Append (Dictionary<string, JSONFactoryDelegate> Base,
                     Dictionary<string, JSONFactoryDelegate> Dictionary) {
             foreach (var Entry in Dictionary) {
-                Base.Add(Entry.Key, Entry.Value);
+                Base.AddSafe(Entry.Key, Entry.Value);
                 }
             }
 

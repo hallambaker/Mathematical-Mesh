@@ -129,7 +129,7 @@ namespace Goedel.Cryptography.Dare {
                     string contentType = null,
                     byte[] cloaked = null,
                     List<byte[]> dataSequences = null) {
-            var cryptoParameters = new CryptoParameters(Signer: signingKey, Recipient: encryptionKey);
+            var cryptoParameters = new CryptoParameters(signer: signingKey, recipient: encryptionKey);
             return new DareMessage(cryptoParameters, plaintext, contentType, cloaked, dataSequences);
 
             }
@@ -192,6 +192,14 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <returns></returns>
         public JSONReader GetBodyReader() => Body.JSONReader();
+
+
+        /// <summary>
+        /// Create a JSONReader for the decrypted body content according to the specified encoding.
+        /// </summary>
+        /// <returns></returns>
+        public JSONReader GetBodyReader(Secret secret) => throw new NYI();
+
 
         /// <summary>
         /// Serialize this object to the specified output stream.

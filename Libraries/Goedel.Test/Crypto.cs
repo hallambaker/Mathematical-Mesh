@@ -16,11 +16,11 @@ namespace Goedel.Test {
 
 
         public CryptoParametersTest(
-                    List<string> Recipients = null,
-                    List<string> Signers = null,
-                    CryptoAlgorithmID EncryptID = CryptoAlgorithmID.NULL,
-                    CryptoAlgorithmID DigestID = CryptoAlgorithmID.NULL) :
-            base(new KeyCollectionCore(), Recipients, Signers, EncryptID, DigestID) {
+                    List<string> recipients = null,
+                    List<string> signers = null,
+                    CryptoAlgorithmID encryptID = CryptoAlgorithmID.NULL,
+                    CryptoAlgorithmID digestID = CryptoAlgorithmID.NULL) :
+            base(new KeyCollectionCore(), recipients, signers, encryptID:encryptID, digestID:digestID) {
             }
 
         protected override void AddEncrypt(string AccountId) => AddEncrypt(AccountId, true);
@@ -43,8 +43,8 @@ namespace Goedel.Test {
 
             }
 
-        protected override void AddSign(string AccountId) => AddSign(AccountId, true);
-        public void AddSign(string AccountId, bool Register) {
+        protected override void AddSign(string accountId) => AddSign(accountId, true);
+        public void AddSign(string accountId, bool register) {
             SignerKeys = SignerKeys ?? new List<KeyPair>();
 
             var Keypair = KeyPair.KeyPairFactoryRSA(keyType: KeySecurity.Ephemeral);
@@ -54,7 +54,7 @@ namespace Goedel.Test {
             //Console.WriteLine($"Keypair is {Keypair.UDF}");
             //Console.WriteLine($"  Public {PublicKeyKeypair.UDF}");
 
-            if (Register) {
+            if (register) {
                 KeyCollection.Add(Keypair);
                 }
             }
@@ -70,9 +70,9 @@ namespace Goedel.Test {
         public List<KeyPair> EncryptionKeys;
         public List<KeyPair> SignerKeys;
 
-        public TestKeys(KeyCollection KeyCollection = null) => this.KeyCollection = KeyCollection ?? KeyCollection.Default;
+        public TestKeys(KeyCollection keyCollection = null) => KeyCollection = keyCollection ?? KeyCollection.Default;
 
-        public void AddEncrypt(bool Register = true) {
+        public void AddEncrypt(bool register = true) {
             EncryptionKeys = EncryptionKeys ?? new List<KeyPair>();
 
             var Keypair = new KeyPairDH();
@@ -84,12 +84,12 @@ namespace Goedel.Test {
             //Console.WriteLine($"  Public {Keypair.PKIXPublicKeyDH}");
             //Console.WriteLine($"  Public {PublicKeyKeypair.UDF}");
 
-            if (Register) {
+            if (register) {
                 KeyCollection.Default.Add(Keypair);
                 }
             }
 
-        public void AddSign(bool Register = true) {
+        public void AddSign(bool register = true) {
             SignerKeys = SignerKeys ?? new List<KeyPair>();
 
             throw new NYI();

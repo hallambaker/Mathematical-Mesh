@@ -18,7 +18,7 @@ namespace Goedel.Mesh {
     /// <remarks>This implementation does not currently support concurrent access to the Mesh profile files
     /// from separate processes. This support should be added my introducing a system wide lock that is
     /// obtained before attempting a write operation and while opening a container.</remarks>
-    public class MeshMachineCore : Disposable, IMeshMachine, IMeshMachineClient {
+    public class MeshMachineCore : Disposable, IMeshMachineClient {
 
 
         public const string FileTypeHost = "application/mmm-host";
@@ -33,36 +33,35 @@ namespace Goedel.Mesh {
         #endregion
 
 
-        public AdminEntry GetAdmin(string local = null) => CatalogHost.GetAdmin(local);
-        public AccountEntry GetAccount(string local = null) => CatalogHost.GetAccount(local);
-        public PendingEntry GetPending(string local = null) => CatalogHost.GetPending(local);
+        public Connection GetConnection(string local = null) => CatalogHost.GetConnection(local);
+        public PendingConnection GetPending(string local = null) => CatalogHost.GetPending(local);
 
 
         /// <summary>
-        /// Create a new Mesh master profile without account or service
+        /// Create a new management context for the specified Mesh profile.
         /// </summary>
+        /// <param name="localName">The friendly name for the profile</param>
+        /// <param name="admin">Enable administration privileges (if available).</param>
         /// <returns>Context for administering the Mesh</returns>
-        public ContextMeshAdmin GetContextMesh(string localName = null) => throw new NYI();
+        public ContextMesh GetContextMesh(string localName = null, bool admin = true) {
 
-        /// <summary>
-        /// Create a new Mesh master profile and account without binding to a service
-        /// </summary>
-        /// <returns>Context for administering the Mesh account</returns>
-        public ContextAccount GetContextAccount(
-                string localName=null) => new ContextAccount(this, GetAccount(localName));
+            var entry = CatalogHost.GetConnection(localName);
+            switch (entry) {
+                case AdminConnection adminEntry: return new ContextMeshAdmin(this, adminEntry);
+                default:  return new ContextMesh(this, entry);
+                }
 
-        /// <summary>
-        /// Create a new Mesh master profile and account and bind to a service
-        /// </summary>
-        /// <returns>Context for administering the Mesh account via the service</returns>
-        public ContextAccountService GetContextService(
-                string localName = null,
-                string accountName = null) => throw new NYI();
+            
+            }
 
-
-
-
-
+        ///// <summary>
+        ///// Create a new management context for the specified Mesh account.
+        ///// </summary>
+        ///// <param name="localName">The friendly name for the account</param>
+        ///// <param name="serviceID">The account service id</param>
+        ///// <returns>Context for administering the Mesh account</returns>
+        //public ContextAccount GetContextAccount(
+        //        string localName=null, string serviceID = null) => throw new NYI();
 
 
         public CatalogHost CatalogHost { get; }
@@ -91,7 +90,7 @@ namespace Goedel.Mesh {
             KeyCollection = GetKeyCollection();
 
             // Now read the container to get the directories.
-            var containerHost = new ContainerProfile(FileNameHost, FileTypeHost,
+            var containerHost = new PersistConnection(FileNameHost, FileTypeHost,
                 fileStatus: FileStatus.ConcurrentLocked,
                 containerType: ContainerType.MerkleTree);
 
@@ -100,25 +99,42 @@ namespace Goedel.Mesh {
 
         #region // Convenience accessors
 
+
+        /// <summary>
+        /// Register <paramref name="profileEntry"/> in the persistence store. An error is
+        /// reported if the entry does not exist and the <paramref name="create"/> is true.
+        /// </summary>
+        /// <param name="profileEntry">The entry to add or update.</param>
+        /// <param name="create">Report an error if the object identifier does not already exist.</param>
+        public void Register(Connection profileEntry, bool create = true) {
+            CatalogHost.Register(profileEntry, create);
+            }
+
         /// <summary>
         /// Create a new Mesh master profile without account or service
         /// </summary>
         /// <returns>Context for administering the Mesh</returns>
         public ContextMeshAdmin CreateMesh(
-                    string localName,
-                    DareMessage escrow = null,
-                    IEnumerable<string> shares = null) => ContextMeshAdmin.CreateMesh(this);
+                string localName,
+                CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
+                CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default,
+                CryptoAlgorithmID algorithmAuthenticate = CryptoAlgorithmID.Default) => ContextMeshAdmin.CreateMesh(
+                    this, null, algorithmSign, algorithmEncrypt, algorithmAuthenticate);
+
 
         /// <summary>
         /// Create a new Mesh master profile without account or service
         /// </summary>
         /// <returns>Context for administering the Mesh</returns>
-        public ContextMesh CreateDevice(
-                string localName
-                ) {
-            throw new NYI();
-
-            }
+        public ContextMeshAdmin RecoverMesh(
+                string localName,
+                DareMessage escrow = null,
+                IEnumerable<string> shares = null,
+                CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
+                CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default,
+                CryptoAlgorithmID algorithmAuthenticate = CryptoAlgorithmID.Default
+                ) => ContextMeshAdmin.RecoverMesh(
+                    this, null, escrow, shares, algorithmSign, algorithmEncrypt, algorithmAuthenticate);
 
 
         /// <summary>
@@ -126,7 +142,10 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <returns>Context for administering the Mesh account</returns>
         public ContextAccount CreateAccount(
-                string localName) {
+                string localName,
+                CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
+                CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default,
+                CryptoAlgorithmID algorithmAuthenticate = CryptoAlgorithmID.Default) {
             var contextMeshAdmin = CreateMesh(localName);
             return contextMeshAdmin.CreateAccount(localName);
             }
@@ -137,7 +156,10 @@ namespace Goedel.Mesh {
         /// <returns>Context for administering the Mesh account via the service</returns>
         public ContextAccountService CreateService(
                 string localName,
-                string accountName=null) {
+                string accountName=null,
+                CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
+                CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default,
+                CryptoAlgorithmID algorithmAuthenticate = CryptoAlgorithmID.Default) {
             var contextMeshAdmin = CreateMesh(localName);
             var contextAccount = contextMeshAdmin.CreateAccount(localName);
             return contextAccount.AddService(accountName ?? localName);
@@ -151,23 +173,15 @@ namespace Goedel.Mesh {
         public ContextAccountService ConnectService(
                 string localName,
                 string accountName = null,
-                string PIN = null) {
-            var contextMesh = CreateDevice(localName);
-            return contextMesh.ConnectService(accountName, PIN);
+                string PIN = null,
+                CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
+                CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default,
+                CryptoAlgorithmID algorithmAuthenticate = CryptoAlgorithmID.Default) {
+            return ContextMesh.ConnectService(localName, accountName, PIN);
             }
 
 
-
-        public ContextAccount GenerateAccount(ContextMeshAdmin contextAdmin,
-                string localName,
-                ProfileDevice profileDevice = null,
-                CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
-                CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default,
-                CryptoAlgorithmID algorithmAuthenticate = CryptoAlgorithmID.Default) =>
-            ContextAccount.CreateAccount(contextAdmin, localName, this, profileDevice,
-                algorithmSign, algorithmEncrypt, algorithmAuthenticate);
-
-        public ContextAccount Connect(
+        public ContextAccountService Connect(
                 string serviceId,
             string localName = null
 ,
@@ -211,34 +225,35 @@ namespace Goedel.Mesh {
 
         public virtual void OpenCatalog(Catalog catalog, string Name) { }
 
-        public virtual void Register(CatalogItem catalogItem) =>
+        public virtual void Register(ConnectionItem catalogItem) =>
                 CatalogHost.Register(catalogItem);
 
-        public virtual void Delete(CatalogItem catalogItem) =>
+        public virtual void Delete(ConnectionItem catalogItem) =>
                 CatalogHost.Delete(catalogItem);
 
 
 
 
-
-
-
-
-
-
-        //// *********** Old
-        //public virtual void Register (DareMessage entry) =>
-        //        CatalogHost.Register(entry);
-
-        //public virtual AssertionAccount GetConnection(
-        //            string accountName = null,
-        //            string deviceUDF = null) => CatalogHost.GetConnection(accountName, deviceUDF);
-
-        ////  ******
-
-
-        public virtual MeshService GetMeshClient(string account) => 
-            MeshService.GetService(account);
+        /// <summary>
+        /// Return a MeshService client for the service ID <paramref name="serviceID"/>
+        /// using the authentication key <paramref name="keyAuthentication"/> and credential
+        /// <paramref name="assertionAccountConnection"/>. 
+        /// </summary>
+        /// <param name="serviceID">The service identifier to connect to.</param>
+        /// <param name="keyAuthentication">The private key to be used for authentication
+        /// (encryption).</param>
+        /// <param name="assertionAccountConnection">The credential binding the device
+        /// to the account.</param>
+        /// <param name="profileMaster">The master profile. This is required when requesting
+        /// an inbound connection or requesting that a new account be created and optional
+        /// otherwise.</param>
+        /// <returns></returns>
+        public virtual MeshService GetMeshClient(
+                string serviceID,
+            KeyPair keyAuthentication,
+            AssertionAccountConnection assertionAccountConnection,
+            ProfileMaster profileMaster = null) =>
+                    MeshService.GetService(serviceID);
 
 
 

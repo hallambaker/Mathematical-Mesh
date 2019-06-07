@@ -377,23 +377,18 @@
 
 	Message CreateRequest
 		Description
-			|Request creation of a new portal account. The request specifies
-			|the requested account identifier and the Mesh profile to be associated 
-			|with the account.
+			|Request binding of an account to a service address.
 		Inherits MeshRequest
-		Struct DareMessage MeshProfile
+		String ServiceID
 			Description
-				|The Mesh profile to be registered.
-		Struct DareMessage CatalogEntryDevices
-			Multiple
+				|The service account to bind to.
+		Struct DareMessage SignedProfileMesh
 			Description
-				|The device profile(s) to be registered in the corresponding device
-				|catalog.
-		Struct CatalogEntryContact CatalogEntryContacts
-			Multiple
+				|The persistent profile that will be used to validate changes to the
+				|account assertion.
+		Struct DareMessage SignedAssertionAccount
 			Description
-				|The contact(s) to be registered in the corresponding contact catalog.
-				|This should usually be populated with a contact for the user themselves.
+				|The signed assertion describing the account.
 
 	Message CreateResponse
 		Inherits MeshResponse
@@ -406,6 +401,7 @@
 			Description
 				|A URL to which the user is directed to complete the account creation 
 				|request.
+
 
 	//Delete account
 	Transaction Admin DeleteAccount DeleteRequest DeleteResponse

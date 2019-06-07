@@ -44,13 +44,13 @@ namespace Goedel.Mesh {
                     KeyCollection keyCollection = null) {
 
             containerName = containerName ?? ContainerDefault;
-            var fileName = Path.Combine(directory, Path.ChangeExtension(containerName, ".cat"));
+            var fileName = Path.Combine(directory, Path.ChangeExtension(containerName, ".dcat"));
             //Console.WriteLine($"Open Store {ContainerName} / {directory}");
             ContainerName = containerName;
 
             Container = Container.Open(
                 fileName,
-                FileStatus.OpenOrCreate,
+                FileStatus.ConcurrentLocked,
                 keyCollection ?? cryptoParameters?.KeyCollection,
                 cryptoParameters,
                 ContainerType.MerkleTree,

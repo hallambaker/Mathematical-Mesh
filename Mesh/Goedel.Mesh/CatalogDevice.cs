@@ -64,31 +64,30 @@ namespace Goedel.Mesh {
             base(directory, containerName?? Label, cryptoParameters, keyCollection) {
             }
 
+
+        public CatalogEntryDevice Get(string key) => Locate(key) as CatalogEntryDevice;
+
         }
 
     public partial class CatalogEntryDevice{
+        /// <summary>
+        /// The primary key used to catalog the entry. This is the UDF of the authentication key.
+        /// </summary>
+        public override string _PrimaryKey => UDF;
+
         /// <summary>
         /// The device connection assertion. This is set by either a new assertion being generated
         /// for a newly added device or by decoding the SignedDeviceConnection entry after 
         /// deserialization.
         /// </summary>
         public AssertionDeviceConnection AssertionDeviceConnection => assertionDeviceConnection ??
-            AssertionDeviceConnection.Decode(SignedDeviceConnection);
+            AssertionDeviceConnection.Decode(SignedDeviceConnection).CacheValue(out assertionDeviceConnection);
         AssertionDeviceConnection assertionDeviceConnection = null;
 
-        /// <summary>
-        /// The device private assertion. This is set by either a new assertion being generated
-        /// for a newly added device or by decoding the SignedDeviceConnection entry after 
-        /// deserialization.
-        /// </summary>
-        public AssertionDevicePrivate AssertionDevicePrivate => assertionDevicePrivate ??
-            AssertionDevicePrivate.Decode(EncryptedDevicePrivate);
-        AssertionDevicePrivate assertionDevicePrivate = null;
 
-        /// <summary>
-        /// The primary key used to catalog the entry. This is the UDF of the authentication key.
-        /// </summary>
-        public override string _PrimaryKey => UDF;
+        public ProfileDevice ProfileDevice => profileDevice ??
+                ProfileDevice.Decode(EncodedProfileDevice).CacheValue(out profileDevice);
+        ProfileDevice profileDevice;
 
 
 
@@ -98,53 +97,6 @@ namespace Goedel.Mesh {
         public CatalogEntryDevice() {
             }
 
-
-        /// <summary>
-        /// Constructor creating a new CatalogEntryDevice with a new AssertionDeviceConnection and
-        /// complimentary AssertionDevicePrivate ready to be completed when the device is added to
-        /// a user's Mesh.
-        /// </summary>
-        /// <param name="profileMaster">The master profile the device is to be connected to.</param>
-        /// <param name="profileDevice">The device profile to be connected.</param>
-        public CatalogEntryDevice(IMeshMachine meshMachine, ProfileDevice profileDevice) {
-            var deviceSignature = profileDevice.KeySignature.KeyPair as KeyPairAdvanced;
-            var deviceEncryption = profileDevice.KeyEncryption.KeyPair as KeyPairAdvanced;
-            var deviceAuthentication = profileDevice.KeyAuthentication.KeyPair as KeyPairAdvanced;
-
-
-            var overlaySignature = new KeyOverlay(meshMachine, deviceSignature);
-            var overlayEncryption = new KeyOverlay(meshMachine, deviceEncryption);
-            var overlayAuthentication = new KeyOverlay(meshMachine, deviceAuthentication);
-           
-
-            assertionDevicePrivate = new AssertionDevicePrivate() {
-                ProfileDevice = profileDevice,
-                KeySignature = overlaySignature,
-                KeyEncryption = overlayEncryption,
-                KeyAuthentication = overlayAuthentication
-                };
-
-            assertionDeviceConnection = new AssertionDeviceConnection() {
-                KeySignature = new PublicKey (overlaySignature.KeyPair),
-                KeyEncryption = new PublicKey (overlayEncryption.KeyPair),
-                KeyAuthentication = new PublicKey (overlayAuthentication.KeyPair)
-                };
-
-            UDF = overlaySignature.KeyPair.UDF;
-            //AuthUDF = overlayAuthentication.KeyPair.UDF;
-            //DeviceUDF = profileDevice.UDF;
-            }
-
-        /// <summary>
-        /// Create the SignedDeviceConnection and EncryptedDevicePrivate
-        /// </summary>
-        public virtual DareMessage Encode(KeyPair keyPair) {
-            SignedDeviceConnection = AssertionDeviceConnection.Encode(keyPair);
-            EncryptedDevicePrivate = AssertionDevicePrivate.Encode(keyPair);
-            DareMessage = DareMessage.Encode(GetBytes(tag: true),
-                    signingKey: keyPair, contentType: "application/mmm");
-            return DareMessage;
-            }
 
 
         public virtual void Activate(List<Permission> permission, Activation activation) {
@@ -174,7 +126,6 @@ namespace Goedel.Mesh {
 
 
         }
-
 
 
     }

@@ -78,6 +78,16 @@
 
 	Section 3 "Classes describing keys"
 
+	Structure KeyComposite
+		TStruct Key Public
+			Description
+				|The composite key
+		TStruct Key Part
+			Description
+				|The overlay key contribution.
+		String Service
+			Description
+				|Service holding the additional contribution
 
 	Structure KeyOverlay
 		String UDF
@@ -96,6 +106,9 @@
 		TStruct Key MasterSignatureKey
 			Description
 				|A Master Signature Key
+		TStruct Key MasterEncryptionKey
+			Description
+				|The Master Encryption Key
 		TStruct Key MasterEscrowKeys
 			Multiple
 			Description
@@ -118,6 +131,10 @@
 			Description
 				|A Personal profile contains at least one OSK which is used to sign 
 				|device administration application profiles.
+		Struct PublicKey KeyEncryption
+			Description
+				|Key used to pass encrypted data to the device such as a
+				|DeviceUseEntry
 
 	Structure ProfileDevice
 		Inherits Profile
@@ -148,16 +165,17 @@
 		Inherits Assertion
 		Description 
 			|Account assertion. This is signed by the service hosting the account.
-		String Account
+		String ServiceIDs
 			Multiple
 			Description
 				|Service address(es).
-		Struct DareMessage MasterProfile
+		String MeshProfileUDF
 			Description
 				|Master profile of the account being registered.
 		Struct PublicKey AccountEncryptionKey
 			Description
 				|Key used to encrypt data under this profile
+
 
 
 	Structure AssertionDeviceConnection
@@ -176,6 +194,21 @@
 			Description
 				|The authentication key for use of the device under the profile
 
+	Structure AssertionAccountConnection
+		Inherits Assertion
+		Struct Permission Permissions
+			Multiple
+			Description
+				|List of the permissions that the device has been granted.
+		Struct PublicKey KeySignature
+			Description
+				|The signature key for use of the device under the profile
+		Struct PublicKey KeyEncryption
+			Description
+				|The encryption key for use of the device under the profile
+		Struct PublicKey KeyAuthentication
+			Description
+				|The authentication key for use of the device under the profile
 
 	Structure AssertionDevicePrivate // To do list accounts as permissions 
 		Inherits Assertion
@@ -184,7 +217,7 @@
 			Description
 				|The signed AssertionDeviceConnection.
 
-		Struct Activation Activations
+		TStruct Activation Activations
 			Multiple
 			Description
 				|List of application and account activation data. Keys, etc.
@@ -202,7 +235,28 @@
 				|The key overlay used to generate the account authentication key from the
 				|device authentication key 
 	
-
+	Structure ActivationAccount
+		Inherits Activation
+		Struct DareMessage SignedAssertionAccount
+			Description
+				|The account assertion
+		Struct DareMessage SignedAssertionAccountConnection
+			Description
+				|The account connection assertion
+		Struct KeyComposite KeyEncryption
+			Description
+				|The key contribution for the decryption key for the device. NB this is 
+				|NOT an overlay on the device signature key, it is an overlay on the 
+				|corresponding recryption key.
+		Struct KeyOverlay KeyAuthentication
+			Description
+			Description
+				|The key overlay used to generate the account authentication key from the
+				|device authentication key 		
+		Struct KeyOverlay KeySignature
+			Description
+				|The key overlay used to generate the account signature key from the
+				|device signature key 
 
 	Structure ProfileApplication
 		Abstract
@@ -235,8 +289,9 @@
 				|Keys or key contributions enabling the operation to be performed
 
 	Structure Contact
+		Inherits Assertion
+
 		String Identifier
-		String Account
 		String FullName
 		String Title
 		String First
@@ -244,6 +299,8 @@
 		String Last
 		String Suffix
 		String Labels
+			Multiple
+		Struct AssertionAccount AssertionAccounts
 			Multiple
 		Struct Address Addresses
 			Multiple
@@ -299,6 +356,12 @@
 		String UDF
 			Description
 				|UDF of the signature key of the device in the Mesh
+		String DeviceUDF
+			Description
+				|UDF of the signature key of the device
+		Struct DareMessage EncodedProfileDevice
+			Description
+				|The device profile
 		Struct DareMessage SignedDeviceConnection
 			Description
 				|The public assertion demonstrating connection of the Device to the Mesh
@@ -323,6 +386,12 @@
 
 	Structure CatalogEntryContact
 		Inherits CatalogEntry
+		Boolean Self
+			Description
+				|If true, this catalog entry is for the user who created the catalog. To be
+				|valid, such an entry MUST be signed by an administration key for the Mesh
+				|profile containing the account to which the catalog belongs.
+
 		String Key
 			Description
 				|Unique key. 
@@ -382,9 +451,14 @@
 		String Key
 
 
-	Structure CatalogEntryApplicationEntry
-		// Application data specific to a particular device
-		// Only need to sync if it is for the current device or the current device is an admin device.
+	Structure CatalogEntryApplicationAccount
+		Description
+			|Wrapper for a signed AccountAssertion
+		Inherits CatalogEntryApplication
+		Struct DareMessage SignedAccountAssertion
+			Description
+				|The account assertion
+
 
 	Structure CatalogEntryApplicationRecryption
 		// The recryption key

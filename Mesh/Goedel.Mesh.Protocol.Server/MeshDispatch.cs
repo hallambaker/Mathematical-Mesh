@@ -93,7 +93,7 @@ namespace Goedel.Mesh.Server {
         /// <param name="Request">The request object to send to the host.</param>
 		/// <returns>The response object from the service</returns>
         public override MeshHelloResponse Hello(
-                HelloRequest Request, JpcSession jpcSession) {
+                HelloRequest Request, JpcSession jpcSession=null) {
 
             var HelloResponse = new MeshHelloResponse() {
                 Version = new Goedel.Protocol.Version() {
@@ -117,11 +117,14 @@ namespace Goedel.Mesh.Server {
         /// <param name="request">The request object to send to the host.</param>
 		/// <returns>The response object from the service</returns>
         public override CreateResponse CreateAccount(
-                CreateRequest request, JpcSession jpcSession) {
+                CreateRequest request, JpcSession jpcSession = null) {
 
-            var accountEntry = new AccountEntry(request);
+            
+
+
             try {
-                Mesh.AccountAdd(jpcSession, accountEntry, request.CatalogEntryDevices);
+                var accountEntry = new AccountEntry(request);
+                Mesh.AccountAdd(jpcSession, accountEntry);
                 return new CreateResponse();
                 }
             catch (System.Exception exception) {
@@ -135,7 +138,7 @@ namespace Goedel.Mesh.Server {
         /// <param name="Request">The request object to send to the host.</param>
         /// <returns>The response object from the service</returns>
         public override StatusResponse Status(
-                StatusRequest Request, JpcSession jpcSession) {
+                StatusRequest Request, JpcSession jpcSession = null) {
 
             try {
                 var result = Mesh.AccountStatus(jpcSession, Request.VerifiedAccount);

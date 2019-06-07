@@ -41,7 +41,7 @@ namespace Goedel.Mesh.Client {
 	///
 	/// An entry in the Mesh linked logchain.
 	/// </summary>
-	public abstract partial class CatalogItem : global::Goedel.Protocol.JSONObject {
+	public abstract partial class ConnectionItem : global::Goedel.Protocol.JSONObject {
 
 		/// <summary>
         /// Tag identifying this class
@@ -51,7 +51,7 @@ namespace Goedel.Mesh.Client {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public new const string __Tag = "CatalogItem";
+		public new const string __Tag = "ConnectionItem";
 
 		/// <summary>
         /// Dictionary mapping tags to factory methods
@@ -59,11 +59,10 @@ namespace Goedel.Mesh.Client {
 		public static Dictionary<string, JSONFactoryDelegate> _TagDictionary = 
 				new Dictionary<string, JSONFactoryDelegate> () {
 
-			{"ProfileEntry", ProfileEntry._Factory},
-			{"DeviceEntry", DeviceEntry._Factory},
-			{"AdminEntry", AdminEntry._Factory},
-			{"AccountEntry", AccountEntry._Factory},
-			{"PendingEntry", PendingEntry._Factory}			};
+			{"Connection", Connection._Factory},
+			{"DeviceConnection", DeviceConnection._Factory},
+			{"AdminConnection", AdminConnection._Factory},
+			{"PendingConnection", PendingConnection._Factory}			};
 
 		/// <summary>
         /// Construct an instance from the specified tagged JSONReader stream.
@@ -84,9 +83,9 @@ namespace Goedel.Mesh.Client {
 		// Transaction Classes
 	/// <summary>
 	///
-	/// Describes a current or pending connection to a Mesh account
+	/// Describes a current or pending connection to a Mesh
 	/// </summary>
-	public partial class ProfileEntry : CatalogItem {
+	public partial class Connection : ConnectionItem {
         /// <summary>
         ///Unique object instance identifier.
         /// </summary>
@@ -107,6 +106,11 @@ namespace Goedel.Mesh.Client {
 			get => _Default;
 			set {_Default = value; __Default = true; }
 			}
+        /// <summary>
+        ///The master profile that provides the root of trust for this Mesh
+        /// </summary>
+
+		public virtual DareMessage						EncodedProfileMaster  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -116,13 +120,13 @@ namespace Goedel.Mesh.Client {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public new const string __Tag = "ProfileEntry";
+		public new const string __Tag = "Connection";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new ProfileEntry();
+		public static new JSONObject _Factory () => new Connection();
 
 
         /// <summary>
@@ -164,6 +168,11 @@ namespace Goedel.Mesh.Client {
 				_Writer.WriteToken ("Default", 1);
 					_Writer.WriteBoolean (Default);
 				}
+			if (EncodedProfileMaster != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("EncodedProfileMaster", 1);
+					EncodedProfileMaster.Serialize (_Writer, false);
+				}
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
 				}
@@ -175,15 +184,15 @@ namespace Goedel.Mesh.Client {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new ProfileEntry FromJSON (JSONReader JSONReader, bool Tagged=true) {
+        public static new Connection FromJSON (JSONReader JSONReader, bool Tagged=true) {
 			if (JSONReader == null) {
 				return null;
 				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
-				return Out as ProfileEntry;
+				return Out as Connection;
 				}
-		    var Result = new ProfileEntry ();
+		    var Result = new Connection ();
 			Result.Deserialize (JSONReader);
 			return Result;
 			}
@@ -208,6 +217,13 @@ namespace Goedel.Mesh.Client {
 					Default = JSONReader.ReadBoolean ();
 					break;
 					}
+				case "EncodedProfileMaster" : {
+					// An untagged structure
+					EncodedProfileMaster = new DareMessage ();
+					EncodedProfileMaster.Deserialize (JSONReader);
+ 
+					break;
+					}
 				default : {
 					break;
 					}
@@ -222,17 +238,7 @@ namespace Goedel.Mesh.Client {
 	///
 	/// Describes an ordinary device connected to a Mesh
 	/// </summary>
-	public partial class DeviceEntry : ProfileEntry {
-        /// <summary>
-        ///The device profile
-        /// </summary>
-
-		public virtual DareMessage						EncodedProfileDevice  {get; set;}
-        /// <summary>
-        ///The master profile that provides the root of trust for this Mesh
-        /// </summary>
-
-		public virtual DareMessage						EncodedProfileMaster  {get; set;}
+	public partial class DeviceConnection : Connection {
         /// <summary>
         ///The device entry containing the full account binding information.
         /// </summary>
@@ -247,13 +253,13 @@ namespace Goedel.Mesh.Client {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public new const string __Tag = "DeviceEntry";
+		public new const string __Tag = "DeviceConnection";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new DeviceEntry();
+		public static new JSONObject _Factory () => new DeviceConnection();
 
 
         /// <summary>
@@ -280,17 +286,7 @@ namespace Goedel.Mesh.Client {
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
-			((ProfileEntry)this).SerializeX(_Writer, false, ref _first);
-			if (EncodedProfileDevice != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("EncodedProfileDevice", 1);
-					EncodedProfileDevice.Serialize (_Writer, false);
-				}
-			if (EncodedProfileMaster != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("EncodedProfileMaster", 1);
-					EncodedProfileMaster.Serialize (_Writer, false);
-				}
+			((Connection)this).SerializeX(_Writer, false, ref _first);
 			if (CatalogEntryDevice != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("CatalogEntryDevice", 1);
@@ -307,15 +303,15 @@ namespace Goedel.Mesh.Client {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new DeviceEntry FromJSON (JSONReader JSONReader, bool Tagged=true) {
+        public static new DeviceConnection FromJSON (JSONReader JSONReader, bool Tagged=true) {
 			if (JSONReader == null) {
 				return null;
 				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
-				return Out as DeviceEntry;
+				return Out as DeviceConnection;
 				}
-		    var Result = new DeviceEntry ();
+		    var Result = new DeviceConnection ();
 			Result.Deserialize (JSONReader);
 			return Result;
 			}
@@ -328,20 +324,6 @@ namespace Goedel.Mesh.Client {
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
-				case "EncodedProfileDevice" : {
-					// An untagged structure
-					EncodedProfileDevice = new DareMessage ();
-					EncodedProfileDevice.Deserialize (JSONReader);
- 
-					break;
-					}
-				case "EncodedProfileMaster" : {
-					// An untagged structure
-					EncodedProfileMaster = new DareMessage ();
-					EncodedProfileMaster.Deserialize (JSONReader);
- 
-					break;
-					}
 				case "CatalogEntryDevice" : {
 					// An untagged structure
 					CatalogEntryDevice = new CatalogEntryDevice ();
@@ -365,12 +347,17 @@ namespace Goedel.Mesh.Client {
 	/// Information enabling administration of a Master profile. It adds an overlay key
 	/// for the administration key.
 	/// </summary>
-	public partial class AdminEntry : DeviceEntry {
+	public partial class AdminConnection : Connection {
         /// <summary>
         ///Overlay for the signature key.
         /// </summary>
 
 		public virtual KeyOverlay						SignatureKey  {get; set;}
+        /// <summary>
+        ///UDF of the connected device
+        /// </summary>
+
+		public virtual string						DeviceUDF  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -380,13 +367,13 @@ namespace Goedel.Mesh.Client {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public new const string __Tag = "AdminEntry";
+		public new const string __Tag = "AdminConnection";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new AdminEntry();
+		public static new JSONObject _Factory () => new AdminConnection();
 
 
         /// <summary>
@@ -413,11 +400,16 @@ namespace Goedel.Mesh.Client {
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
-			((DeviceEntry)this).SerializeX(_Writer, false, ref _first);
+			((Connection)this).SerializeX(_Writer, false, ref _first);
 			if (SignatureKey != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("SignatureKey", 1);
 					SignatureKey.Serialize (_Writer, false);
+				}
+			if (DeviceUDF != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("DeviceUDF", 1);
+					_Writer.WriteString (DeviceUDF);
 				}
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
@@ -430,15 +422,15 @@ namespace Goedel.Mesh.Client {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new AdminEntry FromJSON (JSONReader JSONReader, bool Tagged=true) {
+        public static new AdminConnection FromJSON (JSONReader JSONReader, bool Tagged=true) {
 			if (JSONReader == null) {
 				return null;
 				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
-				return Out as AdminEntry;
+				return Out as AdminConnection;
 				}
-		    var Result = new AdminEntry ();
+		    var Result = new AdminConnection ();
 			Result.Deserialize (JSONReader);
 			return Result;
 			}
@@ -458,155 +450,8 @@ namespace Goedel.Mesh.Client {
  
 					break;
 					}
-				default : {
-					base.DeserializeToken(JSONReader, Tag);
-					break;
-					}
-				}
-			// check up that all the required elements are present
-			}
-
-
-		}
-
-	/// <summary>
-	///
-	/// Specifies the binding of the device to a mesh account serviced by one or more
-	/// Mesh services.
-	/// </summary>
-	public partial class AccountEntry : ProfileEntry {
-        /// <summary>
-        ///The service identifiers to which this account is bound in order of priority.
-        /// </summary>
-
-		public virtual List<string>				ServiceIDs  {get; set;}
-        /// <summary>
-        ///Subdirectory containing the catalogs and spools for the account.
-        /// </summary>
-
-		public virtual string						Directory  {get; set;}
-        /// <summary>
-        ///The account assertion
-        /// </summary>
-
-		public virtual DareMessage						EncodedAssertionAccount  {get; set;}
-		
-		/// <summary>
-        /// Tag identifying this class
-        /// </summary>
-		public override string _Tag => __Tag;
-
-		/// <summary>
-        /// Tag identifying this class
-        /// </summary>
-		public new const string __Tag = "AccountEntry";
-
-		/// <summary>
-        /// Factory method
-        /// </summary>
-        /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new AccountEntry();
-
-
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// </summary>
-        /// <param name="Writer">Output stream</param>
-        /// <param name="wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
-			SerializeX (Writer, wrap, ref first);
-
-
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// Unlike the Serlialize() method, this method is not inherited from the
-        /// parent class allowing a specific version of the method to be called.
-        /// </summary>
-        /// <param name="_Writer">Output stream</param>
-        /// <param name="_wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="_first">If true, item is the first entry in a list.</param>
-		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
-			if (_wrap) {
-				_Writer.WriteObjectStart ();
-				}
-			((ProfileEntry)this).SerializeX(_Writer, false, ref _first);
-			if (ServiceIDs != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("ServiceIDs", 1);
-				_Writer.WriteArrayStart ();
-				bool _firstarray = true;
-				foreach (var _index in ServiceIDs) {
-					_Writer.WriteArraySeparator (ref _firstarray);
-					_Writer.WriteString (_index);
-					}
-				_Writer.WriteArrayEnd ();
-				}
-
-			if (Directory != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("Directory", 1);
-					_Writer.WriteString (Directory);
-				}
-			if (EncodedAssertionAccount != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("EncodedAssertionAccount", 1);
-					EncodedAssertionAccount.Serialize (_Writer, false);
-				}
-			if (_wrap) {
-				_Writer.WriteObjectEnd ();
-				}
-			}
-
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="JSONReader">The input stream</param>
-		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
-        /// <returns>The created object.</returns>		
-        public static new AccountEntry FromJSON (JSONReader JSONReader, bool Tagged=true) {
-			if (JSONReader == null) {
-				return null;
-				}
-			if (Tagged) {
-				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
-				return Out as AccountEntry;
-				}
-		    var Result = new AccountEntry ();
-			Result.Deserialize (JSONReader);
-			return Result;
-			}
-
-        /// <summary>
-        /// Having read a tag, process the corresponding value data.
-        /// </summary>
-        /// <param name="JSONReader">The input stream</param>
-        /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
-			
-			switch (Tag) {
-				case "ServiceIDs" : {
-					// Have a sequence of values
-					bool _Going = JSONReader.StartArray ();
-					ServiceIDs = new List <string> ();
-					while (_Going) {
-						string _Item = JSONReader.ReadString ();
-						ServiceIDs.Add (_Item);
-						_Going = JSONReader.NextArray ();
-						}
-					break;
-					}
-				case "Directory" : {
-					Directory = JSONReader.ReadString ();
-					break;
-					}
-				case "EncodedAssertionAccount" : {
-					// An untagged structure
-					EncodedAssertionAccount = new DareMessage ();
-					EncodedAssertionAccount.Deserialize (JSONReader);
- 
+				case "DeviceUDF" : {
+					DeviceUDF = JSONReader.ReadString ();
 					break;
 					}
 				default : {
@@ -625,7 +470,7 @@ namespace Goedel.Mesh.Client {
 	/// Describes a pending connection to a Mesh account believed to have been 
 	/// created and posted to a service.
 	/// </summary>
-	public partial class PendingEntry : ProfileEntry {
+	public partial class PendingConnection : Connection {
         /// <summary>
         ///
         /// </summary>
@@ -640,13 +485,13 @@ namespace Goedel.Mesh.Client {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public new const string __Tag = "PendingEntry";
+		public new const string __Tag = "PendingConnection";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new PendingEntry();
+		public static new JSONObject _Factory () => new PendingConnection();
 
 
         /// <summary>
@@ -673,7 +518,7 @@ namespace Goedel.Mesh.Client {
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
-			((ProfileEntry)this).SerializeX(_Writer, false, ref _first);
+			((Connection)this).SerializeX(_Writer, false, ref _first);
 			if (MessageConnectionRequest != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("MessageConnectionRequest", 1);
@@ -690,15 +535,15 @@ namespace Goedel.Mesh.Client {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new PendingEntry FromJSON (JSONReader JSONReader, bool Tagged=true) {
+        public static new PendingConnection FromJSON (JSONReader JSONReader, bool Tagged=true) {
 			if (JSONReader == null) {
 				return null;
 				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
-				return Out as PendingEntry;
+				return Out as PendingConnection;
 				}
-		    var Result = new PendingEntry ();
+		    var Result = new PendingConnection ();
 			Result.Deserialize (JSONReader);
 			return Result;
 			}

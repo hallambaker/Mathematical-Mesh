@@ -17,18 +17,18 @@ namespace Goedel.Mesh.Client {
 
     public class CatalogHost : Disposable {
         IMeshMachine MeshMachine;
-        ContainerProfile ContainerProfile;
+        PersistConnection ContainerProfile;
 
-        public virtual void Register(CatalogItem profileEntry) =>
-            ContainerProfile.Update(profileEntry);
-        public virtual void Delete(CatalogItem profile) =>
+        public virtual void Register(ConnectionItem profileEntry, bool create = true) =>
+            ContainerProfile.Update(profileEntry, create);
+        public virtual void Delete(ConnectionItem profile) =>
                 ContainerProfile.Delete(profile._PrimaryKey);
 
        
 
         static CatalogHost() {
-            JSONObject.AddDictionary(CatalogItem._TagDictionary);
-            JSONObject.AddDictionary(MeshItem._TagDictionary);
+            _ = ConnectionItem.Initialize;
+            _ = MeshItem.Initialize;
             }
 
         protected override void Disposing() {
@@ -40,14 +40,14 @@ namespace Goedel.Mesh.Client {
         /// Get the host catalog from the specified mesh machine.
         /// </summary>
         /// <param name="meshMachine"></param>
-        public CatalogHost(ContainerProfile containerHost, IMeshMachine meshMachine) {
+        public CatalogHost(PersistConnection containerHost, IMeshMachine meshMachine) {
             MeshMachine = meshMachine;
             ContainerProfile = containerHost;
             }
 
-        public AdminEntry GetAdmin(string local = null) => ContainerProfile.GetAdmin(local);
-        public AccountEntry GetAccount(string local = null) => ContainerProfile.GetAccount(local);
-        public PendingEntry GetPending(string local = null) => ContainerProfile.GetPending(local);
+        public Connection GetConnection(string local = null) => ContainerProfile.GetConnection(local);
+        //public AccountEntry GetAccount(string local = null) => ContainerProfile.GetAccount(local);
+        public PendingConnection GetPending(string local = null) => ContainerProfile.GetPending(local);
 
 
         /// <summary>

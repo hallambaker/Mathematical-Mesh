@@ -22,7 +22,7 @@ namespace Goedel.XUnit {
         [Fact]
         public void ContainerTestEncrypted() {
             var CryptoParameters = new CryptoParametersTest(
-                        Recipients: Recipients);
+                        recipients: Recipients);
 
             TestContainer($"ContainerList", ContainerType.List, 0, CryptoParameters: CryptoParameters);
             TestContainer($"ContainerList", ContainerType.List, 1, CryptoParameters: CryptoParameters);
@@ -32,7 +32,7 @@ namespace Goedel.XUnit {
         [Fact]
         public void ContainerTestEncryptedItem() {
             var CryptoParametersEntry = new CryptoParametersTest(
-                        Recipients: Recipients);
+                        recipients: Recipients);
 
             TestContainer($"ContainerList", ContainerType.List, 0, CryptoParametersEntry: CryptoParametersEntry);
             TestContainer($"ContainerList", ContainerType.List, 1, CryptoParametersEntry: CryptoParametersEntry);
@@ -42,7 +42,7 @@ namespace Goedel.XUnit {
         [Fact]
         public void ContainerTestSigned() {
             var CryptoParameters = new CryptoParametersTest(
-                        Signers: Signers);
+                        signers: Signers);
 
             TestContainer($"ContainerList", ContainerType.List, 0, CryptoParameters: CryptoParameters);
             TestContainer($"ContainerList", ContainerType.List, 1, CryptoParameters: CryptoParameters);
@@ -109,7 +109,7 @@ namespace Goedel.XUnit {
         public void ContainerTestEncryptedMulti() {
             
             var CryptoParameters = new CryptoParametersTest(
-                    Recipients: Recipients);
+                    recipients: Recipients);
 
             var Records = 0;
             TestContainerMulti($"-Encrypted-{Records}", Records, CryptoParameters: CryptoParameters);
@@ -123,7 +123,7 @@ namespace Goedel.XUnit {
         public void ContainerTestEncryptedEntryMulti() {
 
             var CryptoParameters = new CryptoParametersTest(
-                    Recipients: Recipients);
+                    recipients: Recipients);
 
             var Records = 0;
             TestContainerMulti($"-Encrypted-item-{Records}", Records, CryptoParametersEntry: CryptoParameters);
@@ -137,7 +137,7 @@ namespace Goedel.XUnit {
         [Fact]
         public void ContainerTestEncryptedSignedMulti() {
             var CryptoParameters = new CryptoParametersTest(
-                    Recipients: Recipients, Signers: Signers);
+                    recipients: Recipients, signers: Signers);
 
             var Records = 0;
             TestContainerMulti($"-Encrypted-Signed-{Records}", Records, CryptoParametersEntry: CryptoParameters);

@@ -10,7 +10,14 @@ using Goedel.Protocol;
 using Goedel.Utilities;
 
 namespace Goedel.Mesh.Server {
+    public partial class CatalogItem {
 
+        ///<summary>Initialization property. Access this property to force initialization 
+        ///of the static method.</summary>
+        public static object Initialize => null;
+
+        static CatalogItem() => ContainerPersistenceStore.AddDictionary(_TagDictionary);
+        }
 
     /// <summary>
     /// The Mathematical Mesh persistence store.
@@ -25,8 +32,9 @@ namespace Goedel.Mesh.Server {
 
 
         static MeshPersist() {
-            ContainerPersistenceStore.AddDictionary(CatalogItem._TagDictionary);
-            ContainerPersistenceStore.AddDictionary(MeshItem._TagDictionary);
+            _ = MeshItem.Initialize;
+            _ = CatalogItem.Initialize;
+            _ = MeshProtocol.Initialize;
             }
 
         /// <summary>
@@ -48,8 +56,7 @@ namespace Goedel.Mesh.Server {
         /// Add a new account. The account name must be unique.
         /// </summary>
         public void AccountAdd(JpcSession jpcSession, 
-                        AccountEntry accountEntry,
-                        List<DareMessage> CatalogEntryDevices) {
+                        AccountEntry accountEntry) {
             ContainerStoreEntry containerEntry;
 
             var directory = Path.Combine(DirectoryRoot, accountEntry.Directory);
@@ -70,12 +77,6 @@ namespace Goedel.Mesh.Server {
                 new CatalogApplication(directory).Dispose();
                 new Spool(directory, Spool.SpoolInbound).Dispose();
 
-                // Create and populate the device catalog
-                using (var catalog = new CatalogDevice(directory)) {
-                    foreach (var entry in CatalogEntryDevices) {
-                        catalog.AppendDirect(entry);
-                        }
-                    }
                 }
             }
 
@@ -109,18 +110,21 @@ namespace Goedel.Mesh.Server {
                 };
 
             using (var accountHandle = GetAccountUnverified(messageConnectionRequest.Account)) {
+                throw new NYI();
+                //var witness = UDF.MakeWitnessString(
+                //        accountHandle.AssertionAccount.UDFBytes, messageConnectionRequest.ServerNonce,
+                //        profileDevice.UDFBytes, clientNonce);
+                //messageConnectionRequest.Witness = witness;
+                //connectResponse.Witness = witness;
 
-                var witness = UDF.MakeWitnessString(
-                        accountHandle.ProfileMesh.UDFBytes, messageConnectionRequest.ServerNonce,
-                        profileDevice.UDFBytes, clientNonce);
-                messageConnectionRequest.Witness = witness;
-                connectResponse.Witness = witness;
-                connectResponse.ProfileMesh = accountHandle.MeshProfile;
 
-                var message = DareMessage.Encode(messageConnectionRequest.GetBytes());
 
-                accountHandle.Post(message);
-                return connectResponse;
+                //connectResponse.ProfileMesh = accountHandle.MeshProfile;
+
+                //var message = DareMessage.Encode(messageConnectionRequest.GetBytes());
+
+                //accountHandle.Post(message);
+                //return connectResponse;
                 }
             }
 
@@ -322,19 +326,21 @@ namespace Goedel.Mesh.Server {
 
     public partial class AccountEntry {
 
-        public override string _PrimaryKey => Account;
-        public  string Account => ProfileMesh.Account[0];
+        public override string _PrimaryKey => ServiceID;
 
-        public AssertionAccount ProfileMesh => profileMesh ?? AssertionAccount.Decode(Profile).CacheValue(out profileMesh);
-        AssertionAccount profileMesh;
+        public AssertionAccount AssertionAccount => assertionAccount ?? 
+            AssertionAccount.Decode(SignedAssertionAccount).CacheValue(out assertionAccount);
+        AssertionAccount assertionAccount;
 
         public AccountEntry() {
             }
 
         public AccountEntry(CreateRequest request) {
-            Profile = request.MeshProfile;
+            ServiceID = request.ServiceID;
+            SignedProfileMesh = request.SignedProfileMesh;
+            SignedAssertionAccount = request.SignedAssertionAccount;
             Verify();
-            Directory = Account;
+            Directory = ServiceID;
             }
 
         public bool Verify() => true; // NYI: Verification of signed profile.

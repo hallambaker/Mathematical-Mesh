@@ -1,18 +1,17 @@
-﻿Protocol Goedel.Mesh.Client CatalogItem CatalogItem
+﻿Protocol Goedel.Mesh.Client ConnectionItem ConnectionItem
 	Description 
 		|An entry in the Mesh linked logchain.
 
     Using Goedel.Cryptography.Jose
     Using Goedel.Cryptography.Dare
 
-	Section 1 "Shared Classes"
+	Section 1 "Connection descriptions"
 		Description
-			|The following classes are used as common elements in
-			|Mesh profile specifications.a
+			|The following classes are used to store Mesh connection descriptions.
 
-	Structure ProfileEntry
+	Structure Connection
 		Description
-			|Describes a current or pending connection to a Mesh account
+			|Describes a current or pending connection to a Mesh
 		String ID
 			Description
 				|Unique object instance identifier.
@@ -22,51 +21,37 @@
 		Boolean Default
 			Description
 				|If true, this is the default for the profile type (master, account)
-
-	Structure DeviceEntry
-		Inherits ProfileEntry
-		Description
-			|Describes an ordinary device connected to a Mesh
-		Struct DareMessage EncodedProfileDevice
-			Description
-				|The device profile
 		Struct DareMessage EncodedProfileMaster
 			Description
 				|The master profile that provides the root of trust for this Mesh
+
+	Structure DeviceConnection
+		Inherits Connection
+		Description
+			|Describes an ordinary device connected to a Mesh
+
+
 		Struct CatalogEntryDevice CatalogEntryDevice
 			Description
 				|The device entry containing the full account binding information.
 
-	Structure AdminEntry
-		Inherits DeviceEntry
+	Structure AdminConnection
+		Inherits Connection
 		Description
 			|Information enabling administration of a Master profile. It adds an overlay key
 			|for the administration key.
 		Struct KeyOverlay SignatureKey
 			Description
 				|Overlay for the signature key.
-
-
-	Structure AccountEntry
-		Inherits ProfileEntry
-		Description
-			|Specifies the binding of the device to a mesh account serviced by one or more
-			|Mesh services.
-		String ServiceIDs
-			Multiple
+		String DeviceUDF
 			Description
-				|The service identifiers to which this account is bound in order of priority.
-		String Directory
-			Description
-				|Subdirectory containing the catalogs and spools for the account.
-		Struct DareMessage EncodedAssertionAccount
-			Description
-				|The account assertion
+				|UDF of the connected device
 
 
 
-	Structure PendingEntry
-		Inherits ProfileEntry
+
+	Structure PendingConnection
+		Inherits Connection
 		Description
 			|Describes a pending connection to a Mesh account believed to have been 
 			|created and posted to a service.

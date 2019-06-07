@@ -40,7 +40,7 @@ namespace Goedel.XUnit {
         public void MessageEncryptedAtomic() {
             var Recipients = new List<string> { "Alice@example.com" };
             var CryptoParameters = new CryptoParametersTest(
-                        Recipients: Recipients);
+                        recipients: Recipients);
 
             var Test1 = Platform.GetRandomBytes(1000);
 
@@ -52,8 +52,8 @@ namespace Goedel.XUnit {
         public void MessageDigestAtomic() {
             var Recipients = new List<string> { "Alice@example.com" };
             var CryptoParameters = new CryptoParametersTest(
-                        Recipients: Recipients,
-                        DigestID: CryptoAlgorithmID.SHA_2_512);
+                        recipients: Recipients,
+                        digestID: CryptoAlgorithmID.SHA_2_512);
 
             var Test1 = Platform.GetRandomBytes(100);
 
@@ -65,8 +65,8 @@ namespace Goedel.XUnit {
             var Recipients = new List<string> { "Alice@example.com" };
             var Signers = new List<string> { "Alice@example.com" };
             var CryptoParameters = new CryptoParametersTest(
-                        Recipients: Recipients,
-                        Signers: Signers);
+                        recipients: Recipients,
+                        signers: Signers);
 
             var Test1 = Platform.GetRandomBytes(100);
 
@@ -89,7 +89,7 @@ namespace Goedel.XUnit {
         public void MessageEncryptedFixed() {
             var Recipients = new List<string> { "Alice@example.com" };
             var CryptoParameters = new CryptoParametersTest(
-                        Recipients: Recipients);
+                        recipients: Recipients);
 
             var Test1 = Platform.GetRandomBytes(1000);
 
@@ -103,7 +103,7 @@ namespace Goedel.XUnit {
         public void MessageEncryptedVariable() {
             var Recipients = new List<string> { "Alice@example.com" };
             var CryptoParameters = new CryptoParametersTest(
-                        Recipients: Recipients);
+                        recipients: Recipients);
 
             var Test1 = Platform.GetRandomBytes(1000);
             TestMessageVariable(Test1, CryptoParameters);
@@ -126,7 +126,7 @@ namespace Goedel.XUnit {
             var Recipients = new List<string> { "Alice@example.com" };
 
             var CryptoParameters = new CryptoParametersTest(
-                        Recipients: Recipients);
+                        recipients: Recipients);
 
             var Test1 = Platform.GetRandomBytes(1000);
 
@@ -139,7 +139,7 @@ namespace Goedel.XUnit {
         public void MessageEncrypted () {
             var Recipients = new List<string> { "Alice@example.com" };
             var CryptoParameters = new CryptoParametersTest(
-                        Recipients: Recipients);
+                        recipients: Recipients);
 
             var Test1 = Platform.GetRandomBytes(1000);
             TestMessageAtomic(Test1, CryptoParameters);
@@ -157,7 +157,7 @@ namespace Goedel.XUnit {
         public void MessageEncryptedWithData () {
             var Recipients = new List<string> { "Alice@example.com" };
             var CryptoParameters = new CryptoParametersTest(
-                        Recipients: Recipients);
+                        recipients: Recipients);
 
             var Test1 = Platform.GetRandomBytes(1000);
             var Test2 = Platform.GetRandomBytes(100);
