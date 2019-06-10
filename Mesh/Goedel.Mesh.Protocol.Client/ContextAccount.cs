@@ -25,6 +25,7 @@ namespace Goedel.Mesh.Client {
         ///<summary>The account activation</summary>
         public ActivationAccount ActivationAccount;
 
+
         public AssertionAccount AssertionAccount;
 
         ///<summary>The Machine context.</summary>
@@ -248,7 +249,15 @@ namespace Goedel.Mesh.Client {
 
     public class ContextAccountService : ContextAccount {
         MeshService MeshService;
+        public ContextAccountService(ContextMesh contextMesh, ActivationAccount activationAccount)  :
+                base (contextMesh, activationAccount, null) {
 
+            // here pull the account assertion from the catalog
+
+            // now work out which service to use.
+
+            throw new NYI();
+            }
 
         public ContextAccountService(ContextAccount contextAccount, MeshService  meshService) : 
                     base (contextAccount) {

@@ -62,9 +62,9 @@ namespace Goedel.Mesh.Client {
                 string accountName = null) {
 
             var activation = AssertionDevicePrivate.GetActivation(accountName);
-            
-            //var contextAccount = new ContextAccount(this, activationAccount, assertionAccount);
-            throw new NYI();
+
+            return new ContextAccountService(this, activation);
+
             }
 
         public static ContextAccountService ConnectService(

@@ -58,9 +58,6 @@ namespace Goedel.Mesh.Client {
             //KeyAdministratorEncrypt = KeyCollection.LocatePrivate(ProfileMesh.KeyEncryption.KeyPair.UDF);
 
             // here find the device connection in the device catalog.
-
-            var cat = GetCatalogDevice().Get(adminConnection.ID);
-            var vat2 = CatalogEntryDevice;
             }
 
 
@@ -216,8 +213,13 @@ namespace Goedel.Mesh.Client {
             // of filter capability on thism
 
             ActivationAccount activationAccount = null;
+
+
+            var catalogChanges = new List<CatalogEntry>();
             foreach (var device in GetCatalogDevice().AsCatalogEntryDevice) {
+                catalogChanges.Add(device);
                 if (device.DeviceUDF == AdminConnection.DeviceUDF) {
+                    
                     activationAccount = AddDevice(assertionAccount, device, keyEncrypt as KeyPairAdvanced);
                     }
                 else {
@@ -225,6 +227,8 @@ namespace Goedel.Mesh.Client {
                     }
 
                 }
+            GetCatalogDevice().Update(catalogChanges);
+
 
             // can't do it this way because the catalog entries are being modified inside the loop.
             // need to build a to-do list and then apply the changes.
@@ -280,9 +284,10 @@ namespace Goedel.Mesh.Client {
             devicePrivate.Activations = devicePrivate.Activations ?? new List<Activation>();
             devicePrivate.Activations.Add(activationAccount);
 
-            devicePrivate.Encode(catalogEntryDevice.ProfileDevice.KeyEncryption.KeyPair, ProfileMesh.KeyEncryption.KeyPair);
+            catalogEntryDevice.EncryptedDevicePrivate = 
+                devicePrivate.Encode(catalogEntryDevice.ProfileDevice.KeyEncryption.KeyPair, 
+                        ProfileMesh.KeyEncryption.KeyPair);
 
-            GetCatalogDevice().Update(catalogEntryDevice);
 
             return activationAccount;
             }

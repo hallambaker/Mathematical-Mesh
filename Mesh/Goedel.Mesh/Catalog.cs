@@ -31,7 +31,7 @@ namespace Goedel.Mesh {
         public Catalog(string directory, string containerName,
             CryptoParameters cryptoParameters = null,
                     KeyCollection keyCollection = null, bool readContainer = true) :
-                base(directory, containerName, cryptoParameters, keyCollection) => 
+                base(directory, containerName, cryptoParameters, keyCollection) =>
             ContainerPersistence = new ContainerPersistenceStore(Container, readContainer);
 
 
@@ -62,7 +62,7 @@ namespace Goedel.Mesh {
             using (var container = new Catalog(directory, containerName)) {
 
                 return new ContainerStatus() {
-                    Index = (int) container.ContainerPersistence.FrameCount,
+                    Index = (int)container.ContainerPersistence.FrameCount,
                     Container = containerName
                     };
                 }
@@ -79,6 +79,17 @@ namespace Goedel.Mesh {
 
 
         public virtual void Update(CatalogEntry catalogEntry) => ContainerPersistence.Update(catalogEntry, true);
+
+
+        public virtual void Update(List<CatalogEntry> catalogEntries) {
+            foreach (var catalogEntry in catalogEntries) {
+                ContainerPersistence.Update(catalogEntry, true);
+                }
+            }
+            
+            
+            
+            
 
 
         public virtual void Delete(CatalogEntry catalogEntry) => ContainerPersistence.Delete(catalogEntry._PrimaryKey);
